@@ -1,0 +1,262 @@
+10.3.0 ~ 10.3.4
+Data Masking
+Cloud Providers
+User Access History
+Slack DM 연동
+WAC 트러블슈팅 가이드
+MongoDB 전용 가이드
+[10.2.8~] WAC RBAC Guide
+9.10.0 - 9.10.4
+Default Privilege 설정하기
+Server Proxy 사용 활성화
+9.17.0 ~ 9.17.1
+Custom Data Source 접속하기
+결재 부가 기능 (대리 결재, 재상신 등)
+Google SAML 연동하기
+Workflow Configurations
+ProxyJump 생성하기
+Admin Role History
+GCP에서 서버 리소스 동기화
+Reports
+System
+Policy Audit Logs
+DB Access History
+Reverse Tunnel을 통해 클러스터에 통신하기
+접근 권한 목록 확인하기
+에이전트 없이 프록시 접속하기
+쿠버네티스 정책 YAML Code 문법 안내
+DB Connections
+User Agent
+10.0.0 ~ 10.0.2
+Roles
+Jobs
+Installation and Customer Support
+General Logs
+Provisioning 활성화 하기
+Discovery Jobs
+Kubernetes Logs
+User Management
+QueryPie Overview
+General
+Access Control
+Policy Exception
+Database Proxy 사용 활성화
+Request Auditㅤ
+Permissions 부여 및 회수하기
+9.15.0 ~ 9.15.4
+Server Account Templates
+Masking Pattern
+Server Access Request 요청하기
+Multi Agent Seamless SSH 사용 가이드
+Multi Agent Linux 설치 및 사용 가이드
+DB Access Request 요청하기
+Kerberos Configurations
+11.0.0
+AWS Athena 전용 가이드
+All Requests
+Connection Management
+Cloud Providers
+DocumentDB 전용 가이드
+Databases
+API Token
+Account Management
+Okta 연동하기
+수동으로 개별 서버 등록하기
+qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+Running Queries
+Session Monitoring
+User Activity Recordings
+Account Lock Historyㅤ
+Users
+Access Control‎‎‎‎‎‎‎
+9.14.0 ~ 9.14.3
+Policies‎‎‎‎‎
+Security
+Server Groups
+Web Apps‎
+Web App Role History
+9.8.0 ~ 9.8.12
+(New) Policy Management
+Web App Configurations
+Custom Data Source 설정 및 로그 확인
+Blocked Accounts
+My Dashboard
+Kubernetes Role Historyㅤ
+Server Privilege 부여하기
+Audit
+OAuth 2.0을 사용하기 위한 Google Cloud API 연동
+Alerts
+Multi-Factor Authentication 설정하기
+Roles‎‎‎
+Web Event Audit
+Inventory
+Access Role Request 요청하기
+Discovery Management
+Server Role History
+Pod Session Recordingsㅤ
+WAC FAQ
+웹 SQL 에디터로 접속하기
+Access Control Logsㅤ
+관리자 매뉴얼
+Integrations
+ProxyJump Configurations
+Privilege Type
+Kubernetes
+[10.3.0 ~] WAC JIT 권한 획득 Guide
+Kubernetes Access Control
+Splunk 연동
+Exception Management
+Server Account Management
+권한이 있는 서버에 접속하기
+Roles
+Workflow
+[Okta] 프로비저닝 연동 가이드
+SAC General Configurations
+Root CA 인증서 및 Extension 설치하기
+쿠버네티스 정책 설정하기
+Role 부여 및 회수하기
+Syslog 연동
+웹 SFTP 사용하기
+Session Logs
+Azure에서 서버 리소스 동기화
+Proxy Management
+Multi Agent
+Reportsㅤ
+Server Access History
+AWS에서 서버 리소스 동기화
+Web Access History
+Clusters
+General
+QueryPie Manual
+Ledger Table Policy
+Licenses
+Server Agent 설치 및 제거하기
+메뉴 개선 가이드 (9.12.0)
+실행 계획(Explain) 기능 사용하기
+Discovery
+Policies
+9.12.0 ~ 9.12.14
+Company Management
+10.2.0 ~ 10.2.12
+Cloud Providers
+Custom Attribute
+Server Agents for RDP
+Preferences
+Account Lock History
+9.18.0 ~ 9.18.3
+서버 접근 정책 설정하기
+KAC General Configurations
+Policiesㅤㅤㅤ
+New Request > 요청 타입별 템플릿 변수
+수동으로 쿠버네티스 클러스터 등록하기
+Google Cloud에서 DB 리소스 동기화
+IP Registration Request 요청하기
+Web Access Control
+Data Paths
+쿠버네티스 정책 UI 코드 헬퍼 안내
+Access Control
+DB Access Control
+Connection Management
+Release Notes
+QueryPie Docs
+쿠버네티스 정책 Tips 안내
+External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
+Email 연동
+Provisioning
+External API 변경사항 (9.10.0 버전)
+Web Apps
+JIT Access Control Logs
+Servers
+Web App Logs
+Email을 통한 사용자 비밀 번호 초기화
+WAC Quickstart
+Discovery History
+DAC General Configurations
+Authentication
+LDAP 연동하기
+9.20.0 ~ 9.20.2
+Secret Store 연동
+Reverse Tunnel을 통해 DB에 통신하기
+Multi Agent OS별 3rd Party Tool 지원 목록
+Activity Logs
+Web App Configurations에서 WAC 초기 설정하기
+Root CA 인증서 설치 가이드
+Connection Management
+Dry Run 기능으로 클라우드 동기화 설정 확인하기
+Command Audit
+Database Access Control
+Groups
+Web App Access Control
+SSH Key Configurations
+9.11.0 ~ 9.11.5
+Policies
+Command Templates
+Role 부여 및 회수하기‎‎‎
+Runnig Queries
+Detection Profiles
+Connection Management‎‎
+Ledger Management
+Reverse Tunnels
+Restricted Data Access 요청하기 (제한된 데이터 접근 요청)
+패스워드 변경 Job 생성하기
+사용자 매뉴얼
+Audit Log Export
+Sensitive Data
+Workflow Management
+Google BigQuery OAuth 인증 설정
+Rolesㅤㅤㅤ
+Proxy Management
+AWS에서 쿠버네티스 리소스 동기화
+Server Privilege Request 요청하기
+Unmasking Zones
+10.1.0 ~ 10.1.11
+9.9.0 ~ 9.9.8
+SSH Configurations
+Dashboard
+External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
+Monitoring
+Slack DM - Workflow 알림 유형
+Google BigQuery OAuth 인증을 통해 접속하기
+[~10.2.7] WAC Role & Policy Guide
+Profile Editor
+Unmasking Request 요청하기 (마스킹 해제 요청)
+Server Logs
+쿠버네티스 역할 부여 및 회수하기
+SSL Configurations
+Servers
+Ledger Approval Rules
+AWS SSO 연동하기
+Data Access
+Password Provisioning
+Multi Agent 제약사항
+DB 정책 예외 요청하기 (DB Policy Exception Request)
+Channels
+K8s Access Control
+SQL Export Request 요청하기
+Data Policies
+사용자 프로필
+서버를 그룹으로 관리하기
+Query Audit
+MS Azure에서 DB 리소스 동기화
+Allowed Zones
+9.19.0 
+Approval Rules
+Reverse Tunnel을 통해 서버에 통신하기
+DML Snapshots
+SQL Request 요청하기
+웹 어플리케이션 (웹 사이트) 접속하기
+9.16.0 ~ 9.16.4
+Server Access Control
+Server Access Control
+Access Control
+시스템 구성도 개요
+웹 터미널 사용하기
+Data Patterns
+Workflow Logs
+Scan Results
+9.13.0 ~ 9.13.5
+Access Control Logs
+쿠버네티스 정책 Action 설정 참고 가이드
+AWS에서 DB 리소스 동기화
+Database Logs
+쿠버네티스 역할 설정하기
