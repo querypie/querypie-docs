@@ -51,21 +51,34 @@ src/content/ko/ 디렉토리로 옮겨옵니다.
     - src/content/ko/user-manual/: Source Website 의 /querypie-manual/11.0.0/user-manual 에 대응합니다.
 
 ## 수행할 작업 1: breadcrumbs.revised.txt 파일 작성
-- 입력파일: breadcrumbs.txt
+- 입력파일: breadcrumbs.txt, titles.txt, titles.en.txt
     - breadcrumbs.txt 의 각 줄은 하나의 문서에 대한 URL, 탐색경로 가리킵니다. 
       각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
     - 탐색경로 breadcrumbs 는 하나 이상의 경로가 / 로 구분되며, 하나의 경로는 `[문서 제목](URI)` 형식으로 작성되어 있습니다.
+    - titles.txt 의 각 줄은 하나의 문서에 대한 URL, 문서의 제목을 가리킵니다.
+      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 제목이 옵니다.
+    - titles.en.txt 의 각 줄은 하나의 문서에 대한 URL, 영어로 번역된 제목을 가리킵니다.
+      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 영어로 번역된 제목이 옵니다.
 - 변환절차:
     - `[문서 제목](URI)` 형식의 탐색경로에서, '문서 제목'은 한국어 또는 원래의 문구를 그대로 유지하고, 'URI' 부분을 재작성합니다.
-    - URI 는 /path/filename 으로 구성됩니다. 문서 제목을 영어로 번역하여 URI 의 filename 부분에 적용합니다.
+    - URI 는 /path/filename 으로 구성됩니다. titles.en.txt 에서 얻을 수 있는 영어로 번역된 제목을 활용하여 URI 의 filename 부분에 적용합니다.
     - 영어 번역한 문서 제목에서, a, the 등 정관사는 생략합니다.
     - 영어 번역한 문서 제목에서, 여러 단어의 구분자는 - 를 사용합니다.
     - 탐색경로에 사용되는 URI 는 해당 탐색경로 전체를 나타내는 URI 로 작성합니다. 
       특정 경로의 URI 는 (상위 경로에 사용된 URI)/(해당 페이지의 영어 번역된 제목) 형식으로 작성합니다.
+    - 탐색경로의 마지막 항목을 추가하여 주세요. 마지막 항목을 해당 문서의 제목, URI 로 작성합니다.
+      기존 breadcrumbs.txt 파일의 탐색경로는 상위 경로에 대한 정보만 포함되어 있고, 해당 문서 자체에 대한 정보가 누락되어 있습니다.
 - 출력파일: breadcrumbs.revised.txt
     - 탐색경로의 논리적인 계층구조에 맞추어, URI 을 재작성하고, 변경된 탐색경로를 breadcrumbs.revised.txt 파일에 작성합니다.
     - breadcrumbs.revised.txt 파일은 breadcrumbs.txt 파일과 동일한 디렉토리에 저장합니다.
     - breadcrumbs.revised.txt 파일의 내용은 breadcrumbs.txt 파일의 내용과 동일한 순서로 작성되어야 합니다.
+- python program 의 작동 방식
+    - python program 은 CLI 방식으로 작동합니다. 입력파일로 breadcrumbs.txt, titles.txt, titles.en.txt 파일을 argument 로 지정받고,
+      출력파일로 breadcrumbs.revised.txt 파일의 경로를 argument 로 지정받습니다.
+    - python program 의 파일은 docs/generate_breadcrumbs_revised.py 파일에 저장하여 주세요.
+    - 실행할 때 option 으로 breadcrumbs.txt, titles.en.txt, breadcrumbs.revised.txt 등 입출력 파일의 경로를 입력하도록 작성하여 주세요.
+    - `#!/usr/bin/env python3` 로 시작하는 shebang 을 추가하여, Python 3 환경에서 실행되도록 합니다.
+    - python code 안에는 한글이 아닌 영어로 comment, message 등을 작성합니다.
 - 작업 오류의 예시 #1: 다음과 같은 오류가 발생하지 않도록, 유의하여 주세요.
     - `[QueryPie Docs](/querypie-docs)/[Admin Manual](/querypie-docs/admin-manual/databases/connection-management/db-connections)`
     - 위의 예시에서, 탐색경로의 두번째 항목에서 문서제목은 `[Admin Manual]`이지만, URI 는 `admin-manual/databases/connection-management/db-connections` 입니다.
