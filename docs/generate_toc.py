@@ -9,6 +9,7 @@ from collections import defaultdict
 
 ZWSP = '\u200b'
 LRM = '\u200e'
+HANGUL_FILLER = '\u3164'
 
 # Parse sitemap.xml and extract all URLs
 def parse_sitemap(filename):
@@ -51,7 +52,7 @@ def extract_breadcrumbs(soup, current_url):
     if breadcrumbs and breadcrumbs[0].startswith('[QueryPie Docs for v10]'):
         breadcrumbs = breadcrumbs[1:]
     # Replace any newline in breadcrumb items with space and remove ZWSP, LRM
-    breadcrumbs = [b.replace('\n', ' ').replace('\r', ' ').replace(ZWSP, '').replace(LRM, '') for b in breadcrumbs]
+    breadcrumbs = [b.replace('\n', ' ').replace('\r', ' ').replace(ZWSP, '').replace(LRM, '').replace(HANGUL_FILLER, '') for b in breadcrumbs]
     breadcrumb_str = '/'.join(breadcrumbs)
     return breadcrumb_str
 
@@ -71,7 +72,7 @@ def fetch_title_and_breadcrumbs(url):
         # Remove any newline characters from title
         title = title.replace('\n', ' ').replace('\r', ' ')
         # Remove ZWSP, LRM from title
-        title = title.replace(ZWSP, '').replace(LRM, '')
+        title = title.replace(ZWSP, '').replace(LRM, '').replace(HANGUL_FILLER, '')
         # Extract breadcrumbs using the refactored function
         breadcrumb_str = extract_breadcrumbs(soup, url)
         return title, breadcrumb_str, None
