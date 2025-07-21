@@ -7,6 +7,8 @@ import sys
 import os
 from collections import defaultdict
 
+ZWSP = '\u200b'
+
 # Parse sitemap.xml and extract all URLs
 def parse_sitemap(filename):
     tree = ET.parse(filename)
@@ -14,6 +16,43 @@ def parse_sitemap(filename):
     ns = {'ns': root.tag.split('}')[0].strip('{')}
     urls = [url.find('ns:loc', ns).text.strip() for url in root.findall('ns:url', ns)]
     return urls
+
+# Extract and format breadcrumbs from soup object and current url
+# Returns a formatted breadcrumb string
+def extract_breadcrumbs(soup, current_url):
+    """
+    Extract and format breadcrumbs from soup object and current url.
+    Returns a formatted breadcrumb string.
+    - Each breadcrumb is formatted as [Title](/uri/path)
+    - The first breadcrumb 'QueryPie Docs for v10' is removed if present
+    - The path '/querypie-manual/11.0.0/' is replaced with './'
+    - Any '../../../ko' or similar parent references are removed
+    - All paths are made relative to './'
+    - ZWSP (U+200B) is removed from titles
+    - Newline characters in breadcrumb items are replaced with space
+    """
+    breadcrumbs = []
+    ol = soup.find('ol', class_='breadcrumbs')
+    if ol:
+        for li in ol.find_all('li'):
+            a = li.find('a')
+            if a:
+                text = a.get_text(separator=' ', strip=True).replace('\n', ' ').replace('\r', ' ')
+                href = a.get('href', '')
+                # Remove parent directory references and 'ko' from href
+                # Also remove any ../../../ko or similar
+                parts = [part for part in href.split('/') if part not in ('..', '.', '', 'ko', 'en', 'ja')]
+                href_clean = '/' + '/'.join(parts) if parts else '/'
+                # Replace /querypie-manual/11.0.0/ with ./
+                href_clean = href_clean.replace('/querypie-manual/11.0.0/', './')
+                breadcrumbs.append(f'[{text}]({href_clean})')
+    # Remove first breadcrumb if it is 'QueryPie Docs for v10'
+    if breadcrumbs and breadcrumbs[0].startswith('[QueryPie Docs for v10]'):
+        breadcrumbs = breadcrumbs[1:]
+    # Replace any newline in breadcrumb items with space and remove ZWSP
+    breadcrumbs = [b.replace('\n', ' ').replace('\r', ' ').replace(ZWSP, '') for b in breadcrumbs]
+    breadcrumb_str = '/'.join(breadcrumbs)
+    return breadcrumb_str
 
 # Visit the URL and extract the document title and breadcrumbs
 # Returns (title, breadcrumb_str, error_message)
@@ -30,17 +69,10 @@ def fetch_title_and_breadcrumbs(url):
             title = ''
         # Remove any newline characters from title
         title = title.replace('\n', ' ').replace('\r', ' ')
-        # Extract breadcrumbs from <ol class="breadcrumbs">
-        breadcrumbs = []
-        ol = soup.find('ol', class_='breadcrumbs')
-        if ol:
-            for li in ol.find_all('li'):
-                a = li.find('a')
-                if a:
-                    text = a.get_text(separator=' ', strip=True).replace('\n', ' ')
-                    href = a.get('href', '')
-                    breadcrumbs.append(f'[{text}]({href})')
-        breadcrumb_str = '/'.join(breadcrumbs)
+        # Remove ZWSP from title
+        title = title.replace(ZWSP, '')
+        # Extract breadcrumbs using the refactored function
+        breadcrumb_str = extract_breadcrumbs(soup, url)
         return title, breadcrumb_str, None
     except Exception as e:
         # Return error message if any exception occurs
