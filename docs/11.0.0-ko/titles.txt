@@ -1,262 +1,262 @@
-10.3.0 ~ 10.3.4
-Data Masking
-Cloud Providers
-User Access History
-Slack DM 연동
-WAC 트러블슈팅 가이드
-MongoDB 전용 가이드
-[10.2.8~] WAC RBAC Guide
-9.10.0 - 9.10.4
-Default Privilege 설정하기
-Server Proxy 사용 활성화
-9.17.0 ~ 9.17.1
-Custom Data Source 접속하기
-결재 부가 기능 (대리 결재, 재상신 등)
-Google SAML 연동하기
-Workflow Configurations
-ProxyJump 생성하기
-Admin Role History
-GCP에서 서버 리소스 동기화
-Reports
-System
-Policy Audit Logs
-DB Access History
-Reverse Tunnel을 통해 클러스터에 통신하기
-접근 권한 목록 확인하기
-에이전트 없이 프록시 접속하기
-쿠버네티스 정책 YAML Code 문법 안내
-DB Connections
-User Agent
-10.0.0 ~ 10.0.2
-Roles
-Jobs
-Installation and Customer Support
-General Logs
-Provisioning 활성화 하기
-Discovery Jobs
-Kubernetes Logs
-User Management
-QueryPie Overview
-General
-Access Control
-Policy Exception
-Database Proxy 사용 활성화
-Request Auditㅤ
-Permissions 부여 및 회수하기
-9.15.0 ~ 9.15.4
-Server Account Templates
-Masking Pattern
-Server Access Request 요청하기
-Multi Agent Seamless SSH 사용 가이드
-Multi Agent Linux 설치 및 사용 가이드
-DB Access Request 요청하기
-Kerberos Configurations
-11.0.0
-AWS Athena 전용 가이드
-All Requests
-Connection Management
-Cloud Providers
-DocumentDB 전용 가이드
-Databases
-API Token
-Account Management
-Okta 연동하기
-수동으로 개별 서버 등록하기
-qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
-Running Queries
-Session Monitoring
-User Activity Recordings
-Account Lock Historyㅤ
-Users
-Access Control‎‎‎‎‎‎‎
-9.14.0 ~ 9.14.3
-Policies‎‎‎‎‎
-Security
-Server Groups
-Web Apps‎
-Web App Role History
-9.8.0 ~ 9.8.12
-(New) Policy Management
-Web App Configurations
-Custom Data Source 설정 및 로그 확인
-Blocked Accounts
-My Dashboard
-Kubernetes Role Historyㅤ
-Server Privilege 부여하기
-Audit
-OAuth 2.0을 사용하기 위한 Google Cloud API 연동
-Alerts
-Multi-Factor Authentication 설정하기
-Roles‎‎‎
-Web Event Audit
-Inventory
-Access Role Request 요청하기
-Discovery Management
-Server Role History
-Pod Session Recordingsㅤ
-WAC FAQ
-웹 SQL 에디터로 접속하기
-Access Control Logsㅤ
-관리자 매뉴얼
-Integrations
-ProxyJump Configurations
-Privilege Type
-Kubernetes
-[10.3.0 ~] WAC JIT 권한 획득 Guide
-Kubernetes Access Control
-Splunk 연동
-Exception Management
-Server Account Management
-권한이 있는 서버에 접속하기
-Roles
-Workflow
-[Okta] 프로비저닝 연동 가이드
-SAC General Configurations
-Root CA 인증서 및 Extension 설치하기
-쿠버네티스 정책 설정하기
-Role 부여 및 회수하기
-Syslog 연동
-웹 SFTP 사용하기
-Session Logs
-Azure에서 서버 리소스 동기화
-Proxy Management
-Multi Agent
-Reportsㅤ
-Server Access History
-AWS에서 서버 리소스 동기화
-Web Access History
-Clusters
-General
-QueryPie Manual
-Ledger Table Policy
-Licenses
-Server Agent 설치 및 제거하기
-메뉴 개선 가이드 (9.12.0)
-실행 계획(Explain) 기능 사용하기
-Discovery
-Policies
-9.12.0 ~ 9.12.14
-Company Management
-10.2.0 ~ 10.2.12
-Cloud Providers
-Custom Attribute
-Server Agents for RDP
-Preferences
-Account Lock History
-9.18.0 ~ 9.18.3
-서버 접근 정책 설정하기
-KAC General Configurations
-Policiesㅤㅤㅤ
-New Request > 요청 타입별 템플릿 변수
-수동으로 쿠버네티스 클러스터 등록하기
-Google Cloud에서 DB 리소스 동기화
-IP Registration Request 요청하기
-Web Access Control
-Data Paths
-쿠버네티스 정책 UI 코드 헬퍼 안내
-Access Control
-DB Access Control
-Connection Management
-Release Notes
-QueryPie Docs
-쿠버네티스 정책 Tips 안내
-External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
-Email 연동
-Provisioning
-External API 변경사항 (9.10.0 버전)
-Web Apps
-JIT Access Control Logs
-Servers
-Web App Logs
-Email을 통한 사용자 비밀 번호 초기화
-WAC Quickstart
-Discovery History
-DAC General Configurations
-Authentication
-LDAP 연동하기
-9.20.0 ~ 9.20.2
-Secret Store 연동
-Reverse Tunnel을 통해 DB에 통신하기
-Multi Agent OS별 3rd Party Tool 지원 목록
-Activity Logs
-Web App Configurations에서 WAC 초기 설정하기
-Root CA 인증서 설치 가이드
-Connection Management
-Dry Run 기능으로 클라우드 동기화 설정 확인하기
-Command Audit
-Database Access Control
-Groups
-Web App Access Control
-SSH Key Configurations
-9.11.0 ~ 9.11.5
-Policies
-Command Templates
-Role 부여 및 회수하기‎‎‎
-Runnig Queries
-Detection Profiles
-Connection Management‎‎
-Ledger Management
-Reverse Tunnels
-Restricted Data Access 요청하기 (제한된 데이터 접근 요청)
-패스워드 변경 Job 생성하기
-사용자 매뉴얼
-Audit Log Export
-Sensitive Data
-Workflow Management
-Google BigQuery OAuth 인증 설정
-Rolesㅤㅤㅤ
-Proxy Management
-AWS에서 쿠버네티스 리소스 동기화
-Server Privilege Request 요청하기
-Unmasking Zones
-10.1.0 ~ 10.1.11
-9.9.0 ~ 9.9.8
-SSH Configurations
-Dashboard
-External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
-Monitoring
-Slack DM - Workflow 알림 유형
-Google BigQuery OAuth 인증을 통해 접속하기
-[~10.2.7] WAC Role & Policy Guide
-Profile Editor
-Unmasking Request 요청하기 (마스킹 해제 요청)
-Server Logs
-쿠버네티스 역할 부여 및 회수하기
-SSL Configurations
-Servers
-Ledger Approval Rules
-AWS SSO 연동하기
-Data Access
-Password Provisioning
-Multi Agent 제약사항
-DB 정책 예외 요청하기 (DB Policy Exception Request)
-Channels
-K8s Access Control
-SQL Export Request 요청하기
-Data Policies
-사용자 프로필
-서버를 그룹으로 관리하기
-Query Audit
-MS Azure에서 DB 리소스 동기화
-Allowed Zones
-9.19.0 
-Approval Rules
-Reverse Tunnel을 통해 서버에 통신하기
-DML Snapshots
-SQL Request 요청하기
-웹 어플리케이션 (웹 사이트) 접속하기
-9.16.0 ~ 9.16.4
-Server Access Control
-Server Access Control
-Access Control
-시스템 구성도 개요
-웹 터미널 사용하기
-Data Patterns
-Workflow Logs
-Scan Results
-9.13.0 ~ 9.13.5
-Access Control Logs
-쿠버네티스 정책 Action 설정 참고 가이드
-AWS에서 DB 리소스 동기화
-Database Logs
-쿠버네티스 역할 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-3-0-10-3-4	10.3.0 ~ 10.3.4
+https://docs.querypie.com/ko/querypie-manual/11.0.0/data-masking	Data Masking
+https://docs.querypie.com/ko/querypie-manual/11.0.0/cloud-providers	Cloud Providers
+https://docs.querypie.com/ko/querypie-manual/11.0.0/user-access-history	User Access History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/slack-dm	Slack DM 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/wac	WAC 트러블슈팅 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/mongodb	MongoDB 전용 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-2-8-wac-rbac-guide	[10.2.8~] WAC RBAC Guide
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-10-0-9-10-4	9.10.0 - 9.10.4
+https://docs.querypie.com/ko/querypie-manual/11.0.0/default-privilege	Default Privilege 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-proxy	Server Proxy 사용 활성화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-17-0-9-17-1	9.17.0 ~ 9.17.1
+https://docs.querypie.com/ko/querypie-manual/11.0.0/custom-data-source	Custom Data Source 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-16	결재 부가 기능 (대리 결재, 재상신 등)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/google-saml	Google SAML 연동하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/workflow-configurations	Workflow Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/proxyjump	ProxyJump 생성하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/admin-role-history	Admin Role History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/gcp	GCP에서 서버 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reports-1	Reports
+https://docs.querypie.com/ko/querypie-manual/11.0.0/system	System
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policy-audit-logs	Policy Audit Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/db-access-history	DB Access History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reverse-tunnel	Reverse Tunnel을 통해 클러스터에 통신하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-1	접근 권한 목록 확인하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-14	에이전트 없이 프록시 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/yaml-code	쿠버네티스 정책 YAML Code 문법 안내
+https://docs.querypie.com/ko/querypie-manual/11.0.0/db-connections	DB Connections
+https://docs.querypie.com/ko/querypie-manual/11.0.0/user-agent	User Agent
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-0-0-10-0-2	10.0.0 ~ 10.0.2
+https://docs.querypie.com/ko/querypie-manual/11.0.0/roles-1	Roles
+https://docs.querypie.com/ko/querypie-manual/11.0.0/jobs	Jobs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/installation-and-customer-support	Installation and Customer Support
+https://docs.querypie.com/ko/querypie-manual/11.0.0/general-logs	General Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/provisioning	Provisioning 활성화 하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/discovery-jobs	Discovery Jobs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kubernetes-logs	Kubernetes Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/user-management	User Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/querypie-overview	QueryPie Overview
+https://docs.querypie.com/ko/querypie-manual/11.0.0/general-1	General
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control-3	Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policy-exception	Policy Exception
+https://docs.querypie.com/ko/querypie-manual/11.0.0/database-proxy	Database Proxy 사용 활성화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/request-audit	Request Auditㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/permissions	Permissions 부여 및 회수하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-15-0-9-15-4	9.15.0 ~ 9.15.4
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-account-templates	Server Account Templates
+https://docs.querypie.com/ko/querypie-manual/11.0.0/masking-pattern	Masking Pattern
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-access-request	Server Access Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-agent-seamless-ssh	Multi Agent Seamless SSH 사용 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-agent-linux	Multi Agent Linux 설치 및 사용 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/db-access-request	DB Access Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kerberos-configurations	Kerberos Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/11-0-0	11.0.0
+https://docs.querypie.com/ko/querypie-manual/11.0.0/aws-athena	AWS Athena 전용 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/all-requests	All Requests
+https://docs.querypie.com/ko/querypie-manual/11.0.0/connection-management-3	Connection Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/cloud-providers-1	Cloud Providers
+https://docs.querypie.com/ko/querypie-manual/11.0.0/documentdb	DocumentDB 전용 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/databases	Databases
+https://docs.querypie.com/ko/querypie-manual/11.0.0/api-token	API Token
+https://docs.querypie.com/ko/querypie-manual/11.0.0/account-management	Account Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/okta-1	Okta 연동하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-13	수동으로 개별 서버 등록하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/qp-admin	qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+https://docs.querypie.com/ko/querypie-manual/11.0.0/running-queries	Running Queries
+https://docs.querypie.com/ko/querypie-manual/11.0.0/session-monitoring	Session Monitoring
+https://docs.querypie.com/ko/querypie-manual/11.0.0/user-activity-recordings	User Activity Recordings
+https://docs.querypie.com/ko/querypie-manual/11.0.0/account-lock-history	Account Lock Historyㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/users	Users
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control-2	Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-14-0-9-14-3	9.14.0 ~ 9.14.3
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policies-3	Policies
+https://docs.querypie.com/ko/querypie-manual/11.0.0/security	Security
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-groups	Server Groups
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-apps-1	Web Apps
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-app-role-history	Web App Role History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-8-0-9-8-12	9.8.0 ~ 9.8.12
+https://docs.querypie.com/ko/querypie-manual/11.0.0/new-policy-management	(New) Policy Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-app-configurations	Web App Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/custom-data-source-1	Custom Data Source 설정 및 로그 확인
+https://docs.querypie.com/ko/querypie-manual/11.0.0/blocked-accounts	Blocked Accounts
+https://docs.querypie.com/ko/querypie-manual/11.0.0/my-dashboard	My Dashboard
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kubernetes-role-history	Kubernetes Role Historyㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-privilege	Server Privilege 부여하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/audit	Audit
+https://docs.querypie.com/ko/querypie-manual/11.0.0/oauth-2-0-google-cloud-api	OAuth 2.0을 사용하기 위한 Google Cloud API 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/alerts	Alerts
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-factor-authentication	Multi-Factor Authentication 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/roles	Roles
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-event-audit	Web Event Audit
+https://docs.querypie.com/ko/querypie-manual/11.0.0/inventory	Inventory
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-role-request	Access Role Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/discovery-management	Discovery Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-role-history	Server Role History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/pod-session-recordings	Pod Session Recordingsㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/wac-faq	WAC FAQ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sql	웹 SQL 에디터로 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control-logs	Access Control Logsㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-15	관리자 매뉴얼
+https://docs.querypie.com/ko/querypie-manual/11.0.0/integrations	Integrations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/proxyjump-configurations	ProxyJump Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/privilege-type	Privilege Type
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kubernetes	Kubernetes
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-3-0-wac-jit-guide	[10.3.0 ~] WAC JIT 권한 획득 Guide
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kubernetes-access-control	Kubernetes Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/splunk	Splunk 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/exception-management	Exception Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-account-management	Server Account Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-10	권한이 있는 서버에 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/roles-2	Roles
+https://docs.querypie.com/ko/querypie-manual/11.0.0/workflow	Workflow
+https://docs.querypie.com/ko/querypie-manual/11.0.0/okta	[Okta] 프로비저닝 연동 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sac-general-configurations	SAC General Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/root-ca-extension	Root CA 인증서 및 Extension 설치하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-3	쿠버네티스 정책 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/role	Role 부여 및 회수하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/syslog	Syslog 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sftp	웹 SFTP 사용하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/session-logs	Session Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/azure	Azure에서 서버 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/proxy-management	Proxy Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-agent-1	Multi Agent
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reports	Reportsㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-access-history	Server Access History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/aws	AWS에서 서버 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-access-history	Web Access History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/clusters	Clusters
+https://docs.querypie.com/ko/querypie-manual/11.0.0/general	General
+https://docs.querypie.com/ko/querypie-manual/11.0.0/	QueryPie Manual
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ledger-table-policy	Ledger Table Policy
+https://docs.querypie.com/ko/querypie-manual/11.0.0/licenses	Licenses
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-agent	Server Agent 설치 및 제거하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-12-0	메뉴 개선 가이드 (9.12.0)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/explain	실행 계획(Explain) 기능 사용하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/discovery	Discovery
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policies-2	Policies
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-12-0-9-12-14	9.12.0 ~ 9.12.14
+https://docs.querypie.com/ko/querypie-manual/11.0.0/company-management	Company Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-2-0-10-2-12	10.2.0 ~ 10.2.12
+https://docs.querypie.com/ko/querypie-manual/11.0.0/cloud-providers-2	Cloud Providers
+https://docs.querypie.com/ko/querypie-manual/11.0.0/custom-attribute	Custom Attribute
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-agents-for-rdp	Server Agents for RDP
+https://docs.querypie.com/ko/querypie-manual/11.0.0/preferences	Preferences
+https://docs.querypie.com/ko/querypie-manual/11.0.0/account-lock-history-1	Account Lock History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-18-0-9-18-3	9.18.0 ~ 9.18.3
+https://docs.querypie.com/ko/querypie-manual/11.0.0/--	서버 접근 정책 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/kac-general-configurations	KAC General Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policies-1	Policiesㅤㅤㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/new-request	New Request > 요청 타입별 템플릿 변수
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-4	수동으로 쿠버네티스 클러스터 등록하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/google-cloud-db	Google Cloud에서 DB 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ip-registration-request	IP Registration Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-access-control	Web Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/data-paths	Data Paths
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ui	쿠버네티스 정책 UI 코드 헬퍼 안내
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control-1	Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/db-access-control	DB Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/connection-management-2	Connection Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/release-notes	Release Notes
+https://docs.querypie.com/ko/querypie-manual/11.0.0/querypie-docs	QueryPie Docs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/tips	쿠버네티스 정책 Tips 안내
+https://docs.querypie.com/ko/querypie-manual/11.0.0/external-api-9-9-4-9-9-5	External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/email	Email 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/provisioning-1	Provisioning
+https://docs.querypie.com/ko/querypie-manual/11.0.0/external-api-9-10-0	External API 변경사항 (9.10.0 버전)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-apps	Web Apps
+https://docs.querypie.com/ko/querypie-manual/11.0.0/jit-access-control-logs	JIT Access Control Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/servers	Servers
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-app-logs	Web App Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/email-1	Email을 통한 사용자 비밀 번호 초기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/wac-quickstart	WAC Quickstart
+https://docs.querypie.com/ko/querypie-manual/11.0.0/discovery-history	Discovery History
+https://docs.querypie.com/ko/querypie-manual/11.0.0/dac-general-configurations	DAC General Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/authentication	Authentication
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ldap	LDAP 연동하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-20-0-9-20-2	9.20.0 ~ 9.20.2
+https://docs.querypie.com/ko/querypie-manual/11.0.0/secret-store	Secret Store 연동
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reverse-tunnel-db	Reverse Tunnel을 통해 DB에 통신하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-agent-os-3rd-party-tool	Multi Agent OS별 3rd Party Tool 지원 목록
+https://docs.querypie.com/ko/querypie-manual/11.0.0/activity-logs	Activity Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-app-configurations-wac	Web App Configurations에서 WAC 초기 설정하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/root-ca	Root CA 인증서 설치 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/connection-management-1	Connection Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/dry-run	Dry Run 기능으로 클라우드 동기화 설정 확인하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/command-audit	Command Audit
+https://docs.querypie.com/ko/querypie-manual/11.0.0/database-access-control	Database Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/groups	Groups
+https://docs.querypie.com/ko/querypie-manual/11.0.0/web-app-access-control	Web App Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ssh-key-configurations	SSH Key Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-11-0-9-11-5	9.11.0 ~ 9.11.5
+https://docs.querypie.com/ko/querypie-manual/11.0.0/policies	Policies
+https://docs.querypie.com/ko/querypie-manual/11.0.0/command-templates	Command Templates
+https://docs.querypie.com/ko/querypie-manual/11.0.0/role-1	Role 부여 및 회수하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/runnig-queries	Runnig Queries
+https://docs.querypie.com/ko/querypie-manual/11.0.0/detection-profiles	Detection Profiles
+https://docs.querypie.com/ko/querypie-manual/11.0.0/connection-management	Connection Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ledger-management	Ledger Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reverse-tunnels	Reverse Tunnels
+https://docs.querypie.com/ko/querypie-manual/11.0.0/restricted-data-access	Restricted Data Access 요청하기 (제한된 데이터 접근 요청)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/job	패스워드 변경 Job 생성하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-2	사용자 매뉴얼
+https://docs.querypie.com/ko/querypie-manual/11.0.0/audit-log-export	Audit Log Export
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sensitive-data	Sensitive Data
+https://docs.querypie.com/ko/querypie-manual/11.0.0/workflow-management	Workflow Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/google-bigquery-oauth	Google BigQuery OAuth 인증 설정
+https://docs.querypie.com/ko/querypie-manual/11.0.0/roles-3	Rolesㅤㅤㅤ
+https://docs.querypie.com/ko/querypie-manual/11.0.0/proxy-management-1	Proxy Management
+https://docs.querypie.com/ko/querypie-manual/11.0.0/aws-1	AWS에서 쿠버네티스 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-privilege-request	Server Privilege Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/unmasking-zones	Unmasking Zones
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-1-0-10-1-11	10.1.0 ~ 10.1.11
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-9-0-9-9-8	9.9.0 ~ 9.9.8
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ssh-configurations	SSH Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/dashboard	Dashboard
+https://docs.querypie.com/ko/querypie-manual/11.0.0/external-api-9-8-10-9-9-4	External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/monitoring	Monitoring
+https://docs.querypie.com/ko/querypie-manual/11.0.0/slack-dm-workflow	Slack DM - Workflow 알림 유형
+https://docs.querypie.com/ko/querypie-manual/11.0.0/google-bigquery-oauth-1	Google BigQuery OAuth 인증을 통해 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/10-2-7-wac-role-policy-guide	[~10.2.7] WAC Role & Policy Guide
+https://docs.querypie.com/ko/querypie-manual/11.0.0/profile-editor	Profile Editor
+https://docs.querypie.com/ko/querypie-manual/11.0.0/unmasking-request	Unmasking Request 요청하기 (마스킹 해제 요청)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-logs	Server Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-12	쿠버네티스 역할 부여 및 회수하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ssl-configurations	SSL Configurations
+https://docs.querypie.com/ko/querypie-manual/11.0.0/servers-1	Servers
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ledger-approval-rules	Ledger Approval Rules
+https://docs.querypie.com/ko/querypie-manual/11.0.0/aws-sso	AWS SSO 연동하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/data-access	Data Access
+https://docs.querypie.com/ko/querypie-manual/11.0.0/password-provisioning	Password Provisioning
+https://docs.querypie.com/ko/querypie-manual/11.0.0/multi-agent	Multi Agent 제약사항
+https://docs.querypie.com/ko/querypie-manual/11.0.0/db-db-policy-exception-request	DB 정책 예외 요청하기 (DB Policy Exception Request)
+https://docs.querypie.com/ko/querypie-manual/11.0.0/channels	Channels
+https://docs.querypie.com/ko/querypie-manual/11.0.0/k8s-access-control	K8s Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sql-export-request	SQL Export Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/data-policies	Data Policies
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-6	사용자 프로필
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-7	서버를 그룹으로 관리하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/query-audit	Query Audit
+https://docs.querypie.com/ko/querypie-manual/11.0.0/ms-azure-db	MS Azure에서 DB 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/allowed-zones	Allowed Zones
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-19-0	9.19.0 
+https://docs.querypie.com/ko/querypie-manual/11.0.0/approval-rules	Approval Rules
+https://docs.querypie.com/ko/querypie-manual/11.0.0/reverse-tunnel-1	Reverse Tunnel을 통해 서버에 통신하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/dml-snapshots	DML Snapshots
+https://docs.querypie.com/ko/querypie-manual/11.0.0/sql-request	SQL Request 요청하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-5	웹 어플리케이션 (웹 사이트) 접속하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-16-0-9-16-4	9.16.0 ~ 9.16.4
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-access-control	Server Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/server-access-control-1	Server Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control	Access Control
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-9	시스템 구성도 개요
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-8	웹 터미널 사용하기
+https://docs.querypie.com/ko/querypie-manual/11.0.0/data-patterns	Data Patterns
+https://docs.querypie.com/ko/querypie-manual/11.0.0/workflow-logs	Workflow Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/scan-results	Scan Results
+https://docs.querypie.com/ko/querypie-manual/11.0.0/9-13-0-9-13-5	9.13.0 ~ 9.13.5
+https://docs.querypie.com/ko/querypie-manual/11.0.0/access-control-logs-1	Access Control Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/action	쿠버네티스 정책 Action 설정 참고 가이드
+https://docs.querypie.com/ko/querypie-manual/11.0.0/aws-db	AWS에서 DB 리소스 동기화
+https://docs.querypie.com/ko/querypie-manual/11.0.0/database-logs	Database Logs
+https://docs.querypie.com/ko/querypie-manual/11.0.0/-11	쿠버네티스 역할 설정하기

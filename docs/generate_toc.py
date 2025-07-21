@@ -8,6 +8,7 @@ import os
 from collections import defaultdict
 
 ZWSP = '\u200b'
+LRM = '\u200e'
 
 # Parse sitemap.xml and extract all URLs
 def parse_sitemap(filename):
@@ -49,8 +50,8 @@ def extract_breadcrumbs(soup, current_url):
     # Remove first breadcrumb if it is 'QueryPie Docs for v10'
     if breadcrumbs and breadcrumbs[0].startswith('[QueryPie Docs for v10]'):
         breadcrumbs = breadcrumbs[1:]
-    # Replace any newline in breadcrumb items with space and remove ZWSP
-    breadcrumbs = [b.replace('\n', ' ').replace('\r', ' ').replace(ZWSP, '') for b in breadcrumbs]
+    # Replace any newline in breadcrumb items with space and remove ZWSP, LRM
+    breadcrumbs = [b.replace('\n', ' ').replace('\r', ' ').replace(ZWSP, '').replace(LRM, '') for b in breadcrumbs]
     breadcrumb_str = '/'.join(breadcrumbs)
     return breadcrumb_str
 
@@ -69,8 +70,8 @@ def fetch_title_and_breadcrumbs(url):
             title = ''
         # Remove any newline characters from title
         title = title.replace('\n', ' ').replace('\r', ' ')
-        # Remove ZWSP from title
-        title = title.replace(ZWSP, '')
+        # Remove ZWSP, LRM from title
+        title = title.replace(ZWSP, '').replace(LRM, '')
         # Extract breadcrumbs using the refactored function
         breadcrumb_str = extract_breadcrumbs(soup, url)
         return title, breadcrumb_str, None
@@ -112,8 +113,8 @@ def main():
                 error_types[error_type] += 1
                 title = ''
                 breadcrumb = ''
-            ft.write(title + '\n')
-            fb.write(breadcrumb + '\n')
+            ft.write(url + '\t' + title + '\n')
+            fb.write(url + '\t' + breadcrumb + '\n')
             # Print progress for each URL
             print(f'[{idx}/{total}] {url} - {"ERROR" if error else "OK"}')
 
