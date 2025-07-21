@@ -47,7 +47,15 @@ def main():
         try:
             resp = requests.get(url, timeout=10)
             resp.raise_for_status()
-            soup = BeautifulSoup(resp.text, "html.parser")
+            # Explicitly set the encoding to UTF-8
+            resp.encoding = 'utf-8' # NOTE(JK): This is important to ensure proper encoding
+            # Save the response with proper UTF-8 encoding
+            html_path = os.path.join(base_dir, f"{idx}.html")
+            with open(html_path, "w", encoding="utf-8") as f:
+                f.write(resp.text)
+            print(f"  → Saved main content to {html_path}")
+
+            soup = BeautifulSoup(resp.text, "html.parser", from_encoding="utf-8")
             main_section = soup.find("section", id="main-content")
             if not main_section:
                 print(f"  No <section id=main-content> found in {url}")
@@ -67,11 +75,6 @@ def main():
                     img["src"] = os.path.join(str(idx), filename)
                 else:
                     error_counts['image_download'] += 1
-            # Save the main section as HTML
-            html_path = os.path.join(base_dir, f"{idx}.html")
-            with open(html_path, "w", encoding="utf-8") as f:
-                f.write(str(main_section))
-            print(f"  → Saved main content to {html_path}")
         except Exception as e:
             print(f"  Failed to process: {url} ({e})")
             error_counts['html_download'] += 1

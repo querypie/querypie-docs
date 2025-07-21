@@ -83,3 +83,46 @@ src/content/ko/ 디렉토리로 옮겨옵니다.
     - `[QueryPie Docs](/querypie-docs)/[Admin Manual](/querypie-docs/admin-manual/databases/connection-management/db-connections)`
     - 위의 예시에서, 탐색경로의 두번째 항목에서 문서제목은 `[Admin Manual]`이지만, URI 는 `admin-manual/databases/connection-management/db-connections` 입니다.
     - 탐색경로의 하위 항목의 URI 가 상위 항목에 적용되어 있습니다.
+
+## 수행할 작업 2: src/content/ko/ 디렉토리 아래에 문서 작성
+
+- 입력파일: docs/11.0.0-ko/breadcrumbs.revised.txt
+    - breadcrumbs.revised.txt 의 각 줄은 하나의 문서에 대한 URL, 탐색경로를 가리킵니다. 
+      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
+    - 탐색경로 breadcrumbs 는 하나 이상의 경로가 / 로 구분되며, 하나의 경로는 `[문서 제목](URI)` 형식으로 작성되어 있습니다.
+- 변환절차:
+    - breadcrumbs.revised.txt 파일의 각 줄을 읽어, URL 과 탐색경로를 추출합니다.
+- Python program 의 작동 방식
+    - python program 은 CLI 방식으로 작동합니다. 입력파일로 breadcrumbs.revised.txt 파일,
+      <no>.html 파일이 위치한 경로 (기본값: 11.0.0-ko) 를 argument 로 지정받고,
+      출력파일로 src/content/ko/ 디렉토리 아래에 생성할 markdown 파일의 경로를 argument 로 지정받습니다.
+    - python program 의 파일은 docs/generate_ko_contents.py 파일에 저장하여 주세요.
+    - 실행할 때 option 으로 breadcrumbs.revised.txt, src/content/ko/ 디렉토리의 경로 등을 입력하도록 작성하여 주세요.
+    - `#!/usr/bin/env python3` 로 시작하는 shebang 을 추가하여, Python 3 환경에서 실행되도록 합니다.
+    - python code 안에는 한글이 아닌 영어로 comment, message 등을 작성합니다.
+- 문서의 경로와 파일이름을 결정하기
+    - 탐색경로를 참조하여, 해당 문서의 경로를 결정하고, 그에 맞추어 디렉토리를 `src/content/ko/` 디렉토리 아래에 생성합니다.
+    - 탐색경로의 마지막 항목에 사용된 URI 를 활용하여, 문서의 경로와 파일이름을 결정합니다. URI 는 `/`로 구분되어 있으며,
+      URI 의 마지막 부분이 문서의 파일이름이 됩니다. 이 파일이름에 `.mdx` 확장자를 덧붙여, markdown 파일을 생성합니다.
+    - 탐색경로에서 `[QueryPie Docs](/querypie-docs)` 항목이 `src/content/ko/pam/`에 해당합니다.
+      따라서, /querypie-docs 라는 탐색경로를 갖는 문서는 `src/content/ko/pam/` 디렉토리에 저장되도록 매핑합니다.
+    - 예를 들어, 탐색경로가 `[QueryPie Docs](/querypie-docs)/[Admin Manual](/querypie-docs/admin-manual/databases/connection-management/db-connections)` 이라면,
+      `src/content/ko/pam/admin-manual/databases/connection-management/db-connections.mdx` 파일을 생성합니다.
+- 문서 내용 작성하기
+    - 각 줄의 URL 에 해당하는 문서를 docs/11.0.0-ko/ 디렉토리 아래에서 <no>.html 에서 찾을 수 있습니다.
+      첫번째 줄의 문서는 1.html, 두번째 줄의 문서는 2.html, 세번째 줄의 문서는 3.html 과 같이 순차적으로 번호가 매겨져 있습니다.
+    - 각 html 문서를 읽어들이고, 이 문서의 내용을 Markdown 형식으로 변환합니다. Markdown 변환은 pandoc 을 활용합니다. pandoc 이 설치되어 있다고 가정합니다.
+    - pandoc 을 사용하여 HTML 문서를 Markdown 형식으로 변환할 때, 다음과 같은 옵션을 사용합니다:
+        ```bash
+        pandoc -f html -t markdown -o output.mdx input.html
+        ```
+    - 문서 내에 포함된 이미지 파일을 본문을 저장하는 `.mdx` 파일과 동일한 디렉토리에 저장합니다. 
+- 문서에 포함된 이미지 파일을 저장하기
+    - 이미지 파일의 이름은 `prefix-screenshot-1.png`, `prefix-image-1.png` 와 같은 형식으로 작성합니다.
+    - prefix 부분은 문서의 이름(.mdx 확장자를 제외한 이름)과 동일하게 설정합니다.
+    - (.mdx 확장자를 ) 포함하는 `.mdx` 파일과 prefix 가 동일하게 지정합니다.
+    - 이미지 파일이 screenshot 유형의 경우, `prefix-screenshot-` 접두사를 사용합니다.
+    - 이미지 파일이 diagram, illustration 유형의 경우, `prefix-image-` 접두사를 사용합니다.
+    - 첫번째 이미지 파일은 -1, 두번째 이미지 파일은 -2, 세번째 이미지 파일은 -3 과 같이 순차적으로 번호를 매깁니다.
+- breadcrumbs.revised.txt 파일의 각 항목을 모두 변환한 이후, 작업을 종료합니다.
+    - 하나의 문서를 변환 완료할 때마다, 이용자에게 변환 여부를 간단히 한 줄 안내 문구로 알려줍니다.
