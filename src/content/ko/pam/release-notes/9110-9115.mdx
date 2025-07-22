@@ -1,0 +1,101 @@
+
+
+# 9.11.0 ~ 9.11.5
+
+## **QueryPie 9.11.5 Release**
+
+2023. 5. 9.
+
+**Bug Fix & Enhancement**
+
+* [PostgreSQL] 메모리 사용량에 따라 에이전트 접속 높은 빈도로 오류 발생 수정
+* [Performance] gRPC C Binding 라이브러리 sigsegv 발생 및 프로세스 종료되는 이슈 수정
+
+---
+
+## **QueryPie 9.11.4 Release**
+
+2023. 4. 18.
+
+**Bug Fix & Enhancement**
+
+* [Performance] 롱쿼리 발생되지 않도록 색인 대응 추가
+* [Performance] 쿼리파이 웹 속도 저하 이슈 해결
+
+---
+
+## **QueryPie 9.11.3 Release**
+
+2023. 4. 12.
+
+**Bug Fix & Enhancement**
+
+* [MySQL] mysqldump 덤프 오류 해결
+
+---
+
+## **QueryPie 9.11.2 Release**
+
+2023. 4. 3.
+
+**Bug Fix & Enhancement**
+
+* [Authentication] 동기화 옵션 비활성화일때 ldap사용자 자동 추가 기능 재활성화
+* [SQLServer] 접속 시 [ENGINE] Internal connection fatal error. 발생 오류 해결
+
+---
+
+## **QueryPie 9.11.1 Release**
+
+2023. 3. 22.
+
+**Bug Fix & Enhancement**
+
+* [Agent] 리눅스 환경에서 Agent 설치 문제 해결
+* [Application Log]에 일부 데이터 노출 안되는 이슈 해결
+* [Authentication] okta 및 onelogin saml meta data 표시되지 않는 이슈 해결
+* [Authentication] AWS SAML 로그인 접속 불가 해결
+* [Cloud Provider] GCP, Azure 동기화 목록에서 제외
+* [Connection] multiple database account 강제 비활성화 해결
+* [Query Sharing] 외부 저장소에 파일 저장 시 에러가 발생 해결
+
+---
+
+## **QueryPie 9.11.0 Release**
+
+2023. 2. 24.
+
+**New Features**
+
+* [Agent] MongoDB Multi Host 지원
+* [System Properties] 쿼리파이 설치 정보 확인 페이지 추가
+* QueryPie App Metric 추가
+
+**Bug Fix & Enhancement**
+
+* [Agent] Bitwise NOT 스트림 적용 (Zscaler 충돌 회피)
+* [Agent] Windows환경에서 Agent 실행 중 삭제 시 프로그램 파일이 남아있는 이슈 해결
+* [External API] 커넥션 잠금해제 관련 API 추가
+* [External API] 커넥션 등록 Redis 추가
+* [External API] /api/external/connection-auth-logs 호출시 null pointer 오류 발생
+* [Hbase] Vendor type 중 Hbase 지원의 중단
+* [Job] 서버 재시작시 job 중복 실행 방지 적용
+* [Masking][MySql] WITH 구문과 함께 update 쿼리 실행 시 NotSupportedException 발생 해결
+* [Masking] 마스킹 예외 처리 Allowed Users 에서 사용자가 uuid 로 표시되는 이슈 개선
+* [MongoDB] Connection Timeout 문제 해결
+* [MongoDB] Workflow에서 Export Request 했을 때, Query Audit에 SQL Type이 Unknown으로 기록되는 현상 개선
+* [MongoDB] Alert 타입이 Data Export 일 때, SQL Type이 Unknown으로 기록되는 현상 개선
+* [Mysql] Query Audit Detail 페이지에서 2개 이상의 테이블 표시가 .(점)으로 구분되는 현상 개선
+* [Preferences] 단축키 설정이 새 탭에서는 초기화되는 현상 개선
+* [QSI] select 쿼리 실행시 Query results do not match pre executed results 오류 발생하는 현상 해결
+* [Redis] Agent 접속 후 실행한 쿼리에 대해 Query Audit > First 10 Rows에서 중복 표기 오류 개선
+* [Sensitive Data] 알림 발송시 Sensitive Level 항목이 숫자로 표시되는 현상 개선
+* [SQL Server] pk가 포함되지 않은 select 질의 시, 결과가 조회가 안되는 문제 해결
+* [SQL Server] 쿼리 결과 조회 도중 에러 발생하는 경우, 화면에 관련 내용 안내되도록 개선
+* [SQL Editor] 웹 에디터에 입력된 값이 없을 때 Run SQL이 동작하는 현상 개선
+* [SQL Editor] 데이터 그리드에서 수정 시도시 where 절이 like 로 처리되어 DB에 요청되는 문제 해결
+* [SQL Editor] 쿼리 에디터 내 이스케이프 문자에 스타일 적용
+* [Syslog] KST / UTC Timestamp 내부 설정 기능 추가
+* [Workflow] All Request 에서 Current Page/All Export 시 첫 페이지만 export 되는 오류 개선
+* [Workflow] SQL Request 실행 중 Disconnect 가 되었을 때 Failure 상태로 변경되지 않는 현상 개선
+

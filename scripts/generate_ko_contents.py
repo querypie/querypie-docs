@@ -108,7 +108,7 @@ def main():
             print(f"[SKIP] HTML not found: {html_path}")
             continue
         subprocess.run([
-            'pandoc', '-f', 'html', '-t', 'markdown', '-o', out_path, html_path
+            'markitdown', '--mime-type', 'text/html', '--output', out_path, html_path
         ], check=True)
         # Handle images
         imgs = find_images_in_html(html_path)

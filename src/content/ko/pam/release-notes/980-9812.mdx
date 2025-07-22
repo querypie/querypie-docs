@@ -1,0 +1,161 @@
+
+
+# 9.8.0 ~ 9.8.12
+
+## **QueryPie 9.8.12 Release**
+
+2022. 11. 30.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* [External API] List of Access Approval API 에 id 항목 추가
+
+---
+
+## **QueryPie 9.8.11 Release**
+
+2022. 11. 14.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* [PostgreSQL] Insert 구문 실행 관련 오류 해결
+* [Performance] Hub 서버 CPU 증가 관련 이슈 해결
+
+---
+
+## **QueryPie 9.8.10 Release**
+
+2022. 10. 6.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* [External API] Proxies 관련 리소스 추가
+* [External API] Cloud Sync 후 프록시 옵션에 따라 자동 포트 할당 API 추가
+* [MySQL] mysqlbinlog 명령어 관련 응답 대기 이슈 해결
+* [Performance] logrotate 관련 disk full 현상 개선
+* [Proxy] NLB 경유 Agent 연결시도 시 QPA-03EE 관련 오류 해결
+
+---
+
+## **QueryPie 9.8.9 Release**
+
+2022. 9. 19.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* Redshift 특정 쿼리 실행 시 연결 해제 현상 수정
+* Proxy 환경 내 timeout 현상 개선
+* Agent 접속 시 Unauthorized 에러 수정
+* 정책 설정 내 특정 글자 수 초과 시 UI 개선
+* Like 쿼리 관련 index range scan 이슈 개선 (인덱스를 못찾는 경우 테이블 데이터 수정 기능 비활성화)
+* SycllaDB 내 upoladTimestamp 관련 range 조회 오류 수정
+* 클러스터 동기화 시 Network Zone 동기화해오지 않도록 처리
+* SSH 연결 커넥션 Test Connection 로딩 이슈 수정
+
+---
+
+## **QueryPie 9.8.8 Release**
+
+2022. 8. 11.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* Oracle Procedure 수행 관련 이슈 수정
+* OKTA SDK 버전 수정
+
+---
+
+## **QueryPie 9.8.7 Release**
+
+2022. 8. 9.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* 에이전트 로그인 후 넘어가지 않는 이슈 조치
+
+---
+
+## **QueryPie 9.8.6 Release**
+
+2022. 7. 20.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* LDAP OU 변경시 사용자 커넥션 권한 회수 처리
+* LDAP 연동 옵션에 Email Attribute 항목 추가
+* Proxy 연결에서 멀티 쿼리 실행시 이슈 없도록 임시 조치
+* JSON 타입 데이터 조회 이슈 개선
+* Slack API Proxy 경유 관련 개선
+
+---
+
+## **QueryPie 9.8.5 Release**
+
+2022. 7. 6.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* DocumentDB 관련 SSH 터널링 이슈 개선
+
+---
+
+## **QueryPie 9.8.3-9.8.4 Release**
+
+2022. 6. 22.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* SQL History 관련 기능 개선 (페이징 및 로딩 이슈 해결, 검색 기능 제외)
+* Audit admin 관리자에게 Reports 및 All Requests 메뉴 접근 권한 추가
+* Web Editor 내 실행 쿼리 DML Snapshot 관련 버그 개선
+
+---
+
+## **QueryPie 9.8.2 Release**
+
+2022. 6. 21.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* Export 시도시 Zip 파일로 압축 및 PW 걸기 기능 추가
+* MongoDB Report (Beta) CSV 추출 결과 개선
+* Presto 특정 사이즈 이상의 쿼리 수행 불가, group by/avg 쿼리 관련 오류 개선
+* 장기 미사용 유저 계정 잠금 시 관련 로그 개선
+* MongoDB bson Type 관련 에러 개선
+* DynamoDB 데이터 조회 관련 이슈 개선
+* Authentication Type 변경시 오류 메세지 개선
+* 하단 상태바 버전 태그 표시 개선
+* Impala kerberos 접속 시 Permission 오류 수정
+* 좌측 Table Tree 내 Export 시도 후 취소 시, Object Tree 멈춤 현상 수정
+* MongoDB 관련 파일 export 에러 개선
+* Alert Message Template 내 Connection Label 변수 추가
+
+---
+
+## **QueryPie 9.8.1 Release**
+
+2022. 6. 2.
+
+**&lt;Bug Fix & Enhancement&gt;**
+
+* Agent 사용성 개선 (Connection Guide 및 Data Integration 기능)
+* QueryPie Agent 앱 방식을 트레이에서 윈도우창UI 로 변경
+* Cluster UUID 관련 API 개선
+* MySQL DESC 구문을 Privilege Type 에 기본으로 제공
+* Google OTP 폐쇄망 지원
+* 경보 발송 항목 중 DB Authentication Alert 타입에 Success 이벤트 추가
+* HTTP 웹훅 채널 생성시 Request Body 추가/편집할 수 있도록 개선
+* PostgreSQL / Redshift 커넥션 접속시 database name 항목을 수정 가능하도록 처리
+* Users 목록 필터에 Owner 항목 추가
+* Security 메뉴에 SQL Audit first 10 rows 기능 활성화 옵션 추가
+* Presto에서 order by 결과 표시 개선
+* MongoDB 데이터 표시 형식 개선
+* Request 및 Audit Log 사이 연결링크 추가
+
+  (SQL Audit 메뉴 'Executed From' 컬럼, Role History 메뉴 'Action By' 컬럼)
+
+* 장기미접속 사용자 계정 잠금 처리 오류 수정
+* 동일한 커넥션에 대해 2개 이상의 세션 접속시 발생하는 타임아웃 현상 해결
+
+---
+

@@ -1,0 +1,88 @@
+
+
+# 9.13.0 ~ 9.13.5
+
+## **QueryPie 9.13.5 Release**
+
+2023. 9. 14.
+
+**Bug Fix & Enhancement**
+
+* [Performance] 워크플로우 사용 중 메모리 과점유 문제 해결
+
+## **QueryPie 9.13.4 Release**
+
+2023. 8. 2.
+
+**Bug Fix & Enhancement**
+
+* [Ledger Table Policy] 페이지네이션 문제 해결
+
+## **QueryPie 9.13.3 Release**
+
+2023. 7. 3.
+
+**Bug Fix & Enhancement**
+
+* .NET Runtime 7.0.5 적용으로 Engine SIGABRT 이슈 해결
+
+## **QueryPie 9.13.2 Release**
+
+2023. 6. 23.
+
+**Bug Fix & Enhancement**
+
+* [Vendor] MongoDB Export시 결과 데이터가 1001개 이상일 경우 Export가 되지 않는 문제 해결
+
+## **QueryPie 9.13.1 Release**
+
+2023. 6. 19.
+
+**New Features**
+
+* [Ledger Table] 원장 테이블 관리 및 통제 기능 추가
+
+**Bug Fix & Enhancement**
+
+* [Agent] MariaDB JDBC 드라이버 1.x 2.x 버전을 사용하여 프록시 연결을 하는경우 끊김 문제 해결
+* [Agent] 로그인 시 열기 옵션 자동 활성화되는 현상 수정
+* [Alert] New Request SQL 최대 길이 100자에서 1000자로 늘리기
+* [All Request] 다운로드 시 속도 개선
+* [Cloud Provider] AWS 권한이 1:1 관리되는 벤더일 경우, 필터 선택된 항목만 권한 체크하기
+* [MariaDB] SET 구문 분석에 추가하여 대응
+* [syslog] query audit에 actionType, executedFrom 정보 추가
+
+## **QueryPie 9.13.0 Release**
+
+2023. 5. 15.
+
+**New Features**
+
+* [SBOM] Software Bill of Materials 정보(문서) 제공
+* [Security] 패스워드 복잡도 조건 강화 및 직전 패스워드 재사용 금지 적용
+
+**Deprecated Features**
+
+* [Vendor] 벤더 지원 중단 - EnterpriseDB
+* [Vendor] 벤더 지원 중단- GreenPlum
+* [Vendor] 벤더 지원 중단 - SAP Hana
+* [Vendor] 벤더 지원 중단 - Snowflake
+* [Migration] 로그 마이그레이션 기능 제거
+
+**Bug Fix & Enhancement**
+
+* [Agent] About 창의 Window Controller Button 변경
+* [Connection] Create 과정에서 Network Zone 미선택시 나타나는 경고 문구에 포함된 " 부호 제거
+* [Connection] SSL / SSH 옵션 설정 해제 관련 문제 해결
+* [DB connection] 변경 혹은 삭제 시 알림 추가
+* [Preferences] > 패스워드 변경 시 모달 내 x버튼 미작동 오류 해결
+* [Proxy] 포트 부족한 경우에 정확한 안내 메시지 제공
+* [System Properties] 변경된 환경변수 반영
+* [Vendor][Athena] DB Access History에서 DB Name이 안남는 경우 발생 개선
+* [Vendor][Athena] Use existing database account with Agent 옵션 미노출 처리
+* [Vendor][Athena] 수동으로 Connection 생성시 Workgroup을 필수값으로 지정
+* [Vendor][Hive] SQL Editor에서 Import/Export 버튼 비활성화
+* [Vendor][Hive] Workflow Export Request 비활성화
+* [Vendor][PostgreSQL] DataGrip 특정 테이블 연결 문제 해결
+* [Workflow] SQL Request 시 .sql 파일만 선택 가능하도록 개선
+
