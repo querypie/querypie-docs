@@ -134,4 +134,4 @@ Simply set up the **QueryPie Customer Center** preset on MCP by following the st
 You can also join our community on the [Official QueryPie Discord Channel](https://discord.gg/NsP98BHBm2) to ask questions and share insights with other users.
 -->
 
-Join our community on the [Official QueryPie Discord Channel](https://discord.gg/NsP98BHBm2) to ask questions and share insights with other users.
+Join our community on the [Official QueryPie Discord Channel](https://discord.com/invite/Cu39M55gMk) to ask questions and share insights with other users.
