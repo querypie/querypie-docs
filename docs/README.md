@@ -1,44 +1,71 @@
-# generate_toc.py 사용법 및 Python 환경 설정 안내
+# QueryPie Documentation Files
 
-## 1. Python 가상환경(venv) 생성 및 필수 모듈 설치
+This directory contains files related to the QueryPie documentation project. Below is a description of the files and directories in this location.
 
-```bash
-# docs 디렉토리로 이동
-cd docs
+## Prompt Files
 
-# Python 가상환경 생성 (venv)
-python3 -m venv venv
+### prompt-1-ko.md
+This file contains detailed instructions for creating Korean documentation for QueryPie 11.0.0. It explains:
+- The structure of the documentation
+- How to process breadcrumbs.txt to create breadcrumbs.revised.txt
+- How to convert HTML content to Markdown format
+- How to handle images and file naming conventions
+- The process for generating Korean content in the src/content/ko/ directory
 
-# 가상환경 활성화 (macOS/Linux)
-source venv/bin/activate
+### prompt-2-en.md
+This file contains instructions for creating English documentation for QueryPie 11.0.0. It explains:
+- The structure of the English documentation
+- How to process breadcrumbs.txt to create breadcrumbs.revised.txt for English content
+- The directory structure for English documentation in src/content/en/
 
-# 가상환경 활성화 (Windows)
-venv\Scripts\activate
+## Documentation Directories
 
-# 필수 모듈 설치
-pip install requests beautifulsoup4
-```
+### 11.0.0-en
+This directory contains the English version of the QueryPie 11.0.0 documentation. It includes:
+- HTML files for each documentation page
+- Supporting files for documentation generation
 
-## 2. generate_toc.py 사용법
+### 11.0.0-ko
+This directory contains the Korean version of the QueryPie 11.0.0 documentation. It includes:
+- HTML files for each documentation page
+- Supporting files for documentation generation
 
-`sitemap.xml` 파일이 있는 디렉토리에서 아래와 같이 실행합니다.
+## Text Files in Documentation Directories
 
-```bash
-python generate_toc.py sitemap.xml
-```
+Both 11.0.0-en and 11.0.0-ko directories contain the following important text files:
 
-- `sitemap.xml` 파일을 읽어, 같은 디렉토리에 `urls.txt`, `titles.txt`, `breadcrumbs.txt` 파일을 생성합니다.
-- 각 파일의 내용:
-  - `urls.txt`: sitemap.xml에 포함된 모든 URL 목록 (한 줄에 하나)
-  - `titles.txt`: 각 URL에서 추출한 문서 제목 (한 줄에 하나, 줄바꿈 없음)
-  - `breadcrumbs.txt`: 각 URL에서 추출한 탐색 경로 (breadcrumb, /로 구분)
-- 실행 중 각 URL의 처리 상태가 화면에 출력됩니다.
-- 처리 완료 후, 문서 수와 오류 건수, 오류 유형별 건수가 출력됩니다.
+### sitemap.xml
+- XML file containing the sitemap of the documentation website
+- Used to understand the structure of the documentation and the relationships between pages
 
-## 3. 가상환경 비활성화
+### urls.txt
+- Contains a list of URLs for all documentation pages
+- Each line represents one URL
+- Used to identify all pages that need to be processed
 
-작업이 끝난 후 가상환경을 비활성화하려면 아래 명령어를 입력하세요.
+### titles.txt
+- Contains URLs and titles for all documentation pages
+- Format: `URL\tTitle`
+- Used to extract page titles for documentation generation
 
-```bash
-deactivate
-``` 
+### breadcrumbs.txt
+- Contains URLs and breadcrumb navigation information for all documentation pages
+- Format: `URL\tBreadcrumbs`
+- Breadcrumbs are in the format `[Document Title](URI)` separated by `/`
+- Used to understand the hierarchical structure of the documentation
+
+### breadcrumbs.revised.txt
+- Generated file with revised breadcrumb information
+- Used in the documentation generation process
+- Contains corrected URI paths following the specified format rules
+
+## Image Files
+
+### deploy-action.png
+- Screenshot showing the deployment action process for the documentation
+
+### preview-deploy-url.png
+- Screenshot showing the preview deployment URL for the documentation
+
+## Note
+The `venv` directory is excluded from this documentation as it contains Python virtual environment files not directly related to the documentation content.
