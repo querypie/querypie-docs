@@ -113,6 +113,38 @@ python pages_of_confluence.py --list-only
 python confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
 ```
 
+## remove_hidden_chars.py
+
+`remove_hidden_chars.py`는 파일에서 특정 유니코드 숨김 문자를 찾아 제거하는 스크립트입니다. 이 스크립트는 다음과 같은 문자를 처리합니다:
+
+- 제로 너비 공백(ZWSP, \u200b)
+- 왼쪽에서 오른쪽 마크(LRM, \u200e)
+- 한글 필러(Hangul Filler, \u3164)
+
+이 스크립트는 다음과 같은 기능을 제공합니다:
+- 지정된 확장자를 가진 파일에서 숨김 문자를 검색합니다 (기본값: xhtml, md, mdx).
+- 특정 디렉토리를 검색에서 제외할 수 있습니다 (기본값: node_modules).
+- 드라이 런(dry-run) 모드를 통해 파일을 수정하지 않고 숨김 문자가 포함된 파일만 식별할 수 있습니다.
+- 수정된 파일 수와 제거된 문자 수에 대한 요약을 제공합니다.
+
+실행 방법:
+```bash
+# 기본 설정으로 실행 (현재 디렉토리에서 검색)
+python remove_hidden_chars.py
+
+# 특정 디렉토리에서 검색
+python remove_hidden_chars.py --dir path/to/directory
+
+# 특정 파일 확장자만 검색
+python remove_hidden_chars.py --extensions md,mdx,txt
+
+# 특정 디렉토리 제외
+python remove_hidden_chars.py --exclude-dirs node_modules,build,dist
+
+# 드라이 런 모드 (파일 수정 없이 검색만)
+python remove_hidden_chars.py --dry-run
+```
+
 ## 가상환경 비활성화
 
 작업이 끝난 후 가상환경을 비활성화하려면 아래 명령어를 입력하세요.
