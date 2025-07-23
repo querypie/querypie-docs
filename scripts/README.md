@@ -75,6 +75,44 @@ python generate_ko_contents.py \
   --output_dir src/content/ko
 ```
 
+## pages_of_confluence.py
+
+`pages_of_confluence.py`는 Confluence 공간에서 지정된 문서의 모든 하위 페이지 목록을 생성하는 스크립트입니다. 이 스크립트는 다음과 같은 기능을 수행합니다:
+
+- 각 페이지의 ID, 탐색 경로(breadcrumbs), 제목을 탭으로 구분된 형식으로 출력합니다.
+- 기본적으로 각 페이지 ID에 대한 디렉토리를 생성하고 다음 파일을 저장합니다:
+  - XHTML 형식의 문서 내용 (page.xhtml)
+  - Markdown 형식의 문서 내용 (page.md)
+  - 첨부 파일(있는 경우)
+
+실행 방법:
+```bash
+# 기본 설정으로 실행
+python pages_of_confluence.py
+
+# 특정 페이지 ID와 공간 키 지정
+python pages_of_confluence.py --page-id 123456789 --space-key DOCS
+
+# 인증 정보 지정
+python pages_of_confluence.py --email user@example.com --api-token your-api-token
+
+# 목록만 출력하고 파일 다운로드 없음
+python pages_of_confluence.py --list-only
+```
+
+## confluence_xhtml_to_markdown.py
+
+`confluence_xhtml_to_markdown.py`는 Confluence XHTML 내보내기를 깔끔한 Markdown으로 변환하는 스크립트입니다. 이 스크립트는 다음과 같은 특수 케이스를 처리합니다:
+
+- 코드 블록의 CDATA 섹션
+- colspan 및 rowspan 속성이 있는 테이블
+- 구조화된 매크로 및 기타 Confluence 특정 요소
+
+실행 방법:
+```bash
+python confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+```
+
 ## 가상환경 비활성화
 
 작업이 끝난 후 가상환경을 비활성화하려면 아래 명령어를 입력하세요.
