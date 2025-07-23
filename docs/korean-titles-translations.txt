@@ -1,0 +1,137 @@
+Korean Title | English Translation
+
+# Main Sections
+사용자 매뉴얼 | User Manual
+관리자 매뉴얼 | Administrator Manual
+
+# Release Notes
+메뉴 개선 가이드 (9.12.0) | Menu Improvement Guide (9.12.0)
+External API 변경사항 (9.10.0 버전) | External API Changes (9.10.0 Version)
+External API 변경사항 (9.8.10 버전 > 9.9.4 버전) | External API Changes (9.8.10 Version > 9.9.4 Version)
+External API 변경사항 (9.9.4 버전 > 9.9.5 버전) | External API Changes (9.9.4 Version > 9.9.5 Version)
+
+# QueryPie Overview
+시스템 구성도 개요 | System Architecture Overview
+Database Proxy 사용 활성화 | Enable Database Proxy
+
+# Workflow
+DB Access Request 요청하기 | Requesting DB Access
+SQL Request 요청하기 | Requesting SQL
+실행 계획(Explain) 기능 사용하기 | Using Execution Plan (Explain) Feature
+SQL Export Request 요청하기 | Requesting SQL Export
+Unmasking Request 요청하기 (마스킹 해제 요청) | Requesting Unmasking (Mask Removal Request)
+Restricted Data Access 요청하기 (제한된 데이터 접근 요청) | Requesting Restricted Data Access
+Server Access Request 요청하기 | Requesting Server Access
+Server Privilege Request 요청하기 | Requesting Server Privilege
+Access Role Request 요청하기 | Requesting Access Role
+IP Registration Request 요청하기 | Requesting IP Registration
+결재 부가 기능 (대리 결재, 재상신 등) | Approval Additional Features (Proxy Approval, Resubmission, etc.)
+DB 정책 예외 요청하기 (DB Policy Exception Request) | Requesting DB Policy Exception
+
+# Database Access Control
+웹 SQL 에디터로 접속하기 | Connecting with Web SQL Editor
+Default Privilege 설정하기 | Setting Default Privilege
+에이전트 없이 프록시 접속하기 | Connecting to Proxy without Agent
+Google BigQuery OAuth 인증을 통해 접속하기 | Connecting via Google BigQuery OAuth Authentication
+Custom Data Source 접속하기 | Connecting to Custom Data Source
+
+# Server Access Control
+권한이 있는 서버에 접속하기 | Connecting to Authorized Servers
+웹 터미널 사용하기 | Using Web Terminal
+웹 SFTP 사용하기 | Using Web SFTP
+
+# Kubernetes Access Control
+접근 권한 목록 확인하기 | Checking Access Permission List
+
+# Web Access Control
+Root CA 인증서 및 Extension 설치하기 | Installing Root CA Certificate and Extension
+웹 어플리케이션 (웹 사이트) 접속하기 | Accessing Web Applications (Websites)
+
+# Multi Agent
+Multi Agent Linux 설치 및 사용 가이드 | Multi Agent Linux Installation and Usage Guide
+Multi Agent Seamless SSH 사용 가이드 | Multi Agent Seamless SSH Usage Guide
+Multi Agent OS별 3rd Party Tool 지원 목록 | Multi Agent 3rd Party Tool Support List by OS
+Multi Agent 제약사항 | Multi Agent Limitations
+
+# User Management
+Email을 통한 사용자 비밀 번호 초기화 | User Password Reset via Email
+
+# WAC Quickstart
+Root CA 인증서 설치 가이드 | Root CA Certificate Installation Guide
+
+# User Management
+사용자 프로필 | User Profile
+qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능 | Password Change Enforcement and Account Deletion Feature for qp-admin Default Account
+LDAP 연동하기 | Integrating with LDAP
+Okta 연동하기 | Integrating with Okta
+AWS SSO 연동하기 | Integrating with AWS SSO
+Google SAML 연동하기 | Integrating with Google SAML
+Multi-Factor Authentication 설정하기 | Setting Up Multi-Factor Authentication
+Provisioning 활성화 하기 | Activating Provisioning
+[Okta] 프로비저닝 연동 가이드 | [Okta] Provisioning Integration Guide
+
+# System Integrations
+Syslog 연동 | Integrating with Syslog
+Splunk 연동 | Integrating with Splunk
+Secret Store 연동 | Integrating with Secret Store
+Email 연동 | Integrating with Email
+OAuth 2.0을 사용하기 위한 Google Cloud API 연동 | Integrating Google Cloud API for OAuth 2.0
+Slack DM 연동 | Integrating with Slack DM
+Slack DM - Workflow 알림 유형 | Slack DM - Workflow Notification Types
+
+# Database Connection Management
+AWS에서 DB 리소스 동기화 | Synchronizing DB Resources from AWS
+MS Azure에서 DB 리소스 동기화 | Synchronizing DB Resources from MS Azure
+Google Cloud에서 DB 리소스 동기화 | Synchronizing DB Resources from Google Cloud
+Dry Run 기능으로 클라우드 동기화 설정 확인하기 | Verifying Cloud Synchronization Settings with Dry Run Feature
+MongoDB 전용 가이드 | MongoDB Specific Guide
+DocumentDB 전용 가이드 | DocumentDB Specific Guide
+Google BigQuery OAuth 인증 설정 | Google BigQuery OAuth Authentication Configuration
+AWS Athena 전용 가이드 | AWS Athena Specific Guide
+Custom Data Source 설정 및 로그 확인 | Custom Data Source Configuration and Log Verification
+
+# Company Management
+요청 타입별 템플릿 변수 | Template Variables by Request Type
+
+# Server Connection Management
+AWS에서 서버 리소스 동기화 | Synchronizing Server Resources from AWS
+Azure에서 서버 리소스 동기화 | Synchronizing Server Resources from Azure
+GCP에서 서버 리소스 동기화 | Synchronizing Server Resources from GCP
+수동으로 개별 서버 등록하기 | Manually Registering Individual Servers
+서버를 그룹으로 관리하기 | Managing Servers as Groups
+Server Agent 설치 및 제거하기 | Installing and Removing Server Agent
+ProxyJump 생성하기 | Creating ProxyJump
+
+# Server Account Management
+패스워드 변경 Job 생성하기 | Creating Password Change Job
+
+# Server Access Control
+Permissions 부여 및 회수하기 | Granting and Revoking Permissions
+Role 부여 및 회수하기 | Granting and Revoking Roles
+Server Privilege 부여하기 | Granting Server Privilege
+서버 접근 정책 설정하기 | Setting Server Access Policy
+Server Proxy 사용 활성화 | Enabling Server Proxy
+
+# Kubernetes Connection Management
+AWS에서 쿠버네티스 리소스 동기화 | Synchronizing Kubernetes Resources from AWS
+수동으로 쿠버네티스 클러스터 등록하기 | Manually Registering Kubernetes Clusters
+
+# Kubernetes Access Control
+쿠버네티스 역할 부여 및 회수하기 | Granting and Revoking Kubernetes Roles
+쿠버네티스 역할 설정하기 | Setting Kubernetes Roles
+쿠버네티스 정책 설정하기 | Setting Kubernetes Policies
+쿠버네티스 정책 YAML Code 문법 안내 | Kubernetes Policy YAML Code Syntax Guide
+쿠버네티스 정책 Tips 안내 | Kubernetes Policy Tips Guide
+쿠버네티스 정책 UI 코드 헬퍼 안내 | Kubernetes Policy UI Code Helper Guide
+쿠버네티스 정책 Action 설정 참고 가이드 | Kubernetes Policy Action Configuration Reference Guide
+
+# Web Apps
+Web App Configurations에서 WAC 초기 설정하기 | Initial WAC Setup in Web App Configurations
+WAC 트러블슈팅 가이드 | WAC Troubleshooting Guide
+[10.3.0 ~] WAC JIT 권한 획득 Guide | [10.3.0 ~] WAC JIT Permission Acquisition Guide
+Role 부여 및 회수하기 | Granting and Revoking Roles
+
+# Reverse Tunnels
+Reverse Tunnel을 통해 서버에 통신하기 | Communicating with Servers through Reverse Tunnel
+Reverse Tunnel을 통해 클러스터에 통신하기 | Communicating with Clusters through Reverse Tunnel
+Reverse Tunnel을 통해 DB에 통신하기 | Communicating with DB through Reverse Tunnel
