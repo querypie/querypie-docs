@@ -41,7 +41,7 @@ if ! check_python_package bs4; then
 fi
 
 # Check if the list file path is provided
-if [ $# -lt 1 ]; then
+if [[ $# -lt 1 ]]; then
     echo "Usage: $0 <list_file_path>"
     echo "Example: $0 docs/latest-ko-confluence/list.txt"
     exit 1
@@ -108,7 +108,7 @@ while IFS=$'\t' read -r page_id rest; do
     python3 "$CONVERTER_SCRIPT" "$XHTML_FILE" "$MD_FILE"
     
     # Check if conversion was successful
-    if [ $? -eq 0 ]; then
+    if [[ $? -eq 0 ]]; then
         echo "Successfully converted page_id $page_id"
         CONVERTED_COUNT=$((CONVERTED_COUNT + 1))
     else
