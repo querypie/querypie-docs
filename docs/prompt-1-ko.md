@@ -2,120 +2,117 @@
 
 ## 작업의 개요
 
-이 작업은 QueryPie 11.0.0 한국어 문서를 src/content/ko/ 디렉토리에 작성하는 것입니다. 
+이 작업은 QueryPie Manual 한국어 문서를 src/content/ko/ 디렉토리에 작성하는 것입니다. 
 디렉토리는 QueryPie의 한국어 문서 전용 디렉토리로, 다른 언어의 문서와는 별도로 관리됩니다.
 
-QueryPie 11.0.0 한국어 문서는 https://docs.querypie.com/ko/querypie-manual/11.0.0/ 를 
-출처로 합니다. 이 웹사이트에 있는 내용을 바탕으로, Overview, User Manual, Admin Manual 등 문서를
+QueryPie Manual 한국어 문서는 https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs 를 
+출처로 합니다. 이 Confluence Space 의 내용을 바탕으로, Overview, User Manual, Admin Manual 등 문서를
 src/content/ko/ 디렉토리로 옮겨옵니다.
 
 용어
-- Source Website: https://docs.querypie.com/ko/querypie-manual/11.0.0/ 를 Source Website 로 지칭합니다.
+- Confluence Space: QueryPie Manual 한국어 문서가 위치한 Confluence Space를 의미합니다. 
+  이 Space는 https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs URL을 통해 접근할 수 있습니다.
 - Local Repository: querypie-docs Git Repository를 Local Repository 로 지칭합니다.
 - Target Directory: Local Repository 내에 놓인 src/content/ko/ 디렉토리를 Target Directory 로 지칭합니다.
-- Breadcrumbs: Source Website 에서 특정 문서의 Breadcrumbs 정보를 의미합니다. 한국어로 "탐색 경로"라고 합니다.
+- Breadcrumbs: Confluence 에서 특정 문서의 Breadcrumbs 정보를 의미합니다. 한국어로 "탐색 경로"라고 합니다.
 
-## Source Website 에 대한 상세 정보
-- https://docs.querypie.com/ko/querypie-manual/11.0.0/ URL 을 통해 해당 문서를 가져올 수 있습니다.
-- Local Repository 의 docs/11.0.0-ko/ 디렉토리에 있는 파일들을 참고하여, 
-  Target Directory 에 옮겨올 문서의 구조를 이해합니다.
-- docs/11.0.0-ko/sitemap.xml 은 Source Website 의 Sitemap 파일입니다.
-- docs/11.0.0-ko/urls.txt 는 Source Website 의 전체 문서에 대한 URL 을 담고 있습니다. 
-  urls.txt 는 텍스트 파일이며, 한 줄에 하나의 URL 이 포함되어 있습니다.
-- docs/11.0.0-ko/titles.txt 는 Source Website 의 전체 문서에 대한 url 과 title 을 담고 있습니다. 
-  titles.txt 는 텍스트 파일이며, 한 줄에 url + `\t` + (url 문서의 제목) 으로 구성됩니다.
-- docs/11.0.0-ko/breadcrumbs.txt 는 Source Website 의 전체 문서에 대한 url 과 
-  Breadcrumbs 정보를 담고 있습니다. breadcrumbs.txt 는 텍스트 파일이며, 
-  한 줄에 url + `\t` + (url 문서의 Breadcrumbs) 으로 구성됩니다. Breadcrumbs 정보는 / 를 구분자로 하여,
-  해당 문서를 탐색하기 위한 경로 정보를 포함합니다. 경로 정보는 `[문서 제목](URI)` 형식으로 작성되어 있습니다.
-- urls.txt, titles.txt, breadcrumbs.txt 파일은 각 줄마다 동일한 문서의 속성을 갖고 있습니다.
-  예를 들어, urls.txt 의 첫번째 줄과 titles.txt 의 첫번째 줄, breadcrumbs.txt 의 첫번째 줄은 
-  동일한 문서에 대한 URL, 제목, 탐색경로를 나타냅니다.
-- Source Website 의 문서 구조를 이해하는 데 
-  유용합니다. 이 파일들을 참고하여 Target Directory 에 옮겨올 문서의 구조를 이해합니다.
-
-## Source Website 문서의 계층 구조
-- Source Website 의 문서같은 URL의 패턴은 다음과 같습니다.
-    - /querypie-manual/11.0.0/ : Source Website 의 루트 디렉토리입니다.
-    - /querypie-manual/11.0.0/<page_name> : 개별 문서 페이지입니다.
-- Source Website 의 문서는 논리적으로, 계층적인 구조를 갖고 있습니다.
-    - 각 문서는 페이지 단위로 구성되어 있으며, 페이지는 개별적인 주제를 다루고 있고, 새로운 카테고리가 됩니다.
-    - Source Website 의 루트 디렉토리에 놓인 문서는 "QueryPie Docs" 라는 제목을 갖고 있습니다.
-    - 루트 디렉토리 아래에는 Release Notes, Overview, User Manual, Admin Manual, 4개의 주요 카테고리가 있습니다.
+## Confluence Space 의 문서를 내려받기
+- 이 Space는 https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs URL을 통해 접근할 수 있습니다.
+- scripts/pages_of_confluence.py 파일을 통해, 이 Confluence Space 에서 문서의 목록을 가져올 수 있습니다.
+  pages_of_confluence.py 를 실행한 결과를 docs/latest-ko-confluence/list.txt 파일에 저장합니다.
+- docs/latest-ko-confluence/list.txt 파일은 Confluence Space 에서 가져온 문서의 목록을 담고 있습니다.
+  이 파일은 각 줄마다 하나의 문서에 대한 Page_ID, Breadcrumbs, 제목을 포함하고 있습니다. 각 항목은 tab 문자(`\t`)로 구분되어 있습니다.
+  list.txt 파일의 예시는 다음과 같습니다.
+```
+% head list.txt
+608501837	QueryPie Manual > QueryPie Docs	QueryPie Docs
+544375335	QueryPie Manual > QueryPie Docs > Release Notes	Release Notes
+1064830173	QueryPie Manual > QueryPie Docs > Release Notes > 11.0.0	11.0.0
+954335909	QueryPie Manual > QueryPie Docs > Release Notes > 10.3.0 ~ 10.3.4	10.3.0 ~ 10.3.4
+703463517	QueryPie Manual > QueryPie Docs > Release Notes > 10.2.0 ~ 10.2.12	10.2.0 ~ 10.2.12
+604995641	QueryPie Manual > QueryPie Docs > Release Notes > 10.1.0 ~ 10.1.11	10.1.0 ~ 10.1.11
+544375355	QueryPie Manual > QueryPie Docs > Release Notes > 10.0.0 ~ 10.0.2	10.0.0 ~ 10.0.2
+544375370	QueryPie Manual > QueryPie Docs > Release Notes > 9.20.0 ~ 9.20.2	9.20.0 ~ 9.20.2
+544375385	QueryPie Manual > QueryPie Docs > Release Notes > 9.19.0 	9.19.0 
+544375399	QueryPie Manual > QueryPie Docs > Release Notes > 9.18.0 ~ 9.18.3	9.18.0 ~ 9.18.3
+```
+- scripts/pages_of_confluence.py 는 문서의 Page_ID 를 디렉토리 이름으로 하여, 그 안에 문서의 본문과 첨부파일을 저장합니다.
+  문서의 본문은 `<Page_ID>/page.xhtml` 파일에 저장되며, 첨부파일은 `<Page_ID>/` 디렉토리에 첨부파일의 이름으로 저장됩니다.
+  저장된 page.xhtml, 첨부파일의 구조는 다음과 같습니다.
+```shell
+% find latest-ko-confluence | head -20 
+latest-ko-confluence
+latest-ko-confluence/912425288
+latest-ko-confluence/912425288/host use ..mov
+latest-ko-confluence/912425288/host use.mov
+latest-ko-confluence/912425288/page.xhtml
+latest-ko-confluence/912425288/page.md
+latest-ko-confluence/544375659
+latest-ko-confluence/544375659/page.xhtml
+latest-ko-confluence/544375659/11596736020377
+latest-ko-confluence/544375659/page.md
+latest-ko-confluence/921436219
+latest-ko-confluence/921436219/image-20250411-080409.png
+latest-ko-confluence/921436219/image-20250411-080251.png
+latest-ko-confluence/921436219/page.xhtml
+latest-ko-confluence/921436219/image-20250410-021636.png
+latest-ko-confluence/921436219/image-20250411-080100.png
+latest-ko-confluence/921436219/image-20250515-085639.png
+latest-ko-confluence/921436219/page.md
+latest-ko-confluence/544383110
+latest-ko-confluence/544383110/page.xhtml
+```
+- Confluence Space 의 문서는 논리적으로, 계층적인 구조를 갖고 있습니다.
+  - 각 문서는 페이지 단위로 구성되어 있으며, 페이지는 개별적인 주제를 다루고 있고, 새로운 카테고리가 됩니다.
+  - Confluence Space 의 루트 페이지 문서는 "QueryPie Docs" 라는 제목을 갖고 있습니다.
+  - 루트 디렉토리 아래에는 Release Notes, Overview, User Manual, Admin Manual, 4개의 주요 카테고리가 있습니다.
 
 ## src/content/ko/ 디렉토리의 구조
 - src/content/ko/ 디렉토리는 QueryPie 11.0.0 한국어 문서 전용 디렉토리입니다.
 - 디렉토리 구조는 다음과 같습니다.
-    - src/content/ko/: Source Website 의 /querypie-manual/11.0.0/ 에 대응합니다.
-    - src/content/ko/overview/: Source Website 의 /querypie-manual/11.0.0/overview 에 대응합니다.
-    - src/content/ko/user-manual/: Source Website 의 /querypie-manual/11.0.0/user-manual 에 대응합니다.
+    - src/content/ko/: Confluence Space 의 계층구조 최상위에 대응합니다.
+    - src/content/ko/release-notes.mdx: Confluence Space 의 "Release Notes" 문서에 대응합니다.
+    - src/content/ko/release-notes/: Confluence Space 의 "Release Notes" 하위 문서가 저장됩니다.
+    - src/content/ko/user-manual.mdx: Confluence Space 의 "User Manual" 또는 "사용자 매뉴얼" 에 대응합니다.
+    - src/content/ko/user-manual/: Confluence Space 의 "User Manual" 하위 문서가 저장됩니다.
 
-## 수행할 작업 1: breadcrumbs.revised.txt 파일 작성
-- 입력파일: breadcrumbs.txt, titles.txt, titles.en.txt
-    - breadcrumbs.txt 의 각 줄은 하나의 문서에 대한 URL, 탐색경로 가리킵니다. 
-      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
-    - 탐색경로 breadcrumbs 는 하나 이상의 경로가 / 로 구분되며, 하나의 경로는 `[문서 제목](URI)` 형식으로 작성되어 있습니다.
-    - titles.txt 의 각 줄은 하나의 문서에 대한 URL, 문서의 제목을 가리킵니다.
-      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 제목이 옵니다.
-    - titles.en.txt 의 각 줄은 하나의 문서에 대한 URL, 영어로 번역된 제목을 가리킵니다.
-      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 영어로 번역된 제목이 옵니다.
+## 수행할 작업 1: list.en.txt 파일을 읽고, confluence_xhtml_to_markdown.py 를 실행하는 명령을 생성합니다.
+
+- 입력파일: docs/latest-ko-confluence/list.en.txt
+    - list.en.txt 의 각 줄은 하나의 문서에 대한 Page_ID, 탐색경로, 문서의 제목을 가리킵니다.
+      각 줄의 처음에 Page_ID 가 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
+    - 탐색경로 breadcrumbs 는 하나 이상의 경로가 > 로 구분됩니다.
 - 변환절차:
-    - `[문서 제목](URI)` 형식의 탐색경로에서, '문서 제목'은 한국어 또는 원래의 문구를 그대로 유지하고, 'URI' 부분을 재작성합니다.
-    - URI 는 /path/filename 으로 구성됩니다. titles.en.txt 에서 얻을 수 있는 영어로 번역된 제목을 활용하여 URI 의 filename 부분에 적용합니다.
-    - 영어 번역한 문서 제목에서, a, the 등 정관사는 생략합니다.
-    - 영어 번역한 문서 제목에서, 여러 단어의 구분자는 - 를 사용합니다.
-    - 탐색경로에 사용되는 URI 는 해당 탐색경로 전체를 나타내는 URI 로 작성합니다. 
-      특정 경로의 URI 는 (상위 경로에 사용된 URI)/(해당 페이지의 영어 번역된 제목) 형식으로 작성합니다.
-    - 탐색경로의 마지막 항목을 추가하여 주세요. 마지막 항목을 해당 문서의 제목, URI 로 작성합니다.
-      기존 breadcrumbs.txt 파일의 탐색경로는 상위 경로에 대한 정보만 포함되어 있고, 해당 문서 자체에 대한 정보가 누락되어 있습니다.
-- 출력파일: breadcrumbs.revised.txt
-    - 탐색경로의 논리적인 계층구조에 맞추어, URI 을 재작성하고, 변경된 탐색경로를 breadcrumbs.revised.txt 파일에 작성합니다.
-    - breadcrumbs.revised.txt 파일은 breadcrumbs.txt 파일과 동일한 디렉토리에 저장합니다.
-    - breadcrumbs.revised.txt 파일의 내용은 breadcrumbs.txt 파일의 내용과 동일한 순서로 작성되어야 합니다.
-- python program 의 작동 방식
-    - python program 은 CLI 방식으로 작동합니다. 입력파일로 breadcrumbs.txt, titles.txt, titles.en.txt 파일을 argument 로 지정받고,
-      출력파일로 breadcrumbs.revised.txt 파일의 경로를 argument 로 지정받습니다.
-    - python program 의 파일은 docs/generate_breadcrumbs_revised.py 파일에 저장하여 주세요.
-    - 실행할 때 option 으로 breadcrumbs.txt, titles.en.txt, breadcrumbs.revised.txt 등 입출력 파일의 경로를 입력하도록 작성하여 주세요.
-    - `#!/usr/bin/env python3` 로 시작하는 shebang 을 추가하여, Python 3 환경에서 실행되도록 합니다.
-    - python code 안에는 한글이 아닌 영어로 comment, message 등을 작성합니다.
-- 작업 오류의 예시 #1: 다음과 같은 오류가 발생하지 않도록, 유의하여 주세요.
-    - `[QueryPie Docs](/querypie-docs)/[Admin Manual](/querypie-docs/admin-manual/databases/connection-management/db-connections)`
-    - 위의 예시에서, 탐색경로의 두번째 항목에서 문서제목은 `[Admin Manual]`이지만, URI 는 `admin-manual/databases/connection-management/db-connections` 입니다.
-    - 탐색경로의 하위 항목의 URI 가 상위 항목에 적용되어 있습니다.
-
-## 수행할 작업 2: src/content/ko/ 디렉토리 아래에 문서 작성
-
-- 입력파일: docs/11.0.0-ko/breadcrumbs.revised.txt
-    - breadcrumbs.revised.txt 의 각 줄은 하나의 문서에 대한 URL, 탐색경로를 가리킵니다. 
-      각 줄의 처음에 URL 이 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
-    - 탐색경로 breadcrumbs 는 하나 이상의 경로가 / 로 구분되며, 하나의 경로는 `[문서 제목](URI)` 형식으로 작성되어 있습니다.
-- 변환절차:
-    - breadcrumbs.revised.txt 파일의 각 줄을 읽어, URL 과 탐색경로를 추출합니다.
+    - list.en.txt 파일의 각 줄을 읽어, Page_ID, 탐색경로, 문서 제목을 추출합니다.
+    - list.en.txt 가 놓인 디렉토리에, <Page_ID> 라는 디렉토리가 존재합니다. 
+      <Page_ID>/page.xhtml 파일은 Confluence 의 본문을 표현하는 xhtml 형식 파일입니다.
+    - 각 문서의 탐색경로를 분석하여, 현재 디렉토리 아래에 해당 문서의 경로를 결정합니다.
 - Python program 의 작동 방식
-    - python program 은 CLI 방식으로 작동합니다. 입력파일로 breadcrumbs.revised.txt 파일,
-      <no>.html 파일이 위치한 경로 (기본값: 11.0.0-ko) 를 argument 로 지정받고,
+    - python program 은 CLI 방식으로 작동합니다. 입력파일로 list.en.txt 파일,
+      <Page_ID>/page.md 파일이 위치한 경로 (기본값: docs/latest-ko-confluence/) 를 argument 로 지정받고,
       출력파일로 src/content/ko/ 디렉토리 아래에 생성할 markdown 파일의 경로를 argument 로 지정받습니다.
-    - python program 의 파일은 docs/generate_ko_contents.py 파일에 저장하여 주세요.
-    - 실행할 때 option 으로 breadcrumbs.revised.txt, src/content/ko/ 디렉토리의 경로 등을 입력하도록 작성하여 주세요.
+    - python program 의 파일은 scripts/generate_commands_for_xhtml2markdown.py 파일에 저장하여 주세요.
+    - 실행할 때 option 으로 list.en.txt 디렉토리의 경로를 입력하도록 작성하여 주세요.
     - `#!/usr/bin/env python3` 로 시작하는 shebang 을 추가하여, Python 3 환경에서 실행되도록 합니다.
     - python code 안에는 한글이 아닌 영어로 comment, message 등을 작성합니다.
 - 문서의 경로와 파일이름을 결정하기
-    - 탐색경로를 참조하여, 해당 문서의 경로를 결정하고, 그에 맞추어 디렉토리를 `src/content/ko/` 디렉토리 아래에 생성합니다.
+    - 탐색경로를 참조하여, 해당 문서의 경로를 결정하고, 그에 맞추어 디렉토리를 현재 디렉토리 아래에 생성합니다.
+    - mkdir -p 명령으로 디렉토리를 생성하는 명령을 수행할 수 있게 제공합니다.
     - 탐색경로의 마지막 항목에 사용된 URI 를 활용하여, 문서의 경로와 파일이름을 결정합니다. URI 는 `/`로 구분되어 있으며,
       URI 의 마지막 부분이 문서의 파일이름이 됩니다. 이 파일이름에 `.mdx` 확장자를 덧붙여, markdown 파일을 생성합니다.
-    - 탐색경로에서 `[QueryPie Docs](/querypie-docs)` 항목이 `src/content/ko/pam/`에 해당합니다.
-      따라서, /querypie-docs 라는 탐색경로를 갖는 문서는 `src/content/ko/pam/` 디렉토리에 저장되도록 매핑합니다.
-    - 예를 들어, 탐색경로가 `[QueryPie Docs](/querypie-docs)/[Admin Manual](/querypie-docs/admin-manual/databases/connection-management/db-connections)` 이라면,
-      `src/content/ko/pam/admin-manual/databases/connection-management/db-connections.mdx` 파일을 생성합니다.
+    - `QueryPie Manual` 은 `./querypie-manual.mdx` 파일로 저장합니다.
+    - `QueryPie Manual > QueryPie Docs` 은 `./querypie-manual/querypie-docs.mdx` 파일로 저장합니다.
+    - 예를 들어, 탐색경로가 `QueryPie Manual > QueryPie Docs > Admin Manual > Databases > Connection Management > DB Connections` 이라면,
+      `./querypie-manual/querypie-docs/admin-manual/databases/connection-management/db-connections.mdx` 파일을 생성합니다.
+    - 문서 경로, 문서의 이름에 사용되는 URI 에 a, the 와 같은 관사를 제외합니다.
+- 이 프로그램은 실제 변경사항을 만들지 않고, 변경사항을 출력하는 명령을 생성합니다.
+  - 예를 들어, `mkdir -p ./querypie-manual/querypie-docs/admin-manual/databases/connection-management/db-connections` 와 같은 명령을 출력합니다.
+  - 이 명령은 실제로 디렉토리를 생성하지 않고, 단순히 출력만 합니다.
+
+## 수행할 작업: 작성 중입니다.
+
 - 문서 내용 작성하기
-    - 각 줄의 URL 에 해당하는 문서를 docs/11.0.0-ko/ 디렉토리 아래에서 <no>.html 에서 찾을 수 있습니다.
-      첫번째 줄의 문서는 1.html, 두번째 줄의 문서는 2.html, 세번째 줄의 문서는 3.html 과 같이 순차적으로 번호가 매겨져 있습니다.
-    - 각 html 문서를 읽어들이고, 이 문서의 내용을 Markdown 형식으로 변환합니다. Markdown 변환은 pandoc 을 활용합니다. pandoc 이 설치되어 있다고 가정합니다.
-    - pandoc 을 사용하여 HTML 문서를 Markdown 형식으로 변환할 때, 다음과 같은 옵션을 사용합니다:
-        ```bash
-        pandoc -f html -t markdown -o output.mdx input.html
-        ```
+    - 각 줄의 Page_ID 에 해당하는 문서를 docs/latest-ko-confluence/ 디렉토리 아래에서 <Page_ID>/page.md 에서 찾을 수 있습니다.
     - 문서 내에 포함된 이미지 파일을 본문을 저장하는 `.mdx` 파일과 동일한 디렉토리에 저장합니다. 
 - 문서에 포함된 이미지 파일을 저장하기
     - 이미지 파일의 이름은 `prefix-screenshot-1.png`, `prefix-image-1.png` 와 같은 형식으로 작성합니다.
@@ -124,5 +121,5 @@ src/content/ko/ 디렉토리로 옮겨옵니다.
     - 이미지 파일이 screenshot 유형의 경우, `prefix-screenshot-` 접두사를 사용합니다.
     - 이미지 파일이 diagram, illustration 유형의 경우, `prefix-image-` 접두사를 사용합니다.
     - 첫번째 이미지 파일은 -1, 두번째 이미지 파일은 -2, 세번째 이미지 파일은 -3 과 같이 순차적으로 번호를 매깁니다.
-- breadcrumbs.revised.txt 파일의 각 항목을 모두 변환한 이후, 작업을 종료합니다.
+- list.en.txt 파일의 각 항목을 모두 변환한 이후, 작업을 종료합니다.
     - 하나의 문서를 변환 완료할 때마다, 이용자에게 변환 여부를 간단히 한 줄 안내 문구로 알려줍니다.
