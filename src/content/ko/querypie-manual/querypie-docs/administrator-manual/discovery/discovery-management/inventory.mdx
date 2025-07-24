@@ -3,7 +3,7 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 
 상세 화면에서 민감정보가 존재하는 경로와 태그를 확인할 수 있고 사용자 정의 태그를 부여할 수 있습니다.
 
-Administrator > Discovery > Discovery Management > Inventory
+Administrator &gt; Discovery &gt; Discovery Management &gt; Inventory
 
 ## Inventory의 주요기능
 관리자가 발견된 민감정보에 대해 확인을 완료하면 태그가 확정이 되어 Inventory의 data path에  반영이 됩니다. 여기서 data path란 QueryPie DB 접근제어, 시스템 접근제어, 쿠버네티스 접근제어에서 등록된 커넥션을 기반으로 민감정보가 존재하는 경로를 의미합니다. (10.0.0에서는 민감 정보 탐색이 지원되는 대상이 RDBMS만 가능하기 때문에 inventory에서도 DB 접근제어의 RDBMS 커넥션에 대한 관리만 가능합니다.)
@@ -15,7 +15,7 @@ QueryPie에서 사용하는 태그의 종류
 3. Custom Tag : 사용자가 QueryPie 내에서 자유롭게 부여할 수 있는 태그입니다.
 4. Resource Tag : 각 커넥션에는 클라우드에서 가져온 Provider tag와 사용자가 부여한 Custom tag 두가지가 존재할 수 있습니다. 이를 Resource Tag라고 부릅니다.
 
-< Tag 예시 >
+&lt; Tag 예시 &gt;
 
 ## Inventory 목록
 * Category : QueryPie 서비스별 분류를 표시합니다. 각 접근제어 시스템에 해당하는 Database, System, Kubernetes가 있습니다.

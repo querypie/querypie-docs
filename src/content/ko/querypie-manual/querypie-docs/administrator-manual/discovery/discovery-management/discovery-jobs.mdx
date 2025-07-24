@@ -1,7 +1,7 @@
 ## Overview
 민감정보를 찾고 분류하기 위해서는 먼저 Discovery job을 생성해야 합니다. 이 Job 을 생성, 수정, 삭제와 관련된 관리를 수행합니다. 특정 Job을 수동으로 시작하거나 수행중인 Job을 강제 중지 할 수 있습니다.
 
-Administrator > Discovery > Discovery Management > Discovery Jobs
+Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery Jobs
 
 ## Discovery Job의 구조
 Discovery job은 민감정보를 추출해 내기위한 패턴 정보를 가지고 있는 data pattern과 하나이상의 data pattern의 집합인 detection profile을 포함합니다.각 Data source에 접속해서 스캔을 수행하기 때문에 접근제어 시스템에서 정의된 커넥션 정보가 있어야 합니다.사용자가 수동으로 수행할 수도 있지만 주기적으로 스케줄을 사용하여 수행한다면 스케줄을 등록해야 합니다. 각 DB에 접근하여 민감정보가 있는 컬럼을 조회하므로 각 DB 종류별 쿼리가 이를 수행합니다. 단, 사용자는 이 쿼리를 보거나 변경하거나 삭제할 수 없습니다.

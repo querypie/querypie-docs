@@ -79,6 +79,9 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append(f"###### {self.get_text(node)}")
         elif node.name == 'p':
             text = self.get_text(node)
+            # Encode < and > to prevent conflict with JSX syntax.
+            # Confluence xhtml does not allow JSX syntax in <p/>, so this is safe.
+            text = self.encode_lt_gt(text)
             if text:
                 self.markdown_lines.append(text)
                 self.markdown_lines.append("")  # Add an empty line after paragraphs
@@ -157,7 +160,12 @@ class ConfluenceToMarkdown:
                 text += child.get_text()
         
         return self.trim_nbsp(text)
-    
+
+    def encode_lt_gt(self, text):
+        """Encode < and > as &lt; and &gt;"""
+        text = text.replace('<', '&lt;').replace('>', '&gt;')
+        return text
+
     def trim_nbsp(self, text):
         """Remove NBSP characters at the beginning and end of text."""
         # Replace NBSP characters with regular spaces

@@ -1,0 +1,155 @@
+External API 변경사항은 아래 링크를 참고해주세요.
+
+* External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
+* External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
+
+## QueryPie 9.9.8 Release
+* HBase 벤더 지원 중단
+
+---
+
+## QueryPie 9.9.7 Release
+Enhancement
+
+* [Agent] 에이전트 실행시 zscaler VPN 충돌 이슈 해결
+
+---
+
+## QueryPie 9.9.6 Release
+Enhancement
+
+* CVE (Common Vulnerabilities and Exposure, 공통 취약성 및 노출)  보안 취약점 제거
+
+---
+
+## QueryPie 9.9.5 Release
+Enhancement
+
+* [Access Control] Active 상태 확인 가능한 컬럼 추가
+* [Agent/Proxy] MongoDB Connection 정보 내 Host 구조 개선 (Connection String)
+* [Cloud Provider] AWS Credential 내 Instance Profile > Default Credentials로 명칭 변경
+* [Connections] 좌측 List 패널 사이즈 UI 개선
+* [Policy] Masking rule 생성 시 Pattern preview 추가
+* [Policies] Rule 생성 시 Column Name 길이 표시 개선
+* [Settings] 전체 Menu 리스트 UI 상태 개선
+* [Support] 제품 내 Contact Support 페이지 링크 변경
+* [Syslog] 속성 추가 및 필터링 지원
+* [User Access History] 메뉴 내 로그 Details 페이지 추가
+* [Web Editor] Reload Object UI 추가
+
+&lt;Bug Fix&gt;
+
+* QCP-173 [Access Control] renew한 권한이 하루 지나면 다시 deactivated 되는 이슈 해결
+* QCP-50 [Access Control] 권한 재부여시 발생하는 duplicate key 오류 해결
+* QCP-138 [Agent] 윈도우즈 1709 이하 버전에서 에이전트 실행 오류 해결
+* QCP-285 [Agent] ODBC Client 접속 시 프로세스를 찾을 수 없는 문제 해결
+* QCP-238 [Authentication] SwivelSecure 연동시 사용자 추가가 되지 않는 이슈 해결
+* QCP-240 [Authentication] XFF 파싱 오류로 saml 로그인 실패 이슈 해결
+* QCP-177 [Cloud Provider] EKS IRSA 환경에서 Cross account role 방식의 동기화가 동작하지 않는 이슈 해결
+* QCP-244 [Cloud Provider] EC2 환경에서 Cross account role 방식의 동기화가 동작하지 않는 이슈 해결
+* QCP-126 [MariaDB] timestamp 데이터타입 조회시 NULL로 표시되는 이슈 해결
+* QCP-62 [Policies] 정규식을 통한 데이터 마스킹 규칙 작성 관련 이슈 해결
+* QCP-286 [PostgreSQL] 탭에 선택된 카탈로그 기준으로 조회 안되는 이슈 해결
+* QCP-199 [Dynamodb] 테이블 조회 관련 최대 갯수 제한 관련 이슈 해결
+
+---
+
+## QueryPie 9.9.4 Release
+&lt;Bug Fix&gt;
+
+* [User] 사용자 그룹의 커넥션 권한이 Deactived 상태인 경우에서 발생하는 오류 수정
+
+---
+
+## QueryPie 9.9.3 Release
+&lt;New Features&gt;
+
+* [DB] Redis 커넥션 연결 지원
+* [Proxy] MongoDB Proxy 연결 지원
+
+&lt;Enhancement&gt;
+
+* [Privilege] Redis 접근제어를 위한 Privilege 메뉴에 DB 타입 추가
+* [DB] Impala Kerberos 개별 키탭 지원 (클러스터 구조 대응)
+* [Agent] 파일 다운로드 버전 추가 (Apple Silicon)
+* [Cloud Provider] Access Key 복수 등록 지원
+* [Activity Log] LDAP > Inactive new user by default 옵션 추가
+* [Audit] Query Audit, Running Queries 필터 내 기본 검색 기간 1개월 → 1일로 변경
+* [Alert] DB Connection Attempt 내 옵션 UI 변경 및 Message Template Variable 추가
+
+&lt;Bug Fix&gt;
+
+* [Privilege] 전체 권한있는 사용자의 DISTINCT 쿼리 실행 오류 개선
+* [SQL Editor] 자동완성 갱신을 위해 에디터 내 컨텍스트 메뉴에 ‘Reload Auto Complete’ 기능 추가
+* [Alert] HTTP Channel 응답 결과 NULL 저장 관련 오류 개선
+* [Connection] 삭제된 사용자 User not found 오류 관련 데이터 처리 로직 개선
+* [Policy] 마스킹 적용된 테이블에서 Server sent unknown charsetnr 오류 해결
+* [External API] 업데이트 직후 alert external api 가 정상 동작하지 않는 이슈 해결
+* [MySQL] mysqlbinlog 명령어 사용시 빈로그 추출이 되지 않고 응답 대기가 지속되는 이슈 해결
+* [PostgreSQL] Proxy 접속시 INSERT 관련 오류 수정
+* [Migration] Query Audit 로그의 실행시간/생성시간 차이로 인한 서버 메모리 관련 이슈 해결
+* [Performance] hub 서버의 CPU가 지속적으로 증가하는 이슈 해결
+* [ScyllaDB] Not Supported serialization type 이슈 관련 미지원 데이터 타입 추가
+* [Filter] Users 메뉴의 Status 필터 적용 오류 해결
+* [Bigquery] bigquery 커넥션에 리전 선택 기능 추가(카카오모빌리티)
+
+## QueryPie 9.9.2 Release
+&lt;New Features&gt;
+
+* [Workflow(결재)] 타입 내 Data Export 요청 및 승인 기능 추가
+
+&lt;Enhancements&gt;
+
+* [Authentication] LDAP 동기화 시 사용자 Inactive 옵션 추가 (동기화되어있지 않은 사용자의 경우, 로그인 불가)
+* [Manage Connections] Label (Normal / Ledger) 컬럼 항목 추가
+* [Alerts] DB Connection Attempt 항목 내 Failure Trigger (Action Count, Specified Time Interval) 추가
+* [Alerts] Unusual Login Attempt (IP Access) 타입 추가
+* [Cloud Provider] 동기화 시 Database Type 필터 추가
+* [Users] Description 항목 내 Locked, Locked Manually 상태 구분 및 툴팁 표시 개선
+* [Privilege Type] 중복된 Privilege Name 사용 못하도록 변경
+* [Agent] 업데이트 실패 시, 앱 종료 현상 수정 및 가이드 메세지 개선
+* [MongoDB] 접속 시 Password 미입력 오류 메세지 개선
+* [MySQL] 접속 실패시 에러 메세지 개선
+* [Audit & Log] 메뉴 내 검색 기본 값 Name으로 개선
+
+&lt;Bug Fix&gt;
+
+* [Groups] Group을 마지막으로 업데이트 한 사용자 삭제후, 해당 group을 삭제시 오류 수정
+* [External API] Data Access Policy Rule 삭제 관련 오류 수정
+* [Proxy] 프록시를 통해 mysql workbench 연결시도시 QPA-03EE 오류 수정
+* [SQL Editor] 신규 테이블 추가 후 SQL Editor 자동완성에 반영되지 않는 오류 수정
+* [SQL Editor] Oracle 접속 후 테이블 선택 시 Specified method is not supported 오류 수정
+* [SQL Request] SQL Request 실행 후 상태 로그 업데이트 오류 수정
+* [Agent] Impala 접속 불가 오류 수정
+
+## QueryPie 9.9.1 Release
+&lt;New Features&gt;
+
+* 실행 중 쿼리 확인 가능한 Running Queries 메뉴 신규 추가
+
+&lt;Bug Fix & Enhancement&gt;
+
+* DML Snapshot 기능 세부 스펙 조정
+* Sensitive Data 로그에 조회 건수 표시
+* Setting 메뉴명 일부 조정 (Settings, SSL Configuration, Query Audit, DB Access History)
+* DB Access History > Connected from 컬럼 기록 추가
+* Drawer header / Workflow title 변경 및 글자수 제한
+* Report / Accessible Users 화면에서 Deactivated 표시 안되는 이슈 해결
+* Connection Label (Ledger) 항목 syslog 포함
+* Index Range Scan 관련 인덱스를 못찾는 경우 테이블 데이터 수정 기능 비활성화
+* 클러스터 동기화 기능에서 Security Group 동기화해오지 않도록 처리
+* Network Zone 메뉴 컬럼 조정 (Cloud Provider 항목 제거)
+* DocumentDB AWS 동기화시 TLS 설정도 함께 유지하도록 처리
+* 동기화된 Oracle 커넥션에서 listener type 변경가능하도록 수정
+* 사용자 개별 SQL History 삭제 처리 기준 일자 적용 관련 가이드 툴팁 추가
+* Export 시, 데이터 사이즈가 한 셀의 최대크기를 벗어나는 경우 처리 개선
+* Data Export Type Alert 발송되지 않는 이슈 수정
+* Account Expiration Period 사용자 비활성화 동작 이슈 수정
+* User name 변경 시 admin role 값 'None'으로 변경되는 오류 수정
+* LDAP 동기화 사용자 수정 시 email 필수값 처리 해제
+* LDAP 로그인 시 오류메시지 개선
+* SAML Login Error 시 메세지 개선
+* Authentication > Okta Install Guide 링크 변경
+* System Properties 페이지 추가
+* Reports > 결과 다운로드 시 Export a file with Encryption 옵션 적용
+* Groups 메뉴 검색 필터 항목 조정
