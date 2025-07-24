@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 import argparse
 from bs4 import BeautifulSoup, Tag, NavigableString
+from bs4.element import CData
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -110,10 +111,10 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append("")  # Add empty line after list
         elif node.name == 'table':
             self.process_table(node)
-        elif node.name == 'code' or node.name == 'pre':
+        elif node.name in ['code', 'pre']:
             self.process_code(node)
-        elif node.name == 'structured-macro' and node.get('name') == 'code':
-            self.process_code_macro(node)
+        elif node.name == 'ac:structured-macro':
+            self.handle_structured_macro(node)
         elif node.name == 'div' or node.name == 'span':
             # Process children of div/span elements
             for child in node.children:
@@ -135,6 +136,7 @@ class ConfluenceToMarkdown:
             for child in node.children:
                 self.process_node(child)
         else:
+            logging.warning(f"Unhandled tag: {node.name}, processing children")
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
@@ -330,13 +332,31 @@ class ConfluenceToMarkdown:
         self.markdown_lines.append("")  # Add empty line after code block
         
         self.inside_code_block = False
-    
+
+    def handle_structured_macro(self, macro_node):
+        # Handle structured macros like 'info', 'note', etc.
+        macro_name = macro_node.get('name', '')
+        if macro_name in ['info', 'note', 'tip', 'warning', 'caution']:
+            # TODO(JK): Handle these macros with specific formatting
+            for child in node.children:
+                self.process_node(child)
+        elif macro_name in ['code']:
+            self.process_code_macro(macro_node)
+        elif macro_name in ['toc']:
+            # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
+            logging.debug("Skipping TOC macro")
+        else:
+            # For other macros, we can just log or skip
+            logging.warning(f"Unhandled macro: {macro_name}, processing children")
+            for child in macro_node.children:
+                self.process_node(child)
+
     def process_code_macro(self, macro_node):
         self.inside_code_block = True
         
         # Find language parameter and code content
         language = ""
-        code_content = ""
+        cdata = "TODO(JK): Handle code macro content extraction"
         
         # Look for language parameter
         language_param = macro_node.find('parameter', {'name': 'language'})
@@ -344,16 +364,17 @@ class ConfluenceToMarkdown:
             language = language_param.get_text()
         
         # Look for code content in CDATA section
-        plain_text_body = macro_node.find('plain-text-body')
+        plain_text_body = macro_node.find('ac:plain-text-body')
         if plain_text_body:
             # Extract CDATA content
-            cdata_match = re.search(r'<!\[CDATA\[(.*?)\]\]>', str(plain_text_body), re.DOTALL)
-            if cdata_match:
-                code_content = cdata_match.group(1)
-        
+            for item in plain_text_body.contents:
+                if isinstance(item, CData):
+                    cdata = str(item) # Convert CData object to string
+                    break
+
         # Write the code block
         self.markdown_lines.append(f"```{language}")
-        self.markdown_lines.append(code_content)
+        self.markdown_lines.append(cdata)
         self.markdown_lines.append("```")
         self.markdown_lines.append("")  # Add empty line after code block
         

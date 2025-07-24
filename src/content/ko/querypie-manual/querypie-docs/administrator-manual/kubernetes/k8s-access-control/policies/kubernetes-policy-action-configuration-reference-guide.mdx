@@ -119,6 +119,7 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
 ## 기타 추천 설정 가이드
 예) prod namespace 환경의 리소스에 대한 권한 제한
 
+```
 allow:
   actions:
     - apiGroups: ["*"]
@@ -131,8 +132,11 @@ allow:
       namespace: "prod"
       name: "*"
       verbs: ["get", "list", "watch"]
+```
+
 예) prod namespace에 대한 secret 접근 제한
 
+```
 deny:
   actions:
     - apiGroups: ["*"]
@@ -140,3 +144,4 @@ deny:
       namespace: "prod"
       name: "*"
       verbs: ["*"]
+```

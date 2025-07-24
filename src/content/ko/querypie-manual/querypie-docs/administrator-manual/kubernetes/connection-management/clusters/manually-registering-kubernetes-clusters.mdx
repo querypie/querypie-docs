@@ -1,0 +1,153 @@
+## Overview
+QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다.
+
+## 수동으로 클러스터 등록하기
+개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이 필요합니다.
+
+1. Administrator > Kubernetes > Connection Management > Clusters 메뉴로 이동합니다.
+2. 우측 상단의 + Create Cluster 버튼을 클릭합니다.
+3. Information : 클러스터 수동 등록을 위한 다음의 정보들을 입력합니다Name : 해당 클러스터를 식별할 수 있는 이름을 입력합니다. (필수) 해당 정보는 향후 수정이 불가한 항목입니다. Version : 클러스터의 버전을 기입합니다. (선택) 이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다. API URL : Kubernetes API를 수신할 클러스터의 API URL을 기입합니다. Credential : 해당 클러스터의 Kubernetes API 서버에 액세스 권한을 부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다. 자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.Service Account Token : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정 토큰 값을 기입합니다. Certificate Authority : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.Verify Credential : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다. Verified : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.  Verification Failed : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다. Logging Options  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. Request Audit : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 On입니다. 해당 기능을 Off로 전환 시, 해당 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다. 하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.   Request Audit Types : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를 선택하고 있습니다. Verb 종류: get list watch createupdate patchdeletedeletecollection  Select All : 모든 API 호출에 대해 감사를 진행합니다.  Pod Session Recording : 해당 클러스터 내 Pod exec 명령에 의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는 On입니다. 해당 기능은 이하의 조건을 충족하지 못하면 Off로 전환됩니다: Request Audit이 On으로 활성화되어야 합니다. Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:createget
+  1. Name : 해당 클러스터를 식별할 수 있는 이름을 입력합니다. (필수) 해당 정보는 향후 수정이 불가한 항목입니다.
+    * 해당 정보는 향후 수정이 불가한 항목입니다.
+  2. Version : 클러스터의 버전을 기입합니다. (선택) 이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다.
+    * 이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다.
+  3. API URL : Kubernetes API를 수신할 클러스터의 API URL을 기입합니다.
+  4. 
+  5. Credential : 해당 클러스터의 Kubernetes API 서버에 액세스 권한을 부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다. 자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.Service Account Token : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정 토큰 값을 기입합니다. Certificate Authority : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.Verify Credential : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다. Verified : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.  Verification Failed : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다.
+    1. Service Account Token : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정 토큰 값을 기입합니다.
+    2. Certificate Authority : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.
+    3. Verify Credential : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다. Verified : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.  Verification Failed : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다.
+      * Verified : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.
+      * Verification Failed : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다.
+  6. Logging Options  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. Request Audit : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 On입니다. 해당 기능을 Off로 전환 시, 해당 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다. 하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.   Request Audit Types : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를 선택하고 있습니다. Verb 종류: get list watch createupdate patchdeletedeletecollection  Select All : 모든 API 호출에 대해 감사를 진행합니다.  Pod Session Recording : 해당 클러스터 내 Pod exec 명령에 의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는 On입니다. 해당 기능은 이하의 조건을 충족하지 못하면 Off로 전환됩니다: Request Audit이 On으로 활성화되어야 합니다. Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:createget
+    1. Request Audit : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 On입니다. 해당 기능을 Off로 전환 시, 해당 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다. 하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.
+      1. 해당 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다.
+      2. 하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.
+    2. Request Audit Types : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를 선택하고 있습니다. Verb 종류: get list watch createupdate patchdeletedeletecollection  Select All : 모든 API 호출에 대해 감사를 진행합니다.
+      1. Verb 종류: get list watch createupdate patchdeletedeletecollection
+        1. get
+        2. list
+        3. watch
+        4. create
+        5. update
+        6. patch
+        7. delete
+        8. deletecollection
+      2. Select All : 모든 API 호출에 대해 감사를 진행합니다.
+    3. Pod Session Recording : 해당 클러스터 내 Pod exec 명령에 의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는 On입니다. 해당 기능은 이하의 조건을 충족하지 못하면 Off로 전환됩니다: Request Audit이 On으로 활성화되어야 합니다. Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:createget
+      1. Request Audit이 On으로 활성화되어야 합니다.
+      2. Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:createget
+        1. create
+        2. get
+4. Tags : 필요 시 개별 클러스터에 Tag를 수동으로 입력할 수 있으며 Cloud Provider를 통해 동기화된 클러스터의 경우 동기화해 온 태그도 함께 표시됩니다. (단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가합니다.) + Add Tag 버튼을 클릭하여 새 행을 추가하고 원하는 태그 값을 기입할 수 있으며 태그는 key-value 형태로 기입해야 합니다. Key : 태그를 구분할 수 있는 Key 값을 512자 이내로 입력합니다. Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다. 중복은 대소문자를 구분하여 체크합니다. Value : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.
+  1. Key : 태그를 구분할 수 있는 Key 값을 512자 이내로 입력합니다. Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다. 중복은 대소문자를 구분하여 체크합니다.
+    1. Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다.
+    2. 중복은 대소문자를 구분하여 체크합니다.
+  2. Value : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.
+5. 위 과정을 거친 후 최종 Save 버튼을 클릭하면 클러스터가 성공적으로 등록됩니다.
+
+## 쿠버네티스 클러스터 연동용 스크립트 이용 안내
+* 관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.
+* 관리자는 Administrator > Kubernetes > Connection Management > Clusters > Create Cluster > Credential 안내 박스 내 “download and run this script”의 링크를 클릭하여 스크립트를 다운로드할 수 있습니다.
+
+generate_kubepie_sa.sh 스크립트 컨텐츠
+```
+#!/bin/bash
+
+set -o nounset -o errexit -o pipefail
+
+RESOURCE_PREFIX=querypie
+NAMESPACE=querypie
+
+SERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa
+CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role
+CLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb
+SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret
+
+echo "Creating the Queypie Service Account and grant permission"
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ${CLUSTER_ROLE_NAME}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - users
+  - groups
+  - serviceaccounts
+  verbs:
+  - impersonate
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ${CLUSTER_ROLE_BINDING_NAME}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ${CLUSTER_ROLE_NAME}
+subjects:
+- kind: ServiceAccount
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+EOF
+
+
+SA_SECRET_NAME=$(kubectl get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o "jsonpath={.secrets[0]..name}")
+if [ -z $SA_SECRET_NAME ]
+then
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: ${SERVICE_ACCOUNT_SECRET_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    kubernetes.io/service-account.name: "${SERVICE_ACCOUNT_NAME}"
+EOF
+SA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}
+fi
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    BASE64_DECODE_FLAG="-d"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    BASE64_DECODE_FLAG="-D"
+elif [[ "$OSTYPE" == "linux-musl" ]]; then
+    BASE64_DECODE_FLAG="-d"
+else
+    echo "Unknown OS ${OSTYPE}"
+    exit 1
+fi
+
+SA_TOKEN=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['token']}" | base64 ${BASE64_DECODE_FLAG})
+CA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['ca\.crt']}" | base64 ${BASE64_DECODE_FLAG})
+
+echo "
+Finished successfully.
+Please copy the token and ca cert below and paste them into the credential input box on the querypie clusters page.
+
+>>> Service Account token
+${SA_TOKEN}
+
+--------------
+
+>>> CA Cert
+${CA_CERT}"
+```
+
+* 스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. chmod +x generate_kubepie_sa.sh
+./generate_kubepie_sa.sh
