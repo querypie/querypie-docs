@@ -43,12 +43,10 @@ class ConfluenceToMarkdown:
         
         # Start conversion
         self.process_node(soup)
-        
-        # Join all markdown lines
-        markdown_content = "\n".join(self.markdown_lines)
-        
-        return markdown_content
-    
+
+        # Join all markdown lines and return
+        return "\n".join(self.markdown_lines)
+
     def process_node(self, node):
         if isinstance(node, NavigableString):
             text = node.strip()
