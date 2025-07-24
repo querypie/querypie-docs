@@ -182,7 +182,8 @@ class ConfluenceToMarkdown:
         """
         # Use regex to find all occurrences of text within curly braces
         # that contain 20 or fewer word characters
-        pattern = r'(\{\{?[\w\s\-]{1,20}\}\}?)'
+        # \u2026 is the ellipsis character, `...` which is often used in Confluence
+        pattern = r'(\{\{?[\w\s\-\|\u2026]{1,60}\}\}?)'
         if not re.search(pattern, text):
             return text
 
