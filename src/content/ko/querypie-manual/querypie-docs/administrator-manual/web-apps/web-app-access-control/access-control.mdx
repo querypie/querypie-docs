@@ -1,0 +1,43 @@
+## Overview
+쿼리파이 사용자 및 그룹에 조직에서 관리하는 웹 애플리케이션의 접근 권한에 대한 부여 및 회수 관리를 지원합니다. Access Control은 웹앱 접근 권한을 구현 및 적용하기 위한 최종 단계를 의미합니다.
+
+Administrator > Web Apps > Web App Access Control > Access Control
+
+## Access Control 현황 조회하기
+Administrator > Web Apps > Web App Access Control > Access Control > List Details
+
+1. Administrator > Web Apps > Web App Access Control > Access Control 메뉴로 이동합니다.
+2. 테이블 좌측 상단의 검색란을 통해 사용자/그룹명을 조건으로 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 사용자/그룹 목록을 최신화할 수 있습니다.
+4. 테이블 목록에는 각 사용자/그룹별 이하의 정보를 노출합니다:a. User Type : 사용자/그룹 유형b. Provider : 사용자/그룹의 원장을 표현c. Name : 사용자/그룹명d. Email : 사용자 이메일 주소e. Members : 그룹 내 소속 멤버 목록f. Roles : 부여된 Role의 갯수
+5. Access Control 목록에서 행을 클릭하면 대상 사용자/그룹에 대한 상세 페이지로 이동합니다.Roles디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.Role명으로 검색 가능합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명 Just-in-time Access임시 접근 권한을 획득한 웹앱 목록을 조회할 수 있습니다. 임시 접근 권한은 Workflow의 “Web App Just-In-Time Access Request”를 통해서 신청할 수 있습니다. 웹앱명으로 검색 가능합니다.목록은 각 웹앱마다 이하의 정보를 노출합니다:Web App Name : 웹앱명Expiration Date : 임시 접근 권한 만료일Last Access : 마지막 접근 일시Granted By : 임시 접근 권한을 부여한 관리자명Granted At : 임시 접근 권한이 부여된 일시Web Apps부여된 Role들에 의해 접근 가능한 웹 애플리케이션 목록을 나열합니다.웹앱명, Role명으로 검색 가능합니다.목록은 각 웹앱마다 이하의 정보를 노출합니다:Name : 웹앱명Base URL : 웹앱 URLDescription : 웹앱 설명Tags : 웹앱에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 웹앱 최초 생성일시Updated At : 웹앱 마지막 수정일시
+  1. Roles디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.Role명으로 검색 가능합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명 
+    1. 디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.
+    2. Role명으로 검색 가능합니다.
+    3. 목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명 
+      1. Name : Role명
+      2. Description : Role 상세설명
+      3. Expiration Date : 기한 만료일
+      4. Last Access At : 해당 롤의 마지막 호출 일시
+      5. Granted At : Role이 해당 사용자/그룹에 부여된 일시
+      6. Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명 
+  2. Just-in-time Access임시 접근 권한을 획득한 웹앱 목록을 조회할 수 있습니다. 임시 접근 권한은 Workflow의 “Web App Just-In-Time Access Request”를 통해서 신청할 수 있습니다. 웹앱명으로 검색 가능합니다.목록은 각 웹앱마다 이하의 정보를 노출합니다:Web App Name : 웹앱명Expiration Date : 임시 접근 권한 만료일Last Access : 마지막 접근 일시Granted By : 임시 접근 권한을 부여한 관리자명Granted At : 임시 접근 권한이 부여된 일시
+    1. 임시 접근 권한을 획득한 웹앱 목록을 조회할 수 있습니다. 임시 접근 권한은 Workflow의 “Web App Just-In-Time Access Request”를 통해서 신청할 수 있습니다. 
+    2. 웹앱명으로 검색 가능합니다.
+    3. 목록은 각 웹앱마다 이하의 정보를 노출합니다:Web App Name : 웹앱명Expiration Date : 임시 접근 권한 만료일Last Access : 마지막 접근 일시Granted By : 임시 접근 권한을 부여한 관리자명Granted At : 임시 접근 권한이 부여된 일시
+      1. Web App Name : 웹앱명
+      2. Expiration Date : 임시 접근 권한 만료일
+      3. Last Access : 마지막 접근 일시
+      4. Granted By : 임시 접근 권한을 부여한 관리자명
+      5. Granted At : 임시 접근 권한이 부여된 일시
+  3. Web Apps부여된 Role들에 의해 접근 가능한 웹 애플리케이션 목록을 나열합니다.웹앱명, Role명으로 검색 가능합니다.목록은 각 웹앱마다 이하의 정보를 노출합니다:Name : 웹앱명Base URL : 웹앱 URLDescription : 웹앱 설명Tags : 웹앱에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 웹앱 최초 생성일시Updated At : 웹앱 마지막 수정일시
+    1. 부여된 Role들에 의해 접근 가능한 웹 애플리케이션 목록을 나열합니다.
+    2. 웹앱명, Role명으로 검색 가능합니다.
+    3. 목록은 각 웹앱마다 이하의 정보를 노출합니다:Name : 웹앱명Base URL : 웹앱 URLDescription : 웹앱 설명Tags : 웹앱에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 웹앱 최초 생성일시Updated At : 웹앱 마지막 수정일시
+      1. Name : 웹앱명
+      2. Base URL : 웹앱 URL
+      3. Description : 웹앱 설명
+      4. Tags : 웹앱에 달린 태그 목록
+      5. Role : 관련 Role 목록 나열
+      6. Created At : 웹앱 최초 생성일시
+      7. Updated At : 웹앱 마지막 수정일시

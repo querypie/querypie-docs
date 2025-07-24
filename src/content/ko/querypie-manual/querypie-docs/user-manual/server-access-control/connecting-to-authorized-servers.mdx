@@ -1,0 +1,51 @@
+## Overview
+사용자는 권한이 있는 서버의 목록을 서버, 서버 그룹 별로 또는 Cloud Provider 별로 정렬하여 한눈에 확인할 수 있습니다.  접속할 서버를 선택 후 사용자는 운영체제와 상관없이 웹 브라우저를 통해 제공되는 웹 터미널과 웹 SFTP를 통해 명령어를 실행하고 작업을 수행할 수 있습니다. 
+
+## Role 선택하기
+QueryPie Web > System Access Control > Servers > Select a Role
+
+1. Servers 메뉴로 첫 접속시 표시되는 Role 선택 화면에서 접속을 위해 사용할 Role을 선택합니다.Role에 따라 서버 접근 권한이 다르며, 부여된 Role이 없는 경우 Default Role이 자동으로 선택됩니다. Default Role은 Workflow를 통해 받은 권한이나 관리자가 Role 없이 직접 부여한 접근 권한을 의미합니다.
+  1. Role에 따라 서버 접근 권한이 다르며, 부여된 Role이 없는 경우 Default Role이 자동으로 선택됩니다. 
+  2. Default Role은 Workflow를 통해 받은 권한이나 관리자가 Role 없이 직접 부여한 접근 권한을 의미합니다.
+
+## 서버에 접속하기  
+QueryPie Web > System Access Control > Servers
+
+1. Role 선택 후에는 좌측의 패널에서 현재 사용자가 접근 가능한 서버 목록을 확인할 수 있습니다Sort by Server Group : . 서버 목록은 서버 그룹이 우선 정렬되며 하단에 개별 서버가 정렬됩니다. 만약 정렬 방식을 서버 그룹 없이 서버로만 표시하길 원한다면 좌측 상단에 있는 Sort by Server Group 버튼을 Off 상태로 변경하면 됩니다. Time-limited items only : 시간단위로 권한을 부여받은 서버만 리스트에서 표시합니다.
+  1. Sort by Server Group : . 서버 목록은 서버 그룹이 우선 정렬되며 하단에 개별 서버가 정렬됩니다. 만약 정렬 방식을 서버 그룹 없이 서버로만 표시하길 원한다면 좌측 상단에 있는 Sort by Server Group 버튼을 Off 상태로 변경하면 됩니다. 
+  2. Time-limited items only : 시간단위로 권한을 부여받은 서버만 리스트에서 표시합니다.
+2. 서버 목록에서 서버를 선택하면 우측 페이지에서 서버 및 계정 정보를 확인할 수 있습니다. Server OS : 해당 서버의 OS를 표시됩니다 Host : 해당 서버의 호스트가 표시됩니다. Account : 권한이 있는 계정 목록입니다. 계정 뒤의 괄호 안에는 서버 및 계정이 속한 서버 그룹이 표시됩니다.View Detailed Policy Application : 선택한 계정에 적용된 정책을 표시합니다.Access Time : 접속 가능 시간을 표시합니다.Weekday Access Allowed : 접속 가능 요일을 표시합니다.Restrict Commands (SSH) : SSH 접속시 차단 명령어를 표시합니다.Restrict Functions (SFTP) : SFTP 접속시 차단 기능을 표시합니다.Password(또는 SSH Key) : 선택한 계정의 인증 방식이 Password 일 경우 Password를 입력할 수 있는 필드가 표시됩니다. 만약 자동 로그인 설정이 되어있다면 Password 항목이 표시되지 않으며, 관리자가 설정한 패스워드 또는 SSH Key로 로그인을 하게 됩니다. Status : 선택한 계정의 상태가 표시됩니다. Protocol : SSH, SFTP 또는 RDP 를 선택하여 접속할 수 있습니다. 
+  1. Server OS : 해당 서버의 OS를 표시됩니다 
+  2. Host : 해당 서버의 호스트가 표시됩니다. 
+  3. Account : 권한이 있는 계정 목록입니다. 계정 뒤의 괄호 안에는 서버 및 계정이 속한 서버 그룹이 표시됩니다.
+  4. View Detailed Policy Application : 선택한 계정에 적용된 정책을 표시합니다.Access Time : 접속 가능 시간을 표시합니다.Weekday Access Allowed : 접속 가능 요일을 표시합니다.Restrict Commands (SSH) : SSH 접속시 차단 명령어를 표시합니다.Restrict Functions (SFTP) : SFTP 접속시 차단 기능을 표시합니다.
+    1. Access Time : 접속 가능 시간을 표시합니다.
+    2. Weekday Access Allowed : 접속 가능 요일을 표시합니다.
+    3. Restrict Commands (SSH) : SSH 접속시 차단 명령어를 표시합니다.
+    4. Restrict Functions (SFTP) : SFTP 접속시 차단 기능을 표시합니다.
+  5. Password(또는 SSH Key) : 선택한 계정의 인증 방식이 Password 일 경우 Password를 입력할 수 있는 필드가 표시됩니다. 만약 자동 로그인 설정이 되어있다면 Password 항목이 표시되지 않으며, 관리자가 설정한 패스워드 또는 SSH Key로 로그인을 하게 됩니다. 
+  6. Status : 선택한 계정의 상태가 표시됩니다. 
+  7. Protocol : SSH, SFTP 또는 RDP 를 선택하여 접속할 수 있습니다. 
+3. 하단의 Connect 버튼을 클릭하여 서버에 접속합니다. 
+
+Q. 접속에 실패했다는 에러가 뜹니다. 왜 그런 건가요? 
+
+A. 권한의 상태가 변경되었거나 접속이 허용되지 않은 시간대, 요일에 접속을 시도한 경우 실패할 수 있습니다. 또한 관리자의 서버 정보 설정에 의해 접속이 불가할 수 있으므로 자세한 내용은 관리자에게 문의해 주시기 바랍니다.
+
+Q. RDP를 통한 Windows Server 접속은 어떻게 하나요?
+
+A. QueryPie에서는 QueryPie User Agent를 통해서만 Windows Server에 접속이 가능합니다. 접속 방법은 아래와 같습니다.
+
+QueryPie User Agent 설치 후, 권한을 부여 받은 Windows Server를 우클릭, Open Connection with 메뉴를 클릭 후, PC에 설치된 RDP Client를 클릭하여 접속합니다.
+
+* Windows PC에서는 PC에 기본 설치된 MSTSC 프로그램을 지원합니다.
+* macOS는 RDP 접속을 위해 Windows App을 다운받아야 합니다.
+
+Q. VNC를 통한 macOS 접속은 어떻게 하나요?
+
+A. 사용자의 PC가 macOS일 때, QueryPie User Agent를 통해서 macOS에 접속이 가능합니다. 접속 방법은 아래와 같습니다.
+
+QueryPie User Agent 설치 후, 권한을 부여 받은 macOS를 우클릭, Open Connection with 메뉴를 클릭 후, macOS에 설치된 화면 공유.app을 클릭하여 접속합니다. 접속시, macOS의 계정 정보를 직접 입력해야합니다.
+
+* Windows PC에서는 macOS 접속을 지원하지 않습니다.
+* VNC는 macOS 서버 대상으로만 접속이 가능합니다.

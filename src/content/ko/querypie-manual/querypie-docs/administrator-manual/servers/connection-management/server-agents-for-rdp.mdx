@@ -1,0 +1,53 @@
+## Overview
+QueryPie에서는 Windows Server에 대한 접근제어 및 권한관리를 할 수 있습니다. RDP Protocol을 통해 원격 접속을 하기 위해선 관리하려는 Windows Server에 Server Agent를 설치해야 합니다. 또한 접속중인 RDP의 세션을 실시간으로 확인할 수 있고, Kill Session 기능을 통해 접속중인 RDP 세션을 강제종료 할 수 있습니다.
+
+* Windows Server Agent는 Windows Server 2012 이상의 버전만 지원합니다.
+* RDP 통신을 위해선 QueryPie와 Windows Server간에 아래 Port를 허용해야 합니다.RDP 13389 포트로 연결이 허용되어야 합니다.
+  * RDP 13389 포트로 연결이 허용되어야 합니다.
+* Windows Server에 RDP로 접속할 때 AD 인증을 사용하려면, 계정을 @가 포함된 형식으로 입력하세요.
+* QueryPie를 통한 RDP 세션을 종료해도, 기존에 접속한 세션(또는 콘솔 접속)을 로그오프하지 않습니다.
+
+Administrator > Servers > Connection Management > Server Agents for RDP
+
+## Server Agents 조회하기
+1. Administrator > Servers > Connection Management > Server Agents for RDP 메뉴로 이동합니다.
+2. 테이블 좌측 상단의 검색란을 통해 서버명을 조건으로 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 서버 목록을 최신화할 수 있습니다.
+4. 테이블에서 이하의 컬럼 정보를 제공합니다:Name : 서버 에이전트 명(Windows Server의 Computer name)Host : 서버의 IPLinked Server : 서버 에이전트와 연결된 서버Status : 서버 에이전트의 상태Offline : 서버 에이전트 오프라인 또는 통신 불가능한 상태Online : 서버 에이전트 온라인이며, RDP 접속이 가능한 상태Connection Fail : 서버 에이전트에서 응답은 오지만, 패킷을 전송할 수 없는 상태이며, Connection Fail을 클릭하면 대상 windows server로 연결할 IP 주소를 수동으로 입력 가능Linked At : 서버 에이전트와 최초로 통신된 시간Updated At : 서버 에이전트와 가장 최근 통신한 시간
+  1. Name : 서버 에이전트 명(Windows Server의 Computer name)
+  2. Host : 서버의 IP
+  3. Linked Server : 서버 에이전트와 연결된 서버
+  4. Status : 서버 에이전트의 상태Offline : 서버 에이전트 오프라인 또는 통신 불가능한 상태Online : 서버 에이전트 온라인이며, RDP 접속이 가능한 상태Connection Fail : 서버 에이전트에서 응답은 오지만, 패킷을 전송할 수 없는 상태이며, Connection Fail을 클릭하면 대상 windows server로 연결할 IP 주소를 수동으로 입력 가능
+    1. Offline : 서버 에이전트 오프라인 또는 통신 불가능한 상태
+    2. Online : 서버 에이전트 온라인이며, RDP 접속이 가능한 상태
+    3. Connection Fail : 서버 에이전트에서 응답은 오지만, 패킷을 전송할 수 없는 상태이며, Connection Fail을 클릭하면 대상 windows server로 연결할 IP 주소를 수동으로 입력 가능
+  5. Linked At : 서버 에이전트와 최초로 통신된 시간
+  6. Updated At : 서버 에이전트와 가장 최근 통신한 시간
+
+## Server Agents 생성하기
+1. 서버 에이전트는 windows server에 설치된 서버 에이전트가 QueryPie 서버와 통신하면 Server Agents for RDP 화면에 자동으로 생성됩니다.
+2. QueryPie 서버와 Server Agents가 통신하면 QueryPie의 Servers에 Windows Server를 자동 등록합니다.
+3. Server Agent 설치 및 제거하기 가이드를 통해 Server Agent의 설치 방법을 확인할 수 있습니다.
+
+RDP Server Agent와 연결된 Windows Server의 Port 및 IP는 변경할 수 없습니다.
+
+## Server Agents 와 통신 실패 대응 방법
+Windows Server에 Server Agent 설치 후, Server Agents for RDP 페이지에 Server Agent 정보가 뜨지만, Status가 Connection Failed 로 표시될 수 있습니다.
+
+QueryPie에 등록되는 Server Agent의 Host 정보는 Windows Server가 가지고 있는 IP 정보 중 통신이 가능한 Host로 자동 선택됩니다. 다만, Server Agent에서 QueryPie로 통신이 되지만, QueryPie에서 Server Agent로 통신이 되지 않는 경우, Server Agent는 추가되고, Connection Failed이 Status로 표시됩니다.
+
+이 경우 아래와 같이 해결이 가능합니다.
+
+1. Administrator > Servers > Connection Management > Server Agents for RDP 메뉴로 이동합니다.
+2. Connection Failed 항목을 클릭합니다.
+3. 나타나는 팝업의 Host에 Windows Server에 접속이 가능한 IP를 입력 후 Save버튼을 클릭합니다.
+
+## Server Agents 삭제하기
+1. Administrator > Servers > Connection Management > Server Agents for RDP 메뉴로 이동합니다.
+2. 테이블 내 삭제할 대상 서버 좌측의 체크 박스를 체크합니다.
+3. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
+4. 팝업이 나타나면 DELETE 문구를 기입하고 Delete 버튼을 클릭하여 삭제를 진행합니다.
+
+QueryPie에서는 Windows Server에 설치된 Server Agents를 먼저 삭제한 후, QueryPie의 Server Agents for RDP 메뉴에서 Server Agents 삭제해야 합니다.
+
+Windows Server에 설치된 Server Agents를 먼저 삭제하지 않은 경우, Server Agents가 다시 QueryPie에 등록되고, 새로운 Windows Server를 생성합니다.

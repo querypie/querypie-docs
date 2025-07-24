@@ -1,0 +1,45 @@
+## Overview
+DAC에서 “Datat Access” 정책에 의해 접근이 제한된 테이블 또는 컬럼에 대해 접근이 필요할 경우 Workflow를 통해 관리자에게 일시적 접근 허용을 요청할 수 있습니다. 요청은 Workflow 를 통해 할 수도 있고, 웹 SQL 에디터에서 결과 창을 우클릭하여 표시되는 Send Restricted Data Access Request 메뉴를 통해서도 가능합니다.
+
+## Unmasking Request 요청하기
+### 1. 결재 규칙 선택하기
+* Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
+* 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
+
+### 2. 승인자 지정하기
+* 결재 라인에서 + 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다.
+* 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 Save 버튼을 눌러 결재 라인을 저장합니다.
+* 선택 가능한 승인 조건은 다음과 같습니다.A single Assignee can complete the approval request : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.All Assignees must approve this request : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
+  * A single Assignee can complete the approval request : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.
+  * All Assignees must approve this request : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
+
+### 3. 참조자 지정하기
+* 결재 라인에서 + 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다.관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다.
+  * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다.
+* 이 팝업창에서 결재 승인 조건 및 승인자를 추가합니다.
+* Save 버튼을 눌러 모달을 닫고 참조자 지정을 완료합니다.
+
+### 4. 사후 승인으로 요청 보내기
+* 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다.
+* Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
+
+Q. Urgent Mode 스위치가 보이지 않아요.
+
+A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
+
+### 5. 요청 상세정보 입력하기
+* Title : 요청 제목을 입력합니다.
+* Connection : 접근 허용을 요청할 대상 테이블 또는 컬럼이 속한 커넥션을 선택합니다.
+* Table : 대상 테이블을 선택합니다. 
+* Column : 1개 이상 컬럼을 선택할 수 있으며, 최대 30개까지 선택할 수 있습니다.
+* Data Access Expiration : 요청할 데이터 접근 허용 기간을 설정할 수 있습니다.Time Duration 선택시, 분 단위로 입력 가능하고 최소는 1분, 최대는 44,640분으로 요청할 수 있습니다. Time Duration 의 경우, 승인 시점을 기준으로 동작합니다.Urgent Mode 사용하는 경우, Request 등록 시점을 기준으로 데이터에 접근할 수 있습니다.End Date 선택시, 일자와 시간을 기준으로 선택 가능하며, 최소는 현재 시간, 최대는 30일로 요청할 수 있습니다.
+  1. Time Duration 선택시, 분 단위로 입력 가능하고 최소는 1분, 최대는 44,640분으로 요청할 수 있습니다. Time Duration 의 경우, 승인 시점을 기준으로 동작합니다.Urgent Mode 사용하는 경우, Request 등록 시점을 기준으로 데이터에 접근할 수 있습니다.
+    1. Time Duration 의 경우, 승인 시점을 기준으로 동작합니다.
+    2. Urgent Mode 사용하는 경우, Request 등록 시점을 기준으로 데이터에 접근할 수 있습니다.
+  2. End Date 선택시, 일자와 시간을 기준으로 선택 가능하며, 최소는 현재 시간, 최대는 30일로 요청할 수 있습니다.
+* Comment : 접근 허용 요청 사유를 입력합니다.
+* 페이지 하단의 Submit 버튼을 눌러 요청을 상신합니다.
+
+User > Workflow > Submit Request > Restricted Data Access Request > Request Summary
+
+ 

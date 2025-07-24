@@ -1,0 +1,21 @@
+## Overview
+Workflow를 통해 신청된 Unmasking Request가 승인 처리되면 해당 내용이 Policy Exception Databases> Policies > Policy Exception) 목록에 나열되어 마스킹 정책의 예외 대상을 확인할 수 있습니다.
+
+Policy Exception
+
+## Policy Exception 목록의 항목
+1. Connection : 예외 처리를 적용할 커넥션의 이름을 표시합니다.
+2. Data Path : 예외 처리를 적용할 데이터의 경로를 표시합니다. (ex1. MySQL 기준, Database > Table > Column 으로 표시합니다.  ex2. Oracle 기준, Database > Schema > Table > Column 으로 표시합니다.  ex3. DynamoDB 기준, Table > Column 으로 표시합니다.)
+3. Allowed Users: 정책 예외 처리를 적용받을 사용자 이름을 표시합니다.
+4. Start Time: 정책 예외 처리를 적용할 시작 시간을 표시합니다.Unmasking Request 의 승인 시점을 기준으로 표시합니다.사후승인으로 요청을 등록한 경우, 요청 시점을 기준으로 표시합니다.
+  1. Unmasking Request 의 승인 시점을 기준으로 표시합니다.
+  2. 사후승인으로 요청을 등록한 경우, 요청 시점을 기준으로 표시합니다.
+5. End Time: 정책 예외 처리를 종료 시간을 표시합니다.Unmasking Request 요청에서 설정한 Unmasking Expiration 시간을 기준으로 종료시간을 표시합니다.Unmasking Expiration 타입이 End Date 인 경우에는 해당 시간을 종료시간으로 표시합니다.Unmasking Expiration 타입이 Time Duration 인 경우에는 시작 시간 기준으로 시간 간격을 계산하여 종료시간으로 표시합니다.
+  1. Unmasking Request 요청에서 설정한 Unmasking Expiration 시간을 기준으로 종료시간을 표시합니다.Unmasking Expiration 타입이 End Date 인 경우에는 해당 시간을 종료시간으로 표시합니다.Unmasking Expiration 타입이 Time Duration 인 경우에는 시작 시간 기준으로 시간 간격을 계산하여 종료시간으로 표시합니다.
+    1. Unmasking Expiration 타입이 End Date 인 경우에는 해당 시간을 종료시간으로 표시합니다.
+    2. Unmasking Expiration 타입이 Time Duration 인 경우에는 시작 시간 기준으로 시간 간격을 계산하여 종료시간으로 표시합니다.
+6. Status: 정책 예외 처리 여부가 활성화되어 있는지 여부를 Active, Inactive, Expired 로 표시합니다.Active: 마스킹 해제 요청에 의해 정책 예외 처리가 적용되어 있으며, 마스킹이 해제되어 표시됩니다. End Time 전까지 Inactive 로 변경할 수 있습니다.Inactive: 마스킹 해제 요청에 의해 정책 예외 처리가 비활성화된 상태이며, 마스킹이 적용되어 표시됩니다. End Time 전까지 Active 로 변경할 수 있습니다.Expired: 마스킹 해제 요청의 End Time 이 지난 경우 Expired 로 표시하며, Active 또는 Inactive 로 변경할 수 없습니다.
+  1. Active: 마스킹 해제 요청에 의해 정책 예외 처리가 적용되어 있으며, 마스킹이 해제되어 표시됩니다. End Time 전까지 Inactive 로 변경할 수 있습니다.
+  2. Inactive: 마스킹 해제 요청에 의해 정책 예외 처리가 비활성화된 상태이며, 마스킹이 적용되어 표시됩니다. End Time 전까지 Active 로 변경할 수 있습니다.
+  3. Expired: 마스킹 해제 요청의 End Time 이 지난 경우 Expired 로 표시하며, Active 또는 Inactive 로 변경할 수 없습니다.
+7. Excepted By: 해당 마스킹 해제가 요청된 Unmasking Request 을 링크로 표시하며, 클릭시 All Request 의 해당 Request 상세 화면으로 리다이렉션합니다.

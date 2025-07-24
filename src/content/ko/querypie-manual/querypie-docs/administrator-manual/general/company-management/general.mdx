@@ -1,0 +1,164 @@
+## Overview
+General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다. 
+
+Administrator > General > Company Management > General
+
+1
+2
+false
+disc
+Overview
+list
+true
+## 기본 설정
+* Company Name : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
+* Web Base URL : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
+* Timezone : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
+* Date Format : 날짜 표기 방식을 지정합니다.
+* Default Display Language : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) 
+* Audit Log Retention Period : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
+* Go to System Properties : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. 
+
+## System Properties
+System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할 수 있습니다.
+
+Administrator > General > Company Management > General > System Properties
+
+## 쿼리 공유 설정
+Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송하여 다른 사용자들과 공유하는 기능입니다.
+
+기본적으로 쿼리 공유 설정은 꺼져 있으며, Query Sharing Setting 버튼을 클릭하면 설정 모달이 팝업됩니다. Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩니다.
+
+Query Sharing 모달 - OAuth
+
+Query Sharing 모달 - SSH
+
+* Git Repository URL : 쿼리를 전송할 Git Repository URL
+* Git Branch : 쿼리 파일을 전송할 Repository 내 브랜치 이름
+* Authentication Type : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)OAuth 선택 시, 다음의 내용을 입력합니다.User Name : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)Access Token : Git 서비스에서 제공하는 Access TokenSSH 선택 시, 다음의 내용을 입력합니다.Public Key : Git 서버에 저장된 SSH Public KeyPrivate Key : SSH Public Key와 한 쌍을 이루는 Private KeyPassphrase : Private Key에 Passphrase 설정된 경우 입력
+  * OAuth 선택 시, 다음의 내용을 입력합니다.User Name : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)Access Token : Git 서비스에서 제공하는 Access Token
+    * User Name : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
+    * Access Token : Git 서비스에서 제공하는 Access Token
+  * SSH 선택 시, 다음의 내용을 입력합니다.Public Key : Git 서버에 저장된 SSH Public KeyPrivate Key : SSH Public Key와 한 쌍을 이루는 Private KeyPassphrase : Private Key에 Passphrase 설정된 경우 입력
+    * Public Key : Git 서버에 저장된 SSH Public Key
+    * Private Key : SSH Public Key와 한 쌍을 이루는 Private Key
+    * Passphrase : Private Key에 Passphrase 설정된 경우 입력
+
+입력이 완료되면 Test 버튼을 클릭하여 정상적으로 인증되는지 확인 후 OK 버튼을 입력하여 저장합니다.
+
+GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고해주세요.
+
+* Access Token 발급 : 개인용 액세스 토큰 관리
+* SSH 연결 : SSH를 통한 GitHub 연결
+
+Administrator > General > Company Management > General
+
+Query Sharing 설정이 완료되면 Query Sharing이 On으로 표시됩니다.
+
+SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
+
+* Save 시 연동한 Repository에 쿼리 파일이 저장됩니다.
+* Queries 패널 > QueryPie Git Sharing 폴더에서 Repository에 저장된 쿼리 파일을 불러올 수 있습니다.
+
+자세한 설명은 웹 SQL 에디터로 접속하기를 참고해주세요.
+
+## Workflow Configuration
+Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
+
+## 참조자 지정 활성화
+Activate Review Step to collaborate with others 토글로 활성화합니다.
+
+* Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.
+* 토글을 켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.
+* 토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
+
+## 사후 승인 허용
+Allow users to submit requests in Urgent mode 토글로 활성화합니다.
+
+* Workflow 요청을 상신할 때 사후 승인 모드(Urgent Mode)를 허용할지 결정합니다.
+* 토글을 켜면 다음의 영역에서 사후 승인 관련 토글이 표시됩니다.Approval Rules : 결재 규칙 생성 및 수정Submit Request : 요청 생성 화면의 결재 규칙 지정 영역
+  * Approval Rules : 결재 규칙 생성 및 수정
+  * Submit Request : 요청 생성 화면의 결재 규칙 지정 영역
+* 토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아 있으며, 실행 가능합니다.
+
+## Attribute 기반 승인자 지정 기능
+Use User Attribute-Based Approval 토글을 활성화합니다.
+
+Admin > General > Company Management > General > Workflow Configurations
+
+이 옵션을 통해 워크플로우 요청 상신 시, 사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할지 여부를 결정합니다. 이를 통해 특정 조건에 맞는 담당자에게 승인 요청이 자동으로 할당되도록 설정할 수 있습니다. 
+
+* 중요: 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.Admin > General > Users > Detail page > Profile 탭Attribute 기반 승인자 지정은 1명만 등록할 수 있습니다 (하나의 Attribute에 한 명의 승인자 ID만 지정 가능).
+  * 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.Admin > General > Users > Detail page > Profile 탭
+  * Attribute 기반 승인자 지정은 1명만 등록할 수 있습니다 (하나의 Attribute에 한 명의 승인자 ID만 지정 가능).
+* 토글을 활성화한 경우승인자 자동 지정의 기준이 될 DataType이 identifier인 Attribute를 선택하는 드롭다운 목록이 나타납니다. 관리자는 이 목록에서 승인자 지정에 사용할 Attribute (예: teamLeader)를 선택해야 합니다.선택된 Attribute 삭제 제한: 위 설정에서 특정 Attribute가 승인자 자동 지정 기준으로 선택되면, 해당 Attribute는 Administrator > General > Profile Editor에서 삭제할 수 없도록 시스템에 의해 설정됩니다 (예: 삭제 체크박스 비활성화).Administrator > General > Workflow Management > Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)' 옵션이 표시되며 선택 가능해집니다.이 옵션을 선택하면, 바로 아래에 Workflow Configurations에서 설정한 Attribute (예: teamLeader)가 표시되어, 해당 Attribute 값을 기준으로 승인자가 동적으로 결정됨을 나타냅니다.자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.User > Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule이 표시됩니다.
+  * 승인자 자동 지정의 기준이 될 DataType이 identifier인 Attribute를 선택하는 드롭다운 목록이 나타납니다. 관리자는 이 목록에서 승인자 지정에 사용할 Attribute (예: teamLeader)를 선택해야 합니다.선택된 Attribute 삭제 제한: 위 설정에서 특정 Attribute가 승인자 자동 지정 기준으로 선택되면, 해당 Attribute는 Administrator > General > Profile Editor에서 삭제할 수 없도록 시스템에 의해 설정됩니다 (예: 삭제 체크박스 비활성화).
+    * 선택된 Attribute 삭제 제한: 위 설정에서 특정 Attribute가 승인자 자동 지정 기준으로 선택되면, 해당 Attribute는 Administrator > General > Profile Editor에서 삭제할 수 없도록 시스템에 의해 설정됩니다 (예: 삭제 체크박스 비활성화).
+  * Administrator > General > Workflow Management > Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)' 옵션이 표시되며 선택 가능해집니다.이 옵션을 선택하면, 바로 아래에 Workflow Configurations에서 설정한 Attribute (예: teamLeader)가 표시되어, 해당 Attribute 값을 기준으로 승인자가 동적으로 결정됨을 나타냅니다.자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
+    * 이 옵션을 선택하면, 바로 아래에 Workflow Configurations에서 설정한 Attribute (예: teamLeader)가 표시되어, 해당 Attribute 값을 기준으로 승인자가 동적으로 결정됨을 나타냅니다.
+    * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
+  * User > Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule이 표시됩니다.
+* 토글을 비활성화한 경우Administrator > General > Workflow Configurations 페이지 내에서 Attribute 선택 드롭다운 목록이 비활성화됩니다.Administrator > General > Workflow Management > Approval Rules 페이지에서 승인 규칙 생성 또는 수정 시 'Assignee for Approval' 항목의 'Allow Assignee selection (Attribute-Based)' 옵션이 더 이상 표시되지 않거나 선택할 수 없게 됩니다.기존에 'Allow Assignee selection (Attribute-Based)' 옵션을 사용하여 생성된 승인 규칙은, 사용자가 새로운 워크플로우를 상신할 때 승인 규칙 선택 목록에서 제외됩니다.주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지 않습니다.관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.User > Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다. 
+  * Administrator > General > Workflow Configurations 페이지 내에서 Attribute 선택 드롭다운 목록이 비활성화됩니다.
+  * Administrator > General > Workflow Management > Approval Rules 페이지에서 승인 규칙 생성 또는 수정 시 'Assignee for Approval' 항목의 'Allow Assignee selection (Attribute-Based)' 옵션이 더 이상 표시되지 않거나 선택할 수 없게 됩니다.
+  * 기존에 'Allow Assignee selection (Attribute-Based)' 옵션을 사용하여 생성된 승인 규칙은, 사용자가 새로운 워크플로우를 상신할 때 승인 규칙 선택 목록에서 제외됩니다.주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지 않습니다.관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.
+    * 주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지 않습니다.
+    * 관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.
+  * User > Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다. 
+* Attribute 값 부재 시 알림만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.에러 메시지 예시: 
+  * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.에러 메시지 예시: 
+    * 에러 메시지 예시: 
+* Attribute 값은 있지만 해당 사용자가 비활성화된 경우만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.에러 메세지 예시:
+  * 만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.에러 메세지 예시:
+    * 에러 메세지 예시:
+
+## Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow Menu)
+Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
+
+특정 사용자 속성(User Attribute)을 기준으로 사용자 대시보드에서 Workflow 메뉴를 보이지 않도록 설정하는 기능입니다.
+
+* 토글을 활성화하면 User Attribute의 Key와 Value를 한 쌍으로 선택하고 입력할 수 있습니다.
+* 여기에 설정된 Key:Value 조건과 일치하는 사용자는 사용자 대시보드에 Workflow 메뉴가 표시되지 않습니다.
+* 예시: User Attribute Key로 '부서코드'를 선택하고, Value로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 Workflow 메뉴가 보이지 않습니다.
+
+## SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
+토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
+
+이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
+
+* Query chunk size : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. 
+  * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. 
+* Query throttle interval : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
+
+## Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
+Redirect to custom page for SQL Requests 토글을 활성화합니다.
+
+이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로 인해 워크플로 승인 요청이 발생할 경우, Send Request 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.
+
+* 토글을 활성화한 경우Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.User Agent 사용자가 Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을 보낼 경우, Send Request 클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.
+  * Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.
+  * User Agent 사용자가 Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을 보낼 경우, Send Request 클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.
+* 토글을 비활성화한 경우Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 표시되지 않습니다.User Agent 사용자가 Ledger 테이블에 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, Send Request 버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다
+  * Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 표시되지 않습니다.
+  * User Agent 사용자가 Ledger 테이블에 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, Send Request 버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다
+
+## 워크플로우 Request 타입별 사용자 노출 제어 기능
+Select Request Types Allowed for Users 토글을 활성화합니다. 
+
+이 옵션을 통해 관리자가 사용자가 접근하고 요청할 수 있는 워크플로우의 요청(Request) 타입을 선택적으로 제어할 수 있도록 합니다. 
+
+* 토글을 활성화(On)한 경우:Administrator > General > Workflow Configurations 페이지에서:Select Request Types Allowed for Users 토글 아래에 제품별(Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.관리자는 이 체크박스를 사용하여 사용자에게 노출할 요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.사용자 워크플로우 상신 화면:관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.Access Role Request의 특별 동작:Servers (SAC), Kubernetes (KAC), Web Apps (WAC) 중 하나 이상의 제품에서 Access Role Request가 선택되어야 사용자에게 Access Role Request 항목이 노출됩니다.Access Role Request 요청 시, 내부 Service 항목에는 관리자가 선택한 제품(예: "Server Access Control")만 표시됩니다.
+  * Administrator > General > Workflow Configurations 페이지에서:Select Request Types Allowed for Users 토글 아래에 제품별(Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.관리자는 이 체크박스를 사용하여 사용자에게 노출할 요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.
+    * Select Request Types Allowed for Users 토글 아래에 제품별(Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.
+    * 관리자는 이 체크박스를 사용하여 사용자에게 노출할 요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.
+  * 사용자 워크플로우 상신 화면:관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.
+    * 관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.
+  * Access Role Request의 특별 동작:Servers (SAC), Kubernetes (KAC), Web Apps (WAC) 중 하나 이상의 제품에서 Access Role Request가 선택되어야 사용자에게 Access Role Request 항목이 노출됩니다.Access Role Request 요청 시, 내부 Service 항목에는 관리자가 선택한 제품(예: "Server Access Control")만 표시됩니다.
+    * Servers (SAC), Kubernetes (KAC), Web Apps (WAC) 중 하나 이상의 제품에서 Access Role Request가 선택되어야 사용자에게 Access Role Request 항목이 노출됩니다.
+    * Access Role Request 요청 시, 내부 Service 항목에는 관리자가 선택한 제품(예: "Server Access Control")만 표시됩니다.
+* 토글을 비활성화(Off)한 경우 (기본값):Administrator > General > Workflow Configurations 페이지에서:요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.사용자 워크플로우 상신 화면:기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.
+  * Administrator > General > Workflow Configurations 페이지에서:요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.
+    * 요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.
+  * 사용자 워크플로우 상신 화면:기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.
+    * 기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.
+    * Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.

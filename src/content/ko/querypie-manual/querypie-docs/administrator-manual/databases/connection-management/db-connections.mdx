@@ -1,0 +1,215 @@
+## Overview
+DB Connections 페이지에서 QueryPie에 등록되어 있는 DB 커넥션 목록을 조회하고 상세 설정을 할 수 있습니다.
+
+이 문서에서 설명하는 상세 기능은 아래와 같습니다.
+
+3
+1
+false
+Overview
+disc
+list
+true
+## DB 커넥션 수동으로 등록하기
+DB Connections 페이지 우측 상단의 Create Connection 버튼을 클릭하여 수동 등록 페이지로 진입합니다.
+
+Administrator> Databases> Connection Management> DB Connections> Create Connection> Click here
+
+10.2.8 버전부터 관리자는 커넥션 생성을 위한 커넥션 선택 화면에서 Click here 링크를 통해 QueryPie가 지원하는 모든 벤더의 기능을 한눈에 확인할 수 있는 “Supported Features” 모달을 사용할 수 있습니다. 
+
+이 모달은 주요 기능 항목(Web Editor, Access Control, Audit Log, Privilege Control, Data Policy, Proxy, DML Snapshot, Ledger Management)으로 구성되어 있어, 각 벤더별로 지원 여부를 직관적으로 확인할 수 있도록 도와줍니다.
+
+Administrator > Databases > Connection Management > DB Connections > Create Connection
+
+1. Step 1에서 데이터 소스 종류를 선택하면 Step 2로 진입합니다.
+2. Step 2에서 DB 커넥션 정보를 입력합니다.Allowed Zone : DB 커넥션에 접속할 수 있는 네트워크 대역Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 기본값: Default (All allowed)Connection Name : DB 커넥션 이름Cluster : 클러스터 구성 여부토글 활성화 시 클러스터 등록 모드가 활성화되며, 하단 클러스터 구성으로 DB 커넥션 등록하기 섹션 참고Host : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)Port : DB 커넥션의 포트Database Name : 커넥션 연결시 접속할 DB 이름Secret Store : 인증정보 저장 위치QueryPie : QueryPie 내부에 저장그 외, 등록한 Vault 이름이 표시됨선택한 인증 정보 저장위치 속성에 따라 추가 인증정보 표시 방식이 상이함Test Connection 버튼을 클릭하여, 커넥션 접속 정보가 유효한지 확인할 수 있습니다.Additional Information : 부가정보 입력자세한 설명은 하단 Additional Information 섹션 참고SSL / SSH Setting : SSL/SSH 구성 정보 입력자세한 설명은 하단 SSL / SSH Setting 섹션 참고Next 버튼을 클릭하면 DB 커넥션 생성이 완료되며 Step 3으로 진행합니다.
+  * Allowed Zone : DB 커넥션에 접속할 수 있는 네트워크 대역Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 기본값: Default (All allowed)
+    * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 
+    * 기본값: Default (All allowed)
+  * Connection Name : DB 커넥션 이름
+  * Cluster : 클러스터 구성 여부토글 활성화 시 클러스터 등록 모드가 활성화되며, 하단 클러스터 구성으로 DB 커넥션 등록하기 섹션 참고
+    * 토글 활성화 시 클러스터 등록 모드가 활성화되며, 하단 클러스터 구성으로 DB 커넥션 등록하기 섹션 참고
+  * Host : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)
+  * Port : DB 커넥션의 포트
+  * Database Name : 커넥션 연결시 접속할 DB 이름
+  * Secret Store : 인증정보 저장 위치QueryPie : QueryPie 내부에 저장그 외, 등록한 Vault 이름이 표시됨선택한 인증 정보 저장위치 속성에 따라 추가 인증정보 표시 방식이 상이함
+    * QueryPie : QueryPie 내부에 저장
+    * 그 외, 등록한 Vault 이름이 표시됨
+    * 선택한 인증 정보 저장위치 속성에 따라 추가 인증정보 표시 방식이 상이함
+  * Test Connection 버튼을 클릭하여, 커넥션 접속 정보가 유효한지 확인할 수 있습니다.
+  * Additional Information : 부가정보 입력자세한 설명은 하단 Additional Information 섹션 참고
+    * 자세한 설명은 하단 Additional Information 섹션 참고
+  * SSL / SSH Setting : SSL/SSH 구성 정보 입력자세한 설명은 하단 SSL / SSH Setting 섹션 참고
+    * 자세한 설명은 하단 SSL / SSH Setting 섹션 참고
+  * Next 버튼을 클릭하면 DB 커넥션 생성이 완료되며 Step 3으로 진행합니다.
+3. Step 3에서는 입력된 DB 커넥션 정보를 확인할 수 있습니다.
+4. DB Connections 페이지 내 목록에서 신규 DB 커넥션의 생성을 확인할 수 있습니다.
+
+### 클러스터 구성으로 DB 커넥션 등록하기
+Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클러스터로 구성되어 있으면 Cluster 모드가 활성화됩니다. 
+
+Administrator > Databases > Connection Management > DB Connections > List Details
+
+1. Cluster 옵션을 활성화하면 계층형 구조로 클러스터 및 인스턴스 정보를 입력할 수 있습니다.
+2. 각각의 클러스터 및 인스턴스의 엔드포인트를 알고 있는 경우 Add Cluster를 통해 수동으로 등록할 수 있습니다.Type : 해당 클러스터의 Replication 타입Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다. Expose : 커넥션 목록에서 클러스터를 표시하는 옵션Expandable : 웹 접속시 사용자의 Connections 목록에서 클러스터, 인스턴스 단위까지 모두 표시Unexpandable : 웹 커넥션 사용자의 Connections 목록에서 클러스터 하위의 인스턴스는 표시하지 않고, 클러스터 단위로만 표시Hidden : 사용자의 Connections 목록에서 클러스터가 표시되지 않으며, 클러스터 하위의 인스턴스만 표시Host : 해당 클러스터의 호스트에 해당하는 엔드포인트Add Instance : 인스턴스 레벨까지 관리하고 싶은 경우, 해당 인스턴스의 이름과 호스트를 입력Expose : 사용자의 Connections 목록에서 인스턴스 엔드포인트를 노출할 것인지 여부ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
+  * Type : 해당 클러스터의 Replication 타입Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다. 
+    * Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다. 
+  * Expose : 커넥션 목록에서 클러스터를 표시하는 옵션Expandable : 웹 접속시 사용자의 Connections 목록에서 클러스터, 인스턴스 단위까지 모두 표시Unexpandable : 웹 커넥션 사용자의 Connections 목록에서 클러스터 하위의 인스턴스는 표시하지 않고, 클러스터 단위로만 표시Hidden : 사용자의 Connections 목록에서 클러스터가 표시되지 않으며, 클러스터 하위의 인스턴스만 표시
+    * Expandable : 웹 접속시 사용자의 Connections 목록에서 클러스터, 인스턴스 단위까지 모두 표시
+    * Unexpandable : 웹 커넥션 사용자의 Connections 목록에서 클러스터 하위의 인스턴스는 표시하지 않고, 클러스터 단위로만 표시
+    * Hidden : 사용자의 Connections 목록에서 클러스터가 표시되지 않으며, 클러스터 하위의 인스턴스만 표시
+  * Host : 해당 클러스터의 호스트에 해당하는 엔드포인트
+  * Add Instance : 인스턴스 레벨까지 관리하고 싶은 경우, 해당 인스턴스의 이름과 호스트를 입력Expose : 사용자의 Connections 목록에서 인스턴스 엔드포인트를 노출할 것인지 여부ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
+    * Expose : 사용자의 Connections 목록에서 인스턴스 엔드포인트를 노출할 것인지 여부ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
+      * ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
+
+Cluster 모드는 무엇인가요?
+
+일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다. 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다. Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, 부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여할 수 있습니다.
+
+## DB 커넥션 목록 조회하기
+관리자 콘솔 내 Databases 설정 > DB Connections 페이지에서 현재 QueryPie에 등록된 DB 커넥션 목록을 확인할 수 있습니다.
+
+Administrator > Databases > Connection Management > DB Connections
+
+* 검색: DB 커넥션 이름으로 검색
+* 제공 필터 타입Database Type: DB 유형 (eg. MySQL, MairaDB, PostgreSQL…)Cloud Provider: 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)Favorite View: 즐겨찾기 설정 여부테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다.즐겨찾기 설정 버튼 SSL Status: SSL 활성화 여부Label: 원장DB 여부Tag: 커넥션에 할당된 태그각 태그 입력 방식: Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자: =, !=, :, !:Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
+  * Database Type: DB 유형 (eg. MySQL, MairaDB, PostgreSQL…)
+  * Cloud Provider: 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
+  * Favorite View: 즐겨찾기 설정 여부테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다.즐겨찾기 설정 버튼 
+    * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다.즐겨찾기 설정 버튼 
+  * SSL Status: SSL 활성화 여부
+  * Label: 원장DB 여부
+  * Tag: 커넥션에 할당된 태그각 태그 입력 방식: Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자: =, !=, :, !:Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
+    * 각 태그 입력 방식: Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자: =, !=, :, !:
+      * 지원하는 연산자: =, !=, :, !:
+    * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
+    * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
+
+## DB 커넥션 상세 정보 조회 및 설정하기
+DB Connections 페이지에서 상세 정보를 조회하려는 아이템을 클릭하면 상세 페이지로 진입합니다.
+
+Administrator > Databases > Connection Management > DB Connections > List Details
+
+10.2.8부터 상세 정보를 조회하면 해당 커넥션이 지원하는 기능 목록을 Supported Featuresd에서 확인할 수 있습니다. 
+
+### Accessible Users 조회하기
+DB 커넥션 상세 페이지 우상단 Accessible Users 버튼을 클릭하면 Drawer가 열리고, 해당 커넥션에 접근가능한 사용자 목록을 조회할 수 있습니다.
+
+Administrator > Databases > DB Connections > List Details > Accessible Users
+
+### DB 커넥션 정보 조회 및 수정하기
+DB 커넥션 상세 페이지 내 Connection Information 영역에서 생성 시 입력한 정보를 조회하고 수정할 수 있습니다.
+
+Administrator > Databases > DB Connections > List Details > Connection Information
+
+* Allowed Zone : DB 커넥션에 접속할 수 있는 네트워크 대역Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 기본값: Default (All allowed)
+  * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 
+  * 기본값: Default (All allowed)
+* Connection Name : DB 커넥션 이름
+* Host : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)
+* Port : DB 커넥션의 포트
+* Database Name : 커넥션 연결시 접속할 DB 이름
+* Secret Store : 인증정보 저장 위치QueryPie : QueryPie 내부에 저장그 외, 등록한 Vault 이름이 표시됨선택한 인증 정보 저장위치 속성에 따라 추가 인증정보 표시 방식이 상이함
+  * QueryPie : QueryPie 내부에 저장
+  * 그 외, 등록한 Vault 이름이 표시됨
+  * 선택한 인증 정보 저장위치 속성에 따라 추가 인증정보 표시 방식이 상이함
+
+Test Connection 버튼을 클릭하여, 커넥션 접속 정보가 유효한지 확인할 수 있습니다.
+
+변경 내용을 저장하려면, 상세 페이지 우상단 Save Changes 버튼을 클릭하세요.
+
+Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활성화하였을 때 표시되며, 실제 Secret Store 사용을 위해서는 Admin > General > Integration > HashiCorp Vault 페이지에서 Vault 등록이 필요합니다. 자세한 내용은 Secret Store 연동 문서를 참고하세요.
+
+### 참고. Secret Store 설정 방법
+Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항목이 다르게 표시됩니다.
+
+* Secret Engine = K/V 설정시, 커넥션 정보 페이지에서 Username / Password 입력 항목이 표시됩니다.Username / Password 항목에 Vault 의 Path 를 입력합니다.Path 의 형태는 prod_db/data/mysql?username 형태로 입력할 수 있습니다.예시 기준 실제로 Vault 내의 경로는 prod_db > mysql 의 key 가 username 인 경우입니다.중간의 /data 경로를 추가해야합니다.
+  * Username / Password 항목에 Vault 의 Path 를 입력합니다.
+  * Path 의 형태는 prod_db/data/mysql?username 형태로 입력할 수 있습니다.
+  * 예시 기준 실제로 Vault 내의 경로는 prod_db > mysql 의 key 가 username 인 경우입니다.
+  * 중간의 /data 경로를 추가해야합니다.
+* Secret Engine = Database 설정시, 커넥션 정보 페이지에서 Account 입력 항목이 표시됩니다.Account 항목에 Vault 의 Path 를 입력합니다.Path 의 형태는 prod_db/creds/mysql_role 형태로 입력할 수 있습니다.
+  * Account 항목에 Vault 의 Path 를 입력합니다.
+  * Path 의 형태는 prod_db/creds/mysql_role 형태로 입력할 수 있습니다.
+
+## 추가 설정하기
+페이지 하단의 탭 영역에서 DB 커넥션에 대한 추가 설정이 가능합니다. 항목별 설명을 참고하세요.
+
+### Additional Information
+해당 DB 커넥션에 적용될 세부 정책을 입력합니다. Save Changes 버튼으로 저장합니다.
+
+Additional Information 탭
+
+* Max Display Rows : 쿼리 실행 후 조회 가능한 데이터의 최대 행수를 제한할 수 있습니다.
+* Max Export Rows : 한 번에 내보낼 수 있는 데이터의 최대 행수를 제한할 수 있습니다.
+* Access Start Time : 해당 커넥션에 접근 가능한 시간대의 시작 시간을 설정할 수 있습니다.
+* Access End Time : 해당 커넥션에 접근 가능한 시간대의 끝 시간을 설정할 수 있습니다.
+* Weekday Access Denied : 해당 커넥션에 접근 불가능한 요일을 복수로 선택할 수 있습니다.
+* Maximum Login Failures : 해당 커넥션의 데이터베이스 로그인 실패 허용 최대 횟수를 제한할 수 있습니다.
+* Specified Time interval Before Lockout : 로그인 실패 허용 횟수의 기준이 되는 시간 간격을 설정할 수 있습니다.
+* Database Version : 해당 커넥션에서 사용하는 데이터베이스 버전을 입력할 수 있습니다.
+* Query Audit On/Off : 해당 커넥션에서 실행되는 쿼리 로그를 기록할지 여부를 선택합니다. (Default = On)
+* DML Snapshot On/Off : 해당 커넥션에서 실행되는 전후 데이터를 기록할지 여부를 선택합니다. (Default = Off)
+* User Action Purpose Required : 해당 커넥션에서 사유 입력을 강제할 작업을 설정합니다.Allow reusing the same reason throughout a session : 입력된 사유를 재사용할 수 있도록 설정할 수 있습니다.Export Schema Purpose : Export > SQL > Schema 선택 후 데이터 내보내기 시 사유 입력 여부 설정Import Schema Purpose : Import > SQL > Schema 선택 후 데이터 가져오기 시 사유 입력 여부 설정Export Data Purpose : Export > CSV / JSON / EXCEL 로 데이터 내보내기 시 사유 입력 여부 설정Import Data Purpose : Import > CSV / JSON / EXCEL 로 데이터 가져오기 시 사유 입력 여부 설정SQL Execute : SQL 쿼리 실행 및 테이블 조회시 사유 입력 여부를 설정합니다.
+  * Allow reusing the same reason throughout a session : 입력된 사유를 재사용할 수 있도록 설정할 수 있습니다.
+  * Export Schema Purpose : Export > SQL > Schema 선택 후 데이터 내보내기 시 사유 입력 여부 설정
+  * Import Schema Purpose : Import > SQL > Schema 선택 후 데이터 가져오기 시 사유 입력 여부 설정
+  * Export Data Purpose : Export > CSV / JSON / EXCEL 로 데이터 내보내기 시 사유 입력 여부 설정
+  * Import Data Purpose : Import > CSV / JSON / EXCEL 로 데이터 가져오기 시 사유 입력 여부 설정
+  * SQL Execute : SQL 쿼리 실행 및 테이블 조회시 사유 입력 여부를 설정합니다.
+* Proxy Usage : 해당 커넥션의 프록시 사용 여부를 선택합니다. 자세한 설명은 Proxy 설정을 참고합니다.
+* Character Set : 해당 커넥션에서 사용할 문자 집합을 선택합니다.
+* Collation : 선택한 문자 집합의 정렬 방식을 선택합니다.
+* Description : 해당 커넥션에 대한 설명을 입력할 수 있습니다.
+
+Proxy Usage 
+
+Proxy Usage를 활성화 하면 아래와 같이 두가지 선택사항이 표시됩니다.
+
+Proxy Usage의 옵션
+
+* Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다.
+* Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
+
+QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다. QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “Fixed Credential for Agent” 옵션이 제공됩니다. 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화 한뒤 암호를 고정하여 사용할 수 있습니다. 
+
+### SSL/SSH Setting
+체크박스를 통해 SSL 또는 SSH 사용 여부를 활성화하고, 하단 드롭다운에서 기등록된 설정 정보를 선택합니다. Save Changes 버튼으로 저장합니다.
+
+SSL/SSH Setting 탭
+
+SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문서를 참고해보세요.
+
+* SSL Configurations
+* SSH Configurations
+
+### Connection Owner
+Connection Owner 탭에서 Add Connection Owner 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) Save Changes 버튼으로 저장합니다.
+
+Connection Owner 탭
+
+Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다. 
+
+### Tags
+Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. Add Tag 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 Save Changes 버튼으로 저장합니다.
+
+Tags 탭
+
+### Privilege Setting
+DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정하는 기능입니다.
+
+해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 Security 내 DB 커넥션 보안 설정 문서를 참고하세요.
+
+Privilege Setting 탭
+
+1. Add 버튼을 통해 Privilege 을 선택하고 해당 Privilege 에 고정할 DB Username, Password 를 입력합니다.
+2. Test Connection 을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
+3. Save Changes 를 통해 해당 정보를 저장하여 설정을 마무리합니다.
+
+BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다. 
+
+QueryPie Web > Databases > Connections
+
+* Privilege Setting 이 설정된 권한을 부여받은 사용자는 커넥션 접속시 관리자가 사전에 설정한대로 해당 Privilege 에 맵핑된 DB 계정을 사용하며, Connections 접속 페이지에서 DB Username, Password 항목 자체를 볼 수 없습니다.
+* 웹에디터, 에이전트 프록시, SQL Request, Export Request 등 커넥션 접속에서 해당 DB 계정 사용이 강제화됩니다. 

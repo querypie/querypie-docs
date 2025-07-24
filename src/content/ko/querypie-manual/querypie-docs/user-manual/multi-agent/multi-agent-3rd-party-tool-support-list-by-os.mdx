@@ -1,0 +1,48 @@
+## Overview
+QueryPie Multi Agent에서 지원되는 3rd Party Tool 목록입니다.
+
+Open Connection With 기능을 통해 3rd Party Tool을 실행하고, 정상적으로 사용 가능한 툴 목록입니다.
+
+Agentless 형태의 연결을 통해 지원되는 Tool 외에도, DB 또는 서버에 접속이 가능합니다.
+
+## Database
+| Tools              | Windows      | MacOS        | Linux        |
+| ------------------ | ------------ | ------------ | ------------ |
+| DBeaver            | 지원 (10.2.6~) | 지원 (10.2.6~) | 지원 (10.2.8~) |
+| IntelliJ           | 지원 (10.2.6~) | 지원 (10.2.6~) | 지원 (10.2.8~) |
+| Jdbc               | 지원 (10.2.6~) | 지원 (10.2.6~) | 지원 (10.2.8~) |
+| SQLGate For Oracle | 지원 (10.2.6~) | -            | -            |
+
+Agentless 접속 안내
+
+QueryPie는 에이전트 없이 생성된 URL Proxy를 통해 안전하게 데이터베이스에 접근할 수 있도록 지원합니다
+
+자세한 설정 방법은 에이전트 없이 프록시 접속하기  가이드를 참고해주세요.
+
+## Servers
+| Tools             | Protocol | Windows      | MacOS        | Linux        |
+| ----------------- | -------- | ------------ | ------------ | ------------ |
+| iTerm             | SSH      | -            | 지원 (10.2.8~) | -            |
+| Terminal          | SSH      | -            | 지원 (10.2.8~) | -            |
+| ConsoleWindowHost | SSH      | 지원 (10.2.8~) | -            | -            |
+| PuTTY             | SSH      | 지원 (10.2.8~) | -            | -            |
+| SecureCRT         | SSH      | 지원 (10.2.8~) | -            | -            |
+| Windows Terminal  | SSH      | 지원 (10.2.8~) | -            | -            |
+| XShell            | SSH      | 지원 (10.2.8~) | -            | -            |
+| GnomeTerminal     | SSH      | -            | -            | 지원 (10.2.8~) |
+| Konsole           | SSH      | -            | -            | 지원 (10.2.8~) |
+| FileZilla         | SFTP     | 지원 (10.2.8~) | 지원 (10.2.8~) | 미지원          |
+| WindowsApp        | RDP      | -            | 지원 (10.2.8~) | -            |
+| MSTSC             | RDP      | 지원 (10.2.8~) | -            | -            |
+| ScreenSharing     | VNC      | -            | 지원 (10.2.8~) | -            |
+
+FileZilla 사용시 다수의 Connection(컨넥션)이 생성됩니다.
+
+* FileZilla는 파일 업로드/다운로드 시 작업을 가속화하기 위해 동시 연결(multiple connections) 방식을 사용합니다. 이로 인해 작업 파일 수나 Task 수에 따라 Session Monitoring에서 다수의 Connection이 생성됩니다.
+* 또한, 다운로드나 업로드가 완료된 후에도 FileZilla의 유휴 연결 유지(persistent connection) 설정에 따라 컨넥션이 일정 시간 동안 유지되며, 즉시 종료되지 않을 수 있습니다.
+
+Seamless SSH 연결 
+
+Seamless SSH 설정을 통해서, 다른 Tool에서도 QueryPie를 통한 서버로의 안전한 접속이 가능합니다. 
+
+자세한 설정 방법은 Multi Agent Seamless SSH 사용 가이드  가이드를 참고해주세요.

@@ -1,0 +1,64 @@
+## Overview
+QueryPie 시스템 상에서 주기적으로 또는 수동으로 실행되는 다양한 작업들을 일람하는 메뉴입니다.
+
+Administrator > General > System > Jobs
+
+## Jobs 목록 조회하기
+Administrator > General > System > Jobs 메뉴로 진입하여 Jobs 목록 페이지를 확인할 수 있습니다. 
+
+작업 유형은 크게 두 가지로 나뉩니다.
+
+1. QueryPie 세팅과 함께 자동으로 생성되는 시스템 작업들유형별로 하나의 작업만 존재합니다.Scheduling에 의하여, 정해진 주기로 실행됩니다.추가적인 수동 실행은 불가능합니다.
+  * 유형별로 하나의 작업만 존재합니다.
+  * Scheduling에 의하여, 정해진 주기로 실행됩니다.
+  * 추가적인 수동 실행은 불가능합니다.
+2. 사용자의 리소스 생성에 따라서 만들어지는 리소스 동기화 작업들DB Cloud Provider, Server Cloud Provider, Kubernetes Cluster Sync, Authentication 이 해당됩니다.각 리소스마다 별도의 작업이 생성되며, 작업의 이름은 리소스 이름과 동일하게 표시됩니다.리소스 생성 시에 설정한 대로 Replication Frequency 가 지정됩니다. (Scheduling 또는 Manual)작업 타입이 Scheduling 인 경우에도 추가적인 수동 작업 실행이 가능합니다. 이 경우 수동 실행은 각 리소스 관리 페이지에서 시작할 수 있으며, Jobs 페이지에서는 작업 상태의 추적만 가능합니다.
+  * DB Cloud Provider, Server Cloud Provider, Kubernetes Cluster Sync, Authentication 이 해당됩니다.
+  * 각 리소스마다 별도의 작업이 생성되며, 작업의 이름은 리소스 이름과 동일하게 표시됩니다.
+  * 리소스 생성 시에 설정한 대로 Replication Frequency 가 지정됩니다. (Scheduling 또는 Manual)작업 타입이 Scheduling 인 경우에도 추가적인 수동 작업 실행이 가능합니다. 이 경우 수동 실행은 각 리소스 관리 페이지에서 시작할 수 있으며, Jobs 페이지에서는 작업 상태의 추적만 가능합니다.
+    * 작업 타입이 Scheduling 인 경우에도 추가적인 수동 작업 실행이 가능합니다. 이 경우 수동 실행은 각 리소스 관리 페이지에서 시작할 수 있으며, Jobs 페이지에서는 작업 상태의 추적만 가능합니다.
+
+각 작업에 대해 표시하는 정보는 아래와 같습니다.
+
+* Type : 작업의 유형
+* Job Name : 작업의 이름사용자가 생성한 리소스를 동기화하는 작업의 경우, 각 리소스마다 별도의 작업이 생성되며, 작업의 이름은 리소스의 이름과 동일하게 표시됩니다.
+  * 사용자가 생성한 리소스를 동기화하는 작업의 경우, 각 리소스마다 별도의 작업이 생성되며, 작업의 이름은 리소스의 이름과 동일하게 표시됩니다.
+* Last Result : 가장 최근에 실행된 작업의 상태Running : 작업 실행 중Success : 작업 성공Issue : 작업 부분 성공 (Failure 또는 Ignored 상태의 Task 존재)Failed : 작업 실패
+  * Running : 작업 실행 중
+  * Success : 작업 성공
+  * Issue : 작업 부분 성공 (Failure 또는 Ignored 상태의 Task 존재)
+  * Failed : 작업 실패
+* Last Run At : 가장 최근에 실행된 작업의 시작 시각
+* Replication Frequency : 작업 스케줄링 여부Scheduling : 스케줄링 설정됨Manual : 수동 실행
+  * Scheduling : 스케줄링 설정됨
+  * Manual : 수동 실행
+
+## Job 상세 정보 조회하기
+Administrator > General > System > Jobs > List Detail
+
+* Jobs 목록 페이지에서 상세 정보를 조회하려는 작업을 클릭합니다.
+* 작업의 기본 정보 및 실행 내역을 조회할 수 있습니다.History Number : 작업 이력 번호Last Run At : 실행 시각Result : 작업 실행 결과Running : 작업 실행 중Success : 작업 성공Issue : 작업 부분 성공 (Failure 또는 Ignored 상태의 Task 존재)Failed : 작업 실패Total : 전체 동기화 아이템 수Success : 성공 아이템 수Failure : 실패 아이템 수Ignored : 무시된 아이템 수Trigger : 실행 방식Scheduled : 스케줄에 의한 실행Manual : 수동 실행이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
+  * History Number : 작업 이력 번호
+  * Last Run At : 실행 시각
+  * Result : 작업 실행 결과Running : 작업 실행 중Success : 작업 성공Issue : 작업 부분 성공 (Failure 또는 Ignored 상태의 Task 존재)Failed : 작업 실패
+    * Running : 작업 실행 중
+    * Success : 작업 성공
+    * Issue : 작업 부분 성공 (Failure 또는 Ignored 상태의 Task 존재)
+    * Failed : 작업 실패
+  * Total : 전체 동기화 아이템 수
+  * Success : 성공 아이템 수
+  * Failure : 실패 아이템 수
+  * Ignored : 무시된 아이템 수
+  * Trigger : 실행 방식Scheduled : 스케줄에 의한 실행Manual : 수동 실행이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
+    * Scheduled : 스케줄에 의한 실행
+    * Manual : 수동 실행이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
+      * 이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
+
+10.2.0 현재, Total, Success, Failure, Ignored 정보는 Authentication Type의 Job에 대해서만 제공됩니다.
+
+## Job History 조회하기
+Administrator > General > System > Jobs > List Detail > History Detail
+
+History 목록에서 상세 실행 내역을 조회할 행을 클릭하면 Drawer에서 History Detail을 확인할 수 있습니다. 
+
+Change History에는 Job에서 실행된 모든 세부 작업 내역이 기록되어 있습니다. 

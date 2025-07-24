@@ -1,0 +1,45 @@
+## Overview
+QueryPie 워크플로 결재 접수 및 승인 내역을 조회하는 페이지입니다.
+
+사용자가 Workflow 페이지에서 특정 권한을 신청하거나 결재자가 승인 또는 반려하는 경우 Workflow Logs에서 이력을 확인할 수 있습니다.
+
+## Workflow Logs 조회하기
+Administrator > Audit > General > Workflow Logs
+
+1. Administrator > Audit > General > Workflow Logs 메뉴로 이동합니다.
+2. Action At 기준 최신 내역부터 오래된 순으로 관리자 권한의 부여 또는 회수 로그가 조회됩니다.Name : Display Name이 표시됩니다.Description : 부여된 관리자 권한 상세Action By : 관리자 권한의 부여 또는 회수 주체 (자동 회수의 경우 System 으로 표시)
+  1. Name : Display Name이 표시됩니다.
+  2. Description : 부여된 관리자 권한 상세
+  3. Action By : 관리자 권한의 부여 또는 회수 주체 (자동 회수의 경우 System 으로 표시)
+3. 지원되는 검색 조건은 다음과 같습니다.Workflow Title : 워크플로명Name : 사용자명Email : 이메일Action By : 액션 수행 주체 (본인 또는 대리결재자)Token ID : API 호출 시 사용한 Token 식별 ID
+  1. Workflow Title : 워크플로명
+  2. Name : 사용자명
+  3. Email : 이메일
+  4. Action By : 액션 수행 주체 (본인 또는 대리결재자)
+  5. Token ID : API 호출 시 사용한 Token 식별 ID
+4. 지원되는 필터 조건은 다음과 같습니다.Action At : 로그 발생 기간 범위Action Type : 워크플로 상신/결재(승인/반려)/취소 내역Workflow Requested : 워크플로 상신 (Resubmit의 경우에도 이에 해당)Workflow Approved : 워크플로 승인Workflow Rejected : 워크플로 반려Workflow Canceled : 워크플로 취소Workflow Expired : 워크플로 만료Workflow SQL Executed : 워크플로 SQL 쿼리 실행Workflow Export Executed : 워크플로 SQL Export 실행Workflow Reviewed : 워크플로 참조자 컨펌Request Type : 워크플로 유형 DB Access RequestSQL RequestSQL Export RequestServer Access RequestAccess Role RequestUnmasking RequestRemaining Steps : 다음 잔여 결재 단계 Approval 1Approval 2Approval 3ExecutionDoneReviewUrgent : 사후승인결재 여부 (Urgent / -)
+  1. Action At : 로그 발생 기간 범위
+  2. Action Type : 워크플로 상신/결재(승인/반려)/취소 내역Workflow Requested : 워크플로 상신 (Resubmit의 경우에도 이에 해당)Workflow Approved : 워크플로 승인Workflow Rejected : 워크플로 반려Workflow Canceled : 워크플로 취소Workflow Expired : 워크플로 만료Workflow SQL Executed : 워크플로 SQL 쿼리 실행Workflow Export Executed : 워크플로 SQL Export 실행Workflow Reviewed : 워크플로 참조자 컨펌
+    1. Workflow Requested : 워크플로 상신 (Resubmit의 경우에도 이에 해당)
+    2. Workflow Approved : 워크플로 승인
+    3. Workflow Rejected : 워크플로 반려
+    4. Workflow Canceled : 워크플로 취소
+    5. Workflow Expired : 워크플로 만료
+    6. Workflow SQL Executed : 워크플로 SQL 쿼리 실행
+    7. Workflow Export Executed : 워크플로 SQL Export 실행
+    8. Workflow Reviewed : 워크플로 참조자 컨펌
+  3. Request Type : 워크플로 유형 DB Access RequestSQL RequestSQL Export RequestServer Access RequestAccess Role RequestUnmasking Request
+    1. DB Access Request
+    2. SQL Request
+    3. SQL Export Request
+    4. Server Access Request
+    5. Access Role Request
+    6. Unmasking Request
+  4. Remaining Steps : 다음 잔여 결재 단계 Approval 1Approval 2Approval 3ExecutionDoneReview
+    1. Approval 1
+    2. Approval 2
+    3. Approval 3
+    4. Execution
+    5. Done
+    6. Review
+  5. Urgent : 사후승인결재 여부 (Urgent / -)

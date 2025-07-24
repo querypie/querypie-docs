@@ -1,0 +1,65 @@
+# External API 변경사항 바로가기
+1
+1
+External API 변경사항 바로가기
+---
+
+# API Docs Json File
+---
+
+# 1. Access Approval API
+### (GET) List
+#### Request
+* 변경점 없음
+
+#### Response
+| 변경 전 | 변경 후 |
+| ---- | ---- |
+|      | id   |
+
+* id 가 추가되었습니다.
+
+---
+
+# 2. Approval API
+### (GET) List
+#### Request
+* 변경점 없음
+
+#### Response
+| 변경 전 | 변경 후 |
+| ---- | ---- |
+|      | id   |
+
+* id 가 추가되었습니다.
+
+---
+
+# 3. Audit Log API
+### (GET) List of Approval
+/api/external/audit-logs
+
+#### Request
+* Query Parameter
+* /api/docs 에 잘못 표기 되어 있던 cursor 에 대한 내용이 수정되었습니다.
+
+#### Response
+* /api/docs 에 잘못 표기 되어 있던 nextCursor 에 대한 내용이 수정되었습니다.
+
+---
+
+# 4. Notification Channels API
+### (GET) List
+/api/external/notification-channels
+
+#### Request
+* Query Parameter
+
+| 변경 전                                                                                                | 변경 후                                |
+| --------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| dataFlowRequest.filterKeydataFlowRequest.filterValuedataFlowRequest.sortKeydataFlowRequest.sortType | filterKeyfilterValuesortKeysortType |
+
+* 이름이 변경되었습니다.
+
+#### Response
+* 변경점 없음

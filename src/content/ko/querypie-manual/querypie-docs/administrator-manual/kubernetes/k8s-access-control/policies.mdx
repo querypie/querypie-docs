@@ -1,0 +1,91 @@
+## Overview
+조직에서 관리하는 쿠버네티스 클러스터의 접근 정책(Policy)에 대한 조회, 생성, 수정, 삭제를 지원합니다. Policy는 쿠버네티스 접근 권한을 구현 및 적용하기 위한 가장 첫 번째 단계입니다. 
+
+Administrator > Kubernetes > K8s Access Control > Policies
+
+## Policy 조회하기 
+Administrator > Kubernetes > K8s Access Control > Policies > List Details
+
+1. Administrator > Kubernetes > K8s Access Control > Policies 메뉴로 이동합니다.
+2. 테이블 좌측 상단의 검색란을 통해 정책명을 조건으로 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 Policy 목록을 최신화할 수 있습니다.
+4. 테이블에서 이하의 컬럼 정보를 제공합니다:Name : Policy명Description : Policy 상세설명Created At : 정책 최초 생성일시Updated At : 정책 마지막 수정일시Updated By : 마지막 업데이트를 실행한 관리자명
+  1. Name : Policy명
+  2. Description : Policy 상세설명
+  3. Created At : 정책 최초 생성일시
+  4. Updated At : 정책 마지막 수정일시
+  5. Updated By : 마지막 업데이트를 실행한 관리자명
+5. 각 행을 클릭하면 정책 세부 정보 조회가 가능합니다. Detail 디폴트로 지정되는 탭으로 정책으로 정의된 코드를 조회할 수 있습니다.Detail 탭에 위치할 시, 우측에 Go to Editor Mode 버튼이 있고 이를 클릭 시 해당 Code Editor 페이지 화면으로 전환됩니다.Roles 해당 정책이 할당되어 있는 Role 목록을 나열합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Assigned At : Role에 해당 정책이 할당된 일시Assigned By : 해당 정책을 Role에 할당한 관리자명각 행을 클릭하면 Role에 대한 상세정보를 드로워 형태로 제공합니다. Name : Role명 해당 롤 상세페이지 링크를 제공합니다.Description : Role 상세설명Last Access At : 해당 롤의 마지막 호출 일시Created At : Role 생성 일시Created By : Role 생성자명Updated At : Role 업데이트 일시Updated By : 마지막 Role 수정자명Versions 해당 정책의 각 버전에 대한 내역을 나열합니다. 정책 버전은 Code가 수정되어 저장되면 업데이트 됩니다. 목록은 각 version마다 이하의 정보를 노출합니다:Version : 버전명Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명각 행을 클릭하면 버전에 대한 상세정보를 드로워 형태로 제공합니다. (Title) : 정책명Version : 정책 버전Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명하단에 당시의 정책 코드 스냅샷이 노출됩니다.
+  1.  Detail 디폴트로 지정되는 탭으로 정책으로 정의된 코드를 조회할 수 있습니다.Detail 탭에 위치할 시, 우측에 Go to Editor Mode 버튼이 있고 이를 클릭 시 해당 Code Editor 페이지 화면으로 전환됩니다.
+    1. 디폴트로 지정되는 탭으로 정책으로 정의된 코드를 조회할 수 있습니다.
+    2. Detail 탭에 위치할 시, 우측에 Go to Editor Mode 버튼이 있고 이를 클릭 시 해당 Code Editor 페이지 화면으로 전환됩니다.
+  2. Roles 해당 정책이 할당되어 있는 Role 목록을 나열합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Assigned At : Role에 해당 정책이 할당된 일시Assigned By : 해당 정책을 Role에 할당한 관리자명각 행을 클릭하면 Role에 대한 상세정보를 드로워 형태로 제공합니다. Name : Role명 해당 롤 상세페이지 링크를 제공합니다.Description : Role 상세설명Last Access At : 해당 롤의 마지막 호출 일시Created At : Role 생성 일시Created By : Role 생성자명Updated At : Role 업데이트 일시Updated By : 마지막 Role 수정자명
+    1. 해당 정책이 할당되어 있는 Role 목록을 나열합니다.
+    2. 목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Assigned At : Role에 해당 정책이 할당된 일시Assigned By : 해당 정책을 Role에 할당한 관리자명
+      1. Name : Role명
+      2. Description : Role 상세설명
+      3. Assigned At : Role에 해당 정책이 할당된 일시
+      4. Assigned By : 해당 정책을 Role에 할당한 관리자명
+    3. 각 행을 클릭하면 Role에 대한 상세정보를 드로워 형태로 제공합니다. Name : Role명 해당 롤 상세페이지 링크를 제공합니다.Description : Role 상세설명Last Access At : 해당 롤의 마지막 호출 일시Created At : Role 생성 일시Created By : Role 생성자명Updated At : Role 업데이트 일시Updated By : 마지막 Role 수정자명
+      1. Name : Role명 해당 롤 상세페이지 링크를 제공합니다.
+        * 해당 롤 상세페이지 링크를 제공합니다.
+      2. Description : Role 상세설명
+      3. Last Access At : 해당 롤의 마지막 호출 일시
+      4. Created At : Role 생성 일시
+      5. Created By : Role 생성자명
+      6. Updated At : Role 업데이트 일시
+      7. Updated By : 마지막 Role 수정자명
+  3. Versions 해당 정책의 각 버전에 대한 내역을 나열합니다. 정책 버전은 Code가 수정되어 저장되면 업데이트 됩니다. 목록은 각 version마다 이하의 정보를 노출합니다:Version : 버전명Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명각 행을 클릭하면 버전에 대한 상세정보를 드로워 형태로 제공합니다. (Title) : 정책명Version : 정책 버전Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명하단에 당시의 정책 코드 스냅샷이 노출됩니다.
+    1. 해당 정책의 각 버전에 대한 내역을 나열합니다. 정책 버전은 Code가 수정되어 저장되면 업데이트 됩니다. 
+      * 정책 버전은 Code가 수정되어 저장되면 업데이트 됩니다. 
+    2. 목록은 각 version마다 이하의 정보를 노출합니다:Version : 버전명Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명
+      1. Version : 버전명
+      2. Justification : 정책 업데이트 기입 사유 
+      3. Updated At : 해당 버전 생성 일시
+      4. Updated By : 해당 버전 수정자명
+    3. 각 행을 클릭하면 버전에 대한 상세정보를 드로워 형태로 제공합니다. (Title) : 정책명Version : 정책 버전Justification : 정책 업데이트 기입 사유 Updated At : 해당 버전 생성 일시Updated By : 해당 버전 수정자명하단에 당시의 정책 코드 스냅샷이 노출됩니다.
+      1. (Title) : 정책명
+      2. Version : 정책 버전
+      3. Justification : 정책 업데이트 기입 사유 
+      4. Updated At : 해당 버전 생성 일시
+      5. Updated By : 해당 버전 수정자명
+      6. 하단에 당시의 정책 코드 스냅샷이 노출됩니다.
+
+## Policy 생성하기 
+1. Administrator > Kubernetes > K8s Access Control > Policies 메뉴로 이동합니다.
+2. 우측 상단의 + Create Policy 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다. (아래 정보는 모두 사용자에게 노출되는 정보입니다.)Name : 식별 가능한 정책명 (필수)Description : 해당 정책에 대한 부가적인 설명
+  1. Name : 식별 가능한 정책명 (필수)
+  2. Description : 해당 정책에 대한 부가적인 설명
+4. OK 버튼을 클릭하여 생성합니다.
+5. 정책 목록 맨 상단에 신규 생성된 정책을 클릭합니다.  
+6. 쿠버네티스 정책 설정하기 가이드를 참고하여 정책을 설정합니다. 
+
+## Policy 수정하기  
+1. Administrator > Kubernetes > K8s Access Control > Policies 메뉴로 이동합니다.
+2. 목록에서 수정할 Policy를 클릭하여 상세 페이지로 이동합니다.
+3. 화면 우측 상단의 Edit 버튼을 클릭하여 이하의 정보를 수정할 수 있습니다.Name : 식별 가능한 정책명 (필수)Description : 해당 정책에 대한 부가적인 설명
+  1. Name : 식별 가능한 정책명 (필수)
+  2. Description : 해당 정책에 대한 부가적인 설명
+4. OK 버튼을 클릭하여 수정을 반영합니다.
+
+## Policy 복제하기  
+1. Administrator > Kubernetes > K8s Access Control > Policies 메뉴로 이동합니다.
+2. 목록에서 복제할 Policy를 클릭하여 상세 페이지로 이동합니다.
+3. 화면 우측 상단의 Duplicate 버튼을 클릭하여 복제본의 정보를 수정할 수 있습니다.Name : 식별 가능한 정책명 (필수)Description : 해당 정책에 대한 부가적인 설명
+  1. Name : 식별 가능한 정책명 (필수)
+  2. Description : 해당 정책에 대한 부가적인 설명
+4. OK 버튼을 클릭하여 수정을 반영합니다.
+5. 정책 목록 맨 상단에 신규 복제된 정책을 클릭하여 조회/수정합니다.  
+
+## Policy 삭제하기
+1. Administrator > Kubernetes > K8s Access Control > Policies 메뉴로 이동합니다.
+2. 두 가지 방식으로 삭제 단계를 진행할 수 있습니다:목록에서 삭제 테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다. 상세페이지에서 삭제화면 우측 상단의 Delete 버튼을 클릭합니다.
+  1. 목록에서 삭제 테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다. 
+    1. 테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.
+    2. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다. 
+  2. 상세페이지에서 삭제화면 우측 상단의 Delete 버튼을 클릭합니다.
+    1. 화면 우측 상단의 Delete 버튼을 클릭합니다.
+3. 팝업이 나타나면 Delete 버튼을 클릭하여 삭제를 진행합니다. 
+
+Policy 삭제 시 해당 정책이 부여되어 있던 쿠버네티스 클러스터 리소스 및 역할에서 자동 분리됩니다. 

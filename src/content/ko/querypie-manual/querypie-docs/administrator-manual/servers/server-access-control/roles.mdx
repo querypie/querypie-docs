@@ -1,0 +1,85 @@
+## Overview
+서버에 대한 사용자 액세스를 허용하거나 제한하기 위해 조직 내에서의 사용자 역할을 기반으로 하는 역할 기반 액세스 제어(Role-Based Access Control, RBAC)를 사용합니다. 사용자나 사용자 그룹에게 설정한 Role을 부여할 수 있습니다. Role은 여러 정책을 종합하여 단일 역할로 정의하는 데 사용됩니다.
+
+Administrator > Servers > Server Access Control > Roles
+
+1. Administrator > Servers > Server Access Control > Roles 메뉴로 이동합니다.
+2. 테이블 좌측 상단의 검색란을 통해 역할명을 조건으로 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 Role 목록을 최신화할 수 있습니다.
+4. 테이블에서 이하의 컬럼 정보를 제공합니다:Name : Role명Description : Role 상세설명Last Access At : 해당 역할의 마지막 호출 일시Created At : 역할 최초 생성일시Updated At : 역할 마지막 수정일시Updated By : 마지막 업데이트를 실행한 관리자명
+  1. Name : Role명
+  2. Description : Role 상세설명
+  3. Last Access At : 해당 역할의 마지막 호출 일시
+  4. Created At : 역할 최초 생성일시
+  5. Updated At : 역할 마지막 수정일시
+  6. Updated By : 마지막 업데이트를 실행한 관리자명
+
+## Role 조회하기
+Administrator > Servers > Server Access Control > Roles > List Details
+
+1. Administrator > Servers > Server Access Control > Roles 메뉴로 이동합니다.
+2. 각 행을 클릭하면 역할 세부 정보 조회가 가능합니다.Policies디폴트로 지정되는 탭으로 할당된 정책 목록을 조회할 수 있습니다.테이블 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Policy명Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명각 정책 행을 클릭 해당 정책의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Policy명정책 상세페이지 링크를 새 창으로 열 수 있습니다.Version : Policy 버전Description : Policy 상세설명Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명하단에는 정책이 코드로 노출됩니다.Users/Groups해당 Role이 부여되어 있는 사용자/그룹 목록을 나열합니다.사용자/그룹명으로 검색 가능합니다.목록은 각 사용자/그룹마다 이하의 정보를 노출합니다:User Type : 사용자/그룹 유형Name : 사용자/그룹명Last Access At : 사용자/그룹의 마지막 호출 일시Expiration Date : 기한 만료일Granted At : 사용자/그룹에 해당 Role이 부여된 일시Servers해당 Role에 의해 접근 가능한 서버 목록을 나열합니다.Server명으로 검색 가능합니다.목록은 각 서버마다 이하의 정보를 노출합니다:Server Group : 서버 그룹명Server : 서버명Host : 서버 Host 정보Account : 서버 접속 계정명 
+  1. Policies디폴트로 지정되는 탭으로 할당된 정책 목록을 조회할 수 있습니다.테이블 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Policy명Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명각 정책 행을 클릭 해당 정책의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Policy명정책 상세페이지 링크를 새 창으로 열 수 있습니다.Version : Policy 버전Description : Policy 상세설명Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명하단에는 정책이 코드로 노출됩니다.
+    1. 디폴트로 지정되는 탭으로 할당된 정책 목록을 조회할 수 있습니다.
+    2. 테이블 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Policy명Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명
+      1. Name : Policy명
+      2. Description : Policy 상세설명
+      3. Version : Policy 버전
+      4. Assigned At : 할당 일시
+      5. Assigned By : 해당 정책을 할당한 관리자명
+    3. 각 정책 행을 클릭 해당 정책의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Policy명정책 상세페이지 링크를 새 창으로 열 수 있습니다.Version : Policy 버전Description : Policy 상세설명Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명하단에는 정책이 코드로 노출됩니다.
+      1. 상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Policy명정책 상세페이지 링크를 새 창으로 열 수 있습니다.Version : Policy 버전Description : Policy 상세설명Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명
+        1. Name : Policy명정책 상세페이지 링크를 새 창으로 열 수 있습니다.
+          * 정책 상세페이지 링크를 새 창으로 열 수 있습니다.
+        2. Version : Policy 버전
+        3. Description : Policy 상세설명
+        4. Assigned At : 할당 일시
+        5. Assigned By : 해당 정책을 할당한 관리자명
+      2. 하단에는 정책이 코드로 노출됩니다.
+  2. Users/Groups해당 Role이 부여되어 있는 사용자/그룹 목록을 나열합니다.사용자/그룹명으로 검색 가능합니다.목록은 각 사용자/그룹마다 이하의 정보를 노출합니다:User Type : 사용자/그룹 유형Name : 사용자/그룹명Last Access At : 사용자/그룹의 마지막 호출 일시Expiration Date : 기한 만료일Granted At : 사용자/그룹에 해당 Role이 부여된 일시
+    1. 해당 Role이 부여되어 있는 사용자/그룹 목록을 나열합니다.
+    2. 사용자/그룹명으로 검색 가능합니다.
+    3. 목록은 각 사용자/그룹마다 이하의 정보를 노출합니다:User Type : 사용자/그룹 유형Name : 사용자/그룹명Last Access At : 사용자/그룹의 마지막 호출 일시Expiration Date : 기한 만료일Granted At : 사용자/그룹에 해당 Role이 부여된 일시
+      1. User Type : 사용자/그룹 유형
+      2. Name : 사용자/그룹명
+      3. Last Access At : 사용자/그룹의 마지막 호출 일시
+      4. Expiration Date : 기한 만료일
+      5. Granted At : 사용자/그룹에 해당 Role이 부여된 일시
+  3. Servers해당 Role에 의해 접근 가능한 서버 목록을 나열합니다.Server명으로 검색 가능합니다.목록은 각 서버마다 이하의 정보를 노출합니다:Server Group : 서버 그룹명Server : 서버명Host : 서버 Host 정보Account : 서버 접속 계정명 
+    1. 해당 Role에 의해 접근 가능한 서버 목록을 나열합니다.
+    2. Server명으로 검색 가능합니다.
+    3. 목록은 각 서버마다 이하의 정보를 노출합니다:Server Group : 서버 그룹명Server : 서버명Host : 서버 Host 정보Account : 서버 접속 계정명 
+      1. Server Group : 서버 그룹명
+      2. Server : 서버명
+      3. Host : 서버 Host 정보
+      4. Account : 서버 접속 계정명
+
+## Role 생성하기
+1. Administrator > Servers > Server Access Control > Roles 메뉴로 이동합니다.
+2. 우측 상단의 + Create Role 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다.Name : Role를 화면 상에서 구별할 수 있는 이름입니다.Description : 해당 Role에 대한 부가적인 설명을 입력할 수 있습니다. 사용자들의 Role 선택 화면에서도 표시됩니다.
+  1. Name : Role를 화면 상에서 구별할 수 있는 이름입니다.
+  2. Description : 해당 Role에 대한 부가적인 설명을 입력할 수 있습니다. 사용자들의 Role 선택 화면에서도 표시됩니다.
+4. Save 버튼을 통해 저장합니다.
+
+## Role 수정하기
+Administrator > Servers > Server Access Control > Roles > List Details
+
+Role의 세부 화면 진입 후, 자동으로 선택되어있는 Policies 탭에서 아래와 같이 Policy를 추가 할 수 있습니다.
+
+1. Server Settings > Server Access Control > Roles 메뉴로 이동합니다.
+2. 리스트에서 수정할 Role을 선택합니다.
+3. 화면 우측 중앙에 있는 + Assign Policies 버튼을 클릭합니다.
+4. 사전에 생성한 Policy를 추가합니다.
+
+## Role 삭제하기
+1. Administrator > Servers > Server Access Control > Roles 메뉴로 이동합니다.
+2. 두 가지 방식으로 삭제 단계를 진행할 수 있습니다:목록에서 삭제테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.상세페이지에서 삭제화면 우측 상단의 Delete 버튼을 클릭합니다.
+  1. 목록에서 삭제테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
+    1. 테이블 내 삭제할 대상 정책 좌측의 체크 박스를 체크합니다.
+    2. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
+  2. 상세페이지에서 삭제화면 우측 상단의 Delete 버튼을 클릭합니다.
+    1. 화면 우측 상단의 Delete 버튼을 클릭합니다.
+3. 팝업이 나타나면 Delete 버튼을 클릭하여 삭제를 진행합니다.
+
+Role 삭제 시 해당 역할이 부여되어 있던 사용자 및 그룹에서 권한이 회수됩니다.

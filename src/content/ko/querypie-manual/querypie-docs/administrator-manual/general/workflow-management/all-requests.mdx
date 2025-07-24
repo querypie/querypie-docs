@@ -1,0 +1,42 @@
+## Overview
+All Requests에서는 QueryPie 내의 모든 요청 내역을 조회하고, 상세 내용을 확인할 수 있습니다.
+
+## 요청 목록 조회하기
+Administrator > General > Workflow Management > All Requests 페이지에서 요청 목록을 조회합니다. 
+
+Administrator > General > Workflow Management > All Requests
+
+기본적으로 이번 달에 상신된 요청이 조회되며, 최근 올라온 요청 순으로 정렬되어 있습니다. 목록에 대한 검색 및 필터를 제공합니다. 주요 필터에 대한 설명은 아래를 참고하세요.
+
+* Approval Status : 승인 상태
+* Execution Status : 실행 상태
+* Label : 원장 데이터에 대한 요청 여부를 표시합니다.Normal : 일반적인 요청Ledger : 원장 데이터에 대한 SQL Request원장 테이블 통제 기능을 사용하려면 Ledger Management 라이선스 활성화가 필요합니다. 자세한 내용은 Ledger Table Policy 문서를 참고해주세요.
+  * Normal : 일반적인 요청
+  * Ledger : 원장 데이터에 대한 SQL Request원장 테이블 통제 기능을 사용하려면 Ledger Management 라이선스 활성화가 필요합니다. 자세한 내용은 Ledger Table Policy 문서를 참고해주세요.
+    * 원장 테이블 통제 기능을 사용하려면 Ledger Management 라이선스 활성화가 필요합니다. 
+    * 자세한 내용은 Ledger Table Policy 문서를 참고해주세요.
+
+## 요청 상세 내용 확인하기
+요청을 클릭하면 상세 내용을 확인할 수 있습니다.
+
+### Current Status
+요청의 진행 현황을 확인할 수 있습니다. 박스 위에 마우스를 호버하면 상세 내용을 확인할 수 있습니다.
+
+Administrator > General > Workflow Management > All Requests > List Detail > Current Status
+
+Approvers 단계별 색상은 승인 상태를 나타냅니다. 각 색상의 의미는 다음과 같습니다.
+
+* 초록색 : 승인 완료
+* 노란색 : 현재 승인 진행 중
+* 회색 : 이전 승인 단계가 미완료 되어 대기 중
+
+승인자의 이름이 표기되지 않은 짙은 회색 박스는 Step이 비어 있는 경우를 표시합니다.
+
+### Request Detail
+요청 유형 별로 작성된 상세 내용을 확인할 수 있습니다. 자세한 내용은 Submit Request 하위 문서들을 참고하세요.
+
+* DB Access Request 요청하기 
+* SQL Request 요청하기 
+* SQL Export Request 요청하기 
+* Server Access Request 요청하기
+* Access Role Request 요청하기

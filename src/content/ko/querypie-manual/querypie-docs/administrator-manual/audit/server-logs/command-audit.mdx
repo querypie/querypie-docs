@@ -1,0 +1,80 @@
+## Overview
+QueryPie를 통해 접속한 서버에서 실행한 명령어를 기록합니다. Windows Server의 경우 마우스 클릭, 키보드 입력, 실행 프로세스명을 기록합니다.
+
+## Command Audit 조회하기
+Administrator > Audit > Servers > Command Audit
+
+1. Administrator > Audit > Servers > Command Audit 메뉴로 이동합니다.
+2. 접속일 기준으로 로그가 내림차순으로 조회됩니다.
+3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.Name : 사용자 이름Server Name : 접속 서버 명Command : 실행한 명령어Role : 접속 Role
+  1. Name : 사용자 이름
+  2. Server Name : 접속 서버 명
+  3. Command : 실행한 명령어
+  4. Role : 접속 Role
+4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.Server OS : 접속한 서버의 OSProtocol : 접시 사용한 ProtocolExecuted From : 접속 방식web : QueryPie Web을 통한 접속proxy : Agent 또는 Seamless SSH Connection을 통한 접속Action Type : 기록된 이벤트 타입All : 모든 타입File Download : (SFTP) 파일 다운로드File Upload : (SFTP) 파일 업로드Process Start : (RDP) 프로세스 실행Process Stop : (RDP) 프로세스 종료User Input - MouseClick : (RDP) 사용자 마우스 클릭User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭User Input - KeyPress : (RDP) 사용자 키보드 입력Executed At : 명령어 수행 시점Restricted : 명령어 차단 여부
+  1. Server OS : 접속한 서버의 OS
+  2. Protocol : 접시 사용한 Protocol
+  3. Executed From : 접속 방식web : QueryPie Web을 통한 접속proxy : Agent 또는 Seamless SSH Connection을 통한 접속
+    1. web : QueryPie Web을 통한 접속
+    2. proxy : Agent 또는 Seamless SSH Connection을 통한 접속
+  4. Action Type : 기록된 이벤트 타입All : 모든 타입File Download : (SFTP) 파일 다운로드File Upload : (SFTP) 파일 업로드Process Start : (RDP) 프로세스 실행Process Stop : (RDP) 프로세스 종료User Input - MouseClick : (RDP) 사용자 마우스 클릭User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭User Input - KeyPress : (RDP) 사용자 키보드 입력
+    1. All : 모든 타입
+    2. File Download : (SFTP) 파일 다운로드
+    3. File Upload : (SFTP) 파일 업로드
+    4. Process Start : (RDP) 프로세스 실행
+    5. Process Stop : (RDP) 프로세스 종료
+    6. User Input - MouseClick : (RDP) 사용자 마우스 클릭
+    7. User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭
+    8. User Input - KeyPress : (RDP) 사용자 키보드 입력
+  5. Executed At : 명령어 수행 시점
+  6. Restricted : 명령어 차단 여부
+5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
+6. 테이블에서 이하의 컬럼 정보를 제공합니다:No : 이벤트 식별 번호Executed At : 명령어 수행 시점Name : 대상 사용자 이름Email : 대상 사용자 이메일Role : 대상 사용자 접속시 사용된 Role명Account : 서버 접속 AccountCommand : 실행한 명령어Restricted : 명령어 차단 여부Not RestrictedRestricted Restricted Command : 차단된 명령어Server Name : 대상 서버명Server OS : 접속한 서버의 OSHost : 접속한 서버의 호스트Port : 접속시 사용된 포트Protocol : 접시 사용한 ProtocolClient IP : 사용자 클라이언트 IP 주소Client Name : 사용자의 접속 방식Action Type : 기록된 이벤트 타입Message : 접속 실패 등 특이사항에 대한 기록
+  1. No : 이벤트 식별 번호
+  2. Executed At : 명령어 수행 시점
+  3. Name : 대상 사용자 이름
+  4. Email : 대상 사용자 이메일
+  5. Role : 대상 사용자 접속시 사용된 Role명
+  6. Account : 서버 접속 Account
+  7. Command : 실행한 명령어
+  8. Restricted : 명령어 차단 여부Not RestrictedRestricted
+    1. Not Restricted
+    2. Restricted
+  9.  Restricted Command : 차단된 명령어
+  10. Server Name : 대상 서버명
+  11. Server OS : 접속한 서버의 OS
+  12. Host : 접속한 서버의 호스트
+  13. Port : 접속시 사용된 포트
+  14. Protocol : 접시 사용한 Protocol
+  15. Client IP : 사용자 클라이언트 IP 주소
+  16. Client Name : 사용자의 접속 방식
+  17. Action Type : 기록된 이벤트 타입
+  18. Message : 접속 실패 등 특이사항에 대한 기록
+
+## Command Audit 상세 내역 조회하기
+각 행을 클릭하면 세부 정보 조회가 가능합니다.
+
+Administrator > Audit > Servers > Command Audit > Command Audit Details
+
+* 우측 드로워에는 이하의 정보를 노출합니다:Name : 대상 사용자 이름Action Type : 기록된 이벤트 타입Executed At : 명령어 수행 시점Executed From : 접속 방식Server Access History : 해당 세션의 접속 로그Session Log : 이 명령어를 수행한 세션 레코딩 조회Server Name : 대상 서버명Server OS : 접속한 서버의 OSHost : 접속한 서버의 호스트Port : 접속시 사용된 포트Account : 서버 접속 AccountProtocol : 접시 사용한 ProtocolClient Name : 사용자의 접속 방식Client IP : 사용자 클라이언트 IP 주소Restricted : 명령어 차단 여부 Restricted Command : 차단된 명령어Detected Type : 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)Command : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)Result : 명령어 수행 결과
+  1. Name : 대상 사용자 이름
+  2. Action Type : 기록된 이벤트 타입
+  3. Executed At : 명령어 수행 시점
+  4. Executed From : 접속 방식
+  5. Server Access History : 해당 세션의 접속 로그
+  6. Session Log : 이 명령어를 수행한 세션 레코딩 조회
+  7. Server Name : 대상 서버명
+  8. Server OS : 접속한 서버의 OS
+  9. Host : 접속한 서버의 호스트
+  10. Port : 접속시 사용된 포트
+  11. Account : 서버 접속 Account
+  12. Protocol : 접시 사용한 Protocol
+  13. Client Name : 사용자의 접속 방식
+  14. Client IP : 사용자 클라이언트 IP 주소
+  15. Restricted : 명령어 차단 여부
+  16.  Restricted Command : 차단된 명령어
+  17. Detected Type : 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)
+  18. Command : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)
+  19. Result : 명령어 수행 결과
+
+Enter 키를 여러 번 연속으로 눌러도, Command Audit에는 한 번만 기록됩니다.실제 입력 내용은 Session Log의 레코딩된 화면에서 확인할 수 있습니다.
