@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 import logging
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class SingleLineParser:
     def __init__(self, node):
@@ -129,10 +129,11 @@ class ConfluenceToMarkdown:
     def convert(self, html_content):
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
+        html_content = re.sub(r'\sri:', ' ', html_content)
         
         # Parse HTML with BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
-        
+
         # Start conversion
         self.process_node(soup)
 
@@ -158,6 +159,11 @@ class ConfluenceToMarkdown:
             return
 
         logging.debug(f"ConfluenceToMarkdown:process_node() node.name={node.name}, text={node.get_text()}")
+        if node.name == '[document]':
+            # Start processing from the body of the document
+            for child in node.children:
+                self.process_node(child)
+            return
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'p':
@@ -217,6 +223,8 @@ class ConfluenceToMarkdown:
             # Just process children
             for child in node.children:
                 self.process_node(child)
+        elif node.name == 'ac:image':
+            self.process_image(node)
         else:
             logging.warning(f"ConfluenceToMarkdown: Unexpected node={node.name}, processing children")
             # Default behavior for other tags: process children
@@ -461,6 +469,63 @@ class ConfluenceToMarkdown:
         self.markdown_lines.append("")  # Add empty line after code block
         
         self.inside_code_block = False
+        
+    def process_image(self, image_node):
+        """
+        Process Confluence-specific image tags (ac:image) and convert them to Markdown format.
+        
+        Example XHTML:
+        <ac:image ac:align="center" ac:layout="center" ac:original-height="668" ac:original-width="1024" 
+                 ac:custom-width="true" ac:alt="image-20240806-095511.png" ac:width="760">
+            <ri:attachment ri:filename="image-20240806-095511.png" ri:version-at-save="1"/>
+            <ac:caption><p>How QueryPie Works</p></ac:caption>
+            <ac:adf-mark key="border" size="1" color="#091e4224"/>
+        </ac:image>
+        
+        Converts to Markdown:
+        ![image-20240806-095511.png](image-20240806-095511.png)
+        *How QueryPie Works*
+        """
+        logging.debug(f"Processing Confluence image: {image_node}")
+        
+        # Extract image attributes
+        align = image_node.get('align', 'center')
+        alt_text = image_node.get('alt', '')
+        
+        # Find the attachment filename
+        attachment = image_node.find('ri:attachment')
+        image_filename = ''
+        if attachment:
+            image_filename = attachment.get('filename', '')
+            if not image_filename:
+                # Log warning if filename is still empty
+                logging.warning("'filename' attribute is empty, check XML namespace handling")
+        else:
+            logging.warning("No attachment found in ac:image, no filename to use.")
+        
+        # Find caption if present
+        caption_text = ''
+        caption = image_node.find('ac:caption')
+        if caption:
+            caption_p = caption.find('p')
+            if caption_p:
+                caption_text = self.get_text(caption_p)
+        
+        # Create markdown image with alt text and filename
+        if not alt_text and image_filename:
+            alt_text = image_filename
+            
+        # Add the image in markdown format
+        self.markdown_lines.append(f'<p align="{align}">')
+        #self.markdown_lines.append(f"[{alt_text}]({image_filename})")
+        self.markdown_lines.append(f"<div>[{alt_text}]()</div>") # TODO(JK): Link will be resolved later
+
+        # Add caption if present
+        if caption_text:
+            self.markdown_lines.append(f"*{caption_text}*")
+        self.markdown_lines.append(f'</p>')
+        # Add empty line after image
+        self.markdown_lines.append("")
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')

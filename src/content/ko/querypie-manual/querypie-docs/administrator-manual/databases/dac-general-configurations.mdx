@@ -3,12 +3,19 @@
 ## 데이터베이스 접근 제어 설정
 DB 접근 제어에 적용되는 설정을 관리합니다.
 
+<p align="center">
+<div>[image-20250627-001903.png]()</div>
+</p>
+
 * Privilege Deactivation Period : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
 * Maximum Access Duration : Privilege 요청 및 할당 시 최대 기간DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
   * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
 * Display the first 10 rows in Query Audit : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
 
-Query Audit Detail
+<p align="center">
+<div>[스크린샷 2023-12-10 오후 5.44.00.png]()</div>
+*Query Audit Detail*
+</p>
 
 * Advanced Privilege Setting : Privilege 권한별 계정 통제 (Default : Off)On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨자세한 내용은 DB Connections 내 Privilege Setting 문서 참고
   * On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨
@@ -28,7 +35,10 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승�
   * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.
   * Execute From: `{{executedFrom}}` : 쿼리를 수행한 수단입니다. 10.4.0 기준 Web Editor만 기록됩니다.
 
-Query Audit
+<p align="center">
+<div>[image-20250627-140103.png]()</div>
+*Query Audit*
+</p>
 
 * Member based Connection Filtering : Workflow에서 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링 하는 기능입니다. 커넥션의 상세 화면에서 connection member 에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Reqeust 에 노출됩니다.Databases > Connection Management > DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당
   * 커넥션의 상세 화면에서 connection member 에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Reqeust 에 노출됩니다.Databases > Connection Management > DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당

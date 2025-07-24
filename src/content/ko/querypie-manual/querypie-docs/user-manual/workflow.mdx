@@ -4,9 +4,15 @@ QueryPie는 권한자의 승인 하에 수행되어야 하는 다양한 작업�
 ## Workflow 메뉴 진입점
 QueryPie는 Workflow 메뉴로 진입하는 두 가지 경로를 제공하고 있습니다.
 
-상단 메뉴 &gt; General &gt; Workflow
+<p align="center">
+<div>[스크린샷 2024-09-02 오후 5.22.12.png]()</div>
+*상단 메뉴 &gt; General &gt; Workflow*
+</p>
 
-My Dashboard &gt; Workflow Requests
+<p align="center">
+<div>[스크린샷 2024-07-25 오후 2.54.41.png]()</div>
+*My Dashboard &gt; Workflow Requests*
+</p>
 
 ## Workflow 내의 역할
 Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 있는 역할은 아래와 같습니다.
@@ -54,7 +60,10 @@ Workflow 메뉴 내 Submit Request 버튼을 누른 뒤, 원하는 요청 타입
 1. Workflow 목록 중 Received Requests > To Do 메뉴에서 승인이 필요한 요청 목록을 확인합니다.
 2. 처리하고자 하는 요청을 클릭하여 상세 내용을 확인 후 우측 상단에서 Approve 또는 Reject를 클릭합니다.
 
-Workflow &gt; Received Requests &gt; To Do &gt; List Details
+<p align="center">
+<div>[image-20240801-062129.png]()</div>
+*Workflow &gt; Received Requests &gt; To Do &gt; List Details*
+</p>
 
 Q. 사용자가 요청한 DB 커넥션 중 일부만 승인할 수 있나요?
 
@@ -67,7 +76,10 @@ A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인
 내가 실행자(Executor)로서 할당받은 요청들의 목록은 Executions 하위 메뉴에 표시됩니다. 실행을 해야할 목록(To Do)과 완료된 목록(Done)이 있으며 실행을 필요로 하는 결재 타입은 SQL Request, SQL Export Request 2가지 입니다.
 
 ### SQL Request 실행하기
-Workflow &gt; Executions &gt; To Do &gt; List Details
+<p align="center">
+<div>[스크린샷 2024-07-25 오전 9.48.50.png]()</div>
+*Workflow &gt; Executions &gt; To Do &gt; List Details*
+</p>
 
 1. User > Workflow > Executions > To Do 메뉴로 이동합니다.
 2. 실행 대기 중인 SQL Request 건을 클릭하여 상세 페이지로 이동합니다.
@@ -82,7 +94,10 @@ Q. 대용량 쿼리 실행 시 QueryPie 백그라운드에서도 쿼리 실행�
 A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라우저를 종료하더라도 QueryPie 서버 백그라운드에서 쿼리 실행이 유지됩니다. 웹브라우저 종료 후 QueryPie 재접속 시 서버 백그라운드에서 실행 중인 쿼리는 SQL Request 상세 페이지에서 진행 상태를 확인하실 수 있습니다. 이와 같은 백그라운드 쿼리 실행 기능의 경우 QueryPie v9.15.0 이상의 버전 환경에서만 지원됩니다.
 
 ### SQL Export Request 실행하기
-Workflow &gt; Executions &gt; To Do
+<p align="center">
+<div>[스크린샷 2024-07-25 오전 10.47.19.png]()</div>
+*Workflow &gt; Executions &gt; To Do*
+</p>
 
 1. User > Workflow > Executions > To Do 메뉴로 이동합니다.
 2. 실행 대기 중인 Export Request 건을 클릭하여 상세 페이지로 이동합니다.

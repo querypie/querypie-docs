@@ -9,6 +9,10 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
 ### 일반 설정
 기본적인 보안 설정을 관리합니다.
 
+<p align="center">
+<div>[Screenshot 2025-07-22 at 3.08.16 PM.png]()</div>
+</p>
+
 * Maximum OS Account Login Failures before Lockout : 로그인 실패 시 계정 잠금 정책서버 로그인 실패 허용 최대 횟수 지정Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 11분 내 2회 실패 시 계정 잠금)
   * 서버 로그인 실패 허용 최대 횟수 지정
   * Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 11분 내 2회 실패 시 계정 잠금)
@@ -67,6 +71,10 @@ Workflow 요청 작성 시점을 기준으로 정책 내용이 반영됩니다. 
 
 사용자는 Server Access Request를 통하여 서버에 대한 Direct Permission 을 할당받을 수 있습니다. 자세한 내용은 Server Access Request 요청하기를 참고해주세요.
 
+<p align="center">
+<div>[Screenshot 2025-07-22 at 3.09.36 PM.png]()</div>
+</p>
+
 * Maximum Access Duration : 서버 접근 권한의 최대 사용 기간을 설정
 * Protocols : 허용 프로토콜 (지원 프로토콜 : SSH, SFTP, TELNET, FTP, RDP, VNC)
 * Command Template : 접속시 적용할 차단 명령어 템플릿선택한 Command Template의 내용은 Command Policy Detail 아코디언을 펼쳐서 확인 가능차단 명령어 템플릿의 생성 및 관리 방법은 Command Templates 참고
@@ -93,6 +101,10 @@ Workflow 요청 작성 시점을 기준으로 정책 내용이 반영됩니다. 
 Workflow 요청 작성 시점을 기준으로 정책 내용이 반영됩니다. 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
 
 사용자는 Server Privilege Request를 통하여 서버에 대한 특권을 할당받을 수 있습니다. 자세한 내용은 Server Privilege Request 요청하기를 참고해주세요.
+
+<p align="center">
+<div>[Screenshot 2025-07-22 at 3.15.31 PM.png]()</div>
+</p>
 
 * Maximum Access Duration: 특권 사용의 최대 지속 기간을 설정
 * Allow Pre-defined Command Templates Only: 서버 특권 신청 시 명령어 입력 방식을 제어Enable: 신청자는 관리자가 미리 정의하고 허용한 명령어 템플릿 중에서만 선택할 수 있으며, 명령어를 직접 입력 불가Disable: 기존과 같이 신청자가 허용할 명령어를 직접 입력

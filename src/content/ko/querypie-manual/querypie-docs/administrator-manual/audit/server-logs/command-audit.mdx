@@ -2,7 +2,10 @@
 QueryPie를 통해 접속한 서버에서 실행한 명령어를 기록합니다. Windows Server의 경우 마우스 클릭, 키보드 입력, 실행 프로세스명을 기록합니다.
 
 ## Command Audit 조회하기
-Administrator &gt; Audit &gt; Servers &gt; Command Audit
+<p align="center">
+<div>[image-20240728-171227.png]()</div>
+*Administrator &gt; Audit &gt; Servers &gt; Command Audit*
+</p>
 
 1. Administrator > Audit > Servers > Command Audit 메뉴로 이동합니다.
 2. 접속일 기준으로 로그가 내림차순으로 조회됩니다.
@@ -54,7 +57,10 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 ## Command Audit 상세 내역 조회하기
 각 행을 클릭하면 세부 정보 조회가 가능합니다.
 
-Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Details
+<p align="center">
+<div>[image-20241209-125101.png]()</div>
+*Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Details*
+</p>
 
 * 우측 드로워에는 이하의 정보를 노출합니다:Name : 대상 사용자 이름Action Type : 기록된 이벤트 타입Executed At : 명령어 수행 시점Executed From : 접속 방식Server Access History : 해당 세션의 접속 로그Session Log : 이 명령어를 수행한 세션 레코딩 조회Server Name : 대상 서버명Server OS : 접속한 서버의 OSHost : 접속한 서버의 호스트Port : 접속시 사용된 포트Account : 서버 접속 AccountProtocol : 접시 사용한 ProtocolClient Name : 사용자의 접속 방식Client IP : 사용자 클라이언트 IP 주소Restricted : 명령어 차단 여부 Restricted Command : 차단된 명령어Detected Type : 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)Command : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)Result : 명령어 수행 결과
   1. Name : 대상 사용자 이름

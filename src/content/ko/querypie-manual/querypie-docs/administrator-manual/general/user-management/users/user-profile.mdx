@@ -4,10 +4,16 @@
 ## Profile
 사용자의 Attribute(속성)을 조회할 수 있는 탭입니다. 각 Attribute별 설명은 이 페이지 하단의 참고: 사용자 Attribute 목록 항목을 참고하여 주시기 바랍니다.
 
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile 탭
+<p align="center">
+<div>[image-20240526-063720.png]()</div>
+*Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile 탭*
+</p>
 
 ## Groups
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups 탭
+<p align="center">
+<div>[image-20240514-162350.png]()</div>
+*Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups 탭*
+</p>
 
 사용자가 소속된 사용자 그룹을 조회할 수 있는 탭입니다.
 
@@ -15,7 +21,10 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 2. Group Name : 그룹명
 
 ## Admin Roles
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles 탭
+<p align="center">
+<div>[image-20240514-162730.png]()</div>
+*Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles 탭*
+</p>
 
 사용자에게 할당된 쿼리파이 관리자 권한 목록을 조회할 수 있는 탭입니다.
 
@@ -27,7 +36,10 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 ## Allowed Zones
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones 메뉴에서 생성된 Allowed Zone을 사용자에게 직접 할당하거나, 'IP Registration Request' 워크플로우를 통해 승인된 Static IP가 자동으로 적용된 내역을 확인할 수 있습니다.
 
-Allowed Zones 탭
+<p align="center">
+<div>[image-20240526-064635.png]()</div>
+*Allowed Zones 탭*
+</p>
 
 사전 작업
 
@@ -37,6 +49,10 @@ Allowed Zones 탭
 사용자가 'IP Registration Request' 워크플로우를 통해 IP 주소 등록을 요청하고 최종 승인되면, 해당 IP는 사용자의 Profile 탭에 있는 Static IP 속성에 자동으로 추가됩니다.
 
 이렇게 Static IP 속성에 등록된 주소들은 이 Allowed Zone 탭에 Name이 Static IP 인 항목으로 자동 반영되어, 사용자는 해당 IP에서의 접근 권한을 부여받게 됩니다.
+
+<p align="center">
+<div>[Screenshot 2025-06-26 at 6.12.22 PM.png]()</div>
+</p>
 
 ### 워크플로우를 통해 등록된 Static IP 삭제하기
 워크플로우를 통해 자동으로 등록된 Static IP 항목은 Allowed Zones 탭에서 직접 Detach 할 수 없습니다. 삭제하려면 사용자의 Profile 탭으로 이동하여 Static IP 속성값 중 원하는 IP 주소를 직접 편집하여 제거해야 합니다. Static IP 속성에서 값이 삭제되면 Allowed Zones 탭에서도 해당 IP가 즉시 제거되어 접근 권한이 해제됩니다.
@@ -50,12 +66,18 @@ Allowed Zones 탭
 ### 사용자에게 Allowed Zone 할당하기
 Allowed Zones 탭 우측 Attach Allowed Zones 버튼을 클릭하면 Allowed Zone 할당 모달이 출력됩니다. 할당하고자 하는 Allowed Zone을 선택하고 Attach 버튼을 클릭하여 할당을 완료합니다.
 
-Attach Allowed Zone 모달
+<p align="center">
+<div>[스크린샷 2024-07-30 오후 9.44.03.png]()</div>
+*Attach Allowed Zone 모달*
+</p>
 
 ### 사용자에게서 Allowed Zone 할당 해제하기
 Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크박스로 선택하면 Detach 버튼이 노출됩니다. 버튼을 클릭하고, 확인 모달에서 Detach 버튼을 클릭하여 할당 해제를 완료합니다.
 
-Allowed Zones 할당 해제
+<p align="center">
+<div>[스크린샷 2024-07-30 오후 9.49.52.png]()</div>
+*Allowed Zones 할당 해제*
+</p>
 
 Q. Tags 탭이 비활성화 되어 있어요.
 

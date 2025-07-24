@@ -12,7 +12,10 @@ Syslog (legacy) 는 무엇인가요?기존 Syslog 를 사용하셨던 경우 Sys
 
 1. 상세 페이지에 있는 Configure 버튼을 클릭하면 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
 
-Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination
+<p align="center">
+<div>[스크린샷 2024-07-23 오전 9.36.28.png]()</div>
+*Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination*
+</p>
 
 1. Destination 정보를 생성하기 위해 다음의 정보들을 입력합니다. Destination Name : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.Protocol : syslog에서 선택 가능한 프로토콜은 TCP(기본값)와 UDP입니다. UDP는 패킷의 길이 제약사항이 있고 보안적으로 취약하므로 TCP 사용을 권장합니다.Destination Address (Hostname): syslog를 수신하는 syslog server의 IP address 또는 hostname을 입력합니다.Port : sylog server에서 listen 하는 port를 입력합니다. (기본값 514)Test Connection 버튼 : TCP는 syslog 서버와 통신상태를 점검할 수 있습니다. UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.Select Event Items : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 앴는 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운경우 syslog header를 빼기 위해 제공되는 옵션입니다.Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
   1. Destination Name : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.

@@ -4,10 +4,17 @@ Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터
 ## Access Control 목록 조회하기
 Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별로 부여된 DB 권한(Privilege) 및 관리자 역할 현황을 조회할 수 있습니다. (그룹 또는 사용자 이름으로 검색 가능)
 
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
+<p align="center">
+<div>[스크린샷 2024-07-31 오전 11.35.02.png]()</div>
+*Administrator &gt; Databases &gt; DB Access Control &gt; Access Control*
+</p>
 
 ## 사용자/그룹별 Access Control 상세 내역 조회하기
 Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 그룹을 클릭하면 Drawer가 열립니다.
+
+<p align="center">
+<div>[스크린샷 2024-07-31 오전 11.54.24.png]()</div>
+</p>
 
 * 검색 : Connection Name 으로 조회 가능
 * 제공 필터 타입Database Type : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)Cloud Provider : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)Assigned Status : 권한 할당 여부Favorite View : 즐겨찾기 설정 여부 (DB Connections 목록에서 즐겨찾기 설정 가능)Tag : 커넥션에 할당된 태그각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자 : =, !=, :, !:Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
@@ -22,7 +29,10 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
     * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
 
 ## Access Control 권한 부여하기
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege
+<p align="center">
+<div>[image-20241209-121743.png]()</div>
+*Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege*
+</p>
 
 1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
 2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 디테일 페이지로 이동합니다.
@@ -37,7 +47,10 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Use
 사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속시 Default Privilege 를 선택하고 접속할 수 있습니다.
 
 ## Access Control 권한 회수하기
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details
+<p align="center">
+<div>[image-20241209-122146.png]()</div>
+*Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details*
+</p>
 
 1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
 2. 목록에서 권한을 회수할 사용자 또는 그룹을 선택하여 디테일 페이지로 이동합니다.
@@ -77,15 +90,26 @@ Access Control Details 패널에 대한 세부 설명
 * 권한이 부여되었지만 Expiration Date 컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기미접속 설정(Deactivation Period)의 영향을 받습니다.
 
 ## 커넥션 잠금 계정 해제하기 (Locked Account)
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account
+<p align="center">
+<div>[image-20241209-123011.png]()</div>
+*Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account*
+</p>
 
 1. 데이터베이스 커넥션 보안정책에 의해 DB 계정 인증 실패(Maximum Login Failures) 횟수 초과로 커넥션이 잠긴 경우에 대해 Locked Account 메뉴에서 조회 가능합니다.
 2. DB 계정 인증 실패 횟수와 잠긴 시점이 함께 표시됩니다.
 3. 잠금해제 하고자하는 항목을 선택 후 우측 Unlock을 클릭하여 커넥션 잠금을 해제합니다.
 
+<p align="center">
+<div>[image-20241209-123358.png]()</div>
+</p>
+
 1. 커넥션 잠금 및 잠금해제 내역은 Audit > Databases > Account Lock History 메뉴에서 확인하실 수 있습니다.
 
 테이블 태그로 접근제어하기Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우,
+
+<p align="center">
+<div>[image-20250703-050924.png]()</div>
+</p>
 
 Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다. 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다.
 
@@ -97,5 +121,9 @@ Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 �
 
 1. Databases > DB Access Control > Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다.
 2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
+
+<p align="center">
+<div>[image-20250703-051824.png]()</div>
+</p>
 
 만약 Tag-based table access 기능을 활성화한 상태에서 어떤 태그도 등록하지 않으면 해당 커넥션의 모든 테이블에 접근할 수 없게 됩니다.
