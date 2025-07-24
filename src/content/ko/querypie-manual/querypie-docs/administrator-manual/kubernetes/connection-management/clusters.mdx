@@ -1,12 +1,12 @@
 ## Overview
-쿼리파이에서 쿠버네티스 클러스터 자산에 대한 조회, 생성, 수정, 삭제를 지원합니다. Cloud Provider를 통해 동기화 해온 쿠버네티스 클러스터 및 수동으로 등록한 쿠버네티스 클러스터 모두 동일한 페이지에서 관리합니다. 
+쿼리파이에서 쿠버네티스 클러스터 자산에 대한 조회, 생성, 수정, 삭제를 지원합니다. Cloud Provider를 통해 동기화 해온 쿠버네티스 클러스터 및 수동으로 등록한 쿠버네티스 클러스터 모두 동일한 페이지에서 관리합니다.
 
 Administrator > Kubernetes > Connection Management > Clusters
 
-## Cluster 조회하기 
+## Cluster 조회하기
 1. Administrator > Kubernetes > Connection Management > Clusters 메뉴로 이동합니다.
-2. 테이블 좌측 상단의 검색란을 통해 클러스터명을 조건으로 검색이 가능합니다. 
-3. 테이블 우측 상단의 새로고침 버튼을 통해 클러스터 목록을 최신화할 수 있습니다. 
+2. 테이블 좌측 상단의 검색란을 통해 클러스터명을 조건으로 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 클러스터 목록을 최신화할 수 있습니다.
 4. 테이블에서 이하의 컬럼 정보를 제공합니다: Name : 클러스터 이름Version : 클러스터 버전API URL : 클러스터 API URLCloud Provider : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)Tags : 클러스터에 달린 태그 목록Created At : 클러스터 최초 생성일시Updated At : 클러스터 마지막 수정일시
   1. Name : 클러스터 이름
   2. Version : 클러스터 버전
@@ -17,15 +17,15 @@ Administrator > Kubernetes > Connection Management > Clusters
   7. Updated At : 클러스터 마지막 수정일시
 5. 각 행을 클릭하면 클러스터 세부 정보 조회가 가능합니다.
 
-## Cluster 생성하기 
+## Cluster 생성하기
 1. Administrator > Kubernetes > Connection Management > Clusters 메뉴로 이동합니다.
 2. 우측 상단의 + Create Cluster 버튼을 클릭합니다.
 3. 수동으로 쿠버네티스 클러스터 등록하기 가이드를 참고하여 수동으로 클러스터를 생성합니다.
 
-## Cluster 삭제하기  
+## Cluster 삭제하기
 1. Administrator > Kubernetes > Connection Management > Clusters 메뉴로 이동합니다.
 2. 테이블 내 삭제할 대상 클러스터 좌측의 체크 박스를 체크합니다.
-3. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다. 
+3. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
 4. 팝업이 나타나면 Delete 버튼을 클릭하여 삭제를 진행합니다.
 
 Cluster 삭제 시 사용자/그룹에 부여된 해당 클러스터에 대한 접근 권한 모두 일괄 삭제됩니다.

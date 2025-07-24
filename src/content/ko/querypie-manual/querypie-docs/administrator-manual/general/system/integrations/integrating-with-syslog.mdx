@@ -1,16 +1,16 @@
 ## Overview
-QueryPie에서 기록하는 로그를 Syslog 형식으로 외부로 전송하는 기능을 제공합니다. 
+QueryPie에서 기록하는 로그를 Syslog 형식으로 외부로 전송하는 기능을 제공합니다.
 
 * 9.19.0 이전 버전까지는 UDP 프로토콜 기반 Syslog(RFC3164) 형식의 로그 전송을 지원하였습니다.
 * 9.19.0 버전부터 TCP 프로토콜을 지원합니다. 또한, HTTP/HTTPS 프로토콜 기반 Splunk HEC(HTTP Event Collector) 전송을 지원합니다.
 
 ## Syslog Integration 설정
-1. Administrator > General > System > Integrations 메뉴로 이동합니다. 
-2. Syslog 타일을 클릭하여 상세 페이지로 이동합니다. 
+1. Administrator > General > System > Integrations 메뉴로 이동합니다.
+2. Syslog 타일을 클릭하여 상세 페이지로 이동합니다.
 
-Syslog (legacy) 는 무엇인가요?기존 Syslog 를 사용하셨던 경우 Syslog (Legacy) 타일이 추가로 표시됩니다. 이곳에서 기존 포맷을 유지한 상태로 Syslog 를 그대로 전송받을 수 있습니다. Legacy Format은 Syslog 프로토콜 상 Timestamp 필드가 Time Zone의 영향을 받으므로 별도로 Time Zone 설정 항목이 존재합니다. 기본값은 UTC입니다. 
+Syslog (legacy) 는 무엇인가요?기존 Syslog 를 사용하셨던 경우 Syslog (Legacy) 타일이 추가로 표시됩니다. 이곳에서 기존 포맷을 유지한 상태로 Syslog 를 그대로 전송받을 수 있습니다. Legacy Format은 Syslog 프로토콜 상 Timestamp 필드가 Time Zone의 영향을 받으므로 별도로 Time Zone 설정 항목이 존재합니다. 기본값은 UTC입니다.
 
-1. 상세 페이지에 있는 Configure 버튼을 클릭하면 Destination 정보를 입력할 수 있는 팝업이 표시됩니다. 
+1. 상세 페이지에 있는 Configure 버튼을 클릭하면 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
 
 Administrator > General > System > Integrations > Syslog > Configure Destination
 

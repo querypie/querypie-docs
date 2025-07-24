@@ -1,12 +1,12 @@
 ## Overview
 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
 
-## Profile 
-사용자의 Attribute(속성)을 조회할 수 있는 탭입니다. 각 Attribute별 설명은 이 페이지 하단의 참고: 사용자 Attribute 목록 항목을 참고하여 주시기 바랍니다. 
+## Profile
+사용자의 Attribute(속성)을 조회할 수 있는 탭입니다. 각 Attribute별 설명은 이 페이지 하단의 참고: 사용자 Attribute 목록 항목을 참고하여 주시기 바랍니다.
 
 Administrator > General > User Management > Users > List Details > Profile 탭
 
-## Groups 
+## Groups
 Administrator > General > User Management > Users > List Details > Groups 탭
 
 사용자가 소속된 사용자 그룹을 조회할 수 있는 탭입니다.
@@ -14,17 +14,17 @@ Administrator > General > User Management > Users > List Details > Groups 탭
 1. Auth Provider : 그룹의 관리 주체
 2. Group Name : 그룹명
 
-## Admin Roles 
+## Admin Roles
 Administrator > General > User Management > Users > List Details > Admin Roles 탭
 
-사용자에게 할당된 쿼리파이 관리자 권한 목록을 조회할 수 있는 탭입니다. 
+사용자에게 할당된 쿼리파이 관리자 권한 목록을 조회할 수 있는 탭입니다.
 
 1. Role Name : 관리자 역할명
 2. Description : 관리자 역할에 대한 설명
 3. Granted By : 현 사용자에게 관리자 역할을 부여한 주체
 4. Granted At : 관리자 역할을 부여받은 일시
 
-## Allowed Zones 
+## Allowed Zones
 Administrator > General > Company Management > Allowed Zones 메뉴에서 생성된 Allowed Zone을 사용자에게 직접 할당하거나, 'IP Registration Request' 워크플로우를 통해 승인된 Static IP가 자동으로 적용된 내역을 확인할 수 있습니다.
 
 Allowed Zones 탭
@@ -62,39 +62,39 @@ Q. Tags 탭이 비활성화 되어 있어요.
 A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는 탭으로 아직 미출시된 기능입니다. 추후 버전에서 지원 예정입니다.
 
 ## 참고: 사용자 Attribute 목록
-| 속성명                | 변수                | 설명                            | 비고       |
-| ------------------ | ----------------- | ----------------------------- | -------- |
-| User name          | loginId           | 사용자 ID                        | 필수       |
-| First name         | firstName         | 사용자 이름                        |          |
-| Last name          | lastName          | 사용자 성                         |          |
-| Middle name        | middleName        | 사용자 중간 이름                     |          |
-| Honorific prefix   | honorificPrefix   | 사용자 존칭 (접두사) (예. Mr./Ms.)     |          |
-| Honorific suffix   | honorificSuffix   | 사용자 존칭 (접미사) (예. 님, 씨)        |          |
-| Primary email      | email             | 사용자 이메일                       | 필수       |
-| Title              | title             | 사용자 직함                        |          |
-| Display name       | displayName       | 사용자 표기명                       | 필수       |
-| Nickname           | nickName          | 사용자 별칭                        |          |
-| Profile Url        | profileUrl        | 사용자 프로필 URL                   |          |
-| Secondary email    | secondEmail       | 보조 이메일                        |          |
-| Mobile phone       | mobilePhone       | 휴대폰 번호                        |          |
-| Primary phone      | primaryPhone      | 전화전호 (주 연락처)                  |          |
-| Street address     | streetAddress     | 도로주소                          |          |
-| City               | city              | 도시                            |          |
-| State              | state             | 주/도                           |          |
-| Zip code           | zipCode           | 우편번호                          |          |
-| Country code       | countryCode       | 국가코드 번호                       |          |
-| Postal Address     | postalAddress     | 우편용 주소                        |          |
-| Preferred language | preferredLanguage | 선호 언어 (예. en)                 |          |
-| Locale             | locale            | 국가/언어 설정에 쓰이는 장소 (예. en_US)   |          |
-| Time zone          | timezone          | 지역 타임존 (예. US/Pacific)        |          |
-| User type          | userType          | 사용자 유형 (예. Employee)          |          |
-| Employee number    | employeeNumber    | 사번                            |          |
-| Cost center        | costCenter        | 사업부서 (재무회계 기준)                |          |
-| Organization       | organization      | 사용자 소속 조직                     |          |
-| Division           | division          | 사용자 소속 부                      |          |
-| Department         | department        | 사용자 소속 부서                     |          |
-| Manager ID         | managerId         | 상사 ID                         |          |
-| Manager            | manager           | 상사 표기명                        |          |
-| Static IP          | staticIp          | 사용자 할당 정적 IP                  |          |
-| Mac address        | macAddress        | 사용자 MAC 주소                    |          |
-| Risk score         | riskScore         | 사용자 위험 지수 (쿼리파이 System에서 관리)  | 추후 제공 예정 |
+| 속성명                | 변수                | 설명                           | 비고       |
+| ------------------ | ----------------- | ---------------------------- | -------- |
+| User name          | loginId           | 사용자 ID                       | 필수       |
+| First name         | firstName         | 사용자 이름                       |          |
+| Last name          | lastName          | 사용자 성                        |          |
+| Middle name        | middleName        | 사용자 중간 이름                    |          |
+| Honorific prefix   | honorificPrefix   | 사용자 존칭 (접두사) (예. Mr./Ms.)    |          |
+| Honorific suffix   | honorificSuffix   | 사용자 존칭 (접미사) (예. 님, 씨)       |          |
+| Primary email      | email             | 사용자 이메일                      | 필수       |
+| Title              | title             | 사용자 직함                       |          |
+| Display name       | displayName       | 사용자 표기명                      | 필수       |
+| Nickname           | nickName          | 사용자 별칭                       |          |
+| Profile Url        | profileUrl        | 사용자 프로필 URL                  |          |
+| Secondary email    | secondEmail       | 보조 이메일                       |          |
+| Mobile phone       | mobilePhone       | 휴대폰 번호                       |          |
+| Primary phone      | primaryPhone      | 전화전호 (주 연락처)                 |          |
+| Street address     | streetAddress     | 도로주소                         |          |
+| City               | city              | 도시                           |          |
+| State              | state             | 주/도                          |          |
+| Zip code           | zipCode           | 우편번호                         |          |
+| Country code       | countryCode       | 국가코드 번호                      |          |
+| Postal Address     | postalAddress     | 우편용 주소                       |          |
+| Preferred language | preferredLanguage | 선호 언어 (예. en)                |          |
+| Locale             | locale            | 국가/언어 설정에 쓰이는 장소 (예. en_US)  |          |
+| Time zone          | timezone          | 지역 타임존 (예. US/Pacific)       |          |
+| User type          | userType          | 사용자 유형 (예. Employee)         |          |
+| Employee number    | employeeNumber    | 사번                           |          |
+| Cost center        | costCenter        | 사업부서 (재무회계 기준)               |          |
+| Organization       | organization      | 사용자 소속 조직                    |          |
+| Division           | division          | 사용자 소속 부                     |          |
+| Department         | department        | 사용자 소속 부서                    |          |
+| Manager ID         | managerId         | 상사 ID                        |          |
+| Manager            | manager           | 상사 표기명                       |          |
+| Static IP          | staticIp          | 사용자 할당 정적 IP                 |          |
+| Mac address        | macAddress        | 사용자 MAC 주소                   |          |
+| Risk score         | riskScore         | 사용자 위험 지수 (쿼리파이 System에서 관리) | 추후 제공 예정 |

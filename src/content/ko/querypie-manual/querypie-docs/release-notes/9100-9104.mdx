@@ -2,35 +2,29 @@ External API 변경사항은 아래 링크를 참고해주세요.
 
 * 9.10.0 버전 External API 변경사항
 
-## QueryPie 9.10.4 Release
- 
-
-Bug Fix 
+## QueryPie 9.10.4 Release
+Bug Fix
 
 * [External API] api/external/connection-auth-logs, audit-logs 구버전 스펙 대응
 
 ---
 
-## QueryPie 9.10.3 Release
- 
-
-Bug Fix 
+## QueryPie 9.10.3 Release
+Bug Fix
 
 * [Performance][PostgreSQL] 에이전트 오류 발생 방지를 위해 PG QSI 메모리 기본값 상향 조절
 
 ---
 
-## QueryPie 9.10.2 Release
- 
-
-Bug Fix 
+## QueryPie 9.10.2 Release
+Bug Fix
 
 * [Migration] 1MB 이상의 SQL이 들어간 SQL Request 마이그레이션 할 때 Data Tool long 발생 오류 해결
 
 ---
 
-## QueryPie 9.10.1 Release
-Bug Fix 
+## QueryPie 9.10.1 Release
+Bug Fix
 
 * [DynamoDB] AssumeRole 사용하는 환경에서 쿼리 실행 불가 오류 해결
 * [Redis] ElastiCache Redis 접속시 ERR Unknown Command 오류 해결
@@ -43,7 +37,7 @@ Bug Fix 
 
 ---
 
-## QueryPie 9.10.0 Release
+## QueryPie 9.10.0 Release
 New Features
 
 * [Workflow] 감사 단계 (Approval Steps) & 사후 승인 (Urgent Mode) 기능 추가
@@ -52,8 +46,8 @@ Bug Fix & Enhancement
 
 * [Alert] New Request (Workflow) 내 타입 및 사후승인 조건 추가
 * [Agent] 에이전트 실행시 zscaler VPN 충돌을 피하기 위해 Bitwise Not 스트림 적용
-* [Authentication] SAML 연동 사용자의 계정 삭제 기능 지원 
-* [Authentication] Okta, Onelogin 사용시 QueryPie 자체 OTP 설정 무시되도록 처리 
+* [Authentication] SAML 연동 사용자의 계정 삭제 기능 지원
+* [Authentication] Okta, Onelogin 사용시 QueryPie 자체 OTP 설정 무시되도록 처리
 * [Audit&Log] DML Snapshot에서 Executed From (Query Audit) 컬럼 추가
 * [Audit&Log] 권한 모두 회수했을 때 세션 종료 후 로그 기록
 * [Impala] 관리자나 사용자가 지정한 Realm 으로 접속 불가능한 이슈 수정
@@ -68,7 +62,7 @@ Bug Fix & Enhancement
 * [Redis] 미지원 명령어 실행 시 에러 메세지 개선
 * [Web Editor] 원장 DB의 경우 SQL Execution Purpose 옵션 활성 강제화
 * [Windows][SAML] 미들웨어보다 브라우저 시간이 빠른 경우 OneLogin, Okta 로그인 시 오류 수정
-* [Workflow] Access Request 요청에 Expiration Date 항목에 Default 일자 표시 
+* [Workflow] Access Request 요청에 Expiration Date 항목에 Default 일자 표시
 * [Workflow] All requests 메뉴 내 Export 기능 추가
 * [Workflow] SQL Request / Export Request 타입 커넥션 목록 내 원장 DB 표시 추가
 * [Connection] Access Start Time / Access End Time 정책 초기화시 저장 불가 이슈 해결

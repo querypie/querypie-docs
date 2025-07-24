@@ -1,7 +1,7 @@
 ## Overview
 QueryPie에서의 모든 활동은 감사 로그에 기록됩니다. 사용자와 관리자의 로그인/로그아웃, 권한 부여와 회수, 쿠버네티스에 대한 API 수행 이력, 리소스 또는 보안 설정 변경 등 QueryPie와 접근제어 대상 리소스에서 발생하는 모든 활동 이력이 로그의 대상입니다. 실시간으로 기록되는 로그에 대해 다양한 조건으로 검색 및 필터링이 가능합니다.
 
-## 연관 감사 로그 종류 
+## 연관 감사 로그 종류
 쿼리파이 공통으로 제공되는 감사 로그에 더하여 쿼리파이 쿠버네티스 접근제어 (QueryPie KAC) 라이선스 보유 시, 이하의 감사 로그의 종류 제공합니다.
 
 | 공통 로그                                                     | KAC 전용 로그                                                             |
@@ -11,10 +11,10 @@ QueryPie에서의 모든 활동은 감사 로그에 기록됩니다. 사용자�
 1. General
 
 * User Access History : 사용자 로그인, 로그아웃 이력
-* Activity Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력 
+* Activity Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
 * Admin Role History : 관리자 권한 부여, 변경, 회수 이력
 
-2. Kubernetes 
+2. Kubernetes
 
 * Request Audit : 쿠버네티스 API 서버 호출 내역
 * Pod Session Recordings : Pod Exec 등의 연결 세션 내 행위 녹화 내역

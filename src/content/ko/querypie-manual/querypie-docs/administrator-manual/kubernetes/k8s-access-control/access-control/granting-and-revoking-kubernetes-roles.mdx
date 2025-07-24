@@ -1,12 +1,12 @@
 ## Overview
-관리자는 사용자 또는 사용자 그룹에 쿠버네티스 API 접근 권한이 있는 역할(Role)을 부여하거나 회수할 수 있습니다. 
+관리자는 사용자 또는 사용자 그룹에 쿠버네티스 API 접근 권한이 있는 역할(Role)을 부여하거나 회수할 수 있습니다.
 
-## 쿠버네티스 역할 부여하기 
+## 쿠버네티스 역할 부여하기
 Administrator > Kubernetes > K8s Access Control > Access Control
 
-1. Administrator > Kubernetes > K8s Access Control > Access Control 메뉴로 이동합니다. 
+1. Administrator > Kubernetes > K8s Access Control > Access Control 메뉴로 이동합니다.
 2. 권한을 부여할 사용자 또는 사용자 그룹을 선택하여 상세페이지로 이동합니다. Administrator > Kubernetes > K8s Access Control > Access Control > List Details
-3. Roles 탭 우측의 + Grant Roles 버튼을 클릭하여 부여할 Role 좌측 체크박스를 체크하고 만료일을 지정합니다. Role명으로 검색 가능합니다.기존에 이미 할당되어 있는 역할은 체크박스가 비활성화됩니다.리스트 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Role명 역할 정보를 조회할 수 있는 새창 링크를 제공합니다.Description : Role 상세설명Assigned Policies : 할당되어 있는 정책 목록을 나열Expiration Date : 기한 만료일을 필수로 지정합니다. 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다. 
+3. Roles 탭 우측의 + Grant Roles 버튼을 클릭하여 부여할 Role 좌측 체크박스를 체크하고 만료일을 지정합니다. Role명으로 검색 가능합니다.기존에 이미 할당되어 있는 역할은 체크박스가 비활성화됩니다.리스트 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Role명 역할 정보를 조회할 수 있는 새창 링크를 제공합니다.Description : Role 상세설명Assigned Policies : 할당되어 있는 정책 목록을 나열Expiration Date : 기한 만료일을 필수로 지정합니다. 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다.
   1. Role명으로 검색 가능합니다.
   2. 기존에 이미 할당되어 있는 역할은 체크박스가 비활성화됩니다.
   3. 리스트 목록에는 각 정책별 이하의 정보를 노출합니다:Name : Role명 역할 정보를 조회할 수 있는 새창 링크를 제공합니다.Description : Role 상세설명Assigned Policies : 할당되어 있는 정책 목록을 나열
@@ -14,14 +14,14 @@ Administrator > Kubernetes > K8s Access Control > Access Control
       * 역할 정보를 조회할 수 있는 새창 링크를 제공합니다.
     2. Description : Role 상세설명
     3. Assigned Policies : 할당되어 있는 정책 목록을 나열
-  4. Expiration Date : 기한 만료일을 필수로 지정합니다. 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다. 
-    * 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다. 
+  4. Expiration Date : 기한 만료일을 필수로 지정합니다. 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다.
+    * 디폴트로 설정 시점에서 1년 뒤로 설정되며, 최대 1년까지만 설정 가능합니다.
 4. Grant 버튼을 클릭하여 체크한 대상 Role을 할당합니다.
 5. (Cancel 버튼을 누르면 해당 모달을 변경사항 없이 종료합니다.)
 
-## 쿠버네티스 역할 회수하기 
-1. Administrator > Kubernetes > K8s Access Control > Access Control 메뉴로 이동합니다. 
-2. 권한을 회수할 사용자 또는 사용자 그룹을 선택하여 상세페이지로 이동합니다. 
+## 쿠버네티스 역할 회수하기
+1. Administrator > Kubernetes > K8s Access Control > Access Control 메뉴로 이동합니다.
+2. 권한을 회수할 사용자 또는 사용자 그룹을 선택하여 상세페이지로 이동합니다.
 3. Roles 탭에서 전체 선택 또는 개별 선택 박스에 체크 시 컬럼 바에 노출된 Revoke 버튼을 클릭합니다.
 4. 컨펌창에서 Revoke 버튼 클릭 시, 선택한 역할 권한이 사용자/그룹으로부터 회수되어 리스트에서 사라집니다.
 5. (Cancel 버튼 클릭 시 컨펌창만 닫습니다.)

@@ -1,9 +1,9 @@
 ## Overview
-조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 내역을 쿼리파이 프록시에서 각 호출 별로 모니터링하고 감사 로그를 기록합니다. 
+조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 내역을 쿼리파이 프록시에서 각 호출 별로 모니터링하고 감사 로그를 기록합니다.
 
-## Request Audit 조회하기 
+## Request Audit 조회하기
 1. Administrator > Audit > Kubernetes > Request Audit 메뉴로 이동합니다.
-2. Executed At 당일 00:00~23:59기준으로 로그가 내림차순으로 조회됩니다. 
+2. Executed At 당일 00:00~23:59기준으로 로그가 내림차순으로 조회됩니다.
 3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.Name : 사용자 이름Cluster Name : 쿼리파이 상에 등록된 클러스터 이름
   1. Name : 사용자 이름
   2. Cluster Name : 쿼리파이 상에 등록된 클러스터 이름
@@ -19,29 +19,29 @@
   1. No : 이벤트 식별 번호
   2. Executed At : 쿠버네티스 API 호출 발생 일시
   3. Result : API 호출 성공/실패 여부  Success Failure
-    1.  Success
-    2.  Failure
+    1. Success
+    2. Failure
   4. Name : 대상 사용자 이름
   5. Email : 대상 사용자 이메일
   6. Client IP : 사용자 클라이언트 IP 주소
   7. Cluster Name : 대상 쿠버네티스 클러스터명
   8. Role : 액션을 행사할 수 있었던 Role명
-  9. Namespace : 대상 네임스페이스 
+  9. Namespace : 대상 네임스페이스
   10. Verb : 호출된 특정 쿠버네티스 API 액션
   11. Resource : 호출된 특정 쿠버네티스 리소스
-  12. Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 
-  13. Message : API 호출 시 반환된 메시지를 기록 쿼리파이에서는 pods/exec와 같은 세션 로그에 대해 세션 시작과 끝 각 시간에 맞춰 총 2회 기록하고 있습니다. 이에 대한 구분은 해당 메시지를 통해 함께 구분이 가능합니다.  
-    * 쿼리파이에서는 pods/exec와 같은 세션 로그에 대해 세션 시작과 끝 각 시간에 맞춰 총 2회 기록하고 있습니다. 이에 대한 구분은 해당 메시지를 통해 함께 구분이 가능합니다.  
-  14. Cluster Endpoint : 호출된 타겟 API 엔드포인트 
+  12. Resource Name : 호출된 특정 쿠버네티스 리소스의 이름
+  13. Message : API 호출 시 반환된 메시지를 기록 쿼리파이에서는 pods/exec와 같은 세션 로그에 대해 세션 시작과 끝 각 시간에 맞춰 총 2회 기록하고 있습니다. 이에 대한 구분은 해당 메시지를 통해 함께 구분이 가능합니다.
+    * 쿼리파이에서는 pods/exec와 같은 세션 로그에 대해 세션 시작과 끝 각 시간에 맞춰 총 2회 기록하고 있습니다. 이에 대한 구분은 해당 메시지를 통해 함께 구분이 가능합니다.
+  14. Cluster Endpoint : 호출된 타겟 API 엔드포인트
   15. Kubernetes Groups : API 호출 시 QueryPie Proxy가 impersonate한 쿠버네티스 그룹 계정명
   16. Client Name : 사용자 클라이언트명/버전 (예. kubectl/v1.27.3)
 
-## Request Audit 상세 내역 조회하기 
-1. 각 행을 클릭하면 세부 정보 조회가 가능합니다.최상단에는 기본 이벤트에 따른 정보를 노출합니다:Result : API 호출 성공/실패 여부  Success FailureExecuted At : 쿠버네티스 API 호출 발생 일시Message : API 호출 시 반환된 메시지를 기록Name : 대상 사용자 이름Email : 대상 사용자 이메일Client IP : 사용자 클라이언트 IP 주소Client Name : 사용자 클라이언트명/버전Cluster Name : 대상 쿠버네티스 클러스터명Role : 액션을 행사할 수 있었던 Role명Cluster Endpoint : 호출된 타겟 API 엔드포인트Reverse Tunnel Agent Name : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명Tag : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 TagPod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: Verb : 호출된 특정 쿠버네티스 API 액션Namespace : 대상 네임스페이스 Resource : 호출된 특정 쿠버네티스 리소스Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다. 
-  1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:Result : API 호출 성공/실패 여부  Success FailureExecuted At : 쿠버네티스 API 호출 발생 일시Message : API 호출 시 반환된 메시지를 기록Name : 대상 사용자 이름Email : 대상 사용자 이메일Client IP : 사용자 클라이언트 IP 주소Client Name : 사용자 클라이언트명/버전Cluster Name : 대상 쿠버네티스 클러스터명Role : 액션을 행사할 수 있었던 Role명Cluster Endpoint : 호출된 타겟 API 엔드포인트Reverse Tunnel Agent Name : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명Tag : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 TagPod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: Verb : 호출된 특정 쿠버네티스 API 액션Namespace : 대상 네임스페이스 Resource : 호출된 특정 쿠버네티스 리소스Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다. 
+## Request Audit 상세 내역 조회하기
+1. 각 행을 클릭하면 세부 정보 조회가 가능합니다.최상단에는 기본 이벤트에 따른 정보를 노출합니다:Result : API 호출 성공/실패 여부  Success FailureExecuted At : 쿠버네티스 API 호출 발생 일시Message : API 호출 시 반환된 메시지를 기록Name : 대상 사용자 이름Email : 대상 사용자 이메일Client IP : 사용자 클라이언트 IP 주소Client Name : 사용자 클라이언트명/버전Cluster Name : 대상 쿠버네티스 클러스터명Role : 액션을 행사할 수 있었던 Role명Cluster Endpoint : 호출된 타겟 API 엔드포인트Reverse Tunnel Agent Name : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명Tag : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 TagPod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: Verb : 호출된 특정 쿠버네티스 API 액션Namespace : 대상 네임스페이스 Resource : 호출된 특정 쿠버네티스 리소스Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다.
+  1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:Result : API 호출 성공/실패 여부  Success FailureExecuted At : 쿠버네티스 API 호출 발생 일시Message : API 호출 시 반환된 메시지를 기록Name : 대상 사용자 이름Email : 대상 사용자 이메일Client IP : 사용자 클라이언트 IP 주소Client Name : 사용자 클라이언트명/버전Cluster Name : 대상 쿠버네티스 클러스터명Role : 액션을 행사할 수 있었던 Role명Cluster Endpoint : 호출된 타겟 API 엔드포인트Reverse Tunnel Agent Name : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명Tag : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 TagPod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: Verb : 호출된 특정 쿠버네티스 API 액션Namespace : 대상 네임스페이스 Resource : 호출된 특정 쿠버네티스 리소스Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다.
     1. Result : API 호출 성공/실패 여부  Success Failure
-      1.  Success
-      2.  Failure
+      1. Success
+      2. Failure
     2. Executed At : 쿠버네티스 API 호출 발생 일시
     3. Message : API 호출 시 반환된 메시지를 기록
     4. Name : 대상 사용자 이름
@@ -53,18 +53,18 @@
     10. Cluster Endpoint : 호출된 타겟 API 엔드포인트
     11. Reverse Tunnel Agent Name : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명
     12. Tag : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 Tag
-    13. Pod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 
+    13. Pod Session Recording : Pod exec API로 실행 시 해당 세션에 대한 레코딩세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다.
       1. 세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.
-      2. Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 
-      3. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 
+      2. Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다.
+      3. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다.
     14. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: Verb : 호출된 특정 쿠버네티스 API 액션Namespace : 대상 네임스페이스 Resource : 호출된 특정 쿠버네티스 리소스Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)
       1. Verb : 호출된 특정 쿠버네티스 API 액션
-      2. Namespace : 대상 네임스페이스 
+      2. Namespace : 대상 네임스페이스
       3. Resource : 호출된 특정 쿠버네티스 리소스
-      4. Resource Name : 호출된 특정 쿠버네티스 리소스의 이름 
+      4. Resource Name : 호출된 특정 쿠버네티스 리소스의 이름
       5. Kubernetes Impersonated User : API 호출 시 impersonate한 쿠버네티스 사용자 계정명 (--as 정보를 표현)
       6. Kubernetes Impersonated Group : API 호출 시 impersonate한 쿠버네티스 그룹 계정명 (--as-group 정보를 표현)
-    15. 하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다. 
-      1. 주로 Create, Update, Patch 내역에서 내용을 기록합니다. 
+    15. 하단의 Request Body 영역에는 어떠한 YAML의 컨텐츠가 API로 요청되었는지 명시하고자 합니다.주로 Create, Update, Patch 내역에서 내용을 기록합니다. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다.
+      1. 주로 Create, Update, Patch 내역에서 내용을 기록합니다.
       2. Request Body에 대한 Max Size는 최대 4KB까지만 기록하고 보관합니다.
-      3. 4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다. 
+      3. 4KB가 초과하는 상황이 발생했을 때, 해당 kubernetes API 호출을 그대로 처리는 지원하고, 기록은 그대로 4KB까지만 남깁니다.

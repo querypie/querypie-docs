@@ -2,16 +2,16 @@
 QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어 정책을 설정합니다. 이때 Action에 대한 가이드를 제공하여 잘못된 정책 설정으로 인한 kubectl, lens, k9s와 같은 client tool 사용의 어려움을 겪지 않도록 하려 합니다.
 
 ## API Groups 관련 설정 가이드
-흔히 사용하는 pods 같은 경우는 apiGroups이 core 그룹이기 때문에 ""빈문자열이지만, deployments나 replicasets는 "apps", ingresses 같은 경우는 "networking.k8s.io"로 관리자가 하나하나 알고 세팅하기가 어렵습니다. 
+흔히 사용하는 pods 같은 경우는 apiGroups이 core 그룹이기 때문에 ""빈문자열이지만, deployments나 replicasets는 "apps", ingresses 같은 경우는 "networking.k8s.io"로 관리자가 하나하나 알고 세팅하기가 어렵습니다.
 
-물론 동일한 resource name을 가진 경우 apiGroups를 통해서 분리해야할 수 있지만 흔한 상황은 아닙니다. 
+물론 동일한 resource name을 가진 경우 apiGroups를 통해서 분리해야할 수 있지만 흔한 상황은 아닙니다.
 
 따라서 쿠버네티스 API Group 관리의 미션이 없는 한, 일반적으로는 "*"로 세팅하고 resources로 접근 권한을 제어하는 방향으로 설정을 권장드립니다.
 
 ## Resources 관련 설정 가이드
 3rd Party Client Tool - Lens 화면
 
-3rd Party Client Tool 사용 시 허용된 리소스 범위 내에서 현황 모니터링이 가능합니다. 
+3rd Party Client Tool 사용 시 허용된 리소스 범위 내에서 현황 모니터링이 가능합니다.
 
 * Resources 파트 위 화면에서 resources는 내가 권한을 가진 리소스에 대해서만 표시됩니다. 그래서 pods에 대한 권한만 있다면 pods에 대한 그래프만 보이고, 만약 pods가 필터링 되어서 일부만 볼 수 있다면 일부만 표시됩니다. 다른 리소스들도 마찬가지로 동작합니다.추천 스펙allow:
   actions:
@@ -21,8 +21,8 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
       namespace: "*"
       name: "*"
       verbs: ["get", "list", "watch"]
-  * 위 화면에서 resources는 내가 권한을 가진 리소스에 대해서만 표시됩니다. 
-  * 그래서 pods에 대한 권한만 있다면 pods에 대한 그래프만 보이고, 만약 pods가 필터링 되어서 일부만 볼 수 있다면 일부만 표시됩니다. 
+  * 위 화면에서 resources는 내가 권한을 가진 리소스에 대해서만 표시됩니다.
+  * 그래서 pods에 대한 권한만 있다면 pods에 대한 그래프만 보이고, 만약 pods가 필터링 되어서 일부만 볼 수 있다면 일부만 표시됩니다.
   * 다른 리소스들도 마찬가지로 동작합니다.
   * 추천 스펙allow:
   actions:
@@ -40,8 +40,8 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
       namespace: "*"
       name: "*"
       verbs: ["get", "list", "watch"]
-  * 아래 events 항목은 events 리소스에 대한 권한에 의해서 보여주는데, 위의 resources 항목과 마찬가지로 namespace, name에 의해서 필터링 되어 보여집니다. 
-  * 다만 pods에 대한 권한이 있다고 pods 관련 events가 보이는것이 아니니, 해당 화면을 보려면 명시적으로 events 리소스에 대한 권한을 주어야 합니다. 
+  * 아래 events 항목은 events 리소스에 대한 권한에 의해서 보여주는데, 위의 resources 항목과 마찬가지로 namespace, name에 의해서 필터링 되어 보여집니다.
+  * 다만 pods에 대한 권한이 있다고 pods 관련 events가 보이는것이 아니니, 해당 화면을 보려면 명시적으로 events 리소스에 대한 권한을 주어야 합니다.
   * events 리소스와 pods 리소스는 서로 분리된 리소스입니다. 따라서, events 리소스 권한이 있는 상태에서 pods에 대한 권한만을 주었다고 해서 events 중 pods에 대한 내역만 조회되지 않아 안내드립니다.
   * 추천 스펙allow:
   actions:
@@ -62,8 +62,8 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
       namespace: "*"
       name: "*"
       verbs: ["get", "list", "watch"]
-  * View 권한만을 얻는 사용자의 경우는 get, list, watch를 모두 부여해야 합니다. 
-  * get, list 만으로 kubectl의 사용은 크게 어렵지 않지만, watch가 없다면 lens와 같은 현황 모니터링을 지원하는 툴의 사용이 어렵습니다. 
+  * View 권한만을 얻는 사용자의 경우는 get, list, watch를 모두 부여해야 합니다.
+  * get, list 만으로 kubectl의 사용은 크게 어렵지 않지만, watch가 없다면 lens와 같은 현황 모니터링을 지원하는 툴의 사용이 어렵습니다.
   * 권장 스펙allow:
   actions:
     - apiGroups: ["*"]
@@ -91,9 +91,9 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
       namespace: "*"
       name: "*"
       verbs: ["get", "list", "delete", "deletecollection"]
-  * Edit 권한까지 얻는 사용자의 경우에는 View 권한(최소 get, list)도 함께 부여해주어야 합니다. kubectl에서도 특정 리소스에 대한 수정 요청을 하면 먼저 조회요청을 하기 때문입니다. 
+  * Edit 권한까지 얻는 사용자의 경우에는 View 권한(최소 get, list)도 함께 부여해주어야 합니다. kubectl에서도 특정 리소스에 대한 수정 요청을 하면 먼저 조회요청을 하기 때문입니다.
   * lens같은 툴에서는 View 권한이 없다면 Edit 화면으로 갈 수 있는 방법이 없습니다.
-  * Edit 중에서도 생성(create), 수정(patch, update), 삭제(delete, deletecollection) 이렇게 각 역할에 맞춰서 묶어서 주어져야 합니다. 
+  * Edit 중에서도 생성(create), 수정(patch, update), 삭제(delete, deletecollection) 이렇게 각 역할에 맞춰서 묶어서 주어져야 합니다.
   * deletecollection은 흔하게 사용되지는 않지만, KAC에서는 deletecollection으로 요청이 오더라도 사용자에게 권한이 있는 리소스만을 골라서 삭제처리 하므로 유용하게 사용될 수 있습니다.
   * 권장 스펙 allow:
   actions:
@@ -117,7 +117,7 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
       verbs: ["get", "list", "delete", "deletecollection"]
 
 ## 기타 추천 설정 가이드
-예) prod namespace 환경의 리소스에 대한 권한 제한 
+예) prod namespace 환경의 리소스에 대한 권한 제한
 
 allow:
   actions:

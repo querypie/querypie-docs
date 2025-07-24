@@ -44,8 +44,10 @@ class ConfluenceToMarkdown:
         # Start conversion
         self.process_node(soup)
         
-        # Join all markdown lines and return
-        return "\n".join(self.markdown_lines)
+        # Join all markdown lines
+        markdown_content = "\n".join(self.markdown_lines)
+        
+        return markdown_content
     
     def process_node(self, node):
         if isinstance(node, NavigableString):
@@ -141,10 +143,13 @@ class ConfluenceToMarkdown:
     
     def get_text(self, node):
         if isinstance(node, NavigableString):
-            return str(node)
+            text = str(node)
+            # Remove NBSP at the beginning and end of the text
+            return self.trim_nbsp(text)
         
         if hasattr(node, 'get_text'):
-            return node.get_text()
+            text = node.get_text()
+            return self.trim_nbsp(text)
         
         text = ""
         for child in node.children:
@@ -153,6 +158,12 @@ class ConfluenceToMarkdown:
             elif hasattr(child, 'get_text'):
                 text += child.get_text()
         
+        return self.trim_nbsp(text)
+    
+    def trim_nbsp(self, text):
+        """Remove NBSP characters at the beginning and end of text."""
+        # Replace NBSP characters with regular spaces
+        text = text.replace('\u00A0', ' ')
         return text.strip()
     
     def process_list_item(self, node, list_type, counter=None):
