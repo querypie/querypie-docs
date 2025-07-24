@@ -1,11 +1,5 @@
 QueryPie Multi Agent는 FreeDesktop 환경의 Linux 플랫폼에서만 동작합니다.
 
-1
-2
-false
-default
-list
-true
 # 지원 대상
 | 기반     | 배포판    | 최소 지원 버전           | 검증된 버전 (개발팀에서 검증) |
 | ------ | ------ | ------------------ | ----------------- |
@@ -28,14 +22,21 @@ Multi Agent는 StatusNotifierItem 으로 트레이 아이콘 기능을 제공합
 다양한 리눅스 배포판에서 StatusNotifierItem 이 기본으로 노출되지 않을 수 있습니다.
 
 ### 1. 설치 확인
+```
 gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
+```
+
 설치되어 있지 않음
 
+```
 Extension “appindicatorsupport@rgcjonas.gmail.com” doesn't exist
+```
+
 설치되어 있음
 
 State: ENABLED 인지 꼭 확인해야 합니다.
 
+```
 appindicatorsupport@rgcjonas.gmail.com
   Name: AppIndicator and KStatusNotifierItem Support
   Description: Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
@@ -43,6 +44,8 @@ appindicatorsupport@rgcjonas.gmail.com
   URL: https://github.com/ubuntu/gnome-shell-extension-appindicator
   Version: 53
   State: ENABLED
+```
+
 ### 2. 설치
 다음 링크에서 AppIndicator and KStatusNotifierItem Support 를 다운로드하고, 설치하세요.
 
@@ -74,13 +77,19 @@ Copyright: QueryPie, Inc.
 ### Uninstall
 터미널에서 다음 명령어를 실행합니다.
 
+```
 sudo dpkg -r querypie-multi-agent
+```
+
 출력 예시
 
+```
 Removing querypie-multi-agent (3) ...
 Processing triggers for hicolor-icon-theme (0.17-2) ...
 Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
 Processing triggers for desktop-file-utils (0.27-2build1) ...
+```
+
 ## RedHat 기반
 rpm 명령어를 기준으로 설명합니다.
 
@@ -108,11 +117,17 @@ QueryPie Multi Agent
 ### Uninstall
 터미널에서 다음 명령어를 실행합니다.
 
+```
 sudo rpm -e querypie-multi-agent
+```
+
 출력 예시
 
+```
 QueryPie Multi Agent is being uninstalled.
 QueryPie Multi Agent has been uninstalled.
+```
+
 ## Keyring
 note
 Ubuntu 를 기준으로 설명합니다.

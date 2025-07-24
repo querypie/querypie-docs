@@ -10,13 +10,13 @@ Quickstart는 10.2.8 버전을 기준으로 설명합니다.
 
 이 Quickstart를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다.
 
-none
 # Admin-side
 ## 1. 웹 앱 등록하기
 QueryPie 홈페이지(www.querypie.com) 내 /ko/resources 하위 구조는 다음과 같습니다.
 
 이 퀵스타트 가이드에서는 이 중 일부 경로만을 웹 앱 하위에 등록한 뒤, 등록된 경로만 접근을 허용하는 정책을 생성하겠습니다.
 
+```
 /ko/resources/
 ├── discover/
 │   ├── blog/ (등록)
@@ -29,6 +29,8 @@ QueryPie 홈페이지(www.querypie.com) 내 /ko/resources 하위 구조는 다�
     ├── documentation/ (등록)
     ├── tutorials/ (등록)
     └── demo/
+```
+
 1. Admin > Web Apps > Connection Management > Web Apps 메뉴로 진입하세요.
 2. Create a Web App 버튼을 클릭하면 웹 앱 등록 페이지로 진입합니다.
 
@@ -76,6 +78,7 @@ Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; Edit Policy C
 4. 방금 생성한 QP Web Test 정책을 클릭하여 상세 페이지로 진입하고, Go to Editor Mode 버튼을 클릭합니다.
 5. 에디터에 다음 내용을 복사 후 붙여넣습니다.
 
+```
 apiVersion: webApp.rbac.querypie.com/v1
 kind: WacPolicy
 
@@ -90,6 +93,8 @@ spec:
           - "/ko/resources/discover/white-paper/*"
           - "/ko/resources/learn/documentation/*"
           - "/ko/resources/learn/tutorials/*"
+```
+
 1. Save Changes 버튼을 클릭하고, 사유 입력 모달에서 OK 버튼을 눌러 저장합니다.
 
 ## 3. 역할 생성하기

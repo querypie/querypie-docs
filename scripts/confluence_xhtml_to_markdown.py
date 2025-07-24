@@ -21,6 +21,97 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+class SingleLineParser:
+    def __init__(self, node):
+        self.node = node
+        self.markdown_lines = []
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        self.convert_recursively(self.node)
+        # Join all lines without a space, and remove leading/trailing whitespace
+        # It is supposed to preserve whitespace in the middle of the text
+        return "".join(self.markdown_lines).strip()
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            # This is a leaf node with text
+            text = (
+                node.replace('\u00A0', ' ') # Replace NBSP with space
+            )
+            self.markdown_lines.append(text)
+            return
+
+        logging.debug(f"SingleLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
+        if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            self.markdown_lines.append("#" * int(node.name[1]) + " ")
+            for child in node.children:
+                self.convert_recursively(child)
+        elif node.name in ['strong']:
+            # TODO(JK): Determine if <strong> should be respected in headings
+            if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                for child in node.children:
+                    self.convert_recursively(child)
+                return
+
+            self.markdown_lines.append("**")
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append("**")
+        elif node.name in ['code']:
+            self.markdown_lines.append("`")
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append("`")
+        elif node.name in ['ac:structured-macro']:
+            """
+<ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="a935cf67-ed54-4b6b-aafd-63cbebe654e1">
+    <ac:parameter ac:name="title">Step 1</ac:parameter>
+    <ac:parameter ac:name="colour">Blue</ac:parameter>
+</ac:structured-macro>
+            """
+            if node.get('name') == 'status':
+                self.markdown_lines.append("**[")
+                for child in node.children:
+                    self.convert_recursively(child)
+                self.markdown_lines.append("]**")
+            else:
+                # For other structured macros, we can just log or skip
+                logging.warning(f"SingleLineParser: Unexpected ac:structured-macro: {node.get('ac:name')}, processing children")
+                for child in node.children:
+                    self.convert_recursively(child)
+            return
+        elif node.name in ['ac:parameter']:
+            if node.get('name') == 'title':
+                for child in node.children:
+                    self.convert_recursively(child)
+                return
+            elif node.get('name') == 'colour':
+                # ac:parameter with colour is not needed in Markdown
+                return
+            else:
+                logging.warning(f"SingleLineParser: Unexpected ac:parameter ac:name={node.get('ac:name')}")
+                for child in node.children:
+                    self.convert_recursively(child)
+                return
+        elif node.name in ['ac:inline-comment-marker']:
+            # ac:inline-comment-marker is a Confluence-specific tag that can be bypassed
+            for child in node.children:
+                self.convert_recursively(child)
+            return
+        elif node.name in ['br']:
+            # <br/> should be ignored in single line context
+            return
+        else:
+            logging.warning(f"SingleLineParser: Unexpected node={node.name}")
+            self.markdown_lines.append(f"[{node.name}]")
+            for child in node.children:
+                self.convert_recursively(child)
+
+        return
+
 class ConfluenceToMarkdown:
     def __init__(self):
         self.in_table = False
@@ -65,19 +156,10 @@ class ConfluenceToMarkdown:
                 # For code blocks, preserve original text including whitespace
                 self.markdown_lines.append(str(node))
             return
-            
-        if node.name == 'h1':
-            self.markdown_lines.append(f"# {self.get_text(node)}")
-        elif node.name == 'h2':
-            self.markdown_lines.append(f"## {self.get_text(node)}")
-        elif node.name == 'h3':
-            self.markdown_lines.append(f"### {self.get_text(node)}")
-        elif node.name == 'h4':
-            self.markdown_lines.append(f"#### {self.get_text(node)}")
-        elif node.name == 'h5':
-            self.markdown_lines.append(f"##### {self.get_text(node)}")
-        elif node.name == 'h6':
-            self.markdown_lines.append(f"###### {self.get_text(node)}")
+
+        logging.debug(f"ConfluenceToMarkdown:process_node() node.name={node.name}, text={node.get_text()}")
+        if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'p':
             text = self.get_text(node)
             if text:
@@ -136,7 +218,7 @@ class ConfluenceToMarkdown:
             for child in node.children:
                 self.process_node(child)
         else:
-            logging.warning(f"Unhandled tag: {node.name}, processing children")
+            logging.warning(f"ConfluenceToMarkdown: Unexpected node={node.name}, processing children")
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
@@ -338,7 +420,7 @@ class ConfluenceToMarkdown:
         macro_name = macro_node.get('name', '')
         if macro_name in ['info', 'note', 'tip', 'warning', 'caution']:
             # TODO(JK): Handle these macros with specific formatting
-            for child in node.children:
+            for child in macro_node.children:
                 self.process_node(child)
         elif macro_name in ['code']:
             self.process_code_macro(macro_node)
