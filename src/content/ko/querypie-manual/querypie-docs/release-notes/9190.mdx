@@ -1,0 +1,49 @@
+## QueryPie 9.19.0 Release
+New Features
+
+* [SCIM] SCIM 2.0 기반 사용자 및 그룹 프로비저닝 지원
+* [Users] 사용자 Attribute 프로필 관리 기능 지원
+* [Integrations] SIEM, SOAR 등 Security Tools 연동을 위한 Integrations 메뉴 신설
+* [DAC] SingleStore 신규 벤더 지원
+* [DAC] SAP HanaDB 신규 벤더 지원
+
+Enhancement
+
+* [Workflow] SQL Export Request 멀티 쿼리 상신 기능 제공
+* [Workflow] Approval Rule 설정 시 Server Group Owner를 승인자로 지정할 수 있는 기능 추가
+* [Ledger] 사유 입력 설정 옵션에 대한 관리자 On/Off 기능 제공
+* [Ledger] 사유 입력 문구 재사용 옵션 제공
+* [Ledger] Oracle 신규 벤더 지원
+* [SAC] Agent 리눅스 지원
+* [SAC] Policy 에디터 Visual Mode 추가 지원
+* [SAC] 서버 그룹 내 Server Group Owner 지정 기능 추가
+* [ABAC] 사용자 Attribute 기반 정책 제한 조건 정의 지원
+
+Bug Fix
+
+* [DAC] [Postgres] AWS Lambda 함수 호출 구문 실행 실패하는 문제 해결
+* [DAC] [Postgres] decode 함수 실행 시 에러 발생하는 문제 해결
+* [DAC] [MySQL] Proxy를 통해 BLOB INSERT 시 발생하는 인코딩 오류 수정
+* [DAC] [MySQL] DML Snapshot 활성화 상태에서 BLOB INSERT 시 발생하는 오류 수정
+
+External API
+
+* 신규 V2 API 추가 및 일부 API 쿼리 파라미터 개선List Servers (조회시 서버명 name으로 필터 가능)Server Group Owners API (서버 그룹 오너 조회/할당/제거)Server Groups APIList Group Servers (조회시 서버그룹명 name으로 필터 가능)그룹 필터 태그 조건 덮어쓰기 가능서버 그룹에 서버 추가 및 제거 가능User Management API (사용자 생성/조회/삭제 기능 추가)User Group Management API (사용자 그룹 생성/조회/삭제 가능)Group Member Operations API (사용자 그룹 멤버십 조회/추가/제거)Workflow - System Access Request Details (서버접근신청 워크플로 상세내역 조회 가능)
+  * List Servers (조회시 서버명 name으로 필터 가능)
+  * Server Group Owners API (서버 그룹 오너 조회/할당/제거)
+  * Server Groups APIList Group Servers (조회시 서버그룹명 name으로 필터 가능)그룹 필터 태그 조건 덮어쓰기 가능서버 그룹에 서버 추가 및 제거 가능
+    * List Group Servers (조회시 서버그룹명 name으로 필터 가능)
+    * 그룹 필터 태그 조건 덮어쓰기 가능
+    * 서버 그룹에 서버 추가 및 제거 가능
+  * User Management API (사용자 생성/조회/삭제 기능 추가)
+  * User Group Management API (사용자 그룹 생성/조회/삭제 가능)
+  * Group Member Operations API (사용자 그룹 멤버십 조회/추가/제거)
+  * Workflow - System Access Request Details (서버접근신청 워크플로 상세내역 조회 가능)
+* 일부 API 스펙 변경 - deleted 필드 제거List Users (/api/external/v2/users)Get User (/api/external/v2/users/`{userUuid}`)List DB Cloud Providers (/api/external/v2/dac/cloud-providers)List DB Connections (/api/external/v2/dac/connections)Get DB Connection (/api/external/v2/dac/connections/`{dbConnectionUuid}`)List Privileges (/api/external/v2/privileges)Get Privilege (/api/external/v2/privileges/`{uuid}`)
+  * List Users (/api/external/v2/users)
+  * Get User (/api/external/v2/users/`{userUuid}`)
+  * List DB Cloud Providers (/api/external/v2/dac/cloud-providers)
+  * List DB Connections (/api/external/v2/dac/connections)
+  * Get DB Connection (/api/external/v2/dac/connections/`{dbConnectionUuid}`)
+  * List Privileges (/api/external/v2/privileges)
+  * Get Privilege (/api/external/v2/privileges/`{uuid}`)

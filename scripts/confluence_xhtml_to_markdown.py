@@ -79,9 +79,6 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append(f"###### {self.get_text(node)}")
         elif node.name == 'p':
             text = self.get_text(node)
-            # Encode < and > to prevent conflict with JSX syntax.
-            # Confluence xhtml does not allow JSX syntax in <p/>, so this is safe.
-            text = self.encode_lt_gt(text)
             if text:
                 self.markdown_lines.append(text)
                 self.markdown_lines.append("")  # Add an empty line after paragraphs
@@ -150,6 +147,17 @@ class ConfluenceToMarkdown:
         
         if hasattr(node, 'get_text'):
             text = node.get_text()
+            if node.name in ['p']:
+                # Encode < and > to prevent conflict with JSX syntax.
+                # Confluence xhtml does not allow JSX syntax in <p/>, so this is safe.
+                if '<' in text or '>' in text:
+                    text = self.encode_lt_gt(text)
+                    logging.debug(f"encode_lt_gt node={node.name} text={text}")
+            if node.name in ['li']:
+                if '{' in text or '}' in text:
+                    text = self.quote_embraced_text(text)
+                    logging.debug(f"quote_embraced_text node={node.name} text={text}")
+
             return self.trim_nbsp(text)
         
         text = ""
@@ -165,6 +173,23 @@ class ConfluenceToMarkdown:
         """Encode < and > as &lt; and &gt;"""
         text = text.replace('<', '&lt;').replace('>', '&gt;')
         return text
+
+    def quote_embraced_text(self, text):
+        """Quote text that is embraced by curly braces.
+        
+        If there are 20 or fewer word characters (including spaces, Korean characters, 
+        alphabets, etc.) between the curly braces, format as `{ ...}`.
+        """
+        # Use regex to find all occurrences of text within curly braces
+        # that contain 20 or fewer word characters
+        pattern = r'(\{\{?[\w\s\-]{1,20}\}\}?)'
+        if not re.search(pattern, text):
+            return text
+
+        # Replace all matching patterns with backtick-quoted version
+        result = re.sub(pattern, r'`\1`', text)
+        logging.debug(f"Quoted embraced text: {result} in original text: {text}")
+        return result
 
     def trim_nbsp(self, text):
         """Remove NBSP characters at the beginning and end of text."""

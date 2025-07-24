@@ -1,0 +1,38 @@
+10.3.0 부터 각 Administrator &gt; General &gt; Security 하위에 있던 DAC 관련 설정 항목들이 각 서비스 메뉴의 General &gt; Configurations로 이동되었습니다.
+
+## 데이터베이스 접근 제어 설정
+DB 접근 제어에 적용되는 설정을 관리합니다.
+
+* Privilege Deactivation Period : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
+* Maximum Access Duration : Privilege 요청 및 할당 시 최대 기간DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
+  * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
+* Display the first 10 rows in Query Audit : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
+
+Query Audit Detail
+
+* Advanced Privilege Setting : Privilege 권한별 계정 통제 (Default : Off)On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨자세한 내용은 DB Connections 내 Privilege Setting 문서 참고
+  * On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨
+  * 자세한 내용은 DB Connections 내 Privilege Setting 문서 참고
+* Unmasking Zones : Unmasking request 를 통해 마스킹 된 데이터 조회를 허가 받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 마스킹 정책의 예외 대상인 사용자일지라도 특정 IP(대역)일 경우만 마스킹 해제 상태로 조회 할 수 있도록 설정.  (Default : Off) 참고 : Unmasking Zone 상세 설명
+* Ledger Table Management : 특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화로 설정. (Default : Off)
+* Select Purpose Duration for Agent : Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유입력 강제 대상 데이터를 조회하여 사유입력을 할 때 지정한 시간 동안 재입력하지 않도록 설정. Ledger Table Management 가 On 상태일 때만 설정가능. (Default : 10 minutes)
+* Restricted Statement : 사용 제한 쿼리Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)입력된 Restricted Statement 포함 쿼리 실행시 차단됨
+  * Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)
+  * Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)
+  * 입력된 Restricted Statement 포함 쿼리 실행시 차단됨
+
+Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승인 받더라도 실행이 차단됩니다. 사용자에 따라 실행을 허용해야 하는 쿼리를 입력하지 않도록 합니다.
+
+* Query Annotation : 쿼리 수행시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화 한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.Execute From: `{{executedFrom}}` : 쿼리를 수행한 수단입니다. 10.4.0 기준 Web Editor만 기록됩니다.
+  * User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.
+  * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.
+  * Execute From: `{{executedFrom}}` : 쿼리를 수행한 수단입니다. 10.4.0 기준 Web Editor만 기록됩니다.
+
+Query Audit
+
+* Member based Connection Filtering : Workflow에서 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링 하는 기능입니다. 커넥션의 상세 화면에서 connection member 에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Reqeust 에 노출됩니다.Databases > Connection Management > DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당
+  * 커넥션의 상세 화면에서 connection member 에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Reqeust 에 노출됩니다.Databases > Connection Management > DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당
+
+DB 작업에 대한 사유 입력 강제 설정
+
+9.17.0 버전부터 해당 기능은 커넥션 세부 설정으로 변경되었습니다. 자세한 설정 방법은 DB Connections 내 추가 설정하기를 참고해주세요.

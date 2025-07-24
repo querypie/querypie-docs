@@ -1,0 +1,40 @@
+## Overview
+QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 지원합니다. 사용자를 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있습니다.
+
+## Google Workspace에서 SAML 설정
+1. Google 관리 콘솔 홈페이지에 접속 후 왼쪽 메뉴에서 앱 &gt; 웹 및 모바일 앱을 클릭합니다.
+
+2. 앱 추가 버튼을 누른 후 맞춤 SAML 앱 추가를 클릭합니다.
+
+3. 앱 세부정보를 입력하는 1단계 페이지 입니다. 앱 이름 항목에 ‘QueryPie-SSO’를 입력 후 계속 버튼을 클릭합니다.
+
+4. 2단계 페이지에서는 다음의 값들을 입력합니다. 입력 완료 후 계속 버튼을 클릭하여 3단계로 이동합니다.
+
+* ACS URL : https://`{QueryPie Host}`/saml/sp/acs
+* 엔티티 ID : https://`{QueryPie Host}`/saml/sp/metadata
+* 시작 URL(선택사항) : https://`{QueryPie Host}`/
+
+5. 3단계 페이지에서는 매칭 추가 버튼을 클릭하여 다음의 네 가지 값을 모두 입력 후 마침 버튼을 클릭합니다.
+
+* Basic Information : Primary email → email
+* Basic Information : First name → firstName
+* Basic Information : Last name → lastName
+* Basic Information : Primary email → loginId
+
+6. Google 본인 인증을 위한 비밀번호를 입력 후 다음을 클릭하면 생성이 완료됩니다.
+
+7.  생성이 성공적으로 완료되면 다음과 같이 목록에 신규 추가된 앱이 표시됩니다. 사용 설정을 위해 해당 앱을 클릭합니다.
+
+8. 앱의 상세 정보에서 메타데이터 다운로드를 클릭하여 파일을 다운로드 받은 후  사용자 액세스 항목을 클릭합니다.
+
+9. 서비스 상태를 ‘모든 사용자에 사용하도록 설정’을 선택한 상태로 저장 버튼을 클릭합니다.
+
+## QueryPie에서 인증 방식 설정하기
+1. QueryPie Admin &gt; General &gt; User Management &gt; Authentication 메뉴로 진입하여 다음과 같이 설정합니다.
+
+* Type : SAML을 선택합니다.
+* Identity Provider Metadata : Google 관리 콘솔 홈페이지에서 다운로드 받았던 파일(GoogleIDPMetadata.xml) 을 열어 내용을 복사 후 이곳에 붙여넣기합니다.
+* Save Changes 버튼을 누르면 설정이 완료됩니다.
+
+## QueryPie에서 SAML 로그인
+이제 로그인 페이지에서 Login with SAML 버튼을 통해 Google로 인증하여 QueryPie에 로그인할 수 있습니다.
