@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
 
@@ -41,11 +43,10 @@ Administrator &gt; General &gt; Company Management &gt; Allowed Zones 메뉴에�
 *Allowed Zones 탭*
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **사전 작업** 
+<Callout>
+**사전 작업** 
 사용자별 Allowed Zone 할당을 위해서는 먼저 Admin &gt; General &gt; Company Management &gt; Security 메뉴에서 사용자별 QueryPie Web 접근 IP 제어 기능을 활성화해야 합니다. [Security](Security) 문서를 참고해주세요. 
-
-</div>
+</Callout>
 
 ### 워크플로우를 통해 등록된 Static IP 확인하기
 사용자가 'IP Registration Request' 워크플로우를 통해 IP 주소 등록을 요청하고 최종 승인되면, 해당 IP는 사용자의 Profile 탭에 있는 Static IP 속성에 자동으로 추가됩니다.
@@ -81,11 +82,10 @@ Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크�
 *Allowed Zones 할당 해제*
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. Tags 탭이 비활성화 되어 있어요.** 
+<Callout type="info">
+**Q. Tags 탭이 비활성화 되어 있어요.** 
 A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는 탭으로 아직 미출시된 기능입니다. 추후 버전에서 지원 예정입니다. 
-
-</div>
+</Callout>
 
 ## 참고: 사용자 Attribute 목록
 | 속성명                | 변수                | 설명                           | 비고       |

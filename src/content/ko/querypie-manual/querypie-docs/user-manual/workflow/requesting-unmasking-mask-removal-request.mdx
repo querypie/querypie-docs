@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 DAC에서 마스킹 정책에 의해 마스킹된 항목에 대해 원본 데이터의 확인이 필요할 경우 Workflow를 통해 관리자에게 일시적 마스킹 해제를 요청할 수 있습니다. 마스킹 해제는 Workflow 를 통해 요청할 수도 있, 웹 SQL 에디터에서 마스킹된 데이터를 우클릭하여 표시되는 Unmasking Request 메뉴를 통해서도 가능합니다.
 
@@ -39,11 +41,10 @@ DAC에서 마스킹 정책에 의해 마스킹된 항목에 대해 원본 데이
 <div>[스크린샷 2024-05-23 오후 6.42.45.png]()</div>
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Q. Urgent Mode 스위치가 보이지 않아요.** 
+<Callout>
+**Q. Urgent Mode 스위치가 보이지 않아요.** 
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다. 
-
-</div>
+</Callout>
 
 ### 5. 요청 상세정보 입력하기
 * Title : 요청 제목을 입력합니다.

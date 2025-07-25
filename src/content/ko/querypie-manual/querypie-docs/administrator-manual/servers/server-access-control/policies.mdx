@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로 접근 정책을 관리하고 적용하는 기능입니다. 서버 또는 서버 그룹별로 언제 접속을 허용할 것인지, 어떤 명령어를 금지할 것인지 등 세부적인 정책을 적용하여 사용자 또는 그룹별로 업무상 용도에 맞게 최소한의 서버에만 접근할 수 있도록 설정할 수 있습니다.
 
@@ -105,7 +107,6 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
     1. 화면 우측 상단의 Delete 버튼을 클릭합니다.
 3. 팝업이 나타나면 DELETE 문구를 기입하고 Delete 버튼을 클릭하여 삭제를 진행합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> Policy 삭제 시 해당 정책이 부여되어 있던 리소스 및 역할에서 자동 분리됩니다. 
-
-</div>
+<Callout>
+Policy 삭제 시 해당 정책이 부여되어 있던 리소스 및 역할에서 자동 분리됩니다. 
+</Callout>

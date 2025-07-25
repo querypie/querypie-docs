@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 Privilege 기능에서는 SQL 구문별 조합으로 권한 제어가 가능합니다. 뿐만 아니라 웹 에디터의 경우 데이터 내보내기 및 가져오기, 클립보드 복사 기능까지 제어할 수 있습니다. SQL 구문은 ANSI SQL 기준으로 분류되어 있으며, Redis의 경우에는 별도의 Privilege Type을 제공합니다.
 
@@ -23,8 +25,8 @@ note
 
 해당 권한이 Privilege Type 목록에 생성된 것을 확인할 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Redis 커넥션의 경우에는 어떻게 접근 권한을 생성하고 관리할 수 있나요?** 
+<Callout type="info">
+**Redis 커넥션의 경우에는 어떻게 접근 권한을 생성하고 관리할 수 있나요?** 
 Privilege 생성 화면에서 Database Type을 Redis로 선택할 경우, 제공된 Redis 별도의 권한 타입으로 Privilege를 생성할 수 있습니다. 
 [ul]
 [li]
@@ -37,5 +39,4 @@ Read, Write, Dangerous, Etc. 카테고리는 [Redis ACL Categories](https://redi
 선택된 카테고리 중, 실행을 제한할 명령어를 Restrict Commands에 설정하여 제한할 수 있습니다. 
 
 
-
-</div>
+</Callout>

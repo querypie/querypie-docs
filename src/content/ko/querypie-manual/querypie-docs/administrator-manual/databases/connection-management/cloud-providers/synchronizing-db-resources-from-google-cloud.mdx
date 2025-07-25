@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie 에서는 데이터베이스 등록 및 관리를 위한 Google Cloud(GCP) 연동을 지원합니다. GCP 내의 리소스를 동기화하여 QueryPie에서 관리하는 데이터베이스로 등록하고, 사용자 및 그룹에 동기화해온 데이터베이스에 대한 접근 권한을 부여하고 정책을 설정할 수 있습니다.
 
@@ -24,8 +26,8 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 Google Cloud(G
     * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
 10. Save 버튼을 클릭하여 Cloud Provider 를 저장합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Save Credential for Synchronization 옵션** 
+<Callout>
+**Save Credential for Synchronization 옵션** 
 [ac:image]
 [ri:attachment]
 
@@ -44,8 +46,7 @@ Save Credential for Synchronization
 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다. 
 
 
-
-</div>
+</Callout>
 
 ## 등록된 GCP Cloud Provider 동기화 및 관리
 <p align="center">
@@ -66,10 +67,9 @@ Save Credential for Synchronization
   5. Database Type Filter: 변경 가능
   6. Replication Frequency: 변경 가능
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> “Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은 **활성화 한 뒤 다시 비활성화 할 수 없으므로** 신중히 선택해야 합니다. 
-
-</div>
+<Callout>
+“Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은 **활성화 한 뒤 다시 비활성화 할 수 없으므로** 신중히 선택해야 합니다. 
+</Callout>
 
 ## Service Account 를 통한 동기화
 1. GCP 연동을 위한 Cloud Provider 등록 후 상세페이지에서 Synchronize 버튼을 클릭합니다.
@@ -77,8 +77,8 @@ Save Credential for Synchronization
   * Service Account 는 Google Cloud 콘솔 > IAM 및 관리자 > 서비스 계정 메뉴에서 생성 후 JSON 키를 발급하여 사용하실 수 있습니다.
 3. 해당 JSON 키로 동기화된 리소스는 DB Connections 메뉴에서 확인하실 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **GCP 에서 Service Account 를 생성하실 때 다음의 권한이 필요합니다. ** 
+<Callout type="info">
+**GCP 에서 Service Account 를 생성하실 때 다음의 권한이 필요합니다. ** 
 [ul]
 [li]
 CloudSQL : CloudSQL Viewer 
@@ -87,5 +87,4 @@ CloudSQL : CloudSQL Viewer
 BigQuery : BigQuery Administrator 
 
 
-
-</div>
+</Callout>

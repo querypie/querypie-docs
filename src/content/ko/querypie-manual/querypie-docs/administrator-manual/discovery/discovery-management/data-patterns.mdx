@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 <p align="center">
 <div>[image-20241031-120223.png]()</div>
@@ -7,8 +9,8 @@
 * 탐색에 사용할 데이터 패턴 목록입니다. 사용자 편의를 위해 사전정의된 패턴을 제공하고 있으며 사용자가 원하는 정규식을 입력하여 사용자 정의 할 수도 있습니다.
 * Built-in (사전 정의된) 패턴과 AI Identifier는 내용을 보거나 수정 또는 삭제할 수 없습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> [ul]
+<Callout type="info">
+[ul]
 [li]
 패턴은 용도에 따라 for data, for keyword 가 있습니다. 
 [ul]
@@ -49,8 +51,7 @@ Romanized name - Korean : 로마자 표기된 한글이름
 
 
 
-
-</div>
+</Callout>
 
 ## 사용자 정의 패턴 등록하기
 * 패턴 목록 상단의 + Data Pattern 버튼을 누르면 사용자 정의 패턴을 추가할 수 있습니다.
@@ -70,7 +71,6 @@ Romanized name - Korean : 로마자 표기된 한글이름
 * 사용자 정의 패턴 수정 : data pattern 목록에서 특정 패턴 커스텀 패턴 행을 클릭하면 설정 내용을 보고 수정할 수 있습니다. Built-in 패턴은 내용을 보거나 수정할 수 없습니다.
 * 사용자 정의 패턴 삭제 : 특정 사용자 패턴을 체크하고 Delete 버튼을 눌러 사용자 정의 패턴을 삭제할 수 있습니다.Built-in 패턴은 삭제할 수 없습니다.사용자정의 패턴 삭제
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 사용자 정의 패턴이 어떤 Detection Profile 에 연결되어 있는 상태라면 삭제할 수 없습니다. 삭제하기 위해서 먼저 프로파일에서 삭제하고자 하는 사용자 정의 패턴을 제외시켜야 합니다. 
-
-</div>
+<Callout>
+사용자 정의 패턴이 어떤 Detection Profile 에 연결되어 있는 상태라면 삭제할 수 없습니다. 삭제하기 위해서 먼저 프로파일에서 삭제하고자 하는 사용자 정의 패턴을 제외시켜야 합니다. 
+</Callout>

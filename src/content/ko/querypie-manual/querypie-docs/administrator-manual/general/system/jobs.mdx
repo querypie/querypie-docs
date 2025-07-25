@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie 시스템 상에서 주기적으로 또는 수동으로 실행되는 다양한 작업들을 일람하는 메뉴입니다.
 
@@ -60,10 +62,9 @@ Administrator &gt; General &gt; System &gt; Jobs 메뉴로 진입하여 Jobs 목
     * Manual : 수동 실행이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
       * 이 경우 작업을 실행한 사람의 이름을 함께 표기합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 10.2.0 현재, Total, Success, Failure, Ignored 정보는 Authentication Type의 Job에 대해서만 제공됩니다. 
-
-</div>
+<Callout type="info">
+10.2.0 현재, Total, Success, Failure, Ignored 정보는 Authentication Type의 Job에 대해서만 제공됩니다. 
+</Callout>
 
 ## Job History 조회하기
 <p align="center">

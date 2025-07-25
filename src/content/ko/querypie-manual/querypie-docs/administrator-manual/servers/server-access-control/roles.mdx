@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 서버에 대한 사용자 액세스를 허용하거나 제한하기 위해 조직 내에서의 사용자 역할을 기반으로 하는 역할 기반 액세스 제어(Role-Based Access Control, RBAC)를 사용합니다. 사용자나 사용자 그룹에게 설정한 Role을 부여할 수 있습니다. Role은 여러 정책을 종합하여 단일 역할로 정의하는 데 사용됩니다.
 
@@ -95,7 +97,6 @@ Role의 세부 화면 진입 후, 자동으로 선택되어있는 Policies 탭�
     1. 화면 우측 상단의 Delete 버튼을 클릭합니다.
 3. 팝업이 나타나면 Delete 버튼을 클릭하여 삭제를 진행합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> Role 삭제 시 해당 역할이 부여되어 있던 사용자 및 그룹에서 권한이 회수됩니다. 
-
-</div>
+<Callout>
+Role 삭제 시 해당 역할이 부여되어 있던 사용자 및 그룹에서 권한이 회수됩니다. 
+</Callout>

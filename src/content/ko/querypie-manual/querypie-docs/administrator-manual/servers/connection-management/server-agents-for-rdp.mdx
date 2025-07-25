@@ -1,8 +1,10 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie에서는 Windows Server에 대한 접근제어 및 권한관리를 할 수 있습니다. RDP Protocol을 통해 원격 접속을 하기 위해선 관리하려는 Windows Server에 Server Agent를 설치해야 합니다. 또한 접속중인 RDP의 세션을 실시간으로 확인할 수 있고, Kill Session 기능을 통해 접속중인 RDP 세션을 강제종료 할 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> [ul]
+<Callout type="info">
+[ul]
 [li]
 Windows Server Agent는 Windows Server 2012 이상의 버전만 지원합니다. 
 
@@ -21,8 +23,7 @@ Windows Server에 RDP로 접속할 때 AD 인증을 사용하려면, 계정을 @
 QueryPie를 통한 RDP 세션을 종료해도, 기존에 접속한 세션(또는 콘솔 접속)을 로그오프하지 않습니다. 
 
 
-
-</div>
+</Callout>
 
 <p align="center">
 <div>[image-20240902-050202.png]()</div>
@@ -49,10 +50,9 @@ QueryPie를 통한 RDP 세션을 종료해도, 기존에 접속한 세션(또는
 2. QueryPie 서버와 Server Agents가 통신하면 QueryPie의 Servers에 Windows Server를 자동 등록합니다.
 3. Server Agent 설치 및 제거하기 가이드를 통해 Server Agent의 설치 방법을 확인할 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> RDP Server Agent와 연결된 Windows Server의 Port 및 IP는 변경할 수 없습니다. 
-
-</div>
+<Callout>
+RDP Server Agent와 연결된 Windows Server의 Port 및 IP는 변경할 수 없습니다. 
+</Callout>
 
 ## Server Agents 와 통신 실패 대응 방법
 Windows Server에 Server Agent 설치 후, Server Agents for RDP 페이지에 Server Agent 정보가 뜨지만, Status가 Connection Failed 로 표시될 수 있습니다.
@@ -79,8 +79,7 @@ QueryPie에 등록되는 Server Agent의 Host 정보는 Windows Server가 가지
 3. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
 4. 팝업이 나타나면 DELETE 문구를 기입하고 Delete 버튼을 클릭하여 삭제를 진행합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> QueryPie에서는 Windows Server에 설치된 Server Agents를 먼저 삭제한 후, QueryPie의 Server Agents for RDP 메뉴에서 Server Agents 삭제해야 합니다. 
+<Callout>
+QueryPie에서는 Windows Server에 설치된 Server Agents를 먼저 삭제한 후, QueryPie의 Server Agents for RDP 메뉴에서 Server Agents 삭제해야 합니다. 
 Windows Server에 설치된 Server Agents를 먼저 삭제하지 않은 경우, Server Agents가 다시 QueryPie에 등록되고, 새로운 Windows Server를 생성합니다. 
-
-</div>
+</Callout>

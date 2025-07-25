@@ -1,15 +1,16 @@
+import { Callout } from 'nextra/components'
+
 QueryPie 홈페이지를 예시로 가장 간단한 WAC 사용법을 안내하겠습니다.
 
 1. QueryPie 홈페이지를 웹 앱으로 등록하고 Resources 하위의 일부 메뉴를 하위 경로로 등록합니다.
 2. 등록된 하위 경로에 대해서만 접근을 허용하는 정책(Policy)과 역할(Role)을 만들어봅니다.
 3. 현재 사용자에게 이 역할을 할당하고 웹 앱 접근 제어의 동작을 확인합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **안내** 
+<Callout type="info">
+**안내** 
 Quickstart는 `10.2.8` 버전을 기준으로 설명합니다. 
 이 Quickstart를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다. 
-
-</div>
+</Callout>
 
 # Admin-side
 ## 1. 웹 앱 등록하기
@@ -152,12 +153,11 @@ spec:
 4. 새 탭에서 Host Configuration 페이지가 열립니다. QueryPie Host에 현재 사용중인 QueryPie 주소를 붙여넣고, Continue 버튼을 클릭합니다. Host 정보가 유효하다면 Go to Dashboard 버튼이 나타납니다. 클릭하면 새 탭에서 QueryPie로 진입합니다.Host Configuration 페이지
   1. Host 정보가 유효하다면 Go to Dashboard 버튼이 나타납니다. 클릭하면 새 탭에서 QueryPie로 진입합니다.Host Configuration 페이지
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **주의** 
+<Callout>
+**주의** 
 WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 보장되지 않습니다. 접근 정책 적용 및 감사 로깅에 문제가 있을 수 있습니다. 
 기존에 열려있던 모든 브라우저 탭 및 창을 닫은 후에 익스텐션을 설치하시기 바랍니다. 
-
-</div>
+</Callout>
 
 ## 4. QueryPie를 통하여 웹 앱 접근하기
 1. Go to Dashboard 버튼을 클릭하여 새 탭이 열리고 QueryPie Web 콘솔이 열립니다.현재 QueryPie에 로그인된 상태라면, Web App Dashboard가 열립니다.로그인되지 않은 상태라면 로그인 페이지로 넘어갑니다. 로그인을 완료하고, 상단 메뉴에서 Web Apps를 클릭하여 대시보드로 진입하세요.Role 선택 모달이 표시되면, QP Web Test 를 선택합니다.
@@ -191,10 +191,9 @@ WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 �
 ## 2. 사용자의 세션 기록 확인하기
 웹 앱 및 역할 기준으로 사용자가 통제 대상 웹 앱에 접속하여 하위 페이지를 탐색한 기록이 모두 표시됩니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Web App 생성시 User Activity Recording을 켜야만 기록이 남습니다. 
-
-</div>
+<Callout type="info">
+Web App 생성시 User Activity Recording을 켜야만 기록이 남습니다. 
+</Callout>
 
 <p align="center">
 <div>[스크린샷 2024-12-23 오전 11.58.05.png]()</div>

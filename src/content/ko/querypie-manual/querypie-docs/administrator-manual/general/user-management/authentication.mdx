@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시키는 동시에 안전한 통합 인증 환경을 제공하는 QueryPie 내의 필수 기능입니다. 조직에서 사용하는 계정 시스템을 연동하여 조직 내의 사용자 및 그룹을 QueryPie로 동기화할 수 있습니다. 관리자는 조직 내의 입사자 및 퇴사자를 한 곳에서 관리할 수 있습니다. SSO 통합은 인증 프로세스를 간소화하며 사용자가 조직 내에서 사용 중인 인증 방식으로 QueryPie를 통해 및 데이터베이스 및 시스템에 접근할 수 있도록 합니다. 해당 문서에서는 SSO 연동 방법과 및 주요 고려 사항에 대해 설명합니다.
 
@@ -18,10 +20,9 @@ SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시
 * 계정 시스템 내에 퇴사자가 발생하는 경우, 동기화를 진행하면 QueryPie 사용자에서 삭제됩니다.
 * 동기화된 사용자는 QueryPie 내에서 변경 및 삭제가 불가능합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Authentication 타입 변경이 필요한 경우에는 QueryPie 기술지원팀 또는 Customer Portal로 문의해주세요. 
-
-</div>
+<Callout type="info">
+Authentication 타입 변경이 필요한 경우에는 QueryPie 기술지원팀 또는 Customer Portal로 문의해주세요. 
+</Callout>
 
 ## 계정 시스템 동기화를 통한 그룹 관리
 * Okta, OneLogin, LDAP 의 경우, 계정 시스템 내의 그룹을 QueryPie 그룹으로 동기화할 수 있습니다.

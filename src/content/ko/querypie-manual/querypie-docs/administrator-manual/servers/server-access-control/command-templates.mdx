@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 조직에서 관리하는 서버에서 접속 후 사용 불가능한 명령어 템플릿을 관리할 수 있습니다. 한번 설정한 명령어 템플릿은 접근 권한 설정시 재활용이 가능합니다. 명령어 차단은 string 기반으로 이루어지며, 정규식을 통한 명령어 차단도 지원하고 있습니다. 또한, 서버 특권 신청 프로세스에서 사용자가 선택할 수 있는 명령어 목록을 표준화하여 관리 효율성을 높일 수 있습니다.
 
@@ -29,8 +31,7 @@
   4. Functions (SFTP) : 해당 서버에서 웹 SFTP과 FTP를 통해 실행되는 기능 정책을 설정하는 곳입니다. 디렉터리/파일 삭제, 파일 업로드, 파일 다운로드, 디렉토리 생성 액션을 제한할 수 있습니다.
 4. 우측 하단의 Save 버튼을 클릭하여 설정을 마무리합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **유의 사항** 
+<Callout type="info">
+**유의 사항** 
 Allow for Workflow Request 설정은 SAC &gt; General &gt; Configurations &gt; Server Privilege Request Settings 메뉴에서 Allow Pre-defined Command Templates Only가 Enable일 때 의미를 가집니다. 
-
-</div>
+</Callout>

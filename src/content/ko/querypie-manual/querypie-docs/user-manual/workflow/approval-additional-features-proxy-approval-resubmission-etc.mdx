@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
 
@@ -41,10 +43,9 @@ Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
 *대리 결재자 기준 표시 내용*
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다. 
-
-</div>
+<Callout type="info">
+대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다. 
+</Callout>
 
 ### 3. 위임받은 대리 결재 요청 처리하기
 * 대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. Received Requests > To Do : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함Received Requests > Done : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.
@@ -73,10 +74,9 @@ Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
 *대리 결재자가 Done by the delegate와 함께 표기됨*
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한 내용은 [Slack DM 개인 알림 사용하기](Slack DM - Workflow 알림 유형) 문서를 참고해주세요. 
-
-</div>
+<Callout type="info">
+Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한 내용은 [Slack DM 개인 알림 사용하기](Slack DM - Workflow 알림 유형) 문서를 참고해주세요. 
+</Callout>
 
 ### 5. 대리 결재 설정 종료 이후의 기안 조회 방법
 * 대리 결재 설정 기간이 종료되었다 하더라도 Received Requests > Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다.
@@ -91,10 +91,9 @@ Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
 
 1. Sent Requests > Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 *Deleted* 로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. 
-
-</div>
+<Callout type="info">
+이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 *Deleted* 로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. 
+</Callout>
 
 1. 우측 상단에 있는 Resubmit 버튼을 클릭하여 재상신 페이지로 진입합니다.
 2. 재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다.

@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 QueryPie WAC을 통한 Web Apps에 대한 JIT(Just-in-Time) 권한 획득 사용법을 안내하겠습니다.
 
 JIT 권한 획득은 아래와 같은 순서로 이루어집니다.
@@ -7,12 +9,11 @@ JIT 권한 획득은 아래와 같은 순서로 이루어집니다.
 3. 이용자가 접속할 Web App에 대한 접근 신청을 합니다.
 4. Owner로 등록된 결재권자가 이용자의 Web App 접속을 승인합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **안내** 
+<Callout type="info">
+**안내** 
 JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다. 
 이 가이드를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다. 
-
-</div>
+</Callout>
 
 # Admin-side
 ## 1. 웹 앱 등록하기
@@ -49,8 +50,8 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 2. 우측 상단 "Owner/Member" 버튼을 클릭합니다.
 3. 우측의 드로워 창이 열리고, 대상자를 검색하여 "Assign as" 열에서 왼쪽 Owner와 오른쪽 Member 버튼을 선택하여 역할을 부여합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> JIT(Just-in-Time) 권한 부여에는 아래 두 역할이 있습니다. 
+<Callout type="info">
+JIT(Just-in-Time) 권한 부여에는 아래 두 역할이 있습니다. 
 [ul]
 [li]
 Owner: 이 웹 앱에 대한 Just-in-time 요청을 승인할 수 있는 주체 
@@ -59,18 +60,16 @@ Owner: 이 웹 앱에 대한 Just-in-time 요청을 승인할 수 있는 주체
 Member: 이 웹 앱에 대한 Just-in-time 요청을 상신할 수 있는 주체 
 
 
-
-</div>
+</Callout>
 
 ## 3. 이용자의 JIT Web App 접속 권한 신청
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다. 
+<Callout type="info">
+QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다. 
 설치 방법은 아래 매뉴얼을 참고해주세요. 
 [https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0) 
 [https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0)  
 [https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)  
-
-</div>
+</Callout>
 
 <p align="center">
 <div>[image-20250513-065134.png]()</div>
@@ -95,8 +94,8 @@ Member: 이 웹 앱에 대한 Just-in-time 요청을 상신할 수 있는 주체
   3. Reason for Request : 신청 사유를 입력합니다.
 4. Submit 을 클릭합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다. 
+<Callout type="info">
+JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다. 
 [ul]
 [li]
 **승인자는 Web App Owner로 고정** 되어 있습니다. 
@@ -111,8 +110,7 @@ Member: 이 웹 앱에 대한 Just-in-time 요청을 상신할 수 있는 주체
 사후 승인 모드는 Approval Configuration 에서 활성화된 경우에 나타나며 Off하면 요청 화면에서 나타나지 않습니다. 
 
 
-
-</div>
+</Callout>
 
 ## 4. 결재권자의 JIT Web App 접속 권한 요청 승인
 <p align="center">

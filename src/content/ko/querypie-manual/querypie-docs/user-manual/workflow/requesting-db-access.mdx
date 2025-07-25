@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 아래 순서에 따라 접근이 필요한 DB 커넥션에 대한 Privilege를 요청할 수 있습니다. 요청 후 승인이 완료될 경우 즉시 권한이 부여되며 QueryPie Web에 있는 SQL Editor 또는 Agent를 통해 권한을 받은 커넥션에 접속할 수 있습니다.
 
@@ -39,11 +41,10 @@
 <div>[스크린샷 2024-05-23 오후 6.42.45.png]()</div>
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Q. Urgent Mode 스위치가 보이지 않아요.** 
+<Callout>
+**Q. Urgent Mode 스위치가 보이지 않아요.** 
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다. 
-
-</div>
+</Callout>
 
 ### 5. 요청 정보 입력하기
 * Title : 요청 제목을 입력합니다.

@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 단일 DB 커넥션에 다수의 Privilege 권한이 부여된 경우에 기본으로 접속하는 Default Privilege 를 설정하는 기능입니다.
 
@@ -19,8 +21,8 @@
 2. Privilege 항목에서 부여받은 권한 중 기본 값으로 사용할 Privilege 를 선택합니다.
 3. Save 버튼을 클릭하여 Default Privilege 설정을 완료합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> [ul]
+<Callout>
+[ul]
 [li]
 부여받은 권한이 2개 이상이지만 Default Privilege 설정이 안되어 있는 경우에는 가장 먼저 grant된 privilege가 default privilege가 됩니다. 에이전트 프록시, SQL Request, Export Request 에서 접속시 Default Privilege 로 선택된 권한으로 DB 에 접속합니다. 
 
@@ -34,5 +36,4 @@ Default Privilege 로 커넥션에 이미 접속되어 있는 상태에서 Defau
 부여받은 권한이 2개 이상인 경우 Default privilege 설정이 되어 있지 않고 privilege deactivation period 초과로 inactive 상태가 된 경우 agent를 통해 접속할 수 없습니다. Default privilege가 설정 되어 있어도 상태가 privilege deactivation period 초과로 inactive 인 경우 접속할 수 없습니다. 
 
 
-
-</div>
+</Callout>

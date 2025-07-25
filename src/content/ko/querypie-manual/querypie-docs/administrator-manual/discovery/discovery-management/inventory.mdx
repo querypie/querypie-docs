@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 목록에 표시합니다.
 
@@ -11,8 +13,8 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 ## Inventory의 주요기능
 관리자가 발견된 민감정보에 대해 확인을 완료하면 태그가 확정이 되어 Inventory의 data path에  반영이 됩니다. 여기서 data path란 QueryPie DB 접근제어, 시스템 접근제어, 쿠버네티스 접근제어에서 등록된 커넥션을 기반으로 민감정보가 존재하는 경로를 의미합니다. (10.0.0에서는 민감 정보 탐색이 지원되는 대상이 RDBMS만 가능하기 때문에 inventory에서도 DB 접근제어의 RDBMS 커넥션에 대한 관리만 가능합니다.)
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **QueryPie에서 사용하는 태그의 종류** 
+<Callout type="info">
+**QueryPie에서 사용하는 태그의 종류** 
 [ol]
 [li]
 QueryPie Tag (System Tag) : 시스템에서 자동 부여된 태그로 기본적으로 사용자가 수정하거나 추가할 수 없습니다. 
@@ -34,8 +36,7 @@ Resource Tag : 각 커넥션에는 클라우드에서 가져온 Provider tag와 
 &lt; Tag 예시 &gt; 
 
 
-
-</div>
+</Callout>
 
 ## Inventory 목록
 <p align="center">

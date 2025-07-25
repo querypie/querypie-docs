@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie Multi Agent는 여러 개의 QueryPie Host를 동시에 사용할 수 있도록 개선된 Proxy Agent입니다.
 
@@ -5,8 +7,8 @@ Agent UI에서는 특정 Host에서 사용 가능한 리소스들을 확인할 �
 
 Agent 설치 및 Host 별 로그인 수행만으로 추가 설정 없이 둘 이상의 QueryPie Proxy를 통한 리소스 접속이 가능합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **지원 버전** 
+<Callout type="info">
+**지원 버전** 
 Multi Agent는 `10.2.5` 버전 또는 이후 버전의 QueryPie Host만을 지원합니다. 10.2.4 이하 버전을 사용하는 경우 기존의 User Agent를 사용하시기 바랍니다. 
 동일한 PC에 기존의 User Agent와 Multi Agent 둘 다 설치하는 것은 가능합니다. 단, 동시에 실행되어 있으면 정상적으로 동작하지 않습니다. 
 QueryPie Host 버전이 `10.2.5` ~ `10.2.7` 버전인 경우 지원 범위: 
@@ -27,8 +29,7 @@ Service: DAC, KAC, SAC
 Client OS: MacOS, Windows, Linux 
 
 
-
-</div>
+</Callout>
 
 ## 에이전트 앱 다운로드 및 초기 설정
 1. QueryPie 로그인 후 우측 상단 프로필을 클릭한 뒤 Download & Support > Multi-Agent 버튼을 클릭합니다.QueryPie Web > 프로필 메뉴
@@ -48,10 +49,9 @@ Client OS: MacOS, Windows, Linux
     3. SQLGate for Oracle (Windows만 지원): SQLGate for Oracle 을 열고 커넥션 정보를 삽입해줍니다.
   3. Copy as JDBC URL 10.2.6~Green: 선택한 커넥션의 JDBC URL을 복사해줍니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전에서 지원합니다. 
-
-</div>
+<Callout type="info">
+Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전에서 지원합니다. 
+</Callout>
 
 ### 에이전트에서 3rd Party Database Tool 설정 관리하기
 Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
@@ -111,8 +111,8 @@ Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설�
 3. 필요 시 Account 정보를 입력하고 Open 버튼을 누릅니다.
 4. 선택한 터미널 툴로 서버에 접속할 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **OS 권한 모달** 
+<Callout type="info">
+**OS 권한 모달** 
 [ul]
 [li]
 최초 1회에 한하여, 선택한 터미널 툴에 대한 OS 권한을 요구합니다. `허용` 하지 않으면 터미널 툴을 열 수 없습니다. 
@@ -121,11 +121,10 @@ Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설�
 최초 1회에 한하여 System Event에 대한 OS 권한을 요구합니다. 허용할 경우 세션 끊김 등에 대한 이벤트를 알림 영역에서 받을 수 있습니다. 
 
 
+</Callout>
 
-</div>
-
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **세션 종료 전 알람** 
+<Callout type="info">
+**세션 종료 전 알람** 
 [ul]
 [li]
 세션 종료 5분 전 종료 알람이 Multi Agent 내에서 발생합니다. 
@@ -134,8 +133,7 @@ Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설�
 Multi Agent가 종료되거나 종료 시점이 도래하는 경우, 별도의 세션 종료 알람 없이 연결된 세션이 종료됩니다. 
 
 
-
-</div>
+</Callout>
 
 ### 에이전트에서 서버 접근 권한 요청하기
 서버에 접속 시 필요한 계정의 권한이 없는 경우, Multi Agent에서 직접 서버 접근 권한(Server Privilege Request)을 요청할 수 있습니다.
@@ -145,15 +143,14 @@ Multi Agent가 종료되거나 종료 시점이 도래하는 경우, 별도의 �
 3. 계정 선택 창이 나타나면 하단에 있는 Request Server Privilege 버튼을 클릭합니다.이 버튼을 클릭하면 QueryPie 웹 페이지의 권한 요청 화면으로 이동하며, 이전에 선택했던 Role, 서버 그룹, 서버, 계정 정보가 자동으로 입력되어 있습니다.
   * 이 버튼을 클릭하면 QueryPie 웹 페이지의 권한 요청 화면으로 이동하며, 이전에 선택했던 Role, 서버 그룹, 서버, 계정 정보가 자동으로 입력되어 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **유의 사항** 
+<Callout type="info">
+**유의 사항** 
 [ul]
 [li]
 QueryPie 관리자가 `Admin &gt; General &gt; Workflow Configurations` 설정에서 `Server Privilege Request` 를 비활성화한 경우, 에이전트의 `Request Server Privilege` 버튼도 비활성화됩니다. 
 
 
-
-</div>
+</Callout>
 
 ### 에이전트에서 3rd Party Terminal Tool 설정 관리하기
 Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
@@ -175,10 +172,9 @@ Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습�
   1. Host 목록에서 원하는 Host를 클릭하여 바로 전환할 수 있습니다.Multi-Agent > Setting > General
 3. 프로필 버튼을 클릭하면 등록된 Host 목록을 확인할 수 있습니다. 클릭하여 Host 간 전환이 가능합니다.Multi-Agent > Profile 메뉴 선택
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 되었다면 화면 상 Host 전환 없이 등록된 모든 리소스를 사용할 수 있습니다. 
-
-</div>
+<Callout type="info">
+Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 되었다면 화면 상 Host 전환 없이 등록된 모든 리소스를 사용할 수 있습니다. 
+</Callout>
 
 ## Multi Agent 설정 초기화하기
 1. 시스템 트레이 또는 메뉴 바에서 Multi Agent 아이콘(또는 항목)을 클릭한 뒤, 표시되는 메뉴에서 'Reset All Settings'를 선택합니다.

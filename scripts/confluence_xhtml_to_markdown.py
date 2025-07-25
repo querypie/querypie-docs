@@ -14,6 +14,7 @@ import sys
 import html
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+from itertools import chain
 import argparse
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
@@ -239,7 +240,24 @@ class ConfluenceToMarkdown:
         self.list_stack = []
         self.inside_code_block = False
         self.code_language = ""
-        
+        self._imports = {}
+
+    @property
+    def imports(self):
+        markdown = []
+        if 'Callout' in self._imports and self._imports['Callout']:
+            markdown.append("import { Callout } from 'nextra/components'")
+        if len(markdown) > 0:
+            markdown.append("") # Add an empty line after imports
+        return markdown
+
+    def add_import(self, module_name, condition=True):
+        """Add an import statement to the list of imports."""
+        if condition:
+            self._imports[module_name] = True
+        else:
+            self._imports[module_name] = False
+
     def convert(self, html_content):
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
@@ -252,7 +270,7 @@ class ConfluenceToMarkdown:
         self.process_node(soup)
 
         # Join all markdown lines and return
-        return "\n".join(self.markdown_lines)
+        return "\n".join(chain(self.imports, self.markdown_lines))
 
     def process_node(self, node):
         if isinstance(node, NavigableString):
@@ -335,6 +353,10 @@ class ConfluenceToMarkdown:
         elif node.name == 'tr' or node.name == 'td' or node.name == 'th':
             # These are handled in the process_table method
             pass
+        elif node.name in ['ac:layout', 'ac:layout-section', 'ac:layout-cell']:
+            # Skip layout tags, as they are not needed in Markdown
+            for child in node.children:
+                self.process_node(child)
         elif node.name == 'body' or node.name == 'html' or node.name == None:
             # Just process children
             for child in node.children:
@@ -523,25 +545,20 @@ class ConfluenceToMarkdown:
     def handle_structured_macro(self, node):
         macro_name = node.get('name', '')
         if macro_name in ['info', 'note', 'tip', 'warning', 'caution']:
-            div_class = 'alert alert-info'
-            icon_class = 'fas fa-info-circle'
-            if macro_name == 'info':
-                div_class = 'alert alert-info'
-                icon_class = 'fas fa-info-circle'
-            elif macro_name == 'warning':
-                div_class = 'alert alert-warning'
-                icon_class = 'fas fa-exclamation-triangle'
-            else:
-                logging.warning(f"Unexpected ac:name of ac:structured-macro: {macro_name}")
+            self.add_import('Callout')
 
             markdown = []
-            markdown.append(f'<div class="{div_class}">')
+            if macro_name == 'info':
+                markdown.append('<Callout type="info">')
+            elif macro_name == 'warning':
+                markdown.append('<Callout type="warning">')
+            else:
+                markdown.append('<Callout>')
+                logging.warning(f"Unexpected ac:name of ac:structured-macro: {macro_name}")
+
             markdown.append('\n')
-            markdown.append(f'  <i class="{icon_class}"></i> <strong>{macro_name.capitalize()}:</strong>')
-            markdown.append(' ')
             markdown.extend(MultiLineParser(node).as_markdown)
-            markdown.append('\n')
-            markdown.append('</div>')
+            markdown.append('</Callout>')
             markdown.append('\n')
             self.markdown_lines.append(''.join(markdown))
         elif macro_name in ['code']:

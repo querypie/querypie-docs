@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 ProxyJump 설정을 통해 다른 Network Zone에 있는 서버에 접속하거나 또는 CIDR이 중복되는 서버 대상으로 QueryPie의 접근제어를 적용할 수 있습니다. QueryPie가 Jump Host에 접속이 가능해야 합니다. 또한 Windows Server에 대한 Proxyjump도 지원하고 있습니다.
 
@@ -25,8 +27,8 @@ ProxyJump 설정을 통해 다른 Network Zone에 있는 서버에 접속하거�
   6. Routing Target : Proxyjump를 통해 접속할 서버 그룹을 선택합니다. 한 서버그룹은 하나의 Proxyjump만 설정할 수 있습니다.
 4. Save 버튼을 통해 저장합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Windows Server의 Proxyjump 설정** 
+<Callout type="info">
+**Windows Server의 Proxyjump 설정** 
 [ol]
 [li]
 Windows Server에 접속하여 서버 에이전트를 설치합니다. 
@@ -44,5 +46,4 @@ Windows Server에 접속하여 서버 에이전트를 설치합니다.
 Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 메뉴에 접속하여 등록한 Windows Server의 Server Agent가 추가되었는지 확인합니다. Server Agent 추가는 약 1~2분의 시간이 소요됩니다. 
 
 
-
-</div>
+</Callout>

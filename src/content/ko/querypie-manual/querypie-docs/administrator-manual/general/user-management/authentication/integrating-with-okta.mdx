@@ -1,10 +1,11 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie에서는 Okta 연동을 지원합니다. Okta의 사용자 및 그룹을 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있으며, 이 과정에서 사용자에게 간소화되고 편리한 환경을 제공하면서도 엄격한 보안 정책을 운영할 수 있습니다. QueryPie와 Okta의 통합은 데이터베이스 및 시스템 관리 생태계의 보안과 운영 효율성 및 사용자 경험이 향상시킬 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드]([Okta] 프로비저닝 연동 가이드) 내 절차대로 대신 진행하여 주시기 바랍니다. 하단의 Okta API를 활용한 아웃바운드 사용자 동기화 설정을 동시에 활용할 시, 사용자 동기화에 영향을 받을 수 있는 점 유의하시기 바랍니다. 
-
-</div>
+<Callout type="info">
+SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드]([Okta] 프로비저닝 연동 가이드) 내 절차대로 대신 진행하여 주시기 바랍니다. 하단의 Okta API를 활용한 아웃바운드 사용자 동기화 설정을 동시에 활용할 시, 사용자 동기화에 영향을 받을 수 있는 점 유의하시기 바랍니다. 
+</Callout>
 
 ## Okta에서 QueryPie 를 애플리케이션으로 추가
 <p align="center">
@@ -132,11 +133,10 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 7. Save Changes로 저장합니다.
 8. Synchronize 버튼을 클릭하여 Okta 의 사용자를 동기화합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Application ID 확인하는 방법** 
+<Callout type="info">
+**Application ID 확인하는 방법** 
 2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다. 
-
-</div>
+</Callout>
 
 <p align="center">
 <div>[Authentication-Okta-02.png]()</div>
@@ -151,8 +151,7 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 <div>[image-20240723-070449.png]()</div>
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다. 
+<Callout type="info">
+해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다. 
 SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드]([Okta] 프로비저닝 연동 가이드) 내 절차대로 대신 진행하여 주시기 바랍니다. 
-
-</div>
+</Callout>

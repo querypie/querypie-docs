@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie에서는 사용자를 그룹 단위로 묶어 일괄 관리할 수 있는 그룹 기능을 제공합니다. 그룹은 DB 접근 권한, Workflow 승인/검토자 역할, 서버나 쿠버네티스 역할(Role) 부여 시의 단위로 사용될 수 있습니다. Groups 페이지에서는 QueryPie에 등록된 사용자 그룹 목록을 조회 및 관리합니다.
 
@@ -21,10 +23,9 @@ Administrator &gt; General &gt; User Management &gt; Groups 페이지로 진입�
 ## 그룹 수동 추가하기
 Groups 페이지 우상단 Create Group 버튼을 클릭하면 모달이 출력되며, 원하는 이름을 입력하고 Save 버튼을 클릭하면 그룹 생성이 완료됩니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 수동 추가된 그룹에 대해서만 사용자 추가 또는 삭제가 가능합니다.  IdP에서 동기화된 그룹에 대해서는 조회만 지원하며, 사용자 목록 및 그룹 관리는 IdP 에서 수행하여야 합니다. 
-
-</div>
+<Callout>
+수동 추가된 그룹에 대해서만 사용자 추가 또는 삭제가 가능합니다.  IdP에서 동기화된 그룹에 대해서는 조회만 지원하며, 사용자 목록 및 그룹 관리는 IdP 에서 수행하여야 합니다. 
+</Callout>
 
 ## 그룹에 사용자 추가하기
 리스트에서 사용자를 추가하려는 그룹을 클릭하면 Drawer가 열리고, 상세 정보를 확인할 수 있습니다.
@@ -40,11 +41,10 @@ Groups 페이지 우상단 Create Group 버튼을 클릭하면 모달이 출력�
   3. 하단 Check all 버튼을 클릭하면 전체 사용자가 선택됩니다.사용자 추가 모달
 2. Save 버튼을 클릭하여 그룹 변경 내역을 저장합니다. 그룹 리스트 및 상세 정보 Drawer에서 추가된 사용자를 확인할 수 있습니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. 그룹에 특정 사용자를 추가하려고 하는데 모달에서 보이지 않아요.** 
+<Callout type="info">
+**Q. 그룹에 특정 사용자를 추가하려고 하는데 모달에서 보이지 않아요.** 
 A. 사용자 추가 모달에는 활성화 상태의 사용자만 표시됩니다. Users 페이지에서 사용자의 계정 상태가 Inactive 인지 확인해보세요. 
-
-</div>
+</Callout>
 
 ## 그룹에서 사용자 제거하기
 1. 그룹 상세 페이지에서 제거하려는 사용자를 체크박스로 선택한 뒤, 테이블 헤더에 표시되는 Delete 버튼을 클릭합니다.
@@ -71,12 +71,10 @@ Groups 리스트에서 삭제하려는 그룹을 체크박스로 선택합니다
 <div>[스크린샷 2024-07-26 오후 12.33.14.png]()</div>
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 그룹 이름 변경 및 삭제는 QueryPie에서 수동으로 추가된 그룹만 가능합니다. 
+<Callout type="info">
+그룹 이름 변경 및 삭제는 QueryPie에서 수동으로 추가된 그룹만 가능합니다. 
+</Callout>
 
-</div>
-
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 그룹이 삭제되는 경우 그룹에 속한 사용자가 삭제되지는 않지만, 그룹을 매개로 부여받은 권한 및 역할은 즉시 해제됩니다. 그룹 삭제는 취소가 불가능하므로 실행에 신중을 기하시기 바랍니다. 
-
-</div>
+<Callout>
+그룹이 삭제되는 경우 그룹에 속한 사용자가 삭제되지는 않지만, 그룹을 매개로 부여받은 권한 및 역할은 즉시 해제됩니다. 그룹 삭제는 취소가 불가능하므로 실행에 신중을 기하시기 바랍니다. 
+</Callout>

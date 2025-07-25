@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 관리자는 사용자 또는 사용자 그룹에 서버 또는 서버그룹에 대한 접근 권한(Permission)을 직접 부여하거나 회수할 수 있습니다. 한번 부여된 Permission은 수정이 불가능하고, 삭제만 가능합니다.
 
@@ -23,10 +25,9 @@
   2. 우측 하단 Accounts에서 선택된 서버에 접속할 수 있는 Account를 선택합니다.
 3. Next 버튼을 클릭합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니다. 하나의 서버 그룹 내 1000개 이상의 서버가 등록된 경우, Servers 필드에서 서버명 검색을 통해 서버를 추가합니다. 
-
-</div>
+<Callout type="info">
+Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니다. 하나의 서버 그룹 내 1000개 이상의 서버가 등록된 경우, Servers 필드에서 서버명 검색을 통해 서버를 추가합니다. 
+</Callout>
 
 ### 3. **[Step 2]** : 선택한 서버에 대한 접근 가능 정책을 설정합니다.
 <p align="center">
@@ -73,8 +74,7 @@
 4. 목록 왼쪽 상단에 표시되는 Revoke 버튼을 클릭합니다.
 5. 확인 팝업에서 Revoke 입력 후 Revoke 버튼을 누르면 Role이 성공적으로 회수됩니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. 권한이 부여되거나 회수된 이력을 확인할 수 있는 곳이 있나요? ** 
+<Callout type="info">
+**Q. 권한이 부여되거나 회수된 이력을 확인할 수 있는 곳이 있나요? ** 
 A. Audit 메뉴에서 Servers &gt; Access Control Logs 메뉴를 선택하면 확인할 수 있습니다. 
-
-</div>
+</Callout>

@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러스터에 대해 역할(Role)을 간편하게 요청할 수 있습니다. 승인 즉시 역할이 부여되며, 역할에서 허용하는 서버 또는 쿠버네티스 클러스터에 접속할 수 있습니다.
 
@@ -39,11 +41,10 @@ Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러�
 <div>[image-20240807-130043.png]()</div>
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Q. Urgent Mode 스위치가 보이지 않아요.** 
+<Callout>
+**Q. Urgent Mode 스위치가 보이지 않아요.** 
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다. 
-
-</div>
+</Callout>
 
 ### 5. 요청 대상 역할(Role) 선택하기
 <p align="center">
@@ -57,10 +58,9 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
   1. Server Access Control : 접근 가능한 각 서버그룹명, 서버명, 어카운트명
   2. Kubernetes Access Control : 접근 가능한 쿠버네티스 클러스터명, 플랫폼, API URL
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> Access Role Request는 한 번에 하나의 역할만 요청할 수 있습니다. 역할 별 별도의 결재 요청이 필요하므로, 권한 관리를 강화할 수 있습니다. 
-
-</div>
+<Callout>
+Access Role Request는 한 번에 하나의 역할만 요청할 수 있습니다. 역할 별 별도의 결재 요청이 필요하므로, 권한 관리를 강화할 수 있습니다. 
+</Callout>
 
 ### 6. 요청 정보 입력하기
 <p align="center">

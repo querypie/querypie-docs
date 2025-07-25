@@ -1,10 +1,11 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 QueryPie에서 기록하는 감사 로그를 Splunk를 통하여 외부로 전송하는 기능을 제공합니다.
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Integration 설정을 위해서는 System admin 권한이 필요합니다. 
-
-</div>
+<Callout type="info">
+Integration 설정을 위해서는 System admin 권한이 필요합니다. 
+</Callout>
 
 ## Syslog-Splunk 연계 권장 아키텍처
 <p align="center">
@@ -17,10 +18,9 @@ Splunk에서 권장하는 Syslog-Splunk 연계를 위한 아키텍처는 다음�
 1. 별도 syslog server를 통한 1차 수집 이후 Splunk 로 전송
 2. Universal forwarder / Heavy forwarder를 통해 Splunk로 전송
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용하여 직접 전송할 수 있도록 구성되어 있으나 이 구성은 Splunk의 권장사항이 아님을 주의하여 주시기 바랍니다. 
-
-</div>
+<Callout>
+QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용하여 직접 전송할 수 있도록 구성되어 있으나 이 구성은 Splunk의 권장사항이 아님을 주의하여 주시기 바랍니다. 
+</Callout>
 
 참고로 Splunk는 syslog 수집을 위해 별도로 SC4S(Splunk connector for syslog)를 제공하고 있습니다.
 
@@ -84,10 +84,9 @@ Splunk에서 권장하는 Syslog-Splunk 연계를 위한 아키텍처는 다음�
 | Request Audit                | 해당사항 없음 | 해당사항 없음 | O       |
 | Kubernetes Role History      | 해당사항 없음 | 해당사항 없음 | O       |
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Pod Session Recordings** 는 Request Audit 내 pods/exec 리소스 호출 내역과 리스트가 중복되므로, syslog 전송을 지원하지 않습니다. 
-
-</div>
+<Callout type="info">
+**Pod Session Recordings** 는 Request Audit 내 pods/exec 리소스 호출 내역과 리스트가 중복되므로, syslog 전송을 지원하지 않습니다. 
+</Callout>
 
 * 기타 참고 문서 RFC 3164: The BSD Syslog ProtocolSplunk Universal Forwarder Splunk Connect for Syslog Set up and use HTTP Event Collector in Splunk Web
   * RFC 3164: The BSD Syslog Protocol

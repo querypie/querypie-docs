@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## Overview
 기존 QueryPie DAC은  Data Access, Data Masking, Sensitive Data. Ledger Table Management 과 같은 데이터 정책을 제공하고 있습니다. 그러나 이러한 정책을 각 커넥션마다 개별적으로 설정하고, 각 테이블과 컬럼마다 규칙을 적용해야 합니다. 그리고 정책에 대해 가져오기 및 내보내기 기능을 제공하지 않습니다.
 
@@ -13,8 +15,8 @@ General &gt; Company management &gt; Security 의 하위 항목중 DB Connection
 *Enable New DAC Policy Management*
 </p>
 
-<div class="alert alert-info">
-  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 새로운 정책관리기능을 활성화하기 전에 아래의 내용을 먼저 검토해야 합니다. 
+<Callout>
+새로운 정책관리기능을 활성화하기 전에 아래의 내용을 먼저 검토해야 합니다. 
 [ul]
 [li]
 이 기능을 활성화하기 전에 먼저 원장 테이블 관리기능을 Off 로 전환해야 합니다. 
@@ -29,5 +31,4 @@ General &gt; Company management &gt; Security 의 하위 항목중 DB Connection
 새로운 정책관리기능으로 생성한 정책을 모두 삭제해야 이 기능을 비활성화 할 수 있습니다. 
 
 
-
-</div>
+</Callout>
