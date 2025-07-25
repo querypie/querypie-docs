@@ -14,71 +14,59 @@ import { Callout } from 'nextra/components'
 *Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details*
 </p>
 
-1. Administrator > Kubernetes > K8s Access Control > Access Control 메뉴로 이동합니다.
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control 메뉴로 이동합니다.
 2. 테이블 좌측 상단의 검색란을 통해 사용자/그룹명을 조건으로 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 사용자/그룹 목록을 최신화할 수 있습니다.
-4. 테이블 목록에는 각 사용자/그룹별 이하의 정보를 노출합니다:User Type : 사용자/그룹 유형Provider : 사용자/그룹의 원장을 표현Name : 사용자/그룹명Members : 그룹 내 소속 멤버 목록Roles : 부여된 Role의 갯수
-  1. User Type : 사용자/그룹 유형
-  2. Provider : 사용자/그룹의 원장을 표현
-  3. Name : 사용자/그룹명
-  4. Members : 그룹 내 소속 멤버 목록
-  5. Roles : 부여된 Role의 갯수
-5. Access Control 목록에서 행을 클릭하면 대상 사용자/그룹에 대한 상세 페이지로 이동합니다. Roles 디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.Role명으로 검색 가능합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명각 Role 행을 클릭 해당 Role의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Role명 (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)Description : Role 상세설명Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명Last Access At : 해당 롤의 마지막 호출 일시Expiration Date : 기한 만료일하단에는 해당 롤에 할당되어 있는 정책이 목록으로 노출됩니다.Name : Policy명 (정책 정보를 조회할 수 있는 링크를 제공합니다.)Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명Clusters부여된 Role들에 의해 접근 가능한 쿠버네티스 클러스터 목록을 나열합니다.Cluster명, Role명으로 검색 가능합니다.목록은 각 클러스터마다 이하의 정보를 노출합니다:Name : 클러스터명Version : 쿠버네티스 버전API URL : 클러스터 API URLCloud Provider : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)Tags : 클러스터에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 클러스터 최초 생성일시Updated At : 클러스터 마지막 수정일시
-  1. Roles 디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.Role명으로 검색 가능합니다.목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명각 Role 행을 클릭 해당 Role의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Role명 (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)Description : Role 상세설명Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명Last Access At : 해당 롤의 마지막 호출 일시Expiration Date : 기한 만료일하단에는 해당 롤에 할당되어 있는 정책이 목록으로 노출됩니다.Name : Policy명 (정책 정보를 조회할 수 있는 링크를 제공합니다.)Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명
-    1. 디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.
-    2. Role명으로 검색 가능합니다.
-    3. 목록은 각 Role마다 이하의 정보를 노출합니다:Name : Role명Description : Role 상세설명Expiration Date : 기한 만료일Last Access At : 해당 롤의 마지막 호출 일시Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명
-      1. Name : Role명
-      2. Description : Role 상세설명
-      3. Expiration Date : 기한 만료일
-      4. Last Access At : 해당 롤의 마지막 호출 일시
-      5. Granted At : Role이 해당 사용자/그룹에 부여된 일시
-      6. Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명
-    4. 각 Role 행을 클릭 해당 Role의 상세 정보를 드로워 형태로 제공합니다.상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Role명 (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)Description : Role 상세설명Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명Last Access At : 해당 롤의 마지막 호출 일시Expiration Date : 기한 만료일하단에는 해당 롤에 할당되어 있는 정책이 목록으로 노출됩니다.Name : Policy명 (정책 정보를 조회할 수 있는 링크를 제공합니다.)Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명
-      1. 상단에는 기본 정보가 아래와 같이 노출됩니다:Name : Role명 (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)Description : Role 상세설명Granted At : Role이 해당 사용자/그룹에 부여된 일시Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명Last Access At : 해당 롤의 마지막 호출 일시Expiration Date : 기한 만료일
-        1. Name : Role명 (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)
-          * (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)
-        2. Description : Role 상세설명
-        3. Granted At : Role이 해당 사용자/그룹에 부여된 일시
-        4. Granted By : 해당 Role을 사용자/그룹에 부여한 관리자명
-        5. Last Access At : 해당 롤의 마지막 호출 일시
-        6. Expiration Date : 기한 만료일
-      2. 하단에는 해당 롤에 할당되어 있는 정책이 목록으로 노출됩니다.Name : Policy명 (정책 정보를 조회할 수 있는 링크를 제공합니다.)Description : Policy 상세설명Version : Policy 버전Assigned At : 할당 일시Assigned By : 해당 정책을 할당한 관리자명
-        1. Name : Policy명 (정책 정보를 조회할 수 있는 링크를 제공합니다.)
-          * (정책 정보를 조회할 수 있는 링크를 제공합니다.)
-        2. Description : Policy 상세설명
-        3. Version : Policy 버전
-        4. Assigned At : 할당 일시
-        5. Assigned By : 해당 정책을 할당한 관리자명
-  2. Clusters부여된 Role들에 의해 접근 가능한 쿠버네티스 클러스터 목록을 나열합니다.Cluster명, Role명으로 검색 가능합니다.목록은 각 클러스터마다 이하의 정보를 노출합니다:Name : 클러스터명Version : 쿠버네티스 버전API URL : 클러스터 API URLCloud Provider : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)Tags : 클러스터에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 클러스터 최초 생성일시Updated At : 클러스터 마지막 수정일시
-    1. 부여된 Role들에 의해 접근 가능한 쿠버네티스 클러스터 목록을 나열합니다.
-    2. Cluster명, Role명으로 검색 가능합니다.
-    3. 목록은 각 클러스터마다 이하의 정보를 노출합니다:Name : 클러스터명Version : 쿠버네티스 버전API URL : 클러스터 API URLCloud Provider : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)Tags : 클러스터에 달린 태그 목록Role : 관련 Role 목록 나열Created At : 클러스터 최초 생성일시Updated At : 클러스터 마지막 수정일시
-      1. Name : 클러스터명
-      2. Version : 쿠버네티스 버전
-      3. API URL : 클러스터 API URL
-      4. Cloud Provider : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)
-      5. Tags : 클러스터에 달린 태그 목록
-      6. Role : 관련 Role 목록 나열
-      7. Created At : 클러스터 최초 생성일시
-      8. Updated At : 클러스터 마지막 수정일시
+4. 테이블 목록에는 각 사용자/그룹별 이하의 정보를 노출합니다:
+    1. **User Type**  : 사용자/그룹 유형
+    2. **Provider**  : 사용자/그룹의 원장을 표현
+    3. **Name**  : 사용자/그룹명
+    4. **Members**  : 그룹 내 소속 멤버 목록
+    5. **Roles**  : 부여된 Role의 갯수
+5. Access Control 목록에서 행을 클릭하면 대상 사용자/그룹에 대한 상세 페이지로 이동합니다.
+    1. **Roles **
+        1. 디폴트로 지정되는 탭으로 부여된 Role 목록을 조회할 수 있습니다.
+        2. Role명으로 검색 가능합니다.
+        3. 목록은 각 Role마다 이하의 정보를 노출합니다:
+            1. **Name**  : Role명
+            2. **Description**  : Role 상세설명
+            3. **Expiration Date**  : 기한 만료일
+            4. **Last Access At**  : 해당 롤의 마지막 호출 일시
+            5. **Granted At**  : Role이 해당 사용자/그룹에 부여된 일시
+            6. **Granted By**  : 해당 Role을 사용자/그룹에 부여한 관리자명
+        4. 각 Role 행을 클릭 해당 Role의 상세 정보를 드로워 형태로 제공합니다.
+            1. 상단에는 기본 정보가 아래와 같이 노출됩니다:
+                1. **Name**  : Role명
+                    * (Role 상세페이지 링크를 새 창으로 열 수 있습니다.)
+                2. **Description**  : Role 상세설명
+                3. **Granted At**  : Role이 해당 사용자/그룹에 부여된 일시
+                4. **Granted By**  : 해당 Role을 사용자/그룹에 부여한 관리자명
+                5. **Last Access At**  : 해당 롤의 마지막 호출 일시
+                6. **Expiration Date**  : 기한 만료일
+            2. 하단에는 해당 롤에 할당되어 있는 정책이 목록으로 노출됩니다.
+                1. **Name**  : Policy명
+                    * (정책 정보를 조회할 수 있는 링크를 제공합니다.)
+                2. **Description**  : Policy 상세설명
+                3. **Version**  : Policy 버전
+                4. **Assigned At**  : 할당 일시
+                5. **Assigned By**  : 해당 정책을 할당한 관리자명
+    2. **Clusters**
+        1. 부여된 Role들에 의해 접근 가능한 쿠버네티스 클러스터 목록을 나열합니다.
+        2. Cluster명, Role명으로 검색 가능합니다.
+        3. 목록은 각 클러스터마다 이하의 정보를 노출합니다:
+            1. **Name**  : 클러스터명
+            2. **Version**  : 쿠버네티스 버전
+            3. **API URL**  : 클러스터 API URL
+            4. **Cloud Provider**  : 연결 플랫폼 (수동 클러스터의 경우, 하이픈으로 표기)
+            5. **Tags**  : 클러스터에 달린 태그 목록
+            6. **Role**  : 관련 Role 목록 나열
+            7. **Created At**  : 클러스터 최초 생성일시
+            8. **Updated At**  : 클러스터 마지막 수정일시
 
 <Callout type="info">
 **Expiration Date가 도달한 Granted Role의 처리 방식** 
-[ul]
-[li]
-사용자 또는 그룹에 부여된 Role 중에 Expiration Date에 도달한 Role의 경우, 이하의 액션이 발생합니다: 
-[ul]
-[li]
-Access Control 상세 페이지 내 Roles 탭에서 해당 Role 행이 자동 제거됩니다. 
-
-[li]
-Access Control 상세 페이지 내 Clusters 탭에서 해당 Role로 인해 접근 가능했던 클러스터 행이 자동 제거됩니다. 
-
-[li]
-Audit &gt; Kubernetes &gt; Kubernetes Role History에 “Role Revoked” 로그를 남기고 Action By는 “System”으로 표기합니다. 
-
-
-
-
+* 사용자 또는 그룹에 부여된 Role 중에 Expiration Date에 도달한 Role의 경우, 이하의 액션이 발생합니다:
+    * Access Control 상세 페이지 내 Roles 탭에서 해당 Role 행이 자동 제거됩니다.
+    * Access Control 상세 페이지 내 Clusters 탭에서 해당 Role로 인해 접근 가능했던 클러스터 행이 자동 제거됩니다.
+    * Audit &gt; Kubernetes &gt; Kubernetes Role History에 “Role Revoked” 로그를 남기고 Action By는 “System”으로 표기합니다.
 </Callout>

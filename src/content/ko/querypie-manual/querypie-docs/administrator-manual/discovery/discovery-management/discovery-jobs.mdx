@@ -24,42 +24,34 @@ Discovery job 페이지에서 + Discovery Jobs 버튼을 누르면 Job 생성 �
 </p>
 
 <Callout type="important">
-[ul]
-[li]
-Discovery Job을 생성할 때 모든 커넥션을 선택하면 스캔에 소요되는 시간이 매우 길어질 수 있습니다. 따라서 특정 커넥션만 선택하여 지정하는 것을 권장드립니다. 
-
-[li]
-사용자 편의를 위해 사전 정의된 Built-in Profile을 제공해 드리고 있습니다만, Built-in Profile은 넓은 범위의 다수 패턴이 지정 되기 때문에 오탐이 대량 증가 할 수 있습니다. 스캔 소요시간과 오탐을 줄이기 위해 사용자 지정 Profile을 만들고 필요한 패턴만 Profile에 포함시켜 사용하는 것을 권장드립니다. 
-
-[li]
-**권장 프로세스 : 사용자정의 Detectio profile 생성 → Discovery Job 생성 → Discovery Job 수행 → Scan Result 확인 및 Verify → Inventory 확인** 
-
-
+* Discovery Job을 생성할 때 모든 커넥션을 선택하면 스캔에 소요되는 시간이 매우 길어질 수 있습니다. 따라서 특정 커넥션만 선택하여 지정하는 것을 권장드립니다.
+* 사용자 편의를 위해 사전 정의된 Built-in Profile을 제공해 드리고 있습니다만, Built-in Profile은 넓은 범위의 다수 패턴이 지정 되기 때문에 오탐이 대량 증가 할 수 있습니다. 스캔 소요시간과 오탐을 줄이기 위해 사용자 지정 Profile을 만들고 필요한 패턴만 Profile에 포함시켜 사용하는 것을 권장드립니다.
+* **권장 프로세스 : 사용자정의 Detectio profile 생성 → Discovery Job 생성 → Discovery Job 수행 → Scan Result 확인 및 Verify → Inventory 확인**
 </Callout>
 
 1. Job 이름 지정 : 식별이 용이하도록 Job의 이름을 지정합니다. Job의 이름은 중복될 수 없습니다. 기존에 사용중인 Job 이름과 동일한 이름을 입력하고 저장하면 에러 메시지를 출력합니다.
 2. Description : Job에 대한 설명을 입력합니다.
 3. 스케줄 지정 : 스케줄을 지정하여 Job을 지정한 주기로 수행할 수 있습니다. 스케줄은 cron 형식으로 입력합니다. Manual을 선택하면 스케줄을 지정하지 않습니다. 스케줄이 지정하거나 수동 설정이 되어있는 것과 무관하게 Discovery Job 목록에서 모든 디스커버리 Job은 수동으로 스캔을 시작할 수 있습니다.
-4. Job Execution Timeout : Job 수행시간에 제한을 두어 지정한 시간 동안만 수행할 수 있도록 합니다. Timeout은 기본적으로 Disable 되어 있고 Enable 했을때 기본값은 360분(6시간)입니다. 입력 가능한 최소값은 1분이고 최대값은 최대 1440분 (24시간) 입니다. 제한 시간이 되었을 때의 동작은 Abort와 같습니다. 여러개의 커넥션을 동시에 선택하여 Job을 수행할 때 일부 커넥션에 대한 스캔이 제한 시간 이내에 끝날 수 있습니다. 이 경우 정상적으로 스캔이 끝난 커넥션은 결과를 볼 수 있습니다. 하지만 하나라도 커넥션이 제한시간이내에 끝나지 않을 경우 Final Status 는 Aborted 가 됩니다.Timeout에 의한 Job 수행 중단 예시
+4. Job Execution Timeout : Job 수행시간에 제한을 두어 지정한 시간 동안만 수행할 수 있도록 합니다. Timeout은 기본적으로 Disable 되어 있고 Enable 했을때 기본값은 360분(6시간)입니다. 입력 가능한 최소값은 1분이고 최대값은 최대 1440분 (24시간) 입니다. 제한 시간이 되었을 때의 동작은 Abort와 같습니다. 여러개의 커넥션을 동시에 선택하여 Job을 수행할 때 일부 커넥션에 대한 스캔이 제한 시간 이내에 끝날 수 있습니다. 이 경우 정상적으로 스캔이 끝난 커넥션은 결과를 볼 수 있습니다. 하지만 하나라도 커넥션이 제한시간이내에 끝나지 않을 경우 Final Status 는 Aborted 가 됩니다.
 5. Sample Size 지정 : 전체 컬럼을 모두 스캔하면 서버에 부하가 발생됩니다. 따라서 지정한 행수만 스캔하도록 제한을 할 수 있습니다. 너무 작은 값을 사용하면 검출된 결과를 신뢰할 수 없을 수 있기 때문에 최소 sample size는 100rows 로 제한됩니다. 최대값이 지정되어 있지는 않지만 너무 큰 값을 사용하면 서버의 성능에 심각한 영향을 줄 수 있으므로 신중하게 값을 입력해야 합니다. 기본 값은 1000입니다.
-6. Connection 선택 : 스캔을 하려고 하는 커넥션을 선택합니다. 존재하는 모든 커넥션을 선택할 수도 있고 특정 커넥션만 선택적으로 지정할 수도 있습니다. + Connection 버튼을 누릅니다.Connection 추가팝업 창에서 대상 커넥션을 선택하고 Add 버튼을 누릅니다.특정 커넥션을 선택하여 추가 선택한 커넥션이 목록에 추가되었는지 확인합니다.Discovery Job 대상으로 추가된 커넥션 확인
-  1. + Connection 버튼을 누릅니다.Connection 추가
-  2. 팝업 창에서 대상 커넥션을 선택하고 Add 버튼을 누릅니다.특정 커넥션을 선택하여 추가
-  3. 선택한 커넥션이 목록에 추가되었는지 확인합니다.Discovery Job 대상으로 추가된 커넥션 확인
-7. Detection Profile 지정 : Job이 수행할 때 사용할 패턴집합인 Detection Profile을 지정합니다.+ Detection Profile 버튼을 누릅니다.Detection Profile 추가팝업창에서 사용할 Profile을 선택하고 Add 버튼을 누릅니다.사용할 Detection Profile 선택선택한 profile이 목록에 추가되었는지 확인합니다.Discovery Job에 추가된 Detection Profile 확인
-  1. + Detection Profile 버튼을 누릅니다.Detection Profile 추가
-  2. 팝업창에서 사용할 Profile을 선택하고 Add 버튼을 누릅니다.사용할 Detection Profile 선택
-  3. 선택한 profile이 목록에 추가되었는지 확인합니다.Discovery Job에 추가된 Detection Profile 확인
+6. Connection 선택 : 스캔을 하려고 하는 커넥션을 선택합니다. 존재하는 모든 커넥션을 선택할 수도 있고 특정 커넥션만 선택적으로 지정할 수도 있습니다.
+    1. `+ Connection` 버튼을 누릅니다.
+    2. 팝업 창에서 대상 커넥션을 선택하고 `Add` 버튼을 누릅니다.
+    3. 선택한 커넥션이 목록에 추가되었는지 확인합니다.
+7. Detection Profile 지정 : Job이 수행할 때 사용할 패턴집합인 Detection Profile을 지정합니다.
+    1. `+ Detection Profile` 버튼을 누릅니다.
+    2. 팝업창에서 사용할 Profile을 선택하고 `Add` 버튼을 누릅니다.
+    3. 선택한 profile이 목록에 추가되었는지 확인합니다.
 8. Save 버튼을 눌러 저장합니다.
 
 ## Discovery Job의 수정
 Discovery Job 페이지의 목록에서 특정 Job(행)을 클릭하면 해당 job의 상세페이지가 출력됩니다.
 
-* Discovery job의 메타 정보 수정 : 우측 상단의 Edit 버튼을 클릭하면 Job Name, Description, Schedule, Job Execution Timeout, Sample Size 설정을 수정할 수 있습니다.Discovery Job의 메타데이터 수정
-* Discovery Job의 Connection 수정 : 상세페이지의 Connections 탭을 선택하면 해당 job에 지정된 커넥션이 표시되고 우측의 +Connection 버튼을 눌러 커넥션을 추가할 수 있습니다.상세페이지의 Connections 탭과 Connection 추가 버튼Connection을 제거하려면 Connections 탭의 목록에서 제거할 커넥션을 체크한 뒤 Remove 버튼을 클릭합니다.Job에 최소 1개의 커넥션이 지정되어 있어야 합니다.특정 커넥션을 Discovery job에서 제거
-  * Connection을 제거하려면 Connections 탭의 목록에서 제거할 커넥션을 체크한 뒤 Remove 버튼을 클릭합니다.Job에 최소 1개의 커넥션이 지정되어 있어야 합니다.특정 커넥션을 Discovery job에서 제거
-* Discovery Job의 Detection Profile 수정 : 상세페이지의 Detection Profiles 탭을 선택하면 해당 job에 지정된 Detection Profile이 표시되고 우측의 + Detection Profile 버튼을 눌러 Detection Profile을 추가할 수 있습니다. 상세페이지의 Detection Profiles 탭과 Detection Profile 추가 버튼 Detection Profile을 제거하려면 Detection Profiles 탭의 목록에서 제거할 Detection Profile을 체크한 뒤 Remove 버튼을 클릭합니다.Job에 최소 1개의 Detection Profile이 지정되어 있어야 합니다.특정 Detection Profile을 Discovery Job에서 제거
-  * Detection Profile을 제거하려면 Detection Profiles 탭의 목록에서 제거할 Detection Profile을 체크한 뒤 Remove 버튼을 클릭합니다.Job에 최소 1개의 Detection Profile이 지정되어 있어야 합니다.특정 Detection Profile을 Discovery Job에서 제거
+* Discovery job의 메타 정보 수정 : 우측 상단의 `Edit` 버튼을 클릭하면 Job Name, Description, Schedule, Job Execution Timeout, Sample Size 설정을 수정할 수 있습니다.
+* Discovery Job의 Connection 수정 : 상세페이지의 Connections 탭을 선택하면 해당 job에 지정된 커넥션이 표시되고 우측의 `+Connection` 버튼을 눌러 커넥션을 추가할 수 있습니다.
+    * Connection을 제거하려면 Connections 탭의 목록에서 제거할 커넥션을 체크한 뒤 `Remove` 버튼을 클릭합니다. Job에 최소 1개의 커넥션이 지정되어 있어야 합니다.
+* Discovery Job의 Detection Profile 수정 : 상세페이지의 Detection Profiles 탭을 선택하면 해당 job에 지정된 Detection Profile이 표시되고 우측의 `+ Detection Profile` 버튼을 눌러 Detection Profile을 추가할 수 있습니다.
+    * Detection Profile을 제거하려면 Detection Profiles 탭의 목록에서 제거할 Detection Profile을 체크한 뒤 `Remove` 버튼을 클릭합니다. Job에 최소 1개의 Detection Profile이 지정되어 있어야 합니다.
 
 ## Discovery Job의 삭제
 <p align="center">
@@ -70,23 +62,23 @@ Discovery Job 페이지의 목록에서 특정 Job(행)을 클릭하면 해당 j
 Discovery Job 페이지에서 특정 Job의 체크박스를 체크하고 Delete 버튼을 눌러 Job을 삭제할 수 있습니다. 단, 현재 수행 중인 Job은 Job이 중지될 때 까지 수정 또는 삭제가 불가능합니다.
 
 ## Discovery Job의 동작 제어
-* Discovery Job의 상태 정보Created : Job을 생성했지만 한번도 수행하지 않은 상태입니다.Running : 현재 수행 중인 상태입니다.Completed : Job이 성공적으로 수행을 마친 상태입니다.Failed : Job을 수행되었지만 실패된 상태입니다.Aborted : 수행 중인 Job을 사용자가 강제로 중지시킨 상태입니다.
-  * Created : Job을 생성했지만 한번도 수행하지 않은 상태입니다.
-  * Running : 현재 수행 중인 상태입니다.
-  * Completed : Job이 성공적으로 수행을 마친 상태입니다.
-  * Failed : Job을 수행되었지만 실패된 상태입니다.
-  * Aborted : 수행 중인 Job을 사용자가 강제로 중지시킨 상태입니다.
+* Discovery Job의 상태 정보
+    * **Created**  : Job을 생성했지만 한번도 수행하지 않은 상태입니다.
+    * **Running**  : 현재 수행 중인 상태입니다.
+    * **Completed**  : Job이 성공적으로 수행을 마친 상태입니다.
+    * **Failed**  : Job을 수행되었지만 실패된 상태입니다.
+    * **Aborted**  : 수행 중인 Job을 사용자가 강제로 중지시킨 상태입니다.
 
 <p align="center">
 <div>[image-20240730-082643.png]()</div>
 *Run Now / Stop*
 </p>
 
-* 특정 Job의 수동 시작 : 목록에서 특정 Job을 체크한 뒤 Run Now 버튼을 누르면 수동으로 Job을 시작할 수 있습니다.
-* 수행 중인 특정 Job의 중지 : 목록에서 “Running” 상태인  특정 Job을 체크한 뒤 Stop 버튼을 누르면 수행 중인 Job을 강제 중지 시킬 수 있습니다.
+* 특정 Job의 수동 시작 : 목록에서 특정 Job을 체크한 뒤 `Run Now` 버튼을 누르면 수동으로 Job을 시작할 수 있습니다.
+* 수행 중인 특정 Job의 중지 : 목록에서 “Running” 상태인 특정 Job을 체크한 뒤 `Stop` 버튼을 누르면 수행 중인 Job을 강제 중지 시킬 수 있습니다.
 
 ## Discovery Job의 수행 상태 확인
 Discovery Job의 수행상태 확인은 다음 위치에서 가능합니다.
 
-* Discovery Job 상세페이지의 Run History 탭 (Administrator > Discovery > Discovery Management > Discovery Job)Discovery Job 상세페이지의 Run History 탭
-* Discovery History 의 Run History (Administrator > Discovery > Discovery Management > Discovery History)의 목록 및 각 Job을 클릭했을 때 출력되는 상세 화면. Discovery History 의 Run History Run History의 상세화면
+* Discovery Job 상세페이지의 Run History 탭 (Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery Job)
+* Discovery History 의 Run History (Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery History)의 목록 및 각 Job을 클릭했을 때 출력되는 상세 화면.

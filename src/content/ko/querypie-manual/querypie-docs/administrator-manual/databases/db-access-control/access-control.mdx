@@ -19,16 +19,16 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 </p>
 
 * 검색 : Connection Name 으로 조회 가능
-* 제공 필터 타입Database Type : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)Cloud Provider : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)Assigned Status : 권한 할당 여부Favorite View : 즐겨찾기 설정 여부 (DB Connections 목록에서 즐겨찾기 설정 가능)Tag : 커넥션에 할당된 태그각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자 : =, !=, :, !:Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
-  * Database Type : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
-  * Cloud Provider : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
-  * Assigned Status : 권한 할당 여부
-  * Favorite View : 즐겨찾기 설정 여부 (DB Connections 목록에서 즐겨찾기 설정 가능)
-  * Tag : 커넥션에 할당된 태그각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자 : =, !=, :, !:Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
-    * 각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력지원하는 연산자 : =, !=, :, !:
-      * 지원하는 연산자 : =, !=, :, !:
-    * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
-    * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
+* 제공 필터 타입
+    * **Database Type ** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
+    * **Cloud Provider ** : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
+    * **Assigned Status ** : 권한 할당 여부
+    * **Favorite View ** : 즐겨찾기 설정 여부 (DB Connections 목록에서 즐겨찾기 설정 가능)
+    * **Tag ** : 커넥션에 할당된 태그
+        * 각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력
+            * 지원하는 연산자 : `=`, `!=`, `:`, `!:`
+        * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
+        * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
 
 ## Access Control 권한 부여하기
 <p align="center">
@@ -64,38 +64,18 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 
 <Callout type="important">
 **Access Control Details 패널에서의 Status 설명** 
-[ul]
-[li]
-**Active** : 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태입니다. 
-
-[li]
-**Deactivated** : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다. 
-
-[li]
-Deactivated 상태 우측의 버튼( `Renew` )을 통해 비활성화된 권한을 갱신하여 다시 활성화할 수 있습니다. 
-
-[li]
-비활성화된 권한을 갱신한 경우 **Renewed At** 컬럼에 갱신 시점이 표시됩니다. 
-
-
+* **Active**  : 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태입니다.
+* **Deactivated**  : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다.
+* Deactivated 상태 우측의 버튼(`Renew`)을 통해 비활성화된 권한을 갱신하여 다시 활성화할 수 있습니다.
+* 비활성화된 권한을 갱신한 경우  **Renewed At**  컬럼에 갱신 시점이 표시됩니다.
 </Callout>
 
 <Callout type="important">
 **Access Control Details 패널에 대한 세부 설명** 
-[ul]
-[li]
-해당 권한이 부여된 최초 시점은 **Granted At** 컬럼을 통해 확인할 수 있습니다. 
-
-[li]
-해당 권한을 부여받은 사용자가 커넥션에 마지막으로 접속한 시점은 **Last Access At** 컬럼을 통해 확인할 수 있습니다. 
-
-[li]
-해당 권한이 회수되는 시점은 **Expiration Date** 컬럼을 통해 확인할 수 있습니다. 
-
-[li]
-권한이 부여되었지만 **Expiration Date** 컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기미접속 설정(Deactivation Period)의 영향을 받습니다. 
-
-
+* 해당 권한이 부여된 최초 시점은  **Granted At**  컬럼을 통해 확인할 수 있습니다.
+* 해당 권한을 부여받은 사용자가 커넥션에 마지막으로 접속한 시점은  **Last Access At**  컬럼을 통해 확인할 수 있습니다.
+* 해당 권한이 회수되는 시점은  **Expiration Date**  컬럼을 통해 확인할 수 있습니다.
+* 권한이 부여되었지만  **Expiration Date**  컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기미접속 설정(Deactivation Period)의 영향을 받습니다.
 </Callout>
 
 ## 커넥션 잠금 계정 해제하기 (Locked Account)
@@ -106,13 +86,13 @@ Deactivated 상태 우측의 버튼( `Renew` )을 통해 비활성화된 권한�
 
 1. 데이터베이스 커넥션 보안정책에 의해 DB 계정 인증 실패(Maximum Login Failures) 횟수 초과로 커넥션이 잠긴 경우에 대해 Locked Account 메뉴에서 조회 가능합니다.
 2. DB 계정 인증 실패 횟수와 잠긴 시점이 함께 표시됩니다.
-3. 잠금해제 하고자하는 항목을 선택 후 우측 Unlock을 클릭하여 커넥션 잠금을 해제합니다.
+3. 잠금해제 하고자하는 항목을 선택 후 우측 `Unlock`을 클릭하여 커넥션 잠금을 해제합니다.
 
 <p align="center">
 <div>[image-20241209-123358.png]()</div>
 </p>
 
-1. 커넥션 잠금 및 잠금해제 내역은 Audit > Databases > Account Lock History 메뉴에서 확인하실 수 있습니다.
+1. 커넥션 잠금 및 잠금해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인하실 수 있습니다.
 
 <Callout type="info">
 **테이블 태그로 접근제어하기**   Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우, 
@@ -121,26 +101,12 @@ Deactivated 상태 우측의 버튼( `Renew` )을 통해 비활성화된 권한�
 
 
 Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다. 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다. 
-[ul]
-[li]
-New DAC Policy Management 기능이 Enable이어야 합니다. 
-
-[li]
-특정 사용자에게 특정커넥션에 대한 privilege가 할당되어 있어야 합니다. 
-
-[li]
-Databases &gt; Policy Management &gt; Data Path 에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다. 
-
-
+* New DAC Policy Management 기능이 Enable이어야 합니다.
+* 특정 사용자에게 특정커넥션에 대한 privilege가 할당되어 있어야 합니다.
+* Databases &gt; Policy Management &gt; Data Path 에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다.
 조건이 만족되었다면 아래와 같이 설정할 수 있습니다. 
-[ol]
-[li]
-Databases &gt; DB Access Control &gt; Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다. 
-
-[li]
-상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다. 
-
-
+1. Databases &gt; DB Access Control &gt; Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다.
+2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
 [ac:image]
 [ri:attachment]
 

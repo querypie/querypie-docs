@@ -49,11 +49,15 @@ def as_markdown(node):
         text = text.replace('<', '&lt;').replace('>', '&gt;')
         # Normalize multiple spaces to a single space
         text = re.sub(r'\s+', ' ', text)
-        text = backtick_curly_braces(text)
+        if node.parent.name == 'code':
+            # Do not backtick_curly_braces if the parent node is `<code>`, as it is backticked already.
+            pass
+        else:
+            text = backtick_curly_braces(text)
         return text
     else:
         # Fatal error and crash
-        raise TypeError("as_markdown() expects a NavigableString, got: {}".format(type(node)))
+        raise TypeError(f"as_markdown() expects a NavigableString, got: {type(node).__name__}")
 
 class SingleLineParser:
     def __init__(self, node):
@@ -74,9 +78,12 @@ class SingleLineParser:
             self.markdown_lines.append(as_markdown(node))
             return
 
-        logging.debug(f"SingleLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
+        logging.debug(f"SingleLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append("#" * int(node.name[1]) + " ")
+            for child in node.children:
+                self.convert_recursively(child)
+        elif node.name in ['p']:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['strong']:
@@ -174,6 +181,16 @@ class SingleLineParser:
             for child in node.children:
                 self.convert_recursively(child)
             return
+        elif node.name in ['li']:
+            # Extract text from <p> only.
+            for child in node.children:
+                if isinstance(child, Tag) and child.name == 'p':
+                    self.convert_recursively(child)
+                elif isinstance(child, NavigableString):
+                    logging.debug(f'Skip extracting text from NavigableString({repr(child)}) under <li>')
+                else:
+                    logging.debug(f'Skip extracting text from <{child.name}> under <li>')
+            return
         else:
             logging.warning(f"SingleLineParser: Unexpected node={node.name}")
             self.markdown_lines.append(f'[{node.name}]')
@@ -183,15 +200,15 @@ class SingleLineParser:
         return
 
 class MultiLineParser:
-    def __init__(self, children):
-        self.children = children
+    def __init__(self, node):
+        self.node = node
+        self.list_stack = []
         self.markdown_lines = []
 
     @property
     def as_markdown(self):
         """Convert the node to Markdown format."""
-        for child in self.children:
-            self.convert_recursively(child)
+        self.convert_recursively(self.node)
         # Return the markdown lines as a list of strings
         return self.markdown_lines
 
@@ -205,8 +222,8 @@ class MultiLineParser:
             self.markdown_lines.append(text)
             return
 
-        logging.debug(f"MultiLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
-        if node.name in ['ac:rich-text-body', 'ac:adf-content']:
+        logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        if node.name in ['ac:structured-macro', 'ac:rich-text-body', 'ac:adf-content']:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['p']:
@@ -215,6 +232,8 @@ class MultiLineParser:
                 self.markdown_lines.append(" ")  # Add a space after a child of paragraphs
             # Add an empty line after paragraphs
             self.markdown_lines.append('\n')
+        elif node.name in ['ul', 'ol']:
+            self.convert_ul_ol(node)
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         else:
@@ -225,6 +244,36 @@ class MultiLineParser:
                 self.convert_recursively(child)
             self.markdown_lines.append('\n')
 
+    def convert_ul_ol(self, node):
+        self.list_stack.append(node.name)
+        counter = 1
+        for child in node.children:
+            if child.name == 'li':
+                self.convert_li(child, node.name, counter)
+                counter += 1
+            else:
+                if isinstance(child, NavigableString):
+                    logging.debug(f'Skip extracting text from NavigableString({repr(child)}) under <{node.name}>')
+                else:
+                    logging.warning(f'Skip extracting text from <{child.name}> under <li>')
+        self.list_stack.pop()
+        return
+
+    def convert_li(self, node, list_type, counter=None):
+        indent = " " * 4 * (len(self.list_stack) - 1)
+        if list_type == 'ul':
+            prefix = f"{indent}* "
+        else:
+            prefix = f"{indent}{counter}. "
+
+        text = SingleLineParser(node).as_markdown
+        self.markdown_lines.append(f'{prefix}{text}')
+        self.markdown_lines.append('\n')
+
+        # Handle nested lists
+        for child in node.children:
+            if child.name in ['ul', 'ol']:
+                self.convert_ul_ol(child)
         return
 
 class ConfluenceToMarkdown:
@@ -291,7 +340,7 @@ class ConfluenceToMarkdown:
             return
 
         tmp = node.get_text(strip=True).splitlines()
-        logging.debug(f"ConfluenceToMarkdown node.name={node.name}, text={tmp[0] if tmp else ''}")
+        logging.debug(f"ConfluenceToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(tmp[0] if tmp else '')}")
 
         if node.name == '[document]':
             # Start processing from the body of the document
@@ -315,22 +364,8 @@ class ConfluenceToMarkdown:
             href = node.get('href', '#')
             text = self.get_text(node)
             self.markdown_lines.append(f"[{text}]({href})")
-        elif node.name == 'ul':
-            self.list_stack.append('ul')
-            for child in node.children:
-                if child.name == 'li':
-                    self.process_list_item(child, 'ul')
-            self.list_stack.pop()
-            self.markdown_lines.append("")  # Add empty line after list
-        elif node.name == 'ol':
-            self.list_stack.append('ol')
-            counter = 1
-            for child in node.children:
-                if child.name == 'li':
-                    self.process_list_item(child, 'ol', counter)
-                    counter += 1
-            self.list_stack.pop()
-            self.markdown_lines.append("")  # Add empty line after list
+        elif node.name in ['ul', 'ol']:
+            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
             self.process_table(node)
         elif node.name in ['code', 'pre']:
@@ -410,29 +445,7 @@ class ConfluenceToMarkdown:
         # Replace NBSP characters with regular spaces
         text = text.replace('\u00A0', ' ')
         return text.strip()
-    
-    def process_list_item(self, node, list_type, counter=None):
-        indent = "  " * (len(self.list_stack) - 1)
-        if list_type == 'ul':
-            prefix = f"{indent}* "
-        else:
-            prefix = f"{indent}{counter}. "
-        
-        text = self.get_text(node)
-        self.markdown_lines.append(f"{prefix}{text}")
-        
-        # Handle nested lists
-        for child in node.children:
-            if child.name == 'ul' or child.name == 'ol':
-                self.list_stack.append(child.name)
-                new_counter = 1
-                for subchild in child.children:
-                    if subchild.name == 'li':
-                        self.process_list_item(subchild, child.name, new_counter)
-                        if child.name == 'ol':
-                            new_counter += 1
-                self.list_stack.pop()
-    
+
     def process_table(self, table_node):
         self.in_table = True
         self.table_data = []

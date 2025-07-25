@@ -9,35 +9,35 @@ QueryPie에서는 클라우드 제공자에 등록된 DB 리소스를 연동하�
 </p>
 
 ## Cloud Provider 조회하기
-1. Administrator > Databases > Connection Management > Cloud Providers 메뉴로 이동합니다.
+1. Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 테이블 좌측 상단의 검색란을 통해 클라우드 프로바이더명을 조건으로 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 Cloud Provider 목록을 최신화할 수 있습니다.
-4. 테이블에서 이하의 컬럼 정보를 제공합니다:Name : 클라우드 프로바이더명Cloud Provider : 연결 플랫폼Region : 플랫폼 리전Replication Frequency : 동기화 주기 설정Created At : 클라우드 프로바이더 최초 생성일시Updated At : 클라우드 프로바이더 마지막 수정일시
-  1. Name : 클라우드 프로바이더명
-  2. Cloud Provider : 연결 플랫폼
-  3. Region : 플랫폼 리전
-  4. Replication Frequency : 동기화 주기 설정
-  5. Created At : 클라우드 프로바이더 최초 생성일시
-  6. Updated At : 클라우드 프로바이더 마지막 수정일시
+4. 테이블에서 이하의 컬럼 정보를 제공합니다:
+    1. **Name**  : 클라우드 프로바이더명
+    2. **Cloud Provider**  : 연결 플랫폼
+    3. **Region**  : 플랫폼 리전
+    4. **Replication Frequency ** : 동기화 주기 설정
+    5. **Created At**  : 클라우드 프로바이더 최초 생성일시
+    6. **Updated At ** : 클라우드 프로바이더 마지막 수정일시
 5. 각 행을 클릭하면 클라우드 프로바이더 세부 정보 조회가 가능합니다.
 
 ## Cloud Provider 생성하기
-1. Administrator > Servers > Connection Management > Cloud Providers 메뉴로 이동합니다.
-2. 우측 상단의 + Create Provider 버튼을 클릭합니다.
-3. 이하의 가이드를 참고하여 클라우드 프로바이더를 생성합니다:AWS 에서 DB 리소스 동기화MS Azure 에서 DB 리소스 동기화Google Cloud 에서 DB 리소스 동기화
-  1. AWS 에서 DB 리소스 동기화
-  2. MS Azure 에서 DB 리소스 동기화
-  3. Google Cloud 에서 DB 리소스 동기화
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
+2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
+3. 이하의 가이드를 참고하여 클라우드 프로바이더를 생성합니다:
+    1. [AWS 에서 DB 리소스 동기화](AWS에서 DB 리소스 동기화)
+    2. [MS Azure 에서 DB 리소스 동기화](MS Azure에서 DB 리소스 동기화)
+    3. [Google Cloud 에서 DB 리소스 동기화](Google Cloud에서 DB 리소스 동기화)
 
 ## Cloud Provider 삭제하기
 <p align="center">
 <div>[image-20241103-065154.png]()</div>
 </p>
 
-1. Administrator > Databases > Connection Management > Cloud Providers 메뉴로 이동합니다.
+1. Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 테이블 내 삭제할 대상 클라우드 프로바이더 좌측의 체크 박스를 체크합니다.
-3. 테이블 컬럼 라인에 나타난 Delete 버튼을 클릭합니다.
-4. 팝업이 나타나면 Delete 버튼을 클릭하여 삭제를 진행합니다.
+3. 테이블 컬럼 라인에 나타난 `Delete` 버튼을 클릭합니다.
+4. 팝업이 나타나면 `Delete` 버튼을 클릭하여 삭제를 진행합니다.
 
 <Callout type="important">
 Cloud Provider 삭제 시 해당 클라우드 프로바이더를 통해 동기화 해온 모든 리소스가 함께 일괄 삭제되니 이 점 유의하시기 바랍니다. 
@@ -53,6 +53,6 @@ Cloud Provider 삭제 시 해당 클라우드 프로바이더를 통해 동기�
 <div>[image-20241101-001430.png]()</div>
 </p>
 
-1. Databases > [Connection Management] > Cloud Provider의 목록에서 특정 프로바이더 항목을 선택합니다.
-2. 상세페이지에서 변경하고자하는 설정 항목을 변경한 뒤 우측 상단의 Dry Run버튼을 클릭합니다.
+1. Databases &gt; [Connection Management] &gt; Cloud Provider의 목록에서 특정 프로바이더 항목을 선택합니다.
+2. 상세페이지에서 변경하고자하는 설정 항목을 변경한 뒤 우측 상단의 `Dry Run`버튼을 클릭합니다.
 3. 팝업 창에 출력되는 “Dry Run” 결과를 확인합니다.

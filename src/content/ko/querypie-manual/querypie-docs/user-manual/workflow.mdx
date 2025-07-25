@@ -19,10 +19,10 @@ QueryPie는 Workflow 메뉴로 진입하는 두 가지 경로를 제공하고 �
 ## Workflow 내의 역할
 Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 있는 역할은 아래와 같습니다.
 
-* 요청자(Requester) : Request 를 보낼 수 있습니다.
-* 승인자(Approver) : 요청을 확인하고, 승인 또는 거절할 수 있습니다.
-* 실행자(Executor) : 승인이 완료된 SQL Request 및 Export Request 건을 실행할 수 있습니다.
-* 참조자(Reviewer) : 요청 건을 리뷰하거나 참조할 수 있습니다.
+* **요청자** (Requester) : Request 를 보낼 수 있습니다.
+* **승인자** (Approver) : 요청을 확인하고, 승인 또는 거절할 수 있습니다.
+* **실행자** (Executor) : 승인이 완료된 SQL Request 및 Export Request 건을 실행할 수 있습니다.
+* **참조자** (Reviewer) : 요청 건을 리뷰하거나 참조할 수 있습니다.
 
 <Callout type="info">
 요청 건에 대한 승인자 및 실행자는 [**결재 규칙(Approval Rules)**](Approval Rules) 을 통해 관리자가 사전에 설정할 수 있습니다. 
@@ -31,38 +31,38 @@ Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 
 ## Submit Request (결재 요청하기)
 Workflow 메뉴 내 Submit Request 버튼을 누른 뒤, 원하는 요청 타입을 선택하면 요청 작성 페이지로 이동합니다. 각 요청 타입별 자세한 작성 방법은 연결된 페이지들을 참고해 주시기 바랍니다.
 
-* DB Access Request : DB 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
-* SQL Request : 승인이 필요한 SQL 실행을 요청할 수 있고, 승인 후 1회에 한해 쿼리를 실행할 수 있습니다.
-* SQL Export Request : 데이터 내보내기 작업을 요청할 수 있고, 승인 후 1회에 한해 데이터를 다운로드할 수 있습니다.
-* Unmasking Request : 마스킹된 컬럼의 원본 데이터 확인을 위해 일시적인 마스킹 해제를 요청할 수 있고, 승인 후 설정된 기간 동안 원본 데이터를 확인할 수 있습니다.
-* Restricted Data Access : 접근이 제한된 테이블 또는 컬럼의 데이터에 대한 일시적인 접근 허용을 요청할 수 있고, 승인 후 설정된 기간 동안 해당 데이터에 접근할 수 있습니다.
-* Server Access Request : 서버 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
-* Server Privilege Request : 서버에서 특정 명령어에 대한 임시 실행 권한을 요청할 수 있고, 승인 후 설정된 조건(접속 시점 또는 승인 시점)에 따라 지정된 시간 동안 해당 명령어를 사용할 수 있습니다.
-* Access Role Request : 서버 또는 쿠버네티스 대상 접근 역할 권한을 요청할 수 있고, 승인 즉시 역할이 부여됩니다.
-* IP Registration Request : 시스템 접근을 위한 IP 주소 등록을 요청할 수 있고, 승인 즉시 해당 IP에서의 접근이 허용됩니다.
-* DB Exception Request : DAC 신규 정책 환경에서, 마스킹 해제(Unmasking) 또는 접근 제한 해제(Restricted Data Access)를 하나의 양식으로 요청할 수 있고, 승인 후 설정된 기간 동안 해당 권한이 부여됩니다.
+* [DB Access Request](DB Access Request 요청하기) : DB 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
+* [SQL Request](SQL Request 요청하기) : 승인이 필요한 SQL 실행을 요청할 수 있고, 승인 후 1회에 한해 쿼리를 실행할 수 있습니다.
+* [SQL Export Request](SQL Export Request 요청하기) : 데이터 내보내기 작업을 요청할 수 있고, 승인 후 1회에 한해 데이터를 다운로드할 수 있습니다.
+* [Unmasking Request](Unmasking Request 요청하기 (마스킹 해제 요청)) : 마스킹된 컬럼의 원본 데이터 확인을 위해 일시적인 마스킹 해제를 요청할 수 있고, 승인 후 설정된 기간 동안 원본 데이터를 확인할 수 있습니다.
+* [Restricted Data Access](Restricted Data Access 요청하기 (제한된 데이터 접근 요청)) : 접근이 제한된 테이블 또는 컬럼의 데이터에 대한 일시적인 접근 허용을 요청할 수 있고, 승인 후 설정된 기간 동안 해당 데이터에 접근할 수 있습니다.
+* [Server Access Request](Server Access Request 요청하기) : 서버 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
+* [Server Privilege Request](Server Privilege Request 요청하기) : 서버에서 특정 명령어에 대한 임시 실행 권한을 요청할 수 있고, 승인 후 설정된 조건(접속 시점 또는 승인 시점)에 따라 지정된 시간 동안 해당 명령어를 사용할 수 있습니다.
+* [Access Role Request](Access Role Request 요청하기) : 서버 또는 쿠버네티스 대상 접근 역할 권한을 요청할 수 있고, 승인 즉시 역할이 부여됩니다.
+* [IP Registration Request](IP Registration Request 요청하기) : 시스템 접근을 위한 IP 주소 등록을 요청할 수 있고, 승인 즉시 해당 IP에서의 접근이 허용됩니다.
+* [DB Exception Request](DB 정책 예외 요청하기 (DB Policy Exception Request)) : DAC 신규 정책 환경에서, 마스킹 해제(Unmasking) 또는 접근 제한 해제(Restricted Data Access)를 하나의 양식으로 요청할 수 있고, 승인 후 설정된 기간 동안 해당 권한이 부여됩니다.
 
 ## 대리 상신 기능 사용 시 유의사항
 관리자가 결재 규칙에서 허용한 경우, 다른 사용자를 대신하여 결재를 요청(대리 상신)할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다. 해당 기능의 설정 방법은 Approval Rules 매뉴얼 페이지에서 확인할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다.
 
-* 대리 상신 시 권한 및 DB 표시 기준DB Access Request: 대리 상신자는 본인이 조회 가능한 DB 커넥션에 대해서만 요청을 상신할 수 있습니다.Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request: 대리 상신자는 본인이 권한을 가진 커넥션에 대해서만 위 두 가지 요청을 대리로 상신할 수 있습니다.
-  * DB Access Request: 대리 상신자는 본인이 조회 가능한 DB 커넥션에 대해서만 요청을 상신할 수 있습니다.
-  * Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request: 대리 상신자는 본인이 권한을 가진 커넥션에 대해서만 위 두 가지 요청을 대리로 상신할 수 있습니다.
-* 상신 시 주의사항결재를 적용받을 대상자(Target User) 지정 후 UI에 마우스 커서를 올리면, 선택된 대상자 목록과 함께 다음의 안내 메시지가 표시됩니다.“The following users will be impacted by this request. Please double-check that all settings are correct before proceeding.” (현 결재를 적용받을 대상들입니다. 올바르게 설정했는지 반드시 확인해주세요.)
-  * 결재를 적용받을 대상자(Target User) 지정 후 UI에 마우스 커서를 올리면, 선택된 대상자 목록과 함께 다음의 안내 메시지가 표시됩니다.
-  * “The following users will be impacted by this request. Please double-check that all settings are correct before proceeding.” (현 결재를 적용받을 대상들입니다. 올바르게 설정했는지 반드시 확인해주세요.)
+* **대리 상신 시 권한 및 DB 표시 기준**
+    * **DB Access Request** : 대리 상신자는 본인이 조회 가능한 DB 커넥션에 대해서만 요청을 상신할 수 있습니다.
+    * **Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request** : 대리 상신자는 본인이 권한을 가진 커넥션에 대해서만 위 두 가지 요청을 대리로 상신할 수 있습니다.
+* **상신 시 주의사항**
+    * 결재를 적용받을 대상자(`Target User`) 지정 후 UI에 마우스 커서를 올리면, 선택된 대상자 목록과 함께 다음의 안내 메시지가 표시됩니다.
+    * “The following users will be impacted by this request. Please double-check that all settings are correct before proceeding.” (현 결재를 적용받을 대상들입니다. 올바르게 설정했는지 반드시 확인해주세요.)
 
 ## Sent Request (내가 보낸 요청 확인하기)
 내가 요청자(Requester)로서 상신한 결재 요청 목록은 Sent Requests 하위 메뉴에 표시됩니다.
 
-* In Progress : 결재 요청은 되었으나 아직 승인이 완료되지 않은 진행 중 요청 건입니다. Approval Status, Execution Status 중 하나라도 Pending 또는 In Progress 상태인 요청 건들이 해당 목록에 표시됩니다.
-* Done : 모든 승인(또는 실행)이 완료되었거나 요청자가 결재 요청을 스스로 취소한 건들이 표시됩니다.
+* **In Progress ** : 결재 요청은 되었으나 아직 승인이 완료되지 않은 진행 중 요청 건입니다. Approval Status, Execution Status 중 하나라도 Pending 또는 In Progress 상태인 요청 건들이 해당 목록에 표시됩니다.
+* **Done**  : 모든 승인(또는 실행)이 완료되었거나 요청자가 결재 요청을 스스로 취소한 건들이 표시됩니다.
 
 ## Received Requests (내가 받은 요청 승인 또는 반려하기)
 내가 승인자(Approver)로서 할당받은 요청들의 목록은 Received Requests 하위 메뉴에 표시됩니다. 만약 대리 결재자로 지정된 경우 원결재자가 승인하지 않은 요청 목록도 함께 표시됩니다. 대리 결재 관련 내용은 결재 부가 기능 (대리 결재, 재상신 등) 문서에서 자세히 확인하실 수 있습니다.
 
-1. Workflow 목록 중 Received Requests > To Do 메뉴에서 승인이 필요한 요청 목록을 확인합니다.
-2. 처리하고자 하는 요청을 클릭하여 상세 내용을 확인 후 우측 상단에서 Approve 또는 Reject를 클릭합니다.
+1. Workflow 목록 중 Received Requests &gt; To Do 메뉴에서 승인이 필요한 요청 목록을 확인합니다.
+2. 처리하고자 하는 요청을 클릭하여 상세 내용을 확인 후 우측 상단에서 `Approve` 또는 `Reject`를 클릭합니다.
 
 <p align="center">
 <div>[image-20240801-062129.png]()</div>
@@ -74,8 +74,8 @@ Workflow 메뉴 내 Submit Request 버튼을 누른 뒤, 원하는 요청 타입
 A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인이 가능합니다. 사용자가 요청한 DB 커넥션 목록에서 권한을 부여하지 않을 항목의 체크박스를 해제 후 `Approve` 하면 체크한 커넥션에 대해서는 승인 처리가 되며, 체크하지 않은 커넥션에 대해서는 자동 반려 처리됩니다. 
 </Callout>
 
-1. Comments 팝업창에서 승인 또는 반려 사유를 입력 후 OK 버튼을 눌러 처리를 완료합니다.
-2. 처리를 완료한 요청 건에 대해서는 Workflow > Received Request > Done 메뉴에서 확인할 수 있습니다.
+1. Comments 팝업창에서 승인 또는 반려 사유를 입력 후 `OK` 버튼을 눌러 처리를 완료합니다.
+2. 처리를 완료한 요청 건에 대해서는 Workflow &gt; Received Request &gt; Done 메뉴에서 확인할 수 있습니다.
 
 ## Executions (승인된 요청 실행하기)
 내가 실행자(Executor)로서 할당받은 요청들의 목록은 Executions 하위 메뉴에 표시됩니다. 실행을 해야할 목록(To Do)과 완료된 목록(Done)이 있으며 실행을 필요로 하는 결재 타입은 SQL Request, SQL Export Request 2가지 입니다.
@@ -86,13 +86,13 @@ A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인
 *Workflow &gt; Executions &gt; To Do &gt; List Details*
 </p>
 
-1. User > Workflow > Executions > To Do 메뉴로 이동합니다.
+1. User &gt; Workflow &gt; Executions &gt; To Do 메뉴로 이동합니다.
 2. 실행 대기 중인 SQL Request 건을 클릭하여 상세 페이지로 이동합니다.
-3. 상세 내용 확인 후 우측 상단의 Execute 버튼을 눌러 실행하거나 Cancel 버튼을 눌러 취소 처리할 수 있습니다.
-4. Execute 버튼을 클릭하면 쿼리 실행 확인 팝업창이 표시됩니다.
-5. 유의 사항을 확인 후 Execute 버튼을 클릭하여 쿼리를 최종적으로 실행합니다.
+3. 상세 내용 확인 후 우측 상단의 `Execute` 버튼을 눌러 실행하거나 `Cancel` 버튼을 눌러 취소 처리할 수 있습니다.
+4. `Execute` 버튼을 클릭하면 쿼리 실행 확인 팝업창이 표시됩니다.
+5. 유의 사항을 확인 후 `Execute` 버튼을 클릭하여 쿼리를 최종적으로 실행합니다.
 6. 실행이 완료된 건에 대한 결과는 상세 페이지 내의 Results 탭에서 성공 또는 실패 여부를 확인할 수 있습니다.
-7. Workflow > Received Requests > Done 메뉴에서 본인이 실행한 내역을 확인할 수 있습니다.
+7. Workflow &gt; Received Requests &gt; Done 메뉴에서 본인이 실행한 내역을 확인할 수 있습니다.
 
 <Callout type="info">
 **Q. 대용량 쿼리 실행 시 QueryPie 백그라운드에서도 쿼리 실행이 유지되나요?** 
@@ -105,18 +105,18 @@ A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라�
 *Workflow &gt; Executions &gt; To Do*
 </p>
 
-1. User > Workflow > Executions > To Do 메뉴로 이동합니다.
+1. User &gt; Workflow &gt; Executions &gt; To Do 메뉴로 이동합니다.
 2. 실행 대기 중인 Export Request 건을 클릭하여 상세 페이지로 이동합니다.
-3. 상세 내용 확인 후 우측 상단의 Execute 버튼을 눌러 실행하거나 Cancel 버튼을 눌러 취소 처리할 수 있습니다.
-4. Export Option 팝업창에서 내보내기 옵션을 설정합니다.File Type : 파일 형식을 선택합니다. SQL(기본값), CSV, JSON, EXCEL 중 선택 가능합니다.Export Option : 기타 내보내기 옵션을 선택합니다.DROP TABLE syntax : DROP TABLE 문법을 적용합니다.Contain Data : 내보내기 시 데이터를 포함합니다.New INSERT Statement every N Rows : INSERT 구문을 매번 삽입할 행 수를 지정합니다.
-  * File Type : 파일 형식을 선택합니다. SQL(기본값), CSV, JSON, EXCEL 중 선택 가능합니다.
-  * Export Option : 기타 내보내기 옵션을 선택합니다.DROP TABLE syntax : DROP TABLE 문법을 적용합니다.Contain Data : 내보내기 시 데이터를 포함합니다.New INSERT Statement every N Rows : INSERT 구문을 매번 삽입할 행 수를 지정합니다.
-    * DROP TABLE syntax : DROP TABLE 문법을 적용합니다.
-    * Contain Data : 내보내기 시 데이터를 포함합니다.
-    * New INSERT Statement every N Rows : INSERT 구문을 매번 삽입할 행 수를 지정합니다.
-5. 옵션 설정이 완료되었다면 모달에서 Export 버튼을 클릭하여 내보내기를 최종 실행합니다.
+3. 상세 내용 확인 후 우측 상단의 `Execute` 버튼을 눌러 실행하거나 `Cancel` 버튼을 눌러 취소 처리할 수 있습니다.
+4. Export Option 팝업창에서 내보내기 옵션을 설정합니다.
+    * **File Type**  : 파일 형식을 선택합니다. SQL(기본값), CSV, JSON, EXCEL 중 선택 가능합니다.
+    * **Export Option**  : 기타 내보내기 옵션을 선택합니다.
+        * **DROP TABLE syntax**  : DROP TABLE 문법을 적용합니다.
+        * **Contain Data**  : 내보내기 시 데이터를 포함합니다.
+        * **New INSERT Statement every N Rows**  : INSERT 구문을 매번 삽입할 행 수를 지정합니다.
+5. 옵션 설정이 완료되었다면 모달에서 `Export` 버튼을 클릭하여 내보내기를 최종 실행합니다.
 6. 내보내기가 완료되었다면, 그 결과를 상세 페이지 내 Results 탭에서 확인할 수 있습니다.
-7. Workflow > Executions > Done 메뉴에서 실행 완료된 내보내기 요청 내역을 확인할 수 있습니다.
+7. Workflow &gt; Executions &gt; Done 메뉴에서 실행 완료된 내보내기 요청 내역을 확인할 수 있습니다.
 
 ## Reviews (참조된 요청 확인하기)
 내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다. 참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다. 확인되지 않은 요청을 확인하는 방법은 결재 부가 기능 (대리 결재, 재상신 등) 문서를 참고해주세요.

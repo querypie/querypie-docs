@@ -8,14 +8,14 @@ Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie
 ### SSH config 설정 방법
 기존의 ssh 명령어를 사용하기 위하여 SSH config 파일을 설정할 수 있습니다.
 
-1. .ssh 디렉토리로 이동하여 config 파일을 생성하거나 편집합니다.
+1. `.ssh` 디렉토리로 이동하여 `config` 파일을 생성하거나 편집합니다.
 
 ```
 cd ~/.ssh
 vi config
 ```
 
-1. 다음 설정을 config 파일에 추가한 후 저장하고 종료합니다. (저장하려면 :wq를 누르세요)
+1. 다음 설정을 `config` 파일에 추가한 후 저장하고 종료합니다. (저장하려면 `:wq`를 누르세요)
 
 ```
 Host {{Server Name}}
@@ -54,7 +54,7 @@ Zsh 쉘의 경우:
 vi ~/.zshrc
 ```
 
-1. 다음 줄을 쉘 설정 파일에 추가한 후 저장하고 종료합니다. (저장하려면 :wq를 누르세요)
+1. 다음 줄을 쉘 설정 파일에 추가한 후 저장하고 종료합니다. (저장하려면 `:wq`를 누르세요)
 
 ```
 alias qshdev='ssh -o ProxyCommand="qpctl ssh-proxy %r %h %p"'
@@ -113,8 +113,8 @@ Multi Agent는 Seamless SSH를 사용하기 위해서 QueryPie Host를 입력해
 
 qpctl 명령에 사용하는 기본 서버를 지정하는 기능을 추가합니다.
 
-* 기본서버가 지정되면 qpctl ssh-proxy 명령에서 QueryPie Host 를 입력하지 않아도 됩니다.
-* 기본서버가 지정되어 있더라도 QueryPie Host 를 입력하면 이 값을 사용합니다.
+* 기본서버가 지정되면  **qpctl ssh-proxy**  명령에서  **QueryPie Host**  를 입력하지 않아도 됩니다.
+* 기본서버가 지정되어 있더라도  **QueryPie Host**  를 입력하면 이 값을 사용합니다.
 
 <Callout type="info">
 Reset All Settings 으로 앱을 초기화 하면 기본 호스트 설정도 삭제됩니다. 
@@ -174,18 +174,18 @@ $ qpctl host use nightly.dev.querypie.io
 ###  [ac:emoticon] 실험적 기능 - qpctl 직접 사용 [ac:emoticon]
 Seamless SSH 를 사용하기 위해
 
-* ~/.ssh/config 를 설정하거나
-* ssh 명령에 -o ProxyCommand=qpctl ssh-proxy … 를 입력하는
+* `~/.ssh/config` 를 설정하거나
+* ssh 명령에 `-o ProxyCommand=qpctl ssh-proxy …` 를 입력하는
 
 경험은 자연스럽지 못합니다. 이에 QueryPie Multi Agent를 설치하였다면 ssh 접속을 위해 qpctl 명령어를 직접 사용할 수 있습니다.
 
-1. 사용자가 사용하고자 하는 ssh 명령어 앞에 qpctl 만 붙여주세요.
+1. 사용자가 사용하고자 하는 ssh 명령어 앞에 `qpctl` 만 붙여주세요.
 
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
 ```
 
-1. ~/.ssh/config 에 설정한 것도 qpctl 만 붙여주세요.
+1. `~/.ssh/config` 에 설정한 것도 `qpctl` 만 붙여주세요.
 
 ```
 $ cat ~/.ssh/config
@@ -210,10 +210,10 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
 ### 동작 방식
 qpctl 명령이 ssh 클라이언트 명령을 wrapping 하여 ProxyCommand 옵션을 자동으로 붙여서 실행해줍니다.
 
-1. qpctl ssh command_line
-2. ssh -G command_lineusername, hostname, port 추출
-  1. username, hostname, port 추출
-3. ssh command_line -o ProxyCommand=”qpctl ssh-proxy username hostname port”
+1. **qpctl**  ssh command_line
+2. ssh  **-G**  command_line
+    1. **username, hostname, port**  추출
+3. ssh command_line  **-o ProxyCommand=”qpctl ssh-proxy username**   **hostname**   **port”**
 
 ### 미지원 기능
 #### 사용자 지정 ProxyCommand

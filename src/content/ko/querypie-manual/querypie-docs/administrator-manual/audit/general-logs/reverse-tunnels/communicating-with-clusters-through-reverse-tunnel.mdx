@@ -9,9 +9,9 @@ QueryPie와 다른 Network Zone에 있는 리소스와 통신을 하는 수단�
 *Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; List Details*
 </p>
 
-1. Administrator > Kubernetes > Connection Management > Clusters 메뉴로 이동합니다.
-2. 리스트 내 클러스터를 선택합니다.  클러스터 신규 등록시 수동으로 쿠버네티스 클러스터 등록하기를 참고 바랍니다.
-3. Clusters의 List Detail 페이지 내에서 Tags 항목에 아래 Tag를 추가합니다.RTS = TRUE : 이 Tag가 있는 클러스터는 Reverse Tunnels을 통해 통신을 시도합니다.Reverse Tunnel Agent의 Tag : 동일한 Tag가 있는 Reverse Tunnel Agent를 통해서 클러스터와 통신합니다. 동일한 Tag가 있는 Reverse Tunnel Agent가 없는 경우, 통신은 실패합니다.
-  1. RTS = TRUE : 이 Tag가 있는 클러스터는 Reverse Tunnels을 통해 통신을 시도합니다.
-  2. Reverse Tunnel Agent의 Tag : 동일한 Tag가 있는 Reverse Tunnel Agent를 통해서 클러스터와 통신합니다. 동일한 Tag가 있는 Reverse Tunnel Agent가 없는 경우, 통신은 실패합니다.
-4. Save Changes 버튼을 클릭하여 설정을 저장합니다.
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters 메뉴로 이동합니다.
+2. 리스트 내 클러스터를 선택합니다. 클러스터 신규 등록시 [수동으로 쿠버네티스 클러스터 등록하기]((10.2.0-ko) 수동으로 쿠버네티스 클러스터 등록하기)를 참고 바랍니다.
+3. Clusters의 List Detail 페이지 내에서 Tags 항목에 아래 Tag를 추가합니다.
+    1. `RTS = TRUE` : 이 Tag가 있는 클러스터는 Reverse Tunnels을 통해 통신을 시도합니다.
+    2. Reverse Tunnel Agent의 Tag : 동일한 Tag가 있는 Reverse Tunnel Agent를 통해서 클러스터와 통신합니다. 동일한 Tag가 있는 Reverse Tunnel Agent가 없는 경우, 통신은 실패합니다.
+4. `Save Changes` 버튼을 클릭하여 설정을 저장합니다.

@@ -7,41 +7,41 @@
 *Administrator &gt; Audit &gt; Servers &gt; Access Control Logs*
 </p>
 
-1. Administrator > Audit > Servers > Server Access Control Logs 메뉴로 이동합니다.
+1. Administrator &gt; Audit &gt; Servers &gt; Server Access Control Logs 메뉴로 이동합니다.
 2. 당월 기준으로 내림차순으로 로그가 조회됩니다.
-3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.Name : 사용자 이름Email : 사용자 EmailServer Group : 서버 그룹 명Server Name : 서버 명Host : 서버 호스트Account : 서버 Account
-  1. Name : 사용자 이름
-  2. Email : 사용자 Email
-  3. Server Group : 서버 그룹 명
-  4. Server Name : 서버 명
-  5. Host : 서버 호스트
-  6. Account : 서버 Account
-4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.Event : 이벤트 유형Access Control Granted : Permission 부여 이력Access Control Revoked : Permission 회수 이력Whitelist Granted : Command Whitelist 부여 이력Whitelist Revoked : Command Whitelist 회수 이력Action At : 권한 부여/회수 일시 범위
-  1. Event : 이벤트 유형Access Control Granted : Permission 부여 이력Access Control Revoked : Permission 회수 이력Whitelist Granted : Command Whitelist 부여 이력Whitelist Revoked : Command Whitelist 회수 이력
-    1. Access Control Granted : Permission 부여 이력
-    2. Access Control Revoked : Permission 회수 이력
-    3. Whitelist Granted : Command Whitelist 부여 이력
-    4. Whitelist Revoked : Command Whitelist 회수 이력
-  2. Action At : 권한 부여/회수 일시 범위
+3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
+    1. **Name**  : 사용자 이름
+    2. **Email**  : 사용자 Email
+    3. **Server Group**  : 서버 그룹 명
+    4. **Server Name**  : 서버 명
+    5. **Host**  : 서버 호스트
+    6. **Account**  : 서버 Account
+4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
+    1. **Event**  : 이벤트 유형
+        1. **Access Control Granted**  : Permission 부여 이력
+        2. **Access Control Revoked**  : Permission 회수 이력
+        3. **Whitelist Granted**  : Command Whitelist 부여 이력
+        4. **Whitelist Revoked**  : Command Whitelist 회수 이력
+    2. **Action At**  : 권한 부여/회수 일시 범위
 5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
-6. 테이블에서 이하의 컬럼 정보를 제공합니다:No : 이벤트 식별 번호Action At : Permission 권한 부여/회수 일시Event : Permission 권한 관련 이벤트Access Control Granted : 사용자/그룹에 Permission이 부여된 이벤트Access Control Revoked : 사용자/그룹에서 Permission이 회수된 이벤트Whitelist Granted : 사용자/그룹에 Command Whitelist가 부여된 이벤트Whitelist Revoked : 사용자/그룹에서 Command Whitelist가 회수된 이벤트User Type : 사용자/그룹 유형Name : 대상 사용자/그룹 이름Email : 대상 사용자 이메일그룹의 경우에는 미표기합니다.Server Group : 서버 그룹 명Server Name : 서버 명Host : 서버 호스트Expiration Date : 권한 부여 만료일 (회수예정일)Account : 서버 AccountAction By : Permission 부여/회수를 진행한 관리자명 또는 System
-  1. No : 이벤트 식별 번호
-  2. Action At : Permission 권한 부여/회수 일시
-  3. Event : Permission 권한 관련 이벤트Access Control Granted : 사용자/그룹에 Permission이 부여된 이벤트Access Control Revoked : 사용자/그룹에서 Permission이 회수된 이벤트Whitelist Granted : 사용자/그룹에 Command Whitelist가 부여된 이벤트Whitelist Revoked : 사용자/그룹에서 Command Whitelist가 회수된 이벤트
-    1. Access Control Granted : 사용자/그룹에 Permission이 부여된 이벤트
-    2. Access Control Revoked : 사용자/그룹에서 Permission이 회수된 이벤트
-    3. Whitelist Granted : 사용자/그룹에 Command Whitelist가 부여된 이벤트
-    4. Whitelist Revoked : 사용자/그룹에서 Command Whitelist가 회수된 이벤트
-  4. User Type : 사용자/그룹 유형
-  5. Name : 대상 사용자/그룹 이름
-  6. Email : 대상 사용자 이메일그룹의 경우에는 미표기합니다.
-    1. 그룹의 경우에는 미표기합니다.
-  7. Server Group : 서버 그룹 명
-  8. Server Name : 서버 명
-  9. Host : 서버 호스트
-  10. Expiration Date : 권한 부여 만료일 (회수예정일)
-  11. Account : 서버 Account
-  12. Action By : Permission 부여/회수를 진행한 관리자명 또는 System
+6. 테이블에서 이하의 컬럼 정보를 제공합니다:
+    1. **No**  : 이벤트 식별 번호
+    2. **Action At**  : Permission 권한 부여/회수 일시
+    3. **Event**  : Permission 권한 관련 이벤트
+        1. **Access Control**   **Granted**  : 사용자/그룹에 Permission이 부여된 이벤트
+        2. **Access Control Revoked**  : 사용자/그룹에서 Permission이 회수된 이벤트
+        3. **Whitelist Granted**  : 사용자/그룹에 Command Whitelist가 부여된 이벤트
+        4. **Whitelist Revoked**  : 사용자/그룹에서 Command Whitelist가 회수된 이벤트
+    4. **User Type**  : 사용자/그룹 유형
+    5. **Name**  : 대상 사용자/그룹 이름
+    6. **Email**  : 대상 사용자 이메일
+        1. 그룹의 경우에는 미표기합니다.
+    7. **Server Group**  : 서버 그룹 명
+    8. **Server Name**  : 서버 명
+    9. **Host**  : 서버 호스트
+    10. **Expiration Date**  : 권한 부여 만료일 (회수예정일)
+    11. **Account**  : 서버 Account
+    12. **Action By**  : Permission 부여/회수를 진행한 관리자명 또는 System
 
 ## Server Access Control Logs 상세 내역 조회하기
 각 행을 클릭하면 세부 정보 조회가 가능합니다.
@@ -51,31 +51,31 @@
 *Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Control Logs Detail*
 </p>
 
-1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:Action At : Permission 권한 부여/회수 일시Event : 사용자/그룹에 Permission이 부여/회수된 이벤트User Type : 사용자/그룹 유형Name : 대상 사용자/그룹 이름Email : 대상 사용자 이메일Server Group : 서버 그룹 명Server Name : 서버 명Host : 서버 호스트Expiration Date : 권한 부여 만료일 (회수예정일)Account : 서버 AccountAction By : Permission 부여/회수를 진행한 관리자명 또는 SystemWorkflow를 통해 권한을 부여받은 경우 Access Request 링크가 나오며, 해당 Request 페이지를 새창에서 열게됩니다.
-  1. Action At : Permission 권한 부여/회수 일시
-  2. Event : 사용자/그룹에 Permission이 부여/회수된 이벤트
-  3. User Type : 사용자/그룹 유형
-  4. Name : 대상 사용자/그룹 이름
-  5. Email : 대상 사용자 이메일
-  6. Server Group : 서버 그룹 명
-  7. Server Name : 서버 명
-  8. Host : 서버 호스트
-  9. Expiration Date : 권한 부여 만료일 (회수예정일)
-  10. Account : 서버 Account
-  11. Action By : Permission 부여/회수를 진행한 관리자명 또는 SystemWorkflow를 통해 권한을 부여받은 경우 Access Request 링크가 나오며, 해당 Request 페이지를 새창에서 열게됩니다.
-    1. Workflow를 통해 권한을 부여받은 경우 Access Request 링크가 나오며, 해당 Request 페이지를 새창에서 열게됩니다.
-2. 하단에는 부여/회수된 Permission에 적용된 정책을 나열합니다:Access Control 관련 로그 - PolicyAccess Time : 접속 허용 시간Weekday Access Allow : 접속 허용 요일IP Addresses : 접속 허용 IPCommand Audit : 명령어 기록 여부Proxy Usage : Proxy(Agent)를 통한 접속 가능 여부Max Sessions : 최대 접속 세션 갯수Session Timeout (minutes) : 세션 타임아웃 시간 설정Protocols : 접속 프로토콜Command Template : 적용된 금지명령어 세트Whitelist 관련 로그 - Whitelisted CommandsKeyword : 예외처리 키워드RegEx : 예외처리 정규식Whitelist Expiration Date : 예외처리 만료일
-  1. Access Control 관련 로그 - PolicyAccess Time : 접속 허용 시간Weekday Access Allow : 접속 허용 요일IP Addresses : 접속 허용 IPCommand Audit : 명령어 기록 여부Proxy Usage : Proxy(Agent)를 통한 접속 가능 여부Max Sessions : 최대 접속 세션 갯수Session Timeout (minutes) : 세션 타임아웃 시간 설정Protocols : 접속 프로토콜Command Template : 적용된 금지명령어 세트
-    1. Access Time : 접속 허용 시간
-    2. Weekday Access Allow : 접속 허용 요일
-    3. IP Addresses : 접속 허용 IP
-    4. Command Audit : 명령어 기록 여부
-    5. Proxy Usage : Proxy(Agent)를 통한 접속 가능 여부
-    6. Max Sessions : 최대 접속 세션 갯수
-    7. Session Timeout (minutes) : 세션 타임아웃 시간 설정
-    8. Protocols : 접속 프로토콜
-    9. Command Template : 적용된 금지명령어 세트
-  2. Whitelist 관련 로그 - Whitelisted CommandsKeyword : 예외처리 키워드RegEx : 예외처리 정규식Whitelist Expiration Date : 예외처리 만료일
-    1. Keyword : 예외처리 키워드
-    2. RegEx : 예외처리 정규식
-    3. Whitelist Expiration Date : 예외처리 만료일
+1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:
+    1. **Action At**  : Permission 권한 부여/회수 일시
+    2. **Event**  : 사용자/그룹에 Permission이 부여/회수된 이벤트
+    3. **User Type**  : 사용자/그룹 유형
+    4. **Name**  : 대상 사용자/그룹 이름
+    5. **Email**  : 대상 사용자 이메일
+    6. **Server Group**  : 서버 그룹 명
+    7. **Server Name**  : 서버 명
+    8. **Host**  : 서버 호스트
+    9. **Expiration Date**  : 권한 부여 만료일 (회수예정일)
+    10. **Account**  : 서버 Account
+    11. **Action By**  : Permission 부여/회수를 진행한 관리자명 또는 System
+        1. Workflow를 통해 권한을 부여받은 경우 Access Request 링크가 나오며, 해당 Request 페이지를 새창에서 열게됩니다.
+2. 하단에는 부여/회수된 Permission에 적용된 정책을 나열합니다:
+    1. Access Control 관련 로그 - Policy
+        1. **Access Time**  : 접속 허용 시간
+        2. **Weekday Access Allow**  : 접속 허용 요일
+        3. **IP Addresses**  : 접속 허용 IP
+        4. **Command Audit**  : 명령어 기록 여부
+        5. **Proxy Usage**  : Proxy(Agent)를 통한 접속 가능 여부
+        6. **Max Sessions**  : 최대 접속 세션 갯수
+        7. **Session Timeout (minutes)**  : 세션 타임아웃 시간 설정
+        8. **Protocols**  : 접속 프로토콜
+        9. **Command Template**  : 적용된 금지명령어 세트
+    2. Whitelist 관련 로그 - Whitelisted Commands
+        1. **Keyword**  : 예외처리 키워드
+        2. **RegEx**  : 예외처리 정규식
+        3. **Whitelist Expiration Date**  : 예외처리 만료일

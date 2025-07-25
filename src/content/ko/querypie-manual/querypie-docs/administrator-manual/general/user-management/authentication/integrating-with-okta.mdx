@@ -13,12 +13,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 *Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색*
 </p>
 
-1. Okta 서비스에 접속하여 관리자 계정으로 로그인합니다.
+1. [Okta 서비스](https://login.okta.com/)에 접속하여 관리자 계정으로 로그인합니다.
 2. 우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.
-3. Okta 관리자 페이지의 좌측 패널에서 Applications > Applications 메뉴로 이동합니다.
-4. Browse App Catalog 버튼을 클릭하여 QueryPie 를 검색합니다.
-5. QueryPie 애플리케이션 페이지로 들어가 Add Integration 버튼을 클릭합니다.
-6. Application Label에 QueryPie 로 입력된 것을 확인 후, Done 버튼을 클릭하여 애플리케이션을 추가합니다.
+3. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
+4. `Browse App Catalog` 버튼을 클릭하여 QueryPie 를 검색합니다.
+5. QueryPie 애플리케이션 페이지로 들어가 `Add Integration` 버튼을 클릭합니다.
+6. Application Label에 QueryPie 로 입력된 것을 확인 후, `Done` 버튼을 클릭하여 애플리케이션을 추가합니다.
 
 ## Okta 계정 연동을 위한 Profile 설정
 <p align="center">
@@ -26,27 +26,27 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 *Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute*
 </p>
 
-1. Okta 관리자 페이지의 좌측 패널에서 Directory > Profile Editor 메뉴로 이동합니다.
+1. Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
 2. Profile 목록 중 ‘QueryPie User’ 를 클릭합니다.
-3. Attributes 설정에서 Add Attribute 버튼을 클릭합니다.
-4. Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.Display name : firstName / Variable name : firstName 항목 입력 후 Save and Add Another Display name : lastName / Variable name : lastName 항목 입력 후 Save and Add AnotherDisplay name : email / Variable name : email 항목 입력 후 Save and Add Another Display name : loginId / Variable name : loginId 항목 입력 후 Save  클릭
-  1. Display name : firstName / Variable name : firstName 항목 입력 후 Save and Add Another
-  2. Display name : lastName / Variable name : lastName 항목 입력 후 Save and Add Another
-  3. Display name : email / Variable name : email 항목 입력 후 Save and Add Another
-  4. Display name : loginId / Variable name : loginId 항목 입력 후 Save  클릭
+3. Attributes 설정에서 `Add Attribute` 버튼을 클릭합니다.
+4. Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
+    1. Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another`
+    2. Display name : lastName / Variable name : lastName 항목 입력 후 `Save and Add Another`
+    3. Display name : email / Variable name : email 항목 입력 후 `Save and Add Another`
+    4. Display name : loginId / Variable name : loginId 항목 입력 후 `Save` 클릭
 
 <p align="center">
 <div>[image-20240723-064721.png]()</div>
 *Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings*
 </p>
 
-1. 4가지 Attribute 가 추가된 것을 확인 후 Mappings 버튼을 클릭합니다.
-2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.user.firstName ↔︎ firstNameuser.lastName ↔︎ lastNameuser.email ↔︎ emailuser.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)
-  1. user.firstName ↔︎ firstName
-  2. user.lastName ↔︎ lastName
-  3. user.email ↔︎ email
-  4. user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)
-3. Save Mappings 버튼을 클릭하여 저장합니다.
+1. 4가지 Attribute 가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
+2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.
+    1. user.firstName ↔︎ firstName
+    2. user.lastName ↔︎ lastName
+    3. user.email ↔︎ email
+    4. user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)
+3. `Save Mappings` 버튼을 클릭하여 저장합니다.
 
 ## Okta에 추가된 QueryPie 애플리케이션에 사용자 할당
 <p align="center">
@@ -54,12 +54,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 *Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App*
 </p>
 
-1. Okta 관리자 페이지의 좌측 패널에서 Applications > Applications 메뉴로 이동합니다.
+1. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
 2. 리스트에서 QueryPie 애플리케이션을 클릭합니다.
-3. Assignments 탭으로 이동한 뒤 Assign 버튼을 클릭하여 Assign to People 또는 Assign to Group을 선택합니다.
-4. Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done 버튼을 클릭합니다.People 할당시 사용자 정보 확인 후 Sava and Go Back 버튼을 클릭합니다.Group 할당시 loginId 항목을 빈 칸으로 두고 Save and Go Back 버튼을 클릭합니다.
-  1. People 할당시 사용자 정보 확인 후 Sava and Go Back 버튼을 클릭합니다.
-  2. Group 할당시 loginId 항목을 빈 칸으로 두고 Save and Go Back 버튼을 클릭합니다.
+3. Assignments 탭으로 이동한 뒤 `Assign` 버튼을 클릭하여 `Assign to People` 또는 `Assign to Group`을 선택합니다.
+4. Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done 버튼을 클릭합니다.
+    1. People 할당시 사용자 정보 확인 후 `Sava and Go Back` 버튼을 클릭합니다.
+    2. Group 할당시 loginId 항목을 빈 칸으로 두고 `Save and Go Back` 버튼을 클릭합니다.
 5. 사용자 또는 그룹이 QueryPie 애플리케이션에 할당되어 추가된 내역을 확인하실 수 있습니다.
 
 ## Okta에서 QueryPie 애플리케이션 연동 정보 설정
@@ -69,13 +69,13 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 </p>
 
 1. Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.
-2. Settings 영역의 Edit 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.
+2. Settings 영역의 `Edit` 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.
 3. Metadata URL에 표기된 주소로 별도 탭에서 접근하여 표시되는 XML 정보를 복사합니다.
 
 ## 최소 권한의 Okta API 토큰 발급
 QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 Okta Admin API 토큰 발급이 필요합니다. 일반적인 방법으로는 이용하고 계신 Okta 최고관리자(Super Administrator)/읽기권한관리자(Read-Only Administrator) 계정으로 API 토큰을 이하의 방법으로 발급하여 적용하는 방법이 있습니다:
 
-1. Okta 관리자 페이지 좌측 패널에서 Security > API 메뉴로 이동합니다.
+1. Okta 관리자 페이지 좌측 패널에서 Security &gt; API 메뉴로 이동합니다.
 2. API 메뉴에서 Tokens 탭으로 이동합니다.
 3. Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.
 
@@ -86,34 +86,34 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 *Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role*
 </p>
 
-1. Okta 관리자 페이지 좌측 패널에서 Directory > People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다. 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.
-  * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.
-2. Okta 관리자 페이지 좌측 패널에서 Security > Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.
+1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다.
+    * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.
+2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.
 3. Create new role을 선택합니다.
-4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다. UserView users and their detailsGroupView groups and their detailsApplicationView application and their details
-  1. UserView users and their details
-    * View users and their details
-  2. GroupView groups and their details
-    * View groups and their details
-  3. ApplicationView application and their details
-    * View application and their details
+4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.
+    1. **User**
+        * View users and their details
+    2. **Group**
+        * View groups and their details
+    3. **Application**
+        * View application and their details
 5. Save role을 눌러 커스텀 롤을 저장합니다.
 6. Resources 탭으로 이동합니다.
-7. Create new resource set을 선택합니다.이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.
-  * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.
-8. Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다. User : 쿼리파이 사용자 전부 선택 Group : 쿼리파이 사용 그룹 전부 선택 Application : 쿼리파이 앱으로 한정
-  1. User : 쿼리파이 사용자 전부 선택
-  2. Group : 쿼리파이 사용 그룹 전부 선택
-  3. Application : 쿼리파이 앱으로 한정
+7. Create new resource set을 선택합니다.
+    * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.
+8. Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다.
+    1. User : 쿼리파이 사용자 전부 선택
+    2. Group : 쿼리파이 사용 그룹 전부 선택
+    3. Application : 쿼리파이 앱으로 한정
 9. Create를 선택하여 생성합니다.
-10. Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.Role: MinimumAdminRole | Resource: MinimumResourcesRole: Read-Only Administrator API 토큰 생성메뉴 접근을 위한 임시 부여
-  1. Role: MinimumAdminRole | Resource: MinimumResources
-  2. Role: Read-Only Administrator API 토큰 생성메뉴 접근을 위한 임시 부여
-    * API 토큰 생성메뉴 접근을 위한 임시 부여
+10. Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.
+    1. Role: MinimumAdminRole | Resource: MinimumResources
+    2. Role: Read-Only Administrator
+        * API 토큰 생성메뉴 접근을 위한 임시 부여
 11. 쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다.
-12. Security > API 메뉴에서 Tokens 탭으로 이동합니다.
+12. Security &gt; API 메뉴에서 Tokens 탭으로 이동합니다.
 13. Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다.
-14. 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security > Administrators > Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.
+14. 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.
 
 ## QueryPie에서 Okta 연동 및 동기화 설정
 <p align="center">
@@ -121,17 +121,17 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 *Administrator &gt; General &gt; User Management &gt; Authentication*
 </p>
 
-1. QueryPie 에서 Administrator > General > User Management > Authentication 메뉴로 이동합니다.
+1. QueryPie 에서 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
 2. 인증 Type 항목에서 Okta 를 선택합니다.
 3. 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
-4. 자동 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System”를 체크합니다.API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.API Token: Okta 관리자 API 토큰을 기입합니다. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
-  1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.
-  2. API Token: Okta 관리자 API 토큰을 기입합니다.
-  3. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
+4. 자동 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System”를 체크합니다.
+    1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.
+    2. API Token: Okta 관리자 API 토큰을 기입합니다.
+    3. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
 5. 자동 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.
-6. Dry Run 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
-7. Save Changes로 저장합니다.
-8. Synchronize 버튼을 클릭하여 Okta 의 사용자를 동기화합니다.
+6. `Dry Run` 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
+7. `Save Changes`로 저장합니다.
+8. `Synchronize` 버튼을 클릭하여 Okta 의 사용자를 동기화합니다.
 
 <Callout type="info">
 **Application ID 확인하는 방법** 
@@ -144,8 +144,8 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 </p>
 
 ## QueryPie에서 Okta 로그인
-1. General Settings > Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
-2. 이제 로그인 페이지에서 Login with Okta 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.
+1. General Settings &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
+2. 이제 로그인 페이지에서 `Login with Okta` 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.
 
 <p align="center">
 <div>[image-20240723-070449.png]()</div>

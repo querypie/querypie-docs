@@ -9,57 +9,57 @@
 *Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode*
 </p>
 
-1. Add Resources 모달 Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.Cluster 명으로 리소스 검색이 가능합니다.체크박스에 체크한 리소스를 Add 버튼을 클릭하여 코드에 삽입합니다.
-  1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
-  2. Cluster 명으로 리소스 검색이 가능합니다.
-  3. 체크박스에 체크한 리소스를 Add 버튼을 클릭하여 코드에 삽입합니다.
-2. Set Subjects 모달Spec: Allow에서만 동작합니다.Kubernetes Groups : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다. Permitted Impersonation : (Optional) 해당 필드를 통해 사용자가 클라이언트를 통해 실제 --as, --as-group를 통한 impersonation을 시도할 때 적용 가능한 쿠버네티스 사용자/그룹을 나열합니다.Allowed Kubernetes Users: --as 파라미터로 쿼리파이에서 허용할 kubenetes users를 기입합니다.Allowed Kubernetes Users: --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.‘,’ 를 통해 다중으로 등록 가능합니다. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, Set 버튼을 누르면 변경사항을 에디터에서 덮어씁니다.
-  1. Spec: Allow에서만 동작합니다.
-  2. Kubernetes Groups : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다.
-  3. Permitted Impersonation : (Optional) 해당 필드를 통해 사용자가 클라이언트를 통해 실제 --as, --as-group를 통한 impersonation을 시도할 때 적용 가능한 쿠버네티스 사용자/그룹을 나열합니다.Allowed Kubernetes Users: --as 파라미터로 쿼리파이에서 허용할 kubenetes users를 기입합니다.Allowed Kubernetes Users: --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.‘,’ 를 통해 다중으로 등록 가능합니다.
-    1. Allowed Kubernetes Users: --as 파라미터로 쿼리파이에서 허용할 kubenetes users를 기입합니다.
-    2. Allowed Kubernetes Users: --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.
-    3. ‘,’ 를 통해 다중으로 등록 가능합니다.
-  4. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, Set 버튼을 누르면 변경사항을 에디터에서 덮어씁니다.
-3. Add Actions 모달Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.API Groups: 디폴트로 "*" 제공; 관리자가 수정 가능하며, ‘,’로 다중 기입 가능합니다.Resources: 쿠버네티스 리소스를 명시합니다. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 다중 기입 가능합니다.일반적으로 많이 쓰이는 리소스는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 리소스를 선택할 수 있습니다:pods, pods/exec, pods/log, pods/portforward, services, ingresses, deployments, replicasets, statefulsets, daemonsets, configmaps, secrets, namespaces, nodes, persistentvolumes, persistentvolumeclaims, jobs, cronjobs, serviceaccounts, endpoints, roles, rolebindings, clusterroles, clusterrolebindings위에 표기되지 않은 리소스는 직접 타이핑하여 목록 외 리소스(커스텀 리소스 대응을 위함) 명시가 가능합니다.지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.Namespace: 네임스페이스를 지정하여 쿠버네티스 리소스 범위를 제한합니다.디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.Namespace 범위 외의 Resources인 경우, 해당 필드의 값은 어떠한 값이 들어오더라도 영향받지 않습니다.범위 외 리소스: persistentvolumes, persistentvolumeclaims, serviceaccounts, customresourcedefinitions, endpoints, nodes, clusterroles, clusterrolebindingsName: 쿠버네티스 리소스 중 대상으로 할 리소스명을 기입합니다.디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.Verbs: 쿠버네티스 API 메소드를 다중 설정할 수 있습니다.디폴트로 "*" 제공; 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.일반적으로 호출되는 Verb는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 Verb를 선택할 수 있습니다:get, list, watch, create, update, patch, delete, deletecollection사용자는 직접 타이핑하여 목록 외 커스텀 리소스 전용 다른 verb 명시가 가능합니다.Add 버튼을 클릭하여 actions 리스트 중 하나의 액션 세트를 정의할 수 있습니다. 코드 상으로 append에 해당하는 부분으로 기존의 추가되었던 액션을 초기화하지 않고 새로 추가가 가능합니다.
-  1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
-  2. API Groups: 디폴트로 "*" 제공; 관리자가 수정 가능하며, ‘,’로 다중 기입 가능합니다.
-  3. Resources: 쿠버네티스 리소스를 명시합니다. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 다중 기입 가능합니다.일반적으로 많이 쓰이는 리소스는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 리소스를 선택할 수 있습니다:pods, pods/exec, pods/log, pods/portforward, services, ingresses, deployments, replicasets, statefulsets, daemonsets, configmaps, secrets, namespaces, nodes, persistentvolumes, persistentvolumeclaims, jobs, cronjobs, serviceaccounts, endpoints, roles, rolebindings, clusterroles, clusterrolebindings위에 표기되지 않은 리소스는 직접 타이핑하여 목록 외 리소스(커스텀 리소스 대응을 위함) 명시가 가능합니다.지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.
-    1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 다중 기입 가능합니다.
-    2. 일반적으로 많이 쓰이는 리소스는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 리소스를 선택할 수 있습니다:pods, pods/exec, pods/log, pods/portforward, services, ingresses, deployments, replicasets, statefulsets, daemonsets, configmaps, secrets, namespaces, nodes, persistentvolumes, persistentvolumeclaims, jobs, cronjobs, serviceaccounts, endpoints, roles, rolebindings, clusterroles, clusterrolebindings
-      * pods, pods/exec, pods/log, pods/portforward, services, ingresses, deployments, replicasets, statefulsets, daemonsets, configmaps, secrets, namespaces, nodes, persistentvolumes, persistentvolumeclaims, jobs, cronjobs, serviceaccounts, endpoints, roles, rolebindings, clusterroles, clusterrolebindings
-    3. 위에 표기되지 않은 리소스는 직접 타이핑하여 목록 외 리소스(커스텀 리소스 대응을 위함) 명시가 가능합니다.
-    4. 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.
-  4. Namespace: 네임스페이스를 지정하여 쿠버네티스 리소스 범위를 제한합니다.디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.Namespace 범위 외의 Resources인 경우, 해당 필드의 값은 어떠한 값이 들어오더라도 영향받지 않습니다.범위 외 리소스: persistentvolumes, persistentvolumeclaims, serviceaccounts, customresourcedefinitions, endpoints, nodes, clusterroles, clusterrolebindings
-    1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.
-    2. Namespace 범위 외의 Resources인 경우, 해당 필드의 값은 어떠한 값이 들어오더라도 영향받지 않습니다.범위 외 리소스: persistentvolumes, persistentvolumeclaims, serviceaccounts, customresourcedefinitions, endpoints, nodes, clusterroles, clusterrolebindings
-      * 범위 외 리소스: persistentvolumes, persistentvolumeclaims, serviceaccounts, customresourcedefinitions, endpoints, nodes, clusterroles, clusterrolebindings
-  5. Name: 쿠버네티스 리소스 중 대상으로 할 리소스명을 기입합니다.디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.
-    1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.
-  6. Verbs: 쿠버네티스 API 메소드를 다중 설정할 수 있습니다.디폴트로 "*" 제공; 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.일반적으로 호출되는 Verb는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 Verb를 선택할 수 있습니다:get, list, watch, create, update, patch, delete, deletecollection사용자는 직접 타이핑하여 목록 외 커스텀 리소스 전용 다른 verb 명시가 가능합니다.
-    1. 디폴트로 "*" 제공; 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.
-    2. 일반적으로 호출되는 Verb는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 Verb를 선택할 수 있습니다:get, list, watch, create, update, patch, delete, deletecollection
-      * get, list, watch, create, update, patch, delete, deletecollection
-    3. 사용자는 직접 타이핑하여 목록 외 커스텀 리소스 전용 다른 verb 명시가 가능합니다.
-  7. Add 버튼을 클릭하여 actions 리스트 중 하나의 액션 세트를 정의할 수 있습니다.
-  8. 코드 상으로 append에 해당하는 부분으로 기존의 추가되었던 액션을 초기화하지 않고 새로 추가가 가능합니다.
-4. Set Conditions 모달해당 항목은 모두 선택사항입니다.에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, Set 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. Resource Tags (Optional)쿼리파이 리소스에 달린 태그를 바탕으로 정책 적용 범위 축소가 가능합니다.각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.Insert 버튼을 눌러 새로 행을 생성할 수 있습니다.지정되면 tag 블록처럼 표기되고 X를 누르면 제거됩니다.기입항목: Key : 태그 키 (정규식, glob 미지원)Value : 태그 밸류 기입 (정규식, glob 모두 지원, 다중 입력 지원)User Attributes (Optional)쿼리파이 사용자 속성을 바탕으로 정책 적용 대상 범위 축소 가능합니다.해당 속성값에 모두 매칭되지 못하면 해당 사용자는 속성값이 매칭되기 전까지 정책을 할당받았어도 사용이 불가합니다.각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.Variable Name에서 현재 지원하는 Attribute를 드롭다운 목록으로 제안합니다.loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, localetimezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddressIP Addresses (Optional)해당 리소스에 접근 가능 또는 불가한 IP대역을 관리자가 지정합니다.‘,’를 구분으로 단일IP, CIDR 모두 수용합니다.
-  1. 해당 항목은 모두 선택사항입니다.
-  2. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, Set 버튼을 누르면 변경사항을 에디터에서 덮어씁니다.
-  3. Resource Tags (Optional)쿼리파이 리소스에 달린 태그를 바탕으로 정책 적용 범위 축소가 가능합니다.각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.Insert 버튼을 눌러 새로 행을 생성할 수 있습니다.지정되면 tag 블록처럼 표기되고 X를 누르면 제거됩니다.기입항목: Key : 태그 키 (정규식, glob 미지원)Value : 태그 밸류 기입 (정규식, glob 모두 지원, 다중 입력 지원)
-    1. 쿼리파이 리소스에 달린 태그를 바탕으로 정책 적용 범위 축소가 가능합니다.
-    2. 각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.
-    3. Insert 버튼을 눌러 새로 행을 생성할 수 있습니다.
-    4. 지정되면 tag 블록처럼 표기되고 X를 누르면 제거됩니다.
-    5. 기입항목: Key : 태그 키 (정규식, glob 미지원)Value : 태그 밸류 기입 (정규식, glob 모두 지원, 다중 입력 지원)
-      1. Key : 태그 키 (정규식, glob 미지원)
-      2. Value : 태그 밸류 기입 (정규식, glob 모두 지원, 다중 입력 지원)
-  4. User Attributes (Optional)쿼리파이 사용자 속성을 바탕으로 정책 적용 대상 범위 축소 가능합니다.해당 속성값에 모두 매칭되지 못하면 해당 사용자는 속성값이 매칭되기 전까지 정책을 할당받았어도 사용이 불가합니다.각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.Variable Name에서 현재 지원하는 Attribute를 드롭다운 목록으로 제안합니다.loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, localetimezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
-    1. 쿼리파이 사용자 속성을 바탕으로 정책 적용 대상 범위 축소 가능합니다.
-    2. 해당 속성값에 모두 매칭되지 못하면 해당 사용자는 속성값이 매칭되기 전까지 정책을 할당받았어도 사용이 불가합니다.
-    3. 각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.
-    4. Variable Name에서 현재 지원하는 Attribute를 드롭다운 목록으로 제안합니다.loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, localetimezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
-      * loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, localetimezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
-  5. IP Addresses (Optional)해당 리소스에 접근 가능 또는 불가한 IP대역을 관리자가 지정합니다.‘,’를 구분으로 단일IP, CIDR 모두 수용합니다.
-    1. 해당 리소스에 접근 가능 또는 불가한 IP대역을 관리자가 지정합니다.
-    2. ‘,’를 구분으로 단일IP, CIDR 모두 수용합니다.
+1. **Add Resources**  모달
+    1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
+    2. Cluster 명으로 리소스 검색이 가능합니다.
+    3. 체크박스에 체크한 리소스를 `Add` 버튼을 클릭하여 코드에 삽입합니다.
+2. **Set Subjects**  모달
+    1. Spec: Allow에서만 동작합니다.
+    2. **Kubernetes Groups**  : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다.
+    3. **Permitted Impersonation**  : (Optional) 해당 필드를 통해 사용자가 클라이언트를 통해 실제 --as, --as-group를 통한 impersonation을 시도할 때 적용 가능한 쿠버네티스 사용자/그룹을 나열합니다.
+        1. **Allowed Kubernetes Users** : --as 파라미터로 쿼리파이에서 허용할 kubenetes users를 기입합니다.
+        2. **Allowed Kubernetes Users** : --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.
+        3. ‘,’ 를 통해 다중으로 등록 가능합니다.
+    4. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다.
+3. **Add Actions**  모달
+    1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
+    2. **API Groups** : 디폴트로 "*" 제공; 관리자가 수정 가능하며, ‘,’로 다중 기입 가능합니다.
+    3. **Resources** : 쿠버네티스 리소스를 명시합니다.
+        1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 다중 기입 가능합니다.
+        2. 일반적으로 많이 쓰이는 리소스는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 리소스를 선택할 수 있습니다:
+            * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
+        3. 위에 표기되지 않은 리소스는 직접 타이핑하여 목록 외 리소스(커스텀 리소스 대응을 위함) 명시가 가능합니다.
+        4. 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.
+    4. **Namespace** : 네임스페이스를 지정하여 쿠버네티스 리소스 범위를 제한합니다.
+        1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.
+        2. Namespace 범위 외의 Resources인 경우, 해당 필드의 값은 어떠한 값이 들어오더라도 영향받지 않습니다.
+            * 범위 외 리소스: `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`
+    5. **Name** : 쿠버네티스 리소스 중 대상으로 할 리소스명을 기입합니다.
+        1. 디폴트로 "*" 제공; 관리자가 수정 가능하며, 와일드카드 및 정규표현식 수용이 가능합니다.
+    6. **Verbs** : 쿠버네티스 API 메소드를 다중 설정할 수 있습니다.
+        1. 디폴트로 "*" 제공; 지정되면 Item 블록처럼 표기되고 X를 누르면 제거됩니다.
+        2. 일반적으로 호출되는 Verb는 이하와 같고 필드에 커서를 두면 이하의 목록으로 편히 Verb를 선택할 수 있습니다:
+            * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
+        3. 사용자는 직접 타이핑하여 목록 외 커스텀 리소스 전용 다른 verb 명시가 가능합니다.
+    7. `Add` 버튼을 클릭하여 actions 리스트 중 하나의 액션 세트를 정의할 수 있습니다.
+    8. 코드 상으로 append에 해당하는 부분으로 기존의 추가되었던 액션을 초기화하지 않고 새로 추가가 가능합니다.
+4. **Set Conditions**  모달
+    1. 해당 항목은 모두 선택사항입니다.
+    2. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다.
+    3. **Resource Tags**  (Optional)
+        1. 쿼리파이 리소스에 달린 태그를 바탕으로 정책 적용 범위 축소가 가능합니다.
+        2. 각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.
+        3. Insert 버튼을 눌러 새로 행을 생성할 수 있습니다.
+        4. 지정되면 tag 블록처럼 표기되고 X를 누르면 제거됩니다.
+        5. 기입항목:
+            1. **Key ** : 태그 키 (정규식, glob 미지원)
+            2. **Value ** : 태그 밸류 기입 (정규식, glob 모두 지원, 다중 입력 지원)
+    4. **User Attributes**  (Optional)
+        1. 쿼리파이 사용자 속성을 바탕으로 정책 적용 대상 범위 축소 가능합니다.
+        2. 해당 속성값에 모두 매칭되지 못하면 해당 사용자는 속성값이 매칭되기 전까지 정책을 할당받았어도 사용이 불가합니다.
+        3. 각 행 마다 AND조건으로 동작하고; Value에서 ‘,’로 OR 동작합니다.
+        4. Variable Name에서 현재 지원하는 Attribute를 드롭다운 목록으로 제안합니다.
+            * loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, locale timezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
+    5. **IP Addresses**  (Optional)
+        1. 해당 리소스에 접근 가능 또는 불가한 IP대역을 관리자가 지정합니다.
+        2. ‘,’를 구분으로 단일IP, CIDR 모두 수용합니다.

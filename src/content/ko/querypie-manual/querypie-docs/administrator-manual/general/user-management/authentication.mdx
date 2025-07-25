@@ -6,15 +6,15 @@ SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시
 ## IdP 연동 지원 범위
 현재 QueryPie 에서 지원하는 IdP 서비스는 다음과 같습니다.
 
-* Okta
-* LDAP
+* [Okta](Okta 연동하기)
+* [LDAP](LDAP 연동하기)
 * Swivel Secure
 * OneLogin
 * SAML 2.0
 * Custom Identity Provider : API URL 입력만 가능합니다.
 
 ## 계정 시스템 동기화를 통한 사용자 관리
-* Administrator > General > User Management > Authentication 메뉴에서 외부 계정 시스템 연동을 설정할 수 있습니다.
+* Administrator &gt; General &gt; User Management &gt; Authentication 메뉴에서 외부 계정 시스템 연동을 설정할 수 있습니다.
 * 현재는 연동 설정이 완료되면 Authentication 타입을 변경할 수 없습니다.
 * 계정 시스템 내에 신규 입사자가 발생하는 경우, 동기화를 진행하면 QueryPie 사용자로 추가됩니다.
 * 계정 시스템 내에 퇴사자가 발생하는 경우, 동기화를 진행하면 QueryPie 사용자에서 삭제됩니다.
@@ -42,5 +42,5 @@ Okta, Onelogin, SAML 등 외부 IdP 연동 여부와 관계없이, QueryPie에 �
 * 외부 IdP를 사용하는 환경에서도 관리자 계정을 포함한 모든 로컬 계정에 MFA를 설정하여 무단 액세스로부터 시스템을 안전하게 보호합니다.
 
 ### 설정 방법
-1. Administrator > General > Authentication 메뉴로 이동합니다.
-2. Two Factor Authentication 섹션에서 원하는 MFA 옵션을 활성화하고 구성합니다.
+1. **Administrator &gt; General &gt; Authentication**  메뉴로 이동합니다.
+2. **Two Factor Authentication**  섹션에서 원하는 MFA 옵션을 활성화하고 구성합니다.

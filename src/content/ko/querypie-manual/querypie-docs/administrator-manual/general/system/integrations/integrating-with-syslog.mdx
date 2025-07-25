@@ -7,33 +7,33 @@ QueryPie에서 기록하는 로그를 Syslog 형식으로 외부로 전송하는
 * 9.19.0 버전부터 TCP 프로토콜을 지원합니다. 또한, HTTP/HTTPS 프로토콜 기반 Splunk HEC(HTTP Event Collector) 전송을 지원합니다.
 
 ## Syslog Integration 설정
-1. Administrator > General > System > Integrations 메뉴로 이동합니다.
+1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
 2. Syslog 타일을 클릭하여 상세 페이지로 이동합니다.
 
 <Callout type="important">
 **Syslog (legacy) 는 무엇인가요?**  기존 Syslog 를 사용하셨던 경우 **Syslog (Legacy)** 타일이 추가로 표시됩니다. 이곳에서 기존 포맷을 유지한 상태로 Syslog 를 그대로 전송받을 수 있습니다. Legacy Format은 Syslog 프로토콜 상 Timestamp 필드가 Time Zone의 영향을 받으므로 별도로 Time Zone 설정 항목이 존재합니다. 기본값은 UTC입니다. 
 </Callout>
 
-1. 상세 페이지에 있는 Configure 버튼을 클릭하면 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
+1. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-23 오전 9.36.28.png]()</div>
 *Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination*
 </p>
 
-1. Destination 정보를 생성하기 위해 다음의 정보들을 입력합니다. Destination Name : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.Protocol : syslog에서 선택 가능한 프로토콜은 TCP(기본값)와 UDP입니다. UDP는 패킷의 길이 제약사항이 있고 보안적으로 취약하므로 TCP 사용을 권장합니다.Destination Address (Hostname): syslog를 수신하는 syslog server의 IP address 또는 hostname을 입력합니다.Port : sylog server에서 listen 하는 port를 입력합니다. (기본값 514)Test Connection 버튼 : TCP는 syslog 서버와 통신상태를 점검할 수 있습니다. UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.Select Event Items : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 앴는 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운경우 syslog header를 빼기 위해 제공되는 옵션입니다.Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
-  1. Destination Name : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.
-  2. Protocol : syslog에서 선택 가능한 프로토콜은 TCP(기본값)와 UDP입니다. UDP는 패킷의 길이 제약사항이 있고 보안적으로 취약하므로 TCP 사용을 권장합니다.
-  3. Destination Address (Hostname): syslog를 수신하는 syslog server의 IP address 또는 hostname을 입력합니다.
-  4. Port : sylog server에서 listen 하는 port를 입력합니다. (기본값 514)
-  5. Test Connection 버튼 : TCP는 syslog 서버와 통신상태를 점검할 수 있습니다. UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
-    * UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
-  6. Select Event Items : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 앴는 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
-  7. Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운경우 syslog header를 빼기 위해 제공되는 옵션입니다.
-  8. Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
-2. OK 버튼을 누르고 설정을 저장합니다. 설정 사항을 저장하더라도 바로 Syslog 전송이 활성화되는 것은 아닙니다.
-  1. 설정 사항을 저장하더라도 바로 Syslog 전송이 활성화되는 것은 아닙니다.
-3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 으로 전환합니다. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
-  1. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
-4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 Delete 버튼을 통해 설정을 제거할 수 있습니다. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을  로 변경한 후 삭제해 주시기 바랍니다.
-  1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을  로 변경한 후 삭제해 주시기 바랍니다.
+1. Destination 정보를 생성하기 위해 다음의 정보들을 입력합니다.
+    1. **Destination Name**  : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.
+    2. **Protocol**  : syslog에서 선택 가능한 프로토콜은 TCP(기본값)와 UDP입니다. UDP는 패킷의 길이 제약사항이 있고 보안적으로 취약하므로 TCP 사용을 권장합니다.
+    3. **Destination Address (Hostname)** : syslog를 수신하는 syslog server의 IP address 또는 hostname을 입력합니다.
+    4. **Port**  : sylog server에서 listen 하는 port를 입력합니다. (기본값 514)
+    5. **Test Connection 버튼**  : TCP는 syslog 서버와 통신상태를 점검할 수 있습니다.
+        * UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
+    6. **Select Event Items**  : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 앴는 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
+    7. Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운경우 syslog header를 빼기 위해 제공되는 옵션입니다.
+    8. Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
+2. `OK` 버튼을 누르고 설정을 저장합니다.
+    1. 설정 사항을 저장하더라도 바로 Syslog 전송이 활성화되는 것은 아닙니다.
+3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 [ac:emoticon]으로 전환합니다.
+    1. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
+4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 Delete 버튼을 통해 설정을 제거할 수 있습니다.
+    1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 [ac:emoticon] 로 변경한 후 삭제해 주시기 바랍니다.

@@ -12,33 +12,25 @@ QueryPie의 Database Access Control에서 발생하는 로그들을 Database Log
 
 <Callout type="info">
 10.3.0에 추가된 항목 
-[ul]
-[li]
-Restricted Data Access Logs 
-
-[li]
-Masked Data Access Logs 
-
-[li]
-Sensitive Data Access Logs 
-
-
+* Restricted Data Access Logs
+* Masked Data Access Logs
+* Sensitive Data Access Logs
 </Callout>
 
-1. General
+1. **General**
 
 * User Access History : 사용자 로그인, 로그아웃 이력
 * Activity Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
 * Admin Role History : 관리자 권한 부여, 변경, 회수 이력
 
-1. Databases
+1. **Databases**
 
-* DB Access History : 커넥션 연결 및 연결해제 이력
-* Query Audit : 실행이 끝난 쿼리 수행 이력
-* Running Queries : 현재 실행 중인 쿼리
-* DML Snapshots : INSERT / UPDATE / DELETE 쿼리 실행 완료시 전후 데이터 기록 (기록 위해 별도 설정 필요)
-* Account Lock History : 패스워드 실패 및 장기미접속으로 인한 커넥션 잠금 이력
-* Access Control Logs : 커넥션 접근 권한 부여 및 회수 이력
+* [DB Access History](DB Access History) : 커넥션 연결 및 연결해제 이력
+* [Query Audit](Query Audit) : 실행이 끝난 쿼리 수행 이력
+* [Running Queries](Running Queries) : 현재 실행 중인 쿼리
+* [DML Snapshots](DML Snapshots) : INSERT / UPDATE / DELETE 쿼리 실행 완료시 전후 데이터 기록 (기록 위해 별도 설정 필요)
+* [Account Lock History](Account Lock History) : 패스워드 실패 및 장기미접속으로 인한 커넥션 잠금 이력
+* [Access Control Logs](Access Control Logs) : 커넥션 접근 권한 부여 및 회수 이력
 * Restricted Data Access Logs : Data Access 정책에 의해 접근이 제한된 데이터에 접근한 이력
 * Masked Data Access Logs : Data Masking 정책에 의해 마스킹된 데이터에 접근한 이력
 * Sensitive Data Access Logs : Sensitive data 정책에 의해 alert가 발생한 이력

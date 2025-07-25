@@ -13,29 +13,21 @@ Privilege 기능에서는 SQL 구문별 조합으로 권한 제어가 가능합�
 *Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type*
 </p>
 
-1. Database 설정 메뉴에서 DB Access Control > Privilege Type 메뉴로 이동합니다.
-2. 우측 상단의 Create Privilege Type 버튼을 클릭합니다.
-3. 정책 생성을 위한 다음의 정보들을 입력합니다.Name : 권한을 화면상에서 구별할 수 있는 이름입니다.Database Type : 권한이 부여되는 데이터베이스의 타입을 선택합니다. 기본적으로 General 타입을 선택합니다.Privilege Type : 해당 권한으로 실행을 허용할 구문을 선택합니다. Functions : 해당 권한으로 허용 가능한 작업을 선택합니다. 웹 에디터 내에서의 데이터 내보내기 및 가져오기, 클립보드 복사 기능을 제어할 수 있습니다.
-  1. Name : 권한을 화면상에서 구별할 수 있는 이름입니다.
-  2. Database Type : 권한이 부여되는 데이터베이스의 타입을 선택합니다. 기본적으로 General 타입을 선택합니다.
-  3. Privilege Type : 해당 권한으로 실행을 허용할 구문을 선택합니다.
-  4. Functions : 해당 권한으로 허용 가능한 작업을 선택합니다. 웹 에디터 내에서의 데이터 내보내기 및 가져오기, 클립보드 복사 기능을 제어할 수 있습니다.
-4. Save 버튼을 통해 저장합니다.
+1. Database 설정 메뉴에서 DB Access Control &gt; Privilege Type 메뉴로 이동합니다.
+2. 우측 상단의 `Create Privilege Type` 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다.
+    1. **Name**  : 권한을 화면상에서 구별할 수 있는 이름입니다.
+    2. **Database Type**  : 권한이 부여되는 데이터베이스의 타입을 선택합니다. 기본적으로 General 타입을 선택합니다.
+    3. **Privilege Type**  : 해당 권한으로 실행을 허용할 구문을 선택합니다.
+    4. **Functions**  : 해당 권한으로 허용 가능한 작업을 선택합니다. 웹 에디터 내에서의 데이터 내보내기 및 가져오기, 클립보드 복사 기능을 제어할 수 있습니다.
+4. `Save` 버튼을 통해 저장합니다.
 
 해당 권한이 Privilege Type 목록에 생성된 것을 확인할 수 있습니다.
 
 <Callout type="info">
 **Redis 커넥션의 경우에는 어떻게 접근 권한을 생성하고 관리할 수 있나요?** 
 Privilege 생성 화면에서 Database Type을 Redis로 선택할 경우, 제공된 Redis 별도의 권한 타입으로 Privilege를 생성할 수 있습니다. 
-[ul]
-[li]
-Redis 접속시 실행을 허용할 권한들이 크게 Read, Write, Dangerous, Etc.로 분류되어 있습니다. 
-
-[li]
-Read, Write, Dangerous, Etc. 카테고리는 [Redis ACL Categories](https://redis.io/commands/) 기준을 참고합니다. 
-
-[li]
-선택된 카테고리 중, 실행을 제한할 명령어를 Restrict Commands에 설정하여 제한할 수 있습니다. 
-
-
+* Redis 접속시 실행을 허용할 권한들이 크게 Read, Write, Dangerous, Etc.로 분류되어 있습니다.
+* Read, Write, Dangerous, Etc. 카테고리는 [Redis ACL Categories](https://redis.io/commands/) 기준을 참고합니다.
+* 선택된 카테고리 중, 실행을 제한할 명령어를 Restrict Commands에 설정하여 제한할 수 있습니다.
 </Callout>

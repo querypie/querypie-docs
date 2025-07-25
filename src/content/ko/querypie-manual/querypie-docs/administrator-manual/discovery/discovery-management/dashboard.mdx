@@ -7,20 +7,20 @@ Data Discovery의 수행결과에 대한 전반적인 내용을 시각적인 표
 </p>
 
 ## 위젯
-* Discovery Summary : Discovery Job의 수행 결과 및 Verification 의 결과를 수치로 요약 표시합니다.Scanned Database : Discovery Job이 정상적으로 수행되어 확인된 Database 의 총 개수 입니다.Databases with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재 database의 총 개수 입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다.Scanned Column : Discovery Job이 정상적으로 수행되어 확인된 Column의 총 개수 입니다.Columns with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재하는 column의 총 개수입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다. Discovery Summary 위젯
-  * Scanned Database : Discovery Job이 정상적으로 수행되어 확인된 Database 의 총 개수 입니다.
-  * Databases with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재 database의 총 개수 입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다.
-  * Scanned Column : Discovery Job이 정상적으로 수행되어 확인된 Column의 총 개수 입니다.
-  * Columns with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재하는 column의 총 개수입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다. Discovery Summary 위젯
-* Sensitive Items to Verify : Discovery Job이 정상적으로 수행되어 관리자가 verify 해야할 대상의 현황을 표시합니다. 관리자가 모든 대상의 verification 을 마치면 이 위젯은 데이터를 표시하지 않습니다.  Confidence : 발견된 항목의 95%신뢰구간 수치를 계산하여 Low / Medium / High 의 3단계로 표시합니다. 정규식의 경우(이항분포)의 예를 들자면, 발견된 항목이 100개 중 32개 이하면 Low, 33~66개면 Medium, 67개 이상일 경우 High입니다. 이 수치로 AI identifier 또는 정규식의 검출 수준을 판단할 수 있습니다. Go to Scan Result : 클릭하면 Scan Result 페이지로 이동됩니다.Sensitive Items to Verify 위젯
-  * Confidence : 발견된 항목의 95%신뢰구간 수치를 계산하여 Low / Medium / High 의 3단계로 표시합니다. 정규식의 경우(이항분포)의 예를 들자면, 발견된 항목이 100개 중 32개 이하면 Low, 33~66개면 Medium, 67개 이상일 경우 High입니다. 이 수치로 AI identifier 또는 정규식의 검출 수준을 판단할 수 있습니다.
-  * Go to Scan Result : 클릭하면 Scan Result 페이지로 이동됩니다.Sensitive Items to Verify 위젯
-* Top Connections : Sensitive item이 많이 검출된 순서로 DAC의 커넥션 목록을 표시합니다.  목록의 특정 커넥션을 선택하면 해당 커넥션으로 필터링된 인벤토리 화면으로 이동합니다.See All : 커넥션 목록에 보여줄 항목이 많으면 위젯에 모두 표시하지 못합니다. 이 경우 See All을 누르면 전체 목록을 확인할 수 있습니다.  Top Connections 위젯 Top Connections 위젯의 See All을 클릭하면 출력되는 sensitive item을 포함한 connection 전체 목록
-  * See All : 커넥션 목록에 보여줄 항목이 많으면 위젯에 모두 표시하지 못합니다. 이 경우 See All을 누르면 전체 목록을 확인할 수 있습니다.  Top Connections 위젯 Top Connections 위젯의 See All을 클릭하면 출력되는 sensitive item을 포함한 connection 전체 목록
-* Top Sensitive Items : 가장 많이 검출된 Sensitive item 의 목록과 수를 표시합니다. 특정 sensitive item을 클릭하면 해당 sensitive item으로 필터링된 인벤토리 페이지로 이동됩니다.See All : 검출된 Sensitive item의 종류가 많으면 위젯에서 모두 표시하지 못합니다. 이 경우 See All 을 클릭하면 전체 목록을 확인할 수 있습니다.Top Sensitive Items 위젯 Top Sensitive items 위젯의 See All을 클릭하면 표시되는 전체 목록
-  * See All : 검출된 Sensitive item의 종류가 많으면 위젯에서 모두 표시하지 못합니다. 이 경우 See All 을 클릭하면 전체 목록을 확인할 수 있습니다.Top Sensitive Items 위젯 Top Sensitive items 위젯의 See All을 클릭하면 표시되는 전체 목록
-* Connections by RDBMS : Data Discovery가 스캔에 사용하는 커넥션의 type 별 비율 그래프입니다. (Data Discovery가 현재 지원하는 DB :  MySQL, MariaDB, Oracle, PostgreSQL, MS SQLserver, Azure SQL)* 제약사항 : 특정항목의 비율이 10% 미만이면 지시선과 항목이름이 그래프에 표시되지 않습니다.Connections by RDBMS 위젯
-* Inventory Overview : Job이 1회라도 정상적으로 수행이되면 DB의 구조에 대한 정보를 저장하고 각각 구조에 대한 합산을 보여줍니다. Schema가 존재하는 Database는 Schema를 계수합니다. Go to Inventory : 인벤토리 페이지로 이동합니다.Inventory Overview 위젯
-  * Go to Inventory : 인벤토리 페이지로 이동합니다.Inventory Overview 위젯
-* Sensitive Items by Type : 발견된 민감 정보의 유형별 비율을 보여주는 막대그래프입니다.Sensitive Items by Type 위젯
-* Sensitive Items by Compliance : 발견된 민감 정보의 컴플라이언스 별 비율을 보여주는 막대그래프입니다.Sensitive Items by Compliance 위젯
+* Discovery Summary : Discovery Job의 수행 결과 및 Verification 의 결과를 수치로 요약 표시합니다.
+    * Scanned Database : Discovery Job이 정상적으로 수행되어 확인된 Database 의 총 개수 입니다.
+    * Databases with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재 database의 총 개수 입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다.
+    * Scanned Column : Discovery Job이 정상적으로 수행되어 확인된 Column의 총 개수 입니다.
+    * Columns with Sensitive Item : 관리자가 verification을 한 결과 sensitive item이 존재하는 column의 총 개수입니다. scan이 완료되어도 관리자가 verification을 수행하지 않으면 이 값은 변하지 않습니다.
+* Sensitive Items to Verify : Discovery Job이 정상적으로 수행되어 관리자가 verify 해야할 대상의 현황을 표시합니다. 관리자가 모든 대상의 verification 을 마치면 이 위젯은 데이터를 표시하지 않습니다.
+    * Confidence : 발견된 항목의 95%신뢰구간 수치를 계산하여 Low / Medium / High 의 3단계로 표시합니다. 정규식의 경우(이항분포)의 예를 들자면, 발견된 항목이 100개 중 32개 이하면 Low, 33~66개면 Medium, 67개 이상일 경우 High입니다. 이 수치로 AI identifier 또는 정규식의 검출 수준을 판단할 수 있습니다.
+    * Go to Scan Result : 클릭하면 Scan Result 페이지로 이동됩니다.
+* Top Connections : Sensitive item이 많이 검출된 순서로 DAC의 커넥션 목록을 표시합니다.  목록의 특정 커넥션을 선택하면 해당 커넥션으로 필터링된 인벤토리 화면으로 이동합니다.
+    * See All : 커넥션 목록에 보여줄 항목이 많으면 위젯에 모두 표시하지 못합니다. 이 경우 See All을 누르면 전체 목록을 확인할 수 있습니다.
+* Top Sensitive Items : 가장 많이 검출된 Sensitive item 의 목록과 수를 표시합니다. 특정 sensitive item을 클릭하면 해당 sensitive item으로 필터링된 인벤토리 페이지로 이동됩니다.
+    * See All : 검출된 Sensitive item의 종류가 많으면 위젯에서 모두 표시하지 못합니다. 이 경우 See All 을 클릭하면 전체 목록을 확인할 수 있습니다.
+* Connections by RDBMS : Data Discovery가 스캔에 사용하는 커넥션의 type 별 비율 그래프입니다.  (Data Discovery가 현재 지원하는 DB : MySQL, MariaDB, Oracle, PostgreSQL, MS SQLserver, Azure SQL) * 제약사항 : 특정항목의 비율이 10% 미만이면 지시선과 항목이름이 그래프에 표시되지 않습니다.
+* Inventory Overview : Job이 1회라도 정상적으로 수행이되면 DB의 구조에 대한 정보를 저장하고 각각 구조에 대한 합산을 보여줍니다. Schema가 존재하는 Database는 Schema를 계수합니다.
+    * Go to Inventory : 인벤토리 페이지로 이동합니다.
+* Sensitive Items by Type : 발견된 민감 정보의 유형별 비율을 보여주는 막대그래프입니다.
+* Sensitive Items by Compliance : 발견된 민감 정보의 컴플라이언스 별 비율을 보여주는 막대그래프입니다.

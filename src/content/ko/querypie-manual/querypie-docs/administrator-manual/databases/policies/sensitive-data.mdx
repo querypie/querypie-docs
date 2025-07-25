@@ -11,12 +11,12 @@ import { Callout } from 'nextra/components'
 *Administrator &gt; Databases &gt; Policies &gt; Sensitive Data*
 </p>
 
-1. Database 설정 메뉴에서 Policies >  Sensitive Data 메뉴로 이동합니다.
-2. 우측 상단의 Create Policy 버튼을 클릭합니다.
-3. 정책 생성을 위한 다음의 정보들을 입력합니다.Policy Name : 정책을 화면상에서 구별할 수 있는 이름입니다.Target Connection : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
-  1. Policy Name : 정책을 화면상에서 구별할 수 있는 이름입니다.
-  2. Target Connection : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
-4. Save 버튼을 통해 저장합니다.
+1. Database 설정 메뉴에서 Policies &gt; Sensitive Data 메뉴로 이동합니다.
+2. 우측 상단의 `Create Policy` 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다.
+    1. **Policy Name**  : 정책을 화면상에서 구별할 수 있는 이름입니다.
+    2. **Target Connection**  : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
+4. `Save` 버튼을 통해 저장합니다.
 
 해당 정책이 Sensitive Data 정책 목록에 생성된 것을 확인할 수 있습니다.
 
@@ -29,15 +29,15 @@ import { Callout } from 'nextra/components'
 </p>
 
 1. Sensitive Data 메뉴에서 생성한 정책을 클릭합니다.
-2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 Add Rule List 버튼을 클릭합니다.
-3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.Database Name : 규칙 등록을 위한 필수 값입니다.Table Name : 규칙 등록을 위한 필수 값입니다. 이 경우 해당 테이블 데이터 전체가 민감데이터로 설정됩니다.Column Name : 선택한 테이블 내의 특정 컬럼에만 정책을 적용하고 싶은 경우 컬럼을 선택합니다.
-  1. Database Name : 규칙 등록을 위한 필수 값입니다.
-  2. Table Name : 규칙 등록을 위한 필수 값입니다. 이 경우 해당 테이블 데이터 전체가 민감데이터로 설정됩니다.
-  3. Column Name : 선택한 테이블 내의 특정 컬럼에만 정책을 적용하고 싶은 경우 컬럼을 선택합니다.
-4. 정책을 적용할 데이터의 민감도 레벨을 선택합니다.High, Medium, Low 3가지 레벨 중 하나를 선택합니다.선택한 Sensitive Level 정보는 추후 Alert 발송의 트리거 조건으로 설정할 수 있습니다.
-  1. High, Medium, Low 3가지 레벨 중 하나를 선택합니다.
-  2. 선택한 Sensitive Level 정보는 추후 Alert 발송의 트리거 조건으로 설정할 수 있습니다.
-5. Ok 버튼 통해 저장합니다.
+2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
+3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.
+    1. **Database Name**  : 규칙 등록을 위한 필수 값입니다.
+    2. **Table Name**  : 규칙 등록을 위한 필수 값입니다. 이 경우 해당 테이블 데이터 전체가 민감데이터로 설정됩니다.
+    3. **Column Name**  : 선택한 테이블 내의 특정 컬럼에만 정책을 적용하고 싶은 경우 컬럼을 선택합니다.
+4. 정책을 적용할 데이터의 민감도 레벨을 선택합니다.
+    1. High, Medium, Low 3가지 레벨 중 하나를 선택합니다.
+    2. 선택한 Sensitive Level 정보는 추후 Alert 발송의 트리거 조건으로 설정할 수 있습니다.
+5. `Ok` 버튼 통해 저장합니다.
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터에 접근할 경우 Logs 탭에서 접근 이력을 확인할 수 있습니다. 민감데이터 정책을 알림으로 설정하려는 경우, Alerts 문서를 참고하세요.
 

@@ -19,12 +19,12 @@ DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관
 *Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy*
 </p>
 
-1. Database 설정 메뉴에서 Ledger Management > Ledger Table Policy 메뉴로 이동합니다.
-2. 우측 상단의 Create Policy 버튼을 클릭합니다.
-3. 정책 생성을 위한 다음의 정보들을 입력합니다.Target Connection : 정책 적용의 대상인 테이블이 포함된 커넥션을 선택합니다.Target Databases : 정책 적용의 대상인 테이블이 포함된 데이터베이스를 선택합니다. 동시에 복수의 데이터베이스를 선택할 수 있습니다.
-  1. Target Connection : 정책 적용의 대상인 테이블이 포함된 커넥션을 선택합니다.
-  2. Target Databases : 정책 적용의 대상인 테이블이 포함된 데이터베이스를 선택합니다. 동시에 복수의 데이터베이스를 선택할 수 있습니다.
-4. Save 버튼을 통해 저장합니다.
+1. Database 설정 메뉴에서 Ledger Management &gt; Ledger Table Policy 메뉴로 이동합니다.
+2. 우측 상단의 `Create Policy` 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다.
+    1. **Target Connection**  : 정책 적용의 대상인 테이블이 포함된 커넥션을 선택합니다.
+    2. **Target Databases**  : 정책 적용의 대상인 테이블이 포함된 데이터베이스를 선택합니다. 동시에 복수의 데이터베이스를 선택할 수 있습니다.
+4. `Save` 버튼을 통해 저장합니다.
 
 하나의 DB 커넥션 단위로 Ledger Table Policy 목록에 정책이 생성된 것을 확인할 수 있습니다.
 
@@ -35,10 +35,10 @@ DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관
 
 생성한 정책의 상세페이지로 이동하여, 원장 테이블 승인 규칙을 설정할 수 있습니다.
 
-1. 상세 페이지에서 우측 중앙의 Add Rule 버튼을 클릭합니다.
+1. 상세 페이지에서 우측 중앙의 `Add Rule` 버튼을 클릭합니다.
 2. 원장 테이블을 목록에서 선택합니다.
-3. 해당 원장 테이블에 DML 쿼리 실행시 적용할 워크플로 승인 규칙을 선택합니다.해당 승인 규칙은 Ledger Approval Rules 메뉴에서 별도로 설정하실 수 있습니다.
-  1. 해당 승인 규칙은 Ledger Approval Rules 메뉴에서 별도로 설정하실 수 있습니다.
-4. 데이터를 조회하는 사유 입력을 강제화할 경우, SELECT Purpose 항목을 Required 로 설정합니다 (Default 값은 Required 입니다).
-5. 데이터를 내보내는 사유 입력을 강제화할 경우, Export Purpose 항목을 Required로 설정합니다 (Default 값은 Not Required 입니다).
-6. Ok 버튼을 클릭하여 규칙 추가를 마무리합니다.
+3. 해당 원장 테이블에 DML 쿼리 실행시 적용할 워크플로 승인 규칙을 선택합니다.
+    1. 해당 승인 규칙은 Ledger Approval Rules 메뉴에서 별도로 설정하실 수 있습니다.
+4. 데이터를 조회하는 사유 입력을 강제화할 경우, SELECT Purpose 항목을  **Required**  로 설정합니다 (Default 값은 Required 입니다).
+5. 데이터를 내보내는 사유 입력을 강제화할 경우, Export Purpose 항목을  **Required** 로 설정합니다 (Default 값은 Not Required 입니다).
+6. `Ok` 버튼을 클릭하여 규칙 추가를 마무리합니다.

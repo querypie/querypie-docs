@@ -28,22 +28,22 @@ Bug Fix
 
 External API
 
-* 신규 V2 API 추가 및 일부 API 쿼리 파라미터 개선List Servers (조회시 서버명 name으로 필터 가능)Server Group Owners API (서버 그룹 오너 조회/할당/제거)Server Groups APIList Group Servers (조회시 서버그룹명 name으로 필터 가능)그룹 필터 태그 조건 덮어쓰기 가능서버 그룹에 서버 추가 및 제거 가능User Management API (사용자 생성/조회/삭제 기능 추가)User Group Management API (사용자 그룹 생성/조회/삭제 가능)Group Member Operations API (사용자 그룹 멤버십 조회/추가/제거)Workflow - System Access Request Details (서버접근신청 워크플로 상세내역 조회 가능)
-  * List Servers (조회시 서버명 name으로 필터 가능)
-  * Server Group Owners API (서버 그룹 오너 조회/할당/제거)
-  * Server Groups APIList Group Servers (조회시 서버그룹명 name으로 필터 가능)그룹 필터 태그 조건 덮어쓰기 가능서버 그룹에 서버 추가 및 제거 가능
-    * List Group Servers (조회시 서버그룹명 name으로 필터 가능)
-    * 그룹 필터 태그 조건 덮어쓰기 가능
-    * 서버 그룹에 서버 추가 및 제거 가능
-  * User Management API (사용자 생성/조회/삭제 기능 추가)
-  * User Group Management API (사용자 그룹 생성/조회/삭제 가능)
-  * Group Member Operations API (사용자 그룹 멤버십 조회/추가/제거)
-  * Workflow - System Access Request Details (서버접근신청 워크플로 상세내역 조회 가능)
-* 일부 API 스펙 변경 - deleted 필드 제거List Users (/api/external/v2/users)Get User (/api/external/v2/users/`{userUuid}`)List DB Cloud Providers (/api/external/v2/dac/cloud-providers)List DB Connections (/api/external/v2/dac/connections)Get DB Connection (/api/external/v2/dac/connections/`{dbConnectionUuid}`)List Privileges (/api/external/v2/privileges)Get Privilege (/api/external/v2/privileges/`{uuid}`)
-  * List Users (/api/external/v2/users)
-  * Get User (/api/external/v2/users/`{userUuid}`)
-  * List DB Cloud Providers (/api/external/v2/dac/cloud-providers)
-  * List DB Connections (/api/external/v2/dac/connections)
-  * Get DB Connection (/api/external/v2/dac/connections/`{dbConnectionUuid}`)
-  * List Privileges (/api/external/v2/privileges)
-  * Get Privilege (/api/external/v2/privileges/`{uuid}`)
+* 신규 V2 API 추가 및 일부 API 쿼리 파라미터 개선
+    * List Servers (조회시 서버명 name으로 필터 가능)
+    * Server Group Owners API (서버 그룹 오너 조회/할당/제거)
+    * Server Groups API
+        * List Group Servers (조회시 서버그룹명 name으로 필터 가능)
+        * 그룹 필터 태그 조건 덮어쓰기 가능
+        * 서버 그룹에 서버 추가 및 제거 가능
+    * User Management API (사용자 생성/조회/삭제 기능 추가)
+    * User Group Management API (사용자 그룹 생성/조회/삭제 가능)
+    * Group Member Operations API (사용자 그룹 멤버십 조회/추가/제거)
+    * Workflow - System Access Request Details (서버접근신청 워크플로 상세내역 조회 가능)
+* 일부 API 스펙 변경 - deleted 필드 제거
+    * List Users (`/api/external/v2/users`)
+    * Get User (`/api/external/v2/users/{userUuid}`)
+    * List DB Cloud Providers (`/api/external/v2/dac/cloud-providers`)
+    * List DB Connections (`/api/external/v2/dac/connections`)
+    * Get DB Connection (`/api/external/v2/dac/connections/{dbConnectionUuid}`)
+    * List Privileges (`/api/external/v2/privileges`)
+    * Get Privilege (`/api/external/v2/privileges/{uuid}`)

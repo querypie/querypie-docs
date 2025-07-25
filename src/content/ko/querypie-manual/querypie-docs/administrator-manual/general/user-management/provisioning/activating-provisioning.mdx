@@ -4,9 +4,9 @@ import { Callout } from 'nextra/components'
 SCIM 2.0 프로토콜을 기반으로 동작하는 QueryPie의 Provisioning 기능은 사용자 아이덴티티 동기화를 지원하여 기존의 사용자 인증 및 액세스 관리를 돕는 SSO에 더해 더욱 안전한 사용자 통합 인증 및 관리 환경을 제공합니다. 사용자의 라이프사이클 관리를 지원하게 되어 관리자는 조직 내의 입사자 및 퇴사자를 계정 시스템 한 곳에서 더욱 편리하게 관리할 수 있습니다.
 
 ## Prerequisites
-* 이하의 쿼리파이 관리자 권한 Role에서 해당 기능을 활성화 할 수 있습니다: OwnerSystem Admin
-  * Owner
-  * System Admin
+* 이하의 쿼리파이 관리자 권한 Role에서 해당 기능을 활성화 할 수 있습니다:
+    * Owner
+    * System Admin
 
 ## QueryPie Provisioning 활성화
 <p align="center">
@@ -14,43 +14,23 @@ SCIM 2.0 프로토콜을 기반으로 동작하는 QueryPie의 Provisioning 기�
 *Administrator &gt; General &gt; User Management &gt; Provisioning*
 </p>
 
-1. QueryPie 앱의 Administrator > General > User Management > Provisioning 경로로 이동합니다.
-2. Provisioning 우측의 Enable 버튼을 클릭하여 SCIM 기능을 활성화합니다.
+1. QueryPie 앱의 Administrator &gt; General &gt; User Management &gt; Provisioning 경로로 이동합니다.
+2. Provisioning 우측의 `Enable` 버튼을 클릭하여 SCIM 기능을 활성화합니다.
 3. SCIM Endpoint로 제공하는 주소 값을 향후 Base URL로 설정할 수 있도록 보관합니다.
-4. Access Token 발급을 위해 우측의 Generate Token 버튼을 클릭합니다.
-5. 팝업창이 나타나면 해당 Access Token 값을 향후 IdP 측 토큰 정보에 기입할 수 있도록 복사해둡니다. 해당 토큰 값은 다시 조회가 어려우므로 해당 창을 닫지 않고 바로 원장이 될 Identity Provider로 넘어가시는 것을 권장드립니다. (Okta-QueryPie Provisioning 연동 스텝 참고)혹시라도 토큰 값을 분실한 경우, 기존의 토큰을 삭제하고 다시 4번 단계를 통해 새로 발급받으시기 바랍니다.
-  1. 해당 토큰 값은 다시 조회가 어려우므로 해당 창을 닫지 않고 바로 원장이 될 Identity Provider로 넘어가시는 것을 권장드립니다. (Okta-QueryPie Provisioning 연동 스텝 참고)
-  2. 혹시라도 토큰 값을 분실한 경우, 기존의 토큰을 삭제하고 다시 4번 단계를 통해 새로 발급받으시기 바랍니다.
-6. Confirm 버튼을 눌러 창을 닫습니다.
+4. Access Token 발급을 위해 우측의 `Generate Token` 버튼을 클릭합니다.
+5. 팝업창이 나타나면 해당 Access Token 값을 향후 IdP 측 토큰 정보에 기입할 수 있도록 복사해둡니다.
+    1. 해당 토큰 값은 다시 조회가 어려우므로 해당 창을 닫지 않고 바로 원장이 될 Identity Provider로 넘어가시는 것을 권장드립니다. ([**Okta-QueryPie Provisioning 연동**]([Okta] 프로비저닝 연동 가이드) 스텝 참고)
+    2. 혹시라도 토큰 값을 분실한 경우, 기존의 토큰을 삭제하고 다시 4번 단계를 통해 새로 발급받으시기 바랍니다.
+6. `Confirm` 버튼을 눌러 창을 닫습니다.
 
 <Callout type="important">
 **SCIM 전용 토큰 안내 ** 
-[ol]
-[li]
-Access Token은 Generate Token 버튼을 통해 생성할 수 있으며, 최대 2개까지만 발급 가능합니다. 
-
-[li]
-토큰 값은 생성 당시 1회에 한해 노출되며 이후에는 노출되지 않습니다. 
-
-[li]
-SCIM API전용으로만 사용 가능하며 /api/scim/v2 외 다른 엔드포인트 호출이 불가합니다. 
-
-[li]
-새로 생성된 토큰은 발급일 yyyy-MM-dd 기준으로 1년까지만 유효합니다. 
-[ol]
-[li]
-만료일이 도래하면 토큰은 Expired 처리되어 SCIM API 이용이 불가합니다. 
-
-[li]
-관리자는 만료일이 도달하기 이전에 신규 토큰을 발급하여 기존의 IdP에 설정된 토큰을 변경해주어야 합니다. 
-
-
-
-[li]
-토큰을 선택하고 `DELETE` 버튼을 클릭하여 토큰 삭제가 가능합니다. 
-
-[li]
-만일 관리자가 토큰을 발급받았던 상태에서 Provisioning을 비활성화 했다가 다시 활성화 했을 경우, 기존의 토큰은 모두 비활성화 타이밍에 삭제 처리되므로, 관리자는 새로 유효한 토큰을 발급해야 합니다. 
-
-
+1. Access Token은 Generate Token 버튼을 통해 생성할 수 있으며, 최대 2개까지만 발급 가능합니다.
+2. 토큰 값은 생성 당시 1회에 한해 노출되며 이후에는 노출되지 않습니다.
+3. SCIM API전용으로만 사용 가능하며 /api/scim/v2 외 다른 엔드포인트 호출이 불가합니다.
+4. 새로 생성된 토큰은 발급일 yyyy-MM-dd 기준으로 1년까지만 유효합니다.
+    1. 만료일이 도래하면 토큰은 Expired 처리되어 SCIM API 이용이 불가합니다.
+    2. 관리자는 만료일이 도달하기 이전에 신규 토큰을 발급하여 기존의 IdP에 설정된 토큰을 변경해주어야 합니다.
+5. 토큰을 선택하고 `DELETE` 버튼을 클릭하여 토큰 삭제가 가능합니다.
+6. 만일 관리자가 토큰을 발급받았던 상태에서 Provisioning을 비활성화 했다가 다시 활성화 했을 경우, 기존의 토큰은 모두 비활성화 타이밍에 삭제 처리되므로, 관리자는 새로 유효한 토큰을 발급해야 합니다.
 </Callout>

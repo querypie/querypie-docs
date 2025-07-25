@@ -13,29 +13,29 @@ User 페이지에서 사용자 목록을 조회할 수 있으며, 검색 및 필
 
 Users 목록에서 확인 가능한 정보는 다음과 같습니다.
 
-* Auth Provider : 사용자 인증 제공자QueryPie 또는 User Management > Authentication 에서 설정된 IdP Type을 표시합니다.수동으로 등록된 사용자의 경우 QueryPie로 표시됩니다.IdP에서 연동된 사용자는 각 ID Provider 이름으로 표시됩니다.Authentication 관련 자세한 내용은 (10.2.0-ko) Authentication 문서를 참고하시기 바랍니다.
-  * QueryPie 또는 User Management > Authentication 에서 설정된 IdP Type을 표시합니다.
-  * 수동으로 등록된 사용자의 경우 QueryPie로 표시됩니다.
-  * IdP에서 연동된 사용자는 각 ID Provider 이름으로 표시됩니다.
-  * Authentication 관련 자세한 내용은 (10.2.0-ko) Authentication 문서를 참고하시기 바랍니다.
-* Name : 사용자 이름 (Display Name)
-* Username : 사용자 로그인 ID
-* Email : 사용자 이메일
-* Admin Role : 사용자에게 부여된 관리자 권한
-* Last Login At : 마지막 로그인 일시
-* Last Access At : 마지막 리소스 접근 일시
-* Created At : 사용자 계정 생성 일시
-* Description : 계정 상태 관련 정보Account Locked Manually : 관리자 또는 API에 의한 비활성화Account Expired : 장기 미접속에 의한 계정 만료Account Locked : 다수의 로그인 실패로 인한 계정 잠김
-  * Account Locked Manually : 관리자 또는 API에 의한 비활성화
-  * Account Expired : 장기 미접속에 의한 계정 만료
-  * Account Locked : 다수의 로그인 실패로 인한 계정 잠김
+* **Auth Provider**  : 사용자 인증 제공자
+    * QueryPie 또는 User Management &gt; Authentication 에서 설정된 IdP Type을 표시합니다.
+    * 수동으로 등록된 사용자의 경우 QueryPie로 표시됩니다.
+    * IdP에서 연동된 사용자는 각 ID Provider 이름으로 표시됩니다.
+    * Authentication 관련 자세한 내용은 [(10.2.0-ko) Authentication]((10.2.0-ko) Authentication) 문서를 참고하시기 바랍니다.
+* **Name**  : 사용자 이름 (Display Name)
+* **Username**  : 사용자 로그인 ID
+* **Email**  : 사용자 이메일
+* **Admin Role**  : 사용자에게 부여된 관리자 권한
+* **Last Login At ** : 마지막 로그인 일시
+* **Last Access At**  : 마지막 리소스 접근 일시
+* **Created At ** : 사용자 계정 생성 일시
+* **Description**  : 계정 상태 관련 정보
+    * Account Locked Manually : 관리자 또는 API에 의한 비활성화
+    * Account Expired : 장기 미접속에 의한 계정 만료
+    * Account Locked : 다수의 로그인 실패로 인한 계정 잠김
 
 <p align="center">
 <div>[8b76bd56-c1be-4dec-83c3-79a136e35b19.png]()</div>
 *Description 유형별 표시*
 </p>
 
-* Status : 계정의 활성화 상태 (Active 또는 Inactive)
+* **Status**  : 계정의 활성화 상태 (Active 또는 Inactive)
 
 ## 수동으로 사용자 추가
 조직에 새로운 사용자를 수동으로 추가합니다. 사용자를 추가한 후 그룹 및 정책에 할당하고 권한을 부여할 수 있습니다.
@@ -45,14 +45,14 @@ Users 목록에서 확인 가능한 정보는 다음과 같습니다.
 *Administrator &gt; General &gt; User Management &gt; Users &gt; Add User*
 </p>
 
-1. Administrator > General > User Management > Users 메뉴로 이동합니다.
-2. 우측 상단의 Add User 버튼을 클릭합니다.
-3. 사용자 추가를 위한 다음의 정보들을 입력합니다.Display Name : 쿼리파이 상에서 표기될 사용자의 디스플레이용 이름을 입력합니다. Username: 로그인시 사용자는 고유한 값인 Login ID로, 기본적으로 이름이나 이메일 주소의 형태를 입력합니다.Email: 사용자를 QueryPie 내에서 식별할 수 있는 Unique한 키 값입니다.Password: 관리자가 설정하는 최초 비밀번호입니다. 사용자 로그인 후 변경하도록 안내해주세요.
-  1. Display Name : 쿼리파이 상에서 표기될 사용자의 디스플레이용 이름을 입력합니다.
-  2. Username: 로그인시 사용자는 고유한 값인 Login ID로, 기본적으로 이름이나 이메일 주소의 형태를 입력합니다.
-  3. Email: 사용자를 QueryPie 내에서 식별할 수 있는 Unique한 키 값입니다.
-  4. Password: 관리자가 설정하는 최초 비밀번호입니다. 사용자 로그인 후 변경하도록 안내해주세요.
-4. Save 버튼을 통해 저장합니다.
+1. Administrator &gt; General &gt; User Management &gt; Users 메뉴로 이동합니다.
+2. 우측 상단의 `Add User` 버튼을 클릭합니다.
+3. 사용자 추가를 위한 다음의 정보들을 입력합니다.
+    1. **Display Name ** : 쿼리파이 상에서 표기될 사용자의 디스플레이용 이름을 입력합니다.
+    2. **Username** : 로그인시 사용자는 고유한 값인 Login ID로, 기본적으로 이름이나 이메일 주소의 형태를 입력합니다.
+    3. **Email** : 사용자를 QueryPie 내에서 식별할 수 있는 Unique한 키 값입니다.
+    4. **Password** : 관리자가 설정하는 최초 비밀번호입니다. 사용자 로그인 후 변경하도록 안내해주세요.
+4. `Save` 버튼을 통해 저장합니다.
 
 <Callout type="info">
 사용자의 Username 항목은 고유한 값으로 최초 추가 이후 수정할 수 없습니다. 
@@ -72,12 +72,12 @@ Admin Role 을 부여할 수 있는 관리자는 Owner 역할의 사용자만 �
 *Administrator &gt; General &gt; User Management &gt; Users*
 </p>
 
-1. Admin Role 컬럼 내 드롭다운 항목에는 관리자 역할 현황이 표시됩니다.부여된 권한이 없는 경우 None 으로 표시됩니다.기부여된 권한이 있는 경우 권한명이 표시됩니다. (여러 개인 경우 +N 형식으로 표시)
-  * 부여된 권한이 없는 경우 None 으로 표시됩니다.
-  * 기부여된 권한이 있는 경우 권한명이 표시됩니다. (여러 개인 경우 +N 형식으로 표시)
+1. **Admin Role**  컬럼 내 드롭다운 항목에는 관리자 역할 현황이 표시됩니다.
+    * 부여된 권한이 없는 경우 None 으로 표시됩니다.
+    * 기부여된 권한이 있는 경우 권한명이 표시됩니다. (여러 개인 경우 +N 형식으로 표시)
 2. 드롭다운을 클릭하여, 권한을 추가 또는 삭제할 수 있습니다. (복수 선택 가능)
-3. Clear 버튼을 클릭하면 모든 권한 선택 내역이 초기화됩니다.
-4. Apply 버튼을 클릭하면 변경 내역이 저장됩니다.
+3. `Clear` 버튼을 클릭하면 모든 권한 선택 내역이 초기화됩니다.
+4. `Apply` 버튼을 클릭하면 변경 내역이 저장됩니다.
 
 <Callout type="info">
 관리자 역할 자체를 관리하는 방법은 [Roles]((10.2.0-ko) Roles) 문서를 참고해주세요. 
@@ -180,19 +180,13 @@ QueryPie에서 수동으로 등록한 사용자만 비밀번호 재설정이 가
 *Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Authentication*
 </p>
 
-1. 비밀번호를 재설정하려는 사용자의 상세 페이지에서 Reset Password 버튼을 클릭하면 인증 확인 모달이 노출됩니다.
-2. 임시 비밀번호를 입력 후 Confirm 버튼을 누르면 임시 비밀번호 발급이 완료됩니다.
+1. 비밀번호를 재설정하려는 사용자의 상세 페이지에서 `Reset Password` 버튼을 클릭하면 인증 확인 모달이 노출됩니다.
+2. 임시 비밀번호를 입력 후 `Confirm` 버튼을 누르면 임시 비밀번호 발급이 완료됩니다.
 
 <Callout type="info">
 QueryPie 10.2.2부터 Email 연동 설정이 되어 있는 경우, 관리자가 임시 비밀번호를 지정하는 대신 사용자가 직접 자신의 비밀 번호를 초기화하도록 초기화 메일을 발송 할 수 있습니다. 
-[ol]
-[li]
-관리자가 사용자 상세페이지에서 `Reset Password` 버튼을 클릭합니다. 
-
-[li]
-출력되는 팝업 창의 “Password change method”에서 “User changes own password (via email)”을 선택하고 `Confirm` 버튼을 누르면 비밀번호 초기화 메일이 해당 사용자의 email 주소로 발송됩니다. 
-
-
+1. 관리자가 사용자 상세페이지에서 `Reset Password` 버튼을 클릭합니다.
+2. 출력되는 팝업 창의 “Password change method”에서 “User changes own password (via email)”을 선택하고 `Confirm` 버튼을 누르면 비밀번호 초기화 메일이 해당 사용자의 email 주소로 발송됩니다.
 [ac:image]
 [ri:attachment]
 

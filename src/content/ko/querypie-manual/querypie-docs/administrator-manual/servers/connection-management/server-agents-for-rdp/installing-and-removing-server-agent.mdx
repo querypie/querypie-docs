@@ -8,13 +8,13 @@ Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를 설
 <div>[image-20240728-163032.png]()</div>
 </p>
 
-1. Server Agent 다운로드 페이지에 접속합니다.설치된 QueryPie 도메인 주소 뒤에 /for-agent/server-agent/download 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.e.g. https://sac.querypie.io/for-agent/server-agent/download
-  1. 설치된 QueryPie 도메인 주소 뒤에 /for-agent/server-agent/download 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.e.g. https://sac.querypie.io/for-agent/server-agent/download
+1. Server Agent 다운로드 페이지에 접속합니다.
+    1. 설치된 QueryPie 도메인 주소 뒤에 `/for-agent/server-agent/download` 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다. e.g. `https://sac.querypie.io/for-agent/server-agent/download`
 2. 에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.
 3. 화면 중앙의 Windows 버튼을 클릭하면 압축 파일이 다운로드 됩니다.
-4. 설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.QueryPie Server Access Control_(QueryPie Version)_SetupCONFIG
-  1. QueryPie Server Access Control_(QueryPie Version)_Setup
-  2. CONFIG
+4. 설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.
+    1. QueryPie Server Access Control_(QueryPie Version)_Setup
+    2. CONFIG
 5. 두 파일을 같은 경로에 위치한 뒤, QueryPie Server Access Control_(QueryPie Version)_Setup 파일을 실행합니다.
 6. 안내에 따라 파일을 설치합니다.
 
@@ -26,14 +26,8 @@ RDP Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.
 
 <Callout type="important">
 **RDP연결에 사용할 Port의 변경** 
-[ul]
-[li]
-RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다. 
-
-[li]
-Port 변경이 필요한 경우, RDP Server Agent를 재설치 해야합니다. 
-
-
+* RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.
+* Port 변경이 필요한 경우, RDP Server Agent를 재설치 해야합니다.
 </Callout>
 
 ## CONFIG 파일 없이 Server Agent 설치하기
@@ -72,15 +66,15 @@ CMD에서 Server Agent 설치파일 위치로 이동 후 아래 명령어 실행
 <div>[image-20240829-010643.png]()</div>
 </p>
 
-1. Administrator > Servers > Connection Management > Server Agents for RDP 페이지로 접속합니다.
-2. 우측 상단은 Verify Deletion Key 버튼을 클릭합니다.
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 페이지로 접속합니다.
+2. 우측 상단은 `Verify Deletion Key 버튼을 클릭합니다.`
 3. 확인된 Deletion Key를 기록합니다.
 4. Windows Server 콘솔에 접속합니다.
-5. 제어판 > 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.
+5. 제어판 &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.
 6. 패스워드 입력 란에 3에서 기록한 Deletion Key를 입력합니다.
 7. QueryPie 웹에 접속한 합니다.
-8. Administrator > Servers > Connection Management > Server Agents for RDP 메뉴로 이동합니다.
-9. 테이블 내 삭제할 대상 서버 좌측의 체크 박스를 체크 후 Delete 버튼을 통해 삭제합니다.
+8. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 메뉴로 이동합니다.
+9. 테이블 내 삭제할 대상 서버 좌측의 체크 박스를 체크 후 `Delete` 버튼을 통해 삭제합니다.
 
 <Callout type="info">
 Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일해야 삭제가 가능합니다. 
@@ -88,12 +82,6 @@ Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 �
 
 <Callout type="important">
 **Windows에서 Deletion Key가 틀리는 경우** 
-[ul]
-[li]
-연결된 QueryPie에서 Deletion Key를 받았는지 확인합니다. 
-
-[li]
-QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다. 
-
-
+* 연결된 QueryPie에서 Deletion Key를 받았는지 확인합니다.
+* QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.
 </Callout>

@@ -1,0 +1,182 @@
+import { Callout } from 'nextra/components'
+
+## Overview
+수많은 서버를 그룹화하여 접속 가능한 계정 및 정책을 한 번에 적용할 수 있습니다. 목적에 따라 서버 그룹을 만든 후 일괄적으로 정책을 편리하게 관리할 수 있으며 이렇게 그룹화한 서버 그룹 권한을 개별 유저 또는 유저 그룹에 한 번에 부여할 수 있습니다.
+
+<Callout type="info">
+서버 그룹 등록에 필요한 각 리소스들을 사전에 등록해 주시는 것을 권장합니다. 
+1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates **
+2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations**
+</Callout>
+
+## 서버 그룹 생성하기
+<p align="center">
+<div>[image-20250123-113012.png]()</div>
+*Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Create Server Group*
+</p>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴로 이동합니다.
+2. 우측 상단의 `+ Create Group` 버튼을 클릭합니다.
+3. 그룹 생성을 위한 다음의 정보들을 입력합니다.
+    1. **Name ** : 서버 그룹을 화면 상에서 구별할 수 있는 이름입니다.
+    2. **Description ** : 해당 서버 그룹에 대한 부가적인 설명을 입력할 수 있습니다.
+    3. **Server Tags ** : 해당 서버 그룹에 포함될 서버를 Server Tags를 통해 필터링하여 추가합니다.
+4. `Save` 버튼을 통해 저장합니다.
+
+<Callout type="info">
+서버 그룹은 Tag 기반으로 서버를 관리 할 수 있습니다. 특정 Tag를 서버그룹의 Server Tags에 지정하여, 해당 Tag가 있는 모든 서버가 서버그룹에 포함되는 형태의 유동적인 서버 관리가 가능합니다. 
+</Callout>
+
+## 서버 그룹 생성/수정하기
+아래 정보를 입력하여 서버 그룹을 생성하실 수 있습니다. 생성 후 일부 항목은 수정이 가능합니다.
+
+### 1. 기본 정보 입력 및 서버를 Tag 로 추가하기
+<p align="center">
+<div>[image-20240902-045749.png]()</div>
+</p>
+
+* Name : 서버 그룹의 이름을 입력합니다.
+* Description : 서버 그룹을 설명할 수 있는 내용을 입력합니다. 여러 관리자가 있을 경우, 서버 그룹 간 쉬운 식별을 위해 목적에 맞게 이름 및 설명을 자세히 입력하시는 것을 권장합니다.
+* Server Tags : 서버 그룹으로 묶고 싶은 서버의 태그를 지정하여 유동적으로 서버 그룹의 대상을 관리할 수 있습니다. 태그를 통해 추가된 서버는 서버 테이블에서 수동으로 삭제를 할 수 없으며, Server Tags의 태그를 수정하여야 합니다.
+
+### 2. Server 를 수동으로 추가하기
+<p align="center">
+<div>[image-20241028-003400.png]()</div>
+</p>
+
+* Servers에서는 해당 서버 그룹에 속할 서버를 확인하거나 서버를 서버그룹에 수동 추가 할 수 있습니다.
+    * 우측 상단의 `Add Server` 버튼을 클릭하면 화면 위에 서버 리스트를 확인할 수 있는 팝업이 표시됩니다.
+    * 해당 팝업창에서 서버 그룹에 추가할 개별 서버를 선택 후 `Add` 버튼을 클릭합니다.
+        * 팝업 내 필터([ac:emoticon]) 기능을 이용하여 여러 조건으로 서버를 필터링할 수 있습니다.
+        * 최종 해당 서버 그룹에 추가된 서버들을 확인할 수 있습니다.
+* Information의 Server Tags에서 수동 추가된 서버와 관련된 테그를 삭제하더라도, 수동으로 추가된 서버는 서버그룹에서 제외되지 않습니다. Servers 테이블에서 체크박스 선택 후 나오는 `Delete` 버튼을 통한 수동 삭제만 가능합니다.
+* Test Connection을 통해 Server Group내 추가된 Server와 Account에 대한 계정 정보 확인을 할 수 있습니다.
+    * Test Connection을 사용하기 위해선 최소 1개의 Server와 Account를 Server Group에 추가해야 합니다.
+
+<Callout type="info">
+Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니다. 
+</Callout>
+
+### 3. Accounts 등록하기
+<p align="center">
+<div>[image-20250629-025656.png]()</div>
+</p>
+
+1. 해당 커넥션에 접속 시 필요한  **Account** 를 입력합니다. Account를 입력하는 방법은 두 가지가 있습니다.
+    1. `Copy` 버튼을 눌러 Server Account Templates 메뉴에서 이미 등록한 Account를 한 번에 불러올 수 있습니다.
+        1. Sever Account Template 을 등록하는 방법은 [Server Account Templates](Server Account Templates)를 참고합니다.
+    2. 또는 `Add Account` 기능을 이용하여 수동으로 Account 를 추가할 수 있습니다.
+2. 개별  **Account** 에 입력하거나 설정해야 하는 정보는 아래와 같습니다.
+    1. **Account**  : 개별 계정을 구분할 수 있는 이름을 입력합니다.
+        1. `{username}`를 입력할 경우, 권한을 받은 이용자가 QueryPie로 서버 접속시, QueryPie의 username으로 치환됩니다.
+        2. username이 email 형태로 되어있는 경우, `{username_prefix}`로 입력하면 QueryPie의 username의 접두사(@ 앞 부분)으로 치환됩니다.
+    2. **Auto**   **Login**  : 자동 로그인 설정을 할 수 있습니다. Off 로 설정할 경우 Password 인증 방식만 사용할 수 있습니다.
+    3. **Provisioning**  : 서버 계정에 대한 비밀번호 변경 자동화 기능을 사용할 대상으로 지정 가능합니다.
+        1. Administrator &gt; General &gt; Company Management &gt; Security &gt; Server Connection Security 메뉴에서 Password Provisioning이 활성화 되어 있는 경우에만 해당합니다.
+        2. Secret Store가 QueryPie로 지정되어 있을 때만 나타납니다.
+    4. **Provisioning From ** : 서버 Provisioning 대상 패스워드의 위치를 선택합니다. 현재는 QueryPie의 Meta DB 또는 연결된 AD 가 있는 경우, AD를 선택할 수 있습니다.
+    5. **Account Type : ** 계정의 종류를 선택합니다.
+        1. Local Account : QueryPie 시스템 등록되는 계정입니다.
+        2. Provisioning Account : 접속하려는 서버에 계정을 관리하는 용도로 사용됩니다. 현재는 One Time Account의 생성/삭제 시 사용됩니다.
+        3. One Time Account : 특정 목적이나 기간 동안만 사용할 수 있는 임시 제한 계정입니다. 서버 접속시 계정 뒤에 7자리 난수(숫자+알파벳)을 임의로 추가하여 실제 서버에 계정을 생성하고, 세션 종료시 계정을 삭제합니다. One Time Account를 생성/삭제하기 위해선 Provisioning Account가 반드시 있어야 합니다.
+    6. **Auth**   **Type**  : 개별 계정의 인증 방식을 선택합니다. Password와 SSH Key 방식을 선택할 수 있으며, SSH Key 방식을 선택하고자 할 경우 Auto Login 설정을 먼저 On 으로 변경 해주세요.
+    7. **Authority**  : 인증 방식이 Password 일 경우 인증에 사용할 Password 를 입력합니다. SSH Key 일 경우에는 SSH Key Configurations 에서 이미 등록한 키 중 하나를 선택할 수 있습니다.
+
+<Callout type="info">
+provisioning account는 실제 서버에 등록된 계정이여야 하며 아래와 같은 설정이 필요합니다. 
+* 계정 생성/삭제 권한이 필수입니다.
+* sudo를 쓸 때 패스워드를 입력하지 않도록 설정되어야 합니다.
+</Callout>
+
+<Callout type="info">
+macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 차단합니다. 
+따라서 QueryPie로 macOS 서버 접속 시, VNC 연결 후 사용자가 직접 로그인 정보를 입력해야 합니다. 
+</Callout>
+
+### 3-1. 서버 그룹에서 Secret Store 를 통한 인증 설정하기 (Hashicorp Vault K/V 엔진 기준)
+서버 그룹에 Account 정보 등록 시 Secret Store 연동 정보를 활용하면 사전 지정된 Secret Store 인증 정보 연동을 통해 커넥션에 접속할 수 있습니다. 사전에 서버 인증정보를 Secret Store 에 저장하고, 서버 원격 접속시 사용자가 Secret Store 에 저장된 서버 인증정보를 활용해 접속하게 함으로써 서버 인증정보에 대한 보안을 강화할 수 있습니다. Server Groups이 지정된 Server는 Server Groups와 동일한 Secret Store를 사용하도록 강제됩니다.
+
+<p align="center">
+<div>[image-20240902-050037.png]()</div>
+</p>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴에서 `Create Group` 버튼을 통해 새로운 서버 그룹을 생성합니다.
+    1. 이는 Administrator &gt; Servers &gt; Server Account Management &gt; Server Account Templates 메뉴에서의 설정 방식도 동일합니다.
+2. 입력 항목 중 Secret Store 항목에서 사전에 등록한 Secret Store 항목을 선택합니다.
+3. Secret Store 설정에 저장된 Secret Engine 타입 중 K/V 항목을 선택합니다.
+4. `Add Account` 버튼을 클릭합니다.
+    1. Alias 항목에 이용자들에게 노출될 서버 계정 명을 입력합니다.
+    2. Account / Authority 항목에 Vault 의 Path 를 입력합니다.
+    3. Path 의 형태는 `prod_os/data/linux?account` 형태로 입력할 수 있습니다.
+    4. 예시 기준 실제로 Vault 내의 경로는 `prod_os &gt; linux` 의 key 가 `account` 인 경우입니다.
+    5. 중간의 `/data` 경로를 추가해야합니다.
+5. `Save` 버튼을 통해 서버 그룹 정보를 저장합니다.
+
+### 3-2. 서버 그룹에서 Secret Store 를 통한 인증 설정하기 (Hashicorp Vault SSH OTP 엔진 기준)
+Hashicorp Vault의 SSH OTP 엔진을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, 서버에 vault의 server agent인 vault-ssh-helper를 설치를 해야합니다. 자세한 가이드는 Hashicorp Vault 공식 가이드를 참조 해주세요.
+
+<p align="center">
+<div>[image-20241028-003029.png]()</div>
+</p>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴에서 `Create Group` 버튼을 통해 새로운 서버 그룹을 생성합니다.
+    1. 이는 Administrator &gt; Servers &gt; Server Account Management &gt; Server Account Templates 메뉴에서의 설정 방식도 동일합니다.
+2. 입력 항목 중 Secret Store 항목에서 사전에 등록한 Secret Store 항목을 선택합니다.
+3. Secret Store 설정에 저장된 Secret Engine 타입 중 SSH OTP항목을 선택합니다.
+4. `Add Account` 버튼을 클릭합니다.
+    1. Account에 접속하려는 계정을 입력합니다. Vault OTP의 role을 생성할 때 Allowed users에 포함된 account여야 합니다.
+    2. Authority 항목에 Vault 의 Path 를 입력합니다.
+        1. Path 의 형태는 `engine/creds/role` 형태로 입력할 수 있습니다.
+
+### 3-3. 서버 그룹에서 Secret Store 를 통한 인증 설정하기 (Hashicorp Vault SSH CA 엔진 기준)
+Hashicorp Vault의 SSH CA 엔진(Signed SSH certificates)을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, vault ca 엔진에서 발급한 Public Key를 접속할 서버의 TrustedUserCAKeys에 추가해야 합니다. 자세한 가이드는 Hashicorp Vault 공식 가이드를 참조 해주세요.
+
+<p align="center">
+<div>[image-20250114-023751.png]()</div>
+</p>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴에서 `Create Group` 버튼을 통해 새로운 서버 그룹을 생성합니다.
+    1. 이는 Administrator &gt; Servers &gt; Server Account Management &gt; Server Account Templates 메뉴에서의 설정 방식도 동일합니다.
+2. 입력 항목 중 Secret Store 항목에서 사전에 등록한 Secret Store 항목을 선택합니다.
+3. Secret Store 설정에 저장된 Secret Engine 타입 중 SSH CA항목을 선택합니다.
+4. `Add Account` 버튼을 클릭합니다.
+    1. Account에 접속하려는 계정을 입력합니다. Vault Role 생성시 Allowed user에 포함되어야 합니다.
+    2. Authority 항목에 Vault 의 Path 를 입력합니다.
+        1. Path 의 형태는 `ssh/issue/user` 형태로 입력할 수 있습니다.
+
+<Callout type="info">
+**Vault에서 Role을 설정할 때, ** 
+* **Default extensions** 에 아래 값을 입력해야 합니다.
+    * 
+* **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
+    * QueryPie에서는 인증서의 TTL(Time To Live)은 60초 입니다.
+* **Signing Algorithm** 은 ras-sha2-256 으로 설정합니다.
+</Callout>
+
+### 4. Server Group Owner 등록하기
+<p align="center">
+<div>[image-20250512-105127.png]()</div>
+</p>
+
+서버 그룹 오너를 등록하여 Workflow의 승인자로 지정할 수 있습니다.
+
+1. 우측 상단의 `Assign Owners` 버튼을 클릭하면 User 및 User Group을 표시하는 팝업이 표시됩니다.
+2. 해당 팝업창에서 서버 그룹 오너로 지정할 User 또는 User Group을 선택 후 `Save` 버튼을 클릭합니다.
+3. 해당 서버 그룹에 오너로 지정된 User 또는 User Group을 확인할 수 있습니다.
+4. `Save Changes` 버튼을 통해 저장합니다.
+
+### 5. Server Group Member 등록하기
+<p align="center">
+<div>[image-20250512-105142.png]()</div>
+</p>
+
+서버 그룹 멤버를 등록하여 이용자별 Workflow에서 표시되는 Server Group을 지정할 수 있습니다.
+
+1. 우측 상단의 `Assign Members` 버튼을 클릭하면 User 및 User Group을 표시하는 팝업이 표시됩니다.
+2. 해당 팝업창에서 서버 그룹 멤버로 지정할 User 또는 User Group을 선택 후 `Save` 버튼을 클릭합니다.
+3. 해당 서버 그룹에 멤버로 지정된 User 또는 User Group을 확인할 수 있습니다.
+4. `Save Changes` 버튼을 통해 저장합니다.
+
+<Callout type="info">
+Workflow에서 보여지는 Server Group을 제한하기 위해선 Admin &gt; Servers &gt; General &gt; Configurations에서 “Show Server Groups in Workflow if Assigned as Member” 항목을 활성화 해야 합니다. 자세한 위치는 [Server Access Request Default Settings](SAC General Configurations) 가이드를 참고 부탁드립니다. 
+</Callout>

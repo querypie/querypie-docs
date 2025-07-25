@@ -37,14 +37,14 @@ Bug Fix
 * [Audit] Activity Logs 일부 Update 로그 Affected Data 대상 확인 불가 이슈 해결
 * [Oracle] MERGE INTO 를 통한 DML 쿼리 실행시 DML Snapshot 남지 않는 이슈 해결
 * [Security] 모의해킹을 통한 내부 발견 보안 취약점 일괄 조치 완료
-* [Audit] Kotlin 호환 이슈로 Workflow External API V2 내 boolean 속성 키명 isXXX에서 변경 처리 완료Workflow - DB Access Request DetailsaccessControls[].connection.deletedaccessControls[].privilege.deletedapprovalSteps[].assignees[].delegatedWorkflow - SQL Request Detailsconnection.deletedapprovalSteps[].assignees[].delegatedWorkflow - SQL Export Request Detailsconnection.deletedapprovalSteps[].assignees[].delegated
-  * Workflow - DB Access Request DetailsaccessControls[].connection.deletedaccessControls[].privilege.deletedapprovalSteps[].assignees[].delegated
-    * accessControls[].connection.deleted
-    * accessControls[].privilege.deleted
-    * approvalSteps[].assignees[].delegated
-  * Workflow - SQL Request Detailsconnection.deletedapprovalSteps[].assignees[].delegated
-    * connection.deleted
-    * approvalSteps[].assignees[].delegated
-  * Workflow - SQL Export Request Detailsconnection.deletedapprovalSteps[].assignees[].delegated
-    * connection.deleted
-    * approvalSteps[].assignees[].delegated
+* [Audit] Kotlin 호환 이슈로 Workflow External API V2 내 boolean 속성 키명 isXXX에서 변경 처리 완료
+    * Workflow - DB Access Request Details
+        * accessControls[].connection.deleted
+        * accessControls[].privilege.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Export Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated
