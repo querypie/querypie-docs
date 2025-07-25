@@ -80,19 +80,13 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 
 <Callout type="info">
 DML Query 수행에 대한 승인 프로세스가 강제된 경우  `INSERT` , `UPDATE` , `DELETE` 구문 수행시 관리자가 Workflow로 승인 프로세스를 거치도록 정책을 생성한 경우가 있습니다. 이경우 Web Editor에서 쿼리 수행시 아래와 같은 메시지가 출력됩니다.  `[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.` 
-[ac:image]
-[ri:attachment]
-
-[ac:caption]
-Web Editor에서 경고문 
-
-
+<p align="center">
+<div>[image-20250629-155649.png]()</div>
+*Web Editor에서 경고문*
+</p>
 이경우 `SEND SQL Request` 버튼을 클릭하여 바로 Workflow의 SQL Request 양식으로 이동하여 요청을 진행 할 수 있습니다.  적합한 Approval Rule을 선택해야 하고 DML 여부를 선택합니다. DML인 경우 Content Type에서 File 첨부 방식으로 수행할 수 없습니다. 
-[ac:image]
-[ri:attachment]
-
-[ac:caption]
-Workflow의 SQL Request 양식 
-
-
+<p align="center">
+<div>[image-20250629-161143.png]()</div>
+*Workflow의 SQL Request 양식*
+</p>
 </Callout>

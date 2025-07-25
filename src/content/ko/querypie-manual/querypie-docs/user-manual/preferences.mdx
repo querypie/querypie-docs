@@ -1,14 +1,13 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
-QueryPie 사용자 환경 설정 방법을 안내합니다.
+Preference 화면을 통해 QueryPie 사용자의 개인 별  환경을 설정할 수 있습니다.
 
-## 진입점
-상단 메뉴바 우측의 프로필 버튼을 클릭하고, 사용자 프로필 플로팅 메뉴에서 Preferences 버튼을 클릭하여 진입합니다.
+## 사용자 계정 메뉴의 Preference 버튼
+개별 사용자의 환경설정을 하려면 상단 메뉴바 우측의 사용자 계정을  클릭하고, 메뉴에서 Preferences 버튼을 클릭합니다.
 
 <p align="center">
-<div>[image-20240807-134727.png]()</div>
-*My Dashboard &gt; 우상단 프로필 &gt; Preferences*
+<div>[image-20250724-092314.png]()</div>
 </p>
 
 ## My Account
@@ -19,7 +18,7 @@ My Account 탭에서는 사용자 계정 정보를 확인하고 비밀번호를 
 </Callout>
 
 <p align="center">
-<div>[image-20240912-102412.png]()</div>
+<div>[image-20250725-050431.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; My Account*
 </p>
 
@@ -41,20 +40,20 @@ Approval Settings 탭에서는 대리 결재를 설정할 수 있습니다.
 </Callout>
 
 <p align="center">
-<div>[image-20240912-103248.png]()</div>
+<div>[image-20250725-050830.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; Approver Settings*
 </p>
 
-1. **Delegate Approval to**  : 대리결재자 입력 (1명의 사용자만 선택 가능)
-2. **Start Date**  : 대리결재 시작일자
-3. **End Date**  : 대리결재 종료일자
-4. **Delegation Reason**  : 대리결재 설정 사유 입력 (선택사항)
+* **Delegate Approval to**  : 대리결재자 입력 (1명의 사용자만 선택 가능)
+* **Start Date**  : 대리결재 시작일자
+* **End Date**  : 대리결재 종료일자
+* **Delegation Reason**  : 대리결재 설정 사유 입력 (선택사항)
 
 ## Editor
 Editor 탭에서는 SQL 에디터 표시 방식 및 기능을 설정합니다.
 
 <p align="center">
-<div>[image-20240912-103330.png]()</div>
+<div>[image-20250725-051417.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; Editor*
 </p>
 
@@ -75,7 +74,7 @@ Editor 탭에서는 SQL 에디터 표시 방식 및 기능을 설정합니다.
 Shortcut 탭에서는 SQL Editor에 적용되는 단축키를 조회하고 더블클릭하여 수정할 수 있습니다.
 
 <p align="center">
-<div>[image-20240912-103406.png]()</div>
+<div>[image-20250725-052245.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; Shortcut*
 </p>
 
@@ -83,20 +82,37 @@ Shortcut 탭에서는 SQL Editor에 적용되는 단축키를 조회하고 더�
 Configuration 탭에서는 커버로스 키탭을 관리할 수 있습니다. Create Keatab 을 눌러 키탭 파일을 업로드하세요.
 
 <p align="center">
-<div>[image-20240912-103453.png]()</div>
+<div>[image-20250725-052630.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; Configuration*
 </p>
 
+## Terminal
+Terminal 탭에서 SSH등 텍스트 기반 접속에 보여지는 사용자 페이지의 글꼴 크기(기본 12, 최소 9, 최대 24)와 색 테마를 지정할 수 있습니다.
+
+<p align="center">
+<div>[image-20250725-053323.png]()</div>
+*상단 메뉴바 &gt; Profile &gt; Preferences &gt; Terminal*
+</p>
+
+## Cookie & Privacy
+사용자 경험을 향상시키기 위해 수집하는 선택적 분석용 쿠키 사용에 대한 동의 또는 거부를 할 수 있고 QueryPie 개인정보 처리지침(Privacy Policy)을 확인 할 수 있습니다. 인터넷과 연결되어 있지 않은 폐쇄망에서는 쿠키 정보가 외부로 전송되지 않습니다. 개인정보 처리지침은 인터넷의 QueryPie 홈페이지에 접속가능한 상태에서만 볼 수 있습니다.https://www.querypie.com/privacy-policy  (영어)https://www.querypie.com/ko/privacy-policy  (한국어)https://www.querypie.com/ja/privacy-policy  (일본어)
+
+<p align="center">
+<div>[image-20250725-053955.png]()</div>
+*상단 메뉴바 &gt; Profile &gt; Preferences &gt; Terminal*
+</p>
+
 ## QueryPie Lab
-QueryPie Lab 탭에서는 실험실 기능을 제공하며, 10.0.0 기준으로는 고성능 웹 터미널 기능을 사용해 보실 수 있습니다.
+QueryPie Lab 탭에서는 실험실 기능을 제공하며, 다크모드, 고성능 웹 터미널 기능등 실험적 기능을 체험해 볼 수 있습니다.
 
 <Callout type="important">
 실험실 기능은 다소 안정성이 떨어질 수 있으며 버전 업데이트 시 제거될 수 있습니다. 
 </Callout>
 
 <p align="center">
-<div>[image-20240912-103526.png]()</div>
+<div>[image-20250725-054439.png]()</div>
 *상단 메뉴바 &gt; Profile &gt; Preferences &gt; QueryPie Lab*
 </p>
 
+* **Use Dark Mode :**  브라우저 설정과 관계없이 QueryPie 개별적으로 다크 모드를 사용할 수 있습니다.
 * **Use High Performance Web Terminal ** : 메모리 최적화 기술이 적용되어 여러 세션을 동시에 사용하거나 방대한 양의 로그 파일을 탐색하는 등 높은 메모리 성능을 요구하는 작업에 적합합니다.

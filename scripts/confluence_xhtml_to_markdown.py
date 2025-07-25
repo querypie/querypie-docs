@@ -59,6 +59,15 @@ def as_markdown(node):
         # Fatal error and crash
         raise TypeError(f"as_markdown() expects a NavigableString, got: {type(node).__name__}")
 
+def ancestors(node):
+    max_depth = 20
+    stack = []
+    current = node.parent
+    while current and len(stack) < max_depth:
+        stack.append(f'<{current.name}>')
+        current = current.parent
+    return ''.join(reversed(stack))
+
 class SingleLineParser:
     def __init__(self, node):
         self.node = node
@@ -192,7 +201,7 @@ class SingleLineParser:
                     logging.debug(f'Skip extracting text from <{child.name}> under <li>')
             return
         else:
-            logging.warning(f"SingleLineParser: Unexpected node={node.name}")
+            logging.warning(f"SingleLineParser: Unexpected <{node.name}> from {ancestors(node)}")
             self.markdown_lines.append(f'[{node.name}]')
             for child in node.children:
                 self.convert_recursively(child)
@@ -234,10 +243,12 @@ class MultiLineParser:
             self.markdown_lines.append('\n')
         elif node.name in ['ul', 'ol']:
             self.convert_ul_ol(node)
+        elif node.name in ['ac:image']:
+            self.convert_image(node)
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         else:
-            logging.warning(f"MultiLineParser: Unexpected node={node.name}")
+            logging.warning(f"MultiLineParser: Unexpected <{node.name}> from {ancestors(node)}")
             self.markdown_lines.append(f'[{node.name}]')
             self.markdown_lines.append('\n')
             for child in node.children:
@@ -275,6 +286,67 @@ class MultiLineParser:
             if child.name in ['ul', 'ol']:
                 self.convert_ul_ol(child)
         return
+
+    def convert_image(self, node):
+        """
+        Process Confluence-specific image tags (ac:image) and convert them to Markdown format.
+
+        Example XHTML:
+        <ac:image ac:align="center" ac:layout="center" ac:original-height="668" ac:original-width="1024"
+                 ac:custom-width="true" ac:alt="image-20240806-095511.png" ac:width="760">
+            <ri:attachment ri:filename="image-20240806-095511.png" ri:version-at-save="1"/>
+            <ac:caption><p>How QueryPie Works</p></ac:caption>
+            <ac:adf-mark key="border" size="1" color="#091e4224"/>
+        </ac:image>
+
+        Converts to Markdown:
+        ![image-20240806-095511.png](image-20240806-095511.png)
+        *How QueryPie Works*
+        """
+        logging.debug(f"Processing Confluence image: {node}")
+
+        # Extract image attributes
+        align = node.get('align', 'center')
+        alt_text = node.get('alt', '')
+
+        # Find the attachment filename
+        image_filename = ''
+        attachment = node.find('ri:attachment')
+        if attachment:
+            image_filename = attachment.get('filename', '')
+            if not image_filename:
+                # Log warning if filename is still empty
+                logging.warning("'filename' attribute is empty, check XML namespace handling")
+        else:
+            logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
+
+        # Find caption if present
+        caption_text = ''
+        caption = node.find('ac:caption')
+        if caption:
+            caption_paragraph = caption.find('p')
+            if caption_paragraph:
+                caption_text = SingleLineParser(caption_paragraph).as_markdown
+
+        # Create markdown image with alt text and filename
+        if not alt_text and image_filename:
+            alt_text = image_filename
+
+        # Add the image in markdown format
+        self.markdown_lines.append(f'<p align="{align}">')
+        self.markdown_lines.append('\n')
+        # TODO(JK): Link will be resolved later
+        #self.markdown_lines.append(f"![{alt_text}]({image_filename})")
+        self.markdown_lines.append(f"<div>[{alt_text}]()</div>")
+        self.markdown_lines.append('\n')
+
+        # Add caption if present
+        if caption_text:
+            self.markdown_lines.append(f"*{caption_text}*")
+            self.markdown_lines.append('\n')
+
+        self.markdown_lines.append(f'</p>')
+        self.markdown_lines.append('\n')
 
 class ConfluenceToMarkdown:
     def __init__(self):
@@ -399,7 +471,7 @@ class ConfluenceToMarkdown:
             for child in node.children:
                 self.process_node(child)
         elif node.name == 'ac:image':
-            self.process_image(node)
+            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         else:
             logging.warning(f"Unexpected node={node.name}, processing children")
             # Default behavior for other tags: process children
@@ -688,62 +760,6 @@ class ConfluenceToMarkdown:
         
         self.inside_code_block = False
         
-    def process_image(self, image_node):
-        """
-        Process Confluence-specific image tags (ac:image) and convert them to Markdown format.
-        
-        Example XHTML:
-        <ac:image ac:align="center" ac:layout="center" ac:original-height="668" ac:original-width="1024" 
-                 ac:custom-width="true" ac:alt="image-20240806-095511.png" ac:width="760">
-            <ri:attachment ri:filename="image-20240806-095511.png" ri:version-at-save="1"/>
-            <ac:caption><p>How QueryPie Works</p></ac:caption>
-            <ac:adf-mark key="border" size="1" color="#091e4224"/>
-        </ac:image>
-        
-        Converts to Markdown:
-        ![image-20240806-095511.png](image-20240806-095511.png)
-        *How QueryPie Works*
-        """
-        logging.debug(f"Processing Confluence image: {image_node}")
-        
-        # Extract image attributes
-        align = image_node.get('align', 'center')
-        alt_text = image_node.get('alt', '')
-        
-        # Find the attachment filename
-        attachment = image_node.find('ri:attachment')
-        image_filename = ''
-        if attachment:
-            image_filename = attachment.get('filename', '')
-            if not image_filename:
-                # Log warning if filename is still empty
-                logging.warning("'filename' attribute is empty, check XML namespace handling")
-        else:
-            logging.warning("No attachment found in ac:image, no filename to use.")
-        
-        # Find caption if present
-        caption_text = ''
-        caption = image_node.find('ac:caption')
-        if caption:
-            caption_p = caption.find('p')
-            if caption_p:
-                caption_text = self.get_text(caption_p)
-        
-        # Create markdown image with alt text and filename
-        if not alt_text and image_filename:
-            alt_text = image_filename
-            
-        # Add the image in markdown format
-        self.markdown_lines.append(f'<p align="{align}">')
-        #self.markdown_lines.append(f"[{alt_text}]({image_filename})")
-        self.markdown_lines.append(f"<div>[{alt_text}]()</div>") # TODO(JK): Link will be resolved later
-
-        # Add caption if present
-        if caption_text:
-            self.markdown_lines.append(f"*{caption_text}*")
-        self.markdown_lines.append(f'</p>')
-        # Add empty line after image
-        self.markdown_lines.append("")
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')
