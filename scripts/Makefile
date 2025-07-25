@@ -43,6 +43,17 @@ debug:
 		$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id failed"; \
 	done
 
+# Run a specific test with debug log level
+.PHONY: debug-one
+debug-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make debug-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@echo "Testing case: $(TEST_ID)"
+	@$(VENV) && python $(SCRIPT) --log-level debug $(TEST_DIR)/$(TEST_ID)/page.xhtml $(TEST_DIR)/$(TEST_ID)/output.mdx
+	@$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) failed"
+
 # Clean output files
 .PHONY: clean
 clean:
@@ -57,5 +68,6 @@ help:
 	@echo "  test      - Run all tests"
 	@echo "  test-one  - Run a specific test, e.g., make test-one TEST_ID=568918170"
 	@echo "  debug     - Run all tests with debug log level"
+	@echo "  debug-one - Run a specific test with debug log level, e.g., make debug-one TEST_ID=568918170"
 	@echo "  clean     - Remove all output files"
 	@echo "  help      - Show this help message"

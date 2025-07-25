@@ -206,7 +206,7 @@ class MultiLineParser:
             return
 
         logging.debug(f"MultiLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
-        if node.name in ['ac:rich-text-body']:
+        if node.name in ['ac:rich-text-body', 'ac:adf-content']:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['p']:
@@ -291,7 +291,7 @@ class ConfluenceToMarkdown:
             return
 
         tmp = node.get_text(strip=True).splitlines()
-        logging.debug(f"ConfluenceToMarkdown:process_node() node.name={node.name}, text={tmp[0] if tmp else ''}")
+        logging.debug(f"ConfluenceToMarkdown node.name={node.name}, text={tmp[0] if tmp else ''}")
 
         if node.name == '[document]':
             # Start processing from the body of the document
@@ -337,6 +337,8 @@ class ConfluenceToMarkdown:
             self.process_code(node)
         elif node.name == 'ac:structured-macro':
             self.handle_structured_macro(node)
+        elif node.name == 'ac:adf-extension':
+            self.handle_adf_extension(node)
         elif node.name == 'div' or node.name == 'span':
             # Process children of div/span elements
             for child in node.children:
@@ -364,7 +366,7 @@ class ConfluenceToMarkdown:
         elif node.name == 'ac:image':
             self.process_image(node)
         else:
-            logging.warning(f"ConfluenceToMarkdown: Unexpected node={node.name}, processing children")
+            logging.warning(f"Unexpected node={node.name}, processing children")
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
@@ -544,20 +546,51 @@ class ConfluenceToMarkdown:
 
     def handle_structured_macro(self, node):
         macro_name = node.get('name', '')
-        if macro_name in ['info', 'note', 'tip', 'warning', 'caution']:
+        if macro_name in ['tip', 'info', 'note', 'warning']:
             self.add_import('Callout')
 
             markdown = []
-            if macro_name == 'info':
+            # https://nextra.site/docs/built-ins/callout
+            # Confluence has broken namings of panels.
+            if macro_name == 'tip': # success
+                markdown.append('<Callout type="default">')
+            elif macro_name == 'info': # info
                 markdown.append('<Callout type="info">')
-            elif macro_name == 'warning':
-                markdown.append('<Callout type="warning">')
+            elif macro_name == 'note': # note
+                markdown.append('<Callout type="important">')
+            elif macro_name == 'warning': # error - a broken name
+                markdown.append('<Callout type="error">')
             else:
                 markdown.append('<Callout>')
                 logging.warning(f"Unexpected ac:name of ac:structured-macro: {macro_name}")
-
             markdown.append('\n')
+
+            logging.debug(f'MultiLineParser(node).as_markdown={MultiLineParser(node).as_markdown}')
             markdown.extend(MultiLineParser(node).as_markdown)
+            markdown.append('</Callout>')
+            markdown.append('\n')
+            self.markdown_lines.append(''.join(markdown))
+        elif macro_name in ['panel']: # Custom panel
+            self.add_import('Callout')
+
+            parameter = node.find('ac:parameter', {'name': 'panelIconText'})
+            rich_text_body = node.find('ac:rich-text-body')
+
+            markdown = []
+            # https://nextra.site/docs/built-ins/callout
+            # Confluence has broken namings of panels.
+            if parameter:
+                markdown.append(f'<Callout type="info" emoji="{parameter.text}">')
+            else:
+                markdown.append('<Callout>')
+                logging.warning(f'Cannot find <ac:parameter ac:name="panelIconText"> under <ac:structured-macro: ac:name="{macro_name}">')
+            markdown.append('\n')
+
+            if rich_text_body:
+                markdown.extend(MultiLineParser(rich_text_body).as_markdown)
+            else:
+                logging.warning(f'Cannot find <ac:rich-text-body> under <ac:structured-macro: ac:name="{macro_name}">')
+
             markdown.append('</Callout>')
             markdown.append('\n')
             self.markdown_lines.append(''.join(markdown))
@@ -571,6 +604,47 @@ class ConfluenceToMarkdown:
             logging.warning(f"Unhandled macro: {macro_name}, processing children")
             for child in node.children:
                 self.process_node(child)
+
+    def handle_adf_extension(self, node):
+        logging.debug(f'ac:adf-extension')
+        for child in node.children:
+            if not isinstance(child, Tag):
+                continue
+
+            node_type = child.get('type', '(unknown)')
+            logging.debug(f'child of ac:adf-extension name={child.name} type={node_type}')
+            if child.name == 'ac:adf-node' and node_type == 'panel':
+                self.handle_adf_node_panel(child)
+                return
+
+    def handle_adf_node_panel(self, node):
+        self.add_import('Callout')
+
+        panel_type = 'unknown'
+        adf_attribute = node.find('ac:adf-attribute', {'key': 'panel-type'})
+        if adf_attribute:
+            panel_type = adf_attribute.text
+            logging.debug(f'Found <ac:adf-attribute key="panel-type"> text={adf_attribute.text}')
+
+        adf_content = node.find('ac:adf-content')
+        if adf_content:
+            logging.debug(f'Found <ac:adf-content> text={adf_content.text}')
+
+        markdown = []
+        if panel_type == 'note':
+            markdown.append('<Callout type="important">')
+        else:
+            markdown.append('<Callout>')
+            logging.warning(f"Unexpected text of ac:adf-attribute: {panel_type}")
+        markdown.append('\n')
+
+        if adf_content:
+            markdown.extend(MultiLineParser(adf_content).as_markdown)
+
+        markdown.append('</Callout>')
+        markdown.append('\n')
+        self.markdown_lines.append(''.join(markdown))
+
 
     def process_code_macro(self, macro_node):
         self.inside_code_block = True
@@ -670,7 +744,7 @@ def main():
     
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())
-    logging.basicConfig(level=log_level, format='%(levelname)s - LINE:%(lineno)d - %(message)s')
+    logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
 
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
