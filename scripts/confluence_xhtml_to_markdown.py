@@ -19,6 +19,41 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 import logging
 
+
+def backtick_curly_braces(text):
+    """
+    Wrap text embraced by curly braces with backticks.
+
+    If there are 20 or fewer word characters (including spaces, Korean characters,
+    alphabets, etc.) between the curly braces, format as `{...}`.
+
+    Args:
+        text (str): The input text to process.
+
+    Returns:
+        str: The processed text with curly braces content wrapped in backticks.
+    """
+    # \u2026 is the ellipsis character, `...` which is often used in Confluence
+    pattern = r'(\{\{?[\w\s\-\|\u2026]{1,60}\}\}?)'
+    return re.sub(pattern, r'`\1`', text)
+
+def as_markdown(node):
+    if isinstance(node, NavigableString):
+        # This is a leaf node with text
+        text = (
+            node.replace('\u00A0', ' ') # Replace NBSP with space
+            .replace('\n', ' ')  # Replace newlines with space
+        )
+        # Encode < and > to prevent conflict with JSX syntax.
+        text = text.replace('<', '&lt;').replace('>', '&gt;')
+        # Normalize multiple spaces to a single space
+        text = re.sub(r'\s+', ' ', text)
+        text = backtick_curly_braces(text)
+        return text
+    else:
+        # Fatal error and crash
+        raise TypeError("as_markdown() expects a NavigableString, got: {}".format(type(node)))
+
 class SingleLineParser:
     def __init__(self, node):
         self.node = node
@@ -35,11 +70,7 @@ class SingleLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            # This is a leaf node with text
-            text = (
-                node.replace('\u00A0', ' ') # Replace NBSP with space
-            )
-            self.markdown_lines.append(text)
+            self.markdown_lines.append(as_markdown(node))
             return
 
         logging.debug(f"SingleLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
@@ -54,15 +85,26 @@ class SingleLineParser:
                     self.convert_recursively(child)
                 return
 
-            self.markdown_lines.append("**")
+            self.markdown_lines.append(" **")
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append("**")
+            self.markdown_lines.append("** ")
+        elif node.name in ['em']:
+            self.markdown_lines.append(" *")
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append("* ")
         elif node.name in ['code']:
             self.markdown_lines.append("`")
             for child in node.children:
                 self.convert_recursively(child)
             self.markdown_lines.append("`")
+        elif node.name in ['span']:
+            # The `style` prop expects a mapping from style properties to values, not a string.
+            # For example, style={{marginRight: spacing + 'em'}} when using JSX.
+            # For now, I will not handle the style prop and <span>.
+            for child in node.children:
+                self.convert_recursively(child)
         elif node.name in ['ac:structured-macro']:
             """
 <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="a935cf67-ed54-4b6b-aafd-63cbebe654e1">
@@ -100,13 +142,87 @@ class SingleLineParser:
                 self.convert_recursively(child)
             return
         elif node.name in ['br']:
-            # <br/> should be ignored in single line context
+            # <br/> is a line break, we can replace it with a whitespace in single line context
+            self.markdown_lines.append(" ")
+            return
+        elif node.name in ['a']:
+            href = node.get('href', '#')
+            self.markdown_lines.append("[")
+            for child in node.children:
+                self.markdown_lines.append(SingleLineParser(child).as_markdown)
+            self.markdown_lines.append(f"]({href})")
+            return
+        elif node.name in ['ac:link']:
+            """
+            <ac:link>
+                <ri:page ri:content-title="Slack DM - Workflow 알림 유형" ri:version-at-save="7"/>
+                <ac:link-body>Slack DM 개인 알림 사용하기</ac:link-body>
+            </ac:link>
+            """
+            link_body = '(ERROR: Link body not found)'
+            href = '#'
+            for child in node.children:
+                if isinstance(child, Tag) and child.name == 'ac:link-body':
+                    link_body = SingleLineParser(child).as_markdown
+                if isinstance(child, Tag) and child.name == 'ri:page':
+                    href = child.get('content-title', '#')
+            self.markdown_lines.append(f'[{link_body}]({href})')
+            return
+        elif node.name in ['ac:link-body']:
+            # ac:link-body is used in ac:link, we can process it as a regular text
+            for child in node.children:
+                self.convert_recursively(child)
             return
         else:
             logging.warning(f"SingleLineParser: Unexpected node={node.name}")
-            self.markdown_lines.append(f"[{node.name}]")
+            self.markdown_lines.append(f'[{node.name}]')
             for child in node.children:
                 self.convert_recursively(child)
+
+        return
+
+class MultiLineParser:
+    def __init__(self, children):
+        self.children = children
+        self.markdown_lines = []
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        for child in self.children:
+            self.convert_recursively(child)
+        # Return the markdown lines as a list of strings
+        return self.markdown_lines
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            # This is a leaf node with text
+            text = (
+                node.replace('\u00A0', ' ') # Replace NBSP with space
+            )
+            self.markdown_lines.append(text)
+            return
+
+        logging.debug(f"MultiLineParser: node={type(node)}, name={node.name}, text={node.get_text()}")
+        if node.name in ['ac:rich-text-body']:
+            for child in node.children:
+                self.convert_recursively(child)
+        elif node.name in ['p']:
+            for child in node.children:
+                self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                self.markdown_lines.append(" ")  # Add a space after a child of paragraphs
+            # Add an empty line after paragraphs
+            self.markdown_lines.append('\n')
+        elif node.name in ['a']:
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+        else:
+            logging.warning(f"MultiLineParser: Unexpected node={node.name}")
+            self.markdown_lines.append(f'[{node.name}]')
+            self.markdown_lines.append('\n')
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append('\n')
 
         return
 
@@ -247,8 +363,7 @@ class ConfluenceToMarkdown:
                     logging.debug(f"encode_lt_gt node={node.name} text={text}")
             if node.name in ['li']:
                 if '{' in text or '}' in text:
-                    text = self.quote_embraced_text(text)
-                    logging.debug(f"quote_embraced_text node={node.name} text={text}")
+                    text = backtick_curly_braces(text)
 
             return self.trim_nbsp(text)
         
@@ -265,24 +380,6 @@ class ConfluenceToMarkdown:
         """Encode < and > as &lt; and &gt;"""
         text = text.replace('<', '&lt;').replace('>', '&gt;')
         return text
-
-    def quote_embraced_text(self, text):
-        """Quote text that is embraced by curly braces.
-        
-        If there are 20 or fewer word characters (including spaces, Korean characters, 
-        alphabets, etc.) between the curly braces, format as `{ ...}`.
-        """
-        # Use regex to find all occurrences of text within curly braces
-        # that contain 20 or fewer word characters
-        # \u2026 is the ellipsis character, `...` which is often used in Confluence
-        pattern = r'(\{\{?[\w\s\-\|\u2026]{1,60}\}\}?)'
-        if not re.search(pattern, text):
-            return text
-
-        # Replace all matching patterns with backtick-quoted version
-        result = re.sub(pattern, r'`\1`', text)
-        logging.debug(f"Quoted embraced text: {result} in original text: {text}")
-        return result
 
     def trim_nbsp(self, text):
         """Remove NBSP characters at the beginning and end of text."""
@@ -423,22 +520,39 @@ class ConfluenceToMarkdown:
         
         self.inside_code_block = False
 
-    def handle_structured_macro(self, macro_node):
-        # Handle structured macros like 'info', 'note', etc.
-        macro_name = macro_node.get('name', '')
+    def handle_structured_macro(self, node):
+        macro_name = node.get('name', '')
         if macro_name in ['info', 'note', 'tip', 'warning', 'caution']:
-            # TODO(JK): Handle these macros with specific formatting
-            for child in macro_node.children:
-                self.process_node(child)
+            div_class = 'alert alert-info'
+            icon_class = 'fas fa-info-circle'
+            if macro_name == 'info':
+                div_class = 'alert alert-info'
+                icon_class = 'fas fa-info-circle'
+            elif macro_name == 'warning':
+                div_class = 'alert alert-warning'
+                icon_class = 'fas fa-exclamation-triangle'
+            else:
+                logging.warning(f"Unexpected ac:name of ac:structured-macro: {macro_name}")
+
+            markdown = []
+            markdown.append(f'<div class="{div_class}">')
+            markdown.append('\n')
+            markdown.append(f'  <i class="{icon_class}"></i> <strong>{macro_name.capitalize()}:</strong>')
+            markdown.append(' ')
+            markdown.extend(MultiLineParser(node).as_markdown)
+            markdown.append('\n')
+            markdown.append('</div>')
+            markdown.append('\n')
+            self.markdown_lines.append(''.join(markdown))
         elif macro_name in ['code']:
-            self.process_code_macro(macro_node)
+            self.process_code_macro(node)
         elif macro_name in ['toc']:
             # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
             logging.debug("Skipping TOC macro")
         else:
             # For other macros, we can just log or skip
             logging.warning(f"Unhandled macro: {macro_name}, processing children")
-            for child in macro_node.children:
+            for child in node.children:
                 self.process_node(child)
 
     def process_code_macro(self, macro_node):
@@ -539,8 +653,8 @@ def main():
     
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())
-    logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
-    
+    logging.basicConfig(level=log_level, format='%(levelname)s - LINE:%(lineno)d - %(message)s')
+
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
@@ -554,7 +668,17 @@ def main():
         logging.info(f"Successfully converted {args.input_file} to {args.output_file}")
     
     except Exception as e:
-        logging.error(f"Error during conversion: {e}")
+        import traceback
+        tb = traceback.extract_tb(e.__traceback__)
+        if tb:
+            last_frame = tb[-1]
+            file_name = last_frame.filename.split('/')[-1]
+            line_no = last_frame.lineno
+            func_name = last_frame.name
+            code = last_frame.line
+            logging.error(f"Error during conversion: {e} (in {file_name}, function '{func_name}', line {line_no}, code: '{code}')")
+        else:
+            logging.error(f"Error during conversion: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

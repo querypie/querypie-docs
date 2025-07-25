@@ -65,9 +65,11 @@ Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클�
     * Expose : 사용자의 Connections 목록에서 인스턴스 엔드포인트를 노출할 것인지 여부ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
       * ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
 
-Cluster 모드는 무엇인가요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Cluster 모드는 무엇인가요?** 
+일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다. 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다. Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, ** 부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여** 할 수 있습니다. 
 
-일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다. 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다. Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, 부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여할 수 있습니다.
+</div>
 
 ## DB 커넥션 목록 조회하기
 관리자 콘솔 내 Databases 설정 &gt; DB Connections 페이지에서 현재 QueryPie에 등록된 DB 커넥션 목록을 확인할 수 있습니다.
@@ -133,7 +135,10 @@ Test Connection 버튼을 클릭하여, 커넥션 접속 정보가 유효한지 
 
 변경 내용을 저장하려면, 상세 페이지 우상단 Save Changes 버튼을 클릭하세요.
 
-Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활성화하였을 때 표시되며, 실제 Secret Store 사용을 위해서는 Admin &gt; General &gt; Integration &gt; HashiCorp Vault 페이지에서 Vault 등록이 필요합니다. 자세한 내용은 Secret Store 연동 문서를 참고하세요.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활성화하였을 때 표시되며, 실제 Secret Store 사용을 위해서는 Admin &gt; General &gt; Integration &gt; HashiCorp Vault 페이지에서 Vault 등록이 필요합니다. 자세한 내용은 [Secret Store 연동]((10.2.0-ko) Secret Store 연동) 문서를 참고하세요. 
+
+</div>
 
 ### 참고. Secret Store 설정 방법
 Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항목이 다르게 표시됩니다.
@@ -180,19 +185,27 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 * Collation : 선택한 문자 집합의 정렬 방식을 선택합니다.
 * Description : 해당 커넥션에 대한 설명을 입력할 수 있습니다.
 
-Proxy Usage
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Proxy Usage ** 
+Proxy Usage를 활성화 하면 아래와 같이 두가지 선택사항이 표시됩니다. 
+[ac:image]
+[ri:attachment]
 
-Proxy Usage를 활성화 하면 아래와 같이 두가지 선택사항이 표시됩니다.
+[ac:caption]
+Proxy Usage의 옵션 
 
-<p align="center">
-<div>[image-20241222-134235.png]()</div>
-*Proxy Usage의 옵션*
-</p>
 
-* Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다.
-* Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다.
+[ul]
+[li]
+Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다. 
 
-QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다. QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “Fixed Credential for Agent” 옵션이 제공됩니다. 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화 한뒤 암호를 고정하여 사용할 수 있습니다.
+[li]
+Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
+
+
+QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다. QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다. 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화 한뒤 암호를 고정하여 사용할 수 있습니다. 
+
+</div>
 
 ### SSL/SSH Setting
 체크박스를 통해 SSL 또는 SSH 사용 여부를 활성화하고, 하단 드롭다운에서 기등록된 설정 정보를 선택합니다. Save Changes 버튼으로 저장합니다.
@@ -202,10 +215,18 @@ QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 �
 *SSL/SSH Setting 탭*
 </p>
 
-SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문서를 참고해보세요.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문서를 참고해보세요. 
+[ul]
+[li]
+[SSL Configurations]((10.2.0-ko) SSL Configurations) 
 
-* SSL Configurations
-* SSH Configurations
+[li]
+[SSH Configurations]((10.2.0-ko) SSH Configurations) 
+
+
+
+</div>
 
 ### Connection Owner
 Connection Owner 탭에서 Add Connection Owner 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) Save Changes 버튼으로 저장합니다.
@@ -215,7 +236,10 @@ Connection Owner 탭에서 Add Connection Owner 버튼을 클릭하고, DB 커�
 *Connection Owner 탭*
 </p>
 
-Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다. 
+
+</div>
 
 ### Tags
 Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. Add Tag 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 Save Changes 버튼으로 저장합니다.
@@ -228,7 +252,10 @@ Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니
 ### Privilege Setting
 DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정하는 기능입니다.
 
-해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 Security 내 DB 커넥션 보안 설정 문서를 참고하세요.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 [Security]((10.2.0-ko) Security) 내 **DB 커넥션 보안 설정** 문서를 참고하세요. 
+
+</div>
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 3.47.30.png]()</div>
@@ -239,7 +266,10 @@ DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정�
 2. Test Connection 을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
 3. Save Changes 를 통해 해당 정보를 저장하여 설정을 마무리합니다.
 
-BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다.
+<div class="alert alert-warning">
+  <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다. 
+
+</div>
 
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 11.19.58.png]()</div>

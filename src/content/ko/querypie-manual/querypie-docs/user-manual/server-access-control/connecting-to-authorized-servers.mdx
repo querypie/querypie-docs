@@ -34,24 +34,38 @@
   7. Protocol : SSH, SFTP 또는 RDP 를 선택하여 접속할 수 있습니다.
 3. 하단의 Connect 버튼을 클릭하여 서버에 접속합니다.
 
-Q. 접속에 실패했다는 에러가 뜹니다. 왜 그런 건가요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. 접속에 실패했다는 에러가 뜹니다. 왜 그런 건가요? ** 
+A. 권한의 상태가 변경되었거나 접속이 허용되지 않은 시간대, 요일에 접속을 시도한 경우 실패할 수 있습니다. 또한 관리자의 서버 정보 설정에 의해 접속이 불가할 수 있으므로 자세한 내용은 관리자에게 문의해 주시기 바랍니다. 
 
-A. 권한의 상태가 변경되었거나 접속이 허용되지 않은 시간대, 요일에 접속을 시도한 경우 실패할 수 있습니다. 또한 관리자의 서버 정보 설정에 의해 접속이 불가할 수 있으므로 자세한 내용은 관리자에게 문의해 주시기 바랍니다.
+</div>
 
-Q. RDP를 통한 Windows Server 접속은 어떻게 하나요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. RDP를 통한 Windows Server 접속은 어떻게 하나요?** 
+A. QueryPie에서는 QueryPie User Agent를 통해서만 Windows Server에 접속이 가능합니다. 접속 방법은 아래와 같습니다. 
+QueryPie User Agent 설치 후, 권한을 부여 받은 Windows Server를 우클릭, `Open Connection with` 메뉴를 클릭 후, PC에 설치된 RDP Client를 클릭하여 접속합니다. 
+[ul]
+[li]
+Windows PC에서는 PC에 기본 설치된 MSTSC 프로그램을 지원합니다. 
 
-A. QueryPie에서는 QueryPie User Agent를 통해서만 Windows Server에 접속이 가능합니다. 접속 방법은 아래와 같습니다.
+[li]
+macOS는 RDP 접속을 위해 [Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12) 을 다운받아야 합니다. 
 
-QueryPie User Agent 설치 후, 권한을 부여 받은 Windows Server를 우클릭, Open Connection with 메뉴를 클릭 후, PC에 설치된 RDP Client를 클릭하여 접속합니다.
 
-* Windows PC에서는 PC에 기본 설치된 MSTSC 프로그램을 지원합니다.
-* macOS는 RDP 접속을 위해 Windows App을 다운받아야 합니다.
 
-Q. VNC를 통한 macOS 접속은 어떻게 하나요?
+</div>
 
-A. 사용자의 PC가 macOS일 때, QueryPie User Agent를 통해서 macOS에 접속이 가능합니다. 접속 방법은 아래와 같습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. VNC를 통한 macOS 접속은 어떻게 하나요?** 
+A. 사용자의 PC가 macOS일 때, QueryPie User Agent를 통해서 macOS에 접속이 가능합니다. 접속 방법은 아래와 같습니다. 
+QueryPie User Agent 설치 후, 권한을 부여 받은 macOS를 우클릭, `Open Connection with` 메뉴를 클릭 후, macOS에 설치된 화면 공유.app을 클릭하여 접속합니다. 접속시, macOS의 계정 정보를 직접 입력해야합니다. 
+[ul]
+[li]
+Windows PC에서는 macOS 접속을 지원하지 않습니다. 
 
-QueryPie User Agent 설치 후, 권한을 부여 받은 macOS를 우클릭, Open Connection with 메뉴를 클릭 후, macOS에 설치된 화면 공유.app을 클릭하여 접속합니다. 접속시, macOS의 계정 정보를 직접 입력해야합니다.
+[li]
+VNC는 macOS 서버 대상으로만 접속이 가능합니다. 
 
-* Windows PC에서는 macOS 접속을 지원하지 않습니다.
-* VNC는 macOS 서버 대상으로만 접속이 가능합니다.
+
+
+</div>

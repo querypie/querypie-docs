@@ -22,7 +22,10 @@ Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 
 * 실행자(Executor) : 승인이 완료된 SQL Request 및 Export Request 건을 실행할 수 있습니다.
 * 참조자(Reviewer) : 요청 건을 리뷰하거나 참조할 수 있습니다.
 
-요청 건에 대한 승인자 및 실행자는 결재 규칙(Approval Rules)을 통해 관리자가 사전에 설정할 수 있습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 요청 건에 대한 승인자 및 실행자는 [**결재 규칙(Approval Rules)**](Approval Rules) 을 통해 관리자가 사전에 설정할 수 있습니다. 
+
+</div>
 
 ## Submit Request (결재 요청하기)
 Workflow 메뉴 내 Submit Request 버튼을 누른 뒤, 원하는 요청 타입을 선택하면 요청 작성 페이지로 이동합니다. 각 요청 타입별 자세한 작성 방법은 연결된 페이지들을 참고해 주시기 바랍니다.
@@ -65,9 +68,11 @@ Workflow 메뉴 내 Submit Request 버튼을 누른 뒤, 원하는 요청 타입
 *Workflow &gt; Received Requests &gt; To Do &gt; List Details*
 </p>
 
-Q. 사용자가 요청한 DB 커넥션 중 일부만 승인할 수 있나요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. 사용자가 요청한 DB 커넥션 중 일부만 승인할 수 있나요?** 
+A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인이 가능합니다. 사용자가 요청한 DB 커넥션 목록에서 권한을 부여하지 않을 항목의 체크박스를 해제 후 `Approve` 하면 체크한 커넥션에 대해서는 승인 처리가 되며, 체크하지 않은 커넥션에 대해서는 자동 반려 처리됩니다. 
 
-A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인이 가능합니다. 사용자가 요청한 DB 커넥션 목록에서 권한을 부여하지 않을 항목의 체크박스를 해제 후 Approve 하면 체크한 커넥션에 대해서는 승인 처리가 되며, 체크하지 않은 커넥션에 대해서는 자동 반려 처리됩니다.
+</div>
 
 1. Comments 팝업창에서 승인 또는 반려 사유를 입력 후 OK 버튼을 눌러 처리를 완료합니다.
 2. 처리를 완료한 요청 건에 대해서는 Workflow > Received Request > Done 메뉴에서 확인할 수 있습니다.
@@ -89,9 +94,11 @@ A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인
 6. 실행이 완료된 건에 대한 결과는 상세 페이지 내의 Results 탭에서 성공 또는 실패 여부를 확인할 수 있습니다.
 7. Workflow > Received Requests > Done 메뉴에서 본인이 실행한 내역을 확인할 수 있습니다.
 
-Q. 대용량 쿼리 실행 시 QueryPie 백그라운드에서도 쿼리 실행이 유지되나요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Q. 대용량 쿼리 실행 시 QueryPie 백그라운드에서도 쿼리 실행이 유지되나요?** 
+A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라우저를 종료하더라도 QueryPie 서버 백그라운드에서 쿼리 실행이 유지됩니다. 웹브라우저 종료 후 QueryPie 재접속 시 서버 백그라운드에서 실행 중인 쿼리는 SQL Request 상세 페이지에서 진행 상태를 확인하실 수 있습니다. 이와 같은 백그라운드 쿼리 실행 기능의 경우 QueryPie v9.15.0 이상의 버전 환경에서만 지원됩니다. 
 
-A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라우저를 종료하더라도 QueryPie 서버 백그라운드에서 쿼리 실행이 유지됩니다. 웹브라우저 종료 후 QueryPie 재접속 시 서버 백그라운드에서 실행 중인 쿼리는 SQL Request 상세 페이지에서 진행 상태를 확인하실 수 있습니다. 이와 같은 백그라운드 쿼리 실행 기능의 경우 QueryPie v9.15.0 이상의 버전 환경에서만 지원됩니다.
+</div>
 
 ### SQL Export Request 실행하기
 <p align="center">
@@ -115,7 +122,10 @@ A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라�
 ## Reviews (참조된 요청 확인하기)
 내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다. 참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다. 확인되지 않은 요청을 확인하는 방법은 결재 부가 기능 (대리 결재, 재상신 등) 문서를 참고해주세요.
 
-Review 메뉴는 관리자가 사전에 사용 설정을 한 경우에만 표시됩니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Review 메뉴는 관리자가 사전에 사용 설정을 한 경우에만 표시됩니다. 
+
+</div>
 
 ## 요청의 상태 목록
 요청의 승인 상태 목록은 다음과 같습니다.

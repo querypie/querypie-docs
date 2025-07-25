@@ -42,9 +42,11 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 
 이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 항목으로 기록됩니다.
 
-사용자가 그룹에 포함된 경우, 그룹과 사용자를 대상으로 같은 커넥션에 대해 각각 다른 권한을 적용하면 어떻게 되나요?
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **사용자가 그룹에 포함된 경우, 그룹과 사용자를 대상으로 같은 커넥션에 대해 각각 다른 권한을 적용하면 어떻게 되나요?** 
+사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속시 Default Privilege 를 선택하고 접속할 수 있습니다. 
 
-사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속시 Default Privilege 를 선택하고 접속할 수 있습니다.
+</div>
 
 ## Access Control 권한 회수하기
 <p align="center">
@@ -105,25 +107,37 @@ Access Control Details 패널에 대한 세부 설명
 
 1. 커넥션 잠금 및 잠금해제 내역은 Audit > Databases > Account Lock History 메뉴에서 확인하실 수 있습니다.
 
-테이블 태그로 접근제어하기Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우,
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **테이블 태그로 접근제어하기**   Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우, 
+[ac:image]
+[ri:attachment]
 
-<p align="center">
-<div>[image-20250703-050924.png]()</div>
-</p>
 
-Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다. 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다.
+Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다. 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다. 
+[ul]
+[li]
+New DAC Policy Management 기능이 Enable이어야 합니다. 
 
-* New DAC Policy Management 기능이 Enable이어야 합니다.
-* 특정 사용자에게 특정커넥션에 대한 privilege가 할당되어 있어야 합니다.
-* Databases > Policy Management > Data Path 에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다.
+[li]
+특정 사용자에게 특정커넥션에 대한 privilege가 할당되어 있어야 합니다. 
 
-조건이 만족되었다면 아래와 같이 설정할 수 있습니다.
+[li]
+Databases &gt; Policy Management &gt; Data Path 에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다. 
 
-1. Databases > DB Access Control > Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다.
-2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
 
-<p align="center">
-<div>[image-20250703-051824.png]()</div>
-</p>
+조건이 만족되었다면 아래와 같이 설정할 수 있습니다. 
+[ol]
+[li]
+Databases &gt; DB Access Control &gt; Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다. 
 
-만약 Tag-based table access 기능을 활성화한 상태에서 어떤 태그도 등록하지 않으면 해당 커넥션의 모든 테이블에 접근할 수 없게 됩니다.
+[li]
+상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다. 
+
+
+[ac:image]
+[ri:attachment]
+
+
+만약 Tag-based table access 기능을 활성화한 상태에서 어떤 태그도 등록하지 않으면 해당 커넥션의 모든 테이블에 접근할 수 없게 됩니다.  
+
+</div>

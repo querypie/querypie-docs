@@ -7,17 +7,50 @@
 * 탐색에 사용할 데이터 패턴 목록입니다. 사용자 편의를 위해 사전정의된 패턴을 제공하고 있으며 사용자가 원하는 정규식을 입력하여 사용자 정의 할 수도 있습니다.
 * Built-in (사전 정의된) 패턴과 AI Identifier는 내용을 보거나 수정 또는 삭제할 수 없습니다.
 
-* 패턴은 용도에 따라 for data, for keyword 가 있습니다.for data : data에 대해 탐색을 수행합니다.특정 컬럼의 데이터를 탐색합니다. 정확한 식별을 하기 원한다면 이 유형의 패턴을 사용해야 합니다.for keyword : metadata에 대해 탐색을 수행합니다. 경로 이름만 빠르게 탐색할 경우 유용합니다.예를 들어 이미 관리자는 민감정보가 있을 수 있는 컬럼이를을 알고 있는 경우 컬럼 이름만 탐색하는 것이 탐색 시간과 부하를 줄이는데 유리할 수 있습니다. 이 경우 keyword 유형의 패턴을 프로파일에 지정하여 사용합니다.
-  * for data : data에 대해 탐색을 수행합니다.특정 컬럼의 데이터를 탐색합니다. 정확한 식별을 하기 원한다면 이 유형의 패턴을 사용해야 합니다.
-  * for keyword : metadata에 대해 탐색을 수행합니다. 경로 이름만 빠르게 탐색할 경우 유용합니다.예를 들어 이미 관리자는 민감정보가 있을 수 있는 컬럼이를을 알고 있는 경우 컬럼 이름만 탐색하는 것이 탐색 시간과 부하를 줄이는데 유리할 수 있습니다. 이 경우 keyword 유형의 패턴을 프로파일에 지정하여 사용합니다.
-* AI Identifier : 학습된 AI 모델입니다.Address - Korea : 대한민국 주소Country code - ISO 3166-1 alpha-2 and ISO 3166-1 alpha-3 : 알파벳 2 ~ 3글자로 이루어진 국가코드Disease name - Korean : 한글로 작성된 질병명Job Title - Korean : 한글로 작성된 직업명License / Certificate - Korean : 한글로 작성된 자격증 이름Name - Korean : 한글 이름Romanized name - Korean : 로마자 표기된 한글이름
-  * Address - Korea : 대한민국 주소
-  * Country code - ISO 3166-1 alpha-2 and ISO 3166-1 alpha-3 : 알파벳 2 ~ 3글자로 이루어진 국가코드
-  * Disease name - Korean : 한글로 작성된 질병명
-  * Job Title - Korean : 한글로 작성된 직업명
-  * License / Certificate - Korean : 한글로 작성된 자격증 이름
-  * Name - Korean : 한글 이름
-  * Romanized name - Korean : 로마자 표기된 한글이름
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> [ul]
+[li]
+패턴은 용도에 따라 for data, for keyword 가 있습니다. 
+[ul]
+[li]
+**for data** : data에 대해 탐색을 수행합니다.  특정 컬럼의 데이터를 탐색합니다. 정확한 식별을 하기 원한다면 이 유형의 패턴을 사용해야 합니다. 
+
+[li]
+**for keyword** : metadata에 대해 탐색을 수행합니다. 경로 이름만 빠르게 탐색할 경우 유용합니다.  예를 들어 이미 관리자는 민감정보가 있을 수 있는 컬럼이를을 알고 있는 경우 컬럼 이름만 탐색하는 것이 탐색 시간과 부하를 줄이는데 유리할 수 있습니다. 이 경우 keyword 유형의 패턴을 프로파일에 지정하여 사용합니다. 
+
+
+
+[li]
+**AI Identifier** : 학습된 AI 모델입니다. 
+[ul]
+[li]
+Address - Korea : 대한민국 주소 
+
+
+[ul]
+[li]
+Country code - ISO 3166-1 alpha-2 and ISO 3166-1 alpha-3 : 알파벳 2 ~ 3글자로 이루어진 국가코드 
+
+[li]
+Disease name - Korean : 한글로 작성된 질병명 
+
+[li]
+Job Title - Korean : 한글로 작성된 직업명 
+
+[li]
+License / Certificate - Korean : 한글로 작성된 자격증 이름 
+
+[li]
+Name - Korean : 한글 이름 
+
+[li]
+Romanized name - Korean : 로마자 표기된 한글이름 
+
+
+
+
+
+</div>
 
 ## 사용자 정의 패턴 등록하기
 * 패턴 목록 상단의 + Data Pattern 버튼을 누르면 사용자 정의 패턴을 추가할 수 있습니다.
@@ -37,4 +70,7 @@
 * 사용자 정의 패턴 수정 : data pattern 목록에서 특정 패턴 커스텀 패턴 행을 클릭하면 설정 내용을 보고 수정할 수 있습니다. Built-in 패턴은 내용을 보거나 수정할 수 없습니다.
 * 사용자 정의 패턴 삭제 : 특정 사용자 패턴을 체크하고 Delete 버튼을 눌러 사용자 정의 패턴을 삭제할 수 있습니다.Built-in 패턴은 삭제할 수 없습니다.사용자정의 패턴 삭제
 
-사용자 정의 패턴이 어떤 Detection Profile 에 연결되어 있는 상태라면 삭제할 수 없습니다. 삭제하기 위해서 먼저 프로파일에서 삭제하고자 하는 사용자 정의 패턴을 제외시켜야 합니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 사용자 정의 패턴이 어떤 Detection Profile 에 연결되어 있는 상태라면 삭제할 수 없습니다. 삭제하기 위해서 먼저 프로파일에서 삭제하고자 하는 사용자 정의 패턴을 제외시켜야 합니다. 
+
+</div>

@@ -1,16 +1,25 @@
-10.2.0 부터 추가된 기능입니다. (10.2.0 기준 MySQL만 지원합니다.)
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 10.2.0 부터 추가된 기능입니다. (10.2.0 기준 MySQL만 지원합니다.) 
+
+</div>
 
 ## Overview
 사용자가 Workflow를 통해 SQL Request를 요청할 때 해당 쿼리에 대해 DBMS에서 제공하는 실행 계획(Explain 구문)을 사용하여 쿼리에 대한 제한적인 절차 정보를 확인할 수 있습니다.  이 기능은 DBMS에 종속된 기능이므로 Workflow의 SQL Request 작성할 때 커넥션에 해당하는 DBMS 마다 차이가 있을 수 있습니다.
 
-실행계획이란?데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 실행계획이란?  데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다. 
+
+</div>
 
 ## SQL Request 작성 및 실행계획(Explain) 수행하기
 QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 :  SQL Request 요청하기)
 
 1. MySQL Connection 및 Database 선택 쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다.
 
-Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다. 
+
+</div>
 
 <p align="center">
 <div>[image-20241029-234721.png]()</div>
@@ -26,12 +35,21 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
 <div>[image-20241029-235845.png]()</div>
 </p>
 
-* 실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다.
-* MySQL은 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> [ul]
+[li]
+실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. 
 
-<p align="center">
-<div>[image-20241030-001252.png]()</div>
-</p>
+[li]
+MySQL은 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다. 
+
+
+[ac:image]
+[ri:attachment]
+
+
+
+</div>
 
 1. 실행계획(Explain) 결과 확인Table 형태의 결과 확인아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다. JSON 형태의 결과 확인JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. `{JSON}` 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다. JSON 결과의 복사와 내보내기가 가능합니다. 내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.
   1. Table 형태의 결과 확인아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.
@@ -40,7 +58,10 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
 ## 기타 참고사항
 1. 결재자(Approver)의 실행계획(Explain)결과 확인결재자는 Explain Results 탭에서 첨부된 실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.
 
-결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다. 
+
+</div>
 
 1. MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다.
 
@@ -48,4 +69,7 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
 | -------------- | ------------------------------------------- |
 | SELECT         | SELECT , DELETE , INSERT , REPLACE , UPDATE |
 
-optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다. 
+
+</div>

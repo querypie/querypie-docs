@@ -8,13 +8,23 @@
 7. 작성을 완료했다면 하단 Submit버튼을 클릭하여 신청을 완료합니다.
 8. 관리자의 승인을 받았다면 좌측 Workflow > Sent Request > Done 메뉴에서 확인할 수 있습니다.
 
-Custom Data Source Type 외 다중 요청 시 주의사항
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Custom Data Source Type 외 다중 요청 시 주의사항** 
+[ul]
+[li]
+Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. 
 
-* Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다.
-* 이 경우 다음 메시지가 표시됩니다: "Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection."
-* 같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.
+[li]
+이 경우 다음 메시지가 표시됩니다: "Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection." 
 
-### Agent를 통한 접속
+[li]
+같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다. 
+
+
+
+</div>
+
+###  Agent를 통한 접속
 1. QueryPie Agent 실행QueryPie Agent를 실행합니다.Database 항목에서 Custom Data Source를 확인할 수 있습니다.
   * QueryPie Agent를 실행합니다.
   * Database 항목에서 Custom Data Source를 확인할 수 있습니다.
@@ -28,9 +38,15 @@ Custom Data Source Type 외 다중 요청 시 주의사항
   * Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.
   * 벤더에 따라 추가 정보를 입력합니다.
 
-주의사항
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **주의사항** 
+[ul]
+[li]
+관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다. 
 
-* 관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.
+
+
+</div>
 
 ### 웹으로 접속 시도하는 경우
 1. 웹 커넥션 목록 확인사용자 화면 상단 Databases를 클릭합니다. 좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.

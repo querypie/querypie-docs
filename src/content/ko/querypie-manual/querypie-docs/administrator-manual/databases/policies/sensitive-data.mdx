@@ -39,13 +39,20 @@
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터에 접근할 경우 Logs 탭에서 접근 이력을 확인할 수 있습니다. 민감데이터 정책을 알림으로 설정하려는 경우, Alerts 문서를 참고하세요.
 
-10.2.8부터 Log 탭에서 볼 수 있는Sensitive data 접근 이력에 사용자가 수행한 쿼리를 포함하도록 개선되었습니다.  Log 행을 클릭하면 출력되는 상세 정보에 사용자가 수행한 쿼리를 볼수 있습니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 10.2.8부터 Log 탭에서 볼 수 있는Sensitive data 접근 이력에 사용자가 수행한 쿼리를 포함하도록 개선되었습니다. Log 행을 클릭하면 출력되는 상세 정보에 사용자가 수행한 쿼리를 볼수 있습니다. 
+[ac:image]
+[ri:attachment]
 
-<p align="center">
-<div>[image-20250410-065516.png]()</div>
-*Sensitive Data Log 의 쿼리 내용 표시*
-</p>
+[ac:caption]
+Sensitive Data Log 의 쿼리 내용 표시 
 
-Database Name 선택시 “[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user ‘username’@’host' (using password: YES)” 오류가 발생합니다.
 
-A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보로 설정되어 있을 수 있습니다. Database Settings &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후, Database Username / Password 정보를 입력하고 저장한 뒤 다시 시도합니다.
+
+</div>
+
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> Database Name 선택시 “[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user ‘username’@’host' (using password: YES)” 오류가 발생합니다. 
+A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보로 설정되어 있을 수 있습니다. Database Settings &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후, **Database Username / Password 정보를 입력하고 저장** 한 뒤 다시 시도합니다. 
+
+</div>

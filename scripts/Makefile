@@ -32,6 +32,17 @@ test-one:
 	@$(VENV) && python $(SCRIPT) --log-level warning $(TEST_DIR)/$(TEST_ID)/page.xhtml $(TEST_DIR)/$(TEST_ID)/output.mdx
 	@$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) failed"
 
+# Run tests with debug log level
+.PHONY: debug
+debug:
+	@echo "Running all tests with debug log level..."
+	@for test_case in $$(find $(TEST_DIR) -type d -depth 1); do \
+		test_id=$$(basename $$test_case); \
+		echo "Testing case: $$test_id"; \
+		$(VENV) && python $(SCRIPT) --log-level debug $(TEST_DIR)/$$test_id/page.xhtml $(TEST_DIR)/$$test_id/output.mdx; \
+		$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id failed"; \
+	done
+
 # Clean output files
 .PHONY: clean
 clean:
@@ -45,5 +56,6 @@ help:
 	@echo "  all       - Run all tests (default)"
 	@echo "  test      - Run all tests"
 	@echo "  test-one  - Run a specific test, e.g., make test-one TEST_ID=568918170"
+	@echo "  debug     - Run all tests with debug log level"
 	@echo "  clean     - Remove all output files"
 	@echo "  help      - Show this help message"

@@ -61,9 +61,23 @@
       7. Created At : 클러스터 최초 생성일시
       8. Updated At : 클러스터 마지막 수정일시
 
-Expiration Date가 도달한 Granted Role의 처리 방식
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **Expiration Date가 도달한 Granted Role의 처리 방식** 
+[ul]
+[li]
+사용자 또는 그룹에 부여된 Role 중에 Expiration Date에 도달한 Role의 경우, 이하의 액션이 발생합니다: 
+[ul]
+[li]
+Access Control 상세 페이지 내 Roles 탭에서 해당 Role 행이 자동 제거됩니다. 
 
-* 사용자 또는 그룹에 부여된 Role 중에 Expiration Date에 도달한 Role의 경우, 이하의 액션이 발생합니다:Access Control 상세 페이지 내 Roles 탭에서 해당 Role 행이 자동 제거됩니다.Access Control 상세 페이지 내 Clusters 탭에서 해당 Role로 인해 접근 가능했던 클러스터 행이 자동 제거됩니다.Audit > Kubernetes > Kubernetes Role History에 “Role Revoked” 로그를 남기고 Action By는 “System”으로 표기합니다.
-  * Access Control 상세 페이지 내 Roles 탭에서 해당 Role 행이 자동 제거됩니다.
-  * Access Control 상세 페이지 내 Clusters 탭에서 해당 Role로 인해 접근 가능했던 클러스터 행이 자동 제거됩니다.
-  * Audit > Kubernetes > Kubernetes Role History에 “Role Revoked” 로그를 남기고 Action By는 “System”으로 표기합니다.
+[li]
+Access Control 상세 페이지 내 Clusters 탭에서 해당 Role로 인해 접근 가능했던 클러스터 행이 자동 제거됩니다. 
+
+[li]
+Audit &gt; Kubernetes &gt; Kubernetes Role History에 “Role Revoked” 로그를 남기고 Action By는 “System”으로 표기합니다. 
+
+
+
+
+
+</div>

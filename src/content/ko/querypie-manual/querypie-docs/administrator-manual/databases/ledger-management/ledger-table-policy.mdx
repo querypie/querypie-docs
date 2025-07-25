@@ -1,10 +1,16 @@
 ## Overview
 관리자는 Ledger Table Policy 메뉴를 통해 데이터베이스의 테이블 단위로 원장(Ledger)을 설정하여 사용자가 원장 테이블 호출 시에 따른 규칙을 적용할 수 있습니다.
 
-원장 테이블 정책은 관련 라이선스가 활성화되어 있는 경우에만 사용하실 수 있습니다. 해당 기능 사용을 위해서는 QueryPie 고객지원팀으로 문의주세요.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> 원장 테이블 정책은 관련 라이선스가 활성화되어 있는 경우에만 사용하실 수 있습니다. 해당 기능 사용을 위해서는 QueryPie 고객지원팀으로 문의주세요. 
+
+</div>
 
 ## 원장 테이블에 승인 규칙 맵핑하기
-원장 테이블 관리를 지원하는 벤더는 MySQL, MongoDB, Oracle, MariaDB, Athena 를 지원합니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> 원장 테이블 관리를 지원하는 벤더는 MySQL, MongoDB, Oracle, MariaDB, Athena 를 지원합니다. 
+
+</div>
 
 DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관리하고자 하는 테이블에 승인 규칙을 맵핑할 수 있습니다. 설정 이후 사용자가 해당 테이블에서 UPDATE 등 수정 쿼리 및 데이터 내보내기를 시도하는 경우, 해당 승인 규칙을 통한 SQL Request를 설정할 수 있습니다.
 

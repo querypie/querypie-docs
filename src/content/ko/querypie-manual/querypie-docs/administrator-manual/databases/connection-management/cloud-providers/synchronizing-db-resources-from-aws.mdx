@@ -34,24 +34,50 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을 
 * Cross Account Role : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주세요. (해당 Credential 을 통해 리소스를 동기화하기 위해서는  환경변수 파일 AWS_ACCOUNT_ID 항목에 QueryPie 가 설치된 AWS 계정을 설정해야 합니다)
 * Access Key : Synchronize 버튼 클릭시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
 
-Save Credential for Synchronization 옵션
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **Save Credential for Synchronization 옵션** 
+[ac:image]
+[ri:attachment]
 
-<p align="center">
-<div>[image-20241220-095857.png]()</div>
-*Save Credential for Synchronization*
-</p>
+[ac:caption]
+Save Credential for Synchronization 
 
-* 이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.
-* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
-* 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 
-각 데이터베이스 리소스 동기화에 필요한 정책
+[ul]
+[li]
+**이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.** 
 
-* RDS : AmazonRDSReadOnlyAccess
-* DynamoDB : AmazonDynamoDBFullAccess
-* Redshift : AmazonRedshiftReadOnlyAccess
-* Athena : AmazonAthenaFullAccess, AmazonS3DFullAccess
-* Redis : AmazonElastiCacheFullAccess
+[li]
+이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 
+
+[li]
+이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다. 
+
+
+
+</div>
+
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> **각 데이터베이스 리소스 동기화에 필요한 정책** 
+[ul]
+[li]
+RDS : AmazonRDSReadOnlyAccess 
+
+[li]
+DynamoDB : AmazonDynamoDBFullAccess 
+
+[li]
+Redshift : AmazonRedshiftReadOnlyAccess 
+
+[li]
+Athena : AmazonAthenaFullAccess, AmazonS3DFullAccess 
+
+[li]
+Redis : AmazonElastiCacheFullAccess 
+
+
+
+</div>
 
 ## 등록된 AWS Cloud Provider 동기화 및 관리
 <p align="center">
@@ -73,7 +99,10 @@ Save Credential for Synchronization 옵션
   6. Database Type Filter: 변경 가능
   7. Replication Frequency: 변경 가능
 
-“Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은 활성화 한 뒤 다시 비활성화 할 수 없으므로 신중히 선택해야 합니다.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> “Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은 **활성화 한 뒤 다시 비활성화 할 수 없으므로** 신중히 선택해야 합니다. 
+
+</div>
 
 ## 동기화 가능한 리소스 항목
 * Amazon RDS (MySQL, MariaDB, PostgreSQL, SQL Server, Oracle), DynamoDB, Redshift, DocumentDB, Athena, Redis (ElastiCache)

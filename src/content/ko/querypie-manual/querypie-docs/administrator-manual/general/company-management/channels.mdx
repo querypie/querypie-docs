@@ -34,7 +34,10 @@ Channels 페이지 우상단 Create Channel 버튼을 클릭하면 채널 생성
 ### Channel Type을 `Slack`으로 선택한 경우
 채널 생성을 위한 입력 내용은 다음과 같습니다.
 
-Slack App의 자세한 설정 방법은 문서 하단의 Slack 연동을 위한 Slack App 설정 방법 항목을 참고해주세요.
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Info:</strong> Slack App의 자세한 설정 방법은 문서 하단의 **Slack 연동을 위한 Slack App 설정 방법** 항목을 참고해주세요. 
+
+</div>
 
 * Message Sending Method : 메시지 전송 방식API : Slack API를 활용한 메시지 전송API를 선택한 경우, New Request Alert 에서 승인자 (assignee) 멘션이 가능합니다. (10.2.2 버전 이후)Bot User OAuth Token : 메시지를 전송할 Slack App의 Bot User OAuth TokenChannel ID : 메시지를 전송할 Slack App이 초대되어 있는 Slack Channel IDWebhook : 웹훅 방식으로 메시지 전송Request URL (필수) : 요청을 보낼 URL Slack App에서 Webhook 설정 후, Webhook URL 정보를 복사하여 붙여넣기 해야 함
   * API : Slack API를 활용한 메시지 전송API를 선택한 경우, New Request Alert 에서 승인자 (assignee) 멘션이 가능합니다. (10.2.2 버전 이후)Bot User OAuth Token : 메시지를 전송할 Slack App의 Bot User OAuth TokenChannel ID : 메시지를 전송할 Slack App이 초대되어 있는 Slack Channel ID
@@ -60,11 +63,12 @@ Channel Type을 HTTP로 선택한 경우 입력 내용은 다음과 같습니다
   * Alert에서 정의되는 메시지의 앞뒤에 공통으로 추가하려는 내용을 기입
 
 ### Channel Type을 `Email`로 선택한 경우
-주의
+<div class="alert alert-info">
+  <i class="fas fa-info-circle"></i> <strong>Note:</strong> **주의** 
+QueryPie에 Email 발송을 위한 SMTP 서버를 등록한 경우에만 Email 타입의 채널을 생성할 수 있습니다. 
+Admin &gt; General &gt; System &gt; Integration 메뉴로 진입 후, Email 타일을 클릭하여 관련 설정을 확인하세요. 
 
-QueryPie에 Email 발송을 위한 SMTP 서버를 등록한 경우에만 Email 타입의 채널을 생성할 수 있습니다.
-
-Admin &gt; General &gt; System &gt; Integration 메뉴로 진입 후, Email 타일을 클릭하여 관련 설정을 확인하세요.
+</div>
 
 채널 생성 시 입력 내용은 다음과 같습니다.
 
