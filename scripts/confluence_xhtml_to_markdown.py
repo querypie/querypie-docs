@@ -19,8 +19,6 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 import logging
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 class SingleLineParser:
     def __init__(self, node):
         self.node = node
@@ -158,7 +156,9 @@ class ConfluenceToMarkdown:
                 self.markdown_lines.append(str(node))
             return
 
-        logging.debug(f"ConfluenceToMarkdown:process_node() node.name={node.name}, text={node.get_text()}")
+        tmp = node.get_text(strip=True).splitlines()
+        logging.debug(f"ConfluenceToMarkdown:process_node() node.name={node.name}, text={tmp[0] if tmp else ''}")
+
         if node.name == '[document]':
             # Start processing from the body of the document
             for child in node.children:
@@ -531,7 +531,15 @@ def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')
     parser.add_argument('input_file', help='Input XHTML file path')
     parser.add_argument('output_file', help='Output Markdown file path')
+    parser.add_argument('--log-level', 
+                        choices=['debug', 'info', 'warning', 'error', 'critical'],
+                        default='info',
+                        help='Set the logging level (default: info)')
     args = parser.parse_args()
+    
+    # Configure logging with the specified level
+    log_level = getattr(logging, args.log_level.upper())
+    logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
     
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
