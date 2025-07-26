@@ -56,7 +56,7 @@ export default async function RootLayout({ children, params }) {
           </div>
         </div>
       }
-      logoLink={`/${lang}/install-guide`}
+      logoLink={`/${lang}/`}
       // // Next.js discord server
       // chatLink="https://discord.gg/hEM84NMkRv"
     />

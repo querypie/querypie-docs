@@ -2,14 +2,6 @@ export default {
   index: {
     display: 'hidden',
   },
-  'install-guide': {
-    type: 'page',
-    title: 'Install Guide',
-  },
-  'release-notes': {
-    type: 'page',
-    title: 'Release Notes',
-  },
   'overview': {
     type: 'page',
     title: 'Overview',
@@ -21,6 +13,10 @@ export default {
   'admin-manual': {
     type: 'page',
     title: 'Admin Manual',
+  },
+  'release-notes': {
+    type: 'page',
+    title: 'Release Notes',
   },
   aiHubManual: {
     type: 'page',
