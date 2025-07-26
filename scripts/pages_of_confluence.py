@@ -238,6 +238,14 @@ def process_page_data(page_id, data, directory=None, start_page_id=None):
             except Exception as e:
                 logger.error(f"Error saving XHTML content for page ID {page_id}: {str(e)}")
             
+            # Save page content in HTML format
+            try:
+                logger.info(f"Extracting HTML content for page ID {page_id}")
+                html_content = data.get("body", {}).get("view", {}).get("value", "")
+                save_to_file(directory, "page.html", html_content)
+            except Exception as e:
+                logger.error(f"Error saving HTML content for page ID {page_id}: {str(e)}")
+            
             
             # Download and save attachments if specified and not in local mode
             if args.attachments and not args.local:
