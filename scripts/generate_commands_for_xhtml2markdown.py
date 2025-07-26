@@ -56,6 +56,15 @@ def process_breadcrumbs(breadcrumbs):
         filename = f"{path_components[-1]}.mdx"
         return directory, filename
 
+def print_bash_header():
+    """
+    Print the bash script header.
+    """
+    print("#!/usr/bin/env bash")
+    print("# cd querypie-docs")
+    print("# ./scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt")
+    print()
+
 def generate_commands(list_file, confluence_dir='docs/latest-ko-confluence/', output_base_dir='src/content/ko/'):
     """
     Generate commands to convert Confluence XHTML to Markdown.
@@ -115,6 +124,9 @@ def main():
                         help='Base directory for the output Markdown files (default: src/content/ko/)')
     
     args = parser.parse_args()
+    
+    # Print the bash header
+    print_bash_header()
     
     commands = generate_commands(args.list_file, args.confluence_dir, args.output_dir)
     

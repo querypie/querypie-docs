@@ -63,6 +63,9 @@ DEFAULT_START_PAGE_ID = "608501837"  # Root Page ID of "QueryPie Docs"
 EMAIL = "your-email@example.com"
 API_TOKEN = "your-api-token"
 
+# Default output directory
+DEFAULT_OUTPUT_DIR = "docs/latest-ko-confluence"
+
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Generate a list of all subpages from a specified Confluence document")
 parser.add_argument("--page-id", default=DEFAULT_START_PAGE_ID, help="ID of the starting page (default: %(default)s)")
@@ -72,6 +75,8 @@ parser.add_argument("--email", default=EMAIL, help="Confluence email for authent
 parser.add_argument("--api-token", default=API_TOKEN, help="Confluence API token for authentication")
 parser.add_argument("--attachments", action="store_true", help="Download page content with attachments")
 parser.add_argument("--local", action="store_true", help="Use local page.yaml files instead of making API calls")
+parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR, 
+                    help="Directory to store output files (default: %(default)s)")
 parser.add_argument("--log-level", default="WARNING", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
                     help="Set the logging level (default: %(default)s)")
 args = parser.parse_args()
@@ -91,6 +96,14 @@ logger.debug(f"Using space key: {args.space_key}")
 logger.debug(f"Starting with page ID: {args.page_id}")
 logger.debug(f"Download attachments: {args.attachments}")
 logger.debug(f"Using local mode: {args.local}")
+logger.debug(f"Output directory: {args.output_dir}")
+
+# Check if output directory exists
+if not os.path.exists(args.output_dir):
+    error_msg = f"Error: Output directory '{args.output_dir}' does not exist. Please create it first."
+    logger.critical(error_msg)
+    print(error_msg, file=sys.stderr)
+    sys.exit(1)
 
 # Set up authentication
 auth = HTTPBasicAuth(args.email, args.api_token)
@@ -166,10 +179,10 @@ def process_page_data(page_id, data, directory=None, start_page_id=None):
         title = clean_text(data["title"])
         ancestors = data.get("ancestors", [])
         
-        # If this is the starting page or we don't have a start_page_id, use all ancestors
-        if start_page_id is None or page_id == start_page_id:
-            # Clean ancestor titles before adding them to the path
-            path = [clean_text(a["title"]) for a in ancestors if a["type"] == "page"] + [title]
+        # Special case for the start page: only include its own title in the breadcrumbs
+        if page_id == start_page_id:
+            # For document 608501837, only include its own title in the breadcrumbs
+            path = [title]
         else:
             # Filter out the starting page and its parent from the breadcrumbs
             filtered_ancestors = []
@@ -245,7 +258,7 @@ def process_page_data(page_id, data, directory=None, start_page_id=None):
 # This function reads and returns the page data from the local page.yaml file
 def read_local_page_data(page_id):
     try:
-        directory = os.path.join(os.getcwd(), page_id)
+        directory = os.path.join(args.output_dir, page_id)
         yaml_filepath = os.path.join(directory, "page.yaml")
         
         logger.info(f"Reading local page data from: {yaml_filepath}")
@@ -268,7 +281,7 @@ def read_local_page_data(page_id):
 # Function to read children data from local YAML file
 def read_local_children_data(page_id):
     try:
-        directory = os.path.join(os.getcwd(), page_id)
+        directory = os.path.join(args.output_dir, page_id)
         yaml_filepath = os.path.join(directory, "children.yaml")
         
         logger.info(f"Reading local children data from: {yaml_filepath}")
@@ -372,7 +385,7 @@ def get_child_page_ids_from_api(page_id):
         
         # Save child data to children.yaml (even if there are no children)
         try:
-            directory = os.path.join(os.getcwd(), page_id)
+            directory = os.path.join(args.output_dir, page_id)
             if not os.path.exists(directory):
                 logger.info(f"Creating directory: {directory}")
                 os.makedirs(directory)
@@ -409,7 +422,7 @@ def fetch_page_tree_generic(page_id, get_data_func, get_children_func, start_pag
         
         if data:
             # Process the page data
-            directory = os.path.join(os.getcwd(), page_id)
+            directory = os.path.join(args.output_dir, page_id)
             page_info = process_page_data(page_id, data, directory, start_page_id)
             
             if page_info:

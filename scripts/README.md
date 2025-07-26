@@ -3,8 +3,8 @@
 ## Python 가상환경(venv) 생성 및 필수 모듈 설치
 
 ```bash
-# docs 디렉토리로 이동
-cd docs
+# 프로젝트 루트 디렉토리로 이동
+cd querypie-docs
 
 # Python 가상환경 생성 (venv)
 python3 -m venv venv
@@ -12,97 +12,135 @@ python3 -m venv venv
 # 가상환경 활성화 (macOS/Linux)
 source venv/bin/activate
 
-# 가상환경 활성화 (Windows)
-venv\Scripts\activate
-
 # 필수 모듈 설치
-pip install requests beautifulsoup4
+pip install requests beautifulsoup4 pyyaml
 ```
 
-## generate_toc.py
+## 데이터 수집, 변환 절차의 개요
 
-`sitemap.xml` 파일을 읽어, 같은 디렉토리에 `urls.txt`, `titles.txt`, `breadcrumbs.txt` 파일을 생성합니다.
-- 각 파일의 내용:
-  - `urls.txt`: sitemap.xml에 포함된 모든 URL 목록 (한 줄에 하나)
-  - `titles.txt`: 각 URL에서 추출한 문서 제목 (한 줄에 하나, 줄바꿈 없음)
-  - `breadcrumbs.txt`: 각 URL에서 추출한 탐색 경로 (breadcrumb, /로 구분)
-- 실행 중 각 URL의 처리 상태가 화면에 출력됩니다.
-- 처리 완료 후, 문서 수와 오류 건수, 오류 유형별 건수가 출력됩니다.
+1. `docs/latest-ko-confluence/`에 Confluence 문서 데이터를 저장합니다.
+    - 문서의 목록인 `list.txt`를 저장합니다.
+    - 개별 문서마다 `<page_id>/page.yaml`, `<page_id>/page.xhtml`을 저장합니다.
+    - `pages_of_confluence.py`를 사용합니다.
+2. `docs/latest-ko-confluence/list.en.txt`를 생성합니다.
+   - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
+   - `translate_titles.py`를 사용합니다.
+3. `scripts/xhtml2markdown.sh`를 생성합니다.
+4. - `generate_commands_for_xhtml2markdown.py`를 사용합니다.
+4. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
+    - `scripts/xhtml2markdown.sh`를 실행하면, MDX 문서가 생성됩니다.
+    - `docs/latest-ko-confluence/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
 
-`sitemap.xml` 파일이 있는 디렉토리에서 아래와 같이 실행합니다.
-```bash
-python generate_toc.py sitemap.xml
-```
+## 데이터 수집 및 변환 절차 상세 안내
 
-## save_files_from_sitemap.py
+### 1. Confluence 문서 데이터 수집 (pages_of_confluence.py)
 
-`sitemap.xml` 파일에서 URL을 추출하여 해당 URL의 HTML 파일을 저장하는 스크립트입니다.
-1.html, 2.html, ... 형식으로 URL 의 HTML 파일을 저장합니다. html 파일에 첨부된 image 파일도 함께 저장하는데, image 파일은 `1/`, `2/` 등의 디렉토리에 저장됩니다.
-
-## generate_breadcrumbs_revised.py
-
-`generate_breadcrumbs_revised.py`는 문서 탐색 경로(breadcrumbs)를 개선하는 스크립트입니다. 이 스크립트는 다음과 같은 기능을 수행합니다:
-
-- 입력 파일로 `breadcrumbs.txt`, `titles.txt`, `titles.en.txt`를 사용합니다.
-- 한국어 제목과 영어 제목을 매핑하여 URL 슬러그를 생성합니다.
-- 상대 경로로 된 탐색 경로를 절대 경로로 변환합니다.
-- 각 문서의 탐색 경로에 현재 페이지 정보를 추가합니다.
-- 결과를 `breadcrumbs.revised.txt` 파일로 출력합니다.
-
-실행 방법:
-```bash
-python generate_breadcrumbs_revised.py \
-  --breadcrumbs breadcrumbs.txt \
-  --titles titles.txt \
-  --titles_en titles.en.txt \
-  --output breadcrumbs.revised.txt
-```
-
-## generate_ko_contents.py
-
-`generate_ko_contents.py`는 HTML 파일을 MDX 형식으로 변환하여 한국어 문서를 생성하는 스크립트입니다. 이 스크립트는 다음과 같은 기능을 수행합니다:
-
-- 탐색 경로(breadcrumbs)를 분석하여 출력 파일의 경로와 이름을 결정합니다.
-- HTML 파일을 MDX 형식으로 변환합니다 (pandoc 사용).
-- HTML 파일에 포함된 이미지를 찾아 새 이름으로 복사하고 참조를 업데이트합니다.
-- 이미지는 유형(스크린샷/일반 이미지)에 따라 다른 이름 형식으로 저장됩니다.
-
-실행 방법:
-```bash
-python generate_ko_contents.py \
-  --breadcrumbs breadcrumbs.revised.txt \
-  --html_dir html_files_directory \
-  --output_dir src/content/ko
-```
-
-## pages_of_confluence.py
-
-`pages_of_confluence.py`는 Confluence 공간에서 지정된 문서의 모든 하위 페이지 목록을 생성하는 스크립트입니다. 이 스크립트는 다음과 같은 기능을 수행합니다:
+`pages_of_confluence.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 페이지들을 수집하여 저장하는 스크립트입니다. 
+이 스크립트는 다음과 같은 기능을 수행합니다:
 
 - 각 페이지의 ID, 탐색 경로(breadcrumbs), 제목을 탭으로 구분된 형식으로 출력합니다.
-- 기본적으로 각 페이지 ID에 대한 디렉토리를 생성하고 다음 파일을 저장합니다:
-  - XHTML 형식의 문서 내용 (page.xhtml)
-  - Markdown 형식의 문서 내용 (page.md)
+- 각 페이지 ID에 대한 디렉토리를 생성하고 다음 파일을 저장합니다:
+  - XHTML 형식의 문서 내용 (`page.xhtml`)
+  - 페이지 메타데이터 (`page.yaml`)
   - 첨부 파일(있는 경우)
 
 실행 방법:
 ```bash
+# 로컬에서 pages_of_confluence.py 개선 과정에서 사용하는 명령
+python scripts/pages_of_confluence.py --local >docs/latest-ko-confluence/list.txt
+
 # 기본 설정으로 실행
-python pages_of_confluence.py
+python scripts/pages_of_confluence.py
+
+# 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
+python scripts/pages_of_confluence.py --local
+
+# list.txt 에 파일 목록을 저장
+python scripts/pages_of_confluence.py >list.txt
 
 # 특정 페이지 ID와 공간 키 지정
-python pages_of_confluence.py --page-id 123456789 --space-key DOCS
+python scripts/pages_of_confluence.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
-python pages_of_confluence.py --email user@example.com --api-token your-api-token
+python scripts/pages_of_confluence.py --email user@example.com --api-token your-api-token
 
-# 목록만 출력하고 파일 다운로드 없음
-python pages_of_confluence.py --list-only
+# 첨부파일을 다운로드
+python scripts/pages_of_confluence.py --attachments
+
+# 로그 레벨 설정
+python scripts/pages_of_confluence.py --log-level DEBUG
 ```
 
-## confluence_xhtml_to_markdown.py
+실행 결과:
+- `docs/latest-ko-confluence/` 디렉토리에 문서 데이터가 저장됩니다.
+- 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
+- `>list.txt`로 stdout 을 redirect 하면, `list.txt` 파일에 문서 목록이 저장됩니다.
 
-`confluence_xhtml_to_markdown.py`는 Confluence XHTML 내보내기를 깔끔한 Markdown으로 변환하는 스크립트입니다. 이 스크립트는 다음과 같은 특수 케이스를 처리합니다:
+### 2. 문서 제목 번역 (translate_titles.py)
+
+`translate_titles.py`는 문서 제목을 번역하여 `list.en.txt` 파일을 생성하는 스크립트입니다. 
+이 스크립트는 `list.txt` 파일을 입력으로 사용하여 한국어 제목을 영어로 번역합니다.
+
+> 참고: 이 스크립트는 현재 하드코딩된 파일 경로를 사용합니다:
+> - 입력 파일: docs/latest-ko-confluence/list.txt
+> - 출력 파일: docs/latest-ko-confluence/list.en.txt
+> - 번역 파일: docs/korean-titles-translations.txt
+
+실행 방법:
+```bash
+# 스크립트 실행
+python scripts/translate_titles.py
+```
+
+실행 결과:
+- `docs/latest-ko-confluence/list.en.txt` 파일이 생성됩니다.
+- 이 파일은 원본 `list.txt`와 동일한 형식이지만 제목이 영어로 번역되어 있습니다.
+
+### 3. XHTML을 Markdown으로 변환하기 위한 명령어 생성 (generate_commands_for_xhtml2markdown.py)
+
+`generate_commands_for_xhtml2markdown.py`는 Confluence XHTML 파일을 Markdown으로 변환하기 위한 명령어를 생성하는 스크립트입니다. 
+이 스크립트는 `list.en.txt` 파일을 읽어 각 문서에 대한 변환 명령어를 생성합니다.
+
+실행 방법:
+```bash
+# 기본 설정으로 실행하여 xhtml2markdown.sh 파일 생성
+python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt > scripts/xhtml2markdown.sh
+
+# Confluence 디렉토리 지정
+python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt --confluence-dir docs/custom-path/ > scripts/xhtml2markdown.sh
+
+# 출력 디렉토리 지정
+python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.sh
+
+# 생성된 스크립트에 실행 권한 부여
+chmod +x scripts/xhtml2markdown.sh
+```
+
+실행 결과:
+- `scripts/xhtml2markdown.sh` 파일이 생성됩니다.
+- 이 파일은 각 XHTML 파일을 Markdown으로 변환하기 위한 명령어들을 포함하고 있습니다.
+
+### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.sh)
+
+`xhtml2markdown.sh`는 `generate_commands_for_xhtml2markdown.py`에 의해 생성된 스크립트로, 각 XHTML 파일을 Markdown으로 변환하는 명령어들을 실행합니다. 
+이 스크립트는 `confluence_xhtml_to_markdown.py`를 사용하여 변환 작업을 수행합니다.
+
+실행 방법:
+```bash
+# 스크립트 실행
+./scripts/xhtml2markdown.sh
+```
+
+실행 결과:
+- `src/content/ko/` 디렉토리에 MDX 파일들이 생성됩니다.
+- 각 MDX 파일은 원본 XHTML 파일의 내용을 Markdown 형식으로 변환한 것입니다.
+
+## Confluence xhtml 을 Markdown 으로 변환하기
+
+### confluence_xhtml_to_markdown.py
+
+`confluence_xhtml_to_markdown.py`는 Confluence XHTML 내보내기를 깔끔한 Markdown으로 변환하는 스크립트입니다.
+이 스크립트는 다음과 같은 특수 케이스를 처리합니다:
 
 - 코드 블록의 CDATA 섹션
 - colspan 및 rowspan 속성이 있는 테이블
@@ -110,40 +148,108 @@ python pages_of_confluence.py --list-only
 
 실행 방법:
 ```bash
-python confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+# 기본 실행
+python scripts/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+
+# 로그 레벨 설정
+python scripts/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
 ```
 
-## remove_hidden_chars.py
+실행 결과:
+- 지정된 출력 파일에 Markdown 형식으로 변환된 내용이 저장됩니다.
+- 이 스크립트는 일반적으로 `xhtml2markdown.sh`에 의해 자동으로 호출됩니다.
 
-`remove_hidden_chars.py`는 파일에서 특정 유니코드 숨김 문자를 찾아 제거하는 스크립트입니다. 이 스크립트는 다음과 같은 문자를 처리합니다:
+### Makefile (confluence_xhtml_to_markdown.py 테스트용)
 
-- 제로 너비 공백(ZWSP, \u200b)
-- 왼쪽에서 오른쪽 마크(LRM, \u200e)
-- 한글 필러(Hangul Filler, \u3164)
+`Makefile`은 `confluence_xhtml_to_markdown.py` 스크립트의 테스트를 자동화하기 위한 파일입니다. 이 Makefile은 다음과 같은 기능을 제공합니다:
 
-이 스크립트는 다음과 같은 기능을 제공합니다:
-- 지정된 확장자를 가진 파일에서 숨김 문자를 검색합니다 (기본값: xhtml, md, mdx).
-- 특정 디렉토리를 검색에서 제외할 수 있습니다 (기본값: node_modules).
-- 드라이 런(dry-run) 모드를 통해 파일을 수정하지 않고 숨김 문자가 포함된 파일만 식별할 수 있습니다.
-- 수정된 파일 수와 제거된 문자 수에 대한 요약을 제공합니다.
+- 모든 테스트 케이스 실행
+- 특정 테스트 케이스 실행
+- 디버그 로그 레벨로 테스트 실행
+- 테스트 출력 파일 정리
 
 실행 방법:
 ```bash
-# 기본 설정으로 실행 (현재 디렉토리에서 검색)
-python remove_hidden_chars.py
+# 모든 테스트 실행
+cd scripts
+make test
 
-# 특정 디렉토리에서 검색
-python remove_hidden_chars.py --dir path/to/directory
+# 특정 테스트 실행
+cd scripts
+make test-one TEST_ID=<test_id>
 
-# 특정 파일 확장자만 검색
-python remove_hidden_chars.py --extensions md,mdx,txt
+# 디버그 로그 레벨로 모든 테스트 실행
+cd scripts
+make debug
 
-# 특정 디렉토리 제외
-python remove_hidden_chars.py --exclude-dirs node_modules,build,dist
+# 디버그 로그 레벨로 특정 테스트 실행
+cd scripts
+make debug-one TEST_ID=<test_id>
 
-# 드라이 런 모드 (파일 수정 없이 검색만)
-python remove_hidden_chars.py --dry-run
+# 출력 파일 정리
+cd scripts
+make clean
+
+# 도움말 표시
+cd scripts
+make help
 ```
+
+테스트 케이스는 `scripts/tests/confluence_xhtml_to_markdown/testcases/` 디렉토리에 있으며, 각 테스트 케이스는 다음 파일을 포함합니다:
+- `page.xhtml`: 입력 XHTML 파일
+- `expected.mdx`: 예상 출력 MDX 파일
+- `output.mdx`: 테스트 실행 시 생성되는 실제 출력 파일
+
+## 기타 유틸리티 스크립트
+
+### repeat_npm_run_build.sh
+
+`repeat_npm_run_build.sh`는 빌드 과정에서 문제가 되는 MDX 파일을 자동으로 식별하고 제거하면서 `npm run build` 명령을 반복적으로 실행하는 스크립트입니다. 이 스크립트는 다음과 같은 기능을 수행합니다:
+
+- 빌드 오류 메시지에서 문제가 되는 MDX 파일 경로를 추출합니다.
+- 문제가 되는 MDX 파일을 자동으로 삭제합니다.
+- 최대 10번까지 빌드를 반복 시도합니다.
+- 빌드가 성공하거나 최대 시도 횟수에 도달하면 종료합니다.
+
+실행 방법:
+```bash
+# 기본 빌드 모드로 실행
+./scripts/repeat_npm_run_build.sh
+
+# 문제 파일 추출 모드로 실행
+./scripts/repeat_npm_run_build.sh extract
+```
+
+실행 결과:
+- 빌드 과정에서 문제가 되는 MDX 파일이 자동으로 삭제됩니다.
+- 빌드가 성공하면 성공 메시지와 함께 종료됩니다.
+- 최대 시도 횟수에 도달해도 빌드가 실패하면 오류 메시지와 함께 종료됩니다.
+
+### deploy 디렉토리 (Vercel 배포 스크립트)
+
+`deploy` 디렉토리에는 문서 사이트를 Vercel에 배포하기 위한 Node.js 스크립트가 포함되어 있습니다:
+
+#### index.js
+Vercel SDK를 사용하여 문서 사이트를 배포하는 스크립트입니다. 다음과 같은 기능을 수행합니다:
+- 지정된 브랜치의 코드를 Vercel에 배포합니다.
+- 배포 상태를 확인하고 결과를 보고합니다.
+- 프로덕션 또는 프리뷰 환경에 배포할 수 있습니다.
+
+#### delete-deploy.js
+Vercel에서 프리뷰 배포를 삭제하는 스크립트입니다. 다음과 같은 기능을 수행합니다:
+- 지정된 브랜치의 프리뷰 배포를 찾습니다.
+- 찾은 프리뷰 배포를 삭제합니다.
+
+### generate-sitemap 디렉토리 (사이트맵 생성 스크립트)
+
+`generate-sitemap` 디렉토리에는 웹사이트의 sitemap.xml 파일을 생성하기 위한 Node.js 스크립트가 포함되어 있습니다:
+
+#### index.js
+MDX 파일을 스캔하여 sitemap.xml 파일을 생성하는 스크립트입니다. 다음과 같은 기능을 수행합니다:
+- `src/content` 디렉토리에서 MDX 파일을 찾습니다.
+- 각 MDX 파일에 대한 URL을 생성합니다.
+- 생성된 URL을 sitemap.xml 형식으로 저장합니다.
+- 여러 언어(en, ko, ja)를 지원합니다.
 
 ## 가상환경 비활성화
 
@@ -152,4 +258,3 @@ python remove_hidden_chars.py --dry-run
 ```bash
 deactivate
 ```
-

@@ -2,9 +2,9 @@
 # cd querypie-docs
 # ./scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt
 
-mkdir -p src/content/ko/querypie-manual
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/608501837/page.xhtml src/content/ko/querypie-manual/querypie-docs.mdx
-echo 'Converted 608501837 to src/content/ko/querypie-manual/querypie-docs.mdx'
+mkdir -p src/content/ko/.
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/608501837/page.xhtml src/content/ko/./querypie-docs.mdx
+echo 'Converted 608501837 to src/content/ko/./querypie-docs.mdx'
 
 mkdir -p src/content/ko/.
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375335/page.xhtml src/content/ko/./release-notes.mdx
