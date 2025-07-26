@@ -20,6 +20,11 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 import logging
 
+# Hidden characters constants
+ZWSP = '\u200b'  # Zero Width Space
+LRM = '\u200e'   # Left-to-Right Mark
+HANGUL_FILLER = '\u3164'  # Hangul Filler
+
 
 def backtick_curly_braces(text):
     """
@@ -383,6 +388,11 @@ class ConfluenceToMarkdown:
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
         html_content = re.sub(r'\sri:', ' ', html_content)
+        
+        # Remove special characters before parsing
+        html_content = html_content.replace(ZWSP, '')
+        html_content = html_content.replace(LRM, '')
+        html_content = html_content.replace(HANGUL_FILLER, '')
         
         # Parse HTML with BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')

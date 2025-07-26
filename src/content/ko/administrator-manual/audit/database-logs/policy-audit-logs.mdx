@@ -9,6 +9,15 @@
 ## Policy Audit Logs에 기록되는 내용
 ### 목록 표시 항목
 * Action At : 행위 (이벤트 발생) 시점입니다.
+* Event Type : 기록되는 이벤트의 유형입니다. **[11.1.0]**
+    * Access Denied : Column 또는 Table Data Access 정책에 의해 접근이 차단된 이벤트
+    * Data Masked : Column Data Masking 정책에 의해 접근이 차단된 이벤트
+    * Alert Triggered : Sensitive Data Access Monitoring 정책에 의해 Alert 을 발생시킨 이벤트
+    * Justification Requirement Triggered : Table Access Justification Requirement 정책에 의해 사유입력 하도록 한 이벤트
+    * Approval Enforcement Triggered : DML Query Approval Enforcement 정책에 의해 결재 요구된 이벤트
+    * Exception Column Access : Column Data Access 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
+    * Exception Table Access : Table Data Access 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
+    * Exception Unmasking : Column Data Masking 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 마스킹이 해제된 이벤트
 * Policy Type (정책 유형) : 정책 유형을 표시합니다.
 * Policy Name (정책 이름): 적용된 정책의 이름을 표시하고 링크를 누르면 해당 정책 페이지로 이동할 수 있습니다.
 * Name (사용자 이름): 데이터를 조회한 사용자의 이름입니다.
