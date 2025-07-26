@@ -11,14 +11,15 @@ handling special cases like:
 
 import re
 import sys
-import html
-import xml.etree.ElementTree as ET
-from html.parser import HTMLParser
+import os
 from itertools import chain
 import argparse
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 import logging
+
+# Global variable to store input file path
+INPUT_FILE_PATH = ""
 
 # Hidden characters constants
 ZWSP = '\u200b'  # Zero Width Space
@@ -72,6 +73,42 @@ def ancestors(node):
         stack.append(f'<{current.name}>')
         current = current.parent
     return ''.join(reversed(stack))
+
+def print_node_with_properties(node):
+    """
+    Print all properties of a BeautifulSoup node in the format:
+    <{node.name} property="{property.value}">
+
+    Args:
+        node: A BeautifulSoup Tag object
+
+    Returns:
+        A string representation of the node with all its properties
+    """
+    if not hasattr(node, 'name'):
+        return str(node)
+
+    # Start with the node name
+    result = f"<{node.name}"
+
+    # Add all attributes
+    for attr_name, attr_value in node.attrs.items():
+        # Handle different types of attribute values
+        if isinstance(attr_value, list):
+            # For list attributes like class, join with space
+            attr_value = ' '.join(attr_value)
+        elif isinstance(attr_value, bool) and attr_value:
+            # For boolean attributes that are True, just include the name
+            result += f" {attr_name}"
+            continue
+
+        # Add the attribute to the result
+        result += f" {attr_name}=\"{attr_value}\""
+
+    # Close the tag
+    result += ">"
+
+    return result
 
 class SingleLineParser:
     def __init__(self, node):
@@ -141,7 +178,7 @@ class SingleLineParser:
                 self.markdown_lines.append("]**")
             else:
                 # For other structured macros, we can just log or skip
-                logging.warning(f"SingleLineParser: Unexpected ac:structured-macro: {node.get('ac:name')}, processing children")
+                logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
                 for child in node.children:
                     self.convert_recursively(child)
             return
@@ -154,7 +191,7 @@ class SingleLineParser:
                 # ac:parameter with colour is not needed in Markdown
                 return
             else:
-                logging.warning(f"SingleLineParser: Unexpected ac:parameter ac:name={node.get('ac:name')}")
+                logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
                 for child in node.children:
                     self.convert_recursively(child)
                 return
@@ -206,7 +243,7 @@ class SingleLineParser:
                     logging.debug(f'Skip extracting text from <{child.name}> under <li>')
             return
         else:
-            logging.warning(f"SingleLineParser: Unexpected <{node.name}> from {ancestors(node)}")
+            logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
             for child in node.children:
                 self.convert_recursively(child)
@@ -253,7 +290,7 @@ class MultiLineParser:
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         else:
-            logging.warning(f"MultiLineParser: Unexpected <{node.name}> from {ancestors(node)}")
+            logging.warning(f"MultiLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
             self.markdown_lines.append('\n')
             for child in node.children:
@@ -483,7 +520,7 @@ class ConfluenceToMarkdown:
         elif node.name == 'ac:image':
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         else:
-            logging.warning(f"Unexpected node={node.name}, processing children")
+            logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
@@ -657,7 +694,7 @@ class ConfluenceToMarkdown:
                 markdown.append('<Callout type="error">')
             else:
                 markdown.append('<Callout>')
-                logging.warning(f"Unexpected ac:name of ac:structured-macro: {macro_name}")
+                logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             markdown.append('\n')
 
             logging.debug(f'MultiLineParser(node).as_markdown={MultiLineParser(node).as_markdown}')
@@ -720,17 +757,21 @@ class ConfluenceToMarkdown:
         if adf_attribute:
             panel_type = adf_attribute.text
             logging.debug(f'Found <ac:adf-attribute key="panel-type"> text={adf_attribute.text}')
+        else:
+            logging.warning(f"No <ac:adf-attribute> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
         adf_content = node.find('ac:adf-content')
         if adf_content:
             logging.debug(f'Found <ac:adf-content> text={adf_content.text}')
+        else:
+            logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
         markdown = []
         if panel_type == 'note':
             markdown.append('<Callout type="important">')
         else:
             markdown.append('<Callout>')
-            logging.warning(f"Unexpected text of ac:adf-attribute: {panel_type}")
+            logging.warning(f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
         markdown.append('\n')
 
         if adf_content:
@@ -784,6 +825,21 @@ def main():
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())
     logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
+
+    # Store input file path in global variable
+    global INPUT_FILE_PATH
+    # Extract the last directory and filename from the path
+    path = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
+    dirname, filename = os.path.split(path)  # Split into directory and filename
+    
+    if dirname:
+        # Get the last directory name
+        last_dir = os.path.basename(dirname)
+        # Combine last directory and filename
+        INPUT_FILE_PATH = os.path.join(last_dir, filename)
+    else:
+        # If there's no directory part, just use the filename
+        INPUT_FILE_PATH = filename
 
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
