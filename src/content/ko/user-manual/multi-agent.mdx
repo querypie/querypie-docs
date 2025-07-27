@@ -49,6 +49,8 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 *Multi-Agent &gt; Settings &gt; Databases*
 </p>
 
+
+
 * Database Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
     * Auto Detected : Open Connection With 로 툴을 선택할 때마다 툴의 경로를 자동으로 찾습니다.
         * 툴이 제대로 열리지 않는 경우 Manual Configuration 으로 경로를 수동 지정하시기를 바랍니다.
@@ -81,7 +83,7 @@ Role 셀렉터에서 본인에게 부여된 Role 중 하나를 선택하면, 선
 </p>
 
 ### 에이전트에서 Kubeconfig 설정 가이드 확인하기
-Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설정이 필요합니다.
+Proxy를 통해 kubectl 명령을 사용하려면 **최초 1회의 Kubeconfig 설정** 이 필요합니다.
 
 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 Setting 페이지로 진입, Kubernetes 탭을 선택하면 Kubeconfig File 저장 경로를 관리하고, Kubeconfig 설정 커맨드를 복사할 수 있습니다.
 
@@ -111,6 +113,8 @@ Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설�
 * Multi Agent가 종료되거나 종료 시점이 도래하는 경우, 별도의 세션 종료 알람 없이 연결된 세션이 종료됩니다.
 </Callout>
 
+
+
 ### 에이전트에서 서버 접근 권한 요청하기
 서버에 접속 시 필요한 계정의 권한이 없는 경우, Multi Agent에서 직접 서버 접근 권한(Server Privilege Request)을 요청할 수 있습니다.
 
@@ -123,6 +127,8 @@ Proxy를 통해 kubectl 명령을 사용하려면 최초 1회의 Kubeconfig 설�
 **유의 사항** 
 * QueryPie 관리자가 `Admin &gt; General &gt; Workflow Configurations` 설정에서 `Server Privilege Request`를 비활성화한 경우, 에이전트의 `Request Server Privilege` 버튼도 비활성화됩니다.
 </Callout>
+
+
 
 ### 에이전트에서 3rd Party Terminal Tool 설정 관리하기
 Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
@@ -160,6 +166,8 @@ Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 �
 <div>[스크린샷 2025-04-14 오전 12.12.07.png]()</div>
 *Application Menu (MacOS)*
 </p>
+
+
 
 1. 또는 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 설정 페이지로 진입하고, Hosts 탭 하단의 Reset All Settings 버튼을 클릭합니다.
 2. 확인 모달에서 Reset 버튼을 클릭하면 로컬 폴더에 저장된 모든 설정이 초기화됩니다.
@@ -213,7 +221,11 @@ set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
 %USERPROFILE%\.querypie-multi-agent
 ```
 
+
+
 ## 관리자를 위한 제약사항 문서
 관리자를 위한 Multi Agent 제약사항 문서는 별도의 관리자 가이드 문서를 참고해 주세요.
 
-https://docs.querypie.com/ko/querypie-manual/10.2.0/multi-agent-1
+[https://docs.querypie.com/ko/querypie-manual/10.2.0/multi-agent-1](https://docs.querypie.com/ko/querypie-manual/10.2.0/multi-agent-1)
+
+

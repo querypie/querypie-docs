@@ -3,6 +3,8 @@ import { Callout } from 'nextra/components'
 ## Overview
 단일 DB 커넥션에 다수의 Privilege 권한이 부여된 경우에 기본으로 접속하는 Default Privilege 를 설정하는 기능입니다.
 
+
+
 ## Default Privilege 설정하기
 <p align="center">
 <div>[image-20240731-124310.png]()</div>
@@ -20,6 +22,8 @@ import { Callout } from 'nextra/components'
 1. Privileges 우측에 `Edit` 버튼 또는 `&gt; Go to Settings` 링크를 클릭합니다.
 2. Privilege 항목에서 부여받은 권한 중 기본 값으로 사용할 Privilege 를 선택합니다.
 3. Save 버튼을 클릭하여 Default Privilege 설정을 완료합니다.
+
+
 
 <Callout type="important">
 * 부여받은 권한이 2개 이상이지만 Default Privilege 설정이 안되어 있는 경우에는 가장 먼저 grant된 privilege가 default privilege가 됩니다. 에이전트 프록시, SQL Request, Export Request 에서 접속시 Default Privilege 로 선택된 권한으로 DB 에 접속합니다.

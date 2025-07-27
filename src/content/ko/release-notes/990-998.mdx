@@ -1,5 +1,7 @@
 import { Callout } from 'nextra/components'
 
+
+
 <Callout type="info">
 External API 변경사항은 아래 링크를 참고해주세요. 
 </Callout>
@@ -7,27 +9,43 @@ External API 변경사항은 아래 링크를 참고해주세요.
 * [External API 변경사항 (9.8.10 버전 &gt; 9.9.4 버전)](https://chequer.atlassian.net/servicedesk/customer/portal/6/article/65994753)
 * [External API 변경사항 (9.9.4 버전 &gt; 9.9.5 버전)](https://chequer.atlassian.net/l/cp/ULM0Wf7B)
 
+
+
 ## QueryPie 9.9.8 Release
+[time]
+
 * HBase 벤더 지원 중단
+
+
 
 ---
 
 ## QueryPie 9.9.7 Release
-Enhancement
+[time]
+
+**Enhancement**
 
 * [Agent] 에이전트 실행시 zscaler VPN 충돌 이슈 해결
+
+
 
 ---
 
 ## QueryPie 9.9.6 Release
-Enhancement
+[time]
+
+**Enhancement**
 
 * CVE (Common Vulnerabilities and Exposure, 공통 취약성 및 노출) 보안 취약점 제거
+
+
 
 ---
 
 ## QueryPie 9.9.5 Release
-Enhancement
+[time]
+
+**Enhancement**
 
 * [Access Control] Active 상태 확인 가능한 컬럼 추가
 * [Agent/Proxy] MongoDB Connection 정보 내 Host 구조 개선 (Connection String)
@@ -41,7 +59,7 @@ Enhancement
 * [User Access History] 메뉴 내 로그 Details 페이지 추가
 * [Web Editor] Reload Object UI 추가
 
-Bug Fix
+**Bug Fix**
 
 * QCP-173 [Access Control] renew한 권한이 하루 지나면 다시 deactivated 되는 이슈 해결
 * QCP-50 [Access Control] 권한 재부여시 발생하는 duplicate key 오류 해결
@@ -56,22 +74,30 @@ Bug Fix
 * QCP-286 [PostgreSQL] 탭에 선택된 카탈로그 기준으로 조회 안되는 이슈 해결
 * QCP-199 [Dynamodb] 테이블 조회 관련 최대 갯수 제한 관련 이슈 해결
 
+
+
 ---
 
 ## QueryPie 9.9.4 Release
-Bug Fix
+[time]
+
+**Bug Fix**
 
 * [User] 사용자 그룹의 커넥션 권한이 Deactived 상태인 경우에서 발생하는 오류 수정
+
+
 
 ---
 
 ## QueryPie 9.9.3 Release
-New Features
+[time]
+
+**New Features**
 
 * [DB] Redis 커넥션 연결 지원
 * [Proxy] MongoDB Proxy 연결 지원
 
-Enhancement
+**Enhancement**
 
 * [Privilege] Redis 접근제어를 위한 Privilege 메뉴에 DB 타입 추가
 * [DB] Impala Kerberos 개별 키탭 지원 (클러스터 구조 대응)
@@ -81,7 +107,7 @@ Enhancement
 * [Audit] Query Audit, Running Queries 필터 내 기본 검색 기간 1개월 → 1일로 변경
 * [Alert] DB Connection Attempt 내 옵션 UI 변경 및 Message Template Variable 추가
 
-Bug Fix
+**Bug Fix**
 
 * [Privilege] 전체 권한있는 사용자의 DISTINCT 쿼리 실행 오류 개선
 * [SQL Editor] 자동완성 갱신을 위해 에디터 내 컨텍스트 메뉴에 ‘Reload Auto Complete’ 기능 추가
@@ -97,14 +123,18 @@ Bug Fix
 * [Filter] Users 메뉴의 Status 필터 적용 오류 해결
 * [Bigquery] bigquery 커넥션에 리전 선택 기능 추가(카카오모빌리티)
 
+
+
 ---
 
 ## QueryPie 9.9.2 Release
-New Features
+[time]
+
+**New Features**
 
 * [Workflow(결재)] 타입 내 Data Export 요청 및 승인 기능 추가
 
-Enhancements
+**Enhancements**
 
 * [Authentication] LDAP 동기화 시 사용자 Inactive 옵션 추가 (동기화되어있지 않은 사용자의 경우, 로그인 불가)
 * [Manage Connections] Label (Normal / Ledger) 컬럼 항목 추가
@@ -118,7 +148,7 @@ Enhancements
 * [MySQL] 접속 실패시 에러 메세지 개선
 * [Audit & Log] 메뉴 내 검색 기본 값 Name으로 개선
 
-Bug Fix
+**Bug Fix**
 
 * [Groups] Group을 마지막으로 업데이트 한 사용자 삭제후, 해당 group을 삭제시 오류 수정
 * [External API] Data Access Policy Rule 삭제 관련 오류 수정
@@ -128,14 +158,18 @@ Bug Fix
 * [SQL Request] SQL Request 실행 후 상태 로그 업데이트 오류 수정
 * [Agent] Impala 접속 불가 오류 수정
 
+
+
 ---
 
 ## QueryPie 9.9.1 Release
-New Features
+[time]
+
+**New Features**
 
 * 실행 중 쿼리 확인 가능한 Running Queries 메뉴 신규 추가
 
-Bug Fix & Enhancement
+**Bug Fix & Enhancement**
 
 * DML Snapshot 기능 세부 스펙 조정
 * Sensitive Data 로그에 조회 건수 표시
@@ -161,3 +195,5 @@ Bug Fix & Enhancement
 * System Properties 페이지 추가
 * Reports &gt; 결과 다운로드 시 Export a file with Encryption 옵션 적용
 * Groups 메뉴 검색 필터 항목 조정
+
+

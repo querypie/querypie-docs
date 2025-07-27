@@ -3,6 +3,8 @@ import { Callout } from 'nextra/components'
 ## Overview
 관리자는 사용자 또는 사용자 그룹에 서버 또는 서버그룹에 대한 접근 권한(Permission)을 직접 부여하거나 회수할 수 있습니다. 한번 부여된 Permission은 수정이 불가능하고, 삭제만 가능합니다.
 
+
+
 ## Permissions 부여하기
 ### 1. 권한을 부여할 대상을 선택합니다.
 <p align="center">
@@ -31,7 +33,7 @@ Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니�
 
 ### 3. **[Step 2]** : 선택한 서버에 대한 접근 가능 정책을 설정합니다.
 <p align="center">
-<div>[image-20250512-113037.png]()</div>
+<div>[Screenshot 2025-07-27 at 5.28.54 PM.png]()</div>
 *Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2*
 </p>
 
@@ -51,16 +53,21 @@ Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니�
             1. **Keyword**  : 키워드로 입력 (ls, cat 등)
             2. **RegEx**  : 정규표현식으로 입력 (^sudo\b[^&|;\n]*$ 등)
         2. **Whitelist Expiration Date**  : 위 명령에 대한 별도 예외처리 만료일자를 지정합니다.
-    7. **Access Start Time**  : 접속 가능 시작 시간을 설정합니다.
-    8. **Access End Time**  : 접속 가능 종료 시간을 설정합니다.
-    9. **Access Weekday**  : 접속을 허용하는 요일을 설정합니다.
-    10. **IP Addresses**  : 접속을 허용하는 IP 주소를 설정합니다.
-    11. **Command Audit**  : 이 Permission을 통해 연결된 세션에서 사용된 command의 로깅 여부를 설정합니다.
-    12. **Command Detection**  : Script 및 Alias가 호출될 때, 내부의 금지 명령어 탐지 여부를 설정합니다. *제약사항: (10.2.1) Bash Shell에서만 동작, Script에서 다른 Script를 호출하는 명령어는 수행 차단
-    13. **Proxy Usage**  : QueryPie Agent에서 이 Permission을 통해 서버 접속 가능 여부를 설정합니다.
-    14. **Max Sessions**  : 한 유저가 한 서버에 동시 연결 가능한 세션 수를 제한합니다.
-    15. **Session Timeout (minutes)**  : 입력된 시간(분) 만큼 활동하지 않으면 세션은 종료됩니다.
+    7. **Require Privilege** : 이 옵션을 활성화하면, 사용자가 해당 계정으로 서버에 접속하기 위해 Server Privilege Request 워크플로우를 통한 승인 절차를 필수로 거치게 됩니다. 이는 Windows 서버의 관리자(Admin) 계정과 같이 높은 권한의 계정에 대한 접근을 임시로 허용하고 관리할 때 유용합니다.
+        * 이 옵션이 활성화된 계정으로 접속을 시도하면 사용자 대시보드에서 서버 접속 시, `Connect` 버튼이 비활성화되며, 접근 권한 요청을 제출해야 한다는 안내 메시지가 표시됩니다.
+        * Require Privilege 옵션은 서버의 OS 종류와 상관없이 모든 계정에 적용할 수 있습니다.
+    8. **Access Start Time**  : 접속 가능 시작 시간을 설정합니다.
+    9. **Access End Time**  : 접속 가능 종료 시간을 설정합니다.
+    10. **Access Weekday**  : 접속을 허용하는 요일을 설정합니다.
+    11. **IP Addresses**  : 접속을 허용하는 IP 주소를 설정합니다.
+    12. **Command Audit**  : 이 Permission을 통해 연결된 세션에서 사용된 command의 로깅 여부를 설정합니다.
+    13. **Command Detection**  : Script 및 Alias가 호출될 때, 내부의 금지 명령어 탐지 여부를 설정합니다. *제약사항: (10.2.1) Bash Shell에서만 동작, Script에서 다른 Script를 호출하는 명령어는 수행 차단
+    14. **Proxy Usage**  : QueryPie Agent에서 이 Permission을 통해 서버 접속 가능 여부를 설정합니다.
+    15. **Max Sessions**  : 한 유저가 한 서버에 동시 연결 가능한 세션 수를 제한합니다.
+    16. **Session Timeout (minutes)**  : 입력된 시간(분) 만큼 활동하지 않으면 세션은 종료됩니다.
 3. 우측 하단의 `Grant` 버튼을 클릭하면 권한 부여가 완료됩니다.
+
+
 
 ## Access Control 권한 회수하기
 <p align="center">

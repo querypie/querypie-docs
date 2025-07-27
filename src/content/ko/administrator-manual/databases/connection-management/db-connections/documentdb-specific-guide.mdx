@@ -14,10 +14,10 @@ Amazon DocumentDB 전용 상세 설정 가이드를 이곳에서 제공합니다
 </p>
 
 ## Amazon DocumentDB TLS(SSL) 사용하기
-AWS에서 새로운 DocumentDB를 생성하면 TLS를 사용하여 전송구간 암호화를 사용할 수 있고 사용자가 선택적으로 옵션을 끌 수 있습니다. Amazon DocumentDB 클러스터에 대한 전송 중 데이터 암호화는 클러스터 파라미터 그룹의 TLS 파라미터를 통해 관리됩니다. AWS Management Console 또는 AWS Command Line Interface (AWS CLI)를 사용하여 Amazon DocumentDB 클러스터 TLS 설정을 관리할 수 있습니다. 참고Amazon DocumentDB에서 TLS가 활성화 되어 있는 경우 접속을 위해 AWS에서 제공하는 CA 번들 인증서가 필요합니다.
+AWS에서 새로운 DocumentDB를 생성하면 TLS를 사용하여 전송구간 암호화를 사용할 수 있고 사용자가 선택적으로 옵션을 끌 수 있습니다. Amazon DocumentDB 클러스터에 대한 전송 중 데이터 암호화는 클러스터 파라미터 그룹의 TLS 파라미터를 통해 관리됩니다. AWS Management Console 또는 AWS Command Line Interface (AWS CLI)를 사용하여 Amazon DocumentDB 클러스터 TLS 설정을 관리할 수 있습니다. [참고](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)  Amazon DocumentDB에서 TLS가 활성화 되어 있는 경우 접속을 위해 AWS에서 제공하는 CA 번들 인증서가 필요합니다.
 
 ### CA 번들 인증서 등록하기
-AWS에서는 region에 상관없이 공동으로 사용할 수 있는 global 번들 인증서와 region별 번들 인증서 두가지 종류를 제공합니다.
+AWS에서는 region에 상관없이 공동으로 사용할 수 있는 [global 번들 인증서](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions) 와 [region별 번들 인증서](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.RegionCertificates) 두가지 종류를 제공합니다.
 
 1. 번들 인증서를 다운로드 받습니다.
 2. QueryPie 관리자 콘솔에서 Databases &gt; Connection Management &gt; SSL Configurations 메뉴로 이동합니다.

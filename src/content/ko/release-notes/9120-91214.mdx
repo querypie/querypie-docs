@@ -1,38 +1,60 @@
 ## QueryPie 9.12.14 Release
-Bug Fix & Enhancement
+[time]
+
+
+
+**Bug Fix & Enhancement**
 
 * [MongoDB] 프록시 접속 관련 메모리 성능 이슈 개선
 
 ---
 
 ## QueryPie 9.12.13 Release
-Bug Fix & Enhancement
+[time]
+
+
+
+**Bug Fix & Enhancement**
 
 * [Proxy] MySQL 8.0.26 이상인 경우 Agentless 방식 프록시 접속시 오류 해결
 
 ---
 
 ## QueryPie 9.12.12 Release
-Bug Fix & Enhancement
+[time]
+
+
+
+**Bug Fix & Enhancement**
 
 * [Oracle] 미지원 CharacterSet 추가 지원 (KO16MSWIN949, KO16KSC5601)
 
 ---
 
 ## QueryPie 9.12.11 Release
-Bug Fix & Enhancement
+[time]
+
+
+
+**Bug Fix & Enhancement**
 
 * [Connection] Health Check 기능 개선
 
 ---
 
 ## QueryPie 9.12.10 Release
-New Feature
+[time]
+
+
+
+**New Feature**
 
 * [Workflow] SQL Request 쿼리 실행시 백그라운드 실행 지원 (레진엔터테인먼트/카카오페이)
 * [QSI] 클러스터그룹 내 인스턴스에서 DDL 발생시, 해당 그룹의 QSI 스키마 캐시 갱신
 
-Bug Fix & Enhancement
+
+
+**Bug Fix & Enhancement**
 
 * [Web Editor] 커넥션 연결시 타임아웃을 30초에서 60초로 조정
 * [Syslog] Syslog 내의 Proxy 관련 로그 필터링 항목 추가
@@ -44,14 +66,18 @@ Bug Fix & Enhancement
 * [Web Editor] DocumentDB 3.6 접속시 연결 시간 초과로 인한 접속 불가 이슈 해결
 * [Connection] DB 세션 누수로 인한 사용량 증가 이슈 해결
 
+
+
 ---
 
 ## QueryPie 9.12.9 Release
-New Feature
+[time]
+
+**New Feature**
 
 * [Alert] New Request &gt; Template에 Link 추가
 
-Bug Fix & Enhancement
+**Bug Fix & Enhancement**
 
 * [Alert] Alert을 생성만 해도 Last Event Time이 표시되는 문제 해결
 * [Proxy] 연결 실패시 'DB Access History'가 남지 않는 문제 해결
@@ -71,7 +97,9 @@ Bug Fix & Enhancement
 ---
 
 ## QueryPie 9.12.8 Release
-Bug Fix & Enhancement
+[time]
+
+**Bug Fix & Enhancement**
 
 * [Agent] [Windows10/11] 업데이트 및 설치 후 바로 실행 시 로그인 실패하는 현상 개선
 * MySQL에서 Role과 함께 Grant를 사용하면 발생하는 오류 수정
@@ -80,14 +108,18 @@ Bug Fix & Enhancement
 ---
 
 ## QueryPie 9.12.7 Release
-Bug Fix & Enhancement
+[time]
+
+**Bug Fix & Enhancement**
 
 * [Agent] Agent 환경에서 Query Audit의 IP가 container IP로 고정되던 것을 Client IP가 기록되도록 수정
 
 ---
 
 ## QueryPie 9.12.6 Release
-Bug Fix & Enhancement
+[time]
+
+**Bug Fix & Enhancement**
 
 * [MariaDB] SET 구문이 포함되면 정책 반영되도록 개선
 * [SQL Server] Proxy 미구현 타입 추가 구현
@@ -101,7 +133,9 @@ Bug Fix & Enhancement
 ---
 
 ## QueryPie 9.12.5 Release
-Bug Fix & Enhancement
+[time]
+
+**Bug Fix & Enhancement**
 
 * [Alert] SQL 최대 길이 100자에서 1000자로 개선
 * [Agent] 로그인 시 열기 옵션 자동 활성화되지 않도록 수정
@@ -112,7 +146,9 @@ Bug Fix & Enhancement
 ---
 
 ## QueryPie 9.12.4 Release
-Bug Fix & Enhancement
+[time]
+
+**Bug Fix & Enhancement**
 
 * [Agent/Linux] Tray icon이 뜨도록 해결
 * [Alert] Executed Result : `{{execResult}}` 에러 해결
@@ -132,7 +168,9 @@ Bug Fix & Enhancement
 ---
 
 ## QueryPie 9.12.3 Release
-Bug Fix
+[time]
+
+**Bug Fix **
 
 * [Agent] 사용자가 에이전트 접속 시 API가 에이전트에 노드 리스트 중복으로 보내는 이슈 해결
 * [Performance] gRPC C Binding 라이브러리 sigsegv 발생 및 프로세스 종료 해결
@@ -140,25 +178,35 @@ Bug Fix
 ---
 
 ## QueryPie 9.12.2 Release
-Bug Fix
+[time]
+
+**Bug Fix **
 
 * [Proxy] PPv2 옵션 설정시 Proxy 오류 발생 해결
 * [Export] Export 시 생성된 temp 파일이 삭제되지 않아 disk full 되는 이슈 해결
 * [License] 라이선스 발행 기준 타임존을 UTC → KST로 변경
 
+
+
 ---
 
 ## QueryPie 9.12.1 Release
-Bug Fix
+[time]
+
+**Bug Fix **
 
 * [Performance] DML 스냅샷을 활성화하지 않아도, 항상 스냅샷이 일어나는 결함 해결
 * [Performance] 색인 처리가 누락되어 롱쿼리 발생
 * [PostgreSQL] 메모리 사용량에 따라 에이전트 접속 높은 빈도로 오류 발생
 
+
+
 ---
 
 ## QueryPie 9.12.0 Release
-New Feature
+[time]
+
+**New Feature**
 
 * [Menu] 쿼리파이 전체의 메뉴 개편 및 URL 구조 개선
 * [License] 라이선스 UI 개선
@@ -167,7 +215,9 @@ New Feature
 * [Workflow] query audit 추출시 컬럼에 원장여부 포함
 * [LDAP] 조직 변경에 따른 계정 비활성화 및 비활성화시 참조 필드 옵션 추가
 
-Bug Fix & Enhancement
+** **
+
+**Bug Fix & Enhancement**
 
 * [Agent] 9.12.0 개선
 * [Agent] 리눅스 환경에서 Agent 설치 시 문제 해결

@@ -3,8 +3,10 @@ import { Callout } from 'nextra/components'
 ## Overview
 사용자 인증과 사용자 및 그룹 관리를 위해 QueryPie 서비스와 LDAP 서버를 연동할 수 있습니다.
 
+
+
 ## LDAP 연동 및 동기화 설정
-Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동 후, 인증 Type 항목에서 LDAP을 선택하면 LDAP 연동을 위한 설정 입력이 가능합니다.
+Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동 후, 인증 Type 항목에서 **LDAP** 을 선택하면 LDAP 연동을 위한 설정 입력이 가능합니다.
 
 <Callout type="important">
 **주의: ** Authentication 타입을 선택하고 사용자를 동기화 한 후에는, 인증 타입을 변경하는 것이 불가능합니다.  인증 방식 변경을 위해서는 Customer Portal 을 통해 문의 부탁드립니다. 
@@ -27,18 +29,18 @@ LDAP 연동을 위한 기본적인 인증 정보 및 속성 정보들을 입력�
 <div>[image-20250515-095109.png]()</div>
 </p>
 
-LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면 Use Group 옵션을 활성화하고 필수로 지정된 정보들을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
+LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면 **Use Group 옵션** 을 활성화하고 필수로 지정된 정보들을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
 
-| Attribute           | 필수 여부 | Description                                                                                                                            |
-| ------------------- | ----- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Group Base DN       | 필수    | LDAP 서버의 그룹 Base DN 값을 입력합니다.예: dc=example,dc=com                                                                                      |
-| Group Search Filter | 필수    | 그룹을 가져오기 위한 필터 값을 입력합니다.예: objectclass=posixGroup                                                                                      |
-| Membership Type     | 필수    | 사용자에 그룹 정보가 포함된 경우, Include group information in user entries 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.예: member, uniqueMember, memberUid 등 |
-| Membership Type     | 필수    | 그룹에 사용자 정보가 포함된 경우, Include user information in group entries 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.예: gidNumber                         |
-| Group ID            | 필수    | 그룹의 식별자로 사용할 속성 값을 입력합니다.예: gidNumber                                                                                                  |
+| **Attribute**       | **필수 여부** | **Description**                                                                                                                                    |
+| ------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Group Base DN       | 필수        | LDAP 서버의 그룹 Base DN 값을 입력합니다.[ul]예: `dc=example,dc=com`                                                                                            |
+| Group Search Filter | 필수        | 그룹을 가져오기 위한 필터 값을 입력합니다.[ul]예: `objectclass=posixGroup`                                                                                            |
+| Membership Type     | 필수        | 사용자에 그룹 정보가 포함된 경우, `Include group information in user entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `member`, `uniqueMember`, `memberUid` 등 |
+| Membership Type     | 필수        | 그룹에 사용자 정보가 포함된 경우, `Include user information in group entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `gidNumber`                             |
+| Group ID            | 필수        | 그룹의 식별자로 사용할 속성 값을 입력합니다.[ul]예: `gidNumber`                                                                                                        |
 
 ### LDAP 사용자 동기화 설정
-LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우 Use Synchronization with the Authentication System 옵션을 활성화합니다.
+LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우 **Use Synchronization with the Authentication System** 옵션을 활성화합니다.
 
 <p align="center">
 <div>[image-20250515-095420.png]()</div>
@@ -66,11 +68,11 @@ LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하
 3. 매핑 행 삭제 또는 변경 시, Save Changes를 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save Changes는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.
 </Callout>
 
-| 컬럼명                | 필수 여부 | Description                                                                                                                                                                                       |
-| ------------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Checkbox           | 선택    | 매핑 행을 선택하기 위한 체크박스입니다.행 선택 시 좌측 상단에 Delete 버튼이 표시됩니다.                                                                                                                                             |
-| LDAP Attribute     | 필수    | 연동할 LDAP Attribute를 입력합니다예: manager, mobile 등                                                                                                                                                     |
-| QueryPie Attribute | 필수    | 매핑 대상이 될 QueryPie Attribute를 선택합니다.목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.예: Manager ID (managerId), Mobile Phone (mobilePhone) 등 |
+| **컬럼명**            | **필수 여부** | **Description**                                                                                                                                                                                            |
+| ------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Checkbox           | 선택        | 매핑 행을 선택하기 위한 체크박스입니다.행 선택 시 좌측 상단에 Delete 버튼이 표시됩니다.                                                                                                                                                      |
+| LDAP Attribute     | 필수        | 연동할 LDAP Attribute를 입력합니다[ul]예: `manager`, `mobile` 등                                                                                                                                                      |
+| QueryPie Attribute | 필수        | 매핑 대상이 될 QueryPie Attribute를 선택합니다.목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.[ul]예: `Manager ID (managerId)`,  `Mobile Phone (mobilePhone)` 등 |
 
 매핑 완료 후 동기화를 수행하면, 연동된 Attribute는 Profile Editor와 User Profile에서 확인할 수 있습니다.
 
@@ -93,11 +95,15 @@ LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하
     * 개별 동기화 중 실패 건이 있는 경우, Progress Bar 색상이 노란색으로 표시됩니다.
     * 실패 로그는 [ac:emoticon] 아이콘으로 표시됩니다. 로그를 클릭하면 상세한 에러메시지를 확인할 수 있습니다.
 
+
+
 <Callout type="info">
 **안내** 
 * 사용자 및 그룹은 LDAP → QueryPie로의 단방향 동기화를 지원합니다. 동기화된 사용자 및 그룹은 QueryPie 내에서 변경 및 삭제가 불가능합니다.
 * 10.2.1 버전 이후로 사용자 동기화는 개별 사용자 및 그룹 단위로 처리되도록 개선되었습니다.
 </Callout>
+
+
 
 ## QueryPie에서 LDAP 인증하여 로그인
 1. Administrator &gt; General &gt; User Management &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.

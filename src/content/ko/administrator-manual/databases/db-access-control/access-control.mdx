@@ -3,6 +3,8 @@ import { Callout } from 'nextra/components'
 ## Overview
 Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터베이스 접근 권한을 직접 부여할 수 있습니다.
 
+
+
 ## Access Control 목록 조회하기
 Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별로 부여된 DB 권한(Privilege) 및 관리자 역할 현황을 조회할 수 있습니다. (그룹 또는 사용자 이름으로 검색 가능)
 
@@ -10,6 +12,8 @@ Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별�
 <div>[스크린샷 2024-07-31 오전 11.35.02.png]()</div>
 *Administrator &gt; Databases &gt; DB Access Control &gt; Access Control*
 </p>
+
+
 
 ## 사용자/그룹별 Access Control 상세 내역 조회하기
 Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 그룹을 클릭하면 Drawer가 열립니다.
@@ -30,6 +34,8 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
         * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
         * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
 
+
+
 ## Access Control 권한 부여하기
 <p align="center">
 <div>[image-20241209-121743.png]()</div>
@@ -49,6 +55,8 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속시 Default Privilege 를 선택하고 접속할 수 있습니다. 
 </Callout>
 
+
+
 ## Access Control 권한 회수하기
 <p align="center">
 <div>[image-20241209-122146.png]()</div>
@@ -61,6 +69,8 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 4. 권한을 회수할 커넥션 여러 개를 선택하여 일괄적으로 권한을 회수할 수도 있습니다.
 
 이제 권한이 회수된 사용자는 더이상 해당 커넥션에 접속할 수 없으며, 권한 회수 내역은 Access Control Logs 로그에 Access Control Revoked 항목으로 기록됩니다.
+
+
 
 <Callout type="important">
 **Access Control Details 패널에서의 Status 설명** 
@@ -78,6 +88,8 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 * 권한이 부여되었지만  **Expiration Date**  컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기미접속 설정(Deactivation Period)의 영향을 받습니다.
 </Callout>
 
+
+
 ## 커넥션 잠금 계정 해제하기 (Locked Account)
 <p align="center">
 <div>[image-20241209-123011.png]()</div>
@@ -93,6 +105,8 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 </p>
 
 1. 커넥션 잠금 및 잠금해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인하실 수 있습니다.
+
+
 
 <Callout type="info">
 **테이블 태그로 접근제어하기**   Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우, 

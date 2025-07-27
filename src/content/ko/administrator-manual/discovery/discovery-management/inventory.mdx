@@ -10,8 +10,10 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 *Administrator &gt; Discovery &gt; Discovery Management &gt; Inventory*
 </p>
 
+
+
 ## Inventory의 주요기능
-관리자가 발견된 민감정보에 대해 확인을 완료하면 태그가 확정이 되어 Inventory의 data path에  반영이 됩니다. 여기서 data path란 QueryPie DB 접근제어, 시스템 접근제어, 쿠버네티스 접근제어에서 등록된 커넥션을 기반으로 민감정보가 존재하는 경로를 의미합니다. (10.0.0에서는 민감 정보 탐색이 지원되는 대상이 RDBMS만 가능하기 때문에 inventory에서도 DB 접근제어의 RDBMS 커넥션에 대한 관리만 가능합니다.)
+관리자가 발견된 민감정보에 대해 확인을 완료하면 태그가 확정이 되어 Inventory의 data path에 반영이 됩니다. 여기서 data path란 QueryPie DB 접근제어, 시스템 접근제어, 쿠버네티스 접근제어에서 등록된 커넥션을 기반으로 민감정보가 존재하는 경로를 의미합니다. (10.0.0에서는 민감 정보 탐색이 지원되는 대상이 RDBMS만 가능하기 때문에 inventory에서도 DB 접근제어의 RDBMS 커넥션에 대한 관리만 가능합니다.)
 
 <Callout type="info">
 **QueryPie에서 사용하는 태그의 종류** 
@@ -24,6 +26,8 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 *&lt; Tag 예시 &gt;*
 </p>
 </Callout>
+
+
 
 ## Inventory 목록
 <p align="center">
@@ -42,6 +46,8 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 
 목록의 각 행을 클릭하면 커넥션에 대한 정보와 종속된 경로를 확인 할 수 있습니다.
 
+
+
 ## 커넥션 정보 및 리소스 태그 관리
 상세정보에서 커넥션의 기본 정보와 부여된 태그를 확인하고 관리할 수 있습니다.
 
@@ -49,7 +55,9 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 <div>[image-20240730-043435.png]()</div>
 </p>
 
-Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)가 표시되고 + Add Tags을 클릭하여 태그관리 수행할 수 있습니다.
+Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)가 표시되고 `+ Add Tags` 을 클릭하여 태그관리 수행할 수 있습니다.
+
+
 
 ## 커넥션 하위의 데이터 경로
 <p align="center">
@@ -57,12 +65,12 @@ Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)�
 *커넥션 하위의 data path 목록과 지정된 민감정보 태그*
 </p>
 
-스캔이 최소 1회 성공적으로 완료된 커넥션은 대상 데이터베이스의 컬럼까지의 경로를 보여줍니다. 경로는 아래와 같은 구조로 구성되어 있습니다.
+스캔이 최소 1회 성공적으로 완료된 커넥션은 대상 데이터베이스의 컬럼까지의 경로를 보여줍니다.  경로는 아래와 같은 구조로 구성되어 있습니다.  [ac:image][ri:attachment]
 
-만약 해당 경로에 스캔 결과의 검토로 확정된 민감정보를 포함하고 있는 컬럼이 존재하다면 민감정보 태그와 유형, 관련된 컴플라이언스 정보를 같이 확인할 수 있습니다.
+만약 해당 경로에 [스캔 결과의 검토](Scan Results) 로 확정된 민감정보를 포함하고 있는 컬럼이 존재하다면 민감정보 태그와 유형, 관련된 컴플라이언스 정보를 같이 확인할 수 있습니다.
 
 ## 자동으로 탐지되지 않은 민감정보의 수동 처리
-민감정보가 존재하지만 자동 검출되지 않은 민감정보가 존재하는 컬럼에 대해 관리자가 수동으로 민감정보 태그를 부여할 수  있습니다. (일반적으로 이런 상태는 False Negative 입니다.)
+민감정보가 존재하지만 자동 검출되지 않은 민감정보가 존재하는 컬럼에 대해 관리자가 수동으로 민감정보 태그를 부여할 수 있습니다. (일반적으로 이런 상태는 False Negative 입니다.)
 
 1. Inventory 상세 페이지에서 민감정보가 자동 검출되지 않은 data path를 선택합니다.
 2. Sensitive Items 항목의 `Add New Item` 버튼을 클릭합니다.
@@ -82,7 +90,7 @@ Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)�
 3. 확인 대화창에서 `Remove` 버튼을 누릅니다.
 
 ## 컬럼에 태그 부여
-각 데이터 경로에 있는 Add Custom Tags 버튼을 사용하여 특정 컬럼에 사용자 정의 태그를 부여할 수 있습니다.
+각 데이터 경로에 있는 `Add Custom Tags` 버튼을 사용하여 특정 컬럼에 사용자 정의 태그를 부여할 수 있습니다.
 
 <p align="center">
 <div>[image-20241030-033748.png]()</div>
@@ -104,3 +112,5 @@ Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)�
 * 민감 정보 탐색이 지원되는 대상: MySQL, MariaDB, Oracle, PostgreSQL, MS SQLserver, Azure SQL 탐색이 수행되어야 DB의 경로를 수집할 수 있기 때문에 지원하지 않는 DB의 data path는 표시되지 않습니다.
 * 최소 1회의 성공적인 스캔이 수행되어야 합니다. Discovery job을 생성할 때 지정한 커넥션에 대해 최소한 1회의 스캔이 성공해야 inventory에 대상 path를 볼 수 있습니다. 그렇지 않으면 커넥션만 볼 수 있습니다.
 * Inventory에서는 대상에 사용자 정의 태그만 부여할 수 있습니다. 민감정보 태그는 QueryPie에서 사용하는 시스템 태그이므로 Scan Results 페이지에서 태그를 관리해야 합니다.
+
+

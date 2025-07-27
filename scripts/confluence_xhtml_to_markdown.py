@@ -134,7 +134,7 @@ class SingleLineParser:
             self.markdown_lines.append("#" * int(node.name[1]) + " ")
             for child in node.children:
                 self.convert_recursively(child)
-        elif node.name in ['p']:
+        elif node.name in ['p', 'th', 'td']:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['strong']:
@@ -469,20 +469,15 @@ class ConfluenceToMarkdown:
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'p':
-            text = self.get_text(node)
-            if text:
-                self.markdown_lines.append(text)
-                self.markdown_lines.append("")  # Add an empty line after paragraphs
+            paragraph = ''.join(MultiLineParser(node).as_markdown)
+            paragraph = paragraph.strip()+'\n' # TODO(JK): Improve this hacking.
+            self.markdown_lines.append(paragraph)
         elif node.name == 'strong' or node.name == 'b':
-            text = self.get_text(node)
-            self.markdown_lines.append(f"**{text}**")
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'em' or node.name == 'i':
-            text = self.get_text(node)
-            self.markdown_lines.append(f"*{text}*")
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'a':
-            href = node.get('href', '#')
-            text = self.get_text(node)
-            self.markdown_lines.append(f"[{text}]({href})")
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['ul', 'ol']:
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
@@ -494,9 +489,7 @@ class ConfluenceToMarkdown:
         elif node.name == 'ac:adf-extension':
             self.handle_adf_extension(node)
         elif node.name == 'div' or node.name == 'span':
-            # Process children of div/span elements
-            for child in node.children:
-                self.process_node(child)
+            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'br':
             self.markdown_lines.append("\n")
         elif node.name == 'hr':
@@ -524,46 +517,6 @@ class ConfluenceToMarkdown:
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
-    
-    def get_text(self, node):
-        if isinstance(node, NavigableString):
-            text = str(node)
-            # Remove NBSP at the beginning and end of the text
-            return self.trim_nbsp(text)
-        
-        if hasattr(node, 'get_text'):
-            text = node.get_text()
-            if node.name in ['p']:
-                # Encode < and > to prevent conflict with JSX syntax.
-                # Confluence xhtml does not allow JSX syntax in <p/>, so this is safe.
-                if '<' in text or '>' in text:
-                    text = self.encode_lt_gt(text)
-                    logging.debug(f"encode_lt_gt node={node.name} text={text}")
-            if node.name in ['li']:
-                if '{' in text or '}' in text:
-                    text = backtick_curly_braces(text)
-
-            return self.trim_nbsp(text)
-        
-        text = ""
-        for child in node.children:
-            if isinstance(child, NavigableString):
-                text += str(child)
-            elif hasattr(child, 'get_text'):
-                text += child.get_text()
-        
-        return self.trim_nbsp(text)
-
-    def encode_lt_gt(self, text):
-        """Encode < and > as &lt; and &gt;"""
-        text = text.replace('<', '&lt;').replace('>', '&gt;')
-        return text
-
-    def trim_nbsp(self, text):
-        """Remove NBSP characters at the beginning and end of text."""
-        # Replace NBSP characters with regular spaces
-        text = text.replace('\u00A0', ' ')
-        return text.strip()
 
     def process_table(self, table_node):
         self.in_table = True
@@ -593,7 +546,7 @@ class ConfluenceToMarkdown:
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
                 
-                cell_content = self.get_text(cell)
+                cell_content = SingleLineParser(cell).as_markdown
                 
                 # Add cell content to current row
                 self.current_row.append(cell_content)
@@ -693,7 +646,7 @@ class ConfluenceToMarkdown:
             elif macro_name == 'warning': # error - a broken name
                 markdown.append('<Callout type="error">')
             else:
-                markdown.append('<Callout>')
+                markdown.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{macro_name}"> */{"}"}')
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             markdown.append('\n')
 

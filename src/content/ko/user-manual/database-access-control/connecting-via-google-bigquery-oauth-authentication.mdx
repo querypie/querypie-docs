@@ -15,7 +15,7 @@ QueryPie 관리자가 BigQuery 커넥션 인증 방식을 OAuth 2.0으로 설정
 OAuth 인증 방식은 사용자가 로그인할 때 access token과 refresh token을 발급받습니다. 이후 access token의 기한이 만료되면 refresh token을 사용해서 access token을 재발급 받습니다. refresh token은 각 클라이언트에 저장됩니다. refresh token도 만료가 있을 수 있고 여러가지 원인에 의해 클라이언트에 저장된 refresh token이 유효하지 않은 상황이 발생할 수 있습니다. 이럴 때 클라이언트에 저장되어 있는 refresh token을 삭제하고 재 발급을 받을 필요가 있습니다. 
 </Callout>
 
-사용자 페이지의 “Database”에 접근 가능한 OAuth 인증 설정이 된 BigQuery 커넥션을 선택하면 아래 그림과 같이 Reset Token 버튼이 있습니다. 이 버튼을 클릭하면 클라이언트에 저장된 기존 토큰이 삭제되어 OAuth 인증의 처음(Google 계정의 서비스로 로그인) 부터 다시 진행 할 수 있습니다.
+사용자 페이지의 “Database”에 접근 가능한 OAuth 인증 설정이 된 BigQuery 커넥션을 선택하면 아래 그림과 같이 `Reset Token` 버튼이 있습니다. 이 버튼을 클릭하면 클라이언트에 저장된 기존 토큰이 삭제되어 OAuth 인증의 처음(Google 계정의 서비스로 로그인) 부터 다시 진행 할 수 있습니다.
 
 <p align="center">
 <div>[image-20250226-020846.png]()</div>

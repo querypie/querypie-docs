@@ -5,14 +5,14 @@ QueryPie Multi Agent는 FreeDesktop 환경의 Linux 플랫폼에서만 동작합
 </Callout>
 
 # 지원 대상
-| 기반     | 배포판    | 최소 지원 버전           | 검증된 버전 (개발팀에서 검증) |
-| ------ | ------ | ------------------ | ----------------- |
-| Debian | Debian | 10 (Buster)        | 12 (Bookworm)     |
-| Debian | Ubuntu | 18.04 LTS (Bionic) | 24.04 LTS (Noble) |
-| Debian | Kali   | 2018.4             | 2024.2            |
-| RedHat | Fedora | 28                 | 40                |
-| RedHat | RHEL   | 8 (Ootpa)          | -                 |
-| RedHat | CentOS | 8.0                | -                 |
+| **기반** | **배포판** | **최소 지원 버전**       | **검증된 버전 (개발팀에서 검증)** |
+| ------ | ------- | ------------------ | --------------------- |
+| Debian | Debian  | 10 (Buster)        | 12 (Bookworm)         |
+| Debian | Ubuntu  | 18.04 LTS (Bionic) | 24.04 LTS (Noble)     |
+| Debian | Kali    | 2018.4             | 2024.2                |
+| RedHat | Fedora  | 28                 | 40                    |
+| RedHat | RHEL    | 8 (Ootpa)          | -                     |
+| RedHat | CentOS  | 8.0                | -                     |
 
 * *최소 지원 버전: glibc 2.27 을 지원하는 최소 Linux 버전*
 
@@ -21,7 +21,7 @@ QueryPie Multi Agent는 FreeDesktop 환경의 Linux 플랫폼에서만 동작합
 QueryPie Web &gt; 프로필 &gt; Multi-Agent 를 통하여 Multi Agent 설치 파일을 다운로드받을 수 있습니다.
 
 ## 선행 작업
-Multi Agent는 StatusNotifierItem 으로 트레이 아이콘 기능을 제공합니다.
+Multi Agent는 [StatusNotifierItem](https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/) 으로 트레이 아이콘 기능을 제공합니다.
 
 다양한 리눅스 배포판에서 StatusNotifierItem 이 기본으로 노출되지 않을 수 있습니다.
 
@@ -30,13 +30,13 @@ Multi Agent는 StatusNotifierItem 으로 트레이 아이콘 기능을 제공합
 gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
 ```
 
-설치되어 있지 않음
+**설치되어 있지 않음**
 
 ```
 Extension “appindicatorsupport@rgcjonas.gmail.com” doesn't exist
 ```
 
-설치되어 있음
+**설치되어 있음**
 
 <Callout type="important">
 State: ENABLED 인지 꼭 확인해야 합니다. 
@@ -55,7 +55,7 @@ appindicatorsupport@rgcjonas.gmail.com
 ### 2. 설치
 다음 링크에서 AppIndicator and KStatusNotifierItem Support 를 다운로드하고, 설치하세요.
 
-https://extensions.gnome.org/extension/615/appindicator-support/
+[https://extensions.gnome.org/extension/615/appindicator-support/](https://extensions.gnome.org/extension/615/appindicator-support/)
 
 <p align="center">
 <div>[스크린샷 2025-04-04 오후 2.46.03-20250404-054620.png]()</div>
@@ -111,6 +111,8 @@ QueryPie Multi Agent is being uninstalled.
 QueryPie Multi Agent has been uninstalled.
 ```
 
+
+
 ## Keyring
 <Callout type="important">
 Ubuntu 를 기준으로 설명합니다. 
@@ -118,7 +120,7 @@ Ubuntu 를 기준으로 설명합니다.
 
 GNOME 데스크탑 환경에서는 사용자의 비밀번호, 암호화 키, 인증서 등을 안전하게 저장하고 관리하는 시스템이 있습니다.
 
-Passwords and Keys 앱에서 Login 저장소가 잠겨있으면 멀티 에이전트 실행시 관리자 권한을 요구하게 됩니다.
+Passwords and Keys 앱에서 **Login 저장소가 잠겨있으면** 멀티 에이전트 실행시 관리자 권한을 요구하게 됩니다.
 
 <p align="center">
 <div>[image-20250403-080719.png]()</div>
@@ -141,3 +143,7 @@ Default Browser를 설정하지 않으면 링크가 열리지 않습니다. 브�
 <p align="center">
 <div>[image-20250404-100924.png]()</div>
 </p>
+
+
+
+

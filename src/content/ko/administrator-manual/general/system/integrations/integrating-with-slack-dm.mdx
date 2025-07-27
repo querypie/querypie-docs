@@ -15,6 +15,8 @@ Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림�
 ## Slack API 에서 DM App 생성 (via Manifest Files)
 App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.
 
+
+
 1. [https://api.slack.com/apps](https://api.slack.com/apps) 으로 이동하여 `Create an App` 을 클릭합니다.
 2. Create an app 모달에서, App 생성 방식을 선택합니다. `From a manifest` 를 클릭합니다.
 3. Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.
@@ -27,11 +29,13 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
 3. 설정한 Slack Workspace에서 Slack DM 전용 App이 생성된 것을 확인할 수 있습니다.
 
 ## Bot User OAuth Token 획득
-Features &gt; OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서, Bot User OAuth Token 을 복사하여 기록해 둡니다.
+Features &gt; OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서, **Bot User OAuth Token** 을 복사하여 기록해 둡니다.
 
 <p align="center">
 <div>[image-20240418-022640.png]()</div>
 </p>
+
+
 
 ## App-Level Token 생성
 <Callout type="info">
@@ -57,6 +61,8 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 ## Slack DM 설정 관리하기
 1. Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.
 2. `Edit` 버튼을 클릭하여 입력한 설정을 변경할 수 있습니다.
+
+
 
 ## Workflow 요청 시 Slack DM 테스트
 DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.

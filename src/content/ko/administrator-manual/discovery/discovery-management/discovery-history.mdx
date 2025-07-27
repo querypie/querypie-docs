@@ -14,8 +14,10 @@ Discovery History에는 Discovery Job의 수행 내역을 확인할 수 있는 R
 <div>[image-20241031-062634.png]()</div>
 </p>
 
+
+
 ## Run History
-Discovery Job은 여러가지 상태정보를 가지고 있습니다.  (상태정보에 대한 자세한 내용은 Discovery Jobs의 Discovery Job의 동작 제어 참고.)
+Discovery Job은 여러가지 상태정보를 가지고 있습니다.  (상태정보에 대한 자세한 내용은 [Discovery Jobs]((10.2.0-ko) Discovery Jobs) 의 **Discovery Job의 동작 제어** 참고.)
 
 <p align="center">
 <div>[image-20241030-060644.png]()</div>
@@ -33,6 +35,8 @@ Discovery Job은 여러가지 상태정보를 가지고 있습니다.  (상태�
 * **Connections**  : Job과 매핑되어 있는 커넥션의 이름이 나열되고 각 커넥션별 스캔 진행 상황을 막대그래프로 볼 수 있습니다.
 * **Running Details**  : Job 수행 상세 로그를 볼 수 있습니다. 실패가 발생한 경우 원인을 확인하고 조치하는데 도움을 줍니다. 수동으로 Job을 수행한 경우 누가 시작했는지 확인할 수 있습니다.
 
+
+
 ## Detection History
 민감정보가 발견되면 Detection History에 내역이 기록됩니다.
 
@@ -45,20 +49,34 @@ Detection History에서 발견된 항목을 보려면 Scan results에서 Verific
 *Detection History*
 </p>
 
+
+
 목록에서 특정 행을 클릭하면 상세정보를 확인할 수 있습니다.
+
+
 
 <p align="center">
 <div>[image-20241218-114437.png]()</div>
 *Detection History의 상세정보*
 </p>
 
+
+
+
+
 * **Detection Profiles**  : Job과 매핑되어 있는 Detection profile의 이름을 나열합니다.
 * **Sensitive Items Samples**  : 발견된 민감정보 중 최대 5개를 골라 보여줍니다. 부분 마스킹 되어 있습니다.
 
 ## Verification History
-“자동 발견 → 사람의 판단 → 정탐 확정된 대상만 Inventory에 태그로 부여”와 같은 과정을 거치기 때문에 Scan Results 에서 관리자는 발견된 민감정보가 정탐인지 오탐인지를 확인해야 합니다. 아무리 AI 분류기가 잘 인식하고 아무리 정규식을 정교하게 작성해도 현재의 기술로는 오탐 비율을 0%로 만들 수 없기 때문입니다.따라서 관리자는 스캔 결과를 검토하면서 맞는 결과에 대해서는 Accept, 틀린 결과에 대해서는 False Positive 로 지정하여  처리합니다. 이때 관리자의 결정 내용을 Verification History에 기록으로 남깁니다.
+“자동 발견 → 사람의 판단 → 정탐 확정된 대상만 Inventory에 태그로 부여”와 같은 과정을 거치기 때문에 Scan Results 에서 관리자는 발견된 민감정보가 정탐인지 오탐인지를 확인해야 합니다. 아무리 AI 분류기가 잘 인식하고 아무리 정규식을 정교하게 작성해도 현재의 기술로는 오탐 비율을 0%로 만들 수 없기 때문입니다.따라서 관리자는 스캔 결과를 검토하면서 맞는 결과에 대해서는 Accept, 틀린 결과에 대해서는 False Positive 로 지정하여 처리합니다. 이때 관리자의 결정 내용을 Verification History에 기록으로 남깁니다.
+
+
 
 <p align="center">
 <div>[image-20241218-114923.png]()</div>
 *Verification History*
 </p>
+
+
+
+

@@ -8,20 +8,26 @@ import { Callout } from 'nextra/components'
 *Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery Jobs*
 </p>
 
+
+
 ## Discovery Job의 구조
 <p align="left">
 <div>[image-20240730-064558.png]()</div>
 </p>
 
-Discovery job은 민감정보를 추출해 내기위한 패턴 정보를 가지고 있는 data pattern과 하나이상의 data pattern의 집합인 detection profile을 포함합니다.각 Data source에 접속해서 스캔을 수행하기 때문에 접근제어 시스템에서 정의된 커넥션 정보가 있어야 합니다.사용자가 수동으로 수행할 수도 있지만 주기적으로 스케줄을 사용하여 수행한다면 스케줄을 등록해야 합니다. 각 DB에 접근하여 민감정보가 있는 컬럼을 조회하므로 각 DB 종류별 쿼리가 이를 수행합니다. 단, 사용자는 이 쿼리를 보거나 변경하거나 삭제할 수 없습니다.
+Discovery job은 민감정보를 추출해 내기위한 패턴 정보를 가지고 있는 data pattern과 하나이상의 data pattern의 집합인 detection profile을 포함합니다.  각 Data source에 접속해서 스캔을 수행하기 때문에 접근제어 시스템에서 정의된 커넥션 정보가 있어야 합니다.  사용자가 수동으로 수행할 수도 있지만 주기적으로 스케줄을 사용하여 수행한다면 스케줄을 등록해야 합니다. 각 DB에 접근하여 민감정보가 있는 컬럼을 조회하므로 각 DB 종류별 쿼리가 이를 수행합니다. 단, 사용자는 이 쿼리를 보거나 변경하거나 삭제할 수 없습니다.
+
+
 
 ## Discovery Job 생성
-Discovery job 페이지에서 + Discovery Jobs 버튼을 누르면 Job 생성 페이지로 이동됩니다.
+Discovery job 페이지에서 `+ Discovery Jobs` 버튼을 누르면 Job 생성 페이지로 이동됩니다.
 
 <p align="center">
 <div>[image-20241218-102640.png]()</div>
 *Discovery Job 생성*
 </p>
+
+
 
 <Callout type="important">
 * Discovery Job을 생성할 때 모든 커넥션을 선택하면 스캔에 소요되는 시간이 매우 길어질 수 있습니다. 따라서 특정 커넥션만 선택하여 지정하는 것을 권장드립니다.
@@ -44,6 +50,8 @@ Discovery job 페이지에서 + Discovery Jobs 버튼을 누르면 Job 생성 �
     3. 선택한 profile이 목록에 추가되었는지 확인합니다.
 8. Save 버튼을 눌러 저장합니다.
 
+
+
 ## Discovery Job의 수정
 Discovery Job 페이지의 목록에서 특정 Job(행)을 클릭하면 해당 job의 상세페이지가 출력됩니다.
 
@@ -59,7 +67,9 @@ Discovery Job 페이지의 목록에서 특정 Job(행)을 클릭하면 해당 j
 *Discovery Job 삭제*
 </p>
 
-Discovery Job 페이지에서 특정 Job의 체크박스를 체크하고 Delete 버튼을 눌러 Job을 삭제할 수 있습니다. 단, 현재 수행 중인 Job은 Job이 중지될 때 까지 수정 또는 삭제가 불가능합니다.
+Discovery Job 페이지에서 특정 Job의 체크박스를 체크하고 `Delete` 버튼을 눌러 Job을 삭제할 수 있습니다. 단, 현재 수행 중인 Job은 Job이 중지될 때 까지 수정 또는 삭제가 불가능합니다.
+
+
 
 ## Discovery Job의 동작 제어
 * Discovery Job의 상태 정보
@@ -77,8 +87,14 @@ Discovery Job 페이지에서 특정 Job의 체크박스를 체크하고 Delete 
 * 특정 Job의 수동 시작 : 목록에서 특정 Job을 체크한 뒤 `Run Now` 버튼을 누르면 수동으로 Job을 시작할 수 있습니다.
 * 수행 중인 특정 Job의 중지 : 목록에서 “Running” 상태인 특정 Job을 체크한 뒤 `Stop` 버튼을 누르면 수행 중인 Job을 강제 중지 시킬 수 있습니다.
 
+
+
 ## Discovery Job의 수행 상태 확인
 Discovery Job의 수행상태 확인은 다음 위치에서 가능합니다.
 
 * Discovery Job 상세페이지의 Run History 탭 (Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery Job)
 * Discovery History 의 Run History (Administrator &gt; Discovery &gt; Discovery Management &gt; Discovery History)의 목록 및 각 Job을 클릭했을 때 출력되는 상세 화면.
+
+
+
+

@@ -7,6 +7,8 @@ QueryPie에서 기록하는 감사 로그를 Splunk를 통하여 외부로 전�
 Integration 설정을 위해서는 System admin 권한이 필요합니다. 
 </Callout>
 
+
+
 ## Syslog-Splunk 연계 권장 아키텍처
 <p align="center">
 <div>[스크린샷 2024-06-13 오후 5.49.47.png]()</div>
@@ -23,6 +25,8 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 </Callout>
 
 참고로 Splunk는 syslog 수집을 위해 별도로 SC4S(Splunk connector for syslog)를 제공하고 있습니다.
+
+
 
 ## Splunk Integration 설정하기
 1. General Settings 메뉴에서 System &gt; Integrations 메뉴로 이동합니다.
@@ -61,10 +65,12 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 `Delete` 버튼을 통해 설정을 제거할 수 있습니다.
     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 [ac:emoticon] 로 변경한 후 삭제해 주시기 바랍니다.
 
+
+
 ## 참고
 * 라이센스에 따라 syslog 를 통해 전송되는 QueryPie의 이벤트 항목
 
-| Event Item                   | DAC     | SAC     | KAC     |
+| **Event Item**               | **DAC** | **SAC** | **KAC** |
 | ---------------------------- | ------- | ------- | ------- |
 | User Access History          | O       | O       | O       |
 | Activity Logs                | O       | O       | O       |
@@ -93,3 +99,5 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
     * [Splunk Universal Forwarder](https://www.splunk.com/en_us/blog/learn/splunk-universal-forwarder.html)
     * [Splunk Connect for Syslog](https://splunk.github.io/splunk-connect-for-syslog/main/)
     * [Set up and use HTTP Event Collector in Splunk Web](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector)
+
+

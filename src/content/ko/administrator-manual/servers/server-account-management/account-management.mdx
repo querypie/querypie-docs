@@ -9,7 +9,7 @@ Password Provisioning 을 통해 패스워드가 변경된 서버의 계정을 �
 
 ## Account 조회하기
 <p align="center">
-<div>[image-20240831-155549.png]()</div>
+<div>[Screenshot 2025-07-27 at 6.47.45 PM.png]()</div>
 *Administrator &gt; Servers &gt; Server Account Management &gt; Account Management*
 </p>
 
@@ -27,6 +27,40 @@ Password Provisioning 을 통해 패스워드가 변경된 서버의 계정을 �
     6. **Last Password Updated At :**  계정의 마지막 패스워드 업데이트 일시
     7. **Created At**  : 계정 최초 변경 일시
 5. 각 행을 클릭하면 계정 세부 정보 조회가 가능합니다.
+
+## One Time Account 조회하기
+<p align="center">
+<div>[Screenshot 2025-07-27 at 6.50.29 PM.png]()</div>
+*Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accounts 탭*
+</p>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accounts 탭으로 이동합니다
+2. 테이블 좌측 상단의 검색란을 통해 Server, Host 또는 Account의 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 계정 목록을 최신화할 수 있습니다.
+4. 테이블에서 이하의 컬럼 정보를 제공합니다.
+    1. **Server ** : 대상 서버 명
+    2. **Host**  : 서버의 IP
+    3. **Server OS**  : 서버의 OS
+    4. **Account**  : 서버 접속을 위해 생성된 One Time Account
+    5. **Last Fail Message**  : 삭제된 원인을 담은 에러 에러메세지
+    6. **Last Delete Attempted At**  : 계정 삭제를 마지막으로 시도한 일시
+    7. **Delete Attempt Counts**  : 계정 삭제 시도 횟수
+
+## Active Directory 조회하기
+<p align="center">
+<div>[Screenshot 2025-07-27 at 7.03.55 PM.png]()</div>
+*Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directory탭*
+</p>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directory 탭으로 이동합니다
+2. 테이블 좌측 상단의 검색란을 통해 UPN의 검색이 가능합니다.
+3. 테이블 우측 상단의 새로고침 버튼을 통해 계정 목록을 최신화할 수 있습니다.
+4. 테이블에서 이하의 컬럼 정보를 제공합니다.
+    1. **AD Name**  : QueryPie에 연동된 AD 이름
+    2. **AD Domain**  : AD 도메인 주소
+    3. **UPN**  : 해당 도메인에 로그인할 때 사용하는 사용자 계정
+    4. **Last Password Updated At**  : 계정의 마지막 패스워드 업데이트 일시
+    5. **Created At**  : 계정 최초 변경 일시
 
 ## Account의 세부 정보 조회하기
 <p align="center">

@@ -10,6 +10,8 @@ Security 페이지에서 QueryPie 전반에 대한 보안 설정을 관리할 �
 ## 웹 콘솔 로그인 설정
 QueryPie Web 로그인 관련 보안 설정을 관리합니다.
 
+
+
 ## Account Security Policy
 QueryPie 계정의 잠금 및 만료 등의 보안 정책을 설정할 수 있습니다.
 
@@ -28,6 +30,8 @@ QueryPie 계정의 잠금 및 만료 등의 보안 정책을 설정할 수 있�
     * 로그아웃 알림 표시 방식: 동일 계정으로 다른 환경에서 로그인할 경우, 기존 세션은 종료되며 사용자에게 알림이 표시됩니다.
         * 사용자가 Web Inactivity Timeout 또는 Agent Session Timeout 범위 내에서 활동 중일 경우, 명시적인 UI 동작(예: 버튼 클릭, 페이지 전환 등)을 통해 서버와 통신할 때 알림이 나타납니다.
         * 버튼 클릭 등 사용자 API 호출시 알림이 나타납니다. 알림은 다른 로그인 발생 시점부터 24시간 동안 표시됩니다. Web, User Agent, Multi-Agent는 각각 개별적으로 동시 로그인 제한이 적용됩니다.
+
+
 
 ## Password Setting
 QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
@@ -50,6 +54,8 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
     * Restrict nearby characters on the keyboard (e.g., qwe, ert) : : 3자 이상 키보드 상 나란히 있는 문자열 제한
     * Does not contain part of personal information (Username, Primary email) : 패스워드 내 개인정보(Username, Primary email) 사용 제한
 
+
+
 ## Timeout
 웹 콘솔과 에이전트의 타임아웃 정책을 설정할 수 있습니다.
 
@@ -61,6 +67,8 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
     * 지정된 시간 동안 활동이 없을 경우 타임아웃 처리
 * **Agent Session Timeout (Minutes) ** : 에이전트 세션 타임아웃 기준 (Default : 1,440분)
     * 지정된 시간 동안 에이전트 앱 로그인을 유지하고, 경과 시 로그아웃 처리
+
+
 
 ## QueryPie Web IP Access Control
 QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
@@ -111,6 +119,8 @@ A. 허용되지 않은 IP에서 접속 시도 시 QueryPie 웹 콘솔 내 어떤
 Security 페이지의 설정은 저장 즉시 반영됩니다. 따라서 입력한 IP와 해당 옵션을 설정한 관리자의 IP가 일치하지 않을 경우 관리자라 하더라도 **저장**  **즉시 로그아웃 처리** 되니 주의해서 적용해 주시기 바랍니다. 
 </Callout>
 
+
+
 ## Secret Store 설정
 Secret Store 사용 여부를 설정합니다. 현재 HashiCorp Vault를 지원하고 있습니다.
 
@@ -125,12 +135,18 @@ Vault 등록은 General &gt; Integrations 메뉴에서 수행합니다.
 A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valut 메뉴에 등록된 Vault 가 남아있는지 확인해보세요. 등록된 Vault가 모두 제거된 후 토글 비활성화 가능합니다. 
 </Callout>
 
+
+
 Secret Store 사용 활성화 및 Vault 등록이 완료된 후, DB 커넥션 상세 페이지 또는 Server Group 상세 페이지에서 인증 정보 저장소를 선택할 수 있게 됩니다.
+
+
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 6.59.46.png]()</div>
 *DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선택*
 </p>
+
+
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 7.00.34.png]()</div>
@@ -146,3 +162,5 @@ Secret Store 사용 활성화 및 Vault 등록이 완료된 후, DB 커넥션 �
 
 * Export a file with Encryption : 파일 다운로드 시 암호 입력 여부
     * Required 선택 시, 파일 다운로드 시에 파일 암호 지정 필수
+
+

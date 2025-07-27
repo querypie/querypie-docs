@@ -1,12 +1,14 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
-Data pattern 들의 집합입니다. 기본적으로 민감정보의 유형별, 관련된 컴플라이언스별 built-in profile이 제공됩니다.사용자는 Data pattern을 선택하여 프로파일을 사용자 정의할 수 있습니다.
+Data pattern 들의 집합입니다. 기본적으로 민감정보의 유형별, 관련된 컴플라이언스별 built-in profile이 제공됩니다.  사용자는 Data pattern을 선택하여 프로파일을 사용자 정의할 수 있습니다.
 
 <p align="center">
 <div>[image-20240714-055234.png]()</div>
 *Administrator &gt; Discovery &gt; Discovery Management &gt; Detection Profiles*
 </p>
+
+
 
 ## Built-in(사전 정의된) Detection Profile
 <p align="center">
@@ -40,8 +42,10 @@ Built-in (사전 정의된) Detection profile은 크게 민감정보 유형별, 
 Built-in profile은 삭제하거나 수정할 수 없지만 어떤 패턴을 포함하고 있는지 내용을 볼 수 있습니다. 
 </Callout>
 
+
+
 ## 사용자 정의 프로파일 추가
-Detection profile 목록 상단의 + Detection Profile을 버튼을 누르면 생성 페이지로 이동되고 사용자가 검출에 사용되는 data patten을 지정하여 Detection Profile을 생성할 수 있습니다.
+Detection profile 목록 상단의 `+ Detection Profile` 을 버튼을 누르면 생성 페이지로 이동되고 사용자가 검출에 사용되는 data patten을 지정하여 Detection Profile을 생성할 수 있습니다.
 
 <p align="center">
 <div>[image-20240730-204829.png]()</div>
@@ -65,6 +69,8 @@ Detection profile 목록 상단의 + Detection Profile을 버튼을 누르면 �
 * **Detection Profile Name**  : Detection Profile 이름을 입력합니다.
 * **Description**  : 사용자 정의한 Detection Profile에 대한 설명을 입력합니다. Job에 연결할 때 어떤 패턴들의 집합인지 식별하기 용이하게 하려면 설명을 상세히 작성하는 것이 도움이 될 수 있습니다.
 
+
+
 ## 사용자 정의 프로파일 편집 및 삭제
 * 사용자 정의 프로파일 편집 : Detection Profile 목록에서 특정 행을 클릭하면 설정된 내용을 확인하고 수정할 수 있습니다.
 * 사용자 정의 프로파일 삭제 : 특정 사용자 정의 프로파일을 체크하고 `Delete` 버튼을 클릭합니다.
@@ -72,3 +78,5 @@ Detection profile 목록 상단의 + Detection Profile을 버튼을 누르면 �
 <Callout type="important">
 사용자 정의 detection profile이 어떤 discovery job에 사용되고 있다면 detection profile을 삭제할 수 없습니다. 삭제하기 위해서는 먼저 discovery job에서 해당 detection profile을 제외해야 합니다. 
 </Callout>
+
+

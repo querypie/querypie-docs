@@ -1,0 +1,379 @@
+## External API 변경사항 바로가기
+* [이전 버전 OpenAPI Specification JSON 참고 문서 (9.9.5 기준)](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%9D%B4%EC%A0%84-%EB%B2%84%EC%A0%84-OpenAPI-Specification-JSON-%EC%B0%B8%EA%B3%A0-%EB%AC%B8%EC%84%9C-(9.9.5-%EA%B8%B0%EC%A4%80))
+* [삭제된 External API](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%82%AD%EC%A0%9C%EB%90%9C-External-API)
+* [추가된 External API](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%B6%94%EA%B0%80%EB%90%9C-External-API)
+* [변경된 External API](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EB%B3%80%EA%B2%BD%EB%90%9C-External-API)
+    * [Access Approval API - List of Access Approval](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Access-Approval-API---List-of-Access-Approval)
+    * [Approval Rule API - Detail](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Approval-Rule-API---Detail)
+    * [Approval API - List of Approval](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Approval-API---List-of-Approval)
+
+
+
+---
+
+## 이전 버전 OpenAPI Specification JSON 참고 문서 (9.9.5 기준)
+
+
+[ri:attachment]
+
+
+
+---
+
+## 삭제된 External API
+* Approval Rule API
+    * Create
+    * Update
+
+---
+
+## 추가된 External API
+* Workflow API (기존 Access Approval API 와 Approval API 를 대체합니다.)
+    * [Access Request] Detail
+    * [Access Request] Approve
+    * [Access Request] Reject
+    * [Export Request] Detail
+    * [Export Request] Approve
+    * [Export Request] Reject
+    * [SQL Request] Detail
+    * [SQL Request] Approve
+    * [SQL Request] Reject
+    * All Requests
+* Approval Rule API V2 (기존 Approval Rule API 를 대체합니다.)
+    * List
+    * Add approval rule
+    * Remove approval rule
+    * Detail
+    * Edit approval rule
+
+---
+
+## 변경된 External API
+* Access Approval API
+    * List of Access Approval
+* Approval Rule API
+    * Detail
+* Approval API
+    * List of Approval
+
+---
+
+### Access Approval API - List of Access Approval
+`GET /api/external/access-approvals`
+
+Request 의 변경사항
+
+* Query Parameter 로 사용할 수 있는 `status` 가 변경되었습니다. `PARTIALLY_APPROVED` 가 `IN_PROGRESS` 로 대체되었고, `NONE` 이 삭제되었습니다.
+    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+
+Response 변경사항
+
+* `currentDegree` 가 삭제되었습니다.
+* `approvalStatus` 가 변경되었습니다.
+    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+* `updatedUser` 가 삭제되었습니다.
+* `lines` 의 `uuid` 가 삭제되었습니다.
+* `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
+* `lines` 의 `approvedAt` 이 `actionAt` 으로 대체되었습니다.
+* `lines` 의 `status` 가 변경되었습니다.
+    * **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    * **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+* `lines` 의 `type` 이 변경되었습니다.
+    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    * **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+* `connections` 의 `clusterGroupDescription` 이 삭제되었습니다.
+* `connections` 의 `databaseName` 이 삭제되었습니다.
+* `connections` 의 `schemaName` 이 삭제되었습니다.
+
+Response 변경 전 예시
+
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "connections": [
+        {
+          "clusterGroupDescription": "Cluster Group description",
+          "clusterGroupName": "Cluster Group Name",
+          "clusterGroupUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "clusterHost": "Cluster Host",
+          "clusterReplicationType": "`MASTER`, `SLAVE`, `SINGLE`",
+          "clusterUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "databaseName": "Database Name",
+          "roleName": "Role Name",
+          "roleUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "schemaName": "Schema Name",
+          "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+        }
+      ],
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "currentDegree": 1,
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "approvedAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "degree": 1,
+          "status": "APPROVED",
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string",
+          "uuid": "UUID"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "updatedUser": "User Information",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+Response 변경 후 예시
+
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "connections": [
+        {
+          "clusterGroupName": "Cluster Group Name",
+          "clusterGroupUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "clusterHost": "Cluster Host",
+          "clusterReplicationType": "`MASTER`, `SLAVE`, `SINGLE`",
+          "clusterUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "roleName": "Role Name",
+          "roleUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+        }
+      ],
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "actionAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "status": "APPROVED",
+          "step": 1,
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+
+
+---
+
+### Approval Rule API - Detail
+`GET /api/external/approval-rules/{uuid}`
+
+Response 변경사항
+
+* `approvalCondition` 이 삭제되었습니다.
+* `executionCondition` 이 변경되었습니다.
+    * **before**  : `"NONE"` `"MANUAL"` `"SELF"` `"CONNECTION_OWNER"` `"ANY"`
+    * **after**  : `"ADMIN_ONLY"` `"ALL_USERS"` `"FIXED"` `"CONNECTION_OWNER"`
+* `reviewEnabled` 가 삭제되었습니다.
+* `urgentMode` 가 추가되었습니다.
+* `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
+* `lines` 의 `type` 이 변경되었습니다.
+    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    * **after**  : `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+* `lines` 의 `resourceType` 이 변경되었습니다.
+    * **before**  : `USER`, `ROLE`
+    * **after**  : `USER`, `GROUP`
+* `lines` 의 `uuid` 가 삭제되었습니다.
+
+Response 변경 전 예시
+
+```
+{
+  "approvalCondition": "MANUAL",
+  "createdAt": "2019-08-24T14:15:22Z",
+  "executionCondition": "MANUAL",
+  "lines": [
+    {
+      "degree": 1,
+      "resourceType": "USER",
+      "resourceUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+      "type": "APPROVER",
+      "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+    }
+  ],
+  "name": "Default Rule",
+  "requestType": "SQL",
+  "reviewEnabled": true,
+  "updatedAt": "2019-08-24T14:15:22Z",
+  "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+}
+```
+
+Response 변경 후 예시
+
+```
+{
+  "createdAt": "2019-08-24T14:15:22Z",
+  "executionCondition": "ADMIN_ONLY",
+  "lines": [
+    {
+      "resourceType": "USER",
+      "resourceUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+      "step": 1,
+      "type": "APPROVER"
+    }
+  ],
+  "name": "Default Rule",
+  "requestType": "SQL",
+  "updatedAt": "2019-08-24T14:15:22Z",
+  "urgentMode": true,
+  "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+}
+```
+
+
+
+---
+
+### Approval API - List of Approval
+`GET /api/external/approvals`
+
+Response 변경사항
+
+* `currentDegree` 가 삭제되었습니다.
+* `approvalStatus` 가 변경되었습니다.
+    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+* `updatedUser` 가 삭제되었습니다.
+* `lines` 의 `uuid` 가 삭제되었습니다.
+* `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
+* `lines` 의 `approvedAt` 이 `actionAt` 으로 대체되었습니다.
+* `lines` 의 `status` 가 변경되었습니다.
+    * **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    * **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+* `lines` 의 `type` 이 변경되었습니다.
+    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    * **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+
+Response 변경 전 예시
+
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "currentDegree": 1,
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "approvedAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "degree": 1,
+          "status": "APPROVED",
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string",
+          "uuid": "UUID"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "updatedUser": "User Information",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+Response 변경 후 예시
+
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "actionAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "status": "APPROVED",
+          "step": 1,
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```

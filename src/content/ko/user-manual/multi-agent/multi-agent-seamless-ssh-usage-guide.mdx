@@ -6,7 +6,9 @@ Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie
 
 ## 사용 방법
 ### SSH config 설정 방법
-기존의 ssh 명령어를 사용하기 위하여 SSH config 파일을 설정할 수 있습니다.
+기존의 `ssh` 명령어를 사용하기 위하여 SSH config 파일을 설정할 수 있습니다.
+
+
 
 1. `.ssh` 디렉토리로 이동하여 `config` 파일을 생성하거나 편집합니다.
 
@@ -37,8 +39,12 @@ Host *
 ssh {{Server Account}}@{{Server Name}}
 ```
 
+
+
 ### Shell Alias 설정 방법
-기존의 ssh 명령어를 사용하기 위하여 SSH Alias 를 설정할 수 있습니다.
+기존의 `ssh` 명령어를 사용하기 위하여 SSH Alias 를 설정할 수 있습니다.
+
+
 
 1. 쉘 설정 파일을 엽니다.
 
@@ -83,6 +89,8 @@ qpctl host use develop.dev.querypie.io
 qshdev {{Server Account}}@{{Server Name}}
 ```
 
+
+
 ## 기존 QueryPie User Agent와 달라진 점
 ### 기본 명령어
 Seamless SSH는 QueryPie Multi Agent 설치시 함께 설치되는 다음 명령어를 이용하여 구동됩니다.
@@ -100,7 +108,7 @@ qpa ssh %r %h %p
 ### 연결 에러 노출 방식
 연결 단계에서 QueryPie Proxy 서버에 연결에 오류가 발생하면 기존 User Agent는 dialog 를 표시하고 있어 터미널 친화적이지 않았습니다.
 
-Multi Agent는 터미널에 에러 내용이 노출되도록 변경되었습니다.
+Multi Agent는 **터미널에 에러 내용이 노출** 되도록 변경되었습니다.
 
 ```
 $ qpctl ssh manual@core.dev.querypie.io
@@ -111,7 +119,7 @@ qpctl: error: Connection error: Timeout
 ### 기본 호스트 지정
 Multi Agent는 Seamless SSH를 사용하기 위해서 QueryPie Host를 입력해야 하는 불편함이 있습니다.
 
-qpctl 명령에 사용하는 기본 서버를 지정하는 기능을 추가합니다.
+`qpctl` 명령에 사용하는 기본 서버를 지정하는 기능을 추가합니다.
 
 * 기본서버가 지정되면  **qpctl ssh-proxy**  명령에서  **QueryPie Host**  를 입력하지 않아도 됩니다.
 * 기본서버가 지정되어 있더라도  **QueryPie Host**  를 입력하면 이 값을 사용합니다.
@@ -177,13 +185,17 @@ Seamless SSH 를 사용하기 위해
 * `~/.ssh/config` 를 설정하거나
 * ssh 명령에 `-o ProxyCommand=qpctl ssh-proxy …` 를 입력하는
 
-경험은 자연스럽지 못합니다. 이에 QueryPie Multi Agent를 설치하였다면 ssh 접속을 위해 qpctl 명령어를 직접 사용할 수 있습니다.
+경험은 자연스럽지 못합니다. 이에 QueryPie Multi Agent를 설치하였다면 ssh 접속을 위해 `qpctl` 명령어를 직접 사용할 수 있습니다.
+
+
 
 1. 사용자가 사용하고자 하는 ssh 명령어 앞에 `qpctl` 만 붙여주세요.
 
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
 ```
+
+
 
 1. `~/.ssh/config` 에 설정한 것도 `qpctl` 만 붙여주세요.
 
@@ -198,6 +210,8 @@ IdentityFile ~/.ssh/querypie-dev.pem
 $ qpctl ssh core-dev
 ```
 
+
+
 ## 지원 범위
 ### 최소 지원 버전
 OpenSSH 6.7 이상이 필요합니다.
@@ -208,7 +222,7 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
 ```
 
 ### 동작 방식
-qpctl 명령이 ssh 클라이언트 명령을 wrapping 하여 ProxyCommand 옵션을 자동으로 붙여서 실행해줍니다.
+`qpctl` 명령이 `ssh` 클라이언트 명령을 wrapping 하여 ProxyCommand 옵션을 자동으로 붙여서 실행해줍니다.
 
 1. **qpctl**  ssh command_line
 2. ssh  **-G**  command_line
@@ -217,7 +231,7 @@ qpctl 명령이 ssh 클라이언트 명령을 wrapping 하여 ProxyCommand 옵�
 
 ### 미지원 기능
 #### 사용자 지정 ProxyCommand
-qpctl 가 ProxyCommand 를 사용하기 때문에 사용자 지정 ProxyCommand 는 사용할 수 없습니다.
+qpctl 가 ProxyCommand 를 사용하기 때문에 ** 사용자 지정 ProxyCommand ** 는 사용할 수 없습니다.
 
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."

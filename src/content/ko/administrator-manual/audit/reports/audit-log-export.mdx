@@ -43,6 +43,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 32. Workflow DB Policy Exception Request Logs [JSON] **[11.0.0]**
 </Callout>
 
+
+
 ## Audit Log Export 목록 조회하기
 <p align="center">
 <div>[image-20240714-063656.png]()</div>
@@ -59,7 +61,7 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 ## 로그 추출 작업 생성하기
 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
 
-감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의 Create Task 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
+감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의 `Create Task` 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
 
 <p align="center">
 <div>[스크린샷 2025-01-16 오후 1.18.05.png]()</div>
@@ -82,6 +84,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
     1. 미리보기는 필수 단계입니다.
     2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가 가능합니다.
 9. `Create` 버튼 : 로그 추출 작업을 생성합니다.
+
+
 
 <Callout type="important">
 **필터 표현식** 
@@ -108,6 +112,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 - DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'` 
 </Callout>
 
+
+
 <Callout type="important">
 **Query Audit의 내보내기 파일의 Privilege Type 명시 기준** 
 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 
@@ -115,6 +121,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다.
 3. Redis의 경우에는 커맨드명이 명시됩니다.
 </Callout>
+
+
 
 ## 추출 작업 완료시 파일 내려받기
 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
@@ -129,6 +137,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다. 
 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting &gt; Security’ 메뉴에서 `Export a file with Encryption` 옵션을 ‘Required’로 지정해야 합니다. 
 </Callout>
+
+
 
 ## 로그 추출 파일 보관 기간 정책 안내
 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.

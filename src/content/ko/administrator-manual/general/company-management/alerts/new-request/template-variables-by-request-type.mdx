@@ -1,0 +1,80 @@
+Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.
+
+## 공통 변수
+모든 요청 타입에서 지원하는 변수 목록입니다.
+
+Request Type을 전체 선택한 경우에도 공통 변수는 사용 가능합니다.
+
+| **변수명**       | **변수**             | **설명**                                                                                                           | **추가 시점** |
+| ------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------- |
+| Request Title | `{{requestTitle}}` | 요청 제목[ul]예: 서비스 DB 접근 요청                                                                                         | -         |
+| Assignees     | `{{assignees}}`    | 요청 승인 담당자[ul]예: STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant Hwang)                                     | -         |
+| Comment       | `{{comment}}`      | 요청 코멘트[ul]예: 서비스 운영 목적으로 DB 접근 권한 요청드립니다.                                                                        | -         |
+| User Name     | `{{userName}}`     | 요청자 이름 [ul]예: Keira Yoon                                                                                         | -         |
+| Email         | `{{email}}`        | 요청자 이메일[ul]예: [keira@email.com](mailto:keira@email.com)                                                          | -         |
+| Access Type   | `{{accessType}}`   | 요청 유형[ul]DB Access RequestSQL RequestSQL Export RequestUnmasking RequestServer Access RequestAccess Role Request | -         |
+| Link          | `{{link}}`         | 요청 상세 페이지 링크[ul]예: https://`{querypie_domain}`/workflow/received-requests/to-do/detail/`{workflow_uuid}`         | -         |
+| Workflow Uuid | `{{workflowUuid}}` | 요청 UUID [ul]예: b63f9f94-11e5-4095-a399-be7d96e9ce06                                                              | -         |
+| Workflow Id   | `{{id}}`           | 요청 ID[ul]예: 12                                                                                                   | -         |
+| Urgent        | `{{urgent}}`       | 긴급 요청 여부[ul]true 또는 false                                                                                        | 10.2.0    |
+
+## DB Access Request
+| **변수명**                            | **변수**                         | **설명**                             | **추가 시점** |
+| ---------------------------------- | ------------------------------ | ---------------------------------- | --------- |
+| Expiration Date                    | `{{expirationDate}}`           | 만료 일자                              | 10.2.2    |
+| Requested Privilege per Connection | `{{connectionPrivilegeNames}}` | 커넥션 별 요청된 Privilege를 목록으로 표시[ul]예: | 10.2.2    |
+
+## SQL Request
+| **변수명**                  | **변수**                      | **설명**                            | **추가 시점** |
+| ------------------------ | --------------------------- | --------------------------------- | --------- |
+| SQL Text                 | `{{sqlText}}`               | SQL 구문[ul]최대 100자 (TEXT, FILE 동일) | 10.2.2    |
+| Content Type             | `{{contentType}}`           | SQL 구문 입력 방식[ul]TEXT 또는 FILE      | 10.2.2    |
+| Cluster Group Uuid       | `{{clusterGroupUuid}}`      | DB 커넥션 UUID                       | 10.2.2    |
+| Cluster Group Name       | `{{clusterGroupName}}`      | DB 커넥션 이름                         | 10.2.2    |
+| Cluster Id               | `{{clusterId}}`             | DB 커넥션 ID                         | 10.2.2    |
+| Database Type            | `{{databaseType}}`          | 데이터베이스 유형                         | 10.2.2    |
+| Database Name            | `{{databaseName}}`          | 데이터베이스 이름                         | 10.2.2    |
+| Use Ledger Approval Rule | `{{useLedgerApprovalRule}}` | 원장 승인 규칙 사용 여부                    | 10.2.2    |
+| Target Date              | `{{targetDate}}`            | 실행 목표 일자                          | 10.2.2    |
+| Due Date                 | `{{dueDate}}`               | 승인/실행 만료 일자                       | 10.2.2    |
+
+## SQL Export Request
+| **변수명**            | **변수**                 | **설명**                                                | **추가 시점** |
+| ------------------ | ---------------------- | ----------------------------------------------------- | --------- |
+| Cluster Group Uuid | `{{clusterGroupUuid}}` | DB 커넥션 UUID                                           | 10.2.2    |
+| Cluster Group Name | `{{clusterGroupName}}` | DB 커넥션 이름                                             | 10.2.2    |
+| Cluster Id         | `{{clusterId}}`        | DB 커넥션 ID                                             | 10.2.2    |
+| Database Type      | `{{databaseType}}`     | 데이터베이스 유형                                             | 10.2.2    |
+| Database Name      | `{{databaseName}}`     | 데이터베이스 이름                                             | 10.2.2    |
+| Export Type        | `{{exportType}}`       | 내보내기 유형[ul]QUERY 또는 TABLE                             | 10.2.2    |
+| Export Detail      | `{{exportDetail}}`     | 내보내기 세부 정보[ul]Query인 경우, 최대 100자의 쿼리Table인 경우, 테이블 이름 | 10.2.2    |
+| Target Date        | `{{targetDate}}`       | 실행 목표 일자                                              | 10.2.2    |
+| Due Date           | `{{dueDate}}`          | 승인/실행 만료 일자                                           | 10.2.2    |
+
+## Unmasking Request
+| **변수명**              | **변수**                    | **설명**                                                              | **추가 시점** |
+| -------------------- | ------------------------- | ------------------------------------------------------------------- | --------- |
+| Cluster Group Uuid   | `{{clusterGroupUuid}}`    | DB 커넥션 UUID                                                         | 10.2.2    |
+| Cluster Group Name   | `{{clusterGroupName}}`    | DB 커넥션 이름                                                           | 10.2.2    |
+| Database Type        | `{{databaseType}}`        | 데이터베이스 유형                                                           | 10.2.2    |
+| Database Name        | `{{databaseName}}`        | 데이터베이스 이름                                                           | 10.2.2    |
+| Table Name           | `{{tableName}}`           | 테이블 이름                                                              | 10.2.2    |
+| Column Names         | `{{columnNames}}`         | 컬럼 이름을 목록으로 표시[ul]예: [actor_id, first_name, last_name, last_update] | 10.2.2    |
+| Unmasking Expiration | `{{unmaskingExpiration}}` | 마스킹 해제 만료 시점 [ul]예:                                                 | 10.2.2    |
+
+## Server Access Request
+| **변수명**           | **변수**                | **설명**               | **추가 시점** |
+| ----------------- | --------------------- | -------------------- | --------- |
+| Server Group Name | `{{serverGroupName}}` | 서버 그룹 이름             | 10.2.2    |
+| Server Names      | `{{serverNames}}`     | 서버 이름을 목록으로 표시[ul]예: | 10.2.2    |
+| Server Accounts   | `{{serverAccounts}}`  | 서버 계정을 목록으로 표시[ul]예: | 10.2.2    |
+| Expiration Date   | `{{expirationDate}}`  | 만료 일자                | 10.2.2    |
+
+## Access Role Request
+| **변수명**         | **변수**               | **설명**                        | **추가 시점** |
+| --------------- | -------------------- | ----------------------------- | --------- |
+| Service         | `{{service}}`        | 역할 요청 대상 서비스[ul]SAC, KAC, WAC | 10.2.2    |
+| Role Name       | `{{roleName}}`       | 역할 이름                         | 10.2.2    |
+| Expiration Date | `{{expirationDate}}` | 만료 일자                         | 10.2.2    |
+
+

@@ -17,6 +17,8 @@ General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있
 * **Audit Log Retention Period ** : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
 * **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.
 
+
+
 ## System Properties
 System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할 수 있습니다.
 
@@ -25,10 +27,14 @@ System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설�
 *Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties*
 </p>
 
+
+
 ## 쿼리 공유 설정
 Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송하여 다른 사용자들과 공유하는 기능입니다.
 
-기본적으로 쿼리 공유 설정은 꺼져 있으며, Query Sharing Setting 버튼을 클릭하면 설정 모달이 팝업됩니다. Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩니다.
+기본적으로 쿼리 공유 설정은 꺼져 있으며, `Query Sharing Setting` 버튼을 클릭하면 설정 모달이 팝업됩니다. Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩니다.
+
+
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 2.50.03.png]()</div>
@@ -39,6 +45,8 @@ Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송�
 <div>[스크린샷 2024-07-26 오후 2.56.50.png]()</div>
 *Query Sharing 모달 - SSH*
 </p>
+
+
 
 * **Git Repository URL**  : 쿼리를 전송할 Git Repository URL
 * **Git Branch**  : 쿼리 파일을 전송할 Repository 내 브랜치 이름
@@ -51,7 +59,9 @@ Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송�
         * **Private Key**  : SSH Public Key와 한 쌍을 이루는 Private Key
         * **Passphrase**  : Private Key에 Passphrase 설정된 경우 입력
 
-입력이 완료되면 Test 버튼을 클릭하여 정상적으로 인증되는지 확인 후 OK 버튼을 입력하여 저장합니다.
+
+
+입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인 후 `OK` 버튼을 입력하여 저장합니다.
 
 <Callout type="info">
 GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고해주세요. 
@@ -59,19 +69,25 @@ GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서
 * SSH 연결 : [SSH를 통한 GitHub 연결](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
 </Callout>
 
+
+
+
+
 <p align="center">
 <div>[image-20241028-093832.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; General*
 </p>
 
-Query Sharing 설정이 완료되면 Query Sharing이 On으로 표시됩니다.
+
+
+Query Sharing 설정이 완료되면 Query Sharing이 **On** 으로 표시됩니다.
 
 SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
 
 * Save 시 연동한 Repository에 쿼리 파일이 저장됩니다.
 * Queries 패널 &gt; QueryPie Git Sharing 폴더에서 Repository에 저장된 쿼리 파일을 불러올 수 있습니다.
 
-자세한 설명은 웹 SQL 에디터로 접속하기를 참고해주세요.
+자세한 설명은 [웹 SQL 에디터로 접속하기](웹 SQL 에디터로 접속하기) 를 참고해주세요.
 
 ## Workflow Configuration
 Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
@@ -150,6 +166,8 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 <div>[Screenshot 2025-05-09 at 3.18.32 PM.png]()</div>
 </p>
 
+
+
 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
 
 * **Query chunk size**  : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
@@ -163,7 +181,7 @@ Redirect to custom page for SQL Requests 토글을 활성화합니다.
 <div>[Screenshot 2025-05-09 at 8.33.07 PM.png]()</div>
 </p>
 
-이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로 인해 워크플로 승인 요청이 발생할 경우, Send Request 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.
+이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로 인해 워크플로 승인 요청이 발생할 경우, `Send Request` 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.
 
 * 토글을 활성화한 경우
     * Administrator &gt; General &gt; Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.

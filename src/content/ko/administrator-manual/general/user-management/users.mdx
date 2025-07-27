@@ -3,6 +3,8 @@ import { Callout } from 'nextra/components'
 ## Overview
 User 페이지에서는 현재 QueryPie에 등록된 사용자 목록을 조회하고, 제반 관리 작업을 수행합니다.
 
+
+
 ## 사용자 목록 조회하기
 User 페이지에서 사용자 목록을 조회할 수 있으며, 검색 및 필터를 제공합니다.
 
@@ -37,6 +39,8 @@ Users 목록에서 확인 가능한 정보는 다음과 같습니다.
 
 * **Status**  : 계정의 활성화 상태 (Active 또는 Inactive)
 
+
+
 ## 수동으로 사용자 추가
 조직에 새로운 사용자를 수동으로 추가합니다. 사용자를 추가한 후 그룹 및 정책에 할당하고 권한을 부여할 수 있습니다.
 
@@ -59,6 +63,8 @@ Users 목록에서 확인 가능한 정보는 다음과 같습니다.
 </Callout>
 
 해당 사용자가 QueryPie Provider로 Users 목록에 추가된 것을 확인하실 수 있습니다. 기본적으로 Admin 권한이 없는 기본 User로 등록됩니다.
+
+
 
 ## 사용자에게 관리자 역할 부여 또는 회수하기
 <Callout type="important">
@@ -83,8 +89,10 @@ Admin Role 을 부여할 수 있는 관리자는 Owner 역할의 사용자만 �
 관리자 역할 자체를 관리하는 방법은 [Roles]((10.2.0-ko) Roles) 문서를 참고해주세요. 
 </Callout>
 
+
+
 ## 사용자 상세 정보 조회하기
-Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진입합니다. 등록된 정보의 조회 및 사용자 관리 작업을 수행할 수 있습니다. 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 사용자 상세 정보는 각각 Profile, Groupts, Admin Roles, Allowed Zones, Tags 탭으로 구분됩니다. 각 항목별 설명은 사용자 프로필 문서를 참고해주세요.
+Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진입합니다. 등록된 정보의 조회 및 사용자 관리 작업을 수행할 수 있습니다. 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 사용자 상세 정보는 각각 Profile, Groupts, Admin Roles, Allowed Zones, Tags 탭으로 구분됩니다. 각 항목별 설명은 [사용자 프로필 문서]((10.2.0-ko) 사용자 프로필) 를 참고해주세요.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 9.37.48.png]()</div>
@@ -95,13 +103,15 @@ Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진�
 QueryPie를 통해 등록한 사용자만 Profile 정보 수정 및 사용자 삭제가 가능하며, SCIM 연동된 사용자는 원장 데이터 업데이트를 통해 수정사항을 반영하여야 합니다. 
 </Callout>
 
+
+
 ## 사용자 비활성화하기
 모종의 이유로 사용자 계정을 비활성화해야 할 때, 두 가지 경로로 처리할 수 있습니다.
 
 ### Users 페이지에서 비활성화하기
 사용자 페이지 내 Status 드롭다운에서, 비활성화 하려는 사용자의 Status 값을 Inactive로 변경합니다.
 
-사유 입력 모달이 출력되면 변경 사유를 입력 후 OK 버튼을 클릭하여 변경을 완료합니다.
+사유 입력 모달이 출력되면 변경 사유를 입력 후 `OK` 버튼을 클릭하여 변경을 완료합니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 10.42.45.png]()</div>
@@ -109,24 +119,28 @@ QueryPie를 통해 등록한 사용자만 Profile 정보 수정 및 사용자 �
 </p>
 
 ### 상세 페이지에서 비활성화하기
-사용자 상세 페이지에서 Deactivate 버튼을 클릭하면 사유 입력 모달이 출력됩니다.
+사용자 상세 페이지에서 `Deactivate` 버튼을 클릭하면 사유 입력 모달이 출력됩니다.
 
-사유 입력 후 OK 버튼을 클릭하면 사용자 비활성화가 완료됩니다.
+사유 입력 후 `OK` 버튼을 클릭하면 사용자 비활성화가 완료됩니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 10.46.08.png]()</div>
 *Administrator &gt; General &gt; User Management &gt; Users &gt; List Details*
 </p>
 
+
+
 <Callout type="info">
 비활성화 처리된 사용자의 계정 상태는 Inactive, Description에는 Locked Manually 로 표시됩니다. 
 </Callout>
+
+
 
 ## 사용자 재활성화하기
 관리자에 의해 수동으로 비활성화 되었거나, 장기 미접속으로 인해 비활성화 처리된 사용자의 계정 상태는 Inactive 로 표시됩니다. 이러한 사용자 계정을 다시 활성화하는 방법은 크게 두가지입니다.
 
 ### Users 페이지에서 재활성화하기
-사용자 페이지 내 Status 드롭다운에서, 재활성화 하려는 사용자의 Status 값을 Active로 변경합니다. 사유 입력 모달이 출력되면 변경 사유를 입력 후 OK 버튼을 클릭하여 변경을 완료합니다.
+사용자 페이지 내 Status 드롭다운에서, 재활성화 하려는 사용자의 Status 값을 Active로 변경합니다. 사유 입력 모달이 출력되면 변경 사유를 입력 후 `OK` 버튼을 클릭하여 변경을 완료합니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 10.37.11.png]()</div>
@@ -134,38 +148,44 @@ QueryPie를 통해 등록한 사용자만 Profile 정보 수정 및 사용자 �
 </p>
 
 ### 사용자 상세 페이지에서 재활성화하기
-비활성화된 사용자의 상세 페이지에서 Reactivate 버튼을 클릭합니다. 사유 입력 모달이 출력되면 변경 사유를 입력 후 OK 버튼을 클릭하여 변경을 완료합니다.
+비활성화된 사용자의 상세 페이지에서 `Reactivate` 버튼을 클릭합니다. 사유 입력 모달이 출력되면 변경 사유를 입력 후 `OK` 버튼을 클릭하여 변경을 완료합니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 10.32.41.png]()</div>
 *Administrator &gt; General &gt; User Management &gt; Users &gt; List Details*
 </p>
 
+
+
 ## 사용자 정보 수정하기
 <Callout type="important">
 QueryPie에서 수동으로 등록한 사용자의 정보만 수정가능합니다. SCIM을 통해 연동해온 사용자 정보 수정은 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다. 
 </Callout>
 
-사용자 상세 페이지에서 Edit 버튼을 클릭하면 수정 모드로 진입합니다. 수정 가능한 필드는 활성화됩니다. 입력 완료 후 Save 버튼을 눌러 수정을 완료합니다.
+사용자 상세 페이지에서 `Edit` 버튼을 클릭하면 수정 모드로 진입합니다. 수정 가능한 필드는 활성화됩니다. 입력 완료 후 `Save` 버튼을 눌러 수정을 완료합니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 9.44.36.png]()</div>
 *Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Edit*
 </p>
 
+
+
 ## 사용자 삭제하기
 <Callout type="important">
 QueryPie에서 수동으로 등록한 사용자만 직접 삭제 가능합니다. SCIM을 통해 연동해온 사용자 삭제는 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다. 
 </Callout>
 
-사용자 상세 페이지에서 Delete 버튼을 클릭하면 Delete User 확인 모달이 노출됩니다.
+사용자 상세 페이지에서 `Delete` 버튼을 클릭하면 Delete User 확인 모달이 노출됩니다.
 
-확인 문구로 “DELETE” 를 입력한 뒤 Delete 버튼을 누르면 삭제가 완료됩니다.
+확인 문구로 “DELETE” 를 입력한 뒤 `Delete` 버튼을 누르면 삭제가 완료됩니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-26 오전 10.17.58.png]()</div>
 *Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Delete User*
 </p>
+
+
 
 ## 사용자 비밀번호 재설정하기
 <Callout type="important">
@@ -200,18 +220,22 @@ QueryPie 10.2.2부터 Email 연동 설정이 되어 있는 경우, 관리자가 
 </Callout>
 
 ### 비밀번호 재설정 (사용자)
-사용자가 로그인 할 때 앞에서 설정한 임시 비밀번호를 입력하면, 곧바로 비밀번호 재설정 화면으로 진입됩니다. 비밀번호를 변경한 뒤 Change Password 버튼을 클릭하면 비밀번호 변경이 완료되며, 새로운 비밀번호로 로그인할 수 있습니다.
+사용자가 로그인 할 때 앞에서 설정한 임시 비밀번호를 입력하면, 곧바로 비밀번호 재설정 화면으로 진입됩니다. 비밀번호를 변경한 뒤 `Change Password` 버튼을 클릭하면 비밀번호 변경이 완료되며, 새로운 비밀번호로 로그인할 수 있습니다.
+
+
 
 <p align="center">
 <div>[image-20241220-014612.png]()</div>
 *비밀번호 재설정 화면*
 </p>
 
+
+
 ## 사용자 OTP 재설정하기
-Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진입합니다. OTP를 통해 2차 인증을 설정한 경우, OTP 재설정 기능을 제공합니다. OTP 재설정 후, 사용자는 자신의 OTP를 다시 설정해야 합니다. OTP를 다시 설정하는 방법은 My Dashboard 문서를 참고해주세요.
+Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진입합니다. OTP를 통해 2차 인증을 설정한 경우, OTP 재설정 기능을 제공합니다. OTP 재설정 후, 사용자는 자신의 OTP를 다시 설정해야 합니다. OTP를 다시 설정하는 방법은 [My Dashboard](My Dashboard) 문서를 참고해주세요.
 
 ### 사용자 OTP 재설정
-사용자의 상세 페이지에서 Reset OTP 버튼을 클릭합니다. 경고 모달이 출력되면 Reset 버튼을 클릭하여 변경을 재설정을 완료합니다.
+사용자의 상세 페이지에서 `Reset OTP` 버튼을 클릭합니다. 경고 모달이 출력되면 `Reset` 버튼을 클릭하여 변경을 재설정을 완료합니다.
 
 <p align="center">
 <div>[image-20250116-131037.png]()</div>

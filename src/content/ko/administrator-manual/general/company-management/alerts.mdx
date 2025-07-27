@@ -15,23 +15,23 @@ Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공�
 
 서비스 별로 지원하는 알림 유형은 다음과 같습니다.
 
-| 서비스 구분        | 알림 타입명                    | 설명                               |
-| ------------- | ------------------------- | -------------------------------- |
-| SAC, DAC, KAC | New Request               | 새로운 결재 요청 등록 알림                  |
-| General       | Unusual Login Attempt     | IP 대역에 따른 사용자 로그인 행위 알림          |
-| DAC           | SQL Execution             | 정의된 조건에 해당하는 SQL 구문 실행 알림        |
-| DAC           | Prevented SQL Execution   | 권한 없는 구문 실행 알림                   |
-| DAC           | DB Connection Attempt     | DB 접속 성공 또는 실패 알림                |
-| DAC           | Sensitive Data Access     | 정의된 조건에 해당하는 민감데이터 조회 알림         |
-| DAC           | SQL Export                | 정의된 조건에 해당하는 SQL 내보내기 실행 알림      |
-| SAC           | Server Connection Attempt | 서버 접속 성공 또는 실패 알림                |
-| SAC           | Restricted Command        | 서버/서버 그룹별 차단된 명령어 실행 알림          |
-| SAC           | Specific Command          | 특정 명령어 실행 알림                     |
-| SAC           | File Transfer (SFTP)      | SFTP를 통한 파일 전송 실행 알림             |
-| KAC           | K8s API Request           | 쿠버네티스 API 요청 알림10.2.2 이후 버전에서 지원 |
+| **서비스 구분**    | **알림 타입명**                | **설명**                               |
+| ------------- | ------------------------- | ------------------------------------ |
+| SAC, DAC, KAC | New Request               | 새로운 결재 요청 등록 알림                      |
+| General       | Unusual Login Attempt     | IP 대역에 따른 사용자 로그인 행위 알림              |
+| DAC           | SQL Execution             | 정의된 조건에 해당하는 SQL 구문 실행 알림            |
+| DAC           | Prevented SQL Execution   | 권한 없는 구문 실행 알림                       |
+| DAC           | DB Connection Attempt     | DB 접속 성공 또는 실패 알림                    |
+| DAC           | Sensitive Data Access     | 정의된 조건에 해당하는 민감데이터 조회 알림             |
+| DAC           | SQL Export                | 정의된 조건에 해당하는 SQL 내보내기 실행 알림          |
+| SAC           | Server Connection Attempt | 서버 접속 성공 또는 실패 알림                    |
+| SAC           | Restricted Command        | 서버/서버 그룹별 차단된 명령어 실행 알림              |
+| SAC           | Specific Command          | 특정 명령어 실행 알림                         |
+| SAC           | File Transfer (SFTP)      | SFTP를 통한 파일 전송 실행 알림                 |
+| KAC           | K8s API Request           | 쿠버네티스 API 요청 알림[ul]10.2.2 이후 버전에서 지원 |
 
 ## 알림 생성하기
-Alerts 페이지 우상단 Create Alert 버튼을 클릭하여 새로운 알림을 생성합니다. OK 버튼을 클릭하여 알림 생성을 완료합니다.
+Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알림을 생성합니다. `OK` 버튼을 클릭하여 알림 생성을 완료합니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-29 오후 2.17.28.png]()</div>
@@ -239,13 +239,17 @@ SFTP를 통한 파일 전송 실행 알림
     * 현재 지원 대상 - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets` 등 (총 24종)
     * All Resources (*) : 추후 추가될 모든 리소스 종류를 대상으로 알림 조건 생성
 
+
+
 ## 알림 상세 정보 조회 및 수정
-Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 Save Changes 버튼을 클릭하면 수정 내용이 반영됩니다.
+Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 `Save Changes` 버튼을 클릭하면 수정 내용이 반영됩니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-29 오후 3.42.17.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)*
 </p>
+
+
 
 ## 알림 발송 내역 조회
 Alerts 목록에서 발송 내역을 조회하려는 알림을 선택합니다. 이후 상세 페이지 내 Log에서 내역을 조회할 수 있습니다.
@@ -254,6 +258,8 @@ Alerts 목록에서 발송 내역을 조회하려는 알림을 선택합니다. 
 <div>[스크린샷 2024-07-29 오후 3.42.23.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)*
 </p>
+
+
 
 ## 알림 삭제하기
 기존에 등록된 알림을 삭제하는 두 가지 경로를 제공합니다.
