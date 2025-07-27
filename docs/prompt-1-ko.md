@@ -18,27 +18,64 @@ src/content/ko/ 디렉토리로 옮겨옵니다.
 
 ## Confluence Space 의 문서를 내려받기
 - 이 Space는 https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs URL을 통해 접근할 수 있습니다.
-- scripts/pages_of_confluence.py 파일을 통해, 이 Confluence Space 에서 문서의 목록을 가져올 수 있습니다.
-  pages_of_confluence.py 를 실행한 결과를 docs/latest-ko-confluence/list.txt 파일에 저장합니다.
-- docs/latest-ko-confluence/list.txt 파일은 Confluence Space 에서 가져온 문서의 목록을 담고 있습니다.
+- scripts/pages_of_confluence.py 명령은 이 Confluence Space 에서 문서를 내려받아 저장하고, 목록을 만들어 내는 프로그램입니다.
+  pages_of_confluence.py 는 지정한 문서에서 시작하여 children 문서를 재귀적으로 내려받아 저장합니다.
+  프로그램 코드에는 한국어, 한글을 사용하지 않고, 영어로 설명, 코멘트를 작성하는 것이 규칙입니다.
+- 개발 과정에서 프로그램의 기능 테스트를 빠르게 수행하기 위해, 다음의 문서를 시작 페이지로 지정하면 좋습니다:
+  https://querypie.atlassian.net/wiki/spaces/QM/pages/544375784/QueryPie+Overview
+- 문서 데이터를 저장하는 경로는 기본 `docs/latest-ko-confluence/`입니다. 문서 데이터는 이 아래에 `<page_id>/` 디렉토리를 생성하고
+  데이터를 저장합니다. 상세한 절차는 다음의 4단계로 구분됩니다.
+  1. 데이터 저장 과정의 첫번째 단계는 API 를 호출하고, 그 결과를 `<page_id>/*.yaml` 파일에 저장하는 것입니다.
+      - page.v1.yaml: page v1 API 응답 결과를 yaml 로 저장합니다.
+      - page.v2.yaml: page v2 API 응답 결과를 yaml 로 저장합니다.
+      - ancestors.v2.yaml: ancestors v2 API
+      - children.v2.yaml: children v2 API
+      - attachments.v1.yaml: attachments v1 API
+      - `--local` 실행 옵션을 지정한 경우, 이 API 호출 및 저장 과정을 수행하지 않습니다.
+  2. API 결과에서 본문 데이터를 추출하여 저장합니다.
+      - 앞의 과정에서 저장된 *.yaml 파일을 읽어서 작업을 수행합니다. `--local` 실행 옵션을 지정한 경우, 이 과정을 생략하지 않습니다.
+      - page.xhtml: page v1 API 응답의 body.storage.value 를 저장합니다.
+      - page.html: page v1 API 응답의 body.view.value 를 저장합니다.
+      - page.adf: page v2 API 응답의 body.atlas_doc_format.value
+      - ancestors.v1.yaml: page v1 API 응답의 ancestors 를 저장합니다.
+  3. `--attachments` 실행 옵션을 지정한 경우, 첨부파일을 각각 내려받아 `<page_id>/` 디렉토리에 첨부파일의 이름으로 저장합니다. 
+      - `--local` 실행 옵션이 지정된 경우, 이 과정은 생략합니다.
+  4. ancestors, title 을 참조하여 문서 목록을 stdout 으로 출력합니다.
+      - ancestors 에서, 문서 수집을 시작한 첫페이지, 그리고 이 첫페이지의 부모 등 상위 페이지 정보를 제외합니다.
+```
+# page v1 API
+expand_params = "title,ancestors,body.storage,body.view"
+url = f"{self.args.base_url}/rest/api/content/{page_id}?expand={expand_params}"
+
+# page v2 API
+url = f"{self.args.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format"
+
+# ancestors v2 API
+ancestors_url = f"{self.args.base_url}/api/v2/pages/{page_id}/ancestors"
+
+# children v2 API
+child_url = f"{self.args.base_url}/api/v2/pages/{page_id}/children?type=page&limit=100"
+
+# attachments v1 API
+attachment_url = f"{self.args.base_url}/rest/api/content/{page_id}/child/attachment"
+
+```
+- 문서 목록은 다음의 형식을 갖습니다. stdout 결과를 redirect 하여 list.txt 에 저장하면, 이러한 구조를 갖게 됩니다:
   이 파일은 각 줄마다 하나의 문서에 대한 Page_ID, Breadcrumbs, 제목을 포함하고 있습니다. 각 항목은 tab 문자(`\t`)로 구분되어 있습니다.
   list.txt 파일의 예시는 다음과 같습니다.
 ```
-% head list.txt
-608501837	QueryPie Manual > QueryPie Docs	QueryPie Docs
-544375335	QueryPie Manual > QueryPie Docs > Release Notes	Release Notes
-1064830173	QueryPie Manual > QueryPie Docs > Release Notes > 11.0.0	11.0.0
-954335909	QueryPie Manual > QueryPie Docs > Release Notes > 10.3.0 ~ 10.3.4	10.3.0 ~ 10.3.4
-703463517	QueryPie Manual > QueryPie Docs > Release Notes > 10.2.0 ~ 10.2.12	10.2.0 ~ 10.2.12
-604995641	QueryPie Manual > QueryPie Docs > Release Notes > 10.1.0 ~ 10.1.11	10.1.0 ~ 10.1.11
-544375355	QueryPie Manual > QueryPie Docs > Release Notes > 10.0.0 ~ 10.0.2	10.0.0 ~ 10.0.2
-544375370	QueryPie Manual > QueryPie Docs > Release Notes > 9.20.0 ~ 9.20.2	9.20.0 ~ 9.20.2
-544375385	QueryPie Manual > QueryPie Docs > Release Notes > 9.19.0 	9.19.0 
-544375399	QueryPie Manual > QueryPie Docs > Release Notes > 9.18.0 ~ 9.18.3	9.18.0 ~ 9.18.3
+608501837	QueryPie Docs	QueryPie Docs
+544375335	QueryPie Docs > Release Notes	Release Notes
+1064830173	QueryPie Docs > Release Notes > 11.0.0	11.0.0
+954335909	QueryPie Docs > Release Notes > 10.3.0 ~ 10.3.4	10.3.0 ~ 10.3.4
+703463517	QueryPie Docs > Release Notes > 10.2.0 ~ 10.2.12	10.2.0 ~ 10.2.12
+604995641	QueryPie Docs > Release Notes > 10.1.0 ~ 10.1.11	10.1.0 ~ 10.1.11
+544375355	QueryPie Docs > Release Notes > 10.0.0 ~ 10.0.2	10.0.0 ~ 10.0.2
+544375370	QueryPie Docs > Release Notes > 9.20.0 ~ 9.20.2	9.20.0 ~ 9.20.2
+544375385	QueryPie Docs > Release Notes > 9.19.0 	9.19.0 
+544375399	QueryPie Docs > Release Notes > 9.18.0 ~ 9.18.3	9.18.0 ~ 9.18.3
 ```
-- scripts/pages_of_confluence.py 는 문서의 Page_ID 를 디렉토리 이름으로 하여, 그 안에 문서의 본문과 첨부파일을 저장합니다.
-  문서의 본문은 `<Page_ID>/page.xhtml` 파일에 저장되며, 첨부파일은 `<Page_ID>/` 디렉토리에 첨부파일의 이름으로 저장됩니다.
-  저장된 page.xhtml, 첨부파일의 구조는 다음과 같습니다.
+- `<page_id>` 디렉토리에 저장된 page.xhtml, 첨부파일에 대한 예시는 다음과 같습니다.
 ```shell
 % find latest-ko-confluence | head -20 
 latest-ko-confluence
