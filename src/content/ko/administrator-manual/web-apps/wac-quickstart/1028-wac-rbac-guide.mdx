@@ -49,13 +49,122 @@ spec:
 
 
 ## YAML 명세
-|  **Category**                 |  **Property**  |  **Required**  |  **Description**                               |  **Valid Values**                                                          |
-| ----------------------------- | -------------- | -------------- | ---------------------------------------------- | -------------------------------------------------------------------------- |
-| `apiVersion`                  | -              | **[required]** | 작성된 YAML Code의 버전시스템에서 관리하는 값으로, 수정 불필요        | `webApp.rbac.querypie.com/v1`                                              |
-| `kind`                        | -              | **[required]** | 작성된 YAML Code의 종류시스템에서 관리하는 값으로, 수정 불필요        | `WacPolicy`                                                                |
-| `spec:`<br/> `&lt;effect&gt;` | -              | **[required]** | 정책 내 세부 규칙 (허용 또는 거부)                          | `allow`, `deny`                                                            |
-|                               | `resources`    | **[required]** | 접근을 허용/거부할 리소스 지정                              | `webApp`, `urlPaths`, `urlPathTags` (urlPathTags는 `spec: allow` 에서만 사용 가능) |
-|                               | `conditions`   | **[OPTIONAL]** | 규칙 적용 대상에 대한 세부 조건(현재 `spec: allow` 에서만 사용 가능) | `userAttributes`, `ipAddresses`                                            |
+<table data-table-width="760" data-layout="default" local-id="bb2479df-82c8-474e-8723-247d4037944a">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="#f0f1f2">
+ **Category** 
+</th>
+<th data-highlight-colour="#f0f1f2">
+ **Property** 
+</th>
+<th data-highlight-colour="#f0f1f2">
+ **Required** 
+</th>
+<th data-highlight-colour="#f0f1f2">
+ **Description** 
+</th>
+<th data-highlight-colour="#f0f1f2">
+ **Valid Values** 
+</th>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`apiVersion`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+작성된 YAML Code의 버전
+시스템에서 관리하는 값으로, 수정 불필요
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`kind`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+작성된 YAML Code의 종류
+시스템에서 관리하는 값으로, 수정 불필요
+</td>
+<td data-highlight-colour="#ffffff">
+`WacPolicy`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+정책 내 세부 규칙 (허용 또는 거부)
+</td>
+<td data-highlight-colour="#ffffff">
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+ 
+</td>
+<td data-highlight-colour="#ffffff">
+`resources`
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+접근을 허용/거부할 리소스 지정
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp`, `urlPaths`, `urlPathTags` (urlPathTags는 `spec: allow` 에서만 사용 가능)
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+ 
+</td>
+<td data-highlight-colour="#ffffff">
+`conditions`
+</td>
+<td data-highlight-colour="#ffffff">
+**[OPTIONAL]**
+</td>
+<td data-highlight-colour="#ffffff">
+규칙 적용 대상에 대한 세부 조건
+(현재 `spec: allow` 에서만 사용 가능)
+</td>
+<td data-highlight-colour="#ffffff">
+`userAttributes`, `ipAddresses`
+</td>
+</tr>
+</tbody>
+</table>
 
 아래에서 정책 작성에 필요한 QueryPie WAC Policy YAML 문법을 안내합니다.
 

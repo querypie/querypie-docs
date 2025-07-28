@@ -15,20 +15,159 @@ Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공�
 
 서비스 별로 지원하는 알림 유형은 다음과 같습니다.
 
-|  **서비스 구분**   |  **알림 타입명**               |  **설명**                              |
-| ------------- | ------------------------- | ------------------------------------ |
-| SAC, DAC, KAC | New Request               | 새로운 결재 요청 등록 알림                      |
-| General       | Unusual Login Attempt     | IP 대역에 따른 사용자 로그인 행위 알림              |
-| DAC           | SQL Execution             | 정의된 조건에 해당하는 SQL 구문 실행 알림            |
-| DAC           | Prevented SQL Execution   | 권한 없는 구문 실행 알림                       |
-| DAC           | DB Connection Attempt     | DB 접속 성공 또는 실패 알림                    |
-| DAC           | Sensitive Data Access     | 정의된 조건에 해당하는 민감데이터 조회 알림             |
-| DAC           | SQL Export                | 정의된 조건에 해당하는 SQL 내보내기 실행 알림          |
-| SAC           | Server Connection Attempt | 서버 접속 성공 또는 실패 알림                    |
-| SAC           | Restricted Command        | 서버/서버 그룹별 차단된 명령어 실행 알림              |
-| SAC           | Specific Command          | 특정 명령어 실행 알림                         |
-| SAC           | File Transfer (SFTP)      | SFTP를 통한 파일 전송 실행 알림                 |
-| KAC           | K8s API Request           | 쿠버네티스 API 요청 알림[ul]10.2.2 이후 버전에서 지원 |
+<table data-table-width="760" data-layout="center" local-id="56383138-c970-42e6-869a-a74e4c473292">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+ **서비스 구분** 
+</th>
+<th>
+ **알림 타입명** 
+</th>
+<th>
+ **설명** 
+</th>
+</tr>
+<tr>
+<td>
+SAC, DAC, KAC
+</td>
+<td>
+New Request
+</td>
+<td>
+새로운 결재 요청 등록 알림
+</td>
+</tr>
+<tr>
+<td>
+General
+</td>
+<td>
+Unusual Login Attempt
+</td>
+<td>
+IP 대역에 따른 사용자 로그인 행위 알림
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Execution
+</td>
+<td>
+정의된 조건에 해당하는 SQL 구문 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Prevented SQL Execution
+</td>
+<td>
+권한 없는 구문 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+DB Connection Attempt
+</td>
+<td>
+DB 접속 성공 또는 실패 알림
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Sensitive Data Access
+</td>
+<td>
+정의된 조건에 해당하는 민감데이터 조회 알림
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Export
+</td>
+<td>
+정의된 조건에 해당하는 SQL 내보내기 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Server Connection Attempt
+</td>
+<td>
+서버 접속 성공 또는 실패 알림
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Restricted Command
+</td>
+<td>
+서버/서버 그룹별 차단된 명령어 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Specific Command
+</td>
+<td>
+특정 명령어 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+File Transfer (SFTP)
+</td>
+<td>
+SFTP를 통한 파일 전송 실행 알림
+</td>
+</tr>
+<tr>
+<td>
+KAC
+</td>
+<td>
+K8s API Request
+</td>
+<td>
+쿠버네티스 API 요청 알림
+* 10.2.2 이후 버전에서 지원
+</td>
+</tr>
+</tbody>
+</table>
 
 <Callout type="info">
 11.1.0 부터 New DAC Policy Managment 기능이 활성화 된 경우 아래와 같은 알림 유형을 사용할 수 있습니다. 

@@ -115,6 +115,37 @@ def print_node_with_properties(node):
     return result
 
 
+def get_html_attributes(node):
+    """Extract HTML attributes from a node and format them as a string."""
+    if not hasattr(node, 'attrs') or not node.attrs:
+        return ""
+
+    attrs_list = []
+    for attr_name, attr_value in node.attrs.items():
+        # TODO(JK): Do not include style attribute of Tag for now.
+        # Or, npm run build fails.
+        # MDX requires style property in JSX format, style={{ name: value, ...}}.
+        if attr_name == 'style':
+            continue
+
+        if isinstance(attr_value, list):
+            # 리스트 형태의 속성값 (예: class)을 공백으로 구분된 문자열로 변환
+            attr_value = ' '.join(attr_value)
+        elif isinstance(attr_value, bool):
+            # 불린 속성은 값이 True일 때만 속성명만 포함
+            if attr_value:
+                attrs_list.append(attr_name)
+            continue
+
+        # Escape values of HTML attributes
+        attr_value = attr_value.replace('"', '&quot;')
+        attrs_list.append(f'{attr_name}="{attr_value}"')
+
+    if attrs_list:
+        return " " + " ".join(attrs_list)
+    return ""
+
+
 class SingleLineParser:
     def __init__(self, node):
         self.node = node
@@ -453,9 +484,13 @@ class TableToNativeMarkdown:
     def __init__(self, node):
         self.node = node
         self.markdown_lines = []
-        self.applicable_nodes = \
-            {'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
-             'p', 'strong'}
+        self.applicable_nodes = {
+            'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
+            'p', 'strong',
+        }
+        self.unapplicable_nodes = {
+            'ul', 'ol',
+        }
 
     @property
     def as_markdown(self):
@@ -477,12 +512,21 @@ class TableToNativeMarkdown:
                     collect_node_names(child)
 
         collect_node_names(self.node)
-        logging.debug(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
-        logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
-
         descendants_set = set(descendants)
         if_applicable = descendants_set.issubset(self.applicable_nodes)
-        logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
+        if descendants_set.isdisjoint(self.unapplicable_nodes):
+            if if_applicable:
+                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
+                logging.debug(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
+                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
+            else:
+                logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
+                logging.warning(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
+                logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
+        else:
+            logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
+            logging.warning(f"TableToNativeMarkdown: Unapplicable due to {descendants_set.intersection(self.unapplicable_nodes)}")
+
         return descendants_set.issubset(self.applicable_nodes)
 
     def convert_recursively(self, node):
@@ -615,9 +659,36 @@ class TableToHtmlTable:
             return
 
         logging.debug(f"TableToHtmlTable: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        if node.name in ['not-available']:
+
+        if node.name in ['table', 'thead', 'tbody', 'tfoot', 'tr', 'colgroup']:
+            """Convert table node to HTML table markup."""
+            attrs = get_html_attributes(node)
+            self.markdown_lines.append(f"<{node.name}{attrs}>")
+            self.markdown_lines.append('\n')
+
             for child in node.children:
-                self.convert_recursively(child)
+                if not isinstance(child, NavigableString):
+                    self.convert_recursively(child)
+
+            self.markdown_lines.append(f"</{node.name}>")
+            self.markdown_lines.append('\n')
+        elif node.name in ['th', 'td']:
+            attrs = get_html_attributes(node)
+            self.markdown_lines.append(f"<{node.name}{attrs}>")
+            self.markdown_lines.append('\n')
+
+            for child in node.children:
+                if not isinstance(child, NavigableString):
+                    td = ''.join(MultiLineParser(child).as_markdown)
+                    self.markdown_lines.append(td)
+
+            self.markdown_lines.append(f"</{node.name}>")
+            self.markdown_lines.append('\n')
+        elif node.name == 'col':
+            """Convert col node to HTML col markup."""
+            attrs = get_html_attributes(node)
+            self.markdown_lines.append(f"<col{attrs}/>")
+            self.markdown_lines.append('\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
@@ -722,8 +793,8 @@ class ConfluenceToMarkdown:
             if native_markdown.applicable:
                 self.markdown_lines.append(''.join(native_markdown.as_markdown))
             else:
-                logging.warning(f'ConfluenceToMarkdown: use self.process_table(node)')
-                self.process_table(node)
+                logging.warning(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
+                self.markdown_lines.append(''.join(TableToHtmlTable(node).as_markdown))
         elif node.name in ['code', 'pre']:
             self.process_code(node)
         elif node.name == 'ac:structured-macro':

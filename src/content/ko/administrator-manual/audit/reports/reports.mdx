@@ -16,47 +16,644 @@ QueryPie 보고서는 감사 대응에 필요한 데이터를 보고서 형태�
 ## 보고서 출력 항목 및 필터 지원 사항
 10.2.2 버전 현재 지원하는 보고서 항목 및 필터는 아래의 표를 참고하시기 바랍니다.
 
-|  **보고서 유형**     |  **대분류**                                        |  **소분류**                                                                                     |  **User / Group**  |  **Resource**  |  **기타 필터**                          |
-| --------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------ | -------------- | ----------------------------------- |
-| QueryPie System | Users                                           | User Account Status <br/>사용자 계정 현황                                                           | O                  | X              | [ul]User Status                     |
-| QueryPie System | Users                                           | User Account Management History <br/>사용자 계정 관리 이력                                            | O                  | X              | -                                   |
-| QueryPie System | Users                                           | User Account Activation History <br/>사용자 계정 활성화/비활성화 이력                                      | O                  | X              | -                                   |
-| QueryPie System | Users                                           | Group Status **[added-10.2.2]**<br/>그룹 현황                                                    | X                  | X              | -                                   |
-| QueryPie System | Users                                           | Group Membership History **[added-10.2.2]**<br/>그룹 멤버 추가/삭제 이력                               | X                  | X              | -                                   |
-| QueryPie System | Administrator                                   | Administrator Status <br/>관리자 현황                                                             | O                  | X              | -                                   |
-| QueryPie System | Administrator                                   | Admin Role History <br/>관리자 권한 부여/회수 이력                                                      | O                  | X              | -                                   |
-| QueryPie System | Administrator                                   | Admin Activity History <br/>관리자 행위 이력                                                        | O                  | X              | -                                   |
-| QueryPie System | Login                                           | User Login History <br/>사용자 로그인 이력                                                           | O                  | X              | -                                   |
-| QueryPie System | Login                                           | Login IPs by User <br/>사용자 별 로그인 IP 이력                                                       | O                  | X              | -                                   |
-| QueryPie System | Security Settings                               | Authentication Method <br/>사용자 인증 방식                                                         | X                  | X              | -                                   |
-| QueryPie System | Security Settings                               | Security Configuration Stauts **[updated-10.2.2]**<br/>보안 설정 현황                              | X                  | X              | -                                   |
-| QueryPie DAC    | Databases **[added-10.2.2]**                    | DB Connection Status<br/>DB 커넥션 현황                                                           | X                  | O              | -                                   |
-| QueryPie DAC    | Databases **[added-10.2.2]**                    | DB Connection Management History<br/>DB 커넥션 추가/삭제 이력                                         | X                  | O              | -                                   |
-| QueryPie DAC    | DB Access Control                               | DB Access Control - Assigned Status <br/>DB 접근 권한 부여 현황                                      | O                  | O              | -                                   |
-| QueryPie DAC    | DB Access Control                               | DB Access Control Logs <br/>DB 접근 권한 부여/회수 이력                                                | O                  | O              | -                                   |
-| QueryPie DAC    | DB Access & Queries                             | DB Access History <br/>DB 접근 이력                                                              | O                  | O              | [ul]Time Range                      |
-| QueryPie DAC    | DB Access & Queries                             | Query Execution History <br/>쿼리 실행 이력                                                        | O                  | O              | -                                   |
-| QueryPie DAC    | Workflow Logs - DB **[added-10.2.2]**           | DAC Type Requests<br/>DAC 유형 요청                                                              | X                  | O              | -                                   |
-| QueryPie SAC    | Servers <br/>**[added-10.2.2]**                 | Server Status<br/>서버 현황                                                                      | X                  | O              | -                                   |
-| QueryPie SAC    | Servers <br/>**[added-10.2.2]**                 | Server Management History<br/>서버 추가/삭제/변경 이력                                                 | X                  | O              | -                                   |
-| QueryPie SAC    | Server Groups **[added-10.2.2]**                | Server Group Status<br/>서버 그룹 현황                                                             | X                  | X              | -                                   |
-| QueryPie SAC    | Server Groups **[added-10.2.2]**                | Server Group Management History<br/>서버 그룹 추가/삭제/변경 이력                                        | X                  | X              | -                                   |
-| QueryPie SAC    | Server Account & Password **[added-10.2.2]**    | Provisioned Server Account Status<br/>프로비저닝된 서버 계정 현황                                        | X                  | O              | -                                   |
-| QueryPie SAC    | Server Account & Password **[added-10.2.2]**    | Server Account Provisioning History<br/>서버 계정 프로비저닝 이력                                       | X                  | O              | -                                   |
-| QueryPie SAC    | Server Access Control                           | Direct Permission Status by User/Group **[updated-10.2.2]**<br/>사용자/그룹별 Direct Permission 현황 | O                  | O              | -                                   |
-| QueryPie SAC    | Server Access Control                           | Direct Permission Change History <br/>Direct Permission 변경 이력                                | O                  | O              | -                                   |
-| QueryPie SAC    | Server Access Control                           |  *Server Role Status by User * **[deprecated-10.2.2]**<br/> *사용자별 서버 역할 현황*                  |  *O*               |  *O*           |  *-*                                |
-| QueryPie SAC    | Server Access Control                           | Role-Granted Users by Role **[added-10.2.2]**<br/>역할별 역할 부여 사용자 현황                           | O                  | X              | -                                   |
-| QueryPie SAC    | Server Access Control                           | Accessible Servers by Role **[added-10.2.2]**<br/>역할별 접근 가능 서버 현황                            | X                  | O              | -                                   |
-| QueryPie SAC    | Server Access Control                           | Server Role & Policy Management History **[added-10.2.2]**<br/>서버 역할 및 정책 변경 이력              | X                  | X              | -                                   |
-| QueryPie SAC    | Server Access Control                           | Server Role Grant/Revocation History <br/>서버 역할 부여/회수 이력                                     | O                  | O              | -                                   |
-| QueryPie SAC    | Server Sessions and Commands                    | Server Access History <br/>서버 접근 이력                                                          | O                  | O              | [ul]Time RangeResultAction TypeRole |
-| QueryPie SAC    | Server Sessions and Commands                    | Command History <br/>명령어 이력                                                                  | O                  | O              | [ul]Keyword                         |
-| QueryPie SAC    | Server Sessions and Commands                    | Command Template Status <br/>명령어 템플릿 현황                                                      | X                  | X              | -                                   |
-| QueryPie SAC    | Server Sessions and Commands                    | Command Template Management History <br/>명령어 템플릿 관리 이력                                       | X                  | X              | -                                   |
-| QueryPie SAC    | Server Sessions and Commands                    | Command Whitelist Grant/Revocation History <br/>명령어 일시 허용 권한 부여/회수 이력                        | O                  | O              | -                                   |
-| QueryPie SAC    | Server Sessions and Commands                    | Restricted Commands <br/>차단 명령어 이력                                                           | O                  | O              | [ul]Keyword                         |
-| QueryPie SAC    | Workflow Logs - Servers <br/>**[added-10.2.2]** | SAC Type Requests<br/>SAC 유형 요청                                                              | X                  | O              | -                                   |
+<table data-table-width="958" data-layout="center" local-id="cfcbf091-3775-4454-bff4-924bf43e88f4">
+[ac:adf-fragment-mark]
+[ac:adf-fragment-mark-detail]
+
+
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+ **보고서 유형** 
+</th>
+<th>
+ **대분류** 
+</th>
+<th>
+ **소분류** 
+</th>
+<th>
+ **User / Group** 
+</th>
+<th>
+ **Resource** 
+</th>
+<th>
+ **기타 필터** 
+</th>
+</tr>
+<tr>
+<td rowspan="12">
+QueryPie System
+</td>
+<td rowspan="5">
+Users
+</td>
+<td>
+User Account Status <br/>사용자 계정 현황
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+* User Status
+</td>
+</tr>
+<tr>
+<td>
+User Account Management History <br/>사용자 계정 관리 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+User Account Activation History <br/>사용자 계정 활성화/비활성화 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Status **[added-10.2.2]**<br/>그룹 현황
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Membership History **[added-10.2.2]**<br/>그룹 멤버 추가/삭제 이력
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="3">
+Administrator
+</td>
+<td>
+Administrator Status <br/>관리자 현황
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Role History <br/>관리자 권한 부여/회수 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Activity History <br/>관리자 행위 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Login
+</td>
+<td>
+User Login History <br/>사용자 로그인 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Login IPs by User <br/>사용자 별 로그인 IP 이력
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Security Settings
+</td>
+<td>
+Authentication Method <br/>사용자 인증 방식
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Security Configuration Stauts **[updated-10.2.2]**<br/>보안 설정 현황
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="7">
+QueryPie DAC
+</td>
+<td rowspan="2">
+Databases **[added-10.2.2]** 
+</td>
+<td>
+DB Connection Status<br/>DB 커넥션 현황
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Connection Management History<br/>DB 커넥션 추가/삭제 이력
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access Control
+</td>
+<td>
+DB Access Control - Assigned Status <br/>DB 접근 권한 부여 현황
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Access Control Logs <br/>DB 접근 권한 부여/회수 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access & Queries
+</td>
+<td>
+DB Access History <br/>DB 접근 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+</td>
+</tr>
+<tr>
+<td>
+Query Execution History <br/>쿼리 실행 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Workflow Logs - DB **[added-10.2.2]**
+</td>
+<td>
+DAC Type Requests<br/>DAC 유형 요청
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="20">
+QueryPie SAC
+</td>
+<td rowspan="2">
+Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+Server Status<br/>서버 현황
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Management History<br/>서버 추가/삭제/변경 이력
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Groups **[added-10.2.2]**
+</td>
+<td>
+Server Group Status<br/>서버 그룹 현황
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Group Management History<br/>서버 그룹 추가/삭제/변경 이력
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Account & Password **[added-10.2.2]**
+</td>
+<td>
+Provisioned Server Account Status<br/>프로비저닝된 서버 계정 현황
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Account Provisioning History<br/>서버 계정 프로비저닝 이력
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="7">
+Server Access Control
+</td>
+<td>
+Direct Permission Status by User/Group **[updated-10.2.2]**<br/>사용자/그룹별 Direct Permission 현황
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Direct Permission Change History <br/>Direct Permission 변경 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+ *Server Role Status by User * **[deprecated-10.2.2]**<br/> *사용자별 서버 역할 현황* 
+</td>
+<td>
+ *O* 
+</td>
+<td>
+ *O* 
+</td>
+<td>
+ *-* 
+</td>
+</tr>
+<tr>
+<td>
+Role-Granted Users by Role **[added-10.2.2]**<br/>역할별 역할 부여 사용자 현황
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Accessible Servers by Role **[added-10.2.2]**<br/>역할별 접근 가능 서버 현황
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role & Policy Management History **[added-10.2.2]**<br/>서버 역할 및 정책 변경 이력
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role Grant/Revocation History <br/>서버 역할 부여/회수 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="6">
+Server Sessions and Commands
+</td>
+<td>
+Server Access History <br/>서버 접근 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+* Result
+* Action Type
+* Role
+
+</td>
+</tr>
+<tr>
+<td>
+Command History <br/>명령어 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+</td>
+</tr>
+<tr>
+<td>
+Command Template Status <br/>명령어 템플릿 현황
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Template Management History <br/>명령어 템플릿 관리 이력
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Whitelist Grant/Revocation History <br/>명령어 일시 허용 권한 부여/회수 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Restricted Commands <br/>차단 명령어 이력
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+
+</td>
+</tr>
+<tr>
+<td>
+Workflow Logs - Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+SAC Type Requests<br/>SAC 유형 요청
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+</tbody>
+</table>
 
 ## 보고서 목록 조회
 Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 태스크 목록을 확인할 수 있습니다.

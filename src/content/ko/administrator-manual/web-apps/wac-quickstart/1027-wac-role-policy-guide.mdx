@@ -20,13 +20,122 @@ QueryPie WAC은 다른 QueryPie 제품들과 마찬가지로 RBAC(Role-Based Acc
 # WAC YAML 정책의 기본 구조
 WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 같습니다.
 
-|  **Category**                 |  **Property**  |  **Required**  |  **Description**                               |  **Valid Values**                              |
-| ----------------------------- | -------------- | -------------- | ---------------------------------------------- | ---------------------------------------------- |
-| `apiVersion`                  | -              | **[required]** | 작성된 YAML Code의 버전시스템에서 관리하는 값으로, 수정 불필요        | `webApp.rbac.querypie.com/v1`                  |
-| `kind`                        | -              | **[required]** | 작성된 YAML Code의 종류시스템에서 관리하는 값으로, 수정 불필요        | `WacPolicy`                                    |
-| `spec:`<br/> `&lt;effect&gt;` | -              | **[required]** | 정책 내 세부 규칙 (허용 또는 거부)                          | `allow`, `deny`                                |
-|                               | `resources`    | **[required]** | 접근을 허용/거부할 리소스 지정                              | `webApp`, `urlPaths`                           |
-|                               | `conditions`   | **[OPTIONAL]** | 규칙 적용 대상에 대한 세부 조건(현재 `spec: allow` 에서만 사용 가능) | `urlPathTags`, `userAttributes`, `ipAddresses` |
+<table data-table-width="760" data-layout="default" local-id="35831a4b-16f9-461f-96a1-0af983cbf59e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+ **Category** 
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+ **Property** 
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+ **Required** 
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+ **Description** 
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+ **Valid Values** 
+</th>
+</tr>
+<tr>
+<td>
+`apiVersion`
+</td>
+<td>
+-
+</td>
+<td>
+**[required]**
+</td>
+<td>
+작성된 YAML Code의 버전
+시스템에서 관리하는 값으로, 수정 불필요
+</td>
+<td>
+`webApp.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td>
+`kind`
+</td>
+<td>
+-
+</td>
+<td>
+**[required]**
+</td>
+<td>
+작성된 YAML Code의 종류
+시스템에서 관리하는 값으로, 수정 불필요
+</td>
+<td>
+`WacPolicy`
+</td>
+</tr>
+<tr>
+<td>
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td>
+-
+</td>
+<td>
+**[required]**
+</td>
+<td>
+정책 내 세부 규칙 (허용 또는 거부)
+</td>
+<td>
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td>
+ 
+</td>
+<td>
+`resources`
+</td>
+<td>
+**[required]**
+</td>
+<td>
+접근을 허용/거부할 리소스 지정
+</td>
+<td>
+`webApp`, `urlPaths`
+</td>
+</tr>
+<tr>
+<td>
+ 
+</td>
+<td>
+`conditions`
+</td>
+<td>
+**[OPTIONAL]**
+</td>
+<td>
+규칙 적용 대상에 대한 세부 조건
+(현재 `spec: allow` 에서만 사용 가능)
+</td>
+<td>
+`urlPathTags`, `userAttributes`, `ipAddresses`
+</td>
+</tr>
+</tbody>
+</table>
 
 아래에서 정책 작성에 필요한 QueryPie WAC Policy YAML 문법을 안내합니다.
 

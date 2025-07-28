@@ -98,39 +98,503 @@ A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는
 
 
 ## 참고: 사용자 Attribute 목록
-|  **속성명**           |  **변수**           |  **설명**                       |  **비고**  |
-| ------------------ | ----------------- | ----------------------------- | -------- |
-| User name          | loginId           | 사용자 ID                        | 필수       |
-| First name         | firstName         | 사용자 이름                        |          |
-| Last name          | lastName          | 사용자 성                         |          |
-| Middle name        | middleName        | 사용자 중간 이름                     |          |
-| Honorific prefix   | honorificPrefix   | 사용자 존칭 (접두사) (예. Mr./Ms.)     |          |
-| Honorific suffix   | honorificSuffix   | 사용자 존칭 (접미사) (예. 님, 씨)        |          |
-| Primary email      | email             | 사용자 이메일                       | 필수       |
-| Title              | title             | 사용자 직함                        |          |
-| Display name       | displayName       | 사용자 표기명                       | 필수       |
-| Nickname           | nickName          | 사용자 별칭                        |          |
-| Profile Url        | profileUrl        | 사용자 프로필 URL                   |          |
-| Secondary email    | secondEmail       | 보조 이메일                        |          |
-| Mobile phone       | mobilePhone       | 휴대폰 번호                        |          |
-| Primary phone      | primaryPhone      | 전화전호 (주 연락처)                  |          |
-| Street address     | streetAddress     | 도로주소                          |          |
-| City               | city              | 도시                            |          |
-| State              | state             | 주/도                           |          |
-| Zip code           | zipCode           | 우편번호                          |          |
-| Country code       | countryCode       | 국가코드 번호                       |          |
-| Postal Address     | postalAddress     | 우편용 주소                        |          |
-| Preferred language | preferredLanguage | 선호 언어 (예. en)                 |          |
-| Locale             | locale            | 국가/언어 설정에 쓰이는 장소 (예. en_US)   |          |
-| Time zone          | timezone          | 지역 타임존 (예. US/Pacific)        |          |
-| User type          | userType          | 사용자 유형 (예. Employee)          |          |
-| Employee number    | employeeNumber    | 사번                            |          |
-| Cost center        | costCenter        | 사업부서 (재무회계 기준)                |          |
-| Organization       | organization      | 사용자 소속 조직                     |          |
-| Division           | division          | 사용자 소속 부                      |          |
-| Department         | department        | 사용자 소속 부서                     |          |
-| Manager ID         | managerId         | 상사 ID                         |          |
-| Manager            | manager           | 상사 표기명                        |          |
-| Static IP          | staticIp          | 사용자 할당 정적 IP                  |          |
-| Mac address        | macAddress        | 사용자 MAC 주소                    |          |
-| Risk score         | riskScore         | 사용자 위험 지수 (쿼리파이 System에서 관리)  | 추후 제공 예정 |
+<table data-table-width="760" data-layout="default" local-id="e1c834d3-fcc8-49ac-b85e-efced04d4427">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+ **속성명** 
+</th>
+<th>
+ **변수** 
+</th>
+<th>
+ **설명** 
+</th>
+<th>
+ **비고** 
+</th>
+</tr>
+<tr>
+<td>
+User name
+</td>
+<td>
+loginId
+</td>
+<td>
+사용자 ID
+</td>
+<td>
+필수
+</td>
+</tr>
+<tr>
+<td>
+First name
+</td>
+<td>
+firstName
+</td>
+<td>
+사용자 이름
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Last name
+</td>
+<td>
+lastName
+</td>
+<td>
+사용자 성
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Middle name
+</td>
+<td>
+middleName
+</td>
+<td>
+사용자 중간 이름
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Honorific prefix
+</td>
+<td>
+honorificPrefix
+</td>
+<td>
+사용자 존칭 (접두사) (예. Mr./Ms.)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Honorific suffix
+</td>
+<td>
+honorificSuffix
+</td>
+<td>
+사용자 존칭 (접미사) (예. 님, 씨)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Primary email
+</td>
+<td>
+email
+</td>
+<td>
+사용자 이메일
+</td>
+<td>
+필수
+</td>
+</tr>
+<tr>
+<td>
+Title
+</td>
+<td>
+title
+</td>
+<td>
+사용자 직함
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Display name
+</td>
+<td>
+displayName
+</td>
+<td>
+사용자 표기명
+</td>
+<td>
+필수
+</td>
+</tr>
+<tr>
+<td>
+Nickname
+</td>
+<td>
+nickName
+</td>
+<td>
+사용자 별칭
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Profile Url
+</td>
+<td>
+profileUrl
+</td>
+<td>
+사용자 프로필 URL
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Secondary email
+</td>
+<td>
+secondEmail
+</td>
+<td>
+보조 이메일
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Mobile phone
+</td>
+<td>
+mobilePhone
+</td>
+<td>
+휴대폰 번호
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Primary phone
+</td>
+<td>
+primaryPhone
+</td>
+<td>
+전화전호 (주 연락처)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Street address
+</td>
+<td>
+streetAddress
+</td>
+<td>
+도로주소
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+City
+</td>
+<td>
+city
+</td>
+<td>
+도시
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+State
+</td>
+<td>
+state
+</td>
+<td>
+주/도
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Zip code
+</td>
+<td>
+zipCode
+</td>
+<td>
+우편번호
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Country code
+</td>
+<td>
+countryCode
+</td>
+<td>
+국가코드 번호
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Postal Address
+</td>
+<td>
+postalAddress
+</td>
+<td>
+우편용 주소
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Preferred language
+</td>
+<td>
+preferredLanguage
+</td>
+<td>
+선호 언어 (예. en)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Locale
+</td>
+<td>
+locale
+</td>
+<td>
+국가/언어 설정에 쓰이는 장소 (예. en_US)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Time zone
+</td>
+<td>
+timezone
+</td>
+<td>
+지역 타임존 (예. US/Pacific)
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+User type
+</td>
+<td>
+userType
+</td>
+<td>
+사용자 유형 (예. Employee) 
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Employee number
+</td>
+<td>
+employeeNumber
+</td>
+<td>
+사번
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Cost center
+</td>
+<td>
+costCenter
+</td>
+<td>
+사업부서 (재무회계 기준) 
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Organization
+</td>
+<td>
+organization
+</td>
+<td>
+사용자 소속 조직
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Division
+</td>
+<td>
+division
+</td>
+<td>
+사용자 소속 부
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Department
+</td>
+<td>
+department
+</td>
+<td>
+사용자 소속 부서 
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Manager ID
+</td>
+<td>
+managerId
+</td>
+<td>
+상사 ID
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Manager
+</td>
+<td>
+manager
+</td>
+<td>
+상사 표기명
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Static IP
+</td>
+<td>
+staticIp
+</td>
+<td>
+사용자 할당 정적 IP
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Mac address
+</td>
+<td>
+macAddress
+</td>
+<td>
+사용자 MAC 주소
+</td>
+<td>
+
+</td>
+</tr>
+<tr>
+<td>
+Risk score
+</td>
+<td>
+riskScore
+</td>
+<td>
+사용자 위험 지수 (쿼리파이 System에서 관리) 
+</td>
+<td>
+추후 제공 예정
+</td>
+</tr>
+</tbody>
+</table>
