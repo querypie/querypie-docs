@@ -123,6 +123,9 @@ class SingleLineParser:
         # It is supposed to preserve whitespace in the middle of the text
         return "".join(self.markdown_lines).strip()
 
+    def applicable(self):
+        return False
+
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
@@ -274,6 +277,7 @@ class MultiLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
+            logging.warning(f"MultiLineParser: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
             # This is a leaf node with text
             text = (
                 node.replace('\u00A0', ' ') # Replace NBSP with space
@@ -398,6 +402,183 @@ class MultiLineParser:
         self.markdown_lines.append(f'</p>')
         self.markdown_lines.append('\n')
 
+class TableToNativeMarkdown:
+    def __init__(self, node):
+        self.node = node
+        self.markdown_lines = []
+        self.applicable_nodes = set([
+          'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
+          'p', 'strong',
+        ])
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        self.convert_recursively(self.node)
+        # Return the markdown lines as a list of strings
+        return self.markdown_lines
+
+    @property
+    def applicable(self):
+        # Get all child nodes that are not NavigableString (including nested children)
+        descendants = []
+
+        def collect_node_names(node):
+            for child in node.children:
+                if not isinstance(child, NavigableString):
+                    descendants.append(child.name)
+                    # Recursively collect names from children of children
+                    collect_node_names(child)
+
+        collect_node_names(self.node)
+        logging.debug(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
+        logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
+
+        descendants_set = set(descendants)
+        if_applicable = descendants_set.issubset(self.applicable_nodes)
+        logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
+        return descendants_set.issubset(self.applicable_nodes)
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            logging.warning(f"TableToNativeMarkdown: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(text)
+            return
+
+        logging.debug(f"TableToNativeMarkdown: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        if node.name in ['table']:
+            self.convert_table(node)
+        else:
+            logging.warning(f"TableToNativeMarkdown: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(f'[{node.name}]')
+            self.markdown_lines.append('\n')
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append('\n')
+
+    def convert_table(self, node):
+        table_data = []
+        current_table_row = 0
+        rowspan_tracker = {}
+
+        # Process all rows
+        rows = node.find_all(['tr'])
+
+        for row_idx, row in enumerate(rows):
+            current_row = []
+            cells = row.find_all(['th', 'td'])
+
+            # Apply rowspan from previous rows
+            col_idx = 0
+            for tracked_col, (span_left, content) in sorted(rowspan_tracker.items()):
+                if span_left > 0:
+                    # Insert content from cells spanning from previous rows
+                    current_row.append(content)
+                    # Decrement the remaining rowspan
+                    rowspan_tracker[tracked_col] = (span_left - 1, content)
+                    col_idx += 1
+
+            # Process current row cells
+            for cell_idx, cell in enumerate(cells):
+                colspan = int(cell.get('colspan', 1))
+                rowspan = int(cell.get('rowspan', 1))
+
+                cell_content = SingleLineParser(cell).as_markdown
+
+                # Add cell content to current row
+                current_row.append(cell_content)
+
+                # Handle colspan by adding empty cells
+                for _ in range(1, colspan):
+                    current_row.append("")
+
+                # Track cells with rowspan > 1 for next rows
+                if rowspan > 1:
+                    rowspan_tracker[col_idx + cell_idx] = (rowspan - 1, cell_content)
+
+            # Add the row to table data
+            table_data.append(current_row)
+
+            # Check if it's a header row (contains th elements)
+            if row.find('th') and row_idx == 0:
+                is_header_row = True
+
+        # Convert table data to markdown
+        markdown_table = self.table_data_to_markdown(table_data)
+        self.markdown_lines.extend(markdown_table)
+
+    def table_data_to_markdown(self, table_data):
+        if not table_data or not any(table_data):
+            return ""
+
+        # Determine the number of columns based on the row with the most cells
+        num_cols = max(len(row) for row in table_data)
+
+        # Ensure all rows have the same number of columns
+        normalized_data = []
+        for row in table_data:
+            normalized_row = row + [""] * (num_cols - len(row))
+            normalized_data.append(normalized_row)
+
+        # Calculate the maximum width of each column
+        col_widths = [0] * num_cols
+        for row in normalized_data:
+            for i, cell in enumerate(row):
+                col_widths[i] = max(col_widths[i], len(str(cell)))
+
+        # Build the markdown table
+        md_table = []
+
+        # Header row
+        header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |"
+        md_table.append(header_row)
+        md_table.append("\n")
+
+        # Separator row
+        separator = "| " + " | ".join("-" * col_widths[i] for i in range(num_cols)) + " |"
+        md_table.append(separator)
+        md_table.append("\n")
+
+        # Data rows
+        for row in normalized_data[1:]:
+            data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |"
+            md_table.append(data_row)
+            md_table.append("\n")
+
+        return ''.join(md_table)
+
+class TableToHtmlTable:
+    def __init__(self, node):
+        self.node = node
+        self.markdown_lines = []
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        self.convert_recursively(self.node)
+        # Return the markdown lines as a list of strings
+        return self.markdown_lines
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            logging.warning(f"TableToHtmlTable: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(text)
+            return
+
+        logging.debug(f"TableToHtmlTable: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        if node.name in ['not-available']:
+            for child in node.children:
+                self.convert_recursively(child)
+        else:
+            logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(f'[{node.name}]')
+            self.markdown_lines.append('\n')
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append('\n')
+
 class ConfluenceToMarkdown:
     def __init__(self):
         self.in_table = False
@@ -489,7 +670,13 @@ class ConfluenceToMarkdown:
         elif node.name in ['ul', 'ol']:
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
-            self.process_table(node)
+            native_markdown = TableToNativeMarkdown(node)
+            logging.info("------------- hello, world -------------")
+            if native_markdown.applicable:
+                self.markdown_lines.append(''.join(native_markdown.as_markdown))
+            else:
+                logging.warning(f'ConfluenceToMarkdown: use self.process_table(node)')
+                self.process_table(node)
         elif node.name in ['code', 'pre']:
             self.process_code(node)
         elif node.name == 'ac:structured-macro':
