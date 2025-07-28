@@ -242,6 +242,14 @@ class SingleLineParser:
                 else:
                     logging.debug(f'Skip extracting text from <{child.name}> under <li>')
             return
+        elif node.name in ['ac:emoticon']:
+            """
+            <ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"
+                         ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:"/>
+            """
+            shortname = node.get('emoji-shortname')
+            if shortname:
+                self.markdown_lines.append(f'{shortname}')
         else:
             logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')

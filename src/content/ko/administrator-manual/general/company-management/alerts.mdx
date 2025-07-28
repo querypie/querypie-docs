@@ -30,6 +30,16 @@ Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공�
 | SAC           | File Transfer (SFTP)      | SFTP를 통한 파일 전송 실행 알림                 |
 | KAC           | K8s API Request           | 쿠버네티스 API 요청 알림[ul]10.2.2 이후 버전에서 지원 |
 
+<Callout type="info">
+11.1.0 부터 New DAC Policy Managment 기능이 활성화 된 경우 아래와 같은 알림 유형을 사용할 수 있습니다. 
+* New Request - DB Policy Exception Request DB Policy Exception Request 는 Unmasking과 Restriced Data Access 두가지 유형이 있으나 구분해서 알림 생성을 할 수는 없습니다.
+* Data Access
+    * Column Data Masking : 신 정책 관리에서 생성한 Column Data Masking 정책에 걸려 제한된 마스킹 된 상태로 조회된 이벤트
+    * Table Access Restriction : 신 정책 관리에서 생성한 Table Access Restriction 정책에 걸려 특정 테이블 접근이 제한된 이벤트
+    * Column Access Restriction : 신 정책 관리에서 생성한 Column Access Restriction 정책에 걸려 특정 컬럼 접근이 제한된 이벤트
+    * Sensitive Data Access Monitoring : 신 정책 관리에서 생성한 Sensitive Data Access Monitoring 정책의 조건에 해당되는 이벤트
+</Callout>
+
 ## 알림 생성하기
 Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알림을 생성합니다. `OK` 버튼을 클릭하여 알림 생성을 완료합니다.
 
@@ -66,6 +76,9 @@ Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알�
 * Request Type 선택에 따라 지원되는 템플릿 변수가 상이합니다. 자세한 내용은 별도의  **New Request &gt; 요청 타입별 템플릿 변수**  문서를 참고해주세요.
 **10.2.8 슬랙 메시지 템플릿 변경 사항** 
 * Sensitive Data Access 이벤트에서 슬랙 메시지에 쿼리를 포함하여 전송하도록 개선되면서 `{{queryPreview}}` 변수가 추가되었습니다. 슬랙 특성상 3000자 이상의 메시지 발송 요청을 하면 에러 반환 없이 메시지 발송이 실패하므로 queryPreview를 통해 볼 수 있는 쿼리는 100자로 제한되어 있습니다.
+**11.1.0 Request Type 변경사항** 
+* Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있다면 Alert의 Request Type에 DB Policy Exception Request 를 사용할 수 있습니다.
+* DB Policy Exception Request 는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알람이 발송되도록 합니다.
 </Callout>
 
 ### Unusual Login Attempt
@@ -239,7 +252,40 @@ SFTP를 통한 파일 전송 실행 알림
     * 현재 지원 대상 - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets` 등 (총 24종)
     * All Resources (*) : 추후 추가될 모든 리소스 종류를 대상으로 알림 조건 생성
 
+### Data Access **[11.1.0]**
+<Callout type="info">
+Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있고 관련 정책들이 존재해야 사용할 수 있습니다. 
+</Callout>
 
+Data Access 알림은 Column Data Masking, Table Access Restriction, Column Access Restriction, Sensitive Data Access Monitoring 의 네가지 **policy type** 을 선택할 수 있습니다.
+
+<p align="center">
+<div>[image-20250727-222007.png]()</div>
+</p>
+
+* **Column Data Masking**
+    * **Policy ** : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
+    * **Rows**  : 알람 발생 기준 행 수를 지정합니다.
+    * **Time Interval ** : 알람 발생 기준 시간 (분 단위) 입니다.
+        * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
+        * 최대 1440까지 입력 가능합니다.
+* **Table Access Restriction**
+    * **Policy ** : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
+    * **Unauthorized Access Attempt Count ** : 알람 발생 조건이 되는 접근 회수를 지정합니다. 만약 Time interval 값이 0 이면 시간 조건 없이 단건의 이벤트에 대해 알람이 발생하므로 Unauthorized Access Attempt Count는 1로 고정됩니다. 최소 값은 1, 최대값은 2147483647 입니다.
+    * **Time Interval**  : 알람 발생 기준 시간 (분 단위) 입니다.
+        * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
+        * 최대 1440까지 입력 가능합니다.
+* **Column Access Restriction**
+    * **Rows ** : 알람 발생 기준 행 수를 지정합니다.
+    * **Time Interval**  : 알람 발생 기준 시간 (분 단위) 입니다.
+        * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
+        * 최대 1440까지 입력 가능합니다.
+* **Sensitive Data Access Monitoring**
+    * **Policy**  : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
+    * **Rows**  : 알람 발생 기준 행 수를 지정합니다.
+    * **Time Interval ** : 알람 발생 기준 시간 (분 단위) 입니다.
+        * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
+        * 최대 1440까지 입력 가능합니다
 
 ## 알림 상세 정보 조회 및 수정
 Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 `Save Changes` 버튼을 클릭하면 수정 내용이 반영됩니다.

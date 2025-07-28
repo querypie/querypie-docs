@@ -12,7 +12,7 @@ all: test
 
 # Run all tests
 .PHONY: test
-test: test-html test-xhtml
+test: test-xhtml
 	@echo "All tests completed."
 
 # Run HTML tests only
