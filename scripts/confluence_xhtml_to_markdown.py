@@ -27,6 +27,8 @@ ZWSP = '\u200b'  # Zero Width Space
 LRM = '\u200e'  # Left-to-Right Mark
 HANGUL_FILLER = '\u3164'  # Hangul Filler
 
+LANGUAGE = 'en'
+
 
 def backtick_curly_braces(text):
     """
@@ -289,6 +291,37 @@ class SingleLineParser:
             shortname = node.get('emoji-shortname')
             if shortname:
                 self.markdown_lines.append(f'{shortname}')
+        elif node.name in ['time']:
+            """
+            <time datetime="2025-07-02">
+            """
+            datetime_attr = node.get('datetime', '')
+            if datetime_attr:
+                try:
+                    from datetime import datetime
+                    date_obj = datetime.fromisoformat(datetime_attr.replace('Z', '+00:00'))
+
+                    if LANGUAGE == 'ko':
+                        # Korean: YYYY년 MM월 DD일
+                        formatted_date = date_obj.strftime('%Y년 %m월 %d일')
+                    elif LANGUAGE == 'ja':
+                        # Japanese: YYYY年MM月DD日
+                        formatted_date = date_obj.strftime('%Y年%m月%d日')
+                    elif LANGUAGE == 'en':
+                        # English: Jan 1, 2025
+                        formatted_date = date_obj.strftime('%b %d, %Y')
+                    else:
+                        # Default: ISO format
+                        formatted_date = date_obj.strftime('%Y-%m-%d')
+
+                    self.markdown_lines.append(formatted_date)
+                except ValueError:
+                    # Use original text if date parsing fails
+                    logging.warning(
+                        f"Failed to parse datetime '{datetime_attr}' in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            else:
+                # Process child nodes if the datetime attribute is not present
+                logging.warning(f"Failed to get datetime attribute in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
         else:
             logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
@@ -1093,7 +1126,25 @@ def main():
     logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
 
     # Store input file path in global variable
-    global INPUT_FILE_PATH
+    global INPUT_FILE_PATH, LANGUAGE
+
+    # Extract language code from output file path
+    output_path = os.path.normpath(args.output_file)
+    path_parts = output_path.split(os.sep)
+
+    # Look for 2-letter language code in the path
+    detected_language = 'en'  # Default to English
+    for part in path_parts:
+        if len(part) == 2 and part.isalpha():
+            # Check if it's a known language code
+            if part in ['ko', 'ja', 'en']:
+                detected_language = part
+                break
+
+    # Update global LANGUAGE variable
+    LANGUAGE = detected_language
+    logging.info(f"Detected language from output path: {LANGUAGE}")
+
     # Extract the last directory and filename from the path
     path = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
     dirname, filename = os.path.split(path)  # Split into directory and filename
