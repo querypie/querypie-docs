@@ -8,22 +8,22 @@ Agent UI에서는 특정 Host에서 사용 가능한 리소스들을 확인할 �
 Agent 설치 및 Host 별 로그인 수행만으로 추가 설정 없이 둘 이상의 QueryPie Proxy를 통한 리소스 접속이 가능합니다.
 
 <Callout type="info">
-**지원 버전** 
-Multi Agent는 `10.2.5` 버전 또는 이후 버전의 QueryPie Host만을 지원합니다. 10.2.4 이하 버전을 사용하는 경우 기존의 User Agent를 사용하시기 바랍니다. 
-동일한 PC에 기존의 User Agent와 Multi Agent 둘 다 설치하는 것은 가능합니다. 단, 동시에 실행되어 있으면 정상적으로 동작하지 않습니다. 
-QueryPie Host 버전이 `10.2.5` ~ `10.2.7` 버전인 경우 지원 범위: 
-* Service: DAC, KAC
+ **지원 버전** 
+Multi Agent는 `10.2.5` 버전 또는 이후 버전의 QueryPie Host만을 지원합니다. 10.2.4 이하 버전을 사용하는 경우 기존의 User Agent를 사용하시기 바랍니다.
+동일한 PC에 기존의 User Agent와 Multi Agent 둘 다 설치하는 것은 가능합니다. 단, 동시에 실행되어 있으면 정상적으로 동작하지 않습니다.
+QueryPie Host 버전이 `10.2.5` ~ `10.2.7` 버전인 경우 지원 범위:
+* Service: DAC, KAC 
 * Client OS: MacOS, Windows
-QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위: 
+QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
 * Service: DAC, KAC, SAC
 * Client OS: MacOS, Windows, Linux
 </Callout>
 
 ## 에이전트 앱 다운로드 및 초기 설정
 1. QueryPie 로그인 후 우측 상단 프로필을 클릭한 뒤 Download & Support &gt; `Multi-Agent` 버튼을 클릭합니다.
-2. QueryPie Multi-Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을 복사해 둡니다.
+2. QueryPie Multi-Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을 복사해 둡니다.<br/>
 3. 다운로드받은 QueryPie Multi-Agent 설치 프로그램을 실행한 뒤 .app 파일을 Applications 폴더에 복사하여 설치를 완료합니다.
-4. 설치 완료된 QueryPie Agent를 실행하면 Host 최초 등록 페이지가 열립니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
+4. 설치 완료된 QueryPie Agent를 실행하면 Host 최초 등록 페이지가 열립니다.<br/>QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
 5. 입력한 호스트의 로그인 페이지에서 인증정보를 입력하고 Continue 버튼을 클릭합니다.
 
 ## DAC
@@ -32,13 +32,13 @@ QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
 2. 접속하고자 하는 커넥션을 선택하고 마우스 오른쪽 버튼을 클릭하면 컨텍스트 메뉴가 오픈됩니다.
     1. Connection Information: Proxy 접속을 위한 정보를 확인할 수 있습니다.
     2. Open Connection With **[10.2.6~]**: 3rd Party 툴로 커넥션에 접속할 수 있습니다.
-        1. DBeaver: DBeaver 를 열고 커넥션의 정보를 삽입해줍니다.  (최초 1회의 DBeaver 경로 인식 과정이 필요합니다. DBeaver가 실행 중인 상태에서 본 기능을 실행하시기를 권장합니다.)
+        1. DBeaver: DBeaver 를 열고 커넥션의 정보를 삽입해줍니다. <br/>(최초 1회의 DBeaver 경로 인식 과정이 필요합니다. DBeaver가 실행 중인 상태에서 본 기능을 실행하시기를 권장합니다.)
         2. DataGrip: DataGrip에 붙여넣을 수 있는 커넥션 정보가 복사됩니다.
         3. SQLGate for Oracle (Windows만 지원): SQLGate for Oracle 을 열고 커넥션 정보를 삽입해줍니다.
     3. Copy as JDBC URL **[10.2.6~]**: 선택한 커넥션의 JDBC URL을 복사해줍니다.
 
 <Callout type="info">
-Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전에서 지원합니다. 
+Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전에서 지원합니다.
 </Callout>
 
 ### 에이전트에서 3rd Party Database Tool 설정 관리하기
@@ -61,17 +61,17 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 ### 에이전트에서 default privilege 선택하기
 쿼리파이 DB 접근제어에서 한 사용자가 두개이상의 privilege를 부여받을 수 있습니다. 특정 커넥션에 접근권한을 부여받은 사용자가 여러 그룹에 포함되어 있고 그룹에 다른 접근 권한을 부여한 경우 이 사용자는 여러개의 privilege가 할당될 수 있습니다. 이 때 proxy를 통해 접속할 때 사용할 Privilege를 agent 화면에서 선택할 수 있습니다. (10.3.0 부터 지원)
 
-다중 privilege를 부여받은 후 사용자가 특정 privilege를 default로 설정하지 않으면 접속할 수 없기 때문에 만약 default privilege가 설정되어 있지 않은 경우 아래 그림과 같은 경고 아이콘이 표시됩니다.
+다중 privilege를 부여받은 후 사용자가 특정 privilege를 default로 설정하지 않으면 접속할 수 없기 때문에 만약 default privilege가 설정되어 있지 않은 경우 아래 그림과 같은 경고 아이콘이 표시됩니다.<br/>
 
 <p align="center">
 <div>[image-20250513-025002.png]()</div>
 </p>
 
 1. 다중 Privilege가 할당된 커넥션에 대해 마우스 오른쪽 버튼을 누르고 메뉴를 호출합니다.
-2. 메뉴에서 Connection Information을 선택합니다.
-3. Original Information 의 Privilege에서 편집 (연필모양 아이콘) 버튼을 클릭합니다.
-4. Previlege Name 의 항목중 하나를 선택하고 저장합니다.
-5. 경고 아이콘이 사라지고 할당된 privilege 이름이 해당 커넥션에 보이는지 확인합니다.
+2. 메뉴에서 Connection Information을 선택합니다.<br/>
+3. Original Information 의 Privilege에서 편집 (연필모양 아이콘) 버튼을 클릭합니다.<br/><br/>
+4. Previlege Name 의 항목중 하나를 선택하고 저장합니다.<br/>
+5. 경고 아이콘이 사라지고 할당된 privilege 이름이 해당 커넥션에 보이는지 확인합니다.<br/><br/>
 
 ## KAC
 ### 에이전트에서 Role별 쿠버네티스 클러스터 목록 조회하기
@@ -83,7 +83,7 @@ Role 셀렉터에서 본인에게 부여된 Role 중 하나를 선택하면, 선
 </p>
 
 ### 에이전트에서 Kubeconfig 설정 가이드 확인하기
-Proxy를 통해 kubectl 명령을 사용하려면 **최초 1회의 Kubeconfig 설정** 이 필요합니다.
+Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig 설정** 이 필요합니다.
 
 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 Setting 페이지로 진입, Kubernetes 탭을 선택하면 Kubeconfig File 저장 경로를 관리하고, Kubeconfig 설정 커맨드를 복사할 수 있습니다.
 
@@ -94,7 +94,7 @@ Proxy를 통해 kubectl 명령을 사용하려면 **최초 1회의 Kubeconfig �
 *Multi-Agent &gt; Setting &gt; Kubernetes*
 </p>
 
-## SAC **[10.2.8~]**
+## SAC**[10.2.8~]**
 ### 에이전트에서 서버 접속하기
 1. Role 드롭다운에서 Role을 선택하면, 선택한 Role로 접근할 수 있는 서버 목록을 확인할 수 있습니다.
 2. 서버를 선택하고 우클릭하여 컨텍스트 메뉴를 열고, Open Connection With &gt; 터미널 Tool을 선택합니다.
@@ -102,13 +102,13 @@ Proxy를 통해 kubectl 명령을 사용하려면 **최초 1회의 Kubeconfig �
 4. 선택한 터미널 툴로 서버에 접속할 수 있습니다.
 
 <Callout type="info">
-**OS 권한 모달** 
+ **OS 권한 모달** 
 * 최초 1회에 한하여, 선택한 터미널 툴에 대한 OS 권한을 요구합니다. `허용`하지 않으면 터미널 툴을 열 수 없습니다.
 * 최초 1회에 한하여 System Event에 대한 OS 권한을 요구합니다. 허용할 경우 세션 끊김 등에 대한 이벤트를 알림 영역에서 받을 수 있습니다.
 </Callout>
 
 <Callout type="info">
-**세션 종료 전 알람** 
+ **세션 종료 전 알람** 
 * 세션 종료 5분 전 종료 알람이 Multi Agent 내에서 발생합니다.
 * Multi Agent가 종료되거나 종료 시점이 도래하는 경우, 별도의 세션 종료 알람 없이 연결된 세션이 종료됩니다.
 </Callout>
@@ -118,13 +118,13 @@ Proxy를 통해 kubectl 명령을 사용하려면 **최초 1회의 Kubeconfig �
 ### 에이전트에서 서버 접근 권한 요청하기
 서버에 접속 시 필요한 계정의 권한이 없는 경우, Multi Agent에서 직접 서버 접근 권한(Server Privilege Request)을 요청할 수 있습니다.
 
-1. `Servers` 탭에서 권한을 요청할 서버를 선택하고 마우스 오른쪽 버튼을 클릭하여 컨텍스트 메뉴를 엽니다.
-2. `Open Connection With`에서 사용하려는 터미널 툴을 선택합니다.
-3. 계정 선택 창이 나타나면 하단에 있는 `Request Server Privilege` 버튼을 클릭합니다.
-    * 이 버튼을 클릭하면 QueryPie 웹 페이지의 권한 요청 화면으로 이동하며, 이전에 선택했던 Role, 서버 그룹, 서버, 계정 정보가 자동으로 입력되어 있습니다.
+1. `Servers` 탭에서 권한을 요청할 서버를 선택하고 마우스 오른쪽 버튼을 클릭하여 컨텍스트 메뉴를 엽니다.<br/>
+2. `Open Connection With`에서 사용하려는 터미널 툴을 선택합니다.<br/><br/>
+3. 계정 선택 창이 나타나면 하단에 있는 `Request Server Privilege` 버튼을 클릭합니다.<br/><br/>
+    * 이 버튼을 클릭하면 QueryPie 웹 페이지의 권한 요청 화면으로 이동하며, 이전에 선택했던 Role, 서버 그룹, 서버, 계정 정보가 자동으로 입력되어 있습니다.<br/>
 
 <Callout type="info">
-**유의 사항** 
+ **유의 사항** 
 * QueryPie 관리자가 `Admin &gt; General &gt; Workflow Configurations` 설정에서 `Server Privilege Request`를 비활성화한 경우, 에이전트의 `Request Server Privilege` 버튼도 비활성화됩니다.
 </Callout>
 
@@ -151,7 +151,7 @@ Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습�
 3. 프로필 버튼을 클릭하면 등록된 Host 목록을 확인할 수 있습니다. 클릭하여 Host 간 전환이 가능합니다.
 
 <Callout type="info">
-Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 되었다면 화면 상 Host 전환 없이 등록된 모든 리소스를 사용할 수 있습니다. 
+Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 되었다면 화면 상 Host 전환 없이 등록된 모든 리소스를 사용할 수 있습니다.
 </Callout>
 
 ## Multi Agent 설정 초기화하기
@@ -159,7 +159,7 @@ Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 �
 
 <p align="center">
 <div>[스크린샷 2025-04-14 오전 12.07.19.png]()</div>
-*Status Bar Item (MacOS)*
+* Status Bar Item (MacOS)*
 </p>
 
 <p align="center">

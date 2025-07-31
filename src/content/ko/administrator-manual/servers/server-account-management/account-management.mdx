@@ -4,28 +4,28 @@ import { Callout } from 'nextra/components'
 Password Provisioning 을 통해 패스워드가 변경된 서버의 계정을 조회하고, 패스워드 변경 이력을 확인하고, 개별 서버 계정의 패스워드를 수동으로 관리할 수 있습니다.
 
 <Callout type="info">
-이 메뉴는 Administrator &gt; General &gt; Company Management &gt; [Security](https://chequer.atlassian.net/wiki/spaces/QM/pages/544178422/Security#%EC%84%9C%EB%B2%84-%EC%BB%A4%EB%84%A5%EC%85%98-%EB%B3%B4%EC%95%88-%EC%84%A4%EC%A0%95) 에서 Server Connection Security의 **Password Provisioning** 설정을 On으로 선택 후 저장해야 표시됩니다. 
+ 이 메뉴는 Administrator &gt; General &gt; Company Management &gt; [Security](https://chequer.atlassian.net/wiki/spaces/QM/pages/544178422/Security#%EC%84%9C%EB%B2%84-%EC%BB%A4%EB%84%A5%EC%85%98-%EB%B3%B4%EC%95%88-%EC%84%A4%EC%A0%95)에서 Server Connection Security의  **Password Provisioning**  설정을 On으로 선택 후 저장해야 표시됩니다.
 </Callout>
 
 ## Account 조회하기
 <p align="center">
 <div>[Screenshot 2025-07-27 at 6.47.45 PM.png]()</div>
-*Administrator &gt; Servers &gt; Server Account Management &gt; Account Management*
+*Administrator &gt; Servers &gt; Server Account Management &gt; Account Management *
 </p>
 
 1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Management 메뉴로 이동합니다
 2. 테이블 좌측 상단의 검색란을 통해 서버 또는 Account의 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 계정 목록을 최신화할 수 있습니다.
 4. 테이블에서 이하의 컬럼 정보를 제공합니다.
-    1. **Server ** : 대상 서버 명
-    2. **Host**  : 서버의 IP
-    3. **Server OS**  : 서버의 OS
-    4. **Account**  : 서버 접속용 Account
-    5. **Usage**  : 계정의 사용 용도
-        1. **For User ** : 사용자 접속 용도 계정
-        2. **For Provisioning**  : QueryPie의 패스워드 변경 Job에서 사용되는 계정
-    6. **Last Password Updated At :**  계정의 마지막 패스워드 업데이트 일시
-    7. **Created At**  : 계정 최초 변경 일시
+    1.  **Server ** : 대상 서버 명
+    2.  **Host**  : 서버의 IP
+    3.  **Server OS**  : 서버의 OS
+    4.  **Account**  : 서버 접속용 Account
+    5.  **Usage**  : 계정의 사용 용도
+        1.  **For User ** : 사용자 접속 용도 계정
+        2.  **For Provisioning**  : QueryPie의 패스워드 변경 Job에서 사용되는 계정
+    6.  **Last Password Updated At :**  계정의 마지막 패스워드 업데이트 일시
+    7.  **Created At**  : 계정 최초 변경 일시
 5. 각 행을 클릭하면 계정 세부 정보 조회가 가능합니다.
 
 ## One Time Account 조회하기
@@ -38,13 +38,13 @@ Password Provisioning 을 통해 패스워드가 변경된 서버의 계정을 �
 2. 테이블 좌측 상단의 검색란을 통해 Server, Host 또는 Account의 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 계정 목록을 최신화할 수 있습니다.
 4. 테이블에서 이하의 컬럼 정보를 제공합니다.
-    1. **Server ** : 대상 서버 명
-    2. **Host**  : 서버의 IP
-    3. **Server OS**  : 서버의 OS
-    4. **Account**  : 서버 접속을 위해 생성된 One Time Account
-    5. **Last Fail Message**  : 삭제된 원인을 담은 에러 에러메세지
-    6. **Last Delete Attempted At**  : 계정 삭제를 마지막으로 시도한 일시
-    7. **Delete Attempt Counts**  : 계정 삭제 시도 횟수
+    1.  **Server ** : 대상 서버 명
+    2.  **Host**  : 서버의 IP
+    3.  **Server OS**  : 서버의 OS
+    4.  **Account**  : 서버 접속을 위해 생성된 One Time Account
+    5.  **Last Fail Message**  : 삭제된 원인을 담은 에러 에러메세지
+    6.  **Last Delete Attempted At**  : 계정 삭제를 마지막으로 시도한 일시
+    7.  **Delete Attempt Counts**  : 계정 삭제 시도 횟수
 
 ## Active Directory 조회하기
 <p align="center">
@@ -56,11 +56,11 @@ Password Provisioning 을 통해 패스워드가 변경된 서버의 계정을 �
 2. 테이블 좌측 상단의 검색란을 통해 UPN의 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 계정 목록을 최신화할 수 있습니다.
 4. 테이블에서 이하의 컬럼 정보를 제공합니다.
-    1. **AD Name**  : QueryPie에 연동된 AD 이름
-    2. **AD Domain**  : AD 도메인 주소
-    3. **UPN**  : 해당 도메인에 로그인할 때 사용하는 사용자 계정
-    4. **Last Password Updated At**  : 계정의 마지막 패스워드 업데이트 일시
-    5. **Created At**  : 계정 최초 변경 일시
+    1.  **AD Name**  : QueryPie에 연동된 AD 이름
+    2.  **AD Domain**  : AD 도메인 주소
+    3.  **UPN**  : 해당 도메인에 로그인할 때 사용하는 사용자 계정
+    4.  **Last Password Updated At**  : 계정의 마지막 패스워드 업데이트 일시
+    5.  **Created At**  : 계정 최초 변경 일시
 
 ## Account의 세부 정보 조회하기
 <p align="center">

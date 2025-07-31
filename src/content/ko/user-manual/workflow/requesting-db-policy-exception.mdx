@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
-10.2.6부터 지원하는 DAC 신규 정책을 사용할 경우 기존의 Unmasking Request 또는 Restricted Data Access Request 를 통해 Workflow로 요청할 수 없습니다. 즉, 신규 정책 기능을 활성화 한 경우 Request 메뉴에 표시되는 DB Policy Exception Request 를 사용합니다.  DB Policy Exception Request는 기존 정책과 다르게 Unmasking과 Restricted Data Access가 별도의 양식으로 분리되어 있지 않고 하나의 양식에서 Exception Type을 Unmasking, Restricted Data Access 둘 중 하나를 선택하는 방식입니다.
+10.2.6부터 지원하는 DAC 신규 정책을 사용할 경우 기존의 Unmasking Request 또는 Restricted Data Access Request 를 통해 Workflow로 요청할 수 없습니다. 즉, 신규 정책 기능을 활성화 한 경우 Request 메뉴에 표시되는 DB Policy Exception Request 를 사용합니다. <br/>DB Policy Exception Request는 기존 정책과 다르게 Unmasking과 Restricted Data Access가 별도의 양식으로 분리되어 있지 않고 하나의 양식에서 Exception Type을 Unmasking, Restricted Data Access 둘 중 하나를 선택하는 방식입니다.
 
 ## 정책 예외 요청하기
 ### 1. 결재 규칙 선택하기
@@ -42,27 +42,27 @@ import { Callout } from 'nextra/components'
 </p>
 
 <Callout type="important">
-**Q. Urgent Mode 스위치가 보이지 않아요.** 
-A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다. 
+ **Q. Urgent Mode 스위치가 보이지 않아요.** 
+A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
 </Callout>
 
 ### 5. 요청 상세정보 입력하기
-* **Title**  : 요청 제목을 입력합니다.
-* **Excpetion Type**  : 일시적인 마스킹 해제 요청인 경우 Unmasking을 선택하고 접근 차단된 경로를 임시로 접근 요청하는 경우는 Restricted Data Access 를 선택합니다.
-* **Connection**  : 마스킹 허용 또는 접근 허용을 요청할 대상 테이블 또는 컬럼이 속한 커넥션을 선택합니다. 마스킹해제는 마스킹 정책이 컬럼 단위이므로 컬럼만 선택할 수 있습니다.
-* **Data Scope : ** Data Path와 Tag중 하나를 선택할 수 있습니다. 기본값은 “Data Path” 입니다.
-    * **Data Path ** : 마스킹 해제 또는 접근하려는 컬럼이나 테이블을 직접 지정합니다.
-        * **Table :**  대상 테이블을 선택합니다.
-        * **Column : ** 1개 이상 컬럼을 선택할 수 있으며, 최대 30개까지 선택할 수 있습니다.
-    * **Tag**  : 만약 신청자가 특정 경로에 정책이 태그기반으로 설정되어 있는 것을 알고 있고 어떤 태그가 부여되어 있는 지 알고 있는 경우 태그를 지정하여 신청할 수 있습니다. 일반적으로 신청자가 정책이 태그로 설정되어 있는지 어떤 태그가 사용되고 있는지 모르기 때문에 태그로 신청할 때는 먼저 관리자의 도움을 받아야 합니다.
-        * **Tags**  : Data scope를 태그로 지정한 경우 정책에서 사용된 태그를 사용할 수 있습니다.
-* **Data Access Expiration**  : 요청할 데이터 접근 허용 기간을 설정할 수 있습니다.
-    1. Time Duration 선택시, 분 단위로 입력 가능하고 최소는 1분, 최대는 44,640분으로 요청할 수 있습니다.
+*  **Title**  : 요청 제목을 입력합니다.
+*  **Excpetion Type**  : 일시적인 마스킹 해제 요청인 경우 Unmasking을 선택하고 접근 차단된 경로를 임시로 접근 요청하는 경우는 Restricted Data Access 를 선택합니다.
+*  **Connection**  : 마스킹 허용 또는 접근 허용을 요청할 대상 테이블 또는 컬럼이 속한 커넥션을 선택합니다.<br/>마스킹해제는 마스킹 정책이 컬럼 단위이므로 컬럼만 선택할 수 있습니다. 
+*  **Data Scope : ** Data Path와 Tag중 하나를 선택할 수 있습니다. 기본값은 “Data Path” 입니다.
+    *  **Data Path ** : 마스킹 해제 또는 접근하려는 컬럼이나 테이블을 직접 지정합니다.
+        *  **Table :**  대상 테이블을 선택합니다. 
+        *  **Column : ** 1개 이상 컬럼을 선택할 수 있으며, 최대 30개까지 선택할 수 있습니다.
+    *  **Tag**  : 만약 신청자가 특정 경로에 정책이 태그기반으로 설정되어 있는 것을 알고 있고 어떤 태그가 부여되어 있는 지 알고 있는 경우 태그를 지정하여 신청할 수 있습니다. 일반적으로 신청자가 정책이 태그로 설정되어 있는지 어떤 태그가 사용되고 있는지 모르기 때문에 태그로 신청할 때는 먼저 관리자의 도움을 받아야 합니다. 
+        *  **Tags**  : Data scope를 태그로 지정한 경우 정책에서 사용된 태그를 사용할 수 있습니다.
+*  **Data Access Expiration**  : 요청할 데이터 접근 허용 기간을 설정할 수 있습니다.
+    1. Time Duration 선택시, 분 단위로 입력 가능하고 최소는 1분, 최대는 44,640분으로 요청할 수 있습니다. 
         1. Time Duration 의 경우, 승인 시점을 기준으로 동작합니다.
         2. Urgent Mode 사용하는 경우, Request 등록 시점을 기준으로 데이터에 접근할 수 있습니다.
     2. End Date 선택시, 일자와 시간을 기준으로 선택 가능하며, 최소는 현재 시간, 최대는 30일로 요청할 수 있습니다.
-* **Reason for Request**  : 정책 예외 신청 사유를 입력합니다. 최대 1000자까지 입력할 수 있습니다.
-* 페이지 하단의 `Submit` 버튼을 눌러 요청을 상신합니다.
+*  **Reason for Request**  : 정책 예외 신청 사유를 입력합니다. 최대 1000자까지 입력할 수 있습니다.
+* 페이지 하단의 `Submit` 버튼을 눌러 요청을 상신합니다.<br/>
 
 
 

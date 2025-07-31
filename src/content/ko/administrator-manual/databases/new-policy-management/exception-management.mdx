@@ -11,7 +11,7 @@ Databases &gt; Data Policies &gt; Exception Management에 Workflow 탭에 Wokflo
 * Exception Type : Unmasking, Restricted Data Access와 같이 정책 예외 유형이 표시됩니다.
 * Connection : 정책예외 대상 DB 커넥션이 표시됩니다.
 * Data Path : Workflow에서 요청한 경로가 표시됩니다. Tag로 신청한 경우 대상이 동적으로 바뀌기 때문에 Data Path에 값이 표시되지 않습니다.
-* Data Tag : Workflow에서 요청 양식에서 지정한 태그가 표시됩니다.
+* Data Tag : Workflow에서 요청 양식에서 지정한 태그가 표시됩니다. 
 * Allowed User : 일시적으로 정책 예외가 승인된 사용자 또는 그룹이 표시됩니다.
 * Start Time
 * End Time
@@ -38,12 +38,12 @@ Databases &gt; Policy Mananagement &gt; Exception Management 의 Manual 탭에�
 
 * Exception Name : 정책 예외의 이름을 입력합니다.
 * Exception Type : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
-* Data Scope : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]**
+* Data Scope : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
     * Data Tag 를 선택하면 태그로 대상을 지정할 수 있습니다. Databases &gt; Policy Management &gt; Data Paths에 설정한 태그만 사용할 수 있습니다. 태그는 같은 키는 OR 연산이고 다른 키 사이는 AND 연산입니다.
     * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. 정규식을 사용할 수는 없습니다.
 * Allowed User : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
     * User / Group : 사용자 또는 그룹을 지정할 수 있습니다.
-    * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. **[11.1.0]**
+    * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. **[11.1.0]** 
 * Exception Expiration : 정책예외가 종료되는 시점을 설정합니다.
 * Description : 정책 예외에 대한 간단한 설명을 입력합니다.
 

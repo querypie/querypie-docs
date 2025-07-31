@@ -9,13 +9,13 @@ General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있
 </p>
 
 ## 기본 설정
-* **Company Name**  : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
-* **Web Base URL**  : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
-* **Timezone**  : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
-* **Date Format**  : 날짜 표기 방식을 지정합니다.
-* **Default Display Language**  : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어)
-* **Audit Log Retention Period ** : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
-* **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.
+*  **Company Name**  : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
+*  **Web Base URL**  : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
+*  **Timezone**  : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
+*  **Date Format**  : 날짜 표기 방식을 지정합니다.
+*  **Default Display Language**  : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) 
+*  **Audit Log Retention Period ** : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
+*  **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. 
 
 
 
@@ -48,23 +48,23 @@ Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송�
 
 
 
-* **Git Repository URL**  : 쿼리를 전송할 Git Repository URL
-* **Git Branch**  : 쿼리 파일을 전송할 Repository 내 브랜치 이름
-* **Authentication Type**  : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)
+*  **Git Repository URL**  : 쿼리를 전송할 Git Repository URL
+*  **Git Branch**  : 쿼리 파일을 전송할 Repository 내 브랜치 이름
+*  **Authentication Type**  : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)
     * OAuth 선택 시, 다음의 내용을 입력합니다.
-        * **User Name ** : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
-        * **Access Token**  : Git 서비스에서 제공하는 Access Token
+        *  **User Name ** : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
+        *  **Access Token**  : Git 서비스에서 제공하는 Access Token
     * SSH 선택 시, 다음의 내용을 입력합니다.
-        * **Public Key**  : Git 서버에 저장된 SSH Public Key
-        * **Private Key**  : SSH Public Key와 한 쌍을 이루는 Private Key
-        * **Passphrase**  : Private Key에 Passphrase 설정된 경우 입력
+        *  **Public Key**  : Git 서버에 저장된 SSH Public Key
+        *  **Private Key**  : SSH Public Key와 한 쌍을 이루는 Private Key
+        *  **Passphrase**  : Private Key에 Passphrase 설정된 경우 입력
 
 
 
 입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인 후 `OK` 버튼을 입력하여 저장합니다.
 
 <Callout type="info">
-GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고해주세요. 
+GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고해주세요.
 * Access Token 발급 : [개인용 액세스 토큰 관리](https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 * SSH 연결 : [SSH를 통한 GitHub 연결](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
 </Callout>
@@ -80,14 +80,14 @@ GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서
 
 
 
-Query Sharing 설정이 완료되면 Query Sharing이 **On** 으로 표시됩니다.
+Query Sharing 설정이 완료되면 Query Sharing이  **On** 으로 표시됩니다.
 
 SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
 
 * Save 시 연동한 Repository에 쿼리 파일이 저장됩니다.
 * Queries 패널 &gt; QueryPie Git Sharing 폴더에서 Repository에 저장된 쿼리 파일을 불러올 수 있습니다.
 
-자세한 설명은 [웹 SQL 에디터로 접속하기](웹 SQL 에디터로 접속하기) 를 참고해주세요.
+자세한 설명은 [웹 SQL 에디터로 접속하기](웹 SQL 에디터로 접속하기)를 참고해주세요.
 
 ## Workflow Configuration
 Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
@@ -122,7 +122,7 @@ Use User Attribute-Based Approval 토글을 활성화합니다.
 
 이 옵션을 통해 워크플로우 요청 상신 시, 사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할지 여부를 결정합니다. 이를 통해 특정 조건에 맞는 담당자에게 승인 요청이 자동으로 할당되도록 설정할 수 있습니다.
 
-* 중요:
+* 중요: 
     * 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.
     * Attribute 기반 승인자 지정은 1명만 등록할 수 있습니다 (하나의 Attribute에 한 명의 승인자 ID만 지정 가능).
 * 토글을 활성화한 경우
@@ -138,10 +138,10 @@ Use User Attribute-Based Approval 토글을 활성화합니다.
     * 기존에 'Allow Assignee selection (Attribute-Based)' 옵션을 사용하여 생성된 승인 규칙은, 사용자가 새로운 워크플로우를 상신할 때 승인 규칙 선택 목록에서 제외됩니다.
         * 주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지 않습니다.
         * 관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.
-    * User &gt; Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다.
+    * User &gt; Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다. 
 * Attribute 값 부재 시 알림
     * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
-        * 에러 메시지 예시:
+        * 에러 메시지 예시: 
 * Attribute 값은 있지만 해당 사용자가 비활성화된 경우
     * 만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.
         * 에러 메세지 예시:
@@ -157,7 +157,7 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 
 * 토글을 활성화하면 `User Attribute`의 `Key`와 `Value`를 한 쌍으로 선택하고 입력할 수 있습니다.
 * 여기에 설정된 `Key:Value` 조건과 일치하는 사용자는 사용자 대시보드에 `Workflow` 메뉴가 표시되지 않습니다.
-* **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
+*  **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
 
 ## SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
@@ -170,9 +170,9 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 
 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
 
-* **Query chunk size**  : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
-    * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다.
-* **Query throttle interval ** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
+*  **Query chunk size**  : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
+    * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. 
+*  **Query throttle interval ** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
 
 ## Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
 Redirect to custom page for SQL Requests 토글을 활성화합니다.

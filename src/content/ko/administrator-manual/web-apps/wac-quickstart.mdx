@@ -7,16 +7,16 @@ QueryPie 홈페이지를 예시로 가장 간단한 WAC 사용법을 안내하�
 3. 현재 사용자에게 이 역할을 할당하고 웹 앱 접근 제어의 동작을 확인합니다.
 
 <Callout type="info">
-**안내** 
+ **안내** 
 Quickstart는 `10.2.8` 버전을 기준으로 설명합니다. 
-이 Quickstart를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다. 
+이 Quickstart를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다.
 </Callout>
 
 
 
 # Admin-side
 ## 1. 웹 앱 등록하기
-QueryPie 홈페이지( `www.querypie.com` ) 내 `/ko/resources` 하위 구조는 다음과 같습니다.
+QueryPie 홈페이지(`www.querypie.com`) 내 `/ko/resources` 하위 구조는 다음과 같습니다.
 
 이 퀵스타트 가이드에서는 이 중 일부 경로만을 웹 앱 하위에 등록한 뒤, 등록된 경로만 접근을 허용하는 정책을 생성하겠습니다.
 
@@ -38,7 +38,7 @@ QueryPie 홈페이지( `www.querypie.com` ) 내 `/ko/resources` 하위 구조는
 
 
 1. Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps 메뉴로 진입하세요.
-2. `Create a Web App` 버튼을 클릭하면 웹 앱 등록 페이지로 진입합니다.
+2. `Create a Web App` 버튼을 클릭하면 웹 앱 등록 페이지로 진입합니다.<br/>
 
 <p align="center">
 <div>[스크린샷 2025-04-12 오후 10.56.20.png]()</div>
@@ -48,17 +48,17 @@ QueryPie 홈페이지( `www.querypie.com` ) 내 `/ko/resources` 하위 구조는
 다음의 정보를 입력하세요.
 
 1. Name : QueryPie Web Site
-2. Base URL : `www.querypie.com` 또는 `10.10.10.10:443`
+2. Base URL : `www.querypie.com` 또는 `10.10.10.10:443` 
     1. Base URL에 하위 경로(예: `/ko`)를 포함할 수 없습니다.
     2. Base URL 입력시 `https://` 는 제외하는 것을 권장합니다.
 3. Description : 웹 앱에 대한 설명을 입력하세요. (예: 쿼리파이 웹사이트)
 4. Watermark : 웹 앱 접속 시 사용자의 브라우저 화면에 워터마크를 적용할지 여부를 선택합니다.
     1. 웹 앱 접속시 브라우저에 접속자, 접속일시 등의 정보를 표시함으로써 화면 유출을 방지합니다.
     2. 가이드에서는 On 상태를 가정하고 안내하겠습니다.
-5. URL Paths : 하위 경로를 입력합니다. (선택)
+5. URL Paths : 하위 경로를 입력합니다. (선택) 
     1. 가이드에서는 하위 경로를 입력해보겠습니다. `+ Add Path` 버튼을 클릭하여 하위 경로를 입력해주세요.
 
-| **Path**                               | **Path Tag**   |
+|  **Path**                              |  **Path Tag**  |
 | -------------------------------------- | -------------- |
 | `/ko`                                  | `for:landing`  |
 | `/ko/resources/discover/blog/*`        | `for:discover` |
@@ -142,8 +142,8 @@ spec:
 
 # User-side
 ## 1. Root CA 인증서 설치하기
-1. QueryPie에 로그인한 상태에서 상단 우측 프로필 버튼을 클릭하고, 프로필 메뉴에서 Support &gt; Download Web Secure 버튼을 클릭합니다.
-2. QueryPie Web Secure Download 모달이 열립니다.  **A. Install Root CA Certificate**  에서, Step 1. 내 Download Link를 클릭하면 인증서 파일 다운로드가 실행됩니다.
+1. QueryPie에 로그인한 상태에서 상단 우측 프로필 버튼을 클릭하고, 프로필 메뉴에서 Support &gt; Download Web Secure 버튼을 클릭합니다.<br/>
+2. QueryPie Web Secure Download 모달이 열립니다.  **A. Install Root CA Certificate**  에서, Step 1. 내 Download Link를 클릭하면 인증서 파일 다운로드가 실행됩니다. <br/>
 3. [Root CA 인증서 설치 가이드](https://docs.querypie.com/ko/querypie-manual/10.2.0/root-ca)에 따라 인증서 설치 및 신뢰 설정을 진행합니다.
 
 ## 2. Extension 다운로드 받기
@@ -153,14 +153,14 @@ spec:
 ## 3. Extension 설치 및 Host 설정하기
 1. Chrome 주소창에 chrome://extensions/ 을 입력합니다.
 2. 페이지 우상단의 개발자 모드 토글을 활성화합니다.
-3. 전달받은 Extension 파일의  **압축을 풀지 않은**  상태로, 확장 프로그램 영역으로 끌어넣습니다.
-4. 새 탭에서 Host Configuration 페이지가 열립니다. QueryPie Host에 현재 사용중인 QueryPie 주소를 붙여넣고, `Continue` 버튼을 클릭합니다.
-    1. Host 정보가 유효하다면 `Go to Dashboard` 버튼이 나타납니다. 클릭하면 새 탭에서 QueryPie로 진입합니다.
+3. 전달받은 Extension 파일의  **압축을 풀지 않은**  상태로, 확장 프로그램 영역으로 끌어넣습니다.<br/>
+4. 새 탭에서 Host Configuration 페이지가 열립니다. QueryPie Host에 현재 사용중인 QueryPie 주소를 붙여넣고, `Continue` 버튼을 클릭합니다. 
+    1. Host 정보가 유효하다면 `Go to Dashboard` 버튼이 나타납니다. 클릭하면 새 탭에서 QueryPie로 진입합니다.<br/>
 
 <Callout type="important">
-**주의** 
-WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 보장되지 않습니다. 접근 정책 적용 및 감사 로깅에 문제가 있을 수 있습니다. 
-기존에 열려있던 모든 브라우저 탭 및 창을 닫은 후에 익스텐션을 설치하시기 바랍니다. 
+ **주의** 
+WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 보장되지 않습니다. 접근 정책 적용 및 감사 로깅에 문제가 있을 수 있습니다.
+기존에 열려있던 모든 브라우저 탭 및 창을 닫은 후에 익스텐션을 설치하시기 바랍니다.
 </Callout>
 
 ## 4. QueryPie를 통하여 웹 앱 접근하기
@@ -168,8 +168,8 @@ WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 �
     1. 현재 QueryPie에 로그인된 상태라면, Web App Dashboard가 열립니다.
     2. 로그인되지 않은 상태라면 로그인 페이지로 넘어갑니다. 로그인을 완료하고, 상단 메뉴에서 Web Apps를 클릭하여 대시보드로 진입하세요.
     3. Role 선택 모달이 표시되면, QP Web Test 를 선택합니다.
-2. Web App Dashboard 내 My Apps에 앞에서 등록한 QueryPie Web Site 앱 아이콘이 보일 것입니다. 아이콘을 클릭하면 웹사이트로 접속합니다.
-3. 최초 접속 시, 현재 웹 세션이 기록되고 있음을 알려주는 화면이 보입니다. `Continue` 버튼을 클릭하여 웹사이트로 접근합니다.
+2. Web App Dashboard 내 My Apps에 앞에서 등록한 QueryPie Web Site 앱 아이콘이 보일 것입니다. 아이콘을 클릭하면 웹사이트로 접속합니다.<br/>
+3. 최초 접속 시, 현재 웹 세션이 기록되고 있음을 알려주는 화면이 보입니다. `Continue` 버튼을 클릭하여 웹사이트로 접근합니다.<br/>
 4. QueryPie 홈페이지에 Watermark가 적용된 것을 확인할 수 있습니다.
 5. 허용되지 않은 페이지 (예: Products 메뉴) 에 접근을 시도하는 경우 차단 안내 화면으로 리다이렉션 됩니다.
 
@@ -200,7 +200,7 @@ WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 �
 웹 앱 및 역할 기준으로 사용자가 통제 대상 웹 앱에 접속하여 하위 페이지를 탐색한 기록이 모두 표시됩니다.
 
 <Callout type="info">
-Web App 생성시 User Activity Recording을 켜야만 기록이 남습니다. 
+Web App 생성시 User Activity Recording을 켜야만 기록이 남습니다.
 </Callout>
 
 

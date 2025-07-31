@@ -12,60 +12,60 @@ import { Callout } from 'nextra/components'
 *Administrator &gt; Servers &gt; Server Access Control &gt; Access Control*
 </p>
 
-1. Administrator &gt; Servers &gt; Server Access Control &gt; Access Control 메뉴로 이동합니다.
-2. 권한을 부여할 사용자 또는 사용자 그룹을 선택합니다.
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Access Control 메뉴로 이동합니다. 
+2. 권한을 부여할 사용자 또는 사용자 그룹을 선택합니다. 
 
-### 2. **[Step 1]** : 권한을 부여할 서버 또는 서버 그룹의 계정을 선택합니다.
+### 2.**[Step 1]**: 권한을 부여할 서버 또는 서버 그룹의 계정을 선택합니다.
 <p align="center">
 <div>[image-20240828-015324.png]()</div>
 *Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 1*
 </p>
 
-1. 먼저 왼쪽 목록에서 접근 권한을 부여할 서버 그룹을 선택합니다.
-2. 선택한 서버 그룹에 속한 서버 및 계정이 오른쪽에 표시됩니다. 목록에서 권한을 부여할 서버와 계정을 선택합니다.
-    1. 우측에서 Servers에서 권한을 부여할 서버를 선택합니다.
+1. 먼저 왼쪽 목록에서 접근 권한을 부여할 서버 그룹을 선택합니다. 
+2. 선택한 서버 그룹에 속한 서버 및 계정이 오른쪽에 표시됩니다. 목록에서 권한을 부여할 서버와 계정을 선택합니다. 
+    1. 우측에서 Servers에서 권한을 부여할 서버를 선택합니다. 
     2. 우측 하단 Accounts에서 선택된 서버에 접속할 수 있는 Account를 선택합니다.
-3. `Next` 버튼을 클릭합니다.
+3. `Next` 버튼을 클릭합니다. 
 
 <Callout type="info">
-Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니다. 하나의 서버 그룹 내 1000개 이상의 서버가 등록된 경우, Servers 필드에서 서버명 검색을 통해 서버를 추가합니다. 
+Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니다. 하나의 서버 그룹 내 1000개 이상의 서버가 등록된 경우, Servers 필드에서 서버명 검색을 통해 서버를 추가합니다.
 </Callout>
 
-### 3. **[Step 2]** : 선택한 서버에 대한 접근 가능 정책을 설정합니다.
+### 3.**[Step 2]**: 선택한 서버에 대한 접근 가능 정책을 설정합니다.
 <p align="center">
 <div>[Screenshot 2025-07-27 at 5.28.54 PM.png]()</div>
 *Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2*
 </p>
 
-1. **[Step 1]** 에서 선택했던 전체 계정을 최종 확인하여 잘못 부여된 계정이 없는지 확인합니다. 만약 수정을 원할 경우 `Previous` 버튼을 클릭하여 이전 단계로 이동할 수 있습니다.
+1. **[Step 1]** 에서 선택했던 전체 계정을 최종 확인하여 잘못 부여된 계정이 없는지 확인합니다. 만약 수정을 원할 경우 `Previous` 버튼을 클릭하여 이전 단계로 이동할 수 있습니다. 
 2. 정책의 각 항목은 아래와 같습니다.
-    1. **`{n}` Server(s) selected**  : 항목은 **[Step 1]** 에서 선택했던 Server 수 x Account의 수가 표시됩니다. 클릭하면 각 항목을 리스트 형태로 확인할 수있습니다.
-    2. **Set Permissions by Minute**  : 이 옵션을 선택하면 서버 접근 권한을 분 단위로 설정할 수 있습니다. 체크박스를 선택하면 아래 설정 항목들이 활성화됩니다.
+    1.  **`{n}` Server(s) selected**  : 항목은 **[Step 1]** 에서 선택했던 Server 수 x Account의 수가 표시됩니다. 클릭하면 각 항목을 리스트 형태로 확인할 수있습니다.
+    2.  **Set Permissions by Minute**  : 이 옵션을 선택하면 서버 접근 권한을 분 단위로 설정할 수 있습니다. 체크박스를 선택하면 아래 설정 항목들이 활성화됩니다.
         1. Start Trigger : 권한 부여 시작 조건을 선택합니다
-            1. Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이, 활성화 시점 부터 지정된 기간 동안 서버 접속이 가능합니다.
+            1. Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이, 활성화 시점 부터 지정된 기간 동안 서버 접속이 가능합니다. 
             2. Grant : 권한 부여 즉시 타이머가 시작되며, 사용자의 실제 접속 여부와 관계없이 지정된 기간 동안만 권한이 유효합니다.
-        2. **Duration(Minutes)** : 권한이 유효한 분 단위 시간을 입력합니다.
-    3. **Expiration Date**  : 접속 권한 만료일을 설정합니다. 최대 1년까지 설정할 수 있습니다. (Default = 1년 후)
-    4. **Protocols**  : 서버 접속에 사용할 프로토콜을 사용합니다.
-    5. **Command Template**  : 서버에 접속 후 사용 불가능한 명령 세트를 설정할 수 있습니다. 하단의 Command Template Details을 클릭하여 설정된 세부 조건을 확인할 수 있습니다. *제약사항: (10.2.1) Grant Permissions에서는 Deny로 설정된 Command Template만 사용이 가능합니다.
-    6. **Configure Whitelist**  : Command Template을 통해 명령어를 제어하는 과정에서 특정 명령어에 대한 예외처리 허용을 지원합니다. Configure Whitelist 체크 박스를 체크하면 이하의 설정이 나타납니다:
-        1. **Commands**  : 허용이 필요한 명령어를 기입합니다.
-            1. **Keyword**  : 키워드로 입력 (ls, cat 등)
-            2. **RegEx**  : 정규표현식으로 입력 (^sudo\b[^&|;\n]*$ 등)
-        2. **Whitelist Expiration Date**  : 위 명령에 대한 별도 예외처리 만료일자를 지정합니다.
-    7. **Require Privilege** : 이 옵션을 활성화하면, 사용자가 해당 계정으로 서버에 접속하기 위해 Server Privilege Request 워크플로우를 통한 승인 절차를 필수로 거치게 됩니다. 이는 Windows 서버의 관리자(Admin) 계정과 같이 높은 권한의 계정에 대한 접근을 임시로 허용하고 관리할 때 유용합니다.
+        2.  **Duration(Minutes)** : 권한이 유효한 분 단위 시간을 입력합니다.
+    3.  **Expiration Date**  : 접속 권한 만료일을 설정합니다. 최대 1년까지 설정할 수 있습니다. (Default = 1년 후) 
+    4.  **Protocols**  : 서버 접속에 사용할 프로토콜을 사용합니다. 
+    5.  **Command Template**  : 서버에 접속 후 사용 불가능한 명령 세트를 설정할 수 있습니다. 하단의 Command Template Details을 클릭하여 설정된 세부 조건을 확인할 수 있습니다.<br/>*제약사항: (10.2.1) Grant Permissions에서는 Deny로 설정된 Command Template만 사용이 가능합니다.
+    6.  **Configure Whitelist**  : Command Template을 통해 명령어를 제어하는 과정에서 특정 명령어에 대한 예외처리 허용을 지원합니다. Configure Whitelist 체크 박스를 체크하면 이하의 설정이 나타납니다: 
+        1.  **Commands**  : 허용이 필요한 명령어를 기입합니다.
+            1.  **Keyword**  : 키워드로 입력 (ls, cat 등)
+            2.  **RegEx**  : 정규표현식으로 입력 (^sudo\b[^&|;\n]*$ 등)
+        2.  **Whitelist Expiration Date**  : 위 명령에 대한 별도 예외처리 만료일자를 지정합니다.
+    7.  **Require Privilege** : 이 옵션을 활성화하면, 사용자가 해당 계정으로 서버에 접속하기 위해 Server Privilege Request 워크플로우를 통한 승인 절차를 필수로 거치게 됩니다. 이는 Windows 서버의 관리자(Admin) 계정과 같이 높은 권한의 계정에 대한 접근을 임시로 허용하고 관리할 때 유용합니다.
         * 이 옵션이 활성화된 계정으로 접속을 시도하면 사용자 대시보드에서 서버 접속 시, `Connect` 버튼이 비활성화되며, 접근 권한 요청을 제출해야 한다는 안내 메시지가 표시됩니다.
         * Require Privilege 옵션은 서버의 OS 종류와 상관없이 모든 계정에 적용할 수 있습니다.
-    8. **Access Start Time**  : 접속 가능 시작 시간을 설정합니다.
-    9. **Access End Time**  : 접속 가능 종료 시간을 설정합니다.
-    10. **Access Weekday**  : 접속을 허용하는 요일을 설정합니다.
-    11. **IP Addresses**  : 접속을 허용하는 IP 주소를 설정합니다.
-    12. **Command Audit**  : 이 Permission을 통해 연결된 세션에서 사용된 command의 로깅 여부를 설정합니다.
-    13. **Command Detection**  : Script 및 Alias가 호출될 때, 내부의 금지 명령어 탐지 여부를 설정합니다. *제약사항: (10.2.1) Bash Shell에서만 동작, Script에서 다른 Script를 호출하는 명령어는 수행 차단
-    14. **Proxy Usage**  : QueryPie Agent에서 이 Permission을 통해 서버 접속 가능 여부를 설정합니다.
-    15. **Max Sessions**  : 한 유저가 한 서버에 동시 연결 가능한 세션 수를 제한합니다.
-    16. **Session Timeout (minutes)**  : 입력된 시간(분) 만큼 활동하지 않으면 세션은 종료됩니다.
-3. 우측 하단의 `Grant` 버튼을 클릭하면 권한 부여가 완료됩니다.
+    8.  **Access Start Time**  : 접속 가능 시작 시간을 설정합니다.
+    9.  **Access End Time**  : 접속 가능 종료 시간을 설정합니다.
+    10.  **Access Weekday**  : 접속을 허용하는 요일을 설정합니다.
+    11.  **IP Addresses**  : 접속을 허용하는 IP 주소를 설정합니다.
+    12.  **Command Audit**  : 이 Permission을 통해 연결된 세션에서 사용된 command의 로깅 여부를 설정합니다.
+    13.  **Command Detection**  : Script 및 Alias가 호출될 때, 내부의 금지 명령어 탐지 여부를 설정합니다.<br/>*제약사항: (10.2.1) Bash Shell에서만 동작, Script에서 다른 Script를 호출하는 명령어는 수행 차단
+    14.  **Proxy Usage**  : QueryPie Agent에서 이 Permission을 통해 서버 접속 가능 여부를 설정합니다. 
+    15.  **Max Sessions**  : 한 유저가 한 서버에 동시 연결 가능한 세션 수를 제한합니다.
+    16.  **Session Timeout (minutes)**  : 입력된 시간(분) 만큼 활동하지 않으면 세션은 종료됩니다.
+3.  우측 하단의 `Grant` 버튼을 클릭하면 권한 부여가 완료됩니다. 
 
 
 
@@ -75,13 +75,13 @@ Grant Permissions Step 1에서 서버는 최대 1000개 까지만 표시됩니�
 *Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Servers*
 </p>
 
-1. Server Settings &gt; Server Access Control &gt; Access Control 메뉴로 이동합니다.
-2. 권한을 부여할 사용자 또는 사용자 그룹을 선택합니다.
-3. 접속 가능 서버 목록에서 회수할 서버/계정을 선택합니다. (복수 선택 가능)
-4. 목록 왼쪽 상단에 표시되는 `Revoke` 버튼을 클릭합니다.
-5. 확인 팝업에서 Revoke 입력 후 `Revoke` 버튼을 누르면 Role이 성공적으로 회수됩니다.
+1. Server Settings &gt; Server Access Control &gt; Access Control 메뉴로 이동합니다. 
+2. 권한을 부여할 사용자 또는 사용자 그룹을 선택합니다. 
+3. 접속 가능 서버 목록에서 회수할 서버/계정을 선택합니다. (복수 선택 가능) 
+4. 목록 왼쪽 상단에 표시되는 `Revoke` 버튼을 클릭합니다. 
+5. 확인 팝업에서 Revoke 입력 후 `Revoke` 버튼을 누르면 Role이 성공적으로 회수됩니다. 
 
 <Callout type="info">
-**Q. 권한이 부여되거나 회수된 이력을 확인할 수 있는 곳이 있나요? ** 
+ **Q. 권한이 부여되거나 회수된 이력을 확인할 수 있는 곳이 있나요? ** 
 A. Audit 메뉴에서 Servers &gt; Access Control Logs 메뉴를 선택하면 확인할 수 있습니다. 
 </Callout>

@@ -16,8 +16,8 @@ import { Callout } from 'nextra/components'
 1. Database 설정 메뉴에서 Policies &gt; Data Masking 메뉴로 이동합니다.
 2. 우측 상단의 `Create Policy` 버튼을 클릭합니다.
 3. 정책 생성을 위한 다음의 정보들을 입력합니다.
-    1. **Policy Name**  : 정책을 화면상에서 구별할 수 있는 이름입니다.
-    2. **Target Connection**  : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
+    1.  **Policy Name**  : 정책을 화면상에서 구별할 수 있는 이름입니다.
+    2.  **Target Connection**  : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
 4. `Save` 버튼을 통해 저장합니다.
 
 해당 정책이 Data Masking 정책 목록에 생성된 것을 확인할 수 있습니다.
@@ -34,16 +34,16 @@ import { Callout } from 'nextra/components'
 
 1. Data Masking 메뉴에서 생성한 정책을 클릭합니다.
 2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
-3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.
-    1. **Database Name**  : 규칙 등록을 위한 필수 값입니다.
-    2. **Table Name**  : 규칙 등록을 위한 필수 값입니다.
-    3. **Column Name**  : 규칙 등록을 위한 필수 값입니다.
+3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다. 
+    1.  **Database Name**  : 규칙 등록을 위한 필수 값입니다.
+    2.  **Table Name**  : 규칙 등록을 위한 필수 값입니다. 
+    3.  **Column Name**  : 규칙 등록을 위한 필수 값입니다. 
 4. 마스킹 패턴을 적용합니다.
     1. 3번에서 선택한 컬럼에 적용할 마스킹 패턴을 1개 이상 선택합니다.
     2. 기본적으로 20여가지의 개인정보 및 민감정보를 마스킹하는 패턴을 제공합니다.
     3. Masking Pattern 메뉴에서 정규식을 통해 직접 탐지 패턴과 마스킹 패턴을 생성할 수 있습니다.
-5. 해당 데이터 조회가 필요한 사용자 또는 그룹에 한해 마스킹 규칙을 예외 처리할 수 있습니다.
-    * **Allowed Users**  : 해당 규칙을 예외처리할 사용자 또는 그룹을 선택합니다.
+5. 해당 데이터 조회가 필요한 사용자 또는 그룹에 한해 마스킹 규칙을 예외 처리할 수 있습니다. 
+    *  **Allowed Users**  : 해당 규칙을 예외처리할 사용자 또는 그룹을 선택합니다.
 6. `Ok` 버튼 통해 저장합니다.
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터를 조회할 경우 적용한 마스킹 패턴에 따라 ‘*****@gmail.com’와 같이 마스킹되어 표시됩니다.
@@ -51,13 +51,13 @@ Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이�
 
 
 <Callout type="important">
-Database Name 선택시 “[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user ‘username’@’host' (using password: YES)” 오류가 발생합니다. 
-A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보로 설정되어 있을 수 있습니다. Database Settings &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후, **Database Username / Password 정보를 입력하고 저장** 한 뒤 다시 시도합니다. 
+Database Name 선택시 “[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user ‘username’@’host' (using password: YES)” 오류가 발생합니다.
+A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보로 설정되어 있을 수 있습니다. Database Settings &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후,  **Database Username / Password 정보를 입력하고 저장** 한 뒤 다시 시도합니다.
 </Callout>
 
 ## 마스킹 정책이 적용된 컬럼에 대한 접근 로그 확인하기
 <Callout type="info">
-10.3.0 부터 마스킹 정책이 제어하는 컬럼에 대한 접근로그를 확인할 수 있습니다. 
+10.3.0 부터 마스킹 정책이 제어하는 컬럼에 대한 접근로그를 확인할 수 있습니다.
 </Callout>
 
 <p align="center">
@@ -67,10 +67,10 @@ A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보�
 1. 정책 목록에서 생성한 정책의 개별 항목(행)을 클릭하여 상세 페이지로 이동합니다.
 2. Logs 탭을 선택합니다.
 3. Log의 내용을 확인합니다.
-    1. **Name** : QueryPie 사용자의 Display Name입니다.
-    2. **Connection**  : 정책이 제어하고 있는 대상 커넥션입니다.
-    3. **Database Name ** : 정책이 제어하고 있는 대상 논리 DB 이름입니다.
-    4. **Table Name**  : 정책이 제어하고 있는 대상 테이블 이름입니다.
-    5. **Column Name**  : 정책이 제어하고 있는 대상 단일 또는 복수의 컬럼 이름입니다.
-    6. **Rows**  : 쿼리가 반환하는 행 수입니다.
-    7. **Action At**  : 쿼리를 수행한 시점입니다.
+    1.  **Name** : QueryPie 사용자의 Display Name입니다.
+    2.  **Connection**  : 정책이 제어하고 있는 대상 커넥션입니다.
+    3.  **Database Name ** : 정책이 제어하고 있는 대상 논리 DB 이름입니다.
+    4.  **Table Name**  : 정책이 제어하고 있는 대상 테이블 이름입니다.
+    5.  **Column Name**  : 정책이 제어하고 있는 대상 단일 또는 복수의 컬럼 이름입니다.
+    6.  **Rows**  : 쿼리가 반환하는 행 수입니다.
+    7.  **Action At**  : 쿼리를 수행한 시점입니다.

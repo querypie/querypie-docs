@@ -8,12 +8,12 @@ External API 토큰을 관리하는 페이지입니다.
 ## External API란?
 QueryPie의 기능을 웹 콘솔 외부에서 사용할 수 있는 API로, 10.0 버전 현재, V0.9, V2 두 가지 버전을 제공합니다.
 
-* **QueryPie API V2**
+*  **QueryPie API V2** 
     * 쿼리파이 버전 9.16.1부터 V2 API를 지원합니다.
-    * 호출 경로는 `{querypie url}/api/external/v2/`로 기존의 API V0.9에 영향 없이 이용 가능합니다.
+    * 호출 경로는 `{querypie url}/api/external/v2/`로 기존의 API V0.9에 영향 없이 이용 가능합니다. 
 * API 호출 시 필요한 기본 헤더는 아래와 같습니다. 자세한 API 명세는 API 문서를 참고해주세요.
 
-| **Key**       | **Value**              |
+|  **Key**      |  **Value**             |
 | ------------- | ---------------------- |
 | Content-Type  | application/json       |
 | Authorization | `{querypie api token}` |
@@ -21,9 +21,9 @@ QueryPie의 기능을 웹 콘솔 외부에서 사용할 수 있는 API로, 10.0 
 API 토큰 사용 시 유의사항은 다음과 같습니다.
 
 * API 토큰은 Owner 권한 사용자 또는 해당 메뉴 접근 권한이 있는 관리자가 발급할 수 있습니다.
-* 토큰은 최초 발급 시에만 전체 노출됩니다. 이후에는 앞의 8자리를 제외한 나머지를 모두 마스킹하여 표시합니다.
-    * **토큰 키를 분실한 경우** , 기존 키를 내역에서 삭제하고 토큰을 새로 발급 받아 사용하실 것을 권장합니다.
-* API 토큰 연장 시, Update 버튼을 누른 시점으로부터 토큰 생성 시 설정된 주기만큼 만료일자가 늘어납니다.
+* 토큰은 최초 발급 시에만 전체 노출됩니다. 이후에는 앞의 8자리를 제외한 나머지를 모두 마스킹하여 표시합니다. 
+    *  **토큰 키를 분실한 경우** , 기존 키를 내역에서 삭제하고 토큰을 새로 발급 받아 사용하실 것을 권장합니다. 
+* API 토큰 연장 시, Update 버튼을 누른 시점으로부터 토큰 생성 시 설정된 주기만큼 만료일자가 늘어납니다. 
 
 <Callout type="info">
 제공 API 목록 및 명세는 Administrator &gt; General &gt; System &gt; API Token 우측 상단의 `API Docs` 를 클릭을 통해 조회 가능한 API 문서에서 확인할 수 있습니다. 
@@ -39,7 +39,7 @@ API 토큰 사용 시 유의사항은 다음과 같습니다.
 
 1. Administrator &gt; General &gt; System &gt; API Token 메뉴로 진입합니다.
 2. 현재 생성된 토큰 목록을 확인할 수 있습니다. (생성일 최신 순 정렬)
-3. **검색 및 필터** :
+3.  **검색 및 필터** :
     1. 토큰 목록은 Token Name 또는 Token Value로 검색할 수 있습니다.
     2. 토큰의 상태로 목록을 필터링할 수 있습니다.
 
@@ -52,18 +52,18 @@ API 토큰 사용 시 유의사항은 다음과 같습니다.
 </p>
 
 1. API Token 페이지에서 우측 상단의 `Create API Token` 버튼을 클릭합니다.
-2. 토큰 생성을 위한 다음의 정보들을 입력합니다.
-    1. **API Name**  : 식별 가능한 API 토큰의 이름을 기입합니다.
-    2. **Validity Period Type ** : 토큰의 만료 기한을 지정합니다.
-        1. Never Expire 선택시 토큰을 영구적으로 사용할 수 있으나, 권장하지 않습니다.
-    3. **Scopes : API 토큰으로 수행할 수 있는 권한을 선택합니다.**
+2. 토큰 생성을 위한 다음의 정보들을 입력합니다. 
+    1.  **API Name**  : 식별 가능한 API 토큰의 이름을 기입합니다. 
+    2.  **Validity Period Type ** : 토큰의 만료 기한을 지정합니다. 
+        1. Never Expire 선택시 토큰을 영구적으로 사용할 수 있으나, 권장하지 않습니다. 
+    3.  **Scopes : API 토큰으로 수행할 수 있는 권한을 선택합니다.** 
         1. Full Access : 관리자 기능 전체를 수행할 수 있는 권한입니다.
         2. Select Role : 원하는 Admin Role 을 선택하여 권한 범위를 제한합니다.
             * Admin Role 이 아무것도 입력되지 않은 상태로 저장할 수 있으며, 이 경우 API Token으로 수행할 수 있는 작업이 없습니다.
-    4. **Allowed Zones**  : API 토큰 사용이 가능한 IP 대역을 정의합니다.
-        * Admin &gt; General &gt; Company Management &gt; Allowed Zones 내 정의해놓은 Allowed Zone을 매핑하여 API 호출 IP ACL을 설정합니다.
-    5. **Description**  : 해당 API 토큰에 대한 설명을 작성합니다.
-3. `Ok` 버튼을 클릭하면 API Token 생성이 완료됩니다.
+    4.  **Allowed Zones**  : API 토큰 사용이 가능한 IP 대역을 정의합니다. 
+        *  Admin &gt; General &gt; Company Management &gt; Allowed Zones 내 정의해놓은 Allowed Zone을 매핑하여 API 호출 IP ACL을 설정합니다. 
+    5.  **Description**  : 해당 API 토큰에 대한 설명을 작성합니다. 
+3. `Ok` 버튼을 클릭하면 API Token 생성이 완료됩니다. 
 4. 생성 완료 모달에서 최초에 한하여 API Token 정보를 확인할 수 있습니다.
     1. API Token 우측의 복사 버튼을 클릭하여 Token 정보를 복사할 수 있습니다.
     2. `OK` 버튼을 클릭하여 모달을 닫습니다.
@@ -78,18 +78,18 @@ API 토큰 사용 시 유의사항은 다음과 같습니다.
 
 1. API Token 페이지 내, Token 리스트에서 수정하고자 하는 토큰을 클릭합니다.
 2. Edit API Token 모달이 출력됩니다. 변경 가능한 항목은 아래와 같습니다.
-    1. **API Name ** : 이름을 변경하고자 할 경우 입력합니다.
-    2. **Validity Period Type ** : API Token 만료일자를 변경할 수 있습니다.
-        1. 변경 후 저장시, 현 시점에서 새롭게 지정된 기간을 기준으로 만료일자가 변경됩니다.
+    1.  **API Name ** : 이름을 변경하고자 할 경우 입력합니다. 
+    2.  **Validity Period Type ** : API Token 만료일자를 변경할 수 있습니다. 
+        1. 변경 후 저장시, 현 시점에서 새롭게 지정된 기간을 기준으로 만료일자가 변경됩니다. 
         2. API Token 만료까지 남은 기간이 새롭게 지정된 만료일자보다 짧든 길든 만료일자는 새롭게 지정된 값으로 덮어쓰기 됩니다. 상황에 따라 API 수명을 연장 또는 단축시킬 수 있습니다.
         3. Never Expire로 변경시 만료일시가 없어지나, 권장하지 않습니다.
-    3. **Scopes**  : API Token으로 수행할 수 있는 권한 범위를 변경합니다.
+    3.  **Scopes**  : API Token으로 수행할 수 있는 권한 범위를 변경합니다.
         1. Full Access : 관리자 기능 전체를 수행할 수 있는 권한입니다.
         2. Select Role : 원하는 Admin Role 을 선택하여 권한 범위를 제한합니다.
             * Admin Role 이 아무것도 입력되지 않은 상태로 저장할 수 있으며, 이 경우 API Token으로 수행할 수 있는 작업이 없습니다.
-    4. **Allowed Zones**  : API 토큰 사용이 가능한 IP 대역을 정의합니다.
-        * Admin &gt; General &gt; Company Management &gt; Allowed Zones 내 정의해놓은 Allowed Zone을 매핑하여 API 호출 IP ACL을 설정합니다.
-    5. **Description**  : 해당 API 토큰에 대한 설명을 변경하고자 할 경우 입력합니다.
+    4.  **Allowed Zones**  : API 토큰 사용이 가능한 IP 대역을 정의합니다. 
+        *  Admin &gt; General &gt; Company Management &gt; Allowed Zones 내 정의해놓은 Allowed Zone을 매핑하여 API 호출 IP ACL을 설정합니다. 
+    5.  **Description**  : 해당 API 토큰에 대한 설명을 변경하고자 할 경우 입력합니다. 
 3. `OK` 버튼을 눌러 변경 내용을 저장합니다.
 
 

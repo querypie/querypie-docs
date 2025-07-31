@@ -5,41 +5,41 @@ import { Callout } from 'nextra/components'
 2. 좌측 상단 `Submit Request` 버튼 클릭후 DB Access Request 항목을 선택합니다.
 3. Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.
 4. DB Connection 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.
-5. 다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다.
+5. 다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다. 
 6. Expiration Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다.
-7. 작성을 완료했다면 하단 `Submit`버튼을 클릭하여 신청을 완료합니다.
+7. 작성을 완료했다면 하단 `Submit`버튼을 클릭하여 신청을 완료합니다. 
 8. 관리자의 승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.
 
 <Callout type="important">
-**Custom Data Source Type 외 다중 요청 시 주의사항** 
-* Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다.
+ **Custom Data Source Type 외 다중 요청 시 주의사항** 
+* Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. 
 * 이 경우 다음 메시지가 표시됩니다: "Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection."
 * 같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.
 </Callout>
 
-###  Agent를 통한 접속
-1. **QueryPie Agent 실행**
+### <br/>Agent를 통한 접속
+1.  **QueryPie Agent 실행** 
     * QueryPie Agent를 실행합니다.
     * Database 항목에서 Custom Data Source를 확인할 수 있습니다.
-2. **Connection Guide 확인**
+2.  **Connection Guide 확인** 
     * Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.
     * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.
     * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.
     * Privileges는 "-"로 표시됩니다.
-3. **SQL Tool에서 접속**
+3.  **SQL Tool에서 접속** 
     * DataGrip이나 기타 SQL Tool을 실행합니다.
-    * **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.**
+    *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.**  
     * 벤더에 따라 추가 정보를 입력합니다.
 
 <Callout type="important">
-**주의사항** 
+ **주의사항** 
 * 관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.
 </Callout>
 
 ### 웹으로 접속 시도하는 경우
-1. **웹 커넥션 목록 확인**
-    * 사용자 화면 상단 Databases를 클릭합니다.
+1.  **웹 커넥션 목록 확인** 
+    * 사용자 화면 상단 Databases를 클릭합니다. 
     * 좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.
-2. **접속 불가 안내**
+2.  **접속 불가 안내** 
     * Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.
     * 아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다. "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."

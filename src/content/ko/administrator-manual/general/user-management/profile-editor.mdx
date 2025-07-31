@@ -10,12 +10,12 @@
 ## 사용자 속성 주체 설정 정의
 각 사용자 속성 별 Source Priority를 지정할 수 있으며, 종류는 아래와 같습니다:
 
-1. **Inherit from profile source**
-    1. 외부 Auth Provider로부터 해당 Attribute에 대한 업데이트를 수신을 허용하겠다는 의미의 옵션입니다.
-    2. SCIM API를 통해 사용자의 Attribute가 업데이트(patch) 가능한 상태가 됩니다.
-2. **Inherit from QueryPie **
-    1. 외부 Auth Provider로부터 생성된 사용자이지만, 해당 Attribute는 쿼리파이 자체적으로 관리하겠다는 의미의 옵션입니다.
-    2. SCIM API를 통해 사용자의 해당 Attribute가 업데이트 푸시되어도 쿼리파이 자체적으로 관리하는 Attribute가 되어 변경을 무시합니다.
+1.  **Inherit from profile source** 
+    1. 외부 Auth Provider로부터 해당 Attribute에 대한 업데이트를 수신을 허용하겠다는 의미의 옵션입니다. 
+    2. SCIM API를 통해 사용자의 Attribute가 업데이트(patch) 가능한 상태가 됩니다. 
+2.  **Inherit from QueryPie ** 
+    1. 외부 Auth Provider로부터 생성된 사용자이지만, 해당 Attribute는 쿼리파이 자체적으로 관리하겠다는 의미의 옵션입니다. 
+    2. SCIM API를 통해 사용자의 해당 Attribute가 업데이트 푸시되어도 쿼리파이 자체적으로 관리하는 Attribute가 되어 변경을 무시합니다. 
 
 ## Status 컬럼 정의
 Profile Editor의 Status 컬럼은 해당 Attribute가 사용자 프로필 (General &gt; Users &gt; User Detail &gt; Profile)에 표시될지 여부를 설정합니다.

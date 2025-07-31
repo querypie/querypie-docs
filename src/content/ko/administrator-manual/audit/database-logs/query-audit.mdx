@@ -10,58 +10,58 @@
 1. Administrator &gt; Audit &gt; Databases &gt; Query Audit 메뉴로 이동합니다.
 2. 쿼리 실행 당일 기준으로 로그가 내림차순으로 조회됩니다.
 3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
-    1. **Name**  : 사용자 이름
-    2. **Table(s)**  : 호출 테이블명
+    1.  **Name**  : 사용자 이름
+    2.  **Table(s)**  : 호출 테이블명
 4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
-    1. **Connection Name**  : 접속한 DB 커넥션명
-    2. **Database Type ** : 데이터베이스 유형
-    3. **SQL Type ** : SQL 구문 유형
-    4. **Action Type ** : 액션 유형
-        1. **SQL Execution**  : SQL 구문 실행
-        2. **Export Data**  : 데이터 내보내기
-        3. **Export Schema**  : 스키마 내보내기
-        4. **Import Data**  : 데이터 가져오기
-        5. **Import Schema ** : 스키마 가져오기
-        6. **Copy Clipboard**  : 클립보드 복사
-    5. **Executed At**  : 실행 일시
-    6. **Result ** : 작업 성공/실패 현황
-    7. **Prevented ** : 정책에 의한 비허용된 접근 실행 여부
-    8. **Table Resolved**  : 테이블 호출 여부
-    9. **Executed From**  : 쿼리 실행 주체
-        1. **Web Editor**  : 쿼리파이 웹 에디터에서 실행
-        2. **Proxy**  : 쿼리파이 프록시를 통한 실행
-        3. **SQL Request**  : SQL Request 워크플로를 통한 실행
-        4. **SQL Job**  : SQL Job에 의한 실행
-        5. **SQL Export Request**  : SQL Export Request 워크플로를 통한 실행
-    10. **Label**  : DB 원장 여부
+    1.  **Connection Name**  : 접속한 DB 커넥션명
+    2.  **Database Type ** : 데이터베이스 유형
+    3.  **SQL Type ** : SQL 구문 유형
+    4.  **Action Type ** : 액션 유형
+        1.  **SQL Execution**  : SQL 구문 실행 
+        2.  **Export Data**  : 데이터 내보내기
+        3.  **Export Schema**  : 스키마 내보내기
+        4.  **Import Data**  : 데이터 가져오기
+        5.  **Import Schema ** : 스키마 가져오기
+        6.  **Copy Clipboard**  : 클립보드 복사 
+    5.  **Executed At**  : 실행 일시
+    6.  **Result ** : 작업 성공/실패 현황
+    7.  **Prevented ** : 정책에 의한 비허용된 접근 실행 여부
+    8.  **Table Resolved**  : 테이블 호출 여부
+    9.  **Executed From**  : 쿼리 실행 주체
+        1.  **Web Editor**  : 쿼리파이 웹 에디터에서 실행
+        2.  **Proxy**  : 쿼리파이 프록시를 통한 실행
+        3.  **SQL Request**  : SQL Request 워크플로를 통한 실행
+        4.  **SQL Job**  : SQL Job에 의한 실행
+        5.  **SQL Export Request**  : SQL Export Request 워크플로를 통한 실행
+    10.  **Label**  : DB 원장 여부
 5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
 6. 테이블에서 이하의 컬럼 정보를 제공합니다:
-    1. **No**  : 이벤트 식별 번호
-    2. **Executed At**  : 실행 일시
-    3. **Result ** : 작업 성공/실패 현황
-    4. **Name**  : 대상 사용자 이름
-    5. **Email**  : 대상 사용자 이메일
-    6. **Action Type ** : 액션 유형
-    7. **Connection Name**  : 대상 DB 커넥션명
-    8. **Database Type**  : 대상 데이터베이스 유형
-    9. **Privilege**   **Name**  : 사용자 접속 권한
-    10. **Client IP**  : 사용자 클라이언트 IP 주소
-    11. **Replication Type**  : DB Replication 유형
-    12. **DB Host**  : 접속한 DB 호스트
-    13. **DB Name**  : DB명
-    14. **DB User**  : DB 사용자 ID
-    15. **Table(s)**  : 호출 테이블명
-    16. **SQL Type ** : SQL 구문 유형
-    17. **Query**  : 실행 쿼리문
-    18. **Time(ms)**  : 실행 시간 (Millis기준)
-    19. **Rows**  : 호출 행 수
-    20. **Data Size**  : 호출 데이터 크기
-    21. **Client**   **Name**  : 이용 클라이언트명 (DataGrip 등)
-    22. **Error Message**  : 실행 실패 등 특이사항에 대한 기록
-    23. **Execution Reason**  : 쿼리 실행 사유
-    24. **Prevented ** : 정책에 의한 비허용된 접근 실행 여부
-    25. **Label**  : DB 원장 여부
-    26. **Executed From**  : 쿼리 실행 주체
+    1.  **No**  : 이벤트 식별 번호
+    2.  **Executed At**  : 실행 일시
+    3.  **Result ** : 작업 성공/실패 현황
+    4.  **Name**  : 대상 사용자 이름
+    5.  **Email**  : 대상 사용자 이메일
+    6.  **Action Type ** : 액션 유형
+    7.  **Connection Name**  : 대상 DB 커넥션명
+    8.  **Database Type**  : 대상 데이터베이스 유형
+    9.  **Privilege**   **Name**  : 사용자 접속 권한
+    10.  **Client IP**  : 사용자 클라이언트 IP 주소
+    11.  **Replication Type**  : DB Replication 유형
+    12.  **DB Host**  : 접속한 DB 호스트
+    13.  **DB Name**  : DB명
+    14.  **DB User**  : DB 사용자 ID
+    15.  **Table(s)**  : 호출 테이블명
+    16.  **SQL Type ** : SQL 구문 유형
+    17.  **Query**  : 실행 쿼리문
+    18.  **Time(ms)**  : 실행 시간 (Millis기준)
+    19.  **Rows**  : 호출 행 수
+    20.  **Data Size**  : 호출 데이터 크기 
+    21.  **Client**   **Name**  : 이용 클라이언트명 (DataGrip 등)
+    22.  **Error Message**  : 실행 실패 등 특이사항에 대한 기록
+    23.  **Execution Reason**  : 쿼리 실행 사유
+    24.  **Prevented ** : 정책에 의한 비허용된 접근 실행 여부
+    25.  **Label**  : DB 원장 여부
+    26.  **Executed From**  : 쿼리 실행 주체
 
 ## Query Audit 상세 내역 조회하기
 각 행을 클릭하면 세부 정보 조회가 가능합니다.
@@ -72,32 +72,32 @@
 </p>
 
 * 우측 드로워 상단에는 이하의 기본 쿼리 감사 정보를 노출합니다:
-    1. **Result ** : 작업 성공/실패 현황
-    2. **Name**  : 대상 사용자 이름
-    3. **Action Type ** : 액션 유형
-    4. **SQL Type ** : SQL 구문 유형
-    5. **Privilege**   **Name**  : 사용자 접속 권한
-    6. **Privilege**   **Type**  : 사용자 접속 권한 유형
-    7. **Data Size**  : 호출 데이터 크기
-    8. **Time(ms)**  : 실행 시간 (Millis기준)
-    9. **Executed At**  : 실행 일시
-    10. **Executed From**  : 쿼리 실행 주체
-    11. **Label**  : DB 원장 여부
-    12. **Connection Name**  : 대상 DB 커넥션명
-    13. **Replication Type**  : DB Replication 유형
-    14. **Client**   **Name**  : 이용 클라이언트명 (DataGrip 등)
-    15. **Client IP**  : 사용자 클라이언트 IP 주소
-    16. **Host**   **Name ** : 접속 실행 호스트명
-    17. **Database Type**  : 대상 데이터베이스 유형
-    18. **DB Host**  : 접속한 DB 호스트
-    19. **DB Name**  : DB명
-    20. **DB User**  : DB 사용자 ID
-    21. **Table(s)**  : 호출 테이블명
+    1.  **Result ** : 작업 성공/실패 현황
+    2.  **Name**  : 대상 사용자 이름
+    3.  **Action Type ** : 액션 유형
+    4.  **SQL Type ** : SQL 구문 유형
+    5.  **Privilege**   **Name**  : 사용자 접속 권한
+    6.  **Privilege**   **Type**  : 사용자 접속 권한 유형
+    7.  **Data Size**  : 호출 데이터 크기 
+    8.  **Time(ms)**  : 실행 시간 (Millis기준)
+    9.  **Executed At**  : 실행 일시
+    10.  **Executed From**  : 쿼리 실행 주체
+    11.  **Label**  : DB 원장 여부
+    12.  **Connection Name**  : 대상 DB 커넥션명
+    13.  **Replication Type**  : DB Replication 유형
+    14.  **Client**   **Name**  : 이용 클라이언트명 (DataGrip 등)
+    15.  **Client IP**  : 사용자 클라이언트 IP 주소
+    16.  **Host**   **Name ** : 접속 실행 호스트명
+    17.  **Database Type**  : 대상 데이터베이스 유형
+    18.  **DB Host**  : 접속한 DB 호스트
+    19.  **DB Name**  : DB명
+    20.  **DB User**  : DB 사용자 ID
+    21.  **Table(s)**  : 호출 테이블명
 * 하단에는 실행 쿼리 본문 및 추가 내역을 노출합니다:
-    1. **Query**  : 실행 쿼리문
-    2. **First 10 Rows**  : 호출된 SELECT문에 대한 첫 열 행 샘플
+    1.  **Query**  : 실행 쿼리문
+    2.  **First 10 Rows**  : 호출된 SELECT문에 대한 첫 열 행 샘플
         * 해당 필드는  **Display the first 10 rows in Query Audit**  설정을 활성화한 경우에만 표기됩니다. (Default : Off)
             * [Security](Security) 내  **DB 커넥션 보안 설정**  참고
-        * **Copy Data**  : 전/후 데이터 복사용 버튼
-    3. **Error Message**  : 실행 실패 등 특이사항에 대한 기록
-    4. **Execution Reason**  : 쿼리 실행 사유
+        *  **Copy Data**  : 전/후 데이터 복사용 버튼
+    3.  **Error Message**  : 실행 실패 등 특이사항에 대한 기록
+    4.  **Execution Reason**  : 쿼리 실행 사유

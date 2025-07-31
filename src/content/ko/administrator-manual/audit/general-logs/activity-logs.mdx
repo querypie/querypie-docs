@@ -1,5 +1,5 @@
 ## Overview
-Activity logs에서는 **관리자** 에 의하여 수행되는 리소스 등록 및 설정 변경 이력을 조회할 수 있습니다.
+Activity logs에서는  **관리자** 에 의하여 수행되는 리소스 등록 및 설정 변경 이력을 조회할 수 있습니다.
 
 
 
@@ -10,15 +10,15 @@ Activity logs에서는 **관리자** 에 의하여 수행되는 리소스 등록
 </p>
 
 1. Administrator &gt; Audit &gt; General &gt; Activity Logs 메뉴로 접근합니다.
-2. **조회 기간**  : 기본적으로 이번 달의 로그 목록이 최신 순으로 조회됩니다.
+2.  **조회 기간**  : 기본적으로 이번 달의 로그 목록이 최신 순으로 조회됩니다.
     1. 조회 기간 변경을 위해서는 필터 패널을 열고,  **Action At**  에서 조회 기준일을 변경하시기 바랍니다.
-3. **Action Type**  : 리소스 변경 내용을 간략하게 확인할 수 있습니다. 형식은 다음과 같습니다.
+3.  **Action Type**  : 리소스 변경 내용을 간략하게 확인할 수 있습니다. 형식은 다음과 같습니다.
     1. `{변경이 가해진 리소스 타입}` `{Created | Updated | Deleted…}` : 특정 리소스가 생성, 변경, 또는 삭제된 경우
         * 예: `DB Connection Created`, `Server Updated`, `Kubernetes Policy Deleted`
     2. `{변경이 가해진 리소스 타입}` `{수정이 매개된 리소스 타입}` `{Created | Updated | Deleted | Assigned | Unassigned…}` : 특정 리소스에 다른 리소스가 추가, 변경, 삭제, 할당, 또는 회수된 경우
         * 예: `Server Group Server Added`, `Server Group Account Updated` , `Kubernetes Role Policy Unassigned`
     3. 특정 Action Type 으로 로그 목록을 필터링할 수 있습니다.
-4. **Target**  : Activity Logs에서, 관리자의 행위로 인해 변경이 가해진 리소스 타입의 이름을 확인할 수 있습니다.
+4.  **Target**  : Activity Logs에서, 관리자의 행위로 인해 변경이 가해진 리소스 타입의 이름을 확인할 수 있습니다.
 
 
 
@@ -29,10 +29,10 @@ Activity logs에서는 **관리자** 에 의하여 수행되는 리소스 등록
 </p>
 
 1. 목록의 한 행을 클릭하면 Drawer가 열리고, 상세 내용을 확인할 수 있습니다.
-2. **Affected Data**  : 해당 행위에 의하여 변경된 데이터 내역을 표시합니다. 각 컬럼의 의미는 다음과 같습니다.
+2.  **Affected Data**  : 해당 행위에 의하여 변경된 데이터 내역을 표시합니다. 각 컬럼의 의미는 다음과 같습니다.
     1. Label : 데이터 컬럼명
     2. Before : 액션 이전의 값
     3. After : 액션 이후의 값
-3. **Related Logs**  : 해당 행위에 대해, 연쇄적으로 또는 동시에 발생한 로그를 표시합니다. 전후 로그를 모두 포함합니다.
+3.  **Related Logs**  : 해당 행위에 대해, 연쇄적으로 또는 동시에 발생한 로그를 표시합니다. 전후 로그를 모두 포함합니다.
     1. 관리자가 직접 일으킨 행위 뿐만 아니라, 그에 따라 파생된 시스템의 자동 행위들을 확인할 수 있습니다.
     2. Related Logs에 표시된 행위 로그들은 각각 개별 로그로도 남아있습니다.

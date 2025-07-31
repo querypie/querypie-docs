@@ -6,10 +6,10 @@ import { Callout } from 'nextra/components'
 
 
 ## LDAP 연동 및 동기화 설정
-Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동 후, 인증 Type 항목에서 **LDAP** 을 선택하면 LDAP 연동을 위한 설정 입력이 가능합니다.
+Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동 후, 인증 Type 항목에서  **LDAP** 을 선택하면 LDAP 연동을 위한 설정 입력이 가능합니다.
 
 <Callout type="important">
-**주의: ** Authentication 타입을 선택하고 사용자를 동기화 한 후에는, 인증 타입을 변경하는 것이 불가능합니다.  인증 방식 변경을 위해서는 Customer Portal 을 통해 문의 부탁드립니다. 
+ **주의: ** Authentication 타입을 선택하고 사용자를 동기화 한 후에는, 인증 타입을 변경하는 것이 불가능합니다. <br/>인증 방식 변경을 위해서는 Customer Portal 을 통해 문의 부탁드립니다.
 </Callout>
 
 <p align="center">
@@ -29,76 +29,76 @@ LDAP 연동을 위한 기본적인 인증 정보 및 속성 정보들을 입력�
 <div>[image-20250515-095109.png]()</div>
 </p>
 
-LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면 **Use Group 옵션** 을 활성화하고 필수로 지정된 정보들을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
+LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면  **Use Group 옵션** 을 활성화하고 필수로 지정된 정보들을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
 
-| **Attribute**       | **필수 여부** | **Description**                                                                                                                                    |
-| ------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Group Base DN       | 필수        | LDAP 서버의 그룹 Base DN 값을 입력합니다.[ul]예: `dc=example,dc=com`                                                                                            |
-| Group Search Filter | 필수        | 그룹을 가져오기 위한 필터 값을 입력합니다.[ul]예: `objectclass=posixGroup`                                                                                            |
-| Membership Type     | 필수        | 사용자에 그룹 정보가 포함된 경우, `Include group information in user entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `member`, `uniqueMember`, `memberUid` 등 |
-| Membership Type     | 필수        | 그룹에 사용자 정보가 포함된 경우, `Include user information in group entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `gidNumber`                             |
-| Group ID            | 필수        | 그룹의 식별자로 사용할 속성 값을 입력합니다.[ul]예: `gidNumber`                                                                                                        |
+|  **Attribute**      |  **필수 여부**  |  **Description**                                                                                                                                   |
+| ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Group Base DN       | 필수          | LDAP 서버의 그룹 Base DN 값을 입력합니다.[ul]예: `dc=example,dc=com`                                                                                            |
+| Group Search Filter | 필수          | 그룹을 가져오기 위한 필터 값을 입력합니다.[ul]예: `objectclass=posixGroup`                                                                                            |
+| Membership Type     | 필수          | 사용자에 그룹 정보가 포함된 경우, `Include group information in user entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `member`, `uniqueMember`, `memberUid` 등 |
+| Membership Type     | 필수          | 그룹에 사용자 정보가 포함된 경우, `Include user information in group entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.[ul]예: `gidNumber`                             |
+| Group ID            | 필수          | 그룹의 식별자로 사용할 속성 값을 입력합니다.[ul]예: `gidNumber`                                                                                                        |
 
 ### LDAP 사용자 동기화 설정
-LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우 **Use Synchronization with the Authentication System** 옵션을 활성화합니다.
+LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use Synchronization with the Authentication System**  옵션을 활성화합니다.
 
 <p align="center">
 <div>[image-20250515-095420.png]()</div>
 </p>
 
-* **Replication Frequency**  : 자동 동기화 기능 사용 여부를 설정합니다.
+*  **Replication Frequency**  : 자동 동기화 기능 사용 여부를 설정합니다.
     * Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 `Synchronize` 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.
     * Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression 필드가 활성화됩니다.
-* **Make New Users Inactive by Default ** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
+*  **Make New Users Inactive by Default ** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
     * 동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
-* **Use an Attribute for Privilege Revoke ** : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
+*  **Use an Attribute for Privilege Revoke ** : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
     * 특정 LDAP Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.
     * LDAP Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
-* **Enable Attribute Synchronization :**  LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다.
+*  **Enable Attribute Synchronization :**  LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다.
     * LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다.
     * 옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.
     * 단, 해당 기능은 Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
 
 <Callout type="info">
-**LDAP Attribute Mapping** 
-LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다. 
+ **LDAP Attribute Mapping** 
+LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.
 우측 상단의 `Add Row` 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다. 
 1. 해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.
 2. QueryPie Attribute인 `Username (loginId)`, `Primary Email (email)` 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다.
-3. 매핑 행 삭제 또는 변경 시, Save Changes를 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save Changes는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.
+3.  매핑 행 삭제 또는 변경 시, Save Changes를 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save Changes는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.
 </Callout>
 
-| **컬럼명**            | **필수 여부** | **Description**                                                                                                                                                                                            |
-| ------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Checkbox           | 선택        | 매핑 행을 선택하기 위한 체크박스입니다.행 선택 시 좌측 상단에 Delete 버튼이 표시됩니다.                                                                                                                                                      |
-| LDAP Attribute     | 필수        | 연동할 LDAP Attribute를 입력합니다[ul]예: `manager`, `mobile` 등                                                                                                                                                      |
-| QueryPie Attribute | 필수        | 매핑 대상이 될 QueryPie Attribute를 선택합니다.목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.[ul]예: `Manager ID (managerId)`,  `Mobile Phone (mobilePhone)` 등 |
+|  **컬럼명**           |  **필수 여부**  |  **Description**                                                                                                                                                                                               |
+| ------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Checkbox           | 선택          | 매핑 행을 선택하기 위한 체크박스입니다.행 선택 시 좌측 상단에 Delete 버튼이 표시됩니다.                                                                                                                                                          |
+| LDAP Attribute     | 필수          | 연동할 LDAP Attribute를 입력합니다[ul]예: `manager`, `mobile` 등                                                                                                                                                          |
+| QueryPie Attribute | 필수          | 매핑 대상이 될 QueryPie Attribute를 선택합니다.목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.[ul]예: `Manager ID (managerId)`, <br/>`Mobile Phone (mobilePhone)` 등 |
 
 매핑 완료 후 동기화를 수행하면, 연동된 Attribute는 Profile Editor와 User Profile에서 확인할 수 있습니다.
 
-* **Profile Editor**
+*  **Profile Editor** 
     * Admin &gt; General &gt; User Management &gt; Profile Editor에서 연동된 Attribute는 아래와 같은 상태로 표시됩니다.
-        * **Source Priority**  : Inherit from profile source로 고정됩니다.
-        * **Status**  : 수정이 불가능한 상태로 비활성화됩니다.
-        * **Custom Attribute의 경우** : Display Name, Description, Status 모두 수정이 불가하며, 체크박스가 비활성화되어 삭제 불가 상태로 표시됩니다.
-* **User Profile**
+        *  **Source Priority**  : Inherit from profile source로 고정됩니다.
+        *  **Status**  : 수정이 불가능한 상태로 비활성화됩니다.
+        *  **Custom Attribute의 경우** : Display Name, Description, Status 모두 수정이 불가하며, 체크박스가 비활성화되어 삭제 불가 상태로 표시됩니다.
+*  **User Profile** 
     * Administrator &gt; General &gt; User Management &gt; Users &gt; User Detail Page &gt; User Profile에서 연동된 Attribute는 아래와 같은 상태로 표시됩니다.
         * 수정이 불가능한 읽기 전용 상태로 나타납니다.
             * 예를 들어, Primary Email (email) 값이 regan@querypie.com으로 연동된 경우, UI 상에서 직접 수정할 수 없으며, LDAP에서만 변경 가능합니다.
 
 ### 기타 설정 및 동기화
-* **Anonymous : ** 익명 사용자의 인증 가능 여부를 설정합니다. (True 또는 False)
-* **Dry Run :**  `Dry Run` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행할 경우, 그 결과를 미리 확인할 수 있습니다. (현재 입력된 정보의 저장 여부와 무관)
+*  **Anonymous : ** 익명 사용자의 인증 가능 여부를 설정합니다. (True 또는 False)
+*  **Dry Run :**  `Dry Run` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행할 경우, 그 결과를 미리 확인할 수 있습니다. (현재 입력된 정보의 저장 여부와 무관)
 * `Save Changes` 를 클릭하면 입력된 설정 정보를 QueryPie에 저장합니다.
 * `Synchronize` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행합니다. (현재 입력한 설정 정보를 저장한 후에만 활성화 됨)
-    * [ac:image][ri:attachment]버튼을 클릭하면 직전의 동기화 이력을 조회할 수 있습니다.
+    * [ac:image][ri:attachment]버튼을 클릭하면 직전의 동기화 이력을 조회할 수 있습니다. 
     * 개별 동기화 중 실패 건이 있는 경우, Progress Bar 색상이 노란색으로 표시됩니다.
     * 실패 로그는 :cross_mark: 아이콘으로 표시됩니다. 로그를 클릭하면 상세한 에러메시지를 확인할 수 있습니다.
 
 
 
 <Callout type="info">
-**안내** 
+ **안내** 
 * 사용자 및 그룹은 LDAP → QueryPie로의 단방향 동기화를 지원합니다. 동기화된 사용자 및 그룹은 QueryPie 내에서 변경 및 삭제가 불가능합니다.
 * 10.2.1 버전 이후로 사용자 동기화는 개별 사용자 및 그룹 단위로 처리되도록 개선되었습니다.
 </Callout>
@@ -106,5 +106,5 @@ LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하
 
 
 ## QueryPie에서 LDAP 인증하여 로그인
-1. Administrator &gt; General &gt; User Management &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
+1. Administrator &gt; General &gt; User Management &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다. 
 2. 이제 로그인 페이지에서 ID 및 Password 항목에 LDAP 인증 정보를 입력 후 로그인할 수 있습니다.

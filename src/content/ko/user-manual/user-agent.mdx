@@ -21,7 +21,7 @@ QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/Se
 </p>
 
 <Callout type="info">
-QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다. 
+QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 </Callout>
 
 3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.
@@ -69,7 +69,7 @@ QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 </p>
 
 ## 에이전트로 데이터베이스 접속하기
-1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.  접속할 커넥션에 할당된 `Port` 를 클릭하면, 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.
+1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.<br/>접속할 커넥션에 할당된 `Port` 를 클릭하면, 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.
 
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 3.10.01.png]()</div>
@@ -90,7 +90,7 @@ QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 
 ### 1. 서버 역할 선택하기
 * 사용자 프로필 영역 하단의 `Role` 버튼을 클릭하여 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
-* Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.
+* Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. 
 
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 4.26.53.png]()</div>
@@ -98,10 +98,10 @@ QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 </p>
 
 <Callout type="info">
-역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다. 
+역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
 </Callout>
 
-###  2. Agent로 서버 접속하기
+### <br/>2.Agent로 서버 접속하기
 * 접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
 
 <p align="center">
@@ -109,7 +109,7 @@ QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 *Agent &gt; Server &gt; Open Connection with*
 </p>
 
-* 이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다.
+* 이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. 
 * 사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.
 
 <p align="center">
@@ -142,7 +142,7 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다. 
+config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
 [ac:plain-text-body]
 Host *
   ProxyCommand qpa ssh %r %h %p
@@ -175,7 +175,7 @@ $ ssh deploy@{{Server Name}}
 </p>
 
 <Callout type="info">
-역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다. 
+역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
 </Callout>
 
 
@@ -196,9 +196,9 @@ Agent 설정 메뉴에서 `KubeConfig Path` 버튼을 클릭하여 Kubeconfig �
 *Agent &gt; Settings &gt; Configure Kubeconfig Path*
 </p>
 
-* **Path Configuration**  : Kubeconfig 파일 저장 경로를 사용자가 지정할 수 있습니다.
+*  **Path Configuration**  : Kubeconfig 파일 저장 경로를 사용자가 지정할 수 있습니다.
     * 기본값은 `$HOME/.kube/querypie-kubeconfig` 입니다.
-    * 경로 필드 우측 `Upload` 버튼을 누르면 로컬 파일 경로를 지정할 수 있는 팝업이 나타납니다.
+    * 경로 필드 우측 `Upload` 버튼을 누르면 로컬 파일 경로를 지정할 수 있는 팝업이 나타납니다. 
 
 
 
@@ -207,11 +207,11 @@ Agent 설정 메뉴에서 `KubeConfig Path` 버튼을 클릭하여 Kubeconfig �
 *경로 지정 팝업*
 </p>
 
-* **Where**  : 우측의 `🔽` 버튼을 클릭하여 원하는 폴더를 지정합니다.
-* **Save As**  : Kubeconfig 파일의 이름을 입력합니다. 변경하지 않으면 기본값으로 적용됩니다.
-* **Command Line**  : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.
+*  **Where**  : 우측의 `🔽` 버튼을 클릭하여 원하는 폴더를 지정합니다.
+*  **Save As**  : Kubeconfig 파일의 이름을 입력합니다. 변경하지 않으면 기본값으로 적용됩니다.
+*  **Command Line**  : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.
 
-1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 " `${KUBECONFIG}` " 값을 사용 전에 " `${HOME}/.kube/config` "로 변경해야 합니다.
+1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 "`${KUBECONFIG}`" 값을 사용 전에 "`${HOME}/.kube/config`"로 변경해야 합니다.
 
 ```
 export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"

@@ -6,24 +6,24 @@ QueryPie의 Database Access Control에서 발생하는 로그들을 Database Log
 ## 연관 감사 로그 종류
 쿼리파이 공통으로 제공되는 감사 로그에 더하여 쿼리파이 데이터베이스 접근제어 (QueryPie DAC) 라이선스 보유 시, 다음과 같은 로그 타입을 제공합니다.
 
-| **공통 로그**                                                          | **DAC 전용 로그**                                                                                                                                                                                |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **General** [ul]User Access HistoryActivity LogsAdmin Role History | **Databases** [ul]DB Access HistoryQuery AuditRunning QueriesDML SnapshotAccount Lock HistoryAccess Control LogsRestricted Data Access LogsMasked Data Access LogsSensitive Data Access Logs |
+|  **공통 로그**                                                          |  **DAC 전용 로그**                                                                                                                                                                                |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  **General** [ul]User Access HistoryActivity LogsAdmin Role History |  **Databases** [ul]DB Access HistoryQuery AuditRunning QueriesDML SnapshotAccount Lock HistoryAccess Control LogsRestricted Data Access LogsMasked Data Access LogsSensitive Data Access Logs |
 
 <Callout type="info">
-10.3.0에 추가된 항목 
+10.3.0에 추가된 항목
 * Restricted Data Access Logs
 * Masked Data Access Logs
 * Sensitive Data Access Logs
 </Callout>
 
-1. **General**
+1.  **General** 
 
 * User Access History : 사용자 로그인, 로그아웃 이력
 * Activity Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
 * Admin Role History : 관리자 권한 부여, 변경, 회수 이력
 
-1. **Databases**
+1.  **Databases** 
 
 * [DB Access History](DB Access History) : 커넥션 연결 및 연결해제 이력
 * [Query Audit](Query Audit) : 실행이 끝난 쿼리 수행 이력

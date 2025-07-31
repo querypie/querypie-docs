@@ -119,6 +119,7 @@ class SingleLineParser:
     def __init__(self, node):
         self.node = node
         self.markdown_lines = []
+        self._debug_markdown = False
 
     @property
     def as_markdown(self):
@@ -126,7 +127,7 @@ class SingleLineParser:
         self.convert_recursively(self.node)
         # Join all lines without a space, and remove leading/trailing whitespace
         # It is supposed to preserve whitespace in the middle of the text
-        return "".join(self.markdown_lines).strip()
+        return "".join(self.markdown_lines)
 
     def applicable(self):
         return False
@@ -134,28 +135,36 @@ class SingleLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            self.markdown_lines.append(as_markdown(node))
+            text = as_markdown(node)
+            if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+                self.markdown_lines.append(text.strip())
+            else:
+                self.markdown_lines.append(as_markdown(node))
             return
 
         logging.debug(f"SingleLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        if self._debug_markdown:
+            self.markdown_lines.append(f'<{node.name}>')
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append("#" * int(node.name[1]) + " ")
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['p', 'th', 'td']:
             for child in node.children:
+                # DEBUG(JK): Uncomment below lines for debugging
+                # self.markdown_lines.append(f"({child.name if child.name else 'NavigableString'})")
                 self.convert_recursively(child)
+                # self.markdown_lines.append(f"(/{child.name if child.name else 'NavigableString'})")
         elif node.name in ['strong']:
             # TODO(JK): Determine if <strong> should be respected in headings
             if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                 for child in node.children:
                     self.convert_recursively(child)
-                return
-
-            self.markdown_lines.append(" **")
-            for child in node.children:
-                self.convert_recursively(child)
-            self.markdown_lines.append("** ")
+            else:
+                self.markdown_lines.append(" **")
+                for child in node.children:
+                    self.convert_recursively(child)
+                self.markdown_lines.append("** ")
         elif node.name in ['em']:
             self.markdown_lines.append(" *")
             for child in node.children:
@@ -189,36 +198,30 @@ class SingleLineParser:
                 logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
                 for child in node.children:
                     self.convert_recursively(child)
-            return
         elif node.name in ['ac:parameter']:
             if node.get('name') == 'title':
                 for child in node.children:
                     self.convert_recursively(child)
-                return
             elif node.get('name') == 'colour':
                 # ac:parameter with colour is not needed in Markdown
-                return
+                pass
             else:
                 logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
                 for child in node.children:
                     self.convert_recursively(child)
-                return
         elif node.name in ['ac:inline-comment-marker']:
             # ac:inline-comment-marker is a Confluence-specific tag that can be bypassed
             for child in node.children:
                 self.convert_recursively(child)
-            return
         elif node.name in ['br']:
-            # <br/> is a line break, we can replace it with a whitespace in single line context
-            self.markdown_lines.append(" ")
-            return
+            # <br/> is a line break. Just keep using <br/>.
+            self.markdown_lines.append("<br/>")
         elif node.name in ['a']:
             href = node.get('href', '#')
             self.markdown_lines.append("[")
             for child in node.children:
                 self.markdown_lines.append(SingleLineParser(child).as_markdown)
             self.markdown_lines.append(f"]({href})")
-            return
         elif node.name in ['ac:link']:
             """
             <ac:link>
@@ -234,12 +237,10 @@ class SingleLineParser:
                 if isinstance(child, Tag) and child.name == 'ri:page':
                     href = child.get('content-title', '#')
             self.markdown_lines.append(f'[{link_body}]({href})')
-            return
         elif node.name in ['ac:link-body']:
             # ac:link-body is used in ac:link, we can process it as a regular text
             for child in node.children:
                 self.convert_recursively(child)
-            return
         elif node.name in ['li']:
             # Extract text from <p> only.
             for child in node.children:
@@ -249,7 +250,6 @@ class SingleLineParser:
                     logging.debug(f'Skip extracting text from NavigableString({repr(child)}) under <li>')
                 else:
                     logging.debug(f'Skip extracting text from <{child.name}> under <li>')
-            return
         elif node.name in ['ac:emoticon']:
             """
             <ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"
@@ -264,6 +264,8 @@ class SingleLineParser:
             for child in node.children:
                 self.convert_recursively(child)
 
+        if self._debug_markdown:
+            self.markdown_lines.append(f'</{node.name}>')
         return
 
 
@@ -297,8 +299,10 @@ class MultiLineParser:
                 self.convert_recursively(child)
         elif node.name in ['p']:
             for child in node.children:
+                # self.markdown_lines.append(f"({child.name if child.name else 'NavigableString'})")
                 self.markdown_lines.append(SingleLineParser(child).as_markdown)
-                self.markdown_lines.append(" ")  # Add a space after a child of paragraphs
+                # self.markdown_lines.append(f"(/{child.name if child.name else 'NavigableString'})")
+                # self.markdown_lines.append(f" ")  # Add a space after a child of paragraphs
             # Add an empty line after paragraphs
             self.markdown_lines.append('\n')
         elif node.name in ['ul', 'ol']:
@@ -679,7 +683,6 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
             native_markdown = TableToNativeMarkdown(node)
-            logging.info("------------- hello, world -------------")
             if native_markdown.applicable:
                 self.markdown_lines.append(''.join(native_markdown.as_markdown))
             else:

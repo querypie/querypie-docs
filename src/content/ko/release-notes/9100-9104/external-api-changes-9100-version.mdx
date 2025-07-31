@@ -64,25 +64,25 @@
 Request 의 변경사항
 
 * Query Parameter 로 사용할 수 있는 `status` 가 변경되었습니다. `PARTIALLY_APPROVED` 가 `IN_PROGRESS` 로 대체되었고, `NONE` 이 삭제되었습니다.
-    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
-    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
 
 Response 변경사항
 
 * `currentDegree` 가 삭제되었습니다.
 * `approvalStatus` 가 변경되었습니다.
-    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
-    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
 * `updatedUser` 가 삭제되었습니다.
 * `lines` 의 `uuid` 가 삭제되었습니다.
 * `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
 * `lines` 의 `approvedAt` 이 `actionAt` 으로 대체되었습니다.
 * `lines` 의 `status` 가 변경되었습니다.
-    * **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
-    * **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+    *  **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    *  **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
 * `lines` 의 `type` 이 변경되었습니다.
-    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
-    * **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
 * `connections` 의 `clusterGroupDescription` 이 삭제되었습니다.
 * `connections` 의 `databaseName` 이 삭제되었습니다.
 * `connections` 의 `schemaName` 이 삭제되었습니다.
@@ -210,17 +210,17 @@ Response 변경사항
 
 * `approvalCondition` 이 삭제되었습니다.
 * `executionCondition` 이 변경되었습니다.
-    * **before**  : `"NONE"` `"MANUAL"` `"SELF"` `"CONNECTION_OWNER"` `"ANY"`
-    * **after**  : `"ADMIN_ONLY"` `"ALL_USERS"` `"FIXED"` `"CONNECTION_OWNER"`
+    *  **before**  : `"NONE"` `"MANUAL"` `"SELF"` `"CONNECTION_OWNER"` `"ANY"`
+    *  **after**  : `"ADMIN_ONLY"` `"ALL_USERS"` `"FIXED"` `"CONNECTION_OWNER"`
 * `reviewEnabled` 가 삭제되었습니다.
 * `urgentMode` 가 추가되었습니다.
 * `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
 * `lines` 의 `type` 이 변경되었습니다.
-    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
-    * **after**  : `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after**  : `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
 * `lines` 의 `resourceType` 이 변경되었습니다.
-    * **before**  : `USER`, `ROLE`
-    * **after**  : `USER`, `GROUP`
+    *  **before**  : `USER`, `ROLE`
+    *  **after**  : `USER`, `GROUP`
 * `lines` 의 `uuid` 가 삭제되었습니다.
 
 Response 변경 전 예시
@@ -280,18 +280,18 @@ Response 변경사항
 
 * `currentDegree` 가 삭제되었습니다.
 * `approvalStatus` 가 변경되었습니다.
-    * **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
-    * **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
 * `updatedUser` 가 삭제되었습니다.
 * `lines` 의 `uuid` 가 삭제되었습니다.
 * `lines` 의 `degree` 가 `step` 으로 대체되었습니다.
 * `lines` 의 `approvedAt` 이 `actionAt` 으로 대체되었습니다.
 * `lines` 의 `status` 가 변경되었습니다.
-    * **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
-    * **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+    *  **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    *  **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
 * `lines` 의 `type` 이 변경되었습니다.
-    * **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
-    * **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
 
 Response 변경 전 예시
 

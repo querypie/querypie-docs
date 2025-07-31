@@ -7,7 +7,7 @@ import { Callout } from 'nextra/components'
 
 ## Server Access Request 요청하기
 ### 1. 결재 규칙 선택하기
-* Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
+* Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
 
 <p align="center">
@@ -15,9 +15,9 @@ import { Callout } from 'nextra/components'
 </p>
 
 ### 2. 승인자 지정하기
-* 결재 라인에서 `+` 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다.
+* 결재 라인에서 `+` 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다. 
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
-* 선택 가능한 승인 조건은 다음과 같습니다.
+* 선택 가능한 승인 조건은 다음과 같습니다. 
     * A single Assignee can complete the approval request : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.
     * All Assignees must approve this request : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
 
@@ -26,9 +26,9 @@ import { Callout } from 'nextra/components'
 </p>
 
 ### 3. 참조자 지정하기
-* 결재 라인에서 `+` 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다.
-    * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다.
-* 이 팝업창에서 결재 승인 조건 및 승인자를 추가합니다.
+* 결재 라인에서 `+` 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다. 
+    * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다. 
+* 이 팝업창에서 결재 승인 조건 및 승인자를 추가합니다. 
 * `Save` 버튼을 눌러 모달을 닫고 참조자 지정을 완료합니다.
 
 <p align="center">
@@ -36,7 +36,7 @@ import { Callout } from 'nextra/components'
 </p>
 
 ### 4. 사후 승인으로 요청 보내기
-* 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다.
+* 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다. 
 * Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
 
 <p align="center">
@@ -44,8 +44,8 @@ import { Callout } from 'nextra/components'
 </p>
 
 <Callout type="important">
-**Q. Urgent Mode 스위치가 보이지 않아요.** 
-A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다. 
+ **Q. Urgent Mode 스위치가 보이지 않아요.** 
+A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
 </Callout>
 
 ### 5. 요청 대상 서버 추가하기
@@ -61,7 +61,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 * `Add` 버튼을 클릭하여 모달을 닫고 서버 선택을 완료합니다.
 
 <Callout type="important">
-Server Access Request에서는 **한 번에 하나의 서버 그룹에 대해서만 Direct Permission 요청이 가능** 합니다. Server List 테이블에 서버가 추가되어있는 상태에서 Add Servers 모달을 다시 띄울 경우, 선택된 내용이 모두 초기화됩니다. 
+Server Access Request에서는  **한 번에 하나의 서버 그룹에 대해서만 Direct Permission 요청이 가능** 합니다. Server List 테이블에 서버가 추가되어있는 상태에서 Add Servers 모달을 다시 띄울 경우, 선택된 내용이 모두 초기화됩니다.
 </Callout>
 
 ### 6. 요청 정보 입력하기
@@ -70,19 +70,19 @@ Server Access Request에서는 **한 번에 하나의 서버 그룹에 대해서
 *Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 3*
 </p>
 
-* **Title**  : 요청 제목을 입력합니다.
-* **Expiration Date**  : 해당 권한이 회수되는 만료일자를 선택합니다.
+*  **Title**  : 요청 제목을 입력합니다.
+*  **Expiration Date**  : 해당 권한이 회수되는 만료일자를 선택합니다.
     * 만료일자는 필수 값이며, 따로 설정하지 않으면 1년 뒤 일자로 기본 선택됩니다.
     * 적절한 커넥션 접근 권한 관리를 위해 필요한 기간만큼 요청하는 것을 권장합니다.
-* **Start Trigger**  : 권한 부여 시작 조건을 선택합니다.
+*  **Start Trigger**  : 권한 부여 시작 조건을 선택합니다.
     * Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이, 활성화 시점부터 지정된 기간 동안 서버 접속이 가능합니다.
     * Grant : 권한 부여 즉시 타이머가 시작되며, 사용자의 실제 접속 여부와 관계없이 지정된 기간 동안만 권한이 유효합니다.
-* **Duration(Minutes) ** : 서버 접근 권한이 유효한 시간을 분 단위로 입력합니다. 1분부터 최대 허용 시간까지 설정할 수 있으며, 지정된 시간이 경과하면 자동으로 접근 권한이 만료됩니다.
-* **Reason for Request**  : 커넥션 접근 권한을 요청하는 사유를 입력합니다.
-* **Submit**  : 요청을 모두 작성하였다면 `Submit` 버튼을 눌러 상신을 완료합니다.
+*  **Duration(Minutes) ** : 서버 접근 권한이 유효한 시간을 분 단위로 입력합니다. 1분부터 최대 허용 시간까지 설정할 수 있으며, 지정된 시간이 경과하면 자동으로 접근 권한이 만료됩니다.
+*  **Reason for Request**  : 커넥션 접근 권한을 요청하는 사유를 입력합니다.
+*  **Submit**  : 요청을 모두 작성하였다면 `Submit` 버튼을 눌러 상신을 완료합니다.
 
 접근 권한을 부여받은 서버에 접속하는 방법은 [권한이 있는 서버에 접속하기](권한이 있는 서버에 접속하기) 문서를 참고해 주세요.
 
 <Callout type="info">
-Direct Permission으로 부여된 권한은 서버 목록에서 **Default Role** 을 선택할 경우에 적용됩니다. 접근 권한 정책은 Server Access Request 신청 시점에 설정된 기본 서버 접근 정책을 적용받습니다. 
+Direct Permission으로 부여된 권한은 서버 목록에서  **Default Role** 을 선택할 경우에 적용됩니다. 접근 권한 정책은 Server Access Request 신청 시점에 설정된 기본 서버 접근 정책을 적용받습니다. 
 </Callout>

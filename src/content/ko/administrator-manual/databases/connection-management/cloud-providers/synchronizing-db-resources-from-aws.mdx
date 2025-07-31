@@ -16,15 +16,15 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을 
 1. Database 설정 메뉴에서 Cloud Provider 메뉴로 이동합니다.
 2. 우측 상단의 `Create Provider` 버튼을 클릭합니다.
 3. Name 항목에 해당 프로바이더를 구분할 수 있는 이름을 입력합니다.
-4. **Cloud Provider**  항목에서 Amazon Web Services 를 선택합니다.
-5. **Region**  항목에서 동기화하고자 하는 리소스의 리전을 선택합니다.
+4.  **Cloud Provider**  항목에서 Amazon Web Services 를 선택합니다.
+5.  **Region**  항목에서 동기화하고자 하는 리소스의 리전을 선택합니다.
 6. 리소스를 동기화하기 위해 필요한 Credential 정보를 입력합니다.
     * 각각의  **Credential**  방식에 대한 설명은 하단의  **Credential 타입별 인증 방식 설정하기** 를 참고합니다.
-7. **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다.
-8. **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
+7.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다. 
+8.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
-9. **Auto Configuration Upon Initial Synchronization ** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+9.  **Auto Configuration Upon Initial Synchronization ** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
     * Tag : 동기화된 DB에 자동으로 태그를 추가할 수 있습니다.
         * 태그 값에 `{vpcid}`를 입력하면, 해당 DB가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
@@ -40,25 +40,25 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을 
 
 
 
-* **Default Credentials (Instance Profile)**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스 IAM 권한에 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다. 필요한 리소스에 맞는 정책을 할당해주세요.
-* **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주세요. (해당 Credential 을 통해 리소스를 동기화하기 위해서는 환경변수 파일  **AWS_ACCOUNT_ID**  항목에 QueryPie 가 설치된 AWS 계정을 설정해야 합니다)
-* **Access Key**  : `Synchronize` 버튼 클릭시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다.  QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  ** **
+*  **Default Credentials (Instance Profile)**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스 IAM 권한에 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다. 필요한 리소스에 맞는 정책을 할당해주세요.
+*  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주세요. (해당 Credential 을 통해 리소스를 동기화하기 위해서는 환경변수 파일  **AWS_ACCOUNT_ID**  항목에 QueryPie 가 설치된 AWS 계정을 설정해야 합니다)
+*  **Access Key**  : `Synchronize` 버튼 클릭시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  ** ** 
 
 <Callout type="important">
-**Save Credential for Synchronization 옵션** 
+ **Save Credential for Synchronization 옵션** 
 <p align="center">
 <div>[image-20241220-095857.png]()</div>
 *Save Credential for Synchronization*
 </p>
-* **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.**
-* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.** 
+* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 
 * 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
 
 
 
 <Callout type="info">
-**각 데이터베이스 리소스 동기화에 필요한 정책** 
+ **각 데이터베이스 리소스 동기화에 필요한 정책** 
 * RDS : AmazonRDSReadOnlyAccess
 * DynamoDB : AmazonDynamoDBFullAccess
 * Redshift : AmazonRedshiftReadOnlyAccess
@@ -93,7 +93,7 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을 
     7. Replication Frequency: 변경 가능
 
 <Callout type="important">
-“Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은 **활성화 한 뒤 다시 비활성화 할 수 없으므로** 신중히 선택해야 합니다. 
+“Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은  **활성화 한 뒤 다시 비활성화 할 수 없으므로**  신중히 선택해야 합니다.
 </Callout>
 
 ## 동기화 가능한 리소스 항목
