@@ -519,7 +519,9 @@ class TableToNativeMarkdown:
         self.markdown_lines = []
         self.applicable_nodes = {
             'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
-            'p', 'strong',
+            'p', 'strong', 'em', 'span', 'code', 'br', 'a',
+            'ac:inline-comment-marker',
+            'ac:emoticon',
         }
         self.unapplicable_nodes = {
             'ul', 'ol',
@@ -546,6 +548,7 @@ class TableToNativeMarkdown:
 
         collect_node_names(self.node)
         descendants_set = set(descendants)
+        difference=descendants_set.difference(self.applicable_nodes)
         if_applicable = descendants_set.issubset(self.applicable_nodes)
         if descendants_set.isdisjoint(self.unapplicable_nodes):
             if if_applicable:
@@ -554,11 +557,11 @@ class TableToNativeMarkdown:
                 logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
             else:
                 logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
-                logging.warning(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
-                logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
+                logging.warning(f"TableToNativeMarkdown: Unapplicable due to {difference}")
+                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
         else:
             logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
-            logging.warning(f"TableToNativeMarkdown: Unapplicable due to {descendants_set.intersection(self.unapplicable_nodes)}")
+            logging.warning(f"TableToNativeMarkdown: Unapplicable due to {difference}")
 
         return descendants_set.issubset(self.applicable_nodes)
 
