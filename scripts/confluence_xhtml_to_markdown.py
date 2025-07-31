@@ -285,18 +285,23 @@ class MultiLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"MultiLineParser: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
-            # This is a leaf node with text
-            text = (
-                node.replace('\u00A0', ' ')  # Replace NBSP with space
-            )
-            self.markdown_lines.append(text)
+            logging.warning(f"MultiLineParser: Unexpected NavigableString, text={repr(node.text)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            # Do not append unexpected NavigableString to markdown_lines.
             return
 
         logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        if node.name in ['ac:structured-macro', 'ac:rich-text-body', 'ac:adf-content']:
+        name_attr = node.get('name', '(none)')
+        if node.name in ['ac:structured-macro'] and name_attr in ['tip', 'info', 'note', 'warning']:
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in [
+            'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
+            'ac:adf-content',  # Child of <ac:adf-extension>
+        ]:
+            for child in node.children:
+                self.convert_recursively(child)
+        elif node.name in ['ac:structured-macro'] and node.get('name', '') in ['code']:
+            self.convert_structured_macro_code(node)
         elif node.name in ['p']:
             for child in node.children:
                 # self.markdown_lines.append(f"({child.name if child.name else 'NavigableString'})")
@@ -411,6 +416,33 @@ class MultiLineParser:
 
         self.markdown_lines.append(f'</p>')
         self.markdown_lines.append('\n')
+
+    def convert_structured_macro_code(self, node):
+        # Find language parameter and code content
+        language = ""
+        cdata = "TODO(JK): Handle code macro content extraction"
+
+        # Look for language parameter
+        language_param = node.find('parameter', {'name': 'language'})
+        if language_param:
+            language = language_param.get_text()
+
+        # Look for code content in the CDATA section
+        plain_text_body = node.find('ac:plain-text-body')
+        if plain_text_body:
+            # Extract CDATA content
+            for item in plain_text_body.contents:
+                if isinstance(item, CData):
+                    cdata = str(item)  # Convert CData object to string
+                    break
+
+        # Write the code block
+        self.markdown_lines.append(f"```{language}")
+        self.markdown_lines.append("\n")
+        self.markdown_lines.append(cdata)
+        self.markdown_lines.append("\n")
+        self.markdown_lines.append("```")
+        self.markdown_lines.append("\n")
 
 
 class TableToNativeMarkdown:
