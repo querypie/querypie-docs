@@ -9,21 +9,22 @@ handling special cases like:
 - Structured macros and other Confluence-specific elements
 """
 
+import argparse
+import logging
+import os
 import re
 import sys
-import os
 from itertools import chain
-import argparse
+
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
-import logging
 
 # Global variable to store input file path
 INPUT_FILE_PATH = ""
 
 # Hidden characters constants
 ZWSP = '\u200b'  # Zero Width Space
-LRM = '\u200e'   # Left-to-Right Mark
+LRM = '\u200e'  # Left-to-Right Mark
 HANGUL_FILLER = '\u3164'  # Hangul Filler
 
 
@@ -44,11 +45,12 @@ def backtick_curly_braces(text):
     pattern = r'(\{\{?[\w\s\-\|\u2026]{1,60}\}\}?)'
     return re.sub(pattern, r'`\1`', text)
 
+
 def as_markdown(node):
     if isinstance(node, NavigableString):
         # This is a leaf node with text
         text = (
-            node.replace('\u00A0', ' ') # Replace NBSP with space
+            node.replace('\u00A0', ' ')  # Replace NBSP with space
             .replace('\n', ' ')  # Replace newlines with space
         )
         # Encode < and > to prevent conflict with JSX syntax.
@@ -65,6 +67,7 @@ def as_markdown(node):
         # Fatal error and crash
         raise TypeError(f"as_markdown() expects a NavigableString, got: {type(node).__name__}")
 
+
 def ancestors(node):
     max_depth = 20
     stack = []
@@ -73,6 +76,7 @@ def ancestors(node):
         stack.append(f'<{current.name}>')
         current = current.parent
     return ''.join(reversed(stack))
+
 
 def print_node_with_properties(node):
     """
@@ -109,6 +113,7 @@ def print_node_with_properties(node):
     result += ">"
 
     return result
+
 
 class SingleLineParser:
     def __init__(self, node):
@@ -261,6 +266,7 @@ class SingleLineParser:
 
         return
 
+
 class MultiLineParser:
     def __init__(self, node):
         self.node = node
@@ -280,7 +286,7 @@ class MultiLineParser:
             logging.warning(f"MultiLineParser: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
             # This is a leaf node with text
             text = (
-                node.replace('\u00A0', ' ') # Replace NBSP with space
+                node.replace('\u00A0', ' ')  # Replace NBSP with space
             )
             self.markdown_lines.append(text)
             return
@@ -390,7 +396,7 @@ class MultiLineParser:
         self.markdown_lines.append(f'<p align="{align}">')
         self.markdown_lines.append('\n')
         # TODO(JK): Link will be resolved later
-        #self.markdown_lines.append(f"![{alt_text}]({image_filename})")
+        # self.markdown_lines.append(f"![{alt_text}]({image_filename})")
         self.markdown_lines.append(f"<div>[{alt_text}]()</div>")
         self.markdown_lines.append('\n')
 
@@ -402,14 +408,14 @@ class MultiLineParser:
         self.markdown_lines.append(f'</p>')
         self.markdown_lines.append('\n')
 
+
 class TableToNativeMarkdown:
     def __init__(self, node):
         self.node = node
         self.markdown_lines = []
-        self.applicable_nodes = set([
-          'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
-          'p', 'strong',
-        ])
+        self.applicable_nodes = \
+            {'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
+             'p', 'strong'}
 
     @property
     def as_markdown(self):
@@ -443,7 +449,7 @@ class TableToNativeMarkdown:
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
             logging.warning(f"TableToNativeMarkdown: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(text)
+            self.markdown_lines.append(node.text)
             return
 
         logging.debug(f"TableToNativeMarkdown: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
@@ -548,6 +554,7 @@ class TableToNativeMarkdown:
 
         return ''.join(md_table)
 
+
 class TableToHtmlTable:
     def __init__(self, node):
         self.node = node
@@ -564,7 +571,7 @@ class TableToHtmlTable:
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
             logging.warning(f"TableToHtmlTable: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(text)
+            self.markdown_lines.append(node.text)
             return
 
         logging.debug(f"TableToHtmlTable: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
@@ -578,6 +585,7 @@ class TableToHtmlTable:
             for child in node.children:
                 self.convert_recursively(child)
             self.markdown_lines.append('\n')
+
 
 class ConfluenceToMarkdown:
     def __init__(self):
@@ -600,7 +608,7 @@ class ConfluenceToMarkdown:
         if 'Callout' in self._imports and self._imports['Callout']:
             markdown.append("import { Callout } from 'nextra/components'")
         if len(markdown) > 0:
-            markdown.append("") # Add an empty line after imports
+            markdown.append("")  # Add an empty line after imports
         return markdown
 
     def add_import(self, module_name, condition=True):
@@ -614,12 +622,12 @@ class ConfluenceToMarkdown:
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
         html_content = re.sub(r'\sri:', ' ', html_content)
-        
+
         # Remove special characters before parsing
         html_content = html_content.replace(ZWSP, '')
         html_content = html_content.replace(LRM, '')
         html_content = html_content.replace(HANGUL_FILLER, '')
-        
+
         # Parse HTML with BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -659,7 +667,7 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'p':
             paragraph = ''.join(MultiLineParser(node).as_markdown)
-            paragraph = paragraph.strip()+'\n' # TODO(JK): Improve this hacking.
+            paragraph = paragraph.strip() + '\n'  # TODO(JK): Improve this hacking.
             self.markdown_lines.append(paragraph)
         elif node.name == 'strong' or node.name == 'b':
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
@@ -718,14 +726,14 @@ class ConfluenceToMarkdown:
         self.table_data = []
         self.current_table_row = 0
         self.rowspan_tracker = {}
-        
+
         # Process all rows
         rows = table_node.find_all(['tr'])
-        
+
         for row_idx, row in enumerate(rows):
             self.current_row = []
             cells = row.find_all(['th', 'td'])
-            
+
             # Apply rowspan from previous rows
             col_idx = 0
             for tracked_col, (span_left, content) in sorted(self.rowspan_tracker.items()):
@@ -735,93 +743,93 @@ class ConfluenceToMarkdown:
                     # Decrement the remaining rowspan
                     self.rowspan_tracker[tracked_col] = (span_left - 1, content)
                     col_idx += 1
-            
+
             # Process current row cells
             for cell_idx, cell in enumerate(cells):
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
-                
+
                 cell_content = SingleLineParser(cell).as_markdown
-                
+
                 # Add cell content to current row
                 self.current_row.append(cell_content)
-                
+
                 # Handle colspan by adding empty cells
                 for _ in range(1, colspan):
                     self.current_row.append("")
-                
+
                 # Track cells with rowspan > 1 for next rows
                 if rowspan > 1:
                     self.rowspan_tracker[col_idx + cell_idx] = (rowspan - 1, cell_content)
-            
+
             # Add the row to table data
             self.table_data.append(self.current_row)
-            
+
             # Check if it's a header row (contains th elements)
             if row.find('th') and row_idx == 0:
                 self.is_header_row = True
-        
+
         # Convert table data to markdown
         markdown_table = self.table_data_to_markdown()
         self.markdown_lines.append(markdown_table)
         self.markdown_lines.append("")  # Add empty line after table
         self.in_table = False
-    
+
     def table_data_to_markdown(self):
         if not self.table_data or not any(self.table_data):
             return ""
-        
+
         # Determine the number of columns based on the row with the most cells
         num_cols = max(len(row) for row in self.table_data)
-        
+
         # Ensure all rows have the same number of columns
         normalized_data = []
         for row in self.table_data:
             normalized_row = row + [""] * (num_cols - len(row))
             normalized_data.append(normalized_row)
-        
+
         # Calculate the maximum width of each column
         col_widths = [0] * num_cols
         for row in normalized_data:
             for i, cell in enumerate(row):
                 col_widths[i] = max(col_widths[i], len(str(cell)))
-        
+
         # Build the markdown table
         md_table = []
-        
+
         # Header row
         header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |"
         md_table.append(header_row)
-        
+
         # Separator row
         separator = "| " + " | ".join("-" * col_widths[i] for i in range(num_cols)) + " |"
         md_table.append(separator)
-        
+
         # Data rows
         for row in normalized_data[1:]:
             data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |"
             md_table.append(data_row)
-        
+
         return "\n".join(md_table)
-    
+
     def process_code(self, node):
         self.inside_code_block = True
-        
+
         # Try to determine the language
         language = node.get('class', '')
         if language and isinstance(language, str) and language.startswith('language-'):
             language = language.split('-')[1]
         else:
             language = ""
-        
+
         code_content = node.get_text()
-        
+
         # Start the code block
         self.markdown_lines.append(f"```{language}")
         self.markdown_lines.append(code_content)
         self.markdown_lines.append("```")
         self.markdown_lines.append("")  # Add empty line after code block
-        
+
         self.inside_code_block = False
 
     def handle_structured_macro(self, node):
@@ -832,13 +840,13 @@ class ConfluenceToMarkdown:
             markdown = []
             # https://nextra.site/docs/built-ins/callout
             # Confluence has broken namings of panels.
-            if macro_name == 'tip': # success
+            if macro_name == 'tip':  # success
                 markdown.append('<Callout type="default">')
-            elif macro_name == 'info': # info
+            elif macro_name == 'info':  # info
                 markdown.append('<Callout type="info">')
-            elif macro_name == 'note': # note
+            elif macro_name == 'note':  # note
                 markdown.append('<Callout type="important">')
-            elif macro_name == 'warning': # error - a broken name
+            elif macro_name == 'warning':  # error - a broken name
                 markdown.append('<Callout type="error">')
             else:
                 markdown.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{macro_name}"> */{"}"}')
@@ -850,7 +858,7 @@ class ConfluenceToMarkdown:
             markdown.append('</Callout>')
             markdown.append('\n')
             self.markdown_lines.append(''.join(markdown))
-        elif macro_name in ['panel']: # Custom panel
+        elif macro_name in ['panel']:  # Custom panel
             self.add_import('Callout')
 
             parameter = node.find('ac:parameter', {'name': 'panelIconText'})
@@ -919,7 +927,8 @@ class ConfluenceToMarkdown:
             markdown.append('<Callout type="important">')
         else:
             markdown.append('<Callout>')
-            logging.warning(f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
+            logging.warning(
+                f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
         markdown.append('\n')
 
         if adf_content:
@@ -929,26 +938,25 @@ class ConfluenceToMarkdown:
         markdown.append('\n')
         self.markdown_lines.append(''.join(markdown))
 
-
     def process_code_macro(self, macro_node):
         self.inside_code_block = True
-        
+
         # Find language parameter and code content
         language = ""
         cdata = "TODO(JK): Handle code macro content extraction"
-        
+
         # Look for language parameter
         language_param = macro_node.find('parameter', {'name': 'language'})
         if language_param:
             language = language_param.get_text()
-        
+
         # Look for code content in CDATA section
         plain_text_body = macro_node.find('ac:plain-text-body')
         if plain_text_body:
             # Extract CDATA content
             for item in plain_text_body.contents:
                 if isinstance(item, CData):
-                    cdata = str(item) # Convert CData object to string
+                    cdata = str(item)  # Convert CData object to string
                     break
 
         # Write the code block
@@ -956,20 +964,20 @@ class ConfluenceToMarkdown:
         self.markdown_lines.append(cdata)
         self.markdown_lines.append("```")
         self.markdown_lines.append("")  # Add empty line after code block
-        
+
         self.inside_code_block = False
-        
+
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')
     parser.add_argument('input_file', help='Input XHTML file path')
     parser.add_argument('output_file', help='Output Markdown file path')
-    parser.add_argument('--log-level', 
+    parser.add_argument('--log-level',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         default='info',
                         help='Set the logging level (default: info)')
     args = parser.parse_args()
-    
+
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())
     logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
@@ -979,7 +987,7 @@ def main():
     # Extract the last directory and filename from the path
     path = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
     dirname, filename = os.path.split(path)  # Split into directory and filename
-    
+
     if dirname:
         # Get the last directory name
         last_dir = os.path.basename(dirname)
@@ -992,15 +1000,15 @@ def main():
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
-        
+
         converter = ConfluenceToMarkdown()
         markdown_content = converter.convert(html_content)
-        
+
         with open(args.output_file, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
-        
+
         logging.info(f"Successfully converted {args.input_file} to {args.output_file}")
-    
+
     except Exception as e:
         import traceback
         tb = traceback.extract_tb(e.__traceback__)
@@ -1014,6 +1022,7 @@ def main():
         else:
             logging.error(f"Error during conversion: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
