@@ -291,7 +291,11 @@ class MultiLineParser:
 
         logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
         name_attr = node.get('name', '(none)')
-        if node.name in ['ac:structured-macro'] and name_attr in ['tip', 'info', 'note', 'warning']:
+        if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            # Headings can exist in a <Callout> block.
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+            self.markdown_lines.append('\n')
+        elif node.name in ['ac:structured-macro'] and name_attr in ['tip', 'info', 'note', 'warning']:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in [
