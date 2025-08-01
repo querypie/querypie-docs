@@ -44,7 +44,7 @@ def backtick_curly_braces(text):
         str: The processed text with curly braces content wrapped in backticks.
     """
     # \u2026 is the ellipsis character, `...` which is often used in Confluence
-    pattern = r'(\{\{?[\w\s\-\|\u2026]{1,60}\}\}?)'
+    pattern = r'(\{\{?[\w\s\-\_\.\|\u2026]{1,60}\}\}?)'
     return re.sub(pattern, r'`\1`', text)
 
 
