@@ -62,7 +62,8 @@ QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 �
 * 관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.
 * 관리자는 Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster &gt; Credential 안내 박스 내 “download and run this script”의 링크를 클릭하여 스크립트를 다운로드할 수 있습니다. 
 
-generate_kubepie_sa.sh 스크립트 컨텐츠
+<details>
+<summary>generate_kubepie_sa.sh 스크립트 컨텐츠 </summary>
 ```
 #!/bin/bash
 
@@ -160,5 +161,6 @@ ${SA_TOKEN}
 >>> CA Cert
 ${CA_CERT}"
 ```
+</details>
 
 * 스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. 

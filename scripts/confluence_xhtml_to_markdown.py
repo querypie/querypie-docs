@@ -551,7 +551,7 @@ class MultiLineParser:
         cdata = "TODO(JK): Handle code macro content extraction"
 
         # Look for language parameter
-        language_param = node.find('parameter', {'name': 'language'})
+        language_param = node.find('ac:parameter', {'name': 'language'})
         if language_param:
             language = language_param.get_text()
 
@@ -584,7 +584,7 @@ class MultiLineParser:
         self.markdown_lines.append(f"<details>\n")
         # Find title parameter
         title = "(Untitled)"
-        title_param = node.find('parameter', {'name': 'title'})
+        title_param = node.find('ac:parameter', {'name': 'title'})
         if title_param:
             title = title_param.get_text()
         self.markdown_lines.append(f'<summary>{title}</summary>\n')
@@ -1111,7 +1111,7 @@ class ConfluenceToMarkdown:
             attr_name = node.get('name', '')
             if StructuredMacroToCallout(node).applicable:
                 self.markdown_lines.append(''.join(StructuredMacroToCallout(node).as_markdown))
-            elif attr_name in ['code']:
+            elif attr_name in ['code', 'expand']:
                 self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
             elif attr_name in ['toc']:
                 # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
