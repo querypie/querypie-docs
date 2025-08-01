@@ -1086,8 +1086,19 @@ class ConfluenceToMarkdown:
                 self.markdown_lines.append(''.join(StructuredMacroToCallout(node).as_markdown))
             elif attr_name in ['code']:
                 self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
+            elif attr_name in ['toc']:
+                # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
+                logging.debug("Skipping TOC macro")
+            elif attr_name in ['children']:
+                self.markdown_lines.append(f'(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)')
+                pass
             else:
-                self.handle_structured_macro(node)
+                if self._debug_markdown:
+                    self.markdown_lines.append(f'{print_node_with_properties(node)}')
+                # For other macros, we can just log or skip
+                logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+                for child in node.children:
+                    self.process_node(child)
         elif node.name == 'ac:adf-extension':
             if AdfExtensionToCallout(node).applicable:
                 self.markdown_lines.append(''.join(AdfExtensionToCallout(node).as_markdown))
@@ -1102,22 +1113,6 @@ class ConfluenceToMarkdown:
         else:
             logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Default behavior for other tags: process children
-            for child in node.children:
-                self.process_node(child)
-
-    def handle_structured_macro(self, node):
-        macro_name = node.get('name', '')
-        if macro_name in ['toc']:
-            # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
-            logging.debug("Skipping TOC macro")
-        elif macro_name in ['children']:
-            self.markdown_lines.append(f'(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)')
-            pass
-        else:
-            if self._debug_markdown:
-                self.markdown_lines.append(f'{print_node_with_properties(node)}')
-            # For other macros, we can just log or skip
-            logging.warning(f"Unhandled macro: {macro_name}, processing children")
             for child in node.children:
                 self.process_node(child)
 
