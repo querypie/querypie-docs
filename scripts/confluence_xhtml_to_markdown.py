@@ -393,6 +393,13 @@ class MultiLineParser:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['hr']:
             self.markdown_lines.append(f'---\n')
+        elif node.name in ['blockquote']:
+            markdown = []
+            for child in node.children:
+                markdown.extend(MultiLineParser(child).as_markdown)
+            lines = ''.join(markdown).splitlines()
+            for to_quote in lines:
+                self.markdown_lines.append(f'> {to_quote}')
         else:
             logging.warning(f"MultiLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
