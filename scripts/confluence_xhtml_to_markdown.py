@@ -19,7 +19,7 @@ from itertools import chain
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 
-# Global variable to store input file path
+# Global variable to store an input file path
 INPUT_FILE_PATH = ""
 
 # Hidden characters constants
@@ -131,10 +131,10 @@ def get_html_attributes(node):
             continue
 
         if isinstance(attr_value, list):
-            # 리스트 형태의 속성값 (예: class)을 공백으로 구분된 문자열로 변환
+            # Convert list-type attribute values (e.g., class) to a space-separated string
             attr_value = ' '.join(attr_value)
         elif isinstance(attr_value, bool):
-            # 불린 속성은 값이 True일 때만 속성명만 포함
+            # For boolean attributes, include only the attribute name when the value is True
             if attr_value:
                 attrs_list.append(attr_name)
             continue
@@ -158,7 +158,7 @@ class SingleLineParser:
     def as_markdown(self):
         """Convert the node to Markdown format."""
         self.convert_recursively(self.node)
-        # Join all lines without a space, and remove leading/trailing whitespace
+        # Join all lines without a space and remove leading/trailing whitespace
         # It is supposed to preserve whitespace in the middle of the text
         return "".join(self.markdown_lines)
 
@@ -343,7 +343,7 @@ class MultiLineParser:
     def as_markdown(self):
         """Convert the node to Markdown format."""
         self.convert_recursively(self.node)
-        # Return the markdown lines as a list of strings
+        # Return the Markdown lines as a list of strings
         return self.markdown_lines
 
     def convert_recursively(self, node):
@@ -437,8 +437,8 @@ class MultiLineParser:
         </ac:image>
 
         Converts to Markdown:
-        ![image-20240806-095511.png](image-20240806-095511.png)
-        *How QueryPie Works*
+            ![image-20240806-095511.png](image-20240806-095511.png)
+            *How QueryPie Works*
         """
         logging.debug(f"Processing Confluence image: {node}")
 
@@ -452,12 +452,12 @@ class MultiLineParser:
         if attachment:
             image_filename = attachment.get('filename', '')
             if not image_filename:
-                # Log warning if filename is still empty
+                # Log warning if the filename is still empty
                 logging.warning("'filename' attribute is empty, check XML namespace handling")
         else:
             logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
 
-        # Find caption if present
+        # Find a caption if present
         caption_text = ''
         caption = node.find('ac:caption')
         if caption:
@@ -534,7 +534,7 @@ class TableToNativeMarkdown:
     def as_markdown(self):
         """Convert the node to Markdown format."""
         self.convert_recursively(self.node)
-        # Return the markdown lines as a list of strings
+        # Return the Markdown lines as a list of strings
         return self.markdown_lines
 
     @property
@@ -584,7 +584,6 @@ class TableToNativeMarkdown:
 
     def convert_table(self, node):
         table_data = []
-        current_table_row = 0
         rowspan_tracker = {}
 
         # Process all rows
@@ -629,7 +628,7 @@ class TableToNativeMarkdown:
             if row.find('th') and row_idx == 0:
                 is_header_row = True
 
-        # Convert table data to markdown
+        # Convert table data to Markdown
         markdown_table = self.table_data_to_markdown(table_data)
         self.markdown_lines.extend(markdown_table)
 
@@ -652,7 +651,7 @@ class TableToNativeMarkdown:
             for i, cell in enumerate(row):
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
-        # Build the markdown table
+        # Build the Markdown table
         md_table = []
 
         # Header row
@@ -683,7 +682,7 @@ class TableToHtmlTable:
     def as_markdown(self):
         """Convert the node to Markdown format."""
         self.convert_recursively(self.node)
-        # Return the markdown lines as a list of strings
+        # Return Markdown lines as a list of strings
         return self.markdown_lines
 
     def convert_recursively(self, node):
@@ -733,7 +732,7 @@ class TableToHtmlTable:
             self.markdown_lines.append('\n')
 
 
-class StructuredMacroToMarkdown:
+class StructuredMacroToCallout:
     def __init__(self, node):
         self.node = node
         self.markdown_lines = []
@@ -747,24 +746,83 @@ class StructuredMacroToMarkdown:
 
     @property
     def applicable(self):
-        if self.node.name == 'ac:structured-macro':
-            return True
-
+        attr_name = self.node.get('name', '')
+        if self.node.name in ['ac:structured-macro']:
+            if attr_name in ['tip', 'info', 'note', 'warning']:
+                return True
+            elif attr_name in ['panel']:
+                return True
         return False
+
+    @property
+    def has_applicable_nodes(self):
+
+        def _has_applicable_node(node):
+            if isinstance(node, NavigableString):
+                return False
+            elif StructuredMacroToCallout(node).applicable:
+                return True
+            else:
+                for child in node.children:
+                    if _has_applicable_node(child):
+                        return True
+            return False
+
+        return _has_applicable_node(self.node)
 
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"StructuredMacroToMarkdown: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"StructuredMacroToCallout: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Do not append unexpected NavigableString to markdown_lines.
             return
 
-        logging.debug(f"StructuredMacroToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        if node.name in ['unknown']:
+        logging.debug(f"StructuredMacroToCallout: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        attr_name = node.get('name', '')
+        if node.name in ['ac:structured-macro'] and attr_name in ['tip', 'info', 'note', 'warning']:
+            # https://nextra.site/docs/built-ins/callout
+            # Confluence has broken namings of panels.
+            if attr_name == 'tip':  # success
+                self.markdown_lines.append('<Callout type="default">')
+            elif attr_name == 'info':  # info
+                self.markdown_lines.append('<Callout type="info">')
+            elif attr_name == 'note':  # note
+                self.markdown_lines.append('<Callout type="important">')
+            elif attr_name == 'warning':  # error - a broken name
+                self.markdown_lines.append('<Callout type="error">')
+            else:
+                self.markdown_lines.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{attr_name}"> */{"}"}')
+                logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append('\n')
+
             for child in node.children:
-                self.convert_recursively(child)
+                self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+
+            self.markdown_lines.append('</Callout>')
+            self.markdown_lines.append('\n')
+        elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
+            parameter = node.find('ac:parameter', {'name': 'panelIconText'})
+            rich_text_body = node.find('ac:rich-text-body')
+            # https://nextra.site/docs/built-ins/callout
+            # Confluence has broken namings of panels.
+            if parameter:
+                self.markdown_lines.append(f'<Callout type="info" emoji="{parameter.text}">')
+            else:
+                self.markdown_lines.append('<Callout>')
+                logging.warning(
+                    f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
+            self.markdown_lines.append('\n')
+
+            if rich_text_body:
+                self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+            else:
+                logging.warning(
+                    f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
+
+            self.markdown_lines.append('</Callout>')
+            self.markdown_lines.append('\n')
         else:
-            logging.warning(f"StructuredMacroToMarkdown: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"StructuredMacroToCallout: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
             self.markdown_lines.append('\n')
             for child in node.children:
@@ -816,6 +874,9 @@ class ConfluenceToMarkdown:
         # Parse HTML with BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
 
+        if StructuredMacroToCallout(soup).has_applicable_nodes:
+            self.add_import('Callout')
+
         # Start conversion
         self.process_node(soup)
 
@@ -827,7 +888,7 @@ class ConfluenceToMarkdown:
             text = node.strip()
             if text and not self.inside_code_block:
                 if self.in_table:
-                    # Only add text to current cell if we're in a table
+                    # Only add text to the current cell if we're in a table
                     if self.current_row:
                         if isinstance(self.current_row[-1], str):
                             self.current_row[-1] += text
@@ -844,9 +905,9 @@ class ConfluenceToMarkdown:
         logging.debug(f"ConfluenceToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(tmp[0] if tmp else '')}")
 
         if node.name in [
-            '[document]', # Start processing from the body of the document
+            '[document]',  # Start processing from the body of the document
             'html', 'body',
-            'ac:layout', 'ac:layout-section', 'ac:layout-cell', # Skip layout tags
+            'ac:layout', 'ac:layout-section', 'ac:layout-cell',  # Skip layout tags
         ]:
             for child in node.children:
                 self.process_node(child)
@@ -866,7 +927,13 @@ class ConfluenceToMarkdown:
                 logging.warning(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
                 self.markdown_lines.append(''.join(TableToHtmlTable(node).as_markdown))
         elif node.name == 'ac:structured-macro':
-            self.handle_structured_macro(node)
+            attr_name = node.get('name', '')
+            if StructuredMacroToCallout(node).applicable:
+                self.markdown_lines.append(''.join(StructuredMacroToCallout(node).as_markdown))
+            elif attr_name in ['code']:
+                self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
+            else:
+                self.handle_structured_macro(node)
         elif node.name == 'ac:adf-extension':
             self.handle_adf_extension(node)
         elif node.name == 'div' or node.name == 'span':
@@ -874,7 +941,7 @@ class ConfluenceToMarkdown:
         elif node.name == 'hr':
             self.markdown_lines.append("---")
             self.markdown_lines.append("")
-        elif node.name == 'ac:image': # In-Use as 2025-08-01
+        elif node.name == 'ac:image':  # In-Use as 2025-08-01
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         else:
             logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
@@ -884,57 +951,7 @@ class ConfluenceToMarkdown:
 
     def handle_structured_macro(self, node):
         macro_name = node.get('name', '')
-        if macro_name in ['tip', 'info', 'note', 'warning']:
-            self.add_import('Callout')
-
-            markdown = []
-            # https://nextra.site/docs/built-ins/callout
-            # Confluence has broken namings of panels.
-            if macro_name == 'tip':  # success
-                markdown.append('<Callout type="default">')
-            elif macro_name == 'info':  # info
-                markdown.append('<Callout type="info">')
-            elif macro_name == 'note':  # note
-                markdown.append('<Callout type="important">')
-            elif macro_name == 'warning':  # error - a broken name
-                markdown.append('<Callout type="error">')
-            else:
-                markdown.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{macro_name}"> */{"}"}')
-                logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            markdown.append('\n')
-
-            logging.debug(f'MultiLineParser(node).as_markdown={MultiLineParser(node).as_markdown}')
-            markdown.extend(MultiLineParser(node).as_markdown)
-            markdown.append('</Callout>')
-            markdown.append('\n')
-            self.markdown_lines.append(''.join(markdown))
-        elif macro_name in ['panel']:  # Custom panel
-            self.add_import('Callout')
-
-            parameter = node.find('ac:parameter', {'name': 'panelIconText'})
-            rich_text_body = node.find('ac:rich-text-body')
-
-            markdown = []
-            # https://nextra.site/docs/built-ins/callout
-            # Confluence has broken namings of panels.
-            if parameter:
-                markdown.append(f'<Callout type="info" emoji="{parameter.text}">')
-            else:
-                markdown.append('<Callout>')
-                logging.warning(f'Cannot find <ac:parameter ac:name="panelIconText"> under <ac:structured-macro: ac:name="{macro_name}">')
-            markdown.append('\n')
-
-            if rich_text_body:
-                markdown.extend(MultiLineParser(rich_text_body).as_markdown)
-            else:
-                logging.warning(f'Cannot find <ac:rich-text-body> under <ac:structured-macro: ac:name="{macro_name}">')
-
-            markdown.append('</Callout>')
-            markdown.append('\n')
-            self.markdown_lines.append(''.join(markdown))
-        elif macro_name in ['code']:
-            self.process_code_macro(node)
-        elif macro_name in ['toc']:
+        if macro_name in ['toc']:
             # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
             logging.debug("Skipping TOC macro")
         else:
@@ -988,35 +1005,6 @@ class ConfluenceToMarkdown:
         markdown.append('\n')
         self.markdown_lines.append(''.join(markdown))
 
-    def process_code_macro(self, macro_node):
-        self.inside_code_block = True
-
-        # Find language parameter and code content
-        language = ""
-        cdata = "TODO(JK): Handle code macro content extraction"
-
-        # Look for language parameter
-        language_param = macro_node.find('parameter', {'name': 'language'})
-        if language_param:
-            language = language_param.get_text()
-
-        # Look for code content in CDATA section
-        plain_text_body = macro_node.find('ac:plain-text-body')
-        if plain_text_body:
-            # Extract CDATA content
-            for item in plain_text_body.contents:
-                if isinstance(item, CData):
-                    cdata = str(item)  # Convert CData object to string
-                    break
-
-        # Write the code block
-        self.markdown_lines.append(f"```{language}")
-        self.markdown_lines.append(cdata)
-        self.markdown_lines.append("```")
-        self.markdown_lines.append("")  # Add empty line after code block
-
-        self.inside_code_block = False
-
 
 def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')
@@ -1032,10 +1020,10 @@ def main():
     log_level = getattr(logging, args.log_level.upper())
     logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
 
-    # Store input file path in global variable
+    # Store the input file path in a global variable
     global INPUT_FILE_PATH, LANGUAGE
 
-    # Extract language code from output file path
+    # Extract language code from the output file path
     output_path = os.path.normpath(args.output_file)
     path_parts = output_path.split(os.sep)
 
@@ -1059,7 +1047,7 @@ def main():
     if dirname:
         # Get the last directory name
         last_dir = os.path.basename(dirname)
-        # Combine last directory and filename
+        # Combine the last directory and filename
         INPUT_FILE_PATH = os.path.join(last_dir, filename)
     else:
         # If there's no directory part, just use the filename
