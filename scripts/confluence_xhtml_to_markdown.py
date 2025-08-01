@@ -830,6 +830,96 @@ class StructuredMacroToCallout:
             self.markdown_lines.append('\n')
 
 
+class AdfExtensionToCallout:
+    def __init__(self, node):
+        self.node = node
+        self.markdown_lines = []
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        self.convert_recursively(self.node)
+        # Return the Markdown lines as a list of strings
+        return self.markdown_lines
+
+    @property
+    def applicable(self):
+        if not self.node.name in ['ac:adf-extension']:
+            return False
+
+        for child in self.node.children:
+            if not isinstance(child, Tag):
+                continue
+            node_type = child.get('type', '(unknown)')
+            logging.debug(f'child of ac:adf-extension name={child.name} type={node_type}')
+            if child.name == 'ac:adf-node' and node_type == 'panel':
+                return True
+        return False
+
+    @property
+    def has_applicable_nodes(self):
+
+        def _has_applicable_node(node):
+            if isinstance(node, NavigableString):
+                return False
+            elif AdfExtensionToCallout(node).applicable:
+                return True
+            else:
+                for child in node.children:
+                    if _has_applicable_node(child):
+                        return True
+            return False
+
+        return _has_applicable_node(self.node)
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            logging.warning(f"AdfExtensionToCallout: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            # Do not append unexpected NavigableString to markdown_lines.
+            return
+
+        logging.debug(f"AdfExtensionToCallout: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        attr_key = node.get('type', '(unknown)')
+        if node.name in ['ac:adf-extension']:
+            for child in node.children:
+                self.convert_recursively(child)
+        elif node.name in ['ac:adf-node'] and attr_key == 'panel':
+            panel_type = 'unknown'
+            adf_attribute = node.find('ac:adf-attribute', {'key': 'panel-type'})
+            if adf_attribute:
+                panel_type = adf_attribute.text
+                logging.debug(f'Found <ac:adf-attribute key="panel-type"> text={adf_attribute.text}')
+            else:
+                logging.warning(f"No <ac:adf-attribute> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+
+            if panel_type == 'note':
+                self.markdown_lines.append('<Callout type="important">')
+            else:
+                self.markdown_lines.append('<Callout>')
+                logging.warning(
+                    f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
+            self.markdown_lines.append('\n')
+
+            adf_content = node.find('ac:adf-content')
+            if adf_content:
+                self.markdown_lines.extend(MultiLineParser(adf_content).as_markdown)
+            else:
+                logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+
+            self.markdown_lines.append('</Callout>')
+            self.markdown_lines.append('\n')
+        elif node.name in ['ac:adf-fallback']:
+            pass # Ignore <ac:adf-fallback>
+        else:
+            logging.warning(f"AdfExtensionToCallout: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(f'[{node.name}]')
+            self.markdown_lines.append('\n')
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append('\n')
+
+
 class ConfluenceToMarkdown:
     def __init__(self):
         self.in_table = False
@@ -875,6 +965,8 @@ class ConfluenceToMarkdown:
         soup = BeautifulSoup(html_content, 'html.parser')
 
         if StructuredMacroToCallout(soup).has_applicable_nodes:
+            self.add_import('Callout')
+        elif AdfExtensionToCallout(soup).has_applicable_nodes:
             self.add_import('Callout')
 
         # Start conversion
@@ -935,7 +1027,10 @@ class ConfluenceToMarkdown:
             else:
                 self.handle_structured_macro(node)
         elif node.name == 'ac:adf-extension':
-            self.handle_adf_extension(node)
+            if AdfExtensionToCallout(node).applicable:
+                self.markdown_lines.append(''.join(AdfExtensionToCallout(node).as_markdown))
+            else:
+                self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'div' or node.name == 'span':
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'hr':
@@ -959,51 +1054,6 @@ class ConfluenceToMarkdown:
             logging.warning(f"Unhandled macro: {macro_name}, processing children")
             for child in node.children:
                 self.process_node(child)
-
-    def handle_adf_extension(self, node):
-        logging.debug(f'ac:adf-extension')
-        for child in node.children:
-            if not isinstance(child, Tag):
-                continue
-
-            node_type = child.get('type', '(unknown)')
-            logging.debug(f'child of ac:adf-extension name={child.name} type={node_type}')
-            if child.name == 'ac:adf-node' and node_type == 'panel':
-                self.handle_adf_node_panel(child)
-                return
-
-    def handle_adf_node_panel(self, node):
-        self.add_import('Callout')
-
-        panel_type = 'unknown'
-        adf_attribute = node.find('ac:adf-attribute', {'key': 'panel-type'})
-        if adf_attribute:
-            panel_type = adf_attribute.text
-            logging.debug(f'Found <ac:adf-attribute key="panel-type"> text={adf_attribute.text}')
-        else:
-            logging.warning(f"No <ac:adf-attribute> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-
-        adf_content = node.find('ac:adf-content')
-        if adf_content:
-            logging.debug(f'Found <ac:adf-content> text={adf_content.text}')
-        else:
-            logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-
-        markdown = []
-        if panel_type == 'note':
-            markdown.append('<Callout type="important">')
-        else:
-            markdown.append('<Callout>')
-            logging.warning(
-                f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
-        markdown.append('\n')
-
-        if adf_content:
-            markdown.extend(MultiLineParser(adf_content).as_markdown)
-
-        markdown.append('</Callout>')
-        markdown.append('\n')
-        self.markdown_lines.append(''.join(markdown))
 
 
 def main():
