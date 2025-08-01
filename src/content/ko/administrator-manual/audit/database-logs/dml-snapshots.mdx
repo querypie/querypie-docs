@@ -1,0 +1,63 @@
+## Overview
+쿼리파이에서 INSERT / UPDATE / DELETE 쿼리 실행 완료시 전후 데이터를 기록합니다. 해당 스냅샷은 각 DB 커넥션 별 별도 DML Snapshot 설정을 활성화한 경우 결과 정보를 저장합니다. ([DB Connections](DB Connections) 내  **추가 설정하기 ** 참고)
+
+## DML Snapshots 조회하기
+<p align="center">
+<div>[image-20240730-094404.png]()</div>
+*Administrator &gt; Audit &gt; Databases &gt; DML Snapshots*
+</p>
+
+1. Administrator &gt; Audit &gt; Databases &gt; DML Snapshots 메뉴로 이동합니다.
+2. 쿼리 실행 당월 기준으로 로그가 내림차순으로 조회됩니다.
+3. 테이블 좌측 상단의 검색란을 통해 사용자 이름으로 검색이 가능합니다.
+4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
+    1.  **Connection Name**  : 접속한 DB 커넥션명
+    2.  **Executed At**  : 실행 일시
+    3.  **Statement ** : 구문 유형 (Insert/Update/Delete)
+5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
+6. 테이블에서 이하의 컬럼 정보를 제공합니다:
+    1.  **No**  : 이벤트 식별 번호
+    2.  **Executed At**  : 실행 일시
+    3.  **Name**  : 대상 사용자 이름
+    4.  **Email**  : 대상 사용자 이메일
+    5.  **Statement ** : 구문 유형 (Insert/Update/Delete)
+    6.  **Connection Name**  : 대상 DB 커넥션명
+    7.  **Database Type**  : 대상 데이터베이스 유형
+    8.  **Replication Type**  : DB Replication 유형
+    9.  **DB Host**  : 접속한 DB 호스트
+    10.  **DB User**  : DB 사용자 ID
+    11.  **DB Name**  : DB명
+    12.  **Table(s)**  : 호출 테이블명
+    13.  **Query**  : 실행 쿼리문
+    14.  **Time(ms)**  : 실행 시간 (Millis기준)
+    15.  **Rows**  : 호출 행 수
+    16.  **Executed From**  : 쿼리 실행 주체
+
+## DML Snapshot 상세 내역 조회하기
+각 행을 클릭하면 세부 정보 조회가 가능합니다.
+
+<p align="center">
+<div>[image-20240730-095257.png]()</div>
+*Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Details*
+</p>
+
+* 우측 드로워 상단에는 이하의 기본 쿼리 감사 정보를 노출합니다:
+    1.  **Name**  : 대상 사용자 이름
+    2.  **Executed At**  : 실행 일시
+    3.  **Connection Name**  : 대상 DB 커넥션명
+    4.  **Replication Type**  : DB Replication 유형
+    5.  **Statement ** : 구문 유형 (Insert/Update/Delete)
+    6.  **Time(ms)**  : 실행 시간 (Millis기준)
+    7.  **Rows**  : 호출 행 수
+    8.  **Executed From**  : 쿼리 실행 주체
+    9.  **Database Type**  : 대상 데이터베이스 유형
+    10.  **DB Host**  : 접속한 DB 호스트
+    11.  **DB Name**  : DB명
+    12.  **DB User**  : DB 사용자 ID
+    13.  **Table(s)**  : 호출 테이블명
+* 하단에는 실행 쿼리 본문 및 전후 데이터를 노출합니다:
+    1.  **Query**  : 실행 쿼리문
+    2.  **`{database.table}`**  : 대상 테이블 표기
+        1.  **Before**  : 쿼리 실행 이전 데이터
+        2.  **After**  : 쿼리 실행 이후 데이터
+        3.  **Copy Data**  : 전/후 데이터 복사용 버튼
