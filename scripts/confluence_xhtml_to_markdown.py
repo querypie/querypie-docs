@@ -912,7 +912,7 @@ class AdfExtensionToCallout:
             self.markdown_lines.append('</Callout>')
             self.markdown_lines.append('\n')
         elif node.name in ['ac:adf-fallback']:
-            pass # Ignore <ac:adf-fallback>
+            pass  # Ignore <ac:adf-fallback>
         else:
             logging.warning(f"AdfExtensionToCallout: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
