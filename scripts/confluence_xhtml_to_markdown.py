@@ -733,6 +733,45 @@ class TableToHtmlTable:
             self.markdown_lines.append('\n')
 
 
+class StructuredMacroToMarkdown:
+    def __init__(self, node):
+        self.node = node
+        self.markdown_lines = []
+
+    @property
+    def as_markdown(self):
+        """Convert the node to Markdown format."""
+        self.convert_recursively(self.node)
+        # Return the Markdown lines as a list of strings
+        return self.markdown_lines
+
+    @property
+    def applicable(self):
+        if self.node.name == 'ac:structured-macro':
+            return True
+
+        return False
+
+    def convert_recursively(self, node):
+        """Recursively convert child nodes to Markdown."""
+        if isinstance(node, NavigableString):
+            logging.warning(f"StructuredMacroToMarkdown: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            # Do not append unexpected NavigableString to markdown_lines.
+            return
+
+        logging.debug(f"StructuredMacroToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
+        if node.name in ['unknown']:
+            for child in node.children:
+                self.convert_recursively(child)
+        else:
+            logging.warning(f"StructuredMacroToMarkdown: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(f'[{node.name}]')
+            self.markdown_lines.append('\n')
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append('\n')
+
+
 class ConfluenceToMarkdown:
     def __init__(self):
         self.in_table = False
