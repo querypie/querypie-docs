@@ -329,6 +329,8 @@ class SingleLineParser:
             else:
                 # Process child nodes if the datetime attribute is not present
                 logging.warning(f"Failed to get datetime attribute in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+        elif node.name in ['ac:image']:
+            self.convert_inline_image(node)
         else:
             logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
@@ -338,6 +340,45 @@ class SingleLineParser:
         if self._debug_markdown:
             self.markdown_lines.append(f'</{node.name}>')
         return
+    def convert_inline_image(self, node):
+        """
+        Process Confluence-specific image tags <ac:image> and convert them to Markdown format.
+
+        Example XHTML:
+        <ac:image ac:align="center" ac:layout="center" ac:original-height="668" ac:original-width="1024"
+                 ac:custom-width="true" ac:alt="image-20240806-095511.png" ac:width="760">
+            <ri:attachment ri:filename="image-20240806-095511.png" ri:version-at-save="1"/>
+            <ac:caption><p>How QueryPie Works</p></ac:caption>
+            <ac:adf-mark key="border" size="1" color="#091e4224"/>
+        </ac:image>
+
+        Converts to Markdown:
+            ![image-20240806-095511.png](image-20240806-095511.png)
+        """
+        logging.debug(f"Processing Confluence image: {node}")
+
+        # Extract image attributes
+        align = node.get('align', 'center')
+        alt_text = node.get('alt', '')
+
+        # Find the attachment filename
+        image_filename = ''
+        attachment = node.find('ri:attachment')
+        if attachment:
+            image_filename = attachment.get('filename', '')
+            if not image_filename:
+                # Log warning if the filename is still empty
+                logging.warning("'filename' attribute is empty, check XML namespace handling")
+        else:
+            logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
+
+        # Create a Markdown image with alt text and filename
+        if not alt_text and image_filename:
+            alt_text = image_filename
+
+        # Add the image in Markdown format
+        # self.markdown_lines.append(f"![{alt_text}]({image_filename})")
+        self.markdown_lines.append(f"![{alt_text}]()")  # TODO(JK): Fix image link
 
 
 class MultiLineParser:
