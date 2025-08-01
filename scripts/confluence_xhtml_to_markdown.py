@@ -214,6 +214,11 @@ class SingleLineParser:
             # For now, I will not handle the style prop and <span>.
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in ['u']:
+            self.markdown_lines.append("<u>")
+            for child in node.children:
+                self.convert_recursively(child)
+            self.markdown_lines.append("</u>")
         elif node.name in ['ac:structured-macro']:
             """
 <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="a935cf67-ed54-4b6b-aafd-63cbebe654e1">
