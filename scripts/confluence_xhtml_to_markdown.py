@@ -465,11 +465,11 @@ class MultiLineParser:
             if caption_paragraph:
                 caption_text = SingleLineParser(caption_paragraph).as_markdown
 
-        # Create markdown image with alt text and filename
+        # Create a Markdown image with alt text and filename
         if not alt_text and image_filename:
             alt_text = image_filename
 
-        # Add the image in markdown format
+        # Add the image in Markdown format
         self.markdown_lines.append(f'<p align="{align}">')
         self.markdown_lines.append('\n')
         # TODO(JK): Link will be resolved later
@@ -550,7 +550,7 @@ class TableToNativeMarkdown:
                     collect_node_names(child)
 
         collect_node_names(self.node)
-        unapplicable_descendants=descendants.difference(self.applicable_nodes)
+        unapplicable_descendants = descendants.difference(self.applicable_nodes)
         if_applicable = descendants.issubset(self.applicable_nodes)
         if descendants.isdisjoint(self.unapplicable_nodes) and if_applicable:
             logging.info(f"TableToNativeMarkdown: Applicable {print_node_with_properties(self.node)} has {descendants}")
@@ -611,7 +611,7 @@ class TableToNativeMarkdown:
 
                 cell_content = SingleLineParser(cell).as_markdown
 
-                # Add cell content to current row
+                # Add cell content to the current row
                 current_row.append(cell_content)
 
                 # Handle colspan by adding empty cells
@@ -625,7 +625,7 @@ class TableToNativeMarkdown:
             # Add the row to table data
             table_data.append(current_row)
 
-            # Check if it's a header row (contains th elements)
+            # Check if it's a header row
             if row.find('th') and row_idx == 0:
                 is_header_row = True
 
@@ -780,7 +780,7 @@ class ConfluenceToMarkdown:
         # Start conversion
         self.process_node(soup)
 
-        # Join all markdown lines and return
+        # Join all Markdown lines and return
         return "\n".join(chain(self.imports, self.markdown_lines))
 
     def process_node(self, node):
@@ -804,23 +804,19 @@ class ConfluenceToMarkdown:
         tmp = node.get_text(strip=True).splitlines()
         logging.debug(f"ConfluenceToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(tmp[0] if tmp else '')}")
 
-        if node.name == '[document]':
-            # Start processing from the body of the document
+        if node.name in [
+            '[document]', # Start processing from the body of the document
+            'html', 'body',
+            'ac:layout', 'ac:layout-section', 'ac:layout-cell', # Skip layout tags
+        ]:
             for child in node.children:
                 self.process_node(child)
-            return
-        if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+        elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name == 'p':
             paragraph = ''.join(MultiLineParser(node).as_markdown)
             paragraph = paragraph.strip() + '\n'  # TODO(JK): Improve this hacking.
             self.markdown_lines.append(paragraph)
-        elif node.name == 'strong' or node.name == 'b':
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
-        elif node.name == 'em' or node.name == 'i':
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
-        elif node.name == 'a':
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['ul', 'ol']:
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
@@ -830,152 +826,22 @@ class ConfluenceToMarkdown:
             else:
                 logging.warning(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
                 self.markdown_lines.append(''.join(TableToHtmlTable(node).as_markdown))
-        elif node.name in ['code', 'pre']:
-            self.process_code(node)
         elif node.name == 'ac:structured-macro':
             self.handle_structured_macro(node)
         elif node.name == 'ac:adf-extension':
             self.handle_adf_extension(node)
         elif node.name == 'div' or node.name == 'span':
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name == 'br':
-            self.markdown_lines.append("\n")
         elif node.name == 'hr':
             self.markdown_lines.append("---")
             self.markdown_lines.append("")
-        elif node.name == 'img':
-            alt = node.get('alt', '')
-            src = node.get('src', '')
-            self.markdown_lines.append(f"![{alt}]({src})")
-        elif node.name == 'tr' or node.name == 'td' or node.name == 'th':
-            # These are handled in the process_table method
-            pass
-        elif node.name in ['ac:layout', 'ac:layout-section', 'ac:layout-cell']:
-            # Skip layout tags, as they are not needed in Markdown
-            for child in node.children:
-                self.process_node(child)
-        elif node.name == 'body' or node.name == 'html' or node.name == None:
-            # Just process children
-            for child in node.children:
-                self.process_node(child)
-        elif node.name == 'ac:image':
+        elif node.name == 'ac:image': # In-Use as 2025-08-01
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         else:
             logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Default behavior for other tags: process children
             for child in node.children:
                 self.process_node(child)
-
-    def process_table(self, table_node):
-        self.in_table = True
-        self.table_data = []
-        self.current_table_row = 0
-        self.rowspan_tracker = {}
-
-        # Process all rows
-        rows = table_node.find_all(['tr'])
-
-        for row_idx, row in enumerate(rows):
-            self.current_row = []
-            cells = row.find_all(['th', 'td'])
-
-            # Apply rowspan from previous rows
-            col_idx = 0
-            for tracked_col, (span_left, content) in sorted(self.rowspan_tracker.items()):
-                if span_left > 0:
-                    # Insert content from cells spanning from previous rows
-                    self.current_row.append(content)
-                    # Decrement the remaining rowspan
-                    self.rowspan_tracker[tracked_col] = (span_left - 1, content)
-                    col_idx += 1
-
-            # Process current row cells
-            for cell_idx, cell in enumerate(cells):
-                colspan = int(cell.get('colspan', 1))
-                rowspan = int(cell.get('rowspan', 1))
-
-                cell_content = SingleLineParser(cell).as_markdown
-
-                # Add cell content to current row
-                self.current_row.append(cell_content)
-
-                # Handle colspan by adding empty cells
-                for _ in range(1, colspan):
-                    self.current_row.append("")
-
-                # Track cells with rowspan > 1 for next rows
-                if rowspan > 1:
-                    self.rowspan_tracker[col_idx + cell_idx] = (rowspan - 1, cell_content)
-
-            # Add the row to table data
-            self.table_data.append(self.current_row)
-
-            # Check if it's a header row (contains th elements)
-            if row.find('th') and row_idx == 0:
-                self.is_header_row = True
-
-        # Convert table data to markdown
-        markdown_table = self.table_data_to_markdown()
-        self.markdown_lines.append(markdown_table)
-        self.markdown_lines.append("")  # Add empty line after table
-        self.in_table = False
-
-    def table_data_to_markdown(self):
-        if not self.table_data or not any(self.table_data):
-            return ""
-
-        # Determine the number of columns based on the row with the most cells
-        num_cols = max(len(row) for row in self.table_data)
-
-        # Ensure all rows have the same number of columns
-        normalized_data = []
-        for row in self.table_data:
-            normalized_row = row + [""] * (num_cols - len(row))
-            normalized_data.append(normalized_row)
-
-        # Calculate the maximum width of each column
-        col_widths = [0] * num_cols
-        for row in normalized_data:
-            for i, cell in enumerate(row):
-                col_widths[i] = max(col_widths[i], len(str(cell)))
-
-        # Build the markdown table
-        md_table = []
-
-        # Header row
-        header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |"
-        md_table.append(header_row)
-
-        # Separator row
-        separator = "| " + " | ".join("-" * col_widths[i] for i in range(num_cols)) + " |"
-        md_table.append(separator)
-
-        # Data rows
-        for row in normalized_data[1:]:
-            data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |"
-            md_table.append(data_row)
-
-        return "\n".join(md_table)
-
-    def process_code(self, node):
-        self.inside_code_block = True
-
-        # Try to determine the language
-        language = node.get('class', '')
-        if language and isinstance(language, str) and language.startswith('language-'):
-            language = language.split('-')[1]
-        else:
-            language = ""
-
-        code_content = node.get_text()
-
-        # Start the code block
-        self.markdown_lines.append(f"```{language}")
-        self.markdown_lines.append(code_content)
-        self.markdown_lines.append("```")
-        self.markdown_lines.append("")  # Add empty line after code block
-
-        self.inside_code_block = False
 
     def handle_structured_macro(self, node):
         macro_name = node.get('name', '')
