@@ -215,7 +215,7 @@ class SingleLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['u']:
-            if node.parent.name != 'a': # CORRECTION: Use plain style in anchor text.
+            if node.parent.name != 'a':  # CORRECTION: Use plain style in anchor text.
                 self.markdown_lines.append("<u>")
             for child in node.children:
                 self.convert_recursively(child)
@@ -340,6 +340,7 @@ class SingleLineParser:
         if self._debug_markdown:
             self.markdown_lines.append(f'</{node.name}>')
         return
+
     def convert_inline_image(self, node):
         """
         Process Confluence-specific image tags <ac:image> and convert them to Markdown format.
@@ -412,6 +413,8 @@ class MultiLineParser:
                 self.convert_recursively(child)
         elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
             self.convert_structured_macro_code(node)
+        elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
+            self.convert_structured_macro_expand(node)
         elif node.name in [
             'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
             'ac:adf-content',  # Child of <ac:adf-extension>
@@ -568,6 +571,30 @@ class MultiLineParser:
         self.markdown_lines.append("\n")
         self.markdown_lines.append("```")
         self.markdown_lines.append("\n")
+
+    def convert_structured_macro_expand(self, node):
+        """
+        <ac:structured-macro ac:name="expand" ac:schema-version="1" ac:macro-id="1df48224-102c-464b-931c-e5e53abcb781">
+            <ac:parameter ac:name="title">generate_kubepie_sa.sh 스크립트 컨텐츠</ac:parameter>
+            <ac:rich-text-body>
+            blah... blah...
+            </ac:rich-text-body>
+        </ac:structured-macro><ul>
+        """
+        self.markdown_lines.append(f"<details>\n")
+        # Find title parameter
+        title = "(Untitled)"
+        title_param = node.find('parameter', {'name': 'title'})
+        if title_param:
+            title = title_param.get_text()
+        self.markdown_lines.append(f'<summary>{title}</summary>\n')
+
+        # Look for code content in the CDATA section
+        rich_text_body = node.find('ac:rich-text-body')
+        if rich_text_body:
+            self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+
+        self.markdown_lines.append(f"</details>\n")
 
 
 class TableToNativeMarkdown:
