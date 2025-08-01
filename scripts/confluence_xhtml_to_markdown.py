@@ -402,22 +402,22 @@ class MultiLineParser:
             return
 
         logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        name_attr = node.get('name', '(none)')
+        attr_name = node.get('name', '(none)')
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             # Headings can exist in a <Callout> block.
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
             self.markdown_lines.append('\n')
-        elif node.name in ['ac:structured-macro'] and name_attr in ['tip', 'info', 'note', 'warning']:
+        elif node.name in ['ac:structured-macro'] and attr_name in ['tip', 'info', 'note', 'warning']:
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
+            self.convert_structured_macro_code(node)
         elif node.name in [
             'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
             'ac:adf-content',  # Child of <ac:adf-extension>
         ]:
             for child in node.children:
                 self.convert_recursively(child)
-        elif node.name in ['ac:structured-macro'] and node.get('name', '') in ['code']:
-            self.convert_structured_macro_code(node)
         elif node.name in ['p']:
             for child in node.children:
                 # self.markdown_lines.append(f"({child.name if child.name else 'NavigableString'})")
