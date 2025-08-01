@@ -1030,6 +1030,8 @@ class ConfluenceToMarkdown:
             self.markdown_lines.append(paragraph)
         elif node.name in ['ul', 'ol']:
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
+        elif node.name in ['blockquote']:
+            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'table':
             native_markdown = TableToNativeMarkdown(node)
             if native_markdown.applicable:
