@@ -91,113 +91,13 @@ A. 이미  **Credential** 이 `Default Credentials`이면서 동일한 `Region`�
 
 
 ## Dry Run/Synchronization Log 표기 문구
-<table data-table-width="760" data-layout="default" local-id="2006a4cd-8a47-4412-aab8-4d81b354d24f">
-<colgroup>
-<col/>
-<col/>
-<col/>
-</colgroup>
-<tbody>
-<tr>
-<th>
-
-</th>
-<th>
- **발생 시점** 
-</th>
-<th>
- **문구** 
-</th>
-</tr>
-<tr>
-<td>
-:check_mark:
-</td>
-<td>
-Dry Run 또는 Synchronize 동기화 시작
-</td>
-<td>
-Cluster synchronization started.
-</td>
-</tr>
-<tr>
-<td>
-:check_mark:
-</td>
-<td>
-신규 클러스터 추가 완료
-</td>
-<td>
-New Cluster is added: `{Cluster Name}` (`{API URL}`).
-</td>
-</tr>
-<tr>
-<td>
-:check_mark:
-</td>
-<td>
-기존 클러스터 정보 업데이트 완료
-</td>
-<td>
-Cluster `{Cluster Name}` is updated
-</td>
-</tr>
-<tr>
-<td>
-:check_mark:
-</td>
-<td>
-기존 클러스터 제거 완료
-</td>
-<td>
-Cluster `{Cluster Name}` is removed
-</td>
-</tr>
-<tr>
-<td>
-:check_mark:
-</td>
-<td>
-Dry Run 또는 Synchronize 동기화 성공적으로 종료
-</td>
-<td>
-Cluster synchronization succeeded.
-</td>
-</tr>
-<tr>
-<td>
-<p align="center">
-<div>[image-20240822-082024.png]()</div>
-</p>
-</td>
-<td>
-EKS 클러스터의 인증 모드가 EKS API를 허용하지 않는 경우 동기화 스킵. ConfigMap 모드에서 EKS API를 허용하도록 변경 필요. 
-</td>
-<td>
-Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access. 
-</td>
-</tr>
-<tr>
-<td>
-:cross_mark:
-</td>
-<td>
-이미 중복된 클러스터명이 확인되어 동기화 실패 
-</td>
-<td>
-Cluster synchronization failed. The cluster name “`{Cluster Name}`” is already in use by another cluster. To synchronize it, delete the existing cluster.
-</td>
-</tr>
-<tr>
-<td>
-:cross_mark:
-</td>
-<td>
-Dry Run 또는 Synchronize 동기화 실패 종료
-</td>
-<td>
-Cluster synchronization failed. + `{additional statement}`
-</td>
-</tr>
-</tbody>
-</table>
+|                           |  **발생 시점**                                                                         |  **문구**                                                                                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :check_mark:              | Dry Run 또는 Synchronize 동기화 시작                                                      | Cluster synchronization started.                                                                                                                          |
+| :check_mark:              | 신규 클러스터 추가 완료                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
+| :check_mark:              | 기존 클러스터 정보 업데이트 완료                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
+| :check_mark:              | 기존 클러스터 제거 완료                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
+| :check_mark:              | Dry Run 또는 Synchronize 동기화 성공적으로 종료                                                | Cluster synchronization succeeded.                                                                                                                        |
+| [ac:image][ri:attachment] | EKS 클러스터의 인증 모드가 EKS API를 허용하지 않는 경우 동기화 스킵. ConfigMap 모드에서 EKS API를 허용하도록 변경 필요.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
+| :cross_mark:              | 이미 중복된 클러스터명이 확인되어 동기화 실패                                                          | Cluster synchronization failed. The cluster name “`{Cluster Name}`” is already in use by another cluster. To synchronize it, delete the existing cluster. |
+| :cross_mark:              | Dry Run 또는 Synchronize 동기화 실패 종료                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |

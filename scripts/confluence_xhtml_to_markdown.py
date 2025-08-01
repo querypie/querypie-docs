@@ -522,9 +522,12 @@ class TableToNativeMarkdown:
             'p', 'strong', 'em', 'span', 'code', 'br', 'a',
             'ac:inline-comment-marker',
             'ac:emoticon',
+            'ac:link', 'ac:link-body', 'ri:page',
+            'ac:image', 'ri:attachment',
         }
         self.unapplicable_nodes = {
-            'ul', 'ol',
+            'ul', 'ol', 'li',
+            'ac:structured-macro', 'ac:parameter', 'ac:plain-text-body',
         }
 
     @property
@@ -537,33 +540,29 @@ class TableToNativeMarkdown:
     @property
     def applicable(self):
         # Get all child nodes that are not NavigableString (including nested children)
-        descendants = []
+        descendants = set()
 
         def collect_node_names(node):
             for child in node.children:
                 if not isinstance(child, NavigableString):
-                    descendants.append(child.name)
+                    descendants.add(child.name)
                     # Recursively collect names from children of children
                     collect_node_names(child)
 
         collect_node_names(self.node)
-        descendants_set = set(descendants)
-        difference=descendants_set.difference(self.applicable_nodes)
-        if_applicable = descendants_set.issubset(self.applicable_nodes)
-        if descendants_set.isdisjoint(self.unapplicable_nodes):
-            if if_applicable:
-                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
-                logging.debug(f"TableToNativeMarkdown: self.applicable_nodes={self.applicable_nodes}")
-                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
-            else:
-                logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
-                logging.warning(f"TableToNativeMarkdown: Unapplicable due to {difference}")
-                logging.debug(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} has descendants of {descendants}")
+        unapplicable_descendants=descendants.difference(self.applicable_nodes)
+        if_applicable = descendants.issubset(self.applicable_nodes)
+        if descendants.isdisjoint(self.unapplicable_nodes) and if_applicable:
+            logging.info(f"TableToNativeMarkdown: Applicable {print_node_with_properties(self.node)} has {descendants}")
+        elif unapplicable_descendants.issubset(self.unapplicable_nodes):
+            logging.info(f"TableToNativeMarkdown: Unapplicable {print_node_with_properties(self.node)} has {descendants}")
+            logging.info(f"TableToNativeMarkdown: Unapplicable due to {unapplicable_descendants} that is a subset of self.unapplicable_nodes")
         else:
-            logging.warning(f"TableToNativeMarkdown: {print_node_with_properties(self.node)} is applicable: {if_applicable}")
-            logging.warning(f"TableToNativeMarkdown: Unapplicable due to {difference}")
+            unexpected = unapplicable_descendants.difference(self.unapplicable_nodes)
+            logging.warning(f"TableToNativeMarkdown: Unapplicable {print_node_with_properties(self.node)} has {descendants}")
+            logging.warning(f"TableToNativeMarkdown: Unapplicable due to {unapplicable_descendants} that has unexpected descendants: {unexpected}")
 
-        return descendants_set.issubset(self.applicable_nodes)
+        return if_applicable
 
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
