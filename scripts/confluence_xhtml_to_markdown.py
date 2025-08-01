@@ -384,6 +384,8 @@ class MultiLineParser:
             self.convert_image(node)
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
+        elif node.name in ['hr']:
+            self.markdown_lines.append(f'---\n')
         else:
             logging.warning(f"MultiLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]')
@@ -426,7 +428,7 @@ class MultiLineParser:
 
     def convert_image(self, node):
         """
-        Process Confluence-specific image tags (ac:image) and convert them to Markdown format.
+        Process Confluence-specific image tags <ac:image> and convert them to Markdown format.
 
         Example XHTML:
         <ac:image ac:align="center" ac:layout="center" ac:original-height="668" ac:original-width="1024"
@@ -934,6 +936,7 @@ class ConfluenceToMarkdown:
         self.inside_code_block = False
         self.code_language = ""
         self._imports = {}
+        self._debug_markdown = False
 
     @property
     def imports(self):
@@ -977,6 +980,8 @@ class ConfluenceToMarkdown:
 
     def process_node(self, node):
         if isinstance(node, NavigableString):
+            if self._debug_markdown:
+                self.markdown_lines.append(f"TODO(JK): ConfluenceToMarkdown: Unexpected NavigableString of from {ancestors(node)} in {INPUT_FILE_PATH}")
             text = node.strip()
             if text and not self.inside_code_block:
                 if self.in_table:
@@ -1016,7 +1021,7 @@ class ConfluenceToMarkdown:
             if native_markdown.applicable:
                 self.markdown_lines.append(''.join(native_markdown.as_markdown))
             else:
-                logging.warning(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
+                logging.info(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
                 self.markdown_lines.append(''.join(TableToHtmlTable(node).as_markdown))
         elif node.name == 'ac:structured-macro':
             attr_name = node.get('name', '')
@@ -1034,8 +1039,7 @@ class ConfluenceToMarkdown:
         elif node.name == 'div' or node.name == 'span':
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'hr':
-            self.markdown_lines.append("---")
-            self.markdown_lines.append("")
+            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         elif node.name == 'ac:image':  # In-Use as 2025-08-01
             self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
         else:
@@ -1049,7 +1053,12 @@ class ConfluenceToMarkdown:
         if macro_name in ['toc']:
             # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
             logging.debug("Skipping TOC macro")
+        elif macro_name in ['children']:
+            self.markdown_lines.append(f'(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)')
+            pass
         else:
+            if self._debug_markdown:
+                self.markdown_lines.append(f'{print_node_with_properties(node)}')
             # For other macros, we can just log or skip
             logging.warning(f"Unhandled macro: {macro_name}, processing children")
             for child in node.children:
