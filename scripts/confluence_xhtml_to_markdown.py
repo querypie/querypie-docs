@@ -215,10 +215,12 @@ class SingleLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name in ['u']:
-            self.markdown_lines.append("<u>")
+            if node.parent.name != 'a': # CORRECTION: Use plain style in anchor text.
+                self.markdown_lines.append("<u>")
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append("</u>")
+            if node.parent.name != 'a':
+                self.markdown_lines.append("</u>")
         elif node.name in ['ac:structured-macro']:
             """
 <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="a935cf67-ed54-4b6b-aafd-63cbebe654e1">
