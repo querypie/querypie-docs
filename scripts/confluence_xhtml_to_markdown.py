@@ -10,17 +10,22 @@ handling special cases like:
 """
 
 import argparse
+import filecmp
 import logging
 import os
 import re
+import shutil
 import sys
+from datetime import datetime
 from itertools import chain
+from pathlib import Path
 
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 
 # Global variable to store an input file path
 INPUT_FILE_PATH = ""
+OUTPUT_FILE_PATH = ""
 
 # Hidden characters constants
 ZWSP = '\u200b'  # Zero Width Space
@@ -146,6 +151,57 @@ def get_html_attributes(node):
     if attrs_list:
         return " " + " ".join(attrs_list)
     return ""
+
+
+def datetime_ko_format(date_string):
+    """
+    Convert '2024-08-01 오후 2.50.06' format to '20240801-145006' format
+
+    Args:
+        date_string (str): Date/time string to convert
+
+    Returns:
+        str: Converted date/time string
+    """
+    try:
+        # Split the input string into date and time parts
+        # '2024-08-01 오후 2.50.06' -> ['2024-08-01', '오후 2.50.06']
+        parts = date_string.split(' ')
+
+        if len(parts) != 3:
+            raise ValueError(f"Invalid date format: <{date_string}>")
+
+        date_part = parts[0]  # '2024-08-01'
+        ampm_part = parts[1]  # '오후'
+        time_part = parts[2]  # '2.50.06'
+
+        # Parse date part (YYYY-MM-DD -> YYYYMMDD)
+        date_obj = datetime.strptime(date_part, '%Y-%m-%d')
+        date_formatted = date_obj.strftime('%Y%m%d')
+
+        # Parse time part
+        time_parts = time_part.split('.')
+        if len(time_parts) != 3:
+            raise ValueError("Invalid time format.")
+
+        hour = int(time_parts[0])
+        minute = int(time_parts[1])
+        second = int(time_parts[2])
+
+        # Add 12 for PM (AM remains the same)
+        if ampm_part == '오후' and hour != 12:
+            hour += 12
+        elif ampm_part == '오전' and hour == 12:
+            hour = 0
+
+        # Format time as HHMMSS
+        time_formatted = f"{hour:02d}{minute:02d}{second:02d}"
+
+        # Return a final result
+        return f"{date_formatted}-{time_formatted}"
+
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 
 class SingleLineParser:
@@ -455,7 +511,7 @@ class MultiLineParser:
         if len(children_list) == 1:
             if self._debug_markdown:
                 self.markdown_lines.append(f'<{node.name} the-only-child=true>\n')
-            pass # The only child means the first child.
+            pass  # The only child means the first child.
         elif len(children_list) > 2:
             first_sibling = children_list[0]
             if node == first_sibling:
@@ -1116,11 +1172,66 @@ class AdfExtensionToCallout:
                 self.convert_recursively(child)
 
 
+class Attachment:
+    """
+    <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
+    <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
+    """
+
+    def __init__(self, node, input_file=INPUT_FILE_PATH, output_file=OUTPUT_FILE_PATH):
+        filename = node.get('filename', '')
+        if not filename:
+            logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            return
+
+        self.original = filename
+        if re.match(r'스크린샷 \d\d\d\d-\d\d-\d\d .*.png', filename):
+            datetime_ko = filename.replace('스크린샷 ', '').replace('.png', '')
+            datetime_std = datetime_ko_format(datetime_ko)
+            filename = 'screenshot-' + datetime_std + '.png'
+        if filename.find(' ') >= 0:
+            filename = filename.replace(' ', '-')
+        self.filename = filename
+
+        self.input_dir = os.path.dirname(input_file)
+        self.output_dir = os.path.join(os.path.dirname(output_file), Path(output_file).stem)
+        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir}")
+
+    def __str__(self):
+        return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
+
+    def copy_to_destination(self):
+        source_file = os.path.join(self.input_dir, self.original)
+        if not os.path.exists(source_file):
+            logging.debug(f"Source file found: {repr(source_file)}")
+        else:
+            logging.warning(f"Source file not found: {source_file}")
+
+        if not os.path.exists(self.output_dir):
+            logging.warning(f"Output directory not found: {repr(self.output_dir)}")
+            os.makedirs(self.output_dir)
+        destination_file = os.path.join(self.output_dir, self.filename)
+        if os.path.exists(destination_file):
+            # compare original_file and destination_file are equivalent.
+            if filecmp.cmp(source_file, destination_file):
+                logging.debug(f"Destination file already exists: {repr(destination_file)}")
+            else:
+                logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
+        else:
+            shutil.copyfile(original_file, destination_file)
+            # Change file permission to 0644
+            os.chmod(destination_file, 0o644)
+
+
 class ConfluenceToMarkdown:
-    def __init__(self):
+    def __init__(self, html_content):
         self.markdown_lines = []
         self._imports = {}
+        self._attachments = []
         self._debug_markdown = False
+
+        # Parse HTML with BeautifulSoup
+        self.soup = BeautifulSoup(html_content, 'html.parser')
 
     @property
     def imports(self):
@@ -1138,26 +1249,29 @@ class ConfluenceToMarkdown:
         else:
             self._imports[module_name] = False
 
-    def as_markdown(self, html_content):
-        # Replace XML namespace prefixes
-        html_content = re.sub(r'\sac:', ' ', html_content)
-        html_content = re.sub(r'\sri:', ' ', html_content)
+    def load_attachments(self):
+        # Find all ac:image nodes first
+        ac_image_nodes = self.soup.find_all('ac:image')
+        for ac_image in ac_image_nodes:
+            # Find ri:attachment nodes within each ac:image
+            attachment_nodes = ac_image.find_all('ri:attachment')
+            for node in attachment_nodes:
+                logging.debug(f"add attachment of <ac:image>{node}")
+                attachment = Attachment(node, INPUT_FILE_PATH, OUTPUT_FILE_PATH)
+                attachment.copy_to_destination()
+                self._attachments.append(attachment)
 
-        # Remove special characters before parsing
-        html_content = html_content.replace(ZWSP, '')
-        html_content = html_content.replace(LRM, '')
-        html_content = html_content.replace(HANGUL_FILLER, '')
+        logging.debug(f"attachments: {self._attachments}")
 
-        # Parse HTML with BeautifulSoup
-        soup = BeautifulSoup(html_content, 'html.parser')
+    def as_markdown(self):
 
-        if StructuredMacroToCallout(soup).has_applicable_nodes:
+        if StructuredMacroToCallout(self.soup).has_applicable_nodes:
             self.add_import('Callout')
-        elif AdfExtensionToCallout(soup).has_applicable_nodes:
+        elif AdfExtensionToCallout(self.soup).has_applicable_nodes:
             self.add_import('Callout')
 
         # Start conversion
-        self.markdown_lines.extend(MultiLineParser(soup).as_markdown)
+        self.markdown_lines.extend(MultiLineParser(self.soup).as_markdown)
         # self.process_node(soup)
 
         # Join all Markdown lines and return
@@ -1179,11 +1293,13 @@ def main():
     logging.basicConfig(level=log_level, format='%(levelname)s - %(funcName)s:%(lineno)d - %(message)s')
 
     # Store the input file path in a global variable
-    global INPUT_FILE_PATH, LANGUAGE
+    global INPUT_FILE_PATH, OUTPUT_FILE_PATH, LANGUAGE
+
+    INPUT_FILE_PATH = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
+    OUTPUT_FILE_PATH = os.path.normpath(args.output_file)
 
     # Extract language code from the output file path
-    output_path = os.path.normpath(args.output_file)
-    path_parts = output_path.split(os.sep)
+    path_parts = OUTPUT_FILE_PATH.split(os.sep)
 
     # Look for 2-letter language code in the path
     detected_language = 'en'  # Default to English
@@ -1198,25 +1314,23 @@ def main():
     LANGUAGE = detected_language
     logging.info(f"Detected language from output path: {LANGUAGE}")
 
-    # Extract the last directory and filename from the path
-    path = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
-    dirname, filename = os.path.split(path)  # Split into directory and filename
-
-    if dirname:
-        # Get the last directory name
-        last_dir = os.path.basename(dirname)
-        # Combine the last directory and filename
-        INPUT_FILE_PATH = os.path.join(last_dir, filename)
-    else:
-        # If there's no directory part, just use the filename
-        INPUT_FILE_PATH = filename
-
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
 
-        converter = ConfluenceToMarkdown()
-        markdown_content = converter.as_markdown(html_content)
+        # Replace XML namespace prefixes
+        html_content = re.sub(r'\sac:', ' ', html_content)
+        html_content = re.sub(r'\sri:', ' ', html_content)
+
+        # Remove special characters before parsing
+        html_content = html_content.replace(ZWSP, '')
+        html_content = html_content.replace(LRM, '')
+        html_content = html_content.replace(HANGUL_FILLER, '')
+
+        converter = ConfluenceToMarkdown(html_content)
+        # converter.list_images()
+        converter.load_attachments()
+        markdown_content = converter.as_markdown()
 
         with open(args.output_file, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
