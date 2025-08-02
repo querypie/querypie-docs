@@ -152,6 +152,18 @@ class SingleLineParser:
     def __init__(self, node):
         self.node = node
         self.markdown_lines = []
+        self.applicable_nodes = {
+            'span',
+            'strong', 'em', 'code', 'u',
+            'br', 'a',
+            'ac:inline-comment-marker',
+            'ac:emoticon',
+            'time',
+        }
+        self.unapplicable_nodes = {
+            'ul', 'ol', 'li',
+            'ac:plain-text-body',
+        }
         self._debug_markdown = False
 
     @property
@@ -162,8 +174,31 @@ class SingleLineParser:
         # It is supposed to preserve whitespace in the middle of the text
         return "".join(self.markdown_lines)
 
+    @property
     def applicable(self):
-        return False
+
+        def _is_applicable_recursively(node):
+            if isinstance(node, NavigableString):
+                return True
+            elif node.name in self.applicable_nodes:
+                for child in node.children:
+                    if _is_applicable_recursively(child):
+                        pass
+                    else:
+                        return False
+                return True
+            elif node.name in ['ac:link', 'ac:image']:
+                return True
+            elif node.name in ['ac:structured-macro']:
+                attr_name = node.get('name', '')
+                if attr_name in ['status']:
+                    return True
+                else:
+                    return False
+            else:
+                return False
+
+        return _is_applicable_recursively(self.node)
 
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
@@ -189,7 +224,7 @@ class SingleLineParser:
                 self.convert_recursively(child)
                 # self.markdown_lines.append(f"(/{child.name if child.name else 'NavigableString'})")
         elif node.name in ['strong']:
-            # TODO(JK): Determine if <strong> should be respected in headings
+            # CORRECTION: <strong> is ignored in headings
             if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                 for child in node.children:
                     self.convert_recursively(child)
@@ -387,6 +422,7 @@ class MultiLineParser:
         self.node = node
         self.list_stack = []
         self.markdown_lines = []
+        self._debug_markdown = False
 
     @property
     def as_markdown(self):
@@ -423,12 +459,23 @@ class MultiLineParser:
                 self.convert_recursively(child)
         elif node.name in ['p']:
             for child in node.children:
-                # self.markdown_lines.append(f"({child.name if child.name else 'NavigableString'})")
-                self.markdown_lines.append(SingleLineParser(child).as_markdown)
-                # self.markdown_lines.append(f"(/{child.name if child.name else 'NavigableString'})")
-                # self.markdown_lines.append(f" ")  # Add a space after a child of paragraphs
-            # Add an empty line after paragraphs
+                if isinstance(child, NavigableString):
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                elif SingleLineParser(child).applicable:
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                else:
+                    if self._debug_markdown:
+                        self.markdown_lines.append(f'<{child.name}>')
+                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                    if self._debug_markdown:
+                        self.markdown_lines.append(f'</{child.name}>')
             self.markdown_lines.append('\n')
+            # Add an empty line after paragraphs
+            # self.markdown_lines.append('\n')
+        elif node.name in ['br']:
+            # <br/> is a line break. Just keep using <br/>.
+            # Append '\n' for <br/> in MultiLineParser.
+            self.markdown_lines.append("<br/>\n")
         elif node.name in ['ul', 'ol']:
             self.convert_ul_ol(node)
         elif node.name in ['ac:image']:
