@@ -159,6 +159,7 @@ class SingleLineParser:
             'ac:inline-comment-marker',
             'ac:emoticon',
             'time',
+            'ac:adf-fragment-mark', 'ac:adf-fragment-mark-detail',
         }
         self.unapplicable_nodes = {
             'ul', 'ol', 'li',
@@ -187,7 +188,7 @@ class SingleLineParser:
                     else:
                         return False
                 return True
-            elif node.name in ['ac:link', 'ac:image']:
+            elif node.name in ['ac:link', 'ac:image', 'ac:adf-fragment-mark']:
                 return True
             elif node.name in ['ac:structured-macro']:
                 attr_name = node.get('name', '')
@@ -316,6 +317,23 @@ class SingleLineParser:
             # ac:link-body is used in ac:link, we can process it as a regular text
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in ['ac:adf-fragment-mark']:
+            """
+            Source:
+                <ac:adf-fragment-mark>
+                    <ac:adf-fragment-mark-detail name="Table 1" local-id="42cfbf5f-5c57-44da-8f07-e1ea866a985a"/>
+                </ac:adf-fragment-mark>
+            
+            Target:
+                <a id="table-1"></a>
+                - Use lower cases for fragment names.
+                - Use hyphen for spaces and underscores.
+            """
+            adf_fragment_mark_detail = node.find('ac:adf-fragment-mark-detail')
+            if adf_fragment_mark_detail:
+                fragment_name = adf_fragment_mark_detail.get('name')
+                fragment_name = fragment_name.lower().replace(' ', '-').replace('_', '-')
+                self.markdown_lines.append(f'<a id="{fragment_name}"></a>')
         elif node.name in ['li']:
             # Extract text from <p> only.
             for child in node.children:
@@ -655,6 +673,7 @@ class TableToNativeMarkdown:
             'ac:emoticon',
             'ac:link', 'ac:link-body', 'ri:page',
             'ac:image', 'ri:attachment',
+            'ac:adf-fragment-mark', 'ac:adf-fragment-mark-detail',
         }
         self.unapplicable_nodes = {
             'ul', 'ol', 'li',
@@ -843,7 +862,11 @@ class TableToHtmlTable:
             self.markdown_lines.append('\n')
 
             for child in node.children:
-                if not isinstance(child, NavigableString):
+                if isinstance(child, NavigableString):
+                    logging.warning(f"TableToHtmlTable: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+                elif SingleLineParser(child).applicable:
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                else:
                     td = ''.join(MultiLineParser(child).as_markdown)
                     self.markdown_lines.append(td)
 
@@ -853,6 +876,10 @@ class TableToHtmlTable:
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
             self.markdown_lines.append(f"<col{attrs}/>")
+            self.markdown_lines.append('\n')
+        elif SingleLineParser(node).applicable:
+            # <ac:adf-fragment-mark> could be converted.
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
             self.markdown_lines.append('\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
