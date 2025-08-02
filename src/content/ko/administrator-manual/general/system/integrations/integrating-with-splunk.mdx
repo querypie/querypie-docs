@@ -1,6 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 QueryPie에서 기록하는 감사 로그를 Splunk를 통하여 외부로 전송하는 기능을 제공합니다.
 
 <Callout type="info">
@@ -8,8 +9,8 @@ Integration 설정을 위해서는 System admin 권한이 필요합니다.
 </Callout>
 
 
-
 ## Syslog-Splunk 연계 권장 아키텍처
+
 <p align="center">
 <div>[스크린샷 2024-06-13 오후 5.49.47.png]()</div>
 *Splunk 연계 권장 아키텍쳐*
@@ -21,18 +22,17 @@ Splunk에서 권장하는 Syslog-Splunk 연계를 위한 아키텍처는 다음�
 2. Universal forwarder / Heavy forwarder를 통해 Splunk로 전송
 
 <Callout type="important">
-QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용하여 직접 전송할 수 있도록 구성되어 있으나 이 구성은 Splunk의 권장사항이 아님을 주의하여 주시기 바랍니다. 
+QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용하여 직접 전송할 수 있도록 구성되어 있으나 이 구성은 Splunk의 권장사항이 아님을 주의하여 주시기 바랍니다.
 </Callout>
 
 참고로 Splunk는 syslog 수집을 위해 별도로 SC4S(Splunk connector for syslog)를 제공하고 있습니다.
 
 
-
 ## Splunk Integration 설정하기
+
 1. General Settings 메뉴에서 System &gt; Integrations 메뉴로 이동합니다. 
 2. Splunk 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 아래와 같이 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
-
 <p align="center">
 <div>[image-20240523-101104.png]()</div>
 *(좌) TCP / UDP 설정 화면 (우) HTTP / HTTPS 설정 화면*
@@ -66,10 +66,9 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
 
 
-
 ## 참고
-* 라이센스에 따라 syslog 를 통해 전송되는 QueryPie의 이벤트 항목
 
+* 라이센스에 따라 syslog 를 통해 전송되는 QueryPie의 이벤트 항목
 |  **Event Item**               |  **DAC**  |  **SAC**  |  **KAC**  |
 | ----------------------------- | --------- | --------- | --------- |
 | User Access History           | O         | O         | O         |
@@ -91,7 +90,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 | Kubernetes Role History       | 해당사항 없음   | 해당사항 없음   | O         |
 
 <Callout type="info">
- **Pod Session Recordings** 는 Request Audit 내 pods/exec 리소스 호출 내역과 리스트가 중복되므로, syslog 전송을 지원하지 않습니다.
+**Pod Session Recordings** 는 Request Audit 내 pods/exec 리소스 호출 내역과 리스트가 중복되므로, syslog 전송을 지원하지 않습니다.
 </Callout>
 
 * 기타 참고 문서 

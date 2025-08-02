@@ -1,6 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내려받을 수 있는 기능입니다. 장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인 추출 및 다운로드가 가능합니다. 한 번 생성된 로그 추출 파일은 30일 동안 다운로드가 가능합니다. 추출 지원 로그는 Query Audit, Workflow SQL Request 등 21종입니다.
 
 <Callout type="important">
@@ -8,7 +9,7 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 </Callout>
 
 <Callout type="important">
- **추출 지원 로그 종류 (QueryPie v11.0.0 기준)** 
+**추출 지원 로그 종류 (QueryPie v11.0.0 기준)**
 1. Query Audit [CSV]
 2. Workflow SQL Request [CSV]
 3. Workflow SQL Request for Query Details [CSV]
@@ -44,8 +45,8 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 </Callout>
 
 
-
 ## Audit Log Export 목록 조회하기
+
 <p align="center">
 <div>[image-20240714-063656.png]()</div>
 *Administrator &gt; Audit &gt; General &gt; Audit Log Export*
@@ -59,10 +60,10 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
     *  **Failed**  : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.
 
 ## 로그 추출 작업 생성하기
+
 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
 
 감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의 `Create Task` 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
-
 <p align="center">
 <div>[스크린샷 2025-01-16 오후 1.18.05.png]()</div>
 *Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task*
@@ -86,45 +87,64 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 9. `Create` 버튼 : 로그 추출 작업을 생성합니다. 
 
 
-
 <Callout type="important">
- **필터 표현식** 
+**필터 표현식**
+
 (1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>
-(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다. 
+
+(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
+
 - Number Type
+
 지원하는 표현식 : `&gt;`, `&lt;`, `&lt;=`, `&gt;=`, `==`, `!=`<br/>예 : `x &gt; `10``, `x == `10``
+
 - String Type
+
 지원하는 표현식 : `== (equals)`, `!= (not equals)`, `contains`<br/>예 : `x == 'abc'`, `x != 'abc'`, `contains(x, 'ab')`
-- Boolean Type 
+
+- Boolean Type
+
 지원하는 표현식 : `== (equals)`, `!= (not equals)`, `&& (and)`, `|| (or)`<br/>예 : `x == `true``,` x && y`, `(x &gt; `0`) && (y == `0`)`
+
 - Array Type
+
 예 : `x[? @ == 'value']`, `list[? @ &gt; `10`]`
 
+
 (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.
+
 - AND 조건 : `&&` 연산자를 활용합니다.
+
 - OR 조건 : `||` 연산자를 활용합니다.
+
 - 복합 조건 : 함께 처리해야하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
 
+
 (4) 예시
+
 - Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == 'SQL_EXECUTION'`
+
 - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
+
 - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
+
 - DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
 </Callout>
 
 
-
 <Callout type="important">
- **Query Audit의 내보내기 파일의 Privilege Type 명시 기준** 
-내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 
+**Query Audit의 내보내기 파일의 Privilege Type 명시 기준**
+
+내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
+
 1. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.
 2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. 
 3. Redis의 경우에는 커맨드명이 명시됩니다.
 </Callout>
 
 
-
 ## 추출 작업 완료시 파일 내려받기
+
 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
 
 추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.
@@ -133,12 +153,14 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 2. 상세 페이지에서 다운로드: 목록 페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.
 
 <Callout type="important">
- **다운로드 파일에 암호 포함하기** 
-다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다. 
-해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting &gt; Security’ 메뉴에서 `Export a file with Encryption` 옵션을 ‘Required’로 지정해야 합니다. 
+**다운로드 파일에 암호 포함하기**
+
+다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.
+
+해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting &gt; Security’ 메뉴에서 `Export a file with Encryption` 옵션을 ‘Required’로 지정해야 합니다.
 </Callout>
 
 
-
 ## 로그 추출 파일 보관 기간 정책 안내
+
 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.

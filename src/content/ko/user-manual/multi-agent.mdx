@@ -1,6 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 QueryPie Multi Agent는 여러 개의 QueryPie Host를 동시에 사용할 수 있도록 개선된 Proxy Agent입니다.
 
 Agent UI에서는 특정 Host에서 사용 가능한 리소스들을 확인할 수 있습니다.
@@ -8,18 +9,25 @@ Agent UI에서는 특정 Host에서 사용 가능한 리소스들을 확인할 �
 Agent 설치 및 Host 별 로그인 수행만으로 추가 설정 없이 둘 이상의 QueryPie Proxy를 통한 리소스 접속이 가능합니다.
 
 <Callout type="info">
- **지원 버전** 
+**지원 버전**
+
 Multi Agent는 `10.2.5` 버전 또는 이후 버전의 QueryPie Host만을 지원합니다. 10.2.4 이하 버전을 사용하는 경우 기존의 User Agent를 사용하시기 바랍니다.
+
 동일한 PC에 기존의 User Agent와 Multi Agent 둘 다 설치하는 것은 가능합니다. 단, 동시에 실행되어 있으면 정상적으로 동작하지 않습니다.
+
 QueryPie Host 버전이 `10.2.5` ~ `10.2.7` 버전인 경우 지원 범위:
+
 * Service: DAC, KAC 
 * Client OS: MacOS, Windows
+
 QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
+
 * Service: DAC, KAC, SAC
 * Client OS: MacOS, Windows, Linux
 </Callout>
 
 ## 에이전트 앱 다운로드 및 초기 설정
+
 1. QueryPie 로그인 후 우측 상단 프로필을 클릭한 뒤 Download & Support &gt; `Multi-Agent` 버튼을 클릭합니다.
 2. QueryPie Multi-Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을 복사해 둡니다.<br/>
 3. 다운로드받은 QueryPie Multi-Agent 설치 프로그램을 실행한 뒤 .app 파일을 Applications 폴더에 복사하여 설치를 완료합니다.
@@ -27,7 +35,9 @@ QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
 5. 입력한 호스트의 로그인 페이지에서 인증정보를 입력하고 Continue 버튼을 클릭합니다.
 
 ## DAC
+
 ### 에이전트로 데이터베이스 접속하기
+
 1. Database 탭에서 선택된 QueryPie Host 에 대해 권한이 부여되어 있고 Proxy 사용이 가능한 Database Connection 목록을 확인할 수 있습니다.
 2. 접속하고자 하는 커넥션을 선택하고 마우스 오른쪽 버튼을 클릭하면 컨텍스트 메뉴가 오픈됩니다.
     1. Connection Information: Proxy 접속을 위한 정보를 확인할 수 있습니다.
@@ -42,13 +52,12 @@ Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전
 </Callout>
 
 ### 에이전트에서 3rd Party Database Tool 설정 관리하기
-Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
 
+Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2025-04-13 오후 11.52.52.png]()</div>
 *Multi-Agent &gt; Settings &gt; Databases*
 </p>
-
 
 
 * Database Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
@@ -59,10 +68,10 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 * DataGrip Connection Guide: DataGrip으로 커넥션을 열 때 노출되는 가이드 모달을 계속 볼지 설정합니다.
 
 ### 에이전트에서 default privilege 선택하기
+
 쿼리파이 DB 접근제어에서 한 사용자가 두개이상의 privilege를 부여받을 수 있습니다. 특정 커넥션에 접근권한을 부여받은 사용자가 여러 그룹에 포함되어 있고 그룹에 다른 접근 권한을 부여한 경우 이 사용자는 여러개의 privilege가 할당될 수 있습니다. 이 때 proxy를 통해 접속할 때 사용할 Privilege를 agent 화면에서 선택할 수 있습니다. (10.3.0 부터 지원)
 
 다중 privilege를 부여받은 후 사용자가 특정 privilege를 default로 설정하지 않으면 접속할 수 없기 때문에 만약 default privilege가 설정되어 있지 않은 경우 아래 그림과 같은 경고 아이콘이 표시됩니다.<br/>
-
 <p align="center">
 <div>[image-20250513-025002.png]()</div>
 </p>
@@ -74,48 +83,51 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 5. 경고 아이콘이 사라지고 할당된 privilege 이름이 해당 커넥션에 보이는지 확인합니다.<br/><br/>
 
 ## KAC
-### 에이전트에서 Role별 쿠버네티스 클러스터 목록 조회하기
-Role 셀렉터에서 본인에게 부여된 Role 중 하나를 선택하면, 선택된 Role에 권한이 부여되어 있는 K8s Cluster 목록을 확인할 수 있습니다.
 
+### 에이전트에서 Role별 쿠버네티스 클러스터 목록 조회하기
+
+Role 셀렉터에서 본인에게 부여된 Role 중 하나를 선택하면, 선택된 Role에 권한이 부여되어 있는 K8s Cluster 목록을 확인할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2025-02-17 오전 11.39.08.png]()</div>
 *Multi-Agent &gt; Kubernetes*
 </p>
 
 ### 에이전트에서 Kubeconfig 설정 가이드 확인하기
+
 Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig 설정** 이 필요합니다.
 
 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 Setting 페이지로 진입, Kubernetes 탭을 선택하면 Kubeconfig File 저장 경로를 관리하고, Kubeconfig 설정 커맨드를 복사할 수 있습니다.
 
 이후 사용하시는 터미널에서 복사한 커맨드를 붙여넣고 실행합니다.
-
 <p align="center">
 <div>[스크린샷 2025-02-17 오전 11.37.12.png]()</div>
 *Multi-Agent &gt; Setting &gt; Kubernetes*
 </p>
 
 ## SAC**[10.2.8~]**
+
 ### 에이전트에서 서버 접속하기
+
 1. Role 드롭다운에서 Role을 선택하면, 선택한 Role로 접근할 수 있는 서버 목록을 확인할 수 있습니다.
 2. 서버를 선택하고 우클릭하여 컨텍스트 메뉴를 열고, Open Connection With &gt; 터미널 Tool을 선택합니다.
 3. 필요 시 Account 정보를 입력하고 `Open` 버튼을 누릅니다.
 4. 선택한 터미널 툴로 서버에 접속할 수 있습니다.
 
 <Callout type="info">
- **OS 권한 모달** 
+**OS 권한 모달**
 * 최초 1회에 한하여, 선택한 터미널 툴에 대한 OS 권한을 요구합니다. `허용`하지 않으면 터미널 툴을 열 수 없습니다.
 * 최초 1회에 한하여 System Event에 대한 OS 권한을 요구합니다. 허용할 경우 세션 끊김 등에 대한 이벤트를 알림 영역에서 받을 수 있습니다.
 </Callout>
 
 <Callout type="info">
- **세션 종료 전 알람** 
+**세션 종료 전 알람**
 * 세션 종료 5분 전 종료 알람이 Multi Agent 내에서 발생합니다.
 * Multi Agent가 종료되거나 종료 시점이 도래하는 경우, 별도의 세션 종료 알람 없이 연결된 세션이 종료됩니다.
 </Callout>
 
 
-
 ### 에이전트에서 서버 접근 권한 요청하기
+
 서버에 접속 시 필요한 계정의 권한이 없는 경우, Multi Agent에서 직접 서버 접근 권한(Server Privilege Request)을 요청할 수 있습니다.
 
 1. `Servers` 탭에서 권한을 요청할 서버를 선택하고 마우스 오른쪽 버튼을 클릭하여 컨텍스트 메뉴를 엽니다.<br/>
@@ -124,15 +136,14 @@ Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig �
     * 이 버튼을 클릭하면 QueryPie 웹 페이지의 권한 요청 화면으로 이동하며, 이전에 선택했던 Role, 서버 그룹, 서버, 계정 정보가 자동으로 입력되어 있습니다.<br/>
 
 <Callout type="info">
- **유의 사항** 
+**유의 사항**
 * QueryPie 관리자가 `Admin &gt; General &gt; Workflow Configurations` 설정에서 `Server Privilege Request`를 비활성화한 경우, 에이전트의 `Request Server Privilege` 버튼도 비활성화됩니다.
 </Callout>
 
 
-
 ### 에이전트에서 3rd Party Terminal Tool 설정 관리하기
-Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
 
+Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2025-04-13 오후 11.53.01.png]()</div>
 *Multi-Agent &gt; Setting &gt; Servers*
@@ -145,6 +156,7 @@ Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습�
     * Do not user the tool : 툴 사용을 비활성화 합니다. 서버 목록의 컨텍스트 메뉴에서 툴이 숨겨집니다.
 
 ## 에이전트에서 둘 이상의 Host 사용하기
+
 1. Settings &gt; Hosts 에서 `+ Add New Host` 버튼을 클릭한 뒤 새로운 Host의 도메인을 입력하고 저장합니다.
 2. 새로운 Host 등록이 성공한 경우 Toast로 안내됩니다. 목록에서 새로운 Host가 추가된 것을 확인하고, 우상단의 `X` 버튼을 눌러 설정 페이지를 나갑니다.
     1. Host 목록에서 원하는 Host를 클릭하여 바로 전환할 수 있습니다.
@@ -155,38 +167,35 @@ Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 �
 </Callout>
 
 ## Multi Agent 설정 초기화하기
-1. 시스템 트레이 또는 메뉴 바에서 Multi Agent 아이콘(또는 항목)을 클릭한 뒤, 표시되는 메뉴에서 'Reset All Settings'를 선택합니다.
 
+1. 시스템 트레이 또는 메뉴 바에서 Multi Agent 아이콘(또는 항목)을 클릭한 뒤, 표시되는 메뉴에서 'Reset All Settings'를 선택합니다.
 <p align="center">
 <div>[스크린샷 2025-04-14 오전 12.07.19.png]()</div>
 * Status Bar Item (MacOS)*
 </p>
-
 <p align="center">
 <div>[스크린샷 2025-04-14 오전 12.12.07.png]()</div>
 *Application Menu (MacOS)*
 </p>
-
-
 
 1. 또는 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 설정 페이지로 진입하고, Hosts 탭 하단의 Reset All Settings 버튼을 클릭합니다.
 2. 확인 모달에서 Reset 버튼을 클릭하면 로컬 폴더에 저장된 모든 설정이 초기화됩니다.
 3. Multi Agent 최초 설정 (최초 Host 등록) 페이지로 진입됩니다.
 
 ## Multi Agent 로그 추출하기
+
 Multi-agent 사용 중 문제 발생시 다음의 절차를 따라서 로그를 추출해주세요.
 
 ### GUI
+
 <p align="center">
 <div>[image (13).png]()</div>
 *MacOS*
 </p>
-
 <p align="center">
 <div>[image (12).png]()</div>
 *Windows*
 </p>
-
 1. 메뉴바(MacOS) 또는 시스템 트레이(Windows)에서 Multi-agent 아이콘을 클릭하고, 메뉴에서 Diagnostic Tools &gt; Enable Tracing 을 클릭합니다.
     1. 로그 레벨을 Trace로 변경하며, UI에서는 Disable Tracing 으로 항목이 변경됩니다.
 2. 문제를 재현합니다.
@@ -194,36 +203,34 @@ Multi-agent 사용 중 문제 발생시 다음의 절차를 따라서 로그를 
 4. 추출된 로그 파일을 전달해 주시면 됩니다.
 
 ### macOS
-1. 에이전트 종료 후 터미널에서 다음 커맨드를 실행합니다.
 
+1. 에이전트 종료 후 터미널에서 다음 커맨드를 실행합니다.
 ```
 QPMA_TRACE=1 open -a QueryPieMultiAgent
 ```
 
 1. 문제를 재현합니다.
 2. 아래의 폴더를 압축하여 전달해주세요.
-
 ```
 ~/.querypie-multi-agent
 ```
 
 ### Windows
-1. 에이전트 종료 후 터미널에서 다음 커맨드를 실행합니다.
 
+1. 에이전트 종료 후 터미널에서 다음 커맨드를 실행합니다.
 ```
 set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
 ```
 
 1. 문제를 재현합니다.
 2. 아래의 폴더를 압축하여 전달해주세요.
-
 ```
 %USERPROFILE%\.querypie-multi-agent
 ```
 
 
-
 ## 관리자를 위한 제약사항 문서
+
 관리자를 위한 Multi Agent 제약사항 문서는 별도의 관리자 가이드 문서를 참고해 주세요.
 
 [https://docs.querypie.com/ko/querypie-manual/10.2.0/multi-agent-1](https://docs.querypie.com/ko/querypie-manual/10.2.0/multi-agent-1)

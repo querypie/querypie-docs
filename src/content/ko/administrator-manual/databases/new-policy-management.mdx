@@ -1,15 +1,16 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 기존 QueryPie DAC은 Data Access, Data Masking, Sensitive Data. Ledger Table Management 과 같은 데이터 정책을 제공하고 있습니다. 그러나 이러한 정책을 각 커넥션마다 개별적으로 설정하고, 각 테이블과 컬럼마다 규칙을 적용해야 합니다. 그리고 정책에 대해 가져오기 및 내보내기 기능을 제공하지 않습니다.
 
 10.2.6 부터 이러한 불편에 대한 개선을 위해 새로운 정책 관리 기능을 제공합니다. 태그기반 정책 적용 기능을 통해 DBMS의 path와 태그를 매핑한 뒤 정책을 적용하면 태그에 의해 동적으로 정책이 할당될 수 있습니다. 테이블에 할당된 태그를 통해 특정 테이블만 접근가능하도록 설정할 수 있습니다.
 
 ## 새로운 정책 관리기능 사용하기
+
 새로운 정책 관리기능을 사용하기 위해서는 먼저 기능을 활성화 해야 합니다.
 
 General &gt; Company management &gt; Security 의 하위 항목중 DB Connection Security에서 New DAC Policy Management 를 `Enable`로 설정합니다. (기본값 Disable)<br/>
-
 <p align="center">
 <div>[image-20250307-114537.png]()</div>
 *Enable New DAC Policy Management*

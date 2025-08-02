@@ -1,9 +1,11 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 QueryPie 관리자가 BigQuery 커넥션 인증 방식을 OAuth 2.0으로 설정한 경우 접속할 때 본인의 Google 계정으로 접속할 수 있습니다.
 
 ## Google 계정으로 로그인하기
+
 1. QueryPie 사용자 페이지의 Database 항목 아래의 커넥션 목록에서 BigQuery 커넥션를 선택합니다.<br/>(관리자로 부터 접근이 허용되어야 커넥션 목록에서 볼 수 있습니다.)<br/>
 2. `Connect` 버튼을 누르면 표시되는 팝업 창에서 로그인에 사용할 Google 계정을 선택합니다.
 3. 서비스로 로그인하는 것에 대한 안내 화면에서 “계속”을 선택합니다.<br/>
@@ -11,17 +13,17 @@ QueryPie 관리자가 BigQuery 커넥션 인증 방식을 OAuth 2.0으로 설정
 5. 잠시 기다리면 접속이 완료됩니다.
 
 ## Refresh token 재설정하기
+
 <Callout type="info">
-OAuth 인증 방식은 사용자가 로그인할 때 access token과 refresh token을 발급받습니다. 이후 access token의 기한이 만료되면 refresh token을 사용해서 access token을 재발급 받습니다. refresh token은 각 클라이언트에 저장됩니다. refresh token도 만료가 있을 수 있고 여러가지 원인에 의해 클라이언트에 저장된 refresh token이 유효하지 않은 상황이 발생할 수 있습니다. 이럴 때 클라이언트에 저장되어 있는 refresh token을 삭제하고 재 발급을 받을 필요가 있습니다. 
+OAuth 인증 방식은 사용자가 로그인할 때 access token과 refresh token을 발급받습니다. 이후 access token의 기한이 만료되면 refresh token을 사용해서 access token을 재발급 받습니다. refresh token은 각 클라이언트에 저장됩니다. refresh token도 만료가 있을 수 있고 여러가지 원인에 의해 클라이언트에 저장된 refresh token이 유효하지 않은 상황이 발생할 수 있습니다. 이럴 때 클라이언트에 저장되어 있는 refresh token을 삭제하고 재 발급을 받을 필요가 있습니다.
 </Callout>
 
 사용자 페이지의 “Database”에 접근 가능한 OAuth 인증 설정이 된 BigQuery 커넥션을 선택하면 아래 그림과 같이 `Reset Token` 버튼이 있습니다. 이 버튼을 클릭하면 클라이언트에 저장된 기존 토큰이 삭제되어 OAuth 인증의 처음(Google 계정의 서비스로 로그인) 부터 다시 진행 할 수 있습니다.
-
 <p align="center">
 <div>[image-20250226-020846.png]()</div>
 *사용자 페이지 BigQuery 커넥션의 Reset Token 버튼*
 </p>
 
 <Callout type="info">
-`Reset Token` 버튼은 저장된 토큰을 삭제만 하고 인증단계를 진행하지 않습니다. OAuth 인증단계는 `Connect` 버튼을 눌러야 시작됩니다. 
+`Reset Token` 버튼은 저장된 토큰을 삭제만 하고 인증단계를 진행하지 않습니다. OAuth 인증단계는 `Connect` 버튼을 눌러야 시작됩니다.
 </Callout>

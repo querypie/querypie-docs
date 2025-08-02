@@ -1,22 +1,22 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 수많은 서버를 그룹화하여 접속 가능한 계정 및 정책을 한 번에 적용할 수 있습니다. 목적에 따라 서버 그룹을 만든 후 일괄적으로 정책을 편리하게 관리할 수 있으며 이렇게 그룹화한 서버 그룹 권한을 개별 유저 또는 유저 그룹에 한 번에 부여할 수 있습니다.
 
 <Callout type="info">
-서버 그룹 등록에 필요한 각 리소스들을 사전에 등록해 주시는 것을 권장합니다. 
+서버 그룹 등록에 필요한 각 리소스들을 사전에 등록해 주시는 것을 권장합니다.
 1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates ** 
 2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations** 
 </Callout>
 
 
-
 ## 서버 그룹 생성하기
+
 <p align="center">
 <div>[image-20250123-113012.png]()</div>
 *Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Create Server Group*
 </p>
-
 
 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴로 이동합니다.
@@ -32,11 +32,12 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-
 ## 서버 그룹 생성/수정하기
+
 아래 정보를 입력하여 서버 그룹을 생성하실 수 있습니다. 생성 후 일부 항목은 수정이 가능합니다.
 
 ### 1. 기본 정보 입력 및 서버를 Tag 로 추가하기
+
 <p align="center">
 <div>[image-20240902-045749.png]()</div>
 </p>
@@ -46,6 +47,7 @@ import { Callout } from 'nextra/components'
 * Server Tags : 서버 그룹으로 묶고 싶은 서버의 태그를 지정하여 유동적으로 서버 그룹의 대상을 관리할 수 있습니다. 태그를 통해 추가된 서버는 서버 테이블에서 수동으로 삭제를 할 수 없으며, Server Tags의 태그를 수정하여야 합니다. 
 
 ### 2. Server를 수동으로 추가하기
+
 <p align="center">
 <div>[image-20241028-003400.png]()</div>
 </p>
@@ -64,6 +66,7 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
 </Callout>
 
 ### 3. Accounts 등록하기
+
 <p align="center">
 <div>[Screenshot 2025-07-27 at 10.33.48 PM.png]()</div>
 </p>
@@ -117,14 +120,14 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
             * Hashicorp Vault의 SSH CA 엔진(Signed SSH certificates)을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, vault ca 엔진에서 발급한 Public Key를 접속할 서버의 TrustedUserCAKeys에 추가해야 합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates)를 참조 해주세요.
 
 <Callout type="info">
- **공통 항목: Account** 
+**공통 항목: Account**
 * 개별 계정을 구분할 수 있는 이름을 입력합니다. 
     1. `{username}`를 입력할 경우, 권한을 받은 이용자가 QueryPie로 서버 접속시, QueryPie의 username으로 치환됩니다.
     2. username이 email 형태로 되어있는 경우, `{username_prefix}`로 입력하면 QueryPie의 username의 접두사(@ 앞 부분)으로 치환됩니다.
 </Callout>
 
 <Callout type="info">
- **참고: Vault Role Path** 
+**참고: Vault Role Path**
 Vault SSH-OTP 및 SSH-CA 인증 방식에서는 Vault Role Path 필드에 Vault에 설정된 특정 Role에 접근하기 위한 전체 API 경로(예: 엔진경로/creds/롤이름)를 입력해야 합니다.
 </Callout>
 
@@ -140,7 +143,7 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 </Callout>
 
 <Callout type="info">
- **Vault에서 Role을 설정할 때, ** 
+**Vault에서 Role을 설정할 때, **
 *  **Default extensions** 에 아래 값을 입력해야 합니다.
     * 
 *  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
@@ -149,6 +152,7 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 </Callout>
 
 ### 4. Server Group Owner 등록하기
+
 <p align="center">
 <div>[image-20250512-105127.png]()</div>
 </p>
@@ -161,8 +165,8 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 4. `Save Changes` 버튼을 통해 저장합니다. 
 
 
-
 ### 5. Server Group Member 등록하기
+
 <p align="center">
 <div>[image-20250512-105142.png]()</div>
 </p>

@@ -9,8 +9,9 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 *  **Agent 기반 연결 ** : QueryPie Agent를 통해 서드 파티 SQL 도구로 연결 가능
 
 ### Custom Data Source 커넥션 생성
+
 <Callout type="important">
- **주의** 
+**주의**
 * ID/PW, SSL/TLS 세팅은 Custom Data Source에서 관리자가 할 수 없습니다.
     * 필요할 경우, 사용자가 서드 파티 SQL 도구에서 해당 인증 정보를 직접 입력해야 합니다.
 * 클러스터 없는 단순 구조의 수동 등록만 생성 가능합니다.
@@ -47,6 +48,7 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
         * “Are you sure you want to delete“ 문구가 나온 후 `OK`버튼을 클릭하여 커넥션을 삭제합니다.
 
 ### Access Control 설정
+
 1.  **권한 부여 모달로 이동** 
     * Admin &gt; Databases &gt; DB Access Control &gt; Access Control을 선택합니다.
     * 권한을 부여하고 싶은 사용자를 클릭하여 Detail 페이지로 넘어갑니다.
@@ -58,7 +60,6 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
     * 선택 완료 후 `Grant` 버튼을 눌러 권한을 부여합니다. 
 
 
-
 1.  **권한 회수** 
     * 기본적으로는 사용자가 신청한 Expiration Date까지 권한이 유지됩니다.
     * 사용자에게 부여된 권한을 중간에 회수하려면 Privilege를 Revoke 합니다.
@@ -66,6 +67,7 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
         * Detail 페이지에서 권한을 회수하기 위한 커넥션을 선택한 뒤 `Revoke` 버튼을 클릭합니다.
 
 ### Audit Log 확인
+
 1.  **DB Access History ** 
     * Admin &gt; Audit &gt; DB Access History를 선택합니다.
     * 로그 확인
@@ -77,7 +79,7 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
     * 관리자가 Custom Data Source 커넥션 정보를 생성 / 수정 / 삭제 한 경우 기록이 남습니다.
 
 <Callout type="important">
- **주의** 
+**주의**
 * SQL Tool에서 인증 정보가 틀렸지만 접속을 시도할 경우에도 'Connect success, Disconnect success'로 기록됩니다.
 * 벤더별 복구 프로토콜로 인해, 접속 허용 시간이 지난 후 접속이 시도되면 연결이 끊기면서 로그가 두 번 이상 기록될 수 있습니다.
 </Callout>

@@ -1,10 +1,11 @@
 import { Callout } from 'nextra/components'
 
 <Callout type="info">
-본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다. 본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다. 
+본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다. 본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다.
 </Callout>
 
 ## Prerequisites
+
 * Okta IAM 서비스의  **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
 * Okta 관리자 콘솔(Okta Admin Console)에 접근하여 App을 만들고 사용자/그룹을 앱에 할당할 수 있는 권한이 요구됩니다. 
     *  **최소 필요 권한** 
@@ -20,17 +21,17 @@ import { Callout } from 'nextra/components'
 * [Provisioning 활성화 하기](Provisioning 활성화 하기) 단계를 먼저 수행해야 합니다. 
 
 
-
 <Callout type="info">
 Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인 경우, [Okta 연동하기](Okta 연동하기) 페이지 내 절차대로 대신 진행하여 주시기 바랍니다. SCIM과 동시에 활성화 시, 사용자 동기화에 영향을 받을 수 있으므로 유의하시기 바랍니다.
 </Callout>
 
 ## Integration Steps
-상위 사전 작업이 모두 마무리되면 이하의 순차에 따라 SCIM 연동을 수행합니다.
 
+상위 사전 작업이 모두 마무리되면 이하의 순차에 따라 SCIM 연동을 수행합니다.
 ---
 
 ### Okta 커스텀 SCIM앱 생성
+
 <p align="center">
 <div>[image-20240723-050205.png]()</div>
 *Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML*
@@ -58,17 +59,17 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 11. [Okta에서 QueryPie 애플리케이션 연동 정보 설정](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376100/Draft+Okta#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95) 및 [QueryPie에서 Okta 연동 및 동기화 설정](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376100/Draft+Okta#QueryPie%EC%97%90%EC%84%9C-Okta-%EC%97%B0%EB%8F%99-%EB%B0%8F-%EB%8F%99%EA%B8%B0%ED%99%94-%EC%84%A4%EC%A0%95)을 따라 SSO 연동을 마무리한 뒤, 이후 스텝을 진행하시기 바랍니다.
 
 
-
 ---
 
 ### Okta-QueryPie Provisioning 연동
+
 <p align="center">
 <div>[image-20240723-054522.png]()</div>
 *Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration*
 </p>
 
 <Callout type="info">
-여기에서 [Provisioning 활성화 하기](Provisioning 활성화 하기) 단계를 먼저 수행해야 합니다. 
+여기에서 [Provisioning 활성화 하기](Provisioning 활성화 하기) 단계를 먼저 수행해야 합니다.
 </Callout>
 
 1. Okta에서 생성한 SCIM App의 Provisioning 탭으로 이동합니다. 
@@ -83,10 +84,10 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 5. 하단의 `Save` 버튼을 클릭하여 연결 설정을 저장합니다. 
 
 
-
 ---
 
 ### SCIM API 활성화 및 체크
+
 <p align="center">
 <div>[image-20240430-034915.png]()</div>
 *Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App*
@@ -105,7 +106,7 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 8. 하단의 `Apply updates now` 버튼을 클릭합니다. 
 
 <Callout type="important">
- **일부 Attribute 추가 싱크 방법** 
+**일부 Attribute 추가 싱크 방법**
 1. 쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다: 
     1. secondEmail 
     2. mobilePhone
@@ -129,18 +130,18 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 </Callout>
 
 
-
 ---
 
 ### 사용자 Provisioning 체크
+
 1. SCIM 앱으로 다시 돌아가서 Assignments 탭에서 `Assign` 버튼의 옵션을 통해 사용자를 할당합니다. 
     1.  **Assign to People**  : 사용자 개별 단위로 할당 
     2.  **Assign to Groups**  : 사용자 그룹 단위로 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Users로 이동하여 사용자가 정상 푸시되었는지 확인합니다. 
-
 ---
 
 ### 그룹 Provisioning 체크
+
 <p align="center">
 <div>[image-20240430-062231.png]()</div>
 *Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups*
@@ -152,5 +153,5 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Groups로 이동하여 그룹이 정상 푸시되었는지 확인합니다. 
 
 <Callout type="important">
-Okta 등 타사 Identity Provider(IdP)에서 푸시하여 생성한 Auth Provider가 QueryPie가 아닌 그룹의 경우, 그룹의 삭제를 해당 IdP에서 unlink 후 삭제 처리하시는 것을 권장드립니다. 본 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다. 
+Okta 등 타사 Identity Provider(IdP)에서 푸시하여 생성한 Auth Provider가 QueryPie가 아닌 그룹의 경우, 그룹의 삭제를 해당 IdP에서 unlink 후 삭제 처리하시는 것을 권장드립니다. 본 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다.
 </Callout>

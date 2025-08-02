@@ -1,33 +1,33 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 Allowed Zones 페이지에서는, 사용자의 QueryPie 웹 콘솔 접근 및 DB 접속을 허용할 IP 대역을 통제하기 위해 사전에 Allowed Zone을 등록 및 관리합니다.
 
 
-
 ## 등록된 Allowed Zone 목록 조회하기
+
 Allowed Zone의 목록을 조회하기 위해서는 Administrator &gt; General &gt; Company Management &gt; Allowed Zones 페이지로 접근합니다. Allowed Zone 이름으로 검색이 가능합니다.
 
 <Callout type="info">
- **Default**  Allowed Zone은 QueryPie 설치 시에 기본으로 생성되며 모두 허용(0.0.0.0/0) 값을 가집니다.
+**Default**  Allowed Zone은 QueryPie 설치 시에 기본으로 생성되며 모두 허용(0.0.0.0/0) 값을 가집니다.
 </Callout>
-
 <p align="center">
 <div>[image-20240714-053215.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Allowed Zones*
 </p>
 
 
-
 ## Allowed Zone 상세 정보 조회하기
-Allowed Zones 목록에서 상세 정보를 조회하려는 아이템을 클릭하면 Drawer가 열립니다.
 
+Allowed Zones 목록에서 상세 정보를 조회하려는 아이템을 클릭하면 Drawer가 열립니다.
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 9.15.48.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail*
 </p>
 
 ### Allowed Zone 할당 내역 확인
+
 Drawer 내 Mapped List by Allowed Zones 영역에서 Allowed Zone이 할당된 DB 커넥션 및 사용자를 확인할 수 있습니다.
 
 * Database 탭: 해당 Allowed Zone으로 접근 통제 중인 DB 커넥션 목록
@@ -40,10 +40,9 @@ Drawer 내 Mapped List by Allowed Zones 영역에서 Allowed Zone이 할당된 D
 </Callout>
 
 
-
 ## Allowed Zone 추가하기
-Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 생성 모달이 출력됩니다.
 
+Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 생성 모달이 출력됩니다.
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 9.58.06.png]()</div>
 *Create Allowed Zone 모달*
@@ -54,10 +53,9 @@ Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면
     * 예) 1.1.1.1, 2.2.2.2
 
 
-
 ## Allowed Zone 삭제하기
-Allowed Zone 목록에서 삭제하려는 Allowed Zone을 체크박스로 선택하면 `Delete` 버튼이 노출됩니다. 버튼을 클릭하고 확인 모달에서 `Delete` 버튼을 클릭하여 삭제를 완료합니다.
 
+Allowed Zone 목록에서 삭제하려는 Allowed Zone을 체크박스로 선택하면 `Delete` 버튼이 노출됩니다. 버튼을 클릭하고 확인 모달에서 `Delete` 버튼을 클릭하여 삭제를 완료합니다.
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 10.01.12.png]()</div>
 *삭제 옵션 활성화*

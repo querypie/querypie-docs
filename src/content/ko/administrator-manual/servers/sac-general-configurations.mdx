@@ -5,14 +5,16 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 ## Overview
+
 Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 관리할 수 있는 설정 페이지입니다. 로그인 실패 임계치 설정, 세션 타임아웃, 안전하지 않은 프로토콜 제어 등 서버 연결 보안의 핵심 요소를 설정할 수 있습니다. 이를 통해 관리자는 조직의 보안 요구사항에 맞게 서버 환경을 구성하고 잠재적 위협으로부터 시스템을 보호할 수 있습니다.
 
 ## 서버 커넥션 보안 설정
+
 서버 접근 제어에 적용되는 보안 설정을 관리합니다.
 
 ### 일반 설정
-기본적인 보안 설정을 관리합니다.
 
+기본적인 보안 설정을 관리합니다.
 <p align="center">
 <div>[Screenshot 2025-07-22 at 3.08.16 PM.png]()</div>
 </p>
@@ -53,7 +55,7 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
     * 이 기능이 활성화되면, 사용자가 서버에 접속할 때 여기에 설정된 Allowed Zones의 IP 대역이 표시됩니다.
 
 <Callout type="info">
- **유의 사항** 
+**유의 사항**
 Allowed Zones는 넓은 범위의 허용 IP 대역을 의미합니다. 따라서 표시된 IP 대역 내에 있더라도, 관리자가 데이터 정책(DP/Policy) 등을 통해 추가적인 IP 제한을 설정한 경우 최종 접근이 거부될 수 있습니다.
 </Callout>
 
@@ -82,17 +84,17 @@ RDP Server Agent가 설치되지 않은 Windows Server에 접속할 경우 아�
         * 서버 접속 시, 시스템이 자동으로 서버에 임시 계정을 생성합니다.
 
 ### 서버 권한 신청의 기본 정책 설정
+
 Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 접근 정책을 관리합니다.
 
 <Callout type="important">
- **주의** 
- **Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다. 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
+**주의**
+**Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다. 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
 </Callout>
 
 <Callout type="info">
 사용자는 Server Access Request를 통하여 서버에 대한 Direct Permission 을 할당받을 수 있습니다. 자세한 내용은 [Server Access Request 요청하기](Server Access Request 요청하기)를 참고해주세요.
 </Callout>
-
 <p align="center">
 <div>[Screenshot 2025-07-22 at 3.09.36 PM.png]()</div>
 </p>
@@ -116,17 +118,17 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 *  **Require Minute-Based Requests : ** Workflow에서 서버 관련 권한 신청시 분 단위 신청 허용. 미설정시 일단위로 권한을 신청. 체크된 경우, 서버 접속 권한 신청시 분 단위 권한 신청
 
 ### 서버 특권 신청 정책 설정
+
 사용자가 서버 특권(Server Privilege)을 요청할 때 적용되는 정책을 설정합니다.
 
 <Callout type="important">
- **주의** 
- **Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다. 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
+**주의**
+**Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다. 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
 </Callout>
 
 <Callout type="info">
 사용자는 Server Privilege Request를 통하여 서버에 대한 특권을 할당받을 수 있습니다. 자세한 내용은 [Server Privilege Request 요청하기](Server Privilege Request 요청하기)를 참고해주세요.
 </Callout>
-
 <p align="center">
 <div>[Screenshot 2025-07-22 at 3.15.31 PM.png]()</div>
 </p>

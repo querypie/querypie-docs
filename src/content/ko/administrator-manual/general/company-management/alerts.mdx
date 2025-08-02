@@ -1,8 +1,8 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
-Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공합니다. 주요 이상 징후에 대한 트리거 조건을 미리 설정함으로써 정책 위반사항을 실시간으로 탐지할 수 있습니다. 잠재적인 보안 사고를 신속하게 식별하고 해결할 수 있으며, 사전 정의된 임계값을 초과하는 조회 또는 유출 등 민감한 정보를 보호할 수 있습니다.
 
+Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공합니다. 주요 이상 징후에 대한 트리거 조건을 미리 설정함으로써 정책 위반사항을 실시간으로 탐지할 수 있습니다. 잠재적인 보안 사고를 신속하게 식별하고 해결할 수 있으며, 사전 정의된 임계값을 초과하는 조회 또는 유출 등 민감한 정보를 보호할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2024-07-28 오후 10.33.20.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts*
@@ -11,10 +11,10 @@ Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공�
 이 문서에서는 다음과 같은 내용을 다룹니다.
 
 ## 지원하는 알림 유형
+
 공통 알림을 비롯하여 DB 접근에 특화된 알림과 시스템 접근에 특화된 알림을 지원합니다.
 
 서비스 별로 지원하는 알림 유형은 다음과 같습니다.
-
 <table data-table-width="760" data-layout="center" local-id="56383138-c970-42e6-869a-a74e4c473292">
 <colgroup>
 <col/>
@@ -24,13 +24,13 @@ Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공�
 <tbody>
 <tr>
 <th>
- **서비스 구분** 
+**서비스 구분**
 </th>
 <th>
- **알림 타입명** 
+**알림 타입명**
 </th>
 <th>
- **설명** 
+**설명**
 </th>
 </tr>
 <tr>
@@ -170,7 +170,7 @@ K8s API Request
 </table>
 
 <Callout type="info">
-11.1.0 부터 New DAC Policy Managment 기능이 활성화 된 경우 아래와 같은 알림 유형을 사용할 수 있습니다. 
+11.1.0 부터 New DAC Policy Managment 기능이 활성화 된 경우 아래와 같은 알림 유형을 사용할 수 있습니다.
 * New Request - DB Policy Exception Request<br/>DB Policy Exception Request 는 Unmasking과 Restriced Data Access 두가지 유형이 있으나 구분해서 알림 생성을 할 수는 없습니다.
 * Data Access
     * Column Data Masking : 신 정책 관리에서 생성한 Column Data Masking 정책에 걸려 제한된 마스킹 된 상태로 조회된 이벤트 
@@ -180,8 +180,8 @@ K8s API Request
 </Callout>
 
 ## 알림 생성하기
-Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알림을 생성합니다. `OK` 버튼을 클릭하여 알림 생성을 완료합니다.
 
+Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알림을 생성합니다. `OK` 버튼을 클릭하여 알림 생성을 완료합니다.
 <p align="center">
 <div>[스크린샷 2024-07-29 오후 2.17.28.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert*
@@ -200,6 +200,7 @@ Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알�
     1. 선택한 채널로, 입력한 메시지 템플릿 내용을 테스트 메시지로 전송합니다.
 
 ### New Request
+
 새로운 결재 요청 등록 알림
 
 *  **Request Type**  : Workflow 요청 유형
@@ -210,17 +211,23 @@ Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알�
     * Urgent Mode Only : 사후 승인 요청 건만 알림 발송
 
 <Callout type="info">
- **10.2.2 슬랙 메시지 템플릿 변경 사항** 
+**10.2.2 슬랙 메시지 템플릿 변경 사항**
+
 * Slack &gt; API 방식의 Channel로 전송되는 알림 메시지에서 `{{assignees}}` 에 대한 Slack 사용자 멘션이 지원됩니다.
 * Request Type 선택에 따라 지원되는 템플릿 변수가 상이합니다. 자세한 내용은 별도의  **New Request &gt; 요청 타입별 템플릿 변수**  문서를 참고해주세요.
- **10.2.8 슬랙 메시지 템플릿 변경 사항** 
+
+**10.2.8 슬랙 메시지 템플릿 변경 사항**
+
 * Sensitive Data Access 이벤트에서 슬랙 메시지에 쿼리를 포함하여 전송하도록 개선되면서 `{{queryPreview}}` 변수가 추가되었습니다. 슬랙 특성상 3000자 이상의 메시지 발송 요청을 하면 에러 반환 없이 메시지 발송이 실패하므로 queryPreview를 통해 볼 수 있는 쿼리는 100자로 제한되어 있습니다.
- **11.1.0 Request Type 변경사항** 
+
+**11.1.0 Request Type 변경사항**
+
 * Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있다면 Alert의 Request Type에 DB Policy Exception Request 를 사용할 수 있습니다.
 * DB Policy Exception Request 는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알람이 발송되도록 합니다. 
 </Callout>
 
 ### Unusual Login Attempt
+
 IP 대역에 따른 사용자 로그인 행위 알림
 
 *  **Action Count**  : 알림 발송할 인증 실패 횟수
@@ -235,6 +242,7 @@ IP 대역에 따른 사용자 로그인 행위 알림
 </Callout>
 
 ### SQL Execution
+
 정의된 조건에 해당하는 SQL 구문 실행 알림
 
 *  **Rows**  : 알림 발송 기준 행 수
@@ -250,20 +258,25 @@ IP 대역에 따른 사용자 로그인 행위 알림
 
 <Callout type="info">
 예 1) 100건 이상의 대량 데이터 조회시 알림 발송
+
 * Rows : 100
 * SQL Events : `SELECT`
+
 예 2) 데이터 변경 및 삭제 시도시 알림 발송
+
 * Rows : 1
 * SQL Events : `UPDATE`, `DELETE`
 </Callout>
 
 ### Prevented SQL Execution
+
 권한 없는 구문 실행 알림
 
 *  **Connection**  : 쿼리 실행 시 알림 발송할 대상 커넥션 (10.2.2 이후 버전 - 다중 선택)
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 ### DB Connection Attempt
+
 DB 접속 성공 또는 실패 알림
 
 *  **Alert Trigger Condition**  : 알림 발송 조건 (복수 선택)
@@ -287,6 +300,7 @@ DB 접속 성공 또는 실패 알림
 </Callout>
 
 ### Sensitive Data Access
+
 정의된 조건에 해당하는 민감데이터 조회 알림
 
 *  **Criteria**  : 알림 발송 기준을 선택합니다.
@@ -306,14 +320,18 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 
 <Callout type="info">
 예1) 민감레벨 High 로 설정된 개인정보 데이터 조회시 알림 발송
+
 * Criteria : Sensitive Level
 * Sensitive Level : High
+
 예2) 특정 데이터베이스에 포함된 개인정보 데이터 조회시 알림 발송
+
 * Criteria : Policy
 * Policy : * `{사전에 등록된 Sensitive Data 정책}`* 
 </Callout>
 
 ### SQL Export
+
 정의된 조건에 해당하는 SQL 내보내기 실행 알림
 
 *  **Rows**  : 알림 발송 기준 행 수
@@ -331,6 +349,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 </Callout>
 
 ### Server Connection Attempt
+
 서버 접속 성공 또는 실패 알림
 
 *  **Alert Trigger Condition**  : 알림 발송 조건
@@ -348,6 +367,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 </Callout>
 
 ### Restrict Command
+
 서버/서버 그룹별 차단된 명령어 실행 알림
 
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
@@ -356,6 +376,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 ### Specific Command
+
 특정 명령어 실행 알림
 
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
@@ -367,6 +388,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
     * RegExr : 정규표현식에 해당하는 명령어 실행시 알림 발송
 
 ### File Transfer (SFTP)
+
 SFTP를 통한 파일 전송 실행 알림
 
 *  **Alert Trigger Condition**  : 알림 발송 조건 (다중 선택)
@@ -378,6 +400,7 @@ SFTP를 통한 파일 전송 실행 알림
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 ### K8s API Request**[10.2.2]**
+
 쿠버네티스 API 요청 알림
 
 *  **Result**  : API 요청 결과 (다중 선택)
@@ -392,12 +415,12 @@ SFTP를 통한 파일 전송 실행 알림
     * All Resources (*) : 추후 추가될 모든 리소스 종류를 대상으로 알림 조건 생성
 
 ### Data Access**[11.1.0]**
+
 <Callout type="info">
 Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있고 관련 정책들이 존재해야 사용할 수 있습니다.
 </Callout>
 
 Data Access 알림은 Column Data Masking, Table Access Restriction, Column Access Restriction, Sensitive Data Access Monitoring 의 네가지  **policy type** 을 선택할 수 있습니다.<br/>
-
 <p align="center">
 <div>[image-20250727-222007.png]()</div>
 </p>
@@ -427,26 +450,25 @@ Data Access 알림은 Column Data Masking, Table Access Restriction, Column Acce
         * 최대 1440까지 입력 가능합니다
 
 ## 알림 상세 정보 조회 및 수정
-Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 `Save Changes` 버튼을 클릭하면 수정 내용이 반영됩니다.
 
+Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 `Save Changes` 버튼을 클릭하면 수정 내용이 반영됩니다.
 <p align="center">
 <div>[스크린샷 2024-07-29 오후 3.42.17.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)*
 </p>
 
 
-
 ## 알림 발송 내역 조회
-Alerts 목록에서 발송 내역을 조회하려는 알림을 선택합니다. 이후 상세 페이지 내 Log에서 내역을 조회할 수 있습니다.
 
+Alerts 목록에서 발송 내역을 조회하려는 알림을 선택합니다. 이후 상세 페이지 내 Log에서 내역을 조회할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2024-07-29 오후 3.42.23.png]()</div>
 *Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)*
 </p>
 
 
-
 ## 알림 삭제하기
+
 기존에 등록된 알림을 삭제하는 두 가지 경로를 제공합니다.
 
 1. Alerts 페이지에서 삭제하기 : Alerts 목록 내 삭제하고자 하는 알림을 체크박스로 선택하면 `Delete` 버튼이 노출됩니다. 버튼을 클릭하면 확인 모달이 노출되며, `OK` 버튼을 클릭하여 삭제를 완료합니다.

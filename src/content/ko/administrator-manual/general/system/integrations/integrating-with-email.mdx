@@ -1,6 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 Email 연동을 통해 다음과 같은 주요기능을 지원합니다.
 
 * 비밀번호 초기화 Email 발송 : 사용자의 비밀번호 초기화를 위한 메일을 발송합니다.
@@ -10,6 +11,7 @@ Email 연동을 통해 다음과 같은 주요기능을 지원합니다.
 Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP 서버와 연동하는 방법을 제공합니다.
 
 ## Email Integration 설정
+
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 SMTP 정보를 입력할 수 있는 팝업이 표시됩니다. <br/> 
@@ -29,22 +31,26 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
 5. `OK` 버튼을 누르고 설정을 저장합니다. 
 
 ## Email Integration 설정 수정
+
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Edit 버튼을 누릅니다.<br/> 
 4. 변경이 필요한 부분을 수정하고 저장합니다.
 
 ## Email 발송내역 확인
+
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. Sent Email History 목록을 확인합니다.<br/>이 목록에 저장되는 email 발송 이력은 30일 동안 보관되고 30일 이전의 내용은 삭제됩니다.<br/> 
 
 ## Email Integration 설정 삭제
+
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Delete 버튼을 누릅니다.<br/>SMTP 설정을 사용하는 Alert, MFA 등의 설정이 존재하는 경우 SMTP 설정을 삭제할 수 없습니다.<br/>먼저 관련 설정을 모두 삭제해야 삭제 가능합니다.<br/>
 
 ## 사용자 비밀번호 초기화 메일 발송
+
 <Callout type="info">
 사용자가 직접 자신의 비밀 번호를 초기화 하도록 비밀번호 초기화 메일을 발송하려면 Email Integration 설정이 먼저 필요합니다.
 </Callout>
@@ -55,6 +61,7 @@ Email을 통해 사용자가 자신의 비밀번호를 초기화하도록 하는
 * [사용자가 자신의 비밀 번호를 직접 초기화](Email을 통한 사용자 비밀 번호 초기화)
 
 ## 2차인증 수단으로 Email 사용
+
 <Callout type="info">
 QueryPie 10.2.2부터 Google OTP와 더불어 Email을 2차 인증 수단으로 사용할 수 있게 되었습니다. Email Integration 설정이 먼저 필요합니다.
 </Callout>

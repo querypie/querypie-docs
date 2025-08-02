@@ -1,15 +1,15 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 DB Connections 페이지에서 QueryPie에 등록되어 있는 DB 커넥션 목록을 조회하고 상세 설정을 할 수 있습니다.
 
 이 문서에서 설명하는 상세 기능은 아래와 같습니다.
 
 
-
 ## DB 커넥션 수동으로 등록하기
-DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭하여 수동 등록 페이지로 진입합니다.
 
+DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭하여 수동 등록 페이지로 진입합니다.
 <p align="center">
 <div>[Screenshot 2025-04-10 at 11.33.36 AM.png]()</div>
 *Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here*
@@ -18,7 +18,6 @@ DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭�
 10.2.8 버전부터 관리자는 커넥션 생성을 위한 커넥션 선택 화면에서 Click here 링크를 통해 QueryPie가 지원하는 모든 벤더의 기능을 한눈에 확인할 수 있는 “Supported Features” 모달을 사용할 수 있습니다.
 
 이 모달은 주요 기능 항목(Web Editor, Access Control, Audit Log, Privilege Control, Data Policy, Proxy, DML Snapshot, Ledger Management)으로 구성되어 있어, 각 벤더별로 지원 여부를 직관적으로 확인할 수 있도록 도와줍니다.
-
 <p align="center">
 <div>[image-20240725-062325.png]()</div>
 *Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection*
@@ -49,8 +48,8 @@ DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭�
 4. DB Connections 페이지 내 목록에서 신규 DB 커넥션의 생성을 확인할 수 있습니다.
 
 ### 클러스터 구성으로 DB 커넥션 등록하기
-Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클러스터로 구성되어 있으면 Cluster 모드가 활성화됩니다.
 
+Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클러스터로 구성되어 있으면 Cluster 모드가 활성화됩니다.
 <p align="center">
 <div>[image-20240725-062536.png]()</div>
 *Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details*
@@ -70,15 +69,14 @@ Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클�
             * ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속가능
 
 <Callout type="info">
- **Cluster 모드는 무엇인가요?** 
+**Cluster 모드는 무엇인가요?**
 일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다. 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다. Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, ** 부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여** 할 수 있습니다.
 </Callout>
 
 
-
 ## DB 커넥션 목록 조회하기
-관리자 콘솔 내 Databases 설정 &gt; DB Connections 페이지에서 현재 QueryPie에 등록된 DB 커넥션 목록을 확인할 수 있습니다.
 
+관리자 콘솔 내 Databases 설정 &gt; DB Connections 페이지에서 현재 QueryPie에 등록된 DB 커넥션 목록을 확인할 수 있습니다.
 <p align="center">
 <div>[image-20240714-055800.png]()</div>
 *Administrator &gt; Databases &gt; Connection Management &gt; DB Connections*
@@ -99,10 +97,9 @@ Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클�
         * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
 
 
-
 ## DB 커넥션 상세 정보 조회 및 설정하기
-DB Connections 페이지에서 상세 정보를 조회하려는 아이템을 클릭하면 상세 페이지로 진입합니다.
 
+DB Connections 페이지에서 상세 정보를 조회하려는 아이템을 클릭하면 상세 페이지로 진입합니다.
 <p align="center">
 <div>[Screenshot 2025-04-10 at 11.37.08 AM.png]()</div>
 *Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details*
@@ -111,16 +108,16 @@ DB Connections 페이지에서 상세 정보를 조회하려는 아이템을 클
 10.2.8부터 상세 정보를 조회하면 해당 커넥션이 지원하는 기능 목록을 Supported Featuresd에서 확인할 수 있습니다.
 
 ### Accessible Users 조회하기
-DB 커넥션 상세 페이지 우상단 `Accessible Users` 버튼을 클릭하면 Drawer가 열리고, 해당 커넥션에 접근가능한 사용자 목록을 조회할 수 있습니다.
 
+DB 커넥션 상세 페이지 우상단 `Accessible Users` 버튼을 클릭하면 Drawer가 열리고, 해당 커넥션에 접근가능한 사용자 목록을 조회할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 10.33.40.png]()</div>
 *Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users*
 </p>
 
 ### DB 커넥션 정보 조회 및 수정하기
-DB 커넥션 상세 페이지 내 Connection Information 영역에서 생성 시 입력한 정보를 조회하고 수정할 수 있습니다.
 
+DB 커넥션 상세 페이지 내 Connection Information 영역에서 생성 시 입력한 정보를 조회하고 수정할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 10.32.48.png]()</div>
 *Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information*
@@ -147,6 +144,7 @@ Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활�
 </Callout>
 
 ### 참고. Secret Store 설정 방법
+
 Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항목이 다르게 표시됩니다.
 
 * `Secret Engine` = K/V 설정시, 커넥션 정보 페이지에서 Username / Password 입력 항목이 표시됩니다.
@@ -159,13 +157,13 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
     * Path 의 형태는 `prod_db/creds/mysql_role` 형태로 입력할 수 있습니다.
 
 
-
 ## 추가 설정하기
+
 페이지 하단의 탭 영역에서 DB 커넥션에 대한 추가 설정이 가능합니다. 항목별 설명을 참고하세요.
 
 ### Additional Information
-해당 DB 커넥션에 적용될 세부 정책을 입력합니다. `Save Changes` 버튼으로 저장합니다.
 
+해당 DB 커넥션에 적용될 세부 정책을 입력합니다. `Save Changes` 버튼으로 저장합니다.
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 6.08.08.png]()</div>
 *Additional Information 탭*
@@ -194,20 +192,23 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 * `Description` : 해당 커넥션에 대한 설명을 입력할 수 있습니다.
 
 <Callout type="info">
- **Proxy Usage ** 
+**Proxy Usage **
+
 Proxy Usage를 활성화 하면 아래와 같이 두가지 선택사항이 표시됩니다.
 <p align="center">
 <div>[image-20241222-134235.png]()</div>
 *Proxy Usage의 옵션*
 </p>
+
 * Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다.
 * Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
+
 QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다. QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다. 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화한 뒤 암호를 고정하여 사용할 수 있으며, Fixed Credential for Agent는 Oracle, PostgreSQL, MongoDB에 한해서만 가능합니다.
 </Callout>
 
 ### SSL/SSH Setting
-체크박스를 통해 SSL 또는 SSH 사용 여부를 활성화하고, 하단 드롭다운에서 기등록된 설정 정보를 선택합니다. `Save Changes` 버튼으로 저장합니다.
 
+체크박스를 통해 SSL 또는 SSH 사용 여부를 활성화하고, 하단 드롭다운에서 기등록된 설정 정보를 선택합니다. `Save Changes` 버튼으로 저장합니다.
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 6.08.33.png]()</div>
 *SSL/SSH Setting 탭*
@@ -220,32 +221,32 @@ SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문�
 </Callout>
 
 ### Connection Owner
-Connection Owner 탭에서 `Add Connection Owner` 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) `Save Changes` 버튼으로 저장합니다.
 
+Connection Owner 탭에서 `Add Connection Owner` 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) `Save Changes` 버튼으로 저장합니다.
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 6.08.51.png]()</div>
 *Connection Owner 탭*
 </p>
 
 <Callout type="info">
-Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다. 
+Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다.
 </Callout>
 
 ### Tags
-Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. `Add Tag` 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 `Save Changes` 버튼으로 저장합니다.
 
+Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. `Add Tag` 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 `Save Changes` 버튼으로 저장합니다.
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 11.16.18.png]()</div>
 *Tags 탭*
 </p>
 
 ### Privilege Setting
+
 DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정하는 기능입니다.
 
 <Callout type="info">
 해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 [Security](Security) 내  **DB 커넥션 보안 설정**  문서를 참고하세요.
 </Callout>
-
 <p align="center">
 <div>[스크린샷 2024-07-26 오후 3.47.30.png]()</div>
 *Privilege Setting 탭*
@@ -256,9 +257,8 @@ DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정�
 3. `Save Changes` 를 통해 해당 정보를 저장하여 설정을 마무리합니다.
 
 <Callout type="error">
-BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다. 
+BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다.
 </Callout>
-
 <p align="center">
 <div>[스크린샷 2024-07-30 오후 11.19.58.png]()</div>
 *QueryPie Web &gt; Databases &gt; Connections*

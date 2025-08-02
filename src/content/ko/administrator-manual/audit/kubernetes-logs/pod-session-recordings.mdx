@@ -1,7 +1,9 @@
 ## Overview
+
 조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 중 Pod Exec 등의 연결 세션 내 행위를 기록합니다. 관리자는 영상 재생을 통하여 사용자가 운영 컨테이너 쉘에서의 수행 이력을 모니터링할 수 있습니다.
 
 ## Pod Session Recordings 조회하기
+
 <p align="center">
 <div>[image-20240721-082407.png]()</div>
 *Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings*
@@ -30,6 +32,7 @@
         1. 현재는 Proxy만 기입됩니다.
 
 ## Pod Session Recordings 내역 재생하기
+
 1. 각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이 가능합니다.
 2. Action At의 링크를 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를 보여주는 모달이 나타납니다. 
 3. 녹화된 파일의 크기가 700MB를 초과여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. 

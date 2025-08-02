@@ -5,13 +5,15 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 ## Overview
+
 사용자가 Workflow를 통해 SQL Request를 요청할 때 해당 쿼리에 대해 DBMS에서 제공하는 실행 계획(Explain 구문)을 사용하여 쿼리에 대한 제한적인 절차 정보를 확인할 수 있습니다. 이 기능은 DBMS에 종속된 기능이므로 Workflow의 SQL Request 작성할 때 커넥션에 해당하는 DBMS 마다 차이가 있을 수 있습니다.
 
 <Callout type="info">
-실행계획이란?<br/>데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다. 
+실행계획이란?<br/>데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다.
 </Callout>
 
 ## SQL Request 작성 및 실행계획(Explain) 수행하기
+
 QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : [SQL Request 요청하기](https://chequer.atlassian.net/l/cp/6hUBcwmi))
 
 1.  MySQL Connection 및 Database 선택 <br/>쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다. 
@@ -19,7 +21,6 @@ QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합�
 <Callout type="important">
 Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다.
 </Callout>
-
 <p align="center">
 <div>[image-20241029-234721.png]()</div>
 </p>
@@ -29,7 +30,6 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
     2. 결과 표시 방식 선택
         1.  **Table**  : 테이블 형태로 결과가 표시됩니다.
         2.  **JSON**  : JSON 형태로 결과가 표시됩니다. 
-
 <p align="center">
 <div>[image-20241029-235845.png]()</div>
 </p>
@@ -47,18 +47,18 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
     2. JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. `{JSON}` 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/> <br/> <br/>내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.
 
 ## 기타 참고사항
+
 1. 결재자(Approver)의 실행계획(Explain)결과 확인<br/>결재자는 Explain Results 탭에서 첨부된 실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.
 
 <Callout type="important">
-결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다. 
+결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다.
 </Callout>
 
 1. MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br/>MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다. 
-
 |  **MySQL 5.6.3 이전**  |  **MySQL 5.6.3 이후**                         |
 | -------------------- | ------------------------------------------- |
 | SELECT               | SELECT , DELETE , INSERT , REPLACE , UPDATE |
 
 <Callout type="important">
-optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다. 
+optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다.
 </Callout>

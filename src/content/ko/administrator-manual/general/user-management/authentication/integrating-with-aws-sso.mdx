@@ -1,7 +1,9 @@
 ## Overview
+
 QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 애플리케이션 및 SAML 2.0을 통해 사용자 연동을 지원합니다. 사용자를 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있습니다.
 
 ## AWS IAM Identity Center에서 QueryPie를 애플리케이션으로 추가
+
 <p align="center">
 <div>[AWS-SSO-01-20230317-044219.png]()</div>
 </p>
@@ -19,15 +21,14 @@ QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 �
 8. 제출 버튼을 클릭하여 저장합니다.
 
 
-
 ## QueryPie 연동을 위한 속성 매핑 설정
+
 <p align="center">
 <div>[AWS-SSO-06-20230317-064023.png]()</div>
 </p>
 
 1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집 으로 이동합니다.
 2. 애플리케이션 내 사용자 속상과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
-
 |  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
 | --------------------- | ------------------------------------------------ | ------------ |
 | Subject               | $`{user:email}`                                  | emailAddress |
@@ -39,6 +40,7 @@ QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 �
 `변경 사항 저장` 버튼을 클릭하여 저장합니다.
 
 ## QueryPie 에서 AWS IAM Identity Center 연동 설정
+
 <p align="center">
 <div>[image-20240723-072112.png]()</div>
 *Administrator &gt; General &gt; User Management &gt; Authentication *
@@ -51,6 +53,7 @@ QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 �
 5. `Save Changes` 버튼을 클릭하여 저장합니다.
 
 ## QueryPie에서 SAML 로그인
+
 <p align="center">
 <div>[image-20240723-073353.png]()</div>
 </p>

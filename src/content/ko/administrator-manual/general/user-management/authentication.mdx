@@ -1,11 +1,12 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시키는 동시에 안전한 통합 인증 환경을 제공하는 QueryPie 내의 필수 기능입니다. 조직에서 사용하는 계정 시스템을 연동하여 조직 내의 사용자 및 그룹을 QueryPie로 동기화할 수 있습니다. 관리자는 조직 내의 입사자 및 퇴사자를 한 곳에서 관리할 수 있습니다. SSO 통합은 인증 프로세스를 간소화하며 사용자가 조직 내에서 사용 중인 인증 방식으로 QueryPie를 통해 및 데이터베이스 및 시스템에 접근할 수 있도록 합니다. 해당 문서에서는 SSO 연동 방법과 및 주요 고려 사항에 대해 설명합니다.
 
 
-
 ## IdP 연동 지원 범위
+
 현재 QueryPie 에서 지원하는 IdP 서비스는 다음과 같습니다.
 
 * [Okta](Okta 연동하기)
@@ -16,8 +17,8 @@ SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시
 * Custom Identity Provider : API URL 입력만 가능합니다.
 
 
-
 ## 계정 시스템 동기화를 통한 사용자 관리
+
 * Administrator &gt; General &gt; User Management &gt; Authentication 메뉴에서 외부 계정 시스템 연동을 설정할 수 있습니다.
 * 현재는 연동 설정이 완료되면 Authentication 타입을 변경할 수 없습니다.
 * 계정 시스템 내에 신규 입사자가 발생하는 경우, 동기화를 진행하면 QueryPie 사용자로 추가됩니다.
@@ -29,22 +30,22 @@ Authentication 타입 변경이 필요한 경우에는 QueryPie 기술지원팀 
 </Callout>
 
 
-
 ## 계정 시스템 동기화를 통한 그룹 관리
+
 * Okta, OneLogin, LDAP 의 경우, 계정 시스템 내의 그룹을 QueryPie 그룹으로 동기화할 수 있습니다.
 * 동기화된 그룹은 QueryPie 내에서 변경 및 삭제가 불가능합니다.
 * Okta, OneLogin 타입의 경우, QueryPie 애플리케이션에 그룹을 할당하여 동기화할 수 있습니다.
 * LDAP 타입의 경우, Group 동기화 옵션을 사용할 수 있습니다. 자세한 내용은 상세 연동 가이드 페이지를 참고합니다.
 
 
-
 ## 외부 계정 시스템 및 QueryPie 자체 계정 동시에 사용하기
+
 * 외부 계정 시스템 연동 기능을 사용하는 경우라도, QueryPie 자체적으로 사용자, 그룹을 추가하여 사용할 수 있습니다.
 * 단, Username 과 Email 항목은 고유 값으로 중복하여 등록할 수 없습니다. 
 
 
-
 ## IDP 연동 환경에서의 로컬 계정 보안 강화
+
 외부 계정 시스템(IdP)과 QueryPie 로컬 계정을 함께 사용하는 하이브리드 인증 환경에서도 일관된 보안 정책을 유지할 수 있도록 Multi-Factor Authentication (MFA) 기능이 지원됩니다
 
 Okta, Onelogin, SAML 등 외부 IdP 연동 여부와 관계없이, QueryPie에 직접 생성된 모든 로컬 계정에 MFA를 독립적으로 설정하고 적용할 수 있습니다.
@@ -52,5 +53,6 @@ Okta, Onelogin, SAML 등 외부 IdP 연동 여부와 관계없이, QueryPie에 �
 * 외부 IdP를 사용하는 환경에서도 관리자 계정을 포함한 모든 로컬 계정에 MFA를 설정하여 무단 액세스로부터 시스템을 안전하게 보호합니다.
 
 ### 설정 방법
+
 1.  **Administrator &gt; General &gt; Authentication**  메뉴로 이동합니다.
 2.  **Two Factor Authentication**  섹션에서 원하는 MFA 옵션을 활성화하고 구성합니다.

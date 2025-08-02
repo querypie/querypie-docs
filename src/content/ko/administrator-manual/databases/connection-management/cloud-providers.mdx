@@ -1,14 +1,15 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
-QueryPie에서는 클라우드 제공자에 등록된 DB 리소스를 연동하고, 주기적으로 동기화할 수 있습니다.
 
+QueryPie에서는 클라우드 제공자에 등록된 DB 리소스를 연동하고, 주기적으로 동기화할 수 있습니다.
 <p align="center">
 <div>[image-20240714-055708.png]()</div>
 *Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers*
 </p>
 
 ## Cloud Provider 조회하기
+
 1. Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 테이블 좌측 상단의 검색란을 통해 클라우드 프로바이더명을 조건으로 검색이 가능합니다.
 3. 테이블 우측 상단의 새로고침 버튼을 통해 Cloud Provider 목록을 최신화할 수 있습니다.
@@ -22,6 +23,7 @@ QueryPie에서는 클라우드 제공자에 등록된 DB 리소스를 연동하�
 5. 각 행을 클릭하면 클라우드 프로바이더 세부 정보 조회가 가능합니다.
 
 ## Cloud Provider 생성하기
+
 1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
 3. 이하의 가이드를 참고하여 클라우드 프로바이더를 생성합니다:
@@ -30,6 +32,7 @@ QueryPie에서는 클라우드 제공자에 등록된 DB 리소스를 연동하�
     3. [Google Cloud 에서 DB 리소스 동기화](Google Cloud에서 DB 리소스 동기화)
 
 ## Cloud Provider 삭제하기
+
 <p align="center">
 <div>[image-20241103-065154.png]()</div>
 </p>
@@ -44,11 +47,11 @@ Cloud Provider 삭제 시 해당 클라우드 프로바이더를 통해 동기�
 </Callout>
 
 ## Dry Run 활용하기
+
 <Callout type="info">
- **클라우드 동기화 Dry Run 이란? ** 
+**클라우드 동기화 Dry Run 이란? **
 클라우드 동기화 수행 프로세스를 테스트하고 검증하는 역할로, 동기화 결과가 무엇인지 미리 확인할 수 있도록 합니다. 기존 연동 정보를 변경하는 경우, 사용자의 입력 실수에 의해 예상치 못한 결과가 발생할 수 있습니다. 이런 문제를 미리 예방하기 위해 사용자는 기존 정보를 변경한 뒤 “Dry Run”을 수행하여 입력한 내용에 대해 미리 테스트해 볼 수 있습니다.
 </Callout>
-
 <p align="center">
 <div>[image-20241101-001430.png]()</div>
 </p>

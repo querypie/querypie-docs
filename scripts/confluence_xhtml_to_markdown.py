@@ -449,54 +449,116 @@ class MultiLineParser:
         # Return the Markdown lines as a list of strings
         return self.markdown_lines
 
+    def append_empty_line_unless_first_child(self, node):
+        # Convert generator to list to check length
+        children_list = list(node.parent.children)
+        if len(children_list) == 1:
+            if self._debug_markdown:
+                self.markdown_lines.append(f'<{node.name} the-only-child=true>\n')
+            pass # The only child means the first child.
+        elif len(children_list) > 2:
+            first_sibling = children_list[0]
+            if node == first_sibling:
+                if self._debug_markdown:
+                    self.markdown_lines.append(f'<{node.name} first-sibling=true>\n')
+                pass
+            elif self.markdown_lines[-1] == '\n':
+                if self._debug_markdown:
+                    self.markdown_lines.append(f'<{node.name} first-sibling=false [-1]({repr(self.markdown_lines[-1])}) == "\\n">\n')
+                pass
+            else:
+                if self._debug_markdown:
+                    self.markdown_lines.append('<empty-line>\n')
+                    self.markdown_lines.append(f'<{node.name} empty-line>\n')
+                else:
+                    self.markdown_lines.append('\n')
+
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"MultiLineParser: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            # Do not append unexpected NavigableString to markdown_lines.
+            if node.parent.name == '[document]' and len(node.text.strip()) == 0:
+                pass
+            else:
+                logging.warning(f"MultiLineParser: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+                self.markdown_lines.append(f"MultiLineParser: Unexpected NavigableString {repr(node)} of from {ancestors(node)} in {INPUT_FILE_PATH}")
             return
 
         logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
         attr_name = node.get('name', '(none)')
-        if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-            # Headings can exist in a <Callout> block.
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
-            self.markdown_lines.append('\n')
-        elif node.name in ['ac:structured-macro'] and attr_name in ['tip', 'info', 'note', 'warning']:
+        if node.name in [
+            '[document]',  # Start processing from the body of the document
+            'html', 'body',
+            'ac:layout', 'ac:layout-section', 'ac:layout-cell',  # Skip layout tags
+        ]:
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
+            # Headings can exist in a <Callout> block.
+            self.append_empty_line_unless_first_child(node)
+            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append('\n')
+        elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node).applicable:
+            self.append_empty_line_unless_first_child(node)
+            self.markdown_lines.extend(StructuredMacroToCallout(node).as_markdown)
+        elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node).applicable:
+            self.append_empty_line_unless_first_child(node)
+            self.markdown_lines.extend(AdfExtensionToCallout(node).as_markdown)
         elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
             self.convert_structured_macro_code(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
             self.convert_structured_macro_expand(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['view-file']:
             self.convert_structured_macro_view_file(node)
+        elif node.name in ['ac:structured-macro'] and attr_name in ['toc']:
+            # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
+            logging.info("Skipping TOC macro")
+        elif node.name in ['ac:structured-macro'] and attr_name in ['children']:
+            logging.info(f"Unsupported {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            self.markdown_lines.append(f'(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)\n')
+        elif node.name in ['blockquote']:
+            self.append_empty_line_unless_first_child(node)
+            markdown = []
+            for child in node.children:
+                markdown.extend(MultiLineParser(child).as_markdown)
+            lines = ''.join(markdown).splitlines()
+            for to_quote in lines:
+                self.markdown_lines.append(f'> {to_quote}')
         elif node.name in [
             'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
             'ac:adf-content',  # Child of <ac:adf-extension>
         ]:
             for child in node.children:
                 self.convert_recursively(child)
-        elif node.name in ['p']:
+        elif node.name == 'table':
+            native_markdown = TableToNativeMarkdown(node)
+            if native_markdown.applicable:
+                self.markdown_lines.extend(native_markdown.as_markdown)
+            else:
+                self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
+        elif node.name in ['p', 'div']:
+            self.append_empty_line_unless_first_child(node)
+            child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                    child_markdown.append(SingleLineParser(child).as_markdown)
                 elif SingleLineParser(child).applicable:
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                    child_markdown.append(SingleLineParser(child).as_markdown)
                 else:
                     if self._debug_markdown:
-                        self.markdown_lines.append(f'<{child.name}>')
-                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                        child_markdown.append(f'<{child.name}>')
+                    child_markdown.extend(MultiLineParser(child).as_markdown)
                     if self._debug_markdown:
-                        self.markdown_lines.append(f'</{child.name}>')
-            self.markdown_lines.append('\n')
+                        child_markdown.append(f'</{child.name}>')
             # Add an empty line after paragraphs
-            # self.markdown_lines.append('\n')
+            self.markdown_lines.append(''.join(child_markdown).strip() + '\n')
+        elif node.name in ['span']:
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['br']:
             # <br/> is a line break. Just keep using <br/>.
             # Append '\n' for <br/> in MultiLineParser.
             self.markdown_lines.append("<br/>\n")
         elif node.name in ['ul', 'ol']:
+            self.append_empty_line_unless_first_child(node)
             self.convert_ul_ol(node)
         elif node.name in ['ac:image']:
             self.convert_image(node)
@@ -504,20 +566,11 @@ class MultiLineParser:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['hr']:
             self.markdown_lines.append(f'---\n')
-        elif node.name in ['blockquote']:
-            markdown = []
-            for child in node.children:
-                markdown.extend(MultiLineParser(child).as_markdown)
-            lines = ''.join(markdown).splitlines()
-            for to_quote in lines:
-                self.markdown_lines.append(f'> {to_quote}')
         else:
             logging.warning(f"MultiLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(f'[{node.name}]')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'[{node.name}]\n')
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append('\n')
 
     def convert_ul_ol(self, node):
         self.list_stack.append(node.name)
@@ -528,9 +581,12 @@ class MultiLineParser:
                 counter += 1
             else:
                 if isinstance(child, NavigableString):
-                    logging.debug(f'Skip extracting text from NavigableString({repr(child)}) under <{node.name}>')
+                    if len(child.text.strip()) > 0:
+                        logging.warning(f'Skip extracting NavigableString({repr(child)}) of <{node.name}> from {ancestors(node)} in {INPUT_FILE_PATH}')
+                    else:
+                        logging.debug(f'Skip extracting NavigableString({repr(child)}) of <{node.name}> from {ancestors(node)} in {INPUT_FILE_PATH}')
                 else:
-                    logging.warning(f'Skip extracting text from <{child.name}> under <li>')
+                    logging.warning(f'Skip extracting <{child.name}> of <{node.name}> from {ancestors(node)} in {INPUT_FILE_PATH}')
         self.list_stack.pop()
         return
 
@@ -542,8 +598,7 @@ class MultiLineParser:
             prefix = f"{indent}{counter}. "
 
         text = SingleLineParser(node).as_markdown
-        self.markdown_lines.append(f'{prefix}{text}')
-        self.markdown_lines.append('\n')
+        self.markdown_lines.append(f'{prefix}{text}\n')
 
         # Handle nested lists
         for child in node.children:
@@ -597,20 +652,16 @@ class MultiLineParser:
             alt_text = image_filename
 
         # Add the image in Markdown format
-        self.markdown_lines.append(f'<p align="{align}">')
-        self.markdown_lines.append('\n')
+        self.markdown_lines.append(f'<p align="{align}">\n')
         # TODO(JK): Link will be resolved later
         # self.markdown_lines.append(f"![{alt_text}]({image_filename})")
-        self.markdown_lines.append(f"<div>[{alt_text}]()</div>")
-        self.markdown_lines.append('\n')
+        self.markdown_lines.append(f'<div>[{alt_text}]()</div>\n')
 
         # Add caption if present
         if caption_text:
-            self.markdown_lines.append(f"*{caption_text}*")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'*{caption_text}*\n')
 
-        self.markdown_lines.append(f'</p>')
-        self.markdown_lines.append('\n')
+        self.markdown_lines.append(f'</p>\n')
 
     def convert_structured_macro_code(self, node):
         # Find language parameter and code content
@@ -741,11 +792,9 @@ class TableToNativeMarkdown:
             self.convert_table(node)
         else:
             logging.warning(f"TableToNativeMarkdown: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(f'[{node.name}]')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'[{node.name}]\n')
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append('\n')
 
     def convert_table(self, node):
         table_data = []
@@ -794,12 +843,11 @@ class TableToNativeMarkdown:
                 is_header_row = True
 
         # Convert table data to Markdown
-        markdown_table = self.table_data_to_markdown(table_data)
-        self.markdown_lines.extend(markdown_table)
+        self.table_data_to_markdown(table_data)
 
     def table_data_to_markdown(self, table_data):
         if not table_data or not any(table_data):
-            return ""
+            return
 
         # Determine the number of columns based on the row with the most cells
         num_cols = max(len(row) for row in table_data)
@@ -816,26 +864,20 @@ class TableToNativeMarkdown:
             for i, cell in enumerate(row):
                 col_widths[i] = max(col_widths[i], len(str(cell)))
 
-        # Build the Markdown table
-        md_table = []
-
         # Header row
-        header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |"
-        md_table.append(header_row)
-        md_table.append("\n")
+        header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |\n"
+        self.markdown_lines.append(header_row)
 
         # Separator row
-        separator = "| " + " | ".join("-" * col_widths[i] for i in range(num_cols)) + " |"
-        md_table.append(separator)
-        md_table.append("\n")
+        separator = "| " + " | ".join("-" * col_widths[i] for i in range(num_cols)) + " |\n"
+        self.markdown_lines.append(separator)
 
         # Data rows
         for row in normalized_data[1:]:
-            data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |"
-            md_table.append(data_row)
-            md_table.append("\n")
+            data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |\n"
+            self.markdown_lines.append(data_row)
 
-        return ''.join(md_table)
+        return
 
 
 class TableToHtmlTable:
@@ -862,48 +904,38 @@ class TableToHtmlTable:
         if node.name in ['table', 'thead', 'tbody', 'tfoot', 'tr', 'colgroup']:
             """Convert table node to HTML table markup."""
             attrs = get_html_attributes(node)
-            self.markdown_lines.append(f"<{node.name}{attrs}>")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f"<{node.name}{attrs}>\n")
 
             for child in node.children:
                 if not isinstance(child, NavigableString):
                     self.convert_recursively(child)
 
-            self.markdown_lines.append(f"</{node.name}>")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name in ['th', 'td']:
             attrs = get_html_attributes(node)
-            self.markdown_lines.append(f"<{node.name}{attrs}>")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f"<{node.name}{attrs}>\n")
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
-                    self.markdown_lines.append('\n')
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
                 elif SingleLineParser(child).applicable:
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
                 else:
-                    td = ''.join(MultiLineParser(child).as_markdown)
-                    self.markdown_lines.append(td)
+                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
 
-            self.markdown_lines.append(f"</{node.name}>")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name == 'col':
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
-            self.markdown_lines.append(f"<col{attrs}/>")
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f"<col{attrs}/>\n")
         elif SingleLineParser(node).applicable:
             # <ac:adf-fragment-mark> could be converted.
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(f'[{node.name}]')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'[{node.name}]\n')
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append('\n')
 
 
 class StructuredMacroToCallout:
@@ -957,35 +989,32 @@ class StructuredMacroToCallout:
             # https://nextra.site/docs/built-ins/callout
             # Confluence has broken namings of panels.
             if attr_name == 'tip':  # success
-                self.markdown_lines.append('<Callout type="default">')
+                self.markdown_lines.append('<Callout type="default">\n')
             elif attr_name == 'info':  # info
-                self.markdown_lines.append('<Callout type="info">')
+                self.markdown_lines.append('<Callout type="info">\n')
             elif attr_name == 'note':  # note
-                self.markdown_lines.append('<Callout type="important">')
+                self.markdown_lines.append('<Callout type="important">\n')
             elif attr_name == 'warning':  # error - a broken name
-                self.markdown_lines.append('<Callout type="error">')
+                self.markdown_lines.append('<Callout type="error">\n')
             else:
-                self.markdown_lines.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{attr_name}"> */{"}"}')
+                self.markdown_lines.append(f'<Callout> {"{"}/* <ac:structured-macro ac:name="{attr_name}"> */{"}"}\n')
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append('\n')
 
             for child in node.children:
                 self.markdown_lines.extend(MultiLineParser(child).as_markdown)
 
-            self.markdown_lines.append('</Callout>')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
             parameter = node.find('ac:parameter', {'name': 'panelIconText'})
             rich_text_body = node.find('ac:rich-text-body')
             # https://nextra.site/docs/built-ins/callout
             # Confluence has broken namings of panels.
             if parameter:
-                self.markdown_lines.append(f'<Callout type="info" emoji="{parameter.text}">')
+                self.markdown_lines.append(f'<Callout type="info" emoji="{parameter.text}">\n')
             else:
-                self.markdown_lines.append('<Callout>')
+                self.markdown_lines.append('<Callout>\n')
                 logging.warning(
                     f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
-            self.markdown_lines.append('\n')
 
             if rich_text_body:
                 self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
@@ -993,15 +1022,12 @@ class StructuredMacroToCallout:
                 logging.warning(
                     f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
 
-            self.markdown_lines.append('</Callout>')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append('</Callout>\n')
         else:
             logging.warning(f"StructuredMacroToCallout: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(f'[{node.name}]')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'[{node.name}]\n')
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append('\n')
 
 
 class AdfExtensionToCallout:
@@ -1068,12 +1094,11 @@ class AdfExtensionToCallout:
                 logging.warning(f"No <ac:adf-attribute> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
             if panel_type == 'note':
-                self.markdown_lines.append('<Callout type="important">')
+                self.markdown_lines.append('<Callout type="important">\n')
             else:
-                self.markdown_lines.append('<Callout>')
+                self.markdown_lines.append('<Callout>\n')
                 logging.warning(
                     f'Unexpected panel-type of "{panel_type}" in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
-            self.markdown_lines.append('\n')
 
             adf_content = node.find('ac:adf-content')
             if adf_content:
@@ -1081,32 +1106,19 @@ class AdfExtensionToCallout:
             else:
                 logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
-            self.markdown_lines.append('</Callout>')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:adf-fallback']:
             pass  # Ignore <ac:adf-fallback>
         else:
             logging.warning(f"AdfExtensionToCallout: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            self.markdown_lines.append(f'[{node.name}]')
-            self.markdown_lines.append('\n')
+            self.markdown_lines.append(f'[{node.name}]\n')
             for child in node.children:
                 self.convert_recursively(child)
-            self.markdown_lines.append('\n')
 
 
 class ConfluenceToMarkdown:
     def __init__(self):
-        self.in_table = False
-        self.table_data = []
-        self.current_row = []
-        self.rowspan_tracker = {}
-        self.colspan_tracker = {}
-        self.current_table_row = 0
-        self.is_header_row = False
         self.markdown_lines = []
-        self.list_stack = []
-        self.inside_code_block = False
-        self.code_language = ""
         self._imports = {}
         self._debug_markdown = False
 
@@ -1114,9 +1126,9 @@ class ConfluenceToMarkdown:
     def imports(self):
         markdown = []
         if 'Callout' in self._imports and self._imports['Callout']:
-            markdown.append("import { Callout } from 'nextra/components'")
+            markdown.append("import { Callout } from 'nextra/components'\n")
         if len(markdown) > 0:
-            markdown.append("")  # Add an empty line after imports
+            markdown.append("\n")  # Add an empty line after imports
         return markdown
 
     def add_import(self, module_name, condition=True):
@@ -1126,7 +1138,7 @@ class ConfluenceToMarkdown:
         else:
             self._imports[module_name] = False
 
-    def convert(self, html_content):
+    def as_markdown(self, html_content):
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
         html_content = re.sub(r'\sri:', ' ', html_content)
@@ -1145,93 +1157,11 @@ class ConfluenceToMarkdown:
             self.add_import('Callout')
 
         # Start conversion
-        self.process_node(soup)
+        self.markdown_lines.extend(MultiLineParser(soup).as_markdown)
+        # self.process_node(soup)
 
         # Join all Markdown lines and return
-        return "\n".join(chain(self.imports, self.markdown_lines))
-
-    def process_node(self, node):
-        if isinstance(node, NavigableString):
-            if self._debug_markdown:
-                self.markdown_lines.append(f"TODO(JK): ConfluenceToMarkdown: Unexpected NavigableString {repr(node)} of from {ancestors(node)} in {INPUT_FILE_PATH}")
-            text = node.strip()
-            if text and not self.inside_code_block:
-                if self.in_table:
-                    # Only add text to the current cell if we're in a table
-                    if self.current_row:
-                        if isinstance(self.current_row[-1], str):
-                            self.current_row[-1] += text
-                        else:
-                            self.current_row.append(text)
-                else:
-                    self.markdown_lines.append(text)
-            elif self.inside_code_block:
-                # For code blocks, preserve original text including whitespace
-                self.markdown_lines.append(str(node))
-            return
-
-        tmp = node.get_text(strip=True).splitlines()
-        logging.debug(f"ConfluenceToMarkdown: type={type(node).__name__}, name={node.name}, value={repr(tmp[0] if tmp else '')}")
-
-        if node.name in [
-            '[document]',  # Start processing from the body of the document
-            'html', 'body',
-            'ac:layout', 'ac:layout-section', 'ac:layout-cell',  # Skip layout tags
-        ]:
-            for child in node.children:
-                self.process_node(child)
-        elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
-        elif node.name == 'p':
-            paragraph = ''.join(MultiLineParser(node).as_markdown)
-            paragraph = paragraph.strip() + '\n'  # TODO(JK): Improve this hacking.
-            self.markdown_lines.append(paragraph)
-        elif node.name in ['ul', 'ol']:
-            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name in ['blockquote']:
-            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name == 'table':
-            native_markdown = TableToNativeMarkdown(node)
-            if native_markdown.applicable:
-                self.markdown_lines.append(''.join(native_markdown.as_markdown))
-            else:
-                logging.info(f'ConfluenceToMarkdown: use TableToHtmlTable(node) in {INPUT_FILE_PATH}')
-                self.markdown_lines.append(''.join(TableToHtmlTable(node).as_markdown))
-        elif node.name == 'ac:structured-macro':
-            attr_name = node.get('name', '')
-            if StructuredMacroToCallout(node).applicable:
-                self.markdown_lines.append(''.join(StructuredMacroToCallout(node).as_markdown))
-            elif attr_name in ['code', 'expand', 'view-file']:
-                self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-            elif attr_name in ['toc']:
-                # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
-                logging.debug("Skipping TOC macro")
-            elif attr_name in ['children']:
-                self.markdown_lines.append(f'(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)')
-                pass
-            else:
-                if self._debug_markdown:
-                    self.markdown_lines.append(f'{print_node_with_properties(node)}')
-                # For other macros, we can just log or skip
-                logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-                for child in node.children:
-                    self.process_node(child)
-        elif node.name == 'ac:adf-extension':
-            if AdfExtensionToCallout(node).applicable:
-                self.markdown_lines.append(''.join(AdfExtensionToCallout(node).as_markdown))
-            else:
-                self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name == 'div' or node.name == 'span':
-            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name == 'hr':
-            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        elif node.name == 'ac:image':  # In-Use as 2025-08-01
-            self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
-        else:
-            logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            # Default behavior for other tags: process children
-            for child in node.children:
-                self.process_node(child)
+        return ''.join(chain(self.imports, self.markdown_lines))
 
 
 def main():
@@ -1286,7 +1216,7 @@ def main():
             html_content = f.read()
 
         converter = ConfluenceToMarkdown()
-        markdown_content = converter.convert(html_content)
+        markdown_content = converter.as_markdown(html_content)
 
         with open(args.output_file, 'w', encoding='utf-8') as f:
             f.write(markdown_content)

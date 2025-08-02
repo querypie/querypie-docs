@@ -10,18 +10,20 @@ JIT 권한 획득은 아래와 같은 순서로 이루어집니다.
 4. Owner로 등록된 결재권자가 이용자의 Web App 접속을 승인합니다.
 
 <Callout type="info">
- **안내** 
+**안내**
+
 JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
+
 이 가이드를 따라하려면 QueryPie 관리자 권한 중 Owner 또는 Web App Admin 권한이 필요합니다.
 </Callout>
 
 
-
 # Admin-side
+
 ## 1. 웹 앱 등록하기
+
 1. Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps 메뉴로 진입합니다.
 2. `Create a Web App` 버튼을 클릭하면 웹 앱 등록 페이지로 진입합니다.
-
 <p align="center">
 <div>[스크린샷 2025-04-12 오후 10.56.20.png]()</div>
 </p>
@@ -44,6 +46,7 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 8. `Save` 버튼을 눌러 저장합니다.
 
 ## 2. Web App Owner / Member 등록하기
+
 <p align="center">
 <div>[image-20250513-042540.png]()</div>
 </p>
@@ -59,14 +62,18 @@ JIT(Just-in-Time) 권한 부여에는 아래 두 역할이 있습니다.
 </Callout>
 
 ## 3. 이용자의 JIT Web App 접속 권한 신청
+
 <Callout type="info">
 QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다.
-설치 방법은 아래 매뉴얼을 참고해주세요.
-[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
-[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0) 
-[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0) 
-</Callout>
 
+설치 방법은 아래 매뉴얼을 참고해주세요.
+
+[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#1.-Root-CA-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+
+[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#2.-Extension-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%9B%EA%B8%B0)
+
+[https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0](https://querypie.atlassian.net/wiki/spaces/QM/pages/783417593/WAC+Quickstart#3.-Extension-%EC%84%A4%EC%B9%98-%EB%B0%8F-Host-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+</Callout>
 <p align="center">
 <div>[image-20250513-065134.png]()</div>
 </p>
@@ -75,7 +82,6 @@ QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Ext
 2. 좌측 Role을 클릭하여 “Just In Time Role”을 선택합니다.
 3. 접속하려는 서버를 클릭합니다.
 4. 표시되는 알럿의 “Request Access”를 클릭하여 Workflow로 이동합니다.
-
 
 
 <p align="center">
@@ -101,6 +107,7 @@ JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다
 </Callout>
 
 ## 4. 결재권자의 JIT Web App 접속 권한 요청 승인
+
 <p align="center">
 <div>[image-20250513-072925.png]()</div>
 </p>
@@ -111,8 +118,8 @@ JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다
 4. 상단의 Approve를 클릭합니다.
 
 
-
 ## 5. QueryPie를 통하여 웹 앱 접근하기
+
 <p align="center">
 <div>[image-20250513-073501.png]()</div>
 </p>

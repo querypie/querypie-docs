@@ -5,8 +5,8 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-
 ## 쿼리파이 접근 제어 정책 개요
+
 쿼리파이에서 정의하는 접근 제어 정책은 EABAC(Enhanced Attribute Based Access Control)을 기반으로 동작합니다. EABAC은 쿼리파이 사용자의 역할(Role)과 속성(Attribute)을 기반으로 쿼리파이에 등록된 리소스에 대한 접근을 제어하고 권한 관리를 수행할 수 있는 정책의 통제 방식을 의미합니다. RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based Access Control)의 기능을 결합하여 더욱 유연하고 정교한 접근 제어를 제공합니다. 모든 정책은 All Deny를 전제로 동작합니다.
 
 EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
@@ -14,10 +14,9 @@ EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하
 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 지원하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
 
 
-
 ## 쿠버네티스 정책 YAML 기본 구조
-일부 항목을 제외한 전반 정책 코드에서 와일드카드(“*”) 및 정규표현식([RE2 형식](https://github.com/girishji/re2/wiki/Syntax): `^$` 명시 필수) 패턴을 지원합니다.
 
+일부 항목을 제외한 전반 정책 코드에서 와일드카드(“*”) 및 정규표현식([RE2 형식](https://github.com/girishji/re2/wiki/Syntax): `^$` 명시 필수) 패턴을 지원합니다.
 <table data-table-width="760" data-layout="default" local-id="35831a4b-16f9-461f-96a1-0af983cbf59e">
 <colgroup>
 <col/>
@@ -29,19 +28,19 @@ EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하
 <tbody>
 <tr>
 <th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
- **Category** 
+**Category**
 </th>
 <th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
- **Property** 
+**Property**
 </th>
 <th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
- **Required** 
+**Required**
 </th>
 <th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
- **Description** 
+**Description**
 </th>
 <th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
- **Valid Values** 
+**Valid Values**
 </th>
 </tr>
 <tr>
@@ -89,7 +88,7 @@ O
 O
 </td>
 <td>
-정책의 구체적인 규칙의 허용 또는 거부 여부 지정합니다. 
+정책의 구체적인 규칙의 허용 또는 거부 여부 지정합니다.
 * 각 정책은 이하의 스펙만 허용합니다: 
     * 단일 Allow 
     * 단일 Deny
@@ -102,7 +101,7 @@ O
 </tr>
 <tr>
 <td>
- 
+
 </td>
 <td>
 `resources`
@@ -111,7 +110,7 @@ O
 O
 </td>
 <td>
-접근을 허용/거부할 리소스를 지정합니다. **[와일드카드 및 정규표현식 허용]** 
+접근을 허용/거부할 리소스를 지정합니다. **[와일드카드 및 정규표현식 허용]**
 </td>
 <td>
 `- "cluster:*"`
@@ -120,7 +119,7 @@ O
 </tr>
 <tr>
 <td>
- 
+
 </td>
 <td>
 `subjects`
@@ -140,7 +139,7 @@ O
 </tr>
 <tr>
 <td>
- 
+
 </td>
 <td>
 `actions`
@@ -162,7 +161,7 @@ O
 </tr>
 <tr>
 <td>
- 
+
 </td>
 <td>
 `conditions`
@@ -184,8 +183,8 @@ O
 </table>
 
 
-
 ## Resources 명시 방법
+
 `resources`는 <u>쿠버네티스의 리소스가 아닌</u> 쿼리파이에 등록된 쿠버네티스 클러스터에 대한 리소스를 정의합니다.
 
 1. 해당 `resources` 필드에 대한 정의는 필수입니다. **[required]** 
@@ -207,8 +206,8 @@ O
     * `"cluster:^kubepie-dev-.*$"`
 
 
-
 ## Subjects 명시 방법
+
 `subjects`는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. `subjects`는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.
 
 1. `kubernetesGroups`: **[required]**
@@ -224,8 +223,8 @@ O
         * 와일드카드를 허용합니다. (`"*"`)
 
 
-
 ## Actions 명시 방법
+
 클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다. 각 action에는 `apiGroups`, `resources`, `namespace`, `name`, `verbs` 기입이 필요합니다.
 
 1. `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다. 
@@ -271,8 +270,8 @@ O
         * `verbs: ["*"]`
 
 
-
 ## Conditions 명시 방법
+
 `conditions` 항목에는 `resourceTags`, `userAttributes`, `ipAddresses`를 조건으로 정의할 수 있습니다. **[OPTIONAL]**
 
 * `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. 
@@ -280,8 +279,8 @@ O
 * `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
 
 
-
 ## KAC Policy 예시
+
 ```
 apiVersion: kubernetes.rbac.querypie.com/v1 
 kind: KacPolicy

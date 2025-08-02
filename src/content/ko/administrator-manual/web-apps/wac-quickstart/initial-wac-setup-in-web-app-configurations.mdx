@@ -5,15 +5,14 @@ Web App Configurations 페이지는 10.2.6 또는 그 이상의 버전에서 사
 </Callout>
 
 
-
 Web App Configurations 페이지에서는 WAC 관련 초기 설정을 GUI에서 수행할 수 있습니다.
-
 <p align="center">
 <div>[스크린샷 2025-04-13 오후 10.45.38.png]()</div>
 *Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations*
 </p>
 
 ## WAC Proxy Configurations**[10.2.6~]**
+
 WAC 프록시 서버 구성 후, 서버 설정 정보를 입력합니다. 각 필드에 대한 설명은 아래와 같습니다.
 
 *  **Proxy Host** : WAC 프록시 호스트의 FQDN(정규화된 도메인 이름)을 설정하는 필드입니다.
@@ -23,13 +22,14 @@ WAC 프록시 서버 구성 후, 서버 설정 정보를 입력합니다. 각 �
 *  **Proxy Port** : WAC 프록시 서버의 포트 번호입니다. 기본값은 `7447` 입니다.
 
 <Callout type="info">
- **QueryPie 애플리케이션을 재시작하는 방법** 은 다음과 같습니다.
+**QueryPie 애플리케이션을 재시작하는 방법** 은 다음과 같습니다.
 1. QueryPie가 설치된 EC2 서버에 접속합니다.
 2. 다음 명령어를 실행하여 컨테이너를 종료합니다: `docker compose down`
 3. 다음 명령어를 사용하여 컨테이너를 다시 시작합니다: `docker compose up -d`
 </Callout>
 
 ## QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
+
 WAC Extension 관련 설정을 관리자가 직접 관리할 수 있습니다.
 
 * 기본적으로는 제품 릴리즈 시점의 최신 익스텐션을 다운로드 받을 수 있는 퍼블릭 링크와 호환성 정보가 포함되어 있습니다.
@@ -48,10 +48,10 @@ Current Version, Minimum Required Version 정보는 QueryPie에서 제공하는 
 </Callout>
 
 ### 폐쇄망 환경에서 WAC Extension 배포하기
+
 1. 인터넷 접속 가능한 PC로 WAC Extension을 다운로드 받아둡니다.
 2. 폐쇄망 환경에서 QueryPie &gt; Web App Configurations 페이지로 접속한 뒤 QueryPie Web Secure (Extension) Configurations 섹션에서 `Edit` 버튼을 클릭합니다.
 3. Extension File 옵션에서 `Add by File Upload` 를 선택하고, 다운로드 받았던 익스텐션 파일을 올립니다.<br/>
-
 
 
 1. 따로 전달받은 호환성 정보 변경사항이 없다면, Current Version, Minimum Required Version 정보는 기존 값을 유지합니다.
@@ -59,12 +59,14 @@ Current Version, Minimum Required Version 정보는 QueryPie에서 제공하는 
 3. Extension File 링크가 `https://dl.querypie.com/…` 으로 시작하는 링크에서, 현재 사용 중인 QueryPie Domain 으로 시작하는 링크로 변경된 것을 확인할 수 있습니다.
 
 ### 긴급 패치 Extension 링크 배포하기
+
 1. QueryPie Web Secure (Extension) Configurations 섹션에서 `Edit` 버튼을 클릭합니다.
 2. Extension File 옵션에서 `Add by Link` 를 선택하고, 전달받은 신규 다운로드 링크를 붙여넣습니다.
 3. QueryPie 제조사로부터 전달받은 가이드에 맞추어 호환성 정보 변경사항을 업데이트 합니다. 
 4. `Save` 버튼을 눌러 저장합니다.
 
 ## Watermark Configurations**[10.2.6~]**
+
 Watermark Configurations 섹션에서는 현재 적용된 워터마크 문구 설정을 확인하고, 워터마크 적용 시 관리자가 원하는 문구를 설정할 수 있습니다.
 
 1. 문구 설정을 변경하기 위해서는 `Edit` 버튼을 클릭합니다.
@@ -75,8 +77,8 @@ Watermark Configurations 섹션에서는 현재 적용된 워터마크 문구 �
 6.  **Client IP**  : 페이지에 접속한 클라이언트 IP가 표시됩니다.
 
 ## Root CA Certificate Configurations**[10.2.8~]**
-Root CA Certificate Configurations 섹션에서는 QueryPie에서 기존 사용 중인 Root CA 인증서를 백업하고 복원할 수 있습니다.
 
+Root CA Certificate Configurations 섹션에서는 QueryPie에서 기존 사용 중인 Root CA 인증서를 백업하고 복원할 수 있습니다.
 <p align="center">
 <div>[스크린샷 2025-04-13 오후 10.54.09.png]()</div>
 *Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations &gt; Manage .cer file 모달*
@@ -90,8 +92,10 @@ Root CA Certificate Configurations 섹션에서는 QueryPie에서 기존 사용 
     2. Restore Root CA Certificate Key File : 다운로드 받았던 인증서 파일을 올릴 수 있습니다.
 
 <Callout type="info">
-인증서를 업로드한 뒤에, 변경사항을 적용하기 위해서는  **QueryPie 애플리케이션 재시작이 필요합니다.** 
- **QueryPie 애플리케이션을 재시작하는 방법** 은 다음과 같습니다.
+인증서를 업로드한 뒤에, 변경사항을 적용하기 위해서는  **QueryPie 애플리케이션 재시작이 필요합니다.**
+
+**QueryPie 애플리케이션을 재시작하는 방법** 은 다음과 같습니다.
+
 1. QueryPie가 설치된 EC2 서버에 접속합니다.
 2. 다음 명령어를 실행하여 컨테이너를 종료합니다: `docker compose down`
 3. 다음 명령어를 사용하여 컨테이너를 다시 시작합니다: `docker compose up -d`

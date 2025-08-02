@@ -1,6 +1,7 @@
 import { Callout } from 'nextra/components'
 
 ## Overview
+
 관리자는 Ledger Table Policy 메뉴를 통해 데이터베이스의 테이블 단위로 원장(Ledger)을 설정하여 사용자가 원장 테이블 호출 시에 따른 규칙을 적용할 수 있습니다.
 
 <Callout type="important">
@@ -8,12 +9,12 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 ## 원장 테이블에 승인 규칙 맵핑하기
+
 <Callout type="info">
 원장 테이블 관리를 지원하는 벤더는 MySQL, MongoDB, Oracle, MariaDB, Athena 를 지원합니다.
 </Callout>
 
 DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관리하고자 하는 테이블에 승인 규칙을 맵핑할 수 있습니다. 설정 이후 사용자가 해당 테이블에서 UPDATE 등 수정 쿼리 및 데이터 내보내기를 시도하는 경우, 해당 승인 규칙을 통한 SQL Request를 설정할 수 있습니다.
-
 <p align="center">
 <div>[Screenshot 2024-12-18 at 11.46.38 AM.png]()</div>
 *Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy*
@@ -27,7 +28,6 @@ DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관
 4. `Save` 버튼을 통해 저장합니다.
 
 하나의 DB 커넥션 단위로 Ledger Table Policy 목록에 정책이 생성된 것을 확인할 수 있습니다.
-
 <p align="center">
 <div>[Screenshot 2024-12-18 at 11.47.34 AM.png]()</div>
 *Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt; Details*

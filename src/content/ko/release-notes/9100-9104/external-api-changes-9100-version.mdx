@@ -1,4 +1,5 @@
 ## External API 변경사항 바로가기
+
 * [이전 버전 OpenAPI Specification JSON 참고 문서 (9.9.5 기준)](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%9D%B4%EC%A0%84-%EB%B2%84%EC%A0%84-OpenAPI-Specification-JSON-%EC%B0%B8%EA%B3%A0-%EB%AC%B8%EC%84%9C-(9.9.5-%EA%B8%B0%EC%A4%80))
 * [삭제된 External API](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%82%AD%EC%A0%9C%EB%90%9C-External-API)
 * [추가된 External API](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#%EC%B6%94%EA%B0%80%EB%90%9C-External-API)
@@ -6,7 +7,6 @@
     * [Access Approval API - List of Access Approval](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Access-Approval-API---List-of-Access-Approval)
     * [Approval Rule API - Detail](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Approval-Rule-API---Detail)
     * [Approval API - List of Approval](https://chequer.atlassian.net/wiki/spaces/QB/pages/75104268/9.10.0+Workflow+External+API#Approval-API---List-of-Approval)
-
 
 
 ---
@@ -17,17 +17,17 @@
 :paperclip: [external_9_9_5.json](external_9_9_5.json)
 
 
-
 ---
 
 ## 삭제된 External API
+
 * Approval Rule API
     * Create
     * Update
-
 ---
 
 ## 추가된 External API
+
 * Workflow API (기존 Access Approval API 와 Approval API 를 대체합니다.)
     * [Access Request] Detail
     * [Access Request] Approve
@@ -45,20 +45,20 @@
     * Remove approval rule
     * Detail
     * Edit approval rule
-
 ---
 
 ## 변경된 External API
+
 * Access Approval API
     * List of Access Approval
 * Approval Rule API
     * Detail
 * Approval API
     * List of Approval
-
 ---
 
 ### Access Approval API - List of Access Approval
+
 `GET /api/external/access-approvals`
 
 Request 의 변경사항
@@ -88,7 +88,6 @@ Response 변경사항
 * `connections` 의 `schemaName` 이 삭제되었습니다.
 
 Response 변경 전 예시
-
 ```
 {
   "list": [
@@ -147,7 +146,6 @@ Response 변경 전 예시
 ```
 
 Response 변경 후 예시
-
 ```
 {
   "list": [
@@ -200,10 +198,10 @@ Response 변경 후 예시
 ```
 
 
-
 ---
 
 ### Approval Rule API - Detail
+
 `GET /api/external/approval-rules/{uuid}`
 
 Response 변경사항
@@ -224,7 +222,6 @@ Response 변경사항
 * `lines` 의 `uuid` 가 삭제되었습니다.
 
 Response 변경 전 예시
-
 ```
 {
   "approvalCondition": "MANUAL",
@@ -248,7 +245,6 @@ Response 변경 전 예시
 ```
 
 Response 변경 후 예시
-
 ```
 {
   "createdAt": "2019-08-24T14:15:22Z",
@@ -270,10 +266,10 @@ Response 변경 후 예시
 ```
 
 
-
 ---
 
 ### Approval API - List of Approval
+
 `GET /api/external/approvals`
 
 Response 변경사항
@@ -294,7 +290,6 @@ Response 변경사항
     *  **after : ** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
 
 Response 변경 전 예시
-
 ```
 {
   "list": [
@@ -338,7 +333,6 @@ Response 변경 전 예시
 ```
 
 Response 변경 후 예시
-
 ```
 {
   "list": [

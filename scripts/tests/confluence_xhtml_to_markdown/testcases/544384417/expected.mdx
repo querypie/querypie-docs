@@ -5,6 +5,7 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 ## Overview
+
 QueryPie 보고서는 감사 대응에 필요한 데이터를 보고서 형태로 출력하는 기능입니다.
 
 사용자 및 관리자 현황 및 내역, 보안 설정 내역, DB/서버에 주어진 사용자별 권한 현황 및 이력, DB/서버 접속 및 쿼리/명령어 사용 내역 등을 출력할 수 있습니다.
@@ -14,8 +15,8 @@ QueryPie 보고서는 감사 대응에 필요한 데이터를 보고서 형태�
 </Callout>
 
 ## 보고서 출력 항목 및 필터 지원 사항
-10.2.2 버전 현재 지원하는 보고서 항목 및 필터는 아래의 표를 참고하시기 바랍니다.
 
+10.2.2 버전 현재 지원하는 보고서 항목 및 필터는 아래의 표를 참고하시기 바랍니다.
 <table data-table-width="958" data-layout="center" local-id="cfcbf091-3775-4454-bff4-924bf43e88f4">
 <a id="table-1"></a>
 <colgroup>
@@ -29,22 +30,22 @@ QueryPie 보고서는 감사 대응에 필요한 데이터를 보고서 형태�
 <tbody>
 <tr>
 <th>
- **보고서 유형** 
+**보고서 유형**
 </th>
 <th>
- **대분류** 
+**대분류**
 </th>
 <th>
- **소분류** 
+**소분류**
 </th>
 <th>
- **User / Group** 
+**User / Group**
 </th>
 <th>
- **Resource** 
+**Resource**
 </th>
 <th>
- **기타 필터** 
+**기타 필터**
 </th>
 </tr>
 <tr>
@@ -235,7 +236,7 @@ X
 QueryPie DAC
 </td>
 <td rowspan="2">
-Databases **[added-10.2.2]** 
+Databases **[added-10.2.2]**
 </td>
 <td>
 DB Connection Status<br/>DB 커넥션 현황
@@ -472,16 +473,16 @@ O
 </tr>
 <tr>
 <td>
- *Server Role Status by User * **[deprecated-10.2.2]**<br/> *사용자별 서버 역할 현황* 
+*Server Role Status by User * **[deprecated-10.2.2]**<br/> *사용자별 서버 역할 현황*
 </td>
 <td>
- *O* 
+*O*
 </td>
 <td>
- *O* 
+*O*
 </td>
 <td>
- *-* 
+*-*
 </td>
 </tr>
 <tr>
@@ -653,6 +654,7 @@ O
 </table>
 
 ## 보고서 목록 조회
+
 Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 태스크 목록을 확인할 수 있습니다.
 
 <Callout type="info">
@@ -660,12 +662,10 @@ Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 
 </Callout>
 
 
-
 <p align="center">
 <div>[스크린샷 2024-12-23 오전 11.22.38.png]()</div>
 *Administrator &gt; Audit &gt; Reports &gt; Reports*
 </p>
-
 
 
 1.  **검색**  : Task Name으로 검색이 가능합니다.
@@ -695,15 +695,14 @@ Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 
     3. 비밀번호 지정 활성화 시, 파일을 다운로드 할 때 비밀번호를 설정합니다. 이후 파일의 압축을 해제할 때 설정한 비밀번호를 입력해야 합니다.
 
 ## 보고서 상세 조회하기
-보고서 목록에서 상세 내용을 조회하고자 하는 항목을 선택하면 Drawer가 열리고, 상세 정보를 확인할 수 있습니다.
 
+보고서 목록에서 상세 내용을 조회하고자 하는 항목을 선택하면 Drawer가 열리고, 상세 정보를 확인할 수 있습니다.
 
 
 <p align="center">
 <div>[스크린샷 2024-12-23 오전 11.25.24.png]()</div>
 *Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail*
 </p>
-
 
 
 1.  **Unschedule Task**  : 반복 생성하는 보고서의 경우, 스케줄링 해제가 가능합니다.
@@ -732,10 +731,10 @@ Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 
     4. Action By : 작업자
 
 ## 보고서 생성하기
+
 보고서 목록 화면에서 `+ Create Task` 버튼을 클릭하여 보고서 생성 페이지로 진입합니다.
 
 태스크 이름, 보고서 유형, 스케줄링 관련 내용을 입력하고, 섹션 단위로 보고서 출력 항목 및 적용할 필터를 지정할 수 있습니다. `+ Add Section` 버튼을 클릭하여 섹션을 추가할 수 있습니다.
-
 <p align="center">
 <div>[스크린샷 2024-12-09 오전 10.43.37.png]()</div>
 *Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create*
@@ -769,6 +768,7 @@ Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 
 `Save` 버튼을 클릭하여 보고서 태스크를 저장하고 목록으로 돌아갑니다.
 
 ## 보고서 복제하기**[10.2.2]**
+
 <p align="center">
 <div>[스크린샷 2024-12-23 오전 10.45.29.png]()</div>
 *Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task*
@@ -787,6 +787,7 @@ Audit 메뉴에서 Reports &gt; Reports 메뉴로 진입하면 보고서 생성 
     * 단, 기존에 선택한 Role, User, Group이 더 이상 존재하지 않는 경우에는 필터값에서 제거됨
 
 ## 필터
+
 보고서에서 지원하는 필터의 상세 스펙을 안내합니다.
 
 1.  **User/Group**  : 보고서 출력 데이터를 사용자 또는 그룹으로 필터링합니다.

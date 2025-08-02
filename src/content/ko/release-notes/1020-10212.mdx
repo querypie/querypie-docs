@@ -1,6 +1,6 @@
 ## QueryPie 10.2.12 Release
-2025년 06월 13일
 
+2025년 06월 13일
 
 
 **Bug Fix**
@@ -12,10 +12,9 @@
 * [DAC] SAP HanaDB의 SECONDATE 타입 조회 시 오류 발생 문제 수정
 
 
-
 ## QueryPie 10.2.11 Release
-2025년 05월 28일
 
+2025년 05월 28일
 
 
 **Enhancement **
@@ -24,23 +23,20 @@
 * [SAC] Vault에서 SSH CA 엔진 사용 시 key_type을 rsa 또는 ed25519를 선택할 수 있도록 커스터마이징 기능 제공
 
 
-
 **Bug Fix**
 
 * [DAC] Postgre/Redshift Proxy에서 모든 에러가 An I/O error occurred while sending to the backend. 메세지로 처리되는 이슈 해결
 * [DAC] PostgreSQL Unmasking Request가 특정 조건에서 실패하는 문제 수정
 
 
-
 ## QueryPie 10.2.9 Release
-2025년 05월 02일
 
+2025년 05월 02일
 
 
 **Enhancement **
 
 * [SAC] Role 변경 및 Direct Permission 부여되는 경우에도 세션 유지하도록 개선
-
 
 
 **Bug Fix**
@@ -55,17 +51,15 @@
 * [WAC] 로그인 여부 갱신 시 발생하는 Invalid Token 디버그 로그 과다 출력 이슈 해결
 
 
-
 ## QueryPie 10.2.8 Release
-2025년 04월 11일
 
+2025년 04월 11일
 
 
 **New Feature **
 
 * [DAC] ClickHouse 신규 벤더 지원
 * [DAC] 특정 IP 대역에 대한 마스킹 해제 기능 지원
-
 
 
 **Enhancement **
@@ -87,11 +81,9 @@
 * [WAC] Policy 고도화 - 구조 개선 및 WildCard 지원
 
 
-
 **Vulnerability**
 
 * [General] qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 삭제 기능 지원
-
 
 
 **Bug Fix**
@@ -109,10 +101,9 @@
 * [SAC] 기존 계정의 Secret Store 변경 시 발생하는 저장 오류 해결
 
 
-
 ## QueryPie 10.2.7 Release
-2025년 03월 20일
 
+2025년 03월 20일
 
 
 **Improvement**
@@ -120,7 +111,6 @@
 * [General] Slack DM 을 통해 전달되는 Workflow Request 알림 메시지 항목 추가
 * [Syslog] Legacy Syslog 포맷에 Urgent Mode 항목 추가
 * [Syslog] Workflow New Request 이벤트 전송시 Urgent Mode 항목 추가
-
 
 
 **Bug Fix**
@@ -132,10 +122,9 @@
 * [Agent] RDP Password 잘못입력한 경우 간헐적 에이전트 종료 현상 수정
 
 
-
 ## QueryPie 10.2.6 Release
-2025년 03월 07일
 
+2025년 03월 07일
 
 
 **New Feature**
@@ -145,7 +134,6 @@
 * [DAC] Teradata 신규 벤더 지원
 * [DAC] 태그 기반 DB 정책 템플릿 기능 Beta 출시
 * [SAC] 서버 접근시 시간 단위 권한 상승 요청 및 승인 기능
-
 
 
 **Improvement**
@@ -167,7 +155,6 @@
 * [AIDD] Discovery Job에 timeout 옵션 추가하여 제한된 시간동안 수행할 수 있도록 개선
 
 
-
 **Bug Fix**
 
 * [Agent] 에이전트에서 간헐적으로 'SecretString' 발생하는 이슈 해결
@@ -176,10 +163,9 @@
 * [Workflow]DB Access Request 내의 Reject 처리시 Access Control Logs 관련 이슈 해결
 
 
-
 ## QueryPie 10.2.5 Release
-2025년 02월 14일
 
+2025년 02월 14일
 
 
 **New Feature**
@@ -190,14 +176,12 @@
 * [SAC] Policy 생성/수정/삭제 및 Role 에 Policy 추가/제거 External API 개발
 
 
-
 **Improvement**
 
 * [DAC] BigQuery OAuth 서비스로 로그인 과정에서 사용자가 취소 버튼을 눌렀을 때 예외처리하여 개선
 * [DAC] Redis Enterprise 지원
 * [SAC] 연속된 엔터는 로그에서 무시할 수 있도록 개선
 * [SAC] RDP Windows Server에 AD 계정으로 접속 지원
-
 
 
 **Bug Fix**
@@ -210,10 +194,9 @@
 * [Workflow] 삭제된 커넥션이 포함된 결재 요청시 승인이 실패하는 오류 해결
 
 
-
 ## QueryPie 10.2.4 Release
-2025년 01월 24일
 
+2025년 01월 24일
 
 
 **New Feature**
@@ -224,7 +207,6 @@
 * [KAC] 쿠버네티스 클러스터에 Reverse Tunnel 지원(NOVA)
 * [SAC] Cloud Provider 등록/수정/삭제 External API 지원
 * [Workflow] 사용자의 SQL Request 요청 및 실행 External API 지원
-
 
 
 **Improvement**
@@ -252,7 +234,6 @@
 * [WAC] RootCA 인증서 다운로드 기능 추가
 
 
-
 **Bug Fix**
 
 * [Workflow] Workflow Lists Full Access Policy 권한으로 All Requests 메뉴를 조회할 수 없는 이슈 해결
@@ -264,10 +245,9 @@
 * [DAC] Cloud Provider 에서 동기화 시, “This user does not exist anymore” 오류 발생 해결
 
 
-
 ## QueryPie 10.2.3 Release
-2024년 12월 24일
 
+2024년 12월 24일
 
 
 **Bug Fix**
@@ -275,10 +255,9 @@
 * [AIDD] 특정 DB Data Path 가 겹치는 경우 Hash 중복을 막아 Discovery Jobs 정상 동작하도록 수정
 
 
-
 ## QueryPie 10.2.2 Release
-2024년 12월 19일
 
+2024년 12월 19일
 
 
 **New Feature**
@@ -287,7 +266,6 @@
 * [DAC] OpenSearch 신규 벤더 지원
 * [General] Email 알림 발송 기능 추가
 * [General] 임시 Login Token 을 통한 웹 &lt;-&gt; 에이전트 간 자동로그인 구현
-
 
 
 **Improvement**
@@ -313,17 +291,15 @@
 * [General] Cloud Provider 동기화시 Key 방식 저장하여 재사용 및 동기화 가능하도록 개선
 
 
-
 **Bug Fix**
 
 * [DAC] Window 환경 웹에디터에서 쿼리 작성시 커서 위치 관련 이슈 해결
 * [SAC] 일반 사용자에게 TELNET, FTP의 Protocol 이 노출되지 않는 이슈 해결
 
 
-
 ## QueryPie 10.2.1 Release
-2024년 12월 06일
 
+2024년 12월 06일
 
 
 **New Feature**
@@ -334,7 +310,6 @@
 * [DAC] MariaDB 원장 기능 지원
 * [DAC] Ledger 테이블 관리 기능 추가
 * [SAC] 서버 접속시 Reverse Tunneling Agent 기능 지원 (NOVA)
-
 
 
 **Improvement**
@@ -355,10 +330,9 @@
 * [KAC] EKS 클러스터 상세페이지에서 Test Connection 기능 지원
 
 
-
 ## QueryPie 10.2.0 Release
-2024년 11월 08일
 
+2024년 11월 08일
 
 
 **New Feature**
@@ -369,7 +343,6 @@
 * [SAC] Vault 연동시 OTP Engine 타입 지원
 * [Workflow] 마스킹 해제 요청을 위한 Unmasking Request 기능 지원
 * [Workflow] SQL Request 에서 실행계획 기능 지원
-
 
 
 **Improvement**
@@ -395,7 +368,6 @@
 * [Agent] Host 입력 후 바로 웹 로그인 페이지로 이동하도록 개선
 * [AIDD] AI 분류기 추가
 * [AIDD] 오탐 및 안정성 개선, 대시보드 위젯 추가
-
 
 
 **Bug Fix**
