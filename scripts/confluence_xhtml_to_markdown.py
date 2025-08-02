@@ -451,6 +451,8 @@ class MultiLineParser:
             self.convert_structured_macro_code(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
             self.convert_structured_macro_expand(node)
+        elif node.name in ['ac:structured-macro'] and attr_name in ['view-file']:
+            self.convert_structured_macro_view_file(node)
         elif node.name in [
             'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
             'ac:adf-content',  # Child of <ac:adf-extension>
@@ -595,12 +597,13 @@ class MultiLineParser:
     def convert_structured_macro_code(self, node):
         # Find language parameter and code content
         language = ""
-        cdata = "TODO(JK): Handle code macro content extraction"
+        cdata = 'TODO(JK): Error in converting <structured-macro name="code">'
 
         # Look for language parameter
         language_param = node.find('ac:parameter', {'name': 'language'})
         if language_param:
             language = language_param.get_text()
+        self.markdown_lines.append(f"```{language}\n")
 
         # Look for code content in the CDATA section
         plain_text_body = node.find('ac:plain-text-body')
@@ -610,14 +613,8 @@ class MultiLineParser:
                 if isinstance(item, CData):
                     cdata = str(item)  # Convert CData object to string
                     break
-
-        # Write the code block
-        self.markdown_lines.append(f"```{language}")
-        self.markdown_lines.append("\n")
-        self.markdown_lines.append(cdata)
-        self.markdown_lines.append("\n")
-        self.markdown_lines.append("```")
-        self.markdown_lines.append("\n")
+        self.markdown_lines.append(f"{cdata}\n")
+        self.markdown_lines.append("```\n")
 
     def convert_structured_macro_expand(self, node):
         """
@@ -642,6 +639,24 @@ class MultiLineParser:
             self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
 
         self.markdown_lines.append(f"</details>\n")
+
+    def convert_structured_macro_view_file(self, node):
+        """
+        <ac:structured-macro ac:name="view-file" ac:schema-version="1" ac:macro-id="0ca43a9e-a4e1-4b7a-ad33-9a40ac673203">
+            <ac:parameter ac:name="name">
+                <ri:attachment ri:filename="994_external.json" ri:version-at-save="1"/>
+            </ac:parameter>
+        </ac:structured-macro>
+
+        📎 [994_external.json](./994_external.json)
+        """
+        filename = ""
+        name_parameter = node.find('ac:parameter', {'name': 'name'})
+        if name_parameter:
+            attachment = name_parameter.find('ri:attachment')
+            if attachment:
+                filename = attachment.get('filename', '')
+        self.markdown_lines.append(f":paperclip: [{filename}]({filename})\n")
 
 
 class TableToNativeMarkdown:
@@ -1158,7 +1173,7 @@ class ConfluenceToMarkdown:
             attr_name = node.get('name', '')
             if StructuredMacroToCallout(node).applicable:
                 self.markdown_lines.append(''.join(StructuredMacroToCallout(node).as_markdown))
-            elif attr_name in ['code', 'expand']:
+            elif attr_name in ['code', 'expand', 'view-file']:
                 self.markdown_lines.append(''.join(MultiLineParser(node).as_markdown))
             elif attr_name in ['toc']:
                 # Table of contents macro, we can skip it, as toc is provided by the Markdown renderer by default
