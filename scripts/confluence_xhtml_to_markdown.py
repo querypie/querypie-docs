@@ -452,7 +452,7 @@ class MultiLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"MultiLineParser: Unexpected NavigableString, text={repr(node.text)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"MultiLineParser: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Do not append unexpected NavigableString to markdown_lines.
             return
 
@@ -732,7 +732,7 @@ class TableToNativeMarkdown:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"TableToNativeMarkdown: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"TableToNativeMarkdown: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(node.text)
             return
 
@@ -853,7 +853,7 @@ class TableToHtmlTable:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"TableToHtmlTable: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"TableToHtmlTable: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(node.text)
             return
 
@@ -878,7 +878,8 @@ class TableToHtmlTable:
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    logging.warning(f"TableToHtmlTable: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                    self.markdown_lines.append('\n')
                 elif SingleLineParser(child).applicable:
                     self.markdown_lines.append(SingleLineParser(child).as_markdown)
                 else:
@@ -946,7 +947,7 @@ class StructuredMacroToCallout:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"StructuredMacroToCallout: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"StructuredMacroToCallout: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Do not append unexpected NavigableString to markdown_lines.
             return
 
@@ -1048,7 +1049,7 @@ class AdfExtensionToCallout:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            logging.warning(f"AdfExtensionToCallout: Unexpected NavigableString from {ancestors(node)} in {INPUT_FILE_PATH}")
+            logging.warning(f"AdfExtensionToCallout: Unexpected NavigableString {repr(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             # Do not append unexpected NavigableString to markdown_lines.
             return
 
@@ -1152,7 +1153,7 @@ class ConfluenceToMarkdown:
     def process_node(self, node):
         if isinstance(node, NavigableString):
             if self._debug_markdown:
-                self.markdown_lines.append(f"TODO(JK): ConfluenceToMarkdown: Unexpected NavigableString of from {ancestors(node)} in {INPUT_FILE_PATH}")
+                self.markdown_lines.append(f"TODO(JK): ConfluenceToMarkdown: Unexpected NavigableString {repr(node)} of from {ancestors(node)} in {INPUT_FILE_PATH}")
             text = node.strip()
             if text and not self.inside_code_block:
                 if self.in_table:
