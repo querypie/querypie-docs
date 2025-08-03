@@ -16,6 +16,7 @@ import os
 import re
 import shutil
 import sys
+import unicodedata
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
@@ -31,6 +32,8 @@ OUTPUT_FILE_PATH = ""
 ZWSP = '\u200b'  # Zero Width Space
 LRM = '\u200e'  # Left-to-Right Mark
 HANGUL_FILLER = '\u3164'  # Hangul Filler
+NBSP = '\u00A0'  # Non-Breaking Space
+NNBSP = '\u202f'  # Narrow No-Break Space
 
 LANGUAGE = 'en'
 
@@ -56,10 +59,7 @@ def backtick_curly_braces(text):
 def as_markdown(node):
     if isinstance(node, NavigableString):
         # This is a leaf node with text
-        text = (
-            node.replace('\u00A0', ' ')  # Replace NBSP with space
-            .replace('\n', ' ')  # Replace newlines with space
-        )
+        text = node.replace('\n', ' ')  # Replace newlines with space
         # Encode < and > to prevent conflict with JSX syntax.
         text = text.replace('<', '&lt;').replace('>', '&gt;')
         # Normalize multiple spaces to a single space
@@ -1184,9 +1184,14 @@ class Attachment:
             logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             return
 
+        # Apply unicodedata.normalize to prevent unmatched string comparison.
+        # Use Normalization Form Canonical Composition for the unicode normalization.
+        filename = unicodedata.normalize('NFC', filename)
+        screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
+        assert len(screenshot_ko) == 4 # Normalized string should have four characters.
         self.original = filename
-        if re.match(r'스크린샷 \d\d\d\d-\d\d-\d\d .*.png', filename):
-            datetime_ko = filename.replace('스크린샷 ', '').replace('.png', '')
+        if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', filename):
+            datetime_ko = filename.replace(f'{screenshot_ko} ', '').replace('.png', '')
             datetime_std = datetime_ko_format(datetime_ko)
             filename = 'screenshot-' + datetime_std + '.png'
         if filename.find(' ') >= 0:
@@ -1324,9 +1329,11 @@ def main():
         html_content = re.sub(r'\sri:', ' ', html_content)
 
         # Remove special characters before parsing
-        html_content = html_content.replace(ZWSP, '')
-        html_content = html_content.replace(LRM, '')
-        html_content = html_content.replace(HANGUL_FILLER, '')
+        html_content = (html_content.replace(ZWSP, '')
+                        .replace(LRM, '')
+                        .replace(HANGUL_FILLER, '')
+                        .replace(NBSP, ' ')
+                        .replace(NNBSP, ' '))
 
         converter = ConfluenceToMarkdown(html_content)
         # converter.list_images()

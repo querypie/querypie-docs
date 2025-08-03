@@ -18,6 +18,7 @@ Usage examples:
   python pages_of_confluence.py --attachments  # Download page content with attachments
   python pages_of_confluence.py --local  # Use local YAML files instead of making API calls
 """
+import unicodedata
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -43,6 +44,7 @@ API_TOKEN = os.environ.get('ATLASSIAN_API_TOKEN', 'your-api-token')
 # Hidden characters for text cleaning
 HIDDEN_CHARACTERS = {
     '\u00A0': ' ',  # Non-Breaking Space
+    '\u202f': ' ',  # Narrow No-Break Space
     '\u200b': '',  # Zero Width Space
     '\u200e': '',  # Left-to-Right Mark
     '\u3164': ''  # Hangul Filler
@@ -68,7 +70,9 @@ class ConfluencePageProcessor:
         if text is None:
             return None
 
-        cleaned_text = text
+        # Apply unicodedata.normalize to prevent unmatched string comparison.
+        # Use Normalization Form Canonical Composition for the unicode normalization.
+        cleaned_text = unicodedata.normalize('NFC', text)
         for hidden_char, replacement in HIDDEN_CHARACTERS.items():
             cleaned_text = cleaned_text.replace(hidden_char, replacement)
         return cleaned_text
@@ -260,7 +264,7 @@ class ConfluencePageProcessor:
         """Download a single attachment"""
         try:
             attachment_id = attachment["id"]
-            filename = attachment["title"]
+            filename = self.clean_text(attachment["title"])
             download_url = f"{self.args.base_url}/rest/api/content/{page_id}/child/attachment/{attachment_id}/download"
 
             response = requests.get(download_url, headers={"Accept": "*/*"}, auth=self.auth)
