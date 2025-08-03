@@ -10,14 +10,14 @@ WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 �
 ### WebApp 에 접속이 안되고, 브라우저에`ERR_TIMED_OUT`에러 메세지가 표시되는 경우
 
 <p align="center">
-<div>[image-20250401-011848.png]()</div>
+![image-20250401-011848.png](./wac-troubleshooting-guide/image-20250401-011848.png)
 </p>
 
 브라우저가 WAC Proxy 와 연결을 못하여 발생하는 현상일 수 있습니다.
 
 먼저 Admin &gt; Web Apps &gt; Web app Configuration 메뉴에서 WAC Proxy 주소가 잘 셋팅되어 있는지 확인합니다.
 <p align="center">
-<div>[image-20250401-012042.png]()</div>
+![image-20250401-012042.png](./wac-troubleshooting-guide/image-20250401-012042.png)
 </p>
 
 문제가 발생한 브라우저의 로컬 터미널에서 아래 명령어를 실행하여 WAC Proxy 로 연결이 되는지 확인합니다.
@@ -75,7 +75,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 
 * 크롬 브라우저에서 `chrome://net-export/` 열고 Start Over 을 클릭합니다. (Options 는 디폴트 값인 `Strip private information` 를 선택합니다.)
 <p align="center">
-<div>[image-20250401-012452.png]()</div>
+![image-20250401-012452.png](./wac-troubleshooting-guide/image-20250401-012452.png)
 </p>
 
 * 크롬 브라우저에서 접속이 안되는 WebApp 주소를 입력하여 이동합니다.
@@ -88,7 +88,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 * 왼쪽 Import 메뉴에서 위에서 받은 로그 파일을 업로드 합니다.
 * 왼쪽 Events 메뉴에서 네트워크 송수신 내용을 확인합니다.
 <p align="center">
-<div>[image-20250401-012759.png]()</div>
+![image-20250401-012759.png](./wac-troubleshooting-guide/image-20250401-012759.png)
 </p>
 
 

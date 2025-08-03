@@ -23,14 +23,14 @@ QueryPie에서는 쿠버네티스 클러스터 등록 및 관리를 위한 AWS �
 
 QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 EKS access entry API를 활용합니다. 따라서, 클러스터 인증 모드가 ConfigMap으로만 설정되어 있다면 연결이 어려운 부분이 있어 원활한 동기화를 위해 AWS 콘솔에서 모드 변경을 사전에 작업해두시는 것을 권장드립니다.
 <p align="center">
-<div>[image-20240512-134234.png]()</div>
+![image-20240512-134234.png](./synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
 *AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access*
 </p>
 
 1. AWS Console에 EKS 관리자 권한을 가진 계정으로 접속합니다. 
 2.  **Elastic Kubernetes Service (EKS) ** 메뉴로 이동합니다. 
 3. 대상 EKS 클러스터가 위치한 리전(Region)으로 이동합니다. 
-    * 예) ![image-20240512-134604.png]() 
+    * 예) ![image-20240512-134604.png](./synchronizing-kubernetes-resources-from-aws/image-20240512-134604.png) 
 4. 대상 EKS 클러스터를 선택하여 상세 페이지로 이동합니다.
 5. Access 탭을 클릭하여 Access configuration 현황을 살펴봅니다. 
 6. Authentication mode가  **”ConfigMap”** 이라면, 우측  **Manage access**  버튼을 클릭합니다. 
@@ -41,7 +41,7 @@ QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 
 ## QueryPie에서 AWS 연동 정보 등록하기
 
 <p align="center">
-<div>[image-20240721-054036.png]()</div>
+![image-20240721-054036.png](./synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
 *Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider*
 </p>
 
@@ -72,7 +72,7 @@ A. 이미  **Credential** 이 `Default Credentials`이면서 동일한 `Region`�
 ## 등록된 AWS Cloud Provider 동기화 및 관리
 
 <p align="center">
-<div>[image-20240721-054313.png]()</div>
+![image-20240721-054313.png](./synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
 *Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details*
 </p>
 
@@ -93,13 +93,13 @@ A. 이미  **Credential** 이 `Default Credentials`이면서 동일한 `Region`�
 
 ## Dry Run/Synchronization Log 표기 문구
 
-|                                |  **발생 시점**                                                                         |  **문구**                                                                                                                                                   |
-| ------------------------------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| :check_mark:                   | Dry Run 또는 Synchronize 동기화 시작                                                      | Cluster synchronization started.                                                                                                                          |
-| :check_mark:                   | 신규 클러스터 추가 완료                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
-| :check_mark:                   | 기존 클러스터 정보 업데이트 완료                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
-| :check_mark:                   | 기존 클러스터 제거 완료                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
-| :check_mark:                   | Dry Run 또는 Synchronize 동기화 성공적으로 종료                                                | Cluster synchronization succeeded.                                                                                                                        |
-| ![image-20240822-082024.png]() | EKS 클러스터의 인증 모드가 EKS API를 허용하지 않는 경우 동기화 스킵. ConfigMap 모드에서 EKS API를 허용하도록 변경 필요.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
-| :cross_mark:                   | 이미 중복된 클러스터명이 확인되어 동기화 실패                                                          | Cluster synchronization failed. The cluster name “`{Cluster Name}`” is already in use by another cluster. To synchronize it, delete the existing cluster. |
-| :cross_mark:                   | Dry Run 또는 Synchronize 동기화 실패 종료                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |
+|                                                                                                       |  **발생 시점**                                                                         |  **문구**                                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :check_mark:                                                                                          | Dry Run 또는 Synchronize 동기화 시작                                                      | Cluster synchronization started.                                                                                                                          |
+| :check_mark:                                                                                          | 신규 클러스터 추가 완료                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
+| :check_mark:                                                                                          | 기존 클러스터 정보 업데이트 완료                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
+| :check_mark:                                                                                          | 기존 클러스터 제거 완료                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
+| :check_mark:                                                                                          | Dry Run 또는 Synchronize 동기화 성공적으로 종료                                                | Cluster synchronization succeeded.                                                                                                                        |
+| ![image-20240822-082024.png](./synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png) | EKS 클러스터의 인증 모드가 EKS API를 허용하지 않는 경우 동기화 스킵. ConfigMap 모드에서 EKS API를 허용하도록 변경 필요.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
+| :cross_mark:                                                                                          | 이미 중복된 클러스터명이 확인되어 동기화 실패                                                          | Cluster synchronization failed. The cluster name “`{Cluster Name}`” is already in use by another cluster. To synchronize it, delete the existing cluster. |
+| :cross_mark:                                                                                          | Dry Run 또는 Synchronize 동기화 실패 종료                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |

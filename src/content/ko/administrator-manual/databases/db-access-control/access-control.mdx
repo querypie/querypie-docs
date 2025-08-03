@@ -9,7 +9,7 @@ Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터
 
 Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별로 부여된 DB 권한(Privilege) 및 관리자 역할 현황을 조회할 수 있습니다. (그룹 또는 사용자 이름으로 검색 가능)
 <p align="center">
-<div>[스크린샷 2024-07-31 오전 11.35.02.png]()</div>
+![screenshot-20240731-113502.png](./access-control/screenshot-20240731-113502.png)
 *Administrator &gt; Databases &gt; DB Access Control &gt; Access Control*
 </p>
 
@@ -18,7 +18,7 @@ Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별�
 
 Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 그룹을 클릭하면 Drawer가 열립니다.
 <p align="center">
-<div>[스크린샷 2024-07-31 오전 11.54.24.png]()</div>
+![screenshot-20240731-115424.png](./access-control/screenshot-20240731-115424.png)
 </p>
 
 * 검색 : Connection Name 으로 조회 가능
@@ -37,7 +37,7 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 ## Access Control 권한 부여하기
 
 <p align="center">
-<div>[image-20241209-121743.png]()</div>
+![image-20241209-121743.png](./access-control/image-20241209-121743.png)
 *Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege*
 </p>
 
@@ -58,7 +58,7 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 ## Access Control 권한 회수하기
 
 <p align="center">
-<div>[image-20241209-122146.png]()</div>
+![image-20241209-122146.png](./access-control/image-20241209-122146.png)
 *Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details*
 </p>
 
@@ -90,7 +90,7 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 ## 커넥션 잠금 계정 해제하기 (Locked Account)
 
 <p align="center">
-<div>[image-20241209-123011.png]()</div>
+![image-20241209-123011.png](./access-control/image-20241209-123011.png)
 *Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account*
 </p>
 
@@ -98,7 +98,7 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 2. DB 계정 인증 실패 횟수와 잠긴 시점이 함께 표시됩니다.
 3. 잠금해제 하고자하는 항목을 선택 후 우측 `Unlock`을 클릭하여 커넥션 잠금을 해제합니다.
 <p align="center">
-<div>[image-20241209-123358.png]()</div>
+![image-20241209-123358.png](./access-control/image-20241209-123358.png)
 </p>
 
 1. 커넥션 잠금 및 잠금해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인하실 수 있습니다. 
@@ -107,7 +107,7 @@ Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 �
 <Callout type="info">
 **테이블 태그로 접근제어하기** <br/><br/>Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우,
 <p align="center">
-<div>[image-20250703-050924.png]()</div>
+![image-20250703-050924.png](./access-control/image-20250703-050924.png)
 </p>
 
 Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다. 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다.
@@ -121,7 +121,7 @@ Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 �
 1. Databases &gt; DB Access Control &gt; Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다.
 2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
 <p align="center">
-<div>[image-20250703-051824.png]()</div>
+![image-20250703-051824.png](./access-control/image-20250703-051824.png)
 </p>
 
 만약 Tag-based table access 기능을 활성화한 상태에서 어떤 태그도 등록하지 않으면 해당 커넥션의 모든 테이블에 접근할 수 없게 됩니다.<br/>

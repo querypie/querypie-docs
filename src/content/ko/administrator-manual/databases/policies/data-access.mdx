@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 새로운 테이블/컬럼 접근 제한 정책을 커넥션 기준으로 등록합니다.
 <p align="center">
-<div>[image-20240725-072304.png]()</div>
+![image-20240725-072304.png](./data-access/image-20240725-072304.png)
 *Administrator &gt; Databases &gt; Policies &gt; Data Access *
 </p>
 
@@ -25,7 +25,7 @@ import { Callout } from 'nextra/components'
 ## 테이블/컬럼 접근 제한 정책 정책에 규칙 등록하기
 
 <p align="center">
-<div>[dataaccess-02.png]()</div>
+![data-access-02.png](./data-access/data-access-02.png)
 *Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Add Rule*
 </p>
 
@@ -43,7 +43,7 @@ import { Callout } from 'nextra/components'
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터를 조회하면, 테이블에 정책이 적용된 경우 테이블 자체를 조회할 수 없고, 컬럼에 규칙이 적용된 경우 *  `{RESTRICTED}` * 로 표시됩니다.
 <p align="center">
-<div>[dataaccess-03.png]()</div>
+![data-access-03.png](./data-access/data-access-03.png)
 *SQL Editor &gt; 정책이 적용된 데이터 조회시 * `{RESTRICTED}`*  로 표시*
 </p>
 
@@ -58,7 +58,7 @@ A. 이 경우, DB 계정 정보 설정이 안되어 있거나 잘못된 정보�
 10.3.0 부터 Data access 정책이 제한한 테이블 및 컬럼에 대한 접근로그를 확인할 수 있습니다.
 </Callout>
 <p align="center">
-<div>[image-20250512-040339.png]()</div>
+![image-20250512-040339.png](./data-access/image-20250512-040339.png)
 *Logs 탭에서 로그 확인*
 </p>
 
