@@ -1202,23 +1202,24 @@ class Attachment:
 
     def copy_to_destination(self):
         source_file = os.path.join(self.input_dir, self.original)
-        if not os.path.exists(source_file):
+        if os.path.exists(source_file):
             logging.debug(f"Source file found: {repr(source_file)}")
         else:
-            logging.warning(f"Source file not found: {source_file}")
+            logging.warning(f"Source file not found: {repr(source_file)}, {ascii(source_file)}")
+            return
 
         if not os.path.exists(self.output_dir):
-            logging.warning(f"Output directory not found: {repr(self.output_dir)}")
+            logging.debug(f"Output directory not found: {repr(self.output_dir)}")
             os.makedirs(self.output_dir)
         destination_file = os.path.join(self.output_dir, self.filename)
         if os.path.exists(destination_file):
-            # compare original_file and destination_file are equivalent.
+            # compare source_file and destination_file are equivalent.
             if filecmp.cmp(source_file, destination_file):
                 logging.debug(f"Destination file already exists: {repr(destination_file)}")
             else:
                 logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
         else:
-            shutil.copyfile(original_file, destination_file)
+            shutil.copyfile(source_file, destination_file)
             # Change file permission to 0644
             os.chmod(destination_file, 0o644)
 
