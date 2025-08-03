@@ -9,6 +9,10 @@ for testcase in testcases/[0-9]*; do
   doc_dir=$(basename "$testcase")
   for img in ../../../docs/latest-ko-confluence/"$doc_dir"/*.png; do
     filename=$(basename "$img")
-    ( set -x; cp "$img" "$testcase/$filename" )
+    if [[ $filename == '*.png' ]]; then
+      echo "# No image found in ../../../docs/latest-ko-confluence/$doc_dir/"
+    else
+      ( set -x; cp "$img" "$testcase/$filename" )
+    fi
   done
 done

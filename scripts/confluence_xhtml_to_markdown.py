@@ -204,6 +204,21 @@ def datetime_ko_format(date_string):
         return f"Error: {str(e)}"
 
 
+def normalize_screenshots(filename):
+    screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
+    assert len(screenshot_ko) == 4  # Normalized string should have four characters.
+
+    normalized = filename
+    if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', normalized):
+        datetime_ko = normalized.replace(f'{screenshot_ko} ', '').replace('.png', '')
+        datetime_std = datetime_ko_format(datetime_ko)
+        normalized = 'screenshot-' + datetime_std + '.png'
+    if normalized.find(' ') >= 0:
+        normalized = normalized.replace(' ', '-')
+
+    return normalized
+
+
 class Attachment:
     """
     <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
@@ -219,16 +234,9 @@ class Attachment:
         # Apply unicodedata.normalize to prevent unmatched string comparison.
         # Use Normalization Form Canonical Composition for the unicode normalization.
         filename = unicodedata.normalize('NFC', filename)
-        screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
-        assert len(screenshot_ko) == 4  # Normalized string should have four characters.
         self.original = filename
-        if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', filename):
-            datetime_ko = filename.replace(f'{screenshot_ko} ', '').replace('.png', '')
-            datetime_std = datetime_ko_format(datetime_ko)
-            filename = 'screenshot-' + datetime_std + '.png'
-        if filename.find(' ') >= 0:
-            filename = filename.replace(' ', '-')
-        self.filename = filename
+        self.filename = normalize_screenshots(filename)
+        self.used = False
 
         self.input_dir = os.path.dirname(input_file)
         self.basename_output_file = Path(output_file).stem
@@ -551,9 +559,10 @@ class SingleLineParser:
         markdown = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
-            for attachment_obj in self.attachments:
-                if attachment_obj.original == image_filename:
-                    markdown = attachment_obj.as_markdown()
+            for it in self.attachments:
+                if it.original == image_filename:
+                    it.used = True
+                    markdown = it.as_markdown()
                     break
 
         if not markdown:
@@ -781,9 +790,10 @@ class MultiLineParser:
         markdown = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
-            for attachment_obj in self.attachments:
-                if attachment_obj.original == image_filename:
-                    markdown = attachment_obj.as_markdown()
+            for it in self.attachments:
+                if it.original == image_filename:
+                    it.used = True
+                    markdown = it.as_markdown()
                     break
 
         if not markdown:
@@ -1371,6 +1381,12 @@ def main():
 
         with open(args.output_file, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
+
+        for it in converter.attachments:
+            if it.used:
+                logging.debug(f'Attachment {it} is used.')
+            else:
+                logging.warning(f'Attachment {it} is NOT used.')
 
         logging.info(f"Successfully converted {args.input_file} to {args.output_file}")
 
