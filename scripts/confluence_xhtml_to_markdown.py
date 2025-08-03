@@ -204,9 +204,78 @@ def datetime_ko_format(date_string):
         return f"Error: {str(e)}"
 
 
+class Attachment:
+    """
+    <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
+    <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
+    """
+
+    def __init__(self, node, input_file=INPUT_FILE_PATH, output_file=OUTPUT_FILE_PATH):
+        filename = node.get('filename', '')
+        if not filename:
+            logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            return
+
+        # Apply unicodedata.normalize to prevent unmatched string comparison.
+        # Use Normalization Form Canonical Composition for the unicode normalization.
+        filename = unicodedata.normalize('NFC', filename)
+        screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
+        assert len(screenshot_ko) == 4  # Normalized string should have four characters.
+        self.original = filename
+        if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', filename):
+            datetime_ko = filename.replace(f'{screenshot_ko} ', '').replace('.png', '')
+            datetime_std = datetime_ko_format(datetime_ko)
+            filename = 'screenshot-' + datetime_std + '.png'
+        if filename.find(' ') >= 0:
+            filename = filename.replace(' ', '-')
+        self.filename = filename
+
+        self.input_dir = os.path.dirname(input_file)
+        self.basename_output_file = Path(output_file).stem
+        self.output_dir = os.path.join(os.path.dirname(output_file), self.basename_output_file)
+        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir}")
+
+    def __str__(self):
+        return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
+
+    def copy_to_destination(self):
+        source_file = os.path.join(self.input_dir, self.original)
+        if os.path.exists(source_file):
+            logging.debug(f"Source file found: {repr(source_file)}")
+        else:
+            logging.warning(f"Source file not found: {repr(source_file)}")
+            return
+
+        if not self.filename.endswith('.png'):
+            logging.warning(f"Source file is not an image file: {repr(source_file)}")
+            return
+
+        if not os.path.exists(self.output_dir):
+            logging.debug(f"Output directory not found: {repr(self.output_dir)}")
+            os.makedirs(self.output_dir)
+        destination_file = os.path.join(self.output_dir, self.filename)
+        if os.path.exists(destination_file):
+            # compare source_file and destination_file are equivalent.
+            if filecmp.cmp(source_file, destination_file):
+                logging.debug(f"Destination file already exists: {repr(destination_file)}")
+            else:
+                logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
+        else:
+            shutil.copyfile(source_file, destination_file)
+            # Change file permission to 0644
+            os.chmod(destination_file, 0o644)
+
+    def as_markdown(self):
+        if self.filename.endswith('.png'):
+            return f'![{self.filename}](./{self.basename_output_file}/{self.filename})'
+        else:
+            return f'[{self.filename}](./{self.basename_output_file}/{self.filename})'
+
+
 class SingleLineParser:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.markdown_lines = []
         self.applicable_nodes = {
             'span',
@@ -352,7 +421,7 @@ class SingleLineParser:
             href = node.get('href', '#')
             self.markdown_lines.append("[")
             for child in node.children:
-                self.markdown_lines.append(SingleLineParser(child).as_markdown)
+                self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown)
             self.markdown_lines.append(f"]({href})")
         elif node.name in ['ac:link']:
             """
@@ -365,7 +434,7 @@ class SingleLineParser:
             href = '#'
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
-                    link_body = SingleLineParser(child).as_markdown
+                    link_body = SingleLineParser(child, self.attachments).as_markdown
                 if isinstance(child, Tag) and child.name == 'ri:page':
                     href = child.get('content-title', '#')
             self.markdown_lines.append(f'[{link_body}]({href})')
@@ -467,10 +536,6 @@ class SingleLineParser:
         """
         logging.debug(f"Processing Confluence image: {node}")
 
-        # Extract image attributes
-        align = node.get('align', 'center')
-        alt_text = node.get('alt', '')
-
         # Find the attachment filename
         image_filename = ''
         attachment = node.find('ri:attachment')
@@ -482,18 +547,28 @@ class SingleLineParser:
         else:
             logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
 
-        # Create a Markdown image with alt text and filename
-        if not alt_text and image_filename:
-            alt_text = image_filename
+        # Find matching attachment in self.attachments list
+        markdown = ''
+        image_filename = unicodedata.normalize('NFC', image_filename)
+        if image_filename:
+            for attachment_obj in self.attachments:
+                if attachment_obj.original == image_filename:
+                    markdown = attachment_obj.as_markdown()
+                    break
+
+        if not markdown:
+            # If no matching attachment found, use the filename as fallback
+            logging.warning(f'No matching attachment found for filename: {image_filename}')
+            markdown = f'[{image_filename}]()'
 
         # Add the image in Markdown format
-        # self.markdown_lines.append(f"![{alt_text}]({image_filename})")
-        self.markdown_lines.append(f"![{alt_text}]()")  # TODO(JK): Fix image link
+        self.markdown_lines.append(markdown)
 
 
 class MultiLineParser:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.list_stack = []
         self.markdown_lines = []
         self._debug_markdown = False
@@ -551,14 +626,14 @@ class MultiLineParser:
         elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             # Headings can exist in a <Callout> block.
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown + '\n')
             self.markdown_lines.append('\n')
-        elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node).applicable:
+        elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node, self.attachments).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(StructuredMacroToCallout(node).as_markdown)
-        elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node).applicable:
+            self.markdown_lines.extend(StructuredMacroToCallout(node, self.attachments).as_markdown)
+        elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node, self.attachments).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(AdfExtensionToCallout(node).as_markdown)
+            self.markdown_lines.extend(AdfExtensionToCallout(node, self.attachments).as_markdown)
         elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
             self.convert_structured_macro_code(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
@@ -575,7 +650,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             markdown = []
             for child in node.children:
-                markdown.extend(MultiLineParser(child).as_markdown)
+                markdown.extend(MultiLineParser(child, self.attachments).as_markdown)
             lines = ''.join(markdown).splitlines()
             for to_quote in lines:
                 self.markdown_lines.append(f'> {to_quote}')
@@ -586,29 +661,29 @@ class MultiLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name == 'table':
-            native_markdown = TableToNativeMarkdown(node)
+            native_markdown = TableToNativeMarkdown(node, self.attachments)
             if native_markdown.applicable:
                 self.markdown_lines.extend(native_markdown.as_markdown)
             else:
-                self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
+                self.markdown_lines.extend(TableToHtmlTable(node, self.attachments).as_markdown)
         elif node.name in ['p', 'div']:
             self.append_empty_line_unless_first_child(node)
             child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    child_markdown.append(SingleLineParser(child).as_markdown)
-                elif SingleLineParser(child).applicable:
-                    child_markdown.append(SingleLineParser(child).as_markdown)
+                    child_markdown.append(SingleLineParser(child, self.attachments).as_markdown)
+                elif SingleLineParser(child, self.attachments).applicable:
+                    child_markdown.append(SingleLineParser(child, self.attachments).as_markdown)
                 else:
                     if self._debug_markdown:
                         child_markdown.append(f'<{child.name}>')
-                    child_markdown.extend(MultiLineParser(child).as_markdown)
+                    child_markdown.extend(MultiLineParser(child, self.attachments).as_markdown)
                     if self._debug_markdown:
                         child_markdown.append(f'</{child.name}>')
             # Add an empty line after paragraphs
             self.markdown_lines.append(''.join(child_markdown).strip() + '\n')
         elif node.name in ['span']:
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown)
         elif node.name in ['br']:
             # <br/> is a line break. Just keep using <br/>.
             # Append '\n' for <br/> in MultiLineParser.
@@ -619,7 +694,7 @@ class MultiLineParser:
         elif node.name in ['ac:image']:
             self.convert_image(node)
         elif node.name in ['a']:
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown)
         elif node.name in ['hr']:
             self.markdown_lines.append(f'---\n')
         else:
@@ -653,7 +728,7 @@ class MultiLineParser:
         else:
             prefix = f"{indent}{counter}. "
 
-        text = SingleLineParser(node).as_markdown
+        text = SingleLineParser(node, self.attachments).as_markdown
         self.markdown_lines.append(f'{prefix}{text}\n')
 
         # Handle nested lists
@@ -701,17 +776,24 @@ class MultiLineParser:
         if caption:
             caption_paragraph = caption.find('p')
             if caption_paragraph:
-                caption_text = SingleLineParser(caption_paragraph).as_markdown
+                caption_text = SingleLineParser(caption_paragraph, self.attachments).as_markdown
 
-        # Create a Markdown image with alt text and filename
-        if not alt_text and image_filename:
-            alt_text = image_filename
+        markdown = ''
+        image_filename = unicodedata.normalize('NFC', image_filename)
+        if image_filename:
+            for attachment_obj in self.attachments:
+                if attachment_obj.original == image_filename:
+                    markdown = attachment_obj.as_markdown()
+                    break
+
+        if not markdown:
+            # If no matching attachment found, use the filename as fallback
+            logging.warning(f'No matching attachment found for filename: {image_filename}')
+            markdown = f'[{image_filename}]()'
 
         # Add the image in Markdown format
         self.markdown_lines.append(f'<p align="{align}">\n')
-        # TODO(JK): Link will be resolved later
-        # self.markdown_lines.append(f"![{alt_text}]({image_filename})")
-        self.markdown_lines.append(f'<div>[{alt_text}]()</div>\n')
+        self.markdown_lines.append(f"{markdown}\n")
 
         # Add caption if present
         if caption_text:
@@ -761,7 +843,7 @@ class MultiLineParser:
         # Look for code content in the CDATA section
         rich_text_body = node.find('ac:rich-text-body')
         if rich_text_body:
-            self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+            self.markdown_lines.extend(MultiLineParser(rich_text_body, self.attachments).as_markdown)
 
         self.markdown_lines.append(f"</details>\n")
 
@@ -785,8 +867,9 @@ class MultiLineParser:
 
 
 class TableToNativeMarkdown:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.markdown_lines = []
         self.applicable_nodes = {
             'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
@@ -878,7 +961,7 @@ class TableToNativeMarkdown:
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
 
-                cell_content = SingleLineParser(cell).as_markdown
+                cell_content = SingleLineParser(cell, self.attachments).as_markdown
 
                 # Add cell content to the current row
                 current_row.append(cell_content)
@@ -937,8 +1020,9 @@ class TableToNativeMarkdown:
 
 
 class TableToHtmlTable:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -973,20 +1057,20 @@ class TableToHtmlTable:
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
-                elif SingleLineParser(child).applicable:
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
+                    self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown + '\n')
+                elif SingleLineParser(child, self.attachments).applicable:
+                    self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown + '\n')
                 else:
-                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                    self.markdown_lines.extend(MultiLineParser(child, self.attachments).as_markdown)
 
             self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name == 'col':
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
             self.markdown_lines.append(f"<col{attrs}/>\n")
-        elif SingleLineParser(node).applicable:
+        elif SingleLineParser(node, self.attachments).applicable:
             # <ac:adf-fragment-mark> could be converted.
-            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown + '\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]\n')
@@ -995,8 +1079,9 @@ class TableToHtmlTable:
 
 
 class StructuredMacroToCallout:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -1022,7 +1107,7 @@ class StructuredMacroToCallout:
         def _has_applicable_node(node):
             if isinstance(node, NavigableString):
                 return False
-            elif StructuredMacroToCallout(node).applicable:
+            elif StructuredMacroToCallout(node, self.attachments).applicable:
                 return True
             else:
                 for child in node.children:
@@ -1057,7 +1142,7 @@ class StructuredMacroToCallout:
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
             for child in node.children:
-                self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(child, self.attachments).as_markdown)
 
             self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
@@ -1073,7 +1158,7 @@ class StructuredMacroToCallout:
                     f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
 
             if rich_text_body:
-                self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(rich_text_body, self.attachments).as_markdown)
             else:
                 logging.warning(
                     f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
@@ -1087,8 +1172,9 @@ class StructuredMacroToCallout:
 
 
 class AdfExtensionToCallout:
-    def __init__(self, node):
+    def __init__(self, node, attachments: list[Attachment]):
         self.node = node
+        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -1118,7 +1204,7 @@ class AdfExtensionToCallout:
         def _has_applicable_node(node):
             if isinstance(node, NavigableString):
                 return False
-            elif AdfExtensionToCallout(node).applicable:
+            elif AdfExtensionToCallout(node, self.attachments).applicable:
                 return True
             else:
                 for child in node.children:
@@ -1158,7 +1244,7 @@ class AdfExtensionToCallout:
 
             adf_content = node.find('ac:adf-content')
             if adf_content:
-                self.markdown_lines.extend(MultiLineParser(adf_content).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(adf_content, self.attachments).as_markdown)
             else:
                 logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
@@ -1172,68 +1258,11 @@ class AdfExtensionToCallout:
                 self.convert_recursively(child)
 
 
-class Attachment:
-    """
-    <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
-    <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
-    """
-
-    def __init__(self, node, input_file=INPUT_FILE_PATH, output_file=OUTPUT_FILE_PATH):
-        filename = node.get('filename', '')
-        if not filename:
-            logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            return
-
-        # Apply unicodedata.normalize to prevent unmatched string comparison.
-        # Use Normalization Form Canonical Composition for the unicode normalization.
-        filename = unicodedata.normalize('NFC', filename)
-        screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
-        assert len(screenshot_ko) == 4 # Normalized string should have four characters.
-        self.original = filename
-        if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', filename):
-            datetime_ko = filename.replace(f'{screenshot_ko} ', '').replace('.png', '')
-            datetime_std = datetime_ko_format(datetime_ko)
-            filename = 'screenshot-' + datetime_std + '.png'
-        if filename.find(' ') >= 0:
-            filename = filename.replace(' ', '-')
-        self.filename = filename
-
-        self.input_dir = os.path.dirname(input_file)
-        self.output_dir = os.path.join(os.path.dirname(output_file), Path(output_file).stem)
-        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir}")
-
-    def __str__(self):
-        return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
-
-    def copy_to_destination(self):
-        source_file = os.path.join(self.input_dir, self.original)
-        if os.path.exists(source_file):
-            logging.debug(f"Source file found: {repr(source_file)}")
-        else:
-            logging.warning(f"Source file not found: {repr(source_file)}, {ascii(source_file)}")
-            return
-
-        if not os.path.exists(self.output_dir):
-            logging.debug(f"Output directory not found: {repr(self.output_dir)}")
-            os.makedirs(self.output_dir)
-        destination_file = os.path.join(self.output_dir, self.filename)
-        if os.path.exists(destination_file):
-            # compare source_file and destination_file are equivalent.
-            if filecmp.cmp(source_file, destination_file):
-                logging.debug(f"Destination file already exists: {repr(destination_file)}")
-            else:
-                logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
-        else:
-            shutil.copyfile(source_file, destination_file)
-            # Change file permission to 0644
-            os.chmod(destination_file, 0o644)
-
-
 class ConfluenceToMarkdown:
     def __init__(self, html_content):
         self.markdown_lines = []
+        self.attachments = []
         self._imports = {}
-        self._attachments = []
         self._debug_markdown = False
 
         # Parse HTML with BeautifulSoup
@@ -1265,19 +1294,19 @@ class ConfluenceToMarkdown:
                 logging.debug(f"add attachment of <ac:image>{node}")
                 attachment = Attachment(node, INPUT_FILE_PATH, OUTPUT_FILE_PATH)
                 attachment.copy_to_destination()
-                self._attachments.append(attachment)
+                self.attachments.append(attachment)
 
-        logging.debug(f"attachments: {self._attachments}")
+        logging.debug(f"attachments: {self.attachments}")
 
     def as_markdown(self):
 
-        if StructuredMacroToCallout(self.soup).has_applicable_nodes:
+        if StructuredMacroToCallout(self.soup, self.attachments).has_applicable_nodes:
             self.add_import('Callout')
-        elif AdfExtensionToCallout(self.soup).has_applicable_nodes:
+        elif AdfExtensionToCallout(self.soup, self.attachments).has_applicable_nodes:
             self.add_import('Callout')
 
         # Start conversion
-        self.markdown_lines.extend(MultiLineParser(self.soup).as_markdown)
+        self.markdown_lines.extend(MultiLineParser(self.soup, self.attachments).as_markdown)
         # self.process_node(soup)
 
         # Join all Markdown lines and return
