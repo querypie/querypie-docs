@@ -339,7 +339,7 @@ class ConfluencePageProcessor:
                                  if ancestor.get("type") == "page" and "title" in ancestor]
                 path = ancestor_titles + [title]
 
-            return " > ".join(path)
+            return " />> ".join(path)
         except Exception as e:
             self.logger.error(f"Error building breadcrumbs for page {page_id}: {str(e)}")
             return title

@@ -11,6 +11,10 @@ python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/5443753
 echo 'Converted 544375335 to src/content/ko/./release-notes.mdx'
 
 mkdir -p src/content/ko/release-notes
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1171488777/page.xhtml src/content/ko/release-notes/1110.mdx
+echo 'Converted 1171488777 to src/content/ko/release-notes/1110.mdx'
+
+mkdir -p src/content/ko/release-notes
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1064830173/page.xhtml src/content/ko/release-notes/1100.mdx
 echo 'Converted 1064830173 to src/content/ko/release-notes/1100.mdx'
 
@@ -86,13 +90,13 @@ mkdir -p src/content/ko/release-notes
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375659/page.xhtml src/content/ko/release-notes/990-998.mdx
 echo 'Converted 544375659 to src/content/ko/release-notes/990-998.mdx'
 
-mkdir -p src/content/ko/release-notes/990-998/external-api-changes-9810-version
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375685/page.xhtml src/content/ko/release-notes/990-998/external-api-changes-9810-version/994-version.mdx
-echo 'Converted 544375685 to src/content/ko/release-notes/990-998/external-api-changes-9810-version/994-version.mdx'
+mkdir -p src/content/ko/release-notes/990-998
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375685/page.xhtml src/content/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx
+echo 'Converted 544375685 to src/content/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx'
 
-mkdir -p src/content/ko/release-notes/990-998/external-api-changes-994-version
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375741/page.xhtml src/content/ko/release-notes/990-998/external-api-changes-994-version/995-version.mdx
-echo 'Converted 544375741 to src/content/ko/release-notes/990-998/external-api-changes-994-version/995-version.mdx'
+mkdir -p src/content/ko/release-notes/990-998
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375741/page.xhtml src/content/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx
+echo 'Converted 544375741 to src/content/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx'
 
 mkdir -p src/content/ko/release-notes
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544375768/page.xhtml src/content/ko/release-notes/980-9812.mdx
@@ -298,9 +302,9 @@ mkdir -p src/content/ko/administrator-manual/general/company-management
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543981760/page.xhtml src/content/ko/administrator-manual/general/company-management/alerts.mdx
 echo 'Converted 543981760 to src/content/ko/administrator-manual/general/company-management/alerts.mdx'
 
-mkdir -p src/content/ko/administrator-manual/general/company-management/alerts/new-request
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/793608206/page.xhtml src/content/ko/administrator-manual/general/company-management/alerts/new-request/template-variables-by-request-type.mdx
-echo 'Converted 793608206 to src/content/ko/administrator-manual/general/company-management/alerts/new-request/template-variables-by-request-type.mdx'
+mkdir -p src/content/ko/administrator-manual/general/company-management/alerts
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/793608206/page.xhtml src/content/ko/administrator-manual/general/company-management/alerts/new-request-template-variables-by-request-type.mdx
+echo 'Converted 793608206 to src/content/ko/administrator-manual/general/company-management/alerts/new-request-template-variables-by-request-type.mdx'
 
 mkdir -p src/content/ko/administrator-manual/general/company-management
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544178443/page.xhtml src/content/ko/administrator-manual/general/company-management/licenses.mdx

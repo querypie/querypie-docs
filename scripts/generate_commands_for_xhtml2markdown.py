@@ -36,12 +36,12 @@ def process_breadcrumbs(breadcrumbs):
     Process breadcrumbs to determine the output path.
     
     Args:
-        breadcrumbs: A string containing breadcrumbs separated by ' > '
+        breadcrumbs: A string containing breadcrumbs separated by ' />> '
     
     Returns:
         A tuple containing (directory_path, filename)
     """
-    parts = breadcrumbs.split(' > ')
+    parts = breadcrumbs.split(' />> ')
     
     # Create slugified path components
     path_components = [slugify(part) for part in parts]
