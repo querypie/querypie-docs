@@ -38,7 +38,12 @@ test-xhtml:
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
 			echo "  Processing page.xhtml"; \
-			$(VENV) && python $(SCRIPT) --log-level warning $(TEST_DIR)/$$test_id/page.xhtml $(TEST_DIR)/$$test_id/output.mdx; \
+			$(VENV) && \
+			python $(SCRIPT) --log-level warning \
+				$(TEST_DIR)/$$test_id/page.xhtml \
+				$(TEST_DIR)/$$test_id/output.mdx \
+				--public-dir=$(TEST_DIR) \
+				--attachment-dir=/$$test_id/output; \
 			$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id (XHTML) failed"; \
 		fi; \
 	done
@@ -74,7 +79,12 @@ test-one-xhtml:
 	@echo "Testing case: $(TEST_ID) (XHTML)"
 	@if [ -f "$(TEST_DIR)/$(TEST_ID)/page.xhtml" ]; then \
 		echo "  Processing page.xhtml"; \
-		$(VENV) && python $(SCRIPT) --log-level warning $(TEST_DIR)/$(TEST_ID)/page.xhtml $(TEST_DIR)/$(TEST_ID)/output.mdx; \
+		$(VENV) && \
+		python $(SCRIPT) --log-level warning \
+			$(TEST_DIR)/$(TEST_ID)/page.xhtml \
+			$(TEST_DIR)/$(TEST_ID)/output.mdx \
+			--public-dir=$(TEST_DIR) \
+			--attachment-dir=/$(TEST_ID)/output; \
 		$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) (XHTML) failed"; \
 	else \
 		echo "  No page.xhtml found for test case $(TEST_ID)"; \
@@ -108,7 +118,12 @@ debug-xhtml:
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
 			echo "  Processing page.xhtml"; \
-			$(VENV) && python $(SCRIPT) --log-level debug $(TEST_DIR)/$$test_id/page.xhtml $(TEST_DIR)/$$test_id/output.mdx; \
+			$(VENV) && \
+			python $(SCRIPT) --log-level debug \
+			 	$(TEST_DIR)/$$test_id/page.xhtml \
+			 	$(TEST_DIR)/$$test_id/output.mdx \
+			 	--public-dir=$(TEST_DIR) \
+			 	--attachment-dir=/$$test_id/output; \
 			$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id (XHTML) failed"; \
 		fi; \
 	done
@@ -144,7 +159,12 @@ debug-one-xhtml:
 	@echo "Testing case: $(TEST_ID) (XHTML) with debug log level"
 	@if [ -f "$(TEST_DIR)/$(TEST_ID)/page.xhtml" ]; then \
 		echo "  Processing page.xhtml"; \
-		$(VENV) && python $(SCRIPT) --log-level debug $(TEST_DIR)/$(TEST_ID)/page.xhtml $(TEST_DIR)/$(TEST_ID)/output.mdx; \
+		$(VENV) && \
+		python $(SCRIPT) --log-level debug \
+			$(TEST_DIR)/$(TEST_ID)/page.xhtml \
+			$(TEST_DIR)/$(TEST_ID)/output.mdx \
+			--public-dir=$(TEST_DIR) \
+			--attachment-dir=/$(TEST_ID)/output; \
 		$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) (XHTML) failed"; \
 	else \
 		echo "  No page.xhtml found for test case $(TEST_ID)"; \

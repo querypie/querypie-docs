@@ -225,7 +225,7 @@ class Attachment:
     <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
     """
 
-    def __init__(self, node, input_file=INPUT_FILE_PATH, output_file=OUTPUT_FILE_PATH):
+    def __init__(self, node, input_dir, output_dir, public_dir):
         filename = node.get('filename', '')
         if not filename:
             logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
@@ -238,10 +238,10 @@ class Attachment:
         self.filename = normalize_screenshots(filename)
         self.used = False
 
-        self.input_dir = os.path.dirname(input_file)
-        self.basename_output_file = Path(output_file).stem
-        self.output_dir = os.path.join(os.path.dirname(output_file), self.basename_output_file)
-        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir}")
+        self.input_dir = input_dir
+        self.output_dir = output_dir
+        self.public_dir = public_dir
+        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir} public_dir={self.public_dir}")
 
     def __str__(self):
         return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
@@ -258,10 +258,13 @@ class Attachment:
             logging.warning(f"Source file is not an image file: {repr(source_file)}")
             return
 
-        if not os.path.exists(self.output_dir):
-            logging.debug(f"Output directory not found: {repr(self.output_dir)}")
-            os.makedirs(self.output_dir)
-        destination_file = os.path.join(self.output_dir, self.filename)
+        logging.debug(f"public_dir={self.public_dir} output_dir={self.output_dir}")
+        destination_dir = os.path.normpath(os.path.join(self.public_dir, './' + self.output_dir))
+        logging.debug(f"Destination directory: {destination_dir}")
+        if not os.path.exists(destination_dir):
+            logging.debug(f"Destination directory not found: {repr(destination_dir)}")
+            os.makedirs(destination_dir)
+        destination_file = os.path.join(destination_dir, self.filename)
         if os.path.exists(destination_file):
             # compare source_file and destination_file are equivalent.
             if filecmp.cmp(source_file, destination_file):
@@ -275,9 +278,9 @@ class Attachment:
 
     def as_markdown(self):
         if self.filename.endswith('.png'):
-            return f'![{self.filename}](./{self.basename_output_file}/{self.filename})'
+            return f'![{self.filename}]({self.output_dir}/{self.filename})'
         else:
-            return f'[{self.filename}](./{self.basename_output_file}/{self.filename})'
+            return f'[{self.filename}]({self.output_dir}/{self.filename})'
 
 
 class SingleLineParser:
@@ -1294,7 +1297,7 @@ class ConfluenceToMarkdown:
         else:
             self._imports[module_name] = False
 
-    def load_attachments(self):
+    def load_attachments(self, input_dir, output_dir, public_dir):
         # Find all ac:image nodes first
         ac_image_nodes = self.soup.find_all('ac:image')
         for ac_image in ac_image_nodes:
@@ -1302,7 +1305,7 @@ class ConfluenceToMarkdown:
             attachment_nodes = ac_image.find_all('ri:attachment')
             for node in attachment_nodes:
                 logging.debug(f"add attachment of <ac:image>{node}")
-                attachment = Attachment(node, INPUT_FILE_PATH, OUTPUT_FILE_PATH)
+                attachment = Attachment(node, input_dir, output_dir, public_dir)
                 attachment.copy_to_destination()
                 self.attachments.append(attachment)
 
@@ -1327,6 +1330,11 @@ def main():
     parser = argparse.ArgumentParser(description='Convert Confluence XHTML to Markdown')
     parser.add_argument('input_file', help='Input XHTML file path')
     parser.add_argument('output_file', help='Output Markdown file path')
+    parser.add_argument('--public-dir',
+                        default='./public',
+                        help='/public directory path')
+    parser.add_argument('--attachment-dir',
+                        help='Directory to save attachments (default: output file directory)')
     parser.add_argument('--log-level',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         default='info',
@@ -1342,6 +1350,16 @@ def main():
 
     INPUT_FILE_PATH = os.path.normpath(args.input_file)  # Normalize path for cross-platform compatibility
     OUTPUT_FILE_PATH = os.path.normpath(args.output_file)
+
+    input_dir = os.path.dirname(INPUT_FILE_PATH)
+    # Set attachment directory if provided
+    if args.attachment_dir:
+        output_dir = args.attachment_dir
+        logging.info(f"Using attachment directory: {output_dir}")
+    else:
+        output_file_stem = Path(args.output_file).stem
+        output_dir = os.path.join(os.path.dirname(args.output_file), output_file_stem)
+        logging.info(f"Using default attachment directory: {output_dir}")
 
     # Extract language code from the output file path
     path_parts = OUTPUT_FILE_PATH.split(os.sep)
@@ -1376,7 +1394,7 @@ def main():
 
         converter = ConfluenceToMarkdown(html_content)
         # converter.list_images()
-        converter.load_attachments()
+        converter.load_attachments(input_dir, output_dir, args.public_dir)
         markdown_content = converter.as_markdown()
 
         with open(args.output_file, 'w', encoding='utf-8') as f:
