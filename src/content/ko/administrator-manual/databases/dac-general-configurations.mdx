@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 DB 접근 제어에 적용되는 설정을 관리합니다.
 <p align="center">
-![image-20250627-001903.png](./dac-general-configurations/image-20250627-001903.png)
+![image-20250627-001903.png](/administrator-manual/databases/dac-general-configurations/image-20250627-001903.png)
 </p>
 
 *  **Privilege Deactivation Period ** : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
@@ -16,7 +16,7 @@ DB 접근 제어에 적용되는 설정을 관리합니다.
     * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
 *  **Display the first 10 rows in Query Audit ** : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
 <p align="center">
-![screenshot-20231210-174400.png](./dac-general-configurations/screenshot-20231210-174400.png)
+![screenshot-20231210-174400.png](/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png)
 *Query Audit Detail*
 </p>
 
@@ -40,7 +40,7 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승�
     * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.
     * Execute From: `{{executedFrom}}` : 쿼리를 수행한 수단입니다. 10.4.0 기준 Web Editor만 기록됩니다. 
 <p align="center">
-![image-20250627-140103.png](./dac-general-configurations/image-20250627-140103.png)
+![image-20250627-140103.png](/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png)
 *Query Audit*
 </p>
 

@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
 <p align="center">
-![image-20240807-125005.png](./requesting-sql/image-20240807-125005.png)
+![image-20240807-125005.png](/user-manual/workflow/requesting-sql/image-20240807-125005.png)
 </p>
 
 ### 2. 승인자 지정하기
@@ -23,7 +23,7 @@ import { Callout } from 'nextra/components'
     *  **A single Assignee can complete the approval request**  : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.
     *  **All Assignees must approve this request**  : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
 <p align="center">
-![image-20240807-125031.png](./requesting-sql/image-20240807-125031.png)
+![image-20240807-125031.png](/user-manual/workflow/requesting-sql/image-20240807-125031.png)
 </p>
 
 ### 3. 실행자 및 참조자 지정하기
@@ -33,7 +33,7 @@ import { Callout } from 'nextra/components'
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가합니다. 
 * `Save` 버튼을 눌러 모달을 닫고 참조자 지정을 완료합니다.
 <p align="center">
-![screenshot-20240807-215143.png](./requesting-sql/screenshot-20240807-215143.png)
+![screenshot-20240807-215143.png](/user-manual/workflow/requesting-sql/screenshot-20240807-215143.png)
 </p>
 
 ### 4. 사후 승인으로 요청 보내기
@@ -41,7 +41,7 @@ import { Callout } from 'nextra/components'
 * 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다. 
 * Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
 <p align="center">
-![screenshot-20240807-215226.png](./requesting-sql/screenshot-20240807-215226.png)
+![screenshot-20240807-215226.png](/user-manual/workflow/requesting-sql/screenshot-20240807-215226.png)
 </p>
 
 <Callout type="important">
@@ -52,7 +52,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 ### 5. 요청 정보 입력하기
 
 <p align="center">
-![screenshot-20240802-103844.png](./requesting-sql/screenshot-20240802-103844.png)
+![screenshot-20240802-103844.png](/user-manual/workflow/requesting-sql/screenshot-20240802-103844.png)
 *User &gt; Workflow &gt; Submit Request &gt; SQL Request &gt; Request Summary*
 </p>
 
@@ -72,7 +72,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 
 승인이 완료된 SQL Request 건은 승인 완료 즉시 실행할 수 있는 상태가 됩니다.
 <p align="center">
-![screenshot-20240802-104603.png](./requesting-sql/screenshot-20240802-104603.png)
+![screenshot-20240802-104603.png](/user-manual/workflow/requesting-sql/screenshot-20240802-104603.png)
 *Workflow &gt; Executions &gt; To Do &gt; Request Details &gt; Execute*
 </p>
 
@@ -88,13 +88,13 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 <Callout type="info">
 DML Query 수행에 대한 승인 프로세스가 강제된 경우<br/>`INSERT`, `UPDATE`, `DELETE` 구문 수행시 관리자가 Workflow로 승인 프로세스를 거치도록 정책을 생성한 경우가 있습니다. 이경우 Web Editor에서 쿼리 수행시 아래와 같은 메시지가 출력됩니다. <br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
 <p align="center">
-![image-20250629-155649.png](./requesting-sql/image-20250629-155649.png)
+![image-20250629-155649.png](/user-manual/workflow/requesting-sql/image-20250629-155649.png)
 *Web Editor에서 경고문*
 </p>
 
 이경우 `SEND SQL Request` 버튼을 클릭하여 바로 Workflow의 SQL Request 양식으로 이동하여 요청을 진행 할 수 있습니다. <br/>적합한 Approval Rule을 선택해야 하고 DML 여부를 선택합니다. DML인 경우 Content Type에서 File 첨부 방식으로 수행할 수 없습니다.
 <p align="center">
-![image-20250629-161143.png](./requesting-sql/image-20250629-161143.png)
+![image-20250629-161143.png](/user-manual/workflow/requesting-sql/image-20250629-161143.png)
 *Workflow의 SQL Request 양식*
 </p>
 </Callout>

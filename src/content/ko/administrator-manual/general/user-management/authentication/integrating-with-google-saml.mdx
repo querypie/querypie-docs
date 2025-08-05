@@ -7,25 +7,25 @@ QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 
 
 1. Google 관리 콘솔 홈페이지에 접속 후 왼쪽 메뉴에서 앱 &gt; `웹 및 모바일 앱`을 클릭합니다.
 <p align="center">
-![screenshot-20240902-162650.png](./integrating-with-google-saml/screenshot-20240902-162650.png)
+![screenshot-20240902-162650.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-162650.png)
 </p>
 
 
 2. `앱 추가` 버튼을 누른 후 `맞춤 SAML 앱 추가`를 클릭합니다.
 <p align="center">
-![image-20240902-073821.png](./integrating-with-google-saml/image-20240902-073821.png)
+![image-20240902-073821.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/image-20240902-073821.png)
 </p>
 
 
 3. 앱 세부정보를 입력하는 1단계 페이지 입니다. 앱 이름 항목에 ‘QueryPie-SSO’를 입력 후 `계속` 버튼을 클릭합니다.
 <p align="center">
-![screenshot-20240902-164038.png](./integrating-with-google-saml/screenshot-20240902-164038.png)
+![screenshot-20240902-164038.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164038.png)
 </p>
 
 
 4. 2단계 페이지에서는 다음의 값들을 입력합니다. 입력 완료 후 `계속` 버튼을 클릭하여 3단계로 이동합니다.
 <p align="center">
-![screenshot-20240902-164356.png](./integrating-with-google-saml/screenshot-20240902-164356.png)
+![screenshot-20240902-164356.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164356.png)
 </p>
 
 * ACS URL : `https://{QueryPie Host}/saml/sp/acs` 
@@ -35,7 +35,7 @@ QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 
 
 5. 3단계 페이지에서는 `매칭 추가` 버튼을 클릭하여 다음의 네 가지 값을 모두 입력 후 `마침` 버튼을 클릭합니다.
 <p align="center">
-![screenshot-20240902-164739.png](./integrating-with-google-saml/screenshot-20240902-164739.png)
+![screenshot-20240902-164739.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164739.png)
 </p>
 
 * Basic Information : Primary email → email
@@ -46,25 +46,25 @@ QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 
 
 6. Google 본인 인증을 위한 비밀번호를 입력 후 `다음`을 클릭하면 생성이 완료됩니다.
 <p align="center">
-![screenshot-20240902-164955.png](./integrating-with-google-saml/screenshot-20240902-164955.png)
+![screenshot-20240902-164955.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164955.png)
 </p>
 
 
 7. 생성이 성공적으로 완료되면 다음과 같이 목록에 신규 추가된 앱이 표시됩니다. 사용 설정을 위해 해당 앱을 클릭합니다.
 <p align="center">
-![screenshot-20240902-165202.png](./integrating-with-google-saml/screenshot-20240902-165202.png)
+![screenshot-20240902-165202.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165202.png)
 </p>
 
 
 8. 앱의 상세 정보에서 `메타데이터 다운로드`를 클릭하여 파일을 다운로드 받은 후 `사용자 액세스` 항목을 클릭합니다.
 <p align="center">
-![screenshot-20240902-165512.png](./integrating-with-google-saml/screenshot-20240902-165512.png)
+![screenshot-20240902-165512.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165512.png)
 </p>
 
 
 9. 서비스 상태를 ‘모든 사용자에 사용하도록 설정’을 선택한 상태로 `저장` 버튼을 클릭합니다.
 <p align="center">
-![screenshot-20240902-165647.png](./integrating-with-google-saml/screenshot-20240902-165647.png)
+![screenshot-20240902-165647.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165647.png)
 </p>
 
 
@@ -72,7 +72,7 @@ QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 
 
 1. QueryPie Admin &gt; General &gt; User Management &gt; Authentication 메뉴로 진입하여 다음과 같이 설정합니다.
 <p align="center">
-![screenshot-20240902-170029.png](./integrating-with-google-saml/screenshot-20240902-170029.png)
+![screenshot-20240902-170029.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-170029.png)
 </p>
 
 * Type : SAML을 선택합니다. 
@@ -83,7 +83,7 @@ QueryPie에서는 Google의 사용자를 SAML 2.0을 통해 사용자 연동을 
 ## QueryPie에서 SAML 로그인
 
 <p align="center">
-![image-20240723-073353.png](./integrating-with-google-saml/image-20240723-073353.png)
+![image-20240723-073353.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/image-20240723-073353.png)
 </p>
 
 이제 로그인 페이지에서 `Login with SAML` 버튼을 통해 Google로 인증하여 QueryPie에 로그인할 수 있습니다.
