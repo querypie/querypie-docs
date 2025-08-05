@@ -13,6 +13,7 @@ appropriate directory structure based on the breadcrumbs.
 import os
 import argparse
 import re
+from pathlib import Path
 
 def slugify(text):
     """
@@ -97,13 +98,17 @@ def generate_commands(list_file, confluence_dir='docs/latest-ko-confluence/', ou
             # Create full paths
             input_file = os.path.join(confluence_dir, page_id, 'page.xhtml')
             output_dir = os.path.join(output_base_dir, rel_dir)
-            output_file = os.path.join(output_dir, filename)
+            output_file = os.path.normpath(os.path.join(output_dir, filename))
+            
+            # Generate attachment directory based on breadcrumbs
+            # Use the same path structure as the output file but for attachments
+            attachment_dir = os.path.normpath(os.path.join('/', rel_dir, Path(filename).stem))
             
             # Generate mkdir command
             mkdir_cmd = f"mkdir -p {output_dir}"
             
-            # Generate conversion command
-            convert_cmd = f"python scripts/confluence_xhtml_to_markdown.py {input_file} {output_file}"
+            # Generate conversion command with new options
+            convert_cmd = f"python scripts/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir=public --attachment-dir={attachment_dir}"
             
             # Add commands to the list
             commands.append(mkdir_cmd)
