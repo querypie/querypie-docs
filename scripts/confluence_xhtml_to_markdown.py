@@ -276,11 +276,13 @@ class Attachment:
             # Change file permission to 0644
             os.chmod(destination_file, 0o644)
 
-    def as_markdown(self):
+    def as_markdown(self, caption=''):
+        if not caption:
+            caption = self.filename
         if self.filename.endswith('.png'):
-            return f'![{self.filename}]({self.output_dir}/{self.filename})'
+            return f'![{caption}]({self.output_dir}/{self.filename})'
         else:
-            return f'[{self.filename}]({self.output_dir}/{self.filename})'
+            return f'[{caption}]({self.output_dir}/{self.filename})'
 
 
 class SingleLineParser:
@@ -704,6 +706,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             self.convert_ul_ol(node)
         elif node.name in ['ac:image']:
+            self.append_empty_line_unless_first_child(node)
             self.convert_image(node)
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown)
@@ -796,7 +799,7 @@ class MultiLineParser:
             for it in self.attachments:
                 if it.original == image_filename:
                     it.used = True
-                    markdown = it.as_markdown()
+                    markdown = it.as_markdown(caption_text)
                     break
 
         if not markdown:
@@ -805,14 +808,16 @@ class MultiLineParser:
             markdown = f'[{image_filename}]()'
 
         # Add the image in Markdown format
-        self.markdown_lines.append(f'<p align="{align}">\n')
+        self.markdown_lines.append(f'<figure data-layout="{align}" data-align="{align}">\n')
         self.markdown_lines.append(f"{markdown}\n")
 
         # Add caption if present
         if caption_text:
-            self.markdown_lines.append(f'*{caption_text}*\n')
+            self.markdown_lines.append(f'<figcaption>\n')
+            self.markdown_lines.append(f'{caption_text}\n')
+            self.markdown_lines.append(f"</figcaption>\n")
 
-        self.markdown_lines.append(f'</p>\n')
+        self.markdown_lines.append(f'</figure>\n')
 
     def convert_structured_macro_code(self, node):
         # Find language parameter and code content

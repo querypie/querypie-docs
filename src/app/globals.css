@@ -19,6 +19,15 @@ aside.nextra-sidebar.x\:w-20 { /* collapsed */
     width: calc(var(--x-spacing) * 12);
 }
 
+/* Embedded Image */
+article main figure {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+article main figure figcaption {
+    text-align: center;
+}
+
 /* Custom styles for QueryPie branding */
 .querypie-custom {
   /* Add QueryPie specific styles here */
