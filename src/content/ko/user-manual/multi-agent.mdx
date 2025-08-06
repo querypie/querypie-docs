@@ -54,10 +54,13 @@ Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전
 ### 에이전트에서 3rd Party Database Tool 설정 관리하기
 
 Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
-<p align="center">
-![screenshot-20250413-235252.png](/user-manual/multi-agent/screenshot-20250413-235252.png)
-*Multi-Agent &gt; Settings &gt; Databases*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Settings &gt; Databases](/user-manual/multi-agent/screenshot-20250413-235252.png)
+<figcaption>
+Multi-Agent &gt; Settings &gt; Databases
+</figcaption>
+</figure>
 
 
 * Database Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
@@ -72,9 +75,10 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 쿼리파이 DB 접근제어에서 한 사용자가 두개이상의 privilege를 부여받을 수 있습니다. 특정 커넥션에 접근권한을 부여받은 사용자가 여러 그룹에 포함되어 있고 그룹에 다른 접근 권한을 부여한 경우 이 사용자는 여러개의 privilege가 할당될 수 있습니다. 이 때 proxy를 통해 접속할 때 사용할 Privilege를 agent 화면에서 선택할 수 있습니다. (10.3.0 부터 지원)
 
 다중 privilege를 부여받은 후 사용자가 특정 privilege를 default로 설정하지 않으면 접속할 수 없기 때문에 만약 default privilege가 설정되어 있지 않은 경우 아래 그림과 같은 경고 아이콘이 표시됩니다.<br/>
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20250513-025002.png](/user-manual/multi-agent/image-20250513-025002.png)
-</p>
+</figure>
 
 1. 다중 Privilege가 할당된 커넥션에 대해 마우스 오른쪽 버튼을 누르고 메뉴를 호출합니다.
 2. 메뉴에서 Connection Information을 선택합니다.<br/>
@@ -87,10 +91,13 @@ Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있�
 ### 에이전트에서 Role별 쿠버네티스 클러스터 목록 조회하기
 
 Role 셀렉터에서 본인에게 부여된 Role 중 하나를 선택하면, 선택된 Role에 권한이 부여되어 있는 K8s Cluster 목록을 확인할 수 있습니다.
-<p align="center">
-![screenshot-20250217-113908.png](/user-manual/multi-agent/screenshot-20250217-113908.png)
-*Multi-Agent &gt; Kubernetes*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113908.png)
+<figcaption>
+Multi-Agent &gt; Kubernetes
+</figcaption>
+</figure>
 
 ### 에이전트에서 Kubeconfig 설정 가이드 확인하기
 
@@ -99,10 +106,13 @@ Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig �
 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 Setting 페이지로 진입, Kubernetes 탭을 선택하면 Kubeconfig File 저장 경로를 관리하고, Kubeconfig 설정 커맨드를 복사할 수 있습니다.
 
 이후 사용하시는 터미널에서 복사한 커맨드를 붙여넣고 실행합니다.
-<p align="center">
-![screenshot-20250217-113712.png](/user-manual/multi-agent/screenshot-20250217-113712.png)
-*Multi-Agent &gt; Setting &gt; Kubernetes*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113712.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Kubernetes
+</figcaption>
+</figure>
 
 ## SAC**[10.2.8~]**
 
@@ -144,10 +154,13 @@ Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig �
 ### 에이전트에서 3rd Party Terminal Tool 설정 관리하기
 
 Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
-<p align="center">
-![screenshot-20250413-235301.png](/user-manual/multi-agent/screenshot-20250413-235301.png)
-*Multi-Agent &gt; Setting &gt; Servers*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Servers](/user-manual/multi-agent/screenshot-20250413-235301.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Servers
+</figcaption>
+</figure>
 
 * Terminal Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
     * Auto Detected : Open Connection With 로 툴을 선택할 때마다 툴의 경로를 자동으로 찾습니다.
@@ -169,14 +182,18 @@ Host 전환은 로그인 시에는 필수이나, 로그인 후 Proxy 연결이 �
 ## Multi Agent 설정 초기화하기
 
 1. 시스템 트레이 또는 메뉴 바에서 Multi Agent 아이콘(또는 항목)을 클릭한 뒤, 표시되는 메뉴에서 'Reset All Settings'를 선택합니다.
-<p align="center">
-![screenshot-20250414-000719.png](/user-manual/multi-agent/screenshot-20250414-000719.png)
-* Status Bar Item (MacOS)*
-</p>
-<p align="center">
-![screenshot-20250414-001207.png](/user-manual/multi-agent/screenshot-20250414-001207.png)
-*Application Menu (MacOS)*
-</p>
+<figure data-layout="center" data-align="center">
+![ Status Bar Item (MacOS)](/user-manual/multi-agent/screenshot-20250414-000719.png)
+<figcaption>
+ Status Bar Item (MacOS)
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Application Menu (MacOS)](/user-manual/multi-agent/screenshot-20250414-001207.png)
+<figcaption>
+Application Menu (MacOS)
+</figcaption>
+</figure>
 
 1. 또는 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 설정 페이지로 진입하고, Hosts 탭 하단의 Reset All Settings 버튼을 클릭합니다.
 2. 확인 모달에서 Reset 버튼을 클릭하면 로컬 폴더에 저장된 모든 설정이 초기화됩니다.
@@ -188,14 +205,18 @@ Multi-agent 사용 중 문제 발생시 다음의 절차를 따라서 로그를 
 
 ### GUI
 
-<p align="center">
-![diagnostic-tools-for-macos.png](/user-manual/multi-agent/diagnostic-tools-for-macos.png)
-*MacOS*
-</p>
-<p align="center">
-![diagnostic-tools-for-windows.png](/user-manual/multi-agent/diagnostic-tools-for-windows.png)
-*Windows*
-</p>
+<figure data-layout="center" data-align="center">
+![MacOS](/user-manual/multi-agent/diagnostic-tools-for-macos.png)
+<figcaption>
+MacOS
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Windows](/user-manual/multi-agent/diagnostic-tools-for-windows.png)
+<figcaption>
+Windows
+</figcaption>
+</figure>
 1. 메뉴바(MacOS) 또는 시스템 트레이(Windows)에서 Multi-agent 아이콘을 클릭하고, 메뉴에서 Diagnostic Tools &gt; Enable Tracing 을 클릭합니다.
     1. 로그 레벨을 Trace로 변경하며, UI에서는 Disable Tracing 으로 항목이 변경됩니다.
 2. 문제를 재현합니다.

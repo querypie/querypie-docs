@@ -10,10 +10,12 @@ QueryPie의 바이너리 패키지는 도커 이미지로 만들어져 있으며
 
 ## 시험평가를 위한 간단한 구성
 
-<p align="center">
-![screenshot-20240801-115045.png](/querypie-overview/system-architecture-overview/screenshot-20240801-115045.png)
-*Simple System Configuration for Evaluation*
-</p>
+<figure data-layout="center" data-align="center">
+![Simple System Configuration for Evaluation](/querypie-overview/system-architecture-overview/screenshot-20240801-115045.png)
+<figcaption>
+Simple System Configuration for Evaluation
+</figcaption>
+</figure>
 
 위의 시스템 구조는 QueryPie 제품을 시험평가하기 위해 구성하는 간단한 구성의 사례입니다. 이용자는 웹브라우저로 QueryPie에 접속하게 되며, QueryPie는 Application Load Balancer에 연결된 하나의 Linux VM에 설치되어 작동합니다. Linux VM 안에는 QueryPie 애플리케이션이 docker container 방식으로 구동되고, 이 외에 QueryPie가 사용하는 MySQL database, Redis 캐시가 docker container 방식으로 구동됩니다.
 
@@ -42,10 +44,12 @@ QueryPie는 https://querypie-poc.customer.com/과 같은 TLS 인증서가 적용
 
 ## 실사용을 위한 시스템 구성의 요약
 
-<p align="center">
-![screenshot-20240801-115343.png](/querypie-overview/system-architecture-overview/screenshot-20240801-115343.png)
-*Summary of System Architecture for Real Use*
-</p>
+<figure data-layout="center" data-align="center">
+![Summary of System Architecture for Real Use](/querypie-overview/system-architecture-overview/screenshot-20240801-115343.png)
+<figcaption>
+Summary of System Architecture for Real Use
+</figcaption>
+</figure>
 
 <Callout type="info">
 위 구성은 상세 시스템 아키텍처가 아닌 이용자의 이해를 돕기 위해 요약된 구성도입니다.

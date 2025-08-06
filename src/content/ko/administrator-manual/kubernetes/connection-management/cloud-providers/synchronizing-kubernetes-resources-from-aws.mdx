@@ -22,10 +22,13 @@ QueryPie에서는 쿠버네티스 클러스터 등록 및 관리를 위한 AWS �
 ## AWS EKS 인증 모드 수정하기
 
 QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 EKS access entry API를 활용합니다. 따라서, 클러스터 인증 모드가 ConfigMap으로만 설정되어 있다면 연결이 어려운 부분이 있어 원활한 동기화를 위해 AWS 콘솔에서 모드 변경을 사전에 작업해두시는 것을 권장드립니다.
-<p align="center">
-![image-20240512-134234.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
-*AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access*
-</p>
+
+<figure data-layout="center" data-align="center">
+![AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
+<figcaption>
+AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access
+</figcaption>
+</figure>
 
 1. AWS Console에 EKS 관리자 권한을 가진 계정으로 접속합니다. 
 2.  **Elastic Kubernetes Service (EKS) ** 메뉴로 이동합니다. 
@@ -40,10 +43,12 @@ QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 
 
 ## QueryPie에서 AWS 연동 정보 등록하기
 
-<p align="center">
-![image-20240721-054036.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
-*Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
+</figcaption>
+</figure>
 
 1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
@@ -71,10 +76,12 @@ A. 이미  **Credential** 이 `Default Credentials`이면서 동일한 `Region`�
 
 ## 등록된 AWS Cloud Provider 동기화 및 관리
 
-<p align="center">
-![image-20240721-054313.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
-*Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details
+</figcaption>
+</figure>
 
 1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 등록한 Cloud Provider를 클릭하여 세부 정보 화면으로 들어갑니다.

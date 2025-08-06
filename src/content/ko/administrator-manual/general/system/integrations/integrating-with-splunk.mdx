@@ -11,10 +11,12 @@ Integration 설정을 위해서는 System admin 권한이 필요합니다.
 
 ## Syslog-Splunk 연계 권장 아키텍처
 
-<p align="center">
-![screenshot-20240613-174947.png](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
-*Splunk 연계 권장 아키텍쳐*
-</p>
+<figure data-layout="center" data-align="center">
+![Splunk 연계 권장 아키텍쳐](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
+<figcaption>
+Splunk 연계 권장 아키텍쳐
+</figcaption>
+</figure>
 
 Splunk에서 권장하는 Syslog-Splunk 연계를 위한 아키텍처는 다음과 같습니다.
 
@@ -33,10 +35,13 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 1. General Settings 메뉴에서 System &gt; Integrations 메뉴로 이동합니다. 
 2. Splunk 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 아래와 같이 Destination 정보를 입력할 수 있는 팝업이 표시됩니다.
-<p align="center">
-![image-20240523-101104.png](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20240523-101104.png)
-*(좌) TCP / UDP 설정 화면 (우) HTTP / HTTPS 설정 화면*
-</p>
+
+<figure data-layout="center" data-align="center">
+![(좌) TCP / UDP 설정 화면 (우) HTTP / HTTPS 설정 화면](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20240523-101104.png)
+<figcaption>
+(좌) TCP / UDP 설정 화면 (우) HTTP / HTTPS 설정 화면
+</figcaption>
+</figure>
 
 1. Destination 정보를 생성하기 위해 다음의 정보들을 입력합니다. 
     1.  **Destination Name ** : syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.

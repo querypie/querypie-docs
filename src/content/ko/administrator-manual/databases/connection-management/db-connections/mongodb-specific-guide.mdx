@@ -43,10 +43,12 @@ mongodb+srv://<FQDN>/?[options]
 
 ### 2. MongoDB 커넥션 생성하기
 
-<p align="center">
-![image-20240730-113638.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
-*Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
+</figcaption>
+</figure>
 
 1. Administrator &gt; Databases &gt; Connection Management &gt; DB Connections 메뉴로 이동합니다.
 2. 우측 상단의 `Create Connection` 버튼을 클릭합니다.
@@ -56,9 +58,9 @@ mongodb+srv://<FQDN>/?[options]
 
 #### &lt; Standard Connection &gt;
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
-</p>
+</figure>
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
 2. Connection Name을 지정합니다.
@@ -72,9 +74,10 @@ mongodb+srv://<FQDN>/?[options]
         1. Instance Name : 각각의 호스트를 구별할 수 있는 이름을 입력합니다.
         2. Connection String : 각 호스트를 `호스트네임(도메인주소 또는 IP):[port]` 형식으로 입력합니다.
         3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시 ** `Expose` **옵션을 활성화 시킵니다.**  
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
-</p>
+</figure>
 
 1. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
 2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.** 
@@ -90,9 +93,9 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](DB Connections
 
 #### &lt; +srv Connection &gt;
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
-</p>
+</figure>
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
 2. Connection Name을 지정합니다.
@@ -114,9 +117,10 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](DB Connections
 ### 4. Sharded Cluster(Sharding) 형태로 설정하기
 
 Sharded Cluster는 Replica Set과 Connection String의 옵션만 다르고 설정 방법은 같습니다. Replica Set은 replicaSet=[replica set name] 옵션이 필요하지만 Sharded Cluster는 이 옵션이 필요 없습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
-</p>
+</figure>
 
 #### &lt; Standard Connection &gt;
 
@@ -150,9 +154,10 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](DB Connections
 
 > +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면  **tls=true** 를 수동으로 입력해줘야 합니다. (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이  **&tls=true** 를 입력합니다.
 Proxy를 사용하는 경우 DataGrip등의 SQL Client에서 TLS 설정과 별개로 QueryPie에서도 SSL 설정이 필요합니다.<br/>[SSL Configurations](SSL Configurations)를 참고하여 설정 후 커넥션의 SSL 설정에 반영해야 합니다.<br/>
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
-</p>
+</figure>
 
 
 ---
@@ -170,10 +175,12 @@ MongoDB 에 개인정보 또는 민감정보와 같이 접근 제한이 필요�
 
 ### 마스킹 정책에 규칙 등록하기
 
-<p align="center">
-![image-20240730-115120.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
+</figcaption>
+</figure>
 
 1. 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다.Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 MongoDB 에서 해당 Collection 의 Document 를 조회할 경우 적용한 마스킹 패턴에 따라 사전에 지정한 Attribute 의 Value 값이 ‘*****@gmail.com’와 같이 마스킹되어 표시됩니다.
     1. Data Masking 메뉴에서 생성한 정책을 클릭합니다.
@@ -193,10 +200,13 @@ MongoDB 에 개인정보 또는 민감정보와 같이 접근 제한이 필요�
 ### Collection / JSON Value 접근 제한 정책에 규칙 등록하기
 
 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다.
-<p align="center">
-![image-20240730-115402.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
 
 1. Data Access 메뉴에서 생성한 정책을 클릭합니다.
 2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
@@ -229,53 +239,68 @@ Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이�
 
 #### Case 1. item 속성 접근 제한
 
-<p align="center">
-![image-20240730-115402.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
 
 하나의 속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 해당하는 item을 입력 후 `OK` 버튼을 클릭합니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-120312.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png)
-</p>
+</figure>
 
 위 스크린샷과 같이 item(“T_PWD”) 속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
 #### Case 2. size.h 속성 접근 제한
 
 size하위의 h속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.size.h을 입력 후 `OK` 버튼을 클릭합니다.
-<p align="center">
-![image-20240730-120011.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List*
-</p>
-<p align="center">
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-120215.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png)
-</p>
+</figure>
 
 위 스크린샷과 같이 size 하위의 h속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
 #### Case 3. size 하위 모든 속성 접근 제한
 
 size 하위의 모든 속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.size을 입력 후 `OK` 버튼을 클릭합니다.
-<p align="center">
-![image-20240730-120351.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List*
-</p>
-<p align="center">
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-120421.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png)
-</p>
+</figure>
 
 위 스크린샷과 같이 size 하위의 모든속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
 #### Case 4. tags 속성의 리스트 2번째 값에 대한 접근 제한
 
 tags속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.tags[1]을 입력 후 `OK` 버튼을 클릭합니다.
-<p align="center">
-![image-20240730-120507.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
-*Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List*
-</p>
-<p align="center">
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-120544.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png)
-</p>
+</figure>
 
 위 스크린샷과 같이 tags속성의 2번째 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.

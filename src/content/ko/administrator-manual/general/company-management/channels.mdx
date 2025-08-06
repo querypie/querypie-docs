@@ -7,25 +7,34 @@ Channels 페이지에서는 QueryPie에서 발송하는 알림을 수신할 채�
 ## 등록된 채널 조회하기
 
 Administrator &gt; General &gt; Company Management &gt; Channels 페이지에서 현재 등록된 채널 목록을 조회할 수 있습니다. 채널명으로 검색이 가능하며, Channel Type으로 필터링할 수 있습니다.
-<p align="center">
-![screenshot-20240808-172741.png](/administrator-manual/general/company-management/channels/screenshot-20240808-172741.png)
-*Administrator &gt; General &gt; Company Management &gt; Channels*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels](/administrator-manual/general/company-management/channels/screenshot-20240808-172741.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels
+</figcaption>
+</figure>
 
 리스트 내 항목을 클릭하면 상세 정보를 조회 및 변경할 수 있습니다.
-<p align="center">
-![screenshot-20241211-191603.png](/administrator-manual/general/company-management/channels/screenshot-20241211-191603.png)
-*Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Details*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Details](/administrator-manual/general/company-management/channels/screenshot-20241211-191603.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Details
+</figcaption>
+</figure>
 
 
 ## 채널 등록하기
 
 Channels 페이지 우상단 `Create Channel` 버튼을 클릭하면 채널 생성 모달이 노출됩니다.
-<p align="center">
-![screenshot-20241211-154231.png](/administrator-manual/general/company-management/channels/screenshot-20241211-154231.png)
-*Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Channel*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Channel](/administrator-manual/general/company-management/channels/screenshot-20241211-154231.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Channel
+</figcaption>
+</figure>
 
 *  **Title**  : 채널 이름
 *  **Channel Type**  : 알림을 받을 채널 타입을 선택합니다. 선택지에 따라 하단 추가 입력 항목이 상이합니다.
@@ -87,19 +96,24 @@ Admin &gt; General &gt; System &gt; Integration 메뉴로 진입 후, Email 타�
 ## 채널 삭제하기
 
 Channels 페이지 내 채널 목록에서 삭제하려는 채널을 체크박스로 선택하면 `Delete` 버튼이 노출됩니다. 버튼을 클릭하면 삭제 확인 모달이 출력됩니다. `OK` 버튼을 클릭하면 삭제가 완료됩니다.
-<p align="center">
-![screenshot-20240728-222004.png](/administrator-manual/general/company-management/channels/screenshot-20240728-222004.png)
-*Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete 확인 모달*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete 확인 모달](/administrator-manual/general/company-management/channels/screenshot-20240728-222004.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete 확인 모달
+</figcaption>
+</figure>
 
 ## Slack 연동을 위한 Slack App 설정 방법
 
 ### 1. App 생성하기
 
-<p align="center">
-![screenshot-20240305-161015.png](/administrator-manual/general/company-management/channels/screenshot-20240305-161015.png)
-*Slack API &gt; Apps &gt; Create an App*
-</p>
+<figure data-layout="center" data-align="center">
+![Slack API &gt; Apps &gt; Create an App](/administrator-manual/general/company-management/channels/screenshot-20240305-161015.png)
+<figcaption>
+Slack API &gt; Apps &gt; Create an App
+</figcaption>
+</figure>
 
 1. [https://api.slack.com/apps](https://api.slack.com/apps) 으로 이동합니다.
 2. `Create an App` 버튼을 클릭합니다.
@@ -108,18 +122,23 @@ Channels 페이지 내 채널 목록에서 삭제하려는 채널을 체크박�
 
 ### 2-1. Webhook 타입으로 연동하기
 
-<p align="center">
-![screenshot-20240804-190716.png](/administrator-manual/general/company-management/channels/screenshot-20240804-190716.png)
-*Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks*
-</p>
+<figure data-layout="center" data-align="center">
+![Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks](/administrator-manual/general/company-management/channels/screenshot-20240804-190716.png)
+<figcaption>
+Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks
+</figcaption>
+</figure>
 
 1. 해당 앱 페이지 내에서 `Incoming Webhooks` 메뉴로 이동합니다.
 2. Activate Incoming Webhooks 옵션을 활성화합니다.
 3. 하단의 `Add New Webhook to Workspace` 를 클릭합니다.
-<p align="center">
-![image-20240305-110658.png](/administrator-manual/general/company-management/channels/image-20240305-110658.png)
-*Slack 내 Webhook 추가 화면*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Slack 내 Webhook 추가 화면](/administrator-manual/general/company-management/channels/image-20240305-110658.png)
+<figcaption>
+Slack 내 Webhook 추가 화면
+</figcaption>
+</figure>
 
 1. Workspace 내에 경보를 보낼 채널을 선택한 뒤 `허용` 버튼을 클릭합니다.
 2. 생성된 Webhook URL 정보를 복사한 뒤, QueryPie 채널 생성 모달에 붙여넣습니다.

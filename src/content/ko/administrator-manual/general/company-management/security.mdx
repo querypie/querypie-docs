@@ -16,9 +16,10 @@ QueryPie Web 로그인 관련 보안 설정을 관리합니다.
 ## Account Security Policy
 
 QueryPie 계정의 잠금 및 만료 등의 보안 정책을 설정할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20250515-091125.png](/administrator-manual/general/company-management/security/image-20250515-091125.png)
-</p>
+</figure>
 
 *  **Account Expiration Period (Days)**  : 계정 만료 처리를 위한 장기 미접속 일자 기준
 *  **Expiration Reminder (Days) **  **[deprecated]** : 만료 예정 알림 기준
@@ -36,9 +37,10 @@ QueryPie 계정의 잠금 및 만료 등의 보안 정책을 설정할 수 있�
 ## Password Setting
 
 QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20250515-091250.png](/administrator-manual/general/company-management/security/image-20250515-091250.png)
-</p>
+</figure>
 
 *  **Maximum Password Age**  : 비밀번호 변경 주기 (Default : 90일)
 *  **Password History**  : 이전 비밀번호 재사용 금지 횟수 기준
@@ -58,9 +60,10 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
 ## Timeout
 
 웹 콘솔과 에이전트의 타임아웃 정책을 설정할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
-</p>
+</figure>
 
 *  **Web Inactivity Timeout (Minutes) ** : 웹 콘솔 타임아웃 기준 (Default : 60분)
     * 지정된 시간 동안 활동이 없을 경우 타임아웃 처리
@@ -71,9 +74,10 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
 ## QueryPie Web IP Access Control
 
 QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![Screenshot-2025-06-26-at-2.14.46-PM.png](/administrator-manual/general/company-management/security/Screenshot-2025-06-26-at-2.14.46-PM.png)
-</p>
+</figure>
 
 *  **All Users**  : 모든 사용자에 대해 적용되는 IP 제한 설정 (Default : 0.0.0.0/0)
 *  **Each User**  : 토글을 켜면 개별 사용자에 대해 Allowed Zone 설정 가능 
@@ -101,14 +105,18 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
 **Q. 만약 사용자가 허용되지 않은 IP 에서 QueryPie 웹 콘솔 접속 시도 시 어떤 화면을 보게 되나요?**
 A. 허용되지 않은 IP에서 접속 시도 시 QueryPie 웹 콘솔 내 어떤 페이지이든 접근이 불가하여 아래와 같은 안내 화면을 보게 됩니다. 만약 All Users에 기본값(0.0.0.0/0)이 등록되어 있고, 개별 사용자에게 특정 Allowed Zone 이 설정되어 있다면 로그인 페이지까지는 접속이 가능하나 로그인은 불가하게 됩니다.
 </Callout>
-<p align="center">
-![image-20240121-073718.png](/administrator-manual/general/company-management/security/image-20240121-073718.png)
-*QueryPie Web Access Control &gt; All Users 에 등록된 IP 와 일치하지 않을 경우*
-</p>
-<p align="center">
-![image-20240121-074246.png](/administrator-manual/general/company-management/security/image-20240121-074246.png)
-*Users &gt; Update User 에 등록된 Allowed Zone 과 일치하지 않을 경우*
-</p>
+<figure data-layout="center" data-align="center">
+![QueryPie Web Access Control &gt; All Users 에 등록된 IP 와 일치하지 않을 경우](/administrator-manual/general/company-management/security/image-20240121-073718.png)
+<figcaption>
+QueryPie Web Access Control &gt; All Users 에 등록된 IP 와 일치하지 않을 경우
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Users &gt; Update User 에 등록된 Allowed Zone 과 일치하지 않을 경우](/administrator-manual/general/company-management/security/image-20240121-074246.png)
+<figcaption>
+Users &gt; Update User 에 등록된 Allowed Zone 과 일치하지 않을 경우
+</figcaption>
+</figure>
 <Callout type="important">
 **IP 제한 설정 주의**
 Security 페이지의 설정은 저장 즉시 반영됩니다. 따라서 입력한 IP와 해당 옵션을 설정한 관리자의 IP가 일치하지 않을 경우 관리자라 하더라도  **저장**   **즉시 로그아웃 처리** 되니 주의해서 적용해 주시기 바랍니다.
@@ -118,9 +126,10 @@ Security 페이지의 설정은 저장 즉시 반영됩니다. 따라서 입력�
 ## Secret Store 설정
 
 Secret Store 사용 여부를 설정합니다. 현재 HashiCorp Vault를 지원하고 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![screenshot-20240726-152042.png](/administrator-manual/general/company-management/security/screenshot-20240726-152042.png)
-</p>
+</figure>
 
 Vault 등록은 General &gt; Integrations 메뉴에서 수행합니다.
 
@@ -132,21 +141,26 @@ A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valut 메뉴에 �
 
 Secret Store 사용 활성화 및 Vault 등록이 완료된 후, DB 커넥션 상세 페이지 또는 Server Group 상세 페이지에서 인증 정보 저장소를 선택할 수 있게 됩니다.
 
-<p align="center">
-![screenshot-20240726-185946.png](/administrator-manual/general/company-management/security/screenshot-20240726-185946.png)
-*DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선택*
-</p>
+<figure data-layout="center" data-align="center">
+![DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선택](/administrator-manual/general/company-management/security/screenshot-20240726-185946.png)
+<figcaption>
+DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선택
+</figcaption>
+</figure>
 
-<p align="center">
-![screenshot-20240726-190034.png](/administrator-manual/general/company-management/security/screenshot-20240726-190034.png)
-*Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택*
-</p>
+<figure data-layout="center" data-align="center">
+![Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택](/administrator-manual/general/company-management/security/screenshot-20240726-190034.png)
+<figcaption>
+Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택
+</figcaption>
+</figure>
 ## 기타
 
 기타 보안 설정을 관리합니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![screenshot-20240726-152051.png](/administrator-manual/general/company-management/security/screenshot-20240726-152051.png)
-</p>
+</figure>
 
 * Export a file with Encryption : 파일 다운로드 시 암호 입력 여부
     * Required 선택 시, 파일 다운로드 시에 파일 암호 지정 필수

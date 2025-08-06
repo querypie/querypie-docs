@@ -11,10 +11,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 
 ## Okta에서 QueryPie 를 애플리케이션으로 추가
 
-<p align="center">
-![image-20240723-064242.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png)
-*Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색*
-</p>
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png)
+<figcaption>
+Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색
+</figcaption>
+</figure>
 
 1. [Okta 서비스](https://login.okta.com/)에 접속하여 관리자 계정으로 로그인합니다.
 2. 우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.
@@ -26,10 +28,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 
 ## Okta 계정 연동을 위한 Profile 설정
 
-<p align="center">
-![image-20240723-064424.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png)
-*Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute*
-</p>
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png)
+<figcaption>
+Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute
+</figcaption>
+</figure>
 
 1. Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
 2. Profile 목록 중 ‘QueryPie User’ 를 클릭합니다. 
@@ -39,10 +43,13 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
     2. Display name : lastName / Variable name : lastName 항목 입력 후 `Save and Add Another`
     3. Display name : email / Variable name : email 항목 입력 후 `Save and Add Another` 
     4. Display name : loginId / Variable name : loginId 항목 입력 후 `Save` 클릭
-<p align="center">
-![image-20240723-064721.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064721.png)
-*Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064721.png)
+<figcaption>
+Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
+</figcaption>
+</figure>
 
 1. 4가지 Attribute 가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
 2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.
@@ -55,10 +62,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 
 ## Okta에 추가된 QueryPie 애플리케이션에 사용자 할당
 
-<p align="center">
-![image-20240723-065134.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png)
-*Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App*
-</p>
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png)
+<figcaption>
+Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
+</figcaption>
+</figure>
 
 1. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
 2. 리스트에서 QueryPie 애플리케이션을 클릭합니다.
@@ -71,10 +80,12 @@ SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로�
 
 ## Okta에서 QueryPie 애플리케이션 연동 정보 설정
 
-<p align="center">
-![image-20240723-065346.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png)
-*Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App*
-</p>
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png)
+<figcaption>
+Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
+</figcaption>
+</figure>
 
 1. Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.
 2. Settings 영역의 `Edit` 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.
@@ -90,10 +101,13 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 3. Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.
 
 다만, 보안 수준 향상을 위해 Okta API 토큰의 권한을 최소한으로 부여하도록 조정해야 하는 경우, 이하의 권한 및 방법에 따라 API 토큰을 생성하실 것을 권장드립니다.
-<p align="center">
-![image-20240110-042233.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240110-042233.png)
-*Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240110-042233.png)
+<figcaption>
+Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role
+</figcaption>
+</figure>
 
 1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다. 
     * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다. 
@@ -127,10 +141,12 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 
 ## QueryPie에서 Okta 연동 및 동기화 설정
 
-<p align="center">
-![image-20241103-071714.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png)
-*Administrator &gt; General &gt; User Management &gt; Authentication*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication
+</figcaption>
+</figure>
 
 1. QueryPie 에서 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
 2. 인증 Type 항목에서 Okta 를 선택합니다.
@@ -149,19 +165,23 @@ QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 
 **Application ID 확인하는 방법**
 2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.
 </Callout>
-<p align="center">
-![Authentication-Okta-02.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/Authentication-Okta-02.png)
-*Okta Admin &gt; Applications &gt; QueryPie App 상단 URL*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Okta Admin &gt; Applications &gt; QueryPie App 상단 URL](/administrator-manual/general/user-management/authentication/integrating-with-okta/Authentication-Okta-02.png)
+<figcaption>
+Okta Admin &gt; Applications &gt; QueryPie App 상단 URL
+</figcaption>
+</figure>
 
 
 ## QueryPie에서 Okta 로그인
 
 1. General Settings &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
 2. 이제 로그인 페이지에서 `Login with Okta` 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240723-070449.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-070449.png)
-</p>
+</figure>
 
 <Callout type="info">
 해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.

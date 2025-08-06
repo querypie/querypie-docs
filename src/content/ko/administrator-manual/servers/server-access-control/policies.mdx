@@ -3,10 +3,13 @@ import { Callout } from 'nextra/components'
 ## Overview
 
 QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로 접근 정책을 관리하고 적용하는 기능입니다. 서버 또는 서버 그룹별로 언제 접속을 허용할 것인지, 어떤 명령어를 금지할 것인지 등 세부적인 정책을 적용하여 사용자 또는 그룹별로 업무상 용도에 맞게 최소한의 서버에만 접근할 수 있도록 설정할 수 있습니다.
-<p align="center">
-![image-20240902-052616.png](/administrator-manual/servers/server-access-control/policies/image-20240902-052616.png)
-*Administrator &gt; Servers &gt; Server Access Control &gt; Policies*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies](/administrator-manual/servers/server-access-control/policies/image-20240902-052616.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies
+</figcaption>
+</figure>
 
 1. 테이블 좌측 상단의 검색란을 통해 정책명을 조건으로 검색이 가능합니다.
 2. 테이블에서 이하의 컬럼 정보를 제공합니다:
@@ -19,19 +22,21 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
 
 ## Policy 조회하기
 
-<p align="center">
-![image-20240902-052643.png](/administrator-manual/servers/server-access-control/policies/image-20240902-052643.png)
-*Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details*
-</p>
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details](/administrator-manual/servers/server-access-control/policies/image-20240902-052643.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Policies 메뉴로 이동합니다.
 2. 리스트에서 항목을 클릭하여 정책 세부 정보를 조회합니다.
 
 ### Detail 탭
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![screenshot-20240808-171818.png](/administrator-manual/servers/server-access-control/policies/screenshot-20240808-171818.png)
-</p>
+</figure>
 
 1. 디폴트로 지정되는 탭으로 정책으로 정의된 코드를 조회할 수 있습니다.
 2. Detail 탭에 위치할 시, 우측에 `Go to Editor Mode` 버튼이 있고 이를 클릭 시 해당 Code Editor 페이지 화면으로 전환됩니다.
@@ -39,9 +44,9 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
 
 ### Roles 탭
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20240723-115930.png](/administrator-manual/servers/server-access-control/policies/image-20240723-115930.png)
-</p>
+</figure>
 
 1. 해당 정책이 할당되어 있는 Role 목록을 나열합니다.
 2. 목록은 각 Role마다 이하의 정보를 노출합니다:
@@ -53,9 +58,9 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
 
 ### Versions 탭
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20240723-120008.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120008.png)
-</p>
+</figure>
 
 1. 해당 정책의 각 버전에 대한 내역을 나열합니다.
     * 정책 버전은 Code가 수정되어 저장되면 업데이트 됩니다.
@@ -71,16 +76,17 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
     4.  **Updated At**  : 해당 버전 생성 일시
     5.  **Updated By**  : 해당 버전 수정자명
     6. 하단에 당시의  **정책 코드 스냅샷** 이 노출됩니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240723-120033.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120033.png)
-</p>
+</figure>
 
 
 ## Policy 생성하기
 
-<p align="left">
+<figure data-layout="left" data-align="left">
 ![image-20240723-120134.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120134.png)
-</p>
+</figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Policies 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Policy` 버튼을 클릭합니다.
@@ -92,9 +98,9 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
 
 ## Policy 수정하기
 
-<p align="left">
+<figure data-layout="left" data-align="left">
 ![image-20240723-120317.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120317.png)
-</p>
+</figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Policies 메뉴로 이동합니다.
 2. 목록에서 수정할 Policy를 클릭하여 상세 페이지로 이동합니다.
@@ -106,9 +112,9 @@ QueryPie 서버 접근 정책(Policy)은 조직에서 관리하는 서버 별로
 
 ## Policy 삭제하기
 
-<p align="left">
+<figure data-layout="left" data-align="left">
 ![image-20240723-120357.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120357.png)
-</p>
+</figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Policies 메뉴로 이동합니다.
 2. 두 가지 방식으로 삭제 단계를 진행할 수 있습니다:

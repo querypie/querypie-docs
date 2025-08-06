@@ -12,24 +12,27 @@ Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 �
 <Callout type="important">
 **주의: ** Authentication 타입을 선택하고 사용자를 동기화 한 후에는, 인증 타입을 변경하는 것이 불가능합니다. <br/>인증 방식 변경을 위해서는 Customer Portal 을 통해 문의 부탁드립니다.
 </Callout>
-<p align="center">
-![screenshot-20241209-203250.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-203250.png)
-*Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-203250.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
+</figcaption>
+</figure>
 
 ### 기본 사용자 연동 설정
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
-</p>
+</figure>
 
 LDAP 연동을 위한 기본적인 인증 정보 및 속성 정보들을 입력합니다. Attribute 매핑을 위한 속성 정보의 경우, 필드명은 QueryPie User의 속성명이며, 필드에는 LDAP에서 참조할 Attribute명을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
 
 ### 그룹 연동 설정
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20250515-095109.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095109.png)
-</p>
+</figure>
 
 LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면  **Use Group 옵션** 을 활성화하고 필수로 지정된 정보들을 입력합니다. 자세한 설명은 하단 항목을 참고해주세요.
 <table data-table-width="760" data-layout="default" local-id="b96b2197-17c2-48d3-98a7-93b37fc6260b">
@@ -110,9 +113,10 @@ Group ID
 ### LDAP 사용자 동기화 설정
 
 LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use Synchronization with the Authentication System**  옵션을 활성화합니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20250515-095420.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095420.png)
-</p>
+</figure>
 
 *  **Replication Frequency**  : 자동 동기화 기능 사용 여부를 설정합니다.
     * Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 `Synchronize` 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.

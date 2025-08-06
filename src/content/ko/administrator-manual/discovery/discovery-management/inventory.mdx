@@ -5,10 +5,13 @@ import { Callout } from 'nextra/components'
 QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 목록에 표시합니다.
 
 상세 화면에서 민감정보가 존재하는 경로와 태그를 확인할 수 있고 사용자 정의 태그를 부여할 수 있습니다.
-<p align="center">
-![image-20240714-055033.png](/administrator-manual/discovery/discovery-management/inventory/image-20240714-055033.png)
-*Administrator &gt; Discovery &gt; Discovery Management &gt; Inventory*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Discovery &gt; Discovery Management &gt; Inventory](/administrator-manual/discovery/discovery-management/inventory/image-20240714-055033.png)
+<figcaption>
+Administrator &gt; Discovery &gt; Discovery Management &gt; Inventory
+</figcaption>
+</figure>
 
 
 ## Inventory의 주요기능
@@ -22,18 +25,21 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 2. Provider Tag (Cloud sync tag) : 클라우드에서 동기화한 태그입니다. 각 클라우드는 관리되고 있는 태그가 있을 수 있습니다. 이 태그는 클라우드에서 가져왔기 때문에 QueryPie에서 수정, 추가, 삭제 할 수 없습니다.
 3. Custom Tag : 사용자가 QueryPie 내에서 자유롭게 부여할 수 있는 태그입니다.
 4. Resource Tag : 각 커넥션에는 클라우드에서 가져온 Provider tag와 사용자가 부여한 Custom tag 두가지가 존재할 수 있습니다. 이를 Resource Tag라고 부릅니다.
-<p align="center">
-![image-20240730-023812.png](/administrator-manual/discovery/discovery-management/inventory/image-20240730-023812.png)
-*&lt; Tag 예시 &gt;*
-</p>
+
+<figure data-layout="center" data-align="center">
+![&lt; Tag 예시 &gt;](/administrator-manual/discovery/discovery-management/inventory/image-20240730-023812.png)
+<figcaption>
+&lt; Tag 예시 &gt;
+</figcaption>
+</figure>
 </Callout>
 
 
 ## Inventory 목록
 
-<p align="center">
+<figure data-layout="center" data-align="center">
 ![image-20240730-041253.png](/administrator-manual/discovery/discovery-management/inventory/image-20240730-041253.png)
-</p>
+</figure>
 
 *  **Category**  : QueryPie 서비스별 분류를 표시합니다. 각 접근제어 시스템에 해당하는 Database, System, Kubernetes가 있습니다.
 *  **Name**  : 각 접근제어 시스템이 사용 중인 커넥션 이름입니다. 만약 커넥션이 하나도 없는 경우(QueryPie 최초 설치한 상태) 목록에 표시할 데이터가 없으므로 먼저 접근제어 시스템에서 커넥션을 먼저 생성해야 합니다. 
@@ -51,19 +57,22 @@ QueryPie를 통해 접근제어를 통제하는 대상에 대해 종류별로 �
 ## 커넥션 정보 및 리소스 태그 관리
 
 상세정보에서 커넥션의 기본 정보와 부여된 태그를 확인하고 관리할 수 있습니다.
-<p align="center">
+
+<figure data-layout="center" data-align="center">
 ![image-20240730-043435.png](/administrator-manual/discovery/discovery-management/inventory/image-20240730-043435.png)
-</p>
+</figure>
 
 Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)가 표시되고 `+ Add Tags`을 클릭하여 태그관리 수행할 수 있습니다.
 
 
 ## 커넥션 하위의 데이터 경로
 
-<p align="center">
-![image-20241030-013932.png](/administrator-manual/discovery/discovery-management/inventory/image-20241030-013932.png)
-*커넥션 하위의 data path 목록과 지정된 민감정보 태그*
-</p>
+<figure data-layout="center" data-align="center">
+![커넥션 하위의 data path 목록과 지정된 민감정보 태그](/administrator-manual/discovery/discovery-management/inventory/image-20241030-013932.png)
+<figcaption>
+커넥션 하위의 data path 목록과 지정된 민감정보 태그
+</figcaption>
+</figure>
 
 스캔이 최소 1회 성공적으로 완료된 커넥션은 대상 데이터베이스의 컬럼까지의 경로를 보여줍니다. <br/>경로는 아래와 같은 구조로 구성되어 있습니다. <br/>![image-20240730-045803.png](/administrator-manual/discovery/discovery-management/inventory/image-20240730-045803.png)
 
@@ -81,10 +90,13 @@ Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)�
 ## 민감정보 태그 제거
 
 스캔결과에 대한 검토 결과로 부여된 민감정보 태그와 수동으로 부여한 민감정보 태그 모두 Inventory에서 제거할 수 있습니다. <br/>
-<p align="center">
-![image-20241030-021053.png](/administrator-manual/discovery/discovery-management/inventory/image-20241030-021053.png)
-*기존에 지정된 민감 정보 태그 제거*
-</p>
+
+<figure data-layout="center" data-align="center">
+![기존에 지정된 민감 정보 태그 제거](/administrator-manual/discovery/discovery-management/inventory/image-20241030-021053.png)
+<figcaption>
+기존에 지정된 민감 정보 태그 제거
+</figcaption>
+</figure>
 
 1. 제거할 민감 정보 태그를 선택합니다.
 2. `Remove` 버튼을 누릅니다.
@@ -93,18 +105,24 @@ Resource Tags에는 커넥션에 부여된 태그(Provider tag 및 Custom Tag)�
 ## 컬럼에 태그 부여
 
 각 데이터 경로에 있는 `Add Custom Tags` 버튼을 사용하여 특정 컬럼에 사용자 정의 태그를 부여할 수 있습니다. <br/>
-<p align="center">
-![image-20241030-033748.png](/administrator-manual/discovery/discovery-management/inventory/image-20241030-033748.png)
-*Add Custom Tag*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Add Custom Tag](/administrator-manual/discovery/discovery-management/inventory/image-20241030-033748.png)
+<figcaption>
+Add Custom Tag
+</figcaption>
+</figure>
 
 1. Custom Tags 항목의 `Add Custom Tag` 버튼을 클릭합니다.
 2. Key에 해당하는 임의의 값을 입력하고 엔터를 입력하면 `:` 이 입력됩니다.
 3. Value에 해당하는 임의의 값을 입력하고 엔터를 입력하면 태그가 추가됩니다. 이렇게 하나이상의 태그를 추가하고 `OK` 버튼을 누릅니다.
-<p align="center">
-![image-20241030-034024.png](/administrator-manual/discovery/discovery-management/inventory/image-20241030-034024.png)
-*태그 입력*
-</p>
+
+<figure data-layout="center" data-align="center">
+![태그 입력](/administrator-manual/discovery/discovery-management/inventory/image-20241030-034024.png)
+<figcaption>
+태그 입력
+</figcaption>
+</figure>
 
 1. 입력된 태그를 확인합니다. <br/>태그 옆의 X를 누르면 부여한 커스텀 태그가 제거됩니다. 
 

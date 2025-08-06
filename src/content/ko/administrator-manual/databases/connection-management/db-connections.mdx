@@ -10,18 +10,24 @@ DB Connections 페이지에서 QueryPie에 등록되어 있는 DB 커넥션 목�
 ## DB 커넥션 수동으로 등록하기
 
 DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭하여 수동 등록 페이지로 진입합니다.
-<p align="center">
-![Screenshot-2025-04-10-at-11.33.36-AM.png](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.33.36-AM.png)
-*Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.33.36-AM.png)
+<figcaption>
+Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here
+</figcaption>
+</figure>
 
 10.2.8 버전부터 관리자는 커넥션 생성을 위한 커넥션 선택 화면에서 Click here 링크를 통해 QueryPie가 지원하는 모든 벤더의 기능을 한눈에 확인할 수 있는 “Supported Features” 모달을 사용할 수 있습니다.
 
 이 모달은 주요 기능 항목(Web Editor, Access Control, Audit Log, Privilege Control, Data Policy, Proxy, DML Snapshot, Ledger Management)으로 구성되어 있어, 각 벤더별로 지원 여부를 직관적으로 확인할 수 있도록 도와줍니다.
-<p align="center">
-![image-20240725-062325.png](/administrator-manual/databases/connection-management/db-connections/image-20240725-062325.png)
-*Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/image-20240725-062325.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
+</figcaption>
+</figure>
 
 1. Step 1에서 데이터 소스 종류를 선택하면 Step 2로 진입합니다.
 2. Step 2에서 DB 커넥션 정보를 입력합니다.
@@ -50,10 +56,13 @@ DB Connections 페이지 우측 상단의 `Create Connection` 버튼을 클릭�
 ### 클러스터 구성으로 DB 커넥션 등록하기
 
 Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클러스터로 구성되어 있으면 Cluster 모드가 활성화됩니다.
-<p align="center">
-![image-20240725-062536.png](/administrator-manual/databases/connection-management/db-connections/image-20240725-062536.png)
-*Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/image-20240725-062536.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
+</figcaption>
+</figure>
 
 1. Cluster 옵션을 활성화하면 계층형 구조로 클러스터 및 인스턴스 정보를 입력할 수 있습니다.
 2. 각각의 클러스터 및 인스턴스의 엔드포인트를 알고 있는 경우 `Add Cluster`를 통해 수동으로 등록할 수 있습니다.
@@ -77,10 +86,13 @@ Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클�
 ## DB 커넥션 목록 조회하기
 
 관리자 콘솔 내 Databases 설정 &gt; DB Connections 페이지에서 현재 QueryPie에 등록된 DB 커넥션 목록을 확인할 수 있습니다.
-<p align="center">
-![image-20240714-055800.png](/administrator-manual/databases/connection-management/db-connections/image-20240714-055800.png)
-*Administrator &gt; Databases &gt; Connection Management &gt; DB Connections*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections](/administrator-manual/databases/connection-management/db-connections/image-20240714-055800.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
+</figcaption>
+</figure>
 
 * 검색: DB 커넥션 이름으로 검색
 * 제공 필터 타입
@@ -100,28 +112,37 @@ Cloud Provider 를 통해 리소스를 동기화하는 경우, 리소스가 클�
 ## DB 커넥션 상세 정보 조회 및 설정하기
 
 DB Connections 페이지에서 상세 정보를 조회하려는 아이템을 클릭하면 상세 페이지로 진입합니다.
-<p align="center">
-![Screenshot-2025-04-10-at-11.37.08-AM.png](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.37.08-AM.png)
-*Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.37.08-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
+</figcaption>
+</figure>
 
 10.2.8부터 상세 정보를 조회하면 해당 커넥션이 지원하는 기능 목록을 Supported Featuresd에서 확인할 수 있습니다.
 
 ### Accessible Users 조회하기
 
 DB 커넥션 상세 페이지 우상단 `Accessible Users` 버튼을 클릭하면 Drawer가 열리고, 해당 커넥션에 접근가능한 사용자 목록을 조회할 수 있습니다.
-<p align="center">
-![screenshot-20240730-223340.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-223340.png)
-*Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-223340.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users
+</figcaption>
+</figure>
 
 ### DB 커넥션 정보 조회 및 수정하기
 
 DB 커넥션 상세 페이지 내 Connection Information 영역에서 생성 시 입력한 정보를 조회하고 수정할 수 있습니다.
-<p align="center">
-![screenshot-20240726-223248.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-223248.png)
-*Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-223248.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information
+</figcaption>
+</figure>
 
 * Allowed Zone : DB 커넥션에 접속할 수 있는 네트워크 대역
     * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택가능 
@@ -164,10 +185,13 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 ### Additional Information
 
 해당 DB 커넥션에 적용될 세부 정책을 입력합니다. `Save Changes` 버튼으로 저장합니다.
-<p align="center">
-![screenshot-20240726-180808.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180808.png)
-*Additional Information 탭*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Additional Information 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180808.png)
+<figcaption>
+Additional Information 탭
+</figcaption>
+</figure>
 
 * `Max Display Rows` : 쿼리 실행 후 조회 가능한 데이터의 최대 행수를 제한할 수 있습니다.
 * `Max Export Rows` : 한 번에 내보낼 수 있는 데이터의 최대 행수를 제한할 수 있습니다.
@@ -195,10 +219,13 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 **Proxy Usage **
 
 Proxy Usage를 활성화 하면 아래와 같이 두가지 선택사항이 표시됩니다.
-<p align="center">
-![image-20241222-134235.png](/administrator-manual/databases/connection-management/db-connections/image-20241222-134235.png)
-*Proxy Usage의 옵션*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Proxy Usage의 옵션](/administrator-manual/databases/connection-management/db-connections/image-20241222-134235.png)
+<figcaption>
+Proxy Usage의 옵션
+</figcaption>
+</figure>
 
 * Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다.
 * Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
@@ -209,10 +236,13 @@ QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 �
 ### SSL/SSH Setting
 
 체크박스를 통해 SSL 또는 SSH 사용 여부를 활성화하고, 하단 드롭다운에서 기등록된 설정 정보를 선택합니다. `Save Changes` 버튼으로 저장합니다.
-<p align="center">
-![screenshot-20240726-180833.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180833.png)
-*SSL/SSH Setting 탭*
-</p>
+
+<figure data-layout="center" data-align="center">
+![SSL/SSH Setting 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180833.png)
+<figcaption>
+SSL/SSH Setting 탭
+</figcaption>
+</figure>
 
 <Callout type="info">
 SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문서를 참고해보세요.
@@ -223,10 +253,13 @@ SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문�
 ### Connection Owner
 
 Connection Owner 탭에서 `Add Connection Owner` 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) `Save Changes` 버튼으로 저장합니다.
-<p align="center">
-![screenshot-20240726-180851.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
-*Connection Owner 탭*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Connection Owner 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
+<figcaption>
+Connection Owner 탭
+</figcaption>
+</figure>
 
 <Callout type="info">
 Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Request 의 승인자 또는 실행자로 지정 가능합니다.
@@ -235,10 +268,13 @@ Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Reques
 ### Tags
 
 Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. `Add Tag` 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 `Save Changes` 버튼으로 저장합니다.
-<p align="center">
-![screenshot-20240730-231618.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
-*Tags 탭*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Tags 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
+<figcaption>
+Tags 탭
+</figcaption>
+</figure>
 
 ### Privilege Setting
 
@@ -247,10 +283,13 @@ DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정�
 <Callout type="info">
 해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 [Security](Security) 내  **DB 커넥션 보안 설정**  문서를 참고하세요.
 </Callout>
-<p align="center">
-![screenshot-20240726-154730.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-154730.png)
-*Privilege Setting 탭*
-</p>
+
+<figure data-layout="center" data-align="center">
+![Privilege Setting 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-154730.png)
+<figcaption>
+Privilege Setting 탭
+</figcaption>
+</figure>
 
 1. `Add` 버튼을 통해 Privilege 을 선택하고 해당 Privilege 에 고정할 DB Username, Password 를 입력합니다.
 2. `Test Connection` 을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
@@ -259,10 +298,13 @@ DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정�
 <Callout type="error">
 BigQuery, Dynamo, Athena, Impala, Presto, Trino, Redis 벤더는 Privilege Setting 기능을 지원하지 않습니다.
 </Callout>
-<p align="center">
-![screenshot-20240730-231958.png](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231958.png)
-*QueryPie Web &gt; Databases &gt; Connections*
-</p>
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Databases &gt; Connections](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231958.png)
+<figcaption>
+QueryPie Web &gt; Databases &gt; Connections
+</figcaption>
+</figure>
 
 * Privilege Setting 이 설정된 권한을 부여받은 사용자는 커넥션 접속시 관리자가 사전에 설정한대로 해당 Privilege 에 맵핑된 DB 계정을 사용하며, Connections 접속 페이지에서 DB Username, Password 항목 자체를 볼 수 없습니다.
 * 웹에디터, 에이전트 프록시, SQL Request, Export Request 등 커넥션 접속에서 해당 DB 계정 사용이 강제화됩니다. 
