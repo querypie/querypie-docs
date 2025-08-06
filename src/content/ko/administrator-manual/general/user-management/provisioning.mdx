@@ -20,10 +20,10 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
 
 일반적인 SCIM 연동 API로는 해당 주체를 파악할 수 없으므로, SCIM API가 호출되어 사용자가 생성되면 Auth Provider는 해당 Authentication Type을 따라갑니다. 따라서, 보다 원활한 계정 플로우 관리를 위해 [SSO 계정 시스템 연동](Authentication)의 절차를 먼저 진행하는 것을 권장드립니다. 이에 따른 시스템 동작은 아래와 같습니다.
 
-*  **Authentication 미설정 (Default: Internal Database) ** 
+*  **Authentication 미설정 (Default: Internal Database)** 
     * SCIM API에 의해 생성된 사용자 또는 그룹의 Auth Provider는 “QueryPie”가 되며 일반적인 bulk import의 개념으로 동작하게 됩니다. 
     * 로컬 쿼리파이 계정과 동일하게 관리되며, 쿼리파이에서 해당 사용자에 대한 편집, 삭제가 가능합니다. 
-*  **Authentication 설정 (예. Okta) ** 
+*  **Authentication 설정 (예. Okta)** 
     * SCIM API에 의해 생성된 사용자 또는 그룹의 Auth Provider는 해당 Identity Provider(IdP)로 표기되며 사용자의 Attribute 프로필 관리는 Administrator &gt; General &gt; User Management &gt; Profile Editor의 기준으로 업데이트 관리됩니다. 
     * 기존 로컬 QueryPie 계정에 Username (loginId)가 동일한 사용자의 정보가 SCIM API로 업데이트 호출을 받게되면, 해당 사용자의 프로필이 IdP에 맞추어 수정되나, 쿼리파이 내 부여 권한의 유지를 목적으로 우선 Auth Provider가 해당 IdP로 변경되지 않습니다. (9.19.0 기준)
         * 여전히 로컬 쿼리파이 계정과 동일하게 쿼리파이에서 해당 사용자에 대한 프로필 및 현황 편집, 삭제가 가능합니다. 

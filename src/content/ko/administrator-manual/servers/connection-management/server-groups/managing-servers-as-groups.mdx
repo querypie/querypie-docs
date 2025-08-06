@@ -6,7 +6,7 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 서버 그룹 등록에 필요한 각 리소스들을 사전에 등록해 주시는 것을 권장합니다.
-1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates ** 
+1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates** 
 2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations** 
 </Callout>
 
@@ -24,9 +24,9 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groups 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Group` 버튼을 클릭합니다. 
 3. 그룹 생성을 위한 다음의 정보들을 입력합니다. 
-    1.  **Name ** : 서버 그룹을 화면 상에서 구별할 수 있는 이름입니다. 
-    2.  **Description ** : 해당 서버 그룹에 대한 부가적인 설명을 입력할 수 있습니다. 
-    3.  **Server Tags ** : 해당 서버 그룹에 포함될 서버를 Server Tags를 통해 필터링하여 추가합니다.
+    1.  **Name** : 서버 그룹을 화면 상에서 구별할 수 있는 이름입니다. 
+    2.  **Description** : 해당 서버 그룹에 대한 부가적인 설명을 입력할 수 있습니다. 
+    3.  **Server Tags** : 해당 서버 그룹에 포함될 서버를 Server Tags를 통해 필터링하여 추가합니다.
 4. `Save` 버튼을 통해 저장합니다. 
 
 <Callout type="info">
@@ -104,19 +104,19 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
             * 필수 조건: One Time Account를 사용하려면 반드시 서버 그룹 내에 Provisioning 계정이 먼저 지정되어 있어야 합니다.
     3.  **Secret Store 연동 (Hashicorp Vault)** 
         1. Admin &gt; General &gt; Security &gt; Secret Stores가 활성화 되어야 카테고리 항목이 보입니다. 
-        2. `Vault - K/V - Password` ** ** : Vault K/V 엔진에 저장된 패스워드를 사용합니다.
+        2. `Vault - K/V - Password` **** : Vault K/V 엔진에 저장된 패스워드를 사용합니다.
             * 입력 및 선택이 필요한 항목 : Alias, Secret Store, Account Path, Password Path
                 * Secret Store : 엔진타입이 K/V 타입인 항목만 필터되어 표기됩니다. 
             * 서버 그룹에 Account 정보 등록 시 Secret Store 연동 정보를 활용하면 사전 지정된 Secret Store 인증 정보 연동을 통해 커넥션에 접속할 수 있습니다. 사전에 서버 인증정보를 Secret Store 에 저장하고, 서버 원격 접속시 사용자가 Secret Store 에 저장된 서버 인증정보를 활용해 접속하게 함으로써 서버 인증정보에 대한 보안을 강화할 수 있습니다. Server Groups이 지정된 Server는 Server Groups와 동일한 Secret Store를 사용하도록 강제됩니다.
             * Alias 항목에 이용자들에게 노출될 서버 계정 명을 입력합니다.
-        3. `Vault - K/V - SSH Key` ** ** : Vault K/V 엔진에 저장된 SSH Key를 사용합니다.
+        3. `Vault - K/V - SSH Key` **** : Vault K/V 엔진에 저장된 SSH Key를 사용합니다.
             * 입력 및 선택이 필요한 항목 : Alias, Secret Store, Account Path, SSH Key Path
                 * Secret Store : 엔진타입이 K/V 타입인 항목만 필터되어 표기됩니다. 
-        4. `Vault - SSH - OTP` ** ** : Vault의 SSH OTP 엔진을 사용합니다.
+        4. `Vault - SSH - OTP` **** : Vault의 SSH OTP 엔진을 사용합니다.
             * 입력 및 선택이 필요한 항목: Account, Secret Store, Vault Role Path
                 * Secret Store : 엔진타입이 OTP 타입인 항목만 필터되어 표기됩니다. 
             * Hashicorp Vault의 SSH OTP 엔진을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, 서버에 vault의 server agent인 vault-ssh-helper를 설치를 해야합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp)를 참조 해주세요.
-        5. `Vault - SSH - CA` ** ** : Vault의 SSH CA 엔진을 사용합니다.
+        5. `Vault - SSH - CA` **** : Vault의 SSH CA 엔진을 사용합니다.
             * 입력 및 선택이 필요한 항목: Account, Secret Store, Vault Role Path
                 * Secret Store : 엔진타입이 CA 타입인 항목만 필터되어 표기됩니다. 
             * Hashicorp Vault의 SSH CA 엔진(Signed SSH certificates)을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, vault ca 엔진에서 발급한 Public Key를 접속할 서버의 TrustedUserCAKeys에 추가해야 합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates)를 참조 해주세요.
@@ -145,7 +145,7 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 </Callout>
 
 <Callout type="info">
-**Vault에서 Role을 설정할 때, **
+**Vault에서 Role을 설정할 때,**
 *  **Default extensions** 에 아래 값을 입력해야 합니다.
     * 
 *  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.

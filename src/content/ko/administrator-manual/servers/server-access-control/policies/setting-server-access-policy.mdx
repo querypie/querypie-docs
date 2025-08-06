@@ -6,7 +6,7 @@
 ## 설정 가능한 정책 항목
 
 *  **serverGroup**  : 접속을 허용할 서버 그룹
-*  **account ** : 서버그룹에 등록된 Account
+*  **account** : 서버그룹에 등록된 Account
 *  **protocols**  : 허용 프로토콜 (10.2 기준, SSH, SFTP, TELNET, FTP, RDP 지원)
 *  **commandRef**  : 접속시 적용할 명령어 템플릿
     * 선택한 Command Template의 내용은 `Command Policy Detail` 아코디언을 펼쳐서 확인 가능
@@ -19,7 +19,7 @@
 *  **commandDetection**  : Script 및 Alias가 호출될 때, 내부의 금지 명령어 탐지 여부 설정<br/>*제약사항: (10.2.1) Bash Shell에서만 동작, Script에서 다른 Script를 호출하는 명령어는 수행 차단
 *  **proxyUsage**  : Agent를 통한 프록시 접속 허용 여부
 *  **maxSessions**  : 서버 당 최대 동시 접속수
-*  **sessionTimeout ** : 서버 세션 타임아웃 기준 시간 (분)
+*  **sessionTimeout** : 서버 세션 타임아웃 기준 시간 (분)
 *  **requirePrivilege** : 서버 접속 시 권한 승인 필요 여부<br/>*이 옵션을 활성화(Enable)하면, 해당 계정은 서버 권한 요청(Server Privilege Request) 워크플로우를 통한 승인을 받아야만 서버에 접속할 수 있습니다.
 
 

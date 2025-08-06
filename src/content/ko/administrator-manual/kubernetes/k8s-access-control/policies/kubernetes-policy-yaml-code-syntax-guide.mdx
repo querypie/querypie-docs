@@ -134,7 +134,7 @@ O
 </td>
 <td>
 `kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
-`impersonation:`<br/>` users:`<br/>` - "system:user"`<br/>` groups:`<br/>` - "system:admin"`
+`impersonation:`<br/>`users:`<br/>`- "system:user"`<br/>`groups:`<br/>`- "system:admin"`
 </td>
 </tr>
 <tr>
@@ -156,7 +156,7 @@ O
 * `verbs` : 작업을 허용하거나 거부할 kubernetes 내의 권한을 명시합니다. **[와일드카드 허용]**
 </td>
 <td>
-`- apiGroups: ["*"]`<br/>` resources:`<br/>` - "*"`<br/>` namespace: "*"`<br/>` name: "*"`<br/>` verbs: ["*"]`
+`- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
 </td>
 </tr>
 <tr>
@@ -176,7 +176,7 @@ O
 * `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. **[와일드카드 허용]**
 </td>
 <td>
-`resourceTags: `<br/>` - "Owner": "Daniel"`<br/>`userAttributes: `<br/>` - "department": "DevOps" ipAddresses: `<br/>` - "10.10.10.0/24"`
+`resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
 </td>
 </tr>
 </tbody>

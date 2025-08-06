@@ -20,12 +20,12 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
 ![Screenshot-2025-07-22-at-3.08.16-PM.png](/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.08.16-PM.png)
 </figure>
 
-*  **Maximum OS Account Login Failures before Lockout ** : 로그인 실패 시 계정 잠금 정책
+*  **Maximum OS Account Login Failures before Lockout** : 로그인 실패 시 계정 잠금 정책
     * 서버 로그인 실패 허용 최대 횟수 지정
     * Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 11분 내 2회 실패 시 계정 잠금)
-*  **Maximum Command Attempts before Session Termination ** : 금지 명령어 최대 실행 횟수
+*  **Maximum Command Attempts before Session Termination** : 금지 명령어 최대 실행 횟수
     * Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 10분 이내 10회 시도 시 세션 종료)
-*  **Retain Session After Policy Change ** : 서버 접근 정책 변경시 연결되어있는 세션 유지 여부 설정
+*  **Retain Session After Policy Change** : 서버 접근 정책 변경시 연결되어있는 세션 유지 여부 설정
     *  **Enable**  선택 시:
         * 다음과 같은 경우에도 활성 세션이 종료되지 않고 유지
             * 직접적인 권한 부여 또는 취소
@@ -40,13 +40,13 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
     * 지정된 시간 동안 서버 접속 후 명령 미실행시 타임아웃
     * 개별 Policy에 타임아웃 지정되지 않은 경우 해당 설정 적용
     * 개별 Policy 또는 Server Default Settings에 지정된 타임아웃 정책이 있는 경우 더 짧은 것으로 적용
-*  **Using insecure protocols ** : 권장하지 않는 서버 접속 프로토콜 사용 설정
+*  **Using insecure protocols** : 권장하지 않는 서버 접속 프로토콜 사용 설정
     * TELNET 또는 FTP 사용 여부 설정
 *  **Access Server with MFA**  : 서버 접속시 MFA 인증 여부 (Default : Disabled)
     * 현재 Google OTP 지원하며, 옵션 선택시 MFA 인증을 적용할 서버를 태그 기준으로 지정
         * 태그 입력 방식 : 키 입력 → 엔터 키 입력 → 밸류 입력 → 엔터 입력
     * 입력된 태그는 `key = value` 식으로 표시되며, 입력된 태그와 일치하는 태그를 하나라도 가지고 있는 서버는 MFA 인증 후 접속 가능
-*  **Resource IP Access Control Configuration : ** 서버 접속 허용 IP 접근 제어 설정
+*  **Resource IP Access Control Configuration :** 서버 접속 허용 IP 접근 제어 설정
     * IP 접근 제어를 적용할 서버를 태그 기준으로 지정
     * User/Group에 부여된 Role 또는 Direct Permission보다 우선 적용
     * `Add Configuration` 버튼 클릭 시, 모달이 생성되며 이하의 정보를 기입하여 `Add` 버튼을 클릭하여 추가 (우측 상단의 `Save Changes` 버튼 클릭 이전까지 미반영)
@@ -60,7 +60,7 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
 Allowed Zones는 넓은 범위의 허용 IP 대역을 의미합니다. 따라서 표시된 IP 대역 내에 있더라도, 관리자가 데이터 정책(DP/Policy) 등을 통해 추가적인 IP 제한을 설정한 경우 최종 접근이 거부될 수 있습니다.
 </Callout>
 
-*  **Password Provisioning : ** 패스워드 프로비저닝 사용 여부 설정
+*  **Password Provisioning :** 패스워드 프로비저닝 사용 여부 설정
     * 등록된 서버의 서버 계정 패스워드를 주기적으로 변경
     * On으로 설정 시 아래와 같이 변경
         * [Server Group](https://chequer.atlassian.net/wiki/spaces/QM/pages/544380846#3.-Accounts-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0)에서 패스워드 프로비저닝에 사용할 계정 선택 옵션 추가
@@ -115,9 +115,9 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 *  **Allow Local Port Forwarding**  : Client에서의 Port Forwarding 허용 여부
     * VSCode 등 Port Forwarding을 사용하는 경우 사용
 *  **Max Sessions**  : 서버 당 최대 동시 접속수
-*  **Session Timeout ** : 서버 세션 타임아웃 기준 시간 (분)
+*  **Session Timeout** : 서버 세션 타임아웃 기준 시간 (분)
 *  **Show Server Groups in Workflow if Assigned as Member :**  체크된 경우, 이용자가 Server Access Request 신청시, Server Group Member로 지정된 서버 그룹만 표시
-*  **Require Minute-Based Requests : ** Workflow에서 서버 관련 권한 신청시 분 단위 신청 허용. 미설정시 일단위로 권한을 신청. 체크된 경우, 서버 접속 권한 신청시 분 단위 권한 신청
+*  **Require Minute-Based Requests :** Workflow에서 서버 관련 권한 신청시 분 단위 신청 허용. 미설정시 일단위로 권한을 신청. 체크된 경우, 서버 접속 권한 신청시 분 단위 권한 신청
 
 ### 서버 특권 신청 정책 설정
 

@@ -17,7 +17,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
 3.  **Name**  항목에 해당 프로바이더를 구분할 수 있는 이름을 입력합니다.
-4.  **Cloud**   **Provider**  항목에서 Google ** ** Cloud ** ** Platform 를 선택합니다.
+4.  **Cloud**   **Provider**  항목에서 Google **** Cloud **** Platform 를 선택합니다.
 5. 동기화하고자 하는 리소스의  **Project ID** 를 입력합니다.
 6. 특정 Region 및 Zone의 리소스를 동기화하고자 할 경우  **Use Region and Zone**  항목에 체크 후 Region 과 Zone을 각각 선택해 주세요. 
 7. 리소스를 동기화하기 위해 필요한  **Credential** 을 선택하세요. 현재는 Service Account 방식만 지원되고 있습니다.
@@ -29,8 +29,8 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 9.  **Replication**   **Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
-10.  **Auto Configuration Upon Initial Synchronization ** Cloud Provider에서 처음 동기화하는 서버의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
-    * port ** :**  동기화된 서버의 접속 포트를 지정할 수 있습니다. 현재는 SSH/SFTP 포트만 지정이 가능합니다.
+10.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 서버의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+    * port **:**  동기화된 서버의 접속 포트를 지정할 수 있습니다. 현재는 SSH/SFTP 포트만 지정이 가능합니다.
     * Tag : 동기화된 서버에 자동으로 태그를 추가할 수 있습니다. 
         * 태그 값에 `{vpcid}`를 입력하면, 해당 서버가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, 서버가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.

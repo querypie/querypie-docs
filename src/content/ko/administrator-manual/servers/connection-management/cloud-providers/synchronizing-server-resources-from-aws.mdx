@@ -28,8 +28,8 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 8.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
-9.  **Auto Configuration Upon Initial Synchronization ** Cloud Provider에서 처음 동기화하는 서버의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
-    * port ** :**  동기화된 서버의 접속 포트를 지정할 수 있습니다. 현재는 SSH/SFTP 포트만 지정이 가능합니다.
+9.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 서버의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+    * port **:**  동기화된 서버의 접속 포트를 지정할 수 있습니다. 현재는 SSH/SFTP 포트만 지정이 가능합니다.
     * Tag : 동기화된 서버에 자동으로 태그를 추가할 수 있습니다. 
         * 태그 값에 `{vpcid}`를 입력하면, 해당 서버가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, 서버가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
@@ -53,7 +53,7 @@ Credential 타입
 *  **Default Credentials**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스에 AmazonEC2ReadOnlyAccess 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다.
 *  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해 주세요.
 *  **Profile Credential**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다.
-*  **Access Key**  : `Synchronize` 버튼 클릭시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  ** ** 
+*  **Access Key**  : `Synchronize` 버튼 클릭시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  **** 
 
 <Callout type="important">
 **Save Credential for Synchronization 옵션**
@@ -86,14 +86,14 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 4. 우측 상단의 `Sychronize` 버튼을 클릭하면 AWS 에서 리소스를 동기화할 수 있습니다.
 5. 표시되는 Synchronization Log 에서 동기화 진행 상황을 확인할 수 있고, General &gt; Systems &gt; Jobs 메뉴에서도 동기화 히스토리를 확인할 수 있습니다.
 6. Cloud Provider를 한번 등록하고 나면 Provider 일부 정보는 변경할 수 없습니다.
-    1.  **Name ** : 변경 가능
-    2.  **Cloud Provider ** : 변경 불가
-    3.  **Region ** : 변경 불가
-    4.  **Credential ** : 변경 불가
+    1.  **Name** : 변경 가능
+    2.  **Cloud Provider** : 변경 불가
+    3.  **Region** : 변경 불가
+    4.  **Credential** : 변경 불가
         1. “Save Credential for Synchronization” : 비활성화 상태는 활성화로 변경할 수 있으나 활성화 상태를 비활성화로 전환 불가
-    5.  **Role**   **ARN ** : 변경 불가
-    6.  **Search**   **Filter ** : 변경 가능
-    7.  **Replication**   **Frequency ** : 변경 가능 (단, Credential 이 Access Key 인 경우 변경 불가)
+    5.  **Role**   **ARN** : 변경 불가
+    6.  **Search**   **Filter** : 변경 가능
+    7.  **Replication**   **Frequency** : 변경 가능 (단, Credential 이 Access Key 인 경우 변경 불가)
 
 <Callout type="important">
 “Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 새로 생성할 때와 마찬가지로 이 설정은  **활성화 한 뒤 다시 비활성화 할 수 없으므로**  신중히 선택해야 합니다.

@@ -23,7 +23,7 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
 
 3rd Party Client Tool 사용 시 허용된 리소스 범위 내에서 현황 모니터링이 가능합니다.
 
-*  **Resources 파트 ** 
+*  **Resources 파트** 
     * 위 화면에서 resources는 내가 권한을 가진 리소스에 대해서만 표시됩니다. 
     * 그래서 `pods`에 대한 권한만 있다면 `pods`에 대한 그래프만 보이고, 만약 `pods`가 필터링 되어서 일부만 볼 수 있다면 일부만 표시됩니다. 
     * 다른 리소스들도 마찬가지로 동작합니다.
@@ -39,7 +39,7 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
 
 3rd Party Client Tool 사용에 가장 큰 영향을 받는 부분은 verb 입니다. 관리자는 apiGroups, resources, namespace, name을 통해서 사용자가 접근할 수 있는 리소스에 대한 범위를 지정하고 verb를 통해 어떤 API를 호출할 수 있는지를 지정하는데, 리소스의 범위를 잘 설정했다 하더라도 verb의 묶음을 제대로 설정하지 않으면 Tool 사용이 어렵습니다.
 
-*  **View 권한 ** 
+*  **View 권한** 
     * View 권한만을 얻는 사용자의 경우는 `get`, `list`, `watch`를 모두 부여해야 합니다. 
     * `get`, `list` 만으로 kubectl의 사용은 크게 어렵지 않지만, `watch`가 없다면 lens와 같은 현황 모니터링을 지원하는 툴의 사용이 어렵습니다. 
     * 권장 스펙

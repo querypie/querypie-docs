@@ -354,8 +354,7 @@ class SingleLineParser:
             self.markdown_lines.append(f'<{node.name}>')
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append("#" * int(node.name[1]) + " ")
-            for child in node.children:
-                self.convert_recursively(child)
+            self.markdown_lines.append(self.markdown_of_children(node))
         elif node.name in ['p', 'th', 'td']:
             for child in node.children:
                 # DEBUG(JK): Uncomment below lines for debugging
@@ -369,18 +368,15 @@ class SingleLineParser:
                     self.convert_recursively(child)
             else:
                 self.markdown_lines.append(" **")
-                for child in node.children:
-                    self.convert_recursively(child)
+                self.markdown_lines.append(self.markdown_of_children(node).strip())
                 self.markdown_lines.append("** ")
         elif node.name in ['em']:
             self.markdown_lines.append(" *")
-            for child in node.children:
-                self.convert_recursively(child)
+            self.markdown_lines.append(self.markdown_of_children(node).strip())
             self.markdown_lines.append("* ")
         elif node.name in ['code']:
             self.markdown_lines.append("`")
-            for child in node.children:
-                self.convert_recursively(child)
+            self.markdown_lines.append(self.markdown_of_children(node).strip())
             self.markdown_lines.append("`")
         elif node.name in ['span']:
             # The `style` prop expects a mapping from style properties to values, not a string.
@@ -531,6 +527,17 @@ class SingleLineParser:
         if self._debug_markdown:
             self.markdown_lines.append(f'</{node.name}>')
         return
+
+    def markdown_of_children(self, node):
+        """
+        Convert children nodes as a single line Markdown
+        :param node:
+        :return:
+        """
+        markdown = []
+        for child in node.children:
+            markdown.append(SingleLineParser(child, self.attachments).as_markdown)
+        return ''.join(markdown)
 
     def convert_inline_image(self, node):
         """

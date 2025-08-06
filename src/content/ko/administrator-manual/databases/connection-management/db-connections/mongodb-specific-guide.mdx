@@ -73,7 +73,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
     4. `Add Instance` 버튼을 눌러 각 멤버 호스트를 인스턴스로 추가합니다.
         1. Instance Name : 각각의 호스트를 구별할 수 있는 이름을 입력합니다.
         2. Connection String : 각 호스트를 `호스트네임(도메인주소 또는 IP):[port]` 형식으로 입력합니다.
-        3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시 ** `Expose` **옵션을 활성화 시킵니다.**  
+        3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시** `Expose` **옵션을 활성화 시킵니다.**  
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
@@ -218,7 +218,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
     1. Allowed Users : 해당 규칙을 예외처리할 사용자 또는 그룹을 선택합니다.
 5. `Ok` 버튼 통해 저장합니다.
 
-Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터를 조회하면, 테이블에 정책이 적용된 경우 테이블 자체를 조회할 수 없고, 컬럼에 규칙이 적용된 경우 * `{RESTRICTED}` * 로 표시됩니다.
+Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터를 조회하면, 테이블에 정책이 적용된 경우 테이블 자체를 조회할 수 없고, 컬럼에 규칙이 적용된 경우 *`{RESTRICTED}`* 로 표시됩니다.
 
 ### JSON PATH 예시
 
