@@ -74,7 +74,8 @@ export default async function RootLayout({ children, params }) {
         <Layout
           navbar={navbar}
           footer={<Footer>{new Date().getFullYear()} © QueryPie.</Footer>}
-          editLink={null}
+          editLink="Edit this page on GitHub"
+          docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
           feedback={{
             content: '',
             labels: '',
