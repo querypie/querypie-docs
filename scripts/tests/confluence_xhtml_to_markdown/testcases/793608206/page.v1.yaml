@@ -1,0 +1,494 @@
+id: '793608206'
+type: page
+ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/793608206
+base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNzkzNjA4MjA2
+status: current
+title: New Request > 요청 타입별 템플릿 변수
+ancestors:
+- id: '576585864'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
+  status: current
+  title: QueryPie Manual
+  macroRenderedOutput: {}
+  extensions:
+    position: 921
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/576585864/restriction/byOperation
+    history: /rest/api/content/576585864/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/576585864/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/576585864/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
+    tinyui: /x/iABeIg
+    editui: /pages/resumedraft.action?draftId=576585864
+    webui: /spaces/QM/overview
+    edituiv2: /spaces/QM/pages/edit-v2/576585864
+- id: '608501837'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
+  status: current
+  title: QueryPie Docs
+  macroRenderedOutput: {}
+  extensions:
+    position: 9
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/608501837/restriction/byOperation
+    history: /rest/api/content/608501837/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/608501837/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/608501837/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
+    tinyui: /x/TQBFJ
+    editui: /pages/resumedraft.action?draftId=608501837
+    webui: /spaces/QM/pages/608501837/QueryPie+Docs
+    edituiv2: /spaces/QM/pages/edit-v2/608501837
+- id: '544178405'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1
+  status: current
+  title: 관리자 매뉴얼
+  macroRenderedOutput: {}
+  extensions:
+    position: 521757510
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/544178405/restriction/byOperation
+    history: /rest/api/content/544178405/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/544178405/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/544178405/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/544178405
+    tinyui: /x/5YBvI
+    editui: /pages/resumedraft.action?draftId=544178405
+    webui: /spaces/QM/pages/544178405
+    edituiv2: /spaces/QM/pages/edit-v2/544178405
+- id: '544080057'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544080057
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MDgwMDU3
+  status: current
+  title: General
+  macroRenderedOutput: {}
+  extensions:
+    position: 257
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/544080057/restriction/byOperation
+    history: /rest/api/content/544080057/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/544080057/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/544080057/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/544080057
+    tinyui: /x/uQBuI
+    editui: /pages/resumedraft.action?draftId=544080057
+    webui: /spaces/QM/pages/544080057/General
+    edituiv2: /spaces/QM/pages/edit-v2/544080057
+- id: '543948978'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/543948978
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQzOTQ4OTc4
+  status: current
+  title: Company Management
+  macroRenderedOutput: {}
+  extensions:
+    position: 207
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/543948978/restriction/byOperation
+    history: /rest/api/content/543948978/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/543948978/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/543948978/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/543948978
+    tinyui: /x/sgBsI
+    editui: /pages/resumedraft.action?draftId=543948978
+    webui: /spaces/QM/pages/543948978/Company+Management
+    edituiv2: /spaces/QM/pages/edit-v2/543948978
+- id: '543981760'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/543981760
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQzOTgxNzYw
+  status: current
+  title: Alerts
+  macroRenderedOutput: {}
+  extensions:
+    position: 285289783
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/543981760/restriction/byOperation
+    history: /rest/api/content/543981760/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/543981760/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/543981760/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/543981760
+    tinyui: /x/wIBsI
+    editui: /pages/resumedraft.action?draftId=543981760
+    webui: /spaces/QM/pages/543981760/Alerts
+    edituiv2: /spaces/QM/pages/edit-v2/543981760
+macroRenderedOutput: {}
+body:
+  storage:
+    value: '<p>Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과
+      같습니다.</p><h2>공통 변수</h2><p>모든 요청 타입에서 지원하는 변수 목록입니다.</p><p>Request Type을 전체 선택한
+      경우에도 공통 변수는 사용 가능합니다.</p><table data-table-width="811" data-layout="center"
+      ac:local-id="c749b9ca-9033-4c2b-b8fa-3880ad5a8736"><colgroup><col style="width:
+      178.0px;" /><col style="width: 178.0px;" /><col style="width: 315.0px;" /><col
+      style="width: 140.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Request Title             </p></td><td><p>{{requestTitle}}    </p></td><td><p>요청
+      제목</p><ul><li><p>예: 서비스 DB 접근 요청</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Assignees                 </p></td><td><p>{{assignees}}       </p></td><td><p>요청
+      승인 담당자</p><ul><li><p>예: STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant
+      Hwang)</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Comment                   </p></td><td><p>{{comment}}         </p></td><td><p>요청
+      코멘트</p><ul><li><p>예: 서비스 운영 목적으로 DB 접근 권한 요청드립니다.</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>User
+      Name                 </p></td><td><p>{{userName}}        </p></td><td><p>요청자
+      이름  </p><ul><li><p>예: Keira Yoon</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Email                     </p></td><td><p>{{email}}           </p></td><td><p>요청자
+      이메일</p><ul><li><p>예: <a href="mailto:keira@email.com">keira@email.com</a></p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Access
+      Type               </p></td><td><p>{{accessType}}      </p></td><td><p>요청 유형</p><ul><li><p>DB
+      Access Request</p></li><li><p>SQL Request</p></li><li><p>SQL Export Request</p></li><li><p>Unmasking
+      Request</p></li><li><p>Server Access Request</p></li><li><p>Access Role Request</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Link                      </p></td><td><p>{{link}}            </p></td><td><p>요청
+      상세 페이지 링크</p><ul><li><p>예: https://{querypie_domain}/workflow/received-requests/to-do/detail/{workflow_uuid}</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Workflow
+      Uuid             </p></td><td><p>{{workflowUuid}}    </p></td><td><p>요청 UUID
+      </p><ul><li><p>예: b63f9f94-11e5-4095-a399-be7d96e9ce06</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Workflow
+      Id               </p></td><td><p>{{id}}              </p></td><td><p>요청 ID</p><ul><li><p>예:
+      12</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Urgent                    </p></td><td><p>{{urgent}}          </p></td><td><p>긴급
+      요청 여부</p><ul><li><p>true 또는 false</p></li></ul></td><td><p>10.2.0</p></td></tr></tbody></table><h2><strong>DB
+      Access Request</strong></h2><table data-table-width="808" data-layout="center"
+      ac:local-id="ee62ec7d-c9f6-4e28-b56e-747b6443c26d"><colgroup><col style="width:
+      174.0px;" /><col style="width: 174.0px;" /><col style="width: 319.0px;" /><col
+      style="width: 137.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Expiration Date                  </p></td><td><p>{{expirationDate}}            </p></td><td><p>만료
+      일자</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Requested Privilege per Connection
+      </p></td><td><p>{{connectionPrivilegeNames}}  </p></td><td><p>커넥션 별 요청된 Privilege를
+      목록으로 표시</p><ul><li><p>예:</p><ul><li><p>Connection A : Read/Write</p></li><li><p>Connection
+      B : Read-Only</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr></tbody></table><h2><strong>SQL
+      Request</strong></h2><table data-table-width="814" data-layout="center" ac:local-id="65178aed-8861-4dee-943a-42d33ce617bf"><colgroup><col
+      style="width: 176.0px;" /><col style="width: 176.0px;" /><col style="width:
+      315.0px;" /><col style="width: 140.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>SQL Text                  </p></td><td><p>{{sqlText}}              </p></td><td><p>SQL
+      구문</p><ul><li><p>최대 100자 (TEXT, FILE 동일)</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Content
+      Type              </p></td><td><p>{{contentType}}          </p></td><td><p>SQL
+      구문 입력 방식</p><ul><li><p>TEXT 또는 FILE</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster
+      Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB
+      커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB
+      커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Id                </p></td><td><p>{{clusterId}}            </p></td><td><p>DB
+      커넥션 ID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스
+      유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스
+      이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Use Ledger Approval Rule  </p></td><td><p>{{useLedgerApprovalRule}}</p></td><td><p>원장
+      승인 규칙 사용 여부</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Target Date               </p></td><td><p>{{targetDate}}           </p></td><td><p>실행
+      목표 일자</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Due Date                  </p></td><td><p>{{dueDate}}              </p></td><td><p>승인/실행
+      만료 일자</p></td><td><p>10.2.2</p></td></tr></tbody></table><h2><strong>SQL Export
+      Request</strong></h2><table data-table-width="816" data-layout="center" ac:local-id="a7dabd97-8ea6-4502-b876-197d927dd1dc"><colgroup><col
+      style="width: 166.0px;" /><col style="width: 166.0px;" /><col style="width:
+      344.0px;" /><col style="width: 137.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB
+      커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB
+      커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Id                </p></td><td><p>{{clusterId}}            </p></td><td><p>DB
+      커넥션 ID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스
+      유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스
+      이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Export Type               </p></td><td><p>{{exportType}}           </p></td><td><p>내보내기
+      유형</p><ul><li><p>QUERY 또는 TABLE</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Export
+      Detail             </p></td><td><p>{{exportDetail}}         </p></td><td><p>내보내기
+      세부 정보</p><ul><li><p>Query인 경우, 최대 100자의 쿼리</p></li><li><p>Table인 경우, 테이블 이름</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Target
+      Date               </p></td><td><p>{{targetDate}}           </p></td><td><p>실행
+      목표 일자</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Due Date                  </p></td><td><p>{{dueDate}}              </p></td><td><p>승인/실행
+      만료 일자</p></td><td><p>10.2.2</p></td></tr></tbody></table><h2><strong>Unmasking
+      Request</strong></h2><table data-table-width="816" data-layout="center" ac:local-id="212dceed-34bd-42c0-9cab-7b11a24950af"><colgroup><col
+      style="width: 168.0px;" /><col style="width: 168.0px;" /><col style="width:
+      341.0px;" /><col style="width: 135.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB
+      커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB
+      커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스
+      유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스
+      이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Table Name                </p></td><td><p>{{tableName}}            </p></td><td><p>테이블
+      이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Column Names              </p></td><td><p>{{columnNames}}          </p></td><td><p>컬럼
+      이름을 목록으로 표시</p><ul><li><p>예: [actor_id, first_name, last_name, last_update]</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Unmasking
+      Expiration      </p></td><td><p>{{unmaskingExpiration}}  </p></td><td><p>마스킹
+      해제 만료 시점 </p><ul><li><p>예: </p><ul><li><p>10 Minutes</p></li><li><p>2024-12-03T14:59:00
+      </p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr></tbody></table><h2><strong>Server
+      Access Request</strong></h2><table data-table-width="820" data-layout="center"
+      ac:local-id="a4480e83-0193-4c46-ba7c-53a665a6ad03"><colgroup><col style="width:
+      170.0px;" /><col style="width: 170.0px;" /><col style="width: 345.0px;" /><col
+      style="width: 132.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Server Group Name         </p></td><td><p>{{serverGroupName}}      </p></td><td><p>서버
+      그룹 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Server Names              </p></td><td><p>{{serverNames}}          </p></td><td><p>서버
+      이름을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>Server A</p></li><li><p>Server B</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Server
+      Accounts           </p></td><td><p>{{serverAccounts}}       </p></td><td><p>서버
+      계정을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>dev</p></li><li><p>ec2-user</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Expiration
+      Date           </p></td><td><p>{{expirationDate}}       </p></td><td><p>만료 일자</p></td><td><p>10.2.2</p></td></tr></tbody></table><h2><strong>Access
+      Role Request</strong></h2><table data-table-width="816" data-layout="center"
+      ac:local-id="e44f2beb-29c0-417c-b961-8a1b7946b510"><colgroup><col style="width:
+      172.0px;" /><col style="width: 172.0px;" /><col style="width: 339.0px;" /><col
+      style="width: 130.0px;" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가
+      시점</strong></p></th></tr><tr><td><p>Service                   </p></td><td><p>{{service}}              </p></td><td><p>역할
+      요청 대상 서비스</p><ul><li><p>SAC, KAC, WAC</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Role
+      Name                 </p></td><td><p>{{roleName}}             </p></td><td><p>역할
+      이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Expiration Date           </p></td><td><p>{{expirationDate}}       </p></td><td><p>만료
+      일자</p></td><td><p>10.2.2</p></td></tr></tbody></table><p />'
+    representation: storage
+    embeddedContent: []
+    _expandable:
+      content: /rest/api/content/793608206
+  view:
+    value: '<p>Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과
+      같습니다.</p><h2 id="NewRequest&gt;요청타입별템플릿변수-공통변수">공통 변수</h2><p>모든 요청 타입에서 지원하는
+      변수 목록입니다.</p><p>Request Type을 전체 선택한 경우에도 공통 변수는 사용 가능합니다.</p><div class="table-wrap"><table
+      data-table-width="811" data-layout="center" data-local-id="c749b9ca-9033-4c2b-b8fa-3880ad5a8736"
+      class="confluenceTable"><colgroup><col style="width: 178.0px;"/><col style="width:
+      178.0px;"/><col style="width: 315.0px;"/><col style="width: 140.0px;"/></colgroup><tbody><tr><th
+      class="confluenceTh"><p><strong>변수명</strong></p></th><th class="confluenceTh"><p><strong>변수</strong></p></th><th
+      class="confluenceTh"><p><strong>설명</strong></p></th><th class="confluenceTh"><p><strong>추가
+      시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Request Title             </p></td><td
+      class="confluenceTd"><p>{{requestTitle}}    </p></td><td class="confluenceTd"><p>요청
+      제목</p><ul><li><p>예: 서비스 DB 접근 요청</p></li></ul></td><td class="confluenceTd"><p>-</p></td></tr><tr><td
+      class="confluenceTd"><p>Assignees                 </p></td><td class="confluenceTd"><p>{{assignees}}       </p></td><td
+      class="confluenceTd"><p>요청 승인 담당자</p><ul><li><p>예: STEP 1(Katie Wells), STEP
+      2(Kenny Park), STEP 3(Brant Hwang)</p></li></ul></td><td class="confluenceTd"><p>-</p></td></tr><tr><td
+      class="confluenceTd"><p>Comment                   </p></td><td class="confluenceTd"><p>{{comment}}         </p></td><td
+      class="confluenceTd"><p>요청 코멘트</p><ul><li><p>예: 서비스 운영 목적으로 DB 접근 권한 요청드립니다.</p></li></ul></td><td
+      class="confluenceTd"><p>-</p></td></tr><tr><td class="confluenceTd"><p>User
+      Name                 </p></td><td class="confluenceTd"><p>{{userName}}        </p></td><td
+      class="confluenceTd"><p>요청자 이름  </p><ul><li><p>예: Keira Yoon</p></li></ul></td><td
+      class="confluenceTd"><p>-</p></td></tr><tr><td class="confluenceTd"><p>Email                     </p></td><td
+      class="confluenceTd"><p>{{email}}           </p></td><td class="confluenceTd"><p>요청자
+      이메일</p><ul><li><p>예: <a href="mailto:keira@email.com" class="external-link">keira@email.com</a></p></li></ul></td><td
+      class="confluenceTd"><p>-</p></td></tr><tr><td class="confluenceTd"><p>Access
+      Type               </p></td><td class="confluenceTd"><p>{{accessType}}      </p></td><td
+      class="confluenceTd"><p>요청 유형</p><ul><li><p>DB Access Request</p></li><li><p>SQL
+      Request</p></li><li><p>SQL Export Request</p></li><li><p>Unmasking Request</p></li><li><p>Server
+      Access Request</p></li><li><p>Access Role Request</p></li></ul></td><td class="confluenceTd"><p>-</p></td></tr><tr><td
+      class="confluenceTd"><p>Link                      </p></td><td class="confluenceTd"><p>{{link}}            </p></td><td
+      class="confluenceTd"><p>요청 상세 페이지 링크</p><ul><li><p>예: https://{querypie_domain}/workflow/received-requests/to-do/detail/{workflow_uuid}</p></li></ul></td><td
+      class="confluenceTd"><p>-</p></td></tr><tr><td class="confluenceTd"><p>Workflow
+      Uuid             </p></td><td class="confluenceTd"><p>{{workflowUuid}}    </p></td><td
+      class="confluenceTd"><p>요청 UUID </p><ul><li><p>예: b63f9f94-11e5-4095-a399-be7d96e9ce06</p></li></ul></td><td
+      class="confluenceTd"><p>-</p></td></tr><tr><td class="confluenceTd"><p>Workflow
+      Id               </p></td><td class="confluenceTd"><p>{{id}}              </p></td><td
+      class="confluenceTd"><p>요청 ID</p><ul><li><p>예: 12</p></li></ul></td><td class="confluenceTd"><p>-</p></td></tr><tr><td
+      class="confluenceTd"><p>Urgent                    </p></td><td class="confluenceTd"><p>{{urgent}}          </p></td><td
+      class="confluenceTd"><p>긴급 요청 여부</p><ul><li><p>true 또는 false</p></li></ul></td><td
+      class="confluenceTd"><p>10.2.0</p></td></tr></tbody></table></div><h2 id="NewRequest&gt;요청타입별템플릿변수-DBAccessRequest"><strong>DB
+      Access Request</strong></h2><div class="table-wrap"><table data-table-width="808"
+      data-layout="center" data-local-id="ee62ec7d-c9f6-4e28-b56e-747b6443c26d" class="confluenceTable"><colgroup><col
+      style="width: 174.0px;"/><col style="width: 174.0px;"/><col style="width: 319.0px;"/><col
+      style="width: 137.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>변수명</strong></p></th><th
+      class="confluenceTh"><p><strong>변수</strong></p></th><th class="confluenceTh"><p><strong>설명</strong></p></th><th
+      class="confluenceTh"><p><strong>추가 시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Expiration
+      Date                  </p></td><td class="confluenceTd"><p>{{expirationDate}}            </p></td><td
+      class="confluenceTd"><p>만료 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Requested Privilege per Connection </p></td><td class="confluenceTd"><p>{{connectionPrivilegeNames}}  </p></td><td
+      class="confluenceTd"><p>커넥션 별 요청된 Privilege를 목록으로 표시</p><ul><li><p>예:</p><ul><li><p>Connection
+      A : Read/Write</p></li><li><p>Connection B : Read-Only</p></li></ul></li></ul></td><td
+      class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><h2 id="NewRequest&gt;요청타입별템플릿변수-SQLRequest"><strong>SQL
+      Request</strong></h2><div class="table-wrap"><table data-table-width="814" data-layout="center"
+      data-local-id="65178aed-8861-4dee-943a-42d33ce617bf" class="confluenceTable"><colgroup><col
+      style="width: 176.0px;"/><col style="width: 176.0px;"/><col style="width: 315.0px;"/><col
+      style="width: 140.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>변수명</strong></p></th><th
+      class="confluenceTh"><p><strong>변수</strong></p></th><th class="confluenceTh"><p><strong>설명</strong></p></th><th
+      class="confluenceTh"><p><strong>추가 시점</strong></p></th></tr><tr><td class="confluenceTd"><p>SQL
+      Text                  </p></td><td class="confluenceTd"><p>{{sqlText}}              </p></td><td
+      class="confluenceTd"><p>SQL 구문</p><ul><li><p>최대 100자 (TEXT, FILE 동일)</p></li></ul></td><td
+      class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Content
+      Type              </p></td><td class="confluenceTd"><p>{{contentType}}          </p></td><td
+      class="confluenceTd"><p>SQL 구문 입력 방식</p><ul><li><p>TEXT 또는 FILE</p></li></ul></td><td
+      class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Cluster
+      Group Uuid        </p></td><td class="confluenceTd"><p>{{clusterGroupUuid}}     </p></td><td
+      class="confluenceTd"><p>DB 커넥션 UUID</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Cluster Group Name        </p></td><td class="confluenceTd"><p>{{clusterGroupName}}     </p></td><td
+      class="confluenceTd"><p>DB 커넥션 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Cluster Id                </p></td><td class="confluenceTd"><p>{{clusterId}}            </p></td><td
+      class="confluenceTd"><p>DB 커넥션 ID</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Type             </p></td><td class="confluenceTd"><p>{{databaseType}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 유형</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Name             </p></td><td class="confluenceTd"><p>{{databaseName}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Use Ledger Approval Rule  </p></td><td class="confluenceTd"><p>{{useLedgerApprovalRule}}</p></td><td
+      class="confluenceTd"><p>원장 승인 규칙 사용 여부</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Target Date               </p></td><td class="confluenceTd"><p>{{targetDate}}           </p></td><td
+      class="confluenceTd"><p>실행 목표 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Due Date                  </p></td><td class="confluenceTd"><p>{{dueDate}}              </p></td><td
+      class="confluenceTd"><p>승인/실행 만료 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><h2
+      id="NewRequest&gt;요청타입별템플릿변수-SQLExportRequest"><strong>SQL Export Request</strong></h2><div
+      class="table-wrap"><table data-table-width="816" data-layout="center" data-local-id="a7dabd97-8ea6-4502-b876-197d927dd1dc"
+      class="confluenceTable"><colgroup><col style="width: 166.0px;"/><col style="width:
+      166.0px;"/><col style="width: 344.0px;"/><col style="width: 137.0px;"/></colgroup><tbody><tr><th
+      class="confluenceTh"><p><strong>변수명</strong></p></th><th class="confluenceTh"><p><strong>변수</strong></p></th><th
+      class="confluenceTh"><p><strong>설명</strong></p></th><th class="confluenceTh"><p><strong>추가
+      시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Cluster Group Uuid        </p></td><td
+      class="confluenceTd"><p>{{clusterGroupUuid}}     </p></td><td class="confluenceTd"><p>DB
+      커넥션 UUID</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Cluster
+      Group Name        </p></td><td class="confluenceTd"><p>{{clusterGroupName}}     </p></td><td
+      class="confluenceTd"><p>DB 커넥션 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Cluster Id                </p></td><td class="confluenceTd"><p>{{clusterId}}            </p></td><td
+      class="confluenceTd"><p>DB 커넥션 ID</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Type             </p></td><td class="confluenceTd"><p>{{databaseType}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 유형</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Name             </p></td><td class="confluenceTd"><p>{{databaseName}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Export Type               </p></td><td class="confluenceTd"><p>{{exportType}}           </p></td><td
+      class="confluenceTd"><p>내보내기 유형</p><ul><li><p>QUERY 또는 TABLE</p></li></ul></td><td
+      class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Export
+      Detail             </p></td><td class="confluenceTd"><p>{{exportDetail}}         </p></td><td
+      class="confluenceTd"><p>내보내기 세부 정보</p><ul><li><p>Query인 경우, 최대 100자의 쿼리</p></li><li><p>Table인
+      경우, 테이블 이름</p></li></ul></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Target Date               </p></td><td class="confluenceTd"><p>{{targetDate}}           </p></td><td
+      class="confluenceTd"><p>실행 목표 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Due Date                  </p></td><td class="confluenceTd"><p>{{dueDate}}              </p></td><td
+      class="confluenceTd"><p>승인/실행 만료 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><h2
+      id="NewRequest&gt;요청타입별템플릿변수-UnmaskingRequest"><strong>Unmasking Request</strong></h2><div
+      class="table-wrap"><table data-table-width="816" data-layout="center" data-local-id="212dceed-34bd-42c0-9cab-7b11a24950af"
+      class="confluenceTable"><colgroup><col style="width: 168.0px;"/><col style="width:
+      168.0px;"/><col style="width: 341.0px;"/><col style="width: 135.0px;"/></colgroup><tbody><tr><th
+      class="confluenceTh"><p><strong>변수명</strong></p></th><th class="confluenceTh"><p><strong>변수</strong></p></th><th
+      class="confluenceTh"><p><strong>설명</strong></p></th><th class="confluenceTh"><p><strong>추가
+      시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Cluster Group Uuid        </p></td><td
+      class="confluenceTd"><p>{{clusterGroupUuid}}     </p></td><td class="confluenceTd"><p>DB
+      커넥션 UUID</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Cluster
+      Group Name        </p></td><td class="confluenceTd"><p>{{clusterGroupName}}     </p></td><td
+      class="confluenceTd"><p>DB 커넥션 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Type             </p></td><td class="confluenceTd"><p>{{databaseType}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 유형</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Database Name             </p></td><td class="confluenceTd"><p>{{databaseName}}         </p></td><td
+      class="confluenceTd"><p>데이터베이스 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Table Name                </p></td><td class="confluenceTd"><p>{{tableName}}            </p></td><td
+      class="confluenceTd"><p>테이블 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Column Names              </p></td><td class="confluenceTd"><p>{{columnNames}}          </p></td><td
+      class="confluenceTd"><p>컬럼 이름을 목록으로 표시</p><ul><li><p>예: [actor_id, first_name,
+      last_name, last_update]</p></li></ul></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Unmasking Expiration      </p></td><td class="confluenceTd"><p>{{unmaskingExpiration}}  </p></td><td
+      class="confluenceTd"><p>마스킹 해제 만료 시점 </p><ul><li><p>예: </p><ul><li><p>10 Minutes</p></li><li><p>2024-12-03T14:59:00
+      </p></li></ul></li></ul></td><td class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><h2
+      id="NewRequest&gt;요청타입별템플릿변수-ServerAccessRequest"><strong>Server Access Request</strong></h2><div
+      class="table-wrap"><table data-table-width="820" data-layout="center" data-local-id="a4480e83-0193-4c46-ba7c-53a665a6ad03"
+      class="confluenceTable"><colgroup><col style="width: 170.0px;"/><col style="width:
+      170.0px;"/><col style="width: 345.0px;"/><col style="width: 132.0px;"/></colgroup><tbody><tr><th
+      class="confluenceTh"><p><strong>변수명</strong></p></th><th class="confluenceTh"><p><strong>변수</strong></p></th><th
+      class="confluenceTh"><p><strong>설명</strong></p></th><th class="confluenceTh"><p><strong>추가
+      시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Server Group Name         </p></td><td
+      class="confluenceTd"><p>{{serverGroupName}}      </p></td><td class="confluenceTd"><p>서버
+      그룹 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Server
+      Names              </p></td><td class="confluenceTd"><p>{{serverNames}}          </p></td><td
+      class="confluenceTd"><p>서버 이름을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>Server
+      A</p></li><li><p>Server B</p></li></ul></li></ul></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Server Accounts           </p></td><td class="confluenceTd"><p>{{serverAccounts}}       </p></td><td
+      class="confluenceTd"><p>서버 계정을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>dev</p></li><li><p>ec2-user</p></li></ul></li></ul></td><td
+      class="confluenceTd"><p>10.2.2</p></td></tr><tr><td class="confluenceTd"><p>Expiration
+      Date           </p></td><td class="confluenceTd"><p>{{expirationDate}}       </p></td><td
+      class="confluenceTd"><p>만료 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><h2
+      id="NewRequest&gt;요청타입별템플릿변수-AccessRoleRequest"><strong>Access Role Request</strong></h2><div
+      class="table-wrap"><table data-table-width="816" data-layout="center" data-local-id="e44f2beb-29c0-417c-b961-8a1b7946b510"
+      class="confluenceTable"><colgroup><col style="width: 172.0px;"/><col style="width:
+      172.0px;"/><col style="width: 339.0px;"/><col style="width: 130.0px;"/></colgroup><tbody><tr><th
+      class="confluenceTh"><p><strong>변수명</strong></p></th><th class="confluenceTh"><p><strong>변수</strong></p></th><th
+      class="confluenceTh"><p><strong>설명</strong></p></th><th class="confluenceTh"><p><strong>추가
+      시점</strong></p></th></tr><tr><td class="confluenceTd"><p>Service                   </p></td><td
+      class="confluenceTd"><p>{{service}}              </p></td><td class="confluenceTd"><p>역할
+      요청 대상 서비스</p><ul><li><p>SAC, KAC, WAC</p></li></ul></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Role Name                 </p></td><td class="confluenceTd"><p>{{roleName}}             </p></td><td
+      class="confluenceTd"><p>역할 이름</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr><tr><td
+      class="confluenceTd"><p>Expiration Date           </p></td><td class="confluenceTd"><p>{{expirationDate}}       </p></td><td
+      class="confluenceTd"><p>만료 일자</p></td><td class="confluenceTd"><p>10.2.2</p></td></tr></tbody></table></div><p
+      />'
+    representation: view
+    _expandable:
+      webresource: ''
+      embeddedContent: ''
+      mediaToken: ''
+      content: /rest/api/content/793608206
+  _expandable:
+    editor: ''
+    atlas_doc_format: ''
+    export_view: ''
+    styled_view: ''
+    dynamic: ''
+    editor2: ''
+    anonymous_export_view: ''
+extensions:
+  position: 758
+_expandable:
+  container: /rest/api/space/QM
+  metadata: ''
+  restrictions: /rest/api/content/793608206/restriction/byOperation
+  history: /rest/api/content/793608206/history
+  version: ''
+  descendants: /rest/api/content/793608206/descendant
+  space: /rest/api/space/QM
+  childTypes: ''
+  schedulePublishInfo: ''
+  operations: ''
+  schedulePublishDate: ''
+  children: /rest/api/content/793608206/child
+  draftVersion: ''
+_links:
+  editui: /pages/resumedraft.action?draftId=793608206
+  webui: /spaces/QM/pages/793608206/New+Request
+  edituiv2: /spaces/QM/pages/edit-v2/793608206
+  context: /wiki
+  self: https://querypie.atlassian.net/wiki/rest/api/content/793608206
+  tinyui: /x/DoBNLw
+  collection: /rest/api/content
+  base: https://querypie.atlassian.net/wiki

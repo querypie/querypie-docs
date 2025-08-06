@@ -17,6 +17,9 @@ import re
 import shutil
 import sys
 import unicodedata
+from typing import Optional
+
+import yaml
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
@@ -27,15 +30,57 @@ from bs4.element import CData
 # Global variable to store an input file path
 INPUT_FILE_PATH = ""
 OUTPUT_FILE_PATH = ""
-
-# Hidden characters constants
-ZWSP = '\u200b'  # Zero Width Space
-LRM = '\u200e'  # Left-to-Right Mark
-HANGUL_FILLER = '\u3164'  # Hangul Filler
-NBSP = '\u00A0'  # Non-Breaking Space
-NNBSP = '\u202f'  # Narrow No-Break Space
-
 LANGUAGE = 'en'
+
+# Hidden characters for text cleaning
+HIDDEN_CHARACTERS = {
+    '\u00A0': ' ',  # Non-Breaking Space
+    '\u202f': ' ',  # Narrow No-Break Space
+    '\u200b': '',  # Zero Width Space
+    '\u200e': '',  # Left-to-Right Mark
+    '\u3164': ''  # Hangul Filler
+}
+
+
+def clean_text(text: Optional[str]) -> Optional[str]:
+    """Clean text by removing hidden characters"""
+    if text is None:
+        return None
+
+    # Apply unicodedata.normalize to prevent unmatched string comparison.
+    # Use Normalization Form Canonical Composition for the unicode normalization.
+    cleaned_text = unicodedata.normalize('NFC', text)
+    for hidden_char, replacement in HIDDEN_CHARACTERS.items():
+        cleaned_text = cleaned_text.replace(hidden_char, replacement)
+    return cleaned_text
+
+
+def load_page_v1_yaml(yaml_path):
+    """
+    Load page.v1.yaml file and return as a dictionary object
+    
+    Args:
+        yaml_path (str): Path to the page.v1.yaml file
+        
+    Returns:
+        dict: YAML content as dictionary, or None if the file doesn't exist or has errors
+    """
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            yaml_string = f.read()
+            cleaned_yaml = clean_text(yaml_string)
+            yaml_data = yaml.safe_load(cleaned_yaml)
+            logging.info(f"Successfully loaded page.v1.yaml from {yaml_path}")
+            return yaml_data
+    except FileNotFoundError:
+        logging.warning(f"Page v1 YAML file not found: {yaml_path}")
+        return None
+    except yaml.YAMLError as e:
+        logging.error(f"Error parsing YAML file {yaml_path}: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error loading page.v1.yaml from {yaml_path}: {e}")
+        return None
 
 
 def backtick_curly_braces(text):
@@ -1289,9 +1334,19 @@ class ConfluenceToMarkdown:
         self.attachments = []
         self._imports = {}
         self._debug_markdown = False
+        self.page_v1 = None
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')
+
+    def _extract_page_title(self):
+        """Extract page title from page_v1_yaml_data object"""
+        if self.page_v1 and 'title' in self.page_v1:
+            logging.debug(f"Extracted page title from YAML data: {self.page_v1['title']}")
+            return self.page_v1['title']
+        else:
+            logging.warning("No title found in self.page_v1")
+            return None
 
     @property
     def imports(self):
@@ -1302,12 +1357,27 @@ class ConfluenceToMarkdown:
             markdown.append("\n")  # Add an empty line after imports
         return markdown
 
+    @property
+    def remark(self):
+        remarks = []
+        if self._extract_page_title():
+            # repr() generates a valid value of string for yaml.
+            remarks.append(f'title: {repr(self._extract_page_title())}\n')
+
+        if len(remarks) > 0:
+            return ["---\n"] + remarks + ["---\n", "\n"]
+        else:
+            return []
+
     def add_import(self, module_name, condition=True):
         """Add an import statement to the list of imports."""
         if condition:
             self._imports[module_name] = True
         else:
             self._imports[module_name] = False
+
+    def set_page_v1(self, page_v1):
+        self.page_v1 = page_v1
 
     def load_attachments(self, input_dir, output_dir, public_dir):
         # Find all ac:image nodes first
@@ -1324,7 +1394,6 @@ class ConfluenceToMarkdown:
         logging.debug(f"attachments: {self.attachments}")
 
     def as_markdown(self):
-
         if StructuredMacroToCallout(self.soup, self.attachments).has_applicable_nodes:
             self.add_import('Callout')
         elif AdfExtensionToCallout(self.soup, self.attachments).has_applicable_nodes:
@@ -1335,7 +1404,7 @@ class ConfluenceToMarkdown:
         # self.process_node(soup)
 
         # Join all Markdown lines and return
-        return ''.join(chain(self.imports, self.markdown_lines))
+        return ''.join(chain(self.remark, self.imports, self.markdown_lines))
 
 
 def main():
@@ -1364,7 +1433,7 @@ def main():
     OUTPUT_FILE_PATH = os.path.normpath(args.output_file)
 
     input_dir = os.path.dirname(INPUT_FILE_PATH)
-    # Set attachment directory if provided
+    # Set an attachment directory if provided
     if args.attachment_dir:
         output_dir = args.attachment_dir
         logging.info(f"Using attachment directory: {output_dir}")
@@ -1398,14 +1467,13 @@ def main():
         html_content = re.sub(r'\sri:', ' ', html_content)
 
         # Remove special characters before parsing
-        html_content = (html_content.replace(ZWSP, '')
-                        .replace(LRM, '')
-                        .replace(HANGUL_FILLER, '')
-                        .replace(NBSP, ' ')
-                        .replace(NNBSP, ' '))
+        html_content = clean_text(html_content)
+
+        # Load page.v1.yaml from the same directory as the input file
+        page_v1 = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
 
         converter = ConfluenceToMarkdown(html_content)
-        # converter.list_images()
+        converter.set_page_v1(page_v1)
         converter.load_attachments(input_dir, output_dir, args.public_dir)
         markdown_content = converter.as_markdown()
 

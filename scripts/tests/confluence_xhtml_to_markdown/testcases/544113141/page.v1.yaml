@@ -1,0 +1,348 @@
+id: '544113141'
+type: page
+ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544113141
+base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTEzMTQx
+status: current
+title: DB Access History
+ancestors:
+- id: '576585864'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
+  status: current
+  title: QueryPie Manual
+  macroRenderedOutput: {}
+  extensions:
+    position: 921
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/576585864/restriction/byOperation
+    history: /rest/api/content/576585864/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/576585864/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/576585864/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
+    tinyui: /x/iABeIg
+    editui: /pages/resumedraft.action?draftId=576585864
+    webui: /spaces/QM/overview
+    edituiv2: /spaces/QM/pages/edit-v2/576585864
+- id: '608501837'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
+  status: current
+  title: QueryPie Docs
+  macroRenderedOutput: {}
+  extensions:
+    position: 9
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/608501837/restriction/byOperation
+    history: /rest/api/content/608501837/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/608501837/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/608501837/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
+    tinyui: /x/TQBFJ
+    editui: /pages/resumedraft.action?draftId=608501837
+    webui: /spaces/QM/pages/608501837/QueryPie+Docs
+    edituiv2: /spaces/QM/pages/edit-v2/608501837
+- id: '544178405'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1
+  status: current
+  title: 관리자 매뉴얼
+  macroRenderedOutput: {}
+  extensions:
+    position: 521757510
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/544178405/restriction/byOperation
+    history: /rest/api/content/544178405/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/544178405/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/544178405/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/544178405
+    tinyui: /x/5YBvI
+    editui: /pages/resumedraft.action?draftId=544178405
+    webui: /spaces/QM/pages/544178405
+    edituiv2: /spaces/QM/pages/edit-v2/544178405
+- id: '544379062'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544379062
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc5MDYy
+  status: current
+  title: Audit
+  macroRenderedOutput: {}
+  extensions:
+    position: 2251
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/544379062/restriction/byOperation
+    history: /rest/api/content/544379062/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/544379062/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/544379062/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/544379062
+    tinyui: /x/tpByI
+    editui: /pages/resumedraft.action?draftId=544379062
+    webui: /spaces/QM/pages/544379062/Audit
+    edituiv2: /spaces/QM/pages/edit-v2/544379062
+- id: '544080248'
+  type: page
+  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544080248
+  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MDgwMjQ4
+  status: current
+  title: Database Logs
+  macroRenderedOutput: {}
+  extensions:
+    position: 1535
+  _expandable:
+    container: /rest/api/space/QM
+    metadata: ''
+    restrictions: /rest/api/content/544080248/restriction/byOperation
+    history: /rest/api/content/544080248/history
+    body: ''
+    version: ''
+    descendants: /rest/api/content/544080248/descendant
+    space: /rest/api/space/QM
+    childTypes: ''
+    schedulePublishInfo: ''
+    operations: ''
+    schedulePublishDate: ''
+    children: /rest/api/content/544080248/child
+    ancestors: ''
+    draftVersion: ''
+  _links:
+    self: https://querypie.atlassian.net/wiki/rest/api/content/544080248
+    tinyui: /x/eAFuI
+    editui: /pages/resumedraft.action?draftId=544080248
+    webui: /spaces/QM/pages/544080248/Database+Logs
+    edituiv2: /spaces/QM/pages/edit-v2/544080248
+macroRenderedOutput: {}
+body:
+  storage:
+    value: '<h2>Overview</h2><p>조직에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.</p><h2>DB Access
+      History 조회하기 </h2><ac:image ac:align="center" ac:layout="center" ac:original-height="1800"
+      ac:original-width="2880" ac:custom-width="true" ac:alt="image-20240730-070842.png"
+      ac:width="760"><ri:attachment ri:filename="image-20240730-070842.png" ri:version-at-save="1"
+      /><ac:caption><p>Administrator &gt; Audit &gt; Databases &gt; DB Access History</p></ac:caption><ac:adf-mark
+      key="border" size="1" color="#091e4224" /></ac:image><ol start="1"><li><p>Administrator
+      &gt; Audit &gt; Databases &gt; DB Access History 메뉴로 이동합니다.</p></li><li><p>현재
+      월 기준으로 로그가 내림차순으로 조회됩니다.</p></li><li><p>테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p><ol
+      start="1"><li><p><strong>Name</strong> : 사용자 이름</p></li><li><p><strong>Error
+      Message</strong> : 접근 에러 메시지 내 구문 </p></li><li><p><strong>Client IP</strong>
+      : 사용자 IP</p></li></ol></li><li><p>검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이
+      가능합니다.</p><ac:image ac:align="center" ac:layout="center" ac:original-height="488"
+      ac:original-width="1488" ac:custom-width="true" ac:alt="image-20240730-064139.png"
+      ac:width="736"><ri:attachment ri:filename="image-20240730-064139.png" ri:version-at-save="1"
+      /><ac:adf-mark key="border" size="1" color="#091e4224" /></ac:image><ol start="1"><li><p><strong>Connection
+      Name</strong> : 접속한 DB 커넥션명</p></li><li><p><strong>Database Type </strong>:
+      데이터베이스 유형</p></li><li><p><strong>Action Type </strong>: Connect / Disconnect
+      여부</p></li><li><p><strong>Result </strong>: 접속 성공/실패 여부</p></li><li><p><strong>Action
+      At</strong> : 접속 시점</p></li></ol></li><li><p>테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할
+      수 있습니다.</p></li><li><p>테이블에서 이하의 컬럼 정보를 제공합니다:</p><ol start="1"><li><p><strong>No</strong>
+      : 이벤트 식별 번호</p></li><li><p><strong>Action At</strong> : 서버 접속 시도 일시</p></li><li><p><strong>Action
+      Type</strong> : Connect / Disconnect 여부</p></li><li><p><strong>Result</strong>
+      : 접속 성공/실패 여부</p><ol start="1"><li><p><ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"
+      ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:" /> Success</p></li><li><p><ac:emoticon
+      ac:name="cross" ac:emoji-shortname=":cross_mark:" ac:emoji-id="atlassian-cross_mark"
+      ac:emoji-fallback=":cross_mark:" /> Failure</p></li></ol></li><li><p><strong>Name</strong>
+      : 대상 사용자 이름</p></li><li><p><strong>Email</strong> : 대상 사용자 이메일</p></li><li><p><strong>Cloud
+      Provider</strong> : 대상 클라우드 프로바이더명</p></li><li><p><strong>Connection Name</strong>
+      : 대상 DB 커넥션명</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스 유형</p></li><li><p><strong>Privilege</strong>
+      <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Client IP</strong>
+      : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong> : DB Replication
+      유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB
+      User</strong> : DB 사용자 ID</p></li><li><p><strong>DB Name</strong> : DB명</p></li><li><p><strong>Client</strong>
+      <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Error
+      Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li><li><p><strong>Connected</strong>
+      <strong>From</strong> : 접속 방식</p></li></ol></li></ol><h2>DB Access History 상세
+      내역 조회하기</h2><p>각 행을 클릭하면 세부 정보 조회가 가능합니다. </p><ac:image ac:align="center" ac:layout="center"
+      ac:original-height="1800" ac:original-width="2880" ac:custom-width="true" ac:alt="image-20240730-065045.png"
+      ac:width="760"><ri:attachment ri:filename="image-20240730-065045.png" ri:version-at-save="1"
+      /><ac:caption><p>Administrator &gt; Audit &gt; Databases &gt; DB Access History
+      &gt; DB Access History Details</p></ac:caption><ac:adf-mark key="border" size="1"
+      color="#091e4224" /></ac:image><ul><li><p>우측 드로워에는 이하의 정보를 노출합니다:</p><ol start="1"><li><p><strong>Result</strong>
+      : 접속 성공/실패 여부</p><ol start="1"><li><p><ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"
+      ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:" /> Success</p></li><li><p><ac:emoticon
+      ac:name="cross" ac:emoji-shortname=":cross_mark:" ac:emoji-id="atlassian-cross_mark"
+      ac:emoji-fallback=":cross_mark:" /> Failure</p></li></ol></li><li><p><strong>Name</strong>
+      : 대상 사용자 이름</p></li><li><p><strong>Action At</strong> : 접속 시점</p></li><li><p><strong>Action
+      Type </strong>: Connect / Disconnect 여부</p></li><li><p><strong>Privilege</strong>
+      <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Connection Name</strong>
+      : 대상 DB 커넥션명</p></li><li><p><strong>Host</strong> <strong>Name </strong>: 접속
+      실행 호스트명</p></li><li><p><strong>Connected From</strong> : 접속 방식</p></li><li><p><strong>Client</strong>
+      <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Client
+      IP</strong> : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong>
+      : DB Replication 유형</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스
+      유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB
+      Name</strong> : DB명</p></li><li><p><strong>DB User</strong> : DB 사용자 ID</p></li><li><p><strong>Error
+      Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li></ol></li></ul>'
+    representation: storage
+    embeddedContent: []
+    _expandable:
+      content: /rest/api/content/544113141
+  view:
+    value: '<h2 id="DBAccessHistory-Overview">Overview</h2><p>조직에서 관리하는 DB 커넥션 연결
+      및 연결해제 이력을 기록합니다.</p><h2 id="DBAccessHistory-DBAccessHistory조회하기">DB Access
+      History 조회하기 </h2><span class="confluence-embedded-file-wrapper image-center-wrapper
+      confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border
+      image-center" alt="image-20240730-070842.png" width="760" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-070842.png?version=1&amp;modificationDate=1722323324839&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475"
+      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/544113141/image-20240730-070842.png?version=1&amp;modificationDate=1722323324839&amp;cacheVersion=1&amp;api=v2"
+      data-height="1800" data-width="2880" data-unresolved-comment-count="0" data-linked-resource-id="567804087"
+      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20240730-070842.png"
+      data-base-url="https://querypie.atlassian.net/wiki" data-linked-resource-content-type="image/png"
+      data-linked-resource-container-id="544113141" data-linked-resource-container-version="7"
+      data-media-id="9be40d2e-b1de-4175-a5ef-27fdeee85f2f" data-media-type="file"
+      srcset="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-070842.png?version=1&amp;modificationDate=1722323324839&amp;cacheVersion=1&amp;api=v2&amp;width=1520&amp;height=950
+      2x, https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-070842.png?version=1&amp;modificationDate=1722323324839&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475
+      1x"></span><ol start="1"><li><p>Administrator &gt; Audit &gt; Databases &gt;
+      DB Access History 메뉴로 이동합니다.</p></li><li><p>현재 월 기준으로 로그가 내림차순으로 조회됩니다.</p></li><li><p>테이블
+      좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p><ol start="1"><li><p><strong>Name</strong>
+      : 사용자 이름</p></li><li><p><strong>Error Message</strong> : 접근 에러 메시지 내 구문 </p></li><li><p><strong>Client
+      IP</strong> : 사용자 IP</p></li></ol></li><li><p>검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로
+      이하의 필터링이 가능합니다.</p><span class="confluence-embedded-file-wrapper image-center-wrapper
+      confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border
+      image-center" alt="image-20240730-064139.png" width="736" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-064139.png?version=1&amp;modificationDate=1722321704945&amp;cacheVersion=1&amp;api=v2&amp;width=736&amp;height=241"
+      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/544113141/image-20240730-064139.png?version=1&amp;modificationDate=1722321704945&amp;cacheVersion=1&amp;api=v2"
+      data-height="488" data-width="1488" data-unresolved-comment-count="0" data-linked-resource-id="567869619"
+      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20240730-064139.png"
+      data-base-url="https://querypie.atlassian.net/wiki" data-linked-resource-content-type="image/png"
+      data-linked-resource-container-id="544113141" data-linked-resource-container-version="7"
+      data-media-id="389b335c-ae79-4731-90e4-93e4b7bcf51e" data-media-type="file"
+      srcset="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-064139.png?version=1&amp;modificationDate=1722321704945&amp;cacheVersion=1&amp;api=v2&amp;width=1472&amp;height=482
+      2x, https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-064139.png?version=1&amp;modificationDate=1722321704945&amp;cacheVersion=1&amp;api=v2&amp;width=736&amp;height=241
+      1x"></span><ol start="1"><li><p><strong>Connection Name</strong> : 접속한 DB 커넥션명</p></li><li><p><strong>Database
+      Type </strong>: 데이터베이스 유형</p></li><li><p><strong>Action Type </strong>: Connect
+      / Disconnect 여부</p></li><li><p><strong>Result </strong>: 접속 성공/실패 여부</p></li><li><p><strong>Action
+      At</strong> : 접속 시점</p></li></ol></li><li><p>테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할
+      수 있습니다.</p></li><li><p>테이블에서 이하의 컬럼 정보를 제공합니다:</p><ol start="1"><li><p><strong>No</strong>
+      : 이벤트 식별 번호</p></li><li><p><strong>Action At</strong> : 서버 접속 시도 일시</p></li><li><p><strong>Action
+      Type</strong> : Connect / Disconnect 여부</p></li><li><p><strong>Result</strong>
+      : 접속 성공/실패 여부</p><ol start="1"><li><p><img class="emoticon emoticon-tick" data-emoji-id="atlassian-check_mark"
+      data-emoji-shortname=":check_mark:" data-emoji-fallback=":check_mark:" src="/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/check.png"
+      width="16" height="16" data-emoticon-name="tick" alt="(tick)" /> Success</p></li><li><p><img
+      class="emoticon emoticon-cross" data-emoji-id="atlassian-cross_mark" data-emoji-shortname=":cross_mark:"
+      data-emoji-fallback=":cross_mark:" src="/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/error.png"
+      width="16" height="16" data-emoticon-name="cross" alt="(error)" /> Failure</p></li></ol></li><li><p><strong>Name</strong>
+      : 대상 사용자 이름</p></li><li><p><strong>Email</strong> : 대상 사용자 이메일</p></li><li><p><strong>Cloud
+      Provider</strong> : 대상 클라우드 프로바이더명</p></li><li><p><strong>Connection Name</strong>
+      : 대상 DB 커넥션명</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스 유형</p></li><li><p><strong>Privilege</strong>
+      <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Client IP</strong>
+      : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong> : DB Replication
+      유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB
+      User</strong> : DB 사용자 ID</p></li><li><p><strong>DB Name</strong> : DB명</p></li><li><p><strong>Client</strong>
+      <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Error
+      Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li><li><p><strong>Connected</strong>
+      <strong>From</strong> : 접속 방식</p></li></ol></li></ol><h2 id="DBAccessHistory-DBAccessHistory상세내역조회하기">DB
+      Access History 상세 내역 조회하기</h2><p>각 행을 클릭하면 세부 정보 조회가 가능합니다. </p><span class="confluence-embedded-file-wrapper
+      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
+      confluence-content-image-border image-center" alt="image-20240730-065045.png"
+      width="760" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-065045.png?version=1&amp;modificationDate=1722322247970&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475"
+      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/544113141/image-20240730-065045.png?version=1&amp;modificationDate=1722322247970&amp;cacheVersion=1&amp;api=v2"
+      data-height="1800" data-width="2880" data-unresolved-comment-count="0" data-linked-resource-id="569016364"
+      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20240730-065045.png"
+      data-base-url="https://querypie.atlassian.net/wiki" data-linked-resource-content-type="image/png"
+      data-linked-resource-container-id="544113141" data-linked-resource-container-version="7"
+      data-media-id="b3798907-7b0a-48c8-9aaa-8f7bf3daecc3" data-media-type="file"
+      srcset="https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-065045.png?version=1&amp;modificationDate=1722322247970&amp;cacheVersion=1&amp;api=v2&amp;width=1520&amp;height=950
+      2x, https://querypie.atlassian.net/wiki/download/thumbnails/544113141/image-20240730-065045.png?version=1&amp;modificationDate=1722322247970&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475
+      1x"></span><ul><li><p>우측 드로워에는 이하의 정보를 노출합니다:</p><ol start="1"><li><p><strong>Result</strong>
+      : 접속 성공/실패 여부</p><ol start="1"><li><p><img class="emoticon emoticon-tick" data-emoji-id="atlassian-check_mark"
+      data-emoji-shortname=":check_mark:" data-emoji-fallback=":check_mark:" src="/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/check.png"
+      width="16" height="16" data-emoticon-name="tick" alt="(tick)" /> Success</p></li><li><p><img
+      class="emoticon emoticon-cross" data-emoji-id="atlassian-cross_mark" data-emoji-shortname=":cross_mark:"
+      data-emoji-fallback=":cross_mark:" src="/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/error.png"
+      width="16" height="16" data-emoticon-name="cross" alt="(error)" /> Failure</p></li></ol></li><li><p><strong>Name</strong>
+      : 대상 사용자 이름</p></li><li><p><strong>Action At</strong> : 접속 시점</p></li><li><p><strong>Action
+      Type </strong>: Connect / Disconnect 여부</p></li><li><p><strong>Privilege</strong>
+      <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Connection Name</strong>
+      : 대상 DB 커넥션명</p></li><li><p><strong>Host</strong> <strong>Name </strong>: 접속
+      실행 호스트명</p></li><li><p><strong>Connected From</strong> : 접속 방식</p></li><li><p><strong>Client</strong>
+      <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Client
+      IP</strong> : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong>
+      : DB Replication 유형</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스
+      유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB
+      Name</strong> : DB명</p></li><li><p><strong>DB User</strong> : DB 사용자 ID</p></li><li><p><strong>Error
+      Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li></ol></li></ul>'
+    representation: view
+    _expandable:
+      webresource: ''
+      embeddedContent: ''
+      mediaToken: ''
+      content: /rest/api/content/544113141
+  _expandable:
+    editor: ''
+    atlas_doc_format: ''
+    export_view: ''
+    styled_view: ''
+    dynamic: ''
+    editor2: ''
+    anonymous_export_view: ''
+extensions:
+  position: 618
+_expandable:
+  container: /rest/api/space/QM
+  metadata: ''
+  restrictions: /rest/api/content/544113141/restriction/byOperation
+  history: /rest/api/content/544113141/history
+  version: ''
+  descendants: /rest/api/content/544113141/descendant
+  space: /rest/api/space/QM
+  childTypes: ''
+  schedulePublishInfo: ''
+  operations: ''
+  schedulePublishDate: ''
+  children: /rest/api/content/544113141/child
+  draftVersion: ''
+_links:
+  editui: /pages/resumedraft.action?draftId=544113141
+  webui: /spaces/QM/pages/544113141/DB+Access+History
+  edituiv2: /spaces/QM/pages/edit-v2/544113141
+  context: /wiki
+  self: https://querypie.atlassian.net/wiki/rest/api/content/544113141
+  tinyui: /x/9YFuI
+  collection: /rest/api/content
+  base: https://querypie.atlassian.net/wiki
