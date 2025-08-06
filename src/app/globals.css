@@ -3,8 +3,20 @@
 /* Custom CSS for QueryPie AI Hub Docs */
 
 /* 사이드바 폭 테스트 - 하나씩 확인 */
-.nextra-sidebar {
-  width: 300px !important;
+
+/* sidebar component 는 isExpanded 라는 내부 상태에 따라,
+ * 'x:w-64' 또는 'x:w-20' 이라는 class 를 갖게 됩니다:
+ * Refer to https://github.com/shuding/nextra/blob/main/packages/nextra-theme-docs/src/components/sidebar.tsx#L434
+ *
+ * 'x:w-<num>' 패턴의 class 이름은 tailwindcss framework 에서 비롯하였습니다: Refer to https://tailwindcss.com/docs/width
+ */
+aside.nextra-sidebar.x\:w-64 { /* expanded */
+    /* 64 is the default width of the expanded sidebar */
+    width: calc(var(--x-spacing) * 72);
+}
+aside.nextra-sidebar.x\:w-20 { /* collapsed */
+    /* 20 is the default width of the collapsed sidebar */
+    width: calc(var(--x-spacing) * 12);
 }
 
 /* Custom styles for QueryPie branding */
