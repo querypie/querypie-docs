@@ -3,69 +3,340 @@
 Confluence Page Tree Generator
 
 This script generates a list of all subpages from a specified document in a Confluence space.
-Output format: page_id \t breadcrumbs \t title
+Output format: page_id \t breadcrumbs
 
 The document processing follows 4 distinct stages:
 1. API Data Collection: Fetch and save API responses to YAML files
 2. Content Extraction: Extract and save page content (XHTML, HTML, ADF)
 3. Attachment Download: Download attachments if specified
-4. Document Listing: Generate and output document list with breadcrumbs
+4. Document Listing: Generate and output a document list with breadcrumbs
 
-Additionally, if translations are available, the script will generate an English translation
-of the Korean titles in list.en.txt.
+The script outputs the page list to stdout and saves the structured data to pages.yaml.
 
 Usage examples:
   python pages_of_confluence.py
   python pages_of_confluence.py --page-id 123456789 --space-key DOCS
   python pages_of_confluence.py --email user@example.com --api-token your-api-token
-  python pages_of_confluence.py --attachments  # Download page content with attachments
-  python pages_of_confluence.py --local  # Use local YAML files instead of making API calls
+  python pages_of_confluence.py --attachments # Download page content with attachments
+  python pages_of_confluence.py --local # Use local YAML files instead of making API calls
 """
-import unicodedata
+import argparse
+import logging
+import os
 import re
+import sys
+import traceback
+import unicodedata
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Any, Generator, Protocol
 
 import requests
-from requests.auth import HTTPBasicAuth
-import sys
-import os
-import argparse
-import traceback
 import yaml
-import logging
-from typing import Dict, List, Optional, Any, Generator
-
-# Configuration constants
-BASE_URL = "https://querypie.atlassian.net/wiki"
-SPACE_KEY = "QM"
-DEFAULT_START_PAGE_ID = "608501837"  # Root Page ID of "QueryPie Docs"
-QUICK_START_PAGE_ID = "544375784"  # QueryPie Overview having less children
-DEFAULT_OUTPUT_DIR = "docs/latest-ko-confluence"
-TRANSLATIONS_FILE = "docs/korean-titles-translations.txt"
-
-# Environment variables for authentication
-EMAIL = os.environ.get('ATLASSIAN_USERNAME', 'your-email@example.com')
-API_TOKEN = os.environ.get('ATLASSIAN_API_TOKEN', 'your-api-token')
-
-# Hidden characters for text cleaning
-HIDDEN_CHARACTERS = {
-    '\u00A0': ' ',  # Non-Breaking Space
-    '\u202f': ' ',  # Narrow No-Break Space
-    '\u200b': '',  # Zero Width Space
-    '\u200e': '',  # Left-to-Right Mark
-    '\u3164': ''  # Hangul Filler
-}
+from requests.auth import HTTPBasicAuth
 
 
-class Translator:
-    """Class for handling Korean to English title translations"""
+# ============================================================================
+# Configuration Management
+# ============================================================================
 
-    def __init__(self, translations_file: str):
+@dataclass
+class Config:
+    """Centralized configuration management"""
+    base_url: str = "https://querypie.atlassian.net/wiki"
+    space_key: str = "QM"
+    default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs"
+    quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
+    default_output_dir: str = "docs/latest-ko-confluence"
+    translations_file: str = "docs/korean-titles-translations.txt"
+    email: str = None
+    api_token: str = None
+    download_attachments: bool = False
+    use_local_files: bool = False
+
+    def __post_init__(self):
+        if self.email is None:
+            self.email = os.environ.get('ATLASSIAN_USERNAME', 'your-email@example.com')
+        if self.api_token is None:
+            self.api_token = os.environ.get('ATLASSIAN_API_TOKEN', 'your-api-token')
+
+
+# ============================================================================
+# Custom Exceptions
+# ============================================================================
+
+class ConfluenceError(Exception):
+    """Base exception for Confluence operations"""
+    pass
+
+
+class ApiError(ConfluenceError):
+    """Exception for API-related errors"""
+    pass
+
+
+class FileError(ConfluenceError):
+    """Exception for file operation errors"""
+    pass
+
+
+class TranslationError(ConfluenceError):
+    """Exception for translation-related errors"""
+    pass
+
+
+# ============================================================================
+# Interfaces and Protocols
+# ============================================================================
+
+class ApiClientProtocol(Protocol):
+    """Protocol for API client operations"""
+
+    def make_request(self, url: str, description: str) -> Optional[Dict]:
+        ...
+
+    def get_page_data(self, page_id: str) -> Optional[Dict]:
+        ...
+
+    def get_child_pages(self, page_id: str) -> Optional[Dict]:
+        ...
+
+    def get_attachments(self, page_id: str) -> Optional[Dict]:
+        ...
+
+
+class FileManagerProtocol(Protocol):
+    """Protocol for file operations"""
+
+    def save_file(self, filepath: str, content: Any, is_binary: bool = False) -> bool:
+        ...
+
+    def save_yaml(self, filepath: str, data: Any) -> bool:
+        ...
+
+    def load_yaml(self, filepath: str) -> Optional[Dict]:
+        ...
+
+    def ensure_directory(self, directory: str) -> bool:
+        ...
+
+
+class TranslationServiceProtocol(Protocol):
+    """Protocol for translation operations"""
+
+    def load_translations(self) -> None:
+        ...
+
+    def translate(self, content: str) -> str:
+        ...
+
+    def translate_page(self, page: 'Page') -> None:
+        ...
+
+
+# ============================================================================
+# Utility Functions
+# ============================================================================
+
+def slugify(text: str) -> str:
+    """
+    Convert text to a URL-friendly slug format.
+    Replace spaces with hyphens and remove special characters.
+    """
+    # Convert to lowercase
+    text = text.lower()
+    # Replace spaces with hyphens
+    text = re.sub(r'\s+', '-', text)
+    # Remove special characters
+    text = re.sub(r'[^a-z0-9-]', '', text)
+    # Remove multiple consecutive hyphens
+    text = re.sub(r'-+', '-', text)
+    # Remove leading and trailing hyphens
+    text = text.strip('-')
+    return text
+
+
+def clean_text(text: Optional[str]) -> Optional[str]:
+    """Clean text by removing hidden characters"""
+    if text is None:
+        return None
+
+    # Hidden characters for text cleaning
+    hidden_characters = {
+        '\u00A0': ' ',  # Non-Breaking Space
+        '\u202f': ' ',  # Narrow No-Break Space
+        '\u200b': '',  # Zero Width Space
+        '\u200e': '',  # Left-to-Right Mark
+        '\u3164': ''  # Hangul Filler
+    }
+
+    # Apply unicodedata.normalize to prevent unmatched string comparison.
+    # Use Normalization Form Canonical Composition for the unicode normalization.
+    cleaned_text = unicodedata.normalize('NFC', text)
+    for hidden_char, replacement in hidden_characters.items():
+        cleaned_text = cleaned_text.replace(hidden_char, replacement)
+    return cleaned_text
+
+
+# ============================================================================
+# Data Models
+# ============================================================================
+
+@dataclass
+class Page:
+    """Class to represent a Confluence page with its metadata and content"""
+    page_id: str
+    title: str
+    breadcrumbs: List[str] = None
+    breadcrumbs_en: List[str] = None
+    path: List[str] = None
+
+    def __post_init__(self):
+        if self.breadcrumbs is None:
+            self.breadcrumbs = []
+        if self.breadcrumbs_en is None:
+            self.breadcrumbs_en = []
+        if self.path is None:
+            self.path = []
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'Page':
+        """Create a Page instance from a dictionary"""
+        return cls(
+            page_id=data.get('id', ''),
+            title=data.get('title', ''),
+            breadcrumbs=data.get('breadcrumbs', []),
+            breadcrumbs_en=data.get('breadcrumbs_en', []),
+            path=data.get('path', [])
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert Page instance to dictionary"""
+        return {
+            'page_id': self.page_id,
+            'title': self.title,
+            'breadcrumbs': self.breadcrumbs,
+            'breadcrumbs_en': self.breadcrumbs_en,
+            'path': self.path
+        }
+
+    def to_output_line(self) -> str:
+        """Convert to output line format: page_id \t breadcrumbs \t title"""
+        breadcrumbs_str = " />> ".join(self.breadcrumbs) if self.breadcrumbs else ""
+        return f"{self.page_id}\t{breadcrumbs_str}\t{self.title}"
+
+
+# ============================================================================
+# Service Classes
+# ============================================================================
+
+class ApiClient:
+    """Handles all API-related operations"""
+
+    def __init__(self, config: Config, logger: logging.Logger):
+        self.config = config
+        self.logger = logger
+        self.auth = HTTPBasicAuth(config.email, config.api_token)
+        self.headers = {"Accept": "application/json"}
+
+    def make_request(self, url: str, description: str) -> Optional[Dict]:
+        """Make API request and return response"""
+        try:
+            self.logger.debug(f"Making {description} request to: {url}")
+            response = requests.get(url, headers=self.headers, auth=self.auth)
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            self.logger.error(f"Error making {description} request to {url}: {str(e)}")
+            raise ApiError(f"Failed to make {description} request: {str(e)}")
+
+    def get_page_data_v1(self, page_id: str) -> Optional[Dict]:
+        """Get page data using V1 API"""
+        url = f"{self.config.base_url}/rest/api/content/{page_id}?expand=title,ancestors,body.storage,body.view"
+        return self.make_request(url, "V1 API page data")
+
+    def get_page_data_v2(self, page_id: str) -> Optional[Dict]:
+        """Get page data using V2 API"""
+        url = f"{self.config.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format"
+        return self.make_request(url, "V2 API page data")
+
+    def get_child_pages(self, page_id: str) -> Optional[Dict]:
+        """Get child pages using V2 API"""
+        url = f"{self.config.base_url}/api/v2/pages/{page_id}/children?type=page&limit=100"
+        return self.make_request(url, "V2 API child pages")
+
+    def get_attachments(self, page_id: str) -> Optional[Dict]:
+        """Get attachments using V1 API"""
+        url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
+        return self.make_request(url, "V1 API attachments")
+
+    def download_attachment(self, page_id: str, attachment_id: str) -> Optional[bytes]:
+        """Download attachment content"""
+        try:
+            url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment/{attachment_id}/download"
+            response = requests.get(url, headers={"Accept": "*/*"}, auth=self.auth)
+            response.raise_for_status()
+            return response.content
+        except Exception as e:
+            self.logger.error(f"Error downloading attachment {attachment_id}: {str(e)}")
+            raise ApiError(f"Failed to download attachment: {str(e)}")
+
+
+class FileManager:
+    """Handles all file I/O operations"""
+
+    def __init__(self, logger: logging.Logger):
+        self.logger = logger
+
+    def ensure_directory(self, directory: str) -> bool:
+        """Ensure directory exists"""
+        try:
+            os.makedirs(directory, exist_ok=True)
+            return True
+        except Exception as e:
+            self.logger.error(f"Error creating directory {directory}: {str(e)}")
+            raise FileError(f"Failed to create directory: {str(e)}")
+
+    def save_file(self, filepath: str, content: Any, is_binary: bool = False) -> bool:
+        """Save content to file"""
+        try:
+            self.ensure_directory(os.path.dirname(filepath))
+            mode = 'wb' if is_binary else 'w'
+            encoding = None if is_binary else 'utf-8'
+
+            with open(filepath, mode, encoding=encoding) as f:
+                f.write(content)
+
+            self.logger.debug(f"Saved {len(content)} bytes to {filepath}")
+            return True
+        except Exception as e:
+            self.logger.error(f"Error saving file {filepath}: {str(e)}")
+            raise FileError(f"Failed to save file: {str(e)}")
+
+    def save_yaml(self, filepath: str, data: Any) -> bool:
+        """Save YAML data to a file"""
+        return self.save_file(filepath, yaml.dump(data, allow_unicode=True, sort_keys=False))
+
+    def load_yaml(self, filepath: str) -> Optional[Dict]:
+        """Read YAML from a file"""
+        try:
+            if os.path.exists(filepath):
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    return yaml.safe_load(f)
+        except Exception as e:
+            self.logger.error(f"Error loading YAML from {filepath}: {str(e)}")
+            raise FileError(f"Failed to load YAML: {str(e)}")
+        return None
+
+
+class TranslationService:
+    """Handles Korean to English title translations"""
+
+    def __init__(self, translations_file: str, logger: logging.Logger):
         self.translations_file = translations_file
-        self.logger = logging.getLogger(__name__)
+        self.logger = logger
         self.translations = {}
-        self._load_translations()
 
-    def _load_translations(self) -> None:
+    def load_translations(self) -> None:
         """Load translations from the translations file"""
         if not os.path.exists(self.translations_file):
             self.logger.warning(f"Translations file not found: {self.translations_file}")
@@ -88,8 +359,9 @@ class Translator:
             self.logger.info(f"Loaded {len(self.translations)} translations from {self.translations_file}")
         except Exception as e:
             self.logger.error(f"Error loading translations from {self.translations_file}: {str(e)}")
+            raise TranslationError(f"Failed to load translations: {str(e)}")
 
-    def translate_content(self, content: str) -> str:
+    def translate(self, content: str) -> str:
         """Translate Korean titles in content to English"""
         if not self.translations:
             return content
@@ -106,154 +378,115 @@ class Translator:
 
         return translated_content
 
+    def translate_page(self, page: Page) -> None:
+        """Update English translations and path using the translator"""
+        # Translate breadcrumbs to English
+        page.breadcrumbs_en = []
+        for crumb in page.breadcrumbs:
+            translated = crumb
+            for korean, english in self.translations.items():
+                if korean == crumb:
+                    translated = english
+                    break
+            page.breadcrumbs_en.append(translated)
 
-class ConfluencePageProcessor:
-    """Main class for Confluence page processing"""
+        # Create path by slugifying English breadcrumbs
+        page.path = [slugify(crumb) for crumb in page.breadcrumbs_en]
 
-    def __init__(self, args):
-        self.args = args
-        self.logger = logging.getLogger(__name__)
-        self.auth = HTTPBasicAuth(args.email, args.api_token)
-        self.headers = {"Accept": "application/json"}
 
-        # Initialize translator
-        self.translator = Translator(TRANSLATIONS_FILE)
+# ============================================================================
+# Processing Stages (Refactored per stage)
+# ============================================================================
 
-        # Handle quick-start option
-        if args.quick_start:
-            args.page_id = QUICK_START_PAGE_ID
-            self.logger.info(f"Quick start mode enabled, using page ID: {QUICK_START_PAGE_ID}")
+class StageBase:
+    """Base class for stage processors providing shared utilities and dependencies."""
 
-    def clean_text(self, text: Optional[str]) -> Optional[str]:
-        """Clean text by removing hidden characters"""
-        if text is None:
-            return None
+    def __init__(self, config: Config, api_client: ApiClient, file_manager: FileManager, logger: logging.Logger):
+        self.config = config
+        self.api_client = api_client
+        self.file_manager = file_manager
+        self.logger = logger
 
-        # Apply unicodedata.normalize to prevent unmatched string comparison.
-        # Use Normalization Form Canonical Composition for the unicode normalization.
-        cleaned_text = unicodedata.normalize('NFC', text)
-        for hidden_char, replacement in HIDDEN_CHARACTERS.items():
-            cleaned_text = cleaned_text.replace(hidden_char, replacement)
-        return cleaned_text
+    def get_page_directory(self, page_id: str) -> str:
+        """Return the directory path for a specific page."""
+        return os.path.join(self.config.default_output_dir, page_id)
 
-    def _save_file(self, filepath: str, content: Any, is_binary: bool = False) -> bool:
-        """Save content to file"""
-        try:
-            os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            mode = 'wb' if is_binary else 'w'
-            encoding = None if is_binary else 'utf-8'
 
-            with open(filepath, mode, encoding=encoding) as f:
-                f.write(content)
+class Stage1Processor(StageBase):
+    """Stage 1: API Data Collection - Fetch and save API responses to YAML files."""
 
-            self.logger.debug(f"Saved {len(content)} bytes to {filepath}")
-            return True
-        except Exception as e:
-            self.logger.error(f"Error saving file {filepath}: {str(e)}")
-            return False
-
-    def _save_yaml(self, filepath: str, data: Any) -> bool:
-        """Save YAML data to a file"""
-        return self._save_file(filepath, yaml.dump(data, allow_unicode=True, sort_keys=False))
-
-    def _load_yaml(self, filepath: str) -> Optional[Dict]:
-        """Read YAML from a file"""
-        try:
-            if os.path.exists(filepath):
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    return yaml.safe_load(f)
-        except Exception as e:
-            self.logger.error(f"Error loading YAML from {filepath}: {str(e)}")
-        return None
-
-    def _make_api_request(self, url: str, description: str) -> Optional[Dict]:
-        """Make API request and return response"""
-        try:
-            self.logger.debug(f"Making {description} request to: {url}")
-            response = requests.get(url, headers=self.headers, auth=self.auth)
-            response.raise_for_status()
-            return response.json()
-        except Exception as e:
-            self.logger.error(f"Error making {description} request to {url}: {str(e)}")
-            return None
-
-    def _get_page_directory(self, page_id: str) -> str:
-        """Get page directory path"""
-        return os.path.join(self.args.output_dir, page_id)
-
-    # ============================================================================
-    # STAGE 1: API Data Collection - Fetch and save API responses to YAML files
-    # ============================================================================
-
-    def stage1_collect_api_data(self, page_id: str) -> None:
-        """Stage 1: API Data Collection - Fetch and save API responses to YAML files"""
+    def process(self, page_id: str) -> None:
         self.logger.info(f"Stage 1: Collecting API data for page ID {page_id}")
 
-        if self.args.local:
+        # Skip API calls if using local files
+        if self.config.use_local_files:
             self.logger.info(f"Stage 1 skipped for page ID {page_id} (local mode)")
             return
 
-        directory = self._get_page_directory(page_id)
+        directory = self.get_page_directory(page_id)
+        self.file_manager.ensure_directory(directory)
 
-        # Define API endpoints to fetch
-        api_endpoints = [
+        api_operations = [
             {
-                'url': f"{self.args.base_url}/rest/api/content/{page_id}?expand=title,ancestors,body.storage,body.view",
+                'operation': lambda: self.api_client.get_page_data_v1(page_id),
                 'description': "V1 API page data",
                 'filename': "page.v1.yaml"
             },
             {
-                'url': f"{self.args.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format",
+                'operation': lambda: self.api_client.get_page_data_v2(page_id),
                 'description': "V2 API page data",
                 'filename': "page.v2.yaml"
             },
             {
-                'url': f"{self.args.base_url}/api/v2/pages/{page_id}/children?type=page&limit=100",
+                'operation': lambda: self.api_client.get_child_pages(page_id),
                 'description': "V2 API child pages",
                 'filename': "children.v2.yaml"
             },
             {
-                'url': f"{self.args.base_url}/rest/api/content/{page_id}/child/attachment",
+                'operation': lambda: self.api_client.get_attachments(page_id),
                 'description': "V1 API attachments",
                 'filename': "attachments.v1.yaml"
-            }
+            },
         ]
 
-        # Fetch all API data
-        for endpoint in api_endpoints:
-            data = self._make_api_request(endpoint['url'], endpoint['description'])
-            if data:
-                filepath = os.path.join(directory, endpoint['filename'])
-                self._save_yaml(filepath, data)
-
-                # Log specific information for children and attachments
-                if 'children' in endpoint['filename']:
-                    child_count = len(data.get("results", []))
-                    self.logger.info(f"Saved {child_count} children for page ID {page_id}")
-                elif 'attachments' in endpoint['filename']:
-                    attachment_count = len(data.get("results", []))
-                    self.logger.info(f"Saved metadata for {attachment_count} attachments for page ID {page_id}")
-                else:
-                    self.logger.info(f"Saved {endpoint['description']} for ID {page_id}")
+        for operation_info in api_operations:
+            try:
+                data = operation_info['operation']()
+                if data:
+                    filepath = os.path.join(directory, operation_info['filename'])
+                    self.file_manager.save_yaml(filepath, data)
+                    self._log_operation_result(page_id, operation_info['description'], data)
+            except Exception as e:
+                self.logger.error(f"Failed to collect {operation_info['description']} for page ID {page_id}: {str(e)}")
 
         self.logger.info(f"Stage 1 completed for page ID {page_id}")
 
-    # ============================================================================
-    # STAGE 2: Content Extraction - Extract and save page content
-    # ============================================================================
+    def _log_operation_result(self, page_id: str, description: str, data: Dict) -> None:
+        """Log specific information for different operations."""
+        if 'children' in description:
+            child_count = len(data.get("results", []))
+            self.logger.info(f"Saved {child_count} children for page ID {page_id}")
+        elif 'attachments' in description:
+            attachment_count = len(data.get("results", []))
+            self.logger.info(f"Saved metadata for {attachment_count} attachments for page ID {page_id}")
+        else:
+            self.logger.info(f"Saved {description} for ID {page_id}")
 
-    def stage2_extract_content(self, page_id: str) -> bool:
-        """Stage 2: Content Extraction - Extract and save page content"""
+
+class Stage2Processor(StageBase):
+    """Stage 2: Content Extraction - Extract and save page content."""
+
+    def process(self, page_id: str) -> bool:
         self.logger.info(f"Stage 2: Extracting content for page ID {page_id}")
-        directory = self._get_page_directory(page_id)
+        directory = self.get_page_directory(page_id)
 
         # Extract V1 content
-        v1_data = self._load_yaml(os.path.join(directory, "page.v1.yaml"))
+        v1_data = self.file_manager.load_yaml(os.path.join(directory, "page.v1.yaml"))
         if v1_data:
             self._extract_v1_content(page_id, v1_data, directory)
 
         # Extract V2 content
-        v2_data = self._load_yaml(os.path.join(directory, "page.v2.yaml"))
+        v2_data = self.file_manager.load_yaml(os.path.join(directory, "page.v2.yaml"))
         if v2_data:
             self._extract_v2_content(page_id, v2_data, directory)
 
@@ -261,58 +494,63 @@ class ConfluencePageProcessor:
         return True
 
     def _extract_v1_content(self, page_id: str, v1_data: Dict, directory: str) -> None:
-        """Extract content from V1 API data"""
+        """Extract content from V1 API data."""
         body = v1_data.get("body", {})
 
         # Extract XHTML content
         xhtml_content = body.get("storage", {}).get("value", "")
         if xhtml_content:
-            self._save_file(os.path.join(directory, "page.xhtml"), xhtml_content)
+            self.file_manager.save_file(os.path.join(directory, "page.xhtml"), xhtml_content)
             self.logger.info(f"Extracted XHTML content for page ID {page_id} ({len(xhtml_content)} characters)")
 
         # Extract HTML content
         html_content = body.get("view", {}).get("value", "")
         if html_content:
-            self._save_file(os.path.join(directory, "page.html"), html_content)
+            self.file_manager.save_file(os.path.join(directory, "page.html"), html_content)
             self.logger.info(f"Extracted HTML content for page ID {page_id} ({len(html_content)} characters)")
 
         # Extract ancestors
         ancestors = v1_data.get("ancestors", [])
         if ancestors:
-            self._save_yaml(os.path.join(directory, "ancestors.v1.yaml"), {'results': ancestors})
+            self.file_manager.save_yaml(os.path.join(directory, "ancestors.v1.yaml"), {'results': ancestors})
             self.logger.info(f"Extracted {len(ancestors)} ancestors for page ID {page_id}")
 
     def _extract_v2_content(self, page_id: str, v2_data: Dict, directory: str) -> None:
-        """Extract content from V2 API data"""
+        """Extract content from V2 API data."""
         adf_content = v2_data.get("body", {}).get("atlas_doc_format", {}).get("value", "")
         if adf_content:
-            self._save_file(os.path.join(directory, "page.adf"), adf_content)
+            self.file_manager.save_file(os.path.join(directory, "page.adf"), adf_content)
             self.logger.info(f"Extracted ADF content for page ID {page_id} ({len(adf_content)} characters)")
 
-    # ============================================================================
-    # STAGE 3: Attachment Download - Download attachments if specified
-    # ============================================================================
 
-    def stage3_download_attachments(self, page_id: str) -> bool:
-        """Stage 3: Attachment Download - Download attachments if specified"""
-        if not self.args.attachments or self.args.local:
+class Stage3Processor(StageBase):
+    """Stage 3: Attachment Download - Download attachments if specified."""
+
+    def process(self, page_id: str) -> bool:
+        # Check if attachments should be downloaded
+        if not self.config.download_attachments:
+            self.logger.info(f"Stage 3 skipped for page ID {page_id} (attachments not requested)")
+            return True
+
+        # Skip attachment download if using local files
+        if self.config.use_local_files:
+            self.logger.info(f"Stage 3 skipped for page ID {page_id} (local mode)")
             return True
 
         self.logger.info(f"Stage 3: Downloading attachments for page ID {page_id}")
-        directory = self._get_page_directory(page_id)
+        directory = self.get_page_directory(page_id)
         attachments_filepath = os.path.join(directory, "attachments.v1.yaml")
 
         if not os.path.exists(attachments_filepath):
             return True
 
-        attachments_data = self._load_yaml(attachments_filepath)
+        attachments_data = self.file_manager.load_yaml(attachments_filepath)
         if not attachments_data:
             return True
 
         attachments = attachments_data.get("results", [])
         self.logger.info(f"Found {len(attachments)} attachments for page ID {page_id}")
 
-        # Download each attachment
         for attachment in attachments:
             self._download_single_attachment(page_id, attachment, directory)
 
@@ -320,38 +558,35 @@ class ConfluencePageProcessor:
         return True
 
     def _download_single_attachment(self, page_id: str, attachment: Dict, directory: str) -> None:
-        """Download a single attachment"""
+        """Download a single attachment."""
         try:
             attachment_id = attachment["id"]
-            filename = self.clean_text(attachment["title"])
-            download_url = f"{self.args.base_url}/rest/api/content/{page_id}/child/attachment/{attachment_id}/download"
+            filename = clean_text(attachment["title"])
 
-            response = requests.get(download_url, headers={"Accept": "*/*"}, auth=self.auth)
-            response.raise_for_status()
-
-            filepath = os.path.join(directory, filename)
-            self._save_file(filepath, response.content, is_binary=True)
-            self.logger.info(f"Downloaded attachment: {filename}")
+            content = self.api_client.download_attachment(page_id, attachment_id)
+            if content:
+                filepath = os.path.join(directory, filename)
+                self.file_manager.save_file(filepath, content, is_binary=True)
+                self.logger.info(f"Downloaded attachment: {filename}")
         except Exception as e:
             self.logger.error(f"Error downloading attachment {attachment.get('title', 'unknown')}: {str(e)}")
 
-    # ============================================================================
-    # STAGE 4: Document Listing - Generate and output document list
-    # ============================================================================
 
-    def stage4_generate_document_list(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Dict]:
-        """Stage 4: Document Listing - Generate document information for output listing"""
+class Stage4Processor(StageBase):
+    """Stage 4: Document Listing - Generate document information for output listing."""
+
+    def process(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Page]:
         self.logger.info(f"Stage 4: Generating document list for page ID {page_id}")
 
-        directory = self._get_page_directory(page_id)
-        v1_data = self._load_yaml(os.path.join(directory, "page.v1.yaml"))
+        directory = self.get_page_directory(page_id)
+        v1_data = self.file_manager.load_yaml(os.path.join(directory, "page.v1.yaml"))
 
         if not v1_data:
             self.logger.error(f"V1 data not available for document listing for page ID {page_id}")
             return None
 
         # Extract title from V1 data
-        title = self.clean_text(v1_data.get("title"))
+        title = clean_text(v1_data.get("title"))
         if not title:
             return None
 
@@ -363,23 +598,28 @@ class ConfluencePageProcessor:
 
         self.logger.info(f"Stage 4 completed for page ID {page_id}: {title}")
 
-        return {
-            "id": page_id,
-            "breadcrumbs": breadcrumbs,
-            "title": title
-        }
+        return Page(
+            page_id=page_id,
+            title=title,
+            breadcrumbs=breadcrumbs,
+        )
 
-    def _build_breadcrumbs(self, page_id: str, ancestors: List[Dict], title: str,
-                           start_page_id: Optional[str] = None) -> str:
-        """Build breadcrumb string"""
+    def _build_breadcrumbs(
+            self,
+            page_id: str,
+            ancestors: List[Dict],
+            title: str,
+            start_page_id: Optional[str] = None,
+    ) -> List[str]:
+        """Build breadcrumb list of page titles."""
         try:
             # Special case for the start page
             if start_page_id and page_id == start_page_id:
-                return title
+                return [title]
 
             # Filter ancestors based on start_page_id
             if start_page_id:
-                filtered_ancestors = []
+                filtered_ancestors: List[str] = []
                 found_start_page = False
                 for ancestor in ancestors:
                     if ancestor.get("type") == "page":
@@ -389,43 +629,66 @@ class ConfluencePageProcessor:
                         elif not found_start_page:
                             continue
                         if "title" in ancestor:
-                            filtered_ancestors.append(self.clean_text(ancestor["title"]))
+                            filtered_ancestors.append(clean_text(ancestor["title"]))
 
                 path = filtered_ancestors + [title]
             else:
                 # Include all ancestors
-                ancestor_titles = [self.clean_text(ancestor["title"]) for ancestor in ancestors
-                                   if ancestor.get("type") == "page" and "title" in ancestor]
+                ancestor_titles = [
+                    clean_text(ancestor["title"]) for ancestor in ancestors if ancestor.get("type") == "page" and "title" in ancestor
+                ]
                 path = ancestor_titles + [title]
 
-            return " />> ".join(path)
+            return path
         except Exception as e:
             self.logger.error(f"Error building breadcrumbs for page {page_id}: {str(e)}")
-            return title
+            return [title]
 
-    # ============================================================================
-    # Main Processing Functions
-    # ============================================================================
 
-    def process_page_complete(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Dict]:
+# ============================================================================
+# Main Processor
+# ============================================================================
+
+class ConfluencePageProcessor:
+    """Main class for Confluence page processing with improved structure"""
+
+    def __init__(self, config: Config, logger: logging.Logger):
+        self.config = config
+        self.logger = logger
+
+        # Initialize services with dependency injection
+        self.api_client = ApiClient(config, logger)
+        self.file_manager = FileManager(logger)
+        self.translation_service = TranslationService(config.translations_file, logger)
+
+        # Initialize stage processors
+        self.stage1 = Stage1Processor(config, self.api_client, self.file_manager, logger)
+        self.stage2 = Stage2Processor(config, self.api_client, self.file_manager, logger)
+        self.stage3 = Stage3Processor(config, self.api_client, self.file_manager, logger)
+        self.stage4 = Stage4Processor(config, self.api_client, self.file_manager, logger)
+
+        # Load translations
+        self.translation_service.load_translations()
+
+    def process_page_complete(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Page]:
         """Process a single page through all 4 stages"""
         try:
             self.logger.info(f"Processing page ID {page_id} through all stages")
 
             # Stage 1: API Data Collection
-            self.stage1_collect_api_data(page_id)
+            self.stage1.process(page_id)
 
             # Stage 2: Content Extraction
-            self.stage2_extract_content(page_id)
+            self.stage2.process(page_id)
 
             # Stage 3: Attachment Download
-            self.stage3_download_attachments(page_id)
+            self.stage3.process(page_id)
 
             # Stage 4: Document Listing
-            document_info = self.stage4_generate_document_list(page_id, start_page_id)
+            page = self.stage4.process(page_id, start_page_id)
 
             self.logger.info(f"Completed all stages for page ID {page_id}")
-            return document_info
+            return page
 
         except Exception as e:
             self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
@@ -434,11 +697,11 @@ class ConfluencePageProcessor:
     def get_child_page_ids(self, page_id: str) -> List[str]:
         """Get child page IDs for recursive processing"""
         try:
-            directory = self._get_page_directory(page_id)
+            directory = self.stage1.get_page_directory(page_id)
             yaml_filepath = os.path.join(directory, "children.v2.yaml")
 
             if os.path.exists(yaml_filepath):
-                data = self._load_yaml(yaml_filepath)
+                data = self.file_manager.load_yaml(yaml_filepath)
                 if data:
                     child_ids = [child["id"] for child in data.get("results", [])]
                     self.logger.info(f"Found {len(child_ids)} child pages for page ID {page_id}")
@@ -450,7 +713,7 @@ class ConfluencePageProcessor:
             self.logger.error(f"Error getting child page IDs for page ID {page_id}: {str(e)}")
             return []
 
-    def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None) -> Generator[Dict, None, None]:
+    def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None) -> Generator[Page, None, None]:
         """Recursively fetch page tree through all 4 stages"""
         try:
             self.logger.info(f"Processing page tree for page ID {page_id}")
@@ -460,10 +723,18 @@ class ConfluencePageProcessor:
                 start_page_id = page_id
 
             # Process current page through all 4 stages
-            document_info = self.process_page_complete(page_id, start_page_id)
+            page = self.process_page_complete(page_id, start_page_id)
 
-            if document_info:
-                yield document_info
+            if page:
+                # Update translations if available
+                if self.translation_service.translations:
+                    self.translation_service.translate_page(page)
+                else:
+                    # If no translations available, use original breadcrumbs for English and path
+                    page.breadcrumbs_en = page.breadcrumbs
+                    page.path = [slugify(crumb) for crumb in page.breadcrumbs]
+
+                yield page
 
                 # Process child pages recursively
                 child_ids = self.get_child_page_ids(page_id)
@@ -476,53 +747,33 @@ class ConfluencePageProcessor:
     def run(self) -> None:
         """Main execution function"""
         try:
-            self.logger.info(f"Starting to fetch page tree from page ID: {self.args.page_id}")
+            self.logger.info(f"Starting to fetch page tree from page ID: {self.config.default_start_page_id}")
 
             # Check if output directory exists
-            if not os.path.exists(self.args.output_dir):
-                error_msg = f"Error: Output directory '{self.args.output_dir}' does not exist. Please create it first."
-                self.logger.critical(error_msg)
-                print(error_msg, file=sys.stderr)
-                sys.exit(1)
+            if not os.path.exists(self.config.default_output_dir):
+                self.file_manager.ensure_directory(self.config.default_output_dir)
+                self.logger.info(f"Created output directory: {self.config.default_output_dir}")
 
-            # Prepare output file paths
-            output_file_path = os.path.join(self.args.output_dir, "list.txt")
-            output_en_file_path = os.path.join(self.args.output_dir, "list.en.txt")
+            # Prepare output file path
+            output_yaml_path = os.path.join(self.config.default_output_dir, "pages.yaml")
 
             # Fetch a page tree through all 4 stages
             page_count = 0
-            output_lines = []
+            yaml_entries = []
 
-            for page_info in self.fetch_page_tree_recursive(self.args.page_id):
-                if page_info:
-                    output_line = f"{page_info['id']}\t{page_info['breadcrumbs']}\t{page_info['title']}"
-                    output_lines.append(output_line)
-                    # Also print to stdout for backward compatibility
-                    print(output_line)
+            for page in self.fetch_page_tree_recursive(self.config.default_start_page_id):
+                if page:
+                    # Print to stdout for backward compatibility (page_id and breadcrumbs only)
+                    breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
+                    print(f"{page.page_id}\t{breadcrumbs_str}")
                     page_count += 1
 
-            # Save results to list.txt file
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                for line in output_lines:
-                    f.write(line + '\n')
-            self.logger.info(f"Results saved to {output_file_path}")
+                    # Add to YAML entries
+                    yaml_entries.append(page.to_dict())
 
-            # Generate English translation if translations are available
-            if os.path.exists(TRANSLATIONS_FILE):
-                self.logger.info("Generating English translation...")
-                # Read the Korean content
-                with open(output_file_path, 'r', encoding='utf-8') as f:
-                    korean_content = f.read()
-
-                # Translate the content
-                english_content = self.translator.translate_content(korean_content)
-
-                # Save the English translation
-                with open(output_en_file_path, 'w', encoding='utf-8') as f:
-                    f.write(english_content)
-                self.logger.info(f"English translation saved to {output_en_file_path}")
-            else:
-                self.logger.info(f"Translations file not found: {TRANSLATIONS_FILE}, skipping English translation")
+            # Save YAML file
+            self.file_manager.save_yaml(output_yaml_path, yaml_entries)
+            self.logger.info(f"YAML data saved to {output_yaml_path}")
 
             self.logger.info(f"Completed processing {page_count} pages through all 4 stages")
         except Exception as e:
@@ -531,22 +782,26 @@ class ConfluencePageProcessor:
             sys.exit(1)
 
 
+# ============================================================================
+# Main Function
+# ============================================================================
+
 def main():
     """Main function"""
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Generate a list of all subpages from a specified Confluence document")
-    parser.add_argument("--page-id", default=DEFAULT_START_PAGE_ID,
+    parser.add_argument("--page-id", default=Config().default_start_page_id,
                         help="ID of the starting page (default: %(default)s)")
     parser.add_argument("--quick-start", action="store_true",
-                        help=f"Use QUICK_START_PAGE_ID ({QUICK_START_PAGE_ID}) for faster testing")
-    parser.add_argument("--space-key", default=SPACE_KEY, help="Confluence space key (default: %(default)s)")
-    parser.add_argument("--base-url", default=BASE_URL, help="Confluence base URL (default: %(default)s)")
-    parser.add_argument("--email", default=EMAIL, help="Confluence email for authentication")
-    parser.add_argument("--api-token", default=API_TOKEN, help="Confluence API token for authentication")
+                        help=f"Use QUICK_START_PAGE_ID ({Config().quick_start_page_id}) for faster testing")
+    parser.add_argument("--space-key", default=Config().space_key, help="Confluence space key (default: %(default)s)")
+    parser.add_argument("--base-url", default=Config().base_url, help="Confluence base URL (default: %(default)s)")
+    parser.add_argument("--email", default=Config().email, help="Confluence email for authentication")
+    parser.add_argument("--api-token", default=Config().api_token, help="Confluence API token for authentication")
     parser.add_argument("--attachments", action="store_true", help="Download page content with attachments")
     parser.add_argument("--local", action="store_true",
                         help="Use local page.v1.yaml and page.v2.yaml files instead of making API calls")
-    parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR,
+    parser.add_argument("--output-dir", default=Config().default_output_dir,
                         help="Directory to store output files (default: %(default)s)")
     parser.add_argument("--log-level", default="WARNING", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
                         help="Set the logging level (default: %(default)s)")
@@ -559,8 +814,25 @@ def main():
         stream=sys.stderr
     )
 
+    # Create configuration
+    config = Config(
+        base_url=args.base_url,
+        space_key=args.space_key,
+        email=args.email,
+        api_token=args.api_token,
+        default_output_dir=args.output_dir,
+        download_attachments=args.attachments,
+        use_local_files=args.local
+    )
+
+    # Handle quick-start option
+    if args.quick_start:
+        config.default_start_page_id = config.quick_start_page_id
+        logging.getLogger(__name__).info(f"Quick start mode enabled, using page ID: {config.quick_start_page_id}")
+
     # Create processor and run
-    processor = ConfluencePageProcessor(args)
+    logger = logging.getLogger(__name__)
+    processor = ConfluencePageProcessor(config, logger)
     processor.run()
 
 
