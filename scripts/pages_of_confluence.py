@@ -11,6 +11,9 @@ The document processing follows 4 distinct stages:
 3. Attachment Download: Download attachments if specified
 4. Document Listing: Generate and output document list with breadcrumbs
 
+Additionally, if translations are available, the script will generate an English translation
+of the Korean titles in list.en.txt.
+
 Usage examples:
   python pages_of_confluence.py
   python pages_of_confluence.py --page-id 123456789 --space-key DOCS
@@ -19,6 +22,7 @@ Usage examples:
   python pages_of_confluence.py --local  # Use local YAML files instead of making API calls
 """
 import unicodedata
+import re
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -36,6 +40,7 @@ SPACE_KEY = "QM"
 DEFAULT_START_PAGE_ID = "608501837"  # Root Page ID of "QueryPie Docs"
 QUICK_START_PAGE_ID = "544375784"  # QueryPie Overview having less children
 DEFAULT_OUTPUT_DIR = "docs/latest-ko-confluence"
+TRANSLATIONS_FILE = "docs/korean-titles-translations.txt"
 
 # Environment variables for authentication
 EMAIL = os.environ.get('ATLASSIAN_USERNAME', 'your-email@example.com')
@@ -51,6 +56,57 @@ HIDDEN_CHARACTERS = {
 }
 
 
+class Translator:
+    """Class for handling Korean to English title translations"""
+
+    def __init__(self, translations_file: str):
+        self.translations_file = translations_file
+        self.logger = logging.getLogger(__name__)
+        self.translations = {}
+        self._load_translations()
+
+    def _load_translations(self) -> None:
+        """Load translations from the translations file"""
+        if not os.path.exists(self.translations_file):
+            self.logger.warning(f"Translations file not found: {self.translations_file}")
+            return
+
+        try:
+            with open(self.translations_file, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith('#') or '|' not in line:
+                        continue
+
+                    parts = line.split('|')
+                    if len(parts) == 2:
+                        korean = parts[0].strip()
+                        english = parts[1].strip()
+                        if korean and english:
+                            self.translations[korean] = english
+
+            self.logger.info(f"Loaded {len(self.translations)} translations from {self.translations_file}")
+        except Exception as e:
+            self.logger.error(f"Error loading translations from {self.translations_file}: {str(e)}")
+
+    def translate_content(self, content: str) -> str:
+        """Translate Korean titles in content to English"""
+        if not self.translations:
+            return content
+
+        # Sort translations by length (longest first) to avoid partial matches
+        sorted_translations = sorted(self.translations.items(), key=lambda x: len(x[0]), reverse=True)
+
+        # Replace Korean titles with English translations
+        translated_content = content
+        for korean, english in sorted_translations:
+            # Replace in both the navigation path and the document title
+            translated_content = translated_content.replace(f" />> {korean}", f" />> {english}")
+            translated_content = translated_content.replace(f"\t{korean}", f"\t{english}")
+
+        return translated_content
+
+
 class ConfluencePageProcessor:
     """Main class for Confluence page processing"""
 
@@ -59,6 +115,9 @@ class ConfluencePageProcessor:
         self.logger = logging.getLogger(__name__)
         self.auth = HTTPBasicAuth(args.email, args.api_token)
         self.headers = {"Accept": "application/json"}
+
+        # Initialize translator
+        self.translator = Translator(TRANSLATIONS_FILE)
 
         # Handle quick-start option
         if args.quick_start:
@@ -83,10 +142,10 @@ class ConfluencePageProcessor:
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             mode = 'wb' if is_binary else 'w'
             encoding = None if is_binary else 'utf-8'
-            
+
             with open(filepath, mode, encoding=encoding) as f:
                 f.write(content)
-            
+
             self.logger.debug(f"Saved {len(content)} bytes to {filepath}")
             return True
         except Exception as e:
@@ -166,7 +225,7 @@ class ConfluencePageProcessor:
             if data:
                 filepath = os.path.join(directory, endpoint['filename'])
                 self._save_yaml(filepath, data)
-                
+
                 # Log specific information for children and attachments
                 if 'children' in endpoint['filename']:
                     child_count = len(data.get("results", []))
@@ -204,7 +263,7 @@ class ConfluencePageProcessor:
     def _extract_v1_content(self, page_id: str, v1_data: Dict, directory: str) -> None:
         """Extract content from V1 API data"""
         body = v1_data.get("body", {})
-        
+
         # Extract XHTML content
         xhtml_content = body.get("storage", {}).get("value", "")
         if xhtml_content:
@@ -311,7 +370,7 @@ class ConfluencePageProcessor:
         }
 
     def _build_breadcrumbs(self, page_id: str, ancestors: List[Dict], title: str,
-                          start_page_id: Optional[str] = None) -> str:
+                           start_page_id: Optional[str] = None) -> str:
         """Build breadcrumb string"""
         try:
             # Special case for the start page
@@ -336,7 +395,7 @@ class ConfluencePageProcessor:
             else:
                 # Include all ancestors
                 ancestor_titles = [self.clean_text(ancestor["title"]) for ancestor in ancestors
-                                 if ancestor.get("type") == "page" and "title" in ancestor]
+                                   if ancestor.get("type") == "page" and "title" in ancestor]
                 path = ancestor_titles + [title]
 
             return " />> ".join(path)
@@ -426,12 +485,44 @@ class ConfluencePageProcessor:
                 print(error_msg, file=sys.stderr)
                 sys.exit(1)
 
-            # Fetch page tree through all 4 stages
+            # Prepare output file paths
+            output_file_path = os.path.join(self.args.output_dir, "list.txt")
+            output_en_file_path = os.path.join(self.args.output_dir, "list.en.txt")
+
+            # Fetch a page tree through all 4 stages
             page_count = 0
+            output_lines = []
+
             for page_info in self.fetch_page_tree_recursive(self.args.page_id):
                 if page_info:
-                    print(f"{page_info['id']}\t{page_info['breadcrumbs']}\t{page_info['title']}")
+                    output_line = f"{page_info['id']}\t{page_info['breadcrumbs']}\t{page_info['title']}"
+                    output_lines.append(output_line)
+                    # Also print to stdout for backward compatibility
+                    print(output_line)
                     page_count += 1
+
+            # Save results to list.txt file
+            with open(output_file_path, 'w', encoding='utf-8') as f:
+                for line in output_lines:
+                    f.write(line + '\n')
+            self.logger.info(f"Results saved to {output_file_path}")
+
+            # Generate English translation if translations are available
+            if os.path.exists(TRANSLATIONS_FILE):
+                self.logger.info("Generating English translation...")
+                # Read the Korean content
+                with open(output_file_path, 'r', encoding='utf-8') as f:
+                    korean_content = f.read()
+
+                # Translate the content
+                english_content = self.translator.translate_content(korean_content)
+
+                # Save the English translation
+                with open(output_en_file_path, 'w', encoding='utf-8') as f:
+                    f.write(english_content)
+                self.logger.info(f"English translation saved to {output_en_file_path}")
+            else:
+                self.logger.info(f"Translations file not found: {TRANSLATIONS_FILE}, skipping English translation")
 
             self.logger.info(f"Completed processing {page_count} pages through all 4 stages")
         except Exception as e:

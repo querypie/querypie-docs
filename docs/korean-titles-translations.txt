@@ -55,11 +55,6 @@ Multi Agent 제약사항 | Multi Agent Limitations
 
 # User Management
 Email을 통한 사용자 비밀 번호 초기화 | User Password Reset via Email
-
-# WAC Quickstart
-Root CA 인증서 설치 가이드 | Root CA Certificate Installation Guide
-
-# User Management
 사용자 프로필 | User Profile
 qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능 | Password Change Enforcement and Account Deletion Feature for qp-admin Default Account
 LDAP 연동하기 | Integrating with LDAP
@@ -69,6 +64,10 @@ Google SAML 연동하기 | Integrating with Google SAML
 Multi-Factor Authentication 설정하기 | Setting Up Multi-Factor Authentication
 Provisioning 활성화 하기 | Activating Provisioning
 [Okta] 프로비저닝 연동 가이드 | [Okta] Provisioning Integration Guide
+
+# Company Management
+요청 타입별 템플릿 변수 | Template Variables by Request Type
+New Request > 요청 타입별 템플릿 변수 | New Request > Template Variables by Request Type
 
 # System Integrations
 Syslog 연동 | Integrating with Syslog
@@ -89,9 +88,6 @@ DocumentDB 전용 가이드 | DocumentDB Specific Guide
 Google BigQuery OAuth 인증 설정 | Google BigQuery OAuth Authentication Configuration
 AWS Athena 전용 가이드 | AWS Athena Specific Guide
 Custom Data Source 설정 및 로그 확인 | Custom Data Source Configuration and Log Verification
-
-# Company Management
-요청 타입별 템플릿 변수 | Template Variables by Request Type
 
 # Server Connection Management
 AWS에서 서버 리소스 동기화 | Synchronizing Server Resources from AWS
@@ -130,6 +126,9 @@ Web App Configurations에서 WAC 초기 설정하기 | Initial WAC Setup in Web 
 WAC 트러블슈팅 가이드 | WAC Troubleshooting Guide
 [10.3.0 ~] WAC JIT 권한 획득 Guide | [10.3.0 ~] WAC JIT Permission Acquisition Guide
 Role 부여 및 회수하기 | Granting and Revoking Roles
+
+# WAC Quickstart
+Root CA 인증서 설치 가이드 | Root CA Certificate Installation Guide
 
 # Reverse Tunnels
 Reverse Tunnel을 통해 서버에 통신하기 | Communicating with Servers through Reverse Tunnel
