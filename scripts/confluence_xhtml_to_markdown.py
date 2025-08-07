@@ -17,20 +17,122 @@ import re
 import shutil
 import sys
 import unicodedata
-from typing import Optional
-
-import yaml
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
+from typing import Optional, Dict, List, Any, TypedDict
 
+import yaml
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
+
+
+# Type definitions for page_v1 structure
+class PageV1(TypedDict, total=False):
+    """Type definition for page_v1 data structure"""
+    id: str
+    type: str
+    ari: str
+    base64EncodedAri: str
+    status: str
+    title: str
+    path: List[str]  # Path components for navigation
+    ancestors: List[Dict[str, Any]]
+    macroRenderedOutput: Dict[str, Any]
+    body: Dict[str, Any]
+    extensions: Dict[str, Any]
+    _expandable: Dict[str, Any]
+    _links: Dict[str, str]
+
+
+# Type definitions for pages dictionary structure
+class PageInfo(TypedDict, total=False):
+    """Type definition for page information in pages.yaml"""
+    page_id: str
+    title: str
+    breadcrumbs: List[str]
+    breadcrumbs_en: List[str]
+    path: List[str]
+
+
+class Attachment:
+    """
+    <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
+    <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
+    """
+
+    def __init__(self, node: Tag, input_dir: str, output_dir: str, public_dir: str) -> None:
+        filename = node.get('filename', '')
+        if not filename:
+            logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
+            return
+
+        # Apply unicodedata.normalize to prevent unmatched string comparison.
+        # Use Normalization Form Canonical Composition for the unicode normalization.
+        filename = unicodedata.normalize('NFC', filename)
+        self.original: str = filename
+        self.filename: str = normalize_screenshots(filename)
+        self.used: bool = False
+
+        self.input_dir: str = input_dir
+        self.output_dir: str = output_dir
+        self.public_dir: str = public_dir
+        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir} public_dir={self.public_dir}")
+
+    def __str__(self) -> str:
+        return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
+
+    def copy_to_destination(self) -> None:
+        source_file = os.path.join(self.input_dir, self.original)
+        if os.path.exists(source_file):
+            logging.debug(f"Source file found: {repr(source_file)}")
+        else:
+            logging.warning(f"Source file not found: {repr(source_file)}")
+            return
+
+        if not self.filename.endswith('.png'):
+            logging.warning(f"Source file is not an image file: {repr(source_file)}")
+            return
+
+        logging.debug(f"public_dir={self.public_dir} output_dir={self.output_dir}")
+        destination_dir = os.path.normpath(os.path.join(self.public_dir, './' + self.output_dir))
+        logging.debug(f"Destination directory: {destination_dir}")
+        if not os.path.exists(destination_dir):
+            logging.debug(f"Destination directory not found: {repr(destination_dir)}")
+            os.makedirs(destination_dir)
+        destination_file = os.path.join(destination_dir, self.filename)
+        if os.path.exists(destination_file):
+            # compare source_file and destination_file are equivalent.
+            if filecmp.cmp(source_file, destination_file):
+                logging.debug(f"Destination file already exists: {repr(destination_file)}")
+            else:
+                logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
+        else:
+            shutil.copyfile(source_file, destination_file)
+            # Change file permission to 0644
+            os.chmod(destination_file, 0o644)
+
+    def as_markdown(self, caption: str = '') -> str:
+        if not caption:
+            caption = self.filename
+        if self.filename.endswith('.png'):
+            return f'![{caption}]({self.output_dir}/{self.filename})'
+        else:
+            return f'[{caption}]({self.output_dir}/{self.filename})'
+
+
+# Type alias for pages dictionary
+PagesDict = Dict[str, PageInfo]
 
 # Global variable to store an input file path
 INPUT_FILE_PATH = ""
 OUTPUT_FILE_PATH = ""
 LANGUAGE = 'en'
+
+# Global variables to store data
+PAGES_DICT: PagesDict = {}
+GLOBAL_PAGE_V1: Optional[PageV1] = None
+GLOBAL_ATTACHMENTS: List[Attachment] = []
 
 # Hidden characters for text cleaning
 HIDDEN_CHARACTERS = {
@@ -55,7 +157,104 @@ def clean_text(text: Optional[str]) -> Optional[str]:
     return cleaned_text
 
 
-def load_page_v1_yaml(yaml_path):
+def load_pages_yaml(yaml_path: str) -> PagesDict:
+    """
+    Load the pages.yaml file and return as a dictionary with title as a key
+    
+    Args:
+        yaml_path (str): Path to the pages.yaml file
+        
+    Returns:
+        PagesDict: Dictionary with title as a key and page info as value, or empty dict if a file doesn't exist
+    """
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            yaml_string = f.read()
+            cleaned_yaml = clean_text(yaml_string)
+            yaml_data = yaml.safe_load(cleaned_yaml)
+
+            # Convert a list to dictionary with title as a key
+            pages_dict: PagesDict = {}
+            if isinstance(yaml_data, list):
+                for page in yaml_data:
+                    if isinstance(page, dict) and 'title' in page:
+                        pages_dict[page['title']] = page
+
+            logging.info(f"Successfully loaded pages.yaml from {yaml_path} with {len(pages_dict)} pages")
+            return pages_dict
+    except FileNotFoundError:
+        logging.warning(f"Pages YAML file not found: {yaml_path}")
+        return {}
+    except yaml.YAMLError as e:
+        logging.error(f"Error parsing YAML file {yaml_path}: {e}")
+        return {}
+    except Exception as e:
+        logging.error(f"Error loading pages.yaml from {yaml_path}: {e}")
+        return {}
+
+
+def get_page_v1() -> Optional[PageV1]:
+    """Get the current page_v1 data"""
+    global GLOBAL_PAGE_V1
+    return GLOBAL_PAGE_V1
+
+
+def get_attachments() -> List[Attachment]:
+    """Get the current attachments list"""
+    global GLOBAL_ATTACHMENTS
+    return GLOBAL_ATTACHMENTS
+
+
+def set_page_v1(page_v1: Optional[PageV1]) -> None:
+    """Set the current page_v1 data"""
+    global GLOBAL_PAGE_V1
+    GLOBAL_PAGE_V1 = page_v1
+
+
+def set_attachments(attachments: List[Attachment]) -> None:
+    """Set the current attachments list"""
+    global GLOBAL_ATTACHMENTS
+    GLOBAL_ATTACHMENTS = attachments
+
+
+def calculate_relative_path(current_path, target_path):
+    """
+    Calculate a relative path from the current path to a target path
+    
+    Args:
+        current_path (list): List of path components for the current page
+        target_path (list): List of path components for the target page
+        
+    Returns:
+        str: Relative path string
+    """
+    if not current_path or not target_path:
+        return ""
+
+    # Find common prefix
+    common_prefix_len = 0
+    for i, (curr, target) in enumerate(zip(current_path, target_path)):
+        if curr == target:
+            common_prefix_len = i + 1
+        else:
+            break
+
+    # Calculate relative path
+    relative_parts = []
+
+    # Go up from current path to common ancestor
+    up_levels = len(current_path) - common_prefix_len
+    if up_levels > 0:
+        relative_parts.extend(['..'] * up_levels)
+
+    # Go down from common ancestor to target
+    if common_prefix_len < len(target_path):
+        relative_parts.extend(target_path[common_prefix_len:])
+
+    return '/'.join(relative_parts) if relative_parts else ""
+
+
+def load_page_v1_yaml(yaml_path: str) -> Optional[PageV1]:
     """
     Load page.v1.yaml file and return as a dictionary object
     
@@ -63,7 +262,7 @@ def load_page_v1_yaml(yaml_path):
         yaml_path (str): Path to the page.v1.yaml file
         
     Returns:
-        dict: YAML content as dictionary, or None if the file doesn't exist or has errors
+        PageV1: YAML content as PageV1 dictionary, or None if the file doesn't exist or has errors
     """
     try:
         with open(yaml_path, 'r', encoding='utf-8') as f:
@@ -264,76 +463,9 @@ def normalize_screenshots(filename):
     return normalized
 
 
-class Attachment:
-    """
-    <ri:attachment filename="image-20240725-070857.png" version-at-save="1">
-    <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
-    """
-
-    def __init__(self, node, input_dir, output_dir, public_dir):
-        filename = node.get('filename', '')
-        if not filename:
-            logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
-            return
-
-        # Apply unicodedata.normalize to prevent unmatched string comparison.
-        # Use Normalization Form Canonical Composition for the unicode normalization.
-        filename = unicodedata.normalize('NFC', filename)
-        self.original = filename
-        self.filename = normalize_screenshots(filename)
-        self.used = False
-
-        self.input_dir = input_dir
-        self.output_dir = output_dir
-        self.public_dir = public_dir
-        logging.debug(f"Attachment: filename={filename} input_dir={self.input_dir} output_dir={self.output_dir} public_dir={self.public_dir}")
-
-    def __str__(self):
-        return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
-
-    def copy_to_destination(self):
-        source_file = os.path.join(self.input_dir, self.original)
-        if os.path.exists(source_file):
-            logging.debug(f"Source file found: {repr(source_file)}")
-        else:
-            logging.warning(f"Source file not found: {repr(source_file)}")
-            return
-
-        if not self.filename.endswith('.png'):
-            logging.warning(f"Source file is not an image file: {repr(source_file)}")
-            return
-
-        logging.debug(f"public_dir={self.public_dir} output_dir={self.output_dir}")
-        destination_dir = os.path.normpath(os.path.join(self.public_dir, './' + self.output_dir))
-        logging.debug(f"Destination directory: {destination_dir}")
-        if not os.path.exists(destination_dir):
-            logging.debug(f"Destination directory not found: {repr(destination_dir)}")
-            os.makedirs(destination_dir)
-        destination_file = os.path.join(destination_dir, self.filename)
-        if os.path.exists(destination_file):
-            # compare source_file and destination_file are equivalent.
-            if filecmp.cmp(source_file, destination_file):
-                logging.debug(f"Destination file already exists: {repr(destination_file)}")
-            else:
-                logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
-        else:
-            shutil.copyfile(source_file, destination_file)
-            # Change file permission to 0644
-            os.chmod(destination_file, 0o644)
-
-    def as_markdown(self, caption=''):
-        if not caption:
-            caption = self.filename
-        if self.filename.endswith('.png'):
-            return f'![{caption}]({self.output_dir}/{self.filename})'
-        else:
-            return f'[{caption}]({self.output_dir}/{self.filename})'
-
-
 class SingleLineParser:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.markdown_lines = []
         self.applicable_nodes = {
             'span',
@@ -348,7 +480,9 @@ class SingleLineParser:
             'ul', 'ol', 'li',
             'ac:plain-text-body',
         }
-        self._debug_markdown = False
+        self._debug_tags = {
+            # 'a', 'ac:link', 'ri:page', 'ac:link-body',
+        }
 
     @property
     def as_markdown(self):
@@ -395,8 +529,9 @@ class SingleLineParser:
             return
 
         logging.debug(f"SingleLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        if self._debug_markdown:
-            self.markdown_lines.append(f'<{node.name}>')
+        if node.name in self._debug_tags:
+            self.markdown_lines.append(f'{print_node_with_properties(node)}')
+
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             self.markdown_lines.append("#" * int(node.name[1]) + " ")
             self.markdown_lines.append(self.markdown_of_children(node))
@@ -475,7 +610,7 @@ class SingleLineParser:
             href = node.get('href', '#')
             self.markdown_lines.append("[")
             for child in node.children:
-                self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown)
+                self.markdown_lines.append(SingleLineParser(child).as_markdown)
             self.markdown_lines.append(f"]({href})")
         elif node.name in ['ac:link']:
             """
@@ -486,12 +621,43 @@ class SingleLineParser:
             """
             link_body = '(ERROR: Link body not found)'
             href = '#'
+            target_title = None
+
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
-                    link_body = SingleLineParser(child, self.attachments).as_markdown
+                    link_body = SingleLineParser(child).as_markdown
                 if isinstance(child, Tag) and child.name == 'ri:page':
-                    href = child.get('content-title', '#')
+                    target_title = child.get('content-title', '')
+                    href = target_title  # Keep original title as fallback
+
+            # Try to calculate a relative path if we have pages dictionary and target title
+            if target_title and PAGES_DICT and target_title in PAGES_DICT:
+                target_page = PAGES_DICT[target_title]
+                target_path = target_page.get('path', [])
+
+                # Get the current page path from page_v1.yaml
+            current_page_path: List[str] = []
+            page_v1 = get_page_v1()
+            if page_v1 and isinstance(page_v1, dict) and 'path' in page_v1:
+                path_data = page_v1.get('path', [])
+                if isinstance(path_data, list):
+                    current_page_path = path_data
+
+                # Calculate relative path
+                relative_path = calculate_relative_path(current_page_path, target_path)
+                if relative_path:
+                    href = relative_path
+                    logging.debug(f"Calculated relative path: {current_page_path} -> {target_path} = {relative_path}")
+                else:
+                    logging.debug(f"Could not calculate relative path for {target_title}")
+            else:
+                if target_title:
+                    logging.debug(f"Target title '{target_title}' not found in pages dictionary")
+
             self.markdown_lines.append(f'[{link_body}]({href})')
+        elif node.name in ['ri:page']:
+            content_title = node.get('content-title', '#')
+            self.markdown_lines.append(content_title)
         elif node.name in ['ac:link-body']:
             # ac:link-body is used in ac:link, we can process it as a regular text
             for child in node.children:
@@ -569,7 +735,7 @@ class SingleLineParser:
             for child in node.children:
                 self.convert_recursively(child)
 
-        if self._debug_markdown:
+        if node.name in self._debug_tags:
             self.markdown_lines.append(f'</{node.name}>')
         return
 
@@ -581,7 +747,7 @@ class SingleLineParser:
         """
         markdown = []
         for child in node.children:
-            markdown.append(SingleLineParser(child, self.attachments).as_markdown)
+            markdown.append(SingleLineParser(child).as_markdown)
         return ''.join(markdown)
 
     def convert_inline_image(self, node):
@@ -612,11 +778,12 @@ class SingleLineParser:
         else:
             logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
 
-        # Find matching attachment in self.attachments list
+        # Find matching attachment in attachments list
         markdown = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
-            for it in self.attachments:
+            attachments = get_attachments()
+            for it in attachments:
                 if it.original == image_filename:
                     it.used = True
                     markdown = it.as_markdown()
@@ -632,9 +799,8 @@ class SingleLineParser:
 
 
 class MultiLineParser:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.list_stack = []
         self.markdown_lines = []
         self._debug_markdown = False
@@ -692,14 +858,14 @@ class MultiLineParser:
         elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             # Headings can exist in a <Callout> block.
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
             self.markdown_lines.append('\n')
-        elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node, self.attachments).applicable:
+        elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(StructuredMacroToCallout(node, self.attachments).as_markdown)
-        elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node, self.attachments).applicable:
+            self.markdown_lines.extend(StructuredMacroToCallout(node).as_markdown)
+        elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(AdfExtensionToCallout(node, self.attachments).as_markdown)
+            self.markdown_lines.extend(AdfExtensionToCallout(node).as_markdown)
         elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
             self.convert_structured_macro_code(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
@@ -716,7 +882,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             markdown = []
             for child in node.children:
-                markdown.extend(MultiLineParser(child, self.attachments).as_markdown)
+                markdown.extend(MultiLineParser(child).as_markdown)
             lines = ''.join(markdown).splitlines()
             for to_quote in lines:
                 self.markdown_lines.append(f'> {to_quote}')
@@ -727,29 +893,29 @@ class MultiLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name == 'table':
-            native_markdown = TableToNativeMarkdown(node, self.attachments)
+            native_markdown = TableToNativeMarkdown(node)
             if native_markdown.applicable:
                 self.markdown_lines.extend(native_markdown.as_markdown)
             else:
-                self.markdown_lines.extend(TableToHtmlTable(node, self.attachments).as_markdown)
+                self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
         elif node.name in ['p', 'div']:
             self.append_empty_line_unless_first_child(node)
             child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    child_markdown.append(SingleLineParser(child, self.attachments).as_markdown)
-                elif SingleLineParser(child, self.attachments).applicable:
-                    child_markdown.append(SingleLineParser(child, self.attachments).as_markdown)
+                    child_markdown.append(SingleLineParser(child).as_markdown)
+                elif SingleLineParser(child).applicable:
+                    child_markdown.append(SingleLineParser(child).as_markdown)
                 else:
                     if self._debug_markdown:
                         child_markdown.append(f'<{child.name}>')
-                    child_markdown.extend(MultiLineParser(child, self.attachments).as_markdown)
+                    child_markdown.extend(MultiLineParser(child).as_markdown)
                     if self._debug_markdown:
                         child_markdown.append(f'</{child.name}>')
             # Add an empty line after paragraphs
             self.markdown_lines.append(''.join(child_markdown).strip() + '\n')
         elif node.name in ['span']:
-            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['br']:
             # <br/> is a line break. Just keep using <br/>.
             # Append '\n' for <br/> in MultiLineParser.
@@ -761,7 +927,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             self.convert_image(node)
         elif node.name in ['a']:
-            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['hr']:
             self.markdown_lines.append(f'---\n')
         else:
@@ -795,7 +961,7 @@ class MultiLineParser:
         else:
             prefix = f"{indent}{counter}. "
 
-        text = SingleLineParser(node, self.attachments).as_markdown
+        text = SingleLineParser(node).as_markdown
         self.markdown_lines.append(f'{prefix}{text}\n')
 
         # Handle nested lists
@@ -843,12 +1009,13 @@ class MultiLineParser:
         if caption:
             caption_paragraph = caption.find('p')
             if caption_paragraph:
-                caption_text = SingleLineParser(caption_paragraph, self.attachments).as_markdown
+                caption_text = SingleLineParser(caption_paragraph).as_markdown
 
         markdown = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
-            for it in self.attachments:
+            attachments = get_attachments()
+            for it in attachments:
                 if it.original == image_filename:
                     it.used = True
                     markdown = it.as_markdown(caption_text)
@@ -913,7 +1080,7 @@ class MultiLineParser:
         # Look for code content in the CDATA section
         rich_text_body = node.find('ac:rich-text-body')
         if rich_text_body:
-            self.markdown_lines.extend(MultiLineParser(rich_text_body, self.attachments).as_markdown)
+            self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
 
         self.markdown_lines.append(f"</details>\n")
 
@@ -937,9 +1104,8 @@ class MultiLineParser:
 
 
 class TableToNativeMarkdown:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.markdown_lines = []
         self.applicable_nodes = {
             'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
@@ -1031,7 +1197,7 @@ class TableToNativeMarkdown:
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
 
-                cell_content = SingleLineParser(cell, self.attachments).as_markdown
+                cell_content = SingleLineParser(cell).as_markdown
 
                 # Add cell content to the current row
                 current_row.append(cell_content)
@@ -1090,9 +1256,8 @@ class TableToNativeMarkdown:
 
 
 class TableToHtmlTable:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -1127,20 +1292,20 @@ class TableToHtmlTable:
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown + '\n')
-                elif SingleLineParser(child, self.attachments).applicable:
-                    self.markdown_lines.append(SingleLineParser(child, self.attachments).as_markdown + '\n')
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
+                elif SingleLineParser(child).applicable:
+                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
                 else:
-                    self.markdown_lines.extend(MultiLineParser(child, self.attachments).as_markdown)
+                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
 
             self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name == 'col':
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
             self.markdown_lines.append(f"<col{attrs}/>\n")
-        elif SingleLineParser(node, self.attachments).applicable:
+        elif SingleLineParser(node).applicable:
             # <ac:adf-fragment-mark> could be converted.
-            self.markdown_lines.append(SingleLineParser(node, self.attachments).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]\n')
@@ -1149,9 +1314,8 @@ class TableToHtmlTable:
 
 
 class StructuredMacroToCallout:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -1177,7 +1341,7 @@ class StructuredMacroToCallout:
         def _has_applicable_node(node):
             if isinstance(node, NavigableString):
                 return False
-            elif StructuredMacroToCallout(node, self.attachments).applicable:
+            elif StructuredMacroToCallout(node).applicable:
                 return True
             else:
                 for child in node.children:
@@ -1212,7 +1376,7 @@ class StructuredMacroToCallout:
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
             for child in node.children:
-                self.markdown_lines.extend(MultiLineParser(child, self.attachments).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(child).as_markdown)
 
             self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
@@ -1228,7 +1392,7 @@ class StructuredMacroToCallout:
                     f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
 
             if rich_text_body:
-                self.markdown_lines.extend(MultiLineParser(rich_text_body, self.attachments).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
             else:
                 logging.warning(
                     f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}')
@@ -1242,9 +1406,8 @@ class StructuredMacroToCallout:
 
 
 class AdfExtensionToCallout:
-    def __init__(self, node, attachments: list[Attachment]):
+    def __init__(self, node):
         self.node = node
-        self.attachments = attachments
         self.markdown_lines = []
 
     @property
@@ -1274,7 +1437,7 @@ class AdfExtensionToCallout:
         def _has_applicable_node(node):
             if isinstance(node, NavigableString):
                 return False
-            elif AdfExtensionToCallout(node, self.attachments).applicable:
+            elif AdfExtensionToCallout(node).applicable:
                 return True
             else:
                 for child in node.children:
@@ -1314,7 +1477,7 @@ class AdfExtensionToCallout:
 
             adf_content = node.find('ac:adf-content')
             if adf_content:
-                self.markdown_lines.extend(MultiLineParser(adf_content, self.attachments).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(adf_content).as_markdown)
             else:
                 logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
 
@@ -1329,24 +1492,25 @@ class AdfExtensionToCallout:
 
 
 class ConfluenceToMarkdown:
-    def __init__(self, html_content):
+    def __init__(self, html_content: str):
         self.markdown_lines = []
-        self.attachments = []
         self._imports = {}
         self._debug_markdown = False
-        self.page_v1 = None
+        self.page_v1: Optional[PageV1] = None
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')
 
-    def _extract_page_title(self):
+    def _extract_page_title(self) -> Optional[str]:
         """Extract page title from page_v1_yaml_data object"""
-        if self.page_v1 and 'title' in self.page_v1:
-            logging.debug(f"Extracted page title from YAML data: {self.page_v1['title']}")
-            return self.page_v1['title']
-        else:
-            logging.warning("No title found in self.page_v1")
-            return None
+        page_v1 = get_page_v1()
+        if page_v1 and isinstance(page_v1, dict) and 'title' in page_v1:
+            title = page_v1.get('title')
+            if isinstance(title, str):
+                logging.debug(f"Extracted page title from YAML data: {title}")
+                return title
+        logging.warning("No title found in page_v1")
+        return None
 
     @property
     def imports(self):
@@ -1376,12 +1540,13 @@ class ConfluenceToMarkdown:
         else:
             self._imports[module_name] = False
 
-    def set_page_v1(self, page_v1):
-        self.page_v1 = page_v1
+    def set_page_v1(self, page_v1: Optional[PageV1]) -> None:
+        set_page_v1(page_v1)
 
-    def load_attachments(self, input_dir, output_dir, public_dir):
+    def load_attachments(self, input_dir: str, output_dir: str, public_dir: str) -> None:
         # Find all ac:image nodes first
         ac_image_nodes = self.soup.find_all('ac:image')
+        attachments: List[Attachment] = []
         for ac_image in ac_image_nodes:
             # Find ri:attachment nodes within each ac:image
             attachment_nodes = ac_image.find_all('ri:attachment')
@@ -1389,18 +1554,19 @@ class ConfluenceToMarkdown:
                 logging.debug(f"add attachment of <ac:image>{node}")
                 attachment = Attachment(node, input_dir, output_dir, public_dir)
                 attachment.copy_to_destination()
-                self.attachments.append(attachment)
+                attachments.append(attachment)
 
-        logging.debug(f"attachments: {self.attachments}")
+        logging.debug(f"attachments: {attachments}")
+        set_attachments(attachments)
 
     def as_markdown(self):
-        if StructuredMacroToCallout(self.soup, self.attachments).has_applicable_nodes:
+        if StructuredMacroToCallout(self.soup).has_applicable_nodes:
             self.add_import('Callout')
-        elif AdfExtensionToCallout(self.soup, self.attachments).has_applicable_nodes:
+        elif AdfExtensionToCallout(self.soup).has_applicable_nodes:
             self.add_import('Callout')
 
         # Start conversion
-        self.markdown_lines.extend(MultiLineParser(self.soup, self.attachments).as_markdown)
+        self.markdown_lines.extend(MultiLineParser(self.soup).as_markdown)
         # self.process_node(soup)
 
         # Join all Markdown lines and return
@@ -1469,8 +1635,13 @@ def main():
         # Remove special characters before parsing
         html_content = clean_text(html_content)
 
+        # Load pages.yaml to get the current page's path
+        pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')
+        global PAGES_DICT
+        PAGES_DICT = load_pages_yaml(pages_yaml_path)
+
         # Load page.v1.yaml from the same directory as the input file
-        page_v1 = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
+        page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
 
         converter = ConfluenceToMarkdown(html_content)
         converter.set_page_v1(page_v1)
@@ -1480,7 +1651,8 @@ def main():
         with open(args.output_file, 'w', encoding='utf-8') as f:
             f.write(markdown_content)
 
-        for it in converter.attachments:
+        attachments = get_attachments()
+        for it in attachments:
             if it.used:
                 logging.debug(f'Attachment {it} is used.')
             else:
