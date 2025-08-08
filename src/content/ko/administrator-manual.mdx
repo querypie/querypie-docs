@@ -44,7 +44,7 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **기본 정보 설정하기**
 </th>
 <td>
-* [General](General) 
+* [General](general/company-management/general) 
     * 회사 이름, 타임존, 날짜 표기 방식 등
 </td>
 </tr>
@@ -56,9 +56,9 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **보안 정보 설정하기**
 </th>
 <td>
-* [Security](Security) 
+* [Security](general/company-management/security) 
     * 잠금 정책, 비밀번호 변경 주기, 타임아웃 등
-* [Allowed Zones](Allowed Zones) 
+* [Allowed Zones](general/company-management/allowed-zones) 
     * 허용할 IP 대역 생성 및 관리
 </td>
 </tr>
@@ -71,12 +71,12 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 </th>
 <td>
 * Authentication 
-    * [LDAP 연동하기](LDAP 연동하기)
-    * [Okta 연동하기 ](Okta 연동하기)
-    * [AWS SSO 연동하기 ](AWS SSO 연동하기)
+    * [LDAP 연동하기](general/user-management/authentication/integrating-with-ldap)
+    * [Okta 연동하기 ](general/user-management/authentication/integrating-with-okta)
+    * [AWS SSO 연동하기 ](general/user-management/authentication/integrating-with-aws-sso)
 * Users 
-    * [사용자 프로필 ](사용자 프로필)
-* [Groups](Groups) 
+    * [사용자 프로필 ](general/user-management/users/user-profile)
+* [Groups](general/user-management/groups) 
 </td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **관리자 역할 할당하기**
 </th>
 <td>
-* [Roles](Roles)
+* [Roles](web-apps/web-app-access-control/roles)
 </td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **결재 규칙 설정하기**
 </th>
 <td>
-* [Approval Rules](Approval Rules)
+* [Approval Rules](general/workflow-management/approval-rules)
 </td>
 </tr>
 <tr>
@@ -109,8 +109,8 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **알림 설정하기**
 </th>
 <td>
-* [Channels](Channels)
-* [Alerts](Alerts)
+* [Channels](general/company-management/channels)
+* [Alerts](general/company-management/alerts)
 </td>
 </tr>
 <tr>
@@ -121,7 +121,7 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **외부 보안 솔루션 연동하기**
 </th>
 <td>
-* [Integrations](Integrations)
+* [Integrations](general/system/integrations)
 </td>
 </tr>
 </tbody>
@@ -156,10 +156,10 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **Databased Access Control 설정하기**
 </th>
 <td>
-* [Connection Management](Connection Management)
-* [DB Access Control](DB Access Control)
-* [Policies](Policies)
-* [Ledger Management](Ledger Management)
+* [Connection Management](web-apps/connection-management)
+* [DB Access Control](databases/db-access-control)
+* [Policies](web-apps/web-app-access-control/policies)
+* [Ledger Management](databases/ledger-management)
 </td>
 </tr>
 <tr>
@@ -170,8 +170,8 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **Server Access Control 설정하기**
 </th>
 <td>
-* [Connection Management](Connection Management)
-* [Server Access Control ](Server Access Control)
+* [Connection Management](web-apps/connection-management)
+* [Server Access Control ](servers/server-access-control)
 </td>
 </tr>
 <tr>
@@ -182,8 +182,8 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **Kubernetes Access Control 설정하기**
 </th>
 <td>
-* [Connection Management](Connection Management)
-* [K8s Access Control ](K8s Access Control)
+* [Connection Management](web-apps/connection-management)
+* [K8s Access Control ](kubernetes/k8s-access-control)
 </td>
 </tr>
 <tr>
@@ -194,10 +194,10 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **감사 로그 확인하기**
 </th>
 <td>
-* [General Logs](General Logs)
-* [Database Logs](Database Logs)
-* [Server Logs](Server Logs)
-* [Kubernetes Logs](Kubernetes Logs)
+* [General Logs](audit/general-logs)
+* [Database Logs](audit/database-logs)
+* [Server Logs](audit/server-logs)
+* [Kubernetes Logs](audit/kubernetes-logs)
 </td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 �
 **데이터 디스커버리 사용하기**
 </th>
 <td>
-* [Discovery](Discovery)
+* [Discovery](discovery)
 </td>
 </tr>
 </tbody>

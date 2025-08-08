@@ -85,7 +85,7 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
 
 *  **All Users**  : 모든 사용자에 대해 적용되는 IP 제한 설정 (Default : 0.0.0.0/0)
 *  **Each User**  : 토글을 켜면 개별 사용자에 대해 Allowed Zone 설정 가능 
-    * 사용자별 Allowed Zone 설정 방법은 [사용자 프로필](사용자 프로필) 에서 확인 가능
+    * 사용자별 Allowed Zone 설정 방법은 [사용자 프로필](../../user-management/users/user-profile) 에서 확인 가능
     *  **Use Individual Configuration of Allowed Zones for Each User**  : 사용자별 개별 IP 허용 영역(Allowed Zone)을 설정합니다.
         * 활성화 시, 사용자 목록 및 각 사용자에게 할당된 IP 허용 영역을 확인할 수 있는 `View User to Allowed Zone Mappings` 링크가 표시됩니다.
         *  **View User to Allowed Zone Mappings** : 클릭 시 사용자별 Allowed Zone 목록을 모달(Modal) 창에서 확인할 수 있습니다. 사용자 이름(Display Name)으로 검색이 가능하며, 목록에는 사용자의 이름, 로그인 ID, 이메일, 그리고 할당된 모든 IP 주소가 표시됩니다.
@@ -94,7 +94,7 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
 
 <Callout type="info">
 **IP 접근 제어 정책 활성화 시 유의사항**
-`Require Allowed Zones for User Access` 옵션 활성화로 인해 로그인이 차단된 사용자는 'IP Registration Request' 워크플로우를 통해 신규 IP 주소에 대한 접근 허용을 요청할 수 있습니다. (자세한 내용은 [IP Registration Request 요청하기](IP Registration Request 요청하기) 문서를 참고하십시오.)
+`Require Allowed Zones for User Access` 옵션 활성화로 인해 로그인이 차단된 사용자는 'IP Registration Request' 워크플로우를 통해 신규 IP 주소에 대한 접근 허용을 요청할 수 있습니다. (자세한 내용은 [IP Registration Request 요청하기](../../../../user-manual/workflow/requesting-ip-registration) 문서를 참고하십시오.)
 </Callout>
 
 *  **Admin Page Access Control**  : 관리자 페이지에 접근할 수 있는 관리자의 IP를 제한하는 정책을 설정합니다. 토글을 활성화하여 특정 IP 주소 또는 대역에서 접속하는 관리자만 관리자 페이지에 접근하도록 제한할 수 있습니다.

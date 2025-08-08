@@ -68,8 +68,8 @@ Allowed Zones는 넓은 범위의 허용 IP 대역을 의미합니다. 따라서
     * 등록된 서버의 서버 계정 패스워드를 주기적으로 변경
     * On으로 설정 시 아래와 같이 변경
         * [Server Group](https://chequer.atlassian.net/wiki/spaces/QM/pages/544380846#3.-Accounts-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0)에서 패스워드 프로비저닝에 사용할 계정 선택 옵션 추가
-        * [Password Provisioning](Password Provisioning) 메뉴 활성화 및 Password 변경 Job 등록
-        * [Account Management](Account Management) 메뉴 활성화 및 QueryPie에서 관리하는 서버의 계정 리스트 조회 기능 제공
+        * [Password Provisioning](../server-account-management/password-provisioning) 메뉴 활성화 및 Password 변경 Job 등록
+        * [Account Management](../server-account-management/account-management) 메뉴 활성화 및 QueryPie에서 관리하는 서버의 계정 리스트 조회 기능 제공
 *  **Allow RDP Connection without Server Agent :**  RDP Server Agent가 설치되지 않은 Windows Server 접속 허용 여부 설정
     * QueryPie를 경유하여 RDP 프로토콜로 Windows Server에 접속
 
@@ -98,7 +98,7 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 </Callout>
 
 <Callout type="info">
-사용자는 Server Access Request를 통하여 서버에 대한 Direct Permission 을 할당받을 수 있습니다. 자세한 내용은 [Server Access Request 요청하기](Server Access Request 요청하기)를 참고해주세요.
+사용자는 Server Access Request를 통하여 서버에 대한 Direct Permission 을 할당받을 수 있습니다. 자세한 내용은 [Server Access Request 요청하기](../../../user-manual/workflow/requesting-server-access)를 참고해주세요.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -109,7 +109,7 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 *  **Protocols**  : 허용 프로토콜 (지원 프로토콜 : SSH, SFTP, TELNET, FTP, RDP, VNC)
 *  **Command Template**  : 접속시 적용할 차단 명령어 템플릿
     * 선택한 Command Template의 내용은 `Command Policy Detail` 아코디언을 펼쳐서 확인 가능
-    * 차단 명령어 템플릿의 생성 및 관리 방법은 [Command Templates](Command Templates) 참고
+    * 차단 명령어 템플릿의 생성 및 관리 방법은 [Command Templates](../server-access-control/command-templates) 참고
 *  **Access Start Time**  : 접속 허용 시작 시각
 *  **Access End Time**  : 접속 허용 종료 시각
 *  **Access Weekday**  : 접속 가능 요일
@@ -133,7 +133,7 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 </Callout>
 
 <Callout type="info">
-사용자는 Server Privilege Request를 통하여 서버에 대한 특권을 할당받을 수 있습니다. 자세한 내용은 [Server Privilege Request 요청하기](Server Privilege Request 요청하기)를 참고해주세요.
+사용자는 Server Privilege Request를 통하여 서버에 대한 특권을 할당받을 수 있습니다. 자세한 내용은 [Server Privilege Request 요청하기](../../../user-manual/workflow/requesting-server-privilege)를 참고해주세요.
 </Callout>
 
 <figure data-layout="center" data-align="center">

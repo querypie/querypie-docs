@@ -36,7 +36,6 @@ class PageV1(TypedDict, total=False):
     base64EncodedAri: str
     status: str
     title: str
-    path: List[str]  # Path components for navigation
     ancestors: List[Dict[str, Any]]
     macroRenderedOutput: Dict[str, Any]
     body: Dict[str, Any]
@@ -622,6 +621,8 @@ class SingleLineParser:
             link_body = '(ERROR: Link body not found)'
             href = '#'
             target_title = None
+            this_page = None
+            target_page = None
 
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
@@ -630,29 +631,28 @@ class SingleLineParser:
                     target_title = child.get('content-title', '')
                     href = target_title  # Keep original title as fallback
 
-            # Try to calculate a relative path if we have pages dictionary and target title
-            if target_title and PAGES_DICT and target_title in PAGES_DICT:
-                target_page = PAGES_DICT[target_title]
-                target_path = target_page.get('path', [])
+            if get_page_v1():
+                this_title = get_page_v1().get('title')
+                this_page = PAGES_DICT.get(this_title)
+            else:
+                logging.warning(f"Page v1 not found in {INPUT_FILE_PATH}")
 
-                # Get the current page path from page_v1.yaml
-            current_page_path: List[str] = []
-            page_v1 = get_page_v1()
-            if page_v1 and isinstance(page_v1, dict) and 'path' in page_v1:
-                path_data = page_v1.get('path', [])
-                if isinstance(path_data, list):
-                    current_page_path = path_data
+            if target_title:
+                target_page = PAGES_DICT.get(target_title)
 
-                # Calculate relative path
-                relative_path = calculate_relative_path(current_page_path, target_path)
+            if this_page and target_page:
+                relative_path = calculate_relative_path(this_page.get('path'), target_page.get('path'))
+                logging.warning(f"Calculated relative path: {this_page.get('path')} -> {target_page.get('path')} = {relative_path}")
                 if relative_path:
                     href = relative_path
-                    logging.debug(f"Calculated relative path: {current_page_path} -> {target_path} = {relative_path}")
                 else:
-                    logging.debug(f"Could not calculate relative path for {target_title}")
+                    href = "#invalid-relative-path"
+            elif not target_page:
+                logging.warning(f"Target title '{target_title}' not found in pages dictionary")
+                href = "#target-title-not-found"
             else:
-                if target_title:
-                    logging.debug(f"Target title '{target_title}' not found in pages dictionary")
+                logging.warning(f"Unexpected failure: {target_title}")
+                href = "#unexpected-failure"
 
             self.markdown_lines.append(f'[{link_body}]({href})')
         elif node.name in ['ri:page']:
@@ -1496,21 +1496,9 @@ class ConfluenceToMarkdown:
         self.markdown_lines = []
         self._imports = {}
         self._debug_markdown = False
-        self.page_v1: Optional[PageV1] = None
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')
-
-    def _extract_page_title(self) -> Optional[str]:
-        """Extract page title from page_v1_yaml_data object"""
-        page_v1 = get_page_v1()
-        if page_v1 and isinstance(page_v1, dict) and 'title' in page_v1:
-            title = page_v1.get('title')
-            if isinstance(title, str):
-                logging.debug(f"Extracted page title from YAML data: {title}")
-                return title
-        logging.warning("No title found in page_v1")
-        return None
 
     @property
     def imports(self):
@@ -1524,9 +1512,10 @@ class ConfluenceToMarkdown:
     @property
     def remark(self):
         remarks = []
-        if self._extract_page_title():
+        page_v1 = get_page_v1()
+        if page_v1 and page_v1.get("title"):
             # repr() generates a valid value of string for yaml.
-            remarks.append(f'title: {repr(self._extract_page_title())}\n')
+            remarks.append(f'title: {repr(page_v1.get("title"))}\n')
 
         if len(remarks) > 0:
             return ["---\n"] + remarks + ["---\n", "\n"]
@@ -1539,9 +1528,6 @@ class ConfluenceToMarkdown:
             self._imports[module_name] = True
         else:
             self._imports[module_name] = False
-
-    def set_page_v1(self, page_v1: Optional[PageV1]) -> None:
-        set_page_v1(page_v1)
 
     def load_attachments(self, input_dir: str, output_dir: str, public_dir: str) -> None:
         # Find all ac:image nodes first
@@ -1642,9 +1628,9 @@ def main():
 
         # Load page.v1.yaml from the same directory as the input file
         page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
+        set_page_v1(page_v1)
 
         converter = ConfluenceToMarkdown(html_content)
-        converter.set_page_v1(page_v1)
         converter.load_attachments(input_dir, output_dir, args.public_dir)
         markdown_content = converter.as_markdown()
 

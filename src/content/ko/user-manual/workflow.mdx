@@ -35,27 +35,27 @@ Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 
 *  **참조자** (Reviewer) : 요청 건을 리뷰하거나 참조할 수 있습니다. 
 
 <Callout type="info">
-요청 건에 대한 승인자 및 실행자는 [ **결재 규칙(Approval Rules)** ](Approval Rules)을 통해 관리자가 사전에 설정할 수 있습니다.
+요청 건에 대한 승인자 및 실행자는 [ **결재 규칙(Approval Rules)** ](../../administrator-manual/general/workflow-management/approval-rules)을 통해 관리자가 사전에 설정할 수 있습니다.
 </Callout>
 
 ## Submit Request (결재 요청하기)
 
 Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타입을 선택하면 요청 작성 페이지로 이동합니다. 각 요청 타입별 자세한 작성 방법은 연결된 페이지들을 참고해 주시기 바랍니다.
 
-* [DB Access Request](DB Access Request 요청하기) : DB 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
-* [SQL Request](SQL Request 요청하기) : 승인이 필요한 SQL 실행을 요청할 수 있고, 승인 후 1회에 한해 쿼리를 실행할 수 있습니다.
-* [SQL Export Request](SQL Export Request 요청하기) : 데이터 내보내기 작업을 요청할 수 있고, 승인 후 1회에 한해 데이터를 다운로드할 수 있습니다.
-* [Unmasking Request](Unmasking Request 요청하기 (마스킹 해제 요청)) : 마스킹된 컬럼의 원본 데이터 확인을 위해 일시적인 마스킹 해제를 요청할 수 있고, 승인 후 설정된 기간 동안 원본 데이터를 확인할 수 있습니다.
-* [Restricted Data Access](Restricted Data Access 요청하기 (제한된 데이터 접근 요청)) : 접근이 제한된 테이블 또는 컬럼의 데이터에 대한 일시적인 접근 허용을 요청할 수 있고, 승인 후 설정된 기간 동안 해당 데이터에 접근할 수 있습니다.
-* [Server Access Request](Server Access Request 요청하기) : 서버 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
-* [Server Privilege Request](Server Privilege Request 요청하기) : 서버에서 특정 명령어에 대한 임시 실행 권한을 요청할 수 있고, 승인 후 설정된 조건(접속 시점 또는 승인 시점)에 따라 지정된 시간 동안 해당 명령어를 사용할 수 있습니다.
-* [Access Role Request](Access Role Request 요청하기) : 서버 또는 쿠버네티스 대상 접근 역할 권한을 요청할 수 있고, 승인 즉시 역할이 부여됩니다. 
-* [IP Registration Request](IP Registration Request 요청하기) : 시스템 접근을 위한 IP 주소 등록을 요청할 수 있고, 승인 즉시 해당 IP에서의 접근이 허용됩니다.
-* [DB Exception Request](DB 정책 예외 요청하기 (DB Policy Exception Request)) : DAC 신규 정책 환경에서, 마스킹 해제(Unmasking) 또는 접근 제한 해제(Restricted Data Access)를 하나의 양식으로 요청할 수 있고, 승인 후 설정된 기간 동안 해당 권한이 부여됩니다.
+* [DB Access Request](requesting-db-access) : DB 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
+* [SQL Request](requesting-sql) : 승인이 필요한 SQL 실행을 요청할 수 있고, 승인 후 1회에 한해 쿼리를 실행할 수 있습니다.
+* [SQL Export Request](requesting-sql-export) : 데이터 내보내기 작업을 요청할 수 있고, 승인 후 1회에 한해 데이터를 다운로드할 수 있습니다.
+* [Unmasking Request](requesting-unmasking-mask-removal-request) : 마스킹된 컬럼의 원본 데이터 확인을 위해 일시적인 마스킹 해제를 요청할 수 있고, 승인 후 설정된 기간 동안 원본 데이터를 확인할 수 있습니다.
+* [Restricted Data Access](requesting-restricted-data-access) : 접근이 제한된 테이블 또는 컬럼의 데이터에 대한 일시적인 접근 허용을 요청할 수 있고, 승인 후 설정된 기간 동안 해당 데이터에 접근할 수 있습니다.
+* [Server Access Request](requesting-server-access) : 서버 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
+* [Server Privilege Request](requesting-server-privilege) : 서버에서 특정 명령어에 대한 임시 실행 권한을 요청할 수 있고, 승인 후 설정된 조건(접속 시점 또는 승인 시점)에 따라 지정된 시간 동안 해당 명령어를 사용할 수 있습니다.
+* [Access Role Request](requesting-access-role) : 서버 또는 쿠버네티스 대상 접근 역할 권한을 요청할 수 있고, 승인 즉시 역할이 부여됩니다. 
+* [IP Registration Request](requesting-ip-registration) : 시스템 접근을 위한 IP 주소 등록을 요청할 수 있고, 승인 즉시 해당 IP에서의 접근이 허용됩니다.
+* [DB Exception Request](requesting-db-policy-exception) : DAC 신규 정책 환경에서, 마스킹 해제(Unmasking) 또는 접근 제한 해제(Restricted Data Access)를 하나의 양식으로 요청할 수 있고, 승인 후 설정된 기간 동안 해당 권한이 부여됩니다.
 
 ## 대리 상신 기능 사용 시 유의사항
 
-관리자가 결재 규칙에서 허용한 경우, 다른 사용자를 대신하여 결재를 요청(대리 상신)할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다. 해당 기능의 설정 방법은 [Approval Rules](Approval Rules) 매뉴얼 페이지에서 확인할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다.
+관리자가 결재 규칙에서 허용한 경우, 다른 사용자를 대신하여 결재를 요청(대리 상신)할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다. 해당 기능의 설정 방법은 [Approval Rules](../../administrator-manual/general/workflow-management/approval-rules) 매뉴얼 페이지에서 확인할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다.
 
 *  **대리 상신 시 권한 및 DB 표시 기준** 
     *  **DB Access Request** : 대리 상신자는 본인이 조회 가능한 DB 커넥션에 대해서만 요청을 상신할 수 있습니다.
@@ -73,7 +73,7 @@ Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타�
 
 ## Received Requests (내가 받은 요청 승인 또는 반려하기)
 
-내가 승인자(Approver)로서 할당받은 요청들의 목록은 Received Requests 하위 메뉴에 표시됩니다. 만약 대리 결재자로 지정된 경우 원결재자가 승인하지 않은 요청 목록도 함께 표시됩니다. 대리 결재 관련 내용은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](결재 부가 기능 (대리 결재, 재상신 등))에서 자세히 확인하실 수 있습니다.
+내가 승인자(Approver)로서 할당받은 요청들의 목록은 Received Requests 하위 메뉴에 표시됩니다. 만약 대리 결재자로 지정된 경우 원결재자가 승인하지 않은 요청 목록도 함께 표시됩니다. 대리 결재 관련 내용은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](approval-additional-features-proxy-approval-resubmission-etc)에서 자세히 확인하실 수 있습니다.
 
 1. Workflow 목록 중 Received Requests &gt; To Do 메뉴에서 승인이 필요한 요청 목록을 확인합니다. 
 2. 처리하고자 하는 요청을 클릭하여 상세 내용을 확인 후 우측 상단에서 `Approve` 또는 `Reject`를 클릭합니다.
@@ -143,7 +143,7 @@ Workflow &gt; Executions &gt; To Do
 
 ## Reviews (참조된 요청 확인하기)
 
-내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다. 참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다. 확인되지 않은 요청을 확인하는 방법은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](결재 부가 기능 (대리 결재, 재상신 등))를 참고해주세요.
+내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다. 참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다. 확인되지 않은 요청을 확인하는 방법은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](approval-additional-features-proxy-approval-resubmission-etc)를 참고해주세요.
 
 <Callout type="info">
 Review 메뉴는 관리자가 사전에 사용 설정을 한 경우에만 표시됩니다.
