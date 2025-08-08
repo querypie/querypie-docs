@@ -216,9 +216,9 @@ def set_attachments(attachments: List[Attachment]) -> None:
     GLOBAL_ATTACHMENTS = attachments
 
 
-def calculate_relative_path(current_path, target_path):
+def calculate_relative_path(current_path: List[str], target_path: List[str]):
     """
-    Calculate a relative path from the current path to a target path
+    Calculate a relative path from the current path to a target path using os.path.relpath
     
     Args:
         current_path (list): List of path components for the current page
@@ -227,30 +227,16 @@ def calculate_relative_path(current_path, target_path):
     Returns:
         str: Relative path string
     """
-    if not current_path or not target_path:
-        return ""
+    import os
 
-    # Find common prefix
-    common_prefix_len = 0
-    for i, (curr, target) in enumerate(zip(current_path, target_path)):
-        if curr == target:
-            common_prefix_len = i + 1
-        else:
-            break
+    # Convert path lists to string paths
+    current_path_str = os.path.join("/", *current_path) if current_path else ""
+    target_path_str = os.path.join("/", *target_path) if target_path else ""
+    current_base_dir = os.path.dirname(current_path_str)
+    relative_path = os.path.relpath(target_path_str, current_base_dir)
 
-    # Calculate relative path
-    relative_parts = []
-
-    # Go up from current path to common ancestor
-    up_levels = len(current_path) - common_prefix_len
-    if up_levels > 0:
-        relative_parts.extend(['..'] * up_levels)
-
-    # Go down from common ancestor to target
-    if common_prefix_len < len(target_path):
-        relative_parts.extend(target_path[common_prefix_len:])
-
-    return '/'.join(relative_parts) if relative_parts else ""
+    logging.debug(f"calculate_relative_path: current_path={current_path_str}, target_path={target_path_str}, relative_path={relative_path}")
+    return relative_path
 
 
 def load_page_v1_yaml(yaml_path: str) -> Optional[PageV1]:
@@ -642,7 +628,6 @@ class SingleLineParser:
 
             if this_page and target_page:
                 relative_path = calculate_relative_path(this_page.get('path'), target_page.get('path'))
-                logging.warning(f"Calculated relative path: {this_page.get('path')} -> {target_page.get('path')} = {relative_path}")
                 if relative_path:
                     href = relative_path
                 else:
