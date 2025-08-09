@@ -21,6 +21,7 @@
     ],
     "paths": {
       "@components/*": ["./nextra-components/*"],
+      "private-next-root-dir/public/*": ["./public/*"],
       "@/*": ["./src/*"],
       "ROOT/*": ["./*"]
     }
