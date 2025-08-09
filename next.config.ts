@@ -49,7 +49,7 @@ export default withNextra({
   experimental: {
       turbo: {
           rules: {
-              './components/icons/*.svg': {
+              './nextra-components/icons/*.svg': {
                   loaders: ['@svgr/webpack'],
                   as: '*.js'
               }
