@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { compileMdx } from 'nextra/compile'
 import type { FC } from 'react'
-import { MDXRemote } from '../../packages/nextra/dist/client/mdx-remote'
+import { MDXRemote } from 'nextra/mdx-remote'
 
 export const ExampleCode: FC<{
   filePath: string
