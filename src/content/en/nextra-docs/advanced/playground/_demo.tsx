@@ -4,7 +4,7 @@ import { Code, Mermaid, Playground, Pre, Tabs } from 'nextra/components'
 import { MdxIcon } from 'nextra/icons'
 import type { FC } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useMDXComponents } from '../../../../mdx-components'
+import { useMDXComponents } from '../../mdx-components'
 
 export const Demo: FC = () => {
   const [rawMdx, setRawMdx] =
