@@ -1,3 +1,5 @@
+'use client'
+
 import type { FC } from 'react'
 
 export const ThemesAnimation: FC = props => {
