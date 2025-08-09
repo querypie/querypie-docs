@@ -55,6 +55,5 @@ export default withNextra({
               }
           }
       },
-      optimizePackageImports: ['@components/icons']
   }
 });
