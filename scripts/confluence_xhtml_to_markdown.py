@@ -89,10 +89,6 @@ class Attachment:
             logging.warning(f"Source file not found: {repr(source_file)}")
             return
 
-        if not self.filename.endswith('.png'):
-            logging.warning(f"Source file is not an image file: {repr(source_file)}")
-            return
-
         logging.debug(f"public_dir={self.public_dir} output_dir={self.output_dir}")
         destination_dir = os.path.normpath(os.path.join(self.public_dir, './' + self.output_dir))
         logging.debug(f"Destination directory: {destination_dir}")
