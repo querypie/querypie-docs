@@ -1,4178 +1,4441 @@
-- page_id: '608501837'
-  title: QueryPie Docs
-  breadcrumbs:
-  - QueryPie Docs
-  breadcrumbs_en:
-  - QueryPie Docs
-  path:
-  - querypie-docs
-- page_id: '544375335'
-  title: Release Notes
-  breadcrumbs:
-  - Release Notes
-  breadcrumbs_en:
-  - Release Notes
-  path:
-  - release-notes
-- page_id: '1171488777'
-  title: 11.1.0
-  breadcrumbs:
-  - Release Notes
-  - 11.1.0
-  breadcrumbs_en:
-  - Release Notes
-  - 11.1.0
-  path:
-  - release-notes
-  - '1110'
-- page_id: '1064830173'
-  title: 11.0.0
-  breadcrumbs:
-  - Release Notes
-  - 11.0.0
-  breadcrumbs_en:
-  - Release Notes
-  - 11.0.0
-  path:
-  - release-notes
-  - '1100'
-- page_id: '954335909'
-  title: 10.3.0 ~ 10.3.4
-  breadcrumbs:
-  - Release Notes
-  - 10.3.0 ~ 10.3.4
-  breadcrumbs_en:
-  - Release Notes
-  - 10.3.0 ~ 10.3.4
-  path:
-  - release-notes
-  - 1030-1034
-- page_id: '703463517'
-  title: 10.2.0 ~ 10.2.12
-  breadcrumbs:
-  - Release Notes
-  - 10.2.0 ~ 10.2.12
-  breadcrumbs_en:
-  - Release Notes
-  - 10.2.0 ~ 10.2.12
-  path:
-  - release-notes
-  - 1020-10212
-- page_id: '604995641'
-  title: 10.1.0 ~ 10.1.11
-  breadcrumbs:
-  - Release Notes
-  - 10.1.0 ~ 10.1.11
-  breadcrumbs_en:
-  - Release Notes
-  - 10.1.0 ~ 10.1.11
-  path:
-  - release-notes
-  - 1010-10111
-- page_id: '544375355'
-  title: 10.0.0 ~ 10.0.2
-  breadcrumbs:
-  - Release Notes
-  - 10.0.0 ~ 10.0.2
-  breadcrumbs_en:
-  - Release Notes
-  - 10.0.0 ~ 10.0.2
-  path:
-  - release-notes
-  - 1000-1002
-- page_id: '544375370'
-  title: 9.20.0 ~ 9.20.2
-  breadcrumbs:
-  - Release Notes
-  - 9.20.0 ~ 9.20.2
-  breadcrumbs_en:
-  - Release Notes
-  - 9.20.0 ~ 9.20.2
-  path:
-  - release-notes
-  - 9200-9202
-- page_id: '544375385'
-  title: '9.19.0 '
-  breadcrumbs:
-  - Release Notes
-  - '9.19.0 '
-  breadcrumbs_en:
-  - Release Notes
-  - '9.19.0 '
-  path:
-  - release-notes
-  - '9190'
-- page_id: '544375399'
-  title: 9.18.0 ~ 9.18.3
-  breadcrumbs:
-  - Release Notes
-  - 9.18.0 ~ 9.18.3
-  breadcrumbs_en:
-  - Release Notes
-  - 9.18.0 ~ 9.18.3
-  path:
-  - release-notes
-  - 9180-9183
-- page_id: '544375414'
-  title: 9.17.0 ~ 9.17.1
-  breadcrumbs:
-  - Release Notes
-  - 9.17.0 ~ 9.17.1
-  breadcrumbs_en:
-  - Release Notes
-  - 9.17.0 ~ 9.17.1
-  path:
-  - release-notes
-  - 9170-9171
-- page_id: '544375429'
-  title: 9.16.0 ~ 9.16.4
-  breadcrumbs:
-  - Release Notes
-  - 9.16.0 ~ 9.16.4
-  breadcrumbs_en:
-  - Release Notes
-  - 9.16.0 ~ 9.16.4
-  path:
-  - release-notes
-  - 9160-9164
-- page_id: '544375443'
-  title: 9.15.0 ~ 9.15.4
-  breadcrumbs:
-  - Release Notes
-  - 9.15.0 ~ 9.15.4
-  breadcrumbs_en:
-  - Release Notes
-  - 9.15.0 ~ 9.15.4
-  path:
-  - release-notes
-  - 9150-9154
-- page_id: '544375457'
-  title: 9.14.0 ~ 9.14.3
-  breadcrumbs:
-  - Release Notes
-  - 9.14.0 ~ 9.14.3
-  breadcrumbs_en:
-  - Release Notes
-  - 9.14.0 ~ 9.14.3
-  path:
-  - release-notes
-  - 9140-9143
-- page_id: '544375471'
-  title: 9.13.0 ~ 9.13.5
-  breadcrumbs:
-  - Release Notes
-  - 9.13.0 ~ 9.13.5
-  breadcrumbs_en:
-  - Release Notes
-  - 9.13.0 ~ 9.13.5
-  path:
-  - release-notes
-  - 9130-9135
-- page_id: '544375485'
-  title: 9.12.0 ~ 9.12.14
-  breadcrumbs:
-  - Release Notes
-  - 9.12.0 ~ 9.12.14
-  breadcrumbs_en:
-  - Release Notes
-  - 9.12.0 ~ 9.12.14
-  path:
-  - release-notes
-  - 9120-91214
-- page_id: '544375505'
-  title: 메뉴 개선 가이드 (9.12.0)
-  breadcrumbs:
-  - Release Notes
-  - 9.12.0 ~ 9.12.14
-  - 메뉴 개선 가이드 (9.12.0)
-  breadcrumbs_en:
-  - Release Notes
-  - 9.12.0 ~ 9.12.14
-  - Menu Improvement Guide (9.12.0)
-  path:
-  - release-notes
-  - 9120-91214
-  - menu-improvement-guide-9120
-- page_id: '544375587'
-  title: 9.11.0 ~ 9.11.5
-  breadcrumbs:
-  - Release Notes
-  - 9.11.0 ~ 9.11.5
-  breadcrumbs_en:
-  - Release Notes
-  - 9.11.0 ~ 9.11.5
-  path:
-  - release-notes
-  - 9110-9115
-- page_id: '544375607'
-  title: 9.10.0 - 9.10.4
-  breadcrumbs:
-  - Release Notes
-  - 9.10.0 - 9.10.4
-  breadcrumbs_en:
-  - Release Notes
-  - 9.10.0 - 9.10.4
-  path:
-  - release-notes
-  - 9100-9104
-- page_id: '544375624'
-  title: External API 변경사항 (9.10.0 버전)
-  breadcrumbs:
-  - Release Notes
-  - 9.10.0 - 9.10.4
-  - External API 변경사항 (9.10.0 버전)
-  breadcrumbs_en:
-  - Release Notes
-  - 9.10.0 - 9.10.4
-  - External API Changes (9.10.0 Version)
-  path:
-  - release-notes
-  - 9100-9104
-  - external-api-changes-9100-version
-- page_id: '544375659'
-  title: 9.9.0 ~ 9.9.8
-  breadcrumbs:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  breadcrumbs_en:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  path:
-  - release-notes
-  - 990-998
-- page_id: '544375685'
-  title: External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
-  breadcrumbs:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  - External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
-  breadcrumbs_en:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  - External API Changes (9.8.10 Version > 9.9.4 Version)
-  path:
-  - release-notes
-  - 990-998
-  - external-api-changes-9810-version-994-version
-- page_id: '544375741'
-  title: External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
-  breadcrumbs:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  - External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
-  breadcrumbs_en:
-  - Release Notes
-  - 9.9.0 ~ 9.9.8
-  - External API Changes (9.9.4 Version > 9.9.5 Version)
-  path:
-  - release-notes
-  - 990-998
-  - external-api-changes-994-version-995-version
-- page_id: '544375768'
-  title: 9.8.0 ~ 9.8.12
-  breadcrumbs:
-  - Release Notes
-  - 9.8.0 ~ 9.8.12
-  breadcrumbs_en:
-  - Release Notes
-  - 9.8.0 ~ 9.8.12
-  path:
-  - release-notes
-  - 980-9812
-- page_id: '544375784'
-  title: QueryPie Overview
-  breadcrumbs:
-  - QueryPie Overview
-  breadcrumbs_en:
-  - QueryPie Overview
-  path:
-  - querypie-overview
-- page_id: '544112942'
-  title: Proxy Management
-  breadcrumbs:
-  - QueryPie Overview
-  - Proxy Management
-  breadcrumbs_en:
-  - QueryPie Overview
-  - Proxy Management
-  path:
-  - querypie-overview
-  - proxy-management
-- page_id: '544377869'
-  title: Database Proxy 사용 활성화
-  breadcrumbs:
-  - QueryPie Overview
-  - Proxy Management
-  - Database Proxy 사용 활성화
-  breadcrumbs_en:
-  - QueryPie Overview
-  - Proxy Management
-  - Enable Database Proxy
-  path:
-  - querypie-overview
-  - proxy-management
-  - enable-database-proxy
-- page_id: '544375859'
-  title: 시스템 구성도 개요
-  breadcrumbs:
-  - QueryPie Overview
-  - 시스템 구성도 개요
-  breadcrumbs_en:
-  - QueryPie Overview
-  - System Architecture Overview
-  path:
-  - querypie-overview
-  - system-architecture-overview
-- page_id: '544375808'
-  title: Installation and Customer Support
-  breadcrumbs:
-  - QueryPie Overview
-  - Installation and Customer Support
-  breadcrumbs_en:
-  - QueryPie Overview
-  - Installation and Customer Support
-  path:
-  - querypie-overview
-  - installation-and-customer-support
-- page_id: '544211126'
-  title: 사용자 매뉴얼
-  breadcrumbs:
-  - 사용자 매뉴얼
-  breadcrumbs_en:
-  - User Manual
-  path:
-  - user-manual
-- page_id: '578945174'
-  title: My Dashboard
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - My Dashboard
-  breadcrumbs_en:
-  - User Manual
-  - My Dashboard
-  path:
-  - user-manual
-  - my-dashboard
-- page_id: '793542657'
-  title: Email을 통한 사용자 비밀 번호 초기화
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - My Dashboard
-  - Email을 통한 사용자 비밀 번호 초기화
-  breadcrumbs_en:
-  - User Manual
-  - My Dashboard
-  - User Password Reset via Email
-  path:
-  - user-manual
-  - my-dashboard
-  - user-password-reset-via-email
-- page_id: '544377922'
-  title: Workflow
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  path:
-  - user-manual
-  - workflow
-- page_id: '544377968'
-  title: DB Access Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - DB Access Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting DB Access
-  path:
-  - user-manual
-  - workflow
-  - requesting-db-access
-- page_id: '544378069'
-  title: SQL Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - SQL Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting SQL
-  path:
-  - user-manual
-  - workflow
-  - requesting-sql
-- page_id: '692355151'
-  title: 실행 계획(Explain) 기능 사용하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - SQL Request 요청하기
-  - 실행 계획(Explain) 기능 사용하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting SQL
-  - Using Execution Plan (Explain) Feature
-  path:
-  - user-manual
-  - workflow
-  - requesting-sql
-  - using-execution-plan-explain-feature
-- page_id: '544378182'
-  title: SQL Export Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - SQL Export Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting SQL Export
-  path:
-  - user-manual
-  - workflow
-  - requesting-sql-export
-- page_id: '712769539'
-  title: Unmasking Request 요청하기 (마스킹 해제 요청)
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - Unmasking Request 요청하기 (마스킹 해제 요청)
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting Unmasking (Mask Removal Request)
-  path:
-  - user-manual
-  - workflow
-  - requesting-unmasking-mask-removal-request
-- page_id: '1060306945'
-  title: Restricted Data Access 요청하기 (제한된 데이터 접근 요청)
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - Restricted Data Access 요청하기 (제한된 데이터 접근 요청)
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting Restricted Data Access
-  path:
-  - user-manual
-  - workflow
-  - requesting-restricted-data-access
-- page_id: '544378254'
-  title: Server Access Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - Server Access Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting Server Access
-  path:
-  - user-manual
-  - workflow
-  - requesting-server-access
-- page_id: '878936417'
-  title: Server Privilege Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - Server Privilege Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting Server Privilege
-  path:
-  - user-manual
-  - workflow
-  - requesting-server-privilege
-- page_id: '544378348'
-  title: Access Role Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - Access Role Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting Access Role
-  path:
-  - user-manual
-  - workflow
-  - requesting-access-role
-- page_id: '1055358996'
-  title: IP Registration Request 요청하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - IP Registration Request 요청하기
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting IP Registration
-  path:
-  - user-manual
-  - workflow
-  - requesting-ip-registration
-- page_id: '568918170'
-  title: 결재 부가 기능 (대리 결재, 재상신 등)
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - 결재 부가 기능 (대리 결재, 재상신 등)
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Approval Additional Features (Proxy Approval, Resubmission, etc.)
-  path:
-  - user-manual
-  - workflow
-  - approval-additional-features-proxy-approval-resubmission-etc
-- page_id: '1070006273'
-  title: DB 정책 예외 요청하기 (DB Policy Exception Request)
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Workflow
-  - DB 정책 예외 요청하기 (DB Policy Exception Request)
-  breadcrumbs_en:
-  - User Manual
-  - Workflow
-  - Requesting DB Policy Exception
-  path:
-  - user-manual
-  - workflow
-  - requesting-db-policy-exception
-- page_id: '544380204'
-  title: Database Access Control
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  path:
-  - user-manual
-  - database-access-control
-- page_id: '544380222'
-  title: 웹 SQL 에디터로 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  - 웹 SQL 에디터로 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  - Connecting with Web SQL Editor
-  path:
-  - user-manual
-  - database-access-control
-  - connecting-with-web-sql-editor
-- page_id: '544380354'
-  title: Default Privilege 설정하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  - Default Privilege 설정하기
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  - Setting Default Privilege
-  path:
-  - user-manual
-  - database-access-control
-  - setting-default-privilege
-- page_id: '559906893'
-  title: 에이전트 없이 프록시 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  - 에이전트 없이 프록시 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  - Connecting to Proxy without Agent
-  path:
-  - user-manual
-  - database-access-control
-  - connecting-to-proxy-without-agent
-- page_id: '820609510'
-  title: Google BigQuery OAuth 인증을 통해 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  - Google BigQuery OAuth 인증을 통해 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  - Connecting via Google BigQuery OAuth Authentication
-  path:
-  - user-manual
-  - database-access-control
-  - connecting-via-google-bigquery-oauth-authentication
-- page_id: '880181257'
-  title: Custom Data Source 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Database Access Control
-  - Custom Data Source 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Database Access Control
-  - Connecting to Custom Data Source
-  path:
-  - user-manual
-  - database-access-control
-  - connecting-to-custom-data-source
-- page_id: '544381369'
-  title: Server Access Control
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Server Access Control
-  breadcrumbs_en:
-  - User Manual
-  - Server Access Control
-  path:
-  - user-manual
-  - server-access-control
-- page_id: '544381383'
-  title: 권한이 있는 서버에 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Server Access Control
-  - 권한이 있는 서버에 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Server Access Control
-  - Connecting to Authorized Servers
-  path:
-  - user-manual
-  - server-access-control
-  - connecting-to-authorized-servers
-- page_id: '544381410'
-  title: 웹 터미널 사용하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Server Access Control
-  - 웹 터미널 사용하기
-  breadcrumbs_en:
-  - User Manual
-  - Server Access Control
-  - Using Web Terminal
-  path:
-  - user-manual
-  - server-access-control
-  - using-web-terminal
-- page_id: '544381477'
-  title: 웹 SFTP 사용하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Server Access Control
-  - 웹 SFTP 사용하기
-  breadcrumbs_en:
-  - User Manual
-  - Server Access Control
-  - Using Web SFTP
-  path:
-  - user-manual
-  - server-access-control
-  - using-web-sftp
-- page_id: '544384011'
-  title: Kubernetes Access Control
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Kubernetes Access Control
-  breadcrumbs_en:
-  - User Manual
-  - Kubernetes Access Control
-  path:
-  - user-manual
-  - kubernetes-access-control
-- page_id: '544384025'
-  title: 접근 권한 목록 확인하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Kubernetes Access Control
-  - 접근 권한 목록 확인하기
-  breadcrumbs_en:
-  - User Manual
-  - Kubernetes Access Control
-  - Checking Access Permission List
-  path:
-  - user-manual
-  - kubernetes-access-control
-  - checking-access-permission-list
-- page_id: '1064829218'
-  title: Web Access Control
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Web Access Control
-  breadcrumbs_en:
-  - User Manual
-  - Web Access Control
-  path:
-  - user-manual
-  - web-access-control
-- page_id: '1073709107'
-  title: Root CA 인증서 및 Extension 설치하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Web Access Control
-  - Root CA 인증서 및 Extension 설치하기
-  breadcrumbs_en:
-  - User Manual
-  - Web Access Control
-  - Installing Root CA Certificate and Extension
-  path:
-  - user-manual
-  - web-access-control
-  - installing-root-ca-certificate-and-extension
-- page_id: '1064796396'
-  title: 웹 어플리케이션 (웹 사이트) 접속하기
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Web Access Control
-  - 웹 어플리케이션 (웹 사이트) 접속하기
-  breadcrumbs_en:
-  - User Manual
-  - Web Access Control
-  - Accessing Web Applications (Websites)
-  path:
-  - user-manual
-  - web-access-control
-  - accessing-web-applications-websites
-- page_id: '568950885'
-  title: Preferences
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Preferences
-  breadcrumbs_en:
-  - User Manual
-  - Preferences
-  path:
-  - user-manual
-  - preferences
-- page_id: '544112828'
-  title: User Agent
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - User Agent
-  breadcrumbs_en:
-  - User Manual
-  - User Agent
-  path:
-  - user-manual
-  - user-agent
-- page_id: '852066413'
-  title: Multi Agent
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Multi Agent
-  breadcrumbs_en:
-  - User Manual
-  - Multi Agent
-  path:
-  - user-manual
-  - multi-agent
-- page_id: '912425276'
-  title: Multi Agent Linux 설치 및 사용 가이드
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Multi Agent
-  - Multi Agent Linux 설치 및 사용 가이드
-  breadcrumbs_en:
-  - User Manual
-  - Multi Agent
-  - Multi Agent Linux Installation and Usage Guide
-  path:
-  - user-manual
-  - multi-agent
-  - multi-agent-linux-installation-and-usage-guide
-- page_id: '912425288'
-  title: Multi Agent Seamless SSH 사용 가이드
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Multi Agent
-  - Multi Agent Seamless SSH 사용 가이드
-  breadcrumbs_en:
-  - User Manual
-  - Multi Agent
-  - Multi Agent Seamless SSH Usage Guide
-  path:
-  - user-manual
-  - multi-agent
-  - multi-agent-seamless-ssh-usage-guide
-- page_id: '919240916'
-  title: Multi Agent OS별 3rd Party Tool 지원 목록
-  breadcrumbs:
-  - 사용자 매뉴얼
-  - Multi Agent
-  - Multi Agent OS별 3rd Party Tool 지원 목록
-  breadcrumbs_en:
-  - User Manual
-  - Multi Agent
-  - Multi Agent 3rd Party Tool Support List by OS
-  path:
-  - user-manual
-  - multi-agent
-  - multi-agent-3rd-party-tool-support-list-by-os
-- page_id: '544178405'
-  title: 관리자 매뉴얼
-  breadcrumbs:
-  - 관리자 매뉴얼
-  breadcrumbs_en:
-  - Administrator Manual
-  path:
-  - administrator-manual
-- page_id: '544080057'
-  title: General
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  path:
-  - administrator-manual
-  - general
-- page_id: '543948978'
-  title: Company Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  path:
-  - administrator-manual
-  - general
-  - company-management
-- page_id: '544145591'
-  title: General
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - General
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - General
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - general
-- page_id: '544178422'
-  title: Security
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Security
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Security
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - security
-- page_id: '544112846'
-  title: Allowed Zones
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Allowed Zones
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Allowed Zones
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - allowed-zones
-- page_id: '544243925'
-  title: Channels
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Channels
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Channels
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - channels
-- page_id: '543981760'
-  title: Alerts
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Alerts
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Alerts
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - alerts
-- page_id: '793608206'
-  title: New Request > 요청 타입별 템플릿 변수
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Alerts
-  - New Request > 요청 타입별 템플릿 변수
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Alerts
-  - New Request > Template Variables by Request Type
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - alerts
-  - new-request-template-variables-by-request-type
-- page_id: '544178443'
-  title: Licenses
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Company Management
-  - Licenses
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Company Management
-  - Licenses
-  path:
-  - administrator-manual
-  - general
-  - company-management
-  - licenses
-- page_id: '544375969'
-  title: User Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  path:
-  - administrator-manual
-  - general
-  - user-management
-- page_id: '544047331'
-  title: Users
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Users
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Users
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - users
-- page_id: '544376787'
-  title: 사용자 프로필
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Users
-  - 사용자 프로필
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Users
-  - User Profile
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - users
-  - user-profile
-- page_id: '920944732'
-  title: qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Users
-  - qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Users
-  - Password Change Enforcement and Account Deletion Feature for qp-admin Default
-    Account
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - users
-  - password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account
-- page_id: '544047341'
-  title: Groups
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Groups
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Groups
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - groups
-- page_id: '543948996'
-  title: Roles
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Roles
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Roles
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - roles
-- page_id: '544376982'
-  title: Profile Editor
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Profile Editor
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Profile Editor
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - profile-editor
-- page_id: '953221256'
-  title: Custom Attribute
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Profile Editor
-  - Custom Attribute
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Profile Editor
-  - Custom Attribute
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - profile-editor
-  - custom-attribute
-- page_id: '544375984'
-  title: Authentication
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-- page_id: '544376004'
-  title: LDAP 연동하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  - LDAP 연동하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  - Integrating with LDAP
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-  - integrating-with-ldap
-- page_id: '544376100'
-  title: Okta 연동하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  - Okta 연동하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  - Integrating with Okta
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-  - integrating-with-okta
-- page_id: '544376183'
-  title: AWS SSO 연동하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  - AWS SSO 연동하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  - Integrating with AWS SSO
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-  - integrating-with-aws-sso
-- page_id: '619381289'
-  title: Google SAML 연동하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  - Google SAML 연동하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  - Integrating with Google SAML
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-  - integrating-with-google-saml
-- page_id: '793575425'
-  title: Multi-Factor Authentication 설정하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Authentication
-  - Multi-Factor Authentication 설정하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Authentication
-  - Setting Up Multi-Factor Authentication
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - authentication
-  - setting-up-multi-factor-authentication
-- page_id: '544376236'
-  title: Provisioning
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Provisioning
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Provisioning
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - provisioning
-- page_id: '544376265'
-  title: Provisioning 활성화 하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Provisioning
-  - Provisioning 활성화 하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Provisioning
-  - Activating Provisioning
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - provisioning
-  - activating-provisioning
-- page_id: '544376394'
-  title: '[Okta] 프로비저닝 연동 가이드'
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - User Management
-  - Provisioning
-  - '[Okta] 프로비저닝 연동 가이드'
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - User Management
-  - Provisioning
-  - '[Okta] Provisioning Integration Guide'
-  path:
-  - administrator-manual
-  - general
-  - user-management
-  - provisioning
-  - okta-provisioning-integration-guide
-- page_id: '544178462'
-  title: Workflow Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Workflow Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Workflow Management
-  path:
-  - administrator-manual
-  - general
-  - workflow-management
-- page_id: '544047359'
-  title: All Requests
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Workflow Management
-  - All Requests
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Workflow Management
-  - All Requests
-  path:
-  - administrator-manual
-  - general
-  - workflow-management
-  - all-requests
-- page_id: '544378513'
-  title: Approval Rules
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Workflow Management
-  - Approval Rules
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Workflow Management
-  - Approval Rules
-  path:
-  - administrator-manual
-  - general
-  - workflow-management
-  - approval-rules
-- page_id: '561414376'
-  title: Workflow Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - Workflow Management
-  - Workflow Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - Workflow Management
-  - Workflow Configurations
-  path:
-  - administrator-manual
-  - general
-  - workflow-management
-  - workflow-configurations
-- page_id: '544112865'
-  title: System
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  path:
-  - administrator-manual
-  - general
-  - system
-- page_id: '544080097'
-  title: Integrations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-- page_id: '544379393'
-  title: Syslog 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Syslog 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Syslog
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-syslog
-- page_id: '557940795'
-  title: Splunk 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Splunk 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Splunk
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-splunk
-- page_id: '544379587'
-  title: Secret Store 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Secret Store 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Secret Store
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-secret-store
-- page_id: '798064641'
-  title: Email 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Email 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Email
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-email
-- page_id: '811401365'
-  title: OAuth 2.0을 사용하기 위한 Google Cloud API 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - OAuth 2.0을 사용하기 위한 Google Cloud API 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating Google Cloud API for OAuth 2.0
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-google-cloud-api-for-oauth-20
-- page_id: '883654669'
-  title: Slack DM 연동
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Slack DM 연동
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Slack DM
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-slack-dm
-- page_id: '544378759'
-  title: Slack DM - Workflow 알림 유형
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Integrations
-  - Slack DM 연동
-  - Slack DM - Workflow 알림 유형
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Integrations
-  - Integrating with Slack DM
-  - Slack DM - Workflow Notification Types
-  path:
-  - administrator-manual
-  - general
-  - system
-  - integrations
-  - integrating-with-slack-dm
-  - slack-dm-workflow-notification-types
-- page_id: '544377652'
-  title: API Token
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - API Token
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - API Token
-  path:
-  - administrator-manual
-  - general
-  - system
-  - api-token
-- page_id: '544211220'
-  title: Jobs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - General
-  - System
-  - Jobs
-  breadcrumbs_en:
-  - Administrator Manual
-  - General
-  - System
-  - Jobs
-  path:
-  - administrator-manual
-  - general
-  - system
-  - jobs
-- page_id: '544047372'
-  title: Discovery
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  path:
-  - administrator-manual
-  - discovery
-- page_id: '543949048'
-  title: Discovery Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-- page_id: '543981852'
-  title: Dashboard
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Dashboard
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Dashboard
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - dashboard
-- page_id: '544080127'
-  title: Inventory
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Inventory
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Inventory
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - inventory
-- page_id: '543949058'
-  title: Discovery Jobs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Discovery Jobs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Discovery Jobs
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - discovery-jobs
-- page_id: '543981865'
-  title: Discovery History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Discovery History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Discovery History
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - discovery-history
-- page_id: '543949078'
-  title: Scan Results
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Scan Results
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Scan Results
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - scan-results
-- page_id: '544244011'
-  title: Detection Profiles
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Detection Profiles
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Detection Profiles
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - detection-profiles
-- page_id: '544112915'
-  title: Data Patterns
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Discovery
-  - Discovery Management
-  - Data Patterns
-  breadcrumbs_en:
-  - Administrator Manual
-  - Discovery
-  - Discovery Management
-  - Data Patterns
-  path:
-  - administrator-manual
-  - discovery
-  - discovery-management
-  - data-patterns
-- page_id: '544379638'
-  title: Databases
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  path:
-  - administrator-manual
-  - databases
-- page_id: '956071939'
-  title: DAC General Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - DAC General Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - DAC General Configurations
-  path:
-  - administrator-manual
-  - databases
-  - dac-general-configurations
-- page_id: '921436219'
-  title: Unmasking Zones
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - DAC General Configurations
-  - Unmasking Zones
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - DAC General Configurations
-  - Unmasking Zones
-  path:
-  - administrator-manual
-  - databases
-  - dac-general-configurations
-  - unmasking-zones
-- page_id: '544379705'
-  title: Connection Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-- page_id: '544145672'
-  title: Cloud Providers
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - cloud-providers
-- page_id: '544379719'
-  title: AWS에서 DB 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - AWS에서 DB 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing DB Resources from AWS
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - cloud-providers
-  - synchronizing-db-resources-from-aws
-- page_id: '562167871'
-  title: MS Azure에서 DB 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - MS Azure에서 DB 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing DB Resources from MS Azure
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - cloud-providers
-  - synchronizing-db-resources-from-ms-azure
-- page_id: '562167809'
-  title: Google Cloud에서 DB 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Google Cloud에서 DB 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing DB Resources from Google Cloud
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - cloud-providers
-  - synchronizing-db-resources-from-google-cloud
-- page_id: '712507393'
-  title: Dry Run 기능으로 클라우드 동기화 설정 확인하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Dry Run 기능으로 클라우드 동기화 설정 확인하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Cloud Providers
-  - Verifying Cloud Synchronization Settings with Dry Run Feature
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - cloud-providers
-  - verifying-cloud-synchronization-settings-with-dry-run-feature
-- page_id: '544014712'
-  title: DB Connections
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-- page_id: '544380381'
-  title: MongoDB 전용 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  - MongoDB 전용 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  - MongoDB Specific Guide
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-  - mongodb-specific-guide
-- page_id: '568852692'
-  title: DocumentDB 전용 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  - DocumentDB 전용 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  - DocumentDB Specific Guide
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-  - documentdb-specific-guide
-- page_id: '811434142'
-  title: Google BigQuery OAuth 인증 설정
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  - Google BigQuery OAuth 인증 설정
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  - Google BigQuery OAuth Authentication Configuration
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-  - google-bigquery-oauth-authentication-configuration
-- page_id: '820806182'
-  title: AWS Athena 전용 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  - AWS Athena 전용 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  - AWS Athena Specific Guide
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-  - aws-athena-specific-guide
-- page_id: '880082945'
-  title: Custom Data Source 설정 및 로그 확인
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - DB Connections
-  - Custom Data Source 설정 및 로그 확인
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - DB Connections
-  - Custom Data Source Configuration and Log Verification
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - db-connections
-  - custom-data-source-configuration-and-log-verification
-- page_id: '544145691'
-  title: SSL Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - SSL Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - SSL Configurations
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - ssl-configurations
-- page_id: '544047436'
-  title: SSH Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - SSH Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - SSH Configurations
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - ssh-configurations
-- page_id: '544112932'
-  title: Kerberos Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Connection Management
-  - Kerberos Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Connection Management
-  - Kerberos Configurations
-  path:
-  - administrator-manual
-  - databases
-  - connection-management
-  - kerberos-configurations
-- page_id: '544380126'
-  title: DB Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - DB Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - DB Access Control
-  path:
-  - administrator-manual
-  - databases
-  - db-access-control
-- page_id: '544380140'
-  title: Privilege Type
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - DB Access Control
-  - Privilege Type
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - DB Access Control
-  - Privilege Type
-  path:
-  - administrator-manual
-  - databases
-  - db-access-control
-  - privilege-type
-- page_id: '544380173'
-  title: Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - DB Access Control
-  - Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - DB Access Control
-  - Access Control
-  path:
-  - administrator-manual
-  - databases
-  - db-access-control
-  - access-control
-- page_id: '544379868'
-  title: Policies
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  path:
-  - administrator-manual
-  - databases
-  - policies
-- page_id: '544379937'
-  title: Data Access
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  - Data Access
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  - Data Access
-  path:
-  - administrator-manual
-  - databases
-  - policies
-  - data-access
-- page_id: '569376769'
-  title: Masking Pattern
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  - Masking Pattern
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  - Masking Pattern
-  path:
-  - administrator-manual
-  - databases
-  - policies
-  - masking-pattern
-- page_id: '544379882'
-  title: Data Masking
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  - Data Masking
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  - Data Masking
-  path:
-  - administrator-manual
-  - databases
-  - policies
-  - data-masking
-- page_id: '544379993'
-  title: Sensitive Data
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  - Sensitive Data
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  - Sensitive Data
-  path:
-  - administrator-manual
-  - databases
-  - policies
-  - sensitive-data
-- page_id: '713129986'
-  title: Policy Exception
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Policies
-  - Policy Exception
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Policies
-  - Policy Exception
-  path:
-  - administrator-manual
-  - databases
-  - policies
-  - policy-exception
-- page_id: '571277577'
-  title: Ledger Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Ledger Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Ledger Management
-  path:
-  - administrator-manual
-  - databases
-  - ledger-management
-- page_id: '544380061'
-  title: Ledger Table Policy
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Ledger Management
-  - Ledger Table Policy
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Ledger Management
-  - Ledger Table Policy
-  path:
-  - administrator-manual
-  - databases
-  - ledger-management
-  - ledger-table-policy
-- page_id: '571277650'
-  title: Ledger Approval Rules
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Ledger Management
-  - Ledger Approval Rules
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Ledger Management
-  - Ledger Approval Rules
-  path:
-  - administrator-manual
-  - databases
-  - ledger-management
-  - ledger-approval-rules
-- page_id: '873136365'
-  title: (New) Policy Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - (New) Policy Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - (New) Policy Management
-  path:
-  - administrator-manual
-  - databases
-  - new-policy-management
-- page_id: '878805502'
-  title: Data Paths
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - (New) Policy Management
-  - Data Paths
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - (New) Policy Management
-  - Data Paths
-  path:
-  - administrator-manual
-  - databases
-  - new-policy-management
-  - data-paths
-- page_id: '879198569'
-  title: Data Policies
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - (New) Policy Management
-  - Data Policies
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - (New) Policy Management
-  - Data Policies
-  path:
-  - administrator-manual
-  - databases
-  - new-policy-management
-  - data-policies
-- page_id: '1064796485'
-  title: Exception Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - (New) Policy Management
-  - Exception Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - (New) Policy Management
-  - Exception Management
-  path:
-  - administrator-manual
-  - databases
-  - new-policy-management
-  - exception-management
-- page_id: '954139156'
-  title: Monitoring
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Monitoring
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Monitoring
-  path:
-  - administrator-manual
-  - databases
-  - monitoring
-- page_id: '954172219'
-  title: Runnig Queries
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Monitoring
-  - Runnig Queries
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Monitoring
-  - Runnig Queries
-  path:
-  - administrator-manual
-  - databases
-  - monitoring
-  - runnig-queries
-- page_id: '954204974'
-  title: Proxy Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Databases
-  - Monitoring
-  - Proxy Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Databases
-  - Monitoring
-  - Proxy Management
-  path:
-  - administrator-manual
-  - databases
-  - monitoring
-  - proxy-management
-- page_id: '544380588'
-  title: Servers
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  path:
-  - administrator-manual
-  - servers
-- page_id: '954336174'
-  title: SAC General Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - SAC General Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - SAC General Configurations
-  path:
-  - administrator-manual
-  - servers
-  - sac-general-configurations
-- page_id: '544380635'
-  title: Connection Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-- page_id: '544178567'
-  title: Cloud Providers
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - cloud-providers
-- page_id: '544380650'
-  title: AWS에서 서버 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - AWS에서 서버 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing Server Resources from AWS
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - cloud-providers
-  - synchronizing-server-resources-from-aws
-- page_id: '544380741'
-  title: Azure에서 서버 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - Azure에서 서버 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing Server Resources from Azure
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - cloud-providers
-  - synchronizing-server-resources-from-azure
-- page_id: '544380708'
-  title: GCP에서 서버 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - GCP에서 서버 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing Server Resources from GCP
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - cloud-providers
-  - synchronizing-server-resources-from-gcp
-- page_id: '544211361'
-  title: Servers
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Servers
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Servers
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - servers
-- page_id: '544380774'
-  title: 수동으로 개별 서버 등록하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Servers
-  - 수동으로 개별 서버 등록하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Servers
-  - Manually Registering Individual Servers
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - servers
-  - manually-registering-individual-servers
-- page_id: '544080186'
-  title: Server Groups
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Server Groups
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Server Groups
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - server-groups
-- page_id: '544380846'
-  title: 서버를 그룹으로 관리하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Server Groups
-  - 서버를 그룹으로 관리하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Server Groups
-  - Managing Servers as Groups
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - server-groups
-  - managing-servers-as-groups
-- page_id: '544211376'
-  title: Server Agents for RDP
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Server Agents for RDP
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Server Agents for RDP
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - server-agents-for-rdp
-- page_id: '565575990'
-  title: Server Agent 설치 및 제거하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - Server Agents for RDP
-  - Server Agent 설치 및 제거하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - Server Agents for RDP
-  - Installing and Removing Server Agent
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - server-agents-for-rdp
-  - installing-and-removing-server-agent
-- page_id: '615710737'
-  title: ProxyJump Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - ProxyJump Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - ProxyJump Configurations
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - proxyjump-configurations
-- page_id: '615743551'
-  title: ProxyJump 생성하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Connection Management
-  - ProxyJump Configurations
-  - ProxyJump 생성하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Connection Management
-  - ProxyJump Configurations
-  - Creating ProxyJump
-  path:
-  - administrator-manual
-  - servers
-  - connection-management
-  - proxyjump-configurations
-  - creating-proxyjump
-- page_id: '613777446'
-  title: Server Account Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-- page_id: '544380991'
-  title: Server Account Templates
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  - Server Account Templates
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  - Server Account Templates
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-  - server-account-templates
-- page_id: '544380960'
-  title: SSH Key Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  - SSH Key Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  - SSH Key Configurations
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-  - ssh-key-configurations
-- page_id: '615743501'
-  title: Account Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  - Account Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  - Account Management
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-  - account-management
-- page_id: '615677962'
-  title: Password Provisioning
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  - Password Provisioning
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  - Password Provisioning
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-  - password-provisioning
-- page_id: '619380898'
-  title: 패스워드 변경 Job 생성하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Account Management
-  - Password Provisioning
-  - 패스워드 변경 Job 생성하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Account Management
-  - Password Provisioning
-  - Creating Password Change Job
-  path:
-  - administrator-manual
-  - servers
-  - server-account-management
-  - password-provisioning
-  - creating-password-change-job
-- page_id: '543949216'
-  title: Server Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-- page_id: '544381186'
-  title: Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Access Control
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - access-control
-- page_id: '544381282'
-  title: Permissions 부여 및 회수하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Permissions 부여 및 회수하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Granting and Revoking Permissions
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - access-control
-  - granting-and-revoking-permissions
-- page_id: '544381200'
-  title: Role 부여 및 회수하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Role 부여 및 회수하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Granting and Revoking Roles
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - access-control
-  - granting-and-revoking-roles
-- page_id: '878838349'
-  title: Server Privilege 부여하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Server Privilege 부여하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Access Control
-  - Granting Server Privilege
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - access-control
-  - granting-server-privilege
-- page_id: '544381150'
-  title: Roles
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Roles
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Roles
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - roles
-- page_id: '544381025'
-  title: Policies
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Policies
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Policies
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - policies
-- page_id: '544381039'
-  title: 서버 접근 정책 설정하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Policies
-  - 서버 접근 정책 설정하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Policies
-  - Setting Server Access Policy
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - policies
-  - setting-server-access-policy
-- page_id: '544377895'
-  title: Server Proxy 사용 활성화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Policies
-  - Server Proxy 사용 활성화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Policies
-  - Enabling Server Proxy
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - policies
-  - enabling-server-proxy
-- page_id: '544381118'
-  title: Command Templates
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Command Templates
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Command Templates
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - command-templates
-- page_id: '544244109'
-  title: Blocked Accounts
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Servers
-  - Server Access Control
-  - Blocked Accounts
-  breadcrumbs_en:
-  - Administrator Manual
-  - Servers
-  - Server Access Control
-  - Blocked Accounts
-  path:
-  - administrator-manual
-  - servers
-  - server-access-control
-  - blocked-accounts
-- page_id: '544381596'
-  title: Kubernetes
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  path:
-  - administrator-manual
-  - kubernetes
-- page_id: '954172232'
-  title: KAC General Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - KAC General Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - KAC General Configurations
-  path:
-  - administrator-manual
-  - kubernetes
-  - kac-general-configurations
-- page_id: '544381637'
-  title: Connection Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - Connection Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - Connection Management
-  path:
-  - administrator-manual
-  - kubernetes
-  - connection-management
-- page_id: '544381651'
-  title: Cloud Providers
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - Connection Management
-  - Cloud Providers
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - Connection Management
-  - Cloud Providers
-  path:
-  - administrator-manual
-  - kubernetes
-  - connection-management
-  - cloud-providers
-- page_id: '544381739'
-  title: AWS에서 쿠버네티스 리소스 동기화
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - Connection Management
-  - Cloud Providers
-  - AWS에서 쿠버네티스 리소스 동기화
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - Connection Management
-  - Cloud Providers
-  - Synchronizing Kubernetes Resources from AWS
-  path:
-  - administrator-manual
-  - kubernetes
-  - connection-management
-  - cloud-providers
-  - synchronizing-kubernetes-resources-from-aws
-- page_id: '544381839'
-  title: Clusters
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - Connection Management
-  - Clusters
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - Connection Management
-  - Clusters
-  path:
-  - administrator-manual
-  - kubernetes
-  - connection-management
-  - clusters
-- page_id: '544381877'
-  title: 수동으로 쿠버네티스 클러스터 등록하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - Connection Management
-  - Clusters
-  - 수동으로 쿠버네티스 클러스터 등록하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - Connection Management
-  - Clusters
-  - Manually Registering Kubernetes Clusters
-  path:
-  - administrator-manual
-  - kubernetes
-  - connection-management
-  - clusters
-  - manually-registering-kubernetes-clusters
-- page_id: '544383110'
-  title: K8s Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-- page_id: '544383124'
-  title: Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Access Control
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - access-control
-- page_id: '544383381'
-  title: 쿠버네티스 역할 부여 및 회수하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Access Control
-  - 쿠버네티스 역할 부여 및 회수하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Access Control
-  - Granting and Revoking Kubernetes Roles
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - access-control
-  - granting-and-revoking-kubernetes-roles
-- page_id: '544382741'
-  title: Roles
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Roles
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Roles
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - roles
-- page_id: '544382963'
-  title: 쿠버네티스 역할 설정하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Roles
-  - 쿠버네티스 역할 설정하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Roles
-  - Setting Kubernetes Roles
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - roles
-  - setting-kubernetes-roles
-- page_id: '544382060'
-  title: Policies
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-- page_id: '544382274'
-  title: 쿠버네티스 정책 설정하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - 쿠버네티스 정책 설정하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - Setting Kubernetes Policies
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-  - setting-kubernetes-policies
-- page_id: '544382364'
-  title: 쿠버네티스 정책 YAML Code 문법 안내
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - 쿠버네티스 정책 YAML Code 문법 안내
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - Kubernetes Policy YAML Code Syntax Guide
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-  - kubernetes-policy-yaml-code-syntax-guide
-- page_id: '544382445'
-  title: 쿠버네티스 정책 Tips 안내
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - 쿠버네티스 정책 Tips 안내
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - Kubernetes Policy Tips Guide
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-  - kubernetes-policy-tips-guide
-- page_id: '544382522'
-  title: 쿠버네티스 정책 UI 코드 헬퍼 안내
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - 쿠버네티스 정책 UI 코드 헬퍼 안내
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - Kubernetes Policy UI Code Helper Guide
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-  - kubernetes-policy-ui-code-helper-guide
-- page_id: '544382659'
-  title: 쿠버네티스 정책 Action 설정 참고 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - 쿠버네티스 정책 Action 설정 참고 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Kubernetes
-  - K8s Access Control
-  - Policies
-  - Kubernetes Policy Action Configuration Reference Guide
-  path:
-  - administrator-manual
-  - kubernetes
-  - k8s-access-control
-  - policies
-  - kubernetes-policy-action-configuration-reference-guide
-- page_id: '783515900'
-  title: Web Apps
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  path:
-  - administrator-manual
-  - web-apps
-- page_id: '1064829276'
-  title: Connection Management
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Connection Management
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Connection Management
-  path:
-  - administrator-manual
-  - web-apps
-  - connection-management
-- page_id: '1070694423'
-  title: Web Apps
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Connection Management
-  - Web Apps
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Connection Management
-  - Web Apps
-  path:
-  - administrator-manual
-  - web-apps
-  - connection-management
-  - web-apps
-- page_id: '1064829246'
-  title: Web App Configurations
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Connection Management
-  - Web App Configurations
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Connection Management
-  - Web App Configurations
-  path:
-  - administrator-manual
-  - web-apps
-  - connection-management
-  - web-app-configurations
-- page_id: '1070596135'
-  title: Web App Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Web App Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Web App Access Control
-  path:
-  - administrator-manual
-  - web-apps
-  - web-app-access-control
-- page_id: '1070628904'
-  title: Access Control
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Web App Access Control
-  - Access Control
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Web App Access Control
-  - Access Control
-  path:
-  - administrator-manual
-  - web-apps
-  - web-app-access-control
-  - access-control
-- page_id: '1064599910'
-  title: Role 부여 및 회수하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Web App Access Control
-  - Access Control
-  - Role 부여 및 회수하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Web App Access Control
-  - Access Control
-  - Granting and Revoking Roles
-  path:
-  - administrator-manual
-  - web-apps
-  - web-app-access-control
-  - access-control
-  - granting-and-revoking-roles
-- page_id: '1070628923'
-  title: Roles
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Web App Access Control
-  - Roles
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Web App Access Control
-  - Roles
-  path:
-  - administrator-manual
-  - web-apps
-  - web-app-access-control
-  - roles
-- page_id: '1064829343'
-  title: Policies
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - Web App Access Control
-  - Policies
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - Web App Access Control
-  - Policies
-  path:
-  - administrator-manual
-  - web-apps
-  - web-app-access-control
-  - policies
-- page_id: '783417593'
-  title: WAC Quickstart
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-- page_id: '783745324'
-  title: '[~10.2.7] WAC Role & Policy Guide'
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - '[~10.2.7] WAC Role & Policy Guide'
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - '[~10.2.7] WAC Role & Policy Guide'
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - 1027-wac-role-policy-guide
-- page_id: '924287097'
-  title: '[10.2.8~] WAC RBAC Guide'
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - '[10.2.8~] WAC RBAC Guide'
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - '[10.2.8~] WAC RBAC Guide'
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - 1028-wac-rbac-guide
-- page_id: '956235931'
-  title: '[10.3.0 ~] WAC JIT 권한 획득 Guide'
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - '[10.3.0 ~] WAC JIT 권한 획득 Guide'
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - '[10.3.0 ~] WAC JIT Permission Acquisition Guide'
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - 1030-wac-jit-permission-acquisition-guide
-- page_id: '805962425'
-  title: Root CA 인증서 설치 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - Root CA 인증서 설치 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - Root CA Certificate Installation Guide
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - root-ca-certificate-installation-guide
-- page_id: '883654785'
-  title: Web App Configurations에서 WAC 초기 설정하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - Web App Configurations에서 WAC 초기 설정하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - Initial WAC Setup in Web App Configurations
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - initial-wac-setup-in-web-app-configurations
-- page_id: '924319936'
-  title: WAC 트러블슈팅 가이드
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - WAC 트러블슈팅 가이드
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - WAC Troubleshooting Guide
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - wac-troubleshooting-guide
-- page_id: '927629410'
-  title: WAC FAQ
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Web Apps
-  - WAC Quickstart
-  - WAC FAQ
-  breadcrumbs_en:
-  - Administrator Manual
-  - Web Apps
-  - WAC Quickstart
-  - WAC FAQ
-  path:
-  - administrator-manual
-  - web-apps
-  - wac-quickstart
-  - wac-faq
-- page_id: '544379062'
-  title: Audit
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  path:
-  - administrator-manual
-  - audit
-- page_id: '693043522'
-  title: Reports
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Reports
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Reports
-  path:
-  - administrator-manual
-  - audit
-  - reports
-- page_id: '544384417'
-  title: Reports
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Reports
-  - Reports
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Reports
-  - Reports
-  path:
-  - administrator-manual
-  - audit
-  - reports
-  - reports
-- page_id: '544379140'
-  title: Audit Log Export
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Reports
-  - Audit Log Export
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Reports
-  - Audit Log Export
-  path:
-  - administrator-manual
-  - audit
-  - reports
-  - audit-log-export
-- page_id: '544211450'
-  title: General Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-- page_id: '544080230'
-  title: User Access History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - User Access History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - User Access History
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - user-access-history
-- page_id: '544113108'
-  title: Activity Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Activity Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Activity Logs
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - activity-logs
-- page_id: '544047557'
-  title: Admin Role History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Admin Role History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Admin Role History
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - admin-role-history
-- page_id: '705724442'
-  title: Workflow Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Workflow Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Workflow Logs
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - workflow-logs
-- page_id: '775455036'
-  title: Reverse Tunnels
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - reverse-tunnels
-- page_id: '811434216'
-  title: Reverse Tunnel을 통해 서버에 통신하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Reverse Tunnel을 통해 서버에 통신하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Communicating with Servers through Reverse Tunnel
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - reverse-tunnels
-  - communicating-with-servers-through-reverse-tunnel
-- page_id: '811466988'
-  title: Reverse Tunnel을 통해 클러스터에 통신하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Reverse Tunnel을 통해 클러스터에 통신하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Communicating with Clusters through Reverse Tunnel
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - reverse-tunnels
-  - communicating-with-clusters-through-reverse-tunnel
-- page_id: '955318273'
-  title: Reverse Tunnel을 통해 DB에 통신하기
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Reverse Tunnel을 통해 DB에 통신하기
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - General Logs
-  - Reverse Tunnels
-  - Communicating with DB through Reverse Tunnel
-  path:
-  - administrator-manual
-  - audit
-  - general-logs
-  - reverse-tunnels
-  - communicating-with-db-through-reverse-tunnel
-- page_id: '544080248'
-  title: Database Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-- page_id: '544113141'
-  title: DB Access History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - DB Access History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - DB Access History
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - db-access-history
-- page_id: '544244149'
-  title: Query Audit
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Query Audit
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Query Audit
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - query-audit
-- page_id: '544145819'
-  title: Running Queries
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Running Queries
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Running Queries
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - running-queries
-- page_id: '544244163'
-  title: DML Snapshots
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - DML Snapshots
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - DML Snapshots
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - dml-snapshots
-- page_id: '544014894'
-  title: Account Lock History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Account Lock History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Account Lock History
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - account-lock-history
-- page_id: '544080264'
-  title: Access Control Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Access Control Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Access Control Logs
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - access-control-logs
-- page_id: '1070694532'
-  title: Policy Audit Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Policy Audit Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Policy Audit Logs
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - policy-audit-logs
-- page_id: '1164705793'
-  title: Policy Exception logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Database Logs
-  - Policy Exception logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Database Logs
-  - Policy Exception logs
-  path:
-  - administrator-manual
-  - audit
-  - database-logs
-  - policy-exception-logs
-- page_id: '544014907'
-  title: Server Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-- page_id: '544244182'
-  title: Server Access History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Server Access History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Server Access History
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - server-access-history
-- page_id: '544244208'
-  title: Command Audit
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Command Audit
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Command Audit
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - command-audit
-- page_id: '544014927'
-  title: Session Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Session Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Session Logs
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - session-logs
-- page_id: '544014940'
-  title: Session Monitoring
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Session Monitoring
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Session Monitoring
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - session-monitoring
-- page_id: '544244234'
-  title: Access Control Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Access Control Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Access Control Logs
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - access-control-logs
-- page_id: '544244244'
-  title: Server Role History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Server Role History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Server Role History
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - server-role-history
-- page_id: '543949311'
-  title: Account Lock History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Server Logs
-  - Account Lock History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Server Logs
-  - Account Lock History
-  path:
-  - administrator-manual
-  - audit
-  - server-logs
-  - account-lock-history
-- page_id: '544383513'
-  title: Kubernetes Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Kubernetes Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Kubernetes Logs
-  path:
-  - administrator-manual
-  - audit
-  - kubernetes-logs
-- page_id: '544383587'
-  title: Request Audit
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Kubernetes Logs
-  - Request Audit
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Kubernetes Logs
-  - Request Audit
-  path:
-  - administrator-manual
-  - audit
-  - kubernetes-logs
-  - request-audit
-- page_id: '544383693'
-  title: Pod Session Recordings
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Kubernetes Logs
-  - Pod Session Recordings
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Kubernetes Logs
-  - Pod Session Recordings
-  path:
-  - administrator-manual
-  - audit
-  - kubernetes-logs
-  - pod-session-recordings
-- page_id: '544383799'
-  title: Kubernetes Role History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Kubernetes Logs
-  - Kubernetes Role History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Kubernetes Logs
-  - Kubernetes Role History
-  path:
-  - administrator-manual
-  - audit
-  - kubernetes-logs
-  - kubernetes-role-history
-- page_id: '1064829366'
-  title: Web App Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-- page_id: '1064829380'
-  title: Web Access History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  - Web Access History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  - Web Access History
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-  - web-access-history
-- page_id: '1070563457'
-  title: Web Event Audit
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  - Web Event Audit
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  - Web Event Audit
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-  - web-event-audit
-- page_id: '1070694561'
-  title: User Activity Recordings
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  - User Activity Recordings
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  - User Activity Recordings
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-  - user-activity-recordings
-- page_id: '1070563469'
-  title: Web App Role History
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  - Web App Role History
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  - Web App Role History
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-  - web-app-role-history
-- page_id: '1070694552'
-  title: JIT Access Control Logs
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Audit
-  - Web App Logs
-  - JIT Access Control Logs
-  breadcrumbs_en:
-  - Administrator Manual
-  - Audit
-  - Web App Logs
-  - JIT Access Control Logs
-  path:
-  - administrator-manual
-  - audit
-  - web-app-logs
-  - jit-access-control-logs
-- page_id: '851280543'
-  title: Multi Agent 제약사항
-  breadcrumbs:
-  - 관리자 매뉴얼
-  - Multi Agent 제약사항
-  breadcrumbs_en:
-  - Administrator Manual
-  - Multi Agent Limitations
-  path:
-  - administrator-manual
-  - multi-agent-limitations
+- "page_id": "608501837"
+  "title": "QueryPie Docs"
+  "title_orig": "QueryPie Docs"
+  "breadcrumbs":
+  - "QueryPie Docs"
+  "breadcrumbs_en":
+  - "QueryPie Docs"
+  "path":
+  - "querypie-docs"
+- "page_id": "544375335"
+  "title": "Release Notes"
+  "title_orig": "Release Notes"
+  "breadcrumbs":
+  - "Release Notes"
+  "breadcrumbs_en":
+  - "Release Notes"
+  "path":
+  - "release-notes"
+- "page_id": "1171488777"
+  "title": "11.1.0"
+  "title_orig": "11.1.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.1.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.1.0"
+  "path":
+  - "release-notes"
+  - "1110"
+- "page_id": "1064830173"
+  "title": "11.0.0"
+  "title_orig": "11.0.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.0.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.0.0"
+  "path":
+  - "release-notes"
+  - "1100"
+- "page_id": "954335909"
+  "title": "10.3.0 ~ 10.3.4"
+  "title_orig": "10.3.0 ~ 10.3.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.3.0 ~ 10.3.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.3.0 ~ 10.3.4"
+  "path":
+  - "release-notes"
+  - "1030-1034"
+- "page_id": "703463517"
+  "title": "10.2.0 ~ 10.2.12"
+  "title_orig": "10.2.0 ~ 10.2.12"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.2.0 ~ 10.2.12"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.2.0 ~ 10.2.12"
+  "path":
+  - "release-notes"
+  - "1020-10212"
+- "page_id": "604995641"
+  "title": "10.1.0 ~ 10.1.11"
+  "title_orig": "10.1.0 ~ 10.1.11"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.1.0 ~ 10.1.11"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.1.0 ~ 10.1.11"
+  "path":
+  - "release-notes"
+  - "1010-10111"
+- "page_id": "544375355"
+  "title": "10.0.0 ~ 10.0.2"
+  "title_orig": "10.0.0 ~ 10.0.2"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.0.0 ~ 10.0.2"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.0.0 ~ 10.0.2"
+  "path":
+  - "release-notes"
+  - "1000-1002"
+- "page_id": "544375370"
+  "title": "9.20.0 ~ 9.20.2"
+  "title_orig": "9.20.0 \\u200b~ 9.20.2"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.20.0 ~ 9.20.2"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.20.0 ~ 9.20.2"
+  "path":
+  - "release-notes"
+  - "9200-9202"
+- "page_id": "544375385"
+  "title": "9.19.0 "
+  "title_orig": "9.19.0 \\u200b"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.19.0 "
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.19.0 "
+  "path":
+  - "release-notes"
+  - "9190"
+- "page_id": "544375399"
+  "title": "9.18.0 ~ 9.18.3"
+  "title_orig": "9.18.0 ~ 9.18.3"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.18.0 ~ 9.18.3"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.18.0 ~ 9.18.3"
+  "path":
+  - "release-notes"
+  - "9180-9183"
+- "page_id": "544375414"
+  "title": "9.17.0 ~ 9.17.1"
+  "title_orig": "9.17.0 ~ 9.17.1"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.17.0 ~ 9.17.1"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.17.0 ~ 9.17.1"
+  "path":
+  - "release-notes"
+  - "9170-9171"
+- "page_id": "544375429"
+  "title": "9.16.0 ~ 9.16.4"
+  "title_orig": "9.16.0 ~ 9.16.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.16.0 ~ 9.16.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.16.0 ~ 9.16.4"
+  "path":
+  - "release-notes"
+  - "9160-9164"
+- "page_id": "544375443"
+  "title": "9.15.0 ~ 9.15.4"
+  "title_orig": "9.15.0 ~ 9.15.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.15.0 ~ 9.15.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.15.0 ~ 9.15.4"
+  "path":
+  - "release-notes"
+  - "9150-9154"
+- "page_id": "544375457"
+  "title": "9.14.0 ~ 9.14.3"
+  "title_orig": "9.14.0 ~ 9.14.3"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.14.0 ~ 9.14.3"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.14.0 ~ 9.14.3"
+  "path":
+  - "release-notes"
+  - "9140-9143"
+- "page_id": "544375471"
+  "title": "9.13.0 ~ 9.13.5"
+  "title_orig": "9.13.0 ~ 9.13.5"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.13.0 ~ 9.13.5"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.13.0 ~ 9.13.5"
+  "path":
+  - "release-notes"
+  - "9130-9135"
+- "page_id": "544375485"
+  "title": "9.12.0 ~ 9.12.14"
+  "title_orig": "9.12.0 ~ 9.12.14"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  "path":
+  - "release-notes"
+  - "9120-91214"
+- "page_id": "544375505"
+  "title": "메뉴 개선 가이드 (9.12.0)"
+  "title_orig": "메뉴 개선 가이드 (9.12.0)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  - "메뉴 개선 가이드 (9.12.0)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  - "Menu Improvement Guide (9.12.0)"
+  "path":
+  - "release-notes"
+  - "9120-91214"
+  - "menu-improvement-guide-9120"
+- "page_id": "544375587"
+  "title": "9.11.0 ~ 9.11.5"
+  "title_orig": "9.11.0 ~ 9.11.5"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.11.0 ~ 9.11.5"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.11.0 ~ 9.11.5"
+  "path":
+  - "release-notes"
+  - "9110-9115"
+- "page_id": "544375607"
+  "title": "9.10.0 - 9.10.4"
+  "title_orig": "9.10.0 - 9.10.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  "path":
+  - "release-notes"
+  - "9100-9104"
+- "page_id": "544375624"
+  "title": "External API 변경사항 (9.10.0 버전)"
+  "title_orig": "External API 변경사항 (9.10.0 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  - "External API 변경사항 (9.10.0 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  - "External API Changes (9.10.0 Version)"
+  "path":
+  - "release-notes"
+  - "9100-9104"
+  - "external-api-changes-9100-version"
+- "page_id": "544375659"
+  "title": "9.9.0 ~ 9.9.8"
+  "title_orig": "9.9.0 ~ 9.9.8"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  "path":
+  - "release-notes"
+  - "990-998"
+- "page_id": "544375685"
+  "title": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "title_orig": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API Changes (9.8.10 Version > 9.9.4 Version)"
+  "path":
+  - "release-notes"
+  - "990-998"
+  - "external-api-changes-9810-version-994-version"
+- "page_id": "544375741"
+  "title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "title_orig": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API Changes (9.9.4 Version > 9.9.5 Version)"
+  "path":
+  - "release-notes"
+  - "990-998"
+  - "external-api-changes-994-version-995-version"
+- "page_id": "544375768"
+  "title": "9.8.0 ~ 9.8.12"
+  "title_orig": "9.8.0 ~ 9.8.12"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.8.0 ~ 9.8.12"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.8.0 ~ 9.8.12"
+  "path":
+  - "release-notes"
+  - "980-9812"
+- "page_id": "544375784"
+  "title": "QueryPie Overview"
+  "title_orig": "QueryPie Overview"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  "path":
+  - "querypie-overview"
+- "page_id": "544112942"
+  "title": "Proxy Management"
+  "title_orig": "Proxy Management"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  - "Proxy Management"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  - "Proxy Management"
+  "path":
+  - "querypie-overview"
+  - "proxy-management"
+- "page_id": "544377869"
+  "title": "Database Proxy 사용 활성화"
+  "title_orig": "Database Proxy 사용 활성화"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  - "Proxy Management"
+  - "Database Proxy 사용 활성화"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  - "Proxy Management"
+  - "Enable Database Proxy"
+  "path":
+  - "querypie-overview"
+  - "proxy-management"
+  - "enable-database-proxy"
+- "page_id": "544375859"
+  "title": "시스템 구성도 개요"
+  "title_orig": "시스템 구성도 개요"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  - "시스템 구성도 개요"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  - "System Architecture Overview"
+  "path":
+  - "querypie-overview"
+  - "system-architecture-overview"
+- "page_id": "544375808"
+  "title": "Installation and Customer Support"
+  "title_orig": "Installation and Customer Support"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  - "Installation and Customer Support"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  - "Installation and Customer Support"
+  "path":
+  - "querypie-overview"
+  - "installation-and-customer-support"
+- "page_id": "544211126"
+  "title": "사용자 매뉴얼"
+  "title_orig": "사용자 매뉴얼"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  "breadcrumbs_en":
+  - "User Manual"
+  "path":
+  - "user-manual"
+- "page_id": "578945174"
+  "title": "My Dashboard"
+  "title_orig": "My Dashboard"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "My Dashboard"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "My Dashboard"
+  "path":
+  - "user-manual"
+  - "my-dashboard"
+- "page_id": "793542657"
+  "title": "Email을 통한 사용자 비밀 번호 초기화"
+  "title_orig": "Email을 통한 사용자 비밀 번호 초기화"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "My Dashboard"
+  - "Email을 통한 사용자 비밀 번호 초기화"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "My Dashboard"
+  - "User Password Reset via Email"
+  "path":
+  - "user-manual"
+  - "my-dashboard"
+  - "user-password-reset-via-email"
+- "page_id": "544377922"
+  "title": "Workflow"
+  "title_orig": "Workflow"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  "path":
+  - "user-manual"
+  - "workflow"
+- "page_id": "544377968"
+  "title": "DB Access Request 요청하기"
+  "title_orig": "DB Access Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "DB Access Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting DB Access"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-db-access"
+- "page_id": "544378069"
+  "title": "SQL Request 요청하기"
+  "title_orig": "SQL Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "SQL Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting SQL"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-sql"
+- "page_id": "692355151"
+  "title": "실행 계획(Explain) 기능 사용하기"
+  "title_orig": "실행 계획(Explain) 기능 사용하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "SQL Request 요청하기"
+  - "실행 계획(Explain) 기능 사용하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting SQL"
+  - "Using Execution Plan (Explain) Feature"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-sql"
+  - "using-execution-plan-explain-feature"
+- "page_id": "544378182"
+  "title": "SQL Export Request 요청하기"
+  "title_orig": "SQL Export Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "SQL Export Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting SQL Export"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-sql-export"
+- "page_id": "712769539"
+  "title": "Unmasking Request 요청하기 (마스킹 해제 요청)"
+  "title_orig": "Unmasking Request 요청하기 (마스킹 해제 요청)"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "Unmasking Request 요청하기 (마스킹 해제 요청)"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting Unmasking (Mask Removal Request)"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-unmasking-mask-removal-request"
+- "page_id": "1060306945"
+  "title": "Restricted Data Access 요청하기 (제한된 데이터 접근 요청)"
+  "title_orig": "Restricted Data Access 요청하기 (제한된 데이터 접근 요청)"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "Restricted Data Access 요청하기 (제한된 데이터 접근 요청)"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting Restricted Data Access"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-restricted-data-access"
+- "page_id": "544378254"
+  "title": "Server Access Request 요청하기"
+  "title_orig": "Server Access Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "Server Access Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting Server Access"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-server-access"
+- "page_id": "878936417"
+  "title": "Server Privilege Request 요청하기"
+  "title_orig": "Server Privilege Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "Server Privilege Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting Server Privilege"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-server-privilege"
+- "page_id": "544378348"
+  "title": "Access Role Request 요청하기"
+  "title_orig": "Access Role Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "Access Role Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting Access Role"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-access-role"
+- "page_id": "1055358996"
+  "title": "IP Registration Request 요청하기"
+  "title_orig": "IP Registration Request 요청하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "IP Registration Request 요청하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting IP Registration"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-ip-registration"
+- "page_id": "568918170"
+  "title": "결재 부가 기능 (대리 결재, 재상신 등)"
+  "title_orig": "결재 부가 기능 (대리 결재, 재상신 등)"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "결재 부가 기능 (대리 결재, 재상신 등)"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Approval Additional Features (Proxy Approval, Resubmission, etc.)"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "approval-additional-features-proxy-approval-resubmission-etc"
+- "page_id": "1070006273"
+  "title": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
+  "title_orig": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "DB 정책 예외 요청하기 (DB Policy Exception Request)"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Requesting DB Policy Exception"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "requesting-db-policy-exception"
+- "page_id": "544380204"
+  "title": "Database Access Control"
+  "title_orig": "Database Access Control"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+- "page_id": "544380222"
+  "title": "웹 SQL 에디터로 접속하기"
+  "title_orig": "웹 SQL 에디터로 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  - "웹 SQL 에디터로 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  - "Connecting with Web SQL Editor"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+  - "connecting-with-web-sql-editor"
+- "page_id": "544380354"
+  "title": "Default Privilege 설정하기"
+  "title_orig": "Default Privilege 설정하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  - "Default Privilege 설정하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  - "Setting Default Privilege"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+  - "setting-default-privilege"
+- "page_id": "559906893"
+  "title": "에이전트 없이 프록시 접속하기"
+  "title_orig": "에이전트 없이 프록시 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  - "에이전트 없이 프록시 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  - "Connecting to Proxy without Agent"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+  - "connecting-to-proxy-without-agent"
+- "page_id": "820609510"
+  "title": "Google BigQuery OAuth 인증을 통해 접속하기"
+  "title_orig": "Google BigQuery OAuth 인증을 통해 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  - "Google BigQuery OAuth 인증을 통해 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  - "Connecting via Google BigQuery OAuth Authentication"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+  - "connecting-via-google-bigquery-oauth-authentication"
+- "page_id": "880181257"
+  "title": "Custom Data Source 접속하기"
+  "title_orig": "Custom Data Source 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Database Access Control"
+  - "Custom Data Source 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Database Access Control"
+  - "Connecting to Custom Data Source"
+  "path":
+  - "user-manual"
+  - "database-access-control"
+  - "connecting-to-custom-data-source"
+- "page_id": "544381369"
+  "title": "Server Access Control"
+  "title_orig": "Server Access Control"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Server Access Control"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Server Access Control"
+  "path":
+  - "user-manual"
+  - "server-access-control"
+- "page_id": "544381383"
+  "title": "권한이 있는 서버에 접속하기"
+  "title_orig": "권한이 있는 서버에 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Server Access Control"
+  - "권한이 있는 서버에 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Server Access Control"
+  - "Connecting to Authorized Servers"
+  "path":
+  - "user-manual"
+  - "server-access-control"
+  - "connecting-to-authorized-servers"
+- "page_id": "544381410"
+  "title": "웹 터미널 사용하기"
+  "title_orig": "웹 터미널 사용하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Server Access Control"
+  - "웹 터미널 사용하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Server Access Control"
+  - "Using Web Terminal"
+  "path":
+  - "user-manual"
+  - "server-access-control"
+  - "using-web-terminal"
+- "page_id": "544381477"
+  "title": "웹 SFTP 사용하기"
+  "title_orig": "웹 SFTP 사용하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Server Access Control"
+  - "웹 SFTP 사용하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Server Access Control"
+  - "Using Web SFTP"
+  "path":
+  - "user-manual"
+  - "server-access-control"
+  - "using-web-sftp"
+- "page_id": "544384011"
+  "title": "Kubernetes Access Control"
+  "title_orig": "Kubernetes Access Control"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Kubernetes Access Control"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Kubernetes Access Control"
+  "path":
+  - "user-manual"
+  - "kubernetes-access-control"
+- "page_id": "544384025"
+  "title": "접근 권한 목록 확인하기"
+  "title_orig": "접근 권한 목록 확인하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Kubernetes Access Control"
+  - "접근 권한 목록 확인하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Kubernetes Access Control"
+  - "Checking Access Permission List"
+  "path":
+  - "user-manual"
+  - "kubernetes-access-control"
+  - "checking-access-permission-list"
+- "page_id": "1064829218"
+  "title": "Web Access Control"
+  "title_orig": "Web Access Control"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Web Access Control"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Web Access Control"
+  "path":
+  - "user-manual"
+  - "web-access-control"
+- "page_id": "1073709107"
+  "title": "Root CA 인증서 및 Extension 설치하기"
+  "title_orig": "Root CA 인증서 및 Extension 설치하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Web Access Control"
+  - "Root CA 인증서 및 Extension 설치하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Web Access Control"
+  - "Installing Root CA Certificate and Extension"
+  "path":
+  - "user-manual"
+  - "web-access-control"
+  - "installing-root-ca-certificate-and-extension"
+- "page_id": "1064796396"
+  "title": "웹 어플리케이션 (웹 사이트) 접속하기"
+  "title_orig": "웹 어플리케이션 (웹 사이트) 접속하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Web Access Control"
+  - "웹 어플리케이션 (웹 사이트) 접속하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Web Access Control"
+  - "Accessing Web Applications (Websites)"
+  "path":
+  - "user-manual"
+  - "web-access-control"
+  - "accessing-web-applications-websites"
+- "page_id": "568950885"
+  "title": "Preferences"
+  "title_orig": "Preferences"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Preferences"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Preferences"
+  "path":
+  - "user-manual"
+  - "preferences"
+- "page_id": "544112828"
+  "title": "User Agent"
+  "title_orig": "User Agent"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "User Agent"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "User Agent"
+  "path":
+  - "user-manual"
+  - "user-agent"
+- "page_id": "852066413"
+  "title": "Multi Agent"
+  "title_orig": "Multi Agent"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Multi Agent"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Multi Agent"
+  "path":
+  - "user-manual"
+  - "multi-agent"
+- "page_id": "912425276"
+  "title": "Multi Agent Linux 설치 및 사용 가이드"
+  "title_orig": "Multi Agent Linux 설치 및 사용 가이드"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Multi Agent"
+  - "Multi Agent Linux 설치 및 사용 가이드"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Multi Agent"
+  - "Multi Agent Linux Installation and Usage Guide"
+  "path":
+  - "user-manual"
+  - "multi-agent"
+  - "multi-agent-linux-installation-and-usage-guide"
+- "page_id": "912425288"
+  "title": "Multi Agent Seamless SSH 사용 가이드"
+  "title_orig": "Multi Agent Seamless SSH 사용 가이드"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Multi Agent"
+  - "Multi Agent Seamless SSH 사용 가이드"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Multi Agent"
+  - "Multi Agent Seamless SSH Usage Guide"
+  "path":
+  - "user-manual"
+  - "multi-agent"
+  - "multi-agent-seamless-ssh-usage-guide"
+- "page_id": "919240916"
+  "title": "Multi Agent OS별 3rd Party Tool 지원 목록"
+  "title_orig": "Multi Agent OS별 3rd Party Tool 지원 목록"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Multi Agent"
+  - "Multi Agent OS별 3rd Party Tool 지원 목록"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Multi Agent"
+  - "Multi Agent 3rd Party Tool Support List by OS"
+  "path":
+  - "user-manual"
+  - "multi-agent"
+  - "multi-agent-3rd-party-tool-support-list-by-os"
+- "page_id": "544178405"
+  "title": "관리자 매뉴얼"
+  "title_orig": "관리자 매뉴얼"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  "path":
+  - "administrator-manual"
+- "page_id": "544080057"
+  "title": "General"
+  "title_orig": "General"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  "path":
+  - "administrator-manual"
+  - "general"
+- "page_id": "543948978"
+  "title": "Company Management"
+  "title_orig": "Company Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+- "page_id": "544145591"
+  "title": "General"
+  "title_orig": "General\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "General"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "General"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "general"
+- "page_id": "544178422"
+  "title": "Security"
+  "title_orig": "Security"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Security"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Security"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "security"
+- "page_id": "544112846"
+  "title": "Allowed Zones"
+  "title_orig": "Allowed Zones"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Allowed Zones"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Allowed Zones"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "allowed-zones"
+- "page_id": "544243925"
+  "title": "Channels"
+  "title_orig": "Channels"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Channels"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Channels"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "channels"
+- "page_id": "543981760"
+  "title": "Alerts"
+  "title_orig": "Alerts"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Alerts"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Alerts"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "alerts"
+- "page_id": "793608206"
+  "title": "New Request > 요청 타입별 템플릿 변수"
+  "title_orig": "New Request > 요청 타입별 템플릿 변수"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Alerts"
+  - "New Request > 요청 타입별 템플릿 변수"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Alerts"
+  - "New Request > Template Variables by Request Type"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "alerts"
+  - "new-request-template-variables-by-request-type"
+- "page_id": "544178443"
+  "title": "Licenses"
+  "title_orig": "Licenses"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Company Management"
+  - "Licenses"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Company Management"
+  - "Licenses"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "company-management"
+  - "licenses"
+- "page_id": "544375969"
+  "title": "User Management"
+  "title_orig": "User Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+- "page_id": "544047331"
+  "title": "Users"
+  "title_orig": "Users"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Users"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Users"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "users"
+- "page_id": "544376787"
+  "title": "사용자 프로필"
+  "title_orig": "사용자 프로필"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Users"
+  - "사용자 프로필"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Users"
+  - "User Profile"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "users"
+  - "user-profile"
+- "page_id": "920944732"
+  "title": "qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능"
+  "title_orig": "qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Users"
+  - "qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Users"
+  - "Password Change Enforcement and Account Deletion Feature for qp-admin Default\
+    \ Account"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "users"
+  - "password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account"
+- "page_id": "544047341"
+  "title": "Groups"
+  "title_orig": "Groups"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Groups"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Groups"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "groups"
+- "page_id": "543948996"
+  "title": "Roles"
+  "title_orig": "Roles"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Roles"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Roles"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "roles"
+- "page_id": "544376982"
+  "title": "Profile Editor"
+  "title_orig": "Profile Editor"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Profile Editor"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Profile Editor"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "profile-editor"
+- "page_id": "953221256"
+  "title": "Custom Attribute"
+  "title_orig": "Custom Attribute"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Profile Editor"
+  - "Custom Attribute"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Profile Editor"
+  - "Custom Attribute"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "profile-editor"
+  - "custom-attribute"
+- "page_id": "544375984"
+  "title": "Authentication"
+  "title_orig": "Authentication"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+- "page_id": "544376004"
+  "title": "LDAP 연동하기"
+  "title_orig": "LDAP 연동하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "LDAP 연동하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Integrating with LDAP"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "integrating-with-ldap"
+- "page_id": "544376100"
+  "title": "Okta 연동하기"
+  "title_orig": "Okta 연동하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Okta 연동하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Integrating with Okta"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "integrating-with-okta"
+- "page_id": "544376183"
+  "title": "AWS SSO 연동하기"
+  "title_orig": "AWS SSO 연동하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "AWS SSO 연동하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Integrating with AWS SSO"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "integrating-with-aws-sso"
+- "page_id": "619381289"
+  "title": "Google SAML 연동하기"
+  "title_orig": "Google SAML 연동하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Google SAML 연동하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Integrating with Google SAML"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "integrating-with-google-saml"
+- "page_id": "793575425"
+  "title": "Multi-Factor Authentication 설정하기"
+  "title_orig": "Multi-Factor Authentication 설정하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Multi-Factor Authentication 설정하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Setting Up Multi-Factor Authentication"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "setting-up-multi-factor-authentication"
+- "page_id": "544376236"
+  "title": "Provisioning"
+  "title_orig": "Provisioning"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "provisioning"
+- "page_id": "544376265"
+  "title": "Provisioning 활성화 하기"
+  "title_orig": "Provisioning 활성화 하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  - "Provisioning 활성화 하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  - "Activating Provisioning"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "provisioning"
+  - "activating-provisioning"
+- "page_id": "544376394"
+  "title": "[Okta] 프로비저닝 연동 가이드"
+  "title_orig": "[Okta] 프로비저닝 연동 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  - "[Okta] 프로비저닝 연동 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Provisioning"
+  - "[Okta] Provisioning Integration Guide"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "provisioning"
+  - "okta-provisioning-integration-guide"
+- "page_id": "544178462"
+  "title": "Workflow Management"
+  "title_orig": "Workflow Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Workflow Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Workflow Management"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "workflow-management"
+- "page_id": "544047359"
+  "title": "All Requests"
+  "title_orig": "All Requests"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Workflow Management"
+  - "All Requests"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Workflow Management"
+  - "All Requests"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "workflow-management"
+  - "all-requests"
+- "page_id": "544378513"
+  "title": "Approval Rules"
+  "title_orig": "Approval Rules"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Workflow Management"
+  - "Approval Rules"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Workflow Management"
+  - "Approval Rules"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "workflow-management"
+  - "approval-rules"
+- "page_id": "561414376"
+  "title": "Workflow Configurations"
+  "title_orig": "Workflow Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "Workflow Management"
+  - "Workflow Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "Workflow Management"
+  - "Workflow Configurations"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "workflow-management"
+  - "workflow-configurations"
+- "page_id": "544112865"
+  "title": "System"
+  "title_orig": "System"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+- "page_id": "544080097"
+  "title": "Integrations"
+  "title_orig": "Integrations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+- "page_id": "544379393"
+  "title": "Syslog 연동"
+  "title_orig": "Syslog 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Syslog 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Syslog"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-syslog"
+- "page_id": "557940795"
+  "title": "Splunk 연동"
+  "title_orig": "Splunk 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Splunk 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Splunk"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-splunk"
+- "page_id": "544379587"
+  "title": "Secret Store 연동"
+  "title_orig": "Secret Store 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Secret Store 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Secret Store"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-secret-store"
+- "page_id": "798064641"
+  "title": "Email 연동"
+  "title_orig": "Email 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Email 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Email"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-email"
+- "page_id": "811401365"
+  "title": "OAuth 2.0을 사용하기 위한 Google Cloud API 연동"
+  "title_orig": "OAuth 2.0을 사용하기 위한 Google Cloud API 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "OAuth 2.0을 사용하기 위한 Google Cloud API 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating Google Cloud API for OAuth 2.0"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-google-cloud-api-for-oauth-20"
+- "page_id": "883654669"
+  "title": "Slack DM 연동"
+  "title_orig": "Slack DM 연동"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Slack DM 연동"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Slack DM"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-slack-dm"
+- "page_id": "544378759"
+  "title": "Slack DM - Workflow 알림 유형"
+  "title_orig": "Slack DM - Workflow 알림 유형"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Slack DM 연동"
+  - "Slack DM - Workflow 알림 유형"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Integrations"
+  - "Integrating with Slack DM"
+  - "Slack DM - Workflow Notification Types"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "integrations"
+  - "integrating-with-slack-dm"
+  - "slack-dm-workflow-notification-types"
+- "page_id": "544377652"
+  "title": "API Token"
+  "title_orig": "API Token"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "API Token"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "API Token"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "api-token"
+- "page_id": "544211220"
+  "title": "Jobs"
+  "title_orig": "Jobs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "System"
+  - "Jobs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "System"
+  - "Jobs"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "system"
+  - "jobs"
+- "page_id": "544047372"
+  "title": "Discovery"
+  "title_orig": "Discovery"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+- "page_id": "543949048"
+  "title": "Discovery Management"
+  "title_orig": "Discovery Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+- "page_id": "543981852"
+  "title": "Dashboard"
+  "title_orig": "Dashboard"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Dashboard"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Dashboard"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "dashboard"
+- "page_id": "544080127"
+  "title": "Inventory"
+  "title_orig": "Inventory"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Inventory"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Inventory"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "inventory"
+- "page_id": "543949058"
+  "title": "Discovery Jobs"
+  "title_orig": "Discovery Jobs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Discovery Jobs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Discovery Jobs"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "discovery-jobs"
+- "page_id": "543981865"
+  "title": "Discovery History"
+  "title_orig": "Discovery History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Discovery History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Discovery History"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "discovery-history"
+- "page_id": "543949078"
+  "title": "Scan Results"
+  "title_orig": "Scan Results"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Scan Results"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Scan Results"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "scan-results"
+- "page_id": "544244011"
+  "title": "Detection Profiles"
+  "title_orig": "Detection Profiles"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Detection Profiles"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Detection Profiles"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "detection-profiles"
+- "page_id": "544112915"
+  "title": "Data Patterns"
+  "title_orig": "Data Patterns"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Discovery"
+  - "Discovery Management"
+  - "Data Patterns"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Discovery"
+  - "Discovery Management"
+  - "Data Patterns"
+  "path":
+  - "administrator-manual"
+  - "discovery"
+  - "discovery-management"
+  - "data-patterns"
+- "page_id": "544379638"
+  "title": "Databases"
+  "title_orig": "Databases"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  "path":
+  - "administrator-manual"
+  - "databases"
+- "page_id": "956071939"
+  "title": "DAC General Configurations"
+  "title_orig": "DAC General Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DAC General Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DAC General Configurations"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "dac-general-configurations"
+- "page_id": "921436219"
+  "title": "Unmasking Zones"
+  "title_orig": "Unmasking Zones"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DAC General Configurations"
+  - "Unmasking Zones"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DAC General Configurations"
+  - "Unmasking Zones"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "dac-general-configurations"
+  - "unmasking-zones"
+- "page_id": "544379705"
+  "title": "Connection Management"
+  "title_orig": "Connection Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+- "page_id": "544145672"
+  "title": "Cloud Providers"
+  "title_orig": "Cloud Providers"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "cloud-providers"
+- "page_id": "544379719"
+  "title": "AWS에서 DB 리소스 동기화"
+  "title_orig": "AWS에서 DB 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "AWS에서 DB 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing DB Resources from AWS"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-db-resources-from-aws"
+- "page_id": "562167871"
+  "title": "MS Azure에서 DB 리소스 동기화"
+  "title_orig": "MS Azure에서 DB 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "MS Azure에서 DB 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing DB Resources from MS Azure"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-db-resources-from-ms-azure"
+- "page_id": "562167809"
+  "title": "Google Cloud에서 DB 리소스 동기화"
+  "title_orig": "Google Cloud에서 DB 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Google Cloud에서 DB 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing DB Resources from Google Cloud"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-db-resources-from-google-cloud"
+- "page_id": "712507393"
+  "title": "Dry Run 기능으로 클라우드 동기화 설정 확인하기"
+  "title_orig": "Dry Run 기능으로 클라우드 동기화 설정 확인하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Dry Run 기능으로 클라우드 동기화 설정 확인하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Verifying Cloud Synchronization Settings with Dry Run Feature"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "cloud-providers"
+  - "verifying-cloud-synchronization-settings-with-dry-run-feature"
+- "page_id": "544014712"
+  "title": "DB Connections"
+  "title_orig": "DB Connections"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+- "page_id": "544380381"
+  "title": "MongoDB 전용 가이드"
+  "title_orig": "MongoDB 전용 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "MongoDB 전용 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "MongoDB Specific Guide"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+  - "mongodb-specific-guide"
+- "page_id": "568852692"
+  "title": "DocumentDB 전용 가이드"
+  "title_orig": "DocumentDB 전용 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "DocumentDB 전용 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "DocumentDB Specific Guide"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+  - "documentdb-specific-guide"
+- "page_id": "811434142"
+  "title": "Google BigQuery OAuth 인증 설정"
+  "title_orig": "Google BigQuery OAuth 인증 설정"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "Google BigQuery OAuth 인증 설정"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "Google BigQuery OAuth Authentication Configuration"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+  - "google-bigquery-oauth-authentication-configuration"
+- "page_id": "820806182"
+  "title": "AWS Athena 전용 가이드"
+  "title_orig": "AWS Athena 전용 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "AWS Athena 전용 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "AWS Athena Specific Guide"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+  - "aws-athena-specific-guide"
+- "page_id": "880082945"
+  "title": "Custom Data Source 설정 및 로그 확인"
+  "title_orig": "Custom Data Source 설정 및 로그 확인"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "Custom Data Source 설정 및 로그 확인"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "DB Connections"
+  - "Custom Data Source Configuration and Log Verification"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "db-connections"
+  - "custom-data-source-configuration-and-log-verification"
+- "page_id": "544145691"
+  "title": "SSL Configurations"
+  "title_orig": "SSL Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "SSL Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "SSL Configurations"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "ssl-configurations"
+- "page_id": "544047436"
+  "title": "SSH Configurations"
+  "title_orig": "SSH Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "SSH Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "SSH Configurations"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "ssh-configurations"
+- "page_id": "544112932"
+  "title": "Kerberos Configurations"
+  "title_orig": "Kerberos Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Connection Management"
+  - "Kerberos Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Connection Management"
+  - "Kerberos Configurations"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "connection-management"
+  - "kerberos-configurations"
+- "page_id": "544380126"
+  "title": "DB Access Control"
+  "title_orig": "DB Access Control\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DB Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DB Access Control"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "db-access-control"
+- "page_id": "544380140"
+  "title": "Privilege Type"
+  "title_orig": "Privilege Type"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DB Access Control"
+  - "Privilege Type"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DB Access Control"
+  - "Privilege Type"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "db-access-control"
+  - "privilege-type"
+- "page_id": "544380173"
+  "title": "Access Control"
+  "title_orig": "Access Control"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DB Access Control"
+  - "Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DB Access Control"
+  - "Access Control"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "db-access-control"
+  - "access-control"
+- "page_id": "544379868"
+  "title": "Policies"
+  "title_orig": "Policies"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+- "page_id": "544379937"
+  "title": "Data Access"
+  "title_orig": "Data Access"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  - "Data Access"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  - "Data Access"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+  - "data-access"
+- "page_id": "569376769"
+  "title": "Masking Pattern"
+  "title_orig": "Masking Pattern"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  - "Masking Pattern"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  - "Masking Pattern"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+  - "masking-pattern"
+- "page_id": "544379882"
+  "title": "Data Masking"
+  "title_orig": "Data Masking"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  - "Data Masking"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  - "Data Masking"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+  - "data-masking"
+- "page_id": "544379993"
+  "title": "Sensitive Data"
+  "title_orig": "Sensitive Data"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  - "Sensitive Data"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  - "Sensitive Data"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+  - "sensitive-data"
+- "page_id": "713129986"
+  "title": "Policy Exception"
+  "title_orig": "Policy Exception"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Policies"
+  - "Policy Exception"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Policies"
+  - "Policy Exception"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "policies"
+  - "policy-exception"
+- "page_id": "571277577"
+  "title": "Ledger Management"
+  "title_orig": "Ledger Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Ledger Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Ledger Management"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "ledger-management"
+- "page_id": "544380061"
+  "title": "Ledger Table Policy"
+  "title_orig": "Ledger Table Policy"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Ledger Management"
+  - "Ledger Table Policy"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Ledger Management"
+  - "Ledger Table Policy"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "ledger-management"
+  - "ledger-table-policy"
+- "page_id": "571277650"
+  "title": "Ledger Approval Rules"
+  "title_orig": "Ledger Approval Rules"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Ledger Management"
+  - "Ledger Approval Rules"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Ledger Management"
+  - "Ledger Approval Rules"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "ledger-management"
+  - "ledger-approval-rules"
+- "page_id": "873136365"
+  "title": "(New) Policy Management"
+  "title_orig": "(New) Policy Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "(New) Policy Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "(New) Policy Management"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "new-policy-management"
+- "page_id": "878805502"
+  "title": "Data Paths"
+  "title_orig": "Data Paths"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Data Paths"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Data Paths"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "new-policy-management"
+  - "data-paths"
+- "page_id": "879198569"
+  "title": "Data Policies"
+  "title_orig": "Data Policies"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Data Policies"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Data Policies"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "new-policy-management"
+  - "data-policies"
+- "page_id": "1064796485"
+  "title": "Exception Management"
+  "title_orig": "Exception Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Exception Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "(New) Policy Management"
+  - "Exception Management"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "new-policy-management"
+  - "exception-management"
+- "page_id": "954139156"
+  "title": "Monitoring"
+  "title_orig": "Monitoring"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Monitoring"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Monitoring"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "monitoring"
+- "page_id": "954172219"
+  "title": "Runnig Queries"
+  "title_orig": "Runnig Queries"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Monitoring"
+  - "Runnig Queries"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Monitoring"
+  - "Runnig Queries"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "monitoring"
+  - "runnig-queries"
+- "page_id": "954204974"
+  "title": "Proxy Management"
+  "title_orig": "Proxy Management\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "Monitoring"
+  - "Proxy Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "Monitoring"
+  - "Proxy Management"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "monitoring"
+  - "proxy-management"
+- "page_id": "544380588"
+  "title": "Servers"
+  "title_orig": "Servers"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  "path":
+  - "administrator-manual"
+  - "servers"
+- "page_id": "954336174"
+  "title": "SAC General Configurations"
+  "title_orig": "SAC General Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "SAC General Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "SAC General Configurations"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "sac-general-configurations"
+- "page_id": "544380635"
+  "title": "Connection Management"
+  "title_orig": "Connection Management\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+- "page_id": "544178567"
+  "title": "Cloud Providers"
+  "title_orig": "Cloud Providers\\u200b\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "cloud-providers"
+- "page_id": "544380650"
+  "title": "AWS에서 서버 리소스 동기화"
+  "title_orig": "AWS에서 서버 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "AWS에서 서버 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing Server Resources from AWS"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-server-resources-from-aws"
+- "page_id": "544380741"
+  "title": "Azure에서 서버 리소스 동기화"
+  "title_orig": "Azure에서 서버 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Azure에서 서버 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing Server Resources from Azure"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-server-resources-from-azure"
+- "page_id": "544380708"
+  "title": "GCP에서 서버 리소스 동기화"
+  "title_orig": "GCP에서 서버 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "GCP에서 서버 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing Server Resources from GCP"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-server-resources-from-gcp"
+- "page_id": "544211361"
+  "title": "Servers"
+  "title_orig": "Servers\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Servers"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Servers"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "servers"
+- "page_id": "544380774"
+  "title": "수동으로 개별 서버 등록하기"
+  "title_orig": "수동으로 개별 서버 등록하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Servers"
+  - "수동으로 개별 서버 등록하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Servers"
+  - "Manually Registering Individual Servers"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "servers"
+  - "manually-registering-individual-servers"
+- "page_id": "544080186"
+  "title": "Server Groups"
+  "title_orig": "Server Groups"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Server Groups"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Server Groups"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "server-groups"
+- "page_id": "544380846"
+  "title": "서버를 그룹으로 관리하기"
+  "title_orig": "서버를 그룹으로 관리하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Server Groups"
+  - "서버를 그룹으로 관리하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Server Groups"
+  - "Managing Servers as Groups"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "server-groups"
+  - "managing-servers-as-groups"
+- "page_id": "544211376"
+  "title": "Server Agents for RDP"
+  "title_orig": "Server Agents for RDP"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Server Agents for RDP"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Server Agents for RDP"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "server-agents-for-rdp"
+- "page_id": "565575990"
+  "title": "Server Agent 설치 및 제거하기"
+  "title_orig": "Server Agent 설치 및 제거하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "Server Agents for RDP"
+  - "Server Agent 설치 및 제거하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "Server Agents for RDP"
+  - "Installing and Removing Server Agent"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "server-agents-for-rdp"
+  - "installing-and-removing-server-agent"
+- "page_id": "615710737"
+  "title": "ProxyJump Configurations"
+  "title_orig": "ProxyJump Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "ProxyJump Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "ProxyJump Configurations"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "proxyjump-configurations"
+- "page_id": "615743551"
+  "title": "ProxyJump 생성하기"
+  "title_orig": "ProxyJump 생성하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Connection Management"
+  - "ProxyJump Configurations"
+  - "ProxyJump 생성하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Connection Management"
+  - "ProxyJump Configurations"
+  - "Creating ProxyJump"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "connection-management"
+  - "proxyjump-configurations"
+  - "creating-proxyjump"
+- "page_id": "613777446"
+  "title": "Server Account Management"
+  "title_orig": "Server Account Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+- "page_id": "544380991"
+  "title": "Server Account Templates"
+  "title_orig": "Server Account Templates"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  - "Server Account Templates"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  - "Server Account Templates"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+  - "server-account-templates"
+- "page_id": "544380960"
+  "title": "SSH Key Configurations"
+  "title_orig": "SSH Key Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  - "SSH Key Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  - "SSH Key Configurations"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+  - "ssh-key-configurations"
+- "page_id": "615743501"
+  "title": "Account Management"
+  "title_orig": "Account Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  - "Account Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  - "Account Management"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+  - "account-management"
+- "page_id": "615677962"
+  "title": "Password Provisioning"
+  "title_orig": "Password Provisioning"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  - "Password Provisioning"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  - "Password Provisioning"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+  - "password-provisioning"
+- "page_id": "619380898"
+  "title": "패스워드 변경 Job 생성하기"
+  "title_orig": "패스워드 변경 Job 생성하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Account Management"
+  - "Password Provisioning"
+  - "패스워드 변경 Job 생성하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Account Management"
+  - "Password Provisioning"
+  - "Creating Password Change Job"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-account-management"
+  - "password-provisioning"
+  - "creating-password-change-job"
+- "page_id": "543949216"
+  "title": "Server Access Control"
+  "title_orig": "Server Access Control\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+- "page_id": "544381186"
+  "title": "Access Control"
+  "title_orig": "Access Control\\u200b\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "access-control"
+- "page_id": "544381282"
+  "title": "Permissions 부여 및 회수하기"
+  "title_orig": "Permissions 부여 및 회수하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Permissions 부여 및 회수하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Granting and Revoking Permissions"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "access-control"
+  - "granting-and-revoking-permissions"
+- "page_id": "544381200"
+  "title": "Role 부여 및 회수하기"
+  "title_orig": "Role 부여 및 회수하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Role 부여 및 회수하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Granting and Revoking Roles"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "access-control"
+  - "granting-and-revoking-roles"
+- "page_id": "878838349"
+  "title": "Server Privilege 부여하기"
+  "title_orig": "Server Privilege 부여하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Server Privilege 부여하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Access Control"
+  - "Granting Server Privilege"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "access-control"
+  - "granting-server-privilege"
+- "page_id": "544381150"
+  "title": "Roles"
+  "title_orig": "Roles\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Roles"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Roles"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "roles"
+- "page_id": "544381025"
+  "title": "Policies"
+  "title_orig": "Policies\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "policies"
+- "page_id": "544381039"
+  "title": "서버 접근 정책 설정하기"
+  "title_orig": "서버 접근 정책 설정하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  - "서버 접근 정책 설정하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  - "Setting Server Access Policy"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "policies"
+  - "setting-server-access-policy"
+- "page_id": "544377895"
+  "title": "Server Proxy 사용 활성화"
+  "title_orig": "Server Proxy 사용 활성화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  - "Server Proxy 사용 활성화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Policies"
+  - "Enabling Server Proxy"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "policies"
+  - "enabling-server-proxy"
+- "page_id": "544381118"
+  "title": "Command Templates"
+  "title_orig": "Command Templates"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Command Templates"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Command Templates"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "command-templates"
+- "page_id": "544244109"
+  "title": "Blocked Accounts"
+  "title_orig": "Blocked Accounts"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Servers"
+  - "Server Access Control"
+  - "Blocked Accounts"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Servers"
+  - "Server Access Control"
+  - "Blocked Accounts"
+  "path":
+  - "administrator-manual"
+  - "servers"
+  - "server-access-control"
+  - "blocked-accounts"
+- "page_id": "544381596"
+  "title": "Kubernetes"
+  "title_orig": "Kubernetes"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+- "page_id": "954172232"
+  "title": "KAC General Configurations"
+  "title_orig": "KAC General\\u200b\\u200b\\u200b\\u200b\\u200b Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "KAC General Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "KAC General Configurations"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "kac-general-configurations"
+- "page_id": "544381637"
+  "title": "Connection Management"
+  "title_orig": "Connection Management\\u200b\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "Connection Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "Connection Management"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "connection-management"
+- "page_id": "544381651"
+  "title": "Cloud Providers"
+  "title_orig": "Cloud Providers\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Cloud Providers"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Cloud Providers"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "connection-management"
+  - "cloud-providers"
+- "page_id": "544381739"
+  "title": "AWS에서 쿠버네티스 리소스 동기화"
+  "title_orig": "AWS에서 쿠버네티스 리소스 동기화"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "AWS에서 쿠버네티스 리소스 동기화"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Cloud Providers"
+  - "Synchronizing Kubernetes Resources from AWS"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "connection-management"
+  - "cloud-providers"
+  - "synchronizing-kubernetes-resources-from-aws"
+- "page_id": "544381839"
+  "title": "Clusters"
+  "title_orig": "Clusters"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Clusters"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Clusters"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "connection-management"
+  - "clusters"
+- "page_id": "544381877"
+  "title": "수동으로 쿠버네티스 클러스터 등록하기"
+  "title_orig": "수동으로 쿠버네티스 클러스터 등록하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Clusters"
+  - "수동으로 쿠버네티스 클러스터 등록하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "Connection Management"
+  - "Clusters"
+  - "Manually Registering Kubernetes Clusters"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "connection-management"
+  - "clusters"
+  - "manually-registering-kubernetes-clusters"
+- "page_id": "544383110"
+  "title": "K8s Access Control"
+  "title_orig": "K8s Access Control"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+- "page_id": "544383124"
+  "title": "Access Control"
+  "title_orig": "Access Control\\u200b"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Access Control"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "access-control"
+- "page_id": "544383381"
+  "title": "쿠버네티스 역할 부여 및 회수하기"
+  "title_orig": "쿠버네티스 역할 부여 및 회수하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Access Control"
+  - "쿠버네티스 역할 부여 및 회수하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Access Control"
+  - "Granting and Revoking Kubernetes Roles"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "access-control"
+  - "granting-and-revoking-kubernetes-roles"
+- "page_id": "544382741"
+  "title": "Roles"
+  "title_orig": "Rolesㅤㅤㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Roles"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Roles"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "roles"
+- "page_id": "544382963"
+  "title": "쿠버네티스 역할 설정하기"
+  "title_orig": "쿠버네티스 역할 설정하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Roles"
+  - "쿠버네티스 역할 설정하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Roles"
+  - "Setting Kubernetes Roles"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "roles"
+  - "setting-kubernetes-roles"
+- "page_id": "544382060"
+  "title": "Policies"
+  "title_orig": "Policiesㅤㅤㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+- "page_id": "544382274"
+  "title": "쿠버네티스 정책 설정하기"
+  "title_orig": "쿠버네티스 정책 설정하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "쿠버네티스 정책 설정하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "Setting Kubernetes Policies"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+  - "setting-kubernetes-policies"
+- "page_id": "544382364"
+  "title": "쿠버네티스 정책 YAML Code 문법 안내"
+  "title_orig": "쿠버네티스 정책 YAML Code 문법 안내"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "쿠버네티스 정책 YAML Code 문법 안내"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "Kubernetes Policy YAML Code Syntax Guide"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+  - "kubernetes-policy-yaml-code-syntax-guide"
+- "page_id": "544382445"
+  "title": "쿠버네티스 정책 Tips 안내"
+  "title_orig": "쿠버네티스 정책 Tips 안내"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "쿠버네티스 정책 Tips 안내"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "Kubernetes Policy Tips Guide"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+  - "kubernetes-policy-tips-guide"
+- "page_id": "544382522"
+  "title": "쿠버네티스 정책 UI 코드 헬퍼 안내"
+  "title_orig": "쿠버네티스 정책 UI 코드 헬퍼 안내"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "쿠버네티스 정책 UI 코드 헬퍼 안내"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "Kubernetes Policy UI Code Helper Guide"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+  - "kubernetes-policy-ui-code-helper-guide"
+- "page_id": "544382659"
+  "title": "쿠버네티스 정책 Action 설정 참고 가이드"
+  "title_orig": "쿠버네티스 정책 Action 설정 참고 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "쿠버네티스 정책 Action 설정 참고 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Kubernetes"
+  - "K8s Access Control"
+  - "Policies"
+  - "Kubernetes Policy Action Configuration Reference Guide"
+  "path":
+  - "administrator-manual"
+  - "kubernetes"
+  - "k8s-access-control"
+  - "policies"
+  - "kubernetes-policy-action-configuration-reference-guide"
+- "page_id": "783515900"
+  "title": "Web Apps"
+  "title_orig": "Web Apps"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+- "page_id": "1064829276"
+  "title": "Connection Management"
+  "title_orig": "Connection Management\\u200e\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Connection Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Connection Management"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "connection-management"
+- "page_id": "1070694423"
+  "title": "Web Apps"
+  "title_orig": "Web Apps\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Connection Management"
+  - "Web Apps"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Connection Management"
+  - "Web Apps"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "connection-management"
+  - "web-apps"
+- "page_id": "1064829246"
+  "title": "Web App Configurations"
+  "title_orig": "Web App Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Connection Management"
+  - "Web App Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Connection Management"
+  - "Web App Configurations"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "connection-management"
+  - "web-app-configurations"
+- "page_id": "1070596135"
+  "title": "Web App Access Control"
+  "title_orig": "Web App Access Control"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Web App Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Web App Access Control"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "web-app-access-control"
+- "page_id": "1070628904"
+  "title": "Access Control"
+  "title_orig": "Access Control\\u200e\\u200e\\u200e\\u200e\\u200e\\u200e\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Access Control"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "web-app-access-control"
+  - "access-control"
+- "page_id": "1064599910"
+  "title": "Role 부여 및 회수하기"
+  "title_orig": "Role 부여 및 회수하기\\u200e\\u200e\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Access Control"
+  - "Role 부여 및 회수하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Access Control"
+  - "Granting and Revoking Roles"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "web-app-access-control"
+  - "access-control"
+  - "granting-and-revoking-roles"
+- "page_id": "1070628923"
+  "title": "Roles"
+  "title_orig": "Roles\\u200e\\u200e\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Roles"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Roles"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "web-app-access-control"
+  - "roles"
+- "page_id": "1064829343"
+  "title": "Policies"
+  "title_orig": "Policies\\u200e\\u200e\\u200e\\u200e\\u200e"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Policies"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "Web App Access Control"
+  - "Policies"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "web-app-access-control"
+  - "policies"
+- "page_id": "783417593"
+  "title": "WAC Quickstart"
+  "title_orig": "WAC Quickstart"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+- "page_id": "783745324"
+  "title": "[~10.2.7] WAC Role & Policy Guide"
+  "title_orig": "[~10.2.7] WAC Role & Policy Guide"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[~10.2.7] WAC Role & Policy Guide"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[~10.2.7] WAC Role & Policy Guide"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "1027-wac-role-policy-guide"
+- "page_id": "924287097"
+  "title": "[10.2.8~] WAC RBAC Guide"
+  "title_orig": "[10.2.8~] WAC RBAC Guide"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[10.2.8~] WAC RBAC Guide"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[10.2.8~] WAC RBAC Guide"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "1028-wac-rbac-guide"
+- "page_id": "956235931"
+  "title": "[10.3.0 ~] WAC JIT 권한 획득 Guide"
+  "title_orig": "[10.3.0 ~] WAC JIT 권한 획득 Guide"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[10.3.0 ~] WAC JIT 권한 획득 Guide"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "[10.3.0 ~] WAC JIT Permission Acquisition Guide"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "1030-wac-jit-permission-acquisition-guide"
+- "page_id": "805962425"
+  "title": "Root CA 인증서 설치 가이드"
+  "title_orig": "Root CA 인증서 설치 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "Root CA 인증서 설치 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "Root CA Certificate Installation Guide"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "root-ca-certificate-installation-guide"
+- "page_id": "883654785"
+  "title": "Web App Configurations에서 WAC 초기 설정하기"
+  "title_orig": "Web App Configurations에서 WAC 초기 설정하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "Web App Configurations에서 WAC 초기 설정하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "Initial WAC Setup in Web App Configurations"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "initial-wac-setup-in-web-app-configurations"
+- "page_id": "924319936"
+  "title": "WAC 트러블슈팅 가이드"
+  "title_orig": "WAC 트러블슈팅 가이드"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "WAC 트러블슈팅 가이드"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "WAC Troubleshooting Guide"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "wac-troubleshooting-guide"
+- "page_id": "927629410"
+  "title": "WAC FAQ"
+  "title_orig": "WAC FAQ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "WAC FAQ"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Web Apps"
+  - "WAC Quickstart"
+  - "WAC FAQ"
+  "path":
+  - "administrator-manual"
+  - "web-apps"
+  - "wac-quickstart"
+  - "wac-faq"
+- "page_id": "544379062"
+  "title": "Audit"
+  "title_orig": "Audit"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+- "page_id": "693043522"
+  "title": "Reports"
+  "title_orig": "Reportsㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Reports"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Reports"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "reports"
+- "page_id": "544384417"
+  "title": "Reports"
+  "title_orig": "Reports"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Reports"
+  - "Reports"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Reports"
+  - "Reports"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "reports"
+  - "reports"
+- "page_id": "544379140"
+  "title": "Audit Log Export"
+  "title_orig": "Audit Log Export"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Reports"
+  - "Audit Log Export"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Reports"
+  - "Audit Log Export"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "reports"
+  - "audit-log-export"
+- "page_id": "544211450"
+  "title": "General Logs"
+  "title_orig": "General Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+- "page_id": "544080230"
+  "title": "User Access History"
+  "title_orig": "User Access History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "User Access History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "User Access History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "user-access-history"
+- "page_id": "544113108"
+  "title": "Activity Logs"
+  "title_orig": "Activity Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Activity Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Activity Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "activity-logs"
+- "page_id": "544047557"
+  "title": "Admin Role History"
+  "title_orig": "Admin Role History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Admin Role History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Admin Role History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "admin-role-history"
+- "page_id": "705724442"
+  "title": "Workflow Logs"
+  "title_orig": "Workflow Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Workflow Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Workflow Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "workflow-logs"
+- "page_id": "775455036"
+  "title": "Reverse Tunnels"
+  "title_orig": "Reverse Tunnels"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "reverse-tunnels"
+- "page_id": "811434216"
+  "title": "Reverse Tunnel을 통해 서버에 통신하기"
+  "title_orig": "Reverse Tunnel을 통해 서버에 통신하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Reverse Tunnel을 통해 서버에 통신하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Communicating with Servers through Reverse Tunnel"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "reverse-tunnels"
+  - "communicating-with-servers-through-reverse-tunnel"
+- "page_id": "811466988"
+  "title": "Reverse Tunnel을 통해 클러스터에 통신하기"
+  "title_orig": "Reverse Tunnel을 통해 클러스터에 통신하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Reverse Tunnel을 통해 클러스터에 통신하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Communicating with Clusters through Reverse Tunnel"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "reverse-tunnels"
+  - "communicating-with-clusters-through-reverse-tunnel"
+- "page_id": "955318273"
+  "title": "Reverse Tunnel을 통해 DB에 통신하기"
+  "title_orig": "Reverse Tunnel을 통해 DB에 통신하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Reverse Tunnel을 통해 DB에 통신하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "General Logs"
+  - "Reverse Tunnels"
+  - "Communicating with DB through Reverse Tunnel"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "general-logs"
+  - "reverse-tunnels"
+  - "communicating-with-db-through-reverse-tunnel"
+- "page_id": "544080248"
+  "title": "Database Logs"
+  "title_orig": "Database Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+- "page_id": "544113141"
+  "title": "DB Access History"
+  "title_orig": "DB Access History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "DB Access History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "DB Access History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "db-access-history"
+- "page_id": "544244149"
+  "title": "Query Audit"
+  "title_orig": "Query Audit"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Query Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Query Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "query-audit"
+- "page_id": "544145819"
+  "title": "Running Queries"
+  "title_orig": "Running Queries"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Running Queries"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Running Queries"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "running-queries"
+- "page_id": "544244163"
+  "title": "DML Snapshots"
+  "title_orig": "DML Snapshots"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "DML Snapshots"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "DML Snapshots"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "dml-snapshots"
+- "page_id": "544014894"
+  "title": "Account Lock History"
+  "title_orig": "Account Lock History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Account Lock History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Account Lock History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "account-lock-history"
+- "page_id": "544080264"
+  "title": "Access Control Logs"
+  "title_orig": "Access Control Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Access Control Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Access Control Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "access-control-logs"
+- "page_id": "1070694532"
+  "title": "Policy Audit Logs"
+  "title_orig": "Policy Audit Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Policy Audit Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Policy Audit Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "policy-audit-logs"
+- "page_id": "1164705793"
+  "title": "Policy Exception logs"
+  "title_orig": "Policy Exception logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Database Logs"
+  - "Policy Exception logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Database Logs"
+  - "Policy Exception logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "database-logs"
+  - "policy-exception-logs"
+- "page_id": "544014907"
+  "title": "Server Logs"
+  "title_orig": "Server Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+- "page_id": "544244182"
+  "title": "Server Access History"
+  "title_orig": "Server Access History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Server Access History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Server Access History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "server-access-history"
+- "page_id": "544244208"
+  "title": "Command Audit"
+  "title_orig": "Command Audit"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Command Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Command Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "command-audit"
+- "page_id": "544014927"
+  "title": "Session Logs"
+  "title_orig": "Session Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Session Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Session Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "session-logs"
+- "page_id": "544014940"
+  "title": "Session Monitoring"
+  "title_orig": "Session Monitoring"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Session Monitoring"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Session Monitoring"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "session-monitoring"
+- "page_id": "544244234"
+  "title": "Access Control Logs"
+  "title_orig": "Access Control Logs\\u200bㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Access Control Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Access Control Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "access-control-logs"
+- "page_id": "544244244"
+  "title": "Server Role History"
+  "title_orig": "Server Role History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Server Role History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Server Role History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "server-role-history"
+- "page_id": "543949311"
+  "title": "Account Lock History"
+  "title_orig": "Account Lock Historyㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Server Logs"
+  - "Account Lock History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Server Logs"
+  - "Account Lock History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "server-logs"
+  - "account-lock-history"
+- "page_id": "544383513"
+  "title": "Kubernetes Logs"
+  "title_orig": "Kubernetes Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Kubernetes Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Kubernetes Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "kubernetes-logs"
+- "page_id": "544383587"
+  "title": "Request Audit"
+  "title_orig": "Request Auditㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Request Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Request Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "kubernetes-logs"
+  - "request-audit"
+- "page_id": "544383693"
+  "title": "Pod Session Recordings"
+  "title_orig": "Pod Session Recordingsㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Pod Session Recordings"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Pod Session Recordings"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "kubernetes-logs"
+  - "pod-session-recordings"
+- "page_id": "544383799"
+  "title": "Kubernetes Role History"
+  "title_orig": "Kubernetes Role Historyㅤ"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Kubernetes Role History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Kubernetes Logs"
+  - "Kubernetes Role History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "kubernetes-logs"
+  - "kubernetes-role-history"
+- "page_id": "1064829366"
+  "title": "Web App Logs"
+  "title_orig": "Web App Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+- "page_id": "1064829380"
+  "title": "Web Access History"
+  "title_orig": "Web Access History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  - "Web Access History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  - "Web Access History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+  - "web-access-history"
+- "page_id": "1070563457"
+  "title": "Web Event Audit"
+  "title_orig": "Web Event Audit"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  - "Web Event Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  - "Web Event Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+  - "web-event-audit"
+- "page_id": "1070694561"
+  "title": "User Activity Recordings"
+  "title_orig": "User Activity Recordings"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  - "User Activity Recordings"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  - "User Activity Recordings"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+  - "user-activity-recordings"
+- "page_id": "1070563469"
+  "title": "Web App Role History"
+  "title_orig": "Web App Role History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  - "Web App Role History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  - "Web App Role History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+  - "web-app-role-history"
+- "page_id": "1070694552"
+  "title": "JIT Access Control Logs"
+  "title_orig": "JIT Access Control Logs"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "Web App Logs"
+  - "JIT Access Control Logs"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "Web App Logs"
+  - "JIT Access Control Logs"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "web-app-logs"
+  - "jit-access-control-logs"
+- "page_id": "851280543"
+  "title": "Multi Agent 제약사항"
+  "title_orig": "Multi Agent 제약사항"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Multi Agent 제약사항"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Multi Agent Limitations"
+  "path":
+  - "administrator-manual"
+  - "multi-agent-limitations"

@@ -176,6 +176,25 @@ def clean_text(text: Optional[str]) -> Optional[str]:
     return cleaned_text
 
 
+def escape_hidden_characters(text: str) -> str:
+    """Escape hidden characters to their Unicode escape sequences for YAML output, but keep Hangul characters as-is"""
+    if text is None:
+        return text
+    
+    # Hidden characters to escape (excluding Hangul Filler which is a Hangul character)
+    hidden_characters = {
+        '\u00A0': '\\u00A0',  # Non-Breaking Space
+        '\u202f': '\\u202f',  # Narrow No-Break Space
+        '\u200b': '\\u200b',  # Zero Width Space
+        '\u200e': '\\u200e',  # Left-to-Right Mark
+    }
+    
+    escaped_text = text
+    for hidden_char, escape_seq in hidden_characters.items():
+        escaped_text = escaped_text.replace(hidden_char, escape_seq)
+    return escaped_text
+
+
 # ============================================================================
 # Data Models
 # ============================================================================
@@ -185,6 +204,7 @@ class Page:
     """Class to represent a Confluence page with its metadata and content"""
     page_id: str
     title: str
+    title_orig: str
     breadcrumbs: List[str] = None
     breadcrumbs_en: List[str] = None
     path: List[str] = None
@@ -201,8 +221,9 @@ class Page:
     def from_dict(cls, data: Dict[str, Any]) -> 'Page':
         """Create a Page instance from a dictionary"""
         return cls(
-            page_id=data.get('id', ''),
+            page_id=data.get('page_id', ''),
             title=data.get('title', ''),
+            title_orig=data.get('title_orig', ''),
             breadcrumbs=data.get('breadcrumbs', []),
             breadcrumbs_en=data.get('breadcrumbs_en', []),
             path=data.get('path', [])
@@ -213,6 +234,7 @@ class Page:
         return {
             'page_id': self.page_id,
             'title': self.title,
+            'title_orig': escape_hidden_characters(self.title_orig),
             'breadcrumbs': self.breadcrumbs,
             'breadcrumbs_en': self.breadcrumbs_en,
             'path': self.path
@@ -312,8 +334,8 @@ class FileManager:
             raise FileError(f"Failed to save file: {str(e)}")
 
     def save_yaml(self, filepath: str, data: Any) -> bool:
-        """Save YAML data to a file"""
-        return self.save_file(filepath, yaml.dump(data, allow_unicode=True, sort_keys=False))
+        """Save YAML data to a file with quoted strings and escaped hidden characters"""
+        return self.save_file(filepath, yaml.dump(data, allow_unicode=True, sort_keys=False, default_style='"'))
 
     def load_yaml(self, filepath: str) -> Optional[Dict]:
         """Read YAML from a file"""
@@ -585,7 +607,11 @@ class Stage4Processor(StageBase):
             return None
 
         # Extract title from V1 data
-        title = clean_text(v1_data.get("title"))
+        title_orig = v1_data.get("title")
+        if not title_orig:
+            return None
+        
+        title = clean_text(title_orig)
         if not title:
             return None
 
@@ -600,6 +626,7 @@ class Stage4Processor(StageBase):
         return Page(
             page_id=page_id,
             title=title,
+            title_orig=title_orig,
             breadcrumbs=breadcrumbs,
         )
 
