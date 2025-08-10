@@ -8,19 +8,17 @@ import { Steps } from 'nextra/components'
 import { MDXRemote } from 'nextra/mdx-remote'
 
 export async function Example() {
-  const filename = '/graphql-eslint/[[...slug]]/page.tsx'
-  const pageContent = await fs.readFile(
-    `../examples/swr-site/app/[lang]/${filename}`,
-    'utf8'
-  )
+  // Example code for remote content
+  const exampleCode = `import { getPageMap } from 'nextra/page-map'
+
+export default async function Page({ params }) {
+  const pageMap = await getPageMap('/remote-content')
+  return <div>Remote content example</div>
+}`
+  
   const rawJs = await compileMdx(
-    `~~~jsx filename="app${filename}" {27} showLineNumbers
-${pageContent
-  .replace(
-    "lang: 'en',\n    ...(route && { slug: route.split('/') })",
-    "slug: route.split('/')"
-  )
-  .trimEnd()}
+    `~~~jsx filename="app/remote-content/page.tsx" showLineNumbers
+${exampleCode}
 ~~~`,
     { defaultShowCopyCode: true }
   )

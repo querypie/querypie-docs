@@ -9,15 +9,25 @@ export const ExampleCode: FC<{
   metadata: string
   example: string
 }> = async ({ filePath, metadata, example }) => {
-  const pageContent = await fs.readFile(
-    `../examples/${example}/${filePath}`,
-    'utf8'
-  )
+  // Example middleware code for i18n
+  const exampleCode = `import { createI18nMiddleware } from 'nextra/locales'
+
+const I18nMiddleware = createI18nMiddleware({
+  locales: ['en', 'zh', 'de'],
+  defaultLocale: 'en'
+})
+
+export default I18nMiddleware
+
+export const config = {
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+}`
+
   const ext = path.extname(filePath).slice(1)
 
   const rawJs = await compileMdx(
     `~~~${ext} filename="${filePath}" showLineNumbers ${metadata}
-${pageContent.trim()}
+${exampleCode}
 ~~~`,
     { defaultShowCopyCode: true }
   )
