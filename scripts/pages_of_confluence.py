@@ -15,7 +15,7 @@ The script outputs the page list to stdout and saves the structured data to page
 
 Usage examples:
   python pages_of_confluence.py
-  python pages_of_confluence.py --page-id 123456789 --space-key DOCS
+  python pages_of_confluence.py --page-id 123456789
   python pages_of_confluence.py --email user@example.com --api-token your-api-token
   python pages_of_confluence.py --attachments # Download page content with attachments
   python pages_of_confluence.py --local # Use local YAML files instead of making API calls
@@ -43,7 +43,6 @@ from requests.auth import HTTPBasicAuth
 class Config:
     """Centralized configuration management"""
     base_url: str = "https://querypie.atlassian.net/wiki"
-    space_key: str = "QM"
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs"
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "docs/latest-ko-confluence"
@@ -794,7 +793,7 @@ def main():
                         help="ID of the starting page (default: %(default)s)")
     parser.add_argument("--quick-start", action="store_true",
                         help=f"Use QUICK_START_PAGE_ID ({Config().quick_start_page_id}) for faster testing")
-    parser.add_argument("--space-key", default=Config().space_key, help="Confluence space key (default: %(default)s)")
+
     parser.add_argument("--base-url", default=Config().base_url, help="Confluence base URL (default: %(default)s)")
     parser.add_argument("--email", default=Config().email, help="Confluence email for authentication")
     parser.add_argument("--api-token", default=Config().api_token, help="Confluence API token for authentication")
@@ -817,7 +816,6 @@ def main():
     # Create configuration
     config = Config(
         base_url=args.base_url,
-        space_key=args.space_key,
         email=args.email,
         api_token=args.api_token,
         default_output_dir=args.output_dir,
@@ -825,10 +823,14 @@ def main():
         use_local_files=args.local
     )
 
-    # Handle quick-start option
+    # Handle page-id and quick-start options
     if args.quick_start:
         config.default_start_page_id = config.quick_start_page_id
         logging.getLogger(__name__).info(f"Quick start mode enabled, using page ID: {config.quick_start_page_id}")
+    elif args.page_id != Config().default_start_page_id:
+        # Only update if page-id was explicitly provided and different from default
+        config.default_start_page_id = args.page_id
+        logging.getLogger(__name__).info(f"Using custom page ID: {args.page_id}")
 
     # Create processor and run
     logger = logging.getLogger(__name__)
