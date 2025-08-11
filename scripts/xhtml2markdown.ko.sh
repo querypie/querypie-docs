@@ -615,8 +615,8 @@ python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/9541391
 echo 'Converted 954139156 to src/content/ko/administrator-manual/databases/monitoring.mdx'
 
 mkdir -p src/content/ko/administrator-manual/databases/monitoring
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/954172219/page.xhtml src/content/ko/administrator-manual/databases/monitoring/runnig-queries.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/monitoring/runnig-queries
-echo 'Converted 954172219 to src/content/ko/administrator-manual/databases/monitoring/runnig-queries.mdx'
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/954172219/page.xhtml src/content/ko/administrator-manual/databases/monitoring/running-queries.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/monitoring/running-queries
+echo 'Converted 954172219 to src/content/ko/administrator-manual/databases/monitoring/running-queries.mdx'
 
 mkdir -p src/content/ko/administrator-manual/databases/monitoring
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/954204974/page.xhtml src/content/ko/administrator-manual/databases/monitoring/proxy-management.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/monitoring/proxy-management

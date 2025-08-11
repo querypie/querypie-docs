@@ -140,6 +140,12 @@ HIDDEN_CHARACTERS = {
     '\u3164': ''  # Hangul Filler
 }
 
+def confluence_url():
+    if GLOBAL_PAGE_V1:
+        page_id = GLOBAL_PAGE_V1.get('id')
+        return f'https://querypie.atlassian.net/wiki/spaces/QM/pages/{page_id}/'
+    else:
+        return 'https://querypie.atlassian.net/wiki/spaces/QM/overview'
 
 def clean_text(text: Optional[str]) -> Optional[str]:
     """Clean text by removing hidden characters"""
@@ -638,6 +644,10 @@ class SingleLineParser:
             for child in node.children:
                 self.markdown_lines.append(SingleLineParser(child).as_markdown)
             self.markdown_lines.append(f"]({href})")
+            if "chequer.atlassian.net" in href or "querypie.atlassian.net" in href:
+                logging.warning(f"SingleLineParser: TODO: {print_node_with_properties(node)} from {ancestors(node)} in {confluence_url()}")
+            else:
+                logging.debug(f"SingleLineParser: {print_node_with_properties(node)} from {ancestors(node)} in {confluence_url()}")
         elif node.name in ['ac:link']:
             """
             <ac:link>

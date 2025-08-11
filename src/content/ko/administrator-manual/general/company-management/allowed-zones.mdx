@@ -62,8 +62,12 @@ Create Allowed Zone 모달
 </figure>
 
 *  **Name**  : Allowed Zone 이름 
-*  **IP Band(s)**  : 할당할 IP 대역 (쉼표로 구분하여 작성)
-    * 예) 1.1.1.1, 2.2.2.2
+*  **IP Band(s)**  : 할당할 IP 주소, 또는 IP 주소 범위를 입력합니다.
+    * IP 주소, 또는 IP 주소 범위를 하나 이상 입력할 수 있습니다.
+    * IP 주소 범위는 Classless Inter-Domain Routing(CIDR) 표기법을 사용합니다. 참고: [CIDR 이란?](https://aws.amazon.com/ko/what-is/cidr/)
+    * 둘 이상의 IP 주소, IP 주소 범위를 입력할 때, 쉼표를 구분자로 하여 입력합니다.
+    * 예1) `1.1.1.1, 2.2.2.2`
+    * 예2) `192.168.10.0/24, 192.169.30.0/24`
 
 
 ## Allowed Zone 삭제하기
