@@ -1513,8 +1513,9 @@ class ConfluenceToMarkdown:
         remarks = []
         page_v1 = get_page_v1()
         if page_v1 and page_v1.get("title"):
+            title = clean_text(page_v1.get("title")).strip()
             # repr() generates a valid value of string for yaml.
-            remarks.append(f'title: {repr(page_v1.get("title"))}\n')
+            remarks.append(f'title: {repr(title)}\n')
 
         if len(remarks) > 0:
             return ["---\n"] + remarks + ["---\n", "\n"]
