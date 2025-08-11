@@ -21,6 +21,7 @@ from datetime import datetime
 from itertools import chain
 from pathlib import Path
 from typing import Optional, Dict, List, Any, TypedDict
+from urllib.parse import unquote
 
 import yaml
 from bs4 import BeautifulSoup, Tag, NavigableString
@@ -643,8 +644,20 @@ class SingleLineParser:
                 <ri:page ri:content-title="Slack DM - Workflow 알림 유형" ri:version-at-save="7"/>
                 <ac:link-body>Slack DM 개인 알림 사용하기</ac:link-body>
             </ac:link>
+            <ac:link ac:card-appearance="inline" ac:anchor="QueryPie-Web%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0">
+                <ri:page ri:content-title="My Dashboard" ri:version-at-save="12"/>
+                <ac:link-body>My Dashboard</ac:link-body>
+            </ac:link>
             """
             link_body = '(ERROR: Link body not found)'
+            anchor = node.get('anchor', '')
+            if anchor:
+                decoded_anchor = ' | ' + unquote(anchor)
+                lowercased_fragment = '#' + anchor.lower()
+            else:
+                decoded_anchor = ''
+                lowercased_fragment = ''
+
             href = '#'
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
@@ -653,7 +666,7 @@ class SingleLineParser:
                     target_title = child.get('content-title', '')
                     href = relative_path_to_titled_page(target_title)
 
-            self.markdown_lines.append(f'[{link_body}]({href})')
+            self.markdown_lines.append(f'[{link_body}{decoded_anchor}]({href}{lowercased_fragment})')
         elif node.name in ['ri:page']:
             content_title = node.get('content-title', '#')
             self.markdown_lines.append(content_title)

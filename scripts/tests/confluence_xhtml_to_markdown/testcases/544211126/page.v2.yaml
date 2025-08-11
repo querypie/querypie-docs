@@ -1,0 +1,156 @@
+"spaceId": "539099246"
+"parentId": "608501837"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:22:27.113Z"
+"authorId": "630c844a9796033b256b98a5"
+"parentType": "page"
+"position": !!int "521757335"
+"version":
+  "number": !!int "24"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2025-08-11T17:00:05.104Z"
+  "ncsStepVersion": "414"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"환영합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"이곳에서 QueryPie의 사용자가 어떻게 QueryPie Web에 접속하여 리소스(DB,\
+      \ System, Cluster)에 대한 접근 권한을 받고, 원하는 리소스에 안전하게 접속할 수 있는지에 대한 가이드를 제공합니다. \"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\"\
+      :{\"level\":2},\"content\":[{\"text\":\"QueryPie가 처음이신가요?\",\"type\":\"text\"\
+      }]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"아래 순서를 따라 사용해 보세요. 각 항목을\
+      \ 클릭하면 자세한 사용 방법을 확인하실 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"table\",\"\
+      attrs\":{\"layout\":\"default\",\"isNumberColumnEnabled\":true,\"width\":760.0,\"\
+      localId\":\"c53b8e8a-3f68-476f-aa0a-03f2f0eb700f\"},\"content\":[{\"type\":\"\
+      tableRow\",\"content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"\
+      background\":\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\",\"rowspan\"\
+      :1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\",\"marks\":[{\"\
+      type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\":[{\"text\"\
+      :\"사용 순서\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]}]},{\"type\"\
+      :\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"marks\":[{\"type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\"\
+      :[{\"text\":\"기능\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]}]}]},{\"\
+      type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\"\
+      :1,\"background\":\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\",\"\
+      rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"로그인\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[512.0]},\"\
+      content\":[{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"type\":\"inlineCard\",\"attrs\":{\"\
+      url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/578945174/My+Dashboard#QueryPie-Web%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0\"\
+      }},{\"text\":\" \",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"대시보드 둘러보기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"bulletList\",\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\"\
+      :\"inlineCard\",\"attrs\":{\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/578945174/My+Dashboard#%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C\"\
+      }},{\"text\":\" \",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Workflow로 권한 받기 \",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"bulletList\",\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      type\":\"inlineCard\",\"attrs\":{\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544377968\"\
+      }}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"type\":\"inlineCard\",\"attrs\":{\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378069\"\
+      }}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"SQL Export Request 요청하기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378182\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Unmasking Request 요청하기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/712769539\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Restricted Data Access 요청하기\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1060306945\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Server Access Request 요청하기\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378348\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Server Privilege Request 요청하기\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/878936417\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Access Role Request 요청하기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378348\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"IP Registration Request 요청하기\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1055358996\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"DB Policy Exception Request 요청하기\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1070006273\"\
+      }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"QueryPie Web에서 접속하기 \",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Database Access Control \",\"type\":\"text\"}]},{\"type\"\
+      :\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"웹 SQL 에디터로 접속하기\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544380222\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Default Privilege 설정하기 \",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544380354\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"에이전트 없이 프록시 접속하기 \",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/559906893\"\
+      }}]}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Server Access Control\",\"type\":\"text\"}]},{\"type\"\
+      :\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"접근 권한이 있는 서버에 접속하기\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544381383\"\
+      }}]},{\"text\":\" \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"웹 터미널 사용하기\",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544381410\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"웹 SFTP 사용하기 \",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544381477\"\
+      }}]}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Kubernetes Access Control\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"접근 권한 목록 확인하기\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544384025\"\
+      }}]}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Web Access Control\",\"type\":\"text\"}]},{\"type\":\"\
+      bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Root CA 인증 서 및 Extension 설치하기\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1073709107\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"웹 어플리케이션 (웹 사이트) 접속하기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1064796396\"\
+      }}]}]}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"QueryPie Agent로 접속하기\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Agent\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/852066413\"\
+      }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"var(--ds-background-accent-gray-subtlest,\
+      \ #F4F5F7)\",\"rowspan\":1,\"colwidth\":[247.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"개인 설정 둘러보기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[512.0]},\"content\":[{\"type\":\"bulletList\",\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Preferences\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"\
+      href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/568950885\"}}]}]}]}]}]}]}]},{\"\
+      type\":\"paragraph\"}],\"version\":1}"
+"status": "current"
+"title": "사용자 매뉴얼"
+"id": "544211126"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544211126"
+  "webui": "/spaces/QM/pages/544211126"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544211126"
+  "tinyui": "/x/tgBwI"
+  "base": "https://querypie.atlassian.net/wiki"
