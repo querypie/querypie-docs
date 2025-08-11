@@ -125,7 +125,8 @@ OUTPUT_FILE_PATH = ""
 LANGUAGE = 'en'
 
 # Global variables to store data
-PAGES_DICT: PagesDict = {}
+PAGES_BY_TITLE: PagesDict = {}
+PAGES_BY_ID: PagesDict = {}
 GLOBAL_PAGE_V1: Optional[PageV1] = None
 GLOBAL_ATTACHMENTS: List[Attachment] = []
 
@@ -152,28 +153,43 @@ def clean_text(text: Optional[str]) -> Optional[str]:
     return cleaned_text
 
 
-def load_pages_yaml(yaml_path: str) -> PagesDict:
+def load_pages_yaml(yaml_path: str, pages_by_title: PagesDict, pages_by_id: PagesDict):
     """
-    Load the pages.yaml file and return as a dictionary with title as a key
+    Load the pages.yaml file and populate the provided dictionaries with page information
     
     Args:
-        yaml_path (str): Path to the pages.yaml file
-        
+        yaml_path: Path to the pages.yaml file
+        pages_by_title: Dictionary to be populated with title as key and page info as value
+        pages_by_id: Dictionary to be populated with page_id as key and page info as value
+
     Returns:
-        PagesDict: Dictionary with title as a key and page info as value, or empty dict if a file doesn't exist
+        PagesDict: Dictionary with title as key and page info as value, or empty dict if file doesn't exist
     """
     try:
         with open(yaml_path, 'r', encoding='utf-8') as f:
             yaml_string = f.read()
-            cleaned_yaml = clean_text(yaml_string)
-            yaml_data = yaml.safe_load(cleaned_yaml)
+            yaml_data = yaml.safe_load(yaml_string)
 
             # Convert a list to dictionary with title as a key
             pages_dict: PagesDict = {}
             if isinstance(yaml_data, list):
                 for page in yaml_data:
-                    if isinstance(page, dict) and 'title' in page:
-                        pages_dict[page['title']] = page
+                    if not isinstance(page, dict):
+                        logging.warning(f"Page info must be of type dict: {repr(page)}")
+                        continue
+
+                    title_orig = page.get('title_orig')
+                    if not title_orig:
+                        logging.warning(f"Page info must have a title_orig: {repr(page)}")
+                        continue
+
+                    if title_orig in pages_by_title:
+                        logging.warning(f"title_orig ${repr(title_orig)} already exists in pages_by_title: {repr(pages_by_title[title_orig])}")
+                        logging.warning(f"title_orig ${repr(title_orig)} is from {repr(page)}")
+                        continue
+
+                    pages_by_title[title_orig] = page
+                    pages_by_id[page['page_id']] = page
 
             logging.info(f"Successfully loaded pages.yaml from {yaml_path} with {len(pages_dict)} pages")
             return pages_dict
@@ -235,6 +251,34 @@ def calculate_relative_path(current_path: List[str], target_path: List[str]):
     return relative_path
 
 
+def relative_path_to_titled_page(title: str):
+    if get_page_v1():
+        this_title = get_page_v1().get('title')
+        this_page = PAGES_BY_TITLE.get(this_title)
+    else:
+        this_page = None
+        logging.warning(f"Page v1 not found in {INPUT_FILE_PATH}")
+
+    if title:
+        target_page = PAGES_BY_TITLE.get(title)
+    else:
+        target_page = None
+
+    if this_page and target_page:
+        relative_path = calculate_relative_path(this_page.get('path'), target_page.get('path'))
+        if relative_path:
+            href = relative_path
+        else:
+            href = "#invalid-relative-path"
+    elif not target_page:
+        logging.warning(f"Target title '{title}' not found in pages dictionary")
+        href = "#target-title-not-found"
+    else:
+        logging.warning(f"Unexpected failure of relative_path_to_titled_page: {title}")
+        href = "#unexpected-failure"
+    return href
+
+
 def load_page_v1_yaml(yaml_path: str) -> Optional[PageV1]:
     """
     Load page.v1.yaml file and return as a dictionary object
@@ -248,8 +292,7 @@ def load_page_v1_yaml(yaml_path: str) -> Optional[PageV1]:
     try:
         with open(yaml_path, 'r', encoding='utf-8') as f:
             yaml_string = f.read()
-            cleaned_yaml = clean_text(yaml_string)
-            yaml_data = yaml.safe_load(cleaned_yaml)
+            yaml_data = yaml.safe_load(yaml_string)
             logging.info(f"Successfully loaded page.v1.yaml from {yaml_path}")
             return yaml_data
     except FileNotFoundError:
@@ -284,7 +327,8 @@ def backtick_curly_braces(text):
 def as_markdown(node):
     if isinstance(node, NavigableString):
         # This is a leaf node with text
-        text = node.replace('\n', ' ')  # Replace newlines with space
+        text = clean_text(node.text)
+        text = text.replace('\n', ' ')  # Replace newlines with space
         # Encode < and > to prevent conflict with JSX syntax.
         text = text.replace('<', '&lt;').replace('>', '&gt;')
         # Normalize multiple spaces to a single space
@@ -433,7 +477,7 @@ def normalize_screenshots(filename):
     screenshot_ko = unicodedata.normalize('NFC', '스크린샷')
     assert len(screenshot_ko) == 4  # Normalized string should have four characters.
 
-    normalized = filename
+    normalized = clean_text(filename)
     if re.match(rf'{screenshot_ko} \d\d\d\d-\d\d-\d\d .*.png', normalized):
         datetime_ko = normalized.replace(f'{screenshot_ko} ', '').replace('.png', '')
         datetime_std = datetime_ko_format(datetime_ko)
@@ -602,38 +646,12 @@ class SingleLineParser:
             """
             link_body = '(ERROR: Link body not found)'
             href = '#'
-            target_title = None
-            this_page = None
-            target_page = None
-
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
                     link_body = SingleLineParser(child).as_markdown
                 if isinstance(child, Tag) and child.name == 'ri:page':
                     target_title = child.get('content-title', '')
-                    href = target_title  # Keep original title as fallback
-
-            if get_page_v1():
-                this_title = get_page_v1().get('title')
-                this_page = PAGES_DICT.get(this_title)
-            else:
-                logging.warning(f"Page v1 not found in {INPUT_FILE_PATH}")
-
-            if target_title:
-                target_page = PAGES_DICT.get(target_title)
-
-            if this_page and target_page:
-                relative_path = calculate_relative_path(this_page.get('path'), target_page.get('path'))
-                if relative_path:
-                    href = relative_path
-                else:
-                    href = "#invalid-relative-path"
-            elif not target_page:
-                logging.warning(f"Target title '{target_title}' not found in pages dictionary")
-                href = "#target-title-not-found"
-            else:
-                logging.warning(f"Unexpected failure: {target_title}")
-                href = "#unexpected-failure"
+                    href = relative_path_to_titled_page(target_title)
 
             self.markdown_lines.append(f'[{link_body}]({href})')
         elif node.name in ['ri:page']:
@@ -1599,13 +1617,10 @@ def main():
         html_content = re.sub(r'\sac:', ' ', html_content)
         html_content = re.sub(r'\sri:', ' ', html_content)
 
-        # Remove special characters before parsing
-        html_content = clean_text(html_content)
-
         # Load pages.yaml to get the current page's path
         pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')
-        global PAGES_DICT
-        PAGES_DICT = load_pages_yaml(pages_yaml_path)
+        global PAGES_BY_TITLE
+        load_pages_yaml(pages_yaml_path, PAGES_BY_TITLE, PAGES_BY_ID)
 
         # Load page.v1.yaml from the same directory as the input file
         page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
