@@ -824,7 +824,9 @@ class MultiLineParser:
                 if self._debug_markdown:
                     self.markdown_lines.append(f'<{node.name} first-sibling=true>\n')
                 pass
-            elif self.markdown_lines[-1] == '\n':
+            elif len(self.markdown_lines) == 0:
+                pass
+            elif len(self.markdown_lines) > 0 and self.markdown_lines[-1] == '\n':
                 if self._debug_markdown:
                     self.markdown_lines.append(f'<{node.name} first-sibling=false [-1]({repr(self.markdown_lines[-1])}) == "\\n">\n')
                 pass
