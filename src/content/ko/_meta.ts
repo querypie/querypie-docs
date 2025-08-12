@@ -18,10 +18,6 @@ export default {
     type: 'page',
     title: '릴리즈 노트',
   },
-  'pam': {
-    type: 'page',
-    title: 'HTML변환',
-  },
   aiHubManual: {
     type: 'page',
     title: 'AI Hub Manual',
