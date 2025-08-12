@@ -1,21 +1,18 @@
-name: Deploy
+name: Deploy on Preview
 
 on:
+  push:
+    branches:
+      # It deploys on git push to branch main automatically.
+      # Or, you can trigger it on any branch manually by workflow.
+      - "main"
   workflow_dispatch:
     inputs:
       BRANCH:
-        description: "배포할 브랜치"
+        description: "Branch to Deploy"
         required: true
-        default: "main"
+        default: "preview"
         type: "string"
-      TARGET_ENV:
-        description: "타겟 환경"
-        required: true
-        default: "production"
-        type: "choice"
-        options:
-          - "production"
-          - "preview"
 
 defaults:
   run:
@@ -25,6 +22,9 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.event_name == 'push' && github.ref_name || inputs.BRANCH }}
+      TARGET_ENV: 'preview'
     steps:
       - uses: actions/checkout@v4
 
@@ -39,8 +39,8 @@ jobs:
       - name: Create .env file
         run: |
           echo "VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}" >> .env
-          echo "BRANCH=${{ inputs.BRANCH }}" >> .env
-          echo "TARGET_ENV=${{ inputs.TARGET_ENV }}" >> .env
+          echo "BRANCH=${{ env.BRANCH }}" >> .env
+          echo "TARGET_ENV=${{ env.TARGET_ENV }}" >> .env
 
       - name: Cat .env file
         run: cat .env
