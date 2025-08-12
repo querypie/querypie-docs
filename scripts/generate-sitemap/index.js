@@ -3,7 +3,7 @@
 /**
  * Sitemap Generator Script
  *
- * This script generates a sitemap.xml file for the QueryPie AI Hub Docs website.
+ * This script generates a sitemap.xml file for the QueryPie Manual website.
  * It scans the src/content directory for MDX files and generates URLs according to the specified pattern.
  * The sitemap is saved to public/sitemap.xml.
  */
@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const BASE_URL = 'https://aihub-docs.app.querypie.com';
+const BASE_URL = 'https://docs.querypie.io';
 const CONTENT_DIR = path.join(process.cwd(), 'src', 'content');
 const OUTPUT_FILE = path.join(process.cwd(), 'public', 'sitemap.xml');
 const LANGUAGES = ['en', 'ko', 'ja'];
@@ -34,7 +34,7 @@ function findMdxFiles(dir, baseDir, result = []) {
     if (stat.isDirectory()) {
       findMdxFiles(filePath, baseDir, result);
     } else if (path.extname(file) === '.mdx') {
-      // Calculate relative path from baseDir
+      // Calculate a relative path from baseDir
       const relativePath = path.relative(baseDir, filePath);
       result.push(relativePath);
     }
@@ -124,6 +124,5 @@ function main() {
   console.log(`Total URLs: ${urls.length}`);
 }
 
-// TODO: docs 에 맞게 고친 후 주석 풀어야 함.
 // Run the script
-// main();
+main();
