@@ -56,34 +56,19 @@ const isInternalRequest = (headers: Headers): boolean => {
 };
 
 export async function middleware(request: NextRequest) {
-  // TODO: 오픈 전 이 로직 써야 함
-  //   if (process.env.DEPLOYMENT_ENV !== 'production' && !isInternalRequest(request.headers)) {
-  //     return NextResponse.json({ error: 'Access denied' }, { status: 403 });
-  //   }
-  //
-  //   if (process.env.DEPLOYMENT_ENV === 'production' && request.nextUrl.pathname === '/robots.txt') {
-  //     return new NextResponse(`User-agent: *
-  // Allow: /
-  // Sitemap: https://querypie-docs.vercel.app/sitemap.xml
-  //       `); // TODO: 도메인 수정해야 함
-  //   }
-  //
-  //   if (process.env.DEPLOYMENT_ENV !== 'production' && request.nextUrl.pathname === '/robots.txt') {
-  //     return new NextResponse(`User-agent: *
-  // Disallow: /
-  //       `);
-  //   }
-
-  // TODO: 오픈할 때 사라져야 할 블록
-  if (!isInternalRequest(request.headers)) {
-    return NextResponse.json({ error: 'Access denied' }, { status: 403 });
-  }
-
-  // TODO: 오픈할 때 사라져야 할 블록
   if (request.nextUrl.pathname === '/robots.txt') {
-    return new NextResponse(`User-agent: *
+    if (process.env.DEPLOYMENT_ENV === 'production') {
+      return new NextResponse(`User-agent: *
+  Allow: /
+  Sitemap: https://querypie-docs.vercel.app/sitemap.xml
+  Sitemap: https://docs.querypie.com/sitemap.xml
+  Sitemap: https://docs.querypie.io/sitemap.xml
+      `);
+    } else {
+      return new NextResponse(`User-agent: *
 Disallow: /
       `);
+    }
   }
 
   return nextraMiddleware(request);
