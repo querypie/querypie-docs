@@ -11,15 +11,12 @@ const targetEnv = process.env.TARGET_ENV;
 const branch = process.env.BRANCH;
 
 async function createAndCheckDeployment() {
-  if (targetEnv === 'production' && branch !== 'main') {
-    throw new Error('배포 타겟이 Production일 때는 브랜치를 반드시 main으로 설정해주세요.');
-  }
-
   try {
+    console.log(`Creating deployment: target=[${targetEnv}], branch=[${branch}]`);
     const createResponse = await vercel.deployments.createDeployment({
       requestBody: {
         name: 'querypie-docs', //The project name used in the deployment URL
-        target: targetEnv === 'production' ? 'production' : undefined,
+        target: targetEnv, // production, preview, or staging
         gitSource: {
           type: 'github',
           repo: 'querypie-docs',

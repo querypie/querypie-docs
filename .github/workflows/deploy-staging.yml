@@ -1,6 +1,10 @@
-name: Deploy on Preview
+name: Deploy on Staging
 
 on:
+  push:
+    branches:
+      # It deploys on git push to branch main automatically.
+      - "main"
   workflow_dispatch:
     inputs:
       BRANCH:
@@ -19,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.event_name == 'push' && github.ref_name || inputs.BRANCH }}
-      TARGET_ENV: 'preview'
+      TARGET_ENV: 'staging'
     steps:
       - uses: actions/checkout@v4
 
