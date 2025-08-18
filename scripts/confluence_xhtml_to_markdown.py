@@ -919,8 +919,10 @@ class MultiLineParser:
         elif node.name == 'table':
             native_markdown = TableToNativeMarkdown(node)
             if native_markdown.applicable:
+                self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(native_markdown.as_markdown)
             else:
+                self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
         elif node.name in ['p', 'div']:
             self.append_empty_line_unless_first_child(node)

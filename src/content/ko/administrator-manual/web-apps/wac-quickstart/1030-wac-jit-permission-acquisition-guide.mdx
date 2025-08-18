@@ -36,9 +36,10 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 다음의 정보를 입력합니다.
 
 1. Name : QueryPie Web Site
-2. Base URL : `www.querypie.com` 또는 `10.10.10.10:443` 
+2. Base URL : `querypie.com` 또는 `10.10.10.10:443` 
     1. Base URL에 하위 경로(예: `/ko`)를 포함할 수 없습니다.
-    2. Base URL 입력시 `https://` 는 제외하는 것을 권장합니다.
+    2. Base URL에 `https://` 를 입력하면 오류 메세지가 표시됩니다.
+    3. Base URL에 `www.` 를 입력하면 오류 메세지가 표시됩니다.
 3. Description : 웹 앱에 대한 설명을 입력하세요. (예: 쿼리파이 웹사이트)
 4. URL Paths : 하위 경로를 입력합니다. 여기서는 비워 둡니다.
 5. Watermark : 웹 앱 접속 시 사용자의 브라우저 화면에 워터마크를 적용할지 여부를 선택합니다.
