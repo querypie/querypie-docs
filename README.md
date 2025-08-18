@@ -27,7 +27,20 @@ npm run build
 npm start
 ```
 
-## 배포
+## 배포 - Local Environment
+- `scripts/deploy/` 디렉토리로 이동합니다.
+- `npm install` 명령으로 Vercel SDK 등을 node_modules 에 설치합니다.
+- `index.js`가 필요로 하는 환경변수를 설정합니다.
+  - VERCEL_TOKEN: vercel.com 의 계정에서 생성한 Token 을 지정합니다. Scope 은 QueryPie team 을 지정합니다.
+  - VERCEL_TEAM_ID: QueryPie team 의 Team ID 를 지정합니다. Settings -> General 에서 확인할 수 있습니다.
+  - TARGET_ENV: production, staging, preview 중 하나를 지정합니다.
+  - BRANCH: branch 이름을 지정합니다.
+- `index.js`를 실행합니다.
+```shell
+TARGET_ENV=preview BRANCH=main node ./index.js
+```
+
+## 배포 - GitHub Action
 - [GitHub Actions](https://github.com/chequer-io/querypie-ai-docs/actions/workflows/deploy.yml) 에 접속합니다.
 - `Run workflow`를 눌러서 알맞게 설정한 후 실행합니다.
   - 기본값: Production으로 배포할 거면 기본값으로 두고 나가면 됩니다. 
