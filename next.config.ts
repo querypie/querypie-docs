@@ -25,6 +25,10 @@ export default withNextra({
     locales: ['en', 'ko', 'ja'],
     defaultLocale: 'en',
   },
+  serverRuntimeConfig: {
+    // Enable IP address extraction
+    trustProxy: true,
+  },
   async redirects() {
     return [
       {
