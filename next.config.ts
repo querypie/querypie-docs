@@ -7,6 +7,11 @@ const withNextra = nextra({
     codeblocks: false,
   },
   contentDirBasePath: '/',
+
+  // To use standard HTML elements for your tables
+  // but have them styled with components provided by useMDXComponents()
+  // Refer to this: https://nextra.site/docs/advanced/table
+  whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 });
 
 // Export the final Next.js config with Nextra included
