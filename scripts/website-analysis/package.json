@@ -1,0 +1,27 @@
+{
+  "name": "querypie-docs-website-analyzer",
+  "version": "1.0.0",
+  "description": "QueryPie Docs 웹사이트 분석 툴",
+  "private": true,
+  "main": "analyze_website_enhanced.js",
+  "scripts": {
+    "analyze": "node analyze_website_enhanced.js",
+    "analyze:basic": "node analyze_website.js",
+    "install-deps": "npm install",
+    "test": "node analyze_website_enhanced.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.16.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "website-analysis",
+    "puppeteer",
+    "querypie",
+    "docs"
+  ],
+  "author": "QueryPie",
+  "license": "MIT"
+}
