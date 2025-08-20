@@ -6,7 +6,7 @@ on:
       BRANCH:
         description: "Branch to Deploy"
         required: true
-        default: "release"
+        default: "main"
         type: "string"
 
 defaults:
