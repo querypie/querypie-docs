@@ -97,9 +97,9 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
 
   // Check direct prefix matches
   for (const [prefix, targetUrl] of Object.entries(TARGET_PATH_MAPPINGS)) {
-    if (pathname.startsWith(prefix)) {
+    if (pathname.startsWith(prefix) || pathname + '/' === prefix) {
       const targetBaseUrl = `${TARGET_BASE_URL}${targetUrl}`;
-      const remainingPath = pathname.substring(prefix.length);
+      const remainingPath = pathname.startsWith(prefix) ? pathname.substring(prefix.length) : '';
       const result = { targetBaseUrl, remainingPath };
       pathnameMatchCache.set(pathname, result);
       return result;
@@ -112,9 +112,9 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
     const langCode = langMatch[1];
     for (const [prefix, targetUrl] of Object.entries(TARGET_PATH_MAPPINGS)) {
       const langPrefix = `/${langCode}${prefix}`;
-      if (pathname.startsWith(langPrefix)) {
+      if (pathname.startsWith(langPrefix) || pathname + '/' === langPrefix) {
         const targetBaseUrl = `${TARGET_BASE_URL}/${langCode}${targetUrl}`;
-        const remainingPath = pathname.substring(langPrefix.length);
+        const remainingPath = pathname.startsWith(langPrefix) ? pathname.substring(langPrefix.length) : '';
         const result = { targetBaseUrl, remainingPath };
         pathnameMatchCache.set(pathname, result);
         return result;
