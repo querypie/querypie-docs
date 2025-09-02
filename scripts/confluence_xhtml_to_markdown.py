@@ -409,7 +409,9 @@ def get_html_attributes(node):
         # TODO(JK): Do not include style attribute of Tag for now.
         # Or, npm run build fails.
         # MDX requires style property in JSX format, style={{ name: value, ...}}.
-        if attr_name == 'style':
+        # TODO(JK): Do not include class attribute of Tag for now.
+        # class="numberingColumn" might be the cause of broken table rendering.
+        if attr_name in ['style', 'class']:
             continue
 
         if isinstance(attr_value, list):
