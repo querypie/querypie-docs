@@ -11,8 +11,12 @@ python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/5443753
 echo 'Converted 544375335 to src/content/ko/release-notes.mdx'
 
 mkdir -p src/content/ko/release-notes
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1171488777/page.xhtml src/content/ko/release-notes/1110.mdx --public-dir=public --attachment-dir=/release-notes/1110
-echo 'Converted 1171488777 to src/content/ko/release-notes/1110.mdx'
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1291878563/page.xhtml src/content/ko/release-notes/1120.mdx --public-dir=public --attachment-dir=/release-notes/1120
+echo 'Converted 1291878563 to src/content/ko/release-notes/1120.mdx'
+
+mkdir -p src/content/ko/release-notes
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1171488777/page.xhtml src/content/ko/release-notes/1110-1112.mdx --public-dir=public --attachment-dir=/release-notes/1110-1112
+echo 'Converted 1171488777 to src/content/ko/release-notes/1110-1112.mdx'
 
 mkdir -p src/content/ko/release-notes
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1064830173/page.xhtml src/content/ko/release-notes/1100.mdx --public-dir=public --attachment-dir=/release-notes/1100
@@ -419,6 +423,10 @@ python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/7980646
 echo 'Converted 798064641 to src/content/ko/administrator-manual/general/system/integrations/integrating-with-email.mdx'
 
 mkdir -p src/content/ko/administrator-manual/general/system/integrations
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1267007528/page.xhtml src/content/ko/administrator-manual/general/system/integrations/integrating-with-event-callback.mdx --public-dir=public --attachment-dir=/administrator-manual/general/system/integrations/integrating-with-event-callback
+echo 'Converted 1267007528 to src/content/ko/administrator-manual/general/system/integrations/integrating-with-event-callback.mdx'
+
+mkdir -p src/content/ko/administrator-manual/general/system/integrations
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/811401365/page.xhtml src/content/ko/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20.mdx --public-dir=public --attachment-dir=/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20
 echo 'Converted 811401365 to src/content/ko/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20.mdx'
 
@@ -439,42 +447,6 @@ python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/5442112
 echo 'Converted 544211220 to src/content/ko/administrator-manual/general/system/jobs.mdx'
 
 mkdir -p src/content/ko/administrator-manual
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544047372/page.xhtml src/content/ko/administrator-manual/discovery.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery
-echo 'Converted 544047372 to src/content/ko/administrator-manual/discovery.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543949048/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management
-echo 'Converted 543949048 to src/content/ko/administrator-manual/discovery/discovery-management.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543981852/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/dashboard.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/dashboard
-echo 'Converted 543981852 to src/content/ko/administrator-manual/discovery/discovery-management/dashboard.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544080127/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/inventory.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/inventory
-echo 'Converted 544080127 to src/content/ko/administrator-manual/discovery/discovery-management/inventory.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543949058/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/discovery-jobs.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/discovery-jobs
-echo 'Converted 543949058 to src/content/ko/administrator-manual/discovery/discovery-management/discovery-jobs.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543981865/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/discovery-history.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/discovery-history
-echo 'Converted 543981865 to src/content/ko/administrator-manual/discovery/discovery-management/discovery-history.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/543949078/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/scan-results.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/scan-results
-echo 'Converted 543949078 to src/content/ko/administrator-manual/discovery/discovery-management/scan-results.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544244011/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/detection-profiles.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/detection-profiles
-echo 'Converted 544244011 to src/content/ko/administrator-manual/discovery/discovery-management/detection-profiles.mdx'
-
-mkdir -p src/content/ko/administrator-manual/discovery/discovery-management
-python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544112915/page.xhtml src/content/ko/administrator-manual/discovery/discovery-management/data-patterns.mdx --public-dir=public --attachment-dir=/administrator-manual/discovery/discovery-management/data-patterns
-echo 'Converted 544112915 to src/content/ko/administrator-manual/discovery/discovery-management/data-patterns.mdx'
-
-mkdir -p src/content/ko/administrator-manual
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544379638/page.xhtml src/content/ko/administrator-manual/databases.mdx --public-dir=public --attachment-dir=/administrator-manual/databases
 echo 'Converted 544379638 to src/content/ko/administrator-manual/databases.mdx'
 
@@ -485,6 +457,10 @@ echo 'Converted 956071939 to src/content/ko/administrator-manual/databases/dac-g
 mkdir -p src/content/ko/administrator-manual/databases/dac-general-configurations
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/921436219/page.xhtml src/content/ko/administrator-manual/databases/dac-general-configurations/unmasking-zones.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/dac-general-configurations/unmasking-zones
 echo 'Converted 921436219 to src/content/ko/administrator-manual/databases/dac-general-configurations/unmasking-zones.mdx'
+
+mkdir -p src/content/ko/administrator-manual/databases/dac-general-configurations
+python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/1275396097/page.xhtml src/content/ko/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated
+echo 'Converted 1275396097 to src/content/ko/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated.mdx'
 
 mkdir -p src/content/ko/administrator-manual/databases
 python scripts/confluence_xhtml_to_markdown.py docs/latest-ko-confluence/544379705/page.xhtml src/content/ko/administrator-manual/databases/connection-management.mdx --public-dir=public --attachment-dir=/administrator-manual/databases/connection-management

@@ -74,6 +74,7 @@ Syslog 연동 | Integrating with Syslog
 Splunk 연동 | Integrating with Splunk
 Secret Store 연동 | Integrating with Secret Store
 Email 연동 | Integrating with Email
+Event Callback 연동 | Integrating with Event Callback
 OAuth 2.0을 사용하기 위한 Google Cloud API 연동 | Integrating Google Cloud API for OAuth 2.0
 Slack DM 연동 | Integrating with Slack DM
 Slack DM - Workflow 알림 유형 | Slack DM - Workflow Notification Types
@@ -88,6 +89,9 @@ DocumentDB 전용 가이드 | DocumentDB Specific Guide
 Google BigQuery OAuth 인증 설정 | Google BigQuery OAuth Authentication Configuration
 AWS Athena 전용 가이드 | AWS Athena Specific Guide
 Custom Data Source 설정 및 로그 확인 | Custom Data Source Configuration and Log Verification
+
+# DAC General Configurations
+Masking Pattern (메뉴 위치 이동) | Masking Pattern (Menu Relocated)
 
 # Server Connection Management
 AWS에서 서버 리소스 동기화 | Synchronizing Server Resources from AWS
