@@ -1,0 +1,201 @@
+"parentId": "544377922"
+"ownerId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-30T08:52:50.426Z"
+"authorId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
+"parentType": "page"
+"position": !!int "2455"
+"version":
+  "number": !!int "13"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2025-07-27T10:56:25.206Z"
+  "ncsStepVersion": "231"
+"spaceId": "539099246"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다. \",\"type\"\
+      :\"text\"}]},{\"type\":\"extension\",\"attrs\":{\"layout\":\"default\",\"extensionType\"\
+      :\"com.atlassian.confluence.macro.core\",\"extensionKey\":\"toc\",\"parameters\"\
+      :{\"macroParams\":{\"maxLevel\":{\"value\":\"2\"},\"minLevel\":{\"value\":\"\
+      1\"},\"include\":{\"value\":\"\"},\"outline\":{\"value\":\"false\"},\"indent\"\
+      :{\"value\":\"\"},\"exclude\":{\"value\":\"Overview\"},\"style\":{\"value\"\
+      :\"default\"},\"type\":{\"value\":\"list\"},\"printable\":{\"value\":\"true\"\
+      },\"class\":{\"value\":\"\"}},\"macroMetadata\":{\"macroId\":{\"value\":\"334477e7-dc7b-494d-9513-c21c2ccabe57\"\
+      },\"schemaVersion\":{\"value\":\"1\"},\"title\":\"목차\"}},\"localId\":\"fffae0b9-84f6-42d8-b6f2-b38fd4a694ce\"\
+      }},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"\
+      content\":[{\"text\":\"참조된 요청 확인 처리하기\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":1990,\"alt\":\"스크린샷\
+      \ 2024-08-02 오전 11.41.29.png\",\"id\":\"65c66a03-4937-4a13-aefc-98e5865bc073\"\
+      ,\"collection\":\"contentId-568918170\",\"type\":\"file\",\"height\":1291},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Workflow > Reviews > All\
+      \ Reviews > Review Details\",\"type\":\"text\"}]}]},{\"type\":\"orderedList\"\
+      ,\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Reviews > All Reviews 목록에서 참조\
+      \ 완료 처리하려는 요청을 클릭하여 상세 페이지로 진입합니다. \",\"type\":\"text\"}]},{\"type\":\"orderedList\"\
+      ,\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"참조 문서는 결재 승인 상태와 관계없이(승인 전/후)\
+      \ 모두 열람할 수 있습니다. \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Review Status 가 \",\"type\"\
+      :\"text\"},{\"text\":\"Unread\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]},{\"text\":\" 인 요청들에 대해서만 \",\"type\":\"text\"},{\"text\":\"Confirm\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"이 가능합니다. \",\"\
+      type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"요청 상세 페이지 우측 상단의 \",\"type\":\"text\"},{\"text\":\"\
+      Confirm\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을\
+      \ 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다. \",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"검토 의견을 입력 후 \"\
+      ,\"type\":\"text\"},{\"text\":\"OK\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"code\"}]},{\"text\":\" 버튼을 눌러 확인을 완료합니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      All Reviews 목록으로 돌아가면 Review Status 값이 \",\"type\":\"text\"},{\"text\":\"Confirmed\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\"로 변경된 것을 확인할\
+      \ 수 있습니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"paragraph\"},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\" \",\"type\":\"text\"}]},{\"type\":\"heading\",\"\
+      attrs\":{\"level\":2},\"content\":[{\"text\":\"대리 결재 사용하기\",\"type\":\"text\"\
+      }]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"대리 결재란 승인자 역할을 일정 기간 동안\
+      \ 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.\",\"type\":\"text\"}]},{\"type\":\"\
+      heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"1. 대리 결재 사용 설정하기\"\
+      ,\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":897,\"alt\":\"스크린샷 2024-08-02 오후 12.04.01.png\",\"\
+      id\":\"51f12e2a-d572-4dba-a922-31b32b6e4309\",\"collection\":\"contentId-568918170\"\
+      ,\"type\":\"file\",\"height\":557},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"User > 상단 메뉴바에서 프로필 클릭 > Preferences\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"Delegate Approval to\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 대리 결재자 입력 \",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Start Date\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]},{\"text\":\" : 대리 결재 시작일자\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"End Date\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 대리 결재 종료일자\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Delegation Reason\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]},{\"text\":\" : 대리 결재 설정 사유 입력 \",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\"\
+      \ : \",\"type\":\"text\"},{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 \",\"\
+      type\":\"text\"},{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 즉시 적용됩니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"heading\"\
+      ,\"attrs\":{\"level\":3},\"content\":[{\"text\":\"2. 대리 결재 설정 상태 확인하기\",\"type\"\
+      :\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"대리 결재 설정 기간에는\
+      \ 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"layoutSection\",\"content\":[{\"type\":\"layoutColumn\",\"attrs\":{\"width\"\
+      :50.0},\"content\":[{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":594,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":594,\"alt\":\"스크린샷 2024-08-02 오후 12.07.41.png\",\"\
+      id\":\"1d95cc44-3f43-4b40-9b43-0ca8f41b6e21\",\"collection\":\"contentId-568918170\"\
+      ,\"type\":\"file\",\"height\":174},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"원 결재자 기준 표시 내용\",\"type\":\"text\"}]}]}]},{\"type\":\"layoutColumn\"\
+      ,\"attrs\":{\"width\":50.0},\"content\":[{\"type\":\"mediaSingle\",\"attrs\"\
+      :{\"layout\":\"center\",\"width\":594,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":594,\"alt\":\"스크린샷 2024-08-02 오후\
+      \ 12.08.54.png\",\"id\":\"a62a2ecd-2fa5-49be-a1c3-c3dcb6ce15cf\",\"collection\"\
+      :\"contentId-568918170\",\"type\":\"file\",\"height\":174},\"marks\":[{\"type\"\
+      :\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\"\
+      ,\"content\":[{\"text\":\"대리 결재자 기준 표시 내용\",\"type\":\"text\"}]}]}]}]},{\"type\"\
+      :\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와\
+      \ 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"3. 위임받은 대리 결재\
+      \ 요청 처리하기\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. \",\"type\":\"text\"}]},{\"type\"\
+      :\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"Received Requests > To Do\",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 원 결재자가 수신한 미처리 요청 목록\
+      \ (설정 기간 이전에 수신한 요청 포함\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Received Requests > Done\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 대리 결재 설정\
+      \ 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"상세 페이지에서 승인 또는\
+      \ 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. \",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1433,\"alt\"\
+      :\"스크린샷 2024-08-02 오후 12.46.38.png\",\"id\":\"71fcff56-f18f-411f-b04d-be63b88b4ccb\"\
+      ,\"collection\":\"contentId-568918170\",\"type\":\"file\",\"height\":928},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\"\
+      :\"4. 대리 결재 처리된 요청 건 확인하기 \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"\
+      content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다.\
+      \  \",\"type\":\"text\"}]}]}]},{\"type\":\"layoutSection\",\"content\":[{\"\
+      type\":\"layoutColumn\",\"attrs\":{\"width\":50.0},\"content\":[{\"type\":\"\
+      paragraph\",\"marks\":[{\"type\":\"alignment\",\"attrs\":{\"align\":\"center\"\
+      }}],\"content\":[{\"text\":\"원 결재자가 처리한 경우\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":363,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":676,\"alt\":\"스크린샷 2024-07-25 오후 3.35.33.png\",\"\
+      id\":\"ebd9d727-8244-4b74-99d8-cfc7c6337682\",\"collection\":\"contentId-568918170\"\
+      ,\"type\":\"file\",\"height\":576},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"대리 결재 관련 문구 없음\",\"type\":\"text\"}]}]}]},{\"type\":\"layoutColumn\"\
+      ,\"attrs\":{\"width\":50.0},\"content\":[{\"type\":\"paragraph\",\"marks\":[{\"\
+      type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\":[{\"text\"\
+      :\"대리 결재자가 처리한 경우\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":363,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":662,\"alt\"\
+      :\"스크린샷 2024-07-25 오후 3.21.41.png\",\"id\":\"2eefe12c-cbe5-4c56-b80e-0acc0d4e9f82\"\
+      ,\"collection\":\"contentId-568918170\",\"type\":\"file\",\"height\":571},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"대리 결재자가 Done by the delegate와\
+      \ 함께 표기됨\",\"type\":\"text\"}]}]}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\"\
+      :\"info\"},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Slack\
+      \ DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한\
+      \ 내용은 \",\"type\":\"text\"},{\"text\":\"Slack DM 개인 알림 사용하기\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378759\"\
+      }}]},{\"text\":\" 문서를 참고해주세요. \",\"type\":\"text\"}]}]},{\"type\":\"heading\"\
+      ,\"attrs\":{\"level\":3},\"content\":[{\"text\":\"5. 대리 결재 설정 종료 이후의 기안 조회 방법\"\
+      ,\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"대리 결재 설정 기간이\
+      \ 종료되었다 하더라도 Received Requests > Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할\
+      \ 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다. \",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\"\
+      :[{\"text\":\"기존 요청 건 재상신하기 \",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할\
+      \ 수 있습니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
+      :\"wide\",\"width\":768,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\"\
+      ,\"attrs\":{\"width\":575,\"id\":\"61e8abeb-336b-4006-a484-d651e4b2a0a3\",\"\
+      collection\":\"contentId-568918170\",\"type\":\"file\",\"height\":235},\"marks\"\
+      :[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"}}]},{\"\
+      type\":\"caption\",\"content\":[{\"text\":\"Workflow > Sent Requests > Done\
+      \ > List Details\",\"type\":\"text\"}]}]},{\"type\":\"orderedList\",\"attrs\"\
+      :{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"Sent Requests > Done 목록에서 재상신을 원하는 요청 건을\
+      \ 클릭하여 상세 페이지로 진입합니다. \",\"type\":\"text\"}]}]}]},{\"type\":\"panel\",\"attrs\"\
+      :{\"panelType\":\"info\"},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 \",\"type\":\"text\"},{\"text\"\
+      :\"Deleted\",\"type\":\"text\",\"marks\":[{\"type\":\"textColor\",\"attrs\"\
+      :{\"color\":\"#ff5630\"}},{\"type\":\"em\"}]},{\"text\":\"로 표시되는 것을 확인할 수 있으며,\
+      \ 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"orderedList\",\"attrs\":{\"order\":2},\"content\":[{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"우측 상단에 있는 \"\
+      ,\"type\":\"text\"},{\"text\":\"Resubmit\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 재상신 페이지로 진입합니다. \",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. \",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을\
+      \ 통해 저장합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Workflow > Sent Request > In Progress\
+      \ 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.\",\"type\":\"text\"}]}]}]}],\"version\"\
+      :1}"
+"status": "current"
+"title": "결재 부가 기능 (대리 결재, 재상신 등)"
+"id": "568918170"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=568918170"
+  "webui": "/spaces/QM/pages/568918170"
+  "edituiv2": "/spaces/QM/pages/edit-v2/568918170"
+  "tinyui": "/x/mgDpIQ"
+  "base": "https://querypie.atlassian.net/wiki"

@@ -38,6 +38,18 @@ END_OF_USAGE
     -type f -name '*' \
     -mtime +2d \
     -"$command"
+  find \
+    docs/latest-ko-confluence \
+    -type f -name '*' \
+    -mtime +2d \
+    \! -path 'docs/latest-ko-confluence/.gitignore' \
+    -"$command"
+  find \
+    scripts/tests/confluence_xhtml_to_markdown/testcases/[0-9]* \
+    -type f -name '*' \
+    -mtime +2d \
+    \! -path 'scripts/tests/confluence_xhtml_to_markdown/testcases/*/expected.mdx' \
+    -"$command"
 }
 
 main "$@"

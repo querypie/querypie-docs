@@ -1,208 +1,208 @@
-id: '544381877'
-type: page
-ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381877
-base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxODc3
-status: current
-title: 수동으로 쿠버네티스 클러스터 등록하기
-ancestors:
-- id: '576585864'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
-  status: current
-  title: QueryPie Manual
-  macroRenderedOutput: {}
-  extensions:
-    position: 921
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/576585864/restriction/byOperation
-    history: /rest/api/content/576585864/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/576585864/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/576585864/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
-    tinyui: /x/iABeIg
-    editui: /pages/resumedraft.action?draftId=576585864
-    webui: /spaces/QM/overview
-    edituiv2: /spaces/QM/pages/edit-v2/576585864
-- id: '608501837'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
-  status: current
-  title: QueryPie Docs
-  macroRenderedOutput: {}
-  extensions:
-    position: 9
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/608501837/restriction/byOperation
-    history: /rest/api/content/608501837/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/608501837/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/608501837/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
-    tinyui: /x/TQBFJ
-    editui: /pages/resumedraft.action?draftId=608501837
-    webui: /spaces/QM/pages/608501837/QueryPie+Docs
-    edituiv2: /spaces/QM/pages/edit-v2/608501837
-- id: '544178405'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1
-  status: current
-  title: 관리자 매뉴얼
-  macroRenderedOutput: {}
-  extensions:
-    position: 521757510
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544178405/restriction/byOperation
-    history: /rest/api/content/544178405/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544178405/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544178405/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544178405
-    tinyui: /x/5YBvI
-    editui: /pages/resumedraft.action?draftId=544178405
-    webui: /spaces/QM/pages/544178405
-    edituiv2: /spaces/QM/pages/edit-v2/544178405
-- id: '544381596'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381596
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxNTk2
-  status: current
-  title: Kubernetes
-  macroRenderedOutput: {}
-  extensions:
-    position: 1524
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544381596/restriction/byOperation
-    history: /rest/api/content/544381596/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544381596/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544381596/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544381596
-    tinyui: /x/nJpyI
-    editui: /pages/resumedraft.action?draftId=544381596
-    webui: /spaces/QM/pages/544381596/Kubernetes
-    edituiv2: /spaces/QM/pages/edit-v2/544381596
-- id: '544381637'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381637
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxNjM3
-  status: current
-  title: Connection Management​​
-  macroRenderedOutput: {}
-  extensions:
-    position: 806757042
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544381637/restriction/byOperation
-    history: /rest/api/content/544381637/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544381637/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544381637/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544381637
-    tinyui: /x/xZpyI
-    editui: /pages/resumedraft.action?draftId=544381637
-    webui: /spaces/QM/pages/544381637/Connection+Management
-    edituiv2: /spaces/QM/pages/edit-v2/544381637
-- id: '544381839'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381839
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxODM5
-  status: current
-  title: Clusters
-  macroRenderedOutput: {}
-  extensions:
-    position: 792
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544381839/restriction/byOperation
-    history: /rest/api/content/544381839/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544381839/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544381839/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544381839
-    tinyui: /x/j5tyI
-    editui: /pages/resumedraft.action?draftId=544381839
-    webui: /spaces/QM/pages/544381839/Clusters
-    edituiv2: /spaces/QM/pages/edit-v2/544381839
-macroRenderedOutput: {}
-body:
-  storage:
-    value: "<h2>Overview</h2><p>QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로\
-      \ 등록할 수 있습니다. </p><p /><h2>수동으로 클러스터 등록하기</h2><p>개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인\
-      \ 정보 입력이 필요합니다. </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
-      1800\" ac:original-width=\"2880\" ac:custom-width=\"true\" ac:alt=\"image-20240721-054859.png\"\
-      \ ac:width=\"760\"><ri:attachment ri:filename=\"image-20240721-054859.png\"\
-      \ ri:version-at-save=\"2\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"\
-      #091e4224\" /></ac:image><ol start=\"1\"><li><p>Administrator &gt; Kubernetes\
-      \ &gt; Connection Management &gt; Clusters 메뉴로 이동합니다.</p></li><li><p>우측 상단의\
-      \ <code>+ Create Cluster</code> 버튼을 클릭합니다.</p></li><li><p><strong>Information</strong>\
+"id": "544381877"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381877"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxODc3"
+"status": "current"
+"title": "수동으로 쿠버네티스 클러스터 등록하기"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "921"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544178405"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1"
+  "status": "current"
+  "title": "관리자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757510"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544178405/restriction/byOperation"
+    "history": "/rest/api/content/544178405/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544178405/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544178405/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544178405"
+    "tinyui": "/x/5YBvI"
+    "editui": "/pages/resumedraft.action?draftId=544178405"
+    "webui": "/spaces/QM/pages/544178405"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544178405"
+- "id": "544381596"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381596"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxNTk2"
+  "status": "current"
+  "title": "Kubernetes"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "1524"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544381596/restriction/byOperation"
+    "history": "/rest/api/content/544381596/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544381596/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544381596/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544381596"
+    "tinyui": "/x/nJpyI"
+    "editui": "/pages/resumedraft.action?draftId=544381596"
+    "webui": "/spaces/QM/pages/544381596/Kubernetes"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544381596"
+- "id": "544381637"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381637"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxNjM3"
+  "status": "current"
+  "title": "Connection Management​​"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "806757042"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544381637/restriction/byOperation"
+    "history": "/rest/api/content/544381637/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544381637/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544381637/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544381637"
+    "tinyui": "/x/xZpyI"
+    "editui": "/pages/resumedraft.action?draftId=544381637"
+    "webui": "/spaces/QM/pages/544381637/Connection+Management"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544381637"
+- "id": "544381839"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544381839"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgxODM5"
+  "status": "current"
+  "title": "Clusters"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "792"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544381839/restriction/byOperation"
+    "history": "/rest/api/content/544381839/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544381839/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544381839/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544381839"
+    "tinyui": "/x/j5tyI"
+    "editui": "/pages/resumedraft.action?draftId=544381839"
+    "webui": "/spaces/QM/pages/544381839/Clusters"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544381839"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<h2>Overview</h2><p>QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를\
+      \ 수동으로 등록할 수 있습니다. </p><p /><h2>수동으로 클러스터 등록하기</h2><p>개별 서버를 수동으로 등록하기 위해서는\
+      \ 서버의 기본적인 정보 입력이 필요합니다. </p><ac:image ac:align=\"center\" ac:layout=\"center\"\
+      \ ac:original-height=\"1800\" ac:original-width=\"2880\" ac:custom-width=\"\
+      true\" ac:alt=\"image-20240721-054859.png\" ac:width=\"760\"><ri:attachment\
+      \ ri:filename=\"image-20240721-054859.png\" ri:version-at-save=\"2\" /><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><ol start=\"1\"\
+      ><li><p>Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters\
+      \ 메뉴로 이동합니다.</p></li><li><p>우측 상단의 <code>+ Create Cluster</code> 버튼을 클릭합니다.</p></li><li><p><strong>Information</strong>\
       \ : 클러스터 수동 등록을 위한 다음의 정보들을 입력합니다</p><ol start=\"1\"><li><p><strong>Name</strong>\
       \ : 해당 클러스터를 식별할 수 있는 이름을 입력합니다. (필수) </p><ul><li><p>해당 정보는 향후 수정이 불가한 항목입니다.\
       \ </p></li></ul></li><li><p><strong>Version</strong> : 클러스터의 버전을 기입합니다. (선택)\
@@ -291,13 +291,13 @@ body:
       \ 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. </p><ac:structured-macro\
       \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"0a1a2ec5-0106-4f75-8c06-79da67839e78\"\
       ><ac:plain-text-body><![CDATA[chmod +x generate_kubepie_sa.sh\n./generate_kubepie_sa.sh]]></ac:plain-text-body></ac:structured-macro></li></ul>"
-    representation: storage
-    embeddedContent: []
-    _expandable:
-      content: /rest/api/content/544381877
-  view:
-    value: "<h2 id=\"id-수동으로쿠버네티스클러스터등록하기-Overview\">Overview</h2><p>QueryPie에서는 접근\
-      \ 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다. </p><p /><h2 id=\"id-수동으로쿠버네티스클러스터등록하기-수동으로클러스터등록하기\"\
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/544381877"
+  "view":
+    "value": "<h2 id=\"id-수동으로쿠버네티스클러스터등록하기-Overview\">Overview</h2><p>QueryPie에서는\
+      \ 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다. </p><p /><h2 id=\"id-수동으로쿠버네티스클러스터등록하기-수동으로클러스터등록하기\"\
       >수동으로 클러스터 등록하기</h2><p>개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이 필요합니다. </p><span\
       \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
       ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
@@ -327,19 +327,19 @@ body:
       \ Credential</strong> : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상\
       \ 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다.</p><ul><li><p><img class=\"\
       emoticon emoticon-tick\" data-emoji-id=\"atlassian-check_mark\" data-emoji-shortname=\"\
-      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/check.png\"\
+      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/-434911141/6452/21fe419d86df053f72cc5de962146f95fecba373/_/images/icons/emoticons/check.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"tick\" alt=\"(tick)\" /> <strong>Verified</strong>\
       \ : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다. </p></li><li><p><img class=\"\
       emoticon emoticon-cross\" data-emoji-id=\"atlassian-cross_mark\" data-emoji-shortname=\"\
-      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/1732347312/6452/9ec310e9ed617fde640b4372fb0e11f5501675fa/_/images/icons/emoticons/error.png\"\
-      \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(error)\" />\
-      \ <strong>Verification Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의\
-      \ 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging\
-      \ Options</strong>  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. </p><ol start=\"1\"><li><p><strong>Request\
-      \ Audit</strong> : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는\
-      \ <code>On</code>입니다. 해당 기능을 <code>Off</code>로 전환 시, </p><ol start=\"1\"><li><p>해당\
-      \ 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다. </p></li><li><p>하위의 Request Audit\
-      \ Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.   </p></li></ol></li><li><p><strong>Request\
+      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/-434911141/6452/21fe419d86df053f72cc5de962146f95fecba373/_/images/icons/emoticons/error.png\"\
+      \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(오류)\" /> <strong>Verification\
+      \ Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을\
+      \ 가능성이 있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging Options</strong>\
+      \  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. </p><ol start=\"1\"><li><p><strong>Request Audit</strong>\
+      \ : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 <code>On</code>입니다.\
+      \ 해당 기능을 <code>Off</code>로 전환 시, </p><ol start=\"1\"><li><p>해당 클러스터를 대상으로 호출되는\
+      \ Kubernetes API 이력이 남지 않습니다. </p></li><li><p>하위의 Request Audit Types 및 Pod\
+      \ Session Recording 모두 일괄 비활성화 처리됩니다.   </p></li></ol></li><li><p><strong>Request\
       \ Audit Types</strong> : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의\
       \ 기본 verb 전부를 선택하고 있습니다. </p><ol start=\"1\"><li><p>Verb 종류: </p><ol start=\"\
       1\"><li><p><code>get</code> </p></li><li><p><code>list</code> </p></li><li><p><code>watch</code>\
@@ -375,15 +375,15 @@ body:
       \ 1x\"></span><ul><li><p>관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.</p></li><li><p>관리자는\
       \ Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt;\
       \ Create Cluster &gt; Credential 안내 박스 내 “download and run this script”의 링크를\
-      \ 클릭하여 스크립트를 다운로드할 수 있습니다. </p></li></ul><div id=\"expander-1924050338\" class=\"\
-      expand-container conf-macro output-block\" data-hasbody=\"true\" data-macro-name=\"\
-      expand\" data-macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"><div id=\"expander-control-1924050338\"\
+      \ 클릭하여 스크립트를 다운로드할 수 있습니다. </p></li></ul><div class=\"expand-container conf-macro\
+      \ output-block\" data-hasbody=\"true\" data-macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"\
+      \ data-macro-name=\"expand\" id=\"expander-743904464\"><div id=\"expander-control-743904464\"\
       \ class=\"expand-control\"><span class=\"expand-control-icon icon\"> </span><span\
       \ class=\"expand-control-text\">generate_kubepie_sa.sh 스크립트 컨텐츠 </span></div><div\
-      \ id=\"expander-content-1924050338\" class=\"expand-content expand-hidden\"\
-      ><div class=\"code panel pdl conf-macro output-block\" style=\"border-width:\
-      \ 1px;\" data-hasbody=\"true\" data-macro-name=\"code\" data-macro-id=\"af7dde18-30fb-46b2-9cab-d4ff1b0e1607\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ id=\"expander-content-743904464\" class=\"expand-content expand-hidden\"><div\
+      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      af7dde18-30fb-46b2-9cab-d4ff1b0e1607\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">#!/bin/bash\n\nset -o nounset -o errexit -o pipefail\n\
       \nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\n\
@@ -418,48 +418,47 @@ body:
       \n&gt;&gt;&gt; Service Account token\n${SA_TOKEN}\n\n--------------\n\n&gt;&gt;&gt;\
       \ CA Cert\n${CA_CERT}&quot;</pre>\n</div></div></div></div><ul><li><p>스크립트 다운로드\
       \ 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. </p><div class=\"code panel pdl\
-      \ conf-macro output-block\" style=\"border-width: 1px;\" data-hasbody=\"true\"\
-      \ data-macro-name=\"code\" data-macro-id=\"0a1a2ec5-0106-4f75-8c06-79da67839e78\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
-      \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
-      \ data-theme=\"Confluence\">chmod +x generate_kubepie_sa.sh\n./generate_kubepie_sa.sh</pre>\n\
-      </div></div></li></ul>"
-    representation: view
-    _expandable:
-      webresource: ''
-      embeddedContent: ''
-      mediaToken: ''
-      content: /rest/api/content/544381877
-  _expandable:
-    editor: ''
-    atlas_doc_format: ''
-    export_view: ''
-    styled_view: ''
-    dynamic: ''
-    editor2: ''
-    anonymous_export_view: ''
-extensions:
-  position: 444434013
-_expandable:
-  container: /rest/api/space/QM
-  metadata: ''
-  restrictions: /rest/api/content/544381877/restriction/byOperation
-  history: /rest/api/content/544381877/history
-  version: ''
-  descendants: /rest/api/content/544381877/descendant
-  space: /rest/api/space/QM
-  childTypes: ''
-  schedulePublishInfo: ''
-  operations: ''
-  schedulePublishDate: ''
-  children: /rest/api/content/544381877/child
-  draftVersion: ''
-_links:
-  editui: /pages/resumedraft.action?draftId=544381877
-  webui: /spaces/QM/pages/544381877
-  edituiv2: /spaces/QM/pages/edit-v2/544381877
-  context: /wiki
-  self: https://querypie.atlassian.net/wiki/rest/api/content/544381877
-  tinyui: /x/tZtyI
-  collection: /rest/api/content
-  base: https://querypie.atlassian.net/wiki
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"0a1a2ec5-0106-4f75-8c06-79da67839e78\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
+      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
+      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">chmod\
+      \ +x generate_kubepie_sa.sh\n./generate_kubepie_sa.sh</pre>\n</div></div></li></ul>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/544381877"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "444434013"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/544381877/restriction/byOperation"
+  "history": "/rest/api/content/544381877/history"
+  "version": ""
+  "descendants": "/rest/api/content/544381877/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/544381877/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544381877"
+  "webui": "/spaces/QM/pages/544381877"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544381877"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/544381877"
+  "tinyui": "/x/tZtyI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

@@ -1,69 +1,145 @@
-parentId: '544380204'
-spaceId: '539099246'
-lastOwnerId: null
-createdAt: '2025-03-07T13:06:15.384Z'
-authorId: 712020:135aab25-6da3-422c-8277-0ed0e5bec77e
-parentType: page
-position: 1597
-version:
-  number: 1
-  message: ''
-  minorEdit: false
-  authorId: 712020:135aab25-6da3-422c-8277-0ed0e5bec77e
-  createdAt: '2025-03-07T13:06:35.556Z'
-  ncsStepVersion: '20'
-ownerId: 712020:135aab25-6da3-422c-8277-0ed0e5bec77e
-body:
-  atlas_doc_format:
-    representation: atlas_doc_format
-    value: '{"type":"doc","content":[{"type":"extension","attrs":{"layout":"default","extensionType":"com.atlassian.confluence.macro.core","extensionKey":"toc","parameters":{"macroParams":{"minLevel":{"value":"2"},"maxLevel":{"value":"6"},"outline":{"value":"false"},"style":{"value":"none"},"type":{"value":"list"},"printable":{"value":"true"}},"macroMetadata":{"macroId":{"value":"5f9d6351-54a9-4524-86ca-acd73b79bfad"},"schemaVersion":{"value":"1"},"title":"목차"}},"localId":"c35fc44e-3eda-46fb-9e57-b7b45c4a80ce"}},{"type":"heading","attrs":{"level":3},"content":[{"text":"Custom
-      Data Source 접근 요청","type":"text"}]},{"type":"orderedList","attrs":{"order":1},"content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"사용자
-      화면 상단 Workflow 메뉴로 이동합니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"좌측
-      상단 ","type":"text"},{"text":"Submit Request","type":"text","marks":[{"type":"code"}]},{"text":"
-      버튼 클릭후 DB Access Request 항목을 선택합니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":1512,"id":"ebf56c30-abc3-49f1-9017-6339e5a4e341","collection":"contentId-880181257","type":"file","height":766}}]},{"type":"paragraph"}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Approval
-      Rule을 상황에 맞게 설정하고 Title도 작성합니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"DB
-      Connection 목록에서 Type이 ''Custom Data Source''인 항목을 선택합니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"다른
-      벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다. ","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Expiration
-      Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":1512,"id":"d7070363-3247-45e8-97bf-338e4fba548e","collection":"contentId-880181257","type":"file","height":763}}]},{"type":"paragraph"}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"작성을
-      완료했다면 하단 ","type":"text"},{"text":"Submit","type":"text","marks":[{"type":"code"}]},{"text":"버튼을
-      클릭하여 신청을 완료합니다.  ","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"관리자의
-      승인을 받았다면 좌측 Workflow > Sent Request > Done 메뉴에서 확인할 수 있습니다.","type":"text"}]}]}]},{"type":"panel","attrs":{"panelType":"warning"},"content":[{"type":"paragraph","content":[{"text":"Custom
-      Data Source Type 외 다중 요청 시 주의사항","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Custom
-      Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. ","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"이
-      경우 다음 메시지가 표시됩니다: \"Privileges cannot be applied across different types at once
-      (e.g., General, Redis, Custom Data Source). Please assign privileges separately
-      for each connection.\"","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"같은
-      권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.","type":"text"}]}]}]}]},{"type":"heading","attrs":{"level":3},"content":[{"type":"hardBreak"},{"text":"Agent를
-      통한 접속","type":"text"}]},{"type":"orderedList","attrs":{"order":1},"content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"QueryPie
-      Agent 실행","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"QueryPie
-      Agent를 실행합니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Database
-      항목에서 Custom Data Source를 확인할 수 있습니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":400,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":400,"id":"67fdb9e5-7248-4053-993b-97617f74b08b","collection":"contentId-880181257","type":"file","height":550}}]},{"type":"paragraph"}]}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Connection
-      Guide 확인","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Agent에서
-      Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"위
-      행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":903,"id":"f2458d69-8e68-4b68-8dac-f3f6e02330f6","collection":"contentId-880181257","type":"file","height":453}}]},{"type":"paragraph"}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"UID/PW는
-      수정할 수 없는 db username, db password로 표시됩니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Privileges는
-      \"-\"로 표시됩니다.","type":"text"}]}]}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"SQL
-      Tool에서 접속","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"DataGrip이나
-      기타 SQL Tool을 실행합니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Host와
-      Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.","type":"text","marks":[{"type":"strong"}]},{"text":"
-      ","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"벤더에
-      따라 추가 정보를 입력합니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":800,"id":"e1bd40e7-3ce0-4c96-bda4-8c3a18414b89","collection":"contentId-880181257","type":"file","height":680}}]}]}]}]}]},{"type":"panel","attrs":{"panelType":"warning"},"content":[{"type":"paragraph","content":[{"text":"주의사항","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"관리자가
-      설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.","type":"text"}]}]}]}]},{"type":"heading","attrs":{"level":3},"content":[{"text":"웹으로
-      접속 시도하는 경우","type":"text"}]},{"type":"orderedList","attrs":{"order":1},"content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"웹
-      커넥션 목록 확인","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"사용자
-      화면 상단 Databases를 클릭합니다. ","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"좌측
-      커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":1512,"id":"4c25d94b-56e6-4c25-bfed-43e00e729a89","collection":"contentId-880181257","type":"file","height":768}}]},{"type":"paragraph"}]}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"접속
-      불가 안내","type":"text","marks":[{"type":"strong"}]}]},{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"Custom
-      Data Source 선택 시 Connect 버튼이 비활성화됩니다.","type":"text"}]}]},{"type":"listItem","content":[{"type":"paragraph","content":[{"text":"아래와
-      같은 툴팁이 표시되며 웹으로는 접속이 불가합니다. ","type":"text"}]},{"type":"paragraph","content":[{"text":"\"Access
-      is only possible through a proxy and cannot be accessed through the web. Please
-      open the QueryPie Agent to connect to the Custom Data Source.\"","type":"text"}]},{"type":"mediaSingle","attrs":{"layout":"center","width":712,"widthType":"pixel"},"content":[{"type":"media","attrs":{"width":1512,"id":"d65abe53-b4fe-4503-ab0d-6d727f997799","collection":"contentId-880181257","type":"file","height":763}}]}]}]}]}]}],"version":1}'
-status: current
-title: Custom Data Source 접속하기
-id: '880181257'
-_links:
-  editui: /pages/resumedraft.action?draftId=880181257
-  webui: /spaces/QM/pages/880181257/Custom+Data+Source
-  edituiv2: /spaces/QM/pages/edit-v2/880181257
-  tinyui: /x/CYB2N
-  base: https://querypie.atlassian.net/wiki
+"parentId": "544380204"
+"spaceId": "539099246"
+"lastOwnerId": !!null "null"
+"createdAt": "2025-03-07T13:06:15.384Z"
+"authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+"parentType": "page"
+"position": !!int "1597"
+"version":
+  "number": !!int "1"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2025-03-07T13:06:35.556Z"
+  "ncsStepVersion": "20"
+"ownerId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"extension\",\"attrs\":{\"\
+      layout\":\"default\",\"extensionType\":\"com.atlassian.confluence.macro.core\"\
+      ,\"extensionKey\":\"toc\",\"parameters\":{\"macroParams\":{\"minLevel\":{\"\
+      value\":\"2\"},\"maxLevel\":{\"value\":\"6\"},\"outline\":{\"value\":\"false\"\
+      },\"style\":{\"value\":\"none\"},\"type\":{\"value\":\"list\"},\"printable\"\
+      :{\"value\":\"true\"}},\"macroMetadata\":{\"macroId\":{\"value\":\"5f9d6351-54a9-4524-86ca-acd73b79bfad\"\
+      },\"schemaVersion\":{\"value\":\"1\"},\"title\":\"목차\"}},\"localId\":\"c35fc44e-3eda-46fb-9e57-b7b45c4a80ce\"\
+      }},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"Custom\
+      \ Data Source 접근 요청\",\"type\":\"text\"}]},{\"type\":\"orderedList\",\"attrs\"\
+      :{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"사용자 화면 상단 Workflow 메뉴로 이동합니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"좌측 상단 \",\"type\":\"text\"},{\"text\":\"Submit Request\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼 클릭후 DB Access\
+      \ Request 항목을 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\"\
+      :{\"layout\":\"center\",\"width\":712,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":1512,\"id\":\"ebf56c30-abc3-49f1-9017-6339e5a4e341\"\
+      ,\"collection\":\"contentId-880181257\",\"type\":\"file\",\"height\":766}}]},{\"\
+      type\":\"paragraph\"}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"DB Connection 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다. \"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Expiration Date과 Reason for Request 항목도 상황에 맞게 설정\
+      \ 및 작성합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
+      :\"center\",\"width\":712,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"\
+      media\",\"attrs\":{\"width\":1512,\"id\":\"d7070363-3247-45e8-97bf-338e4fba548e\"\
+      ,\"collection\":\"contentId-880181257\",\"type\":\"file\",\"height\":763}}]},{\"\
+      type\":\"paragraph\"}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"작성을 완료했다면 하단 \",\"type\":\"text\"},{\"text\":\"Submit\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"버튼을 클릭하여 신청을\
+      \ 완료합니다.  \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"관리자의 승인을 받았다면 좌측 Workflow > Sent\
+      \ Request > Done 메뉴에서 확인할 수 있습니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"panel\"\
+      ,\"attrs\":{\"panelType\":\"warning\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Custom Data Source Type 외 다중 요청 시 주의사항\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다.\
+      \ \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"이 경우 다음 메시지가 표시됩니다: \\\"Privileges cannot\
+      \ be applied across different types at once (e.g., General, Redis, Custom Data\
+      \ Source). Please assign privileges separately for each connection.\\\"\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.\",\"type\":\"text\"\
+      }]}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\":[{\"type\"\
+      :\"hardBreak\"},{\"text\":\"Agent를 통한 접속\",\"type\":\"text\"}]},{\"type\":\"\
+      orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"QueryPie Agent 실행\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"QueryPie Agent를 실행합니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Database 항목에서 Custom Data Source를 확인할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":400,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":400,\"id\"\
+      :\"67fdb9e5-7248-4053-993b-97617f74b08b\",\"collection\":\"contentId-880181257\"\
+      ,\"type\":\"file\",\"height\":550}}]},{\"type\":\"paragraph\"}]}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Connection Guide 확인\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"\
+      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"Agent에서 Custom Data Source 커넥션 행을 클릭하면\
+      \ Port 정보를 담은 행이 보입니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"위 행을 우클릭을 한뒤 Connection Guide를\
+      \ 클릭하면 접속 정보를 확인할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"\
+      attrs\":{\"layout\":\"center\",\"width\":712,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":903,\"id\":\"f2458d69-8e68-4b68-8dac-f3f6e02330f6\"\
+      ,\"collection\":\"contentId-880181257\",\"type\":\"file\",\"height\":453}}]},{\"\
+      type\":\"paragraph\"}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Privileges는 \\\"-\\\"로 표시됩니다.\",\"type\":\"text\"\
+      }]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"SQL Tool에서 접속\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"DataGrip이나 기타 SQL Tool을 실행합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" \",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"벤더에 따라 추가 정보를 입력합니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":712,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":800,\"id\"\
+      :\"e1bd40e7-3ce0-4c96-bda4-8c3a18414b89\",\"collection\":\"contentId-880181257\"\
+      ,\"type\":\"file\",\"height\":680}}]}]}]}]}]},{\"type\":\"panel\",\"attrs\"\
+      :{\"panelType\":\"warning\"},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"주의사항\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"\
+      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가\
+      \ 표시됩니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :3},\"content\":[{\"text\":\"웹으로 접속 시도하는 경우\",\"type\":\"text\"}]},{\"type\"\
+      :\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"웹 커넥션 목록 확인\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"사용자 화면 상단 Databases를 클릭합니다. \",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.\"\
+      ,\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":712,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":1512,\"id\":\"4c25d94b-56e6-4c25-bfed-43e00e729a89\",\"collection\"\
+      :\"contentId-880181257\",\"type\":\"file\",\"height\":768}}]},{\"type\":\"paragraph\"\
+      }]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"접속 불가 안내\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"\
+      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"Custom Data Source 선택 시 Connect 버튼이\
+      \ 비활성화됩니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다.\
+      \ \",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"\\\
+      \"Access is only possible through a proxy and cannot be accessed through the\
+      \ web. Please open the QueryPie Agent to connect to the Custom Data Source.\\\
+      \"\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"\
+      center\",\"width\":712,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\"\
+      ,\"attrs\":{\"width\":1512,\"id\":\"d65abe53-b4fe-4503-ab0d-6d727f997799\",\"\
+      collection\":\"contentId-880181257\",\"type\":\"file\",\"height\":763}}]}]}]}]}]}],\"\
+      version\":1}"
+"status": "current"
+"title": "Custom Data Source 접속하기"
+"id": "880181257"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=880181257"
+  "webui": "/spaces/QM/pages/880181257/Custom+Data+Source"
+  "edituiv2": "/spaces/QM/pages/edit-v2/880181257"
+  "tinyui": "/x/CYB2N"
+  "base": "https://querypie.atlassian.net/wiki"

@@ -1,349 +1,367 @@
-id: '880181257'
-type: page
-ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/880181257
-base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvODgwMTgxMjU3
-status: current
-title: Custom Data Source 접속하기
-ancestors:
-- id: '576585864'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
-  status: current
-  title: QueryPie Manual
-  macroRenderedOutput: {}
-  extensions:
-    position: 921
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/576585864/restriction/byOperation
-    history: /rest/api/content/576585864/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/576585864/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/576585864/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
-    tinyui: /x/iABeIg
-    editui: /pages/resumedraft.action?draftId=576585864
-    webui: /spaces/QM/overview
-    edituiv2: /spaces/QM/pages/edit-v2/576585864
-- id: '608501837'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
-  status: current
-  title: QueryPie Docs
-  macroRenderedOutput: {}
-  extensions:
-    position: 9
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/608501837/restriction/byOperation
-    history: /rest/api/content/608501837/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/608501837/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/608501837/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
-    tinyui: /x/TQBFJ
-    editui: /pages/resumedraft.action?draftId=608501837
-    webui: /spaces/QM/pages/608501837/QueryPie+Docs
-    edituiv2: /spaces/QM/pages/edit-v2/608501837
-- id: '544211126'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2
-  status: current
-  title: 사용자 매뉴얼
-  macroRenderedOutput: {}
-  extensions:
-    position: 521757335
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544211126/restriction/byOperation
-    history: /rest/api/content/544211126/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544211126/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544211126/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544211126
-    tinyui: /x/tgBwI
-    editui: /pages/resumedraft.action?draftId=544211126
-    webui: /spaces/QM/pages/544211126
-    edituiv2: /spaces/QM/pages/edit-v2/544211126
-- id: '544380204'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544380204
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgwMjA0
-  status: current
-  title: Database Access Control
-  macroRenderedOutput: {}
-  extensions:
-    position: 304940485
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544380204/restriction/byOperation
-    history: /rest/api/content/544380204/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544380204/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544380204/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544380204
-    tinyui: /x/LJVyI
-    editui: /pages/resumedraft.action?draftId=544380204
-    webui: /spaces/QM/pages/544380204/Database+Access+Control
-    edituiv2: /spaces/QM/pages/edit-v2/544380204
-macroRenderedOutput: {}
-body:
-  storage:
-    value: '<ac:structured-macro ac:name="toc" ac:schema-version="1" data-layout="default"
-      ac:local-id="c35fc44e-3eda-46fb-9e57-b7b45c4a80ce" ac:macro-id="5f9d6351-54a9-4524-86ca-acd73b79bfad"><ac:parameter
-      ac:name="minLevel">2</ac:parameter><ac:parameter ac:name="maxLevel">6</ac:parameter><ac:parameter
-      ac:name="outline">false</ac:parameter><ac:parameter ac:name="style">none</ac:parameter><ac:parameter
-      ac:name="type">list</ac:parameter><ac:parameter ac:name="printable">true</ac:parameter></ac:structured-macro><h3>Custom
-      Data Source 접근 요청</h3><ol start="1"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측
-      상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><ac:image
-      ac:align="center" ac:layout="center" ac:original-height="766" ac:original-width="1512"
-      ac:custom-width="true" ac:width="712"><ri:attachment ri:filename="Screenshot
-      2025-03-06 at 1.19.24 PM.png" ri:version-at-save="1" /></ac:image><p /></li><li><p>Approval
-      Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB Connection 목록에서 Type이 ''Custom
-      Data Source''인 항목을 선택합니다.</p></li><li><p>다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에
-      &ldquo;-&rdquo;로 표기됩니다. </p></li><li><p>Expiration Date과 Reason for Request
-      항목도 상황에 맞게 설정 및 작성합니다.</p><ac:image ac:align="center" ac:layout="center" ac:original-height="763"
-      ac:original-width="1512" ac:custom-width="true" ac:width="712"><ri:attachment
-      ri:filename="Screenshot 2025-03-06 at 1.22.28 PM.png" ri:version-at-save="1"
-      /></ac:image><p /></li><li><p>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.  </p></li><li><p>관리자의
-      승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol><ac:structured-macro
-      ac:name="note" ac:schema-version="1" ac:macro-id="49e266fd-3fe8-41c2-a65b-1892fa504004"><ac:rich-text-body><p><strong>Custom
-      Data Source Type 외 다중 요청 시 주의사항</strong></p><ul><li><p>Custom Data Source와 다른
-      벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. </p></li><li><p>이 경우 다음 메시지가
-      표시됩니다: &quot;Privileges cannot be applied across different types at once (e.g.,
-      General, Redis, Custom Data Source). Please assign privileges separately for
-      each connection.&quot;</p></li><li><p>같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro><h3><br
-      />Agent를 통한 접속</h3><ol start="1"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie
-      Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><ac:image
-      ac:align="center" ac:layout="center" ac:original-height="550" ac:original-width="400"
-      ac:custom-width="true" ac:width="400"><ri:attachment ri:filename="Screenshot
-      2025-03-06 at 2.05.26 PM.png" ri:version-at-save="1" /></ac:image><p /></li></ul></li><li><p><strong>Connection
-      Guide 확인</strong></p><ul><li><p>Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port
-      정보를 담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할
-      수 있습니다.</p><ac:image ac:align="center" ac:layout="center" ac:original-height="453"
-      ac:original-width="903" ac:custom-width="true" ac:width="712"><ri:attachment
-      ri:filename="Screenshot 2025-03-06 at 2.08.11 PM.png" ri:version-at-save="1"
-      /></ac:image><p /></li><li><p>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는
-      &quot;-&quot;로 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나
-      기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는
-      정보를 입력해야합니다.</strong> </p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p><ac:image ac:align="center"
-      ac:layout="center" ac:original-height="680" ac:original-width="800" ac:custom-width="true"
-      ac:width="712"><ri:attachment ri:filename="Screenshot 2025-03-06 at 2.18.26 PM.png"
-      ri:version-at-save="1" /></ac:image></li></ul></li></ol><ac:structured-macro
-      ac:name="note" ac:schema-version="1" ac:macro-id="4de93d75-70f3-4361-aa97-fca387cd343e"><ac:rich-text-body><p><strong>주의사항</strong></p><ul><li><p>관리자가
-      설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></ac:rich-text-body></ac:structured-macro><h3>웹으로
-      접속 시도하는 경우</h3><ol start="1"><li><p><strong>웹 커넥션 목록 확인</strong></p><ul><li><p>사용자
-      화면 상단 Databases를 클릭합니다. </p></li><li><p>좌측 커넥션 목록에서 QueryPie Connections를 클릭하면
-      접근 권한이 있는 Custom Data Source가 표시됩니다.</p><ac:image ac:align="center" ac:layout="center"
-      ac:original-height="768" ac:original-width="1512" ac:custom-width="true" ac:width="712"><ri:attachment
-      ri:filename="Screenshot 2025-03-06 at 2.22.22 PM.png" ri:version-at-save="1"
-      /></ac:image><p /></li></ul></li><li><p><strong>접속 불가 안내</strong></p><ul><li><p>Custom
-      Data Source 선택 시 Connect 버튼이 비활성화됩니다.</p></li><li><p>아래와 같은 툴팁이 표시되며 웹으로는 접속이
-      불가합니다. </p><p>&quot;Access is only possible through a proxy and cannot be accessed
-      through the web. Please open the QueryPie Agent to connect to the Custom Data
-      Source.&quot;</p><ac:image ac:align="center" ac:layout="center" ac:original-height="763"
-      ac:original-width="1512" ac:custom-width="true" ac:width="712"><ri:attachment
-      ri:filename="Screenshot 2025-03-06 at 2.23.37 PM.png" ri:version-at-save="1"
-      /></ac:image></li></ul></li></ol>'
-    representation: storage
-    embeddedContent: []
-    _expandable:
-      content: /rest/api/content/880181257
-  view:
-    value: '<div class="toc-macro client-side-toc-macro  conf-macro output-block"
-      data-structure="list" data-numberedoutline="false" data-cssliststyle="none"
-      data-headerelements="H2,H3,H4,H5,H6" data-hasbody="false" data-macro-name="toc"
-      data-macro-id="5f9d6351-54a9-4524-86ca-acd73b79bfad" data-layout="default" data-local-id="c35fc44e-3eda-46fb-9e57-b7b45c4a80ce">
-      </div><h3 id="CustomDataSource접속하기-CustomDataSource접근요청">Custom Data Source
-      접근 요청</h3><ol start="1"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측
-      상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><span
-      class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image image-center" width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=360"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2"
-      data-height="766" data-width="1512" data-unresolved-comment-count="0" data-linked-resource-id="880181270"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 1.19.24 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="ebf56c30-abc3-49f1-9017-6339e5a4e341"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=720
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=360
-      1x"></span><p /></li><li><p>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB
-      Connection 목록에서 Type이 ''Custom Data Source''인 항목을 선택합니다.</p></li><li><p>다른 벤더들과
-      다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다. </p></li><li><p>Expiration Date과 Reason
-      for Request 항목도 상황에 맞게 설정 및 작성합니다.</p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      image-center" width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2"
-      data-height="763" data-width="1512" data-unresolved-comment-count="0" data-linked-resource-id="880181277"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 1.22.28 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="d7070363-3247-45e8-97bf-338e4fba548e"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=718
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359
-      1x"></span><p /></li><li><p>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.  </p></li><li><p>관리자의
-      승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol><div
-      class="confluence-information-macro confluence-information-macro-note conf-macro
-      output-block" data-hasbody="true" data-macro-name="note" data-macro-id="49e266fd-3fe8-41c2-a65b-1892fa504004"><span
-      class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon">
-      </span><div class="confluence-information-macro-body"><p><strong>Custom Data
-      Source Type 외 다중 요청 시 주의사항</strong></p><ul><li><p>Custom Data Source와 다른 벤더를
-      함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. </p></li><li><p>이 경우 다음 메시지가 표시됩니다:
-      &quot;Privileges cannot be applied across different types at once (e.g., General,
-      Redis, Custom Data Source). Please assign privileges separately for each connection.&quot;</p></li><li><p>같은
-      권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.</p></li></ul></div></div><h3 id="CustomDataSource접속하기-Agent를통한접속"><br/>Agent를
-      통한 접속</h3><ol start="1"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie
-      Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><span
-      class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image image-center" width="400" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=400&amp;height=550"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2"
-      data-height="550" data-width="400" data-unresolved-comment-count="0" data-linked-resource-id="880181283"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 2.05.26 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="67fdb9e5-7248-4053-993b-97617f74b08b"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=800&amp;height=1100
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=400&amp;height=550
-      1x"></span><p /></li></ul></li><li><p><strong>Connection Guide 확인</strong></p><ul><li><p>Agent에서
-      Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을
-      한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.</p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      image-center" width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=357"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2"
-      data-height="453" data-width="903" data-unresolved-comment-count="0" data-linked-resource-id="880181289"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 2.08.11 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="f2458d69-8e68-4b68-8dac-f3f6e02330f6"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=714
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=357
-      1x"></span><p /></li><li><p>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는
-      &quot;-&quot;로 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나
-      기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는
-      정보를 입력해야합니다.</strong> </p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      image-center" width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=605"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2"
-      data-height="680" data-width="800" data-unresolved-comment-count="0" data-linked-resource-id="880181295"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 2.18.26 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="e1bd40e7-3ce0-4c96-bda4-8c3a18414b89"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=800&amp;height=680
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=605
-      1x"></span></li></ul></li></ol><div class="confluence-information-macro confluence-information-macro-note
-      conf-macro output-block" data-hasbody="true" data-macro-name="note" data-macro-id="4de93d75-70f3-4361-aa97-fca387cd343e"><span
-      class="aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon">
-      </span><div class="confluence-information-macro-body"><p><strong>주의사항</strong></p><ul><li><p>관리자가
-      설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></div></div><h3 id="CustomDataSource접속하기-웹으로접속시도하는경우">웹으로
-      접속 시도하는 경우</h3><ol start="1"><li><p><strong>웹 커넥션 목록 확인</strong></p><ul><li><p>사용자
-      화면 상단 Databases를 클릭합니다. </p></li><li><p>좌측 커넥션 목록에서 QueryPie Connections를 클릭하면
-      접근 권한이 있는 Custom Data Source가 표시됩니다.</p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      image-center" width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=361"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2"
-      data-height="768" data-width="1512" data-unresolved-comment-count="0" data-linked-resource-id="880181301"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 2.22.22 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="4c25d94b-56e6-4c25-bfed-43e00e729a89"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=722
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=361
-      1x"></span><p /></li></ul></li><li><p><strong>접속 불가 안내</strong></p><ul><li><p>Custom
-      Data Source 선택 시 Connect 버튼이 비활성화됩니다.</p></li><li><p>아래와 같은 툴팁이 표시되며 웹으로는 접속이
-      불가합니다. </p><p>&quot;Access is only possible through a proxy and cannot be accessed
-      through the web. Please open the QueryPie Agent to connect to the Custom Data
-      Source.&quot;</p><span class="confluence-embedded-file-wrapper image-center-wrapper
-      confluence-embedded-manual-size"><img class="confluence-embedded-image image-center"
-      width="712" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2"
-      data-height="763" data-width="1512" data-unresolved-comment-count="0" data-linked-resource-id="880181307"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="Screenshot
-      2025-03-06 at 2.23.37 PM.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="880181257"
-      data-linked-resource-container-version="1" data-media-id="d65abe53-b4fe-4503-ab0d-6d727f997799"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=718
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359
-      1x"></span></li></ul></li></ol>'
-    representation: view
-    _expandable:
-      webresource: ''
-      embeddedContent: ''
-      mediaToken: ''
-      content: /rest/api/content/880181257
-  _expandable:
-    editor: ''
-    atlas_doc_format: ''
-    export_view: ''
-    styled_view: ''
-    dynamic: ''
-    editor2: ''
-    anonymous_export_view: ''
-extensions:
-  position: 1597
-_expandable:
-  container: /rest/api/space/QM
-  metadata: ''
-  restrictions: /rest/api/content/880181257/restriction/byOperation
-  history: /rest/api/content/880181257/history
-  version: ''
-  descendants: /rest/api/content/880181257/descendant
-  space: /rest/api/space/QM
-  childTypes: ''
-  schedulePublishInfo: ''
-  operations: ''
-  schedulePublishDate: ''
-  children: /rest/api/content/880181257/child
-  draftVersion: ''
-_links:
-  editui: /pages/resumedraft.action?draftId=880181257
-  webui: /spaces/QM/pages/880181257/Custom+Data+Source
-  edituiv2: /spaces/QM/pages/edit-v2/880181257
-  context: /wiki
-  self: https://querypie.atlassian.net/wiki/rest/api/content/880181257
-  tinyui: /x/CYB2N
-  collection: /rest/api/content
-  base: https://querypie.atlassian.net/wiki
+"id": "880181257"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/880181257"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvODgwMTgxMjU3"
+"status": "current"
+"title": "Custom Data Source 접속하기"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "921"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544211126"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2"
+  "status": "current"
+  "title": "사용자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757335"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544211126/restriction/byOperation"
+    "history": "/rest/api/content/544211126/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544211126/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544211126/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544211126"
+    "tinyui": "/x/tgBwI"
+    "editui": "/pages/resumedraft.action?draftId=544211126"
+    "webui": "/spaces/QM/pages/544211126"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544211126"
+- "id": "544380204"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544380204"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgwMjA0"
+  "status": "current"
+  "title": "Database Access Control"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "304940485"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544380204/restriction/byOperation"
+    "history": "/rest/api/content/544380204/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544380204/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544380204/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544380204"
+    "tinyui": "/x/LJVyI"
+    "editui": "/pages/resumedraft.action?draftId=544380204"
+    "webui": "/spaces/QM/pages/544380204/Database+Access+Control"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544380204"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"\
+      default\" ac:local-id=\"c35fc44e-3eda-46fb-9e57-b7b45c4a80ce\" ac:macro-id=\"\
+      5f9d6351-54a9-4524-86ca-acd73b79bfad\"><ac:parameter ac:name=\"minLevel\">2</ac:parameter><ac:parameter\
+      \ ac:name=\"maxLevel\">6</ac:parameter><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter\
+      \ ac:name=\"style\">none</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter\
+      \ ac:name=\"printable\">true</ac:parameter></ac:structured-macro><h3>Custom\
+      \ Data Source 접근 요청</h3><ol start=\"1\"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측\
+      \ 상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"766\" ac:original-width=\"\
+      1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"\
+      Screenshot 2025-03-06 at 1.19.24 PM.png\" ri:version-at-save=\"1\" /></ac:image><p\
+      \ /></li><li><p>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB Connection\
+      \ 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.</p></li><li><p>다른 벤더들과 다르게 Privilege를\
+      \ 선택할 수 없기 때문에 &ldquo;-&rdquo;로 표기됩니다. </p></li><li><p>Expiration Date과 Reason\
+      \ for Request 항목도 상황에 맞게 설정 및 작성합니다.</p><ac:image ac:align=\"center\" ac:layout=\"\
+      center\" ac:original-height=\"763\" ac:original-width=\"1512\" ac:custom-width=\"\
+      true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at\
+      \ 1.22.28 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>작성을\
+      \ 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.  </p></li><li><p>관리자의 승인을\
+      \ 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol><ac:structured-macro\
+      \ ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"49e266fd-3fe8-41c2-a65b-1892fa504004\"\
+      ><ac:rich-text-body><p><strong>Custom Data Source Type 외 다중 요청 시 주의사항</strong></p><ul><li><p>Custom\
+      \ Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. </p></li><li><p>이\
+      \ 경우 다음 메시지가 표시됩니다: &quot;Privileges cannot be applied across different types\
+      \ at once (e.g., General, Redis, Custom Data Source). Please assign privileges\
+      \ separately for each connection.&quot;</p></li><li><p>같은 권한 타입의 커넥션끼리는 일괄 적용이\
+      \ 가능합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro><h3><br />Agent를\
+      \ 통한 접속</h3><ol start=\"1\"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie\
+      \ Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"550\" ac:original-width=\"\
+      400\" ac:custom-width=\"true\" ac:width=\"400\"><ri:attachment ri:filename=\"\
+      Screenshot 2025-03-06 at 2.05.26 PM.png\" ri:version-at-save=\"1\" /></ac:image><p\
+      \ /></li></ul></li><li><p><strong>Connection Guide 확인</strong></p><ul><li><p>Agent에서\
+      \ Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을\
+      \ 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.</p><ac:image ac:align=\"center\"\
+      \ ac:layout=\"center\" ac:original-height=\"453\" ac:original-width=\"903\"\
+      \ ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot\
+      \ 2025-03-06 at 2.08.11 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>UID/PW는\
+      \ 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는 &quot;-&quot;로\
+      \ 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나\
+      \ 기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는\
+      \ 정보를 입력해야합니다.</strong> </p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p><ac:image ac:align=\"\
+      center\" ac:layout=\"center\" ac:original-height=\"680\" ac:original-width=\"\
+      800\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"\
+      Screenshot 2025-03-06 at 2.18.26 PM.png\" ri:version-at-save=\"1\" /></ac:image></li></ul></li></ol><ac:structured-macro\
+      \ ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"4de93d75-70f3-4361-aa97-fca387cd343e\"\
+      ><ac:rich-text-body><p><strong>주의사항</strong></p><ul><li><p>관리자가 설정한 접근 가능 시간\
+      \ 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></ac:rich-text-body></ac:structured-macro><h3>웹으로\
+      \ 접속 시도하는 경우</h3><ol start=\"1\"><li><p><strong>웹 커넥션 목록 확인</strong></p><ul><li><p>사용자\
+      \ 화면 상단 Databases를 클릭합니다. </p></li><li><p>좌측 커넥션 목록에서 QueryPie Connections를\
+      \ 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.</p><ac:image ac:align=\"center\"\
+      \ ac:layout=\"center\" ac:original-height=\"768\" ac:original-width=\"1512\"\
+      \ ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot\
+      \ 2025-03-06 at 2.22.22 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li></ul></li><li><p><strong>접속\
+      \ 불가 안내</strong></p><ul><li><p>Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.</p></li><li><p>아래와\
+      \ 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다. </p><p>&quot;Access is only possible through a\
+      \ proxy and cannot be accessed through the web. Please open the QueryPie Agent\
+      \ to connect to the Custom Data Source.&quot;</p><ac:image ac:align=\"center\"\
+      \ ac:layout=\"center\" ac:original-height=\"763\" ac:original-width=\"1512\"\
+      \ ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot\
+      \ 2025-03-06 at 2.23.37 PM.png\" ri:version-at-save=\"1\" /></ac:image></li></ul></li></ol>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/880181257"
+  "view":
+    "value": "<div class=\"toc-macro client-side-toc-macro  conf-macro output-block\"\
+      \ data-cssliststyle=\"none\" data-hasbody=\"false\" data-headerelements=\"H2,H3,H4,H5,H6\"\
+      \ data-layout=\"default\" data-local-id=\"c35fc44e-3eda-46fb-9e57-b7b45c4a80ce\"\
+      \ data-macro-id=\"5f9d6351-54a9-4524-86ca-acd73b79bfad\" data-macro-name=\"\
+      toc\" data-numberedoutline=\"false\" data-structure=\"list\"> </div><h3 id=\"\
+      CustomDataSource접속하기-CustomDataSource접근요청\">Custom Data Source 접근 요청</h3><ol\
+      \ start=\"1\"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측 상단 <code>Submit\
+      \ Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ image-center\" width=\"712\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=360\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"766\" data-width=\"1512\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181270\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 1.19.24 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"ebf56c30-abc3-49f1-9017-6339e5a4e341\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=720\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.19.24%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793929&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=360\
+      \ 1x\"></span><p /></li><li><p>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB\
+      \ Connection 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.</p></li><li><p>다른 벤더들과\
+      \ 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다. </p></li><li><p>Expiration Date과 Reason\
+      \ for Request 항목도 상황에 맞게 설정 및 작성합니다.</p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ image-center\" width=\"712\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"763\" data-width=\"1512\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181277\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 1.22.28 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"d7070363-3247-45e8-97bf-338e4fba548e\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=718\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%201.22.28%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793945&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359\
+      \ 1x\"></span><p /></li><li><p>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을\
+      \ 완료합니다.  </p></li><li><p>관리자의 승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done\
+      \ 메뉴에서 확인할 수 있습니다.</p></li></ol><div class=\"confluence-information-macro confluence-information-macro-note\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"49e266fd-3fe8-41c2-a65b-1892fa504004\"\
+      \ data-macro-name=\"note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p><strong>Custom Data Source Type 외 다중 요청 시 주의사항</strong></p><ul><li><p>Custom\
+      \ Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. </p></li><li><p>이\
+      \ 경우 다음 메시지가 표시됩니다: &quot;Privileges cannot be applied across different types\
+      \ at once (e.g., General, Redis, Custom Data Source). Please assign privileges\
+      \ separately for each connection.&quot;</p></li><li><p>같은 권한 타입의 커넥션끼리는 일괄 적용이\
+      \ 가능합니다.</p></li></ul></div></div><h3 id=\"CustomDataSource접속하기-Agent를통한접속\"\
+      ><br/>Agent를 통한 접속</h3><ol start=\"1\"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie\
+      \ Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><span\
+      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image image-center\" width=\"400\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=400&amp;height=550\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"550\" data-width=\"400\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181283\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 2.05.26 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"67fdb9e5-7248-4053-993b-97617f74b08b\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=800&amp;height=1100\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.05.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793968&amp;cacheVersion=1&amp;api=v2&amp;width=400&amp;height=550\
+      \ 1x\"></span><p /></li></ul></li><li><p><strong>Connection Guide 확인</strong></p><ul><li><p>Agent에서\
+      \ Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을\
+      \ 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.</p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ image-center\" width=\"712\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=357\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"453\" data-width=\"903\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181289\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 2.08.11 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"f2458d69-8e68-4b68-8dac-f3f6e02330f6\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=714\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.08.11%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793977&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=357\
+      \ 1x\"></span><p /></li><li><p>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는\
+      \ &quot;-&quot;로 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나\
+      \ 기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는\
+      \ 정보를 입력해야합니다.</strong> </p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p><span class=\"\
+      confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image image-center\" width=\"712\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=605\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"680\" data-width=\"800\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181295\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 2.18.26 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"e1bd40e7-3ce0-4c96-bda4-8c3a18414b89\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=800&amp;height=680\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.18.26%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793988&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=605\
+      \ 1x\"></span></li></ul></li></ol><div class=\"confluence-information-macro\
+      \ confluence-information-macro-note conf-macro output-block\" data-hasbody=\"\
+      true\" data-macro-id=\"4de93d75-70f3-4361-aa97-fca387cd343e\" data-macro-name=\"\
+      note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon\"\
+      > </span><div class=\"confluence-information-macro-body\"><p><strong>주의사항</strong></p><ul><li><p>관리자가\
+      \ 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></div></div><h3 id=\"\
+      CustomDataSource접속하기-웹으로접속시도하는경우\">웹으로 접속 시도하는 경우</h3><ol start=\"1\"><li><p><strong>웹\
+      \ 커넥션 목록 확인</strong></p><ul><li><p>사용자 화면 상단 Databases를 클릭합니다. </p></li><li><p>좌측\
+      \ 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.</p><span\
+      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image image-center\" width=\"712\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=361\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"768\" data-width=\"1512\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181301\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 2.22.22 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"4c25d94b-56e6-4c25-bfed-43e00e729a89\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=722\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.22.22%E2%80%AFPM.png?version=1&amp;modificationDate=1741352793995&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=361\
+      \ 1x\"></span><p /></li></ul></li><li><p><strong>접속 불가 안내</strong></p><ul><li><p>Custom\
+      \ Data Source 선택 시 Connect 버튼이 비활성화됩니다.</p></li><li><p>아래와 같은 툴팁이 표시되며 웹으로는\
+      \ 접속이 불가합니다. </p><p>&quot;Access is only possible through a proxy and cannot\
+      \ be accessed through the web. Please open the QueryPie Agent to connect to\
+      \ the Custom Data Source.&quot;</p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ image-center\" width=\"712\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"763\" data-width=\"1512\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"880181307\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"Screenshot 2025-03-06 at 2.23.37 PM.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"880181257\" data-linked-resource-container-version=\"\
+      1\" data-media-id=\"d65abe53-b4fe-4503-ab0d-6d727f997799\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=1424&amp;height=718\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/880181257/Screenshot%202025-03-06%20at%202.23.37%E2%80%AFPM.png?version=1&amp;modificationDate=1741352794004&amp;cacheVersion=1&amp;api=v2&amp;width=712&amp;height=359\
+      \ 1x\"></span></li></ul></li></ol>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/880181257"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "1597"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/880181257/restriction/byOperation"
+  "history": "/rest/api/content/880181257/history"
+  "version": ""
+  "descendants": "/rest/api/content/880181257/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/880181257/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=880181257"
+  "webui": "/spaces/QM/pages/880181257/Custom+Data+Source"
+  "edituiv2": "/spaces/QM/pages/edit-v2/880181257"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/880181257"
+  "tinyui": "/x/CYB2N"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

@@ -1,107 +1,107 @@
-id: '544112828'
-type: page
-ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544112828
-base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTEyODI4
-status: current
-title: User Agent
-ancestors:
-- id: '576585864'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
-  status: current
-  title: QueryPie Manual
-  macroRenderedOutput: {}
-  extensions:
-    position: 921
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/576585864/restriction/byOperation
-    history: /rest/api/content/576585864/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/576585864/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/576585864/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
-    tinyui: /x/iABeIg
-    editui: /pages/resumedraft.action?draftId=576585864
-    webui: /spaces/QM/overview
-    edituiv2: /spaces/QM/pages/edit-v2/576585864
-- id: '608501837'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
-  status: current
-  title: QueryPie Docs
-  macroRenderedOutput: {}
-  extensions:
-    position: 9
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/608501837/restriction/byOperation
-    history: /rest/api/content/608501837/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/608501837/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/608501837/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
-    tinyui: /x/TQBFJ
-    editui: /pages/resumedraft.action?draftId=608501837
-    webui: /spaces/QM/pages/608501837/QueryPie+Docs
-    edituiv2: /spaces/QM/pages/edit-v2/608501837
-- id: '544211126'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2
-  status: current
-  title: 사용자 매뉴얼
-  macroRenderedOutput: {}
-  extensions:
-    position: 521757335
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544211126/restriction/byOperation
-    history: /rest/api/content/544211126/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544211126/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544211126/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544211126
-    tinyui: /x/tgBwI
-    editui: /pages/resumedraft.action?draftId=544211126
-    webui: /spaces/QM/pages/544211126
-    edituiv2: /spaces/QM/pages/edit-v2/544211126
-macroRenderedOutput: {}
-body:
-  storage:
-    value: "<ac:layout><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"\
+"id": "544112828"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544112828"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTEyODI4"
+"status": "current"
+"title": "User Agent"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "921"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544211126"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2"
+  "status": "current"
+  "title": "사용자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757335"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544211126/restriction/byOperation"
+    "history": "/rest/api/content/544211126/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544211126/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544211126/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544211126"
+    "tinyui": "/x/tgBwI"
+    "editui": "/pages/resumedraft.action?draftId=544211126"
+    "webui": "/spaces/QM/pages/544211126"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544211126"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<ac:layout><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"\
       default\"><ac:layout-cell><h2>Overview</h2><p>QueryPie Agent를 설치하면, DataGrip,\
       \ DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd\
       \ Party 애플리케이션을 사용할 수 있습니다.</p><ac:structured-macro ac:name=\"toc\" ac:schema-version=\"\
@@ -328,26 +328,26 @@ body:
       2\"><ri:page ri:space-key=\"QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"\
       17\" /></ri:attachment><ac:caption><p>Agent &gt; App menu</p></ac:caption><ac:adf-mark\
       \ key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image><p /></ac:layout-cell></ac:layout-section></ac:layout>"
-    representation: storage
-    embeddedContent: []
-    _expandable:
-      content: /rest/api/content/544112828
-  view:
-    value: "<div class=\"contentLayout2\">\n<div class=\"columnLayout fixed-width\"\
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/544112828"
+  "view":
+    "value": "<div class=\"contentLayout2\">\n<div class=\"columnLayout fixed-width\"\
       \ data-layout=\"fixed-width\">\n<div class=\"cell normal\" data-type=\"normal\"\
       >\n<div class=\"innerCell\">\n<h2 id=\"UserAgent-Overview\">Overview</h2><p>QueryPie\
       \ Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client,\
       \ Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.</p><div class=\"toc-macro client-side-toc-macro\
-      \  conf-macro output-block\" data-structure=\"list\" data-numberedoutline=\"\
-      false\" data-cssliststyle=\"default\" data-headerelements=\"H1,H2\" data-excludeheaderregex=\"\
-      Overview\" data-hasbody=\"false\" data-macro-name=\"toc\" data-macro-id=\"334477e7-dc7b-494d-9513-c21c2ccabe57\"\
-      \ data-layout=\"default\" data-local-id=\"93991f90-344b-497e-8886-42bac10548aa\"\
-      > </div><p /><h2 id=\"UserAgent-에이전트앱다운로드및실행하기\">에이전트 앱 다운로드 및 실행하기</h2><p>1.\
-      \ QueryPie 로그인 후 우측 상단 프로필을 클릭하여 <code>Agent Download</code> 버튼을 클릭합니다. </p><span\
-      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
-      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
-      \ alt=\"스크린샷 2024-08-04 오후 5.30.02.png\" width=\"760\" loading=\"lazy\"\
-      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.30.02.png?version=1&amp;modificationDate=1722760209840&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=537\"\
+      \  conf-macro output-block\" data-cssliststyle=\"default\" data-excludeheaderregex=\"\
+      Overview\" data-hasbody=\"false\" data-headerelements=\"H1,H2\" data-layout=\"\
+      default\" data-local-id=\"93991f90-344b-497e-8886-42bac10548aa\" data-macro-id=\"\
+      334477e7-dc7b-494d-9513-c21c2ccabe57\" data-macro-name=\"toc\" data-numberedoutline=\"\
+      false\" data-structure=\"list\"> </div><p /><h2 id=\"UserAgent-에이전트앱다운로드및실행하기\"\
+      >에이전트 앱 다운로드 및 실행하기</h2><p>1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 <code>Agent Download</code>\
+      \ 버튼을 클릭합니다. </p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"스크린샷 2024-08-04 오후 5.30.02.png\" width=\"760\"\
+      \ loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.30.02.png?version=1&amp;modificationDate=1722760209840&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=537\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.30.02.png?version=1&amp;modificationDate=1722760209840&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"555\" data-width=\"785\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"576855167\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -372,15 +372,14 @@ body:
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/image-20240723-154847.png?version=1&amp;modificationDate=1722238373681&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=712\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/image-20240723-154847.png?version=1&amp;modificationDate=1722238373681&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=422\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-name=\"info\" data-macro-id=\"\
-      a19b2299-084c-45a1-93d5-b93fb507dfc0\"><span class=\"aui-icon aui-icon-small\
-      \ aui-iconfont-info confluence-information-macro-icon\"> </span><div class=\"\
-      confluence-information-macro-body\"><p>QueryPie Agent는 Mac, Windows, Linux OS를\
-      \ 지원합니다.</p></div></div><p>3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.\
-      \ </p><span class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
-      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
-      \ alt=\"스크린샷 2024-08-04 오후 5.40.02.png\" width=\"760\" loading=\"lazy\"\
-      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.40.02.png?version=1&amp;modificationDate=1722760811440&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=532\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"a19b2299-084c-45a1-93d5-b93fb507dfc0\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.</p></div></div><p>3. 다운로드받은\
+      \ QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다. </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"스크린샷 2024-08-04\
+      \ 오후 5.40.02.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.40.02.png?version=1&amp;modificationDate=1722760811440&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=532\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.40.02.png?version=1&amp;modificationDate=1722760811440&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"750\" data-width=\"1070\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"576593212\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -509,17 +508,17 @@ body:
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.26.53.png?version=1&amp;modificationDate=1722324458897&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=739\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.26.53.png?version=1&amp;modificationDate=1722324458897&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=441\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-name=\"info\" data-macro-id=\"\
-      bd9c2ba9-1db8-4edd-aecb-874773173e41\"><span class=\"aui-icon aui-icon-small\
-      \ aui-iconfont-info confluence-information-macro-icon\"> </span><div class=\"\
-      confluence-information-macro-body\"><p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능\
-      \ 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><h3 id=\"UserAgent-2.Agent로서버접속하기\"\
-      ><br/>2. <span class=\"inline-comment-marker\" data-ref=\"50b132b2-0b7d-413a-805b-ec80489a780b\"\
-      >Agent로 서버 접속하기</span></h3><ul><li><p>접속할 서버를 우클릭 후 Open Connection with 메뉴를\
-      \ 선택하여, 사용하려는 터미널 툴을 선택합니다.</p></li></ul><span class=\"confluence-embedded-file-wrapper\
-      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
-      \ confluence-content-image-border image-center\" alt=\"스크린샷 2024-07-30\
-      \ 오후 4.17.29.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.17.29.png?version=1&amp;modificationDate=1722324286400&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=543\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"bd9c2ba9-1db8-4edd-aecb-874773173e41\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><h3\
+      \ id=\"UserAgent-2.Agent로서버접속하기\"><br/>2. <span class=\"inline-comment-marker\"\
+      \ data-ref=\"50b132b2-0b7d-413a-805b-ec80489a780b\">Agent로 서버 접속하기</span></h3><ul><li><p>접속할\
+      \ 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.</p></li></ul><span\
+      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"스크린샷 2024-07-30 오후 4.17.29.png\" width=\"760\" loading=\"lazy\"\
+      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.17.29.png?version=1&amp;modificationDate=1722324286400&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=543\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.17.29.png?version=1&amp;modificationDate=1722324286400&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"553\" data-width=\"774\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"567836926\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -547,42 +546,42 @@ body:
       \ 1x\"></span><h3 id=\"UserAgent-3.SeamlessSSH설정하기\">3. Seamless SSH 설정하기</h3><p>Seamless\
       \ SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh\
       \ 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.</p><p>1) 터미널을 열고, .ssh 폴더로\
-      \ 이동합니다.</p><div class=\"code panel pdl conf-macro output-block\" style=\"border-width:\
-      \ 1px;\" data-hasbody=\"true\" data-macro-name=\"code\" data-macro-id=\"1de98306-db73-4eac-b791-0b547d3df79d\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ 이동합니다.</p><div class=\"code panel pdl conf-macro output-block\" data-hasbody=\"\
+      true\" data-macro-id=\"1de98306-db73-4eac-b791-0b547d3df79d\" data-macro-name=\"\
+      code\" style=\"border-width: 1px;\"><div class=\"codeContent panelContent pdl\"\
+      >\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"brush:\
+      \ java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">$ cd .ssh</pre>\n\
+      </div></div><p>2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.</p><div class=\"\
+      code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      e97ed0fa-ef78-4d6e-b9bc-1cc0e9841fe0\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
-      \ data-theme=\"Confluence\">$ cd .ssh</pre>\n</div></div><p>2) ssh 폴더에서 config\
-      \ 파일을 생성하기 위해 vi 에디터를 엽니다.</p><div class=\"code panel pdl conf-macro output-block\"\
-      \ style=\"border-width: 1px;\" data-hasbody=\"true\" data-macro-name=\"code\"\
-      \ data-macro-id=\"e97ed0fa-ef78-4d6e-b9bc-1cc0e9841fe0\"><div class=\"codeContent\
+      \ data-theme=\"Confluence\">$ vi config</pre>\n</div></div><p><span class=\"\
+      inline-comment-marker\" data-ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\">3)\
+      \ 아래의 내용을 입력 후, </span><code><span class=\"inline-comment-marker\" data-ref=\"\
+      9346ce2e-a893-4aa6-8a8e-808d683cd275\">wq</span></code><span class=\"inline-comment-marker\"\
+      \ data-ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"> 키를 입력하여 vi 에디터를 나옵니다.</span></p><div\
+      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      ea969a7b-3265-4ec9-ae6b-bc72a5d8e759\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
+      \ data-theme=\"Confluence\">Host {{Server Name}}\n  Hostname {{Server URL}}\n\
+      \  Port {{Server SSH Port}}\n  ProxyCommand qpa ssh %r %h %p</pre>\n</div></div><div\
+      \ class=\"confluence-information-macro confluence-information-macro-information\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"a602951d-1254-4c43-b9f3-c9ee269dd369\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.\
+      \ 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p><div class=\"code panel\
+      \ pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"b6f6c7b9-b15c-41a8-8dd7-6957810e92b0\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
       \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
-      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">$\
-      \ vi config</pre>\n</div></div><p><span class=\"inline-comment-marker\" data-ref=\"\
-      9346ce2e-a893-4aa6-8a8e-808d683cd275\">3) 아래의 내용을 입력 후, </span><code><span class=\"\
-      inline-comment-marker\" data-ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\">wq</span></code><span\
-      \ class=\"inline-comment-marker\" data-ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"\
-      > 키를 입력하여 vi 에디터를 나옵니다.</span></p><div class=\"code panel pdl conf-macro output-block\"\
-      \ style=\"border-width: 1px;\" data-hasbody=\"true\" data-macro-name=\"code\"\
-      \ data-macro-id=\"ea969a7b-3265-4ec9-ae6b-bc72a5d8e759\"><div class=\"codeContent\
-      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
-      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">Host\
-      \ {{Server Name}}\n  Hostname {{Server URL}}\n  Port {{Server SSH Port}}\n \
-      \ ProxyCommand qpa ssh %r %h %p</pre>\n</div></div><div class=\"confluence-information-macro\
-      \ confluence-information-macro-information conf-macro output-block\" data-hasbody=\"\
-      true\" data-macro-name=\"info\" data-macro-id=\"a602951d-1254-4c43-b9f3-c9ee269dd369\"\
-      ><span class=\"aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon\"\
-      > </span><div class=\"confluence-information-macro-body\"><p>config 파일 작성 시\
-      \ Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가\
-      \ 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p><div class=\"code panel pdl conf-macro\
-      \ output-block\" style=\"border-width: 1px;\" data-hasbody=\"true\" data-macro-name=\"\
-      code\" data-macro-id=\"b6f6c7b9-b15c-41a8-8dd7-6957810e92b0\"><div class=\"\
-      codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
       brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">Host\
       \ *\n  ProxyCommand qpa ssh %r %h %p</pre>\n</div></div></div></div><p>4) 이상으로\
       \ 설정이 완료됩니다. Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.</p><div\
-      \ class=\"code panel pdl conf-macro output-block\" style=\"border-width: 1px;\"\
-      \ data-hasbody=\"true\" data-macro-name=\"code\" data-macro-id=\"252afd2c-956a-4915-bb49-8794cbb5afc1\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      252afd2c-956a-4915-bb49-8794cbb5afc1\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">$ ssh deploy@{{Server Name}}</pre>\n</div></div><p\
       \ /><h2 id=\"UserAgent-에이전트를통한쿠버네티스접속\">에이전트를 통한 쿠버네티스 접속 </h2><span class=\"\
@@ -618,17 +617,16 @@ body:
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.27.05.png?version=1&amp;modificationDate=1722320830831&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=764\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.27.05.png?version=1&amp;modificationDate=1722320830831&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=453\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-name=\"info\" data-macro-id=\"\
-      1c4708d7-7443-42fb-8216-64ef6f94e225\"><span class=\"aui-icon aui-icon-small\
-      \ aui-iconfont-info confluence-information-macro-icon\"> </span><div class=\"\
-      confluence-information-macro-body\"><p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes\
-      \ 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><p /><h3 id=\"UserAgent-2.Policy조회하기\"\
-      >2. Policy 조회하기</h3><p>선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 <code>\U0001F50D\
-      </code> 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할\
-      \ 수 있습니다.</p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
-      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
-      \ image-center\" alt=\"스크린샷 2024-07-30 오후 4.11.41.png\" width=\"760\"\
-      \ loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.11.41.png?version=1&amp;modificationDate=1722323566875&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=711\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"1c4708d7-7443-42fb-8216-64ef6f94e225\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><p\
+      \ /><h3 id=\"UserAgent-2.Policy조회하기\">2. Policy 조회하기</h3><p>선택된 역할에 따라 접근 가능한\
+      \ 리소스가 표시됩니다. 각 클러스터 우측의 <code>\U0001F50D</code> 버튼을 누르면 Policy Information\
+      \ 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.</p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"스크린샷 2024-07-30\
+      \ 오후 4.11.41.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.11.41.png?version=1&amp;modificationDate=1722323566875&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=711\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.11.41.png?version=1&amp;modificationDate=1722323566875&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"959\" data-width=\"1024\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"567935271\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -675,29 +673,29 @@ body:
       \ : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.</p></li></ul><p>1) KUBECONFIG 환경\
       \ 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 &quot;<code>${KUBECONFIG}</code>&quot; 값을 사용 전에\
       \ &quot;<code>${HOME}/.kube/config</code>&quot;로 변경해야 합니다. </p><div class=\"\
-      code panel pdl conf-macro output-block\" style=\"border-width: 1px;\" data-hasbody=\"\
-      true\" data-macro-name=\"code\" data-macro-id=\"ce6c6f0a-b878-4df3-a478-09981ee99d00\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      ce6c6f0a-b878-4df3-a478-09981ee99d00\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig&quot;</pre>\n\
       </div></div><p><span class=\"inline-comment-marker\" data-ref=\"489e3194-1605-43db-8b78-366b9f36e6ec\"\
       >2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.</span></p><div\
-      \ class=\"code panel pdl conf-macro output-block\" style=\"border-width: 1px;\"\
-      \ data-hasbody=\"true\" data-macro-name=\"code\" data-macro-id=\"72444119-bb0a-42ee-9057-d414de3ca3d2\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      72444119-bb0a-42ee-9057-d414de3ca3d2\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${KUBECONFIG}:&lt;사용자가 지정한\
       \ 경로&gt;&quot;</pre>\n</div></div><p>3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기\
-      \ 바랍니다.</p><ul><li><p>참고: <a href=\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
-      \ class=\"external-link\">kubeconfig 파일 병합</a></p></li><li><p>참고: <a href=\"\
+      \ 바랍니다.</p><ul><li><p>참고: <a class=\"external-link\" href=\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
+      >kubeconfig 파일 병합</a></p></li><li><p>참고: <a class=\"external-link\" href=\"\
       https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95\"\
-      \ class=\"external-link\">KUBECONFIG 환경 변수 설정</a></p></li></ul><p>4) <code>Copy</code>\
-      \ 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 </p><div class=\"\
-      code panel pdl conf-macro output-block\" style=\"border-width: 1px;\" data-hasbody=\"\
-      true\" data-macro-name=\"code\" data-macro-id=\"4bffd456-0fbd-4502-8b21-fb56a08f8c2a\"\
-      ><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
-      \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
-      \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig&quot;</pre>\n\
+      >KUBECONFIG 환경 변수 설정</a></p></li></ul><p>4) <code>Copy</code> 로 커맨드라인을 복사하여\
+      \ 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 </p><div class=\"code panel pdl\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"4bffd456-0fbd-4502-8b21-fb56a08f8c2a\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
+      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
+      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">export\
+      \ KUBECONFIG=&quot;${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig&quot;</pre>\n\
       </div></div><p /><h2 id=\"UserAgent-QueryPieAgent세팅초기화하기\">QueryPie Agent 세팅\
       \ 초기화하기</h2><p>세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다. </p></div>\n\
       </div>\n</div>\n<div class=\"columnLayout two-equal\" data-layout=\"two-equal\"\
@@ -734,42 +732,42 @@ body:
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.24.png?version=2&amp;modificationDate=1722321750957&amp;cacheVersion=1&amp;api=v2&amp;width=494&amp;height=570\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.24.png?version=2&amp;modificationDate=1722321750957&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=418\
       \ 1x\"></span><p /></div>\n</div>\n</div>\n</div>"
-    representation: view
-    _expandable:
-      webresource: ''
-      embeddedContent: ''
-      mediaToken: ''
-      content: /rest/api/content/544112828
-  _expandable:
-    editor: ''
-    atlas_doc_format: ''
-    export_view: ''
-    styled_view: ''
-    dynamic: ''
-    editor2: ''
-    anonymous_export_view: ''
-extensions:
-  position: 901463041
-_expandable:
-  container: /rest/api/space/QM
-  metadata: ''
-  restrictions: /rest/api/content/544112828/restriction/byOperation
-  history: /rest/api/content/544112828/history
-  version: ''
-  descendants: /rest/api/content/544112828/descendant
-  space: /rest/api/space/QM
-  childTypes: ''
-  schedulePublishInfo: ''
-  operations: ''
-  schedulePublishDate: ''
-  children: /rest/api/content/544112828/child
-  draftVersion: ''
-_links:
-  editui: /pages/resumedraft.action?draftId=544112828
-  webui: /spaces/QM/pages/544112828/User+Agent
-  edituiv2: /spaces/QM/pages/edit-v2/544112828
-  context: /wiki
-  self: https://querypie.atlassian.net/wiki/rest/api/content/544112828
-  tinyui: /x/vIBuI
-  collection: /rest/api/content
-  base: https://querypie.atlassian.net/wiki
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/544112828"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "901463041"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/544112828/restriction/byOperation"
+  "history": "/rest/api/content/544112828/history"
+  "version": ""
+  "descendants": "/rest/api/content/544112828/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/544112828/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544112828"
+  "webui": "/spaces/QM/pages/544112828/User+Agent"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544112828"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/544112828"
+  "tinyui": "/x/vIBuI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

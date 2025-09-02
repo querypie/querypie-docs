@@ -1,266 +1,276 @@
-id: '544375741'
-type: page
-ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375741
-base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1NzQx
-status: current
-title: External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
-ancestors:
-- id: '576585864'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
-  status: current
-  title: QueryPie Manual
-  macroRenderedOutput: {}
-  extensions:
-    position: 921
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/576585864/restriction/byOperation
-    history: /rest/api/content/576585864/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/576585864/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/576585864/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
-    tinyui: /x/iABeIg
-    editui: /pages/resumedraft.action?draftId=576585864
-    webui: /spaces/QM/overview
-    edituiv2: /spaces/QM/pages/edit-v2/576585864
-- id: '608501837'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
-  status: current
-  title: QueryPie Docs
-  macroRenderedOutput: {}
-  extensions:
-    position: 9
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/608501837/restriction/byOperation
-    history: /rest/api/content/608501837/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/608501837/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/608501837/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
-    tinyui: /x/TQBFJ
-    editui: /pages/resumedraft.action?draftId=608501837
-    webui: /spaces/QM/pages/608501837/QueryPie+Docs
-    edituiv2: /spaces/QM/pages/edit-v2/608501837
-- id: '544375335'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375335
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1MzM1
-  status: current
-  title: Release Notes
-  macroRenderedOutput: {}
-  extensions:
-    position: 521755880
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544375335/restriction/byOperation
-    history: /rest/api/content/544375335/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544375335/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544375335/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544375335
-    tinyui: /x/J4JyI
-    editui: /pages/resumedraft.action?draftId=544375335
-    webui: /spaces/QM/pages/544375335/Release+Notes
-    edituiv2: /spaces/QM/pages/edit-v2/544375335
-- id: '544375659'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375659
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1NjU5
-  status: current
-  title: 9.9.0 ~ 9.9.8
-  macroRenderedOutput: {}
-  extensions:
-    position: 930072103
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544375659/restriction/byOperation
-    history: /rest/api/content/544375659/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544375659/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544375659/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544375659
-    tinyui: /x/a4NyI
-    editui: /pages/resumedraft.action?draftId=544375659
-    webui: /spaces/QM/pages/544375659/9.9.0+~+9.9.8
-    edituiv2: /spaces/QM/pages/edit-v2/544375659
-macroRenderedOutput: {}
-body:
-  storage:
-    value: '<h1>External API 변경사항 바로가기</h1><ac:structured-macro ac:name="toc" ac:schema-version="1"
-      data-layout="default" ac:local-id="d20a7b68-bbd3-4415-bd42-1c3d42bab812" ac:macro-id="b1b7a13a598cededc74e26d40052217d"><ac:parameter
-      ac:name="minLevel">1</ac:parameter><ac:parameter ac:name="maxLevel">1</ac:parameter><ac:parameter
-      ac:name="exclude">External API 변경사항 바로가기</ac:parameter></ac:structured-macro><hr
-      /><h1>API Docs Json File</h1><p class="media-group"><ac:structured-macro ac:name="view-file"
-      ac:schema-version="1" ac:macro-id="0ca43a9e-a4e1-4b7a-ad33-9a40ac673203"><ac:parameter
-      ac:name="name"><ri:attachment ri:filename="994_external.json" ri:version-at-save="1"
-      /></ac:parameter></ac:structured-macro><ac:structured-macro ac:name="view-file"
-      ac:schema-version="1" ac:macro-id="68b8c372-669e-47ba-bfdd-93903d121b25"><ac:parameter
-      ac:name="name"><ri:attachment ri:filename="995_external.json" ri:version-at-save="1"
-      /></ac:parameter></ac:structured-macro></p><hr /><h1>1. Access Approval API</h1><h3><strong>(GET)
-      List</strong></h3><h4>Request</h4><ul><li><p>변경점 없음</p></li></ul><h4>Response</h4><table
-      data-table-width="760" data-layout="default" ac:local-id="729f4860-908e-453e-a2ce-586ef92bde21"><colgroup><col
-      style="width: 316.0px;" /><col style="width: 364.0px;" /></colgroup><tbody><tr><th><p><strong>변경
-      전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table><ul><li><p><strong>id</strong>
-      가 <strong>추가</strong>되었습니다.</p></li></ul><hr /><h1>2. Approval API</h1><h3><strong>(GET)
-      List</strong></h3><h4>Request</h4><ul><li><p>변경점 없음</p></li></ul><h4>Response</h4><table
-      data-table-width="760" data-layout="default" ac:local-id="d1aedf57-9c7c-4ffd-abf3-d1381144dd7d"><colgroup><col
-      style="width: 316.0px;" /><col style="width: 364.0px;" /></colgroup><tbody><tr><th><p><strong>변경
-      전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table><ul><li><p><strong>id</strong>
-      가 <strong>추가</strong>되었습니다.</p></li></ul><hr /><h1>3. Audit Log API</h1><h3><strong>(GET)
-      List of Approval</strong></h3><p><code>/api/external/audit-logs</code></p><h4>Request</h4><ul><li><p>Query
-      Parameter</p></li><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>cursor</strong> 에 대한
-      내용이 수정되었습니다.</p></li></ul><h4>Response</h4><ul><li><p>/api/docs 에 잘못 표기 되어 있던
-      <strong>nextCursor</strong> 에 대한 내용이 수정되었습니다.</p></li></ul><hr /><h1>4. Notification
-      Channels API</h1><h3><strong>(GET) List</strong></h3><p><code>/api/external/notification-channels</code></p><h4>Request</h4><ul><li><p>Query
-      Parameter</p></li></ul><table data-table-width="760" data-layout="default" ac:local-id="a8579e9b-bf3a-44ef-8dbe-bef487c68840"><colgroup><col
-      style="width: 316.0px;" /><col style="width: 364.0px;" /></colgroup><tbody><tr><th><p><strong>변경
-      전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><ul><li><p>dataFlowRequest.filterKey</p></li><li><p>dataFlowRequest.filterValue</p></li><li><p>dataFlowRequest.sortKey</p></li><li><p>dataFlowRequest.sortType</p></li></ul></td><td><ul><li><p>filterKey</p></li><li><p>filterValue</p></li><li><p>sortKey</p></li><li><p>sortType</p></li></ul></td></tr></tbody></table><ul><li><p><strong>이름</strong>이
-      <strong>변경</strong>되었습니다.</p></li></ul><h4>Response</h4><ul><li><p>변경점 없음</p></li></ul>'
-    representation: storage
-    embeddedContent: []
-    _expandable:
-      content: /rest/api/content/544375741
-  view:
-    value: '<h1 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-ExternalAPI변경사항바로가기">External
-      API 변경사항 바로가기</h1><div class="toc-macro client-side-toc-macro  conf-macro output-block"
-      data-headerelements="H1" data-excludeheaderregex="External API 변경사항 바로가기" data-hasbody="false"
-      data-macro-name="toc" data-macro-id="b1b7a13a598cededc74e26d40052217d" data-layout="default"
-      data-local-id="d20a7b68-bbd3-4415-bd42-1c3d42bab812"> </div><hr/><h1 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-APIDocsJsonFile">API
-      Docs Json File</h1><p class="media-group"><span class="confluence-embedded-file-wrapper
-      conf-macro output-inline" data-hasbody="false" data-macro-name="view-file" data-macro-id="0ca43a9e-a4e1-4b7a-ad33-9a40ac673203"><a
-      class="confluence-embedded-file" href="/wiki/download/attachments/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2"
-      data-nice-type="null" data-file-src="/wiki/download/attachments/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2"
-      data-linked-resource-id="544375753" data-linked-resource-type="attachment" data-linked-resource-container-id="544375741"
-      data-linked-resource-default-alias="994_external.json" data-mime-type="application/json"
-      data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="e222be1a-882e-4b85-a1ee-1efed7c08cdd"
-      data-media-type="file"><img src="https://querypie.atlassian.net/wiki/download/thumbnails/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2&amp;viewType=fileMacro"
-      height="250" /></a></span><span class="confluence-embedded-file-wrapper conf-macro
-      output-inline" data-hasbody="false" data-macro-name="view-file" data-macro-id="68b8c372-669e-47ba-bfdd-93903d121b25"><a
-      class="confluence-embedded-file" href="/wiki/download/attachments/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2"
-      data-nice-type="null" data-file-src="/wiki/download/attachments/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2"
-      data-linked-resource-id="544375756" data-linked-resource-type="attachment" data-linked-resource-container-id="544375741"
-      data-linked-resource-default-alias="995_external.json" data-mime-type="application/json"
-      data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="aeb576e0-660a-4355-bf9e-2cf350ea57f3"
-      data-media-type="file"><img src="https://querypie.atlassian.net/wiki/download/thumbnails/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2&amp;viewType=fileMacro"
-      height="250" /></a></span></p><hr/><h1 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-1.AccessApprovalAPI">1.
-      Access Approval API</h1><h3 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List"><strong>(GET)
-      List</strong></h3><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request">Request</h4><ul><li><p>변경점
-      없음</p></li></ul><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response">Response</h4><div
-      class="table-wrap"><table data-table-width="760" data-layout="default" data-local-id="729f4860-908e-453e-a2ce-586ef92bde21"
-      class="confluenceTable"><colgroup><col style="width: 316.0px;"/><col style="width:
-      364.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>변경 전</strong></p></th><th
-      class="confluenceTh"><p><strong>변경 후</strong></p></th></tr><tr><td class="confluenceTd"><p
-      /></td><td class="confluenceTd"><ul><li><p>id</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>id</strong>
-      가 <strong>추가</strong>되었습니다.</p></li></ul><hr/><h1 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-2.ApprovalAPI">2.
-      Approval API</h1><h3 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List.1"><strong>(GET)
-      List</strong></h3><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.1">Request</h4><ul><li><p>변경점
-      없음</p></li></ul><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.1">Response</h4><div
-      class="table-wrap"><table data-table-width="760" data-layout="default" data-local-id="d1aedf57-9c7c-4ffd-abf3-d1381144dd7d"
-      class="confluenceTable"><colgroup><col style="width: 316.0px;"/><col style="width:
-      364.0px;"/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>변경 전</strong></p></th><th
-      class="confluenceTh"><p><strong>변경 후</strong></p></th></tr><tr><td class="confluenceTd"><p
-      /></td><td class="confluenceTd"><ul><li><p>id</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>id</strong>
-      가 <strong>추가</strong>되었습니다.</p></li></ul><hr/><h1 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-3.AuditLogAPI">3.
-      Audit Log API</h1><h3 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)ListofApproval"><strong>(GET)
-      List of Approval</strong></h3><p><code>/api/external/audit-logs</code></p><h4
-      id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.2">Request</h4><ul><li><p>Query
-      Parameter</p></li><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>cursor</strong> 에 대한
-      내용이 수정되었습니다.</p></li></ul><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.2">Response</h4><ul><li><p>/api/docs
-      에 잘못 표기 되어 있던 <strong>nextCursor</strong> 에 대한 내용이 수정되었습니다.</p></li></ul><hr/><h1
-      id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-4.NotificationChannelsAPI">4. Notification
-      Channels API</h1><h3 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List.2"><strong>(GET)
-      List</strong></h3><p><code>/api/external/notification-channels</code></p><h4
-      id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.3">Request</h4><ul><li><p>Query
-      Parameter</p></li></ul><div class="table-wrap"><table data-table-width="760"
-      data-layout="default" data-local-id="a8579e9b-bf3a-44ef-8dbe-bef487c68840" class="confluenceTable"><colgroup><col
-      style="width: 316.0px;"/><col style="width: 364.0px;"/></colgroup><tbody><tr><th
-      class="confluenceTh"><p><strong>변경 전</strong></p></th><th class="confluenceTh"><p><strong>변경
-      후</strong></p></th></tr><tr><td class="confluenceTd"><ul><li><p>dataFlowRequest.filterKey</p></li><li><p>dataFlowRequest.filterValue</p></li><li><p>dataFlowRequest.sortKey</p></li><li><p>dataFlowRequest.sortType</p></li></ul></td><td
-      class="confluenceTd"><ul><li><p>filterKey</p></li><li><p>filterValue</p></li><li><p>sortKey</p></li><li><p>sortType</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>이름</strong>이
-      <strong>변경</strong>되었습니다.</p></li></ul><h4 id="ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.3">Response</h4><ul><li><p>변경점
-      없음</p></li></ul>'
-    representation: view
-    _expandable:
-      webresource: ''
-      embeddedContent: ''
-      mediaToken: ''
-      content: /rest/api/content/544375741
-  _expandable:
-    editor: ''
-    atlas_doc_format: ''
-    export_view: ''
-    styled_view: ''
-    dynamic: ''
-    editor2: ''
-    anonymous_export_view: ''
-extensions:
-  position: 38055023
-_expandable:
-  container: /rest/api/space/QM
-  metadata: ''
-  restrictions: /rest/api/content/544375741/restriction/byOperation
-  history: /rest/api/content/544375741/history
-  version: ''
-  descendants: /rest/api/content/544375741/descendant
-  space: /rest/api/space/QM
-  childTypes: ''
-  schedulePublishInfo: ''
-  operations: ''
-  schedulePublishDate: ''
-  children: /rest/api/content/544375741/child
-  draftVersion: ''
-_links:
-  editui: /pages/resumedraft.action?draftId=544375741
-  webui: /spaces/QM/pages/544375741/External+API+9.9.4+9.9.5
-  edituiv2: /spaces/QM/pages/edit-v2/544375741
-  context: /wiki
-  self: https://querypie.atlassian.net/wiki/rest/api/content/544375741
-  tinyui: /x/vYNyI
-  collection: /rest/api/content
-  base: https://querypie.atlassian.net/wiki
+"id": "544375741"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375741"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1NzQx"
+"status": "current"
+"title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "921"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544375335"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375335"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1MzM1"
+  "status": "current"
+  "title": "Release Notes"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521755880"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544375335/restriction/byOperation"
+    "history": "/rest/api/content/544375335/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544375335/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544375335/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544375335"
+    "tinyui": "/x/J4JyI"
+    "editui": "/pages/resumedraft.action?draftId=544375335"
+    "webui": "/spaces/QM/pages/544375335/Release+Notes"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544375335"
+- "id": "544375659"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544375659"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc1NjU5"
+  "status": "current"
+  "title": "9.9.0 ~ 9.9.8"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "930072103"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544375659/restriction/byOperation"
+    "history": "/rest/api/content/544375659/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544375659/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544375659/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544375659"
+    "tinyui": "/x/a4NyI"
+    "editui": "/pages/resumedraft.action?draftId=544375659"
+    "webui": "/spaces/QM/pages/544375659/9.9.0+~+9.9.8"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544375659"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"\
+      default\" ac:local-id=\"d20a7b68-bbd3-4415-bd42-1c3d42bab812\" ac:macro-id=\"\
+      b1b7a13a598cededc74e26d40052217d\"><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter\
+      \ ac:name=\"maxLevel\">1</ac:parameter><ac:parameter ac:name=\"exclude\">External\
+      \ API 변경사항 바로가기</ac:parameter></ac:structured-macro><hr /><h1>API Docs Json\
+      \ File</h1><p class=\"media-group\"><ac:structured-macro ac:name=\"view-file\"\
+      \ ac:schema-version=\"1\" ac:macro-id=\"bb52972a-ed8f-4020-a27f-c84b50eb1e0c\"\
+      ><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"994_external.json\"\
+      \ ri:version-at-save=\"1\" /></ac:parameter></ac:structured-macro><ac:structured-macro\
+      \ ac:name=\"view-file\" ac:schema-version=\"1\" ac:macro-id=\"7bd5e77e-1eef-4fea-b41d-c4305e195959\"\
+      ><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"995_external.json\"\
+      \ ri:version-at-save=\"1\" /></ac:parameter></ac:structured-macro></p><hr /><h1>1.\
+      \ Access Approval API</h1><h3><strong>(GET) List</strong></h3><h4>Request</h4><ul><li><p>변경점\
+      \ 없음</p></li></ul><h4>Response</h4><table data-table-width=\"760\" data-layout=\"\
+      default\" ac:local-id=\"729f4860-908e-453e-a2ce-586ef92bde21\"><colgroup><col\
+      \ style=\"width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경\
+      \ 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table><ul><li><p><strong>id</strong>\
+      \ 가 <strong>추가</strong>되었습니다.</p></li></ul><hr /><h1>2. Approval API</h1><h3><strong>(GET)\
+      \ List</strong></h3><h4>Request</h4><ul><li><p>변경점 없음</p></li></ul><h4>Response</h4><table\
+      \ data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"d1aedf57-9c7c-4ffd-abf3-d1381144dd7d\"\
+      ><colgroup><col style=\"width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경\
+      \ 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table><ul><li><p><strong>id</strong>\
+      \ 가 <strong>추가</strong>되었습니다.</p></li></ul><hr /><h1>3. Audit Log API</h1><h3><strong>(GET)\
+      \ List of Approval</strong></h3><p><code>/api/external/audit-logs</code></p><h4>Request</h4><ul><li><p>Query\
+      \ Parameter</p></li><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>cursor</strong> 에\
+      \ 대한 내용이 수정되었습니다.</p></li></ul><h4>Response</h4><ul><li><p>/api/docs 에 잘못 표기\
+      \ 되어 있던 <strong>nextCursor</strong> 에 대한 내용이 수정되었습니다.</p></li></ul><hr /><h1>4.\
+      \ Notification Channels API</h1><h3><strong>(GET) List</strong></h3><p><code>/api/external/notification-channels</code></p><h4>Request</h4><ul><li><p>Query\
+      \ Parameter</p></li></ul><table data-table-width=\"760\" data-layout=\"default\"\
+      \ ac:local-id=\"a8579e9b-bf3a-44ef-8dbe-bef487c68840\"><colgroup><col style=\"\
+      width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경\
+      \ 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><ul><li><p>dataFlowRequest.filterKey</p></li><li><p>dataFlowRequest.filterValue</p></li><li><p>dataFlowRequest.sortKey</p></li><li><p>dataFlowRequest.sortType</p></li></ul></td><td><ul><li><p>filterKey</p></li><li><p>filterValue</p></li><li><p>sortKey</p></li><li><p>sortType</p></li></ul></td></tr></tbody></table><ul><li><p><strong>이름</strong>이\
+      \ <strong>변경</strong>되었습니다.</p></li></ul><h4>Response</h4><ul><li><p>변경점 없음</p></li></ul>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/544375741"
+  "view":
+    "value": "<div class=\"toc-macro client-side-toc-macro  conf-macro output-block\"\
+      \ data-excludeheaderregex=\"External API 변경사항 바로가기\" data-hasbody=\"false\"\
+      \ data-headerelements=\"H1\" data-layout=\"default\" data-local-id=\"d20a7b68-bbd3-4415-bd42-1c3d42bab812\"\
+      \ data-macro-id=\"b1b7a13a598cededc74e26d40052217d\" data-macro-name=\"toc\"\
+      > </div><hr/><h1 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-APIDocsJsonFile\"\
+      >API Docs Json File</h1><p class=\"media-group\"><span class=\"confluence-embedded-file-wrapper\
+      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"bb52972a-ed8f-4020-a27f-c84b50eb1e0c\"\
+      \ data-macro-name=\"view-file\"><a class=\"confluence-embedded-file\" href=\"\
+      /wiki/download/attachments/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-nice-type=\"null\" data-file-src=\"/wiki/download/attachments/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-linked-resource-id=\"544375753\" data-linked-resource-type=\"attachment\"\
+      \ data-linked-resource-container-id=\"544375741\" data-linked-resource-default-alias=\"\
+      994_external.json\" data-mime-type=\"application/json\" data-has-thumbnail=\"\
+      true\" data-linked-resource-version=\"1\" data-media-id=\"e222be1a-882e-4b85-a1ee-1efed7c08cdd\"\
+      \ data-media-type=\"file\"><img src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544375741/994_external.json?version=1&amp;modificationDate=1720933305192&amp;cacheVersion=1&amp;api=v2&amp;viewType=fileMacro\"\
+      \ height=\"250\" /></a></span><span class=\"confluence-embedded-file-wrapper\
+      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"7bd5e77e-1eef-4fea-b41d-c4305e195959\"\
+      \ data-macro-name=\"view-file\"><a class=\"confluence-embedded-file\" href=\"\
+      /wiki/download/attachments/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-nice-type=\"null\" data-file-src=\"/wiki/download/attachments/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-linked-resource-id=\"544375756\" data-linked-resource-type=\"attachment\"\
+      \ data-linked-resource-container-id=\"544375741\" data-linked-resource-default-alias=\"\
+      995_external.json\" data-mime-type=\"application/json\" data-has-thumbnail=\"\
+      true\" data-linked-resource-version=\"1\" data-media-id=\"aeb576e0-660a-4355-bf9e-2cf350ea57f3\"\
+      \ data-media-type=\"file\"><img src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544375741/995_external.json?version=1&amp;modificationDate=1720933305554&amp;cacheVersion=1&amp;api=v2&amp;viewType=fileMacro\"\
+      \ height=\"250\" /></a></span></p><hr/><h1 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-1.AccessApprovalAPI\"\
+      >1. Access Approval API</h1><h3 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List\"\
+      ><strong>(GET) List</strong></h3><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request\"\
+      >Request</h4><ul><li><p>변경점 없음</p></li></ul><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response\"\
+      >Response</h4><div class=\"table-wrap\"><table data-table-width=\"760\" data-layout=\"\
+      default\" data-local-id=\"729f4860-908e-453e-a2ce-586ef92bde21\" class=\"confluenceTable\"\
+      ><colgroup><col style=\"width: 316.0px;\"/><col style=\"width: 364.0px;\"/></colgroup><tbody><tr><th\
+      \ class=\"confluenceTh\"><p><strong>변경 전</strong></p></th><th class=\"confluenceTh\"\
+      ><p><strong>변경 후</strong></p></th></tr><tr><td class=\"confluenceTd\"><p /></td><td\
+      \ class=\"confluenceTd\"><ul><li><p>id</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>id</strong>\
+      \ 가 <strong>추가</strong>되었습니다.</p></li></ul><hr/><h1 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-2.ApprovalAPI\"\
+      >2. Approval API</h1><h3 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List.1\"\
+      ><strong>(GET) List</strong></h3><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.1\"\
+      >Request</h4><ul><li><p>변경점 없음</p></li></ul><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.1\"\
+      >Response</h4><div class=\"table-wrap\"><table data-table-width=\"760\" data-layout=\"\
+      default\" data-local-id=\"d1aedf57-9c7c-4ffd-abf3-d1381144dd7d\" class=\"confluenceTable\"\
+      ><colgroup><col style=\"width: 316.0px;\"/><col style=\"width: 364.0px;\"/></colgroup><tbody><tr><th\
+      \ class=\"confluenceTh\"><p><strong>변경 전</strong></p></th><th class=\"confluenceTh\"\
+      ><p><strong>변경 후</strong></p></th></tr><tr><td class=\"confluenceTd\"><p /></td><td\
+      \ class=\"confluenceTd\"><ul><li><p>id</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>id</strong>\
+      \ 가 <strong>추가</strong>되었습니다.</p></li></ul><hr/><h1 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-3.AuditLogAPI\"\
+      >3. Audit Log API</h1><h3 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)ListofApproval\"\
+      ><strong>(GET) List of Approval</strong></h3><p><code>/api/external/audit-logs</code></p><h4\
+      \ id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.2\">Request</h4><ul><li><p>Query\
+      \ Parameter</p></li><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>cursor</strong> 에\
+      \ 대한 내용이 수정되었습니다.</p></li></ul><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.2\"\
+      >Response</h4><ul><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>nextCursor</strong>\
+      \ 에 대한 내용이 수정되었습니다.</p></li></ul><hr/><h1 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-4.NotificationChannelsAPI\"\
+      >4. Notification Channels API</h1><h3 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-(GET)List.2\"\
+      ><strong>(GET) List</strong></h3><p><code>/api/external/notification-channels</code></p><h4\
+      \ id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Request.3\">Request</h4><ul><li><p>Query\
+      \ Parameter</p></li></ul><div class=\"table-wrap\"><table data-table-width=\"\
+      760\" data-layout=\"default\" data-local-id=\"a8579e9b-bf3a-44ef-8dbe-bef487c68840\"\
+      \ class=\"confluenceTable\"><colgroup><col style=\"width: 316.0px;\"/><col style=\"\
+      width: 364.0px;\"/></colgroup><tbody><tr><th class=\"confluenceTh\"><p><strong>변경\
+      \ 전</strong></p></th><th class=\"confluenceTh\"><p><strong>변경 후</strong></p></th></tr><tr><td\
+      \ class=\"confluenceTd\"><ul><li><p>dataFlowRequest.filterKey</p></li><li><p>dataFlowRequest.filterValue</p></li><li><p>dataFlowRequest.sortKey</p></li><li><p>dataFlowRequest.sortType</p></li></ul></td><td\
+      \ class=\"confluenceTd\"><ul><li><p>filterKey</p></li><li><p>filterValue</p></li><li><p>sortKey</p></li><li><p>sortType</p></li></ul></td></tr></tbody></table></div><ul><li><p><strong>이름</strong>이\
+      \ <strong>변경</strong>되었습니다.</p></li></ul><h4 id=\"ExternalAPI변경사항(9.9.4버전&gt;9.9.5버전)-Response.3\"\
+      >Response</h4><ul><li><p>변경점 없음</p></li></ul>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/544375741"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "38055023"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/544375741/restriction/byOperation"
+  "history": "/rest/api/content/544375741/history"
+  "version": ""
+  "descendants": "/rest/api/content/544375741/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/544375741/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544375741"
+  "webui": "/spaces/QM/pages/544375741/External+API+9.9.4+9.9.5"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544375741"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/544375741"
+  "tinyui": "/x/vYNyI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

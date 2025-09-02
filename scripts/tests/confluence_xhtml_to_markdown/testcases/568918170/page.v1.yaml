@@ -1,491 +1,457 @@
-id: '568918170'
-type: page
-ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/568918170
-base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTY4OTE4MTcw
-status: current
-title: 결재 부가 기능 (대리 결재, 재상신 등)
-ancestors:
-- id: '576585864'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0
-  status: current
-  title: QueryPie Manual
-  macroRenderedOutput: {}
-  extensions:
-    position: 921
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/576585864/restriction/byOperation
-    history: /rest/api/content/576585864/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/576585864/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/576585864/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/576585864
-    tinyui: /x/iABeIg
-    editui: /pages/resumedraft.action?draftId=576585864
-    webui: /spaces/QM/overview
-    edituiv2: /spaces/QM/pages/edit-v2/576585864
-- id: '608501837'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3
-  status: current
-  title: QueryPie Docs
-  macroRenderedOutput: {}
-  extensions:
-    position: 9
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/608501837/restriction/byOperation
-    history: /rest/api/content/608501837/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/608501837/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/608501837/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/608501837
-    tinyui: /x/TQBFJ
-    editui: /pages/resumedraft.action?draftId=608501837
-    webui: /spaces/QM/pages/608501837/QueryPie+Docs
-    edituiv2: /spaces/QM/pages/edit-v2/608501837
-- id: '544211126'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2
-  status: current
-  title: 사용자 매뉴얼
-  macroRenderedOutput: {}
-  extensions:
-    position: 521757335
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544211126/restriction/byOperation
-    history: /rest/api/content/544211126/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544211126/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544211126/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544211126
-    tinyui: /x/tgBwI
-    editui: /pages/resumedraft.action?draftId=544211126
-    webui: /spaces/QM/pages/544211126
-    edituiv2: /spaces/QM/pages/edit-v2/544211126
-- id: '544377922'
-  type: page
-  ari: ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544377922
-  base64EncodedAri: YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc3OTIy
-  status: current
-  title: Workflow
-  macroRenderedOutput: {}
-  extensions:
-    position: 185634649
-  _expandable:
-    container: /rest/api/space/QM
-    metadata: ''
-    restrictions: /rest/api/content/544377922/restriction/byOperation
-    history: /rest/api/content/544377922/history
-    body: ''
-    version: ''
-    descendants: /rest/api/content/544377922/descendant
-    space: /rest/api/space/QM
-    childTypes: ''
-    schedulePublishInfo: ''
-    operations: ''
-    schedulePublishDate: ''
-    children: /rest/api/content/544377922/child
-    ancestors: ''
-    draftVersion: ''
-  _links:
-    self: https://querypie.atlassian.net/wiki/rest/api/content/544377922
-    tinyui: /x/QoxyI
-    editui: /pages/resumedraft.action?draftId=544377922
-    webui: /spaces/QM/pages/544377922/Workflow
-    edituiv2: /spaces/QM/pages/edit-v2/544377922
-macroRenderedOutput: {}
-body:
-  storage:
-    value: '<ac:layout><ac:layout-section ac:type="fixed-width" ac:breakout-mode="default"><ac:layout-cell><h2>Overview</h2><p>Workflow
-      사용 시 편리함을 더해주는 부가 기능을 소개합니다. </p><ac:structured-macro ac:name="toc" ac:schema-version="1"
-      data-layout="default" ac:local-id="fffae0b9-84f6-42d8-b6f2-b38fd4a694ce" ac:macro-id="334477e7-dc7b-494d-9513-c21c2ccabe57"><ac:parameter
-      ac:name="maxLevel">2</ac:parameter><ac:parameter ac:name="minLevel">1</ac:parameter><ac:parameter
-      ac:name="include" /><ac:parameter ac:name="outline">false</ac:parameter><ac:parameter
-      ac:name="indent" /><ac:parameter ac:name="exclude">Overview</ac:parameter><ac:parameter
-      ac:name="style">default</ac:parameter><ac:parameter ac:name="type">list</ac:parameter><ac:parameter
-      ac:name="printable">true</ac:parameter><ac:parameter ac:name="class" /></ac:structured-macro><p
-      /><h2>참조된 요청 확인 처리하기</h2><ac:image ac:align="center" ac:layout="center" ac:original-height="1291"
-      ac:original-width="1990" ac:custom-width="true" ac:alt="스크린샷 2024-08-02
-      오전 11.41.29.png" ac:width="760"><ri:attachment ri:filename="스크린샷 2024-08-02
-      오전 11.41.29.png" ri:version-at-save="1" /><ac:caption><p>Workflow &gt; Reviews
-      &gt; All Reviews &gt; Review Details</p></ac:caption><ac:adf-mark key="border"
-      size="1" color="#091e4224" /></ac:image><ol start="1"><li><p>Reviews &gt; All
-      Reviews 목록에서 참조 완료 처리하려는 요청을 클릭하여 상세 페이지로 진입합니다. </p><ol start="1"><li><p>참조
-      문서는 결재 승인 상태와 관계없이(승인 전/후) 모두 열람할 수 있습니다. </p></li><li><p>Review Status 가 <strong>Unread</strong>
-      인 요청들에 대해서만 <code>Confirm</code>이 가능합니다. </p></li></ol></li><li><p>요청 상세 페이지
-      우측 상단의 <code>Confirm</code> 버튼을 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다. </p></li><li><p>검토
-      의견을 입력 후 <code>OK</code> 버튼을 눌러 확인을 완료합니다. </p></li><li><p>All Reviews 목록으로
-      돌아가면 Review Status 값이 <strong>Confirmed</strong>로 변경된 것을 확인할 수 있습니다.</p></li></ol><p
-      /><p> </p><h2>대리 결재 사용하기</h2><p>대리 결재란 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다.
-      사용 방법은 다음과 같습니다.</p><h3>1. 대리 결재 사용 설정하기</h3><ac:image ac:align="center" ac:layout="center"
-      ac:original-height="557" ac:original-width="897" ac:custom-width="true" ac:alt="스크린샷
-      2024-08-02 오후 12.04.01.png" ac:width="760"><ri:attachment ri:filename="스크린샷
-      2024-08-02 오후 12.04.01.png" ri:version-at-save="1" /><ac:caption><p>User &gt;
-      상단 메뉴바에서 프로필 클릭 &gt; Preferences</p></ac:caption><ac:adf-mark key="border" size="1"
-      color="#091e4224" /></ac:image><ul><li><p><strong>Delegate Approval to</strong>
-      : 대리 결재자 입력 </p></li><li><p><strong>Start Date</strong> : 대리 결재 시작일자</p></li><li><p><strong>End
-      Date</strong> : 대리 결재 종료일자</p></li><li><p><strong>Delegation Reason</strong>
-      : 대리 결재 설정 사유 입력 </p></li><li><p><strong>Save</strong> : <code>Save</code> 버튼을
-      입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 <code>Save</code> 즉시 적용됩니다.</p></li></ul><h3>2.
-      대리 결재 설정 상태 확인하기</h3><p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p></ac:layout-cell></ac:layout-section><ac:layout-section
-      ac:type="two_equal" ac:breakout-mode="default"><ac:layout-cell><ac:image ac:align="center"
-      ac:layout="center" ac:original-height="174" ac:original-width="594" ac:custom-width="true"
-      ac:alt="스크린샷 2024-08-02 오후 12.07.41.png" ac:width="594"><ri:attachment
-      ri:filename="스크린샷 2024-08-02 오후 12.07.41.png" ri:version-at-save="1"
-      /><ac:caption><p>원 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark key="border" size="1"
-      color="#091e4224" /></ac:image></ac:layout-cell><ac:layout-cell><ac:image ac:align="center"
-      ac:layout="center" ac:original-height="174" ac:original-width="594" ac:custom-width="true"
-      ac:alt="스크린샷 2024-08-02 오후 12.08.54.png" ac:width="594"><ri:attachment
-      ri:filename="스크린샷 2024-08-02 오후 12.08.54.png" ri:version-at-save="1"
-      /><ac:caption><p>대리 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark key="border" size="1"
-      color="#091e4224" /></ac:image></ac:layout-cell></ac:layout-section><ac:layout-section
-      ac:type="fixed-width" ac:breakout-mode="default"><ac:layout-cell><ac:structured-macro
-      ac:name="info" ac:schema-version="1" ac:macro-id="0e393d17-632f-4483-91ba-6fc07e3650b3"><ac:rich-text-body><p>대리
-      결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를
-      선택하면 됩니다.</p></ac:rich-text-body></ac:structured-macro><h3>3. 위임받은 대리 결재 요청
-      처리하기</h3><ul><li><p>대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. </p><ul><li><p><strong>Received
-      Requests &gt; To Do</strong> : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함</p></li><li><p><strong>Received
-      Requests &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세
-      페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul><ac:image
-      ac:align="center" ac:layout="center" ac:original-height="928" ac:original-width="1433"
-      ac:custom-width="true" ac:alt="스크린샷 2024-08-02 오후 12.46.38.png" ac:width="760"><ri:attachment
-      ri:filename="스크린샷 2024-08-02 오후 12.46.38.png" ri:version-at-save="1"
-      /><ac:adf-mark key="border" size="1" color="#091e4224" /></ac:image><h3>4. 대리
-      결재 처리된 요청 건 확인하기 </h3><ul><li><p>다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가
-      처리한 것인지를 확인할 수 있습니다.  </p></li></ul></ac:layout-cell></ac:layout-section><ac:layout-section
-      ac:type="two_equal" ac:breakout-mode="default"><ac:layout-cell><p style="text-align:
-      center;"><strong>원 결재자가 처리한 경우</strong></p><ac:image ac:align="center" ac:layout="center"
-      ac:original-height="576" ac:original-width="676" ac:custom-width="true" ac:alt="스크린샷
-      2024-07-25 오후 3.35.33.png" ac:width="363"><ri:attachment ri:filename="스크린샷
-      2024-07-25 오후 3.35.33.png" ri:version-at-save="1" /><ac:caption><p>대리 결재 관련
-      문구 없음</p></ac:caption><ac:adf-mark key="border" size="1" color="#091e4224" /></ac:image></ac:layout-cell><ac:layout-cell><p
-      style="text-align: center;"><strong>대리 결재자가 처리한 경우</strong></p><ac:image ac:align="center"
-      ac:layout="center" ac:original-height="571" ac:original-width="662" ac:custom-width="true"
-      ac:alt="스크린샷 2024-07-25 오후 3.21.41.png" ac:width="363"><ri:attachment
-      ri:filename="스크린샷 2024-07-25 오후 3.21.41.png" ri:version-at-save="1"
-      /><ac:caption><p>대리 결재자가 Done by the delegate와 함께 표기됨</p></ac:caption><ac:adf-mark
-      key="border" size="1" color="#091e4224" /></ac:image></ac:layout-cell></ac:layout-section><ac:layout-section
-      ac:type="fixed-width" ac:breakout-mode="default"><ac:layout-cell><ac:structured-macro
-      ac:name="info" ac:schema-version="1" ac:macro-id="0d492211-666c-4cf5-b197-36ab604842b9"><ac:rich-text-body><p>Slack
-      DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한
-      내용은 <ac:link><ri:page ri:content-title="Slack DM - Workflow 알림 유형" ri:version-at-save="14"
-      /><ac:link-body>Slack DM 개인 알림 사용하기</ac:link-body></ac:link> 문서를 참고해주세요. </p></ac:rich-text-body></ac:structured-macro><h3>5.
-      대리 결재 설정 종료 이후의 기안 조회 방법</h3><ul><li><p>대리 결재 설정 기간이 종료되었다 하더라도 Received Requests
-      &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나
-      처리할 수 없습니다. </p></li></ul><p /><h2>기존 요청 건 재상신하기 </h2><p>동일한 내용으로 반복적인 결재 요청을
-      하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다. </p><ac:image ac:align="center" ac:layout="wide"
-      ac:original-height="235" ac:original-width="575" ac:custom-width="true" ac:width="768"><ri:attachment
-      ri:filename="image-20230824-110815.png" ri:version-at-save="1" /><ac:caption><p>Workflow
-      &gt; Sent Requests &gt; Done &gt; List Details</p></ac:caption><ac:adf-mark
-      key="border" size="1" color="#091e4224" /></ac:image><ol start="1"><li><p>Sent
-      Requests &gt; Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다. </p></li></ol><ac:structured-macro
-      ac:name="info" ac:schema-version="1" ac:macro-id="131be646-3aa7-492b-902a-32bf694b89af"><ac:rich-text-body><p>이때
-      이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 <em><span style="color: rgb(255,86,48);">Deleted</span></em>로
-      표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></ac:rich-text-body></ac:structured-macro><ol
-      start="2"><li><p>우측 상단에 있는 <code>Resubmit</code> 버튼을 클릭하여 재상신 페이지로 진입합니다. </p></li><li><p>재상신
-      페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. </p></li><li><p><code>Save</code> 버튼을 통해 저장합니다.</p></li><li><p>Workflow
-      &gt; Sent Request &gt; In Progress 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol></ac:layout-cell></ac:layout-section></ac:layout>'
-    representation: storage
-    embeddedContent: []
-    _expandable:
-      content: /rest/api/content/568918170
-  view:
-    value: '<div class="contentLayout2"><style>[data-colorid=basm9tnj51]{color:#ff5630}
-      html[data-color-mode=dark] [data-colorid=basm9tnj51]{color:#cf2600}</style>
-
-      <div class="columnLayout fixed-width" data-layout="fixed-width">
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <h2 id="id-결재부가기능(대리결재,재상신등)-Overview">Overview</h2><p>Workflow 사용 시 편리함을 더해주는
-      부가 기능을 소개합니다. </p><div class="toc-macro client-side-toc-macro  conf-macro output-block"
-      data-structure="list" data-numberedoutline="false" data-cssliststyle="default"
-      data-headerelements="H1,H2" data-excludeheaderregex="Overview" data-hasbody="false"
-      data-macro-name="toc" data-macro-id="334477e7-dc7b-494d-9513-c21c2ccabe57" data-layout="default"
-      data-local-id="fffae0b9-84f6-42d8-b6f2-b38fd4a694ce"> </div><p /><h2 id="id-결재부가기능(대리결재,재상신등)-참조된요청확인처리하기">참조된
-      요청 확인 처리하기</h2><span class="confluence-embedded-file-wrapper image-center-wrapper
-      confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border
-      image-center" alt="스크린샷 2024-08-02 오전 11.41.29.png" width="760" loading="lazy"
-      src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2"
-      data-height="1291" data-width="1990" data-unresolved-comment-count="0" data-linked-resource-id="575209495"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-08-02 오전 11.41.29.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="65c66a03-4937-4a13-aefc-98e5865bc073"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=830
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492
-      1x" /></span><ol start="1"><li><p>Reviews &gt; All Reviews 목록에서 참조 완료 처리하려는
-      요청을 클릭하여 상세 페이지로 진입합니다. </p><ol start="1"><li><p>참조 문서는 결재 승인 상태와 관계없이(승인 전/후)
-      모두 열람할 수 있습니다. </p></li><li><p>Review Status 가 <strong>Unread</strong> 인 요청들에
-      대해서만 <code>Confirm</code>이 가능합니다. </p></li></ol></li><li><p>요청 상세 페이지 우측 상단의
-      <code>Confirm</code> 버튼을 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다. </p></li><li><p>검토
-      의견을 입력 후 <code>OK</code> 버튼을 눌러 확인을 완료합니다. </p></li><li><p>All Reviews 목록으로
-      돌아가면 Review Status 값이 <strong>Confirmed</strong>로 변경된 것을 확인할 수 있습니다.</p></li></ol><p
-      /><p> </p><h2 id="id-결재부가기능(대리결재,재상신등)-대리결재사용하기">대리 결재 사용하기</h2><p>대리 결재란 승인자
-      역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p><h3 id="id-결재부가기능(대리결재,재상신등)-1.대리결재사용설정하기">1.
-      대리 결재 사용 설정하기</h3><span class="confluence-embedded-file-wrapper image-center-wrapper
-      confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-content-image-border
-      image-center" alt="스크린샷 2024-08-02 오후 12.04.01.png" width="760" loading="lazy"
-      src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=472"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2"
-      data-height="557" data-width="897" data-unresolved-comment-count="0" data-linked-resource-id="575504423"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-08-02 오후 12.04.01.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="51f12e2a-d572-4dba-a922-31b32b6e4309"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=795
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=472
-      1x" /></span><ul><li><p><strong>Delegate Approval to</strong> : 대리 결재자 입력 </p></li><li><p><strong>Start
-      Date</strong> : 대리 결재 시작일자</p></li><li><p><strong>End Date</strong> : 대리 결재
-      종료일자</p></li><li><p><strong>Delegation Reason</strong> : 대리 결재 설정 사유 입력 </p></li><li><p><strong>Save</strong>
-      : <code>Save</code> 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 <code>Save</code>
-      즉시 적용됩니다.</p></li></ul><h3 id="id-결재부가기능(대리결재,재상신등)-2.대리결재설정상태확인하기">2. 대리 결재
-      설정 상태 확인하기</h3><p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p></div>
-
-      </div>
-
-      </div>
-
-      <div class="columnLayout two-equal" data-layout="two-equal">
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image confluence-content-image-border image-center"
-      alt="스크린샷 2024-08-02 오후 12.07.41.png" width="594" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2"
-      data-height="174" data-width="594" data-unresolved-comment-count="0" data-linked-resource-id="574652513"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-08-02 오후 12.07.41.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="1d95cc44-3f43-4b40-9b43-0ca8f41b6e21"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=1188&amp;height=348
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174
-      1x" /></span></div>
-
-      </div>
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image confluence-content-image-border image-center"
-      alt="스크린샷 2024-08-02 오후 12.08.54.png" width="594" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2"
-      data-height="174" data-width="594" data-unresolved-comment-count="0" data-linked-resource-id="575242300"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-08-02 오후 12.08.54.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="a62a2ecd-2fa5-49be-a1c3-c3dcb6ce15cf"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=1188&amp;height=348
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174
-      1x" /></span></div>
-
-      </div>
-
-      </div>
-
-      <div class="columnLayout fixed-width" data-layout="fixed-width">
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <div class="confluence-information-macro confluence-information-macro-information
-      conf-macro output-block" data-hasbody="true" data-macro-name="info" data-macro-id="0e393d17-632f-4483-91ba-6fc07e3650b3"><span
-      class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon">
-      </span><div class="confluence-information-macro-body"><p>대리 결재 설정 기간 중 기안 요청자에게는
-      별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.</p></div></div><h3
-      id="id-결재부가기능(대리결재,재상신등)-3.위임받은대리결재요청처리하기">3. 위임받은 대리 결재 요청 처리하기</h3><ul><li><p>대리
-      결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. </p><ul><li><p><strong>Received
-      Requests &gt; To Do</strong> : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함</p></li><li><p><strong>Received
-      Requests &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세
-      페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul><span
-      class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image confluence-content-image-border image-center"
-      alt="스크린샷 2024-08-02 오후 12.46.38.png" width="760" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2"
-      data-height="928" data-width="1433" data-unresolved-comment-count="0" data-linked-resource-id="575144055"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-08-02 오후 12.46.38.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="71fcff56-f18f-411f-b04d-be63b88b4ccb"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=829
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492
-      1x" /></span><h3 id="id-결재부가기능(대리결재,재상신등)-4.대리결재처리된요청건확인하기">4. 대리 결재 처리된 요청
-      건 확인하기 </h3><ul><li><p>다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할
-      수 있습니다.  </p></li></ul></div>
-
-      </div>
-
-      </div>
-
-      <div class="columnLayout two-equal" data-layout="two-equal">
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <p style="text-align: center;"><strong>원 결재자가 처리한 경우</strong></p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      confluence-content-image-border image-center" alt="스크린샷 2024-07-25 오후
-      3.35.33.png" width="363" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=309"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2"
-      data-height="576" data-width="676" data-unresolved-comment-count="0" data-linked-resource-id="567968135"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-07-25 오후 3.35.33.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="ebd9d727-8244-4b74-99d8-cfc7c6337682"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=726&amp;height=618
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=309
-      1x" /></span></div>
-
-      </div>
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <p style="text-align: center;"><strong>대리 결재자가 처리한 경우</strong></p><span class="confluence-embedded-file-wrapper
-      image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image
-      confluence-content-image-border image-center" alt="스크린샷 2024-07-25 오후
-      3.21.41.png" width="363" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=313"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2"
-      data-height="571" data-width="662" data-unresolved-comment-count="0" data-linked-resource-id="567968141"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="스크린샷
-      2024-07-25 오후 3.21.41.png" data-base-url="https://querypie.atlassian.net/wiki"
-      data-linked-resource-content-type="image/png" data-linked-resource-container-id="568918170"
-      data-linked-resource-container-version="13" data-media-id="2eefe12c-cbe5-4c56-b80e-0acc0d4e9f82"
-      data-media-type="file" srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=726&amp;height=626
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=313
-      1x" /></span></div>
-
-      </div>
-
-      </div>
-
-      <div class="columnLayout fixed-width" data-layout="fixed-width">
-
-      <div class="cell normal" data-type="normal">
-
-      <div class="innerCell">
-
-      <div class="confluence-information-macro confluence-information-macro-information
-      conf-macro output-block" data-hasbody="true" data-macro-name="info" data-macro-id="0d492211-666c-4cf5-b197-36ab604842b9"><span
-      class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon">
-      </span><div class="confluence-information-macro-body"><p>Slack DM을 통한 요청 알림을
-      사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한 내용은 <a href="/wiki/spaces/QM/pages/544378759/Slack+DM+-+Workflow"
-      data-linked-resource-id="544378759" data-linked-resource-version="14" data-linked-resource-type="page">Slack
-      DM 개인 알림 사용하기</a> 문서를 참고해주세요. </p></div></div><h3 id="id-결재부가기능(대리결재,재상신등)-5.대리결재설정종료이후의기안조회방법">5.
-      대리 결재 설정 종료 이후의 기안 조회 방법</h3><ul><li><p>대리 결재 설정 기간이 종료되었다 하더라도 Received Requests
-      &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나
-      처리할 수 없습니다. </p></li></ul><p /><h2 id="id-결재부가기능(대리결재,재상신등)-기존요청건재상신하기">기존 요청
-      건 재상신하기 </h2><p>동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다.
-      </p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img
-      class="confluence-embedded-image confluence-content-image-border image-center"
-      width="768" loading="lazy" src="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=768&amp;height=313"
-      data-image-src="https://querypie.atlassian.net/wiki/download/attachments/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2"
-      data-height="235" data-width="575" data-unresolved-comment-count="0" data-linked-resource-id="568099149"
-      data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20230824-110815.png"
-      data-base-url="https://querypie.atlassian.net/wiki" data-linked-resource-content-type="image/png"
-      data-linked-resource-container-id="568918170" data-linked-resource-container-version="13"
-      data-media-id="61e8abeb-336b-4006-a484-d651e4b2a0a3" data-media-type="file"
-      srcset="https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=1149&amp;height=469
-      2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=768&amp;height=313
-      1x" /></span><ol start="1"><li><p>Sent Requests &gt; Done 목록에서 재상신을 원하는 요청 건을
-      클릭하여 상세 페이지로 진입합니다. </p></li></ol><div class="confluence-information-macro confluence-information-macro-information
-      conf-macro output-block" data-hasbody="true" data-macro-name="info" data-macro-id="131be646-3aa7-492b-902a-32bf694b89af"><span
-      class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon">
-      </span><div class="confluence-information-macro-body"><p>이때 이미 삭제된 데이터(결재 규칙,
-      승인자, 서버, 계정 등)는 <em><span data-colorid="basm9tnj51">Deleted</span></em>로 표시되는
-      것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></div></div><ol
-      start="2"><li><p>우측 상단에 있는 <code>Resubmit</code> 버튼을 클릭하여 재상신 페이지로 진입합니다. </p></li><li><p>재상신
-      페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. </p></li><li><p><code>Save</code> 버튼을 통해 저장합니다.</p></li><li><p>Workflow
-      &gt; Sent Request &gt; In Progress 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol></div>
-
-      </div>
-
-      </div>
-
-      </div>'
-    representation: view
-    _expandable:
-      webresource: ''
-      embeddedContent: ''
-      mediaToken: ''
-      content: /rest/api/content/568918170
-  _expandable:
-    editor: ''
-    atlas_doc_format: ''
-    export_view: ''
-    styled_view: ''
-    dynamic: ''
-    editor2: ''
-    anonymous_export_view: ''
-extensions:
-  position: 2455
-_expandable:
-  container: /rest/api/space/QM
-  metadata: ''
-  restrictions: /rest/api/content/568918170/restriction/byOperation
-  history: /rest/api/content/568918170/history
-  version: ''
-  descendants: /rest/api/content/568918170/descendant
-  space: /rest/api/space/QM
-  childTypes: ''
-  schedulePublishInfo: ''
-  operations: ''
-  schedulePublishDate: ''
-  children: /rest/api/content/568918170/child
-  draftVersion: ''
-_links:
-  editui: /pages/resumedraft.action?draftId=568918170
-  webui: /spaces/QM/pages/568918170
-  edituiv2: /spaces/QM/pages/edit-v2/568918170
-  context: /wiki
-  self: https://querypie.atlassian.net/wiki/rest/api/content/568918170
-  tinyui: /x/mgDpIQ
-  collection: /rest/api/content
-  base: https://querypie.atlassian.net/wiki
+"id": "568918170"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/568918170"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTY4OTE4MTcw"
+"status": "current"
+"title": "결재 부가 기능 (대리 결재, 재상신 등)"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "921"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544211126"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211126"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMTI2"
+  "status": "current"
+  "title": "사용자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757335"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544211126/restriction/byOperation"
+    "history": "/rest/api/content/544211126/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544211126/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544211126/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544211126"
+    "tinyui": "/x/tgBwI"
+    "editui": "/pages/resumedraft.action?draftId=544211126"
+    "webui": "/spaces/QM/pages/544211126"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544211126"
+- "id": "544377922"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544377922"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc3OTIy"
+  "status": "current"
+  "title": "Workflow"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "185634649"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544377922/restriction/byOperation"
+    "history": "/rest/api/content/544377922/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544377922/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544377922/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544377922"
+    "tinyui": "/x/QoxyI"
+    "editui": "/pages/resumedraft.action?draftId=544377922"
+    "webui": "/spaces/QM/pages/544377922/Workflow"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544377922"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<ac:layout><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"\
+      default\"><ac:layout-cell><h2>Overview</h2><p>Workflow 사용 시 편리함을 더해주는 부가 기능을\
+      \ 소개합니다. </p><ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"\
+      default\" ac:local-id=\"fffae0b9-84f6-42d8-b6f2-b38fd4a694ce\" ac:macro-id=\"\
+      334477e7-dc7b-494d-9513-c21c2ccabe57\"><ac:parameter ac:name=\"maxLevel\">2</ac:parameter><ac:parameter\
+      \ ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"include\" /><ac:parameter\
+      \ ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"indent\" /><ac:parameter\
+      \ ac:name=\"exclude\">Overview</ac:parameter><ac:parameter ac:name=\"style\"\
+      >default</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter\
+      \ ac:name=\"printable\">true</ac:parameter><ac:parameter ac:name=\"class\" /></ac:structured-macro><p\
+      \ /><h2>참조된 요청 확인 처리하기</h2><ac:image ac:align=\"center\" ac:layout=\"center\"\
+      \ ac:original-height=\"1291\" ac:original-width=\"1990\" ac:custom-width=\"\
+      true\" ac:alt=\"스크린샷 2024-08-02 오전 11.41.29.png\" ac:width=\"760\"\
+      ><ri:attachment ri:filename=\"스크린샷 2024-08-02 오전 11.41.29.png\" ri:version-at-save=\"\
+      1\" /><ac:caption><p>Workflow &gt; Reviews &gt; All Reviews &gt; Review Details</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><ol start=\"1\"\
+      ><li><p>Reviews &gt; All Reviews 목록에서 참조 완료 처리하려는 요청을 클릭하여 상세 페이지로 진입합니다. </p><ol\
+      \ start=\"1\"><li><p>참조 문서는 결재 승인 상태와 관계없이(승인 전/후) 모두 열람할 수 있습니다. </p></li><li><p>Review\
+      \ Status 가 <strong>Unread</strong> 인 요청들에 대해서만 <code>Confirm</code>이 가능합니다.\
+      \ </p></li></ol></li><li><p>요청 상세 페이지 우측 상단의 <code>Confirm</code> 버튼을 클릭하여 Comment\
+      \ 입력할 수 있는 팝업창을 띄웁니다. </p></li><li><p>검토 의견을 입력 후 <code>OK</code> 버튼을 눌러 확인을\
+      \ 완료합니다. </p></li><li><p>All Reviews 목록으로 돌아가면 Review Status 값이 <strong>Confirmed</strong>로\
+      \ 변경된 것을 확인할 수 있습니다.</p></li></ol><p /><p> </p><h2>대리 결재 사용하기</h2><p>대리 결재란\
+      \ 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p><h3>1. 대리 결재 사용\
+      \ 설정하기</h3><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
+      557\" ac:original-width=\"897\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
+      \ 2024-08-02 오후 12.04.01.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      스크린샷 2024-08-02 오후 12.04.01.png\" ri:version-at-save=\"1\" /><ac:caption><p>User\
+      \ &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences</p></ac:caption><ac:adf-mark key=\"\
+      border\" size=\"1\" color=\"#091e4224\" /></ac:image><ul><li><p><strong>Delegate\
+      \ Approval to</strong> : 대리 결재자 입력 </p></li><li><p><strong>Start Date</strong>\
+      \ : 대리 결재 시작일자</p></li><li><p><strong>End Date</strong> : 대리 결재 종료일자</p></li><li><p><strong>Delegation\
+      \ Reason</strong> : 대리 결재 설정 사유 입력 </p></li><li><p><strong>Save</strong> : <code>Save</code>\
+      \ 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 <code>Save</code> 즉시 적용됩니다.</p></li></ul><h3>2.\
+      \ 대리 결재 설정 상태 확인하기</h3><p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p></ac:layout-cell></ac:layout-section><ac:layout-section\
+      \ ac:type=\"two_equal\" ac:breakout-mode=\"default\"><ac:layout-cell><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"174\" ac:original-width=\"\
+      594\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.07.41.png\"\
+      \ ac:width=\"594\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.07.41.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>원 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image></ac:layout-cell><ac:layout-cell><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"174\" ac:original-width=\"\
+      594\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.08.54.png\"\
+      \ ac:width=\"594\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.08.54.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>대리 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image></ac:layout-cell></ac:layout-section><ac:layout-section\
+      \ ac:type=\"fixed-width\" ac:breakout-mode=\"default\"><ac:layout-cell><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"0e393d17-632f-4483-91ba-6fc07e3650b3\"\
+      ><ac:rich-text-body><p>대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로\
+      \ Approval Rule 및 Approver를 선택하면 됩니다.</p></ac:rich-text-body></ac:structured-macro><h3>3.\
+      \ 위임받은 대리 결재 요청 처리하기</h3><ul><li><p>대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과\
+      \ 같습니다. </p><ul><li><p><strong>Received Requests &gt; To Do</strong> : 원 결재자가\
+      \ 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함</p></li><li><p><strong>Received Requests\
+      \ &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세\
+      \ 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"928\" ac:original-width=\"\
+      1433\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.46.38.png\"\
+      \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.46.38.png\"\
+      \ ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"\
+      #091e4224\" /></ac:image><h3>4. 대리 결재 처리된 요청 건 확인하기 </h3><ul><li><p>다음과 같이 요청\
+      \ 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다.  </p></li></ul></ac:layout-cell></ac:layout-section><ac:layout-section\
+      \ ac:type=\"two_equal\" ac:breakout-mode=\"default\"><ac:layout-cell><p style=\"\
+      text-align: center;\"><strong>원 결재자가 처리한 경우</strong></p><ac:image ac:align=\"\
+      center\" ac:layout=\"center\" ac:original-height=\"576\" ac:original-width=\"\
+      676\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-25 오후 3.35.33.png\"\
+      \ ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-25 오후 3.35.33.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>대리 결재 관련 문구 없음</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image></ac:layout-cell><ac:layout-cell><p\
+      \ style=\"text-align: center;\"><strong>대리 결재자가 처리한 경우</strong></p><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"571\" ac:original-width=\"\
+      662\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-25 오후 3.21.41.png\"\
+      \ ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-25 오후 3.21.41.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>대리 결재자가 Done by the delegate와 함께\
+      \ 표기됨</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\"\
+      \ /></ac:image></ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"\
+      fixed-width\" ac:breakout-mode=\"default\"><ac:layout-cell><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"0d492211-666c-4cf5-b197-36ab604842b9\"\
+      ><ac:rich-text-body><p>Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이\
+      \ 발송됩니다. Slack DM 알림 관련 자세한 내용은 <ac:link><ri:page ri:content-title=\"Slack DM\
+      \ - Workflow 알림 유형\" ri:version-at-save=\"14\" /><ac:link-body>Slack DM 개인 알림\
+      \ 사용하기</ac:link-body></ac:link> 문서를 참고해주세요. </p></ac:rich-text-body></ac:structured-macro><h3>5.\
+      \ 대리 결재 설정 종료 이후의 기안 조회 방법</h3><ul><li><p>대리 결재 설정 기간이 종료되었다 하더라도 Received Requests\
+      \ &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상\
+      \ 조회하거나 처리할 수 없습니다. </p></li></ul><p /><h2>기존 요청 건 재상신하기 </h2><p>동일한 내용으로 반복적인\
+      \ 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다. </p><ac:image ac:align=\"center\"\
+      \ ac:layout=\"wide\" ac:original-height=\"235\" ac:original-width=\"575\" ac:custom-width=\"\
+      true\" ac:width=\"768\"><ri:attachment ri:filename=\"image-20230824-110815.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Workflow &gt; Sent Requests &gt;\
+      \ Done &gt; List Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
+      1\" color=\"#091e4224\" /></ac:image><ol start=\"1\"><li><p>Sent Requests &gt;\
+      \ Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다. </p></li></ol><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"131be646-3aa7-492b-902a-32bf694b89af\"\
+      ><ac:rich-text-body><p>이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 <em><span style=\"\
+      color: rgb(255,86,48);\">Deleted</span></em>로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신\
+      \ 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></ac:rich-text-body></ac:structured-macro><ol\
+      \ start=\"2\"><li><p>우측 상단에 있는 <code>Resubmit</code> 버튼을 클릭하여 재상신 페이지로 진입합니다.\
+      \ </p></li><li><p>재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. </p></li><li><p><code>Save</code>\
+      \ 버튼을 통해 저장합니다.</p></li><li><p>Workflow &gt; Sent Request &gt; In Progress 메뉴에서\
+      \ 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol></ac:layout-cell></ac:layout-section></ac:layout>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/568918170"
+  "view":
+    "value": "<div class=\"contentLayout2\"><style>[data-colorid=bngfiecpxh]{color:#ff5630}\
+      \ html[data-color-mode=dark] [data-colorid=bngfiecpxh]{color:#cf2600}</style>\n\
+      <div class=\"columnLayout fixed-width\" data-layout=\"fixed-width\">\n<div class=\"\
+      cell normal\" data-type=\"normal\">\n<div class=\"innerCell\">\n<h2 id=\"id-결재부가기능(대리결재,재상신등)-Overview\"\
+      >Overview</h2><p>Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다. </p><div class=\"toc-macro\
+      \ client-side-toc-macro  conf-macro output-block\" data-cssliststyle=\"default\"\
+      \ data-excludeheaderregex=\"Overview\" data-hasbody=\"false\" data-headerelements=\"\
+      H1,H2\" data-layout=\"default\" data-local-id=\"fffae0b9-84f6-42d8-b6f2-b38fd4a694ce\"\
+      \ data-macro-id=\"334477e7-dc7b-494d-9513-c21c2ccabe57\" data-macro-name=\"\
+      toc\" data-numberedoutline=\"false\" data-structure=\"list\"> </div><p /><h2\
+      \ id=\"id-결재부가기능(대리결재,재상신등)-참조된요청확인처리하기\">참조된 요청 확인 처리하기</h2><span class=\"\
+      confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"스크린샷 2024-08-02 오전 11.41.29.png\" width=\"760\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"1291\" data-width=\"1990\" data-unresolved-comment-count=\"\
+      0\" data-linked-resource-id=\"575209495\" data-linked-resource-version=\"1\"\
+      \ data-linked-resource-type=\"attachment\" data-linked-resource-default-alias=\"\
+      스크린샷 2024-08-02 오전 11.41.29.png\" data-base-url=\"https://querypie.atlassian.net/wiki\"\
+      \ data-linked-resource-content-type=\"image/png\" data-linked-resource-container-id=\"\
+      568918170\" data-linked-resource-container-version=\"13\" data-media-id=\"65c66a03-4937-4a13-aefc-98e5865bc073\"\
+      \ data-media-type=\"file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=830\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2011.41.29.png?version=1&amp;modificationDate=1722566496587&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492\
+      \ 1x\" /></span><ol start=\"1\"><li><p>Reviews &gt; All Reviews 목록에서 참조 완료 처리하려는\
+      \ 요청을 클릭하여 상세 페이지로 진입합니다. </p><ol start=\"1\"><li><p>참조 문서는 결재 승인 상태와 관계없이(승인\
+      \ 전/후) 모두 열람할 수 있습니다. </p></li><li><p>Review Status 가 <strong>Unread</strong>\
+      \ 인 요청들에 대해서만 <code>Confirm</code>이 가능합니다. </p></li></ol></li><li><p>요청 상세 페이지\
+      \ 우측 상단의 <code>Confirm</code> 버튼을 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다. </p></li><li><p>검토\
+      \ 의견을 입력 후 <code>OK</code> 버튼을 눌러 확인을 완료합니다. </p></li><li><p>All Reviews 목록으로\
+      \ 돌아가면 Review Status 값이 <strong>Confirmed</strong>로 변경된 것을 확인할 수 있습니다.</p></li></ol><p\
+      \ /><p> </p><h2 id=\"id-결재부가기능(대리결재,재상신등)-대리결재사용하기\">대리 결재 사용하기</h2><p>대리 결재란\
+      \ 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p><h3 id=\"id-결재부가기능(대리결재,재상신등)-1.대리결재사용설정하기\"\
+      >1. 대리 결재 사용 설정하기</h3><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"스크린샷 2024-08-02 오후 12.04.01.png\" width=\"760\"\
+      \ loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=472\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"557\" data-width=\"897\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"575504423\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-02 오후\
+      \ 12.04.01.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"51f12e2a-d572-4dba-a922-31b32b6e4309\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=795\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.04.01.png?version=1&amp;modificationDate=1722567850281&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=472\
+      \ 1x\" /></span><ul><li><p><strong>Delegate Approval to</strong> : 대리 결재자 입력\
+      \ </p></li><li><p><strong>Start Date</strong> : 대리 결재 시작일자</p></li><li><p><strong>End\
+      \ Date</strong> : 대리 결재 종료일자</p></li><li><p><strong>Delegation Reason</strong>\
+      \ : 대리 결재 설정 사유 입력 </p></li><li><p><strong>Save</strong> : <code>Save</code>\
+      \ 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 <code>Save</code> 즉시 적용됩니다.</p></li></ul><h3\
+      \ id=\"id-결재부가기능(대리결재,재상신등)-2.대리결재설정상태확인하기\">2. 대리 결재 설정 상태 확인하기</h3><p>대리 결재\
+      \ 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p></div>\n</div>\n</div>\n\
+      <div class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n<div class=\"\
+      cell normal\" data-type=\"normal\">\n<div class=\"innerCell\">\n<span class=\"\
+      confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"스크린샷 2024-08-02 오후 12.07.41.png\" width=\"594\" loading=\"lazy\"\
+      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"174\" data-width=\"594\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"574652513\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-02 오후\
+      \ 12.07.41.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"1d95cc44-3f43-4b40-9b43-0ca8f41b6e21\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=1188&amp;height=348\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.07.41.png?version=1&amp;modificationDate=1722568068729&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174\
+      \ 1x\" /></span></div>\n</div>\n<div class=\"cell normal\" data-type=\"normal\"\
+      >\n<div class=\"innerCell\">\n<span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"스크린샷 2024-08-02\
+      \ 오후 12.08.54.png\" width=\"594\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"174\" data-width=\"594\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"575242300\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-02 오후\
+      \ 12.08.54.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"a62a2ecd-2fa5-49be-a1c3-c3dcb6ce15cf\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=1188&amp;height=348\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.08.54.png?version=1&amp;modificationDate=1722568146133&amp;cacheVersion=1&amp;api=v2&amp;width=594&amp;height=174\
+      \ 1x\" /></span></div>\n</div>\n</div>\n<div class=\"columnLayout fixed-width\"\
+      \ data-layout=\"fixed-width\">\n<div class=\"cell normal\" data-type=\"normal\"\
+      >\n<div class=\"innerCell\">\n<div class=\"confluence-information-macro confluence-information-macro-information\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"0e393d17-632f-4483-91ba-6fc07e3650b3\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule\
+      \ 및 Approver를 선택하면 됩니다.</p></div></div><h3 id=\"id-결재부가기능(대리결재,재상신등)-3.위임받은대리결재요청처리하기\"\
+      >3. 위임받은 대리 결재 요청 처리하기</h3><ul><li><p>대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과\
+      \ 같습니다. </p><ul><li><p><strong>Received Requests &gt; To Do</strong> : 원 결재자가\
+      \ 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함</p></li><li><p><strong>Received Requests\
+      \ &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세\
+      \ 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul><span\
+      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"스크린샷 2024-08-02 오후 12.46.38.png\" width=\"760\" loading=\"lazy\"\
+      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"928\" data-width=\"1433\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"575144055\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-02 오후\
+      \ 12.46.38.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"71fcff56-f18f-411f-b04d-be63b88b4ccb\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=829\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-02%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2012.46.38.png?version=1&amp;modificationDate=1722570405310&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=492\
+      \ 1x\" /></span><h3 id=\"id-결재부가기능(대리결재,재상신등)-4.대리결재처리된요청건확인하기\">4. 대리 결재 처리된\
+      \ 요청 건 확인하기 </h3><ul><li><p>다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를\
+      \ 확인할 수 있습니다.  </p></li></ul></div>\n</div>\n</div>\n<div class=\"columnLayout\
+      \ two-equal\" data-layout=\"two-equal\">\n<div class=\"cell normal\" data-type=\"\
+      normal\">\n<div class=\"innerCell\">\n<p style=\"text-align: center;\"><strong>원\
+      \ 결재자가 처리한 경우</strong></p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"스크린샷 2024-07-25 오후 3.35.33.png\" width=\"363\"\
+      \ loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=309\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"576\" data-width=\"676\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"567968135\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-25 오후\
+      \ 3.35.33.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"ebd9d727-8244-4b74-99d8-cfc7c6337682\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=726&amp;height=618\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.33.png?version=1&amp;modificationDate=1722333107959&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=309\
+      \ 1x\" /></span></div>\n</div>\n<div class=\"cell normal\" data-type=\"normal\"\
+      >\n<div class=\"innerCell\">\n<p style=\"text-align: center;\"><strong>대리 결재자가\
+      \ 처리한 경우</strong></p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"스크린샷 2024-07-25 오후 3.21.41.png\" width=\"363\"\
+      \ loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=313\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"571\" data-width=\"662\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"567968141\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-25 오후\
+      \ 3.21.41.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"2eefe12c-cbe5-4c56-b80e-0acc0d4e9f82\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=726&amp;height=626\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-25%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.21.41.png?version=1&amp;modificationDate=1722333107967&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=313\
+      \ 1x\" /></span></div>\n</div>\n</div>\n<div class=\"columnLayout fixed-width\"\
+      \ data-layout=\"fixed-width\">\n<div class=\"cell normal\" data-type=\"normal\"\
+      >\n<div class=\"innerCell\">\n<div class=\"confluence-information-macro confluence-information-macro-information\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"0d492211-666c-4cf5-b197-36ab604842b9\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM\
+      \ 알림 관련 자세한 내용은 <a href=\"/wiki/spaces/QM/pages/544378759/Slack+DM+-+Workflow\"\
+      \ data-linked-resource-id=\"544378759\" data-linked-resource-version=\"14\"\
+      \ data-linked-resource-type=\"page\">Slack DM 개인 알림 사용하기</a> 문서를 참고해주세요. </p></div></div><h3\
+      \ id=\"id-결재부가기능(대리결재,재상신등)-5.대리결재설정종료이후의기안조회방법\">5. 대리 결재 설정 종료 이후의 기안 조회 방법</h3><ul><li><p>대리\
+      \ 결재 설정 기간이 종료되었다 하더라도 Received Requests &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가\
+      \ 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다. </p></li></ul><p /><h2\
+      \ id=\"id-결재부가기능(대리결재,재상신등)-기존요청건재상신하기\">기존 요청 건 재상신하기 </h2><p>동일한 내용으로 반복적인\
+      \ 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다. </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" width=\"768\" loading=\"lazy\"\
+      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=768&amp;height=313\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"235\" data-width=\"575\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"568099149\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20230824-110815.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"568918170\" data-linked-resource-container-version=\"\
+      13\" data-media-id=\"61e8abeb-336b-4006-a484-d651e4b2a0a3\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=1149&amp;height=469\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/568918170/image-20230824-110815.png?version=1&amp;modificationDate=1722333202549&amp;cacheVersion=1&amp;api=v2&amp;width=768&amp;height=313\
+      \ 1x\" /></span><ol start=\"1\"><li><p>Sent Requests &gt; Done 목록에서 재상신을 원하는\
+      \ 요청 건을 클릭하여 상세 페이지로 진입합니다. </p></li></ol><div class=\"confluence-information-macro\
+      \ confluence-information-macro-information conf-macro output-block\" data-hasbody=\"\
+      true\" data-macro-id=\"131be646-3aa7-492b-902a-32bf694b89af\" data-macro-name=\"\
+      info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon\"\
+      > </span><div class=\"confluence-information-macro-body\"><p>이때 이미 삭제된 데이터(결재\
+      \ 규칙, 승인자, 서버, 계정 등)는 <em><span data-colorid=\"bngfiecpxh\">Deleted</span></em>로\
+      \ 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></div></div><ol\
+      \ start=\"2\"><li><p>우측 상단에 있는 <code>Resubmit</code> 버튼을 클릭하여 재상신 페이지로 진입합니다.\
+      \ </p></li><li><p>재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. </p></li><li><p><code>Save</code>\
+      \ 버튼을 통해 저장합니다.</p></li><li><p>Workflow &gt; Sent Request &gt; In Progress 메뉴에서\
+      \ 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol></div>\n</div>\n</div>\n</div>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/568918170"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "2455"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/568918170/restriction/byOperation"
+  "history": "/rest/api/content/568918170/history"
+  "version": ""
+  "descendants": "/rest/api/content/568918170/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/568918170/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=568918170"
+  "webui": "/spaces/QM/pages/568918170"
+  "edituiv2": "/spaces/QM/pages/edit-v2/568918170"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/568918170"
+  "tinyui": "/x/mgDpIQ"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

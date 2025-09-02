@@ -5,7 +5,7 @@ title: 'Reports'
 import { Callout } from 'nextra/components'
 
 <Callout type="important">
-10.2.0 현재 Reports 기능은 Beta 버전으로 제공 중입니다.
+11.2.0 현재 Reports 기능은 Beta 버전으로 제공 중입니다.
 </Callout>
 
 ## Overview
@@ -15,12 +15,12 @@ QueryPie 보고서는 감사 대응에 필요한 데이터를 보고서 형태�
 사용자 및 관리자 현황 및 내역, 보안 설정 내역, DB/서버에 주어진 사용자별 권한 현황 및 이력, DB/서버 접속 및 쿼리/명령어 사용 내역 등을 출력할 수 있습니다.
 
 <Callout type="info">
-10.2.0 버전 현재 보고서는 영어로만 출력 가능합니다.
+11.2.0 버전 현재 보고서는 영어로만 출력 가능합니다.
 </Callout>
 
 ## 보고서 출력 항목 및 필터 지원 사항
 
-10.2.2 버전 현재 지원하는 보고서 항목 및 필터는 아래의 표를 참고하시기 바랍니다.
+11.2.0 버전 현재 지원하는 보고서 항목 및 필터는 아래의 표를 참고하시기 바랍니다.
 
 <table data-table-width="958" data-layout="center" local-id="cfcbf091-3775-4454-bff4-924bf43e88f4">
 <a id="table-1"></a>
@@ -237,7 +237,7 @@ X
 </td>
 </tr>
 <tr>
-<td rowspan="7">
+<td rowspan="8">
 QueryPie DAC
 </td>
 <td rowspan="2">
@@ -333,17 +333,32 @@ O
 </td>
 </tr>
 <tr>
-<td>
+<td rowspan="2">
 Workflow Logs - DB **[added-10.2.2]**
 </td>
 <td>
-DAC Type Requests<br/>DAC 유형 요청
+DAC Type Requests<br/>Workflow를 통해 진행된 DAC 유형 요청
 </td>
 <td>
 X
 </td>
 <td>
 O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DAC Unmasking Requests **[added-11.2.0]**
+Workflow를 통해 진행된 Unmasking 요청
+</td>
+<td>
+O
+</td>
+<td>
+X
 </td>
 <td>
 -

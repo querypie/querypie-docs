@@ -6,6 +6,7 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 10.2.0 부터 추가된 기능입니다. (10.2.0 기준 MySQL만 지원합니다.)
+11.2.0 부터 관리자가 이 기능을 비활성화 할 수 있도록 변경되었습니다. 사용자가 이 기능을 사용할 수 없는 경우 관리자가 정책적으로 비활성화한 것입니다.
 </Callout>
 
 ## Overview
@@ -18,7 +19,7 @@ import { Callout } from 'nextra/components'
 
 ## SQL Request 작성 및 실행계획(Explain) 수행하기
 
-QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : [SQL Request 요청하기](https://chequer.atlassian.net/l/cp/6hUBcwmi))
+QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : [SQL Request 요청하기](.))
 
 1.  MySQL Connection 및 Database 선택 <br/>쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다. 
 
@@ -31,7 +32,7 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
 </figure>
 
 1. 실행계획(Explain) 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 `Explain` 버튼을 누릅니다.
-    1.  **Attach Explain Results**  : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 ON 입니다.)
+    1.  **Attach Explain Results**  : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) 
     2. 결과 표시 방식 선택
         1.  **Table**  : 테이블 형태로 결과가 표시됩니다.
         2.  **JSON**  : JSON 형태로 결과가 표시됩니다. 

@@ -1,0 +1,347 @@
+"parentId": "544211126"
+"spaceId": "539099246"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:25:02.926Z"
+"authorId": "630c844a9796033b256b98a5"
+"parentType": "page"
+"position": !!int "901463041"
+"version":
+  "number": !!int "17"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2024-11-21T04:35:26.957Z"
+  "ncsStepVersion": "3"
+"ownerId": "630c844a9796033b256b98a5"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client,\
+      \ iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\"\
+      ,\"type\":\"text\"}]},{\"type\":\"extension\",\"attrs\":{\"layout\":\"default\"\
+      ,\"extensionType\":\"com.atlassian.confluence.macro.core\",\"extensionKey\"\
+      :\"toc\",\"parameters\":{\"macroParams\":{\"maxLevel\":{\"value\":\"2\"},\"\
+      minLevel\":{\"value\":\"1\"},\"include\":{\"value\":\"\"},\"outline\":{\"value\"\
+      :\"false\"},\"indent\":{\"value\":\"\"},\"exclude\":{\"value\":\"Overview\"\
+      },\"style\":{\"value\":\"default\"},\"type\":{\"value\":\"list\"},\"printable\"\
+      :{\"value\":\"true\"},\"class\":{\"value\":\"\"}},\"macroMetadata\":{\"macroId\"\
+      :{\"value\":\"334477e7-dc7b-494d-9513-c21c2ccabe57\"},\"schemaVersion\":{\"\
+      value\":\"1\"},\"title\":\"목차\"}},\"localId\":\"93991f90-344b-497e-8886-42bac10548aa\"\
+      }},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"\
+      content\":[{\"text\":\"에이전트 앱 다운로드 및 실행하기\",\"type\":\"text\"}]},{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 \",\"\
+      type\":\"text\"},{\"text\":\"Agent Download\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 버튼을 클릭합니다. \",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":785,\"alt\"\
+      :\"스크린샷 2024-08-04 오후 5.30.02.png\",\"id\":\"67a6943d-652f-4c68-9c0c-d557835738c7\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":555},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"QueryPie Web > 프로필 메뉴\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"2.\
+      \ QueryPie Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한\
+      \ 후 Step 3에 있는 QueryPie URL을 복사해 둡니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":1280,\"alt\":\"image-20240723-154847.png\"\
+      ,\"id\":\"fbe361aa-3dcc-4621-8880-d003d64b15a0\",\"collection\":\"contentId-544112828\"\
+      ,\"type\":\"file\",\"height\":712},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"QueryPie Web > Agent Downloads 팝업창\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"3. 다운로드받은\
+      \ QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다. \",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1070,\"alt\"\
+      :\"스크린샷 2024-08-04 오후 5.40.02.png\",\"id\":\"fd34ea32-ee7c-4b7b-8549-88ee2dc6613c\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":750},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Mac OS 설치 프로그램\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"4. 설치 완료된 QueryPie\
+      \ Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 \",\"type\":\"\
+      text\"},{\"text\":\"Next\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":827,\"id\":\"f3c05cc9-284e-48b3-85d1-9ab82f31dd90\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":461},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > QueryPie Host 입력\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\"\
+      :{\"level\":2},\"content\":[{\"text\":\"QueryPie Agent에 로그인하기\",\"type\":\"\
+      text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"1. Agent 앱 내 로그인\
+      \ 화면에서 \",\"type\":\"text\"},{\"text\":\"Login\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1494,\"alt\"\
+      :\"스크린샷 2024-08-04 오후 5.37.13.png\",\"id\":\"52eedd00-2468-4701-929a-e8b6a51d520f\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":961},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"2. 웹 브라우저가 열리면, 로그인\
+      \ 페이지에서 인증정보를 입력하고, \",\"type\":\"text\"},{\"text\":\"Continue\",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"\
+      text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\"\
+      :760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"\
+      width\":1548,\"alt\":\"스크린샷 2024-07-29 오후 5.12.36.png\",\"id\":\"74a61ed8-668e-4606-a432-2e126be9a0b8\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":917},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"QueryPie Web > Agent Login\
+      \ Page\",\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"wide\",\"width\":764,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :1548,\"alt\":\"스크린샷 2024-07-29 오후 5.13.14.png\",\"id\":\"0276642c-4bc2-422a-a7ef-c5d929d87f55\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":917},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"QueryPie Web > Agent Login\
+      \ Success Page\",\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :1063,\"alt\":\"스크린샷 2024-08-04 오후 5.42.09.png\",\"id\":\"6e07127a-484e-48b9-a419-1ee859f89c48\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":383},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Chrome - Agent App 열기 모달\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\"\
+      :[{\"text\":\"에이전트로 데이터베이스 접속하기\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의\
+      \ 접속 정보를 확인할 수 있습니다.\",\"type\":\"text\"},{\"type\":\"hardBreak\"},{\"text\"\
+      :\"접속할 커넥션에 할당된 \",\"type\":\"text\"},{\"text\":\"Port\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"code\"}]},{\"text\":\" 를 클릭하면, 해당 커넥션의 \",\"type\":\"text\"\
+      },{\"text\":\"Proxy Credentials\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 정보를 확인할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"wide\",\"width\":764,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":983,\"alt\":\"스크린샷 2024-07-30\
+      \ 오후 3.10.01.png\",\"id\":\"f81ad467-6420-4d51-9ec2-00975dc27a62\",\"collection\"\
+      :\"contentId-544112828\",\"type\":\"file\",\"height\":814},\"marks\":[{\"type\"\
+      :\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\"\
+      ,\"content\":[{\"text\":\"Agent > DB Connection Information\",\"type\":\"text\"\
+      }]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"2. 위의 접속 정보를 3rd Party\
+      \ 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"wide\",\"width\":764,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":827,\"alt\":\"agent-07.png\",\"id\"\
+      :\"45d35639-b90e-44ba-a829-4a70dd0f3cbe\",\"collection\":\"contentId-544112828\"\
+      ,\"type\":\"file\",\"height\":461},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"3rd Party Client를 이용한 DB 커넥션 접속\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{\"\
+      text\":\"에이전트를 통한 서버 접속\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"로그인이 정상적으로 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.\",\"\
+      type\":\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\"\
+      :[{\"text\":\"1. 서버 역할 선택하기\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"사용자 프로필 영역 하단의 \",\"type\":\"text\"},{\"text\":\"Role\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 원하는\
+      \ 역할을 고르고 \",\"type\":\"text\"},{\"text\":\"OK\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하세요.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Default 역할 선택시, Workflow > Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.\
+      \ \",\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
+      :\"wide\",\"width\":764,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\"\
+      ,\"attrs\":{\"width\":939,\"alt\":\"스크린샷 2024-07-30 오후 4.26.53.png\"\
+      ,\"id\":\"8dc43414-44b2-49cc-b06f-408d6065dbb0\",\"collection\":\"contentId-544112828\"\
+      ,\"type\":\"file\",\"height\":542},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"Agent > Server > Select a Role\",\"type\":\"text\"}]}]},{\"type\":\"\
+      panel\",\"attrs\":{\"panelType\":\"info\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을\
+      \ 먼저 완료해야 합니다.\",\"type\":\"text\"}]}]},{\"type\":\"heading\",\"attrs\":{\"\
+      level\":3},\"content\":[{\"type\":\"hardBreak\"},{\"text\":\"2. \",\"type\"\
+      :\"text\"},{\"text\":\"Agent로 서버 접속하기\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"annotation\",\"attrs\":{\"annotationType\":\"inlineComment\",\"id\":\"50b132b2-0b7d-413a-805b-ec80489a780b\"\
+      }}]}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"접속할 서버를 우클릭 후 Open Connection\
+      \ with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"\
+      mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"\
+      pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":774,\"alt\":\"\
+      스크린샷 2024-07-30 오후 4.17.29.png\",\"id\":\"cc8c961b-b1a6-41fd-9fb8-9a627c856f46\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":553},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > Server > Open Connection\
+      \ with\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. \",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, \",\"type\":\"text\"},{\"text\":\"OK\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 세션을 엽니다.\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"\
+      center\",\"width\":746,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\"\
+      ,\"attrs\":{\"width\":848,\"alt\":\"스크린샷 2024-07-30 오후 4.25.32.png\"\
+      ,\"id\":\"a9d3fd3c-c6f1-4b5d-b1f5-1a64e2071060\",\"collection\":\"contentId-544112828\"\
+      ,\"type\":\"file\",\"height\":567}},{\"type\":\"caption\",\"content\":[{\"text\"\
+      :\"Agent > Server >  Open New Session\",\"type\":\"text\"}]}]},{\"type\":\"\
+      heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"3. Seamless SSH 설정하기\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"Seamless\
+      \ SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh\
+      \ 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"1) 터미널을 열고, .ssh 폴더로 이동합니다.\"\
+      ,\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"content\":[{\"text\":\"$ cd\
+      \ .ssh\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"codeBlock\",\"content\":[{\"text\":\"$ vi config\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"3) 아래의 내용을 입력 후, \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\":\"\
+      inlineComment\",\"id\":\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"}}]},{\"text\"\
+      :\"wq\",\"type\":\"text\",\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"\
+      annotationType\":\"inlineComment\",\"id\":\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"\
+      }},{\"type\":\"code\"}]},{\"text\":\" 키를 입력하여 vi 에디터를 나옵니다.\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\":\"inlineComment\"\
+      ,\"id\":\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"}}]}]},{\"type\":\"codeBlock\"\
+      ,\"content\":[{\"text\":\"Host {{Server Name}}\\n  Hostname {{Server URL}}\\\
+      n  Port {{Server SSH Port}}\\n  ProxyCommand qpa ssh %r %h %p\",\"type\":\"\
+      text\"}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"config 파일 작성 시 Seamless SSH\
+      \ 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와\
+      \ 같이 입력하여도 접속이 가능합니다.\",\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"content\"\
+      :[{\"text\":\"Host *\\n  ProxyCommand qpa ssh %r %h %p\",\"type\":\"text\"}]}]},{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"4) 이상으로 설정이 완료됩니다. Agent > Server\
+      \ 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"codeBlock\",\"content\":[{\"text\":\"$ ssh deploy@{{Server Name}}\",\"type\"\
+      :\"text\"}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"에이전트를 통한 쿠버네티스 접속 \",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"wide\",\"width\":764,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1800,\"id\"\
+      :\"913df4f1-45fb-4d52-b2b0-ad195539a5bd\",\"collection\":\"contentId-544112828\"\
+      ,\"type\":\"file\",\"height\":900},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]}]},{\"type\":\"bulletList\",\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 \",\"type\":\"text\"},{\"text\"\
+      :\"kubeconfig\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\"\
+      :\" 파일이 자동으로 수신됩니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"이를 통해 Kubernetes Client(kubectl,\
+      \ lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\":[{\"\
+      text\":\"1. Kubernetes 역할 선택하기\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"사용자 프로필 영역 하단의 \",\"type\":\"text\"},{\"text\":\"\
+      Role\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하면\
+      \ 역할 선택 모달이 열립니다. 원하는 역할을 고르고 \",\"type\":\"text\"},{\"text\":\"OK\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하세요.\",\"type\"\
+      :\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\"\
+      :760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"\
+      width\":958,\"alt\":\"스크린샷 2024-07-30 오후 3.27.05.png\",\"id\":\"6c1725ee-a1a8-497d-b2b0-c67d17f2a217\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":572},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > Kubernetes > Select\
+      \ a Role\",\"type\":\"text\"}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\"\
+      :\"info\"},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"역할이\
+      \ 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"\
+      level\":3},\"content\":[{\"text\":\"2. Policy 조회하기\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"선택된 역할에 따라 접근 가능한 리소스가 표시됩니다.\
+      \ 각 클러스터 우측의 \",\"type\":\"text\"},{\"text\":\"\U0001F50D\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르면 Policy Information 팝업창이\
+      \ 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1024,\"alt\"\
+      :\"스크린샷 2024-07-30 오후 4.11.41.png\",\"id\":\"cb86e836-4484-4cd5-90ae-e0f6c4d9d548\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":959},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > Policy Information\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3},\"content\"\
+      :[{\"text\":\"3. Kubeconfig 경로 설정하기\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Agent 설정 메뉴에서 \",\"type\":\"text\"},{\"text\":\"KubeConfig\
+      \ Path\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을\
+      \ 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"wide\",\"width\":764,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":585,\"alt\":\"스크린샷 2024-07-30\
+      \ 오후 3.46.23.png\",\"id\":\"26e1ada0-ba93-49ba-a1cd-67cc0598c05c\",\"collection\"\
+      :\"contentId-544112828\",\"type\":\"file\",\"height\":520},\"marks\":[{\"type\"\
+      :\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\"\
+      ,\"content\":[{\"text\":\"Agent > Settings > Configure Kubeconfig Path\",\"\
+      type\":\"text\"}]}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Path Configuration\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : Kubeconfig\
+      \ 파일 저장 경로를 사용자가 지정할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"기본값은 \",\"type\":\"text\"},{\"text\":\"$HOME/.kube/querypie-kubeconfig\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 입니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"경로 필드 우측 \",\"type\":\"text\"},{\"text\":\"Upload\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르면 로컬 파일\
+      \ 경로를 지정할 수 있는 팝업이 나타납니다. \",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"paragraph\"\
+      },{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :475,\"alt\":\"스크린샷 2024-07-30 오후 4.35.30.png\",\"id\":\"12e069ee-6586-4353-8ca5-52f557bd8e1f\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":244},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"경로 지정 팝업\",\"type\":\"text\"\
+      }]}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Where\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 우측의 \",\"type\":\"text\"\
+      },{\"text\":\"\U0001F53D\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 클릭하여 원하는 폴더를 지정합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Save As\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : Kubeconfig\
+      \ 파일의 이름을 입력합니다. 변경하지 않으면 기본값으로 적용됩니다.\",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Command\
+      \ Line\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" :\
+      \ KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령\
+      \ 줄 내의 디폴트 \\\"\",\"type\":\"text\"},{\"text\":\"${KUBECONFIG}\",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"\\\" 값을 사용 전에 \\\"\",\"\
+      type\":\"text\"},{\"text\":\"${HOME}/.kube/config\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"code\"}]},{\"text\":\"\\\"로 변경해야 합니다. \",\"type\":\"text\"}]},{\"\
+      type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\"${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\\\
+      \"\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\"\
+      :\"inlineComment\",\"id\":\"489e3194-1605-43db-8b78-366b9f36e6ec\"}}]}]},{\"\
+      type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\"${KUBECONFIG}:<사용자가\
+      \ 지정한 경로>\\\"\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"참고: \",\"type\":\"text\"\
+      },{\"text\":\"kubeconfig 파일 병합\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
+      ,\"attrs\":{\"href\":\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
+      }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"참고: \",\"type\":\"text\"},{\"text\":\"KUBECONFIG 환경 변수 설정\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95\"\
+      }}]}]}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"4) \",\"type\":\"\
+      text\"},{\"text\":\"Copy\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 \",\"type\"\
+      :\"text\"}]},{\"type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\
+      \"${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig\\\"\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\"\
+      :[{\"text\":\"QueryPie Agent 세팅 초기화하기\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게\
+      \ 됩니다. \",\"type\":\"text\"}]},{\"type\":\"layoutSection\",\"content\":[{\"\
+      type\":\"layoutColumn\",\"attrs\":{\"width\":50.0},\"content\":[{\"type\":\"\
+      heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"Agent 내 설정 메뉴에서 초기화\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"프로필 영역\
+      \ 우측  \",\"type\":\"text\"},{\"text\":\"⚙️\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 설정 메뉴를 엽니다. \",\"type\":\"text\"},{\"\
+      text\":\"Reset All Settings\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
+      }]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":361,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":476,\"alt\":\"스크린샷\
+      \ 2024-07-30 오후 3.35.18.png\",\"id\":\"63f5e347-f342-42a6-8fc1-25a2f2483ccd\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":557},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > Settings\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"paragraph\"}]},{\"type\":\"layoutColumn\",\"attrs\"\
+      :{\"width\":50.0},\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\":3},\"\
+      content\":[{\"text\":\"(Mac) 메뉴 막대 내 앱 메뉴에서 초기화\",\"type\":\"text\"}]},{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를\
+      \ 엽니다. \",\"type\":\"text\"},{\"text\":\"Reset All Settings\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":363,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :247,\"alt\":\"스크린샷 2024-07-30 오후 3.35.24.png\",\"id\":\"69abf319-7b7c-454a-83a8-d6515180916d\"\
+      ,\"collection\":\"contentId-544112828\",\"type\":\"file\",\"height\":285},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > App menu\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"paragraph\"}]}]}],\"version\":1}"
+"status": "current"
+"title": "User Agent"
+"id": "544112828"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544112828"
+  "webui": "/spaces/QM/pages/544112828/User+Agent"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544112828"
+  "tinyui": "/x/vIBuI"
+  "base": "https://querypie.atlassian.net/wiki"

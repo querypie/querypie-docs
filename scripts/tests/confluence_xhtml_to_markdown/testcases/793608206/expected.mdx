@@ -226,6 +226,35 @@ Expiration Date
 </td>
 <td>
 10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+권한 만료일자
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 <tr>
@@ -398,6 +427,21 @@ Target Date
 </td>
 <td>
 10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+실행 목표 일자
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 <tr>
@@ -412,6 +456,35 @@ Due Date
 </td>
 <td>
 10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+실행 만료 일자
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 </tbody>
@@ -558,6 +631,20 @@ Target Date
 </tr>
 <tr>
 <td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+실행 목표 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
 Due Date
 </td>
 <td>
@@ -568,6 +655,34 @@ Due Date
 </td>
 <td>
 10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+실행 만료 일자
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 </tbody>
@@ -699,6 +814,320 @@ Unmasking Expiration
 10.2.2
 </td>
 </tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Restricted Data Access Request
+
+<table data-table-width="816" data-layout="center" local-id="8d66df32-3ad9-473e-9876-a4c7fe8775e1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**변수명**
+</th>
+<th>
+**변수**
+</th>
+<th>
+**설명**
+</th>
+<th>
+**추가 시점**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB 커넥션 UUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB 커넥션 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+데이터베이스 유형
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+데이터베이스 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+테이블 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+컬럼 이름을 목록으로 표시
+* 예: [actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Restricted Data Access Expiration
+</td>
+<td>
+`{{restrictedDataAccessExpiration}}`
+</td>
+<td>
+접근 허용 만료 시점
+* 예: 
+    * 10 Minutes
+    * 2024-12-03T14:59:00 
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## DB Policy Exception Request
+
+<table data-table-width="816" data-layout="center" local-id="8fdf1d5c-786c-4147-8e56-bfd6d8dcdb0f">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**변수명**
+</th>
+<th>
+**변수**
+</th>
+<th>
+**설명**
+</th>
+<th>
+**추가 시점**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB 커넥션 UUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB 커넥션 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Data Scope Type
+</td>
+<td>
+`{{dataScopeType}}`
+</td>
+<td>
+Data Path와 Tag중 하나를 선택
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+데이터베이스 유형
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+데이터베이스 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+테이블 이름
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+컬럼 이름을 목록으로 표시
+* 예: [actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Expiration
+</td>
+<td>
+`{{expiration}}`
+</td>
+<td>
+예외 허용 만료 시점
+* 예: 
+    * 10 Minutes
+    * 2024-12-03T14:59:00 
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -786,6 +1215,209 @@ Expiration Date
 </td>
 <td>
 10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+권한 만료일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+권한 부여 시작 조건
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+분(Minutes) 단위 서버 접근 권한이 유효한 시간
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Server Privilege Request
+
+<table data-table-width="820" data-layout="center" local-id="1ac8db57-f53b-4306-9a63-eabe504365d4">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**변수명**
+</th>
+<th>
+**변수**
+</th>
+<th>
+**설명**
+</th>
+<th>
+**추가 시점**
+</th>
+</tr>
+<tr>
+<td>
+Server Group Name
+</td>
+<td>
+`{{serverGroupName}}`
+</td>
+<td>
+서버 그룹 이름
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Names
+</td>
+<td>
+`{{serverNames}}`
+</td>
+<td>
+서버 이름을 목록으로 표시
+* 예: 
+    * Server A
+    * Server B
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Accounts
+</td>
+<td>
+`{{serverAccounts}}`
+</td>
+<td>
+서버 계정을 목록으로 표시
+* 예: 
+    * dev
+    * ec2-user
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+만료 일자
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Privilege Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+권한 만료일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+권한 부여 시작 조건
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+분(Minutes) 단위 서버 특권이 유효한 시간
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 </tbody>
@@ -856,9 +1488,51 @@ Expiration Date
 </td>
 <td>
 10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+승인 만료 일자
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Role Expiration Date
+</td>
+<td>
+`{{roleExpirationDate}}`
+</td>
+<td>
+권한 만료 일자
+</td>
+<td>
+11.2.0
 </td>
 </tr>
 </tbody>
 </table>
 
+## Web APP Just-In-Time Access Request
 
+|  **변수명**                 |  **변수**                      |  **설명**                        |  **추가 시점**  |
+| ------------------------ | ---------------------------- | ------------------------------ | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | 승인 만료 일자                       | 11.2.0      |
+| Web App Name             | `{{webAppName}}`             | 요청 대상 웹앱                       | 11.0.0      |
+| Access Duration          | `{{accessDuration}}`         | 분(Minutes) 단위 웹앱 접근 권한이 유효한 시간 | 11.0.0      |
+
+## IP Registration Request
+
+|  **변수명**                 |  **변수**                      |  **설명**  |  **추가 시점**  |
+| ------------------------ | ---------------------------- | -------- | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | 승인 만료 일자 | 11.2.0      |
+| IP Addresses             | `{{ipAddresses}}`            | IP 주소    | 11.0.0      |
