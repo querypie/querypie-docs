@@ -14,9 +14,11 @@ import { Callout } from 'nextra/components'
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
+*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Exception Expiration End Date을 초과할 수 없습니다. 초과한 경우, 상신 할 수 없습니다.
+    * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20240801-074431.png](/user-manual/workflow/requesting-db-policy-exception/image-20240801-074431.png)
+![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-db-policy-exception/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
 ### 2. 승인자 지정하기
@@ -71,7 +73,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
     1. Time Duration 선택시, 분 단위로 입력 가능하고 최소는 1분, 최대는 44,640분으로 요청할 수 있습니다. 
         1. Time Duration 의 경우, 승인 시점을 기준으로 동작합니다.
         2. Urgent Mode 사용하는 경우, Request 등록 시점을 기준으로 데이터에 접근할 수 있습니다.
-    2. End Date 선택시, 일자와 시간을 기준으로 선택 가능하며, 최소는 현재 시간, 최대는 30일로 요청할 수 있습니다.
+    2. End Date 선택시, 일자와 시간을 기준으로 선택 가능하며, 최소는 현재 시간, 최대는 180일로 요청할 수 있습니다.
 *  **Reason for Request**  : 정책 예외 신청 사유를 입력합니다. 최대 1000자까지 입력할 수 있습니다.
 * 페이지 하단의 `Submit` 버튼을 눌러 요청을 상신합니다.<br/>
 

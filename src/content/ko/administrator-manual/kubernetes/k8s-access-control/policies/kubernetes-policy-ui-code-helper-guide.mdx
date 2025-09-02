@@ -27,7 +27,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     2.  **Kubernetes Groups**  : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다. 
     3.  **Permitted Impersonation**  : (Optional) 해당 필드를 통해 사용자가 클라이언트를 통해 실제 --as, --as-group를 통한 impersonation을 시도할 때 적용 가능한 쿠버네티스 사용자/그룹을 나열합니다.
         1.  **Allowed Kubernetes Users** : --as 파라미터로 쿼리파이에서 허용할 kubenetes users를 기입합니다.
-        2.  **Allowed Kubernetes Users** : --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.
+        2.  **Allowed Kubernetes Groups** : --as-group 파라미터로 쿼리파이에서 허용할 kubernetes groups를 기입합니다.
         3. ‘,’ 를 통해 다중으로 등록 가능합니다. 
     4. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. 
 3.  **Add Actions**  모달

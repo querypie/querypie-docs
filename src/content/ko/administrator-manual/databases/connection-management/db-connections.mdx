@@ -191,11 +191,12 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 해당 DB 커넥션에 적용될 세부 정책을 입력합니다. `Save Changes` 버튼으로 저장합니다.
 
 <figure data-layout="center" data-align="center">
-![Additional Information 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180808.png)
+![Additional Information 탭](/administrator-manual/databases/connection-management/db-connections/image-20250825-005925.png)
 <figcaption>
 Additional Information 탭
 </figcaption>
 </figure>
+
 
 * `Max Display Rows` : 쿼리 실행 후 조회 가능한 데이터의 최대 행수를 제한할 수 있습니다.
 * `Max Export Rows` : 한 번에 내보낼 수 있는 데이터의 최대 행수를 제한할 수 있습니다.
@@ -218,6 +219,12 @@ Additional Information 탭
 * `Character Set` : 해당 커넥션에서 사용할 문자 집합을 선택합니다.
 * `Collation` : 선택한 문자 집합의 정렬 방식을 선택합니다.
 * `Description` : 해당 커넥션에 대한 설명을 입력할 수 있습니다.
+
+<Callout type="info">
+**User Action Purpose Required** <br/>11.2.0부터 User Action Purpose Required 옵션의 SQL Execute이벤트에 대한 사유 입력을 Agent를 통해서도 받을 수 있도록 개선되었습니다.<br/>&lt; 제약사항 &gt;
+* 3rd party tool (DBeaver, DataGrip등)을 사용할 때 사유입력을 강제할 수 있는 것은 SQL Execute 항목만 해당됩니다.
+* 3rd party tool에서 내부적으로 전송하는 쿼리 (DB 스키마를 트리구조로 보여주거나 데이터 타입을 UI에서 표시해주는 기능을 수행하는 쿼리)도 SQL Execute로 감지되어 사유입력을 요구합니다. 예) 최초 접속하자마자 쿼리를 입력하지 않았음에도 불구하고 사유입력 창이 팝업됩니다. 이 경우 SQL 구문의 종류를 판단하지 않으므로 설정에 따라 상당히 불편함을 초래할 수 있습니다. 따라서 Database &gt; General &gt; Configurations 의 Query Purpose Duration for Agent 옵션의 값을 적절하게 조절해야 합니다.<br/>
+</Callout>
 
 <Callout type="info">
 **Proxy Usage**

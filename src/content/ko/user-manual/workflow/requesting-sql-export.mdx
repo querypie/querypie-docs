@@ -15,9 +15,11 @@ import { Callout } from 'nextra/components'
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
+*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Execution Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신 할 수 없습니다.
+    * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240807-215359.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215359.png)
+![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.43.46-AM.png)
 </figure>
 
 ### 2. 승인자 지정하기
@@ -60,11 +62,12 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 ### 5. 요청 정보 입력하기
 
 <figure data-layout="center" data-align="center">
-![User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary](/user-manual/workflow/requesting-sql-export/screenshot-20240802-105050.png)
+![User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.51.52-AM.png)
 <figcaption>
 User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary
 </figcaption>
 </figure>
+
 
 *  **Title**  : 요청 제목을 입력합니다. 
 *  **Connection**  : SQL 실행을 요청할 대상 커넥션을 선택합니다. 권한이 있는 커넥션에 한해 선택 가능합니다. 
@@ -72,8 +75,8 @@ User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summ
 *  **Content Type**  : 다운로드하고자 하는 데이터를 조회할 방식을 선택합니다.
     1.  **Query Result**  : 요청 페이지 내의 Queries 항목에서 쿼리를 직접 작성합니다. 해당 쿼리 결과를 다운로드할 수 있습니다. 최대 10개까지 쿼리를 작성하고 Export 가능합니다. 
     2.  **Table**  : 선택한 테이블 전체를 내보내기 할 수 있습니다.
-*  **Target Date**  : 해당 쿼리가 실행되기를 원하는 일자를 선택합니다. 기본 선택일은 요청일 당일입니다.
-*  **Due Date**  : 다운로드가 실행되기를 원하는 일자를 선택합니다. 따로 설정하지 않으면 요청일로 기본 선택됩니다.
+*  **Preferred Execution Date**  : 해당 쿼리가 실행되기를 원하는 일자를 선택합니다. 기본 선택일은 요청일 당일입니다.
+*  **Execution Expiration Date**  : Executor가 실행할 수 있는 마지막 날짜를 선택합니다. 기본 선택일은 1주일 뒤입니다.
 *  **Reason for Request**  : SQL Export 권한을 요청하는 사유를 입력합니다.
 *  **Submit**  : 기안 작성 완료 후 `Submit` 버튼을 클릭하면 상신이 완료됩니다.
 

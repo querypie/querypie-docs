@@ -15,9 +15,11 @@ import { Callout } from 'nextra/components'
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
+*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Execution Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신 할 수 없습니다.
+    * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20240807-125005.png](/user-manual/workflow/requesting-sql/image-20240807-125005.png)
+![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.43.46-AM.png)
 </figure>
 
 ### 2. 승인자 지정하기
@@ -60,10 +62,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 ### 5. 요청 정보 입력하기
 
 <figure data-layout="center" data-align="center">
-![User &gt; Workflow &gt; Submit Request &gt; SQL Request &gt; Request Summary](/user-manual/workflow/requesting-sql/screenshot-20240802-103844.png)
-<figcaption>
-User &gt; Workflow &gt; Submit Request &gt; SQL Request &gt; Request Summary
-</figcaption>
+![Screenshot-2025-08-26-at-12.47.02-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.47.02-AM.png)
 </figure>
 
 *  **Title**  : 요청 제목을 입력합니다.
@@ -72,8 +71,8 @@ User &gt; Workflow &gt; Submit Request &gt; SQL Request &gt; Request Summary
 *  **Content Type**  : 요청할 SQL 구문을 입력할 방식을 선택합니다.
     * Text : 쿼리를 최대 9999라인, 1천만자, 또는 5MB까지 작성할 수 있습니다.
     * File : .sql 파일을 업로드할 수 있으며, 실행 용량의 제한이 없습니다. 단, Storage 구성이 필요합니다.
-*  **Target Date**  : 해당 쿼리가 실행되기를 원하는 일자를 선택합니다. 기본 선택일은 요청일 당일입니다.
-*  **Due Date**  : 승인/실행이 만료되는 일자를 선택합니다. 기본 선택일은 1년 뒤입니다.
+*  **Preferred Execution Date**  : 해당 쿼리가 실행되기를 원하는 일자를 선택합니다. 기본 선택일은 요청일 당일입니다.
+*  **Execution Expiration Date**  : Executor가 실행할 수 있는 마지막 날짜를 선택합니다. 기본 선택일은 1주일 뒤입니다.
 *  **Reason for Request**  : SQL 실행 권한을 요청하는 사유를 입력합니다.
 *  **Submit**  : 기안 작성 완료 후 `Submit` 버튼을 클릭하면 상신이 완료됩니다.
 

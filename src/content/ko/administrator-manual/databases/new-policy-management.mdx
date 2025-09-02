@@ -26,7 +26,13 @@ Enable New DAC Policy Management
 <Callout type="important">
 새로운 정책관리기능을 활성화하기 전에 아래의 내용을 먼저 검토해야 합니다.
 * 이 기능을 활성화하기 전에 먼저 원장 테이블 관리기능을 Off 로 전환해야 합니다.
-* 새로운 정책 관리 기능을 활성화하면 기존 정책은 비활성화 되고 새로운 정책 관리기능을 통해 정책을 새로 생성해야 합니다. 기존 정책은 비활성화되는 것이고 삭제되는 것은 아니므로 기존 정책의 내용을 확인할 수 있습니다.
+*  **새로운 정책 관리 기능을 활성화하면 기존 정책은 비활성화 되고 메뉴에서 보이지 않게 됩니다. 설정화면에 접근하기 위해서는 기존 정책의 URL을 브라우저에서 직접 입력해야 합니다.** 
+*  **구 정책 페이지 직접 접근용 URL** 
+    *  **Data Access**  : https://`{QueryPie Host}`/database-settings/policies/data-access
+    *  **Data Masking**  : https://`{QueryPie Host}`/database-settings/policies/data-masking
+    *  **Sensitive Data**  : https://`{QueryPie Host}`/database-settings/policies/sensitive-data
+    *  **Policy Exception**  : https://`{QueryPie Host}`//database-settings/policies/policy-exception **** 
+*  **새로운 정책관리기능이 활성화 되면 기존 정책은 비활성화됩니다. 기존 정책이 삭제되는 것은 아니므로 URL을 통해 기존 UI로 이동하여 기존 정책의 내용을 확인할 수는 있습니다.**  
 * 이 기능에 의해 생성된 정책은 기존 정책과 호환되지 않고 기존 정책을 마이그레이션 할 수 없습니다.
 * 새로운 정책관리기능으로 생성한 정책을 모두 삭제해야 이 기능을 비활성화 할 수 있습니다. 
 </Callout>

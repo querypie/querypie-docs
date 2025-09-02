@@ -14,9 +14,11 @@ Server Privilege Request를 사용하면 서버에 대한 임시 명령어 사�
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
+*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Privilege Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신 할 수 없습니다. Maximum Approval Duration &gt; Maximum Access Duration인 경우, Maximum Approval Duration의 값이 Maximum Access Duration의 값과 동일하게 적용됩니다. 예) Maximum Approval Duration은 14일이고 Maximum Access Duration은 5일인 경우, Maximum Approval Duration의 값도 5일로 적용됩니다.
+    * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20240807-130008.png](/user-manual/workflow/requesting-server-privilege/image-20240807-130008.png)
+![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
 ### 2. 승인자 지정하기
@@ -102,15 +104,25 @@ A. 관리자가 워크플로우에서 사용하도록 허용한 템플릿이 없
 
 ### 8. Server Privilege 사용 시간 입력하기
 
-*  **Privilege Start Trigger**  : Server Privilege 적용 시간인 Privilege Duration의 시작 트리거를 선택할 수 있습니다.
-    *  **Access to Server**  : Server Privilege 적용 후, 적용된 사용자가 서버 접속 시작부터 시간을 카운트합니다.
-    *  **Grant**  : Server Privilege 부여 시점부터 Server Privilege 사용 가능 시간을 카운트 합니다. Request가 승인이 되면 QueryPie에서 자동으로 Server Privilege을 부여합니다. 
-*  **Privilege Duration**  : Server Privilege 적용 시간을 설정합니다. 분단위로 시간을 입력할 수 있습니다. Privilege Start Trigger에 따라서 시작하는 시점이 달라집니다.
+#### Require Minute-Based RequestsOn인 경우
 
 <figure data-layout="center" data-align="center">
-![image-20250307-124242.png](/user-manual/workflow/requesting-server-privilege/image-20250307-124242.png)
+![Screenshot-2025-08-26-at-1.05.08-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.05.08-AM.png)
 </figure>
 
+*  **Start Trigger**  : 권한 부여 시작 조건을 선택합니다.
+    * Access to the Server : Server Privilege 적용 후, 적용된 사용자가 서버 접속 시작부터 시간을 카운트합니다.
+    * Grant : erver Privilege 부여 시점부터 Server Privilege 사용 가능 시간을 카운트 합니다. Request가 승인이 되면 QueryPie에서 자동으로 Server Privilege을 부여합니다. 
+*  **Duration(Minutes)** : Server Privilege 적용 시간을 설정합니다. 분단위로 시간을 입력할 수 있습니다. Privilege Start Trigger에 따라서 시작하는 시점이 달라집니다.
+
+#### Require Minute-Based RequestsOff인 경우
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-1.14.48-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.14.48-AM.png)
+</figure>
+
+*  **Privilege Expiration Date**  : 요청 권한의 만료일자를 입력합니다. 기본값은 관리자 페이지에서 SAC configurations &gt; Server Privilege Request Settings의 Maximum Access Duration 값을 따릅니다.
+    * 적절한 커넥션 접근 권한 관리를 위해 필요한 기간만큼 요청하는 것을 권장합니다.
 
 ### 9. 요청 정보 입력하기
 

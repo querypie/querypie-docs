@@ -32,10 +32,52 @@ Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
 
 ## Web App 생성하기
 
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.58.08-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
+</figcaption>
+</figure>
+
 1. Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps 메뉴로 이동합니다.
 2. 우측 상단의 + Create Web App 버튼을 클릭합니다.
+3. Web App 생성화면
+    1. Name : 웹앱명
+    2. Base URL : 웹앱 URL 또는 호스트 주소 
+    3. Description : 웹앱 설명
+    4. Tags : 웹앱에 추가할 태그 설정
+    5. Watermark : 브라우저에 워터마크 적용 여부
+    6. User Activity Recording : 사용자 활동 기록 여부 (웹앱 접근 및 사용 기록 추적 설정)
+    7. URL Paths: Web App의 하위 경로 입력
+
+## Web App Owner 및 Member 설정하기
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.07-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners
+</figcaption>
+</figure>
+
+Web App에 Owner와 Member를 지정하여 Just-In-Time (JIT) 접근 요청에 대한 권한을 세분화할 수 있습니다. 각 역할의 권한은 다음과 같이 명확하게 분리됩니다.
+
+*  **Web App Owner:** JIT 접근 요청에 대한 승인 권한을 가집니다. 
+*  **Web App Member:** JIT 접근 요청에 대한 상신(신청) 권한을 가집니다. 
+* 한 명의 사용자가 Owner와 Member 권한을 동시에 가질 수 있으며, 이 경우 요청 상신과 승인이 모두 가능합니다.
+
+<figure data-layout="center" data-align="center">
+![Assign Owners 화면](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.24-PM.png)
+<figcaption>
+Assign Owners 화면
+</figcaption>
+</figure>
+
+Web App 생성 시 또는 상세 정보 화면에서 Owner/Member를 설정할 수 있습니다. `+ Assign Owners` 또는 `+ Assign Members` 버튼을 클릭하면 사용자 추가 모달이 나타납니다.
+
+모달 창에서는 Status가 Active인 사용자만 조회되며, 원하는 사용자를 선택하여 추가할 수 있습니다.
 
 ## Web App 삭제하기
+
 
 1. Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps 메뉴로 이동합니다.
 2. 테이블 내 삭제할 대상 웹앱 좌측의 체크 박스를 체크합니다.

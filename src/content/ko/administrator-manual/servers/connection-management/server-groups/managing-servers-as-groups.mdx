@@ -96,6 +96,11 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
         3. `QueryPie - SSH Key` : QueryPie에 등록된 SSH Key를 사용하여 자동 로그인합니다.
             * 입력 및 선택이 필요한 항목 : Account, SSH Key
             * Admin &gt; Servers &gt; Configurations &gt; Using One Time Accounts 활성화 시, Set As Provisioning Account 체크박스 체크 가능
+        4. `QueryPie - Custom Account` : 서버 접속 시 사전에 등록된 계정 대신, 사용자가 계정 정보를 직접 입력하여 접속할 수 있도록 허용합니다. 사용자는 접속 시점에 노출되는 입력 필드에 계정과 패스워드를 수동으로 입력해야 합니다.
+            * 입력이 필요한 항목 : Alias
+            * Seamless SSH 방식에서는 Custom Account 접속을 지원하지 않습니다.
+            * Server Agent가 설치된 Windows Server에서는 Custom Account 접속을 지원하지 않습니다.
+            * Server Agent가 없는 Windows Server에서는 Custom Account로만 접속을 할 수 있습니다.
     2.  **Provisioning 및 One Time Account** 
         1. Admin &gt; Servers &gt; Configures에서 Password Provisioning과 Using One Time Accounts가 활성화 되어야 카테고리 항목이 보입니다. 
         2. `QueryPie - Provisioning` : QueryPie에 등록된 계정을 Provisioning 용도로 사용합니다.
@@ -135,6 +140,12 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
 <Callout type="info">
 **참고: Vault Role Path**
 Vault SSH-OTP 및 SSH-CA 인증 방식에서는 Vault Role Path 필드에 Vault에 설정된 특정 Role에 접근하기 위한 전체 API 경로(예: 엔진경로/creds/롤이름)를 입력해야 합니다.
+</Callout>
+
+<Callout type="info">
+**참고: QueryPie - Custom Account**
+* Seamless SSH 접속 방식에서는 이 기능을 지원하지 않으며, 접속 시도 시 "Custom account not supported on seamless SSH" 오류 메시지가 표시됩니다.
+* Admin &gt; Audit &gt; Server Access History에는 접속에 사용된 Alias가 기록됩니다. SSH 접속의 경우 사용자가 입력한 계정명도 함께 기록되지만, Server Agent가 없는 Windows RDP 접속 시에는 Alias만 기록됩니다.
 </Callout>
 
 <Callout type="info">

@@ -2,14 +2,12 @@
 title: 'General'
 ---
 
-import { Callout } from 'nextra/components'
-
 ## Overview
 
 General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; General](/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.33.28-PM.png)
+![Administrator &gt; General &gt; Company Management &gt; General](/administrator-manual/general/company-management/general/image-20250822-103044.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; General
 </figcaption>
@@ -38,79 +36,37 @@ Administrator &gt; General &gt; Company Management &gt; General &gt; System Prop
 </figure>
 
 
-## 쿼리 공유 설정
-
-Query Sharing은 QueryPie SQL Editor에서 작성한 쿼리를 Git으로 전송하여 다른 사용자들과 공유하는 기능입니다.
-
-기본적으로 쿼리 공유 설정은 꺼져 있으며, `Query Sharing Setting` 버튼을 클릭하면 설정 모달이 팝업됩니다. Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩니다.
-
-
-<figure data-layout="center" data-align="center">
-![Query Sharing 모달 - OAuth](/administrator-manual/general/company-management/general/screenshot-20240726-145003.png)
-<figcaption>
-Query Sharing 모달 - OAuth
-</figcaption>
-</figure>
-<figure data-layout="center" data-align="center">
-![Query Sharing 모달 - SSH](/administrator-manual/general/company-management/general/screenshot-20240726-145650.png)
-<figcaption>
-Query Sharing 모달 - SSH
-</figcaption>
-</figure>
-
-*  **Git Repository URL**  : 쿼리를 전송할 Git Repository URL
-*  **Git Branch**  : 쿼리 파일을 전송할 Repository 내 브랜치 이름
-*  **Authentication Type**  : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)
-    * OAuth 선택 시, 다음의 내용을 입력합니다.
-        *  **User Name** : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
-        *  **Access Token**  : Git 서비스에서 제공하는 Access Token
-    * SSH 선택 시, 다음의 내용을 입력합니다.
-        *  **Public Key**  : Git 서버에 저장된 SSH Public Key
-        *  **Private Key**  : SSH Public Key와 한 쌍을 이루는 Private Key
-        *  **Passphrase**  : Private Key에 Passphrase 설정된 경우 입력
-
-
-입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인 후 `OK` 버튼을 입력하여 저장합니다.
-
-<Callout type="info">
-GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고해주세요.
-* Access Token 발급 : [개인용 액세스 토큰 관리](https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-* SSH 연결 : [SSH를 통한 GitHub 연결](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
-</Callout>
-
-
-
-<figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; General](/administrator-manual/general/company-management/general/image-20241028-093832.png)
-<figcaption>
-Administrator &gt; General &gt; Company Management &gt; General
-</figcaption>
-</figure>
-
-
-Query Sharing 설정이 완료되면 Query Sharing이  **On** 으로 표시됩니다.
-
-SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
-
-* Save 시 연동한 Repository에 쿼리 파일이 저장됩니다.
-* Queries 패널 &gt; QueryPie Git Sharing 폴더에서 Repository에 저장된 쿼리 파일을 불러올 수 있습니다.
-
-자세한 설명은 [웹 SQL 에디터로 접속하기](../../../user-manual/database-access-control/connecting-with-web-sql-editor)를 참고해주세요.
-
 ## Workflow Configuration
 
 Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-06-26-at-6.34.20-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.34.20-PM.png)
+![Screenshot-2025-08-25-at-5.36.19-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png)
 </figure>
+
+## 최대 승인 기간 설정
+
+모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.
+
+관리자는 Maximum Approval Duration 항목에서 승인 대기 요청이 자동으로 만료될 때까지의 기간을 1일에서 최대 14일까지 설정할 수 있습니다. 이곳에 설정된 기간은 사용자가 워크플로우를 상신할 때 선택하는 Approval Expiration Date (승인 만료일)의 최대값으로 적용됩니다.
+
+* Admin &gt; Databases &gt; Configurations의 Maximum Access Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다. 
+
+## 워크플로우 사유입력 글자 수 제한 설정
+
+워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및 최대 글자 수를 설정하는 기능입니다. 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
+
+* 관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할 수 있습니다.
+    * Reason for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 1000자)
+    * Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 300자)
+* 글자 수 범위는 최소 3자에서 최대 1000자 사이에서만 설정할 수 있습니다.
 
 ## 참조자 지정 활성화
 
 Activate Review Step to collaborate with others 토글로 활성화합니다.
 
 * Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.
-* 토글을 켜면 요청 생성 화면의  **결재 규칙**  지정 영역에서 참조자 지정 버튼이 표시됩니다.
+* 토글을 켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.
 * 토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
 
 ## 사후 승인 허용
@@ -231,3 +187,48 @@ Select Request Types Allowed for Users 토글을 활성화합니다.
     * 사용자 워크플로우 상신 화면:
         * 기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.
         * Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.
+
+## DB access 요청 권한 별 결재선 지정 기능
+
+Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval Rule)을 특정할 수 있도록 하려면 “Use DB Privilege Type Based Approval” 토글을 활성화합니다.
+
+<figure data-layout="center" data-align="center">
+![Use DB Privilege Type Based Approval](/administrator-manual/general/company-management/general/image-20250822-111454.png)
+<figcaption>
+Use DB Privilege Type Based Approval
+</figcaption>
+</figure>
+
+`+Routing Rule` 버튼을 누르면 privilege 에 대한 조건을 지정하여 결재선에 대한 라우팅을 지정할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+![image-20250822-112026.png](/administrator-manual/general/company-management/general/image-20250822-112026.png)
+</figure>
+
+*  **Routing Rule Name**  : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.
+*  **Condition**  : Privilege에 대한 조건을 지정합니다.
+    *  **All Match**  : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.
+    *  **Contains** : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.
+*   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.
+*  **Approval Rule**  : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.
+
+### Routing Rule 지정 예시
+
+* 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 모두 “Read-Only” 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 `Add` 버튼을 누릅니다.
+    * Condition: All Match 선택.
+    * Requested Privilege Type : Read-Only 선택.
+    * Approval Rule : 강제하기 원하는 Approval Rule 선택. 
+* 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 `Add` 버튼을 누릅니다.
+    * Condition: Contains 선택.
+    * Requested Privilege Type : Read/Write 선택.
+    * Approval Rule : 강제하기 원하는 Approval Rule 선택.
+
+## SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
+
+Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 “Attach Explain Results” 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.
+
+<figure data-layout="center" data-align="center">
+![image-20250825-002423.png](/administrator-manual/general/company-management/general/image-20250825-002423.png)
+</figure>
+
+관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 “Attach Explain Results” 는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야 실행계획 결과가 첨부됩니다.

@@ -1,0 +1,54 @@
+---
+title: 'Event Callback 연동'
+---
+
+## Overview
+
+Event Callback 연동은 웹훅(Webhook)을 통해 QueryPie에서 발생하는 시스템 이벤트를 고객사의 애플리케이션으로 실시간 전송하는 기능입니다. 이를 통해 주요 시스템 이벤트 알림을 외부 서비스와 통합하여 관리할 수 있습니다.
+
+
+## Event Callback 설정
+
+1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다
+2. Event Callback 타일을 클릭하여 상세 페이지로 이동합니다. 
+3. 상세페이지에 있는 `+ Create` 버튼을 클릭하면 Event Callback을 생성할 수 있는 팝업이 표시됩니다.
+
+<figure data-layout="center" data-align="center">
+![Event Callback Integration 상세페이지](/administrator-manual/general/system/integrations/integrating-with-event-callback/Screenshot-2025-08-25-at-6.04.50-PM.png)
+<figcaption>
+Event Callback Integration 상세페이지
+</figcaption>
+</figure>
+
+1. Event Callback 설정을 위해 다음의 정보들을 입력합니다.
+    *  **Name** : 식별이 용이하도록 임의의 이름을 입력합니다.
+    *  **Callback URL** : 이벤트 알림을 수신할 외부 애플리케이션의 웹훅 URL을 입력합니다.
+    *  **Status** : 웹훅의 동작 상태를 선택합니다.
+        *  **Enabled** : 웹훅이 활성화되어 실시간으로 이벤트를 전송합니다.
+        *  **Paused** : 웹훅을 일시 중지합니다. 이 상태에서 발생한 이벤트는 누적되며, 다시 Enabled로 변경 시 누적된 이벤트가 모두 전송됩니다.
+        *  **Disabled** : 웹훅을 완전히 비활성화합니다. 이 상태에서는 이벤트가 전송되지 않으며, 누적되지도 않습니다.
+    *  **Subscribed Events** : 알림을 구독할 이벤트 타입을 선택합니다. 현재 지원되는 이벤트는 다음과 같습니다.
+        * `USER_LOCKED`: 사용자 계정 잠금
+        * `USER_LOGIN_SUCCEEDED`: 사용자 로그인 성공
+        * `USER_CREATED`: 사용자 생성
+        * `USER_DELETED`: 사용자 삭제
+    *  **Authorization Header** : 웹훅 요청 시 보안 인증을 위해 필요한 인증 헤더 값을 입력합니다. (예: Authorization: Bearer &lt;token&gt;)
+    *  **Description** : 설정에 대한 설명을 입력합니다. (선택 사항)<br/>
+
+
+1. `Create` 버튼을 눌러 설정을 저장합니다.
+
+## Event Callback 설정 수정
+
+1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
+2. Event Callback 타일을 클릭하여 상세 페이지로 이동합니다.
+3. 생성된 Event Callback 목록에서 수정하려는 항목을 클릭합니다.
+4. 필요한 정보를 수정한 후 저장합니다.
+
+## Event Callback 설정 삭제
+
+1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
+2. Event Callback 타일을 클릭하여 상세 페이지로 이동합니다.
+3. 생성된 Event Callback 목록에서 삭제하려는 항목의 좌측 체크박스를 체크합니다.
+4. 목록 좌측 상단에서 `Delete`버튼을 클릭합니다
+5. 확인 창이 나타나면 삭제를 진행하여 설정을 제거합니다.

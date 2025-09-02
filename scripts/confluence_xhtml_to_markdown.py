@@ -83,7 +83,7 @@ class Attachment:
         return f'{"{"}filename="{self.filename}",original="{self.original}"{"}"}'
 
     def copy_to_destination(self) -> None:
-        source_file = os.path.join(self.input_dir, self.original)
+        source_file = clean_text(os.path.join(self.input_dir, self.original))
         if os.path.exists(source_file):
             logging.debug(f"Source file found: {repr(source_file)}")
         else:
@@ -101,6 +101,7 @@ class Attachment:
             # compare source_file and destination_file are equivalent.
             if filecmp.cmp(source_file, destination_file):
                 logging.debug(f"Destination file already exists: {repr(destination_file)}")
+                os.utime(destination_file, None)
             else:
                 logging.warning(f"Destination file already exists but different: {repr(destination_file)}")
         else:
