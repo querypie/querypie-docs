@@ -28,4 +28,8 @@ export default {
     title: 'Contact Us',
     href: 'https://www.querypie.com/company/contact-us',
   },
+  'querypie-docs': {
+    type: 'page',
+    display: 'hidden',
+  }
 };
