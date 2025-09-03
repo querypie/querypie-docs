@@ -1,0 +1,96 @@
+---
+title: 'My Dashboard'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+After signing in to QueryPie Web, you will be directed to the user dashboard. The dashboard provides an at‑a‑glance view of your assigned roles, groups, approval status, and a list of recently accessed connections.
+
+## Sign in to QueryPie Web
+
+When you access QueryPie via a web browser, the first screen is the sign‑in page.
+
+<Callout type="info">
+If you access from an IP address that is not allowed by the administrator, the sign‑in page may not be displayed.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![QueryPie Sign‑in Page](/user-manual/my-dashboard/image-20250725-085352.png)
+<figcaption>
+QueryPie Sign‑in Page
+</figcaption>
+</figure>
+
+### Google Analytics cookies notice and cookie settings
+
+To improve user experience, QueryPie uses cookies to collect information. On your first visit to the sign‑in page, you can consent to or refuse the use of optional analytics cookies, and you may change this at any time. You can also manage consent for each optional analytics cookie in the Cookie Preferences screen. Essential cookies cannot be disabled; without them, basic functionality may not work. Even after signing in, you can change settings under Preferences in the Cookie & Privacy page. In closed networks with no internet access, no data is sent externally even if you provide consent. You can review QueryPie’s Privacy Policy via the link provided.
+
+<figure data-layout="center" data-align="center">
+![Cookie Preferences](/user-manual/my-dashboard/image-20250724-094214.png)
+<figcaption>
+Cookie Preferences
+</figcaption>
+</figure>
+
+Note: [Preferences | Cookie-&-Privacy](preferences#cookie-%26-privacy)
+
+### Enter account information
+
+-  SSO Sign‑in button: Shown when the administrator has configured SSO (Single Sign‑On). Click to be redirected to the IdP authentication page.
+-  ID/PW fields: Enter the ID and password registered in QueryPie and click Continue to sign in.
+
+> Info
+> If the administrator has enabled Multi‑Factor Authentication, after entering your password, you must perform a second factor using the method specified by the administrator. As of QueryPie 10.2.2, the available methods are Google OTP and Email.
+>
+> - If Google OTP is the second factor
+>   - Enter your sign‑in password on the sign‑in page.
+>   - On your first sign‑in, register QueryPie in your Authenticator app by scanning the QR code shown in the popup. The page suggests downloading an authentication app such as Google Authenticator, Microsoft Authenticator, or Okta Verify, making it easy to install a compatible app from the App Store or Google Play.
+>   - Enter the one‑time verification code from your Authenticator app.
+> - If Email is the second factor
+>   - Enter your sign‑in password on the sign‑in page.
+>   - Check your email inbox for the authentication code. The code is valid for 30 minutes.
+>   - You can request “Resend authentication code.” A second resend request is available after 5 minutes.
+
+## User Dashboard
+
+Once signed in successfully, you will land on the user dashboard. The dashboard provides an at‑a‑glance view of your assigned roles, groups, approval status, and a list of recently accessed connections.
+
+<figure data-layout="center" data-align="center">
+![My Dashboard](/user-manual/my-dashboard/screenshot-20240801-142503.png)
+<figcaption>
+My Dashboard
+</figcaption>
+</figure>
+
+### User Info
+
+-  Basic Info: Shows your display name, email, and last sign‑in time.
+-  Groups: Shows user groups you belong to.
+-  Roles: Shows roles assigned to you by product area. If you have an Admin role, the assigned Admin Role is also displayed.
+
+### Workflow Requests
+
+-  Sent Requests: Number of approval requests you have submitted that are still in progress.
+-  Received Requests: Number of requests you have received that require your approval.
+-  Submit Request: Click to immediately open the request creation page from the dashboard.
+
+### Services
+
+- Services available to you appear based on the licenses you hold. Clicking a service takes you to its main screen.
+
+### Recent Connections
+
+- View a list of connections you recently accessed for each QueryPie service.
+
+## Go to Admin Page
+
+If your account is assigned an administrator role, you will see a Go to Admin Page button in the top menu bar. Click the button to open the Admin page in a new tab.
+
+<figure data-layout="center" data-align="center">
+![My Dashboard > Top‑right menu](/user-manual/my-dashboard/screenshot-20240801-145006.png)
+<figcaption>
+My Dashboard > Top‑right menu
+</figcaption>
+</figure>

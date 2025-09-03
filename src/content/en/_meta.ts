@@ -2,7 +2,7 @@ export default {
   index: {
     display: 'hidden',
   },
-  'overview': {
+  'querypie-overview': {
     type: 'page',
     title: 'Overview',
   },
@@ -10,9 +10,9 @@ export default {
     type: 'page',
     title: 'User Manual',
   },
-  'admin-manual': {
+  'administrator-manual': {
     type: 'page',
-    title: 'Admin Manual',
+    title: 'Administrator Manual',
   },
   'release-notes': {
     type: 'page',

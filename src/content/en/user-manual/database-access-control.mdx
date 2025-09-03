@@ -1,0 +1,38 @@
+---
+title: 'Database Access Control'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Users who have been granted access permissions for a connection can connect to database connections in a controlled environment via the Web SQL Editor or a proxy. Permissions may be granted to individual users or to user groups.
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/image-20240724-051755.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases
+</figcaption>
+</figure>
+
+You can connect to a database and run queries to browse data using the following methods:
+
+* [Connect with Web SQL Editor](database-access-control/connecting-with-web-sql-editor)
+* [Connect to Proxy without Agent](database-access-control/connecting-to-proxy-without-agent)
+* [Connect to Proxy via Agent](user-agent)
+
+<Callout type="info">
+**Differences between Web SQL Editor and Proxy access**
+
+QueryPie provides a **Web SQL Editor** that lets you run queries and browse data from your web browser. This environment enforces a high level of security controls. While export/import and clipboard copy are tightly restricted to the minimum necessary, developers and data users can still work efficiently within a secured, access‑controlled web environment. For databases that contain personal data or serve production workloads, we recommend connecting and running queries in the web environment.
+
+By contrast, **proxy access via the Agent** lets developers or data users continue using their **existing DB client tools**. The desktop agent acts as a proxy between the database and the client, allowing developers to keep using familiar tools. This is convenient for SQL work; however, note that it is **harder to control the fine‑grained features provided by each client tool**.
+
+QueryPie also supports **URL Proxy access without an Agent**. When a **web service (e.g., Redash, Tableau, Zeppelin)** needs to connect to a DB, you can use QueryPie‑issued URL Proxy credentials to apply access control policies and connect safely.
+
+In short, each approach has advantages and trade‑offs. Choose the method that best fits your security requirements and user convenience.
+</Callout>
+
+## Quick links to database connection guides
+
+(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)

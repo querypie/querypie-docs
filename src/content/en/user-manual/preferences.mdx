@@ -1,0 +1,148 @@
+---
+title: 'Preferences'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Use the Preferences page to configure your personal settings in QueryPie.
+
+## Preferences from the user account menu
+
+To configure your personal settings, click your user account at the top-right of the menu bar and select Preferences.
+
+<figure data-layout="center" data-align="center">
+![image-20250724-092314.png](/user-manual/preferences/image-20250724-092314.png)
+</figure>
+
+## My Account
+
+In the My Account tab, you can review your account details and change your password.
+
+<Callout type="info">
+The password change function is only supported for accounts created in QueryPie. If you use SSO Login, please use your IdP’s user settings to change your password instead of QueryPie.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; My Account](/user-manual/preferences/image-20250725-050431.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; My Account
+</figcaption>
+</figure>
+
+*  **Language Preference**  : Choose your display language and click OK in the confirmation modal to apply. Your page reloads immediately when the new language is applied. 
+    * Supported languages (non-English languages are Beta and some menus may still appear in English): 
+        * English
+        * Korean **[Beta]** 
+        * Japanese **[Beta]** 
+
+<Callout type="important">
+This setting is stored in your browser’s local storage. If local storage is cleared, you will need to set your language again.
+</Callout>
+
+## Approval Settings
+
+Use the Approval Settings tab to configure proxy approval (delegate approval).
+
+<Callout type="info">
+For detailed instructions on proxy approval, see [Additional Approval Features (Proxy Approval, Resubmission, etc.)](workflow/approval-additional-features-proxy-approval-resubmission-etc).
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Approver Settings](/user-manual/preferences/image-20250725-050830.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Approver Settings
+</figcaption>
+</figure>
+
+*  **Delegate Approval to**  : Select the delegate approver (only one user can be selected)
+*  **Start Date**  : Start date for the delegation period
+*  **End Date**  : End date for the delegation period
+*  **Delegation Reason**  : Optional reason for delegation
+
+## Editor
+
+Use the Editor tab to configure the display and behavior of the SQL editor.
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Editor](/user-manual/preferences/image-20250725-051417.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Editor
+</figcaption>
+</figure>
+
+*  **Theme** : Choose Light or Dark. 
+*  **Editor**  : Configure the editor options: 
+    *  **Font Size**  : Set the font size
+    *  **Tab Size**  : Set the indentation width for tabs
+    *  **Auto Complete**  : Enable or disable autocomplete for common queries
+    *  **Automatic Line Change**  : Enable or disable automatic line wrapping
+    *  **Full Scan Warning**  : Enable warnings for queries that may cause a full table scan
+*  **Grid** : Settings for grid displays (applies to all table-formatted views)
+    *  **Font Size**  : Set the font size
+    *  **Row Height**  : Set row height (em)
+        * eg. 2 em = `{Font Size}`*2
+    *  **How to show NULL item** : How to display empty values (Default : NULL)
+
+## Shortcut
+
+Use the Shortcut tab to view and edit keyboard shortcuts used in the SQL Editor (double-click to edit).
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Shortcut](/user-manual/preferences/image-20250725-052245.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Shortcut
+</figcaption>
+</figure>
+
+## Configuration
+
+Use the Configuration tab to manage Kerberos keytabs. Click `Create Keytab` to upload a keytab file.
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Configuration](/user-manual/preferences/image-20250725-052630.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Configuration
+</figcaption>
+</figure>
+
+## Terminal
+
+In the Terminal tab, configure the font size (default 12, min 9, max 24) and color theme used for text-based connections such as SSH.
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Terminal](/user-manual/preferences/image-20250725-053323.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Terminal
+</figcaption>
+</figure>
+
+## Cookie & Privacy
+
+You can consent to or refuse the use of optional analytics cookies collected to improve user experience, and you can review QueryPie’s Privacy Policy. On closed networks without internet connectivity, no cookie information is transmitted externally. The Privacy Policy pages are available when the internet-accessible QueryPie website is reachable.<br/>[https://www.querypie.com/privacy-policy](https://www.querypie.com/privacy-policy) (English)<br/>[https://www.querypie.com/ko/privacy-policy](https://www.querypie.com/ko/privacy-policy) (Korean)<br/>[https://www.querypie.com/ja/privacy-policy](https://www.querypie.com/ja/privacy-policy) (Japanese)
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; Terminal](/user-manual/preferences/image-20250725-053955.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; Terminal
+</figcaption>
+</figure>
+
+## QueryPie Lab
+
+The QueryPie Lab tab provides experimental features such as Dark Mode and the High Performance Web Terminal.
+
+<Callout type="important">
+Experimental features may be less stable and may be removed in future versions.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Top menu bar &gt; Profile &gt; Preferences &gt; QueryPie Lab](/user-manual/preferences/image-20250725-054439.png)
+<figcaption>
+Top menu bar &gt; Profile &gt; Preferences &gt; QueryPie Lab
+</figcaption>
+</figure>
+
+*  **Use Dark Mode :**  Use QueryPie’s Dark Mode regardless of the browser setting.
+*  **Use High Performance Web Terminal** : Optimized memory usage enables multiple concurrent sessions and exploration of large log files—ideal for tasks requiring high memory performance.

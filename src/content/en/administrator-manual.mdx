@@ -1,0 +1,215 @@
+---
+title: 'Administrator Manual'
+---
+
+## Welcome
+
+As a QueryPie administrator, you can manage resources and permissions, solution security, notification settings, and the overall platform via QueryPie Web or the API. Depending on the licenses provided and the administrator roles assigned to you, the available settings menus may differ.
+
+To access the Admin page, first sign in to QueryPie. After a successful sign‑in you will land on the user dashboard. If your account has been granted an administrator role, a Go to Admin Page button appears at the top right. Click this button to open the Admin page in a new tab.
+
+<figure data-layout="center" data-align="center">
+![Admin page entry point in the GNB](/administrator-manual/screenshot-20240801-145006.png)
+<figcaption>
+Admin page entry point in the GNB
+</figcaption>
+</figure>
+
+## New to configuring QueryPie Admin?
+
+Before configuring services such as Databases, Servers, and Kubernetes, there are a few essential items to set up. In particular, we recommend configuring security settings, user settings, and assigning administrator roles first.
+
+<table data-table-width="760" data-layout="default" local-id="96d34ea4-8772-49af-9ba2-14ea36b1f3e1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Setup order**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Settings**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Configure basic information**
+</th>
+<td>
+* [General](administrator-manual/general/company-management/general) 
+    * Company name, time zone, date format, and more
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Configure security information**
+</th>
+<td>
+* [Security](administrator-manual/general/company-management/security) 
+    * Lock policy, password rotation cycle, timeout, etc.
+* [Allowed Zones](administrator-manual/general/company-management/allowed-zones) 
+    * Create and manage allowed IP ranges
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Create users and user groups**
+</th>
+<td>
+* Authentication 
+    * [Integrate with LDAP](administrator-manual/general/user-management/authentication/integrating-with-ldap)
+    * [Integrate with Okta](administrator-manual/general/user-management/authentication/integrating-with-okta)
+    * [Integrate with AWS SSO](administrator-manual/general/user-management/authentication/integrating-with-aws-sso)
+* Users 
+    * [User Profile](administrator-manual/general/user-management/users/user-profile)
+* [Groups](administrator-manual/general/user-management/groups) 
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**Assign administrator roles**
+</th>
+<td>
+* [Roles](administrator-manual/general/user-management/roles)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**Configure approval rules**
+</th>
+<td>
+* [Approval Rules](administrator-manual/general/workflow-management/approval-rules)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**Configure notifications**
+</th>
+<td>
+* [Channels](administrator-manual/general/company-management/channels)
+* [Alerts](administrator-manual/general/company-management/alerts)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**Integrate with external security solutions**
+</th>
+<td>
+* [Integrations](administrator-manual/general/system/integrations)
+</td>
+</tr>
+</tbody>
+</table>
+
+## Great, the basics are done. Now configure each service.
+
+Once you finish the basic setup, continue with service‑level configurations. Experience robust access control with QueryPie’s fine‑grained permission model. After completing the service configurations, you can review admin/user connection and activity history in the Audit menu. QueryPie also provides Discovery features to identify sensitive data—explore our next‑generation discovery capabilities.
+
+<table data-table-width="760" data-layout="default" local-id="1c770267-da7f-48dc-b1e3-817744eeec38">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Setup order**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Settings**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Configure Database Access Control**
+</th>
+<td>
+* [Connection Management](administrator-manual/databases/connection-management)
+* [DB Access Control](administrator-manual/databases/db-access-control)
+* [Policies](administrator-manual/databases/policies)
+* [Ledger Management](administrator-manual/databases/ledger-management)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Configure Server Access Control**
+</th>
+<td>
+* [Connection Management](administrator-manual/servers/connection-management)
+* [Server Access Control](user-manual/server-access-control)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Configure Kubernetes Access Control**
+</th>
+<td>
+* [Connection Management](administrator-manual/kubernetes/connection-management)
+* [K8s Access Control](administrator-manual/kubernetes/k8s-access-control)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**Review audit logs**
+</th>
+<td>
+* [General Logs](administrator-manual/audit/general-logs)
+* [Database Logs](administrator-manual/audit/database-logs)
+* [Server Logs](administrator-manual/audit/server-logs)
+* [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**Use Data Discovery**
+</th>
+<td>
+* [Discovery](#target-title-not-found)
+</td>
+</tr>
+</tbody>
+</table>
