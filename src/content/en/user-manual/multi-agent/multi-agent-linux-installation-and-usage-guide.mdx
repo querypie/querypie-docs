@@ -1,0 +1,156 @@
+---
+title: 'Multi Agent Linux Installation and Usage Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+QueryPie Multi Agent runs only on Linux platforms with a FreeDesktop environment.
+</Callout>
+
+# Supported Targets
+
+| Base | Distribution | Minimum Supported Version | Verified Versions (validated by the dev team) |
+| -------- | --------- | ------------------ | ----------------------- |
+| Debian   | Debian    | 10 (Buster)        | 12 (Bookworm)           |
+| Debian   | Ubuntu    | 18.04 LTS (Bionic) | 24.04 LTS (Noble)       |
+| Debian   | Kali      | 2018.4             | 2024.2                  |
+| RedHat   | Fedora    | 28                 | 40                      |
+| RedHat   | RHEL      | 8 (Ootpa)          | -                       |
+| RedHat   | CentOS    | 8.0                | -                       |
+
+* Minimum supported version: The minimum Linux version that supports glibc 2.27
+
+# Installation and Removal
+
+## Download the installer
+
+You can download the Multi Agent installer via QueryPie Web > Profile > Multi-Agent.
+
+## Prerequisites
+
+Multi Agent provides a tray icon feature via [StatusNotifierItem](https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/).
+
+Depending on the Linux distribution, StatusNotifierItem may not be exposed by default.
+
+### 1. Check installation
+
+```
+gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
+```
+
+Not installed
+```
+Extension “appindicatorsupport@rgcjonas.gmail.com” doesn't exist
+```
+
+Installed
+
+<Callout type="important">
+Make sure State is ENABLED.
+</Callout>
+```
+appindicatorsupport@rgcjonas.gmail.com
+  Name: AppIndicator and KStatusNotifierItem Support
+  Description: Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
+  Path: /home/parallels/.local/share/gnome-shell/extensions/appindicatorsupport@rgcjonas.gmail.com
+  URL: https://github.com/ubuntu/gnome-shell-extension-appindicator
+  Version: 53
+  State: ENABLED
+```
+
+### 2. Install
+
+Download and install AppIndicator and KStatusNotifierItem Support from the link below.
+
+https://extensions.gnome.org/extension/615/appindicator-support/
+
+<figure data-layout="center" data-align="center">
+![Screenshot-20250404-144620.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/Screenshot-20250404-144620.png)
+</figure>
+
+<figure data-layout="center" data-align="center">
+![image-20250404-054650.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250404-054650.png)
+</figure>
+
+## Debian-based
+
+Based on the dpkg command.
+
+### Install
+
+1. Download querypie-multi-agent.deb.
+2. Run the following command to install the file. Output example
+3. Verify the installation. Output example
+
+### Uninstall
+
+Run the following command in the terminal.
+```
+sudo dpkg -r querypie-multi-agent
+```
+
+Output example
+```
+Removing querypie-multi-agent (3) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
+Processing triggers for desktop-file-utils (0.27-2build1) ...
+```
+
+## RedHat-based
+
+Based on the rpm command.
+
+### Install
+
+1. Download querypie-multi-agent.rpm.
+2. Run the following command in the terminal to install the file. Output example
+3. Verify the installation. Output example
+
+### Uninstall
+
+Run the following command in the terminal.
+```
+sudo rpm -e querypie-multi-agent
+```
+
+Output example
+```
+QueryPie Multi Agent is being uninstalled.
+QueryPie Multi Agent has been uninstalled.
+```
+
+## Keyring
+
+<Callout type="important">
+The following is based on Ubuntu.
+</Callout>
+
+In the GNOME desktop environment, there is a system that securely stores and manages user passwords, encryption keys, and certificates.
+
+If the Login keyring is locked in the Passwords and Keys app, Multi Agent will require administrator privileges at startup.
+
+<figure data-layout="center" data-align="center">
+![image-20250403-080719.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080719.png)
+</figure>
+
+<figure data-layout="center" data-align="center">
+![image-20250403-080458.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080458.png)
+</figure>
+
+If you unlock it using the Unlock button, administrator privileges will not be required at runtime.
+
+<figure data-layout="center" data-align="center">
+![image-20250403-080814.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080814.png)
+</figure>
+
+# Troubleshooting
+
+## Clicking a link in Multi Agent does nothing
+
+If a Default Browser is not set, links will not open. Please set a default browser in your browser's settings.
+
+<figure data-layout="center" data-align="center">
+![image-20250404-100924.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250404-100924.png)
+</figure>

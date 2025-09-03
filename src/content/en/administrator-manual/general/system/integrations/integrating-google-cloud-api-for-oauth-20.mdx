@@ -1,0 +1,36 @@
+---
+title: 'Integrating Google Cloud API for OAuth 2.0'
+---
+
+## Overview
+
+By registering the Client ID and Client Secret created in Google Cloud API, you can integrate OAuth 2.0 authentication for connecting to BigQuery. For instructions on setting up OAuth 2.0 in the Google Cloud API Console, please refer to this document: https://support.google.com/cloud/answer/6158849?hl=en and the Google Cloud API Console at https://console.cloud.google.com/apis/credentials.
+
+## Google Cloud API Integration
+
+<figure data-layout="center" data-align="center">
+![Google Cloud API Integration for using OAuth 2.0 authentication](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-090507.png)
+<figcaption>
+Google Cloud API Integration for using OAuth 2.0 authentication
+</figcaption>
+</figure>
+
+### Add an OAuth 2.0 Client ID
+
+1. Go to General > System > Integration.
+2. Under Authentication, click the Google Cloud API tile.
+3. Click the `+Add` button in the OAuth 2.0 Client IDs section.<br/>
+4. Enter the information in the popup and click Save.<br/>
+   1. Name: Enter a name that is easy to identify in the list.
+   2. Client ID: Enter the Client ID from Google API Console.
+   3. Client Secret: Enter the Client Secret from Google API Console.
+
+### Edit an OAuth 2.0 Client ID
+
+1. Click the row of the specific Client ID you want to edit in the list.
+2. Modify the information in the popup and click Save.
+
+### Delete an OAuth 2.0 Client ID
+
+1. Check the specific Client ID you want to delete in the list.<br/>
+2. Click the Delete button at the top to remove it.<br/> If the Client ID you are trying to delete is linked to a connection configuration, a warning message will appear and deletion will be blocked. First remove the OAuth settings from the connection configuration or delete the connection, then try again.<br/>

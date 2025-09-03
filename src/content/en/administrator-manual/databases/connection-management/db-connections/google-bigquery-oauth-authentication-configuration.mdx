@@ -1,0 +1,27 @@
+---
+title: 'Google BigQuery OAuth Authentication Configuration'
+---
+
+## Choose an authentication method
+
+Starting from QueryPie 10.2.4, you can choose the Google Cloud authentication method for BigQuery connections. The default authentication method used in Google Cloud synchronization is Service Account key authentication, so newly synchronized or manually created connections use Service Account key authentication by default. Additionally, for both manually created connections and those synchronized from the cloud, you can change the authentication method from Service Account key to OAuth 2.0 and save it. To use OAuth 2.0 authentication, you must first register the Client ID and Client Secret from the Google Cloud API Console in QueryPie.
+
+## Google Cloud API Integration
+
+For how to set up Google Cloud API Integration, please refer to: [Integrating Google Cloud API for OAuth 2.0](../../../general/system/integrations/integrating-google-cloud-api-for-oauth-20)
+
+## Specify an OAuth 2.0 Client ID for a connection
+
+Whether the connection was created via cloud synchronization or manually, you can select "Using Google User Account (OAuth 2.0)" as the Authentication Method.
+
+<figure data-layout="center" data-align="center">
+![Specify Authentication Method when creating a new BigQuery connection](/administrator-manual/databases/connection-management/db-connections/google-bigquery-oauth-authentication-configuration/image-20250116-112226.png)
+<figcaption>
+Specify Authentication Method when creating a new BigQuery connection
+</figcaption>
+</figure>
+
+1. In Authentication Method, select "Using Google User Account (OAuth 2.0)".
+2. For OAuth 2.0 Client ID, select the Client ID configured in General > System > Integration > Authentication > Google Cloud API. If the Client ID integration has not been configured yet, click the Go to Google Cloud API link to navigate to the Integration screen.
+3. Enter the Project ID of your Google Cloud project.
+4. Configure other required and optional fields and save.

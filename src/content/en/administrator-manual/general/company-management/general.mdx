@@ -1,0 +1,231 @@
+---
+title: 'General'
+---
+
+## Overview
+
+In the General page, you can change the basic settings that apply across QueryPie.
+
+<figure data-layout="center" data-align="center">
+![Administrator > General > Company Management > General](/administrator-manual/general/company-management/general/image-20250822-103044.png)
+<figcaption>
+Administrator > General > Company Management > General
+</figcaption>
+</figure>
+
+## Basic settings
+
+* Company Name: Enter the company name to be displayed in profile areas, etc.
+* Web Base URL: The base domain address used to access the QueryPie service
+* Timezone: Set the time zone applied to date and time information throughout QueryPie.
+* Date Format: Specify the date display format.
+* Default Display Language: Set QueryPie's default language (default: English).
+* Audit Log Retention Period: Set the retention period for audit logs. Currently fixed at 5 years.
+* Go to System Properties: Click to view system configuration values.
+
+## System Properties
+
+In the System Properties page, you can view the configuration values of QueryPie system components and save them to a file.
+
+<figure data-layout="center" data-align="center">
+![Administrator > General > Company Management > General > System Properties](/administrator-manual/general/company-management/general/image-20240805-014838.png)
+<figcaption>
+Administrator > General > Company Management > General > System Properties
+</figcaption>
+</figure>
+
+## Workflow Configuration
+
+In Workflow Configurations, you can change settings related to request submission and approval.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-25-at-5.36.19-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png)
+</figure>
+
+## Maximum approval duration
+
+Set a maximum period that uniformly limits the approval expiration date for all workflow requests.
+
+Administrators can set the period until pending approval requests automatically expire to between 1 and 14 days in Maximum Approval Duration. This value becomes the maximum allowed value for Approval Expiration Date when users submit workflows.
+
+* If Admin > Databases > Configurations > Maximum Access Duration or Admin > Servers > Configurations > Maximum Access Duration is set shorter than Maximum Approval Duration, then to prevent approvals from being processed after privileges have already expired, the Approval Expiration Date will follow the shorter Access Expiration Date.
+
+## Character limit for workflow reasons and comments
+
+Configure minimum and maximum character counts for Reason for Request and for Comments entered at approve, reject, cancel, and confirm actions. This lets administrators enforce input lengths according to organizational policies.
+
+* In the Workflow Configurations page, specify ranges for:
+    * Reason for Request: Minimum and maximum character counts when submitting a workflow (default: min 3, max 1000)
+    * Comments: Minimum and maximum character counts when approving, rejecting, undoing execution, or acknowledging a review (default: min 3, max 300)
+* The range can only be set between a minimum of 3 and a maximum of 1000 characters.
+
+## Enable specifying reviewers
+
+Enable with the "Activate Review Step to collaborate with others" toggle.
+
+* Decide whether to allow specifying reviewers when submitting a workflow request.
+* When enabled, a button to specify reviewers appears in the approval rule selection area of the request creation screen.
+* When disabled, the button is removed. Existing reviewer settings remain and can still be viewed.
+
+## Allow post-approval
+
+Enable with the "Allow users to submit requests in Urgent mode" toggle.
+
+* Decide whether to allow post-approval mode (Urgent Mode) when submitting a workflow request.
+* When enabled, toggles related to post-approval appear in the following areas:
+    * Approval Rules: When creating or editing approval rules
+    * Submit Request: In the approval rule selection area of the request creation screen
+* When disabled, those toggles no longer appear. Existing requests already submitted in post-approval mode remain and can still proceed.
+
+## User-attribute-based approver selection
+
+Enable with the "Use User Attribute-Based Approval" toggle.
+
+<figure data-layout="center" data-align="center">
+![Admin > General > Company Management > General > Workflow Configurations](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.14.55-AM.png)
+<figcaption>
+Admin > General > Company Management > General > Workflow Configurations
+</figcaption>
+</figure>
+
+This option determines whether, when submitting a workflow request, the approver is automatically selected based on a specific user profile Attribute (e.g., team leader, department head). This ensures approval requests are automatically assigned to the appropriate person.
+
+* Important:
+    * The selected Attribute's value must contain the approver's QueryPie Login ID.
+    * Only one approver can be set via attribute-based selection (one approver ID per attribute).
+* When enabled:
+    * A dropdown appears listing Attributes with DataType identifier, from which you select the Attribute used to auto-assign approvers (e.g., teamLeader).
+        * Restrict deleting the selected Attribute: Once an Attribute is selected here, it cannot be deleted from Administrator > General > Profile Editor (e.g., delete checkbox disabled).
+    * In Administrator > General > Workflow Management > Approval Rules, when adding or editing rules, an Allow Assignee selection (Attribute-Based) option appears and can be selected.
+        * Selecting this shows the Attribute chosen in Workflow Configurations (e.g., teamLeader) to indicate the approver is determined dynamically based on that Attribute's value.
+        * Interaction with self-approval disabled: If Self Approval is disabled in Approval Rules, then when the attribute-based approver resolves to the requester themself, they cannot be auto-assigned as approver. In such cases, approver designation may fail or be handled differently according to workflow settings or system policy.
+    * In User > Workflow submission page, rules created with Allow Assignee selection (Attribute-Based) are shown.
+* When disabled:
+    * The Attribute selection dropdown is disabled on the Workflow Configurations page.
+    * In Approval Rules, the Allow Assignee selection (Attribute-Based) option is no longer shown or selectable when creating or editing rules.
+    * Existing rules created with this option are excluded from the approver rule selection list when the user submits a new workflow.
+        * Note: Ongoing workflows using those rules are unaffected.
+        * When administrators attempt to edit such rules, settings related to attribute-based approver selection may be disabled or reset, and saving will fail with a red-bordered error if required values are missing.
+    * In the User > Workflow submission page, approval rules created with Allow Assignee selection (Attribute-Based) are not displayed.
+* When the Attribute value is missing:
+    * If the submitter's user profile lacks a value for the selected Attribute (i.e., no approver Login ID specified), an alert modal is shown and submission is blocked. The submitter must ask an administrator to set the Attribute value.
+        * Example error message:
+* When the Attribute value exists but the user is deactivated:
+    * If the approver specified by the Attribute is deactivated, the Approver field remains empty and an alert modal is shown; submission is blocked.
+        * Example error message:
+
+## Hide the Workflow menu based on user Attribute (Use User Attribute to Hide Workflow Menu)
+
+Enable with the "Use User Attribute to Hide Workflow Menu" toggle.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-6.35.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.35.32-PM.png)
+</figure>
+
+Hide the Workflow menu on the user dashboard for users matching a specified User Attribute key/value.
+
+* When enabled, you can choose a Key and enter a Value for a User Attribute.
+* Users whose profile matches the specified Key:Value will not see the Workflow menu on their dashboards.
+* Example: If you select Department Code as the User Attribute Key and enter Department A as the Value, users in that department will not see the Workflow menu.
+
+## Enable throttling for SQL requests in Workflow
+
+When enabled, throttling is applied when executing SQL requests submitted via Workflow.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
+</figure>
+
+With this option enabled, queries are executed in consecutive batches of the specified count, pausing for the specified interval (ms) between batches. This helps prevent DB overload from large batch executions.
+
+* Query chunk size: A value between 1 and 999,999. Splits many queries into chunks of this size and executes them sequentially.
+    * Example: If there are 100 queries and Query chunk size is 10, 10 queries are executed at a time.
+* Query throttle interval: Interval between consecutive query batches (1–9,999 ms)
+
+## Custom URL redirection for Ledger table DML workflows
+
+Enable with the "Redirect to custom page for SQL Requests" toggle.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-8.33.07-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png)
+</figure>
+
+If a User Agent user runs INSERT, UPDATE, or DELETE queries on a Ledger table and a workflow approval request is generated, this option determines whether clicking Send Request redirects the user to a predefined custom URL page. This facilitates integration with your external workflow system.
+
+* When enabled:
+    * A field to enter a custom URL appears on the Administrator > General > Workflow Configurations page.
+    * When a User Agent user submits an approval request for a change query on a Ledger table and clicks Send Request, they are redirected to the custom URL. Query or user information is not transmitted.
+* When disabled:
+    * The field to enter a custom URL is hidden.
+    * When a User Agent user triggers a workflow approval request for a Ledger table DML operation and clicks Send Request, they are taken to QueryPie's standard workflow page as usual.
+
+## Control which Workflow Request types are exposed to users
+
+Enable with the "Select Request Types Allowed for Users" toggle.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-8.40.28-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.40.28-PM.png)
+</figure>
+
+This option allows administrators to selectively control which Workflow request types users can access and submit.
+
+* When enabled (On):
+    * In Administrator > General > Workflow Configurations:
+        * A list of request types appears as checkboxes, grouped by product (Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps (WAC)).
+        * Administrators can select which request types are exposed to users. By default, all request types are selected.
+    * User Workflow submission screen:
+        * Only the request types checked by the administrator are displayed and can be requested.
+    * Special behavior for Access Role Request:
+        * Access Role Request must be selected in at least one of Servers (SAC), Kubernetes (KAC), or Web Apps (WAC) for it to be exposed to users.
+        * When requesting an Access Role, the internal Service field shows only the products selected by the administrator (e.g., Server Access Control).
+* When disabled (Off, default):
+    * In Administrator > General > Workflow Configurations:
+        * The checkbox list for selecting request types is not displayed.
+    * User Workflow submission screen:
+        * As before, all workflow request types relevant to the user's assigned licenses are displayed and can be requested.
+        * The Service field in Access Role Request is also fully exposed according to licenses.
+
+## Specify approval rules by requested DB access privileges
+
+To route DB Access Requests to specific approval rules based on the requested privileges, enable the "Use DB Privilege Type Based Approval" toggle.
+
+<figure data-layout="center" data-align="center">
+![Use DB Privilege Type Based Approval](/administrator-manual/general/company-management/general/image-20250822-111454.png)
+<figcaption>
+Use DB Privilege Type Based Approval
+</figcaption>
+</figure>
+
+Click +Routing Rule to define conditions for privileges and route to a designated approval rule.
+
+<figure data-layout="center" data-align="center">
+![image-20250822-112026.png](/administrator-manual/general/company-management/general/image-20250822-112026.png)
+</figure>
+
+* Routing Rule Name: Enter an easily identifiable name for the routing rule.
+* Condition: Specify conditions for Privilege.
+    * All Match: Triggers when all Privilege Types requested in a DB Access Request are the same.
+    * Contains: Triggers when at least one of the requested Privilege Types matches the specified type.
+* Requested Privilege Type: Select one of the Privilege Types defined in Administrator > Databases > DB Access Control > Privilege Type.
+* Approval Rule: Select the Approval Rule to enforce when the above conditions are met.
+
+### Examples of routing rules
+
+* If you want to force a specific Approval Rule when all requested privileges for the target connection are Read-Only in a DB Access Request, configure as follows and click Add:
+    * Condition: Select All Match.
+    * Requested Privilege Type: Select Read-Only.
+    * Approval Rule: Select the Approval Rule to enforce.
+* If you want to force a specific Approval Rule when any requested privilege is Read/Write, configure as follows and click Add:
+    * Condition: Select Contains.
+    * Requested Privilege Type: Select Read/Write.
+    * Approval Rule: Select the Approval Rule to enforce.
+
+## Enable/disable attaching execution plans in SQL Requests
+
+Provide an option to enable or disable the Attach Explain Results feature when submitting SQL requests via Workflow.
+
+<figure data-layout="center" data-align="center">
+![image-20250825-002423.png](/administrator-manual/general/company-management/general/image-20250825-002423.png)
+</figure>
+
+Even if an administrator enables this option, the Attach Explain Results toggle in the Workflow SQL Request form remains Off by default. Users must explicitly turn it On when needed for the execution plan to be attached.

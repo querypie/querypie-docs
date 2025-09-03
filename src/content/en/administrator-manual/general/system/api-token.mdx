@@ -1,0 +1,119 @@
+---
+title: 'API Token'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This page manages External API tokens.
+
+## What is the External API?
+
+An API that allows you to use QueryPie features outside of the web console. As of version 10.0, two versions are available: V0.9 and V2.
+
+* QueryPie API V2
+    * V2 API is supported from QueryPie version 9.16.1.
+    * The base path is `{querypie url}`/api/external/v2/ and can be used without impacting the existing API V0.9.
+* The basic headers required for API calls are as follows. For detailed API specifications, refer to the API documentation.
+
+| Key | Value |
+| ------------- | ---------------------- |
+| Content-Type  | application/json       |
+| Authorization | `{querypie api token}` |
+
+Notes for using API tokens:
+
+* API tokens can be issued by users with Owner privileges or administrators who have access to this menu.
+* Tokens are fully visible only at the time of initial issuance. Thereafter, everything except the first 8 characters is masked.
+    * If you lose a token key, we recommend deleting the existing key from the list and issuing a new token.
+* When extending an API token, clicking Update extends the expiration date by the period configured at token creation, starting from the click time.
+
+<Callout type="info">
+You can check the list of provided APIs and their specifications in the API docs accessible by clicking API Docs in Administrator > General > System > API Token.
+</Callout>
+
+## View API token list
+
+<figure data-layout="center" data-align="center">
+![Administrator > General > System > API Token](/administrator-manual/general/system/api-token/screenshot-20240723-110619.png)
+<figcaption>
+Administrator > General > System > API Token
+</figcaption>
+</figure>
+
+1. Go to Administrator > General > System > API Token.
+2. You can view the list of currently created tokens (sorted by creation date, newest first).
+3. Search and filter:
+    1. You can search the token list by Token Name or Token Value.
+    2. You can filter the list by token status.
+
+## Create an API token
+
+<figure data-layout="center" data-align="center">
+![Administrator > General > System > API Token > Create API Token](/administrator-manual/general/system/api-token/image-20241028-094955.png)
+<figcaption>
+Administrator > General > System > API Token > Create API Token
+</figcaption>
+</figure>
+
+1. In the API Token page, click Create API Token at the top right.
+2. Enter the following information:
+    1. API Name: Enter an identifiable name for the API token.
+    2. Validity Period Type: Specify the token expiration period.
+        1. Selecting Never Expire allows permanent use of the token, but is not recommended.
+    3. Scopes: Select the permissions that can be performed with the API token.
+        1. Full Access: Grants access to all administrator functions.
+        2. Select Role: Select desired Admin Roles to restrict scope of permissions.
+            * You can save without any Admin Role selected; in that case, the API token cannot perform any actions.
+    4. Allowed Zones: Define IP ranges where the API token can be used.
+        * Map Allowed Zones defined in Admin > General > Company Management > Allowed Zones to configure API call IP ACLs.
+    5. Description: Enter a description for this API token.
+3. Click Ok to complete token creation.
+4. In the completion modal, you can view the API token information for the first and only time.
+    1. Click the copy button next to API Token to copy the token value.
+    2. Click OK to close the modal.
+
+## Edit an API token
+
+<figure data-layout="center" data-align="center">
+![General Settings > System > API Token > Edit API Token](/administrator-manual/general/system/api-token/image-20241028-095455.png)
+<figcaption>
+General Settings > System > API Token > Edit API Token
+</figcaption>
+</figure>
+
+1. In the API Token page, click the token you want to edit from the list.
+2. The Edit API Token modal appears. You can change the following items:
+    1. API Name: Enter if you want to change the name.
+    2. Validity Period Type: You can change the API token expiration date.
+        1. After changing and saving, the expiration date will be updated based on the newly specified period from the current time.
+        2. Regardless of whether the remaining time is shorter or longer than the new period, the expiration date will be overwritten with the new value. Depending on the situation, you can extend or shorten the API's lifetime.
+        3. Changing to Never Expire removes the expiration date, but is not recommended.
+    3. Scopes: Change the scope of permissions that can be performed with the API token.
+        1. Full Access: Grants access to all administrator functions.
+        2. Select Role: Select desired Admin Roles to restrict scope of permissions.
+            * You can save without any Admin Role selected; in that case, the API token cannot perform any actions.
+    4. Allowed Zones: Define IP ranges where the API token can be used.
+        * Map Allowed Zones defined in Admin > General > Company Management > Allowed Zones to configure API call IP ACLs.
+    5. Description: Enter if you want to change the description of this API token.
+3. Click OK to save changes.
+
+## Renew API token validity period
+
+1. In the API Token page, click Update for the token you want to renew.
+2. Upon success, a toast appears and the expiration date is extended by the period configured in Validity Period Type from the time you click the button.
+
+## Delete an API token
+
+<figure data-layout="center" data-align="center">
+![Administrator > General > System > API Token > Delete](/administrator-manual/general/system/api-token/screenshot-20240723-121212.png)
+<figcaption>
+Administrator > General > System > API Token > Delete
+</figcaption>
+</figure>
+
+1. In the API Token page, select the token(s) to delete using the checkboxes.
+2. Click Delete in the table header.
+3. When the confirmation modal appears, click OK.
+4. Confirm that the token is removed from the table list.

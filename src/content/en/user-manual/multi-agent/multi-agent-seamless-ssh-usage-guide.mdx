@@ -1,0 +1,229 @@
+---
+title: 'Multi Agent Seamless SSH Usage Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+Seamless SSH allows you to connect to servers through QueryPie while preserving the native terminal experience.
+
+This document describes how to use Seamless SSH, along with specs and support scope, based on version 10.2.8.
+
+## How to use
+
+### Configure SSH config
+
+You can configure the SSH config file to keep using the standard ssh command.
+
+1. Navigate to the .ssh directory and create or edit the config file.
+```
+cd ~/.ssh
+vi config
+```
+
+1. Add the following settings to the config file, then save and exit (press :wq to save).
+```
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+1. If server URLs and ports do not overlap across servers, you can configure it as follows:
+```
+Host *
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+1. Connect to the server using the simplified ssh command.
+```
+ssh {{Server Account}}@{{Server Name}}
+```
+
+### Configure shell alias
+
+You can configure an SSH alias to continue using the ssh command.
+
+1. Open your shell configuration file.
+
+For Bash:
+```
+vi ~/.bashrc
+```
+
+For Zsh:
+```
+vi ~/.zshrc
+```
+
+1. Add the following line to the shell configuration file, then save and exit (press :wq to save).
+```
+alias qshdev='ssh -o ProxyCommand="qpctl ssh-proxy %r %h %p"'
+```
+
+1. Apply the changes to the current shell session.
+
+For Bash:
+```
+source ~/.bashrc
+```
+
+For Zsh:
+```
+source ~/.zshrc
+```
+
+Or simply open a new terminal window.
+
+1. Connect to the server using the alias.
+```
+qpctl host use develop.dev.querypie.io
+qshdev {{Server Account}}@{{Server Name}}
+```
+
+## Differences from the previous QueryPie User Agent
+
+### Base command
+
+Seamless SSH runs using the following command installed with QueryPie Multi Agent.
+```
+qpctl ssh-proxy %r %h %p [QueryPie Host]
+```
+
+The command used by the previous User Agent was:
+```
+qpa ssh %r %h %p
+```
+
+### How connection errors are displayed
+
+If an error occurred when connecting to the QueryPie Proxy server, the previous User Agent displayed a dialog, which was not terminal-friendly.
+
+Multi Agent now displays the error in the terminal.
+```
+$ qpctl ssh manual@core.dev.querypie.io
+qpctl: error: Connection error: Timeout
+```
+
+## Newly added features
+
+### Default host
+
+To use Seamless SSH, you need to enter the QueryPie Host, which can be inconvenient.
+
+We added a feature to set a default server used by the qpctl command.
+
+* When a default server is set, you do not need to enter the QueryPie Host in the qpctl ssh-proxy command.
+* Even if a default server is set, if you provide a QueryPie Host explicitly, that value will be used.
+
+<Callout type="info">
+If you reset the app using Reset All Settings, the default host setting will also be removed.
+</Callout>
+
+#### qpctl host list
+
+Check the list of currently registered QueryPie Hosts.
+
+<Callout type="important">
+This is not the QueryPie Host currently selected in the UI.
+</Callout>
+```
+$ qpctl host list
+QueryPie Hosts:
+ - https://nightly.dev.querypie.io
+ - http://t8.ec2.querypie.io (current)
+ - https://t3.qa.querypie.io
+ - https://t4.qa.querypie.io
+ - https://t8.qa.querypie.io
+ - https://t12.qa.querypie.io
+```
+
+#### qpctl host use
+
+Shows the list of registered QueryPie Hosts and lets you select one with the arrow keys
+```
+$ qpctl host use
+Use the arrow keys to navigate: ↓ ↑ → ←
+QueryPie Hosts
+  ▸ https://nightly.dev.querypie.io
+    http://t8.ec2.querypie.io (current)
+    https://t3.qa.querypie.io
+    https://t4.qa.querypie.io
+↓   https://t8.qa.querypie.io
+```
+```
+Selected https://t4.qa.querypie.io
+✔ Host changed to https://t4.qa.querypie.io
+```
+
+<figure data-layout="center" data-align="center">
+[qpctl-host-use-without-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-without-hostname.mov)
+</figure>
+
+#### qpctl host use `{QueryPie Host}`
+```
+$ qpctl host use nightly.dev.querypie.io
+✔ Host changed to https://nightly.dev.querypie.io
+```
+
+<figure data-layout="center" data-align="center">
+[qpctl-host-use-with-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-with-hostname.mov)
+</figure>
+
+### :warning: Experimental feature - Use qpctl directly :warning:
+
+To use Seamless SSH, either
+
+* configure ~/.ssh/config, or
+* add -o ProxyCommand=qpctl ssh-proxy … to the ssh command
+
+These are not the most natural experiences. If you have QueryPie Multi Agent installed, you can use the qpctl command directly for ssh connections.
+
+1. Prefix your ssh command with qpctl.
+```
+$ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
+```
+
+1. If you have settings in ~/.ssh/config, just prefix with qpctl as well.
+```
+$ cat ~/.ssh/config
+
+Host core-dev
+Hostname core.dev.querypie.io
+User ec2-user
+IdentityFile ~/.ssh/querypie-dev.pem
+
+$ qpctl ssh core-dev
+```
+
+## Support scope
+
+### Minimum supported version
+
+OpenSSH 6.7 or later is required.
+```
+$ ssh -V
+OpenSSH_9.8p1, LibreSSL 3.3.6
+```
+
+### How it works
+
+The qpctl command wraps the ssh client command and automatically adds the ProxyCommand option.
+
+1. qpctl ssh command_line
+2. ssh -G command_line
+    1. Extract username, hostname, port
+3. ssh command_line -o ProxyCommand="qpctl ssh-proxy username hostname port"
+
+### Unsupported features
+
+#### Custom ProxyCommand
+
+Because qpctl uses ProxyCommand, a custom ProxyCommand cannot be used.
+```
+$ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
+qpctl: error: ProxyCommand option is not supported
+```
+
+#### scp
+
+scp is not supported yet.

@@ -1,0 +1,62 @@
+---
+title: 'Multi Agent 3rd-Party Tool Support List by OS'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This is a list of 3rd-party tools supported by QueryPie Multi Agent.
+
+These tools can be launched via the Open Connection With feature and are verified to work properly.
+
+In addition to the tools supported via agentless connections, you can also connect to databases and servers.
+
+## Database
+
+| Tools | Windows | MacOS | Linux |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| DBeaver            | **Supported (10.2.6~)** | **Supported (10.2.6~)** | **Supported (10.2.8~)** |
+| IntelliJ           | **Supported (10.2.6~)** | **Supported (10.2.6~)** | **Supported (10.2.8~)** |
+| Jdbc               | **Supported (10.2.6~)** | **Supported (10.2.6~)** | **Supported (10.2.8~)** |
+| SQLGate For Oracle | **Supported (10.2.6~)** | - | - |
+
+<Callout type="info">
+Agentless access
+
+QueryPie supports secure database access through a URL Proxy created without an agent.
+
+For details, see Connecting to Proxy without Agent: ../database-access-control/connecting-to-proxy-without-agent.
+</Callout>
+
+## Servers
+
+| Tools | Protocol | Windows | MacOS | Linux |
+| ----------------- | -------------- | ------------------ | ------------------ | ------------------ |
+| iTerm             | SSH            | -                  | **Supported (10.2.8~)** | - |
+| Terminal          | SSH            | -                  | **Supported (10.2.8~)** | - |
+| ConsoleWindowHost | SSH            | **Supported (10.2.8~)** | - | - |
+| PuTTY             | SSH            | **Supported (10.2.8~)** | - | - |
+| SecureCRT         | SSH            | **Supported (10.2.8~)** | - | - |
+| Windows Terminal  | SSH            | **Supported (10.2.8~)** | - | - |
+| XShell            | SSH            | **Supported (10.2.8~)** | - | - |
+| GnomeTerminal     | SSH            | - | - | **Supported (10.2.8~)** |
+| Konsole           | SSH            | - | - | **Supported (10.2.8~)** |
+| FileZilla         | SFTP           | **Supported (10.2.8~)** | **Supported (10.2.8~)** | Not supported |
+| WindowsApp        | RDP            | - | **Supported (10.2.8~)** | - |
+| MSTSC             | RDP            | **Supported (10.2.8~)** | - | - |
+| ScreenSharing     | VNC            | - | **Supported (10.2.8~)** | - |
+
+<Callout type="info">
+Multiple connections when using FileZilla
+* FileZilla accelerates operations by using multiple connections for uploads/downloads. As a result, multiple connections may appear in Session Monitoring depending on the number of files or tasks.
+* Also, even after downloads or uploads complete, connections may persist for a certain period based on FileZilla's persistent connection settings and may not close immediately.
+</Callout>
+
+<Callout type="info">
+Seamless SSH connections
+
+With Seamless SSH configuration, other tools can also connect securely to servers through QueryPie.
+
+For detailed setup, see Multi Agent Seamless SSH Usage Guide: multi-agent-seamless-ssh-usage-guide.
+</Callout>

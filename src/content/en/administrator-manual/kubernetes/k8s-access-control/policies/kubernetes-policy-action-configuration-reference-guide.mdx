@@ -1,0 +1,81 @@
+---
+title: 'Kubernetes Policy Action Configuration Reference Guide'
+---
+
+## Overview
+
+In QueryPie KAC, you configure access control policies for k8s using YAML-based policies. This guide explains how to set Actions to avoid difficulties using client tools such as kubectl, Lens, and k9s due to misconfigured policies.
+
+## Guide for API Groups settings
+
+Commonly used resources like pods belong to the core group and thus use an empty string ("") for apiGroups, whereas deployments and replicasets belong to "apps", and ingresses belong to "networking.k8s.io". It is burdensome for administrators to know and set each value one by one.
+
+While you may need to separate by apiGroups if there are resources with the same name, that is not common.
+
+Therefore, unless there is a specific mission to manage Kubernetes API Groups, we generally recommend setting apiGroups to "*" and controlling access via resources.
+
+## Guide for Resources settings
+
+<figure data-layout="center" data-align="center">
+![3rd Party Client Tool - Lens screen](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide/screenshot-lens-resources-events.png)
+<figcaption>
+3rd Party Client Tool - Lens screen
+</figcaption>
+</figure>
+
+When using 3rd-party client tools, you can monitor status within the permitted resource scope.
+
+* Resources section
+    * In the screen above, only resources for which you have permissions are displayed.
+    * Therefore, if you only have permission for pods, only the graph for pods is shown, and if pods are filtered to view only a subset, only that subset is displayed.
+    * Other resources behave similarly.
+    * Recommended spec
+* Events section
+    * The events section below is displayed based on permissions for the events resource, and like the resources section above, it is filtered by namespace and name.
+    * However, having permissions for pods does not automatically show pods-related events. To view that screen, you must explicitly grant permissions for the events resource.
+    * The events resource and pods resource are separate resources. Therefore, even if you grant only pods permissions while having permissions for events, you cannot query only events related to pods.
+    * Recommended spec
+
+## Guide for Verbs settings
+
+The part that most affects 3rd-party client tool usage is verbs. Administrators specify the scope of resources users can access through apiGroups, resources, namespace, and name, and specify which APIs can be invoked via verbs. Even if you set the resource scope well, using the wrong verb combinations makes tools hard to use.
+
+* View permissions
+    * For users who only get View permissions, grant get, list, and watch all together.
+    * Using kubectl is not too difficult with just get and list, but without watch, tools like Lens that support live monitoring are difficult to use.
+    * Recommended spec
+* Edit permissions
+    * For users who also get Edit permissions, you must also grant View permissions (at minimum, get and list). This is because kubectl first performs a read before issuing a modification request for a given resource.
+    * In tools like Lens, without View permissions there is no way to reach the Edit screen.
+    * For Edit, group the verbs by role: create (create), modify (patch, update), delete (delete, deletecollection).
+    * Although deletecollection is not commonly used, in KAC, even when a deletecollection request is made, only resources for which the user has permissions are selected and deleted, so it can be useful.
+    * Recommended spec
+
+## Other recommended configuration examples
+
+Example) Restrict permissions for resources in the prod namespace
+```
+allow:
+  actions:
+    - apiGroups: ["*"]
+      resources: ["*"]
+      namespace: "dev"
+      name: "*"
+      verbs: ["*"]
+    - apiGroups: ["*"]
+      resources: ["*"]
+      namespace: "prod"
+      name: "*"
+      verbs: ["get", "list", "watch"]
+```
+
+Example) Restrict access to secrets in the prod namespace
+```
+deny:
+  actions:
+    - apiGroups: ["*"]
+      resources: ["secrets"]
+      namespace: "prod"
+      name: "*"
+      verbs: ["*"]
+```

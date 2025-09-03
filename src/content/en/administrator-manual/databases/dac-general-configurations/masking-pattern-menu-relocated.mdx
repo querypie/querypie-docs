@@ -1,0 +1,68 @@
+---
+title: 'Masking Pattern (Menu Relocated)'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+The Masking Pattern page allows you to manage patterns for detecting and masking sensitive information. By default, 25 masking patterns are provided, and you can add your own custom patterns as needed.
+
+<Callout type="info">
+Menu relocation
+From 11.2.0, the menu has been moved from Administrator > Databases > Policies > Masking Pattern to Administrator > Databases > General > Masking Pattern.
+</Callout>
+
+## View the list of masking patterns
+
+On the Masking Pattern page, you can view the registered masking patterns (searchable by pattern name).
+
+<figure data-layout="center" data-align="center">
+![Administrator > Databases > General > Masking Pattern](/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated/image-20250826-005621.png)
+<figcaption>
+Administrator > Databases > General > Masking Pattern
+</figcaption>
+</figure>
+
+## View/Edit/Delete masking pattern details
+
+Click an item in the table to open a drawer where you can view, edit, or delete its details.
+
+<figure data-layout="center" data-align="center">
+![Administrator > Databases > General > Masking Pattern > Details](/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated/image-20250826-005930.png)
+<figcaption>
+Administrator > Databases > General > Masking Pattern > Details
+</figcaption>
+</figure>
+
+* Detecting Pattern: Pattern for detecting sensitive information
+* Masking Pattern: Pattern for masking sensitive information
+* Masking Pattern Preview: Preview of masking pattern results
+    * Raw Data: Sample data
+    * Detected Data: Area detected as sensitive information in the sample data by the Detecting Pattern (shaded in blue)
+    * In the Masked Data within the Preview table, you can check the masking results for the sample data
+
+Click Save to store your changes.
+
+Click Delete and then Delete in the confirmation modal to remove the masking pattern.
+
+Alternatively, select items to delete in the Masking Pattern list using the checkbox and click Delete to remove them.
+
+## Add a masking pattern
+
+Click Create Pattern to open a modal. Enter all the required information and click Save.
+
+<figure data-layout="center" data-align="center">
+![Create Pattern](/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated/screenshot-20240731-174002.png)
+<figcaption>
+Create Pattern
+</figcaption>
+</figure>
+
+* Name: Masking pattern name
+* Detecting Pattern: Pattern for detecting sensitive information (regex)
+* Masking Pattern: Pattern for masking sensitive information (regex)
+* Masking Pattern Preview: Information to preview and validate the masking pattern
+    * When you enter sample data into Raw Data, the detected data will appear in Detected Data
+    * The summarized result will be displayed in the Preview table
+    * Only one sample data item can be entered
