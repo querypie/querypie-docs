@@ -1,0 +1,46 @@
+---
+title: 'ProxyJump Configurations'
+---
+
+## Overview
+
+Supports access control for servers in different Network Zones from QueryPie or when CIDR overlaps. Through ProxyJump settings, you can connect to target servers through Jump Hosts installed in other Network Zones or VPCs. When users attempt to connect to servers displayed in QueryPie, they can connect in the same way as servers that do not go through Jump Hosts. This allows you to control unnecessary user access to Jump Hosts.
+
+
+## Viewing ProxyJump
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations](/administrator-manual/servers/connection-management/proxyjump-configurations/image-20240829-012626.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations menu.
+2. You can search by ProxyJump name using the search box in the top left of the table.
+3. You can refresh the server group list using the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : ProxyJump name
+    2.  **Jump Hosts**  : Jump Host set by administrator (one of the servers)
+    3.  **Target Server Groups**  : Server groups to connect through Jump Host
+    4.  **Updated At** : Last modification date and time of settings
+    5.  **Created At**  : Settings creation date and time
+5. Click on each row to view ProxyJump detailed information.
+
+## <br/>Creating ProxyJump
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations menu.
+2. Click the `+ Create ProxyJump` button in the top right.
+3. Register servers by referring to the [Creating ProxyJump](proxyjump-configurations/creating-proxyjump) guide.
+
+
+## Deleting ProxyJump
+
+<figure data-layout="center" data-align="center">
+![image-20240909-083933.png](/administrator-manual/servers/connection-management/proxyjump-configurations/image-20240909-083933.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations menu.
+2. Check the checkbox on the left of the target settings to delete in the table.
+3. Click the `Delete` button that appears in the table column line.
+4. When a popup appears, click the `Delete` button to proceed with deletion.

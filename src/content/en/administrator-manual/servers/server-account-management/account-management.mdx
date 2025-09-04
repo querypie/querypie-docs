@@ -1,0 +1,92 @@
+---
+title: 'Account Management'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can view server accounts whose passwords have been changed through Password Provisioning, check password change history, and manually manage passwords for individual server accounts.
+
+<Callout type="info">
+This menu is displayed only after selecting **Password Provisioning** setting to On and saving in Administrator &gt; Servers &gt; [SAC General Configurations](../sac-general-configurations).
+</Callout>
+
+## Viewing Accounts
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management ](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-6.47.45-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management 
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Account Management &gt; Account Management menu
+2. You can search for servers or Accounts through the search field in the top left of the table.
+3. You can refresh the account list through the refresh button in the top right of the table.
+4. The table provides the following column information.
+    1.  **Server** : Target server name
+    2.  **Host**  : Server IP
+    3.  **Server OS**  : Server OS
+    4.  **Account**  : Account for server access
+    5.  **Usage**  : Account usage purpose
+        1.  **For User** : Account for user access
+        2.  **For Provisioning**  : Account used in QueryPie's password change Jobs
+    6.  **Last Password Updated At :**  Last password update date and time for the account
+    7.  **Created At**  : Account initial change date and time
+5. Clicking each row allows you to view account detailed information.
+
+## Viewing One Time Accounts
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accounts tab](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-6.50.29-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accounts tab
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accounts tab
+2. You can search for Server, Host, or Account through the search field in the top left of the table.
+3. You can refresh the account list through the refresh button in the top right of the table.
+4. The table provides the following column information.
+    1.  **Server** : Target server name
+    2.  **Host**  : Server IP
+    3.  **Server OS**  : Server OS
+    4.  **Account**  : One Time Account created for server access
+    5.  **Last Fail Message**  : Error message containing the cause of deletion
+    6.  **Last Delete Attempted At**  : Last date and time when account deletion was attempted
+    7.  **Delete Attempt Counts**  : Number of account deletion attempts
+
+## Viewing Active Directory
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directory tab](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-7.03.55-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directory tab
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directory tab
+2. You can search for UPN through the search field in the top left of the table.
+3. You can refresh the account list through the refresh button in the top right of the table.
+4. The table provides the following column information.
+    1.  **AD Name**  : AD name linked to QueryPie
+    2.  **AD Domain**  : AD domain address
+    3.  **UPN**  : User account used when logging into that domain
+    4.  **Last Password Updated At**  : Last password update date and time for the account
+    5.  **Created At**  : Account initial change date and time
+
+## Viewing Account Detailed Information
+
+<figure data-layout="center" data-align="center">
+![image-20240831-155640.png](/administrator-manual/servers/server-account-management/account-management/image-20240831-155640.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Account Management &gt; Account Management menu
+2. Click the row with the account you want to check.
+3. Check password change history through Log Details.
+4. Click the `View Password` button to check the current password.
+
+<Callout type="info">
+To View Password, you need to perform an identity verification process (re-enter password). If OTP is applied when accessing QueryPie User, OTP authentication is also performed in View Password.
+</Callout>

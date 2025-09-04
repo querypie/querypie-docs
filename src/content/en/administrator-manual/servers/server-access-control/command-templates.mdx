@@ -1,0 +1,50 @@
+---
+title: 'Command Templates'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can manage command templates that cannot be used after accessing servers managed by the organization. Once set, command templates can be reused when setting access permissions. Command blocking is based on strings, and command blocking through regular expressions is also supported. Additionally, you can standardize the list of commands that users can select in the server privilege request process to improve management efficiency.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates](/administrator-manual/servers/server-access-control/command-templates/image-20240902-053009.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates
+</figcaption>
+</figure>
+
+## Setting Blocked Command Templates
+
+Server access policies can be set in the Policies menu. For setting methods, refer to the **commandsRef** section in [Setting Server Access Policies](policies/setting-server-access-policy).
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt; Create Command Template](/administrator-manual/servers/server-access-control/command-templates/Screenshot-2025-07-22-at-3.23.24-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt; Create Command Template
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates menu.
+2. Click the `+ Create Template` button in the top right.
+3. Enter the following information for each item to set policies. 
+    1.  **Base Type** : Select whether to allow or prohibit commands registered in this command template. This item cannot be changed after creating the command template.
+        1.  **Deny**  : Set commands to prohibit. Commands other than the set commands can be used.
+        2.  **Allow**  : Set commands to allow. Commands other than the set commands cannot be used.<br/>*Limitation: (10.2.1) Allow setting does not work in TELNET and FTP.
+    2.  **Allow for Workflow Request** : Set whether to allow users to select the created template in the server privilege request (Server Privilege Request) workflow.
+        * This option is only activated when Base Type is Allow.
+        * When set to On, users can select this template when requesting server privileges.
+    3.  **Commands (SSH)**  : This is where you set command policies executed through web terminals on servers. 
+        1.  **Keyword**  : You can enter commands as keywords. 
+        2.  **RegEx**  : You can enter commands in regular expression format. 
+    4.  **Functions (SFTP)**  : This is where you set function policies executed through web SFTP and FTP on the server. You can restrict actions such as directory/file deletion, file upload, file download, and directory creation. 
+4. Click the `Save` button in the bottom right to complete the settings.
+
+
+<Callout type="info">
+**Important Notes**
+The Allow for Workflow Request setting has meaning when Allow Pre-defined Command Templates Only is Enable in the SAC &gt; General &gt; Configurations &gt; Server Privilege Request Settings menu.
+</Callout>
+
+

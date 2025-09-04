@@ -1,0 +1,41 @@
+---
+title: 'SSH Key Configurations'
+---
+
+## Overview
+
+When the authentication method for accounts during connection access is SSH Key, you can pre-register and store keys here. Keys registered in this way can be loaded by setting Auth Type to SSH Key in the Account item when registering servers or server groups.
+
+
+## Registering SSH Keys
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; Create SSH Key](/administrator-manual/servers/server-account-management/ssh-key-configurations/image-20240828-012337.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; Create SSH Key
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations menu. 
+2. Click the `Create SSH Key` button in the top right. 
+3. Enter each of the following items in the popup displayed on the screen. 
+    1.  **Name** : Enter a name that can distinguish the SSH Key. 
+    2.  **Description** : You can enter additional description of the SSH Key. 
+    3.  **Passphrase** : You can select whether to use Passphrase. If you want to use it, you can change the switch button to On state and enter the Passphrase. 
+    4.  **Private**   **Key** : Enter the Private Key in the appropriate format. 
+    5.  **Copy from a Key File**  : Copy the Private Key from a file.
+4. Click the `Save` button to save. 
+
+
+## SSH Key Management Features
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; SSH Key Details](/administrator-manual/servers/server-account-management/ssh-key-configurations/image-20240828-012530.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; SSH Key Details
+</figcaption>
+</figure>
+
+* View connected servers and server groups: When you click on an individual SSH Key, a Drawer page opens and you can see at a glance which server groups or servers are using that key. 
+* SSH Key modification: Click the `Edit` button in the top right to modify the key. However, when modifying, the previously entered Passphrase and Private Key are masked for security reasons and cannot be viewed in their original form. 
+* SSH Key deletion: Click the `Delete` button in the top right to delete the key. However, if the key you want to delete is already in use in server groups or servers, deletion is not possible, so please disconnect the account connected to that key from the server or server group before deleting. 

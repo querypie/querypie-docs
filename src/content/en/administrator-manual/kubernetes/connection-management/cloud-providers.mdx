@@ -1,0 +1,55 @@
+---
+title: 'Cloud Providers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Supports viewing, creating, modifying, and deleting Cloud Providers for Kubernetes synchronization. Through Cloud Providers, you can synchronize Kubernetes resources within cloud platforms and bulk register them as clusters managed by QueryPie.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers](/administrator-manual/kubernetes/connection-management/cloud-providers/image-20240721-053703.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+
+## Viewing Cloud Providers
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu.
+2. You can search by Cloud Provider name using the search box in the top left of the table. 
+3. You can refresh the Cloud Provider list using the refresh button in the top right of the table. 
+4. The table provides the following column information: 
+    1.  **Name**  : Cloud provider title
+    2.  **Cloud Provider**  : Connected platform 
+    3.  **Region**  : Platform region 
+    4.  **Replication Frequency** : Synchronization cycle setting
+    5.  **Created At**  : Cloud provider initial creation date and time
+    6.  **Updated At** : Cloud provider last modification date and time
+5. Click on each row to view cloud provider detailed information.
+
+
+## Creating Cloud Providers
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu.
+2. Click the `+ Create Provider` button in the top right.
+3. Create a cloud provider by referring to the following guides:
+    * [Synchronizing Kubernetes Resources from AWS](cloud-providers/synchronizing-kubernetes-resources-from-aws)
+
+
+## Deleting Cloud Providers
+
+<figure data-layout="left" data-align="left">
+![image-20240721-053752.png](/administrator-manual/kubernetes/connection-management/cloud-providers/image-20240721-053752.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu.
+2. Check the checkbox on the left of the target cloud provider to delete in the table. 
+3. Click the `Delete` button that appears in the table column line. 
+4. When a popup appears, enter the *DELETE* text and click the `Delete` button to proceed with deletion. 
+
+<Callout type="important">
+Please note that when deleting a Cloud Provider, all resources synchronized through that cloud provider will be bulk deleted together.
+</Callout>

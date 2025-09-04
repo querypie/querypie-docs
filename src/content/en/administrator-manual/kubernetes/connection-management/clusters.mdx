@@ -1,0 +1,55 @@
+---
+title: 'Clusters'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie supports viewing, creating, modifying, and deleting Kubernetes cluster assets. Both Kubernetes clusters synchronized through Cloud Providers and manually registered Kubernetes clusters are managed on the same page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters](/administrator-manual/kubernetes/connection-management/clusters/image-20240721-054705.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters
+</figcaption>
+</figure>
+
+
+## Viewing Clusters
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters menu.
+2. You can search by cluster name using the search box in the top left of the table. 
+3. You can refresh the cluster list using the refresh button in the top right of the table. 
+4. The table provides the following column information: 
+    1.  **Name**  : Cluster name
+    2.  **Version**  : Cluster version
+    3.  **API URL**  : Cluster API URL
+    4.  **Cloud Provider**  : Connected platform (displayed as hyphen for manual clusters)
+    5.  **Tags**  : List of tags attached to the cluster
+    6.  **Created At**  : Cluster initial creation date and time
+    7.  **Updated At**  : Cluster last modification date and time
+5. Click on each row to view cluster detailed information.
+
+
+## Creating Clusters
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters menu.
+2. Click the `+ Create Cluster` button in the top right.
+3. Create a cluster manually by referring to the [Manually Registering Kubernetes Clusters](clusters/manually-registering-kubernetes-clusters) guide.
+
+
+## Deleting Clusters
+
+<figure data-layout="left" data-align="left">
+![image-20240721-054752.png](/administrator-manual/kubernetes/connection-management/clusters/image-20240721-054752.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters menu.
+2. Check the checkbox on the left of the target cluster to delete in the table.
+3. Click the `Delete` button that appears in the table column line. 
+4. When a popup appears, click the `Delete` button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Cluster, all access permissions for that cluster granted to users/groups are bulk deleted.
+</Callout>

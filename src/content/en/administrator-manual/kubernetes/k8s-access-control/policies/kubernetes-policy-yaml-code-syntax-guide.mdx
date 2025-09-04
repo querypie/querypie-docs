@@ -1,0 +1,331 @@
+---
+title: 'Kubernetes Policy YAML Code Syntax Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+This document is written based on **QueryPie Enterprise 9.20.0**.
+</Callout>
+
+
+## QueryPie Access Control Policy Overview
+
+Access control policies defined in QueryPie operate based on EABAC (Enhanced Attribute Based Access Control). EABAC is a policy control method that can control access to resources registered in QueryPie and perform permission management based on the roles and attributes of QueryPie users. It provides more flexible and sophisticated access control by combining the functions of RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control). All policies operate on the premise of All Deny.
+
+EABAC operates in two ways: Role and Policy. Role settings are done through GUI, and Policy definitions are managed through code (YAML).
+
+For Kubernetes policies, the specification was created as a comprehensive model that can accommodate both Role limited to namespaces that actually exist in Kubernetes and ClusterRole that supports resources outside the namespace scope.
+
+
+## Kubernetes Policy YAML Basic Structure
+
+Wildcard ("*") and regular expression ([RE2 format](https://github.com/girishji/re2/wiki/Syntax): `^$` explicit required) patterns are supported in general policy code except for some items.
+
+<table data-table-width="760" data-layout="default" local-id="35831a4b-16f9-461f-96a1-0af983cbf59e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Category**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Property**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Required**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Description**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Valid Values**
+</th>
+</tr>
+<tr>
+<td>
+`apiVersion`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+This is the version of the written YAML Code. It is a value managed by the system and does not need to be modified.
+</td>
+<td>
+`kubernetes.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td>
+`kind`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+This is the type of the written YAML Code. It is a value managed by the system and does not need to be modified.
+</td>
+<td>
+`KacPolicy`
+</td>
+</tr>
+<tr>
+<td>
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+Specifies whether to allow or deny specific rules of the policy.
+* Each policy only allows the following specs: 
+    * Single Allow 
+    * Single Deny
+    * Single Allow & Single Deny
+* Deny has higher priority than Allow.
+</td>
+<td>
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`resources`
+</td>
+<td>
+O
+</td>
+<td>
+Specifies resources to allow/deny access. **[Wildcard and regular expressions allowed]**
+</td>
+<td>
+`- "cluster:*"`
+`- "cluster:^eks-.*$"`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`subjects`
+</td>
+<td>
+O
+</td>
+<td>
+Specifies Kubernetes users/groups to impersonate Kubernetes commands.
+* `kubernetesGroups` : Specifies the kubernetes group to be used by QueryPie Proxy.
+* `impersonation` : Specifies target users/groups to allow impersonation from the client side. **[Wildcard allowed]**
+</td>
+<td>
+`kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
+`impersonation:`<br/>`users:`<br/>`- "system:user"`<br/>`groups:`<br/>`- "system:admin"`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`actions`
+</td>
+<td>
+O
+</td>
+<td>
+Specifies the Resource API list to allow/deny within the Kubernetes cluster API server. **[Wildcard and regular expressions allowed]**
+* `apiGroups` : Defines the Kubernetes API group list. **[Wildcard allowed]**
+* `resources` : Defines Kubernetes resources. **[Wildcard allowed]**
+* `namespace` : Defines the target namespace. **[Wildcard and regular expressions allowed]**
+* `name` : Defines the target resource name. **[Wildcard and regular expressions allowed]**
+* `verbs` : Specifies permissions within Kubernetes to allow or deny operations. **[Wildcard allowed]**
+</td>
+<td>
+`- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`conditions`
+</td>
+<td>
+
+</td>
+<td>
+Controls the target in detail by applying conditions for whether to apply resource access policies.
+* `resourceTags` : Can be filtered by resource tag keys and values. **[Value wildcard and regular expressions allowed]** 
+* `userAttributes` : Restricts policy usage by using user attributes as conditions. **[Value wildcard and regular expressions allowed]**
+* `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. **[Wildcard allowed]**
+</td>
+<td>
+`resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
+</td>
+</tr>
+</tbody>
+</table>
+
+
+## Resources Specification Method
+
+`resources` defines resources for Kubernetes clusters registered in QueryPie, <u>not Kubernetes resources</u>.
+
+1. Definition for the `resources` field is required. **[required]** 
+2. Enter based on the Kubernetes cluster name.
+    * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
+3. Kubernetes cluster names are established based on the following criteria. 
+    * Character length limit of 100 characters
+    * Only alphabetic case-sensitive, numbers and the following special symbols are allowed
+        * underscore (_)
+        * hyphen (-)
+    * Names must start and end with alphabetic case-sensitive or numbers
+    * Cluster names are limited to prevent duplication
+4. Multiple Kubernetes clusters can be specified in a single policy. 
+    * `- "cluster:kubepie-dev-1"`<br/>`- "cluster:kubepie-dev-2"`
+    * `["cluster:kubepie-dev-1", "cluster:kubepie-dev-2"]`
+5. Paths allow wildcards.
+    * `"cluster:kubepie-dev-*"`
+6. Paths allow regular expressions.
+    * `"cluster:^kubepie-dev-.*$"`
+
+
+## Subjects Specification Method
+
+`subjects` defines users/groups within Kubernetes to impersonate Kubernetes commands. `subjects` is a field that needs to be applied only in spec:allow, and is not syntactically allowed in spec:deny.
+
+1. `kubernetesGroups`: **[required]**
+    * Defines the kubernetes group account that QueryPie Proxy will impersonate to perform APIs on resources.
+        * These subjects must be definable at the Policy-wide level and must be defined to assign at least one.
+            * These subjects for Impersonation can be nested with other Policies within one Role.
+        * Defines kubernetes-side groups (single or multiple) that can perform permissions on resources specified in Resources.
+        * In kubernetesGroups, Querypie User's Group can be entered in reserved word format. In this case, User's Group must be entered without double quotes (") and when users view the Policy, the actual user Group value is displayed.
+2. `impersonation`: **[OPTIONAL]**
+    * When users attempt impersonation (--as, --as-group) in kubectl commands with permissions of specific serviceaccounts, etc. within kubernetes from the client side, defines the call allowance list for this.
+        * `users`: Lists values allowed in the "--as" parameter with users/service accounts existing within Kubernetes.
+        * `groups`: Lists values allowed in the "--as-group" parameter with group accounts existing within Kubernetes.
+        * Wildcards are allowed. (`"*"`)
+
+
+## Actions Specification Method
+
+Specifies the Resource API list to allow within the cluster API server. Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entries.
+
+1. `apiGroups` : Defines the Kubernetes API group list. 
+    1. By defining API groups, more detailed permission control is possible for each API group. 
+    2. When control over custom resources is needed, it can be specified in apiGroups to control only custom resources. 
+    3. Reference: 
+        1. [API Groups Guide ](https://kubernetes.io/docs/reference/using-api/#api-groups)
+        2. [API Group List](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#api-groups) 
+    4. Wildcards are allowed to comprehensively specify all API groups.
+        * `apiGroups: ["*"]`
+2. `resources` : Defines the Kubernetes resource list.
+    1. Commonly used resources are as follows:
+        * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
+    2. Resources not listed above are also acceptable in policies. 
+    3. Even if you grant permissions only to namespace sub-resources, ReadOnly permissions for Namespace are also granted. Therefore, cases where you need to specify the namespace every time when calling resources do not occur. If you want to prevent granting permissions to specific namespaces, you can set access denial for namespace resources in `spec:deny`. 
+    4. Multiple resources can be specified in a single policy action. 
+    5. Wildcards are allowed. (`"*"`)
+3. `namespace` : Defines the target namespace. 
+    1. By defining namespaces in actions, you can control allowed namespaces within the cluster for each resource. 
+    2. Both wildcards and regular expressions are allowed.
+        * `namespace: "*"`
+    3. For resources that do not exist in namespaces other than namespaces, you do not need to write the namespace.
+        1. Target examples) `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`, etc.
+4. `name` : By defining target resource names, you can control based on naming among allowed resources within the cluster. 
+    1. Both wildcards and regular expressions are allowed.
+        * `name: "pods-*"`
+5. `verbs` : Specifies API permissions within Kubernetes to allow or deny operations.
+    * Commonly called verbs are as follows: 
+        * `get`: Resource information retrieval
+        * `list`: Resource list enumeration
+        * `watch`: Resource change monitoring 
+        * `create`: New resource creation
+        * `update`: Existing resource update
+        * `patch`: Resource partial modification
+        * `delete`: Resource deletion 
+        * `deletecollection`: Multiple resource deletion in a single operation
+    * Even if there are special verbs not listed above, they can be specified and applied in policies. 
+    * When supporting 3rd-Party clients, the following verbs are required and guided: 
+        * View permissions : `get`, `list`, `watch`
+        * Edit permissions : `get`, `list`, `watch` + `create`, `update`, `patch`, `delete`, `deletecollection`
+    * Generally, `create` verb specification is required for container shell access session creation through pod exec commands. 
+    * Wildcards are allowed. 
+        * `verbs: ["*"]`
+
+
+## Conditions Specification Method
+
+`conditions` items can define `resourceTags`, `userAttributes`, `ipAddresses` as conditions. **[OPTIONAL]**
+
+* `resourceTags` : In tag items, you can filter by resource tag keys and values. 
+* `userAttributes` : Specifies user attributes as conditions and restricts the use of permissions defined in the policy only to users whose values match. 
+* `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. 
+
+
+## KAC Policy Example
+
+```
+apiVersion: kubernetes.rbac.querypie.com/v1 
+kind: KacPolicy
+
+spec:
+  allow: 
+    resources: 
+      - "cluster:*"
+    subjects: 
+      kubernetesGroups: 
+        - "system:masters"
+      impersonation: 
+        users: ["system:serviceaccount:argocd"] 
+        groups: ["system:admin"]  
+    actions: 
+      - apiGroups: ["*"] 
+        resources: 
+          - "pods"
+        namespace: "*" 
+        name: "*" 
+        verbs: ["get", "list", "watch"]
+    conditions: 
+      resourceTags: 
+        "Owner": ["Kenny", "Brant"]
+        "Team": "DevSecOps" 
+      userAttributes: 
+        "countryCode": "KR"
+        "department": "Infra"
+      ipAddresses: ["10.10.0.0/24", "10.11.10.1"] 
+  deny: 
+    resources: 
+      - "cluster:kubepie-*"
+    actions: 
+      - apiGroups: ["*"]
+        resources: 
+          - "*"
+        namespace: "production"
+        name: "*"
+        verbs: ["*"]
+    conditions: 
+      resourceTags: 
+        "Owner": "Brant"
+```

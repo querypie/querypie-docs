@@ -1,0 +1,38 @@
+---
+title: 'Web App Configurations'
+---
+
+## Overview
+
+The Web App Configurations page is a settings page in QueryPie WAC where you can manage web application access and security policies. You can configure core elements of web application connection security such as login failure threshold settings, session timeouts, and insecure protocol controls. This allows administrators to configure web environments according to their organization's security requirements and protect systems from potential threats.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web App Configurations](/administrator-manual/web-apps/connection-management/web-app-configurations/image-20250629-153047.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
+</figcaption>
+</figure>
+
+
+*  **Just-in-time Access Request Configurations :** Manage settings for temporary access requests.
+    *  **Maximum Access Duration (minutes)** : Set the maximum allowed time for temporary access requests in minutes. The default value is 60 minutes.
+*  **WAC Proxy Configurations :** Manage QueryPie WAC proxy information.
+    *  **Proxy Host** : Displays the host address of the WAC proxy server.  **Proxy Port** : Displays the port number of the WAC proxy server.
+*  **QueryPie Web Secure (Extension) Configurations :** Manage files and version information for QueryPie Web Secure extension deployment.
+    *  **Extension File** : Displays the download URL of the Chrome extension file. 
+    *  **Current Version** : Displays the version of the currently installed extension. 
+    *  **Minimum Required Version** : Displays the minimum required version.
+*  **Watermark Configurations :** Customize watermark text to be displayed in the browser when accessing web applications. The set text is applied uniformly to all users and all web applications. Available watermark options are as follows.
+    *  **Custom String** : Custom text
+    *  **Username** : User ID
+    *  **Display Name** : User display name
+    *  **Email** : User email address
+    *  **Employee number** : Employee number
+    *  **Organization** : Organization name
+    *  **Division** : Business unit
+    *  **Department** : Department name
+    *  **Timestamp** : Access time
+    *  **Client IP** : Client IP address
+*  **Root CA Certificate Configurations :** Backup and restore Root CA certificate files and key files for QueryPie WAC. Administrators can manage certificate files through the **Manage .cer file** and **Manage .key file** buttons.
+    *  **Root CA Certificate File** : Displays the Root CA certificate file name. 
+    *  **RootCA Certificate Key File** : Displays the Root CA certificate key file name. 

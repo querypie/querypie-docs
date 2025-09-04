@@ -1,0 +1,91 @@
+---
+title: 'Web Apps'
+---
+
+import { Callout } from 'nextra/components'
+
+# Overview
+
+QueryPie supports viewing, creating, and modifying Web Apps assets. All web apps registered through web applications, APIs, or manually registered web apps are managed on the same page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps](/administrator-manual/web-apps/connection-management/web-apps/image-20250629-153743.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
+</figcaption>
+</figure>
+
+## Viewing Web Apps
+
+1. Navigate to Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
+2. You can search by web app name through the search field in the top left of the table.
+3. You can refresh the web app list through the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1. Name : Web app name
+    2. URL : Web app URL or domain
+    3. Description : Web app description
+    4. Tags : List of tags attached to the web app
+    5. User Activity Recording : Whether user activity is recorded (setting for tracking web app access and usage history)
+    6. Created At : Web app creation date and time
+    7. Updated At : Web app last modification date and time
+5. Clicking each row allows you to view web app detailed information.
+
+## Creating Web Apps
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.58.08-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
+2. Click the + Create Web App button in the top right.
+3. Web App creation screen
+    1. Name : Web app name
+    2. Base URL : Web app URL or host address 
+    3. Description : Web app description
+    4. Tags : Tag settings to add to the web app
+    5. Watermark : Whether to apply watermark to browser
+    6. User Activity Recording : Whether user activity is recorded (setting for tracking web app access and usage history)
+    7. URL Paths: Enter sub-paths of the Web App
+
+## Setting Web App Owners and Members
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.07-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners
+</figcaption>
+</figure>
+
+You can specify Owners and Members for Web Apps to granularly manage permissions for Just-In-Time (JIT) access requests. The permissions for each role are clearly separated as follows.
+
+*  **Web App Owner:** Has approval authority for JIT access requests. 
+*  **Web App Member:** Has submission (application) authority for JIT access requests. 
+* One user can have both Owner and Member permissions simultaneously, in which case both request submission and approval are possible.
+
+<figure data-layout="center" data-align="center">
+![Assign Owners screen](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.24-PM.png)
+<figcaption>
+Assign Owners screen
+</figcaption>
+</figure>
+
+You can set Owners/Members when creating a Web App or in the detailed information screen. Clicking the `+ Assign Owners` or `+ Assign Members` button brings up a user addition modal.
+
+In the modal window, only users with Status Active are displayed, and you can select and add desired users.
+
+## Deleting Web Apps
+
+
+1. Navigate to Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
+2. Check the checkbox on the left of the target web app to delete in the table.
+3. Click the Delete button that appears on the table column line.
+4. When a popup appears, enter the DELETE text and click the Delete button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Web App, all access permissions for that web app granted to users/groups are deleted in bulk.
+</Callout>
+
+

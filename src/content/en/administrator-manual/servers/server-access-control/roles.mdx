@@ -1,0 +1,120 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Role-Based Access Control (RBAC) based on user roles within the organization is used to allow or restrict user access to servers. You can assign set Roles to users or user groups. Roles are used to define multiple policies as a single role.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles](/administrator-manual/servers/server-access-control/roles/image-20240902-052135.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Roles menu.
+2. You can search by role name through the search field in the top left of the table.
+3. You can refresh the Role list through the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : Role name
+    2.  **Description**  : Role detailed description
+    3.  **Last Access At**  : Last call date and time for this role
+    4.  **Created At**  : Role initial creation date and time
+    5.  **Updated At** : Role last modification date and time
+    6.  **Updated By**  : Administrator name who performed the last update
+
+
+## Viewing Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details](/administrator-manual/servers/server-access-control/roles/image-20240902-052205.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Roles menu.
+2. Clicking each row allows you to view role detailed information.
+    1.  **Policies** 
+        1. This is the default tab where you can view the list of assigned policies.
+        2. The table list displays the following information for each policy:
+            1.  **Name**  : Policy name
+            2.  **Description**  : Policy detailed description
+            3.  **Version**  : Policy version
+            4.  **Assigned At**  : Assignment date and time
+            5.  **Assigned By**  : Administrator name who assigned this policy
+        3. Clicking each policy row provides detailed information about that policy in drawer format.
+            1. Basic information is displayed at the top as follows:
+                1.  **Name**  : Policy name
+                    * You can open the policy detailed page link in a new window.
+                2.  **Version**  : Policy version
+                3.  **Description**  : Policy detailed description
+                4.  **Assigned**   **At**  : Assignment date and time
+                5.  **Assigned By**  : Administrator name who assigned this policy
+            2. The policy is displayed as code at the bottom.
+    2.  **Users/Groups** 
+        1. Lists the user/group list where this Role is assigned.
+        2. You can search by user/group name.
+        3. The list displays the following information for each user/group:
+            1.  **User Type**  : User/group type
+            2.  **Name**  : User/group name
+            3.  **Last Access At**  : Last call date and time for the user/group
+            4.  **Expiration Date**  : Expiration date
+            5.  **Granted At**  : Date and time when this Role was assigned to the user/group
+    3.  **Servers** 
+        1. Lists the server list accessible by this Role.
+        2. You can search by Server name.
+        3. The list displays the following information for each server: 
+            1.  **Server Group**  : Server group name
+            2.  **Server**  : Server name
+            3.  **Host**  : Server Host information
+            4.  **Account**  : Server access account name
+
+## Creating Roles
+
+<figure data-layout="center" data-align="center">
+![image-20240723-081606.png](/administrator-manual/servers/server-access-control/roles/image-20240723-081606.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Roles menu.
+2. Click the `+ Create Role` button in the top right.
+3. Enter the following information for role creation.
+    1.  **Name** : Name that can distinguish the Role on the screen.
+    2.  **Description** : You can enter additional description of the Role. It is also displayed on the Role selection screen for users.
+4. Save through the `Save` button.
+
+
+## Modifying Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details](/administrator-manual/servers/server-access-control/roles/image-20240902-052459.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+After entering the detailed screen of the Role, you can add Policies as follows in the Policies tab that is automatically selected.
+
+1. Navigate to Server Settings &gt; Server Access Control &gt; Roles menu.
+2. Select the Role to modify from the list.
+3. Click the `+ Assign Policies` button in the right center of the screen.
+4. Add pre-created Policies.
+
+
+## Deleting Roles
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Roles menu.
+2. You can proceed with the deletion step in two ways:
+    1. Delete from list
+        1. Check the checkbox on the left of the target policy to delete in the table.
+        2. Click the `Delete` button that appears on the table column line.
+    2. Delete from detailed page
+        1. Click the `Delete` button in the top right of the screen.
+3. When a popup appears, click the `Delete` button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Role, permissions are revoked from users and groups where that role was assigned.
+</Callout>

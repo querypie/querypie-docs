@@ -1,0 +1,56 @@
+---
+title: 'Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie supports viewing, creating, modifying, and deleting Server assets. Servers synchronized through Cloud Providers, APIs, or manually registered servers are all managed on the same page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Servers](/administrator-manual/servers/connection-management/servers/image-20240902-045519.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Servers
+</figcaption>
+</figure>
+
+## Viewing Servers
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Servers menu.
+2. You can search by server name using the search box in the top left of the table.
+3. You can refresh the server list using the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : Server name
+    2.  **Host**  : Server's IP or domain
+    3.  **Cloud Provider**  : Connected platform (displayed as hyphen for manually registered servers)
+    4.  **Server OS**  : Server's OS
+    5.  **OS Version**  : Server OS detailed version
+    6.  **Tag**  : List of tags attached to the server
+    7.  **Server Agent**  : (Windows Server only) Server Agent Online/Offline status and version information
+    8.  **Created At**  : Server creation date and time
+    9.  **Updated At** : Server last modification date and time
+5. Click on each row to view server detailed information.
+
+
+## Creating Servers
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Servers menu.
+2. Click the `+ Create Server` button in the top right.
+3. Register servers by referring to the [Manually Registering Individual Servers](servers/manually-registering-individual-servers) guide.
+
+
+## Deleting Servers
+
+<figure data-layout="center" data-align="center">
+![image-20240723-162214.png](/administrator-manual/servers/connection-management/servers/image-20240723-162214.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Servers menu.
+2. Check the checkbox on the left of the target server to delete in the table.
+3. Click the `Delete` button that appears in the table column line.
+4. When a popup appears, enter the *DELETE* text and click the `Delete` button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Server, all access permissions for that server granted to users/groups are bulk deleted.
+</Callout>

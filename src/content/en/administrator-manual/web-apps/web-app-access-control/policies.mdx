@@ -1,0 +1,132 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Supports viewing, creating, modifying, and deleting access policies (Policy) for web applications managed by the organization. Policy is the core foundational step for implementing and applying web application access permissions.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164449.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies
+</figcaption>
+</figure>
+
+## Viewing Policies
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; List Details](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164509.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. You can search by policy name through the search field in the top left of the table.
+3. Debug errors in directly modified code through the Errors tab at the bottom. If there are errors in the code, the Errors tab is displayed in red so you can check immediately.
+4. You can refresh the Policy list through the refresh button in the top right of the table.
+5. The table provides the following information:<br/>a. Name : Policy name<br/>b. Description : Policy detailed description<br/>c. Created At : Policy initial creation date and time<br/>d. Updated At : Policy last modification date and time<br/>e. Updated By : Administrator name who performed the last update
+6. Clicking each row allows you to view policy detailed information.
+    1. Detail
+        1. This is the default tab where you can view the code defined by the policy.
+        2. There is a `Go to Editor Mode` button on the right of the Detail tab, and clicking it switches to the corresponding Code Editor page screen.
+    2. Roles<br/>
+        1. Lists the Role list where this policy is assigned.
+        2. The list displays the following information for each Role:
+            1. Name : Role name
+            2. Description : Role detailed description
+            3. Assigned At : Date and time when this policy was assigned to the Role
+            4. Assigned By : Administrator name who assigned this policy to the Role
+        3. Clicking each row provides detailed information about the Role in drawer format.
+    3. Versions
+        1. Lists the history for each version of this policy.
+            1. Policy versions are updated when Code is modified and saved.
+        2.  The list displays the following information for each version:
+            1. Version : Version name
+            2. Justification : Reason for policy update period
+            3. Updated At : Date and time when this version was created
+            4. Updated By : Name of the person who modified this version
+        3. Clicking each row provides detailed information about the version in drawer format.
+            1. (Title) : Policy name
+            2. Version : Policy version
+            3. Justification : Reason for policy update period
+            4. Updated At : Date and time when this version was created
+            5. Updated By : Name of the person who modified this version
+            6. The **policy code snapshot** at that time is displayed at the bottom.
+
+## Creating Policies
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164901.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164901.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. Click the + Create Policy button in the top right.
+3. Enter the following information for policy creation. (All information below is exposed to users.)<br/>a. Name : Identifiable policy name (required)<br/>b. Description : Additional description of the policy
+4. Click the OK button to create.
+5. Click the newly created policy at the top of the policy list.
+6. Set policies by referring to the web application policy setting guide.
+
+## Modifying Policies
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164928.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164928.png)
+</figure>
+
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. Click the Policy to modify from the list to go to the detailed page.
+3. Click the Edit button in the top right of the screen to modify the following information.<br/>a. Name : Identifiable policy name (required)<br/>b. Description : Additional description of the policy
+4. Click the OK button to apply the modifications.
+
+## Duplicating Policies
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164941.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164941.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. Click the Policy to duplicate from the list to go to the detailed page.
+3. Click the Duplicate button in the top right of the screen to modify the duplicate's information.<br/>a. Name : Identifiable policy name (required)<br/>b. Description : Additional description of the policy
+4. Click the OK button to apply the modifications.
+5. Click the newly duplicated policy at the top of the policy list to view/modify.
+
+## Deleting Policies
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164955.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164955.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. You can proceed with the deletion step in two ways:<br/>a. Delete from list<br/> i. Check the checkbox of the target policy to delete in the table.<br/> ii. Click the Delete button that appears on the table column line.<br/>b. Delete from detailed page<br/> i. Click the Delete button in the top right of the screen.
+3. When a popup appears, click the Delete button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Policy, it is automatically separated from web application resources and roles where that policy was assigned.
+</Callout>
+
+## Editing Policy Code
+
+<figure data-layout="center" data-align="center">
+![image-20250629-165051.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-165051.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. Click the Policy to edit from the list to go to the detailed page.
+3. Click the Go to Editor Mode button in the top right of the Detail tab.
+4. In the code editing screen, you can use the following features:
+    1. Directly edit policy code in YAML format in the left code editor
+    2. Edit Spec functionality in the right panel:
+        * Edit Spec - Allow: Add/edit allow rules
+            * Add Resources: Add resource button
+            * Set Conditions: Set conditions button
+        * Edit Spec - Deny: Add/edit deny rules
+            * Add Resources: Add resource button
+        * Check code errors and tips in the bottom Errors(0) / Tips(1) tabs
+5. After editing is complete, click the Save Changes button to save.
+6. Click the Cancel button to cancel editing.
+
+

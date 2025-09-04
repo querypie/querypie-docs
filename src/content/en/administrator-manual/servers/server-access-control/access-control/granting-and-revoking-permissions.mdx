@@ -1,0 +1,103 @@
+---
+title: 'Granting and Revoking Permissions'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Administrators can directly grant or revoke access permissions (Permission) to servers or server groups for users or user groups. Once granted, Permissions cannot be modified and can only be deleted.
+
+
+## Granting Permissions
+
+### 1. Select the target to grant permissions to.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control](/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/image-20240828-015212.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Access Control menu. 
+2. Select the user or user group to grant permissions to. 
+
+### 2.**[Step 1]**: Select the account of the server or server group to grant permissions to.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 1](/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/image-20240828-015324.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 1
+</figcaption>
+</figure>
+
+1. First, select the server group to grant access permissions to from the left list. 
+2. Servers and accounts belonging to the selected server group are displayed on the right. Select the server and account to grant permissions to from the list. 
+    1. Select the server to grant permissions to from Servers on the right. 
+    2. Select the Account that can access the selected server from Accounts at the bottom right.
+3. Click the `Next` button. 
+
+<Callout type="info">
+In Grant Permissions Step 1, a maximum of 1000 servers are displayed. If more than 1000 servers are registered in a single server group, add servers through server name search in the Servers field.
+</Callout>
+
+### 3.**[Step 2]**: Set access policies for the selected servers.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2](/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/Screenshot-2025-07-27-at-5.28.54-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2
+</figcaption>
+</figure>
+
+1. **[Step 1]** Finally confirm all accounts selected to ensure no accounts were incorrectly granted. If you want to make changes, you can click the `Previous` button to go back to the previous step. 
+2. Each policy item is as follows:
+    1.  **`{n}` Server(s) selected**  : This item displays the number of Servers selected in **[Step 1]** x the number of Accounts. Click to view each item in list format.
+    2.  **Set Permissions by Minute**  : When this option is selected, server access permissions can be set in minutes. When the checkbox is selected, the following setting items are activated.
+        1. Start Trigger : Select the permission grant start condition
+            1. Access to the Server : Permissions are activated immediately when the user accesses the server. Regardless of server session maintenance, server access is possible for the specified period from the activation time. 
+            2. Grant : The timer starts immediately upon permission grant, and permissions are valid only for the specified period regardless of the user's actual access.
+        2.  **Duration(Minutes)** : Enter the valid time in minutes for the permission.
+    3.  **Expiration Date**  : Set the access permission expiration date. Can be set up to a maximum of 1 year. (Default = 1 year later) 
+    4.  **Protocols**  : Use the protocol to be used for server access. 
+    5.  **Command Template**  : Set the command set that cannot be used after accessing the server. You can check the detailed conditions set by clicking Command Template Details below.<br/>*Limitation: (10.2.1) Only Command Templates set to Deny can be used in Grant Permissions.
+    6.  **Configure Whitelist**  : Supports exception handling for specific commands in the process of controlling commands through Command Template. When the Configure Whitelist checkbox is checked, the following settings appear: 
+        1.  **Commands**  : Enter commands that need to be allowed.
+            1.  **Keyword**  : Enter as keyword (ls, cat, etc.)
+            2.  **RegEx**  : Enter as regular expression (^sudo\b[^&|;\n]*$, etc.)
+        2.  **Whitelist Expiration Date**  : Specify a separate exception handling expiration date for the above commands.
+    7.  **Require Privilege** : When this option is activated, users must go through an approval process through Server Privilege Request workflow to access servers with that account. This is useful when temporarily allowing and managing access to high-privilege accounts such as administrator (Admin) accounts on Windows servers.
+        * When attempting to access with an account where this option is activated, the `Connect` button is disabled when accessing the server from the user dashboard, and a message is displayed indicating that an access permission request must be submitted.
+        * The Require Privilege option can be applied to all accounts regardless of the server's OS type.
+    8.  **Access Start Time**  : Set the allowed access start time.
+    9.  **Access End Time**  : Set the allowed access end time.
+    10.  **Access Weekday**  : Set the days of the week when access is allowed.
+    11.  **IP Addresses**  : Set the IP addresses allowed for access.
+    12.  **Command Audit**  : Set whether to log commands used in sessions connected through this Permission.
+    13.  **Command Detection**  : Set whether to detect prohibited commands within Script/Alias when they are called.<br/>*Limitation: (10.2.1) Only works in Bash Shell, commands that call other Scripts from Script are blocked
+    14.  **Proxy Usage**  : Set whether to allow server access through QueryPie Agent with this Permission. 
+    15.  **Max Sessions**  : Limit the number of concurrent sessions a user can have on a single server.
+    16.  **Session Timeout (minutes)**  : Sessions are terminated if inactive for the entered time (minutes).
+3.  Click the `Grant` button in the bottom right to complete permission grant. 
+
+
+## Revoking Access Control Permissions
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Servers](/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/image-20240421-025726.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Servers
+</figcaption>
+</figure>
+
+1. Navigate to Server Settings &gt; Server Access Control &gt; Access Control menu. 
+2. Select the user or user group to grant permissions to. 
+3. Select the server/account to revoke from the accessible server list. (Multiple selection possible) 
+4. Click the `Revoke` button displayed in the top left of the list. 
+5. Enter Revoke in the confirmation popup and click the `Revoke` button to successfully revoke the Role. 
+
+<Callout type="info">
+**Q. Is there a place to check the history of granted or revoked permissions?**
+A. You can check it by selecting the Servers &gt; Access Control Logs menu in the Audit menu.
+</Callout>

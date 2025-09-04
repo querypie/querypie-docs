@@ -1,0 +1,97 @@
+---
+title: 'Synchronizing Server Resources from Azure'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie supports Azure integration for server registration and management. You can synchronize resources within Azure, register them as servers managed by QueryPie, and grant access permissions and set policies for users and groups on the synchronized servers.
+
+
+## Registering Azure Integration Information in QueryPie
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-azure/image-20241220-101742.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers menu.
+2. Click the `+ Create Provider` button in the top right.
+3. Enter a name that can distinguish this provider in the **Name** field.
+4. Select Microsoft Azure from the **Cloud**   **Provider** field.
+5. Enter the **Tenant**   **ID** of the resources you want to synchronize.
+6. If you want to synchronize resources from a specific **Region**, check the Use Region item and select the Region.
+7. Enter the **Subscription**   **ID**.
+8. Enter the **Credential** information required to synchronize resources. Currently, only Client Secret method is supported.
+    1. Provides manual synchronization method by entering Azure's Client Secret when clicking `Synchronize` button by default. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable synchronization through schedules even when using Client Secret as Credential type. 
+9. You can use **Search**   **Filter** to retrieve a list of some types of resources you want to synchronize. 
+    1. Search Filter works the same way as AWS search. You can use values such as names, hosts, OS, tags as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order. 
+        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value value and press Enter 
+    2. For more detailed usage, please refer to [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch). 
+10. Select the synchronization method from the **Replication**   **Frequency** field.
+    1. Manual : A method that synchronizes manually only when you want to synchronize.
+    2. Scheduling : A method that synchronizes resources through periodic scheduling. Cron Expressions are provided.
+11.  **Auto Configuration Upon Initial Synchronization** You can specify some values for servers that are initially synchronized from Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register again.
+    * port **:**  You can specify the connection port of synchronized servers. Currently, only SSH/SFTP ports can be specified.
+    * Tag : You can automatically add tags to synchronized servers. 
+        * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud where the server belongs is automatically filled.
+        * Example: If you set the tag Key to "Network" and enter the Value as `{vpcid}`, when the server is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag is automatically created.
+12. Click the `Save` button to save the Cloud Provider.
+
+<Callout type="important">
+**Save Credential for Synchronization Option**
+
+<figure data-layout="center" data-align="center">
+![Save Credential for Synchronization](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-azure/image-20241220-091144.png)
+<figcaption>
+Save Credential for Synchronization
+</figcaption>
+</figure>
+
+*  **Synchronization settings saved with this option enabled cannot disable this option from the synchronization settings detailed page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same permissions as before, creating new synchronization settings, and then deleting the existing synchronization settings.** 
+* Synchronization settings saved with this option disabled can enable the option by checking the checkbox on the detailed page.
+* If this option is enabled, you can synchronize manually or specify a schedule.
+</Callout>
+
+## Synchronizing and Managing Registered Azure Cloud Provider
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-azure/image-20241220-104437.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers menu.
+2. Click on the registered Cloud Provider to enter the detailed information screen.
+3. Click the `Dry run` button in the top right to check in advance which servers will be synchronized from Azure. Dry run results are not saved.
+4. Click the `Sychronize` button in the top right to synchronize resources from Azure.
+5. You can check the synchronization progress in the displayed Synchronization Log, and you can also check the synchronization history in General &gt; Systems &gt; Jobs menu.
+6. Once a Cloud Provider is registered, basic information and authentication information of the Provider cannot be changed.
+    1.  **Name** : Can be changed
+    2.  **Cloud**   **Provider** : Cannot be changed
+    3.  **Tenant**   **ID** : Cannot be changed
+    4.  **Region** : Cannot be changed
+    5.  **Subscription**  ID: Cannot be changed
+    6.  **Credential** : Cannot be changed
+        1. "Save Credential for Synchronization" : Can be changed from disabled to enabled, but cannot be changed from enabled to disabled
+    7.  **Search**   **Filter** : Can be changed
+    8.  **Replication**   **Frequency** : Cannot be changed
+
+<Callout type="important">
+Synchronization settings saved with the "Save Credential for Synchronization" option disabled can enable the option by checking the checkbox on the detailed page. Like when creating new ones, **this setting cannot be disabled again after being enabled**, so you must choose carefully.
+</Callout>
+
+<Callout type="info">
+Registering Applications and Obtaining Client Secret Information in Microsoft Azure
+* Access the Microsoft Entra ID menu in the Azure console. 
+* Register a new application in the 'App registrations' menu in the left menu. 
+    * **Enter the ID value of the application as Client Secret ID.** 
+* Move to the 'Certificates & secrets menu' in the detailed page of the registered application.
+* Click the 'New client secret' button at the top to create a new client secret.
+* Access the 'IAM' menu of 'Subscriptions'. 
+* Assign the previously registered application to the 'Reader' role through role assignment addition. 
+</Callout>

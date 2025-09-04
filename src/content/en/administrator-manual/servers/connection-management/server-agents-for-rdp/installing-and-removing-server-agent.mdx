@@ -1,0 +1,98 @@
+---
+title: 'Installing and Removing Server Agent'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+To connect remotely to Windows Server, you must install QueryPie Server Agent. After installing QueryPie Server Agent, Windows Servers are automatically added to the Servers menu in QueryPie.
+
+
+## Installing Server Agent
+
+<figure data-layout="center" data-align="center">
+![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
+</figure>
+
+1. Access the Server Agent download page.
+    1. You can access the Server Agent download page by adding `/for-agent/server-agent/download` after the installed QueryPie domain address.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+2. Login to QueryPie is required for agent installation.
+3. Click the Windows button in the center of the screen to download the compressed file.
+4. Extract the compressed file on the Windows server to be installed. The compressed file contains the following two files.
+    1. QueryPie Server Access Control_(QueryPie Version)_Setup
+    2. CONFIG
+5. Place both files in the same path, then run the QueryPie Server Access Control_(QueryPie Version)_Setup file.
+6. Install the file according to the instructions. 
+
+<Callout type="info">
+**CONFIG File Description**
+
+Contains the address of QueryPie to which the RDP Server Agent will connect.
+
+Starting from version 10.2.8, you can specify the Port to use for RDP connection in the CONFIG file.
+</Callout>
+
+<Callout type="important">
+**Changing Port Used for RDP Connection**
+* Port changes for RDP are not supported in QueryPie Web.
+* If port changes are needed, you must reinstall the RDP Server Agent.
+</Callout>
+
+
+## Installing Server Agent Without CONFIG File
+
+Installing without GUI allows automatic program installation without user intervention, which is useful for large-scale deployment or remote installation.
+
+You can automatically install Server Agent through PowerShell or CMD.
+
+**PowerShell**
+```
+& "{installation file path}.exe" /Url="{QueryPie web address}" /Port="{Port to use for RDP}" /VERYSILENT
+```
+
+e.g.
+```
+& ".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com" /Port="13389" /VERYSILENT
+```
+
+
+**CMD**
+```
+"{installation file path}.exe" /Url="{QueryPie web address}" /Port="{Port to use for RDP}" /VERYSILENT
+```
+
+e.g.
+
+After moving to the Server Agent installation file location in CMD, execute the following command
+```
+".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com"  /Port="13389" /VERYSILENT
+```
+
+
+## Removing Server Agent
+
+<figure data-layout="center" data-align="center">
+![image-20240829-010643.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240829-010643.png)
+</figure>
+
+1. Access the Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP page.
+2. Click the `Verify Deletion Key` button in the top right.
+3. Record the confirmed Deletion Key.
+4. Access the Windows Server console.
+5. Access Control Panel &gt; Add/Remove Programs menu and delete QueryPie Server Agent.
+6. Enter the Deletion Key recorded in step 3 in the password input field.
+7. Access QueryPie web.
+8. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP menu.
+9. Check the checkbox on the left of the target server to delete in the table and delete through the `Delete` button.
+
+
+<Callout type="info">
+Deletion Key changes daily, and deletion is only possible when the date of the server running QueryPie and the date of the target Windows server for deletion are the same.
+</Callout>
+
+<Callout type="important">
+**When Deletion Key is Incorrect in Windows**
+* Check if the Deletion Key was received from the connected QueryPie.
+* Check if the date of the server running QueryPie and the date of the target Windows server for deletion are the same.
+</Callout>

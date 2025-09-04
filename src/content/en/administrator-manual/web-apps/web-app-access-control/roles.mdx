@@ -1,0 +1,104 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Supports viewing, creating, modifying, and deleting roles (Role) according to access permissions for web applications managed by the organization. Role is the step after Policy for implementing and applying web app access permissions, meaning a collection of Policies and permissions that serve as a link between users/groups and policies.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-161837.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles
+</figcaption>
+</figure>
+
+
+## Viewing Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-161857.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Access Control &gt; Roles menu.
+2. You can search by role name through the search field in the top left of the table.
+3. You can refresh the Role list through the refresh button in the top right of the table.
+4. The table provides the following information:<br/>a.  **Name**  : Role name<br/>b.  **Description**  : Role detailed description<br/>c.  **Last Access At** : Last call date and time for this role<br/>d.  **Created At** : Role initial creation date and time<br/>e.  **Updated At**  : Role last modification date and time<br/>f.  **Updated By**  : Administrator name who performed the last update
+5. Clicking each row allows you to view role detailed information.
+    1.   **Policies** 
+        1. This is the default tab where you can view the list of assigned policies.
+        2. The table list displays the following information for each policy:
+            1. Name : Policy name
+            2. Description : Policy detailed description
+            3. Version : Policy version
+            4. Assigned At : Assignment date and time
+            5. Assigned By : Administrator name who assigned this policy
+        3. Clicking the left of each policy row provides detailed information about the policy in drawer format.
+            1. Basic information is displayed at the top as follows:
+                1.  **Name**  : Policy name
+                    * You can open the policy detailed page link in a new window.
+                2.  **Description**  : Policy detailed description
+                3.  **Version**  : Policy version
+                4.  **Assigned**   **At**  : Assignment date and time
+                5.  **Assigned By**  : Administrator name who assigned this policy
+            2. The policy is displayed as code at the bottom.
+    2.  **Users/Groups** 
+        1. Lists the user/group list where this Role is assigned.
+        2. You can search by user/group name.
+        3. The list displays the following information for each user/group:
+            1. User Type : User/group type
+            2. Name : User/group name
+            3. Last Access At : Last call date and time for the user/group
+            4. Expiration Date : Expiration date
+            5. Granted At : Date and time when this Role was assigned to the user/group
+    3.  **Web Apps** 
+        1. Lists the web application list accessible by this Role.
+        2. You can search by web application name.
+        3. The list displays the following information for each web application:
+            1. Name : Web application name
+            2. Base URL : Web application base URL
+            3. Description : Web application description
+            4. User Activity Recording : User activity recording status (On/Off)
+            5. Tags : List of tags attached to the web application
+            6. Created At : Web application initial creation date and time
+            7. Updated At : Web application last modification date and time
+
+
+## Creating Roles
+
+1. Navigate to Administrator &gt; Web Apps &gt; Access Control &gt; Roles menu.
+2. Click the + Create Role button in the top right.
+3. Enter the following information for role creation. (All information below is exposed to users.)<br/>a. Name : Identifiable role name (required)<br/>b. Description : Additional description of the role
+4. Click the Save button to create.
+5. Click the newly created role at the top of the role list.
+6. Set policies by referring to the Kubernetes role setting guide.
+
+## Modifying Roles
+
+<figure data-layout="center" data-align="center">
+![image-20250629-163924.png](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-163924.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Access Control &gt; Roles menu.
+2. Click the Role to modify from the list to go to the detailed page.
+3. Click the Edit button in the top right of the screen to modify the following information.<br/>a. Name : Identifiable role name (required)<br/>b. Description : Additional description of the role
+4. Click the Save button to apply the modifications.
+
+## Deleting Roles
+
+<figure data-layout="center" data-align="center">
+![image-20250629-163949.png](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-163949.png)
+</figure>
+
+1. Navigate to Administrator &gt; Web Apps &gt; Access Control &gt; Roles menu.
+2. You can proceed with the deletion step in two ways:<br/>a. Delete from list<br/> i. Check the checkbox of the target policy to delete in the table.<br/> ii. Click the Delete button that appears on the table column line.<br/>b. Delete from detailed page<br/> i. Click the Delete button in the top right of the screen.
+3. When a popup appears, click the Delete button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Role, permissions are revoked from users and groups where that role was assigned.
+</Callout>

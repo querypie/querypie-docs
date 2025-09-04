@@ -1,0 +1,136 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Supports viewing, creating, modifying, and deleting access policies (Policy) for Kubernetes clusters managed by the organization. Policy is the first step in implementing and applying Kubernetes access permissions.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072128.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies
+</figcaption>
+</figure>
+
+
+## Viewing Policies
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072306.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies menu.
+2. You can search by policy name using the search box in the top left of the table.
+3. You can refresh the Policy list using the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : Policy name
+    2.  **Description**  : Policy detailed description
+    3.  **Created At**  : Policy initial creation date and time
+    4.  **Updated At** : Policy last modification date and time
+    5.  **Updated By**  : Administrator name who performed the last update
+5. Click on each row to view policy detailed information.
+    1.   **Detail** 
+        1. This is the default tab where you can view the code defined by the policy.
+        2. When positioned in the Detail tab, there is a `Go to Editor Mode` button on the right, and clicking it switches to the Code Editor page screen.
+    2.  **Roles** 
+        1. Lists the Role list where the policy is assigned.
+        2. The list exposes the following information for each Role:
+            1.  **Name**  : Role name
+            2.  **Description**  : Role detailed description
+            3.  **Assigned At**  : Date and time when the policy was assigned to the Role
+            4.  **Assigned By** : Administrator name who assigned the policy to the Role
+        3. Click on each row to provide detailed information about the Role in drawer format. 
+            1.  **Name**  : Role name 
+                * Provides a link to the role detailed page.
+            2.  **Description**  : Role detailed description
+            3.  **Last Access At**  : Last call date and time for the role
+            4.  **Created At**  : Role creation date and time
+            5.  **Created By**  : Role creator name
+            6.  **Updated At**  : Role update date and time
+            7.  **Updated By**  : Last Role modifier name
+    3.  **Versions** 
+        1. Lists the history for each version of the policy. 
+            * Policy versions are updated when Code is modified and saved. 
+        2. The list exposes the following information for each version:
+            1.  **Version**  : Version name
+            2.  **Justification**  : Reason for policy update entry 
+            3.  **Updated At**  : Version creation date and time
+            4.  **Updated By**  : Version modifier name
+        3. Click on each row to provide detailed information about the version in drawer format. 
+            1.  **(Title)**  : Policy name
+            2.  **Version**  : Policy version
+            3.  **Justification**  : Reason for policy update entry 
+            4.  **Updated At**  : Version creation date and time
+            5.  **Updated By**  : Version modifier name
+            6. The **policy code snapshot** at that time is exposed at the bottom.
+
+
+## Creating Policies
+
+<figure data-layout="center" data-align="center">
+![image-20240721-072621.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072621.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies menu.
+2. Click the `+ Create Policy` button in the top right.
+3. Enter the following information for policy creation. (All information below is exposed to users.)
+    1.  **Name :** Identifiable policy name (required)
+    2.  **Description** : Additional description of the policy
+4. Click the `OK` button to create.
+5. Click the newly created policy at the top of the policy list. 
+6. Set the policy by referring to the [Setting Kubernetes Policies](policies/setting-kubernetes-policies) guide. 
+
+
+## Modifying Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072705.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072705.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies menu.
+2. Click on the Policy to modify from the list to move to the detailed page.
+3. Click the `Edit` button in the top right of the screen to modify the following information.
+    1.  **Name :** Identifiable policy name (required)
+    2.  **Description** : Additional description of the policy
+4. Click the `OK` button to apply the modifications.
+
+
+## Duplicating Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072804.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072804.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies menu.
+2. Click on the Policy to duplicate from the list to move to the detailed page.
+3. Click the `Duplicate` button in the top right of the screen to modify the duplicate's information.
+    1.  **Name :** Identifiable policy name (required)
+    2.  **Description** : Additional description of the policy
+4. Click the `OK` button to apply the modifications.
+5. Click the newly duplicated policy at the top of the policy list to view/modify. 
+
+
+## Deleting Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072845.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072845.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies menu.
+2. You can proceed with the deletion step in two ways:
+    1. Delete from list 
+        1. Check the checkbox on the left of the target policy to delete in the table.
+        2. Click the `Delete` button that appears in the table column line. 
+    2. Delete from detailed page
+        1. Click the `Delete` button in the top right of the screen.
+3. When a popup appears, click the `Delete` button to proceed with deletion. 
+
+<Callout type="important">
+When deleting a Policy, it is automatically separated from Kubernetes cluster resources and roles where the policy was granted.
+</Callout>

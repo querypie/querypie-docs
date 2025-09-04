@@ -1,0 +1,74 @@
+---
+title: 'All Requests'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+All Requests allows you to view all request history within QueryPie and check detailed information.
+
+
+## Viewing Request List
+
+You can view the request list on the Administrator &gt; General &gt; Workflow Management &gt; All Requests page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; All Requests](/administrator-manual/general/workflow-management/all-requests/image-20240714-054431.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; All Requests
+</figcaption>
+</figure>
+
+By default, requests submitted this month are displayed, sorted by the most recent requests first. Search and filter options are provided for the list. Please refer to the descriptions of major filters below.
+
+*  **Approval Status** : Approval status
+*  **Execution Status**  : Execution status
+*  **Label**  : Indicates whether the request is for ledger data.
+    *  **Normal**  : General requests
+    *  **Ledger**  : SQL Request for ledger data
+        * Ledger Management license activation is required to use the ledger table control feature. 
+        * For more details, please refer to the [Ledger Table Policy](../../databases/ledger-management/ledger-table-policy) document.
+
+
+## Checking Request Details
+
+You can check detailed information by clicking on a request.
+
+### Current Status
+
+You can check the progress status of the request. Hover your mouse over the box to view detailed information.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; All Requests &gt; List Detail &gt; Current Status](/administrator-manual/general/workflow-management/all-requests/screenshot-20240725-181602.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; All Requests &gt; List Detail &gt; Current Status
+</figcaption>
+</figure>
+
+**Approvers step-by-step colors** indicate the approval status. The meaning of each color is as follows.
+
+* Green : Approval completed
+* Yellow : Currently under approval
+* Gray : Waiting as previous approval step is incomplete
+
+<Callout type="info">
+A dark gray box without an approver's name indicates an empty Step.
+</Callout>
+
+### Request Detail
+
+You can check the detailed content written for each request type. For more details, please refer to the Submit Request sub-documents.
+
+* [Requesting DB Access](../../../user-manual/workflow/requesting-db-access)
+* [Requesting SQL](../../../user-manual/workflow/requesting-sql)
+* [Requesting SQL Export](../../../user-manual/workflow/requesting-sql-export)
+* [Requesting Unmasking](../../../user-manual/workflow/requesting-unmasking-mask-removal-request)
+* [Requesting Restricted Data Access](../../../user-manual/workflow/requesting-restricted-data-access)
+* [Requesting Server Access](../../../user-manual/workflow/requesting-access-role)
+* [Requesting Server Privilege](../../../user-manual/workflow/requesting-server-privilege)
+* [Requesting Access Role](../../../user-manual/workflow/requesting-access-role)
+* [Requesting IP Registration](../../../user-manual/workflow/requesting-ip-registration)
+* [Requesting DB Policy Exception](../../../user-manual/workflow/requesting-db-policy-exception)
+
+

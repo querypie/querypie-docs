@@ -1,0 +1,74 @@
+---
+title: 'Kubernetes Policy UI Code Helper Guide'
+---
+
+## Overview
+
+You can manage access policies (Policy) for Kubernetes clusters managed by the organization. Kubernetes policies are operated as Policy as a Code (PaC) and work based on YAML format. On the right side, a modal is provided as a Policy UI convenience feature to help users work with UI for content to be inserted into the code editor.
+
+
+## Using UI Code Helper
+
+A code support modal for each field is provided on the right side of the code editor screen. The modal serves to help with code editing, and content inserted by the entire modal can be removed from the code editor.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
+</figcaption>
+</figure>
+
+1.  **Add Resources**  modal 
+    1. Works the same in both Spec: Allow and Spec: Deny.
+    2. You can search resources by cluster name.
+    3. Click the `Add` button to insert the checked resources into the code.
+2.  **Set Subjects**  modal
+    1. Works only in Spec: Allow.
+    2.  **Kubernetes Groups**  : (Required) Specifies the Kubernetes group that QueryPie Proxy will impersonate to perform API calls through this field. 
+    3.  **Permitted Impersonation**  : (Optional) Lists the Kubernetes users/groups that can be applied when users attempt impersonation through actual --as, --as-group through clients through this field.
+        1.  **Allowed Kubernetes Users** : Enter the kubernetes users to be allowed in QueryPie with the --as parameter.
+        2.  **Allowed Kubernetes Groups** : Enter the kubernetes groups to be allowed in QueryPie with the --as-group parameter.
+        3. Multiple registration is possible through ','. 
+    4. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
+3.  **Add Actions**  modal
+    1. Works the same in both Spec: Allow and Spec: Deny.
+    2.  **API Groups** : Provides "*" by default; administrators can modify and enter multiple values with ','.
+    3.  **Resources** : Specifies Kubernetes resources. 
+        1. Provides "*" by default; administrators can modify and enter multiple values.
+        2. Commonly used resources are as follows, and you can easily select resources from the following list by placing the cursor in the field:
+            * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
+        3. Resources not listed above can be specified by directly typing to specify resources outside the list (for custom resource support).
+        4. When specified, it is displayed like an Item block and can be removed by pressing X.
+    4.  **Namespace** : Specifies namespaces to limit the scope of Kubernetes resources.
+        1. Provides "*" by default; administrators can modify and wildcards and regular expressions are accepted.
+        2. For Resources outside the Namespace scope, the value of the field is not affected by any value that comes in.
+            * Out-of-scope resources: `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`
+    5.  **Name** : Enter the resource name to be targeted among Kubernetes resources.
+        1. Provides "*" by default; administrators can modify and wildcards and regular expressions are accepted.
+    6.  **Verbs** : Multiple Kubernetes API methods can be set.
+        1. Provides "*" by default; when specified, it is displayed like an Item block and can be removed by pressing X.
+        2. Commonly called Verbs are as follows, and you can easily select Verbs from the following list by placing the cursor in the field:
+            * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
+        3. Users can directly type to specify other verb names for custom resources outside the list.
+    7. Click the `Add` button to define one action set among the actions list. 
+    8. In terms of code, it corresponds to the append part, so new additions are possible without initializing previously added actions.
+4.  **Set Conditions**  modal
+    1. All items are optional.
+    2. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
+    3.  **Resource Tags**  (Optional)
+        1. You can reduce the policy application scope based on tags attached to QueryPie resources.
+        2. Each row operates as an AND condition; OR operation with ',' in Value.
+        3. You can create a new row by pressing the Insert button.
+        4. When specified, it is displayed like a tag block and can be removed by pressing X.
+        5. Entry items: 
+            1.  **Key** : Tag key (regex, glob not supported)
+            2.  **Value** : Tag value entry (both regex and glob supported, multiple input supported)
+    4.  **User Attributes**  (Optional)
+        1. You can reduce the target scope of policy application based on QueryPie user attributes.
+        2. If all attribute values do not match, the user cannot use the policy even if it was assigned until the attribute values match.
+        3. Each row operates as an AND condition; OR operation with ',' in Value.
+        4. The dropdown list suggests currently supported Attributes in Variable Name.
+            * loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, locale<br/>timezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
+    5.  **IP Addresses**  (Optional)
+        1. Administrators specify IP ranges that can or cannot access the resource.
+        2. Both single IP and CIDR are accepted with ',' as separator.

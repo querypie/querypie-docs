@@ -1,0 +1,125 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Supports viewing, creating, modifying, and deleting roles (Role) according to access permissions for Kubernetes clusters managed by the organization. Role is the step after Policy for implementing and applying Kubernetes access permissions, meaning a collection of Policies and permissions that serve as a link between users/groups and policies.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070743.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles
+</figcaption>
+</figure>
+
+
+## Viewing Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070912.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. You can search by role name using the search box in the top left of the table.
+3. You can refresh the Role list using the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : Role name
+    2.  **Description**  : Role detailed description
+    3.  **Last Access At**  : Last call date and time for the role
+    4.  **Created At**  : Role initial creation date and time
+    5.  **Updated At** : Role last modification date and time
+    6.  **Updated By**  : Administrator name who performed the last update
+5. Click on each row to view role detailed information.
+    1.   **Policies** 
+        1. This is the default tab where you can view the list of assigned policies.
+        2. The table list exposes the following information for each policy:
+            1.  **Name**  : Policy name
+            2.  **Description**  : Policy detailed description
+            3.  **Version**  : Policy version
+            4.  **Assigned At**  : Assignment date and time
+            5.  **Assigned By**  : Administrator name who assigned the policy
+        3. Click on each policy row to provide detailed information about the policy in drawer format.
+            1. Basic information is exposed at the top as follows:
+                1.  **Name**  : Policy name 
+                    * You can open the policy detailed page link in a new window.
+                2.  **Description**  : Policy detailed description
+                3.  **Version**  : Policy version
+                4.  **Assigned**   **At**  : Assignment date and time
+                5.  **Assigned By**  : Administrator name who assigned the policy
+            2. The policy is exposed as code at the bottom.
+    2.  **Users/Groups** 
+        1. Lists the user/group list where the Role is granted.
+        2. You can search by user/group name. 
+        3. The list exposes the following information for each user/group:
+            1.  **User Type**  : User/group type
+            2.  **Name**  : User/group name
+            3.  **Last Access At**  : Last call date and time for the user/group
+            4.  **Expiration Date**  : Expiration date
+            5.  **Granted At**  : Date and time when the Role was granted to the user/group
+    3.  **Clusters** 
+        1. Lists the Kubernetes cluster list accessible through the Role.
+        2. You can search by cluster name.
+        3. The list exposes the following information for each cluster:
+            1.  **Name**  : Cluster name
+            2.  **Version**  : Kubernetes version
+            3.  **API URL**  : Cluster API URL
+            4.  **Cloud Provider**  : Connected platform (displayed as hyphen for manual clusters)
+            5.  **Tags**  : List of tags attached to the cluster
+            6.  **Created At**  : Cluster initial creation date and time
+            7.  **Updated At**  : Cluster last modification date and time
+
+
+## Creating Roles
+
+<figure data-layout="left" data-align="left">
+![image-20240721-071306.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071306.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. Click the `+ Create Role` button in the top right.
+3. Enter the following information for role creation. (All information below is exposed to users.)
+    1.  **Name :** Identifiable role name (required)
+    2.  **Description** : Additional description of the role
+4. Click the `Save` button to create.
+5. Click the newly created role at the top of the role list. 
+6. Set policies by referring to the Kubernetes role setting guide. 
+
+
+## Modifying Roles
+
+<figure data-layout="left" data-align="left">
+![image-20240721-071337.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071337.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. Click on the Role to modify from the list to move to the detailed page.
+3. Click the `Edit` button in the top right of the screen to modify the following information.
+    1.  **Name :** Identifiable role name (required)
+    2.  **Description** : Additional description of the role
+4. Click the `Save` button to apply the modifications.
+
+
+## Deleting Roles
+
+<figure data-layout="left" data-align="left">
+![image-20240721-071429.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071429.png)
+</figure>
+
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. You can proceed with the deletion step in two ways:
+    1. Delete from list 
+        1. Check the checkbox on the left of the target policy to delete in the table.
+        2. Click the `Delete` button that appears in the table column line. 
+    2. Delete from detailed page
+        1. Click the `Delete` button in the top right of the screen.
+3. When a popup appears, click the `Delete` button to proceed with deletion. 
+
+<Callout type="important">
+When deleting a Role, permissions are revoked from users and groups where the role was granted.
+</Callout>

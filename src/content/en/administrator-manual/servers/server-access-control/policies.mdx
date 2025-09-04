@@ -1,0 +1,134 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie server access policies (Policy) are functions for managing and applying access policies for each server managed by the organization. You can set detailed policies such as when to allow access and which commands to prohibit for each server or server group, so that users or groups can access only the minimum necessary servers according to their business purposes.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies](/administrator-manual/servers/server-access-control/policies/image-20240902-052616.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies
+</figcaption>
+</figure>
+
+1. You can search by policy name through the search field in the top left of the table.
+2. The table provides the following column information:
+    1.  **Name**  : Policy name
+    2.  **Description**  : Policy detailed description
+    3.  **Created At**  : Policy initial creation date and time
+    4.  **Updated At** : Policy last modification date and time
+3. Clicking each row allows you to view policy detailed information.
+
+
+## Viewing Policies
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details](/administrator-manual/servers/server-access-control/policies/image-20240902-052643.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Policies menu.
+2. Click an item from the list to view policy detailed information.
+
+### Detail Tab
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240808-171818.png](/administrator-manual/servers/server-access-control/policies/screenshot-20240808-171818.png)
+</figure>
+
+1. This is the default tab where you can view the code defined by the policy.
+2. When in the Detail tab, there is a `Go to Editor Mode` button on the right, and clicking it switches to the corresponding Code Editor page screen.
+
+
+### Roles Tab
+
+<figure data-layout="center" data-align="center">
+![image-20240723-115930.png](/administrator-manual/servers/server-access-control/policies/image-20240723-115930.png)
+</figure>
+
+1. Lists the Role list where this policy is assigned.
+2. The list displays the following information for each Role:
+    1.  **Name**  : Role name
+    2.  **Description**  : Role detailed description
+    3.  **Assigned At**  : Date and time when this policy was assigned to the Role
+    4.  **Assigned By** : Administrator name who assigned this policy to the Role
+
+
+### Versions Tab
+
+<figure data-layout="center" data-align="center">
+![image-20240723-120008.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120008.png)
+</figure>
+
+1. Lists the history for each version of this policy.
+    * Policy versions are updated when Code is modified and saved.
+2. The list displays the following information for each version:
+    1.  **Version**  : Version name
+    2.  **Justification**  : Reason for policy update entry
+    3.  **Updated At**  : Date and time when this version was created
+    4.  **Updated By**  : Name of the person who modified this version
+3. Clicking each row provides detailed information about the version in drawer format.
+    1.  **(Title)**  : Policy name
+    2.  **Version**  : Policy version
+    3.  **Justification**  : Reason for policy update entry
+    4.  **Updated At**  : Date and time when this version was created
+    5.  **Updated By**  : Name of the person who modified this version
+    6. The **policy code snapshot** at that time is displayed at the bottom.
+
+<figure data-layout="center" data-align="center">
+![image-20240723-120033.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120033.png)
+</figure>
+
+
+## Creating Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120134.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120134.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Policies menu.
+2. Click the `+ Create Policy` button in the top right.
+3. Enter the following information for policy creation. (All information below is exposed to users.)
+    1.  **Name :** Identifiable policy name
+    2.  **Description** : Additional description of the policy
+4. Click the `OK` button to create.
+
+
+## Modifying Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120317.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120317.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Policies menu.
+2. Click the Policy to modify from the list to go to the detailed page.
+3. Click the `Edit` button in the top right of the screen to modify the following information.
+    1.  **Name :** Identifiable policy name (required)
+    2.  **Description** : Additional description of the policy
+4. Click the `OK` button to apply the modifications.
+
+
+## Deleting Policies
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120357.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120357.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Policies menu.
+2. You can proceed with the deletion step in two ways:
+    1. Delete from list
+        1. Check the checkbox on the left of the target policy to delete in the table.
+        2. Click the `Delete` button that appears on the table column line.
+    2. Delete from detailed page
+        1. Click the `Delete` button in the top right of the screen.
+3. When a popup appears, enter the *DELETE* text and click the `Delete` button to proceed with deletion.
+
+<Callout type="important">
+When deleting a Policy, it is automatically separated from resources and roles where that policy was assigned.
+</Callout>

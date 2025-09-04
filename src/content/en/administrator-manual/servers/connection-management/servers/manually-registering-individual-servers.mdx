@@ -1,0 +1,53 @@
+---
+title: 'Manually Registering Individual Servers'
+---
+
+## Overview
+
+QueryPie allows you to manually register servers to apply access control. Registered individual servers can be added to server groups to grant access permissions or set policies. However, Windows servers cannot be manually registered and can only be automatically registered through Server Agent integration.
+
+
+## Manually Registering Servers
+
+To manually register individual servers, you need to enter basic server information.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create Server](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154238.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create Server
+</figcaption>
+</figure>
+
+### 1. Entering Information
+
+<figure data-layout="center" data-align="center">
+![image-20240828-154305.png](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154305.png)
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Servers menu.
+2. Click the `Create Server` button in the top right.
+3. Enter the following information for server registration.
+    1.  **Name**  : Enter a name that can distinguish the server.
+    2.  **Host**  : Enter the server's host. Both domain and IP formats can be entered. 
+    3.  **Server OS**  : Select the server's OS. 
+    4.  **OS Version** : Enter detailed information of the server OS.
+    5.  **Port**  : Enter the port for the connection. 
+        1. SSH/SFTP : Enter the port to use for SSH/SFTP access.
+        2. TELNET : Enter the port to use for TELNET access. Only displayed when TELNET is activated through the "Using insecure protocols" item in [SAC General Configurations](../../sac-general-configurations) menu.
+        3. FTP : Enter the port to use for FTP access. Only displayed when FTP is activated through the "Using insecure protocols" item in [SAC General Configurations](../../sac-general-configurations) menu.
+        4. RDP : Only displayed when Server OS is Windows Server.
+
+### 2. Entering Tags (Optional)
+
+<figure data-layout="center" data-align="center">
+![image-20240723-163036.png](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240723-163036.png)
+</figure>
+
+You can manually enter Tags for individual servers if necessary. Tags added this way can be used for filtering in the server list or when adding servers to server groups. Tags synchronized through Cloud Provider are also displayed together. (However, tags imported through synchronization cannot be deleted or modified)
+
+1.  **Key**  : Enter a Key value that can distinguish the tag within 512 characters. Key value must be entered as required, and already registered keys cannot be entered in duplicate. Duplicates are checked case-sensitively. 
+2.  **Value**  : Enter a Value value to be used for filtering within 256 characters.
+
+After going through the above process, click the final `Save` button to successfully register the server.
+
+

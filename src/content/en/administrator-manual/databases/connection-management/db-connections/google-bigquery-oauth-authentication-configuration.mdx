@@ -2,17 +2,17 @@
 title: 'Google BigQuery OAuth Authentication Configuration'
 ---
 
-## Choose an authentication method
+## Authentication Method Selection
 
-Starting from QueryPie 10.2.4, you can choose the Google Cloud authentication method for BigQuery connections. The default authentication method used in Google Cloud synchronization is Service Account key authentication, so newly synchronized or manually created connections use Service Account key authentication by default. Additionally, for both manually created connections and those synchronized from the cloud, you can change the authentication method from Service Account key to OAuth 2.0 and save it. To use OAuth 2.0 authentication, you must first register the Client ID and Client Secret from the Google Cloud API Console in QueryPie.
+Starting from QueryPie 10.2.4, QueryPie connections have been improved to allow selective specification of Google Cloud authentication methods when accessing BigQuery. The default authentication method used in Google Cloud synchronization is Service Account key authentication, so connections also use Service Account key authentication by default. Additionally, you can change the authentication method from Service Account key to OAuth 2.0 authentication for both manually created connections and cloud-synchronized connections. To use OAuth 2.0 authentication, you must first register the Client ID and Client Secret from the Google Cloud API Console in QueryPie.
 
 ## Google Cloud API Integration
 
-For how to set up Google Cloud API Integration, please refer to: [Integrating Google Cloud API for OAuth 2.0](../../../general/system/integrations/integrating-google-cloud-api-for-oauth-20)
+For Google Cloud API Integration setup, please refer to this document: [Integrating Google Cloud API for OAuth 2.0](../../../general/system/integrations/integrating-google-cloud-api-for-oauth-20)
 
-## Specify an OAuth 2.0 Client ID for a connection
+## Specifying OAuth 2.0 Client ID for Connection
 
-Whether the connection was created via cloud synchronization or manually, you can select "Using Google User Account (OAuth 2.0)" as the Authentication Method.
+Both cloud-synchronized connections and manually created connections can select "Using Google User Account (OAuth 2.0)" as the Authentication Method.
 
 <figure data-layout="center" data-align="center">
 ![Specify Authentication Method when creating a new BigQuery connection](/administrator-manual/databases/connection-management/db-connections/google-bigquery-oauth-authentication-configuration/image-20250116-112226.png)
@@ -21,7 +21,7 @@ Specify Authentication Method when creating a new BigQuery connection
 </figcaption>
 </figure>
 
-1. In Authentication Method, select "Using Google User Account (OAuth 2.0)".
-2. For OAuth 2.0 Client ID, select the Client ID configured in General > System > Integration > Authentication > Google Cloud API. If the Client ID integration has not been configured yet, click the Go to Google Cloud API link to navigate to the Integration screen.
-3. Enter the Project ID of your Google Cloud project.
+1. Select "Using Google User Account (OAuth 2.0)" in Authentication Method.
+2. In the OAuth 2.0 Client ID field, select the Client ID configured in General &gt; System &gt; Integration &gt; Authentication &gt; Google Cloud API. If the Integration settings for the Client ID are not yet configured, you can click the "Go to Google Cloud API" link to navigate to the Integration screen.
+3. Enter the Google Cloud Project ID.
 4. Configure other required and optional fields and save.

@@ -1,0 +1,46 @@
+---
+title: 'Setting Server Access Policies'
+---
+
+## Overview
+
+You can manage access policies (Policy) for servers managed by the organization. Policies operate based on YAML Code in a form similar to IaC. You can not only set the days and times when access is allowed, but also set accessible IP addresses, audit settings, and agent usage availability. In addition, you can set the number of allowed sessions per user.
+
+
+## Configurable Policy Items
+
+*  **serverGroup**  : Server group to allow access to
+*  **account** : Account registered in the server group
+*  **protocols**  : Allowed protocols (as of 10.2, supports SSH, SFTP, TELNET, FTP, RDP)
+*  **commandRef**  : Command template to apply when accessing
+    * You can check the content of the selected Command Template by expanding the `Command Policy Detail` accordion
+    * For creating and managing command templates, refer to [Command Templates](../command-templates)
+    * When both Allow / Deny command templates are applied, Deny takes priority
+*  **accessTime**  : Access allowed time
+*  **accessWeekday**  : Access allowed days of the week
+*  **ipAddress**  : Access allowed IP settings<br/>*When corresponding to Security &gt; Resource IP Access Control Configuration settings, only IPs within the allowed range are permitted access
+*  **commandAudit**  : Whether to apply command auditing when accessing
+*  **commandDetection**  : Whether to detect prohibited commands within Script and Alias when they are called<br/>*Limitation: (10.2.1) Only works in Bash Shell, commands that call other Scripts from Script are blocked
+*  **proxyUsage**  : Whether to allow proxy access through Agent
+*  **maxSessions**  : Maximum concurrent connections per server
+*  **sessionTimeout** : Server session timeout criteria time (minutes)
+*  **requirePrivilege** : Whether privilege approval is required for server access<br/>*When this option is activated (Enable), the account must receive approval through the server privilege request (Server Privilege Request) workflow to access the server.
+
+
+## Editing Policy Code
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Policies menu.
+2. Click the Policy to edit policy code from the list.
+3. Click the `Go to Editor Mode` button on the right of the Detail tab to go to the Code Editor screen.
+4. Use the following methods to modify the desired policy content in the code editor window.
+    1. Debug errors in directly modified code through the Errors tab at the bottom.
+    2. Check the definition methods for each item through the Tips tab at the bottom and reflect them in the code.
+    3. Insert or modify content in the code through the buttons on the right.
+5. When access policy definition is complete, click the activated `Save` button in the top right to save the policy.
