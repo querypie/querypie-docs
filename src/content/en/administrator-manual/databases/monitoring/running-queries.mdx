@@ -1,0 +1,99 @@
+---
+title: 'Running Queries'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Running Queries provides functionality to check information about queries executed through Web editor, Workflow, and Proxy, and allows administrators to forcibly stop running queries when necessary. You can check whether executed queries are from Web Editor or executed through Workflow through the Executed From field in Running Queries.
+
+## Viewing Running Queries
+
+<figure data-layout="center" data-align="center">
+![Databases &gt; Monitoring &gt; Running Queries](/administrator-manual/databases/monitoring/running-queries/image-20250512-110402.png)
+<figcaption>
+Databases &gt; Monitoring &gt; Running Queries
+</figcaption>
+</figure>
+
+1. Navigate to Databases &gt; Monitoring &gt; Running Queries menu.
+2. Logs are displayed in descending order based on the current day.
+3. Click the filter button in the top left of the table to filter with the following AND/OR conditions:
+    1.  **SQL Type** : SQL statement type
+    2.  **Action At**  : Query execution date and time range
+    3.  **Executed From**  : Query execution subject
+        1.  **Web Editor**  : Executed from QueryPie web editor
+        2.  **Proxy**  : Executed through QueryPie proxy
+        3.  **SQL Request**  : Executed through SQL Request workflow
+        4.  **SQL Job**  : Executed by SQL Job
+        5.  **SQL Export Request**  : Executed through SQL Export Request workflow
+4. You can refresh the log list through the refresh button in the top right of the table.
+5. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Query execution date and time
+    3.  **Name**  : Target user
+    4.  **Email**  : Target user email
+    5.  **Action Type**  : Action type
+    6.  **Connection Name**  : Target DB connection name
+    7.  **Database Type**  : Target database type
+    8.  **Privilege Name**  : User access permission
+    9.  **Client IP**  : User client IP address
+    10.  **Replication Type**  : DB Replication type
+    11.  **DB Host**  : Connected DB host
+    12.  **DB Name**  : DB name
+    13.  **DB User**  : DB user ID
+    14.  **Table(s)**  : Called table names
+    15.  **SQL Type** : SQL statement type
+    16.  **Query**  : Executed query statement
+    17.  **Client Name**  : Used client name (DataGrip, etc.)
+    18.  **Execution Reason**  : Query execution reason
+    19.  **Executed From**  : Query execution subject
+
+## Viewing Running Query Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Databases &gt; Monitoring &gt; Running Queries &gt; Running Query Details](/administrator-manual/databases/monitoring/running-queries/image-20250512-110509.png)
+<figcaption>
+Databases &gt; Monitoring &gt; Running Queries &gt; Running Query Details
+</figcaption>
+</figure>
+
+* The right drawer displays the following information:
+    1.  **Name**  : Target user name
+    2.  **Action Type**  : Action type
+    3.  **Privilege Name**  : User access permission
+    4.  **Privilege Type**  : User access permission type
+    5.  **SQL Type** : SQL statement type
+    6.  **Executed From**  : Query execution subject
+    7.  **Connection Name**  : Target DB connection name
+    8.  **Replication Type**  : DB Replication type
+    9.  **Client Name**  : Used client name (DataGrip, etc.)
+    10.  **Client IP**  : User client IP address
+    11.  **Database Type**  : Target database type
+    12.  **DB Host**  : Connected DB host
+    13.  **DB Name**  : DB name
+    14.  **DB User**  : DB user ID
+    15.  **Table(s)**  : Called table names
+    16.  **Query**  : Executed query statement
+
+## Stopping Queries
+
+Administrators can intervene and stop running queries in Running Queries for queries executed through Web Editor and queries running through Workflow's SQL Request or SQL Export Request.
+
+<Callout type="info">
+You can view query information executed through Proxy, but cannot stop them. If you want to stop them, you must stop the session in Proxy Management.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Stopping Queries](/administrator-manual/databases/monitoring/running-queries/image-20250512-111342.png)
+<figcaption>
+Stopping Queries
+</figcaption>
+</figure>
+
+1. Check the query you want to stop.
+2. Click the Kill Query button.
+3. Check the warning message and click the `OK` button to stop the query.

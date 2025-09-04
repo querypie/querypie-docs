@@ -1,0 +1,89 @@
+---
+title: 'Data Access'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can set policies so that data requiring access restrictions such as personal information or sensitive information within an organization cannot be viewed during queries. In the Data Access menu, you can select connections to set policies, create policies, and register and manage rules for data requiring access restrictions by table or column criteria.
+
+## Creating Table/Column Access Restriction Policies
+
+Register new table/column access restriction policies by connection.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access ](/administrator-manual/databases/policies/data-access/image-20240725-072304.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access 
+</figcaption>
+</figure>
+
+1. Navigate to Policies &gt; Data Access menu from the Database settings menu.
+2. Click the `Create Policy` button in the top right.
+3. Enter the following information for policy creation:
+    1.  **Policy Name**  : Name that can distinguish the policy on screen.
+    2.  **Target Connection**  : Select the connection to apply the policy to. One policy can be connected to one connection.
+4. Save through the `Save` button.
+
+You can check that the policy has been created in the Data Access policy list.
+
+## Registering Rules in Table/Column Access Restriction Policies
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Add Rule](/administrator-manual/databases/policies/data-access/data-access-02.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Add Rule
+</figcaption>
+</figure>
+
+After creating a policy, register the data path to which the policy will be applied as rules.
+
+1. Click the policy created in the Data Access menu.
+2. The policy detail information and rule registration screen is displayed, click the `Add Rule List` button on the right.
+3. Select the data path to which the policy will be applied in order. 
+    1.  **Database Name**  : Required value for rule registration.
+    2.  **Table Name**  : Required value for rule registration. When only table is selected, querying the table itself is restricted.
+    3.  **Column Name**  : Select when you want to restrict data access by column unit.
+4. Exception handling of table/column access restriction rules can be done for users or groups who need to query the data. 
+    *  **Allowed Users**  : Select users or groups to exception handle the rule.
+5. Save by clicking the `Ok` button.
+
+You can check that rules are registered in the Rule List tab. Now when users query the data, if policy is applied to the table, the table itself cannot be queried, and if rules are applied to columns, it is displayed as *`{RESTRICTED}`*.
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Displayed as *`{RESTRICTED}`* when querying data with applied policies](/administrator-manual/databases/policies/data-access/data-access-03.png)
+<figcaption>
+SQL Editor &gt; Displayed as *`{RESTRICTED}`* when querying data with applied policies
+</figcaption>
+</figure>
+
+<Callout type="important">
+When selecting Database Name, "[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)" error occurs.
+A. In this case, DB account information may not be set or may be set with incorrect information. Click the corresponding connection information in Administrator &gt; Databases &gt; Connection Management &gt; DB Connections menu, then **enter and save Database Username / Password information** and try again.
+</Callout>
+
+## Checking Access Logs for Tables/Columns with Applied Access Restriction Policies
+
+<Callout type="info">
+From version 10.3.0, you can check access logs for tables and columns restricted by Data access policies.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Checking logs in Logs tab](/administrator-manual/databases/policies/data-access/image-20250512-040339.png)
+<figcaption>
+Checking logs in Logs tab
+</figcaption>
+</figure>
+
+1. Click on individual items (rows) of created policies in the policy list to navigate to the detail page.
+2. Select the Logs tab.
+3. Check the log content:
+    1.  **Name** : Display Name of QueryPie users.
+    2.  **Connection**  : Target connection controlled by the policy.
+    3.  **Database Name** : Target logical DB name controlled by the policy.
+    4.  **Table Name**  : Target table name controlled by the policy.
+    5.  **Column Name**  : Target single or multiple column names controlled by the policy.
+    6.  **Rows**  : Number of rows returned by the query.
+    7.  **Action At**  : Time when the query was performed.
+4. Click on rows in the Log tab to check the executed query in the detail screen.

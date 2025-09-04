@@ -1,0 +1,89 @@
+---
+title: 'Synchronizing DB Resources from Google Cloud'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie supports Google Cloud (GCP) integration for database registration and management. You can synchronize resources within GCP to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
+
+## Registering GCP Integration Information in QueryPie
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+1. Navigate to the Cloud Provider menu from the Database settings menu.
+2. Click the `Create Provider` button in the top right.
+3. Enter a name that can distinguish the provider in the Name field.
+4. Select Google Cloud Platform from the **Cloud Provider** field.
+5. Enter the project of the resources you want to synchronize in the **Project ID** field.
+6. Enter the **Credential** information required to synchronize resources.
+    * Provides a manual synchronization method that enters GCP's Service Account when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Service Account as the Credential type.
+7. Select the resources you want to synchronize from the **Database Type Filter** field. 
+8. Select the synchronization method from the **Replication Frequency** field.
+    1. Manual : A method that synchronizes manually only when you want to synchronize.
+    2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
+9. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+    * Tag : You can automatically add tags to synchronized DBs.
+        * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
+        * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
+10. Click the `Save` button to save the Cloud Provider.
+
+<Callout type="important">
+**Save Credential for Synchronization Option**
+
+<figure data-layout="center" data-align="center">
+![Save Credential for Synchronization](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241220-094727.png)
+<figcaption>
+Save Credential for Synchronization
+</figcaption>
+</figure>
+
+*  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.** 
+* Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page.
+* When this option is enabled, you can synchronize manually or set a schedule.
+</Callout>
+
+## Synchronizing and Managing Registered GCP Cloud Provider
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241220-095231.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details
+</figcaption>
+</figure>
+
+1. Navigate to the Cloud Provider menu from the Database settings menu.
+2. Click on the registered Cloud Provider to enter the detailed information screen.
+3. Click the `Synchronize` button in the top right to synchronize resources from GCP.
+4. You can check the synchronization progress in the displayed Synchronization Log, and also check the synchronization history in the Administrator &gt; General &gt; Systems &gt; Jobs menu.
+5. Once a Cloud Provider is registered, the Provider basic information and authentication information cannot be changed.
+    1. Name: Changeable
+    2. Cloud Provider: Not changeable
+    3. Project ID: Not changeable
+    4. Credential: Not changeable
+        1. "Save Credential for Synchronization" : Can be changed from disabled to enabled, but cannot be changed from enabled to disabled
+    5. Database Type Filter: Changeable
+    6. Replication Frequency: Changeable
+
+<Callout type="important">
+Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page. Like when creating new ones, this setting **cannot be disabled again after being enabled**, so you must choose carefully.
+</Callout>
+
+## Synchronization through Service Account
+
+1. After registering a Cloud Provider for GCP integration, click the `Synchronize` button on the detail page.
+2. Enter the JSON key value in the displayed Service Account JSON field and click the `Ok` button.
+    * You can create a Service Account in Google Cloud Console &gt; IAM &amp; Admin &gt; Service Accounts menu and issue a JSON key to use. 
+3. Resources synchronized with the JSON key can be checked in the DB Connections menu.
+
+<Callout type="info">
+**The following permissions are required when creating a Service Account in GCP.**
+* CloudSQL : CloudSQL Viewer
+* BigQuery : BigQuery Administrator
+</Callout>

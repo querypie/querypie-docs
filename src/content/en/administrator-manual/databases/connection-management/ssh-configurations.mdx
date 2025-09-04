@@ -1,0 +1,28 @@
+---
+title: 'SSH Configurations'
+---
+
+## Overview
+
+SSH Configurations is a page for managing SSH tunneling information to use when connecting DB connections.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; SSH Configuration &gt; Create SSH Configuration](/administrator-manual/databases/connection-management/ssh-configurations/screenshot-20240730-230232.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; SSH Configuration &gt; Create SSH Configuration
+</figcaption>
+</figure>
+
+1. Navigate to Connection Management &gt; SSH Configuration menu from the Databases settings menu.
+2. Click the `Create SSH` button in the top right.
+3. Enter information for SSH tunneling registration.
+    1. Name: SSH tunneling configuration name
+    2. SSH Auth Type: Authentication method (Password or Key pair method)
+        * Authentication information input content at the bottom of the modal differs depending on the selection
+    3. SSH Host: Host information for SSH connection (both domain and IP formats can be entered)
+    4. SSH Port: Port information for SSH connection
+    5. Username / Password : ID and password to use for connection
+        * Displayed when Password method is selected
+    6. SSH Private Key / SSH Key Passphrase : Private key and passphrase information to use for connection
+        * Displayed when Key pair method is selected
+4. Click the `Save` button to save the entered content.

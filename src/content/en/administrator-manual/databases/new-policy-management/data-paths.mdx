@@ -1,0 +1,128 @@
+---
+title: 'Data Paths'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+The Data Paths menu allows you to assign and manage tags for tables and columns. These configured tags are used for data classification and policy application.
+
+## Key Features
+
+*  **Tagging Targets** : Tags can be applied at table and column levels.
+*  **Application Limitations** : Tags are not supported at database and schema levels.
+* Table Access Control: You can grant permissions in whitelist mode so that only tables with assigned tags are accessible. 
+*  **Data Classification** : You can classify data by purpose and characteristics through tags.
+*  **Access Control Integration** : You can set access control policies based on assigned tags.
+
+## Assigning Tags to Tables
+
+Table tagging can be managed in the Data Paths menu, allowing you to systematically classify and manage tables through tags.
+
+<figure data-layout="center" data-align="center">
+![image-20250307-121743.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-121743.png)
+</figure>
+
+1. Click **Data Paths** under the **Policy Management** section in the left sidebar.
+2. The **Tables** tab is selected by default.
+3. Click the **Add Table** button in the top right.
+4. Enter the following information in the popup window:
+    1.  **Connection** : Select database connection from dropdown.
+    2.  **Database Name** : Select database name from dropdown.
+    3.  **Table Name** : Select the table to assign tags to. 
+5. After entering all information, click the **OK** button to add the table.
+
+<figure data-layout="center" data-align="center">
+![image-20250307-122237.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-122237.png)
+</figure>
+
+1. When the table is added, it appears in the list, and you can click the **"Add Tags"** button on the detail page to add new tags.
+2. Tags can be added in Key:Value format. 
+3. Basic information of the selected table is displayed at the top of the page. 
+    1. When selecting Connection, it navigates to the detail page of the corresponding connection.
+    2. When clicking Column Check, the table column list appears on the right. 
+
+<Callout type="important">
+In the table detail screen, you can only manage tags for the table. Column tags are managed in the column detail screen.
+</Callout>
+
+## Assigning Tags to Columns
+
+Column tagging can also be managed in the Data Paths menu. You can systematically classify columns through tags and effectively apply policies such as masking in bulk.
+
+<figure data-layout="center" data-align="center">
+![image-20250307-124339.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-124339.png)
+</figure>
+
+1. Select the **Columns** tab from the top tabs of the **Data Paths** menu.
+2. Click the **Add Column** button in the top right.
+3. Enter the following information in the popup window:
+    1.  **Connection** : Select database connection from dropdown.
+    2.  **Database Name** : Select database name from dropdown.
+    3.  **Table Name** : Select the table to assign tags to. 
+    4.  **Column Name** : Select the column name to assign tags to.
+4. After entering all information, click the **OK** button to add the column.
+
+<figure data-layout="center" data-align="center">
+![image-20250307-124802.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-124802.png)
+</figure>
+
+1. When the column is added, it appears in the list, and you can click the **"Add Tags"** button on the detail page to add new tags.
+2. Tags can be added in Key:Value format. 
+3. Basic information of the selected column is displayed at the top of the detail page. 
+    1. When selecting Connection, it navigates to the detail page of the corresponding connection.
+    2. When clicking Column, it navigates to the table detail page. 
+
+<Callout type="important">
+**Important** : When adding a column while the referenced table is not yet added to Data Paths, the corresponding table is automatically added to Data Paths together. Therefore, you don't need to add the table separately first, and the required table is automatically created during the column addition process.
+</Callout>
+
+## Relationship Between Tables and Columns - Automatic Table Creation Feature
+
+QueryPie provides the following automation features when adding columns to improve user convenience:
+
+1.  **Automatic Table Creation** : When adding a column, if the referenced table is not registered in Data Paths, the corresponding table is automatically added to Data Paths.
+2.  **Single Process** : Thanks to this feature, users can process everything at once during the column addition process without going through two steps of adding the table first and then adding the column.
+3.  **Consistency Maintenance** : The relationship between automatically created tables and added columns is automatically set, maintaining consistency in data structure.
+
+## Granting Table Access Permissions Based on Tags
+
+You can grant table access permissions based on tags set in the Data Paths menu, and it works in whitelist mode. That is, it allows access only to tables with specific tags and restricts access to other tables. This feature enables fine-grained data access control.
+
+The permission granting process consists of two main steps:
+
+1. Granting database access permissions to users (Grant Privilege)
+2. Setting tag-based access control within granted permissions (Access Type)
+
+<figure data-layout="center" data-align="center">
+![image-20250307-125727.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-125727.png)
+</figure>
+
+1. In the **Access Control** menu, select the user to set access permissions and grant permissions through **Grant Permission**. 
+2. When you click on the granted permission list, the **Privilege Details** screen is displayed.
+3. Select the **Tag-based Table Access** option in the **Access Type** section. 
+    1. The default value is set to the **All Table Access** option. This option grants access to all tables.
+    2. When you select the **Tag-based Table Access** option, it changes to whitelist mode that allows access only to tables with specific tags.
+
+## Permission Application Results
+
+When tag-based table access permissions are set:
+
+1. Users can only access tables with the assigned tags.
+2. Access to tables without those tags is restricted.
+
+## Use Cases
+
+Tag-based table access permissions are useful in the following situations:
+
+1.  **Department-based Data Access Management** : You can assign specific tags to tables related to each department and set department users to access only tables with those tags.
+2.  **Project-based Access Control** : You can assign project tags to project-related tables and grant access permissions only to project participants for tables with those tags.
+3.  **Data Sensitivity-based Access Control** : You can assign tags to tables based on data sensitivity and allow access only to users with appropriate permissions.
+
+## Precautions
+
+1. Since tag-based access control works in whitelist mode, access to tables without set tags is not possible.
+2. When multiple tags are added, you can access tables that have at least one of those tags.
+3. Since tag settings are managed in the Data Paths menu, appropriate tags must be assigned to tables before setting access control.
+4. Access permission changes are applied immediately after saving.

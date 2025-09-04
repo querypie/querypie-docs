@@ -1,0 +1,114 @@
+---
+title: 'Databases'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240523-193355.png](/administrator-manual/databases/screenshot-20240523-193355.png)
+</figure>
+
+## Overview
+
+QueryPie DAC can control 20+ types of RDBMS, NoSQL, and other diverse data sources through standardized SQL syntax using its own developed engine. Users can access databases and execute queries through web browsers regardless of operating system. It also supports the use of IDE tools such as Datagrip and DBeaver through desktop agents.
+
+## Recommended DAC Initial Setup Sequence
+
+If you are an administrator using QueryPie DAC (Database Access Controller) for the first time, we recommend following the initial setup sequence below for smooth database management.
+
+<Callout type="info">
+Clicking on linked items will take you to a page where you can immediately check the related guide.
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**Setup Sequence**
+</th>
+<th>
+**Setup Items**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Preparations**
+</th>
+<td>
+* [User Registration](general/user-management/users) 
+* [User Group Registration](general/user-management/groups)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Register Connections**
+</th>
+<td>
+* [Synchronize DB Resources from AWS](databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws)
+* [DB Connections | Manually Registering DB Connections](databases/connection-management/db-connections#db-%ec%bb%a4%eb%84%a5%ec%85%98-%ec%88%98%eb%8f%99%ec%9c%bc%eb%a1%9c-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)
+* [Data Source-Specific Setup Guide](databases/connection-management/db-connections/mongodb-specific-guide)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Configure Policies**
+</th>
+<td>
+* [Setting Up Data Masking Policies](databases/policies/data-masking)
+* [Setting Up Table/Column Access Restriction Policies](databases/policies/data-access)
+* [Setting Up Sensitive Data Policies](databases/policies/sensitive-data)
+* [Setting Up Ledger Table Control Policies](databases/ledger-management/ledger-table-policy)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**Grant Permissions**
+</th>
+<td>
+* [Creating and Managing Privileges](databases/db-access-control/privilege-type)
+* [Granting and Revoking Access Permissions](databases/db-access-control/access-control)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**Access DB**
+</th>
+<td>
+* [Accessing DB](../user-manual/database-access-control)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**Check Logs**
+</th>
+<td>
+* [Checking Audit Logs](audit/database-logs)
+</td>
+</tr>
+</tbody>
+</table>

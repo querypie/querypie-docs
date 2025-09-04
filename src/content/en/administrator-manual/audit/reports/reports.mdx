@@ -1,0 +1,847 @@
+---
+title: 'Reports'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="important">
+As of version 11.2.0, the Reports feature is currently provided as a Beta version.
+</Callout>
+
+## Overview
+
+QueryPie Reports is a feature that outputs data required for audit compliance in report format.
+
+You can output user and administrator status and history, security configuration history, user-specific permission status and history for DB/servers, DB/server access and query/command usage history, etc.
+
+<Callout type="info">
+As of version 11.2.0, reports can only be output in English.
+</Callout>
+
+## Report Output Items and Filter Support
+
+Please refer to the table below for report items and filters currently supported as of version 11.2.0.
+
+<table data-table-width="958" data-layout="center" local-id="cfcbf091-3775-4454-bff4-924bf43e88f4">
+<a id="table-1"></a>
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Report Type**
+</th>
+<th>
+**Category**
+</th>
+<th>
+**Subcategory**
+</th>
+<th>
+**User / Group**
+</th>
+<th>
+**Resource**
+</th>
+<th>
+**Other Filters**
+</th>
+</tr>
+<tr>
+<td rowspan="12">
+QueryPie System
+</td>
+<td rowspan="5">
+Users
+</td>
+<td>
+User Account Status <br/>User Account Status
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+* User Status
+</td>
+</tr>
+<tr>
+<td>
+User Account Management History <br/>User Account Management History
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+User Account Activation History <br/>User Account Activation/Deactivation History
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Status **[added-10.2.2]**<br/>Group Status
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Membership History **[added-10.2.2]**<br/>Group Member Addition/Deletion History
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="3">
+Administrator
+</td>
+<td>
+Administrator Status <br/>Administrator Status
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Role History <br/>Administrator Permission Grant/Revocation History
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Activity History <br/>Administrator Activity History
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Login
+</td>
+<td>
+User Login History <br/>User Login History
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Login IPs by User <br/>Login IP History by User
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Security Settings
+</td>
+<td>
+Authentication Method <br/>User Authentication Method
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Security Configuration Status **[updated-10.2.2]**<br/>Security Configuration Status
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="8">
+QueryPie DAC
+</td>
+<td rowspan="2">
+Databases **[added-10.2.2]**
+</td>
+<td>
+DB Connection Status<br/>DB Connection Status
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Connection Management History<br/>DB Connection Addition/Deletion History
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access Control
+</td>
+<td>
+DB Access Control - Assigned Status <br/>DB Access Permission Grant Status
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Access Control Logs <br/>DB Access Permission Grant/Revocation History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access & Queries
+</td>
+<td>
+DB Access History <br/>DB Access History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+</td>
+</tr>
+<tr>
+<td>
+Query Execution History <br/>Query Execution History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Workflow Logs - DB **[added-10.2.2]**
+</td>
+<td>
+DAC Type Requests<br/>DAC Type Requests Processed through Workflow
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DAC Unmasking Requests **[added-11.2.0]**
+Unmasking Requests Processed through Workflow
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="20">
+QueryPie SAC
+</td>
+<td rowspan="2">
+Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+Server Status<br/>Server Status
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Management History<br/>Server Addition/Deletion/Change History
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Groups **[added-10.2.2]**
+</td>
+<td>
+Server Group Status<br/>Server Group Status
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Group Management History<br/>Server Group Addition/Deletion/Change History
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Account & Password **[added-10.2.2]**
+</td>
+<td>
+Provisioned Server Account Status<br/>Provisioned Server Account Status
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Account Provisioning History<br/>Server Account Provisioning History
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="7">
+Server Access Control
+</td>
+<td>
+Direct Permission Status by User/Group **[updated-10.2.2]**<br/>Direct Permission Status by User/Group
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Direct Permission Change History <br/>Direct Permission Change History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+*Server Role Status by User* **[deprecated-10.2.2]**<br/> *Server Role Status by User*
+</td>
+<td>
+*O*
+</td>
+<td>
+*O*
+</td>
+<td>
+*-
+</td>
+</tr>
+<tr>
+<td>
+Role-Granted Users by Role **[added-10.2.2]**<br/>Role-Granted Users Status by Role
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Accessible Servers by Role **[added-10.2.2]**<br/>Accessible Servers Status by Role
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role & Policy Management History **[added-10.2.2]**<br/>Server Role and Policy Change History
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role Grant/Revocation History <br/>Server Role Grant/Revocation History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="6">
+Server Sessions and Commands
+</td>
+<td>
+Server Access History <br/>Server Access History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+* Result
+* Action Type
+* Role
+
+</td>
+</tr>
+<tr>
+<td>
+Command History <br/>Command History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+</td>
+</tr>
+<tr>
+<td>
+Command Template Status <br/>Command Template Status
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Template Management History <br/>Command Template Management History
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Whitelist Grant/Revocation History <br/>Command Temporary Permission Grant/Revocation History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Restricted Commands <br/>Blocked Command History
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+
+</td>
+</tr>
+<tr>
+<td>
+Workflow Logs - Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+SAC Type Requests<br/>SAC Type Requests
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+</tbody>
+</table>
+
+## Viewing Report List
+
+You can check the report generation task list by entering the Audit menu &gt; Reports &gt; Reports menu.
+
+<Callout type="info">
+To access the Reports menu, the Report Audit Full Access administrator permission must be granted to the account.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports](/administrator-manual/audit/reports/reports/screenshot-20241223-112238.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports
+</figcaption>
+</figure>
+
+1.  **Search**  : You can search by Task Name.
+2.  **Create Task**  : Enters the report generation page.
+3.  **Refresh**  : Reloads the list.
+4.  **Type**  : Type information specified when creating the report, with the following three types:
+    1. QueryPie System
+    2. QueryPie DAC
+    3. QueryPie SAC
+5.  **Task Name**  : The name of the task entered when creating the report.
+6.  **Scheduling**  : Repeat cycle information for the task entered when creating the report, which can have the following values:
+    1. None : No repetition (generated one-time)
+    2. Daily : Daily repetition
+    3. Weekly : Weekly repetition
+    4. Monthly : Monthly repetition
+    5. Quarterly : Quarterly repetition
+7.  **Created By**  : Information about the person who created the report generation task.
+8.  **Created At**  : Time when the report generation task was created.
+9.  **Last Task At**  : Time when the report was last generated. (Empty if never generated)
+10.  **Last Task Status**  : Status of the last report generation task. Has the following values:
+    1. Succeeded : Success
+    2. In Progress : In Progress
+    3. Failed : Failed
+11.  **Last Report File**  : Clicking the button allows you to download the last generated report file.
+    1. Disabled if no file has been generated or if it has already expired.
+    2. Whether to specify a password for file download can be set in Security settings.
+    3. When password specification is enabled, you set a password when downloading the file. You must enter the set password when extracting the file.
+
+## Viewing Report Details
+
+When you select an item from the report list to view detailed content, a Drawer opens and you can check detailed information.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail](/administrator-manual/audit/reports/reports/screenshot-20241223-112524.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail
+</figcaption>
+</figure>
+
+1.  **Unschedule Task**  : For reports that are generated repeatedly, you can unschedule them.
+    1. The button is disabled for tasks with no schedule or already unscheduled tasks, and displays as Task Unscheduled.
+2.  **Type**  : Displays report type information. (QueryPie General, DAC, SAC) 
+    1. Clicking the magnifying glass button allows you to check the selected output items and filter information.
+3.  **Scheduling**  : Displays the set repeat cycle information. (None, Daily, Weekly, Quarterly)
+4.  **Date Range**  : For one-time generated reports, displays the period range.
+5.  **Start Date**  : For repeatedly generated reports, displays the task start date.
+6.  **Next Task At**  : Displays the date and time of the next scheduled task. (Left blank for non-repeating tasks)
+7.  **User Scope**  : Displays user scope information.
+8.  **Resource Scope**  : Displays resource scope information.
+9.  **Report List tab**  : Displays the list of generated reports. 
+    1. Report No. : Report serial number within the report task
+    2. Created At : Report creation date and time
+    3. Expired At : Report file expiration (scheduled) date and time
+    4. Status : Report task status (one of Succeeded, Failed)
+    5. Report File : File download link 
+        * Disabled if no file has been generated or if it has already expired.
+        * Whether to specify a password for file download can be set in Security settings.
+        * When password specification is enabled, you set a password when downloading the file. You must enter the set password when extracting the file.
+10.  **Action History tab**  : Displays the user's action history for the report.
+    1. Action At : Action execution date and time
+    2. Action Type : Action type (one of Report Download, Report Unschedule)
+    3. Target Report No. : Target report serial number (blank if none)
+    4. Action By : Action performer
+
+## Creating Reports
+
+Click the `+ Create Task` button on the report list screen to enter the report creation page.
+
+You can enter task name, report type, scheduling-related content, and specify report output items and filters to apply by section. Click the `+ Add Section` button to add sections.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create](/administrator-manual/audit/reports/reports/screenshot-20241209-104337.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create
+</figcaption>
+</figure>
+
+1.  **Task Name**  : Enter a name that can identify the report generation task.
+2.  **Type**  : Select the report type. (QueryPie General, DAC, SAC)
+3.  **Scheduling**  : Enter the repeat cycle for the report generation task.
+    1. None : Select when generating one-time without task repetition.
+    2. Daily : Select when you want to generate daily repetition.
+    3. Weekly : Select when you want to generate weekly repetition.
+    4. Monthly : Select when you want to generate monthly repetition.
+    5. Quarterly : Select when you want to generate quarterly repetition.
+4.  **Date Range**  : Period range for historical data
+    1. When `Scheduling` is set to `None`, specify the output range for historical data.
+    2. Status data is output based on the task execution time regardless of the Date Range input value.
+    3. Constraint: Date Range can only select up to 3 months of data.
+        1.  As of version `10.2.8`, only data up to 3 months ago from today can be selected. This will be fixed in version `10.2.9`.
+5.  **Start Date**  : Start date for repeat tasks
+    1. When `Scheduling` is set to `Daily`, `Weekly`, `Monthly`, or `Quarterly`, specify the task start date.
+6.  **Data**  : Report output items
+    1. When selecting items, you can check the data period range information at the bottom, and when Scheduling is specified, it shows the content that will be applied to the first output report.
+    2. Reference Time : Guidance on the reference time applied to status data
+    3. Date Range : Guidance on the period range applied to historical data
+7.  **Filter**  : Filter input to apply to sections
+    1. Available filters are displayed according to the selected report output items.
+    2. Refer to the filter items below
+
+After entering all desired information, click the `Preview` button to preview the report that will be output.
+
+Click the `Save` button to save the report task and return to the list.
+
+## Duplicating Reports**[10.2.2]**
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task](/administrator-manual/audit/reports/reports/screenshot-20241223-104529.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task
+</figcaption>
+</figure>
+
+After selecting the report you want to duplicate from the list, click the :copy: `Duplicate Task` button to duplicate an existing report and create a new report task.
+
+The information that is duplicated when duplicating a task is as follows:
+
+*  **Task Name**  - Copy is added after the existing task name
+*  **Type**  - The report type selected in the existing task is maintained
+*  **Scheduling**  - The repeat cycle selected in the existing task is maintained
+    * However, Date Range and Start Date are reset and need to be re-entered
+*  **Data**  - The output items selected in the existing task are preserved
+*  **Filter**  - Filters entered for each Data are preserved
+    * However, if previously selected Roles, Users, or Groups no longer exist, they are removed from the filter values
+
+## Filters
+
+This section provides detailed specifications for filters supported in reports.
+
+1.  **User/Group**  : Filters report output data by user or group.
+    1. Example: If you want to output a report on DB access permissions granted to the PM team:
+        * Type: QueryPie DAC
+        * Data: DB Access Control - Assigned Status
+        * Filter &gt; User/Group: PM (group)
+2.  **Resource**  : Filters report output data by tags assigned to resources.
+    1. Example: If you want to output a report on access permissions for DBs tagged with `Service:Homepage`:
+        * Type: QueryPie DAC
+        * Data: DB Access Control - Assigned Status
+        * Filter &gt; Resource: `Service:Homepage`
+    2. Tag operation logic is the same as other QueryPie functions and is as follows:
+        * When multiple tag filters with the same Key are entered, they are combined with OR conditions.
+        * When multiple tag filters with different Keys are entered, they are combined with AND conditions.
+    3. For Workflows, requests can be made for multiple resources at once. In this case, if at least one resource that meets the conditions is included in the request, it is included in the search results.
+3.  **User Status :** Filters by User Account status when outputting User Account Status.
+    1. Filter values: Active, Locked, Expired, Locked Manually
+4.  **Time Range**  : Filters by time range when selecting DB Access History or Server Access History.
+    1. Enter start and end times.
+    2. Select whether to exclude results within the entered time range. When selected, only logs outside the entered time range are output.
+5.  **Result**  : Filters by result when selecting Server Access History.
+    1. Filter values: Success, Failure
+6.  **Action Type**  : Filters by action type (Action Type) when selecting Server Access History.
+    1. Filter values: Connect, Disconnect
+7.  **Role**  : Filters by server role used when selecting Server Access History.
+    1. When multiple Roles are entered, they are combined with OR conditions.
+8.  **Keyword**  : Filters by entered command when selecting Command History or Restricted Commands.
+    1. After entering keywords, press Enter on the keyboard to apply the search condition.
+    2. Only command history containing the entered keywords is extracted. (like search)
+    3. Case insensitive.
+    4. When multiple keywords are entered, they are combined with OR conditions.

@@ -1,0 +1,69 @@
+---
+title: 'Cloud Providers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie can integrate DB resources registered with cloud providers and synchronize them periodically.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/image-20240714-055708.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+## Viewing Cloud Providers
+
+1. Navigate to Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers menu.
+2. You can search by cloud provider name through the search box in the top left of the table.
+3. You can refresh the Cloud Provider list through the refresh button in the top right of the table.
+4. The table provides the following column information:
+    1.  **Name**  : Cloud provider name
+    2.  **Cloud Provider**  : Connected platform
+    3.  **Region**  : Platform region
+    4.  **Replication Frequency** : Synchronization cycle setting
+    5.  **Created At**  : Cloud provider initial creation date and time
+    6.  **Updated At** : Cloud provider last modification date and time
+5. Clicking on each row allows you to view cloud provider detailed information.
+
+## Creating Cloud Providers
+
+1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers menu.
+2. Click the `+ Create Provider` button in the top right.
+3. Create a cloud provider by referring to the following guides:
+    1. [Synchronizing DB Resources from AWS](cloud-providers/synchronizing-db-resources-from-aws)
+    2. [Synchronizing DB Resources from MS Azure](cloud-providers/synchronizing-db-resources-from-ms-azure)
+    3. [Synchronizing DB Resources from Google Cloud](cloud-providers/synchronizing-db-resources-from-google-cloud)
+
+## Deleting Cloud Providers
+
+<figure data-layout="center" data-align="center">
+![image-20241103-065154.png](/administrator-manual/databases/connection-management/cloud-providers/image-20241103-065154.png)
+</figure>
+
+1. Navigate to Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers menu.
+2. Check the checkbox on the left of the target cloud provider to delete in the table.
+3. Click the `Delete` button that appears on the table column line.
+4. When a popup appears, click the `Delete` button to proceed with deletion.
+
+<Callout type="important">
+Please note that when deleting a Cloud Provider, all resources synchronized through that cloud provider will be deleted together in bulk.
+</Callout>
+
+## Using Dry Run
+
+<Callout type="info">
+**What is Cloud Synchronization Dry Run?**
+It serves to test and verify the cloud synchronization process, allowing you to check in advance what the synchronization results will be. When changing existing integration information, unexpected results may occur due to user input errors. To prevent such problems in advance, users can change existing information and then perform a "Dry Run" to test the entered content in advance.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20241101-001430.png](/administrator-manual/databases/connection-management/cloud-providers/image-20241101-001430.png)
+</figure>
+
+1. Select a specific provider item from the list in Databases &gt; [Connection Management] &gt; Cloud Provider.
+2. Change the setting items you want to change on the detail page, then click the `Dry Run` button in the top right.
+3. Check the "Dry Run" results displayed in the popup window.

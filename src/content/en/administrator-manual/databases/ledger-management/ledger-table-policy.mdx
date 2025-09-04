@@ -1,0 +1,54 @@
+---
+title: 'Ledger Table Policy'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Administrators can set ledgers at the table level of databases through the Ledger Table Policy menu and apply rules according to user ledger table calls.
+
+<Callout type="important">
+Ledger table policies can only be used when the related license is activated. Please contact QueryPie customer support team to use this feature.
+</Callout>
+
+## Mapping Approval Rules to Ledger Tables
+
+<Callout type="info">
+Vendors supporting ledger table management include MySQL, MongoDB, Oracle, MariaDB, and Athena.
+</Callout>
+
+You can create policies by DB connection unit and map approval rules to tables to be managed as ledgers within connections. After setup, when users attempt to modify queries such as UPDATE and data export on the corresponding table, you can set SQL Requests through the corresponding approval rules.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy](/administrator-manual/databases/ledger-management/ledger-table-policy/Screenshot-2024-12-18-at-11.46.38-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy
+</figcaption>
+</figure>
+
+1. Navigate to Ledger Management &gt; Ledger Table Policy menu from the Database settings menu.
+2. Click the `Create Policy` button in the top right.
+3. Enter the following information for policy creation:
+    1.  **Target Connection**  : Select the connection containing the table that is the target of policy application.
+    2.  **Target Databases**  : Select the databases containing the tables that are the target of policy application. You can select multiple databases simultaneously.
+4. Save through the `Save` button.
+
+You can check that policies have been created in the Ledger Table Policy list by DB connection unit.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt; Details](/administrator-manual/databases/ledger-management/ledger-table-policy/Screenshot-2024-12-18-at-11.47.34-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt; Details
+</figcaption>
+</figure>
+
+Move to the detail page of the created policy to set ledger table approval rules.
+
+1. Click the `Add Rule` button in the middle right of the detail page.
+2. Select the ledger table from the list.
+3. Select the workflow approval rule to apply when executing DML queries on the corresponding ledger table.
+    1. You can separately set the corresponding approval rules in the Ledger Approval Rules menu.
+4. If you want to enforce input of reasons for data queries, set the SELECT Purpose field to **Required** (Default value is Required).
+5. If you want to enforce input of reasons for data export, set the Export Purpose field to **Required** (Default value is Not Required). 
+6. Click the `Ok` button to complete rule addition.
