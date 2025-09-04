@@ -1,0 +1,136 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織で管理するKubernetesクラスターのアクセスポリシー(Policy)に対する照会、作成、修正、削除をサポートします。PolicyはKubernetesアクセス権限を実装および適用するための最も最初の段階です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072128.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies
+</figcaption>
+</figure>
+
+
+## Policy照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072306.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. テーブル左上の検索欄を通じて、ポリシー名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、Policyリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : Policy名
+    2.  **Description**  : Policy詳細説明
+    3.  **Created At**  : ポリシー初回作成日時
+    4.  **Updated At** : ポリシー最終修正日時
+    5.  **Updated By**  : 最終アップデートを実行した管理者名
+5. 各行をクリックするとポリシー詳細情報照会が可能です。
+    1.   **Detail**
+        1. デフォルトで指定されるタブでポリシーで定義されたコードを照会できます。
+        2. Detailタブに位置する時、右側に`Go to Editor Mode`ボタンがあり、これをクリックすると該当Code Editorページ画面に切り替わります。
+    2.  **Roles**
+        1. 該当ポリシーが割り当てられているRoleリストを列挙します。
+        2. リストは各Roleごとに以下の情報を露出します：
+            1.  **Name**  : Role名
+            2.  **Description**  : Role詳細説明
+            3.  **Assigned At**  : Roleに該当ポリシーが割り当てられた日時
+            4.  **Assigned By** : 該当ポリシーをRoleに割り当てた管理者名
+        3. 各行をクリックするとRoleに対する詳細情報をドロワー形態で提供します。
+            1.  **Name**  : Role名
+                * 該当ロール詳細ページリンクを提供します。
+            2.  **Description**  : Role詳細説明
+            3.  **Last Access At**  : 該当ロールの最終呼び出し日時
+            4.  **Created At**  : Role作成日時
+            5.  **Created By**  : Role作成者名
+            6.  **Updated At**  : Roleアップデート日時
+            7.  **Updated By**  : 最終Role修正者名
+    3.  **Versions**
+        1. 該当ポリシーの各版に対する履歴を列挙します。
+            * ポリシー版はCodeが修正されて保存されるとアップデートされます。
+        2. リストは各versionごとに以下の情報を露出します：
+            1.  **Version**  : 版名
+            2.  **Justification**  : ポリシーアップデート入力事由
+            3.  **Updated At**  : 該当版作成日時
+            4.  **Updated By**  : 該当版修正者名
+        3. 各行をクリックすると版に対する詳細情報をドロワー形態で提供します。
+            1.  **(Title)**  : ポリシー名
+            2.  **Version**  : ポリシー版
+            3.  **Justification**  : ポリシーアップデート入力事由
+            4.  **Updated At**  : 該当版作成日時
+            5.  **Updated By**  : 該当版修正者名
+            6. 下段に当時の  **ポリシーコードスナップショット** が露出されます。
+
+
+## Policy作成
+
+<figure data-layout="center" data-align="center">
+![image-20240721-072621.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072621.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. 右上の`+ Create Policy`ボタンをクリックします。
+3. ポリシー作成のための以下の情報を入力します。(以下情報はすべてユーザーに露出される情報です。)
+    1.  **Name :** 識別可能なポリシー名 (必須)
+    2.  **Description** : 該当ポリシーに対する付加的な説明
+4. `OK`ボタンをクリックして作成します。
+5. ポリシーリスト最上段に新規作成されたポリシーをクリックします。
+6. [Kubernetesポリシー設定](policies/setting-kubernetes-policies)ガイドを参考にしてポリシーを設定します。
+
+
+## Policy修正
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072705.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072705.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. リストで修正するPolicyをクリックして詳細ページに移動します。
+3. 画面右上の`Edit`ボタンをクリックして以下の情報を修正できます。
+    1.  **Name :** 識別可能なポリシー名 (必須)
+    2.  **Description** : 該当ポリシーに対する付加的な説明
+4. `OK`ボタンをクリックして修正を反映します。
+
+
+## Policy複製
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072804.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072804.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. リストで複製するPolicyをクリックして詳細ページに移動します。
+3. 画面右上の`Duplicate`ボタンをクリックして複製本の情報を修正できます。
+    1.  **Name :** 識別可能なポリシー名 (必須)
+    2.  **Description** : 該当ポリシーに対する付加的な説明
+4. `OK`ボタンをクリックして修正を反映します。
+5. ポリシーリスト最上段に新規複製されたポリシーをクリックして照会/修正します。
+
+
+## Policy削除
+
+<figure data-layout="left" data-align="left">
+![image-20240721-072845.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072845.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. 2つの方式で削除段階を進行できます：
+    1. リストで削除
+        1. テーブル内の削除対象ポリシー左側のチェックボックスをチェックします。
+        2. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+    2. 詳細ページで削除
+        1. 画面右上の`Delete`ボタンをクリックします。
+3. ポップアップが表示されたら`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Policy削除時、該当ポリシーが付与されていたKubernetesクラスターリソースおよび役割から自動分離されます。
+</Callout>

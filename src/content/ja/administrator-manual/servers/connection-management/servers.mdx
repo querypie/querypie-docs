@@ -1,0 +1,56 @@
+---
+title: 'Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieではServer資産に対する照会、作成、修正削除をサポートします。Cloud Providerを通じて同期してきたサーバー、APIまたは手動で登録したサーバーすべて同じページで管理します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Servers](/administrator-manual/servers/connection-management/servers/image-20240902-045519.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Servers
+</figcaption>
+</figure>
+
+## Server照会
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
+2. テーブル左上の検索欄を通じて、サーバー名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、サーバーリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : サーバー名
+    2.  **Host**  : サーバーのIPまたはドメイン
+    3.  **Cloud Provider**  : 接続プラットフォーム (手動登録サーバーの場合、ハイフンで表記)
+    4.  **Server OS**  : サーバーのOS
+    5.  **OS Version**  : サーバーOSの詳細版
+    6.  **Tag**  : サーバーに付いたタグリスト
+    7.  **Server Agent**  : (Windows Serverのみ該当) Server Agent Online/Offline可否および版情報
+    8.  **Created At**  : サーバー作成日時
+    9.  **Updated At** : サーバー最終修正日時
+5. 各行をクリックするとサーバー詳細情報照会が可能です。
+
+
+## Server作成
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
+2. 右上の`+ Create Server`ボタンをクリックします。
+3. [手動で個別サーバー登録](servers/manually-registering-individual-servers)ガイドを参考にしてサーバーを登録します。
+
+
+## Server削除
+
+<figure data-layout="center" data-align="center">
+![image-20240723-162214.png](/administrator-manual/servers/connection-management/servers/image-20240723-162214.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
+2. テーブル内の削除対象サーバー左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたら  *DELETE*  文句を入力し、`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Server削除時、ユーザー/グループに付与された該当サーバーに対するアクセス権限すべて一括削除されます。
+</Callout>

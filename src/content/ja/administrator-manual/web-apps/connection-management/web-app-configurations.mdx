@@ -1,0 +1,38 @@
+---
+title: 'Web App Configurations'
+---
+
+## Overview
+
+Web App Configurationsページは、QueryPie WACでウェブアプリケーションアクセスとセキュリティポリシーを管理できる設定ページです。ログイン失敗閾値設定、セッションタイムアウト、安全でないプロトコル制御など、ウェブアプリケーション接続セキュリティの核心要素を設定できます。これにより、管理者は組織のセキュリティ要件に合わせてウェブ環境を構成し、全体的な脅威からシステムを保護できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web App Configurations](/administrator-manual/web-apps/connection-management/web-app-configurations/image-20250629-153047.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
+</figcaption>
+</figure>
+
+
+*  **Just-in-time Access Request Configurations :** 一時アクセス要求に対する設定を管理します。
+    *  **Maximum Access Duration (minutes)** : 一時アクセス要求時最大許可時間を分単位で設定します。デフォルト値は60分です。
+*  **WAC Proxy Configurations :** QueryPie WACプロキシ情報を管理します。
+    *  **Proxy Host** : WACプロキシサーバーのホストアドレスが表示されます。  **Proxy Port** : WACプロキシサーバーのポート番号が表示されます。
+*  **QueryPie Web Secure (Extension) Configurations :** QueryPie Web Secure拡張プログラム配布のためのファイルとバージョン情報を管理します。
+    *  **Extension File** : クローム拡張プログラムファイルのダウンロードURLが表示されます。
+    *  **Current Version** : 現在インストールされた拡張プログラムのバージョンが表示されます。
+    *  **Minimum Required Version** : 最小要求バージョンが表示されます。
+*  **Watermark Configurations :** ウェブアプリケーションアクセス時ブラウザに表示されるウォーターマークテキストをユーザー定義します。設定されたテキストはすべてのユーザーと全体のウェブアプリケーションに均一に適用されます。使用可能なウォーターマークオプションは以下の通りです。
+    *  **Custom String** : ユーザー定義テキスト
+    *  **Username** : ユーザーID
+    *  **Display Name** : ユーザー表示名
+    *  **Email** : ユーザーメールアドレス
+    *  **Employee number** : 社員番号
+    *  **Organization** : 組織名
+    *  **Division** : 事業部
+    *  **Department** : 部署名
+    *  **Timestamp** : アクセス時間
+    *  **Client IP** : クライアントIPアドレス
+*  **Root CA Certificate Configurations :** QueryPie WACのためのRoot CA証明書ファイルとキーファイルをバックアップと復元します。管理者は  **Manage .cer file**  と  **Manage .key file**  ボタンを通じて証明書ファイルを管理できます。
+    *  **Root CA Certificate File** : Root CA証明書ファイル名が表示されます。
+    *  **RootCA Certificate Key File** : Root CA証明書キーファイル名が表示されます。

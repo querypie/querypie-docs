@@ -1,0 +1,134 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieサーバーアクセスポリシー（Policy）は、組織で管理するサーバー別にアクセスポリシーを管理し適用する機能です。サーバーまたはサーバーグループ別にいつ接続を許可するか、どのコマンドを禁止するかなど、詳細なポリシーを適用してユーザーまたはグループ別に業務用途に合わせて最小限のサーバーにのみアクセスできるように設定できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies](/administrator-manual/servers/server-access-control/policies/image-20240902-052616.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies
+</figcaption>
+</figure>
+
+1. テーブル左上の検索欄を通じてポリシー名を条件に検索が可能です。
+2. テーブルで以下のカラム情報を提供します：
+    1.  **Name**  : Policy名
+    2.  **Description**  : Policy詳細説明
+    3.  **Created At**  : ポリシー最初生成日時
+    4.  **Updated At** : ポリシー最後修正日時
+3. 各行をクリックするとポリシー詳細情報照会が可能です。
+
+
+## Policy照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details](/administrator-manual/servers/server-access-control/policies/image-20240902-052643.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Policiesメニューに移動します。
+2. リストで項目をクリックしてポリシー詳細情報を照会します。
+
+### Detailタブ
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240808-171818.png](/administrator-manual/servers/server-access-control/policies/screenshot-20240808-171818.png)
+</figure>
+
+1. デフォルトで指定されるタブでポリシーで定義されたコードを照会できます。
+2. Detailタブに位置する時、右側に`Go to Editor Mode`ボタンがあり、これをクリックすると該当Code Editorページ画面に切り替わります。
+
+
+### Rolesタブ
+
+<figure data-layout="center" data-align="center">
+![image-20240723-115930.png](/administrator-manual/servers/server-access-control/policies/image-20240723-115930.png)
+</figure>
+
+1. 該当ポリシーが割り当てられているRoleリストを列挙します。
+2. リストは各Roleごとに以下の情報を表示します：
+    1.  **Name**  : Role名
+    2.  **Description**  : Role詳細説明
+    3.  **Assigned At**  : Roleに該当ポリシーが割り当てられた日時
+    4.  **Assigned By** : 該当ポリシーをRoleに割り当てた管理者名
+
+
+### Versionsタブ
+
+<figure data-layout="center" data-align="center">
+![image-20240723-120008.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120008.png)
+</figure>
+
+1. 該当ポリシーの各バージョンに対する履歴を列挙します。
+    * ポリシーバージョンはCodeが修正されて保存されると更新されます。
+2. リストは各versionごとに以下の情報を表示します：
+    1.  **Version**  : バージョン名
+    2.  **Justification**  : ポリシー更新記入事由
+    3.  **Updated At**  : 該当バージョン生成日時
+    4.  **Updated By**  : 該当バージョン修正者名
+3. 各行をクリックするとバージョンに対する詳細情報をドロワー形式で提供します。
+    1.  **(Title)**  : ポリシー名
+    2.  **Version**  : ポリシーバージョン
+    3.  **Justification**  : ポリシー更新記入事由
+    4.  **Updated At**  : 該当バージョン生成日時
+    5.  **Updated By**  : 該当バージョン修正者名
+    6. 下部に当時の  **ポリシーコードスナップショット**  が表示されます。
+
+<figure data-layout="center" data-align="center">
+![image-20240723-120033.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120033.png)
+</figure>
+
+
+## Policy生成
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120134.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120134.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Policiesメニューに移動します。
+2. 右上の`+ Create Policy`ボタンをクリックします。
+3. ポリシー生成のための以下の情報を入力します。（以下の情報はすべてユーザーに表示される情報です。）
+    1.  **Name :** 識別可能なポリシー名
+    2.  **Description** : 該当ポリシーに対する付加的な説明
+4. `OK`ボタンをクリックして生成します。
+
+
+## Policy修正
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120317.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120317.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Policiesメニューに移動します。
+2. リストで修正するPolicyをクリックして詳細ページに移動します。
+3. 画面右上の`Edit`ボタンをクリックして以下の情報を修正できます。
+    1.  **Name :** 識別可能なポリシー名（必須）
+    2.  **Description** : 該当ポリシーに対する付加的な説明
+4. `OK`ボタンをクリックして修正を反映します。
+
+
+## Policy削除
+
+<figure data-layout="left" data-align="left">
+![image-20240723-120357.png](/administrator-manual/servers/server-access-control/policies/image-20240723-120357.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Policiesメニューに移動します。
+2. 二つの方式で削除段階を進行できます：
+    1. リストから削除
+        1. テーブル内削除対象ポリシー左側のチェックボックスをチェックします。
+        2. テーブルカラムラインに現れた`Delete`ボタンをクリックします。
+    2. 詳細ページから削除
+        1. 画面右上の`Delete`ボタンをクリックします。
+3. ポップアップが現れたら  *DELETE*  文句を記入して`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Policy削除時、該当ポリシーが付与されていたリソースと役割から自動分離されます。
+</Callout>

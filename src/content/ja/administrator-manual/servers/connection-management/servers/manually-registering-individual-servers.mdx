@@ -1,0 +1,53 @@
+---
+title: '手動で個別サーバー登録'
+---
+
+## Overview
+
+QueryPieでは、アクセス制御を適用するサーバーを手動で登録できます。登録された個別サーバーはサーバーグループに追加してアクセス権限を付与したり、ポリシー設定ができます。ただし、Windowsサーバーの場合は手動登録ができず、Server Agent連携を通じた自動登録のみ可能です。
+
+
+## 手動でサーバー登録
+
+個別サーバーを手動で登録するためには、サーバーの基本的な情報入力が必要です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create Server](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154238.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create Server
+</figcaption>
+</figure>
+
+### 1. Information入力
+
+<figure data-layout="center" data-align="center">
+![image-20240828-154305.png](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154305.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
+2. 右上の`Create Server`ボタンをクリックします。
+3. サーバー登録のための以下の情報を入力します。
+    1.  **Name**  : 該当サーバーを区別できる名前を入力します。
+    2.  **Host**  : サーバーのホストを入力します。ドメイン、IP形態すべて入力できます。
+    3.  **Server OS**  : サーバーのOSを選択します。
+    4.  **OS Version** : サーバーOSの詳細情報を入力します。
+    5.  **Port**  : コネクションのポートを入力します。
+        1. SSH/SFTP : SSH/SFTPアクセス時に使用するポートを入力します。
+        2. TELNET : TELNETアクセス時に使用するポートを入力します。[SAC General Configurations](../../sac-general-configurations)メニュー「Using insecure protocols」項目を通じてTELNETを活性化した場合のみ表示されます。
+        3. FTP : FTPアクセス時に使用するポートを入力します。[SAC General Configurations](../../sac-general-configurations)メニュー「Using insecure protocols」項目を通じてFTPを活性化した場合のみ表示されます。
+        4. RDP : Server OSがWindows Serverの場合のみ表示されます。
+
+### 2. Tag入力 (Optional)
+
+<figure data-layout="center" data-align="center">
+![image-20240723-163036.png](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240723-163036.png)
+</figure>
+
+必要時、個別サーバーにTagを手動で入力できます。このように追加されたTagはサーバーリストでまたはサーバーグループにサーバーを追加する時、該当Tagを活用してフィルタリングできます。また、Cloud Provider同期してきたタグも一緒に表示されます。(ただし、同期を通じて読み込んだタグは削除および修正不可)
+
+1.  **Key**  : タグを区別できるKey値を512文字以内で入力します。Key値を必須で入力する必要があり、既に登録されたキーは重複入力ができません。重複は大文字小文字を区別してチェックします。
+2.  **Value**  : フィルタリングに使用するValue値を256文字以内で入力します。
+
+上記の過程を経た後、最終`Save`ボタンをクリックするとサーバーが正常に登録されます。
+
+

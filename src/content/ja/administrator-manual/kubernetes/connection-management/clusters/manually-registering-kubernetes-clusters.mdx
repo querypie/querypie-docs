@@ -1,0 +1,170 @@
+---
+title: '手動でKubernetesクラスター登録'
+---
+
+## Overview
+
+QueryPieでは、アクセス制御を適用するオンプレミスなどに位置するKubernetesクラスターを手動で登録することができます。
+
+
+## 手動でクラスター登録
+
+個別サーバーを手動で登録するためには、サーバーの基本的な情報入力が必要です。
+
+<figure data-layout="center" data-align="center">
+![image-20240721-054859.png](/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters/image-20240721-054859.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clustersメニューに移動します。
+2. 右上の`+ Create Cluster`ボタンをクリックします。
+3.  **Information**  : クラスター手動登録のための以下の情報を入力します
+    1.  **Name**  : 該当クラスターを識別できる名前を入力します。(必須)
+        * 該当情報は今後修正が不可能な項目です。
+    2.  **Version**  : クラスターの版を入力します。(選択)
+        * 以降のクレデンシャル認証テスト手順を通じて自動入力予定の項目です。
+    3.  **API URL**  : Kubernetes APIを受信するクラスターのAPI URLを入力します。
+    4. 
+    5.  **Credential**  : 該当クラスターのKubernetes APIサーバーにアクセス権限を付与するには、サービスアカウントトークンおよびCA証明書を該当クラスターから取得する必要があります。詳細は青色情報ボックス内の内容を確認してください。
+        1.  **Service Account Token**  : QueryPie ProxyでユーザーKubernetes API呼び出し時に使用するKubernetesクラスターのサービスアカウントトークン値を入力します。
+        2.  **Certificate Authority**  : QueryPieでKubernetes APIサーバー証明書を検証するCA証明書を入力します。
+        3.  **Verify Credential**  : サービスアカウントトークンおよびCA証明書をすべて入力すると該当ボタンが活性化されます。ボタンをクリックすると正常接続が可能かどうかをチェックできます。実行結果に応じて以下のように結果が表示されます。
+            * :check_mark:  **Verified**  : クラスター接続成功でサービスアカウントトークンおよびCA証明書が正常に入力されたことを意味します。
+            * :cross_mark:  **Verification Failed**  : クラスター接続失敗でサービスアカウントトークンおよびCA証明書中に値のエラーがあるか、ネットワーク接続に失敗した可能性があることを意味します。
+    6.  **Logging Options**  : 該当クラスターに対するログオプションを選択します。
+        1.  **Request Audit**  : 該当クラスターに対するKubernetes API呼び出し履歴に対するログ活性化オプションで、Defaultは`On`です。該当機能を`Off`に切り替えると、
+            1. 該当クラスターを対象に呼び出されるKubernetes API履歴が残りません。
+            2. 下位のRequest Audit TypesおよびPod Session Recordingすべて一括非活性化処理されます。
+        2.  **Request Audit Types**  : 該当クラスターの監査対象Verbを管理者が選択できます。Defaultは以下の基本verbすべてを選択しています。
+            1. Verb種類：
+                1. `get`
+                2. `list`
+                3. `watch`
+                4. `create`
+                5. `update`
+                6. `patch`
+                7. `delete`
+                8. `deletecollection`
+            2. :white_check_mark: Select All : すべてのAPI呼び出しに対して監査を進行します。
+        3.  **Pod Session Recording**  : 該当クラスター内Pod execコマンドによって開かれたセッションに対するレコーディング活性化オプションで、Defaultは`On`です。該当機能は以下の条件を満たさないと`Off`に切り替わります：
+            1. Request Auditが`On`で活性化されている必要があります。
+            2. Request Audit Typesに以下のverbが選択されている必要があります：
+                1. `create`
+                2. `get`
+4.  **Tags**  : 必要時、個別クラスターにTagを手動で入力でき、Cloud Providerを通じて同期されたクラスターの場合、同期してきたタグも一緒に表示されます。(ただし、同期を通じて読み込んだタグは削除および修正ができません。) `+ Add Tag`ボタンをクリックして新しい行を追加し、希望するタグ値を入力でき、タグはkey-value形態で入力する必要があります。
+    1.  **Key**  : タグを区別できるKey値を512文字以内で入力します。
+        1. Key値を必須で入力する必要があり、すでに登録されたキーは重複入力ができません。
+        2. 重複は大文字小文字を区別してチェックします。
+    2.  **Value**  : フィルタリングに使用するValue値を256文字以内で入力します。
+5. 上記の過程を経た後、最終`Save`ボタンをクリックするとクラスターが正常に登録されます。
+
+
+## Kubernetesクラスター連携用スクリプト利用案内
+
+<figure data-layout="center" data-align="center">
+![image-20240511-033842.png](/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters/image-20240511-033842.png)
+</figure>
+
+* 管理者は事前に該当対象Kubernetesクラスターにアクセスが可能でなければなりません。
+* 管理者はAdministrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster &gt; Credential案内ボックス内の「download and run this script」のリンクをクリックしてスクリプトをダウンロードできます。
+<details>
+<summary>generate_kubepie_sa.shスクリプトコンテンツ</summary>
+```
+#!/bin/bash
+
+set -o nounset -o errexit -o pipefail
+
+RESOURCE_PREFIX=querypie
+NAMESPACE=querypie
+
+SERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa
+CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role
+CLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb
+SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret
+
+echo "Creating the Queypie Service Account and grant permission"
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ${CLUSTER_ROLE_NAME}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - users
+  - groups
+  - serviceaccounts
+  verbs:
+  - impersonate
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ${CLUSTER_ROLE_BINDING_NAME}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ${CLUSTER_ROLE_NAME}
+subjects:
+- kind: ServiceAccount
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+EOF
+
+
+SA_SECRET_NAME=$(kubectl get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o "jsonpath={.secrets[0]..name}")
+if [ -z $SA_SECRET_NAME ]
+then
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: ${SERVICE_ACCOUNT_SECRET_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    kubernetes.io/service-account.name: "${SERVICE_ACCOUNT_NAME}"
+EOF
+SA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}
+fi
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    BASE64_DECODE_FLAG="-d"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    BASE64_DECODE_FLAG="-D"
+elif [[ "$OSTYPE" == "linux-musl" ]]; then
+    BASE64_DECODE_FLAG="-d"
+else
+    echo "Unknown OS ${OSTYPE}"
+    exit 1
+fi
+
+SA_TOKEN=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['token']}" | base64 ${BASE64_DECODE_FLAG})
+CA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['ca\.crt']}" | base64 ${BASE64_DECODE_FLAG})
+
+echo "
+Finished successfully.
+Please copy the token and ca cert below and paste them into the credential input box on the querypie clusters page.
+
+>>> Service Account token
+${SA_TOKEN}
+
+--------------
+
+>>> CA Cert
+${CA_CERT}"
+```
+</details>
+
+* スクリプトダウンロード後、該当パスで以下のコマンドを実行して実行権限を付与した後使用します。

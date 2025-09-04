@@ -1,0 +1,331 @@
+---
+title: 'KubernetesポリシーYAML Code文法案内'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+該当ドキュメントは  **QueryPie Enterprise 9.20.0基準** で作成されました。
+</Callout>
+
+
+## QueryPieアクセス制御ポリシー概要
+
+QueryPieで定義するアクセス制御ポリシーはEABAC(Enhanced Attribute Based Access Control)をベースに動作します。EABACはQueryPieユーザーの役割(Role)と属性(Attribute)をベースにQueryPieに登録されたリソースに対するアクセスを制御し、権限管理を実行できるポリシーの統制方式を意味します。RBAC(Role-Based Access Control)およびABAC(Attribute-Based Access Control)の機能を結合してより柔軟で精巧なアクセス制御を提供します。すべてのポリシーはAll Denyを前提に動作します。
+
+EABACはRole、Policy二つで動作します。Role設定はGUIで行い、Policy定義はコード(YAML)で管理します。
+
+Kubernetesポリシーの場合、実際のKubernetesに存在するネームスペースに限定されるRoleとネームスペース範囲外リソースをサポートするClusterRole両側すべてを受容できる総合モデルでスペックが制作されました。
+
+
+## KubernetesポリシーYAML基本構造
+
+一部項目を除いた全般ポリシーコードでワイルドカード("*")および正規表現([RE2形式](https://github.com/girishji/re2/wiki/Syntax): `^$`明示必須)パターンをサポートします。
+
+<table data-table-width="760" data-layout="default" local-id="35831a4b-16f9-461f-96a1-0af983cbf59e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Category**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Property**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Required**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Description**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Valid Values**
+</th>
+</tr>
+<tr>
+<td>
+`apiVersion`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+作成されたYAML Codeの版です。システムで管理する値で、修正が不要です。
+</td>
+<td>
+`kubernetes.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td>
+`kind`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+作成されたYAML Codeの種類です。システムで管理する値で、修正が不要です。
+</td>
+<td>
+`KacPolicy`
+</td>
+</tr>
+<tr>
+<td>
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td>
+-
+</td>
+<td>
+O
+</td>
+<td>
+ポリシーの具体的な規則の許可または拒否の可否を指定します。
+* 各ポリシーは以下のスペックのみ許可します：
+    * 単一Allow
+    * 単一Deny
+    * 単一Allow & 単一Deny
+* DenyがAllowより優先順位が高くなります。
+</td>
+<td>
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`resources`
+</td>
+<td>
+O
+</td>
+<td>
+アクセスを許可/拒否するリソースを指定します。**[ワイルドカードおよび正規表現許可]**
+</td>
+<td>
+`- "cluster:*"`
+`- "cluster:^eks-.*$"`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`subjects`
+</td>
+<td>
+O
+</td>
+<td>
+KubernetesコマンドをimpersonateするKubernetesユーザー/グループを指定します。
+* `kubernetesGroups` : QueryPie Proxyが利用するkubernetes groupを指定します。
+* `impersonation` : クライアント段階でimpersonationを許可する対象ユーザー/グループを指定します。**[ワイルドカード許可]**
+</td>
+<td>
+`kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
+`impersonation:`<br/>`users:`<br/>`- "system:user"`<br/>`groups:`<br/>`- "system:admin"`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`actions`
+</td>
+<td>
+O
+</td>
+<td>
+KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明示します。**[ワイルドカードおよび正規表現許可]**
+* `apiGroups` : Kubernetes APIグループリストを定義します。**[ワイルドカード許可]**
+* `resources` : Kubernetesリソースを定義します。**[ワイルドカード許可]**
+* `namespace` : 対象ネームスペースを定義します。**[ワイルドカードおよび正規表現許可]**
+* `name` : 対象リソース名を定義します。**[ワイルドカードおよび正規表現許可]**
+* `verbs` : 作業を許可または拒否するkubernetes内の権限を明示します。**[ワイルドカード許可]**
+</td>
+<td>
+`- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+`conditions`
+</td>
+<td>
+
+</td>
+<td>
+リソースアクセスポリシー適用の可否を条件で適用対象を細部制御します。
+* `resourceTags` : リソースタグのキーと値でフィルタリングできます。**[Valueワイルドカードおよび正規表現許可]**
+* `userAttributes` : ユーザーのattributeを条件で権限使用を制限します。**[Valueワイルドカードおよび正規表現許可]**
+* `ipAddresses` : リソースに対するIPアクセス統制条件リストを単一IP、CIDR形態で定義します。**[ワイルドカード許可]**
+</td>
+<td>
+`resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
+</td>
+</tr>
+</tbody>
+</table>
+
+
+## Resources明示方法
+
+`resources`は<u>Kubernetesのリソースではない</u>QueryPieに登録されたKubernetesクラスターに対するリソースを定義します。
+
+1. 該当`resources`フィールドに対する定義は必須です。**[required]**
+2. Kubernetesクラスター名を基に入力します。
+    * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
+3. Kubernetesクラスター名は以下の基準で確立されます。
+    * 文字長100文字制限
+    * アルファベット大文字小文字(case-sensitive)、数字および以下の特殊記号のみ許可
+        * underscore (_)
+        * hyphen (-)
+    * 名前開始と終了はアルファベット大文字小文字または数字で制限
+    * クラスター名は重複を制限
+4. Kubernetesクラスターは単一ポリシーで多重指定が可能です。
+    * `- "cluster:kubepie-dev-1"`<br/>`- "cluster:kubepie-dev-2"`
+    * `["cluster:kubepie-dev-1", "cluster:kubepie-dev-2"]`
+5. パスはワイルドカードを許可します。
+    * `"cluster:kubepie-dev-*"`
+6. パスは正規表現を許可します。
+    * `"cluster:^kubepie-dev-.*$"`
+
+
+## Subjects明示方法
+
+`subjects`はKubernetesコマンドをimpersonateするKubernetes内ユーザー/グループを定義します。`subjects`はspec:allowに限って適用が必要なフィールドで、spec:denyでは文法的に許可されません。
+
+1. `kubernetesGroups`: **[required]**
+    * リソースに対するAPI実行のためにQueryPie Proxyがimpersonateするkubernetesグループアカウントを定義します。
+        * 該当subjectsはPolicy-wideレベルで定義でき、最小一つが配定されるように定義されなければなりません。
+            * Impersonationのための該当subjectsは他のPolicyたちと一つのRole内で重複が可能です。
+        * Resourcesに明示されたリソースに対する権限実行が可能なkubernetes側グループ(単一または複数)を定義します。
+        * kubernetesGroupsにはQuerypie UserのGroupを予約語形態で入力できます。この時、UserのGroupは二重引用符(")なしで入力されなければならず、ユーザーがPolicyを見る時は実際のuser Groupの値が表示されます。
+2. `impersonation`: **[OPTIONAL]**
+    * ユーザーがクライアント段階でkubernetes内特定serviceaccountなどの権限でkubectlコマンドにimpersonation(--as, --as-group)を試みる場合、これに対する呼び出し許可リストを定義します。
+        * `users`: Kubernetes内存在するユーザー/サービスアカウントで"--as"パラメータに許可可能な値を列挙します。
+        * `groups`: Kubernetes内存在するグループアカウントで"--as-group"パラメータに許可可能な値を列挙します。
+        * ワイルドカードを許可します。(`"*"`)
+
+
+## Actions明示方法
+
+クラスターAPIサーバー内許可するResource APIリストを明示します。各actionには`apiGroups`、`resources`、`namespace`、`name`、`verbs`入力が必要です。
+
+1. `apiGroups` : Kubernetes APIグループリストを定義します。
+    1. APIグループを定義することでより細部な権限制御がAPIグループ別に可能です。
+    2. カスタムリソースに対する統制が必要な時、apiGroupsに明示してカスタムリソースに限って統制も可能です。
+    3. 参考：
+        1. [API Groups案内](https://kubernetes.io/docs/reference/using-api/#api-groups)
+        2. [API Groupリスト](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#api-groups)
+    4. ワイルドカードを許可してAPIグループ全体を包括的に指定することが可能です。
+        * `apiGroups: ["*"]`
+2. `resources` : Kubernetesリソースリストを定義します。
+    1. 一般的に多く使われるリソースは以下と同じです：
+        * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
+    2. 上に表記されていないリソースもポリシーで受容が可能です。
+    3. ネームスペース下位リソースだけ指定して権限を付与しても、Namespaceに対するReadOnly権限が一緒に付与されます。したがって、リソース呼び出し時毎回ネームスペース明示してあげる必要がある事例が発生されません。特定ネームスペースに対する権限付与を防止しようとする場合、`spec:deny`でネームスペースリソースに対するアクセス拒否を設定できます。
+    4. 単一ポリシーアクションで多重でリソース指定が可能です。
+    5. ワイルドカードを許可します。(`"*"`)
+3. `namespace` : 対象ネームスペースを定義します。
+    1. ネームスペースをアクションで定義してクラスター内許可対象ネームスペースをリソース別に制御できます。
+    2. ワイルドカードと正規表現すべて許可します。
+        * `namespace: "*"`
+    3. namespaces外ネームスペースに存続しないリソースの場合、該当namespaceを作成しなくても構いません。
+        1. 対象例) `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`など
+4. `name` : 対象リソース名を定義してクラスター内許可リソース中ネーミングを基に制御が可能です。
+    1. ワイルドカードと正規表現すべて許可します。
+        * `name: "pods-*"`
+5. `verbs` : 作業を許可または拒否するkubernetes内のAPI権限を明示します。
+    * 一般的に呼び出されるverbは以下と同じです：
+        * `get`: リソース情報検索
+        * `list`: リソースリスト列挙
+        * `watch`: リソース変更事項監視
+        * `create`: 新しいリソース作成
+        * `update`: 既存リソースアップデート
+        * `patch`: リソース部分修正
+        * `delete`: リソース削除
+        * `deletecollection`: 単一作業で複数資源削除
+    * 上に表記されていない特殊なverbがあってもポリシーに明示して適用可能です。
+    * 3rd-Partyクライアントサポート時以下のverbが必須で要求され案内します：
+        * View権限 : `get`, `list`, `watch`
+        * Edit権限 : `get`, `list`, `watch` + `create`, `update`, `patch`, `delete`, `deletecollection`
+    * pod execコマンドを通じたコンテナシェルアクセスセッション生成には一般的に`create` verb明示が必要です。
+    * ワイルドカードを許可します。
+        * `verbs: ["*"]`
+
+
+## Conditions明示方法
+
+`conditions`項目には`resourceTags`、`userAttributes`、`ipAddresses`を条件で定義できます。**[OPTIONAL]**
+
+* `resourceTags` : タグ項目ではリソースタグのキーと値でフィルタリングできます。
+* `userAttributes` : ユーザーの属性(attribute)を条件で指定し、値がマッチングされるユーザーに限って該当ポリシーで定義された権限の使用を制限します。
+* `ipAddresses` : リソースに対するIPアクセス統制条件リストを単一IP、CIDR形態で定義します。
+
+
+## KAC Policy例
+
+```
+apiVersion: kubernetes.rbac.querypie.com/v1 
+kind: KacPolicy
+
+spec:
+  allow: 
+    resources: 
+      - "cluster:*"
+    subjects: 
+      kubernetesGroups: 
+        - "system:masters"
+      impersonation: 
+        users: ["system:serviceaccount:argocd"] 
+        groups: ["system:admin"]  
+    actions: 
+      - apiGroups: ["*"] 
+        resources: 
+          - "pods"
+        namespace: "*" 
+        name: "*" 
+        verbs: ["get", "list", "watch"]
+    conditions: 
+      resourceTags: 
+        "Owner": ["Kenny", "Brant"]
+        "Team": "DevSecOps" 
+      userAttributes: 
+        "countryCode": "KR"
+        "department": "Infra"
+      ipAddresses: ["10.10.0.0/24", "10.11.10.1"] 
+  deny: 
+    resources: 
+      - "cluster:kubepie-*"
+    actions: 
+      - apiGroups: ["*"]
+        resources: 
+          - "*"
+        namespace: "production"
+        name: "*"
+        verbs: ["*"]
+    conditions: 
+      resourceTags: 
+        "Owner": "Brant"
+```

@@ -1,0 +1,46 @@
+---
+title: 'Server Groups'
+---
+
+## Overview
+
+QueryPieではServer Group単位でポリシーを設定し、アクセス権限を付与できます。また、サーバーのTagを通じて一括でサーバーを選択したり、今後同期されるサーバーが自動でサーバーグループに選択されるようにできます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Server Groups](/administrator-manual/servers/connection-management/server-groups/image-20240902-045633.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Server Groups
+</figcaption>
+</figure>
+
+## Server Group照会
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groupsメニューに移動します。
+2. テーブル左上の検索欄を通じて、サーバーグループ名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、サーバーグループリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : サーバーグループ名
+    2.  **Description**  : 管理者が設定したサーバーグループに対する説明
+    3.  **Server Tags**  : サーバーグループに含まれるサーバータグ条件
+    4.  **Created At**  : サーバーグループ作成日時
+    5.  **Updated At** : サーバーグループ最終修正日時
+5. 各行をクリックするとサーバーグループ詳細情報照会が可能です。
+
+
+## Server Group作成
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groupsメニューに移動します。
+2. 右上の`+ Create Group`ボタンをクリックします。
+3. [サーバーをグループで管理](server-groups/managing-servers-as-groups)ガイドを参考にしてサーバーを登録します。
+
+
+## Server Group削除
+
+<figure data-layout="center" data-align="center">
+![image-20240728-151520.png](/administrator-manual/servers/connection-management/server-groups/image-20240728-151520.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groupsメニューに移動します。
+2. テーブル内の削除対象サーバーグループ左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたらDelete入力後、`Delete`ボタンをクリックして削除を進行します。

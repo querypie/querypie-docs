@@ -1,0 +1,46 @@
+---
+title: 'サーバーアクセスポリシー設定'
+---
+
+## Overview
+
+組織で管理するサーバーのアクセスポリシー（Policy）を管理できます。PolicyはIaCのような形態でYAML Codeをベースに動作します。接続を許可する曜日と時間を設定できるだけでなく、接続可能なIPアドレス設定とAudit可否、Agent使用可能可否を設定できます。その他、ユーザー別許可セッション数も設定が可能です。
+
+
+## 設定可能なポリシー項目
+
+*  **serverGroup**  : 接続を許可するサーバーグループ
+*  **account** : サーバーグループに登録されたAccount
+*  **protocols**  : 許可プロトコル（10.2基準、SSH、SFTP、TELNET、FTP、RDPサポート）
+*  **commandRef**  : 接続時適用するコマンドテンプレート
+    * 選択したCommand Templateの内容は`Command Policy Detail`アコーディオンを展開して確認可能
+    * コマンドテンプレートの生成と管理方法は[Command Templates](../command-templates)参照
+    * Allow / Denyコマンドテンプレートをすべて適用した場合、Deny優先適用
+*  **accessTime**  : 接続許可時間
+*  **accessWeekday**  : 接続可能曜日
+*  **ipAddress**  : 接続可能IP設定<br/>*Security &gt; Resource IP Access Control Configuration設定に該当する場合、許可した範囲内のIPのみアクセス許可
+*  **commandAudit**  : 接続時コマンド監査適用可否
+*  **commandDetection**  : ScriptとAliasが呼び出される時、内部の禁止コマンド検出可否設定<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
+*  **proxyUsage**  : Agentを通じたプロキシ接続許可可否
+*  **maxSessions**  : サーバー当たり最大同時接続数
+*  **sessionTimeout** : サーバーセッションタイムアウト基準時間（分）
+*  **requirePrivilege** : サーバー接続時権限承認必要可否<br/>*このオプションを有効化（Enable）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けてからでないとサーバーに接続できません。
+
+
+## Policyコード編集
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Policiesメニューに移動します。
+2. リストでポリシーコードを編集するPolicyをクリックします。
+3. Detailタブ右側の`Go to Editor Mode`ボタンをクリックしてCode Editor画面に移動します。
+4. 以下の方法を活用してコードエディターウィンドウで希望するポリシー内容を修正します。
+    1. 下部のErrorsタブを通じて直接修正したコードのエラーをデバッグします。
+    2. 下部のTipsタブを通じて各項目に対する定義方法を確認してコードに反映します。
+    3. 右側のボタンを通じてコードに内容を挿入または修正します。
+5. アクセスポリシー定義が完了すると右上に有効化された`Save`ボタンをクリックしてポリシーを保存します。

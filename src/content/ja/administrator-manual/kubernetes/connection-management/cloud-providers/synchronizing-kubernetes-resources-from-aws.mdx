@@ -1,0 +1,116 @@
+---
+title: 'AWSからKubernetesリソース同期'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでは、Kubernetesクラスター登録および管理のためのAWS連携をサポートします。AWS内のリソースを同期し、QueryPieで管理するクラスターに登録し、ユーザーおよびグループに同期してきたクラスターに対するKubernetes APIアクセス権限を付与し、ポリシーを設定することができます。
+
+<Callout type="info">
+### 事前準備事項
+
+1. AWSリソースとの同期のために、QueryPieインスタンスに割り当てられたAWS IAMロールに必要なポリシー作業を添付したか確認してください。ポリシーには以下の作業をすべて含める必要があります：
+
+* eks:ListClusters
+* eks:DescribeCluster
+* eks:ListAccessEntries
+* eks:DescribeAccessEntry
+* eks:CreateAccessEntry
+* eks:ListAssociatedAccessPolicies
+* eks:AssociateAccessPolicy
+</Callout>
+
+
+## AWS EKS認証モード修正
+
+QueryPieは、AWS EKS Kubernetesクラスター接続のために、同期時にEKS access entry APIを活用します。したがって、クラスター認証モードがConfigMapでのみ設定されている場合、接続が困難な部分があり、円滑な同期のためにAWSコンソールでモード変更を事前に作業しておくことをお勧めします。
+
+<figure data-layout="center" data-align="center">
+![AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
+<figcaption>
+AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access
+</figcaption>
+</figure>
+
+1. AWS ConsoleにEKS管理者権限を持つアカウントでアクセスします。
+2.  **Elastic Kubernetes Service (EKS)** メニューに移動します。
+3. 対象EKSクラスターが位置するリージョン(Region)に移動します。
+    * 例) ![image-20240512-134604.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134604.png)
+4. 対象EKSクラスターを選択して詳細ページに移動します。
+5. AccessタブをクリックしてAccess configuration現況を確認します。
+6. Authentication modeが  **"ConfigMap"** であれば、右側の  **Manage access**  ボタンをクリックします。
+7. Cluster authentication modeを  **"EKS API and ConfigMap"** に変更します。
+8. `Save changes`を押して変更事項を保存します。
+
+
+## QueryPieでAWS連携情報登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
+</figcaption>
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 右上の`+ Create Provider`ボタンをクリックします。
+3.  **Name**  項目に該当プロバイダーを区別できる名前を入力します。
+4.  **Cloud Provider**  項目でAmazon Web Servicesを選択します。
+5.  **Region**  項目で同期したいリソースのリージョンを選択します。
+6. リソースを同期するために必要な  **Credential**  情報を入力します。
+    1.  **Default Credentials**  : QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにIAMロールを割り当てて同じAWS内のリソースを同期することができます。
+    2.  **Cross Account Role**  : IAMロールを作成して他のAWSアカウントのリソースを同期することができます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
+7.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得することができます。
+    1. Search FilterはAWSの検索方式と同じように動作します。名前、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
+        1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
+    2. より詳細な使用方法は[User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)で確認できます。
+8.  **Replication Frequency**  項目で同期方式を選択します。
+    1. Manual : 同期したい時点にのみ手動で同期する方式です。
+    2. Scheduling : 周期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
+9. (`Dry Run`ボタンをクリックして同期に問題がないか事前に確認できます。)
+10. `Save`ボタンをクリックしてCloud Providerを保存します。
+
+<Callout type="important">
+**Q. Saveボタンをクリックしたのに「Already exists cloud provider.」というエラーが表示されます。**
+A. すでに  **Credential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。この場合、他の`Region`を選択して登録を試みると正常に保存されます。
+</Callout>
+
+
+## 登録されたAWS Cloud Provider同期および管理
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 登録したCloud Providerをクリックして詳細情報画面に入ります。
+3. 右上の`Synchronize`ボタンをクリックするとAWSからリソースを同期できます。
+    1. 表記文句に対する定義は以下の  **Dry Run/Synchronization Log表記文句** を参考にしてください。
+    2. 表示されるSynchronization Logで同期進行状況を確認でき、Settings &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
+4. Cloud Providerを一度登録すると、Provider一部情報は変更できません。
+    1.  **Name** : 変更可能
+    2.  **Cloud Provider** : 変更不可
+    3.  **Region** : 変更不可
+    4.  **Credential** : 変更不可
+    5.  **Role**   **ARN** : 変更不可
+    6.  **Search**   **Filter** : 変更可能
+    7.  **Replication**   **Frequency** : 変更可能
+
+
+## Dry Run/Synchronization Log表記文句
+
+|                                                                                                                                                                            |  **発生時点**                                                                         |  **文句**                                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :check_mark:                                                                                                                                                               | Dry RunまたはSynchronize同期開始                                                      | Cluster synchronization started.                                                                                                                          |
+| :check_mark:                                                                                                                                                               | 新規クラスター追加完了                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
+| :check_mark:                                                                                                                                                               | 既存クラスター情報更新完了                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
+| :check_mark:                                                                                                                                                               | 既存クラスター削除完了                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
+| :check_mark:                                                                                                                                                               | Dry RunまたはSynchronize同期成功終了                                                | Cluster synchronization succeeded.                                                                                                                        |
+| ![image-20240822-082024.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png) | EKSクラスターの認証モードがEKS APIを許可しない場合同期スキップ. ConfigMapモードでEKS APIを許可するように変更必要.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
+| :cross_mark:                                                                                                                                                               | すでに重複したクラスター名が確認されて同期失敗                                                          | Cluster synchronization failed. The cluster name "`{Cluster Name}`" is already in use by another cluster. To synchronize it, delete the existing cluster. |
+| :cross_mark:                                                                                                                                                               | Dry RunまたはSynchronize同期失敗終了                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |

@@ -1,0 +1,104 @@
+---
+title: 'AWSからサーバーリソース同期'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでは、サーバー登録および管理のためのAWS連携をサポートします。AWS内のリソースを同期し、QueryPieで管理するサーバーに登録し、ユーザーおよびグループに同期してきたサーバーに対するアクセス権限を付与し、ポリシーを設定できます。また、Scale-outで増設されたサーバーに自動でサーバーグループを追加して設定しておいたアクセス権限を適用受けることができます。
+
+
+## QueryPieでAWS連携情報登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-aws/image-20241220-095625.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 右上の`+ Create Provider`ボタンをクリックします。
+3.  **Name**  項目に該当プロバイダーを区別できる名前を入力します。
+4.  **Cloud Provider**  項目でAmazon Web Servicesを選択します。
+5.  **Region**  項目で同期したいリソースのリージョンを選択します。
+6. リソースを同期するために必要な  **Credential**  情報を入力します。
+    1. 各々のCredential方式に対する説明は下段の<u>Credentialタイプ別認証方式設定</u>を参考にします。
+7.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
+    1. Search FilterはAWSの検索方式と同じように動作します。名前、ホスト、OS、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
+        1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
+    2. より詳細な使用方法は[User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)で確認できます。
+8.  **Replication Frequency**  項目で同期方式を選択します。
+    1. Manual : 同期したい時点にのみ手動で同期する方式です。
+    2. Scheduling : 周期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
+9.  **Auto Configuration Upon Initial Synchronization** Cloud Providerで初回同期するサーバーの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。
+    * port **:**  同期されたサーバーの接続ポートを指定できます。現在はSSH/SFTPポートのみ指定が可能です。
+    * Tag : 同期されたサーバーに自動でタグを追加できます。
+        * タグ値に`{vpcid}`を入力すると、該当サーバーが属するCloudのVPC IDが自動で埋められます。
+        * 例: タグKeyを"Network"に設定し、Valueを`{vpcid}`で入力すると、サーバーが"vpc-1a2b3c4d" VPCにある場合"Network: vpc-1a2b3c4d"タグが自動生成されます。
+10. `Save`ボタンをクリックしてCloud Providerを保存します。
+
+<Callout type="info">
+**Q. Saveボタンをクリックしたのに「Already exists cloud provider.」というエラーが表示されます。なぜそうなるのですか？**
+A. すでに  **Creadential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。この場合、他の`Region`を選択して登録する必要があります。
+</Callout>
+
+
+## Credentialタイプ別認証方式設定
+
+<figure data-layout="center" data-align="center">
+![Credentialタイプ](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-aws/image-20240902-044927.png)
+<figcaption>
+Credentialタイプ
+</figcaption>
+</figure>
+
+*  **Default Credentials**  : QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにAmazonEC2ReadOnlyAccessポリシーを割り当てて同じAWS内のリソースを同期できます。
+*  **Cross Account Role**  : IAMロールを作成して他のAWSアカウントのリソースを同期できます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
+*  **Profile Credential**  : IAMロールを作成して他のAWSアカウントのリソースを同期できます。
+*  **Access Key**  : `Synchronize`ボタンクリック時にAWSアカウントのaccess keyおよびsecret keyを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでaccess keyを使用する時もスケジュールを通じた同期が可能になるよう改善されました。  ****
+
+<Callout type="important">
+**Save Credential for Synchronizationオプション**
+
+<figure data-layout="center" data-align="center">
+![Save Credential for Synchronization](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-aws/image-20241220-095857.png)
+<figcaption>
+Save Credential for Synchronization
+</figcaption>
+</figure>
+
+*  **このオプションを活性化して保存した同期設定は同期設定詳細ページでこのオプションを非活性にできませんので慎重に選択する必要があります。保存されたcredentialは交換できません。他のcredentialを使用しなければならない状況であれば同期設定を新しく作成する必要があります。credential変更が必要な場合、既存と同じIAM権限が割り当てられたcredentialを作成し、同期設定を新しく作った後、既存同期設定を削除することをお勧めします。**
+* このオプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。
+* このオプションが活性化されていれば同期を手動ですることもでき、スケジュールを指定することもできます。
+</Callout>
+
+
+## 登録されたAWS Cloud Provider同期および管理
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/servers/connection-management/cloud-providers/synchronizing-server-resources-from-aws/image-20241220-100236.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 登録したCloud Providerをクリックして詳細情報画面に入ります。
+3. 右上の`Dry run`ボタンをクリックするとAWSから同期されるサーバーを事前に確認できます。Dry run結果は保存されません。
+4. 右上の`Sychronize`ボタンをクリックするとAWSからリソースを同期できます。
+5. 表示されるSynchronization Logで同期進行状況を確認でき、General &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
+6. Cloud Providerを一度登録すると、Provider一部情報は変更できません。
+    1.  **Name** : 変更可能
+    2.  **Cloud Provider** : 変更不可
+    3.  **Region** : 変更不可
+    4.  **Credential** : 変更不可
+        1. "Save Credential for Synchronization" : 非活性化状態は活性化に変更できますが、活性化状態を非活性化に切り替え不可
+    5.  **Role**   **ARN** : 変更不可
+    6.  **Search**   **Filter** : 変更可能
+    7.  **Replication**   **Frequency** : 変更可能 (ただし、CredentialがAccess Keyの場合変更不可)
+
+<Callout type="important">
+"Save Credential for Synchronization"オプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。新しく作成する時と同様にこの設定は  **活性化した後再び非活性化できませんので**  慎重に選択する必要があります。
+</Callout>

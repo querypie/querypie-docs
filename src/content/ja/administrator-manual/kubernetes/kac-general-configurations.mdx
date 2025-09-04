@@ -1,0 +1,21 @@
+---
+title: 'KAC General Configurations'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+10.3.0から各Administrator &gt; General &gt; Security下位にあったKAC関連設定項目たちが各サービスメニューのGeneral &gt; Configurationsに移動されました。
+</Callout>
+
+
+## Kubernetesアクセス統制設定
+
+Kubernetesクラスターアクセス制御、権限管理、セッションポリシーなどコンテナベース環境でのセキュリティのための設定を提供します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-152035.png](/administrator-manual/kubernetes/kac-general-configurations/screenshot-20240726-152035.png)
+</figure>
+
+* Idle Session Timeout (Minutes) : ポッドセッションタイムアウト (Default : 15)
+    * exec、port-forward、attachを通じたセッション接続時アイドル時間指定

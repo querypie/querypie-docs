@@ -1,0 +1,76 @@
+---
+title: 'Access Control'
+---
+
+## Overview
+
+クエリパイユーザーとグループに組織で管理するウェブアプリケーションのアクセス権限に対する付与と回収管理をサポートします。Access Controlは、ウェブアプリアクセス権限を実装し適用するための最終段階を意味します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Access Control](/administrator-manual/web-apps/web-app-access-control/access-control/image-20250629-155857.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Access Control
+</figcaption>
+</figure>
+
+
+## Access Control現状照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details](/administrator-manual/web-apps/web-app-access-control/access-control/Screenshot-2025-08-25-at-9.37.07-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Access Controlメニューに移動します。
+2. テーブル左上の検索欄を通じてユーザー/グループ名を条件に検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてユーザー/グループリストを最新化できます。
+4. テーブルリストには各ユーザー/グループ別以下の情報を表示します：a.  **User Type** : ユーザー/グループタイプb.  **Provider**  : ユーザー/グループの元帳を表現c.  **Name**  : ユーザー/グループ名d.  **Email**  : ユーザーメールアドレスe.  **Members**  : グループ内所属メンバーリストf.  **Roles**  : 付与されたRoleの数
+5. Access Controlリストで行をクリックすると対象ユーザー/グループに対する詳細ページに移動します。
+    1.  **Roles** 
+        1. デフォルトで指定されるタブで付与されたRoleリストを照会できます。
+        2. Role名で検索可能です。
+        3. リストは各Roleごとに以下の情報を表示します：
+            1. Name：Role名
+            2. Description：Role詳細説明
+            3. Expiration Date：期限満了日
+            4. Last Access At：該当ロールの最後呼び出し日時
+            5. Granted At：Roleが該当ユーザー/グループに付与された日時
+            6. Granted By：該当Roleをユーザー/グループに付与した管理者名
+    2.  **Just-in-time Access** 
+        1. 一時アクセス権限を獲得したウェブアプリリストを照会できます。一時アクセス権限はWorkflowの「Web App Just-In-Time Access Request」を通じて申請できます。
+        2. ウェブアプリ名で検索可能です。
+        3. リストは各ウェブアプリごとに以下の情報を表示します：
+            1. Web App Name：ウェブアプリ名
+            2. Expiration Date：一時アクセス権限満了日
+            3. Last Access：最後アクセス日時
+            4. Granted By：一時アクセス権限を付与した管理者名
+            5. Granted At：一時アクセス権限が付与された日時
+        4. 管理者はユーザーが付与されたJust-in-Time（JIT）アクセス権限を満了日前でも即座に回収できます。権限が回収されると、ユーザーのウェブアプリセッションは即座に終了します。
+            1. Just-in-Time Accessメニューリストで権限を回収したい項目を選択します。
+            2. リスト左上に位置するRevokeボタンをクリックします。
+            3. 権限回収確認ウィンドウが現れたら内容を確認して確認ボタンをクリックして最終的に権限を回収します。
+    3.  **Web Apps** 
+        1. 付与されたRoleたちによってアクセス可能なウェブアプリケーションリストを列挙します。
+        2. ウェブアプリ名、Role名で検索可能です。
+        3. リストは各ウェブアプリごとに以下の情報を表示します：
+            1. Name：ウェブアプリ名
+            2. Base URL：ウェブアプリURL
+            3. Description：ウェブアプリ説明
+            4. Tags：ウェブアプリに付いたタグリスト
+            5. Role：関連Roleリスト列挙
+            6. Created At：ウェブアプリ最初生成日時
+            7. Updated At：ウェブアプリ最後修正日時
+    4.  **Web Apps by User Group**  
+        1. ユーザーが所属するUser Groupから継承されたRoleを通じてアクセス可能なウェブアプリケーションリストを列挙します。これにより、グループ権限によりアクセス可能なウェブアプリを明確に確認できます。
+        2. ウェブアプリ名で検索可能です。
+        3. リストは各ウェブアプリごとに以下の情報を表示します：
+            *  **Name :** ウェブアプリ名
+            *  **Base URL :** ウェブアプリURL
+            *  **Description :** ウェブアプリ説明
+            *  **Tags :** ウェブアプリに付いたタグリスト
+            *  **Created At :** ウェブアプリ最初生成日時
+            *  **Updated At :** ウェブアプリ最後修正日時
+
+

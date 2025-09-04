@@ -1,0 +1,92 @@
+---
+title: 'Account Management'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Password Provisioningを通じてパスワードが変更されたサーバーのアカウントを照会し、パスワード変更履歴を確認し、個別サーバーアカウントのパスワードを手動で管理できます。
+
+<Callout type="info">
+このメニューはAdministrator &gt; Servers &gt; [SAC General Configurations](../sac-general-configurations)で  **Password Provisioning**  設定をOnに選択後保存する必要があります。
+</Callout>
+
+## Account照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management ](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-6.47.45-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management 
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Managementメニューに移動します
+2. テーブル左上の検索欄を通じてサーバーまたはAccountの検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてアカウントリストを最新化できます。
+4. テーブルで以下のカラム情報を提供します。
+    1.  **Server** : 対象サーバー名
+    2.  **Host**  : サーバーのIP
+    3.  **Server OS**  : サーバーのOS
+    4.  **Account**  : サーバー接続用Account
+    5.  **Usage**  : アカウントの使用用途
+        1.  **For User** : ユーザー接続用途アカウント
+        2.  **For Provisioning**  : QueryPieのパスワード変更Jobで使用されるアカウント
+    6.  **Last Password Updated At :**  アカウントの最後パスワード更新日時
+    7.  **Created At**  : アカウント最初変更日時
+5. 各行をクリックするとアカウント詳細情報照会が可能です。
+
+## One Time Account照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accountsタブ](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-6.50.29-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accountsタブ
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; One Time Accountsタブに移動します
+2. テーブル左上の検索欄を通じてServer、HostまたはAccountの検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてアカウントリストを最新化できます。
+4. テーブルで以下のカラム情報を提供します。
+    1.  **Server** : 対象サーバー名
+    2.  **Host**  : サーバーのIP
+    3.  **Server OS**  : サーバーのOS
+    4.  **Account**  : サーバー接続のために生成されたOne Time Account
+    5.  **Last Fail Message**  : 削除された原因を含むエラーメッセージ
+    6.  **Last Delete Attempted At**  : アカウント削除を最後に試行した日時
+    7.  **Delete Attempt Counts**  : アカウント削除試行回数
+
+## Active Directory照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directoryタブ](/administrator-manual/servers/server-account-management/account-management/Screenshot-2025-07-27-at-7.03.55-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directoryタブ
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Management &gt; Active Directoryタブに移動します
+2. テーブル左上の検索欄を通じてUPNの検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてアカウントリストを最新化できます。
+4. テーブルで以下のカラム情報を提供します。
+    1.  **AD Name**  : QueryPieに連動されたAD名
+    2.  **AD Domain**  : ADドメインアドレス
+    3.  **UPN**  : 該当ドメインにログインする時に使用するユーザーアカウント
+    4.  **Last Password Updated At**  : アカウントの最後パスワード更新日時
+    5.  **Created At**  : アカウント最初変更日時
+
+## Accountの詳細情報照会
+
+<figure data-layout="center" data-align="center">
+![image-20240831-155640.png](/administrator-manual/servers/server-account-management/account-management/image-20240831-155640.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; Account Managementメニューに移動します
+2. 確認したいaccountがある行をクリックします。
+3. Log Detailsを通じてパスワード変更履歴を確認します。
+4. `View Password`ボタンをクリックして現在のパスワードを確認できます。
+
+<Callout type="info">
+View Passwordをするには本人認証過程（パスワード再入力）を実行します。QueryPieのUser接続時にOTPが適用されている場合、View PasswordでもOTP認証を実行します。
+</Callout>

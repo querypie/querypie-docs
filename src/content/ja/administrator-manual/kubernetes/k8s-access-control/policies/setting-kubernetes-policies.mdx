@@ -1,0 +1,30 @@
+---
+title: 'Kubernetesポリシー設定'
+---
+
+## Overview
+
+組織で管理するKubernetesクラスターのアクセスポリシー(Policy)を管理できます。KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベースに動作します。アクセスを許可するクラスターリソース、API範囲を設定できるだけでなく、リソースタグおよびユーザー属性(Attribute)ベースポリシー適用範囲細部化およびアクセス可能なIPアドレス設定を一緒に適用できます。
+
+
+## Policyコード編集
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/kubernetes/k8s-access-control/policies/setting-kubernetes-policies/image-20240721-073114.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
+</figcaption>
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
+2. リストでポリシーコードを編集するPolicyをクリックします。
+3. Detailタブ右側の`Go to Editor Mode`ボタンをクリックしてCode Editor画面に移動します。
+4. 以下の方法を活用してコードエディター窓で希望するポリシー内容を修正します。
+    1. 中央のコードを直接修正可能で、wildcard("*")および正規表現([RE2形式](https://github.com/girishji/re2/wiki/Syntax))パターンをサポートします。
+        * 参考: [KubernetesポリシーYAML Code文法案内](kubernetes-policy-yaml-code-syntax-guide)
+        * 下段のErrorsタブを通じて直接修正したコードのエラーをデバッグします。コードにエラーがある場合、Errorsタブが赤色で表示されて即座に確認できます。
+    2. 下段のTipsタブを通じて各項目に対する定義方法を確認してコードに反映します。
+        * 参考: [KubernetesポリシーTips案内](kubernetes-policy-tips-guide)
+    3. 右側のボタンを通じてコードに内容を挿入または修正します。
+        * 参考: [KubernetesポリシーUIコードヘルパー案内](kubernetes-policy-ui-code-helper-guide)
+5. アクセスポリシー定義が完了すると右側上段に活性化された`Save Changes`ボタンをクリックしてポリシーを保存します。

@@ -1,0 +1,85 @@
+---
+title: 'KubernetesポリシーAction設定参考ガイド'
+---
+
+## Overview
+
+QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難を経験しないようにしようとします。
+
+
+## API Groups関連設定ガイド
+
+よく使用されるpodsのような場合はapiGroupsがcoreグループなので`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`で管理者が一つ一つ知って設定するのが困難です。
+
+もちろん同じresource nameを持つ場合、apiGroupsを通じて分離する必要があるかもしれませんが、よくある状況ではありません。
+
+したがって、Kubernetes API Group管理のミッションがない限り、一般的には`"*"`で設定し、resourcesでアクセス権限を制御する方向で設定することをお勧めします。
+
+
+## Resources関連設定ガイド
+
+<figure data-layout="center" data-align="center">
+![3rd Party Client Tool - Lens画面](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide/screenshot-lens-resources-events.png)
+<figcaption>
+3rd Party Client Tool - Lens画面
+</figcaption>
+</figure>
+
+3rd Party Client Tool使用時、許可されたリソース範囲内で現況モニタリングが可能です。
+
+*  **Resourcesパート**
+    * 上画面でresourcesは私が権限を持つリソースに対してのみ表示されます。
+    * そのため`pods`に対する権限だけあれば`pods`に対するグラフだけ見え、もし`pods`がフィルタリングされて一部だけ見ることができれば一部だけ表示されます。
+    * 他のリソースも同様に動作します。
+    * 推奨スペック
+*  **Eventsパート**
+    * 下のevents項目は`events`リソースに対する権限によって表示されますが、上のresources項目と同様にnamespace、nameによってフィルタリングされて表示されます。
+    * ただし`pods`に対する権限があるからといって`pods`関連`events`が見えるわけではないので、該当画面を見るには明示的に`events`リソースに対する権限を与える必要があります。
+    * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソース権限がある状態で`pods`に対する権限だけを与えたからといって`events`中`pods`に対する履歴だけ照会されないことをお知らせします。
+    * 推奨スペック
+
+
+## Verbs関連設定ガイド
+
+3rd Party Client Tool使用に最も大きな影響を受ける部分はverbです。管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースに対する範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲をよく設定したとしてもverbの束を適切に設定しなければTool使用が困難です。
+
+*  **View権限**
+    * View権限だけを得るユーザーの場合は`get`、`list`、`watch`をすべて付与する必要があります。
+    * `get`、`list`だけでもkubectlの使用は大きく困難ではありませんが、`watch`がないとlensのような現況モニタリングをサポートするツールの使用が困難です。
+    * 推奨スペック
+*  **Edit権限**
+    * Edit権限まで得るユーザーの場合はView権限(最小`get`、`list`)も一緒に付与してあげる必要があります。kubectlでも特定リソースに対する修正要求をするとまず照会要求をするためです。
+    * lensのようなツールではView権限がないとEdit画面に行く方法がありません。
+    * Edit中でも作成(`create`)、修正(`patch`、`update`)、削除(`delete`、`deletecollection`)このように各役割に合わせて束にして与えられる必要があります。
+    * `deletecollection`はよく使用されるわけではありませんが、KACでは`deletecollection`で要求が来てもユーザーに権限があるリソースだけを選んで削除処理するため、有用に使用できます。
+    * 推奨スペック
+
+
+## その他推奨設定ガイド
+
+例) prod namespace環境のリソースに対する権限制限
+```
+allow:
+  actions:
+    - apiGroups: ["*"]
+      resources: ["*"]
+      namespace: "dev"
+      name: "*"
+      verbs: ["*"]
+    - apiGroups: ["*"]
+      resources: ["*"]
+      namespace: "prod"
+      name: "*"
+      verbs: ["get", "list", "watch"]
+```
+
+例) prod namespaceに対するsecretアクセス制限
+```
+deny:
+  actions:
+    - apiGroups: ["*"]
+      resources: ["secrets"]
+      namespace: "prod"
+      name: "*"
+      verbs: ["*"]
+```

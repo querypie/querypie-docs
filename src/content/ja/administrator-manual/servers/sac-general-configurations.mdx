@@ -1,0 +1,153 @@
+---
+title: 'SAC General Configurations'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+10.3.0から、各Administrator &gt; General &gt; Securityの下にあったSAC関連の設定項目が、各サービスメニューのGeneral &gt; Configurationsに移動されました。
+</Callout>
+
+## Overview
+
+Configurationsページは、QueryPieでサーバーアクセスとセキュリティポリシーを管理できる設定ページです。ログイン失敗閾値設定、セッションタイムアウト、安全でないプロトコル制御など、サーバー接続セキュリティの核心要素を設定できます。これにより、管理者は組織のセキュリティ要件に合わせてサーバー環境を構成し、潜在的な脅威からシステムを保護できます。
+
+## サーバー接続セキュリティ設定
+
+サーバーアクセス制御に適用されるセキュリティ設定を管理します。
+
+### 一般設定
+
+基本的なセキュリティ設定を管理します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-25-at-9.28.10-PM.png](/administrator-manual/servers/sac-general-configurations/Screenshot-2025-08-25-at-9.28.10-PM.png)
+</figure>
+
+*  **Permission Revocation Period :** 長期未接続サーバー権限の自動回収設定
+    * Enable選択時、指定された期間（日）の間、ユーザーがサーバーに接続しない場合、付与されたサーバーアクセス権限が自動的に回収されます。
+    * 注意事項
+        * ユーザーに直接付与された権限のうち、有効期限があるDirect PermissionまたはRole権限にのみ適用されます。
+        * グループから継承された権限や、有効期限が指定されていない永続権限は、この機能の影響を受けません。
+        * 権限が付与された後、ユーザーが一度も接続しなかった場合は、権限が付与された時点から期間が計算されます。
+*  **Maximum OS Account Login Failures before Lockout** : ログイン失敗時のアカウントロックポリシー
+    * サーバーログイン失敗許可最大回数指定
+    * Enable選択時、回数と期間範囲基準の追加入力が可能（例：11分以内に2回失敗時、アカウントロック）
+*  **Maximum Command Attempts before Session Termination** : 禁止コマンド最大実行回数
+    * Enable選択時、回数と期間範囲基準の追加入力が可能（例：10分以内に10回試行時、セッション終了）
+*  **Retain Session After Policy Change** : サーバーアクセスポリシー変更時、接続されているセッション維持設定
+    *  **Enable** 選択時：
+        * 以下のような場合でもアクティブセッションが終了せずに維持
+            * 直接的な権限付与または取消
+            * ポリシー更新
+            * ユーザーロール変更
+        * ただし、ユーザーのロールや権限が完全に削除される場合、関連リソースへのセッションは終了
+        * 変更されたポリシーを適用するには、セッションの再接続が必要
+    *  **Disable** 選択時：
+        * ポリシー変更時、接続されたすべてのセッションが自動終了
+        * 新しく接続されるセッションから変更されたポリシーが適用
+*  **Server Session Timeout**  : サーバーセッションタイムアウト基準（分）
+    * 指定された時間の間、サーバー接続後コマンド未実行時タイムアウト
+    * 個別Policyにタイムアウトが指定されていない場合、該当設定が適用
+    * 個別PolicyまたはServer Default Settingsに指定されたタイムアウトポリシーがある場合、より短い方が適用
+*  **Using insecure protocols** : 推奨しないサーバー接続プロトコル使用設定
+    * TELNETまたはFTP使用可否設定
+*  **Access Server with MFA**  : サーバー接続時MFA認証可否（Default : Disabled）
+    * 現在Google OTPをサポートし、オプション選択時、MFA認証を適用するサーバーをタグ基準で指定
+        * タグ入力方式：キー入力 → エンターキー入力 → バリュー入力 → エンター入力
+    * 入力されたタグは`key = value`式で表示され、入力されたタグと一致するタグを一つでも持っているサーバーはMFA認証後に接続可能
+*  **Resource IP Access Control Configuration :** サーバー接続許可IPアクセス制御設定
+    * IPアクセス制御を適用するサーバーをタグ基準で指定
+    * User/Groupに付与されたRoleまたはDirect Permissionより優先適用
+    * `Add Configuration`ボタンクリック時、モーダルが生成され、以下の情報を記入して`Add`ボタンをクリックして追加（右上の`Save Changes`ボタンクリック以前まで未反映）
+        *  **Server Tag Key**  : サーバータグキーを記入し、一度に一つずつのみ適用可能（使用時記入必須）
+        *  **Server Tag Value**  : サーバータグバリューを記入し、一度に一つずつのみ適用可能（使用時記入必須）
+        *  **Allowed Zones**  : General &gt; Company Management &gt; Allowed Zones名簿を読み込み、使用時最低1個選択必須
+    * この機能が有効化されると、ユーザーがサーバーに接続する時、ここに設定されたAllowed ZonesのIP帯域が表示されます。
+
+<Callout type="info">
+**注意事項**
+Allowed Zonesは広い範囲の許可IP帯域を意味します。したがって、表示されたIP帯域内にいても、管理者がデータポリシー（DP/Policy）などを通じて追加的なIP制限を設定した場合、最終アクセスが拒否されることがあります。
+</Callout>
+
+*  **Password Provisioning :** パスワードプロビジョニング使用可否設定
+    * 登録されたサーバーのサーバーアカウントパスワードを定期的に変更
+    * Onに設定時、以下のように変更
+        * [サーバーをグループで管理する | 3.-Accounts-登録する](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)でパスワードプロビジョニングに使用するアカウント選択オプション追加
+        * [Password Provisioning](server-account-management/password-provisioning)メニュー有効化とPassword変更Job登録
+        * [Account Management](server-account-management/account-management)メニュー有効化とQueryPieで管理するサーバーのアカウントリスト照会機能提供
+*  **Allow RDP Connection without Server Agent :**  RDP Server AgentがインストールされていないWindows Server接続許可設定
+    * QueryPieを経由してRDPプロトコルでWindows Serverに接続
+
+<Callout type="important">
+RDP Server AgentがインストールされていないWindows Serverに接続する場合、以下のような制約事項があります。
+* サーバー接続に使用されるAccountを制御できません。
+* Server Access Historyのみ記録され、Windows接続に使用されたサーバーAccountは記録されません。
+* Command AuditとSession Recordingが記録されません。
+* RDP Server Agentをインストールする目的でのみ使用することを推奨し、RDP Server Agentインストール後、リモート接続を再開した時点からAuditとレコーディングが正常動作します。
+</Callout>
+
+*  **Using One Time Accounts**  : 一時ログインアカウント使用設定
+    * 各サーバーセッションに対して固有の一時アカウントを生成する機能の使用可否を設定します。
+    * Enable選択時、以下のように動作します。
+        * Server Groupsメニュー設定にAccountカテゴリでQueryPie - One Time Accountが追加されます。
+        * ProvisioningアカウントとOne Time Accountをシステムに登録できます。
+        * サーバー接続時、システムが自動的にサーバーに一時アカウントを生成します。
+
+### サーバー権限申請の基本ポリシー設定
+
+Workflow要求を通じたDirect Permission割り当て時に適用されるサーバーアクセスポリシーを管理します。
+
+<Callout type="important">
+**注意**
+**Workflow要求作成時点**を基準にポリシー内容が反映されます。要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
+</Callout>
+
+<Callout type="info">
+ユーザーはServer Access Requestを通じてサーバーに対するDirect Permissionを割り当て受けることができます。詳細は[Server Access Request要求する](../../user-manual/workflow/requesting-server-access)を参照してください。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-07-22-at-3.09.36-PM.png](/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.09.36-PM.png)
+</figure>
+
+* Maximum Access Duration : サーバーアクセス権限の最大使用期間を設定
+*  **Protocols**  : 許可プロトコル（サポートプロトコル：SSH、SFTP、TELNET、FTP、RDP、VNC）
+*  **Command Template**  : 接続時適用するブロックコマンドテンプレート
+    * 選択したCommand Templateの内容は`Command Policy Detail`アコーディオンを展開して確認可能
+    * ブロックコマンドテンプレートの作成と管理方法は[Command Templates](server-access-control/command-templates)参照
+*  **Access Start Time**  : 接続許可開始時刻
+*  **Access End Time**  : 接続許可終了時刻
+*  **Access Weekday**  : 接続可能曜日
+*  **Command Audit**  : 接続時コマンド監査適用可否
+*  **Command Detection**  : 接続後Script/Alias内禁止コマンド検出可否
+*  **Proxy Usage**  : Agentを通じたプロキシ接続許可可否
+*  **Allow Local Port Forwarding**  : ClientからのPort Forwarding許可可否
+    * VSCodeなどPort Forwardingを使用する場合に使用
+*  **Max Sessions**  : サーバー当たり最大同時接続数
+*  **Session Timeout** : サーバーセッションタイムアウト基準時間（分）
+*  **Show Server Groups in Workflow if Assigned as Member :**  チェックされた場合、利用者がServer Access Request申請時、Server Group Memberに指定されたサーバーグループのみ表示
+*  **Require Minute-Based Requests :** Workflowでサーバー関連権限申請時、分単位申請許可。未設定時、日単位で権限を申請。チェックされた場合、サーバー接続権限申請時、分単位権限申請
+
+### サーバー特権申請ポリシー設定
+
+ユーザーがサーバー特権（Server Privilege）を要求する時に適用されるポリシーを設定します。
+
+<Callout type="important">
+**注意**
+**Workflow要求作成時点**を基準にポリシー内容が反映されます。要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
+</Callout>
+
+<Callout type="info">
+ユーザーはServer Privilege Requestを通じてサーバーに対する特権を割り当て受けることができます。詳細は[Server Privilege Request要求する](../../user-manual/workflow/requesting-server-privilege)を参照してください。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-07-22-at-3.15.31-PM.png](/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.15.31-PM.png)
+</figure>
+
+*  **Maximum Access Duration** : 特権使用の最大持続期間を設定
+*  **Allow Pre-defined Command Templates Only** : サーバー特権申請時コマンド入力方式を制御
+    *  **Enable** : 申請者は管理者が事前に定義し許可したコマンドテンプレートの中から選択のみ可能で、コマンドを直接入力不可
+    *  **Disable** : 既存と同様に申請者が許可するコマンドを直接入力
+*  **Require Minute-Based Requests** : Workflowでサーバー関連権限申請時、分単位申請許可。未設定時、日単位で権限を申請。チェックされた場合、サーバー特権申請時、分単位で権限申請

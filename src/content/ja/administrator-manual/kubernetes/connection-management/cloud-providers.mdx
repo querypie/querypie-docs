@@ -1,0 +1,55 @@
+---
+title: 'Cloud Providers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Kubernetes同期用Cloud Providerの照会、作成、修正、削除をサポートします。Cloud Providerを通じて、クラウドプラットフォーム内のKubernetesリソースを同期し、QueryPieで管理するクラスターに一括登録することが可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers](/administrator-manual/kubernetes/connection-management/cloud-providers/image-20240721-053703.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+
+## Cloud Provider照会
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. テーブル左上の検索欄を通じて、Cloud Provider名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、Cloud Providerリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : クラウドプロバイダータイトル
+    2.  **Cloud Provider**  : 接続プラットフォーム
+    3.  **Region**  : プラットフォームリージョン
+    4.  **Replication Frequency** : 同期周期設定
+    5.  **Created At**  : クラウドプロバイダー初回作成日時
+    6.  **Updated At** : クラウドプロバイダー最終修正日時
+5. 各行をクリックすると、クラウドプロバイダー詳細情報照会が可能です。
+
+
+## Cloud Provider作成
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 右上の`+ Create Provider`ボタンをクリックします。
+3. 以下のガイドを参考にしてクラウドプロバイダーを作成します：
+    * [AWSからKubernetesリソース同期](cloud-providers/synchronizing-kubernetes-resources-from-aws)
+
+
+## Cloud Provider削除
+
+<figure data-layout="left" data-align="left">
+![image-20240721-053752.png](/administrator-manual/kubernetes/connection-management/cloud-providers/image-20240721-053752.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. テーブル内の削除対象クラウドプロバイダー左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたら、*DELETE*文句を入力し、`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Cloud Provider削除時、該当クラウドプロバイダーを通じて同期してきたすべてのリソースが一緒に一括削除されるため、この点にご注意ください。
+</Callout>

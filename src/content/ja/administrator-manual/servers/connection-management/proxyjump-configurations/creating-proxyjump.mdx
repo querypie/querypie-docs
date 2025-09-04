@@ -1,0 +1,47 @@
+---
+title: 'ProxyJump作成'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+ProxyJump設定を通じて他のNetwork Zoneにあるサーバーにアクセスしたり、またはCIDRが重複するサーバー対象にQueryPieのアクセス制御を適用できます。QueryPieがJump Hostにアクセスが可能でなければなりません。また、Windows Serverに対するProxyjumpもサポートしています。
+
+
+## ProxyJump作成
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations &gt; Create ProxyJump](/administrator-manual/servers/connection-management/proxyjump-configurations/creating-proxyjump/image-20250116-115457.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations &gt; Create ProxyJump
+</figcaption>
+</figure>
+
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurationsメニューに移動します。
+2. 右上の`+ Create ProxyJump`ボタンをクリックします。
+3. グループ作成のための以下の情報を入力します。
+    1.  **Name** : ProxyJump設定の名称です。
+    2.  **Jump Hosts** : Hopとして使用されるJump Hostを設定します。
+        1.  **Server**  : Serversに登録されたサーバー中Jump Hostを選択します。
+        2.  **Account**  : Jump Hostにアクセスが可能なAccountを入力します。
+        3.  **Auth Types**  : Jump Hostにアクセス時に使用する認証方式を選択します。
+            *  **Password**  : パスワードを直接入力します。
+            *  **SSH Key :** SSH Key Configurationsに登録したSSH Keyを選択します。
+            *  **Managed by Job :** QueryPieで管理するクレデンシャルを選択します。[SAC General Configurations](../../sac-general-configurations)メニューで「Password Provisioning」項目を設定した場合のみ表示されます。
+        4.  **Authority**  : パスワード入力またはSSH Keyを選択します。
+    3.  **Test Jump Hosts**  : 入力されたAccountでJump Hostアクセス可能可否をチェックします。
+    4.  **Add Jump Host**  : Jump Hostを追加します。サーバーアクセス時、追加されたすべてのJump Hostを順次経由して最終サーバーにアクセスを試みます。最大5個Jump Hostを使用できます。
+    5.  **Delete** : 追加したJump Hostを削除します。Jump Host 1は削除ができません。
+    6.  **Routing Target** : Proxyjumpを通じてアクセスするサーバーグループを選択します。一つのサーバーグループは一つのProxyjumpのみ設定できます。
+4. `Save`ボタンを通じて保存します。
+
+<Callout type="info">
+**Windows ServerのProxyjump設定**
+1. Windows Serverにアクセスしてサーバーエージェントをインストールします。
+2. [手動で個別サーバー登録](../servers/manually-registering-individual-servers)を通じてWindows Serverを登録します。
+3. 登録したWindows Serverをサーバーグループに追加します。
+4. サーバーグループをRouting Targetに追加します。
+5. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューにアクセスして登録したWindows ServerのServer Agentが追加されたか確認します。Server Agent追加は約1~2分の時間がかかります。
+</Callout>

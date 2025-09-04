@@ -1,0 +1,98 @@
+---
+title: 'Server Agentインストールおよび削除'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Windows ServerにリモートアクセスするにはQueryPie Server Agentをインストールする必要があります。QueryPie Server Agentインストール後、QueryPie内ServersメニューにWindows Serverが自動で追加されます。
+
+
+## Server Agentインストール
+
+<figure data-layout="center" data-align="center">
+![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
+</figure>
+
+1. Server Agentダウンロードページにアクセスします。
+    1. インストールされたQueryPieドメインアドレス後に`/for-agent/server-agent/download`を付けてServer Agentダウンロードページにアクセスできます。<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+2. エージェントインストールにはQueryPieにログインが必要です。
+3. 画面中央のWindowsボタンをクリックすると圧縮ファイルがダウンロードされます。
+4. インストールするWindowsサーバーに圧縮ファイルを解凍します。圧縮ファイル内には以下の2つのファイルがあります。
+    1. QueryPie Server Access Control_(QueryPie Version)_Setup
+    2. CONFIG
+5. 2つのファイルを同じパスに配置した後、QueryPie Server Access Control_(QueryPie Version)_Setupファイルを実行します。
+6. 案内に従ってファイルをインストールします。
+
+<Callout type="info">
+**CONFIGファイル説明**
+
+RDP Server Agentが接続されるQueryPieのアドレスを持っています。
+
+10.2.8版からはRDP接続に使用するPortをCONFIGファイルで指定できます。
+</Callout>
+
+<Callout type="important">
+**RDP接続に使用するPortの変更**
+* RDPで使用するPortの変更はQueryPie Webではサポートしません。
+* Port変更が必要な場合、RDP Server Agentを再インストールする必要があります。
+</Callout>
+
+
+## CONFIGファイルなしでServer Agentインストール
+
+GUIなしでインストールするとユーザー介入なしに自動でプログラムをインストールできるため、大規模配布やリモートインストールに有用です。
+
+PowerShellまたはCMDを通じてServer Agentを自動でインストールできます。
+
+**PowerShell**
+```
+& "{インストールファイルパス}.exe" /Url="{QueryPieウェブアドレス}" /Port="{RDPに使用するPort}" /VERYSILENT
+```
+
+e.g.
+```
+& ".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com" /Port="13389" /VERYSILENT
+```
+
+
+**CMD**
+```
+"{インストールファイルパス}.exe" /Url="{QueryPieウェブアドレス}" /Port="{RDPに使用するPort}" /VERYSILENT
+```
+
+e.g.
+
+CMDでServer Agentインストールファイル位置に移動後、以下のコマンド実行
+```
+".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com"  /Port="13389" /VERYSILENT
+```
+
+
+## Server Agent削除
+
+<figure data-layout="center" data-align="center">
+![image-20240829-010643.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240829-010643.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPページにアクセスします。
+2. 右上段は`Verify Deletion Keyボタンをクリックします。`
+3. 確認されたDeletion Keyを記録します。
+4. Windows Serverコンソールにアクセスします。
+5. コントロールパネル &gt; プログラム追加/削除メニューアクセス後、QueryPie Server Agentを削除します。
+6. パスワード入力欄に3で記録したDeletion Keyを入力します。
+7. QueryPieウェブにアクセスします。
+8. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
+9. テーブル内の削除対象サーバー左側のチェックボックスをチェック後`Delete`ボタンを通じて削除します。
+
+
+<Callout type="info">
+Deletion Keyは日単位で変更され、QueryPieが動作するサーバーの日付と削除対象Windowsサーバーの日付が同じでなければ削除ができません。
+</Callout>
+
+<Callout type="important">
+**WindowsでDeletion Keyが間違っている場合**
+* 接続されたQueryPieからDeletion Keyを受信したか確認します。
+* QueryPieが動作するサーバーの日付と削除対象Windowsサーバーの日付が同じか確認します。
+</Callout>

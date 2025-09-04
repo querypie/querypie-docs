@@ -1,0 +1,91 @@
+---
+title: 'Web Apps'
+---
+
+import { Callout } from 'nextra/components'
+
+# Overview
+
+QueryPieでは、Web Apps資産に対する照会、生成、修正事例をサポートします。ウェブアプリケーションを通じて登録されたウェブアプリ、APIまたは手動で登録したウェブアプリすべて同じページで管理します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps](/administrator-manual/web-apps/connection-management/web-apps/image-20250629-153743.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
+</figcaption>
+</figure>
+
+## Web App照会
+
+1. Administrator &gt; Web Apps &gt; Connection Management &gt; Web Appsメニューに移動します。
+2. テーブル左上の検索窓を通じてウェブアプリ名を条件に検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてウェブアプリリストを最新化できます。
+4. テーブルで以下のカラム情報を提供します：
+    1. Name：ウェブアプリ名
+    2. URL：ウェブアプリURLまたはドメイン
+    3. Description：ウェブアプリ説明
+    4. Tags：ウェブアプリに付いたタグリスト
+    5. User Activity Recording：ユーザー活動記録可否（ウェブアプリアクセスと使用記録追跡設定）
+    6. Created At：ウェブアプリ生成日時
+    7. Updated At：ウェブアプリ最後修正日時
+5. 各行をクリックするとウェブアプリ詳細情報照会が可能です。
+
+## Web App生成
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.58.08-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps
+</figcaption>
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Connection Management &gt; Web Appsメニューに移動します。
+2. 右上の+ Create Web Appボタンをクリックします。
+3. Web App生成画面
+    1. Name：ウェブアプリ名
+    2. Base URL：ウェブアプリURLまたはホストアドレス
+    3. Description：ウェブアプリ説明
+    4. Tags：ウェブアプリに追加するタグ設定
+    5. Watermark：ブラウザにウォーターマーク適用可否
+    6. User Activity Recording：ユーザー活動記録可否（ウェブアプリアクセスと使用記録追跡設定）
+    7. URL Paths: Web Appの下位パス入力
+
+## Web App OwnerとMember設定
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.07-PM.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Connection Management &gt; Web Apps &gt; Web App Owners
+</figcaption>
+</figure>
+
+Web AppにOwnerとMemberを指定してJust-In-Time（JIT）アクセス要求に対する権限を細分化できます。各役割の権限は以下のように明確に分離されます。
+
+*  **Web App Owner:** JITアクセス要求に対する承認権限を持ちます。
+*  **Web App Member:** JITアクセス要求に対する上申（申請）権限を持ちます。
+* 一人のユーザーがOwnerとMember権限を同時に持つことができ、この場合、要求上申と承認がすべて可能です。
+
+<figure data-layout="center" data-align="center">
+![Assign Owners画面](/administrator-manual/web-apps/connection-management/web-apps/Screenshot-2025-08-27-at-6.57.24-PM.png)
+<figcaption>
+Assign Owners画面
+</figcaption>
+</figure>
+
+Web App生成時または詳細情報画面でOwner/Memberを設定できます。`+ Assign Owners`または`+ Assign Members`ボタンをクリックするとユーザー追加モーダルが現れます。
+
+モーダルウィンドウではStatusがActive인ユーザーのみ照会され、希望するユーザーを選択して追加できます。
+
+## Web App削除
+
+
+1. Administrator &gt; Web Apps &gt; Connection Management &gt; Web Appsメニューに移動します。
+2. テーブル内削除対象ウェブアプリ左側のチェックボックスをチェックします。
+3. テーブルカラムラインに現れたDeleteボタンをクリックします。
+4. ポップアップが現れたらDELETE文句を記入してDeleteボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Web App削除時、ユーザー/グループに付与された該当ウェブアプリに対するアクセス権限すべて一括削除されます。
+</Callout>
+
+

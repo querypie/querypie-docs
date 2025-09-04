@@ -1,0 +1,97 @@
+---
+title: 'Server Agents for RDP'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでは、Windows Serverに対するアクセス制御および権限管理ができます。RDP Protocolを通じてリモートアクセスするには、管理しようとするWindows ServerにServer Agentをインストールする必要があります。また、アクセス中のRDPのセッションをリアルタイムで確認でき、Kill Session機能を通じてアクセス中のRDPセッションを強制終了できます。
+
+<Callout type="info">
+* Windows Server AgentはWindows Server 2012以上の版のみサポートします。
+* RDP通信のためにはQueryPieとWindows Server間に以下のPortを許可する必要があります。
+    * RDP `13389`ポートで接続が許可されなければなりません。
+* Windows ServerにRDPでアクセスする時、AD認証を使用するには、アカウントを@が含まれた形式で入力してください。
+* QueryPieを通じたRDPセッションを終了しても、既存にアクセスしたセッション(またはコンソールアクセス)をログオフしません。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP](/administrator-manual/servers/connection-management/server-agents-for-rdp/image-20250707-011843.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP
+</figcaption>
+</figure>
+
+
+## Server Agents照会
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
+2. テーブル左上の検索欄を通じて、サーバー名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、サーバーリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : サーバーエージェント名(Windows ServerのComputer name)
+    2.  **Host**  : サーバーのIP
+    3.  **Linked Server**  : サーバーエージェントと接続されたサーバー
+    4.  **Status** : サーバーエージェントの状態
+        1. Offline : サーバーエージェントオフラインまたは通信不可能な状態
+        2. Online : サーバーエージェントオンラインで、RDPアクセスが可能な状態
+        3. Connection Fail : サーバーエージェントから応答は来るが、パケットを送信できない状態で、Connection Failをクリックすると対象windows serverに接続するIPアドレスを手動で入力可能
+    5.  **Last Update Status**  : 最終アップデート状態
+    6.  **Last Update Attempted At**  : 最終アップデート日時
+    7.  **Linked At**  : サーバーエージェントと初回通信された時間
+    8.  **Updated At** : サーバーエージェントと最も最近通信した時間
+
+
+## Server Agents作成
+
+1. サーバーエージェントはwindows serverにインストールされたサーバーエージェントがQueryPieサーバーと通信するとServer Agents for RDP画面に自動で作成されます。
+2. QueryPieサーバーとServer Agentsが通信するとQueryPieのServersにWindows Serverを自動登録します。
+3. [Server Agentインストールおよび削除](server-agents-for-rdp/installing-and-removing-server-agent)ガイドを通じてServer Agentのインストール方法を確認できます。
+
+<Callout type="important">
+RDP Server Agentと接続されたWindows ServerのPortおよびIPは変更できません。
+</Callout>
+
+
+## Server Agentsと通信失敗対応方法
+
+Windows ServerにServer Agentインストール後、Server Agents for RDPページにServer Agent情報が表示されますが、StatusがConnection Failedで表示されることがあります。
+
+QueryPieに登録されるServer AgentのHost情報はWindows Serverが持っているIP情報中通信が可能なHostで自動選択されます。ただし、Server AgentからQueryPieに通信はされますが、QueryPieからServer Agentに通信されない場合、Server Agentは追加され、Connection FailedがStatusで表示されます。
+
+この場合、以下のように解決が可能です。
+
+<figure data-layout="center" data-align="center">
+![image-20240731-024502.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/image-20240731-024502.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
+2. Connection Failed項目をクリックします。
+3. 表示されるポップアップのHostにWindows Serverにアクセスが可能なIPを入力後`Save`ボタンをクリックします。
+
+
+## Server Agentsアップデート
+
+QueryPieウェブ画面で直接Server Agentを最新版にアップデートできます。アップデートは現在使用中のQueryPie版に互換性のあるエージェント版で進行されます。
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
+2. テーブル内でアップデート対象サーバー左側のチェックボックスを選択します。
+3. テーブル上段に表示される`Update`ボタンをクリックしてアップデートを進行します。
+
+
+## Server Agents削除
+
+<figure data-layout="center" data-align="center">
+![image-20240728-154821.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/image-20240728-154821.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
+2. テーブル内の削除対象サーバー左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたら  *DELETE*  文句を入力し、`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+QueryPieではWindows ServerにインストールされたServer Agentsをまず削除した後、QueryPieのServer Agents for RDPメニューでServer Agents削除する必要があります。
+Windows ServerにインストールされたServer Agentsをまず削除しない場合、Server Agentsが再びQueryPieに登録され、新しいWindows Serverを作成します。
+</Callout>

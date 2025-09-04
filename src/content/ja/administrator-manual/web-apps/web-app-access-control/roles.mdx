@@ -1,0 +1,104 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織で管理するウェブアプリケーションのアクセス権限に応じた役割（Role）に対する照会、生成、修正、削除をサポートします。Roleは、ウェブアプリアクセス権限を実装し適用するためのPolicy以降の段階として、Policyの集合であり、ユーザー/グループとポリシーの接続点となる権限を意味します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-161837.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles
+</figcaption>
+</figure>
+
+
+## Role照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-161857.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Access Control &gt; Rolesメニューに移動します。
+2. テーブル最左上部の検索欄を通じて役割名を条件に検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてRoleリストを最新化できます。
+4. テーブルで以下のような情報を提供します：<br/>a.  **Name**  : Role名<br/>b.  **Description**  : Role詳細説明<br/>c.  **Last Access At** : 該当役割の最後呼び出し日時<br/>d.  **Created At** : 役割最初生成日時<br/>e.  **Updated At**  : 役割最後修正日時<br/>f.  **Updated By**  : 最後更新を実行した管理者名
+5. 各行をクリックすると役割詳細情報照会が可能です。
+    1.   **Policies** 
+        1. デフォルトで指定されるタブで割り当てられたポリシーリストを照会できます。
+        2. テーブルリストには各ポリシー別以下の情報を表示します：
+            1. Name：Policy名
+            2. Description：Policy詳細説明
+            3. Version：Policyバージョン
+            4. Assigned At：割り当て日時
+            5. Assigned By：該当ポリシーを割り当てた管理者名
+        3. 各ポリシー行の左側ポリシーの詳細情報をドロワー形式で提供します。
+            1. 上部には基本情報が以下のように表示されます：
+                1.  **Name**  : Policy名
+                    * ポリシー詳細ページリンクを新しいウィンドウで開けます。
+                2.  **Description**  : Policy詳細説明
+                3.  **Version**  : Policyバージョン
+                4.  **Assigned**   **At**  : 割り当て日時
+                5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+            2. 下部にはポリシーがコードで表示されます。
+    2.  **Users/Groups** 
+        1. 該当Roleが付与されているユーザー/グループリストを列挙します。
+        2. ユーザー/グループ名で検索可能です。
+        3. リストは各ユーザー/グループごとに以下の情報を表示します：
+            1. User Type：ユーザー/グループタイプ
+            2. Name：ユーザー/グループ名
+            3. Last Access At：ユーザー/グループの最後呼び出し日時
+            4. Expiration Date：期限満了日
+            5. Granted At：ユーザー/グループに該当Roleが付与された日時
+    3.  **Web Apps** 
+        1. 該当Roleによってアクセス可能なウェブアプリケーションリストを列挙します。
+        2. ウェブアプリケーション名で検索可能です。
+        3. リストは各ウェブアプリケーションごとに以下の情報を表示します：
+            1. Name：ウェブアプリケーション名
+            2. Base URL：ウェブアプリケーション基本URL
+            3. Description：ウェブアプリケーション説明
+            4. User Activity Recording：ユーザー活動記録状態（On/Off）
+            5. Tags：ウェブアプリケーションに付いたタグリスト
+            6. Created At：ウェブアプリケーション最初生成日時
+            7. Updated At：ウェブアプリケーション最後修正日時
+
+
+## Role生成
+
+1. Administrator &gt; Web Apps &gt; Access Control &gt; Rolesメニューに移動します。
+2. 右上の+ Create Roleボタンをクリックします。
+3. 役割生成のための以下の情報を入力します。（以下の情報はすべてユーザーに表示される情報です。）<br/>a. Name：識別可能な役割名（必須）<br/>b. Description：該当役割に対する付加的な説明
+4. Saveボタンをクリックして生成します。
+5. 役割リスト最上部に新規生成された役割をクリックします。
+6. クーバネティス役割設定ガイドを参照してポリシーを設定します。
+
+## Role修正
+
+<figure data-layout="center" data-align="center">
+![image-20250629-163924.png](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-163924.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Access Control &gt; Rolesメニューに移動します。
+2. リストで修正するRoleをクリックして詳細ページに移動します。
+3. 画面右上のEditボタンをクリックして以下の情報を修正できます。<br/>a. Name：識別可能な役割名（必須）<br/>b. Description：該当役割に対する付加的な説明
+4. Saveボタンをクリックして修正を反映します。
+
+## Role削除
+
+<figure data-layout="center" data-align="center">
+![image-20250629-163949.png](/administrator-manual/web-apps/web-app-access-control/roles/image-20250629-163949.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Access Control &gt; Rolesメニューに移動します。
+2. 二つの方式で削除段階を進行できます：<br/>a. リストから削除<br/> i. テーブル内削除対象ポリシーのチェックボックスをチェックします。<br/> ii. テーブルコンテンツラインに現れたDeleteボタンをクリックします。<br/>b. 詳細ページから削除<br/> i. 画面右上のDeleteボタンをクリックします。
+3. ポップアップが現れたらDeleteボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Role削除時、該当役割が付与されていたユーザーとグループから権限が回収されます。
+</Callout>

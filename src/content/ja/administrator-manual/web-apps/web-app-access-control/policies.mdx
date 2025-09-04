@@ -1,0 +1,132 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織で管理するウェブアプリケーションのアクセスポリシー（Policy）に対する照会、生成、修正、削除をサポートします。Policyは、ウェブアプリケーションアクセス権限を実装し適用するための基盤となる核心段階です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164449.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies
+</figcaption>
+</figure>
+
+## Policy照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; List Details](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164509.png)
+<figcaption>
+Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. テーブル最左上部の検索欄を通じてポリシー名を条件に検索が可能です。
+3. 下部のErrorsタブを通じて直接修正したコードのエラーをデバッグします。コードにエラーがある場合、Errorsタブが赤色で表示されて即座に確認できます。
+4. テーブル右上のリフレッシュボタンを通じてPolicyリストを最新化できます。
+5. テーブルで以下のような情報を提供します：<br/>a. Name：Policy名<br/>b. Description：Policy詳細説明<br/>c. Created At：ポリシー最初生成日時<br/>d. Updated At：ポリシー最後修正日時<br/>e. Updated By：最後更新を実行した管理者名
+6. 各行をクリックするとポリシー詳細情報照会が可能です。
+    1. Detail
+        1. デフォルトで指定されるタブでポリシーで定義されたコードを照会できます。
+        2. Detailタブの右側にある、右側の`Go to Editor Mode`ボタンがあり、これをクリックすると該当Code Editorページ画面に切り替わります。
+    2. Roles<br/>
+        1. 該当ポリシーが割り当てられているRoleリストを列挙します。
+        2. リストは各Roleごとに以下の情報を表示します：
+            1. Name：Role名
+            2. Description：Role詳細説明
+            3. Assigned At：Roleに該当ポリシーが割り当てられた日時
+            4. Assigned By：該当ポリシーをRoleに割り当てた管理者名
+        3. 各行をクリックするとRoleに対する詳細情報をドロワー形式で提供します。
+    3. Versions
+        1. 該当ポリシーの各バージョンに対する履歴を列挙します。
+            1. ポリシーバージョンはCodeが修正されて保存されると更新されます。
+        2.  リストは各versionごとに以下の情報を表示します：
+            1. Version：バージョン名
+            2. Justification：ポリシー更新期間事由
+            3. Updated At：該当バージョン生成日時
+            4. Updated By：該当バージョン修正者名
+        3. 各行をクリックするとバージョンに対する詳細情報をドロワー形式で提供します。
+            1. (Title)：ポリシー名
+            2. Version：ポリシーバージョン
+            3. Justification：ポリシー更新期間事由
+            4. Updated At：該当バージョン生成日時
+            5. Updated By：該当バージョン修正者名
+            6. 下部に当時のポリシーコードスナップショットが表示されます。
+
+## Policy生成
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164901.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164901.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. 右上の+ Create Policyボタンをクリックします。
+3. ポリシー生成のための以下の情報を入力します。（以下の情報はすべてユーザーに表示される情報です。）<br/>a. Name：識別可能なポリシー名（必須）<br/>b. Description：該当ポリシーに対する付加的な説明
+4. OKボタンをクリックして生成します。
+5. ポリシーリスト最上部に新規生成されたポリシーをクリックします。
+6. ウェブアプリケーションポリシー設定ガイドを参照してポリシーを設定します。
+
+## Policy修正
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164928.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164928.png)
+</figure>
+
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. リストで修正するPolicyをクリックして詳細ページに移動します。
+3. 画面右上のEditボタンをクリックして以下の情報を修正できます。<br/>a. Name：識別可能なポリシー名（必須）<br/>b. Description：該当ポリシーに対する付加的な説明
+4. OKボタンをクリックして修正を反映します。
+
+## Policy複製
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164941.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164941.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. リストで複製するPolicyをクリックして詳細ページに移動します。
+3. 画面右上のDuplicateボタンをクリックして複製版の情報を修正できます。<br/>a. Name：識別可能なポリシー名（必須）<br/>b. Description：該当ポリシーに対する付加的な説明
+4. OKボタンをクリックして修正を反映します。
+5. ポリシーリスト最上部に新規複製されたポリシーをクリックして照会/修正します。
+
+## Policy削除
+
+<figure data-layout="center" data-align="center">
+![image-20250629-164955.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-164955.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. 二つの方式で削除段階を進行できます：<br/>a. リストから削除<br/> i. テーブル内削除対象ポリシーのチェックボックスをチェックします。<br/> ii. テーブルコンテンツラインに現れたDeleteボタンをクリックします。<br/>b. 詳細ページから削除<br/> i. 画面右上のDeleteボタンをクリックします。
+3. ポップアップが現れたらDeleteボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Policy削除時、該当ポリシーが付与されていたウェブアプリケーションリソースと役割から自動分離されます。
+</Callout>
+
+## Policyコード編集
+
+<figure data-layout="center" data-align="center">
+![image-20250629-165051.png](/administrator-manual/web-apps/web-app-access-control/policies/image-20250629-165051.png)
+</figure>
+
+1. Administrator &gt; Web Apps &gt; Web App Access Control &gt; Policiesメニューに移動します。
+2. リストで編集するPolicyをクリックして詳細ページに移動します。
+3. Detailタブで右上のGo to Editor Modeボタンをクリックします。
+4. コード編集画面で以下の機能を使用できます：
+    1. 左側コードエディターでYAML形式のポリシーコードを直接編集
+    2. 右側パネルでEdit Spec機能提供：
+        * Edit Spec - Allow：許可規則追加/編集
+            * Add Resources：リソース追加ボタン
+            * Set Conditions：条件設定ボタン
+        * Edit Spec - Deny：拒否規則追加/編集
+            * Add Resources：リソース追加ボタン
+        * 下部Errors(0) / Tips(1)タブでコードエラーとヒント確認
+5. 編集完了後Save Changesボタンをクリックして保存します。
+6. Cancelボタンをクリックして編集をキャンセルできます。
+
+

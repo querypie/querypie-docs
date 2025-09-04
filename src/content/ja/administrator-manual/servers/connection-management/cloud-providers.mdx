@@ -1,0 +1,56 @@
+---
+title: 'Cloud Providers'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでは、サーバー登録および管理のためのCloud Providerとの連携をサポートします。Cloud Provider内のリソースを同期し、QueryPieで管理するサーバーに登録し、ユーザーおよびグループに同期してきたサーバーに対するアクセス権限を付与し、ポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers](/administrator-manual/servers/connection-management/cloud-providers/image-20240902-044659.png)
+<figcaption>
+Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+## Cloud Provider照会
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. テーブル左上の検索欄を通じて、クラウドプロバイダー名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、Cloud Providerリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : クラウドプロバイダー名
+    2.  **Cloud Provider**  : 接続プラットフォーム
+    3.  **Region**  : プラットフォームリージョン
+    4.  **Replication Frequency** : 同期周期設定
+    5.  **Created At**  : クラウドプロバイダー初回作成日時
+    6.  **Updated At** : クラウドプロバイダー最終修正日時
+5. 各行をクリックすると、クラウドプロバイダー詳細情報照会が可能です。
+
+
+## Cloud Provider作成
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. 右上の`+ Create Provider`ボタンをクリックします。
+3. 以下のガイドを参考にしてクラウドプロバイダーを作成します：
+    1. [AWSからKubernetesリソース同期](cloud-providers/synchronizing-server-resources-from-aws)
+    2. [Azureからサーバーリソース同期](cloud-providers/synchronizing-server-resources-from-azure)
+    3. [GCPからサーバーリソース同期](cloud-providers/synchronizing-server-resources-from-gcp)
+
+
+## Cloud Provider削除
+
+<figure data-layout="center" data-align="center">
+![image-20240902-044732.png](/administrator-manual/servers/connection-management/cloud-providers/image-20240902-044732.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
+2. テーブル内の削除対象クラウドプロバイダー左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたら`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Cloud Provider削除時、該当クラウドプロバイダーを通じて同期してきたすべてのリソースが一緒に一括削除されるため、この点にご注意ください。
+</Callout>

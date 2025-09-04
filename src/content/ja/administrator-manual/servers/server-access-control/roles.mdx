@@ -1,0 +1,120 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+サーバーに対するユーザーアクセスを許可または制限するために、組織内でのユーザー役割をベースにした役割ベースアクセス制御（Role-Based Access Control、RBAC）を使用します。ユーザーやユーザーグループに設定したRoleを付与できます。Roleは複数のポリシーを総合して単一役割で定義するのに使用されます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles](/administrator-manual/servers/server-access-control/roles/image-20240902-052135.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
+2. テーブル左上の検索欄を通じて役割名を条件に検索が可能です。
+3. テーブル右上のリフレッシュボタンを通じてRoleリストを最新化できます。
+4. テーブルで以下のカラム情報を提供します：
+    1.  **Name**  : Role名
+    2.  **Description**  : Role詳細説明
+    3.  **Last Access At**  : 該当役割の最後呼び出し日時
+    4.  **Created At**  : 役割最初生成日時
+    5.  **Updated At** : 役割最後修正日時
+    6.  **Updated By**  : 最後更新を実行した管理者名
+
+
+## Role照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details](/administrator-manual/servers/server-access-control/roles/image-20240902-052205.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
+2. 各行をクリックすると役割詳細情報照会が可能です。
+    1.  **Policies** 
+        1. デフォルトで指定されるタブで割り当てられたポリシーリストを照会できます。
+        2. テーブルリストには各ポリシー別以下の情報を表示します：
+            1.  **Name**  : Policy名
+            2.  **Description**  : Policy詳細説明
+            3.  **Version**  : Policyバージョン
+            4.  **Assigned At**  : 割り当て日時
+            5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+        3. 各ポリシー行をクリックすると該当ポリシーの詳細情報をドロワー形式で提供します。
+            1. 上部には基本情報が以下のように表示されます：
+                1.  **Name**  : Policy名
+                    * ポリシー詳細ページリンクを新しいウィンドウで開けます。
+                2.  **Version**  : Policyバージョン
+                3.  **Description**  : Policy詳細説明
+                4.  **Assigned**   **At**  : 割り当て日時
+                5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+            2. 下部にはポリシーがコードで表示されます。
+    2.  **Users/Groups** 
+        1. 該当Roleが付与されているユーザー/グループリストを列挙します。
+        2. ユーザー/グループ名で検索可能です。
+        3. リストは各ユーザー/グループごとに以下の情報を表示します：
+            1.  **User Type**  : ユーザー/グループタイプ
+            2.  **Name**  : ユーザー/グループ名
+            3.  **Last Access At**  : ユーザー/グループの最後呼び出し日時
+            4.  **Expiration Date**  : 期限満了日
+            5.  **Granted At**  : ユーザー/グループに該当Roleが付与された日時
+    3.  **Servers** 
+        1. 該当Roleによってアクセス可能なサーバーリストを列挙します。
+        2. Server名で検索可能です。
+        3. リストは各サーバーごとに以下の情報を表示します：
+            1.  **Server Group**  : サーバーグループ名
+            2.  **Server**  : サーバー名
+            3.  **Host**  : サーバーHost情報
+            4.  **Account**  : サーバー接続アカウント名
+
+## Role生成
+
+<figure data-layout="center" data-align="center">
+![image-20240723-081606.png](/administrator-manual/servers/server-access-control/roles/image-20240723-081606.png)
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
+2. 右上の`+ Create Role`ボタンをクリックします。
+3. ポリシー生成のための以下の情報を入力します。
+    1.  **Name** : Roleを画面で区別できる名前です。
+    2.  **Description** : 該当Roleに対する付加的な説明を入力できます。ユーザーたちのRole選択画面でも表示されます。
+4. `Save`ボタンを通じて保存します。
+
+
+## Role修正
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details](/administrator-manual/servers/server-access-control/roles/image-20240902-052459.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+Roleの詳細画面進入後、自動で選択されているPoliciesタブで以下のようにPolicyを追加できます。
+
+1. Server Settings &gt; Server Access Control &gt; Rolesメニューに移動します。
+2. リストで修正するRoleを選択します。
+3. 画面右側中央にある`+ Assign Policies`ボタンをクリックします。
+4. 事前に生成したPolicyを追加します。
+
+
+## Role削除
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
+2. 二つの方式で削除段階を進行できます：
+    1. リストから削除
+        1. テーブル内削除対象ポリシー左側のチェックボックスをチェックします。
+        2. テーブルカラムラインに現れた`Delete`ボタンをクリックします。
+    2. 詳細ページから削除
+        1. 画面右上の`Delete`ボタンをクリックします。
+3. ポップアップが現れたら`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Role削除時、該当役割が付与されていたユーザーとグループから権限が回収されます。
+</Callout>

@@ -1,0 +1,50 @@
+---
+title: 'Command Templates'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織で管理するサーバーで接続後使用不可能なコマンドテンプレートを管理できます。一度設定したコマンドテンプレートは、アクセス権限設定時に再利用が可能です。コマンドブロックはstringベースで行われ、正規表現を通じたコマンドブロックもサポートしています。また、サーバー特権申請プロセスでユーザーが選択できるコマンドリストを標準化して管理効率性を高めることができます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates](/administrator-manual/servers/server-access-control/command-templates/image-20240902-053009.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates
+</figcaption>
+</figure>
+
+## ブロックコマンドテンプレート設定
+
+サーバーアクセスポリシーはPoliciesメニューで設定できます。設定方法は[サーバーアクセスポリシー設定](policies/setting-server-access-policy)の  **commandsRef**  部分を参照します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt; Create Command Template](/administrator-manual/servers/server-access-control/command-templates/Screenshot-2025-07-22-at-3.23.24-PM.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt; Create Command Template
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Command Templatesメニューに移動します。
+2. 右上の`+ Create Template`ボタンをクリックします。
+3. ポリシー設定のために各項目別に以下の情報を入力します。
+    1.  **Base Type** : このコマンドテンプレートに登録されたコマンドの許可、禁止可否を選択します。この項目はコマンドテンプレート生成後変更できません。
+        1.  **Deny**  : 禁止するコマンドを設定します。設定されたコマンド以外の他のコマンドは使用可能です。
+        2.  **Allow**  : 許可するコマンドを設定します。設定されたコマンド以外の他のコマンドは使用不可能です。<br/>*制約事項: (10.2.1) Allow設定はTELNETとFTPでは動作しません。
+    2.  **Allow for Workflow Request** : 生成するテンプレートをサーバー特権申請（Server Privilege Request）ワークフローでユーザーが選択できるように許可するかを設定します。
+        * このオプションはBase TypeがAllowの場合にのみ有効化されます。
+        * Onに設定すると、ユーザーがサーバー特権申請時にこのテンプレートを選択できます。
+    3.  **Commands (SSH)**  : サーバーでウェブターミナルを通じて実行されるコマンドポリシーを設定する場所です。
+        1.  **Keyword**  : コマンドをキーワードで入力できます。
+        2.  **RegEx**  : コマンドを正規表現形式で入力できます。
+    4.  **Functions (SFTP)**  : 該当サーバーでウェブSFTPとFTPを通じて実行される機能ポリシーを設定する場所です。ディレクトリ/ファイル削除、ファイルアップロード、ファイルダウンロード、ディレクトリ作成アクションを制限できます。
+4. 右下の`Save`ボタンをクリックして設定を完了します。
+
+
+<Callout type="info">
+**注意事項**
+Allow for Workflow Request設定はSAC &gt; General &gt; Configurations &gt; Server Privilege Request SettingsメニューでAllow Pre-defined Command Templates OnlyがEnableの時に意味を持ちます。
+</Callout>
+
+

@@ -1,0 +1,55 @@
+---
+title: 'Clusters'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでKubernetesクラスター資産の照会、作成、修正、削除をサポートします。Cloud Providerを通じて同期してきたKubernetesクラスターおよび手動で登録したKubernetesクラスターすべて同じページで管理します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters](/administrator-manual/kubernetes/connection-management/clusters/image-20240721-054705.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters
+</figcaption>
+</figure>
+
+
+## Cluster照会
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clustersメニューに移動します。
+2. テーブル左上の検索欄を通じて、クラスター名を条件に検索が可能です。
+3. テーブル右上の更新ボタンを通じて、クラスターリストを最新化できます。
+4. テーブルでは以下のカラム情報を提供します：
+    1.  **Name**  : クラスター名
+    2.  **Version**  : クラスター版
+    3.  **API URL**  : クラスターAPI URL
+    4.  **Cloud Provider**  : 接続プラットフォーム (手動クラスターの場合、ハイフンで表記)
+    5.  **Tags**  : クラスターに付いたタグリスト
+    6.  **Created At**  : クラスター初回作成日時
+    7.  **Updated At**  : クラスター最終修正日時
+5. 各行をクリックすると、クラスター詳細情報照会が可能です。
+
+
+## Cluster作成
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clustersメニューに移動します。
+2. 右上の`+ Create Cluster`ボタンをクリックします。
+3. [手動でKubernetesクラスター登録](clusters/manually-registering-kubernetes-clusters)ガイドを参考にして手動でクラスターを作成します。
+
+
+## Cluster削除
+
+<figure data-layout="left" data-align="left">
+![image-20240721-054752.png](/administrator-manual/kubernetes/connection-management/clusters/image-20240721-054752.png)
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clustersメニューに移動します。
+2. テーブル内の削除対象クラスター左側のチェックボックスをチェックします。
+3. テーブルカラムラインに表示された`Delete`ボタンをクリックします。
+4. ポップアップが表示されたら`Delete`ボタンをクリックして削除を進行します。
+
+<Callout type="important">
+Cluster削除時、ユーザー/グループに付与された該当クラスターに対するアクセス権限すべて一括削除されます。
+</Callout>
