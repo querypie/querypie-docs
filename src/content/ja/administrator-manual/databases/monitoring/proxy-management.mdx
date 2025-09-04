@@ -1,0 +1,49 @@
+---
+title: 'Proxy Management'
+---
+
+## Overview
+
+管理者はProxy managementを通じて有効化されたProxyコネクションを確認し、Port状態を確認できます。DataGripやDBeaverのような3rd party toolを通じてクエリを実行すると、該当セッションを確認し、停止することもできます。
+
+## Proxy使用有効化されたコネクション確認
+
+*  **Proxy Session** : Proxyを通じてアクセスできる各Data source別port情報です。
+*  **Connection Name**  : 「Use Proxy」オプションが有効化されているコネクションの名前です。
+*  **Data Source Type**  : MySQLなどDBMSのタイプを表します。
+*  **Cloud Provider**  : クラウドから同期されたコネクションを使用する場合、クラウドサービスプロバイダーの情報が表示されます。
+*  **Session Count** : Proxyを通じて接続された総sessionの個数を表示します。
+*  **Connected At**  : 接続が開始された時点を表示します。
+*  **Status**  : 有効有無を表示します。 
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Monitoring &gt; Proxy Management](/administrator-manual/databases/monitoring/proxy-management/image-20250512-113752.png)
+<figcaption>
+Administrator &gt; Databases &gt; Monitoring &gt; Proxy Management
+</figcaption>
+</figure>
+
+
+1. Database設定メニューからProxy Manangementメニューに移動します。
+2. クラスター基準でProxy使用が有効化されたコネクションとPort情報を確認できます。
+3. Proxyアクセスを通じてコネクションに接続中のユーザーを確認でき、必要な場合、該当セッションを`Kill`できます。
+
+
+## Proxy使用オプション有効化
+
+基本的にはProxy使用オプションが非有効化されています。アクセスを許可するコネクションでProxy使用有無を有効化します。
+
+<figure data-layout="center" data-align="center">
+![image-20240725-070857.png](/administrator-manual/databases/monitoring/proxy-management/image-20240725-070857.png)
+</figure>
+
+1. Database設定メニューからDB Connectionsメニューに移動します。
+2. 登録したコネクションを一つクリックします。
+3. 下部のAdditional Information項目に移動します。
+4. `Proxy Usage`オプションをチェックして有効化します。
+5. 2つのProxy認証方式のうち一つを選択します。
+    1.  **Use QueryPie registered account** : 管理者がコネクション情報ページ内に保存したDB username / password基準でProxyアクセス情報を生成する方式です。ユーザーはAgentまたは別途生成されたProxy Credential情報を利用してProxyにアクセスできます。
+    2.  **Use existing database account with Agent**  : ユーザーが既存に使用していたDB username / passwordを使用できる方式でProxyアクセス情報が生成されます。ユーザーはAgentで実行後、localhostとport情報を利用してProxyにアクセスできます。※ユーザーのDB username / password認証を使用する場合、Agentを通じてのみアクセス可能です。
+6.  **Network ID**  : Reverse SSH機能を使用する場合に必要な設定値です。
+
+Proxy Usageオプションを有効化するとProxyにアクセスできるPortが該当コネクションに割り当てられます。ユーザーは該当オプションが有効化されるとProxyアクセス情報を確認でき、管理者のみ該当Proxyオプションを設定できます。

@@ -1,0 +1,54 @@
+---
+title: 'Ledger Table Policy'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+管理者はLedger Table Policyメニューを通じてデータベースのテーブル単位で元帳（Ledger）を設定し、ユーザーが元帳テーブル呼び出し時に従う規則を適用できます。
+
+<Callout type="important">
+元帳テーブルポリシーは関連ライセンスが有効化されている場合にのみ使用できます。該当機能使用のためにはQueryPie顧客サポートチームにお問い合わせください。
+</Callout>
+
+## 元帳テーブルに承認規則マッピング
+
+<Callout type="info">
+元帳テーブル管理をサポートするベンダーはMySQL、MongoDB、Oracle、MariaDB、Athenaをサポートします。
+</Callout>
+
+DBコネクション単位でPolicyを作成し、コネクション内の元帳として管理したいテーブルに承認規則をマッピングできます。設定後、ユーザーが該当テーブルでUPDATEなど修正クエリおよびデータエクスポートを試行する場合、該当承認規則を通じたSQL Requestを設定できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy](/administrator-manual/databases/ledger-management/ledger-table-policy/Screenshot-2024-12-18-at-11.46.38-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy
+</figcaption>
+</figure>
+
+1. Database設定メニューからLedger Management &gt; Ledger Table Policyメニューに移動します。
+2. 右上の`Create Policy`ボタンをクリックします。
+3. ポリシー作成のための以下の情報を入力します。
+    1.  **Target Connection**  : ポリシー適用の対象であるテーブルが含まれるコネクションを選択します。
+    2.  **Target Databases**  : ポリシー適用の対象であるテーブルが含まれるデータベースを選択します。同時に複数のデータベースを選択できます。
+4. `Save`ボタンで保存します。
+
+一つのDBコネクション単位でLedger Table Policy一覧にポリシーが作成されたことを確認できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt; Details](/administrator-manual/databases/ledger-management/ledger-table-policy/Screenshot-2024-12-18-at-11.47.34-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt; Details
+</figcaption>
+</figure>
+
+作成したポリシーの詳細ページに移動して、元帳テーブル承認規則を設定できます。
+
+1. 詳細ページで右中央の`Add Rule`ボタンをクリックします。
+2. 元帳テーブルを一覧から選択します。
+3. 該当元帳テーブルでDMLクエリ実行時に適用するワークフロー承認規則を選択します。
+    1. 該当承認規則はLedger Approval Rulesメニューで別途設定できます。
+4. データを照会する理由入力を強制化する場合、SELECT Purpose項目を  **Required**  に設定します（Default値はRequiredです）。
+5. データをエクスポートする理由入力を強制化する場合、Export Purpose項目を  **Required** に設定します（Default値はNot Requiredです）。 
+6. `Ok`ボタンをクリックして規則追加を完了します。

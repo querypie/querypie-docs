@@ -1,0 +1,35 @@
+---
+title: 'Policy Exception'
+---
+
+## Overview
+
+Workflowを通じて申請されたUnmasking Requestが承認処理されると該当内容がPolicy Exception Databases&gt; Policies &gt; Policy Exception)一覧に列挙され、マスキングポリシーの例外対象を確認できます。
+
+
+<figure data-layout="center" data-align="center">
+![Policy Exception](/administrator-manual/databases/policies/policy-exception/image-20241101-011820.png)
+<figcaption>
+Policy Exception
+</figcaption>
+</figure>
+
+## Policy Exception一覧の項目
+
+1. Connection : 例外処理を適用するコネクションの名前を表示します。
+2. Data Path : 例外処理を適用するデータの経路を表示します。 <br/>（例1. MySQL基準、Database &gt; Table &gt; Column で表示します。 <br/> 例2. Oracle基準、Database &gt; Schema &gt; Table &gt; Column で表示します。 <br/> 例3. DynamoDB基準、Table &gt; Column で表示します。）
+3. Allowed Users: ポリシー例外処理を適用されるユーザー名を表示します。
+4. Start Time: ポリシー例外処理を適用する開始時間を表示します。
+    1. Unmasking Request の承認時点を基準に表示します。
+    2. 事後承認でリクエストを登録した場合、リクエスト時点を基準に表示します。
+5. End Time: ポリシー例外処理を終了時間を表示します。
+    1. Unmasking Requestリクエストで設定したUnmasking Expiration時間を基準に終了時間を表示します。
+        1. Unmasking ExpirationタイプがEnd Date の場合には該当時間を終了時間で表示します。
+        2. Unmasking ExpirationタイプがTime Duration の場合には開始時間基準で時間間隔を計算して終了時間で表示します。
+6. Status: ポリシー例外処理有無が有効化されているか有無をActive、Inactive、Expired で表示します。
+    1. Active: マスキング解除リクエストによってポリシー例外処理が適用されており、マスキングが解除されて表示されます。End Time前までInactive に変更できます。
+    2. Inactive: マスキング解除リクエストによってポリシー例外処理が非有効化された状態で、マスキングが適用されて表示されます。End Time前までActive に変更できます。
+    3. Expired: マスキング解除リクエストのEnd Time が過ぎた場合Expired で表示し、Active またはInactive に変更できません。
+7. Excepted By: 該当マスキング解除がリクエストされたUnmasking Request をリンクで表示し、クリック時All Request の該当Request詳細画面にリダイレクトします。
+
+

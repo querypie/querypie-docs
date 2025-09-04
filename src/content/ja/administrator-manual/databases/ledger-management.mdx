@@ -1,0 +1,28 @@
+---
+title: 'Ledger Management'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+元帳テーブルポリシーはデータベース内の重要テーブルを元帳（=Ledger）として管理できる概念であり、元帳として管理されるテーブルの場合、ユーザーがDMLクエリを実行するためにワークフロー承認プロセスを経るよう強制できます。
+
+<Callout type="important">
+既存の元帳テーブルポリシー機能は別途ライセンスで提供されましたが、10.2.1バージョンからDAC統合機能で提供されます。
+</Callout>
+
+
+管理者はLedger Table Policyメニューを通じてデータベースのテーブル単位で元帳（Ledger）設定ができ、テーブルに「元帳専用承認規則（Ledger Approval Rule）」をマッピングすると元帳ワークフロープロセスを経ることになります。元帳専用承認規則をマッピングすることで、該当テーブルはすぐに元帳テーブルの性格を持つことになります。
+
+* ユーザーが元帳テーブルを対象にINSERT / UPDATE / DELETEクエリ実行時、
+    * 該当テーブルに対してユーザーがQueryPie Web Editorおよび3rd-party editorで修正クエリを試行すると、ユーザーはSQL Requestを経なければならないという案内を受けます。
+    * 続いてSQL Requestに進入したユーザーは事前に管理者が該当テーブルに設定した元帳専用承認規則（Ledger Approval Rule）のみ選択でき、テーブルを基準に承認有無を強制し、同時に決裁ラインまで強制できます。
+* ユーザーが元帳テーブルを対象にSELECTクエリ実行時、
+    * 元帳テーブルに対してユーザーがQueryPie Web EditorでSELECTクエリを実行する場合、クエリを実行する理由を入力するよう強制化できます。 
+    * ただし、3rd-party editorでは理由入力強制が不可能です。
+
+
+## Ledger管理ガイドショートカット
+
+(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)

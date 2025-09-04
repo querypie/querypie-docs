@@ -1,0 +1,85 @@
+---
+title: 'Data Masking'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織内で個人情報または機密情報のように管理が必要なデータは照会時マスキングされて表示するようポリシーを設定できます。Data Maskingメニューでポリシーを設定するコネクションを選択してポリシーを作成し、マスキングが必要なデータをカラム基準で規則を登録し、管理できます。
+
+
+## データマスキングポリシー作成
+
+新しいマスキングポリシーをコネクション基準で登録します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking](/administrator-manual/databases/policies/data-masking/image-20240725-072925.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking
+</figcaption>
+</figure>
+
+1. Database設定メニューからPolicies &gt; Data Maskingメニューに移動します。
+2. 右上の`Create Policy`ボタンをクリックします。
+3. ポリシー作成のための以下の情報を入力します。
+    1.  **Policy Name**  : ポリシーを画面上で区別できる名前です。
+    2.  **Target Connection**  : ポリシーを適用するコネクションを選択します。1つのポリシー当たり1つのコネクションを接続できます。
+4. `Save`ボタンで保存します。
+
+該当ポリシーがData Maskingポリシー一覧に作成されたことを確認できます。
+
+
+## データマスキングポリシーに規則登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details
+</figcaption>
+</figure>
+
+ポリシーを作成した後、実際にポリシーを適用するデータの経路を規則で登録します。
+
+1. Data Maskingメニューで作成したポリシーをクリックします。
+2. ポリシー詳細情報および規則登録画面が表示され、右側で`Add Rule List`ボタンをクリックします。
+3. ポリシーを適用するデータの経路を順番に選択します。 
+    1.  **Database Name**  : 規則登録のための必須値です。
+    2.  **Table Name**  : 規則登録のための必須値です。 
+    3.  **Column Name**  : 規則登録のための必須値です。 
+4. マスキングパターンを適用します。
+    1. 3番で選択したカラムに適用するマスキングパターンを1つ以上選択します。
+    2. 基本的に20余りの個人情報および機密情報をマスキングするパターンを提供します。
+    3. Masking Patternメニューで正規表現を通じて直接検出パターンとマスキングパターンを作成できます。
+5. 該当データ照会が必要なユーザーまたはグループに限りマスキング規則を例外処理できます。 
+    *  **Allowed Users**  : 該当規則を例外処理するユーザーまたはグループを選択します。
+6. `Ok`ボタンで保存します。
+
+Rule Listタブで規則が登録されたことを確認できます。これでユーザーが該当データを照会する場合、適用したマスキングパターンに従って「*****@gmail.com」のようにマスキングされて表示されます。
+
+
+<Callout type="important">
+Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)」エラーが発生します。
+A. この場合、DBアカウント情報設定がされていないか、間違った情報で設定されている可能性があります。Database Settings &gt; Connection Management &gt; DB Connectionsメニューで該当コネクション情報クリック後、  **Database Username / Password情報を入力し保存** した後再試行します。
+</Callout>
+
+## マスキングポリシーが適用されたカラムに対するアクセスログ確認
+
+<Callout type="info">
+10.3.0からマスキングポリシーが制御するカラムに対するアクセスログを確認できます。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20250512-041023.png](/administrator-manual/databases/policies/data-masking/image-20250512-041023.png)
+</figure>
+
+1. ポリシー一覧で作成したポリシーの個別項目（行）をクリックして詳細ページに移動します。
+2. Logsタブを選択します。
+3. Logの内容を確認します。
+    1.  **Name** : QueryPieユーザーのDisplay Nameです。
+    2.  **Connection**  : ポリシーが制御している対象コネクションです。
+    3.  **Database Name** : ポリシーが制御している対象論理DB名です。
+    4.  **Table Name**  : ポリシーが制御している対象テーブル名です。
+    5.  **Column Name**  : ポリシーが制御している対象単一または複数のカラム名です。
+    6.  **Rows**  : クエリが返す行数です。
+    7.  **Action At**  : クエリを実行した時点です。

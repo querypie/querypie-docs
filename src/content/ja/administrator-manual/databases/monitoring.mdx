@@ -1,0 +1,36 @@
+---
+title: 'Monitoring'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+クエリパイでクエリの実行は3つの経路があります。
+
+* Web Editorを使用してユーザーがクエリ入力後実行。
+* WorkflowのSQL Requestを使用して決裁を経た後、承認が完了するとExecutorが実行ボタンを押して実行。
+* 3rd party tool（DBeaverなど）を使用（ユーザーAgent方式）またはURLを使用（Agent-less）してクエリパイProxyを通じて実行。
+
+上記のように実行されたクエリはRunning Queries、Proxy Managementを通じて状態を報告し、必要時に管理者が強制的に停止できます。（10.3.0以降から可能）
+
+<Callout type="info">
+10.3.0からAuditの下位項目としてモニタリングのみ可能だったRunning Queries機能にクエリ強制停止機能が追加されました。Proxy Managementはセッション強制機能が以前から存在していて位置のみMonitoring下位に移動されました。
+</Callout>
+
+
+<figure data-layout="center" data-align="center">
+![Databases &gt; Monitoring &gt; Running Queries](/administrator-manual/databases/monitoring/image-20250512-101633.png)
+<figcaption>
+Databases &gt; Monitoring &gt; Running Queries
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![Databases &gt; Monitoring &gt; Proxy Management](/administrator-manual/databases/monitoring/image-20250512-104613.png)
+<figcaption>
+Databases &gt; Monitoring &gt; Proxy Management
+</figcaption>
+</figure>
+
+

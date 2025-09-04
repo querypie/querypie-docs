@@ -1,0 +1,40 @@
+---
+title: '(New) Policy Management'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+既存QueryPie DACはData Access、Data Masking、Sensitive Data。Ledger Table Managementのようなデータポリシーを提供しています。しかし、これらのポリシーを各コネクションごとに個別に設定し、各テーブルとカラムごとに規則を適用する必要があります。そしてポリシーに対してインポートおよびエクスポート機能を提供しません。
+
+10.2.6からこれらの不便に対する改善のために新しいポリシー管理機能を提供します。タグベースポリシー適用機能を通じてDBMSのpathとタグをマッピングした後、ポリシーを適用するとタグによって動的にポリシーが割り当てられます。テーブルに割り当てられたタグを通じて特定テーブルのみアクセス可能に設定できます。
+
+## 新しいポリシー管理機能使用
+
+新しいポリシー管理機能を使用するためには、まず機能を有効化する必要があります。
+
+General &gt; Company management &gt; Securityの下位項目中DB Connection SecurityでNew DAC Policy Managementを`Enable`に設定します。（基本値Disable）<br/>
+
+<figure data-layout="center" data-align="center">
+![Enable New DAC Policy Management](/administrator-manual/databases/new-policy-management/image-20250307-114537.png)
+<figcaption>
+Enable New DAC Policy Management
+</figcaption>
+</figure>
+
+<Callout type="important">
+新しいポリシー管理機能を有効化する前に以下の内容をまず検討する必要があります。
+* この機能を有効化する前にまず元帳テーブル管理機能をOffに切り替える必要があります。
+*  **新しいポリシー管理機能を有効化すると既存ポリシーは非有効化され、メニューで見えなくなります。設定画面にアクセスするためには既存ポリシーのURLをブラウザで直接入力する必要があります。** 
+*  **旧ポリシーページ直接アクセス用URL** 
+    *  **Data Access**  : https://`{QueryPie Host}`/database-settings/policies/data-access
+    *  **Data Masking**  : https://`{QueryPie Host}`/database-settings/policies/data-masking
+    *  **Sensitive Data**  : https://`{QueryPie Host}`/database-settings/policies/sensitive-data
+    *  **Policy Exception**  : https://`{QueryPie Host}`//database-settings/policies/policy-exception **** 
+*  **新しいポリシー管理機能が有効化されると既存ポリシーは非有効化されます。既存ポリシーが削除されるわけではないため、URLを通じて既存UIに移動して既存ポリシーの内容を確認することはできます。**  
+* この機能によって生成されたポリシーは既存ポリシーと互換性がなく、既存ポリシーをマイグレーションできません。
+* 新しいポリシー管理機能で作成したポリシーをすべて削除しなければこの機能を非有効化できません。 
+</Callout>
+
+

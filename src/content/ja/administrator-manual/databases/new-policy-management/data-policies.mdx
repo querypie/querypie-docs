@@ -1,0 +1,114 @@
+---
+title: 'Data Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Data PoliciesはQueryPieでデータアクセス制御、データマスキング、そして使用理由入力強制化のようなデータガバナンスポリシーを設定し、管理する機能です。この機能を通じてデータセキュリティ、個人情報保護、そして規制遵守を管理できます。
+
+
+## ポリシー作成画面アクセス
+
+<figure data-layout="center" data-align="center">
+![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
+</figure>
+
+1. 左側サイドバーで  **Policy Management**  セクションを展開します。
+2.  **Data Policies**  メニューをクリックします。
+3. 上部の  **Create Policy**  ボタンをクリックしてポリシー作成画面に移動します。
+
+
+## ポリシー基本情報設定
+
+<figure data-layout="center" data-align="center">
+![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
+</figure>
+
+ポリシー作成画面の  **Information**  セクションで以下の情報を設定します:
+
+1.  **Name** : ポリシーの名前を入力します。（必須入力項目）
+2.  **Policy Type** : ドロップダウンメニューで適用するポリシータイプを選択します。（必須入力項目）
+3.  **Description** : ポリシーに対する説明を入力します。（選択事項）
+
+
+### ポリシータイプ紹介
+
+QueryPieは以下のようなポリシータイプを提供します:
+
+1.  **Column Data Masking** 
+    * カラムを対象にデータマスキングポリシーを適用します。 
+    * 正規表現ベースのマスキングパターンを使用して特定データパターンを検出し、マスキングします。（Masking Patterns）
+    * ユーザーが該当カラムを照会する時`{masked}`形態で表示され、セルをクリックするとマスキング処理されたデータが表示されます。<br/>
+2.  **Table Access Restriction** 
+    * テーブルを対象にアクセス遮断ポリシーを適用します。
+    * ユーザーが該当テーブルを照会しようとする時アクセスが遮断され、権限なしメッセージが表示されます。
+    * メッセージ: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/>
+3.  **Column Access Restriction** 
+    * カラムを対象にアクセス遮断ポリシーを適用します。
+    * ユーザーが該当カラムを照会しようとする時`{restricted}`形態で表示され、アクセスが遮断されます。<br/>
+4.  **Table Access Justification Requirement** 
+    * 特定テーブルに対する作業時理由入力を強制化します。
+    * ユーザーが選択された作業（例：SELECTクエリ、データエクスポート）を実行する時理由入力モーダルが表示されます。
+    * 入力された理由はQuery AuditのExecution Reasonに記録されます。<br/>
+5.  **Sensitive Data Access Monitoring** 
+    * 管理者が特定テーブルまたはカラムを機密情報として指定し、アクセスする場合Alertを発生させます。
+    * どの経路が機密情報か設定し、Alert設定はGeneral &gt; Company Management &gt; Alertで設定します。<br/>（11.0.0基準新ポリシー用Sensitive Data Access Monitoring Alert設定機能は未実装状態です。）
+6.  **DML Query Approval Enforcement**  
+    * 特定テーブルに対して`INSERT`、`UPDATE`、`DELETE`クエリを実行する場合Workflowで承認手順を経るよう強制します。
+    * このポリシーを作成する前にGeneral &gt; Workflow Management &gt; Approval RulesでSQL Request TypeのApproval Ruleをまず作成しておく必要があります。`INSERT`、`UPDATE`、`DELETE`を実行するのは実行する人に該当privilegeが付与されていることを前提とします。クエリを実行する人がリクエスト者本人になるようにするには、以下の図のようにExecution項目のAssignee for Executionに「Allow Assginee selection (All Users)が選択されている必要があり、`INSERT`、`UPDATE`、`DELETE`権限はあるが管理者でない人が承認を経てクエリを実行できます。<br/>
+    *  Approval Ruleが作成されていれば以下の図のようにポリシーと連携するApproval Ruleを指定できます。<br/>
+    * DML Query Approval Enforcementはタグで対象を指定できず、specific data pathで特定経路を指定する必要があります。
+
+## ポリシー適用対象設定
+
+ポリシー作成画面の  **User Scope**  セクションでポリシーが適用されるユーザー範囲を設定します。
+
+<figure data-layout="center" data-align="center">
+![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
+</figure>
+
+### Scope Type
+
+1.  **Everyone** : すべてのユーザーにポリシーが適用されます。（基本値）
+2.  **Users or Groups** : 選択した特定ユーザーやグループにのみポリシーが適用されます。
+3.  **Attribute of Users**  : 特定属性を持つユーザーに動的にポリシーを適用したい場合使用します。 **[11.1.0]** 
+
+### Exclusions
+
+ポリシー適用から除外する対象を設定できます。User scopeのscope typeが  **Everyone** の場合のみExclusion対象を指定できます。ポリシー例外（Policy Exception）を通じて指定する状況と異なる点は、ポリシー例外は例外の期間が決まっているがExclusion対象はポリシーと同じライフサイクルを持つということです。つまり、ポリシーが存在する期間中常に適用されます。（ポリシー適用対象 = 全体 - exclusionsに指定した特定ユーザーまたはグループです。）
+
+1.  **None** : 除外なしにScope Typeに従ってすべてのユーザーに適用されます。（基本値）
+2.  **Users and Groups** : 選択したユーザーやグループをポリシー適用から除外します。 
+
+
+## ポリシー適用ターゲットデータ設定
+
+ポリシー作成画面の  **Data Scope**  セクションでポリシーが適用されるデータを設定します。
+
+<figure data-layout="center" data-align="center">
+![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
+</figure>
+
+### Scope Type
+
+現在はタグベースでのみポリシーを適用できます:
+
+1.  **Data tags** : Data Pathsメニューで設定されたタグを基にポリシー適用対象を選択します。
+    * このオプションが選択されるとタグキーと値を指定してポリシーを適用するテーブルまたはカラムを選択できます。
+2.  **Specific data path** : 特定データ経路を直接指定するオプションです。（11.0.0から）
+    * このオプションを選択した後Add tartgetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。 
+
+
+### ポリシー保存
+
+すべての設定が完了すると画面下部の  **Save**  ボタンをクリックしてポリシーを保存します。保存をキャンセルするには  **Cancel**  ボタンをクリックします。
+
+
+<Callout type="important">
+**注意事項**
+* ポリシー設定時データタグを基にするため、ポリシー設定前にData Pathsメニューで適切なタグが割り当てられている必要があります。
+* ポリシーは下部に列挙されたデータベースタイプのみサポートし、サポートされないデータベースタイプにはポリシーを適用できません。
+    *  MySQL、MariaDB、Impala、Single Store、Hive、BigQuery、Oracle、PostgreSQL、SQLServer、Redshift、MS SQL Azure、SAP Hana、Trino、Athena、MongoDB、DocumentDB、Cassandra、ScyllaDB、DynamoDB、Redis
+</Callout>

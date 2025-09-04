@@ -1,0 +1,70 @@
+---
+title: 'Sensitive Data'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織内で個人情報または機密情報のように管理が必要なデータを機密データポリシーで設定する方法を確認できます。Sensitive Dataメニューでポリシーを設定するコネクションを選択してポリシーを作成し、機密なデータをテーブル、カラム基準で規則を登録し、管理できます。ポリシーで作成された場合、別途ログを通じて機密データにアクセスした記録を確認でき、Alert機能を通じて通知を受け取ることもできます。
+
+
+## 機密データポリシー作成
+
+新しい機密データポリシーをコネクション基準で登録します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Sensitive Data](/administrator-manual/databases/policies/sensitive-data/image-20240729-054311.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Sensitive Data
+</figcaption>
+</figure>
+
+1. Database設定メニューからPolicies &gt; Sensitive Dataメニューに移動します。
+2. 右上の`Create Policy`ボタンをクリックします。
+3. ポリシー作成のための以下の情報を入力します。
+    1.  **Policy Name**  : ポリシーを画面上で区別できる名前です。
+    2.  **Target Connection**  : ポリシーを適用するコネクションを選択します。1つのポリシー当たり1つのコネクションを接続できます。
+4. `Save`ボタンで保存します。
+
+該当ポリシーがSensitive Dataポリシー一覧に作成されたことを確認できます。
+
+
+## 機密データポリシーに規則登録
+
+ポリシーを作成した後、実際にポリシーを適用するデータの経路を規則で登録します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Sensitive Data &gt; Rule List](/administrator-manual/databases/policies/sensitive-data/image-20240820-120656.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Sensitive Data &gt; Rule List
+</figcaption>
+</figure>
+
+1. Sensitive Dataメニューで作成したポリシーをクリックします。
+2. ポリシー詳細情報および規則登録画面が表示され、右側で`Add Rule List`ボタンをクリックします。
+3. ポリシーを適用するデータの経路を順番に選択します。
+    1.  **Database Name**  : 規則登録のための必須値です。
+    2.  **Table Name**  : 規則登録のための必須値です。この場合、該当テーブルデータ全体が機密データに設定されます。
+    3.  **Column Name**  : 選択したテーブル内の特定カラムにのみポリシーを適用したい場合カラムを選択します。
+4. ポリシーを適用するデータの機密度レベルを選択します。
+    1. High、Medium、Low 3つのレベル中一つを選択します。
+    2. 選択したSensitive Level情報は今後Alert送信のトリガー条件で設定できます。 
+5. `Ok`ボタンで保存します。
+
+Rule Listタブで規則が登録されたことを確認できます。これでユーザーが該当データにアクセスする場合Logsタブでアクセス履歴を確認できます。機密データポリシーを通知で設定したい場合、[Alerts](../../general/company-management/alerts)文書を参考にしてください。
+
+<Callout type="info">
+10.2.8からLogタブで見ることができるSensitive dataアクセス履歴にユーザーが実行したクエリを含むよう改善されました。Log行をクリックすると出力される詳細情報にユーザーが実行したクエリを見ることができます。
+<figure data-layout="center" data-align="center">
+![Sensitive Data Log のクエリ内容表示](/administrator-manual/databases/policies/sensitive-data/image-20250410-065516.png)
+<figcaption>
+Sensitive Data Log のクエリ内容表示
+</figcaption>
+</figure>
+</Callout>
+
+<Callout type="important">
+Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)」エラーが発生します。
+A. この場合、DBアカウント情報設定がされていないか、間違った情報で設定されている可能性があります。Database Settings &gt; Connection Management &gt; DB Connectionsメニューで該当コネクション情報クリック後、  **Database Username / Password情報を入力し保存** した後再試行します。
+</Callout>

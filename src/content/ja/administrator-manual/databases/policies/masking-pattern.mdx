@@ -1,0 +1,70 @@
+---
+title: 'Masking Pattern'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Masking Patternページでは機密情報を検出およびマスキングするためのパターンを管理します。基本的に25個のマスキングパターンが提供され、その他ユーザーが希望するパターンを直接追加できます。
+
+<Callout type="info">
+**メニュー位置移動**
+11.2.0から既存のAdministrator &gt; Databases &gt; Policies &gt; Masking PatternからAdministrator &gt; Databases &gt; General &gt; Masking Patternにメニューが移動されました。
+</Callout>
+
+## マスキングパターン一覧照会
+
+Masing Patternページで登録されたマスキングパターンを照会できます。（パターン名で検索可能）
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; General &gt; Masking Pattern](/administrator-manual/databases/policies/masking-pattern/image-20250826-005621.png)
+<figcaption>
+Administrator &gt; Databases &gt; General &gt; Masking Pattern
+</figcaption>
+</figure>
+
+
+## マスキングパターン詳細情報照会/変更/削除
+
+テーブルで詳細情報を照会したいアイテムをクリックするとDrawerが開き、詳細情報を照会、変更、または削除できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; General &gt; Masking Pattern &gt; Details](/administrator-manual/databases/policies/masking-pattern/image-20250826-005930.png)
+<figcaption>
+Administrator &gt; Databases &gt; General &gt; Masking Pattern &gt; Details
+</figcaption>
+</figure>
+
+*  **Detecting Pattern**  : 機密情報検出パターン
+*  **Masking Pattern**  : 機密情報マスキングパターン
+*  **Masking Pattern Preview**  : マスキングパターン適用結果プレビュー
+    *  **Raw Data**  : サンプルデータ
+    *  **Detected Data**  : サンプルデータでDetecting Patternによって機密情報として検出された領域（青色陰影）
+    * Previewテーブル内Masked Dataでサンプルデータに対する機密情報マスキング結果を確認できます
+
+`Save`ボタンをクリックすると変更内容が保存されます。
+
+`Delete`ボタンをクリックし、確認モーダルで`Delete`ボタンをクリックするとマスキングパターン削除が完了します。
+
+またはMasking Pattern一覧で削除したいアイテムをチェックボックスで選択し`Delete`ボタンをクリックして削除できます。
+
+
+## マスキングパターン追加登録
+
+`Create Pattern`ボタンをクリックするとモーダルが開きます。必要な情報をすべて入力後`Save`ボタンを押して保存します。
+
+<figure data-layout="center" data-align="center">
+![Create Pattern](/administrator-manual/databases/policies/masking-pattern/screenshot-20240731-174002.png)
+<figcaption>
+Create Pattern
+</figcaption>
+</figure>
+
+*  **Name**  : マスキングパターン名
+*  **Detecting Pattern**  : 機密情報検出用パターン（正規表現）
+*  **Masking Pattern**  : 機密情報マスキング用パターン（正規表現）
+*  **Masking Pattern Preview**  : マスキングパターンが正確に入力されたかプレビューするための情報
+    * Raw Dataにサンプルデータを入力するとDetected Dataに検出データが表示される
+    * Previewテーブルに整理された結果が表示される
+    * サンプルデータは一つだけ入力可能

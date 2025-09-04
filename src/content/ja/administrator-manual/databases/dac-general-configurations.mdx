@@ -1,0 +1,116 @@
+---
+title: 'DAC General Configurations'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+10.3.0からAdministrator &gt; General &gt; Security配下にあったDAC関連設定項目が各サービスメニューのGeneral &gt; Configurationsに移動されました。
+11.2.0からAdministrator &gt; General &gt; Company Management &gt; General配下にあったQuery SharingがAdministrator &gt; Databases &gt; General &gt; Configurationsに移動されました。
+</Callout>
+
+## データベースアクセス制御設定
+
+DBアクセス制御に適用される設定を管理します。
+
+<figure data-layout="center" data-align="center">
+![image-20250822-104340.png](/administrator-manual/databases/dac-general-configurations/image-20250822-104340.png)
+</figure>
+
+
+### Query Sharing
+
+<br/>Query SharingはQueryPie SQL Editorで作成したクエリをGitに送信して他のユーザーと共有する機能です。基本的にクエリ共有設定はオフになっており、`Query Sharing Setting`ボタンをクリックすると設定モーダルがポップアップします。Query SharingオプションをOnに選択すると、追加入力項目が表示されます。
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-145003.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145003.png)
+</figure>
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-145650.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145650.png)
+</figure>
+
+*  **Git Repository URL**  : クエリを送信するGit Repository URL
+*  **Git Branch**  : クエリファイルを送信するRepository内のブランチ名
+*  **Authentication Type**  : クエリ送信リクエストの認証方式（OAuthまたはSSH選択）
+    * OAuth選択時、以下の内容を入力します。
+        *  **User Name** : Git Repositoryを利用中のユーザー名（例：GitHub Username）
+        *  **Access Token**  : Gitサービスで提供されるAccess Token
+    * SSH選択時、以下の内容を入力します。
+        *  **Public Key**  : Gitサーバーに保存されたSSH Public Key
+        *  **Private Key**  : SSH Public Keyと一対を成すPrivate Key
+        *  **Passphrase**  : Private KeyにPassphraseが設定されている場合入力
+
+
+入力が完了すると`Test`ボタンをクリックして正常に認証されるか確認後、`OK`ボタンを入力して保存します。
+
+<Callout type="info">
+GitHubを利用したOAuthまたはSSH認証に関する説明は以下の文書を参考にしてください。
+* Access Token発行 : [個人用アクセストークンの管理](https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+* SSH接続 : [SSHを通じたGitHub接続](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
+</Callout>
+
+
+Query Sharing設定が完了するとQuery Sharingが  **On** で表示されます。
+
+SQL Editor画面でクエリ共有機能を使用できます。
+
+* Save時に連携したRepositoryにクエリファイルが保存されます。
+* Queriesパネル &gt; QueryPie Git SharingフォルダからRepositoryに保存されたクエリファイルを読み込むことができます。
+
+詳細な説明は[ウェブSQLエディターでアクセス](../../user-manual/database-access-control/connecting-with-web-sql-editor)を参考にしてください。
+---
+
+### アクセス制御設定
+
+
+*  **Privilege Deactivation Period** : DB権限（Privilege）の期限切れのための長期未使用基準期間（Default : 90日）
+*  **Maximum Access Duration** : Privilegeリクエストおよび割り当て時の最大期間
+    * DB Access Requestリクエスト時に指定された期間を超過した期限日設定不可
+
+*  **Display the first 10 rows in Query Audit** : Query Audit内SELECT文実行結果の表示方式設定（Default : OffでOnに設定した場合、全体結果を表示せず、最初の10行のみ表示されます）
+
+<figure data-layout="center" data-align="center">
+![Query Audit Detail](/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png)
+<figcaption>
+Query Audit Detail
+</figcaption>
+</figure>
+
+*  **Advanced Privilege Setting**  : Privilege権限別アカウント制御（Default : Off）
+    * Onに設定した場合、Connection Detailsページ下部にPrivilege Settingsタブが表示される
+    * 詳細内容は[DB Connections](connection-management/db-connections)内  **Privilege Setting**  文書参考
+*  **Unmasking Zones** : Unmasking requestを通じてマスキングされたデータ照会を許可されたユーザーまたはマスキングポリシーのallowed userに登録されてマスキングポリシーの例外対象ユーザーであっても特定IP（帯域）の場合のみマスキング解除状態で照会できるよう設定。（Default : Off） <br/>参考 : [Unmasking Zones詳細説明](dac-general-configurations/unmasking-zones)
+*  **Ledger Table Management :**  特定テーブルをLedgerに指定してWorkflow承認強制、理由入力強制ができるLedger table management機能の有効化または無効化設定。（Default : Off）
+*  **Select Purpose Duration for Agent :**  Proxyを通じて3rd party toolでDBにアクセスするユーザーが理由入力強制対象データを照会して理由入力をする時、指定した時間内に再入力しないよう設定。Ledger Table ManagementがOn状態の時のみ設定可能。（Default : 10 minutes）
+*  **Restricted Statement**  : 使用制限クエリ
+    * Statement : クエリに含まれる場合実行制限したい文字列入力（大文字小文字区別なし）
+    * Allowed User : 該当構文実行を許可するユーザー指定（複数選択可能、グループ単位指定不可）
+    * 入力されたRestricted Statementを含むクエリ実行時ブロックされる
+
+<Callout type="important">
+Restricted StatementポリシーによってブロックされるクエリはSQL Requestで承認を受けても実行がブロックされます。ユーザーによって実行を許可すべきクエリを入力しないよう注意してください。
+</Callout>
+
+*  **Justification Length**  : Connection設定で「User Action Purpose Required」オプションが有効化されているか、Ledger table managementポリシーで理由入力を強制した場合、Web EditorまたはAgentを通じて理由入力をする必要があります。この時、入力欄に入力する文字長の最小値および最大値を管理者が指定します。
+    * 入力値の最小値は1で最大値は1000です。<br/>
+
+*  **Query Annotation**  : クエリ実行時に自動で管理者が指定したコメントを記録します。機能を有効化した場合、以下の3つのテンプレートを使用してコメントを記録します。10.4.0基準Redshift限定サポート。
+    * User Name: `{{userName}}` : クエリを実行したユーザーのDisplay Nameです。
+    * Login ID: `{{loginId}}` : クエリを実行したユーザーのLogin IDです。
+    * Execute From: `{{executedFrom}}` : クエリを実行した手段です。10.4.0基準Web Editorのみ記録されます。 
+
+<figure data-layout="center" data-align="center">
+![Query Audit](/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png)
+<figcaption>
+Query Audit
+</figcaption>
+</figure>
+
+<br/>
+
+*  **Member based Connection Filtering :** WorkflowでDB Access Requestフォームで特定ユーザーまたはグループに対して全体コネクションを表示せず、指定したコネクションのみ表示するようフィルタリングする機能です。 
+    * コネクションの詳細画面でconnection memberに登録されたユーザー/グループのみ該当コネクションがWorkflow DB Access Reqeustに表示されます。<br/>
+
+<Callout type="info">
+**DB作業に対する理由入力強制設定**
+9.17.0バージョンから該当機能はコネクション詳細設定に変更されました。詳細な設定方法は[DB Connections](connection-management/db-connections)内  **追加設定** を参考にしてください。
+</Callout>

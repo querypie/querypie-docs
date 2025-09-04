@@ -1,0 +1,38 @@
+---
+title: 'Ledger Approval Rules'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+管理者は元帳テーブルにマッピングする「元帳専用承認規則（Ledger Approval Rule）」を定義できます。
+
+<Callout type="important">
+元帳テーブルポリシーは関連ライセンスが有効化されている場合にのみ使用できます。該当機能使用のためにはQueryPie顧客サポートチームにお問い合わせください。
+</Callout>
+
+
+## 元帳テーブルに承認規則作成
+
+元帳テーブルポリシー適用時強制化する承認規則を別途作成し、管理できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval Rules](/administrator-manual/databases/ledger-management/ledger-approval-rules/Screenshot-2024-12-18-at-11.52.33-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval Rules
+</figcaption>
+</figure>
+
+1. Database設定メニューからLedger Management &gt; Ledger Approval Rulesメニューに移動します。
+2. 右上の`Add Approval Rule`ボタンをクリックします。
+3. ポリシー作成のための以下の情報を入力します。
+    1.  **Rule Name**  : 決裁規則を画面上で区別できる名前です。
+    2.  **Request Type**  : 決裁規則を追加するリクエストタイプを選択します。決裁規則はリクエストタイプ別に区分されます。
+    3.  **Approval Steps**  : 段階別承認が可能になるよう承認規則を設定できます。 
+        * `Add Step`ボタンをクリックして承認段階を追加できます。最大3段階まで可能です。
+    4.  **Execution Steps**  : SQL / Export Requestタイプの場合、実行者に対する規則を設定できます。 
+4.  **Urgent Mode**  : 該当決裁規則を選択する場合、事後承認機能許可有無を設定します。（Default = Off）
+5. `Save`ボタンで保存します。
+
+承認者関連詳細オプションと実行者関連詳細オプションは[Approval Rules](../../general/workflow-management/approval-rules)文書を参考にしてください。
