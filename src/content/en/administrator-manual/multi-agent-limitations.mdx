@@ -1,0 +1,26 @@
+---
+title: 'Multi Agent Limitations'
+---
+
+This document outlines the limitations of QueryPie Multi Agent.
+
+### Version
+
+* Multi Agent is available in version 10.2.5 or later.
+    * If version >= 10.2.5, you can register and use QueryPie hosts of different versions.
+    * However, hosts of version 10.2.4 or earlier cannot be registered.
+* Multi Agent ensures maximum compatibility in versions 10.2.5 and above.
+    * Maximum backward compatibility is ensured, and when a host of an incompatible version is registered or attempted to be registered, an update notification is provided.
+    * Only manual updates are supported. That is, you must download and install a new Multi Agent from the incompatible version of QueryPie.
+    * Forward compatibility is 100% supported.
+
+### DB Connection Ports
+
+* When connecting DAC Proxy, it occupies user PC port ranges.
+* Proxy port ranges must be configured differently for each QueryPie host to avoid port conflicts.
+* The maximum number of available ports is 65,000, but usage of 10,000 or fewer is recommended.
+
+### Others
+
+* There is no limit to the maximum number of registerable hosts, but depending on the user's PC (memory) performance, problems such as speed degradation may occur when viewing the host list.
+* No environment variable configuration is required during QueryPie installation for Multi Agent usage.

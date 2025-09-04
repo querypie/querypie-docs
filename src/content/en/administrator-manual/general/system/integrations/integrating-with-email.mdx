@@ -1,0 +1,76 @@
+---
+title: 'Email Integration'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Email integration supports the following key features:
+
+* Password reset email sending: Sends emails for user password resets.
+* Two-factor authentication code sending: Provides additional security steps via email during user login.
+* Event notifications: Sends emails to administrators for events generated through Alert rules.
+
+An SMTP server is required for email sending, and QueryPie provides methods for integrating with SMTP servers.
+
+## Email Integration Configuration
+
+1. Navigate to Administrator > General > System > Integrations menu.
+2. Click on the Email tile to go to the details page.
+3. Click the `Configure` button on the details page to display a popup for entering SMTP information.
+4. Enter the following information to create SMTP settings:
+    1. **Email Server Name**: Enter an arbitrary name for easy identification.
+    2. **Host**: Enter the hostname (FQDN) of the SMTP server.
+    3. **Secure**: Select the encryption transmission method. You can choose between TLS and STARTTLS. The default is TLS.<br/>STARTTLS uses plain text if the SMTP Server cannot use TLS.
+    4. **Port**: Enter the port number used by the SMTP server.
+    5. **Timeout (milliseconds)**: Enter the threshold for waiting for SMTP response. The default is 60000. Unless absolutely necessary, avoid modifying this value.
+    6. **Sender Email Address**: Enter the email address of the sender.
+    7. **Sender Name**: Enter the content to be displayed as the sender's name.
+    8. **Support Email Address (Reply-to)**: All emails sent from QueryPie to the SMTP server are send-only. Since the send-only email address entered in Sender Email Address cannot receive reply emails from users, it may be necessary to provide an address to receive emails when users need to request technical support.<br/>As of version 10.2.2, the password reset email template and two-factor authentication code email template use the support email address specified here.
+    9. **SMTP Server Requires Authentication switch**: Select On or Off depending on whether authentication is required to access the SMTP server and send emails. When On is selected, User and Password must be entered.
+        1. User: Enter the user for authentication. The format is typically an email address.
+        2. Password: Enter the password for the authentication account.
+    10. **Send Workflow Notification via Email switch**: Select whether to send email notifications to related parties when workflow-related events occur, such as receiving approval requests and processing approvals/rejections.
+    11. **Test button**: Verifies that the SMTP settings can connect without issues.
+5. Click the `OK` button to save the settings.
+
+## Modifying Email Integration Settings
+
+1. Navigate to Administrator > General > System > Integrations menu.
+2. Click on the Email tile to go to the details page.
+3. Click the Edit button for the SMTP settings displayed in Email sender on the details page.
+4. Modify the necessary parts and save.
+
+## Checking Email Sending History
+
+1. Navigate to Administrator > General > System > Integrations menu.
+2. Click on the Email tile to go to the details page.
+3. Check the Sent Email History list.<br/>Email sending history stored in this list is retained for 30 days and content older than 30 days is deleted.
+
+## Deleting Email Integration Settings
+
+1. Navigate to Administrator > General > System > Integrations menu.
+2. Click on the Email tile to go to the details page.
+3. Click the Delete button for the SMTP settings displayed in Email sender on the details page.<br/>If there are settings using the SMTP settings such as Alert, MFA, etc., the SMTP settings cannot be deleted.<br/>All related settings must be deleted first before deletion is possible.
+
+## Sending User Password Reset Emails
+
+<Callout type="info">
+Email Integration configuration is required first to send password reset emails for users to reset their own passwords.
+</Callout>
+
+Please refer to the following content for methods to have users reset their passwords via email:
+
+* Administrator resets a specific user's password: [Users | Resetting User Passwords](../../user-management/users#resetting-user-passwords)
+* User resets their own password: [User Password Reset via Email](../../../../user-manual/my-dashboard/user-password-reset-via-email)
+
+## Using Email as Two-Factor Authentication
+
+<Callout type="info">
+From QueryPie version 10.2.2, Email can be used as a two-factor authentication method along with Google OTP. Email Integration configuration is required first.
+</Callout>
+
+Please refer to the following content for methods to use Email as a two-factor authentication method:
+
+* [Setting up Multi-Factor Authentication](../../user-management/authentication/setting-up-multi-factor-authentication)

@@ -1,0 +1,121 @@
+---
+title: 'Kubernetes'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![image-20240510-011958.png](/administrator-manual/kubernetes/image-20240510-011958.png)
+</figure>
+
+## Overview
+
+QueryPie KAC is a Kubernetes API protection solution for centrally managing cloud infrastructure such as AWS EKS or other on-premises Kubernetes clusters. With KAC, administrators can perform detailed user Kubernetes resource API access restriction and management, and audit and monitor Kubernetes APIs requested by users.
+
+## Recommended KAC Initial Setup Order
+
+For administrators new to QueryPie KAC (Kubernetes Access Controller), we recommend following the setup order below for smooth Kubernetes management.
+
+<Callout type="info">
+Clicking on linked items will take you to pages where you can immediately check related guides.
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**Setup Order**
+</th>
+<th>
+**Setup Items**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Preliminary Preparation**
+</th>
+<td>
+* [User Registration](general/user-management/users)
+* [User Group Registration](general/user-management/groups)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Kubernetes Cluster Registration**
+</th>
+<td>
+* [Synchronizing Kubernetes Resources from AWS](kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws)
+* [Manual Kubernetes Cluster Registration](kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Policy Configuration**
+</th>
+<td>
+* [Setting Kubernetes Policies](kubernetes/k8s-access-control/policies/setting-kubernetes-policies)
+* [Setting Kubernetes Roles](kubernetes/k8s-access-control/roles/setting-kubernetes-roles)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**Permission Granting**
+</th>
+<td>
+* [Granting and Revoking Kubernetes Roles](kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**Log Checking**
+</th>
+<td>
+* [Checking Kubernetes Audit Logs](audit/kubernetes-logs)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**[Users] Using Kubernetes**
+</th>
+<td>
+* [Accessing Kubernetes](../user-manual/kubernetes-access-control)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**Administrator Permission Settings**
+</th>
+<td>
+* [Setting Kubernetes Administrator Permissions](general/user-management/roles)
+</td>
+</tr>
+</tbody>
+</table>

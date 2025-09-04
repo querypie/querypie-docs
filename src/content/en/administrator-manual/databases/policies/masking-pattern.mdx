@@ -1,0 +1,68 @@
+---
+title: 'Masking Pattern'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+The Masking Pattern page manages patterns for detecting and masking sensitive information. By default, 25 masking patterns are provided, and you can directly add additional patterns as needed.
+
+<Callout type="info">
+**Menu Location Change**
+From version 11.2.0, the menu has been moved from Administrator > Databases > Policies > Masking Pattern to Administrator > Databases > General > Masking Pattern.
+</Callout>
+
+## Viewing Masking Pattern List
+
+You can view registered masking patterns on the Masking Pattern page. (Searchable by pattern name)
+
+<figure data-layout="center" data-align="center">
+![Administrator > Databases > General > Masking Pattern](/administrator-manual/databases/policies/masking-pattern/image-20250826-005621.png)
+<figcaption>
+Administrator > Databases > General > Masking Pattern
+</figcaption>
+</figure>
+
+## Viewing/Modifying/Deleting Masking Pattern Details
+
+Clicking on an item in the table you want to view details for opens a Drawer where you can view, modify, or delete detailed information.
+
+<figure data-layout="center" data-align="center">
+![Administrator > Databases > General > Masking Pattern > Details](/administrator-manual/databases/policies/masking-pattern/image-20250826-005930.png)
+<figcaption>
+Administrator > Databases > General > Masking Pattern > Details
+</figcaption>
+</figure>
+
+* **Detecting Pattern**: Sensitive information detection pattern
+* **Masking Pattern**: Sensitive information masking pattern
+* **Masking Pattern Preview**: Preview of masking pattern application results
+    * **Raw Data**: Sample data
+    * **Detected Data**: Areas detected as sensitive information in sample data by the Detecting Pattern (blue shading)
+    * You can check the sensitive information masking results for sample data in Masked Data within the Preview table
+
+Clicking the `Save` button saves the changes.
+
+Clicking the `Delete` button and clicking the `Delete` button in the confirmation modal completes the masking pattern deletion.
+
+Alternatively, you can select items to delete using checkboxes in the Masking Pattern list and click the `Delete` button to delete them.
+
+## Adding Additional Masking Patterns
+
+Clicking the `Create Pattern` button opens a modal. After entering all necessary information, click the `Save` button to save.
+
+<figure data-layout="center" data-align="center">
+![Create Pattern](/administrator-manual/databases/policies/masking-pattern/screenshot-20240731-174002.png)
+<figcaption>
+Create Pattern
+</figcaption>
+</figure>
+
+* **Name**: Masking pattern name
+* **Detecting Pattern**: Pattern for detecting sensitive information (regular expression)
+* **Masking Pattern**: Pattern for masking sensitive information (regular expression)
+* **Masking Pattern Preview**: Information for previewing whether the masking pattern is entered correctly
+    * Entering sample data in Raw Data displays detected data in Detected Data
+    * Organized results are displayed in the Preview table
+    * Only one sample data can be entered

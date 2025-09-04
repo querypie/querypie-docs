@@ -1,0 +1,125 @@
+---
+title: 'Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240523-195046.png](/administrator-manual/servers/screenshot-20240523-195046.png)
+</figure>
+
+## Overview
+
+QueryPie SAC can centrally manage permissions for various systems and servers in cloud and on-premises environments, network equipment, and all resources accessible via SSH. Additionally, you can group numerous servers to easily and conveniently set access policies and grant permissions. It provides advanced features for real-time monitoring of user system access status and session recording capabilities that allow you to replay work history on the same screen.
+
+## Recommended SAC Initial Setup Order
+
+For administrators new to SAC (System Access Controller), we recommend following the setup order below for smooth server management. Setting up essential resources like Account and SSH Key first, which are required for server registration, will help you complete the work faster and more conveniently.
+
+<Callout type="info">
+Clicking on linked items will take you to pages where you can immediately check related guides.
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**Setup Order**
+</th>
+<th>
+**Setup Items**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Preliminary Preparation**
+</th>
+<td>
+* [User Registration](general/user-management/users)
+* [User Group Registration](general/user-management/groups)
+* [SSH Key Registration](servers/server-account-management/ssh-key-configurations)
+* [Account Template Registration](servers/server-account-management/server-account-templates)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Server Registration**
+</th>
+<td>
+* [Synchronization via Cloud Provider](servers/connection-management/cloud-providers)
+* [Manual Server Registration](servers/connection-management/servers/manually-registering-individual-servers)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Server Group Registration**
+</th>
+<td>
+* [Managing Servers as Groups](servers/connection-management/server-groups/managing-servers-as-groups)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**Policy Configuration**
+</th>
+<td>
+* [Setting Command Block Templates](servers/server-access-control/command-templates)
+* [Setting Server Access Policies](servers/server-access-control/policies/setting-server-access-policy)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**Permission Granting**
+</th>
+<td>
+* [Granting Server Access Role Permissions](servers/server-access-control/access-control/granting-and-revoking-roles)
+* [Directly Granting Server Access Permissions](servers/server-access-control/access-control/granting-and-revoking-permissions)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**Log Checking**
+</th>
+<td>
+* [Checking Audit Logs](audit/server-logs)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**Other Settings**
+</th>
+<td>
+* [Setting Server Notification Policies](general/company-management/alerts)
+* [Server Security Settings](general/company-management/security)
+</td>
+</tr>
+</tbody>
+</table>
