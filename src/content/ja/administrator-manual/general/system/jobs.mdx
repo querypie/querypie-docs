@@ -1,0 +1,92 @@
+---
+title: 'Jobs'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieシステム上で周期的または手動で実行される多様な作業を一覧するメニューです。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs](/administrator-manual/general/system/jobs/screenshot-20241107-223755.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs
+</figcaption>
+</figure>
+
+## Jobsリスト照会
+
+Administrator &gt; General &gt; System &gt; Jobsメニューに進入してJobsリストページを確認できます。
+
+作業タイプは大きく2つに分かれます。
+
+1. QueryPieセッティングと一緒に自動で生成されるシステム作業
+    * タイプ別に1つの作業のみ存在します。
+    * Schedulingにより、定められた周期で実行されます。
+    * 追加的な手動実行は不可能です。
+2. ユーザーのリソース生成により作成されるリソース同期作業
+    * DB Cloud Provider、Server Cloud Provider、Kubernetes Cluster Sync、Authenticationが該当します。
+    * 各リソースごとに別途の作業が生成され、作業の名前はリソース名と同一に表示されます。
+    * リソース生成時に設定した通りReplication Frequencyが指定されます。（SchedulingまたはManual）
+        * 作業タイプがSchedulingの場合でも追加的な手動作業実行が可能です。この場合手動実行は各リソース管理ページで開始でき、Jobsページでは作業状態の追跡のみ可能です。
+
+各作業に対して表示する情報は以下の通りです。
+
+*  **Type** : 作業のタイプ
+*  **Job Name**  : 作業の名前
+    * ユーザーが生成したリソースを同期する作業の場合、各リソースごとに別途の作業が生成され、作業の名前はリソースの名前と同一に表示されます。
+*  **Last Result**  : 最も最近に実行された作業の状態
+    * Running : 作業実行中
+    * Success : 作業成功
+    * Issue : 作業部分成功（FailureまたはIgnored状態のTask存在）
+    * Failed : 作業失敗
+*  **Last Run At**  : 最も最近に実行された作業の開始時刻
+*  **Replication Frequency** : 作業スケジューリング可否
+    * Scheduling : スケジューリング設定
+    * Manual : 手動実行
+
+## Job詳細情報照会
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail](/administrator-manual/general/system/jobs/screenshot-20241107-223800.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail
+</figcaption>
+</figure>
+
+* Jobsリストページで詳細情報を照会したい作業をクリックします。
+* 作業の基本情報および実行履歴を照会できます。
+    *  **History Number**  : 作業履歴番号
+    *  **Last Run At**  : 実行時刻
+    *  **Result** : 作業実行結果
+        * Running : 作業実行中
+        * Success : 作業成功
+        * Issue : 作業部分成功（FailureまたはIgnored状態のTask存在）
+        * Failed : 作業失敗
+    *  **Total**  : 全体同期アイテム数
+    *  **Success**  : 成功アイテム数
+    *  **Failure**  : 失敗アイテム数
+    *  **Ignored**  : 無視されたアイテム数
+    *  **Trigger**  : 実行方式
+        * Scheduled : スケジュールによる実行
+        * Manual : 手動実行
+            * この場合作業を実行した人の名前を一緒に表記します。
+
+<Callout type="info">
+10.2.0現在、Total、Success、Failure、Ignored情報はAuthentication TypeのJobに対してのみ提供されます。
+</Callout>
+
+## Job History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail &gt; History Detail](/administrator-manual/general/system/jobs/screenshot-20241107-223901.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail &gt; History Detail
+</figcaption>
+</figure>
+
+Historyリストで詳細実行履歴を照会したい行をクリックするとDrawerでHistory Detailを確認できます。
+
+Change HistoryにはJobで実行されたすべての詳細作業履歴が記録されています。

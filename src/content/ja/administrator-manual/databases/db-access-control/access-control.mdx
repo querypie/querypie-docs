@@ -9,9 +9,9 @@ import { Callout } from 'nextra/components'
 Access Controlページで管理者はユーザーまたはグループにデータベースアクセス権限を直接付与できます。
 
 
-## Access Control一覧照会
+## Access Controlリスト照会
 
-Access ControlページではQueryPieに登録されたユーザーおよびグループ別に付与されたDB権限（Privilege）および管理者役割現況を照会できます。（グループまたはユーザー名で検索可能）
+Access Controlページでは、QueryPieに登録されたユーザーおよびグループ別に付与されたDB権限（Privilege）および管理者役割現況を照会できます。（グループまたはユーザー名で検索可能）
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
@@ -21,23 +21,23 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figure>
 
 
-## ユーザー/グループ別Access Control詳細内訳照会
+## ユーザー/グループ別Access Control詳細履歴照会
 
-Access Controlページ内テーブルで照会したいユーザーまたはグループをクリックするとDrawerが開きます。
+Access Controlページ内テーブルで照会しようとするユーザーまたはグループをクリックするとDrawerが開きます。
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
 </figure>
 
-* 検索 : Connection Nameで照会可能
+* 検索：Connection Nameで照会可能
 * 提供フィルタータイプ
-    *  **Database Type** : DBタイプ（例：MySQL、MariaDB、PostgreSQL…）
-    *  **Cloud Provider** : クラウドプロバイダータイプ（AWS、Azure、GCP、またはQueryPie Connection）
-    *  **Assigned Status** : 権限割り当て有無
-    *  **Favorite View** : お気に入り設定有無（DB Connections一覧でお気に入り設定可能）
-    *  **Tag** : コネクションに割り当てられたタグ
-        * 各タグ入力方式 : Key入力 → エンターキー入力 → 演算子入力 → Value入力 → エンターキー入力
-            * サポートする演算子 : `=`, `!=`, `:`, `!:`
+    *  **Database Type** ：DBタイプ（eg. MySQL、MariaDB、PostgreSQL…）
+    *  **Cloud Provider** ：クラウド提供者タイプ（AWS、Azure、GCP、またはQueryPie Connection）
+    *  **Assigned Status** ：権限割り当て有無
+    *  **Favorite View** ：お気に入り設定有無（DB Connectionsリストでお気に入り設定可能）
+    *  **Tag** ：コネクションに割り当てられたタグ
+        * 各タグ入力方式：Key入力 → エンターキー入力 → 演算子入力 → Value入力 → エンターキー入力
+            * サポートする演算子：`=`、`!=`、`:`、`!:`
         * Keyが同じタグを複数入力時OR検索実行（合集合）
         * Keyが異なるタグを複数入力時AND検索実行（交集合）
 
@@ -51,17 +51,17 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Use
 </figcaption>
 </figure>
 
-1. Database設定メニューからAccess Controlメニューに移動します。
-2. 一覧で権限を付与したいユーザーまたはグループを選択してディテールページに移動します。
-3. 権限を付与したいコネクションを見つけてチェックボックス選択後、Privilege Typeを選択します。 
-4. 権限を付与したいコネクション複数を選択して一括的に権限を付与することもできます。 
-5. 下部のExpiration Date項目で権限期限日を設定します。未設定時は期限日なしで権限が付与されます。 
+1. Database設定メニューでAccess Controlメニューに移動します。
+2. リストで権限を付与しようとするユーザーまたはグループを選択してディテールページに移動します。
+3. 権限を付与しようとするコネクションを見つけてチェックボックス選択後Privilege Typeを選択します。
+4. 権限を付与しようとするコネクション複数個を選択して一括的に権限を付与することもできます。
+5. 下部のExpiration Date項目で権限有効期限を設定します。未設定時有効期限なしに権限が付与されます。
 
-これで権限を付与されたユーザーは該当権限でコネクションにアクセスでき、権限付与内訳はAccess Control LogsログにAccess Control Granted項目で記録されます。
+これで権限を付与受けたユーザーは該当権限でコネクションに接続でき、権限付与履歴はAccess Control LogsログにAccess Control Granted項目として記録されます。
 
 <Callout type="info">
-**ユーザーがグループに含まれている場合、グループとユーザーを対象に同じコネクションに対してそれぞれ異なる権限を適用するとどうなりますか？**
-ユーザーに個別ユーザー権限およびグループの権限で複数のPrivilegeが付与された場合、ユーザーコネクションアクセス時にDefault Privilegeを選択してアクセスできます。
+**ユーザーがグループに含まれた場合、グループとユーザーを対象に同じコネクションに対してそれぞれ異なる権限を適用するとどうなりますか？**
+ユーザーに個別ユーザー権限およびグループの権限で複数のPrivilegeが付与された場合、ユーザーコネクション接続時Default Privilegeを選択して接続できます。
 </Callout>
 
 
@@ -74,28 +74,28 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 </figcaption>
 </figure>
 
-1. Database設定メニューからAccess Controlメニューに移動します。
-2. 一覧で権限を回収したいユーザーまたはグループを選択してディテールページに移動します。
-3. 権限を回収したいコネクションを見つけてチェックボックス選択後、Revokeボタンで権限を回収します。
-4. 権限を回収したいコネクション複数を選択して一括的に権限を回収することもできます。
+1. Database設定メニューでAccess Controlメニューに移動します。
+2. リストで権限を回収しようとするユーザーまたはグループを選択してディテールページに移動します。
+3. 権限を回収しようとするコネクションを見つけてチェックボックス選択後Revokeボタンで権限を回収します。
+4. 権限を回収しようとするコネクション複数個を選択して一括的に権限を回収することもできます。
 
-これで権限が回収されたユーザーはもう該当コネクションにアクセスできず、権限回収内訳はAccess Control LogsログにAccess Control Revoked項目で記録されます。
+これで権限が回収されたユーザーはもう該当コネクションに接続できず、権限回収履歴はAccess Control LogsログにAccess Control Revoked項目として記録されます。
 
 
 <Callout type="important">
 **Access Control DetailsパネルでのStatus説明**
-*  **Active**  : 該当ユーザーにコネクションの権限が正常に付与されている状態です。
-*  **Deactivated**  : 該当ユーザーがコネクションに対する権限はあるが、管理者によって設定された期間中コネクションにアクセスしなかった場合、非活性化された状態です。この場合、ユーザーは該当コネクションに一時的にアクセスできません。 
-* Deactivated状態右側のボタン（`Renew`）で非活性化された権限を更新して再活性化できます。
-* 非活性化された権限を更新した場合  **Renewed At**  カラムに更新時点が表示されます。
+*  **Active**  ：該当ユーザーにコネクションの権限が正常に付与されている状態です。
+*  **Deactivated**  ：該当ユーザーがコネクションに対する権限があるが、管理者によって設定された期間中コネクションに接続しなかった場合無効化された状態です。この場合、ユーザーは該当コネクションに一時的に接続できません。
+* Deactivated状態右側のボタン（`Renew`）で無効化された権限を更新して再び有効化できます。
+* 無効化された権限を更新した場合**Renewed At**カラムに更新時点が表示されます。
 </Callout>
 
 <Callout type="important">
 **Access Control Detailsパネルに対する詳細説明**
-* 該当権限が付与された最初の時点は  **Granted At**  カラムで確認できます。
-* 該当権限を付与されたユーザーがコネクションに最後にアクセスした時点は  **Last Access At**  カラムで確認できます。
-* 該当権限が回収される時点は  **Expiration Date**  カラムで確認できます。
-* 権限が付与されたが  **Expiration Date**  カラムに何も表示がない場合、該当権限は回収されません。ただし、該当コネクション権限に対する基本的な管理はコネクション長期未アクセス設定（Deactivation Period）の影響を受けます。
+* 該当権限が付与された最初の時点は**Granted At**カラムで確認できます。
+* 該当権限を付与受けたユーザーがコネクションに最後に接続した時点は**Last Access At**カラムで確認できます。
+* 該当権限が回収される時点は**Expiration Date**カラムで確認できます。
+* 権限が付与されたが**Expiration Date**カラムに何の表示もない場合該当権限は回収されません。ただし、該当コネクション権限に対する基本的な管理はコネクション長期未接続設定（Deactivation Period）の影響を受けます。
 </Callout>
 
 
@@ -110,13 +110,13 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 
 1. データベースコネクションセキュリティポリシーによってDBアカウント認証失敗（Maximum Login Failures）回数超過でコネクションがロックされた場合についてLocked Accountメニューで照会可能です。
 2. DBアカウント認証失敗回数とロックされた時点が一緒に表示されます。
-3. ロック解除したい項目を選択後、右側`Unlock`をクリックしてコネクションロックを解除します。
+3. ロック解除しようとする項目を選択後右側`Unlock`をクリックしてコネクションロックを解除します。
 
 <figure data-layout="center" data-align="center">
 ![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
 </figure>
 
-1. コネクションロックおよびロック解除内訳はAudit &gt; Databases &gt; Account Lock Historyメニューで確認できます。 
+1. コネクションロックおよびロック解除履歴はAudit > Databases > Account Lock Historyメニューで確認できます。
 
 
 <Callout type="info">
@@ -126,20 +126,20 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 ![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
 </figure>
 
-Access Controlで特定ユーザーにアクセス許可されたコネクションに対して特定タグが付与されたテーブルのみアクセス可能に制御できます。この機能を使用するために以下の条件が満たされる必要があります。
+Access Controlで特定ユーザーにアクセス許可されたコネクションに対して特定タグが付与されたテーブルのみアクセス可能になるよう制御できます。この機能を使用するために以下の条件が充足されなければなりません。
 
 * New DAC Policy Management機能がEnableでなければなりません。
-* 特定ユーザーに特定コネクションに対するprivilegeが割り当てられている必要があります。
-* Databases &gt; Policy Management &gt; Data Pathに対象テーブルがパスで登録されている必要があり、タグが付与されている必要があります。
+* 特定ユーザーに特定コネクションに対するprivilegeが割り当てられていなければなりません。
+* Databases > Policy Management > Data Pathに対象テーブルが経路として登録されていてタグが付与されていなければなりません。
 
-条件が満たされたら以下のように設定できます。
+条件が満足されれば以下のように設定できます。
 
-1. Databases &gt; DB Access Control &gt; Access Controlで特定ユーザーにprivilegeが割り当てられた特定コネクション詳細画面に移動します。
-2. 詳細画面でAccess TypeをTag-based table accessに選択し、タグを追加します。既存のタグ（テーブルに付与されたタグ）のみ選択して使用できます。
+1. Databases > DB Access Control > Access Controlで特定ユーザーにprivilegeが割り当てられた特定コネクション詳細画面に移動します。
+2. 詳細画面でAccess TypeをTag-based table accessで選択してタグを追加します。既存のタグ（テーブルに付与されたタグ）のみ選択して使用できます。
 
 <figure data-layout="center" data-align="center">
 ![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)
 </figure>
 
-もしTag-based table access機能を有効化した状態でどのタグも登録しないと、該当コネクションのすべてのテーブルにアクセスできなくなります。<br/>
+もしTag-based table access機能を有効化した状態でどのタグも登録しないと該当コネクションのすべてのテーブルにアクセスできなくなります。<br/>
 </Callout>

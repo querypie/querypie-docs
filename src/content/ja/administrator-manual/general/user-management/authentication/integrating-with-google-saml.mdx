@@ -1,0 +1,105 @@
+---
+title: 'Google SAML連携'
+---
+
+## Overview
+
+QueryPieではGoogleのユーザーをSAML 2.0を通じてユーザー連携をサポートします。ユーザーを同期してアクセス権限を付与しポリシーを適用できます。
+
+
+## Google WorkspaceでSAML設定
+
+1. Google管理コンソールホームページにアクセス後左側メニューでアプリ &gt; `ウェブおよびモバイルアプリ`をクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-162650.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-162650.png)
+</figure>
+
+
+2. `アプリ追加`ボタンを押した後`カスタムSAMLアプリ追加`をクリックします。
+
+<figure data-layout="center" data-align="center">
+![image-20240902-073821.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/image-20240902-073821.png)
+</figure>
+
+
+3. アプリ詳細情報を入力する1段階ページです。アプリ名項目に'QueryPie-SSO'を入力後`続行`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-164038.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164038.png)
+</figure>
+
+
+4. 2段階ページでは以下の値を入力します。入力完了後`続行`ボタンをクリックして3段階に移動します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-164356.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164356.png)
+</figure>
+
+* ACS URL : `https://{QueryPie Host}/saml/sp/acs`
+* エンティティID : `https://{QueryPie Host}/saml/sp/metadata`
+* 開始URL（選択事項） : `https://{QueryPie Host}/`
+
+
+5. 3段階ページでは`マッチング追加`ボタンをクリックして以下の4つの値をすべて入力後`完了`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-164739.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164739.png)
+</figure>
+
+* Basic Information : Primary email → email
+* Basic Information : First name → firstName
+* Basic Information : Last name → lastName
+* Basic Information : Primary email → loginId
+
+
+6. Google本人認証のためのパスワードを入力後`次`をクリックすると生成が完了します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-164955.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164955.png)
+</figure>
+
+
+7. 生成が正常に完了すると以下のようにリストに新規追加されたアプリが表示されます。使用設定のために該当アプリをクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-165202.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165202.png)
+</figure>
+
+
+8. アプリの詳細情報で`メタデータダウンロード`をクリックしてファイルをダウンロードした後`ユーザーアクセス`項目をクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-165512.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165512.png)
+</figure>
+
+
+9. サービス状態を'すべてのユーザーに使用するよう設定'を選択した状態で`保存`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-165647.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165647.png)
+</figure>
+
+
+## QueryPieで認証方式設定
+
+1. QueryPie Admin &gt; General &gt; User Management &gt; Authenticationメニューに進入して以下のように設定します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240902-170029.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-170029.png)
+</figure>
+
+* Type : SAMLを選択します。
+* Identity Provider Metadata : Google管理コンソールホームページでダウンロードしたファイル（GoogleIDPMetadata.xml）を開いて内容をコピー後ここに貼り付けます。
+* `Save Changes`ボタンを押すと設定が完了します。
+
+
+## QueryPieでSAMLログイン
+
+<figure data-layout="center" data-align="center">
+![image-20240723-073353.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/image-20240723-073353.png)
+</figure>
+
+これでログインページで`Login with SAML`ボタンを通じてGoogleで認証してQueryPieにログインできます。
+
+

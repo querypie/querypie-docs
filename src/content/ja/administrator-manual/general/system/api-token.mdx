@@ -1,0 +1,125 @@
+---
+title: 'API Token'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+External APIトークンを管理するページです。
+
+
+## External APIとは？
+
+QueryPieの機能をウェブコンソール外部で使用できるAPIで、10.0バージョン現在、V0.9、V2の2つのバージョンを提供します。
+
+*  **QueryPie API V2**
+    * クエリパイバージョン9.16.1からV2 APIをサポートします。
+    * 呼び出しパスは`{querypie url}/api/external/v2/`で既存のAPI V0.9に影響なく利用可能です。
+* API呼び出し時に必要な基本ヘッダーは以下の通りです。詳細なAPI仕様はAPIドキュメントを参照してください。
+
+|  **Key**      |  **Value**             |
+| ------------- | ---------------------- |
+| Content-Type  | application/json       |
+| Authorization | `{querypie api token}` |
+
+APIトークン使用時の注意事項は以下の通りです。
+
+* APIトークンはOwner権限ユーザーまたは該当メニューアクセス権限がある管理者が発行できます。
+* トークンは初回発行時にのみ全体表示されます。その後は前の8文字を除いた残りをすべてマスキングして表示します。
+    *  **トークンキーを紛失した場合**、既存キーを履歴から削除しトークンを新規発行して使用することを推奨します。
+* APIトークン延長時、Updateボタンを押した時点からトークン生成時設定された周期分だけ有効期限日が延びます。
+
+<Callout type="info">
+提供APIリストおよび仕様はAdministrator &gt; General &gt; System &gt; API Token右上の`API Docs`をクリックして照会可能なAPIドキュメントで確認できます。
+</Callout>
+
+
+## APIトークンリスト照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; API Token](/administrator-manual/general/system/api-token/screenshot-20240723-110619.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; API Token
+</figcaption>
+</figure>
+
+1. Administrator &gt; General &gt; System &gt; API Tokenメニューに進入します。
+2. 現在生成されたトークンリストを確認できます。（生成日最新順ソート）
+3.  **検索およびフィルタ**：
+    1. トークンリストはToken NameまたはToken Valueで検索できます。
+    2. トークンの状態でリストをフィルタリングできます。
+
+
+## APIトークン生成
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; API Token &gt; Create API Token](/administrator-manual/general/system/api-token/image-20241028-094955.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; API Token &gt; Create API Token
+</figcaption>
+</figure>
+
+1. API Tokenページで右上の`Create API Token`ボタンをクリックします。
+2. トークン生成のための以下の情報を入力します。
+    1.  **API Name**  : 識別可能なAPIトークンの名前を記入します。
+    2.  **Validity Period Type** : トークンの有効期限を指定します。
+        1. Never Expire選択時トークンを永続的に使用できますが、推奨しません。
+    3.  **Scopes : APIトークンで実行できる権限を選択します。**
+        1. Full Access : 管理者機能全体を実行できる権限です。
+        2. Select Role : 希望するAdmin Roleを選択して権限範囲を制限します。
+            * Admin Roleが何も入力されていない状態で保存でき、この場合API Tokenで実行できる作業がありません。
+    4.  **Allowed Zones**  : APIトークン使用が可能なIP帯域を定義します。
+        *  Admin &gt; General &gt; Company Management &gt; Allowed Zones内定義したAllowed ZoneをマッピングしてAPI呼び出しIP ACLを設定します。
+    5.  **Description**  : 該当APIトークンに対する説明を記述します。
+3. `Ok`ボタンをクリックするとAPI Token生成が完了します。
+4. 生成完了モーダルで初回に限りAPI Token情報を確認できます。
+    1. API Token右のコピーボタンをクリックしてToken情報をコピーできます。
+    2. `OK`ボタンをクリックしてモーダルを閉じます。
+
+
+## APIトークン修正
+
+<figure data-layout="center" data-align="center">
+![General Settings &gt; System &gt; API Token &gt; Edit API Token](/administrator-manual/general/system/api-token/image-20241028-095455.png)
+<figcaption>
+General Settings &gt; System &gt; API Token &gt; Edit API Token
+</figcaption>
+</figure>
+
+1. API Tokenページ内、Tokenリストで修正したいトークンをクリックします。
+2. Edit API Tokenモーダルが出力されます。変更可能な項目は以下の通りです。
+    1.  **API Name** : 名前を変更したい場合入力します。
+    2.  **Validity Period Type** : API Token有効期限日を変更できます。
+        1. 変更後保存時、現時点で新たに指定された期間を基準に有効期限日が変更されます。
+        2. API Token有効期限まで残り期間が新たに指定された有効期限日より短くても長くても有効期限日は新たに指定された値で上書きされます。状況によりAPI寿命を延長または短縮できます。
+        3. Never Expireに変更時有効期限がなくなりますが、推奨しません。
+    3.  **Scopes**  : API Tokenで実行できる権限範囲を変更します。
+        1. Full Access : 管理者機能全体を実行できる権限です。
+        2. Select Role : 希望するAdmin Roleを選択して権限範囲を制限します。
+            * Admin Roleが何も入力されていない状態で保存でき、この場合API Tokenで実行できる作業がありません。
+    4.  **Allowed Zones**  : APIトークン使用が可能なIP帯域を定義します。
+        *  Admin &gt; General &gt; Company Management &gt; Allowed Zones内定義したAllowed ZoneをマッピングしてAPI呼び出しIP ACLを設定します。
+    5.  **Description**  : 該当APIトークンに対する説明を変更したい場合入力します。
+3. `OK`ボタンを押して変更内容を保存します。
+
+
+## APIトークン使用期間更新
+
+1. API Tokenページ内のトークンリストで、更新したいトークンの`Update`ボタンをクリックします。
+2. 更新成功時トーストが出力され、ボタンクリック時点からトークン生成時**Validity Period Type**で設定された期間分だけ有効期限日が延びます。
+
+
+## APIトークン削除
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; API Token &gt; Delete](/administrator-manual/general/system/api-token/screenshot-20240723-121212.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; API Token &gt; Delete
+</figcaption>
+</figure>
+
+1. API Tokenページで削除したいトークンをチェックボックスで選択します。
+2. テーブルヘッダーで`Delete`ボタンをクリックします。
+3. 確認モーダルが出力されると`OK`ボタンをクリックします。
+4. テーブルリストで該当トークンの削除を確認します。

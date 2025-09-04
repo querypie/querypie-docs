@@ -1,0 +1,48 @@
+---
+title: 'Syslog連携'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieで記録するログをSyslog形式で外部に送信する機能を提供します。
+
+* 9.19.0以前バージョンまではUDPプロトコル基盤Syslog（RFC3164）形式のログ送信をサポートしました。
+* 9.19.0バージョンからTCPプロトコルをサポートします。また、HTTP/HTTPSプロトコル基盤Splunk HEC（HTTP Event Collector）送信をサポートします。
+
+
+## Syslog Integration設定
+
+1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
+2. Syslogタイルをクリックして詳細ページに移動します。
+
+<Callout type="important">
+**Syslog (legacy)とは何ですか？** <br/>既存Syslogを使用されていた場合**Syslog (Legacy)**タイルが追加で表示されます。ここで既存フォーマットを維持した状態でSyslogをそのまま送信受信できます。Legacy FormatはSyslogプロトコル上TimestampフィールドがTime Zoneの影響を受けるため別途Time Zone設定項目が存在します。デフォルト値はUTCです。
+</Callout>
+
+1. 詳細ページにある`Configure`ボタンをクリックするとDestination情報を入力できるポップアップが表示されます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination](/administrator-manual/general/system/integrations/integrating-with-syslog/screenshot-20240723-093628.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination
+</figcaption>
+</figure>
+
+1. Destination情報を生成するために以下の情報を入力します。
+    1.  **Destination Name**  : syslogを受信する主体を識別できるよう適当な名前を入力します。
+    2.  **Protocol**  : syslogで選択可能なプロトコルはTCP（デフォルト値）とUDPです。UDPはパケットの長さ制約事項がありセキュリティ的に脆弱なためTCP使用を推奨します。
+    3.  **Destination Address (Hostname)** : syslogを受信するsyslog serverのIP addressまたはhostnameを入力します。
+    4.  **Port**  : sylog serverでlistenするportを入力します。（デフォルト値514）
+    5.  **Test Connectionボタン**  : TCPはsyslogサーバーと通信状態を点検できます。
+        * UDPはプロトコル特性上通信状態点検が不可能で、Test Connectionボタンが無効化されます。
+    6.  **Select Event Items**  : イベント項目を選択的に送信できます。下にある"Select all event items, including those that may be added later."チェックボックスを選択すると送信可能なすべてのイベントを送信します。
+    7. Disable syslog header : syslog header情報を除いて送信します（デフォルト値Yes）。一部SIEMでjson解析が困難な場合syslog headerを除くために提供されるオプションです。
+    8. Description : 設定情報に対する100文字以内の簡略情報を入力します。
+2. `OK`ボタンを押して設定を保存します。
+    1. 設定事項を保存してもすぐにSyslog送信が有効化されるわけではありません。
+3. 送信開始をするにはページ左上部にあるトグルボタンを：トグル：に切り替えます。
+    1. この送信トグルボタンはメンテナンスなど多様な状況で一時的に送信を停止する必要がある場合使用できます。
+4. もしもはやSyslog送信が必要ない場合Deleteボタンを通じて設定を削除できます。
+    1. ただし、送信中状態では削除できないため送信トグルボタンを：トグルoff：に変更した後削除してください。

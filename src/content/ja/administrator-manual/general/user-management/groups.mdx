@@ -6,12 +6,12 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-QueryPieではユーザーをグループ単位でまとめて一括管理できるグループ機能を提供します。グループはDBアクセス権限、Workflow承認/レビュアー役割、サーバーやKubernetes役割(Role)付与時の単位として使用できます。GroupsページではQueryPieに登録されたユーザーグループリストを照会および管理します。
+QueryPieでは、ユーザーをグループ単位でまとめて一括管理できるグループ機能を提供します。グループはDBアクセス権限、Workflow承認/検討者役割、サーバーやKubernetes役割（Role）付与時の単位として使用できます。Groupsページでは、QueryPieに登録されたユーザーグループリストを照会および管理します。
 
 
 ## グループリスト照会
 
-Administrator &gt; General &gt; User Management &gt; Groupsページにアクセスするとグループリストを照会できます。グループ名で検索できます。照会可能な情報は以下の通りです。
+Administrator &gt; General &gt; User Management &gt; Groupsページに進入するとグループリストを照会できます。グループ名で検索できます。照会可能な情報は以下の通りです。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Groups](/administrator-manual/general/user-management/groups/image-20240714-053938.png)
@@ -20,19 +20,19 @@ Administrator &gt; General &gt; User Management &gt; Groups
 </figcaption>
 </figure>
 
-*  **Auth Provider**  : ユーザー認証提供者
-    * QueryPieまたはUser Management &gt; Authenticationで設定されたIdP Typeを表示します。
-    * 手動で登録されたグループの場合はQueryPieで表示されます。
-    * IdPから連携されたグループは各ID Provider名で表示されます。
-*  **Group Name** : グループ名
-*  **Members**  : グループに属するユーザーリスト
-*  **Updated At** : グループ情報が最後に変更された日時
-*  **Created At** : グループ作成日時
+*  **Auth Provider**  ：ユーザー認証提供者
+    * QueryPieまたはUser Management > Authenticationで設定されたIdP Typeを表示します。
+    * 手動で登録されたグループの場合、QueryPieで表示されます。
+    * IdPから連動されたグループは各ID Provider名で表示されます。
+*  **Group Name** ：グループ名
+*  **Members**  ：グループに属するユーザーリスト
+*  **Updated At** ：グループ情報が最後に変更された日時
+*  **Created At** ：グループ生成日時
 
 
 ## グループ手動追加
 
-Groupsページ右上`Create Group`ボタンをクリックするとモーダルが出力され、希望する名前を入力して`Save`ボタンをクリックするとグループ作成が完了します。
+Groupsページ右上`Create Group`ボタンをクリックするとモーダルが出力され、希望する名前を入力して`Save`ボタンをクリックするとグループ生成が完了します。
 
 <Callout type="important">
 手動追加されたグループに対してのみユーザー追加または削除が可能です。<br/>IdPから同期されたグループに対しては照会のみサポートし、ユーザーリストおよびグループ管理はIdPで実行しなければなりません。
@@ -41,57 +41,57 @@ Groupsページ右上`Create Group`ボタンをクリックするとモーダル
 
 ## グループにユーザー追加
 
-リストでユーザーを追加したいグループをクリックするとDrawerが開き、詳細情報を確認できます。
+リストでユーザーを追加しようとするグループをクリックするとDrawerが開き、詳細情報を確認できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報](/administrator-manual/general/user-management/groups/screenshot-20240726-121151.png)
+![Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報](/administrator-manual/general/user-management/groups/screenshot-20240726-121151.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報
+Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報
 </figcaption>
 </figure>
 
 1. `+ Add Users`ボタンをクリックするとモーダルが出力されます。
     1. 名前またはメールでユーザーを検索できます。
-    2. 11.2.0からLDAPを通じて同期された非活性化状態のユーザーも検索結果に含まれて表示されます。非活性ユーザーは名前横に`(Inactive)`テキストが表示されます。
-    3. 追加したいユーザーをクリックすると追加状態に変更されます。
+    2. 11.2.0からLDAPを通じて同期された無効化状態のユーザーも検索結果に含まれて表示されます。無効ユーザーは名前横に`(Inactive)`テキストが表示されます。
+    3. 追加しようとするユーザーをクリックすると追加状態に変更されます。
     4. 下部`Check all`ボタンをクリックすると全体ユーザーが選択されます。<br/> 
 2. `Save`ボタンをクリックしてグループ変更履歴を保存します。グループリストおよび詳細情報Drawerで追加されたユーザーを確認できます。
 
 <Callout type="info">
-**Q. グループに特定ユーザーを追加しようとしているのですがモーダルで見えません。**
-A. ユーザー追加モーダルには活性化状態のユーザーのみ表示されます。Usersページでユーザーのアカウント状態がInactiveか確認してください。
+**Q. グループに特定ユーザーを追加しようとしますが、モーダルで見えません。**
+A. ユーザー追加モーダルには有効化状態のユーザーのみ表示されます。Usersページでユーザーのアカウント状態がInactiveか確認してください。
 </Callout>
 
 
-## グループからユーザー削除
+## グループからユーザー除去
 
-1. グループ詳細ページで削除したいユーザーをチェックボックスで選択した後、テーブルヘッダーに表示される`Delete`ボタンをクリックします。
-2. ユーザー削除確認モーダルで`OK`ボタンをクリックします。
-3. ユーザー削除が完了するとDrawer内ユーザーリストおよびGroupリストの目録で確認できます。
+1. グループ詳細ページで除去しようとするユーザーをチェックボックスで選択した後、テーブルヘッダーに表示される`Delete`ボタンをクリックします。
+2. ユーザー除去確認モーダルで`OK`ボタンをクリックします。
+3. ユーザー除去が完了するとDrawer内ユーザーリストおよびGroupリストの目録で確認できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報](/administrator-manual/general/user-management/groups/screenshot-20240726-122800.png)
+![Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報](/administrator-manual/general/user-management/groups/screenshot-20240726-122800.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報
+Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報
 </figcaption>
 </figure>
 
 
 ## グループ名変更
 
-グループ詳細情報Drawer最上位の`Edit`ボタンをクリックすると、修正モーダルが出力されます。グループ名を変更後`Save`ボタンをクリックして保存します。
+グループ詳細情報Drawer最上部の`Edit`ボタンをクリックすると、修正モーダルが出力されます。グループ名を変更後`Save`ボタンをクリックして保存します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報 &gt; Update Group](/administrator-manual/general/user-management/groups/screenshot-20240726-122036.png)
+![Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報 > Update Group](/administrator-manual/general/user-management/groups/screenshot-20240726-122036.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Groups &gt; 詳細情報 &gt; Update Group
+Administrator &gt; General &gt; User Management &gt; Groups > 詳細情報 > Update Group
 </figcaption>
 </figure>
 
 
 ## グループ削除
 
-Groupsリストで削除したいグループをチェックボックスで選択します。テーブルヘッダーに`Delete`ボタンが表示されます。ボタンをクリックし、確認モーダルで`OK`ボタンをクリックして削除を完了します。
+Groupsリストで削除しようとするグループをチェックボックスで選択します。テーブルヘッダーに`Delete`ボタンが表示されます。ボタンをクリックし、確認モーダルで`OK`ボタンをクリックして削除を完了します。
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-123314.png](/administrator-manual/general/user-management/groups/screenshot-20240726-123314.png)
@@ -102,5 +102,5 @@ Groupsリストで削除したいグループをチェックボックスで選�
 </Callout>
 
 <Callout type="important">
-グループが削除される場合グループに属するユーザーが削除されることはありませんが、グループを媒介として付与された権限および役割は即座に解除されます。グループ削除はキャンセルが不可能なので実行に慎重を期してください。
+グループが削除される場合、グループに属するユーザーが削除されることはありませんが、グループを媒介として付与受けた権限および役割は即座に解除されます。グループ削除はキャンセルが不可能なので実行に慎重を期してください。
 </Callout>

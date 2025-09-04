@@ -1,0 +1,161 @@
+---
+title: 'Channels'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+ChannelsページではQueryPieから送信する通知を受信するチャンネルを登録および管理します。現在QueryPieで提供するチャンネルタイプはSlack、Agit、HTTP、Emailの4つであり、チャンネル登録事前に連携のための作業が必要です。
+
+## 登録されたチャンネル照会
+
+Administrator &gt; General &gt; Company Management &gt; Channelsページで現在登録されたチャンネルリストを照会できます。チャンネル名で検索が可能で、Channel Typeでフィルタリングできます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels](/administrator-manual/general/company-management/channels/screenshot-20240808-172741.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels
+</figcaption>
+</figure>
+
+リスト内項目をクリックすると詳細情報を照会および変更できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Details](/administrator-manual/general/company-management/channels/screenshot-20241211-191603.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Details
+</figcaption>
+</figure>
+
+
+## チャンネル登録
+
+Channelsページ右上の`Create Channel`ボタンをクリックするとチャンネル作成モーダルが表示されます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Channel](/administrator-manual/general/company-management/channels/screenshot-20241211-154231.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Channel
+</figcaption>
+</figure>
+
+*  **Title**  : チャンネル名
+*  **Channel Type**  : 通知を受信するチャンネルタイプを選択します。選択肢により下部追加入力項目が異なります。
+    * Slack : Slackチャンネルで通知送信
+    * Agit : アジットで通知送信
+    * HTTP : Zapier、Okta WorkflowsなどHTTP APIに直接リクエストする方式
+    * Email : メールで通知送信
+
+### Channel Typeを`Slack`で選択した場合
+
+チャンネル作成のための入力内容は以下の通りです。
+
+<Callout type="info">
+Slack Appの詳細設定方法はドキュメント下部の**Slack連携のためのSlack App設定方法**項目を参照してください。
+</Callout>
+
+*  **Message Sending Method**  : メッセージ送信方式
+    * API : Slack APIを活用したメッセージ送信
+        * APIを選択した場合、New Request Alertで承認者（assignee）メンションが可能です。（10.2.2バージョン以降）
+        * Bot User OAuth Token : メッセージを送信するSlack AppのBot User OAuth Token
+        * Channel ID : メッセージを送信するSlack Appが招待されているSlack Channel ID
+    * Webhook : ウェブフック方式でメッセージ送信
+        * Request URL（必須） : リクエストを送信するURL
+            * Slack AppでWebhook設定後、Webhook URL情報をコピーして貼り付けする必要があります
+
+### Channel Typeを`Agit`で選択した場合
+
+チャンネル作成のための入力内容は以下の通りです。
+
+*  **Request URL** （必須） : リクエストを送信するURL
+*  **Agit Channel**  : アジットチャンネルに表示する名前入力
+
+### Channel Typeを`HTTP`で選択した場合
+
+チャンネル作成のための入力内容は以下の通りです。
+
+*  **Request URL** （必須） : リクエストを送信するURL
+*  **Request Header (JSON)**  : 必要時呼び出しのためのリクエストヘッダーを入力（JSON形式）
+*  **Body Template**  : リクエストボディテンプレート
+    * デフォルト値：`{{message}}`
+    * Alertで定義されるメッセージの前後に共通で追加したい内容を記入
+
+### Channel Typeを`Email`で選択した場合
+
+<Callout type="important">
+**注意**
+
+QueryPieにEmail送信のためのSMTPサーバーを登録した場合のみEmailタイプのチャンネルを作成できます。
+
+Admin &gt; General &gt; System &gt; Integrationメニューに進入後、Emailタイルをクリックして関連設定を確認してください。
+</Callout>
+
+チャンネル作成時入力内容は以下の通りです。
+
+*  **Email Recipients** （必須） : メール受信者
+    * QueryPieに登録されたユーザーを選択でき、登録されたメールアドレスでメールが送信されます
+*  **Body Template**  : リクエストボディテンプレート
+    * デフォルト値：`{{message}}`
+    * Alertで定義されるメッセージの前後に共通で追加したい内容を記入
+
+## チャンネル削除
+
+Channelsページ内チャンネルリストで削除したいチャンネルをチェックボックスで選択すると`Delete`ボタンが表示されます。ボタンをクリックすると削除確認モーダルが出力されます。`OK`ボタンをクリックすると削除が完了します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete確認モーダル](/administrator-manual/general/company-management/channels/screenshot-20240728-222004.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete確認モーダル
+</figcaption>
+</figure>
+
+## Slack連携のためのSlack App設定方法
+
+### 1. App作成
+
+<figure data-layout="center" data-align="center">
+![Slack API &gt; Apps &gt; Create an App](/administrator-manual/general/company-management/channels/screenshot-20240305-161015.png)
+<figcaption>
+Slack API &gt; Apps &gt; Create an App
+</figcaption>
+</figure>
+
+1. [https://api.slack.com/apps](https://api.slack.com/apps)に移動します。
+2. `Create an App`ボタンをクリックします。
+3. 上画面で通知を送信するApp NameとSlack Workspaceを選択します。
+4. `Create App`をクリックします。
+
+### 2-1. Webhookタイプで連携
+
+<figure data-layout="center" data-align="center">
+![Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks](/administrator-manual/general/company-management/channels/screenshot-20240804-190716.png)
+<figcaption>
+Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks
+</figcaption>
+</figure>
+
+1. 該当アプリページ内で`Incoming Webhooks`メニューに移動します。
+2. Activate Incoming Webhooksオプションを有効化します。
+3. 下部の`Add New Webhook to Workspace`をクリックします。
+
+<figure data-layout="center" data-align="center">
+![Slack内Webhook追加画面](/administrator-manual/general/company-management/channels/image-20240305-110658.png)
+<figcaption>
+Slack内Webhook追加画面
+</figcaption>
+</figure>
+
+1. Workspace内に警報を送信するチャンネルを選択した後`許可`ボタンをクリックします。
+2. 生成されたWebhook URL情報をコピーした後、QueryPieチャンネル作成モーダルに貼り付けます。
+
+### 2-2. APIタイプで連携
+
+1. 生成したAppをクリックしてアプリのSettingsページに進入した後、`App Manifest`メニューに移動します。
+2. scopes領域に`chat:write`, `users:read`, `users:read.email`を追加した後保存します。
+3. 上部の黄色い通知バーを通じて`Reinstall your app`でアプリを再起動します。（必須）
+4. `Reinstall to {Workspace_name}`ボタンをクリックして通知を送信するSlackチャンネルを選択した後`許可`ボタンをクリックします。
+    1. Scopeを変更した後適用するには、この段階を再度実行する必要があります。
+5. 該当Slackチャンネルに移動して生成したアプリを追加します。（既にアプリを追加した状態であればこの段階はスキップできます）
+6. チャンネル名をクリックしてChannel Detailモーダルを開き、モーダル下部でChannel IDをコピーします。コピーしたChannel IDをQueryPieチャンネル作成モーダルに貼り付けます。
+7. OAuth & PermissionsページでBot User OAuth Tokenをコピーし、QueryPieチャンネル作成モーダルに貼り付けます。

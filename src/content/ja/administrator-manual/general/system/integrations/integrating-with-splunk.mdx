@@ -1,0 +1,112 @@
+---
+title: 'Splunk連携'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieで記録する監査ログをSplunkを通じて外部に送信する機能を提供します。
+
+<Callout type="info">
+Integration設定にはSystem admin権限が必要です。
+</Callout>
+
+
+## Syslog-Splunk連携推奨アーキテクチャ
+
+<figure data-layout="center" data-align="center">
+![Splunk連携推奨アーキテクチャ](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
+<figcaption>
+Splunk連携推奨アーキテクチャ
+</figcaption>
+</figure>
+
+Splunkで推奨するSyslog-Splunk連携のためのアーキテクチャは以下の通りです。
+
+1. 別途syslog serverを通じた1次収集後Splunkに送信
+2. Universal forwarder / Heavy forwarderを通じてSplunkに送信
+
+<Callout type="important">
+QueryPieは顧客便宜のためTCP、UDP、HTTP、HTTPSプロトコルを使用して直接送信できるよう構成されていますが、この構成はSplunkの推奨事項ではないことに注意してください。
+</Callout>
+
+参考にSplunkはsyslog収集のために別途SC4S（Splunk connector for syslog）を提供しています。
+
+
+## Splunk Integration設定
+
+1. General SettingsメニューでSystem &gt; Integrationsメニューに移動します。
+2. Splunkタイルをクリックして詳細ページに移動します。
+3. 詳細ページにある`Configure`ボタンをクリックすると以下のようにDestination情報を入力できるポップアップが表示されます。
+
+<figure data-layout="center" data-align="center">
+![（左）TCP / UDP設定画面 （右）HTTP / HTTPS設定画面](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20240523-101104.png)
+<figcaption>
+（左）TCP / UDP設定画面 （右）HTTP / HTTPS設定画面
+</figcaption>
+</figure>
+
+1. Destination情報を生成するために以下の情報を入力します。
+    1.  **Destination Name** : syslogを受信する主体を識別できるよう適当な名前を入力します。
+    2.  **Protocol**  : Splunkに送信可能なプロトコルはTCP（デフォルト値）、UDP、HTTP、HTTPSです。
+        1. UDPはパケットの長さ制約事項がありセキュリティ的に脆弱なためTCP使用を推奨します。
+        2. SplunkでHTTP Event Collectorを使用する場合デフォルト値はHTTPSです。
+        3. もしHTTPSの代わりにHTTPを使用するにはまずSplunkのHECオプションでSSLオプションを使用しないよう設定する必要があります。HTTP選択時、追加的に以下のフィールド値を入力する必要があります：
+            *  **HEC Host**  : Splunk serverのhostnameまたはipアドレスを入力します。
+            *  **HEC Token**  : Splunk HEC token値を入力します。
+    3.  **Destination Address (Hostname)** : syslogを受信するSplunk serverまたはforwarderのIP addressまたはhostnameを入力します。HTTP、HTTPSプロトコルはこの部分がHEC Host入力に変わって表示されます。
+    4.  **Port**  : sylog serverのlistening portを入力します。（TCP/UDPデフォルト値514）
+        1. Splunk HEC portはSplunkの設定をまず確認後入力する必要があります。
+        2. SplunkメニューでHTTP/HTTPSプロトコルを選択した場合：
+            * Splunk HTTP Event Collectorのglobal optionに設定されたport番号を入力します。デフォルト値は8088です。
+            * Splunk Cloudユーザーには443を入力します。
+    5.  **HEC Token** : HTTP、HTTPSプロトコルの場合SplunkのHEC設定時生成するtoken値を入力する必要があります。
+    6.  **Test Connectionボタン**  : TCP、HTTP、HTTPSプロトコルは対象と通信状態を点検できます。
+        * UDPはプロトコル特性上通信状態点検が不可能で、Test Connectionボタンが無効化されます。
+    7.  **Select Event Items**  : イベント項目を選択的に送信できます。下部"Select all event items, including those that may be added later."チェックボックスを選択すると送信可能なすべてのイベントを送信します。
+    8.  **Disable syslog header**  : syslog header情報を除いて送信します（デフォルト値Yes）。一部SIEMでjson解析が困難な場合syslog headerを除くために提供されるオプションです。HTTP、HTTPSの場合このオプションを使用できず常にsyslog headerがない状態で送信されます。
+    9.  **Description** : 設定情報に対する100文字以内の簡略情報を入力します。
+2. `OK`ボタンを押して設定を保存します。
+    1. 設定事項が保存されてもすぐにSyslogが送信されるわけではありません。
+3. 送信開始をするにはページ左上部にあるトグルボタンを：トグル：に切り替えます。
+    1. この送信トグルボタンはメンテナンスなど多様な状況で一時的に送信を停止する必要がある場合使用できます。
+4. もしもはやSyslog送信が必要ない場合`Delete`ボタンを通じて設定を削除できます。
+    1. ただし、送信中状態では削除できないため送信トグルボタンを：トグルoff：に変更した後削除してください。
+
+
+## 参考
+
+* ライセンスによりsyslogを通じて送信されるQueryPieのイベント項目
+
+|  **Event Item**               |  **DAC**  |  **SAC**  |  **KAC**  |
+| ----------------------------- | --------- | --------- | --------- |
+| User Access History           | O         | O         | O         |
+| Activity Logs                 | O         | O         | O         |
+| Admin Role History            | O         | O         | O         |
+| Audit Log Export              | O         | O         | O         |
+| DB Access History             | O         | 該当事項なし   | 該当事項なし   |
+| Query Audit                   | O         | 該当事項なし   | 該当事項なし   |
+| DML Snapshot                  | O         | 該当事項なし   | 該当事項なし   |
+| DB Access Control Logs        | O         | 該当事項なし   | 該当事項なし   |
+| Account Lock History          | O         | 該当事項なし   | 該当事項なし   |
+| Server Access History         | 該当事項なし   | O         | 該当事項なし   |
+| Server Command Audit          | 該当事項なし   | O         | 該当事項なし   |
+| Server Session Logs           | 該当事項なし   | O         | 該当事項なし   |
+| Server Access Control Logs    | 該当事項なし   | O         | 該当事項なし   |
+| Workflow Logs                 | O         | O         | O         |
+| Approval Urgent Waiting Logs  | O         | O         | O         |
+| Request Audit                 | 該当事項なし   | 該当事項なし   | O         |
+| Kubernetes Role History       | 該当事項なし   | 該当事項なし   | O         |
+
+<Callout type="info">
+**Pod Session Recordings**はRequest Audit内pods/execリソース呼び出し履歴とリストが重複するため、syslog送信をサポートしません。
+</Callout>
+
+* その他参考ドキュメント
+    * [RFC 3164: The BSD Syslog Protocol](https://datatracker.ietf.org/doc/html/rfc3164)
+    * [Splunk Universal Forwarder](https://www.splunk.com/en_us/blog/learn/splunk-universal-forwarder.html)
+    * [Splunk Connect for Syslog](https://splunk.github.io/splunk-connect-for-syslog/main/)
+    * [Set up and use HTTP Event Collector in Splunk Web](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector)
+
+

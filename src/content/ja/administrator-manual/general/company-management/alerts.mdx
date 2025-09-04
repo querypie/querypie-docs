@@ -1,0 +1,501 @@
+---
+title: 'Alerts'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Alertsページでは、リソースアクセスに関連する通知機能を提供します。主要な異常徴候に対するトリガー条件を事前に設定することで、ポリシー違反事項をリアルタイムで検出できます。潜在的なセキュリティインシデントを迅速に識別し解決でき、事前定義された閾値を超えるクエリや漏洩など、機密情報を保護できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts](/administrator-manual/general/company-management/alerts/screenshot-20240728-223320.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts
+</figcaption>
+</figure>
+
+このドキュメントでは以下の内容を扱います。
+
+## サポートする通知タイプ
+
+共通通知をはじめ、DBアクセスに特化した通知とシステムアクセスに特化した通知をサポートします。
+
+サービス別にサポートする通知タイプは以下の通りです。
+
+<table data-table-width="760" data-layout="center" local-id="56383138-c970-42e6-869a-a74e4c473292">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**サービス区分**
+</th>
+<th>
+**通知タイプ名**
+</th>
+<th>
+**説明**
+</th>
+</tr>
+<tr>
+<td>
+SAC, DAC, KAC
+</td>
+<td>
+New Request
+</td>
+<td>
+新しい承認リクエスト登録通知
+</td>
+</tr>
+<tr>
+<td>
+General
+</td>
+<td>
+Unusual Login Attempt
+</td>
+<td>
+IP帯域によるユーザーログイン行為通知
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Execution
+</td>
+<td>
+定義された条件に該当するSQL文実行通知
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Prevented SQL Execution
+</td>
+<td>
+権限のない文実行通知
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+DB Connection Attempt
+</td>
+<td>
+DB接続成功または失敗通知
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Sensitive Data Access
+</td>
+<td>
+定義された条件に該当する機密データ照会通知
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Export
+</td>
+<td>
+定義された条件に該当するSQLエクスポート実行通知
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Server Connection Attempt
+</td>
+<td>
+サーバー接続成功または失敗通知
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Restricted Command
+</td>
+<td>
+サーバー/サーバーグループ別ブロックされたコマンド実行通知
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Specific Command
+</td>
+<td>
+特定コマンド実行通知
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+File Transfer (SFTP)
+</td>
+<td>
+SFTPによるファイル転送実行通知
+</td>
+</tr>
+<tr>
+<td>
+KAC
+</td>
+<td>
+K8s API Request
+</td>
+<td>
+Kubernetes APIリクエスト通知
+* 10.2.2以降バージョンでサポート
+</td>
+</tr>
+</tbody>
+</table>
+
+<Callout type="info">
+11.1.0からNew DAC Policy Management機能が有効化された場合、以下のような通知タイプを使用できます。
+* New Request - DB Policy Exception Request<br/>DB Policy Exception RequestはUnmaskingとRestricted Data Accessの2つのタイプがありますが、区別して通知生成はできません。
+* Data Access
+    * Column Data Masking : 新ポリシー管理で作成したColumn Data Maskingポリシーに引っかかり制限されたマスキング状態で照会されたイベント
+    * Table Access Restriction : 新ポリシー管理で作成したTable Access Restrictionポリシーに引っかかり特定テーブルアクセスが制限されたイベント
+    * Column Access Restriction : 新ポリシー管理で作成したColumn Access Restrictionポリシーに引っかかり特定カラムアクセスが制限されたイベント
+    * Sensitive Data Access Monitoring : 新ポリシー管理で作成したSensitive Data Access Monitoringポリシーの条件に該当するイベント
+</Callout>
+
+## 通知作成
+
+Alertsページ右上の`Create Alert`ボタンをクリックして新しい通知を作成します。`OK`ボタンをクリックして通知作成を完了します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert](/administrator-manual/general/company-management/alerts/screenshot-20240729-141728.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
+</figcaption>
+</figure>
+
+1.  **Name**  : 通知名
+2.  **Alert Type**  : 通知タイプを選択します。
+    1. 通知タイプ別に設定可能な条件が異なります。詳細は下部ドキュメントを参照してください。
+3.  **Message Template**  : 通知メッセージテンプレートを設定します。
+    1. Message Template Variableでサポートするテンプレート変数を活用してカスタムメッセージを作成できます。
+    2. Message Template VariableはAlert Type別に異なります。
+4.  **Channel**  : 通知送信チャンネル
+    1. Administrator &gt; General &gt; Channelsに登録されたチャンネルの中から1つを選択します。
+    2. チャンネルに関する詳細説明は[Channels](channels)ドキュメントを参照してください。
+5.  **Subject Title**  : ChannelをEmailで選択した場合表示されます。メール通知のタイトルを直接指定でき、Message Template Variableでサポートする変数を同様に使用できます。入力しない場合、システムでデフォルトに設定されたタイトルで送信されます。
+6.  **Send Test Message**  : 通知テストメッセージ送信
+    1. 選択したチャンネルで、入力したメッセージテンプレート内容をテストメッセージとして送信します。
+
+### New Request
+
+新しい承認リクエスト登録通知
+
+*  **Request Type**  : Workflowリクエストタイプ
+    * DB Access Request, SQL Request, SQL Export Request, Server Access Request, Access Role Request, Unmasking Requestの中から選択
+    * All Requests (*) : すべてのリクエストタイプに対して通知送信
+*  **Urgent Mode**  : 事後承認可否
+    * All : すべての承認リクエスト件に通知送信
+    * Urgent Mode Only : 事後承認リクエスト件のみ通知送信
+*  **Send email only to those involved in this request :** ChannelをEmailで選択した場合表示されます。このオプションを有効化すると、該当リクエストの関係者（リクエスト者、承認者など）にMessage Templateの内容を含む通知が送信されます。
+
+
+<Callout type="info">
+**10.2.2 Slackメッセージテンプレート変更事項**
+
+* Slack &gt; API方式のChannelで送信される通知メッセージで`{{assignees}}`に対するSlackユーザーメンションがサポートされます。
+* Request Type選択によりサポートされるテンプレート変数が異なります。詳細は別の**New Request &gt; リクエストタイプ別テンプレート変数**ドキュメントを参照してください。
+
+**10.2.8 Slackメッセージテンプレート変更事項**
+
+* Sensitive Data AccessイベントでSlackメッセージにクエリを含めて送信するよう改善され、`{{queryPreview}}`変数が追加されました。Slackの特性上、3000文字以上のメッセージ送信リクエストを行うとエラー返却なしにメッセージ送信が失敗するため、queryPreviewを通じて見ることができるクエリは100文字に制限されています。
+
+**11.1.0 Request Type変更事項**
+
+* Databases &gt; General &gt; ConfigurationsでNew DAC Policy Management機能が有効化されている場合、AlertのRequest TypeでDB Policy Exception Requestを使用できます。
+* DB Policy Exception RequestはColumn Data Masking、Table Access Restriction、Column Data Access Restrictionに対するポリシー例外リクエストイベントが発生したときにアラームが送信されるようにします。
+
+**11.2.0 メール通知テンプレート変更事項**
+
+* AlertのChannelをEmailで指定する場合、Subject Title（メールタイトル）を直接入力する機能が追加されました。
+* Workflow関連Alert設定時、ChannelがEmailの場合、`Send email only to those involved in this request`オプションを提供します。このオプションを有効化すると、該当リクエストの関係者（リクエスト者、承認者など）にMessage Templateの内容で通知が送信されます。
+</Callout>
+
+### Unusual Login Attempt
+
+IP帯域によるユーザーログイン行為通知
+
+*  **Action Count**  : 通知送信する認証失敗回数
+    * 2以上入力可能です。
+*  **Specific Time Interval (Minutes)**  : 通知送信基準時間（分）
+    * 1以上入力可能です。
+
+<Callout type="info">
+例）異常なログイン試行時通知送信 - 5分間QueryPieログイン失敗3回累積時
+* Action Count : 3
+* Specific Time Internal (Minutes) : 5
+</Callout>
+
+### SQL Execution
+
+定義された条件に該当するSQL文実行通知
+
+*  **Rows**  : 通知送信基準行数
+    * レコード変更がないSQL Event : 0入力時正常動作します。
+        * `Create`, `Drop`, `Revoke`, `Truncate`など
+    * その他のSQL Events : 1以上入力時正常動作します。
+*  **Specific Time Interval (Minutes)**  : 通知送信基準時間（分）（10.2.2以降バージョン）
+    * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+    * 最大1440まで入力可能です。
+*  **SQL Events**  : 通知送信するSQLクエリ（複数選択）
+*  **Connection**  : クエリ実行時通知送信する対象コネクション（10.2.2以降バージョン - 複数選択）
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+<Callout type="info">
+例1）100件以上の大量データ照会時通知送信
+
+* Rows : 100
+* SQL Events : `SELECT`
+
+例2）データ変更および削除試行時通知送信
+
+* Rows : 1
+* SQL Events : `UPDATE`, `DELETE`
+</Callout>
+
+### Prevented SQL Execution
+
+権限のない文実行通知
+
+*  **Connection**  : クエリ実行時通知送信する対象コネクション（10.2.2以降バージョン - 複数選択）
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+### DB Connection Attempt
+
+DB接続成功または失敗通知
+
+*  **Alert Trigger Condition**  : 通知送信条件（複数選択）
+    * Success : DB接続成功時通知送信
+    * Failure : DB接続失敗時通知送信
+*  **Connection Failure Trigger with Interval**  : 接続失敗回数/期間通知条件設定
+    * Failureが選択された場合のみ有効化可能です。有効化時追加入力条件が表示されます。
+    * Action Count : 回数基準
+        * 1以上入力可能です。
+    * Specific Time Interval (Minutes) : 期間基準（分）
+        * 1以上入力可能です。
+*  **Connection**  : クエリ実行時通知送信する対象コネクション（10.2.2以降バージョン - 複数選択）
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+<Callout type="info">
+例）異常なデータベース接続試行時通知送信 - 5分間DB接続失敗3回累積時
+* Alert Trigger Condition : Failure
+* Connection Failure Trigger with Internal : On
+* Action Count : 3
+* Specified Time Internal (Minutes) : 5
+</Callout>
+
+### Sensitive Data Access
+
+定義された条件に該当する機密データ照会通知
+
+*  **Criteria**  : 通知送信基準を選択します。
+    * Sensitive Level : Sensitive Data Policy &gt; Ruleに設定されたデータ別機密レベル基準
+        * Low, Medium, Highの中から選択
+    * Policy : 特定Sensitive Data Policy基準
+        * 登録されたSensitive Data Policyの中から選択
+*  **Rows**  : 通知送信基準行数（10.2.2以降バージョン）
+    * 1以上入力可能です。
+*  **Specific Time Interval (Minutes)**  : 通知送信基準時間（分）（10.2.2以降バージョン）
+    * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+    * 最大1440まで入力可能です。
+
+<Callout type="important">
+Sensitive Data Access通知タイプ使用には機密データポリシーに個人情報が含まれるテーブルおよびカラムを事前定義する必要があります。詳細は[Sensitive Data](../../databases/policies/sensitive-data)ドキュメントを参照してください。
+</Callout>
+
+<Callout type="info">
+例1）機密レベルHighに設定された個人情報データ照会時通知送信
+
+* Criteria : Sensitive Level
+* Sensitive Level : High
+
+例2）特定データベースに含まれる個人情報データ照会時通知送信
+
+* Criteria : Policy
+* Policy : *`{事前に登録されたSensitive Dataポリシー}`*
+</Callout>
+
+### SQL Export
+
+定義された条件に該当するSQLエクスポート実行通知
+
+*  **Rows**  : 通知送信基準行数
+    * 1以上入力可能です。
+*  **Specific Time Interval (Minutes)**  : 通知送信基準時間（分）（10.2.2以降バージョン）
+    * 0入力時、時間条件なしに単件のSQLエクスポートを基準とします。
+    * 最大1440まで入力可能です。
+*  **Connection**  : SQLエクスポート実行時通知送信する対象コネクション（10.2.2以降バージョン - 複数選択）
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+<Callout type="info">
+例）100件以上の大量データエクスポート試行時通知送信
+* Alert Type : SQL Export
+* Trigger Condition (Rows) : 100
+</Callout>
+
+### Server Connection Attempt
+
+サーバー接続成功または失敗通知
+
+*  **Alert Trigger Condition**  : 通知送信条件
+    * Success : DB接続成功時通知送信
+    * Failure : DB接続失敗時通知送信
+*  **Connection**  : 通知送信する対象コネクション（複数選択）
+    * サーバーおよびサーバーグループ選択可能で、重複選択可能
+        * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+<Callout type="info">
+例）ユーザーがサーバー接続を試行したが失敗した場合のみ通知送信
+* Alert Type : Server Connection Attempt
+* Alert Trigger Condition : Failureにのみチェック
+</Callout>
+
+### Restrict Command
+
+サーバー/サーバーグループ別ブロックされたコマンド実行通知
+
+*  **Connection**  : 通知送信する対象コネクション（複数選択）
+    * サーバーおよびサーバーグループ選択可能で、重複選択可能
+        * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+### Specific Command
+
+特定コマンド実行通知
+
+*  **Connection**  : 通知送信する対象コネクション（複数選択）
+    * サーバーおよびサーバーグループ選択可能で、重複選択可能
+        * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+*  **Command**  : 実行時通知送信するコマンド条件
+    * Keyword : コマンドに入力されたキーワード含む時通知送信
+    * RegExr : 正規表現に該当するコマンド実行時通知送信
+
+### File Transfer (SFTP)
+
+SFTPによるファイル転送実行通知
+
+*  **Alert Trigger Condition**  : 通知送信条件（複数選択）
+    * FIle Upload : ファイルアップロード時通知送信
+    * File Download : ファイルダウンロード時通知送信
+*  **Connection**  : 通知送信する対象コネクション（複数選択）
+    * サーバーおよびサーバーグループ選択可能で、重複選択可能
+        * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
+    * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
+
+### K8s API Request**[10.2.2]**
+
+Kubernetes APIリクエスト通知
+
+*  **Result**  : APIリクエスト結果（複数選択）
+    * Success : リクエスト成功時通知送信
+    * Failure : リクエスト失敗時通知送信
+*  **Clusters**  : APIリクエスト通知送信対象クラスター
+    * All Clusters (*) : 今後追加されるすべてのクラスターを対象に通知条件作成
+*  **Verbs**  : 通知送信対象Verb
+    * 現在サポート対象 - `create`, `update`, `patch`, `delete`, `deletecollection`（5種）
+*  **Resource Kind**  : 通知送信対象リソース種類
+    * 現在サポート対象 - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`など（計24種）
+    * All Resources (*) : 今後追加されるすべてのリソース種類を対象に通知条件作成
+
+### Data Access**[11.1.0]**
+
+<Callout type="info">
+Databases &gt; General &gt; ConfigurationsでNew DAC Policy Management機能が有効化されており、関連ポリシーが存在する必要があります。
+</Callout>
+
+Data Access通知はColumn Data Masking、Table Access Restriction、Column Access Restriction、Sensitive Data Access Monitoringの4つの**policy type**を選択できます。<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20250727-222007.png](/administrator-manual/general/company-management/alerts/image-20250727-222007.png)
+</figure>
+
+*  **Column Data Masking**
+    *  **Policy** : アラーム発生条件となる対象ポリシー名を指定します。
+    *  **Rows**  : アラーム発生基準行数を指定します。
+    *  **Time Interval** : アラーム発生基準時間（分単位）です。
+        * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+        * 最大1440まで入力可能です。
+*  **Table Access Restriction**
+    *  **Policy** : アラーム発生条件となる対象ポリシー名を指定します。
+    *  **Unauthorized Access Attempt Count** : アラーム発生条件となるアクセス回数を指定します。Time interval値が0の場合、時間条件なしに単件のイベントに対してアラームが発生するため、Unauthorized Access Attempt Countは1に固定されます。最小値は1、最大値は2147483647です。
+    *  **Time Interval**  : アラーム発生基準時間（分単位）です。
+        * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+        * 最大1440まで入力可能です。
+*  **Column Access Restriction**
+    *  **Rows** : アラーム発生基準行数を指定します。
+    *  **Time Interval**  : アラーム発生基準時間（分単位）です。
+        * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+        * 最大1440まで入力可能です。
+*  **Sensitive Data Access Monitoring**
+    *  **Policy**  : アラーム発生条件となる対象ポリシー名を指定します。
+    *  **Rows**  : アラーム発生基準行数を指定します。
+    *  **Time Interval** : アラーム発生基準時間（分単位）です。
+        * 0入力時、時間条件なしに単件のSQL実行を基準とします。
+        * 最大1440まで入力可能です
+
+## 通知詳細情報照会および修正
+
+Alertsページで詳細内容を照会したい通知を選択します。詳細ページDetailsタブで通知作成時に入力した通知条件およびメッセージを照会し修正できます。右上`Save Changes`ボタンをクリックすると修正内容が反映されます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)](/administrator-manual/general/company-management/alerts/screenshot-20240729-154217.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)
+</figcaption>
+</figure>
+
+
+## 通知送信履歴照会
+
+Alertsリストで送信履歴を照会したい通知を選択します。その後詳細ページ内Logで履歴を照会できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)](/administrator-manual/general/company-management/alerts/screenshot-20240729-154223.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)
+</figcaption>
+</figure>
+
+
+## 通知削除
+
+既存に登録された通知を削除する2つの経路を提供します。
+
+1. Alertsページで削除 : Alertsリスト内削除したい通知をチェックボックスで選択すると`Delete`ボタンが表示されます。ボタンをクリックすると確認モーダルが表示され、`OK`ボタンをクリックして削除を完了します。
+2. 通知詳細ページで削除 : 削除したい通知の詳細ページ右上`Delete`ボタンをクリックすると確認モーダルが表示され、`OK`ボタンをクリックして削除を完了します。

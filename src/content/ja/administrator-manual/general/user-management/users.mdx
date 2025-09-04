@@ -4,9 +4,10 @@ title: 'Users'
 
 import { Callout } from 'nextra/components'
 
-## 概要
+## Overview
 
 Userページでは、現在QueryPieに登録されたユーザーリストを照会し、諸般管理作業を実行します。
+
 
 ## ユーザーリスト照会
 
@@ -21,35 +22,36 @@ Administrator &gt; General &gt; User Management &gt; Users
 
 Usersリストで確認可能な情報は以下の通りです。
 
-*  **Auth Provider**  : ユーザー認証提供者
-    * QueryPieまたはUser Management &gt; Authenticationで設定されたIdP Typeを表示します。
-    * 手動で登録されたユーザーの場合QueryPieで表示されます。
+*  **Auth Provider**  ：ユーザー認証提供者
+    * QueryPieまたはUser Management > Authenticationで設定されたIdP Typeを表示します。
+    * 手動で登録されたユーザーの場合、QueryPieで表示されます。
     * IdPから連動されたユーザーは各ID Provider名で表示されます。
     * Authentication関連の詳細内容は[Authentication](authentication)文書を参照してください。
-*  **Name**  : ユーザー名（Display Name）
-*  **Username**  : ユーザーログインID
-*  **Email**  : ユーザーメール
-*  **Admin Role**  : ユーザーに付与された管理者権限
-*  **Last Login At** : 最後のログイン日時
-*  **Last Access At**  : 最後のリソースアクセス日時
-*  **Created At** : ユーザーアカウント作成日時
-*  **Description**  : アカウント状態関連情報
-    * Account Locked Manually : 管理者またはAPIによる無効化
-    * Account Expired : 長期未接続によるアカウント期限切れ
-    * Account Locked : 多数のログイン失敗によるアカウントロック
+*  **Name**  ：ユーザー名（Display Name）
+*  **Username**  ：ユーザーログインID
+*  **Email**  ：ユーザーメール
+*  **Admin Role**  ：ユーザーに付与された管理者権限
+*  **Last Login At** ：最後のログイン日時
+*  **Last Access At**  ：最後のリソースアクセス日時
+*  **Created At** ：ユーザーアカウント生成日時
+*  **Description**  ：アカウント状態関連情報
+    * Account Locked Manually：管理者またはAPIによる無効化
+    * Account Expired：長期未接続によるアカウント期限切れ
+    * Account Locked：多数のログイン失敗によるアカウントロック
 
 <figure data-layout="center" data-align="center">
-![Description類型別表示](/administrator-manual/general/user-management/users/account-status-descriptions.png)
+![Descriptionタイプ別表示](/administrator-manual/general/user-management/users/account-status-descriptions.png)
 <figcaption>
-Description類型別表示
+Descriptionタイプ別表示
 </figcaption>
 </figure>
 
-*  **Status**  : アカウントの有効化状態（ActiveまたはInactive）
+*  **Status**  ：アカウントの有効化状態（ActiveまたはInactive）
+
 
 ## 手動でユーザー追加
 
-組織に新しいユーザーを手動で追加します。ユーザーを追加した後、グループおよびポリシーに割り当て権限を付与できます。
+組織に新しいユーザーを手動で追加します。ユーザーを追加した後、グループおよびポリシーに割り当てて権限を付与できます。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; Add User](/administrator-manual/general/user-management/users/screenshot-20240726-093805.png)
@@ -61,17 +63,18 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; Add User
 1. Administrator &gt; General &gt; User Management &gt; Usersメニューに移動します。
 2. 右上の`Add User`ボタンをクリックします。
 3. ユーザー追加のための以下の情報を入力します。
-    1.  **Display Name** : クエリパイ上で表記されるユーザーのディスプレイ用名前を入力します。
-    2.  **Username** : ログイン時使用するユーザーの固有値であるLogin IDで、基本的に名前やメールアドレスの形態を入力します。
-    3.  **Email** : ユーザーをQueryPie内で識別できるUniqueなキー値です。
-    4.  **Password** : 管理者が設定する最初のパスワードです。ユーザーログイン後変更するよう案内してください。
-4. `Save`ボタンを通じて保存します。
+    1.  **Display Name** ：QueryPie上で表記されるユーザーのディスプレイ用名前を入力します。
+    2.  **Username** ：ログイン時ユーザーが使用する固有な値であるLogin IDで、基本的に名前やメールアドレスの形態を入力します。
+    3.  **Email** ：ユーザーをQueryPie内で識別できるUniqueなキー値です。
+    4.  **Password** ：管理者が設定する最初のパスワードです。ユーザーログイン後変更するよう案内してください。
+4. `Save`ボタンで保存します。
 
 <Callout type="info">
-ユーザーのUsername項目は固有値で最初追加以降修正できません。
+ユーザーのUsername項目は固有な値で最初の追加以降修正できません。
 </Callout>
 
 該当ユーザーがQueryPie ProviderでUsersリストに追加されたことを確認できます。基本的にAdmin権限のない基本Userで登録されます。
+
 
 ## ユーザーに管理者役割付与または回収
 
@@ -89,8 +92,8 @@ Administrator &gt; General &gt; User Management &gt; Users
 </figure>
 
 1.  **Admin Role**  カラム内ドロップダウン項目には管理者役割現況が表示されます。
-    * 付与された権限がない場合Noneで表示されます。
-    * 既付与された権限がある場合権限名が表示されます。（複数の場合+N形式で表示）
+    * 付与された権限がない場合、Noneで表示されます。
+    * 既付与された権限がある場合、権限名が表示されます。（複数の場合+N形式で表示）
 2. ドロップダウンをクリックして、権限を追加または削除できます。（複数選択可能）
 3. `Clear`ボタンをクリックするとすべての権限選択履歴が初期化されます。
 4. `Apply`ボタンをクリックすると変更履歴が保存されます。
@@ -99,9 +102,10 @@ Administrator &gt; General &gt; User Management &gt; Users
 管理者役割自体を管理する方法は[Roles](roles)文書を参照してください。
 </Callout>
 
+
 ## ユーザー詳細情報照会
 
-Usersページでユーザーをクリックすると詳細情報ページに進入します。登録された情報の照会およびユーザー管理作業を実行できます。ユーザープロフィールに登録された属性でAttribute-based Access Control (ABAC)を実装できます。ユーザー詳細情報はそれぞれProfile、Groupts、Admin Roles、Allowed Zones、Tagsタブで区分されます。各項目別説明は[ユーザープロフィール文書](users/user-profile)を参照してください。
+Usersページでユーザーをクリックすると詳細情報ページに進入します。登録された情報の照会およびユーザー管理作業を実行できます。ユーザープロファイルに登録された属性でAttribute-based Access Control（ABAC）を実装できます。ユーザー詳細情報はそれぞれProfile、Groups、Admin Roles、Allowed Zones、Tagsタブで区分されます。各項目別説明は[ユーザープロファイル文書](users/user-profile)を参照してください。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/users/screenshot-20240726-093748.png)
@@ -111,12 +115,13 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </figure>
 
 <Callout type="info">
-QueryPieを通じて登録したユーザーのみProfile情報修正およびユーザー削除が可能で、SCIM連動されたユーザーは元帳データ更新を通じて修正事項を反映しなければなりません。
+QueryPieを通じて登録したユーザーのみProfile情報修正およびユーザー削除が可能で、SCIM連動されたユーザーは台帳データ更新を通じて修正事項を反映しなければなりません。
 </Callout>
+
 
 ## ユーザー無効化
 
-何らかの理由でユーザーアカウントを無効化しなければならない時、二つの経路で処理できます。
+何らかの理由でユーザーアカウントを無効化する必要がある時、2つの経路で処理できます。
 
 ### Usersページで無効化
 
@@ -144,13 +149,15 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </figcaption>
 </figure>
 
+
 <Callout type="info">
 無効化処理されたユーザーのアカウント状態はInactive、DescriptionにはLocked Manuallyで表示されます。
 </Callout>
 
+
 ## ユーザー再有効化
 
-管理者によって手動で無効化されたか、長期未接続により無効化処理されたユーザーのアカウント状態はInactiveで表示されます。このようなユーザーアカウントを再び有効化する方法は大きく二つです。
+管理者によって手動で無効化されたか、長期未接続により無効化処理されたユーザーのアカウント状態はInactiveで表示されます。このようなユーザーアカウントを再び有効化する方法は大きく2つです。
 
 ### Usersページで再有効化
 
@@ -174,10 +181,11 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </figcaption>
 </figure>
 
+
 ## ユーザー情報修正
 
 <Callout type="important">
-QueryPieで手動に登録したユーザーの情報のみ修正可能です。SCIMを通じて連動してきたユーザー情報修正は元帳データ更新後同期を経て可能です。
+QueryPieで手動に登録したユーザーの情報のみ修正可能です。SCIMを通じて連動してきたユーザー情報修正は台帳データ更新後同期を経て可能です。
 </Callout>
 
 ユーザー詳細ページで`Edit`ボタンをクリックすると修正モードに進入します。修正可能なフィールドは有効化されます。入力完了後`Save`ボタンを押して修正を完了します。
@@ -189,10 +197,11 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figcaption>
 </figure>
 
+
 ## ユーザー削除
 
 <Callout type="important">
-QueryPieで手動に登録したユーザーのみ直接削除可能です。SCIMを通じて連動してきたユーザー削除は元帳データ更新後同期を経て可能です。
+QueryPieで手動に登録したユーザーのみ直接削除可能です。SCIMを通じて連動してきたユーザー削除は台帳データ更新後同期を経て可能です。
 </Callout>
 
 ユーザー詳細ページで`Delete`ボタンをクリックするとDelete User確認モーダルが露出されます。
@@ -205,6 +214,7 @@ QueryPieで手動に登録したユーザーのみ直接削除可能です。SCI
 Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Delete User
 </figcaption>
 </figure>
+
 
 ## ユーザーパスワード再設定
 
@@ -230,7 +240,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 QueryPie 10.2.2からEmail連動設定がされている場合、管理者が一時パスワードを指定する代わりにユーザーが直接自分のパスワードを初期化するよう初期化メールを発送できます。
 
 1. 管理者がユーザー詳細ページで`Reset Password`ボタンをクリックします。
-2. 出力されるポップアップウィンドウの「Password change method」で「User changes own password (via email)」を選択し`Confirm`ボタンを押すとパスワード初期化メールが該当ユーザーのemailアドレスに発送されます。
+2. 出力されるポップアップウィンドウの「Password change method」で「User changes own password (via email)」を選択して`Confirm`ボタンを押すとパスワード初期化メールが該当ユーザーのemailアドレスに発送されます。
 
 <figure data-layout="center" data-align="center">
 ![Emailを通じてユーザーが自分のパスワードを直接初期化するよう選択](/administrator-manual/general/user-management/users/image-20241218-195131.png)
@@ -239,7 +249,7 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 </figcaption>
 </figure>
 
-ユーザーが受信することになるメールの内容は以下と類似します。パスワード初期化リンクは30分間有効です。もし30分を超えてユーザーがこのリンクで接続しないと、このリンクでパスワードを初期化できませんので、管理者が再び上記手順（User changes own password (via email)）を実行してパスワード初期化メールを発送してあげなければなりません。
+ユーザーが受信することになるメールの内容は以下のようになります。パスワード初期化リンクは30分間有効です。もし30分を超えてユーザーがこのリンクで接続しない場合、このリンクでパスワードを初期化できませんので、管理者が再び上記手順（User changes own password (via email)）を実行してパスワード初期化メールを発送してあげる必要があります。
 
 <figure data-layout="center" data-align="center">
 ![パスワード初期化メール](/administrator-manual/general/user-management/users/image-20241218-224655.png)
@@ -248,11 +258,13 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 </figcaption>
 </figure>
 
+
 </Callout>
 
 ### パスワード再設定（ユーザー）
 
 ユーザーがログインする時、前に設定した一時パスワードを入力すると、すぐにパスワード再設定画面に進入します。パスワードを変更した後`Change Password`ボタンをクリックするとパスワード変更が完了し、新しいパスワードでログインできます。
+
 
 <figure data-layout="center" data-align="center">
 ![パスワード再設定画面](/administrator-manual/general/user-management/users/image-20241220-014612.png)
@@ -260,6 +272,7 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 パスワード再設定画面
 </figcaption>
 </figure>
+
 
 ## ユーザーOTP再設定
 

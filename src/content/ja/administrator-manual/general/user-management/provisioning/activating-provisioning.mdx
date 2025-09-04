@@ -1,0 +1,47 @@
+---
+title: 'Provisioning有効化'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+SCIM 2.0プロトコルを基に動作するQueryPieのProvisioning機能は、ユーザーアイデンティティ同期をサポートして、既存のユーザー認証およびアクセス管理を助けるSSOに加えて、より安全なユーザー統合認証および管理環境を提供します。ユーザーのライフサイクル管理をサポートすることになり、管理者は組織内の入社者および退社者をアカウントシステム一箇所でより便利に管理できます。
+
+
+## Prerequisites
+
+* 以下のQueryPie管理者権限Roleで該当機能を有効化できます：
+    * Owner
+    * System Admin 
+
+
+## QueryPie Provisioning有効化
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Provisioning](/administrator-manual/general/user-management/provisioning/activating-provisioning/image-20240714-054222.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Provisioning
+</figcaption>
+</figure>
+
+1. QueryPieアプリのAdministrator &gt; General &gt; User Management &gt; Provisioningパスに移動します。
+2. Provisioning右側の`Enable`ボタンをクリックしてSCIM機能を有効化します。
+3. SCIM Endpointで提供するアドレス値を今後Base URLで設定できるように保管します。
+4. Access Token発行のために右側の`Generate Token`ボタンをクリックします。
+5. ポップアップウィンドウが現れると、該当Access Token値を今後IdP側トークン情報に記入できるようにコピーしておきます。
+    1. 該当トークン値は再照会が困難なので、該当ウィンドウを閉じずにすぐに台帳となるIdentity Providerに移ることをお勧めします。（[**Okta-QueryPie Provisioning連動**](okta-provisioning-integration-guide)ステップ参照）
+    2. 万が一トークン値を紛失した場合、既存のトークンを削除して再び4番ステップを通じて新たに発行してください。
+6. `Confirm`ボタンを押してウィンドウを閉じます。
+
+<Callout type="important">
+**SCIM専用トークン案内**
+1. Access TokenはGenerate Tokenボタンを通じて生成でき、最大2個まで発行可能です。
+2. トークン値は生成時1回に限り露出され、以降は露出されません。
+3. SCIM API専用でのみ使用可能で、/api/scim/v2以外の他のエンドポイント呼び出しが不可能です。
+4. 新たに生成されたトークンは発行日yyyy-MM-dd基準で1年まで有効です。
+    1. 有効期限が到来するとトークンはExpired処理されてSCIM API利用が不可能です。
+    2. 管理者は有効期限が到達する前に新規トークンを発行して既存のIdPに設定されたトークンを変更してあげる必要があります。
+5. トークンを選択して`DELETE`ボタンをクリックしてトークン削除が可能です。
+6. 万が一管理者がトークンを発行受けた状態でProvisioningを無効化した後、再び有効化した場合、既存のトークンはすべて無効化タイミングに削除処理されるため、管理者は新たに有効なトークンを発行する必要があります。
+</Callout>

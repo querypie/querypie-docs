@@ -1,0 +1,1538 @@
+---
+title: 'New Request > リクエストタイプ別テンプレート変数'
+---
+
+Alert TypeをNew Requestで選択した場合、Request Typeによるテンプレート変数サポート内容は以下の通りです。
+
+## 共通変数
+
+すべてのリクエストタイプでサポートする変数リストです。
+
+Request Typeを全体選択した場合でも共通変数は使用可能です。
+
+<table data-table-width="811" data-layout="center" local-id="c749b9ca-9033-4c2b-b8fa-3880ad5a8736">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Request Title
+</td>
+<td>
+`{{requestTitle}}`
+</td>
+<td>
+リクエストタイトル
+* 例：サービスDBアクセスリクエスト
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Assignees
+</td>
+<td>
+`{{assignees}}`
+</td>
+<td>
+リクエスト承認担当者
+* 例：STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant Hwang)
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Comment
+</td>
+<td>
+`{{comment}}`
+</td>
+<td>
+リクエストコメント
+* 例：サービス運営目的でDBアクセス権限リクエストいたします。
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+User Name
+</td>
+<td>
+`{{userName}}`
+</td>
+<td>
+リクエスト者名
+* 例：Keira Yoon
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Email
+</td>
+<td>
+`{{email}}`
+</td>
+<td>
+リクエスト者メール
+* 例：[keira@email.com](mailto:keira@email.com)
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Access Type
+</td>
+<td>
+`{{accessType}}`
+</td>
+<td>
+リクエストタイプ
+* DB Access Request
+* SQL Request
+* SQL Export Request
+* Unmasking Request
+* Server Access Request
+* Access Role Request
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Link
+</td>
+<td>
+`{{link}}`
+</td>
+<td>
+リクエスト詳細ページリンク
+* 例：https://`{querypie_domain}`/workflow/received-requests/to-do/detail/`{workflow_uuid}`
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Workflow Uuid
+</td>
+<td>
+`{{workflowUuid}}`
+</td>
+<td>
+リクエストUUID
+* 例：b63f9f94-11e5-4095-a399-be7d96e9ce06
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Workflow Id
+</td>
+<td>
+`{{id}}`
+</td>
+<td>
+リクエストID
+* 例：12
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Urgent
+</td>
+<td>
+`{{urgent}}`
+</td>
+<td>
+緊急リクエスト可否
+* trueまたはfalse
+</td>
+<td>
+10.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## DB Access Request
+
+<table data-table-width="808" data-layout="center" local-id="ee62ec7d-c9f6-4e28-b56e-747b6443c26d">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+有効期限日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+権限有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Requested Privilege per Connection
+</td>
+<td>
+`{{connectionPrivilegeNames}}`
+</td>
+<td>
+コネクション別リクエストされたPrivilegeをリストで表示
+* 例：
+    * Connection A : Read/Write
+    * Connection B : Read-Only
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+</tbody>
+</table>
+
+## SQL Request
+
+<table data-table-width="814" data-layout="center" local-id="65178aed-8861-4dee-943a-42d33ce617bf">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+SQL Text
+</td>
+<td>
+`{{sqlText}}`
+</td>
+<td>
+SQL文
+* 最大100文字（TEXT、FILE同一）
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Content Type
+</td>
+<td>
+`{{contentType}}`
+</td>
+<td>
+SQL文入力方式
+* TEXTまたはFILE
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DBコネクションUUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DBコネクション名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Id
+</td>
+<td>
+`{{clusterId}}`
+</td>
+<td>
+DBコネクションID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+データベースタイプ
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+データベース名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Use Ledger Approval Rule
+</td>
+<td>
+`{{useLedgerApprovalRule}}`
+</td>
+<td>
+台帳承認ルール使用可否
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Target Date
+</td>
+<td>
+`{{targetDate}}`
+</td>
+<td>
+実行目標日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+実行目標日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Due Date
+</td>
+<td>
+`{{dueDate}}`
+</td>
+<td>
+承認/実行有効期限日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+実行有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## SQL Export Request
+
+<table data-table-width="816" data-layout="center" local-id="a7dabd97-8ea6-4502-b876-197d927dd1dc">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DBコネクションUUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DBコネクション名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Id
+</td>
+<td>
+`{{clusterId}}`
+</td>
+<td>
+DBコネクションID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+データベースタイプ
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+データベース名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Export Type
+</td>
+<td>
+`{{exportType}}`
+</td>
+<td>
+エクスポートタイプ
+* QUERYまたはTABLE
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Export Detail
+</td>
+<td>
+`{{exportDetail}}`
+</td>
+<td>
+エクスポート詳細情報
+* Queryの場合、最大100文字のクエリ
+* Tableの場合、テーブル名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Target Date
+</td>
+<td>
+`{{targetDate}}`
+</td>
+<td>
+実行目標日
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+実行目標日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Due Date
+</td>
+<td>
+`{{dueDate}}`
+</td>
+<td>
+承認/実行有効期限日
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+実行有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Unmasking Request
+
+<table data-table-width="816" data-layout="center" local-id="212dceed-34bd-42c0-9cab-7b11a24950af">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DBコネクションUUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DBコネクション名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+データベースタイプ
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+データベース名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+テーブル名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+カラム名をリストで表示
+* 例：[actor_id, first_name, last_name, last_update]
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Unmasking Expiration
+</td>
+<td>
+`{{unmaskingExpiration}}`
+</td>
+<td>
+マスキング解除有効期限時点
+* 例：
+    * 10 Minutes
+    * 2024-12-03T14:59:00
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Restricted Data Access Request
+
+<table data-table-width="816" data-layout="center" local-id="8d66df32-3ad9-473e-9876-a4c7fe8775e1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DBコネクションUUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DBコネクション名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+データベースタイプ
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+データベース名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+テーブル名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+カラム名をリストで表示
+* 例：[actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Restricted Data Access Expiration
+</td>
+<td>
+`{{restrictedDataAccessExpiration}}`
+</td>
+<td>
+アクセス許可有効期限時点
+* 例：
+    * 10 Minutes
+    * 2024-12-03T14:59:00
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## DB Policy Exception Request
+
+<table data-table-width="816" data-layout="center" local-id="8fdf1d5c-786c-4147-8e56-bfd6d8dcdb0f">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DBコネクションUUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DBコネクション名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Data Scope Type
+</td>
+<td>
+`{{dataScopeType}}`
+</td>
+<td>
+Data PathとTagのうち一つを選択
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+データベースタイプ
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+データベース名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+テーブル名
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+カラム名をリストで表示
+* 例：[actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Expiration
+</td>
+<td>
+`{{expiration}}`
+</td>
+<td>
+例外許可有効期限時点
+* 例：
+    * 10 Minutes
+    * 2024-12-03T14:59:00
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Server Access Request
+
+<table data-table-width="820" data-layout="center" local-id="a4480e83-0193-4c46-ba7c-53a665a6ad03">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Server Group Name
+</td>
+<td>
+`{{serverGroupName}}`
+</td>
+<td>
+サーバーグループ名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Names
+</td>
+<td>
+`{{serverNames}}`
+</td>
+<td>
+サーバー名をリストで表示
+* 例：
+    * Server A
+    * Server B
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Accounts
+</td>
+<td>
+`{{serverAccounts}}`
+</td>
+<td>
+サーバーアカウントをリストで表示
+* 例：
+    * dev
+    * ec2-user
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+有効期限日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+権限有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+権限付与開始条件
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+分（Minutes）単位サーバーアクセス権限が有効な時間
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Server Privilege Request
+
+<table data-table-width="820" data-layout="center" local-id="1ac8db57-f53b-4306-9a63-eabe504365d4">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Server Group Name
+</td>
+<td>
+`{{serverGroupName}}`
+</td>
+<td>
+サーバーグループ名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Names
+</td>
+<td>
+`{{serverNames}}`
+</td>
+<td>
+サーバー名をリストで表示
+* 例：
+    * Server A
+    * Server B
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Accounts
+</td>
+<td>
+`{{serverAccounts}}`
+</td>
+<td>
+サーバーアカウントをリストで表示
+* 例：
+    * dev
+    * ec2-user
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+有効期限日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Privilege Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+権限有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+権限付与開始条件
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+分（Minutes）単位サーバー特権が有効な時間
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Access Role Request
+
+<table data-table-width="816" data-layout="center" local-id="e44f2beb-29c0-417c-b961-8a1b7946b510">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**変数名**
+</th>
+<th>
+**変数**
+</th>
+<th>
+**説明**
+</th>
+<th>
+**追加時点**
+</th>
+</tr>
+<tr>
+<td>
+Service
+</td>
+<td>
+`{{service}}`
+</td>
+<td>
+役割リクエスト対象サービス
+* SAC, KAC, WAC
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Role Name
+</td>
+<td>
+`{{roleName}}`
+</td>
+<td>
+役割名
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+有効期限日
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+承認有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Role Expiration Date
+</td>
+<td>
+`{{roleExpirationDate}}`
+</td>
+<td>
+権限有効期限日
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Web APP Just-In-Time Access Request
+
+|  **変数名**                 |  **変数**                      |  **説明**                        |  **追加時点**  |
+| ------------------------ | ---------------------------- | ------------------------------ | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | 承認有効期限日                       | 11.2.0      |
+| Web App Name             | `{{webAppName}}`             | リクエスト対象ウェブアプリ                       | 11.0.0      |
+| Access Duration          | `{{accessDuration}}`         | 分（Minutes）単位ウェブアプリアクセス権限が有効な時間 | 11.0.0      |
+
+## IP Registration Request
+
+|  **変数名**                 |  **変数**                      |  **説明**  |  **追加時点**  |
+| ------------------------ | ---------------------------- | -------- | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | 承認有効期限日 | 11.2.0      |
+| IP Addresses             | `{{ipAddresses}}`            | IPアドレス    | 11.0.0      |

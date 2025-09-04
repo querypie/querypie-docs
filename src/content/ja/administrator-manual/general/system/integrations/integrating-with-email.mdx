@@ -1,0 +1,77 @@
+---
+title: 'Email連携'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Email連携を通じて以下のような主要機能をサポートします。
+
+* パスワード初期化Email送信 : ユーザーのパスワード初期化のためのメールを送信します。
+* 2次認証用認証コード送信 : ユーザーログイン時追加セキュリティ段階をEmailを通じて提供します。
+* イベント通知 : Alertルールを通じて発生するイベントに対して管理者にEmailを送信します。
+
+Email送信にはSMTPサーバーが必要で、QueryPieではSMTPサーバーと連携する方法を提供します。
+
+## Email Integration設定
+
+1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
+2. Emailタイルをクリックして詳細ページに移動します。
+3. 詳細ページにある`Configure`ボタンをクリックするとSMTP情報を入力できるポップアップが表示されます。<br/>
+4. SMTP設定を生成するために以下の情報を入力します。
+    1.  **Email Server Name**  : 識別が容易になるよう任意の名前を入力します。
+    2.  **Host**  : SMTPサーバーのhostname（FQDN）を入力します。
+    3.  **Secure**  : 暗号化送信方式を選択します。TLS、STARTTLSの中から選択できます。デフォルト値はTLSです。<br/>STARTTLSはSMTP ServerがTLSを使用できない場合平文を使用します。
+    4.  **Port**  : SMTPサーバーが使用するポート番号を入力します。
+    5.  **Timeout (milliseconds)** : SMTPの応答を待機する閾値を入力します。デフォルト値は60000です。必ず必要な場合でなければ可能な限りこの値を修正しないようにします。
+    6.  **Sender Email Address**  : メール送信者のメールアドレスを入力します。
+    7.  **Sender Name**  : メール送信者の名前で表示される内容を入力します。
+    8.  **Support Email Address (Reply-to)**  : クエリパイでSMTPサーバーに送信するメールはすべて送信専用メールです。Sender Email Addressに入力した送信専用メールアドレスはユーザーの返信メールを受信できないため、場合によってメール受信者が技術サポートをリクエストする必要がある時メールを受信するアドレスを提供する必要があります。<br/>10.2.2基準パスワード初期化emailテンプレート、2次認証用認証コードメールテンプレートでここで指定したsupport email addressを使用するようになっています。
+    9.  **SMTP Server Requires Authenticationスイッチ**  : SMTPサーバーに接続およびEmail送信のために認証必要可否によりOnまたはOffを選択します。Onにする場合User、Passwordを入力する必要があります。
+        1. User : 認証のためのユーザーを入力します。形式は一般的にemailアドレスです。
+        2. Password : 認証アカウントのパスワードを入力します。
+    10.  **Send Workflow Notification via Emailスイッチ**  : 承認リクエスト受信、承認/却下処理などワークフロー関連イベント発生時関係者にメール通知を送信するかどうかを選択します。
+    11.  **Testボタン**  : SMTP設定が接続に問題ないか確認します。<br/>
+    12.
+5. `OK`ボタンを押して設定を保存します。
+
+## Email Integration設定修正
+
+1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
+2. Emailタイルをクリックして詳細ページに移動します。
+3. 詳細ページEmail senderに表示されたSMTP設定に対してEditボタンを押します。<br/>
+4. 変更が必要な部分を修正し保存します。
+
+## Email送信履歴確認
+
+1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
+2. Emailタイルをクリックして詳細ページに移動します。
+3. Sent Email Historyリストを確認します。<br/>このリストに保存されるemail送信履歴は30日間保管され30日以前の内容は削除されます。<br/>
+
+## Email Integration設定削除
+
+1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
+2. Emailタイルをクリックして詳細ページに移動します。
+3. 詳細ページEmail senderに表示されたSMTP設定に対してDeleteボタンを押します。<br/>SMTP設定を使用するAlert、MFAなどの設定が存在する場合SMTP設定を削除できません。<br/>まず関連設定をすべて削除してから削除可能です。<br/>
+
+## ユーザーパスワード初期化メール送信
+
+<Callout type="info">
+ユーザーが直接自分のパスワードを初期化するようパスワード初期化メールを送信するにはEmail Integration設定がまず必要です。
+</Callout>
+
+Emailを通じてユーザーが自分のパスワードを初期化するようする方法について以下内容を参照してください。
+
+* 管理者が特定ユーザーのパスワードを初期化 : [Users | ユーザー-パスワード-再設定](../../user-management/users#%ec%82%ac%ec%9a%a9%ec%9e%90-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%ec%9e%ac%ec%84%a4%ec%a0%95%ed%95%98%ea%b8%b0)
+* ユーザーが自分のパスワードを直接初期化 : [Emailを通じたユーザーパスワード初期化](../../../../user-manual/my-dashboard/user-password-reset-via-email)
+
+## 2次認証手段としてEmail使用
+
+<Callout type="info">
+QueryPie 10.2.2からGoogle OTPとともにEmailを2次認証手段として使用できるようになりました。Email Integration設定がまず必要です。
+</Callout>
+
+2次認証手段としてEmailを使用する方法は以下内容を参照してください。
+
+* [Multi-Factor Authentication設定](../../user-management/authentication/setting-up-multi-factor-authentication)

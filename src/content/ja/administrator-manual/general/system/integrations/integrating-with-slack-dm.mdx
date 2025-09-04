@@ -1,0 +1,82 @@
+---
+title: 'Slack DM連携'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Slack AppをQueryPieに連携し、QueryPieからDirect Message通知を受信できます。
+
+<Callout type="info">
+本ドキュメントは**10.2.6またはそれ以上のバージョン**に適用されます。
+10.2.5またはそれ以下のバージョンのSlack連携方法は[10.1.0バージョンマニュアルドキュメント](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)を参照してください。
+</Callout>
+
+### 構成時事前に必要な権限
+
+* Slack Workspace管理者権限アカウント（Slack WorkspaceにAppをインストールするために必要）
+* QueryPie OwnerおよびApproval Admin権限アカウント
+
+## Slack APIでDM App生成（via Manifest Files）
+
+App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
+
+
+1. [https://api.slack.com/apps](https://api.slack.com/apps)に移動して`Create an App`をクリックします。<br/>
+2. Create an appモーダルで、App生成方式を選択します。`From a manifest`をクリックします。<br/>
+3. Pick a workspaceモーダルでQueryPieと連携するSlack Workspaceを選択した後次の段階に進行します。<br/>
+4. Create app from manifestモーダルでJSON形式のApp Manifestを入力します。<br/>事前に埋められている内容を削除し以下のApp Manifestを貼り付けた後次の段階に進行します。<br/>:light_bulb_on: `{{..}}`内の値は希望する値に変更してください。
+5. 設定内容を検討し`Create`ボタンをクリックしてApp生成を完了します。<br/>
+
+## Slack WorkspaceにSlack Appインストール
+
+1. Settings &gt; Install Appで`Install to Workspace`ボタンをクリックして生成されたアプリをSlack Workspaceにインストールします。
+2. 権限リクエストページで、`許可`をクリックします。
+3. 設定したSlack WorkspaceでSlack DM専用Appが生成されたことを確認できます。
+
+## Bot User OAuth Token取得
+
+Features &gt; OAuth & Permissionsメニュー内OAuth Tokens for Your Workspaceセクションで、**Bot User OAuth Token**をコピーして記録しておきます。
+
+<figure data-layout="center" data-align="center">
+![image-20240418-022640.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240418-022640.png)
+</figure>
+
+
+## App-Level Token生成
+
+<Callout type="info">
+App manifestでSlack appを生成する時Socket Modeと関連権限を有効化することはできますが、App Level Token（xapp-）は自動で生成されません。
+* App Level Tokenはセキュリティ資格証明（security credential）であるためmanifestで自動生成/露出されるとセキュリティ上危険
+* App manifestはアプリの構成（configuration）のみ定義し、実際の認証トークンは別途生成/管理される
+</Callout>
+
+以下の段階を実行してApp-Level Tokenを手動で生成します。
+
+1. アプリ設定ページのSettings &gt; Basic InformationメニューのApp-Level Tokensセクションに移動し、`Generate Token and Scope`ボタンをクリックします。<br/>
+2. Generate an app-level tokenモーダルで、Add Scopeボタンをクリックした後`connections:write`を追加します。<br/>
+3. 生成されたApp-Level Tokenモーダルで、アプリトークンをコピーして別途記録しておきます。App-Level Tokenは`xapp-`で始まります。
+
+## QueryPieでSlack DM設定
+
+1. Admin &gt; General &gt; System &gt; Integrations &gt; Slackメニューに進入した後、`Configure`ボタンをクリックして設定モーダルを開きます。<br/>
+2. 設定モーダルに先ほど記録しておいたApp TokenとBot User OAuth Tokenを入力します。
+3. 追加設定値は以下の通りです。DMでWorkflow通知を受けメッセージ内で承認/拒否を実行するにはすべての設定トグルを有効化します。
+    *  **Send Workflow Notification via Slack DM**  : ワークフローリクエストに対するSlack DM送信有効化
+    *  **Allow Users to approve or reject on Slack DM**  : Slack DM内で承認または拒否機能有効化<br/>
+4. `Save`ボタンを押して設定を完了します。
+
+## Slack DM設定管理
+
+1. Slack Configurationを登録した後、現在の設定状態を画面で確認できます。<br/>
+2. `Edit`ボタンをクリックして入力した設定を変更できます。<br/>
+
+
+## Workflowリクエスト時Slack DMテスト
+
+DB Access Requestを例に、Slack DM機能が正常に動作するかテストを実行します。
+
+1. QueryPie User &gt; WorkflowページでSubmit Requestボタンをクリックした後、DB Access Requestを選択してリクエスト作成画面に進入します。リクエスト作成画面で必要な情報を入力し、リクエストを提出します。
+2. 承認者は前に追加したSlack AppとのDMで承認すべきリクエスト通知を受信できます。<br/>**Allow Users to approve or reject on Slack DM**設定がオンになっているため、DMで直接理由を入力してリクエストを承認または拒否できます。<br/>
+3. DMで`Details`ボタンをクリック時、QueryPie Adminで承認リクエストに対する詳細内容を確認し承認または拒否できます。<br/>

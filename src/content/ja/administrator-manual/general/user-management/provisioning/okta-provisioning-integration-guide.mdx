@@ -1,0 +1,169 @@
+---
+title: '[Okta]プロビジョニング連動ガイド'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+本ガイドは、OktaのApp Integration Wizard（AIW）を基にQueryPieとSCIM連動を実装する方法を案内します。本製品のSCIM機能はRPC 7643を基にSCIM 2.0基本規格に合わせて製作されたため、他社Identity Provider連動時にも該当ガイドに従って必要な情報をQueryPieで収集して連動を進行してください。
+</Callout>
+
+## Prerequisites
+
+* Okta IAMサービスの**Lifecycle Management（LCM）**ライセンス購読が必要です。
+* Okta管理者コンソール（Okta Admin Console）にアクセスしてAppを作成し、ユーザー/グループをアプリに割り当てることができる権限が要求されます。
+    * **最小必要権限**
+        * User
+            * Edit users' application assignments
+        * Group
+            * Edit groups' application assignments
+        * Application
+            * Manage applications
+* [https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm](https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm)ページ内の[Okta IP range allowlist](https://s3.amazonaws.com/okta-ip-ranges/ip_ranges.json)を参照して該当するテナントのIP帯域を確認し、事前にインバウンドトラフィック例外処理許可をする必要があります。
+* ライセンスと共にQueryPie製品がインストールされている必要があります。
+* QueryPie Owner/Application Admin Role権限のアカウントがある必要があります。
+* [Provisioning有効化](activating-provisioning)ステップを先に実行する必要があります。
+
+
+<Callout type="info">
+Okta APIを活用したアウトバウンドユーザー同期を設定する予定の場合、[Okta連動](../authentication/integrating-with-okta)ページ内の手順に従って代わりに進行してください。SCIMと同時に有効化時、ユーザー同期に影響を受ける可能性があるため注意してください。
+</Callout>
+
+## Integration Steps
+
+上位事前作業がすべて完了すると、以下の順序に従ってSCIM連動を実行します。
+---
+
+### OktaカスタムSCIMアプリ生成
+
+<figure data-layout="center" data-align="center">
+![Okta Admin Console > Applications > Applications > Create App Integration > SAML 2.0 > Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
+<figcaption>
+Okta Admin Console > Applications > Applications > Create App Integration > SAML 2.0 > Configure SAML
+</figcaption>
+</figure>
+
+1. [Oktaサービス](https://login.okta.com/)に接続して管理者アカウントでログインします。
+2. 右上の`Admin`ボタンをクリックして管理者コンソールに接続します。
+3. Okta管理者ページの左側パネルでApplications > Applicationsメニューに移動します。
+4. `Create App Integration`ボタンをクリックします。
+5. カスタムSCIM連動を目的としてSign-in methodで**SAML 2.0**オプションを選択した後、`Next`ボタンをクリックします。
+6. General SettingsステップでGeneral Settings内の値を適切に定義した後、下部の`Next`ボタンをクリックします。
+    1. **App name**：識別可能なアプリケーション名を記入します。
+    2. **App logo**：ユーザーが識別可能なロゴをアップロードします。
+7. Configure SAMLステップでSAML Settings内の値を適切に定義した後、下部の`Next`ボタンをクリックします。
+    1. **Single sign-on URL**：https://`{{querypie.domain}}`/saml/sp/acs
+    2. **Audience URI (SP Entity ID)**：https://`{{querypie.domain}}`/saml/sp/metadata
+    3. **Attribute Statements (optional)**：QueryPie url必須attributeを以下のように記入します。
+        1. Name：**firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
+        2. Name：**lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
+        3. Name：**email** <br/>Name format: Unspecified<br/>Value: **user.email**
+        4. Name：**loginId** <br/>Name format: Unspecified<br/>Value: **user.login**
+8. Feedbackステップで`I'm an Okta customer adding an internal app`を選択した後、下部の`Finish`ボタンをクリックします。
+9. Applicationが生成されると、上部のGeneralタブに移動して**App Settings**メニューの右側`Edit`ボタンをクリックします。
+10. Provisioningフィールドを**SCIM**で選択した後、`Save`ボタンをクリックします。
+11. [Okta連動 | OktaでQueryPieアプリケーション連動情報設定](../authentication/integrating-with-okta#okta%ec%97%90%ec%84%9c-querypie-%ec%95%a0%ed%94%8c%eb%a6%ac%ec%bc%80%ec%9d%b4%ec%85%98-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%84%a4%ec%a0%95)および[Okta連動 | QueryPieでOkta連動および同期設定](../authentication/integrating-with-okta#querypie%ec%97%90%ec%84%9c-okta-%ec%97%b0%eb%8f%99-%eb%b0%8f-%eb%8f%99%ea%b8%b0%ed%99%94-%ec%84%a4%ec%a0%95)に従ってSSO連動を完了した後、以降のステップを進行してください。
+
+
+---
+
+### Okta-QueryPie Provisioning連動
+
+<figure data-layout="center" data-align="center">
+![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
+<figcaption>
+Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > Integration
+</figcaption>
+</figure>
+
+<Callout type="info">
+ここで[Provisioning有効化](activating-provisioning)ステップを先に実行する必要があります。
+</Callout>
+
+1. Oktaで生成したSCIM AppのProvisioningタブに移動します。
+2. SCIM Connectionの右側`Edit`ボタンを押して以下の値を入力して修正します。
+    1. SCIM connector base URL：QueryPieで照会したSCIM Endpoint値を挿入します。
+    2. Unique identifier field for users：「**userName**」
+    3. Support provisioning action：
+    4. Authentication Mode：「**HTTP Header**」
+    5. HTTP Header > Authorization：QueryPieで生成したSCIM専用access token値を挿入します。
+3. Test Connector Configurationボタンを押して接続テストを進行します。
+4. 「*Connector configured successfully*」文句と共にポップアップが現れると、`Close`ボタンをクリックします。
+5. 下部の`Save`ボタンを押して接続設定を保存します。
+
+
+---
+
+### SCIM API有効化およびチェック
+
+<figure data-layout="center" data-align="center">
+![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
+<figcaption>
+Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > To App
+</figcaption>
+</figure>
+
+1. Oktaで生成したSCIM AppのProvisioningタブのTo App画面に移動します。
+2. Provisioning to App右側のEditボタンをクリックします。
+3. 以下の設定のチェックボックスを有効化した後、Saveボタンをクリックして保存します。
+    1. **Create Users**：ユーザーがアプリに割り当てられる時、アプリに追加します。
+    2. **Update User Attributes**：ユーザーのプロファイル更新が発生すると、アプリに反映します。
+    3. **Deactivate Users**：ユーザーが無効化される時、アプリで一緒に無効化します。
+4. QueryPie SCIM App Attribute Mappings下部の`Go to Profile Editor`ボタンをクリックします。
+5. Attributes下部の`Mappings`ボタンをクリックします。
+6. ポップアップウィンドウ上部の2つのタブ中「Okta User to `{ユーザーが定義したApp名}`」で記載されたタブに移動します。
+7. ユーザー任意の設定に合わせて項目をマッピングした後、下部の`Save Mappings`ボタンをクリックします。
+8. 下部の`Apply updates now`ボタンをクリックします。
+
+<Callout type="important">
+**一部Attribute追加同期方法**
+1. QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目がSCIM Integration当時に別途importされません。該当Attributeは以下の通りです：
+    1. secondEmail
+    2. mobilePhone
+    3. postalAddress（SCIMスキーマに合わせて「formatted」で追加されて該当項目をマッピングすればよいです。）
+    4. staticIp（QueryPie専用カスタム属性）
+    5. macAddress（QueryPie専用カスタム属性）
+2. 該当Attribute情報を一緒に同期が必要な場合、OktaなどのIdPでCustom Attributeを追加してマッピングして同期させることができます。[Okta例]
+    1. SCIMアプリのProvisioningタブ > To App下部の`Go to Profile Editor`をクリックします。
+    2. `Add Attribute`ボタンをクリックします。
+    3. 同期に必要なAttributeを新たに登録します。
+        1. Data type：QueryPieと同様にstringを選択します。
+        2. Display name：Okta内表記する属性名を記入します。
+        3. Variable name & External name：同期するcustom attribute変数名を記入します。
+            * QueryPieユーザープロファイルでも括弧で変数名確認が可能です。
+        4. External namespace：該当情報で記入します。
+        5. 以降`Save`または`Save and Add Another`ボタンをクリックして保存します。
+        6. 次に`Mappings`ボタンをクリックします。
+        7. プロンプト上部のタブを2番目のタブ（Okta → `{APP}`）で選択します。
+        8. 下部に新たに生成したCustom AttributeとIdP内適切なAttributeをマッピングしてSave Mappingsボタンをクリックして設定を保存します。
+        9. 以降ユーザーをアプリに割り当てます。
+</Callout>
+
+
+---
+
+### ユーザーProvisioningチェック
+
+1. SCIMアプリに戻ってAssignmentsタブで`Assign`ボタンのオプションを通じてユーザーを割り当てます。
+    1. **Assign to People**：ユーザー個別単位で割り当て
+    2. **Assign to Groups**：ユーザーグループ単位で割り当て
+2. QueryPieアプリに戻ってAdministrator &gt; General &gt; User Management &gt; Usersに移動してユーザーが正常プッシュされたかを確認します。
+---
+
+### グループProvisioningチェック
+
+<figure data-layout="center" data-align="center">
+![Okta Admin Console > Applications > Applications > Custom SCIM App > Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
+<figcaption>
+Okta Admin Console > Applications > Applications > Custom SCIM App > Push Groups
+</figcaption>
+</figure>
+
+1. SCIMアプリに戻ってPush Groupsタブで`Push Groups`ボタンのオプションを通じてユーザーを割り当てます。
+    1. **Find groups by name**：プッシュするグループ名で検索して割り当て
+    2. **Find groups by rule**：検索ルールを定義して条件に合致するグループ割り当て
+2. QueryPieアプリに戻ってAdministrator &gt; General &gt; User Management &gt; Groupsに移動してグループが正常プッシュされたかを確認します。
+
+<Callout type="important">
+Oktaなど他社Identity Provider（IdP）からプッシュして生成したAuth ProviderがQueryPieではないグループの場合、グループの削除を該当IdPでunlink後削除処理することをお勧めします。本製品でグループを削除する場合、該当IdPでの管理フローが絡んで該当削除されたグループ名では製品に再びpushが困難になる可能性があります。
+</Callout>

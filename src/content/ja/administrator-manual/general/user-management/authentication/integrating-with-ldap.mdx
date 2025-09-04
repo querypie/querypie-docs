@@ -1,0 +1,240 @@
+---
+title: 'LDAP連携'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+ユーザー認証とユーザーおよびグループ管理のためにQueryPieサービスとLDAPサーバーを連携できます。
+
+
+## LDAP連携および同期設定
+
+Administrator &gt; General &gt; User Management &gt; Authenticationメニューに移動後、認証Type項目で**LDAP**を選択するとLDAP連携のための設定入力が可能です。
+
+<Callout type="important">
+**注意:** Authenticationタイプを選択しユーザーを同期した後には、認証タイプを変更することが不可能です。<br/>認証方式変更のためにはCustomer Portalを通じてお問い合わせください。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-203250.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
+</figcaption>
+</figure>
+
+### 基本ユーザー連携設定
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
+</figure>
+
+LDAP連携のための基本的な認証情報および属性情報を入力します。Attributeマッピングのための属性情報の場合、フィールド名はQueryPie Userの属性名で、フィールドにはLDAPで参照するAttribute名を入力します。詳細説明は下部項目を参照してください。
+
+### グループ連携設定
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095109.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095109.png)
+</figure>
+
+LDAPでユーザーグループ情報および所属情報を同期するには**Use Groupオプション**を有効化し必須で指定された情報を入力します。詳細説明は下部項目を参照してください。
+
+<table data-table-width="760" data-layout="default" local-id="b96b2197-17c2-48d3-98a7-93b37fc6260b">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Attribute**
+</th>
+<th>
+**必須可否**
+</th>
+<th>
+**Description**
+</th>
+</tr>
+<tr>
+<td>
+Group Base DN
+</td>
+<td>
+必須
+</td>
+<td>
+LDAPサーバーのグループBase DN値を入力します。
+* 例：`dc=example,dc=com`
+</td>
+</tr>
+<tr>
+<td>
+Group Search Filter
+</td>
+<td>
+必須
+</td>
+<td>
+グループを取得するためのフィルター値を入力します。
+* 例：`objectclass=posixGroup`
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Membership Type
+</td>
+<td rowspan="2">
+必須
+</td>
+<td>
+ユーザーにグループ情報が含まれる場合、`Include group information in user entries`を選択し、下部フィールドに参照するAttributeを入力します。
+* 例：`member`、`uniqueMember`、`memberUid`など
+</td>
+</tr>
+<tr>
+<td>
+グループにユーザー情報が含まれる場合、`Include user information in group entries`を選択し、下部フィールドに参照するAttributeを入力します。
+* 例：`gidNumber`
+</td>
+</tr>
+<tr>
+<td>
+Group ID
+</td>
+<td>
+必須
+</td>
+<td>
+グループの識別子として使用する属性値を入力します。
+* 例：`gidNumber`
+</td>
+</tr>
+</tbody>
+</table>
+
+### LDAPユーザー同期設定
+
+LDAPサーバーからユーザー情報同期を実行するには**Use Synchronization with the Authentication System**オプションを有効化します。
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095420.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095420.png)
+</figure>
+
+*  **Replication Frequency**  : 自動同期機能使用可否を設定します。
+    * Manual : 手動でのみ同期を実行します。現在ページで`Synchronize`ボタンをクリックする時のみLDAPサーバーからユーザー情報を読み込みます。
+    * Scheduling : 周期的に同期を実行します。下部Use cron expressionフィールドが有効化されます。
+*  **Make New Users Inactive by Default** : 同期時新しいユーザーを非有効化状態で追加するかどうかを選択します。
+    * 同期するユーザー数が多い場合、またはユーザーのLDAP認証を通じたQueryPieアクセスを個別に管理したい場合該当オプションを有効化してください。
+*  **Use an Attribute for Privilege Revoke** : 同期時特定AttributeによりPrivilegeを回収するかどうかを選択します。
+    * 特定LDAP Attributeの変更により自動でDAC Privilegeを回収したい場合このオプションを有効化してください。
+    * LDAP Attribute入力フィールドに有効化変更を検知したいAttribute名を入力します。
+*  **Enable Attribute Synchronization :**  LDAPユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。
+    * LDAPで管理中のユーザー属性をQueryPie内Attributeと自動で連携したい場合、該当オプションを有効化してください。
+    * オプション有効化時、下部にLDAP Attribute Mapping UIが表示されマッピング作業を通じて連携するLDAP AttributeとQueryPie Attributeを指定できます。
+    * ただし、該当機能はProfile EditorでSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
+
+<Callout type="info">
+**LDAP Attribute Mapping**
+
+LDAPで管理中のユーザー属性をQueryPie内Attributeとマッピングして同期するには、Enable Attribute Synchronizationオプションを有効化し以下情報を入力します。
+
+右上の`Add Row`ボタンをクリックすると新しいマッピング行が追加され、各行ごとにLDAP Attributeと対応するQueryPie Attributeを指定できます。
+
+1. 該当機能はAdmin &gt; General &gt; User Management &gt; Profile EditorでSource PriorityがInherit from profile sourceに設定されたQueryPie Attributeに限り適用されます。
+2. QueryPie Attributeである`Username (loginId)`、`Primary Email (email)`項目はLDAP連携設定時別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
+3. マッピング行削除または変更時、Save ChangesをクリックしなければUI上で変更事項が反映されず、Synchronizeを追加でクリックしなければLDAPと実際の同期が実行されます。つまり、Save Changesは画面上変更、Synchronizeはシステム反映を意味します。
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="a5c81338-6a96-4dc0-89e5-d0c7a08da012">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**カラム名**
+</th>
+<th>
+**必須可否**
+</th>
+<th>
+**Description**
+</th>
+</tr>
+<tr>
+<td>
+Checkbox
+</td>
+<td>
+選択
+</td>
+<td>
+マッピング行を選択するためのチェックボックスです。行選択時左上部にDeleteボタンが表示されます。
+</td>
+</tr>
+<tr>
+<td>
+LDAP Attribute
+</td>
+<td>
+必須
+</td>
+<td>
+連携するLDAP Attributeを入力します
+* 例：`manager`、`mobile`など
+</td>
+</tr>
+<tr>
+<td>
+QueryPie Attribute
+</td>
+<td>
+必須
+</td>
+<td>
+マッピング対象となるQueryPie Attributeを選択します。リストにはProfile EditorでInherit from profile sourceに設定された項目のみ表示され、Display NameとVariable Nameが一緒に表示されます。
+* 例：`Manager ID (managerId)`、<br/>`Mobile Phone (mobilePhone)`など
+</td>
+</tr>
+</tbody>
+</table>
+
+マッピング完了後同期を実行すると、連携されたAttributeはProfile EditorとUser Profileで確認できます。
+
+*  **Profile Editor**
+    * Admin &gt; General &gt; User Management &gt; Profile Editorで連携されたAttributeは以下のような状態で表示されます。
+        *  **Source Priority**  : Inherit from profile sourceで固定されます。
+        *  **Status**  : 修正が不可能な状態で無効化されます。
+        *  **Custom Attributeの場合** : Display Name、Description、Statusすべて修正が不可能で、チェックボックスが無効化されて削除不可能状態で表示されます。
+*  **User Profile**
+    * Administrator &gt; General &gt; User Management &gt; Users &gt; User Detail Page &gt; User Profileで連携されたAttributeは以下のような状態で表示されます。
+        * 修正が不可能な読み取り専用状態で表示されます。
+            * 例えば、Primary Email (email)値がregan@querypie.comで連携された場合、UI上で直接修正できず、LDAPでのみ変更可能です。
+
+### その他設定および同期
+
+*  **Anonymous :** 匿名ユーザーの認証可能可否を設定します。（TrueまたはFalse）
+*  **Dry Run :**  `Dry Run`ボタンをクリックすると現在入力された設定情報を基盤に同期を実行する場合、その結果を事前に確認できます。（現在入力された情報の保存可否と無関係）
+* `Save Changes`をクリックすると入力された設定情報をQueryPieに保存します。
+* `Synchronize`ボタンをクリックすると現在入力された設定情報を基盤に同期を実行します。（現在入力した設定情報を保存した後にのみ有効化される）
+    * ![image-20241209-124345.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png)ボタンをクリックすると直前の同期履歴を照会できます。
+    * 個別同期中失敗件がある場合、Progress Bar色が黄色で表示されます。
+    * 失敗ログは：cross_mark:アイコンで表示されます。ログをクリックすると詳細なエラーメッセージを確認できます。
+
+
+<Callout type="info">
+**案内**
+* ユーザーおよびグループはLDAP → QueryPieへの単方向同期をサポートします。同期されたユーザーおよびグループはQueryPie内で変更および削除が不可能です。
+* 10.2.1バージョン以降ユーザー同期は個別ユーザーおよびグループ単位で処理されるよう改善されました。
+</Callout>
+
+
+## QueryPieでLDAP認証してログイン
+
+1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。
+2. これでログインページでIDおよびPassword項目にLDAP認証情報を入力後ログインできます。

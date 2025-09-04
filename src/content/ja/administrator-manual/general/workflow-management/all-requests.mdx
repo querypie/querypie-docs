@@ -4,9 +4,10 @@ title: 'All Requests'
 
 import { Callout } from 'nextra/components'
 
-## 概要
+## Overview
 
 All Requestsでは、QueryPie内のすべての要求履歴を照会し、詳細内容を確認できます。
+
 
 ## 要求リスト照会
 
@@ -19,15 +20,16 @@ Administrator &gt; General &gt; Workflow Management &gt; All Requests
 </figcaption>
 </figure>
 
-基本的に今月に上申された要求が照会され、最近上がった要求順でソートされています。リストに対する検索およびフィルターを提供します。主要フィルターに対する説明は以下を参照してください。
+基本的に今月に上申された要求が照会され、最近上がった要求順でソートされています。目録に対する検索およびフィルターを提供します。主要フィルターに対する説明は以下を参照してください。
 
-*  **Approval Status** : 承認状態
-*  **Execution Status**  : 実行状態
-*  **Label**  : 元帳データに対する要求の有無を表示します。
-    *  **Normal**  : 一般的な要求
-    *  **Ledger**  : 元帳データに対するSQL Request
-        * 元帳テーブル統制機能を使用するにはLedger Managementライセンス有効化が必要です。
+*  **Approval Status** ：承認状態
+*  **Execution Status**  ：実行状態
+*  **Label**  ：台帳データに対する要求有無を表示します。
+    *  **Normal**  ：一般的な要求
+    *  **Ledger**  ：台帳データに対するSQL Request
+        * 台帳テーブル統制機能を使用するにはLedger Managementライセンス有効化が必要です。
         * 詳細内容は[Ledger Table Policy](../../databases/ledger-management/ledger-table-policy)文書を参照してください。
+
 
 ## 要求詳細内容確認
 
@@ -38,33 +40,34 @@ Administrator &gt; General &gt; Workflow Management &gt; All Requests
 要求の進行現況を確認できます。ボックス上にマウスをホバーすると詳細内容を確認できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Workflow Management &gt; All Requests &gt; List Detail &gt; Current Status](/administrator-manual/general/workflow-management/all-requests/screenshot-20240725-181602.png)
+![Administrator &gt; General &gt; Workflow Management &gt; All Requests > List Detail > Current Status](/administrator-manual/general/workflow-management/all-requests/screenshot-20240725-181602.png)
 <figcaption>
-Administrator &gt; General &gt; Workflow Management &gt; All Requests &gt; List Detail &gt; Current Status
+Administrator &gt; General &gt; Workflow Management &gt; All Requests > List Detail > Current Status
 </figcaption>
 </figure>
 
-**Approvers段階別色** は承認状態を表します。各色の意味は以下の通りです。
+**Approvers段階別色**は承認状態を表します。各色の意味は以下の通りです。
 
 * 緑色：承認完了
 * 黄色：現在承認進行中
 * 灰色：以前承認段階が未完了で待機中
 
 <Callout type="info">
-承認者の名前が表記されていない濃い灰色ボックスはStepが空の場合を表示します。
+承認者の名前が表記されていない濃い灰色ボックスはStepが空いている場合を表示します。
 </Callout>
 
 ### Request Detail
 
-要求類型別に作成された詳細内容を確認できます。詳細内容はSubmit Request下位文書を参照してください。
+要求タイプ別に作成された詳細内容を確認できます。詳細内容はSubmit Request下位文書を参照してください。
 
-* [DB Access Request要求する](../../../user-manual/workflow/requesting-db-access)
-* [SQL Request要求する](../../../user-manual/workflow/requesting-sql)
-* [SQL Export Request要求する](../../../user-manual/workflow/requesting-sql-export)
-* [Unmasking Request要求する](../../../user-manual/workflow/requesting-unmasking-mask-removal-request)
-* [Restricted Data Access要求する](../../../user-manual/workflow/requesting-restricted-data-access)
-* [Server Access Request要求する](../../../user-manual/workflow/requesting-access-role)
-* [Server Privilege Request要求する](../../../user-manual/workflow/requesting-server-privilege)
-* [Access Role Request要求する](../../../user-manual/workflow/requesting-access-role)
-* [IP Registration Request要求する](../../../user-manual/workflow/requesting-ip-registration)
-* [DB Policy Exception Request要求する](../../../user-manual/workflow/requesting-db-policy-exception)
+* [DB Access Request要求](../../../user-manual/workflow/requesting-db-access)
+* [SQL Request要求](../../../user-manual/workflow/requesting-sql)
+* [SQL Export Request要求](../../../user-manual/workflow/requesting-sql-export)
+* [Unmasking Request要求](../../../user-manual/workflow/requesting-unmasking-mask-removal-request)
+* [Restricted Data Access要求](../../../user-manual/workflow/requesting-restricted-data-access)
+* [Server Access Request要求](../../../user-manual/workflow/requesting-access-role)
+* [Server Privilege Request要求](../../../user-manual/workflow/requesting-server-privilege)
+* [Access Role Request要求](../../../user-manual/workflow/requesting-access-role)
+* [IP Registration Request要求](../../../user-manual/workflow/requesting-ip-registration)
+* [DB Policy Exception Request要求](../../../user-manual/workflow/requesting-db-policy-exception)
+

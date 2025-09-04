@@ -1,0 +1,158 @@
+---
+title: 'ユーザープロファイル'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+ユーザープロファイルに登録された属性でAttribute-based Access Control（ABAC）を実装できます。この文書では、ユーザー詳細情報項目別詳細内容を案内します。
+
+
+## Profile 
+
+ユーザーのAttribute（属性）を照会できるタブです。各Attribute別説明はこのページ下部の**参照：ユーザーAttributeリスト**項目を参照してください。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users > List Details > Profileタブ](/administrator-manual/general/user-management/users/user-profile/image-20240526-063720.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users > List Details > Profileタブ
+</figcaption>
+</figure>
+
+## Groups
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users > List Details > Groupsタブ](/administrator-manual/general/user-management/users/user-profile/image-20240514-162350.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users > List Details > Groupsタブ
+</figcaption>
+</figure>
+
+ユーザーが所属するユーザーグループを照会できるタブです。
+
+1.  **Auth Provider** ：グループの管理主体
+2.  **Group Name**  ：グループ名
+
+
+## Admin Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users > List Details > Admin Rolesタブ](/administrator-manual/general/user-management/users/user-profile/image-20240514-162730.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users > List Details > Admin Rolesタブ
+</figcaption>
+</figure>
+
+ユーザーに割り当てられたQueryPie管理者権限リストを照会できるタブです。
+
+1.  **Role Name**  ：管理者役割名
+2.  **Description**  ：管理者役割に対する説明
+3.  **Granted By**  ：現ユーザーに管理者役割を付与した主体
+4.  **Granted At**  ：管理者役割を付与受けた日時
+
+
+## Allowed Zones
+
+Administrator &gt; General &gt; Company Management &gt; Allowed Zonesメニューで生成されたAllowed Zoneをユーザーに直接割り当てるか、'IP Registration Request'ワークフローを通じて承認されたStatic IPが自動的に適用された履歴を確認できます。
+
+<figure data-layout="center" data-align="center">
+![Allowed Zonesタブ](/administrator-manual/general/user-management/users/user-profile/image-20240526-064635.png)
+<figcaption>
+Allowed Zonesタブ
+</figcaption>
+</figure>
+
+<Callout type="important">
+**事前作業**
+ユーザー別Allowed Zone割り当てのためには、まずAdmin &gt; General &gt; Company Management &gt; Securityメニューでユーザー別QueryPie WebアクセスIP制御機能を有効化しなければなりません。[Security](../../company-management/security)文書を参照してください。
+</Callout>
+
+### ワークフローを通じて登録されたStatic IP確認
+
+ユーザーが'IP Registration Request'ワークフローを通じてIPアドレス登録を要求し最終承認されると、該当IPはユーザーの**Profile**タブにある`Static IP`属性に自動的に追加されます。
+
+このように`Static IP`属性に登録されたアドレスはこの`Allowed Zone`タブに`Name`が`Static IP`である項目として自動反映され、ユーザーは該当IPからのアクセス権限を付与受けることになります。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-6.12.22-PM.png](/administrator-manual/general/user-management/users/user-profile/Screenshot-2025-06-26-at-6.12.22-PM.png)
+</figure>
+
+### ワークフローを通じて登録されたStatic IP削除
+
+ワークフローを通じて自動的に登録された`Static IP`項目は`Allowed Zones`タブで直接`Detach`できません。削除するにはユーザーの**Profile**タブに移動して`Static IP`属性値中希望するIPアドレスを直接編集して除去しなければなりません。`Static IP`属性で値が削除されると`Allowed Zones`タブでも該当IPが即座に除去されてアクセス権限が解除されます。
+
+
+### テーブル表示情報
+
+テーブルで表示する情報は以下の通りです。
+
+1.  **Name** ：Allowed Zoneの名称
+2.  **IP Bands**  ：Allowed ZoneのIP帯域
+
+### ユーザーにAllowed Zone割り当て
+
+Allowed Zonesタブ右側`Attach Allowed Zones`ボタンをクリックするとAllowed Zone割り当てモーダルが出力されます。割り当てようとするAllowed Zoneを選択して`Attach`ボタンをクリックして割り当てを完了します。
+
+<figure data-layout="center" data-align="center">
+![Attach Allowed Zoneモーダル](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214403.png)
+<figcaption>
+Attach Allowed Zoneモーダル
+</figcaption>
+</figure>
+
+### ユーザーからAllowed Zone割り当て解除
+
+Allowed Zoneタブ下部リストで割り当てを解除しようとする項目をチェックボックスで選択すると`Detach`ボタンが露出されます。ボタンをクリックし、確認モーダルで`Detach`ボタンをクリックして割り当て解除を完了します。
+
+<figure data-layout="center" data-align="center">
+![Allowed Zones割り当て解除](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214952.png)
+<figcaption>
+Allowed Zones割り当て解除
+</figcaption>
+</figure>
+
+<Callout type="info">
+**Q. Tagsタブが無効化されています。**
+A. Tagsタブはユーザー別に割り当てられたTagを照会し管理できるタブで、まだ未出荷の機能です。今後バージョンでサポート予定です。
+</Callout>
+
+
+## 参照：ユーザーAttributeリスト
+
+|  **属性名**           |  **変数**           |  **説明**                       |  **備考**  |
+| ------------------ | ----------------- | ----------------------------- | -------- |
+| User name          | loginId           | ユーザーID                        | 必須       |
+| First name         | firstName         | ユーザー名                        |          |
+| Last name          | lastName          | ユーザー姓                         |          |
+| Middle name        | middleName        | ユーザー中間名                     |          |
+| Honorific prefix   | honorificPrefix   | ユーザー敬称（接頭辞）（例：Mr./Ms.）     |          |
+| Honorific suffix   | honorificSuffix   | ユーザー敬称（接尾辞）（例：さん、様）        |          |
+| Primary email      | email             | ユーザーメール                       | 必須       |
+| Title              | title             | ユーザー職名                        |          |
+| Display name       | displayName       | ユーザー表記名                       | 必須       |
+| Nickname           | nickName          | ユーザー別名                        |          |
+| Profile Url        | profileUrl        | ユーザープロファイルURL                   |          |
+| Secondary email    | secondEmail       | 補助メール                        |          |
+| Mobile phone       | mobilePhone       | 携帯電話番号                        |          |
+| Primary phone      | primaryPhone      | 電話番号（主連絡先）                  |          |
+| Street address     | streetAddress     | 道路住所                          |          |
+| City               | city              | 都市                            |          |
+| State              | state             | 州/道                           |          |
+| Zip code           | zipCode           | 郵便番号                          |          |
+| Country code       | countryCode       | 国コード番号                       |          |
+| Postal Address     | postalAddress     | 郵便用住所                        |          |
+| Preferred language | preferredLanguage | 好み言語（例：en）                 |          |
+| Locale             | locale            | 国/言語設定に使われる場所（例：en_US）   |          |
+| Time zone          | timezone          | 地域タイムゾーン（例：US/Pacific）        |          |
+| User type          | userType          | ユーザータイプ（例：Employee）          |          |
+| Employee number    | employeeNumber    | 社員番号                            |          |
+| Cost center        | costCenter        | 事業部（財務会計基準）                |          |
+| Organization       | organization      | ユーザー所属組織                     |          |
+| Division           | division          | ユーザー所属部                      |          |
+| Department         | department        | ユーザー所属部署                     |          |
+| Manager ID         | managerId         | 上司ID                         |          |
+| Manager            | manager           | 上司表記名                        |          |
+| Static IP          | staticIp          | ユーザー割り当て静的IP                  |          |
+| Mac address        | macAddress        | ユーザーMACアドレス                    |          |
+| Risk score         | riskScore         | ユーザー危険指数（QueryPie Systemで管理）  | 今後提供予定 |

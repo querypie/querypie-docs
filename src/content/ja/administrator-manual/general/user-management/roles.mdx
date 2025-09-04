@@ -4,24 +4,25 @@ title: 'Roles'
 
 import { Callout } from 'nextra/components'
 
-## 概要
+## Overview
 
 RolesページでQueryPie内多様な管理者役割を管理できます。
 
-この文書では管理者役割の構成、ポリシーの種類および管理者役割管理方法を案内します。
+この文書では、管理者役割の構成、ポリシーの種類および管理者役割管理方法を案内します。
 
 ## 管理者役割構成
 
 管理者役割は役割（Role）とポリシー（Policy）で構成されます。
 
-*  **管理者役割** （Role） : ユーザーに付与される単位として、ポリシー（Policy）の集合です。
+*  **管理者役割** （Role）：ユーザーに付与される単位として、ポリシー（Policy）の集合です。
     * 基本提供役割はCreated by Systemで表記されています。
-        * Owner役割はQueryPieシステム全体に対する権限を持ち変更および削除が制限されます。
+        * Owner役割はQueryPieシステム全体に対する権限を持ち、変更および削除が制限されます。
         * その他役割は必要に応じて変更して活用できます。
     * 基本提供役割以外に、ユーザーが直接役割を生成できます。
-*  **管理者ポリシー** （Policy） : Permissionの集合
+*  **管理者ポリシー** （Policy）：Permissionの集合
     * 個別ポリシーはそれぞれ管理者ページ内個別メニューアクセス権限および詳細機能実行権限で定義されます。
     * ポリシーレベルの追加、修正および削除は不可能です。
+
 
 ## 管理者役割リスト照会
 
@@ -40,18 +41,20 @@ Administrator &gt; General &gt; User Management &gt; Roles
 Owner役割はQueryPieシステムに対する全体アクセスが可能な管理者役割として、変更および削除が不可能です。
 </Callout>
 
+
 ## 管理者役割詳細内容照会
 
 Rolesリストで詳細内容を照会しようとする役割をクリックすると詳細ページに進入します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-131148.png)
+![Administrator &gt; General &gt; User Management &gt; Roles > List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-131148.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+Administrator &gt; General &gt; User Management &gt; Roles > List Details
 </figcaption>
 </figure>
 
 Detailタブには現在照会中の管理者役割に割り当てられたポリシーリストを表示します。
+
 
 ## 管理者役割にポリシー割り当て
 
@@ -64,16 +67,18 @@ Detailタブには現在照会中の管理者役割に割り当てられたポ�
 
 1. 管理者役割詳細ページで追加で割り当てられたポリシーリストを確認できます。
 
+
 ## 管理者役割からポリシー除去
 
 Rolesリストで、ポリシーを除去しようとする管理者役割詳細ページに進入します。Detailタブのポリシーリストで除去しようとするポリシーをチェックボックスで選択後`Delete`ボタンをクリックします。確認モーダルで`OK`ボタンを押してポリシー除去を完了します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-132233.png)
+![Administrator &gt; General &gt; User Management &gt; Roles > List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-132233.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+Administrator &gt; General &gt; User Management &gt; Roles > List Details
 </figcaption>
 </figure>
+
 
 ## 管理者役割修正
 
@@ -86,12 +91,13 @@ Rolesリストで、修正しようとする管理者役割詳細ページに進
 </figcaption>
 </figure>
 
+
 ## 管理者役割削除
 
-もう使用しない管理者役割を削除する二つの経路を提供します。
+もう使用しない管理者役割を削除する2つの経路を提供します。
 
 <Callout type="important">
-管理者役割が削除されると既存に該当役割を割り当てられたユーザーたちからも即座に該当役割が回収されます。管理者役割削除はキャンセルが不可能なので慎重に実行してください。
+管理者役割が削除されると既存に該当役割を割り当て受けたユーザーからも即座に該当役割が回収されます。管理者役割削除はキャンセルが不可能なので慎重に実行してください。
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-132448.png](/administrator-manual/general/user-management/roles/screenshot-20240726-132448.png)
 </figure>
@@ -99,7 +105,7 @@ Rolesリストで、修正しようとする管理者役割詳細ページに進
 
 ### 管理者役割リストから削除
 
-Rolesリストで削除しようとする役割をチェックボックスで選択した後、テーブルヘッダーに表示される`Delete`ボタンをクリックします。確認モーダルで削除確認文句「DELETE」を正しく入力し`Delete`ボタンをクリックすると管理者役割削除が完了します。
+Rolesリストで削除しようとする役割をチェックボックスで選択した後、テーブルヘッダーに表示される`Delete`ボタンをクリックします。確認モーダルで削除確認文句「DELETE」を正しく入力して`Delete`ボタンをクリックすると管理者役割削除が完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Roles](/administrator-manual/general/user-management/roles/screenshot-20240726-132801.png)
@@ -110,16 +116,17 @@ Administrator &gt; General &gt; User Management &gt; Roles
 
 ### 管理者役割詳細ページから削除
 
-Rolesリストで、削除しようとする管理者役割詳細ページに進入します。`Delete`ボタンをクリックして削除確認モーダルを開いた後、削除確認文句「DELETE」を正しく入力し`Delete`ボタンをクリックすると管理者役割削除が完了します。
+Rolesリストで、削除しようとする管理者役割詳細ページに進入します。`Delete`ボタンをクリックして削除確認モーダルを開いた後、削除確認文句「DELETE」を正しく入力して`Delete`ボタンをクリックすると管理者役割削除が完了します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-133911.png)
+![Administrator &gt; General &gt; User Management &gt; Roles > List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-133911.png)
 <figcaption>
-Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+Administrator &gt; General &gt; User Management &gt; Roles > List Details
 </figcaption>
 </figure>
 
-## 参考）管理者ポリシーの種類
+
+## 参照）管理者ポリシーの種類
 
 以下のリストで管理者ポリシー別権限内容および該当ポリシーが有効化されるために必要なQueryPie製品ライセンス情報を確認できます。
 
