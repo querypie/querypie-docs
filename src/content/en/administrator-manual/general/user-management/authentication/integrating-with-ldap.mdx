@@ -1,0 +1,237 @@
+---
+title: 'Integrating with LDAP'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can integrate QueryPie service with LDAP server for user authentication and user and group management.
+
+## LDAP Integration and Synchronization Configuration
+
+Navigate to Administrator &gt; General &gt; User Management &gt; Authentication menu, then select **LDAP** in the Authentication Type field to enable configuration input for LDAP integration.
+
+<Callout type="important">
+**Warning:** After selecting Authentication type and synchronizing users, it is not possible to change the authentication type. <br/>Please contact us through Customer Portal for authentication method changes.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-203250.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
+</figcaption>
+</figure>
+
+### Basic User Integration Configuration
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
+</figure>
+
+Enter basic authentication information and attribute information for LDAP integration. For attribute information for Attribute mapping, the field name is the QueryPie User attribute name, and the field contains the Attribute name to reference in LDAP. For detailed descriptions, please refer to the items below.
+
+### Group Integration Configuration
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095109.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095109.png)
+</figure>
+
+To synchronize user group information and membership information from LDAP, activate the **Use Group option** and enter the required information. For detailed descriptions, please refer to the items below.
+
+<table data-table-width="760" data-layout="default" local-id="b96b2197-17c2-48d3-98a7-93b37fc6260b">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Attribute**
+</th>
+<th>
+**Required**
+</th>
+<th>
+**Description**
+</th>
+</tr>
+<tr>
+<td>
+Group Base DN
+</td>
+<td>
+Required
+</td>
+<td>
+Enter the Group Base DN value of the LDAP server.
+* Example: `dc=example,dc=com`
+</td>
+</tr>
+<tr>
+<td>
+Group Search Filter
+</td>
+<td>
+Required
+</td>
+<td>
+Enter the filter value to retrieve groups.
+* Example: `objectclass=posixGroup`
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Membership Type
+</td>
+<td rowspan="2">
+Required
+</td>
+<td>
+If group information is included in users, select `Include group information in user entries` and enter the Attribute to reference in the field below.
+* Example: `member`, `uniqueMember`, `memberUid`, etc.
+</td>
+</tr>
+<tr>
+<td>
+If user information is included in groups, select `Include user information in group entries` and enter the Attribute to reference in the field below.
+* Example: `gidNumber`
+</td>
+</tr>
+<tr>
+<td>
+Group ID
+</td>
+<td>
+Required
+</td>
+<td>
+Enter the attribute value to use as the group identifier.
+* Example: `gidNumber`
+</td>
+</tr>
+</tbody>
+</table>
+
+### LDAP User Synchronization Configuration
+
+To execute user information synchronization from LDAP server, activate the **Use Synchronization with the Authentication System** option.
+
+<figure data-layout="center" data-align="center">
+![image-20250515-095420.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095420.png)
+</figure>
+
+*  **Replication Frequency**  : Sets whether to use automatic synchronization functionality.
+    * Manual : Performs synchronization only manually. User information is retrieved from LDAP server only when clicking the `Synchronize` button on the current page.
+    * Scheduling : Performs synchronization periodically. The Use cron expression field below is activated.
+*  **Make New Users Inactive by Default** : Selects whether to add new users in inactive status during synchronization.
+    * Activate this option when there are many users to synchronize or when you want to individually manage QueryPie access through LDAP authentication for users.
+*  **Use an Attribute for Privilege Revoke** : Selects whether to revoke Privileges according to specific Attributes during synchronization.
+    * Activate this option when you want to automatically revoke DAC Privileges due to changes in specific LDAP Attributes.
+    * Enter the Attribute name you want to detect for activation changes in the LDAP Attribute input field.
+*  **Enable Attribute Synchronization :**  Selects whether to map and synchronize LDAP user attributes with QueryPie user attributes.
+    * Activate this option when you want to automatically link user attributes managed in LDAP with Attributes within QueryPie.
+    * When the option is activated, LDAP Attribute Mapping UI is displayed below, and you can specify LDAP Attributes and QueryPie Attributes to link through mapping operations.
+    * However, this functionality only applies to Attributes where Source Priority is set to Inherit from profile source in Profile Editor.
+
+<Callout type="info">
+**LDAP Attribute Mapping**
+
+To map and synchronize user attributes managed in LDAP with Attributes within QueryPie, activate the Enable Attribute Synchronization option and enter the information below.
+
+Click the `Add Row` button in the top right corner to add a new mapping row, and you can specify QueryPie Attributes corresponding to LDAP Attributes for each row.
+
+1. This functionality only applies to QueryPie Attributes where Source Priority is set to Inherit from profile source in Admin &gt; General &gt; User Management &gt; Profile Editor.
+2. QueryPie Attributes `Username (loginId)` and `Primary Email (email)` are entered separately during LDAP integration configuration, so these items are not exposed in the LDAP–QueryPie Attribute Mapping UI.
+3. When deleting or changing mapping rows, you must click Save Changes for changes to be reflected in the UI, and you must additionally click Synchronize for actual synchronization with LDAP to be performed. That is, Save Changes means screen changes, and Synchronize means system reflection.
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="a5c81338-6a96-4dc0-89e5-d0c7a08da012">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Column Name**
+</th>
+<th>
+**Required**
+</th>
+<th>
+**Description**
+</th>
+</tr>
+<tr>
+<td>
+Checkbox
+</td>
+<td>
+Optional
+</td>
+<td>
+Checkbox for selecting mapping rows. When a row is selected, a Delete button appears in the top left corner.
+</td>
+</tr>
+<tr>
+<td>
+LDAP Attribute
+</td>
+<td>
+Required
+</td>
+<td>
+Enter the LDAP Attribute to link.
+* Example: `manager`, `mobile`, etc.
+</td>
+</tr>
+<tr>
+<td>
+QueryPie Attribute
+</td>
+<td>
+Required
+</td>
+<td>
+Select the QueryPie Attribute to map to. Only items set to Inherit from profile source in Profile Editor are displayed in the list, with both Display Name and Variable Name shown.
+* Example: `Manager ID (managerId)`, <br/>`Mobile Phone (mobilePhone)`, etc.
+</td>
+</tr>
+</tbody>
+</table>
+
+After completing mapping and performing synchronization, linked Attributes can be checked in Profile Editor and User Profile.
+
+*  **Profile Editor** 
+    * In Admin &gt; General &gt; User Management &gt; Profile Editor, linked Attributes are displayed in the following status.
+        *  **Source Priority**  : Fixed to Inherit from profile source.
+        *  **Status**  : Disabled in an unmodifiable state.
+        *  **For Custom Attributes** : Display Name, Description, and Status are all unmodifiable, and the checkbox is disabled and displayed in a non-deletable state.
+*  **User Profile** 
+    * In Administrator &gt; General &gt; User Management &gt; Users &gt; User Detail Page &gt; User Profile, linked Attributes are displayed in the following status.
+        * Appears in a read-only state that cannot be modified.
+            * For example, if the Primary Email (email) value is linked to regan@querypie.com, it cannot be directly modified in the UI and can only be changed in LDAP.
+
+### Other Settings and Synchronization
+
+*  **Anonymous :** Sets whether anonymous users can authenticate. (True or False)
+*  **Dry Run :**  Clicking the `Dry Run` button allows you to preview the results if synchronization is performed based on the currently entered configuration information. (Regardless of whether the currently entered information is saved)
+* Clicking `Save Changes` saves the entered configuration information to QueryPie.
+* Clicking the `Synchronize` button performs synchronization based on the currently entered configuration information. (Only activated after saving the currently entered configuration information)
+    * ![image-20241209-124345.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png)Clicking the button allows you to view the previous synchronization history.
+    * If there are failed items during individual synchronization, the Progress Bar color is displayed in yellow.
+    * Failure logs are displayed with :cross_mark: icon. Clicking the log allows you to check detailed error messages.
+
+<Callout type="info">
+**Information**
+* Users and groups support one-way synchronization from LDAP → QueryPie. Synchronized users and groups cannot be modified or deleted within QueryPie.
+* From version 10.2.1, user synchronization has been improved to process individual users and groups.
+</Callout>
+
+## LDAP Authentication Login in QueryPie
+
+1. You can check synchronized users and groups in Administrator &gt; General &gt; User Management &gt; Users or Groups menu.
+2. Now you can log in by entering LDAP authentication information in the ID and Password fields on the login page.

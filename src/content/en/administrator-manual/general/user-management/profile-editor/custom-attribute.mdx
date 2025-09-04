@@ -1,0 +1,54 @@
+---
+title: 'Custom Attribute'
+---
+
+## Overview
+
+This document provides guidance on Custom Attribute configuration and management methods.
+
+## Creating Custom Attribute
+
+1. Click the `+ Create Attribute` button in the top right corner of the attribute list table.
+2. Enter the items specified below and click the `OK` button to create a Custom Attribute.
+    *  **Display Name**  (Required): Name of the attribute that cannot be duplicated. Example) Team Leader
+        * When Display Name is duplicated, the following error message is displayed in a modal.
+    *  **Variable Name**  (Required): Variable name of the attribute that cannot be duplicated. Example) teamLeader
+        * When Variable Name is duplicated, the following error message is displayed in a modal.
+    *  **Datatype**  (Required): Select the data type of the attribute value.
+        * string: General text (string) value. (Example: "Marketing Team")
+        * number: Numeric value. (Example: 100)
+        * string array: Multiple text values in list format. (Example: ["variable1", "variable1"])
+        * identifier: Unique identifier pointing to other objects (mainly LoginID) within the system
+    *  **Description**  (Optional): Description of the attribute.
+3. Default settings when creating:
+    *  **Source Priority** : inherit from profile source (default)
+    *  **Status** : Visible (default)
+
+## Modifying Custom Attribute
+
+1. Modifiable items:
+    * Display Name
+    * Description
+    * Source Priority
+    * Status
+2. Non-modifiable items:
+    * Variable Name
+    * Data Type
+3. Modification method:
+    * Display Name, Description: Click on the corresponding Custom Attribute in the Profile Editor table to open the detail modal and modify.
+    * Source Priority, Status: Can be modified directly inline in the corresponding Custom Attribute row of the Profile Editor table.
+4. Limitations:
+    * Custom Attributes linked with IdP cannot be modified.
+    * When Custom Attribute is being used in User Attribute-Based Approval within Workflow Approval Rule, the Display Name and Description of that attribute cannot be modified.
+
+## Deleting Custom Attribute
+
+1. Deletion method:
+    * Select the checkbox of the Custom Attribute item to delete.
+    * Click the `Delete` button that appears at the top of the table.
+    * Confirm deletion in the deletion confirmation modal window.
+2. Non-deletable targets:
+    * Basic Attributes built into the QueryPie system (e.g., Username, Primary email, etc.)
+    * Custom Attributes linked with IdP
+    * Custom Attributes being used in User Attribute-Based Approval within Workflow Approval Rule
+    * Checkboxes for the above items are disabled and cannot be selected.

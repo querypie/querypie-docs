@@ -6,114 +6,120 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-This page manages External API tokens.
+This is a page for managing External API tokens.
 
-## What is the External API?
 
-An API that allows you to use QueryPie features outside of the web console. As of version 10.0, two versions are available: V0.9 and V2.
+## What is External API?
 
-* QueryPie API V2
-    * V2 API is supported from QueryPie version 9.16.1.
-    * The base path is `{querypie url}`/api/external/v2/ and can be used without impacting the existing API V0.9.
-* The basic headers required for API calls are as follows. For detailed API specifications, refer to the API documentation.
+External API is an API that allows you to use QueryPie's features outside of the web console. Currently in version 10.0, it provides two versions: V0.9 and V2.
 
-| Key | Value |
+*  **QueryPie API V2** 
+    * QueryPie version 9.16.1 and later supports V2 API.
+    * The call path is `{querypie url}/api/external/v2/` and can be used without affecting the existing API V0.9.
+* The basic headers required for API calls are as follows. Please refer to the API documentation for detailed API specifications.
+
+|  **Key**      |  **Value**             |
 | ------------- | ---------------------- |
 | Content-Type  | application/json       |
 | Authorization | `{querypie api token}` |
 
-Notes for using API tokens:
+Precautions when using API tokens are as follows.
 
-* API tokens can be issued by users with Owner privileges or administrators who have access to this menu.
-* Tokens are fully visible only at the time of initial issuance. Thereafter, everything except the first 8 characters is masked.
-    * If you lose a token key, we recommend deleting the existing key from the list and issuing a new token.
-* When extending an API token, clicking Update extends the expiration date by the period configured at token creation, starting from the click time.
+* API tokens can be issued by users with Owner privileges or administrators with access to the corresponding menu.
+* Tokens are fully exposed only upon initial issuance. After that, all except the first 8 characters are masked and displayed.
+    *  **If the token key is lost** , we recommend deleting the existing key from the history and issuing a new token to use.
+* When extending API tokens, the expiration date is extended by the period set when the token was created from the time the Update button is pressed.
 
 <Callout type="info">
-You can check the list of provided APIs and their specifications in the API docs accessible by clicking API Docs in Administrator > General > System > API Token.
+The list of provided APIs and specifications can be found in the API documentation accessible by clicking `API Docs` in the top right corner of Administrator &gt; General &gt; System &gt; API Token.
 </Callout>
 
-## View API token list
+
+## Viewing API Token List
 
 <figure data-layout="center" data-align="center">
-![Administrator > General > System > API Token](/administrator-manual/general/system/api-token/screenshot-20240723-110619.png)
+![Administrator &gt; General &gt; System &gt; API Token](/administrator-manual/general/system/api-token/screenshot-20240723-110619.png)
 <figcaption>
-Administrator > General > System > API Token
+Administrator &gt; General &gt; System &gt; API Token
 </figcaption>
 </figure>
 
-1. Go to Administrator > General > System > API Token.
-2. You can view the list of currently created tokens (sorted by creation date, newest first).
-3. Search and filter:
-    1. You can search the token list by Token Name or Token Value.
-    2. You can filter the list by token status.
+1. Navigate to Administrator &gt; General &gt; System &gt; API Token menu.
+2. You can view the list of currently created tokens. (Sorted by creation date, newest first)
+3.  **Search and Filter** :
+    1. Token lists can be searched by Token Name or Token Value.
+    2. Lists can be filtered by token status.
 
-## Create an API token
+
+## Creating API Tokens
 
 <figure data-layout="center" data-align="center">
-![Administrator > General > System > API Token > Create API Token](/administrator-manual/general/system/api-token/image-20241028-094955.png)
+![Administrator &gt; General &gt; System &gt; API Token &gt; Create API Token](/administrator-manual/general/system/api-token/image-20241028-094955.png)
 <figcaption>
-Administrator > General > System > API Token > Create API Token
+Administrator &gt; General &gt; System &gt; API Token &gt; Create API Token
 </figcaption>
 </figure>
 
-1. In the API Token page, click Create API Token at the top right.
-2. Enter the following information:
-    1. API Name: Enter an identifiable name for the API token.
-    2. Validity Period Type: Specify the token expiration period.
-        1. Selecting Never Expire allows permanent use of the token, but is not recommended.
-    3. Scopes: Select the permissions that can be performed with the API token.
-        1. Full Access: Grants access to all administrator functions.
-        2. Select Role: Select desired Admin Roles to restrict scope of permissions.
-            * You can save without any Admin Role selected; in that case, the API token cannot perform any actions.
-    4. Allowed Zones: Define IP ranges where the API token can be used.
-        * Map Allowed Zones defined in Admin > General > Company Management > Allowed Zones to configure API call IP ACLs.
-    5. Description: Enter a description for this API token.
-3. Click Ok to complete token creation.
-4. In the completion modal, you can view the API token information for the first and only time.
-    1. Click the copy button next to API Token to copy the token value.
-    2. Click OK to close the modal.
+1. Click the `Create API Token` button in the top right corner of the API Token page.
+2. Enter the following information for token creation.
+    1.  **API Name**  : Enter an identifiable name for the API token.
+    2.  **Validity Period Type** : Specify the expiration period for the token.
+        1. When Never Expire is selected, the token can be used permanently, but this is not recommended.
+    3.  **Scopes : Select permissions that can be performed with the API token.** 
+        1. Full Access : Permission to perform all administrator functions.
+        2. Select Role : Select desired Admin Role to limit permission scope.
+            * Admin Role can be saved without any input, and in this case, no operations can be performed with the API Token.
+    4.  **Allowed Zones**  : Define IP ranges where API token usage is possible.
+        * Set API call IP ACL by mapping Allowed Zones defined in Admin &gt; General &gt; Company Management &gt; Allowed Zones.
+    5.  **Description**  : Write a description for the API token.
+3. Click the `Ok` button to complete API Token creation.
+4. You can view API Token information only once in the creation completion modal.
+    1. Click the copy button on the right side of the API Token to copy Token information.
+    2. Click the `OK` button to close the modal.
 
-## Edit an API token
+
+## Modifying API Tokens
 
 <figure data-layout="center" data-align="center">
-![General Settings > System > API Token > Edit API Token](/administrator-manual/general/system/api-token/image-20241028-095455.png)
+![General Settings &gt; System &gt; API Token &gt; Edit API Token](/administrator-manual/general/system/api-token/image-20241028-095455.png)
 <figcaption>
-General Settings > System > API Token > Edit API Token
+General Settings &gt; System &gt; API Token &gt; Edit API Token
 </figcaption>
 </figure>
 
-1. In the API Token page, click the token you want to edit from the list.
-2. The Edit API Token modal appears. You can change the following items:
-    1. API Name: Enter if you want to change the name.
-    2. Validity Period Type: You can change the API token expiration date.
-        1. After changing and saving, the expiration date will be updated based on the newly specified period from the current time.
-        2. Regardless of whether the remaining time is shorter or longer than the new period, the expiration date will be overwritten with the new value. Depending on the situation, you can extend or shorten the API's lifetime.
-        3. Changing to Never Expire removes the expiration date, but is not recommended.
-    3. Scopes: Change the scope of permissions that can be performed with the API token.
-        1. Full Access: Grants access to all administrator functions.
-        2. Select Role: Select desired Admin Roles to restrict scope of permissions.
-            * You can save without any Admin Role selected; in that case, the API token cannot perform any actions.
-    4. Allowed Zones: Define IP ranges where the API token can be used.
-        * Map Allowed Zones defined in Admin > General > Company Management > Allowed Zones to configure API call IP ACLs.
-    5. Description: Enter if you want to change the description of this API token.
-3. Click OK to save changes.
+1. Click on the token you want to modify in the Token list within the API Token page.
+2. The Edit API Token modal is displayed. Changeable items are as follows.
+    1.  **API Name** : Enter if you want to change the name.
+    2.  **Validity Period Type** : You can change the API Token expiration date.
+        1. When saving after changes, the expiration date changes based on the newly specified period from the current time.
+        2. Whether the remaining period until API Token expiration is shorter or longer than the newly specified expiration date, the expiration date is overwritten with the newly specified value. You can extend or shorten API lifespan depending on the situation.
+        3. When changing to Never Expire, the expiration date/time is removed, but this is not recommended.
+    3.  **Scopes**  : Change the permission scope that can be performed with the API Token.
+        1. Full Access : Permission to perform all administrator functions.
+        2. Select Role : Select desired Admin Role to limit permission scope.
+            * Admin Role can be saved without any input, and in this case, no operations can be performed with the API Token.
+    4.  **Allowed Zones**  : Define IP ranges where API token usage is possible.
+        * Set API call IP ACL by mapping Allowed Zones defined in Admin &gt; General &gt; Company Management &gt; Allowed Zones.
+    5.  **Description**  : Enter if you want to change the description for the API token.
+3. Click the `OK` button to save the changes.
 
-## Renew API token validity period
 
-1. In the API Token page, click Update for the token you want to renew.
-2. Upon success, a toast appears and the expiration date is extended by the period configured in Validity Period Type from the time you click the button.
+## Renewing API Token Usage Period
 
-## Delete an API token
+1. Click the `Update` button of the token you want to renew in the token list within the API Token page.
+2. When renewal is successful, a toast is displayed, and the expiration date is extended by the period set in  **Validity Period Type**  when the token was created from the time the button was clicked.
+
+
+## Deleting API Tokens
 
 <figure data-layout="center" data-align="center">
-![Administrator > General > System > API Token > Delete](/administrator-manual/general/system/api-token/screenshot-20240723-121212.png)
+![Administrator &gt; General &gt; System &gt; API Token &gt; Delete](/administrator-manual/general/system/api-token/screenshot-20240723-121212.png)
 <figcaption>
-Administrator > General > System > API Token > Delete
+Administrator &gt; General &gt; System &gt; API Token &gt; Delete
 </figcaption>
 </figure>
 
-1. In the API Token page, select the token(s) to delete using the checkboxes.
-2. Click Delete in the table header.
-3. When the confirmation modal appears, click OK.
-4. Confirm that the token is removed from the table list.
+1. Select the token you want to delete with a checkbox in the API Token page.
+2. Click the `Delete` button in the table header.
+3. Click the `OK` button when the confirmation modal is displayed.
+4. Confirm the deletion of the corresponding token in the table list.

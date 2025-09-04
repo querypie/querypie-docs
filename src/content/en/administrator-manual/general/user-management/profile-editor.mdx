@@ -1,0 +1,39 @@
+---
+title: 'Profile Editor'
+---
+
+## Overview
+
+Administrators can implement Attribute-Level Mastering management for each profile attribute (Attribute) for efficient ledger management of user identity. Through Profile Editor, you can set the ledger authority for each user attribute and manage updates. This Profile Editor has no impact on QueryPie users and controls the attribute management authority for users whose Auth Provider is set to external IdP such as Okta, LDAP.
+
+Additionally, not only predefined attributes but also custom attributes can be created, modified, and deleted according to organizational needs. This enables flexible user information management tailored to each organization's policies.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-2.04.57-PM.png](/administrator-manual/general/user-management/profile-editor/Screenshot-2025-05-09-at-2.04.57-PM.png)
+</figure>
+
+## User Attribute Authority Setting Definition
+
+Source Priority can be specified for each user attribute, and the types are as follows:
+
+1.  **Inherit from profile source** 
+    1. This is an option that means allowing updates for that Attribute from external Auth Provider.
+    2. The user's Attribute becomes updatable (patch) through SCIM API.
+2.  **Inherit from QueryPie** 
+    1. This is an option that means managing that Attribute independently within QueryPie even though the user was created from external Auth Provider.
+    2. Even if the user's corresponding Attribute is pushed for update through SCIM API, it becomes an Attribute managed independently by QueryPie and ignores changes.
+
+## Status Column Definition
+
+The Status column in Profile Editor sets whether that Attribute will be displayed in the user profile (General &gt; Users &gt; User Detail &gt; Profile).
+
+1. Operation method: Select `Visible` or `Hidden` through the dropdown menu.
+    * `Visible`: The corresponding Attribute is displayed in the user profile.
+    * `Hidden`: The corresponding Attribute is not displayed in the user profile or user profile edit screen (User Profile Edit).
+2. Application target: Can be applied to both basic Attributes and Custom Attributes.
+3. Always Visible: The following basic Attributes are always maintained in `Visible` status and cannot be changed to `Hidden`. When attempting to change, an error message such as "'Variable Name' is managed by the system and cannot be changed." is displayed.
+    * Username
+    * Primary email
+    * Display name
+    * Risk score
+4. Limitations: The Status of Attributes linked with IdP cannot be modified.

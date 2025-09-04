@@ -1,0 +1,47 @@
+---
+title: 'Syslog Integration'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Provides functionality to send logs recorded by QueryPie externally in Syslog format.
+
+* Versions up to 9.19.0 supported log transmission in Syslog (RFC3164) format based on UDP protocol.
+* From version 9.19.0, TCP protocol is supported. Also, Splunk HEC (HTTP Event Collector) transmission based on HTTP/HTTPS protocol is supported.
+
+## Syslog Integration Configuration
+
+1. Navigate to Administrator &gt; General &gt; System &gt; Integrations menu.
+2. Click on the Syslog tile to go to the detail page.
+
+<Callout type="important">
+**What is Syslog (legacy)?** <br/>If you have used existing Syslog, an additional **Syslog (Legacy)** tile will be displayed. Here you can continue to receive Syslog while maintaining the existing format. Legacy Format has a separate Time Zone setting option because the Timestamp field in the Syslog protocol is affected by Time Zone. The default is UTC.
+</Callout>
+
+1. Click the `Configure` button on the detail page to display a popup where you can enter Destination information.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination](/administrator-manual/general/system/integrations/integrating-with-syslog/screenshot-20240723-093628.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Configure Destination
+</figcaption>
+</figure>
+
+1. Enter the following information to create Destination information.
+    1.  **Destination Name**  : Enter an appropriate name to identify the entity receiving syslog.
+    2.  **Protocol**  : Protocols available in syslog are TCP (default) and UDP. UDP has packet length constraints and is vulnerable security-wise, so TCP usage is recommended.
+    3.  **Destination Address (Hostname)** : Enter the IP address or hostname of the syslog server receiving syslog.
+    4.  **Port**  : Enter the port that the syslog server listens on. (default 514)
+    5.  **Test Connection button**  : TCP can check communication status with the syslog server.
+        * UDP cannot check communication status due to protocol characteristics, so the Test Connection button is disabled.
+    6.  **Select Event Items**  : You can selectively send event items. Selecting the "Select all event items, including those that may be added later." checkbox below sends all available events.
+    7. Disable syslog header : Sends without syslog header information (default Yes). This is an option provided to remove syslog headers when some SIEMs have difficulty parsing JSON.
+    8. Description : Enter brief information within 100 characters about the configuration information.
+2. Click the `OK` button to save the settings.
+    1. Even if settings are saved, syslog transmission is not immediately activated.
+3. To start transmission, switch the toggle button in the top left of the page to :toggle:.
+    1. This transmission toggle button can be used when transmission needs to be temporarily stopped for maintenance or various situations.
+4. If syslog transmission is no longer needed, you can remove the configuration through the Delete button.
+    1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.

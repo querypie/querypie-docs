@@ -1,0 +1,1547 @@
+---
+title: 'New Request > Template Variables by Request Type'
+---
+
+When Alert Type is set to New Request, the template variable support content by Request Type is as follows.
+
+## Common Variables
+
+List of variables supported in all request types.
+
+Common variables are also available when Request Type is set to all.
+
+<table data-table-width="811" data-layout="center" local-id="c749b9ca-9033-4c2b-b8fa-3880ad5a8736">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Request Title
+</td>
+<td>
+`{{requestTitle}}`
+</td>
+<td>
+Request title
+* Example: Service DB Access Request
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Assignees
+</td>
+<td>
+`{{assignees}}`
+</td>
+<td>
+Request approval assignees
+* Example: STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant Hwang)
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Comment
+</td>
+<td>
+`{{comment}}`
+</td>
+<td>
+Request comment
+* Example: Requesting DB access permission for service operation purposes.
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+User Name
+</td>
+<td>
+`{{userName}}`
+</td>
+<td>
+Requester name
+* Example: Keira Yoon
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Email
+</td>
+<td>
+`{{email}}`
+</td>
+<td>
+Requester email
+* Example: [keira@email.com](mailto:keira@email.com)
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Access Type
+</td>
+<td>
+`{{accessType}}`
+</td>
+<td>
+Request type
+* DB Access Request
+* SQL Request
+* SQL Export Request
+* Unmasking Request
+* Server Access Request
+* Access Role Request
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Link
+</td>
+<td>
+`{{link}}`
+</td>
+<td>
+Request detail page link
+* Example: https://`{querypie_domain}`/workflow/received-requests/to-do/detail/`{workflow_uuid}`
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Workflow Uuid
+</td>
+<td>
+`{{workflowUuid}}`
+</td>
+<td>
+Request UUID
+* Example: b63f9f94-11e5-4095-a399-be7d96e9ce06
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Workflow Id
+</td>
+<td>
+`{{id}}`
+</td>
+<td>
+Request ID
+* Example: 12
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Urgent
+</td>
+<td>
+`{{urgent}}`
+</td>
+<td>
+Urgent request status
+* true or false
+</td>
+<td>
+10.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## DB Access Request
+
+<table data-table-width="808" data-layout="center" local-id="ee62ec7d-c9f6-4e28-b56e-747b6443c26d">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+Expiration date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+Access expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Requested Privilege per Connection
+</td>
+<td>
+`{{connectionPrivilegeNames}}`
+</td>
+<td>
+Display requested privileges by connection as a list
+* Example:
+    * Connection A : Read/Write
+    * Connection B : Read-Only
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+</tbody>
+</table>
+
+## SQL Request
+
+<table data-table-width="814" data-layout="center" local-id="65178aed-8861-4dee-943a-42d33ce617bf">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+SQL Text
+</td>
+<td>
+`{{sqlText}}`
+</td>
+<td>
+SQL statement
+* Maximum 100 characters (same for TEXT, FILE)
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Content Type
+</td>
+<td>
+`{{contentType}}`
+</td>
+<td>
+SQL statement input method
+* TEXT or FILE
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB connection UUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB connection name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Id
+</td>
+<td>
+`{{clusterId}}`
+</td>
+<td>
+DB connection ID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+Database type
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+Database name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Use Ledger Approval Rule
+</td>
+<td>
+`{{useLedgerApprovalRule}}`
+</td>
+<td>
+Whether to use ledger approval rule
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Target Date
+</td>
+<td>
+`{{targetDate}}`
+</td>
+<td>
+Execution target date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+Execution target date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Due Date
+</td>
+<td>
+`{{dueDate}}`
+</td>
+<td>
+Approval/execution expiration date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+Execution expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## SQL Export Request
+
+<table data-table-width="816" data-layout="center" local-id="a7dabd97-8ea6-4502-b876-197d927dd1dc">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB connection UUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB connection name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Id
+</td>
+<td>
+`{{clusterId}}`
+</td>
+<td>
+DB connection ID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+Database type
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+Database name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Export Type
+</td>
+<td>
+`{{exportType}}`
+</td>
+<td>
+Export type
+* QUERY or TABLE
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Export Detail
+</td>
+<td>
+`{{exportDetail}}`
+</td>
+<td>
+Export detail information
+* For Query: Maximum 100 character query
+* For Table: Table name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Target Date
+</td>
+<td>
+`{{targetDate}}`
+</td>
+<td>
+Execution target date
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Preferred Execution Date
+</td>
+<td>
+`{{preferredExecutionDate}}`
+</td>
+<td>
+Execution target date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Due Date
+</td>
+<td>
+`{{dueDate}}`
+</td>
+<td>
+Approval/execution expiration date
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Execution Expiration Date
+</td>
+<td>
+`{{executionExpirationDate}}`
+</td>
+<td>
+Execution expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Unmasking Request
+
+<table data-table-width="816" data-layout="center" local-id="212dceed-34bd-42c0-9cab-7b11a24950af">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB connection UUID
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB connection name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+Database type
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+Database name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+Table name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+Display column names as a list
+* Example: [actor_id, first_name, last_name, last_update]
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Unmasking Expiration
+</td>
+<td>
+`{{unmaskingExpiration}}`
+</td>
+<td>
+Unmasking expiration time
+* Example: 
+    * 10 Minutes
+    * 2024-12-03T14:59:00 
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Restricted Data Access Request
+
+<table data-table-width="816" data-layout="center" local-id="8d66df32-3ad9-473e-9876-a4c7fe8775e1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB connection UUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB connection name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+Database type
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+Database name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+Table name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+Display column names as a list
+* Example: [actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Restricted Data Access Expiration
+</td>
+<td>
+`{{restrictedDataAccessExpiration}}`
+</td>
+<td>
+Access permission expiration time
+* Example: 
+    * 10 Minutes
+    * 2024-12-03T14:59:00 
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## DB Policy Exception Request
+
+<table data-table-width="816" data-layout="center" local-id="8fdf1d5c-786c-4147-8e56-bfd6d8dcdb0f">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Cluster Group Uuid
+</td>
+<td>
+`{{clusterGroupUuid}}`
+</td>
+<td>
+DB connection UUID
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Cluster Group Name
+</td>
+<td>
+`{{clusterGroupName}}`
+</td>
+<td>
+DB connection name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Data Scope Type
+</td>
+<td>
+`{{dataScopeType}}`
+</td>
+<td>
+Choose one between Data Path and Tag
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Type
+</td>
+<td>
+`{{databaseType}}`
+</td>
+<td>
+Database type
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Database Name
+</td>
+<td>
+`{{databaseName}}`
+</td>
+<td>
+Database name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Table Name
+</td>
+<td>
+`{{tableName}}`
+</td>
+<td>
+Table name
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Column Names
+</td>
+<td>
+`{{columnNames}}`
+</td>
+<td>
+Display column names as a list
+* Example: [actor_id, first_name, last_name, last_update]
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Expiration
+</td>
+<td>
+`{{expiration}}`
+</td>
+<td>
+Exception permission expiration time
+* Example: 
+    * 10 Minutes
+    * 2024-12-03T14:59:00 
+</td>
+<td>
+11.0.0
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Server Access Request
+
+<table data-table-width="820" data-layout="center" local-id="a4480e83-0193-4c46-ba7c-53a665a6ad03">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Server Group Name
+</td>
+<td>
+`{{serverGroupName}}`
+</td>
+<td>
+Server group name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Names
+</td>
+<td>
+`{{serverNames}}`
+</td>
+<td>
+Display server names as a list
+* Example: 
+    * Server A
+    * Server B
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Accounts
+</td>
+<td>
+`{{serverAccounts}}`
+</td>
+<td>
+Display server accounts as a list
+* Example: 
+    * dev
+    * ec2-user
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+Expiration date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Access Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+Access expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+Permission grant start condition
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+Time in minutes that server access permission is valid
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Server Privilege Request
+
+<table data-table-width="820" data-layout="center" local-id="1ac8db57-f53b-4306-9a63-eabe504365d4">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Server Group Name
+</td>
+<td>
+`{{serverGroupName}}`
+</td>
+<td>
+Server group name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Names
+</td>
+<td>
+`{{serverNames}}`
+</td>
+<td>
+Display server names as a list
+* Example: 
+    * Server A
+    * Server B
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Server Accounts
+</td>
+<td>
+`{{serverAccounts}}`
+</td>
+<td>
+Display server accounts as a list
+* Example: 
+    * dev
+    * ec2-user
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+Expiration date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Privilege Expiration Date
+</td>
+<td>
+`{{accessExpirationDate}}`
+</td>
+<td>
+Privilege expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Trigger Condition
+</td>
+<td>
+`{{triggerCondition}}`
+</td>
+<td>
+Permission grant start condition
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Duration
+</td>
+<td>
+`{{duration}}`
+</td>
+<td>
+Time in minutes that server privilege is valid
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Access Role Request
+
+<table data-table-width="816" data-layout="center" local-id="e44f2beb-29c0-417c-b961-8a1b7946b510">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Variable Name**
+</th>
+<th>
+**Variable**
+</th>
+<th>
+**Description**
+</th>
+<th>
+**Added Version**
+</th>
+</tr>
+<tr>
+<td>
+Service
+</td>
+<td>
+`{{service}}`
+</td>
+<td>
+Target service for role request
+* SAC, KAC, WAC
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Role Name
+</td>
+<td>
+`{{roleName}}`
+</td>
+<td>
+Role name
+</td>
+<td>
+10.2.2
+</td>
+</tr>
+<tr>
+<td>
+Expiration Date
+</td>
+<td>
+`{{expirationDate}}`
+</td>
+<td>
+Expiration date
+</td>
+<td>
+10.2.2
+11.2.0 - Deprecated
+</td>
+</tr>
+<tr>
+<td>
+Approval Expiration Date
+</td>
+<td>
+`{{approvalExpirationDate}}`
+</td>
+<td>
+Approval expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+<tr>
+<td>
+Role Expiration Date
+</td>
+<td>
+`{{roleExpirationDate}}`
+</td>
+<td>
+Role expiration date
+</td>
+<td>
+11.2.0
+</td>
+</tr>
+</tbody>
+</table>
+
+## Web APP Just-In-Time Access Request
+
+|  **Variable Name**                 |  **Variable**                      |  **Description**                        |  **Added Version**  |
+| ------------------------ | ---------------------------- | ------------------------------ | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | Approval expiration date                       | 11.2.0      |
+| Web App Name             | `{{webAppName}}`             | Target web app for request                       | 11.0.0      |
+| Access Duration          | `{{accessDuration}}`         | Time in minutes that web app access permission is valid | 11.0.0      |
+
+## IP Registration Request
+
+|  **Variable Name**                 |  **Variable**                      |  **Description**  |  **Added Version**  |
+| ------------------------ | ---------------------------- | -------- | ----------- |
+| Approval Expiration Date | `{{approvalExpirationDate}}` | Approval expiration date | 11.2.0      |
+| IP Addresses             | `{{ipAddresses}}`            | IP addresses    | 11.0.0      |

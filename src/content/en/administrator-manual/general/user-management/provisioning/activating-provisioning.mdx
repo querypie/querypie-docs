@@ -1,0 +1,45 @@
+---
+title: 'Activating Provisioning'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie's Provisioning functionality, which operates based on SCIM 2.0 protocol, supports user identity synchronization, providing a more secure integrated user authentication and management environment in addition to SSO that helps existing user authentication and access management. By supporting user lifecycle management, administrators can more conveniently manage new hires and departures within their organization in one place in the account system.
+
+## Prerequisites
+
+* This functionality can be activated in the following QueryPie administrator privilege Roles:
+    * Owner
+    * System Admin
+
+## Activating QueryPie Provisioning
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Provisioning](/administrator-manual/general/user-management/provisioning/activating-provisioning/image-20240714-054222.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Provisioning
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; General &gt; User Management &gt; Provisioning path in the QueryPie app.
+2. Click the `Enable` button on the right side of Provisioning to activate SCIM functionality.
+3. Store the address value provided as SCIM Endpoint so it can be set as Base URL in the future.
+4. Click the `Generate Token` button on the right to issue an Access Token.
+5. When a popup window appears, copy the Access Token value to fill in the token information on the IdP side in the future.
+    1. Since this token value is difficult to retrieve again, we recommend proceeding directly to the Identity Provider that will be the ledger without closing this window. (Refer to [**Okta-QueryPie Provisioning Integration**](okta-provisioning-integration-guide) step)
+    2. If you lose the token value, please delete the existing token and issue a new one through step 4 again.
+6. Click the `Confirm` button to close the window.
+
+<Callout type="important">
+**SCIM Dedicated Token Information**
+1. Access Tokens can be generated through the Generate Token button, and up to 2 can be issued.
+2. Token values are exposed only once at the time of generation and are not exposed thereafter.
+3. Can only be used for SCIM API and cannot call endpoints other than /api/scim/v2.
+4. Newly generated tokens are valid for up to 1 year from the issue date yyyy-MM-dd.
+    1. When the expiration date arrives, the token is processed as Expired and SCIM API cannot be used.
+    2. Administrators must issue new tokens before the expiration date and change the tokens set in existing IdP.
+5. Tokens can be deleted by selecting the token and clicking the `DELETE` button.
+6. If an administrator disables Provisioning after issuing tokens and then re-enables it, all existing tokens are deleted at the time of deactivation, so the administrator must issue new valid tokens.
+</Callout>

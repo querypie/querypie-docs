@@ -1,0 +1,32 @@
+---
+title: 'Policy Exception'
+---
+
+## Overview
+
+When an Unmasking Request submitted through Workflow is approved, the content is listed in the Policy Exception (Databases &gt; Policies &gt; Policy Exception) list, allowing you to check the exceptions to masking policies.
+
+<figure data-layout="center" data-align="center">
+![Policy Exception](/administrator-manual/databases/policies/policy-exception/image-20241101-011820.png)
+<figcaption>
+Policy Exception
+</figcaption>
+</figure>
+
+## Policy Exception List Items
+
+1. Connection : Displays the name of the connection to apply exception handling to.
+2. Data Path : Displays the path of the data to apply exception handling to. <br/>(ex1. For MySQL, displayed as Database &gt; Table &gt; Column. <br/> ex2. For Oracle, displayed as Database &gt; Schema &gt; Table &gt; Column. <br/> ex3. For DynamoDB, displayed as Table &gt; Column.)
+3. Allowed Users: Displays the usernames of users who will receive policy exception handling.
+4. Start Time: Displays the start time for applying policy exception handling.
+    1. Displayed based on the approval time of the Unmasking Request.
+    2. When a request is registered with post-approval, displayed based on the request time.
+5. End Time: Displays the end time for policy exception handling.
+    1. The end time is displayed based on the Unmasking Expiration time set in the Unmasking Request.
+        1. When the Unmasking Expiration type is End Date, that time is displayed as the end time.
+        2. When the Unmasking Expiration type is Time Duration, the end time is calculated based on the time interval from the start time.
+6. Status: Displays whether policy exception handling is active as Active, Inactive, or Expired.
+    1. Active: Policy exception handling is applied by the unmasking request and data is displayed unmasked. Can be changed to Inactive until the End Time.
+    2. Inactive: Policy exception handling is deactivated by the unmasking request and data is displayed masked. Can be changed to Active until the End Time.
+    3. Expired: When the End Time of the unmasking request has passed, it is displayed as Expired and cannot be changed to Active or Inactive.
+7. Excepted By: Displays the Unmasking Request that requested the unmasking as a link, and clicking it redirects to the corresponding Request details screen in All Requests.

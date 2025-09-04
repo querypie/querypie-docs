@@ -1,0 +1,153 @@
+---
+title: 'User Profile'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Attribute-based Access Control (ABAC) can be implemented with attributes registered in the user profile. This document provides detailed information for each user detail information item.
+
+## Profile 
+
+This is a tab where you can view the user's Attributes. Please refer to the **Reference: User Attribute List** item at the bottom of this page for descriptions of each Attribute.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile Tab](/administrator-manual/general/user-management/users/user-profile/image-20240526-063720.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile Tab
+</figcaption>
+</figure>
+
+## Groups
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups Tab](/administrator-manual/general/user-management/users/user-profile/image-20240514-162350.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups Tab
+</figcaption>
+</figure>
+
+This is a tab where you can view the user groups that the user belongs to.
+
+1.  **Auth Provider** : Group management authority
+2.  **Group Name**  : Group name
+
+## Admin Roles
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles Tab](/administrator-manual/general/user-management/users/user-profile/image-20240514-162730.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles Tab
+</figcaption>
+</figure>
+
+This is a tab where you can view the list of QueryPie administrator privileges assigned to the user.
+
+1.  **Role Name**  : Administrator role name
+2.  **Description**  : Description of the administrator role
+3.  **Granted By**  : Entity that granted the administrator role to the current user
+4.  **Granted At**  : Date and time when the administrator role was granted
+
+## Allowed Zones
+
+You can directly assign Allowed Zones created in the Administrator &gt; General &gt; Company Management &gt; Allowed Zones menu to users, or check the history of Static IPs automatically applied through the 'IP Registration Request' workflow.
+
+<figure data-layout="center" data-align="center">
+![Allowed Zones Tab](/administrator-manual/general/user-management/users/user-profile/image-20240526-064635.png)
+<figcaption>
+Allowed Zones Tab
+</figcaption>
+</figure>
+
+<Callout type="important">
+**Prerequisites**
+To assign Allowed Zones per user, you must first activate the user-specific QueryPie Web access IP control functionality in Admin &gt; General &gt; Company Management &gt; Security menu. Please refer to the [Security](../../company-management/security) documentation.
+</Callout>
+
+### Checking Static IPs Registered Through Workflow
+
+When users request IP address registration through the 'IP Registration Request' workflow and receive final approval, that IP is automatically added to the `Static IP` attribute in the user's **Profile** tab.
+
+These addresses registered in the `Static IP` attribute are automatically reflected in this `Allowed Zone` tab as items with `Name` as `Static IP`, and users are granted access permissions from those IPs.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-6.12.22-PM.png](/administrator-manual/general/user-management/users/user-profile/Screenshot-2025-06-26-at-6.12.22-PM.png)
+</figure>
+
+### Deleting Static IPs Registered Through Workflow
+
+`Static IP` items automatically registered through workflow cannot be directly `Detach`ed from the `Allowed Zones` tab. To delete them, you must go to the user's **Profile** tab and directly edit the `Static IP` attribute value to remove the desired IP address. When values are deleted from the `Static IP` attribute, those IPs are immediately removed from the `Allowed Zones` tab and access permissions are revoked.
+
+### Table Display Information
+
+The information displayed in the table is as follows.
+
+1.  **Name** : Allowed Zone name
+2.  **IP Bands**  : Allowed Zone IP range
+
+### Assigning Allowed Zones to Users
+
+Click the `Attach Allowed Zones` button on the right side of the Allowed Zones tab to display the Allowed Zone assignment modal. Select the Allowed Zone you want to assign and click the `Attach` button to complete the assignment.
+
+<figure data-layout="center" data-align="center">
+![Attach Allowed Zone Modal](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214403.png)
+<figcaption>
+Attach Allowed Zone Modal
+</figcaption>
+</figure>
+
+### Detaching Allowed Zones from Users
+
+Select the item you want to detach with a checkbox in the list at the bottom of the Allowed Zone tab, and the `Detach` button will appear. Click the button and click the `Detach` button in the confirmation modal to complete the detachment.
+
+<figure data-layout="center" data-align="center">
+![Allowed Zones Detachment](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214952.png)
+<figcaption>
+Allowed Zones Detachment
+</figcaption>
+</figure>
+
+<Callout type="info">
+**Q. The Tags tab is disabled.**
+A. The Tags tab is a tab where you can view and manage Tags assigned per user, and it is a feature that has not been released yet. It is planned to be supported in future versions.
+</Callout>
+
+## Reference: User Attribute List
+
+|  **Attribute Name**           |  **Variable**           |  **Description**                       |  **Notes**  |
+| ------------------ | ----------------- | ----------------------------- | -------- |
+| User name          | loginId           | User ID                        | Required       |
+| First name         | firstName         | User first name                        |          |
+| Last name          | lastName          | User last name                         |          |
+| Middle name        | middleName        | User middle name                     |          |
+| Honorific prefix   | honorificPrefix   | User honorific (prefix) (e.g. Mr./Ms.)     |          |
+| Honorific suffix   | honorificSuffix   | User honorific (suffix) (e.g. 님, 씨)        |          |
+| Primary email      | email             | User email                       | Required       |
+| Title              | title             | User title                        |          |
+| Display name       | displayName       | User display name                       | Required       |
+| Nickname           | nickName          | User nickname                        |          |
+| Profile Url        | profileUrl        | User profile URL                   |          |
+| Secondary email    | secondEmail       | Secondary email                        |          |
+| Mobile phone       | mobilePhone       | Mobile phone number                        |          |
+| Primary phone      | primaryPhone      | Phone number (main contact)                  |          |
+| Street address     | streetAddress     | Street address                          |          |
+| City               | city              | City                            |          |
+| State              | state             | State/Province                           |          |
+| Zip code           | zipCode           | Postal code                          |          |
+| Country code       | countryCode       | Country code number                       |          |
+| Postal Address     | postalAddress     | Postal address                        |          |
+| Preferred language | preferredLanguage | Preferred language (e.g. en)                 |          |
+| Locale             | locale            | Locale used for country/language settings (e.g. en_US)   |          |
+| Time zone          | timezone          | Regional timezone (e.g. US/Pacific)        |          |
+| User type          | userType          | User type (e.g. Employee)          |          |
+| Employee number    | employeeNumber    | Employee number                            |          |
+| Cost center        | costCenter        | Business unit (financial accounting basis)                |          |
+| Organization       | organization      | User's organization                     |          |
+| Division           | division          | User's division                      |          |
+| Department         | department        | User's department                     |          |
+| Manager ID         | managerId         | Manager ID                         |          |
+| Manager            | manager           | Manager display name                        |          |
+| Static IP          | staticIp          | User assigned static IP                  |          |
+| Mac address        | macAddress        | User MAC address                    |          |
+| Risk score         | riskScore         | User risk score (managed by QueryPie System)  | Planned for future release |

@@ -1,0 +1,68 @@
+---
+title: 'Sensitive Data'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can learn how to set up data that requires management within your organization, such as personal information or sensitive data, as sensitive data policies. In the Sensitive Data menu, you can select the connection for which to set policies, create policies, and register and manage rules for sensitive data on a table and column basis. When created as a policy, you can check access records to sensitive data through separate logs and receive notifications through the Alert feature.
+
+## Creating Sensitive Data Policies
+
+Register new sensitive data policies by connection.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Sensitive Data](/administrator-manual/databases/policies/sensitive-data/image-20240729-054311.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Sensitive Data
+</figcaption>
+</figure>
+
+1. Navigate to Policies &gt; Sensitive Data menu in Database settings.
+2. Click the `Create Policy` button in the top right corner.
+3. Enter the following information for policy creation:
+    1.  **Policy Name**  : A name to distinguish the policy on the screen.
+    2.  **Target Connection**  : Select the connection to apply the policy to. One policy can be linked to one connection.
+4. Save by clicking the `Save` button.
+
+You can confirm that the policy has been created in the Sensitive Data policy list.
+
+## Registering Rules in Sensitive Data Policies
+
+After creating a policy, register the path of the data to which the policy will be applied as a rule.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Sensitive Data &gt; Rule List](/administrator-manual/databases/policies/sensitive-data/image-20240820-120656.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Sensitive Data &gt; Rule List
+</figcaption>
+</figure>
+
+1. Click on the policy you created in the Sensitive Data menu.
+2. The policy details and rule registration screen will be displayed. Click the `Add Rule List` button on the right.
+3. Select the path of the data to apply the policy to in order:
+    1.  **Database Name**  : Required value for rule registration.
+    2.  **Table Name**  : Required value for rule registration. In this case, all data in the table is set as sensitive data.
+    3.  **Column Name**  : Select a column if you want to apply the policy only to specific columns within the selected table.
+4. Select the sensitivity level of the data to apply the policy to:
+    1. Choose one of three levels: High, Medium, or Low.
+    2. The selected Sensitive Level information can be set as a trigger condition for future Alert notifications.
+5. Save by clicking the `Ok` button.
+
+You can confirm that the rule has been registered in the Rule List tab. Now when users access the data, you can check the access history in the Logs tab. To set up sensitive data policies as notifications, refer to the [Alerts](../../general/company-management/alerts) documentation.
+
+<Callout type="info">
+From version 10.2.8, the sensitive data access history visible in the Log tab has been improved to include queries performed by users. Click on a Log row to see the detailed information including the query performed by the user.
+<figure data-layout="center" data-align="center">
+![Sensitive Data Log Query Content Display](/administrator-manual/databases/policies/sensitive-data/image-20250410-065516.png)
+<figcaption>
+Sensitive Data Log Query Content Display
+</figcaption>
+</figure>
+</Callout>
+
+<Callout type="important">
+When selecting Database Name, the error "[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)" occurs.
+A. In this case, the DB account information may not be set up or may be set up with incorrect information. Click on the connection information in Database Settings &gt; Connection Management &gt; DB Connections menu, then **enter and save the Database Username / Password information** and try again.
+</Callout>

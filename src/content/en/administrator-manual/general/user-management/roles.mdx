@@ -1,0 +1,165 @@
+---
+title: 'Roles'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can manage various administrator roles within QueryPie in the Roles page.
+
+This document provides guidance on administrator role configuration, policy types, and administrator role management methods.
+
+## Administrator Role Configuration
+
+Administrator roles are composed of roles and policies.
+
+*  **Administrator Role** (Role) : A unit granted to users, which is a collection of policies.
+    * Default provided roles are marked as Created by System.
+        * The Owner role has permissions for the entire QueryPie system and changes and deletions are restricted.
+        * Other roles can be modified and utilized as needed.
+    * In addition to default provided roles, users can directly create roles.
+*  **Administrator Policy** (Policy) : A collection of Permissions
+    * Individual policies are defined as individual menu access permissions and detailed function execution permissions within the administrator page.
+    * Addition, modification, and deletion at the policy level are not possible.
+
+## Viewing Administrator Role List
+
+You can view currently registered administrator roles in the Roles page. You can search by name.
+
+* Administrator roles provided by default in QueryPie have Created by value marked as System.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Roles](/administrator-manual/general/user-management/roles/screenshot-20240726-130853.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Roles
+</figcaption>
+</figure>
+
+<Callout type="important">
+The Owner role is an administrator role that can access the entire QueryPie system and cannot be changed or deleted.
+</Callout>
+
+## Viewing Administrator Role Details
+
+Click on the role you want to view details for in the Roles list to enter the detail page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-131148.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+The Detail tab displays the list of policies assigned to the administrator role currently being viewed.
+
+## Assigning Policies to Administrator Roles
+
+1. In the Roles list, click on the administrator role you want to assign additional policies to enter the detail page. Click the `Assign Policies` button to open the modal.
+2. The modal displays a list of policies not currently assigned to that role. Click on the desired policy to add it, then click the `Assign` button to save.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-131834.png](/administrator-manual/general/user-management/roles/screenshot-20240726-131834.png)
+</figure>
+
+1. You can check the list of additionally assigned policies in the administrator role detail page.
+
+## Removing Policies from Administrator Roles
+
+Enter the detail page of the administrator role you want to remove policies from in the Roles list. Select the policy you want to remove with a checkbox in the policy list in the Detail tab, then click the `Delete` button. Click the `OK` button in the confirmation modal to complete policy removal.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-132233.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+## Modifying Administrator Roles
+
+Enter the detail page of the administrator role you want to modify in the Roles list. Click the `Edit` button to open the modification modal, where you can modify the name and description.
+
+<figure data-layout="center" data-align="center">
+![Role Modification Modal](/administrator-manual/general/user-management/roles/screenshot-20240726-132439.png)
+<figcaption>
+Role Modification Modal
+</figcaption>
+</figure>
+
+## Deleting Administrator Roles
+
+Two methods are provided for deleting administrator roles that are no longer used.
+
+<Callout type="important">
+When an administrator role is deleted, that role is immediately revoked from users who had previously been assigned that role. Administrator role deletion cannot be undone, so please execute carefully.
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-132448.png](/administrator-manual/general/user-management/roles/screenshot-20240726-132448.png)
+</figure>
+</Callout>
+
+### Deleting from Administrator Role List
+
+Select the role you want to delete with a checkbox in the Roles list, then click the `Delete` button displayed in the table header. In the confirmation modal, correctly enter the deletion confirmation phrase "DELETE" and click the `Delete` button to complete administrator role deletion.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Roles](/administrator-manual/general/user-management/roles/screenshot-20240726-132801.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Roles
+</figcaption>
+</figure>
+
+### Deleting from Administrator Role Detail Page
+
+Enter the detail page of the administrator role you want to delete in the Roles list. Click the `Delete` button to open the deletion confirmation modal, then correctly enter the deletion confirmation phrase "DELETE" and click the `Delete` button to complete administrator role deletion.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details](/administrator-manual/general/user-management/roles/screenshot-20240726-133911.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+## Reference) Types of Administrator Policies
+
+You can check the permission content for each administrator policy and QueryPie product license information required to activate that policy in the list below.
+
+|  **Policy Name**                                  |  **Description**                                            |  **License**  |
+| ------------------------------------------------- | ----------------------------------------------------------- | ------------- |
+| User Management Full Access                       | Can access and modify Users and Groups menu.                | Default       |
+| User Management Read Only                         | Can access Users and Groups menu.                           | Default       |
+| Group Management Full Access                      | Can access and modify Group menu                            | Default       |
+| Group Management Read Only                        | Can access Groups menu                                      | Default       |
+| General Setting Full Access                       | Can access and modify General menu.                         | Default       |
+| Security Setting Full Access                      | Can access and modify Security menu.                        | Default       |
+| Allowed Zone Full Access                          | Can access and modify Allowed Zones menu.                   | Default       |
+| Alert Setting Full Access                         | Can access and modify Alert menu.                           | Default       |
+| Channel Setting Full Access                       | Can access and modify Channel menu.                         | Default       |
+| License Page Full Access                          | Can access License menu.                                    | Default       |
+| Authentication Setting Full Access                | Can access and modify Authentication menu.                  | Default       |
+| Workflow Lists Full Access                        | Can access All Requests menu.                               | Default       |
+| Approval Rule Setting Full Access                 | Can access and modify Approval menu.                        | Default       |
+| API Token Setting Full Access                     | Can access and modify API Token menu.                       | Default       |
+| Job Page Full Access                              | Can access Jobs menu.                                       | Default       |
+| Integration Page Full Access                      | Can access and modify Integration menu.                     | Default       |
+| System Properties Full Access                     | Can access System Properties menu.                          | Default       |
+| Database Connection Management Full Access        | Can access and modify Connection Management menu.           | DAC Only      |
+| Database Access Control Full Access               | Can access and modify DB Access Control menu.               | DAC Only      |
+| Database Policy Management Full Access            | Can access and modify Database Policies menu.               | DAC Only      |
+| Proxy Management Full Access                      | Can access Proxy Management menu.                           | DAC Only      |
+| Database Ledger Policy Full Access                | Can access and modify Ledger Management menu.               | DAC Only      |
+| Masking Pattern Setting Full Access               | Can access and modify Masking Pattern menu.                 | DAC Only      |
+| Server Connection Management Full Access          | Can access and modify Server Management menu.               | SAC Only      |
+| Server Access Control Full Access                 | Can access and modify Server Access Control menu.           | SAC Only      |
+| General Audit Full Access                         | Can access General Audit menu and export logs and report.   | Default       |
+| Database Audit Full Access                        | Can access Database Audit menu and export logs and report.  | DAC Only      |
+| Server Audit Full Access                          | Can access Server Audit menu and export logs and report.    | SAC Only      |
+| DB Access Request Approval Permission             | Can access and modify Profile Editor setting.               | DAC Only      |
+| SQL Request Approval Permission                   | Can approve SQL Request as an approver.                     | DAC Only      |
+| SQL Export Request Approval Permission            | Can approve Data Export Request as an approver.             | DAC Only      |
+| Server Access Request Approval Permission         | Can approve Server Access Request as an approver.           | SAC Only      |
+| Access Role Request Approval Permission           | Can approve Access Role Request as an approver.             | SAC or KAC    |
+| SCIM Provisioning and API Token Management Access | Can manage SCIM Provisioning status and API Token.          | Default       |
+| Kubernetes Connection Management Full Access      | Can access and modify Connection Management menu            | KAC           |
+| Kubernetes Access Control Full Access             | Can access and modify Kubernetes Access Control menu        | KAC           |
+| Kubernetes Audit Full Access                      | Can access Kubernetes Audit menu and export logs and report | KAC           |
+| Discovery Management Full Access                  | Can access and modify Discovery menu                        | DD            |

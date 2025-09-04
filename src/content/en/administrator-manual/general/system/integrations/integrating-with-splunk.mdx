@@ -1,0 +1,107 @@
+---
+title: 'Splunk Integration'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Provides functionality to send audit logs recorded by QueryPie externally through Splunk.
+
+<Callout type="info">
+System admin privileges are required for Integration settings.
+</Callout>
+
+## Recommended Syslog-Splunk Integration Architecture
+
+<figure data-layout="center" data-align="center">
+![Recommended Splunk Integration Architecture](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
+<figcaption>
+Recommended Splunk Integration Architecture
+</figcaption>
+</figure>
+
+The architecture recommended by Splunk for Syslog-Splunk integration is as follows.
+
+1. Primary collection through a separate syslog server, then transmission to Splunk
+2. Transmission to Splunk through Universal forwarder / Heavy forwarder
+
+<Callout type="important">
+QueryPie is configured to allow direct transmission using TCP, UDP, HTTP, HTTPS protocols for customer convenience, but please note that this configuration is not a Splunk recommendation.
+</Callout>
+
+For reference, Splunk provides SC4S (Splunk connector for syslog) separately for syslog collection.
+
+## Configuring Splunk Integration
+
+1. Navigate to System &gt; Integrations menu in General Settings.
+2. Click on the Splunk tile to go to the detail page.
+3. Click the `Configure` button on the detail page to display a popup where you can enter Destination information.
+
+<figure data-layout="center" data-align="center">
+![(Left) TCP / UDP Settings Screen (Right) HTTP / HTTPS Settings Screen](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20240523-101104.png)
+<figcaption>
+(Left) TCP / UDP Settings Screen (Right) HTTP / HTTPS Settings Screen
+</figcaption>
+</figure>
+
+1. Enter the following information to create Destination information.
+    1.  **Destination Name** : Enter an appropriate name to identify the entity receiving syslog.
+    2.  **Protocol**  : Protocols available for transmission to Splunk are TCP (default), UDP, HTTP, HTTPS.
+        1. UDP has packet length constraints and is vulnerable security-wise, so TCP usage is recommended.
+        2. When using Splunk HTTP Event Collector, the default is HTTPS.
+        3. To use HTTP instead of HTTPS, you must first configure Splunk's HEC option to not use SSL. When selecting HTTP, you must additionally enter the following field values:
+            *  **HEC Host**  : Enter the hostname or IP address of the Splunk server.
+            *  **HEC Token**  : Enter the Splunk HEC token value.
+    3.  **Destination Address (Hostname)** : Enter the IP address or hostname of the Splunk server or forwarder receiving syslog. For HTTP, HTTPS protocols, this changes to HEC Host input.
+    4.  **Port**  : Enter the listening port of the syslog server. (TCP/UDP default 514)
+        1. Splunk HEC port must be checked in Splunk settings first before entering.
+        2. When selecting HTTP/HTTPS protocol in Splunk menu:
+            * Enter the port number set in Splunk HTTP Event Collector's global option. Default is 8088.
+            * For Splunk Cloud users, enter 443.
+    5.  **HEC Token** : For HTTP, HTTPS protocols, you must enter the token value created when configuring Splunk's HEC.
+    6.  **Test Connection button**  : TCP, HTTP, HTTPS protocols can check communication status with the target.
+        * UDP cannot check communication status due to protocol characteristics, so the Test Connection button is disabled.
+    7.  **Select Event Items**  : You can selectively send event items. Selecting the "Select all event items, including those that may be added later." checkbox at the bottom sends all available events.
+    8.  **Disable syslog header**  : Sends without syslog header information (default Yes). This is an option provided to remove syslog headers when some SIEMs have difficulty parsing JSON. For HTTP, HTTPS, this option cannot be used and is always sent without syslog headers.
+    9.  **Description** : Enter brief information within 100 characters about the configuration information.
+2. Click the `OK` button to save the settings.
+    1. Even if settings are saved, syslog is not immediately transmitted.
+3. To start transmission, switch the toggle button in the top left of the page to :toggle:.
+    1. This transmission toggle button can be used when transmission needs to be temporarily stopped for maintenance or various situations.
+4. If syslog transmission is no longer needed, you can remove the configuration through the `Delete` button.
+    1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.
+
+## Reference
+
+* QueryPie event items transmitted through syslog according to license
+
+|  **Event Item**               |  **DAC**  |  **SAC**  |  **KAC**  |
+| ----------------------------- | --------- | --------- | --------- |
+| User Access History           | O         | O         | O         |
+| Activity Logs                 | O         | O         | O         |
+| Admin Role History            | O         | O         | O         |
+| Audit Log Export              | O         | O         | O         |
+| DB Access History             | O         | N/A       | N/A       |
+| Query Audit                   | O         | N/A       | N/A       |
+| DML Snapshot                  | O         | N/A       | N/A       |
+| DB Access Control Logs        | O         | N/A       | N/A       |
+| Account Lock History          | O         | N/A       | N/A       |
+| Server Access History         | N/A       | O         | N/A       |
+| Server Command Audit          | N/A       | O         | N/A       |
+| Server Session Logs           | N/A       | O         | N/A       |
+| Server Access Control Logs    | N/A       | O         | N/A       |
+| Workflow Logs                 | O         | O         | O         |
+| Approval Urgent Waiting Logs  | O         | O         | O         |
+| Request Audit                 | N/A       | N/A       | O         |
+| Kubernetes Role History       | N/A       | N/A       | O         |
+
+<Callout type="info">
+**Pod Session Recordings** are not supported for syslog transmission because they duplicate the list and details of pods/exec resource calls within Request Audit.
+</Callout>
+
+* Other reference documents
+    * [RFC 3164: The BSD Syslog Protocol](https://datatracker.ietf.org/doc/html/rfc3164)
+    * [Splunk Universal Forwarder](https://www.splunk.com/en_us/blog/learn/splunk-universal-forwarder.html)
+    * [Splunk Connect for Syslog](https://splunk.github.io/splunk-connect-for-syslog/main/)
+    * [Set up and use HTTP Event Collector in Splunk Web](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector)

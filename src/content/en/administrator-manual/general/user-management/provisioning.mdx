@@ -1,0 +1,38 @@
+---
+title: 'Provisioning'
+---
+
+## Overview
+
+**SCIM (System for Cross-domain Identity Management)** is an open standard protocol designed to manage user identity information, providing a defined schema representing users and groups and RESTful APIs to perform CRUD (Create, Read, Update, Delete) operations on those user and group resources. By integrating with the account system used by your organization, you can synchronize Attributes (attributes) and status corresponding to users and groups within your organization to QueryPie immediately as they are reflected in the account system.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240613-174843.png](/administrator-manual/general/user-management/provisioning/screenshot-20240613-174843.png)
+</figure>
+
+## User Management Through Account System SCIM Synchronization
+
+QueryPie defines user ledgers based on the Auth Provider field. This Auth Provider follows the external account system type configured in the Administrator &gt; General &gt; User Management &gt; Authentication menu.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Provisioning](/administrator-manual/general/user-management/provisioning/image-20240714-054222.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Provisioning
+</figcaption>
+</figure>
+
+Since general SCIM integration APIs cannot identify the authority, when a user is created through SCIM API calls, the Auth Provider follows the corresponding Authentication Type. Therefore, we recommend proceeding with the [SSO account system integration](authentication) procedure first for smoother account flow management. The system behavior according to this is as follows.
+
+*  **Authentication Not Configured (Default: Internal Database)** 
+    * Auth Provider of users or groups created through SCIM API becomes "QueryPie" and operates as a general bulk import concept.
+    * Managed the same as local QueryPie accounts, and users can be edited and deleted in QueryPie.
+*  **Authentication Configured (e.g., Okta)** 
+    * Auth Provider of users or groups created through SCIM API is marked as the corresponding Identity Provider (IdP), and user Attribute profile management is updated and managed according to Administrator &gt; General &gt; User Management &gt; Profile Editor standards.
+    * When existing local QueryPie accounts with the same Username (loginId) receive update calls through SCIM API, the user's profile is modified according to IdP, but to maintain granted permissions within QueryPie, the Auth Provider is not changed to the corresponding IdP first. (As of 9.19.0)
+        * Still managed the same as local QueryPie accounts, and user profiles and status can be edited and deleted in QueryPie.
+        * For actual consistency maintenance, we recommend managing user lifecycle in IdP.
+    * Synchronized users cannot be modified or deleted within QueryPie.
+
+## SCIM Account System Integration Guide Quick Access
+
+(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)

@@ -1,0 +1,78 @@
+---
+title: 'Allowed Zones'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+The Allowed Zones page allows you to pre-register and manage Allowed Zones to control IP ranges that allow users' QueryPie web console access and DB connections.
+
+## Viewing Registered Allowed Zone List
+
+To view the Allowed Zone list, access the Administrator &gt; General &gt; Company Management &gt; Allowed Zones page. You can search by Allowed Zone name.
+
+<Callout type="info">
+**Default** Allowed Zone is created by default during QueryPie installation and has an allow-all (0.0.0.0/0) value.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20240714-053215.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Allowed Zones
+</figcaption>
+</figure>
+
+## Viewing Allowed Zone Details
+
+Click on the item you want to view details for in the Allowed Zones list to open a drawer.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-211548.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
+</figcaption>
+</figure>
+
+### Checking Allowed Zone Assignment History
+
+In the Mapped List by Allowed Zones area within the drawer, you can check DB connections and users assigned to the Allowed Zone.
+
+* Database tab: List of DB connections controlled by this Allowed Zone
+    * Allowed Zone assignment is possible from the DB Connection Detail page
+* Users tab: List of users whose QueryPie Web access is controlled by this Allowed Zone
+
+<Callout type="info">
+* User-specific Allowed Zone assignment is disabled by default, and Global Option activation is performed in the [Security menu](security).
+* User-specific Allowed Zone assignment is performed in the [user detail page](../user-management/users/user-profile) in the Users menu.
+</Callout>
+
+## Adding Allowed Zones
+
+Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone creation modal.
+
+<figure data-layout="center" data-align="center">
+![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
+<figcaption>
+Create Allowed Zone Modal
+</figcaption>
+</figure>
+
+*  **Name**  : Allowed Zone name
+*  **IP Band(s)**  : Enter IP addresses or IP address ranges to assign.
+    * You can enter one or more IP addresses or IP address ranges.
+    * IP address ranges use Classless Inter-Domain Routing (CIDR) notation. Reference: [What is CIDR?](https://aws.amazon.com/ko/what-is/cidr/)
+    * When entering two or more IP addresses or IP address ranges, use commas as separators.
+    * Example 1) `1.1.1.1, 2.2.2.2`
+    * Example 2) `192.168.10.0/24, 192.169.30.0/24`
+
+## Deleting Allowed Zones
+
+Select the Allowed Zone you want to delete with a checkbox in the Allowed Zone list, and the `Delete` button will appear. Click the button and then click the `Delete` button in the confirmation modal to complete the deletion.
+
+<figure data-layout="center" data-align="center">
+![Delete Option Activated](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-220112.png)
+<figcaption>
+Delete Option Activated
+</figcaption>
+</figure>

@@ -1,0 +1,82 @@
+---
+title: 'Data Masking'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can set policies to mask and display data that requires management within your organization, such as personal information or sensitive data, when viewing. In the Data Masking menu, you can select the connection for which to set policies, create policies, and register and manage rules for data that needs masking on a column basis.
+
+## Creating Data Masking Policies
+
+Register new masking policies by connection.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking](/administrator-manual/databases/policies/data-masking/image-20240725-072925.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking
+</figcaption>
+</figure>
+
+1. Navigate to Policies &gt; Data Masking menu in Database settings.
+2. Click the `Create Policy` button in the top right corner.
+3. Enter the following information for policy creation:
+    1.  **Policy Name**  : A name to distinguish the policy on the screen.
+    2.  **Target Connection**  : Select the connection to apply the policy to. One policy can be linked to one connection.
+4. Save by clicking the `Save` button.
+
+You can confirm that the policy has been created in the Data Masking policy list.
+
+## Registering Rules in Data Masking Policies
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details
+</figcaption>
+</figure>
+
+After creating a policy, register the path of the data to which the policy will be applied as a rule.
+
+1. Click on the policy you created in the Data Masking menu.
+2. The policy details and rule registration screen will be displayed. Click the `Add Rule List` button on the right.
+3. Select the path of the data to apply the policy to in order:
+    1.  **Database Name**  : Required value for rule registration.
+    2.  **Table Name**  : Required value for rule registration.
+    3.  **Column Name**  : Required value for rule registration.
+4. Apply masking patterns:
+    1. Select one or more masking patterns to apply to the column selected in step 3.
+    2. By default, patterns for masking about 20 types of personal information and sensitive data are provided.
+    3. You can create detection patterns and masking patterns directly through regular expressions in the Masking Pattern menu.
+5. You can make exceptions to masking rules for users or groups who need to view the data:
+    *  **Allowed Users**  : Select users or groups to make exceptions for this rule.
+6. Save by clicking the `Ok` button.
+
+You can confirm that the rule has been registered in the Rule List tab. Now when users view the data, it will be displayed masked according to the applied masking pattern, such as '*****@gmail.com'.
+
+<Callout type="important">
+When selecting Database Name, the error "[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)" occurs.
+A. In this case, the DB account information may not be set up or may be set up with incorrect information. Click on the connection information in Database Settings &gt; Connection Management &gt; DB Connections menu, then **enter and save the Database Username / Password information** and try again.
+</Callout>
+
+## Checking Access Logs for Columns with Applied Masking Policies
+
+<Callout type="info">
+From version 10.3.0, you can check access logs for columns controlled by masking policies.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20250512-041023.png](/administrator-manual/databases/policies/data-masking/image-20250512-041023.png)
+</figure>
+
+1. Click on the individual item (row) of the policy you created in the policy list to navigate to the details page.
+2. Select the Logs tab.
+3. Check the log content:
+    1.  **Name** : Display Name of the QueryPie user.
+    2.  **Connection**  : Target connection controlled by the policy.
+    3.  **Database Name** : Target logical database name controlled by the policy.
+    4.  **Table Name**  : Target table name controlled by the policy.
+    5.  **Column Name**  : Target single or multiple column names controlled by the policy.
+    6.  **Rows**  : Number of rows returned by the query.
+    7.  **Action At**  : Time when the query was executed.

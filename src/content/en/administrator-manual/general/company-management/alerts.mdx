@@ -1,0 +1,498 @@
+---
+title: 'Alerts'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+The Alerts page provides notification functionality related to resource access. By pre-setting trigger conditions for major anomalies, you can detect policy violations in real-time. This allows for rapid identification and resolution of potential security incidents, and protection of sensitive information such as queries or data leaks that exceed predefined thresholds.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts](/administrator-manual/general/company-management/alerts/screenshot-20240728-223320.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts
+</figcaption>
+</figure>
+
+This document covers the following content:
+
+## Supported Alert Types
+
+It supports general alerts as well as alerts specialized for DB access and system access.
+
+The alert types supported by each service are as follows:
+
+<table data-table-width="760" data-layout="center" local-id="56383138-c970-42e6-869a-a74e4c473292">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Service Category**
+</th>
+<th>
+**Alert Type Name**
+</th>
+<th>
+**Description**
+</th>
+</tr>
+<tr>
+<td>
+SAC, DAC, KAC
+</td>
+<td>
+New Request
+</td>
+<td>
+New approval request registration notification
+</td>
+</tr>
+<tr>
+<td>
+General
+</td>
+<td>
+Unusual Login Attempt
+</td>
+<td>
+User login behavior notification based on IP range
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Execution
+</td>
+<td>
+SQL statement execution notification for defined conditions
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Prevented SQL Execution
+</td>
+<td>
+Unauthorized statement execution notification
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+DB Connection Attempt
+</td>
+<td>
+DB connection success or failure notification
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+Sensitive Data Access
+</td>
+<td>
+Sensitive data query notification for defined conditions
+</td>
+</tr>
+<tr>
+<td>
+DAC
+</td>
+<td>
+SQL Export
+</td>
+<td>
+SQL export execution notification for defined conditions
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Server Connection Attempt
+</td>
+<td>
+Server connection success or failure notification
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Restricted Command
+</td>
+<td>
+Blocked command execution notification by server/server group
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+Specific Command
+</td>
+<td>
+Specific command execution notification
+</td>
+</tr>
+<tr>
+<td>
+SAC
+</td>
+<td>
+File Transfer (SFTP)
+</td>
+<td>
+File transfer execution notification via SFTP
+</td>
+</tr>
+<tr>
+<td>
+KAC
+</td>
+<td>
+K8s API Request
+</td>
+<td>
+Kubernetes API request notification
+* Supported from version 10.2.2
+</td>
+</tr>
+</tbody>
+</table>
+
+<Callout type="info">
+From version 11.1.0, when the New DAC Policy Management feature is activated, you can use the following alert types:
+* New Request - DB Policy Exception Request<br/>DB Policy Exception Request has two types: Unmasking and Restricted Data Access, but they cannot be distinguished for alert generation.
+* Data Access
+    * Column Data Masking : Event where data was queried in a restricted masked state due to Column Data Masking policy created in new policy management
+    * Table Access Restriction : Event where access to specific tables was restricted due to Table Access Restriction policy created in new policy management
+    * Column Access Restriction : Event where access to specific columns was restricted due to Column Access Restriction policy created in new policy management
+    * Sensitive Data Access Monitoring : Event that meets the conditions of Sensitive Data Access Monitoring policy created in new policy management
+</Callout>
+
+## Creating Alerts
+
+Click the `Create Alert` button in the top right corner of the Alerts page to create a new alert. Click the `OK` button to complete alert creation.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert](/administrator-manual/general/company-management/alerts/screenshot-20240729-141728.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
+</figcaption>
+</figure>
+
+1.  **Name**  : Alert name
+2.  **Alert Type**  : Select the alert type.
+    1. Configurable conditions vary by alert type. Please refer to the documentation below for detailed information.
+3.  **Message Template**  : Set the alert message template.
+    1. You can create custom messages using template variables supported in Message Template Variable.
+    2. Message Template Variables vary by Alert Type.
+4.  **Channel**  : Alert delivery channel
+    1. Select one of the channels registered in Administrator &gt; General &gt; Channels.
+    2. For detailed information about channels, refer to the [Channels](channels) documentation.
+5.  **Subject Title**  : Displayed when Channel is set to Email. You can directly specify the email notification subject and use the same variables supported in Message Template Variable. If not entered, it will be sent with the default subject set by the system.
+6.  **Send Test Message**  : Send alert test message
+    1. Sends the entered message template content as a test message to the selected channel.
+
+### New Request
+
+New approval request registration notification
+
+*  **Request Type**  : Workflow request type
+    * Choose one from DB Access Request, SQL Request, SQL Export Request, Server Access Request, Access Role Request, Unmasking Request
+    * All Requests (*) : Send notifications for all request types
+*  **Urgent Mode**  : Post-approval status
+    * All : Send notifications for all approval requests
+    * Urgent Mode Only : Send notifications only for post-approval requests
+*  **Send email only to those involved in this request :** Displayed when Channel is set to Email. When this option is enabled, notifications containing the Message Template content are sent to those involved in the request (requester, approver, etc.).
+
+<Callout type="info">
+**10.2.2 Slack Message Template Changes**
+
+* Slack user mentions for `{{assignees}}` are supported in alert messages sent via Slack &gt; API method channels.
+* Template variables supported vary depending on Request Type selection. Please refer to the separate **New Request &gt; Template Variables by Request Type** documentation for detailed information.
+
+**10.2.8 Slack Message Template Changes**
+
+* Sensitive Data Access events have been improved to include queries in Slack messages, and the `{{queryPreview}}` variable has been added. Due to Slack's characteristics, sending messages over 3000 characters will fail without returning an error, so queries visible through queryPreview are limited to 100 characters.
+
+**11.1.0 Request Type Changes**
+
+* If the New DAC Policy Management feature is enabled in Databases &gt; General &gt; Configurations, you can use DB Policy Exception Request in the Alert's Request Type.
+* DB Policy Exception Request sends alerts when policy exception request events occur for Column Data Masking, Table Access Restriction, and Column Data Access Restriction.
+
+**11.2.0 Email Notification Template Changes**
+
+* When Alert's Channel is set to Email, the ability to directly enter Subject Title (email subject) has been added.
+* When setting Workflow-related Alert with Email as Channel, the `Send email only to those involved in this request` option is provided. When this option is enabled, notifications with Message Template content are sent to those involved in the request (requester, approver, etc.).
+</Callout>
+
+### Unusual Login Attempt
+
+User login behavior notification based on IP range
+
+*  **Action Count**  : Number of authentication failures to trigger alert
+    * Can enter 2 or more.
+*  **Specific Time Interval (Minutes)**  : Time period (minutes) for alert trigger
+    * Can enter 1 or more.
+
+<Callout type="info">
+Example) Send notification for unusual login attempts - when QueryPie login fails 3 times within 5 minutes
+* Action Count : 3
+* Specific Time Internal (Minutes) : 5
+</Callout>
+
+### SQL Execution
+
+SQL statement execution notification for defined conditions
+
+*  **Rows**  : Number of rows to trigger alert
+    * For SQL Events without record changes: Works normally when 0 is entered.
+        * `Create`, `Drop`, `Revoke`, `Truncate`, etc.
+    * For other SQL Events: Works normally when 1 or more is entered.
+*  **Specific Time Interval (Minutes)**  : Time period (minutes) for alert trigger (from version 10.2.2)
+    * When 0 is entered, triggers based on a single SQL execution without time conditions.
+    * Can enter up to 1440.
+*  **SQL Events**  : SQL queries to trigger alerts (multiple selection)
+*  **Connection**  : Target connections for alert when query is executed (from version 10.2.2 - multiple selection)
+    * All Connections (*) : Creates alert conditions for all future connections
+
+<Callout type="info">
+Example 1) Send alert for bulk data queries of 100 or more records
+
+* Rows : 100
+* SQL Events : `SELECT`
+
+Example 2) Send alert for data modification and deletion attempts
+
+* Rows : 1
+* SQL Events : `UPDATE`, `DELETE`
+</Callout>
+
+### Prevented SQL Execution
+
+Unauthorized statement execution notification
+
+*  **Connection**  : Target connections for alert when query is executed (from version 10.2.2 - multiple selection)
+    * All Connections (*) : Creates alert conditions for all future connections
+
+### DB Connection Attempt
+
+DB connection success or failure notification
+
+*  **Alert Trigger Condition**  : Alert trigger conditions (multiple selection)
+    * Success : Send alert when DB connection succeeds
+    * Failure : Send alert when DB connection fails
+*  **Connection Failure Trigger with Interval**  : Connection failure count/period alert condition settings
+    * Only available when Failure is selected. When enabled, additional input conditions are exposed.
+    * Action Count : Count-based
+        * Can enter 1 or more.
+    * Specific Time Interval (Minutes) : Period-based (minutes)
+        * Can enter 1 or more.
+*  **Connection**  : Target connections for alert when query is executed (from version 10.2.2 - multiple selection)
+    * All Connections (*) : Creates alert conditions for all future connections
+
+<Callout type="info">
+Example) Send alert for unusual database connection attempts - when DB connection fails 3 times within 5 minutes
+* Alert Trigger Condition : Failure
+* Connection Failure Trigger with Internal : On
+* Action Count : 3
+* Specified Time Internal (Minutes) : 5
+</Callout>
+
+### Sensitive Data Access
+
+Sensitive data query notification for defined conditions
+
+*  **Criteria**  : Select alert trigger criteria.
+    * Sensitive Level : Based on sensitivity level set for each data in Sensitive Data Policy &gt; Rule
+        * Choose one from Low, Medium, High
+    * Policy : Based on specific Sensitive Data Policy
+        * Choose one from registered Sensitive Data Policies
+*  **Rows**  : Number of rows to trigger alert (from version 10.2.2)
+    * Can enter 1 or more.
+*  **Specific Time Interval (Minutes)**  : Time period (minutes) for alert trigger (from version 10.2.2)
+    * When 0 is entered, triggers based on a single SQL execution without time conditions.
+    * Can enter up to 1440.
+
+<Callout type="important">
+To use the Sensitive Data Access alert type, you must pre-define tables and columns containing personal information in sensitive data policies. For detailed information, please refer to the [Sensitive Data](../../databases/policies/sensitive-data) documentation.
+</Callout>
+
+<Callout type="info">
+Example 1) Send alert when querying personal data set to High sensitivity level
+
+* Criteria : Sensitive Level
+* Sensitive Level : High
+
+Example 2) Send alert when querying personal data included in specific database
+
+* Criteria : Policy
+* Policy : *`{pre-registered Sensitive Data policy}`*
+</Callout>
+
+### SQL Export
+
+SQL export execution notification for defined conditions
+
+*  **Rows**  : Number of rows to trigger alert
+    * Can enter 1 or more.
+*  **Specific Time Interval (Minutes)**  : Time period (minutes) for alert trigger (from version 10.2.2)
+    * When 0 is entered, triggers based on a single SQL export without time conditions.
+    * Can enter up to 1440.
+*  **Connection**  : Target connections for alert when SQL export is executed (from version 10.2.2 - multiple selection)
+    * All Connections (*) : Creates alert conditions for all future connections
+
+<Callout type="info">
+Example) Send alert for bulk data export attempts of 100 or more records
+* Alert Type : SQL Export
+* Trigger Condition (Rows) : 100
+</Callout>
+
+### Server Connection Attempt
+
+Server connection success or failure notification
+
+*  **Alert Trigger Condition**  : Alert trigger conditions
+    * Success : Send alert when server connection succeeds
+    * Failure : Send alert when server connection fails
+*  **Connection**  : Target connections for alert (multiple selection)
+    * Can select servers and server groups, with duplicate selection allowed
+        * Even if targets are duplicated due to multiple selection, alert is sent only once
+    * All Connections (*) : Creates alert conditions for all future connections
+
+<Callout type="info">
+Example) Send alert only when user attempts server connection but fails
+* Alert Type : Server Connection Attempt
+* Alert Trigger Condition : Check only Failure
+</Callout>
+
+### Restrict Command
+
+Blocked command execution notification by server/server group
+
+*  **Connection**  : Target connections for alert (multiple selection)
+    * Can select servers and server groups, with duplicate selection allowed
+        * Even if targets are duplicated due to multiple selection, alert is sent only once
+    * All Connections (*) : Creates alert conditions for all future connections
+
+### Specific Command
+
+Specific command execution notification
+
+*  **Connection**  : Target connections for alert (multiple selection)
+    * Can select servers and server groups, with duplicate selection allowed
+        * Even if targets are duplicated due to multiple selection, alert is sent only once
+    * All Connections (*) : Creates alert conditions for all future connections
+*  **Command**  : Command conditions to trigger alert when executed
+    * Keyword : Send alert when entered keyword is included in command
+    * RegExr : Send alert when command matches regular expression
+
+### File Transfer (SFTP)
+
+File transfer execution notification via SFTP
+
+*  **Alert Trigger Condition**  : Alert trigger conditions (multiple selection)
+    * File Upload : Send alert when file is uploaded
+    * File Download : Send alert when file is downloaded
+*  **Connection**  : Target connections for alert (multiple selection)
+    * Can select servers and server groups, with duplicate selection allowed
+        * Even if targets are duplicated due to multiple selection, alert is sent only once
+    * All Connections (*) : Creates alert conditions for all future connections
+
+### K8s API Request**[10.2.2]**
+
+Kubernetes API request notification
+
+*  **Result**  : API request result (multiple selection)
+    * Success : Send alert when request succeeds
+    * Failure : Send alert when request fails
+*  **Clusters**  : Target clusters for API request alert
+    * All Clusters (*) : Creates alert conditions for all future clusters
+*  **Verbs**  : Target Verbs for alert
+    * Currently supported - `create`, `update`, `patch`, `delete`, `deletecollection` (5 types)
+*  **Resource Kind**  : Target resource types for alert
+    * Currently supported - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, etc. (24 types total)
+    * All Resources (*) : Creates alert conditions for all future resource types
+
+### Data Access**[11.1.0]**
+
+<Callout type="info">
+This can only be used when the New DAC Policy Management feature is enabled in Databases &gt; General &gt; Configurations and related policies exist.
+</Callout>
+
+Data Access alerts can select four **policy types**: Column Data Masking, Table Access Restriction, Column Access Restriction, and Sensitive Data Access Monitoring.<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20250727-222007.png](/administrator-manual/general/company-management/alerts/image-20250727-222007.png)
+</figure>
+
+*  **Column Data Masking** 
+    *  **Policy** : Specify the target policy name that will be the alert trigger condition.
+    *  **Rows**  : Specify the number of rows for alert trigger.
+    *  **Time Interval** : Time period (minutes) for alert trigger.
+        * When 0 is entered, triggers based on a single SQL execution without time conditions.
+        * Can enter up to 1440.
+*  **Table Access Restriction** 
+    *  **Policy** : Specify the target policy name that will be the alert trigger condition.
+    *  **Unauthorized Access Attempt Count** : Specify the number of access attempts for alert trigger. If Time interval value is 0, alerts are triggered for single events without time conditions, so Unauthorized Access Attempt Count is fixed at 1. Minimum value is 1, maximum value is 2147483647.
+    *  **Time Interval**  : Time period (minutes) for alert trigger.
+        * When 0 is entered, triggers based on a single SQL execution without time conditions.
+        * Can enter up to 1440.
+*  **Column Access Restriction** 
+    *  **Rows** : Specify the number of rows for alert trigger.
+    *  **Time Interval**  : Time period (minutes) for alert trigger.
+        * When 0 is entered, triggers based on a single SQL execution without time conditions.
+        * Can enter up to 1440.
+*  **Sensitive Data Access Monitoring** 
+    *  **Policy**  : Specify the target policy name that will be the alert trigger condition.
+    *  **Rows**  : Specify the number of rows for alert trigger.
+    *  **Time Interval** : Time period (minutes) for alert trigger.
+        * When 0 is entered, triggers based on a single SQL execution without time conditions.
+        * Can enter up to 1440
+
+## Viewing and Modifying Alert Details
+
+Select the alert you want to view details for in the Alerts page. In the Details tab of the detail page, you can view and modify the alert conditions and messages entered when creating the alert. Click the `Save Changes` button in the top right corner to apply the modifications.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)](/administrator-manual/general/company-management/alerts/screenshot-20240729-154217.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Details)
+</figcaption>
+</figure>
+
+## Viewing Alert Delivery History
+
+Select the alert you want to view delivery history for in the Alerts list. You can then view the history in the Log section of the detail page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)](/administrator-manual/general/company-management/alerts/screenshot-20240729-154223.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details (Logs)
+</figcaption>
+</figure>
+
+## Deleting Alerts
+
+Two methods are provided for deleting existing alerts.
+
+1. Delete from Alerts page : Select the alert you want to delete with a checkbox in the Alerts list, and the `Delete` button will appear. Click the button to show a confirmation modal, and click `OK` to complete the deletion.
+2. Delete from alert detail page : Click the `Delete` button in the top right corner of the detail page of the alert you want to delete to show a confirmation modal, and click `OK` to complete the deletion.

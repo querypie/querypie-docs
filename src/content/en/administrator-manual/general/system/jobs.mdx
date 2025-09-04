@@ -1,0 +1,91 @@
+---
+title: 'Jobs'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This is a menu that provides an overview of various tasks that run periodically or manually on the QueryPie system.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs](/administrator-manual/general/system/jobs/screenshot-20241107-223755.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs
+</figcaption>
+</figure>
+
+## Viewing Jobs List
+
+You can check the Jobs list page by navigating to Administrator &gt; General &gt; System &gt; Jobs menu.
+
+Job types are broadly divided into two categories.
+
+1. System jobs automatically created with QueryPie settings
+    * Only one job exists per type.
+    * Executed at predetermined intervals by scheduling.
+    * Additional manual execution is not possible.
+2. Resource synchronization jobs created according to user resource creation
+    * Includes DB Cloud Provider, Server Cloud Provider, Kubernetes Cluster Sync, Authentication.
+    * Separate jobs are created for each resource, and job names are displayed the same as resource names.
+    * Replication Frequency is specified as configured when creating resources. (Scheduling or Manual)
+        * Even when job type is Scheduling, additional manual job execution is possible. In this case, manual execution can be started from each resource management page, and only job status tracking is possible from the Jobs page.
+
+Information displayed for each job is as follows.
+
+*  **Type** : Job type
+*  **Job Name**  : Job name
+    * For jobs that synchronize resources created by users, separate jobs are created for each resource, and job names are displayed the same as resource names.
+*  **Last Result**  : Status of the most recently executed job
+    * Running : Job executing
+    * Success : Job successful
+    * Issue : Job partially successful (Tasks with Failure or Ignored status exist)
+    * Failed : Job failed
+*  **Last Run At**  : Start time of the most recently executed job
+*  **Replication Frequency** : Whether job is scheduled
+    * Scheduling : Scheduled
+    * Manual : Manual execution
+
+## Viewing Job Details
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail](/administrator-manual/general/system/jobs/screenshot-20241107-223800.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail
+</figcaption>
+</figure>
+
+* Click on the job you want to view details for in the Jobs list page.
+* You can view basic job information and execution history.
+    *  **History Number**  : Job history number
+    *  **Last Run At**  : Execution time
+    *  **Result** : Job execution result
+        * Running : Job executing
+        * Success : Job successful
+        * Issue : Job partially successful (Tasks with Failure or Ignored status exist)
+        * Failed : Job failed
+    *  **Total**  : Total number of synchronization items
+    *  **Success**  : Number of successful items
+    *  **Failure**  : Number of failed items
+    *  **Ignored**  : Number of ignored items
+    *  **Trigger**  : Execution method
+        * Scheduled : Execution by schedule
+        * Manual : Manual execution
+            * In this case, the name of the person who executed the job is also displayed.
+
+<Callout type="info">
+As of version 10.2.0, Total, Success, Failure, Ignored information is only provided for Authentication Type jobs.
+</Callout>
+
+## Viewing Job History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail &gt; History Detail](/administrator-manual/general/system/jobs/screenshot-20241107-223901.png)
+<figcaption>
+Administrator &gt; General &gt; System &gt; Jobs &gt; List Detail &gt; History Detail
+</figcaption>
+</figure>
+
+Click on the row you want to view detailed execution history for in the History list to check History Detail in the Drawer.
+
+Change History records all detailed task history executed in the Job.
