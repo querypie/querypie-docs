@@ -29,6 +29,14 @@ export default withNextra({
     // Enable IP address extraction
     trustProxy: true,
   },
+  // Configure webpack to use memory cache to avoid large string serialization warnings
+  webpack: (config, { dev, isServer }) => {
+    // Use memory cache for better performance and to avoid serialization warnings
+    config.cache = {
+      type: 'memory',
+    };
+    return config;
+  },
   async redirects() {
     return [
       {

@@ -1,5 +1,5 @@
 import { importPage } from 'nextra/pages';
-import { useMDXComponents as getMDXComponents } from 'ROOT/mdx-components';
+import { useMDXComponents as getMDXComponents } from '@/mdx-components';
 import fs from 'fs';
 import path from 'path';
 
