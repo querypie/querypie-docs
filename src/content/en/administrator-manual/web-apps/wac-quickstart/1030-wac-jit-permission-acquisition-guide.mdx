@@ -1,0 +1,139 @@
+---
+title: '[10.3.0 ~] WAC JIT Permission Acquisition Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+This guide explains how to use JIT (Just-in-Time) permission acquisition for Web Apps through QueryPie WAC.
+
+JIT permission acquisition proceeds in the following order.
+
+1. Register a Web App with QueryPie WAC.
+2. Register Owners and Members under the Web App.
+3. Users request access to the Web App they want to access.
+4. The approver registered as Owner approves the user's Web App access.
+
+<Callout type="info">
+**Notice**
+
+The JIT Permission Acquisition Guide is based on version `10.3.0`.
+
+To follow this guide, you need Owner or Web App Admin permissions among QueryPie administrator permissions.
+</Callout>
+
+
+# Admin-side
+
+## 1. Register Web App
+
+1. Navigate to Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
+2. Click the `Create a Web App` button to enter the web app registration page.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20250412-225620.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/screenshot-20250412-225620.png)
+</figure>
+
+Enter the following information.
+
+1. Name : QueryPie Web Site
+2. Base URL : `querypie.com` or `10.10.10.10:443` 
+    1. Base URL cannot include sub-paths (e.g., `/ko`).
+    2. If you enter `https://` in Base URL, an error message will be displayed.
+    3. If you enter `www.` in Base URL, an error message will be displayed.
+3. Description : Enter a description of the web app. (e.g., QueryPie website)
+4. URL Paths : Enter sub-paths. Leave this blank here.
+5. Watermark : Choose whether to apply watermark to the user's browser screen when accessing the web app.
+    1. Displays information such as accessor and access time on the browser when accessing the web app to prevent screen leakage.
+    2. This guide assumes On status.
+6. User Activity Recording : Whether to record user behavior
+    1. Turn on all options after enabling On.
+    2. Excluded URL Paths is where you enter paths to exclude from user behavior recording. Leave this blank here.
+7. Tag : Tag for the web app. Leave this blank here.
+8. Click the `Save` button to save.
+
+## 2. Register Web App Owner / Member
+
+<figure data-layout="center" data-align="center">
+![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
+</figure>
+
+1. Access the web app detail page 
+2. Click the "Owner/Member" button in the top right.
+3. The drawer window on the right opens, search for the target person and select the left Owner and right Member buttons in the "Assign as" column to assign roles.
+
+<Callout type="info">
+JIT (Just-in-Time) permission assignment has the following two roles.
+* Owner: Entity that can approve Just-in-time requests for this web app
+* Member: Entity that can submit Just-in-time requests for this web app
+</Callout>
+
+## 3. User's JIT Web App Access Permission Request
+
+<Callout type="info">
+When accessing Web App through QueryPie, Root CA certificate installation and Chrome Extension installation are required.
+
+Please refer to the following manual for installation methods.
+
+[WAC Quickstart | 1.-Root-CA-인증서-설치하기](.#1.-root-ca-%ec%9d%b8%ec%a6%9d%ec%84%9c-%ec%84%a4%ec%b9%98%ed%95%98%ea%b8%b0)
+
+[WAC Quickstart | 2.-Extension-다운로드-받기](.#2.-extension-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c-%eb%b0%9b%ea%b8%b0)
+
+[WAC Quickstart | 3.-Extension-설치-및-Host-설정하기](.#3.-extension-%ec%84%a4%ec%b9%98-%eb%b0%8f-host-%ec%84%a4%ec%a0%95%ed%95%98%ea%b8%b0)
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20250513-065134.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-065134.png)
+</figure>
+
+1. After accessing QueryPie, click Web Apps at the top.
+2. Click Role on the left and select "Just In Time Role".
+3. Click the server you want to access.
+4. Click "Request Access" in the displayed alert to go to Workflow.
+
+
+<figure data-layout="center" data-align="center">
+![image-20250513-065247.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-065247.png)
+</figure>
+
+1. Access Web App Just-In-Time Access Request.
+2. Fill out Step1. If you clicked an item assigned in Web Apps, no separate selection is needed.
+    1. Web App : Only items where the user is designated as Member can be selected.
+    2. Approvers : Displays Users designated as Owner.
+3. Fill out Step2.
+    1. Request Title : Enter the request title.
+    2. Access Duration (Minutes) : Enter the usage time. It is requested in minutes.
+    3. Reason for Request : Enter the reason for the request.
+4. Click Submit.
+
+<Callout type="info">
+When requesting JIT (Just-in-Time) permissions, there are the following constraints.
+*  **Approvers are fixed as Web App Owners** .
+* The approval condition is fixed so that **completion occurs when at least 1 of multiple approvers approves** .
+*  **Adding approval steps or changing approvers is restricted** .
+* Post-approval mode appears when enabled in Approval Configuration and disappears when turned Off in the request screen.
+</Callout>
+
+## 4. Approver's JIT Web App Access Permission Request Approval
+
+<figure data-layout="center" data-align="center">
+![image-20250513-072925.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-072925.png)
+</figure>
+
+1. A user with approval authority (designated as Web App Owner) accesses Workflow.
+2. Go to Received Requests &gt; To Do.
+3. Click on the request content to go to the Detail page.
+4. Click Approve at the top.
+
+
+## 5. Access Web App through QueryPie
+
+<figure data-layout="center" data-align="center">
+![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)
+</figure>
+
+1. Go to QueryPie Web Apps.
+2. Click Role in the top left and change to Just In Time Role.
+3. In the Web App Dashboard's My Apps, you will see "JIT Active" on the QueryPie Web Site app icon you requested earlier. Click the icon to access the website.
+4. When the requested time expires, access permissions are automatically revoked.
+
+

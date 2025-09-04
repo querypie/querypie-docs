@@ -1,0 +1,310 @@
+---
+title: '[10.2.8~] WAC RBAC Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+QueryPie WAC provides RBAC (Role-Based Access Control).
+
+This document provides guidance on WAC roles and policies applied to version `10.2.8` and above.
+
+# WAC Roles and Policies
+
+* Policy is a specification that describes how to control access to resources registered in WAC, written in YAML format.
+    * It includes allowing or blocking web app resources.
+* Role is an object that defines what users can and cannot do.
+    * Multiple policies can be assigned to one role, and in this case, policies are combined with OR conditions.
+    * When multiple policies exist for the same Web App and sub-paths, Deny policies take precedence over Allow policies.
+* Users can be assigned multiple roles but can only select and use one at a time.
+
+<Callout type="important">
+**Warning**
+When all policies included in a role are combined, **at least 1 allow policy** must remain.<br/>Roles composed only of deny policies do not grant any app permissions and cannot be used normally.
+</Callout>
+
+# Basic Structure of WAC YAML Policy
+
+WAC policies are written in YAML format, and their basic structure is as follows.
+
+## YAML Document Example
+
+```
+apiVersion: webApp.rbac.querypie.com/v1
+kind: WacPolicy
+
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPathTags:              
+          access: "admin"
+      - webApp: "QueryPie Customer Portal"
+        urlPaths: ["*"]          
+    conditions:
+      userAttributes:
+        department: "White"
+      ipAddresses: 
+        - "10.10.0.0/24"
+        - "10.10.1.79"
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management/roles"
+```
+
+
+## YAML Specification
+
+<table data-table-width="760" data-layout="default" local-id="bb2479df-82c8-474e-8723-247d4037944a">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="#f0f1f2">
+**Category**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Property**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Required**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Description**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Valid Values**
+</th>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`apiVersion`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+Version of the written YAML Code
+System-managed value, no modification needed
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`kind`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+Type of the written YAML Code
+System-managed value, no modification needed
+</td>
+<td data-highlight-colour="#ffffff">
+`WacPolicy`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+Detailed rules within the policy (allow or deny)
+</td>
+<td data-highlight-colour="#ffffff">
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+
+</td>
+<td data-highlight-colour="#ffffff">
+`resources`
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+Specify resources to allow/deny access
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp`, `urlPaths`, `urlPathTags` (urlPathTags can only be used in `spec: allow`)
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+
+</td>
+<td data-highlight-colour="#ffffff">
+`conditions`
+</td>
+<td data-highlight-colour="#ffffff">
+**[OPTIONAL]**
+</td>
+<td data-highlight-colour="#ffffff">
+Detailed conditions for rule application targets
+(Currently only available in `spec: allow`)
+</td>
+<td data-highlight-colour="#ffffff">
+`userAttributes`, `ipAddresses`
+</td>
+</tr>
+</tbody>
+</table>
+
+Below is the QueryPie WAC Policy YAML syntax needed for policy writing.
+
+## spec: &lt;effect&gt;**[required]**
+
+Specifies whether to allow or deny specific rules of the policy. Supports `spec: allow` or `spec: deny`.
+
+1. A policy can have a maximum of 1 `allow` and 1 `deny`.
+2. When `deny` and `allow` are declared simultaneously for the same element within a policy, `deny` takes precedence.
+
+## Resources**[required]**
+
+Specifies the web app resources for which you want to set allow or block policies. Must have `webApp` as a required sub-element and can have `urlPaths` or `urlPathTags`.
+
+<Callout type="info">
+`resources` is allowed in both `spec: allow` and `spec: deny`.
+However, specification through `urlPathTags` is only supported in `spec: allow`.
+</Callout>
+
+### webApp**[required]**
+
+Enter the web app resource name defined in QueryPie.
+
+1. Web apps must be specified explicitly, and wildcards or regular expressions are not allowed.
+    * `- webApp: "QueryPie"` (O)
+    * `- webApp: "*Query*"` (X)
+    * `- webApp: "QueryPie$"` (X)
+2. Multiple web apps can be listed within one `spec`.
+3. Web app names must meet the following conditions.
+    * Maximum 120 characters
+    * Only alphabetic case-sensitive letters, numbers, and some special symbols (`_`, `-`, `(`, `)`, `[`, `]`) are allowed
+    * Spaces are allowed
+    * Start and end are limited to alphabetic case-sensitive letters or numbers
+    * No duplicates allowed
+
+To operate access control policies at the sub-path level of web apps, you can enter `urlPaths` or `urlPathTags` under `webApp`. Within one policy, it is **impossible** to specify both `urlPaths` and `urlPathTags` for the same web app.
+
+### urlPaths**[OPTIONAL]**
+
+Specifies the sub-paths of specific web app resources to which you want to apply policies.
+
+1. Only sub-paths registered in Admin &gt; Web App can be registered.
+2. To allow or deny **all** sub-paths that exist in the web app, including Base URL, write `urlPaths: ["*"]`.
+    * Example: Block access to all paths of QueryPie Web Admin
+3. When entering sub-paths, policies are applied to the entered paths.
+    * Sub-paths are listed and multiple can be entered.
+    * You can enter wildcards at the end of paths to indicate all paths under specific paths. (Does not include parent paths)
+    * Overlapping paths cannot be entered simultaneously.
+        * Example: **Cannot enter simultaneously** `/general-settings/*` and `/general-settings/user-management` of QueryPie Web Admin 
+4. Wildcards cannot be entered in the middle of paths or as part of path names, and regular expressions cannot be entered.
+    * `"/*-settings"` (X)
+    * `"/*/edit"` (X)
+    * `"^/database-settings/policies/data-.*$"` (X)
+5. When deny and allow policies overlap for the same resource (and sub-paths), **deny policies are applied first**.
+
+### urlPathTags**[OPTIONAL]**
+
+Specifies sub-paths to allow access based on URL Path tags assigned to each sub-path registered in the web app.
+
+1. Tags are case-sensitive and multiple can be entered.
+    * When multiple tags with the same Key are entered, they operate with **OR** conditions.
+        * Example: Allow access to paths with `access: admin` or `access: user` tags
+    * When multiple tags with different Keys are entered, they operate with **AND** conditions.
+        * Example: Allow access to paths with both `access: admin` and `type: general` tags
+
+## Conditions**[OPTIONAL]**
+
+`conditions` defines conditions to narrow the scope of resources to which rules apply. Two types of condition specifications are possible: `userAttributes` and `ipAddresses`.
+
+<Callout type="info">
+`conditions` is only syntactically allowed in spec:allow.
+</Callout>
+
+### userAttributes**[OPTIONAL]**
+
+Limits the scope of users whose resource access is allowed by rules based on QueryPie user attributes.
+
+<Callout type="info">
+User attributes can be viewed in the user detail page in Administrator &gt; General &gt; Users menu. Attributes of users added in QueryPie can be added/changed/deleted in the detail page, and attributes of users added through IdP synchronization can be changed in the user registry (Okta, LDAP, etc.).
+</Callout>
+
+Attribute information is case-sensitive and multiple can be entered.
+
+* When multiple attributes with the same Key are entered, they operate with OR conditions.
+    * Example: Allow access for users whose department is PM or QA
+* When multiple attributes with different Keys are entered, they operate with AND conditions.
+    * Example: Allow access for users whose department is PM and title is manager
+
+### ipAddresses**[OPTIONAL]**
+
+Defines a list of IP access control conditions for resources in single IP, CIDR format.
+```
+ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+```
+
+If not defined separately, the default value is allow all (`0.0.0.0/0`).
+
+# Recommended Operation Methods
+
+We recommend specifying web apps and sub-paths to allow access by permission.
+
+1. Check the permission list that exists for each web app. 
+    1. Example: For a recruitment platform,
+        1. HR - has all permissions
+        2. Interviewer - can only access pages that manage interview results
+2. Create Roles for each permission of the web app.
+    1. HR, Interviewer
+3. Create access policies for each permission and assign them to Roles.
+    1. HR - Allow access to all paths within the recruitment platform
+    2. Interviewer - Allow access only to interview result pages within the recruitment platform
+
+<Callout type="important">
+**Warning**
+
+When using partial allow patterns, **landing pages that are absolutely necessary for normal website use** must be configured as separate policies and included in roles.
+
+* Example: Login pages, redirect pages, etc.
+</Callout>
+
+
+Choose one of the following two methods for specifying sub-paths to allow access.
+
+### Tag-based Access Control
+
+We recommend registering Paths in web apps, assigning appropriate tags to each Path, and then controlling access based on tags in policies. Using this method provides the following benefits:
+
+*  **Easy role-based policy management** : Manage by assigning the same tags to paths needed for specific roles
+*  **Simplified policy maintenance** : Even when new paths are added to web apps, access control is possible without modifying existing policies by just assigning appropriate tags
+*  **Complex access control implementation** : Implement detailed access control by combining various conditions (user attributes, IP addresses, etc.) with tags
+
+### Wildcard Utilization
+
+You can efficiently control access to all pages under specific paths using the newly supported wildcard functionality.
+
+* Overall access control for admin pages: `/admin/*`
+* Overall access control for specific feature modules: `/module/orders/*`

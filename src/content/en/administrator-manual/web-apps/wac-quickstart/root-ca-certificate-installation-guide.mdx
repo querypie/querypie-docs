@@ -1,0 +1,61 @@
+---
+title: 'Root CA Certificate Installation Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+To use web application access control through WAC, Root CA certificate installation is required on the user's local PC.
+
+## 1. Download Certificate
+
+Enter the following path in your web browser to download the Root CA certificate suitable for your environment.
+```
+{QueryPie_Host}/api/user/wac/certificate/download
+```
+
+## 2. Install Certificate
+
+Install the Root CA certificate downloaded to your local PC.
+
+<Callout type="info">
+Administrator Privilege is required for certificate configuration.
+</Callout>
+
+### MacOS
+
+You can install the Root CA certificate in the Keychain Access app.
+
+1. Run Spotlight &gt; Keychain Access app.
+2. Drag and drop the downloaded certificate file onto the Keychain Access app screen. The newly installed querypie certificate is not in a trusted state.
+3. Double-click the querypie certificate to open the modal, click the Trust item to expand the collapsed area, then change **When using this certificate** : `Use system defaults` to `Always trust` and close the modal.
+4. Perform additional authentication to change system certificate trust settings.
+5. The newly installed querypie certificate is displayed as trusted for all users.
+
+Alternatively, you can set the same configuration by running the following command in Terminal.
+```
+cd {Root CA Downloaded Path}
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain qp-wac-rootCA.cer
+```
+
+### Windows
+
+You can install the Root CA certificate through the Certificate Import Wizard.
+
+1. Open the folder containing the downloaded Root CA certificate in Windows Explorer.
+2. Right-click on the certificate file and select `Install Certificate(I)` from the context menu to start the Certificate Import Wizard.
+3. When the Certificate Import Wizard window opens, select `Current User(C)` for the storage location and click the `Next(N)` button.
+4. For the certificate store, select the `Place all certificates in the following store(P)` option and click the `Browse(R)...` button. 
+5. When the **Select Certificate Store** modal opens, select Trusted Root Certification Authorities. Keep the actual store display option unchecked. Click the OK button.
+6. Confirm the certificate store settings and click the `Next(N)` button.
+7. Confirm the set content and click the `Finish(F)` button.
+8. A security warning modal appears. Click the `Yes(Y)` button to immediately execute certificate import. Click the OK button in the import completion modal.
+
+## 3. Verify Chrome Certificate Settings
+
+The following method can be used to verify that the certificate has been set up correctly.
+
+1. Open chrome://certificate-manager/localcerts in Chrome browser.
+2. Click **View certificates imported from macOS or View certificates imported from Windows**.
+3. Check the querypie certificate in the list of trusted certificates.
+
+

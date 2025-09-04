@@ -1,0 +1,52 @@
+---
+title: 'WAC FAQ'
+---
+
+The following are frequently asked questions from those who are new to WAC.
+
+If you have any other questions, please contact us through QueryPie Support.
+
+
+### The extension update notification modal appeared. When is an update necessary?
+
+The update notification modal appears when extension updates are essential due to WAC feature updates.
+
+By comparing the currently used extension version with the minimum required version according to the QueryPie Host version, if the currently used version is lower than the minimum required version, you must proceed with the update.
+
+
+### When does the recording notification modal appear? It seems to appear every time.
+
+<figure data-layout="center" data-align="center">
+![image-20250414-105519.png](/administrator-manual/web-apps/wac-quickstart/wac-faq/image-20250414-105519.png)
+</figure>
+
+The recording notification modal appears at the start of a session.
+
+The session starts when the first tab for a web app opens and ends when all tabs are closed for the last time.
+
+
+### I scrolled up and down but it wasn't recorded. When is it recorded?
+
+User Activity Recording must be turned on for the web app, and scroll up and scroll down events must be set to be captured.
+
+And it is recorded when you scroll up or down more than 500px in the web browser.
+
+Event recording has a certain debouncing time, so if multiple types of events occur in a short time, they may not be recorded.
+
+
+### I opened a link in the web app with "Open in new tab" but Event Snapshot wasn't recorded.
+
+When opening a link in a new tab, the Extension cannot know the screen loaded in the newly opened tab, so Navigated event screenshots are not captured. :joy:
+
+However, if other events (such as mouse clicks) occur, screenshots are immediately recorded. Please keep this in mind.
+
+
+### The extension's user information shows N/A and doesn't change even after refreshing.
+
+<figure data-layout="center" data-align="center">
+![image-20250415-071521.png](/administrator-manual/web-apps/wac-quickstart/wac-faq/image-20250415-071521.png)
+</figure>
+
+This occurs because the extension login has expired.
+
+After logging into the QueryPie registered as Host in the web browser, the extension also loads login information. After that, if you select a Role, you can use it normally.

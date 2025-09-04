@@ -1,0 +1,256 @@
+---
+title: 'WAC Quickstart'
+---
+
+import { Callout } from 'nextra/components'
+
+This guide explains the simplest WAC usage using the QueryPie homepage as an example.
+
+1. Register the QueryPie homepage as a web app and register some menus under Resources as sub-paths.
+2. Create policies and roles that only allow access to registered sub-paths.
+3. Assign this role to the current user and verify the operation of web app access control.
+
+<Callout type="info">
+**Notice**
+
+The Quickstart is based on version `10.2.8`.
+
+To follow this Quickstart, you need Owner or Web App Admin permissions among QueryPie administrator permissions.
+</Callout>
+
+
+# Admin-side
+
+## 1. Register Web App
+
+The sub-structure under `/ko/resources` of the QueryPie homepage (`www.querypie.com`) is as follows.
+
+In this quickstart guide, we will register only some of these paths under the web app and create a policy that only allows access to registered paths.
+```
+/ko/resources/
+├── discover/
+│   ├── blog/ (register)
+│   ├── webinars/ (register)
+│   ├── white-paper/ (register)
+│   ├── certifications/
+│   └── integrations/
+│
+└── learn/
+    ├── documentation/ (register)
+    ├── tutorials/ (register)
+    └── demo/
+```
+
+
+1. Navigate to Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
+2. Click the `Create a Web App` button to enter the web app registration page.<br/>
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Create a Web App](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-225620.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Create a Web App
+</figcaption>
+</figure>
+
+Enter the following information.
+
+1. Name : QueryPie Web Site
+2. Base URL : `querypie.com` or `10.10.10.10:443` 
+    1. Base URL cannot include sub-paths (e.g., `/ko`).
+    2. If you enter `https://` in Base URL, an error message will be displayed.
+    3. If you enter `www.` in Base URL, an error message will be displayed.
+3. Description : Enter a description of the web app. (e.g., QueryPie website)
+4. Watermark : Choose whether to apply watermark to the user's browser screen when accessing the web app.
+    1. Displays information such as accessor and access time on the browser when accessing the web app to prevent screen leakage.
+    2. This guide assumes On status.
+5. URL Paths : Enter sub-paths. (Optional) 
+    1. In this guide, let's enter sub-paths. Click the `+ Add Path` button to enter sub-paths.
+
+|  **Path**                              |  **Path Tag**  |
+| -------------------------------------- | -------------- |
+| `/ko`                                  | `for:landing`  |
+| `/ko/resources/discover/blog`          | `for:discover` |
+| `/ko/resources/discover/blog/*`        | `for:discover` |
+| `/ko/resources/discover/webinars`      | `for:discover` |
+| `/ko/resources/discover/webinars/*`    | `for:discover` |
+| `/ko/resources/discover/white-paper`   | `for:discover` |
+| `/ko/resources/discover/white-paper/*` | `for:discover` |
+| `/ko/resources/learn/documentation`    | `for:learn`    |
+| `/ko/resources/learn/documentation/*`  | `for:learn`    |
+| `/ko/resources/learn/tutorials`        | `for:learn`    |
+| `/ko/resources/learn/tutorials/*`      | `for:learn`    |
+
+Then enter the remaining information.
+
+1. User Activity Recording : Whether to record user behavior
+    1. Turn on all options after enabling On.
+    2. Excluded URL Paths is where you enter paths to exclude from user behavior recording. Leave this blank here.
+2. Tag : Tag for the web app. Leave this blank here.
+3. Click the `Save` button to save.
+
+## 2. Register Policy
+
+Next, let's create a policy that only allows access to registered sub-paths for the QueryPie website.
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; Edit Policy Code](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-230727.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; Edit Policy Code
+</figcaption>
+</figure>
+
+1. Navigate to Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies menu.
+2. Click the `Create Policy` button and enter the following in the Create Policy modal.
+    1. Name : QP Web Test
+3. Click the `Save` button to save.
+4. Click on the QP Web Test policy you just created to enter the detail page and click the `Go to Editor Mode` button.
+5. Copy and paste the following content into the editor.
+```
+apiVersion: webApp.rbac.querypie.com/v1
+kind: WacPolicy
+
+spec:
+  allow:
+    resources:
+      - webApp: "QueryPie Web Site"
+        urlPaths:
+          - "/ko"
+          - "/ko/resources/discover/blog/*"
+          - "/ko/resources/discover/webinars/*"
+          - "/ko/resources/discover/white-paper/*"
+          - "/ko/resources/learn/documentation/*"
+          - "/ko/resources/learn/tutorials/*"
+```
+
+1. Click the `Save Changes` button and click the `OK` button in the reason input modal to save.
+
+## 3. Create Role
+
+Now let's create a new role and assign the policy we created earlier.
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204911.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles menu.
+2. Click the `Create Role` button and enter the following.
+    1. Name : QP Web Test
+3. Click on the role you just created to enter the detail page &gt; Policies tab. Click the `Assign Policies` button.
+4. In the Assign Policies modal, select the QP Web Test policy you created earlier and click the `Assign` button to save and close the modal.
+
+## 4. Assign Role to Users/Groups
+
+Now let's assign the QP Web Test role we just created to the current user.
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204937.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details
+</figcaption>
+</figure>
+
+1. Navigate to Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control menu.
+2. Select the user or group to assign the role to.
+    1. For now, select yourself who is testing.
+3. In the user detail page &gt; Roles tab, click the `Grant Roles` button.
+4. In the Grant Roles modal, select the QP Web Test you just created and click the `Grant` button to save.
+    1. If you don't change the expiration date, it will be automatically set to 1 year from today.
+
+Now let's proceed with user-side settings to verify that the access policy we just created is properly applied.
+
+# User-side
+
+## 1. Install Root CA Certificate
+
+1. While logged into QueryPie, click the profile button in the top right and click Support &gt; Download Web Secure button in the profile menu.<br/>
+2. The QueryPie Web Secure Download modal opens. In **A. Install Root CA Certificate**, click Step 1. Download Link to download the certificate file. <br/>
+3. Follow the [Root CA Certificate Installation Guide](wac-quickstart/root-ca-certificate-installation-guide) to install the certificate and set up trust.
+
+## 2. Download Extension
+
+1. Click Support &gt; Download Web Secure button in the QueryPie profile menu.
+2. In the QueryPie Web Secure Download modal, click the Download Link in **B. Install Chrome Extension** &gt; Step 1. to download the Extension file.
+
+## 3. Install Extension and Set Host
+
+1. Enter chrome://extensions/ in the Chrome address bar.
+2. Enable the Developer mode toggle in the top right of the page.
+3. Drag the Extension file you received **without extracting** into the extensions area.<br/>
+4. The Host Configuration page opens in a new tab. Paste the QueryPie address you are currently using in QueryPie Host and click the `Continue` button. 
+    1. If the Host information is valid, the `Go to Dashboard` button appears. Click it to enter QueryPie in a new tab.<br/>
+
+<Callout type="important">
+**Warning**
+
+Management is not guaranteed for tabs that were open before WAC extension installation. There may be problems with access policy application and audit logging.
+
+Please close all existing browser tabs and windows before installing the extension.
+</Callout>
+
+## 4. Access Web App through QueryPie
+
+1. Click the `Go to Dashboard` button to open a new tab and the QueryPie Web console opens.
+    1. If you are currently logged into QueryPie, the Web App Dashboard opens.
+    2. If you are not logged in, you will go to the login page. Complete login and click Web Apps in the top menu to enter the dashboard.
+    3. When the Role selection modal appears, select QP Web Test.
+2. In the Web App Dashboard's My Apps, you will see the QueryPie Web Site app icon you registered earlier. Click the icon to access the website.<br/>
+3. On first access, you will see a screen informing you that the current web session is being recorded. Click the `Continue` button to access the website.<br/>
+4. You can see that Watermark has been applied to the QueryPie homepage.
+5. When trying to access unauthorized pages (e.g., Products menu), you will be redirected to a blocking notification screen.
+
+# Admin-side (again)
+
+## 1. Check Web App Access Records
+
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Audit &gt; Web Apps &gt; Web Access History](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115604.png)
+<figcaption>
+Admin &gt; Audit &gt; Web Apps &gt; Web Access History
+</figcaption>
+</figure>
+
+
+1. Navigate to Admin &gt; Audit &gt; Web Apps &gt; Web Access History.
+2. You can check the web app access records of the current user.
+    1. Action Type : Start and end of web app access
+        1. Connect : Start of access
+            * Displayed when accessing the web app. All sub-paths are recorded separately.
+        2. Disconnect : End of access
+            * Displayed when closing tabs or moving to other pages
+    2. Result : Result
+        1. Success : Access successful
+        2. Failure : Access failed
+            * Displayed as access failure when blocked by WAC policy
+
+## 2. Check User Session Records
+
+All records of users navigating sub-pages after accessing controlled web apps are displayed by web app and role.
+
+<Callout type="info">
+Records are only created when User Activity Recording is enabled during Web App creation.
+</Callout>
+
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115805.png)
+<figcaption>
+Admin &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; Details
+</figcaption>
+</figure>
+
+
+1. Navigate to Admin &gt; Audit &gt; Web Apps &gt; User Activity Recording.
+2. Click on the record left by the current user name to go to the detail page.
+3. In Event Timeline, you can check user behavior in chronological order.
+    1. Click filters to check by behavior type.
+    2. Searchable values are as follows.
+        1. Content (clicked text or link)
+        2. URL (page URL being accessed)
+        3. Tab ID (tab ID used)
+4. Screenshots of pages users were actually viewing are saved for each event.
+
+

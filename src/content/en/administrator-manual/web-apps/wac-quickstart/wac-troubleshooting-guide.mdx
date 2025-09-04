@@ -1,0 +1,144 @@
+---
+title: 'WAC Troubleshooting Guide'
+---
+
+This document provides guidance on problems that may occur during WAC use and their solutions.
+
+### When access policies are not applied or audit logs are missing in tests immediately after Extension (QueryPie Web Secure) installation
+
+Management is not guaranteed for tabs that were open before WAC extension installation.
+
+To prevent such situations, please close all existing browser tabs and windows before installing the extension.
+
+
+### When WebApp access fails and the browser displays an `ERR_TIMED_OUT` error message
+
+<figure data-layout="center" data-align="center">
+![image-20250401-011848.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png)
+</figure>
+
+This may be a phenomenon that occurs when the browser cannot connect to the WAC Proxy.
+
+First, check if the WAC Proxy address is properly set in the Admin &gt; Web Apps &gt; Web app Configuration menu.
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012042.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012042.png)
+</figure>
+
+Run the following command in the local terminal of the browser where the problem occurred to check if the connection to WAC Proxy is working.
+
+First, check if port access is possible using nc(netcat) CLI.
+```
+$ nc -vz internal-proxy.querypie.io 7447
+Connection to internal-proxy.querypie.io port 7447 [tcp/*] succeeded!
+```
+
+If nc connection works well, check if HTTP requests and responses are working properly with curl command as shown below.
+
+If nc connection works well, check if HTTP requests and responses are working properly with curl command as shown below.
+```
+$ $ curl -v -k https://internal-proxy.querypie.io:7447
+* Host internal-proxy.querypie.io:7447 was resolved.
+* IPv6: (none)
+* IPv4: 10.60.40.1, 10.60.52.85, 10.60.74.191
+*   Trying 10.60.40.1:7447...
+* Connected to internal-proxy.querypie.io (10.60.40.1) port 7447
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+* ALPN: server did not agree on a protocol. Uses default.
+* Server certificate:
+*  subject: CN=internal-proxy.querypie.io
+*  start date: Feb 13 00:00:00 2025 GMT
+*  expire date: Feb 13 00:00:00 2075 GMT
+*  issuer: CN=querypie
+*  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: internal-proxy.querypie.io:7447
+> User-Agent: curl/8.7.1
+> Accept: */*
+>
+* Request completely sent off
+< HTTP/1.1 407 Proxy Authentication Required
+< Proxy-Authenticate: Basic realm="QueryPie Proxy"
+< Date: Tue, 01 Apr 2025 01:22:26 GMT
+< Content-Length: 0
+<
+* Connection #0 to host internal-proxy.querypie.io left intact
+```
+
+If the same issue persists even after proceeding this far, Chrome browser network logs are needed.
+
+**Execution Method**
+
+* Open `chrome://net-export/` in Chrome browser and click Start Over. (Select the default option `Strip private information`.)
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012452.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012452.png)
+</figure>
+
+* Enter the WebApp address that cannot be accessed in Chrome browser and navigate to it.
+* Confirm that the issue has been reproduced, then go back to the `chrome://net-export/` tab and click Stop Logging.
+* Copy the Chrome browser network log file.
+
+**Log Analysis Method**
+
+* Access [https://netlog-viewer.appspot.com/](https://netlog-viewer.appspot.com/).
+* Upload the log file received above in the Import menu on the left.
+* Check network transmission and reception content in the Events menu on the left.
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012759.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012759.png)
+</figure>
+
+
+### When Chrome browser's managed login window appears after PC wakes up from long sleep mode
+
+When a PC enters sleep mode and then wakes up, a login window managed by Chrome browser may appear.
+
+This login window appears because browser Proxy authentication failed, and authentication will not work even if you enter QueryPie ID and password.
+
+In this case, you can use the product normally again by proceeding as follows.
+
+**Solution:**
+
+1. Log in to the extension again.
+2. Select a Role.
+3. Refresh the tab that displays the login window managed by Chrome browser.
+
+
+### When mouse clicks become unresponsive in web browser due to QueryPie API server failure
+
+When QueryPie API server failure occurs, mouse clicks may continue to be unresponsive within the web browser.
+
+In this case, temporarily disable the WAC extension as follows, then contact the administrator.
+
+**Solution:**
+
+1. Go to Chrome &gt; Extensions management page. (You can easily navigate by entering chrome://extensions/ in the address bar)
+2. Find QueryPie Web Secure (extension) from the list of all extensions and disable the toggle in the bottom right.
+
+This allows normal browsing of web apps that are **not specified** to be accessed only through QueryPie WAC.
+
+After QueryPie API server is normalized, you can use the extension again. It is recommended to perform reconfiguration after enabling the extension.
+
+
+### How to Extract QueryPie Web Secure Logs
+
+This guide explains how to extract related logs when problems occur with QueryPie Web Secure (Extension).
+
+1. Run Chrome developer tools using the following method.
+    1. Windows : Ctrl + Shift + I
+    2. MacOS : Cmd + Option + I
+    3. Or, right-click on the window where the problem occurred and click the `Inspect` button in the context menu
+
+1. Click `QueryPie Web Secure` from the panel list.
+2. The log extraction function runs in developer tools. Click the `Export Log` button to save the querypie-web-secure-logs.json file separately. Click the `Save` button.
+3. Attach the saved log when making a CS request.

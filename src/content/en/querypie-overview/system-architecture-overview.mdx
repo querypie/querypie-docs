@@ -1,0 +1,64 @@
+---
+title: 'System Architecture Overview'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie has a web application architecture that operates in both cloud and on-premises environments.
+
+QueryPie typically operates as a Docker container on Linux VMs and is recommended to be operated as a web application protected by TLS certificates. When customers install and operate QueryPie in a cloud environment, it is recommended to configure it with a load balancer and TLS certificates. Resources necessary for QueryPie operation, such as connection settings and user information, are stored in a MySQL database. Redis is utilized as temporary storage for fast response times.
+
+QueryPie's binary package is built as a Docker image and is prepared for deployment on Linux VMs or physical Linux servers in Azure, AWS, and GCP when the OS and Docker daemon are recent versions. It also natively supports Kubernetes, but is primarily recommended for customers with Kubernetes DevOps teams. The trial evaluation binary package is identical to the version provided to customers. Product features are managed by licenses installed and provided remotely by the vendor. Evaluation licenses typically provide a usage period of 2-4 weeks.
+
+## Simple Configuration for Trial Evaluation
+
+<figure data-layout="center" data-align="center">
+![Simple System Configuration for Evaluation](/querypie-overview/system-architecture-overview/screenshot-20240801-115045.png)
+<figcaption>
+Simple System Configuration for Evaluation
+</figcaption>
+</figure>
+
+The system structure above is an example of a simple configuration set up to trial and evaluate the QueryPie product. Users access QueryPie through a web browser, and QueryPie is installed and operates on a single Linux VM connected to an Application Load Balancer. Inside the Linux VM, the QueryPie application runs in Docker container mode, along with the MySQL database and Redis cache used by QueryPie, which also run in Docker container mode.
+
+QueryPie will have a web service URL with TLS certificates applied, such as https://querypie-poc.customer.com/, and it is recommended to configure an Application Load Balancer with TLS certificates to set this up.
+
+
+## Prerequisites for Trial Evaluation Configuration
+
+The following preparations are necessary to install QueryPie for testing and evaluation purposes.
+
+1. Fully Qualified Domain Name (FQDN) for accessing the product
+    * You can freely choose your desired domain. Example) querypie-poc.customer.com
+2. Load balancer (LB) and TLS certificate for the above FQDN
+    * QueryPie technical support personnel do not need direct access to TLS certificate files. 
+    * However, QueryPie requires a load balancer (LB) with TLS applied.
+    * For AWS, [Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html) corresponds to this.
+    * For Azure, [Application Gateway](https://learn.microsoft.com/en-us/azure/application-gateway/overview) corresponds to this.
+    * For GCP, [Application Load Balancer](https://cloud.google.com/load-balancing/docs/application-load-balancer) corresponds to this.
+3. Linux VM to run QueryPie
+    * For evaluation purposes, it is recommended to use 2 vCPUs and 8GiB memory.
+    * While applying a load balancer is essential, there is no need to configure 2 or more VM instances. 
+    * Even if QueryPie is installed on a single VM, you can effectively test the product's features.
+4. Please temporarily allow remote access to your company's Linux VM environment.
+    * You can provide temporary Azure, AWS, GCP accounts for load balancer and TLS setup. Configure a Linux VM instance accessible via SSH public key and provide the SSH public key (.pem file).
+
+
+## Summary of System Configuration for Real Use
+
+<figure data-layout="center" data-align="center">
+![Summary of System Architecture for Real Use](/querypie-overview/system-architecture-overview/screenshot-20240801-115343.png)
+<figcaption>
+Summary of System Architecture for Real Use
+</figcaption>
+</figure>
+
+<Callout type="info">
+The above configuration is a summarized diagram to help users understand, not a detailed system architecture.
+</Callout>
+
+The above configuration is an example that summarizes the main elements of the system configuration applied when using the actual QueryPie product. Users can connect to and use QueryPie through a web browser. In addition, to access DB and System from applications running on user PCs such as DataGrip, MySQL Workbench, iTerm, and Putty, you can install and use the QueryPie Agent on your PC.
+
+The QueryPie server configured in a cloud environment has a redundant configuration to operate as a web application, and it is recommended to use MySQL and Redis in Managed Service mode provided by the cloud. The QueryPie Agent installed on PCs connects to the QueryPie server using a TCP-based proprietary protocol, and it is recommended to configure a Network Load Balancer for this purpose.

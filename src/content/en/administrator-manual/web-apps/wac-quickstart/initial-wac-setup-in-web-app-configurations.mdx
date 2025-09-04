@@ -1,0 +1,112 @@
+---
+title: 'Initial WAC Setup in Web App Configurations'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+The Web App Configurations page is available in version 10.2.6 or higher.
+</Callout>
+
+
+You can perform initial WAC-related settings through the GUI on the Web App Configurations page.
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations](/administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations/screenshot-20250413-224538.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
+</figcaption>
+</figure>
+
+## WAC Proxy Configurations**[10.2.6~]**
+
+After configuring the WAC proxy server, enter the server configuration information. The description of each field is as follows.
+
+*  **Proxy Host** : This is a field to set the FQDN (Fully Qualified Domain Name) of the WAC proxy host.
+    * You can enter FQDN or IP address in the Proxy Host field.
+    * The default value `wac-proxy.querypie.io` is an arbitrarily set value, and must be changed to match the actual proxy host you are using to use WAC correctly.
+    * **If you change the Proxy Host, you must restart the QueryPie application.**  
+*  **Proxy Port** : This is the port number of the WAC proxy server. The default value is `7447`.
+
+<Callout type="info">
+**How to restart the QueryPie application** is as follows.
+1. Access the EC2 server where QueryPie is installed.
+2. Run the following command to stop the container: `docker compose down`
+3. Use the following command to restart the container: `docker compose up -d`
+</Callout>
+
+## QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
+
+Administrators can directly manage WAC Extension related settings.
+
+* By default, it includes a public link to download the latest extension at the time of product release and compatibility information.
+* For users in closed network environments who need WAC Extension deployment, download the WAC Extension file from a PC with internet access, then upload the file to the internal repository in Configurations.
+* When WAC Extension patches are released separately from regular releases, apply the changed configuration values. This allows you to deploy the changed extension to users as well.
+
+The description of each field is as follows.
+
+*  **Extension File** : This is the path where you can download the extension file.
+*  **Current Version** : This is the version information of the currently registered extension.
+*  **Minimum Required Version** : This is the value of the minimum extension version required by the currently installed QueryPie version.
+    * The WAC server checks the extension version information installed on the user's browser, and if a version lower than the value entered in this field is being used, it forces extension updates.
+
+<Callout type="info">
+Current Version and Minimum Required Version information must be entered according to the compatibility information provided by QueryPie.
+</Callout>
+
+### Deploying WAC Extension in Closed Network Environment
+
+1. Download the WAC Extension from a PC with internet access and keep it ready.
+2. In a closed network environment, access QueryPie &gt; Web App Configurations page, then click the `Edit` button in the QueryPie Web Secure (Extension) Configurations section.
+3. In the Extension File option, select `Add by File Upload` and upload the extension file you downloaded.<br/>
+
+
+1. If there are no separate compatibility information changes received, maintain the existing values for Current Version and Minimum Required Version information.
+2. Click the `Save` button to save.
+3. You can see that the Extension File link has changed from a link starting with `https://dl.querypie.com/…` to a link starting with the QueryPie Domain you are currently using.
+
+### Deploying Emergency Patch Extension Link
+
+1. Click the `Edit` button in the QueryPie Web Secure (Extension) Configurations section.
+2. In the Extension File option, select `Add by Link` and paste the new download link you received.
+3. Update compatibility information changes according to the guide received from QueryPie manufacturer. 
+4. Click the `Save` button to save.
+
+## Watermark Configurations**[10.2.6~]**
+
+In the Watermark Configurations section, you can check the currently applied watermark text settings and set the text you want when applying watermarks.
+
+1. Click the `Edit` button to change the text settings.
+2. When the settings modal is open, you can preview the watermark application results based on the currently logged-in user.<br/>
+3.  **Custom String**  : You can enter the text you want to display in the watermark. Up to 40 characters can be entered.
+4.  **User Information**  : You can display Username, Display Name, Email, Employee number, Organization, Division, and Department information.
+5.  **Timestamp**  : The time when the page was first accessed is displayed.
+6.  **Client IP**  : The client IP that accessed the page is displayed.
+
+## Root CA Certificate Configurations**[10.2.8~]**
+
+In the Root CA Certificate Configurations section, you can backup and restore the Root CA certificate currently used by QueryPie.
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations &gt; Manage .cer file modal](/administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations/screenshot-20250413-225409.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations &gt; Manage .cer file modal
+</figcaption>
+</figure>
+
+1. Manage .cer file
+    1. Backup Root CA Certificate File : You can download the currently used certificate file. (Same as the certificate file you can get from User Profile &gt; Web Secure)
+    2. Restore Root CA Certificate File : You can upload the certificate file you downloaded.
+2. Manage .key file
+    1. Backup Root CA Certificate Key File : You can download the currently used certificate key file.
+    2. Restore Root CA Certificate Key File : You can upload the certificate file you downloaded.
+
+<Callout type="info">
+After uploading the certificate, **QueryPie application restart is required** to apply the changes.
+
+**How to restart the QueryPie application** is as follows.
+
+1. Access the EC2 server where QueryPie is installed.
+2. Run the following command to stop the container: `docker compose down`
+3. Use the following command to restart the container: `docker compose up -d`
+</Callout>
