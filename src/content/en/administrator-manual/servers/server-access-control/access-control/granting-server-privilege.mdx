@@ -1,0 +1,46 @@
+---
+title: 'Granting Server Privilege'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can grant Server Privilege to servers with access permissions through Permission or Role to temporarily allow the use of specific commands. When granting Server Privilege again to a target that already has Server Privilege, the existing Server Privilege is revoked and newly granted again.
+
+
+## Granting Server Privilege
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; User/Group &gt; Servers &gt; Server Details](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/image-20250307-121546.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; User/Group &gt; Servers &gt; Server Details
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Access Control menu.
+2. Select the user or user group to whom you want to grant special command exception permissions.
+3. Select the target server/account from the Servers tab list to enter the drawer detail page.
+4. Click the `Configure` button under Server Privilege at the bottom of the detail page.
+5. When the modal appears, configure the following and click the `Grant` button to complete the exception handling.
+    1.  **Commands**  : Enter the commands that need to be allowed.
+        1.  **Keyword**  : Enter as keywords (ls, cat, etc.)
+        2.  **RegEx**  : Enter as regular expressions (^sudo\b[^&|;\n]*$, etc.)
+    2.  **Privilege Start Trigger**  : You can select the start trigger for Privilege Duration when Server Privilege is applied.
+        1.  **Access to Server**  : After Server Privilege is applied, the time is counted from when the applied user starts accessing the server.
+        2.  **Grant**  : The Server Privilege usage time is counted from the moment Server Privilege is applied.
+    3.  **Privilege Duration**  : Set the Server Privilege application time. You can enter the time in minutes. The start time varies depending on the Privilege Start Trigger.
+    4.  **Privilege Expiration Date**  : Specify the expiration date for the special exception handling for the above commands.
+6. The modal items vary depending on the server's OS and Require Privilege option status.
+    1. When the server's OS is Linux and the Require Privilege option is enabled
+    2. When the server's OS is Linux and the Require Privilege option is disabled
+    3. When the server's OS is not Linux and the Require Privilege option is enabled
+    4. When the server's OS is not Linux and the Require Privilege option is disabled
+
+<Callout type="info">
+**Q. Is there a place where I can check the history of granted or revoked permissions?**
+
+A. When the target server for setting Server Privilege is granted through Permission, <br/>it is recorded in Audit menu &gt; Servers &gt; Access Control Logs.
+
+When the target server for setting Server Privilege is granted through Role, <br/>it is recorded in Audit menu &gt; Servers &gt; Server Role History.
+</Callout>

@@ -1,0 +1,278 @@
+---
+title: 'Multi Agent'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie Multi Agent is an improved Proxy Agent that allows you to use multiple QueryPie Hosts simultaneously.
+
+In the Agent UI, you can check the resources available on specific Hosts.
+
+You can access resources through two or more QueryPie Proxies without additional configuration by simply installing the Agent and performing login for each Host.
+
+<Callout type="info">
+**Supported Versions**
+
+Multi Agent only supports QueryPie Host version `10.2.5` or later. If you are using version 10.2.4 or earlier, please use the existing User Agent.
+
+It is possible to install both the existing User Agent and Multi Agent on the same PC. However, if both are running simultaneously, they will not function properly.
+
+Support scope when QueryPie Host version is `10.2.5` ~ `10.2.7`:
+
+* Service: DAC, KAC 
+* Client OS: MacOS, Windows
+
+Support scope when QueryPie Host version is `10.2.8` or later:
+
+* Service: DAC, KAC, SAC
+* Client OS: MacOS, Windows, Linux
+</Callout>
+
+## Download Agent App and Initial Setup
+
+1. After logging into QueryPie, click the profile in the top right corner, then click Download & Support &gt; `Multi-Agent` button.
+2. When the QueryPie Multi-Agent Downloads popup appears, download the installation file that matches your PC's operating system in Step 1, then copy the QueryPie URL from Step 3.<br/>
+3. Run the downloaded QueryPie Multi-Agent installation program and copy the .app file to the Applications folder to complete the installation.
+4. When you run the installed QueryPie Agent, the Host initial registration page opens.<br/>Enter the QueryPie URL you copied earlier in the QueryPie Host input field and click the `Next` button to enter the login screen.
+5. Enter your authentication information on the login page of the entered host and click the Continue button.
+
+## DAC
+
+### Connecting to Database with Agent
+
+1. In the Database tab, you can view the Database Connection list that has been granted permissions and can use Proxy for the selected QueryPie Host.
+2. Select the connection you want to connect to and right-click to open the context menu.
+    1. Connection Information: You can check the information needed for Proxy connection.
+    2. Open Connection With **[10.2.6~]**: You can connect to the connection with 3rd Party tools.
+        1. DBeaver: Opens DBeaver and inserts the connection information.<br/>(A one-time DBeaver path recognition process is required. We recommend running this feature while DBeaver is running.)
+        2. DataGrip: Connection information that can be pasted into DataGrip is copied.
+        3. SQLGate for Oracle (Windows only): Opens SQLGate for Oracle and inserts the connection information.
+    3. Copy as JDBC URL **[10.2.6~]**: Copies the JDBC URL of the selected connection.
+
+<Callout type="info">
+Open Connection With and Copy as JDBC URL features are supported in version 10.2.6 or later.
+</Callout>
+
+### Managing 3rd Party Database Tool Settings in Agent
+
+You can manage 3rd Party tool-related settings in Settings &gt; Databases.
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Settings &gt; Databases](/user-manual/multi-agent/screenshot-20250413-235252.png)
+<figcaption>
+Multi-Agent &gt; Settings &gt; Databases
+</figcaption>
+</figure>
+
+
+* Database Tool Path: You can set the path of supported 3rd Party tools.
+    * Auto Detected: Automatically finds the tool's path each time you select a tool with Open Connection With.
+        * If the tool doesn't open properly, please manually specify the path with Manual Configuration.
+    * Manual Configuration: Manually specify the path where the tool is installed.
+    * Do not use the tool: Disables tool usage. The tool is hidden from the context menu in the connection list.
+* DataGrip Connection Guide: Sets whether to continue viewing the guide modal that appears when opening a connection with DataGrip.
+
+### Selecting Default Privilege in Agent
+
+In QueryPie DB access control, one user can be granted two or more privileges. When a user with access rights to a specific connection is included in multiple groups and different access rights are granted to the groups, this user can be assigned multiple privileges. At this time, you can select the Privilege to use when connecting through proxy from the agent screen. (Supported from 10.3.0)
+
+If a user with multiple privileges does not set a specific privilege as default, they cannot connect, so if no default privilege is set, a warning icon like the one shown below is displayed.<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20250513-025002.png](/user-manual/multi-agent/image-20250513-025002.png)
+</figure>
+
+1. Right-click on a connection with multiple Privileges assigned and call the menu.
+2. Select Connection Information from the menu.<br/>
+3. Click the edit (pencil icon) button in the Privilege of Original Information.<br/><br/>
+4. Select one of the Privilege Name items and save.<br/>
+5. Check that the warning icon disappears and the assigned privilege name is visible for that connection.<br/><br/>
+
+## KAC
+
+### Viewing Kubernetes Cluster List by Role in Agent
+
+When you select one of the Roles granted to you from the Role selector, you can view the K8s Cluster list that has permissions for the selected Role.
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113908.png)
+<figcaption>
+Multi-Agent &gt; Kubernetes
+</figcaption>
+</figure>
+
+### Checking Kubeconfig Setup Guide in Agent
+
+To use kubectl commands through Proxy, **one-time Kubeconfig setup** is required.
+
+Click the gear button in the top right corner of the agent to enter the Setting page, select the Kubernetes tab to manage the Kubeconfig File storage path and copy the Kubeconfig setup command.
+
+Then paste and run the copied command in the terminal you are using.
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113712.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Kubernetes
+</figcaption>
+</figure>
+
+## SAC**[10.2.8~]**
+
+### Connecting to Server with Agent
+
+1. When you select a Role from the Role dropdown, you can view the server list that can be accessed with the selected Role.
+2. Select a server, right-click to open the context menu, and select Open Connection With &gt; Terminal Tool.
+3. Enter Account information if necessary and press the `Open` button.
+    1. When you select an account with category QueryPie - Custom Account in Account, the Custom Account field and Password field are displayed, and you can directly enter unregistered account information to connect to Linux and Windows servers.
+        1. However, when connecting to a Windows Server without Server Agent, only Custom Account can be selected, and the Custom Account input field and Password input field are not displayed. It cannot be used on Windows Servers with Server Agent.
+4. You can connect to the server with the selected terminal tool.
+
+
+<Callout type="info">
+**OS Permission Modal**
+* Only once, it requests OS permission for the selected terminal tool. If you don't `Allow`, you cannot open the terminal tool.
+* Only once, it requests OS permission for System Events. If allowed, you can receive notifications about events such as session disconnections in the notification area.
+</Callout>
+
+<Callout type="info">
+**Session End Alert**
+* A session end alert occurs in Multi Agent 5 minutes before session end.
+* When Multi Agent is terminated or the end time arrives, connected sessions are terminated without a separate session end alert.
+</Callout>
+
+
+### Requesting Server Access Permission from Agent
+
+When you don't have the necessary account permissions to connect to a server, you can directly request server access permission (Server Privilege Request) from Multi Agent.
+
+1. Select the server you want to request permission for in the `Servers` tab and right-click to open the context menu.<br/>
+2. Select the terminal tool you want to use from `Open Connection With`.<br/><br/>
+3. When the account selection window appears, click the `Request Server Privilege` button at the bottom.<br/><br/>
+    * Clicking this button navigates to the permission request screen on the QueryPie web page, with the previously selected Role, server group, server, and account information automatically filled in.<br/>
+
+<Callout type="info">
+**Notes**
+* If the QueryPie administrator disables `Server Privilege Request` in the `Admin &gt; General &gt; Workflow Configurations` setting, the `Request Server Privilege` button in the agent is also disabled.
+</Callout>
+
+
+### Available Filters When Viewing Server List in Agent
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Servers](/user-manual/multi-agent/Screenshot-2025-08-25-at-4.57.03-PM.png)
+<figcaption>
+Multi-Agent &gt; Servers
+</figcaption>
+</figure>
+
+1.  **Time-limited items only**  : Only displays servers with time-based permissions in the list.
+2.  **Search by Host**  : Changes the search criteria for the server list from the existing server name to Host (IP address). At the same time, the display method of the server list is also switched to Host. When the toggle is disabled, you can only search by server name.
+
+### Managing 3rd Party Terminal Tool Settings in Agent
+
+You can manage terminal tool-related settings in Setting &gt; Servers.
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Servers](/user-manual/multi-agent/screenshot-20250413-235301.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Servers
+</figcaption>
+</figure>
+
+* Terminal Tool Path: You can set the path of supported 3rd Party tools.
+    * Auto Detected: Automatically finds the tool's path each time you select a tool with Open Connection With.
+        * If the tool doesn't open properly, please manually specify the path with Manual Configuration.
+    * Manual Configuration: Manually specify the path where the tool is installed.
+    * Do not use the tool: Disables tool usage. The tool is hidden from the context menu in the server list.
+
+## Using Two or More Hosts in Agent
+
+1. In Settings &gt; Hosts, click the `+ Add New Host` button, enter the domain of the new Host, and save.
+2. If the new Host registration is successful, you will be notified with a Toast. Check that the new Host has been added to the list and click the `X` button in the top right corner to exit the settings page.
+    1. You can click on the desired Host in the Host list to switch immediately.
+3. Click the profile button to view the registered Host list. You can click to switch between Hosts.
+
+<Callout type="info">
+Host switching is required during login, but after login when Proxy connection is established, you can use all registered resources without switching Hosts on the screen.
+</Callout>
+
+## Resetting Multi Agent Settings
+
+1. Click the Multi Agent icon (or item) in the system tray or menu bar, then select 'Reset All Settings' from the displayed menu.
+<figure data-layout="center" data-align="center">
+![ Status Bar Item (MacOS)](/user-manual/multi-agent/screenshot-20250414-000719.png)
+<figcaption>
+ Status Bar Item (MacOS)
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Application Menu (MacOS)](/user-manual/multi-agent/screenshot-20250414-001207.png)
+<figcaption>
+Application Menu (MacOS)
+</figcaption>
+</figure>
+
+1. Or click the gear button in the top right corner of the agent to enter the settings page and click the Reset All Settings button at the bottom of the Hosts tab.
+2. Click the Reset button in the confirmation modal to reset all settings stored in the local folder.
+3. You will enter the Multi Agent initial setup (initial Host registration) page.
+
+## Extracting Multi Agent Logs
+
+If problems occur while using Multi-agent, please extract logs following the procedures below.
+
+### GUI
+
+<figure data-layout="center" data-align="center">
+![MacOS](/user-manual/multi-agent/diagnostic-tools-for-macos.png)
+<figcaption>
+MacOS
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Windows](/user-manual/multi-agent/diagnostic-tools-for-windows.png)
+<figcaption>
+Windows
+</figcaption>
+</figure>
+1. Click the Multi-agent icon in the menu bar (MacOS) or system tray (Windows) and click Diagnostic Tools &gt; Enable Tracing in the menu.
+    1. Changes the log level to Trace, and the item changes to Disable Tracing in the UI.
+2. Reproduce the problem.
+3. Click Multi-agent icon &gt; Diagnostic Tools &gt; Export Log from the menu bar again.
+4. You can send the extracted log file.
+
+### macOS
+
+1. After closing the agent, run the following command in the terminal.
+```
+QPMA_TRACE=1 open -a QueryPieMultiAgent
+```
+
+1. Reproduce the problem.
+2. Please compress and send the following folder.
+```
+~/.querypie-multi-agent
+```
+
+### Windows
+
+1. After closing the agent, run the following command in the terminal.
+```
+set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
+```
+
+1. Reproduce the problem.
+2. Please compress and send the following folder.
+```
+%USERPROFILE%\.querypie-multi-agent
+```
+
+
+## Constraint Documentation for Administrators
+
+Please refer to the separate administrator guide document for Multi Agent constraint documentation for administrators.
+
+[Multi Agent Constraints](../administrator-manual/multi-agent-limitations)
+
+
