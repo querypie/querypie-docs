@@ -1,0 +1,63 @@
+---
+title: 'Web SFTP使用'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieでは、Webブラウザを通じて様々な作業を実行できるWeb SFTPを提供しています。
+
+
+## Web SFTP画面構成
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Servers &gt; Terminal](/user-manual/server-access-control/using-web-sftp/image-20240802-061021.png)
+<figcaption>
+QueryPie Web &gt; Servers &gt; Terminal
+</figcaption>
+</figure>
+
+* SFTPプロトコルを選択して接続に成功した場合、上記のようにWeb SFTP画面が表示されます。
+* 上部には複数のサーバーとセッションを開いて移動できるツールバー、下部には様々な作業を実行できるSFTP画面があります。
+
+
+## Web SFTP機能の使用
+
+<figure data-layout="center" data-align="center">
+![image-20240723-160917.png](/user-manual/server-access-control/using-web-sftp/image-20240723-160917.png)
+</figure>
+
+1. パス表示窓：現在の位置が表示され、希望するパスを入力後`Enter`ボタンを押すと便利に移動できます。
+2. `Remove`：複数のディレクトリおよびファイルを選択後削除できます。
+3. `Create Directory`：クリック時に表示されるポップアップ窓でディレクトリの名前を入力後ディレクトリを作成できます。
+4. `Upload`：ローカルPCにあるディレクトリおよびファイルをアップロードできます。
+5. `Download`：複数のファイルを選択後ダウンロードできます。（ただし、ディレクトリタイプはダウンロード不可能です）
+
+<Callout type="info">
+該当サーバーで管理者が設定したポリシーにより一部機能の使用が制限される場合があります。
+</Callout>
+
+
+## ファイルアップロード/ダウンロード状況の確認
+
+ファイルアップロードおよびダウンロード時に以下のようなポップアップ窓を通じて転送状態および結果を確認できます。
+
+<figure data-layout="center" data-align="center">
+![image-20240802-061430.png](/user-manual/server-access-control/using-web-sftp/image-20240802-061430.png)
+</figure>
+
+1.  **Name**：ディレクトリおよびファイルの名前が表示されます。
+2.  **Progress**：転送率が表示されます。
+3.  **Result**：転送結果が以下のように表示されます。
+    1. **[pending]**：転送待機
+    2. **[uploading]** / **[downloading]**：転送完了後実際のサーバーに転送中の状態
+    3. **[sucess]**：転送完了
+    4. **[failure]**：転送失敗
+4.  **Completion Time**：転送完了または転送失敗時間が表示されます。
+5. `Cancel`ボタン：アップ/ダウンロード途中で該当ボタンを押すと**[sucess]**処理されたファイルを除く残りのファイルの転送状態がすべてキャンセル処理されます。すべてのファイルがアップ/ダウンロード完了した場合、該当ボタンは`Close`ボタンに変更されます。
+
+<Callout type="info">
+**Q. ファイルアップ/ダウンロード時にサイズ制限はありますか？**
+A. 1GB以下のファイルのみアップロード可能で、超過したファイルアップロード時は**[FAILURE]**処理されます。
+</Callout>

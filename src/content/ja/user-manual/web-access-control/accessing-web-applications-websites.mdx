@@ -1,0 +1,48 @@
+---
+title: 'Webアプリケーション（Webサイト）への接続'
+---
+
+## Overview
+
+ユーザーはアクセス権限が付与されたWebアプリケーション（Webサイト）リストを確認し、Webアプリケーション別またはSaaSプラットフォーム別に接続して安全に作業できます。接続のためには、まず自分にアクセス権限が付与されたRoleが必要です。適切なRoleを選択するか、Roleがない場合はWorkflowを通じてWebアプリケーション接続のための権限を申請する必要があります。
+
+## Role選択
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role](/user-manual/web-access-control/accessing-web-applications-websites/image-20250629-151725.png)
+<figcaption>
+QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role
+</figcaption>
+</figure>
+
+1. Web Applicationsメニューへの初回アクセス時に表示されるRole選択画面で、接続に使用するRoleを選択します。
+    1. Roleに応じてWebサイトアクセス権限が異なり、付与されたRoleがない場合はWorkflowに移動します。
+    2. Just In Time Roleを選択した場合、自分がWeb AppsのOwnerまたはMemberに指定されたWeb Appが表示され、対象Web Appに接続する前にWorkflowの`Web App Just-In-Time Access Request`を通じて承認を受け、承認を受けた時間中のみ接続できます。
+
+## Webアプリケーション（Webサイト）への接続
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Web Access Control &gt; Web Apps](/user-manual/web-access-control/accessing-web-applications-websites/image-20250629-152117.png)
+<figcaption>
+QueryPie Web &gt; Web Access Control &gt; Web Apps
+</figcaption>
+</figure>
+
+1. Role選択後の画面で現在のユーザーがアクセス可能なWeb Appリストを確認できます。
+2. リストで1つのWeb Appアイコン内部右上の「...」をクリックすると右側パネルが開き、Webアプリケーション詳細情報および接続オプションが表示されます。
+    1.  **Expiration Date**：Roleの期限日時が表示されます。
+    2.  **Base URL**：WebアプリケーションのベースURLが表示されます。
+    3.  **Description**：Webアプリケーションに対する説明が表示されます。
+    4.  **Tags**：Webアプリケーションに割り当てられたタグが表示されます。
+    5.  **User Activity Recording**：該当セクションでは記録されるよう設定されたユーザー活動項目を確認できます。
+        1. Navigated：ページナビゲーション記録
+        2. Mouse Clicked：マウスクリック記録
+        3. Clipboard Copied：クリップボードコピー記録
+        4. File Uploaded：ファイルアップロード記録
+        5. File Downloaded：ファイルダウンロード記録
+        6. Value Changed：値変更記録
+        7. Scrolled Up/Down：スクロール記録
+        8. Print Initiated：印刷開始記録
+    6.  **Open**：下部の**Open**ボタンをクリックして選択したWebアプリケーションに接続します。
+3. リストでWeb Appをクリックすると該当Web Appに接続されます。
+

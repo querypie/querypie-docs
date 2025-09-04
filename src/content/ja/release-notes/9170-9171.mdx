@@ -1,0 +1,65 @@
+---
+title: '9.17.0 ~ 9.17.1'
+---
+
+## QueryPie 9.17.1 Release
+
+2024年03月25日
+
+
+**New Features**
+
+* [DAC] 特定構文実行統制機能をサポート
+
+**Bug Fix**
+
+* [DAC] AWS Aurora 3.06.0使用時の予約語衝突によるマイグレーション問題を解決
+* [DAC] SQL Request実行時のDB認証情報設定なし接続関連問題を解決
+
+
+---
+
+## QueryPie 9.17.0 Release
+
+2024年03月11日
+
+
+**New Features**
+
+* [Audit] External API V2およびDocumentを新規リリース
+* [Audit] 監査ログエクスポートのActivity Logs、DML SnapshotおよびSAC監査ログ範囲にサポート領域を拡大
+* [DAC] Custom Identity Providerを通じた人事情報ファイル連携をサポート
+* [DAC] DocumentDB Proxyをサポート
+* [DAC] Tiberoを新規サポート
+* [DAC] Privilege権限別DBアカウント統制機能Advanced Privilege Settingを追加
+* [DAC] ワークフロー申請時の権限期限に最大値設定機能
+* [DAC] 接続レベル理由入力機能制御機能を追加
+* [SAC] Proxyを通じた3rd-partyクライアント接続をサポート
+* [SAC] Server TagによるServer Groupグルーピングをサポート
+
+
+**Enhancement**
+
+* [DAC] MongoDB + SRVをサポート
+* [SAC] Policyオブジェクト化構造を改善
+* [SAC] Web Terminal / Command Auditログを強化
+* [Security] 2FA初期化ロジックを改善
+* [Security] API Tokenページセキュリティ強化を改善
+
+
+**Bug Fix**
+
+* [Audit] Activity Logs一部UpdateログのAffected Data対象確認不可問題を解決
+* [Oracle] MERGE INTOを通じたDMLクエリ実行時にDML Snapshotが残らない問題を解決
+* [Security] 模擬ハッキングを通じた内部発見セキュリティ脆弱点を一括措置完了
+* [Audit] Kotlin互換性問題でWorkflow External API V2内のboolean属性キー名をisXXXから変更処理完了
+    * Workflow - DB Access Request Details
+        * accessControls[].connection.deleted
+        * accessControls[].privilege.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Export Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated

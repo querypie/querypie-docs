@@ -1,0 +1,76 @@
+---
+title: '9.18.0 ~ 9.18.3'
+---
+
+## QueryPie 9.18.3 Hotfix
+
+2024年05月07日
+
+
+**Bug Fix**
+
+* [External API] API Docロードできない問題を修正
+* [Security] DACライセンスのみある場合のSave Changesができない問題を解決
+* [DAC] Agentless接続失敗時にDatabase Access Historyに失敗ログが残らない問題を解決
+* [DAC] MySQLでWorkflowを通じたクエリ実行時に最初のクエリのメタデータで残る問題を解決
+* [Audit Log Export] Query Audit Export時のTable(s)カラムのデータが""で表記されるバグを修正
+* [Audit] マルチクエリ上申時にTable名が正常に記録されない現象を解決
+* [Agent] ポリシーが設定されたConnectionでのDBeaverを通じた接続失敗問題を解決
+* [Agent] Linuxの特定ケースでAgentが実行されない問題を修正
+
+
+## QueryPie 9.18.2 Hotfix
+
+2024年04月26日
+
+
+**Bug Fix**
+
+* [Alert] 送信失敗件数の過度発生時のサービス使用関連問題を解決
+* [Security] Web IP Access Control設定関連エラーログ発生問題を解決
+* [Report] User Group Member Added HistoryレポートのUser Name非表示バグを修正
+* [External API] Connection Owner設定された場合の接続リスト照会時エラー発生問題を修正
+* [DAC] 特定ケースでProxy Managementページ進入時のエラー発生問題を修正
+
+
+## QueryPie 9.18.1 Hotfix
+
+2024年04月22日
+
+
+**New Features**
+
+* [SAC] Role基盤Access Control機能を新規提供
+* [SAC] PaC（Policy as Code）方式を通じたポリシー設定機能
+* [SAC] Blocked Accountsメニュー新設およびUnlock機能
+
+
+**Enhancement**
+
+* [SAC] Workflow &gt; Server Access Request決裁様式を簡素化
+* [SAC] サーバーグループ内サーバー手動追加機能を提供
+
+
+## QueryPie 9.18.0 Release
+
+2024年04月04日
+
+
+**New Features**
+
+* [IAM] 管理者役割（Role）設定機能を新規リリース
+* [DAC] MongoDB元帳テーブル統制機能をサポート
+
+
+**Enhancement**
+
+* [SAC] リソース関連External API V2を新規リリース
+
+
+**Bug Fix**
+
+* [Agent] 証明書検証失敗関連アラートおよびログを追加
+* [DAC] ダウンロード20M制限関連問題を修正
+* [DAC] MySQL 8.0バージョンマイグレーション時のTable名が切れる現象を修正
+* [DAC] Audit Logs Exportフィルター適用時の全体ログダウンロード関連問題を解決
+* [IDP] SAML Redirect方式でのログイン不可問題を解決

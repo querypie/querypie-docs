@@ -1,0 +1,95 @@
+---
+title: '9.13.0 ~ 9.13.5'
+---
+
+## QueryPie 9.13.5 Release
+
+2023年09月14日
+
+**Bug Fix & Enhancement**
+
+* [Performance] ワークフロー使用中のメモリ過占有問題を解決
+
+
+## QueryPie 9.13.4 Release
+
+2023年08月02日
+
+**Bug Fix & Enhancement**
+
+* [Ledger Table Policy] ページネーション問題を解決
+
+
+## QueryPie 9.13.3 Release 
+
+2023年07月03日
+
+**Bug Fix & Enhancement**
+
+* .NET Runtime 7.0.5適用によりEngine SIGABRT問題を解決
+
+
+## QueryPie 9.13.2 Release 
+
+2023年06月23日
+
+**Bug Fix & Enhancement**
+
+* [Vendor] MongoDB Export時の結果データが1001個以上の場合にExportできない問題を解決
+
+
+## QueryPie 9.13.1 Release
+
+2023年06月19日
+
+**New Features**
+
+* [Ledger Table] 元帳テーブル管理および統制機能を追加
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] MariaDB JDBCドライバー1.x 2.xバージョンを使用してProxy接続する場合の切断問題を解決
+* [Agent] ログイン時の開くオプション自動活性化現象を修正
+* [Alert] New Request SQL最大長を100字から1000字に拡張
+* [All Request] ダウンロード時の速度を改善
+* [Cloud Provider] AWS権限が1:1管理されるベンダーの場合、フィルター選択項目のみ権限チェック
+* [MariaDB] SET構文解析に追加して対応
+* [syslog] query auditにactionType、executedFrom情報を追加
+
+
+## QueryPie 9.13.0 Release
+
+2023年05月15日
+
+**New Features**
+
+* [SBOM] Software Bill of Materials情報（文書）を提供
+* [Security] パスワード複雑度条件強化および直前パスワード再使用禁止を適用
+
+
+**Deprecated Features**
+
+* [Vendor] ベンダーサポート中断 - EnterpriseDB
+* [Vendor] ベンダーサポート中断 - GreenPlum
+* [Vendor] ベンダーサポート中断 - SAP Hana
+* [Vendor] ベンダーサポート中断 - Snowflake
+* [Migration] ログマイグレーション機能を削除
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] About窓のWindow Controller Buttonを変更
+* [Connection] Create過程でNetwork Zone未選択時に表示される警告文句に含まれた「"」記号を削除
+* [Connection] SSL / SSHオプション設定解除関連問題を解決
+* [DB connection] 変更または削除時のアラートを追加
+* [Preferences] &gt; パスワード変更時のモーダル内xボタン未動作エラーを解決
+* [Proxy] ポート不足の場合の正確な案内メッセージを提供
+* [System Properties] 変更された環境変数を反映
+* [Vendor][Athena] DB Access HistoryでDB Nameが残らない場合の発生を改善
+* [Vendor][Athena] Use existing database account with Agentオプションの非表示処理
+* [Vendor][Athena] 手動でConnection作成時のWorkgroupを必須値に指定
+* [Vendor][Hive] SQL EditorでImport/Exportボタンを非活性化
+* [Vendor][Hive] Workflow Export Requestを非活性化
+* [Vendor][PostgreSQL] DataGrip特定テーブル接続問題を解決
+* [Workflow] SQL Request時に.sqlファイルのみ選択可能になるよう改善

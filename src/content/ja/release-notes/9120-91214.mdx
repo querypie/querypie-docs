@@ -1,0 +1,97 @@
+---
+title: '9.12.0 ~ 9.12.14'
+---
+
+## QueryPie 9.12.14 Release
+
+2024年01月30日
+
+
+**Bug Fix & Enhancement**
+
+* [MongoDB] Proxy接続関連メモリ性能問題を改善
+---
+
+## QueryPie 9.12.13 Release
+
+2024年01月08日
+
+
+**Bug Fix & Enhancement**
+
+* [Proxy] MySQL 8.0.26以上の場合のAgentless方式Proxy接続時エラーを解決
+---
+
+## QueryPie 9.12.12 Release
+
+2023年12月08日
+
+
+**Bug Fix & Enhancement**
+
+* [Oracle] 未サポートCharacterSetの追加サポート（KO16MSWIN949、KO16KSC5601）
+---
+
+## QueryPie 9.12.11 Release
+
+2023年10月25日
+
+
+**Bug Fix & Enhancement**
+
+* [Connection] Health Check機能を改善
+---
+
+## QueryPie 9.12.10 Release
+
+2023年09月08日
+
+
+**New Feature**
+
+* [Workflow] SQL Requestクエリ実行時のバックグラウンド実行をサポート（レジンエンターテインメント/カカオペイ）
+* [QSI] クラスターグループ内インスタンスでDDL発生時、該当グループのQSIスキーマキャッシュを更新
+
+
+**Bug Fix & Enhancement**
+
+* [Web Editor] 接続時のタイムアウトを30秒から60秒に調整
+* [Syslog] Syslog内のProxy関連ログフィルタリング項目を追加
+* [Agent] Amazon ワークスペース（Windows Server 2016）でのエージェント接続問題を解決
+* [Web Editor] 接続リストでのClusterおよびInstance情報表示関連問題を修正
+* [Proxy] 断続的にProxy接続が切断される問題関連の修正作業を反映
+* [MySQL] GroupByなしでHavingを使用する場合のエラー発生
+* [Agent] エージェント通信時のヘッダーにUser-Agent項目を追加
+* [Web Editor] DocumentDB 3.6接続時の接続タイムアウトによる接続不可問題を解決
+* [Connection] DBセッション漏れによる使用量増加問題を解決
+
+
+---
+
+## QueryPie 9.12.9 Release
+
+2023年07月26日
+
+**New Feature**
+
+* [Alert] New Request &gt; TemplateにLinkを追加
+
+**Bug Fix & Enhancement**
+
+* [Alert] Alertを作成しただけでLast Event Timeが表示される問題を解決
+* [Proxy] 接続失敗時の「DB Access History」が残らない問題を解決
+* [Proxy] Client IPをAgent、Agentlessすべての環境で正確に把握するよう改善
+* [Proxy] LOCAL IDE（DBeaver）でDDL実行後キャンセル時に進行しない問題を解決
+* [Proxy] First 10 rows記録中のArgumentOutOfRangeException、IndexOutOfRangeException問題を解決
+* [SSL] OpenSSLバージョン差によるSSLモード接続不可問題を解決
+* [Session] 非ログイン -&gt; Oktaログイン時、目標URLに行かず最初のページにランディングする現象を改善
+* [LDAP] Group同期時にGroup Base DN値を参照するよう改善
+* [Workflow] 段階別権限が有効なユーザーのみ詳細ページ照会可能にするよう改善
+* [Web Editor] Object Info &gt; DataでJSONデータクリック時のエラー発生を解決
+* [Web Editor] Object BrowserのDB選択時の予期しないObject Info Panelデータ露出問題を解決
+* [Web Editor] クエリ実行後Data Viewer照会時のLOB 'uuid' was not foundエラー発生を解決
+* [Web Editor] 同一接続に再接続して復元されたResult窓でData Viewerを照会した際のエラー発生を解決
+* [User Access History] SAMLログインした場合のログのHostname値が127.0.0.1で残る問題を解決
+---
+
+（続く文書を次のレスポンスで送信します）

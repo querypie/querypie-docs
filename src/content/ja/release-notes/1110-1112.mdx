@@ -1,0 +1,69 @@
+---
+title: '11.1.0 ~ 11.1.2'
+---
+
+## QueryPie 11.1.2 Release
+
+2025年08月19日
+
+
+**Bug Fix**
+
+* [General] MultiAgent画面下部のHost Versionが接続されたQueryPieバージョンと同じになるよう修正
+* [General] ブラウザの証明書アルゴリズム優先順位によりユーザー証明書が適用されない問題を解決
+* [DAC] MultiAgentログイン状態でDB接続が切断されるエラーを修正し、セッションが維持されるよう解決
+* [DAC] MultiAgentで理由入力した内容がQuery Auditに記録されない問題を解決
+* [DAC] DB Connection内のExposeをHiddenに選択時にMultiAgentでエラーが発生する問題を解決
+* [DAC] Athena特定VIEW照会時のエラーを解決
+* [DAC] Web Editor接続時に遅延する症状を改善
+* [DAC] CubeOne復号化機能利用時に120個以上のデータで発生していた復号化エラーを修正
+* [DAC] CTE基盤UPDATE文実行時のUnable to resolve tableエラーを修正
+* [DAC] Redshift Proxy接続時にprepared statementを呼び出せない問題を修正
+* [DAC] SQLServerでexpression call targetエラーが発生する問題を解決
+* [DAC] MongoDB Connection Detailsで項目を修正する時に他の項目の値が復元されないよう修正
+* [DAC] Web EditorでMongoDB接続時にauthSourceオプションによって接続可能になるよう修正
+
+
+
+## QueryPie 11.1.0 Release
+
+2025年07月25日
+
+
+**New Feature**
+
+* [General] マルチエージェントでServer Privilege Requestリクエスト機能を追加
+* [General] Google Analyticsクッキー使用同意およびクッキー設定機能を提供
+* [General] ワークフロー承認完了またはUrgent modeでExecutorがキャンセルできるExternal API
+* [DAC] 新ポリシー（タグ基盤ポリシー）でUser scopeとしてユーザー属性を指定する機能を追加
+* [DAC] 新ポリシー（タグ基盤ポリシー）でPolicy Audit LogにEvent Typeカラムを追加
+* [DAC] 新ポリシー（タグ基盤ポリシー）でAudit LogにPolicy Exception Logを追加
+* [DAC] タグ基盤ポリシーでMaskingポリシーが適用されるとアラートを送信
+* [DAC] タグ基盤ポリシーのWorkflow DB Policy Exception Requestに対するアラートを送信
+* [DAC] タグ基盤ポリシーでSensitive dataポリシー/Levelが適用される（sensitive dataアクセス時）とアラートを送信
+* [DAC] タグ基盤ポリシーでData Accessポリシーが適用される（Restricted dataアクセス時）とアラートを送信
+* [SAC] QueryPieとWindows Active Directory連携機能を追加
+* [SAC] Server Privilege Request申請時にCommand Template選択機能を追加
+* [SAC] Require Privilegeオプションを通じたサーバーアカウントアクセス制御を導入
+* [SAC] ADアカウントパスワード変更機能を追加
+* [SAC] RDP Server Agentリモートアップデート機能を追加
+* [SAC] ユーザーのRole / Direct Permission満了予定リストAPIを提供
+* [WAC] 管理者がユーザーのJIT Webセッションに対する権限回収機能を提供
+
+**Improvement**
+
+* [General] Enable Attribute Synchronizationオプションを使用しながらStatic IPを修正できるよう改善
+* [General] 決裁者グループのメンバーが非活性になっても決裁者地位を維持するよう改善
+* [General] ワークフロー承認完了前でも参照者が上申内容を照会できるよう改善
+* [General] ユーザーダッシュボードのSACおよびKACメニューでOpen Agentクリック時にMulti-Agentが開くよう改善
+* [DAC] 新ポリシー（タグ基盤ポリシー）でポリシー例外作成時にData Scopeを直接指定するよう変更
+* [DAC] Databaseパスワード満了時にWeb Editorでユーザーが自分のパスワードを変更できるよう改善（Oracle 19c限定）
+* [DAC] SAP HANA DBのデータタイプがSECONDDATEに指定された値での照会時のエラーを改善
+* [SAC] ユーザーダッシュボードのServersでサーバー接続可能なallowed zoneを表示
+* [SAC] JIT臨時アカウント機能 - Global Optionを提供
+* [SAC] Server GroupのAccount UIを改善
+* [SAC] One Time Account照会/削除画面を実装
+* [SAC] SACレポート項目を追加
+* [SAC] External APIを通じてWindows Serverを登録できるよう改善
+* [KAC] Policy Editorの使いやすさを改善
+* [WAC] Policy Editorの使いやすさを改善

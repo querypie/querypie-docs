@@ -1,0 +1,24 @@
+---
+title: 'Workflow Management'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+WorkflowはQueryPie内で権限者の承認の下で実行される必要がある様々な作業について決裁を要請し、承認、実際の作業実行まで処理できるようサポートする機能です。Workflow Managementは管理者サイドでWorkflowを管理する機能で、全体リクエスト一覧および決裁規則（Approval Rule）を管理できます。また、Workflow全体に対する決裁設定が可能です。
+
+
+* [All Requests](workflow-management/all-requests) : Workflowを通じて上申されたすべてのリクエスト一覧を照会し、詳細情報を確認します。
+* [Approval Rules](workflow-management/approval-rules) : 決裁規則を管理します。
+* [Workflow Configurations](workflow-management/workflow-configurations) : 決裁上申および承認プロセスを設定します。
+
+
+### Slack DM通知設定
+
+Slack DMを通じてリクエストの段階別内容を受信し、直接処理も可能です。[Slack DM連携](system/integrations/integrating-with-slack-dm)文書でSlack DM通知送信のためのSlack連携方法を確認できます。
+
+
+<Callout type="info">
+10.2.5またはそれ以前のSlack DM連携設定方法は[10.1.0バージョンマニュアル文書](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)をご参照ください。
+</Callout>

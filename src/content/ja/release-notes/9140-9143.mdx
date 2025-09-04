@@ -1,0 +1,71 @@
+---
+title: '9.14.0 ~ 9.14.3'
+---
+
+## QueryPie 9.14.3 Release
+
+2024年02月18日
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] Internal TLS Certificate Update
+
+
+---
+
+## QueryPie 9.14.2 Release
+
+2023年11月27日
+
+
+**Bug Fix & Enhancement**
+
+* [Connection] Driver接続時のセッション整理問題を改善
+
+
+---
+
+## QueryPie 9.14.1 Release
+
+2023年10月05日
+
+
+**New Features**
+
+* [Workflow] ワークフロー個人別Slack DM通知送信
+* [Workflow] ワークフロー承認代理決裁者設定
+
+
+**Bug Fix & Enhancement**
+
+* [Syslog] Query Execution/Query Export理由コメントをsyslogに追加
+* [Syslog] Query Audit ログにWorkflow UUIDを追加
+* [Syslog] database情報にconnectionName情報を追加
+* [Syslog] Workflow Urgent Mode承認遅延件のログを追加
+* [Syslog] 「APPROVAL」ログで承認完了時にリクエスト者と実行者が同一の場合はログを1件のみ生成
+* [External API] DML Snapshot照会のためのAPIを追加
+
+
+---
+
+## QueryPie 9.14.0 Release
+
+2023年09月13日
+
+
+**New Features**
+
+* [SAC] System Access Controller（システムアクセス制御）新規リリース
+* [Workflow] 再上申機能を追加
+* [Audit] Admin Role Historyメニューを追加
+
+
+**Bug Fix & Enhancement**
+
+* [GNB Menu] DAC/SACライセンス条件によってGNB Menuグルーピング可否を制御
+* [Workflow] ワークフローページ内部のUIを改善
+* [SQL Editor] クエリ実行警告モーダル（Full Scan可能性アラート）でExecuteボタン動作を修正
+* [Vendor] Athena on AWSクラウド同期化をサポート
+* [Vendor] Redis on AWS（ElastiCache）クラウド同期化をサポート
+* [Vendor] PostgreSQLのDML Snapshotをサポート（Beta）

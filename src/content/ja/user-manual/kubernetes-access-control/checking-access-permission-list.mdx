@@ -1,0 +1,53 @@
+---
+title: 'アクセス権限リストの確認'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+ユーザーは権限があるKubernetesクラスターのリストをCloud Provider別に整列して一目で確認し、Kubernetes API呼び出しに対するアクセスを支援する専用QueryPie エージェントをダウンロードしてインストールできます。
+
+## Role選択
+
+ユーザーはQueryPieログイン後、Kubernetesメニューで自分に付与された権限を照会できます。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Kubernetes Access Control &gt; Kuber &gt; Select a Role](/user-manual/kubernetes-access-control/checking-access-permission-list/image-20240721-081220.png)
+<figcaption>
+QueryPie Web &gt; Kubernetes Access Control &gt; Kuber &gt; Select a Role
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; System Access Control &gt; Kubernetes &gt; Select a Role](/user-manual/kubernetes-access-control/checking-access-permission-list/image-20240723-155143.png)
+<figcaption>
+QueryPie Web &gt; System Access Control &gt; Kubernetes &gt; Select a Role
+</figcaption>
+</figure>
+
+1. Kubernetesメニューへの初回アクセス時に表示されるRole選択画面で、権限確認を希望するRoleを選択します。
+    1. Roleに応じてアクセス権限が異なり、付与されたRoleがない場合は左側のリストが表示されません。
+    2. この場合、WorkflowメニューのAccess Role Request様式を通じて適切な権限を申請できます。
+
+
+## アクセス権限リストの確認
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; System Access Control &gt; Kubernetes ](/user-manual/kubernetes-access-control/checking-access-permission-list/image-20240721-081324.png)
+<figcaption>
+QueryPie Web &gt; System Access Control &gt; Kubernetes 
+</figcaption>
+</figure>
+
+1. Role選択後は左側のパネルで現在のユーザーがアクセス可能なKubernetesクラスターリストがCloud Provider基準で整列して表示されます。
+2. クラスターリストで個別クラスターを選択すると右側のページで以下の詳細情報を確認できます。
+    1.  **Cluster Endpoint**  : KubernetesクラスターのAPI URLを表記します。
+    2.  **Expiration Date**  : 権限期限が表示されます。
+    3.  **Status**  : 権限の状態が表示されます。
+    4.  **Assigned Policies**  : 該当クラスターのアクセス権限に関与するポリシーが下部に列挙されます。ポリシー名右側の虫眼鏡アイコンをクリックしてポリシーがどのように設定されているか詳しく確認できます。
+    5.  **Open Agent**  : Open Agentを押してエージェントを実行またはインストールできます。
+
+<Callout type="info">
+Agentをインストールする方法は[Agentマニュアル](../user-agent)で確認できます。
+</Callout>

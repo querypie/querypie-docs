@@ -1,0 +1,72 @@
+---
+title: 'Root CA証明書およびExtensionのインストール'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+このページでは、WAC（Web Access Control）を使用するために必要なRoot CA証明書とChrome Extensionのインストール過程をご案内します。
+
+
+## インストールおよび設定ガイド
+
+### 1. Root CA証明書のインストール
+
+1. QueryPieにログインした状態で右上のプロフィールアイコンをクリックした後、Support &gt; Download Web Secureメニューに移動します。
+
+<figure data-layout="center" data-align="center">
+![QueryPie &gt; Profile Menu](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241223-120321.png)
+<figcaption>
+QueryPie &gt; Profile Menu
+</figcaption>
+</figure>
+
+1. QueryPie Web Secure Downloadモーダル窓が表示されたら、下記写真のようにA. Install Root CA Certificate項目のStep 1. Download Linkをクリックして証明書ファイルをダウンロードします。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web Secure Download](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20250116-155957.png)
+<figcaption>
+QueryPie Web Secure Download
+</figcaption>
+</figure>
+
+1. ダウンロード後は[Root CA証明書インストールガイド](../../administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide)に従って証明書インストールおよび信頼設定を完了します。
+
+### 2. ExtensionインストールおよびHost設定
+
+1.  **Extensionダウンロード**
+    * QueryPieプロフィールメニューでSupport &gt; Download Web Secureボタンをクリックします。
+    * QueryPie Web Secure Downloadモーダルが表示されたら、QueryPie Web Secure Download写真のように**B. Install Chrome Extension** &gt; Step 1.のDownload Linkをクリックして、Extensionファイルのダウンロードを実行します。
+2.  **Extensionインストール**
+    * Chromeブラウザのアドレスバーにchrome://extensions/を入力して拡張機能ページに移動します。
+    * ページ右上にある開発者モードトグルを有効にします。
+    * ダウンロードしたExtensionファイルを解凍しない状態のまま拡張機能ページ内にドラッグアンドドロップします。
+
+<figure data-layout="center" data-align="center">
+![Chrome &gt; 拡張機能管理](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241219-192626.png)
+<figcaption>
+Chrome &gt; 拡張機能管理
+</figcaption>
+</figure>
+
+1.  **Host設定**
+    * Extensionインストールが完了するとHost Configurationページが新しいタブで開きます。
+    * QueryPie Host入力欄に現在使用中のQueryPieのアドレスを入力し`Continue`ボタンをクリックします。
+    * Host情報が有効であれば`Go to Dashboard`ボタンが有効になります。このボタンをクリックすると新しいタブでQueryPieダッシュボードに移動します。
+
+<figure data-layout="center" data-align="center">
+![Host Configurationページ](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241219-192931.png)
+<figcaption>
+Host Configurationページ
+</figcaption>
+</figure>
+
+<Callout type="important">
+**注意**
+
+WACエクステンションインストール前に開かれていたタブについては管理が保証されません。アクセスポリシー適用および監査ログに問題がある可能性があります。
+
+既に開かれていたすべてのブラウザタブおよび窓を閉じた後にエクステンションをインストールしてください。
+</Callout>
+

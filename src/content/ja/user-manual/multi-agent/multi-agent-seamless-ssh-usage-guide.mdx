@@ -1,0 +1,237 @@
+---
+title: 'Multi Agent Seamless SSH 使用ガイド'
+---
+
+import { Callout } from 'nextra/components'
+
+Seamless SSHとは、既存のターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。
+
+本文書は10.2.8バージョンを基準にSeamless SSHの使用法、スペックおよびサポート範囲をご案内します。
+
+## 使用方法
+
+### SSH config設定方法
+
+既存の`ssh`コマンドを使用するためにSSH configファイルを設定できます。
+
+
+1. `.ssh`ディレクトリに移動して`config`ファイルを作成または編集します。
+```
+cd ~/.ssh
+vi config
+```
+
+1. 以下の設定を`config`ファイルに追加後、保存して終了します。（保存するには`:wq`を押してください）
+```
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+1. サーバー間でURLとポートが重複しない場合、以下のように設定することもできます。
+```
+Host *
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+1. 簡素化されたSSHコマンドを使用してサーバーに接続します。
+```
+ssh {{Server Account}}@{{Server Name}}
+```
+
+
+### Shell Alias設定方法
+
+既存の`ssh`コマンドを使用するためにSSH Aliasを設定できます。
+
+
+1. シェル設定ファイルを開きます。
+
+Bashシェルの場合:
+```
+vi ~/.bashrc
+```
+
+Zshシェルの場合:
+```
+vi ~/.zshrc
+```
+
+1. 以下の行をシェル設定ファイルに追加後、保存して終了します。（保存するには`:wq`を押してください）
+```
+alias qshdev='ssh -o ProxyCommand="qpctl ssh-proxy %r %h %p"'
+```
+
+1. 変更事項を現在のシェルセッションに適用します。
+
+Bashシェルの場合:
+```
+source ~/.bashrc
+```
+
+Zshシェルの場合:
+```
+source ~/.zshrc
+```
+
+または新しいターミナル窓を開いても構いません。
+
+1. Aliasを使用してサーバーに接続します。
+```
+qpctl host use develop.dev.querypie.io
+qshdev {{Server Account}}@{{Server Name}}
+```
+
+
+## 既存QueryPie User Agentとの相違点
+
+### 基本コマンド
+
+Seamless SSHはQueryPie Multi Agentインストール時に一緒にインストールされる以下のコマンドを利用して動作します。
+```
+qpctl ssh-proxy %r %h %p [QueryPie Host]
+```
+
+既存User Agentで使用していたコマンドは以下の通りです。
+```
+qpa ssh %r %h %p
+```
+
+### 接続エラー表示方式
+
+接続段階でQueryPie Proxyサーバーへの接続にエラーが発生すると、既存User Agentはdialogを表示してターミナルフレンドリーではありませんでした。
+
+Multi Agentは**ターミナルにエラー内容が表示**されるよう変更されました。
+```
+$ qpctl ssh manual@core.dev.querypie.io
+qpctl: error: Connection error: Timeout
+```
+
+## 新たに追加された機能
+
+### デフォルトホスト指定
+
+Multi AgentはSeamless SSHを使用するためにQueryPie Hostを入力する必要がある不便さがあります。
+
+`qpctl`コマンドで使用するデフォルトサーバーを指定する機能を追加します。
+
+* デフォルトサーバーが指定されると**qpctl ssh-proxy**コマンドで**QueryPie Host**を入力しなくても構いません。
+* デフォルトサーバーが指定されていても**QueryPie Host**を入力するとこの値を使用します。
+
+<Callout type="info">
+Reset All Settingsでアプリを初期化するとデフォルトホスト設定も削除されます。
+</Callout>
+
+#### qpctl host list
+
+現在登録されたQueryPie Hostsリストを確認します。
+
+<Callout type="important">
+UIで現在選択したQueryPie Hostではありません。
+</Callout>
+```
+$ qpctl host list
+QueryPie Hosts:
+ - https://nightly.dev.querypie.io
+ - http://t8.ec2.querypie.io (current)
+ - https://t3.qa.querypie.io
+ - https://t4.qa.querypie.io
+ - https://t8.qa.querypie.io
+ - https://t12.qa.querypie.io
+```
+
+#### qpctl host use
+
+現在登録されたQueryPie Hostsリストを表示し、方向キーで選択します
+```
+$ qpctl host use
+Use the arrow keys to navigate: ↓ ↑ → ←
+QueryPie Hosts
+  ▸ https://nightly.dev.querypie.io
+    http://t8.ec2.querypie.io (current)
+    https://t3.qa.querypie.io
+    https://t4.qa.querypie.io
+↓   https://t8.qa.querypie.io
+```
+```
+Selected https://t4.qa.querypie.io
+✔ Host changed to https://t4.qa.querypie.io
+```
+
+<figure data-layout="center" data-align="center">
+[qpctl-host-use-without-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-without-hostname.mov)
+</figure>
+
+#### qpctl host use `{QueryPie Host}`
+
+```
+$ qpctl host use nightly.dev.querypie.io
+✔ Host changed to https://nightly.dev.querypie.io
+```
+
+<figure data-layout="center" data-align="center">
+[qpctl-host-use-with-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-with-hostname.mov)
+</figure>
+
+### :warning:実験的機能 - qpctl直接使用:warning:
+
+Seamless SSHを使用するために
+
+* `~/.ssh/config`を設定したり
+* sshコマンドに`-o ProxyCommand=qpctl ssh-proxy …`を入力する
+
+体験は自然ではありません。これにQueryPie Multi Agentをインストールした場合、ssh接続のために`qpctl`コマンドを直接使用できます。
+
+
+1. ユーザーが使用したいsshコマンドの前に`qpctl`のみ付けてください。
+```
+$ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
+```
+
+
+1. `~/.ssh/config`に設定したものも`qpctl`のみ付けてください。
+```
+$ cat ~/.ssh/config
+
+Host core-dev
+Hostname core.dev.querypie.io
+User ec2-user
+IdentityFile ~/.ssh/querypie-dev.pem
+
+$ qpctl ssh core-dev
+```
+
+
+## サポート範囲
+
+### 最小サポートバージョン
+
+OpenSSH 6.7以上が必要です。
+```
+$ ssh -V
+OpenSSH_9.8p1, LibreSSL 3.3.6
+```
+
+### 動作方式
+
+`qpctl`コマンドが`ssh`クライアントコマンドをwrappingしてProxyCommandオプションを自動で付けて実行します。
+
+1.  **qpctl**  ssh command_line
+2. ssh  **-G**  command_line
+    1.  **username、hostname、port**  抽出
+3. ssh command_line  **-o ProxyCommand="qpctl ssh-proxy username**   **hostname**   **port"** 
+
+### 未サポート機能
+
+#### ユーザー定義ProxyCommand
+
+qpctlがProxyCommandを使用するため**ユーザー定義ProxyCommand**は使用できません。
+```
+$ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
+qpctl: error: ProxyCommand option is not supported
+```
+
+#### scp
+
+scpはまだサポートされていません。

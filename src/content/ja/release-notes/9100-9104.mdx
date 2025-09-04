@@ -1,0 +1,87 @@
+---
+title: '9.10.0 - 9.10.4'
+---
+
+import { Callout } from 'nextra/components'
+
+
+<Callout type="info">
+External API変更事項は以下のリンクをご参照ください。
+[External API変更事項（9.10.0バージョン）](9100-9104/external-api-changes-9100-version)
+</Callout>
+
+## QueryPie 9.10.4 Release
+
+2023年05月03日
+
+**Bug Fix**
+
+* [External API] api/external/connection-auth-logs、audit-logs旧バージョンスペック対応
+---
+
+## QueryPie 9.10.3 Release
+
+2023年04月19日
+
+**Bug Fix**
+
+* [Performance][PostgreSQL] エージェントエラー発生防止のためPG QSIメモリデフォルト値を上方調整
+---
+
+## QueryPie 9.10.2 Release
+
+2023年02月22日
+
+**Bug Fix**
+
+* [Migration] 1MB以上のSQLが含まれたSQL Requestのマイグレーション時の「Data Tool long」発生エラーを解決
+---
+
+## QueryPie 9.10.1 Release
+
+2023年01月30日
+
+**Bug Fix**
+
+* [DynamoDB] AssumeRoleを使用する環境でのクエリ実行不可エラーを解決
+* [Redis] ElastiCache Redis接続時のERR Unknown Commandエラーを解決
+* [Redis] 6.2.0以前のバージョンでのWeb接続不可現象を解決
+* [Redis] Proxy - Kill Session時のエラー発生問題を解決
+* [Workflow] All Request Export試行時にstep別承認時間をCompanyタイムゾーンで適用するよう修正
+* [Workflow] 期限切れの決裁リストが含まれた状態のリストが照会されないエラーを解決
+* [Migration][Workflow] approved_atが空欄の場合のマイグレーションエラー発生問題を解決
+* [Migration] Query Auditログマイグレーション時のクエリ実行時間および処理データ数の欠落エラーを解決
+---
+
+## QueryPie 9.10.0 Release
+
+2023年01月12日
+
+**New Features**
+
+* [Workflow] 監査段階（Approval Steps）& 事後承認（Urgent Mode）機能を追加
+
+**Bug Fix & Enhancement**
+
+* [Alert] New Request（Workflow）内のタイプおよび事後承認条件を追加
+* [Agent] エージェント実行時のzscaler VPN衝突回避のためBitwise Notストリームを適用
+* [Authentication] SAML連携ユーザーのアカウント削除機能をサポート
+* [Authentication] Okta、Onelogin使用時にQueryPie自体のOTP設定が無視されるよう処理
+* [Audit&Log] DML SnapshotでExecuted From（Query Audit）カラムを追加
+* [Audit&Log] 権限をすべて回収した際のセッション終了後ログ記録
+* [Impala] 管理者やユーザーが指定したRealmで接続不可能な問題を修正
+* [MongoDB] Proxy内のDML Snapshotをサポート
+* [MongoDB] Aggregateコマンドのポリシー適用をサポート（Web Editor）
+* [MongoDB] データ照会時の絵文字表示不具合
+* [Privilege Type] Default Privilege Type名前変更（-role削除）
+* [PostgreSQL] Proxy環境でのSASL認証失敗エラーを修正
+* [PostgreSQL] ProxyでのPreparedStatementの異常動作エラーを修正
+* [PostgreSQL] クエリ実行後のUnknown Content-Type receivedエラーを修正
+* [Proxy] 閉鎖網環境内での外部連携http client proxy設定を適用
+* [Redis] 未サポートコマンド実行時のエラーメッセージを改善
+* [Web Editor] 元帳DBの場合SQL Execution Purposeオプションの有効化を強制
+* [Windows][SAML] ミドルウェアよりブラウザ時間が早い場合のOneLogin、Oktaログイン時エラーを修正
+* [Workflow] Access Requestリクエストの期限日項目にデフォルト日付を表示
+* [Workflow] All requestsメニュー内のExport機能を追加
+* [Workflow] SQL Request / Export Requestタイプの接続リスト内に元帳DB表示を追加
+* [Connection] Access Start Time / Access End Timeポリシー初期化時の保存不可問題を解決

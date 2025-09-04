@@ -1,0 +1,105 @@
+---
+title: '9.11.0 ~ 9.11.5'
+---
+
+## QueryPie 9.11.5 Release
+
+2023年05月09日
+
+**Bug Fix & Enhancement**
+
+* [PostgreSQL] メモリ使用量によりエージェント接続で高頻度エラー発生を修正
+* [Performance] gRPC C Bindingライブラリのsigsegv発生およびプロセス終了問題を修正
+
+
+---
+
+## QueryPie 9.11.4 Release
+
+2023年04月18日
+
+**Bug Fix & Enhancement**
+
+* [Performance] ロングクエリが発生しないようインデックス対応を追加
+* [Performance] QueryPie Web速度低下問題を解決
+
+
+---
+
+## QueryPie 9.11.3 Release
+
+2023年04月12日
+
+**Bug Fix & Enhancement**
+
+* [MySQL] mysqldumpダンプエラーを解決
+
+
+---
+
+## QueryPie 9.11.2 Release
+
+2023年04月03日
+
+**Bug Fix & Enhancement**
+
+* [Authentication] 同期化オプション非活性時のldapユーザー自動追加機能を再活性化
+* [SQLServer] 接続時の[ENGINE] Internal connection fatal error.発生エラーを解決
+
+
+---
+
+## QueryPie 9.11.1 Release
+
+2023年03月22日
+
+**Bug Fix & Enhancement**
+
+* [Agent] Linux環境でのAgentインストール問題を解決
+* [Application Log]の一部データ非表示問題を解決
+* [Authentication] oktaおよびonelogin saml meta dataが表示されない問題を解決
+* [Authentication] AWS SAMLログイン接続不可を解決
+* [Cloud Provider] GCP、Azure同期化リストから除外
+* [Connection] multiple database account強制非活性化を解決
+* [Query Sharing] 外部ストレージへのファイル保存時エラー発生を解決
+---
+
+## QueryPie 9.11.0 Release
+
+2023年02月24日
+
+**New Features**
+
+* [Agent] MongoDB Multi Hostサポート
+* [System Properties] QueryPieインストール情報確認ページを追加
+* QueryPie App Metricを追加
+
+****
+
+**Bug Fix & Enhancement**
+
+* [Agent] Bitwise NOTストリーム適用（Zscaler衝突回避）
+* [Agent] Windows環境でAgent実行中削除時のプログラムファイル残存問題を解決
+* [External API] 接続ロック解除関連APIを追加
+* [External API] 接続登録Redisを追加
+* [External API] /api/external/connection-auth-logs呼び出し時のnull pointerエラー発生
+* [Hbase] Vendor typeでのHbaseサポート中断
+* [Job] サーバー再起動時のjob重複実行防止を適用
+* [Masking][MySql] WITH構文とupdate クエリ実行時のNotSupportedException発生を解決
+* [Masking] マスキング例外処理Allowed Usersでユーザーがuuidで表示される問題を改善
+* [MongoDB] Connection Timeout問題を解決
+* [MongoDB] WorkflowでExport Requestした際のQuery AuditでSQL TypeがUnknownで記録される現象を改善
+* [MongoDB] AlertタイプがData Exportの際のSQL TypeがUnknownで記録される現象を改善
+* [Mysql] Query Audit DetailページでのTwo以上のテーブル表示が.（ドット）で区分される現象を改善
+* [Preferences] ショートカット設定が新しいタブで初期化される現象を改善
+* [QSI] selectクエリ実行時のQuery results do not match pre executed resultsエラー発生現象を解決
+* [Redis] Agent接続後実行したクエリのQuery Audit &gt; First 10 Rowsでの重複表記エラーを改善
+* [Sensitive Data] アラート送信時のSensitive Level項目が数字で表示される現象を改善
+* [SQL Server] pkが含まれていないselectクエリ時の結果照会不可問題を解決
+* [SQL Server] クエリ結果照会中のエラー発生時の画面関連内容案内を改善
+* [SQL Editor] Webエディターに入力値がない場合のRun SQL動作現象を改善
+* [SQL Editor] データグリッドでの修正試行時のwhere句がlikeで処理されてDBにリクエストされる問題を解決
+* [SQL Editor] クエリエディター内のエスケープ文字にスタイルを適用
+* [Syslog] KST / UTC Timestamp内部設定機能を追加
+* [Workflow] All RequestでのCurrent Page/All Export時の最初のページのみexportされるエラーを改善
+* [Workflow] SQL Request実行中のDisconnect時にFailure状態に変更されない現象を改善

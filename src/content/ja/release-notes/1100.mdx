@@ -1,0 +1,49 @@
+---
+title: '11.0.0'
+---
+
+## QueryPie 11.0.0 Release
+
+2025年07月02日
+
+
+**New Feature**
+
+* [General] 管理者ページのIP ACLサポート
+* [General] バージョン表記変更
+* [General] ログイン時のIPアクセス制限強化およびユーザーIP申請Workflowを追加
+* [General] 代理上申機能を追加（DB Access / Unmasking / Restricted Data Access / DB Policy Exception）
+* [General] Attribute基盤Workflowメニューの非表示
+* [DAC] DB Access Requestでタグによるリクエスト対象フィルタリング
+* [DAC] 特定ユーザー基盤のDB Access Requestフィルタリング設定
+* [DAC] Redshift接続でユーザー識別のためのユーザー定義コメント追加機能
+* [DAC] Data Access / Data Masking / Sensitive Dataイベントに対するsyslog送信サポート
+* [DAC] WorkflowにData Access制限解除リクエストタイプを追加
+* [DAC] WorkflowにDB Policy Exception Requestを追加
+* [DAC] Workflowを通じたポリシー例外管理および管理者の手動例外処理機能
+* [DAC] Sensitive Dataアクセスモニタリングポリシーを実装
+* [DAC] Policy TypeにDML Query Approvalを追加
+* [DAC] Policy Audit Logの記録
+* [DAC] Audit Log Export項目を追加（Workflow Unmasking / Restricted Data Access / DB Policy Exception Request）
+* [SAC] JIT臨時アカウント作成/接続/終了後の回収をサポート
+* [SAC] RDP接続終了時のログイン維持オプションを追加
+* [SAC] ユーザーのサーバーセッション終了前のAgent通知機能
+* [WAC] Audit Log Export項目を追加（Web App Access History / Web App Event Audit / Web App Role History / JIT Access Control Logs）
+
+**Improvement**
+
+* [General] ユーザーダッシュボードでADMIN文言を削除
+* [General] User Group &gt; Detail ドローでEmail検索をサポート
+* [General] Okta連携時にQueryPieのDisplay nameがOkta display nameに変更
+* [General] Okta、Onelogin、SAML IDPを連携した状態でローカルアカウントMFAをサポート
+* [General] Audit Log Export時にWorkflowにTarget Userを追加
+* [General] Auth Provider関係なく最低1人のOwnerアカウントが必ず存在するよう改善
+* [General] マルチエージェントのネットワークが切断されて再接続した時に自動でRetryするよう改善
+* [General] IP blockページからログインページに移動できるリンクを提供
+* [DAC] Default privilegeの自動設定
+* [DAC] ポリシーが設定された接続はQuery AuditをOnに強制化
+* [DAC] Proxyを通じたAthenaクエリ結果照会を改善
+* [DAC] Data Scopeでパスで指定
+* [DAC] タグ検索時に部分一致検索が可能になるよう検索方法を改善
+* [SAC] Web / Agentで分単位で受けた権限（Access、Privilege）を受けた項目を表示
+* [WAC] User Page &gt; Web App &gt; JIT Role選択後、特定Web Appの「...」クリック時にレコーディングされる項目を表示

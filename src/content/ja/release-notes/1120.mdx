@@ -1,0 +1,53 @@
+---
+title: '11.2.0'
+---
+
+## QueryPie 11.2.0 Release
+
+2025年08月22日
+
+
+**New Feature**
+
+* [General] Workflow Configurationsで承認期限最大値を14日に設定できる機能を追加
+* [General] ワークフロー理由入力文字数のユーザー定義
+* [General] IntegrationにEvent Call Back機能UIを追加
+* [DAC] Unmasking Request Report
+* [DAC] Privilegeに応じてWorkflow上申様式の決裁線を制限
+* [DAC] Vertica Proxyサポート
+* [DAC] 理由入力文字数のユーザー定義機能
+* [SAC] サーバーグループに指定したサーバーアカウント以外のアカウントを手動で入力して接続できる機能
+* [SAC] 一定期間接続しないと権限を回収する機能
+* [WAC] Access Control詳細画面にWeb Apps by User Groupタブを追加
+
+
+**Improvement**
+
+* [General] ワークフローのRequest Type別承認期限と権限期限を分離
+* [General] Urgent Mode時に承認期限が権限期限より長く設定されるよう機能を追加
+* [General] Alert Templateに権限期限変数を追加
+* [General] MFA登録案内画面でvirtual otp アプリ名をより識別可能になるよう具体的に表示
+* [General] Workflowでapproveまたはrejectした後にリストに移動されるよう改善
+* [General] 決裁段階4段階をサポート
+* [General] Email通知テンプレートのカスタマイズおよびヘッダー、フッター画像削除
+* [General] ユーザーアカウント期限切れ通知期間のカスタマイズ
+* [General] LDAP ユーザー非活性アカウントのグループ追加を許可
+* [General] Workflow 参照者固定設定機能
+* [General] Audit Log Export当日ログ抽出を改善
+* [General] Audit Log Export &gt; Workflow Requestsのフィールド変更
+* [General] Workflowでコメントポップアップの多言語サポート
+* [General] ブラウザタブタイトル変更機能要請
+* [General] QueryPie Meta DBおよびAPI性能改善
+* [General] OTPアプリ名カスタマイズ機能
+* [DAC] Query Sharing設定位置を移動
+* [DAC] New DAC Policyオプションが活性化されている時にPoliciesメニュー項目（旧ポリシーメニュー項目）が見えないよう修正
+* [DAC] SQL Requestの実行計画結果添付機能に対するOn / Offオプションを提供
+* [DAC] Approval Rule追加時に新 / 旧ポリシー項目が同時に表示されないよう改善
+* [DAC] Max Display Rows / Max Export Rowsをユーザー定義可能になるよう改善
+* [DAC] Multi AgentでUser Action Purpose Requirement設定時に理由入力機能を提供
+* [DAC] DB Access ControlのGrant Privilegeダイアログでprivilege一括適用機能を追加
+* [SAC] 利用者ダッシュボード &gt; ServersでHostで検索をサポート
+* [SAC] ユーザーのサーバーセッション（web）終了前の通知機能
+* [SAC] Server AgentなしでRDP接続時にCustom Accountで接続するよう改善
+* [SAC] Activity LogでVault K/V - Password、Vault K/V - SSH Key、QueryPie - Custom AccountについてAccount入力欄をAlias入力欄に改善
+* [WAC] Owner / MemberをSACと統一

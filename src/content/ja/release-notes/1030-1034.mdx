@@ -1,0 +1,107 @@
+---
+title: '10.3.0 ~ 10.3.4'
+---
+
+## QueryPie 10.3.4 Release
+
+2025年06月16日
+
+
+**Bug Fix**
+
+* [General] okta & LDAP同期時、特定ユーザー削除不可問題を修正
+
+
+## QueryPie 10.3.3 Release
+
+2025年06月10日
+
+
+**Bug Fix**
+
+* [General] マルチエージェントのカスタムスキーム（okta ログイン）が動作しない問題を解決
+
+
+## QueryPie 10.3.2 Release
+
+2025年06月05日
+
+
+**Bug Fix**
+
+* [General] マルチエージェントでopen connection with dbeaverを選択時にエラーが発生する問題を解決
+* [DAC] Copy clipboard時に内部APIが不要に繰り返し呼び出される現象を改善
+* [SAC] 内部バッチジョブによって発生するlong queryの性能問題を解決
+
+
+## QueryPie 10.3.1 Release
+
+2025年05月28日
+
+
+**Enhancement**
+
+* [General] QueryPie内部バッチ作業の性能改善
+* [SAC] VaultでSSH CAエンジン使用時にkey_typeをrsaまたはed25519を選択できるようにカスタマイズ機能を提供
+
+
+**Bug Fix**
+
+* [DAC] Postgre/Redshift Proxyですべてのエラーが「An I/O error occurred while sending to the backend.」メッセージで処理される問題を解決
+
+
+## QueryPie 10.3.0 Release
+
+2025年05月14日
+
+
+**New Feature**
+
+* [General] ユーザー同時ログイン制限機能を追加
+* [General] Custom Attributeを追加する機能を追加
+* [General] LDAP User AttributeをQueryPieに連携する機能を追加
+* [General] WorkflowでUser Attribute基盤の承認者指定機能を追加
+* [General] Vault AppRole認証方式を追加
+* [General] Privilege RequestでServer Group Owner承認機能を追加
+* [DAC] Cloud Provider同期時に自動タギング機能を追加
+* [DAC] DB接続時にReverse Tunnelサポート（NOVA）するよう改善
+* [DAC] HBase新規サポート
+* [DAC] 復号化ワークフローおよびCubeOne連携
+* [DAC] Webエディターでデータエクスポート試行時にDRM連携
+* [DAC] 実行中のQueryを管理者が停止できる機能を提供
+* [DAC] Webエディターでデータエクスポート試行時にDRM連携
+* [DAC] Multi-AgentでDACのDefault Privilege選択
+* [SAC] Server Groupで個人アカウント変数指定機能を実装
+* [SAC] ユーザー別に表示されるServer Group制限のためのMember機能を追加
+* [SAC] Server Grant Permissionで時間単位の権限付与機能を追加
+* [SAC] SSH接続時にVSCodeツールを通じて接続できるようサポート
+* [WAC] Web App Just-in-time Access Request機能を追加
+* [WAC] Web App詳細ページでWebアプリ別のOwnerおよびMember設定機能
+
+
+**Enhancement**
+
+* [General] ユーザーダッシュボード権限回収時にRecent Connectionsに表記される方法を改善
+* [General] Audit Log Export Preview UIの改善
+* [General] Configuration設定をApproval Rules -&gt; Generalメニューに移動
+* [General] WorkflowのServer Access Request申請時に時間単位申請機能を追加
+* [General] WorkflowのRequestタイプ別ユーザー露出制御機能
+* [General] Workflowで決裁者の自己承認許可可否オプションを追加
+* [DAC] Security設定をGeneral &gt; Security -&gt; Databases &gt; Configurationsメニューに移動
+* [SAC] Role変更およびDirect Permission付与される場合でもセッション維持するよう改善
+* [SAC] Server Privilege Requestの申請時間デフォルト値を60分に修正
+* [SAC] Security設定をGeneral &gt; Security -&gt; Servers &gt; Configurationsメニューに移動
+* [KAC] Security設定をGeneral &gt; Security -&gt; Kubernetes &gt; Configurationsメニューに移動
+* [WAC] Web App作成時にBase URLでIPアドレスを入力できるよう改善
+
+
+**Bug Fix**
+
+* [General] RDP Server Agentのバージョン表記が正しく行われない問題を解決
+* [SAC] Terminalを開いてRoleが変更された場合、ターミナルの「+」クリック時にServersタブに移動するよう修正
+* [WAC] Slackで承認後リンククリック時に接続不可問題を解決
+* [WAC] 削除されたユーザーが付与したrole回収時のエラーを解決
+* [WAC] base urlにダミー値を入れた場合のエラー発生問題を解決
+* [WAC] ユーザーダッシュボードのWeb Appの名前が長くなった時に整列されないバグを修正
+* [WAC] QueryPieログインが切れた状態でエクステンションPop-upのログイン案内が非表示になる問題を解決
+* [Workflow] Urgent mode Off設定時にWeb App Just-In-Time Access RequestでUrgent mode設定エリアが表示される問題を解決

@@ -1,0 +1,52 @@
+---
+title: 'External API変更事項（9.8.10バージョン > 9.9.4バージョン）'
+---
+
+---
+
+# API Docs JSON file
+
+:paperclip: [9810_external.json](9810_external.json)
+:paperclip: [994_external.json](994_external.json)
+
+
+---
+
+# 1. Authentication
+
+* API Key HTTP Header nameが変更されました
+
+|                             |  **変更前**            |  **変更後**     |
+| --------------------------- | -------------------- | ------------- |
+|  **Header Parameter name**  | X-QueryPie-Api-Token | Authorization |
+
+---
+
+# 2. Alert API
+
+### 変更/改善事項
+
+* 各Alert TypeごとにAPIが分離されました
+* List APIは簡単な情報のみ返すよう変更
+* 新規Detail API、Create API、Update APIが各タイプ別に追加
+
+### 新規APIエンドポイント
+
+* SQL Execution: `/api/external/alerts/sql-execution`
+* Prevented SQL Execution: `/api/external/alerts/prevented-sql-execution`
+* DB Connection Attempt: `/api/external/alerts/db-connection-attempt`
+* Sensitive Data Access: `/api/external/alerts/sensitive-data-access`
+* Data Export: `/api/external/alerts/data-export`
+* Workflow New Request: `/api/external/alerts/workflow-new-request`
+* Unusual Login Attempt（新規）: `/api/external/alerts/unusual-login-attempt`
+
+---
+
+# 3. その他の主要変更事項
+
+* Approval Rule APIでRequestTypeに`EXPORT`が追加
+* Audit Log APIでRedisサポート追加
+* Cloud Provider APIで同期化データベースタイプ指定機能追加
+* Connection APIでconnectionAccount構造改善
+
+（詳細な変更内容は元のドキュメントを参照してください）

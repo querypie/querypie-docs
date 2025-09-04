@@ -1,0 +1,60 @@
+---
+title: '9.19.0'
+---
+
+## QueryPie 9.19.0 Release
+
+2024年06月03日
+
+
+**New Features**
+
+* [SCIM] SCIM 2.0基盤ユーザーおよびグループプロビジョニングをサポート
+* [Users] ユーザーAttributeプロファイル管理機能をサポート
+* [Integrations] SIEM、SOARなどSecurity Tools連携のためのIntegrationsメニューを新設
+* [DAC] SingleStore新規ベンダーをサポート
+* [DAC] SAP HanaDB新規ベンダーをサポート
+
+
+**Enhancement**
+
+* [Workflow] SQL Export Requestマルチクエリ上申機能を提供
+* [Workflow] Approval Rule設定時にServer Group Ownerを承認者に指定できる機能を追加
+* [Ledger] 理由入力設定オプションに対する管理者On/Off機能を提供
+* [Ledger] 理由入力文言再使用オプションを提供
+* [Ledger] Oracle新規ベンダーをサポート
+* [SAC] AgentのLinuxをサポート
+* [SAC] PolicyエディターVisual Modeの追加をサポート
+* [SAC] サーバーグループ内のServer Group Owner指定機能を追加
+* [ABAC] ユーザーAttribute基盤ポリシー制限条件定義をサポート
+
+
+**Bug Fix**
+
+* [DAC] [Postgres] AWS Lambda関数呼び出し構文実行失敗問題を解決
+* [DAC] [Postgres] decode関数実行時のエラー発生問題を解決
+* [DAC] [MySQL] Proxyを通じたBLOB INSERT時に発生するエンコーディングエラーを修正
+* [DAC] [MySQL] DML Snapshot活性化状態でのBLOB INSERT時に発生するエラーを修正
+
+
+**External API**
+
+* 新規V2 API追加および一部APIクエリパラメーター改善
+    * List Servers（照会時にサーバー名nameでフィルター可能）
+    * Server Group Owners API（サーバーグループオーナー照会/割当/削除）
+    * Server Groups API
+        * List Group Servers（照会時にサーバーグループ名nameでフィルター可能）
+        * グループフィルタータグ条件上書き可能
+        * サーバーグループにサーバー追加および削除可能
+    * User Management API（ユーザー作成/照会/削除機能追加）
+    * User Group Management API（ユーザーグループ作成/照会/削除可能）
+    * Group Member Operations API（ユーザーグループメンバーシップ照会/追加/削除）
+    * Workflow - System Access Request Details（サーバーアクセス申請ワークフロー詳細履歴照会可能）
+* 一部APIスペック変更 - deletedフィールド削除
+    * List Users (`/api/external/v2/users`)
+    * Get User (`/api/external/v2/users/{userUuid}`)
+    * List DB Cloud Providers (`/api/external/v2/dac/cloud-providers`)
+    * List DB Connections (`/api/external/v2/dac/connections`)
+    * Get DB Connection (`/api/external/v2/dac/connections/{dbConnectionUuid}`)
+    * List Privileges (`/api/external/v2/privileges`)
+    * Get Privilege (`/api/external/v2/privileges/{uuid}`)

@@ -1,0 +1,185 @@
+---
+title: '9.9.0 ~ 9.9.8'
+---
+
+import { Callout } from 'nextra/components'
+
+
+<Callout type="info">
+External API変更事項は以下のリンクをご参照ください。
+* [External API変更事項（9.8.10バージョン &gt; 9.9.4バージョン）](990-998/external-api-changes-9810-version-994-version)
+* [External API変更事項（9.9.4バージョン &gt; 9.9.5バージョン）](990-998/external-api-changes-994-version-995-version)
+</Callout>
+---
+
+## QueryPie 9.9.8 Release
+
+2023年01月18日
+
+* HBaseベンダーサポート中断
+---
+
+## QueryPie 9.9.7 Release
+
+2023年01月09日
+
+**Enhancement**
+
+* [Agent] エージェント実行時のzscaler VPN衝突問題を解決
+---
+
+## QueryPie 9.9.6 Release
+
+2023年01月04日
+
+**Enhancement**
+
+* CVE（Common Vulnerabilities and Exposure、共通脆弱性および暴露）セキュリティ脆弱点を削除
+---
+
+## QueryPie 9.9.5 Release
+
+2022年12月06日
+
+**Enhancement**
+
+* [Access Control] Active状態確認可能なカラムを追加
+* [Agent/Proxy] MongoDB Connection情報内のHost構造を改善（Connection String）
+* [Cloud Provider] AWS Credential内のInstance Profile &gt; Default Credentialsに名称変更
+* [Connections] 左側ListパネルサイズのUIを改善
+* [Policy] Masking rule作成時のPattern previewを追加
+* [Policies] Rule作成時のColumn Name長さ表示を改善
+* [Settings] 全体Menuリスト UIの状態を改善
+* [Support] 製品内Contact Supportページのリンクを変更
+* [Syslog] 属性追加およびフィルタリングをサポート
+* [User Access History] メニュー内のログDetailsページを追加
+* [Web Editor] Reload Object UIを追加
+
+**Bug Fix**
+
+* QCP-173 [Access Control] renewした権限が一日経つと再びdeactivatedされる問題を解決
+* QCP-50 [Access Control] 権限再付与時に発生するduplicate keyエラーを解決
+* QCP-138 [Agent] Windows 1709以下バージョンでのエージェント実行エラーを解決
+* QCP-285 [Agent] ODBC Client接続時にプロセスが見つからない問題を解決
+* QCP-238 [Authentication] SwivelSecure連携時にユーザー追加ができない問題を解決
+* QCP-240 [Authentication] XFFパースエラーによるsamlログイン失敗問題を解決
+* QCP-177 [Cloud Provider] EKS IRSA環境でCross account role方式の同期が動作しない問題を解決
+* QCP-244 [Cloud Provider] EC2環境でCross account role方式の同期が動作しない問題を解決
+* QCP-126 [MariaDB] timestampデータタイプ照会時にNULLで表示される問題を解決
+* QCP-62 [Policies] 正規表現を通じたデータマスキング規則作成関連問題を解決
+* QCP-286 [PostgreSQL] タブに選択されたカタログ基準で照会されない問題を解決
+* QCP-199 [Dynamodb] テーブル照会関連最大数制限関連問題を解決
+---
+
+## QueryPie 9.9.4 Release
+
+2022年11月14日
+
+**Bug Fix**
+
+* [User] ユーザーグループの接続権限がDeactived状態の場合に発生するエラーを修正
+---
+
+## QueryPie 9.9.3 Release
+
+2022年11月04日
+
+**New Features**
+
+* [DB] Redis接続をサポート
+* [Proxy] MongoDB Proxy接続をサポート
+
+**Enhancement**
+
+* [Privilege] Redisアクセス制御のためのPrivilegeメニューにDBタイプを追加
+* [DB] Impala Kerberos個別キータブをサポート（クラスター構造対応）
+* [Agent] ファイルダウンロードバージョンを追加（Apple Silicon）
+* [Cloud Provider] Access Key複数登録をサポート
+* [Activity Log] LDAP &gt; Inactive new user by defaultオプションを追加
+* [Audit] Query Audit、Running Queriesフィルタ内の基本検索期間を1ヶ月 → 1日に変更
+* [Alert] DB Connection Attempt内のオプションUIを変更およびMessage Template Variableを追加
+
+**Bug Fix**
+
+* [Privilege] 全体権限があるユーザーのDISTINCTクエリ実行エラーを改善
+* [SQL Editor] 自動完成更新のためにエディター内のコンテキストメニューに「Reload Auto Complete」機能を追加
+* [Alert] HTTP Channelレスポンス結果NULL保存関連エラーを改善
+* [Connection] 削除されたユーザーのUser not foundエラー関連データ処理ロジックを改善
+* [Policy] マスキング適用されたテーブルでServer sent unknown charsetnrエラーを解決
+* [External API] アップデート直後のalert external apiが正常動作しない問題を解決
+* [MySQL] mysqlbinlogコマンド使用時にバイナリログ抽出されずレスポンス待機が継続する問題を解決
+* [PostgreSQL] Proxy接続時のINSERT関連エラーを修正
+* [Migration] Query Auditログの実行時間/生成時間差によるサーバーメモリ関連問題を解決
+* [Performance] hubサーバーのCPUが持続的に増加する問題を解決
+* [ScyllaDB] Not Supported serialization type問題関連の未サポートデータタイプを追加
+* [Filter] Usersメニューのstatusフィルタ適用エラーを解決
+* [Bigquery] bigquery接続にリージョン選択機能を追加（カカオモビリティ）
+---
+
+## QueryPie 9.9.2 Release 
+
+2022年10月17日
+
+**New Features**
+
+* [Workflow（決裁）] タイプ内のData Exportリクエストおよび承認機能を追加
+
+**Enhancements**
+
+* [Authentication] LDAP同期時のユーザーInactiveオプションを追加（同期されていないユーザーの場合、ログイン不可）
+* [Manage Connections] Label（Normal / Ledger）カラム項目を追加
+* [Alerts] DB Connection Attempt項目内のFailure Trigger（Action Count、Specified Time Interval）を追加
+* [Alerts] Unusual Login Attempt（IP Access）タイプを追加
+* [Cloud Provider] 同期時のDatabase Typeフィルタを追加
+* [Users] Description項目内のLocked、Locked Manually状態区分およびツールチップ表示を改善
+* [Privilege Type] 重複したPrivilege Nameを使用できないよう変更
+* [Agent] アップデート失敗時のアプリ終了現象を修正およびガイドメッセージを改善
+* [MongoDB] 接続時のPassword未入力エラーメッセージを改善
+* [MySQL] 接続失敗時のエラーメッセージを改善
+* [Audit & Log] メニュー内検索基本値をNameに改善
+
+**Bug Fix**
+
+* [Groups] Groupを最後に更新したユーザー削除後、該当groupを削除時のエラーを修正
+* [External API] Data Access Policy Rule削除関連エラーを修正
+* [Proxy] Proxyを通じたmysql workbench接続試行時のQPA-03EEエラーを修正
+* [SQL Editor] 新規テーブル追加後のSQL Editor自動完成に反映されないエラーを修正
+* [SQL Editor] Oracle接続後のテーブル選択時のSpecified method is not supportedエラーを修正
+* [SQL Request] SQL Request実行後の状態ログアップデートエラーを修正
+* [Agent] Impala接続不可エラーを修正
+---
+
+## QueryPie 9.9.1 Release 
+
+2022年09月14日
+
+**New Features**
+
+* 実行中クエリ確認可能なRunning Queriesメニューを新規追加
+
+**Bug Fix & Enhancement**
+
+* DML Snapshot機能詳細スペック調整
+* Sensitive Dataログに照会件数を表示
+* Settingメニュー名一部調整（Settings、SSL Configuration、Query Audit、DB Access History）
+* DB Access History &gt; Connected fromカラム記録を追加
+* Drawer header / Workflowタイトル変更および文字数制限
+* Report / Accessible Users画面でDeactivatedが表示されない問題を解決
+* Connection Label（Ledger）項目をsyslogに含める
+* Index Range Scan関連でインデックスが見つからない場合のテーブルデータ修正機能を非活性化
+* クラスター同期機能でSecurity Group同期しないよう処理
+* Network Zoneメニューカラム調整（Cloud Provider項目削除）
+* DocumentDB AWS同期時にTLS設定も一緒に維持するよう処理
+* 同期されたOracle接続でlistener type変更可能にするよう修正
+* ユーザー個別SQL History削除処理基準日適用関連ガイドツールチップを追加
+* Export時、データサイズが一つのセルの最大サイズを超える場合の処理を改善
+* Data Export Type Alert送信されない問題を修正
+* Account Expiration Periodユーザー非活性化動作問題を修正
+* User name変更時のadmin role値が「None」に変更されるエラーを修正
+* LDAP同期ユーザー修正時のemail必須値処理を解除
+* LDAPログイン時のエラーメッセージを改善
+* SAML Login Error時のメッセージを改善
+* Authentication &gt; Okta Install Guideリンクを変更
+* System Propertiesページを追加
+* Reports &gt; 結果ダウンロード時のExport a file with Encryptionオプションを適用
+* Groupsメニュー検索フィルタ項目を調整

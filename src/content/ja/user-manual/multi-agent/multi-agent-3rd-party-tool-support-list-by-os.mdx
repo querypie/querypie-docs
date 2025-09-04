@@ -1,0 +1,64 @@
+---
+title: 'Multi Agent OS別3rd Party Toolサポートリスト'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie Multi Agentでサポートされる3rd Party Toolリストです。
+
+Open Connection With機能を通じて3rd Party Toolを実行し、正常に使用可能なツールリストです。
+
+Agentless形態の接続を通じてサポートされるTool以外にも、DBまたはサーバーへの接続が可能です。
+
+
+## Database
+
+|  **Tools**         |  **Windows**       |  **MacOS**         |  **Linux**         |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| DBeaver            |  **サポート (10.2.6~)**  |  **サポート (10.2.6~)**  |  **サポート (10.2.8~)**  |
+| IntelliJ           |  **サポート (10.2.6~)**  |  **サポート (10.2.6~)**  |  **サポート (10.2.8~)**  |
+| Jdbc               |  **サポート (10.2.6~)**  |  **サポート (10.2.6~)**  |  **サポート (10.2.8~)**  |
+| SQLGate For Oracle |  **サポート (10.2.6~)**  | -                  | -                  |
+
+<Callout type="info">
+**Agentless接続案内**
+
+QueryPieはエージェントなしで生成されたURL Proxyを通じて安全にデータベースにアクセスできるようサポートします
+
+詳細な設定方法は[エージェントなしでProxy接続](../database-access-control/connecting-to-proxy-without-agent)ガイドをご参照ください。
+</Callout>
+
+
+## Servers
+
+|  **Tools**        |  **Protocol**  |  **Windows**       |  **MacOS**         |  **Linux**         |
+| ----------------- | -------------- | ------------------ | ------------------ | ------------------ |
+| iTerm             | SSH            | -                  |  **サポート (10.2.8~)**  | -                  |
+| Terminal          | SSH            | -                  |  **サポート (10.2.8~)**  | -                  |
+| ConsoleWindowHost | SSH            |  **サポート (10.2.8~)**  | -                  | -                  |
+| PuTTY             | SSH            |  **サポート (10.2.8~)**  | -                  | -                  |
+| SecureCRT         | SSH            |  **サポート (10.2.8~)**  | -                  | -                  |
+| Windows Terminal  | SSH            |  **サポート (10.2.8~)**  | -                  | -                  |
+| XShell            | SSH            |  **サポート (10.2.8~)**  | -                  | -                  |
+| GnomeTerminal     | SSH            | -                  | -                  |  **サポート (10.2.8~)**  |
+| Konsole           | SSH            | -                  | -                  |  **サポート (10.2.8~)**  |
+| FileZilla         | SFTP           |  **サポート (10.2.8~)**  |  **サポート (10.2.8~)**  | 未サポート                |
+| WindowsApp        | RDP            | -                  |  **サポート (10.2.8~)**  | -                  |
+| MSTSC             | RDP            |  **サポート (10.2.8~)**  | -                  | -                  |
+| ScreenSharing     | VNC            | -                  |  **サポート (10.2.8~)**  | -                  |
+
+<Callout type="info">
+**FileZilla使用時に多数のConnection（コネクション）が作成されます。**
+* FileZillaはファイルアップロード/ダウンロード時に作業を加速化するため**同時接続（multiple connections）方式を使用**します。これにより作業ファイル数やTask数に応じて**Session Monitoringで多数のConnection**が作成されます。
+* また、ダウンロードやアップロードが完了した後でもFileZillaのアイドル接続維持（persistent connection）設定により、コネクションが一定時間維持され、即座に終了されない場合があります。
+</Callout>
+
+<Callout type="info">
+**Seamless SSH接続**
+
+Seamless SSH設定を通じて、他のToolでもQueryPieを通じたサーバーへの安全な接続が可能です。
+
+詳細な設定方法は[Multi Agent Seamless SSH使用ガイド](multi-agent-seamless-ssh-usage-guide)ガイドをご参照ください。
+</Callout>

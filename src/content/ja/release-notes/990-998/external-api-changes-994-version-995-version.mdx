@@ -1,0 +1,76 @@
+---
+title: 'External API変更事項（9.9.4バージョン > 9.9.5バージョン）'
+---
+
+---
+
+# API Docs Json File
+
+:paperclip: [994_external.json](994_external.json)
+:paperclip: [995_external.json](995_external.json)
+---
+
+# 1. Access Approval API
+
+### (GET) List
+
+#### Request
+
+* 変更点なし
+
+#### Response
+
+* **id**が**追加**されました。
+
+---
+
+# 2. Approval API
+
+### (GET) List
+
+#### Request
+
+* 変更点なし
+
+#### Response
+
+* **id**が**追加**されました。
+
+---
+
+# 3. Audit Log API
+
+### (GET) List of Approval
+
+`/api/external/audit-logs`
+
+#### Request
+
+* Query Parameter
+* /api/docsで誤表記されていた**cursor**に関する内容が修正されました。
+
+#### Response
+
+* /api/docsで誤表記されていた**nextCursor**に関する内容が修正されました。
+
+---
+
+# 4. Notification Channels API
+
+### (GET) List
+
+`/api/external/notification-channels`
+
+#### Request
+
+* Query Parameter
+
+|**変更前**|**変更後**|
+|---|---|
+|* dataFlowRequest.filterKey<br/>* dataFlowRequest.filterValue<br/>* dataFlowRequest.sortKey<br/>* dataFlowRequest.sortType|* filterKey<br/>* filterValue<br/>* sortKey<br/>* sortType|
+
+* **名前**が**変更**されました。
+
+#### Response
+
+* 変更点なし

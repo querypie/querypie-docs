@@ -1,0 +1,84 @@
+---
+title: '9.16.0 ~ 9.16.4'
+---
+
+## QueryPie 9.16.4 Release
+
+2024年04月04日
+
+
+**Bug Fix**
+
+* [SAC] QueryPie Web IP Access Control設定時のWebターミナル接続エラーを解決
+---
+
+## QueryPie 9.16.3 Release
+
+2024年03月05日
+
+
+**Bug Fix**
+
+* [External API] Workflow API呼び出し時の必須値処理関連エラーを解決
+---
+
+## QueryPie 9.16.2 Release
+
+2024年02月15日
+
+
+**Bug Fix**
+
+* [SAC] Locked状態のアカウントがActiveで表示されるエラーを解決
+* [DAC] Username & Passwordが空欄のConnection削除時のActivity Logs記録エラーを解決
+* [Agent] Internal TLS Certificate Update
+
+
+---
+
+## QueryPie 9.16.1 Release
+
+2024年01月30日
+
+
+**Enhancement**
+
+* [Audit] DAC Log External API V2バージョンをサポート
+* [Audit] Activity Logs Affected Data保管ロジックを改善
+
+
+**Bug Fix**
+
+* [DAC] Owner権限でないユーザーのImpala接続エラーを解決
+
+
+---
+
+## QueryPie 9.16.0 Release
+
+2024年01月26日
+
+
+**New Features**
+
+* [Security] ユーザー別IP統制機能
+* [Audit] 監査ログ統計レポートBetaバージョンをリリース
+* [Audit] ログ無結性検証機能を追加
+
+
+**Enhancement**
+
+* [DAC] Cloud Provider Azure接続をサポート
+* [DAC] MongoDBマルチホスト方式をサポート
+* [SAC] Tag基盤サーバーグループ自動追加機能をサポート
+* [SAC] Secret Store連携機能追加およびサーバー認証情報へのVault連携をサポート
+* [SAC] SSH Keyファイルアップロード方式をサポート
+* [Audit] DML Snapshotログのbefore/afterデータに機密情報マスキング処理を改善
+
+
+**Bug Fix**
+
+* [MySQL] LEAD関数内でIF文を使用する場合のエラーを解決
+* [MariaDB] MariaDB 10.6.2.0バージョン以上の場合のTablePlus接続問題を解決
+* [MongoDB] Aggregate構文実行関連エラーを解決
+* [MongoDB] Proxy接続時のData Compressionオプション関連を改善

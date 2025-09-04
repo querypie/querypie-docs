@@ -1,0 +1,125 @@
+---
+title: '決裁付加機能（代理決裁、再上申など）'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Workflow使用時に便利さを追加する付加機能をご紹介します。
+
+
+## 参照されたリクエストの確認処理
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Reviews &gt; All Reviews &gt; Review Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png)
+<figcaption>
+Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
+</figcaption>
+</figure>
+
+1. Reviews &gt; All Reviewsリストで参照完了処理したいリクエストをクリックして詳細ページに入ります。
+    1. 参照文書は決裁承認状態と関係なく（承認前/後）すべて閲覧できます。
+    2. Review Statusが**Unread**のリクエストについてのみ`Confirm`が可能です。
+2. リクエスト詳細ページ右上の`Confirm`ボタンをクリックしてCommentを入力できるポップアップ窓を表示します。
+3. 検討意見を入力後`OK`ボタンを押して確認を完了します。
+4. All Reviewsリストに戻るとReview Status値が**Confirmed**に変更されたことを確認できます。
+
+
+
+## 代理決裁の使用
+
+代理決裁とは承認者役割を一定期間他のユーザーに委任する機能です。使用方法は以下の通りです。
+
+### 1. 代理決裁使用設定
+
+<figure data-layout="center" data-align="center">
+![User &gt; 上部メニューバーでプロフィールクリック &gt; Preferences](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png)
+<figcaption>
+User &gt; 上部メニューバーでプロフィールクリック &gt; Preferences
+</figcaption>
+</figure>
+
+*  **Delegate Approval to**  : 代理決裁者入力
+*  **Start Date**  : 代理決裁開始日
+*  **End Date**  : 代理決裁終了日
+*  **Delegation Reason**  : 代理決裁設定理由入力
+*  **Save**  : `Save`ボタンを入力すると代理決裁設定が保存されます。設定開始が当日の場合、`Save`で即座に適用されます。
+
+### 2. 代理決裁設定状態の確認
+
+代理決裁設定期間には元決裁者と代理決裁者のアクセス時に上部メニューバーに以下のように表示されます。
+<figure data-layout="center" data-align="center">
+![元決裁者基準表示内容](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120741.png)
+<figcaption>
+元決裁者基準表示内容
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![代理決裁者基準表示内容](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120854.png)
+<figcaption>
+代理決裁者基準表示内容
+</figcaption>
+</figure>
+<Callout type="info">
+代理決裁設定期間中、起案リクエスト者には別途の案内が表示されません。リクエスト者は普段通りApproval RuleおよびApproverを選択すれば問題ありません。
+</Callout>
+
+### 3. 委任された代理決裁リクエストの処理
+
+* 代理決裁設定期間中、代理決裁者が確認できるリクエストは以下の通りです。
+    *  **Received Requests &gt; To Do**  : 元決裁者が受信した未処理リクエストリスト（設定期間以前に受信したリクエストを含む）
+    *  **Received Requests &gt; Done**  : 代理決裁設定期間内に代理決裁者が処理したリクエストを見ることができます。
+* 詳細ページで承認または却下でき、Comment入力時には代理決裁中であることを知らせる文言が表示されます。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240802-124638.png](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png)
+</figure>
+
+### 4. 代理決裁処理されたリクエストの確認
+
+* 以下のようにリクエスト詳細ページ内の承認状況で元決裁者または代理決裁者が処理したのかを確認できます。
+**元決裁者が処理した場合**
+<figure data-layout="center" data-align="center">
+![代理決裁関連文言なし](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-153533.png)
+<figcaption>
+代理決裁関連文言なし
+</figcaption>
+</figure>
+**代理決裁者が処理した場合**
+<figure data-layout="center" data-align="center">
+![代理決裁者がDone by the delegateと共に表記される](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-152141.png)
+<figcaption>
+代理決裁者がDone by the delegateと共に表記される
+</figcaption>
+</figure>
+<Callout type="info">
+Slack DMを通じたリクエスト通知を使用中であれば、代理決裁者にもWorkflow段階別通知が送信されます。Slack DM通知関連の詳細は[Slack DM個人通知の使用](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types)文書をご参照ください。
+</Callout>
+
+### 5. 代理決裁設定終了後の起案照会方法
+
+* 代理決裁設定期間が終了しても、Received Requests &gt; Doneリストで代理決裁設定期間内に代理決裁者が処理したリクエストを確認できます。それ以外のリクエストはもはや照会や処理ができません。
+
+
+## 既存リクエストの再上申
+
+同一内容で反復的な決裁リクエストをしたり、却下処理された決裁案件について以下のように再上申できます。
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Sent Requests &gt; Done &gt; List Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/image-20230824-110815.png)
+<figcaption>
+Workflow &gt; Sent Requests &gt; Done &gt; List Details
+</figcaption>
+</figure>
+
+1. Sent Requests &gt; Doneリストで再上申したいリクエストをクリックして詳細ページに入ります。
+
+<Callout type="info">
+この際、既に削除されたデータ（決裁規則、承認者、サーバー、アカウントなど）は*Deleted*で表示されることを確認でき、削除された値は再上申時に除外され、修正された値は現在基準で読み込まれます。
+</Callout>
+
+1. 右上にある`Resubmit`ボタンをクリックして再上申ページに入ります。
+2. 再上申ページ内で修正したい値がある場合に修正します。
+3. `Save`ボタンを通じて保存します。
+4. Workflow &gt; Sent Request &gt; In Progressメニューで自分のリクエスト履歴と承認状況を確認できます。

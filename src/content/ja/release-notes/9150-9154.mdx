@@ -1,0 +1,82 @@
+---
+title: '9.15.0 ~ 9.15.4'
+---
+
+## QueryPie 9.15.4 Release
+
+2024年02月18日
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] Internal TLS Certificate Update
+
+
+---
+
+## QueryPie 9.15.3 Release
+
+2024年01月31日
+
+
+**Bug Fix & Enhancement**
+
+* Okta同期時のLast Name同期関連ロジック改善
+---
+
+## QueryPie 9.15.2 Release
+
+2024年01月16日
+
+
+**Bug Fix & Enhancement**
+
+* SSH-2.0-OpenSSH 5.3バージョンでssh-rsaアルゴリズムの下位互換をサポート
+
+
+---
+
+## QueryPie 9.15.1 Release
+
+2024年01月12日
+
+
+**Bug Fix & Enhancement**
+
+* [Log Export] エクスポートタスク実行関連のRunning Atフィールドを改善
+
+
+---
+
+## QueryPie 9.15.0 Release
+
+2023年12月08日
+
+
+**New Features**
+
+* [Security] パスワード期限サイクル設定およびリセット機能を追加
+* [Workflow] バックグラウンドクエリ実行
+* [Audit] Log Exportメニューを新規追加
+* [DAC] Secret Store連携機能追加およびDB認証情報へのVault連携をサポート
+* [DAC] Snowflake接続をサポート
+
+
+**Enhancement**
+
+* [Web Editor] Preview処理UXを改善
+* [IDP] LDAP同期時の2個以上グループ連携をサポート
+* [Agent] エージェント内にQueryPie Host選択リストを追加
+* [Agent] エージェントログインタイムアウト更新ロジックを改善
+* [DAC] Redis SSL/TLSをサポート
+* [SAC] SSH証明書追加対応
+
+
+**Bug Fix**
+
+* [Athena] AwsDataCatalogでデータベースを変更できない
+* [MongoDB] Import時の「"undefined" is not valid JSON」というエラーが発生
+* [Workflow] SQL Requestファイルタイプリクエスト再上申時にエディターモードを使用できない問題
+* [Editor] Querypie Export、mysqldump問題を解決
+* [Agent] 接続リストのExposeオプション処理が反映されるよう修正
+* [Athena] IAM権限によるエラー発生時のDB接続切断問題を改善
