@@ -1,0 +1,144 @@
+---
+title: 'WACトラブルシューティングガイド'
+---
+
+この文書ではWAC使用中に発生する可能性のある問題と解決策を案内します。
+
+### Extension (QueryPie Web Secure) インストール直後テストでアクセスポリシーが適用されないかオーディットログが欠落する場合
+
+WACエクステンションインストール前に開いていたタブに対しては管理が保証されません。
+
+このような状況を予防するため、既存に開いていたすべてのブラウザタブおよびウィンドウを閉じた後にエクステンションをインストールしてください。
+
+
+### WebAppに接続できず、ブラウザに`ERR_TIMED_OUT`エラーメッセージが表示される場合
+
+<figure data-layout="center" data-align="center">
+![image-20250401-011848.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png)
+</figure>
+
+ブラウザがWAC Proxyと接続できずに発生する現象の可能性があります。
+
+まずAdmin &gt; Web Apps &gt; Web app ConfigurationメニューでWAC Proxyアドレスがよく設定されているか確認します。
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012042.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012042.png)
+</figure>
+
+問題が発生したブラウザのローカルターミナルで以下のコマンドを実行してWAC Proxyに接続できるか確認します。
+
+まずnc（netcat）CLIでポート接続ができるか確認します。
+```
+$ nc -vz internal-proxy.querypie.io 7447
+Connection to internal-proxy.querypie.io port 7447 [tcp/*] succeeded!
+```
+
+nc接続がよくできれば以下のようにcurlコマンドでHTTPリクエストとレスポンスがよく来るか確認します。
+
+nc接続がよくできれば以下のようにcurlコマンドでHTTPリクエストとレスポンスがよく来るか確認します。
+```
+$ $ curl -v -k https://internal-proxy.querypie.io:7447
+* Host internal-proxy.querypie.io:7447 was resolved.
+* IPv6: (none)
+* IPv4: 10.60.40.1, 10.60.52.85, 10.60.74.191
+*   Trying 10.60.40.1:7447...
+* Connected to internal-proxy.querypie.io (10.60.40.1) port 7447
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+* (304) (IN), TLS handshake, Server hello (2):
+* (304) (IN), TLS handshake, Unknown (8):
+* (304) (IN), TLS handshake, Certificate (11):
+* (304) (IN), TLS handshake, CERT verify (15):
+* (304) (IN), TLS handshake, Finished (20):
+* (304) (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+* ALPN: server did not agree on a protocol. Uses default.
+* Server certificate:
+*  subject: CN=internal-proxy.querypie.io
+*  start date: Feb 13 00:00:00 2025 GMT
+*  expire date: Feb 13 00:00:00 2075 GMT
+*  issuer: CN=querypie
+*  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: internal-proxy.querypie.io:7447
+> User-Agent: curl/8.7.1
+> Accept: */*
+>
+* Request completely sent off
+< HTTP/1.1 407 Proxy Authentication Required
+< Proxy-Authenticate: Basic realm="QueryPie Proxy"
+< Date: Tue, 01 Apr 2025 01:22:26 GMT
+< Content-Length: 0
+<
+* Connection #0 to host internal-proxy.querypie.io left intact
+```
+
+ここまで進行しても現象が同じであればChromeブラウザのネットワークログが必要です。
+
+**実行方法**
+
+* Chromeブラウザで `chrome://net-export/` を開き、Start Overをクリックします。（Optionsはデフォルト値の `Strip private information` を選択します。）
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012452.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012452.png)
+</figure>
+
+* Chromeブラウザで接続できないWebAppアドレスを入力して移動します。
+* 現象が再現されたことを確認し、再び `chrome://net-export/` タブに移動してStop Loggingをクリックします。
+* Chromeブラウザネットワークログファイルをコピーします。
+
+**ログ分析方法**
+
+* [https://netlog-viewer.appspot.com/](https://netlog-viewer.appspot.com/) に接続します。
+* 左側Importメニューで上で受け取ったログファイルをアップロードします。
+* 左側Eventsメニューでネットワーク送受信内容を確認します。
+
+<figure data-layout="center" data-align="center">
+![image-20250401-012759.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012759.png)
+</figure>
+
+
+### PCが長時間スリープモードから目覚めた時、Chromeブラウザで管理するログインウィンドウが表示される場合
+
+PCがスリープモードに入った後目覚めた場合、Chromeブラウザで管理するログインウィンドウが表示される可能性があります。
+
+このログインウィンドウはブラウザでProxy認証を実行するのに失敗したため現れるもので、QueryPie IDおよびパスワードを入力しても認証されません。
+
+この場合、以下のように進行すると再び正常に製品を使用できます。
+
+**解決方法:**
+
+1. エクステンションに再ログインします。
+2. Roleを選択します。
+3. Chromeブラウザで管理するログインウィンドウが表示されたタブをリフレッシュします。
+
+
+### QueryPie APIサーバー障害によりWebブラウザ内でマウスクリックが効かなくなった場合
+
+QueryPie APIサーバーの障害が発生する場合、Webブラウザ内で継続してマウスクリックができなくなる可能性があります。
+
+この時は一時的に以下のようにWACエクステンション無効化措置後、管理者にお問い合わせください。
+
+**解決方法:**
+
+1. Chrome &gt; 拡張機能管理ページに移動します。（アドレスバーでchrome://extensions/ を入力すると簡単に移動できます）
+2. 全体拡張機能リストでQueryPie Web Secure（エクステンション）を見つけ、右下のトグルを無効化します。
+
+これによりQueryPie WACを通じてのみアクセスするように  **指定されていない**  Webアプリは正常にブラウジング可能です。
+
+QueryPie APIサーバーの正常化後には再びエクステンションを使用できます。エクステンションを有効化した後、再設定を実行することをお勧めします。
+
+
+### QueryPie Web Secureログ抽出方法
+
+QueryPie Web Secure（Extension）に問題が発生した場合、関連ログを抽出する方法を案内します。
+
+1. 以下の方法でChrome開発者ツールを実行します。
+    1. Windows : Ctrl + Shift + I
+    2. MacOS : Cmd + Option + I
+    3. または、問題が発生したウィンドウでマウス右クリック後コンテキストメニューで `検査` ボタンクリック
+
+1. パネルリストで、 `QueryPie Web Secure` をクリックします。
+2. 開発者ツールでログ抽出機能が実行されます。 `Export Log` ボタンをクリックするとquerypie-web-secure-logs.jsonファイルの別途保存が実行されます。 `保存` ボタンを押します。
+3. 保存完了されたログをCSリクエスト時に一緒に添付します。

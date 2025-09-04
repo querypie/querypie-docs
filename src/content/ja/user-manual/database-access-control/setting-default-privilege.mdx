@@ -6,7 +6,7 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-単一DB接続に複数のPrivilege権限が付与された場合に基本で接続するDefault Privilegeを設定する機能です。
+単一DBコネクションに複数のPrivilege権限が付与された場合に基本で接続するDefault Privilegeを設定する機能です。
 
 
 ## Default Privilege設定
@@ -36,6 +36,6 @@ QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; De
 <Callout type="important">
 * 付与された権限が2個以上だがDefault Privilege設定がされていない場合、最も最初にgrantされたprivilegeがdefault privilegeになります。エージェントプロキシ、SQL Request、Export Requestで接続時Default Privilegeで選択された権限でDBに接続します。
 * Default Privilege変更はウェブとMulti-Agentで提供します。User AgentではDefault Privilege変更機能は提供せず、ユーザーは接続するPrivilegeを変更しようとする場合、ウェブページで変更する必要があります。
-* Default Privilegeで接続に既に接続されている状態でDefault Privilegeを変更した場合または該当権限を回収した場合、既存セッションはDisconnect処理し、新しいDefault権限で新規Connect処理します。
+* Default Privilegeでコネクションに既に接続されている状態でDefault Privilegeを変更した場合または該当権限を回収した場合、既存セッションはDisconnect処理し、新しいDefault権限で新規Connect処理します。
 *  付与された権限が2個以上の場合Default privilege設定がされていない状態でprivilege deactivation period超過でinactive状態になった場合、agentを通じて接続できません。Default privilegeが設定されていても状態がprivilege deactivation period超過でinactiveの場合接続できません。
 </Callout>

@@ -4,7 +4,7 @@ title: 'Account Lock History'
 
 ## Overview
 
-QueryPieのユーザー別接続パスワード失敗および長期未接続による接続ロック履歴を表示します。パスワード誤入力、非認可IPの接続試行など接続失敗した回数をすべてカウントし、管理者が設定した接続失敗閾値到達時接続アカウントがLock状態になります。
+QueryPieのユーザー別コネクションパスワード失敗および長期未接続によるコネクションロック履歴を表示します。パスワード誤入力、非認可IPの接続試行など接続失敗した回数をすべてカウントし、管理者が設定した接続失敗閾値到達時接続アカウントがLock状態になります。
 
 ## DB Account Lock History照会
 
@@ -19,7 +19,7 @@ Administrator &gt; Audit &gt; Databases &gt; Account Lock History
 2. テーブルに発生時点降順でリストにログが露出されます。
 3. テーブル左上の検索欄を通じてユーザー名で検索が可能です。
 4. 検索フィールド右側フィルターボタンをクリックして **Action At** に対する日時範囲を再指定してフィルタリングが可能です。
-    1.  **Connection Name**  : 接続したDB接続名
+    1.  **Connection Name**  : 接続したDBコネクション名
     2.  **Database Type** : データベースタイプ
     3.  **Lock Status**  : ロックタイプ
         1.  **Locked**  : ユーザーのアカウントロックイベント
@@ -29,7 +29,7 @@ Administrator &gt; Audit &gt; Databases &gt; Account Lock History
 6. テーブルで以下のカラム情報を提供します：
     1.  **Name**  : 対象ユーザー名
     2.  **Email**  : 対象ユーザーメール
-    3.  **Connection Name**  : 対象DB接続名
+    3.  **Connection Name**  : 対象DBコネクション名
     4.  **Database Type**  : 対象データベースタイプ
     5.  **Attempted Count**  : 接続試行回数
     6.  **Lock Status**  : ロック現況

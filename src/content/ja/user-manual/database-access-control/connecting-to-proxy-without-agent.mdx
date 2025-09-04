@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 ## URL Proxy認証情報受領
 
 <Callout type="info">
-この作業は管理者によってProxy使用が有効化されたDB接続に限ってのみ実行が可能です。使用設定のために[Database Proxy使用有効化](../../querypie-overview/proxy-management/enable-database-proxy)文書を参照してください。
+この作業は管理者によってProxy使用が有効化されたDBコネクションに限ってのみ実行が可能です。使用設定のために[Database Proxy使用有効化](../../querypie-overview/proxy-management/enable-database-proxy)文書を参照してください。
 * 10.2.6からOracleユーザー接続ページProxy InfoにService Name/SID情報が表記されます。
 </Callout>
 
@@ -35,5 +35,5 @@ QueryPie Web &gt; Data Access Control &gt; Databases &gt; Proxy Info &gt; Create
 </figcaption>
 </figure>
 
-1. 該当ポップアップで提供する **Username** および **Password** を使用しようとするサービスに入力してクエリパイプロキシを通じた接続を有効化します。（該当ユーザー認証トークン情報は最初発行時にのみ全体露出されます）
+1. 該当ポップアップで提供する **Username** および **Password** を使用しようとするサービスに入力してQueryPieプロキシを通じた接続を有効化します。（該当ユーザー認証トークン情報は最初発行時にのみ全体露出されます）
 2. もしトークンキーを紛失した場合、既存キーを履歴で`Revoke`ボタンをクリックして削除し、再度`Create Token`ボタンをクリックしてトークンを新規発行して使用してください。

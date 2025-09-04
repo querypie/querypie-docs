@@ -1,0 +1,112 @@
+---
+title: 'Web App ConfigurationsでWAC初期設定'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+Web App Configurationsページは10.2.6またはそれ以上のバージョンで使用できます。
+</Callout>
+
+
+Web App ConfigurationsページではWAC関連の初期設定をGUIで実行できます。
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations](/administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations/screenshot-20250413-224538.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
+</figcaption>
+</figure>
+
+## WAC Proxy Configurations**[10.2.6~]**
+
+WACプロキシサーバー構成後、サーバー設定情報を入力します。各フィールドに対する説明は以下の通りです。
+
+*  **Proxy Host** : WACプロキシホストのFQDN（正規化されたドメイン名）を設定するフィールドです。
+    * Proxy HostフィールドにはFQDNまたはIPアドレスを入力できます。
+    * デフォルト値の `wac-proxy.querypie.io` は任意に設定された値で、WACを正しく使用するには実際に使用するプロキシホストに合わせて変更する必要があります。
+    * Proxy Hostを変更した場合  **QueryPieアプリケーションを再起動する必要があります。**  
+*  **Proxy Port** : WACプロキシサーバーのポート番号です。デフォルト値は `7447` です。
+
+<Callout type="info">
+**QueryPieアプリケーションを再起動する方法** は以下の通りです。
+1. QueryPieがインストールされたEC2サーバーに接続します。
+2. 以下のコマンドを実行してコンテナを終了します: `docker compose down`
+3. 以下のコマンドを使用してコンテナを再起動します: `docker compose up -d`
+</Callout>
+
+## QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
+
+WAC Extension関連設定を管理者が直接管理できます。
+
+* 基本的には製品リリース時点の最新エクステンションをダウンロードできるパブリックリンクと互換性情報が含まれています。
+* 閉鎖網環境のユーザーを対象にWAC Extension配布が必要な場合は、インターネット接続可能なPCでWAC Extensionファイルをダウンロードした後、Configurationsでファイルを内部ストレージにアップロードします。
+* 正規リリースと別途WAC Extensionパッチがリリースされた場合に変更された設定値を適用します。これによりユーザーにも変更されたエクステンションを配布できます。
+
+各フィールドに対する説明は以下の通りです。
+
+*  **Extension File** : エクステンションファイルをダウンロードできるパスです。
+*  **Current Version** : 現在登録されたエクステンションバージョン情報です。
+*  **Minimum Required Version** : 現在インストールされたQueryPieバージョンで最低限要求するエクステンションバージョンの値です。
+    * WACサーバーでユーザーブラウザにインストールされたエクステンションバージョン情報を検査して、該当フィールドに入力された値より低いバージョンを使用している場合はエクステンション更新を強制します。
+
+<Callout type="info">
+Current Version、Minimum Required Version情報はQueryPieで提供する互換性情報に合わせて入力されなければなりません。
+</Callout>
+
+### 閉鎖網環境でWAC Extension配布
+
+1. インターネット接続可能なPCでWAC Extensionをダウンロードしておきます。
+2. 閉鎖網環境でQueryPie &gt; Web App Configurationsページに接続した後、QueryPie Web Secure (Extension) Configurationsセクションで `Edit` ボタンをクリックします。
+3. Extension Fileオプションで `Add by File Upload` を選択し、ダウンロードしていたエクステンションファイルをアップロードします。<br/>
+
+
+1. 別途受け取った互換性情報変更事項がない場合、Current Version、Minimum Required Version情報は既存値を維持します。
+2. `Save` ボタンを押して保存します。
+3. Extension Fileリンクが `https://dl.querypie.com/…` で始まるリンクから、現在使用中のQueryPie Domainで始まるリンクに変更されたことを確認できます。
+
+### 緊急パッチExtensionリンク配布
+
+1. QueryPie Web Secure (Extension) Configurationsセクションで `Edit` ボタンをクリックします。
+2. Extension Fileオプションで `Add by Link` を選択し、受け取った新規ダウンロードリンクを貼り付けます。
+3. QueryPie製造元から受け取ったガイドに合わせて互換性情報変更事項を更新します。
+4. `Save` ボタンを押して保存します。
+
+## Watermark Configurations**[10.2.6~]**
+
+Watermark Configurationsセクションでは現在適用されたウォーターマーク文句設定を確認し、ウォーターマーク適用時管理者が望む文句を設定できます。
+
+1. 文句設定を変更するには `Edit` ボタンをクリックします。
+2. 設定モーダルが開いた状態では現在接続したユーザーを基準にウォーターマーク適用結果をプレビューできます。<br/>
+3.  **Custom String**  : ウォーターマークに表示したいテキストを入力できます。最大40文字まで入力可能です。
+4.  **ユーザー情報**  : Username、Display Name、Email、Employee number、Organization、Division、Department情報を表示できます。
+5.  **Timestamp**  : ページに最初に接続した時間が表示されます。
+6.  **Client IP**  : ページに接続したクライアントIPが表示されます。
+
+## Root CA Certificate Configurations**[10.2.8~]**
+
+Root CA Certificate ConfigurationsセクションではQueryPieで既存使用中のRoot CA証明書をバックアップし復元できます。
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations &gt; Manage .cer file モーダル](/administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations/screenshot-20250413-225409.png)
+<figcaption>
+Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations &gt; Manage .cer file モーダル
+</figcaption>
+</figure>
+
+1. Manage .cer file
+    1. Backup Root CA Certificate File : 現在使用中の証明書ファイルをダウンロードできます。（ユーザープロフィール &gt; Web Secureで受け取れる証明書ファイルと同一です）
+    2. Restore Root CA Certificate File : ダウンロードしていた証明書ファイルをアップロードできます。
+2. Manage .key file
+    1. Backup Root CA Certificate Key File : 現在使用中の証明書キーファイルをダウンロードできます。
+    2. Restore Root CA Certificate Key File : ダウンロードしていた証明書ファイルをアップロードできます。
+
+<Callout type="info">
+証明書をアップロードした後、変更事項を適用するには  **QueryPieアプリケーション再起動が必要です。**
+
+**QueryPieアプリケーションを再起動する方法** は以下の通りです。
+
+1. QueryPieがインストールされたEC2サーバーに接続します。
+2. 以下のコマンドを実行してコンテナを終了します: `docker compose down`
+3. 以下のコマンドを使用してコンテナを再起動します: `docker compose up -d`
+</Callout>

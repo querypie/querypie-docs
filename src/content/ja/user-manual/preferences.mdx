@@ -10,7 +10,7 @@ Preference画面を通じてQueryPieユーザーの個人別環境を設定で�
 
 ## ユーザーアカウントメニューのPreferenceボタン
 
-個別ユーザーの環境設定をするには上部メニューバー右側のユーザーアカウントをクリックし、メニューでPreferencesボタンをクリックします。
+個別ユーザーの環境設定を行うには、上部メニューバー右側のユーザーアカウントをクリックし、メニューからPreferencesボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 ![image-20250724-092314.png](/user-manual/preferences/image-20250724-092314.png)
@@ -19,10 +19,10 @@ Preference画面を通じてQueryPieユーザーの個人別環境を設定で�
 
 ## My Account
 
-My Accountタブではユーザーアカウント情報を確認しパスワードを変更できます。
+My Accountタブでは、ユーザーアカウント情報を確認し、パスワードを変更できます。
 
 <Callout type="info">
-パスワード変更機能はQueryPieで作成したアカウントでのみサポートされます。SSO Login使用時パスワード変更はQueryPieではなく個別IdPのユーザー設定機能を利用してください。
+パスワード変更機能はQueryPieで生成したアカウントでのみサポートされます。SSO Login使用時は、パスワード変更はQueryPieではなく個別IdPのユーザー設定機能をご利用ください。
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -32,14 +32,14 @@ My Accountタブではユーザーアカウント情報を確認しパスワー�
 </figcaption>
 </figure>
 
-*  **Language Preference**  : ユーザーは自分が希望する表示言語を選択でき、コンファムモーダルが現れるとOKボタンを押して適用できます。言語設定が適用される即座にユーザーのページがリロードされます。 
-    * 現在以下の言語がサポートされ、英語外言語はBetaで一部メニューに対しては英文表記のまま残る可能性がある点を共有します。 
+*  **Language Preference**  : ユーザーは希望する表示言語を選択でき、確認モーダルが表示されたらOKボタンを押して適用できます。言語設定が適用されると同時にユーザーのページがリロードされます。
+    * 現在以下の言語がサポートされており、英語以外の言語はBetaで一部メニューについては英文表記のまま残る可能性がある点をご共有いたします。
         * 英語
         * 韓国語 **[Beta]** 
         * 日本語 **[Beta]** 
 
 <Callout type="important">
-該当設定はユーザーブラウザのローカルストレージに保存されます。ローカルストレージが初期化される時、ユーザーは本言語設定を再び保存してください。
+該当設定はユーザーブラウザのローカルストレージに保存されます。ローカルストレージが初期化された際は、ユーザーは本言語設定を再度保存してください。
 </Callout>
 
 
@@ -48,7 +48,7 @@ My Accountタブではユーザーアカウント情報を確認しパスワー�
 Approval Settingsタブでは代理決裁を設定できます。
 
 <Callout type="info">
-詳細な代理決裁機能使用方法は[決裁付加機能 (代理決裁、再上申など)](workflow/approval-additional-features-proxy-approval-resubmission-etc)文書を参照してください。
+詳細な代理決裁機能の使用方法は[決裁付加機能（代理決裁、再上申など）](workflow/approval-additional-features-proxy-approval-resubmission-etc)文書をご参照ください。
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -58,15 +58,15 @@ Approval Settingsタブでは代理決裁を設定できます。
 </figcaption>
 </figure>
 
-*  **Delegate Approval to**  : 代理決裁者入力 (1名のユーザーのみ選択可能)
+*  **Delegate Approval to**  : 代理決裁者入力（1名のユーザーのみ選択可能）
 *  **Start Date**  : 代理決裁開始日
 *  **End Date**  : 代理決裁終了日
-*  **Delegation Reason**  : 代理決裁設定理由入力 (選択事項)
+*  **Delegation Reason**  : 代理決裁設定理由入力（選択事項）
 
 
 ## Editor
 
-EditorタブではSQLエディター表示方式および機能を設定します。
+EditorタブではSQLエディターの表示方式および機能を設定します。
 
 <figure data-layout="center" data-align="center">
 ![上部メニューバー &gt; Profile &gt; Preferences &gt; Editor](/user-manual/preferences/image-20250725-051417.png)
@@ -75,23 +75,23 @@ EditorタブではSQLエディター表示方式および機能を設定しま�
 </figcaption>
 </figure>
 
-*  **Theme** : LightまたはDarkテーマを設定できます。 
-*  **Editor**  : 以下のようなエディター設定ができます。 
+*  **Theme** : LightまたはDarkテーマを設定できます。
+*  **Editor**  : 以下のようなエディター設定ができます。
     *  **Font Size**  : フォントサイズ指定
     *  **Tab Size**  : タブインデント幅指定
-    *  **Auto Complete**  : 主要クエリに対する自動完成活性化可否
-    *  **Automatic Line Change**  : 自動改行 (wrap機能) 活性化可否
-    *  **Full Scan Warning**  : クエリ実行時、DB全体スキャンが含まれる可能性があるクエリに対して警告する機能活性化可否
-*  **Grid** : グリッド設定 (テーブル形式で表示されるすべての部分に適用)
+    *  **Auto Complete**  : 主要クエリに対する自動完成の有効化
+    *  **Automatic Line Change**  : 自動改行（wrap機能）の有効化
+    *  **Full Scan Warning**  : クエリ実行時、DB全体スキャンが含まれる可能性のあるクエリに対して警告する機能の有効化
+*  **Grid** : グリッド設定（テーブル形式で表示されるすべての部分に適用）
     *  **Font Size**  : フォントサイズ指定
-    *  **Row Height**  : 列高さ指定 (em)
+    *  **Row Height**  : 行の高さ指定（em）
         * eg. 2 em = `{Font Size}`*2
-    *  **How to show NULL item** : 該当セルに値がない場合表示方式 (Default : NULL)
+    *  **How to show NULL item** : 該当セルに値がない場合の表示方式（Default : NULL）
 
 
 ## Shortcut
 
-ShortcutタブではSQL Editorに適用されるショートカットキーを照会しダブルクリックして修正できます。
+ShortcutタブではSQL Editorに適用されるショートカットキーを照会し、ダブルクリックして修正できます。
 
 <figure data-layout="center" data-align="center">
 ![上部メニューバー &gt; Profile &gt; Preferences &gt; Shortcut](/user-manual/preferences/image-20250725-052245.png)
@@ -115,7 +115,7 @@ ConfigurationタブではKerberosキータブを管理できます。`Create Kea
 
 ## Terminal
 
-TerminalタブでSSHなどテキスト基盤接続に表示されるユーザーページのフォントサイズ(基本12、最小9、最大24)と色テーマを指定できます。
+TerminalタブではSSHなどテキストベース接続に表示されるユーザーページのフォントサイズ（基本12、最小9、最大24）とカラーテーマを指定できます。
 
 <figure data-layout="center" data-align="center">
 ![上部メニューバー &gt; Profile &gt; Preferences &gt; Terminal](/user-manual/preferences/image-20250725-053323.png)
@@ -127,7 +127,7 @@ TerminalタブでSSHなどテキスト基盤接続に表示されるユーザー
 
 ## Cookie & Privacy
 
-ユーザー体験を向上させるために収集する選択的分析用クッキー使用に対する同意または拒否をすることができQueryPie個人情報処理指針(Privacy Policy)を確認できます。インターネットと接続されていない閉鎖網ではクッキー情報が外部に送信されません。個人情報処理指針はインターネットのQueryPieホームページにアクセス可能な状態でのみ見ることができます。<br/>[https://www.querypie.com/privacy-policy](https://www.querypie.com/privacy-policy) (英語)<br/>[https://www.querypie.com/ko/privacy-policy](https://www.querypie.com/ko/privacy-policy) (韓国語)<br/>[https://www.querypie.com/ja/privacy-policy](https://www.querypie.com/ja/privacy-policy) (日本語)
+ユーザー体験を向上させるために収集する選択的分析用Cookieの使用に対する同意または拒否ができ、QueryPie個人情報処理指針（Privacy Policy）を確認できます。インターネットと接続されていない閉鎖網ではCookie情報が外部に送信されません。個人情報処理指針はインターネットのQueryPieホームページにアクセス可能な状態でのみ見ることができます。<br/>[https://www.querypie.com/privacy-policy](https://www.querypie.com/privacy-policy) (英語)<br/>[https://www.querypie.com/ko/privacy-policy](https://www.querypie.com/ko/privacy-policy) (韓国語)<br/>[https://www.querypie.com/ja/privacy-policy](https://www.querypie.com/ja/privacy-policy) (日本語)
 
 <figure data-layout="center" data-align="center">
 ![上部メニューバー &gt; Profile &gt; Preferences &gt; Terminal](/user-manual/preferences/image-20250725-053955.png)
@@ -139,10 +139,10 @@ TerminalタブでSSHなどテキスト基盤接続に表示されるユーザー
 
 ## QueryPie Lab
 
-QueryPie Labタブでは実験室機能を提供し、ダークモード、高性能ウェブターミナル機能などの実験的機能を体験できます。
+QueryPie Labタブでは実験室機能を提供し、ダークモード、高性能ウェブターミナル機能など実験的機能を体験できます。
 
 <Callout type="important">
-実験室機能はやや安定性が落ちる可能性がありバージョンアップデート時削除される可能性があります。
+実験室機能は多少安定性が低い可能性があり、バージョンアップデート時に削除される可能性があります。
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -153,4 +153,4 @@ QueryPie Labタブでは実験室機能を提供し、ダークモード、高�
 </figure>
 
 *  **Use Dark Mode :**  ブラウザ設定と関係なくQueryPie個別的にダークモードを使用できます。
-*  **Use High Performance Web Terminal** : メモリ最適化技術が適用されて複数セッションを同時に使用したり膨大な量のログファイルを探索するなど高いメモリ性能を要求する作業に適しています。
+*  **Use High Performance Web Terminal** : メモリ最適化技術が適用され、複数のセッションを同時に使用したり膨大な量のログファイルを探索するなど高いメモリ性能を要求する作業に適しています。

@@ -6,11 +6,11 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-QueryPie管理者がBigQuery接続認証方式をOAuth 2.0に設定した場合、接続時に自分のGoogleアカウントで接続できます。
+QueryPie管理者がBigQueryコネクション認証方式をOAuth 2.0に設定した場合、接続時に自分のGoogleアカウントで接続できます。
 
 ## Googleアカウントでログイン
 
-1. QueryPieユーザーページのDatabase項目下の接続リストでBigQuery接続を選択します。<br/>（管理者からアクセスが許可されなければ接続リストで見ることができません。）<br/>
+1. QueryPieユーザーページのDatabase項目下のコネクションリストでBigQueryコネクションを選択します。<br/>（管理者からアクセスが許可されなければコネクションリストで見ることができません。）<br/>
 2. `Connect`ボタンを押すと表示されるポップアップでログインに使用するGoogleアカウントを選択します。
 3. サービスにログインすることについての案内画面で「続行」を選択します。<br/>
 4. Googleアカウントへのアクセスを許可します。<br/>
@@ -22,12 +22,12 @@ QueryPie管理者がBigQuery接続認証方式をOAuth 2.0に設定した場合�
 OAuth認証方式はユーザーがログインする時にaccess tokenとrefresh tokenを発行します。その後access tokenの期限が満了するとrefresh tokenを使用してaccess tokenを再発行します。refresh tokenは各クライアントに保存されます。refresh tokenにも期限がある場合があり、様々な原因によってクライアントに保存されたrefresh tokenが有効でない状況が発生する場合があります。この時、クライアントに保存されているrefresh tokenを削除して再発行を受ける必要があります。
 </Callout>
 
-ユーザーページの「Database」にアクセス可能なOAuth認証設定されたBigQuery接続を選択すると、以下の図のように`Reset Token`ボタンがあります。このボタンをクリックするとクライアントに保存された既存トークンが削除され、OAuth認証の最初（Googleアカウントのサービスにログイン）から再び進行できます。
+ユーザーページの「Database」にアクセス可能なOAuth認証設定されたBigQueryコネクションを選択すると、以下の図のように`Reset Token`ボタンがあります。このボタンをクリックするとクライアントに保存された既存トークンが削除され、OAuth認証の最初（Googleアカウントのサービスにログイン）から再び進行できます。
 
 <figure data-layout="center" data-align="center">
-![ユーザーページBigQuery接続のReset Tokenボタン](/user-manual/database-access-control/connecting-via-google-bigquery-oauth-authentication/image-20250226-020846.png)
+![ユーザーページBigQueryコネクションのReset Tokenボタン](/user-manual/database-access-control/connecting-via-google-bigquery-oauth-authentication/image-20250226-020846.png)
 <figcaption>
-ユーザーページBigQuery接続のReset Tokenボタン
+ユーザーページBigQueryコネクションのReset Tokenボタン
 </figcaption>
 </figure>
 

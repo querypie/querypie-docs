@@ -4,7 +4,7 @@ title: 'DML Snapshots'
 
 ## Overview
 
-クエリパイでINSERT / UPDATE / DELETEクエリ実行完了時前後データを記録します。該当スナップショットは各DB接続別別途DML Snapshot設定を有効化した場合結果情報を保存します。（[DB Connections](../../databases/connection-management/db-connections)内 **追加設定** 参照）
+QueryPieでINSERT / UPDATE / DELETEクエリ実行完了時前後データを記録します。該当スナップショットは各DBコネクション別別途DML Snapshot設定を有効化した場合結果情報を保存します。（[DB Connections](../../databases/connection-management/db-connections)内 **追加設定** 参照）
 
 ## DML Snapshots照会
 
@@ -19,7 +19,7 @@ Administrator &gt; Audit &gt; Databases &gt; DML Snapshots
 2. クエリ実行当月基準でログが降順で照会されます。
 3. テーブル左上の検索欄を通じてユーザー名で検索が可能です。
 4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
-    1.  **Connection Name**  : 接続したDB接続名
+    1.  **Connection Name**  : 接続したDBコネクション名
     2.  **Executed At**  : 実行日時
     3.  **Statement** : 構文タイプ（Insert/Update/Delete）
 5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
@@ -29,7 +29,7 @@ Administrator &gt; Audit &gt; Databases &gt; DML Snapshots
     3.  **Name**  : 対象ユーザー名
     4.  **Email**  : 対象ユーザーメール
     5.  **Statement** : 構文タイプ（Insert/Update/Delete）
-    6.  **Connection Name**  : 対象DB接続名
+    6.  **Connection Name**  : 対象DBコネクション名
     7.  **Database Type**  : 対象データベースタイプ
     8.  **Replication Type**  : DB Replicationタイプ
     9.  **DB Host**  : 接続したDBホスト
@@ -55,7 +55,7 @@ Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Det
 * 右側ドロワー上部には以下の基本クエリ監査情報を露出します：
     1.  **Name**  : 対象ユーザー名
     2.  **Executed At**  : 実行日時
-    3.  **Connection Name**  : 対象DB接続名
+    3.  **Connection Name**  : 対象DBコネクション名
     4.  **Replication Type**  : DB Replicationタイプ
     5.  **Statement** : 構文タイプ（Insert/Update/Delete）
     6.  **Time(ms)**  : 実行時間（Millis基準）
