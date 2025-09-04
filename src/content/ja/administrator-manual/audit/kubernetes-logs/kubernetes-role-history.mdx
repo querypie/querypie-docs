@@ -1,0 +1,69 @@
+---
+title: 'Kubernetes Role History'
+---
+
+## Overview
+
+クエリパイユーザー/グループに付与されるKubernetes Roleに関する付与および回収履歴を記録します。
+
+## Kubernetes Role Historyの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History](/administrator-manual/audit/kubernetes-logs/kubernetes-role-history/image-20240721-083952.png)
+<figcaption>
+Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role Historyメニューに移動します。
+2. Action At当月00:00~23:59基準で降順にログが照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+   1. **Name**: ユーザー名
+   2. **Email**: ユーザーメール
+   3. **Role Name**: Kubernetesアクセス権限役割名
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+   1. **Event**: Kubernetesロールイベントタイプ
+      1. **Role Granted**: Role付与履歴
+      2. **Role Revoked**: Role回収履歴
+   2. **User Type**: 付与対象タイプ
+      1. **GROUP**: グループ対象
+      2. **USER**: ユーザー対象
+   3. **Action At**: Kubernetes API権限付与/回収日時範囲
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のカラム情報を提供します:
+   1. **No**: イベント識別番号
+   2. **Action At**: Role権限付与/回収日時
+   3. **Event**: Role権限関連イベント
+      1. **Role Granted**: ユーザー/グループにRoleが付与されたイベント
+      2. **Role Revoked**: ユーザー/グループからRoleが回収されたイベント
+   4. **User Type**: ユーザー/グループタイプ
+   5. **Name**: 対象ユーザー/グループ名
+   6. **Email**: 対象ユーザーメール
+      1. グループの場合はハイフン('-')で表記されます。
+   7. **Role**: 付与/回収されたRole名
+   8. **Expiration Date**: 権限付与期限日（回収予定日）
+   9. **Action By**: Role付与/回収を進行した管理者名またはSystem
+
+## Kubernetes Role History詳細内訳の照会
+
+1. 各行をクリックすると詳細情報照会が可能です。
+   1. 最上位には基本イベントに基づく情報を露出します:
+      1. **Role Name**: Role名
+         * リンクを押すと該当Roleの詳細ページパスで新窓で開くことを許可します。
+      2. **Event**: ユーザー/グループにRoleが付与/回収されたイベント
+      3. **Name**: 対象ユーザー/グループ名
+      4. **Email**: 対象ユーザーメール
+         1. グループの場合はハイフン('-')で表記されます。
+      5. **Action At**: Role権限付与/回収日時
+      6. **Action By**: Role付与/回収を進行した管理者名またはSystem
+      7. **Expiration Date**: 権限付与期限日（回収予定日）
+   2. 下部には付与/回収されたRoleに対応するPolicyを一覧化して列挙します:
+      * 表記カラム
+         1. **Name**: 割り当てられている政策名
+         2. **Description**: 割り当てられている政策の詳細説明
+         3. **Version**: 割り当てられている政策のバージョン
+            * リンクを押すと政策コードを照会できるようにポップアップモーダルが現れます。
+               1. 付与されていた当時のPolicy Snapshotを見せます。
+                  * 該当Policyが削除されても記録が残ります。
+               2. 簡単に政策名とともにコードを見せます。
+               3. `Close`ボタンまたは右上の`X`をクリックすると該当モーダルが閉じます。

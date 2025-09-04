@@ -1,0 +1,310 @@
+---
+title: 'MongoDB専用ガイド'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+MongoDB専用詳細設定ガイドをここで提供します。
+</Callout>
+
+## MongoDBコネクション登録
+
+MongoDBは単一ホストで構成される場合よりReplica SetまたはSharded Cluster（Sharding）形態のマルチホスト構造を使用する場合が多いです。この場合、マルチホスト方式のコネクションを作成する必要があります。
+
+### 1. MongoDBの基本的なConnection String構造理解
+
+MongoDBのconnection stringはstandard、+srv2種類があります。
+
+#### &lt; Standard connection stringの構造 &gt;
+
+```
+mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port]..../?[options]
+```
+
+* mongodb:// : standard connection string scheme
+* Hostname or IP : mongodbクラスターメンバーホストの全体ドメイン名またはIPアドレス
+* options : /? の後に付く接続に関連するオプション。複数のオプションを使用する場合は&で付けて使用します。<br/>ex. /?authSource=admin&replicaSet=rs0
+
+<Callout type="info">
+replica setを使用する場合/? の後にreplicaSet=[replica set名]を入力する必要があります。ex. /?replicaSet=rs0
+</Callout>
+
+
+#### &lt; +srv connection stringの構造 &gt;
+
+```
+mongodb+srv://<FQDN>/?[options]
+```
+
+* mongodb+srv:// : +srv connection string scheme
+* FQDN : Fully qualified domain name - DNSに登録されているホスト名とドメイン名の組み合わせで構成された名前 ex. server1.example.com
+* options : /? の後に付く接続に関連するオプション。複数のオプションを使用する場合は&で付けて使用します。<br/>ex. /?authSource=admin&replicaSet=rs0
+
+<Callout type="info">
++srvはクラスターに含まれている各ホストのアドレスが動的に変わる可能性があるため、QueryPieで+srvを直接コネクションに使用することはできず、standard connection stringに変換して使用します。このような変換過程により、現在+srvを使用して接続する場合、下位インスタンスへの直接接続はサポートしません。それでも+srv接続環境の下位ホストに対する直接接続が必要な場合、ユーザーがnslookupコマンドを使用してDNS照会を通じて各ホスト情報を確認後、別途standard connection stringを使用したコネクションを作成して接続する必要があります。
+</Callout>
+
+### 2. MongoDBコネクション作成
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
+</figcaption>
+</figure>
+
+1. Administrator &gt; Databases &gt; Connection Management &gt; DB Connectionsメニューに移動します。
+2. 右上の`Create Connection`ボタンをクリックします。
+3. データソース選択段階でmongoDBを選択します。
+
+### 3. Replica Set形態で設定
+
+#### &lt; Standard Connection &gt;
+
+<figure data-layout="center" data-align="center">
+![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
+</figure>
+
+1. Allowed Zoneに適切なネットワークzone設定をします。
+2. Connection Nameを指定します。
+3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
+   1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
+   2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには"`Expandable`"を、展開して見ることができないようにするには"`Unexpandable`"を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには"`Hidden`"を選択します。
+   3. Connection String :
+      1. Scheme選択項目で`mongodb://`を選択します。
+      2. 下位ホスト名とポートをカンマで区切って入力します。
+   4. `Add Instance`ボタンを押して各メンバーホストをインスタンスとして追加します。
+      1. Instance Name : それぞれのホストを区別できる名前を入力します。
+      2. Connection String : 各ホストを`ホスト名（ドメインアドレスまたはIP）:[port]`形式で入力します。
+      3. Exposeはコネクション情報での個別インスタンスの露出可否を決定できるオプションです。<br/>**マルチホスト機能を使用するには必ずインスタンスがexpose状態でなければならないため、必ず**`Expose`**オプションをアクティブにします。**
+
+<figure data-layout="center" data-align="center">
+![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
+</figure>
+
+1. Authentication DB : Authentication DB（authSource）の値を入力します。
+2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（[Key]=[Value]）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（[Key]=[Vaule]&[Key]=[Value]）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
+3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+4. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
+5. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
+6. `Next`ボタンを通じて仕上げて保存します。
+
+<Callout type="info">
+Clusterモードに対するより詳細な内容は[DB Connections](.)でも確認できます。
+</Callout>
+---
+
+#### &lt; +srv Connection &gt;
+
+<figure data-layout="center" data-align="center">
+![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
+</figure>
+
+1. Allowed Zoneに適切なネットワークzone設定をします。
+2. Connection Nameを指定します。
+3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
+   1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
+   2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには"`Expandable`"を、展開して見ることができないようにするには"`Unexpandable`"を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには"`Hidden`"を選択します。
+   3. Connection String :
+      1. Scheme選択項目で`mongodb+srv://`を選択します。
+      2. ドメイン形式のホスト名（FQDN）を入力します。
+      3. `Lookup`ボタンを押します。正常にDNS照会がされた場合、クラスターに含まれたノードがインスタンスとして自動で追加されます。
+   4. Authentication DBおよびOther Options
+      1. Authentication DB値とOther OptionsにもDNSのTXTレコードで照会された値が自動で入力されます。
+      2. +srvスキームはTLSオプションが自動でtrueなので、standard stringに変換するとtls=trueを手動で入力する必要があります。（TXTレコードにTLSオプションがないためです。）したがって、Other options項目に上図のように&tls=trueを入力します。
+4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+5. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
+6. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
+7. `Next`ボタンを通じて仕上げて保存します
+
+### 4. Sharded Cluster（Sharding）形態で設定
+
+Sharded ClusterはReplica SetとConnection Stringのオプションのみ異なり、設定方法は同じです。Replica SetはreplicaSet=[replica set name]オプションが必要ですが、Sharded Clusterはこのオプションが不要です。
+
+<figure data-layout="center" data-align="center">
+![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
+</figure>
+
+#### &lt; Standard Connection &gt;
+
+1. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
+   1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、Primary値を維持します。
+   2. Connection String :
+      1. Scheme選択項目で`mongodb://`を選択します。
+      2. 各mongosのホスト名とポートをカンマで区切って入力します。
+   3. `Add Instance`ボタンを押して各mongosをインスタンスとして追加します。
+      1. mongodb://ホスト名（ドメインアドレスまたはIP）:[port]形式で入力後、Instance Nameを適切に入力します。
+      2. Exposeはコネクション情報での露出可否を決定できる値です。
+2. Authentication DB : Authentication DB（authSource）の値を入力します。
+3. Other Options : Sharded clusterは別途追加オプションが必要ない場合があります。
+4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+5. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
+6. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
+7. `Next`ボタンを通じて仕上げて保存します。
+---
+
+#### &lt; +srv Connection &gt;
+
+standard stringに変換された後、tls=trueオプションのみOther optionsに適切に入力すれば 됩니다。replica set設定と差がありません。
+
+<Callout type="info">
+Clusterモードに対するより詳細な内容は[DB Connections](.)でも確認できます。
+</Callout>
+
+## Proxyを使用する場合のTLS（SSL）設定
+
+上で案内されたように、QueryPieのSQL editorを使用して接続する場合、コネクションストリングにtls=trueが必要です。
+
+> +srvスキームはTLSオプションが自動でtrueなので、standard stringに変換すると**tls=true**を手動で入力する必要があります。（TXTレコードにTLSオプションがないためです。）したがって、Other options項目に上図のように**&tls=true**を入力します。
+Proxyを使用する場合、DataGripなどのSQL ClientでTLS設定と別にQueryPieでもSSL設定が必要です。<br/>[SSL Configurations](../ssl-configurations)を参照して設定後、コネクションのSSL設定に反映する必要があります。<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
+</figure>
+
+
+---
+
+
+## MongoDBデータ政策および規則設定
+
+MongoDBに個人情報または機密情報のようにアクセス制限が必要なデータは照会時に該当データを確認できないようにCollection、JSON Valueに対してデータアクセス制限およびマスキング政策を設定できます。QueryPieでサポートするDBMS中MongoDBの場合は常にデータをJSON形態で保存するため、別途フォーマッティングロジックを使用します。
+
+
+最初政策作成は以下のリンクを確認してください。
+
+* [Data Masking](../../policies/data-masking)
+* [Data Access](../../policies/data-access)
+
+### マスキング政策に規則登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
+</figcaption>
+</figure>
+
+1. 政策を作成した後、実際に政策を適用するデータのパスを規則として登録します。Rule Listタブで規則が登録されたことを確認できます。これでユーザーがMongoDBで該当CollectionのDocumentを照会する場合、適用したマスキングパターンに従って事前に指定したAttributeのValue値が'*****@gmail.com'のようにマスキングされて表示されます。
+   1. Data Maskingメニューで作成した政策をクリックします。
+   2. 政策詳細情報および規則登録画面が表示され、右側で`Add Rule List`ボタンをクリックします。
+   3. 政策を適用するデータのパスを順次選択します。
+      1. Database Name : 規則登録のための必須値です。
+      2. Table Name : MongoDBの場合はCollection名を入力します。
+      3. Column Name : MongoDBの場合はDocument内でマスキングを適用するJSON Attribute値を入力します。
+   4. マスキングパターンを適用します。
+      1. 3番で選択したカラムに適用するマスキングパターンを1つ以上選択します。
+      2. 基本的に20余りの個人情報および機密情報をマスキングするパターンを提供します。
+      3. Masking Patternメニューで正規表現を通じて直接探知パターンとマスキングパターンを作成できます。
+   5. 該当データ照会が必要なユーザーまたはグループに限りマスキング規則を例外処理できます。
+      1. Allowed Users : 該当規則を例外処理するユーザーまたはグループを選択します。
+   6. `Ok`ボタンを通じて保存します。
+
+### Collection / JSON Valueアクセス制限政策に規則登録
+
+政策を作成した後、実際に政策を適用するデータのパスを規則として登録します。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+1. Data Accessメニューで作成した政策をクリックします。
+2. 政策詳細情報および規則登録画面が表示され、右側で`Add Rule List`ボタンをクリックします。
+3. 政策を適用するデータのパスを順次選択します。
+   1. Database Name : 規則登録のための必須値です。
+   2. Table Name : 規則登録のための必須値です。テーブルのみ選択する場合、該当テーブル照会自体が不可能になるように制限されます。MongoDBの場合はCollection名を入力します。
+   3. Column Name : MongoDBではDocument内の特定Valueに対してデータアクセスを制限したい場合、JSON Attribute値を入力します。
+4. 該当データ照会が必要なユーザーまたはグループに限りアクセス制限規則を例外処理できます。
+   1. Allowed Users : 該当規則を例外処理するユーザーまたはグループを選択します。
+5. `Ok`ボタンを通じて保存します。
+
+Rule Listタブで規則が登録されたことを確認できます。これでユーザーが該当データを照会すると、テーブルに政策が適用された場合はテーブル自体を照会できず、カラムに規則が適用された場合は*`{RESTRICTED}`*で表示されます。
+
+### JSON PATH例
+
+政策を適用するMongoDBのデータの例は以下の通りです。
+```
+{
+    _id: ObjectId("64b3f7ad344ac8c881a09dc6"),
+    item: "journal",
+    qty: 25,
+    tags: ["blank", "red"],
+    size: {
+        h: 14,
+        w: 21,
+        uom: "cm"
+    }
+}
+```
+
+#### Case 1. item属性アクセス制限
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+1つの属性に対してアクセス制限政策を設定する場合、「Column Name」項目に該当するitemを入力後`OK`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![image-20240730-120312.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png)
+</figure>
+
+上スクリーンショットのようにitem（"T_PWD"）属性の値が"Restricted Column"で表示されることを確認できます。
+
+#### Case 2. size.h属性アクセス制限
+
+size下位のh属性に対してアクセス制限政策を設定する場合、「Column Name」項目に$.size.hを入力後`OK`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![image-20240730-120215.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png)
+</figure>
+
+上スクリーンショットのようにsize下位のh属性の値が"Restricted Column"で表示されることを確認できます。
+
+#### Case 3. size下位すべての属性アクセス制限
+
+size下位のすべての属性に対してアクセス制限政策を設定する場合、「Column Name」項目に$.sizeを入力後`OK`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![image-20240730-120421.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png)
+</figure>
+
+上スクリーンショットのようにsize下位のすべての属性の値が"Restricted Column"で表示されることを確認できます。
+
+#### Case 4. tags属性のリスト2番目の値に対するアクセス制限
+
+tags属性のリスト値中2番目の値に対するアクセス制限政策を設定する場合、「Column Name」項目に$.tags[1]を入力後`OK`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
+<figcaption>
+Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![image-20240730-120544.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png)
+</figure>
+
+上スクリーンショットのようにtags属性の2番目の値が"Restricted Column"で表示されることを確認できます。

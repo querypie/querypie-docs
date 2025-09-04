@@ -1,0 +1,81 @@
+---
+title: 'Request Audit'
+---
+
+## Overview
+
+組織で管理するKubernetesクラスターのAPIサーバー呼び出し内訳をクエリパイプロキシで各呼び出し別にモニタリングし、監査ログを記録します。
+
+## Request Auditの照会
+
+<figure data-layout="center" data-align="center">
+![image-20240721-082824.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png)
+</figure>
+
+1. Administrator &gt; Audit &gt; Kubernetes &gt; Request Auditメニューに移動します。
+2. Executed At当日00:00~23:59基準でログが降順で照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+   1. **Name**: ユーザー名
+   2. **Cluster Name**: クエリパイ上に登録されたクラスター名
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+   1. **Verb**: 呼び出された特定のKubernetes APIアクション
+      * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
+   2. **Resource**: 呼び出された特定のKubernetesリソース
+      * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`, `others`
+         * `others`はその他カスタムリソースなど該当しない項目をフィルタリングする時に利用します。
+   3. **Executed At**: Kubernetes API呼び出し発生日時範囲
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のカラム情報を提供します:
+   1. **No**: イベント識別番号
+   2. **Executed At**: Kubernetes API呼び出し発生日時
+   3. **Result**: API呼び出し成功/失敗の有無
+      1. :check_mark: Success
+      2. :cross_mark: Failure
+   4. **Name**: 対象ユーザー名
+   5. **Email**: 対象ユーザーメール
+   6. **Client IP**: ユーザークライアントIPアドレス
+   7. **Cluster Name**: 対象Kubernetesクラスター名
+   8. **Role**: アクションを行使できたRole名
+   9. **Namespace**: 対象ネームスペース
+   10. **Verb**: 呼び出された特定のKubernetes APIアクション
+   11. **Resource**: 呼び出された特定のKubernetesリソース
+   12. **Resource Name**: 呼び出された特定のKubernetesリソースの名前
+   13. **Message**: API呼び出し時に返されたメッセージを記録
+      * クエリパイではpods/execのようなセッションログに対してセッション開始と終了各時間に合わせて総2回記録しています。これに対する区分は該当メッセージを通じてともに区分が可能です。
+   14. **Cluster Endpoint**: 呼び出されたターゲットAPIエンドポイント
+   15. **Kubernetes Groups**: API呼び出し時にQueryPie ProxyがimpersonateしたKubernetesグループアカウント名
+   16. **Client Name**: ユーザークライアント名/バージョン（例. kubectl/v1.27.3）
+
+## Request Audit詳細内訳の照会
+
+1. 各行をクリックすると詳細情報照会が可能です。
+   1. 最上位には基本イベントに基づく情報を露出します:
+      1. **Result**: API呼び出し成功/失敗の有無
+         1. :check_mark: Success
+         2. :cross_mark: Failure
+      2. **Executed At**: Kubernetes API呼び出し発生日時
+      3. **Message**: API呼び出し時に返されたメッセージを記録
+      4. **Name**: 対象ユーザー名
+      5. **Email**: 対象ユーザーメール
+      6. **Client IP**: ユーザークライアントIPアドレス
+      7. **Client Name**: ユーザークライアント名/バージョン
+      8. **Cluster Name**: 対象Kubernetesクラスター名
+      9. **Role**: アクションを行使できたRole名
+      10. **Cluster Endpoint**: 呼び出されたターゲットAPIエンドポイント
+      11. **Reverse Tunnel Agent Name**: Reverse Tunnelを通じて接続された場合、通信に使用されたReverse Tunnel Agent名
+      12. **Tag**: Reverse Tunnelを通じて接続された場合、通信に使用されたReverse Tunnel Agentを選択するのに使用されたTag
+      13. **Pod Session Recording**: Pod exec APIで実行時、該当セッションに対するレコーディング
+         1. セッションレコーディングが発生されたログに限り該当フィールドが詳細ページで照会可能です。
+         2. Pod exec APIで実行時、該当セッションに対するレコーディングが進行され、該当「Session Recording」文句にハイパーリンクが含まれます。
+         3. リンククリック時、関連セッションレコーディングがプレイされます。
+      14. 中間段にはAPI呼び出し内訳に基づく情報を露出します:
+         1. **Verb**: 呼び出された特定のKubernetes APIアクション
+         2. **Namespace**: 対象ネームスペース
+         3. **Resource**: 呼び出された特定のKubernetesリソース
+         4. **Resource Name**: 呼び出された特定のKubernetesリソースの名前
+         5. **Kubernetes Impersonated User**: API呼び出し時にimpersonateしたKubernetesユーザーアカウント名（--as情報を表現）
+         6. **Kubernetes Impersonated Group**: API呼び出し時にimpersonateしたKubernetesグループアカウント名（--as-group情報を表現）
+      15. 下部の**Request Body**領域にはどのようなYAMLのコンテンツがAPIで要求されたかを明示しようとします。
+         1. 主にCreate、Update、Patch内訳で内容を記録します。
+         2. Request Bodyに対するMax Sizeは最大4KBまで記録し保管します。
+         3. 4KBが超過する状況が発生した時、該当kubernetes API呼び出しをそのまま処理はサポートし、記録はそのまま4KBまで残ります。

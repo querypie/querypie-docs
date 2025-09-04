@@ -1,0 +1,59 @@
+---
+title: 'Web App Role History'
+---
+
+## Overview
+
+組織で管理するウェブアプリケーション役割付与および回収履歴を記録します。
+
+## Web App Role Historyの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History](/administrator-manual/audit/web-app-logs/web-app-role-history/Screenshot-2025-06-30-at-2.47.18-PM.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Web Apps &gt; Web App Role Historyメニューに移動します。
+2. 現在月基準でログが降順で照会されます。
+3. テーブル最左上部の検索欄を通じて以下の条件で検索が可能です。<br/>a. User Name : ユーザー名<br/>b. User Email : ユーザーメール<br/>c. Role Name : 役割名
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+   1. **Event**: イベントタイプ
+   2. **User Type**: ユーザータイプ
+   3. **Action At**: アクション発生日時範囲
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のような情報を提供します:
+   1. **No**: 順番
+   2. **Action At**: アクション発生日時
+   3. **Event**: イベントタイプ（Role Granted、Role Revoked）
+   4. **User Type**: ユーザータイプ（USER、GROUP）
+   5. **Name**: ユーザー名
+   6. **Email**: ユーザーメール
+   7. **Role Name**: 付与/回収された役割名
+   8. **Expiration Date**: 役割期限日時
+   9. **Action By**: アクションを実行した管理者名
+
+## Web App Role History詳細内訳の照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History &gt; Web App Role History Details](/administrator-manual/audit/web-app-logs/web-app-role-history/Screenshot-2025-06-30-at-2.50.17-PM.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History &gt; Web App Role History Details
+</figcaption>
+</figure>
+
+* **右側ドロワーには以下の情報を露出します:**
+   1. **Role Name**: 付与/回収された役割名
+   2. **Event**: イベントタイプ（Role Granted、Role Revoked）
+   3. **Name**: 対象ユーザー名
+   4. **Email**: 対象ユーザーメール
+   5. **Action At**: アクション時点
+   6. **Action By**: アクションを実行した管理者名
+   7. **Expiration Date**: 役割期限日時
+   8. **Policies**: 該当役割に含まれた政策一覧
+      1. Name : 政策名
+      2. Description : 政策説明
+      3. Version : 政策バージョン

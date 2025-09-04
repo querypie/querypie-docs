@@ -1,0 +1,56 @@
+---
+title: 'Web App Logs'
+---
+
+## Overview
+
+QueryPieでのすべてのウェブアプリを監査ログに記録します。ユーザーと管理者のログイン/ログアウト、権限付与と回収、ウェブアプリケーションに対する実行履歴、リソースまたはセキュリティ設定変更など、QueryPieとアクセス制御対象リソースで発生するすべての活動履歴がログの対象です。リアルタイムで記録されるログについて、様々な条件で検索およびフィルタリングが可能です。
+
+## 関連監査ログ種類
+
+ウェブアプリと共通で提供される監査ログに加えて、ウェブアプリKubernetesアクセス制御（QueryPie WAC）ライセンス保有時、以下の監査ログの種類を提供します。
+
+<table data-table-width="507" data-layout="default" local-id="2f7b87af-5d13-428d-90c7-597153763bc3">
+<tbody>
+<tr>
+<th data-highlight-colour="#f0f1f2">
+**共通ログ**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**WAC専用ログ**
+</th>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+**General**
+* User Access History
+* Activity Logs
+* Admin Role History
+</td>
+<td data-highlight-colour="#ffffff">
+**Web Apps**
+* Web Access History
+* Web Event Audit
+* User Activity Recordings
+* Web App Role History
+* JIT Access Control Logs
+</td>
+</tr>
+</tbody>
+</table>
+
+## 1. General
+
+* Access Control Logs : アクセス制御関連ログ、ログインと履歴
+* Policy Audit Logs : 管理者が実行するリソース登録および設定変更履歴
+* Policy Exception Logs : 管理者権限付与、変更、回収履歴
+
+## 2. Web Apps
+
+* Web Access History : ウェブアプリケーションアクセス履歴内訳
+* Web Event Audit : ウェブアプリケーションイベント監査内訳
+* User Activity Recordings : ユーザー活動記録内訳
+* Web App Role History : ウェブアプリケーションアクセス権限付与および回収履歴
+* JIT Access Control Logs : JITアクセス制御ログ内訳
+
+

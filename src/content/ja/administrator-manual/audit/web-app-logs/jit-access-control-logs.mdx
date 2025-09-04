@@ -1,0 +1,34 @@
+---
+title: 'JIT Access Control Logs'
+---
+
+## Overview
+
+組織で管理するウェブアプリケーションJIT（Just-In-Time）アクセス制御ログ履歴を記録します。
+
+## JIT Access Control Logsの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; JIT Access Control Logs](/administrator-manual/audit/web-app-logs/jit-access-control-logs/image-20250629-174842.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; JIT Access Control Logs
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Web Apps &gt; JIT Access Control Logsメニューに移動します。
+2. 現在月基準でログが降順で照会されます。
+3. テーブル最左上部の検索欄を通じて以下の条件で検索が可能です。<br/>a. **User Name**: ユーザー名<br/>b. **User Email**: ユーザーメール<br/>c. **Web App Name**: ウェブアプリケーション名
+4. 検索フィールド右側フィルターボタンをクリックしてAND条件で以下のフィルタリングが可能です。
+   1. **Event**: イベントタイプ（JIT Access Granted/JIT Access Revoked）
+   2. **Action At**: アクション発生日時範囲
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のような情報を提供します:
+   1. **No**: 順番
+   2. **Action At**: アクション発生日時
+   3. **Event**: イベントタイプ（JIT Access Granted、JIT Access Revoked）
+   4. **User Type**: ユーザータイプ（USER）
+   5. **Name**: ユーザー名
+   6. **Email**: ユーザーメール
+   7. **Web App**: ウェブアプリケーション名
+   8. **Expiration Date**: JITアクセス権限期限日時
+   9. **Action By**: アクションを実行した管理者名

@@ -1,0 +1,45 @@
+---
+title: 'User Access History'
+---
+
+## Overview
+
+すべてのユーザーのQueryPieシステムアクセスに関連するすべての履歴、すなわちアカウントログイン/ログアウト、アカウントの状態変更、パスワードリセットメッセージ送信などの履歴を照会できます。
+
+
+## User Access Historyの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; User Access History](/administrator-manual/audit/general-logs/user-access-history/image-20240714-063443.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; User Access History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; General &gt; User Access Historyメニューにアクセスします。
+2. 今月のログが最新順で照会されます。
+3. **Action Type**: システムアクセス関連の行為タイプを表します。一部のログはActivity Logsにも同時に記録されます。
+   * **User Login**: ユーザーのQueryPieログイン
+   * **User Logout**: ユーザーのQueryPieログアウト
+   * **Account Locked**: パスワード連続エラーによるアカウントロック
+   * **Account Expired**: ユーザー活動なしによるアカウント期限切れ（Activity Logsに**User Deactivated**で記録）
+   * **Account Locked Manually**: 管理者による特定ユーザーアカウントのロック（Activity Logsに**User Updated**で記録）
+   * **Account Unlocked**: 管理者による特定ユーザーアカウントの再アクティベート（Activity Logsに**User Reactivated**で記録）
+   * **Password Reset Push**: 管理者によるユーザーアカウントのパスワードリセット発生
+4. **Result**: 行為の結果を表示します。
+5. **Message**: 必要に応じて、行為の具体的な内容を記録します。Messageカラムのテキストでログを検索できます。
+
+
+## User Access History詳細内容の照会
+
+User Access History一覧で個別ログをクリックすると、ログに関する詳細情報を確認できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; User Access History &gt; Details](/administrator-manual/audit/general-logs/user-access-history/image-20240721-074544.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; User Access History &gt; Details
+</figcaption>
+</figure>
+
+
+

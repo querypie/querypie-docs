@@ -1,0 +1,111 @@
+---
+title: 'AWSからDBリソース同期'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieではデータベース登録および管理のためのAWS連動をサポートしています。AWS内のリソースを同期してQueryPieで管理するデータベースとして登録し、ユーザーおよびグループに同期して持ってきたデータベースに対するアクセス権限を付与し政策を設定できます。
+
+
+## QueryPieでAWS連動情報登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241217-084317.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+</figcaption>
+</figure>
+
+
+1. Database設定メニューでCloud Providerメニューに移動します。
+2. 右上の`Create Provider`ボタンをクリックします。
+3. Name項目に該当プロバイダーを区分できる名前を入力します。
+4. **Cloud Provider**項目でAmazon Web Servicesを選択します。
+5. **Region**項目で同期したいリソースのリージョンを選択します。
+6. リソースを同期するために必要なCredential情報を入力します。
+   * それぞれの**Credential**方式に対する説明は下部の**Credentialタイプ別認証方式設定**を参照します。
+7. **Database Type Filter**項目で同期したいリソースを選択します。
+8. **Replication Frequency**項目で同期方式を選択します。
+   1. Manual : 同期をしたい時点にのみ手動で同期する方式です。
+   2. Scheduling : 定期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
+9. **Auto Configuration Upon Initial Synchronization** Cloud Providerで最初に同期するDBの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。
+   * Tag : 同期されたDBに自動でタグを追加できます。
+     * タグ値に`{vpcid}`を入力すると、該当DBが属するCloudのVPC IDが自動で埋められます。
+     * 例: タグKeyを"Network"に設定しValueを`{vpcid}`で入力すると、DBが"vpc-1a2b3c4d" VPCにある場合"Network: vpc-1a2b3c4d"タグが自動生成されます。
+10. `Save`ボタンをクリックしてCloud Providerを保存します。
+
+
+## Credentialタイプ別認証方式設定
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20240725-043642.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt; Create Provider
+</figcaption>
+</figure>
+
+
+* **Default Credentials (Instance Profile)**: QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスIAM権限に政策を割り当てて同じAWS内のリソースを同期できます。必要なリソースに合う政策を割り当ててください。
+* **Cross Account Role**: IAM役割を作成して他のAWSアカウントのリソースを同期できます。画面に表示されたステップに従って同期のための権限を作成し政策を割り当ててください。（該当Credentialを通じてリソースを同期するには環境変数ファイル**AWS_ACCOUNT_ID**項目にQueryPieがインストールされたAWSアカウントを設定する必要があります）
+* **Access Key**: `Synchronize`ボタンクリック時にAWSアカウントのaccess keyおよびsecret keyを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでaccess keyを使用する時もスケジュールを通じた同期が可能になるように改善されました。****
+
+<Callout type="important">
+**Save Credential for Synchronizationオプション**
+
+<figure data-layout="center" data-align="center">
+![Save Credential for Synchronization](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241220-095857.png)
+<figcaption>
+Save Credential for Synchronization
+</figcaption>
+</figure>
+
+* **このオプションをアクティブにして保存した同期設定は同期設定詳細ページでこのオプションを非アクティブにできませんので慎重に選択する必要があります。保存されたcredentialは交換できません。他のcredentialを使用しなければならない状況なら同期設定を新しく作成する必要があります。credential変更が必要な場合は既存と同じIAM権限が割り当てられたcredentialを作成し同期設定を新しく作った後既存同期設定を削除することをお勧めします。**
+* このオプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。
+* このオプションがアクティブになっていれば同期を手動ですることもでき、スケジュールを指定することもできます。
+</Callout>
+
+
+<Callout type="info">
+**各データベースリソース同期に必要な政策**
+* RDS : AmazonRDSReadOnlyAccess
+* DynamoDB : AmazonDynamoDBFullAccess
+* Redshift : AmazonRedshiftReadOnlyAccess
+* Athena : AmazonAthenaFullAccess, AmazonS3DFullAccess
+* Redis : AmazonElastiCacheFullAccess
+</Callout>
+
+
+## 登録されたAWS Cloud Provider同期および管理
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241220-100746.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details
+</figcaption>
+</figure>
+
+
+1. Database設定メニューでCloud Providerメニューに移動します。
+2. 登録したCloud Providerをクリックして詳細情報画面に入ります。
+3. 右上の`Synchronize`ボタンをクリックするとAWSからリソースを同期できます。
+4. 表示されるSynchronization Logで同期進行状況を確認でき、Administrator &gt; General &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
+5. Cloud Providerを一度登録した後はProvider基本情報および認証情報は変更できません。
+   1. Name: 変更可能
+   2. Cloud Provider: 変更不可
+   3. Region: 変更不可
+   4. Credential: 変更不可
+      1. "Save Credential for Synchronization" : 非アクティブ状態はアクティブに変更できますが、アクティブ状態を非アクティブに転換不可
+   5. Role ARN: 変更不可
+   6. Database Type Filter: 変更可能
+   7. Replication Frequency: 変更可能
+
+<Callout type="important">
+"Save Credential for Synchronization"オプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。新しく作成する時と同様にこの設定は**アクティブにした後再び非アクティブにできませんので**慎重に選択する必要があります。
+</Callout>
+
+## 同期可能なリソース項目
+
+* Amazon RDS (MySQL, MariaDB, PostgreSQL, SQL Server, Oracle), DynamoDB, Redshift, DocumentDB, Athena, Redis (ElastiCache)

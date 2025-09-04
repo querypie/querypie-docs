@@ -1,0 +1,33 @@
+---
+title: 'Admin Role History'
+---
+
+## Overview
+
+QueryPie管理者権限の付与および回収履歴を照会するページです。
+
+Administrator &gt; General &gt; User Management &gt; Usersページで特定のユーザーに管理者権限を付与または回収する場合、Admin Role Historyに履歴が残ります。
+
+
+## Admin Role Historyの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Admin Role History](/administrator-manual/audit/general-logs/admin-role-history/screenshot-20240722-190405.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Admin Role History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; General &gt; Admin Role Historyメニューに移動します。
+2. Action At基準で最新内訳から古い順に管理者権限の付与または回収ログが照会されます。
+   1. **Name**: Display Nameが表示されます。
+   2. **Description**: 付与された管理者権限詳細
+   3. **Action By**: 管理者権限の付与または回収主体（自動回収の場合は**System**で表示）
+3. サポートされる検索条件は以下の通りです。
+   1. **Name**: ユーザー名（Display Name）
+   2. **Action Type**: イベント名
+      * Admin Role Granted
+      * Admin Role Revoked
+4. その他、イベント発生時点（**Action At**）基準でログフィルタリングが可能です。
+
+

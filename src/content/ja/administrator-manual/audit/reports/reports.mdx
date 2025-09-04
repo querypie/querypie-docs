@@ -1,0 +1,851 @@
+---
+title: 'Reports'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="important">
+11.2.0現在、Reports機能はBeta版で提供中です。
+</Callout>
+
+## Overview
+
+QueryPieレポートは監査対応に必要なデータをレポート形式で出力する機能です。
+
+ユーザーおよび管理者現況および履歴、セキュリティ設定履歴、DB/サーバーに与えられたユーザー別権限現況および履歴、DB/サーバー接続およびクエリ/コマンド使用履歴などを出力できます。
+
+<Callout type="info">
+11.2.0バージョン現在、レポートは英語でのみ出力可能です。
+</Callout>
+
+## レポート出力項目およびフィルターサポート事項
+
+11.2.0バージョン現在サポートするレポート項目およびフィルターは以下の表を参照してください。
+
+<table data-table-width="958" data-layout="center" local-id="cfcbf091-3775-4454-bff4-924bf43e88f4">
+<a id="table-1"></a>
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**レポートタイプ**
+</th>
+<th>
+**大分類**
+</th>
+<th>
+**小分類**
+</th>
+<th>
+**User / Group**
+</th>
+<th>
+**Resource**
+</th>
+<th>
+**その他フィルター**
+</th>
+</tr>
+<tr>
+<td rowspan="12">
+QueryPie System
+</td>
+<td rowspan="5">
+Users
+</td>
+<td>
+User Account Status <br/>ユーザーアカウント現況
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+* User Status
+</td>
+</tr>
+<tr>
+<td>
+User Account Management History <br/>ユーザーアカウント管理履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+User Account Activation History <br/>ユーザーアカウントアクティベート/非アクティベート履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Status **[added-10.2.2]**<br/>グループ現況
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Group Membership History **[added-10.2.2]**<br/>グループメンバー追加/削除履歴
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="3">
+Administrator
+</td>
+<td>
+Administrator Status <br/>管理者現況
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Role History <br/>管理者権限付与/回収履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Admin Activity History <br/>管理者行為履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Login
+</td>
+<td>
+User Login History <br/>ユーザーログイン履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Login IPs by User <br/>ユーザー別ログインIP履歴
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Security Settings
+</td>
+<td>
+Authentication Method <br/>ユーザー認証方式
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Security Configuration Stauts **[updated-10.2.2]**<br/>セキュリティ設定現況
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="8">
+QueryPie DAC
+</td>
+<td rowspan="2">
+Databases **[added-10.2.2]**
+</td>
+<td>
+DB Connection Status<br/>DBコネクション現況
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Connection Management History<br/>DBコネクション追加/削除履歴
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access Control
+</td>
+<td>
+DB Access Control - Assigned Status <br/>DBアクセス権限付与現況
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DB Access Control Logs <br/>DBアクセス権限付与/回収履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+DB Access & Queries
+</td>
+<td>
+DB Access History <br/>DBアクセス履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+</td>
+</tr>
+<tr>
+<td>
+Query Execution History <br/>クエリ実行履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Workflow Logs - DB **[added-10.2.2]**
+</td>
+<td>
+DAC Type Requests<br/>Workflowを通じて進行されたDACタイプ要求
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+DAC Unmasking Requests **[added-11.2.0]**
+Workflowを通じて進行されたUnmasking要求
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="20">
+QueryPie SAC
+</td>
+<td rowspan="2">
+Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+Server Status<br/>サーバー現況
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Management History<br/>サーバー追加/削除/変更履歴
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Groups **[added-10.2.2]**
+</td>
+<td>
+Server Group Status<br/>サーバーグループ現況
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Group Management History<br/>サーバーグループ追加/削除/変更履歴
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Server Account & Password **[added-10.2.2]**
+</td>
+<td>
+Provisioned Server Account Status<br/>プロビジョニングされたサーバーアカウント現況
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Account Provisioning History<br/>サーバーアカウントプロビジョニング履歴
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="7">
+Server Access Control
+</td>
+<td>
+Direct Permission Status by User/Group **[updated-10.2.2]**<br/>ユーザー/グループ別Direct Permission現況
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Direct Permission Change History <br/>Direct Permission変更履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+*Server Role Status by User* **[deprecated-10.2.2]**<br/> *ユーザー別サーバー役割現況*
+</td>
+<td>
+*O*
+</td>
+<td>
+*O*
+</td>
+<td>
+*-
+</td>
+</tr>
+<tr>
+<td>
+Role-Granted Users by Role **[added-10.2.2]**<br/>役割別役割付与ユーザー現況
+</td>
+<td>
+O
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Accessible Servers by Role **[added-10.2.2]**<br/>役割別アクセス可能サーバー現況
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role & Policy Management History **[added-10.2.2]**<br/>サーバー役割および政策変更履歴
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Server Role Grant/Revocation History <br/>サーバー役割付与/回収履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td rowspan="6">
+Server Sessions and Commands
+</td>
+<td>
+Server Access History <br/>サーバーアクセス履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Time Range
+* Result
+* Action Type
+* Role
+
+</td>
+</tr>
+<tr>
+<td>
+Command History <br/>コマンド履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+</td>
+</tr>
+<tr>
+<td>
+Command Template Status <br/>コマンドテンプレート現況
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Template Management History <br/>コマンドテンプレート管理履歴
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Command Whitelist Grant/Revocation History <br/>コマンド一時許可権限付与/回収履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+<tr>
+<td>
+Restricted Commands <br/>遮断コマンド履歴
+</td>
+<td>
+O
+</td>
+<td>
+O
+</td>
+<td>
+* Keyword
+
+</td>
+</tr>
+<tr>
+<td>
+Workflow Logs - Servers <br/>**[added-10.2.2]**
+</td>
+<td>
+SAC Type Requests<br/>SACタイプ要求
+</td>
+<td>
+X
+</td>
+<td>
+O
+</td>
+<td>
+-
+</td>
+</tr>
+</tbody>
+</table>
+
+## レポート一覧照会
+
+AuditメニューでReports &gt; Reportsメニューに進入するとレポート生成タスク一覧を確認できます。
+
+<Callout type="info">
+レポートメニューにアクセスするにはアカウントにReport Audit Full Access管理者権限が付与されていなければなりません。
+</Callout>
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports](/administrator-manual/audit/reports/reports/screenshot-20241223-112238.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports
+</figcaption>
+</figure>
+
+
+1. **検索**: Task Nameで検索が可能です。
+2. **Create Task**: レポート生成ページに進入します。
+3. **リフレッシュ**: 一覧を再読み込みします。
+4. **Type**: レポート生成時に指定したタイプ情報で、以下の3つがあります。
+   1. QueryPie System
+   2. QueryPie DAC
+   3. QueryPie SAC
+5. **Task Name**: レポート生成時に入力したタスクの名前です。
+6. **Scheduling**: レポート生成時に入力したタスクの反復周期情報で、以下のような値を持ちます。
+   1. None : 反復なし（一回性で生成）
+   2. Daily : 毎日反復
+   3. Weekly : 毎週反復
+   4. Monthly : 毎月反復
+   5. Quarterly : 毎四半期反復
+7. **Created By**: レポート生成タスクを作った人の情報です。
+8. **Created At**: レポート生成タスクを作った時点です。
+9. **Last Task At**: 最後にレポートが生成された時点です。（生成されたことがない場合は空）
+10. **Last Task Status**: 最後のレポート生成タスクの状態です。以下のような値を持ちます。
+    1. Succeeded : 成功
+    2. In Progress : 進行中
+    3. Failed : 失敗
+11. **Last Report File**: ボタンをクリックすると、最後に生成されたレポートファイルをダウンロードできます。
+    1. 生成されたファイルがないか、すでに期限切れの場合は非アクティブ処理されます。
+    2. ファイルダウンロード時のパスワード指定の有無はSecurity設定で指定できます。
+    3. パスワード指定アクティブ時、ファイルをダウンロードする時にパスワードを設定します。その後ファイルの圧縮を解く時に設定したパスワードを入力する必要があります。
+
+## レポート詳細照会
+
+レポート一覧で詳細内容を照会したい項目を選択するとDrawerが開き、詳細情報を確認できます。
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail](/administrator-manual/audit/reports/reports/screenshot-20241223-112524.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail
+</figcaption>
+</figure>
+
+
+1. **Unschedule Task**: 反復生成するレポートの場合、スケジューリング解除が可能です。
+   1. スケジュールがないかすでに解除されたタスクのボタンは非アクティブされており、Task Unscheduledで表示されます。
+2. **Type**: レポートタイプ情報を表示します。（QueryPie General、DAC、SAC）
+   1. 虫眼鏡ボタンをクリックすると選択された出力項目およびフィルター情報を確認できます。
+3. **Scheduling**: 設定された反復周期情報を表示します。（None、Daily、Weekly、Quarterly）
+4. **Date Range**: 一回性で生成するレポートの場合、期間範囲を表示します。
+5. **Start Date**: 反復生成するレポートの場合、タスク開始日を表示します。
+6. **Next Task At**: 次に予定されたタスクの日時を表示します。（反復しない場合は空にします）
+7. **User Scope**: ユーザーScope情報を表示します。
+8. **Resource Scope**: リソースScope情報を表示します。
+9. **Report Listタブ**: 生成されたレポートの一覧を表示します。
+   1. Report No. : レポートタスク内レポート連番
+   2. Created At : レポートの生成日時
+   3. Expired At : レポートファイルの期限切れ（予定）日時
+   4. Status : レポートタスクの状態（Succeeded、Failedのいずれか）
+   5. Report File : ファイルダウンロードリンク
+      * 生成されたファイルがないか、すでに期限切れの場合は非アクティブ処理されます。
+      * ファイルダウンロード時のパスワード指定の有無はSecurity設定で指定できます。
+      * パスワード指定アクティブ時、ファイルをダウンロードする時にパスワードを設定します。その後ファイルの圧縮を解く時に設定したパスワードを入力する必要があります。
+10. **Action Historyタブ**: レポートに対するユーザーの作業履歴を表示します。
+    1. Action At : 作業実行日時
+    2. Action Type : 作業タイプ（Report Download、Report Unscheduleのいずれか）
+    3. Target Report No. : 対象レポート連番（ない場合は空）
+    4. Action By : 作業者
+
+## レポート生成
+
+レポート一覧画面で`+ Create Task`ボタンをクリックしてレポート生成ページに進入します。
+
+タスク名、レポートタイプ、スケジューリング関連内容を入力し、セクション単位でレポート出力項目および適用するフィルターを指定できます。`+ Add Section`ボタンをクリックしてセクションを追加できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create](/administrator-manual/audit/reports/reports/screenshot-20241209-104337.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create
+</figcaption>
+</figure>
+
+1. **Task Name**: レポート生成タスクを識別できる名前を入力します。
+2. **Type**: レポートタイプを選択します。（QueryPie General、DAC、SAC）
+3. **Scheduling**: レポート生成タスクの反復周期を入力します。
+   1. None : タスクの反復なしに一回性で生成する時に選択します。
+   2. Daily : 毎日反復生成したい時に選択します。
+   3. Weekly : 毎週反復生成したい時に選択します。
+   4. Monthly : 毎月反復生成したい時に選択します。
+   5. Quarterly : 毎四半期反復生成したい時に選択します。
+4. **Date Range**: 履歴データの期間範囲
+   1. `Scheduling`を`None`に指定した場合、履歴データの出力範囲を指定します。
+   2. 現況データはDate Range入力値と無関係にタスク実行時点を基準に出力されます。
+   3. 制約事項: Date Rangeは最大3ヶ月分のデータのみ選択できます。
+      1. `10.2.8`バージョン現在、今日から最大3ヶ月前のデータのみ選択できます。これは`10.2.9`バージョンで修正予定です。
+5. **Start Date**: 反復タスクの開始日
+   1. `Scheduling`を`Daily`、`Weekly`、`Monthly`、または`Quarterly`に指定した場合、タスク開始日を指定します。
+6. **Data**: レポート出力項目
+   1. 項目選択時、下部でデータ期間範囲情報を確認でき、Scheduling指定時、最初に出力されるレポートに適用される内容を表示してくれます。
+   2. Reference Time : 現況データに適用される基準時点案内
+   3. Date Range : 履歴データに適用される期間範囲案内
+7. **Filter**: セクションに適用するフィルター入力
+   1. レポート出力項目選択に従って適用可能なフィルターが表示されます。
+   2. 下部フィルター項目参照
+
+希望する情報をすべて入力後`Preview`ボタンをクリックすると出力されるレポートをプレビューできます。
+
+`Save`ボタンをクリックしてレポートタスクを保存し、一覧に戻ります。
+
+## レポート複製**[10.2.2]**
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task](/administrator-manual/audit/reports/reports/screenshot-20241223-104529.png)
+<figcaption>
+Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task
+</figcaption>
+</figure>
+
+複製したいレポートを一覧で選択した後:copy: `Duplicate Task`ボタンをクリックすると、既存に生成していたレポートを複製して新しいレポートタスクを生成できます。
+
+タスク複製時に複製される情報は以下の通りです。
+
+* **Task Name** - 既存タスク名の後にCopyが追加される
+* **Type** - 既存タスクで選択したレポートタイプが維持される
+* **Scheduling** - 既存タスクで選択した反復周期が維持される
+  * ただし、Date RangeおよびStart Dateは初期化され、再入力が必要
+* **Data** - 既存タスクで選択した出力項目が保存される
+* **Filter** - Data別に入力したフィルターが保存される
+  * ただし、既存に選択したRole、User、Groupがもはや存在しない場合はフィルター値から除去される
+
+## フィルター
+
+レポートでサポートするフィルターの詳細スペックを案内します。
+
+1. **User/Group**: レポート出力データをユーザーまたはグループでフィルタリングします。
+   1. 例: PMチームに対して付与されたDBアクセス権限レポート出力を希望する場合は以下のように選択
+      * Type: QueryPie DAC
+      * Data: DB Access Control - Assigned Status
+      * Filter &gt; User/Group: PM（グループ）
+2. **Resource**: レポート出力データをリソースに付与されたタグでフィルタリングします。
+   1. 例: `Service:Homepage`タグが付いたDBに対するアクセス権限レポート出力を希望する場合
+      * Type: QueryPie DAC
+      * Data: DB Access Control - Assigned Status
+      * Filter &gt; Resource: `Service:Homepage`
+   2. タグ演算ロジックは他のQueryPie機能と同様で、以下の通りです。
+      * Keyが同じタグフィルターを複数入力する場合はOR条件で合わされます。
+      * Keyが異なるタグフィルターを複数入力する場合はAND条件で合わされます。
+   3. Workflowの場合、一度に複数のリソースに対して要求が可能です。この時要求内に条件を満たすリソースが1つ以上含まれていれば検索結果に含まれます。
+3. **User Status :** User Account Status出力時、User Accountの状態でフィルタリングします。
+   1. フィルター値: Active、Locked、Expired、Locked Manually
+4. **Time Range**: DB Access HistoryまたはServer Access History選択時、時間範囲でフィルタリングします。
+   1. 開始時間および終了時間を入力します。
+   2. 入力された時間範囲内の結果を除外するかどうかを選択します。選択時、入力された時間範囲外のログのみ出力されます。
+5. **Result**: Server Access History選択時、結果を基準にフィルタリングします。
+   1. フィルター値: Success、Failure
+6. **Action Type**: Server Access History選択時、行為タイプ（Action Type）を基準にフィルタリングします。
+   1. フィルター値: Connect、Disconnect
+7. **Role**: Server Access History選択時、使用したサーバー役割を基準にフィルタリングします。
+   1. 複数のRoleを入力する場合はOR条件で合わされます。
+8. **Keyword**: Command HistoryまたはRestricted Commands選択時、入力したコマンド基準でフィルタリングします。
+   1. キーワード入力後、キーボードでEnterキーを入力して検索条件を適用します。
+   2. 入力したキーワードが含まれたコマンド履歴のみ抽出されます。（like検索）
+   3. 大文字小文字を区別しません。
+   4. 複数のキーワードを入力する場合はOR条件で合わされます。

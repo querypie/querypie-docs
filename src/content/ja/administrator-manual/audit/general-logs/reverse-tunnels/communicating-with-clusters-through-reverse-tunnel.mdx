@@ -1,0 +1,25 @@
+---
+title: 'Reverse Tunnelを介してクラスターに通信する'
+---
+
+## Reverse Tunnelを介してクラスターに通信する
+
+QueryPieと他のNetwork Zoneにあるリソースとの通信手段としてReverse Tunnelingをサポートしています。通信しようとするNetwork ZoneにReverse Tunnel Agentをインストールすると、Reverse Tunnel AgentからQueryPie方向（Outbound）に接続を確立します。
+
+リソース（クラスター）にTagを追加してReverse Tunnelを介してQueryPieから他のNetwork Zoneのリソースに通信できます。
+
+## Reverse Tunnelをクラスターに適用する
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; List Details](/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-clusters-through-reverse-tunnel/image-20250116-124402.png)
+<figcaption>
+Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; List Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clustersメニューに移動します。
+2. リスト内のクラスターを選択します。クラスター新規登録時は[手動でKubernetesクラスター登録する](../../../kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters)を参照してください。
+3. ClustersのList Detailページ内でTags項目に以下のTagを追加します。
+   1. `RTS = TRUE` : このTagがあるクラスターはReverse Tunnelsを介して通信を試行します。
+   2. Reverse Tunnel AgentのTag : 同じTagがあるReverse Tunnel Agentを通じてクラスターと通信します。同じTagがあるReverse Tunnel Agentがない場合、通信は失敗します。
+4. `Save Changes`ボタンをクリックして設定を保存します。

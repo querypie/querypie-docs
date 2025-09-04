@@ -1,0 +1,59 @@
+---
+title: 'Pod Session Recordings'
+---
+
+## Overview
+
+組織で管理するKubernetesクラスターのAPIサーバー呼び出し中、Pod Execなどの接続セッション内行為を記録します。管理者は映像再生を通じてユーザーが運用コンテナシェルでの実行履歴をモニタリングできます。
+
+## Pod Session Recordingsの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings](/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082407.png)
+<figcaption>
+Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordingsメニューに移動します。
+2. Pod execセッション内訳はテーブルに降順で一覧にログが露出されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+   1. **Name**: ユーザー名
+   2. **Email**: ユーザーメール
+   3. **Cluster Name**: クエリパイ上に登録されたクラスター名
+   4. **Client IP**: ユーザークライアントIPアドレス
+   5. **Client Name**: ユーザークライアント名/バージョン（例. kubectl/v1.27.3）
+4. 検索フィールド右側フィルターボタンをクリックして**Action At**に対する日時範囲を再指定してフィルタリングが可能です。
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のカラム情報を提供します:
+   1. **No**: イベント識別番号
+   2. **Action At**: セッション録画開始日時
+   3. **Name**: 対象ユーザー名
+   4. **Email**: 対象ユーザーメール
+   5. **Cluster Name**: 対象Kubernetesクラスター名
+   6. **Role**: アクションを行使できたRole名
+   7. **Client IP**: ユーザークライアントIPアドレス
+   8. **Client Name**: ユーザークライアント名/バージョン
+   9. **Connected From**: 接続方式の主体
+      1. 現在はProxyのみ記入されます。
+
+## Pod Session Recordings内訳の再生
+
+1. 各行のAction Atのリンクをクリックするとセッションレコーディング内訳の再生が可能です。
+2. Action Atのリンクをクリックするとモーダルが実行され、再生のための初期ダウンローディングプロセスを見せるモーダルが現れます。
+3. 録画されたファイルのサイズが700MBを超過するかどうかによって再生画面を露出するかダウンロードボタンを露出します。
+   1. **700MB未満**
+      1. 上部に基本情報が露出され、下部にReplay再生画面が露出されます。
+         1. **Name**: 実行者名
+         2. **Action At**: 発生日時（開始）
+         3. **Session Recording Name**: レコーディング名
+      2. 再生ボタンを押すと開始されます。
+         1. 逆に、一時停止ボタンを押すと再生が止まります。
+         2. ボタン右側ラインをドラッグするか希望する時点をクリックして該当部分から再生も可能です。
+      3. `Close`ボタンを押すと窓が閉じます。
+   2. **700MB以上**
+      1. 再生画面内に実行不可能文句とともにダウンロードボタンを提供します。
+         1. ファイルサイズが700MBを超過してセッションを再生できません。
+         2. このセッション録画を見るにはファイルコンテンツをダウンロードしてプレイする必要があります。
+      2. `Download`ボタンを押すとダウンロードが進行してローカルにファイルが生成されます。
+         1. Administrator &gt; General &gt; Company Management &gt; Security &gt; Others &gt; `Export a file with Encryption`共通オプションが`Required`でアクティブになっている場合、該当ダウンロード時に暗号化モーダルが追加で現れ、該当モーダル以降にダウンロードを実行します。

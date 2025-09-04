@@ -1,0 +1,71 @@
+---
+title: 'User Activity Recordings'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+組織で管理するウェブアプリケーションユーザー活動を記録します。
+
+## User Activity Recordingsの照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings](/administrator-manual/audit/web-app-logs/user-activity-recordings/image-20250629-175520.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordingsメニューに移動します。
+2. 現在月基準でログが内訳数で照会されます。
+3. テーブル最左上部の検索欄を通じて以下の条件で検索が可能です。
+   1. **User Name**: ユーザー名
+   2. **User Email**: ユーザーEmail
+   3. **Role Name**: 役割名
+   4. **Web App Name**: ウェブアプリケーション名
+   5. **Web App Base Url**: ウェブアプリケーション基本URL
+   6. **Session ID**: セッション固有識別子
+   7. **Client Ip**: クライアントIPアドレス
+4. 検索フィールド右側フィルターボタンをクリックしてAND条件で以下のフィルタリングが可能です。
+
+**a. Action At**: アクション発生日時範囲
+
+
+## User Activity Recordings詳細内訳の照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; User Activity Recordings Details](/administrator-manual/audit/web-app-logs/user-activity-recordings/image-20250629-175637.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; User Activity Recordings Details
+</figcaption>
+</figure>
+
+1. **詳細ページには以下の情報を露出します:**
+   1. **Action At**: アクション時点
+   2. **Name**: 対象ユーザー名
+   3. **Role**: ユーザー役割名
+   4. **Client Ip**: クライアントIPアドレス
+   5. **Session ID**: セッション固有識別子
+   6. **Email**: 対象ユーザーメール
+   7. **Web App**: ウェブアプリケーション名
+   8. **Base URL**: ウェブアプリケーション基本URL
+2. **Event Timelineでは管理者が記録するように設定した項目のみ表示されます**
+   1. Navigated : ページ移動記録（設定時）
+   2. Mouse Clicked : マウスクリックイベント（設定時）
+   3. Clipboard Copied : クリップボードコピーイベント（設定時）
+   4. File Uploaded : ファイルアップロードイベント（設定時）
+   5. File Downloaded : ファイルダウンロードイベント（設定時）
+   6. Value Changed : 値変更イベント（設定時）
+   7. Scrolled Up/Down : スクロールイベント（設定時）
+   8. Print Initiated : 印刷開始イベント（設定時）
+   9. URL : アクセスしたページURL
+   10. Tab ID : タブ識別子
+   11. Timestamp : イベント発生時間
+3. **画面右側には実際のユーザーがアクセスしたウェブアプリケーションのスクリーンショットが表示されます。**
+
+<Callout type="info">
+管理者はWeb Apps &gt; Web App Configurationsで各ウェブアプリケーション別に記録するユーザー活動タイプを設定できます。
+</Callout>

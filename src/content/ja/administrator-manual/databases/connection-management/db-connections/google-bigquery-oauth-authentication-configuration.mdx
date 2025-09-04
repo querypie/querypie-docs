@@ -1,0 +1,27 @@
+---
+title: 'Google BigQuery OAuth認証設定'
+---
+
+## 認証方式の選択
+
+QueryPie 10.2.4からQueryPieコネクションでBigQuery接続時にGoogle Cloud認証方式を選択的に指定できるように改善されました。Google Cloud同期で基本的に使用する認証方式はService Accountキーを通じた認証なので、コネクションの認証方法も基本的にService Accountキー認証を使用します。追加でコネクションを手動作成したりクラウドと同期したコネクションに対してService Accountキー認証方式をOAuth 2.0認証方式に変更して保存できます。OAuth 2.0認証方式を使用するにはまずGoogle Cloud APIコンソールに登録されたClient ID、Client SecretをQueryPieに登録する必要があります。
+
+## Google Cloud API Integration
+
+Google Cloud API Integration設定方法はこの文書を参照してください: [OAuth 2.0を使用するためのGoogle Cloud API連動](../../../general/system/integrations/integrating-google-cloud-api-for-oauth-20)
+
+## ConnectionにOAuth 2.0 Client ID指定
+
+クラウド同期を通じて生成されたコネクションや手動で作ったコネクションすべてAuthentication Methodを"Using Google User Account (OAuth 2.0)"で選択できます。
+
+<figure data-layout="center" data-align="center">
+![新しいBigQueryコネクションを作成する時にAuthentication Method指定](/administrator-manual/databases/connection-management/db-connections/google-bigquery-oauth-authentication-configuration/image-20250116-112226.png)
+<figcaption>
+新しいBigQueryコネクションを作成する時にAuthentication Method指定
+</figcaption>
+</figure>
+
+1. Authentication Methodで"Using Google User Account (OAuth 2.0)"を選択します。
+2. OAuth 2.0 Client ID項目にGeneral &gt; System &gt; Integration &gt; Authentication &gt; Google Cloud APIで設定したClient IDを選択します。もしClient IDに対するIntegration設定がまだされていない状態なら"Go to Google Cloud APIリンクをクリックしてIntegration画面に移動できます。
+3. Project IDにGoogle CloudのProject IDを入力します。
+4. 他の必須項目およびオプション項目を設定して保存します。

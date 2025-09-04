@@ -1,0 +1,94 @@
+---
+title: 'MS AzureからDBリソース同期'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieではデータベース登録および管理のためのMS Azure連動をサポートしています。Azure内のリソースを同期してQueryPieで管理するデータベースとして登録し、ユーザーおよびグループに同期して持ってきたデータベースに対するアクセス権限を付与し政策を設定できます。
+
+
+## QueryPieでAzure連動情報登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241217-102747.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
+</figcaption>
+</figure>
+
+
+1. Database設定メニューでCloud Providerメニューに移動します。
+2. 右上の`Create Provider`ボタンをクリックします。
+3. Name項目に該当プロバイダーを区分できる名前を入力します。
+4. **Cloud****Provider**項目でMicrosoft Azureを選択します。
+5. 同期したいリソースの**Tenant****ID**を入力します。
+6. **Subscription****ID**を入力します。
+7. リソースを同期するために必要な**Credential**情報を入力します。現在はClient Secret方式のみサポートされています。
+   * `Synchronize`ボタンクリック時にAzureのClient Secretを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでClient Secretを使用する時もスケジュールを通じた同期が可能になるように改善されました。
+8. **Database Type Filter**項目で同期したいリソースを選択します。
+   * 現在Azure SQL Databaseのみ同期可能です。
+9. **Replication****Frequency**項目で同期方式を選択します。
+   1. Manual : 同期をしたい時点にのみ手動で同期する方式です。
+   2. Scheduling : 定期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
+10. **Auto Configuration Upon Initial Synchronization** Cloud Providerで最初に同期するDBの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。
+    * Tag : 同期されたDBに自動でタグを追加できます。
+      * タグ値に`{vpcid}`を入力すると、該当DBが属するCloudのVPC IDが自動で埋められます。
+      * 例: タグKeyを"Network"に設定しValueを`{vpcid}`で入力すると、DBが"vpc-1a2b3c4d" VPCにある場合"Network: vpc-1a2b3c4d"タグが自動生成されます。
+11. `Save`ボタンをクリックしてCloud Providerを保存します。
+
+
+<Callout type="important">
+**Save Credential for Synchronizationオプション**
+
+<figure data-layout="center" data-align="center">
+![Save Credential for Synchronization](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241221-025943.png)
+<figcaption>
+Save Credential for Synchronization
+</figcaption>
+</figure>
+
+* **このオプションをアクティブにして保存した同期設定は同期設定詳細ページでこのオプションを非アクティブにできませんので慎重に選択する必要があります。保存されたcredentialは交換できません。他のcredentialを使用しなければならない状況なら同期設定を新しく作成する必要があります。credential変更が必要な場合は既存と同じ権限が割り当てられたcredentialを作成し同期設定を新しく作った後既存同期設定を削除することをお勧めします。**
+* このオプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。
+* このオプションがアクティブになっていれば同期を手動ですることもでき、スケジュールを指定することもできます。
+</Callout>
+
+
+## 登録されたAzure Cloud Provider同期および管理
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241219-060152.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details
+</figcaption>
+</figure>
+
+1. Database設定メニューでCloud Providerメニューに移動します。
+2. 登録したCloud Providerをクリックして詳細情報画面に入ります。
+3. 右上の`Sychronize`ボタンをクリックするとAzureからリソースを同期できます。
+4. 表示されるSynchronization Logで同期進行状況を確認でき、Administrator &gt; General &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
+5. Cloud Providerを一度登録した後はProvider基本情報および認証情報は変更できません。
+   1. **Name**: 変更可能
+   2. **Cloud Provider**: 変更不可
+   3. **Tenant****ID**: 変更不可
+   4. **Subscription ID**: 変更不可
+   5. **Credential**: 変更不可
+      1. "Save Credential for Synchronization" : 非アクティブ状態はアクティブに変更できますが、アクティブ状態を非アクティブに転換不可
+   6. **Database Type Filter**: 変更不可
+   7. **Replication Frequency**: "Save Credential for Synchronization"オプションがアクティブになっているクラウド同期設定はこの値を変更できます。"Save Credential for Synchronization"は基本値が非アクティブです。
+
+<Callout type="important">
+"Save Credential for Synchronization"オプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。新しく作成する時と同様にこの設定は**アクティブにした後再び非アクティブにできませんので**慎重に選択する必要があります。
+</Callout>
+
+<Callout type="info">
+Microsoft Azureでアプリケーション登録およびClient Secret情報取得
+* AzureコンソールでMicrosoft Entra IDメニューにアクセスします。
+* 左側メニューで「アプリ登録」メニューで新しいアプリケーションを登録します。
+  * **該当アプリケーションのID値をClient Secret IDで入力します。**
+* 登録したアプリケーションを詳細ページで「証明書およびパスワードメニュー」に移動します。
+* 上部の「新しいクライアントパスワード」ボタンをクリックして新しいクライアントパスワードを生成します。
+* 「サブスクリプション」の「IAM」メニューにアクセスします。
+* 役割割り当て追加を通じて「読者」役割に前に登録したアプリケーションを割り当てます。
+</Callout>
