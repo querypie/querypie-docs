@@ -1,0 +1,28 @@
+---
+title: 'Policies'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie data access policies are features that allow administrators to manage and apply access policies for each data source to protect personal information and sensitive information within the organization. You can set up access to only the minimum information necessary for business purposes for users or groups by applying table/column restrictions, masking, and sensitive data policies for each connection, which is the data source unit of QueryPie.
+
+
+## Data Access Policy Guide Quick Access
+
+* [ **Data Access** ](policies/data-access): Manage access policies for specific tables or columns within DB connections
+    * When policies are registered, the table/column is only accessible to authorized users
+* [ **Masking Pattern** ](policies/masking-pattern): Manage sensitive information masking patterns
+* [ **Data Masking** ](policies/data-masking): Manage sensitive information masking policies for specific tables or columns within DB connections
+    * When policies are registered, sensitive information masking is performed on the table/column with the specified masking pattern
+* [ **Sensitive Data** ](policies/sensitive-data): Manage sensitive data policies for specific tables or columns within DB connections
+    * When policies are registered, access history to the table/column is stored in sensitive data access history, and sensitive data access notifications can be registered
+
+
+<Callout type="info">
+**Recommended Guide**
+1. When registering rules after creating data policies, access restriction policies are applied to all users by default.
+2. Allow access only to necessary users or groups through the exception user handling (Allowed Users) feature.
+3. By creating exception user groups and assigning those groups to Allowed Users, you can easily manage exception handling for users who are allowed to access the data.
+</Callout>

@@ -1,0 +1,73 @@
+---
+title: 'Server Role History'
+---
+
+## Overview
+
+Records the history of grants and revocations of server access Roles assigned to QueryPie users/groups.
+
+## Viewing Server Role History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Role History](/administrator-manual/audit/server-logs/server-role-history/image-20240728-174347.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Role History
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Role History menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Email**  : User email
+    3.  **Role Name**  : Server access permission role name
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Event**  : Event type
+        1.  **Role Granted**  : Role grant history
+        2.  **Role Revoked**  : Role revocation history
+    2.  **Action At**  : Permission grant/revocation date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Role permission grant/revocation date and time
+    3.  **Event**  : Role permission related event
+        1.  **Role Granted**  : Event where Role was granted to user/group
+        2.  **Role Revoked**  : Event where Role was revoked from user/group
+    4.  **User Type**  : User/group type
+    5.  **Name**  : Target user/group name
+    6.  **Email**  : Target user email
+        1. Not displayed for groups.
+    7.  **Role Name**  : Granted/revoked Role name
+    8.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
+    9.  **Action By**  : Administrator name or System who performed the Role grant/revocation
+
+## Viewing Server Role History Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role History Details](/administrator-manual/audit/server-logs/server-role-history/image-20240728-174604.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role History Details
+</figcaption>
+</figure>
+
+1. The top displays information based on basic events:
+    1.  **Action At**  : Role permission grant/revocation date and time
+    2.  **Name**  : Target user/group name
+    3.  **Event**  : Event where Role was granted/revoked to user/group
+    4.  **Email**  : Target user email
+    5.  **Action By**  : Administrator name or System who performed the Role grant/revocation
+    6.  **Role Name**  : Role name
+    7.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
+2. The bottom lists and displays Policies corresponding to the granted/revoked Role:
+    *  **Name**  : Assigned policy name
+    *  **Description**  : Detailed description of the assigned policy
+    *  **Version**  : Version of the assigned policy
+        * Clicking the link displays a popup modal to view the policy code.
+            1. Shows the Policy Snapshot from when it was granted.
+                * Records remain even if the corresponding Policy is deleted.
+            2. Displays the code along with the policy name and Policy's Description.
+            3. Clicking the `Close` button or the `X` in the top right closes the modal.
+
+

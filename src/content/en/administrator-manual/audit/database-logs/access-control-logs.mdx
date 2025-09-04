@@ -1,0 +1,51 @@
+---
+title: 'Access Control Logs'
+---
+
+## Overview
+
+Records the history of access permission grants and revocations for DB connections assigned to QueryPie users/groups.
+
+## Viewing DB Access Control Logs
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Access Control Logs](/administrator-manual/audit/database-logs/access-control-logs/image-20240730-072419.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Access Control Logs
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; Access Control Logs menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Connection Name**  : DB connection name
+    3.  **Email**  : User email
+    4.  **Privilege Name**  : User access permission name
+    5.  **DB Host**  : DB host
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Connection Name**  : DB connection name
+    2.  **Database Type** : Database type
+    3.  **Event**  : Permission grant/revocation event type
+        1.  **Connection Owner Granted**  : Connection owner permission grant history
+        2.  **Connection Owner Revoked**  : Connection owner permission revocation history
+        3.  **Access Control Granted**  : Connection access permission grant history
+        4.  **Access Control Updated**  : Connection access permission modification history
+        5.  **Access Control Revoked**  : Connection access permission revocation history
+    4.  **Action At**  : Permission grant/revocation date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Permission grant/revocation date and time
+    3.  **Event**  : Permission grant/revocation event type
+    4.  **User Type**  : User/group type
+    5.  **Name**  : Target user/group name
+    6.  **Email**  : Target user email
+        1. Not displayed for groups.
+    7.  **Privilege**   **Name**  : User access permission
+    8.  **Description**  : Output of input reasons such as reactivation
+    9.  **Connection Name**  : Target DB connection name
+    10.  **Database Type**  : Target database type
+    11.  **Replication Type**  : DB Replication type
+    12.  **DB Host**  : Connected DB host
+    13.  **Action By**  : Administrator name or System who performed the permission grant/revocation

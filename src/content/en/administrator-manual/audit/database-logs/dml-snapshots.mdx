@@ -1,0 +1,74 @@
+---
+title: 'DML Snapshots'
+---
+
+## Overview
+
+Records before and after data when INSERT / UPDATE / DELETE queries are completed in QueryPie. This snapshot stores result information when separate DML Snapshot settings are activated for each DB connection. (Refer to **Additional Settings** in [DB Connections](../../databases/connection-management/db-connections))
+
+## Viewing DML Snapshots
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DML Snapshots](/administrator-manual/audit/database-logs/dml-snapshots/image-20240730-094404.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DML Snapshots
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; DML Snapshots menu.
+2. Logs are displayed in descending order based on the query execution month.
+3. You can search by user name through the search field in the top left of the table.
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Connection Name**  : Connected DB connection name
+    2.  **Executed At**  : Execution date and time
+    3.  **Statement** : Statement type (Insert/Update/Delete)
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Execution date and time
+    3.  **Name**  : Target user name
+    4.  **Email**  : Target user email
+    5.  **Statement** : Statement type (Insert/Update/Delete)
+    6.  **Connection Name**  : Target DB connection name
+    7.  **Database Type**  : Target database type
+    8.  **Replication Type**  : DB Replication type
+    9.  **DB Host**  : Connected DB host
+    10.  **DB User**  : DB user ID
+    11.  **DB Name**  : DB name
+    12.  **Table(s)**  : Called table name
+    13.  **Query**  : Executed query statement
+    14.  **Time(ms)**  : Execution time (in milliseconds)
+    15.  **Rows**  : Number of affected rows
+    16.  **Executed From**  : Query execution subject
+
+## Viewing DML Snapshot Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Details](/administrator-manual/audit/database-logs/dml-snapshots/image-20240730-095257.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Details
+</figcaption>
+</figure>
+
+* The top of the right drawer displays the following basic query audit information:
+    1.  **Name**  : Target user name
+    2.  **Executed At**  : Execution date and time
+    3.  **Connection Name**  : Target DB connection name
+    4.  **Replication Type**  : DB Replication type
+    5.  **Statement** : Statement type (Insert/Update/Delete)
+    6.  **Time(ms)**  : Execution time (in milliseconds)
+    7.  **Rows**  : Number of affected rows
+    8.  **Executed From**  : Query execution subject
+    9.  **Database Type**  : Target database type
+    10.  **DB Host**  : Connected DB host
+    11.  **DB Name**  : DB name
+    12.  **DB User**  : DB user ID
+    13.  **Table(s)**  : Called table name
+* The bottom displays the executed query body and before/after data:
+    1.  **Query**  : Executed query statement
+    2.  **`{database.table}`**  : Target table notation
+        1.  **Before**  : Data before query execution
+        2.  **After**  : Data after query execution
+        3.  **Copy Data**  : Button for copying before/after data

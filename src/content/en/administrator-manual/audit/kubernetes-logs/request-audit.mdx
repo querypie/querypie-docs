@@ -1,0 +1,81 @@
+---
+title: 'Request Audit'
+---
+
+## Overview
+
+The QueryPie proxy monitors and records audit logs for each call of API server call history to Kubernetes clusters managed by the organization.
+
+## Viewing Request Audit
+
+<figure data-layout="center" data-align="center">
+![image-20240721-082824.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png)
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Kubernetes &gt; Request Audit menu.
+2. Logs are displayed in descending order based on Executed At from 00:00 to 23:59 of the current day. 
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Cluster Name**  : Cluster name registered in QueryPie
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Verb**  : Specific Kubernetes API action called
+        * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
+    2.  **Resource**  : Specific Kubernetes resource called
+        * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`, `others`
+            * `others` is used to filter items that do not correspond to other custom resources, etc.
+    3.  **Executed At**  : Kubernetes API call occurrence date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Kubernetes API call occurrence date and time
+    3.  **Result**  : API call success/failure status 
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    4.  **Name**  : Target user name
+    5.  **Email**  : Target user email
+    6.  **Client IP**  : User client IP address
+    7.  **Cluster Name**  : Target Kubernetes cluster name
+    8.  **Role**  : Role name that could perform the action
+    9.  **Namespace** : Target namespace 
+    10.  **Verb**  : Specific Kubernetes API action called
+    11.  **Resource**  : Specific Kubernetes resource called
+    12.  **Resource Name**  : Name of the specific Kubernetes resource called 
+    13.  **Message**  : Records messages returned during API calls 
+        * QueryPie records a total of 2 times for session logs such as pods/exec, matching the start and end times of each session. The distinction can be made through the corresponding message. 
+    14.  **Cluster Endpoint**  : Target API endpoint called 
+    15.  **Kubernetes Groups**  : Kubernetes group account name that QueryPie Proxy impersonated during API calls
+    16.  **Client Name**  : User client name/version (e.g. kubectl/v1.27.3)
+
+## Viewing Request Audit Details
+
+1. You can view detailed information by clicking on each row.
+    1. The top displays information based on basic events:
+        1.  **Result**  : API call success/failure status 
+            1. :check_mark: Success
+            2. :cross_mark: Failure
+        2.  **Executed At** : Kubernetes API call occurrence date and time
+        3.  **Message**  : Records messages returned during API calls
+        4.  **Name**  : Target user name
+        5.  **Email**  : Target user email
+        6.  **Client IP**  : User client IP address
+        7.  **Client Name**  : User client name/version
+        8.  **Cluster Name**  : Target Kubernetes cluster name
+        9.  **Role**  : Role name that could perform the action
+        10.  **Cluster Endpoint**  : Target API endpoint called
+        11.  **Reverse Tunnel Agent Name** : When connected through Reverse Tunnel, the name of the Reverse Tunnel Agent used for communication
+        12.  **Tag** : When connected through Reverse Tunnel, the Tag used to select the Reverse Tunnel Agent for communication
+        13.  **Pod Session Recording**  : Recording for the corresponding session when executed with Pod exec API
+            1. This field is viewable in the detail page only for logs where session recording occurred.
+            2. When executed with Pod exec API, recording for the corresponding session proceeds, and the "Session Recording" text includes a hyperlink. 
+            3. Clicking the link plays the related session recording. 
+        14. The middle section displays information based on API call history: 
+            1.  **Verb**  : Specific Kubernetes API action called
+            2.  **Namespace**  : Target namespace 
+            3.  **Resource**  : Specific Kubernetes resource called
+            4.  **Resource Name**  : Name of the specific Kubernetes resource called 
+            5.  **Kubernetes Impersonated User** : Kubernetes user account name impersonated during API calls (expresses --as information)
+            6.  **Kubernetes Impersonated Group**  : Kubernetes group account name impersonated during API calls (expresses --as-group information)
+        15. The **Request Body** area at the bottom specifies what YAML content was requested via API.
+            1. Mainly records content in Create, Update, Patch history. 
+            2. The Max Size for Request Body is recorded and stored up to a maximum of 4KB.
+            3. When a situation exceeding 4KB occurs, the corresponding kubernetes API call is processed as is, and the record remains only up to 4KB. 

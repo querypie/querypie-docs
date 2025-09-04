@@ -1,0 +1,47 @@
+---
+title: 'Activity Logs'
+---
+
+## Overview
+
+In Activity logs, you can view the history of resource registration and configuration changes performed by **administrators**.
+
+
+## Viewing Activity Logs
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Activity Logs](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-191106.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Activity Logs
+</figcaption>
+</figure>
+
+1. Access the Administrator &gt; Audit &gt; General &gt; Activity Logs menu.
+2.  **Query Period**  : By default, the log list for this month is displayed in the latest order.
+    1. To change the query period, open the filter panel and change the query reference date in **Action At**.
+3.  **Action Type**  : You can briefly check the resource change content. The format is as follows:
+    1. `{Resource type that was changed}` `{Created | Updated | Deleted…}` : When a specific resource was created, modified, or deleted
+        * Example: `DB Connection Created`, `Server Updated`, `Kubernetes Policy Deleted`
+    2. `{Resource type that was changed}` `{Resource type that was modified}` `{Created | Updated | Deleted | Assigned | Unassigned…}` : When another resource was added, modified, deleted, assigned, or revoked to a specific resource
+        * Example: `Server Group Server Added`, `Server Group Account Updated` , `Kubernetes Role Policy Unassigned`
+    3. You can filter the log list by specific Action Type.
+4.  **Target**  : In Activity Logs, you can check the name of the resource type that was changed due to administrator actions.
+
+
+## Viewing Activity Logs Details
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-193807.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details
+</figcaption>
+</figure>
+
+1. Click on a row in the list to open a Drawer and view detailed content.
+2.  **Affected Data**  : Displays the data details that were changed by the action. The meaning of each column is as follows:
+    1. Label : Data column name
+    2. Before : Value before the action
+    3. After : Value after the action
+3.  **Related Logs**  : Displays logs that occurred in a chain or simultaneously for the action. Includes both before and after logs.
+    1. You can check not only actions directly caused by administrators, but also automatic system actions derived from them.
+    2. Action logs displayed in Related Logs are also kept as individual logs.

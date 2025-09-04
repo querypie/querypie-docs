@@ -1,0 +1,321 @@
+---
+title: 'DB Connections'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+In the DB Connections page, you can view the list of DB connections registered in QueryPie and configure detailed settings.
+
+The detailed features described in this document are as follows:
+
+
+## Manually Registering DB Connections
+
+Click the `Create Connection` button in the top right of the DB Connections page to enter the manual registration page.
+
+<figure data-layout="center" data-align="center">
+![Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.33.36-AM.png)
+<figcaption>
+Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here
+</figcaption>
+</figure>
+
+From version 10.2.8, administrators can use the "Supported Features" modal through the Click here link on the connection selection screen for connection creation, which allows you to see all vendor features supported by QueryPie at a glance.
+
+This modal is composed of major feature items (Web Editor, Access Control, Audit Log, Privilege Control, Data Policy, Proxy, DML Snapshot, Ledger Management), helping you intuitively check support status for each vendor.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/image-20240725-062325.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
+</figcaption>
+</figure>
+
+1. In Step 1, select the data source type to proceed to Step 2.
+2. In Step 2, enter DB connection information.
+    *  **Allowed Zone**  : Network range that can access the DB connection
+        * You can select Allowed Zones registered in the Allowed Zones menu 
+        * Default: Default (All allowed)
+    *  **Connection Name**  : DB connection name
+    *  **Cluster**  : Cluster configuration status
+        * When toggled on, cluster registration mode is activated. Refer to the **Registering DB Connections with Cluster Configuration** section below
+    *  **Host**  : DB connection host (both domain and IP formats can be entered)
+    *  **Port**  : DB connection port
+    *  **Database Name**  : DB name to connect to when establishing connection
+    *  **Secret Store**  : Authentication information storage location
+        * QueryPie : Stored within QueryPie
+        * Other registered Vault names are displayed
+        * Additional authentication information display methods vary depending on the selected authentication information storage location properties
+    * Click the `Test Connection` button to verify if the connection access information is valid.
+    * Additional Information : Enter additional information
+        * For detailed description, refer to the **Additional Information** section below
+    * SSL / SSH Setting : Enter SSL/SSH configuration information
+        * For detailed description, refer to the **SSL / SSH Setting** section below
+    * Click the `Next` button to complete DB connection creation and proceed to Step 3.
+3. In Step 3, you can review the entered DB connection information.
+4. You can confirm the creation of the new DB connection in the list on the DB Connections page.
+
+### Registering DB Connections with Cluster Configuration
+
+When synchronizing resources through Cloud Provider, if resources are configured as clusters, Cluster mode is activated.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/image-20240725-062536.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
+</figcaption>
+</figure>
+
+1. When the Cluster option is activated, you can enter cluster and instance information in a hierarchical structure.
+2. If you know the endpoints of each cluster and instance, you can register them manually through `Add Cluster`.
+    *  **Type**  : Replication type of the corresponding cluster
+        * Primary and Secondary types are available, and permissions can be granted at the cluster level. 
+    *  **Expose**  : Option to display the cluster in the connection list
+        * Expandable : Displays all clusters and instances in the user's Connections list when accessing via web
+        * Unexpandable : Displays only at the cluster level in the web connection user's Connections list, not showing instances under the cluster
+        * Hidden : The cluster is not displayed in the user's Connections list, only instances under the cluster are shown
+    *  **Host**  : Endpoint corresponding to the cluster's host
+    *  **Add Instance**  : If you want to manage down to the instance level, enter the name and host of the corresponding instance
+        * Expose : Whether to expose the instance endpoint in the user's Connections list
+            * e.g. If there are 3 instances under Secondary and only 2 of them have Expose = On setting, users with Secondary permissions can access 2 instance endpoints
+
+<Callout type="info">
+**What is Cluster Mode?**
+Generally, when synchronizing through Cloud Provider, it is registered in cluster structure for Primary and Secondary cluster and endpoint management. Even when manually registering connections, you can register connections in cluster structure through the Cluster toggle button. When using Cluster mode, you can manage access permissions in cluster and instance endpoint structure, and **for purposes such as load balancing and permission management, you can grant permissions only to specific instance endpoints to certain users**.
+</Callout>
+
+
+## Viewing DB Connection List
+
+You can view the list of DB connections currently registered in QueryPie in the Databases settings &gt; DB Connections page within the administrator console.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections](/administrator-manual/databases/connection-management/db-connections/image-20240714-055800.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
+</figcaption>
+</figure>
+
+* Search: Search by DB connection name
+* Provided filter types
+    *  **Database Type** : DB type (eg. MySQL, MairaDB, PostgreSQL…)
+    *  **Cloud Provider** : Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
+    *  **Favorite View** : Favorite setting status
+        * There is a button for favorite setting on the far right of the table. 
+    *  **SSL Status** : SSL activation status
+    *  **Label** : Whether it's a ledger DB
+    *  **Tag** : Tags assigned to connections
+        * Input method for each tag: Enter Key → Press Enter → Enter operator → Enter Value → Press Enter
+            * Supported operators: `=`, `!=`, `:`, `!:`
+        * When entering multiple tags with the same Key, OR search is performed (union)
+        * When entering multiple tags with different Keys, AND search is performed (intersection)
+
+
+## Viewing and Configuring DB Connection Details
+
+Click on the item you want to view details for in the DB Connections page to enter the detail page.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.37.08-AM.png)
+<figcaption>
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
+</figcaption>
+</figure>
+
+From 10.2.8, when viewing details, you can check the list of features supported by the connection in Supported Features.
+
+### Viewing Accessible Users
+
+Click the `Accessible Users` button in the top right of the DB connection detail page to open a Drawer and view the list of users who can access the connection.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-223340.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users
+</figcaption>
+</figure>
+
+### Viewing and Modifying DB Connection Information
+
+In the Connection Information area of the DB connection detail page, you can view and modify the information entered during creation.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-223248.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information
+</figcaption>
+</figure>
+
+* Allowed Zone : Network range that can access the DB connection
+    * You can select Allowed Zones registered in the Allowed Zones menu 
+    * Default: Default (All allowed)
+* Connection Name : DB connection name
+* Host : DB connection host (both domain and IP formats can be entered)
+* Port : DB connection port
+* Database Name : DB name to connect to when establishing connection
+* Secret Store : Authentication information storage location
+    * QueryPie : Stored within QueryPie
+    * Other registered Vault names are displayed
+    * Additional authentication information display methods vary depending on the selected authentication information storage location properties
+
+Click the `Test Connection` button to verify if the connection access information is valid.
+
+To save changes, click the `Save Changes` button in the top right of the detail page.
+
+<Callout type="info">
+The Secret Store item is displayed when Secret Store usage is enabled in the Security settings menu, and to actually use Secret Store, Vault registration is required on the Admin &gt; General &gt; Integration &gt; HashiCorp Vault page. For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
+</Callout>
+
+### Reference. Secret Store Configuration Method
+
+DB Account items are displayed differently depending on the Secret Engine type stored in Secret Store settings.
+
+* When `Secret Engine` = K/V setting, Username / Password input fields are displayed on the connection information page.
+    * Enter the Vault Path in the Username / Password fields.
+    * Path can be entered in the format `prod_db/data/mysql?username`.
+    * Based on the example, the actual path in Vault is when the key `username` exists in `prod_db &gt; mysql`.
+    * The `/data` path in the middle must be added.
+* When `Secret Engine` = Database setting, Account input field is displayed on the connection information page.
+    * Enter the Vault Path in the Account field.
+    * Path can be entered in the format `prod_db/creds/mysql_role`.
+
+
+## Additional Settings
+
+You can configure additional settings for DB connections in the tab area at the bottom of the page. Refer to the description for each item.
+
+### Additional Information
+
+Enter detailed policies to be applied to the DB connection. Save with the `Save Changes` button.
+
+<figure data-layout="center" data-align="center">
+![Additional Information tab](/administrator-manual/databases/connection-management/db-connections/image-20250825-005925.png)
+<figcaption>
+Additional Information tab
+</figcaption>
+</figure>
+
+
+* `Max Display Rows` : You can limit the maximum number of rows of data that can be viewed after query execution.
+* `Max Export Rows` : You can limit the maximum number of rows of data that can be exported at once.
+* `Access Start Time` : You can set the start time of the time period when the connection can be accessed.
+* `Access End Time` : You can set the end time of the time period when the connection can be accessed.
+* `Weekday Access Denied` : You can select multiple weekdays when the connection cannot be accessed.
+* `Maximum Login Failures` : You can limit the maximum number of database login failures allowed for the connection.
+* `Specified Time interval Before Lockout` : You can set the time interval that serves as the basis for the number of login failures allowed.
+* `Database Version` : You can enter the database version used in the connection.
+* `Query Audit On/Off` : You can choose whether to record query logs executed in the connection. (Default = On)
+* `DML Snapshot On/Off` : You can choose whether to record before/after data for executions in the connection. (Default = Off)
+* `User Action Purpose Required` : You can set operations that require reason input in the connection.
+    * Allow reusing the same reason throughout a session : You can set to allow reusing entered reasons.
+    * Export Schema Purpose : Set whether to require reason input when exporting data after selecting Export &gt; SQL &gt; Schema
+    * Import Schema Purpose : Set whether to require reason input when importing data after selecting Import &gt; SQL &gt; Schema
+    * Export Data Purpose : Set whether to require reason input when exporting data via Export &gt; CSV / JSON / EXCEL
+    * Import Data Purpose : Set whether to require reason input when importing data via Import &gt; CSV / JSON / EXCEL
+    * SQL Execute : Set whether to require reason input for SQL query execution and table viewing.
+* `Proxy Usage` : You can choose whether to use proxy for the connection. For detailed description, refer to Proxy settings.
+* `Character Set` : You can select the character set to use in the connection.
+* `Collation` : You can select the sorting method for the selected character set.
+* `Description` : You can enter a description for the connection.
+
+<Callout type="info">
+**User Action Purpose Required** <br/>From 11.2.0, reason input for SQL Execute events in User Action Purpose Required options has been improved to also be received through Agent.<br/>&lt; Limitations &gt;
+* When using 3rd party tools (DBeaver, DataGrip, etc.), only SQL Execute items can be forced to require reason input.
+* Queries sent internally by 3rd party tools (queries that show DB schema in tree structure or display data types in UI) are also detected as SQL Execute and require reason input. Example) Reason input popup appears even when no query is entered immediately after initial connection. In this case, since SQL statement types are not judged, it can cause considerable inconvenience depending on settings. Therefore, the value of the Query Purpose Duration for Agent option in Database &gt; General &gt; Configurations must be adjusted appropriately.<br/>
+</Callout>
+
+<Callout type="info">
+**Proxy Usage**
+
+When Proxy Usage is activated, two options are displayed as follows:
+
+<figure data-layout="center" data-align="center">
+![Proxy Usage options](/administrator-manual/databases/connection-management/db-connections/image-20241222-134235.png)
+<figcaption>
+Proxy Usage options
+</figcaption>
+</figure>
+
+* Use QueryPie registered account : When accessing DB through Proxy, the account information entered in 3rd party tools uses the account information specified by QueryPie's Proxy.
+* Use existing database acount with Agent : When accessing DB through Proxy, the account information entered in 3rd party tools uses the actual DB account information. 
+
+From QueryPie 9.17, when using account information specified by Proxy, it has been changed to use random passwords as a security enhancement measure. From QueryPie 10.2.2, the " **Fixed Credential for Agent** " option is provided to use fixed passwords in situations where random password usage is difficult. When random password usage is difficult, administrators can activate this option and use fixed passwords, and Fixed Credential for Agent is only available for Oracle, PostgreSQL, and MongoDB.
+</Callout>
+
+### SSL/SSH Setting
+
+Activate SSL or SSH usage through checkboxes and select pre-registered configuration information from the dropdown below. Save with the `Save Changes` button.
+
+<figure data-layout="center" data-align="center">
+![SSL/SSH Setting tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180833.png)
+<figcaption>
+SSL/SSH Setting tab
+</figcaption>
+</figure>
+
+<Callout type="info">
+SSL/SSH configuration information must be pre-registered. Please refer to the following documents:
+* [SSL Configurations](ssl-configurations)
+* [SSH Configurations](ssh-configurations)
+</Callout>
+
+### Connection Owner
+
+In the Connection Owner tab, click the `Add Connection Owner` button to specify Connection Owners for each DB connection. (Can be specified for users or groups) Save with the `Save Changes` button.
+
+<figure data-layout="center" data-align="center">
+![Connection Owner tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
+<figcaption>
+Connection Owner tab
+</figcaption>
+</figure>
+
+<Callout type="info">
+Connection Owner can be specified as approvers or executors for SQL Request, SQL Export Request for the corresponding DB connection.
+</Callout>
+
+### Tags
+
+In the Tags tab, you can register and manage tags for each DB connection. Click the `Add Tag` button to add a tag row, and enter Key and Value. Complete the input and save with the `Save Changes` button.
+
+<figure data-layout="center" data-align="center">
+![Tags tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
+<figcaption>
+Tags tab
+</figcaption>
+</figure>
+
+### Privilege Setting
+
+This is a feature that forces specification of connection accounts to use for each Privilege in DB connections.
+
+<Callout type="info">
+This tab is only displayed when Advanced Privilege Setting is activated in Security. For detailed information, refer to the **DB Connection Security Settings** document in [Security](../../general/company-management/security).
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Privilege Setting tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-154730.png)
+<figcaption>
+Privilege Setting tab
+</figcaption>
+</figure>
+
+1. Click the `Add` button to select a Privilege and enter the DB Username and Password to be fixed for that Privilege.
+2. You can test whether the account is actually accessible through `Test Connection`.
+3. Complete the configuration by saving the information through `Save Changes`.
+
+<Callout type="error">
+BigQuery, Dynamo, Athena, Impala, Presto, Trino, and Redis vendors do not support the Privilege Setting feature.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Databases &gt; Connections](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231958.png)
+<figcaption>
+QueryPie Web &gt; Databases &gt; Connections
+</figcaption>
+</figure>
+
+* Users who have been granted privileges with Privilege Setting configured use the DB account mapped to that Privilege as pre-configured by the administrator when connecting, and cannot see the DB Username and Password fields themselves on the Connections access page.
+* The use of that DB account is enforced in connection access such as web editor, agent proxy, SQL Request, Export Request, etc. 

@@ -1,0 +1,47 @@
+---
+title: 'Policy Audit Logs'
+---
+
+## Overview
+
+Records policy creation and status in Audit Logs to allow checking who applied which policy and what events occurred. Records begin and are displayed in the menu when new DAC policies are activated.
+
+<figure data-layout="center" data-align="center">
+![Audit &gt; Databases &gt; Policy Audit Logs](/administrator-manual/audit/database-logs/policy-audit-logs/image-20250629-174715.png)
+<figcaption>
+Audit &gt; Databases &gt; Policy Audit Logs
+</figcaption>
+</figure>
+
+## Content Recorded in Policy Audit Logs
+
+### List Display Items
+
+* Action At : Time when the action (event) occurred.
+* Event Type : Type of event being recorded. **[11.1.0]** 
+    * Access Denied : Event where access was blocked by Column or Table Data Access policy
+    * Data Masked : Event where access was blocked by Column Data Masking policy
+    * Alert Triggered : Event that triggered an Alert by Sensitive Data Access Monitoring policy
+    * Justification Requirement Triggered : Event that required justification input by Table Access Justification Requirement policy
+    * Approval Enforcement Triggered : Event that required approval by DML Query Approval Enforcement policy
+    * Exception Column Access : Event where access was allowed by policy exception despite Column Data Access policy being applied
+    * Exception Table Access : Event where access was allowed by policy exception despite Table Data Access policy being applied
+    * Exception Unmasking : Event where masking was removed by policy exception despite Column Data Masking policy being applied
+* Policy Type (Policy Type) : Displays the policy type.
+* Policy Name (Policy Name): Displays the name of the applied policy and clicking the link navigates to the corresponding policy page.
+* Name (User Name): Name of the user who queried the data.
+* Login ID (Login ID) : Login ID of the user who queried the data.
+* Email (User Email): Email address of the user who queried the data.
+* Connection (Connection): Name of the connection where the data was queried.
+* Data Path : Path including Database name, Schema name, Table name, and Column name. 
+
+### Detail Screen Display Items
+
+* Database Type (Database Type): Type of the queried database. (ex. MySQL, PostgreSQL, Athena, etc.)
+* Databases (Database): Name of the database to which the queried data belongs
+* Schema (Schema): Name of the schema to which the queried data belongs. 
+* Table (Table): Name of the table containing the queried data.
+* Column (Column): Name of the column containing the queried data.
+* Rows : Number of rows affected by the query. Displayed in the detail drawer
+* Query (Query): Displayed in the detail screen. You can view the SQL query executed by the user.
+* Tag (Tag): (From 11.0.0) Displays tag information of the table or column triggered when performing the query. If multiple tag conditions are met, all are displayed.

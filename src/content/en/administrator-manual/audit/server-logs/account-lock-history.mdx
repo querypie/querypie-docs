@@ -1,0 +1,45 @@
+---
+title: 'Account Lock History'
+---
+
+## Overview
+
+Displays the history of server access permission locks by QueryPie user. It counts all failed connection attempts such as password input errors and unauthorized IP access attempts, and the access account becomes locked when the connection failure threshold set by the administrator is reached.
+
+## Viewing Server Account Lock History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Account Lock History](/administrator-manual/audit/server-logs/account-lock-history/image-20240728-175941.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Account Lock History
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Account Lock History menu.
+2. Logs are displayed in the table list in descending order.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Email**  : User email
+    3.  **Account**  : Server access account
+    4.  **Role Name**  : Used role name
+    5.  **Server Name**  : Connected server name
+4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.<br/>
+    1.  **Event**  : Event type
+        1.  **Account Locked**  : User account lock event
+        2.  **Account Unlocked**  : Administrator account lock release event
+    2.  **Action At**  : Event occurrence date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Event occurrence date and time
+    3.  **Event**  : Event type
+        1.  **Account Locked**  : User account lock event
+        2.  **Account Unlocked**  : Administrator account lock release event
+    4.  **Name**  : Target user/group name
+    5.  **Email**  : Target user email
+        1. For groups, it is displayed as "-".
+    6.  **Role Name**  : Granted/revoked role name
+    7.  **Server Group**  : Server group name
+    8.  **Server Name**  : Server name
+    9.  **Account**  : Lock target server account
+    10.  **Action By**  : User or administrator name who caused the event

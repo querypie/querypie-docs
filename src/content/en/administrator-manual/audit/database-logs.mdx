@@ -1,0 +1,71 @@
+---
+title: 'Database Logs'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can view logs generated from QueryPie's Database Access Control in Database Logs. You can check information such as DB access permission grants and revocations, DB access history, executed queries, and DML query snapshots. Additionally, you can view and release connection lock history due to DB connection password failures and long-term inactivity through QueryPie.
+
+## Related Audit Log Types
+
+In addition to the audit logs commonly provided by QueryPie, when you have a QueryPie Database Access Control (QueryPie DAC) license, the following log types are provided.
+
+<table data-table-width="507" data-layout="default" local-id="95470ac3-09e4-4695-80b7-6e7d4ff27bf8">
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**Common Logs**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**DAC-specific Logs**
+</th>
+</tr>
+<tr>
+<td>
+**General**
+* User Access History
+* Activity Logs
+* Admin Role History
+</td>
+<td>
+**Databases**
+* DB Access History
+* Query Audit
+* Running Queries
+* DML Snapshot
+* Account Lock History
+* Access Control Logs
+* Restricted Data Access Logs
+* Masked Data Access Logs
+* Sensitive Data Access Logs
+</td>
+</tr>
+</tbody>
+</table>
+
+<Callout type="info">
+Items added in 10.3.0
+* Restricted Data Access Logs
+* Masked Data Access Logs
+* Sensitive Data Access Logs
+</Callout>
+
+1.  **General** 
+
+* User Access History : User login and logout history
+* Activity Logs : History of resource registration and configuration changes performed by administrators
+* Admin Role History : History of administrator permission grants, changes, and revocations
+
+1.  **Databases** 
+
+* [DB Access History](database-logs/db-access-history) : Connection and disconnection history
+* [Query Audit](database-logs/query-audit) : History of completed query executions
+* [Running Queries](database-logs/running-queries) : Currently executing queries
+* [DML Snapshots](database-logs/dml-snapshots) : Before and after data records when INSERT / UPDATE / DELETE queries are completed (separate configuration required for recording)
+* [Account Lock History](database-logs/account-lock-history) : Connection lock history due to password failures and long-term inactivity
+* [Access Control Logs](database-logs/access-control-logs) : History of connection access permission grants and revocations
+* Restricted Data Access Logs : History of access to data restricted by Data Access policies
+* Masked Data Access Logs : History of access to data masked by Data Masking policies
+* Sensitive Data Access Logs : History of alerts triggered by Sensitive data policies

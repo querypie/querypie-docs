@@ -1,0 +1,77 @@
+---
+title: 'Web Event Audit'
+---
+
+## Overview
+
+Records the audit history of web application events managed by the organization.
+
+
+## Viewing Web Event Audit
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit](/administrator-manual/audit/web-app-logs/web-event-audit/image-20250629-172952.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1. User Name : User name
+    2. User Email : User email
+    3. Role Name : Role name
+    4. Web App Name : Web application name
+    5. Content : Content content
+    6. Url : Accessed URL
+    7. Session Uuid : Session unique identifier
+    8. Tab Id : Tab identifier
+    9. Client Ip : Client IP address
+    10. Message : Message content
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1. Event Type : Event type (Mouse Clicked/Clipboard Copied, etc.)
+    2. Result : Execution result (Success/Failure)
+    3. Action At : Action occurrence date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Sequence number
+    2.  **Action At**  : Action occurrence date and time
+    3.  **Event Type**  : Event type (Mouse Clicked, Clipboard Copied, etc.)
+    4.  **Result**  : Execution result (Success/Failure)
+    5.  **Name**  : User name
+    6.  **Email**  : User email
+    7.  **Web App**  : Web application name
+    8.  **URL**  : Accessed URL
+    9.  **Session ID**  : Session unique identifier
+    10.  **Tab ID**  : Tab identifier
+    11.  **Client IP**  : Client IP address
+
+## Viewing Web Event Audit Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit &gt; Event Audit Detail](/administrator-manual/audit/web-app-logs/web-event-audit/image-20250629-172959.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit &gt; Event Audit Detail
+</figcaption>
+</figure>
+
+*  **The right drawer displays the following information:** 
+    1.  **Action At**  : Action time
+    2.  **Event Type**  : Event type (Mouse Clicked, Clipboard Copied, etc.)
+    3.  **Result**  : Event processing success/failure status
+        1. ✅ Success
+        2. ❌ Failure
+    4.  **Client IP**  : Client IP address
+    5.  **Name**  : Target user name
+    6.  **Email**  : Target user email
+    7.  **Role**  : User role name
+    8.  **Message**  : Records of unusual events such as event execution
+    9.  **Web App**  : Web application name
+    10.  **URL**  : Page URL where the event occurred
+    11.  **Session ID**  : Session unique identifier
+    12.  **Tab ID**  : Tab identifier
+    13.  **Clicked Text**  : Clicked text content (for Mouse Clicked events)
+    14.  **Event Snapshot**  : Screen screenshot at the time of event occurrence

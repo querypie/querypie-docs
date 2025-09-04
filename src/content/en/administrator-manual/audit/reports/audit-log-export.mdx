@@ -1,0 +1,179 @@
+---
+title: 'Audit Log Export'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This is a feature that allows you to extract various audit logs generated in QueryPie and download them as CSV files. It enables stable extraction and download even for large files such as logs spanning long periods. Once generated, log extraction files can be downloaded for 30 days. The supported extraction logs include Query Audit, Workflow SQL Request, and 21 other types.
+
+<Callout type="important">
+With the addition of the Audit Log Export feature, the 'Excel File Download' button that was provided on each log screen has been discontinued from QueryPie v9.15.0.
+</Callout>
+
+<Callout type="important">
+**Supported Extraction Log Types (QueryPie v11.0.0)**
+1. Query Audit [CSV]
+2. Workflow SQL Request [CSV]
+3. Workflow SQL Request for Query Details [CSV]
+4. Workflow SQL Export Request [CSV]
+5. Workflow DB Access Request [CSV]
+6. Workflow Server Access Request [JSON]
+7. User Access History [CSV]
+8. Admin Role History [CSV]
+9. DB Access History [CSV]
+10. DB Account Lock History [CSV]
+11. DB Access Control Logs [CSV]
+12. Server Access History [JSON]
+13. Command Audit [JSON]
+14. Session Logs [JSON]
+15. Server Access Control Logs [JSON]
+16. Server Role History [JSON]
+17. Activity Logs [JSON]
+18. DML Snapshot [JSON]
+19. Server Account Lock History [JSON]
+20. Request Audit [JSON]
+21. Kubernetes Role History [JSON]
+22. Alert Logs [JSON] **[10.3.0]** 
+23. Restricted Data Access Logs [JSON] **[10.3.0]** 
+24. Masked Data Access Logs [JSON] **[10.3.0]** 
+25. Sensitive Data Access Logs [JSON] **[10.3.0]** 
+26. Web Access History [CSV] **[11.0.0]**
+27. Web Event Audit [CSV] **[11.0.0]**
+28. Web App Role History [CSV] **[11.0.0]**
+29. JIT Access Control Logs [CSV] **[11.0.0]**
+30. Workflow Unmasking Request Logs [JSON] **[11.0.0]** 
+31. Workflow Restricted Data Access Request [JSON] **[11.0.0]** 
+32. Workflow DB Policy Exception Request Logs [JSON] **[11.0.0]** 
+</Callout>
+
+
+## Viewing Audit Log Export List
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Audit Log Export](/administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Audit Log Export
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; General &gt; Audit Log Export menu.
+2. You can view the list of Audit Log Export tasks created so far.
+3. Status shows the progress status of the task:
+    *  **Processing**  : Audit log extraction is in progress.
+    *  **Completed**  : Audit log extraction is completed and file download is available. (If 30 days have passed since extraction completion, the file has expired and download is not possible.)
+    *  **Failed**  : Audit log extraction has failed. Please contact QueryPie Customer Support.
+
+## Creating Log Extraction Task
+
+Audit log extraction and download proceeds through the following major steps: (1) Access related menu → (2) Create log extraction task → (3) Wait until log extraction completion → (4) Download file when extraction is completed
+
+To start audit log extraction, you need to access the 'Audit &gt; General &gt; Audit Log Export' menu and click the `Create Task` button in the top right. When you click the button, the following screen appears.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task](/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
+</figcaption>
+</figure>
+
+1.  **Task Name** : Enter the name of the log extraction task.
+2.  **Log Type** : Select the type of log to extract. 
+    1. Select the log type you want to extract, such as Query Audit.
+    2. After selecting the log type, click See Log Template and Description to view detailed information such as keys for each log.
+3.  **Download File Format** : Specify the log output file format. (As of 9.17.0, the downloadable format for each log is limited to a single format. Please refer to the **'Supported Extraction Log Types'** above.) 
+4.  **For Text Exceeding 32,000 Characters**  : For CSV files, you can choose whether to trim text exceeding 32,000 characters.
+    1. Trim Overflowing Text - Trims text exceeding 32,000 characters. Prevents table corruption due to exceeding the maximum number of characters per cell when opening files directly in Excel.
+    2. No Action - Includes text exceeding 32,000 characters as is.
+5.  **From**  : Specify the extraction start date.
+6.  **To** : Specify the last date for extraction. From 11.2.0, you can select the current date. 
+7.  **Filter Expression**  : Specify filter expressions. 
+    1. Please refer to the ' **Filter Expression** ' section below for input methods and examples.
+8.  **Generate Preview** : Generate a preview. 
+    1. Preview is a required step.
+    2. You must check the preview results to proceed to the next step 'Create'.
+9. `Create` button : Creates the log extraction task. 
+
+<Callout type="info">
+**Important Notes**
+When extracting logs by selecting the current date, since data is accumulated in real-time, the content of the file generated through actual Create may differ from the results at the Preview time.
+</Callout>
+
+<Callout type="important">
+**Filter Expression**
+
+(1) To use filter expressions, please refer to the log-specific keys and their types and included values through 'See Log Template and Description'.<br/>
+
+(2) Available filter expressions are divided as follows depending on the data type:
+
+- Number Type
+
+Supported expressions: `&gt;`, `&lt;`, `&lt;=`, `&gt;=`, `==`, `!=`<br/>Example: `x &gt; `10``, `x == `10``
+
+- String Type
+
+Supported expressions: `== (equals)`, `!= (not equals)`, `contains`<br/>Example: `x == 'abc'`, `x != 'abc'`, `contains(x, 'ab')`
+
+- Boolean Type
+
+Supported expressions: `== (equals)`, `!= (not equals)`, `&& (and)`, `|| (or)`<br/>Example: `x == `true``,`x && y`, `(x &gt; `0`) && (y == `0`)`
+
+- Array Type
+
+Example: `x[? @ == 'value']`, `list[? @ &gt; `10`]`
+
+
+(3) You can use the following characters to use multiple conditions together:
+
+- AND condition: Use the `&&` operator.
+
+- OR condition: Use the `||` operator.
+
+- Complex condition: Use parentheses (`( )`) to group conditions that need to be processed together.
+
+
+(4) Examples
+
+- Expression needed to extract only query execution logs from Query Audit: `actionType == 'SQL_EXECUTION'`
+
+- Expression needed to extract only query execution logs performed in web editor from Query Audit: `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
+
+- Expression needed to extract only for 2 specific databases from DB Access History: `connectionName == 'database1' || connectionName == 'database2'`
+
+- Expression needed to extract only for 2 specific databases with Replication Type SINGLE from DB Access History: `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
+</Callout>
+
+
+<Callout type="important">
+**Query Audit Export File Privilege Type Specification Criteria**
+
+The 'Privilege Type' column in the export file records which permission was required at the time of execution. It works as follows:
+
+1. Commands executed with basic permissions (SET, SHOW, etc.) have blank values in the corresponding column.
+2. Logs performed according to permissions such as INSERT have SQL Type specified. 
+3. For Redis, the command name is specified.
+</Callout>
+
+
+## Downloading Files When Extraction Task is Completed
+
+For short-term queries without separate filtering conditions, log extraction is completed within a few minutes. For logs spanning long periods or with high complexity of filtering conditions, it may take some time for log extraction.
+
+After the extraction task is completed, you can download the log file in two ways:
+
+1. Download from list page: Click the Download button on the list page.
+2. Download from detail page: Click on the task on the list page to enter the detail page, then click the Download button in the top right.
+
+<Callout type="important">
+**Including Password in Download File**
+
+The download target file is a '*.zip file compressed from *.csv or *.json files'.
+
+To specify a password for the compressed file, you must set the `Export a file with Encryption` option to 'Required' in the 'General Setting &gt; Security' menu.
+</Callout>
+
+
+## Log Extraction File Retention Policy Guide
+
+Extracted log files are retained for 30 days from the task creation date, and unlimited downloads are possible within that period. However, files expire after 30 days. If you need expired log files, please create a new log extraction task.

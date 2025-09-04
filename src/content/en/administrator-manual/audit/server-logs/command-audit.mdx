@@ -1,0 +1,103 @@
+---
+title: 'Command Audit'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Records commands executed on servers accessed through QueryPie. For Windows Servers, it records mouse clicks, keyboard inputs, and executed process names.
+
+## Viewing Command Audit
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Command Audit](/administrator-manual/audit/server-logs/command-audit/image-20240728-171227.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Command Audit
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Command Audit menu.
+2. Logs are displayed in descending order based on the connection date.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Server Name**  : Connected server name
+    3.  **Command**  : Executed command
+    4.  **Role**  : Connection role
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Server OS**  : OS of the connected server
+    2.  **Protocol** : Protocol used for connection
+    3.  **Executed From** : Connection method
+        1. web : Connection through QueryPie Web
+        2. proxy : Connection through Agent or Seamless SSH Connection
+    4.  **Action Type** : Recorded event type
+        1. All : All types
+        2. File Download : (SFTP) File download
+        3. File Upload : (SFTP) File upload
+        4. Process Start : (RDP) Process execution
+        5. Process Stop : (RDP) Process termination
+        6. User Input - MouseClick : (RDP) User mouse click
+        7. User Input - MouseDoubleClick : (RDP) User mouse double click
+        8. User Input - KeyPress : (RDP) User keyboard input
+    5.  **Executed At**  : Command execution time
+    6.  **Restricted**  : Command blocking status
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Command execution time
+    3.  **Name**  : Target user name
+    4.  **Email**  : Target user email
+    5.  **Role**  : Role name used when the target user connected
+    6.  **Account**  : Server access account
+    7.  **Command**  : Executed command
+    8.  **Restricted**  : Command blocking status
+        1. Not Restricted
+        2. Restricted
+    9.  **Restricted Command**  : Blocked command
+    10.  **Server Name**  : Target server name
+    11.  **Server OS**  : OS of the connected server
+    12.  **Host**  : Host of the connected server
+    13.  **Port**  : Port used for connection
+    14.  **Protocol** : Protocol used for connection
+    15.  **Client IP**  : User client IP address
+    16.  **Client**   **Name**  : User's connection method
+    17.  **Action Type** : Recorded event type
+    18.  **Message**  : Records of unusual events such as connection failures
+
+## Viewing Command Audit Details
+
+You can view detailed information by clicking on each row.
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Details](/administrator-manual/audit/server-logs/command-audit/image-20241209-125101.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Details
+</figcaption>
+</figure>
+
+* The right drawer displays the following information:
+    1.  **Name**  : Target user name
+    2.  **Action Type** : Recorded event type
+    3.  **Executed At**  : Command execution time
+    4.  **Executed From** : Connection method
+    5.  **Server Access History** : Access log for the corresponding session
+    6.  **Session Log**  : Session recording view for the session that executed this command
+    7.  **Server Name**  : Target server name
+    8.  **Server OS**  : OS of the connected server
+    9.  **Host**  : Host of the connected server
+    10.  **Port**  : Port used for connection
+    11.  **Account**  : Server access account
+    12.  **Protocol** : Protocol used for connection
+    13.  **Client**   **Name**  : User's connection method
+    14.  **Client IP**  : User client IP address
+    15.  **Restricted**  : Command blocking status
+    16.  **Restricted Command**  : Blocked command
+    17.  **Detected Type :** Execution method of the detected blocked command (Shell Script or Alias)
+    18.  **Command**  : User input command (process name or click coordinates for RDP)
+    19.  **Result**  : Command execution result
+
+
+<Callout type="important">
+Even if you press the Enter key multiple times in succession, it is only recorded once in Command Audit.<br/>The actual input content can be checked in the recorded screen of Session Log.
+</Callout>

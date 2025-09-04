@@ -1,0 +1,71 @@
+---
+title: 'User Activity Recordings'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Records user activities for web applications managed by the organization.
+
+## Viewing User Activity Recordings
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings](/administrator-manual/audit/web-app-logs/user-activity-recordings/image-20250629-175520.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings menu.
+2. Logs are displayed by the number of history based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **User Name**  : User name
+    2.  **User Email**  : User email
+    3.  **Role Name**  : Role name
+    4.  **Web App Name**  : Web application name
+    5.  **Web App Base Url**  : Web application base URL
+    6.  **Session ID**  : Session unique identifier
+    7.  **Client Ip**  : Client IP address
+4. Click the filter button on the right side of the search field to filter with AND conditions for the following:
+
+**a. Action At**  : Action occurrence date and time range
+
+
+## Viewing User Activity Recordings Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; User Activity Recordings Details](/administrator-manual/audit/web-app-logs/user-activity-recordings/image-20250629-175637.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; User Activity Recordings Details
+</figcaption>
+</figure>
+
+1.  **The detail page displays the following information:** 
+    1.  **Action At**  : Action time
+    2.  **Name**  : Target user name
+    3.  **Role**  : User role name
+    4.  **Client Ip**  : Client IP address
+    5.  **Session ID**  : Session unique identifier
+    6.  **Email**  : Target user email
+    7.  **Web App**  : Web application name
+    8.  **Base URL**  : Web application base URL
+2.  **Event Timeline displays only items configured by administrators to record** 
+    1. Navigated : Page navigation records (when configured)
+    2. Mouse Clicked : Mouse click events (when configured)
+    3. Clipboard Copied : Clipboard copy events (when configured)
+    4. File Uploaded : File upload events (when configured)
+    5. File Downloaded : File download events (when configured)
+    6. Value Changed : Value change events (when configured)
+    7. Scrolled Up/Down : Scroll events (when configured)
+    8. Print Initiated : Print start events (when configured)
+    9. URL : Accessed page URL
+    10. Tab ID : Tab identifier
+    11. Timestamp : Event occurrence time
+3.  **The right side of the screen displays screenshots of the actual web application accessed by the user.** 
+
+<Callout type="info">
+Administrators can configure the types of user activities to record for each web application in Web Apps &gt; Web App Configurations.
+</Callout>

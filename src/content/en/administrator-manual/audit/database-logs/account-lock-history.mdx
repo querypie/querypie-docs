@@ -1,0 +1,44 @@
+---
+title: 'Account Lock History'
+---
+
+## Overview
+
+Displays the history of connection locks due to connection password failures and long-term inactivity by QueryPie user. It counts all failed connection attempts such as password input errors and unauthorized IP access attempts, and the access account becomes locked when the connection failure threshold set by the administrator is reached.
+
+## Viewing DB Account Lock History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Account Lock History](/administrator-manual/audit/database-logs/account-lock-history/image-20240730-070724.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Account Lock History
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; Account Lock History menu.
+2. Logs are displayed in the list in descending order by occurrence time.
+3. You can search by user name through the search field in the top left of the table.
+4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.
+    1.  **Connection Name**  : Connected DB connection name
+    2.  **Database Type** : Database type
+    3.  **Lock Status**  : Lock type
+        1.  **Locked**  : User account lock event
+        2.  **Unlocked**  : Administrator account lock release event
+    4.  **Action At**  : Event occurrence date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **Name**  : Target user name
+    2.  **Email**  : Target user email
+    3.  **Connection Name**  : Target DB connection name
+    4.  **Database Type**  : Target database type
+    5.  **Attempted Count**  : Number of connection attempts
+    6.  **Lock Status**  : Lock status
+    7.  **Unlocked By**  : Lock release performer information
+    8.  **Unlocked At**  : Access account lock release date and time
+    9.  **Locked At**  : Access account lock date and time
+    10.  **Action At**  : Event occurrence date and time
+    11.  **Host Name**  : Connection execution hostname
+    12.  **Client IP**  : User client IP address
+    13.  **Replication Type**  : DB Replication type
+    14.  **DB Host**  : Connected DB host
+    15.  **DB Name**  : DB name

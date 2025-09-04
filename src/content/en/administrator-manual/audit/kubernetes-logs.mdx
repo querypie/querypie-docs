@@ -1,0 +1,50 @@
+---
+title: 'Kubernetes Logs'
+---
+
+## Overview
+
+All activities in QueryPie are recorded in audit logs. User and administrator login/logout, permission grants and revocations, API execution history for Kubernetes, resource or security configuration changes, and all activity history occurring in QueryPie and access-controlled target resources are subject to logging. Real-time recorded logs can be searched and filtered with various conditions.
+
+## Related Audit Log Types
+
+In addition to the audit logs commonly provided by QueryPie, when you have a QueryPie Kubernetes Access Control (QueryPie KAC) license, the following types of audit logs are provided.
+
+<table data-table-width="507" data-layout="default" local-id="2eeba34f-b909-48ea-a011-5381931efcd4">
+<tbody>
+<tr>
+<th>
+**Common Logs**
+</th>
+<th>
+**KAC-specific Logs**
+</th>
+</tr>
+<tr>
+<td>
+**General**
+* User Access History
+* Activity Logs
+* Admin Role History
+</td>
+<td>
+**Kubernetes**
+* Request Audit
+* Pod Session Recordings
+* Kubernetes Role History
+</td>
+</tr>
+</tbody>
+</table>
+
+**1. General**
+
+* User Access History : User login and logout history
+* Activity Logs : History of resource registration and configuration changes performed by administrators 
+* Admin Role History : History of administrator permission grants, changes, and revocations
+
+**2. Kubernetes**
+
+* [Request Audit](kubernetes-logs/request-audit) : Kubernetes API server call history
+* [Pod Session Recordings](kubernetes-logs/pod-session-recordings) : Recording history of actions within connection sessions such as Pod Exec
+* [Kubernetes Role History](kubernetes-logs/kubernetes-role-history) : History of Kubernetes access permission grants and revocations

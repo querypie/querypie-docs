@@ -1,0 +1,145 @@
+---
+title: 'Access Control'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+In the Access Control page, administrators can directly grant database access permissions to users or groups.
+
+
+## Viewing Access Control List
+
+In the Access Control page, you can view the DB privileges and administrator role status granted to users and groups registered in QueryPie by user or group. (Searchable by group or user name)
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
+</figcaption>
+</figure>
+
+
+## Viewing User/Group Access Control Details
+
+Click on a user or group in the table within the Access Control page to open a drawer.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
+</figure>
+
+* Search: Can be searched by Connection Name
+* Available filter types
+    *  **Database Type** : Database type (e.g. MySQL, MariaDB, PostgreSQL…)
+    *  **Cloud Provider** : Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
+    *  **Assigned Status** : Whether privileges are assigned
+    *  **Favorite View** : Whether favorite is set (can be set in DB Connections list)
+    *  **Tag** : Tags assigned to connections
+        * Each tag input method: Key input → Enter key → Operator input → Value input → Enter key
+            * Supported operators: `=`, `!=`, `:`, `!:`
+        * When multiple tags with the same key are entered, OR search is performed (union)
+        * When multiple tags with different keys are entered, AND search is performed (intersection)
+
+
+## Granting Access Control Permissions
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege](/administrator-manual/databases/db-access-control/access-control/image-20250820-001735.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege
+</figcaption>
+</figure>
+
+1. Navigate to the Access Control menu from the Database settings menu.
+2. Select the user or group to grant permissions to from the list and go to the detail page.
+3. Find the connection to grant permissions to, select the checkbox, and choose the Privilege Type.
+4. You can also select multiple connections to grant permissions to and grant permissions in bulk.
+5. Set the permission expiration date in the Expiration Date field at the bottom. If not set, permissions are granted without expiration.
+
+Users who have been granted permissions can now connect to the connection with those permissions, and the permission grant history is recorded as an Access Control Granted item in the Access Control Logs.
+
+<Callout type="info">
+**What happens when a user is included in a group and different permissions are applied to the same connection for both the group and the user?**
+When a user has multiple privileges granted through both individual user permissions and group permissions, the user can select a Default Privilege and connect when accessing the connection.
+</Callout>
+
+
+## Revoking Access Control Permissions
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details](/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details
+</figcaption>
+</figure>
+
+1. Navigate to the Access Control menu from the Database settings menu.
+2. Select the user or group to revoke permissions from from the list and go to the detail page.
+3. Find the connection to revoke permissions from, select the checkbox, and revoke permissions through the Revoke button.
+4. You can also select multiple connections to revoke permissions from and revoke permissions in bulk.
+
+Users whose permissions have been revoked can no longer access the connection, and the permission revocation history is recorded as an Access Control Revoked item in the Access Control Logs.
+
+
+<Callout type="important">
+**Status Description in Access Control Details Panel**
+*  **Active**  : The user has normal permissions for the connection.
+*  **Deactivated**  : The user has permissions for the connection but is in a deactivated state when they have not accessed the connection for a period set by the administrator. In this case, the user cannot temporarily access the connection.
+* You can renew and reactivate deactivated permissions by clicking the button (`Renew`) on the right side of the Deactivated status.
+* When deactivated permissions are renewed, the renewal time is displayed in the **Renewed At** column.
+</Callout>
+
+<Callout type="important">
+**Detailed Description of Access Control Details Panel**
+* The initial time when the permission was granted can be checked through the **Granted At** column.
+* The last time the user who was granted the permission accessed the connection can be checked through the **Last Access At** column.
+* The time when the permission will be revoked can be checked through the **Expiration Date** column.
+* If a permission is granted but the **Expiration Date** column shows nothing, the permission is not revoked. However, basic management of the connection permission is affected by the connection long-term non-access setting (Deactivation Period).
+</Callout>
+
+
+## Unlocking Locked Connection Accounts
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account](/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account
+</figcaption>
+</figure>
+
+1. When a connection is locked due to exceeding the maximum number of DB account authentication failures (Maximum Login Failures) by the database connection security policy, it can be viewed in the Locked Account menu.
+2. The number of DB account authentication failures and the time when it was locked are displayed together.
+3. Select the item you want to unlock and click `Unlock` on the right to unlock the connection.
+
+<figure data-layout="center" data-align="center">
+![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
+</figure>
+
+1. Connection lock and unlock history can be checked in the Audit &gt; Databases &gt; Account Lock History menu.
+
+
+<Callout type="info">
+**Access Control with Table Tags** <br/><br/>When New DAC Policy Management is enabled in Databases &gt; General &gt; Configurations,
+
+<figure data-layout="center" data-align="center">
+![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
+</figure>
+
+In Access Control, you can control access to only tables with specific tags for connections that specific users are allowed to access. The following conditions must be met to use this feature.
+
+* New DAC Policy Management feature must be enabled.
+* A specific user must have privileges assigned to a specific connection.
+* The target table must be registered as a path in Databases &gt; Policy Management &gt; Data Path and have tags assigned.
+
+If the conditions are met, you can set it up as follows:
+
+1. Go to the detailed screen of a specific connection with privileges assigned to a specific user in Databases &gt; DB Access Control &gt; Access Control.
+2. In the detailed screen, select Access Type as Tag-based table access and add tags. You can only select and use existing tags (tags assigned to tables).
+
+<figure data-layout="center" data-align="center">
+![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)
+</figure>
+
+If you enable the Tag-based table access feature but don't register any tags, you won't be able to access any tables in that connection.<br/>
+</Callout>

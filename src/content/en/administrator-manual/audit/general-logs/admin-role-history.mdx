@@ -1,0 +1,33 @@
+---
+title: 'Admin Role History'
+---
+
+## Overview
+
+This is a page for viewing the history of QueryPie administrator permission grants and revocations.
+
+When administrator permissions are granted or revoked to specific users in the Administrator &gt; General &gt; User Management &gt; Users page, a history is recorded in Admin Role History.
+
+
+## Viewing Admin Role History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Admin Role History](/administrator-manual/audit/general-logs/admin-role-history/screenshot-20240722-190405.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Admin Role History
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; General &gt; Admin Role History menu.
+2. Administrator permission grant or revocation logs are displayed from the latest to oldest based on Action At.
+    1.  **Name**  : Display Name is shown.
+    2.  **Description**  : Details of granted administrator permissions
+    3.  **Action By**  : Subject of administrator permission grant or revocation (displayed as **System** for automatic revocations)
+3. Supported search conditions are as follows:
+    1.  **Name**  : User name (Display Name)
+    2.  **Action Type**  : Event name 
+        * Admin Role Granted
+        * Admin Role Revoked
+4. Additionally, log filtering is possible based on the event occurrence time ( **Action At** ).
+
+

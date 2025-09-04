@@ -1,0 +1,44 @@
+---
+title: 'User Access History'
+---
+
+## Overview
+
+You can view all history related to all users' access to the QueryPie system, including account login/logout, account status changes, password reset message transmission, etc.
+
+
+## Viewing User Access History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; User Access History](/administrator-manual/audit/general-logs/user-access-history/image-20240714-063443.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; User Access History
+</figcaption>
+</figure>
+
+1. Access the Administrator &gt; Audit &gt; General &gt; User Access History menu.
+2. Logs for this month are displayed in the latest order.
+3.  **Action Type**  : Indicates the type of system access-related actions. Some logs are also recorded simultaneously in Activity Logs.
+    *  **User Login**  : User's QueryPie login
+    *  **User Logout** : User's QueryPie logout
+    *  **Account Locked**  : Account locked due to consecutive password errors
+    *  **Account Expired** : Account expired due to no user activity (recorded as **User Deactivated** in Activity Logs)
+    *  **Account Locked Manually**  : Specific user account locked by administrator (recorded as **User Updated** in Activity Logs)
+    *  **Account Unlocked**  : Specific user account reactivated by administrator (recorded as **User Reactivated** in Activity Logs)
+    *  **Password Reset Push** : Password reset occurred for user account by administrator 
+4.  **Result**  : Displays the result of the action. 
+5.  **Message**  : Records specific content of the action when necessary. You can search logs by the text in the Message column.
+
+
+## Viewing User Access History Details
+
+You can view detailed information about logs by clicking on individual logs in the User Access History list.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; User Access History &gt; Details](/administrator-manual/audit/general-logs/user-access-history/image-20240721-074544.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; User Access History &gt; Details
+</figcaption>
+</figure>
+
+

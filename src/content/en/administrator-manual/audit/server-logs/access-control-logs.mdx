@@ -1,0 +1,92 @@
+---
+title: 'Access Control Logs'
+---
+
+## Overview
+
+Records the history of grants and revocations of server access Direct Permissions assigned to QueryPie users/groups.
+
+## Viewing Server Access Control Logs
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Access Control Logs](/administrator-manual/audit/server-logs/access-control-logs/image-20240728-174950.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Access Control Logs
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Access Control Logs menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Email**  : User email
+    3.  **Server Group**  : Server group name
+    4.  **Server Name**  : Server name
+    5.  **Host**  : Server host
+    6.  **Account**  : Server account
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Event**  : Event type
+        1.  **Access Control Granted**  : Permission grant history
+        2.  **Access Control Revoked**  : Permission revocation history
+        3.  **Whitelist Granted**  : Command Whitelist grant history
+        4.  **Whitelist Revoked**  : Command Whitelist revocation history
+    2.  **Action At**  : Permission grant/revocation date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Permission grant/revocation date and time
+    3.  **Event**  : Permission related event
+        1.  **Access Control**   **Granted**  : Event where Permission was granted to user/group
+        2.  **Access Control Revoked**  : Event where Permission was revoked from user/group
+        3.  **Whitelist Granted**  : Event where Command Whitelist was granted to user/group
+        4.  **Whitelist Revoked**  : Event where Command Whitelist was revoked from user/group
+    4.  **User Type**  : User/group type
+    5.  **Name**  : Target user/group name
+    6.  **Email**  : Target user email
+        1. Not displayed for groups.
+    7.  **Server Group**  : Server group name
+    8.  **Server Name**  : Server name
+    9.  **Host**  : Server host
+    10.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
+    11.  **Account**  : Server account
+    12.  **Action By**  : Administrator name or System who performed the permission grant/revocation
+
+## Viewing Server Access Control Logs Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Control Logs Detail](/administrator-manual/audit/server-logs/access-control-logs/image-20240728-175354.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Control Logs Detail
+</figcaption>
+</figure>
+
+1. The top displays information based on basic events:
+    1.  **Action At**  : Permission grant/revocation date and time
+    2.  **Event**  : Event where Permission was granted/revoked to user/group
+    3.  **User Type**  : User/group type
+    4.  **Name**  : Target user/group name
+    5.  **Email**  : Target user email
+    6.  **Server Group**  : Server group name
+    7.  **Server Name**  : Server name
+    8.  **Host**  : Server host
+    9.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
+    10.  **Account**  : Server account
+    11.  **Action By**  : Administrator name or System who performed the permission grant/revocation
+        1. When permissions are granted through Workflow, an Access Request link appears and opens the corresponding Request page in a new window.
+2. The bottom lists policies applied to the granted/revoked Permission:
+    1. Access Control related logs - Policy
+        1.  **Access Time**  : Access allowed time
+        2.  **Weekday Access Allow**  : Access allowed weekdays
+        3.  **IP Addresses**  : Access allowed IP addresses
+        4.  **Command Audit**  : Command recording status
+        5.  **Proxy Usage**  : Access through Proxy (Agent) availability
+        6.  **Max Sessions**  : Maximum number of access sessions
+        7.  **Session Timeout (minutes)**  : Session timeout time setting
+        8.  **Protocols**  : Access protocols
+        9.  **Command Template**  : Applied prohibited command set
+    2. Whitelist related logs - Whitelisted Commands
+        1.  **Keyword**  : Exception handling keyword
+        2.  **RegEx**  : Exception handling regular expression
+        3.  **Whitelist Expiration Date**  : Exception handling expiration date 

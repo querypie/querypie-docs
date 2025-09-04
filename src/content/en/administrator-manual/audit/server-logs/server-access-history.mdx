@@ -1,0 +1,90 @@
+---
+title: 'Server Access History'
+---
+
+## Overview
+
+Records the connection history of servers managed by the organization.
+
+## Viewing Server Access History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Access History](/administrator-manual/audit/server-logs/server-access-history/image-20240728-165641.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Access History
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Access History menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Email**  : User email
+    3.  **Account**  : Server access account
+    4.  **Server Name**  : Connected server name
+    5.  **Host**  : Connected server host
+    6.  **Client IP**  : User IP
+    7.  **Client**   **Name**  : User's connection method
+    8.  **Role**  : Connection role
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Server OS**  : OS of the connected server
+    2.  **Protocol** : Protocol used for connection
+    3.  **Result** : Connection attempt result
+    4.  **Action Type** : Connect / Disconnect status
+    5.  **Action At**  : Connection time
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Server connection attempt date and time
+    3.  **Result**  : Connection success/failure status
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    4.  **Name**  : Target user name
+    5.  **Email**  : Target user email
+    6.  **Role**  : Role name used when the target user connected
+    7.  **Account**  : Server access account
+    8.  **Server Name**  : Target server name
+    9.  **Server OS**  : OS of the connected server
+    10.  **Host**  : Host of the connected server
+    11.  **Port**  : Port used for connection
+    12.  **Protocol** : Protocol used for connection
+    13.  **Client IP**  : User client IP address
+    14.  **Client**   **Name**  : User's connection method
+    15.  **Message**  : Records of unusual events such as connection failures
+
+## Viewing Server Access History Details
+
+You can view detailed information by clicking on each row.
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Access History Details](/administrator-manual/audit/server-logs/server-access-history/image-20241209-142526.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Access History Details
+</figcaption>
+</figure>
+
+
+* The right drawer displays the following information:
+    1.  **Result**  : Server connection success/failure status
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    2.  **Name**  : Target user name
+    3.  **Action At**  : Connection time
+    4.  **Action Type** : Connect / Disconnect status
+    5.  **Connected From**  : Connection method
+    6.  **Role**  : Role used when the target user connected
+    7.  **Command Audit**  : Command recording view through this connection
+    8.  **Session Log**  : Session recording view through this connection
+    9.  **Server Name**  : Target server name
+    10.  **Server OS**  : OS of the connected server
+    11.  **Host**  : Host of the connected server
+    12.  **Port**  : Port used for connection
+    13.  **Account**  : Server access account
+    14.  **Protocol** : Protocol used for connection
+    15.  **Client**   **Name**  : User's connection method
+    16.  **Client IP**  : User client IP address
+    17.  **Reverse Tunnel Agent Name** : When connected through Reverse Tunnel, the Name of the Reverse Tunnel Agent used
+    18.  **Tag**  : When connected through Reverse Tunnel, the Tag used to select the Reverse Tunnel Agent
+    19.  **ProxyJump**  : When accessing a server via Jump Host, the applied ProxyJump
+    20.  **Message**  : Records of unusual events such as connection failures

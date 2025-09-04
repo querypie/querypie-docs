@@ -1,0 +1,38 @@
+---
+title: 'Policy Exception logs'
+---
+
+## Overview
+
+Records and tracks the status changes of policy exception processing. Each time a policy exception is created, modified, deleted, expired, activated, or deactivated, the corresponding event is logged for tracking. You can view the detailed content of a specific policy exception by clicking on a row in the list.
+
+<figure data-layout="center" data-align="center">
+![Policy Exception Logs](/administrator-manual/audit/database-logs/policy-exception-logs/image-20250725-132239.png)
+<figcaption>
+Policy Exception Logs
+</figcaption>
+</figure>
+
+
+## Content Recorded in Policy Exception Logs
+
+*  **Action At** : Time when the event occurred
+*  **Event Type**  : Classification by event type. 
+    *  **Created**  : Event where a policy exception was created by Workflow or administrator
+    *  **Modified** : Event where a policy exception was modified by administrator
+    *  **Deleted**  : Event where a specific policy exception was manually deleted by administrator
+    *  **Expired**  : Event where a policy exception expired when the expiration period specified by Workflow or administrator was reached
+    *  **Activated**  : Event where a specific policy exception became active by administrator
+    *  **Deactivated**  : Event where a specific policy exception became inactive by administrator 
+*  **Exception Type**  : Currently existing policy exceptions have two types: Restricted Data Access and Unmasking.
+*  **Allowed Users**  : Target users or groups of the policy exception are recorded. Also, user attributes (Attribute of Users) specified by the administrator are recorded.
+*  **Description** : Description set for the policy exception.
+*  **Excepted By**  : Subject that triggered the policy exception. 
+    *  **Workflow**  : Recorded as workflow when policy exception request and approval were made through workflow.
+    *  **User(Admin)**  : User Display Name is displayed when the policy exception was manually created by administrator. 
+*  **Start Time** : Start time of the policy exception.
+*  **End Time**  : End time of the policy exception.
+*  **Action By :** Subject that caused modification, deletion, status change to Active or Inactive, or expiration of existing policy exceptions. (Expiration subject is always recorded as System since it occurs at the expiration time.)
+*  **Exception Name :** Workflow title is displayed when performed through workflow. Exception Name is displayed for manual policy exceptions by administrator.
+
+

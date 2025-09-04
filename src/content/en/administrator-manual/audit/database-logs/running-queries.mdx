@@ -1,0 +1,87 @@
+---
+title: 'Running Queries'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can view currently executing queries. When query execution ends, the content is recorded as history in Query Audit.
+
+<Callout type="info">
+In 10.3.0, the Running Queries menu that was in Audit &gt; Databases &gt; Running Queries has been moved to Databases &gt; Monitoring &gt; Running Queries, and the ability to stop queries executed through Web Editor and Workflow has been added.
+Please refer to this document for details: Databases &gt; Monitoring &gt; [Running Queries](../../databases/monitoring/running-queries)
+</Callout>
+
+## Viewing Running Queries
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Running Queries](/administrator-manual/audit/database-logs/running-queries/image-20240730-081612.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Running Queries
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; Running Queries menu.
+2. Logs are displayed in descending order based on the current day.
+3. Click the filter button in the top left of the table to filter with AND/OR conditions for the following:
+    1.  **SQL Type** : SQL statement type
+    2.  **Action At**  : Query execution date and time range
+    3.  **Executed From**  : Query execution subject
+        1.  **Web Editor**  : Executed from QueryPie web editor 
+        2.  **Proxy**  : Executed through QueryPie proxy
+        3.  **SQL Request**  : Executed through SQL Request workflow
+        4.  **SQL Job**  : Executed by SQL Job
+        5.  **SQL Export Request**  : Executed through SQL Export Request workflow 
+4. You can refresh the log list through the refresh button in the top right of the table.
+5. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Query execution date and time
+    3.  **Name**  : Target user
+    4.  **Email**  : Target user email
+    5.  **Action Type**  : Action type
+    6.  **Connection Name**  : Target DB connection name
+    7.  **Database Type**  : Target database type
+    8.  **Privilege**   **Name**  : User access permission
+    9.  **Client IP**  : User client IP address
+    10.  **Replication Type**  : DB Replication type
+    11.  **DB Host**  : Connected DB host
+    12.  **DB Name**  : DB name
+    13.  **DB User**  : DB user ID
+    14.  **Table(s)**  : Called table name
+    15.  **SQL Type** : SQL statement type
+    16.  **Query**  : Executed query statement
+    17.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    18.  **Execution Reason**  : Query execution reason
+    19.  **Executed From**  : Query execution subject
+
+## Viewing Running Query Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Running Queries &gt; Running Query Details](/administrator-manual/audit/database-logs/running-queries/image-20240730-080947.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Running Queries &gt; Running Query Details
+</figcaption>
+</figure>
+
+* The right drawer displays the following information:
+    1.  **Name**  : Target user name
+    2.  **Action Type**  : Action type
+    3.  **Privilege**   **Name**  : User access permission
+    4.  **Privilege**   **Type**  : User access permission type 
+    5.  **SQL Type** : SQL statement type
+    6.  **Executed From**  : Query execution subject
+    7.  **Connection Name**  : Target DB connection name
+    8.  **Replication Type**  : DB Replication type
+    9.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    10.  **Client IP**  : User client IP address
+    11.  **Database Type**  : Target database type
+    12.  **DB Host**  : Connected DB host
+    13.  **DB Name**  : DB name
+    14.  **DB User**  : DB user ID
+    15.  **Table(s)**  : Called table name
+    16.  **Query**  : Executed query statement
+
+

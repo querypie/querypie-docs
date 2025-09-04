@@ -1,0 +1,174 @@
+---
+title: 'Security'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+In the Security page, you can manage security settings for QueryPie overall. This document provides descriptions of each security setting.
+
+<Callout type="info">
+From 10.3.0, configuration items for each service have been moved from Administrator &gt; General &gt; Security to under General of each service (Databases / Servers / Kubernetes) (Administrator &gt; `{Service}` &gt; General &gt; Configurations).
+</Callout>
+
+## Web Console Login Settings
+
+Manage security settings related to QueryPie Web login.
+
+
+## Account Security Policy
+
+You can set security policies such as account lockout and expiration for QueryPie accounts.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-27-at-4.25.50-PM.png](/administrator-manual/general/company-management/security/Screenshot-2025-08-27-at-4.25.50-PM.png)
+</figure>
+
+*  **Account Expiration Period (Days)**  : Long-term non-access day criteria for account expiration processing
+*  **Expiration Reminder (Days) :** Set the criteria date for sending account expiration notification emails. You can select multiple desired dates from 1 to 14 days from the dropdown list. For example, if you select 14, 7, 1, notification emails will be sent 14 days, 7 days, and 1 day before account expiration respectively.
+    * This feature only works in environments where Email settings are completed in the Integration menu.
+    * If no notification period is selected, expiration notification emails will not be sent.
+*  **Maximum Login Failures before Account Lockout**  : Account lockout policy for login failures
+    * Specify the maximum allowed number of QueryPie login failures (Default: 60 minutes, 5 times)
+    * When Enable is selected, additional input of count and period range criteria is possible (e.g., account lockout when 5 failures within 1440 minutes)
+*  **Restrict Concurrent Login**  : Concurrent login restriction feature that limits the number of logins that can be activated simultaneously in multiple environments (Web, Agent each) for one user login account to 1, maintaining only the most recent login as active and automatically logging out previous logins on next activity to strengthen account security.
+    * Concurrent login restriction method: When this option is activated, the oldest login session is terminated and new login is allowed.
+        * However, sessions that are already logged in at the time of activating the option are not immediately terminated and are maintained. When a new user logs in later, the existing user session is logged out.
+    * Logout notification display method: When logging in with the same account in a different environment, the existing session is terminated and a notification is displayed to the user.
+        * If the user is active within the Web Inactivity Timeout or Agent Session Timeout range, the notification appears when communicating with the server through explicit UI actions (e.g., button clicks, page transitions, etc.).
+        * Notifications appear when user API calls such as button clicks are made. Notifications are displayed for 24 hours from the time of other login occurrence. Web, User Agent, and Multi-Agent each have individual concurrent login restrictions applied.
+
+
+## Password Setting
+
+You can set password policies for QueryPie accounts.
+
+<figure data-layout="center" data-align="center">
+![image-20250515-091250.png](/administrator-manual/general/company-management/security/image-20250515-091250.png)
+</figure>
+
+*  **Maximum Password Age**  : Password change cycle (Default: 90 days)
+*  **Password History**  : Number of previous passwords that cannot be reused
+    * Stores password history for the set number and prohibits using the same password when changing passwords
+*  **Minimum Length**  : Minimum password length (Default: 9 characters)
+*  **Password Complexity Requirements**  : Password complexity settings
+    * Lower case letter (a-z) : Lowercase letters required
+    * Upper case letter (A-Z) : Uppercase letters required
+    * Number (0-9) : Numbers required
+    * Special character (e.g., !@#$%^&*) : Special characters required
+    * Limit 3 repeating characters and numbers (e.g., aaa, bbb) : Limit 3 or more repeating characters/numbers
+    * Limit 3 consecutive characters and numbers (e.g., abc, 123) : Limit 3 or more consecutive characters/numbers
+    * Restrict nearby characters on the keyboard (e.g., qwe, ert) : Limit 3 or more adjacent strings on the keyboard
+    * Does not contain part of personal information (Username, Primary email) : Restrict use of personal information (Username, Primary email) in passwords
+
+
+## Timeout
+
+You can set timeout policies for web console and agents.
+
+<figure data-layout="center" data-align="center">
+![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
+</figure>
+
+*  **Web Inactivity Timeout (Minutes)** : Web console timeout criteria (Default: 60 minutes)
+    * Timeout processing when there is no activity for the specified time
+*  **Agent Session Timeout (Minutes)** : Agent session timeout criteria (Default: 1,440 minutes)
+    * Maintain agent app login for the specified time and logout when elapsed
+
+
+## QueryPie Web IP Access Control
+
+You can set IP restriction policies for QueryPie access.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-2.14.46-PM.png](/administrator-manual/general/company-management/security/Screenshot-2025-06-26-at-2.14.46-PM.png)
+</figure>
+
+*  **All Users**  : IP restriction settings applied to all users (Default: 0.0.0.0/0)
+*  **Each User**  : When the toggle is turned on, Allowed Zone settings are possible for individual users
+    * How to set Allowed Zone for each user can be checked in [User Profile](../user-management/users/user-profile)
+    *  **Use Individual Configuration of Allowed Zones for Each User**  : Set individual IP allowed zones (Allowed Zone) for each user.
+        * When activated, a `View User to Allowed Zone Mappings` link is displayed where you can check the user list and IP allowed zones assigned to each user.
+        *  **View User to Allowed Zone Mappings** : When clicked, you can check the Allowed Zone list for each user in a modal window. You can search by user name (Display Name), and the list shows the user's name, login ID, email, and all assigned IP addresses.
+    *  **Require Allowed Zones for User Access**  : A policy that makes user IP allowed zone settings mandatory.
+        * When this option is activated, users without individual IP allowed zone (Allowed Zone) settings cannot log in to QueryPie. Access to the login page is possible, but login attempts are blocked.
+
+<Callout type="info">
+**Notes when activating IP access control policy**
+Users blocked from login due to activation of the `Require Allowed Zones for User Access` option can request access permission for new IP addresses through the 'IP Registration Request' workflow. (For details, please refer to the [Requesting IP Registration Request](../../../user-manual/workflow/requesting-ip-registration) document.)
+</Callout>
+
+*  **Admin Page Access Control**  : Set policies to restrict IPs of administrators who can access the admin page. You can activate the toggle to restrict only administrators connecting from specific IP addresses or ranges to access the admin page.
+    *  **Access Requirements:** 
+        * The user must have administrator privileges.
+        * The user's connection IP must be included in the IP range set in 'All Users'.
+        * The user's connection IP must be included in the IP list registered in 'Admin Page Access Control'.
+    *  **Notes when setting admin page access control** 
+        * When adding an IP to `Admin Page Access Control`, that IP must be included in the upper **All Users** setting. If you try to save after adding an IP that is not registered in **All Users**, an error occurs and the settings are not saved.
+
+<Callout type="info">
+**Q. What screen will users see when trying to access the QueryPie web console from an unauthorized IP?**
+A. When trying to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and you will see the guidance screen below. If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
+</Callout>
+<figure data-layout="center" data-align="center">
+![QueryPie Web Access Control &gt; When it doesn't match the IP registered in All Users](/administrator-manual/general/company-management/security/image-20240121-073718.png)
+<figcaption>
+QueryPie Web Access Control &gt; When it doesn't match the IP registered in All Users
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![When it doesn't match the Allowed Zone registered in Users &gt; Update User](/administrator-manual/general/company-management/security/image-20240121-074246.png)
+<figcaption>
+When it doesn't match the Allowed Zone registered in Users &gt; Update User
+</figcaption>
+</figure>
+<Callout type="important">
+**IP restriction setting caution**
+Settings on the Security page are applied immediately upon saving. Therefore, if the IP you entered and the IP of the administrator who set the option do not match, even if you are an administrator, you will be **logged out immediately upon saving**, so please apply with caution.
+</Callout>
+
+
+## Secret Store Settings
+
+Set whether to use Secret Store. Currently supports HashiCorp Vault.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-152042.png](/administrator-manual/general/company-management/security/screenshot-20240726-152042.png)
+</figure>
+
+Vault registration is performed in the General &gt; Integrations menu.
+
+<Callout type="info">
+**Q. I want to deactivate Secret Store, but the toggle is disabled.**
+A. Please check if there are any Vaults registered in the Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault menu. You can deactivate the toggle after all registered Vaults are removed.
+</Callout>
+
+
+After Secret Store usage activation and Vault registration are completed, you can select the authentication information storage in the DB connection detail page or Server Group detail page.
+
+<figure data-layout="center" data-align="center">
+![DB Connection detail page &gt; Connection Information &gt; Secret Store selection](/administrator-manual/general/company-management/security/screenshot-20240726-185946.png)
+<figcaption>
+DB Connection detail page &gt; Connection Information &gt; Secret Store selection
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![Server Group detail page &gt; Accounts &gt; Secret Store selection](/administrator-manual/general/company-management/security/screenshot-20240726-190034.png)
+<figcaption>
+Server Group detail page &gt; Accounts &gt; Secret Store selection
+</figcaption>
+</figure>
+## Others
+
+Manage other security settings.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-152051.png](/administrator-manual/general/company-management/security/screenshot-20240726-152051.png)
+</figure>
+
+* Export a file with Encryption : Whether to enter password when downloading files
+    * When Required is selected, file password specification is mandatory when downloading files
+
+

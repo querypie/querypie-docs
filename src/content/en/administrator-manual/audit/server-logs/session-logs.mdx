@@ -1,0 +1,72 @@
+---
+title: 'Session Logs'
+---
+
+## Overview
+
+Records server access sessions managed by the organization. Administrators can monitor users' work execution history within servers through video playback.
+
+## Viewing Session Logs
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Session Logs](/administrator-manual/audit/server-logs/session-logs/image-20240728-173024.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Session Logs
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Session Logs menu.
+2. Logs are displayed in the table list in descending order.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Email**  : User email
+    3.  **Account**  : Server access account
+    4.  **Server Name**  : Connected server name
+    5.  **Host**  : Connected server host
+    6.  **Client IP**  : User IP
+    7.  **Client**   **Name**  : User's connection method
+4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.
+    1.  **Server OS**  : OS of the connected server
+    2.  **Protocol** : Protocol used for connection
+    3.  **Action At**  : Connection time
+    4.  **Connected From**  : Connection method subject
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Session recording start date and time
+    3.  **Name**  : Target user name
+    4.  **Email**  : Target user email
+    5.  **Role**  : Role name used for server connection
+    6.  **Account**  : Server access account
+    7.  **Server Name**  : Connected server name
+    8.  **Server OS**  : OS of the connected server
+    9.  **Host**  : Connected server host
+    10.  **Port**  : Port used for connection
+    11.  **Protocol** : Protocol used for connection
+    12.  **Client IP**  : User client IP address
+    13.  **Client**   **Name**  : User's connection method
+    14.  **Connected From**  : Connection method subject
+        1. Web
+        2. Proxy
+
+## Playing Session Records
+
+Click the Action At link in each row to play the session recording history.
+
+Depending on whether the recorded file size exceeds 700MB, it displays the playback screen or download button.
+
+1.  **Less than 700MB** 
+    1. Basic information is displayed at the top and the Replay playback screen is displayed at the bottom.
+        1.  **Name** : Executor name
+        2.  **Action At** : Occurrence date and time (start)
+        3.  **Session Record** : Recording name
+    2. Click the play button to start.
+        1. Conversely, click the pause button to stop playback.
+        2. You can also drag the line to the right of the button or click on the desired point to play from that part.
+    3. Click the `Close` button to close the window.
+2.  **700MB or more** 
+    1. Provides a download button along with a message that playback is not possible within the playback screen.
+        1. The file size exceeds 700MB and the session cannot be played back.
+        2. To view this session recording, you need to download the file content and play it.
+    2. Click the `Download` button to proceed with the download and create a file locally.
+        1. When the common option `Export a file with Encryption` in Administrator &gt; General &gt; Company Management &gt; Security &gt; Others is set to `Required`, an encryption modal appears additionally during the download and the download is executed after the modal.

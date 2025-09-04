@@ -1,0 +1,59 @@
+---
+title: 'Workflow Logs'
+---
+
+## Overview
+
+This is a page for viewing QueryPie workflow approval reception and approval history.
+
+When users request specific permissions on the Workflow page or approvers approve or reject requests, you can check the history in Workflow Logs.
+
+
+## Viewing Workflow Logs
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Workflow Logs](/administrator-manual/audit/general-logs/workflow-logs/image-20241029-052424.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Workflow Logs
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; General &gt; Workflow Logs menu.
+2. Administrator permission grant or revocation logs are displayed from the latest to oldest based on Action At.
+    1.  **Name**  : Display Name is shown.
+    2.  **Description**  : Details of granted administrator permissions
+    3.  **Action By**  : Subject of administrator permission grant or revocation (displayed as **System** for automatic revocations)
+3. Supported search conditions are as follows:
+    1.  **Workflow Title**  : Workflow name
+    2.  **Name**  : User name
+    3.  **Email**  : Email
+    4.  **Action By**  : Action performer (self or proxy approver)
+    5.  **Token ID**  : Token identification ID used for API calls
+4. Supported filter conditions are as follows:
+    1.  **Action At** : Log occurrence period range
+    2.  **Action Type**  : Workflow submission/approval (approval/rejection)/cancellation history
+        1.  **Workflow Requested**  : Workflow submission (also applies to Resubmit cases)
+        2.  **Workflow Approved**  : Workflow approval
+        3.  **Workflow Rejected**  : Workflow rejection
+        4.  **Workflow Canceled**  : Workflow cancellation
+        5.  **Workflow Expired**  : Workflow expiration
+        6.  **Workflow SQL Executed**  : Workflow SQL query execution
+        7.  **Workflow Export Executed**  : Workflow SQL Export execution
+        8.  **Workflow Reviewed** : Workflow reviewer confirmation
+    3.  **Request Type**  : Workflow type 
+        1. DB Access Request
+        2. SQL Request
+        3. SQL Export Request
+        4. Server Access Request
+        5. Access Role Request
+        6. Unmasking Request
+    4. Remaining Steps : Next remaining approval steps 
+        1. Approval 1
+        2. Approval 2
+        3. Approval 3
+        4. Execution
+        5. Done
+        6. Review
+    5. Urgent : Post-approval approval status (Urgent / -)
+
+

@@ -1,0 +1,59 @@
+---
+title: 'Web App Role History'
+---
+
+## Overview
+
+Records the history of role grants and revocations for web applications managed by the organization.
+
+## Viewing Web App Role History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History](/administrator-manual/audit/web-app-logs/web-app-role-history/Screenshot-2025-06-30-at-2.47.18-PM.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table.<br/>a. User Name : User name<br/>b. User Email : User email<br/>c. Role Name : Role name
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Event**  : Event type
+    2.  **User Type**  : User type
+    3.  **Action At** : Action occurrence date and time range
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following information:
+    1.  **No**  : Sequence number
+    2.  **Action At**  : Action occurrence date and time
+    3.  **Event**  : Event type (Role Granted, Role Revoked)
+    4.  **User Type**  : User type (USER, GROUP)
+    5.  **Name**  : User name
+    6.  **Email**  : User email
+    7.  **Role Name**  : Granted/revoked role name
+    8.  **Expiration Date**  : Role expiration date and time
+    9.  **Action By**  : Administrator name who performed the action
+
+## Viewing Web App Role History Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History &gt; Web App Role History Details](/administrator-manual/audit/web-app-logs/web-app-role-history/Screenshot-2025-06-30-at-2.50.17-PM.png)
+<figcaption>
+Administrator &gt; Audit &gt; Web Apps &gt; Web App Role History &gt; Web App Role History Details
+</figcaption>
+</figure>
+
+*  **The right drawer displays the following information:** 
+    1.  **Role Name**  : Granted/revoked role name
+    2.  **Event**  : Event type (Role Granted, Role Revoked)
+    3.  **Name**  : Target user name
+    4.  **Email**  : Target user email
+    5.  **Action At**  : Action time
+    6.  **Action By**  : Administrator name who performed the action
+    7.  **Expiration Date**  : Role expiration date and time
+    8.  **Policies**  : List of policies included in the corresponding role
+        1. Name : Policy name
+        2. Description : Policy description
+        3. Version : Policy version

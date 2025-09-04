@@ -1,0 +1,116 @@
+---
+title: 'DAC General Configurations'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+From 10.3.0, DAC-related setting items that were under Administrator &gt; General &gt; Security have been moved to General &gt; Configurations in each service menu.
+From 11.2.0, Query Sharing that was under Administrator &gt; General &gt; Company Management &gt; General has been moved to Administrator &gt; Databases &gt; General &gt; Configurations.
+</Callout>
+
+## Database Access Control Settings
+
+Manages settings applied to DB access control.
+
+<figure data-layout="center" data-align="center">
+![image-20250822-104340.png](/administrator-manual/databases/dac-general-configurations/image-20250822-104340.png)
+</figure>
+
+
+### Query Sharing
+
+<br/>Query Sharing is a feature that sends queries written in QueryPie SQL Editor to Git to share with other users. By default, query sharing settings are off, and clicking the `Query Sharing Setting` button opens a settings modal. When Query Sharing option is set to On, additional input fields are displayed.
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-145003.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145003.png)
+</figure>
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-145650.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145650.png)
+</figure>
+
+*  **Git Repository URL**  : Git Repository URL to send queries to
+*  **Git Branch**  : Branch name in the repository to send query files to
+*  **Authentication Type**  : Authentication method for query transmission requests (select OAuth or SSH)
+    * When OAuth is selected, enter the following:
+        *  **User Name** : Username of the user using the Git Repository (e.g. GitHub Username)
+        *  **Access Token**  : Access Token provided by Git service
+    * When SSH is selected, enter the following:
+        *  **Public Key**  : SSH Public Key stored in Git server
+        *  **Private Key**  : Private Key that forms a pair with SSH Public Key
+        *  **Passphrase**  : Enter if Passphrase is set for Private Key
+
+
+After input is complete, click the `Test` button to verify that authentication works properly, then click the `OK` button to save.
+
+<Callout type="info">
+For descriptions of OAuth or SSH authentication using GitHub, please refer to the following documents:
+* Access Token issuance: [Managing personal access tokens](https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+* SSH connection: [Connecting to GitHub with SSH](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
+</Callout>
+
+
+When Query Sharing configuration is complete, Query Sharing is displayed as **On**.
+
+You can use the query sharing feature on the SQL Editor screen.
+
+* When saving, query files are stored in the linked Repository.
+* You can load query files stored in the repository from Queries panel &gt; QueryPie Git Sharing folder.
+
+For detailed description, please refer to [Connecting with Web SQL Editor](../../user-manual/database-access-control/connecting-with-web-sql-editor).
+---
+
+### Access Control Settings
+
+
+*  **Privilege Deactivation Period** : Long-term unused criteria period for DB privilege expiration (Default: 90 days)
+*  **Maximum Access Duration** : Maximum period for privilege requests and assignments
+    * Cannot set expiration dates exceeding the specified period when requesting DB Access Request
+
+*  **Display the first 10 rows in Query Audit** : Query Audit SELECT statement execution result display method setting (Default: Off, when set to On, only the first 10 rows are displayed instead of showing all results)
+
+<figure data-layout="center" data-align="center">
+![Query Audit Detail](/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png)
+<figcaption>
+Query Audit Detail
+</figcaption>
+</figure>
+
+*  **Advanced Privilege Setting**  : Account control by privilege permission (Default: Off)
+    * When set to On, Privilege Settings tab is displayed at the bottom of Connection Details page
+    * For detailed information, refer to **Privilege Setting** document in [DB Connections](connection-management/db-connections)
+*  **Unmasking Zones** : Setting to allow users who have been granted permission to view masked data through Unmasking request or users registered as allowed users of masking policies to view in unmasked state only when accessing from specific IPs (ranges), even if they are exception targets of masking policies. (Default: Off) <br/>Reference: [Unmasking Zones detailed description](dac-general-configurations/unmasking-zones)
+*  **Ledger Table Management :**  Setting to activate or deactivate Ledger table management functionality that can force workflow approval and reason input by designating specific tables as Ledger. (Default: Off)
+*  **Select Purpose Duration for Agent :**  Setting to prevent re-input for a specified time when users accessing DB through Proxy with 3rd party tools input reasons for reason input mandatory target data. Only configurable when Ledger Table Management is On. (Default: 10 minutes)
+*  **Restricted Statement**  : Usage restricted queries
+    * Statement : Enter strings to restrict execution when included in queries (case insensitive)
+    * Allowed User : Specify users allowed to execute the corresponding statement (multiple selection possible, group-level specification not possible)
+    * Queries containing entered Restricted Statement are blocked when executed
+
+<Callout type="important">
+Queries blocked by Restricted Statement policies are blocked from execution even if approved through SQL Request. Do not enter queries that should be allowed for execution by certain users.
+</Callout>
+
+*  **Justification Length**  : When "User Action Purpose Required" option is activated in Connection settings or reason input is forced by Ledger table management policies, reason input must be made through Web Editor or Agent. Administrators specify the minimum and maximum values for the number of characters entered in the input field.
+    * The minimum input value is 1 and the maximum value is 1000.<br/>
+
+*  **Query Annotation**  : Automatically records annotations specified by administrators when performing queries. When the feature is activated, annotations are recorded using the following 3 templates. As of 10.4.0, limited to Redshift support.
+    * User Name: `{{userName}}` : Display Name of the user who performed the query.
+    * Login ID: `{{loginId}}` : Login ID of the user who performed the query.
+    * Execute From: `{{executedFrom}}` : The means by which the query was performed. As of 10.4.0, only Web Editor is recorded. 
+
+<figure data-layout="center" data-align="center">
+![Query Audit](/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png)
+<figcaption>
+Query Audit
+</figcaption>
+</figure>
+
+<br/>
+
+*  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow. 
+    * Only connections registered as connection members in the connection detail screen are exposed in Workflow DB Access Request.<br/>
+
+<Callout type="info">
+**Reason Input Mandatory Settings for DB Operations**
+From version 9.17.0, this feature has been changed to detailed connection settings. For detailed configuration methods, please refer to **Additional Settings** in [DB Connections](connection-management/db-connections).
+</Callout>

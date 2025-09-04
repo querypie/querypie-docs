@@ -1,0 +1,48 @@
+---
+title: 'Session Monitoring'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+You can view server access sessions through QueryPie. You can also force terminate connected sessions.
+
+## Viewing Session Monitoring
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Session Monitoring](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173632.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
+</figcaption>
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Monitoring menu.
+2. View currently connected sessions.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Server Name**  : Connected server name
+        1. Below shows the user names connected to the corresponding server
+    2.  **Account**  : Server access account
+    3.  **Protocol** : Protocol used for connection
+    4.  **Connected At**  : Connection time
+    5.  **Connected From**  : Connection method subject
+        1. Web
+        2. Proxy
+
+
+
+## Force Terminating Sessions
+
+<figure data-layout="center" data-align="center">
+![image-20240728-173640.png](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173640.png)
+</figure>
+
+1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Server Monitoring menu.
+2. View currently connected sessions.
+3. Click the checkbox in front of the session to force terminate.
+4. Click the `Kill Session` button.
+5. Click the `OK` button in the popup that appears.
+
+<Callout type="info">
+Force terminating a session does not block the user. If necessary, please perform separate blocking for the connected user.
+</Callout>

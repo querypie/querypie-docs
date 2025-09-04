@@ -1,0 +1,114 @@
+---
+title: 'Query Audit'
+---
+
+## Overview
+
+Records the history of completed queries and action executions for DB operations in QueryPie.
+
+## Viewing Query Audit
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Query Audit](/administrator-manual/audit/database-logs/query-audit/image-20240730-090702.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Query Audit
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; Query Audit menu.
+2. Logs are displayed in descending order based on the query execution date.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Table(s)**  : Called table name
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Connection Name**  : Connected DB connection name
+    2.  **Database Type** : Database type
+    3.  **SQL Type** : SQL statement type
+    4.  **Action Type** : Action type
+        1.  **SQL Execution**  : SQL statement execution 
+        2.  **Export Data**  : Data export
+        3.  **Export Schema**  : Schema export
+        4.  **Import Data**  : Data import
+        5.  **Import Schema** : Schema import
+        6.  **Copy Clipboard**  : Clipboard copy 
+    5.  **Executed At**  : Execution date and time
+    6.  **Result** : Operation success/failure status
+    7.  **Prevented** : Whether unauthorized access was executed due to policy
+    8.  **Table Resolved**  : Whether table was called
+    9.  **Executed From**  : Query execution subject
+        1.  **Web Editor**  : Executed from QueryPie web editor
+        2.  **Proxy**  : Executed through QueryPie proxy
+        3.  **SQL Request**  : Executed through SQL Request workflow
+        4.  **SQL Job**  : Executed by SQL Job
+        5.  **SQL Export Request**  : Executed through SQL Export Request workflow
+    10.  **Label**  : Whether DB is ledger
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Executed At**  : Execution date and time
+    3.  **Result** : Operation success/failure status
+    4.  **Name**  : Target user name
+    5.  **Email**  : Target user email
+    6.  **Action Type** : Action type
+    7.  **Connection Name**  : Target DB connection name
+    8.  **Database Type**  : Target database type
+    9.  **Privilege**   **Name**  : User access permission
+    10.  **Client IP**  : User client IP address
+    11.  **Replication Type**  : DB Replication type
+    12.  **DB Host**  : Connected DB host
+    13.  **DB Name**  : DB name
+    14.  **DB User**  : DB user ID
+    15.  **Table(s)**  : Called table name
+    16.  **SQL Type** : SQL statement type
+    17.  **Query**  : Executed query statement
+    18.  **Time(ms)**  : Execution time (in milliseconds)
+    19.  **Rows**  : Number of affected rows
+    20.  **Data Size**  : Called data size 
+    21.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    22.  **Error Message**  : Records of unusual events such as execution failures
+    23.  **Execution Reason**  : Query execution reason
+    24.  **Prevented** : Whether unauthorized access was executed due to policy
+    25.  **Label**  : Whether DB is ledger
+    26.  **Executed From**  : Query execution subject
+
+## Viewing Query Audit Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Query Audit &gt; Query Audit Details](/administrator-manual/audit/database-logs/query-audit/image-20240730-091103.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Query Audit &gt; Query Audit Details
+</figcaption>
+</figure>
+
+* The top of the right drawer displays the following basic query audit information:
+    1.  **Result** : Operation success/failure status
+    2.  **Name**  : Target user name
+    3.  **Action Type** : Action type
+    4.  **SQL Type** : SQL statement type
+    5.  **Privilege**   **Name**  : User access permission
+    6.  **Privilege**   **Type**  : User access permission type
+    7.  **Data Size**  : Called data size 
+    8.  **Time(ms)**  : Execution time (in milliseconds)
+    9.  **Executed At**  : Execution date and time
+    10.  **Executed From**  : Query execution subject
+    11.  **Label**  : Whether DB is ledger
+    12.  **Connection Name**  : Target DB connection name
+    13.  **Replication Type**  : DB Replication type
+    14.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    15.  **Client IP**  : User client IP address
+    16.  **Host**   **Name** : Connection execution hostname
+    17.  **Database Type**  : Target database type
+    18.  **DB Host**  : Connected DB host
+    19.  **DB Name**  : DB name
+    20.  **DB User**  : DB user ID
+    21.  **Table(s)**  : Called table name
+* The bottom displays the executed query body and additional details:
+    1.  **Query**  : Executed query statement
+    2.  **First 10 Rows**  : First 10 row samples for called SELECT statements
+        * This field is only displayed when the **Display the first 10 rows in Query Audit** setting is enabled. (Default: Off)
+            * Refer to **DB Connection Security Settings** in [Security](../../general/company-management/security)
+        *  **Copy Data**  : Button for copying before/after data
+    3.  **Error Message**  : Records of unusual events such as execution failures
+    4.  **Execution Reason**  : Query execution reason

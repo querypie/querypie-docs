@@ -1,0 +1,82 @@
+---
+title: 'DB Access History'
+---
+
+## Overview
+
+Records the connection and disconnection history of DB connections managed by the organization.
+
+## Viewing DB Access History
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DB Access History](/administrator-manual/audit/database-logs/db-access-history/image-20240730-070842.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DB Access History
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Databases &gt; DB Access History menu.
+2. Logs are displayed in descending order based on the current month.
+3. You can search with the following conditions through the search field in the top left of the table:
+    1.  **Name**  : User name
+    2.  **Error Message**  : Phrase within access error message 
+    3.  **Client IP**  : User IP
+4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+    1.  **Connection Name**  : Connected DB connection name
+    2.  **Database Type** : Database type
+    3.  **Action Type** : Connect / Disconnect status
+    4.  **Result** : Connection success/failure status
+    5.  **Action At**  : Connection time
+5. You can refresh the log list through the refresh button in the top right of the table.
+6. The table provides the following column information:
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Server connection attempt date and time
+    3.  **Action Type**  : Connect / Disconnect status
+    4.  **Result**  : Connection success/failure status
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    5.  **Name**  : Target user name
+    6.  **Email**  : Target user email
+    7.  **Cloud Provider**  : Target cloud provider name
+    8.  **Connection Name**  : Target DB connection name
+    9.  **Database Type**  : Target database type
+    10.  **Privilege**   **Name**  : User access permission 
+    11.  **Client IP**  : User client IP address
+    12.  **Replication Type**  : DB Replication type
+    13.  **DB Host**  : Connected DB host
+    14.  **DB User**  : DB user ID
+    15.  **DB Name**  : DB name
+    16.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    17.  **Error Message**  : Records of unusual events such as connection failures
+    18.  **Connected**   **From**  : Connection method
+
+## Viewing DB Access History Details
+
+You can view detailed information by clicking on each row.
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details](/administrator-manual/audit/database-logs/db-access-history/image-20240730-065045.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details
+</figcaption>
+</figure>
+
+* The right drawer displays the following information:
+    1.  **Result**  : Connection success/failure status
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    2.  **Name**  : Target user name
+    3.  **Action At**  : Connection time
+    4.  **Action Type** : Connect / Disconnect status
+    5.  **Privilege**   **Name**  : User access permission 
+    6.  **Connection Name**  : Target DB connection name
+    7.  **Host**   **Name** : Connection execution hostname
+    8.  **Connected From**  : Connection method
+    9.  **Client**   **Name**  : Used client name (DataGrip, etc.)
+    10.  **Client IP**  : User client IP address
+    11.  **Replication Type**  : DB Replication type
+    12.  **Database Type**  : Target database type
+    13.  **DB Host**  : Connected DB host
+    14.  **DB Name**  : DB name
+    15.  **DB User**  : DB user ID
+    16.  **Error Message**  : Records of unusual events such as connection failures
