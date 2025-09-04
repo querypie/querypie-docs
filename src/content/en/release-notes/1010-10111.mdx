@@ -1,0 +1,231 @@
+---
+title: '10.1.0 ~ 10.1.11'
+---
+
+## QueryPie 10.1.11 Release
+
+January 22, 2025
+
+
+**Bug Fix**
+
+* [General] Improved issue where Audit Log Export stops when unexpected exceptions occur
+* [DAC] Redirect to custom link when switching to workflow after executing Ledger target DML queries
+* [Agent] Improved /bin/bash: osascript: command not found when running Agent on Mac
+
+
+## QueryPie 10.1.10 Release
+
+January 08, 2025
+
+**Bug Fix**
+
+* [DAC] Fixed issue where Rows are not properly queried in Query Audit menu when accessing Oracle Proxy
+* [DAC] Applied SystemSetting local cache to DB query section when executing queries
+
+
+## QueryPie 10.1.9 Release
+
+December 13, 2024
+
+
+**Bug Fix**
+
+* [DAC] Fixed MongoDB 'MongoDB.Bson.BsonInt64' related error
+* [DAC] Fixed ORA-03113 related error when accessing OCI EXACS
+* [DAC] Fixed issue related to DML Snapshot recording when attempting MongoDB UPSERT
+* [DAC] Fixed issue related to TablePlus connection through SQLServer proxy
+* [DAC] Fixed issue related to permission for UPDATE statements using WITH in PostgreSQL after connection
+* [DAC] Fixed error when executing USE statements for databases starting with numbers in some vendors
+* [DAC] Fixed Not allowed object type undefined error
+* [SAC] Improved memory over-occupation issue due to session leaks
+* [General] Fixed issue where Test button does not work in Logs tab of Alert detail page
+* [Agent] Improved to explicitly obtain administrator privileges before proceeding with upgrade
+
+
+## QueryPie 10.1.8 Release
+
+December 06, 2024
+
+
+**Enhancement**
+
+* [IDP] Improved to synchronize by user unit to resolve Job duplicate execution issue during IdP synchronization
+* [DAC] Added functionality to specify connection account password when accessing Oracle, MongoDB, PostgreSQL through agent
+
+**Bug Fix**
+
+* [DAC] Fixed issue where port allocation is not performed for added instances
+* [DAC] Fixed issue related to Alias usage in UPDATE statements when executing SQLServer queries
+* [DAC] Fixed issue where JSON strings are temporarily visible in right object information panel when accessing Hive web editor
+* [DAC] Fixed issue where INSERT statements with PK in subqueries do not execute normally when SQLServer DML Snapshot is on
+* [DAC] Fixed proxy row issue when executing Explain Plan related to Oracle Toad connection
+* [DAC] Fixed issue where dbms_output does not work normally in SQLGate
+* [DAC] Fixed issue where AWS SCT-Oracle connection creation does not connect normally
+* [Agent] Fixed issue where network connection waits before token expiration check after QueryPie agent session unlock
+* [SAC] Fixed issue where QueryPie SAC Agent connection fails when entering Korean password
+* [SAC] Fixed Server group not found error when user attempts server connection
+* [SAC] Fixed issue where Session Timeout does not work normally when there is no input after SSH connection
+* [Common] Fixed Connection reset by peer error occurring due to RST packet return when calling Lambda through NAT Gateway in Alert HTTP
+* [Workflow] Fixed error occurring when there are many connections requested in DB Access Request
+* [Workflow] Fixed query did not return a unique result error when approving DB Access Request
+
+
+## QueryPie 10.1.7 Release
+
+November 25, 2024
+
+
+**Enhancement**
+
+* [Agent] Implemented Proxy Throttling functionality
+* [DAC] Applied logging exception handling for repetitive queries sent by client tools like DataGrip
+* [Agent] Improved to allow personal account usage in agent when accessing Oracle OCI
+
+**Bug Fix**
+
+* [DAC] Fixed issue where logs are not left for Oracle OCI connection
+* [DAC] Fixed error when executing Oracle queries through Toad tool
+* [DAC] Fixed error related to LEFT OUTER JOIN query execution when PostgreSQL policy is applied
+* [Common] Fixed issue where login is not possible after refresh-token-expired error popup is displayed
+* [API] Fixed issue related to First 10 Rows query through External API
+* [DAC] Fixed issue where OtherOptions are not applied when connecting to Hive in web editor
+* [DAC] Fixed error when checking table info for partition tables when querying PostgreSQL in web editor
+* [DAC] Fixed error related to CURRENT_DATE, CURRENT_TIME function calls without parentheses in MySQL
+* [DAC] Fixed issue where permissions deactivated due to long-term inactivity are processed as Expired when reaching expiration date
+* [DAC] Fixed error related to Update query execution with subqueries for tables with Ledger policy applied
+
+
+## QueryPie 10.1.6 Release
+
+November 12, 2024
+
+
+**Bug Fix**
+
+* [General] Fixed issue related to Alert duplicate sending logic
+* [General] Fixed Loading chunk 721 failed error
+* [DAC] Fixed session termination issue when sending queries simultaneously from different tools after PostgreSQL proxy connection
+* [DAC] Fixed conflict issue between DML snapshot functionality when useServerPrepStmts = true in MySQL
+* [SAC] Fixed disconnection issue when calling sessions simultaneously through tmux
+* [DAC] Added MongoDB sleep() query support
+* [DAC] Fixed Wrong Data Type error when executing DocumentDB queries
+* [DAC] Fixed malfunction related to Workflow Status changes
+
+## QueryPie 10.1.5 Release
+
+November 01, 2024
+
+
+**Bug Fix**
+
+* [DAC] Fixed SecurityContext is null error occurring during query execution
+* [DAC] Processed to skip instances in Modifying status during AWS cloud synchronization
+* [DAC] Fixed Unauthorized error when executing queries after agent Oracle connection
+* [DAC] Fixed issue where Oracle proxy connection intermittently terminates when Oracle usage is high
+* [DAC] Fixed issue where Oracle proxy does not work properly when identical BLOB data exists
+* [DAC] Fixed display error in connection detail page when there are permissions processed for long-term inactivity
+
+## QueryPie 10.1.4 Release
+
+October 22, 2024
+
+
+**Bug Fix**
+
+* [Workflow] Fixed query error in Request page where proxy approver can approve
+
+
+## QueryPie 10.1.3 Release
+
+October 17, 2024
+
+
+**Enhancement**
+
+* [DAC] Restricted to allow connections corresponding to SID or ServiceName registered in connection information when accessing Oracle
+
+**Bug Fix**
+
+* [Agent] Improved agent Refresh Token expiration logic
+* [Syslog] Fixed log retransmission related issue and Proxy connection delay issue
+
+
+## QueryPie 10.1.2 Release
+
+October 02, 2024
+
+
+**Enhancement**
+
+* [DAC] Added defensive code to self-clean even if Session and Job leaks occur
+
+
+**Bug Fix**
+
+* [DAC] [MySQL] Fixed error occurring when processing Query Attributes
+* [DAC] [MongoDB] Fixed error where queries executed normally through Agent are recorded as Failure in DB Access History
+* [DAC] [MongoDB] Fixed error occurring when KillCursors command fails in Proxy
+* [DAC] Fixed issue where Ledger table approval popup does not appear when accessing Proxy through 3rd-party after 10.1.1 upgrade
+* [SAC] Fixed issue where some results are intermittently not displayed when there are many search results in Server Group list
+* [SAC] Fixed issue where only some server lists appear in the final step when granting permissions for large numbers of servers
+
+
+**External API**
+
+* [SAC] Added new Grant Direct Permission by Name API (can grant by resource name)
+
+
+## QueryPie 10.1.1 Release 
+
+September 20, 2024
+
+****
+
+**Enhancement**
+
+* [Dashboard] Improved dashboard page loading speed
+
+****
+
+**Bug Fix**
+
+* [SAC] Fixed error message occurring when user selects Role after server with permissions is deleted
+* [SAC] Fixed error message occurring when server access permissions already owned are duplicated
+
+
+## QueryPie 10.1.0 Release
+
+September 09, 2024
+
+
+**New Features**
+
+* [SAC] Added functionality to specify allowed commands (White List) when granting individual permissions to users
+* [SAC] Added Allowed Zone application functionality for server resources based on server tags
+* [SAC] Added Jump Host connection support in multi-hop environments (ProxyJump)
+* [SAC] Added new protocol support (FTP, Telnet)
+* [SAC] Added password management functionality (batch change, change cycle management, etc.)
+
+
+**Enhancement**
+
+* [SAC] [RDP] Added password input step when deleting server agent
+* [KAC] Expanded Proxy connection domain support range (added IP addresses)
+
+
+**Bug Fix**
+
+* [Dashboard] Fixed error occurring when there are deleted accounts in recent server access history
+* [Security] Fixed issue where logout occurs before reaching configured Session Timeout value
+* [IAM] Fixed error occurring when accessing with account having 2 or more Admin Roles
+* [DAC] Fixed connection error occurring with specific versions of Oracle JDBC Driver
+* [DAC] Fixed issue where before/after data is not left when executing UPDATE queries after DML Snapshot setting
+* [SAC] Fixed issue where Host Name is duplicated in User Access History when logging in with Okta
+
+
+**External API**
+
+* [SAC] Added Whitelist object to Get Direct Permission API
+* [SAC] Modified Grant Direct Permission API to allow Whitelist granting
+* [SAC] Added new Grant Whitelist API

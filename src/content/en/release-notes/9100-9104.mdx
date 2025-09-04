@@ -1,0 +1,88 @@
+---
+title: '9.10.0 - 9.10.4'
+---
+
+import { Callout } from 'nextra/components'
+
+
+<Callout type="info">
+For External API changes, please refer to the link below.
+[External API Changes (9.10.0 Version)](9100-9104/external-api-changes-9100-version)
+</Callout>
+
+## QueryPie 9.10.4 Release
+
+May 03, 2023
+
+**Bug Fix**
+
+* [External API] Supported legacy specifications for api/external/connection-auth-logs, audit-logs
+---
+
+## QueryPie 9.10.3 Release
+
+April 19, 2023
+
+**Bug Fix**
+
+* [Performance][PostgreSQL] Adjusted PG QSI memory default value upward to prevent agent errors
+---
+
+## QueryPie 9.10.2 Release
+
+February 22, 2023
+
+**Bug Fix**
+
+* [Migration] Fixed `Data Tool long` error occurring when migrating SQL Requests with SQL over 1MB
+---
+
+## QueryPie 9.10.1 Release
+
+January 30, 2023
+
+**Bug Fix**
+
+* [DynamoDB] Fixed error where queries cannot be executed in environments using AssumeRole
+* [Redis] Fixed ERR Unknown Command error when accessing ElastiCache Redis
+* [Redis] Fixed issue where access through web is not possible in versions before 6.2.0
+* [Redis] Fixed error occurring when Proxy - Kill Session
+* [Workflow] Modified to apply approval time by step in Company timezone when attempting All Request Export
+* [Workflow] Fixed error where lists including expired approval items cannot be queried
+* [Migration][Workflow] Fixed migration error occurring when approved_at is blank
+* [Migration] Fixed error where query execution time and processed data count are missing during Query Audit log migration
+---
+
+## QueryPie 9.10.0 Release
+
+January 12, 2023
+
+**New Features**
+
+* [Workflow] Added audit steps (Approval Steps) & post-approval (Urgent Mode) functionality
+
+**Bug Fix & Enhancement**
+
+* [Alert] Added types and post-approval conditions to New Request (Workflow)
+* [Agent] Applied Bitwise Not stream to avoid zscaler VPN conflicts when running agent
+* [Authentication] Added account deletion functionality for SAML integrated users
+* [Authentication] Processed to ignore QueryPie's own OTP settings when using Okta, Onelogin
+* [Audit&Log] Added Executed From (Query Audit) column to DML Snapshot
+* [Audit&Log] Recorded logs after session termination when all permissions are revoked
+* [Impala] Fixed issue where connection is not possible with Realm specified by administrator or user
+* [MongoDB] Added DML Snapshot support in Proxy
+* [MongoDB] Added Aggregate command policy application support (Web Editor)
+* [MongoDB] Fixed emoji corruption issue when querying data
+* [Privilege Type] Changed Default Privilege Type name (removed -role)
+* [PostgreSQL] Fixed error where SASL authentication fails in proxy environment
+* [PostgreSQL] Fixed error where PreparedStatement does not work normally in proxy
+* [PostgreSQL] Fixed Unknown Content-Type received error after query execution
+* [Proxy] Applied external integration http client proxy settings in closed network environment
+* [Redis] Improved error messages when executing unsupported commands
+* [Web Editor] Forced activation of SQL Execution Purpose option for ledger DBs
+* [Windows][SAML] Fixed OneLogin, Okta login error when browser time is faster than middleware time
+* [Workflow] Added Default date display to Expiration Date item in Access Request requests
+* [Workflow] Added Export functionality to All requests menu
+* [Workflow] Added ledger DB display to connection list in SQL Request / Export Request types
+* [Connection] Fixed issue where Access Start Time / Access End Time policy cannot be saved when initialized
+

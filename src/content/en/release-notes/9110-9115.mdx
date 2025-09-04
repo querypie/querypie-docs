@@ -1,0 +1,107 @@
+---
+title: '9.11.0 ~ 9.11.5'
+---
+
+## QueryPie 9.11.5 Release
+
+May 09, 2023
+
+**Bug Fix & Enhancement**
+
+* [PostgreSQL] Fixed high frequency agent connection errors according to memory usage
+* [Performance] Fixed gRPC C Binding library sigsegv occurrence and process termination issue
+
+
+---
+
+## QueryPie 9.11.4 Release
+
+April 18, 2023
+
+**Bug Fix & Enhancement**
+
+* [Performance] Added index response to prevent long queries
+* [Performance] Fixed QueryPie web speed degradation issue
+
+
+---
+
+## QueryPie 9.11.3 Release
+
+April 12, 2023
+
+**Bug Fix & Enhancement**
+
+* [MySQL] Fixed mysqldump dump error
+
+
+---
+
+## QueryPie 9.11.2 Release
+
+April 03, 2023
+
+**Bug Fix & Enhancement**
+
+* [Authentication] Reactivated LDAP user auto-add functionality when synchronization option is disabled
+* [SQLServer] Fixed [ENGINE] Internal connection fatal error occurring during connection
+
+
+---
+
+## QueryPie 9.11.1 Release
+
+March 22, 2023
+
+**Bug Fix & Enhancement**
+
+* [Agent] Fixed Agent installation issues in Linux environment
+* [Application Log] Fixed issue where some data is not exposed
+* [Authentication] Fixed issue where okta and onelogin saml meta data is not displayed
+* [Authentication] Fixed AWS SAML login access issue
+* [Cloud Provider] Excluded GCP, Azure from synchronization list
+* [Connection] Fixed forced deactivation of multiple database account
+* [Query Sharing] Fixed error occurring when saving files to external storage
+---
+
+## QueryPie 9.11.0 Release
+
+February 24, 2023
+
+**New Features**
+
+* [Agent] Added MongoDB Multi Host support
+* [System Properties] Added QueryPie installation information confirmation page
+* Added QueryPie App Metric
+
+****
+
+**Bug Fix & Enhancement**
+
+* [Agent] Applied Bitwise NOT stream (avoid Zscaler conflicts)
+* [Agent] Fixed issue where program files remain when deleting Agent during execution in Windows environment
+* [External API] Added connection unlock related API
+* [External API] Added Redis to connection registration
+* [External API] Fixed null pointer error occurring when calling /api/external/connection-auth-logs
+* [Hbase] Discontinued Hbase support in Vendor type
+* [Job] Applied job duplicate execution prevention when server restarts
+* [Masking][MySql] Fixed NotSupportedException occurring when executing update queries with WITH statements
+* [Masking] Improved issue where users are displayed as uuid in Allowed Users for masking exception processing
+* [MongoDB] Fixed Connection Timeout issue
+* [MongoDB] Improved issue where SQL Type is recorded as Unknown in Query Audit when Export Request is made in Workflow
+* [MongoDB] Improved issue where SQL Type is recorded as Unknown when Alert type is Data Export
+* [Mysql] Improved issue where 2 or more tables are separated by .(dot) in Query Audit Detail page
+* [Preferences] Improved issue where shortcut key settings are reset in new tabs
+* [QSI] Fixed "Query results do not match pre executed results" error occurring when executing select queries
+* [Redis] Improved duplicate notation error in Query Audit > First 10 Rows for queries executed after Agent connection
+* [Sensitive Data] Improved issue where Sensitive Level items are displayed as numbers when sending notifications
+* [SQL Server] Fixed issue where results cannot be queried when select queries without pk are executed
+* [SQL Server] Improved to display related content on screen when errors occur during query result viewing
+* [SQL Editor] Improved issue where Run SQL operates when no values are entered in web editor
+* [SQL Editor] Fixed issue where where clause is processed as like and requested to DB when attempting to modify in data grid
+* [SQL Editor] Applied styles to escape characters in query editor
+* [Syslog] Added KST / UTC Timestamp internal setting functionality
+* [Workflow] Improved issue where only first page is exported in Current Page/All Export in All Request
+* [Workflow] Improved issue where status does not change to Failure when Disconnect occurs during SQL Request execution
+
+

@@ -1,0 +1,49 @@
+---
+title: '11.0.0'
+---
+
+## QueryPie 11.0.0 Release
+
+July 02, 2025
+
+
+**New Feature**
+
+* [General] Added administrator page IP ACL support
+* [General] Changed version notation
+* [General] Enhanced IP access restrictions during login and added user IP request Workflow
+* [General] Added proxy submission functionality (DB Access / Unmasking / Restricted Data Access / DB Policy Exception)
+* [General] Added Attribute-based Workflow menu non-exposure
+* [DAC] Added tag-based filtering for request targets in DB Access Request
+* [DAC] Added filtering settings for DB Access Request based on specific users
+* [DAC] Added user-defined comment functionality for user identification in Redshift connections
+* [DAC] Added syslog transmission support for Data Access / Data Masking / Sensitive Data events
+* [DAC] Added Data Access restriction release request type to Workflow
+* [DAC] Added DB Policy Exception Request to Workflow
+* [DAC] Added policy exception management through Workflow and manual exception processing functionality for administrators
+* [DAC] Implemented Sensitive Data access monitoring policy
+* [DAC] Added DML Query Approval to Policy Type
+* [DAC] Added Policy Audit Log recording
+* [DAC] Added Audit Log Export items (Workflow Unmasking / Restricted Data Access / DB Policy Exception Request)
+* [SAC] Added JIT temporary account creation/access/termination and recovery support
+* [SAC] Added login maintenance option when RDP connection terminates
+* [SAC] Added Agent notification functionality before user server session termination
+* [WAC] Added Audit Log Export items (Web App Access History / Web App Event Audit / Web App Role History / JIT Access Control Logs)
+
+**Improvement**
+
+* [General] Removed ADMIN text from user dashboard
+* [General] Added Email search support in User Group > Detail drawer
+* [General] Changed QueryPie's Display name to Okta display name when integrating with Okta
+* [General] Added local account MFA support when integrating with Okta, Onelogin, SAML IDP
+* [General] Added Target User to Workflow in Audit Log Export
+* [General] Improved to ensure at least one Owner account must exist regardless of Auth Provider
+* [General] Improved to automatically Retry when multi-agent network is disconnected and reconnected
+* [General] Added link to move to login page from IP block page
+* [DAC] Added automatic Default privilege setting
+* [DAC] Forced Query Audit to On for connections with policies set
+* [DAC] Improved Athena query result viewing through Proxy
+* [DAC] Specified by path in Data Scope
+* [DAC] Improved search method to allow partial match search when searching by tags
+* [SAC] Added display of items received by minute (Access, Privilege) in Web / Agent
+* [WAC] Added display of recorded items when clicking "..." of specific Web App after selecting JIT Role in User Page > Web App

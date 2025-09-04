@@ -1,0 +1,67 @@
+---
+title: '9.17.0 ~ 9.17.1'
+---
+
+## QueryPie 9.17.1 Release
+
+March 25, 2024
+
+
+**New Features**
+
+* [DAC] Added specific statement execution control functionality support
+
+**Bug Fix**
+
+* [DAC] Fixed migration issue due to reserved word conflicts when using AWS Aurora 3.06.0
+* [DAC] Fixed issue related to connections without DB authentication information settings during SQL Request execution
+
+
+---
+
+## QueryPie 9.17.0 Release
+
+March 11, 2024
+
+
+**New Features**
+
+* [Audit] New External API V2 and Document release
+* [Audit] Expanded support area to Activity Logs, DML Snapshot and SAC audit logs for audit log export
+* [DAC] Added Custom Identity Provider integration support for HR information file integration
+* [DAC] Added DocumentDB Proxy support
+* [DAC] Added new Tibero support
+* [DAC] Added Advanced Privilege Setting for DB account control by Privilege permission
+* [DAC] Added maximum value setting functionality for permission expiration period when applying for workflow
+* [DAC] Added connection-level reason input functionality control
+* [SAC] Added 3rd-party client connection support through Proxy
+* [SAC] Added Server Group grouping support based on Server Tag
+
+
+**Enhancement**
+
+* [DAC] Added MongoDB + SRV support
+* [SAC] Improved Policy objectification structure
+* [SAC] Enhanced Web Terminal / Command Audit logging
+* [Security] Improved 2FA initialization logic
+* [Security] Improved API Token page security enhancement
+
+
+**Bug Fix**
+
+* [Audit] Fixed issue where some Update logs in Activity Logs cannot check Affected Data targets
+* [Oracle] Fixed issue where DML Snapshot is not left when executing DML queries through MERGE INTO
+* [Security] Completed comprehensive measures for internal security vulnerabilities discovered through penetration testing
+* [Audit] Completed processing changes from isXXX boolean attribute key names in Workflow External API V2 due to Kotlin compatibility issues
+    * Workflow - DB Access Request Details
+        * accessControls[].connection.deleted
+        * accessControls[].privilege.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated
+    * Workflow - SQL Export Request Details
+        * connection.deleted
+        * approvalSteps[].assignees[].delegated
+
+

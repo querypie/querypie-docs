@@ -1,0 +1,107 @@
+---
+title: '10.3.0 ~ 10.3.4'
+---
+
+## QueryPie 10.3.4 Release
+
+June 16, 2025
+
+
+**Bug Fix**
+
+* [General] Fixed issue where specific users cannot be deleted during okta & LDAP synchronization
+
+
+## QueryPie 10.3.3 Release
+
+June 10, 2025
+
+
+**Bug Fix**
+
+* [General] Fixed issue where custom scheme (okta login) does not work in multi-agent
+
+
+## QueryPie 10.3.2 Release
+
+June 05, 2025
+
+
+**Bug Fix**
+
+* [General] Fixed error occurring when selecting open connection with dbeaver in multi-agent
+* [DAC] Improved issue where internal API is unnecessarily called repeatedly when copying clipboard
+* [SAC] Fixed long query performance issue caused by internal batch jobs
+
+
+## QueryPie 10.3.1 Release
+
+May 28, 2025
+
+
+**Enhancement**
+
+* [General] Improved performance of QueryPie internal batch jobs
+* [SAC] Added customization functionality to select key_type as rsa or ed25519 when using SSH CA engine in Vault
+
+
+**Bug Fix**
+
+* [DAC] Fixed issue where all errors in Postgre/Redshift Proxy are processed as "An I/O error occurred while sending to the backend." message
+
+
+## QueryPie 10.3.0 Release
+
+May 14, 2025
+
+
+**New Feature**
+
+* [General] Added user concurrent login restriction functionality
+* [General] Added functionality to add Custom Attributes
+* [General] Added functionality to integrate LDAP User Attributes with QueryPie
+* [General] Added approver designation functionality based on User Attributes in Workflow
+* [General] Added Vault AppRole authentication method
+* [General] Added Server Group Owner approval functionality in Privilege Request
+* [DAC] Added automatic tagging functionality during Cloud Provider synchronization
+* [DAC] Improved to support Reverse Tunnel (NOVA) when accessing DB
+* [DAC] Added new HBase support
+* [DAC] Added decryption workflow and CubeOne integration
+* [DAC] Added DRM integration when attempting Data Export in web editor
+* [DAC] Added functionality for administrators to stop running queries
+* [DAC] Added DRM integration when attempting Data Export in web editor
+* [DAC] Added Default Privilege selection for DAC in Multi-Agent
+* [SAC] Implemented personal account variable specification functionality in Server Group
+* [SAC] Added Member functionality to limit Server Groups displayed by user
+* [SAC] Added hourly permission granting functionality in Server Grant Permission
+* [SAC] Added support to access through VSCode tool when SSH connecting
+* [WAC] Added Web App Just-in-time Access Request functionality
+* [WAC] Added Owner and Member setting functionality by web app in Web App detail page
+
+
+**Enhancement**
+
+* [General] Improved method of displaying in Recent Connections when user dashboard permissions are revoked
+* [General] Improved Audit Log Export Preview UI
+* [General] Moved Configuration settings to Approval Rules -> General menu
+* [General] Added hourly request functionality in Workflow's Server Access Request
+* [General] Added user exposure control functionality by Request type in Workflow
+* [General] Added option to allow self-approval by approvers in Workflow
+* [DAC] Moved Security settings to General > Security -> Databases > Configurations menu
+* [SAC] Improved to maintain sessions even when Role changes and Direct Permission is granted
+* [SAC] Modified default request time for Server Privilege Request to 60 minutes
+* [SAC] Moved Security settings to General > Security -> Servers > Configurations menu
+* [KAC] Moved Security settings to General > Security -> Kubernetes > Configurations menu
+* [WAC] Improved to allow IP address input as Base URL when creating Web App
+
+
+**Bug Fix**
+
+* [General] Fixed issue where RDP Server Agent version display is incorrect
+* [SAC] Fixed to move to Servers tab when clicking "+" in terminal when Role is changed after opening Terminal
+* [WAC] Fixed issue where access is not possible when clicking link after approval in Slack
+* [WAC] Fixed error when revoking roles granted by deleted users
+* [WAC] Fixed error occurring when entering dummy values in base url
+* [WAC] Fixed bug where Web App names are not sorted when they become long in user dashboard
+* [WAC] Fixed issue where login guide is not displayed in extension Pop-up when QueryPie login is released
+* [Workflow] Fixed issue where Urgent mode setting area is displayed in Web App Just-In-Time Access Request when Urgent mode Off is set

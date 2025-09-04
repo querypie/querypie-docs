@@ -1,0 +1,121 @@
+---
+title: 'Approval Additional Features (Proxy Approval, Resubmission, etc.)'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This page introduces additional features that add convenience when using Workflow.
+
+## Processing Referenced Request Confirmations
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Reviews &gt; All Reviews &gt; Review Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png)
+<figcaption>
+Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
+</figcaption>
+</figure>
+
+1. Click on the request you want to complete the reference for in the Reviews &gt; All Reviews list to enter the detail page.
+    1. Reference documents can be viewed regardless of approval status (before/after approval).
+    2. `Confirm` is only possible for requests with Review Status of **Unread**.
+2. Click the `Confirm` button in the top right of the request detail page to display a popup window where you can enter comments.
+3. Enter your review opinion and click the `OK` button to complete the confirmation.
+4. When you return to the All Reviews list, you can see that the Review Status value has changed to **Confirmed**.
+
+## Using Proxy Approval
+
+Proxy approval is a feature that delegates the approver role to another user for a certain period. The usage method is as follows:
+
+### 1. Setting Up Proxy Approval
+
+<figure data-layout="center" data-align="center">
+![User &gt; Click Profile in Top Menu Bar &gt; Preferences](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png)
+<figcaption>
+User &gt; Click Profile in Top Menu Bar &gt; Preferences
+</figcaption>
+</figure>
+
+* **Delegate Approval to**: Enter the proxy approver
+* **Start Date**: Proxy approval start date
+* **End Date**: Proxy approval end date
+* **Delegation Reason**: Enter the reason for setting up proxy approval
+* **Save**: Click the `Save` button to save the proxy approval settings. If the start date is today, it is applied immediately upon `Save`.
+
+### 2. Checking Proxy Approval Setting Status
+
+During the proxy approval setting period, the following is displayed in the top menu bar when the original approver and proxy approver access:
+<figure data-layout="center" data-align="center">
+![Display content based on original approver](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120741.png)
+<figcaption>
+Display content based on original approver
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Display content based on proxy approver](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120854.png)
+<figcaption>
+Display content based on proxy approver
+</figcaption>
+</figure>
+<Callout type="info">
+During the proxy approval setting period, no separate notification appears to the requester. The requester can select Approval Rule and Approver as usual.
+</Callout>
+
+### 3. Processing Delegated Proxy Approval Requests
+
+* During the proxy approval setting period, the requests that the proxy approver can check are as follows:
+    * **Received Requests &gt; To Do**: List of unprocessed requests received by the original approver (including requests received before the setting period)
+    * **Received Requests &gt; Done**: You can view requests processed by the proxy approver within the proxy approval setting period.
+* You can approve or reject on the detail page, and when entering comments, a message indicating that you are in proxy approval is displayed.
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240802-124638.png](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png)
+</figure>
+
+### 4. Checking Requests Processed by Proxy Approval
+
+* You can check whether the request was processed by the original approver or proxy approver in the approval status within the request detail page as follows:
+**When processed by the original approver**
+<figure data-layout="center" data-align="center">
+![No proxy approval related text](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-153533.png)
+<figcaption>
+No proxy approval related text
+</figcaption>
+</figure>
+**When processed by the proxy approver**
+<figure data-layout="center" data-align="center">
+![Proxy approver is displayed with Done by the delegate](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-152141.png)
+<figcaption>
+Proxy approver is displayed with Done by the delegate
+</figcaption>
+</figure>
+<Callout type="info">
+If you are using request notifications through Slack DM, Workflow step-by-step notifications are also sent to the proxy approver. For detailed information about Slack DM notifications, please refer to the [Using Slack DM Personal Notifications](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types) document.
+</Callout>
+
+### 5. How to View Drafts After Proxy Approval Setting Ends
+
+* Even after the proxy approval setting period ends, you can check requests processed by the proxy approver within the proxy approval setting period in the Received Requests &gt; Done list. Other requests can no longer be viewed or processed.
+
+## Resubmitting Existing Requests
+
+You can resubmit approval requests with the same content repeatedly or for rejected approval items as follows:
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Sent Requests &gt; Done &gt; List Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/image-20230824-110815.png)
+<figcaption>
+Workflow &gt; Sent Requests &gt; Done &gt; List Details
+</figcaption>
+</figure>
+
+1. Click on the request you want to resubmit in the Sent Requests &gt; Done list to enter the detail page.
+
+<Callout type="info">
+At this time, you can see that already deleted data (approval rules, approvers, servers, accounts, etc.) is displayed as *Deleted*, and deleted values are excluded during resubmission while modified values are loaded based on current criteria.
+</Callout>
+
+1. Click the `Resubmit` button in the top right to enter the resubmission page.
+2. Modify any values you want to change on the resubmission page.
+3. Save through the `Save` button.
+4. You can check your request history and approval status in Workflow &gt; Sent Request &gt; In Progress menu.

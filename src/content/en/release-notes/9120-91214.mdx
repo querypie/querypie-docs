@@ -1,0 +1,255 @@
+---
+title: '9.12.0 ~ 9.12.14'
+---
+
+## QueryPie 9.12.14 Release
+
+January 30, 2024
+
+
+**Bug Fix & Enhancement**
+
+* [MongoDB] Improved memory performance issues related to proxy connection
+---
+
+## QueryPie 9.12.13 Release
+
+January 08, 2024
+
+
+**Bug Fix & Enhancement**
+
+* [Proxy] Fixed error when accessing proxy in Agentless mode for MySQL 8.0.26 and above
+---
+
+## QueryPie 9.12.12 Release
+
+December 08, 2023
+
+
+**Bug Fix & Enhancement**
+
+* [Oracle] Added support for unsupported CharacterSet (KO16MSWIN949, KO16KSC5601)
+---
+
+## QueryPie 9.12.11 Release
+
+October 25, 2023
+
+
+**Bug Fix & Enhancement**
+
+* [Connection] Improved Health Check functionality
+---
+
+## QueryPie 9.12.10 Release
+
+September 08, 2023
+
+
+**New Feature**
+
+* [Workflow] Added background execution support when executing SQL Request queries (Resin Entertainment/Kakao Pay)
+* [QSI] Refreshed QSI schema cache for group when DDL occurs in instances within cluster group
+
+
+**Bug Fix & Enhancement**
+
+* [Web Editor] Adjusted connection timeout from 30 seconds to 60 seconds
+* [Syslog] Added Proxy-related log filtering items to Syslog
+* [Agent] Fixed agent connection issues in Amazon Workspace (Windows Server 2016)
+* [Web Editor] Fixed issues related to Cluster and Instance information display in connection list
+* [Proxy] Applied fixes related to intermittent Proxy connection disconnection issues
+* [MySQL] Fixed error when using Having without GroupBy
+* [Agent] Added User-Agent item to headers during agent communication
+* [Web Editor] Fixed connection failure due to connection timeout when accessing DocumentDB 3.6
+* [Connection] Fixed usage increase issue due to DB session leaks
+
+
+---
+
+## QueryPie 9.12.9 Release
+
+July 26, 2023
+
+**New Feature**
+
+* [Alert] Added Link to New Request > Template
+
+**Bug Fix & Enhancement**
+
+* [Alert] Fixed issue where Last Event Time is displayed even when Alert is only created
+* [Proxy] Fixed issue where 'DB Access History' is not left when connection fails
+* [Proxy] Improved to accurately identify Client IP in all Agent, Agentless environments
+* [Proxy] Fixed issue where progress is not made when canceling after executing DDL in LOCAL IDE (DBeaver)
+* [Proxy] Fixed ArgumentOutOfRangeException, IndexOutOfRangeException issues during First 10 rows recording
+* [SSL] Fixed SSL mode connection failure due to OpenSSL version differences
+* [Session] Improved issue where landing on first page instead of target URL when logging in with Okta from non-login state
+* [LDAP] Improved to reference Group Base DN value during Group synchronization
+* [Workflow] Improved to allow detailed page viewing only for users with valid step-by-step permissions
+* [Web Editor] Fixed error occurring when clicking JSON data in Object Info > Data
+* [Web Editor] Fixed unexpected Object Info Panel data exposure issue when selecting database in Object Browser
+* [Web Editor] Fixed LOB 'uuid' was not found error when viewing Data Viewer after query execution
+* [Web Editor] Fixed error occurring when viewing Data Viewer with restored Result window after reconnecting to same connection
+* [User Access History] Fixed issue where Hostname value is left as 127.0.0.1 when logging in with SAML
+---
+
+## QueryPie 9.12.8 Release
+
+July 04, 2023
+
+**Bug Fix & Enhancement**
+
+* [Agent] Improved login failure when running immediately after update and installation in [Windows10/11]
+* Fixed error occurring when using Grant with Role in MySQL
+* [Proxy] Improved issue where schema must be entered regardless of USE statement when creating mysql in 3rd-party tool without entering Database Name
+---
+
+## QueryPie 9.12.7 Release
+
+June 15, 2023
+
+**Bug Fix & Enhancement**
+
+* [Agent] Fixed IP in Query Audit to record Client IP instead of being fixed as container IP in Agent environment
+---
+
+## QueryPie 9.12.6 Release
+
+June 12, 2023
+
+**Bug Fix & Enhancement**
+
+* [MariaDB] Improved to apply policies when SET statements are included
+* [SQL Server] Added implementation for unimplemented Proxy types
+* [SQL Server] Fixed errors in Proxy environment when applying Data Access, Data Masking
+* [Performance] Fixed Connection Pool exhaustion when recording DML Snapshot simultaneously
+* [Performance] Fixed issue where SQL Audit logs remain as Running Query when API response is delayed
+* [SAML] Fixed initial login error
+* [MySQL] Fixed mysqldump error
+* [Proxy] Fixed error occurring when attempting to open 2 or more connections simultaneously
+---
+
+## QueryPie 9.12.5 Release
+
+May 19, 2023
+
+**Bug Fix & Enhancement**
+
+* [Alert] Improved SQL maximum length from 100 to 1000 characters
+* [Agent] Modified to not automatically activate open option during login
+* [Agent] Modified to disconnect when agent session terminates
+* [SQL Server] Fixed issue where queries do not execute when DML Snapshot is enabled
+* [Agent] Improved to connect with proxy using MariaDB JDBC driver 1.x 2.x versions
+---
+
+## QueryPie 9.12.4 Release
+
+May 17, 2023
+
+**Bug Fix & Enhancement**
+
+* [Agent/Linux] Fixed to display Tray icon
+* [Alert] Fixed Executed Result : `{{execResult}}` error
+* [Authentication] Fixed Cluster Group NotFound error occurring during okta sync
+* [Editor] Fixed to properly display datetime column values
+* [MariaDB] Fixed issue where SQL Type is left as Set in Audit when executing Set statements through Proxy
+* [MariaDB] Improved to additionally respond to SET statement analysis
+* [Oracle] Changed script query query
+* [Oracle] Changed schema list query
+* [Oracle] Disabled auto-completion functionality in SQL Editor
+* [Privilege] Fixed user permission check errors due to cache inconsistency
+* [Proxy] Fixed issue where connections are disconnected when executing query queries with invalid data in Datetime format
+* [Query Audit] Fixed DB load occurring when downloading CSV files from logs
+* [SQL Job] Modified to enable SQL Jobs tab
+* [Workflow] Fixed issue where canceled approvals are not exposed in sent request's in progress
+---
+
+## QueryPie 9.12.3 Release
+
+May 10, 2023
+
+**Bug Fix**
+
+* [Agent] Fixed issue where API sends duplicate node lists to agent when user accesses agent
+* [Performance] Fixed gRPC C Binding library sigsegv occurrence and process termination
+---
+
+## QueryPie 9.12.2 Release
+
+May 02, 2023
+
+**Bug Fix**
+
+* [Proxy] Fixed Proxy error occurring when PPv2 option is set
+* [Export] Fixed disk full issue where generated temp files are not deleted during Export
+* [License] Changed license issuance standard timezone from UTC → KST
+
+
+---
+
+## QueryPie 9.12.1 Release
+
+April 25, 2023
+
+**Bug Fix**
+
+* [Performance] Fixed defect where snapshots always occur even when DML snapshot is not enabled
+* [Performance] Fixed long query occurrence due to missing index processing
+* [PostgreSQL] Fixed high frequency agent connection errors according to memory usage
+
+
+---
+
+## QueryPie 9.12.0 Release
+
+April 13, 2023
+
+**New Feature**
+
+* [Menu] Reorganized QueryPie's entire menu and improved URL structure
+* [License] Improved license UI
+* [Application log] Hidden menu processing
+* [Impala] Added Web Proxy support for UIDPWD method
+* [Workflow] Added ledger status to columns when extracting query audit
+* [LDAP] Added account deactivation due to organizational changes and reference field options when deactivated
+
+****
+
+**Bug Fix & Enhancement**
+
+* [Agent] 9.12.0 improvements
+* [Agent] Fixed Agent installation issues in Linux environment
+* [Alert] Fixed Workflow Slack Channel functionality error
+* [Authentication] Fixed issue where okta and onelogin saml meta data is not properly displayed
+* [Authentication] Reactivated LDAP user auto-add functionality when synchronization option is disabled
+* [Authentication] Fixed SSL Authentication Error occurrence
+* [AzureSQL] Fixed error occurring when clicking Trigger, info in SQL Editor > Object info
+* [Channel] Excluded KakaoWork from Channel Type
+* [Cloud Provider] Provided only AWS in Create Provider > Cloud Provider dropdown items
+* [Connection] Fixed forced deactivation bug of Multiple Database Account
+* [Connection] Changed tooltip box message for Multiple Database Account
+* [Connection] Fixed issue where engine dies when calling rpc GrpcGitService.SaveFile
+* [DML Snapshot] Attached beta tags next to DML Snapshot option for 11 vendors
+* [DynamoDB] Improved to display return values in original exponential form
+* [Export] Fixed export error
+* [External API] Fixed Update Cluster Group (PATCH) External API error
+* [Impala] Fixed error occurring when querying tables after registering columns in Sensitive Data
+* [LDAP] Fixed error occurring when users not included in group exist during group synchronization
+* [Oracle] Fixed ORA-00900: invalid SQL statement error
+* [Oracle] Fixed error occurring when querying function > script in web SQL 'ORA-19011 Character string buffer too small'
+* [Performance] Improved very slow connection through Agent
+* [Performance] Added warning notifications by checking full scan before query execution
+* [Privilege] Improved issue where first permission is not blocked when copying Json Data even without Copy Clipboard permission
+* [Privilege Type] Improved issue where Tag fonts appear differently for each user
+* [Proxy/MariaDB] Improved error occurring when using libmariadb driver
+* [Query Audit] Fixed issue where Execution Reason is not left when executing after enabling SQL Execution Purpose option
+* [Query Audit] Applied masking pattern to password setting logs (MySQL only)
+* [Redis] Fixed issue where Wrongtype DB error is displayed as Engine error
+* [Redis] Processed Redis driver Errors as Exceptions
+* [Setting] Fixed issue where accounts are locked when using only Proxy by checking only Last Login for Account Expiration Period option
+* [SQLServer] Fixed [ENGINE] Internal connection fatal error occurring during connection
+* [Syslog] Fixed IP recording error
+* [Workflow] Fixed expiration date specification error in Access Request
+* [Workflow] Fixed issue where canceled requests show Status as None in Reviews
+* [Workflow] Fixed issue where connection information cannot be queried with for user information of multi-account

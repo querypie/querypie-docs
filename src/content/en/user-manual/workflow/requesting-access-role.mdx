@@ -1,0 +1,99 @@
+---
+title: 'Requesting Access Role Request'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+Access Role Request allows you to easily request roles for servers or Kubernetes clusters that need access. Roles are granted immediately upon approval, and you can access servers or Kubernetes clusters allowed by the role.
+
+## Access Role Request
+
+### 1. Selecting Approval Rules
+
+* Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
+* If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
+* **Approval Expiration Date**: Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Role Expiration Date. If exceeded, the request cannot be submitted.
+    * However, when submitting in Urgent Mode, the above condition is ignored.
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-12.54.02-AM.png)
+</figure>
+
+### 2. Assigning Approvers
+
+* Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
+* In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
+* Available approval conditions are as follows:
+    * **A single Assignee can complete the approval request**: The approval request is approved with just one approval from multiple people.
+    * **All Assignees must approve this request**: All approvers must approve for the approval request to be approved.
+
+<figure data-layout="center" data-align="center">
+![image-20240807-130021.png](/user-manual/workflow/requesting-access-role/image-20240807-130021.png)
+</figure>
+
+### 3. Assigning Reviewers
+
+* Click the `+` button in the approval line to display a popup window where you can assign reviewers.
+    * If the administrator has not allowed reviewer assignment, the Reviewer box will not be displayed.
+* In this popup window, add approval conditions and approvers.
+* Click the `Save` button to close the modal and complete reviewer assignment.
+
+<figure data-layout="center" data-align="center">
+![image-20240807-130031.png](/user-manual/workflow/requesting-access-role/image-20240807-130031.png)
+</figure>
+
+### 4. Sending Request with Post-Approval
+
+* If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
+* After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.
+
+<figure data-layout="center" data-align="center">
+![image-20240807-130043.png](/user-manual/workflow/requesting-access-role/image-20240807-130043.png)
+</figure>
+
+<Callout type="important">
+**Q. I can't see the Urgent Mode switch.**
+A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed.
+</Callout>
+
+### 5. Selecting Target Role
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 2](/user-manual/workflow/requesting-access-role/screenshot-20240802-111018.png)
+<figcaption>
+QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 2
+</figcaption>
+</figure>
+
+1. **Service**: Select the target service for the request. You can select Server Access Control or Kubernetes Access Control.
+2. **Role**: Select the role to request from the role list displayed according to the selected service. (Single selection)
+3. According to the selected service and role, the following information is displayed in the list:
+    1. **Server Access Control**: Accessible server group names, server names, account names
+    2. **Kubernetes Access Control**: Accessible Kubernetes cluster names, platforms, API URLs
+
+<Callout type="important">
+Access Role Request can only request one role at a time. Since separate approval requests are required for each role, permission management can be strengthened.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-1.18.14-AM.png](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-1.18.14-AM.png)
+</figure>
+
+1. **Role Expiration Date**: Select the expiration date when the permission will be revoked.
+    * The expiration date is a required value, and if not set separately, it defaults to one year later.
+    * It is recommended to request only the period necessary for appropriate connection access permission management.
+
+### 6. Entering Request Information
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 3](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-1.09.31-AM.png)
+<figcaption>
+QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 3
+</figcaption>
+</figure>
+
+* **Title**: Enter the request title.
+* **Reason for Request**: Enter the reason for requesting access permission.
+* **Submit**: If you have completed all the requests, click the `Submit` button to complete the request submission.

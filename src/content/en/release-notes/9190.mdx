@@ -1,0 +1,60 @@
+---
+title: '9.19.0'
+---
+
+## QueryPie 9.19.0 Release
+
+June 03, 2024
+
+
+**New Features**
+
+* [SCIM] Added SCIM 2.0-based user and group provisioning support
+* [Users] Added user Attribute profile management functionality support
+* [Integrations] Added new Integrations menu for SIEM, SOAR and other Security Tools integration
+* [DAC] Added new SingleStore vendor support
+* [DAC] Added new SAP HanaDB vendor support
+
+
+**Enhancement**
+
+* [Workflow] Added SQL Export Request multi-query submission functionality
+* [Workflow] Added functionality to designate Server Group Owner as approver when setting Approval Rules
+* [Ledger] Added administrator On/Off functionality for reason input setting options
+* [Ledger] Added reason input text reuse option
+* [Ledger] Added new Oracle vendor support
+* [SAC] Added Agent Linux support
+* [SAC] Added Policy editor Visual Mode support
+* [SAC] Added Server Group Owner designation functionality within server groups
+* [ABAC] Added user Attribute-based policy restriction condition definition support
+
+
+**Bug Fix**
+
+* [DAC] [Postgres] Fixed issue where AWS Lambda function call statement execution fails
+* [DAC] [Postgres] Fixed error occurring when executing decode function
+* [DAC] [MySQL] Fixed encoding error occurring when inserting BLOB through Proxy
+* [DAC] [MySQL] Fixed error occurring when inserting BLOB with DML Snapshot enabled
+
+
+**External API**
+
+* Added new V2 API and improved some API query parameters
+    * List Servers (can filter by server name when querying)
+    * Server Group Owners API (query/assign/remove server group owners)
+    * Server Groups API
+        * List Group Servers (can filter by server group name when querying)
+        * Can overwrite group filter tag conditions
+        * Can add and remove servers to/from server groups
+    * User Management API (added user creation/query/deletion functionality)
+    * User Group Management API (can create/query/delete user groups)
+    * Group Member Operations API (query/add/remove user group membership)
+    * Workflow - System Access Request Details (can query server access request workflow details)
+* Some API spec changes - removed deleted field
+    * List Users (`/api/external/v2/users`)
+    * Get User (`/api/external/v2/users/{userUuid}`)
+    * List DB Cloud Providers (`/api/external/v2/dac/cloud-providers`)
+    * List DB Connections (`/api/external/v2/dac/connections`)
+    * Get DB Connection (`/api/external/v2/dac/connections/{dbConnectionUuid}`)
+    * List Privileges (`/api/external/v2/privileges`)
+    * Get Privilege (`/api/external/v2/privileges/{uuid}`)

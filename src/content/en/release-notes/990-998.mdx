@@ -1,0 +1,186 @@
+---
+title: '9.9.0 ~ 9.9.8'
+---
+
+import { Callout } from 'nextra/components'
+
+
+<Callout type="info">
+For External API changes, please refer to the links below.
+* [External API Changes (9.8.10 Version > 9.9.4 Version)](990-998/external-api-changes-9810-version-994-version)
+* [External API Changes (9.9.4 Version > 9.9.5 Version)](990-998/external-api-changes-994-version-995-version) 
+</Callout>
+---
+
+## QueryPie 9.9.8 Release
+
+January 18, 2023
+
+* HBase vendor support discontinued
+---
+
+## QueryPie 9.9.7 Release
+
+January 09, 2023
+
+**Enhancement**
+
+* [Agent] Resolved zscaler VPN conflict issue when running agent
+---
+
+## QueryPie 9.9.6 Release
+
+January 04, 2023
+
+**Enhancement**
+
+* Removed CVE (Common Vulnerabilities and Exposure) security vulnerabilities
+---
+
+## QueryPie 9.9.5 Release
+
+December 06, 2022
+
+**Enhancement**
+
+* [Access Control] Added column to check Active status
+* [Agent/Proxy] Improved Host structure in MongoDB Connection information (Connection String)
+* [Cloud Provider] Changed AWS Credential Instance Profile > Default Credentials naming
+* [Connections] Improved left List panel size UI
+* [Policy] Added Pattern preview when creating Masking rules
+* [Policies] Improved Column Name length display when creating Rules
+* [Settings] Improved overall Menu list UI status
+* [Support] Changed Contact Support page link within product
+* [Syslog] Added attributes and filtering support
+* [User Access History] Added log Details page in menu
+* [Web Editor] Added Reload Object UI
+
+**Bug Fix**
+
+* QCP-173 [Access Control] Resolved issue where renewed permissions become deactivated again after one day
+* QCP-50 [Access Control] Resolved duplicate key error occurring when re-granting permissions
+* QCP-138 [Agent] Resolved agent execution error on Windows 1709 and below versions
+* QCP-285 [Agent] Resolved issue where process cannot be found when connecting with ODBC Client
+* QCP-238 [Authentication] Resolved issue where user addition fails when integrating with SwivelSecure
+* QCP-240 [Authentication] Resolved saml login failure issue due to XFF parsing error
+* QCP-177 [Cloud Provider] Resolved issue where Cross account role synchronization does not work in EKS IRSA environment
+* QCP-244 [Cloud Provider] Resolved issue where Cross account role synchronization does not work in EC2 environment
+* QCP-126 [MariaDB] Resolved issue where timestamp datatype shows as NULL when querying
+* QCP-62 [Policies] Resolved issue related to writing data masking rules through regular expressions
+* QCP-286 [PostgreSQL] Resolved issue where queries are not performed based on selected catalog in tabs
+* QCP-199 [Dynamodb] Resolved issue related to maximum number limit for table queries
+---
+
+## QueryPie 9.9.4 Release
+
+November 14, 2022
+
+**Bug Fix**
+
+* [User] Fixed error occurring when user group's connection permissions are in Deactivated status
+---
+
+## QueryPie 9.9.3 Release
+
+November 04, 2022
+
+**New Features**
+
+* [DB] Added Redis connection support
+* [Proxy] Added MongoDB Proxy connection support
+
+**Enhancement**
+
+* [Privilege] Added DB type to Privilege menu for Redis access control
+* [DB] Added Impala Kerberos individual keytab support (cluster structure support)
+* [Agent] Added file download version (Apple Silicon)
+* [Cloud Provider] Added multiple Access Key registration support
+* [Activity Log] Added LDAP > Inactive new user by default option
+* [Audit] Changed default search period from 1 month → 1 day in Query Audit, Running Queries filter
+* [Alert] Changed option UI and added Message Template Variable in DB Connection Attempt
+
+**Bug Fix**
+
+* [Privilege] Improved DISTINCT query execution error for users with full permissions
+* [SQL Editor] Added 'Reload Auto Complete' feature to context menu in editor for auto-completion refresh
+* [Alert] Improved HTTP Channel response result NULL storage related error
+* [Connection] Improved data processing logic for User not found error related to deleted users
+* [Policy] Resolved Server sent unknown charsetnr error on tables with masking applied
+* [External API] Resolved issue where alert external api does not work properly immediately after update
+* [MySQL] Resolved issue where mysqlbinlog command does not extract empty logs and continues waiting for response
+* [PostgreSQL] Fixed INSERT related error when accessing through Proxy
+* [Migration] Resolved server memory related issue due to execution time/creation time difference in Query Audit logs
+* [Performance] Resolved issue where hub server CPU continuously increases
+* [ScyllaDB] Added unsupported data types for Not Supported serialization type issue
+* [Filter] Resolved Status filter application error in Users menu
+* [Bigquery] Added region selection feature for bigquery connection (Kakao Mobility)
+---
+
+## QueryPie 9.9.2 Release 
+
+October 17, 2022
+
+**New Features**
+
+* [Workflow(Approval)] Added Data Export request and approval functionality within type
+
+**Enhancements**
+
+* [Authentication] Added user Inactive option during LDAP synchronization (users not synchronized cannot login)
+* [Manage Connections] Added Label (Normal / Ledger) column item
+* [Alerts] Added Failure Trigger (Action Count, Specified Time Interval) in DB Connection Attempt item
+* [Alerts] Added Unusual Login Attempt (IP Access) type
+* [Cloud Provider] Added Database Type filter during synchronization
+* [Users] Improved Description item Locked, Locked Manually status distinction and tooltip display
+* [Privilege Type] Changed to prevent duplicate Privilege Name usage
+* [Agent] Fixed app termination issue when update fails and improved guide message
+* [MongoDB] Improved Password not entered error message when connecting
+* [MySQL] Improved error message when connection fails
+* [Audit & Log] Improved default search value to Name in menu
+
+**Bug Fix**
+
+* [Groups] Fixed error when deleting group after deleting user who last updated the group
+* [External API] Fixed Data Access Policy Rule deletion related error
+* [Proxy] Fixed QPA-03EE error when attempting to connect mysql workbench through proxy
+* [SQL Editor] Fixed error where new table addition is not reflected in SQL Editor auto-completion
+* [SQL Editor] Fixed Specified method is not supported error when selecting table after Oracle connection
+* [SQL Request] Fixed status log update error after SQL Request execution
+* [Agent] Fixed Impala connection error
+---
+
+## QueryPie 9.9.1 Release 
+
+September 14, 2022
+
+**New Features**
+
+* Added new Running Queries menu to check queries in execution
+
+**Bug Fix & Enhancement**
+
+* Adjusted DML Snapshot functionality detailed specifications
+* Added query count display to Sensitive Data logs
+* Adjusted some Setting menu names (Settings, SSL Configuration, Query Audit, DB Access History)
+* Added Connected from column record to DB Access History
+* Changed Drawer header / Workflow title and added character limit
+* Resolved issue where Deactivated is not displayed in Report / Accessible Users screen
+* Included Connection Label (Ledger) item in syslog
+* Disabled table data modification functionality when index cannot be found in Index Range Scan related cases
+* Processed to not synchronize Security Group in cluster synchronization functionality
+* Adjusted Network Zone menu columns (removed Cloud Provider item)
+* Processed to maintain TLS settings when synchronizing DocumentDB AWS
+* Modified to allow listener type changes in synchronized Oracle connections
+* Added guide tooltip for user individual SQL History deletion processing criteria date application
+* Improved processing when data size exceeds maximum size of a single cell during Export
+* Fixed issue where Data Export Type Alert is not sent
+* Fixed Account Expiration Period user deactivation behavior issue
+* Fixed error where admin role value changes to 'None' when user name is changed
+* Removed email required value processing when modifying LDAP synchronized users
+* Improved error message during LDAP login
+* Improved SAML Login Error message
+* Changed Authentication > Okta Install Guide link
+* Added System Properties page
+* Applied Export a file with Encryption option when downloading Reports > results
+* Adjusted Groups menu search filter items
+

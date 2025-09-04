@@ -1,0 +1,1700 @@
+---
+title: 'External API Changes (9.8.10 Version > 9.9.4 Version)'
+---
+
+---
+
+# API Docs JSON file
+
+:paperclip: [9810_external.json](9810_external.json)
+:paperclip: [994_external.json](994_external.json)
+
+
+---
+
+# 1. Authentication
+
+* API Key HTTP Header name has been changed
+
+|                             |  **Before Change**            |  **After Change**     |
+| --------------------------- | -------------------- | ------------- |
+|  **Header Parameter name**  | X-QueryPie-Api-Token | Authorization |
+
+
+---
+
+# 2. Alert API
+
+### Changes/Improvements
+
+<table data-table-width="760" data-layout="default" local-id="dde603df-3268-4faf-a41d-602a0c651910">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**API(9.8.10)**
+</th>
+<th>
+**Changes**
+</th>
+</tr>
+<tr>
+<th>
+**(GET) List**
+</th>
+<td>
+* Returns **all information** for each Alert <br/>→ Changed to return **simple information** for each Alert.
+* **Detail API added** that returns detailed information for each Alert Type.
+</td>
+</tr>
+<tr>
+<th>
+**(POST) Create**
+</th>
+<td>
+* **Single API** can create all types of Alerts <br/>→ **Creation APIs separated** by each Alert Type.
+* Existing Create API has been removed.
+</td>
+</tr>
+<tr>
+<th>
+**(PUT) Update**
+</th>
+<td>
+* **Single API** can update all types of Alerts <br/>→ **Update APIs separated** by each Alert Type.
+* Existing Update API has been removed.
+</td>
+</tr>
+<tr>
+<th>
+**(Delete) Delete**
+</th>
+<td>
+* No changes.
+</td>
+</tr>
+</tbody>
+</table>
+
+### [New] (POST) Create, (PUT) Update, (GET) Detail API
+
+* For detailed request content, refer to Docs
+
+<table data-table-width="760" data-layout="default" local-id="07d79f85-952c-4830-a77e-c026ab9a37ca">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Alert Type (9.8.10 Standard)**
+</th>
+<th>
+**Docs Location (9.9.4)**
+</th>
+</tr>
+<tr>
+<td>
+`SQL_EXECUTION`
+</td>
+<td>
+[SQL Execution]<br/>`/api/external/alerts/sql-execution`
+</td>
+</tr>
+<tr>
+<td>
+`SQL_EXECUTION_PREVENTED`
+</td>
+<td>
+[Prevented SQL Execution]<br/>`/api/external/alerts/prevented-sql-execution`
+</td>
+</tr>
+<tr>
+<td>
+`DATABASE_AUTHENTICATION_FAILED`
+</td>
+<td>
+[DB Connection Attempt]<br/>`/api/external/alerts/db-connection-attempt`
+</td>
+</tr>
+<tr>
+<td>
+`SENSITIVE_DATA_BY_POLICY`
+</td>
+<td>
+[Sensitive Data Access]<br/>`api/external/alerts/sensitive-data-access`
+* policy
+</td>
+</tr>
+<tr>
+<td>
+`SENSITIVE_DATA_BY_LEVEL`
+</td>
+<td>
+[Sensitive Data Access]<br/>`api/external/alerts/sensitive-data-access`
+* level
+</td>
+</tr>
+<tr>
+<td>
+`EXCEL_EXPORT`
+</td>
+<td>
+[Data Export]<br/>`api/external/alerts/data-export`
+</td>
+</tr>
+<tr>
+<td>
+`APPROVAL_REQUESTED`
+</td>
+<td>
+[Workflow New Request]<br/>`/api/external/alerts/workflow-new-request`
+</td>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+[Unusual Login Attempt](New)<br/>`/api/external/alerts/unusual-login-attempt`
+</td>
+</tr>
+</tbody>
+</table>
+
+### (GET) List
+
+`/api/external/notifications`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="4a964f40-a620-417f-bd2f-52c24b38404e">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  "list": [
+    {
+      "condition": {...},
+      "description": "",
+      "lastAt": "2019-08-24T14:15:22Z",
+      "lastStatus": "UNDEFINED",
+      "notification": {...},
+      "policy": {...},
+      "template": "{{userName}} executed {{expRows}} rows.",
+      "uuid": "a5ac2279-b715-4819-a00d-daba81739057"
+    },
+    ...
+  ],
+  "page": {...}
+}
+```
+</td>
+<td>
+```json
+{
+  "list": [
+    {
+      "alertType": "SQL Execution",
+      "lastAt": "2019-08-24T14:15:22Z",
+      "lastStatus": "UNDEFINED",
+      "name": "string",
+      "template": "{{userName}} executed {{expRows}} rows.",
+      "uuid": "a5ac2279-b715-4819-a00d-daba81739057"
+    },
+    ...
+  ],
+  "page": {...}
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+---
+
+# 3. Approval Rule API
+
+### (GET) List
+
+`/api/external/approval-rules`
+
+#### Request
+
+* Query Parameter
+* **RequestType** changed from `SQL`, `ACCESS` → `SQL`, `EXPORT`, `ACCESS` with **EXPORT added**.
+
+#### Response
+
+* No changes
+
+
+
+---
+
+# 4. Audit Log API
+
+### (GET) List of Approval
+
+`/api/external/audit-logs`
+
+#### Request
+
+* Query Parameter
+
+<table data-table-width="760" data-layout="default" local-id="177f70ea-ceb0-4cfd-bbf6-f23d470f037a">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+* pageNumber
+* pageSize
+* actionType
+* clusterGroupId
+* clusterId
+* startDate
+* endDate
+* databaseType
+* sqlFullText
+</td>
+<td>
+* **cursor** 
+* **count** 
+* actionType
+* clusterGroupId
+* clusterId
+* startDate
+* endDate
+* **databaseType** 
+* sqlFullText
+</td>
+</tr>
+</tbody>
+</table>
+
+* cursor uses the **nextCursor** from Response **as is**. Leave empty for first call.
+    * Content shown in /api/docs is **incorrect** and will be corrected in future versions.
+* **count** is the same as the existing pageSize, with a **max** value of **100**.
+* `Redis` has been **added** to **databaseType**.
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="932182bb-da8d-497f-a802-b0ac654a837a">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  "list": [
+    {
+      …
+      "execMillis": 200,
+      "execResult": false,
+      "executedAt": "2019-08-24T14:15:22Z",
+      …
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+</td>
+<td>
+```json
+{
+  "hasNext": true,
+  "list": [
+    {
+      …
+      "execMillis": 200,
+      "execResult": false, (Deprecated)
+      "executedAt": "2019-08-24T14:15:22Z",
+      …
+    }
+  ],
+  "nextCursor": "2019-08-24T16:15:22Z"
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* hasNext field has been **added**. Indicates **whether there is next data after Response**.
+* **execResult** has been **Deprecated**. Will be removed in future versions.
+* **page** field has **disappeared** and **nextCursor** has been **added**.
+    * Refers to **executedAt of the last element in the current Response list** within the startDate and endDate range of Request.
+    * Putting this value in the cursor of Request will **continue from that time** to fetch data. (startDate, endDate do not need to be changed.)
+    * Content shown in /api/docs is **incorrect** and will be corrected in future versions.
+
+### <br/>(GET) Detail
+
+`/api/external/audit-logs/{id}`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="faa4a484-fb0f-47b7-978a-23feea65210e">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+      …
+      "execMillis": 200,
+      "execResult": false,
+      "executedAt": "2019-08-24T14:15:22Z",
+      …   
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "execMillis": 200,
+      "execResult": false, (Deprecated)
+      "executedAt": "2019-08-24T14:15:22Z",
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **execResult** has been **Deprecated**. Will be removed in future versions.
+
+
+### (GET) Detail
+
+`/api/external/audit-logs/{uuid}`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="e34b740f-592e-49c5-b549-6f54500e8c83">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+      …
+      "execMillis": 200,
+      "execResult": false,
+      "executedAt": "2019-08-24T14:15:22Z",
+      …   
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "execMillis": 200,
+      "execResult": false, (Deprecated)
+      "executedAt": "2019-08-24T14:15:22Z",
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **execResult** has been **Deprecated**. Will be removed in future versions.
+
+
+
+---
+
+# 5. Authentication History API
+
+### (GET) List of Authentication
+
+`/api/external/connection-auth-logs`
+
+#### Request
+
+* Query Parameter
+
+<table data-table-width="760" data-layout="default" local-id="9d2bd396-23e6-44cf-baa2-f17fc0dd9b55">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+* pageNumber
+* pageSize
+* actionType
+* clusterGroupId
+* clusterId
+* startDate
+* endDate
+* databaseType
+* sqlFullText
+</td>
+<td>
+* pageNumber
+* pageSize
+* **actionType** 
+* clusterGroupId
+* clusterId
+* startDate
+* endDate
+* **databaseType** 
+* sqlFullText
+</td>
+</tr>
+</tbody>
+</table>
+
+* `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` have been **removed** from **actionType**.
+    * Only `CONNECT`, `DISCONNECT` are used.
+* `Redis` has been **added** to **databaseType**.
+
+#### Response
+
+* No changes
+
+
+
+---
+
+# 6. User Access History API
+
+### (GET) List of User Access History
+
+`/api/external/system-auth-logs`
+
+#### Request & Response
+
+* `CONNECT`, `DISCONNECT` have been **removed** from **actionType**.
+    * Only `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` are used.
+
+
+
+---
+
+# 7. Cloud Provider API
+
+### (GET) List of Cloud Provider
+
+`/api/external/cloud-providers`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="c43c1c7c-02dd-48b4-a04d-2c66bce49618">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  "list": [
+    {
+      …
+      "subscriptionId": "string",
+      "targetArn": "string",
+       …
+    }
+  ],
+  "page": {
+    …
+  }
+}
+```
+</td>
+<td>
+```json
+{
+  "list": [
+    {
+      …
+      "subscriptionId": "string",
+      "synchronizableDatabaseTypes": [],
+      "targetArn": "string",
+       …
+    }
+  ],
+  "page": {
+     …
+  }
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **synchronizableDatabaseTypes** has been **added**.
+    * Output field for **database types (vendors) to be synchronized**.
+    * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
+
+
+### (POST) Create Cloud Provider
+
+`/api/external/cloud-providers`
+
+#### Request
+
+<table data-table-width="760" data-layout="default" local-id="7f2d3d42-8253-404f-9149-10b318b6ca3d">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "targetArn": "string",
+       …
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "synchronizableDatabaseTypes": [],
+      "targetArn": "string",
+       …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **synchronizableDatabaseTypes** has been **added**.
+    * Input field for **database types (vendors) to be synchronized**.
+    * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="b16699b8-ecb0-4ee1-ac36-7ac7ea42eae9">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "targetArn": "string",
+       …
+ }
+```
+</td>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "synchronizableDatabaseTypes": [],
+      "targetArn": "string",
+       …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **synchronizableDatabaseTypes** has been **added**.
+    * Output field for **database types (vendors) to be synchronized**.
+    * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`<br/>
+
+### (PUT) Update Cloud Provider
+
+`/api/external/cloud-providers/{cloudProviderUuid}`
+
+#### Request
+
+<table data-table-width="760" data-layout="default" local-id="f52a5751-3b5e-4888-b0bb-bb102080762d">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  "cronExpression": "0 0 6 * * ?",
+  "name": "AWS",
+  "proxyAuthType": "QUERYPIE",
+  "proxyEnabled": true,
+  "replicationMode": "MANUAL"
+}
+```
+
+</td>
+<td>
+```json
+{
+  "cronExpression": "0 0 6 * * ?",
+  "name": "AWS",
+  "proxyAuthType": "QUERYPIE",
+  "proxyEnabled": true,
+  "replicationMode": "MANUAL",
+  "synchronizableDatabaseTypes": [
+    "AURORA_MY_SQL"
+  ]
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **synchronizableDatabaseTypes** has been **added**.
+    * Input field for **database types (vendors) to be synchronized**.
+    * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="1b7cfa33-d4bb-4e89-a7c6-5add7e6663c3">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "targetArn": "string",
+       …
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "subscriptionId": "string",
+      "synchronizableDatabaseTypes": [],
+      "targetArn": "string",
+       …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **synchronizableDatabaseTypes** has been **added**.
+    * Output field for **database types (vendors) to be synchronized**.
+    * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
+
+
+
+---
+
+# 8. Cluster Role API
+
+### (GET) List of Role
+
+`/api/external/roles`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="fea50ede-0255-4ec9-960a-1472523b2651">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  "list": [
+    {
+      ...
+      "privilegeTypes": "SELECT",
+      ...
+    },
+    ...
+  ],
+  "page": {...}
+}
+```
+</td>
+<td>
+```
+{
+  "list": [
+    {
+      ...
+      "privilegeTypes": "SELECT",
+      "privilegeVendor": "SQL",
+      ...
+    },
+    ...
+  ],
+  "page": {...}
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **privilegeVendor** has been **added**.
+    * `SQL`, `REDIS`
+
+### (POST) Create Role
+
+`/api/external/roles`
+
+#### Request & Response
+
+<table data-table-width="760" data-layout="default" local-id="56c6d3e7-3146-49ff-82ea-4aa792c89003">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  …
+  "privilegeTypes": "ALL",
+  …
+}
+```
+</td>
+<td>
+```json
+{
+  …
+  "privilegeTypes": "ALL",
+  "privilegeVendor": "SQL",
+  …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **privilegeVendor** has been **added**.
+    * `SQL`, `REDIS`
+
+### (PUT) Update Role
+
+`/api/external/roles/{roleUuid}`
+
+#### Request & Response
+
+<table data-table-width="760" data-layout="default" local-id="85cd18b3-fa2c-4df3-a4b5-1b6e9a773256">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+```json
+{
+  …
+  "privilegeTypes": "ALL",
+  …
+}
+```
+</td>
+<td>
+```json
+{
+  …
+  "privilegeTypes": "ALL",
+  "privilegeVendor": "SQL",
+  …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **privilegeVendor** has been **added**.
+    * `SQL`, `REDIS`
+
+
+
+---
+
+# 9. Connection API
+
+### (GET) List of Cluster Group
+
+`/api/external/connections`
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="c8555215-eb77-4807-a123-8728d1377f19">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+
+</th>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<th>
+**Request**
+</th>
+<td>
+-
+</td>
+<td>
+None
+</td>
+</tr>
+<tr>
+<th>
+**Response**
+</th>
+<td>
+```json
+{
+  "list": [
+    {
+      …
+      "clusters": [
+          …
+      ],
+      "connectionOwners": [
+       …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "dbUserInfos": [
+        {
+          "dbUserType": "string",
+          "dbUsername": "string"
+        }
+      ],
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useMultipleAccount": true,
+      "useProxy": true,
+      …
+    }
+  ],
+  "page": {
+    …
+  }
+}
+```
+
+</td>
+<td>
+```json
+{
+  "list": [
+    {
+      …
+      "clusters": [
+        …
+      ],
+      "connectionAccount": {
+        "kerberosProtocols": {
+          "admin": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          },
+          "common": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          }
+        },
+        "type": "UIDPWD",
+        "useMultipleAccount": false,
+        "usernamePasswords": {
+          "admin": {
+            "username": "string"
+          },
+          "common": {
+            "username": "string"
+          },
+          "proxy": {
+            "username": "string"
+          }
+        }
+      },
+      "connectionOwners": [
+        …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useProxy": true,
+      …
+    }
+  ],
+  "page": {
+    …
+  }
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **dbUserInfo** has been **removed**. **userMultipleAccount** has been **removed**.
+    * Content of these fields is passed through connectionAccount.<br/>
+* **connectionAccount** has been **added**.
+    * Field that passes **account information** of the connection.
+    * **type** refers to the **type** of account.
+        * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
+    * **useMultipleAccount** is a **boolean** value indicating whether to use **multi-account**.
+    * **KerberosProtocols** is a field that passes **Kerberos account** information.
+        * Kerberos accounts **do not support proxy accounts**.
+    * **usernamePasswords** is a field that passes **usernamePassword account** information.
+
+
+### (POST) Create Cluster Group
+
+`/api/external/connections`
+
+#### Request
+
+<table data-table-width="760" data-layout="default" local-id="a91c0329-8458-4c75-a106-ccdd7a0e25e3">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+
+</th>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<th>
+**Request**
+</th>
+<td>
+-
+</td>
+<td>
+None
+</td>
+</tr>
+<tr>
+<th>
+**Response**
+</th>
+<td>
+```json
+{
+      "clusters": [
+          …
+      ],
+      "connectionOwners": [
+       …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "dbUserInfos": [
+        {
+          "dbUserType": "string",
+          "dbUsername": "string"
+        }
+      ],
+      "deleted": false,
+      …
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "clusters": [
+        …
+      ],
+      "connectionAccount": {
+        "kerberosProtocols": {
+          "admin": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          },
+          "common": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          }
+        },
+        "type": "UIDPWD",
+        "useMultipleAccount": false,
+        "usernamePasswords": {
+          "admin": {
+            "username": "string"
+          },
+          "common": {
+            "username": "string"
+          },
+          "proxy": {
+            "username": "string"
+          }
+        }
+      },
+      "connectionOwners": [
+        …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "deleted": false,
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **dbUserInfo** has been **removed**. **userMultipleAccount** has been **removed**. 
+    * Content of these fields is passed through connectionAccount.<br/>
+* **connectionAccount** has been **added**.
+    * Field that passes **account information** of the connection.
+    * **type** refers to the **type** of account.
+        * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
+    * **useMultipleAccount** is a **boolean** value indicating whether to use **multi-account**.
+    * **KerberosProtocols** is a field that passes **Kerberos account** information.
+        * Kerberos accounts **do not support proxy accounts**.
+    * **usernamePasswords** is a field that passes **usernamePassword account** information.
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="39575eab-8bc2-45f4-b145-a8b9d33bc1ef">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+
+</th>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<th>
+**Request**
+</th>
+<td>
+-
+</td>
+<td>
+None
+</td>
+</tr>
+<tr>
+<th>
+**Response**
+</th>
+<td>
+```json
+{
+      …
+      "clusters": [
+          …
+      ],
+      "connectionOwners": [
+       …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "dbUserInfos": [
+        {
+          "dbUserType": "string",
+          "dbUsername": "string"
+        }
+      ],
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useMultipleAccount": true,
+      "useProxy": true,
+      …
+}
+```
+</td>
+<td>
+```json
+{
+      …
+      "clusters": [
+        …
+      ],
+      "connectionAccount": {
+        "kerberosProtocols": {
+          "admin": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          },
+          "common": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          }
+        },
+        "type": "UIDPWD",
+        "useMultipleAccount": false,
+        "usernamePasswords": {
+          "admin": {
+            "username": "string"
+          },
+          "common": {
+            "username": "string"
+          },
+          "proxy": {
+            "username": "string"
+          }
+        }
+      },
+      "connectionOwners": [
+        …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useProxy": true,
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **dbUserInfo** has been **removed**. **userMultipleAccount** has been **removed**. 
+    * Content of these fields is passed through connectionAccount.<br/>
+* **connectionAccount** has been **added**.
+    * Field that passes **account information** of the connection.
+    * **type** refers to the **type** of account.
+        * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
+    * **useMultipleAccount** is a **boolean** value indicating whether to use **multi-account**.
+    * **KerberosProtocols** is a field that passes **Kerberos account** information.
+        * Kerberos accounts **do not support proxy accounts**.
+    * **usernamePasswords** is a field that passes **usernamePassword account** information.
+
+### <br/>(PATCH) Update Cluster Group
+
+`/api/external/connections/{uuid}`
+
+#### Request
+
+<table data-table-width="760" data-layout="default" local-id="30d79d2b-4f9e-4cd9-82c4-3e3b2d040226">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+
+</th>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<th>
+**Request**
+</th>
+<td>
+-
+</td>
+<td>
+None
+</td>
+</tr>
+<tr>
+<th>
+**Response**
+</th>
+<td>
+```json
+{
+      "clusters": [
+          …
+      ],
+      "connectionOwners": [
+       …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "dbUserInfos": [
+        {
+          "dbUserType": "string",
+          "dbUsername": "string"
+        }
+      ],
+      "deleted": false,
+      …
+}
+```
+
+</td>
+<td>
+```json
+{
+      …
+      "clusters": [
+        …
+      ],
+      "connectionAccount": {
+        "kerberosProtocols": {
+          "admin": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          },
+          "common": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          }
+        },
+        "type": "UIDPWD",
+        "useMultipleAccount": false,
+        "usernamePasswords": {
+          "admin": {
+            "username": "string"
+          },
+          "common": {
+            "username": "string"
+          },
+          "proxy": {
+            "username": "string"
+          }
+        }
+      },
+      "connectionOwners": [
+        …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "deleted": false,
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **dbUserInfo** has been **removed**. **userMultipleAccount** has been **removed**. 
+    * Content of these fields is passed through connectionAccount.<br/>
+* **connectionAccount** has been **added**.
+    * Field that passes **account information** of the connection.
+    * **type** refers to the **type** of account.
+        * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
+    * **useMultipleAccount** is a **boolean** value indicating whether to use **multi-account**.
+    * **KerberosProtocols** is a field that passes **Kerberos account** information.
+        * Kerberos accounts **do not support proxy accounts**.
+    * **usernamePasswords** is a field that passes **usernamePassword account** information.
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="55b9a43a-b701-488d-8c41-38951410331d">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+
+</th>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<th>
+**Request**
+</th>
+<td>
+-
+</td>
+<td>
+None
+</td>
+</tr>
+<tr>
+<th>
+**Response**
+</th>
+<td>
+```json
+{
+      …
+      "clusters": [
+          …
+      ],
+      "connectionOwners": [
+       …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "dbUserInfos": [
+        {
+          "dbUserType": "string",
+          "dbUsername": "string"
+        }
+      ],
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useMultipleAccount": true,
+      "useProxy": true,
+      …
+}
+```
+</td>
+<td>
+```json
+{
+      …
+      "clusters": [
+        …
+      ],
+      "connectionAccount": {
+        "kerberosProtocols": {
+          "admin": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          },
+          "common": {
+            "principal": "string",
+            "realm": "string",
+            "serviceName": "string"
+          }
+        },
+        "type": "UIDPWD",
+        "useMultipleAccount": false,
+        "usernamePasswords": {
+          "admin": {
+            "username": "string"
+          },
+          "common": {
+            "username": "string"
+          },
+          "proxy": {
+            "username": "string"
+          }
+        }
+      },
+      "connectionOwners": [
+        …
+      ],
+      "databaseType": "MySQL",
+      "databaseVersion": "5.7.10",
+      "deleted": false,
+      …
+      "schemaName": "test_db",
+      "useProxy": true,
+      …
+}
+```
+</td>
+</tr>
+</tbody>
+</table>
+
+* **dbUserInfo** has been **removed**. **userMultipleAccount** has been **removed**. 
+    * Content of these fields is passed through connectionAccount.<br/>
+* **connectionAccount** has been **added**.
+    * Field that passes **account information** of the connection.
+    * **type** refers to the **type** of account.
+        * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
+    * **useMultipleAccount** is a **boolean** value indicating whether to use **multi-account**.
+    * **KerberosProtocols** is a field that passes **Kerberos account** information.
+        * Kerberos accounts **do not support proxy accounts**.
+    * **usernamePasswords** is a field that passes **usernamePassword account** information.
+
+
+
+---
+
+# 10. Notification Channels API
+
+### (GET) List of Notification channel
+
+`/api/external/notification-channels`
+
+#### Request
+
+* Query Parameter field addition
+
+<table data-table-width="760" data-layout="default" local-id="306ad9b1-6ed1-421e-b58c-42ed27d24672">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+* …
+</td>
+<td>
+* dataFlowRequest. **filterKey** 
+* dataFlowRequest. **filterValue** 
+* dataFlowRequest. **sortKey** 
+* dataFlowRequest. **sortType** 
+* …
+</td>
+</tr>
+</tbody>
+</table>
+
+* dataflowRequest. **filterKey** is for entering **filter key**. ex) "Title"
+* dataflowRequest. **filterValue** is for entering **filter value (search term)**. ex) "channelName123"
+* dataflowRequest. **sortKey** is for entering **column name** to **sort**. ex) "createdAt"
+* dataflowRequest. **sortType** is for entering whether to **sort** in **descending** or **ascending** order. ex) "ASC", "DESC"
+
+
+
+

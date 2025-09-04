@@ -1,0 +1,150 @@
+---
+title: 'External API Changes (9.9.4 Version > 9.9.5 Version)'
+---
+
+---
+
+# API Docs Json File
+
+:paperclip: [994_external.json](994_external.json)
+:paperclip: [995_external.json](995_external.json)
+---
+
+# 1. Access Approval API
+
+### (GET) List
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="729f4860-908e-453e-a2ce-586ef92bde21">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+* id
+</td>
+</tr>
+</tbody>
+</table>
+
+* **id** has been **added**.
+---
+
+# 2. Approval API
+
+### (GET) List
+
+#### Request
+
+* No changes
+
+#### Response
+
+<table data-table-width="760" data-layout="default" local-id="d1aedf57-9c7c-4ffd-abf3-d1381144dd7d">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+
+</td>
+<td>
+* id
+</td>
+</tr>
+</tbody>
+</table>
+
+* **id** has been **added**.
+---
+
+# 3. Audit Log API
+
+### (GET) List of Approval
+
+`/api/external/audit-logs`
+
+#### Request
+
+* Query Parameter
+* Content about **cursor** that was incorrectly displayed in /api/docs has been corrected.
+
+#### Response
+
+* Content about **nextCursor** that was incorrectly displayed in /api/docs has been corrected.
+---
+
+# 4. Notification Channels API
+
+### (GET) List
+
+`/api/external/notification-channels`
+
+#### Request
+
+* Query Parameter
+
+<table data-table-width="760" data-layout="default" local-id="a8579e9b-bf3a-44ef-8dbe-bef487c68840">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Before Change**
+</th>
+<th>
+**After Change**
+</th>
+</tr>
+<tr>
+<td>
+* dataFlowRequest.filterKey
+* dataFlowRequest.filterValue
+* dataFlowRequest.sortKey
+* dataFlowRequest.sortType
+</td>
+<td>
+* filterKey
+* filterValue
+* sortKey
+* sortType
+</td>
+</tr>
+</tbody>
+</table>
+
+* **Names** have been **changed**.
+
+#### Response
+
+* No changes

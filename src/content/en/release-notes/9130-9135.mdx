@@ -1,0 +1,97 @@
+---
+title: '9.13.0 ~ 9.13.5'
+---
+
+## QueryPie 9.13.5 Release
+
+September 14, 2023
+
+**Bug Fix & Enhancement**
+
+* [Performance] Fixed memory over-occupation issue during workflow usage
+
+
+## QueryPie 9.13.4 Release
+
+August 02, 2023
+
+**Bug Fix & Enhancement**
+
+* [Ledger Table Policy] Fixed pagination issue
+
+
+## QueryPie 9.13.3 Release 
+
+July 03, 2023
+
+**Bug Fix & Enhancement**
+
+* Fixed Engine SIGABRT issue by applying .NET Runtime 7.0.5
+
+
+## QueryPie 9.13.2 Release 
+
+June 23, 2023
+
+**Bug Fix & Enhancement**
+
+* [Vendor] Fixed issue where Export does not work when MongoDB Export result data exceeds 1001 items
+
+
+## QueryPie 9.13.1 Release
+
+June 19, 2023
+
+**New Features**
+
+* [Ledger Table] Added ledger table management and control functionality
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] Fixed disconnection issue when connecting with proxy using MariaDB JDBC driver 1.x 2.x versions
+* [Agent] Fixed issue where open option is automatically activated during login
+* [Alert] Increased New Request SQL maximum length from 100 to 1000 characters
+* [All Request] Improved download speed
+* [Cloud Provider] For vendors where AWS permissions are managed 1:1, only check permissions for filter-selected items
+* [MariaDB] Added additional response to SET statement analysis
+* [syslog] Added actionType, executedFrom information to query audit
+
+
+## QueryPie 9.13.0 Release
+
+May 15, 2023
+
+**New Features**
+
+* [SBOM] Provided Software Bill of Materials information (documentation)
+* [Security] Enhanced password complexity conditions and applied previous password reuse prevention
+
+
+**Deprecated Features**
+
+* [Vendor] Discontinued vendor support - EnterpriseDB
+* [Vendor] Discontinued vendor support - GreenPlum
+* [Vendor] Discontinued vendor support - SAP Hana
+* [Vendor] Discontinued vendor support - Snowflake
+* [Migration] Removed log migration functionality
+
+
+**Bug Fix & Enhancement**
+
+* [Agent] Changed Window Controller Button in About window
+* [Connection] Removed " symbol from warning message when Network Zone is not selected during Create process
+* [Connection] Fixed issues related to SSL / SSH option setting deactivation
+* [DB connection] Added notifications for changes or deletions
+* [Preferences] Fixed non-functioning x button error in modal when changing passwords
+* [Proxy] Provided accurate guidance messages when ports are insufficient
+* [System Properties] Reflected changed environment variables
+* [Vendor][Athena] Improved issue where DB Name is not left in DB Access History
+* [Vendor][Athena] Hidden Use existing database account with Agent option
+* [Vendor][Athena] Made Workgroup mandatory when manually creating Connections
+* [Vendor][Hive] Disabled Import/Export buttons in SQL Editor
+* [Vendor][Hive] Disabled Workflow Export Request
+* [Vendor][PostgreSQL] Fixed DataGrip specific table connection issues
+* [Workflow] Improved to allow only .sql file selection in SQL Request
+
+

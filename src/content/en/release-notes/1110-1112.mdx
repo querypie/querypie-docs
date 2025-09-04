@@ -1,0 +1,69 @@
+---
+title: '11.1.0 ~ 11.1.2'
+---
+
+## QueryPie 11.1.2 Release
+
+August 19, 2025
+
+
+**Bug Fix**
+
+* [General] Fixed Host Version at bottom of MultiAgent screen to match connected QueryPie version
+* [General] Fixed issue where user certificates are not applied due to browser certificate algorithm priority
+* [DAC] Fixed error where DB connections were disconnected in MultiAgent login state to maintain sessions
+* [DAC] Fixed issue where reason input content in MultiAgent is not recorded in Query Audit
+* [DAC] Fixed error occurring in MultiAgent when selecting Expose as Hidden in DB Connection
+* [DAC] Fixed error when querying specific Athena VIEWs
+* [DAC] Improved delayed symptoms when accessing Web Editor
+* [DAC] Fixed decryption error occurring with 120 or more data when using CubeOne decryption functionality
+* [DAC] Fixed Unable to resolve table error when executing CTE-based UPDATE statements
+* [DAC] Fixed issue where prepared statements cannot be called when accessing Redshift Proxy
+* [DAC] Fixed issue where expression call target error occurs in SQLServer
+* [DAC] Fixed issue where values of other items are not restored when modifying items in MongoDB Connection Details
+* [DAC] Fixed to allow connection based on authSource option when accessing MongoDB in Web Editor
+
+
+
+## QueryPie 11.1.0 Release
+
+July 25, 2025
+
+
+**New Feature**
+
+* [General] Added Server Privilege Request functionality in multi-agent
+* [General] Added Google Analytics cookie consent and cookie setting functionality
+* [General] Added External API for workflow approval completion or Executor cancellation in Urgent mode
+* [DAC] Added functionality to specify user attributes as User scope in new policies (tag-based policies)
+* [DAC] Added Event Type column to Policy Audit Log in new policies (tag-based policies)
+* [DAC] Added Policy Exception Log to Audit Log in new policies (tag-based policies)
+* [DAC] Added alert sending when tag-based policy Masking policy is applied
+* [DAC] Added alert sending for tag-based policy Workflow DB Policy Exception Request
+* [DAC] Added alert sending when tag-based policy Sensitive data policy/Level is applied (when accessing sensitive data)
+* [DAC] Added alert sending when tag-based policy Data Access policy is applied (when accessing restricted data)
+* [SAC] Added functionality to integrate QueryPie with Windows Active Directory
+* [SAC] Added Command Template selection functionality when applying for Server Privilege Request
+* [SAC] Introduced server account access control through Require Privilege option
+* [SAC] Added AD account password change functionality
+* [SAC] Added RDP Server Agent remote update functionality
+* [SAC] Added API providing list of users' Role / Direct Permission expiration schedules
+* [WAC] Added functionality for administrators to revoke permissions for users' JIT Web sessions
+
+**Improvement**
+
+* [General] Improved to allow Static IP modification while using Enable Attribute Synchronization option
+* [General] Improved to maintain approver status even when members of approver group are deactivated
+* [General] Improved to allow referrers to view submission content before workflow approval completion
+* [General] Improved to open Multi-Agent when clicking Open Agent in SAC and KAC menus in user dashboard
+* [DAC] Changed to directly specify Data Scope when creating policy exceptions in new policies (tag-based policies)
+* [DAC] Improved to allow users to change their own passwords in Web Editor when Database passwords expire (Oracle 19c only)
+* [DAC] Improved error when querying values specified as SECONDDATE data type in SAP HANA DB
+* [SAC] Added allowed zone display for accessible servers in user dashboard > Servers
+* [SAC] Added JIT temporary account functionality - Global Option
+* [SAC] Improved Server Group Account UI
+* [SAC] Implemented One Time Account query/deletion screen
+* [SAC] Added SAC Report items
+* [SAC] Improved to allow Windows Server registration through External API
+* [KAC] Improved Policy Editor usability
+* [WAC] Improved Policy Editor usability

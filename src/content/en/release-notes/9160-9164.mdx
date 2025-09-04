@@ -1,0 +1,84 @@
+---
+title: '9.16.0 ~ 9.16.4'
+---
+
+## QueryPie 9.16.4 Release
+
+April 04, 2024
+
+
+**Bug Fix**
+
+* [SAC] Fixed web terminal connection error when setting QueryPie Web IP Access Control
+---
+
+## QueryPie 9.16.3 Release
+
+March 05, 2024
+
+
+**Bug Fix**
+
+* [External API] Fixed error related to required value processing when calling Workflow API
+---
+
+## QueryPie 9.16.2 Release
+
+February 15, 2024
+
+
+**Bug Fix**
+
+* [SAC] Fixed error where Locked status accounts appear as Active
+* [DAC] Fixed Activity Logs recording error when deleting Connections with blank Username & Password
+* [Agent] Internal TLS Certificate Update
+
+
+---
+
+## QueryPie 9.16.1 Release
+
+January 30, 2024
+
+
+**Enhancement**
+
+* [Audit] Added DAC Log External API V2 version support
+* [Audit] Improved Activity Logs Affected Data storage logic
+
+
+**Bug Fix**
+
+* [DAC] Fixed Impala connection error for users without Owner permissions
+
+
+---
+
+## QueryPie 9.16.0 Release
+
+January 26, 2024
+
+
+**New Features**
+
+* [Security] User-specific IP control functionality
+* [Audit] Beta version release of audit log statistics report
+* [Audit] Added log integrity verification functionality
+
+
+**Enhancement**
+
+* [DAC] Added Cloud Provider Azure connection support
+* [DAC] Added MongoDB multi-host method support
+* [SAC] Added tag-based server group auto-add functionality support
+* [SAC] Added Secret Store integration functionality and Vault integration support for server authentication information
+* [SAC] Added SSH Key file upload method support
+* [Audit] Improved sensitive information masking processing for DML Snapshot log before/after data
+
+
+**Bug Fix**
+
+* [MySQL] Fixed error when using IF statements inside LEAD functions
+* [MariaDB] Fixed TablePlus connection issue for MariaDB 10.6.2.0 and above versions
+* [MongoDB] Fixed error related to Aggregate statement execution
+* [MongoDB] Improved Data Compression option related issues during proxy connection

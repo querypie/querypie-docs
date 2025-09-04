@@ -1,0 +1,165 @@
+---
+title: 'Connecting with Web SQL Editor'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie provides a web SQL editor that allows you to execute queries and view data through a web browser.
+
+## Connecting to Databases with Access Permissions
+
+You can check the list of database connections with access permissions granted to individual users or groups, and select the connection to work with to connect to the database.
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-114320.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases
+</figcaption>
+</figure>
+
+1. After logging into QueryPie, click `Databases` in the top menu bar options.
+2. Accessible database connections are displayed in the left panel.
+3. Click on the connection you want to connect to, and detailed information is displayed on the right. Click the `Connect` button to connect.
+
+If the required connection is not displayed, you can request access permissions through Workflow &gt; DB Access Request.
+
+## Using Web SQL Editor
+
+The editor consists of a left object panel, top toolbar, center SQL editor, and right object information panel.
+
+### 1. Top Left Object Panel
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png)
+<figcaption>
+SQL Editor &gt; Connection Panel
+</figcaption>
+</figure>
+
+* `Change connection`: You can check the currently connected connection and change to other connected connections through the arrow button.
+* `Connection Management`: You can navigate to the Databases connection list while maintaining existing connections.
+* `Disconnect`: You can disconnect the currently connected connection through the disconnect button.
+
+### 2. Left Object Panel
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png)
+<figcaption>
+SQL Editor &gt; Connection Panel
+</figcaption>
+</figure>
+
+* **Database Change**: You can change the currently connected database. (Connects to the default database on first connection)
+* **Object Information Search**: You can search for schemas / tables / views / events / functions / procedures / triggers, etc. within the database.
+* **Object Information View**: You can check schemas / tables / views / events / functions / procedures / triggers, etc. within the database.
+* **Object Information Refresh**: When you click on schemas / tables / views / events / functions / procedures / triggers, etc. within the database, the `Refresh` button on the right becomes active and you can refresh object information.
+* **Individual Object Information Refresh**: Individual object information can also be refreshed by right-clicking and clicking the `Reload Object` button.
+
+### 3. Top Toolbar
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
+</figcaption>
+</figure>
+
+* `Run SQL`: You can execute the written query. By default, the entire written query is executed.
+* `Stop`: You can stop the running query.
+* `Object Panel`: Provides the option to collapse/expand the left object panel.
+* `Open`: You can load SQL files.
+* `Save`: You can save SQL files.
+    * When Query Sharing is set to On, SQL files are saved to the Git Repository.
+* `Undo`: You can undo based on the query being written.
+* `Redo`: You can redo the undone action.
+* `Format`: You can format the query being written.
+* `Auto commit`: Automatically enables commit for performed work queries.
+    * `Commit`: Manually confirms performed work queries.
+    * `List`: Lists queries that have not been confirmed.
+    * `Rollback`: Performs rollback to the step immediately after the last commit.
+* `Import`: You can import data as SQL/CSV/Excel files and save them to the database.
+* `Export`: You can download data as SQL/CSV/JSON/Excel files.
+* `SQL Request`: Takes the query written in the editor to the SQL Request workflow page.
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Editor Tab & Result](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052240.png)
+<figcaption>
+SQL Editor &gt; Editor Tab & Result
+</figcaption>
+</figure>
+
+* Query writing supports autocomplete, and you can use context menu operations and shortcuts.
+* `Limit`: You can limit the number of result output rows when executing queries. By default, it is limited to 1000.
+* `Full Screen`: You can check query execution results in full screen.
+* `Stack/Column View`: When executing multiple queries, you can check results in horizontal or vertical split grids.
+
+### 3. Queries Panel
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Queries Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png)
+<figcaption>
+SQL Editor &gt; Queries Panel 
+</figcaption>
+</figure>
+
+* `Queries`: When Query Sharing is enabled, you can import/export SQL queries from the connected GitHub Repository.
+
+<Callout type="info">
+To use this feature, administrators must pre-configure query sharing settings. (Reference: [General](../../administrator-manual/general/company-management/general) &gt; **Query Sharing Settings**)
+</Callout>
+
+### 4. Object Info Panel
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Object Info Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png)
+<figcaption>
+SQL Editor &gt; Object Info Panel 
+</figcaption>
+</figure>
+
+* `Data`: You can check the data of table/view objects.
+* `Structure`: You can check the structure of table/view objects.
+* `Index`: You can check the index information of tables.
+* `Relation`: You can check the relationship connections of tables.
+* `Trigger`: You can check trigger information.
+* `Script`: You can check the script information of objects.
+* `Info`: You can check the detailed information of objects.
+
+### 5. SQL History Panel
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; SQL History Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png)
+<figcaption>
+SQL Editor &gt; SQL History Panel
+</figcaption>
+</figure>
+
+* `SQL History`: You can check the history of executed queries. Records are kept for up to 3 months.
+
+<Callout type="info">
+**Q. Are there limitations on the query size that can be executed in the web editor?**
+
+**A. SQL Editor supports the following:**
+
+* Single query execution is limited to 10 million characters.
+* Supports up to 9999 lines within the query editor.
+* Supports up to 5MB size within the query editor.
+* When uploading files, supports up to 5MB size.
+
+**A. When attaching files in Workflow &gt; SQL Request screen, the following is supported:**
+
+* When selecting File type, there is no size limit for query execution through file attachment.
+* Single query execution is limited to 10 million characters.
+* When selecting Text type, supports up to 9999 lines within the query editor.
+* When selecting Text type, supports up to 5MB size within the query editor.
+</Callout>
+
+### 6. Entering Reason When Executing Queries
+
+Reason input may be forced when executing queries due to Ledger policies or connection policies. In this case, when users enter queries, a popup for entering reasons is displayed. As shown in the figure below, enter the reason for executing the query in the "Write the reason for this request" popup dialog and click the `OK` button to display the query execution results. You can enter up to 300 characters.
+
+<figure data-layout="center" data-align="center">
+![image-20241031-233232.png](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20241031-233232.png)
+</figure>

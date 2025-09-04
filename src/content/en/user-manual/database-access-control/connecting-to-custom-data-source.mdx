@@ -1,0 +1,52 @@
+---
+title: 'Connecting to Custom Data Source'
+---
+
+import { Callout } from 'nextra/components'
+
+### Custom Data Source Access Request
+
+1. Navigate to the Workflow menu at the top of the user screen.
+2. Click the `Submit Request` button in the top left and select the DB Access Request item.
+3. Set the Approval Rule according to the situation and write the Title.
+4. Select an item with Type 'Custom Data Source' from the DB Connection list.
+5. Unlike other vendors, Privilege cannot be selected, so it is displayed as "-".
+6. Set and write the Expiration Date and Reason for Request items according to the situation.
+7. After completing the writing, click the `Submit` button at the bottom to complete the application.
+8. After receiving administrator approval, you can check it in the left Workflow &gt; Sent Request &gt; Done menu.
+
+<Callout type="important">
+**Precautions when making multiple requests with Custom Data Source Type**
+* When selecting Custom Data Source together with other vendors, they cannot be selected in bulk because the permission types are different.
+* In this case, the following message is displayed: "Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection."
+* Bulk application is possible between connections of the same permission type.
+</Callout>
+
+### <br/>Connecting through Agent
+
+1. **Running QueryPie Agent**
+    * Run QueryPie Agent.
+    * You can check Custom Data Source in the Database item.
+2. **Checking Connection Guide**
+    * When you click on the Custom Data Source connection row in Agent, you can see a row containing Port information.
+    * Right-click on the above row and click Connection Guide to check the connection information.
+    * UID/PW is displayed as unmodifiable db username, db password.
+    * Privileges are displayed as "-".
+3. **Connecting in SQL Tool**
+    * Run DataGrip or other SQL Tools.
+    * **Host and Port must be entered with the information specified in the Connection Guide.**
+    * Enter additional information according to the vendor.
+
+<Callout type="important">
+**Precautions**
+* Error messages are displayed when attempting to connect outside the access time set by the administrator.
+</Callout>
+
+### When Attempting to Connect via Web
+
+1. **Checking Web Connection List**
+    * Click Databases at the top of the user screen.
+    * When you click QueryPie Connections in the left connection list, Custom Data Sources with access permissions are displayed.
+2. **Connection Not Possible Notice**
+    * When selecting Custom Data Source, the Connect button is disabled.
+    * The following tooltip is displayed and connection via web is not possible: "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."

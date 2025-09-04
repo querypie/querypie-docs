@@ -1,0 +1,70 @@
+---
+title: 'Installing Root CA Certificate and Extension'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+This page guides you through the process of installing the Root CA certificate and Chrome Extension necessary to use WAC (Web Access Control).
+
+## Installation and Setup Guide
+
+### 1. Installing Root CA Certificate
+
+1. While logged into QueryPie, click the profile icon in the top right, then navigate to Support &gt; Download Web Secure menu.
+
+<figure data-layout="center" data-align="center">
+![QueryPie &gt; Profile Menu](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241223-120321.png)
+<figcaption>
+QueryPie &gt; Profile Menu
+</figcaption>
+</figure>
+
+1. When the QueryPie Web Secure Download modal window appears, click the Step 1. Download Link in the A. Install Root CA Certificate section as shown in the picture below to download the certificate file.
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web Secure Download](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20250116-155957.png)
+<figcaption>
+QueryPie Web Secure Download
+</figcaption>
+</figure>
+
+1. After downloading, complete the certificate installation and trust setup according to the [Root CA Certificate Installation Guide](../../administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide).
+
+### 2. Installing Extension and Setting Host
+
+1. **Extension Download**
+    * Click the Support &gt; Download Web Secure button in the QueryPie profile menu.
+    * When the QueryPie Web Secure Download modal appears, click the Download Link in Step 1. of **B. Install Chrome Extension** as shown in the QueryPie Web Secure Download picture to execute the Extension file download.
+2. **Extension Installation**
+    * Enter chrome://extensions/ in the Chrome browser address bar to go to the extensions page.
+    * Enable the Developer mode toggle in the top right of the page.
+    * Drag and drop the downloaded Extension file (without extracting) into the extensions page.
+
+<figure data-layout="center" data-align="center">
+![Chrome &gt; Extension Management](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241219-192626.png)
+<figcaption>
+Chrome &gt; Extension Management
+</figcaption>
+</figure>
+
+1. **Host Setup**
+    * After the Extension installation is complete, the Host Configuration page opens in a new tab.
+    * Enter the address of the QueryPie you are currently using in the QueryPie Host input field and click the `Continue` button.
+    * If the Host information is valid, the `Go to Dashboard` button becomes active. Click this button to navigate to the QueryPie dashboard in a new tab.
+
+<figure data-layout="center" data-align="center">
+![Host Configuration page](/user-manual/web-access-control/installing-root-ca-certificate-and-extension/screenshot-20241219-192931.png)
+<figcaption>
+Host Configuration page
+</figcaption>
+</figure>
+
+<Callout type="important">
+**Caution**
+
+Management is not guaranteed for tabs that were open before installing the WAC extension. There may be issues with access policy application and audit logging.
+
+Please close all existing browser tabs and windows before installing the extension.
+</Callout>

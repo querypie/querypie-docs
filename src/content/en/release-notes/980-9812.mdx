@@ -1,0 +1,158 @@
+---
+title: '9.8.0 ~ 9.8.12'
+---
+
+
+## QueryPie 9.8.12 Release 
+
+November 30, 2022
+
+**Bug Fix & Enhancement**
+
+* [External API] Added id item to List of Access Approval API
+
+---
+
+## QueryPie 9.8.11 Release 
+
+November 14, 2022
+
+**Bug Fix & Enhancement**
+
+* [PostgreSQL] Fixed error related to Insert statement execution
+* [Performance] Fixed Hub server CPU increase related issue
+
+---
+
+## QueryPie 9.8.10 Release 
+
+October 06, 2022
+
+**Bug Fix & Enhancement**
+
+* [External API] Added Proxies related resources
+* [External API] Added automatic port allocation API according to proxy options after Cloud Sync
+* [MySQL] Fixed mysqlbinlog command related response waiting issue
+* [Performance] Improved logrotate related disk full issue
+* [Proxy] Fixed QPA-03EE related error when attempting Agent connection via NLB
+
+---
+
+## QueryPie 9.8.9 Release 
+
+September 19, 2022
+
+**Bug Fix & Enhancement**
+
+* Fixed connection disconnection when executing specific Redshift queries
+* Improved timeout issues in Proxy environment
+* Fixed Unauthorized error during Agent connection
+* Improved UI when specific character count is exceeded in policy settings
+* Improved Like query related index range scan issue (disabled table data modification functionality when index cannot be found)
+* Fixed ScyllaDB uploadTimestamp related range query error
+* Processed to not synchronize Network Zone during cluster synchronization
+* Fixed SSH connection Test Connection loading issue
+
+---
+
+## QueryPie 9.8.8 Release
+
+August 11, 2022
+
+**Bug Fix & Enhancement**
+
+* Fixed Oracle Procedure execution related issue
+* Fixed OKTA SDK version
+
+---
+
+## QueryPie 9.8.7 Release
+
+August 09, 2022
+
+**Bug Fix & Enhancement**
+
+* Fixed issue where agent does not proceed after login
+
+---
+
+## QueryPie 9.8.6 Release 
+
+July 20, 2022
+
+**Bug Fix & Enhancement**
+
+* Processed user connection permission revocation when LDAP OU changes
+* Added Email Attribute item to LDAP integration options
+* Applied temporary measures to prevent issues during multi-query execution in Proxy connection
+* Improved JSON type data query issues
+* Improved Slack API Proxy related issues
+
+---
+
+## QueryPie 9.8.5 Release
+
+July 06, 2022
+
+**Bug Fix & Enhancement**
+
+* Improved DocumentDB related SSH tunneling issues
+
+---
+
+## QueryPie 9.8.3-9.8.4 Release 
+
+June 22, 2022
+
+**Bug Fix & Enhancement**
+
+* Improved SQL History related functionality (fixed paging and loading issues, excluded search functionality)
+* Added Reports and All Requests menu access permissions for Audit admin administrators
+* Improved Web Editor execution query DML Snapshot related bugs
+
+---
+
+## QueryPie 9.8.2 Release 
+
+June 21, 2022
+
+**Bug Fix & Enhancement**
+
+* Added Zip file compression and password protection functionality when attempting Export
+* Improved MongoDB Report (Beta) CSV extraction results
+* Improved Presto query execution issues for queries above specific size, group by/avg query related errors
+* Improved logs related to long-term unused user account locking
+* Improved MongoDB bson Type related errors
+* Improved DynamoDB data query related issues
+* Improved error messages when changing Authentication Type
+* Improved bottom status bar version tag display
+* Fixed Permission error when accessing Impala kerberos
+* Fixed Object Tree stopping issue when canceling after attempting Export in left Table Tree
+* Improved MongoDB related file export errors
+* Added Connection Label variable to Alert Message Template
+
+---
+
+## QueryPie 9.8.1 Release
+
+June 02, 2022
+
+**Bug Fix & Enhancement**
+
+* Improved Agent usability (Connection Guide and Data Integration functionality)
+* Changed QueryPie Agent app method from tray to window UI
+* Improved Cluster UUID related API
+* Provided MySQL DESC statement as default in Privilege Type
+* Added Google OTP closed network support
+* Added Success event to DB Authentication Alert type among alert sending items
+* Improved to allow adding/editing Request Body when creating HTTP webhook channels
+* Processed to allow modifying database name item when accessing PostgreSQL / Redshift connections
+* Added Owner item to Users list filter
+* Added SQL Audit first 10 rows functionality activation option to Security menu
+* Improved order by result display in Presto
+* Improved MongoDB data display format
+* Added connection links between Request and Audit Log<br/>(SQL Audit menu 'Executed From' column, Role History menu 'Action By' column)
+* Fixed long-term inactive user account locking processing error
+* Fixed timeout issue occurring when accessing 2 or more sessions to same connection
+
+---

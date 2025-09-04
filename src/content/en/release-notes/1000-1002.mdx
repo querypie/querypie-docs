@@ -1,0 +1,70 @@
+---
+title: '10.0.0 ~ 10.0.2'
+---
+
+## QueryPie 10.0.2 Release 
+
+September 06, 2024
+
+****
+
+**Bug Fix**
+
+* [DAC] Fixed error occurring when using DECLARE / SELECT statements with SQL Server in Agentless Proxy
+
+
+## QueryPie 10.0.1 Release
+
+August 09, 2024
+
+
+**Bug Fix**
+
+* [Agent] Fixed error occurring when accessing servers with Allowed Zone configured
+* [DAC] Fixed issue where MongoDB query execution fails after error occurs
+
+
+## QueryPie 10.0.0 Release
+
+July 22, 2024
+
+
+**New Features**
+
+* [General] Separated user/administrator pages
+* [General] New user dashboard (My Dashboard) menu
+* [Security] Password reuse prevention count setting functionality
+* [AIDD] New AI Data Discovery feature release
+* [Workflow] New Access Role Request feature
+* [DAC] Tag functionality in Connection page
+* [DAC] GCP synchronization re-support
+* [DAC] Hive Kerberos authentication support
+* [DAC] SQLServer SSMS Proxy connection support
+* [SAC] Windows server access control (RDP) support
+
+
+**Enhancement**
+
+* [SCIM] Added user and group Import functionality and improved Group Push functionality
+* [Workflow] Added functionality to stop SQL Request after query execution
+* [Audit] Improved to check status values by task in Audit Log Export list
+* [Audit] Added ID value when extracting Workflow SQL Request type in Audit Log Export
+* [DAC] Added functionality to batch terminate sessions when connecting multiple connections with SQL Editor
+
+
+**Bug Fix**
+
+* [SCIM] Fixed abnormal operation issue with Attribute updates according to Profile Editor
+* [External API] Fixed issue where API Token permission Scopes value is granted as Select Role after 9.19.0 upgrade
+* [DAC] Fixed issue where specific SQL Server queries (IF/EXEC) do not execute
+* [DAC] Fixed intermittent error occurring when accessing Connection with new browser tab
+* [Activity Log] Fixed error occurring when querying past data containing null values
+* [Security] Fixed error occurring when setting specific values in QueryPie Web IP Access Control
+* [Agent] Fixed error occurring when connecting MariaDB connection with Open Connection With functionality
+* [DAC] Fixed bug where MariaDB Temporary Table does not work normally when DMLSnapshot value is On
+* [Agent] Fixed issue where Agent cannot be accessed with Firefox on Ubuntu
+
+
+**External API**
+
+* Added Workflow - Access Role Request Details query API

@@ -1,0 +1,78 @@
+---
+title: '9.18.0 ~ 9.18.3'
+---
+
+## QueryPie 9.18.3 Hotfix
+
+May 07, 2024
+
+
+**Bug Fix**
+
+* [External API] Fixed issue where API Doc does not load
+* [Security] Fixed issue where Save Changes does not work when only DAC license is available
+* [DAC] Fixed issue where failure logs are not left in Database Access History when Agentless connection fails
+* [DAC] Fixed issue where first query's metadata remains when executing queries through Workflow in MySQL
+* [Audit Log Export] Fixed bug where Table(s) column data is displayed as "" in Query Audit Export
+* [Audit] Fixed issue where Table names are not recorded normally during multi-query submission
+* [Agent] Fixed issue where connection fails through DBeaver with policy-configured Connection
+* [Agent] Fixed issue where Agent does not run in specific cases on Linux
+
+
+## QueryPie 9.18.2 Hotfix
+
+April 26, 2024
+
+
+**Bug Fix**
+
+* [Alert] Fixed service usage issues when excessive alert sending failures occur
+* [Security] Fixed error log occurrence issue related to Web IP Access Control settings
+* [Report] Fixed User Name non-display bug in User Group Member Added History report
+* [External API] Fixed error occurring when querying connection list when Connection Owner is set
+* [DAC] Fixed error occurring when entering Proxy Management page in specific cases
+
+
+## QueryPie 9.18.1 Hotfix
+
+April 22, 2024
+
+
+**New Features**
+
+* [SAC] Added new Role-based Access Control functionality
+* [SAC] Policy setting functionality through PaC (Policy as Code) method
+* [SAC] Added new Blocked Accounts menu and Unlock functionality
+
+
+**Enhancement**
+
+* [SAC] Simplified Workflow > Server Access Request approval form
+* [SAC] Added manual server addition functionality within server groups
+
+
+## QueryPie 9.18.0 Release
+
+April 04, 2024
+
+
+**New Features**
+
+* [IAM] New administrator role (Role) setting functionality release
+* [DAC] Added MongoDB ledger table control functionality support
+
+
+**Enhancement**
+
+* [SAC] New resource-related External API V2 release
+
+
+**Bug Fix**
+
+* [Agent] Added certificate verification failure related notifications and logs
+* [DAC] Fixed 20M download limit related issues
+* [DAC] Fixed issue where Table names are truncated during MySQL 8.0 version migration
+* [DAC] Fixed issue related to downloading all logs when applying filters in Audit Logs Export
+* [IDP] Fixed issue where login is not possible with SAML Redirect method
+
+

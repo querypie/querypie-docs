@@ -1,0 +1,60 @@
+---
+title: 'Using Web SFTP'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie provides web SFTP that allows you to perform various tasks through a web browser.
+
+## Web SFTP Screen Layout
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Servers &gt; Terminal](/user-manual/server-access-control/using-web-sftp/image-20240802-061021.png)
+<figcaption>
+QueryPie Web &gt; Servers &gt; Terminal
+</figcaption>
+</figure>
+
+* When you successfully connect by selecting the SFTP protocol, the web SFTP screen is displayed as shown above.
+* The top has a toolbar where you can open and navigate between multiple servers and sessions, and the bottom has an SFTP screen where you can perform various tasks.
+
+## Using Web SFTP Features
+
+<figure data-layout="center" data-align="center">
+![image-20240723-160917.png](/user-manual/server-access-control/using-web-sftp/image-20240723-160917.png)
+</figure>
+
+1. Path display window: Shows the current location, and you can easily navigate by entering the desired path and pressing the `Enter` button.
+2. `Remove`: You can select and delete multiple directories and files.
+3. `Create Directory`: Click to display a popup window where you can enter the directory name and create a directory.
+4. `Upload`: You can upload directories and files from your local PC.
+5. `Download`: You can select and download multiple files. (However, directory types cannot be downloaded)
+
+<Callout type="info">
+Some features may be restricted depending on the policies set by the administrator on that server.
+</Callout>
+
+## Checking File Upload/Download Status
+
+You can check the transfer status and results through the following popup window when uploading and downloading files.
+
+<figure data-layout="center" data-align="center">
+![image-20240802-061430.png](/user-manual/server-access-control/using-web-sftp/image-20240802-061430.png)
+</figure>
+
+1. **Name**: The names of directories and files are displayed.
+2. **Progress**: The transfer rate is displayed.
+3. **Result**: The transfer result is displayed as follows:
+    1. **[pending]**: Waiting for transfer
+    2. **[uploading]** / **[downloading]**: Currently transferring to the actual server after transfer completion
+    3. **[success]**: Transfer completed
+    4. **[failure]**: Transfer failed
+4. **Completion Time**: The time of transfer completion or transfer failure is displayed.
+5. `Cancel` button: When pressed during upload/download, the transfer status of all files except those processed as **[success]** is canceled. If all files have been uploaded/downloaded, the button changes to a `Close` button.
+
+<Callout type="info">
+**Q. Are there size limitations when uploading/downloading files?**
+A. Only files under 1GB can be uploaded, and files exceeding this size will be processed as **[FAILURE]**.
+</Callout>

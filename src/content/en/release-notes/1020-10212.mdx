@@ -1,0 +1,395 @@
+---
+title: '10.2.0 ~ 10.2.12'
+---
+
+## QueryPie 10.2.12 Release
+
+June 13, 2025
+
+
+**Bug Fix**
+
+* [General] Fixed issue where proxy ports are not allocated for clusters with instances in multi-agent
+* [DAC] Improved issue where internal API is unnecessarily called repeatedly when copying clipboard
+* [DAC] Changed session connection check query to fix Hive connection issue
+* [DAC] Fixed issue where incorrect messages are output when Redshift query errors occur
+* [DAC] Fixed error occurring when querying SECONDATE type in SAP HanaDB
+
+
+## QueryPie 10.2.11 Release
+
+May 28, 2025
+
+
+**Enhancement**
+
+* [General] Improved performance of QueryPie internal batch jobs
+* [SAC] Added customization functionality to select key_type as rsa or ed25519 when using SSH CA engine in Vault
+
+
+**Bug Fix**
+
+* [DAC] Fixed issue where all errors in Postgre/Redshift Proxy are processed as "An I/O error occurred while sending to the backend." message
+* [DAC] Fixed issue where PostgreSQL Unmasking Request fails under specific conditions
+
+
+## QueryPie 10.2.9 Release
+
+May 02, 2025
+
+
+**Enhancement**
+
+* [SAC] Improved to maintain sessions even when Role changes and Direct Permission is granted
+
+
+**Bug Fix**
+
+* [DAC] Fixed error where selecting tables with 400 columns fails in Impala through proxy
+* [DAC] Fixed MongoDB memory leak error
+* [DAC] Fixed error where Schema-enabled DBs cannot be applied for Unmasking Request
+* [General] Fixed error where infinite connection attempts occur when SSL is enabled in QueryPie Meta DB
+* [General] Fixed error where MinIO Endpoint URL cannot be configured in S3-compatible storage
+* [General] Fixed error where user groups cannot be deleted
+* [General] Fixed error where approvers do not receive Slack DM when submitting workflow
+* [WAC] Fixed issue where Invalid Token debug logs are excessively output when updating login status
+
+
+## QueryPie 10.2.8 Release
+
+April 11, 2025
+
+
+**New Feature**
+
+* [DAC] Added new ClickHouse vendor support
+* [DAC] Added masking release functionality for specific IP ranges
+
+
+**Enhancement**
+
+* [General] Added Network Zone External API validation check
+* [General] Improved text copy functionality in Alert Dialog modal
+* [General] Changed QUERYPIE_WEB_URL environment variable setting location (moved to Meta DB)
+* [Agent] Added SAC support in multi-agent
+* [Agent] Added multi-agent support for Linux OS
+* [Agent] Expanded macOS Status menu and tray icon functionality
+* [DAC] Added Temporary Table support in PostgreSQL
+* [DAC] Added reason input modal support in multi-agent environment
+* [DAC] Added vendor support level display in DB Connections detail page
+* [DAC] Added $search, $searchMeta stage support for MongoDB Atlas Search
+* [DAC] Improved to include executed queries in logs when Sensitive Data access events occur
+* [SAC] Added user-customizable RDP port functionality
+* [KAC] Added dynamic values (User Group) to kubernetesGroup item in Policy
+* [WAC] Added Root CA certificate management functionality in Web App Configurations
+* [WAC] Advanced Policy - structural improvement and WildCard support
+
+
+**Vulnerability**
+
+* [General] Added password change enforcement and deletion functionality for qp-admin default account
+
+
+**Bug Fix**
+
+* [General] Improved issue where successful logins are included when calculating login attempt counts
+* [Agent] Fixed width inconsistency in Host selection dropdown before and after multi-agent login
+* [DAC] Improved unmanaged memory leak in PostgreSQL
+* [DAC] Fixed error where column information for specific functions is not displayed when AS statement is missing in PostgreSQL
+* [DAC] Improved Empty Query response processing logic in PostgreSQL
+* [DAC] Fixed error where results exceeding 1,021 are not displayed normally in SQL Request results tab
+* [DAC] Fixed proxy connection failure when querying tables with many columns in Impala
+* [DAC] Fixed issue where Default Privilege selection window appears when users without permissions execute queries
+* [SAC] Fixed error where existing session tab history is not maintained when accessing new sessions in Web Terminal
+* [SAC] Fixed bug where SSH connection through Agent is not possible in VDI environment (Windows)
+* [SAC] Fixed storage error occurring when changing existing account's Secret Store
+
+
+## QueryPie 10.2.7 Release
+
+March 20, 2025
+
+
+**Improvement**
+
+* [General] Added items to Workflow Request notification messages delivered through Slack DM
+* [Syslog] Added Urgent Mode item to Legacy Syslog format
+* [Syslog] Added Urgent Mode item when sending Workflow New Request events
+
+
+**Bug Fix**
+
+* [DAC] Added Redshift Connector package support
+* [SAC] Fixed memory leak in Windows server agent process detection
+* [Multi-Agent] Modified to allow IP and HTTP domain registration when registering Host
+* [Multi-Agent] Fixed memory shortage and added automatic recovery functionality
+* [Agent] Fixed intermittent agent termination when RDP Password is incorrectly entered
+
+
+## QueryPie 10.2.6 Release
+
+March 07, 2025
+
+
+**New Feature**
+
+* [DAC] Added Custom Data Source connection support (Endpoint Proxy)
+* [SAC] Added new VNC protocol support
+* [DAC] Added new Teradata vendor support
+* [DAC] Beta release of tag-based DB policy template functionality
+* [SAC] Added hourly permission escalation request and approval functionality for server access
+
+
+**Improvement**
+
+* [General] Improved Slack integration functionality (replaced existing Slack DM)
+* [General] Changed Action Rate Limit criteria to IP and Access Token combination
+* [General] Improved multiple selection UI for SQL type in Query Audit logs
+* [General] Applied UTF-8(BOM) encoding when generating Report CSV files
+* [General] Improved to restrict duplicate actions within same request in Workflow
+* [Agent] Added fast connection support for Database 3rd Party Client in multi-agent
+* [DAC] Added SID information to Proxy Info in Oracle user connection page
+* [DAC] Activated Dr.Sum SSH functionality
+* [SAC] Added automatic tagging functionality during Cloud Provider synchronization
+* [SAC] Improved to allow Agent installation and connection on Rocky Linux 9
+* [SAC] Improved loading speed of Server Groups and Servers list when granting server permissions
+* [WAC] Added Web App Configurations page
+* [WAC] Added Web App watermark text customization functionality
+* [WAC] Refined Web App user behavior Event Log
+* [AIDD] Added timeout option to Discovery Job to allow execution for limited time
+
+
+**Bug Fix**
+
+* [Agent] Fixed intermittent 'SecretString' issue in agent
+* [DAC] Fixed issue where table references in WITH statements are not possible when using PostgreSQL UNION statements
+* [DAC] Fixed issue where MSSQL dates are displayed in 12-hour format
+* [Workflow] Fixed issue related to Access Control Logs when processing Reject in DB Access Request
+
+
+## QueryPie 10.2.5 Release
+
+February 14, 2025
+
+
+**New Feature**
+
+* [Agent] Multi-agent MVP release
+* [SAC] Added new Filezilla SFTP client support to QueryPie Agent
+* [SAC] Added new x-shell SSH client to QueryPie Agent
+* [SAC] Developed Policy creation/modification/deletion and Role Policy addition/removal External API
+
+
+**Improvement**
+
+* [DAC] Improved exception handling when users click cancel button during BigQuery OAuth service login process
+* [DAC] Added Redis Enterprise support
+* [SAC] Improved to ignore consecutive enters in logs
+* [SAC] Added AD account connection support to RDP Windows Server
+
+
+**Bug Fix**
+
+* [DAC] Improved to apply policies only when actual change target table is Ledger when identifying ledger tables
+* [DAC] Fixed Ledger identification issue for INSERT target tables
+* [DAC] Fixed SQLServer availability group dashboard usage issue
+* [DAC] Fixed memory overload issue when executing large queries after enabling DML Snapshot option
+* [DAC] Fixed error when executing queries after setting SQLServer SET STATISTIC IO, TIME, etc.
+* [Workflow] Fixed error where approval fails when approval request includes deleted connections
+
+
+## QueryPie 10.2.4 Release
+
+January 24, 2025
+
+
+**New Feature**
+
+* [DAC] Added new Spanner vendor support
+* [DAC] Added new Dr.Sum vendor support
+* [DAC] Added OAuth authentication support for BigQuery connection
+* [KAC] Added Reverse Tunnel support for Kubernetes clusters (NOVA)
+* [SAC] Added Cloud Provider registration/modification/deletion External API support
+* [Workflow] Added user SQL Request request and execution External API support
+
+
+**Improvement**
+
+* [General] Added Indonesia timezone
+* [General] Improved to change CSV file generation to UTF-8(BOM) encoding type
+* [DAC] Improved to work normally with personal Keytab and UID & PW authentication in workflow
+* [DAC] Improved to allow retry even when account information is incorrect when executing approved queries in SQL Request
+* [DAC] Improved to synchronize even when instances have no Public IP or Private IP during Cloud SQL synchronization
+* [DAC] Improved SQL History panel in web editor to sort executed at in reverse order
+* [DAC] Improved Athena Workgroup registration
+* [DAC] Improved Database Filter operation during GCP synchronization
+* [DAC] Improved Masking policy scan logic when accessing DB connections
+* [DAC] Redirect to custom link when switching to workflow after executing Ledger target DML queries
+* [SAC] Added HA configuration and PPv2 support for NOVA Server
+* [AIDD] Added SSL support for all supported databases
+* [SAC] Improved UX of select all checkbox when selecting servers
+* [SAC] Improved to allow unlimited Expiration Date setting when granting server access permissions
+* [SAC] Improved large-scale batch server permission granting (Direct Permission)
+* [SAC] Requested to allow modification of items other than servers in Server Group modification page
+* [SAC] Added Proxyjump Multi-Hop support
+* [Audit] Added option to truncate text when attempting Audit Logs Export
+* [WAC] Improved Sub Path registration method when creating WebApp
+* [WAC] Supplemented access control logic for Single Page Application
+* [WAC] Added RootCA certificate download functionality
+
+
+**Bug Fix**
+
+* [Workflow] Fixed issue where All Requests menu cannot be queried with Full Access Policy permission in Workflow Lists
+* [DAC] Fixed error related to Target Table loading when performing CSV Import
+* [DAC] Fixed issue where UPDATE, DELETE, MERGE statements including WITH statements in SQLServer are executed as SELECT
+* [DAC] Fixed issue where Import does not work normally when executing queries during data Import in Oracle
+* [DAC] Fixed issue related to ORDER BY sorting display in SELECT statements
+* [DAC] Fixed issue where Role ARN, etc. are not displayed normally when saving AWS synchronization information
+* [DAC] Fixed "This user does not exist anymore" error occurring during Cloud Provider synchronization
+
+
+## QueryPie 10.2.3 Release
+
+December 24, 2024
+
+
+**Bug Fix**
+
+* [AIDD] Modified to prevent Hash duplication when specific DB Data Paths overlap to ensure Discovery Jobs work normally
+
+
+## QueryPie 10.2.2 Release
+
+December 19, 2024
+
+
+**New Feature**
+
+* [WAC] Web Access Controller MVP version release
+* [DAC] Added new OpenSearch vendor support
+* [General] Added Email notification sending functionality
+* [General] Implemented automatic login between web and agent through temporary Login Token
+
+
+**Improvement**
+
+* [Agent] Improved to explicitly obtain administrator privileges before proceeding with upgrade
+* [Agent] Added SQLGate Quick Connection support in Windows agent
+* [AIDD] Advanced user dashboard and improved scan performance
+* [DAC] Provided environment variable to allow using masked columns in WHERE conditions
+* [DAC] Added Athena Ledger Table support
+* [DAC] Added Export Purpose functionality to Ledger policy
+* [DAC] Added fixed/random password options for Oracle, MongoDB, PostgreSQL Proxy (Agent)
+* [SAC] Improved to allow Windows Server connection without RDP Server Agent
+* [SAC] Added Allow/Deny spec to Command Template
+* [SAC] Added OpenSSH Certificate support
+* [SAC] Added mapping functionality with existing WindowOS after installing Server Agent on Windows server
+* [SAC] Added Vault SSH CA Engine (signed ssh certificates)
+* [SAC] Added Server Access Control Role permission related External API support
+* [SAC] Added option to maintain open sessions when Policy changes
+* [KAC] Improved Tips suggestion content for policy syntax changes
+* [KAC] Improved policies related to Non-namespaced resources
+* [KAC] Added Request Audit related logs to Alert types
+* [General] Changed Alert functionality UI/UX and improved condition selection related items
+* [General] Improved to store in Key format during Cloud Provider synchronization for reuse and synchronization
+
+
+**Bug Fix**
+
+* [DAC] Fixed cursor position related issue when writing queries in web editor on Windows environment
+* [SAC] Fixed issue where TELNET, FTP Protocol is not exposed to general users
+
+
+## QueryPie 10.2.1 Release
+
+December 06, 2024
+
+
+**New Feature**
+
+* [Admin] Implemented Proxy Throttling functionality
+* [DAC] Added BigQuery policy support
+* [DAC] Added new Vertica support
+* [DAC] Added MariaDB ledger functionality support
+* [DAC] Added Ledger table management functionality
+* [SAC] Added Reverse Tunneling Agent functionality for server connection (NOVA)
+
+
+**Improvement**
+
+* [Admin] Improved integrated report functionality
+* [Admin] Granularized User Management admin permissions
+* [Admin] Added Name value selection functionality when integrating Authentication > LDAP
+* [DAC] Improved log display for rules set with regular expressions in Sensitive Data
+* [DAC] Improved Access Control UI/UX
+* [DAC] Added expiration date specification functionality when granting DB permissions in admin page
+* [DAC] Added Ledger functionality API
+* [DAC] Improved to apply rules to multiple columns in masking policy
+* [DAC] Added MySQL 8.0 JSON Table Function support
+* [DAC] Improved to allow personal DB account usage and logging when accessing Oracle OCI
+* [SAC] Advanced command bypass control functionality (Command Restrictions)
+* [SAC] Added Allow / Deny spec when setting Command Template
+* [SAC] Added JumpHost SSH Key algorithm support when using ProxyJump
+* [KAC] Added Test Connection functionality in EKS cluster detail page
+
+
+## QueryPie 10.2.0 Release
+
+November 08, 2024
+
+
+**New Feature**
+
+* [General] Multi-language global settings
+* [General] User password security rule setting functionality
+* [DAC] Added Hive data policy support (Data Access, Data Masking, Sensitive Data)
+* [SAC] Added OTP Engine type support when integrating with Vault
+* [Workflow] Added Unmasking Request functionality for masking release requests
+* [Workflow] Added execution plan functionality in SQL Request
+
+
+**Improvement**
+
+* [General] Added Message Template Variable to Alert (workflowUuid, urgent, executedAt)
+* [General] Changed Job execution and result processing to handle success/failure by individual items rather than all
+* [IDP] Masked API token values for Okta Sync
+* [IDP] Added Dry Run functionality for Okta, Onelogin, LDAP synchronization
+* [DAC] Added Dry Run functionality for cloud synchronization
+* [DAC] Added search functionality in Policy detail page
+* [DAC] Added MariaDB Ed25519 Password encryption support
+* [DAC] Added PK to DML Snapshot UPDATE statements
+* [DAC] Added connection name, host tooltip to connection popup in web editor
+* [DAC] Improved reason input character limit to maximum 300 characters
+* [DAC] Fixed display error in connection detail page when there are permissions processed for long-term inactivity
+* [DAC] Modified to leave parameter information in Audit when executing MySQL Prepared Statements
+* [SAC] Applied terminal Color Theme by server
+* [SAC] Added Test Connections functionality for individual servers in Server Groups
+* [SAC] Added Port number specification functionality during server synchronization
+* [Audit] Added KAC Audit Log Export support
+* [Audit] Added multiple selection functionality for SQL Type filter in Query Audit menu
+* [Workflow] Added External API support for user-specific approval
+* [Agent] Improved to move to web login page immediately after Host input
+* [AIDD] Added AI classifier
+* [AIDD] Improved false positives and stability, added dashboard widgets
+
+
+**Bug Fix**
+
+* [General] Fixed issue where logout occurs before reaching session timeout threshold
+* [General] Fixed error where Reset Password fails when performed by account with Policy of User Admin Role permission
+* [DAC] Fixed issue where NewLine is not displayed when querying or modifying grids
+* [DAC] Fixed issue where Materialized View cannot be queried when QSI is applied to PostgreSQL
+* [SAC] Fixed Server Group not found error when deleted servers exist
+* [DAC] Fixed issue where queries executed normally through Agent in MongoDB are recorded as Stopped in logs
+* [DAC] Fixed issue where Failure is recorded in DB Access History when MongoDB connection succeeds through Agent
+* [DAC] Fixed error when executing use statements for databases starting with numbers in some vendors
+* [DAC] Fixed error where synchronization fails when exceptions are processed for resources without permissions
+* [DAC] Fixed issue where Oracle proxy does not work properly when identical BLOB data exists
+* [DAC] Fixed issue where Oracle proxy connection intermittently terminates when Oracle usage is high
+* [DAC] Processed to skip instances in Modifying status during AWS cloud synchronization
+* [DAC] Fixed Unauthorized error when executing queries after agent Oracle connection
+* [Audit] Fixed issue where Logout logs occur as many times as tabs when session timeout occurs
+* [Audit] Responded to memory issues when Query Full Text capacity is large during log export attempts
+
+
