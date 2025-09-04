@@ -1,0 +1,139 @@
+---
+title: '[10.3.0 ~] WAC JIT権限取得Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+QueryPie WACを通じたWeb Appsに対するJIT（Just-in-Time）権限取得の使用方法をご案内します。
+
+JIT権限取得は以下のような順序で行われます。
+
+1. QueryPie WACにWeb Appを登録します。
+2. Web App配下にOwnerとMemberを登録します。
+3. 利用者がアクセスするWeb Appに対するアクセス申請をします。
+4. Ownerに登録された決裁権者が利用者のWeb Appアクセスを承認します。
+
+<Callout type="info">
+**案内**
+
+JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
+
+このガイドを実行するには、QueryPie管理者権限のうちOwnerまたはWeb App Admin権限が必要です。
+</Callout>
+
+
+# Admin-side
+
+## 1. Webアプリケーションの登録
+
+1. **Admin > Web Apps > Connection Management > Web Apps** メニューに移動します。
+2. `Create a Web App` ボタンをクリックすると、Webアプリケーション登録ページに移動します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20250412-225620.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/screenshot-20250412-225620.png)
+</figure>
+
+以下の情報を入力します。
+
+1. **Name**: QueryPie Web Site
+2. **Base URL**: `querypie.com` または `10.10.10.10:443` 
+    1. Base URLにはサブパス（例：`/ko`）を含めることはできません。
+    2. Base URLに `https://` を入力するとエラーメッセージが表示されます。
+    3. Base URLに `www.` を入力するとエラーメッセージが表示されます。
+3. **Description**: Webアプリケーションの説明を入力してください。（例：クエリパイウェブサイト）
+4. **URL Paths**: サブパスを入力します。ここでは空にしておきます。
+5. **Watermark**: Webアプリケーションアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
+    1. Webアプリケーションアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
+    2. ガイドではOn状態を前提として案内します。
+6. **User Activity Recording**: ユーザー行動記録の有無
+    1. Onで有効化後、すべてのオプションをオンにしてください。
+    2. Excluded URL Pathsはユーザー行動記録を除外するパスを入力します。ここでは空にしておきます。
+7. **Tag**: Webアプリケーションのタグです。ここでは空にしておきます。
+8. `Save` ボタンを押して保存します。
+
+## 2. Web App Owner / Member登録
+
+<figure data-layout="center" data-align="center">
+![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
+</figure>
+
+1. Webアプリケーション詳細ページにアクセスします 
+2. 右上「Owner/Member」ボタンをクリックします。
+3. 右側のドロワーウィンドウが開き、対象者を検索して「Assign as」列で左側Ownerと右側Memberボタンを選択して役割を付与します。
+
+<Callout type="info">
+JIT（Just-in-Time）権限付与には以下の2つの役割があります。
+* Owner: このWebアプリケーションに対するJust-in-time要求を承認できる主体
+* Member: このWebアプリケーションに対するJust-in-time要求を上申できる主体
+</Callout>
+
+## 3. 利用者のJIT Web Appアクセス権限申請
+
+<Callout type="info">
+QueryPieを通じてWeb Appアクセス時、Root CA証明書インストールとChromeのExtensionのインストールが必要です。
+
+インストール方法は以下のマニュアルを参考にしてください。
+
+[WAC Quickstart | 1.-Root-CA-証明書-インストール](.#1.-root-ca-%ec%9d%b8%ec%a6%9d%ec%84%9c-%ec%84%a4%ec%b9%98%ed%95%98%ea%b8%b0)
+
+[WAC Quickstart | 2.-Extension-ダウンロード](.#2.-extension-%eb%8b%a4%ec%9a%b4%eb%a1%9c%eb%93%9c-%eb%b0%9b%ea%b8%b0)
+
+[WAC Quickstart | 3.-Extension-インストール-および-Host-設定](.#3.-extension-%ec%84%a4%ec%b9%98-%eb%b0%8f-host-%ec%84%a4%ec%a0%95%ed%95%98%ea%b8%b0)
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20250513-065134.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-065134.png)
+</figure>
+
+1. QueryPieアクセス後、上部のWeb Appsをクリックします。
+2. 左側Roleをクリックして「Just In Time Role」を選択します。
+3. アクセスしたいサーバーをクリックします。
+4. 表示されるアラートの「Request Access」をクリックしてWorkflowに移動します。
+
+
+<figure data-layout="center" data-align="center">
+![image-20250513-065247.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-065247.png)
+</figure>
+
+1. Web App Just-In-Time Access Requestにアクセスします。
+2. Step1を記述します。Web Appsで割り当てられた項目をクリックした場合、別途選択は必要ありません。
+    1. **Web App**: 利用者がMemberに指定された項目のみ選択可能です。
+    2. **Approvers**: Ownerに指定されたUserを表示します。
+3. Step2を記述します。
+    1. **Request Title**: 申請タイトルを入力します。
+    2. **Access Duration (Minutes)**: 使用時間を入力します。分単位で申請されます。
+    3. **Reason for Request**: 申請理由を入力します。
+4. Submitをクリックします。
+
+<Callout type="info">
+JIT（Just-in-Time）権限申請時、以下のような制約事項があります。
+*  **承認者はWeb App Ownerに固定** されています。
+* 承認条件は **複数の承認者中最低1名が承認すれば完了** するよう固定されています。
+*  **承認段階追加や承認者変更は制限** されます。
+* 事後承認モードはApproval Configurationで有効化された場合に表示され、Offにすると要求画面で表示されません。
+</Callout>
+
+## 4. 決裁権者のJIT Web Appアクセス権限要求承認
+
+<figure data-layout="center" data-align="center">
+![image-20250513-072925.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-072925.png)
+</figure>
+
+1. （Web App Ownerに指定された）決裁権を持つユーザーがWorkflowにアクセスします。
+2. Received Requests > To Doに移動します。
+3. 申請内容をクリックしてDetailページに移動します。
+4. 上部のApproveをクリックします。
+
+
+## 5. QueryPieを通じてWebアプリケーションにアクセス
+
+<figure data-layout="center" data-align="center">
+![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)
+</figure>
+
+1. QueryPie Web Appsに移動します。
+2. 左上のRoleをクリックしてJust In Time Roleに変更します。
+3. Web App Dashboard内のMy Appsに先ほど申請したQueryPie Web Siteアプリケーションアイコンに「JIT Active」が表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。
+4. 申請した時間が満了するとアクセス権限は自動的に回収されます。
+
+

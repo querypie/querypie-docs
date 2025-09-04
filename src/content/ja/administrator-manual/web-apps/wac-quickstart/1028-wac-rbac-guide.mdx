@@ -1,0 +1,310 @@
+---
+title: '[10.2.8~] WAC RBAC Guide'
+---
+
+import { Callout } from 'nextra/components'
+
+QueryPie WACはRBAC（Role-Based Access Control）を提供しています。
+
+このドキュメントでは `10.2.8` 以上のバージョンに適用されたWACロールとポリシーについて案内します。
+
+# WACロールとポリシー
+
+* **ポリシー（Policy）** はWACに登録されたリソースに対してどのようにアクセスを制御するかを記述した仕様で、YAML形式で記述します。
+    * Webアプリケーションリソースに対する許可またはブロックが含まれます。
+* **ロール（Role）** はユーザーが何をできるかできないかを定義するオブジェクトです。
+    * ロール1つの中には複数のポリシーを割り当てることができ、この場合ポリシーはOR条件で結合されます。
+    * 同一のWeb Appおよびサブパスに対する複数のポリシーが存在する場合、ブロック（Deny）ポリシーが許可（Allow）ポリシーより優先されます。
+* ユーザーは複数のロールを割り当てられるが、一度に1つだけ選択して使用します。
+
+<Callout type="important">
+**注意**
+ロールに含まれるポリシーをすべて統合した時、**最低1つの許可ポリシー**が残っていなければなりません。<br/>ブロックポリシーのみで構成されたロールは何のアプリケーション権限も付与しないため、正常な使用が不可能です。
+</Callout>
+
+# WAC YAMLポリシーの基本構造
+
+WACのポリシーはYAML形式で記述され、その基本構造は以下の通りです。
+
+## YAMLドキュメント例
+
+```
+apiVersion: webApp.rbac.querypie.com/v1
+kind: WacPolicy
+
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPathTags:              
+          access: "admin"
+      - webApp: "QueryPie Customer Portal"
+        urlPaths: ["*"]          
+    conditions:
+      userAttributes:
+        department: "White"
+      ipAddresses: 
+        - "10.10.0.0/24"
+        - "10.10.1.79"
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management/roles"
+```
+
+
+## YAML仕様
+
+<table data-table-width="760" data-layout="default" local-id="bb2479df-82c8-474e-8723-247d4037944a">
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th data-highlight-colour="#f0f1f2">
+**Category**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Property**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Required**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Description**
+</th>
+<th data-highlight-colour="#f0f1f2">
+**Valid Values**
+</th>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`apiVersion`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+記述されたYAML Codeのバージョン
+システムで管理する値で、修正不要
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp.rbac.querypie.com/v1`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`kind`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+記述されたYAML Codeの種類
+システムで管理する値で、修正不要
+</td>
+<td data-highlight-colour="#ffffff">
+`WacPolicy`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+`spec:`<br/> `&lt;effect&gt;`
+</td>
+<td data-highlight-colour="#ffffff">
+-
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+ポリシー内の詳細ルール（許可または拒否）
+</td>
+<td data-highlight-colour="#ffffff">
+`allow`, `deny`
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+
+</td>
+<td data-highlight-colour="#ffffff">
+`resources`
+</td>
+<td data-highlight-colour="#ffffff">
+**[required]**
+</td>
+<td data-highlight-colour="#ffffff">
+アクセスを許可/拒否するリソース指定
+</td>
+<td data-highlight-colour="#ffffff">
+`webApp`, `urlPaths`, `urlPathTags` (urlPathTagsは `spec: allow` でのみ使用可能)
+</td>
+</tr>
+<tr>
+<td data-highlight-colour="#ffffff">
+
+</td>
+<td data-highlight-colour="#ffffff">
+`conditions`
+</td>
+<td data-highlight-colour="#ffffff">
+**[OPTIONAL]**
+</td>
+<td data-highlight-colour="#ffffff">
+ルール適用対象に対する詳細条件
+(現在 `spec: allow` でのみ使用可能)
+</td>
+<td data-highlight-colour="#ffffff">
+`userAttributes`, `ipAddresses`
+</td>
+</tr>
+</tbody>
+</table>
+
+以下でポリシー記述に必要なQueryPie WAC Policy YAML文法を案内します。
+
+## spec: &lt;effect&gt;**[required]**
+
+ポリシーの具体的なルールの許可または拒否の有無を指定します。`spec: allow` または `spec: deny` をサポートします。
+
+1. 1つのポリシーには最大1回の `allow`、1回の `deny` のみが存在できます。
+2. ポリシー内で同一の要素に対して `deny` と `allow` が同時に宣言された場合、`deny` が優先されます。
+
+## Resources**[required]**
+
+許可またはブロックポリシーを設定したいWebアプリケーションリソースを指定します。配下に `webApp` を必須で持ち、`urlPaths` または `urlPathTags` を持ちます。
+
+<Callout type="info">
+`resources` は `spec: allow`、`spec: deny` で両方とも許可されます。
+ただし、`urlPathTags` による明示は `spec: allow` でのみサポートされます。
+</Callout>
+
+### webApp**[required]**
+
+QueryPieに定義したWebアプリケーションリソース名を入力します。
+
+1. 明示的にWebアプリケーションを特定する必要があり、ワイルドカードや正規表現は許可されません。
+    * `- webApp: "QueryPie"` (O)
+    * `- webApp: "*Query*"` (X)
+    * `- webApp: "QueryPie$"` (X)
+2. 1つの `spec` 内で複数のWebアプリケーションを列挙できます。
+3. Webアプリケーション名は以下の条件を満たす必要があります。
+    * 文字数最大120文字
+    * アルファベット大文字小文字（case-sensitive）、数字および一部特殊記号（`_`、`-`、`(`、`)`、`[`、`]`）のみ許可
+    * スペース許可
+    * 開始と終了はアルファベット大文字小文字または数字に制限
+    * 重複不可
+
+Webアプリケーションのサブパスレベルでアクセス制御ポリシーを運用するためには、`webApp` 配下に `urlPaths` または `urlPathTags` を入力できます。1つのポリシー内で、1つのWebアプリケーションに対して `urlPaths` と `urlPathTags` を同時に指定することは **不可能** です。
+
+### urlPaths**[OPTIONAL]**
+
+ポリシーを適用したい特定のWebアプリケーションリソースのサブパスを特定します。
+
+1. **Admin > Web App** に登録されたサブパスのみ登録可能です。
+2. Base URLを含めて、Webアプリケーションに存在する **すべて** のサブパスに対して許可または拒否するには `urlPaths: ["*"]` で記述します。
+    * 例：QueryPie Web Admin の全体パスに対してアクセスブロック
+3. サブパス入力時、入力したパスに対してポリシーが適用されます。
+    * サブパスはリストで列挙し、複数入力できます。
+    * パスの最後の部分にワイルドカードを入力して、特定パス配下のすべてのパスを指示できます。（上位パスは含みません）
+    * 入力したパス中に相互に重複するパスを同時に入力できません。
+        * 例：QueryPie Web Admin の `/general-settings/*` と `/general-settings/user-management` を **同時に入力不可** 
+4. パスの中間またはパス名の一部にワイルドカードを入力したり、正規表現を入力することは **できません** 。
+    * `"/*-settings"` (X)
+    * `"/*/edit"` (X)
+    * `"^/database-settings/policies/data-.*$"` (X)
+5. 同一のリソース（およびサブパス）に対してブロックポリシーと許可ポリシーが重複する場合、**ブロックポリシーが優先適用**されます。
+
+### urlPathTags**[OPTIONAL]**
+
+Webアプリケーションに登録されたサブパス別URL Pathタグを基準に、アクセスを許可するサブパスを指定します。
+
+1. タグは大文字小文字を区別し、複数入力できます。
+    * Keyが同一のタグを複数入力時、**OR** 条件で動作します。
+        * 例：`access: admin` または `access: user` が付与されたパスに対してアクセス許可
+    * Keyが異なるタグを複数入力時、**AND** 条件で動作します。
+        * 例：`access: admin` と `type: general` が一緒に付与されたパスに対してアクセス許可
+
+## Conditions**[OPTIONAL]**
+
+`conditions` はルール適用対象リソースの範囲を狭めるための条件を定義します。`userAttributes`、`ipAddresses` 2種類の条件指定が可能です。
+
+<Callout type="info">
+`conditions` はspec:allowでのみ文法的に許可されます。
+</Callout>
+
+### userAttributes**[OPTIONAL]**
+
+QueryPieユーザーの属性（attribute）を基準にルールによってリソースアクセスが許可されるユーザーの範囲を限定します。
+
+<Callout type="info">
+ユーザー属性はAdministrator > General > Usersメニューのユーザー別詳細ページで照会できます。QueryPieで追加されたユーザーの属性は詳細ページで追加/変更/削除などが可能で、IdP同期によって追加されたユーザーの属性はユーザー元帳（Okta、LDAPなど）で変更できます。
+</Callout>
+
+属性情報は大文字小文字を区別し、複数入力できます。
+
+* Keyが同一の属性を複数入力時、OR条件で動作します。
+    * 例：部署（department）がPMまたはQAのユーザーに対してアクセス許可
+* Keyが異なる属性を複数入力時、AND条件で動作します。
+    * 例：部署（department）がPMで、職位（title）が管理者のユーザーに対してアクセス許可
+
+### ipAddresses**[OPTIONAL]**
+
+リソースに対するIPアクセス制御条件リストを単一IP、CIDR形式で定義します。
+```
+ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+```
+
+別途定義しない場合、デフォルト値はすべて許可（`0.0.0.0/0`）です。
+
+# 推奨する運用方式
+
+権限別にアクセスを許可するWebアプリケーションおよびサブパスを指定する方式を推奨しています。
+
+1. Webアプリケーション別に存在する権限リストを確認します。 
+    1. 例：採用プラットフォームに対して、
+        1. HR - すべての権限を持つ
+        2. 面接官 - 面接結果を管理するページにのみアクセス可能
+2. Webアプリケーションの権限別にそれぞれRoleを作成します。
+    1. HR, Interviewer
+3. 権限別アクセスポリシーをそれぞれ作成し、RoleにAssignします。
+    1. HR - 採用プラットフォーム内のすべてのパスに対してアクセス許可
+    2. Interviewer - 採用プラットフォーム内の面接結果ページにのみアクセス許可
+
+<Callout type="important">
+**注意**
+
+一部許可パターンを使用する場合、正常なウェブサイト使用のために **必ず入場が必要なランディングページ** を別途ポリシーで構成し、ロールに入れてあげなければなりません。
+
+* 例：ログインページ、リダイレクトページなど
+</Callout>
+
+
+アクセスを許可するサブパスを指定するための方法は以下の2つの中から選択してください。
+
+### タグベースアクセス制御
+
+WebアプリケーションにPathを登録し、各Pathに適切なタグを付与した後、ポリシーでタグベースにアクセスを制御することを推奨します。この方式を使用すると以下のような利点があります。
+
+*  **ロールベースポリシー管理の容易性** : 特定ロールに必要なパスに同一のタグを付与して管理可能
+*  **ポリシー保守の簡素化** : Webアプリケーションに新しいパスが追加されても適切なタグのみ付与すれば既存ポリシー修正なしでアクセス制御可能
+*  **複雑なアクセス制御の実装** : 多様な条件（ユーザー属性、IPアドレスなど）とタグを組み合わせて細かいアクセス制御実装可能
+
+### ワイルドカード活用
+
+新しくサポートされるワイルドカード機能を活用して、特定パス配下のすべてのページに対するアクセスを効率的に制御できます。
+
+* 管理ページの全体アクセス制御：`/admin/*`
+* 特定機能モジュール全体アクセス制御：`/module/orders/*`

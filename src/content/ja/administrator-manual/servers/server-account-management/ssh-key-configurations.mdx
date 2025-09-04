@@ -1,0 +1,41 @@
+---
+title: 'SSH Key Configurations'
+---
+
+## Overview
+
+コネクション接続時アカウントの認証方式がSSH Keyの場合、事前にここでキーを登録して保存しておけます。このように登録しておいたキーはサーバーまたはサーバーグループでAccount項目登録時にAuth TypeをSSH Keyに設定して呼び出せます。
+
+
+## SSH Key登録
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; Create SSH Key](/administrator-manual/servers/server-account-management/ssh-key-configurations/image-20240828-012337.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; Create SSH Key
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurationsメニューに移動します。
+2. 右上の`Create SSH Key`ボタンをクリックします。
+3. 画面に表示されるポップアップでそれぞれ以下項目を入力します。
+    1.  **Name** : SSH Keyを区別できる名前を入力します。
+    2.  **Description** : 該当SSH Keyに対する付加的な説明を入力できます。
+    3.  **Passphrase** : Passphrase使用可否を選択できます。使用を希望するならスイッチボタンをOn状態に変更後Passphraseを入力できます。
+    4.  **Private**   **Key** : Private Keyを形式に合わせて入力します。
+    5.  **Copy from a Key File**  : ファイルからPrivate Keyをコピーします。
+4. `Save`ボタンをクリックして保存します。
+
+
+## SSH Key管理機能
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; SSH Key Details](/administrator-manual/servers/server-account-management/ssh-key-configurations/image-20240828-012530.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Account Management &gt; SSH Key Configurations &gt; SSH Key Details
+</figcaption>
+</figure>
+
+* 接続されたサーバーおよびサーバーグループ照会 : 個別SSH KeyをクリックするとDrawerページが開きながら該当キーを使用中のサーバーグループまたはサーバーが何かを一目で確認できます。
+* SSH Key修正 : 右上にある`Edit`ボタンをクリックしてキーを修正できます。ただし修正時には既存入力したPassphraseとPrivate Keyはセキュリティ上の理由でマスキング処理されて表示され、原文確認が不可能です。
+* SSH Key削除 : 右上にある`Delete`ボタンをクリックしてキーを削除できます。ただし、削除しようとするキーがサーバーグループまたはサーバーで既に使用中の場合は削除が不可能なので、該当キーと接続されたアカウントが存在するサーバーまたはサーバーグループで接続を解除後削除してください。

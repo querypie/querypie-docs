@@ -1,0 +1,56 @@
+---
+title: 'Role付与および回収'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+管理者はユーザーまたはユーザーグループにサーバーアクセス権限がある役割（Role）を付与または回収できます。
+
+## Role付与
+
+### 1. 権限を付与する対象を選択します。
+
+<figure data-layout="center" data-align="center">
+![Administrator > Servers > Server Access Control > Access Control](/administrator-manual/web-apps/web-app-access-control/access-control/granting-and-revoking-roles/image-20250629-161238.png)
+<figcaption>
+Administrator > Servers > Server Access Control > Access Control
+</figcaption>
+</figure>
+
+
+1. **Administrator > Web Apps > Web App Access Control > Access Control** メニューに移動します。
+2. 権限を付与するユーザーまたはユーザーグループを選択します。
+
+### 2. 権限を付与するRoleを選択します。
+
+<figure data-layout="center" data-align="center">
+![image-20250629-161326.png](/administrator-manual/web-apps/web-app-access-control/access-control/granting-and-revoking-roles/image-20250629-161326.png)
+</figure>
+
+1. 画面左側のRolesタブを選択します。
+2. 右側中央で `+ Grant Roles` ボタンをクリックします。
+3. 付与するRole左側のチェックボックスをチェックします。
+4. Expiration Dateを入力します。基本値は1年です。
+5. `Grant` ボタンをクリックします。
+
+
+## Role回収
+
+<figure data-layout="center" data-align="center">
+![image-20250629-161437.png](/administrator-manual/web-apps/web-app-access-control/access-control/granting-and-revoking-roles/image-20250629-161437.png)
+</figure>
+
+1. **Administrator > Web Apps > Web App Access Control > Access Control** メニューに移動します。
+2. 権限を付与するユーザーまたはユーザーグループを選択します。
+3. Rolesタブに移動します。
+4. Roleリストで権限を回収するRoleを選択します。（複数選択可能）
+5. リスト左側上部に表示される `Revoke` ボタンをクリックします。
+6. 確認ポップアップでRevoke入力後 `Revoke` ボタンを押すとRoleが正常に回収されます。
+
+
+<Callout type="info">
+**Q. Role付与または回収された履歴を確認できる場所はありますか？**
+A. AuditメニューでWeb Apps > Web App Role Historyメニューを選択すると確認できます。
+</Callout>

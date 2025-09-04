@@ -1,0 +1,46 @@
+---
+title: 'Server Privilege付与'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+PermissionまたはRoleでアクセス権限が付与されたサーバーに対してServer Privilegeを付与して一時的に特定のコマンド使用を許可できます。既存に既にServer Privilegeを付与した対象にServer Privilegeを再び付与する場合、既存のServer Privilegeを回収し新しく再び付与します。
+
+
+## Server Privilege付与
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; User/Group &gt; Servers &gt; Server Details](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/image-20250307-121546.png)
+<figcaption>
+Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; User/Group &gt; Servers &gt; Server Details
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Server Access Control &gt; Access Controlメニューに移動します。
+2. 別途コマンド例外処理権限を付与するユーザーまたはユーザーグループを選択します。
+3. Serversタブリストで対象サーバー/アカウントを選択してドロワー詳細ページに進入します。
+4. 詳細ページ下段にServer Privilege下段の`Configure`ボタンをクリックします。
+5. モーダルが表示されたら、以下を設定した後`Grant`ボタンをクリックして例外処理を完了します。
+    1.  **Commands**  : 許可が必要なコマンドを記入します。
+        1.  **Keyword**  : キーワードで入力（ls、catなど）
+        2.  **RegEx**  : 正規表現で入力（^sudo\b[^&|;\n]*$など）
+    2.  **Privilege Start Trigger**  : Server Privilege適用時間であるPrivilege Durationの開始トリガーを選択できます。
+        1.  **Access to Server**  : Server Privilege適用後、適用されたユーザーがサーバー接続開始から時間をカウントします。
+        2.  **Grant**  : Server Privilege適用時点からServer Privilege使用可能時間をカウントします。
+    3.  **Privilege Duration**  : Server Privilege適用時間を設定します。分単位で時間を入力できます。Privilege Start Triggerに応じて開始する時点が異なります。
+    4.  **Privilege Expiration Date**  : 上記コマンドに対する別途例外処理有効期限日を指定します。
+6. モーダルの項目はサーバーのOSとRequire Privilegeオプション状態に応じて表示される項目が異なります。
+    1. サーバーのOSがLinuxでRequire Privilegeオプションが有効化された場合
+    2. サーバーのOSがLinuxでRequire Privilegeオプションが無効化された場合
+    3. サーバーのOSがLinuxでなくRequire Privilegeオプションが有効化された場合
+    4. サーバーのOSがLinuxでなくRequire Privilegeオプションが無効化された場合
+
+<Callout type="info">
+**Q. 権限が付与されたり回収された履歴を確認できる場所がありますか？**
+
+A. Server Privilegeを設定する対象サーバーがPermissionで付与された場合、<br/>AuditメニューのServers &gt; Access Control Logsで記録されます。
+
+Server Privilegeを設定する対象サーバーがRoleで付与された場合、<br/>AuditメニューでServers &gt; Server Role History で記録されます。
+</Callout>
