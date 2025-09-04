@@ -44,6 +44,7 @@ next-env.d.ts
 .env*.local
 /public/_pagefind
 /public/sitemap.xml
+/public/*/sitemap.xml
 
 # log files in top dir for maintenance
 /*.log
