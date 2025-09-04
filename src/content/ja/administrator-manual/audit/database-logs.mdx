@@ -1,0 +1,71 @@
+---
+title: 'Database Logs'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieのDatabase Access Controlで発生するログをDatabase Logsで確認できます。DB接続権限付与と回収、DBアクセス履歴、実行したクエリ、DMLクエリスナップショットなどの情報を確認できます。その他、QueryPie内DB接続パスワード失敗および長期未接続による接続ロック履歴を照会し、また解除できます。
+
+## 関連監査ログ種類
+
+クエリパイ共通で提供される監査ログに加えてクエリパイデータベースアクセス制御（QueryPie DAC）ライセンス保有時、以下のようなログタイプを提供します。
+
+<table data-table-width="507" data-layout="default" local-id="95470ac3-09e4-4695-80b7-6e7d4ff27bf8">
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**共通ログ**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**DAC専用ログ**
+</th>
+</tr>
+<tr>
+<td>
+**General**
+* User Access History
+* Activity Logs
+* Admin Role History
+</td>
+<td>
+**Databases**
+* DB Access History
+* Query Audit
+* Running Queries
+* DML Snapshot
+* Account Lock History
+* Access Control Logs
+* Restricted Data Access Logs
+* Masked Data Access Logs
+* Sensitive Data Access Logs
+</td>
+</tr>
+</tbody>
+</table>
+
+<Callout type="info">
+10.3.0に追加された項目
+* Restricted Data Access Logs
+* Masked Data Access Logs
+* Sensitive Data Access Logs
+</Callout>
+
+1.  **General** 
+
+* User Access History : ユーザーログイン、ログアウト履歴
+* Activity Logs : 管理者が実行するリソース登録および設定変更履歴
+* Admin Role History : 管理者権限付与、変更、回収履歴
+
+1.  **Databases** 
+
+* [DB Access History](database-logs/db-access-history) : 接続接続および接続解除履歴
+* [Query Audit](database-logs/query-audit) : 実行が終了したクエリ実行履歴
+* [Running Queries](database-logs/running-queries) : 現在実行中のクエリ
+* [DML Snapshots](database-logs/dml-snapshots) : INSERT / UPDATE / DELETEクエリ実行完了時前後データ記録（記録のために別途設定必要）
+* [Account Lock History](database-logs/account-lock-history) : パスワード失敗および長期未接続による接続ロック履歴
+* [Access Control Logs](database-logs/access-control-logs) : 接続アクセス権限付与および回収履歴
+* Restricted Data Access Logs : Data Access政策によってアクセスが制限されたデータにアクセスした履歴
+* Masked Data Access Logs : Data Masking政策によってマスキングされたデータにアクセスした履歴
+* Sensitive Data Access Logs : Sensitive data政策によってalertが発生した履歴

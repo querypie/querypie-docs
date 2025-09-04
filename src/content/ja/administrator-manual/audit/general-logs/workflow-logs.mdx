@@ -1,0 +1,59 @@
+---
+title: 'Workflow Logs'
+---
+
+## Overview
+
+QueryPieワークフロー承認受付および承認履歴を照会するページです。
+
+ユーザーがWorkflowページで特定権限を申請したり承認者が承認または却下する場合、Workflow Logsで履歴を確認できます。
+
+
+## Workflow Logs照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; General &gt; Workflow Logs](/administrator-manual/audit/general-logs/workflow-logs/image-20241029-052424.png)
+<figcaption>
+Administrator &gt; Audit &gt; General &gt; Workflow Logs
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; General &gt; Workflow Logsメニューに移動します。
+2. Action At基準最新履歴から古い順に管理者権限の付与または回収ログが照会されます。
+    1.  **Name**  : Display Nameが表示されます。
+    2.  **Description**  : 付与された管理者権限詳細
+    3.  **Action By**  : 管理者権限の付与または回収主体（自動回収の場合 **System** で表示）
+3. サポートされる検索条件は以下の通りです。
+    1.  **Workflow Title**  : ワークフロー名
+    2.  **Name**  : ユーザー名
+    3.  **Email**  : メール
+    4.  **Action By**  : アクション実行主体（本人または代理承認者）
+    5.  **Token ID**  : API呼び出し時使用したToken識別ID
+4. サポートされるフィルター条件は以下の通りです。
+    1.  **Action At** : ログ発生期間範囲
+    2.  **Action Type**  : ワークフロー申請/承認（承認/却下）/キャンセル履歴
+        1.  **Workflow Requested**  : ワークフロー申請（Resubmitの場合もこれに該当）
+        2.  **Workflow Approved**  : ワークフロー承認
+        3.  **Workflow Rejected**  : ワークフロー却下
+        4.  **Workflow Canceled**  : ワークフローキャンセル
+        5.  **Workflow Expired**  : ワークフロー期限切れ
+        6.  **Workflow SQL Executed**  : ワークフローSQLクエリ実行
+        7.  **Workflow Export Executed**  : ワークフローSQL Export実行
+        8.  **Workflow Reviewed** : ワークフロー参照者確認
+    3.  **Request Type**  : ワークフロータイプ
+        1. DB Access Request
+        2. SQL Request
+        3. SQL Export Request
+        4. Server Access Request
+        5. Access Role Request
+        6. Unmasking Request
+    4. Remaining Steps : 次の残り承認段階
+        1. Approval 1
+        2. Approval 2
+        3. Approval 3
+        4. Execution
+        5. Done
+        6. Review
+    5. Urgent : 事後承認承認の有無（Urgent / -）
+
+

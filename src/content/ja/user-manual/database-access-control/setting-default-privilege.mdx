@@ -1,0 +1,41 @@
+---
+title: 'Default Privilege設定'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+単一DB接続に複数のPrivilege権限が付与された場合に基本で接続するDefault Privilegeを設定する機能です。
+
+
+## Default Privilege設定
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges](/user-manual/database-access-control/setting-default-privilege/image-20240731-124310.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges
+</figcaption>
+</figure>
+
+1. 付与された権限が1個の場合、ウェブ、プロキシ、SQL Request、Export Request、SQL Jobsすべて該当権限で接続し、別途Default Privilege設定をしません。
+2. 付与された権限が2個以上の場合、ユーザーは別途Default Privilege設定をする必要があります。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; Default Privilege Setting](/user-manual/database-access-control/setting-default-privilege/image-20240731-124808.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; Default Privilege Setting
+</figcaption>
+</figure>
+
+1. Privileges右側の`Edit`ボタンまたは`&gt; Go to Settings`リンクをクリックします。
+2. Privilege項目で付与された権限の中から基本値で使用するPrivilegeを選択します。
+3. SaveボタンをクリックしてDefault Privilege設定を完了します。
+
+
+<Callout type="important">
+* 付与された権限が2個以上だがDefault Privilege設定がされていない場合、最も最初にgrantされたprivilegeがdefault privilegeになります。エージェントプロキシ、SQL Request、Export Requestで接続時Default Privilegeで選択された権限でDBに接続します。
+* Default Privilege変更はウェブとMulti-Agentで提供します。User AgentではDefault Privilege変更機能は提供せず、ユーザーは接続するPrivilegeを変更しようとする場合、ウェブページで変更する必要があります。
+* Default Privilegeで接続に既に接続されている状態でDefault Privilegeを変更した場合または該当権限を回収した場合、既存セッションはDisconnect処理し、新しいDefault権限で新規Connect処理します。
+*  付与された権限が2個以上の場合Default privilege設定がされていない状態でprivilege deactivation period超過でinactive状態になった場合、agentを通じて接続できません。Default privilegeが設定されていても状態がprivilege deactivation period超過でinactiveの場合接続できません。
+</Callout>

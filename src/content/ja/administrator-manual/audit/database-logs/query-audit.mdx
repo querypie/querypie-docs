@@ -1,0 +1,114 @@
+---
+title: 'Query Audit'
+---
+
+## Overview
+
+クエリパイでDB作業実行が終了したクエリおよびアクション実行履歴を記録します。
+
+## Query Audit照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Query Audit](/administrator-manual/audit/database-logs/query-audit/image-20240730-090702.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Query Audit
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; Query Auditメニューに移動します。
+2. クエリ実行当日基準でログが降順で照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Table(s)**  : 呼び出しテーブル名
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Connection Name**  : 接続したDB接続名
+    2.  **Database Type** : データベースタイプ
+    3.  **SQL Type** : SQL構文タイプ
+    4.  **Action Type** : アクションタイプ
+        1.  **SQL Execution**  : SQL構文実行
+        2.  **Export Data**  : データエクスポート
+        3.  **Export Schema**  : スキーマエクスポート
+        4.  **Import Data**  : データインポート
+        5.  **Import Schema** : スキーマインポート
+        6.  **Copy Clipboard**  : クリップボードコピー
+    5.  **Executed At**  : 実行日時
+    6.  **Result** : 作業成功/失敗現況
+    7.  **Prevented** : 政策による非許可されたアクセス実行の有無
+    8.  **Table Resolved**  : テーブル呼び出しの有無
+    9.  **Executed From**  : クエリ実行主体
+        1.  **Web Editor**  : クエリパイウェブエディターで実行
+        2.  **Proxy**  : クエリパイプロキシを通じた実行
+        3.  **SQL Request**  : SQL Requestワークフローを通じた実行
+        4.  **SQL Job**  : SQL Jobによる実行
+        5.  **SQL Export Request**  : SQL Export Requestワークフローを通じた実行
+    10.  **Label**  : DB元帳の有無
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Executed At**  : 実行日時
+    3.  **Result** : 作業成功/失敗現況
+    4.  **Name**  : 対象ユーザー名
+    5.  **Email**  : 対象ユーザーメール
+    6.  **Action Type** : アクションタイプ
+    7.  **Connection Name**  : 対象DB接続名
+    8.  **Database Type**  : 対象データベースタイプ
+    9.  **Privilege**   **Name**  : ユーザー接続権限
+    10.  **Client IP**  : ユーザークライアントIPアドレス
+    11.  **Replication Type**  : DB Replicationタイプ
+    12.  **DB Host**  : 接続したDBホスト
+    13.  **DB Name**  : DB名
+    14.  **DB User**  : DBユーザーID
+    15.  **Table(s)**  : 呼び出しテーブル名
+    16.  **SQL Type** : SQL構文タイプ
+    17.  **Query**  : 実行クエリ文
+    18.  **Time(ms)**  : 実行時間（Millis基準）
+    19.  **Rows**  : 呼び出し行数
+    20.  **Data Size**  : 呼び出しデータサイズ
+    21.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    22.  **Error Message**  : 実行失敗など特異事項に対する記録
+    23.  **Execution Reason**  : クエリ実行理由
+    24.  **Prevented** : 政策による非許可されたアクセス実行の有無
+    25.  **Label**  : DB元帳の有無
+    26.  **Executed From**  : クエリ実行主体
+
+## Query Audit詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Query Audit &gt; Query Audit Details](/administrator-manual/audit/database-logs/query-audit/image-20240730-091103.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Query Audit &gt; Query Audit Details
+</figcaption>
+</figure>
+
+* 右側ドロワー上部には以下の基本クエリ監査情報を露出します：
+    1.  **Result** : 作業成功/失敗現況
+    2.  **Name**  : 対象ユーザー名
+    3.  **Action Type** : アクションタイプ
+    4.  **SQL Type** : SQL構文タイプ
+    5.  **Privilege**   **Name**  : ユーザー接続権限
+    6.  **Privilege**   **Type**  : ユーザー接続権限タイプ
+    7.  **Data Size**  : 呼び出しデータサイズ
+    8.  **Time(ms)**  : 実行時間（Millis基準）
+    9.  **Executed At**  : 実行日時
+    10.  **Executed From**  : クエリ実行主体
+    11.  **Label**  : DB元帳の有無
+    12.  **Connection Name**  : 対象DB接続名
+    13.  **Replication Type**  : DB Replicationタイプ
+    14.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    15.  **Client IP**  : ユーザークライアントIPアドレス
+    16.  **Host**   **Name** : 接続実行ホスト名
+    17.  **Database Type**  : 対象データベースタイプ
+    18.  **DB Host**  : 接続したDBホスト
+    19.  **DB Name**  : DB名
+    20.  **DB User**  : DBユーザーID
+    21.  **Table(s)**  : 呼び出しテーブル名
+* 下部には実行クエリ本文および追加履歴を露出します：
+    1.  **Query**  : 実行クエリ文
+    2.  **First 10 Rows**  : 呼び出されたSELECT文に対する最初の10行サンプル
+        * 該当フィールドは **Display the first 10 rows in Query Audit** 設定を有効化した場合にのみ表記されます。（Default : Off）
+            * [Security](../../general/company-management/security)内 **DB接続セキュリティ設定** 参照
+        *  **Copy Data**  : 前/後データコピー用ボタン
+    3.  **Error Message**  : 実行失敗など特異事項に対する記録
+    4.  **Execution Reason**  : クエリ実行理由

@@ -1,0 +1,33 @@
+---
+title: 'Reverse Tunnels'
+---
+
+## Overview
+
+QueryPieと接続されたReverse Tunnelsセッションをモニタリングするページです。
+
+ユーザーがインフラ内にインストールしたReverse Tunnel AgentがQueryPieと正常通信をする場合、QueryPieとReverse Tunnels間に生成されたセッションを確認できます。リソース（サーバー、クラスター）にTagを追加してReverse Tunnelsで接続の有無を設定できます。
+
+## Reverse Tunnels照会
+
+<figure data-layout="center" data-align="center">
+![Admin Page &gt; Audit &gt; General &gt; Reverse Tunnels](/administrator-manual/audit/general-logs/reverse-tunnels/image-20250116-123838.png)
+<figcaption>
+Admin Page &gt; Audit &gt; General &gt; Reverse Tunnels
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; General &gt; Reverse Tunnelsメニューに移動します。
+2.  QueryPieとReverse Tunnels間に生成されたセッションを確認できます。
+    1.  **Agent Name**  : Reverse Tunnel Agentインストール時設定したAgent Name
+    2.  **Host** : Reverse Tunnel AgentのHost情報
+    3.  **Version**  : インストールされたReverse Tunnel Agent情報表示
+    4.  **Tags**  : Reverse Tunnel Agentに設定されたTag
+    5.  **Connected At**  : QueryPieとReverse Tunnels間セッションが生成された時点
+3. サポートされる検索条件は以下の通りです。
+    1.  **Name** : Reverse Tunnel Agentインストール時設定したAgent Name
+    2.  **Host**  : Reverse Tunnel AgentのHost情報
+4. サポートされるフィルター条件は以下の通りです。
+    1.  **Tag** : Reverse Tunnel Agentに設定されたTag
+
+

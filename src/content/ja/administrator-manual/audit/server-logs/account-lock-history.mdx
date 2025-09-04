@@ -1,0 +1,45 @@
+---
+title: 'Account Lock History'
+---
+
+## Overview
+
+QueryPieのユーザー別サーバー接続権限ロック履歴を表示します。パスワード誤入力、非認可IPの接続試行など接続失敗した回数をすべてカウントし、管理者が設定した接続失敗閾値到達時接続アカウントがLock状態になります。
+
+## Server Account Lock History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Account Lock History](/administrator-manual/audit/server-logs/account-lock-history/image-20240728-175941.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Account Lock History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Servers &gt; Server Account Lock Historyメニューに移動します。
+2. テーブルに降順でリストにログが露出されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Email**  : ユーザーEmail
+    3.  **Account**  : サーバー接続Account
+    4.  **Role Name**  : 使用されたRole名
+    5.  **Server Name**  : 接続サーバー名
+4. 検索フィールド右側フィルターボタンをクリックして **Action At** に対する日時範囲を再指定してフィルタリングが可能です。<br/>
+    1.  **Event**  : イベントタイプ
+        1.  **Account Locked**  : ユーザーのアカウントロックイベント
+        2.  **Account Unlocked**  : 管理者のアカウントロック解除イベント
+    2.  **Action At**  : イベント発生日時範囲
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : イベント発生日時
+    3.  **Event**  : イベントタイプ
+        1.  **Account Locked**  : ユーザーのアカウントロックイベント
+        2.  **Account Unlocked**  : 管理者のアカウントロック解除イベント
+    4.  **Name**  : 対象ユーザー/グループ名
+    5.  **Email**  : 対象ユーザーメール
+        1. グループの場合は「-」で表記します。
+    6.  **Role Name**  : 付与/回収されたRole名前
+    7.  **Server Group**  : サーバーグループ名
+    8.  **Server Name**  : サーバー名
+    9.  **Account**  : Lock対象サーバーのAccount
+    10.  **Action By**  : イベントを発生させたユーザーまたは管理者名

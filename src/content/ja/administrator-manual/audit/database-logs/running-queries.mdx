@@ -1,0 +1,87 @@
+---
+title: 'Running Queries'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+現在実行中のクエリを照会できます。クエリ実行が終了するとQuery Auditに内容が履歴として記録されます。
+
+<Callout type="info">
+10.3.0でAudit &gt; Databases &gt; Running QueriesにあったRunning QueriesメニューがDatabases &gt; Monitoring &gt; Running Queriesに移動され、Web Editor、Workflowを通じて実行したクエリの停止機能が追加されました。
+詳細内容はこの文書を参照してください：Databases &gt; Monitoring &gt; [Running Queries](../../databases/monitoring/running-queries)
+</Callout>
+
+## Running Queries照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Running Queries](/administrator-manual/audit/database-logs/running-queries/image-20240730-081612.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Running Queries
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; Running Queriesメニューに移動します。
+2. 当日基準で降順でログが照会されます。
+3. テーブル左上のフィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **SQL Type** : SQL構文タイプ
+    2.  **Action At**  : クエリ実行日時範囲
+    3.  **Executed From**  : クエリ実行主体
+        1.  **Web Editor**  : クエリパイウェブエディターで実行
+        2.  **Proxy**  : クエリパイプロキシを通じた実行
+        3.  **SQL Request**  : SQL Requestワークフローを通じた実行
+        4.  **SQL Job**  : SQL Jobによる実行
+        5.  **SQL Export Request**  : SQL Export Requestワークフローを通じた実行
+4. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+5. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Executed At**  : クエリ実行日時
+    3.  **Name**  : 対象ユーザー
+    4.  **Email**  : 対象ユーザーメール
+    5.  **Action Type**  : アクションタイプ
+    6.  **Connection Name**  : 対象DB接続名
+    7.  **Database Type**  : 対象データベースタイプ
+    8.  **Privilege**   **Name**  : ユーザー接続権限
+    9.  **Client IP**  : ユーザークライアントIPアドレス
+    10.  **Replication Type**  : DB Replicationタイプ
+    11.  **DB Host**  : 接続したDBホスト
+    12.  **DB Name**  : DB名
+    13.  **DB User**  : DBユーザーID
+    14.  **Table(s)**  : 呼び出しテーブル名
+    15.  **SQL Type** : SQL構文タイプ
+    16.  **Query**  : 実行クエリ文
+    17.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    18.  **Execution Reason**  : クエリ実行理由
+    19.  **Executed From**  : クエリ実行主体
+
+## Running Query詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Running Queries &gt; Running Query Details](/administrator-manual/audit/database-logs/running-queries/image-20240730-080947.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Running Queries &gt; Running Query Details
+</figcaption>
+</figure>
+
+* 右側ドロワーには以下の情報を露出します：
+    1.  **Name**  : 対象ユーザー名
+    2.  **Action Type**  : アクションタイプ
+    3.  **Privilege**   **Name**  : ユーザー接続権限
+    4.  **Privilege**   **Type**  : ユーザー接続権限タイプ
+    5.  **SQL Type** : SQL構文タイプ
+    6.  **Executed From**  : クエリ実行主体
+    7.  **Connection Name**  : 対象DB接続名
+    8.  **Replication Type**  : DB Replicationタイプ
+    9.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    10.  **Client IP**  : ユーザークライアントIPアドレス
+    11.  **Database Type**  : 対象データベースタイプ
+    12.  **DB Host**  : 接続したDBホスト
+    13.  **DB Name**  : DB名
+    14.  **DB User**  : DBユーザーID
+    15.  **Table(s)**  : 呼び出しテーブル名
+    16.  **Query**  : 実行クエリ文
+
+

@@ -1,0 +1,98 @@
+---
+title: 'SQL Export Request の申請'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+以下の手順に従ってSQL Export Requestを申請できます。特定のDB接続に対して権限のないデータエクスポートを要求し、承認後、実行者は承認されたデータエクスポートを1回に限り実行できます。
+
+
+## SQL Export Request の申請
+
+### 1. 承認ルールの選択
+
+* Approval Ruleを選択して目的に合った承認ルールを選択してください。選択したルールに応じて承認対象が異なります。
+* 管理者が承認者を指定した承認ルールが選択された場合、自動的に承認者が指定され、追加や変更はできません。
+*  **Approval Expiration Date** : 承認有効期限を入力します。Maximum Approval Durationを通じて最大値を設定できます。Approval Expiration DateはExecution Expiration Dateを超えることはできません。超えた場合、申請できません。
+    * ただし、Urgent Modeで申請する場合、上記条件を無視します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.43.46-AM.png)
+</figure>
+
+### 2. 承認者の指定
+
+* 承認ラインで`+`ボタンを押すと、段階別承認者を指定できるポップアップが表示されます。
+* このポップアップで承認条件と承認者を追加後、`Save`ボタンを押して承認ラインを保存します。
+* 選択可能な承認条件は以下の通りです。
+    *  **A single Assignee can complete the approval request**  : 複数名の中の一人の承認だけで承認要求が承認処理されます。
+    *  **All Assignees must approve this request**  : すべての承認者が承認して初めて承認要求が承認処理されます。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240807-215435.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215435.png)
+</figure>
+
+### 3. 実行者と参照者の指定
+
+* 承認ラインで`+`ボタンを押すと、実行者と参照者を指定できるポップアップが表示されます。
+    * 管理者が参照者指定を許可していない場合、Reviewerボックスは表示されません。
+* このポップアップで承認条件と承認者を追加します。
+* `Save`ボタンを押してモーダルを閉じ、参照者指定を完了します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240807-215506.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215506.png)
+</figure>
+
+### 4. 事後承認で要求を送信
+
+* 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+* Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240807-215537.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215537.png)
+</figure>
+
+<Callout type="important">
+**Q. Urgent Modeスイッチが表示されません。**
+A. 管理者がUrgent Modeを許可していない承認ルールを選択した場合、該当機能は表示されません。
+</Callout>
+
+### 5. 要求情報の入力
+
+<figure data-layout="center" data-align="center">
+![User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.51.52-AM.png)
+<figcaption>
+User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary
+</figcaption>
+</figure>
+
+
+*  **Title**  : 要求タイトルを入力します。
+*  **Connection**  : SQL実行を要求する対象接続を選択します。権限のある接続に限り選択可能です。
+*  **Database**  : 選択した接続内でデータエクスポートを要求する接続内のデータベースを選択します。
+*  **Content Type**  : ダウンロードしたいデータを照会する方式を選択します。
+    1.  **Query Result**  : 要求ページ内のQueries項目でクエリを直接作成します。該当クエリ結果をダウンロードできます。最大10個までクエリを作成してExport可能です。
+    2.  **Table**  : 選択したテーブル全体をエクスポートできます。
+*  **Preferred Execution Date**  : 該当クエリが実行されることを希望する日付を選択します。基本選択日は要求日当日です。
+*  **Execution Expiration Date**  : Executorが実行できる最後の日付を選択します。基本選択日は1週間後です。
+*  **Reason for Request**  : SQL Export権限を要求する理由を入力します。
+*  **Submit**  : 起案作成完了後、`Submit`ボタンをクリックすると申請が完了します。
+
+
+## 承認完了したデータのダウンロード
+
+承認が完了したExport Request件は承認完了と同時にダウンロード可能な状態になります。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240802-105329.png](/user-manual/workflow/requesting-sql-export/screenshot-20240802-105329.png)
+</figure>
+
+1. Workflow &gt; Executions &gt; To Doメニューに移動します。
+2. 実行待機中のExport Request件をクリックして詳細ページに移動します。
+3. Export Request詳細内容を確認後、右上の`Execute`ボタンをクリックします。
+4. Export Optionモーダルでエクスポートオプションを設定した後、`Export`ボタンをクリックします。
+    1. 詳細内容確認後、ダウンロードしない場合は`Cancel`ボタンをクリックしてキャンセル処理できます。
+5. ダウンロードが完了した結果は詳細ページ内のResultsタブで確認できます。
+6. Workflow &gt; Executions &gt; Doneメニューで自分がダウンロードした要求履歴を確認できます。

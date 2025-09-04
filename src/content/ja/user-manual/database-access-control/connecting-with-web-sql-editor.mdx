@@ -1,0 +1,170 @@
+---
+title: 'ウェブSQLエディターで接続する'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieではウェブブラウザを通じてクエリを実行し、データを照会できるウェブSQLエディターを提供します。
+
+
+## アクセス権限のあるデータベース接続
+
+個別ユーザーまたはグループにアクセス権限が付与されたデータベース接続リストを確認でき、作業を実行する接続を選択してデータベースに接続できます。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-114320.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases
+</figcaption>
+</figure>
+
+1. QueryPieログイン後、上部メニューバーオプションで`Databases`をクリックします。
+2. 左側パネルに接続可能なデータベース接続が表示されます。
+3. 接続しようとする接続をクリックすると右側に詳細情報が表示され、`Connect`ボタンをクリックして接続します。
+
+必要な接続が表示されない場合、Workflow &gt; DB Access Requestを通じてアクセス権限を要求できます。
+
+## ウェブSQLエディター使用
+
+エディターは左側オブジェクトパネル、上部ツールバー、中央SQLエディター、右側オブジェクト情報パネルで構成されています。
+
+### 1. 左上オブジェクトパネル
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png)
+<figcaption>
+SQL Editor &gt; Connection Panel
+</figcaption>
+</figure>
+
+* `Change connection` : 矢印ボタンを通じて接続中の接続確認および接続中の他の接続に変更可能です。
+* `Connection Management` : 既存接続が維持された状態でDatabases接続リストに移動可能です。
+* `Disconnect` : 接続解除ボタンを通じて現在接続中の接続の接続を切ることができます。
+
+### 2. 左側オブジェクトパネル
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png)
+<figcaption>
+SQL Editor &gt; Connection Panel
+</figcaption>
+</figure>
+
+*  **データベース変更**  : 現在接続したデータベースを変更できます。（最初接続時基本設定データベースに接続）
+*  **オブジェクト情報検索**  : データベース内のスキーマ/テーブル/ビュー/イベント/関数/プロシージャ/トリガーなどを検索できます。
+*  **オブジェクト情報照会**  : データベース内のスキーマ/テーブル/ビュー/イベント/関数/プロシージャ/トリガーなどを確認できます。
+*  **オブジェクト情報更新**  : データベース内のスキーマ/テーブル/ビュー/イベント/関数/プロシージャ/トリガーなどをクリック時、右側`新規更新`ボタンが有効化されてオブジェクト情報を更新できます。
+*  **個別オブジェクト情報更新**  : 個別オブジェクト情報も右クリック後`Reload Object`ボタンをクリックして同様に更新できます。
+
+### 3. 上部ツールバー
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png)
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
+</figcaption>
+</figure>
+
+* `Run SQL` : 作成したクエリを実行できます。基本的に作成された全体クエリが実行されます。
+* `Stop` : 実行中のクエリを停止できます。
+* `Object Panel` : 左側オブジェクトパネル折りたたみ/開く機能をオプションで提供します。
+* `Open` : SQLファイルを読み込めます。
+* `Save` : SQLファイルを保存できます。
+    * Query Sharing設定がOnの場合、Git RepositoryにSQLファイルが保存されます。
+* `Undo` : 作成中のクエリ基準で実行取消できます。
+* `Redo` : 実行取消した作業を再実行できます。
+* `Format` : 作成中のクエリを整列できます。
+* `Auto commit` : 実行した作業クエリを自動的にコミットを有効化します。
+    * `Commit` : 実行した作業クエリを手動で確定します。
+    * `List` : 作業確定されていないクエリリストを列挙します。
+    * `Rollback` : 直前コミット直後の段階に回帰を実行します。
+* `Import` : データをSQL/CSV/Excelファイルでインポートしてデータベースに保存できます。
+* `Export` : データをSQL/CSV/JSON/Excelファイルでダウンロードできます。
+* `SQL Request` : エディターに作成されたクエリを載せてSQL Requestワークフローページに移動します。
+
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Editor Tab & Result](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052240.png)
+<figcaption>
+SQL Editor &gt; Editor Tab & Result
+</figcaption>
+</figure>
+
+* クエリ作成時自動補完をサポートし、コンテキストメニューを通じた作業およびショートカットキー使用が可能です。
+* `Limit`: クエリ実行時結果出力行数を制限できます。基本的に1000個に制限されます。
+* `Full Screen` : クエリ実行結果を全画面で確認できます。
+* `Stack/Column View` : クエリを複数実行した時、横または縦の分割されたグリッドで結果を確認できます。
+
+### 3. Queriesパネル
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Queries Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png)
+<figcaption>
+SQL Editor &gt; Queries Panel 
+</figcaption>
+</figure>
+
+* `Queries` : Query Sharing有効化時、接続されたGitHub RepositoryからSQLクエリインポート/エクスポートが可能です。
+
+<Callout type="info">
+該当機能を使用するためには管理者がクエリ共有設定を事前にする必要があります。（[General](../../administrator-manual/general/company-management/general) &gt;  **クエリ共有設定**  参照）
+</Callout>
+
+### 4. Object Infoパネル
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; Object Info Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png)
+<figcaption>
+SQL Editor &gt; Object Info Panel 
+</figcaption>
+</figure>
+
+* `Data` : テーブル/ビューオブジェクトのデータを確認できます。
+* `Structure` : テーブル/ビューオブジェクトの構造を確認できます。
+* `Index` : テーブルのインデックス情報を確認できます。
+* `Relation` : テーブルの接続関係を確認できます。
+* `Trigger` : トリガー情報を確認できます。
+* `Script` : オブジェクトのスクリプト情報を確認できます。
+* `Info` : オブジェクトの詳細情報を確認できます。
+
+### 5. SQL Historyパネル
+
+<figure data-layout="center" data-align="center">
+![SQL Editor &gt; SQL History Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png)
+<figcaption>
+SQL Editor &gt; SQL History Panel
+</figcaption>
+</figure>
+
+* `SQL History` : 実行したクエリ履歴を確認できます。記録は最大3ヶ月まで保管されます。
+
+<Callout type="info">
+**Q ウェブエディターで実行できるクエリサイズに制限がありますか？**
+
+**A. SQL Editorの場合、以下のようにサポートされます。**
+
+* 単一クエリ実行時1000万文字に制限されます。
+* クエリエディター内で9999行までサポートします。
+* クエリエディター内で5mbサイズまでサポートします。
+* ファイルアップロードする場合、5mbサイズまでサポートします。
+
+**A. Workflow &gt; SQL Request画面でファイルを添付する場合は以下のようにサポートされます。**
+
+* Fileタイプ選択して、ファイル添付を通じたクエリ実行容量制限はありません。
+* 単一クエリ実行時1000万文字に制限されます。
+* Textタイプ選択する場合、クエリエディター内で9999行までサポートします。
+* Textタイプ選択する場合、クエリエディター内で5mbサイズまでサポートします。
+</Callout>
+
+### 6. クエリ実行時理由入力
+
+Ledger政策または接続政策によってクエリを実行時理由入力が強制される場合があります。この場合、ユーザーがクエリを入力すると理由を入力するポップアップが出力されます。以下の図のように「Write the reason for this request」ポップアップダイアログにクエリを実行する理由を入力して`OK`ボタンを押すとクエリ実行結果が出力されます。総300文字まで入力可能です。
+
+<figure data-layout="center" data-align="center">
+![image-20241031-233232.png](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20241031-233232.png)
+</figure>
+
+
+

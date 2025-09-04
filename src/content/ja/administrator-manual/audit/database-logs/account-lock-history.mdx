@@ -1,0 +1,44 @@
+---
+title: 'Account Lock History'
+---
+
+## Overview
+
+QueryPieのユーザー別接続パスワード失敗および長期未接続による接続ロック履歴を表示します。パスワード誤入力、非認可IPの接続試行など接続失敗した回数をすべてカウントし、管理者が設定した接続失敗閾値到達時接続アカウントがLock状態になります。
+
+## DB Account Lock History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Account Lock History](/administrator-manual/audit/database-logs/account-lock-history/image-20240730-070724.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Account Lock History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; Account Lock Historyメニューに移動します。
+2. テーブルに発生時点降順でリストにログが露出されます。
+3. テーブル左上の検索欄を通じてユーザー名で検索が可能です。
+4. 検索フィールド右側フィルターボタンをクリックして **Action At** に対する日時範囲を再指定してフィルタリングが可能です。
+    1.  **Connection Name**  : 接続したDB接続名
+    2.  **Database Type** : データベースタイプ
+    3.  **Lock Status**  : ロックタイプ
+        1.  **Locked**  : ユーザーのアカウントロックイベント
+        2.  **Unlocked**  : 管理者のアカウントロック解除イベント
+    4.  **Action At**  : イベント発生日時範囲
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **Name**  : 対象ユーザー名
+    2.  **Email**  : 対象ユーザーメール
+    3.  **Connection Name**  : 対象DB接続名
+    4.  **Database Type**  : 対象データベースタイプ
+    5.  **Attempted Count**  : 接続試行回数
+    6.  **Lock Status**  : ロック現況
+    7.  **Unlocked By**  : ロック解除実行者情報
+    8.  **Unlocked At**  : 接続アカウントロック解除日時
+    9.  **Locked At**  : 接続アカウントロック日時
+    10.  **Action At**  : イベント発生日時
+    11.  **Host Name**  : 接続実行ホスト名
+    12.  **Client IP**  : ユーザークライアントIPアドレス
+    13.  **Replication Type**  : DB Replicationタイプ
+    14.  **DB Host**  : 接続したDBホスト
+    15.  **DB Name**  : DB名

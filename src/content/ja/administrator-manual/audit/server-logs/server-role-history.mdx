@@ -1,0 +1,73 @@
+---
+title: 'Server Role History'
+---
+
+## Overview
+
+クエリパイユーザー/グループに付与されるサーバーアクセスRoleに対する付与および回収履歴を記録します。
+
+## Server Role History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Role History](/administrator-manual/audit/server-logs/server-role-history/image-20240728-174347.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Role History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Servers &gt; Server Role Historyメニューに移動します。
+2. 当月基準で降順でログが照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Email**  : ユーザーメール
+    3.  **Role Name**  : サーバーアクセス権限役割名
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Event**  : イベントタイプ
+        1.  **Role Granted**  : Role付与履歴
+        2.  **Role Revoked**  : Role回収履歴
+    2.  **Action At**  : 権限付与/回収日時範囲
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : Role権限付与/回収日時
+    3.  **Event**  : Role権限関連イベント
+        1.  **Role Granted**  : ユーザー/グループにRoleが付与されたイベント
+        2.  **Role Revoked**  : ユーザー/グループからRoleが回収されたイベント
+    4.  **User Type**  : ユーザー/グループタイプ
+    5.  **Name**  : 対象ユーザー/グループ名
+    6.  **Email**  : 対象ユーザーメール
+        1. グループの場合は表記しません。
+    7.  **Role Name**  : 付与/回収されたRole名前
+    8.  **Expiration Date**  : 権限付与有効期限（回収予定日）
+    9.  **Action By**  : Role付与/回収を進行した管理者名またはSystem
+
+## Server Role History詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role History Details](/administrator-manual/audit/server-logs/server-role-history/image-20240728-174604.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role History Details
+</figcaption>
+</figure>
+
+1. 最上部には基本イベントに応じた情報を露出します：
+    1.  **Action At**  : Role権限付与/回収日時
+    2.  **Name**  : 対象ユーザー/グループ名
+    3.  **Event**  : ユーザー/グループにRoleが付与/回収されたイベント
+    4.  **Email**  : 対象ユーザーメール
+    5.  **Action By**  : Role付与/回収を進行した管理者名またはSystem
+    6.  **Role Name**  : Role名
+    7.  **Expiration Date**  : 権限付与有効期限（回収予定日）
+2. 下部には付与/回収されたRoleに該当するPolicyをリスト化して列挙します：
+    *  **Name**  : 割り当てられている政策名
+    *  **Description**  : 割り当てられている政策の詳細説明
+    *  **Version**  : 割り当てられている政策のバージョン
+        * リンクを押すと政策コードを照会できるようにポップアップモーダルが表示されます。
+            1. 付与されていた当時のPolicy Snapshotを見せます。
+                * 該当Policyが削除されても記録が残ります。
+            2. 政策名、PolicyのDescriptionと共にコードを見せます。
+            3. `Close`ボタンまたは右上の`X`をクリックすると該当モーダルが閉じます。
+
+

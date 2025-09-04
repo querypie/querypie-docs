@@ -1,0 +1,72 @@
+---
+title: '実行計画（Explain）機能の使用'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+10.2.0から追加された機能です。（10.2.0基準MySQLのみサポートします。）
+11.2.0から管理者がこの機能を無効化できるように変更されました。ユーザーがこの機能を使用できない場合、管理者が政策的に無効化したものです。
+</Callout>
+
+## Overview
+
+ユーザーがWorkflowを通じてSQL Requestを要求する時、該当クエリに対してDBMSで提供する実行計画（Explain構文）を使用してクエリに対する制限的な手順情報を確認できます。この機能はDBMSに依存する機能であるため、WorkflowのSQL Request作成時に接続に該当するDBMSごとに差がある場合があります。
+
+<Callout type="info">
+実行計画とは？<br/>データベースのオプティマイザーが最も最適なクエリを実行するために生成する一連の作業セットまたは作業手順です。段階的に実行段階を見ることができ、段階別コストを見ることができます。
+</Callout>
+
+## SQL Request作成および実行計画（Explain）実行
+
+QueryPie WorkflowでSQL Requestを作成する基本方法は同じです。（参考：[SQL Request要求](.)）
+
+1.  MySQL ConnectionおよびDatabase選択<br/>クエリを実行するMySQL ConnectionとDatabaseを選択してクエリを入力します。
+
+<Callout type="important">
+Content Typeは「Text」のみサポートします。「File」を選択すると実行計画（Explain）機能を使用できません。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20241029-234721.png](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png)
+</figure>
+
+1. 実行計画（Explain）オプションおよび実行計画実行<br/>クエリエディター下部にあるオプションを選択して`Explain`ボタンを押します。
+    1.  **Attach Explain Results**  : 実行計画の結果をSQL Requestに添付するかを選択するスイッチです。（基本値はOFFです。必要な場合スイッチをONに切り替えて実行計画結果を添付する必要があります。）
+    2. 結果表示方式選択
+        1.  **Table**  : テーブル形式で結果が表示されます。
+        2.  **JSON**  : JSON形式で結果が表示されます。
+
+<figure data-layout="center" data-align="center">
+![image-20241029-235845.png](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png)
+</figure>
+
+<Callout type="important">
+* 実行計画対象となるクエリ（セミコロンで終わる構文）は100個に制限されます。
+* MySQLは5.6以降からExplainの結果をJSONフォーマットで出力できます。したがって5.6以前バージョンを対象にExplainを実行する場合、JSONで出力できません。
+<figure data-layout="center" data-align="center">
+![image-20241030-001252.png](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png)
+</figure>
+</Callout>
+
+1. 実行計画（Explain）結果確認
+    1. Table形式の結果確認<br/>以下の図のような結果が表示されます。各フィールドの意味はMySQL reference文書を参照してください。<br/>
+    2. JSON形式の結果確認<br/>JSONを選択してExplainボタンを押すと以下の図のような結果が表示されます。`{JSON}`をクリックすると全体JSON内容を確認できます。<br/> <br/> <br/>エクスポート（Export）する時、管理者設定に応じてパスワード入力を要求するポップアップが出力される場合があります。
+
+## その他参考事項
+
+1. 承認者（Approver）の実行計画（Explain）結果確認<br/>承認者はExplain Resultsタブで添付された実行計画（Explain）結果を確認し、承認の参考資料として活用できます。
+
+<Callout type="important">
+承認者が見ることができる実行計画（Explain）結果は申請者が実行計画を実行する時選択したフォーマットでのみ見ることができます。つまり、申請者が実行計画をJSON形式で出力するよう設定して添付して申請した場合、承認者はJSON形式の結果のみ見ることができ、出力形式をテーブルに変更することはできません。
+</Callout>
+
+1. MySQLで実行計画（Explain）を通じて検討可能な構文<br/>MySQLはバージョン別に実行計画を通じて分析するサポート構文が異なります。
+
+|  **MySQL 5.6.3以前**  |  **MySQL 5.6.3以降**                         |
+| -------------------- | ------------------------------------------- |
+| SELECT               | SELECT , DELETE , INSERT , REPLACE , UPDATE |
+
+<Callout type="important">
+optimizer_trace、analyzeはSQL Requestで提供する実行計画（Explain）実行機能でサポートしません。
+</Callout>

@@ -1,0 +1,113 @@
+---
+title: 'IP Registration Request の申請'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+以下の手順に従ってシステムアクセスに必要なIPアドレス登録を要求できます。要求後承認が完了すると即座に該当IPからのシステムアクセスが許可されます。
+
+
+## IP Registration Request の申請
+
+### 1. 承認ルールの選択
+
+* Approval Ruleを選択して目的に合った承認ルールを選択してください。選択したルールに応じて承認対象が異なります。
+* 管理者が承認者を指定した承認ルールが選択された場合、自動的に承認者が指定され、追加や変更はできません。
+*  **Approval Expiration Date** : 承認有効期限を入力します。Maximum Approval Durationを通じて最大値を設定できます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-08-26-at-12.54.02-AM.png)
+</figure>
+
+### 2. 承認者の指定
+
+* 承認ラインで`+`ボタンを押すと、段階別承認者を指定できるポップアップが表示されます。
+* このポップアップで承認条件と承認者を追加後、`Save`ボタンを押して承認ラインを保存します。
+* 選択可能な承認条件は以下の通りです。
+    *  **A single Assignee can complete the approval request**  : 複数名の中の一人の承認だけで承認要求が承認処理されます。
+    *  **All Assignees must approve this request**  : すべての承認者が承認して初めて承認要求が承認処理されます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-3.56.29-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-3.56.29-PM.png)
+</figure>
+
+### 3. 参照者の指定
+
+* 承認ラインで`+`ボタンを押すと、参照者を指定できるポップアップが表示されます。
+    * 管理者が参照者指定を許可していない場合、Reviewerボックスは表示されません。
+* このポップアップで承認条件と承認者を追加します。
+* `Save`ボタンを押してモーダルを閉じ、参照者指定を完了します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-3.57.36-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-3.57.36-PM.png)
+</figure>
+
+
+### 4. 事後承認で要求を送信
+
+* 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+* Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-3.59.57-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-3.59.57-PM.png)
+</figure>
+
+<Callout type="important">
+**Q. Urgent Modeスイッチが表示されません。**
+A. 管理者がUrgent Modeを許可していない承認ルールを選択した場合、該当機能は表示されません。
+</Callout>
+
+
+### 5. 要求情報の入力
+
+*  **IP Addresses (必須)**  :
+    * アクセスを許可するIPアドレスを一行に一つずつ入力します。（最大20個）
+    * エンターキーを押して新しいIPアドレスを追加できます。
+    * 既に登録されたIPアドレスは表示されますが、セキュリティのために修正はできず、削除のみ可能です。
+*  **Title (必須)**  : 要求タイトルを入力します。
+*  **Reason for Request (必須)**  : IPアドレス登録を要求する理由を入力します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-1.22.57-AM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-08-26-at-1.22.57-AM.png)
+</figure>
+
+要求情報入力が完了したら、ページ下部の`Submit`ボタンを押して要求を申請します。
+
+## ログイン遮断時のIP登録要求
+
+管理者によってIPアクセス制御政策（`Require Allowed Zones for User Access`）が有効化された状態で、許可リストにないIPでログインを試行する場合、ログインが遮断されIP登録のための専用ページに移動します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-07-03-at-5.05.13-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-07-03-at-5.05.13-PM.png)
+</figure>
+
+該当ページでは以下の手順に従ってIP登録を要求できます。
+
+1.  **承認ルール（Approval Rule）の選択** : ドロップダウンリストから使用する承認ルールを選択します。
+2.  **IPアドレス（IP Addresses）の入力** : アクセスを許可されるIPアドレスをカンマ（`,`）で区切って入力します。（最大20個）
+3.  **要求提出（Submit）** : `Submit`ボタンをクリックして要求を提出します。
+
+
+### 自動入力項目
+
+ログイン遮断ページで要求を提出する場合、ユーザーの利便性のために以下の項目はシステムで自動的に生成して入力してくれます。
+
+*  **タイトル（Title）** : `IP Registration Request from {ユーザー名} ({ログインID})`
+*  **要求理由（Reason for Request）** : `I, {ユーザー名}, am requesting IP registration because I am currently unable to access the system with my existing IP address. Please allow access from the IP address provided.`
+*  **承認有効期限（Due Date）** : 要求日から1年後に自動設定されます。
+
+
+### 要求提出後
+
+要求を一度提出すると、該当要求が処理（承認または却下）されるまでは新しいIP登録要求を提出できません。要求が正常に提出されると'Your IP request has been received.'案内メッセージと共に要求が正常に受付されたことを知らせる画面が表示されます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-4.19.02-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-4.19.02-PM.png)
+</figure>
+
+<Callout type="info">
+**Q. IP登録承認を受けたのにログインページではなくIP登録申請ページに移動します。どう解決すればよいですか？**
+A. これを解決するためにIP遮断および登録申請ページに **login page** リンクを提供しました。該当リンクをクリックするとログインページに正常アクセスできます。
+</Callout>

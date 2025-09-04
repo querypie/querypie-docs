@@ -1,0 +1,51 @@
+---
+title: 'Access Control Logs'
+---
+
+## Overview
+
+クエリパイユーザー/グループに付与されるDB接続に対するアクセス権限付与および回収履歴を記録します。
+
+## DB Access Control Logs照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; Access Control Logs](/administrator-manual/audit/database-logs/access-control-logs/image-20240730-072419.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; Access Control Logs
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; Access Control Logsメニューに移動します。
+2. 当月基準で降順でログが照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Connection Name**  : DB接続名
+    3.  **Email**  : ユーザーEmail
+    4.  **Privilege Name**  : ユーザー接続権限名
+    5.  **DB Host**  : DBホスト
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Connection Name**  : DB接続名
+    2.  **Database Type** : データベースタイプ
+    3.  **Event**  : 権限付与/回収イベントタイプ
+        1.  **Connection Owner Granted**  : Connectionオーナー権限付与履歴
+        2.  **Connection Owner Revoked**  : Connectionオーナー権限回収履歴
+        3.  **Access Control Granted**  : 接続アクセス権限付与履歴
+        4.  **Access Control Updated**  : 接続アクセス権限修正履歴
+        5.  **Access Control Revoked**  : 接続アクセス権限回収履歴
+    4.  **Action At**  : 権限付与/回収日時範囲
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : 権限付与/回収日時
+    3.  **Event**  : 権限付与/回収イベントタイプ
+    4.  **User Type**  : ユーザー/グループタイプ
+    5.  **Name**  : 対象ユーザー/グループ名
+    6.  **Email**  : 対象ユーザーメール
+        1. グループの場合は表記しません。
+    7.  **Privilege**   **Name**  : ユーザー接続権限
+    8.  **Description**  : 再活性化など入力理由出力
+    9.  **Connection Name**  : 対象DB接続名
+    10.  **Database Type**  : 対象データベースタイプ
+    11.  **Replication Type**  : DB Replicationタイプ
+    12.  **DB Host**  : 接続したDBホスト
+    13.  **Action By**  : Permission付与/回収を進行した管理者名またはSystem

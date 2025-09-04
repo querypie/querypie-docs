@@ -1,0 +1,58 @@
+---
+title: 'Server Logs'
+---
+
+## Overview
+
+QueryPieのSystem Access Controlで発生するログをServer Logsで確認できます。サーバー接続権限付与と回収、サーバーログイン/ログアウト、実行したコマンド履歴などの情報を確認できます。その他、QueryPieを通じて接続したセッションリストを照会したりセッションを強制終了できます。
+
+## 関連監査ログ種類
+
+クエリパイ共通で提供される監査ログに加えてクエリパイシステムアクセス制御（QueryPie SAC）ライセンス保有時、以下の監査ログの種類を提供します。
+
+<table data-table-width="507" data-layout="default" local-id="95470ac3-09e4-4695-80b7-6e7d4ff27bf8">
+<tbody>
+<tr>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**共通ログ**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**SAC専用ログ**
+</th>
+</tr>
+<tr>
+<td>
+**General**
+* User Access History
+* Activity Logs
+* Admin Role History
+</td>
+<td>
+**Servers**
+* Server Access History
+* Command Audit
+* Session Logs
+* Session Monitoring
+* Access Control Logs
+* Server Role History
+* Account Lock History
+</td>
+</tr>
+</tbody>
+</table>
+
+1.  **General** 
+
+* User Access History : ユーザーログイン、ログアウト履歴
+* Activity Logs : 管理者が実行するリソース登録および設定変更履歴
+* Admin Role History : 管理者権限付与、変更、回収履歴
+
+1.  **Servers** 
+
+* [Server Access History](server-logs/server-access-history) : Server接続履歴
+* [Command Audit](server-logs/command-audit) : Server内実行コマンド履歴
+* [Session Logs](server-logs/session-logs) : 接続セッション内行為録画履歴
+* [Session Monitoring](server-logs/session-monitoring) : 接続したセッションリスト照会
+* [Access Control Logs](server-logs/access-control-logs) : Direct Permission付与履歴
+* [Server Role History](server-logs/server-role-history) : Role付与履歴
+* [Account Lock History](server-logs/account-lock-history) : QueryPieユーザー別サーバー接続アカウントロックおよび解除履歴

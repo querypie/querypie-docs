@@ -1,0 +1,74 @@
+---
+title: 'DML Snapshots'
+---
+
+## Overview
+
+クエリパイでINSERT / UPDATE / DELETEクエリ実行完了時前後データを記録します。該当スナップショットは各DB接続別別途DML Snapshot設定を有効化した場合結果情報を保存します。（[DB Connections](../../databases/connection-management/db-connections)内 **追加設定** 参照）
+
+## DML Snapshots照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DML Snapshots](/administrator-manual/audit/database-logs/dml-snapshots/image-20240730-094404.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DML Snapshots
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; DML Snapshotsメニューに移動します。
+2. クエリ実行当月基準でログが降順で照会されます。
+3. テーブル左上の検索欄を通じてユーザー名で検索が可能です。
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Connection Name**  : 接続したDB接続名
+    2.  **Executed At**  : 実行日時
+    3.  **Statement** : 構文タイプ（Insert/Update/Delete）
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Executed At**  : 実行日時
+    3.  **Name**  : 対象ユーザー名
+    4.  **Email**  : 対象ユーザーメール
+    5.  **Statement** : 構文タイプ（Insert/Update/Delete）
+    6.  **Connection Name**  : 対象DB接続名
+    7.  **Database Type**  : 対象データベースタイプ
+    8.  **Replication Type**  : DB Replicationタイプ
+    9.  **DB Host**  : 接続したDBホスト
+    10.  **DB User**  : DBユーザーID
+    11.  **DB Name**  : DB名
+    12.  **Table(s)**  : 呼び出しテーブル名
+    13.  **Query**  : 実行クエリ文
+    14.  **Time(ms)**  : 実行時間（Millis基準）
+    15.  **Rows**  : 呼び出し行数
+    16.  **Executed From**  : クエリ実行主体
+
+## DML Snapshot詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Details](/administrator-manual/audit/database-logs/dml-snapshots/image-20240730-095257.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DML Snapshots &gt; DML Snapshot Details
+</figcaption>
+</figure>
+
+* 右側ドロワー上部には以下の基本クエリ監査情報を露出します：
+    1.  **Name**  : 対象ユーザー名
+    2.  **Executed At**  : 実行日時
+    3.  **Connection Name**  : 対象DB接続名
+    4.  **Replication Type**  : DB Replicationタイプ
+    5.  **Statement** : 構文タイプ（Insert/Update/Delete）
+    6.  **Time(ms)**  : 実行時間（Millis基準）
+    7.  **Rows**  : 呼び出し行数
+    8.  **Executed From**  : クエリ実行主体
+    9.  **Database Type**  : 対象データベースタイプ
+    10.  **DB Host**  : 接続したDBホスト
+    11.  **DB Name**  : DB名
+    12.  **DB User**  : DBユーザーID
+    13.  **Table(s)**  : 呼び出しテーブル名
+* 下部には実行クエリ本文および前後データを露出します：
+    1.  **Query**  : 実行クエリ文
+    2.  **`{database.table}`**  : 対象テーブル表記
+        1.  **Before**  : クエリ実行以前データ
+        2.  **After**  : クエリ実行以後データ
+        3.  **Copy Data**  : 前/後データコピー用ボタン

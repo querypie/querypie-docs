@@ -1,0 +1,90 @@
+---
+title: 'Server Access History'
+---
+
+## Overview
+
+組織で管理するサーバー接続履歴を記録します。
+
+## Server Access History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Access History](/administrator-manual/audit/server-logs/server-access-history/image-20240728-165641.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Access History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Servers &gt; Server Access Historyメニューに移動します。
+2. 現在月基準でログが降順で照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Email**  : ユーザーEmail
+    3.  **Account**  : サーバー接続Account
+    4.  **Server Name**  : 接続サーバー名
+    5.  **Host**  : 接続サーバーホスト
+    6.  **Client IP**  : ユーザーIP
+    7.  **Client**   **Name**  : ユーザーの接続方式
+    8.  **Role**  : 接続Role
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Server OS**  : 接続したサーバーのOS
+    2.  **Protocol** : 接続使用したProtocol
+    3.  **Result** : 接続試行結果
+    4.  **Action Type** : Connect / Disconnectの有無
+    5.  **Action At**  : 接続時点
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : サーバー接続試行日時
+    3.  **Result**  : 接続成功/失敗の有無
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    4.  **Name**  : 対象ユーザー名
+    5.  **Email**  : 対象ユーザーメール
+    6.  **Role**  : 対象ユーザー接続時使用されたRole名
+    7.  **Account**  : サーバー接続Account
+    8.  **Server Name**  : 対象サーバー名
+    9.  **Server OS**  : 接続したサーバーのOS
+    10.  **Host**  : 接続したサーバーのホスト
+    11.  **Port**  : 接続時使用されたポート
+    12.  **Protocol** : 接続使用したProtocol
+    13.  **Client IP**  : ユーザークライアントIPアドレス
+    14.  **Client**   **Name**  : ユーザーの接続方式
+    15.  **Message**  : 接続失敗など特異事項に対する記録
+
+## Server Access History詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Access History Details](/administrator-manual/audit/server-logs/server-access-history/image-20241209-142526.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Access History Details
+</figcaption>
+</figure>
+
+
+* 右側ドロワーには以下の情報を露出します：
+    1.  **Result**  : サーバー接続成功/失敗の有無
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    2.  **Name**  : 対象ユーザー名
+    3.  **Action At**  : 接続時点
+    4.  **Action Type** : Connect / Disconnectの有無
+    5.  **Connected From**  : 接続方式
+    6.  **Role**  : 対象ユーザー接続時使用されたRole
+    7.  **Command Audit**  : この接続を通じたコマンド記録照会
+    8.  **Session Log**  : この接続を通じたセッションレコーディング照会
+    9.  **Server Name**  : 対象サーバー名
+    10.  **Server OS**  : 接続したサーバーのOS
+    11.  **Host**  : 接続したサーバーのホスト
+    12.  **Port**  : 接続時使用されたポート
+    13.  **Account**  : サーバー接続Account
+    14.  **Protocol** : 接続使用したProtocol
+    15.  **Client**   **Name**  : ユーザーの接続方式
+    16.  **Client IP**  : ユーザークライアントIPアドレス
+    17.  **Reverse Tunnel Agent Name** : Reverse Tunnelで接続した場合、使用されたReverse Tunnel AgentのName
+    18.  **Tag**  : Reverse Tunnelで接続した場合、Reverse Tunnel Agentを選択するのに使用されたTag
+    19.  **ProxyJump**  : Jump Hostを経由してサーバーに接続した場合、適用されたProxyJump
+    20.  **Message**  : 接続失敗など特異事項に対する記録

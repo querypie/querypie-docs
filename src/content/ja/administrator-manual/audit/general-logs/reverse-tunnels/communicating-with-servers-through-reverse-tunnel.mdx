@@ -1,0 +1,25 @@
+---
+title: 'Reverse Tunnelを通じてサーバーに通信する'
+---
+
+## Reverse Tunnelを通じてサーバーに通信する
+
+QueryPieと他のNetwork Zoneにあるリソースと通信する手段としてReverse Tunnelingをサポートしています。接続しようとするNetwork ZoneにReverse Tunnel AgentをインストールするとReverse Tunnel AgentからQueryPie方向（Outbound）に接続を結びます。
+
+リソース（サーバー）にTagを追加してReverse Tunnelを通じてQueryPieから他のNetwork Zoneのリソースに通信できます。
+
+## Reverse Tunnelsサーバーに適用
+
+<figure data-layout="center" data-align="center">
+![Admin Page &gt; Servers &gt; Connection Management &gt; Servers](/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-servers-through-reverse-tunnel/image-20241209-134405.png)
+<figcaption>
+Admin Page &gt; Servers &gt; Connection Management &gt; Servers
+</figcaption>
+</figure>
+
+1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
+2. リスト内サーバーを選択します。サーバー新規登録時[手動で個別サーバー登録](../../../servers/connection-management/servers/manually-registering-individual-servers)を参照してください。
+3. ServerのList Detailページ内でTags項目に以下のTagを追加します。
+    1. `RTS = TRUE` : このTagがあるServerはReverse Tunnelsを通じて接続を試行します。
+    2. Reverse Tunnel AgentのTag : 同じTagがあるReverse Tunnel Agentを通じてサーバーに接続します。同じTagがあるReverse Tunnel Agentがない場合、接続は失敗します。
+4. `Save Changes`ボタンをクリックして設定を保存します。

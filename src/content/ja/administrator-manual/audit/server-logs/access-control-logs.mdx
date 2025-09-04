@@ -1,0 +1,92 @@
+---
+title: 'Access Control Logs'
+---
+
+## Overview
+
+クエリパイユーザー/グループに付与されるサーバーアクセスDirect Permissionに対する付与および回収履歴を記録します。
+
+## Server Access Control Logs照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Access Control Logs](/administrator-manual/audit/server-logs/access-control-logs/image-20240728-174950.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Access Control Logs
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Servers &gt; Server Access Control Logsメニューに移動します。
+2. 当月基準で降順でログが照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Email**  : ユーザーEmail
+    3.  **Server Group**  : サーバーグループ名
+    4.  **Server Name**  : サーバー名
+    5.  **Host**  : サーバーホスト
+    6.  **Account**  : サーバーAccount
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Event**  : イベントタイプ
+        1.  **Access Control Granted**  : Permission付与履歴
+        2.  **Access Control Revoked**  : Permission回収履歴
+        3.  **Whitelist Granted**  : Command Whitelist付与履歴
+        4.  **Whitelist Revoked**  : Command Whitelist回収履歴
+    2.  **Action At**  : 権限付与/回収日時範囲
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : Permission権限付与/回収日時
+    3.  **Event**  : Permission権限関連イベント
+        1.  **Access Control**   **Granted**  : ユーザー/グループにPermissionが付与されたイベント
+        2.  **Access Control Revoked**  : ユーザー/グループからPermissionが回収されたイベント
+        3.  **Whitelist Granted**  : ユーザー/グループにCommand Whitelistが付与されたイベント
+        4.  **Whitelist Revoked**  : ユーザー/グループからCommand Whitelistが回収されたイベント
+    4.  **User Type**  : ユーザー/グループタイプ
+    5.  **Name**  : 対象ユーザー/グループ名
+    6.  **Email**  : 対象ユーザーメール
+        1. グループの場合は表記しません。
+    7.  **Server Group**  : サーバーグループ名
+    8.  **Server Name**  : サーバー名
+    9.  **Host**  : サーバーホスト
+    10.  **Expiration Date**  : 権限付与有効期限（回収予定日）
+    11.  **Account**  : サーバーAccount
+    12.  **Action By**  : Permission付与/回収を進行した管理者名またはSystem
+
+## Server Access Control Logs詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Control Logs Detail](/administrator-manual/audit/server-logs/access-control-logs/image-20240728-175354.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Control Logs Detail
+</figcaption>
+</figure>
+
+1. 最上部には基本イベントに応じた情報を露出します：
+    1.  **Action At**  : Permission権限付与/回収日時
+    2.  **Event**  : ユーザー/グループにPermissionが付与/回収されたイベント
+    3.  **User Type**  : ユーザー/グループタイプ
+    4.  **Name**  : 対象ユーザー/グループ名
+    5.  **Email**  : 対象ユーザーメール
+    6.  **Server Group**  : サーバーグループ名
+    7.  **Server Name**  : サーバー名
+    8.  **Host**  : サーバーホスト
+    9.  **Expiration Date**  : 権限付与有効期限（回収予定日）
+    10.  **Account**  : サーバーAccount
+    11.  **Action By**  : Permission付与/回収を進行した管理者名またはSystem
+        1. Workflowを通じて権限を付与された場合Access Requestリンクが表示され、該当Requestページを新窓で開きます。
+2. 下部には付与/回収されたPermissionに適用された政策を列挙します：
+    1. Access Control関連ログ - Policy
+        1.  **Access Time**  : 接続許可時間
+        2.  **Weekday Access Allow**  : 接続許可曜日
+        3.  **IP Addresses**  : 接続許可IP
+        4.  **Command Audit**  : コマンド記録の有無
+        5.  **Proxy Usage**  : Proxy（Agent）を通じた接続可能の有無
+        6.  **Max Sessions**  : 最大接続セッション数
+        7.  **Session Timeout (minutes)**  : セッションタイムアウト時間設定
+        8.  **Protocols**  : 接続プロトコル
+        9.  **Command Template**  : 適用された禁止コマンドセット
+    2. Whitelist関連ログ - Whitelisted Commands
+        1.  **Keyword**  : 例外処理キーワード
+        2.  **RegEx**  : 例外処理正規表現
+        3.  **Whitelist Expiration Date**  : 例外処理有効期限

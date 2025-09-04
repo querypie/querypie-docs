@@ -1,0 +1,82 @@
+---
+title: 'DB Access History'
+---
+
+## Overview
+
+組織で管理するDB接続接続および接続解除履歴を記録します。
+
+## DB Access History照会
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DB Access History](/administrator-manual/audit/database-logs/db-access-history/image-20240730-070842.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DB Access History
+</figcaption>
+</figure>
+
+1. Administrator &gt; Audit &gt; Databases &gt; DB Access Historyメニューに移動します。
+2. 現在月基準でログが降順で照会されます。
+3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    1.  **Name**  : ユーザー名
+    2.  **Error Message**  : アクセスエラーメッセージ内構文
+    3.  **Client IP**  : ユーザーIP
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+    1.  **Connection Name**  : 接続したDB接続名
+    2.  **Database Type** : データベースタイプ
+    3.  **Action Type** : Connect / Disconnectの有無
+    4.  **Result** : 接続成功/失敗の有無
+    5.  **Action At**  : 接続時点
+5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+6. テーブルで以下のカラム情報を提供します：
+    1.  **No**  : イベント識別番号
+    2.  **Action At**  : サーバー接続試行日時
+    3.  **Action Type**  : Connect / Disconnectの有無
+    4.  **Result**  : 接続成功/失敗の有無
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    5.  **Name**  : 対象ユーザー名
+    6.  **Email**  : 対象ユーザーメール
+    7.  **Cloud Provider**  : 対象クラウドプロバイダー名
+    8.  **Connection Name**  : 対象DB接続名
+    9.  **Database Type**  : 対象データベースタイプ
+    10.  **Privilege**   **Name**  : ユーザー接続権限
+    11.  **Client IP**  : ユーザークライアントIPアドレス
+    12.  **Replication Type**  : DB Replicationタイプ
+    13.  **DB Host**  : 接続したDBホスト
+    14.  **DB User**  : DBユーザーID
+    15.  **DB Name**  : DB名
+    16.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    17.  **Error Message**  : 接続失敗など特異事項に対する記録
+    18.  **Connected**   **From**  : 接続方式
+
+## DB Access History詳細履歴照会
+
+各行をクリックすると詳細情報照会が可能です。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details](/administrator-manual/audit/database-logs/db-access-history/image-20240730-065045.png)
+<figcaption>
+Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details
+</figcaption>
+</figure>
+
+* 右側ドロワーには以下の情報を露出します：
+    1.  **Result**  : 接続成功/失敗の有無
+        1. :check_mark: Success
+        2. :cross_mark: Failure
+    2.  **Name**  : 対象ユーザー名
+    3.  **Action At**  : 接続時点
+    4.  **Action Type** : Connect / Disconnectの有無
+    5.  **Privilege**   **Name**  : ユーザー接続権限
+    6.  **Connection Name**  : 対象DB接続名
+    7.  **Host**   **Name** : 接続実行ホスト名
+    8.  **Connected From**  : 接続方式
+    9.  **Client**   **Name**  : 利用クライアント名（DataGripなど）
+    10.  **Client IP**  : ユーザークライアントIPアドレス
+    11.  **Replication Type**  : DB Replicationタイプ
+    12.  **Database Type**  : 対象データベースタイプ
+    13.  **DB Host**  : 接続したDBホスト
+    14.  **DB Name**  : DB名
+    15.  **DB User**  : DBユーザーID
+    16.  **Error Message**  : 接続失敗など特異事項に対する記録
