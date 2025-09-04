@@ -1,0 +1,174 @@
+---
+title: 'Security'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+SecurityページでQueryPie全般のセキュリティ設定を管理できます。この文書では各セキュリティ設定についての説明を提供します。
+
+<Callout type="info">
+10.3.0から各サービス別設定項目がAdministrator &gt; General &gt; Security下で各サービス(Databases / Servers / Kubernetes)のGeneral下(Administrator &gt; `{Service}` &gt; General &gt; Configurations)に移動されました。
+</Callout>
+
+## ウェブコンソールログイン設定
+
+QueryPie Webログイン関連のセキュリティ設定を管理します。
+
+
+## Account Security Policy
+
+QueryPieアカウントのロックおよび期限切れなどのセキュリティポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-27-at-4.25.50-PM.png](/administrator-manual/general/company-management/security/Screenshot-2025-08-27-at-4.25.50-PM.png)
+</figure>
+
+*  **Account Expiration Period (Days)**  : アカウント期限切れ処理のための長期未接続日数基準
+*  **Expiration Reminder (Days) :** アカウント期限切れ通知メールを送信する基準日を設定します。ドロップダウンリストから1日から14日まで希望する日付を複数選択できます。例えば、14、7、1を選択すると、アカウント期限切れ14日前、7日前、1日前にそれぞれ通知メールが送信されます。
+    * この機能はIntegrationメニューにEmail設定が完了した環境でのみ動作します。
+    * 通知期間を何も選択しない場合、期限切れ通知メールは送信されません。
+*  **Maximum Login Failures before Account Lockout**  : ログイン失敗時のアカウントロックポリシー
+    * QueryPieログイン失敗最大許可回数指定 (Default : 60分、5回)
+    * Enable選択時回数および期間範囲基準追加入力可能 (例: 1440分内5回失敗時アカウントロック)
+*  **Restrict Concurrent Login**  : 同時ログイン制限機能でユーザーログインアカウント一つに対して同時に複数環境(Web、Agentそれぞれ)で活性化できるログイン数を1個に制限し、最も最近のログインのみ活性状態を維持し、以前のログインは次の活動時自動ログアウトさせてアカウントセキュリティを強化するポリシー。 
+    * 同時ログイン制限方式 : 該当オプションが活性化されると、最も古いログインセッションを終了し、新規ログインを許可します。
+        * ただし、オプションを活性化した時点に既にログインされたセッションは即座に終了されず維持されます。その後新しいユーザーがログインすると、既存ユーザーセッションはログアウトされます。
+    * ログアウト通知表示方式: 同一アカウントで他の環境からログインする場合、既存セッションは終了し、ユーザーに通知が表示されます。 
+        * ユーザーがWeb Inactivity TimeoutまたはAgent Session Timeout範囲内で活動中の場合、明示的なUI動作(例: ボタンクリック、ページ転換など)を通じてサーバーと通信する時通知が現れます。 
+        * ボタンクリックなどユーザーAPI呼び出し時通知が現れます。通知は他のログイン発生時点から24時間表示されます。Web、User Agent、Multi-Agentはそれぞれ個別に同時ログイン制限が適用されます。
+
+
+## Password Setting
+
+QueryPieアカウントのパスワードポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+![image-20250515-091250.png](/administrator-manual/general/company-management/security/image-20250515-091250.png)
+</figure>
+
+*  **Maximum Password Age**  : パスワード変更周期 (Default : 90日)
+*  **Password History**  : 以前のパスワード再使用禁止回数基準
+    * 設定された数字分のパスワード履歴を保存し、パスワード変更時同一パスワード使用を禁止
+*  **Minimum Length**  : パスワード最小長 (Default : 9文字)
+*  **Password Complexity Requirements**  : パスワード複雑度設定
+    * Lower case letter (a-z) : 小文字必須
+    * Upper case letter (A-Z) : 大文字必須
+    * Number (0-9) : 数字必須
+    * Special character (e.g., !@#$%^&*) : 特殊文字必須
+    * Limit 3 repeating characters and numbers (e.g., aaa, bbb) : 3文字以上反復される文字/数字制限
+    * Limit 3 consecutive characters and numbers (e.g., abc, 123) : 3文字以上連続される文字/数字制限
+    * Restrict nearby characters on the keyboard (e.g., qwe, ert) : : 3文字以上キーボード上隣接する文字列制限
+    * Does not contain part of personal information (Username, Primary email) : パスワード内個人情報(Username, Primary email)使用制限
+
+
+## Timeout
+
+ウェブコンソールとエージェントのタイムアウトポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
+</figure>
+
+*  **Web Inactivity Timeout (Minutes)** : ウェブコンソールタイムアウト基準 (Default : 60分)
+    * 指定された時間活動がない場合タイムアウト処理
+*  **Agent Session Timeout (Minutes)** : エージェントセッションタイムアウト基準 (Default : 1,440分)
+    * 指定された時間エージェントアプリログインを維持し、経過時ログアウト処理
+
+
+## QueryPie Web IP Access Control
+
+QueryPie接続時IP制限ポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-2.14.46-PM.png](/administrator-manual/general/company-management/security/Screenshot-2025-06-26-at-2.14.46-PM.png)
+</figure>
+
+*  **All Users**  : すべてのユーザーに適用されるIP制限設定 (Default : 0.0.0.0/0)
+*  **Each User**  : トグルをオンにすると個別ユーザーに対してAllowed Zone設定可能 
+    * ユーザー別Allowed Zone設定方法は[ユーザープロフィール](../user-management/users/user-profile)で確認可能
+    *  **Use Individual Configuration of Allowed Zones for Each User**  : ユーザー別個別IP許可領域(Allowed Zone)を設定します。
+        * 活性化時、ユーザーリストおよび各ユーザーに割り当てられたIP許可領域を確認できる`View User to Allowed Zone Mappings`リンクが表示されます。
+        *  **View User to Allowed Zone Mappings** : クリック時ユーザー別Allowed Zoneリストをモーダル(Modal)ウィンドウで確認できます。ユーザー名(Display Name)で検索が可能で、リストにはユーザーの名前、ログインID、メール、そして割り当てられたすべてのIPアドレスが表示されます。
+    *  **Require Allowed Zones for User Access**  : ユーザーのIP許可領域設定を必須で強制するポリシーです。
+        * このオプションを活性化すると、個別IP許可領域(Allowed Zone)が設定されていないユーザーはQueryPieにログインできません。ログインページアクセスは可能ですが、ログイン試行が遮断されます。
+
+<Callout type="info">
+**IPアクセス制御ポリシー活性化時注意事項**
+`Require Allowed Zones for User Access`オプション活性化によりログインが遮断されたユーザーは'IP Registration Request'ワークフローを通じて新規IPアドレスに対するアクセス許可を要求できます。(詳細内容は[IP Registration Request要求](../../../user-manual/workflow/requesting-ip-registration)文書を参照してください。)
+</Callout>
+
+*  **Admin Page Access Control**  : 管理者ページにアクセスできる管理者のIPを制限するポリシーを設定します。トグルを活性化して特定IPアドレスまたは帯域から接続する管理者のみ管理者ページにアクセスするよう制限できます。
+    *  **アクセス要求条件:** 
+        * ユーザーは管理者権限を持っている必要があります。
+        * ユーザーの接続IPは'All Users'に設定されたIP帯域に含まれている必要があります。
+        * ユーザーの接続IPは'Admin Page Access Control'に登録されたIPリストに含まれている必要があります。
+    *  **管理者ページアクセス制御設定時注意事項** 
+        * `Admin Page Access Control`にIPを追加する場合、該当IPは必ず上位の  **All Users** 設定にも含まれている必要があります。もし  **All Users** に登録されていないIPを追加して保存を試行する場合、エラーが発生し設定が保存されません。
+
+<Callout type="info">
+**Q. もしユーザーが許可されていないIPからQueryPieウェブコンソール接続試行時どの画面を見ることになりますか？**
+A. 許可されていないIPから接続試行時QueryPieウェブコンソール内どのページでもアクセス不可で下記のような案内画面を見ることになります。もしAll Usersに基本値(0.0.0.0/0)が登録されており、個別ユーザーに特定Allowed Zoneが設定されているならログインページまでは接続可能ですがログインは不可になります。
+</Callout>
+<figure data-layout="center" data-align="center">
+![QueryPie Web Access Control &gt; All Usersに登録されたIPと一致しない場合](/administrator-manual/general/company-management/security/image-20240121-073718.png)
+<figcaption>
+QueryPie Web Access Control &gt; All Usersに登録されたIPと一致しない場合
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Users &gt; Update Userに登録されたAllowed Zoneと一致しない場合](/administrator-manual/general/company-management/security/image-20240121-074246.png)
+<figcaption>
+Users &gt; Update Userに登録されたAllowed Zoneと一致しない場合
+</figcaption>
+</figure>
+<Callout type="important">
+**IP制限設定注意**
+Securityページの設定は保存即座に反映されます。したがって入力したIPと該当オプションを設定した管理者のIPが一致しない場合管理者であっても  **保存**   **即座にログアウト処理** されるので注意して適用してください。
+</Callout>
+
+
+## Secret Store設定
+
+Secret Store使用可否を設定します。現在HashiCorp Vaultをサポートしています。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-152042.png](/administrator-manual/general/company-management/security/screenshot-20240726-152042.png)
+</figure>
+
+Vault登録はGeneral &gt; Integrationsメニューで実行します。
+
+<Callout type="info">
+**Q. Secret Store活性化を解除したいのですが、トグルが非活性化状態です。**
+A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valutメニューに登録されたVaultが残っているか確認してください。登録されたVaultがすべて削除された後トグル非活性化可能です。
+</Callout>
+
+
+Secret Store使用活性化およびVault登録が完了した後、DBコネクション詳細ページまたはServer Group詳細ページで認証情報保存庫を選択できるようになります。
+
+<figure data-layout="center" data-align="center">
+![DB Connection詳細ページ内Connection Information &gt; Secret Store選択](/administrator-manual/general/company-management/security/screenshot-20240726-185946.png)
+<figcaption>
+DB Connection詳細ページ内Connection Information &gt; Secret Store選択
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![Server Group詳細ページ内Accounts &gt; Secret Store選択](/administrator-manual/general/company-management/security/screenshot-20240726-190034.png)
+<figcaption>
+Server Group詳細ページ内Accounts &gt; Secret Store選択
+</figcaption>
+</figure>
+## その他
+
+その他セキュリティ設定を管理します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240726-152051.png](/administrator-manual/general/company-management/security/screenshot-20240726-152051.png)
+</figure>
+
+* Export a file with Encryption : ファイルダウンロード時パスワード入力可否
+    * Required選択時、ファイルダウンロード時にファイルパスワード指定必須
+
+

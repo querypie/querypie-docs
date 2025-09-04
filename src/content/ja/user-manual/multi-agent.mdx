@@ -1,0 +1,278 @@
+---
+title: 'Multi Agent'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie Multi Agentは複数のQueryPie Hostを同時に使用できるよう改善されたProxy Agentです。
+
+Agent UIでは特定Hostで使用可能なリソースを確認できます。
+
+AgentインストールおよびHost別ログイン実行のみで追加設定なしに2つ以上のQueryPie Proxyを通じたリソース接続が可能です。
+
+<Callout type="info">
+**サポートバージョン**
+
+Multi Agentは`10.2.5`バージョンまたは以降バージョンのQueryPie Hostのみをサポートします。10.2.4以下バージョンを使用する場合は既存のUser Agentを使用してください。
+
+同一PCに既存のUser AgentとMulti Agent両方インストールすることは可能です。ただし、同時に実行されていると正常に動作しません。
+
+QueryPie Hostバージョンが`10.2.5` ~ `10.2.7`バージョンの場合サポート範囲:
+
+* Service: DAC, KAC 
+* Client OS: MacOS, Windows
+
+QueryPie Hostバージョンが`10.2.8`以上バージョンの場合サポート範囲:
+
+* Service: DAC, KAC, SAC
+* Client OS: MacOS, Windows, Linux
+</Callout>
+
+## エージェントアプリダウンロードおよび初期設定
+
+1. QueryPieログイン後右上プロフィールをクリックした後Download & Support &gt; `Multi-Agent`ボタンをクリックします。
+2. QueryPie Multi-Agent Downloadsポップアップウィンドウが実行されるとStep 1で使用中のPCオペレーティングシステムに合うインストールファイルをダウンロードした後Step 3にあるQueryPie URLをコピーしておきます。<br/>
+3. ダウンロードしたQueryPie Multi-Agentインストールプログラムを実行した後.appファイルをApplicationsフォルダにコピーしてインストールを完了します。
+4. インストール完了されたQueryPie Agentを実行するとHost初回登録ページが開きます。<br/>QueryPie Host入力欄に事前にコピーしておいたQueryPie URLを入力して`Next`ボタンをクリックするとログイン画面にアクセスします。
+5. 入力したホストのログインページで認証情報を入力してContinueボタンをクリックします。
+
+## DAC
+
+### エージェントでデータベース接続
+
+1. Databaseタブで選択されたQueryPie Hostに対して権限が付与されておりProxy使用が可能なDatabase Connection目録を確認できます。
+2. 接続したいコネクションを選択してマウス右ボタンをクリックするとコンテキストメニューが開きます。
+    1. Connection Information: Proxy接続のための情報を確認できます。
+    2. Open Connection With **[10.2.6~]**: 3rd Partyツールでコネクションに接続できます。
+        1. DBeaver: DBeaverを開いてコネクションの情報を挿入します。<br/>(初回1回のDBeaverパス認識過程が必要です。DBeaverが実行中状態で本機能を実行することをお勧めします。)
+        2. DataGrip: DataGripに貼り付けることができるコネクション情報がコピーされます。
+        3. SQLGate for Oracle (Windowsのみサポート): SQLGate for Oracleを開いてコネクション情報を挿入します。
+    3. Copy as JDBC URL **[10.2.6~]**: 選択したコネクションのJDBC URLをコピーします。
+
+<Callout type="info">
+Open Connection With、Copy as JDBC URL機能は10.2.6またはその以降バージョンでサポートします。
+</Callout>
+
+### エージェントで3rd Party Database Tool設定管理
+
+Settings &gt; Databasesで3rd Partyツール関連設定を管理できます。
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Settings &gt; Databases](/user-manual/multi-agent/screenshot-20250413-235252.png)
+<figcaption>
+Multi-Agent &gt; Settings &gt; Databases
+</figcaption>
+</figure>
+
+
+* Database Tool Path: サポートする3rd Partyツールのパスを設定できます。
+    * Auto Detected : Open Connection Withでツールを選択するたびにツールのパスを自動で探します。
+        * ツールが適切に開かない場合はManual Configurationでパスを手動指定してください。
+    * Manual Configuration : 手動でツールがインストールされたパスを指定します。
+    * Do not user the tool : ツール使用を非活性化します。コネクション目録のコンテキストメニューでツールが隠されます。
+* DataGrip Connection Guide: DataGripでコネクションを開く時露出されるガイドモーダルを継続して見るか設定します。
+
+### エージェントでdefault privilege選択
+
+クエリパイDBアクセス制御で一ユーザーが2個以上のprivilegeを付与されることができます。特定コネクションにアクセス権限を付与されたユーザーが複数グループに含まれておりグループに異なるアクセス権限を付与した場合このユーザーは複数のprivilegeが割り当てられることができます。この時proxyを通じて接続する時使用するPrivilegeをagent画面で選択できます。(10.3.0からサポート)
+
+多重privilegeを付与された後ユーザーが特定privilegeをdefaultに設定しないと接続できないためもしdefault privilegeが設定されていない場合は下記図のような警告アイコンが表示されます。<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20250513-025002.png](/user-manual/multi-agent/image-20250513-025002.png)
+</figure>
+
+1. 多重Privilegeが割り当てられたコネクションに対してマウス右ボタンを押してメニューを呼び出します。
+2. メニューでConnection Informationを選択します。<br/>
+3. Original InformationのPrivilegeで編集(鉛筆形アイコン)ボタンをクリックします。<br/><br/>
+4. Previlege Nameの項目中一つを選択して保存します。<br/>
+5. 警告アイコンが消え割り当てられたprivilege名前が該当コネクションに見えるか確認します。<br/><br/>
+
+## KAC
+
+### エージェントでRole別Kubernetesクラスター目録照会
+
+Roleセレクターで本人に付与されたRole中一つを選択すると、選択されたRoleに権限が付与されているK8s Cluster目録を確認できます。
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113908.png)
+<figcaption>
+Multi-Agent &gt; Kubernetes
+</figcaption>
+</figure>
+
+### エージェントでKubeconfig設定ガイド確認
+
+Proxyを通じてkubectlコマンドを使用するには**初回1回のKubeconfig設定**が必要です。
+
+エージェント右上の歯車ボタンをクリックしてSettingページにアクセス、Kubernetesタブを選択するとKubeconfig File保存パスを管理し、Kubeconfig設定コマンドをコピーできます。
+
+その後使用するターミナルでコピーしたコマンドを貼り付けて実行します。
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Kubernetes](/user-manual/multi-agent/screenshot-20250217-113712.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Kubernetes
+</figcaption>
+</figure>
+
+## SAC**[10.2.8~]**
+
+### エージェントでサーバー接続
+
+1. RoleドロップダウンでRoleを選択すると、選択したRoleでアクセスできるサーバー目録を確認できます。
+2. サーバーを選択して右クリックしてコンテキストメニューを開き、Open Connection With &gt; ターミナルToolを選択します。
+3. 必要時Account情報を入力して`Open`ボタンを押します。
+    1. AccountでカテゴリがQueryPie - Custom Accountのアカウントを選択するとCustom AccountフィールドとPasswordフィールドが表記され、事前に登録されていないアカウント情報を直接入力してLinuxおよびWindowsサーバーに接続できます。
+        1. ただし、Server AgentがないWindows Serverに接続時、Custom Accountのみ選択でき、Custom Account入力フィールドとPassword入力フィールドは表記されません。Server AgentがあるWindows Serverでは使用できません。 
+4. 選択したターミナルツールでサーバーに接続できます。
+
+
+<Callout type="info">
+**OS権限モーダル**
+* 初回1回に限り、選択したターミナルツールに対するOS権限を要求します。`許可`しないとターミナルツールを開けません。
+* 初回1回に限りSystem Eventに対するOS権限を要求します。許可する場合セッション切断などに対するイベントを通知領域で受信できます。
+</Callout>
+
+<Callout type="info">
+**セッション終了前アラーム**
+* セッション終了5分前終了アラームがMulti Agent内で発生します。
+* Multi Agentが終了または終了時点が到来する場合、別途のセッション終了アラームなしに接続されたセッションが終了します。
+</Callout>
+
+
+### エージェントでサーバーアクセス権限要求
+
+サーバーに接続時必要なアカウントの権限がない場合、Multi Agentで直接サーバーアクセス権限(Server Privilege Request)を要求できます。
+
+1. `Servers`タブで権限を要求するサーバーを選択してマウス右ボタンをクリックしてコンテキストメニューを開きます。<br/>
+2. `Open Connection With`で使用したいターミナルツールを選択します。<br/><br/>
+3. アカウント選択窓が現れると下部にある`Request Server Privilege`ボタンをクリックします。<br/><br/>
+    * このボタンをクリックするとQueryPieウェブページの権限要求画面に移動し、以前に選択したRole、サーバーグループ、サーバー、アカウント情報が自動で入力されています。<br/>
+
+<Callout type="info">
+**注意事項**
+* QueryPie管理者が`Admin &gt; General &gt; Workflow Configurations`設定で`Server Privilege Request`を非活性化した場合、エージェントの`Request Server Privilege`ボタンも非活性化されます。
+</Callout>
+
+
+### エージェントサーバー目録照会時使用可能なフィルター
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Servers](/user-manual/multi-agent/Screenshot-2025-08-25-at-4.57.03-PM.png)
+<figcaption>
+Multi-Agent &gt; Servers
+</figcaption>
+</figure>
+
+1.  **Time-limited items only**  : 時間単位で権限を付与されたサーバーのみリストで表示します。
+2.  **Search by Host**  : サーバー目録の検索基準が既存サーバー名からHost(IPアドレス)に変更されます。同時にサーバー目録の表記方式もHostに転換されて表示されます。トグルが非活性化された状態ではサーバー名でのみ検索できます。
+
+### エージェントで3rd Party Terminal Tool設定管理
+
+Setting &gt; Serversでターミナルツール関連設定を管理できます。
+
+<figure data-layout="center" data-align="center">
+![Multi-Agent &gt; Setting &gt; Servers](/user-manual/multi-agent/screenshot-20250413-235301.png)
+<figcaption>
+Multi-Agent &gt; Setting &gt; Servers
+</figcaption>
+</figure>
+
+* Terminal Tool Path: サポートする3rd Partyツールのパスを設定できます。
+    * Auto Detected : Open Connection Withでツールを選択するたびにツールのパスを自動で探します。
+        * ツールが適切に開かない場合はManual Configurationでパスを手動指定してください。
+    * Manual Configuration : 手動でツールがインストールされたパスを指定します。
+    * Do not user the tool : ツール使用を非活性化します。サーバー目録のコンテキストメニューでツールが隠されます。
+
+## エージェントで2つ以上のHost使用
+
+1. Settings &gt; Hostsで`+ Add New Host`ボタンをクリックした後新しいHostのドメインを入力して保存します。
+2. 新しいHost登録が成功した場合Toastで案内されます。目録で新しいHostが追加されたことを確認し、右上の`X`ボタンを押して設定ページを出ます。
+    1. Host目録で希望するHostをクリックしてすぐに転換できます。
+3. プロフィールボタンをクリックすると登録されたHost目録を確認できます。クリックしてHost間転換が可能です。
+
+<Callout type="info">
+Host転換はログイン時には必須ですが、ログイン後Proxy接続がされたなら画面上のHost転換なしに登録されたすべてのリソースを使用できます。
+</Callout>
+
+## Multi Agent設定初期化
+
+1. システムトレイまたはメニューバーでMulti Agentアイコン(または項目)をクリックした後、表示されるメニューで'Reset All Settings'を選択します。
+<figure data-layout="center" data-align="center">
+![ Status Bar Item (MacOS)](/user-manual/multi-agent/screenshot-20250414-000719.png)
+<figcaption>
+ Status Bar Item (MacOS)
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Application Menu (MacOS)](/user-manual/multi-agent/screenshot-20250414-001207.png)
+<figcaption>
+Application Menu (MacOS)
+</figcaption>
+</figure>
+
+1. またはエージェント右上の歯車ボタンをクリックして設定ページにアクセスし、Hostsタブ下部のReset All Settingsボタンをクリックします。
+2. 確認モーダルでResetボタンをクリックするとローカルフォルダに保存されたすべての設定が初期化されます。
+3. Multi Agent初回設定(初回Host登録)ページにアクセスします。
+
+## Multi Agentログ抽出
+
+Multi-agent使用中問題発生時次の手順に従ってログを抽出してください。
+
+### GUI
+
+<figure data-layout="center" data-align="center">
+![MacOS](/user-manual/multi-agent/diagnostic-tools-for-macos.png)
+<figcaption>
+MacOS
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![Windows](/user-manual/multi-agent/diagnostic-tools-for-windows.png)
+<figcaption>
+Windows
+</figcaption>
+</figure>
+1. メニューバー(MacOS)またはシステムトレイ(Windows)でMulti-agentアイコンをクリックし、メニューでDiagnostic Tools &gt; Enable Tracingをクリックします。
+    1. ログレベルをTraceに変更し、UIではDisable Tracingで項目が変更されます。
+2. 問題を再現します。
+3. 再びメニューバーでMulti-agentアイコン &gt; Diagnostic Tools &gt; Export Logをクリックします。
+4. 抽出されたログファイルを伝達してください。
+
+### macOS
+
+1. エージェント終了後ターミナルで次のコマンドを実行します。
+```
+QPMA_TRACE=1 open -a QueryPieMultiAgent
+```
+
+1. 問題を再現します。
+2. 下記のフォルダを圧縮して伝達してください。
+```
+~/.querypie-multi-agent
+```
+
+### Windows
+
+1. エージェント終了後ターミナルで次のコマンドを実行します。
+```
+set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
+```
+
+1. 問題を再現します。
+2. 下記のフォルダを圧縮して伝達してください。
+```
+%USERPROFILE%\.querypie-multi-agent
+```
+
+
+## 管理者のための制約事項文書
+
+管理者のためのMulti Agent制約事項文書は別途の管理者ガイド文書を参照してください。
+
+[Multi Agent制約事項](../administrator-manual/multi-agent-limitations)
+
+

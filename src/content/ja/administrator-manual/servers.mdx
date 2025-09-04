@@ -1,0 +1,126 @@
+---
+title: 'Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240523-195046.png](/administrator-manual/servers/screenshot-20240523-195046.png)
+</figure>
+
+## Overview
+
+QueryPie SACはクラウドおよびオンプレミスに散らばった複数のシステムおよびサーバー、ネットワーク機器などSSH接続が可能なすべてのリソースの権限を統合管理できます。また、数多くのサーバーをグループ化してアクセスポリシーを簡単で便利に設定し、権限を簡便に付与できます。ユーザーのシステム接続現況をリアルタイムでモニタリングし、セッション録画機能を通じて作業履歴を同一画面でリプレイできる進歩した機能を提供します。
+
+
+## 推奨するSAC初期設定順序
+
+SAC(System Access Controller)を初めて使用する管理者なら、円滑なサーバー管理のために下記順序で初期設定することをお勧めします。Account、SSH Keyのようにサーバー登録に必須的に必要なリソースをまず登録後サーバー登録を進行すると、より迅速で便利に作業を完了できます。
+
+<Callout type="info">
+リンクされた項目をクリックすると関連ガイドをすぐに確認できるページに移動します。
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**設定順序**
+</th>
+<th>
+**設定項目**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**事前準備**
+</th>
+<td>
+* [User登録](general/user-management/users) 
+* [User Group登録](general/user-management/groups)
+* [SSH Key登録](servers/server-account-management/ssh-key-configurations)
+* [Account Template登録](servers/server-account-management/server-account-templates)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**サーバー登録**
+</th>
+<td>
+* [Cloud Providerを通じた同期](servers/connection-management/cloud-providers)
+* [手動でサーバー登録](servers/connection-management/servers/manually-registering-individual-servers)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**サーバーグループ登録**
+</th>
+<td>
+* [サーバーをグループで管理](servers/connection-management/server-groups/managing-servers-as-groups)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**ポリシー設定**
+</th>
+<td>
+* [遮断コマンドテンプレート設定](servers/server-access-control/command-templates)
+* [サーバーアクセスポリシー設定](servers/server-access-control/policies/setting-server-access-policy)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**権限付与**
+</th>
+<td>
+* [サーバーアクセスRole権限付与](servers/server-access-control/access-control/granting-and-revoking-roles)
+* [サーバーアクセス権限直接付与](servers/server-access-control/access-control/granting-and-revoking-permissions)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**ログ確認**
+</th>
+<td>
+* [監査ログ確認](audit/server-logs)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**その他設定**
+</th>
+<td>
+* [サーバー通知ポリシー設定](general/company-management/alerts)
+* [サーバーセキュリティ設定](general/company-management/security)
+</td>
+</tr>
+</tbody>
+</table>

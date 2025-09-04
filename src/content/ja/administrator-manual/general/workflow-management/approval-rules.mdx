@@ -1,0 +1,128 @@
+---
+title: 'Approval Rules'
+---
+
+## 概要
+
+決裁規則（Approval Rules）とは、管理者が事前に設定しておいたWorkflow承認プロセスを意味します。決裁規則は要求類型別にそれぞれ生成し、承認段階を1〜4段階で設定し各段階別に承認者選択方式を設定できます。Approval Rulesページで提供する機能は以下の通りです。
+
+1.  **決裁規則リスト照会**  : 登録された決裁規則リストを照会できます。（最近生成順）
+2.  **決裁設定**  : 決裁上申および承認プロセスを設定します。
+    1. 詳細説明は[Workflow Configurations](workflow-configurations)文書を参照してください。
+3.  **決裁規則生成**  : ページ右上の`Add Approval Rule`ボタンをクリックします。
+4.  **詳細情報確認および修正**  : リストで決裁規則をクリックすると登録された内容を確認し修正できます。
+5.  **決裁規則削除**  : リストでチェックボックスを選択するとテーブルヘッダーに`Delete`ボタンが露出され、これをクリックすると登録された規則を削除できます。
+
+この文書では決裁規則の生成、照会、変更および削除方法を案内します。
+
+## 決裁規則リスト照会
+
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesメニューで決裁規則リストを照会できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules](/administrator-manual/general/workflow-management/approval-rules/screenshot-20240723-163151.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules
+</figcaption>
+</figure>
+
+## 決裁規則生成
+
+Approval Rulesページ右上の`Add Approval Rule`ボタンをクリックするとモーダルが露出されます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Add Approval Rule](/administrator-manual/general/workflow-management/approval-rules/Screenshot-2025-08-26-at-4.42.57-PM.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Add Approval Rule
+</figcaption>
+</figure>
+
+*  **Rule Name** : 決裁規則を画面で区別できる名前です。
+*  **Request Type**  : 決裁規則を追加する要求タイプを選択します。決裁規則は要求タイプ別に区分されます。
+    * :warning: Request Typeは一度決裁規則を生成すると  **変更できません。** 
+*  **Approval Steps**  : 承認段階および承認者指定方式を設定します。
+    * `Add Step`ボタンをクリックして承認段階を追加できます。最大4段階まで可能です。（ただし、Request Type中Web App JIT Requestは4段階承認をサポートしません。）
+    * 承認者指定方式：
+        *  **Allow Assignee selection (Admin-Only)** : 要求者が直接承認者を指定できますが、Ownerおよび該当要求を承認する権限を持つ管理者のみ選択可能です。
+        *  **Allow Assignee selection (All Users)**  : 要求者が直接承認者を指定でき、すべてのユーザーを選択可能です。
+            * このオプションを選択する場合要求者本人を承認者として指定することを許可します。
+        *  **Assign Connection Owner** : 要求時点で選択したコネクションのConnection Ownerが承認者として指定されます。（Request TypeでSQL / Export Requestを指定した場合のみ有効化）
+        *  **Assign Server Group Owners** : 要求時点で選択したサーバーグループのServer Group Ownerが承認者として指定されます。（Request TypeでServer Access Request / Server Privilege Requestを指定した場合のみ有効化）
+        *  **Select Assignees**  : 現在選択するユーザーまたはグループのみが承認者として指定され、要求作成時承認者変更が不可能です。
+        *  **Allow Assignee selection (Attribute-Based)** : 要求者プロフィールの特定ユーザーAttribute値を基準に承認者を自動的に指定します。
+*  **Execution Steps** : SQL実行者指定方式を設定します。（Request TypeでSQL / Export Requestを指定した場合のみ有効化）
+    *  **Allow Assignee selection (Admin-Only)** : 要求者が直接実行者を指定できますが、Ownerおよび該当要求を承認する権限を持つ管理者のみ選択可能です。
+    *  **Allow Assignee selection (All Users)**  : 要求者が直接実行者を指定でき、すべてのユーザーを選択可能です。
+        * このオプションを選択する場合要求者本人を実行者として指定することを許可します。
+    *  **Assign Connection Owner** : 要求時点で選択したDBコネクションのConnection Ownerが実行者として指定されます。要求作成時実行者変更が不可能です。
+        *  [DB Connections](../../databases/connection-management/db-connections)でDBコネクション別にConnection Ownerを指定する方法を確認できます。
+    *  **Select Assignees**  : 現在選択するユーザーまたはグループのみが実行者として指定され、要求作成時実行者変更が不可能です。
+*  **Reveiw :** Administrator &gt; General &gt; Workflow Configurationsで **** Activate Review Step to collaborate with others **** オプションが有効化された場合のみ表示されます。決裁要求に対する参照者を指定する方式を設定します。
+    *  **参照者指定方式：** 
+        * Select Assignee(s) / Group(s) **：** 管理者が特定ユーザーまたはグループを固定された参照者として事前に指定します。この規則で決裁を上申するユーザーは参照者を変更できません。
+        * Allow Assignee selection (All Users) **：** 決裁上申者が直接すべての有効ユーザー中から参照者を選択するよう許可します。
+        * Connection OwnerとServer Ownerは固定参照者として指定できません。
+*  **Urgent Mode**  : 該当決裁規則下で事後承認（Urgent Mode）を許可するかを決定します。
+    * 基本値は非許可（Off）で、後日Approval Rule修正を通じてOn/Off可能です。
+    * Workflow Configurationsで事後承認が許可されていなければこのオプションが表示されません。
+*  **Allow Self-Approval**  : 該当決裁規則（Approval Rule）下で要求者が自分を承認者として指定したり自分の要求を直接承認することを許可するかを決定します。
+    1.  **ワークフロー上申ページ** 
+        1.  **注意** : 
+            * 特定要求上申後に自己承認規則が変更されても、すでに上申された要求には遡及して適用されません。
+        2.  **Allow Assignee selection (Admin-Only)** :
+            * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
+            * 無効化時：ワークフロー上申ページで承認者選択リストから要求者本人が除外されます。
+        3.  **Allow Assignee selection (All Users)**  :
+            * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
+            * 無効化時：ワークフロー上申ページで承認者選択リストから要求者本人が除外されます。
+        4.  **Select Assignees**  :
+            1. 承認規則に要求者自身のみApproverで設定された場合：
+                * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
+                * 無効化時：該当Approval Ruleは上申者ページ画面に表示されますが、選択して上申時エラーが発生します。
+            2. 承認規則に要求者本人が含まれたグループがApproverで設定された場合：
+                * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
+                * 無効化時：要求者は承認者リストに含まれて表示されます。上申は可能ですが、実際承認者画面では要求者本人の名前が除外され残りのグループ構成員のみApproverで登録されます。
+        5.  **Assign Connection Owner** :
+            * 有効化時：本人が含まれた場合自動的に本人が承認者として指定されます。
+            * 無効化時：Ownerに要求者本人が含まれていても要求上申ページの承認者リストに表示されません。
+        6.  **Assign Server Group Owners :** 
+            * 有効化時：本人が含まれた場合自動的に本人が承認者として指定されます。
+            * 無効化時：Ownerに要求者本人が含まれていても要求上申ページの承認者リストに表示されません。
+    2.  **ワークフロー承認ページ** 
+        1.  **新規オプション無効化時：** 
+            * 要求者本人が承認者として指定された場合、`Approve`ボタンをクリックするとエラーメッセージが表示され自己承認が不可能です。
+        2.  **新規オプション有効化時：** 
+            * 要求者本人が承認者として指定された場合、`Approve`ボタンをクリックすると自己承認が可能です
+*  **Allow submitting requests for others**  : ユーザーが他のユーザーを代わりにワークフロー要求を提出できるよう許可します（代理上申）。
+    * この機能はRequest Typeが`DB Access Request`、`Unmasking Request`、`Restricted Data Access Request`、`DB Policy Exception Request`、`Decryption Request`の場合のみ有効化されます。
+    * `Allow submitting requests for others`オプションが有効化された決裁規則を選択すると、要求上申画面に決裁を適用受ける実際対象ユーザーを指定する`Target User`項目が表示されます。
+* 入力を終えたら`OK`ボタンをクリックして決裁規則生成を完了します。
+
+## 決裁規則確認および修正
+
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules内決裁規則リスト中詳細内容を確認および修正しようとするアイテムをクリックして、モーダルを開きます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Update Approval Rule](/administrator-manual/general/workflow-management/approval-rules/image-20250512-121540.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Update Approval Rule
+</figcaption>
+</figure>
+
+* 生成時入力された項目中  **Request Type**  を除いたすべての項目が変更可能です。
+* 変更を終えたら`OK`ボタンをクリックして決裁規則修正を完了します。（変更された内容がなくてもアップデート処理される）
+* 変更をキャンセルしたり、またはアップデートなしにモーダルを閉じるには`Cancel`ボタンを押してモーダルを閉じて出ます。
+
+## 決裁規則削除
+
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesリストで決裁規則を削除できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules (削除有効化)](/administrator-manual/general/workflow-management/approval-rules/screenshot-20240725-165423.png)
+<figcaption>
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules (削除有効化)
+</figcaption>
+</figure>
+
+1. 削除しようとする決裁規則をチェックボックスで選択した後、テーブルヘッダーに露出される`Delete`ボタンをクリックします。
+2. 削除確認モーダルで`OK`ボタンをクリックすると削除が完了します。

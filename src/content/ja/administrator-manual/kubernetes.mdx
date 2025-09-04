@@ -1,0 +1,122 @@
+---
+title: 'Kubernetes'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![image-20240510-011958.png](/administrator-manual/kubernetes/image-20240510-011958.png)
+</figure>
+
+## Overview
+
+QueryPie KACはAWS EKSやその他のオンプレミスKubernetesクラスターのようなクラウドインフラを中央で管理するためのKubernetes API保護ソリューションです。KACを使用すると管理者は細かくユーザーのKubernetesリソースAPIアクセス制限および管理を実行し、ユーザーが要求したKubernetes APIを監査およびモニタリングできます。
+
+
+## 推奨するKAC初期設定順序
+
+QueryPie KAC(Kubernetes Access Controller)を初めて使用する管理者なら、円滑なKubernetes管理のために下記順序で初期設定することをお勧めします。
+
+<Callout type="info">
+リンクされた項目をクリックすると関連ガイドをすぐに確認できるページに移動します。
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**設定順序**
+</th>
+<th>
+**設定項目**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**事前準備**
+</th>
+<td>
+* [User登録](general/user-management/users)
+* [User Group登録](general/user-management/groups)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Kubernetesクラスター登録**
+</th>
+<td>
+* [AWSでKubernetesリソース同期](kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws)
+* [手動でKubernetesクラスター登録](kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**ポリシー設定**
+</th>
+<td>
+* [Kubernetesポリシー設定](kubernetes/k8s-access-control/policies/setting-kubernetes-policies)
+* [Kubernetes役割設定](kubernetes/k8s-access-control/roles/setting-kubernetes-roles) 
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**権限付与**
+</th>
+<td>
+* [Kubernetes役割付与および回収](kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**ログ確認**
+</th>
+<td>
+* [Kubernetes監査ログ確認](audit/kubernetes-logs)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**[ユーザー] Kubernetes利用**
+</th>
+<td>
+* [Kubernetes接続](../user-manual/kubernetes-access-control)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**管理者権限設定**
+</th>
+<td>
+* [Kubernetes管理者権限設定](general/user-management/roles)
+</td>
+</tr>
+</tbody>
+</table>

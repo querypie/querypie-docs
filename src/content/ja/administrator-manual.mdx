@@ -1,0 +1,209 @@
+---
+title: '管理者マニュアル'
+---
+
+## ようこそ
+
+QueryPieの管理者は、QueryPie WebまたはAPIを通じて、リソースおよび権限、ソリューションセキュリティ、通知設定など、QueryPie全般のソリューション管理を進めることができます。提供されたライセンスおよび管理者役割権限に応じて、管理者に表示される設定メニューが異なります。
+
+管理者ページにアクセスするには、まずQueryPieにログインします。ログインが正常に完了すると、ユーザーダッシュボードに移動し、QueryPie管理者役割が割り当てられたユーザーの場合、右上に`Go to Admin Page`ボタンが表示されます。このボタンをクリックして管理者ページを新しいタブで開くことができます。
+
+<figure data-layout="center" data-align="center">
+![GNB内の管理者ページアクセスポイント](/administrator-manual/screenshot-20240801-145006.png)
+<figcaption>
+GNB内の管理者ページアクセスポイント
+</figcaption>
+</figure>
+
+
+## QueryPie管理者設定が初めてですか？
+
+Databases、Servers、Kubernetesなど、各サービス設定を進める前に、基本的に設定しなければならない項目があります。特にセキュリティ設定、ユーザー設定、管理者役割割り当ては必須で設定することをお勧めします。
+
+<table data-table-width="760" data-layout="default" local-id="96d34ea4-8772-49af-9ba2-14ea36b1f3e1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**設定順序**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**設定項目**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**基本情報設定**
+</th>
+<td>
+* [General](administrator-manual/general/company-management/general) 
+    * 会社名、タイムゾーン、日付表記方式など
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**セキュリティ情報設定**
+</th>
+<td>
+* [Security](administrator-manual/general/company-management/security) 
+    * ロックポリシー、パスワード変更周期、タイムアウトなど
+* [Allowed Zones](administrator-manual/general/company-management/allowed-zones) 
+    * 許可するIP帯域の作成および管理
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**ユーザーおよびユーザーグループ作成**
+</th>
+<td>
+* Authentication 
+    * [LDAP連携](administrator-manual/general/user-management/authentication/integrating-with-ldap)
+    * [Okta連携](administrator-manual/general/user-management/authentication/integrating-with-okta)
+    * [AWS SSO連携](administrator-manual/general/user-management/authentication/integrating-with-aws-sso)
+* Users 
+    * [ユーザープロフィール](administrator-manual/general/user-management/users/user-profile)
+* [Groups](administrator-manual/general/user-management/groups) 
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**管理者役割割り当て**
+</th>
+<td>
+* [Roles](administrator-manual/general/user-management/roles)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**承認ルール設定**
+</th>
+<td>
+* [Approval Rules](administrator-manual/general/workflow-management/approval-rules)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**通知設定**
+</th>
+<td>
+* [Channels](administrator-manual/general/company-management/channels)
+* [Alerts](administrator-manual/general/company-management/alerts)
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<th>
+**外部セキュリティソリューション連携**
+</th>
+<td>
+* [Integrations](administrator-manual/general/system/integrations)
+</td>
+</tr>
+</tbody>
+</table>
+
+
+## さあ、基本設定が完了しました。今度はサービス別設定をしてみましょうか？
+
+基本設定が完了したら、サービス別設定が残っています。QueryPieの細分化されたアクセス制御機能を通じて、強力な権限管理を体験してみてください。サービス別設定が終わった後は、管理者/ユーザーの接続および実行履歴をAuditメニューで詳しく確認できます。また、機密情報を識別できるDiscovery機能も提供するので、次世代ディスカバリ機能を体験してみてください。
+
+<table data-table-width="760" data-layout="default" local-id="1c770267-da7f-48dc-b1e3-817744eeec38">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**設定順序**
+</th>
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+**設定項目**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**Database Access Control設定**
+</th>
+<td>
+* [Connection Management](administrator-manual/databases/connection-management)
+* [DB Access Control](administrator-manual/databases/db-access-control)
+* [Policies](administrator-manual/databases/policies)
+* [Ledger Management](administrator-manual/databases/ledger-management)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**Server Access Control設定**
+</th>
+<td>
+* [Connection Management](administrator-manual/servers/connection-management)
+* [Server Access Control](user-manual/server-access-control)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**Kubernetes Access Control設定**
+</th>
+<td>
+* [Connection Management](administrator-manual/kubernetes/connection-management)
+* [K8s Access Control](administrator-manual/kubernetes/k8s-access-control)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**監査ログ確認**
+</th>
+<td>
+* [General Logs](administrator-manual/audit/general-logs)
+* [Database Logs](administrator-manual/audit/database-logs)
+* [Server Logs](administrator-manual/audit/server-logs)
+* [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+</td>
+</tr>
+</tbody>
+</table>
+
+
+

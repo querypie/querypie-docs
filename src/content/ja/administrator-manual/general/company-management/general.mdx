@@ -1,0 +1,231 @@
+---
+title: 'General'
+---
+
+## 概要
+
+Generalページでは、QueryPie全体の基本設定を変更できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; General](/administrator-manual/general/company-management/general/image-20250822-103044.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; General
+</figcaption>
+</figure>
+
+## 基本設定
+
+*  **Company Name**  : プロフィール領域などに表示する会社名を入力します。
+*  **Web Base URL**  : QueryPieサービスにアクセスするために使用する基本ドメインアドレス
+*  **Timezone**  : QueryPie全体で表示される日付および時刻情報に適用されるタイムゾーンを設定します。
+*  **Date Format**  : 日付表記方式を指定します。
+*  **Default Display Language**  : QueryPieの基本言語設定を設定します。（デフォルト：英語）
+*  **Audit Log Retention Period** : 監査ログ保存期間を設定します。現在は5年に固定されています。
+*  **Go to System Properties**  : クリックするとシステム設定値の内訳を確認できます。
+
+## System Properties
+
+System Propertiesページでは、QueryPieシステムコンポーネントの設定値を確認し、ファイルで保存できます。
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties](/administrator-manual/general/company-management/general/image-20240805-014838.png)
+<figcaption>
+Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties
+</figcaption>
+</figure>
+
+## Workflow Configuration
+
+Workflow Configurationsでは、決裁上申および承認関連の設定を変更します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-25-at-5.36.19-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png)
+</figure>
+
+## 最大承認期間設定
+
+すべてのワークフロー要求の承認期限を一括的に制限する最大期間を設定します。
+
+管理者はMaximum Approval Duration項目で、承認待ち要求が自動的に期限切れになるまでの期間を1日から最大14日まで設定できます。ここに設定された期間は、ユーザーがワークフローを上申する際に選択するApproval Expiration Date（承認期限日）の最大値として適用されます。
+
+* Admin &gt; Databases &gt; ConfigurationsのMaximum Access DurationまたはAdmin &gt; Servers &gt; ConfigurationsのMaximum Access DurationがMaximum Approval Durationより短く設定された場合、権限がすでに期限切れになった後に承認が処理される状況を防ぐために、Approval Expiration Dateはより短いAccess Expiration Date（権限期限日）に従います。
+
+## ワークフロー理由入力文字数制限設定
+
+ワークフローの要求理由Reason for Requestと承認、拒否、キャンセル、確認時に入力するCommentの最小および最大文字数を設定する機能です。この設定を通じて、管理者は組織のポリシーに合わせて入力文字数を管理できます。
+
+* 管理者はWorkflow Configurationsページで以下の項目に対する文字数範囲を指定できます。
+    * Reason for Request: ワークフロー上申時の理由入力に対する最小、最大文字数を設定します。（基本値：最小3文字、最大1000文字）
+    * Comments: ワークフロー承認、拒否、実行キャンセル、レビュー確認時の入力値に対する最小、最大文字数を設定します。（基本値：最小3文字、最大300文字）
+* 文字数範囲は最小3文字から最大1000文字の間でのみ設定できます。
+
+## 参照者指定有効化
+
+Activate Review Step to collaborate with othersトグルで有効化します。
+
+* Workflow要求を上申する際に参照者を指定するように許可するかを決定します。
+* トグルをオンにすると、要求作成画面の決裁規則指定領域で参照者指定ボタンが表示されます。
+* トグルをオフにすると該当ボタンが削除されます。（既存に指定した履歴は維持され、引き続きリストを確認できます。）
+
+## 事後承認許可
+
+Allow users to submit requests in Urgent modeトグルで有効化します。
+
+* Workflow要求を上申する際に事後承認モード（Urgent Mode）を許可するかを決定します。
+* トグルをオンにすると、以下の領域で事後承認関連トグルが表示されます。
+    * Approval Rules : 決裁規則作成および修正
+    * Submit Request : 要求作成画面の決裁規則指定領域
+* トグルをオフにすると、上記領域で事後承認関連トグルが表示されなくなります。ただし、既存にすでに事後承認モードで要求した履歴はそのまま残っており、実行可能です。
+
+## Attribute基盤承認者指定機能
+
+Use User Attribute-Based Approvalトグルを有効化します。
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.14.55-AM.png)
+<figcaption>
+Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations
+</figcaption>
+</figure>
+
+このオプションを通じて、ワークフロー要求上申時に、ユーザープロフィールの特定Attribute（例：チームリーダー、部長）を基準に承認者を自動的に指定するかを決定します。これを通じて、特定条件に合う担当者に承認要求が自動的に割り当てられるように設定できます。
+
+* 重要：
+    * 選択されたAttributeの値には承認者のQueryPie Login IDが入力されていなければなりません。
+    * Attribute基盤承認者指定は1名のみ登録できます（一つのAttributeに一人の承認者IDのみ指定可能）。
+* トグルを有効化した場合
+    * 承認者自動指定の基準となるDataTypeがidentifierであるAttributeを選択するドロップダウンリストが表示されます。管理者はこのリストから承認者指定に使用するAttribute（例：teamLeader）を選択しなければなりません。
+        * 選択されたAttribute削除制限：上記設定で特定Attributeが承認者自動指定基準として選択されると、該当AttributeはAdministrator &gt; General &gt; Profile Editorで削除できなくなるようシステムによって設定されます（例：削除チェックボックス無効化）。
+    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで新しい承認規則を追加または既存規則を修正する際、'Assignee for Approval'項目に'Allow Assignee selection (Attribute-Based)'オプションが表示され選択可能になります。
+        * このオプションを選択すると、すぐ下にWorkflow Configurationsで設定したAttribute（例：teamLeader）が表示され、該当Attribute値を基準に承認者が動的に決定されることを示します。
+        * 自己承認無効化時連動：もしApproval Rules設定で'Self Approval（自己承認）'オプションが無効化された場合、Attribute基盤で決定された承認者が要求者本人の場合には該当要求者を承認者として自動指定できません。この場合、ワークフロー設定またはシステムポリシーに従って承認者指定が失敗するか他の経路で処理される可能性があるため注意が必要です。
+    * User &gt; Workflow上申ページでAllow Assignee selection (Attribute-Based)で作成されたApproval Ruleが表示されます。
+* トグルを無効化した場合
+    * Administrator &gt; General &gt; Workflow Configurationsページ内でAttribute選択ドロップダウンリストが無効化されます。
+    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで承認規則作成または修正時'Assignee for Approval'項目の'Allow Assignee selection (Attribute-Based)'オプションが表示されなくなったり選択できなくなります。
+    * 既存に'Allow Assignee selection (Attribute-Based)'オプションを使用して作成された承認規則は、ユーザーが新しいワークフローを上申する際に承認規則選択リストから除外されます。
+        * 注意：すでに該当規則で上申されて進行中のワークフローの承認プロセスには影響を与えません。
+        * 管理者が該当規則を修正しようとする際、Attribute基盤承認者指定関連設定は無効化または初期化される可能性があり、必須入力値不足時は保存できず赤い枠線でエラーが表示されます。
+    * User &gt; Workflow上申ページでAllow Assignee selection (Attribute-Based)で作成されたApproval Ruleは表示されません。
+* Attribute値不在時通知
+    * もし上申者User Profileに該当Attribute値が空の場合（すなわち、承認者のLogin IDが指定されていない場合）、ワークフロー上申時に以下のような内容の通知モーダルが表示され要求提出が中断されます。上申者は管理者に問い合わせてプロフィールのAttribute値を設定しなければなりません。
+        * エラーメッセージ例：
+* Attribute値はあるが該当ユーザーが無効化された場合
+    * もし上申者User Profileに該当Attribute値で指定された承認者が無効化された場合、ワークフロー上申時にApprover欄に指定された承認者が表記されず、以下のような内容の通知モーダルが表示され要求提出が中断されます。
+        * エラーメッセージ例：
+
+## Attribute基盤ワークフローメニュー非表示機能 (Use User Attribute to Hide Workflow Menu)
+
+Use User Attribute to Hide Workflow Menuトグルを有効化します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-06-26-at-6.35.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.35.32-PM.png)
+</figure>
+
+特定ユーザー属性（User Attribute）を基準にユーザーダッシュボードでWorkflowメニューを表示しないように設定する機能です。
+
+* トグルを有効化すると`User Attribute`の`Key`と`Value`を一組で選択し入力できます。
+* ここに設定された`Key:Value`条件と一致するユーザーは、ユーザーダッシュボードに`Workflow`メニューが表示されません。
+*  **例：**  `User Attribute Key`で'部署コード'を選択し、`Value`で'部署A'を入力すると、該当部署コード所属のユーザーには`Workflow`メニューが表示されません。
+
+## SQL要求実行時スロットリング有効化 (Use throttling when submitting SQL Request in Workflow)
+
+トグルをオンにすると、Workflowで上申されたSQL要求実行時にスロットリングを適用します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
+</figure>
+
+このオプションを有効化する場合、明示された個数分だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。これを通じて大容量クエリ実行に伴うDB負荷を防ぐことができます。
+
+*  **Query chunk size**  : 1〜999,999の間の値で設定され、多数のクエリを該当個数分だけ分けて順次実行する機能
+    * 例）100個のクエリがある時、Query chunk sizeが10に設定されていると一度に10個のQueryを実行します。
+*  **Query throttle interval** : 連続クエリ実行後、次の連続クエリ実行間の間隔（1〜9,999 ms）
+
+## LedgerテーブルDMLワークフローカスタムURLリダイレクト機能
+
+Redirect to custom page for SQL Requestsトグルを有効化します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-8.33.07-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png)
+</figure>
+
+このオプションを通じて、User AgentでLedgerテーブル対象にINSERT、UPDATE、DELETEクエリ実行によりワークフロー承認要求が発生する場合、`Send Request`ボタンクリック時にユーザーを事前に定義されたカスタムURLページにリダイレクトするかを決定します。これを通じて、顧客社は自社運営中の外部ワークフローシステムとの連携を強化できます。
+
+* トグルを有効化した場合
+    * Administrator &gt; General &gt; Workflow ConfigurationsページにカスタムURLを入力できるフィールドが表示されます。
+    * User Agent使用者がLedgerテーブルに対して変更クエリを実行し承認要求を送る場合、`Send Request`クリック時に該当カスタムURLにリダイレクトされ、この時クエリやユーザー情報は伝達されません。
+* トグルを無効化した場合
+    * Administrator &gt; General &gt; Workflow ConfigurationsページにカスタムURLを入力できるフィールドが表示されません。
+    * User Agent使用者がLedgerテーブルに対してINSERT、UPDATE、DELETEクエリを実行してワークフロー承認要求モーダルが表示される時、`Send Request`ボタンをクリックすると既存と同様にQueryPie内部の標準ワークフローページに移動します
+
+## ワークフローRequestタイプ別ユーザー露出制御機能
+
+Select Request Types Allowed for Usersトグルを有効化します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-05-09-at-8.40.28-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.40.28-PM.png)
+</figure>
+
+このオプションを通じて、管理者がユーザーがアクセスし要求できるワークフローの要求（Request）タイプを選択的に制御できるようにします。
+
+* トグルを有効化（On）した場合：
+    * Administrator &gt; General &gt; Workflow Configurationsページで：
+        * Select Request Types Allowed for Usersトグルの下に製品別（Databases (DAC)、Servers (SAC)、Kubernetes (KAC)、Web Apps (WAC)）で分類された要求タイプリストがチェックボックス形式で表示されます。
+        * 管理者はこのチェックボックスを使用してユーザーに露出する要求タイプを選択的に指定できます。基本的にすべての要求タイプが選択された状態で表示されます。
+    * ユーザーワークフロー上申画面：
+        * 管理者が選択した（チェックした）要求タイプのみユーザーに表示され要求可能です。
+    * Access Role Requestの特別動作：
+        * Servers (SAC)、Kubernetes (KAC)、Web Apps (WAC)のうち一つ以上でAccess Role Requestが選択されなければユーザーにAccess Role Request項目が露出されません。
+        * Access Role Request要求時、内部Service項目には管理者が選択した製品（例：「Server Access Control」）のみ表示されます。
+* トグルを無効化（Off）した場合（基本値）：
+    * Administrator &gt; General &gt; Workflow Configurationsページで：
+        * 要求タイプ選択のためのチェックボックスリストが表示されません。
+    * ユーザーワークフロー上申画面：
+        * 既存と同様に、ユーザーに割り当てられたライセンスに従ってすべての関連製品のワークフロー要求タイプが露出され要求可能です。
+        * Access Role Request内のService項目もライセンスに従ってすべて露出されます。
+
+## DB access要求権限別決裁線指定機能
+
+Workflowを通じてDB Access Requestを上申する場合、要求する権限に従って決裁線（Approval Rule）を特定できるようにするには「Use DB Privilege Type Based Approval」トグルを有効化します。
+
+<figure data-layout="center" data-align="center">
+![Use DB Privilege Type Based Approval](/administrator-manual/general/company-management/general/image-20250822-111454.png)
+<figcaption>
+Use DB Privilege Type Based Approval
+</figcaption>
+</figure>
+
+`+Routing Rule`ボタンを押すと、privilegeに対する条件を指定して決裁線に対するルーティングを指定できます。
+
+<figure data-layout="center" data-align="center">
+![image-20250822-112026.png](/administrator-manual/general/company-management/general/image-20250822-112026.png)
+</figure>
+
+*  **Routing Rule Name**  : 識別しやすいルーティング規則の名前を入力します。
+*  **Condition**  : Privilegeに対する条件を指定します。
+    *  **All Match**  : ユーザーがDB Access Requestを上申する際に指定したPrivilege Typeがすべて同じ種類の場合に動作する条件です。
+    *  **Contains** : ユーザーがDB Access Requestを上申する際に指定したPrivilege Typeが一つでも指定した種類を含んだ時に動作する条件です。
+*   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Typeに定義されているPrivilege類型のうち一つを選択します。
+*  **Approval Rule**  : 上記条件が満たされた場合に強制する決裁線（Approval Rule）を指定します。
+
+### Routing Rule指定例
+
+* もしユーザーがWorkflowのDB Access Requestを通じて要求した対象コネクションに指定したprivilegeがすべて「Read-Only」の場合、特定Approval ruleを使用するように強制したいなら、以下のように設定し`Add`ボタンを押します。
+    * Condition: All Match選択。
+    * Requested Privilege Type : Read-Only選択。
+    * Approval Rule : 強制したいApproval Rule選択。
+* もしユーザーがWorkflowのDB Access Requestを通じて要求した対象コネクションに指定したprivilegeが一つでもRead/Writeが含まれている場合、特定Approval ruleを使用するように強制したいなら、以下のように設定し`Add`ボタンを押します。
+    * Condition: Contains選択。
+    * Requested Privilege Type : Read/Write選択。
+    * Approval Rule : 強制したいApproval Rule選択。
+
+## SQL Requestで実行計画添付機能有効/無効オプション
+
+WorkflowのSQL Requestを通じて実行するクエリを上申する際に実行計画結果を添付する「Attach Explain Results」機能を有効または無効化できるオプションを提供します。
+
+<figure data-layout="center" data-align="center">
+![image-20250825-002423.png](/administrator-manual/general/company-management/general/image-20250825-002423.png)
+</figure>
+
+管理者がこのオプションを有効化しても、WorkflowのSQL Request様式で「Attach Explain Results」はOffになっているため、ユーザーが必要時に明示的に「Attatch Explain Results」トグルスイッチをOnに変更しなければ実行計画結果が添付されます。

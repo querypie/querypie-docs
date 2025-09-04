@@ -1,0 +1,300 @@
+---
+title: 'User Agent'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPie Agentをインストールすると、DataGrip、DBeaverのようなSQL Client、iTerm/SecureCRTのようなSSH Client、Lens、k9sのような3rd Partyアプリケーションを使用できます。
+
+
+## エージェントアプリダウンロードおよび実行
+
+1. QueryPieログイン後右上プロフィールをクリックして`Agent Download`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; プロフィールメニュー](/user-manual/user-agent/screenshot-20240804-173002.png)
+<figcaption>
+QueryPie Web &gt; プロフィールメニュー
+</figcaption>
+</figure>
+
+2. QueryPie Agent Downloadsポップアップウィンドウが実行されるとStep 1で使用中のPCオペレーティングシステムに合うインストールファイルをダウンロードした後Step 3にあるQueryPie URLをコピーしておきます。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Agent Downloadsポップアップウィンドウ](/user-manual/user-agent/image-20240723-154847.png)
+<figcaption>
+QueryPie Web &gt; Agent Downloadsポップアップウィンドウ
+</figcaption>
+</figure>
+
+<Callout type="info">
+QueryPie AgentはMac、Windows、Linux OSをサポートします。
+</Callout>
+
+3. ダウンロードしたQueryPie Agentインストールプログラムを実行してインストールを完了します。
+
+<figure data-layout="center" data-align="center">
+![Mac OSインストールプログラム](/user-manual/user-agent/screenshot-20240804-174002.png)
+<figcaption>
+Mac OSインストールプログラム
+</figcaption>
+</figure>
+
+4. インストール完了されたQueryPie Agentを実行します。QueryPie Host入力欄に事前にコピーしておいたQueryPie URLを入力して`Next`ボタンをクリックするとログイン画面にアクセスします。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; QueryPie Host入力](/user-manual/user-agent/agent-03.png)
+<figcaption>
+Agent &gt; QueryPie Host入力
+</figcaption>
+</figure>
+
+
+## QueryPie Agentにログイン
+
+1. Agentアプリ内ログイン画面で`Login`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240804-173713.png](/user-manual/user-agent/screenshot-20240804-173713.png)
+</figure>
+
+2. ウェブブラウザが開くと、ログインページで認証情報を入力し、`Continue`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Agent Login Page](/user-manual/user-agent/screenshot-20240729-171236.png)
+<figcaption>
+QueryPie Web &gt; Agent Login Page
+</figcaption>
+</figure>
+
+3. ログインが成功すると下記のようにログイン成功画面が表示されその後Agentに戻ります。
+
+<figure data-layout="center" data-align="center">
+![QueryPie Web &gt; Agent Login Success Page](/user-manual/user-agent/screenshot-20240729-171314.png)
+<figcaption>
+QueryPie Web &gt; Agent Login Success Page
+</figcaption>
+</figure>
+
+4. Agent開きを明示的に実行して認証情報をAgentに伝達します。
+
+<figure data-layout="center" data-align="center">
+![Chrome - Agent App開きモーダル](/user-manual/user-agent/screenshot-20240804-174209.png)
+<figcaption>
+Chrome - Agent App開きモーダル
+</figcaption>
+</figure>
+
+## エージェントでデータベース接続
+
+1. ログインが正常に完了されるとAgentアプリ内Databasesタブで権限のあるコネクションの接続情報を確認できます。<br/>接続するコネクションに割り当てられた`Port`をクリックすると、該当コネクションの`Proxy Credentials`情報を確認できます。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; DB Connection Information](/user-manual/user-agent/screenshot-20240730-151001.png)
+<figcaption>
+Agent &gt; DB Connection Information
+</figcaption>
+</figure>
+
+2. 上記の接続情報を3rd Partyクライアントに入力するとDBコネクション接続が可能です。
+
+<figure data-layout="center" data-align="center">
+![3rd Party Clientを利用したDBコネクション接続](/user-manual/user-agent/agent-07.png)
+<figcaption>
+3rd Party Clientを利用したDBコネクション接続
+</figcaption>
+</figure>
+
+
+## エージェントを通じたサーバー接続
+
+ログインが正常に完了されるとAgentアプリ内Serverタブで権限のあるサーバーを確認できます。
+
+### 1. サーバー役割選択
+
+* ユーザープロフィール領域下部の`Role`ボタンをクリックして希望する役割を選び`OK`ボタンをクリックしてください。
+* Default役割選択時、Workflow &gt; Server Access Request要求により割り当てられたサーバー権限を使用します。 
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Server &gt; Select a Role](/user-manual/user-agent/screenshot-20240730-162653.png)
+<figcaption>
+Agent &gt; Server &gt; Select a Role
+</figcaption>
+</figure>
+
+<Callout type="info">
+役割が2個以上なら、Agentログイン後Server機能使用のために役割選択をまず完了しなければなりません。
+</Callout>
+
+### <br/>2.Agentでサーバー接続
+
+* 接続するサーバーを右クリック後Open Connection withメニューを選択して、使用したいターミナルツールを選択します。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Server &gt; Open Connection with](/user-manual/user-agent/screenshot-20240730-161729.png)
+<figcaption>
+Agent &gt; Server &gt; Open Connection with
+</figcaption>
+</figure>
+
+* その後該当サーバーに接続可能なアカウントが複数あるなら、Account選択窓が開きます。 
+* 使用したいアカウントを選択し必要時パスワードを入力した後、`OK`ボタンをクリックしてセッションを開きます。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Server &gt; Open New Session](/user-manual/user-agent/screenshot-20240730-162532.png)
+<figcaption>
+Agent &gt; Server &gt; Open New Session
+</figcaption>
+</figure>
+
+### 3. Seamless SSH設定
+
+Seamless SSHとは既存ターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。次の方法で.sshフォルダにconfigファイルを作成して簡単にseamless SSH設定が可能です。
+
+1) ターミナルを開き、.sshフォルダに移動します。
+```
+$ cd .ssh
+```
+
+2) sshフォルダでconfigファイルを作成するためviエディターを開きます。
+```
+$ vi config
+```
+
+3) 下記の内容を入力後、`wq`キーを入力してviエディターを出ます。
+```
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpa ssh %r %h %p
+```
+
+<Callout type="info">
+configファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続が可能です。
+```
+Host *
+  ProxyCommand qpa ssh %r %h %p
+```
+</Callout>
+
+4) 以上で設定が完了します。Agent &gt; Serverタブで役割を選択すると既存sshコマンドでサーバーに接続できます。
+```
+$ ssh deploy@{{Server Name}}
+```
+
+
+## エージェントを通じたKubernetes接続
+
+<figure data-layout="center" data-align="center">
+![kubernetes-agent-access-flow.png](/user-manual/user-agent/kubernetes-agent-access-flow.png)
+</figure>
+
+* 権限を付与されたユーザーはエージェント実行時現在ポリシーに応じた`kubeconfig`ファイルが自動で受信されます。
+* これを通じてKubernetes Client(kubectl、lens、k9sなど)ツールでKubernetes APIリソースにアクセスできます。
+* エージェントではアクセス可能なクラスターリストを表示し、各クラスターに適用されたポリシーを確認できます。
+* また設定メニューを通じてkubeconfigファイルの位置を確認および修正できます。
+
+### 1. Kubernetes役割選択
+
+ユーザープロフィール領域下部の`Role`ボタンをクリックすると役割選択モーダルが開きます。希望する役割を選び`OK`ボタンをクリックしてください。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Kubernetes &gt; Select a Role](/user-manual/user-agent/screenshot-20240730-152705.png)
+<figcaption>
+Agent &gt; Kubernetes &gt; Select a Role
+</figcaption>
+</figure>
+
+<Callout type="info">
+役割が2個以上なら、Agentログイン後Kubernetes機能使用のために役割選択をまず完了しなければなりません。
+</Callout>
+
+
+### 2. Policy照会
+
+選択された役割に応じてアクセス可能なリソースが表示されます。各クラスター右側の`🔍`ボタンを押すとPolicy Informationポップアップウィンドウが現れ、ここで該当クラスターに適用されたポリシー目録を詳しく確認できます。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Policy Information](/user-manual/user-agent/screenshot-20240730-161141.png)
+<figcaption>
+Agent &gt; Policy Information
+</figcaption>
+</figure>
+
+### 3. Kubeconfigパス設定
+
+Agent設定メニューで`KubeConfig Path`ボタンをクリックしてKubeconfigパス設定モーダルを開きます。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Settings &gt; Configure Kubeconfig Path](/user-manual/user-agent/screenshot-20240730-154623.png)
+<figcaption>
+Agent &gt; Settings &gt; Configure Kubeconfig Path
+</figcaption>
+</figure>
+
+*  **Path Configuration**  : Kubeconfigファイル保存パスをユーザーが指定できます。
+    * 基本値は`$HOME/.kube/querypie-kubeconfig`です。
+    * パスフィールド右側`Upload`ボタンを押すとローカルファイルパスを指定できるポップアップが現れます。 
+
+
+<figure data-layout="center" data-align="center">
+![パス指定ポップアップ](/user-manual/user-agent/screenshot-20240730-163530.png)
+<figcaption>
+パス指定ポップアップ
+</figcaption>
+</figure>
+
+*  **Where**  : 右側の`🔽`ボタンをクリックして希望するフォルダを指定します。
+*  **Save As**  : Kubeconfigファイルの名前を入力します。変更しないと基本値で適用されます。
+*  **Command Line**  : KUBECONFIG環境変数を宣言するためのコマンドラインを提供します。
+
+1) KUBECONFIG環境変数を初回設定する場合、コマンド行内のデフォルト"`${KUBECONFIG}`"値を使用前に"`${HOME}/.kube/config`"に変更しなければなりません。
+```
+export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
+```
+
+2) QueryPieで提供されたユーザー指定kubeconfigパスを変更した場合新パスで環境変数を再び宣言しなければなりません。
+```
+export KUBECONFIG="${KUBECONFIG}:<ユーザーが指定したパス>"
+```
+
+3) より詳細なkubeconfigに対する内容は次のリンクを参照してください。
+
+* 参考: [kubeconfigファイルマージ](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
+* 参考: [KUBECONFIG環境変数設定](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
+
+4) `Copy`でコマンドラインをコピーしてクライアントに宣言しコンテキストをアクセス可能なクラスターにスイッチできます
+```
+export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
+```
+
+
+## QueryPie Agentセッティング初期化
+
+セッティングを初期化すると入力したQueryPie Host情報が初期化されて再び入力できるようになります。
+### Agent内設定メニューで初期化
+
+プロフィール領域右側`⚙️`ボタンをクリックして設定メニューを開きます。`Reset All Settings`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; Settings](/user-manual/user-agent/screenshot-20240730-153518.png)
+<figcaption>
+Agent &gt; Settings
+</figcaption>
+</figure>
+
+
+### (Mac) メニューバー内アプリメニューで初期化
+
+メニューバーでQueryPie Agentアイコンをクリックしてアプリメニューを開きます。`Reset All Settings`ボタンをクリックします。
+
+<figure data-layout="center" data-align="center">
+![Agent &gt; App menu](/user-manual/user-agent/screenshot-20240730-153524.png)
+<figcaption>
+Agent &gt; App menu
+</figcaption>
+</figure>
+
+

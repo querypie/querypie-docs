@@ -1,0 +1,43 @@
+---
+title: 'Privilege Type'
+---
+
+import { Callout } from 'nextra/components'
+
+## 概要
+
+Privilege機能ではSQL構文別組み合わせで権限制御が可能です。それだけでなくウェブエディターの場合はデータエクスポートおよびインポート、クリップボードコピー機能まで制御できます。SQL構文はANSI SQL基準で分類されており、Redisの場合は別途のPrivilege Typeを提供します。
+
+## Privilege生成
+
+<Callout type="important">
+権限生成時MySQL基準SET、SHOW、DESCRIBE、USE構文はすべての権限に基本的に含まれます。
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type](/administrator-manual/databases/db-access-control/privilege-type/image-20240725-071543.png)
+<figcaption>
+Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type
+</figcaption>
+</figure>
+
+1. Database設定メニューでDB Access Control &gt; Privilege Typeメニューに移動します。
+2. 右上の`Create Privilege Type`ボタンをクリックします。
+3. ポリシー生成のための以下の情報を入力します。
+    1.  **Name**  : 権限を画面で区別できる名前です。
+    2.  **Database Type**  : 権限が付与されるデータベースのタイプを選択します。基本的にGeneralタイプを選択します。
+    3.  **Privilege Type**  : 該当権限で実行を許可する構文を選択します。
+    4.  **Functions**  : 該当権限で許可可能な作業を選択します。ウェブエディター内でのデータエクスポートおよびインポート、クリップボードコピー機能を制御できます。
+4. `Save`ボタンを通じて保存します。
+
+該当権限がPrivilege Typeリストに生成されたことを確認できます。
+
+<Callout type="info">
+**Redisコネクションの場合はどのようにアクセス権限を生成し管理できますか？**
+
+Privilege生成画面でDatabase TypeをRedisで選択する場合、提供されたRedis別途の権限タイプでPrivilegeを生成できます。
+
+* Redis接続時実行を許可する権限が大きくRead、Write、Dangerous、Etc.で分類されています。
+* Read、Write、Dangerous、Etc.カテゴリーは[Redis ACL Categories](https://redis.io/commands/)基準を参照します。
+* 選択されたカテゴリー中、実行を制限するコマンドをRestrict Commandsに設定して制限できます。
+</Callout>

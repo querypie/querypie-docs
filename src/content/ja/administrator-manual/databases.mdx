@@ -1,0 +1,114 @@
+---
+title: 'Databases'
+---
+
+import { Callout } from 'nextra/components'
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240523-193355.png](/administrator-manual/databases/screenshot-20240523-193355.png)
+</figure>
+
+## Overview
+
+QueryPie DACは20余種類以上のRDBMS、NoSQLなどの多様なデータソースを独自開発エンジンを通じて標準化されたSQL構文で制御可能です。ユーザーはオペレーティングシステムに関係なくウェブブラウザを通じてデータベースに接続しクエリを実行できます。また、デスクトップエージェントを通じてDatagrip、DBeaverなどのIDEツールの使用もサポートします。
+
+## 推奨するDAC初期設定順序
+
+QueryPie DAC(Database Access Controller)を初めて使用する管理者なら、円滑なデータベース管理のために下記順序で初期設定することをお勧めします。
+
+<Callout type="info">
+リンクされた項目をクリックすると関連ガイドをすぐに確認できるページに移動します。
+</Callout>
+
+<table data-table-width="760" data-layout="default" local-id="732b2fe2-d76c-4f02-aa32-1d192dd4db6e">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+</th>
+<th>
+**設定順序**
+</th>
+<th>
+**設定項目**
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<th>
+**事前準備**
+</th>
+<td>
+* [User登録](general/user-management/users) 
+* [User Group登録](general/user-management/groups)
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<th>
+**コネクション登録**
+</th>
+<td>
+* [AWSでDBリソース同期](databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws)
+* [DB Connections | DB-コネクション-手動で-登録](databases/connection-management/db-connections#db-%ec%bb%a4%eb%84%a5%ec%85%98-%ec%88%98%eb%8f%99%ec%9c%bc%eb%a1%9c-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)
+* [データソース別設定ガイド](databases/connection-management/db-connections/mongodb-specific-guide)
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<th>
+**ポリシー設定**
+</th>
+<td>
+* [データマスキングポリシー設定](databases/policies/data-masking)
+* [テーブル/カラムアクセス制限ポリシー設定](databases/policies/data-access)
+* [機密データポリシー設定](databases/policies/sensitive-data)
+* [元帳テーブル制御ポリシー設定](databases/ledger-management/ledger-table-policy)
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<th>
+**権限付与**
+</th>
+<td>
+* [Privilege作成および管理](databases/db-access-control/privilege-type)
+* [アクセス権限付与および回収](databases/db-access-control/access-control)
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<th>
+**DB接続**
+</th>
+<td>
+* [DB接続](../user-manual/database-access-control)
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<th>
+**ログ確認**
+</th>
+<td>
+* [監査ログ確認](audit/database-logs)
+</td>
+</tr>
+</tbody>
+</table>

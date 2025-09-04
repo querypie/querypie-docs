@@ -1,0 +1,231 @@
+---
+title: '10.1.0 ~ 10.1.11'
+---
+
+## QueryPie 10.1.11 Release
+
+2025年01月22日
+
+
+**Bug Fix**
+
+* [General] Audit Log Export時予期しない例外発生する場合止まる現象改善
+* [DAC] Ledger対象DMLクエリ実行後ワークフロー転換時カスタムリンクでリダイレクション
+* [Agent] MacでAgent実行時/bin/bash: osascript: command not found改善
+
+
+## QueryPie 10.1.10 Release
+
+2025年01月08日
+
+**Bug Fix**
+
+* [DAC] Oracle Proxy接続時Query AuditメニューでRowsが適切に照会されないイシュー解決
+* [DAC] クエリ実行時DB照会する区間にSystemSettingローカルキャッシュ適用
+
+
+## QueryPie 10.1.9 Release
+
+2024年12月13日
+
+
+**Bug Fix**
+
+* [DAC] MongoDB 'MongoDB.Bson.BsonInt64'関連エラー解決
+* [DAC] OCI EXACS接続時ORA-03113関連エラー解決 
+* [DAC] MongDB UPSERT試行時DML Snapshot記録関連イシュー解決
+* [DAC] SQLServerプロキシを通じたTablePlus接続関連イシュー解決 
+* [DAC] PostgreSQL接続後WITHを使用したUPDATE構文使用権限関連イシュー解決
+* [DAC] 一部ベンダーで数字で始まるデータベース対象でUSE構文実行エラー解決 
+* [DAC] Not allowed object type undefinedエラー解決
+* [SAC] セッション漏洩によるメモリ過占有イシュー改善
+* [General] Alert詳細ページのLogsタブでTestボタン動作しないイシュー解決
+* [Agent] アップグレード時明示的に管理者権限取得後進行するよう改善
+
+
+## QueryPie 10.1.8 Release
+
+2024年12月06日
+
+
+**Enhancement**
+
+* [IDP] IdP同期時Job重複実行イシュー改善のためユーザー単位で同期するよう改善
+* [DAC] Oracle、MongoDB、PostgreSQLエージェントを通じた接続時接続アカウントのパスワードを指定できる機能提供
+
+**Bug Fix**
+
+* [DAC] 追加されたinstanceに対するport割り当てが行われないイシュー解決
+* [DAC] SQLServerクエリ実行時UPDATE構文内でAlias使用関連イシュー解決
+* [DAC] Hiveウェブエディターで接続時右側オブジェクト情報パネルで一時的にJSON文字列が見えるイシュー解決
+* [DAC] SQLServer DML Snapshotがオン状態で`INSERT`構文サブクエリにPKを含む場合正常に実行されないイシュー解決
+* [DAC] Oracle Toad接続関連Explain Plan実行時プロキシ行発生するイシュー解決
+* [DAC] SQLGateでdbms_outputが正常に動作しないイシュー解決
+* [DAC] AWS SCT-Oracleコネクション作成時正常に接続しないイシュー解決
+* [Agent] クエリパイエージェントセッションアンロック後トークン期限切れ確認前ネットワーク接続待機イシュー解決
+* [SAC] Querypie SAC Agent接続およびパスワード韓国語で入力時接続失敗現象解決
+* [SAC] ユーザーサーバー接続試行時Server group not foundエラー発生する問題解決
+* [SAC] SSH接続後入力がない場合Session Timeout正常に動作しないイシュー解決
+* [共通] Alert HTTPでNAT Gatewayを通じたLambda呼び出し時RSTパケット返却によりConnection reset by peerエラーが発生する問題解決
+* [Workflow] DB Access Requestで要求したコネクションが多い場合エラーが発生する問題解決
+* [Workflow] DB Access Request承認時query did not return a unique resultエラー解決
+
+
+## QueryPie 10.1.7 Release
+
+2024年11月25日
+
+
+**Enhancement**
+
+* [Agent] Proxy Throttling機能実装
+* [DAC] DataGripなどクライアントツールで送信する反復的クエリはロギング例外処理適用
+* [DAC] Oracle OCI接続時エージェントで個人アカウント使用可能に改善
+
+**Bug Fix**
+
+* [DAC] Oracle OCI接続関連ログ残らないイシュー解決
+* [DAC] トードツールを通じてOracleクエリ実行時エラー解決
+* [DAC] PostgreSQLポリシー適用された場合LEFT OUTER JOINクエリ実行関連エラー解決
+* [共通] refresh-token-expiredエラーポップアップ表示後ログイン不可能なイシュー解決
+* [API] External APIを通じたFirst 10 Rows照会関連イシュー解決
+* [DAC] ウェブエディターでHive接続時、OtherOptions適用されないイシュー解決
+* [DAC] ウェブエディターでPostgreSQL照会時、パーティションテーブル対象でtable info確認時エラー解決
+* [DAC] MySQLでCURRENT_DATE、CURRENT_TIME小括弧なしで関数呼び出し関連エラー修正
+* [DAC] 長期未接続によりDeactivateされた権限が期限切れ日に到達した場合Expired処理イシュー解決
+* [DAC] Ledgerポリシー適用したテーブル対象でサブクエリが含まれたUpdateクエリ実行関連エラー解決
+
+
+## QueryPie 10.1.6 Release
+
+2024年11月12日
+
+
+**Bug Fix**
+
+* [General] Alert重複送信ロジック関連現象解決
+* [General] Loading chunk 721 failedエラー修正
+* [DAC] PostgreSQLプロキシ接続後互いに異なるツールで同時にクエリを送信した場合セッション種類イシュー解決
+* [DAC] MySQLでuseServerPrepStmts = trueの場合DMLスナップショット機能衝突イシュー解決
+* [SAC] tmuxを通じたセッション同時呼び出し時切れるイシュー解決
+* [DAC] MongoDB sleep()クエリサポート
+* [DAC] DocumentDBクエリ実行時Wrong Data Typeエラー解決
+* [DAC] Workflow Status変更関連誤動作修正
+
+## QueryPie 10.1.5 Release
+
+2024年11月01日
+
+
+**Bug Fix**
+
+* [DAC] クエリ実行中SecurityContext is nullエラー発生修正
+* [DAC] AWSクラウド同期Modifying状態のインスタンスは同期時Skipされるよう処理
+* [DAC] エージェントOracle接続後クエリ時Unauthorizedエラー修正
+* [DAC] Oracle使用量が多い場合Proxy接続が間欠的に終了するイシュー修正
+* [DAC] 同一BLOBデータが存在する場合Oracleプロキシが適切に動作しないイシュー修正
+* [DAC] 長期未接続処理された権限がある場合コネクション詳細ページ表示エラー修正
+
+## QueryPie 10.1.4 Release
+
+2024年10月22日
+
+
+**Bug Fix**
+
+* [Workflow] 代理決裁者が代決可能なRequestページ照会エラー解決
+
+
+## QueryPie 10.1.3 Release
+
+2024年10月17日
+
+
+**Enhancement**
+
+* [DAC] Oracle接続時接続情報に登録されたSIDまたはServiceNameに該当する接続許可するよう制限
+
+**Bug Fix**
+
+* [Agent] エージェントRefresh Token期限切れロジック改善
+* [Syslog] ログ再送信関連イシューおよびProxy接続遅延イシュー解決
+
+
+## QueryPie 10.1.2 Release
+
+2024年10月02日
+
+
+**Enhancement**
+
+* [DAC] SessionおよびJobで漏洩が発生しても自ら整理されるようする防御コード追加
+
+
+**Bug Fix**
+
+* [DAC] [MySQL] Query Attributes処理時エラーが発生する問題解決
+* [DAC] [MongoDB] Agentで接続成功したにもかかわらずDB Access HistoryにFailureで記録されるエラー修正
+* [DAC] [MongoDB] ProxyでKillCursorsコマンド失敗時エラー発生する問題解決
+* [DAC] 10.1.1アップグレード後3rd-partyでProxyアクセス時Ledgerテーブル決裁誘導ポップアップが表示されない問題解決
+* [SAC] Server Group目録で検索結果の数が多い場合、一部結果間欠的未表記される問題修正
+* [SAC] 大量サーバーが登録された場合Grant Permission時最後段階でサーバーリストが一部のみ表示される問題解決
+
+
+**External API**
+
+* [SAC] Grant Direct Permission by Name API新規追加 (リソース名で付与可能)
+
+
+## QueryPie 10.1.1 Release 
+
+2024年09月20日
+
+****
+
+**Enhancement**
+
+* [Dashboard] ダッシュボードページローディング速度改善
+
+****
+
+**Bug Fix**
+
+* [SAC] 権限があるサーバーが削除された後、ユーザーがRole選択時エラーメッセージ発生する問題解決
+* [SAC] 既に保有しているサーバーアクセス権限が再び重複付与される場合エラーメッセージ発生する問題解決
+
+
+## QueryPie 10.1.0 Release
+
+2024年09月09日
+
+
+**New Features**
+
+* [SAC] ユーザーに個別権限付与時許可するコマンド(White List)を指定できる機能提供
+* [SAC] サーバーTagを基盤とするサーバーリソース内Allowed Zone適用機能サポート
+* [SAC] マルチホップ環境でのJump Host接続サポート (ProxyJump)
+* [SAC] 新規プロトコル(FTP、Telnet)サポート
+* [SAC] パスワード管理機能(一括変更、変更周期管理など)
+
+
+**Enhancement**
+
+* [SAC] [RDP] サーバーエージェント削除時パスワード入力段階追加
+* [KAC] Proxy接続ドメインサポート範囲拡大 (IPアドレス追加)
+
+
+**Bug Fix**
+
+* [Dashboard] 最近サーバー接続履歴に削除されたアカウントがある場合エラー発生する問題解決
+* [Security] 設定したSession Timeout値に到達する前にログアウトされる現象解決
+* [IAM] Admin Roleが2個以上保有したアカウントで接続時エラー発生する問題解決
+* [DAC] Oracle JDBC Driver特定バージョンで接続エラー発生する問題解決
+* [DAC] DML Snapshot設定後UPDATEクエリ実行時前後データ残らない現象修正
+* [SAC] Oktaログイン時User Access HistoryにHost Nameが重複で残る現象修正
+
+
+**External API**
+
+* [SAC] Get Direct Permission API内Whitelistオブジェクト追加
+* [SAC] Grant Direct Permission API Whitelist付与可能に修正
+* [SAC] Grant Whitelist API新規追加

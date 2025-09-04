@@ -1,0 +1,185 @@
+---
+title: 'System Architecture Overview'
+---
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+該当文書は  **QueryPie Enterprise 10.0.0基準** で作成されました。
+</Callout>
+
+## システムアーキテクチャ概要
+
+QueryPieは企業のセキュリティ要件に合わせて設計された統合アクセス制御ソリューションです。本セクションではQueryPieの全体的なシステムアーキテクチャと各コンポーネントの役割について説明します。
+
+### アーキテクチャコンポーネント
+
+QueryPieシステムは以下の主要コンポーネントで構成されています：
+
+#### 1. QueryPie Host
+- **役割**: システムの中央管理サーバー
+- **機能**: 
+  - ユーザー認証・認可
+  - アクセス制御ポリシー管理
+  - 監査ログ収集・分析
+  - プロキシエージェント管理
+  - ワークフロー処理
+
+#### 2. プロキシエージェント
+- **DAC (Database Access Control) プロキシ**: データベースアクセス制御
+- **SAC (Server Access Control) プロキシ**: サーバーアクセス制御  
+- **KAC (Kubernetes Access Control) プロキシ**: Kubernetesアクセス制御
+
+#### 3. ターゲットリソース
+- **データベース**: Oracle, MySQL, PostgreSQL, SQL Server等
+- **サーバー**: Linux, Windows, Unix系サーバー
+- **Kubernetes**: クラスター内のポッド、サービス、デプロイメント等
+
+### システムフロー
+
+<figure data-layout="center" data-align="center">
+![System Architecture Flow](/querypie-overview/system-architecture-overview/system-architecture-flow.png)
+<figcaption>
+System Architecture Flow
+</figcaption>
+</figure>
+
+#### 1. 認証・認可フロー
+1. ユーザーがQueryPie Web UIにアクセス
+2. QueryPie Hostがユーザー認証を実行
+3. 認証成功後、ユーザーの権限情報を確認
+4. アクセス可能なリソースリストを提供
+
+#### 2. リソースアクセスフロー
+1. ユーザーが特定リソースへのアクセスを要求
+2. QueryPie Hostがアクセス制御ポリシーを確認
+3. プロキシエージェントを介してターゲットリソースに接続
+4. セッション記録と監査ログを生成
+
+#### 3. 監査・ログフロー
+1. すべてのアクセス試行がプロキシエージェントで記録
+2. ログがQueryPie Hostに送信
+3. リアルタイム監視とアラート生成
+4. 監査レポート作成
+
+### セキュリティアーキテクチャ
+
+#### 1. ネットワークセキュリティ
+- **暗号化通信**: TLS/SSLを使用した全通信の暗号化
+- **VPN 지원**: 企業VPNとの連携
+- **ファイアウォール**: ネットワークレベルのアクセス制御
+
+#### 2. 認証・認可
+- **多要素認証**: MFA 지원
+- **SSO連携**: Active Directory, LDAP等との連携
+- **ロールベースアクセス制御**: RBAC 구현
+
+#### 3. データ保護
+- **データマスキング**: 機密データの動的マスキング
+- **暗号化**: 保存データの暗号化
+- **バックアップ**: 定期的なデータバックアップ
+
+### スケーラビリティ
+
+QueryPieは以下の方法でスケーラビリティを確保しています：
+
+#### 1. 水平スケーリング
+- 複数のプロキシエージェント 배치
+- ロードバランシング 지원
+- クラスター環境 지원
+
+#### 2. 垂直スケーリング
+- リソース使用量 최적화
+- キャッシュ 메커니즘
+- データ베이스 최적화
+
+### 高可用性
+
+#### 1. 冗長性
+- QueryPie Host 클러스터링
+- プロキシエージェント冗長化
+- データベース 클러스터링
+
+#### 2. 障害復旧
+- 自動フェイルオーバー
+- データ復旧 메커니즘
+- バックアップ・復元
+
+### 監視・管理
+
+#### 1. リアルタイム監視
+- システム 상태監視
+- パフォーマンス指標監視
+- アラート・通知
+
+#### 2. ログ管理
+- 集中ログ収集
+- ログ分析・検索
+- 監査レポート
+
+<figure data-layout="center" data-align="center">
+![System Monitoring Dashboard](/querypie-overview/system-architecture-overview/system-monitoring-dashboard.png)
+<figcaption>
+System Monitoring Dashboard
+</figcaption>
+</figure>
+
+### デプロイメントオプション
+
+QueryPieは以下のデプロイメントオプションを提供します：
+
+#### 1. オンプレミス
+- 企業内サーバー에 설치
+- 完全なデータ制御
+- カスタマイズ 가능
+
+#### 2. クラウド
+- AWS, Azure, GCP 등 클라우드 플랫폼 지원
+- マネージド 서비스 제공
+- 自動 스케일링
+
+#### 3. ハイブリッド
+- オンプレミス와 클라우드의 조합
+- 柔軟한 아키텍처
+- 段階적 마이그레이션 지원
+
+### 統合・連携
+
+QueryPieは以下のシステムとの統合을 지원합니다：
+
+#### 1. 認証システム
+- Active Directory
+- LDAP
+- SAML
+- OAuth 2.0
+
+#### 2. SIEM 시스템
+- Splunk
+- QRadar
+- ArcSight
+- ELK Stack
+
+#### 3. 監視システム
+- Nagios
+- Zabbix
+- Prometheus
+- Grafana
+
+### パフォーマンス最適化
+
+#### 1. キャッシュ戦略
+- メモリキャッシュ
+- データベースキャッシュ
+- CDN 활용
+
+#### 2. データベース最適化
+- インデックス 최적화
+- クエリ 최적화
+- 接続プール링
+
+#### 3. ネットワーク最適化
+- 圧縮
+- バッチ処理
+- 非同期処理
+
+このシステムアーキテクチャにより、QueryPieは企業のセキュリティ要件を満たしながら、高いパフォーマンスと可用性を提供します。

@@ -1,0 +1,192 @@
+---
+title: 'Workflow'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+QueryPieは権限者の承認下で実行されなければならない多様な作業に対して決裁を要求し承認できるWorkflow機能をサポートします。QueryPieを離れずに統合された環境で要求、承認、実行作業まで便利に進行できます。
+
+
+## Workflowメニューアクセスポイント
+
+QueryPieはWorkflowメニューにアクセスする2つの経路を提供しています。
+<figure data-layout="center" data-align="center">
+![上部メニュー &gt; General &gt; Workflow](/user-manual/workflow/screenshot-20240902-172212.png)
+<figcaption>
+上部メニュー &gt; General &gt; Workflow
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center">
+![My Dashboard &gt; Workflow Requests](/user-manual/workflow/screenshot-20240725-145441.png)
+<figcaption>
+My Dashboard &gt; Workflow Requests
+</figcaption>
+</figure>
+
+## Workflow内の役割
+
+Workflow機能内で実行する行為に応じてユーザーが持つことができる役割は以下の通りです。
+
+*  **要求者** (Requester) : Requestを送ることができます。 
+*  **承認者** (Approver) : 要求を確認し、承認または拒否できます。 
+*  **実行者** (Executor) : 承認が完了されたSQL RequestおよびExport Request件を実行できます。 
+*  **参照者** (Reviewer) : 要求件をレビューまたは参照できます。 
+
+<Callout type="info">
+要求件に対する承認者および実行者は[ **決裁ルール(Approval Rules)** ](../administrator-manual/general/workflow-management/approval-rules)を通じて管理者が事前に設定できます。
+</Callout>
+
+## Submit Request (決裁要求)
+
+Workflowメニュー内`Submit Request`ボタンを押した後、希望する要求タイプを選択すると要求作成ページに移動します。各要求タイプ別詳細作成方法は接続されたページを参照してください。
+
+* [DB Access Request](workflow/requesting-db-access) : DBコネクションに対するアクセス権限を要求でき、承認即座に権限が付与されます。
+* [SQL Request](workflow/requesting-sql) : 承認が必要なSQL実行を要求でき、承認後1回に限りクエリを実行できます。
+* [SQL Export Request](workflow/requesting-sql-export) : データエクスポート作業を要求でき、承認後1回に限りデータをダウンロードできます。
+* [Unmasking Request](workflow/requesting-unmasking-mask-removal-request) : マスキングされたカラムの元データ確認のため一時的なマスキング解除を要求でき、承認後設定された期間中元データを確認できます。
+* [Restricted Data Access](workflow/requesting-restricted-data-access) : アクセスが制限されたテーブルまたはカラムのデータに対する一時的なアクセス許可を要求でき、承認後設定された期間中該当データにアクセスできます。
+* [Server Access Request](workflow/requesting-server-access) : サーバーコネクションに対するアクセス権限を要求でき、承認即座に権限が付与されます。
+* [Server Privilege Request](workflow/requesting-server-privilege) : サーバーで特定コマンドに対する一時実行権限を要求でき、承認後設定された条件(接続時点または承認時点)に応じて指定された時間中該当コマンドを使用できます。
+* [Access Role Request](workflow/requesting-access-role) : サーバーまたはKubernetes対象アクセス役割権限を要求でき、承認即座に役割が付与されます。 
+* [IP Registration Request](workflow/requesting-ip-registration) : システムアクセスのためのIPアドレス登録を要求でき、承認即座に該当IPからのアクセスが許可されます。
+* [DB Exception Request](workflow/requesting-db-policy-exception) : DAC新規ポリシー環境で、マスキング解除(Unmasking)またはアクセス制限解除(Restricted Data Access)を一つの様式で要求でき、承認後設定された期間中該当権限が付与されます。
+
+## 代理上申機能使用時注意事項
+
+管理者が決裁ルールで許可した場合、他のユーザーを代わりに決裁を要求(代理上申)できます。代理上申時には次の基準が適用されます。該当機能の設定方法は[Approval Rules](../administrator-manual/general/workflow-management/approval-rules)マニュアルページで確認できます。代理上申時には次の基準が適用されます。
+
+*  **代理上申時権限およびDB表示基準** 
+    *  **DB Access Request** : 代理上申者は本人が照会可能なDBコネクションに対してのみ要求を上申できます。
+    *  **Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request** : 代理上申者は本人が権限を持つコネクションに対してのみ上記2つの要求を代理で上申できます。
+*  **上申時注意事項** 
+    * 決裁を適用される対象者(`Target User`)指定後UIにマウスカーソルを置くと、選択された対象者目録と一緒に次の案内メッセージが表示されます。
+    * "The following users will be impacted by this request. Please double-check that all settings are correct before proceeding." (現在決裁を適用される対象です。正しく設定したか必ず確認してください。)
+
+## Sent Request (私が送った要求確認)
+
+私が要求者(Requester)として上申した決裁要求目録はSent Requests下位メニューに表示されます。
+
+*  **In Progress** : 決裁要求はされましたがまだ承認が完了されていない進行中要求件です。Approval Status、Execution Status中一つでもPendingまたはIn Progress状態の要求件が該当目録に表示されます。 
+*  **Done**  : すべての承認(または実行)が完了されたか要求者が決裁要求を自分でキャンセルした件が表示されます。 
+
+## Received Requests (私が受けた要求承認または反対)
+
+私が承認者(Approver)として割り当てられた要求の目録はReceived Requests下位メニューに表示されます。もし代理決裁者として指定された場合元決裁者が承認しない要求目録も一緒に表示されます。代理決裁関連内容は[決裁付加機能 (代理決裁、再上申など) 文書](workflow/approval-additional-features-proxy-approval-resubmission-etc)で詳しく確認できます。
+
+1. Workflow目録中Received Requests &gt; To Doメニューで承認が必要な要求目録を確認します。 
+2. 処理したい要求をクリックして詳細内容を確認後右上で`Approve`または`Reject`をクリックします。
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Received Requests &gt; To Do &gt; List Details](/user-manual/workflow/image-20240801-062129.png)
+<figcaption>
+Workflow &gt; Received Requests &gt; To Do &gt; List Details
+</figcaption>
+</figure>
+
+<Callout type="info">
+**Q. ユーザーが要求したDBコネクション中一部のみ承認できますか？**
+A. DB Access Requestの場合一部DBコネクションに対してのみ部分承認が可能です。ユーザーが要求したDBコネクション目録で権限を付与しない項目のチェックボックスを解除後`Approve`するとチェックしたコネクションに対しては承認処理がされ、チェックしないコネクションに対しては自動反対処理されます。
+</Callout>
+
+1. Commentsポップアップウィンドウで承認または反対理由を入力後`OK`ボタンを押して処理を完了します。 
+2. 処理を完了した要求件に対してはWorkflow &gt; Received Request &gt; Doneメニューで確認できます。 
+
+## Executions (承認された要求実行)
+
+私が実行者(Executor)として割り当てられた要求の目録はExecutions下位メニューに表示されます。実行しなければならない目録(To Do)と完了された目録(Done)があり実行を必要とする決裁タイプはSQL Request、SQL Export Request 2つです。
+
+### SQL Request実行
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Executions &gt; To Do &gt; List Details](/user-manual/workflow/screenshot-20240725-094850.png)
+<figcaption>
+Workflow &gt; Executions &gt; To Do &gt; List Details
+</figcaption>
+</figure>
+
+1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。 
+2. 実行待機中のSQL Request件をクリックして詳細ページに移動します。
+3. 詳細内容確認後右上の`Execute`ボタンを押して実行または`Cancel`ボタンを押してキャンセル処理できます。
+4. `Execute`ボタンをクリックするとクエリ実行確認ポップアップウィンドウが表示されます。 
+5. 注意事項を確認後`Execute`ボタンをクリックしてクエリを最終的に実行します。
+6. 実行が完了された件に対する結果は詳細ページ内のResultsタブで成功または失敗可否を確認できます。 
+7. Workflow &gt; Received Requests &gt; Doneメニューで本人が実行した履歴を確認できます。
+
+<Callout type="info">
+**Q. 大容量クエリ実行時QueryPieバックグラウンドでもクエリ実行が維持されますか？**
+A. SQL Requestを通じて実行するクエリが大容量の場合、ウェブブラウザを終了してもQueryPieサーバーバックグラウンドでクエリ実行が維持されます。ウェブブラウザ終了後QueryPie再接続時サーバーバックグラウンドで実行中のクエリはSQL Request詳細ページで進行状態を確認できます。このようなバックグラウンドクエリ実行機能の場合QueryPie v9.15.0以上のバージョン環境でのみサポートされます。
+</Callout>
+
+### SQL Export Request実行
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Executions &gt; To Do](/user-manual/workflow/screenshot-20240725-104719.png)
+<figcaption>
+Workflow &gt; Executions &gt; To Do
+</figcaption>
+</figure>
+
+1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。 
+2. 実行待機中のExport Request件をクリックして詳細ページに移動します。
+3. 詳細内容確認後右上の`Execute`ボタンを押して実行または`Cancel`ボタンを押してキャンセル処理できます。
+4. Export Optionポップアップウィンドウでエクスポートオプションを設定します。
+    *  **File Type**  : ファイル形式を選択します。SQL(基本値)、CSV、JSON、EXCEL中選択可能です。
+    *  **Export Option**  : その他エクスポートオプションを選択します。
+        *  **DROP TABLE syntax**  : DROP TABLE構文を適用します。
+        *  **Contain Data**  : エクスポート時データを含めます。
+        *  **New INSERT Statement every N Rows**  : INSERT構文を毎回挿入する行数を指定します。
+5. オプション設定が完了されたらモーダルで`Export`ボタンをクリックしてエクスポートを最終的に実行します。
+6. エクスポートが完了されたら、その結果を詳細ページ内Resultsタブで確認できます。 
+7. Workflow &gt; Executions &gt; Doneメニューで実行完了されたエクスポート要求履歴を確認できます。
+
+## Reviews (参照された要求確認)
+
+私が参照者(Reviewer)として指定された要求中承認または実行完了された要求件はReviews &gt; All Reviews目録に表示されます。参照状態はReview StatusカラムにUnread、Confirmed二つの値で表示されます。確認されていない要求を確認する方法は[決裁付加機能 (代理決裁、再上申など) 文書](workflow/approval-additional-features-proxy-approval-resubmission-etc)を参照してください。
+
+<Callout type="info">
+Reviewメニューは管理者が事前に使用設定をした場合のみ表示されます。
+</Callout>
+
+## 要求の状態目録
+
+要求の承認状態目録は以下の通りです。
+
+<table data-table-width="760" data-layout="default" local-id="7a620066-c0b8-4120-ad33-9894d8be7321">
+<tbody>
+<tr>
+<th>
+**承認状態 (Approval Status)**
+</th>
+<th>
+**実行状態 (Execution Status)**
+</th>
+<th>
+**参照状態 (Review Status)**
+</th>
+</tr>
+<tr>
+<td>
+* Pending : 承認待機中 
+* In Progress : 承認進行中 
+* Approved : 承認完了
+* Canceled : 要求者によるキャンセル
+* Rejected : 承認者による反対
+* Expired : 決裁要求期限切れ
+</td>
+<td>
+* Pending : 実行待機中
+* Executing : 実行中
+* Success : 実行成功
+* Failure : 実行失敗
+* Canceled : 要求者によるキャンセル
+* Expired : 実行期限切れ
+</td>
+<td>
+* Unread : レビュー待機中
+* Confirmed : レビュー完了
+</td>
+</tr>
+</tbody>
+</table>

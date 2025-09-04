@@ -1,0 +1,395 @@
+---
+title: '10.2.0 ~ 10.2.12'
+---
+
+## QueryPie 10.2.12 Release
+
+2025年06月13日
+
+
+**Bug Fix**
+
+* [General] マルチエージェントでinstanceを持つclusterの場合プロキシポートを割り当てない問題修正
+* [DAC] Copy clipboard時内部APIが不必要に反復的に呼び出される現象改善
+* [DAC] Hive接続不可イシューを修正するためセッション接続確認クエリ変更
+* [DAC] Redshiftクエリエラー時間違ったメッセージが出力される問題修正
+* [DAC] SAP HanaDBのSECONDATEタイプ照会時エラー発生問題修正
+
+
+## QueryPie 10.2.11 Release
+
+2025年05月28日
+
+
+**Enhancement**
+
+* [General] QueryPie内部バッチ作業の性能改善
+* [SAC] VaultでSSH CAエンジン使用時key_typeをrsaまたはed25519を選択できるようカスタマイズ機能提供
+
+
+**Bug Fix**
+
+* [DAC] Postgre/Redshift ProxyですべてのエラーがAn I/O error occurred while sending to the backend.メッセージで処理されるイシュー解決
+* [DAC] PostgreSQL Unmasking Requestが特定条件で失敗する問題修正
+
+
+## QueryPie 10.2.9 Release
+
+2025年05月02日
+
+
+**Enhancement**
+
+* [SAC] Role変更およびDirect Permission付与される場合にもセッション維持するよう改善
+
+
+**Bug Fix**
+
+* [DAC] Impalaでproxyでカラム400個のテーブルselect時失敗するエラー解決
+* [DAC] MongoDBメモリ漏洩エラー解決
+* [DAC] Unmasking Request時SchemaがあるDB申請不可なエラー解決
+* [General] QueryPie Meta DBにSSL活性化時無限接続を試行するエラー解決
+* [General] S3互換保存庫MinIOのEndpoint URLが設定されないエラー解決
+* [General] ユーザーグループ削除できないエラー解決 
+* [General] ワークフロー上申時承認者がSlack DM受信できないエラー解決
+* [WAC] ログイン可否更新時発生するInvalid Tokenデバッグログ過多出力イシュー解決
+
+
+## QueryPie 10.2.8 Release
+
+2025年04月11日
+
+
+**New Feature**
+
+* [DAC] ClickHouse新規ベンダーサポート
+* [DAC] 特定IP帯域に対するマスキング解除機能サポート
+
+
+**Enhancement**
+
+* [General] Network Zone External APIバリデーションチェック追加
+* [General] Alert Dialogモーダル内テキストコピー機能改善
+* [General] QUERYPIE_WEB_URL環境変数設定位置変更 (Meta DBに移動)
+* [Agent] マルチエージェントでSACサポート
+* [Agent] Linux OSでマルチエージェントサポート
+* [Agent] macOS Statusメニューおよびトレイアイコン機能拡張
+* [DAC] PostgreSQLでTemporary Tableサポート
+* [DAC] マルチエージェント環境で理由入力モーダルサポート
+* [DAC] DB Connections詳細ページにベンダーサポートレベル表示
+* [DAC] MongoDB Atlas Search関連$search、$searchMeta stageサポート
+* [DAC] Sensitive Dataアクセスイベント発生時ログに実行クエリ含むよう改善
+* [SAC] RDPポートユーザー任意変更機能追加
+* [KAC] Policy内kubernetesGroup項目に動的な値(User Group)追加
+* [WAC] Web App ConfigurationsでRoot CA証明書管理機能追加
+* [WAC] Policy高度化 - 構造改善およびWildCardサポート
+
+
+**Vulnerability**
+
+* [General] qp-admin基本アカウントに対するパスワード変更強制化および削除機能サポート
+
+
+**Bug Fix**
+
+* [General] ログイン試行回数計算時成功したログイン含むイシュー改善
+* [Agent] マルチエージェントログイン前後Host選択ドロップダウン幅不一致現象解決
+* [DAC] PostgreSQLで管理されないメモリ漏洩現象改善
+* [DAC] PostgreSQLでAS構文欠落時特定関数のカラム情報を表示しないエラー解決
+* [DAC] PostgreSQLでEmpty Query応答処理ロジック改善
+* [DAC] SQL Request結果タブで1,021個超過する場合正常に表示しないエラー解決
+* [DAC] Impalaでカラム数が多いテーブル照会時proxy接続失敗現象解決
+* [DAC] 権限ないユーザーのクエリ実行時Default Privilege選択窓が表示される現象解決
+* [SAC] Web Terminalで新しいセッション接続時既存セッションタブの履歴が維持されないエラー解決
+* [SAC] VDI環境(Windows)でAgentを通じたSSH接続不可バグフィックス
+* [SAC] 既存アカウントのSecret Store変更時発生する保存エラー解決
+
+
+## QueryPie 10.2.7 Release
+
+2025年03月20日
+
+
+**Improvement**
+
+* [General] Slack DMを通じて伝達されるWorkflow Request通知メッセージ項目追加
+* [Syslog] Legacy SyslogフォーマットにUrgent Mode項目追加
+* [Syslog] Workflow New Requestイベント送信時Urgent Mode項目追加
+
+
+**Bug Fix**
+
+* [DAC] Redshift Connectorパッケージサポート
+* [SAC] Windowsサーバーエージェントプロセス検出メモリ漏洩現象解決
+* [Multi-Agent] Host登録時IPおよびHTTPドメイン登録可能に修正
+* [Multi-Agent] メモリ不足現象解決および自動復旧機能追加
+* [Agent] RDP Password間違って入力した場合間欠的エージェント終了現象修正
+
+
+## QueryPie 10.2.6 Release
+
+2025年03月07日
+
+
+**New Feature**
+
+* [DAC] Custom Data Source接続サポート (Endpoint Proxy)
+* [SAC] VNCプロトコル新規サポート
+* [DAC] Teradata新規ベンダーサポート
+* [DAC] タグ基盤DBポリシーテンプレート機能Betaリリース
+* [SAC] サーバーアクセス時時間単位権限上昇要求および承認機能
+
+
+**Improvement**
+
+* [General] Slack連携機能改善 (既存Slack DM代替)
+* [General] Action Rate Limit基準をIPおよびAccess Token組み合わせに変更
+* [General] Query AuditログでSQL type多重選択UI改善
+* [General] Report CSVファイル生成時UTF-8(BOM)エンコーディング適用
+* [General] Workflow同一要求件内で重複アクションを制限するよう改善
+* [Agent] マルチエージェント内のDatabase 3rd Party Client迅速接続サポート
+* [DAC] OracleユーザーコネクションページProxy Info情報にSID情報表記
+* [DAC] Dr.Sum SSH機能活性化
+* [SAC] Cloud Provide同期時自動タギング機能追加
+* [SAC] Rocky Linux 9でAgentインストールおよび接続可能に改善
+* [SAC] サーバー権限付与時Server GroupsおよびServers目録ローディング速度改善
+* [WAC] Web App Configurationsページ追加
+* [WAC] Web Appウォーターマーク文句カスタム機能追加
+* [WAC] Web Appユーザー行為Event Log精巧化
+* [AIDD] Discovery Jobにtimeoutオプション追加して制限された時間内実行できるよう改善
+
+
+**Bug Fix**
+
+* [Agent] エージェントで間欠的に'SecretString'発生するイシュー解決
+* [DAC] PostgreSQL UNION構文使用時WITH構文のテーブル参照不可能なイシュー解決
+* [DAC] MSSQL日付が12時間制で表示されるイシュー解決
+* [Workflow]DB Access Request内のReject処理時Access Control Logs関連イシュー解決
+
+
+## QueryPie 10.2.5 Release
+
+2025年02月14日
+
+
+**New Feature**
+
+* [Agent] マルチエージェントMVPリリース
+* [SAC] QueryPie AgentにSFTPクライアントFilezilla新規サポート
+* [SAC] QueryPie AgentにSSHクライアントx-shell新規追加
+* [SAC] Policy作成/修正/削除およびRoleにPolicy追加/除去External API開発
+
+
+**Improvement**
+
+* [DAC] BigQuery OAuthサービスでログイン過程でユーザーがキャンセルボタンを押した時例外処理して改善
+* [DAC] Redis Enterpriseサポート
+* [SAC] 連続したエンターはログで無視できるよう改善
+* [SAC] RDP Windows ServerにADアカウントで接続サポート
+
+
+**Bug Fix**
+
+* [DAC] 元帳テーブル識別時実際変更対象テーブルがLedgerの場合のみポリシー適用されるよう改善
+* [DAC] INSERT対象テーブルのLedger識別イシュー解決
+* [DAC] SQLServer可用性グループダッシュボード使用イシュー解決
+* [DAC] DML Snapshotオプション活性化後大容量クエリ実行時Memory過負荷イシュー解決
+* [DAC] SQLServer SET STATISTIC IO、TIMEなど設定後クエリ実行時エラー解決
+* [Workflow] 削除されたコネクションが含まれた決裁要求時承認が失敗するエラー解決
+
+
+## QueryPie 10.2.4 Release
+
+2025年01月24日
+
+
+**New Feature**
+
+* [DAC] Spanner新規ベンダーサポート
+* [DAC] Dr.Sum新規ベンダーサポート
+* [DAC] BigQuery接続時OAuth認証サポート
+* [KAC] KubernetesクラスターにReverse Tunnelサポート(NOVA)
+* [SAC] Cloud Provider登録/修正/削除External APIサポート
+* [Workflow] ユーザーのSQL Request要求および実行External APIサポート
+
+
+**Improvement**
+
+* [Ganeral] インドネシアタイムゾーン追加
+* [General] CSVファイル生成時、UTF-8(BOM)エンコーディングタイプに変更改善
+* [DAC] ワークフローで個人KeytabおよびUID & PW認証正常動作するよう改善 
+* [DAC] SQL Request承認されたクエリ実行時、アカウント情報が間違っても再試行できるよう改善
+* [DAC] Cloud SQL同期時インスタンスにPublic IPおよびPrivate IPがなくても同期されるよう改善 
+* [DAC] ウェブエディターSQL Historyパネルでexecuted at逆順でソートされるよう改善
+* [DAC] Athena Workgroup登録関連改善
+* [DAC] GCP同期時Database Filter動作改善
+* [DAC] DBコネクション接続時Maskingポリシースキャンロジック改善
+* [DAC] Ledger対象DMLクエリ実行後、ワークフローに移す時カスタムリンクでリダイレクション
+* [SAC] NOVA ServerのHA構成およびPPv2サポート
+* [AIDD] サポートするすべてのデータベースにSSLサポート
+* [SAC] サーバー選択時全体選択チェックボックスUX改善
+* [SAC] サーバーアクセス権限付与Expiration Date無制限設定可能に改善
+* [SAC] 大規模でサーバー権限一括付与(Direct Permission)改善
+* [SAC] Server Group修正ページでサーバー外項目修正可能に要求
+* [SAC] Proxyjumpマルチホップ(Multi-Hop)サポート
+* [Audit] Audit Logs Export試行時文字を切ることができるオプション提供
+* [WAC] WebApp作成時Sub Path登録方式改善
+* [WAC] Single Page Applicationに対するアクセス制御ロジック補完
+* [WAC] RootCA証明書ダウンロード機能追加
+
+
+**Bug Fix**
+
+* [Workflow] Workflow Lists Full Access Policy権限でAll Requestsメニューを照会できないイシュー解決
+* [DAC] CSV Import実行時Target Tableローディング関連エラー解決
+* [DAC] SQLServer WITH構文を含むUPDATE、DELETE、MERGE構文がSELECTで実行されるイシュー解決
+* [DAC] OracleでデータImport実行中クエリ実行時正常にImportされないイシュー解決
+* [DAC] SELECT構文内のORDER BYソート表示関連イシュー解決
+* [DAC] AWS同期情報保存時Role ARNなどが正常に表示されないイシュー解決
+* [DAC] Cloud Providerで同期時、"This user does not exist anymore"エラー発生解決
+
+
+## QueryPie 10.2.3 Release
+
+2024年12月24日
+
+
+**Bug Fix**
+
+* [AIDD] 特定DB Data Pathが重なる場合Hash重複を防いでDiscovery Jobs正常動作するよう修正
+
+
+## QueryPie 10.2.2 Release
+
+2024年12月19日
+
+
+**New Feature**
+
+* [WAC] Web Access Controller MVPバージョンリリース
+* [DAC] OpenSearch新規ベンダーサポート
+* [General] Email通知送信機能追加
+* [General] 一時Login Tokenを通じたウェブ&lt;-&gt;エージェント間自動ログイン実装
+
+
+**Improvement**
+
+* [Agent] アップグレード時明示的に管理者権限取得後進行するよう改善
+* [Agent] WindowsエージェントでSQLGate Quick Connectionサポート
+* [AIDD] ユーザーダッシュボード高度化およびスキャン性能改善
+* [DAC] マスキングポリシーが適用されたカラムをWHERE条件に使用できるよう許可する環境変数提供
+* [DAC] Athena Ledger Tableサポート
+* [DAC] LedgerポリシーにExport Purpose機能追加
+* [DAC] Oracle、MongoDB、PostgreSQL Proxy (Agent)暗号固定 / 乱数オプション提供
+* [SAC] RDP Server AgentなくWindows Server接続可能に改善
+* [SAC] Command TemplateでAllow/Denyスペック追加改善
+* [SAC] OpenSSH Certificateサポート
+* [SAC] WindowサーバーにServer Agentインストール後既存WindowOSとマッピング機能追加
+* [SAC] Vault SSH CA Engine追加 (signed ssh certificates)
+* [SAC] Server Access Control Role権限関連External APIサポート
+* [SAC] Policy変更時開いているセッション維持できるようオプション提供
+* [KAC] ポリシー構文変更対応Tips提案内容改善
+* [KAC] Non-namespacedリソース関連ポリシー改善
+* [KAC] AlertタイプにRequest Audit関連ログ追加 
+* [General] Alert機能UI/UX変更および条件選択関連項目改善
+* [General] Cloud Provider同期時Key方式保存して再利用および同期可能に改善
+
+
+**Bug Fix**
+
+* [DAC] Window環境ウェブエディターでクエリ作成時カーソル位置関連イシュー解決
+* [SAC] 一般ユーザーにTELNET、FTPのProtocolが露出されないイシュー解決
+
+
+## QueryPie 10.2.1 Release
+
+2024年12月06日
+
+
+**New Feature**
+
+* [Admin] Proxy Throttling機能実装
+* [DAC] BigQueryポリシーサポート
+* [DAC] Vertica新規サポート
+* [DAC] MariaDB元帳機能サポート
+* [DAC] Ledgerテーブル管理機能追加
+* [SAC] サーバー接続時Reverse Tunneling Agent機能サポート (NOVA)
+
+
+**Improvement**
+
+* [Admin] 統合レポート機能改善
+* [Admin] User Managementアドミン権限細分化
+* [Admin] Authentication &gt; LDAP連携時Name値選択機能追加
+* [DAC] Sensitive Data正規表現で設定したルールのログ表示改善
+* [DAC] Access Control UI/UX改善
+* [DAC] 管理者ページでDB権限付与時期限切れ日指定機能追加
+* [DAC] Ledger機能API追加
+* [DAC] マスキングポリシーで複数個のカラム対象でルール適用可能に改善
+* [DAC] MySQL 8.0 JSON Table Functionサポート 
+* [DAC] Oracle OCI接続時DB個人アカウント使用およびロギング可能に改善
+* [SAC] コマンド迂回制御機能高度化 (Command Restrictions)
+* [SAC] Command Template設定時Allow / Denyスペック追加
+* [SAC] ProxyJump使用時JumpHost SSH Keyアルゴリズム追加サポート
+* [KAC] EKSクラスター詳細ページでTest Connection機能サポート
+
+
+## QueryPie 10.2.0 Release
+
+2024年11月08日
+
+
+**New Feature**
+
+* [General] 多言語グローバル設定
+* [General] ユーザーパスワードセキュリティルール設定機能
+* [DAC] Hiveデータポリシーサポート (Data Access、Data Masking、Sensitive Data)
+* [SAC] Vault連携時OTP Engineタイプサポート
+* [Workflow] マスキング解除要求のためのUnmasking Request機能サポート
+* [Workflow] SQL Requestで実行計画機能サポート
+
+
+**Improvement**
+
+* [General] Alert内Message Template Variable追加 (workflowUuid、urgent、executedAt)
+* [General] Job実行および結果処理を全体ではなく個別項目基準で成功/失敗処理するよう変更
+* [IDP] Okta SyncのためのAPIトークン値マスキング 
+* [IDP] Okta、Onelogin、LDAP同期時Dry Run機能追加
+* [DAC] クラウド同期時Dry Run機能追加
+* [DAC] Policy詳細ページでも検索機能追加
+* [DAC] MariaDB Ed25519 Password暗号化サポート
+* [DAC] DML Snapshot UPDATE構文にPK追加
+* [DAC] ウェブエディター内コネクションポップアップにconnection name、hostツールチップ追加
+* [DAC] 理由入力文字数制限最大300文字に改善
+* [DAC] 長期未接続処理された権限がある場合コネクション詳細ページ表示エラー修正
+* [DAC] MySQL Prepared Statementを実行する場合Auditにparameter情報が残るよう修正
+* [SAC] サーバー別ターミナルColor Theme適用
+* [SAC] Server Groups内の個別サーバーTest Connections機能サポート
+* [SAC] サーバー同期時Port番号指定機能
+* [Audit] KAC Audit Log Exportサポート
+* [Audit] Query AuditメニューSQL Typeフィルターの多重選択機能追加
+* [Workflow] ユーザー別承認のためのExternal APIサポート
+* [Agent] Host入力後すぐにウェブログインページに移動するよう改善
+* [AIDD] AI分類器追加
+* [AIDD] 誤検知および安定性改善、ダッシュボードウィジェット追加
+
+
+**Bug Fix**
+
+* [General] セッションタイムアウト閾値到達前ログアウトされる現象解決
+* [General] User Admin Role権限のPolicyを持つアカウントでReset Password実行時失敗するエラー解決
+* [DAC] グリッドを照会または修正する時NewLineが表示されないイシュー解決
+* [DAC] PostgreSQLでQSI適用時Materialized View照会不可能なイシュー解決
+* [SAC] 削除されたサーバーが存在する場合Server Group not foundエラー発生イシュー解決
+* [DAC] Agentを通じてMongoDBで正常に実行したクエリがログにStoppedで記録されるイシュー解決
+* [DAC] AgentでMongoDB接続成功時DB Access HistoryにFailureが記録されるイシュー解決
+* [DAC] 一部ベンダーで数字で始まるdatabaseの場合use構文実行エラー解決
+* [DAC] 特定リソースに権限がない場合exception処理されて同期に失敗するエラー解決
+* [DAC] 同一BLOBデータが存在する場合Oracleプロキシが適切に動作しないイシュー解決
+* [DAC] Oracle使用量が多い場合Proxy接続が間欠的に終了するイシュー修正
+* [DAC] AWSクラウド同期Modifying状態のインスタンスはSkipされるよう処理
+* [DAC] エージェントOracle接続後クエリ時Unauthorizedエラー修正
+* [Audit] セッションタイムアウト発生時Logoutログがタブ数分発生するイシュー解決
+* [Audit] ログexport試行時Query Full Textの容量が大きい場合メモリイシュー対応
+
+

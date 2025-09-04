@@ -1,0 +1,120 @@
+---
+title: 'SQL Request要求'
+---
+
+import { Callout } from 'nextra/components'
+
+## Overview
+
+下記順序に従って特定DBコネクションに対して権限がないクエリ実行を要求できます。承認後、実行者は承認されたクエリを1回に限り実行し、その結果を照会できます。
+
+
+## SQL Request要求
+
+### 1. 決裁ルール選択
+
+* Approval Ruleを選択して目的に合う決裁ルールを選択してください。選択したルールに応じて承認対象が変わります。 
+* もし管理者が承認者を指定した決裁ルールが選択された場合、自動で承認者が指定され追加および変更が不可能です。
+*  **Approval Expiration Date** : 承認期限切れ日を入力します。Maximum Approval Durationを通じて最大値を設定できます。Approval Expiration DateはExecution Expiration Dateを超過できません。超過した場合、上申できません。
+    * ただし、Urgent Modeで上申時、上記条件を無視します。
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.43.46-AM.png)
+</figure>
+
+### 2. 承認者指定
+
+* 決裁ラインで`+`ボタンを押すと段階別承認者を指定できるポップアップウィンドウが表示されます。 
+* このポップアップウィンドウで決裁承認条件および承認者を追加後`Save`ボタンを押して決裁ラインを保存します。
+* 選択可能な承認条件は以下の通りです。 
+    *  **A single Assignee can complete the approval request**  : 複数名中一人の承認だけで決裁要求が承認処理されます。
+    *  **All Assignees must approve this request**  : すべての承認者が承認しなければ決裁要求が承認処理されます。
+
+<figure data-layout="center" data-align="center">
+![image-20240807-125031.png](/user-manual/workflow/requesting-sql/image-20240807-125031.png)
+</figure>
+
+### 3. 実行者および参照者指定
+
+* 決裁ラインで`+`ボタンを押すと実行者および参照者を指定できるポップアップウィンドウが表示されます。 
+    * 管理者が参照者指定を許可しない場合はReviewerボックスが表示されません。 
+* このポップアップウィンドウで決裁承認条件および承認者を追加します。 
+* `Save`ボタンを押してモーダルを閉じ参照者指定を完了します。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240807-215143.png](/user-manual/workflow/requesting-sql/screenshot-20240807-215143.png)
+</figure>
+
+### 4. 事後承認で要求送信
+
+* 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。 
+* Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
+
+<figure data-layout="center" data-align="center">
+![screenshot-20240807-215226.png](/user-manual/workflow/requesting-sql/screenshot-20240807-215226.png)
+</figure>
+
+<Callout type="important">
+**Q. Urgent Modeスイッチが見えません。**
+A. 管理者がUrgent Modeを許可しない決裁ルールを選択した場合、該当機能が表示されません。
+</Callout>
+
+### 5. 要求情報入力
+
+<figure data-layout="center" data-align="center">
+![Screenshot-2025-08-26-at-12.47.02-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.47.02-AM.png)
+</figure>
+
+*  **Title**  : 要求タイトルを入力します。
+*  **Connection**  : SQL実行を要求する対象コネクションを選択します。権限があるコネクションに限り選択可能です。
+*  **Database**  : 選択したコネクション内でSQL実行を要求するデータベースを選択します。
+*  **Content Type**  : 要求するSQL構文を入力する方式を選択します。
+    * Text : クエリを最大9999行、1千万文字、または5MBまで作成できます。
+    * File : .sqlファイルをアップロードでき、実行容量の制限がありません。ただし、Storage構成が必要です。
+*  **Preferred Execution Date**  : 該当クエリが実行されることを希望する日付を選択します。基本選択日は要求日当日です。
+*  **Execution Expiration Date**  : Executorが実行できる最後の日付を選択します。基本選択日は1週間後です。
+*  **Reason for Request**  : SQL実行権限を要求する理由を入力します。
+*  **Submit**  : 起案作成完了後`Submit`ボタンをクリックすると上申が完了します。
+
+
+## 承認完了されたSQL実行
+
+承認が完了されたSQL Request件は承認完了即座に実行可能な状態になります。
+
+<figure data-layout="center" data-align="center">
+![Workflow &gt; Executions &gt; To Do &gt; Request Details &gt; Execute](/user-manual/workflow/requesting-sql/screenshot-20240802-104603.png)
+<figcaption>
+Workflow &gt; Executions &gt; To Do &gt; Request Details &gt; Execute
+</figcaption>
+</figure>
+
+1. Workflow &gt; Executions &gt; To Doメニューに移動します。
+2. 実行待機中のSQL Request件をクリックして詳細ページに移動します。
+3. SQL Request詳細内容を確認後右上の`Execute`ボタンをクリックして実行します。
+    1. 詳細内容確認後、実行をキャンセルしたい場合は`Cancel`ボタンをクリックしてキャンセル処理できます。
+4. 実行が完了された結果は詳細ページ内のResultsタブで成功/失敗可否を確認できます。
+5. Workflow &gt; Received Requests &gt; Doneメニューで本人が実行者である要求履歴を確認できます。
+
+
+
+<Callout type="info">
+DML Query実行に対する承認プロセスが強制された場合<br/>`INSERT`、`UPDATE`、`DELETE`構文実行時管理者がWorkflowで承認プロセスを経るようポリシーを作成した場合があります。この場合Web Editorでクエリ実行時下記のようなメッセージが出力されます。<br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
+
+<figure data-layout="center" data-align="center">
+![Web Editorで警告文](/user-manual/workflow/requesting-sql/image-20250629-155649.png)
+<figcaption>
+Web Editorで警告文
+</figcaption>
+</figure>
+
+この場合`SEND SQL Request`ボタンをクリックしてすぐにWorkflowのSQL Request様式に移動して要求を進行できます。<br/>適切なApproval Ruleを選択しなければならずDML可否を選択します。DMLの場合Content TypeでFile添付方式で実行できません。
+
+<figure data-layout="center" data-align="center">
+![WorkflowのSQL Request様式](/user-manual/workflow/requesting-sql/image-20250629-161143.png)
+<figcaption>
+WorkflowのSQL Request様式
+</figcaption>
+</figure>
+</Callout>
+
+
