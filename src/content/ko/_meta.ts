@@ -4,7 +4,7 @@ export default {
   },
   'querypie-overview': {
     type: 'page',
-    title: 'Overview',
+    title: 'QueryPie Overview',
   },
   'user-manual': {
     type: 'page',
@@ -20,12 +20,12 @@ export default {
   },
   aiHubManual: {
     type: 'page',
-    title: 'AI Hub Manual',
+    title: 'AI Hub 매뉴얼',
     href: 'https://aihub-docs.app.querypie.com/ko',
   },
   contactUs: {
     type: 'page',
-    title: 'Contact Us',
+    title: '문의하기',
     href: 'https://www.querypie.com/company/contact-us',
   },
 };
