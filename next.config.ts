@@ -35,6 +35,37 @@ export default withNextra({
     config.cache = {
       type: 'memory',
     };
+
+    // Handle Node.js built-in modules for undici
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push({
+        'undici': 'commonjs undici',
+      });
+    }
+
+    // Fallback for Node.js built-in modules
+    config.resolve = config.resolve || {};
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      'node:console': false,
+      'node:crypto': false,
+      'node:diagnostics_channel': false,
+      'node:dns': false,
+      'node:fs/promises': false,
+      'node:fs': false,
+      'node:path': false,
+      'node:stream': false,
+      'node:util': false,
+      'node:url': false,
+      'node:buffer': false,
+      'node:events': false,
+      'node:net': false,
+      'node:tls': false,
+      'node:http': false,
+      'node:https': false,
+    };
+
     return config;
   },
   async redirects() {
