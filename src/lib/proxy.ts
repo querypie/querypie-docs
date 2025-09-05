@@ -1,9 +1,12 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {proxyLogger} from './logger';
 import {LRUCache} from './lru-cache';
+import {Agent as UndiciAgent} from 'undici';
 
 // Configure target base URL
 const TARGET_BASE_URL = 'https://docs.querypie.com';
+const TARGET_HOSTNAME = 'docs.querypie.com'; // Host header value for upstream requests
+const UPSTREAM_HOSTNAME = '9e7979a9-c0fa-49b9-943d-eff9237acacc.sites-2.scroll-viewport.k15t.app'; // Actual upstream server hostname
 
 // Configure your target path mappings here
 const TARGET_PATH_MAPPINGS: Record<string, string> = {
@@ -24,7 +27,14 @@ const TARGET_PATH_MAPPINGS: Record<string, string> = {
 const EXCLUDED_REQUEST_HEADERS = ['host', 'x-forwarded-host', 'x-forwarded-proto'];
 const EXCLUDED_RESPONSE_HEADERS = ['content-encoding', 'content-length', 'transfer-encoding'];
 
-
+/**
+ * Build upstream URL by replacing the hostname in the original URL
+ */
+function buildUpstreamUrl(originalUrl: string): string {
+  const url = new URL(originalUrl);
+  url.hostname = UPSTREAM_HOSTNAME;
+  return url.toString();
+}
 
 // Create cache instance for pathname matching results
 const pathnameMatchCache = new LRUCache<string, { targetBaseUrl: string; remainingPath: string } | null>(10);
@@ -85,7 +95,7 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
   const cachedMatch = pathnameMatchCache.get(pathname);
   if (cachedMatch !== undefined) {
     cacheHits++;
-    proxyLogger.debug('Cache hit for pathname', { pathname, cacheSize: pathnameMatchCache.size() });
+    proxyLogger.debug('Cache hit for pathname', {pathname, cacheSize: pathnameMatchCache.size()});
 
     if ((cacheHits + cacheMisses) % 100 === 0) {
       logCacheStats();
@@ -100,7 +110,7 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
     if (pathname.startsWith(prefix) || pathname + '/' === prefix) {
       const targetBaseUrl = `${TARGET_BASE_URL}${targetUrl}`;
       const remainingPath = pathname.startsWith(prefix) ? pathname.substring(prefix.length) : '';
-      const result = { targetBaseUrl, remainingPath };
+      const result = {targetBaseUrl, remainingPath};
       pathnameMatchCache.set(pathname, result);
       return result;
     }
@@ -115,7 +125,7 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
       if (pathname.startsWith(langPrefix) || pathname + '/' === langPrefix) {
         const targetBaseUrl = `${TARGET_BASE_URL}/${langCode}${targetUrl}`;
         const remainingPath = pathname.startsWith(langPrefix) ? pathname.substring(langPrefix.length) : '';
-        const result = { targetBaseUrl, remainingPath };
+        const result = {targetBaseUrl, remainingPath};
         pathnameMatchCache.set(pathname, result);
         return result;
       }
@@ -131,10 +141,10 @@ function findMatchingPrefix(pathname: string): { targetBaseUrl: string; remainin
  */
 function rewriteUrlsInHtml(htmlContent: string, proxyOrigin: string): string {
   const rewrittenHtml = htmlContent.replace(/https:\/\/docs\.querypie\.com/g, proxyOrigin);
-  
+
   const originalCount = (htmlContent.match(/https:\/\/docs\.querypie\.com/g) || []).length;
-  proxyLogger.debug('URL rewrite completed', { originalCount, rewrittenCount: originalCount });
-  
+  proxyLogger.debug('URL rewrite completed', {originalCount, rewrittenCount: originalCount});
+
   return rewrittenHtml;
 }
 
@@ -149,15 +159,15 @@ function areUrlsSimilarExceptTrailingSlash(url1: string, url2: string): boolean 
       return url.startsWith('/') ? url : `/${url}`;
     }
   };
-  
+
   const normalize = (path: string) => path.endsWith('/') ? path.slice(0, -1) : path;
   const normalized1 = normalize(getPathname(url1));
   const normalized2 = normalize(getPathname(url2));
-  
+
   proxyLogger.debug('URL similarity check', {
     url1, url2, normalized1, normalized2, isSimilar: normalized1 === normalized2
   });
-  
+
   return normalized1 === normalized2;
 }
 
@@ -165,22 +175,22 @@ function areUrlsSimilarExceptTrailingSlash(url1: string, url2: string): boolean 
  * Convert location URL to target or proxy URL
  */
 function convertLocationUrl(
-  location: string, 
-  baseUrl: string, 
+  location: string,
+  baseUrl: string,
   currentPath?: string
 ): string {
   if (location.startsWith('http')) {
-    return location.startsWith(TARGET_BASE_URL) 
+    return location.startsWith(TARGET_BASE_URL)
       ? `${baseUrl}${location.substring(TARGET_BASE_URL.length)}`
       : location;
   }
-  
+
   if (location.startsWith('/')) {
     return `${baseUrl}${location}`;
   }
-  
+
   // Relative URL
-  const currentDir = currentPath 
+  const currentDir = currentPath
     ? currentPath.substring(0, currentPath.lastIndexOf('/') + 1)
     : '/';
   return `${baseUrl}${currentDir}${location}`;
@@ -191,7 +201,7 @@ function convertLocationUrl(
  */
 function prepareProxyHeaders(request: NextRequest): Headers {
   const headers = new Headers();
-  
+
   request.headers.forEach((value, key) => {
     if (!EXCLUDED_REQUEST_HEADERS.includes(key.toLowerCase())) {
       headers.set(key, value);
@@ -202,6 +212,7 @@ function prepareProxyHeaders(request: NextRequest): Headers {
   headers.set('x-forwarded-for', clientIP);
   headers.set('x-forwarded-proto', request.nextUrl.protocol);
   headers.set('x-forwarded-host', request.nextUrl.host);
+  headers.set('host', TARGET_HOSTNAME);
 
   return headers;
 }
@@ -221,15 +232,16 @@ function createResponseHeaders(response: Response): Headers {
 
 /**
  * Make a fetch request with common configuration
+ * Uses the upstream hostname for the actual connection while setting the target hostname in headers
  */
 async function makeFetchRequest(
   url: string,
   request: NextRequest,
-  headers?: Headers,
+  dispatcher: UndiciAgent,
   additionalHeaders?: Record<string, string>
 ): Promise<Response> {
-  const requestHeaders = headers || prepareProxyHeaders(request);
-  
+  const requestHeaders = prepareProxyHeaders(request);
+
   if (additionalHeaders) {
     Object.entries(additionalHeaders).forEach(([key, value]) => {
       requestHeaders.set(key, value);
@@ -241,13 +253,20 @@ async function makeFetchRequest(
     headers: requestHeaders,
     body: request.body,
     redirect: 'manual',
+    // @ts-expect-error - undici dispatcher is supported in Node runtime
+    dispatcher,
   });
 }
 
 /**
  * Handle 304 Not Modified response by fetching actual content
+ * Bypasses cache by adding no-cache headers to get fresh content
  */
-async function handle304Response(request: NextRequest, targetUrl: string): Promise<Response> {
+async function handle304Response(
+  request: NextRequest,
+  upstreamUrl: string,
+  dispatcher: UndiciAgent
+): Promise<Response> {
   proxyLogger.debug('304 Not Modified detected, fetching actual content');
 
   const noCacheHeaders = {
@@ -257,8 +276,8 @@ async function handle304Response(request: NextRequest, targetUrl: string): Promi
     'if-modified-since': ''
   };
 
-  const response = await makeFetchRequest(targetUrl, request, undefined, noCacheHeaders);
-  
+  const response = await makeFetchRequest(upstreamUrl, request, dispatcher, noCacheHeaders);
+
   proxyLogger.info('304 bypass response', {
     status: response.status,
     statusText: response.statusText
@@ -269,13 +288,15 @@ async function handle304Response(request: NextRequest, targetUrl: string): Promi
 
 /**
  * Handle trailing slash redirects by making a direct request
+ * Avoids redirect loops by making a direct request to the target URL
  */
 async function handleTrailingSlashRedirect(
   request: NextRequest,
   response: Response,
   location: string,
   targetBaseUrl: string,
-  remainingPath: string
+  remainingPath: string,
+  dispatcher: UndiciAgent
 ): Promise<Response | null> {
   if (!areUrlsSimilarExceptTrailingSlash(request.nextUrl.href, location)) {
     return null;
@@ -290,14 +311,15 @@ async function handleTrailingSlashRedirect(
   const targetUrl = convertLocationUrl(location, TARGET_BASE_URL, remainingPath ? `${targetBaseUrl}${remainingPath}` : targetBaseUrl);
 
   try {
-    const directResponse = await makeFetchRequest(targetUrl, request);
+    const upstreamUrl = buildUpstreamUrl(targetUrl);
+    const directResponse = await makeFetchRequest(upstreamUrl, request, dispatcher);
     
-    proxyLogger.info('Direct request completed for trailing slash redirect', {
+    proxyLogger.info('Direct request completed for trailing slash redirect via upstream', {
+      upstreamUrl,
       status: directResponse.status,
       statusText: directResponse.statusText,
       contentType: directResponse.headers.get('content-type') || 'unknown'
     });
-
     return directResponse;
   } catch (error) {
     proxyLogger.error('Direct request failed for trailing slash redirect', {
@@ -318,7 +340,7 @@ async function processResponse(response: Response, request: NextRequest): Promis
   if (contentType.includes('text/html') && response.body) {
     const htmlContent = await response.text();
     const rewrittenHtml = rewriteUrlsInHtml(htmlContent, request.nextUrl.origin);
-    
+
     return new NextResponse(rewrittenHtml, {
       status: response.status,
       statusText: response.statusText,
@@ -345,7 +367,7 @@ function handleRedirectResponse(response: Response, request: NextRequest, locati
 
   const responseHeaders = createResponseHeaders(response);
   const proxyLocation = convertLocationUrl(location, request.nextUrl.origin, request.nextUrl.pathname);
-  
+
   responseHeaders.set('location', proxyLocation);
 
   return new NextResponse(null, {
@@ -372,17 +394,23 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
 
     const match = findMatchingPrefix(pathname);
     if (!match) {
-      proxyLogger.info('No matching prefix found', { pathname });
-      return new NextResponse('Service not found', { status: 404 });
+      proxyLogger.info('No matching prefix found', {pathname});
+      return new NextResponse('Service not found', {status: 404});
     }
 
-    const { targetBaseUrl, remainingPath } = match;
+    const {targetBaseUrl, remainingPath} = match;
     const targetUrl = remainingPath ? `${targetBaseUrl}${remainingPath}` : targetBaseUrl;
     const finalUrl = `${targetUrl}${request.nextUrl.search}`;
 
-    proxyLogger.debug('Forwarding request', { finalUrl });
+    // Build upstream URL by replacing hostname with UPSTREAM_HOSTNAME (no DNS resolution)
+    const upstreamUrl = buildUpstreamUrl(finalUrl);
 
-    let response = await makeFetchRequest(finalUrl, request);
+    // Create dispatcher with SNI override to TARGET_HOSTNAME for HTTPS connections
+    const dispatcher = new UndiciAgent({connect: {servername: TARGET_HOSTNAME}});
+
+    proxyLogger.debug('Forwarding request', {finalUrl, upstreamUrl, upstreamHost: UPSTREAM_HOSTNAME});
+
+    let response = await makeFetchRequest(upstreamUrl, request, dispatcher);
 
     proxyLogger.info('Proxy response received', {
       status: response.status,
@@ -392,7 +420,7 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
 
     // Handle 304 Not Modified
     if (response.status === 304) {
-      response = await handle304Response(request, finalUrl);
+      response = await handle304Response(request, upstreamUrl, dispatcher);
     }
 
     // Handle redirects
@@ -400,7 +428,7 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
       const location = response.headers.get('location');
       if (location) {
         const directResponse = await handleTrailingSlashRedirect(
-          request, response, location, targetBaseUrl, remainingPath
+          request, response, location, targetBaseUrl, remainingPath, dispatcher
         );
 
         if (directResponse) {
@@ -413,8 +441,8 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
 
         return handleRedirectResponse(response, request, location);
       }
-      
-      proxyLogger.warn('Redirect status but no location header', { status: response.status });
+
+      proxyLogger.warn('Redirect status but no location header', {status: response.status});
     }
 
     return await processResponse(response, request);
@@ -424,7 +452,7 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined
     });
-    return new NextResponse('Internal Server Error', { status: 500 });
+    return new NextResponse('Internal Server Error', {status: 500});
   }
 }
 
@@ -432,9 +460,9 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
  * Check if the request path should be proxied
  */
 export function shouldProxy(pathname: string): boolean {
-  proxyLogger.debug('shouldProxy check', { pathname });
+  proxyLogger.debug('shouldProxy check', {pathname});
   const match = findMatchingPrefix(pathname);
   const shouldProxy = !!match;
-  proxyLogger.debug(shouldProxy ? 'Match found' : 'No match found', { pathname });
+  proxyLogger.debug(shouldProxy ? 'Match found' : 'No match found', {pathname});
   return shouldProxy;
 }
