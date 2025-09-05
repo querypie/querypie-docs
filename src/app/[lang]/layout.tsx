@@ -80,7 +80,32 @@ export default async function RootLayout({ children, params }) {
             content: '',
             labels: '',
           }}
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
+          sidebar={{ 
+            defaultMenuCollapseLevel: 1,
+            // Custom sort function to use order property from _meta.ts files
+            sort: (a, b) => {
+              // Get order from meta data if available
+              const getOrder = (item) => {
+                // Check if item has meta with order property
+                if (item.meta && typeof item.meta.order === 'number') {
+                  return item.meta.order;
+                }
+                // Fallback to 999 for items without order
+                return 999;
+              };
+              
+              const orderA = getOrder(a);
+              const orderB = getOrder(b);
+              
+              // Sort by order first
+              if (orderA !== orderB) {
+                return orderA - orderB;
+              }
+              
+              // If same order, sort alphabetically by title
+              return (a.title || '').localeCompare(b.title || '');
+            }
+          }}
           pageMap={pageMap}
           i18n={[
             { locale: 'en', name: 'English' },

@@ -1,3 +1,3 @@
 export default {
-  'creating-proxyjump': 'ProxyJump 생성하기',
+  'creating-proxyjump': { title: 'ProxyJump 생성하기', order: 1 },
 };

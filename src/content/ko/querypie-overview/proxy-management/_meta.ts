@@ -1,3 +1,3 @@
 export default {
-  'enable-database-proxy': 'Database Proxy 사용 활성화',
+  'enable-database-proxy': { title: 'Database Proxy 사용 활성화', order: 1 },
 };

@@ -1617,6 +1617,7 @@ def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_
                 os.makedirs(meta_dir, exist_ok=True)
 
                 entries: List[str] = []
+                order_counter = 1
                 for child in ordered:
                     if not isinstance(child, dict):
                         continue
@@ -1650,7 +1651,8 @@ def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_
 
                     key_repr = f"'{slug_key}'"
                     title_repr = (title or '').replace("'", "\\'")
-                    entries.append(f"  {key_repr}: '{title_repr}',")
+                    entries.append(f"  {key_repr}: {{ title: '{title_repr}', order: {order_counter} }},")
+                    order_counter += 1
 
                 if entries:
                     meta_path = os.path.join(meta_dir, '_meta.ts')

@@ -1,5 +1,5 @@
 export default {
-  'request-audit': 'Request Audit',
-  'pod-session-recordings': 'Pod Session Recordings',
-  'kubernetes-role-history': 'Kubernetes Role History',
+  'request-audit': { title: 'Request Audit', order: 1 },
+  'pod-session-recordings': { title: 'Pod Session Recordings', order: 2 },
+  'kubernetes-role-history': { title: 'Kubernetes Role History', order: 3 },
 };
