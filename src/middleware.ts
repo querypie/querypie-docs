@@ -1,27 +1,27 @@
-import { middleware as nextraMiddleware } from 'nextra/locales';
-import { NextRequest, NextResponse } from 'next/server';
-import { handleProxyRequest, shouldProxy } from './lib/proxy';
-import { middlewareLogger } from './lib/logger';
+import {middleware as nextraMiddleware} from 'nextra/locales';
+import {NextRequest, NextResponse} from 'next/server';
+import {handleProxyRequest, shouldProxy} from './lib/proxy';
+import {middlewareLogger} from './lib/logger';
 
 export async function middleware(request: NextRequest) {
-  middlewareLogger.debug('Middleware request', { 
+  middlewareLogger.debug('Middleware request', {
     pathname: request.nextUrl.pathname,
-    method: request.method 
+    method: request.method
   });
 
   if (request.nextUrl.pathname === '/robots.txt') {
     middlewareLogger.debug('Handling robots.txt request');
     if (process.env.DEPLOYMENT_ENV === 'production') {
       return new NextResponse(`User-agent: *
-  Allow: /
-  Sitemap: https://querypie-docs.vercel.app/sitemap.xml
-  Sitemap: https://docs.querypie.com/sitemap.xml
-  Sitemap: https://docs.querypie.io/sitemap.xml
-      `);
+Allow: /
+Sitemap: https://docs.querypie.com/sitemap.xml
+Sitemap: https://docs.querypie.io/sitemap.xml
+Sitemap: https://querypie-docs.vercel.app/sitemap.xml
+`);
     } else {
       return new NextResponse(`User-agent: *
 Disallow: /
-      `);
+`);
     }
   }
 
