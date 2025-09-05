@@ -1,4 +1,4 @@
 export default {
-  'installing-root-ca-certificate-and-extension': 'Root CA証明書とExtensionインストール',
-  'accessing-web-applications-websites': 'Webアプリケーション（Webサイト）アクセス',
+  'installing-root-ca-certificate-and-extension': 'Root CA証明書およびExtensionのインストール',
+  'accessing-web-applications-websites': 'Webアプリケーション（Webサイト）へのアクセス',
 };

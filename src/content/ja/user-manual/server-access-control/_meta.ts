@@ -1,5 +1,5 @@
 export default {
-  'connecting-to-authorized-servers': '権限のあるサーバーに接続する',
-  'using-web-terminal': 'Webターミナル使用',
-  'using-web-sftp': 'Web SFTP使用',
+  'connecting-to-authorized-servers': '認証されたサーバーへの接続',
+  'using-web-terminal': 'Webターミナルの使用',
+  'using-web-sftp': 'Web SFTPの使用',
 };

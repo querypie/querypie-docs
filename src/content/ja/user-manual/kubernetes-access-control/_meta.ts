@@ -1,3 +1,3 @@
 export default {
-  'checking-access-permission-list': 'アクセス権限リスト確認',
+  'checking-access-permission-list': 'アクセス権限一覧の確認',
 };
