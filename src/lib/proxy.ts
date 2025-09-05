@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {proxyLogger} from './logger';
 import {LRUCache} from './lru-cache';
-import {Agent as UndiciAgent} from 'undici';
 
 // Configure target base URL
 const TARGET_BASE_URL = 'https://docs.querypie.com';
@@ -237,7 +236,6 @@ function createResponseHeaders(response: Response): Headers {
 async function makeFetchRequest(
   url: string,
   request: NextRequest,
-  dispatcher: UndiciAgent,
   additionalHeaders?: Record<string, string>
 ): Promise<Response> {
   const requestHeaders = prepareProxyHeaders(request);
@@ -253,8 +251,6 @@ async function makeFetchRequest(
     headers: requestHeaders,
     body: request.body,
     redirect: 'manual',
-    // @ts-expect-error - undici dispatcher is supported in Node runtime
-    dispatcher,
   });
 }
 
@@ -264,8 +260,7 @@ async function makeFetchRequest(
  */
 async function handle304Response(
   request: NextRequest,
-  upstreamUrl: string,
-  dispatcher: UndiciAgent
+  upstreamUrl: string
 ): Promise<Response> {
   proxyLogger.debug('304 Not Modified detected, fetching actual content');
 
@@ -276,7 +271,7 @@ async function handle304Response(
     'if-modified-since': ''
   };
 
-  const response = await makeFetchRequest(upstreamUrl, request, dispatcher, noCacheHeaders);
+  const response = await makeFetchRequest(upstreamUrl, request, noCacheHeaders);
 
   proxyLogger.info('304 bypass response', {
     status: response.status,
@@ -295,8 +290,7 @@ async function handleTrailingSlashRedirect(
   response: Response,
   location: string,
   targetBaseUrl: string,
-  remainingPath: string,
-  dispatcher: UndiciAgent
+  remainingPath: string
 ): Promise<Response | null> {
   if (!areUrlsSimilarExceptTrailingSlash(request.nextUrl.href, location)) {
     return null;
@@ -312,7 +306,7 @@ async function handleTrailingSlashRedirect(
 
   try {
     const upstreamUrl = buildUpstreamUrl(targetUrl);
-    const directResponse = await makeFetchRequest(upstreamUrl, request, dispatcher);
+    const directResponse = await makeFetchRequest(upstreamUrl, request);
     
     proxyLogger.info('Direct request completed for trailing slash redirect via upstream', {
       upstreamUrl,
@@ -405,12 +399,9 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
     // Build upstream URL by replacing hostname with UPSTREAM_HOSTNAME (no DNS resolution)
     const upstreamUrl = buildUpstreamUrl(finalUrl);
 
-    // Create dispatcher with SNI override to TARGET_HOSTNAME for HTTPS connections
-    const dispatcher = new UndiciAgent({connect: {servername: TARGET_HOSTNAME}});
-
     proxyLogger.debug('Forwarding request', {finalUrl, upstreamUrl, upstreamHost: UPSTREAM_HOSTNAME});
 
-    let response = await makeFetchRequest(upstreamUrl, request, dispatcher);
+    let response = await makeFetchRequest(upstreamUrl, request);
 
     proxyLogger.info('Proxy response received', {
       status: response.status,
@@ -420,7 +411,7 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
 
     // Handle 304 Not Modified
     if (response.status === 304) {
-      response = await handle304Response(request, upstreamUrl, dispatcher);
+      response = await handle304Response(request, upstreamUrl);
     }
 
     // Handle redirects
@@ -428,7 +419,7 @@ export async function handleProxyRequest(request: NextRequest): Promise<NextResp
       const location = response.headers.get('location');
       if (location) {
         const directResponse = await handleTrailingSlashRedirect(
-          request, response, location, targetBaseUrl, remainingPath, dispatcher
+          request, response, location, targetBaseUrl, remainingPath
         );
 
         if (directResponse) {
