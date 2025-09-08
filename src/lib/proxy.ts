@@ -3,7 +3,7 @@ import {proxyLogger} from './logger';
 import {LRUCache} from './lru-cache';
 
 // Configure target base URL
-const TARGET_BASE_URL = 'https://docs.querypie.com';
+const TARGET_BASE_URL = 'https://querypie-docs-v10-v9.scrollhelp.site';
 
 // Configure your target path mappings here
 const TARGET_PATH_MAPPINGS: Record<string, string> = {
@@ -24,11 +24,8 @@ const TARGET_PATH_MAPPINGS: Record<string, string> = {
 const EXCLUDED_REQUEST_HEADERS = ['host', 'x-forwarded-host', 'x-forwarded-proto'];
 const EXCLUDED_RESPONSE_HEADERS = ['content-encoding', 'content-length', 'transfer-encoding'];
 
-
-
-// Create cache instance for pathname matching results
+// Create a cache instance for pathname matching results
 const pathnameMatchCache = new LRUCache<string, { targetBaseUrl: string; remainingPath: string } | null>(10);
-
 // Cache statistics
 let cacheHits = 0;
 let cacheMisses = 0;
