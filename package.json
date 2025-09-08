@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/chequer-io/querypie-docs#readme",
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@next/third-parties": "^15.4.6",
     "@theguild/remark-mermaid": "^0.3.0",
     "next": "^15.4.6",
