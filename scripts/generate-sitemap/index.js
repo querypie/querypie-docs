@@ -104,14 +104,12 @@ function generateLanguageSitemap(lang) {
     return [];
   }
 
-  console.log(`Processing language: ${lang}`);
   const mdxFiles = findMdxFiles(langDir, CONTENT_DIR);
   const urls = [];
 
   for (const file of mdxFiles) {
     const url = filePathToUrl(file, lang);
     urls.push(url);
-    console.log(`Added URL: ${url}`);
   }
 
   return urls;
@@ -139,7 +137,6 @@ function main() {
       const langDir = path.join(PUBLIC_DIR, lang);
       if (!fs.existsSync(langDir)) {
         fs.mkdirSync(langDir, { recursive: true });
-        console.log(`Created directory: ${langDir}`);
       }
       
       // Generate sitemap XML for this language
@@ -148,19 +145,18 @@ function main() {
       // Write to language-specific directory
       const outputFile = path.join(langDir, 'sitemap.xml');
       fs.writeFileSync(outputFile, xml);
-      console.log(`Sitemap generated at: ${outputFile}`);
-      console.log(`Total URLs for ${lang}: ${urls.length}`);
+      const relativePath = path.relative(process.cwd(), outputFile);
+      console.log(`${lang}: ${urls.length} URLs -> ${relativePath}`);
       totalUrls += urls.length;
     }
   }
 
   // Generate sitemap index file
-  generateSitemapIndex();
+  const indexFile = generateSitemapIndex();
+  const relativeIndexPath = path.relative(process.cwd(), indexFile);
 
-  console.log(`\nAll sitemaps generated successfully!`);
-  console.log(`Total URLs across all languages: ${totalUrls}`);
-  console.log(`Language-specific sitemaps saved to public/{language}/sitemap.xml`);
-  console.log(`Sitemap index updated at public/sitemap.xml`);
+  console.log(`\nTotal: ${totalUrls} URLs`);
+  console.log(`Sitemap index: ${relativeIndexPath}`);
 }
 
 /**
@@ -195,7 +191,7 @@ function generateSitemapIndex() {
   // Write sitemap index file
   const indexFile = path.join(PUBLIC_DIR, 'sitemap.xml');
   fs.writeFileSync(indexFile, xml);
-  console.log(`Sitemap index generated at: ${indexFile}`);
+  return indexFile;
 }
 
 // Run the script
