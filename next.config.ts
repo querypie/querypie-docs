@@ -37,13 +37,4 @@ export default withNextra({
     };
     return config;
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/en/',
-        permanent: false,
-      },
-    ];
-  },
 });
