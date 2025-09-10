@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import React from 'react';
+import CustomTocLayout from '@/components/custom-toc-layout';
 
 const defaultMetadata: Metadata = {
   title: {
@@ -85,41 +86,81 @@ export default async function RootLayout({ children, params }) {
 
   const pageMap = await getPageMap(`/${lang || 'en'}`);
 
-  return (
-    <html lang={lang} dir="ltr" suppressHydrationWarning>
-      <Head faviconGlyph="✦" />
-      {process.env.DEPLOYMENT_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-      )}
-      <body>
-        <Layout
-          pageMap={pageMap}
-          navbar={navbar}
-          footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
-          docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
-          editLink="Edit this page on GitHub"
-          feedback={{
-            content: 'Question? Give us feedback',
-            labels: 'feedback',
-          }}
-          i18n={[
-            { locale: 'en', name: 'English' },
-            { locale: 'ja', name: '日本語' },
-            { locale: 'ko', name: '한국어' },
-          ]}
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
-          toc={{
-            // TODO(JK): For debugging only. Remote this later.
-            extraContent: (
-              <div>
-                <small>layout={layoutName}</small>
-              </div>
-            ),
-          }}
-        >
-          {children}
-        </Layout>
-      </body>
-    </html>
-  );
+  if (layoutName === 'main-layout') {
+    return (
+      <html lang={lang} dir="ltr" suppressHydrationWarning>
+        <Head faviconGlyph="✦" />
+        {process.env.DEPLOYMENT_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        <body>
+          <CustomTocLayout
+            pageMap={pageMap}
+            navbar={navbar}
+            footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
+            docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
+            editLink="Edit this page on GitHub"
+            feedback={{
+              content: 'Question? Give us feedback',
+              labels: 'feedback',
+            }}
+            i18n={[
+              { locale: 'en', name: 'English' },
+              { locale: 'ja', name: '日本語' },
+              { locale: 'ko', name: '한국어' },
+            ]}
+            sidebar={{ defaultMenuCollapseLevel: 1 }}
+            toc={{
+              // TODO(JK): For debugging only. Remote this later.
+              extraContent: (
+                <div>
+                  <small>layout={layoutName}</small>
+                </div>
+              ),
+            }}
+          >
+            {children}
+          </CustomTocLayout>
+        </body>
+      </html>
+    );
+  } else {
+    return (
+      <html lang={lang} dir="ltr" suppressHydrationWarning>
+        <Head faviconGlyph="✦" />
+        {process.env.DEPLOYMENT_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        <body>
+          <Layout
+            pageMap={pageMap}
+            navbar={navbar}
+            footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
+            docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
+            editLink="Edit this page on GitHub"
+            feedback={{
+              content: 'Question? Give us feedback',
+              labels: 'feedback',
+            }}
+            i18n={[
+              { locale: 'en', name: 'English' },
+              { locale: 'ja', name: '日本語' },
+              { locale: 'ko', name: '한국어' },
+            ]}
+            sidebar={{ defaultMenuCollapseLevel: 1 }}
+            toc={{
+              // TODO(JK): For debugging only. Remote this later.
+              extraContent: (
+                <div>
+                  <small>layout={layoutName}</small>
+                </div>
+              ),
+            }}
+          >
+            {children}
+          </Layout>
+        </body>
+      </html>
+    );
+  }
 }
