@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { addBasePath } from 'next/dist/client/add-base-path';
 
 // Language data and types
 export interface LanguageOption {
@@ -15,6 +16,9 @@ export const languages: LanguageOption[] = [
   { code: 'ko', name: '한국어', flag: '🇰🇷' },
 ];
 
+// Constants
+const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
+
 // Utility functions
 export const getCurrentLanguage = (currentLang: string): LanguageOption => {
   return languages.find(lang => lang.code === currentLang) || languages[0];
@@ -24,16 +28,30 @@ export const getCurrentPagePath = (pathname: string, currentLang: string): strin
   return pathname.replace(`/${currentLang}`, '') || '/';
 };
 
-export const generateLanguageSelectorHTML = (currentLang: string): string => {
+// Language change handler with cookie support
+export const handleLanguageChange = (lang: string, currentLang: string, pathname: string): void => {
+  // Set cookie for language preference
+  const date = new Date(Date.now() + ONE_YEAR);
+  document.cookie = `NEXT_LOCALE=${lang}; expires=${date.toUTCString()}; path=/`;
+  
+  // Navigate to the new language URL
+  const newPath = pathname.replace(`/${currentLang}`, `/${lang}`);
+  location.href = addBasePath(newPath);
+};
+
+export const generateLanguageSelectorHTML = (currentLang: string, pathname: string): string => {
   const languageButtons = languages.map(language => {
     const isActive = language.code === currentLang;
-    const currentPath = getCurrentPagePath(window.location.pathname, currentLang);
     
     return `
-      <a href="/${language.code}${currentPath}" class="language-button ${isActive ? 'active' : 'inactive'}">
+      <button 
+        class="language-button ${isActive ? 'active' : 'inactive'}" 
+        data-lang="${language.code}"
+        ${isActive ? 'disabled' : ''}
+      >
         <span>${language.flag}</span>
         <span>${language.name}</span>
-      </a>
+      </button>
     `;
   }).join('');
 
@@ -86,9 +104,16 @@ export const languageSelectorStyles = `
     transition: all 0.2s ease;
     width: 100%;
     box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    background: none;
   }
 
-  .language-button:hover {
+  .language-button:disabled {
+    cursor: default;
+  }
+
+  .language-button:hover:not(:disabled) {
     transform: translateY(-1px);
     text-decoration: none;
   }
@@ -98,7 +123,7 @@ export const languageSelectorStyles = `
     color: white;
   }
 
-  .language-button.active:hover {
+  .language-button.active:hover:not(:disabled) {
     background: #0051cc;
     color: white;
   }
@@ -108,7 +133,7 @@ export const languageSelectorStyles = `
     color: #495057;
   }
 
-  .language-button.inactive:hover {
+  .language-button.inactive:hover:not(:disabled) {
     background: #e9ecef;
     color: #495057;
   }
@@ -138,8 +163,20 @@ export default function LanguageSelector({ currentLang }: LanguageSelectorProps)
     const addLanguageSelector = () => {
       const tocContainer = document.querySelector('nav.nextra-toc');
       if (tocContainer && !tocContainer.querySelector('.language-selector-toc')) {
-        const html = generateLanguageSelectorHTML(currentLang);
+        const html = generateLanguageSelectorHTML(currentLang, window.location.pathname);
         tocContainer.insertAdjacentHTML('afterbegin', html);
+        
+        // Add event listeners to language buttons
+        const languageButtons = tocContainer.querySelectorAll('.language-button[data-lang]');
+        languageButtons.forEach(button => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetLang = button.getAttribute('data-lang');
+            if (targetLang && targetLang !== currentLang) {
+              handleLanguageChange(targetLang, currentLang, window.location.pathname);
+            }
+          });
+        });
       }
     };
 
