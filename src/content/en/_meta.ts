@@ -20,7 +20,7 @@ export default {
   },
   aiHubManual: {
     type: 'page',
-    title: 'AI Hub Manual',
+    title: 'AIP Manual',
     href: 'https://aihub-docs.app.querypie.com/en',
   },
   contactUs: {
