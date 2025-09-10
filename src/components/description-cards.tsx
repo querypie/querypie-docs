@@ -39,8 +39,8 @@ const Card: FC<{
               'x:group-focus:after:translate-x-0.5'
             ],
             children
-              ? 'x:dark:text-gray-300 x:dark:hover:text-gray-100'
-              : 'x:dark:text-neutral-200 x:dark:hover:text-neutral-50'
+              ? 'x:dark:text-gray-200 x:dark:hover:text-white' // Improved contrast for dark theme
+              : 'x:dark:text-gray-100 x:dark:hover:text-white' // Improved contrast for dark theme
           )}
           title={typeof title === 'string' ? title : undefined}
         >
@@ -56,8 +56,8 @@ const Card: FC<{
             className={cn(
               'x:text-sm x:text-gray-600 x:leading-relaxed',
               children
-                ? 'x:dark:text-gray-400'
-                : 'x:dark:text-neutral-300'
+                ? 'x:dark:text-gray-300' // Improved contrast for dark theme
+                : 'x:dark:text-gray-200' // Improved contrast for dark theme
             )}
             style={{ marginTop: 0, marginLeft: '24px', marginRight: '24px', marginBottom: '16px' }}
           >

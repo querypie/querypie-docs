@@ -76,6 +76,10 @@ export const languageSelectorStyles = `
     margin-bottom: 16px;
   }
 
+  .dark .language-selector-toc {
+    border-bottom-color: #374151;
+  }
+
   .language-selector-title {
     font-size: 14px;
     font-weight: 600;
@@ -84,6 +88,18 @@ export const languageSelectorStyles = `
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  .dark .language-selector-title {
+    color: #d1d5db;
+  }
+
+  .globe-icon {
+    color: #6b7280;
+  }
+
+  .dark .globe-icon {
+    color: #9ca3af;
   }
 
   .language-buttons {
@@ -123,9 +139,17 @@ export const languageSelectorStyles = `
     color: white;
   }
 
+  .dark .language-button.active {
+    background: #3b82f6;
+  }
+
   .language-button.active:hover:not(:disabled) {
     background: #0051cc;
     color: white;
+  }
+
+  .dark .language-button.active:hover:not(:disabled) {
+    background: #2563eb;
   }
 
   .language-button.inactive {
@@ -133,9 +157,19 @@ export const languageSelectorStyles = `
     color: #495057;
   }
 
+  .dark .language-button.inactive {
+    background: #374151;
+    color: #d1d5db;
+  }
+
   .language-button.inactive:hover:not(:disabled) {
     background: #e9ecef;
     color: #495057;
+  }
+
+  .dark .language-button.inactive:hover:not(:disabled) {
+    background: #4b5563;
+    color: #f3f4f6;
   }
 `;
 
