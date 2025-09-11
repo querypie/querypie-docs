@@ -32,7 +32,9 @@
     "nextra-theme-docs": "^4.3.0",
     "pino": "^9.9.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "remark-emoji": "^5.0.2",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

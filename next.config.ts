@@ -1,4 +1,6 @@
 import nextra from 'nextra';
+import remarkEmoji from 'remark-emoji';
+import remarkGfm from 'remark-gfm';
 
 // Set up Nextra with its configuration
 const withNextra = nextra({
@@ -12,6 +14,11 @@ const withNextra = nextra({
   // but have them styled with components provided by useMDXComponents()
   // Refer to this: https://nextra.site/docs/advanced/table
   whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
+
+  // Add remark plugins for emoji and GitHub Flavored Markdown support
+  mdxOptions: {
+    remarkPlugins: [remarkEmoji, remarkGfm],
+  },
 });
 
 // Export the final Next.js config with Nextra included
