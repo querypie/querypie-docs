@@ -1,29 +1,125 @@
 ---
-title: 'QueryPie ドキュメント'
+title: 'QueryPie 製品ドキュメント'
 ---
 
 import MainLayout from '@/components/main-layout';
+import DescriptionCards from '@/components/description-cards';
+import { 
+  CircleStackIcon, 
+  ServerIcon, 
+  CubeIcon, 
+  GlobeAltIcon,
+  BookOpenIcon,
+  UserIcon,
+  Cog6ToothIcon,
+  NewspaperIcon
+} from '@heroicons/react/24/outline';
 
 <MainLayout currentLang="ja">
 
-# QueryPie 最新ドキュメント
+# QueryPie 製品ドキュメントへようこそ
 
-* [リリースノート](release-notes)
-* [QueryPie の概要](querypie-overview)
-* [ユーザーガイド](user-manual)
-* [管理者ガイド](administrator-manual)
+## QueryPieとは？
 
-# QueryPie テクニカルサポート
+QueryPieは、**DAC、SAC、KAC、WAC**を単一の統合プラットフォームで提供する統合セキュリティソリューションです。クラウドとオンプレミス環境の両方をカバーし、データベースからシステム、Kubernetes、Webアプリケーションまで、すべてのアクセスを統合管理します。
 
-* [Customer Portal ナレッジベース](https://querypie.atlassian.net/wiki/spaces/QCP/overview)
-* Enterprise Plan ご契約者向け Customer Portal
-    * https://help.support.querypie.com （お客様ユーザーの認証が必要です）
+### コア製品構成
 
-# QueryPie Community Edition
+<DescriptionCards num="2">
+  <DescriptionCards.Card
+    title="DAC (Database Access Controller)"
+    description="データベースアクセス制御と監査"
+    href="https://www.querypie.com/ja/platform/security/database-access-controller"
+    icon={<CircleStackIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="SAC (System Access Controller)"
+    description="システムとサーバーのアクセス制御"
+    href="https://www.querypie.com/ja/platform/security/system-access-controller"
+    icon={<ServerIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="KAC (Kubernetes Access Controller)"
+    description="Kubernetesクラスターアクセス制御"
+    href="https://www.querypie.com/ja/platform/security/kubernetes-access-controller"
+    icon={<CubeIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="WAC (Web Access Controller)"
+    description="Webアプリケーションアクセス制御"
+    href="https://www.querypie.com/ja/platform/security/web-access-controller"
+    icon={<GlobeAltIcon />}
+    arrow
+  />
+</DescriptionCards>
 
-* [QueryPie コミュニティ版 インストールガイド](https://www.querypie.com/ja/resources/learn/documentation/querypie-install-guide)
+RBAC/ABACベースの動的アクセス制御、Web SQLエディター、リアルタイム監査、異常検知アラートを通じて、企業のデータセキュリティを強化します。Dockerベースの簡単なインストールとWebベースのインターフェースにより、SaaSの利便性とオンプレミスの強力なセキュリティを組み合わせたハイブリッドソリューションを提供します。
 
-# 旧リリース版ドキュメント
+## はじめに
+
+### 初めての方ですか？
+QueryPieを初めて使用される方向けのガイドです。
+
+<DescriptionCards num="2">
+  <DescriptionCards.Card
+    title="QueryPie 概要"
+    description="製品全体の理解と主要機能"
+    href="/ja/querypie-overview"
+    icon={<BookOpenIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="ユーザーマニュアル"
+    description="基本的な使用方法と機能学習"
+    href="/ja/user-manual"
+    icon={<UserIcon />}
+    arrow
+  />
+</DescriptionCards>
+
+### 管理者の方ですか？
+システム設定と管理を担当される方向けのドキュメントです。
+
+<DescriptionCards num="2">
+  <DescriptionCards.Card
+    title="管理者マニュアル"
+    description="設定、セキュリティポリシー管理"
+    href="/ja/administrator-manual"
+    icon={<Cog6ToothIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="リリースノート"
+    description="最新のアップデートと変更内容"
+    href="/ja/release-notes"
+    icon={<NewspaperIcon />}
+    arrow
+  />
+</DescriptionCards>
+
+## Community Edition 🎉
+
+**QueryPie Community Edition**がリリースされました！Enterprise版のすべての機能を無料で体験してください。
+
+DAC、SAC、KAC、WACのすべてのアクセス制御機能を含み、最大5名のユーザーアカウントで運用可能です。
+Dockerベースの簡単なインストールで7-10分以内にすぐに開始できます。
+一行コマンド`bash <(curl https://dl.querypie.com/setup.v2.sh)`で自動インストールが可能で、1年間有効な無料ライセンスを提供します。
+有効期限が満了した時点で、Community Editionライセンスを無料で延長して使用できます。
+
+* **[QueryPie コミュニティ版インストールガイド](https://www.querypie.com/ja/resources/learn/documentation/querypie-install-guide)** - 無料インストールと体験ガイド
+
+## テクニカルサポート
+
+### 公開テクニカルサポート資料
+* **[Customer Portal テクニカルサポート資料](https://querypie.atlassian.net/wiki/spaces/QCP/overview)** - Enterprise PlanおよびCommunity Edition利用者すべてが利用可能
+
+### Enterprise Plan専用サポート
+* **[お客様専用サポートポータル](https://help.support.querypie.com)** （お客様ユーザー認証が必要）
+
+## 旧バージョンドキュメント
 
 * [QueryPie v10.2.0](/ja/querypie-manual/10.2.0)
 
