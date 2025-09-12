@@ -42,7 +42,7 @@ const Card: FC<{
               ? 'x:dark:text-gray-200 x:dark:hover:text-white' // Improved contrast for dark theme
               : 'x:dark:text-gray-100 x:dark:hover:text-white' // Improved contrast for dark theme
           )}
-          title={typeof title === 'string' ? title : undefined}
+          title={title}
         >
           {icon && (
             <div style={{ width: '24px', height: '24px', flexShrink: 0 }}>
