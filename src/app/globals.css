@@ -12,11 +12,11 @@
  */
 aside.nextra-sidebar.x\:w-64 { /* expanded */
     /* 64 is the default width of the expanded sidebar */
-    width: calc(var(--x-spacing) * 72);
+    width: calc(var(--x-spacing) * 64);
 }
 aside.nextra-sidebar.x\:w-20 { /* collapsed */
     /* 20 is the default width of the collapsed sidebar */
-    width: calc(var(--x-spacing) * 12);
+    width: calc(var(--x-spacing) * 20);
 }
 
 /* Embedded Image */

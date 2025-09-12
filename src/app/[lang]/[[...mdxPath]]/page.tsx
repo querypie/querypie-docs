@@ -4,12 +4,12 @@ import fs from 'fs';
 import path from 'path';
 
 export async function generateStaticParams() {
-  const locales = ['en', 'ko', 'ja']; // next.config.mjs와 동일
-  const basePath = path.resolve('src', 'content'); // content 폴더 기준
+  const locales = ['en', 'ja', 'ko']; // Same as next.config.mjs
+  const basePath = path.resolve('src', 'content'); // Content folder base path
 
   const paramsList: { lang: string; mdxPath: string[] }[] = [];
 
-  // 특정 폴더 내 .mdx 파일을 찾는 함수
+  // Function to find .mdx files in specific folders
   function findMdxFiles(dir: string): string[][] {
     const mdxFiles: string[][] = [];
     const files = fs.readdirSync(dir, { withFileTypes: true });
@@ -18,16 +18,16 @@ export async function generateStaticParams() {
       const filePath = path.join(dir, file.name);
 
       if (file.isDirectory()) {
-        // 하위 디렉토리를 재귀적으로 탐색
+        // Recursively search subdirectories
         mdxFiles.push(...findMdxFiles(filePath));
       } else if (file.isFile() && file.name.endsWith('.mdx')) {
-        // .mdx 파일만 수집
+        // Collect only .mdx files
         const relativePath = path.relative(basePath, filePath);
         const pathSegments = relativePath
-          .split(path.sep) // 경로를 분할
-          .slice(1) // locale 경로 제거
+          .split(path.sep) // Split path
+          .slice(1) // Remove locale path
           .map(
-            (segment, index, arr) => (index === arr.length - 1 ? path.parse(segment).name : segment), // 마지막 엘리먼트에서 .mdx 제거
+            (segment, index, arr) => (index === arr.length - 1 ? path.parse(segment).name : segment), // Remove .mdx from last element
           )
           .filter(segment => segment !== 'index');
 
@@ -38,7 +38,7 @@ export async function generateStaticParams() {
     return mdxFiles;
   }
 
-  // 로케일별로 mdx 파일 검색
+  // Search mdx files by locale
   for (const locale of locales) {
     const localeDir = path.join(basePath, locale);
     if (fs.existsSync(localeDir)) {
@@ -50,7 +50,7 @@ export async function generateStaticParams() {
         if (fs.existsSync(fullPath)) {
           paramsList.push({
             lang: locale,
-            mdxPath: pathSegments || [], // mdx 파일 경로 설정
+            mdxPath: pathSegments || [], // Set mdx file path
           });
         }
       }

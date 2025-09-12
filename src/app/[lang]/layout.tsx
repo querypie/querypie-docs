@@ -49,7 +49,7 @@ export default async function RootLayout({ children, params }) {
       logo={
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <img src="/icon-32.png" alt="QueryPie 로고" width={18} height={18} />
+            <img src="/icon-32.png" alt="QueryPie Logo" width={18} height={18} />
             <div>
               <b>QueryPie</b> <span style={{ opacity: '60%' }}>Docs</span>
             </div>
@@ -73,7 +73,7 @@ export default async function RootLayout({ children, params }) {
       <body>
         <Layout
           navbar={navbar}
-          footer={<Footer>{new Date().getFullYear()} © QueryPie.</Footer>}
+          footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
           editLink="Edit this page on GitHub"
           docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
           feedback={{
@@ -84,8 +84,8 @@ export default async function RootLayout({ children, params }) {
           pageMap={pageMap}
           i18n={[
             { locale: 'en', name: 'English' },
-            { locale: 'ko', name: '한국어' },
             { locale: 'ja', name: '日本語' },
+            { locale: 'ko', name: '한국어' },
           ]}
         >
           {children}

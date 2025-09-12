@@ -8,7 +8,7 @@ interface MainLayoutProps {
   currentLang: string;
 }
 
-export default function MainLayout({ children, currentLang }: MainLayoutProps) {
+export default function MainLayoutObsoleted({ children, currentLang }: MainLayoutProps) {
   return (
     <>
       <LanguageSelector currentLang={currentLang} />
