@@ -154,9 +154,6 @@ function createDevLogger(baseLogger: PinoLogger, module: string): LoggerInterfac
 // Proxy-specific logger (includes Vercel environment information)
 export const proxyLogger = createDevLogger(logger, 'proxy');
 
-// General application logger
-export const appLogger = createDevLogger(logger, 'app');
-
 // Middleware-specific logger
 export const middlewareLogger = createDevLogger(logger, 'middleware');
 
