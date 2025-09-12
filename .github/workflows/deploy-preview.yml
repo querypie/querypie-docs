@@ -1,6 +1,10 @@
 name: Deploy on Preview
 
 on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches-ignore:
+      - main
   workflow_dispatch:
     inputs:
       BRANCH:
@@ -13,12 +17,16 @@ defaults:
   run:
     working-directory: scripts/deploy
 
+concurrency:
+  group: preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     env:
-      BRANCH: ${{ github.event_name == 'push' && github.ref_name || inputs.BRANCH }}
+      BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name || inputs.BRANCH }}
       TARGET_ENV: 'preview'
     steps:
       - uses: actions/checkout@v4
