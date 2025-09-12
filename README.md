@@ -1,66 +1,90 @@
-# querypie-docs
-QueryPie 제품의 Docs를 관리하는 Git Repository입니다.
+# QueryPie Documentation
 
-## 기술 스택
-- Next.js 15
-- React.js 19
-- Nextra 4
-- TypeScript 5
+This repository contains the official documentation for QueryPie, an integrated security solution that provides **DAC (Database Access Controller), SAC (System Access Controller), KAC (Kubernetes Access Controller), and WAC (Web Access Controller)** in a unified platform.
 
-## 로컬 실행 방법
-- 파일 고치면 고친게 바로 웹브라우저에 반영되나, 좀 느립니다.
-- `http://localhost:3000`
-```shell
+## Purpose
+
+This repository serves as the central hub for maintaining and publishing QueryPie's product documentation, including:
+
+- **User Manual** - Comprehensive guides for end users
+- **Administrator Manual** - System configuration and management documentation
+- **Release Notes** - Latest updates and feature changes
+- **API Documentation** - Technical reference materials
+
+## Getting Started
+
+### For Users
+- Visit our [live documentation site](https://docs.querypie.io)
+- Browse through the user manual for step-by-step guides
+- Check release notes for the latest features and improvements
+
+### For Contributors
+- Report documentation issues via [GitHub Issues](https://github.com/querypie/querypie-docs/issues)
+- Suggest improvements or corrections
+- Submit pull requests for documentation updates
+
+## Technology Stack
+
+- **Next.js 15** - React framework for static site generation
+- **Nextra 4** - Documentation framework
+- **TypeScript 5** - Type-safe development
+- **React 19** - UI library
+
+## Local Development
+
+To run the documentation site locally:
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-```
 
-## 빌드 및 실행
-- 빌드 후 실행하면 Production과 마찬가지로 빠릅니다.
-- `http://localhost:3000`
-```shell
+# Build for production
 npm run build
 npm start
 ```
 
-## 배포 현황
-2025-09-05 기준
-- Vercel Project
-  - https://vercel.com/querypie/querypie-docs
-- Production Deployment
-  - [ ] https://docs.querypie.com
-  - [x] https://docs.querypie.io
-  - [x] https://querypie-docs.vercel.app
-- Staging Deployment
-  - [ ] https://docs-staging.querypie.com
-  - [x] https://docs-staging.querypie.io
-- Preview Deployment
-  - Vercel Deployment 마다 다른 URL 을 갖습니다.
+The site will be available at `http://localhost:3000`.
 
-### 배포 - GitHub Action
-- [GitHub Actions](https://github.com/chequer-io/querypie-ai-docs/actions/workflows/deploy.yml) 에 접속합니다.
-- `Run workflow`를 눌러서 알맞게 설정한 후 실행합니다.
-    - `Delete on Production`: docs.querypie.com 에 배포하는 용도입니다.
-    - `Delete on Staging`: docs-staging.querypie.com 에 배포하는 용도입니다. 자동 배포됩니다.
-    - `Delete on Preview`: feature branch 의 결과를 미리 살펴보는데 사용합니다.
+## Contributing
 
-### 배포 관련 화면 스크린샷
-![deploy-action.png](docs/deploy-action.png)
-![preview-deploy-url.png](docs/preview-deploy-url.png)
+We welcome contributions to improve our documentation! Please:
 
-### 배포 - Local Environment
-- `scripts/deploy/` 디렉토리로 이동합니다.
-- `npm install` 명령으로 Vercel SDK 등을 node_modules 에 설치합니다.
-- `index.js`가 필요로 하는 환경변수를 설정합니다.
-  - VERCEL_TOKEN: vercel.com 의 계정에서 생성한 Token 을 지정합니다. Scope 은 QueryPie team 을 지정합니다.
-  - VERCEL_TEAM_ID: QueryPie team 의 Team ID 를 지정합니다. Settings -> General 에서 확인할 수 있습니다.
-  - TARGET_ENV: production, staging, preview 중 하나를 지정합니다.
-  - BRANCH: branch 이름을 지정합니다.
-- `index.js`를 실행합니다.
-```shell
-TARGET_ENV=preview BRANCH=main node ./index.js
-```
+1. Fork this repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## 오픈 전 다음 파일 TODO 보고 로직이나 값 고쳐서 나가야 함
-- src/middleware.ts
-- scripts/generate-sitemap/index.js
-- src/app/[lang]/layout.tsx
+For major changes, please open an issue first to discuss what you would like to change.
+
+## Support
+
+- **Documentation Issues**: [GitHub Issues](https://github.com/querypie/querypie-docs/issues)
+- **Product Support**: [QueryPie Support Portal](https://help.support.querypie.com)
+- **Community**: [QueryPie Community Edition](https://www.querypie.com/en/resources/learn/documentation/querypie-install-guide)
+
+## Copyright
+
+&copy; 2025 QueryPie, Inc. All rights reserved.
+
+The content of this repository is the intellectual property of QueryPie, Inc. and is protected by copyright laws. 
+You may not redistribute, modify, or create derivative works of this content without explicit written permission from QueryPie, Inc.
+
+## License
+
+This documentation is licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
+
+### License Files
+- [English License](LICENSE.md)
+- [한국어 라이선스](LICENSE.ko.md)
+- [日本語ライセンス](LICENSE.ja.md)
+
+### Key Points
+- ✅ **Free to share and adapt** - You can copy, redistribute, and modify this documentation
+- ✅ **Commercial use allowed** - You can use it for commercial purposes
+- ⚠️ **Attribution required** - You must give appropriate credit and link to the license
+- ⚠️ **Trademark restrictions** - "QueryPie" is a trademark; derivative works must clearly state they are not official QueryPie documents
+
+For full details, please refer to the license files above or visit [Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
