@@ -4,7 +4,8 @@ import { NotFoundPage } from 'nextra-theme-docs'
 import {useParams} from "next/navigation";
 
 export default function NotFound() {
-  const { lang } = useParams<{ lang: string }>();
+  const params = useParams<{ lang: string }>();
+  const lang = params?.lang;
 
   if (lang === 'ko') {
     return (
@@ -18,10 +19,11 @@ export default function NotFound() {
         <h1>申し訳ありません。ページが見つかりませんでした。</h1>
       </NotFoundPage>
     )
-  } else
+  } else {
     return (
       <NotFoundPage content="Submit an issue" labels="broken-link">
-        <h1>Sorry, we couldn’t find that page.</h1>
+        <h1>Sorry, we could not find that page.</h1>
       </NotFoundPage>
     )
+  }
 }
