@@ -6,40 +6,36 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import '../globals.css';
 import { Metadata } from 'next';
 
-export const metadata = (() => {
-  const defaultMetadata: Metadata = {
-    title: {
-      default: 'QueryPi Docs',
-      template: '%s - QueryPie Docs',
-    },
-    description: 'QueryPie Docs',
-    applicationName: 'QueryPie Docs',
-    appleWebApp: {
-      title: 'QueryPie Docs',
-    },
-    other: {
-      'msapplication-TileImage': '/icon-256.png',
-      'msapplication-TileColor': '#fff',
-    },
-  };
+const defaultMetadata: Metadata = {
+  title: {
+    default: 'QueryPi Docs',
+    template: '%s - QueryPie Docs',
+  },
+  description: 'QueryPie Docs',
+  applicationName: 'QueryPie Docs',
+  appleWebApp: {
+    title: 'QueryPie Docs',
+  },
+  other: {
+    'msapplication-TileImage': '/icon-256.png',
+    'msapplication-TileColor': '#fff',
+  },
+};
 
-  if (process.env.DEPLOYMENT_ENV !== 'production') {
-    return defaultMetadata;
-  }
-
-  return {
-    ...defaultMetadata,
-    metadataBase: new URL('https://querypie-docs.vercel.app'),
-    twitter: {
-      site: 'https://querypie-docs.vercel.app',
-    },
-    other: {
-      'msapplication-TileImage': '/icon-256.png',
-      'msapplication-TileColor': '#fff',
-      'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION_KEY as string,
-    },
-  };
-})();
+export const metadata: Metadata = process.env.DEPLOYMENT_ENV !== 'production' 
+  ? defaultMetadata
+  : {
+      ...defaultMetadata,
+      metadataBase: new URL('https://docs.querypie.com'),
+      twitter: {
+        site: 'https://docs.querypie.com',
+      },
+      other: {
+        'msapplication-TileImage': '/icon-256.png',
+        'msapplication-TileColor': '#fff',
+        'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION_KEY as string,
+      },
+    };
 
 export default async function RootLayout({ children, params }) {
   const { lang } = await params;
