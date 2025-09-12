@@ -39,8 +39,8 @@ const Card: FC<{
               'x:group-focus:after:translate-x-0.5'
             ],
             children
-              ? 'x:dark:text-gray-200 x:dark:hover:text-white' // Improved contrast for dark theme
-              : 'x:dark:text-gray-100 x:dark:hover:text-white' // Improved contrast for dark theme
+              ? 'x:dark:text-gray-200 x:dark:hover:text-white' // Improved contrast for the dark theme
+              : 'x:dark:text-gray-100 x:dark:hover:text-white' // Improved contrast for the dark theme
           )}
           title={title}
         >
@@ -56,8 +56,8 @@ const Card: FC<{
             className={cn(
               'x:text-sm x:text-gray-600 x:leading-relaxed',
               children
-                ? 'x:dark:text-gray-300' // Improved contrast for dark theme
-                : 'x:dark:text-gray-200' // Improved contrast for dark theme
+                ? 'x:dark:text-gray-300' // Improved contrast for the dark theme
+                : 'x:dark:text-gray-200' // Improved contrast for the dark theme
             )}
             style={{ marginTop: 0, marginLeft: '24px', marginRight: '24px', marginBottom: '16px' }}
           >
@@ -140,7 +140,7 @@ const _Cards: FC<
  * Import the `<DescriptionCards>` component to your page, which includes the `<DescriptionCards.Card>` component.
  *
  * Then, optionally import the icons that you want to use. To create a set of description cards, follow the
- * example below where the `<DescriptionCards.Card>` component is used to create a card with description
+ * example below where the `<DescriptionCards.Card>` component is used to create a card with a description
  * and the `<DescriptionCards>` component is used to group multiple cards together.
  *
  * ```mdx filename="MDX"
