@@ -30,7 +30,7 @@ export const handleLanguageChange = (lang: string, currentLang: string, pathname
   location.href = addBasePath(newPath);
 };
 
-export const generateLanguageSelectorHTML = (currentLang: string, pathname: string): string => {
+export const generateLanguageSelectorHTML = (currentLang: string): string => {
   const languageButtons = languages.map(language => {
     const isActive = language.code === currentLang;
     
@@ -188,7 +188,7 @@ export default function LanguageSelector({ currentLang }: LanguageSelectorProps)
     const addLanguageSelector = () => {
       const tocContainer = document.querySelector('nav.nextra-toc');
       if (tocContainer && !tocContainer.querySelector('.language-selector-toc')) {
-        const html = generateLanguageSelectorHTML(currentLang, window.location.pathname);
+        const html = generateLanguageSelectorHTML(currentLang);
         tocContainer.insertAdjacentHTML('afterbegin', html);
         
         // Add event listeners to language buttons
