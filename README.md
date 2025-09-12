@@ -69,8 +69,9 @@ For major changes, please open an issue first to discuss what you would like to 
 
 &copy; 2025 QueryPie, Inc. All rights reserved.
 
-The content of this repository is the intellectual property of QueryPie, Inc. and is protected by copyright laws. 
-You may not redistribute, modify, or create derivative works of this content without explicit written permission from QueryPie, Inc.
+The content of this repository is the intellectual property of QueryPie, Inc. 
+However, this documentation is made available under the Creative Commons Attribution 4.0 International License (CC BY 4.0), 
+which allows free sharing, modification, and commercial use with proper attribution.
 
 ## License
 
