@@ -5,6 +5,10 @@ import { getPageMap } from 'nextra/page-map';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import '../globals.css';
 import { Metadata } from 'next';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import React from 'react';
 
 const defaultMetadata: Metadata = {
   title: {
@@ -22,24 +26,47 @@ const defaultMetadata: Metadata = {
   },
 };
 
-export const metadata: Metadata = process.env.DEPLOYMENT_ENV !== 'production' 
-  ? defaultMetadata
-  : {
-      ...defaultMetadata,
-      metadataBase: new URL('https://docs.querypie.com'),
-      twitter: {
-        site: 'https://docs.querypie.com',
-      },
-      other: {
-        'msapplication-TileImage': '/icon-256.png',
-        'msapplication-TileColor': '#fff',
-        'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION_KEY as string,
-      },
-    };
+export const metadata: Metadata =
+  process.env.DEPLOYMENT_ENV !== 'production'
+    ? defaultMetadata
+    : {
+        ...defaultMetadata,
+        metadataBase: new URL('https://docs.querypie.com'),
+        twitter: {
+          site: 'https://docs.querypie.com',
+        },
+        other: {
+          'msapplication-TileImage': '/icon-256.png',
+          'msapplication-TileColor': '#fff',
+          'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION_KEY as string,
+        },
+      };
+
+// Extract layout information from Front Matter of an MDX file
+function getLayoutFromMdx(mdxPath: string[], lang: string): string {
+  const normalizedMdxPath = mdxPath && mdxPath.length > 0 ? mdxPath : ['index'];
+
+  try {
+    const contentPath = path.join(process.cwd(), 'src', 'content', lang, ...normalizedMdxPath) + '.mdx';
+
+    if (!fs.existsSync(contentPath)) {
+      return 'default';
+    }
+
+    const fileContent = fs.readFileSync(contentPath, 'utf-8');
+    const { data } = matter(fileContent);
+
+    return data.layout || 'default';
+  } catch (error) {
+    console.warn(`Failed to parse frontmatter for ${normalizedMdxPath.join('/')}:`, error);
+    return 'default';
+  }
+}
 
 export default async function RootLayout({ children, params }) {
-  const { lang } = await params;
+  const { lang, mdxPath } = await params;
 
+  const layoutName = getLayoutFromMdx(mdxPath, lang);
   const navbar = (
     <Navbar
       logo={
@@ -53,8 +80,6 @@ export default async function RootLayout({ children, params }) {
         </div>
       }
       logoLink={`/${lang}/`}
-      // // Next.js discord server
-      // chatLink="https://discord.gg/hEM84NMkRv"
     />
   );
 
@@ -68,21 +93,29 @@ export default async function RootLayout({ children, params }) {
       )}
       <body>
         <Layout
+          pageMap={pageMap}
           navbar={navbar}
           footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
-          editLink="Edit this page on GitHub"
           docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
+          editLink="Edit this page on GitHub"
           feedback={{
-            content: '',
-            labels: '',
+            content: 'Question? Give us feedback',
+            labels: 'feedback',
           }}
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
-          pageMap={pageMap}
           i18n={[
             { locale: 'en', name: 'English' },
             { locale: 'ja', name: '日本語' },
             { locale: 'ko', name: '한국어' },
           ]}
+          sidebar={{ defaultMenuCollapseLevel: 1 }}
+          toc={{
+            // TODO(JK): For debugging only. Remote this later.
+            extraContent: (
+              <div>
+                <small>layout={layoutName}</small>
+              </div>
+            ),
+          }}
         >
           {children}
         </Layout>
