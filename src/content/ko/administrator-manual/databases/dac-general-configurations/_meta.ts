@@ -1,4 +1,4 @@
 export default {
-  'unmasking-zones': 'Unmasking Zones',
-  'masking-pattern-menu-relocated': 'Masking Pattern (메뉴 위치 이동)',
+  'unmasking-zones': { title: 'Unmasking Zones', order: 1 },
+  'masking-pattern-menu-relocated': { title: 'Masking Pattern (메뉴 위치 이동)', order: 2 },
 };

@@ -1,4 +1,4 @@
 export default {
-  'reports': 'Reports',
-  'audit-log-export': 'Audit Log Export',
+  'reports': { title: 'Reports', order: 1 },
+  'audit-log-export': { title: 'Audit Log Export', order: 2 },
 };

@@ -1,4 +1,4 @@
 export default {
-  'running-queries': 'Running Queries',
-  'proxy-management': 'Proxy Management',
+  'running-queries': { title: 'Running Queries', order: 1 },
+  'proxy-management': { title: 'Proxy Management', order: 2 },
 };

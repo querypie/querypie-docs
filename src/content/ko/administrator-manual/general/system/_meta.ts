@@ -1,5 +1,5 @@
 export default {
-  'integrations': 'Integrations',
-  'api-token': 'API Token',
-  'jobs': 'Jobs',
+  'integrations': { title: 'Integrations', order: 1 },
+  'api-token': { title: 'API Token', order: 2 },
+  'jobs': { title: 'Jobs', order: 3 },
 };

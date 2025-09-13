@@ -1,3 +1,3 @@
 export default {
-  'custom-attribute': 'Custom Attribute',
+  'custom-attribute': { title: 'Custom Attribute', order: 1 },
 };

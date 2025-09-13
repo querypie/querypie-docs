@@ -1,5 +1,5 @@
 export default {
-  'kac-general-configurations': 'KAC General Configurations',
-  'connection-management': 'Connection Management',
-  'k8s-access-control': 'K8s Access Control',
+  'kac-general-configurations': { title: 'KAC General Configurations', order: 1 },
+  'connection-management': { title: 'Connection Management', order: 2 },
+  'k8s-access-control': { title: 'K8s Access Control', order: 3 },
 };

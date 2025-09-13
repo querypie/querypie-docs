@@ -1,4 +1,4 @@
 export default {
-  'cloud-providers': 'Cloud Providers',
-  'clusters': 'Clusters',
+  'cloud-providers': { title: 'Cloud Providers', order: 1 },
+  'clusters': { title: 'Clusters', order: 2 },
 };
