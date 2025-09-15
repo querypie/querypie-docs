@@ -98,7 +98,7 @@ export default async function RootLayout({ children, params }) {
             pageMap={pageMap}
             navbar={navbar}
             footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
-            docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
+            docsRepositoryBase="https://github.com/querypie/querypie-docs/blob/main"
             editLink="Edit this page on GitHub"
             feedback={{
               content: 'Question? Give us feedback',
@@ -136,7 +136,7 @@ export default async function RootLayout({ children, params }) {
             pageMap={pageMap}
             navbar={navbar}
             footer={<Footer>{new Date().getFullYear()} &copy; QueryPie, Inc.</Footer>}
-            docsRepositoryBase="https://github.com/chequer-io/querypie-docs/blob/main"
+            docsRepositoryBase="https://github.com/querypie/querypie-docs/blob/main"
             editLink="Edit this page on GitHub"
             feedback={{
               content: 'Question? Give us feedback',
