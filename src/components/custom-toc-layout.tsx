@@ -1,5 +1,9 @@
 import React from 'react';
-import { CustomTocLayoutProps, CustomTocLayoutPropsSchema } from './schema';
+import { CustomTocLayoutPropsSchema } from './schemas';
+import { z } from 'zod';
+
+// Extract TypeScript type from Zod schema (following nextra-theme-docs pattern)
+type CustomTocLayoutProps = z.infer<typeof CustomTocLayoutPropsSchema>;
 
 // Server-safe components (no client-side interactions)
 const ThemeSwitch = ({ darkMode }: { darkMode?: boolean }) => {
