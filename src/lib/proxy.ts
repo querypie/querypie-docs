@@ -136,6 +136,19 @@ function rewriteUrlsInHtml(htmlContent: string, proxyOrigin: string): string {
 }
 
 /**
+ * Rewrite URLs in sitemap XML content to use proxy URLs
+ */
+function rewriteUrlsInSitemap(xmlContent: string, proxyOrigin: string): string {
+  // Replace docs.querypie.io with proxy origin
+  const rewrittenXml = xmlContent.replace(/https:\/\/querypie-docs-v10-v9\.scrollhelp\.site/g, proxyOrigin);
+
+  const originalCount = (xmlContent.match(/https:\/\/querypie-docs-v10-v9\.scrollhelp\.site/g) || []).length;
+  proxyLogger.debug('Sitemap URL rewrite completed', { originalCount, rewrittenCount: originalCount, proxyOrigin });
+  
+  return rewrittenXml;
+}
+
+/**
  * Check if two URLs are similar except for trailing slash
  */
 function areUrlsSimilarExceptTrailingSlash(url1: string, url2: string): boolean {
@@ -317,6 +330,19 @@ async function processResponse(response: Response, request: NextRequest): Promis
     const rewrittenHtml = rewriteUrlsInHtml(htmlContent, request.nextUrl.origin);
     
     return new NextResponse(rewrittenHtml, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: responseHeaders,
+    });
+  }
+
+  // Handle sitemap.xml responses
+  if (contentType.includes('application/xml') || contentType.includes('text/xml') || 
+      request.nextUrl.pathname.endsWith('sitemap.xml')) {
+    const xmlContent = await response.text();
+    const rewrittenXml = rewriteUrlsInSitemap(xmlContent, request.nextUrl.origin);
+
+    return new NextResponse(rewrittenXml, {
       status: response.status,
       statusText: response.statusText,
       headers: responseHeaders,
