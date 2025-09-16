@@ -1,8 +1,8 @@
 # Makefile for testing confluence_xhtml_to_markdown.py
 
 # Variables
-# Activate virtualenv located at project root: ../venv
-VENV = source ../venv/bin/activate
+# Activate virtualenv located at project root: ../../venv
+VENV = source ../../venv/bin/activate
 # Converter script lives under project root scripts/
 SCRIPT = ../../scripts/confluence_xhtml_to_markdown.py
 # Testcases live under this directory
