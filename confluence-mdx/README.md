@@ -25,10 +25,10 @@ pip install requests beautifulsoup4 pyyaml
 2. `confluence-mdx/var/list.en.txt`를 생성합니다.
    - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
    - `translate_titles.py`를 사용합니다.
-3. `scripts/xhtml2markdown.ko.sh`를 생성합니다.
+3. `confluence-mdx/bin/xhtml2markdown.ko.sh`를 생성합니다.
    - `generate_commands_for_xhtml2markdown.py`를 사용합니다.
 4. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
-   - `scripts/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
+   - `confluence-mdx/bin/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
    - `confluence-mdx/var/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
 
 ## 데이터 수집 및 변환 절차 상세 안내
@@ -104,20 +104,20 @@ python confluence-mdx/bin/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > confluence-mdx/bin/xhtml2markdown.ko.sh
 
 # Confluence 디렉토리 지정
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > confluence-mdx/bin/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > confluence-mdx/bin/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
-chmod +x scripts/xhtml2markdown.ko.sh
+chmod +x confluence-mdx/bin/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
-- `scripts/xhtml2markdown.ko.sh` 파일이 생성됩니다.
+- `confluence-mdx/bin/xhtml2markdown.ko.sh` 파일이 생성됩니다.
 - 이 파일은 각 XHTML 파일을 Markdown으로 변환하기 위한 명령어들을 포함하고 있습니다.
 
 ### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.ko.sh)
@@ -128,7 +128,7 @@ chmod +x scripts/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 스크립트 실행
-./scripts/xhtml2markdown.ko.sh
+./confluence-mdx/bin/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
