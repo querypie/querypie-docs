@@ -1,0 +1,20 @@
+# A Compose file to run Python applications
+services:
+  confluence-mdx:
+    build: .
+    container_name: confluence-mdx
+    volumes:
+      # Mount var directory as a named volume
+      - confluence-var-data:/app/var
+    environment:
+      # Set Confluence API credentials (optional)
+      - CONFLUENCE_EMAIL=${CONFLUENCE_EMAIL:-}
+      - CONFLUENCE_API_TOKEN=${CONFLUENCE_API_TOKEN:-}
+    # Override default command to keep container running
+    command: tail -f /dev/null
+    # Or run specific script
+    # command: python bin/pages_of_confluence.py
+
+volumes:
+  confluence-var-data:
+    driver: local
