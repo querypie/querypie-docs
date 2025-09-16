@@ -14,7 +14,7 @@ This repository serves as the central hub for maintaining and publishing QueryPi
 ## Getting Started
 
 ### For Users
-- Visit our [live documentation site](https://docs.querypie.io)
+- Visit our [live documentation site](https://docs.querypie.com)
 - Browse through the user manual for step-by-step guides
 - Check release notes for the latest features and improvements
 

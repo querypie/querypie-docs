@@ -70,8 +70,6 @@ export async function middleware(request: NextRequest) {
       return new NextResponse(`User-agent: *
 Allow: /
 Sitemap: https://docs.querypie.com/sitemap.xml
-Sitemap: https://docs.querypie.io/sitemap.xml
-Sitemap: https://querypie-docs.vercel.app/sitemap.xml
 `);
     } else {
       return new NextResponse(`User-agent: *

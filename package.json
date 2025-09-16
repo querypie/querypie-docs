@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chequer-io/querypie-docs.git"
+    "url": "git+https://github.com/querypie/querypie-docs.git"
   },
   "author": "QueryPie",
   "bugs": {
-    "url": "https://github.com/chequer-io/querypie-docs/issues"
+    "url": "https://github.com/querypie/querypie-docs/issues"
   },
-  "homepage": "https://github.com/chequer-io/querypie-docs#readme",
+  "homepage": "https://github.com/querypie/querypie-docs#readme",
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@next/third-parties": "^15.5.3",
