@@ -63,7 +63,7 @@ make clean
 ## Update input files and expected output
 
 How to update input files
-- Ensure your Confluence data has been refreshed under `docs/latest-ko-confluence/<page-id>/`.
+- Ensure your Confluence data has been refreshed under `confluence-mdx/var/<page-id>/`.
 - From this directory, run:
   ```bash
   ./copy-files-to-testcases.sh

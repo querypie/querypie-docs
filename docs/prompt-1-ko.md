@@ -18,12 +18,12 @@ src/content/ko/ 디렉토리로 옮겨옵니다.
 
 ## Confluence Space 의 문서를 내려받기
 - 이 Space는 https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs URL을 통해 접근할 수 있습니다.
-- scripts/pages_of_confluence.py 명령은 이 Confluence Space 에서 문서를 내려받아 저장하고, 목록을 만들어 내는 프로그램입니다.
+- confluence-mdx/bin/pages_of_confluence.py 명령은 이 Confluence Space 에서 문서를 내려받아 저장하고, 목록을 만들어 내는 프로그램입니다.
   pages_of_confluence.py 는 지정한 문서에서 시작하여 children 문서를 재귀적으로 내려받아 저장합니다.
   프로그램 코드에는 한국어, 한글을 사용하지 않고, 영어로 설명, 코멘트를 작성하는 것이 규칙입니다.
 - 개발 과정에서 프로그램의 기능 테스트를 빠르게 수행하기 위해, 다음의 문서를 시작 페이지로 지정하면 좋습니다:
   https://querypie.atlassian.net/wiki/spaces/QM/pages/544375784/QueryPie+Overview
-- 문서 데이터를 저장하는 경로는 기본 `docs/latest-ko-confluence/`입니다. 문서 데이터는 이 아래에 `<page_id>/` 디렉토리를 생성하고
+- 문서 데이터를 저장하는 경로는 기본 `confluence-mdx/var/`입니다. 문서 데이터는 이 아래에 `<page_id>/` 디렉토리를 생성하고
   데이터를 저장합니다. 상세한 절차는 다음의 4단계로 구분됩니다.
   1. 데이터 저장 과정의 첫번째 단계는 API 를 호출하고, 그 결과를 `<page_id>/*.yaml` 파일에 저장하는 것입니다.
       - page.v1.yaml: page v1 API 응답 결과를 yaml 로 저장합니다.
@@ -115,7 +115,7 @@ latest-ko-confluence/544383110/page.xhtml
 
 ## 수행할 작업 1: list.en.txt 파일을 읽고, confluence_xhtml_to_markdown.py 를 실행하는 명령을 생성합니다.
 
-- 입력파일: docs/latest-ko-confluence/list.en.txt
+- 입력파일: confluence-mdx/var/list.en.txt
     - list.en.txt 의 각 줄은 하나의 문서에 대한 Page_ID, 탐색경로, 문서의 제목을 가리킵니다.
       각 줄의 처음에 Page_ID 가 오고, 그 뒤에 탭 문자(`\t`)가 있으며, 그 뒤에 탐색경로가 옵니다.
     - 탐색경로 breadcrumbs 는 하나 이상의 경로가 > 로 구분됩니다.
@@ -126,9 +126,9 @@ latest-ko-confluence/544383110/page.xhtml
     - 각 문서의 탐색경로를 분석하여, 현재 디렉토리 아래에 해당 문서의 경로를 결정합니다.
 - Python program 의 작동 방식
     - python program 은 CLI 방식으로 작동합니다. 입력파일로 list.en.txt 파일,
-      <Page_ID>/page.md 파일이 위치한 경로 (기본값: docs/latest-ko-confluence/) 를 argument 로 지정받고,
+      <Page_ID>/page.xhtml 파일이 위치한 경로 (기본값: confluence-mdx/var/) 를 argument 로 지정받고,
       출력파일로 src/content/ko/ 디렉토리 아래에 생성할 markdown 파일의 경로를 argument 로 지정받습니다.
-    - python program 의 파일은 scripts/generate_commands_for_xhtml2markdown.py 파일에 저장하여 주세요.
+    - python program 의 파일은 confluence-mdx/bin/generate_commands_for_xhtml2markdown.py 파일에 저장하여 주세요.
     - 실행할 때 option 으로 list.en.txt 디렉토리의 경로를 입력하도록 작성하여 주세요.
     - `#!/usr/bin/env python3` 로 시작하는 shebang 을 추가하여, Python 3 환경에서 실행되도록 합니다.
     - python code 안에는 한글이 아닌 영어로 comment, message 등을 작성합니다.
@@ -149,7 +149,7 @@ latest-ko-confluence/544383110/page.xhtml
 ## 수행할 작업: 작성 중입니다.
 
 - 문서 내용 작성하기
-    - 각 줄의 Page_ID 에 해당하는 문서를 docs/latest-ko-confluence/ 디렉토리 아래에서 <Page_ID>/page.md 에서 찾을 수 있습니다.
+    - 각 줄의 Page_ID 에 해당하는 문서를 confluence-mdx/var/ 디렉토리 아래에서 <Page_ID>/page.xhtml 에서 찾을 수 있습니다.
     - 문서 내에 포함된 이미지 파일을 본문을 저장하는 `.mdx` 파일과 동일한 디렉토리에 저장합니다. 
 - 문서에 포함된 이미지 파일을 저장하기
     - 이미지 파일의 이름은 `prefix-screenshot-1.png`, `prefix-image-1.png` 와 같은 형식으로 작성합니다.

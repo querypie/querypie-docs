@@ -63,16 +63,16 @@ def print_bash_header():
     """
     print("#!/usr/bin/env bash")
     print("# cd querypie-docs")
-    print("# ./scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt")
+    print("# ./confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt")
     print()
 
-def generate_commands(list_file, confluence_dir='docs/latest-ko-confluence/', output_base_dir='src/content/ko/'):
+def generate_commands(list_file, confluence_dir='confluence-mdx/var/', output_base_dir='src/content/ko/'):
     """
     Generate commands to convert Confluence XHTML to Markdown.
     
     Args:
         list_file: Path to the list.en.txt file
-        confluence_dir: Directory containing the Confluence XHTML files
+        confluence_dir: Directory containing the Confluence XHTML files (default: confluence-mdx/var/)
         output_base_dir: Base directory for the output Markdown files
     """
     commands = []
@@ -123,8 +123,8 @@ def generate_commands(list_file, confluence_dir='docs/latest-ko-confluence/', ou
 def main():
     parser = argparse.ArgumentParser(description='Generate commands to convert Confluence XHTML to Markdown')
     parser.add_argument('list_file', help='Path to the list.en.txt file')
-    parser.add_argument('--confluence-dir', default='docs/latest-ko-confluence/', 
-                        help='Directory containing the Confluence XHTML files (default: docs/latest-ko-confluence/)')
+    parser.add_argument('--confluence-dir', default='confluence-mdx/var/', 
+                        help='Directory containing the Confluence XHTML files (default: confluence-mdx/var/)')
     parser.add_argument('--output-dir', default='src/content/ko/', 
                         help='Base directory for the output Markdown files (default: src/content/ko/)')
     

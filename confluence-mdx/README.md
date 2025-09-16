@@ -104,13 +104,13 @@ python confluence-mdx/bin/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > scripts/xhtml2markdown.ko.sh
 
 # Confluence 디렉토리 지정
-python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > scripts/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.ko.sh
+python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
 chmod +x scripts/xhtml2markdown.ko.sh
@@ -149,10 +149,10 @@ chmod +x scripts/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 실행
-python scripts/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+python confluence-mdx/bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
 
 # 로그 레벨 설정
-python scripts/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
+python confluence-mdx/bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
 ```
 
 실행 결과:
@@ -171,31 +171,31 @@ python scripts/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md -
 실행 방법:
 ```bash
 # 모든 테스트 실행
-cd scripts
+cd confluence-mdx/tests
 make test
 
 # 특정 테스트 실행
-cd scripts
+cd confluence-mdx/tests
 make test-one TEST_ID=<test_id>
 
 # 디버그 로그 레벨로 모든 테스트 실행
-cd scripts
+cd confluence-mdx/tests
 make debug
 
 # 디버그 로그 레벨로 특정 테스트 실행
-cd scripts
+cd confluence-mdx/tests
 make debug-one TEST_ID=<test_id>
 
 # 출력 파일 정리
-cd scripts
+cd confluence-mdx/tests
 make clean
 
 # 도움말 표시
-cd scripts
+cd confluence-mdx/tests
 make help
 ```
 
-테스트 케이스는 `scripts/tests/confluence_xhtml_to_markdown/testcases/` 디렉토리에 있으며, 각 테스트 케이스는 다음 파일을 포함합니다:
+테스트 케이스는 `confluence-mdx/tests/testcases/` 디렉토리에 있으며, 각 테스트 케이스는 다음 파일을 포함합니다:
 - `page.xhtml`: 입력 XHTML 파일
 - `expected.mdx`: 예상 출력 MDX 파일
 - `output.mdx`: 테스트 실행 시 생성되는 실제 출력 파일
