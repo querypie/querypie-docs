@@ -3,8 +3,8 @@
 # Variables
 # Activate virtualenv located at project root: ../../venv
 VENV = source ../../venv/bin/activate
-# Converter script lives under project root scripts/
-SCRIPT = ../../scripts/confluence_xhtml_to_markdown.py
+# Converter script now lives under confluence-mdx/bin/
+SCRIPT = ../../confluence-mdx/bin/confluence_xhtml_to_markdown.py
 # Testcases live under this directory
 TEST_DIR = testcases
 DIFF = diff -u
