@@ -108,7 +108,7 @@ def generate_commands(list_file, confluence_dir='confluence-mdx/var/', output_ba
             mkdir_cmd = f"mkdir -p {output_dir}"
             
             # Generate conversion command with new options
-            convert_cmd = f"python scripts/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir=public --attachment-dir={attachment_dir}"
+            convert_cmd = f"python confluence-mdx/bin/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir=public --attachment-dir={attachment_dir}"
             
             # Add commands to the list
             commands.append(mkdir_cmd)
