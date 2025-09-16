@@ -22,14 +22,17 @@ confluence-mdx/tests/
 To add a new test case:
 
 1. Create a new directory under `testcases/` with the Confluence page ID or a descriptive name
-2. Add the input XHTML file as `page.xhtml`
+2. `testcases/<page-id>`에 테스트용 입력 파일을 채우거나, 복사합니다.
+   - `./copy-files-to-testcases.sh` 를 실행하여 `../../docs/latest-ko-confluence/<page-id>/` 아래의 파일을 `testcases/<page-id>/` 로 복사합니다.
 3. Generate the expected output by running:
    ```
    source ../venv/bin/activate
-   python ../../scripts/confluence_xhtml_to_markdown.py testcases/YOUR_TEST_ID/page.xhtml testcases/YOUR_TEST_ID/expected.mdx
+   python ../../scripts/confluence_xhtml_to_markdown.py testcases/<page-id>/page.xhtml testcases/<page-id>/expected.mdx
    ```
+   Run the above from this directory: confluence-mdx/tests.
+4. 생성된 `output.mdx`를 `expected.mdx`로 간주합니다.
+   - `./update-expected-mdx.sh`를 실행합니다.
 
-Run the above from this directory: confluence-mdx/tests.
 
 ## Running Tests
 
@@ -55,6 +58,13 @@ make test-one TEST_ID=568918170
 cd confluence-mdx/tests
 make clean
 ```
+
+## Update input files and expected output
+
+How to update input files
+- 
+
+How to update expected outputs
 
 ## Test Process
 
