@@ -62,18 +62,19 @@ def print_bash_header():
     Print the bash script header.
     """
     print("#!/usr/bin/env bash")
-    print("# cd querypie-docs")
-    print("# ./confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt")
+    print("# cd confluence-mdx")
+    print("# ./bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/ko/ --public-dir target/public")
     print()
 
-def generate_commands(list_file, confluence_dir='confluence-mdx/var/', output_base_dir='src/content/ko/'):
+def generate_commands(list_file, confluence_dir='var/', output_base_dir='target/ko/', public_dir='target/public'):
     """
     Generate commands to convert Confluence XHTML to Markdown.
     
     Args:
         list_file: Path to the list.en.txt file
-        confluence_dir: Directory containing the Confluence XHTML files (default: confluence-mdx/var/)
+        confluence_dir: Directory containing the Confluence XHTML files (default: var/)
         output_base_dir: Base directory for the output Markdown files
+        public_dir: Public assets base directory passed to the converter (default: target/public)
     """
     commands = []
     
@@ -108,7 +109,7 @@ def generate_commands(list_file, confluence_dir='confluence-mdx/var/', output_ba
             mkdir_cmd = f"mkdir -p {output_dir}"
             
             # Generate conversion command with new options
-            convert_cmd = f"python confluence-mdx/bin/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir=public --attachment-dir={attachment_dir}"
+            convert_cmd = f"python bin/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir={public_dir} --attachment-dir={attachment_dir}"
             
             # Add commands to the list
             commands.append(mkdir_cmd)
@@ -123,17 +124,19 @@ def generate_commands(list_file, confluence_dir='confluence-mdx/var/', output_ba
 def main():
     parser = argparse.ArgumentParser(description='Generate commands to convert Confluence XHTML to Markdown')
     parser.add_argument('list_file', help='Path to the list.en.txt file')
-    parser.add_argument('--confluence-dir', default='confluence-mdx/var/', 
-                        help='Directory containing the Confluence XHTML files (default: confluence-mdx/var/)')
-    parser.add_argument('--output-dir', default='src/content/ko/', 
-                        help='Base directory for the output Markdown files (default: src/content/ko/)')
+    parser.add_argument('--confluence-dir', default='var/', 
+                        help='Directory containing the Confluence XHTML files (default: var/)')
+    parser.add_argument('--output-dir', default='target/ko/', 
+                        help='Base directory for the output Markdown files (default: target/ko/)')
+    parser.add_argument('--public-dir', default='target/public',
+                        help='Public assets base directory for image/attachment URLs (default: target/public)')
     
     args = parser.parse_args()
     
     # Print the bash header
     print_bash_header()
     
-    commands = generate_commands(args.list_file, args.confluence_dir, args.output_dir)
+    commands = generate_commands(args.list_file, args.confluence_dir, args.output_dir, args.public_dir)
     
     # Print all commands
     for cmd in commands:

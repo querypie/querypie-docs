@@ -45,8 +45,8 @@ class Config:
     base_url: str = "https://querypie.atlassian.net/wiki"
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs"
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
-    default_output_dir: str = "confluence-mdx/var"
-    translations_file: str = "confluence-mdx/etc/korean-titles-translations.txt"
+    default_output_dir: str = "var"
+    translations_file: str = "etc/korean-titles-translations.txt"
     email: str = None
     api_token: str = None
     download_attachments: bool = False

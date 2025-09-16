@@ -3,8 +3,8 @@
 ## Python 가상환경(venv) 생성 및 필수 모듈 설치
 
 ```bash
-# 프로젝트 루트 디렉토리로 이동
-cd querypie-docs
+# confluence-mdx 디렉토리로 이동
+cd querypie-docs/confluence-mdx
 
 # Python 가상환경 생성 (venv)
 python3 -m venv venv
@@ -47,32 +47,32 @@ pip install requests beautifulsoup4 pyyaml
 실행 방법:
 ```bash
 # 로컬에서 pages_of_confluence.py 개선 과정에서 사용하는 명령
-python confluence-mdx/bin/pages_of_confluence.py --local >confluence-mdx/var/list.txt
+python bin/pages_of_confluence.py --local >var/list.txt
 
 # 기본 설정으로 실행
-python confluence-mdx/bin/pages_of_confluence.py
+python bin/pages_of_confluence.py
 
 # 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
-python confluence-mdx/bin/pages_of_confluence.py --local
+python bin/pages_of_confluence.py --local
 
 # list.txt 에 파일 목록을 저장
-python confluence-mdx/bin/pages_of_confluence.py > confluence-mdx/var/list.txt
+python bin/pages_of_confluence.py >var/list.txt
 
 # 특정 페이지 ID와 공간 키 지정
-python confluence-mdx/bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
+python bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
-python confluence-mdx/bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
+python bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
 
 # 첨부파일을 다운로드
-python confluence-mdx/bin/pages_of_confluence.py --attachments
+python bin/pages_of_confluence.py --attachments
 
 # 로그 레벨 설정
-python confluence-mdx/bin/pages_of_confluence.py --log-level DEBUG
+python bin/pages_of_confluence.py --log-level DEBUG
 ```
 
 실행 결과:
-- `confluence-mdx/var/` 디렉토리에 문서 데이터가 저장됩니다.
+- `var/` 디렉토리에 문서 데이터가 저장됩니다.
 - 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
 - `>list.txt`로 stdout 을 redirect 하면, `list.txt` 파일에 문서 목록이 저장됩니다.
 
@@ -82,18 +82,18 @@ python confluence-mdx/bin/pages_of_confluence.py --log-level DEBUG
 이 스크립트는 `list.txt` 파일을 입력으로 사용하여 한국어 제목을 영어로 번역합니다.
 
 > 참고: 이 스크립트는 현재 하드코딩된 파일 경로를 사용합니다:
-> - 입력 파일: confluence-mdx/var/list.txt
-> - 출력 파일: confluence-mdx/var/list.en.txt
-> - 번역 파일: confluence-mdx/etc/korean-titles-translations.txt
+> - 입력 파일: var/list.txt
+> - 출력 파일: var/list.en.txt
+> - 번역 파일: etc/korean-titles-translations.txt
 
 실행 방법:
 ```bash
 # 스크립트 실행
-python confluence-mdx/bin/translate_titles.py
+python bin/translate_titles.py
 ```
 
 실행 결과:
-- `confluence-mdx/var/list.en.txt` 파일이 생성됩니다.
+- `var/list.en.txt` 파일이 생성됩니다.
 - 이 파일은 원본 `list.txt`와 동일한 형식이지만 제목이 영어로 번역되어 있습니다.
 
 ### 3. XHTML을 Markdown으로 변환하기 위한 명령어 생성 (generate_commands_for_xhtml2markdown.py)
@@ -104,20 +104,20 @@ python confluence-mdx/bin/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > confluence-mdx/bin/xhtml2markdown.ko.sh
+python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
 
 # Confluence 디렉토리 지정
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > confluence-mdx/bin/xhtml2markdown.ko.sh
+python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-python confluence-mdx/bin/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > confluence-mdx/bin/xhtml2markdown.ko.sh
+python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
-chmod +x confluence-mdx/bin/xhtml2markdown.ko.sh
+chmod +x bin/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
-- `confluence-mdx/bin/xhtml2markdown.ko.sh` 파일이 생성됩니다.
+- `bin/xhtml2markdown.ko.sh` 파일이 생성됩니다.
 - 이 파일은 각 XHTML 파일을 Markdown으로 변환하기 위한 명령어들을 포함하고 있습니다.
 
 ### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.ko.sh)
@@ -128,11 +128,11 @@ chmod +x confluence-mdx/bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 스크립트 실행
-./confluence-mdx/bin/xhtml2markdown.ko.sh
+./bin/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
-- `src/content/ko/` 디렉토리에 MDX 파일들이 생성됩니다.
+- `target/ko/` 디렉토리에 MDX 파일들이 생성됩니다. `target/public/` 디렉토리에 첨부파일에 저장됩니다.
 - 각 MDX 파일은 원본 XHTML 파일의 내용을 Markdown 형식으로 변환한 것입니다.
 
 ## Confluence xhtml 을 Markdown 으로 변환하기
@@ -149,10 +149,10 @@ chmod +x confluence-mdx/bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 실행
-python confluence-mdx/bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+python bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
 
 # 로그 레벨 설정
-python confluence-mdx/bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
+python bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
 ```
 
 실행 결과:
@@ -171,31 +171,31 @@ python confluence-mdx/bin/confluence_xhtml_to_markdown.py input_file.xhtml outpu
 실행 방법:
 ```bash
 # 모든 테스트 실행
-cd confluence-mdx/tests
+cd tests
 make test
 
 # 특정 테스트 실행
-cd confluence-mdx/tests
+cd tests
 make test-one TEST_ID=<test_id>
 
 # 디버그 로그 레벨로 모든 테스트 실행
-cd confluence-mdx/tests
+cd tests
 make debug
 
 # 디버그 로그 레벨로 특정 테스트 실행
-cd confluence-mdx/tests
+cd tests
 make debug-one TEST_ID=<test_id>
 
 # 출력 파일 정리
-cd confluence-mdx/tests
+cd tests
 make clean
 
 # 도움말 표시
-cd confluence-mdx/tests
+cd tests
 make help
 ```
 
-테스트 케이스는 `confluence-mdx/tests/testcases/` 디렉토리에 있으며, 각 테스트 케이스는 다음 파일을 포함합니다:
+테스트 케이스는 `tests/testcases/` 디렉토리에 있으며, 각 테스트 케이스는 다음 파일을 포함합니다:
 - `page.xhtml`: 입력 XHTML 파일
 - `expected.mdx`: 예상 출력 MDX 파일
 - `output.mdx`: 테스트 실행 시 생성되는 실제 출력 파일
