@@ -22,16 +22,17 @@ confluence-mdx/tests/
 To add a new test case:
 
 1. Create a new directory under `testcases/` with the Confluence page ID or a descriptive name
-2. `testcases/<page-id>`에 테스트용 입력 파일을 채우거나, 복사합니다.
-   - `./copy-files-to-testcases.sh` 를 실행하여 `../../docs/latest-ko-confluence/<page-id>/` 아래의 파일을 `testcases/<page-id>/` 로 복사합니다.
+2. Populate `testcases/<page-id>` with input files.
+   - Option A: Run `./copy-files-to-testcases.sh` to copy files from `../../docs/latest-ko-confluence/<page-id>/` into `testcases/<page-id>/`.
+   - Option B: Manually place `page.xhtml` (and any related assets) under `testcases/<page-id>/`.
 3. Generate the expected output by running:
    ```
-   source ../venv/bin/activate
+   source ../../venv/bin/activate
    python ../../scripts/confluence_xhtml_to_markdown.py testcases/<page-id>/page.xhtml testcases/<page-id>/expected.mdx
    ```
    Run the above from this directory: confluence-mdx/tests.
-4. 생성된 `output.mdx`를 `expected.mdx`로 간주합니다.
-   - `./update-expected-mdx.sh`를 실행합니다.
+4. Consider the newly generated `output.mdx` as the baseline expected output when appropriate.
+   - Run `./update-expected-mdx.sh` to copy `output.mdx` to `expected.mdx` for the test case.
 
 
 ## Running Tests
@@ -62,9 +63,32 @@ make clean
 ## Update input files and expected output
 
 How to update input files
-- 
+- Ensure your Confluence data has been refreshed under `docs/latest-ko-confluence/<page-id>/`.
+- From this directory, run:
+  ```bash
+  ./copy-files-to-testcases.sh
+  ```
+  This copies the latest files (e.g., `page.xhtml`, `page.yaml`, attachments) for each `<page-id>` into the matching `testcases/<page-id>/` directory.
+- Alternatively, manually copy or edit `testcases/<page-id>/page.xhtml` if you are crafting a synthetic test case.
 
 How to update expected outputs
+- Activate the Python virtual environment and generate fresh outputs for all cases by running the tests:
+  ```bash
+  source ../../venv/bin/activate
+  make test-xhtml
+  ```
+  This regenerates `testcases/<page-id>/output.mdx` for each case.
+- If the new outputs are correct, and you want to accept them as the expected baselines, run:
+  ```bash
+  ./update-expected-mdx.sh
+  ```
+  This replaces each `expected.mdx` with the corresponding `output.mdx`.
+- For a single test case, you can update just one expected file:
+  ```bash
+  source ../../venv/bin/activate
+  make test-one-xhtml TEST_ID=<page-id>
+  cp testcases/<page-id>/output.mdx testcases/<page-id>/expected.mdx
+  ```
 
 ## Test Process
 
