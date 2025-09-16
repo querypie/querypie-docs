@@ -18,18 +18,18 @@ pip install requests beautifulsoup4 pyyaml
 
 ## 데이터 수집, 변환 절차의 개요
 
-1. `docs/latest-ko-confluence/`에 Confluence 문서 데이터를 저장합니다.
+1. `confluence-mdx/var/`에 Confluence 문서 데이터를 저장합니다.
     - 문서의 목록인 `list.txt`를 저장합니다.
     - 개별 문서마다 `<page_id>/page.yaml`, `<page_id>/page.xhtml`을 저장합니다.
     - `pages_of_confluence.py`를 사용합니다.
-2. `docs/latest-ko-confluence/list.en.txt`를 생성합니다.
+2. `confluence-mdx/var/list.en.txt`를 생성합니다.
    - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
    - `translate_titles.py`를 사용합니다.
 3. `scripts/xhtml2markdown.ko.sh`를 생성합니다.
    - `generate_commands_for_xhtml2markdown.py`를 사용합니다.
 4. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
    - `scripts/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
-   - `docs/latest-ko-confluence/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
+   - `confluence-mdx/var/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
 
 ## 데이터 수집 및 변환 절차 상세 안내
 
@@ -47,32 +47,32 @@ pip install requests beautifulsoup4 pyyaml
 실행 방법:
 ```bash
 # 로컬에서 pages_of_confluence.py 개선 과정에서 사용하는 명령
-python scripts/pages_of_confluence.py --local >docs/latest-ko-confluence/list.txt
+python confluence-mdx/bin/pages_of_confluence.py --local >confluence-mdx/var/list.txt
 
 # 기본 설정으로 실행
-python scripts/pages_of_confluence.py
+python confluence-mdx/bin/pages_of_confluence.py
 
 # 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
-python scripts/pages_of_confluence.py --local
+python confluence-mdx/bin/pages_of_confluence.py --local
 
 # list.txt 에 파일 목록을 저장
-python scripts/pages_of_confluence.py >list.txt
+python confluence-mdx/bin/pages_of_confluence.py > confluence-mdx/var/list.txt
 
 # 특정 페이지 ID와 공간 키 지정
-python scripts/pages_of_confluence.py --page-id 123456789 --space-key DOCS
+python confluence-mdx/bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
-python scripts/pages_of_confluence.py --email user@example.com --api-token your-api-token
+python confluence-mdx/bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
 
 # 첨부파일을 다운로드
-python scripts/pages_of_confluence.py --attachments
+python confluence-mdx/bin/pages_of_confluence.py --attachments
 
 # 로그 레벨 설정
-python scripts/pages_of_confluence.py --log-level DEBUG
+python confluence-mdx/bin/pages_of_confluence.py --log-level DEBUG
 ```
 
 실행 결과:
-- `docs/latest-ko-confluence/` 디렉토리에 문서 데이터가 저장됩니다.
+- `confluence-mdx/var/` 디렉토리에 문서 데이터가 저장됩니다.
 - 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
 - `>list.txt`로 stdout 을 redirect 하면, `list.txt` 파일에 문서 목록이 저장됩니다.
 
@@ -82,18 +82,18 @@ python scripts/pages_of_confluence.py --log-level DEBUG
 이 스크립트는 `list.txt` 파일을 입력으로 사용하여 한국어 제목을 영어로 번역합니다.
 
 > 참고: 이 스크립트는 현재 하드코딩된 파일 경로를 사용합니다:
-> - 입력 파일: docs/latest-ko-confluence/list.txt
-> - 출력 파일: docs/latest-ko-confluence/list.en.txt
-> - 번역 파일: docs/korean-titles-translations.txt
+> - 입력 파일: confluence-mdx/var/list.txt
+> - 출력 파일: confluence-mdx/var/list.en.txt
+> - 번역 파일: confluence-mdx/etc/korean-titles-translations.txt
 
 실행 방법:
 ```bash
 # 스크립트 실행
-python scripts/translate_titles.py
+python confluence-mdx/bin/translate_titles.py
 ```
 
 실행 결과:
-- `docs/latest-ko-confluence/list.en.txt` 파일이 생성됩니다.
+- `confluence-mdx/var/list.en.txt` 파일이 생성됩니다.
 - 이 파일은 원본 `list.txt`와 동일한 형식이지만 제목이 영어로 번역되어 있습니다.
 
 ### 3. XHTML을 Markdown으로 변환하기 위한 명령어 생성 (generate_commands_for_xhtml2markdown.py)
@@ -104,13 +104,13 @@ python scripts/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt > scripts/xhtml2markdown.ko.sh
+python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt > scripts/xhtml2markdown.ko.sh
 
 # Confluence 디렉토리 지정
-python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt --confluence-dir docs/custom-path/ > scripts/xhtml2markdown.ko.sh
+python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --confluence-dir confluence-mdx/var/ > scripts/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-python scripts/generate_commands_for_xhtml2markdown.py docs/latest-ko-confluence/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.ko.sh
+python scripts/generate_commands_for_xhtml2markdown.py confluence-mdx/var/list.en.txt --output-dir src/content/custom-path/ > scripts/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
 chmod +x scripts/xhtml2markdown.ko.sh

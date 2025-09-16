@@ -8,9 +8,9 @@ Structure of list.txt in Korean
 """
 
 # Paths
-TRANSLATIONS_FILE = "docs/korean-titles-translations.txt"
-INPUT_FILE = "docs/latest-ko-confluence/list.txt"
-OUTPUT_FILE = "docs/latest-ko-confluence/list.en.txt"
+TRANSLATIONS_FILE = "confluence-mdx/etc/korean-titles-translations.txt"
+INPUT_FILE = "confluence-mdx/var/list.txt"
+OUTPUT_FILE = "confluence-mdx/var/list.en.txt"
 
 
 def load_translations():
