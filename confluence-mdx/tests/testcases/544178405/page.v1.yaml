@@ -90,33 +90,33 @@
       \ data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"\
       ><p style=\"text-align: center;\"><strong>설정 항목</strong></p></th></tr><tr><td\
       \ class=\"numberingColumn\">1</td><th><p><strong>기본 정보 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"General​\" ri:version-at-save=\"7\" /><ac:link-body>General</ac:link-body></ac:link>\
+      \ ri:content-title=\"General​\" ri:version-at-save=\"35\" /><ac:link-body>General</ac:link-body></ac:link>\
       \ </p><ul><li><p>회사 이름, 타임존, 날짜 표기 방식 등</p></li></ul></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn\">2</td><th><p><strong>보안 정보 설정하기 </strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Security\" ri:version-at-save=\"19\" /><ac:link-body>Security</ac:link-body></ac:link>\
+      \ ri:content-title=\"Security\" ri:version-at-save=\"39\" /><ac:link-body>Security</ac:link-body></ac:link>\
       \ </p><ul><li><p>잠금 정책, 비밀번호 변경 주기, 타임아웃 등</p></li></ul></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Allowed Zones\" ri:version-at-save=\"8\" /><ac:link-body>Allowed\
+      \ ri:content-title=\"Allowed Zones\" ri:version-at-save=\"9\" /><ac:link-body>Allowed\
       \ Zones</ac:link-body></ac:link> </p><ul><li><p>허용할 IP 대역 생성 및 관리</p></li></ul></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn\">3</td><th><p><strong>사용자 및 사용자 그룹 생성하기</strong></p></th><td><ul><li><p>Authentication\
       \ </p><ul><li><p><ac:link><ri:page ri:content-title=\"LDAP 연동하기\" ri:version-at-save=\"\
-      5\" /><ac:link-body>LDAP 연동하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Okta 연동하기\" ri:version-at-save=\"6\" /><ac:link-body>Okta\
+      13\" /><ac:link-body>LDAP 연동하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Okta 연동하기\" ri:version-at-save=\"12\" /><ac:link-body>Okta\
       \ 연동하기 </ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
-      AWS SSO 연동하기\" ri:version-at-save=\"6\" /><ac:link-body>AWS SSO 연동하기 </ac:link-body></ac:link></p></li></ul></li><li><p>Users\
+      AWS SSO 연동하기\" ri:version-at-save=\"9\" /><ac:link-body>AWS SSO 연동하기 </ac:link-body></ac:link></p></li></ul></li><li><p>Users\
       \ </p><ul><li><p><ac:link><ri:page ri:content-title=\"사용자 프로필\" ri:version-at-save=\"\
-      10\" /><ac:link-body>사용자 프로필 </ac:link-body></ac:link></p></li></ul></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Groups\" ri:version-at-save=\"9\" /><ac:link-body>Groups</ac:link-body></ac:link>\
+      13\" /><ac:link-body>사용자 프로필 </ac:link-body></ac:link></p></li></ul></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Groups\" ri:version-at-save=\"10\" /><ac:link-body>Groups</ac:link-body></ac:link>\
       \ </p></li></ul></td></tr><tr><td class=\"numberingColumn\">4</td><th><p><strong>관리자\
       \ 역할 할당하기 </strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"\
-      Roles\" ri:version-at-save=\"8\" /><ac:link-body>Roles</ac:link-body></ac:link></p></li></ul></td></tr><tr><td\
+      Roles\" ri:version-at-save=\"9\" /><ac:link-body>Roles</ac:link-body></ac:link></p></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn\">5</td><th><p><strong>결재 규칙 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Approval Rules\" ri:version-at-save=\"13\" /><ac:link-body>Approval\
+      \ ri:content-title=\"Approval Rules\" ri:version-at-save=\"22\" /><ac:link-body>Approval\
       \ Rules</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\"\
       >6</td><th><p><strong>알림 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Channels\" ri:version-at-save=\"8\" /><ac:link-body>Channels</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Alerts\" ri:version-at-save=\"16\" /><ac:link-body>Alerts</ac:link-body></ac:link></p></li></ul></td></tr><tr><td\
+      \ ri:content-title=\"Channels\" ri:version-at-save=\"17\" /><ac:link-body>Channels</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Alerts\" ri:version-at-save=\"22\" /><ac:link-body>Alerts</ac:link-body></ac:link></p></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn\">7</td><th><p><strong>외부 보안 솔루션 연동하기 </strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Integrations\" ri:version-at-save=\"7\" /><ac:link-body>Integrations</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table><p\
+      \ ri:content-title=\"Integrations\" ri:version-at-save=\"8\" /><ac:link-body>Integrations</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table><p\
       \ /><h2>자, 이제 기본 설정을 마쳤습니다. 이제 서비스별 설정을 해볼까요?</h2><p>기본 설정을 마쳤다면 서비스별 설정이 남았습니다.\
       \ QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요. 서비스별 설정이 끝난 후에는 관리자/사용자의 접속\
       \ 및 실행 이력들을 Audit 메뉴에서 자세히 확인하실 수 있습니다. 뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능\
@@ -128,31 +128,29 @@
       \ data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"\
       ><p style=\"text-align: center;\"><strong>설정 항목</strong></p></th></tr><tr><td\
       \ class=\"numberingColumn\">1</td><th><p><strong>Databased Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Connection Management\" ri:version-at-save=\"8\" /><ac:link-body>Connection\
+      \ ri:content-title=\"Connection Management\" ri:version-at-save=\"17\" /><ac:link-body>Connection\
       \ Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
       DB Access Control​\" ri:version-at-save=\"7\" /><ac:link-body>DB Access Control</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Policies\" ri:version-at-save=\"10\" /><ac:link-body>Policies</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Ledger Management\" ri:version-at-save=\"4\" /><ac:link-body>Ledger\
+      \ ri:content-title=\"Policies\" ri:version-at-save=\"14\" /><ac:link-body>Policies</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Ledger Management\" ri:version-at-save=\"5\" /><ac:link-body>Ledger\
       \ Management</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"\
       numberingColumn\">2</td><th><p><strong>Server Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Connection Management​\" ri:version-at-save=\"8\" /><ac:link-body>Connection\
+      \ ri:content-title=\"Connection Management​\" ri:version-at-save=\"10\" /><ac:link-body>Connection\
       \ Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
       Server Access Control\" ri:version-at-save=\"12\" /><ac:link-body>Server Access\
       \ Control </ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"\
       numberingColumn\">3</td><th><p><strong>Kubernetes Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Connection Management​​\" ri:version-at-save=\"9\" /><ac:link-body>Connection\
+      \ ri:content-title=\"Connection Management​​\" ri:version-at-save=\"11\" /><ac:link-body>Connection\
       \ Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
-      K8s Access Control\" ri:version-at-save=\"7\" /><ac:link-body>K8s Access Control\
+      K8s Access Control\" ri:version-at-save=\"8\" /><ac:link-body>K8s Access Control\
       \ </ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\"\
       >4</td><th><p><strong>감사 로그 확인하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"General Logs\" ri:version-at-save=\"10\" /><ac:link-body>General\
+      \ ri:content-title=\"General Logs\" ri:version-at-save=\"14\" /><ac:link-body>General\
       \ Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
-      Database Logs\" ri:version-at-save=\"5\" /><ac:link-body>Database Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
+      Database Logs\" ri:version-at-save=\"6\" /><ac:link-body>Database Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page\
       \ ri:content-title=\"Server Logs\" ri:version-at-save=\"6\" /><ac:link-body>Server\
       \ Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"\
-      Kubernetes Logs\" ri:version-at-save=\"8\" /><ac:link-body>Kubernetes Logs</ac:link-body></ac:link></p></li></ul></td></tr><tr><td\
-      \ class=\"numberingColumn\">5</td><th><p><strong>데이터 디스커버리 사용하기</strong></p></th><td><ul><li><p><ac:link><ri:page\
-      \ ri:content-title=\"Discovery\" ri:version-at-save=\"10\" /><ac:link-body>Discovery</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table><p\
+      Kubernetes Logs\" ri:version-at-save=\"8\" /><ac:link-body>Kubernetes Logs</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table><p\
       \ /><p />"
     "representation": "storage"
     "embeddedContent": []
@@ -174,7 +172,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-01 오후\
       \ 2.50.06.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544178405\" data-linked-resource-container-version=\"\
-      12\" data-media-id=\"cb7e3a7c-61dc-452d-a53c-fd0c182ed199\" data-media-type=\"\
+      13\" data-media-id=\"cb7e3a7c-61dc-452d-a53c-fd0c182ed199\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544178405/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-01%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%202.50.06.png?version=1&amp;modificationDate=1722821768131&amp;cacheVersion=1&amp;api=v2&amp;width=1396&amp;height=196\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544178405/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-01%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%202.50.06.png?version=1&amp;modificationDate=1722821768131&amp;cacheVersion=1&amp;api=v2&amp;width=762&amp;height=106\
       \ 1x\"></span><p /><h2 id=\"id-관리자매뉴얼-QueryPie관리자설정이처음이신가요?\">QueryPie 관리자 설정이\
@@ -282,12 +280,8 @@
       \ data-linked-resource-id=\"544014907\" data-linked-resource-version=\"6\" data-linked-resource-type=\"\
       page\">Server Logs</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/544383513/Kubernetes+Logs\"\
       \ data-linked-resource-id=\"544383513\" data-linked-resource-version=\"8\" data-linked-resource-type=\"\
-      page\">Kubernetes Logs</a></p></li></ul></td></tr><tr><td class=\"numberingColumn\
-      \ confluenceTd\">5</td><th class=\"confluenceTh\"><p><strong>데이터 디스커버리 사용하기</strong></p></th><td\
-      \ class=\"confluenceTd\"><ul><li><p><a href=\"/wiki/spaces/QM/pages/544047372/Discovery\"\
-      \ data-linked-resource-id=\"544047372\" data-linked-resource-version=\"10\"\
-      \ data-linked-resource-type=\"page\">Discovery</a></p></li></ul></td></tr></tbody></table></div><p\
-      \ /><p />"
+      page\">Kubernetes Logs</a></p></li></ul></td></tr></tbody></table></div><p /><p\
+      \ />"
     "representation": "view"
     "_expandable":
       "webresource": ""

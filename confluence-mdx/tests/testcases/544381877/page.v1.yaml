@@ -327,11 +327,11 @@
       \ Credential</strong> : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상\
       \ 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다.</p><ul><li><p><img class=\"\
       emoticon emoticon-tick\" data-emoji-id=\"atlassian-check_mark\" data-emoji-shortname=\"\
-      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/-434911141/6452/21fe419d86df053f72cc5de962146f95fecba373/_/images/icons/emoticons/check.png\"\
+      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/check.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"tick\" alt=\"(tick)\" /> <strong>Verified</strong>\
       \ : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다. </p></li><li><p><img class=\"\
       emoticon emoticon-cross\" data-emoji-id=\"atlassian-cross_mark\" data-emoji-shortname=\"\
-      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/-434911141/6452/21fe419d86df053f72cc5de962146f95fecba373/_/images/icons/emoticons/error.png\"\
+      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/error.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(오류)\" /> <strong>Verification\
       \ Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을\
       \ 가능성이 있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging Options</strong>\
@@ -377,25 +377,25 @@
       \ Create Cluster &gt; Credential 안내 박스 내 “download and run this script”의 링크를\
       \ 클릭하여 스크립트를 다운로드할 수 있습니다. </p></li></ul><div class=\"expand-container conf-macro\
       \ output-block\" data-hasbody=\"true\" data-macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"\
-      \ data-macro-name=\"expand\" id=\"expander-743904464\"><div id=\"expander-control-743904464\"\
+      \ data-macro-name=\"expand\" id=\"expander-1388545300\"><div id=\"expander-control-1388545300\"\
       \ class=\"expand-control\"><span class=\"expand-control-icon icon\"> </span><span\
       \ class=\"expand-control-text\">generate_kubepie_sa.sh 스크립트 컨텐츠 </span></div><div\
-      \ id=\"expander-content-743904464\" class=\"expand-content expand-hidden\"><div\
-      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      af7dde18-30fb-46b2-9cab-d4ff1b0e1607\" data-macro-name=\"code\" style=\"border-width:\
-      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
-      \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
-      \ data-theme=\"Confluence\">#!/bin/bash\n\nset -o nounset -o errexit -o pipefail\n\
-      \nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\n\
-      CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role\nCLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb\n\
-      SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret\n\necho &quot;Creating\
-      \ the Queypie Service Account and grant permission&quot;\nkubectl apply -f -\
-      \ &lt;&lt;EOF\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: ${NAMESPACE}\n\
-      ---\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: ${SERVICE_ACCOUNT_NAME}\n\
-      \  namespace: ${NAMESPACE}\n---\napiVersion: rbac.authorization.k8s.io/v1\n\
-      kind: ClusterRole\nmetadata:\n  name: ${CLUSTER_ROLE_NAME}\nrules:\n- apiGroups:\n\
-      \  - &quot;&quot;\n  resources:\n  - users\n  - groups\n  - serviceaccounts\n\
-      \  verbs:\n  - impersonate\n---\napiVersion: rbac.authorization.k8s.io/v1\n\
+      \ id=\"expander-content-1388545300\" class=\"expand-content expand-hidden\"\
+      ><div class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\"\
+      \ data-macro-id=\"af7dde18-30fb-46b2-9cab-d4ff1b0e1607\" data-macro-name=\"\
+      code\" style=\"border-width: 1px;\"><div class=\"codeContent panelContent pdl\"\
+      >\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"brush:\
+      \ java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">#!/bin/bash\n\
+      \nset -o nounset -o errexit -o pipefail\n\nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\
+      \nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\nCLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role\n\
+      CLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb\nSERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret\n\
+      \necho &quot;Creating the Queypie Service Account and grant permission&quot;\n\
+      kubectl apply -f - &lt;&lt;EOF\napiVersion: v1\nkind: Namespace\nmetadata:\n\
+      \  name: ${NAMESPACE}\n---\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n\
+      \  name: ${SERVICE_ACCOUNT_NAME}\n  namespace: ${NAMESPACE}\n---\napiVersion:\
+      \ rbac.authorization.k8s.io/v1\nkind: ClusterRole\nmetadata:\n  name: ${CLUSTER_ROLE_NAME}\n\
+      rules:\n- apiGroups:\n  - &quot;&quot;\n  resources:\n  - users\n  - groups\n\
+      \  - serviceaccounts\n  verbs:\n  - impersonate\n---\napiVersion: rbac.authorization.k8s.io/v1\n\
       kind: ClusterRoleBinding\nmetadata:\n  name: ${CLUSTER_ROLE_BINDING_NAME}\n\
       roleRef:\n  apiGroup: rbac.authorization.k8s.io\n  kind: ClusterRole\n  name:\
       \ ${CLUSTER_ROLE_NAME}\nsubjects:\n- kind: ServiceAccount\n  name: ${SERVICE_ACCOUNT_NAME}\n\

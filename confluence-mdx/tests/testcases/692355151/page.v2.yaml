@@ -1,17 +1,3 @@
-"parentId": "544378069"
-"spaceId": "539099246"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-10-22T01:34:18.108Z"
-"authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
-"parentType": "page"
-"position": !!int "478567228"
-"version":
-  "number": !!int "10"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
-  "createdAt": "2025-08-25T00:19:21.487Z"
-  "ncsStepVersion": "426"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -142,10 +128,24 @@
       :\"warning\"},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
       optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다.\
       \ \",\"type\":\"text\"}]}]}],\"version\":1}"
-"status": "current"
-"title": "실행 계획(Explain) 기능 사용하기"
+"parentId": "544378069"
+"spaceId": "539099246"
 "ownerId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-10-22T01:34:18.108Z"
+"authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+"parentType": "page"
+"version":
+  "number": !!int "10"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+  "createdAt": "2025-08-25T00:19:21.487Z"
+  "ncsStepVersion": "426"
 "id": "692355151"
+"position": !!int "478567228"
+"title": "실행 계획(Explain) 기능 사용하기"
+"status": "current"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=692355151"
   "webui": "/spaces/QM/pages/692355151/Explain"

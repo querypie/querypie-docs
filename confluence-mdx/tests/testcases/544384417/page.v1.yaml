@@ -487,12 +487,12 @@
   "view":
     "value": "<div class=\"confluence-information-macro confluence-information-macro-note\
       \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"b98c114e-83b6-4ba3-8830-5a3ef3102272\"\
-      \ data-macro-name=\"note\"><style>[data-colorid=g1nu648xe2]{color:#97a0af} html[data-color-mode=dark]\
-      \ [data-colorid=g1nu648xe2]{color:#505968}[data-colorid=fqk2rjzcq9]{color:#97a0af}\
-      \ html[data-color-mode=dark] [data-colorid=fqk2rjzcq9]{color:#505968}[data-colorid=h3u0bql1ko]{color:#97a0af}\
-      \ html[data-color-mode=dark] [data-colorid=h3u0bql1ko]{color:#505968}[data-colorid=exh5unekbd]{color:#97a0af}\
-      \ html[data-color-mode=dark] [data-colorid=exh5unekbd]{color:#505968}[data-colorid=sd43dbl25f]{color:#97a0af}\
-      \ html[data-color-mode=dark] [data-colorid=sd43dbl25f]{color:#505968}</style><span\
+      \ data-macro-name=\"note\"><style>[data-colorid=jpojc64pkc]{color:#97a0af} html[data-color-mode=dark]\
+      \ [data-colorid=jpojc64pkc]{color:#505968}[data-colorid=nn9d4rq2y9]{color:#97a0af}\
+      \ html[data-color-mode=dark] [data-colorid=nn9d4rq2y9]{color:#505968}[data-colorid=w8vwi9m2fe]{color:#97a0af}\
+      \ html[data-color-mode=dark] [data-colorid=w8vwi9m2fe]{color:#505968}[data-colorid=typiw9hhwa]{color:#97a0af}\
+      \ html[data-color-mode=dark] [data-colorid=typiw9hhwa]{color:#505968}[data-colorid=vbtoex6vj2]{color:#97a0af}\
+      \ html[data-color-mode=dark] [data-colorid=vbtoex6vj2]{color:#505968}</style><span\
       \ class=\"aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon\"\
       > </span><div class=\"confluence-information-macro-body\"><p>11.2.0 현재 Reports\
       \ 기능은 Beta 버전으로 제공 중입니다.</p></div></div><h2 id=\"Reports-Overview\">Overview</h2><p>QueryPie\
@@ -665,16 +665,16 @@
       \ 이력</p></td><td class=\"confluenceTd\"><p style=\"text-align: center;\">O</p></td><td\
       \ class=\"confluenceTd\"><p style=\"text-align: center;\">O</p></td><td class=\"\
       confluenceTd\"><p style=\"text-align: center;\">-</p></td></tr><tr><td class=\"\
-      confluenceTd\"><p><em><span data-colorid=\"fqk2rjzcq9\">Server Role Status by\
+      confluenceTd\"><p><em><span data-colorid=\"typiw9hhwa\">Server Role Status by\
       \ User </span></em><span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
       \ aui-lozenge-error conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"\
       3cdc8c07-9c01-4dd8-9456-288a2153bb30\" data-macro-name=\"status\">DEPRECATED-10.2.2</span><br\
-      \ /><em><span data-colorid=\"exh5unekbd\">사용자별 서버 역할 현황</span></em></p></td><td\
+      \ /><em><span data-colorid=\"vbtoex6vj2\">사용자별 서버 역할 현황</span></em></p></td><td\
       \ class=\"confluenceTd\"><p style=\"text-align: center;\"><em><span data-colorid=\"\
-      g1nu648xe2\">O</span></em></p></td><td class=\"confluenceTd\"><p style=\"text-align:\
-      \ center;\"><em><span data-colorid=\"sd43dbl25f\">O</span></em></p></td><td\
+      jpojc64pkc\">O</span></em></p></td><td class=\"confluenceTd\"><p style=\"text-align:\
+      \ center;\"><em><span data-colorid=\"w8vwi9m2fe\">O</span></em></p></td><td\
       \ class=\"confluenceTd\"><p style=\"text-align: center;\"><em><span data-colorid=\"\
-      h3u0bql1ko\">-</span></em></p></td></tr><tr><td class=\"confluenceTd\"><p>Role-Granted\
+      nn9d4rq2y9\">-</span></em></p></td></tr><tr><td class=\"confluenceTd\"><p>Role-Granted\
       \ Users by Role <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
       \ aui-lozenge-success conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"\
       8532647f-91fc-4ac4-94ec-daa935c5ec39\" data-macro-name=\"status\">ADDED-10.2.2</span><br\
@@ -857,7 +857,7 @@
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544384417/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-12-23%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%2010.45.29.png?version=1&amp;modificationDate=1734918733467&amp;cacheVersion=1&amp;api=v2&amp;width=589&amp;height=363\
       \ 1x\" /></span><p>복제하려는 보고서를 목록에서 선택한 뒤  <img class=\"emoticon emoticon-blue-star\"\
       \ data-emoji-id=\"8131cbc6-728f-4eb5-abed-e3e9204f76a4\" data-emoji-shortname=\"\
-      :copy:\" data-emoji-fallback=\":copy:\" src=\"/wiki/s/-434911141/6452/21fe419d86df053f72cc5de962146f95fecba373/_/images/icons/emoticons/star_blue.png\"\
+      :copy:\" data-emoji-fallback=\":copy:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/star_blue.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"blue-star\" alt=\"(파란별)\"\
       \ /> <code>Duplicate Task</code> 버튼을 클릭하면, 기존에 생성했던 보고서를 복제하여 새로운 보고서 태스크를 생성할\
       \ 수 있습니다. </p><p>태스크 복제 시에 복제되는 정보는 다음과 같습니다.</p><ul><li><p><strong>Task Name</strong>\

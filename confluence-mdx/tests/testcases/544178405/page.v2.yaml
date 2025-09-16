@@ -1,17 +1,3 @@
-"parentId": "608501837"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:22:57.682Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"position": !!int "521757510"
-"version":
-  "number": !!int "12"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "638d40f6489de2f7f467482a"
-  "createdAt": "2024-08-06T12:27:24.613Z"
-  "ncsStepVersion": "7526"
-"spaceId": "539099246"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -53,7 +39,7 @@
       :1,\"colwidth\":[518.0]},\"content\":[{\"type\":\"bulletList\",\"content\":[{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
       :\"General\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\"\
-      :\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544145591\"}}]},{\"text\"\
+      :\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544145591\"}}]},{\"text\"\
       :\" \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
       :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
       회사 이름, 타임존, 날짜 표기 방식 등\",\"type\":\"text\"}]}]}]}]}]}]}]},{\"type\":\"tableRow\"\
@@ -63,13 +49,13 @@
       type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[518.0]},\"\
       content\":[{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
       :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Security\",\"type\":\"text\"\
-      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544178422\"\
+      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544178422\"\
       }}]},{\"text\":\" \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\"\
       :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
       text\":\"잠금 정책, 비밀번호 변경 주기, 타임아웃 등\",\"type\":\"text\"}]}]}]}]},{\"type\":\"\
       listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Allowed\
       \ Zones\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\"\
-      :\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544112846\"}}]},{\"text\"\
+      :\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544112846\"}}]},{\"text\"\
       :\" \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
       :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
       허용할 IP 대역 생성 및 관리\",\"type\":\"text\"}]}]}]}]}]}]}]},{\"type\":\"tableRow\"\
@@ -82,21 +68,21 @@
       \ \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"\
       listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"LDAP\
       \ 연동하기\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\"\
-      :\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376004\"}}]}]}]},{\"\
+      :\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544376004\"}}]}]}]},{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
       :\"Okta 연동하기 \",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"\
-      href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376100\"}}]}]}]},{\"\
+      href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544376100\"}}]}]}]},{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
       :\"AWS SSO 연동하기 \",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\"\
-      :{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376183\"\
+      :{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544376183\"\
       }}]}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"Users \",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
       ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"사용자 프로필 \",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376787\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544376787\"\
       }}]}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"Groups\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
-      ,\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544047341\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544047341\"\
       }}]},{\"text\":\" \",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"tableRow\",\"\
       content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
       colwidth\":[242.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
@@ -104,7 +90,7 @@
       type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[518.0]},\"\
       content\":[{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
       :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Roles\",\"type\":\"text\"\
-      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/543948996\"\
+      ,\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/543948996\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[242.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"결재 규칙 설정하기\",\"type\":\"text\"\
@@ -112,7 +98,7 @@
       colspan\":1,\"rowspan\":1,\"colwidth\":[518.0]},\"content\":[{\"type\":\"bulletList\"\
       ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"Approval Rules\",\"type\":\"text\",\"marks\":[{\"type\"\
-      :\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544378513\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378513\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[242.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"알림 설정하기\",\"type\":\"text\",\"\
@@ -120,10 +106,10 @@
       :1,\"rowspan\":1,\"colwidth\":[518.0]},\"content\":[{\"type\":\"bulletList\"\
       ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"Channels\",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544243925\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544243925\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Alerts\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\"\
-      :{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/543981760\"\
+      :{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/543981760\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[242.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"외부 보안 솔루션 연동하기 \",\"type\":\"\
@@ -131,7 +117,7 @@
       :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[518.0]},\"content\":[{\"type\":\"\
       bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
       ,\"content\":[{\"text\":\"Integrations\",\"type\":\"text\",\"marks\":[{\"type\"\
-      :\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544080097\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544080097\"\
       }}]}]}]}]}]}]}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"\
       level\":2},\"content\":[{\"text\":\"자, 이제 기본 설정을 마쳤습니다. 이제 서비스별 설정을 해볼까요?\"\
       ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"기본 설정을\
@@ -156,16 +142,16 @@
       colspan\":1,\"rowspan\":1,\"colwidth\":[415.0]},\"content\":[{\"type\":\"bulletList\"\
       ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"Connection Management\",\"type\":\"text\",\"marks\":[{\"\
-      type\":\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544379705\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544379705\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"DB Access Control\",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544380126\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544380126\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Policies\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"\
-      attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544379868\"\
+      attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544379868\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Ledger Management\",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/571277577\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/571277577\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[344.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"Server Access Control 설정하기\",\"\
@@ -173,10 +159,10 @@
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[415.0]},\"content\":[{\"\
       type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
       :\"paragraph\",\"content\":[{\"text\":\"Connection Management\",\"type\":\"\
-      text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544380635\"\
+      text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544380635\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Server Access Control \",\"type\":\"text\",\"marks\":[{\"type\"\
-      :\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544381369\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544381369\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[344.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"Kubernetes Access Control 설정하기\"\
@@ -184,10 +170,10 @@
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[415.0]},\"content\":[{\"\
       type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
       :\"paragraph\",\"content\":[{\"text\":\"Connection Management\",\"type\":\"\
-      text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544381637\"\
+      text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544381637\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"K8s Access Control \",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544383110\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544383110\"\
       }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
       ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[344.0]},\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"감사 로그 확인하기\",\"type\":\"text\"\
@@ -195,30 +181,36 @@
       colspan\":1,\"rowspan\":1,\"colwidth\":[415.0]},\"content\":[{\"type\":\"bulletList\"\
       ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
       content\":[{\"text\":\"General Logs\",\"type\":\"text\",\"marks\":[{\"type\"\
-      :\"link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544211450\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544211450\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Database Logs\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
-      ,\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544080248\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544080248\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Server Logs\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
-      ,\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544014907\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544014907\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"Kubernetes Logs\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
-      ,\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544383513\"\
-      }}]}]}]}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableHeader\"\
-      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[344.0]},\"content\":[{\"\
-      type\":\"paragraph\",\"content\":[{\"text\":\"데이터 디스커버리 사용하기\",\"type\":\"text\"\
-      ,\"marks\":[{\"type\":\"strong\"}]}]}]},{\"type\":\"tableCell\",\"attrs\":{\"\
-      colspan\":1,\"rowspan\":1,\"colwidth\":[415.0]},\"content\":[{\"type\":\"bulletList\"\
-      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
-      content\":[{\"text\":\"Discovery\",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      link\",\"attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544047372\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544383513\"\
       }}]}]}]}]}]}]}]},{\"type\":\"paragraph\"},{\"type\":\"paragraph\"}],\"version\"\
       :1}"
-"status": "current"
-"title": "관리자 매뉴얼"
+"parentId": "608501837"
+"spaceId": "539099246"
 "ownerId": "630c844a9796033b256b98a5"
+"createdAt": "2024-07-14T05:22:57.682Z"
+"authorId": "630c844a9796033b256b98a5"
+"parentType": "page"
+"position": !!int "521757510"
+"version":
+  "number": !!int "13"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2025-09-03T09:15:09.206Z"
+  "ncsStepVersion": "6"
 "id": "544178405"
+"title": "관리자 매뉴얼"
+"status": "current"
+"lastOwnerId": !!null "null"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544178405"
   "webui": "/spaces/QM/pages/544178405"

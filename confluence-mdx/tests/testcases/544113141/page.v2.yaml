@@ -1,18 +1,3 @@
-"parentId": "544080248"
-"spaceId": "539099246"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T06:38:35.226Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"position": !!int "618"
-"version":
-  "number": !!int "7"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
-  "createdAt": "2024-08-05T02:46:23.021Z"
-  "ncsStepVersion": "1021"
-"ownerId": "630c844a9796033b256b98a5"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -193,9 +178,24 @@
       :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Error Message\",\"type\"\
       :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 접속 실패 등 특이사항에 대한\
       \ 기록\",\"type\":\"text\"}]}]}]}]}]}],\"version\":1}"
-"status": "current"
-"title": "DB Access History"
+"parentId": "544080248"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T06:38:35.226Z"
+"authorId": "630c844a9796033b256b98a5"
+"parentType": "page"
+"position": !!int "618"
+"version":
+  "number": !!int "7"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
+  "createdAt": "2024-08-05T02:46:23.021Z"
+  "ncsStepVersion": "1021"
 "id": "544113141"
+"title": "DB Access History"
+"status": "current"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544113141"
   "webui": "/spaces/QM/pages/544113141/DB+Access+History"
