@@ -12,7 +12,7 @@ const attributeSchema = z
   .meta({ type: "'class' | `data-${string}`" })
 
 const feedbackSchema = z.strictObject({
-  content: reactNode.default('Question? Give us feedback').meta({
+  content: z.any().default('Question? Give us feedback').meta({
     description: 'Content of the feedback link.'
   }),
   labels: z.string().default('feedback').meta({
@@ -63,32 +63,26 @@ const themeSwitchSchema = z.strictObject({
 })
 
 const tocSchema = z.strictObject({
-  backToTop: reactNode.default('Scroll to top').meta({
+  backToTop: z.any().default('Scroll to top').meta({
     description: 'Text of back to top button.'
   }),
-  extraContent: reactNode
-    // @TODO added in zod v4
-    .optional()
-    .meta({
-      description: 'Display extra content below the TOC content.'
-    }),
+  extraContent: z.any().optional().meta({
+    description: 'Display extra content below the TOC content.'
+  }),
   float: z.boolean().default(true).meta({
     description: 'Float the TOC next to the content.'
   }),
-  title: reactNode.default('On This Page').meta({
+  title: z.any().default('On This Page').meta({
     description: 'Title of the TOC sidebar.'
   })
 })
 
 export const CustomTocLayoutPropsSchema = z.strictObject({
-  banner: reactNode
-    // @TODO added in zod v4
-    .optional()
-    .meta({
-      description:
-        'Rendered [`<Banner>` component](/docs/built-ins/banner). E.g. `<Banner {...bannerProps} />`'
-    }),
-  children: reactNode,
+  banner: z.any().optional().meta({
+    description:
+      'Rendered [`<Banner>` component](/docs/built-ins/banner). E.g. `<Banner {...bannerProps} />`'
+  }),
+  children: z.any(),
   darkMode: z.boolean().default(true).meta({
     description: 'Show or hide the dark mode select button.'
   }),
@@ -99,17 +93,14 @@ export const CustomTocLayoutPropsSchema = z.strictObject({
     .meta({
       description: 'URL of the documentation repository.'
     }),
-  editLink: reactNode.default('Edit this page').meta({
+  editLink: z.any().default('Edit this page').meta({
     description: 'Content of the edit link.'
   }),
   feedback: feedbackSchema.default(feedbackSchema.parse({})),
-  footer: reactNode
-    // @TODO added in zod v4
-    .optional()
-    .meta({
-      description:
-        'Rendered [`<Footer>` component](/docs/docs-theme/built-ins/footer). E.g. `<Footer {...footerProps} />`'
-    }),
+  footer: z.any().optional().meta({
+    description:
+      'Rendered [`<Footer>` component](/docs/docs-theme/built-ins/footer). E.g. `<Footer {...footerProps} />`'
+  }),
   i18n: z
     .array(
       z.strictObject({
@@ -126,33 +117,14 @@ export const CustomTocLayoutPropsSchema = z.strictObject({
       description:
         'Options to configure the language dropdown for [the i18n docs website](/docs/guide/i18n).'
     }),
-  lastUpdated: element
-    .default(<LastUpdated />)
-    .refine(el => el.type !== Fragment && typeof el.type !== 'string', {
-      error: `\`Layout#lastUpdated\` must be a \`<LastUpdated />\` component:
-
-\`\`\`js
-import { Layout, LastUpdated } from 'nextra-theme-docs'
-
-<Layout
-  lastUpdated={<LastUpdated locale="YOUR_LOCALE">YOUR_CONTENT</LastUpdated>}
->
-  {children}
-</Layout>
-\`\`\`
-`
-    })
-    .meta({
-      default: '<LastUpdated />',
-      description: 'Component to render the last updated info.'
-    }),
-  navbar: reactNode
-    // @TODO added in zod v4
-    .optional()
-    .meta({
-      description:
-        'Rendered [`<Navbar>` component](/docs/docs-theme/built-ins/navbar). E.g. `<Navbar {...navbarProps} />`'
-    }),
+  lastUpdated: z.any().default(<LastUpdated />).meta({
+    default: '<LastUpdated />',
+    description: 'Component to render the last updated info.'
+  }),
+  navbar: z.any().optional().meta({
+    description:
+      'Rendered [`<Navbar>` component](/docs/docs-theme/built-ins/navbar). E.g. `<Navbar {...navbarProps} />`'
+  }),
   navigation: z
     .union([
       z.boolean(),
@@ -179,7 +151,7 @@ import { Layout, LastUpdated } from 'nextra-theme-docs'
     .meta({
       description: "Page map list. Result of `getPageMap(route = '/')` call."
     }),
-  search: reactNode.default(<Search />).meta({
+  search: z.any().default(<Search />).meta({
     default: '<Search />',
     description:
       'Rendered [`<Search>` component](/docs/built-ins/search). E.g. `<Search {...searchProps} />`'
