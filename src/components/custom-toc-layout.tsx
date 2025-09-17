@@ -147,25 +147,8 @@ function ConfigProvider({ children, pageMap, navbar, footer }: {
   navbar: ReactNode
   footer: ReactNode
 }) {
-  const [mounted, setMounted] = useState(false)
-  const [pathname, setPathname] = useState('/')
-  
-  // Use useFSRoute outside of useEffect
-  let currentPathname = '/'
-  try {
-    currentPathname = useFSRoute()
-  } catch (error) {
-    // Fallback to default route during SSR
-    currentPathname = '/'
-  }
-  
-  useEffect(() => {
-    setMounted(true)
-    setPathname(currentPathname)
-  }, [currentPathname])
-
-  // Use a default route during SSR
-  const route = mounted ? pathname : '/'
+  // Use a default route for SSR
+  const route = '/'
   const normalizedPages = normalizePages({
     list: pageMap,
     route: route
@@ -535,7 +518,19 @@ type FolderProps = {
 }
 
 function Folder({ item: _item, anchors, onFocus, level }: FolderProps) {
-  const routeOriginal = useFSRoute()
+  const [mounted, setMounted] = useState(false)
+  const [routeOriginal, setRouteOriginal] = useState('/')
+  
+  useEffect(() => {
+    setMounted(true)
+    try {
+      const currentRoute = useFSRoute()
+      setRouteOriginal(currentRoute)
+    } catch (error) {
+      setRouteOriginal('/')
+    }
+  }, [])
+  
   const route = routeOriginal.split('#', 1)[0]!
 
   const item = {
@@ -686,7 +681,19 @@ function File({
   anchors: Heading[]
   onFocus: FocusEventHandler
 }) {
-  const route = useFSRoute()
+  const [mounted, setMounted] = useState(false)
+  const [route, setRoute] = useState('/')
+  
+  useEffect(() => {
+    setMounted(true)
+    try {
+      const currentRoute = useFSRoute()
+      setRoute(currentRoute)
+    } catch (error) {
+      setRoute('/')
+    }
+  }, [])
+  
   const active = item.route && [route, route + '/'].includes(item.route + '/')
   const activeSlug = useActiveAnchor()
 
@@ -999,20 +1006,25 @@ export default function CustomTocLayout(props: any) {
     setMounted(true)
   }, [])
 
+  // Extract children and other props
+  const { children, toc: tocData, metadata, ...restProps } = props
+
   // Pre-process props to ensure all required properties are present
   const processedProps = {
-    ...props,
+    ...restProps,
+    children,
+    pageMap: [], // Default empty array for pageMap
     sidebar: {
       defaultMenuCollapseLevel: 2,
       defaultOpen: true,
       toggleButton: true,
-      ...props.sidebar
+      ...restProps.sidebar
     },
     toc: {
       title: 'On This Page',
       backToTop: 'Scroll to top',
       float: true,
-      ...props.toc
+      ...restProps.toc
     }
   }
 
@@ -1020,7 +1032,6 @@ export default function CustomTocLayout(props: any) {
   const validatedProps = CustomTocLayoutPropsSchema.parse(processedProps)
   
   const {
-    children,
     banner,
     navbar,
     footer,
@@ -1055,13 +1066,14 @@ export default function CustomTocLayout(props: any) {
     navigation: typeof navigation === 'boolean' ? { next: navigation, prev: navigation } : navigation
   }
 
+  // Always render the Context Providers, even during SSR
   return (
     <ThemeConfigProvider value={themeConfig}>
       <ThemeProvider {...nextThemes}>
         <SkipNavLink />
         {banner}
         <ConfigProvider pageMap={pageMap} navbar={navbar} footer={footer}>
-          <TOCProvider toc={[]}>
+          <TOCProvider toc={tocData || []}>
             {mounted ? (
               <>
                 <MobileNav />
