@@ -139,7 +139,7 @@ function rewriteUrlsInHtml(htmlContent: string, proxyOrigin: string): string {
  * Rewrite URLs in sitemap XML content to use proxy URLs
  */
 function rewriteUrlsInSitemap(xmlContent: string, proxyOrigin: string): string {
-  // Replace docs.querypie.io with proxy origin
+  // Replace querypie-docs-v10-v9.scrollhelp.site with proxy origin
   const rewrittenXml = xmlContent.replace(/https:\/\/querypie-docs-v10-v9\.scrollhelp\.site/g, proxyOrigin);
 
   const originalCount = (xmlContent.match(/https:\/\/querypie-docs-v10-v9\.scrollhelp\.site/g) || []).length;

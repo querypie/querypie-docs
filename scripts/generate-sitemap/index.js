@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const BASE_URL = 'https://docs.querypie.io';
+const BASE_URL = 'https://docs.querypie.com';
 const CONTENT_DIR = path.join(process.cwd(), 'src', 'content');
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
 const LANGUAGES = ['en', 'ko', 'ja'];

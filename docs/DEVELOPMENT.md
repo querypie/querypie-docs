@@ -27,7 +27,7 @@ npm start
 - Vercel Project
   - https://vercel.com/querypie/querypie-docs
 - Production Deployment
-  - [ ] https://docs.querypie.com
+  - [x] https://docs.querypie.com
   - [x] https://docs.querypie.io
   - [x] https://querypie-docs.vercel.app
 - Staging Deployment
