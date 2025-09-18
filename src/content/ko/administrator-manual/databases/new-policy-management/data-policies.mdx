@@ -4,12 +4,14 @@ title: 'Data Policies'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Policies
+
+### Overview
 
 Data Policies는 QueryPie에서 데이터 접근 제어, 데이터 마스킹, 그리고 사용 사유 입력 강제화와 같은 데이터 거버넌스 정책을 설정하고 관리하는 기능입니다. 이 기능을 통해 데이터 보안, 개인정보 보호, 그리고 규정 준수를 관리할 수 있습니다.
 
 
-## 정책 생성 화면 접근하기
+### 정책 생성 화면 접근하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
@@ -20,7 +22,7 @@ Data Policies는 QueryPie에서 데이터 접근 제어, 데이터 마스킹, �
 3. 상단의  **Create Policy**  버튼을 클릭하여 정책 생성 화면으로 이동합니다.
 
 
-## 정책 기본 정보 설정하기
+### 정책 기본 정보 설정하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
@@ -33,7 +35,7 @@ Data Policies는 QueryPie에서 데이터 접근 제어, 데이터 마스킹, �
 3.  **Description** : 정책에 대한 설명을 입력합니다. (선택 사항)
 
 
-### 정책 타입 소개
+#### 정책 타입 소개
 
 QueryPie는 다음과 같은 정책 타입을 제공합니다:
 
@@ -61,7 +63,7 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
     *  Approval Rule이 생성되어 있으면 아래 그림과 같이 정책과 연계할 Approval Rule을 지정할 수 있습니다.<br/>
     * DML Query Approval Enforcement는 태그로 대상을 지정할 수 없고 specific data path로 특정 경로를 지정해야합니다.
 
-## 정책 적용 대상 설정하기
+### 정책 적용 대상 설정하기
 
 정책 생성 화면의  **User Scope**  섹션에서 정책이 적용될 사용자 범위를 설정합니다.
 
@@ -69,13 +71,13 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
 ![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 1.  **Everyone** : 모든 사용자에게 정책이 적용됩니다. (기본값)
 2.  **Users or Groups** : 선택한 특정 사용자나 그룹에게만 정책이 적용됩니다.
 3.  **Attribute of Users**  : 특정 속성이 있는 사용자에게 동적으로 정책을 적용하려는 경우 사용합니다. **[11.1.0]** 
 
-### Exclusions
+#### Exclusions
 
 정책 적용에서 제외할 대상을 설정할 수 있습니다. User scope의 scope type이  **Everyone** 인 경우만 Exclusion 대상을 지정할 수 있습니다. 정책예외(Policy Exception)를 통해 지정하는 상황과 다른 점은 정책 예외는 예외의 기간이 정해져 있지만 Exclusionㄴ 대상은 정책과 동일한 수명주기를 갖는다는 것입니다. 즉, 정책이 존재하는 기간동안 항상 적용됩니다. (정책 적용 대상 = 전체 - exclusions에 지정한 특정 사용자 또는 그룹입니다.)
 
@@ -83,7 +85,7 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
 2.  **Users and Groups** : 선택한 사용자나 그룹을 정책 적용에서 제외합니다. 
 
 
-## 정책 적용 타겟 데이터 설정하기
+### 정책 적용 타겟 데이터 설정하기
 
 정책 생성 화면의  **Data Scope**  섹션에서 정책이 적용될 데이터를 설정합니다.
 
@@ -91,7 +93,7 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
 ![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 현재는 태그 기반으로만 정책을 적용할 수 있습니다:
 
@@ -101,7 +103,7 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
     * 이 옵션을 선택한 뒤 Add tartget 버튼을 눌러 출력되는 팝업 대화창에서 Database, Schema, Table, Column을 지정할 수 있고 정규표현식을 사용할 수도 있습니다. 
 
 
-### 정책 저장하기
+#### 정책 저장하기
 
 모든 설정이 완료되면 화면 하단의  **Save**  버튼을 클릭하여 정책을 저장합니다. 저장을 취소하려면  **Cancel**  버튼을 클릭합니다.
 

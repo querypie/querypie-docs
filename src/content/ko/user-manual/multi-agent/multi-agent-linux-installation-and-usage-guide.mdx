@@ -4,11 +4,13 @@ title: 'Multi Agent Linux 설치 및 사용 가이드'
 
 import { Callout } from 'nextra/components'
 
+# Multi Agent Linux 설치 및 사용 가이드
+
 <Callout type="info">
 QueryPie Multi Agent는 FreeDesktop 환경의 Linux 플랫폼에서만 동작합니다.
 </Callout>
 
-# 지원 대상
+## 지원 대상
 
 |  **기반**  |  **배포판**  |  **최소 지원 버전**      |  **검증된 버전 (개발팀에서 검증)**  |
 | -------- | --------- | ------------------ | ----------------------- |
@@ -21,19 +23,19 @@ QueryPie Multi Agent는 FreeDesktop 환경의 Linux 플랫폼에서만 동작합
 
 *  *최소 지원 버전: glibc 2.27 을 지원하는 최소 Linux 버전* 
 
-# 설치 및 삭제 방법
+## 설치 및 삭제 방법
 
-## 설치 파일 다운로드
+### 설치 파일 다운로드
 
 QueryPie Web &gt; 프로필 &gt; Multi-Agent 를 통하여 Multi Agent 설치 파일을 다운로드받을 수 있습니다.
 
-## 선행 작업
+### 선행 작업
 
 Multi Agent는 [StatusNotifierItem](https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/) 으로 트레이 아이콘 기능을 제공합니다.
 
 다양한 리눅스 배포판에서 StatusNotifierItem 이 기본으로 노출되지 않을 수 있습니다.
 
-### 1. 설치 확인
+#### 1. 설치 확인
 
 ```
 gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
@@ -59,7 +61,7 @@ appindicatorsupport@rgcjonas.gmail.com
   State: ENABLED
 ```
 
-### 2. 설치
+#### 2. 설치
 
 다음 링크에서 AppIndicator and KStatusNotifierItem Support 를 다운로드하고, 설치하세요.
 
@@ -73,17 +75,17 @@ appindicatorsupport@rgcjonas.gmail.com
 ![image-20250404-054650.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250404-054650.png)
 </figure>
 
-## Debian 기반
+### Debian 기반
 
 dpkg 명령어를 기준으로 설명합니다.
 
-### Install
+#### Install
 
 1. `querypie-multi-agent.deb` 을 다운로드합니다.
 2. 다음 명령어를 실행하여 파일을 설치합니다.출력 예시
 3. 설치 여부를 확인합니다.출력 예시
 
-### Uninstall
+#### Uninstall
 
 터미널에서 다음 명령어를 실행합니다.
 ```
@@ -98,17 +100,17 @@ Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
 Processing triggers for desktop-file-utils (0.27-2build1) ...
 ```
 
-## RedHat 기반
+### RedHat 기반
 
 rpm 명령어를 기준으로 설명합니다.
 
-### Install
+#### Install
 
 1. `querypie-multi-agent.rpm` 을 다운로드합니다.
 2. 터미널에서 다음 명령어를 실행하여 파일을 설치합니다.출력 예시
 3. 설치 여부를 확인합니다.출력 예시
 
-### Uninstall
+#### Uninstall
 
 터미널에서 다음 명령어를 실행합니다.
 ```
@@ -122,7 +124,7 @@ QueryPie Multi Agent has been uninstalled.
 ```
 
 
-## Keyring
+### Keyring
 
 <Callout type="important">
 Ubuntu 를 기준으로 설명합니다.
@@ -146,9 +148,9 @@ Unlock 버튼으로 잠금을 해제해두면 실행 단계에서 관리자 권�
 ![image-20250403-080814.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080814.png)
 </figure>
 
-# Troubleshooting
+## Troubleshooting
 
-## Multi Agent 내 링크를 클릭했는데, 반응이 없습니다.
+### Multi Agent 내 링크를 클릭했는데, 반응이 없습니다.
 
 Default Browser를 설정하지 않으면 링크가 열리지 않습니다. 브라우저 내 설정에서 기본 브라우저를 설정하시기 바랍니다.
 

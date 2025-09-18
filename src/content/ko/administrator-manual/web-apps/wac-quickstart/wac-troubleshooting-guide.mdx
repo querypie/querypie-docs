@@ -2,16 +2,18 @@
 title: 'WAC 트러블슈팅 가이드'
 ---
 
+# WAC 트러블슈팅 가이드
+
 본 문서에서는 WAC 사용 도중 생길 수 있는 문제들과 해결책을 안내합니다.
 
-### Extension (QueryPie Web Secure) 설치 직후 테스트에서 접근 정책이 적용되지 않거나 오딧 로그가 누락되는 경우
+#### Extension (QueryPie Web Secure) 설치 직후 테스트에서 접근 정책이 적용되지 않거나 오딧 로그가 누락되는 경우
 
 WAC 익스텐션 설치 전에 열려 있던 탭들에 대해서는 관리가 보장되지 않습니다.
 
 이러한 상황을 예방하기 위하여, 기존에 열려있던 모든 브라우저 탭 및 창을 닫은 후에 익스텐션을 설치하시기 바랍니다.
 
 
-### WebApp 에 접속이 안되고, 브라우저에`ERR_TIMED_OUT`에러 메세지가 표시되는 경우
+#### WebApp 에 접속이 안되고, 브라우저에`ERR_TIMED_OUT`에러 메세지가 표시되는 경우
 
 <figure data-layout="center" data-align="center">
 ![image-20250401-011848.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png)
@@ -99,7 +101,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 </figure>
 
 
-### PC가 장시간 잠자기 모드에서 깨어났을 때, 크롬 브라우저에서 관리하는 로그인 창이 노출되는 경우
+#### PC가 장시간 잠자기 모드에서 깨어났을 때, 크롬 브라우저에서 관리하는 로그인 창이 노출되는 경우
 
 PC가 잠자기 모드로 진입하였다 깨어난 경우 크롬 브라우저에서 관리하는 로그인 창이 노출될 수 있습니다.
 
@@ -114,7 +116,7 @@ PC가 잠자기 모드로 진입하였다 깨어난 경우 크롬 브라우저�
 3. 크롬 브라우저에서 관리하는 로그인 창이 표시된 탭을 새로고침 합니다.
 
 
-### QueryPie API 서버 장애로 인해 웹 브라우저 내에서 마우스 클릭이 먹통이 된 경우
+#### QueryPie API 서버 장애로 인해 웹 브라우저 내에서 마우스 클릭이 먹통이 된 경우
 
 QueryPie API 서버의 장애가 발생하는 경우 웹 브라우저 내에서 계속해서 마우스 클릭이 되지 않을 수 있습니다.
 
@@ -130,7 +132,7 @@ QueryPie API 서버의 장애가 발생하는 경우 웹 브라우저 내에서 
 QueryPie API 서버의 정상화 후에는 다시 익스텐션을 사용하실 수 있습니다. 익스텐션을 활성화한 후, 재설정을 수행하시기를 권장드립니다.
 
 
-### QueryPie Web Secure 로그 추출 방법
+#### QueryPie Web Secure 로그 추출 방법
 
 QueryPie Web Secure (Extension)에 문제가 생겼을 경우 관련 로그를 추출하는 방법을 안내합니다.
 

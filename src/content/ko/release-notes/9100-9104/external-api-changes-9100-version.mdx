@@ -2,22 +2,24 @@
 title: 'External API 변경사항 (9.10.0 버전)'
 ---
 
+# External API 변경사항 (9.10.0 버전)
+
 ---
 
-## 이전 버전 OpenAPI Specification JSON 참고 문서 (9.9.5 기준)
+### 이전 버전 OpenAPI Specification JSON 참고 문서 (9.9.5 기준)
 
 
 :paperclip: [external_9_9_5.json](external_9_9_5.json)
 ---
 
-## 삭제된 External API
+### 삭제된 External API
 
 * Approval Rule API
     * Create
     * Update
 ---
 
-## 추가된 External API
+### 추가된 External API
 
 * Workflow API (기존 Access Approval API 와 Approval API 를 대체합니다.)
     * [Access Request] Detail
@@ -38,7 +40,7 @@ title: 'External API 변경사항 (9.10.0 버전)'
     * Edit approval rule
 ---
 
-## 변경된 External API
+### 변경된 External API
 
 * Access Approval API
     * List of Access Approval
@@ -48,7 +50,7 @@ title: 'External API 변경사항 (9.10.0 버전)'
     * List of Approval
 ---
 
-### Access Approval API - List of Access Approval
+#### Access Approval API - List of Access Approval
 
 `GET /api/external/access-approvals`
 
@@ -191,7 +193,7 @@ Response 변경 후 예시
 
 ---
 
-### Approval Rule API - Detail
+#### Approval Rule API - Detail
 
 `GET /api/external/approval-rules/{uuid}`
 
@@ -259,7 +261,7 @@ Response 변경 후 예시
 
 ---
 
-### Approval API - List of Approval
+#### Approval API - List of Approval
 
 `GET /api/external/approvals`
 

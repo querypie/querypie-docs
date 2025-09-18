@@ -4,19 +4,21 @@ title: 'MongoDB 전용 가이드'
 
 import { Callout } from 'nextra/components'
 
+# MongoDB 전용 가이드
+
 <Callout type="info">
 MongoDB 전용 상세 설정 가이드를 이곳에서 제공합니다.
 </Callout>
 
-## MongoDB 커넥션 등록하기
+### MongoDB 커넥션 등록하기
 
 MongoDB는 단일 호스트로 구성되는 경우 보다 Replica Set 또는 Sharded Cluster(Sharding)형태의 멀티 호스트 구조를 사용하는 경우가 많습니다. 이 경우 멀티 호스트 방식의 커넥션을 생성해야합니다.
 
-### 1. MongoDB의 기본적인 Connection String 구조 이해하기
+#### 1. MongoDB의 기본적인 Connection String 구조 이해하기
 
 MongoDB의 connection string은 standard, +srv 두가지가 있습니다.
 
-#### &lt; Standard connection string의 구조 &gt;
+##### &lt; Standard connection string의 구조 &gt;
 
 ```
 mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port]..../?[options]
@@ -31,7 +33,7 @@ replica set 을 사용하는 경우 /? 뒤에 replicaSet=[replica set 이름] �
 </Callout>
 
 
-#### &lt; +srv connection string의 구조 &gt;
+##### &lt; +srv connection string의 구조 &gt;
 
 ```
 mongodb+srv://<FQDN>/?[options]
@@ -45,7 +47,7 @@ mongodb+srv://<FQDN>/?[options]
 +srv 는 클러스터에 포함되어 있는 각각의 호스트의 주소가 동적으로 바뀔 수 있기 때문에 QueryPie에서 +srv를 직접 커넥션에 사용할 수는 없고 standard connection string으로 변환해서 사용하게 됩니다. 이런 변환과정으로 인해 현재 +srv 를 사용하여 접속하는 경우 하위 인스턴스에 직접 접속은 지원하지 않습니다. 그럼에도 불구하고 +srv 접속 환경의 하위 호스트에 대한 직접 접속이 필요한 경우, 사용자가 nslookup 명령을 사용하여 DNS 조회를 통해 각 호스트 정보를 확인 후 별도 standard connection string을 사용한 커넥션을 생성해서 접속을 해야합니다.
 </Callout>
 
-### 2. MongoDB 커넥션 생성하기
+#### 2. MongoDB 커넥션 생성하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
@@ -58,9 +60,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. 우측 상단의 `Create Connection` 버튼을 클릭합니다.
 3. 데이터 소스 선택 단계에서 mongoDB를 선택합니다.
 
-### 3. Replica Set 형태로 설정하기
+#### 3. Replica Set 형태로 설정하기
 
-#### &lt; Standard Connection &gt;
+##### &lt; Standard Connection &gt;
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
@@ -95,7 +97,7 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 �
 </Callout>
 ---
 
-#### &lt; +srv Connection &gt;
+##### &lt; +srv Connection &gt;
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
@@ -118,7 +120,7 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 �
 6. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
 7. `Next` 버튼을 통해 마무리하고 저장합니다
 
-### 4. Sharded Cluster(Sharding) 형태로 설정하기
+#### 4. Sharded Cluster(Sharding) 형태로 설정하기
 
 Sharded Cluster는 Replica Set과 Connection String의 옵션만 다르고 설정 방법은 같습니다. Replica Set은 replicaSet=[replica set name] 옵션이 필요하지만 Sharded Cluster는 이 옵션이 필요 없습니다.
 
@@ -126,7 +128,7 @@ Sharded Cluster는 Replica Set과 Connection String의 옵션만 다르고 설�
 ![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
 </figure>
 
-#### &lt; Standard Connection &gt;
+##### &lt; Standard Connection &gt;
 
 1. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 Primary 값을 유지합니다.
@@ -144,7 +146,7 @@ Sharded Cluster는 Replica Set과 Connection String의 옵션만 다르고 설�
 7. `Next` 버튼을 통해 마무리하고 저장합니다.
 ---
 
-#### &lt; +srv Connection &gt;
+##### &lt; +srv Connection &gt;
 
 standard string으로 변환된 뒤 tls=true 옵션만 Other options에 잘 넣어주면 됩니다. replica set 설정과 차이가 없습니다.
 
@@ -152,7 +154,7 @@ standard string으로 변환된 뒤 tls=true 옵션만 Other options에 잘 넣�
 Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 확인하실 수 있습니다.
 </Callout>
 
-## Proxy를 사용하는 경우 TLS(SSL) 설정
+### Proxy를 사용하는 경우 TLS(SSL) 설정
 
 위에서 안내된 바와 같이 QueryPie의 SQL editor를 사용하여 접속하는 경우 커넥션 스트링에 tls=true가 필요합니다.
 
@@ -167,7 +169,7 @@ Proxy를 사용하는 경우 DataGrip등의 SQL Client에서 TLS 설정과 별�
 ---
 
 
-## MongoDB 데이터 정책 및 규칙 설정
+### MongoDB 데이터 정책 및 규칙 설정
 
 MongoDB 에 개인정보 또는 민감정보와 같이 접근 제한이 필요한 데이터는 조회 시 해당 데이터를 확인할 수 없도록 Collection, JSON Value에 대해 데이터 접근 제한 및 마스킹 정책을 설정할 수 있습니다. QueryPie에서 지원하는 DBMS 중 MongoDB의 경우 항상 데이터를 JSON 형태로 저장하기 때문에 별도의 포맷팅 로직을 사용하게 됩니다.
 
@@ -177,7 +179,7 @@ MongoDB 에 개인정보 또는 민감정보와 같이 접근 제한이 필요�
 * [Data Masking](../../policies/data-masking)
 * [Data Access](../../policies/data-access)
 
-### 마스킹 정책에 규칙 등록하기
+#### 마스킹 정책에 규칙 등록하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
@@ -201,7 +203,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
         1. Allowed Users : 해당 규칙을 예외처리할 사용자 또는 그룹을 선택합니다.
     6. `Ok` 버튼 통해 저장합니다.
 
-### Collection / JSON Value 접근 제한 정책에 규칙 등록하기
+#### Collection / JSON Value 접근 제한 정책에 규칙 등록하기
 
 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다.
 
@@ -224,7 +226,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 해당 데이터를 조회하면, 테이블에 정책이 적용된 경우 테이블 자체를 조회할 수 없고, 컬럼에 규칙이 적용된 경우 *`{RESTRICTED}`* 로 표시됩니다.
 
-### JSON PATH 예시
+#### JSON PATH 예시
 
 정책을 적용할 MongoDB의 데이터의 예시는 다음과 같습니다.
 ```
@@ -241,7 +243,7 @@ Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이�
 }
 ```
 
-#### Case 1. item 속성 접근 제한
+##### Case 1. item 속성 접근 제한
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
@@ -258,7 +260,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 위 스크린샷과 같이 item(“T_PWD”) 속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
-#### Case 2. size.h 속성 접근 제한
+##### Case 2. size.h 속성 접근 제한
 
 size하위의 h속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.size.h을 입력 후 `OK` 버튼을 클릭합니다.
 
@@ -275,7 +277,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 위 스크린샷과 같이 size 하위의 h속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
-#### Case 3. size 하위 모든 속성 접근 제한
+##### Case 3. size 하위 모든 속성 접근 제한
 
 size 하위의 모든 속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.size을 입력 후 `OK` 버튼을 클릭합니다.
 
@@ -292,7 +294,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 위 스크린샷과 같이 size 하위의 모든속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
 
-#### Case 4. tags 속성의 리스트 2번째 값에 대한 접근 제한
+##### Case 4. tags 속성의 리스트 2번째 값에 대한 접근 제한
 
 tags속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 “Column Name” 항목에 $.tags[1]을 입력 후 `OK` 버튼을 클릭합니다.
 

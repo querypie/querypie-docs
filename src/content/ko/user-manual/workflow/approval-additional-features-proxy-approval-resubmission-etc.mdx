@@ -4,12 +4,14 @@ title: '결재 부가 기능 (대리 결재, 재상신 등)'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# 결재 부가 기능 (대리 결재, 재상신 등)
+
+### Overview
 
 Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
 
 
-## 참조된 요청 확인 처리하기
+### 참조된 요청 확인 처리하기
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Reviews &gt; All Reviews &gt; Review Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png)
@@ -27,11 +29,11 @@ Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
 
 
 
-## 대리 결재 사용하기
+### 대리 결재 사용하기
 
 대리 결재란 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.
 
-### 1. 대리 결재 사용 설정하기
+#### 1. 대리 결재 사용 설정하기
 
 <figure data-layout="center" data-align="center">
 ![User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png)
@@ -46,7 +48,7 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 *  **Delegation Reason**  : 대리 결재 설정 사유 입력 
 *  **Save**  : `Save` 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 `Save` 즉시 적용됩니다.
 
-### 2. 대리 결재 설정 상태 확인하기
+#### 2. 대리 결재 설정 상태 확인하기
 
 대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.
 <figure data-layout="center" data-align="center">
@@ -65,7 +67,7 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.
 </Callout>
 
-### 3. 위임받은 대리 결재 요청 처리하기
+#### 3. 위임받은 대리 결재 요청 처리하기
 
 * 대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. 
     *  **Received Requests &gt; To Do**  : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함
@@ -76,7 +78,7 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 ![screenshot-20240802-124638.png](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png)
 </figure>
 
-### 4. 대리 결재 처리된 요청 건 확인하기
+#### 4. 대리 결재 처리된 요청 건 확인하기
 
 * 다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다. 
 **원 결재자가 처리한 경우**
@@ -97,12 +99,12 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한 내용은 [Slack DM 개인 알림 사용하기](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types) 문서를 참고해주세요.
 </Callout>
 
-### 5. 대리 결재 설정 종료 이후의 기안 조회 방법
+#### 5. 대리 결재 설정 종료 이후의 기안 조회 방법
 
 * 대리 결재 설정 기간이 종료되었다 하더라도 Received Requests &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다. 
 
 
-## 기존 요청 건 재상신하기
+### 기존 요청 건 재상신하기
 
 동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다.
 

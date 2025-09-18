@@ -4,11 +4,13 @@ title: '[Okta] 프로비저닝 연동 가이드'
 
 import { Callout } from 'nextra/components'
 
+# [Okta] 프로비저닝 연동 가이드
+
 <Callout type="info">
 본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다. 본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다.
 </Callout>
 
-## Prerequisites
+### Prerequisites
 
 * Okta IAM 서비스의  **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
 * Okta 관리자 콘솔(Okta Admin Console)에 접근하여 App을 만들고 사용자/그룹을 앱에 할당할 수 있는 권한이 요구됩니다. 
@@ -29,12 +31,12 @@ import { Callout } from 'nextra/components'
 Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인 경우, [Okta 연동하기](../authentication/integrating-with-okta) 페이지 내 절차대로 대신 진행하여 주시기 바랍니다. SCIM과 동시에 활성화 시, 사용자 동기화에 영향을 받을 수 있으므로 유의하시기 바랍니다.
 </Callout>
 
-## Integration Steps
+### Integration Steps
 
 상위 사전 작업이 모두 마무리되면 이하의 순차에 따라 SCIM 연동을 수행합니다.
 ---
 
-### Okta 커스텀 SCIM앱 생성
+#### Okta 커스텀 SCIM앱 생성
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
@@ -67,7 +69,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 
 ---
 
-### Okta-QueryPie Provisioning 연동
+#### Okta-QueryPie Provisioning 연동
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
@@ -94,7 +96,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 
 ---
 
-### SCIM API 활성화 및 체크
+#### SCIM API 활성화 및 체크
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
@@ -142,7 +144,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 
 ---
 
-### 사용자 Provisioning 체크
+#### 사용자 Provisioning 체크
 
 1. SCIM 앱으로 다시 돌아가서 Assignments 탭에서 `Assign` 버튼의 옵션을 통해 사용자를 할당합니다. 
     1.  **Assign to People**  : 사용자 개별 단위로 할당 
@@ -150,7 +152,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Users로 이동하여 사용자가 정상 푸시되었는지 확인합니다. 
 ---
 
-### 그룹 Provisioning 체크
+#### 그룹 Provisioning 체크
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)

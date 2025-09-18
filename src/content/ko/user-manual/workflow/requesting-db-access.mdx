@@ -4,14 +4,16 @@ title: 'DB Access Request 요청하기'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# DB Access Request 요청하기
+
+### Overview
 
 아래 순서에 따라 접근이 필요한 DB 커넥션에 대한 Privilege를 요청할 수 있습니다. 요청 후 승인이 완료될 경우 즉시 권한이 부여되며 QueryPie Web에 있는 SQL Editor 또는 Agent를 통해 권한을 받은 커넥션에 접속할 수 있습니다.
 
 
-## DB Access Request 요청하기
+### DB Access Request 요청하기
 
-### 1. 결재 규칙 선택하기
+#### 1. 결재 규칙 선택하기
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
@@ -22,7 +24,7 @@ import { Callout } from 'nextra/components'
 ![Screenshot-2025-08-26-at-12.21.07-AM.png](/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.21.07-AM.png)
 </figure>
 
-### 2. 승인자 지정하기
+#### 2. 승인자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다. 
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
@@ -34,7 +36,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-154729.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-154729.png)
 </figure>
 
-### 3. 참조자 지정하기
+#### 3. 참조자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다. 
     * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다. 
@@ -45,7 +47,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-171350.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-171350.png)
 </figure>
 
-### 4. 사후 승인으로 요청 보내기
+#### 4. 사후 승인으로 요청 보내기
 
 * 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다. 
 * Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
@@ -59,7 +61,7 @@ import { Callout } from 'nextra/components'
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
 </Callout>
 
-### 5. 요청 정보 입력하기
+#### 5. 요청 정보 입력하기
 
 *  **Title**  : 요청 제목을 입력합니다. 
 *  **Access Expiration Date**  : 요청 권한의 만료일자를 입력합니다. 기본값은 관리자 페이지에서 DAC configurations의 Maximum Access Duration 값을 따릅니다. 
@@ -72,7 +74,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
 </figcaption>
 </figure>
 
-### 6. 요청할 DB 커넥션 선택 및 권한 지정하기
+#### 6. 요청할 DB 커넥션 선택 및 권한 지정하기
 
 * Request Summary 영역 내 테이블에는 현재 QueryPie에 등록되어 있는 DB 커넥션 목록이 표시됩니다. 
     *  **Privilege Type**  : 특정 DB 커넥션에 요청할 Privilege Type을 지정하면 그 값이 표시됩니다. 

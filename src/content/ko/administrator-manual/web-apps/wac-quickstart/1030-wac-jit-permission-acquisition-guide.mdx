@@ -4,6 +4,8 @@ title: '[10.3.0 ~] WAC JIT 권한 획득 Guide'
 
 import { Callout } from 'nextra/components'
 
+# [10.3.0 ~] WAC JIT 권한 획득 Guide
+
 QueryPie WAC을 통한 Web Apps에 대한 JIT(Just-in-Time) 권한 획득 사용법을 안내하겠습니다.
 
 JIT 권한 획득은 아래와 같은 순서로 이루어집니다.
@@ -22,9 +24,9 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 </Callout>
 
 
-# Admin-side
+## Admin-side
 
-## 1. 웹 앱 등록하기
+### 1. 웹 앱 등록하기
 
 1. Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps 메뉴로 진입합니다.
 2. `Create a Web App` 버튼을 클릭하면 웹 앱 등록 페이지로 진입합니다.
@@ -51,7 +53,7 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 7. Tag : 웹 앱에 대한 태그입니다. 여기서는 비워 둡니다.
 8. `Save` 버튼을 눌러 저장합니다.
 
-## 2. Web App Owner / Member 등록하기
+### 2. Web App Owner / Member 등록하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
@@ -67,7 +69,7 @@ JIT(Just-in-Time) 권한 부여에는 아래 두 역할이 있습니다.
 * Member: 이 웹 앱에 대한 Just-in-time 요청을 상신할 수 있는 주체
 </Callout>
 
-## 3. 이용자의 JIT Web App 접속 권한 신청
+### 3. 이용자의 JIT Web App 접속 권한 신청
 
 <Callout type="info">
 QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다.
@@ -113,7 +115,7 @@ JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다
 * 사후 승인 모드는 Approval Configuration 에서 활성화된 경우에 나타나며 Off하면 요청 화면에서 나타나지 않습니다.
 </Callout>
 
-## 4. 결재권자의 JIT Web App 접속 권한 요청 승인
+### 4. 결재권자의 JIT Web App 접속 권한 요청 승인
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-072925.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-072925.png)
@@ -125,7 +127,7 @@ JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다
 4. 상단의 Approve를 클릭합니다.
 
 
-## 5. QueryPie를 통하여 웹 앱 접근하기
+### 5. QueryPie를 통하여 웹 앱 접근하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)

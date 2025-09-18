@@ -2,7 +2,9 @@
 title: 'General'
 ---
 
-## Overview
+# General
+
+### Overview
 
 General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
 
@@ -13,7 +15,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 </figcaption>
 </figure>
 
-## 기본 설정
+### 기본 설정
 
 *  **Company Name**  : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
 *  **Web Base URL**  : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
@@ -24,7 +26,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 *  **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. 
 
 
-## System Properties
+### System Properties
 
 System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할 수 있습니다.
 
@@ -36,7 +38,7 @@ Administrator &gt; General &gt; Company Management &gt; General &gt; System Prop
 </figure>
 
 
-## Workflow Configuration
+### Workflow Configuration
 
 Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
 
@@ -44,7 +46,7 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
 ![Screenshot-2025-08-25-at-5.36.19-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png)
 </figure>
 
-## 최대 승인 기간 설정
+### 최대 승인 기간 설정
 
 모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.
 
@@ -52,7 +54,7 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
 
 * Admin &gt; Databases &gt; Configurations의 Maximum Access Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다. 
 
-## 워크플로우 사유입력 글자 수 제한 설정
+### 워크플로우 사유입력 글자 수 제한 설정
 
 워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및 최대 글자 수를 설정하는 기능입니다. 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
 
@@ -61,7 +63,7 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
     * Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 300자)
 * 글자 수 범위는 최소 3자에서 최대 1000자 사이에서만 설정할 수 있습니다.
 
-## 참조자 지정 활성화
+### 참조자 지정 활성화
 
 Activate Review Step to collaborate with others 토글로 활성화합니다.
 
@@ -69,7 +71,7 @@ Activate Review Step to collaborate with others 토글로 활성화합니다.
 * 토글을 켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.
 * 토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
 
-## 사후 승인 허용
+### 사후 승인 허용
 
 Allow users to submit requests in Urgent mode 토글로 활성화합니다.
 
@@ -79,7 +81,7 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
     * Submit Request : 요청 생성 화면의 결재 규칙 지정 영역
 * 토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아 있으며, 실행 가능합니다.
 
-## Attribute 기반 승인자 지정 기능
+### Attribute 기반 승인자 지정 기능
 
 Use User Attribute-Based Approval 토글을 활성화합니다.
 
@@ -116,7 +118,7 @@ Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurat
     * 만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.
         * 에러 메세지 예시:
 
-## Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow Menu)
+### Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow Menu)
 
 Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 
@@ -130,7 +132,7 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 * 여기에 설정된 `Key:Value` 조건과 일치하는 사용자는 사용자 대시보드에 `Workflow` 메뉴가 표시되지 않습니다.
 *  **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
 
-## SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
+### SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
 
 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
 
@@ -145,7 +147,7 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
     * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. 
 *  **Query throttle interval** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
 
-## Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
+### Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
 
 Redirect to custom page for SQL Requests 토글을 활성화합니다.
 
@@ -162,7 +164,7 @@ Redirect to custom page for SQL Requests 토글을 활성화합니다.
     * Administrator &gt; General &gt; Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 표시되지 않습니다.
     * User Agent 사용자가 Ledger 테이블에 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, `Send Request` 버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다
 
-## 워크플로우 Request 타입별 사용자 노출 제어 기능
+### 워크플로우 Request 타입별 사용자 노출 제어 기능
 
 Select Request Types Allowed for Users 토글을 활성화합니다.
 
@@ -188,7 +190,7 @@ Select Request Types Allowed for Users 토글을 활성화합니다.
         * 기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.
         * Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.
 
-## DB access 요청 권한 별 결재선 지정 기능
+### DB access 요청 권한 별 결재선 지정 기능
 
 Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval Rule)을 특정할 수 있도록 하려면 “Use DB Privilege Type Based Approval” 토글을 활성화합니다.
 
@@ -212,7 +214,7 @@ Use DB Privilege Type Based Approval
 *   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.
 *  **Approval Rule**  : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.
 
-### Routing Rule 지정 예시
+#### Routing Rule 지정 예시
 
 * 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 모두 “Read-Only” 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 `Add` 버튼을 누릅니다.
     * Condition: All Match 선택.
@@ -223,7 +225,7 @@ Use DB Privilege Type Based Approval
     * Requested Privilege Type : Read/Write 선택.
     * Approval Rule : 강제하기 원하는 Approval Rule 선택.
 
-## SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
+### SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
 
 Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 “Attach Explain Results” 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.
 

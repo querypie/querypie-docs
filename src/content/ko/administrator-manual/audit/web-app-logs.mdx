@@ -2,11 +2,13 @@
 title: 'Web App Logs'
 ---
 
-## Overview
+# Web App Logs
+
+### Overview
 
 QueryPie에서의 모든 웹앱을 감사 로그에 기록합니다. 사용자와 관리자의 로그인/로그아웃, 권한 부여와 회수, 웹애플리케이션에 대한 수행 이력, 리소스 또는 보안 설정 변경 등 QueryPie와 접근제어 대상 리소스에서 발생하는 모든 활동 이력이 로그의 대상입니다. 실시간으로 기록되는 로그에 대해 다양한 조건으로 검색 및 필터링이 가능합니다.
 
-## 연관 감사 로그 종류
+### 연관 감사 로그 종류
 
 웹앱과 공통으로 제공되는 감사 로그에 더하여 웹앱 쿠버네티스 접근제어 (QueryPie WAC) 리이슨스 보류, 시, 아래와 감사 로그의 종류 제공합니다.
 
@@ -39,13 +41,13 @@ QueryPie에서의 모든 웹앱을 감사 로그에 기록합니다. 사용자�
 </tbody>
 </table>
 
-## 1. General
+### 1. General
 
 * Access Control Logs : 접근 제어 관련 로그, 로그인과 이력
 * Policy Audit Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
 * Policy Exception Logs : 관리자 권한 부여, 변경, 회수 이력
 
-## 2. Web Apps
+### 2. Web Apps
 
 * Web Access History : 웹 애플리케이션 접근 이력 내역
 * Web Event Audit : 웹 애플리케이션 이벤트 감사 내역

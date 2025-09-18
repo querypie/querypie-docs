@@ -4,12 +4,14 @@ title: 'User Agent'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# User Agent
+
+### Overview
 
 QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
 
 
-## 에이전트 앱 다운로드 및 실행하기
+### 에이전트 앱 다운로드 및 실행하기
 
 1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download` 버튼을 클릭합니다.
 
@@ -52,7 +54,7 @@ Agent &gt; QueryPie Host 입력
 </figure>
 
 
-## QueryPie Agent에 로그인하기
+### QueryPie Agent에 로그인하기
 
 1. Agent 앱 내 로그인 화면에서 `Login` 버튼을 클릭합니다.
 
@@ -87,7 +89,7 @@ Chrome - Agent App 열기 모달
 </figcaption>
 </figure>
 
-## 에이전트로 데이터베이스 접속하기
+### 에이전트로 데이터베이스 접속하기
 
 1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.<br/>접속할 커넥션에 할당된 `Port` 를 클릭하면, 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.
 
@@ -108,11 +110,11 @@ Agent &gt; DB Connection Information
 </figure>
 
 
-## 에이전트를 통한 서버 접속
+### 에이전트를 통한 서버 접속
 
 로그인이 정상적으로 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.
 
-### 1. 서버 역할 선택하기
+#### 1. 서버 역할 선택하기
 
 * 사용자 프로필 영역 하단의 `Role` 버튼을 클릭하여 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
 * Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. 
@@ -128,7 +130,7 @@ Agent &gt; Server &gt; Select a Role
 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
 </Callout>
 
-### <br/>2.Agent로 서버 접속하기
+#### <br/>2.Agent로 서버 접속하기
 
 * 접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
 
@@ -149,7 +151,7 @@ Agent &gt; Server &gt; Open New Session
 </figcaption>
 </figure>
 
-### 3. Seamless SSH 설정하기
+#### 3. Seamless SSH 설정하기
 
 Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
 
@@ -185,7 +187,7 @@ $ ssh deploy@{{Server Name}}
 ```
 
 
-## 에이전트를 통한 쿠버네티스 접속
+### 에이전트를 통한 쿠버네티스 접속
 
 <figure data-layout="center" data-align="center">
 ![kubernetes-agent-access-flow.png](/user-manual/user-agent/kubernetes-agent-access-flow.png)
@@ -196,7 +198,7 @@ $ ssh deploy@{{Server Name}}
 * 에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.
 * 또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.
 
-### 1. Kubernetes 역할 선택하기
+#### 1. Kubernetes 역할 선택하기
 
 사용자 프로필 영역 하단의 `Role` 버튼을 클릭하면 역할 선택 모달이 열립니다. 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
 
@@ -212,7 +214,7 @@ Agent &gt; Kubernetes &gt; Select a Role
 </Callout>
 
 
-### 2. Policy 조회하기
+#### 2. Policy 조회하기
 
 선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 `🔍` 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.
 
@@ -223,7 +225,7 @@ Agent &gt; Policy Information
 </figcaption>
 </figure>
 
-### 3. Kubeconfig 경로 설정하기
+#### 3. Kubeconfig 경로 설정하기
 
 Agent 설정 메뉴에서 `KubeConfig Path` 버튼을 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.
 
@@ -271,10 +273,10 @@ export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
 
 
-## QueryPie Agent 세팅 초기화하기
+### QueryPie Agent 세팅 초기화하기
 
 세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다.
-### Agent 내 설정 메뉴에서 초기화
+#### Agent 내 설정 메뉴에서 초기화
 
 프로필 영역 우측 `⚙️` 버튼을 클릭하여 설정 메뉴를 엽니다. `Reset All Settings` 버튼을 클릭합니다.
 
@@ -286,7 +288,7 @@ Agent &gt; Settings
 </figure>
 
 
-### (Mac) 메뉴 막대 내 앱 메뉴에서 초기화
+#### (Mac) 메뉴 막대 내 앱 메뉴에서 초기화
 
 메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다. `Reset All Settings` 버튼을 클릭합니다.
 

@@ -4,12 +4,14 @@ title: 'AWS에서 쿠버네티스 리소스 동기화'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# AWS에서 쿠버네티스 리소스 동기화
+
+### Overview
 
 QueryPie에서는 쿠버네티스 클러스터 등록 및 관리를 위한 AWS 연동을 지원합니다. AWS 내의 리소스를 동기화하여 QueryPie에서 관리하는 클러스터로 등록하고, 사용자 및 그룹에 동기화 해온 클러스터에 대한 쿠버네티스 API 접근 권한을 부여하고 정책을 설정할 수 있습니다.
 
 <Callout type="info">
-### 사전 준비사항
+#### 사전 준비사항
 
 1. AWS 리소스와의 동기화를 위해 QueryPie 인스턴스에 할당된 AWS IAM 역할에 필요한 정책 작업을 첨부했는지 확인하십시오. 정책에 다음 작업을 모두 포함해야합니다:
 
@@ -23,7 +25,7 @@ QueryPie에서는 쿠버네티스 클러스터 등록 및 관리를 위한 AWS �
 </Callout>
 
 
-## AWS EKS 인증 모드 수정하기
+### AWS EKS 인증 모드 수정하기
 
 QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 EKS access entry API를 활용합니다. 따라서, 클러스터 인증 모드가 ConfigMap으로만 설정되어 있다면 연결이 어려운 부분이 있어 원활한 동기화를 위해 AWS 콘솔에서 모드 변경을 사전에 작업해두시는 것을 권장드립니다.
 
@@ -45,7 +47,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 8. `Save changes`를 눌러 변경사항을 저장합니다. 
 
 
-## QueryPie에서 AWS 연동 정보 등록하기
+### QueryPie에서 AWS 연동 정보 등록하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
@@ -78,7 +80,7 @@ A. 이미  **Credential** 이 `Default Credentials`이면서 동일한 `Region`�
 </Callout>
 
 
-## 등록된 AWS Cloud Provider 동기화 및 관리
+### 등록된 AWS Cloud Provider 동기화 및 관리
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
@@ -102,7 +104,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     7.  **Replication**   **Frequency** : 변경 가능
 
 
-## Dry Run/Synchronization Log 표기 문구
+### Dry Run/Synchronization Log 표기 문구
 
 |                                                                                                                                                                            |  **발생 시점**                                                                         |  **문구**                                                                                                                                                   |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |

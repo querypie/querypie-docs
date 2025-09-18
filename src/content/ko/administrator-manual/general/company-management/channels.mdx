@@ -4,11 +4,13 @@ title: 'Channels'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Channels
+
+### Overview
 
 Channels 페이지에서는 QueryPie에서 발송하는 알림을 수신할 채널을 등록 및 관리합니다. 현재 QueryPie에서 제공하는 채널 타입은 Slack, Agit, HTTP, Email의 네 가지이며, 채널 등록 사전에 연동을 위한 작업이 필요합니다.
 
-## 등록된 채널 조회하기
+### 등록된 채널 조회하기
 
 Administrator &gt; General &gt; Company Management &gt; Channels 페이지에서 현재 등록된 채널 목록을 조회할 수 있습니다. 채널명으로 검색이 가능하며, Channel Type으로 필터링할 수 있습니다.
 
@@ -29,7 +31,7 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Detai
 </figure>
 
 
-## 채널 등록하기
+### 채널 등록하기
 
 Channels 페이지 우상단 `Create Channel` 버튼을 클릭하면 채널 생성 모달이 노출됩니다.
 
@@ -47,7 +49,7 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Cha
     * HTTP : Zapier, Okta Workflows 등 HTTP API에 직접 요청하는 방식
     * Email : 이메일로 알림 전송
 
-### Channel Type을`Slack`으로 선택한 경우
+#### Channel Type을`Slack`으로 선택한 경우
 
 채널 생성을 위한 입력 내용은 다음과 같습니다.
 
@@ -64,14 +66,14 @@ Slack App의 자세한 설정 방법은 문서 하단의  **Slack 연동을 위�
         * Request URL (필수) : 요청을 보낼 URL 
             * Slack App에서 Webhook 설정 후, Webhook URL 정보를 복사하여 붙여넣기 해야 함
 
-### Channel Type을`Agit`로 선택한 경우
+#### Channel Type을`Agit`로 선택한 경우
 
 채널 생성을 위한 입력 내용은 다음과 같습니다.
 
 *  **Request URL**  (필수) : 요청을 보낼 URL
 *  **Agit Channel**  : 아지트 채널에 대해 표시할 이름 입력
 
-### Channel Type을`HTTP`로 선택한 경우
+#### Channel Type을`HTTP`로 선택한 경우
 
 채널 생성을 위한 입력 내용은 다음과 같습니다.
 
@@ -81,7 +83,7 @@ Slack App의 자세한 설정 방법은 문서 하단의  **Slack 연동을 위�
     * 기본값 : `{{message}}`
     * Alert에서 정의되는 메시지의 앞뒤에 공통으로 추가하려는 내용을 기입
 
-### Channel Type을`Email`로 선택한 경우
+#### Channel Type을`Email`로 선택한 경우
 
 <Callout type="important">
 **주의**
@@ -99,7 +101,7 @@ Admin &gt; General &gt; System &gt; Integration 메뉴로 진입 후, Email 타�
     * 기본값 : `{{message}}` 
     * Alert에서 정의되는 메시지의 앞뒤에 공통으로 추가하려는 내용을 기입
 
-## 채널 삭제하기
+### 채널 삭제하기
 
 Channels 페이지 내 채널 목록에서 삭제하려는 채널을 체크박스로 선택하면 `Delete` 버튼이 노출됩니다. 버튼을 클릭하면 삭제 확인 모달이 출력됩니다. `OK` 버튼을 클릭하면 삭제가 완료됩니다.
 
@@ -110,9 +112,9 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete 확
 </figcaption>
 </figure>
 
-## Slack 연동을 위한 Slack App 설정 방법
+### Slack 연동을 위한 Slack App 설정 방법
 
-### 1. App 생성하기
+#### 1. App 생성하기
 
 <figure data-layout="center" data-align="center">
 ![Slack API &gt; Apps &gt; Create an App](/administrator-manual/general/company-management/channels/screenshot-20240305-161015.png)
@@ -126,7 +128,7 @@ Slack API &gt; Apps &gt; Create an App
 3. 위 화면에서 알림을 보낼 App Name 과 Slack Workspace 를 선택합니다.
 4. `Create App` 을 클릭합니다.
 
-### 2-1. Webhook 타입으로 연동하기
+#### 2-1. Webhook 타입으로 연동하기
 
 <figure data-layout="center" data-align="center">
 ![Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks](/administrator-manual/general/company-management/channels/screenshot-20240804-190716.png)
@@ -149,7 +151,7 @@ Slack 내 Webhook 추가 화면
 1. Workspace 내에 경보를 보낼 채널을 선택한 뒤 `허용` 버튼을 클릭합니다.
 2. 생성된 Webhook URL 정보를 복사한 뒤, QueryPie 채널 생성 모달에 붙여넣습니다.
 
-### 2-2. API 타입으로 연동하기
+#### 2-2. API 타입으로 연동하기
 
 1. 생성했던 App 을 클릭하여 앱의 Settings 페이지에 진입한 뒤, `App Manifest` 메뉴로 이동합니다.
 2. scopes 영역에 `chat:write`, `users:read`, `users:read.email` 을 추가한 뒤 저장합니다. 

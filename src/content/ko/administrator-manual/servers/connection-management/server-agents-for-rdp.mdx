@@ -4,7 +4,9 @@ title: 'Server Agents for RDP'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Server Agents for RDP
+
+### Overview
 
 QueryPie에서는 Windows Server에 대한 접근제어 및 권한관리를 할 수 있습니다. RDP Protocol을 통해 원격 접속을 하기 위해선 관리하려는 Windows Server에 Server Agent를 설치해야 합니다. 또한 접속중인 RDP의 세션을 실시간으로 확인할 수 있고, Kill Session 기능을 통해 접속중인 RDP 세션을 강제종료 할 수 있습니다.
 
@@ -24,7 +26,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP
 </figure>
 
 
-## Server Agents 조회하기
+### Server Agents 조회하기
 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 메뉴로 이동합니다.
 2. 테이블 좌측 상단의 검색란을 통해 서버명을 조건으로 검색이 가능합니다.
@@ -43,7 +45,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP
     8.  **Updated At** : 서버 에이전트와 가장 최근 통신한 시간
 
 
-## Server Agents 생성하기
+### Server Agents 생성하기
 
 1. 서버 에이전트는 windows server에 설치된 서버 에이전트가 QueryPie 서버와 통신하면 Server Agents for RDP 화면에 자동으로 생성됩니다.
 2. QueryPie 서버와 Server Agents가 통신하면 QueryPie의 Servers에 Windows Server를 자동 등록합니다.
@@ -54,7 +56,7 @@ RDP Server Agent와 연결된 Windows Server의 Port 및 IP는 변경할 수 없
 </Callout>
 
 
-## Server Agents 와 통신 실패 대응 방법
+### Server Agents 와 통신 실패 대응 방법
 
 Windows Server에 Server Agent 설치 후, Server Agents for RDP 페이지에 Server Agent 정보가 뜨지만, Status가 Connection Failed 로 표시될 수 있습니다.
 
@@ -71,7 +73,7 @@ QueryPie에 등록되는 Server Agent의 Host 정보는 Windows Server가 가지
 3. 나타나는 팝업의 Host에 Windows Server에 접속이 가능한 IP를 입력 후 `Save`버튼을 클릭합니다.
 
 
-## Server Agents 업데이트하기
+### Server Agents 업데이트하기
 
 QueryPie 웹 화면에서 직접 Server Agent를 최신 버전으로 업데이트할 수 있습니다. 업데이트는 현재 사용 중인 QueryPie 버전에 호환되는 에이전트 버전으로 진행됩니다.
 
@@ -80,7 +82,7 @@ QueryPie 웹 화면에서 직접 Server Agent를 최신 버전으로 업데이�
 3. 테이블 상단에 나타나는 `Update` 버튼을 클릭하여 업데이트를 진행합니다. 
 
 
-## Server Agents 삭제하기
+### Server Agents 삭제하기
 
 <figure data-layout="center" data-align="center">
 ![image-20240728-154821.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/image-20240728-154821.png)

@@ -4,6 +4,8 @@ title: 'Web App Configurations에서 WAC 초기 설정하기'
 
 import { Callout } from 'nextra/components'
 
+# Web App Configurations에서 WAC 초기 설정하기
+
 <Callout type="info">
 Web App Configurations 페이지는 10.2.6 또는 그 이상의 버전에서 사용할 수 있습니다.
 </Callout>
@@ -18,7 +20,7 @@ Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
 </figcaption>
 </figure>
 
-## WAC Proxy Configurations**[10.2.6~]**
+### WAC Proxy Configurations**[10.2.6~]**
 
 WAC 프록시 서버 구성 후, 서버 설정 정보를 입력합니다. 각 필드에 대한 설명은 아래와 같습니다.
 
@@ -35,7 +37,7 @@ WAC 프록시 서버 구성 후, 서버 설정 정보를 입력합니다. 각 �
 3. 다음 명령어를 사용하여 컨테이너를 다시 시작합니다: `docker compose up -d`
 </Callout>
 
-## QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
+### QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
 
 WAC Extension 관련 설정을 관리자가 직접 관리할 수 있습니다.
 
@@ -54,7 +56,7 @@ WAC Extension 관련 설정을 관리자가 직접 관리할 수 있습니다.
 Current Version, Minimum Required Version 정보는 QueryPie에서 제공하는 호환성 정보에 맞게 입력되어야 합니다.
 </Callout>
 
-### 폐쇄망 환경에서 WAC Extension 배포하기
+#### 폐쇄망 환경에서 WAC Extension 배포하기
 
 1. 인터넷 접속 가능한 PC로 WAC Extension을 다운로드 받아둡니다.
 2. 폐쇄망 환경에서 QueryPie &gt; Web App Configurations 페이지로 접속한 뒤 QueryPie Web Secure (Extension) Configurations 섹션에서 `Edit` 버튼을 클릭합니다.
@@ -65,14 +67,14 @@ Current Version, Minimum Required Version 정보는 QueryPie에서 제공하는 
 2. `Save` 버튼을 눌러 저장합니다.
 3. Extension File 링크가 `https://dl.querypie.com/…` 으로 시작하는 링크에서, 현재 사용 중인 QueryPie Domain 으로 시작하는 링크로 변경된 것을 확인할 수 있습니다.
 
-### 긴급 패치 Extension 링크 배포하기
+#### 긴급 패치 Extension 링크 배포하기
 
 1. QueryPie Web Secure (Extension) Configurations 섹션에서 `Edit` 버튼을 클릭합니다.
 2. Extension File 옵션에서 `Add by Link` 를 선택하고, 전달받은 신규 다운로드 링크를 붙여넣습니다.
 3. QueryPie 제조사로부터 전달받은 가이드에 맞추어 호환성 정보 변경사항을 업데이트 합니다. 
 4. `Save` 버튼을 눌러 저장합니다.
 
-## Watermark Configurations**[10.2.6~]**
+### Watermark Configurations**[10.2.6~]**
 
 Watermark Configurations 섹션에서는 현재 적용된 워터마크 문구 설정을 확인하고, 워터마크 적용 시 관리자가 원하는 문구를 설정할 수 있습니다.
 
@@ -83,7 +85,7 @@ Watermark Configurations 섹션에서는 현재 적용된 워터마크 문구 �
 5.  **Timestamp**  : 페이지에 최초로 접속한 시간이 표시됩니다.
 6.  **Client IP**  : 페이지에 접속한 클라이언트 IP가 표시됩니다.
 
-## Root CA Certificate Configurations**[10.2.8~]**
+### Root CA Certificate Configurations**[10.2.8~]**
 
 Root CA Certificate Configurations 섹션에서는 QueryPie에서 기존 사용 중인 Root CA 인증서를 백업하고 복원할 수 있습니다.
 

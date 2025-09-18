@@ -4,7 +4,9 @@ title: 'Alerts'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Alerts
+
+### Overview
 
 Alerts 페이지에서는 리소스 접근과 관련한 알림 기능을 제공합니다. 주요 이상 징후에 대한 트리거 조건을 미리 설정함으로써 정책 위반사항을 실시간으로 탐지할 수 있습니다. 잠재적인 보안 사고를 신속하게 식별하고 해결할 수 있으며, 사전 정의된 임계값을 초과하는 조회 또는 유출 등 민감한 정보를 보호할 수 있습니다.
 
@@ -17,7 +19,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts
 
 이 문서에서는 다음과 같은 내용을 다룹니다.
 
-## 지원하는 알림 유형
+### 지원하는 알림 유형
 
 공통 알림을 비롯하여 DB 접근에 특화된 알림과 시스템 접근에 특화된 알림을 지원합니다.
 
@@ -187,7 +189,7 @@ K8s API Request
     * Sensitive Data Access Monitoring : 신 정책 관리에서 생성한 Sensitive Data Access Monitoring 정책의 조건에 해당되는 이벤트
 </Callout>
 
-## 알림 생성하기
+### 알림 생성하기
 
 Alerts 페이지 우상단 `Create Alert` 버튼을 클릭하여 새로운 알림을 생성합니다. `OK` 버튼을 클릭하여 알림 생성을 완료합니다.
 
@@ -211,7 +213,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 6.  **Send Test Message**  : 알림 테스트 메시지 발송
     1. 선택한 채널로, 입력한 메시지 템플릿 내용을 테스트 메시지로 전송합니다.
 
-### New Request
+#### New Request
 
 새로운 결재 요청 등록 알림
 
@@ -245,7 +247,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 * Workflow 관련 Alert 설정 시 Channel이 Email인 경우, `Send email only to those involved in this request` 옵션을 제공합니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용으로 알림이 발송됩니다. 
 </Callout>
 
-### Unusual Login Attempt
+#### Unusual Login Attempt
 
 IP 대역에 따른 사용자 로그인 행위 알림
 
@@ -260,7 +262,7 @@ IP 대역에 따른 사용자 로그인 행위 알림
 * Specific Time Internal (Minutes) : 5
 </Callout>
 
-### SQL Execution
+#### SQL Execution
 
 정의된 조건에 해당하는 SQL 구문 실행 알림
 
@@ -287,14 +289,14 @@ IP 대역에 따른 사용자 로그인 행위 알림
 * SQL Events : `UPDATE`, `DELETE`
 </Callout>
 
-### Prevented SQL Execution
+#### Prevented SQL Execution
 
 권한 없는 구문 실행 알림
 
 *  **Connection**  : 쿼리 실행 시 알림 발송할 대상 커넥션 (10.2.2 이후 버전 - 다중 선택)
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
-### DB Connection Attempt
+#### DB Connection Attempt
 
 DB 접속 성공 또는 실패 알림
 
@@ -318,7 +320,7 @@ DB 접속 성공 또는 실패 알림
 * Specified Time Internal (Minutes) : 5
 </Callout>
 
-### Sensitive Data Access
+#### Sensitive Data Access
 
 정의된 조건에 해당하는 민감데이터 조회 알림
 
@@ -349,7 +351,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 * Policy : *`{사전에 등록된 Sensitive Data 정책}`* 
 </Callout>
 
-### SQL Export
+#### SQL Export
 
 정의된 조건에 해당하는 SQL 내보내기 실행 알림
 
@@ -367,7 +369,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 * Trigger Condition (Rows) : 100
 </Callout>
 
-### Server Connection Attempt
+#### Server Connection Attempt
 
 서버 접속 성공 또는 실패 알림
 
@@ -385,7 +387,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 * Alert Trigger Condition : Failure 에만 체크
 </Callout>
 
-### Restrict Command
+#### Restrict Command
 
 서버/서버 그룹별 차단된 명령어 실행 알림
 
@@ -394,7 +396,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
         * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
-### Specific Command
+#### Specific Command
 
 특정 명령어 실행 알림
 
@@ -406,7 +408,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
     * Keyword : 명령어에 입력된 키워드 포함시 알림 발송
     * RegExr : 정규표현식에 해당하는 명령어 실행시 알림 발송
 
-### File Transfer (SFTP)
+#### File Transfer (SFTP)
 
 SFTP를 통한 파일 전송 실행 알림
 
@@ -418,7 +420,7 @@ SFTP를 통한 파일 전송 실행 알림
         * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
-### K8s API Request**[10.2.2]**
+#### K8s API Request**[10.2.2]**
 
 쿠버네티스 API 요청 알림
 
@@ -433,7 +435,7 @@ SFTP를 통한 파일 전송 실행 알림
     * 현재 지원 대상 - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets` 등 (총 24종)
     * All Resources (*) : 추후 추가될 모든 리소스 종류를 대상으로 알림 조건 생성
 
-### Data Access**[11.1.0]**
+#### Data Access**[11.1.0]**
 
 <Callout type="info">
 Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있고 관련 정책들이 존재해야 사용할 수 있습니다.
@@ -469,7 +471,7 @@ Data Access 알림은 Column Data Masking, Table Access Restriction, Column Acce
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다
 
-## 알림 상세 정보 조회 및 수정
+### 알림 상세 정보 조회 및 수정
 
 Alerts 페이지에서 상세 내용을 조회하려는 알림을 선택합니다. 상세 페이지 Details 탭에서 알림 생성 시에 입력한 알림 조건 및 메시지를 조회하고 수정할 수 있습니다. 우상단 `Save Changes` 버튼을 클릭하면 수정 내용이 반영됩니다.
 
@@ -481,7 +483,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figure>
 
 
-## 알림 발송 내역 조회
+### 알림 발송 내역 조회
 
 Alerts 목록에서 발송 내역을 조회하려는 알림을 선택합니다. 이후 상세 페이지 내 Log에서 내역을 조회할 수 있습니다.
 
@@ -493,7 +495,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figure>
 
 
-## 알림 삭제하기
+### 알림 삭제하기
 
 기존에 등록된 알림을 삭제하는 두 가지 경로를 제공합니다.
 

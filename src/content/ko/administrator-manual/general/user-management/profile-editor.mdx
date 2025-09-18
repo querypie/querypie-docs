@@ -2,7 +2,9 @@
 title: 'Profile Editor'
 ---
 
-## Overview
+# Profile Editor
+
+### Overview
 
 관리자는 사용자 아이덴티티의 효율적인 원장 관리를 위한 각 프로필 속성(Attribute) 별 Attribute-Level Mastering의 관리 구현이 가능합니다. Profile Editor를 통해 사용자의 각 속성 별로 원장 주체를 설정하고 이에 대한 업데이트 관리가 가능합니다. 해당 Profile Editor의 경우, QueryPie 사용자에 대해서는 영향도가 없으며 Auth Provider가 Okta, LDAP 등 외부 IdP로 지정되어 있는 사용자의 속성 관리 주체를 통제합니다.
 
@@ -12,7 +14,7 @@ title: 'Profile Editor'
 ![Screenshot-2025-05-09-at-2.04.57-PM.png](/administrator-manual/general/user-management/profile-editor/Screenshot-2025-05-09-at-2.04.57-PM.png)
 </figure>
 
-## 사용자 속성 주체 설정 정의
+### 사용자 속성 주체 설정 정의
 
 각 사용자 속성 별 Source Priority를 지정할 수 있으며, 종류는 아래와 같습니다:
 
@@ -23,7 +25,7 @@ title: 'Profile Editor'
     1. 외부 Auth Provider로부터 생성된 사용자이지만, 해당 Attribute는 쿼리파이 자체적으로 관리하겠다는 의미의 옵션입니다. 
     2. SCIM API를 통해 사용자의 해당 Attribute가 업데이트 푸시되어도 쿼리파이 자체적으로 관리하는 Attribute가 되어 변경을 무시합니다. 
 
-## Status 컬럼 정의
+### Status 컬럼 정의
 
 Profile Editor의 Status 컬럼은 해당 Attribute가 사용자 프로필 (General &gt; Users &gt; User Detail &gt; Profile)에 표시될지 여부를 설정합니다.
 

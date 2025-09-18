@@ -2,9 +2,11 @@
 title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 ---
 
+# External API 변경사항 (9.8.10 버전 > 9.9.4 버전)
+
 ---
 
-# API Docs JSON file
+## API Docs JSON file
 
 :paperclip: [9810_external.json](9810_external.json)
 :paperclip: [994_external.json](994_external.json)
@@ -12,7 +14,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 1. Authentication
+## 1. Authentication
 
 * API Key HTTP Header name이 변경되었습니다
 
@@ -23,9 +25,9 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 2. Alert API
+## 2. Alert API
 
-### 변경/개선 사항
+#### 변경/개선 사항
 
 <table data-table-width="760" data-layout="default" local-id="dde603df-3268-4faf-a41d-602a0c651910">
 <colgroup>
@@ -79,7 +81,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 </tbody>
 </table>
 
-### [신규](POST) Create, (PUT) Update, (GET) Detail API
+#### [신규](POST) Create, (PUT) Update, (GET) Detail API
 
 * 자세한 요청 내용은 Docs 참조
 
@@ -166,15 +168,15 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 </tbody>
 </table>
 
-### (GET) List
+#### (GET) List
 
 `/api/external/notifications`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="4a964f40-a620-417f-bd2f-52c24b38404e">
 <colgroup>
@@ -237,18 +239,18 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 3. Approval Rule API
+## 3. Approval Rule API
 
-### (GET) List
+#### (GET) List
 
 `/api/external/approval-rules`
 
-#### Request
+##### Request
 
 * Query Parameter
 *  **RequestType**  이 `SQL`, `ACCESS` → `SQL`, `EXPORT`, `ACCESS` 로 `EXPORT` **가 추가** 되었습니다.
 
-#### Response
+##### Response
 
 * 변경점 없음
 
@@ -256,13 +258,13 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 4. Audit Log API
+## 4. Audit Log API
 
-### (GET) List of Approval
+#### (GET) List of Approval
 
 `/api/external/audit-logs`
 
-#### Request
+##### Request
 
 * Query Parameter
 
@@ -312,7 +314,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 *  **count** 는 기존 pageSize 와 동일하며,  **max**  값은  **100** 입니다.
 *  **databaseType**  에 `Redis` 가  **추가** 되었습니다.
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="932182bb-da8d-497f-a802-b0ac654a837a">
 <colgroup>
@@ -379,15 +381,15 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     * Request 의 cursor 에 해당 값을 넣으면  **해당 시간부터 이어서**  데이터를 가져옵니다. (startDate, endDate 는 변경하지 않아도 됩니다.)
     * /api/docs 에 나와있는 내용은  **잘못된 내용** 으로 이후 버전에서 수정 예정입니다.
 
-### <br/>(GET) Detail
+#### <br/>(GET) Detail
 
 `/api/external/audit-logs/{id}`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="faa4a484-fb0f-47b7-978a-23feea65210e">
 <colgroup>
@@ -434,15 +436,15 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 *  **execResult** 가 **Deprecated**  되었습니다. 이후 버전에서 삭제됩니다.
 
 
-### (GET) Detail
+#### (GET) Detail
 
 `/api/external/audit-logs/{uuid}`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="e34b740f-592e-49c5-b549-6f54500e8c83">
 <colgroup>
@@ -493,13 +495,13 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 5. Authentication History API
+## 5. Authentication History API
 
-### (GET) List of Authentication
+#### (GET) List of Authentication
 
 `/api/external/connection-auth-logs`
 
-#### Request
+##### Request
 
 * Query Parameter
 
@@ -548,7 +550,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     *  `CONNECT`, `DISCONNECT` 만 사용합니다.
 *  **databaseType**  에 `Redis`가  **추가** 되었습니다.
 
-#### Response
+##### Response
 
 * 변경점 없음
 
@@ -556,13 +558,13 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 6. User Access History API
+## 6. User Access History API
 
-### (GET) List of User Access History
+#### (GET) List of User Access History
 
 `/api/external/system-auth-logs`
 
-#### Request & Response
+##### Request & Response
 
 *  **actionType**  에서 `CONNECT`, `DISCONNECT`이  **제거** 되었습니다.
     *  `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` 만 사용합니다.
@@ -571,17 +573,17 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 7. Cloud Provider API
+## 7. Cloud Provider API
 
-### (GET) List of Cloud Provider
+#### (GET) List of Cloud Provider
 
 `/api/external/cloud-providers`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="c43c1c7c-02dd-48b4-a04d-2c66bce49618">
 <colgroup>
@@ -642,11 +644,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
 
-### (POST) Create Cloud Provider
+#### (POST) Create Cloud Provider
 
 `/api/external/cloud-providers`
 
-#### Request
+##### Request
 
 <table data-table-width="760" data-layout="default" local-id="7f2d3d42-8253-404f-9149-10b318b6ca3d">
 <colgroup>
@@ -693,7 +695,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     *  **싱크하고자 하는 데이터베이스의 타입**  (벤더) 를 입력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="b16699b8-ecb0-4ee1-ac36-7ac7ea42eae9">
 <colgroup>
@@ -740,11 +742,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     *  **싱크하고자 하는 데이터베이스의 타입**  (벤더) 를 출력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`<br/>
 
-### (PUT) Update Cloud Provider
+#### (PUT) Update Cloud Provider
 
 `/api/external/cloud-providers/{cloudProviderUuid}`
 
-#### Request
+##### Request
 
 <table data-table-width="760" data-layout="default" local-id="f52a5751-3b5e-4888-b0bb-bb102080762d">
 <colgroup>
@@ -796,7 +798,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     *  **싱크하고자 하는 데이터베이스의 타입**  (벤더) 를 입력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="1b7cfa33-d4bb-4e89-a7c6-5add7e6663c3">
 <colgroup>
@@ -847,17 +849,17 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 8. Cluster Role API
+## 8. Cluster Role API
 
-### (GET) List of Role
+#### (GET) List of Role
 
 `/api/external/roles`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="fea50ede-0255-4ec9-960a-1472523b2651">
 <colgroup>
@@ -912,11 +914,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 *  **privilegeVendor** 가  **추가** 되었습니다.
     * `SQL`, `REDIS`
 
-### (POST) Create Role
+#### (POST) Create Role
 
 `/api/external/roles`
 
-#### Request & Response
+##### Request & Response
 
 <table data-table-width="760" data-layout="default" local-id="56c6d3e7-3146-49ff-82ea-4aa792c89003">
 <colgroup>
@@ -959,11 +961,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 *  **privilegeVendor** 가  **추가** 되었습니다.
     * `SQL`, `REDIS`
 
-### (PUT) Update Role
+#### (PUT) Update Role
 
 `/api/external/roles/{roleUuid}`
 
-#### Request & Response
+##### Request & Response
 
 <table data-table-width="760" data-layout="default" local-id="85cd18b3-fa2c-4df3-a4b5-1b6e9a773256">
 <colgroup>
@@ -1010,17 +1012,17 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 9. Connection API
+## 9. Connection API
 
-### (GET) List of Cluster Group
+#### (GET) List of Cluster Group
 
 `/api/external/connections`
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="c8555215-eb77-4807-a123-8728d1377f19">
 <colgroup>
@@ -1161,11 +1163,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
     *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
 
 
-### (POST) Create Cluster Group
+#### (POST) Create Cluster Group
 
 `/api/external/connections`
 
-#### Request
+##### Request
 
 <table data-table-width="760" data-layout="default" local-id="a91c0329-8458-4c75-a106-ccdd7a0e25e3">
 <colgroup>
@@ -1283,7 +1285,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
         * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.** 
     *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="39575eab-8bc2-45f4-b145-a8b9d33bc1ef">
 <colgroup>
@@ -1409,11 +1411,11 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
         * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.** 
     *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
 
-### <br/>(PATCH) Update Cluster Group
+#### <br/>(PATCH) Update Cluster Group
 
 `/api/external/connections/{uuid}`
 
-#### Request
+##### Request
 
 <table data-table-width="760" data-layout="default" local-id="30d79d2b-4f9e-4cd9-82c4-3e3b2d040226">
 <colgroup>
@@ -1530,7 +1532,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
         * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.** 
     *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="55b9a43a-b701-488d-8c41-38951410331d">
 <colgroup>
@@ -1660,13 +1662,13 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 
 ---
 
-# 10. Notification Channels API
+## 10. Notification Channels API
 
-### (GET) List of Notification channel
+#### (GET) List of Notification channel
 
 `/api/external/notification-channels`
 
-#### Request
+##### Request
 
 * Query Parameter 필드추가
 

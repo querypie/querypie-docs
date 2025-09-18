@@ -4,7 +4,9 @@ title: '서버를 그룹으로 관리하기'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# 서버를 그룹으로 관리하기
+
+### Overview
 
 수많은 서버를 그룹화하여 접속 가능한 계정 및 정책을 한 번에 적용할 수 있습니다. 목적에 따라 서버 그룹을 만든 후 일괄적으로 정책을 편리하게 관리할 수 있으며 이렇게 그룹화한 서버 그룹 권한을 개별 유저 또는 유저 그룹에 한 번에 부여할 수 있습니다.
 
@@ -15,7 +17,7 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-## 서버 그룹 생성하기
+### 서버 그룹 생성하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Create Server Group](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250123-113012.png)
@@ -38,11 +40,11 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 </Callout>
 
 
-## 서버 그룹 생성/수정하기
+### 서버 그룹 생성/수정하기
 
 아래 정보를 입력하여 서버 그룹을 생성하실 수 있습니다. 생성 후 일부 항목은 수정이 가능합니다.
 
-### 1. 기본 정보 입력 및 서버를 Tag 로 추가하기
+#### 1. 기본 정보 입력 및 서버를 Tag 로 추가하기
 
 <figure data-layout="center" data-align="center">
 ![image-20240902-045749.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20240902-045749.png)
@@ -52,7 +54,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 * Description : 서버 그룹을 설명할 수 있는 내용을 입력합니다. 여러 관리자가 있을 경우, 서버 그룹 간 쉬운 식별을 위해 목적에 맞게 이름 및 설명을 자세히 입력하시는 것을 권장합니다. 
 * Server Tags : 서버 그룹으로 묶고 싶은 서버의 태그를 지정하여 유동적으로 서버 그룹의 대상을 관리할 수 있습니다. 태그를 통해 추가된 서버는 서버 테이블에서 수동으로 삭제를 할 수 없으며, Server Tags의 태그를 수정하여야 합니다. 
 
-### 2. Server를 수동으로 추가하기
+#### 2. Server를 수동으로 추가하기
 
 <figure data-layout="center" data-align="center">
 ![image-20241028-003400.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20241028-003400.png)
@@ -71,7 +73,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니다.
 </Callout>
 
-### 3. Accounts 등록하기
+#### 3. Accounts 등록하기
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-07-27-at-10.33.48-PM.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.33.48-PM.png)
@@ -168,7 +170,7 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 *  **Signing Algorithm** 은 ras-sha2-256 으로 설정합니다.
 </Callout>
 
-### 4. Server Group Owner 등록하기
+#### 4. Server Group Owner 등록하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250512-105127.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250512-105127.png)
@@ -182,7 +184,7 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 4. `Save Changes` 버튼을 통해 저장합니다. 
 
 
-### 5. Server Group Member 등록하기
+#### 5. Server Group Member 등록하기
 
 <figure data-layout="center" data-align="center">
 ![image-20250512-105142.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250512-105142.png)

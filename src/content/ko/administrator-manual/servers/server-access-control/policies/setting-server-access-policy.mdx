@@ -2,12 +2,14 @@
 title: '서버 접근 정책 설정하기'
 ---
 
-## Overview
+# 서버 접근 정책 설정하기
+
+### Overview
 
 조직에서 관리하는 서버의 접근 정책(Policy)를 관리할 수 있습니다. Policy는 IaC와 같은 형태로 YAML Code를 베이스로 동작합니다. 접속을 허용할 요일 및 시간을 설정할 수 있을 뿐만 아니라 접속 가능한 IP 주소 설정 및 Audit 여부, Agent 사용 가능 여부를 설정할 수 있습니다. 그 외 유저별 허용 세션 수 또한 설정이 가능합니다.
 
 
-## 설정 가능한 정책 항목
+### 설정 가능한 정책 항목
 
 *  **serverGroup**  : 접속을 허용할 서버 그룹
 *  **account** : 서버그룹에 등록된 Account
@@ -27,7 +29,7 @@ title: '서버 접근 정책 설정하기'
 *  **requirePrivilege** : 서버 접속 시 권한 승인 필요 여부<br/>*이 옵션을 활성화(Enable)하면, 해당 계정은 서버 권한 요청(Server Privilege Request) 워크플로우를 통한 승인을 받아야만 서버에 접속할 수 있습니다.
 
 
-## Policy 코드 편집하기
+### Policy 코드 편집하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png)

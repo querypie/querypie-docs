@@ -4,14 +4,16 @@ title: 'Access Role Request 요청하기'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Access Role Request 요청하기
+
+### Overview
 
 Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러스터에 대해 역할(Role)을 간편하게 요청할 수 있습니다. 승인 즉시 역할이 부여되며, 역할에서 허용하는 서버 또는 쿠버네티스 클러스터에 접속할 수 있습니다.
 
 
-## Access Role Request
+### Access Role Request
 
-### 1. 결재 규칙 선택하기
+#### 1. 결재 규칙 선택하기
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
@@ -22,7 +24,7 @@ Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러�
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. 승인자 지정하기
+#### 2. 승인자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다. 
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
@@ -34,7 +36,7 @@ Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러�
 ![image-20240807-130021.png](/user-manual/workflow/requesting-access-role/image-20240807-130021.png)
 </figure>
 
-### 3. 참조자 지정하기
+#### 3. 참조자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다. 
     * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다. 
@@ -45,7 +47,7 @@ Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러�
 ![image-20240807-130031.png](/user-manual/workflow/requesting-access-role/image-20240807-130031.png)
 </figure>
 
-### 4. 사후 승인으로 요청 보내기
+#### 4. 사후 승인으로 요청 보내기
 
 * 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다. 
 * Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
@@ -59,7 +61,7 @@ Access Role Request는 접근이 필요한 서버 또는 쿠버네티스 클러�
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
 </Callout>
 
-### 5. 요청 대상 역할(Role) 선택하기
+#### 5. 요청 대상 역할(Role) 선택하기
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 2](/user-manual/workflow/requesting-access-role/screenshot-20240802-111018.png)
@@ -86,7 +88,7 @@ Access Role Request는 한 번에 하나의 역할만 요청할 수 있습니다
     * 만료 일자는 필수 값이며, 따로 설정하지 않으면 1년 뒤 일자로 기본 선택됩니다.
     * 적절한 커넥션 접근 권한 관리를 위해 필요한 기간만큼 요청하는 것을 권장합니다
 
-### 6. 요청 정보 입력하기
+#### 6. 요청 정보 입력하기
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 3](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-1.09.31-AM.png)

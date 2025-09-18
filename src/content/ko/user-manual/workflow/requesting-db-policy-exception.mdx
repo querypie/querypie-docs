@@ -4,13 +4,15 @@ title: 'DB 정책 예외 요청하기 (DB Policy Exception Request)'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# DB 정책 예외 요청하기 (DB Policy Exception Request)
+
+### Overview
 
 10.2.6부터 지원하는 DAC 신규 정책을 사용할 경우 기존의 Unmasking Request 또는 Restricted Data Access Request 를 통해 Workflow로 요청할 수 없습니다. 즉, 신규 정책 기능을 활성화 한 경우 Request 메뉴에 표시되는 DB Policy Exception Request 를 사용합니다. <br/>DB Policy Exception Request는 기존 정책과 다르게 Unmasking과 Restricted Data Access가 별도의 양식으로 분리되어 있지 않고 하나의 양식에서 Exception Type을 Unmasking, Restricted Data Access 둘 중 하나를 선택하는 방식입니다.
 
-## 정책 예외 요청하기
+### 정책 예외 요청하기
 
-### 1. 결재 규칙 선택하기
+#### 1. 결재 규칙 선택하기
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
@@ -21,7 +23,7 @@ import { Callout } from 'nextra/components'
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-db-policy-exception/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. 승인자 지정하기
+#### 2. 승인자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 단계별 승인자를 지정할 수 있는 팝업창이 표시됩니다.
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
@@ -33,7 +35,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-154729.png](/user-manual/workflow/requesting-db-policy-exception/screenshot-20240724-154729.png)
 </figure>
 
-### 3. 참조자 지정하기
+#### 3. 참조자 지정하기
 
 * 결재 라인에서 `+` 버튼을 누르면 참조자를 지정할 수 있는 팝업창이 표시됩니다.
     * 관리자가 참조자 지정을 허용하지 않은 경우에는 Reviewer 박스가 표시되지 않습니다.
@@ -44,7 +46,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-171350.png](/user-manual/workflow/requesting-db-policy-exception/screenshot-20240724-171350.png)
 </figure>
 
-### 4. 사후 승인으로 요청 보내기
+#### 4. 사후 승인으로 요청 보내기
 
 * 사후 승인 기능이 허용된 결재 규칙을 선택한 경우 Urgent Mode 스위치가 표시됩니다.
 * Urgent mode = On 으로 설정 후 결재 요청을 등록하면 즉시 권한을 부여받거나 작업을 수행할 수 있습니다.
@@ -58,7 +60,7 @@ import { Callout } from 'nextra/components'
 A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 경우, 해당 기능이 표시되지 않습니다.
 </Callout>
 
-### 5. 요청 상세정보 입력하기
+#### 5. 요청 상세정보 입력하기
 
 *  **Title**  : 요청 제목을 입력합니다.
 *  **Excpetion Type**  : 일시적인 마스킹 해제 요청인 경우 Unmasking을 선택하고 접근 차단된 경로를 임시로 접근 요청하는 경우는 Restricted Data Access 를 선택합니다.

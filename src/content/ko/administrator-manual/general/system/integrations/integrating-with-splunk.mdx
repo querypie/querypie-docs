@@ -4,7 +4,9 @@ title: 'Splunk 연동'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Splunk 연동
+
+### Overview
 
 QueryPie에서 기록하는 감사 로그를 Splunk를 통하여 외부로 전송하는 기능을 제공합니다.
 
@@ -13,7 +15,7 @@ Integration 설정을 위해서는 System admin 권한이 필요합니다.
 </Callout>
 
 
-## Syslog-Splunk 연계 권장 아키텍처
+### Syslog-Splunk 연계 권장 아키텍처
 
 <figure data-layout="center" data-align="center">
 ![Splunk 연계 권장 아키텍쳐](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
@@ -34,7 +36,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 참고로 Splunk는 syslog 수집을 위해 별도로 SC4S(Splunk connector for syslog)를 제공하고 있습니다.
 
 
-## Splunk Integration 설정하기
+### Splunk Integration 설정하기
 
 1. General Settings 메뉴에서 System &gt; Integrations 메뉴로 이동합니다. 
 2. Splunk 타일을 클릭하여 상세 페이지로 이동합니다. 
@@ -75,7 +77,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
 
 
-## 참고
+### 참고
 
 * 라이센스에 따라 syslog 를 통해 전송되는 QueryPie의 이벤트 항목
 

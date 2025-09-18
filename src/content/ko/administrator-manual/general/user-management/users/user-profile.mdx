@@ -4,12 +4,14 @@ title: '사용자 프로필'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# 사용자 프로필
+
+### Overview
 
 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
 
 
-## Profile 
+### Profile 
 
 사용자의 Attribute(속성)을 조회할 수 있는 탭입니다. 각 Attribute별 설명은 이 페이지 하단의  **참고: 사용자 Attribute 목록**  항목을 참고하여 주시기 바랍니다.
 
@@ -20,7 +22,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figcaption>
 </figure>
 
-## Groups
+### Groups
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups 탭](/administrator-manual/general/user-management/users/user-profile/image-20240514-162350.png)
@@ -35,7 +37,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 2.  **Group Name**  : 그룹명
 
 
-## Admin Roles
+### Admin Roles
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles 탭](/administrator-manual/general/user-management/users/user-profile/image-20240514-162730.png)
@@ -52,7 +54,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 4.  **Granted At**  : 관리자 역할을 부여받은 일시
 
 
-## Allowed Zones
+### Allowed Zones
 
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones 메뉴에서 생성된 Allowed Zone을 사용자에게 직접 할당하거나, 'IP Registration Request' 워크플로우를 통해 승인된 Static IP가 자동으로 적용된 내역을 확인할 수 있습니다.
 
@@ -68,7 +70,7 @@ Allowed Zones 탭
 사용자별 Allowed Zone 할당을 위해서는 먼저 Admin &gt; General &gt; Company Management &gt; Security 메뉴에서 사용자별 QueryPie Web 접근 IP 제어 기능을 활성화해야 합니다. [Security](../../company-management/security) 문서를 참고해주세요.
 </Callout>
 
-### 워크플로우를 통해 등록된 Static IP 확인하기
+#### 워크플로우를 통해 등록된 Static IP 확인하기
 
 사용자가 'IP Registration Request' 워크플로우를 통해 IP 주소 등록을 요청하고 최종 승인되면, 해당 IP는 사용자의  **Profile**  탭에 있는 `Static IP` 속성에 자동으로 추가됩니다.
 
@@ -78,19 +80,19 @@ Allowed Zones 탭
 ![Screenshot-2025-06-26-at-6.12.22-PM.png](/administrator-manual/general/user-management/users/user-profile/Screenshot-2025-06-26-at-6.12.22-PM.png)
 </figure>
 
-### 워크플로우를 통해 등록된 Static IP삭제하기
+#### 워크플로우를 통해 등록된 Static IP삭제하기
 
 워크플로우를 통해 자동으로 등록된 `Static IP` 항목은 `Allowed Zones` 탭에서 직접 `Detach` 할 수 없습니다. 삭제하려면 사용자의  **Profile**  탭으로 이동하여 `Static IP` 속성값 중 원하는 IP 주소를 직접 편집하여 제거해야 합니다. `Static IP` 속성에서 값이 삭제되면 `Allowed Zones` 탭에서도 해당 IP가 즉시 제거되어 접근 권한이 해제됩니다.
 
 
-### 테이블 표시 정보
+#### 테이블 표시 정보
 
 테이블에서 표시하는 정보는 다음과 같습니다.
 
 1.  **Name** : Allowed Zone의 명칭
 2.  **IP Bands**  : Allowed Zone의 IP대역
 
-### 사용자에게 Allowed Zone 할당하기
+#### 사용자에게 Allowed Zone 할당하기
 
 Allowed Zones 탭 우측 `Attach Allowed Zones` 버튼을 클릭하면 Allowed Zone 할당 모달이 출력됩니다. 할당하고자 하는 Allowed Zone을 선택하고 `Attach` 버튼을 클릭하여 할당을 완료합니다.
 
@@ -101,7 +103,7 @@ Attach Allowed Zone 모달
 </figcaption>
 </figure>
 
-### 사용자에게서 Allowed Zone 할당 해제하기
+#### 사용자에게서 Allowed Zone 할당 해제하기
 
 Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크박스로 선택하면 `Detach` 버튼이 노출됩니다. 버튼을 클릭하고, 확인 모달에서 `Detach` 버튼을 클릭하여 할당 해제를 완료합니다.
 
@@ -118,7 +120,7 @@ A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는
 </Callout>
 
 
-## 참고: 사용자 Attribute 목록
+### 참고: 사용자 Attribute 목록
 
 |  **속성명**           |  **변수**           |  **설명**                       |  **비고**  |
 | ------------------ | ----------------- | ----------------------------- | -------- |

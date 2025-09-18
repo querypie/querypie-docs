@@ -4,7 +4,9 @@ title: 'Workflow Configurations'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Workflow Configurations
+
+### Overview
 
 Workflow Configurations에서는 다음과 같은 결재 상신 및 승인 관련 설정을 변경합니다.
 
@@ -13,7 +15,7 @@ Workflow Configurations에서는 다음과 같은 결재 상신 및 승인 관�
 10.2.5 이하 버전에서의 Slack DM 설정 방법은 [10.1.0 버전 매뉴얼 문서](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)를 참고해주세요.
 </Callout>
 
-## 결재 상신 및 승인 설정하기
+### 결재 상신 및 승인 설정하기
 
 Approval Rules 페이지 우측 상단에서 `⚙️` 버튼을 클릭하면 Workflow Configurations 모달이 팝업됩니다.
 
@@ -24,7 +26,7 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Wor
 </figcaption>
 </figure>
 
-## 참조자 지정 활성화
+### 참조자 지정 활성화
 
 Activate Review Step to collaborate with others 토글로 활성화합니다.
 
@@ -32,7 +34,7 @@ Activate Review Step to collaborate with others 토글로 활성화합니다.
 * 토글을 켜면 요청 생성 화면의  **결재 규칙**  지정 영역에서 참조자 지정 버튼이 표시됩니다.
 * 토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
 
-## 사후 승인 허용
+### 사후 승인 허용
 
 Allow users to submit requests in Urgent mode 토글로 활성화합니다.
 
@@ -42,7 +44,7 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
     * Submit Request : 요청 생성 화면의 결재 규칙 지정 영역
 * 토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아 있으며, 실행 가능합니다.
 
-## SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
+### SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
 
 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
 
@@ -51,7 +53,7 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
 *  **Maximum concurrent queries**  : 연속 실행 가능한 쿼리의 최대 개수 (1 ~ 999,999)
 *  **Query throttle interval** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
 
-## Workflow 양식에서 Tag로 필터링 (Tag Display and Filtering in DAC Workflow Requests)
+### Workflow 양식에서 Tag로 필터링 (Tag Display and Filtering in DAC Workflow Requests)
 
 Tag Display and Filtering in DAC Workflow Requests 토글 스위치로 활성화 합니다.
 
