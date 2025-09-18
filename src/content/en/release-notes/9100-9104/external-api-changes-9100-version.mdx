@@ -2,22 +2,24 @@
 title: 'External API Changes (Version 9.10.0)'
 ---
 
+# External API Changes (Version 9.10.0)
+
 ---
 
-## Previous Version OpenAPI Specification JSON Reference Document (Based on 9.9.5)
+### Previous Version OpenAPI Specification JSON Reference Document (Based on 9.9.5)
 
 
 :paperclip: [external_9_9_5.json](external_9_9_5.json)
 ---
 
-## Removed External APIs
+### Removed External APIs
 
 * Approval Rule API
     * Create
     * Update
 ---
 
-## Added External APIs
+### Added External APIs
 
 * Workflow API (Replaces existing Access Approval API and Approval API.)
     * [Access Request] Detail
@@ -38,7 +40,7 @@ title: 'External API Changes (Version 9.10.0)'
     * Edit approval rule
 ---
 
-## Changed External APIs
+### Changed External APIs
 
 * Access Approval API
     * List of Access Approval
@@ -48,7 +50,7 @@ title: 'External API Changes (Version 9.10.0)'
     * List of Approval
 ---
 
-### Access Approval API - List of Access Approval
+#### Access Approval API - List of Access Approval
 
 `GET /api/external/access-approvals`
 
@@ -191,7 +193,7 @@ Response After Change Example
 
 ---
 
-### Approval Rule API - Detail
+#### Approval Rule API - Detail
 
 `GET /api/external/approval-rules/{uuid}`
 
@@ -259,7 +261,7 @@ Response After Change Example
 
 ---
 
-### Approval API - List of Approval
+#### Approval API - List of Approval
 
 `GET /api/external/approvals`
 

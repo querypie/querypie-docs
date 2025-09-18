@@ -4,11 +4,13 @@ title: '[Okta] Provisioning Integration Guide'
 
 import { Callout } from 'nextra/components'
 
+# [Okta] Provisioning Integration Guide
+
 <Callout type="info">
 This guide explains how to implement SCIM integration between QueryPie and Okta using Okta's App Integration Wizard (AIW). QueryPie's SCIM features are built to the SCIM 2.0 basic specification based on RFC 7643. Therefore, when integrating with other Identity Providers, follow this guide to collect the necessary information from QueryPie and proceed with the integration.
 </Callout>
 
-## Prerequisites
+### Prerequisites
 
 * You must subscribe to the Okta IAM service license for Lifecycle Management (LCM).
 * You need permissions in the Okta Admin Console to create an app and assign users/groups to the app.
@@ -28,12 +30,12 @@ This guide explains how to implement SCIM integration between QueryPie and Okta 
 If you plan to configure outbound user synchronization using the Okta API, please instead follow the steps in Integrating with Okta: ../authentication/integrating-with-okta. Enabling it simultaneously with SCIM may affect user synchronization.
 </Callout>
 
-## Integration Steps
+### Integration Steps
 
 Once the prerequisites are completed, perform the SCIM integration in the following order.
 ---
 
-### Create an Okta custom SCIM app
+#### Create an Okta custom SCIM app
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console > Applications > Applications > Create App Integration > SAML 2.0 > Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
@@ -65,7 +67,7 @@ Okta Admin Console > Applications > Applications > Create App Integration > SAML
 
 ---
 
-### Okta-QueryPie Provisioning integration
+#### Okta-QueryPie Provisioning integration
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
@@ -91,7 +93,7 @@ Ensure you have completed Activating Provisioning: activating-provisioning.
 
 ---
 
-### Enable and verify SCIM API
+#### Enable and verify SCIM API
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
@@ -138,7 +140,7 @@ Additional sync method for some attributes
 
 ---
 
-### Verify user provisioning
+#### Verify user provisioning
 
 1. Return to the SCIM app and in the Assignments tab use the Assign button options to assign users:
     1. Assign to People: Assign by individual users.
@@ -146,7 +148,7 @@ Additional sync method for some attributes
 2. Return to the QueryPie app and go to Administrator > General > User Management > Users to confirm users are pushed successfully.
 ---
 
-### Verify group provisioning
+#### Verify group provisioning
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console > Applications > Applications > Custom SCIM App > Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)

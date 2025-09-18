@@ -4,7 +4,9 @@ title: 'Workflow Configurations'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Workflow Configurations
+
+### Overview
 
 Workflow Configurations allows you to modify the following approval submission and approval-related settings.
 
@@ -13,7 +15,7 @@ Starting from version 10.2.6, Slack DM notification-related settings have been m
 For Slack DM setup methods in version 10.2.5 and below, please refer to the [10.1.0 version manual document](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations).
 </Callout>
 
-## Setting Up Approval Submission and Approval
+### Setting Up Approval Submission and Approval
 
 Click the `⚙️` button in the top right corner of the Approval Rules page to open the Workflow Configurations modal.
 
@@ -24,7 +26,7 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Wor
 </figcaption>
 </figure>
 
-## Activating Reviewer Assignment
+### Activating Reviewer Assignment
 
 Activate with the "Activate Review Step to collaborate with others" toggle.
 
@@ -32,7 +34,7 @@ Activate with the "Activate Review Step to collaborate with others" toggle.
 * When the toggle is on, the reviewer assignment button is displayed in the **Approval Rules** section of the request creation screen.
 * When the toggle is off, the button is removed. (Previously assigned records are maintained and can still be viewed in the list.)
 
-## Allowing Post-Approval
+### Allowing Post-Approval
 
 Activate with the "Allow users to submit requests in Urgent mode" toggle.
 
@@ -42,7 +44,7 @@ Activate with the "Allow users to submit requests in Urgent mode" toggle.
     * Submit Request : Approval rules section in the request creation screen
 * When the toggle is off, post-approval related toggles are no longer displayed in the above areas. However, previously submitted requests in post-approval mode remain and can be executed.
 
-## Activating Throttling for SQL Request Execution (Use throttling when submitting SQL Request in Workflow)
+### Activating Throttling for SQL Request Execution (Use throttling when submitting SQL Request in Workflow)
 
 When the toggle is on, throttling is applied when executing SQL requests submitted in Workflow.
 
@@ -51,7 +53,7 @@ When this option is activated, queries are executed continuously up to the speci
 *  **Maximum concurrent queries**  : Maximum number of queries that can be executed continuously (1 ~ 999,999)
 *  **Query throttle interval** : Interval between continuous query executions (1 ~ 9,999 ms)
 
-## Filtering by Tag in Workflow Forms (Tag Display and Filtering in DAC Workflow Requests)
+### Filtering by Tag in Workflow Forms (Tag Display and Filtering in DAC Workflow Requests)
 
 Activate with the "Tag Display and Filtering in DAC Workflow Requests" toggle switch.
 

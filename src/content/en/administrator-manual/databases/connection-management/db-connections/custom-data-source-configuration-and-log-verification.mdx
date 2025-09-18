@@ -4,6 +4,8 @@ title: 'Custom Data Source Configuration and Log Verification'
 
 import { Callout } from 'nextra/components'
 
+# Custom Data Source Configuration and Log Verification
+
 Custom Data Source is a new feature that provides simple access control through proxy for vendors not natively supported by QueryPie. By providing simple access control, it allows users to safely access a wider variety of data sources. This feature was added in version 10.2.6.
 
 **Key Features**
@@ -12,7 +14,7 @@ Custom Data Source is a new feature that provides simple access control through 
 *  **TCP-based Access Control** : Provides user and IP-based access control
 *  **Agent-based Connection** : Can connect to third-party SQL tools through QueryPie Agent
 
-### Creating Custom Data Source Connections
+#### Creating Custom Data Source Connections
 
 <Callout type="important">
 **Caution**
@@ -51,7 +53,7 @@ Custom Data Source is a new feature that provides simple access control through 
         * Select the checkbox on the left of the connection you want to delete from the DB Connections list, then click the `Delete` button. 
         * After the "Are you sure you want to delete" message appears, click the `OK` button to delete the connection.
 
-### Setting Up Access Control
+#### Setting Up Access Control
 
 1.  **Navigate to Permission Grant Modal** 
     * Select Admin &gt; Databases &gt; DB Access Control &gt; Access Control.
@@ -69,7 +71,7 @@ Custom Data Source is a new feature that provides simple access control through 
         * Select Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User. 
         * Select the connection to revoke permissions from on the Detail page, then click the `Revoke` button.
 
-### Checking Audit Logs
+#### Checking Audit Logs
 
 1.  **DB Access History** 
     * Select Admin &gt; Audit &gt; DB Access History.

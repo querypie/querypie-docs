@@ -4,11 +4,13 @@ title: 'Approval Additional Features (Proxy Approval, Resubmission, etc.)'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Approval Additional Features (Proxy Approval, Resubmission, etc.)
+
+### Overview
 
 This page introduces additional features that add convenience when using Workflow.
 
-## Processing Referenced Request Confirmations
+### Processing Referenced Request Confirmations
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Reviews &gt; All Reviews &gt; Review Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png)
@@ -24,11 +26,11 @@ Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
 3. Enter your review opinion and click the `OK` button to complete the confirmation.
 4. When you return to the All Reviews list, you can see that the Review Status value has changed to **Confirmed**.
 
-## Using Proxy Approval
+### Using Proxy Approval
 
 Proxy approval is a feature that delegates the approver role to another user for a certain period. The usage method is as follows:
 
-### 1. Setting Up Proxy Approval
+#### 1. Setting Up Proxy Approval
 
 <figure data-layout="center" data-align="center">
 ![User &gt; Click Profile in Top Menu Bar &gt; Preferences](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png)
@@ -43,7 +45,7 @@ User &gt; Click Profile in Top Menu Bar &gt; Preferences
 * **Delegation Reason**: Enter the reason for setting up proxy approval
 * **Save**: Click the `Save` button to save the proxy approval settings. If the start date is today, it is applied immediately upon `Save`.
 
-### 2. Checking Proxy Approval Setting Status
+#### 2. Checking Proxy Approval Setting Status
 
 During the proxy approval setting period, the following is displayed in the top menu bar when the original approver and proxy approver access:
 <figure data-layout="center" data-align="center">
@@ -62,7 +64,7 @@ Display content based on proxy approver
 During the proxy approval setting period, no separate notification appears to the requester. The requester can select Approval Rule and Approver as usual.
 </Callout>
 
-### 3. Processing Delegated Proxy Approval Requests
+#### 3. Processing Delegated Proxy Approval Requests
 
 * During the proxy approval setting period, the requests that the proxy approver can check are as follows:
     * **Received Requests &gt; To Do**: List of unprocessed requests received by the original approver (including requests received before the setting period)
@@ -73,7 +75,7 @@ During the proxy approval setting period, no separate notification appears to th
 ![screenshot-20240802-124638.png](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png)
 </figure>
 
-### 4. Checking Requests Processed by Proxy Approval
+#### 4. Checking Requests Processed by Proxy Approval
 
 * You can check whether the request was processed by the original approver or proxy approver in the approval status within the request detail page as follows:
 **When processed by the original approver**
@@ -94,11 +96,11 @@ Proxy approver is displayed with Done by the delegate
 If you are using request notifications through Slack DM, Workflow step-by-step notifications are also sent to the proxy approver. For detailed information about Slack DM notifications, please refer to the [Using Slack DM Personal Notifications](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types) document.
 </Callout>
 
-### 5. How to View Drafts After Proxy Approval Setting Ends
+#### 5. How to View Drafts After Proxy Approval Setting Ends
 
 * Even after the proxy approval setting period ends, you can check requests processed by the proxy approver within the proxy approval setting period in the Received Requests &gt; Done list. Other requests can no longer be viewed or processed.
 
-## Resubmitting Existing Requests
+### Resubmitting Existing Requests
 
 You can resubmit approval requests with the same content repeatedly or for rejected approval items as follows:
 

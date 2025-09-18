@@ -4,11 +4,13 @@ title: 'DocumentDB Specific Guide'
 
 import { Callout } from 'nextra/components'
 
+# DocumentDB Specific Guide
+
 <Callout type="info">
 This section provides detailed setup guides specific to Amazon DocumentDB.
 </Callout>
 
-## Adjusting Connection Cluster Structure for Cloud Synchronization
+### Adjusting Connection Cluster Structure for Cloud Synchronization
 
 This feature allows you to check cluster information created through cloud synchronization and access cluster endpoints, read-only endpoints, and instance endpoints according to their purposes, designed to work efficiently even in multi-host environments. This feature can be configured in Administrator Page &gt; Databases &gt; DB Connections.
 
@@ -18,11 +20,11 @@ After cloud synchronization, as shown in the screen below, it shows multi-host c
 ![image-20240122-102557.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240122-102557.png)
 </figure>
 
-## Using Amazon DocumentDB TLS(SSL)
+### Using Amazon DocumentDB TLS(SSL)
 
 When creating a new DocumentDB in AWS, you can use TLS for transport encryption and users can optionally turn off this option. Data encryption in transit for Amazon DocumentDB clusters is managed through TLS parameters in cluster parameter groups. You can manage Amazon DocumentDB cluster TLS settings using AWS Management Console or AWS Command Line Interface (AWS CLI). [Reference](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>When TLS is enabled in Amazon DocumentDB, a CA bundle certificate provided by AWS is required for connection.
 
-### Registering CA Bundle Certificate
+#### Registering CA Bundle Certificate
 
 AWS provides two types: [global bundle certificate](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions) that can be used jointly regardless of region and [region-specific bundle certificate](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.RegionCertificates).
 
@@ -43,7 +45,7 @@ AWS provides two types: [global bundle certificate](https://docs.aws.amazon.com/
 ![image-20240220-225433.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240220-225433.png)
 </figure>
 
-### Mapping Certificate to DocumentDB
+#### Mapping Certificate to DocumentDB
 
 1. Navigate to Administrator &gt; Databases &gt; Connection Management &gt; DB Connections menu.
 2. Select the DocumentDB connection created through cloud synchronization.

@@ -2,7 +2,9 @@
 title: 'Profile Editor'
 ---
 
-## Overview
+# Profile Editor
+
+### Overview
 
 Administrators can implement Attribute-Level Mastering management for each profile attribute (Attribute) for efficient ledger management of user identity. Through Profile Editor, you can set the ledger authority for each user attribute and manage updates. This Profile Editor has no impact on QueryPie users and controls the attribute management authority for users whose Auth Provider is set to external IdP such as Okta, LDAP.
 
@@ -12,7 +14,7 @@ Additionally, not only predefined attributes but also custom attributes can be c
 ![Screenshot-2025-05-09-at-2.04.57-PM.png](/administrator-manual/general/user-management/profile-editor/Screenshot-2025-05-09-at-2.04.57-PM.png)
 </figure>
 
-## User Attribute Authority Setting Definition
+### User Attribute Authority Setting Definition
 
 Source Priority can be specified for each user attribute, and the types are as follows:
 
@@ -23,7 +25,7 @@ Source Priority can be specified for each user attribute, and the types are as f
     1. This is an option that means managing that Attribute independently within QueryPie even though the user was created from external Auth Provider.
     2. Even if the user's corresponding Attribute is pushed for update through SCIM API, it becomes an Attribute managed independently by QueryPie and ignores changes.
 
-## Status Column Definition
+### Status Column Definition
 
 The Status column in Profile Editor sets whether that Attribute will be displayed in the user profile (General &gt; Users &gt; User Detail &gt; Profile).
 

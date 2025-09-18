@@ -4,13 +4,15 @@ title: 'Multi Agent Seamless SSH Usage Guide'
 
 import { Callout } from 'nextra/components'
 
+# Multi Agent Seamless SSH Usage Guide
+
 Seamless SSH allows you to connect to servers through QueryPie while preserving the native terminal experience.
 
 This document describes how to use Seamless SSH, along with specs and support scope, based on version 10.2.8.
 
-## How to use
+### How to use
 
-### Configure SSH config
+#### Configure SSH config
 
 You can configure the SSH config file to keep using the standard ssh command.
 
@@ -39,7 +41,7 @@ Host *
 ssh {{Server Account}}@{{Server Name}}
 ```
 
-### Configure shell alias
+#### Configure shell alias
 
 You can configure an SSH alias to continue using the ssh command.
 
@@ -80,9 +82,9 @@ qpctl host use develop.dev.querypie.io
 qshdev {{Server Account}}@{{Server Name}}
 ```
 
-## Differences from the previous QueryPie User Agent
+### Differences from the previous QueryPie User Agent
 
-### Base command
+#### Base command
 
 Seamless SSH runs using the following command installed with QueryPie Multi Agent.
 ```
@@ -94,7 +96,7 @@ The command used by the previous User Agent was:
 qpa ssh %r %h %p
 ```
 
-### How connection errors are displayed
+#### How connection errors are displayed
 
 If an error occurred when connecting to the QueryPie Proxy server, the previous User Agent displayed a dialog, which was not terminal-friendly.
 
@@ -104,9 +106,9 @@ $ qpctl ssh manual@core.dev.querypie.io
 qpctl: error: Connection error: Timeout
 ```
 
-## Newly added features
+### Newly added features
 
-### Default host
+#### Default host
 
 To use Seamless SSH, you need to enter the QueryPie Host, which can be inconvenient.
 
@@ -119,7 +121,7 @@ We added a feature to set a default server used by the qpctl command.
 If you reset the app using Reset All Settings, the default host setting will also be removed.
 </Callout>
 
-#### qpctl host list
+##### qpctl host list
 
 Check the list of currently registered QueryPie Hosts.
 
@@ -137,7 +139,7 @@ QueryPie Hosts:
  - https://t12.qa.querypie.io
 ```
 
-#### qpctl host use
+##### qpctl host use
 
 Shows the list of registered QueryPie Hosts and lets you select one with the arrow keys
 ```
@@ -159,7 +161,7 @@ Selected https://t4.qa.querypie.io
 [qpctl-host-use-without-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-without-hostname.mov)
 </figure>
 
-#### qpctl host use `{QueryPie Host}`
+##### qpctl host use `{QueryPie Host}`
 ```
 $ qpctl host use nightly.dev.querypie.io
 ✔ Host changed to https://nightly.dev.querypie.io
@@ -169,7 +171,7 @@ $ qpctl host use nightly.dev.querypie.io
 [qpctl-host-use-with-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-with-hostname.mov)
 </figure>
 
-### :warning: Experimental feature - Use qpctl directly :warning:
+#### :warning: Experimental feature - Use qpctl directly :warning:
 
 To use Seamless SSH, either
 
@@ -195,9 +197,9 @@ IdentityFile ~/.ssh/querypie-dev.pem
 $ qpctl ssh core-dev
 ```
 
-## Support scope
+### Support scope
 
-### Minimum supported version
+#### Minimum supported version
 
 OpenSSH 6.7 or later is required.
 ```
@@ -205,7 +207,7 @@ $ ssh -V
 OpenSSH_9.8p1, LibreSSL 3.3.6
 ```
 
-### How it works
+#### How it works
 
 The qpctl command wraps the ssh client command and automatically adds the ProxyCommand option.
 
@@ -214,9 +216,9 @@ The qpctl command wraps the ssh client command and automatically adds the ProxyC
     1. Extract username, hostname, port
 3. ssh command_line -o ProxyCommand="qpctl ssh-proxy username hostname port"
 
-### Unsupported features
+#### Unsupported features
 
-#### Custom ProxyCommand
+##### Custom ProxyCommand
 
 Because qpctl uses ProxyCommand, a custom ProxyCommand cannot be used.
 ```
@@ -224,6 +226,6 @@ $ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
 qpctl: error: ProxyCommand option is not supported
 ```
 
-#### scp
+##### scp
 
 scp is not supported yet.

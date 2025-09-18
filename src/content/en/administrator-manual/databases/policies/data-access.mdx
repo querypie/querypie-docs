@@ -4,11 +4,13 @@ title: 'Data Access'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Access
+
+### Overview
 
 You can set policies so that data requiring access restrictions such as personal information or sensitive information within an organization cannot be viewed during queries. In the Data Access menu, you can select connections to set policies, create policies, and register and manage rules for data requiring access restrictions by table or column criteria.
 
-## Creating Table/Column Access Restriction Policies
+### Creating Table/Column Access Restriction Policies
 
 Register new table/column access restriction policies by connection.
 
@@ -28,7 +30,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access
 
 You can check that the policy has been created in the Data Access policy list.
 
-## Registering Rules in Table/Column Access Restriction Policies
+### Registering Rules in Table/Column Access Restriction Policies
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Add Rule](/administrator-manual/databases/policies/data-access/data-access-02.png)
@@ -63,7 +65,7 @@ When selecting Database Name, "[ENGINE] [30101] Please Check the user credential
 A. In this case, DB account information may not be set or may be set with incorrect information. Click the corresponding connection information in Administrator &gt; Databases &gt; Connection Management &gt; DB Connections menu, then **enter and save Database Username / Password information** and try again.
 </Callout>
 
-## Checking Access Logs for Tables/Columns with Applied Access Restriction Policies
+### Checking Access Logs for Tables/Columns with Applied Access Restriction Policies
 
 <Callout type="info">
 From version 10.3.0, you can check access logs for tables and columns restricted by Data access policies.

@@ -4,11 +4,13 @@ title: 'Synchronizing DB Resources from AWS'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Synchronizing DB Resources from AWS
+
+### Overview
 
 QueryPie supports AWS integration for database registration and management. You can synchronize resources within AWS to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
 
-## Registering AWS Integration Information in QueryPie
+### Registering AWS Integration Information in QueryPie
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241217-084317.png)
@@ -34,7 +36,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
 10. Click the `Save` button to save the Cloud Provider.
 
-## Setting Up Authentication Methods by Credential Type
+### Setting Up Authentication Methods by Credential Type
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20240725-043642.png)
@@ -71,7 +73,7 @@ Save Credential for Synchronization
 * Redis : AmazonElastiCacheFullAccess
 </Callout>
 
-## Synchronizing and Managing Registered AWS Cloud Provider
+### Synchronizing and Managing Registered AWS Cloud Provider
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241220-100746.png)
@@ -98,6 +100,6 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page. Like when creating new ones, this setting **cannot be disabled again after being enabled**, so you must choose carefully.
 </Callout>
 
-## Synchronizable Resource Items
+### Synchronizable Resource Items
 
 * Amazon RDS (MySQL, MariaDB, PostgreSQL, SQL Server, Oracle), DynamoDB, Redshift, DocumentDB, Athena, Redis (ElastiCache)

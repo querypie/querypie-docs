@@ -4,7 +4,9 @@ title: 'Server Agents for RDP'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Server Agents for RDP
+
+### Overview
 
 QueryPie can perform access control and permission management for Windows Servers. To connect remotely through RDP Protocol, you must install Server Agent on the Windows Server you want to manage. You can also check RDP sessions in real-time and force terminate connected RDP sessions through the Kill Session feature.
 
@@ -24,7 +26,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP
 </figure>
 
 
-## Viewing Server Agents
+### Viewing Server Agents
 
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP menu.
 2. You can search by server name using the search box in the top left of the table.
@@ -43,7 +45,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP
     8.  **Updated At** : Most recent communication time with server agent
 
 
-## Creating Server Agents
+### Creating Server Agents
 
 1. Server agents are automatically created on the Server Agents for RDP screen when server agents installed on windows servers communicate with QueryPie servers.
 2. When QueryPie servers and Server Agents communicate, Windows Servers are automatically registered in QueryPie's Servers.
@@ -54,7 +56,7 @@ Port and IP of Windows Servers linked to RDP Server Agent cannot be changed.
 </Callout>
 
 
-## Response Methods for Server Agents Communication Failures
+### Response Methods for Server Agents Communication Failures
 
 After installing Server Agent on Windows Server, Server Agent information may appear on the Server Agents for RDP page, but Status may be displayed as Connection Failed.
 
@@ -71,7 +73,7 @@ In this case, it can be resolved as follows.
 3. Enter the IP that can connect to Windows Server in the Host of the popup and click the `Save` button.
 
 
-## Updating Server Agents
+### Updating Server Agents
 
 You can directly update Server Agents to the latest version from the QueryPie web screen. Updates proceed to agent versions compatible with the currently used QueryPie version.
 
@@ -80,7 +82,7 @@ You can directly update Server Agents to the latest version from the QueryPie we
 3. Click the `Update` button that appears at the top of the table to proceed with the update. 
 
 
-## Deleting Server Agents
+### Deleting Server Agents
 
 <figure data-layout="center" data-align="center">
 ![image-20240728-154821.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/image-20240728-154821.png)

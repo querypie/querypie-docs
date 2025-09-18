@@ -2,12 +2,14 @@
 title: 'Setting Server Access Policies'
 ---
 
-## Overview
+# Setting Server Access Policies
+
+### Overview
 
 You can manage access policies (Policy) for servers managed by the organization. Policies operate based on YAML Code in a form similar to IaC. You can not only set the days and times when access is allowed, but also set accessible IP addresses, audit settings, and agent usage availability. In addition, you can set the number of allowed sessions per user.
 
 
-## Configurable Policy Items
+### Configurable Policy Items
 
 *  **serverGroup**  : Server group to allow access to
 *  **account** : Account registered in the server group
@@ -27,7 +29,7 @@ You can manage access policies (Policy) for servers managed by the organization.
 *  **requirePrivilege** : Whether privilege approval is required for server access<br/>*When this option is activated (Enable), the account must receive approval through the server privilege request (Server Privilege Request) workflow to access the server.
 
 
-## Editing Policy Code
+### Editing Policy Code
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png)

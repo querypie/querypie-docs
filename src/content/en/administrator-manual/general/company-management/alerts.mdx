@@ -4,7 +4,9 @@ title: 'Alerts'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Alerts
+
+### Overview
 
 The Alerts page provides notification functionality related to resource access. By pre-setting trigger conditions for major anomalies, you can detect policy violations in real-time. This allows for rapid identification and resolution of potential security incidents, and protection of sensitive information such as queries or data leaks that exceed predefined thresholds.
 
@@ -17,7 +19,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts
 
 This document covers the following content:
 
-## Supported Alert Types
+### Supported Alert Types
 
 It supports general alerts as well as alerts specialized for DB access and system access.
 
@@ -187,7 +189,7 @@ From version 11.1.0, when the New DAC Policy Management feature is activated, yo
     * Sensitive Data Access Monitoring : Event that meets the conditions of Sensitive Data Access Monitoring policy created in new policy management
 </Callout>
 
-## Creating Alerts
+### Creating Alerts
 
 Click the `Create Alert` button in the top right corner of the Alerts page to create a new alert. Click the `OK` button to complete alert creation.
 
@@ -211,7 +213,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 6.  **Send Test Message**  : Send alert test message
     1. Sends the entered message template content as a test message to the selected channel.
 
-### New Request
+#### New Request
 
 New approval request registration notification
 
@@ -244,7 +246,7 @@ New approval request registration notification
 * When setting Workflow-related Alert with Email as Channel, the `Send email only to those involved in this request` option is provided. When this option is enabled, notifications with Message Template content are sent to those involved in the request (requester, approver, etc.).
 </Callout>
 
-### Unusual Login Attempt
+#### Unusual Login Attempt
 
 User login behavior notification based on IP range
 
@@ -259,7 +261,7 @@ Example) Send notification for unusual login attempts - when QueryPie login fail
 * Specific Time Internal (Minutes) : 5
 </Callout>
 
-### SQL Execution
+#### SQL Execution
 
 SQL statement execution notification for defined conditions
 
@@ -286,14 +288,14 @@ Example 2) Send alert for data modification and deletion attempts
 * SQL Events : `UPDATE`, `DELETE`
 </Callout>
 
-### Prevented SQL Execution
+#### Prevented SQL Execution
 
 Unauthorized statement execution notification
 
 *  **Connection**  : Target connections for alert when query is executed (from version 10.2.2 - multiple selection)
     * All Connections (*) : Creates alert conditions for all future connections
 
-### DB Connection Attempt
+#### DB Connection Attempt
 
 DB connection success or failure notification
 
@@ -317,7 +319,7 @@ Example) Send alert for unusual database connection attempts - when DB connectio
 * Specified Time Internal (Minutes) : 5
 </Callout>
 
-### Sensitive Data Access
+#### Sensitive Data Access
 
 Sensitive data query notification for defined conditions
 
@@ -348,7 +350,7 @@ Example 2) Send alert when querying personal data included in specific database
 * Policy : *`{pre-registered Sensitive Data policy}`*
 </Callout>
 
-### SQL Export
+#### SQL Export
 
 SQL export execution notification for defined conditions
 
@@ -366,7 +368,7 @@ Example) Send alert for bulk data export attempts of 100 or more records
 * Trigger Condition (Rows) : 100
 </Callout>
 
-### Server Connection Attempt
+#### Server Connection Attempt
 
 Server connection success or failure notification
 
@@ -384,7 +386,7 @@ Example) Send alert only when user attempts server connection but fails
 * Alert Trigger Condition : Check only Failure
 </Callout>
 
-### Restrict Command
+#### Restrict Command
 
 Blocked command execution notification by server/server group
 
@@ -393,7 +395,7 @@ Blocked command execution notification by server/server group
         * Even if targets are duplicated due to multiple selection, alert is sent only once
     * All Connections (*) : Creates alert conditions for all future connections
 
-### Specific Command
+#### Specific Command
 
 Specific command execution notification
 
@@ -405,7 +407,7 @@ Specific command execution notification
     * Keyword : Send alert when entered keyword is included in command
     * RegExr : Send alert when command matches regular expression
 
-### File Transfer (SFTP)
+#### File Transfer (SFTP)
 
 File transfer execution notification via SFTP
 
@@ -417,7 +419,7 @@ File transfer execution notification via SFTP
         * Even if targets are duplicated due to multiple selection, alert is sent only once
     * All Connections (*) : Creates alert conditions for all future connections
 
-### K8s API Request**[10.2.2]**
+#### K8s API Request**[10.2.2]**
 
 Kubernetes API request notification
 
@@ -432,7 +434,7 @@ Kubernetes API request notification
     * Currently supported - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, etc. (24 types total)
     * All Resources (*) : Creates alert conditions for all future resource types
 
-### Data Access**[11.1.0]**
+#### Data Access**[11.1.0]**
 
 <Callout type="info">
 This can only be used when the New DAC Policy Management feature is enabled in Databases &gt; General &gt; Configurations and related policies exist.
@@ -468,7 +470,7 @@ Data Access alerts can select four **policy types**: Column Data Masking, Table 
         * When 0 is entered, triggers based on a single SQL execution without time conditions.
         * Can enter up to 1440
 
-## Viewing and Modifying Alert Details
+### Viewing and Modifying Alert Details
 
 Select the alert you want to view details for in the Alerts page. In the Details tab of the detail page, you can view and modify the alert conditions and messages entered when creating the alert. Click the `Save Changes` button in the top right corner to apply the modifications.
 
@@ -479,7 +481,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figcaption>
 </figure>
 
-## Viewing Alert Delivery History
+### Viewing Alert Delivery History
 
 Select the alert you want to view delivery history for in the Alerts list. You can then view the history in the Log section of the detail page.
 
@@ -490,7 +492,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figcaption>
 </figure>
 
-## Deleting Alerts
+### Deleting Alerts
 
 Two methods are provided for deleting existing alerts.
 

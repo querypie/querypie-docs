@@ -4,11 +4,13 @@ title: 'Connecting with Web SQL Editor'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Connecting with Web SQL Editor
+
+### Overview
 
 QueryPie provides a web SQL editor that allows you to execute queries and view data through a web browser.
 
-## Connecting to Databases with Access Permissions
+### Connecting to Databases with Access Permissions
 
 You can check the list of database connections with access permissions granted to individual users or groups, and select the connection to work with to connect to the database.
 
@@ -25,11 +27,11 @@ QueryPie Web &gt; Database Access Control &gt; Databases
 
 If the required connection is not displayed, you can request access permissions through Workflow &gt; DB Access Request.
 
-## Using Web SQL Editor
+### Using Web SQL Editor
 
 The editor consists of a left object panel, top toolbar, center SQL editor, and right object information panel.
 
-### 1. Top Left Object Panel
+#### 1. Top Left Object Panel
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png)
@@ -42,7 +44,7 @@ SQL Editor &gt; Connection Panel
 * `Connection Management`: You can navigate to the Databases connection list while maintaining existing connections.
 * `Disconnect`: You can disconnect the currently connected connection through the disconnect button.
 
-### 2. Left Object Panel
+#### 2. Left Object Panel
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png)
@@ -57,7 +59,7 @@ SQL Editor &gt; Connection Panel
 * **Object Information Refresh**: When you click on schemas / tables / views / events / functions / procedures / triggers, etc. within the database, the `Refresh` button on the right becomes active and you can refresh object information.
 * **Individual Object Information Refresh**: Individual object information can also be refreshed by right-clicking and clicking the `Reload Object` button.
 
-### 3. Top Toolbar
+#### 3. Top Toolbar
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png)
@@ -95,7 +97,7 @@ SQL Editor &gt; Editor Tab & Result
 * `Full Screen`: You can check query execution results in full screen.
 * `Stack/Column View`: When executing multiple queries, you can check results in horizontal or vertical split grids.
 
-### 3. Queries Panel
+#### 3. Queries Panel
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Queries Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png)
@@ -110,7 +112,7 @@ SQL Editor &gt; Queries Panel
 To use this feature, administrators must pre-configure query sharing settings. (Reference: [General](../../administrator-manual/general/company-management/general) &gt; **Query Sharing Settings**)
 </Callout>
 
-### 4. Object Info Panel
+#### 4. Object Info Panel
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Object Info Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png)
@@ -127,7 +129,7 @@ SQL Editor &gt; Object Info Panel
 * `Script`: You can check the script information of objects.
 * `Info`: You can check the detailed information of objects.
 
-### 5. SQL History Panel
+#### 5. SQL History Panel
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; SQL History Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png)
@@ -156,7 +158,7 @@ SQL Editor &gt; SQL History Panel
 * When selecting Text type, supports up to 5MB size within the query editor.
 </Callout>
 
-### 6. Entering Reason When Executing Queries
+#### 6. Entering Reason When Executing Queries
 
 Reason input may be forced when executing queries due to Ledger policies or connection policies. In this case, when users enter queries, a popup for entering reasons is displayed. As shown in the figure below, enter the reason for executing the query in the "Write the reason for this request" popup dialog and click the `OK` button to display the query execution results. You can enter up to 300 characters.
 

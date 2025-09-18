@@ -4,12 +4,14 @@ title: 'Synchronizing Kubernetes Resources from AWS'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Synchronizing Kubernetes Resources from AWS
+
+### Overview
 
 QueryPie supports AWS integration for Kubernetes cluster registration and management. You can synchronize resources within AWS, register them as clusters managed by QueryPie, and grant Kubernetes API access permissions and set policies for users and groups on the synchronized clusters.
 
 <Callout type="info">
-### Prerequisites
+#### Prerequisites
 
 1. To synchronize with AWS resources, ensure that the necessary policy actions have been attached to the AWS IAM role assigned to the QueryPie instance. The policy must include all of the following actions:
 
@@ -23,7 +25,7 @@ QueryPie supports AWS integration for Kubernetes cluster registration and manage
 </Callout>
 
 
-## Modifying AWS EKS Authentication Mode
+### Modifying AWS EKS Authentication Mode
 
 QueryPie utilizes the EKS access entry API during synchronization for AWS EKS Kubernetes cluster connections. Therefore, if the cluster authentication mode is set to ConfigMap only, there may be connection difficulties, and we recommend changing the mode in the AWS console in advance for smooth synchronization.
 
@@ -45,7 +47,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 8. Click `Save changes` to save the changes. 
 
 
-## Registering AWS Integration Information in QueryPie
+### Registering AWS Integration Information in QueryPie
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
@@ -78,7 +80,7 @@ A. If there is already a Cloud Provider registered with `Default Credentials` as
 </Callout>
 
 
-## Synchronizing and Managing Registered AWS Cloud Provider
+### Synchronizing and Managing Registered AWS Cloud Provider
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
@@ -102,7 +104,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     7.  **Replication**   **Frequency** : Can be changed
 
 
-## Dry Run/Synchronization Log Notation
+### Dry Run/Synchronization Log Notation
 
 |                                                                                                                                                                            |  **Occurrence Time**                                                                         |  **Text**                                                                                                                                                   |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |

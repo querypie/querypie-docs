@@ -4,11 +4,13 @@ title: '[~10.2.7] WAC Role & Policy Guide'
 
 import { Callout } from 'nextra/components'
 
+# [~10.2.7] WAC Role & Policy Guide
+
 QueryPie WAC provides RBAC (Role-Based Access Control) like other QueryPie products.
 
 This document provides guidance on WAC roles and policies applied to version `10.2.7` and below.
 
-# WAC Roles and Policies
+## WAC Roles and Policies
 
 * Policy is a specification that describes how to control access to resources registered in WAC, written in YAML format.
     * It includes allowing or blocking web app resources.
@@ -22,7 +24,7 @@ This document provides guidance on WAC roles and policies applied to version `10
 When all policies included in a role are combined, **at least 1 allow policy** must remain.<br/>Roles composed only of deny policies do not grant any app permissions and cannot be used normally.
 </Callout>
 
-# Basic Structure of WAC YAML Policy
+## Basic Structure of WAC YAML Policy
 
 WAC policies are written in YAML format, and their basic structure is as follows.
 
@@ -145,14 +147,14 @@ Detailed conditions for rule application targets
 
 Below is the QueryPie WAC Policy YAML syntax needed for policy writing.
 
-## spec: &lt;effect&gt;**[required]**
+### spec: &lt;effect&gt;**[required]**
 
 Specifies whether to allow or deny specific rules of the policy. Supports `spec: allow` or `spec: deny`.
 
 1. A policy can have a maximum of 1 `allow` and 1 `deny`.
 2. When `deny` and `allow` are declared simultaneously for the same element within a policy, `deny` takes precedence.
 
-## Resources**[required]**
+### Resources**[required]**
 
 Specifies the web app resources for which you want to set allow or block policies. Must have `webApp` and `urlPaths` as sub-elements.
 
@@ -160,7 +162,7 @@ Specifies the web app resources for which you want to set allow or block policie
 `resources` is allowed in both `spec: allow` and `spec: deny`.
 </Callout>
 
-### webApp**[required]**
+#### webApp**[required]**
 
 Enter the web app resource name defined in QueryPie.
 
@@ -176,7 +178,7 @@ Enter the web app resource name defined in QueryPie.
     * Start and end are limited to alphabetic case-sensitive letters or numbers
     * No duplicates allowed
 
-### urlPaths**[OPTIONAL]**
+#### urlPaths**[OPTIONAL]**
 
 Specifies the sub-paths of specific web app resources to which you want to apply policies.
 
@@ -201,7 +203,7 @@ To enter specific sub-paths in urlPaths, Path Management activation is required 
     * `"^/database-settings/policies/data-.*$"` (X)
 2. When deny and allow policies overlap for the same resource (and sub-paths), **deny policies take precedence**.
 
-## Conditions**[OPTIONAL]**
+### Conditions**[OPTIONAL]**
 
 `conditions` defines conditions to narrow the scope of resources to which rules apply. Three types of condition specifications are possible: `urlPathTags`, `userAttributes`, and `ipAddresses`.
 
@@ -209,7 +211,7 @@ To enter specific sub-paths in urlPaths, Path Management activation is required 
 `conditions` is only syntactically allowed in spec:allow.
 </Callout>
 
-### urlPathTags**[OPTIONAL]**
+#### urlPathTags**[OPTIONAL]**
 
 Limits the scope of resources whose access is allowed by rules based on tags assigned to Web App's Path Management.
 
@@ -228,7 +230,7 @@ Limits the scope of resources whose access is allowed by rules based on tags ass
     *  **When target urlPath of web app resource is specified but no matching urlPathTag exists within the scope** 
         * No paths match the conditions, so no paths are allowed.
 
-### userAttributes**[OPTIONAL]**
+#### userAttributes**[OPTIONAL]**
 
 Limits the scope of users whose resource access is allowed by rules based on QueryPie user attributes.
 
@@ -243,7 +245,7 @@ Attribute information is case-sensitive and multiple can be entered.
 * When multiple attributes with different Keys are entered, they operate with AND conditions. 
     * Example: Allow access for users whose department is PM and title is manager
 
-### ipAddresses**[OPTIONAL]**
+#### ipAddresses**[OPTIONAL]**
 
 Defines a list of IP access control conditions for resources in single IP, CIDR format.
 ```
@@ -252,9 +254,9 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 If not defined separately, the default value is allow all (`0.0.0.0/0`).
 
-# Recommended Usage Methods
+## Recommended Usage Methods
 
-## Full Allow + Partial Deny
+### Full Allow + Partial Deny
 
 The most basic usage is to create separate full allow policies and purpose-specific deny policies and assign them to one role.
 
@@ -275,7 +277,7 @@ And combine policies by role.
 
 This pattern can be used when there are no problems with leaving access to unidentified sub-paths open.
 
-## Partial Allow + Partial Deny
+### Partial Allow + Partial Deny
 
 When access to unidentified sub-paths should not be allowed, you must clearly specify the paths to allow.
 

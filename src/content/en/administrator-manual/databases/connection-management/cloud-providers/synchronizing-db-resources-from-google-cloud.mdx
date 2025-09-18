@@ -4,11 +4,13 @@ title: 'Synchronizing DB Resources from Google Cloud'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Synchronizing DB Resources from Google Cloud
+
+### Overview
 
 QueryPie supports Google Cloud (GCP) integration for database registration and management. You can synchronize resources within GCP to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
 
-## Registering GCP Integration Information in QueryPie
+### Registering GCP Integration Information in QueryPie
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
@@ -49,7 +51,7 @@ Save Credential for Synchronization
 * When this option is enabled, you can synchronize manually or set a schedule.
 </Callout>
 
-## Synchronizing and Managing Registered GCP Cloud Provider
+### Synchronizing and Managing Registered GCP Cloud Provider
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241220-095231.png)
@@ -75,7 +77,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page. Like when creating new ones, this setting **cannot be disabled again after being enabled**, so you must choose carefully.
 </Callout>
 
-## Synchronization through Service Account
+### Synchronization through Service Account
 
 1. After registering a Cloud Provider for GCP integration, click the `Synchronize` button on the detail page.
 2. Enter the JSON key value in the displayed Service Account JSON field and click the `Ok` button.

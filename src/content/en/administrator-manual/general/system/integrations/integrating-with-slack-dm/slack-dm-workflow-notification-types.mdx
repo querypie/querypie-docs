@@ -2,7 +2,9 @@
 title: 'Slack DM - Workflow Notification Types'
 ---
 
-## Overview
+# Slack DM - Workflow Notification Types
+
+### Overview
 
 This document provides guidance on notification types sent to Workflow requesters/approvers/executors through Slack Direct Messages (DM).
 
@@ -20,7 +22,7 @@ For post-approval (Urgent Mode), four types of notifications are sent as follows
 3. Approval completion notification - to requester
 4. Urgent Mode unapproved notification
 
-## Approval Request Notification
+### Approval Request Notification
 
 Supports all five types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request, Access Role Request).
 
@@ -39,7 +41,7 @@ Normal Mode Approval Request Example (Left) / Post-Approval Mode Approval Reques
 </figcaption>
 </figure>
 
-## Rejection Notification
+### Rejection Notification
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-060544.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060544.png)
@@ -51,7 +53,7 @@ No separate action buttons are included, but the `Details` button is included. W
 
 For post-approval (Urgent Mode) drafts, rejection cases do not exist. Therefore, rejection messages also do not exist.
 
-## Approval Completion Notification - to Requester
+### Approval Completion Notification - to Requester
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-060552.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060552.png)
@@ -63,7 +65,7 @@ No separate action buttons are included, but the `Details` button is included. W
 
 For post-approval (Urgent Mode) drafts, this message is also sent to the requester after all post-approvals are completed.
 
-## Execution Available Notification
+### Execution Available Notification
 
 Supports two types (SQL Request, SQL Export Request) that include Execute actions in Workflow.
 
@@ -77,7 +79,7 @@ For post-approval (Urgent Mode) drafts, a message is sent to the executor immedi
 ![image-20231003-062055.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-062055.png)
 </figure>
 
-## Urgent Mode Unapproved Notification
+### Urgent Mode Unapproved Notification
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-062615.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-062615.png)

@@ -4,7 +4,9 @@ title: 'Slack DM Integration'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Slack DM Integration
+
+### Overview
 
 You can integrate a Slack App with QueryPie and receive Direct Message notifications from QueryPie.
 
@@ -13,12 +15,12 @@ This document applies to **version 10.2.6 or higher**.
 For Slack integration methods for version 10.2.5 or lower, please refer to the [10.1.0 version manual documentation](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations).
 </Callout>
 
-### Required Permissions for Configuration
+#### Required Permissions for Configuration
 
 * Slack Workspace administrator account (required to install App in Slack Workspace)
 * QueryPie Owner and Approval Admin account
 
-## Creating DM App in Slack API (via Manifest Files)
+### Creating DM App in Slack API (via Manifest Files)
 
 Create a Slack App dedicated for QueryPie DM integration using App Manifest.
 
@@ -28,13 +30,13 @@ Create a Slack App dedicated for QueryPie DM integration using App Manifest.
 4. In the Create app from manifest modal, enter the App Manifest in JSON format. <br/>Delete the pre-filled content and paste the App Manifest below, then proceed to the next step.<br/>:light_bulb_on: Please change the values in `{{..}}` to your desired values.
 5. Review the settings and click the `Create` button to complete app creation.<br/>
 
-## Installing Slack App in Slack Workspace
+### Installing Slack App in Slack Workspace
 
 1. In Settings &gt; Install App, click the `Install to Workspace` button to install the created app in the Slack Workspace.
 2. On the permission request page, click `Allow`.
 3. You can confirm that a Slack DM dedicated app has been created in the configured Slack Workspace.
 
-## Obtaining Bot User OAuth Token
+### Obtaining Bot User OAuth Token
 
 In the OAuth Tokens for Your Workspace section of the Features &gt; OAuth & Permissions menu, copy and record the **Bot User OAuth Token**.
 
@@ -42,7 +44,7 @@ In the OAuth Tokens for Your Workspace section of the Features &gt; OAuth & Perm
 ![image-20240418-022640.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240418-022640.png)
 </figure>
 
-## Creating App-Level Token
+### Creating App-Level Token
 
 <Callout type="info">
 When creating a Slack app with App manifest, you can activate Socket Mode and related permissions, but App Level Token (xapp-) is not automatically generated.
@@ -56,7 +58,7 @@ Follow these steps to manually create an App-Level Token.
 2. In the Generate an app-level token modal, click the Add Scope button and add `connections:write`.<br/>
 3. In the generated App-Level Token modal, copy the app token and record it separately. App-Level Token starts with `xapp-`.
 
-## Configuring Slack DM in QueryPie
+### Configuring Slack DM in QueryPie
 
 1. Navigate to Admin &gt; General &gt; System &gt; Integrations &gt; Slack menu and click the `Configure` button to open the settings modal.<br/>
 2. Enter the App Token and Bot User OAuth Token you recorded earlier in the settings modal.
@@ -65,12 +67,12 @@ Follow these steps to manually create an App-Level Token.
     *  **Allow Users to approve or reject on Slack DM**  : Enable approval or rejection functionality within Slack DM<br/>
 4. Click the `Save` button to complete the setup.
 
-## Managing Slack DM Settings
+### Managing Slack DM Settings
 
 1. After registering Slack Configuration, you can check the current settings status on the screen.<br/>
 2. Click the `Edit` button to modify the entered settings.<br/>
 
-## Testing Slack DM for Workflow Requests
+### Testing Slack DM for Workflow Requests
 
 Using DB Access Request as an example, test whether the Slack DM functionality works properly.
 

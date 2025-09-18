@@ -4,19 +4,21 @@ title: 'SAC General Configurations'
 
 import { Callout } from 'nextra/components'
 
+# SAC General Configurations
+
 <Callout type="info">
 Starting from version 10.3.0, SAC-related configuration items that were previously under Administrator &gt; General &gt; Security have been moved to General &gt; Configurations under each service menu.
 </Callout>
 
-## Overview
+### Overview
 
 The Configurations page is a settings page in QueryPie where you can manage server access and security policies. You can configure core elements of server connection security such as login failure threshold settings, session timeouts, and insecure protocol controls. This allows administrators to configure server environments according to their organization's security requirements and protect systems from potential threats.
 
-## Server Connection Security Settings
+### Server Connection Security Settings
 
 Manage security settings applied to server access control.
 
-### General Settings
+#### General Settings
 
 Manage basic security settings.
 
@@ -94,7 +96,7 @@ When accessing Windows Servers without RDP Server Agent installed, the following
         * Provisioning accounts and One Time Accounts can be registered in the system.
         * When accessing servers, the system automatically creates temporary accounts on the server.
 
-### Default Policy Settings for Server Permission Requests
+#### Default Policy Settings for Server Permission Requests
 
 Manage server access policies applied when assigning Direct Permissions through Workflow requests.
 
@@ -129,7 +131,7 @@ Users can be assigned Direct Permissions for servers through Server Access Reque
 *  **Show Server Groups in Workflow if Assigned as Member :**  When checked, only server groups assigned as Server Group Members are displayed when users apply for Server Access Request
 *  **Require Minute-Based Requests :** Allow minute-based requests for server-related permission requests in Workflow. If not set, permissions are requested in days. When checked, server access permission requests are made in minutes
 
-### Server Privilege Request Policy Settings
+#### Server Privilege Request Policy Settings
 
 Set policies applied when users request server privileges (Server Privilege).
 

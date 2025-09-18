@@ -2,11 +2,13 @@
 title: 'Integrating with AWS SSO'
 ---
 
-## Overview
+# Integrating with AWS SSO
+
+### Overview
 
 QueryPie supports user integration through multiple cloud applications and SAML 2.0 for users in AWS IAM Identity Center. You can grant access permissions and apply policies by synchronizing users.
 
-## Adding QueryPie as an Application in AWS IAM Identity Center
+### Adding QueryPie as an Application in AWS IAM Identity Center
 
 <figure data-layout="center" data-align="center">
 ![AWS-SSO-01-20230317-044219.png](/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/AWS-SSO-01-20230317-044219.png)
@@ -24,7 +26,7 @@ QueryPie supports user integration through multiple cloud applications and SAML 
     2. Application SAML Target : https://`{querypie_host}`/saml/sp/metadata
 8. Click the Submit button to save.
 
-## Setting Attribute Mapping for QueryPie Integration
+### Setting Attribute Mapping for QueryPie Integration
 
 <figure data-layout="center" data-align="center">
 ![AWS-SSO-06-20230317-064023.png](/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/AWS-SSO-06-20230317-064023.png)
@@ -43,7 +45,7 @@ QueryPie supports user integration through multiple cloud applications and SAML 
 
 Click the `Save Changes` button to save.
 
-## Configuring AWS IAM Identity Center Integration in QueryPie
+### Configuring AWS IAM Identity Center Integration in QueryPie
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Authentication ](/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/image-20240723-072112.png)
@@ -58,7 +60,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 4. Paste the downloaded XML information into the Identity Provider Metadata field.
 5. Click the `Save Changes` button to save.
 
-## SAML Login in QueryPie
+### SAML Login in QueryPie
 
 <figure data-layout="center" data-align="center">
 ![image-20240723-073353.png](/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/image-20240723-073353.png)

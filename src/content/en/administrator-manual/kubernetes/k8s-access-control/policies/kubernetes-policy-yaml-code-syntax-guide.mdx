@@ -4,12 +4,14 @@ title: 'Kubernetes Policy YAML Code Syntax Guide'
 
 import { Callout } from 'nextra/components'
 
+# Kubernetes Policy YAML Code Syntax Guide
+
 <Callout type="info">
 This document is written based on **QueryPie Enterprise 9.20.0**.
 </Callout>
 
 
-## QueryPie Access Control Policy Overview
+### QueryPie Access Control Policy Overview
 
 Access control policies defined in QueryPie operate based on EABAC (Enhanced Attribute Based Access Control). EABAC is a policy control method that can control access to resources registered in QueryPie and perform permission management based on the roles and attributes of QueryPie users. It provides more flexible and sophisticated access control by combining the functions of RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control). All policies operate on the premise of All Deny.
 
@@ -18,7 +20,7 @@ EABAC operates in two ways: Role and Policy. Role settings are done through GUI,
 For Kubernetes policies, the specification was created as a comprehensive model that can accommodate both Role limited to namespaces that actually exist in Kubernetes and ClusterRole that supports resources outside the namespace scope.
 
 
-## Kubernetes Policy YAML Basic Structure
+### Kubernetes Policy YAML Basic Structure
 
 Wildcard ("*") and regular expression ([RE2 format](https://github.com/girishji/re2/wiki/Syntax): `^$` explicit required) patterns are supported in general policy code except for some items.
 
@@ -188,7 +190,7 @@ Controls the target in detail by applying conditions for whether to apply resour
 </table>
 
 
-## Resources Specification Method
+### Resources Specification Method
 
 `resources` defines resources for Kubernetes clusters registered in QueryPie, <u>not Kubernetes resources</u>.
 
@@ -211,7 +213,7 @@ Controls the target in detail by applying conditions for whether to apply resour
     * `"cluster:^kubepie-dev-.*$"`
 
 
-## Subjects Specification Method
+### Subjects Specification Method
 
 `subjects` defines users/groups within Kubernetes to impersonate Kubernetes commands. `subjects` is a field that needs to be applied only in spec:allow, and is not syntactically allowed in spec:deny.
 
@@ -228,7 +230,7 @@ Controls the target in detail by applying conditions for whether to apply resour
         * Wildcards are allowed. (`"*"`)
 
 
-## Actions Specification Method
+### Actions Specification Method
 
 Specifies the Resource API list to allow within the cluster API server. Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entries.
 
@@ -275,7 +277,7 @@ Specifies the Resource API list to allow within the cluster API server. Each act
         * `verbs: ["*"]`
 
 
-## Conditions Specification Method
+### Conditions Specification Method
 
 `conditions` items can define `resourceTags`, `userAttributes`, `ipAddresses` as conditions. **[OPTIONAL]**
 
@@ -284,7 +286,7 @@ Specifies the Resource API list to allow within the cluster API server. Each act
 * `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. 
 
 
-## KAC Policy Example
+### KAC Policy Example
 
 ```
 apiVersion: kubernetes.rbac.querypie.com/v1 

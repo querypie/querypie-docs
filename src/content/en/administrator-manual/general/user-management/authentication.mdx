@@ -4,11 +4,13 @@ title: 'Authentication'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Authentication
+
+### Overview
 
 SSO (Single Sign-On) integration is an essential feature within QueryPie that enhances user authentication and access management while providing a secure integrated authentication environment. By integrating with the account system used by your organization, you can synchronize users and groups within your organization to QueryPie. Administrators can manage new hires and departures in one place. SSO integration simplifies the authentication process and allows users to access databases and systems through QueryPie using the authentication method they are using within their organization. This document explains SSO integration methods and key considerations.
 
-## IdP Integration Support Scope
+### IdP Integration Support Scope
 
 The IdP services currently supported by QueryPie are as follows.
 
@@ -19,7 +21,7 @@ The IdP services currently supported by QueryPie are as follows.
 * SAML 2.0
 * Custom Identity Provider : Only API URL input is possible.
 
-## User Management Through Account System Synchronization
+### User Management Through Account System Synchronization
 
 * You can configure external account system integration in Administrator &gt; General &gt; User Management &gt; Authentication menu.
 * Currently, Authentication type cannot be changed once integration is completed.
@@ -31,19 +33,19 @@ The IdP services currently supported by QueryPie are as follows.
 If you need to change the Authentication type, please contact the QueryPie technical support team or Customer Portal.
 </Callout>
 
-## Group Management Through Account System Synchronization
+### Group Management Through Account System Synchronization
 
 * For Okta, OneLogin, and LDAP, groups within the account system can be synchronized to QueryPie groups.
 * Synchronized groups cannot be modified or deleted within QueryPie.
 * For Okta and OneLogin types, groups can be synchronized by assigning groups to the QueryPie application.
 * For LDAP type, Group synchronization option can be used. For detailed information, refer to the detailed integration guide page.
 
-## Using External Account System and QueryPie's Own Accounts Simultaneously
+### Using External Account System and QueryPie's Own Accounts Simultaneously
 
 * Even when using external account system integration, you can add and use users and groups within QueryPie itself.
 * However, Username and Email fields are unique values and cannot be registered as duplicates.
 
-## Local Account Security Enhancement in IDP Integration Environment
+### Local Account Security Enhancement in IDP Integration Environment
 
 Multi-Factor Authentication (MFA) functionality is supported to maintain consistent security policies even in hybrid authentication environments where external account systems (IdP) and QueryPie local accounts are used together.
 
@@ -51,7 +53,7 @@ Regardless of whether external IdP integration such as Okta, Onelogin, SAML is u
 
 * Even in environments using external IdP, MFA can be configured for all local accounts including administrator accounts to safely protect the system from unauthorized access.
 
-### Configuration Method
+#### Configuration Method
 
 1.  Navigate to **Administrator &gt; General &gt; Authentication** menu.
 2.  In the **Two Factor Authentication** section, activate and configure the desired MFA option.

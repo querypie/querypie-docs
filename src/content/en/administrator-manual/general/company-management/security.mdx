@@ -4,7 +4,9 @@ title: 'Security'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Security
+
+### Overview
 
 You can manage security settings for QueryPie in the Security page. This document provides descriptions of each security setting.
 
@@ -12,12 +14,12 @@ You can manage security settings for QueryPie in the Security page. This documen
 From version 10.3.0, service-specific configuration items have been moved from Administrator &gt; General &gt; Security to each service's General submenu (Administrator &gt; `{Service}` &gt; General &gt; Configurations) for each service (Databases / Servers / Kubernetes).
 </Callout>
 
-## Web Console Login Settings
+### Web Console Login Settings
 
 Manage security settings related to QueryPie Web login.
 
 
-## Account Security Policy
+### Account Security Policy
 
 You can set security policies such as account lockout and expiration for QueryPie accounts.
 
@@ -40,7 +42,7 @@ You can set security policies such as account lockout and expiration for QueryPi
         * Notifications appear when user API calls such as button clicks occur. Notifications are displayed for 24 hours from the time of other login occurrences. Web, User Agent, and Multi-Agent each have individual concurrent login restrictions applied.
 
 
-## Password Setting
+### Password Setting
 
 You can set password policies for QueryPie accounts.
 
@@ -63,7 +65,7 @@ You can set password policies for QueryPie accounts.
     * Does not contain part of personal information (Username, Primary email) : Restrict use of personal information (Username, Primary email) in passwords
 
 
-## Timeout
+### Timeout
 
 You can set timeout policies for web console and agents.
 
@@ -77,7 +79,7 @@ You can set timeout policies for web console and agents.
     * Maintains agent app login for the specified time and processes logout when elapsed
 
 
-## QueryPie Web IP Access Control
+### QueryPie Web IP Access Control
 
 You can set IP restriction policies when accessing QueryPie.
 
@@ -129,7 +131,7 @@ Settings on the Security page are applied immediately upon saving. Therefore, if
 </Callout>
 
 
-## Secret Store Settings
+### Secret Store Settings
 
 Sets whether to use Secret Store. Currently supports HashiCorp Vault.
 
@@ -160,7 +162,7 @@ DB Connection detail page &gt; Connection Information &gt; Secret Store selectio
 Server Group detail page &gt; Accounts &gt; Secret Store selection
 </figcaption>
 </figure>
-## Others
+### Others
 
 Manages other security settings.
 

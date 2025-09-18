@@ -4,11 +4,13 @@ title: 'Integrating with LDAP'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Integrating with LDAP
+
+### Overview
 
 You can integrate QueryPie service with LDAP server for user authentication and user and group management.
 
-## LDAP Integration and Synchronization Configuration
+### LDAP Integration and Synchronization Configuration
 
 Navigate to Administrator &gt; General &gt; User Management &gt; Authentication menu, then select **LDAP** in the Authentication Type field to enable configuration input for LDAP integration.
 
@@ -23,7 +25,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
 </figcaption>
 </figure>
 
-### Basic User Integration Configuration
+#### Basic User Integration Configuration
 
 <figure data-layout="center" data-align="center">
 ![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
@@ -31,7 +33,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
 
 Enter basic authentication information and attribute information for LDAP integration. For attribute information for Attribute mapping, the field name is the QueryPie User attribute name, and the field contains the Attribute name to reference in LDAP. For detailed descriptions, please refer to the items below.
 
-### Group Integration Configuration
+#### Group Integration Configuration
 
 <figure data-layout="center" data-align="center">
 ![image-20250515-095109.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095109.png)
@@ -114,7 +116,7 @@ Enter the attribute value to use as the group identifier.
 </tbody>
 </table>
 
-### LDAP User Synchronization Configuration
+#### LDAP User Synchronization Configuration
 
 To execute user information synchronization from LDAP server, activate the **Use Synchronization with the Authentication System** option.
 
@@ -215,7 +217,7 @@ After completing mapping and performing synchronization, linked Attributes can b
         * Appears in a read-only state that cannot be modified.
             * For example, if the Primary Email (email) value is linked to regan@querypie.com, it cannot be directly modified in the UI and can only be changed in LDAP.
 
-### Other Settings and Synchronization
+#### Other Settings and Synchronization
 
 *  **Anonymous :** Sets whether anonymous users can authenticate. (True or False)
 *  **Dry Run :**  Clicking the `Dry Run` button allows you to preview the results if synchronization is performed based on the currently entered configuration information. (Regardless of whether the currently entered information is saved)
@@ -231,7 +233,7 @@ After completing mapping and performing synchronization, linked Attributes can b
 * From version 10.2.1, user synchronization has been improved to process individual users and groups.
 </Callout>
 
-## LDAP Authentication Login in QueryPie
+### LDAP Authentication Login in QueryPie
 
 1. You can check synchronized users and groups in Administrator &gt; General &gt; User Management &gt; Users or Groups menu.
 2. Now you can log in by entering LDAP authentication information in the ID and Password fields on the login page.

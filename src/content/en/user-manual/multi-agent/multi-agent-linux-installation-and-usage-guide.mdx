@@ -4,11 +4,13 @@ title: 'Multi Agent Linux Installation and Usage Guide'
 
 import { Callout } from 'nextra/components'
 
+# Multi Agent Linux Installation and Usage Guide
+
 <Callout type="info">
 QueryPie Multi Agent runs only on Linux platforms with a FreeDesktop environment.
 </Callout>
 
-# Supported Targets
+## Supported Targets
 
 | Base | Distribution | Minimum Supported Version | Verified Versions (validated by the dev team) |
 | -------- | --------- | ------------------ | ----------------------- |
@@ -21,19 +23,19 @@ QueryPie Multi Agent runs only on Linux platforms with a FreeDesktop environment
 
 * Minimum supported version: The minimum Linux version that supports glibc 2.27
 
-# Installation and Removal
+## Installation and Removal
 
-## Download the installer
+### Download the installer
 
 You can download the Multi Agent installer via QueryPie Web > Profile > Multi-Agent.
 
-## Prerequisites
+### Prerequisites
 
 Multi Agent provides a tray icon feature via [StatusNotifierItem](https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/).
 
 Depending on the Linux distribution, StatusNotifierItem may not be exposed by default.
 
-### 1. Check installation
+#### 1. Check installation
 
 ```
 gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
@@ -59,7 +61,7 @@ appindicatorsupport@rgcjonas.gmail.com
   State: ENABLED
 ```
 
-### 2. Install
+#### 2. Install
 
 Download and install AppIndicator and KStatusNotifierItem Support from the link below.
 
@@ -73,17 +75,17 @@ https://extensions.gnome.org/extension/615/appindicator-support/
 ![image-20250404-054650.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250404-054650.png)
 </figure>
 
-## Debian-based
+### Debian-based
 
 Based on the dpkg command.
 
-### Install
+#### Install
 
 1. Download querypie-multi-agent.deb.
 2. Run the following command to install the file. Output example
 3. Verify the installation. Output example
 
-### Uninstall
+#### Uninstall
 
 Run the following command in the terminal.
 ```
@@ -98,17 +100,17 @@ Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
 Processing triggers for desktop-file-utils (0.27-2build1) ...
 ```
 
-## RedHat-based
+### RedHat-based
 
 Based on the rpm command.
 
-### Install
+#### Install
 
 1. Download querypie-multi-agent.rpm.
 2. Run the following command in the terminal to install the file. Output example
 3. Verify the installation. Output example
 
-### Uninstall
+#### Uninstall
 
 Run the following command in the terminal.
 ```
@@ -121,7 +123,7 @@ QueryPie Multi Agent is being uninstalled.
 QueryPie Multi Agent has been uninstalled.
 ```
 
-## Keyring
+### Keyring
 
 <Callout type="important">
 The following is based on Ubuntu.
@@ -145,9 +147,9 @@ If you unlock it using the Unlock button, administrator privileges will not be r
 ![image-20250403-080814.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080814.png)
 </figure>
 
-# Troubleshooting
+## Troubleshooting
 
-## Clicking a link in Multi Agent does nothing
+### Clicking a link in Multi Agent does nothing
 
 If a Default Browser is not set, links will not open. Please set a default browser in your browser's settings.
 

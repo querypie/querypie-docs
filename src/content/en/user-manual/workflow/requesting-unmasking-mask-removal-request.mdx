@@ -4,13 +4,15 @@ title: 'Requesting Unmasking (Mask Removal Request)'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Requesting Unmasking (Mask Removal Request)
+
+### Overview
 
 When you need to verify original data for items masked by masking policies in DAC, you can request temporary mask removal from administrators through Workflow. Mask removal can be requested through Workflow, or through the Unmasking Request menu that appears when you right-click on masked data in the web SQL editor.
 
-## Requesting Unmasking
+### Requesting Unmasking
 
-### 1. Selecting Approval Rules
+#### 1. Selecting Approval Rules
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
 * If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
@@ -21,7 +23,7 @@ When you need to verify original data for items masked by masking policies in DA
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-unmasking-mask-removal-request/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. Assigning Approvers
+#### 2. Assigning Approvers
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
@@ -33,7 +35,7 @@ When you need to verify original data for items masked by masking policies in DA
 ![screenshot-20240724-154729.png](/user-manual/workflow/requesting-unmasking-mask-removal-request/screenshot-20240724-154729.png)
 </figure>
 
-### 3. Assigning Reviewers
+#### 3. Assigning Reviewers
 
 * Click the `+` button in the approval line to display a popup window where you can assign reviewers.
     * If the administrator has not allowed reviewer assignment, the Reviewer box will not be displayed.
@@ -44,7 +46,7 @@ When you need to verify original data for items masked by masking policies in DA
 ![screenshot-20240724-171350.png](/user-manual/workflow/requesting-unmasking-mask-removal-request/screenshot-20240724-171350.png)
 </figure>
 
-### 4. Sending Request with Post-Approval
+#### 4. Sending Request with Post-Approval
 
 * If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
 * After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.
@@ -58,7 +60,7 @@ When you need to verify original data for items masked by masking policies in DA
 A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed.
 </Callout>
 
-### 5. Entering Request Details
+#### 5. Entering Request Details
 
 * **Title**: Enter the request title.
 * **Connection**: Select the connection that contains the column for which you want to request mask removal.

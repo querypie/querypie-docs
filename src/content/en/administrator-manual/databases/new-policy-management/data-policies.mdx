@@ -4,11 +4,13 @@ title: 'Data Policies'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Policies
+
+### Overview
 
 Data Policies is a feature in QueryPie for setting and managing data governance policies such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, personal information protection, and regulatory compliance.
 
-## Accessing Policy Creation Screen
+### Accessing Policy Creation Screen
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
@@ -18,7 +20,7 @@ Data Policies is a feature in QueryPie for setting and managing data governance 
 2. Click the **Data Policies** menu.
 3. Click the **Create Policy** button at the top to navigate to the policy creation screen.
 
-## Setting Policy Basic Information
+### Setting Policy Basic Information
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
@@ -30,7 +32,7 @@ Set the following information in the **Information** section of the policy creat
 2.  **Policy Type** : Select the policy type to apply from the dropdown menu. (Required field)
 3.  **Description** : Enter a description of the policy. (Optional)
 
-### Policy Type Introduction
+#### Policy Type Introduction
 
 QueryPie provides the following policy types:
 
@@ -58,7 +60,7 @@ QueryPie provides the following policy types:
     * If an Approval Rule is created, you can specify the Approval Rule to link with the policy as shown in the figure below.<br/>
     * DML Query Approval Enforcement cannot specify targets with tags and must specify specific data paths.
 
-## Setting Policy Application Targets
+### Setting Policy Application Targets
 
 Set the user scope to which the policy will be applied in the **User Scope** section of the policy creation screen.
 
@@ -66,20 +68,20 @@ Set the user scope to which the policy will be applied in the **User Scope** sec
 ![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 1.  **Everyone** : The policy is applied to all users. (Default value)
 2.  **Users or Groups** : The policy is applied only to selected specific users or groups.
 3.  **Attribute of Users**  : Used when you want to dynamically apply policies to users with specific attributes. **[11.1.0]** 
 
-### Exclusions
+#### Exclusions
 
 You can set targets to exclude from policy application. Exclusion targets can only be specified when the scope type of User scope is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for exceptions, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied during the period the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
 
 1.  **None** : Applied to all users according to Scope Type without exclusions. (Default value)
 2.  **Users and Groups** : Excludes selected users or groups from policy application. 
 
-## Setting Policy Target Data
+### Setting Policy Target Data
 
 Set the data to which the policy will be applied in the **Data Scope** section of the policy creation screen.
 
@@ -87,7 +89,7 @@ Set the data to which the policy will be applied in the **Data Scope** section o
 ![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 Currently, policies can only be applied based on tags:
 
@@ -96,7 +98,7 @@ Currently, policies can only be applied based on tags:
 2.  **Specific data path** : Option to directly specify specific data paths. (From 11.0.0)
     * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and you can also use regular expressions. 
 
-### Saving Policies
+#### Saving Policies
 
 When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. Click the **Cancel** button to cancel saving.
 

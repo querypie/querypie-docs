@@ -4,6 +4,8 @@ title: 'WAC Quickstart'
 
 import { Callout } from 'nextra/components'
 
+# WAC Quickstart
+
 This guide explains the simplest WAC usage using the QueryPie homepage as an example.
 
 1. Register the QueryPie homepage as a web app and register some menus under Resources as sub-paths.
@@ -19,9 +21,9 @@ To follow this Quickstart, you need Owner or Web App Admin permissions among Que
 </Callout>
 
 
-# Admin-side
+## Admin-side
 
-## 1. Register Web App
+### 1. Register Web App
 
 The sub-structure under `/ko/resources` of the QueryPie homepage (`www.querypie.com`) is as follows.
 
@@ -88,7 +90,7 @@ Then enter the remaining information.
 2. Tag : Tag for the web app. Leave this blank here.
 3. Click the `Save` button to save.
 
-## 2. Register Policy
+### 2. Register Policy
 
 Next, let's create a policy that only allows access to registered sub-paths for the QueryPie website.
 
@@ -124,7 +126,7 @@ spec:
 
 1. Click the `Save Changes` button and click the `OK` button in the reason input modal to save.
 
-## 3. Create Role
+### 3. Create Role
 
 Now let's create a new role and assign the policy we created earlier.
 
@@ -141,7 +143,7 @@ Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details
 3. Click on the role you just created to enter the detail page &gt; Policies tab. Click the `Assign Policies` button.
 4. In the Assign Policies modal, select the QP Web Test policy you created earlier and click the `Assign` button to save and close the modal.
 
-## 4. Assign Role to Users/Groups
+### 4. Assign Role to Users/Groups
 
 Now let's assign the QP Web Test role we just created to the current user.
 
@@ -161,20 +163,20 @@ Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List De
 
 Now let's proceed with user-side settings to verify that the access policy we just created is properly applied.
 
-# User-side
+## User-side
 
-## 1. Install Root CA Certificate
+### 1. Install Root CA Certificate
 
 1. While logged into QueryPie, click the profile button in the top right and click Support &gt; Download Web Secure button in the profile menu.<br/>
 2. The QueryPie Web Secure Download modal opens. In **A. Install Root CA Certificate**, click Step 1. Download Link to download the certificate file. <br/>
 3. Follow the [Root CA Certificate Installation Guide](wac-quickstart/root-ca-certificate-installation-guide) to install the certificate and set up trust.
 
-## 2. Download Extension
+### 2. Download Extension
 
 1. Click Support &gt; Download Web Secure button in the QueryPie profile menu.
 2. In the QueryPie Web Secure Download modal, click the Download Link in **B. Install Chrome Extension** &gt; Step 1. to download the Extension file.
 
-## 3. Install Extension and Set Host
+### 3. Install Extension and Set Host
 
 1. Enter chrome://extensions/ in the Chrome address bar.
 2. Enable the Developer mode toggle in the top right of the page.
@@ -190,7 +192,7 @@ Management is not guaranteed for tabs that were open before WAC extension instal
 Please close all existing browser tabs and windows before installing the extension.
 </Callout>
 
-## 4. Access Web App through QueryPie
+### 4. Access Web App through QueryPie
 
 1. Click the `Go to Dashboard` button to open a new tab and the QueryPie Web console opens.
     1. If you are currently logged into QueryPie, the Web App Dashboard opens.
@@ -201,9 +203,9 @@ Please close all existing browser tabs and windows before installing the extensi
 4. You can see that Watermark has been applied to the QueryPie homepage.
 5. When trying to access unauthorized pages (e.g., Products menu), you will be redirected to a blocking notification screen.
 
-# Admin-side (again)
+## Admin-side (again)
 
-## 1. Check Web App Access Records
+### 1. Check Web App Access Records
 
 
 <figure data-layout="center" data-align="center">
@@ -226,7 +228,7 @@ Admin &gt; Audit &gt; Web Apps &gt; Web Access History
         2. Failure : Access failed
             * Displayed as access failure when blocked by WAC policy
 
-## 2. Check User Session Records
+### 2. Check User Session Records
 
 All records of users navigating sub-pages after accessing controlled web apps are displayed by web app and role.
 

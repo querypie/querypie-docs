@@ -4,13 +4,15 @@ title: 'Requesting Server Privilege Request'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Requesting Server Privilege Request
+
+### Overview
 
 Using Server Privilege Request, you can easily request temporary command usage permissions for servers. You can select and apply for the temporary command usage time and the start time of permissions (immediately upon approval or from server access time). This feature only supports SSH protocol communication.
 
-## Server Privilege Request
+### Server Privilege Request
 
-### 1. Selecting Approval Rules
+#### 1. Selecting Approval Rules
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
 * If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
@@ -21,7 +23,7 @@ Using Server Privilege Request, you can easily request temporary command usage p
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. Assigning Approvers
+#### 2. Assigning Approvers
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
@@ -33,7 +35,7 @@ Using Server Privilege Request, you can easily request temporary command usage p
 ![image-20240807-130021.png](/user-manual/workflow/requesting-server-privilege/image-20240807-130021.png)
 </figure>
 
-### 3. Assigning Reviewers
+#### 3. Assigning Reviewers
 
 * Click the `+` button in the approval line to display a popup window where you can assign reviewers.
     * If the administrator has not allowed reviewer assignment, the Reviewer box will not be displayed.
@@ -44,7 +46,7 @@ Using Server Privilege Request, you can easily request temporary command usage p
 ![screenshot-20240807-215819.png](/user-manual/workflow/requesting-server-privilege/screenshot-20240807-215819.png)
 </figure>
 
-### 4. Sending Request with Post-Approval
+#### 4. Sending Request with Post-Approval
 
 * If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
 * After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.
@@ -58,7 +60,7 @@ Using Server Privilege Request, you can easily request temporary command usage p
 A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed.
 </Callout>
 
-### 5. Selecting Target Role
+#### 5. Selecting Target Role
 
 * Click the select box below Role.
 * Select one of the Roles assigned to the user.
@@ -67,7 +69,7 @@ A. If you select an approval rule where the administrator has not allowed Urgent
 ![image-20250307-123347.png](/user-manual/workflow/requesting-server-privilege/image-20250307-123347.png)
 </figure>
 
-### 6. Selecting Target Server
+#### 6. Selecting Target Server
 
 * Click `Add Server` on the right side of Server List to display a popup window where you can select servers.
 * The selectable servers vary depending on the Role selected in "5. Selecting Target Role".
@@ -77,7 +79,7 @@ A. If you select an approval rule where the administrator has not allowed Urgent
 ![image-20250307-123829.png](/user-manual/workflow/requesting-server-privilege/image-20250307-123829.png)
 </figure>
 
-### 7. Entering Commands to Use
+#### 7. Entering Commands to Use
 
 * The command input method varies depending on the administrator's settings.
 * When directly entering Command Template
@@ -101,9 +103,9 @@ A. This is the case when there are no templates that the administrator has allow
 If the request target consists only of non-Linux servers such as Windows servers, this request is intended to obtain temporary access permissions to the server rather than specific command usage. Therefore, the field for entering or selecting Commands is not displayed on the screen.
 </Callout>
 
-### 8. Entering Server Privilege Usage Time
+#### 8. Entering Server Privilege Usage Time
 
-#### When Require Minute-Based Requests is On
+##### When Require Minute-Based Requests is On
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-1.05.08-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.05.08-AM.png)
@@ -114,7 +116,7 @@ If the request target consists only of non-Linux servers such as Windows servers
     * Grant: It counts the Server Privilege usage time from the Server Privilege grant time. When the Request is approved, QueryPie automatically grants Server Privilege.
 * **Duration(Minutes)**: Set the Server Privilege application time. You can input time in minutes. The start time varies depending on the Privilege Start Trigger.
 
-#### When Require Minute-Based Requests is Off
+##### When Require Minute-Based Requests is Off
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-1.14.48-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.14.48-AM.png)
@@ -123,7 +125,7 @@ If the request target consists only of non-Linux servers such as Windows servers
 * **Privilege Expiration Date**: Enter the expiration date of the requested permission. The default value follows the Maximum Access Duration value in SAC configurations &gt; Server Privilege Request Settings in the administrator page.
     * It is recommended to request only the period necessary for appropriate connection access permission management.
 
-### 9. Entering Request Information
+#### 9. Entering Request Information
 
 * **Title**: Enter the request title.
 * **Reason for Request**: Enter the reason for requesting connection access permission.

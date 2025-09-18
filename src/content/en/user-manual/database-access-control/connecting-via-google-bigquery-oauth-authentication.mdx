@@ -4,11 +4,13 @@ title: 'Connect via Google BigQuery OAuth Authentication'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Connect via Google BigQuery OAuth Authentication
+
+### Overview
 
 If your QueryPie administrator has set the authentication method for a BigQuery connection to OAuth 2.0, you can connect using your Google account.
 
-## Sign in with your Google account
+### Sign in with your Google account
 
 1. In the Database section of the QueryPie user page, select the BigQuery connection from the list of connections.<br/>(You will only see connections for which the administrator has granted you access.)<br/>
 2. Click Connect and select the Google account you will use for sign-in in the popup.
@@ -16,7 +18,7 @@ If your QueryPie administrator has set the authentication method for a BigQuery 
 4. Allow access to your Google account.
 5. Wait a moment for the connection to complete.
 
-## Reset the refresh token
+### Reset the refresh token
 
 <Callout type="info">
 With OAuth authentication, you receive an access token and a refresh token when you sign in. After the access token expires, the refresh token is used to reissue a new access token. The refresh token is stored on the client. The refresh token can also expire, or the locally stored refresh token may become invalid for various reasons. In such cases, delete the refresh token stored on the client and obtain a new one.

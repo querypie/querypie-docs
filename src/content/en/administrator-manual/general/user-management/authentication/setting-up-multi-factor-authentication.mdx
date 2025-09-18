@@ -4,7 +4,9 @@ title: 'Setting up Multi-Factor Authentication'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Setting up Multi-Factor Authentication
+
+### Overview
 
 <Callout type="info">
 What is Multi-Factor Authentication (MFA)?<br/>It is a multi-factor authentication security technique that requires additional authentication information beyond passwords. <br/>Additional authentication methods may include physical/virtual OTP (One Time Password: one-time password generator), biometric authentication, Email, etc.
@@ -12,7 +14,7 @@ What is Multi-Factor Authentication (MFA)?<br/>It is a multi-factor authenticati
 
 QueryPie allows you to specify Google OTP or Email as a secondary authentication method in the administrator page.
 
-## Specifying MFA Method
+### Specifying MFA Method
 
 <Callout type="important">
 To specify MFA method, Authentication Type must be set to Internal database or LDAP.<br/>To specify Email as MFA method, Email Integration configuration must be completed first.
@@ -22,7 +24,7 @@ To specify MFA method, Authentication Type must be set to Internal database or L
 * When Authentication Type is Internal database<br/>  
 * When Authentication Type is LDAP<br/>  
 
-## Using MFA for Server Access
+### Using MFA for Server Access
 
 <Callout type="info">
 This setting can only be used when Server Access Control (SAC) license is activated.

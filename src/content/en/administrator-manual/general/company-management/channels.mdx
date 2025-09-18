@@ -4,11 +4,13 @@ title: 'Channels'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Channels
+
+### Overview
 
 The Channels page allows you to register and manage channels to receive notifications sent by QueryPie. Currently, QueryPie provides four channel types: Slack, Agit, HTTP, and Email, and preliminary work for integration is required before channel registration.
 
-## Viewing Registered Channels
+### Viewing Registered Channels
 
 You can view the list of currently registered channels in the Administrator &gt; General &gt; Company Management &gt; Channels page. You can search by channel name and filter by Channel Type.
 
@@ -29,7 +31,7 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; List Detai
 </figure>
 
 
-## Registering Channels
+### Registering Channels
 
 Click the `Create Channel` button in the top right corner of the Channels page to display the channel creation modal.
 
@@ -47,7 +49,7 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; Create Cha
     * HTTP : Direct request to HTTP API such as Zapier, Okta Workflows
     * Email : Send notifications via email
 
-### When Channel Type is set to `Slack`
+#### When Channel Type is set to `Slack`
 
 The input content for channel creation is as follows.
 
@@ -64,14 +66,14 @@ For detailed Slack App setup methods, refer to the  **Slack App Setup Method for
         * Request URL (required) : URL to send requests to
             * Must copy and paste Webhook URL information after setting up Webhook in Slack App
 
-### When Channel Type is set to `Agit`
+#### When Channel Type is set to `Agit`
 
 The input content for channel creation is as follows.
 
 *  **Request URL**  (required) : URL to send requests to
 *  **Agit Channel**  : Enter the name to display for the Agit channel
 
-### When Channel Type is set to `HTTP`
+#### When Channel Type is set to `HTTP`
 
 The input content for channel creation is as follows.
 
@@ -81,7 +83,7 @@ The input content for channel creation is as follows.
     * Default value : `{{message}}`
     * Enter content to add commonly before and after messages defined in Alert
 
-### When Channel Type is set to `Email`
+#### When Channel Type is set to `Email`
 
 <Callout type="important">
 **Caution**
@@ -99,7 +101,7 @@ The input content when creating a channel is as follows.
     * Default value : `{{message}}` 
     * Enter content to add commonly before and after messages defined in Alert
 
-## Deleting Channels
+### Deleting Channels
 
 Select the channel you want to delete with a checkbox in the channel list within the Channels page, and the `Delete` button will appear. Click the button to display a deletion confirmation modal. Click the `OK` button to complete the deletion.
 
@@ -110,9 +112,9 @@ Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete con
 </figcaption>
 </figure>
 
-## Slack App Setup Method for Slack Integration
+### Slack App Setup Method for Slack Integration
 
-### 1. Creating an App
+#### 1. Creating an App
 
 <figure data-layout="center" data-align="center">
 ![Slack API &gt; Apps &gt; Create an App](/administrator-manual/general/company-management/channels/screenshot-20240305-161015.png)
@@ -126,7 +128,7 @@ Slack API &gt; Apps &gt; Create an App
 3. Select the App Name and Slack Workspace to send notifications to in the above screen.
 4. Click `Create App`.
 
-### 2-1. Integrating with Webhook Type
+#### 2-1. Integrating with Webhook Type
 
 <figure data-layout="center" data-align="center">
 ![Slack API &gt; Apps &gt; Settings &gt; Incoming Webhooks](/administrator-manual/general/company-management/channels/screenshot-20240804-190716.png)
@@ -149,7 +151,7 @@ Webhook addition screen in Slack
 1. Select the channel to send alerts to within the Workspace and click the `Allow` button.
 2. Copy the generated Webhook URL information and paste it into the QueryPie channel creation modal.
 
-### 2-2. Integrating with API Type
+#### 2-2. Integrating with API Type
 
 1. Click the created App to enter the app's Settings page, then navigate to the `App Manifest` menu.
 2. Add `chat:write`, `users:read`, `users:read.email` to the scopes area and save.

@@ -4,14 +4,16 @@ title: 'DB Connections'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# DB Connections
+
+### Overview
 
 In the DB Connections page, you can view the list of DB connections registered in QueryPie and configure detailed settings.
 
 The detailed features described in this document are as follows:
 
 
-## Manually Registering DB Connections
+### Manually Registering DB Connections
 
 Click the `Create Connection` button in the top right of the DB Connections page to enter the manual registration page.
 
@@ -57,7 +59,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 3. In Step 3, you can review the entered DB connection information.
 4. You can confirm the creation of the new DB connection in the list on the DB Connections page.
 
-### Registering DB Connections with Cluster Configuration
+#### Registering DB Connections with Cluster Configuration
 
 When synchronizing resources through Cloud Provider, if resources are configured as clusters, Cluster mode is activated.
 
@@ -87,7 +89,7 @@ Generally, when synchronizing through Cloud Provider, it is registered in cluste
 </Callout>
 
 
-## Viewing DB Connection List
+### Viewing DB Connection List
 
 You can view the list of DB connections currently registered in QueryPie in the Databases settings &gt; DB Connections page within the administrator console.
 
@@ -113,7 +115,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
         * When entering multiple tags with different Keys, AND search is performed (intersection)
 
 
-## Viewing and Configuring DB Connection Details
+### Viewing and Configuring DB Connection Details
 
 Click on the item you want to view details for in the DB Connections page to enter the detail page.
 
@@ -126,7 +128,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 From 10.2.8, when viewing details, you can check the list of features supported by the connection in Supported Features.
 
-### Viewing Accessible Users
+#### Viewing Accessible Users
 
 Click the `Accessible Users` button in the top right of the DB connection detail page to open a Drawer and view the list of users who can access the connection.
 
@@ -137,7 +139,7 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessib
 </figcaption>
 </figure>
 
-### Viewing and Modifying DB Connection Information
+#### Viewing and Modifying DB Connection Information
 
 In the Connection Information area of the DB connection detail page, you can view and modify the information entered during creation.
 
@@ -168,7 +170,7 @@ To save changes, click the `Save Changes` button in the top right of the detail 
 The Secret Store item is displayed when Secret Store usage is enabled in the Security settings menu, and to actually use Secret Store, Vault registration is required on the Admin &gt; General &gt; Integration &gt; HashiCorp Vault page. For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
 </Callout>
 
-### Reference. Secret Store Configuration Method
+#### Reference. Secret Store Configuration Method
 
 DB Account items are displayed differently depending on the Secret Engine type stored in Secret Store settings.
 
@@ -182,11 +184,11 @@ DB Account items are displayed differently depending on the Secret Engine type s
     * Path can be entered in the format `prod_db/creds/mysql_role`.
 
 
-## Additional Settings
+### Additional Settings
 
 You can configure additional settings for DB connections in the tab area at the bottom of the page. Refer to the description for each item.
 
-### Additional Information
+#### Additional Information
 
 Enter detailed policies to be applied to the DB connection. Save with the `Save Changes` button.
 
@@ -244,7 +246,7 @@ Proxy Usage options
 From QueryPie 9.17, when using account information specified by Proxy, it has been changed to use random passwords as a security enhancement measure. From QueryPie 10.2.2, the " **Fixed Credential for Agent** " option is provided to use fixed passwords in situations where random password usage is difficult. When random password usage is difficult, administrators can activate this option and use fixed passwords, and Fixed Credential for Agent is only available for Oracle, PostgreSQL, and MongoDB.
 </Callout>
 
-### SSL/SSH Setting
+#### SSL/SSH Setting
 
 Activate SSL or SSH usage through checkboxes and select pre-registered configuration information from the dropdown below. Save with the `Save Changes` button.
 
@@ -261,7 +263,7 @@ SSL/SSH configuration information must be pre-registered. Please refer to the fo
 * [SSH Configurations](ssh-configurations)
 </Callout>
 
-### Connection Owner
+#### Connection Owner
 
 In the Connection Owner tab, click the `Add Connection Owner` button to specify Connection Owners for each DB connection. (Can be specified for users or groups) Save with the `Save Changes` button.
 
@@ -276,7 +278,7 @@ Connection Owner tab
 Connection Owner can be specified as approvers or executors for SQL Request, SQL Export Request for the corresponding DB connection.
 </Callout>
 
-### Tags
+#### Tags
 
 In the Tags tab, you can register and manage tags for each DB connection. Click the `Add Tag` button to add a tag row, and enter Key and Value. Complete the input and save with the `Save Changes` button.
 
@@ -287,7 +289,7 @@ Tags tab
 </figcaption>
 </figure>
 
-### Privilege Setting
+#### Privilege Setting
 
 This is a feature that forces specification of connection accounts to use for each Privilege in DB connections.
 

@@ -2,11 +2,13 @@
 title: 'Kubernetes Policy Action Configuration Reference Guide'
 ---
 
-## Overview
+# Kubernetes Policy Action Configuration Reference Guide
+
+### Overview
 
 In QueryPie KAC, you configure access control policies for k8s using YAML-based policies. This guide explains how to set Actions to avoid difficulties using client tools such as kubectl, Lens, and k9s due to misconfigured policies.
 
-## Guide for API Groups settings
+### Guide for API Groups settings
 
 Commonly used resources like pods belong to the core group and thus use an empty string ("") for apiGroups, whereas deployments and replicasets belong to "apps", and ingresses belong to "networking.k8s.io". It is burdensome for administrators to know and set each value one by one.
 
@@ -14,7 +16,7 @@ While you may need to separate by apiGroups if there are resources with the same
 
 Therefore, unless there is a specific mission to manage Kubernetes API Groups, we generally recommend setting apiGroups to "*" and controlling access via resources.
 
-## Guide for Resources settings
+### Guide for Resources settings
 
 <figure data-layout="center" data-align="center">
 ![3rd Party Client Tool - Lens screen](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide/screenshot-lens-resources-events.png)
@@ -36,7 +38,7 @@ When using 3rd-party client tools, you can monitor status within the permitted r
     * The events resource and pods resource are separate resources. Therefore, even if you grant only pods permissions while having permissions for events, you cannot query only events related to pods.
     * Recommended spec
 
-## Guide for Verbs settings
+### Guide for Verbs settings
 
 The part that most affects 3rd-party client tool usage is verbs. Administrators specify the scope of resources users can access through apiGroups, resources, namespace, and name, and specify which APIs can be invoked via verbs. Even if you set the resource scope well, using the wrong verb combinations makes tools hard to use.
 
@@ -51,7 +53,7 @@ The part that most affects 3rd-party client tool usage is verbs. Administrators 
     * Although deletecollection is not commonly used, in KAC, even when a deletecollection request is made, only resources for which the user has permissions are selected and deleted, so it can be useful.
     * Recommended spec
 
-## Other recommended configuration examples
+### Other recommended configuration examples
 
 Example) Restrict permissions for resources in the prod namespace
 ```

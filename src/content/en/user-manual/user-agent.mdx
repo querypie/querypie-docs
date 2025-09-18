@@ -4,11 +4,13 @@ title: 'User Agent'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# User Agent
+
+### Overview
 
 By installing QueryPie Agent, you can use SQL Clients like DataGrip and DBeaver, SSH Clients like iTerm and SecureCRT, and 3rd party applications like Lens and k9s.
 
-## Downloading and Running Agent App
+### Downloading and Running Agent App
 
 1. After logging into QueryPie, click the profile in the top right and click the `Agent Download` button.
 
@@ -50,7 +52,7 @@ Agent &gt; QueryPie Host Input
 </figcaption>
 </figure>
 
-## Logging into QueryPie Agent
+### Logging into QueryPie Agent
 
 1. Click the `Login` button on the login screen within the Agent app.
 
@@ -85,7 +87,7 @@ Chrome - Agent App Open Modal
 </figcaption>
 </figure>
 
-## Connecting to Database through Agent
+### Connecting to Database through Agent
 
 1. After login is completed normally, you can check the connection information for authorized connections in the Databases tab within the Agent app.<br/>Click the `Port` assigned to the connection you want to connect to, and you can check the `Proxy Credentials` information for that connection.
 
@@ -105,11 +107,11 @@ DB Connection Access Using 3rd Party Client
 </figcaption>
 </figure>
 
-## Server Access through Agent
+### Server Access through Agent
 
 After login is completed normally, you can check authorized servers in the Server tab within the Agent app.
 
-### 1. Selecting Server Role
+#### 1. Selecting Server Role
 
 * Click the `Role` button below the user profile area to choose the desired role and click the `OK` button.
 * When selecting the Default role, use the server permissions assigned through Workflow &gt; Server Access Request.
@@ -125,7 +127,7 @@ Agent &gt; Server &gt; Select a Role
 If you have two or more roles, you must complete role selection first before using the Server function after Agent login.
 </Callout>
 
-### <br/>2. Connecting to Server through Agent
+#### <br/>2. Connecting to Server through Agent
 
 * Right-click on the server you want to connect to and select the Open Connection with menu to choose the terminal tool you want to use.
 
@@ -146,7 +148,7 @@ Agent &gt; Server &gt; Open New Session
 </figcaption>
 </figure>
 
-### 3. Setting Up Seamless SSH
+#### 3. Setting Up Seamless SSH
 
 Seamless SSH is a feature that allows you to connect to servers through QueryPie while maintaining existing terminal usability. You can easily set up seamless SSH by creating a config file in the .ssh folder using the following method.
 
@@ -181,7 +183,7 @@ Host *
 $ ssh deploy@{{Server Name}}
 ```
 
-## Kubernetes Access through Agent
+### Kubernetes Access through Agent
 
 <figure data-layout="center" data-align="center">
 ![kubernetes-agent-access-flow.png](/user-manual/user-agent/kubernetes-agent-access-flow.png)
@@ -192,7 +194,7 @@ $ ssh deploy@{{Server Name}}
 * The agent displays a list of accessible clusters and shows the policies applied to each cluster.
 * You can also check and modify the location of the kubeconfig file through the settings menu.
 
-### 1. Selecting Kubernetes Role
+#### 1. Selecting Kubernetes Role
 
 Click the `Role` button below the user profile area to open the role selection modal. Choose the desired role and click the `OK` button.
 
@@ -207,7 +209,7 @@ Agent &gt; Kubernetes &gt; Select a Role
 If you have two or more roles, you must complete role selection first before using the Kubernetes function after Agent login.
 </Callout>
 
-### 2. Viewing Policy
+#### 2. Viewing Policy
 
 Resources accessible according to the selected role are displayed. Click the `🔍` button on the right of each cluster to display the Policy Information popup window where you can check the detailed list of policies applied to that cluster.
 
@@ -218,7 +220,7 @@ Agent &gt; Policy Information
 </figcaption>
 </figure>
 
-### 3. Setting Kubeconfig Path
+#### 3. Setting Kubeconfig Path
 
 Click the `KubeConfig Path` button in the Agent settings menu to open the Kubeconfig path configuration modal.
 
@@ -264,10 +266,10 @@ export KUBECONFIG="${KUBECONFIG}:<user-specified path>"
 export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
 
-## Resetting QueryPie Agent Settings
+### Resetting QueryPie Agent Settings
 
 Resetting settings will initialize the QueryPie Host information you entered, allowing you to enter it again.
-### Reset from Agent Settings Menu
+#### Reset from Agent Settings Menu
 
 Click the `⚙️` button on the right of the profile area to open the settings menu. Click the `Reset All Settings` button.
 
@@ -278,7 +280,7 @@ Agent &gt; Settings
 </figcaption>
 </figure>
 
-### (Mac) Reset from App Menu in Menu Bar
+#### (Mac) Reset from App Menu in Menu Bar
 
 Click the QueryPie Agent icon in the menu bar to open the app menu. Click the `Reset All Settings` button.
 

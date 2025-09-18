@@ -4,7 +4,9 @@ title: 'Splunk Integration'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Splunk Integration
+
+### Overview
 
 Provides functionality to send audit logs recorded by QueryPie externally through Splunk.
 
@@ -12,7 +14,7 @@ Provides functionality to send audit logs recorded by QueryPie externally throug
 System admin privileges are required for Integration settings.
 </Callout>
 
-## Recommended Syslog-Splunk Integration Architecture
+### Recommended Syslog-Splunk Integration Architecture
 
 <figure data-layout="center" data-align="center">
 ![Recommended Splunk Integration Architecture](/administrator-manual/general/system/integrations/integrating-with-splunk/screenshot-20240613-174947.png)
@@ -32,7 +34,7 @@ QueryPie is configured to allow direct transmission using TCP, UDP, HTTP, HTTPS 
 
 For reference, Splunk provides SC4S (Splunk connector for syslog) separately for syslog collection.
 
-## Configuring Splunk Integration
+### Configuring Splunk Integration
 
 1. Navigate to System &gt; Integrations menu in General Settings.
 2. Click on the Splunk tile to go to the detail page.
@@ -72,7 +74,7 @@ For reference, Splunk provides SC4S (Splunk connector for syslog) separately for
 4. If syslog transmission is no longer needed, you can remove the configuration through the `Delete` button.
     1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.
 
-## Reference
+### Reference
 
 * QueryPie event items transmitted through syslog according to license
 

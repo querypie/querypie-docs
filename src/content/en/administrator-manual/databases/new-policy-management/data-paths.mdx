@@ -4,11 +4,13 @@ title: 'Data Paths'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Paths
+
+### Overview
 
 The Data Paths menu allows you to assign and manage tags for tables and columns. These configured tags are used for data classification and policy application.
 
-## Key Features
+### Key Features
 
 *  **Tagging Targets** : Tags can be applied at table and column levels.
 *  **Application Limitations** : Tags are not supported at database and schema levels.
@@ -16,7 +18,7 @@ The Data Paths menu allows you to assign and manage tags for tables and columns.
 *  **Data Classification** : You can classify data by purpose and characteristics through tags.
 *  **Access Control Integration** : You can set access control policies based on assigned tags.
 
-## Assigning Tags to Tables
+### Assigning Tags to Tables
 
 Table tagging can be managed in the Data Paths menu, allowing you to systematically classify and manage tables through tags.
 
@@ -47,7 +49,7 @@ Table tagging can be managed in the Data Paths menu, allowing you to systematica
 In the table detail screen, you can only manage tags for the table. Column tags are managed in the column detail screen.
 </Callout>
 
-## Assigning Tags to Columns
+### Assigning Tags to Columns
 
 Column tagging can also be managed in the Data Paths menu. You can systematically classify columns through tags and effectively apply policies such as masking in bulk.
 
@@ -78,7 +80,7 @@ Column tagging can also be managed in the Data Paths menu. You can systematicall
 **Important** : When adding a column while the referenced table is not yet added to Data Paths, the corresponding table is automatically added to Data Paths together. Therefore, you don't need to add the table separately first, and the required table is automatically created during the column addition process.
 </Callout>
 
-## Relationship Between Tables and Columns - Automatic Table Creation Feature
+### Relationship Between Tables and Columns - Automatic Table Creation Feature
 
 QueryPie provides the following automation features when adding columns to improve user convenience:
 
@@ -86,7 +88,7 @@ QueryPie provides the following automation features when adding columns to impro
 2.  **Single Process** : Thanks to this feature, users can process everything at once during the column addition process without going through two steps of adding the table first and then adding the column.
 3.  **Consistency Maintenance** : The relationship between automatically created tables and added columns is automatically set, maintaining consistency in data structure.
 
-## Granting Table Access Permissions Based on Tags
+### Granting Table Access Permissions Based on Tags
 
 You can grant table access permissions based on tags set in the Data Paths menu, and it works in whitelist mode. That is, it allows access only to tables with specific tags and restricts access to other tables. This feature enables fine-grained data access control.
 
@@ -105,14 +107,14 @@ The permission granting process consists of two main steps:
     1. The default value is set to the **All Table Access** option. This option grants access to all tables.
     2. When you select the **Tag-based Table Access** option, it changes to whitelist mode that allows access only to tables with specific tags.
 
-## Permission Application Results
+### Permission Application Results
 
 When tag-based table access permissions are set:
 
 1. Users can only access tables with the assigned tags.
 2. Access to tables without those tags is restricted.
 
-## Use Cases
+### Use Cases
 
 Tag-based table access permissions are useful in the following situations:
 
@@ -120,7 +122,7 @@ Tag-based table access permissions are useful in the following situations:
 2.  **Project-based Access Control** : You can assign project tags to project-related tables and grant access permissions only to project participants for tables with those tags.
 3.  **Data Sensitivity-based Access Control** : You can assign tags to tables based on data sensitivity and allow access only to users with appropriate permissions.
 
-## Precautions
+### Precautions
 
 1. Since tag-based access control works in whitelist mode, access to tables without set tags is not possible.
 2. When multiple tags are added, you can access tables that have at least one of those tags.

@@ -4,7 +4,9 @@ title: 'Audit Log Export'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Audit Log Export
+
+### Overview
 
 This is a feature that allows you to extract various audit logs generated in QueryPie and download them as CSV files. It enables stable extraction and download even for large files such as logs spanning long periods. Once generated, log extraction files can be downloaded for 30 days. The supported extraction logs include Query Audit, Workflow SQL Request, and 21 other types.
 
@@ -49,7 +51,7 @@ With the addition of the Audit Log Export feature, the 'Excel File Download' but
 </Callout>
 
 
-## Viewing Audit Log Export List
+### Viewing Audit Log Export List
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; General &gt; Audit Log Export](/administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png)
@@ -65,7 +67,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
     *  **Completed**  : Audit log extraction is completed and file download is available. (If 30 days have passed since extraction completion, the file has expired and download is not possible.)
     *  **Failed**  : Audit log extraction has failed. Please contact QueryPie Customer Support.
 
-## Creating Log Extraction Task
+### Creating Log Extraction Task
 
 Audit log extraction and download proceeds through the following major steps: (1) Access related menu → (2) Create log extraction task → (3) Wait until log extraction completion → (4) Download file when extraction is completed
 
@@ -156,7 +158,7 @@ The 'Privilege Type' column in the export file records which permission was requ
 </Callout>
 
 
-## Downloading Files When Extraction Task is Completed
+### Downloading Files When Extraction Task is Completed
 
 For short-term queries without separate filtering conditions, log extraction is completed within a few minutes. For logs spanning long periods or with high complexity of filtering conditions, it may take some time for log extraction.
 
@@ -174,6 +176,6 @@ To specify a password for the compressed file, you must set the `Export a file w
 </Callout>
 
 
-## Log Extraction File Retention Policy Guide
+### Log Extraction File Retention Policy Guide
 
 Extracted log files are retained for 30 days from the task creation date, and unlimited downloads are possible within that period. However, files expire after 30 days. If you need expired log files, please create a new log extraction task.

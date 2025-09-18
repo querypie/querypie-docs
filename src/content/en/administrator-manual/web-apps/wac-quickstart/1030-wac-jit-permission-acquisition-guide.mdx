@@ -4,6 +4,8 @@ title: '[10.3.0 ~] WAC JIT Permission Acquisition Guide'
 
 import { Callout } from 'nextra/components'
 
+# [10.3.0 ~] WAC JIT Permission Acquisition Guide
+
 This guide explains how to use JIT (Just-in-Time) permission acquisition for Web Apps through QueryPie WAC.
 
 JIT permission acquisition proceeds in the following order.
@@ -22,9 +24,9 @@ To follow this guide, you need Owner or Web App Admin permissions among QueryPie
 </Callout>
 
 
-# Admin-side
+## Admin-side
 
-## 1. Register Web App
+### 1. Register Web App
 
 1. Navigate to Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps menu.
 2. Click the `Create a Web App` button to enter the web app registration page.
@@ -51,7 +53,7 @@ Enter the following information.
 7. Tag : Tag for the web app. Leave this blank here.
 8. Click the `Save` button to save.
 
-## 2. Register Web App Owner / Member
+### 2. Register Web App Owner / Member
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
@@ -67,7 +69,7 @@ JIT (Just-in-Time) permission assignment has the following two roles.
 * Member: Entity that can submit Just-in-time requests for this web app
 </Callout>
 
-## 3. User's JIT Web App Access Permission Request
+### 3. User's JIT Web App Access Permission Request
 
 <Callout type="info">
 When accessing Web App through QueryPie, Root CA certificate installation and Chrome Extension installation are required.
@@ -113,7 +115,7 @@ When requesting JIT (Just-in-Time) permissions, there are the following constrai
 * Post-approval mode appears when enabled in Approval Configuration and disappears when turned Off in the request screen.
 </Callout>
 
-## 4. Approver's JIT Web App Access Permission Request Approval
+### 4. Approver's JIT Web App Access Permission Request Approval
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-072925.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-072925.png)
@@ -125,7 +127,7 @@ When requesting JIT (Just-in-Time) permissions, there are the following constrai
 4. Click Approve at the top.
 
 
-## 5. Access Web App through QueryPie
+### 5. Access Web App through QueryPie
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)

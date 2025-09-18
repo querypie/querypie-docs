@@ -4,11 +4,13 @@ title: 'Workflow'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Workflow
+
+### Overview
 
 QueryPie supports Workflow functionality that allows you to request and approve various tasks that must be performed under the approval of authorized personnel. You can conveniently proceed with request, approval, and execution tasks in an integrated environment without leaving QueryPie.
 
-## Workflow Menu Entry Points
+### Workflow Menu Entry Points
 
 QueryPie provides two paths to enter the Workflow menu.
 <figure data-layout="center" data-align="center">
@@ -24,7 +26,7 @@ My Dashboard &gt; Workflow Requests
 </figcaption>
 </figure>
 
-## Roles in Workflow
+### Roles in Workflow
 
 Depending on the actions performed within the Workflow functionality, users can have the following roles:
 
@@ -37,7 +39,7 @@ Depending on the actions performed within the Workflow functionality, users can 
 Approvers and executors for request items can be pre-configured by administrators through [**Approval Rules**](../administrator-manual/general/workflow-management/approval-rules).
 </Callout>
 
-## Submit Request (Requesting Approval)
+### Submit Request (Requesting Approval)
 
 After clicking the `Submit Request` button in the Workflow menu, select the desired request type to move to the request creation page. Please refer to the linked pages for detailed creation methods for each request type.
 
@@ -52,7 +54,7 @@ After clicking the `Submit Request` button in the Workflow menu, select the desi
 * [IP Registration Request](workflow/requesting-ip-registration): You can request IP address registration for system access, and access from that IP is allowed immediately upon approval.
 * [DB Exception Request](workflow/requesting-db-policy-exception): In the DAC new policy environment, you can request mask removal (Unmasking) or access restriction removal (Restricted Data Access) in a single form, and the corresponding permissions are granted for the set period after approval.
 
-## Notes When Using Proxy Submission Feature
+### Notes When Using Proxy Submission Feature
 
 When administrators allow it in approval rules, you can request approval on behalf of other users (proxy submission). When using proxy submission, the following criteria apply. The setup method for this feature can be found in the [Approval Rules](../administrator-manual/general/workflow-management/approval-rules) manual page. The following criteria apply when using proxy submission:
 
@@ -63,14 +65,14 @@ When administrators allow it in approval rules, you can request approval on beha
     * After specifying the target user (`Target User`) who will be subject to the approval, when you hover the mouse cursor over the UI, the following guidance message is displayed along with the list of selected target users.
     * "The following users will be impacted by this request. Please double-check that all settings are correct before proceeding." (These are the targets who will be subject to the current approval. Please make sure all settings are correct.)
 
-## Sent Request (Checking Requests I Sent)
+### Sent Request (Checking Requests I Sent)
 
 The list of approval requests I submitted as a Requester is displayed in the Sent Requests submenu.
 
 * **In Progress**: Requests that have been submitted for approval but approval has not yet been completed. Requests where either Approval Status or Execution Status is Pending or In Progress are displayed in this list.
 * **Done**: Items where all approvals (or executions) have been completed or the requester has canceled the approval request themselves are displayed.
 
-## Received Requests (Approving or Rejecting Requests I Received)
+### Received Requests (Approving or Rejecting Requests I Received)
 
 The list of requests assigned to me as an Approver is displayed in the Received Requests submenu. If designated as a proxy approver, the list of requests not yet approved by the original approver is also displayed. For detailed information about proxy approval, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
@@ -92,11 +94,11 @@ A. For DB Access Request, partial approval is possible for only some DB connecti
 1. Enter the reason for approval or rejection in the Comments popup window, then click the `OK` button to complete the processing.
 2. You can check the completed request items in Workflow &gt; Received Request &gt; Done menu.
 
-## Executions (Executing Approved Requests)
+### Executions (Executing Approved Requests)
 
 The list of requests assigned to me as an Executor is displayed in the Executions submenu. There are lists for items to be executed (To Do) and completed items (Done), and the approval types that require execution are SQL Request and SQL Export Request.
 
-### Executing SQL Request
+#### Executing SQL Request
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Executions &gt; To Do &gt; List Details](/user-manual/workflow/screenshot-20240725-094850.png)
@@ -118,7 +120,7 @@ Workflow &gt; Executions &gt; To Do &gt; List Details
 A. When the query executed through SQL Request is large, query execution continues in the QueryPie server background even if you close the web browser. When you reconnect to QueryPie after closing the web browser, you can check the progress of queries running in the server background on the SQL Request detail page. This background query execution feature is only supported in QueryPie v9.15.0 and above.
 </Callout>
 
-### Executing SQL Export Request
+#### Executing SQL Export Request
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Executions &gt; To Do](/user-manual/workflow/screenshot-20240725-104719.png)
@@ -140,7 +142,7 @@ Workflow &gt; Executions &gt; To Do
 6. After the export is completed, you can check the results in the Results tab within the detail page.
 7. You can check the completed export request history in Workflow &gt; Executions &gt; Done menu.
 
-## Reviews (Checking Referenced Requests)
+### Reviews (Checking Referenced Requests)
 
 Requests where I am designated as a Reviewer and that have been approved or executed are displayed in the Reviews &gt; All Reviews list. The review status is displayed in the Review Status column with two values: Unread and Confirmed. For how to check unconfirmed requests, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
@@ -148,7 +150,7 @@ Requests where I am designated as a Reviewer and that have been approved or exec
 The Review menu is only displayed when the administrator has pre-configured its use.
 </Callout>
 
-## Request Status List
+### Request Status List
 
 The approval status list for requests is as follows:
 

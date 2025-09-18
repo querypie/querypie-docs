@@ -2,11 +2,13 @@
 title: 'Exception Management'
 ---
 
-## Overview
+# Exception Management
+
+### Overview
 
 There are two types of exception handling for policies: cases where policy exceptions are applied through Workflow policy exception requests and cases where administrators directly set policy exceptions. Previous DAC policies only allowed policy exceptions through Workflow exception requests (Unmasking, Restricted Data Access), but new policies allow administrators to directly set policy exceptions and integrate manage them with Workflow-processed ones.
 
-## Policy Exception Management Through Workflow
+### Policy Exception Management Through Workflow
 
 <figure data-layout="center" data-align="center">
 ![image-20250629-172021.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250629-172021.png)
@@ -26,7 +28,7 @@ The Workflow tab in Databases &gt; Data Policies &gt; Exception Management displ
     * Inactive : When administrators temporarily change the policy exception status to inactive, it is displayed as Inactive.
 * Excepted By : Click the link to view the workflow where the policy exception was approved.
 
-## Administrators Directly Setting Policy Exceptions
+### Administrators Directly Setting Policy Exceptions
 
 <figure data-layout="center" data-align="center">
 ![Manual tab of Databases &gt; Policy Management &gt; Exception Management](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-211515.png)
@@ -37,7 +39,7 @@ Manual tab of Databases &gt; Policy Management &gt; Exception Management
 
 In the Manual tab of Databases &gt; Policy Management &gt; Exception Management, administrators can manually specify policy exception targets.
 
-### Setting Policy Exceptions
+#### Setting Policy Exceptions
 
 <figure data-layout="center" data-align="center">
 ![Manual Policy Exception Creation](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
@@ -59,7 +61,7 @@ Click the `+ Create Exception` button and configure settings for the policy exce
 * Exception Expiration : Set the time when the policy exception ends.
 * Description : Enter a brief description of the policy exception.
 
-### Immediately Changing Policy Exception Status
+#### Immediately Changing Policy Exception Status
 
 When administrators create policy exceptions, the policy exception status is maintained until the time specified in Exception Expiration, but in some cases, you may need to immediately release the exception status. You can immediately change the status by selecting Active or Inactive in the Status column of the list, so you can easily respond without deleting or creating new policy exceptions.
 
@@ -67,7 +69,7 @@ When administrators create policy exceptions, the policy exception status is mai
 ![image-20250716-055008.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055008.png)
 </figure>
 
-### Modifying Manually Created Policy Exceptions
+#### Modifying Manually Created Policy Exceptions
 
 You can modify the settings by clicking on a specific policy exception row in the list. (Exception Type cannot be changed.)
 
@@ -75,7 +77,7 @@ You can modify the settings by clicking on a specific policy exception row in th
 ![image-20250716-055149.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055149.png)
 </figure>
 
-### Deleting Manually Created Policy Exceptions
+#### Deleting Manually Created Policy Exceptions
 
 <figure data-layout="center" data-align="center">
 ![image-20250716-055525.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055525.png)

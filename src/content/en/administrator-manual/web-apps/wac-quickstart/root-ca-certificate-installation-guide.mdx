@@ -4,16 +4,18 @@ title: 'Root CA Certificate Installation Guide'
 
 import { Callout } from 'nextra/components'
 
+# Root CA Certificate Installation Guide
+
 To use web application access control through WAC, Root CA certificate installation is required on the user's local PC.
 
-## 1. Download Certificate
+### 1. Download Certificate
 
 Enter the following path in your web browser to download the Root CA certificate suitable for your environment.
 ```
 {QueryPie_Host}/api/user/wac/certificate/download
 ```
 
-## 2. Install Certificate
+### 2. Install Certificate
 
 Install the Root CA certificate downloaded to your local PC.
 
@@ -21,7 +23,7 @@ Install the Root CA certificate downloaded to your local PC.
 Administrator Privilege is required for certificate configuration.
 </Callout>
 
-### MacOS
+#### MacOS
 
 You can install the Root CA certificate in the Keychain Access app.
 
@@ -37,7 +39,7 @@ cd {Root CA Downloaded Path}
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain qp-wac-rootCA.cer
 ```
 
-### Windows
+#### Windows
 
 You can install the Root CA certificate through the Certificate Import Wizard.
 
@@ -50,7 +52,7 @@ You can install the Root CA certificate through the Certificate Import Wizard.
 7. Confirm the set content and click the `Finish(F)` button.
 8. A security warning modal appears. Click the `Yes(Y)` button to immediately execute certificate import. Click the OK button in the import completion modal.
 
-## 3. Verify Chrome Certificate Settings
+### 3. Verify Chrome Certificate Settings
 
 The following method can be used to verify that the certificate has been set up correctly.
 

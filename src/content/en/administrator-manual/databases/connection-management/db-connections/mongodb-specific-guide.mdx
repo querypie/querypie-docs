@@ -4,19 +4,21 @@ title: 'MongoDB Specific Guide'
 
 import { Callout } from 'nextra/components'
 
+# MongoDB Specific Guide
+
 <Callout type="info">
 This section provides detailed setup guides specific to MongoDB.
 </Callout>
 
-## Registering MongoDB Connections
+### Registering MongoDB Connections
 
 MongoDB often uses multi-host structures such as Replica Set or Sharded Cluster (Sharding) rather than single host configurations. In this case, you need to create multi-host connections.
 
-### 1. Understanding Basic MongoDB Connection String Structure
+#### 1. Understanding Basic MongoDB Connection String Structure
 
 MongoDB connection strings have two types: standard and +srv.
 
-#### &lt; Standard Connection String Structure &gt;
+##### &lt; Standard Connection String Structure &gt;
 
 ```
 mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port]..../?[options]
@@ -30,7 +32,7 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 When using replica set, you must enter replicaSet=[replica set name] after /?. ex. /?replicaSet=rs0
 </Callout>
 
-#### &lt; +srv Connection String Structure &gt;
+##### &lt; +srv Connection String Structure &gt;
 
 ```
 mongodb+srv://<FQDN>/?[options]
@@ -44,7 +46,7 @@ mongodb+srv://<FQDN>/?[options]
 Since +srv can dynamically change the address of each host included in the cluster, QueryPie cannot directly use +srv in connections and converts it to standard connection string for use. Due to this conversion process, direct access to subordinate instances is not supported when using +srv for connection. Nevertheless, if direct access to subordinate hosts in +srv connection environment is needed, users must use nslookup command to check each host information through DNS lookup and create separate connections using standard connection string for access.
 </Callout>
 
-### 2. Creating MongoDB Connections
+#### 2. Creating MongoDB Connections
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
@@ -57,9 +59,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Click the `Create Connection` button in the top right.
 3. Select mongoDB in the data source selection step.
 
-### 3. Setting Up as Replica Set
+#### 3. Setting Up as Replica Set
 
-#### &lt; Standard Connection &gt;
+##### &lt; Standard Connection &gt;
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
@@ -94,7 +96,7 @@ For more detailed information about Cluster mode, you can also check [DB Connect
 </Callout>
 ---
 
-#### &lt; +srv Connection &gt;
+##### &lt; +srv Connection &gt;
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
@@ -117,7 +119,7 @@ For more detailed information about Cluster mode, you can also check [DB Connect
 6. Click the `Test Connection` button to verify if the entered connection information is valid.
 7. Complete and save by clicking the `Next` button
 
-### 4. Setting Up as Sharded Cluster (Sharding)
+#### 4. Setting Up as Sharded Cluster (Sharding)
 
 Sharded Cluster has the same setup method as Replica Set, only the Connection String options are different. Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster doesn't need this option.
 
@@ -125,7 +127,7 @@ Sharded Cluster has the same setup method as Replica Set, only the Connection St
 ![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
 </figure>
 
-#### &lt; Standard Connection &gt;
+##### &lt; Standard Connection &gt;
 
 1. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, maintain the Primary value.
@@ -143,7 +145,7 @@ Sharded Cluster has the same setup method as Replica Set, only the Connection St
 7. Complete and save by clicking the `Next` button.
 ---
 
-#### &lt; +srv Connection &gt;
+##### &lt; +srv Connection &gt;
 
 Just put the tls=true option in Other options after converting to standard string. There's no difference from replica set setup.
 
@@ -151,7 +153,7 @@ Just put the tls=true option in Other options after converting to standard strin
 For more detailed information about Cluster mode, you can also check [DB Connections](.).
 </Callout>
 
-## TLS(SSL) Settings When Using Proxy
+### TLS(SSL) Settings When Using Proxy
 
 As mentioned above, when using QueryPie's SQL editor for connection, tls=true is required in the connection string.
 
@@ -164,7 +166,7 @@ When using Proxy, SSL settings are required in QueryPie separately from TLS sett
 
 ---
 
-## MongoDB Data Policy and Rule Settings
+### MongoDB Data Policy and Rule Settings
 
 For data requiring access restrictions such as personal information or sensitive information in MongoDB, you can set data access restrictions and masking policies for Collections and JSON Values so that such data cannot be viewed during queries. Since MongoDB among DBMS supported by QueryPie always stores data in JSON format, separate formatting logic is used.
 
@@ -173,7 +175,7 @@ Please check the links below for initial policy creation.
 * [Data Masking](../../policies/data-masking)
 * [Data Access](../../policies/data-access)
 
-### Registering Rules in Masking Policy
+#### Registering Rules in Masking Policy
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
@@ -197,7 +199,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
         1. Allowed Users : Select users or groups to exception handle the rule.
     6. Save by clicking the `Ok` button.
 
-### Registering Rules in Collection / JSON Value Access Restriction Policy
+#### Registering Rules in Collection / JSON Value Access Restriction Policy
 
 After creating a policy, register the data path to which the policy will be applied as rules.
 
@@ -220,7 +222,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 You can check that rules are registered in the Rule List tab. Now when users query the data, if policy is applied to the table, the table itself cannot be queried, and if rules are applied to columns, it is displayed as *`{RESTRICTED}`*.
 
-### JSON PATH Examples
+#### JSON PATH Examples
 
 Examples of MongoDB data to which policies are applied are as follows:
 ```
@@ -237,7 +239,7 @@ Examples of MongoDB data to which policies are applied are as follows:
 }
 ```
 
-#### Case 1. item Attribute Access Restriction
+##### Case 1. item Attribute Access Restriction
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
@@ -254,7 +256,7 @@ When setting access restriction policy for one attribute, enter the correspondin
 
 As shown in the screenshot above, you can see that the value of the item("T_PWD") attribute is displayed as "Restricted Column".
 
-#### Case 2. size.h Attribute Access Restriction
+##### Case 2. size.h Attribute Access Restriction
 
 When setting access restriction policy for the h attribute under size, enter $.size.h in the "Column Name" field and click the `OK` button.
 
@@ -271,7 +273,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 As shown in the screenshot above, you can see that the value of the h attribute under size is displayed as "Restricted Column".
 
-#### Case 3. All Attributes Under size Access Restriction
+##### Case 3. All Attributes Under size Access Restriction
 
 When setting access restriction policy for all attributes under size, enter $.size in the "Column Name" field and click the `OK` button.
 
@@ -288,7 +290,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 As shown in the screenshot above, you can see that the values of all attributes under size are displayed as "Restricted Column".
 
-#### Case 4. Access Restriction for 2nd Value in tags Attribute
+##### Case 4. Access Restriction for 2nd Value in tags Attribute
 
 When setting access restriction policy for the 2nd value in the tags attribute list, enter $.tags[1] in the "Column Name" field and click the `OK` button.
 

@@ -4,11 +4,13 @@ title: 'Data Masking'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Masking
+
+### Overview
 
 You can set policies to mask and display data that requires management within your organization, such as personal information or sensitive data, when viewing. In the Data Masking menu, you can select the connection for which to set policies, create policies, and register and manage rules for data that needs masking on a column basis.
 
-## Creating Data Masking Policies
+### Creating Data Masking Policies
 
 Register new masking policies by connection.
 
@@ -28,7 +30,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking
 
 You can confirm that the policy has been created in the Data Masking policy list.
 
-## Registering Rules in Data Masking Policies
+### Registering Rules in Data Masking Policies
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
@@ -60,7 +62,7 @@ When selecting Database Name, the error "[ENGINE] [30101] Please Check the user 
 A. In this case, the DB account information may not be set up or may be set up with incorrect information. Click on the connection information in Database Settings &gt; Connection Management &gt; DB Connections menu, then **enter and save the Database Username / Password information** and try again.
 </Callout>
 
-## Checking Access Logs for Columns with Applied Masking Policies
+### Checking Access Logs for Columns with Applied Masking Policies
 
 <Callout type="info">
 From version 10.3.0, you can check access logs for columns controlled by masking policies.
