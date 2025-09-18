@@ -2,23 +2,25 @@
 title: 'External API 변경사항 (9.9.4 버전 > 9.9.5 버전)'
 ---
 
+# External API 변경사항 (9.9.4 버전 > 9.9.5 버전)
+
 ---
 
-# API Docs Json File
+## API Docs Json File
 
 :paperclip: [994_external.json](994_external.json)
 :paperclip: [995_external.json](995_external.json)
 ---
 
-# 1. Access Approval API
+## 1. Access Approval API
 
-### (GET) List
+#### (GET) List
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="729f4860-908e-453e-a2ce-586ef92bde21">
 <colgroup>
@@ -48,15 +50,15 @@ title: 'External API 변경사항 (9.9.4 버전 > 9.9.5 버전)'
 *  **id**  가  **추가** 되었습니다.
 ---
 
-# 2. Approval API
+## 2. Approval API
 
-### (GET) List
+#### (GET) List
 
-#### Request
+##### Request
 
 * 변경점 없음
 
-#### Response
+##### Response
 
 <table data-table-width="760" data-layout="default" local-id="d1aedf57-9c7c-4ffd-abf3-d1381144dd7d">
 <colgroup>
@@ -86,29 +88,29 @@ title: 'External API 변경사항 (9.9.4 버전 > 9.9.5 버전)'
 *  **id**  가  **추가** 되었습니다.
 ---
 
-# 3. Audit Log API
+## 3. Audit Log API
 
-### (GET) List of Approval
+#### (GET) List of Approval
 
 `/api/external/audit-logs`
 
-#### Request
+##### Request
 
 * Query Parameter
 * /api/docs 에 잘못 표기 되어 있던  **cursor**  에 대한 내용이 수정되었습니다.
 
-#### Response
+##### Response
 
 * /api/docs 에 잘못 표기 되어 있던  **nextCursor**  에 대한 내용이 수정되었습니다.
 ---
 
-# 4. Notification Channels API
+## 4. Notification Channels API
 
-### (GET) List
+#### (GET) List
 
 `/api/external/notification-channels`
 
-#### Request
+##### Request
 
 * Query Parameter
 
@@ -145,6 +147,6 @@ title: 'External API 변경사항 (9.9.4 버전 > 9.9.5 버전)'
 
 *  **이름** 이  **변경** 되었습니다.
 
-#### Response
+##### Response
 
 * 변경점 없음

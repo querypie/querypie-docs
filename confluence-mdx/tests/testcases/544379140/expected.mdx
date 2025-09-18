@@ -4,7 +4,9 @@ title: 'Audit Log Export'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Audit Log Export
+
+### Overview
 
 QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내려받을 수 있는 기능입니다. 장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인 추출 및 다운로드가 가능합니다. 한 번 생성된 로그 추출 파일은 30일 동안 다운로드가 가능합니다. 추출 지원 로그는 Query Audit, Workflow SQL Request 등 21종입니다.
 
@@ -49,7 +51,7 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 </Callout>
 
 
-## Audit Log Export 목록 조회하기
+### Audit Log Export 목록 조회하기
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; General &gt; Audit Log Export](/544379140/output/image-20240714-063656.png)
@@ -65,7 +67,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
     *  **Completed**  : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)
     *  **Failed**  : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.
 
-## 로그 추출 작업 생성하기
+### 로그 추출 작업 생성하기
 
 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
 
@@ -156,7 +158,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </Callout>
 
 
-## 추출 작업 완료시 파일 내려받기
+### 추출 작업 완료시 파일 내려받기
 
 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
 
@@ -174,6 +176,6 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </Callout>
 
 
-## 로그 추출 파일 보관 기간 정책 안내
+### 로그 추출 파일 보관 기간 정책 안내
 
 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.

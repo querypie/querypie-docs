@@ -567,7 +567,11 @@ class SingleLineParser:
             self.markdown_lines.append(f'{print_node_with_properties(node)}')
 
         if node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-            self.markdown_lines.append("#" * int(node.name[1]) + " ")
+            # Adjust heading level: h1 -> h2, h2 -> h3, etc.
+            # h6 remains h6 (max level)
+            original_level = int(node.name[1])
+            adjusted_level = min(original_level + 1, 6)
+            self.markdown_lines.append("#" * adjusted_level + " ")
             self.markdown_lines.append(self.markdown_of_children(node))
         elif node.name in ['p', 'th', 'td']:
             for child in node.children:
@@ -1551,6 +1555,16 @@ class ConfluenceToMarkdown:
         else:
             return []
 
+    @property
+    def title(self):
+        """Get document title and format it as h1 heading for Nextra"""
+        page_v1 = get_page_v1()
+        if page_v1 and page_v1.get("title"):
+            title = clean_text(page_v1.get("title")).strip()
+            if title:
+                return [f"# {title}\n", "\n"]
+        return []
+
     def add_import(self, module_name, condition=True):
         """Add an import statement to the list of imports."""
         if condition:
@@ -1580,6 +1594,8 @@ class ConfluenceToMarkdown:
         elif AdfExtensionToCallout(self.soup).has_applicable_nodes:
             self.add_import('Callout')
 
+        # Add document title at the beginning if available
+        self.markdown_lines.extend(self.title)
         # Start conversion
         self.markdown_lines.extend(MultiLineParser(self.soup).as_markdown)
         # self.process_node(soup)
