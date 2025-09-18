@@ -4,12 +4,14 @@ title: 'ユーザープロファイル'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# ユーザープロファイル
+
+### Overview
 
 ユーザープロファイルに登録された属性でAttribute-based Access Control（ABAC）を実装できます。この文書では、ユーザー詳細情報項目別詳細内容を案内します。
 
 
-## Profile 
+### Profile 
 
 ユーザーのAttribute（属性）を照会できるタブです。各Attribute別説明はこのページ下部の**参照：ユーザーAttributeリスト**項目を参照してください。
 
@@ -20,7 +22,7 @@ Administrator &gt; General &gt; User Management &gt; Users > List Details > Prof
 </figcaption>
 </figure>
 
-## Groups
+### Groups
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users > List Details > Groupsタブ](/administrator-manual/general/user-management/users/user-profile/image-20240514-162350.png)
@@ -35,7 +37,7 @@ Administrator &gt; General &gt; User Management &gt; Users > List Details > Grou
 2.  **Group Name**  ：グループ名
 
 
-## Admin Roles
+### Admin Roles
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users > List Details > Admin Rolesタブ](/administrator-manual/general/user-management/users/user-profile/image-20240514-162730.png)
@@ -52,7 +54,7 @@ Administrator &gt; General &gt; User Management &gt; Users > List Details > Admi
 4.  **Granted At**  ：管理者役割を付与受けた日時
 
 
-## Allowed Zones
+### Allowed Zones
 
 Administrator &gt; General &gt; Company Management &gt; Allowed Zonesメニューで生成されたAllowed Zoneをユーザーに直接割り当てるか、'IP Registration Request'ワークフローを通じて承認されたStatic IPが自動的に適用された履歴を確認できます。
 
@@ -68,7 +70,7 @@ Allowed Zonesタブ
 ユーザー別Allowed Zone割り当てのためには、まずAdmin &gt; General &gt; Company Management &gt; Securityメニューでユーザー別QueryPie WebアクセスIP制御機能を有効化しなければなりません。[Security](../../company-management/security)文書を参照してください。
 </Callout>
 
-### ワークフローを通じて登録されたStatic IP確認
+#### ワークフローを通じて登録されたStatic IP確認
 
 ユーザーが'IP Registration Request'ワークフローを通じてIPアドレス登録を要求し最終承認されると、該当IPはユーザーの**Profile**タブにある`Static IP`属性に自動的に追加されます。
 
@@ -78,19 +80,19 @@ Allowed Zonesタブ
 ![Screenshot-2025-06-26-at-6.12.22-PM.png](/administrator-manual/general/user-management/users/user-profile/Screenshot-2025-06-26-at-6.12.22-PM.png)
 </figure>
 
-### ワークフローを通じて登録されたStatic IP削除
+#### ワークフローを通じて登録されたStatic IP削除
 
 ワークフローを通じて自動的に登録された`Static IP`項目は`Allowed Zones`タブで直接`Detach`できません。削除するにはユーザーの**Profile**タブに移動して`Static IP`属性値中希望するIPアドレスを直接編集して除去しなければなりません。`Static IP`属性で値が削除されると`Allowed Zones`タブでも該当IPが即座に除去されてアクセス権限が解除されます。
 
 
-### テーブル表示情報
+#### テーブル表示情報
 
 テーブルで表示する情報は以下の通りです。
 
 1.  **Name** ：Allowed Zoneの名称
 2.  **IP Bands**  ：Allowed ZoneのIP帯域
 
-### ユーザーにAllowed Zone割り当て
+#### ユーザーにAllowed Zone割り当て
 
 Allowed Zonesタブ右側`Attach Allowed Zones`ボタンをクリックするとAllowed Zone割り当てモーダルが出力されます。割り当てようとするAllowed Zoneを選択して`Attach`ボタンをクリックして割り当てを完了します。
 
@@ -101,7 +103,7 @@ Attach Allowed Zoneモーダル
 </figcaption>
 </figure>
 
-### ユーザーからAllowed Zone割り当て解除
+#### ユーザーからAllowed Zone割り当て解除
 
 Allowed Zoneタブ下部リストで割り当てを解除しようとする項目をチェックボックスで選択すると`Detach`ボタンが露出されます。ボタンをクリックし、確認モーダルで`Detach`ボタンをクリックして割り当て解除を完了します。
 
@@ -118,7 +120,7 @@ A. Tagsタブはユーザー別に割り当てられたTagを照会し管理で�
 </Callout>
 
 
-## 参照：ユーザーAttributeリスト
+### 参照：ユーザーAttributeリスト
 
 |  **属性名**           |  **変数**           |  **説明**                       |  **備考**  |
 | ------------------ | ----------------- | ----------------------------- | -------- |

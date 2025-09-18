@@ -4,16 +4,18 @@ title: 'Root CA証明書インストールガイド'
 
 import { Callout } from 'nextra/components'
 
+# Root CA証明書インストールガイド
+
 WACを通じたWebアプリケーションアクセス制御を利用するには、ユーザーのローカルPCにRoot CA証明書のインストールが必要です。
 
-## 1. 証明書のダウンロード
+### 1. 証明書のダウンロード
 
 Webブラウザに以下のパスを入力すると、環境に適したRoot CA証明書がダウンロードされます。
 ```
 {QueryPie_Host}/api/user/wac/certificate/download
 ```
 
-## 2. 証明書のインストール
+### 2. 証明書のインストール
 
 ローカルPCにダウンロードしたRoot CA証明書をインストールします。
 
@@ -21,7 +23,7 @@ Webブラウザに以下のパスを入力すると、環境に適したRoot CA�
 証明書設定のためにAdministrator Privilegeが必要です。
 </Callout>
 
-### MacOS
+#### MacOS
 
 キーチェーンアクセスアプリでRoot CA証明書をインストールできます。
 
@@ -37,7 +39,7 @@ cd {Root CA Downloaded Path}
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain qp-wac-rootCA.cer
 ```
 
-### Windows
+#### Windows
 
 証明書インポートウィザードを通じてRoot CA証明書をインストールできます。
 
@@ -50,7 +52,7 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 7. 設定した内容を確認し、`完了(F)` ボタンを押します。
 8. セキュリティ警告モーダルが出力されます。`はい(Y)` ボタンを押すと即座に証明書インポートが実行されます。インポート完了モーダルで確認ボタンをクリックします。
 
-## 3. Chrome証明書設定確認
+### 3. Chrome証明書設定確認
 
 証明書が正常に設定されたかどうかを確認する方法は以下の通りです。
 

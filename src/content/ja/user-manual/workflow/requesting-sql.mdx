@@ -4,14 +4,16 @@ title: 'SQL Request要求'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# SQL Request要求
+
+### Overview
 
 下記順序に従って特定DBコネクションに対して権限がないクエリ実行を要求できます。承認後、実行者は承認されたクエリを1回に限り実行し、その結果を照会できます。
 
 
-## SQL Request要求
+### SQL Request要求
 
-### 1. 決裁ルール選択
+#### 1. 決裁ルール選択
 
 * Approval Ruleを選択して目的に合う決裁ルールを選択してください。選択したルールに応じて承認対象が変わります。 
 * もし管理者が承認者を指定した決裁ルールが選択された場合、自動で承認者が指定され追加および変更が不可能です。
@@ -22,7 +24,7 @@ import { Callout } from 'nextra/components'
 ![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.43.46-AM.png)
 </figure>
 
-### 2. 承認者指定
+#### 2. 承認者指定
 
 * 決裁ラインで`+`ボタンを押すと段階別承認者を指定できるポップアップウィンドウが表示されます。 
 * このポップアップウィンドウで決裁承認条件および承認者を追加後`Save`ボタンを押して決裁ラインを保存します。
@@ -34,7 +36,7 @@ import { Callout } from 'nextra/components'
 ![image-20240807-125031.png](/user-manual/workflow/requesting-sql/image-20240807-125031.png)
 </figure>
 
-### 3. 実行者および参照者指定
+#### 3. 実行者および参照者指定
 
 * 決裁ラインで`+`ボタンを押すと実行者および参照者を指定できるポップアップウィンドウが表示されます。 
     * 管理者が参照者指定を許可しない場合はReviewerボックスが表示されません。 
@@ -45,7 +47,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240807-215143.png](/user-manual/workflow/requesting-sql/screenshot-20240807-215143.png)
 </figure>
 
-### 4. 事後承認で要求送信
+#### 4. 事後承認で要求送信
 
 * 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。 
 * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
@@ -59,7 +61,7 @@ import { Callout } from 'nextra/components'
 A. 管理者がUrgent Modeを許可しない決裁ルールを選択した場合、該当機能が表示されません。
 </Callout>
 
-### 5. 要求情報入力
+#### 5. 要求情報入力
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-12.47.02-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.47.02-AM.png)
@@ -77,7 +79,7 @@ A. 管理者がUrgent Modeを許可しない決裁ルールを選択した場合
 *  **Submit**  : 起案作成完了後`Submit`ボタンをクリックすると上申が完了します。
 
 
-## 承認完了されたSQL実行
+### 承認完了されたSQL実行
 
 承認が完了されたSQL Request件は承認完了即座に実行可能な状態になります。
 

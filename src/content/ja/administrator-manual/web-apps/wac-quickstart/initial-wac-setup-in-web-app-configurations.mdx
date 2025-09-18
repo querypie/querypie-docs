@@ -4,6 +4,8 @@ title: 'Web App ConfigurationsでWAC初期設定'
 
 import { Callout } from 'nextra/components'
 
+# Web App ConfigurationsでWAC初期設定
+
 <Callout type="info">
 Web App Configurationsページは10.2.6またはそれ以上のバージョンで使用できます。
 </Callout>
@@ -18,7 +20,7 @@ Admin &gt; Web Apps &gt; Connection Management &gt; Web App Configurations
 </figcaption>
 </figure>
 
-## WAC Proxy Configurations**[10.2.6~]**
+### WAC Proxy Configurations**[10.2.6~]**
 
 WACプロキシサーバー構成後、サーバー設定情報を入力します。各フィールドに対する説明は以下の通りです。
 
@@ -35,7 +37,7 @@ WACプロキシサーバー構成後、サーバー設定情報を入力しま�
 3. 以下のコマンドを使用してコンテナを再起動します: `docker compose up -d`
 </Callout>
 
-## QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
+### QueryPie Web Secure (Extension) Configurations**[10.2.6~]**
 
 WAC Extension関連設定を管理者が直接管理できます。
 
@@ -54,7 +56,7 @@ WAC Extension関連設定を管理者が直接管理できます。
 Current Version、Minimum Required Version情報はQueryPieで提供する互換性情報に合わせて入力されなければなりません。
 </Callout>
 
-### 閉鎖網環境でWAC Extension配布
+#### 閉鎖網環境でWAC Extension配布
 
 1. インターネット接続可能なPCでWAC Extensionをダウンロードしておきます。
 2. 閉鎖網環境でQueryPie &gt; Web App Configurationsページに接続した後、QueryPie Web Secure (Extension) Configurationsセクションで `Edit` ボタンをクリックします。
@@ -65,14 +67,14 @@ Current Version、Minimum Required Version情報はQueryPieで提供する互換
 2. `Save` ボタンを押して保存します。
 3. Extension Fileリンクが `https://dl.querypie.com/…` で始まるリンクから、現在使用中のQueryPie Domainで始まるリンクに変更されたことを確認できます。
 
-### 緊急パッチExtensionリンク配布
+#### 緊急パッチExtensionリンク配布
 
 1. QueryPie Web Secure (Extension) Configurationsセクションで `Edit` ボタンをクリックします。
 2. Extension Fileオプションで `Add by Link` を選択し、受け取った新規ダウンロードリンクを貼り付けます。
 3. QueryPie製造元から受け取ったガイドに合わせて互換性情報変更事項を更新します。
 4. `Save` ボタンを押して保存します。
 
-## Watermark Configurations**[10.2.6~]**
+### Watermark Configurations**[10.2.6~]**
 
 Watermark Configurationsセクションでは現在適用されたウォーターマーク文句設定を確認し、ウォーターマーク適用時管理者が望む文句を設定できます。
 
@@ -83,7 +85,7 @@ Watermark Configurationsセクションでは現在適用されたウォータ�
 5.  **Timestamp**  : ページに最初に接続した時間が表示されます。
 6.  **Client IP**  : ページに接続したクライアントIPが表示されます。
 
-## Root CA Certificate Configurations**[10.2.8~]**
+### Root CA Certificate Configurations**[10.2.8~]**
 
 Root CA Certificate ConfigurationsセクションではQueryPieで既存使用中のRoot CA証明書をバックアップし復元できます。
 

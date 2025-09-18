@@ -4,12 +4,14 @@ title: 'LDAP連携'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# LDAP連携
+
+### Overview
 
 ユーザー認証とユーザーおよびグループ管理のためにQueryPieサービスとLDAPサーバーを連携できます。
 
 
-## LDAP連携および同期設定
+### LDAP連携および同期設定
 
 Administrator &gt; General &gt; User Management &gt; Authenticationメニューに移動後、認証Type項目で**LDAP**を選択するとLDAP連携のための設定入力が可能です。
 
@@ -24,7 +26,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
 </figcaption>
 </figure>
 
-### 基本ユーザー連携設定
+#### 基本ユーザー連携設定
 
 <figure data-layout="center" data-align="center">
 ![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
@@ -32,7 +34,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
 
 LDAP連携のための基本的な認証情報および属性情報を入力します。Attributeマッピングのための属性情報の場合、フィールド名はQueryPie Userの属性名で、フィールドにはLDAPで参照するAttribute名を入力します。詳細説明は下部項目を参照してください。
 
-### グループ連携設定
+#### グループ連携設定
 
 <figure data-layout="center" data-align="center">
 ![image-20250515-095109.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095109.png)
@@ -115,7 +117,7 @@ Group ID
 </tbody>
 </table>
 
-### LDAPユーザー同期設定
+#### LDAPユーザー同期設定
 
 LDAPサーバーからユーザー情報同期を実行するには**Use Synchronization with the Authentication System**オプションを有効化します。
 
@@ -216,7 +218,7 @@ QueryPie Attribute
         * 修正が不可能な読み取り専用状態で表示されます。
             * 例えば、Primary Email (email)値がregan@querypie.comで連携された場合、UI上で直接修正できず、LDAPでのみ変更可能です。
 
-### その他設定および同期
+#### その他設定および同期
 
 *  **Anonymous :** 匿名ユーザーの認証可能可否を設定します。（TrueまたはFalse）
 *  **Dry Run :**  `Dry Run`ボタンをクリックすると現在入力された設定情報を基盤に同期を実行する場合、その結果を事前に確認できます。（現在入力された情報の保存可否と無関係）
@@ -234,7 +236,7 @@ QueryPie Attribute
 </Callout>
 
 
-## QueryPieでLDAP認証してログイン
+### QueryPieでLDAP認証してログイン
 
 1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。
 2. これでログインページでIDおよびPassword項目にLDAP認証情報を入力後ログインできます。

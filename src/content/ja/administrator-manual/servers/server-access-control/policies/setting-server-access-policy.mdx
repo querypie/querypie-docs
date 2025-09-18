@@ -2,12 +2,14 @@
 title: 'サーバーアクセスポリシー設定'
 ---
 
-## Overview
+# サーバーアクセスポリシー設定
+
+### Overview
 
 組織で管理するサーバーのアクセスポリシー（Policy）を管理できます。PolicyはIaCのような形態でYAML Codeをベースに動作します。接続を許可する曜日と時間を設定できるだけでなく、接続可能なIPアドレス設定とAudit可否、Agent使用可能可否を設定できます。その他、ユーザー別許可セッション数も設定が可能です。
 
 
-## 設定可能なポリシー項目
+### 設定可能なポリシー項目
 
 *  **serverGroup**  : 接続を許可するサーバーグループ
 *  **account** : サーバーグループに登録されたAccount
@@ -27,7 +29,7 @@ title: 'サーバーアクセスポリシー設定'
 *  **requirePrivilege** : サーバー接続時権限承認必要可否<br/>*このオプションを有効化（Enable）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けてからでないとサーバーに接続できません。
 
 
-## Policyコード編集
+### Policyコード編集
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png)

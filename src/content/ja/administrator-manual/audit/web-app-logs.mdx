@@ -2,11 +2,13 @@
 title: 'Web App Logs'
 ---
 
-## Overview
+# Web App Logs
+
+### Overview
 
 QueryPieでのすべてのウェブアプリを監査ログに記録します。ユーザーと管理者のログイン/ログアウト、権限付与と回収、ウェブアプリケーションに対する実行履歴、リソースまたはセキュリティ設定変更など、QueryPieとアクセス制御対象リソースで発生するすべての活動履歴がログの対象です。リアルタイムで記録されるログについて、様々な条件で検索およびフィルタリングが可能です。
 
-## 関連監査ログ種類
+### 関連監査ログ種類
 
 ウェブアプリと共通で提供される監査ログに加えて、ウェブアプリKubernetesアクセス制御（QueryPie WAC）ライセンス保有時、以下の監査ログの種類を提供します。
 
@@ -39,13 +41,13 @@ QueryPieでのすべてのウェブアプリを監査ログに記録します。
 </tbody>
 </table>
 
-## 1. General
+### 1. General
 
 * Access Control Logs : アクセス制御関連ログ、ログインと履歴
 * Policy Audit Logs : 管理者が実行するリソース登録および設定変更履歴
 * Policy Exception Logs : 管理者権限付与、変更、回収履歴
 
-## 2. Web Apps
+### 2. Web Apps
 
 * Web Access History : ウェブアプリケーションアクセス履歴内訳
 * Web Event Audit : ウェブアプリケーションイベント監査内訳

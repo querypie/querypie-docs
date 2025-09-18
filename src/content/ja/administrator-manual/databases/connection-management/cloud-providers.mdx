@@ -4,7 +4,9 @@ title: 'Cloud Providers'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Cloud Providers
+
+### Overview
 
 QueryPieではクラウド提供者に登録されたDBリソースを連動し、定期的に同期できます。
 
@@ -15,7 +17,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 </figcaption>
 </figure>
 
-## Cloud Providerの照会
+### Cloud Providerの照会
 
 1. Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providersメニューに移動します。
 2. テーブル左上の検索欄を通じてクラウドプロバイダー名を条件に検索が可能です。
@@ -29,7 +31,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
    6. **Updated At**: クラウドプロバイダー最後修正日時
 5. 各行をクリックするとクラウドプロバイダー詳細情報照会が可能です。
 
-## Cloud Providerの作成
+### Cloud Providerの作成
 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
 2. 右上の`+ Create Provider`ボタンをクリックします。
@@ -38,7 +40,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
    2. [MS AzureからDBリソース同期](cloud-providers/synchronizing-db-resources-from-ms-azure)
    3. [Google CloudからDBリソース同期](cloud-providers/synchronizing-db-resources-from-google-cloud)
 
-## Cloud Providerの削除
+### Cloud Providerの削除
 
 <figure data-layout="center" data-align="center">
 ![image-20241103-065154.png](/administrator-manual/databases/connection-management/cloud-providers/image-20241103-065154.png)
@@ -53,7 +55,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 Cloud Provider削除時、該当クラウドプロバイダーを通じて同期して持ってきたすべてのリソースが一緒に一括削除されるので、この点ご注意ください。
 </Callout>
 
-## Dry Runの活用
+### Dry Runの活用
 
 <Callout type="info">
 **クラウド同期Dry Runとは？**

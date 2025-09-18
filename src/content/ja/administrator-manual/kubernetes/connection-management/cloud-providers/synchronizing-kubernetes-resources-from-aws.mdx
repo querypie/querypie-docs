@@ -4,12 +4,14 @@ title: 'AWSからKubernetesリソース同期'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# AWSからKubernetesリソース同期
+
+### Overview
 
 QueryPieでは、Kubernetesクラスター登録および管理のためのAWS連携をサポートします。AWS内のリソースを同期し、QueryPieで管理するクラスターに登録し、ユーザーおよびグループに同期してきたクラスターに対するKubernetes APIアクセス権限を付与し、ポリシーを設定することができます。
 
 <Callout type="info">
-### 事前準備事項
+#### 事前準備事項
 
 1. AWSリソースとの同期のために、QueryPieインスタンスに割り当てられたAWS IAMロールに必要なポリシー作業を添付したか確認してください。ポリシーには以下の作業をすべて含める必要があります：
 
@@ -23,7 +25,7 @@ QueryPieでは、Kubernetesクラスター登録および管理のためのAWS�
 </Callout>
 
 
-## AWS EKS認証モード修正
+### AWS EKS認証モード修正
 
 QueryPieは、AWS EKS Kubernetesクラスター接続のために、同期時にEKS access entry APIを活用します。したがって、クラスター認証モードがConfigMapでのみ設定されている場合、接続が困難な部分があり、円滑な同期のためにAWSコンソールでモード変更を事前に作業しておくことをお勧めします。
 
@@ -45,7 +47,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 8. `Save changes`を押して変更事項を保存します。
 
 
-## QueryPieでAWS連携情報登録
+### QueryPieでAWS連携情報登録
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
@@ -78,7 +80,7 @@ A. すでに  **Credential** が`Default Credentials`でありながら同じ`Re
 </Callout>
 
 
-## 登録されたAWS Cloud Provider同期および管理
+### 登録されたAWS Cloud Provider同期および管理
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
@@ -102,7 +104,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     7.  **Replication**   **Frequency** : 変更可能
 
 
-## Dry Run/Synchronization Log表記文句
+### Dry Run/Synchronization Log表記文句
 
 |                                                                                                                                                                            |  **発生時点**                                                                         |  **文句**                                                                                                                                                   |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |

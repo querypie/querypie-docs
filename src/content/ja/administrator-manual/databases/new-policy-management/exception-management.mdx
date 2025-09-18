@@ -2,11 +2,13 @@
 title: 'Exception Management'
 ---
 
-## Overview
+# Exception Management
+
+### Overview
 
 ポリシーに対する例外処理はWorkflowのポリシー例外申請の場合と管理者が直接ポリシー例外設定をする場合2つがあります。以前のDACポリシーはポリシー例外はWorkflowを通じた例外申請（Unmasking、Restricted Data Access）のみ可能でしたが、新規ポリシーでは管理者が直接ポリシー例外を設定し、Workflowで処理されたものと統合管理できます。
 
-## Workflowを通じたポリシー例外管理
+### Workflowを通じたポリシー例外管理
 
 <figure data-layout="center" data-align="center">
 ![image-20250629-172021.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250629-172021.png)
@@ -26,7 +28,7 @@ Databases &gt; Data Policies &gt; Exception ManagementにWorkflowタブにWokflo
     * Inactive : ポリシー例外状態を管理者が一時的に非有効状態に変更した場合Inactiveで表示されます。
 * Excepted By : リンクをクリックしてポリシー例外が承認されたworkflowを見ることができます。
 
-## 管理者が直接ポリシー例外設定
+### 管理者が直接ポリシー例外設定
 
 <figure data-layout="center" data-align="center">
 ![Databases &gt; Policy Management &gt; Exception Management のManualタブ](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-211515.png)
@@ -37,7 +39,7 @@ Databases &gt; Policy Management &gt; Exception Management のManualタブ
 
 Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで管理者が手動でポリシー例外対象を指定できます。
 
-### ポリシー例外設定
+#### ポリシー例外設定
 
 <figure data-layout="center" data-align="center">
 ![手動ポリシー例外作成](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
@@ -59,7 +61,7 @@ Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで�
 * Exception Expiration : ポリシー例外が終了する時点を設定します。
 * Description : ポリシー例外に対する簡単な説明を入力します。
 
-### ポリシー例外の状態即座変更
+#### ポリシー例外の状態即座変更
 
 管理者がポリシー例外を作成する時Exception Expirationに指定した時点までポリシー例外状態が維持されますが、場合によって即座に例外状態を解除する必要がある場合もあります。一覧のStatus列でActive、Inactive中一つを選択して即座に状態変更ができ、ポリシー例外を削除したり新しく作ったりせずに簡単に対応できます。
 
@@ -67,7 +69,7 @@ Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで�
 ![image-20250716-055008.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055008.png)
 </figure>
 
-### 手動で作成したポリシー例外修正
+#### 手動で作成したポリシー例外修正
 
 一覧で特定ポリシー例外行をクリックすると設定内容を修正できます。（Exception Typeは変更できません。）
 
@@ -76,7 +78,7 @@ Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで�
 </figure>
 
 
-### 手動で作成したポリシー例外削除
+#### 手動で作成したポリシー例外削除
 
 <figure data-layout="center" data-align="center">
 ![image-20250716-055525.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055525.png)

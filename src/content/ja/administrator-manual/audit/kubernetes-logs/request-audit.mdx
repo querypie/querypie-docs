@@ -2,11 +2,13 @@
 title: 'Request Audit'
 ---
 
-## Overview
+# Request Audit
+
+### Overview
 
 組織で管理するKubernetesクラスターのAPIサーバー呼び出し内訳をクエリパイプロキシで各呼び出し別にモニタリングし、監査ログを記録します。
 
-## Request Auditの照会
+### Request Auditの照会
 
 <figure data-layout="center" data-align="center">
 ![image-20240721-082824.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png)
@@ -46,7 +48,7 @@ title: 'Request Audit'
    15. **Kubernetes Groups**: API呼び出し時にQueryPie ProxyがimpersonateしたKubernetesグループアカウント名
    16. **Client Name**: ユーザークライアント名/バージョン（例. kubectl/v1.27.3）
 
-## Request Audit詳細内訳の照会
+### Request Audit詳細内訳の照会
 
 1. 各行をクリックすると詳細情報照会が可能です。
    1. 最上位には基本イベントに基づく情報を露出します:

@@ -4,7 +4,9 @@ title: 'サーバーをグループで管理'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# サーバーをグループで管理
+
+### Overview
 
 数多くのサーバーをグループ化してアクセス可能なアカウントおよびポリシーを一度に適用できます。目的に応じてサーバーグループを作成した後、一括でポリシーを便利に管理でき、このようにグループ化したサーバーグループ権限を個別ユーザーまたはユーザーグループに一度に付与できます。
 
@@ -15,7 +17,7 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-## サーバーグループ作成
+### サーバーグループ作成
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Create Server Group](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250123-113012.png)
@@ -38,11 +40,11 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 </Callout>
 
 
-## サーバーグループ作成/修正
+### サーバーグループ作成/修正
 
 以下の情報を入力してサーバーグループを作成できます。作成後、一部項目は修正が可能です。
 
-### 1. 基本情報入力およびサーバーをTagで追加
+#### 1. 基本情報入力およびサーバーをTagで追加
 
 <figure data-layout="center" data-align="center">
 ![image-20240902-045749.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20240902-045749.png)
@@ -52,7 +54,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 * Description : サーバーグループを説明できる内容を入力します。複数の管理者がいる場合、サーバーグループ間の簡単な識別のために目的に合わせて名前および説明を詳細に入力することをお勧めします。
 * Server Tags : サーバーグループでまとめたいサーバーのタグを指定して流動的にサーバーグループの対象を管理できます。タグを通じて追加されたサーバーはサーバーテーブルで手動削除ができず、Server Tagsのタグを修正しなければなりません。
 
-### 2. Serverを手動で追加
+#### 2. Serverを手動で追加
 
 <figure data-layout="center" data-align="center">
 ![image-20241028-003400.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20241028-003400.png)
@@ -71,7 +73,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 Test ConnectionはServer Groupを保存した後にのみ使用できます。
 </Callout>
 
-### 3. Accounts登録
+#### 3. Accounts登録
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-07-27-at-10.33.48-PM.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.33.48-PM.png)
@@ -168,7 +170,7 @@ macOSのVNCプロトコル制限により、VNCを通じた自動ログインを
 *  **Signing Algorithm** はras-sha2-256で設定します。
 </Callout>
 
-### 4. Server Group Owner登録
+#### 4. Server Group Owner登録
 
 <figure data-layout="center" data-align="center">
 ![image-20250512-105127.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250512-105127.png)
@@ -182,7 +184,7 @@ macOSのVNCプロトコル制限により、VNCを通じた自動ログインを
 4. `Save Changes`ボタンを通じて保存します。
 
 
-### 5. Server Group Member登録
+#### 5. Server Group Member登録
 
 <figure data-layout="center" data-align="center">
 ![image-20250512-105142.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20250512-105142.png)

@@ -2,12 +2,14 @@
 title: 'KubernetesポリシーAction設定参考ガイド'
 ---
 
-## Overview
+# KubernetesポリシーAction設定参考ガイド
+
+### Overview
 
 QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難を経験しないようにしようとします。
 
 
-## API Groups関連設定ガイド
+### API Groups関連設定ガイド
 
 よく使用されるpodsのような場合はapiGroupsがcoreグループなので`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`で管理者が一つ一つ知って設定するのが困難です。
 
@@ -16,7 +18,7 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
 したがって、Kubernetes API Group管理のミッションがない限り、一般的には`"*"`で設定し、resourcesでアクセス権限を制御する方向で設定することをお勧めします。
 
 
-## Resources関連設定ガイド
+### Resources関連設定ガイド
 
 <figure data-layout="center" data-align="center">
 ![3rd Party Client Tool - Lens画面](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide/screenshot-lens-resources-events.png)
@@ -39,7 +41,7 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
     * 推奨スペック
 
 
-## Verbs関連設定ガイド
+### Verbs関連設定ガイド
 
 3rd Party Client Tool使用に最も大きな影響を受ける部分はverbです。管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースに対する範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲をよく設定したとしてもverbの束を適切に設定しなければTool使用が困難です。
 
@@ -55,7 +57,7 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
     * 推奨スペック
 
 
-## その他推奨設定ガイド
+### その他推奨設定ガイド
 
 例) prod namespace環境のリソースに対する権限制限
 ```

@@ -4,6 +4,8 @@ title: 'WAC Quickstart'
 
 import { Callout } from 'nextra/components'
 
+# WAC Quickstart
+
 QueryPieホームページを例に、最もシンプルなWACの使用方法をご案内します。
 
 1. QueryPieホームページをWebアプリケーションとして登録し、Resources配下の一部メニューをサブパスとして登録します。
@@ -19,9 +21,9 @@ Quickstartは `10.2.8` バージョンを基準に説明します。
 </Callout>
 
 
-# Admin-side
+## Admin-side
 
-## 1. Webアプリケーションの登録
+### 1. Webアプリケーションの登録
 
 QueryPieホームページ（`www.querypie.com`）内の `/ko/resources` 配下構造は以下の通りです。
 
@@ -88,7 +90,7 @@ Admin > Web Apps > Create a Web App
 2. **Tag**: Webアプリケーションのタグです。ここでは空にしておきます。
 3. `Save` ボタンを押して保存します。
 
-## 2. ポリシーの登録
+### 2. ポリシーの登録
 
 次に、QueryPieウェブサイトに対して、登録されたサブパスにのみアクセスを許可するポリシーを作成します。
 
@@ -124,7 +126,7 @@ spec:
 
 1. `Save Changes` ボタンをクリックし、理由入力モーダルで `OK` ボタンを押して保存します。
 
-## 3. ロールの作成
+### 3. ロールの作成
 
 今度は新しいロールを作成し、先ほど作成したポリシーを割り当てます。
 
@@ -141,7 +143,7 @@ Admin > Web Apps > Web App Access Control > Roles > List Details
 3. 今作成したロールをクリックして詳細ページ > Policiesタブに移動します。`Assign Policies` ボタンをクリックします。
 4. Assign Policiesモーダルで先ほど作成したQP Web Testポリシーを選択し、`Assign` ボタンをクリックして保存し、モーダルを閉じます。
 
-## 4. ロールをユーザー/グループに割り当て
+### 4. ロールをユーザー/グループに割り当て
 
 今度は今作成したQP Web Testロールを現在のユーザーに割り当ててみます。
 
@@ -161,20 +163,20 @@ Admin > Web Apps > Web App Access Control > Access Control > List Details
 
 続いて、今作成したアクセスポリシーが正しく適用されているか確認するため、ユーザー側の設定を進めてみます。
 
-# User-side
+## User-side
 
-## 1. Root CA証明書のインストール
+### 1. Root CA証明書のインストール
 
 1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。<br/>
 2. QueryPie Web Secure Downloadモーダルが開きます。**A. Install Root CA Certificate** で、Step 1. のDownload Linkをクリックすると証明書ファイルのダウンロードが実行されます。<br/>
 3. [Root CA証明書インストールガイド](wac-quickstart/root-ca-certificate-installation-guide)に従って証明書のインストールと信頼設定を進めます。
 
-## 2. Extensionのダウンロード
+### 2. Extensionのダウンロード
 
 1. QueryPieプロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。
 2. QueryPie Web Secure Downloadモーダルで **B. Install Chrome Extension** > Step 1. のDownload LinkをクリックしてExtensionファイルのダウンロードを実行します。
 
-## 3. ExtensionのインストールとHost設定
+### 3. ExtensionのインストールとHost設定
 
 1. Chromeアドレスバーに `chrome://extensions/` を入力します。
 2. ページ右上の開発者モードトグルを有効にします。
@@ -190,7 +192,7 @@ WAC拡張機能インストール前に開いていたタブについては管�
 既に開いていたすべてのブラウザタブとウィンドウを閉じてから拡張機能をインストールしてください。
 </Callout>
 
-## 4. QueryPieを通じてWebアプリケーションにアクセス
+### 4. QueryPieを通じてWebアプリケーションにアクセス
 
 1. `Go to Dashboard` ボタンをクリックすると新しいタブが開き、QueryPie Webコンソールが開きます。
     1. 現在QueryPieにログインされている状態であれば、Web App Dashboardが開きます。
@@ -201,9 +203,9 @@ WAC拡張機能インストール前に開いていたタブについては管�
 4. QueryPieホームページにウォーターマークが適用されていることを確認できます。
 5. 許可されていないページ（例：Productsメニュー）にアクセスを試みると、ブロック案内画面にリダイレクトされます。
 
-# Admin-side (again)
+## Admin-side (again)
 
-## 1. Webアプリケーションアクセス記録の確認
+### 1. Webアプリケーションアクセス記録の確認
 
 
 <figure data-layout="center" data-align="center">
@@ -226,7 +228,7 @@ Admin > Audit > Web Apps > Web Access History
         2. **Failure**: アクセス失敗
             * WACポリシーによってアクセスがブロックされた場合、アクセス失敗として表示されます
 
-## 2. ユーザーのセッション記録の確認
+### 2. ユーザーのセッション記録の確認
 
 Webアプリケーションとロール基準でユーザーが制御対象Webアプリケーションにアクセスしてサブページを探索した記録がすべて表示されます。
 

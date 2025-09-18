@@ -4,12 +4,14 @@ title: 'Workflow'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Workflow
+
+### Overview
 
 QueryPieは権限者の承認下で実行されなければならない多様な作業に対して決裁を要求し承認できるWorkflow機能をサポートします。QueryPieを離れずに統合された環境で要求、承認、実行作業まで便利に進行できます。
 
 
-## Workflowメニューアクセスポイント
+### Workflowメニューアクセスポイント
 
 QueryPieはWorkflowメニューにアクセスする2つの経路を提供しています。
 <figure data-layout="center" data-align="center">
@@ -25,7 +27,7 @@ My Dashboard &gt; Workflow Requests
 </figcaption>
 </figure>
 
-## Workflow内の役割
+### Workflow内の役割
 
 Workflow機能内で実行する行為に応じてユーザーが持つことができる役割は以下の通りです。
 
@@ -38,7 +40,7 @@ Workflow機能内で実行する行為に応じてユーザーが持つことが
 要求件に対する承認者および実行者は[ **決裁ルール(Approval Rules)** ](../administrator-manual/general/workflow-management/approval-rules)を通じて管理者が事前に設定できます。
 </Callout>
 
-## Submit Request (決裁要求)
+### Submit Request (決裁要求)
 
 Workflowメニュー内`Submit Request`ボタンを押した後、希望する要求タイプを選択すると要求作成ページに移動します。各要求タイプ別詳細作成方法は接続されたページを参照してください。
 
@@ -53,7 +55,7 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
 * [IP Registration Request](workflow/requesting-ip-registration) : システムアクセスのためのIPアドレス登録を要求でき、承認即座に該当IPからのアクセスが許可されます。
 * [DB Exception Request](workflow/requesting-db-policy-exception) : DAC新規ポリシー環境で、マスキング解除(Unmasking)またはアクセス制限解除(Restricted Data Access)を一つの様式で要求でき、承認後設定された期間中該当権限が付与されます。
 
-## 代理上申機能使用時注意事項
+### 代理上申機能使用時注意事項
 
 管理者が決裁ルールで許可した場合、他のユーザーを代わりに決裁を要求(代理上申)できます。代理上申時には次の基準が適用されます。該当機能の設定方法は[Approval Rules](../administrator-manual/general/workflow-management/approval-rules)マニュアルページで確認できます。代理上申時には次の基準が適用されます。
 
@@ -64,14 +66,14 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
     * 決裁を適用される対象者(`Target User`)指定後UIにマウスカーソルを置くと、選択された対象者目録と一緒に次の案内メッセージが表示されます。
     * "The following users will be impacted by this request. Please double-check that all settings are correct before proceeding." (現在決裁を適用される対象です。正しく設定したか必ず確認してください。)
 
-## Sent Request (私が送った要求確認)
+### Sent Request (私が送った要求確認)
 
 私が要求者(Requester)として上申した決裁要求目録はSent Requests下位メニューに表示されます。
 
 *  **In Progress** : 決裁要求はされましたがまだ承認が完了されていない進行中要求件です。Approval Status、Execution Status中一つでもPendingまたはIn Progress状態の要求件が該当目録に表示されます。 
 *  **Done**  : すべての承認(または実行)が完了されたか要求者が決裁要求を自分でキャンセルした件が表示されます。 
 
-## Received Requests (私が受けた要求承認または反対)
+### Received Requests (私が受けた要求承認または反対)
 
 私が承認者(Approver)として割り当てられた要求の目録はReceived Requests下位メニューに表示されます。もし代理決裁者として指定された場合元決裁者が承認しない要求目録も一緒に表示されます。代理決裁関連内容は[決裁付加機能 (代理決裁、再上申など) 文書](workflow/approval-additional-features-proxy-approval-resubmission-etc)で詳しく確認できます。
 
@@ -93,11 +95,11 @@ A. DB Access Requestの場合一部DBコネクションに対してのみ部分�
 1. Commentsポップアップウィンドウで承認または反対理由を入力後`OK`ボタンを押して処理を完了します。 
 2. 処理を完了した要求件に対してはWorkflow &gt; Received Request &gt; Doneメニューで確認できます。 
 
-## Executions (承認された要求実行)
+### Executions (承認された要求実行)
 
 私が実行者(Executor)として割り当てられた要求の目録はExecutions下位メニューに表示されます。実行しなければならない目録(To Do)と完了された目録(Done)があり実行を必要とする決裁タイプはSQL Request、SQL Export Request 2つです。
 
-### SQL Request実行
+#### SQL Request実行
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Executions &gt; To Do &gt; List Details](/user-manual/workflow/screenshot-20240725-094850.png)
@@ -119,7 +121,7 @@ Workflow &gt; Executions &gt; To Do &gt; List Details
 A. SQL Requestを通じて実行するクエリが大容量の場合、ウェブブラウザを終了してもQueryPieサーバーバックグラウンドでクエリ実行が維持されます。ウェブブラウザ終了後QueryPie再接続時サーバーバックグラウンドで実行中のクエリはSQL Request詳細ページで進行状態を確認できます。このようなバックグラウンドクエリ実行機能の場合QueryPie v9.15.0以上のバージョン環境でのみサポートされます。
 </Callout>
 
-### SQL Export Request実行
+#### SQL Export Request実行
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Executions &gt; To Do](/user-manual/workflow/screenshot-20240725-104719.png)
@@ -141,7 +143,7 @@ Workflow &gt; Executions &gt; To Do
 6. エクスポートが完了されたら、その結果を詳細ページ内Resultsタブで確認できます。 
 7. Workflow &gt; Executions &gt; Doneメニューで実行完了されたエクスポート要求履歴を確認できます。
 
-## Reviews (参照された要求確認)
+### Reviews (参照された要求確認)
 
 私が参照者(Reviewer)として指定された要求中承認または実行完了された要求件はReviews &gt; All Reviews目録に表示されます。参照状態はReview StatusカラムにUnread、Confirmed二つの値で表示されます。確認されていない要求を確認する方法は[決裁付加機能 (代理決裁、再上申など) 文書](workflow/approval-additional-features-proxy-approval-resubmission-etc)を参照してください。
 
@@ -149,7 +151,7 @@ Workflow &gt; Executions &gt; To Do
 Reviewメニューは管理者が事前に使用設定をした場合のみ表示されます。
 </Callout>
 
-## 要求の状態目録
+### 要求の状態目録
 
 要求の承認状態目録は以下の通りです。
 

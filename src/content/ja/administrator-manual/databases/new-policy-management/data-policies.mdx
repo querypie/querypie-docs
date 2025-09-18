@@ -4,12 +4,14 @@ title: 'Data Policies'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Policies
+
+### Overview
 
 Data PoliciesはQueryPieでデータアクセス制御、データマスキング、そして使用理由入力強制化のようなデータガバナンスポリシーを設定し、管理する機能です。この機能を通じてデータセキュリティ、個人情報保護、そして規制遵守を管理できます。
 
 
-## ポリシー作成画面アクセス
+### ポリシー作成画面アクセス
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
@@ -20,7 +22,7 @@ Data PoliciesはQueryPieでデータアクセス制御、データマスキン�
 3. 上部の  **Create Policy**  ボタンをクリックしてポリシー作成画面に移動します。
 
 
-## ポリシー基本情報設定
+### ポリシー基本情報設定
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
@@ -33,7 +35,7 @@ Data PoliciesはQueryPieでデータアクセス制御、データマスキン�
 3.  **Description** : ポリシーに対する説明を入力します。（選択事項）
 
 
-### ポリシータイプ紹介
+#### ポリシータイプ紹介
 
 QueryPieは以下のようなポリシータイプを提供します:
 
@@ -61,7 +63,7 @@ QueryPieは以下のようなポリシータイプを提供します:
     *  Approval Ruleが作成されていれば以下の図のようにポリシーと連携するApproval Ruleを指定できます。<br/>
     * DML Query Approval Enforcementはタグで対象を指定できず、specific data pathで特定経路を指定する必要があります。
 
-## ポリシー適用対象設定
+### ポリシー適用対象設定
 
 ポリシー作成画面の  **User Scope**  セクションでポリシーが適用されるユーザー範囲を設定します。
 
@@ -69,13 +71,13 @@ QueryPieは以下のようなポリシータイプを提供します:
 ![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 1.  **Everyone** : すべてのユーザーにポリシーが適用されます。（基本値）
 2.  **Users or Groups** : 選択した特定ユーザーやグループにのみポリシーが適用されます。
 3.  **Attribute of Users**  : 特定属性を持つユーザーに動的にポリシーを適用したい場合使用します。 **[11.1.0]** 
 
-### Exclusions
+#### Exclusions
 
 ポリシー適用から除外する対象を設定できます。User scopeのscope typeが  **Everyone** の場合のみExclusion対象を指定できます。ポリシー例外（Policy Exception）を通じて指定する状況と異なる点は、ポリシー例外は例外の期間が決まっているがExclusion対象はポリシーと同じライフサイクルを持つということです。つまり、ポリシーが存在する期間中常に適用されます。（ポリシー適用対象 = 全体 - exclusionsに指定した特定ユーザーまたはグループです。）
 
@@ -83,7 +85,7 @@ QueryPieは以下のようなポリシータイプを提供します:
 2.  **Users and Groups** : 選択したユーザーやグループをポリシー適用から除外します。 
 
 
-## ポリシー適用ターゲットデータ設定
+### ポリシー適用ターゲットデータ設定
 
 ポリシー作成画面の  **Data Scope**  セクションでポリシーが適用されるデータを設定します。
 
@@ -91,7 +93,7 @@ QueryPieは以下のようなポリシータイプを提供します:
 ![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
 </figure>
 
-### Scope Type
+#### Scope Type
 
 現在はタグベースでのみポリシーを適用できます:
 
@@ -101,7 +103,7 @@ QueryPieは以下のようなポリシータイプを提供します:
     * このオプションを選択した後Add tartgetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。 
 
 
-### ポリシー保存
+#### ポリシー保存
 
 すべての設定が完了すると画面下部の  **Save**  ボタンをクリックしてポリシーを保存します。保存をキャンセルするには  **Cancel**  ボタンをクリックします。
 

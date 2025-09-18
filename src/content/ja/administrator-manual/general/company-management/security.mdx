@@ -4,7 +4,9 @@ title: 'Security'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Security
+
+### Overview
 
 SecurityページでQueryPie全般のセキュリティ設定を管理できます。この文書では各セキュリティ設定についての説明を提供します。
 
@@ -12,12 +14,12 @@ SecurityページでQueryPie全般のセキュリティ設定を管理できま�
 10.3.0から各サービス別設定項目がAdministrator &gt; General &gt; Security下で各サービス(Databases / Servers / Kubernetes)のGeneral下(Administrator &gt; `{Service}` &gt; General &gt; Configurations)に移動されました。
 </Callout>
 
-## ウェブコンソールログイン設定
+### ウェブコンソールログイン設定
 
 QueryPie Webログイン関連のセキュリティ設定を管理します。
 
 
-## Account Security Policy
+### Account Security Policy
 
 QueryPieアカウントのロックおよび期限切れなどのセキュリティポリシーを設定できます。
 
@@ -40,7 +42,7 @@ QueryPieアカウントのロックおよび期限切れなどのセキュリテ
         * ボタンクリックなどユーザーAPI呼び出し時通知が現れます。通知は他のログイン発生時点から24時間表示されます。Web、User Agent、Multi-Agentはそれぞれ個別に同時ログイン制限が適用されます。
 
 
-## Password Setting
+### Password Setting
 
 QueryPieアカウントのパスワードポリシーを設定できます。
 
@@ -63,7 +65,7 @@ QueryPieアカウントのパスワードポリシーを設定できます。
     * Does not contain part of personal information (Username, Primary email) : パスワード内個人情報(Username, Primary email)使用制限
 
 
-## Timeout
+### Timeout
 
 ウェブコンソールとエージェントのタイムアウトポリシーを設定できます。
 
@@ -77,7 +79,7 @@ QueryPieアカウントのパスワードポリシーを設定できます。
     * 指定された時間エージェントアプリログインを維持し、経過時ログアウト処理
 
 
-## QueryPie Web IP Access Control
+### QueryPie Web IP Access Control
 
 QueryPie接続時IP制限ポリシーを設定できます。
 
@@ -129,7 +131,7 @@ Securityページの設定は保存即座に反映されます。したがって
 </Callout>
 
 
-## Secret Store設定
+### Secret Store設定
 
 Secret Store使用可否を設定します。現在HashiCorp Vaultをサポートしています。
 
@@ -160,7 +162,7 @@ DB Connection詳細ページ内Connection Information &gt; Secret Store選択
 Server Group詳細ページ内Accounts &gt; Secret Store選択
 </figcaption>
 </figure>
-## その他
+### その他
 
 その他セキュリティ設定を管理します。
 

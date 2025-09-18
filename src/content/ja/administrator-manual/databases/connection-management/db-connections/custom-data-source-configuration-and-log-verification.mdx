@@ -4,6 +4,8 @@ title: 'Custom Data Source設定およびログ確認'
 
 import { Callout } from 'nextra/components'
 
+# Custom Data Source設定およびログ確認
+
 Custom Data SourceはQueryPieで基本的にサポートしないベンダーに対してProxyで単純アクセス制御をする新しい機能です。単純アクセス制御を提供することで、ユーザーがより多様なデータソースに安全にアクセスできるようにします。この機能は10.2.6バージョンに追加されました。
 
 **主要特徴**
@@ -12,7 +14,7 @@ Custom Data SourceはQueryPieで基本的にサポートしないベンダーに
 * **TCPベースアクセス制御**: ユーザーとIPベースのアクセス制御提供
 * **Agentベース接続**: QueryPie Agentを通じてサードパーティSQLツールで接続可能
 
-### Custom Data Sourceコネクション作成
+#### Custom Data Sourceコネクション作成
 
 <Callout type="important">
 **注意**
@@ -51,7 +53,7 @@ Custom Data SourceはQueryPieで基本的にサポートしないベンダーに
      * DB Connections一覧で削除を希望するコネクションの左側チェックボックスを選択後`Delete`ボタンをクリックします。
      * "Are you sure you want to delete"文句が出た後`OK`ボタンをクリックしてコネクションを削除します。
 
-### Access Control設定
+#### Access Control設定
 
 1. **権限付与モーダルに移動**
    * Admin &gt; Databases &gt; DB Access Control &gt; Access Controlを選択します。
@@ -70,7 +72,7 @@ Custom Data SourceはQueryPieで基本的にサポートしないベンダーに
      * Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Userを選択します。
      * Detailページで権限を回収するためのコネクションを選択した後`Revoke`ボタンをクリックします。
 
-### Audit Log確認
+#### Audit Log確認
 
 1. **DB Access History**
    * Admin &gt; Audit &gt; DB Access Historyを選択します。

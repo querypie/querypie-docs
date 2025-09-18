@@ -4,12 +4,14 @@ title: 'Users'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Users
+
+### Overview
 
 Userページでは、現在QueryPieに登録されたユーザーリストを照会し、諸般管理作業を実行します。
 
 
-## ユーザーリスト照会
+### ユーザーリスト照会
 
 Userページでユーザーリストを照会でき、検索およびフィルターを提供します。
 
@@ -49,7 +51,7 @@ Descriptionタイプ別表示
 *  **Status**  ：アカウントの有効化状態（ActiveまたはInactive）
 
 
-## 手動でユーザー追加
+### 手動でユーザー追加
 
 組織に新しいユーザーを手動で追加します。ユーザーを追加した後、グループおよびポリシーに割り当てて権限を付与できます。
 
@@ -76,7 +78,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; Add User
 該当ユーザーがQueryPie ProviderでUsersリストに追加されたことを確認できます。基本的にAdmin権限のない基本Userで登録されます。
 
 
-## ユーザーに管理者役割付与または回収
+### ユーザーに管理者役割付与または回収
 
 <Callout type="important">
 Admin Roleを付与できる管理者はOwner役割のユーザーのみ可能です。
@@ -103,7 +105,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 </Callout>
 
 
-## ユーザー詳細情報照会
+### ユーザー詳細情報照会
 
 Usersページでユーザーをクリックすると詳細情報ページに進入します。登録された情報の照会およびユーザー管理作業を実行できます。ユーザープロファイルに登録された属性でAttribute-based Access Control（ABAC）を実装できます。ユーザー詳細情報はそれぞれProfile、Groups、Admin Roles、Allowed Zones、Tagsタブで区分されます。各項目別説明は[ユーザープロファイル文書](users/user-profile)を参照してください。
 
@@ -119,11 +121,11 @@ QueryPieを通じて登録したユーザーのみProfile情報修正および�
 </Callout>
 
 
-## ユーザー無効化
+### ユーザー無効化
 
 何らかの理由でユーザーアカウントを無効化する必要がある時、2つの経路で処理できます。
 
-### Usersページで無効化
+#### Usersページで無効化
 
 ユーザーページ内Statusドロップダウンで、無効化しようとするユーザーのStatus値をInactiveに変更します。
 
@@ -136,7 +138,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 </figcaption>
 </figure>
 
-### 詳細ページで無効化
+#### 詳細ページで無効化
 
 ユーザー詳細ページで`Deactivate`ボタンをクリックすると理由入力モーダルが出力されます。
 
@@ -155,11 +157,11 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </Callout>
 
 
-## ユーザー再有効化
+### ユーザー再有効化
 
 管理者によって手動で無効化されたか、長期未接続により無効化処理されたユーザーのアカウント状態はInactiveで表示されます。このようなユーザーアカウントを再び有効化する方法は大きく2つです。
 
-### Usersページで再有効化
+#### Usersページで再有効化
 
 ユーザーページ内Statusドロップダウンで、再有効化しようとするユーザーのStatus値をActiveに変更します。理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
 
@@ -170,7 +172,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 </figcaption>
 </figure>
 
-### ユーザー詳細ページで再有効化
+#### ユーザー詳細ページで再有効化
 
 無効化されたユーザーの詳細ページで`Reactivate`ボタンをクリックします。理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
 
@@ -182,7 +184,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </figure>
 
 
-## ユーザー情報修正
+### ユーザー情報修正
 
 <Callout type="important">
 QueryPieで手動に登録したユーザーの情報のみ修正可能です。SCIMを通じて連動してきたユーザー情報修正は台帳データ更新後同期を経て可能です。
@@ -198,7 +200,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figure>
 
 
-## ユーザー削除
+### ユーザー削除
 
 <Callout type="important">
 QueryPieで手動に登録したユーザーのみ直接削除可能です。SCIMを通じて連動してきたユーザー削除は台帳データ更新後同期を経て可能です。
@@ -216,7 +218,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figure>
 
 
-## ユーザーパスワード再設定
+### ユーザーパスワード再設定
 
 <Callout type="important">
 QueryPieで手動に登録したユーザーのみパスワード再設定が可能です。SCIMを通じて連動してきたユーザーの認証手段はSCIMで管理しています。
@@ -224,7 +226,7 @@ QueryPieで手動に登録したユーザーのみパスワード再設定が可
 
 パスワード再設定は一時パスワード発行を通じて進行されます。管理者はユーザー詳細ページで一時パスワードを発行した後、ユーザーに一時パスワードを案内しなければなりません。
 
-### 一時パスワード発行
+#### 一時パスワード発行
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Authentication](/administrator-manual/general/user-management/users/image-20241218-194814.png)
@@ -261,7 +263,7 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 
 </Callout>
 
-### パスワード再設定（ユーザー）
+#### パスワード再設定（ユーザー）
 
 ユーザーがログインする時、前に設定した一時パスワードを入力すると、すぐにパスワード再設定画面に進入します。パスワードを変更した後`Change Password`ボタンをクリックするとパスワード変更が完了し、新しいパスワードでログインできます。
 
@@ -274,11 +276,11 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 </figure>
 
 
-## ユーザーOTP再設定
+### ユーザーOTP再設定
 
 Usersページでユーザーをクリックすると詳細情報ページに進入します。OTPを通じて2次認証を設定した場合、OTP再設定機能を提供します。OTP再設定後、ユーザーは自分のOTPを再び設定しなければなりません。OTPを再び設定する方法は[My Dashboard](../../../user-manual/my-dashboard)文書を参照してください。
 
-### ユーザーOTP再設定
+#### ユーザーOTP再設定
 
 ユーザーの詳細ページで`Reset OTP`ボタンをクリックします。警告モーダルが出力されると`Reset`ボタンをクリックして変更を再設定完了します。
 

@@ -4,14 +4,16 @@ title: 'DB Access Request要求'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# DB Access Request要求
+
+### Overview
 
 下記順序に従ってアクセスが必要なDBコネクションに対するPrivilegeを要求できます。要求後承認が完了すると即座に権限が付与され、QueryPie WebにあるSQL EditorまたはAgentを通じて権限を受けたコネクションに接続できます。
 
 
-## DB Access Request要求
+### DB Access Request要求
 
-### 1. 決裁ルール選択
+#### 1. 決裁ルール選択
 
 * Approval Ruleを選択して目的に合う決裁ルールを選択してください。選択したルールに応じて承認対象が変わります。 
 * もし管理者が承認者を指定した決裁ルールが選択された場合、自動で承認者が指定され追加および変更が不可能です。
@@ -22,7 +24,7 @@ import { Callout } from 'nextra/components'
 ![Screenshot-2025-08-26-at-12.21.07-AM.png](/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.21.07-AM.png)
 </figure>
 
-### 2. 承認者指定
+#### 2. 承認者指定
 
 * 決裁ラインで`+`ボタンを押すと段階別承認者を指定できるポップアップウィンドウが表示されます。 
 * このポップアップウィンドウで決裁承認条件および承認者を追加後`Save`ボタンを押して決裁ラインを保存します。
@@ -34,7 +36,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-154729.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-154729.png)
 </figure>
 
-### 3. 参照者指定
+#### 3. 参照者指定
 
 * 決裁ラインで`+`ボタンを押すと参照者を指定できるポップアップウィンドウが表示されます。 
     * 管理者が参照者指定を許可しない場合はReviewerボックスが表示されません。 
@@ -45,7 +47,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240724-171350.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-171350.png)
 </figure>
 
-### 4. 事後承認で要求送信
+#### 4. 事後承認で要求送信
 
 * 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。 
 * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
@@ -59,7 +61,7 @@ import { Callout } from 'nextra/components'
 A. 管理者がUrgent Modeを許可しない決裁ルールを選択した場合、該当機能が表示されません。
 </Callout>
 
-### 5. 要求情報入力
+#### 5. 要求情報入力
 
 *  **Title**  : 要求タイトルを入力します。 
 *  **Access Expiration Date**  : 要求権限の期限切れ日を入力します。基本値は管理者ページでDAC configurationsのMaximum Access Duration値に従います。 
@@ -72,7 +74,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
 </figcaption>
 </figure>
 
-### 6. 要求するDBコネクション選択および権限指定
+#### 6. 要求するDBコネクション選択および権限指定
 
 * Request Summary領域内テーブルには現在QueryPieに登録されているDBコネクション目録が表示されます。 
     *  **Privilege Type**  : 特定DBコネクションに要求するPrivilege Typeを指定するとその値が表示されます。 

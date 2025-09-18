@@ -4,11 +4,13 @@ title: 'Google CloudからDBリソース同期'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Google CloudからDBリソース同期
+
+### Overview
 
 QueryPieではデータベース登録および管理のためのGoogle Cloud（GCP）連動をサポートしています。GCP内のリソースを同期してQueryPieで管理するデータベースとして登録し、ユーザーおよびグループに同期して持ってきたデータベースに対するアクセス権限を付与し政策を設定できます。
 
-## QueryPieでGCP連動情報登録
+### QueryPieでGCP連動情報登録
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
@@ -49,7 +51,7 @@ Save Credential for Synchronization
 * このオプションがアクティブになっていれば同期を手動ですることもでき、スケジュールを指定することもできます。
 </Callout>
 
-## 登録されたGCP Cloud Provider同期および管理
+### 登録されたGCP Cloud Provider同期および管理
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241220-095231.png)
@@ -75,7 +77,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 "Save Credential for Synchronization"オプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。新しく作成する時と同様にこの設定は**アクティブにした後再び非アクティブにできませんので**慎重に選択する必要があります。
 </Callout>
 
-## Service Accountを通じた同期
+### Service Accountを通じた同期
 
 1. GCP連動のためのCloud Provider登録後、詳細ページで`Synchronize`ボタンをクリックします。
 2. 表示されるService Account JSON項目にJSONキー値を入力後`Ok`ボタンをクリックします。

@@ -4,11 +4,13 @@ title: 'Reports'
 
 import { Callout } from 'nextra/components'
 
+# Reports
+
 <Callout type="important">
 11.2.0現在、Reports機能はBeta版で提供中です。
 </Callout>
 
-## Overview
+### Overview
 
 QueryPieレポートは監査対応に必要なデータをレポート形式で出力する機能です。
 
@@ -18,7 +20,7 @@ QueryPieレポートは監査対応に必要なデータをレポート形式で
 11.2.0バージョン現在、レポートは英語でのみ出力可能です。
 </Callout>
 
-## レポート出力項目およびフィルターサポート事項
+### レポート出力項目およびフィルターサポート事項
 
 11.2.0バージョン現在サポートするレポート項目およびフィルターは以下の表を参照してください。
 
@@ -673,7 +675,7 @@ O
 </tbody>
 </table>
 
-## レポート一覧照会
+### レポート一覧照会
 
 AuditメニューでReports &gt; Reportsメニューに進入するとレポート生成タスク一覧を確認できます。
 
@@ -716,7 +718,7 @@ Administrator &gt; Audit &gt; Reports &gt; Reports
     2. ファイルダウンロード時のパスワード指定の有無はSecurity設定で指定できます。
     3. パスワード指定アクティブ時、ファイルをダウンロードする時にパスワードを設定します。その後ファイルの圧縮を解く時に設定したパスワードを入力する必要があります。
 
-## レポート詳細照会
+### レポート詳細照会
 
 レポート一覧で詳細内容を照会したい項目を選択するとDrawerが開き、詳細情報を確認できます。
 
@@ -754,7 +756,7 @@ Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail
     3. Target Report No. : 対象レポート連番（ない場合は空）
     4. Action By : 作業者
 
-## レポート生成
+### レポート生成
 
 レポート一覧画面で`+ Create Task`ボタンをクリックしてレポート生成ページに進入します。
 
@@ -794,7 +796,7 @@ Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create
 
 `Save`ボタンをクリックしてレポートタスクを保存し、一覧に戻ります。
 
-## レポート複製**[10.2.2]**
+### レポート複製**[10.2.2]**
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task](/administrator-manual/audit/reports/reports/screenshot-20241223-104529.png)
@@ -815,7 +817,7 @@ Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task
 * **Filter** - Data別に入力したフィルターが保存される
   * ただし、既存に選択したRole、User、Groupがもはや存在しない場合はフィルター値から除去される
 
-## フィルター
+### フィルター
 
 レポートでサポートするフィルターの詳細スペックを案内します。
 

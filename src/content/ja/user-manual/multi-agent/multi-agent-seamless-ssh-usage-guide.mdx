@@ -4,13 +4,15 @@ title: 'Multi Agent Seamless SSH 使用ガイド'
 
 import { Callout } from 'nextra/components'
 
+# Multi Agent Seamless SSH 使用ガイド
+
 Seamless SSHとは、既存のターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。
 
 本文書は10.2.8バージョンを基準にSeamless SSHの使用法、スペックおよびサポート範囲をご案内します。
 
-## 使用方法
+### 使用方法
 
-### SSH config設定方法
+#### SSH config設定方法
 
 既存の`ssh`コマンドを使用するためにSSH configファイルを設定できます。
 
@@ -41,7 +43,7 @@ ssh {{Server Account}}@{{Server Name}}
 ```
 
 
-### Shell Alias設定方法
+#### Shell Alias設定方法
 
 既存の`ssh`コマンドを使用するためにSSH Aliasを設定できます。
 
@@ -84,9 +86,9 @@ qshdev {{Server Account}}@{{Server Name}}
 ```
 
 
-## 既存QueryPie User Agentとの相違点
+### 既存QueryPie User Agentとの相違点
 
-### 基本コマンド
+#### 基本コマンド
 
 Seamless SSHはQueryPie Multi Agentインストール時に一緒にインストールされる以下のコマンドを利用して動作します。
 ```
@@ -98,7 +100,7 @@ qpctl ssh-proxy %r %h %p [QueryPie Host]
 qpa ssh %r %h %p
 ```
 
-### 接続エラー表示方式
+#### 接続エラー表示方式
 
 接続段階でQueryPie Proxyサーバーへの接続にエラーが発生すると、既存User Agentはdialogを表示してターミナルフレンドリーではありませんでした。
 
@@ -108,9 +110,9 @@ $ qpctl ssh manual@core.dev.querypie.io
 qpctl: error: Connection error: Timeout
 ```
 
-## 新たに追加された機能
+### 新たに追加された機能
 
-### デフォルトホスト指定
+#### デフォルトホスト指定
 
 Multi AgentはSeamless SSHを使用するためにQueryPie Hostを入力する必要がある不便さがあります。
 
@@ -123,7 +125,7 @@ Multi AgentはSeamless SSHを使用するためにQueryPie Hostを入力する�
 Reset All Settingsでアプリを初期化するとデフォルトホスト設定も削除されます。
 </Callout>
 
-#### qpctl host list
+##### qpctl host list
 
 現在登録されたQueryPie Hostsリストを確認します。
 
@@ -141,7 +143,7 @@ QueryPie Hosts:
  - https://t12.qa.querypie.io
 ```
 
-#### qpctl host use
+##### qpctl host use
 
 現在登録されたQueryPie Hostsリストを表示し、方向キーで選択します
 ```
@@ -163,7 +165,7 @@ Selected https://t4.qa.querypie.io
 [qpctl-host-use-without-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-without-hostname.mov)
 </figure>
 
-#### qpctl host use `{QueryPie Host}`
+##### qpctl host use `{QueryPie Host}`
 
 ```
 $ qpctl host use nightly.dev.querypie.io
@@ -174,7 +176,7 @@ $ qpctl host use nightly.dev.querypie.io
 [qpctl-host-use-with-hostname.mov](/user-manual/multi-agent/multi-agent-seamless-ssh-usage-guide/qpctl-host-use-with-hostname.mov)
 </figure>
 
-### :warning:実験的機能 - qpctl直接使用:warning:
+#### :warning:実験的機能 - qpctl直接使用:warning:
 
 Seamless SSHを使用するために
 
@@ -203,9 +205,9 @@ $ qpctl ssh core-dev
 ```
 
 
-## サポート範囲
+### サポート範囲
 
-### 最小サポートバージョン
+#### 最小サポートバージョン
 
 OpenSSH 6.7以上が必要です。
 ```
@@ -213,7 +215,7 @@ $ ssh -V
 OpenSSH_9.8p1, LibreSSL 3.3.6
 ```
 
-### 動作方式
+#### 動作方式
 
 `qpctl`コマンドが`ssh`クライアントコマンドをwrappingしてProxyCommandオプションを自動で付けて実行します。
 
@@ -222,9 +224,9 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
     1.  **username、hostname、port**  抽出
 3. ssh command_line  **-o ProxyCommand="qpctl ssh-proxy username**   **hostname**   **port"** 
 
-### 未サポート機能
+#### 未サポート機能
 
-#### ユーザー定義ProxyCommand
+##### ユーザー定義ProxyCommand
 
 qpctlがProxyCommandを使用するため**ユーザー定義ProxyCommand**は使用できません。
 ```
@@ -232,6 +234,6 @@ $ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
 qpctl: error: ProxyCommand option is not supported
 ```
 
-#### scp
+##### scp
 
 scpはまだサポートされていません。

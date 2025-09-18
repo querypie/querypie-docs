@@ -4,14 +4,16 @@ title: 'SQL Export Request の申請'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# SQL Export Request の申請
+
+### Overview
 
 以下の手順に従ってSQL Export Requestを申請できます。特定のDB接続に対して権限のないデータエクスポートを要求し、承認後、実行者は承認されたデータエクスポートを1回に限り実行できます。
 
 
-## SQL Export Request の申請
+### SQL Export Request の申請
 
-### 1. 承認ルールの選択
+#### 1. 承認ルールの選択
 
 * Approval Ruleを選択して目的に合った承認ルールを選択してください。選択したルールに応じて承認対象が異なります。
 * 管理者が承認者を指定した承認ルールが選択された場合、自動的に承認者が指定され、追加や変更はできません。
@@ -22,7 +24,7 @@ import { Callout } from 'nextra/components'
 ![Screenshot-2025-08-26-at-12.43.46-AM.png](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.43.46-AM.png)
 </figure>
 
-### 2. 承認者の指定
+#### 2. 承認者の指定
 
 * 承認ラインで`+`ボタンを押すと、段階別承認者を指定できるポップアップが表示されます。
 * このポップアップで承認条件と承認者を追加後、`Save`ボタンを押して承認ラインを保存します。
@@ -34,7 +36,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240807-215435.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215435.png)
 </figure>
 
-### 3. 実行者と参照者の指定
+#### 3. 実行者と参照者の指定
 
 * 承認ラインで`+`ボタンを押すと、実行者と参照者を指定できるポップアップが表示されます。
     * 管理者が参照者指定を許可していない場合、Reviewerボックスは表示されません。
@@ -45,7 +47,7 @@ import { Callout } from 'nextra/components'
 ![screenshot-20240807-215506.png](/user-manual/workflow/requesting-sql-export/screenshot-20240807-215506.png)
 </figure>
 
-### 4. 事後承認で要求を送信
+#### 4. 事後承認で要求を送信
 
 * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
@@ -59,7 +61,7 @@ import { Callout } from 'nextra/components'
 A. 管理者がUrgent Modeを許可していない承認ルールを選択した場合、該当機能は表示されません。
 </Callout>
 
-### 5. 要求情報の入力
+#### 5. 要求情報の入力
 
 <figure data-layout="center" data-align="center">
 ![User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summary](/user-manual/workflow/requesting-sql-export/Screenshot-2025-08-26-at-12.51.52-AM.png)
@@ -81,7 +83,7 @@ User &gt; Workflow &gt; Submit Request &gt; SQL Export Request &gt; Request Summ
 *  **Submit**  : 起案作成完了後、`Submit`ボタンをクリックすると申請が完了します。
 
 
-## 承認完了したデータのダウンロード
+### 承認完了したデータのダウンロード
 
 承認が完了したExport Request件は承認完了と同時にダウンロード可能な状態になります。
 

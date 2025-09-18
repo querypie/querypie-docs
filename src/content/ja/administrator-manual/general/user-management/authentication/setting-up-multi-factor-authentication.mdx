@@ -4,7 +4,9 @@ title: 'Multi-Factor Authentication設定'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Multi-Factor Authentication設定
+
+### Overview
 
 <Callout type="info">
 Multi-Factor Authentication (MFA)とは？<br/>パスワード以外に追加で認証情報を入力する多重認証セキュリティ技法です。<br/>追加認証手段として物理/仮想OTP（One Time Password：1回用パスワード生成器）、生体認証、Emailなどを使用することもあります。
@@ -12,7 +14,7 @@ Multi-Factor Authentication (MFA)とは？<br/>パスワード以外に追加で
 
 QueryPieは管理者ページで2次認証手段としてGoogle OTPまたはEmailを指定できます。
 
-## MFA手段指定
+### MFA手段指定
 
 <Callout type="important">
 MFA手段を指定するにはAuthentication TypeがInternal databaseまたはLDAPで選択されていなければなりません。<br/>EmailをMFA手段として指定するにはまずEmail Integration設定が完了されていなければなりません。
@@ -22,7 +24,7 @@ MFA手段を指定するにはAuthentication TypeがInternal databaseまたはLD
 * Authentication TypeがInternal databaseの場合<br/>
 * Authentication TypeがLDAPの場合<br/>
 
-## サーバー接続時MFA使用
+### サーバー接続時MFA使用
 
 <Callout type="info">
 この設定はサーバーアクセス制御（SAC）ライセンスが有効化されていなければ使用できません。

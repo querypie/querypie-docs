@@ -4,14 +4,16 @@ title: 'Access Role Request の申請'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Access Role Request の申請
+
+### Overview
 
 Access Role Requestはアクセスが必要なサーバーまたはKubernetesクラスターに対して役割（Role）を簡単に要求できます。承認即時に役割が付与され、役割で許可するサーバーまたはKubernetesクラスターに接続できます。
 
 
-## Access Role Request
+### Access Role Request
 
-### 1. 承認ルールの選択
+#### 1. 承認ルールの選択
 
 * Approval Ruleを選択して目的に合った承認ルールを選択してください。選択したルールに応じて承認対象が異なります。
 * 管理者が承認者を指定した承認ルールが選択された場合、自動的に承認者が指定され、追加や変更はできません。
@@ -22,7 +24,7 @@ Access Role Requestはアクセスが必要なサーバーまたはKubernetesク
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. 承認者の指定
+#### 2. 承認者の指定
 
 * 承認ラインで`+`ボタンを押すと、段階別承認者を指定できるポップアップが表示されます。
 * このポップアップで承認条件と承認者を追加後、`Save`ボタンを押して承認ラインを保存します。
@@ -34,7 +36,7 @@ Access Role Requestはアクセスが必要なサーバーまたはKubernetesク
 ![image-20240807-130021.png](/user-manual/workflow/requesting-access-role/image-20240807-130021.png)
 </figure>
 
-### 3. 参照者の指定
+#### 3. 参照者の指定
 
 * 承認ラインで`+`ボタンを押すと、参照者を指定できるポップアップが表示されます。
     * 管理者が参照者指定を許可していない場合、Reviewerボックスは表示されません。
@@ -45,7 +47,7 @@ Access Role Requestはアクセスが必要なサーバーまたはKubernetesク
 ![image-20240807-130031.png](/user-manual/workflow/requesting-access-role/image-20240807-130031.png)
 </figure>
 
-### 4. 事後承認で要求を送信
+#### 4. 事後承認で要求を送信
 
 * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
@@ -59,7 +61,7 @@ Access Role Requestはアクセスが必要なサーバーまたはKubernetesク
 A. 管理者がUrgent Modeを許可していない承認ルールを選択した場合、該当機能は表示されません。
 </Callout>
 
-### 5. 要求対象役割（Role）の選択
+#### 5. 要求対象役割（Role）の選択
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 2](/user-manual/workflow/requesting-access-role/screenshot-20240802-111018.png)
@@ -86,7 +88,7 @@ Access Role Requestは一度に一つの役割のみ要求できます。役割�
     * 有効期限は必須値で、別途設定しないと1年後の日付で基本選択されます。
     * 適切な接続アクセス権限管理のために必要な期間だけ要求することを推奨します
 
-### 6. 要求情報の入力
+#### 6. 要求情報の入力
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Workflow &gt; Submit Request &gt; Access Role Request &gt; Step 3](/user-manual/workflow/requesting-access-role/Screenshot-2025-08-26-at-1.09.31-AM.png)

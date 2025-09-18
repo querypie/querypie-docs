@@ -4,13 +4,15 @@ title: 'Server Privilege Request の申請'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Server Privilege Request の申請
+
+### Overview
 
 Server Privilege Requestを使用すると、サーバーに対する一時的なコマンド使用権限を簡単に要求できます。一時的なコマンド使用時間と権限開始時点（承認即時またはサーバー接続時点から）を選択申請できます。この機能はSSHプロトコル通信のみサポートします。
 
-## Server Privilege Request
+### Server Privilege Request
 
-### 1. 承認ルールの選択
+#### 1. 承認ルールの選択
 
 * Approval Ruleを選択して目的に合った承認ルールを選択してください。選択したルールに応じて承認対象が異なります。
 * 管理者が承認者を指定した承認ルールが選択された場合、自動的に承認者が指定され、追加や変更はできません。
@@ -21,7 +23,7 @@ Server Privilege Requestを使用すると、サーバーに対する一時的�
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-12.54.02-AM.png)
 </figure>
 
-### 2. 承認者の指定
+#### 2. 承認者の指定
 
 * 承認ラインで`+`ボタンを押すと、段階別承認者を指定できるポップアップが表示されます。
 * このポップアップで承認条件と承認者を追加後、`Save`ボタンを押して承認ラインを保存します。
@@ -33,7 +35,7 @@ Server Privilege Requestを使用すると、サーバーに対する一時的�
 ![image-20240807-130021.png](/user-manual/workflow/requesting-server-privilege/image-20240807-130021.png)
 </figure>
 
-### 3. 参照者の指定
+#### 3. 参照者の指定
 
 * 承認ラインで`+`ボタンを押すと、参照者を指定できるポップアップが表示されます。
     * 管理者が参照者指定を許可していない場合、Reviewerボックスは表示されません。
@@ -44,7 +46,7 @@ Server Privilege Requestを使用すると、サーバーに対する一時的�
 ![screenshot-20240807-215819.png](/user-manual/workflow/requesting-server-privilege/screenshot-20240807-215819.png)
 </figure>
 
-### 4. 事後承認で要求を送信
+#### 4. 事後承認で要求を送信
 
 * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
@@ -59,7 +61,7 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
 </Callout>
 
 
-### 5. 要求対象Roleの選択
+#### 5. 要求対象Roleの選択
 
 * Role下部のselect boxをクリックします。
 * ユーザーに付与されたRoleの中から一つを選択します。
@@ -68,7 +70,7 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
 ![image-20250307-123347.png](/user-manual/workflow/requesting-server-privilege/image-20250307-123347.png)
 </figure>
 
-### 6. 要求対象サーバーの選択
+#### 6. 要求対象サーバーの選択
 
 * Server List右側の`Add Server`をクリックすると、サーバーを選択できるポップアップが表示されます。
 * 選択可能なサーバーは「5. 要求対象Roleの選択」で選択したRoleによって異なります。
@@ -78,7 +80,7 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
 ![image-20250307-123829.png](/user-manual/workflow/requesting-server-privilege/image-20250307-123829.png)
 </figure>
 
-### 7. 使用するCommandsの入力
+#### 7. 使用するCommandsの入力
 
 * 管理者の設定によってコマンド入力方式が異なります。
 * Command Template直接入力時
@@ -102,9 +104,9 @@ A. 管理者がワークフローで使用するよう許可したテンプレ�
 要求対象がWindowsサーバーのようにLinux以外のサーバーで만 구성된場合、この要求は特定のコマンド使用ではなく、サーバーに対する一時的な接続権限を得ることを目的とします。したがって、Commandsを入力または選択するフィールドは画面に表示されません。
 </Callout>
 
-### 8. Server Privilege使用時間の入力
+#### 8. Server Privilege使用時間の入力
 
-#### Require Minute-Based RequestsOnの場合
+##### Require Minute-Based RequestsOnの場合
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-1.05.08-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.05.08-AM.png)
@@ -115,7 +117,7 @@ A. 管理者がワークフローで使用するよう許可したテンプレ�
     * Grant : Server Privilege付与時点からServer Privilege使用可能時間をカウントします。Requestが承認されるとQueryPieで自動的にServer Privilegeを付与します。
 *  **Duration(Minutes)** : Server Privilege適用時間を設定します。分単位で時間を入力できます。Privilege Start Triggerによって開始する時点が異なります。
 
-#### Require Minute-Based RequestsOffの場合
+##### Require Minute-Based RequestsOffの場合
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-1.14.48-AM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-08-26-at-1.14.48-AM.png)
@@ -124,7 +126,7 @@ A. 管理者がワークフローで使用するよう許可したテンプレ�
 *  **Privilege Expiration Date**  : 要求権限の有効期限を入力します。基本値は管理者ページのSAC configurations &gt; Server Privilege Request SettingsのMaximum Access Duration値に従います。
     * 適切な接続アクセス権限管理のために必要な期間だけ要求することを推奨します。
 
-### 9. 要求情報の入力
+#### 9. 要求情報の入力
 
 *  **Title**  : 要求タイトルを入力します。
 *  **Reason for Request**  : 接続アクセス権限を要求する理由を入力します。

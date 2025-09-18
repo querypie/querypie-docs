@@ -4,7 +4,9 @@ title: 'Okta連携'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Okta連携
+
+### Overview
 
 QueryPieではOkta連携をサポートします。Oktaのユーザーおよびグループを同期してアクセス権限を付与しポリシーを適用でき、この過程でユーザーに簡素化され便利な環境を提供しながらも厳格なセキュリティポリシーを運営できます。QueryPieとOktaの統合はデータベースおよびシステム管理エコシステムのセキュリティと運営効率性およびユーザー経験が向上させることができます。
 
@@ -13,7 +15,7 @@ SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビ
 </Callout>
 
 
-## OktaでQueryPieをアプリケーションとして追加
+### OktaでQueryPieをアプリケーションとして追加
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie検索](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png)
@@ -30,7 +32,7 @@ Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Quer
 6. Application LabelにQueryPieで入力されたことを確認後、`Done`ボタンをクリックしてアプリケーションを追加します。
 
 
-## Oktaアカウント連携のためのProfile設定
+### Oktaアカウント連携のためのProfile設定
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png)
@@ -64,7 +66,7 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
 3. `Save Mappings`ボタンをクリックして保存します。
 
 
-## Oktaに追加されたQueryPieアプリケーションにユーザー割り当て
+### Oktaに追加されたQueryPieアプリケーションにユーザー割り当て
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png)
@@ -82,7 +84,7 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 5. ユーザーまたはグループがQueryPieアプリケーションに割り当てられ追加された履歴を確認できます。
 
 
-## OktaでQueryPieアプリケーション連携情報設定
+### OktaでQueryPieアプリケーション連携情報設定
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png)
@@ -96,7 +98,7 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 3. Metadata URLに表記されたアドレスで別途タブからアクセスして表示されるXML情報をコピーします。
 
 
-## 最小権限のOkta APIトークン発行
+### 最小権限のOkta APIトークン発行
 
 QueryPie-Okta間ユーザーおよびグループ、グループメンバーシップの同期のためにOkta Admin APIトークン発行が必要です。一般的な方法では利用しているOkta最高管理者（Super Administrator）/読み取り権限管理者（Read-Only Administrator）アカウントでAPIトークンを以下の方法で発行して適用する方法があります：
 
@@ -143,7 +145,7 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 14. その後再び初期作業した管理者アカウントでアクセスしてSecurity &gt; Administrators &gt; Adminsタブで連携用アカウントを編集してRead-Only Adminstrator権限を回収します。
 
 
-## QueryPieでOkta連携および同期設定
+### QueryPieでOkta連携および同期設定
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Authentication](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png)
@@ -178,7 +180,7 @@ Okta Admin &gt; Applications &gt; QueryPie App上部URL
 </figure>
 
 
-## QueryPieでOktaログイン
+### QueryPieでOktaログイン
 
 1. General Settings &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。
 2. これでログインページで`Login with Okta`ボタンを通じてOktaアカウントでQueryPieにログインできます。

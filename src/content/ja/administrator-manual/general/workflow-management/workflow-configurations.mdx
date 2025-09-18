@@ -4,7 +4,9 @@ title: 'Workflow Configurations'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Workflow Configurations
+
+### Overview
 
 Workflow Configurationsでは、以下のような決裁上申および承認関連設定を変更します。
 
@@ -13,7 +15,7 @@ Workflow Configurationsでは、以下のような決裁上申および承認関
 10.2.5以下バージョンでのSlack DM設定方法は[10.1.0バージョンマニュアル文書](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)を参照してください。
 </Callout>
 
-## 決裁上申および承認設定
+### 決裁上申および承認設定
 
 Approval Rulesページ右上で`⚙️`ボタンをクリックするとWorkflow Configurationsモーダルがポップアップされます。
 
@@ -24,7 +26,7 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Wor
 </figcaption>
 </figure>
 
-## 参照者指定有効化
+### 参照者指定有効化
 
 Activate Review Step to collaborate with othersトグルで有効化します。
 
@@ -32,7 +34,7 @@ Activate Review Step to collaborate with othersトグルで有効化します。
 * トグルをオンにすると要求生成画面の**決裁規則**指定領域で参照者指定ボタンが表示されます。
 * トグルをオフにすると該当ボタンが除去されます。（既存に指定した履歴は維持され、依然として目録を確認できます。）
 
-## 事後承認許可
+### 事後承認許可
 
 Allow users to submit requests in Urgent modeトグルで有効化します。
 
@@ -42,7 +44,7 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
     * Submit Request：要求生成画面の決裁規則指定領域
 * トグルをオフにすると上記領域で事後承認関連トグルがもう表示されません。ただし、既存に既に事後承認モードで要求した履歴はそのまま残っており、実行可能です。
 
-## SQL要求実行時スロットリング有効化（Use throttling when submitting SQL Request in Workflow）
+### SQL要求実行時スロットリング有効化（Use throttling when submitting SQL Request in Workflow）
 
 トグルをオンにするとWorkflowで上申されたSQL要求実行時スロットリングを適用します。
 
@@ -51,7 +53,7 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
 *  **Maximum concurrent queries**  ：連続実行可能なクエリの最大個数（1～999,999）
 *  **Query throttle interval** ：連続クエリ実行後、次の連続クエリ実行間の間隔（1～9,999 ms）
 
-## Workflow様式でTagでフィルタリング（Tag Display and Filtering in DAC Workflow Requests）
+### Workflow様式でTagでフィルタリング（Tag Display and Filtering in DAC Workflow Requests）
 
 Tag Display and Filtering in DAC Workflow Requestsトグルスイッチで有効化します。
 

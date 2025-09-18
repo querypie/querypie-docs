@@ -4,7 +4,9 @@ title: 'Email連携'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Email連携
+
+### Overview
 
 Email連携を通じて以下のような主要機能をサポートします。
 
@@ -14,7 +16,7 @@ Email連携を通じて以下のような主要機能をサポートします。
 
 Email送信にはSMTPサーバーが必要で、QueryPieではSMTPサーバーと連携する方法を提供します。
 
-## Email Integration設定
+### Email Integration設定
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
@@ -36,26 +38,26 @@ Email送信にはSMTPサーバーが必要で、QueryPieではSMTPサーバー�
     12.
 5. `OK`ボタンを押して設定を保存します。
 
-## Email Integration設定修正
+### Email Integration設定修正
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
 3. 詳細ページEmail senderに表示されたSMTP設定に対してEditボタンを押します。<br/>
 4. 変更が必要な部分を修正し保存します。
 
-## Email送信履歴確認
+### Email送信履歴確認
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
 3. Sent Email Historyリストを確認します。<br/>このリストに保存されるemail送信履歴は30日間保管され30日以前の内容は削除されます。<br/>
 
-## Email Integration設定削除
+### Email Integration設定削除
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
 3. 詳細ページEmail senderに表示されたSMTP設定に対してDeleteボタンを押します。<br/>SMTP設定を使用するAlert、MFAなどの設定が存在する場合SMTP設定を削除できません。<br/>まず関連設定をすべて削除してから削除可能です。<br/>
 
-## ユーザーパスワード初期化メール送信
+### ユーザーパスワード初期化メール送信
 
 <Callout type="info">
 ユーザーが直接自分のパスワードを初期化するようパスワード初期化メールを送信するにはEmail Integration設定がまず必要です。
@@ -66,7 +68,7 @@ Emailを通じてユーザーが自分のパスワードを初期化するよう
 * 管理者が特定ユーザーのパスワードを初期化 : [Users | ユーザー-パスワード-再設定](../../user-management/users#%ec%82%ac%ec%9a%a9%ec%9e%90-%eb%b9%84%eb%b0%80%eb%b2%88%ed%98%b8-%ec%9e%ac%ec%84%a4%ec%a0%95%ed%95%98%ea%b8%b0)
 * ユーザーが自分のパスワードを直接初期化 : [Emailを通じたユーザーパスワード初期化](../../../../user-manual/my-dashboard/user-password-reset-via-email)
 
-## 2次認証手段としてEmail使用
+### 2次認証手段としてEmail使用
 
 <Callout type="info">
 QueryPie 10.2.2からGoogle OTPとともにEmailを2次認証手段として使用できるようになりました。Email Integration設定がまず必要です。

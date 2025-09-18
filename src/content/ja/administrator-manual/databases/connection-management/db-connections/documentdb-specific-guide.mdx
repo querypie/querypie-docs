@@ -4,11 +4,13 @@ title: 'DocumentDB専用ガイド'
 
 import { Callout } from 'nextra/components'
 
+# DocumentDB専用ガイド
+
 <Callout type="info">
 Amazon DocumentDB専用詳細設定ガイドをここで提供します。
 </Callout>
 
-## Cloud同期する場合コネクションクラスター構造調整
+### Cloud同期する場合コネクションクラスター構造調整
 
 クラウド同期を通じて生成されたクラスター情報を確認し、クラスターエンドポイント、読み取り専用エンドポイント、インスタンスエンドポイントをそれぞれ用途に合わせてアクセスできる機能で、マルチホスト環境でも効率的に動作するように設計されました。該当機能は管理者ページ &gt; Databases &gt; DB Connectionsで設定できます。
 
@@ -18,11 +20,11 @@ Amazon DocumentDB専用詳細設定ガイドをここで提供します。
 ![image-20240122-102557.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240122-102557.png)
 </figure>
 
-## Amazon DocumentDB TLS（SSL）使用
+### Amazon DocumentDB TLS（SSL）使用
 
 AWSで新しいDocumentDBを作成するとTLSを使用して転送区間暗号化を使用でき、ユーザーが選択的にオプションを切ることができます。Amazon DocumentDBクラスターに対する転送中データ暗号化はクラスターパラメーターグループのTLSパラメーターを通じて管理されます。AWS Management ConsoleまたはAWS Command Line Interface（AWS CLI）を使用してAmazon DocumentDBクラスターTLS設定を管理できます。[参照](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>Amazon DocumentDBでTLSがアクティブになっている場合、接続のためにAWSが提供するCAバンドル認証書が必要です。
 
-### CAバンドル認証書登録
+#### CAバンドル認証書登録
 
 AWSではリージョンに関係なく共同で使用できる[globalバンドル認証書](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions)と[リージョン別バンドル認証書](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.RegionCertificates)2種類を提供します。
 
@@ -43,7 +45,7 @@ AWSではリージョンに関係なく共同で使用できる[globalバンド�
 ![image-20240220-225433.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240220-225433.png)
 </figure>
 
-### DocumentDBに認証書マッピング
+#### DocumentDBに認証書マッピング
 
 1. Adminstrator &gt; Databases &gt; Connection Management &gt; DB Connectionsメニューに移動します。
 2. クラウド同期を通じて生成されているDocumentDBコネクションを選択します。

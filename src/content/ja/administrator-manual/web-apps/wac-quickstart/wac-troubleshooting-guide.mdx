@@ -2,16 +2,18 @@
 title: 'WACトラブルシューティングガイド'
 ---
 
+# WACトラブルシューティングガイド
+
 この文書ではWAC使用中に発生する可能性のある問題と解決策を案内します。
 
-### Extension (QueryPie Web Secure) インストール直後テストでアクセスポリシーが適用されないかオーディットログが欠落する場合
+#### Extension (QueryPie Web Secure) インストール直後テストでアクセスポリシーが適用されないかオーディットログが欠落する場合
 
 WACエクステンションインストール前に開いていたタブに対しては管理が保証されません。
 
 このような状況を予防するため、既存に開いていたすべてのブラウザタブおよびウィンドウを閉じた後にエクステンションをインストールしてください。
 
 
-### WebAppに接続できず、ブラウザに`ERR_TIMED_OUT`エラーメッセージが表示される場合
+#### WebAppに接続できず、ブラウザに`ERR_TIMED_OUT`エラーメッセージが表示される場合
 
 <figure data-layout="center" data-align="center">
 ![image-20250401-011848.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png)
@@ -99,7 +101,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 </figure>
 
 
-### PCが長時間スリープモードから目覚めた時、Chromeブラウザで管理するログインウィンドウが表示される場合
+#### PCが長時間スリープモードから目覚めた時、Chromeブラウザで管理するログインウィンドウが表示される場合
 
 PCがスリープモードに入った後目覚めた場合、Chromeブラウザで管理するログインウィンドウが表示される可能性があります。
 
@@ -114,7 +116,7 @@ PCがスリープモードに入った後目覚めた場合、Chromeブラウザ
 3. Chromeブラウザで管理するログインウィンドウが表示されたタブをリフレッシュします。
 
 
-### QueryPie APIサーバー障害によりWebブラウザ内でマウスクリックが効かなくなった場合
+#### QueryPie APIサーバー障害によりWebブラウザ内でマウスクリックが効かなくなった場合
 
 QueryPie APIサーバーの障害が発生する場合、Webブラウザ内で継続してマウスクリックができなくなる可能性があります。
 
@@ -130,7 +132,7 @@ QueryPie APIサーバーの障害が発生する場合、Webブラウザ内で�
 QueryPie APIサーバーの正常化後には再びエクステンションを使用できます。エクステンションを有効化した後、再設定を実行することをお勧めします。
 
 
-### QueryPie Web Secureログ抽出方法
+#### QueryPie Web Secureログ抽出方法
 
 QueryPie Web Secure（Extension）に問題が発生した場合、関連ログを抽出する方法を案内します。
 

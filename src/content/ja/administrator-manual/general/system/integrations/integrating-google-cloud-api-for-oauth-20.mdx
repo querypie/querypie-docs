@@ -2,11 +2,13 @@
 title: 'OAuth 2.0を使用するためのGoogle Cloud API連携'
 ---
 
-## Overview
+# OAuth 2.0を使用するためのGoogle Cloud API連携
+
+### Overview
 
 Google Cloud APIで生成したClient IDおよびClient Secret情報を登録してBigQuery接続にOAuth 2.0方式の認証を統合できます。[Google Cloud APIコンソール](https://console.cloud.google.com/apis/credentials)でOAuth 2.0を設定する方法はこの[ドキュメント](https://support.google.com/cloud/answer/6158849?hl=en)を参照してください。
 
-## Googl Cloud API Integration
+### Googl Cloud API Integration
 
 <figure data-layout="center" data-align="center">
 ![OAuth 2.0認証を使用するためのGoogle Cloud API Integration](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-090507.png)
@@ -15,7 +17,7 @@ OAuth 2.0認証を使用するためのGoogle Cloud API Integration
 </figcaption>
 </figure>
 
-### OAuth 2.0 Client ID追加
+#### OAuth 2.0 Client ID追加
 
 1. General &gt; System &gt; Integrationメニューを選択します。
 2. Authentication項目下でGoogle Cloud APIタイルをクリックします。
@@ -25,12 +27,12 @@ OAuth 2.0認証を使用するためのGoogle Cloud API Integration
     2. Client ID : Google API Consoleで確認したClient IDを入力します。
     3. Client Secret : Google API Consoleで確認したClient IDを入力します。
 
-### OAuth 2.0 Client ID修正
+#### OAuth 2.0 Client ID修正
 
 1. リストで修正したい特定Client ID行をクリックします。
 2. ポップアップウィンドウに情報を修正しSaveボタンを押して保存します。
 
-### OAuth 2.0 Client ID削除
+#### OAuth 2.0 Client ID削除
 
 1. リストで削除を希望する特定Client IDをチェックします。<br/>
 2. 上部のDeleteボタンを押して削除します。<br/>この時削除したいClient IDがコネクション設定と接続されていると以下のような警告メッセージが出力され削除できません。まずコネクション設定でOAuth設定を削除するかコネクションを削除する必要があります。<br/>

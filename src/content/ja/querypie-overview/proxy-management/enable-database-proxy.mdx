@@ -4,12 +4,14 @@ title: 'Database Proxy 使用活性化'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Database Proxy 使用活性化
+
+### Overview
 
 データベース接続へのアクセス時にProxy接続をサポートしています。基本的にQueryPieが提供するWeb SQLエディターを通じて接続にアクセスできるほか、QueryPieで生成したProxy Credential情報またはAgentを通じた既存のDB username/passwordで使用していたツールから接続にアクセスできます。Web SQLエディターと合わせてProxy接続をサポートすることで、様々なユーザー環境でも問題なく接続アクセスを制御し、ポリシーを適用し、ログを記録できます。現在Proxy接続は、MySQL、MariaDB、Oracle、PostgreSQL、Redshift、Trino、SQLServer、MongoDBをサポートしています。
 
 
-## Proxy使用オプションの活性化
+### Proxy使用オプションの活性化
 
 基本的にはProxy使用オプションが非活性化されています。アクセスを許可する接続でProxy使用の可否を活性化します。
 
@@ -32,7 +34,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 Proxy Usageオプションを活性化すると、Proxyで接続できるPortが該当接続に割り当てられます。ユーザーは該当オプションが活性化されるとProxy接続情報を確認でき、管理者のみ該当Proxyオプションを設定できます。
 
 
-## Proxy使用が活性化された接続を確認する
+### Proxy使用が活性化された接続を確認する
 
 <Callout type="info">
 10.3.0からDatabases &gt; Connection Management &gt; Proxy ManagementはDatabases &gt; Monitoring &gt; Proxy Managementに移動されました。10.3.0以降のバージョンユーザーは[Proxy Management](../../administrator-manual/databases/monitoring/proxy-management)をご参照ください。

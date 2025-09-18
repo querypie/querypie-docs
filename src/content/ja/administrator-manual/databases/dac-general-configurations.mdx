@@ -4,12 +4,14 @@ title: 'DAC General Configurations'
 
 import { Callout } from 'nextra/components'
 
+# DAC General Configurations
+
 <Callout type="info">
 10.3.0からAdministrator &gt; General &gt; Security配下にあったDAC関連設定項目が各サービスメニューのGeneral &gt; Configurationsに移動されました。
 11.2.0からAdministrator &gt; General &gt; Company Management &gt; General配下にあったQuery SharingがAdministrator &gt; Databases &gt; General &gt; Configurationsに移動されました。
 </Callout>
 
-## データベースアクセス制御設定
+### データベースアクセス制御設定
 
 DBアクセス制御に適用される設定を管理します。
 
@@ -18,7 +20,7 @@ DBアクセス制御に適用される設定を管理します。
 </figure>
 
 
-### Query Sharing
+#### Query Sharing
 
 <br/>Query SharingはQueryPie SQL Editorで作成したクエリをGitに送信して他のユーザーと共有する機能です。基本的にクエリ共有設定はオフになっており、`Query Sharing Setting`ボタンをクリックすると設定モーダルがポップアップします。Query SharingオプションをOnに選択すると、追加入力項目が表示されます。
 <figure data-layout="center" data-align="center">
@@ -59,7 +61,7 @@ SQL Editor画面でクエリ共有機能を使用できます。
 詳細な説明は[ウェブSQLエディターでアクセス](../../user-manual/database-access-control/connecting-with-web-sql-editor)を参考にしてください。
 ---
 
-### アクセス制御設定
+#### アクセス制御設定
 
 
 *  **Privilege Deactivation Period** : DB権限（Privilege）の期限切れのための長期未使用基準期間（Default : 90日）

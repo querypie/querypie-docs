@@ -4,12 +4,14 @@ title: 'Data Masking'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Masking
+
+### Overview
 
 組織内で個人情報または機密情報のように管理が必要なデータは照会時マスキングされて表示するようポリシーを設定できます。Data Maskingメニューでポリシーを設定するコネクションを選択してポリシーを生成し、マスキングが必要なデータをカラム基準で規則を登録し管理できます。
 
 
-## データマスキングポリシー生成
+### データマスキングポリシー生成
 
 新しいマスキングポリシーをコネクション基準で登録します。
 
@@ -30,7 +32,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking
 該当ポリシーがData Maskingポリシーリストに生成されたことを確認できます。
 
 
-## データマスキングポリシーに規則登録
+### データマスキングポリシーに規則登録
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Masking > Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
@@ -63,7 +65,7 @@ Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP
 A. この場合、DBアカウント情報設定がされていないか間違った情報で設定されている可能性があります。Database Settings > Connection Management > DB Connectionsメニューで該当コネクション情報クリック後、**Database Username / Password情報を入力して保存**した後再び試行します。
 </Callout>
 
-## マスキングポリシーが適用されたカラムに対するアクセスログ確認
+### マスキングポリシーが適用されたカラムに対するアクセスログ確認
 
 <Callout type="info">
 10.3.0からマスキングポリシーが制御するカラムに対するアクセスログを確認できます。

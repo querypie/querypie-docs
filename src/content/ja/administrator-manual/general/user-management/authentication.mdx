@@ -4,12 +4,14 @@ title: 'Authentication'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Authentication
+
+### Overview
 
 SSO（Single Sign-On）統合はユーザー認証およびアクセス管理を向上させると同時に安全な統合認証環境を提供するQueryPie内の必須機能です。組織で使用するアカウントシステムを連携して組織内のユーザーおよびグループをQueryPieに同期できます。管理者は組織内の入社者および退社者を一箇所で管理できます。SSO統合は認証プロセスを簡素化し、ユーザーが組織内で使用中の認証方式でQueryPieを通じてデータベースおよびシステムにアクセスできるようにします。該当ドキュメントではSSO連携方法と主要考慮事項について説明します。
 
 
-## IdP連携サポート範囲
+### IdP連携サポート範囲
 
 現在QueryPieでサポートするIdPサービスは以下の通りです。
 
@@ -21,7 +23,7 @@ SSO（Single Sign-On）統合はユーザー認証およびアクセス管理を
 * Custom Identity Provider : API URL入力のみ可能です。
 
 
-## アカウントシステム同期を通じたユーザー管理
+### アカウントシステム同期を通じたユーザー管理
 
 * Administrator &gt; General &gt; User Management &gt; Authenticationメニューで外部アカウントシステム連携を設定できます。
 * 現在は連携設定が完了するとAuthenticationタイプを変更できません。
@@ -34,7 +36,7 @@ Authenticationタイプ変更が必要な場合にはQueryPie技術サポート�
 </Callout>
 
 
-## アカウントシステム同期を通じたグループ管理
+### アカウントシステム同期を通じたグループ管理
 
 * Okta、OneLogin、LDAPの場合、アカウントシステム内のグループをQueryPieグループに同期できます。
 * 同期されたグループはQueryPie内で変更および削除が不可能です。
@@ -42,13 +44,13 @@ Authenticationタイプ変更が必要な場合にはQueryPie技術サポート�
 * LDAPタイプの場合、Group同期オプションを使用できます。詳細内容は詳細連携ガイドページを参照します。
 
 
-## 外部アカウントシステムおよびQueryPie自身アカウント同時使用
+### 外部アカウントシステムおよびQueryPie自身アカウント同時使用
 
 * 外部アカウントシステム連携機能を使用する場合でも、QueryPie自身でユーザー、グループを追加して使用できます。
 * ただし、UsernameとEmail項目は固有値で重複して登録できません。
 
 
-## IDP連携環境でのローカルアカウントセキュリティ強化
+### IDP連携環境でのローカルアカウントセキュリティ強化
 
 外部アカウントシステム（IdP）とQueryPieローカルアカウントを一緒に使用するハイブリッド認証環境でも一貫したセキュリティポリシーを維持できるようMulti-Factor Authentication（MFA）機能がサポートされます
 
@@ -56,7 +58,7 @@ Okta、Onelogin、SAMLなど外部IdP連携可否と関係なく、QueryPieに�
 
 * 外部IdPを使用する環境でも管理者アカウントを含むすべてのローカルアカウントにMFAを設定して無断アクセスからシステムを安全に保護します。
 
-### 設定方法
+#### 設定方法
 
 1.  **Administrator &gt; General &gt; Authentication** メニューに移動します。
 2.  **Two Factor Authentication** セクションで希望するMFAオプションを有効化し構成します。

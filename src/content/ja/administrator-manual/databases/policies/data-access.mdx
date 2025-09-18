@@ -4,11 +4,13 @@ title: 'Data Access'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Data Access
+
+### Overview
 
 組織内で個人情報または機密情報のようにアクセス制限が必要なデータは照会時該当データを確認できないようポリシーを設定できます。Data Accessメニューでポリシーを設定するコネクションを選択してポリシーを生成し、アクセス制限が必要なデータをテーブルまたはカラム基準で規則を登録し管理できます。
 
-## テーブル/カラムアクセス制限ポリシー生成
+### テーブル/カラムアクセス制限ポリシー生成
 
 新しいテーブル/カラムアクセス制限ポリシーをコネクション基準で登録します。
 
@@ -29,7 +31,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access
 該当ポリシーがData Accessポリシーリストに生成されたことを確認できます。
 
 
-## テーブル/カラムアクセス制限ポリシーに規則登録
+### テーブル/カラムアクセス制限ポリシーに規則登録
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Add Rule](/administrator-manual/databases/policies/data-access/data-access-02.png)
@@ -64,7 +66,7 @@ Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP
 A. この場合、DBアカウント情報設定がされていないか間違った情報で設定されている可能性があります。Administrator &gt; Databases &gt; Connection Management &gt; DB Connectionsメニューで該当コネクション情報クリック後、**Database Username / Password情報を入力して保存**した後再び試行します。
 </Callout>
 
-## アクセス制限ポリシーが適用されたテーブル/カラムに対するアクセスログ確認
+### アクセス制限ポリシーが適用されたテーブル/カラムに対するアクセスログ確認
 
 <Callout type="info">
 10.3.0からData accessポリシーが制限したテーブルおよびカラムに対するアクセスログを確認できます。

@@ -4,11 +4,13 @@ title: 'Google BigQuery OAuth認証を通じて接続する'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Google BigQuery OAuth認証を通じて接続する
+
+### Overview
 
 QueryPie管理者がBigQueryコネクション認証方式をOAuth 2.0に設定した場合、接続時に自分のGoogleアカウントで接続できます。
 
-## Googleアカウントでログイン
+### Googleアカウントでログイン
 
 1. QueryPieユーザーページのDatabase項目下のコネクションリストでBigQueryコネクションを選択します。<br/>（管理者からアクセスが許可されなければコネクションリストで見ることができません。）<br/>
 2. `Connect`ボタンを押すと表示されるポップアップでログインに使用するGoogleアカウントを選択します。
@@ -16,7 +18,7 @@ QueryPie管理者がBigQueryコネクション認証方式をOAuth 2.0に設定�
 4. Googleアカウントへのアクセスを許可します。<br/>
 5. しばらく待つと接続が完了します。
 
-## Refresh token再設定
+### Refresh token再設定
 
 <Callout type="info">
 OAuth認証方式はユーザーがログインする時にaccess tokenとrefresh tokenを発行します。その後access tokenの期限が満了するとrefresh tokenを使用してaccess tokenを再発行します。refresh tokenは各クライアントに保存されます。refresh tokenにも期限がある場合があり、様々な原因によってクライアントに保存されたrefresh tokenが有効でない状況が発生する場合があります。この時、クライアントに保存されているrefresh tokenを削除して再発行を受ける必要があります。

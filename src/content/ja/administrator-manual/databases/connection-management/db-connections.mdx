@@ -4,14 +4,16 @@ title: 'DB Connections'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# DB Connections
+
+### Overview
 
 DB ConnectionsページでQueryPieに登録されているDBコネクションリストを照会し、詳細設定ができます。
 
 この文書で説明する詳細機能は以下の通りです。
 
 
-## DBコネクション手動で登録
+### DBコネクション手動で登録
 
 DB Connectionsページ右上の`Create Connection`ボタンをクリックして手動登録ページに進入します。
 
@@ -57,7 +59,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Cr
 3. Step 3では入力されたDBコネクション情報を確認できます。
 4. DB Connectionsページ内目録で新規DBコネクションの生成を確認できます。
 
-### クラスター構成でDBコネクション登録
+#### クラスター構成でDBコネクション登録
 
 Cloud Providerを通じてリソースを同期する場合、リソースがクラスターで構成されているとClusterモードが有効化されます。
 
@@ -87,7 +89,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Li
 </Callout>
 
 
-## DBコネクションリスト照会
+### DBコネクションリスト照会
 
 管理者コンソール内Databases設定 > DB Connectionsページで現在QueryPieに登録されたDBコネクションリストを確認できます。
 
@@ -113,7 +115,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
         * Keyが異なるタグを複数入力時AND検索実行（交集合）
 
 
-## DBコネクション詳細情報照会および設定
+### DBコネクション詳細情報照会および設定
 
 DB Connectionsページで詳細情報を照会しようとするアイテムをクリックすると詳細ページに進入します。
 
@@ -126,7 +128,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Li
 
 10.2.8から詳細情報を照会すると該当コネクションがサポートする機能リストをSupported Featuresdで確認できます。
 
-### Accessible Users照会
+#### Accessible Users照会
 
 DBコネクション詳細ページ右上`Accessible Users`ボタンをクリックするとDrawerが開き、該当コネクションにアクセス可能なユーザーリストを照会できます。
 
@@ -137,7 +139,7 @@ Administrator > Databases > DB Connections > List Details > Accessible Users
 </figcaption>
 </figure>
 
-### DBコネクション情報照会および修正
+#### DBコネクション情報照会および修正
 
 DBコネクション詳細ページ内Connection Information領域で生成時入力した情報を照会し修正できます。
 
@@ -168,7 +170,7 @@ Administrator > Databases > DB Connections > List Details > Connection Informati
 Secret Store項目はSecurity設定メニューでSecret Store使用を有効化した時表示され、実際のSecret Store使用のためにはAdmin &gt; General &gt; Integration &gt; HashiCorp VaultページでVault登録が必要です。詳細内容は[Secret Store連動](../../general/system/integrations/integrating-with-secret-store)文書を参照してください。
 </Callout>
 
-### 参照. Secret Store設定方法
+#### 参照. Secret Store設定方法
 
 Secret Store設定に保存されたSecret Engineタイプに 따라DB Account項目が異なって表示されます。
 
@@ -182,11 +184,11 @@ Secret Store設定に保存されたSecret Engineタイプに 따라DB Account�
     * Pathの形態は`prod_db/creds/mysql_role`形態で入力できます。
 
 
-## 追加設定
+### 追加設定
 
 ページ下部のタブ領域でDBコネクションに対する追加設定が可能です。項目別説明を参照してください。
 
-### Additional Information
+#### Additional Information
 
 該当DBコネクションに適用される詳細ポリシーを入力します。`Save Changes`ボタンで保存します。
 
@@ -244,7 +246,7 @@ Proxy Usageのオプション
 QueryPie 9.17からProxyで指定したアカウント情報使用時セキュリティ強化措置で乱数パスワードを使用するよう変更されました。QueryPie 10.2.2から乱数パスワード使用が困難な状況に対する改善で固定パスワードを使用できる「**Fixed Credential for Agent**」オプションが提供されます。乱数パスワード使用が困難な場合管理者がこのオプションを有効化した後パスワードを固定して使用でき、Fixed Credential for AgentはOracle、PostgreSQL、MongoDBに限ってのみ可能です。
 </Callout>
 
-### SSL/SSH Setting
+#### SSL/SSH Setting
 
 チェックボックスを通じてSSLまたはSSH使用有無を有効化し、下部ドロップダウンで既登録された設定情報を選択します。`Save Changes`ボタンで保存します。
 
@@ -261,7 +263,7 @@ SSL/SSH構成情報は事前に登録されていなければなりません。�
 * [SSH Configurations](ssh-configurations)
 </Callout>
 
-### Connection Owner
+#### Connection Owner
 
 Connection Ownerタブで`Add Connection Owner`ボタンをクリックし、DBコネクション別Connection Ownerを指定できます。（ユーザーまたはグループ単位で指定可能）`Save Changes`ボタンで保存します。
 
@@ -276,7 +278,7 @@ Connection Ownerタブ
 Connection Ownerは該当DBコネクションに対するSQL Request、SQL Export Requestの承認者または実行者として指定可能です。
 </Callout>
 
-### Tags
+#### Tags
 
 TagsタブでDBコネクション別にタグを登録して管理できます。`Add Tag`ボタンをクリックするとタグ行が追加され、KeyとValueを入力します。入力完了後`Save Changes`ボタンで保存します。
 
@@ -287,7 +289,7 @@ Tagsタブ
 </figcaption>
 </figure>
 
-### Privilege Setting
+#### Privilege Setting
 
 DBコネクションにPrivilege別に使用しなければならない接続アカウントを強制指定する機能です。
 

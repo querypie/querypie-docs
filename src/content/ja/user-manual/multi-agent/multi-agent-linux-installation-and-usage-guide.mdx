@@ -4,11 +4,13 @@ title: 'Multi Agent Linux インストールおよび使用ガイド'
 
 import { Callout } from 'nextra/components'
 
+# Multi Agent Linux インストールおよび使用ガイド
+
 <Callout type="info">
 QueryPie Multi AgentはFreeDesktop環境のLinuxプラットフォームでのみ動作します。
 </Callout>
 
-# サポート対象
+## サポート対象
 
 |  **ベース**  |  **ディストリビューション**  |  **最小サポートバージョン**      |  **検証済みバージョン（開発チームで検証）**  |
 | -------- | --------- | ------------------ | ----------------------- |
@@ -21,19 +23,19 @@ QueryPie Multi AgentはFreeDesktop環境のLinuxプラットフォームでの�
 
 *  *最小サポートバージョン: glibc 2.27をサポートする最小Linuxバージョン* 
 
-# インストールおよび削除方法
+## インストールおよび削除方法
 
-## インストールファイルのダウンロード
+### インストールファイルのダウンロード
 
 QueryPie Web &gt; プロフィール &gt; Multi-Agentを通じてMulti Agentインストールファイルをダウンロードできます。
 
-## 事前作業
+### 事前作業
 
 Multi Agentは[StatusNotifierItem](https://www.freedesktop.org/wiki/Specifications/StatusNotifierItem/)でトレイアイコン機能を提供します。
 
 様々なLinuxディストリビューションでStatusNotifierItemがデフォルトで表示されない場合があります。
 
-### 1. インストール確認
+#### 1. インストール確認
 
 ```
 gnome-extensions info appindicatorsupport@rgcjonas.gmail.com
@@ -59,7 +61,7 @@ appindicatorsupport@rgcjonas.gmail.com
   State: ENABLED
 ```
 
-### 2. インストール
+#### 2. インストール
 
 以下のリンクでAppIndicator and KStatusNotifierItem Supportをダウンロードし、インストールしてください。
 
@@ -73,17 +75,17 @@ appindicatorsupport@rgcjonas.gmail.com
 ![image-20250404-054650.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250404-054650.png)
 </figure>
 
-## Debianベース
+### Debianベース
 
 dpkgコマンドを基準に説明します。
 
-### Install
+#### Install
 
 1. `querypie-multi-agent.deb`をダウンロードします。
 2. 以下のコマンドを実行してファイルをインストールします。出力例
 3. インストール状況を確認します。出力例
 
-### Uninstall
+#### Uninstall
 
 ターミナルで以下のコマンドを実行します。
 ```
@@ -98,17 +100,17 @@ Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
 Processing triggers for desktop-file-utils (0.27-2build1) ...
 ```
 
-## RedHatベース
+### RedHatベース
 
 rpmコマンドを基準に説明します。
 
-### Install
+#### Install
 
 1. `querypie-multi-agent.rpm`をダウンロードします。
 2. ターミナルで以下のコマンドを実行してファイルをインストールします。出力例
 3. インストール状況を確認します。出力例
 
-### Uninstall
+#### Uninstall
 
 ターミナルで以下のコマンドを実行します。
 ```
@@ -122,7 +124,7 @@ QueryPie Multi Agent has been uninstalled.
 ```
 
 
-## Keyring
+### Keyring
 
 <Callout type="important">
 Ubuntuを基準に説明します。
@@ -146,9 +148,9 @@ Unlockボタンでロックを解除しておくと実行段階で管理者権�
 ![image-20250403-080814.png](/user-manual/multi-agent/multi-agent-linux-installation-and-usage-guide/image-20250403-080814.png)
 </figure>
 
-# Troubleshooting
+## Troubleshooting
 
-## Multi Agent内のリンクをクリックしましたが、反応がありません。
+### Multi Agent内のリンクをクリックしましたが、反応がありません。
 
 Default Browserを設定しないとリンクが開きません。ブラウザ内の設定でデフォルトブラウザを設定してください。
 

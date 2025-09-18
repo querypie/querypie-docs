@@ -4,12 +4,14 @@ title: 'ウェブSQLエディターで接続する'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# ウェブSQLエディターで接続する
+
+### Overview
 
 QueryPieではウェブブラウザを通じてクエリを実行し、データを照会できるウェブSQLエディターを提供します。
 
 
-## アクセス権限のあるデータベース接続
+### アクセス権限のあるデータベース接続
 
 個別ユーザーまたはグループにアクセス権限が付与されたデータベースコネクションリストを確認でき、作業を実行するコネクションを選択してデータベースに接続できます。
 
@@ -26,11 +28,11 @@ QueryPie Web &gt; Database Access Control &gt; Databases
 
 必要なコネクションが表示されない場合、Workflow &gt; DB Access Requestを通じてアクセス権限を要求できます。
 
-## ウェブSQLエディター使用
+### ウェブSQLエディター使用
 
 エディターは左側オブジェクトパネル、上部ツールバー、中央SQLエディター、右側オブジェクト情報パネルで構成されています。
 
-### 1. 左上オブジェクトパネル
+#### 1. 左上オブジェクトパネル
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png)
@@ -43,7 +45,7 @@ SQL Editor &gt; Connection Panel
 * `Connection Management` : 既存接続が維持された状態でDatabasesコネクションリストに移動可能です。
 * `Disconnect` : 接続解除ボタンを通じて現在接続中のコネクションの接続を切ることができます。
 
-### 2. 左側オブジェクトパネル
+#### 2. 左側オブジェクトパネル
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Connection Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png)
@@ -58,7 +60,7 @@ SQL Editor &gt; Connection Panel
 *  **オブジェクト情報更新**  : データベース内のスキーマ/テーブル/ビュー/イベント/関数/プロシージャ/トリガーなどをクリック時、右側`新規更新`ボタンが有効化されてオブジェクト情報を更新できます。
 *  **個別オブジェクト情報更新**  : 個別オブジェクト情報も右クリック後`Reload Object`ボタンをクリックして同様に更新できます。
 
-### 3. 上部ツールバー
+#### 3. 上部ツールバー
 
 <figure data-layout="center" data-align="center">
 ![QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png)
@@ -97,7 +99,7 @@ SQL Editor &gt; Editor Tab & Result
 * `Full Screen` : クエリ実行結果を全画面で確認できます。
 * `Stack/Column View` : クエリを複数実行した時、横または縦の分割されたグリッドで結果を確認できます。
 
-### 3. Queriesパネル
+#### 3. Queriesパネル
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Queries Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png)
@@ -112,7 +114,7 @@ SQL Editor &gt; Queries Panel
 該当機能を使用するためには管理者がクエリ共有設定を事前にする必要があります。（[General](../../administrator-manual/general/company-management/general) &gt;  **クエリ共有設定**  参照）
 </Callout>
 
-### 4. Object Infoパネル
+#### 4. Object Infoパネル
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; Object Info Panel ](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png)
@@ -129,7 +131,7 @@ SQL Editor &gt; Object Info Panel
 * `Script` : オブジェクトのスクリプト情報を確認できます。
 * `Info` : オブジェクトの詳細情報を確認できます。
 
-### 5. SQL Historyパネル
+#### 5. SQL Historyパネル
 
 <figure data-layout="center" data-align="center">
 ![SQL Editor &gt; SQL History Panel](/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png)
@@ -158,7 +160,7 @@ SQL Editor &gt; SQL History Panel
 * Textタイプ選択する場合、クエリエディター内で5mbサイズまでサポートします。
 </Callout>
 
-### 6. クエリ実行時理由入力
+#### 6. クエリ実行時理由入力
 
 Ledger政策または接続政策によってクエリを実行時理由入力が強制される場合があります。この場合、ユーザーがクエリを入力すると理由を入力するポップアップが出力されます。以下の図のように「Write the reason for this request」ポップアップダイアログにクエリを実行する理由を入力して`OK`ボタンを押すとクエリ実行結果が出力されます。総300文字まで入力可能です。
 

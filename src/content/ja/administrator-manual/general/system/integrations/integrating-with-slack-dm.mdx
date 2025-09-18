@@ -4,7 +4,9 @@ title: 'Slack DM連携'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Slack DM連携
+
+### Overview
 
 Slack AppをQueryPieに連携し、QueryPieからDirect Message通知を受信できます。
 
@@ -13,12 +15,12 @@ Slack AppをQueryPieに連携し、QueryPieからDirect Message通知を受信�
 10.2.5またはそれ以下のバージョンのSlack連携方法は[10.1.0バージョンマニュアルドキュメント](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)を参照してください。
 </Callout>
 
-### 構成時事前に必要な権限
+#### 構成時事前に必要な権限
 
 * Slack Workspace管理者権限アカウント（Slack WorkspaceにAppをインストールするために必要）
 * QueryPie OwnerおよびApproval Admin権限アカウント
 
-## Slack APIでDM App生成（via Manifest Files）
+### Slack APIでDM App生成（via Manifest Files）
 
 App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
 
@@ -29,13 +31,13 @@ App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
 4. Create app from manifestモーダルでJSON形式のApp Manifestを入力します。<br/>事前に埋められている内容を削除し以下のApp Manifestを貼り付けた後次の段階に進行します。<br/>:light_bulb_on: `{{..}}`内の値は希望する値に変更してください。
 5. 設定内容を検討し`Create`ボタンをクリックしてApp生成を完了します。<br/>
 
-## Slack WorkspaceにSlack Appインストール
+### Slack WorkspaceにSlack Appインストール
 
 1. Settings &gt; Install Appで`Install to Workspace`ボタンをクリックして生成されたアプリをSlack Workspaceにインストールします。
 2. 権限リクエストページで、`許可`をクリックします。
 3. 設定したSlack WorkspaceでSlack DM専用Appが生成されたことを確認できます。
 
-## Bot User OAuth Token取得
+### Bot User OAuth Token取得
 
 Features &gt; OAuth & Permissionsメニュー内OAuth Tokens for Your Workspaceセクションで、**Bot User OAuth Token**をコピーして記録しておきます。
 
@@ -44,7 +46,7 @@ Features &gt; OAuth & Permissionsメニュー内OAuth Tokens for Your Workspace�
 </figure>
 
 
-## App-Level Token生成
+### App-Level Token生成
 
 <Callout type="info">
 App manifestでSlack appを生成する時Socket Modeと関連権限を有効化することはできますが、App Level Token（xapp-）は自動で生成されません。
@@ -58,7 +60,7 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 2. Generate an app-level tokenモーダルで、Add Scopeボタンをクリックした後`connections:write`を追加します。<br/>
 3. 生成されたApp-Level Tokenモーダルで、アプリトークンをコピーして別途記録しておきます。App-Level Tokenは`xapp-`で始まります。
 
-## QueryPieでSlack DM設定
+### QueryPieでSlack DM設定
 
 1. Admin &gt; General &gt; System &gt; Integrations &gt; Slackメニューに進入した後、`Configure`ボタンをクリックして設定モーダルを開きます。<br/>
 2. 設定モーダルに先ほど記録しておいたApp TokenとBot User OAuth Tokenを入力します。
@@ -67,13 +69,13 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
     *  **Allow Users to approve or reject on Slack DM**  : Slack DM内で承認または拒否機能有効化<br/>
 4. `Save`ボタンを押して設定を完了します。
 
-## Slack DM設定管理
+### Slack DM設定管理
 
 1. Slack Configurationを登録した後、現在の設定状態を画面で確認できます。<br/>
 2. `Edit`ボタンをクリックして入力した設定を変更できます。<br/>
 
 
-## Workflowリクエスト時Slack DMテスト
+### Workflowリクエスト時Slack DMテスト
 
 DB Access Requestを例に、Slack DM機能が正常に動作するかテストを実行します。
 

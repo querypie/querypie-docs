@@ -2,7 +2,9 @@
 title: 'Slack DM - Workflow通知タイプ'
 ---
 
-## Overview
+# Slack DM - Workflow通知タイプ
+
+### Overview
 
 このドキュメントではSlack Direct Messages（DM）を通じてWorkflowリクエスト者/承認者/実行者に送信される通知タイプを案内します。
 
@@ -20,7 +22,7 @@ title: 'Slack DM - Workflow通知タイプ'
 3. 承認完了通知 - リクエスト者に
 4. Urgent Mode未承認通知
 
-## 承認リクエスト通知
+### 承認リクエスト通知
 
 Workflowの5つのタイプ（SQL Request、SQL Export Request、DB Access Request、Server Access Request、Access Role Request）すべてをサポートします。
 
@@ -39,7 +41,7 @@ QueryPie管理者の事前設定により、メッセージを受信した承認
 </figcaption>
 </figure>
 
-## 却下通知
+### 却下通知
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-060544.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060544.png)
@@ -51,7 +53,7 @@ Workflowの4つのタイプ（SQL Request、SQL Export Request、DB Access Reque
 
 事後承認（Urgent Mode）起案の場合には却下ケースが存在しません。したがって却下メッセージも存在しません。
 
-## 承認完了通知 - リクエスト者に
+### 承認完了通知 - リクエスト者に
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-060552.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060552.png)
@@ -63,7 +65,7 @@ Workflowの4つのタイプ（SQL Request、SQL Export Request、DB Access Reque
 
 事後承認（Urgent Mode）起案の場合にもすべての事後承認が完了してからリクエスト者に該当メッセージが送信されます。
 
-## 実行可能通知
+### 実行可能通知
 
 WorkflowでExecute行動を含む2つのタイプ（SQL Request、SQL Export Request）をサポートします。
 
@@ -77,7 +79,7 @@ WorkflowでExecute行動を含む2つのタイプ（SQL Request、SQL Export Req
 ![image-20231003-062055.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-062055.png)
 </figure>
 
-## Urgent Mode未承認通知
+### Urgent Mode未承認通知
 
 <figure data-layout="center" data-align="center">
 ![image-20231003-062615.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-062615.png)

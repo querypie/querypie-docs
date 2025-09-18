@@ -4,19 +4,21 @@ title: 'SAC General Configurations'
 
 import { Callout } from 'nextra/components'
 
+# SAC General Configurations
+
 <Callout type="info">
 10.3.0から、各Administrator &gt; General &gt; Securityの下にあったSAC関連の設定項目が、各サービスメニューのGeneral &gt; Configurationsに移動されました。
 </Callout>
 
-## Overview
+### Overview
 
 Configurationsページは、QueryPieでサーバーアクセスとセキュリティポリシーを管理できる設定ページです。ログイン失敗閾値設定、セッションタイムアウト、安全でないプロトコル制御など、サーバー接続セキュリティの核心要素を設定できます。これにより、管理者は組織のセキュリティ要件に合わせてサーバー環境を構成し、潜在的な脅威からシステムを保護できます。
 
-## サーバー接続セキュリティ設定
+### サーバー接続セキュリティ設定
 
 サーバーアクセス制御に適用されるセキュリティ設定を管理します。
 
-### 一般設定
+#### 一般設定
 
 基本的なセキュリティ設定を管理します。
 
@@ -94,7 +96,7 @@ RDP Server AgentがインストールされていないWindows Serverに接続�
         * ProvisioningアカウントとOne Time Accountをシステムに登録できます。
         * サーバー接続時、システムが自動的にサーバーに一時アカウントを生成します。
 
-### サーバー権限申請の基本ポリシー設定
+#### サーバー権限申請の基本ポリシー設定
 
 Workflow要求を通じたDirect Permission割り当て時に適用されるサーバーアクセスポリシーを管理します。
 
@@ -129,7 +131,7 @@ Workflow要求を通じたDirect Permission割り当て時に適用されるサ�
 *  **Show Server Groups in Workflow if Assigned as Member :**  チェックされた場合、利用者がServer Access Request申請時、Server Group Memberに指定されたサーバーグループのみ表示
 *  **Require Minute-Based Requests :** Workflowでサーバー関連権限申請時、分単位申請許可。未設定時、日単位で権限を申請。チェックされた場合、サーバー接続権限申請時、分単位権限申請
 
-### サーバー特権申請ポリシー設定
+#### サーバー特権申請ポリシー設定
 
 ユーザーがサーバー特権（Server Privilege）を要求する時に適用されるポリシーを設定します。
 

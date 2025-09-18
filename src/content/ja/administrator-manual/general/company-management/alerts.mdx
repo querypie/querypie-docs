@@ -4,7 +4,9 @@ title: 'Alerts'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Alerts
+
+### Overview
 
 Alertsページでは、リソースアクセスに関連する通知機能を提供します。主要な異常徴候に対するトリガー条件を事前に設定することで、ポリシー違反事項をリアルタイムで検出できます。潜在的なセキュリティインシデントを迅速に識別し解決でき、事前定義された閾値を超えるクエリや漏洩など、機密情報を保護できます。
 
@@ -17,7 +19,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts
 
 このドキュメントでは以下の内容を扱います。
 
-## サポートする通知タイプ
+### サポートする通知タイプ
 
 共通通知をはじめ、DBアクセスに特化した通知とシステムアクセスに特化した通知をサポートします。
 
@@ -187,7 +189,7 @@ Kubernetes APIリクエスト通知
     * Sensitive Data Access Monitoring : 新ポリシー管理で作成したSensitive Data Access Monitoringポリシーの条件に該当するイベント
 </Callout>
 
-## 通知作成
+### 通知作成
 
 Alertsページ右上の`Create Alert`ボタンをクリックして新しい通知を作成します。`OK`ボタンをクリックして通知作成を完了します。
 
@@ -211,7 +213,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 6.  **Send Test Message**  : 通知テストメッセージ送信
     1. 選択したチャンネルで、入力したメッセージテンプレート内容をテストメッセージとして送信します。
 
-### New Request
+#### New Request
 
 新しい承認リクエスト登録通知
 
@@ -245,7 +247,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 * Workflow関連Alert設定時、ChannelがEmailの場合、`Send email only to those involved in this request`オプションを提供します。このオプションを有効化すると、該当リクエストの関係者（リクエスト者、承認者など）にMessage Templateの内容で通知が送信されます。
 </Callout>
 
-### Unusual Login Attempt
+#### Unusual Login Attempt
 
 IP帯域によるユーザーログイン行為通知
 
@@ -260,7 +262,7 @@ IP帯域によるユーザーログイン行為通知
 * Specific Time Internal (Minutes) : 5
 </Callout>
 
-### SQL Execution
+#### SQL Execution
 
 定義された条件に該当するSQL文実行通知
 
@@ -287,14 +289,14 @@ IP帯域によるユーザーログイン行為通知
 * SQL Events : `UPDATE`, `DELETE`
 </Callout>
 
-### Prevented SQL Execution
+#### Prevented SQL Execution
 
 権限のない文実行通知
 
 *  **Connection**  : クエリ実行時通知送信する対象コネクション（10.2.2以降バージョン - 複数選択）
     * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
 
-### DB Connection Attempt
+#### DB Connection Attempt
 
 DB接続成功または失敗通知
 
@@ -318,7 +320,7 @@ DB接続成功または失敗通知
 * Specified Time Internal (Minutes) : 5
 </Callout>
 
-### Sensitive Data Access
+#### Sensitive Data Access
 
 定義された条件に該当する機密データ照会通知
 
@@ -349,7 +351,7 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
 * Policy : *`{事前に登録されたSensitive Dataポリシー}`*
 </Callout>
 
-### SQL Export
+#### SQL Export
 
 定義された条件に該当するSQLエクスポート実行通知
 
@@ -367,7 +369,7 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
 * Trigger Condition (Rows) : 100
 </Callout>
 
-### Server Connection Attempt
+#### Server Connection Attempt
 
 サーバー接続成功または失敗通知
 
@@ -385,7 +387,7 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
 * Alert Trigger Condition : Failureにのみチェック
 </Callout>
 
-### Restrict Command
+#### Restrict Command
 
 サーバー/サーバーグループ別ブロックされたコマンド実行通知
 
@@ -394,7 +396,7 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
         * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
     * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
 
-### Specific Command
+#### Specific Command
 
 特定コマンド実行通知
 
@@ -406,7 +408,7 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
     * Keyword : コマンドに入力されたキーワード含む時通知送信
     * RegExr : 正規表現に該当するコマンド実行時通知送信
 
-### File Transfer (SFTP)
+#### File Transfer (SFTP)
 
 SFTPによるファイル転送実行通知
 
@@ -418,7 +420,7 @@ SFTPによるファイル転送実行通知
         * 複数選択により対象が重複選択された場合でも通知は1回のみ送信
     * All Connections (*) : 今後追加されるすべてのコネクション対象に通知条件作成
 
-### K8s API Request**[10.2.2]**
+#### K8s API Request**[10.2.2]**
 
 Kubernetes APIリクエスト通知
 
@@ -433,7 +435,7 @@ Kubernetes APIリクエスト通知
     * 現在サポート対象 - `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`など（計24種）
     * All Resources (*) : 今後追加されるすべてのリソース種類を対象に通知条件作成
 
-### Data Access**[11.1.0]**
+#### Data Access**[11.1.0]**
 
 <Callout type="info">
 Databases &gt; General &gt; ConfigurationsでNew DAC Policy Management機能が有効化されており、関連ポリシーが存在する必要があります。
@@ -469,7 +471,7 @@ Data Access通知はColumn Data Masking、Table Access Restriction、Column Acce
         * 0入力時、時間条件なしに単件のSQL実行を基準とします。
         * 最大1440まで入力可能です
 
-## 通知詳細情報照会および修正
+### 通知詳細情報照会および修正
 
 Alertsページで詳細内容を照会したい通知を選択します。詳細ページDetailsタブで通知作成時に入力した通知条件およびメッセージを照会し修正できます。右上`Save Changes`ボタンをクリックすると修正内容が反映されます。
 
@@ -481,7 +483,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figure>
 
 
-## 通知送信履歴照会
+### 通知送信履歴照会
 
 Alertsリストで送信履歴を照会したい通知を選択します。その後詳細ページ内Logで履歴を照会できます。
 
@@ -493,7 +495,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; List Details
 </figure>
 
 
-## 通知削除
+### 通知削除
 
 既存に登録された通知を削除する2つの経路を提供します。
 

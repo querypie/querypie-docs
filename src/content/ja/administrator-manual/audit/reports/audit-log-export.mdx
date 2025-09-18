@@ -4,7 +4,9 @@ title: 'Audit Log Export'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# Audit Log Export
+
+### Overview
 
 QueryPieで生成された各種監査ログを抽出し、csvファイルでダウンロードできる機能です。長期間にわたるログなど大容量ファイルの場合でも安定した抽出およびダウンロードが可能です。一度生成されたログ抽出ファイルは30日間ダウンロードが可能です。抽出サポートログはQuery Audit、Workflow SQL Requestなど21種類です。
 
@@ -49,7 +51,7 @@ Audit Log Export機能追加に伴い、各ログ画面で提供されていた'
 </Callout>
 
 
-## Audit Log Export一覧の照会
+### Audit Log Export一覧の照会
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; General &gt; Audit Log Export](/administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png)
@@ -65,7 +67,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
    * **Completed**: 監査ログ抽出が完了し、ファイルダウンロードが可能です。（抽出完了後30日が経過した場合、ファイルが期限切れでダウンロードが不可能です。）
    * **Failed**: 監査ログ抽出が失敗しました。QueryPie Customer Supportを通じてお問い合わせください。
 
-## ログ抽出作業の作成
+### ログ抽出作業の作成
 
 監査ログ抽出およびダウンロードは大きく以下のような段階で進行されます。（1）関連メニュー進入 → （2）ログ抽出作業作成 → （3）ログ抽出完了まで待機 → （4）抽出完了時ファイルダウンロード
 
@@ -156,7 +158,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </Callout>
 
 
-## 抽出作業完了時ファイルダウンロード
+### 抽出作業完了時ファイルダウンロード
 
 別途のフィルタリング条件がない短期間照会の場合にはログ抽出が数分以内に完了します。長期間にわたるログやフィルタリング条件の複雑度が高い場合などではログ抽出まで多少時間がかかる場合があります。
 
@@ -174,6 +176,6 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </Callout>
 
 
-## ログ抽出ファイル保管期間政策案内
+### ログ抽出ファイル保管期間政策案内
 
 抽出が完了したログファイルは作業生成日から30日間保管され、該当期間以内には回数制限なしにダウンロードが可能です。しかし、30日が経過するとファイルが期限切れになります。期限切れのログファイルが必要になった場合、ログ抽出タスクを再生成してください。

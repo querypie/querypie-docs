@@ -4,12 +4,14 @@ title: '決裁付加機能（代理決裁、再上申など）'
 
 import { Callout } from 'nextra/components'
 
-## Overview
+# 決裁付加機能（代理決裁、再上申など）
+
+### Overview
 
 Workflow使用時に便利さを追加する付加機能をご紹介します。
 
 
-## 参照されたリクエストの確認処理
+### 参照されたリクエストの確認処理
 
 <figure data-layout="center" data-align="center">
 ![Workflow &gt; Reviews &gt; All Reviews &gt; Review Details](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png)
@@ -27,11 +29,11 @@ Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
 
 
 
-## 代理決裁の使用
+### 代理決裁の使用
 
 代理決裁とは承認者役割を一定期間他のユーザーに委任する機能です。使用方法は以下の通りです。
 
-### 1. 代理決裁使用設定
+#### 1. 代理決裁使用設定
 
 <figure data-layout="center" data-align="center">
 ![User &gt; 上部メニューバーでプロフィールクリック &gt; Preferences](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png)
@@ -46,7 +48,7 @@ User &gt; 上部メニューバーでプロフィールクリック &gt; Prefere
 *  **Delegation Reason**  : 代理決裁設定理由入力
 *  **Save**  : `Save`ボタンを入力すると代理決裁設定が保存されます。設定開始が当日の場合、`Save`で即座に適用されます。
 
-### 2. 代理決裁設定状態の確認
+#### 2. 代理決裁設定状態の確認
 
 代理決裁設定期間には元決裁者と代理決裁者のアクセス時に上部メニューバーに以下のように表示されます。
 <figure data-layout="center" data-align="center">
@@ -65,7 +67,7 @@ User &gt; 上部メニューバーでプロフィールクリック &gt; Prefere
 代理決裁設定期間中、起案リクエスト者には別途の案内が表示されません。リクエスト者は普段通りApproval RuleおよびApproverを選択すれば問題ありません。
 </Callout>
 
-### 3. 委任された代理決裁リクエストの処理
+#### 3. 委任された代理決裁リクエストの処理
 
 * 代理決裁設定期間中、代理決裁者が確認できるリクエストは以下の通りです。
     *  **Received Requests &gt; To Do**  : 元決裁者が受信した未処理リクエストリスト（設定期間以前に受信したリクエストを含む）
@@ -76,7 +78,7 @@ User &gt; 上部メニューバーでプロフィールクリック &gt; Prefere
 ![screenshot-20240802-124638.png](/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png)
 </figure>
 
-### 4. 代理決裁処理されたリクエストの確認
+#### 4. 代理決裁処理されたリクエストの確認
 
 * 以下のようにリクエスト詳細ページ内の承認状況で元決裁者または代理決裁者が処理したのかを確認できます。
 **元決裁者が処理した場合**
@@ -97,12 +99,12 @@ User &gt; 上部メニューバーでプロフィールクリック &gt; Prefere
 Slack DMを通じたリクエスト通知を使用中であれば、代理決裁者にもWorkflow段階別通知が送信されます。Slack DM通知関連の詳細は[Slack DM個人通知の使用](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types)文書をご参照ください。
 </Callout>
 
-### 5. 代理決裁設定終了後の起案照会方法
+#### 5. 代理決裁設定終了後の起案照会方法
 
 * 代理決裁設定期間が終了しても、Received Requests &gt; Doneリストで代理決裁設定期間内に代理決裁者が処理したリクエストを確認できます。それ以外のリクエストはもはや照会や処理ができません。
 
 
-## 既存リクエストの再上申
+### 既存リクエストの再上申
 
 同一内容で反復的な決裁リクエストをしたり、却下処理された決裁案件について以下のように再上申できます。
 

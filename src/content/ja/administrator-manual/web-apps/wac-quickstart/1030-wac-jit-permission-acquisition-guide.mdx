@@ -4,6 +4,8 @@ title: '[10.3.0 ~] WAC JIT権限取得Guide'
 
 import { Callout } from 'nextra/components'
 
+# [10.3.0 ~] WAC JIT権限取得Guide
+
 QueryPie WACを通じたWeb Appsに対するJIT（Just-in-Time）権限取得の使用方法をご案内します。
 
 JIT権限取得は以下のような順序で行われます。
@@ -22,9 +24,9 @@ JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
 </Callout>
 
 
-# Admin-side
+## Admin-side
 
-## 1. Webアプリケーションの登録
+### 1. Webアプリケーションの登録
 
 1. **Admin > Web Apps > Connection Management > Web Apps** メニューに移動します。
 2. `Create a Web App` ボタンをクリックすると、Webアプリケーション登録ページに移動します。
@@ -51,7 +53,7 @@ JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
 7. **Tag**: Webアプリケーションのタグです。ここでは空にしておきます。
 8. `Save` ボタンを押して保存します。
 
-## 2. Web App Owner / Member登録
+### 2. Web App Owner / Member登録
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
@@ -67,7 +69,7 @@ JIT（Just-in-Time）権限付与には以下の2つの役割があります。
 * Member: このWebアプリケーションに対するJust-in-time要求を上申できる主体
 </Callout>
 
-## 3. 利用者のJIT Web Appアクセス権限申請
+### 3. 利用者のJIT Web Appアクセス権限申請
 
 <Callout type="info">
 QueryPieを通じてWeb Appアクセス時、Root CA証明書インストールとChromeのExtensionのインストールが必要です。
@@ -113,7 +115,7 @@ JIT（Just-in-Time）権限申請時、以下のような制約事項があり�
 * 事後承認モードはApproval Configurationで有効化された場合に表示され、Offにすると要求画面で表示されません。
 </Callout>
 
-## 4. 決裁権者のJIT Web Appアクセス権限要求承認
+### 4. 決裁権者のJIT Web Appアクセス権限要求承認
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-072925.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-072925.png)
@@ -125,7 +127,7 @@ JIT（Just-in-Time）権限申請時、以下のような制約事項があり�
 4. 上部のApproveをクリックします。
 
 
-## 5. QueryPieを通じてWebアプリケーションにアクセス
+### 5. QueryPieを通じてWebアプリケーションにアクセス
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)
