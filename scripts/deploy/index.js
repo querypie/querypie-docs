@@ -25,7 +25,7 @@ async function createAndCheckDeployment() {
           type: 'github',
           repo: 'querypie-docs',
           ref: branch,
-          org: 'chequer-io', //For a personal account, the org-name is your GH username
+          org: 'querypie', // For a personal account, the org-name is your GH username
         },
       },
     });
