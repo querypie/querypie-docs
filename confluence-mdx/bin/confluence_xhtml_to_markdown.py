@@ -109,11 +109,28 @@ class Attachment:
             # Change file permission to 0644
             os.chmod(destination_file, 0o644)
 
-    def as_markdown(self, caption: str = '') -> str:
+    def as_markdown(self, caption: Optional[str] = None, width: Optional[str] = None, align: str = None) -> str:
         if not caption:
             caption = self.filename
+
+        rehype_attr = []
+        if width:
+            rehype_attr.append(f'width={width}')
+
+        # Convert align to appropriate Tailwind CSS classes for rehype-attr
+        if align == 'left':
+            rehype_attr.append('class="float-left mr-4"')
+        elif align == 'right':
+            rehype_attr.append('class="float-right ml-4"')
+        elif align == 'center':
+            rehype_attr.append('class="mx-auto block"')
+
         if self.filename.endswith('.png'):
-            return f'![{caption}]({self.output_dir}/{self.filename})'
+            if rehype_attr:
+                attr_str = ' '.join(rehype_attr)
+                return f'![{caption}]({self.output_dir}/{self.filename}){{{attr_str}}}'
+            else:
+                return f'![{caption}]({self.output_dir}/{self.filename})'
         else:
             return f'[{caption}]({self.output_dir}/{self.filename})'
 
@@ -791,9 +808,20 @@ class SingleLineParser:
         </ac:image>
 
         Converts to Markdown:
-            ![image-20240806-095511.png](image-20240806-095511.png)
+            ![image-20240806-095511.png](image-20240806-095511.png){width="760"}
         """
         logging.debug(f"Processing Confluence image: {node}")
+
+        # Extract width attribute if custom-width is true
+        width = None
+        custom_width = node.get('custom-width', 'false')
+        if custom_width == 'true':
+            width = node.get('width', '')
+            if width:
+                logging.debug(f"Using custom width: {width}")
+
+        # Extract align attribute
+        align = node.get('align', 'center')
 
         # Find the attachment filename
         image_filename = ''
@@ -814,7 +842,7 @@ class SingleLineParser:
             for it in attachments:
                 if it.original == image_filename:
                     it.used = True
-                    markdown = it.as_markdown()
+                    markdown = it.as_markdown(width=width, align=align)
                     break
 
         if not markdown:
@@ -1045,7 +1073,7 @@ class MultiLineParser:
         </ac:image>
 
         Converts to Markdown:
-            ![image-20240806-095511.png](image-20240806-095511.png)
+            ![image-20240806-095511.png](image-20240806-095511.png){width="760"}
             *How QueryPie Works*
         """
         logging.debug(f"Processing Confluence image: {node}")
@@ -1053,6 +1081,14 @@ class MultiLineParser:
         # Extract image attributes
         align = node.get('align', 'center')
         alt_text = node.get('alt', '')
+
+        # Extract width attribute if custom-width is true
+        width = None
+        custom_width = node.get('custom-width', 'false')
+        if custom_width == 'true':
+            width = node.get('width', '')
+            if width:
+                logging.debug(f"Using custom width: {width}")
 
         # Find the attachment filename
         image_filename = ''
@@ -1080,7 +1116,7 @@ class MultiLineParser:
             for it in attachments:
                 if it.original == image_filename:
                     it.used = True
-                    markdown = it.as_markdown(caption_text)
+                    markdown = it.as_markdown(caption_text, width, align)
                     break
 
         if not markdown:
