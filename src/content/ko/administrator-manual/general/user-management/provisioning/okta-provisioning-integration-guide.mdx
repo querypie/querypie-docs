@@ -39,7 +39,7 @@ Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인
 #### Okta 커스텀 SCIM앱 생성
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png){width="760"}
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML
 </figcaption>
@@ -72,7 +72,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 #### Okta-QueryPie Provisioning 연동
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png){width="760"}
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration
 </figcaption>
@@ -92,7 +92,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다. 
 4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다. 
   <figure data-layout="center" data-align="center">
-  ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png)
+  ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png){width="324"}
   </figure>
 5. 하단의 `Save` 버튼을 클릭하여 연결 설정을 저장합니다. 
 
@@ -102,7 +102,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 #### SCIM API 활성화 및 체크
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png){width="760"}
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App
 </figcaption>
@@ -131,36 +131,36 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 2. 해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다. [Okta 예제]
     1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
       <figure data-layout="center" data-align="center">
-      ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
+      ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png){width="518"}
       </figure>
     2. `Add Attribute` 버튼을 클릭합니다. 
       <figure data-layout="center" data-align="center">
-      ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+      ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png){width="187"}
       </figure>
     3. 동기화에 필요한 Attribute를 새로 등록합니다. 
       <figure data-layout="center" data-align="center">
-      ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
+      ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png){width="314"}
       </figure>
         1. Data type : 쿼리파이와 동일하게 string 선택합니다.
         2. Display name : 옥타 내 표기할 속성명을 기입합니다.
         3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다. 
             * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다. 
               <figure data-layout="center" data-align="center">
-              ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
+              ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png){width="144"}
               </figure>
         4. External namespace : 해당 정보로 기입합니다. 
           <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >        5. 이후 `Save` 또는 `Save and Add Another` 버튼을 클릭하여 저장합니다.
         6. 그 다음 `Mappings` 버튼을 클릭합니다. 
           <figure data-layout="center" data-align="center">
-          ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+          ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png){width="187"}
           </figure>
         7. 프롬프트 상단의 탭을 2번째 탭(Okta → `{APP}`)으로 선택합니다. 
           <figure data-layout="center" data-align="center">
-          ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+          ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png){width="285"}
           </figure>
         8. 하단에 새로 생성한 Custom Attribute와 IdP 내 적절한 Attribute를 매핑하고 Save Mappings 버튼을 클릭하여 설정을 저장합니다. 
           <figure data-layout="center" data-align="center">
-          ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+          ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png){width="450"}
           </figure>
         9. 이후 사용자를 앱에 할당합니다. 
 </Callout>
@@ -172,7 +172,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 
 1. SCIM 앱으로 다시 돌아가서 Assignments 탭에서 `Assign` 버튼의 옵션을 통해 사용자를 할당합니다. 
   <figure data-layout="center" data-align="center">
-  ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png)
+  ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png){width="736"}
   <figcaption>
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
@@ -181,7 +181,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
     2.  **Assign to Groups**  : 사용자 그룹 단위로 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Users로 이동하여 사용자가 정상 푸시되었는지 확인합니다. 
   <figure data-layout="center" data-align="center">
-  ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png)
+  ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png){width="736"}
   <figcaption>
   Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
   </figcaption>
@@ -191,7 +191,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 #### 그룹 Provisioning 체크
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png){width="760"}
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups
 </figcaption>
