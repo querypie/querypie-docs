@@ -52,12 +52,30 @@ Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행
 </Callout>
 
 1. 실행계획(Explain) 결과 확인
-    1. Table 형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/> 
-    2. JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. `{JSON}` 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/> <br/> <br/>내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.
+    1. Table 형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/> <br/>  
+      <figure data-layout="center" data-align="center">
+      ![image-20241030-002325.png](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png)
+      </figure>
+    2. JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. `{JSON}` 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/> <br/>  <br/> <br/>  <br/>내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.
+      <figure data-layout="center" data-align="center">
+      ![`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다.](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003040.png)
+      <figcaption>
+      `{JSON}`을 클릭하면 전체 내용을 볼수 있습니다.
+      </figcaption>
+      </figure>
+      <figure data-layout="center" data-align="center">
+      ![JSON 결과의 복사와 내보내기가 가능합니다.](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003129.png)
+      <figcaption>
+      JSON 결과의 복사와 내보내기가 가능합니다.
+      </figcaption>
+      </figure>
 
 ### 기타 참고사항
 
 1. 결재자(Approver)의 실행계획(Explain)결과 확인<br/>결재자는 Explain Results 탭에서 첨부된 실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.
+  <figure data-layout="center" data-align="center">
+  ![image-20241030-004258.png](/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-004258.png)
+  </figure>
 
 <Callout type="important">
 결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다.

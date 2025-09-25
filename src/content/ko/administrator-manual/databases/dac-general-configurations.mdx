@@ -87,6 +87,9 @@ Query Audit Detail
     * Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)
     * Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)
     * 입력된 Restricted Statement 포함 쿼리 실행시 차단됨
+      <figure data-layout="center" data-align="center">
+      ![image-20240326-011036.png](/administrator-manual/databases/dac-general-configurations/image-20240326-011036.png)
+      </figure>
 
 <Callout type="important">
 Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승인 받더라도 실행이 차단됩니다. 사용자에 따라 실행을 허용해야 하는 쿼리를 입력하지 않도록 합니다.
@@ -94,6 +97,9 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승�
 
 *  **Justification Length**  : Connection 설정에서 “User Action Purpose Required” 옵션이 활성화 되어 있거나 Ledger table management 정책에서 사유입력을 강제한 경우 Web Editor 또는 Agent를 통해 사유입력을 해야 합니다. 이때 입력란에 입력하는 글자길이의 최소값 및 최대값을 관리자가 지정합니다.
     * 입력값의 최소값은 1이고 최대값은 1000입니다.<br/>
+      <figure data-layout="center" data-align="center">
+      ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
+      </figure>
 
 *  **Query Annotation**  : 쿼리 수행시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화 한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.
     * User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.
@@ -111,6 +117,12 @@ Query Audit
 
 *  **Member based Connection Filtering :** Workflow에서 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링 하는 기능입니다. 
     * 커넥션의 상세 화면에서 connection member 에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Reqeust 에 노출됩니다.<br/>
+      <figure data-layout="center" data-align="center">
+      ![Databases &gt; Connection Management &gt; DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당](/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png)
+      <figcaption>
+      Databases &gt; Connection Management &gt; DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당
+      </figcaption>
+      </figure>
 
 <Callout type="info">
 **DB 작업에 대한 사유 입력 강제 설정**

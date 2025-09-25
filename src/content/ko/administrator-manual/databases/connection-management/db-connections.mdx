@@ -105,7 +105,13 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Database Type** : DB 유형 (eg. MySQL, MairaDB, PostgreSQL…)
     *  **Cloud Provider** : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
     *  **Favorite View** : 즐겨찾기 설정 여부
-        * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다. 
+        * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다. <br/>  
+          <figure data-layout="center" data-align="center">
+          ![즐겨찾기 설정 버튼](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png)
+          <figcaption>
+          즐겨찾기 설정 버튼
+          </figcaption>
+          </figure>
     *  **SSL Status** : SSL 활성화 여부
     *  **Label** : 원장DB 여부
     *  **Tag** : 커넥션에 할당된 태그
@@ -226,6 +232,9 @@ Additional Information 탭
 **User Action Purpose Required** <br/>11.2.0부터 User Action Purpose Required 옵션의 SQL Execute이벤트에 대한 사유 입력을 Agent를 통해서도 받을 수 있도록 개선되었습니다.<br/>&lt; 제약사항 &gt;
 * 3rd party tool (DBeaver, DataGrip등)을 사용할 때 사유입력을 강제할 수 있는 것은 SQL Execute 항목만 해당됩니다.
 * 3rd party tool에서 내부적으로 전송하는 쿼리 (DB 스키마를 트리구조로 보여주거나 데이터 타입을 UI에서 표시해주는 기능을 수행하는 쿼리)도 SQL Execute로 감지되어 사유입력을 요구합니다. 예) 최초 접속하자마자 쿼리를 입력하지 않았음에도 불구하고 사유입력 창이 팝업됩니다. 이 경우 SQL 구문의 종류를 판단하지 않으므로 설정에 따라 상당히 불편함을 초래할 수 있습니다. 따라서 Database &gt; General &gt; Configurations 의 Query Purpose Duration for Agent 옵션의 값을 적절하게 조절해야 합니다.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20250825-020520.png](/administrator-manual/databases/connection-management/db-connections/image-20250825-020520.png)
+  </figure>
 </Callout>
 
 <Callout type="info">

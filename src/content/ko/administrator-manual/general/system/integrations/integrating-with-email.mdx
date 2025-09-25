@@ -20,7 +20,13 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
-3. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 SMTP 정보를 입력할 수 있는 팝업이 표시됩니다. <br/> 
+3. 상세 페이지에 있는 `Configure` 버튼을 클릭하면 SMTP 정보를 입력할 수 있는 팝업이 표시됩니다. <br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Email Integration 상세페이지](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163108.png)
+  <figcaption>
+  Email Integration 상세페이지
+  </figcaption>
+  </figure>
 4. SMTP 설정을 생성하기 위해 다음의 정보들을 입력합니다. 
     1.  **Email Server Name**  : 식별이 용이하도록 임의의 이름을 입력합니다. 
     2.  **Host**  : SMTP 서버의 hostname (FQDN) 을 입력합니다. 
@@ -36,26 +42,50 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
     10.  **Send Workflow Notification via Email 스위치**  : 결재 요청 수신, 승인/반려 처리 등 워크플로우 관련 이벤트 발생 시 관련자에게 이메일 알림을 발송할지 여부를 선택합니다.
     11.  **Test 버튼**  : SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
     12.  
+      <figure data-layout="center" data-align="center">
+      ![SMTP 설정 팝업 다이얼로그](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163449.png)
+      <figcaption>
+      SMTP 설정 팝업 다이얼로그
+      </figcaption>
+      </figure>
 5. `OK` 버튼을 누르고 설정을 저장합니다. 
 
 ### Email Integration 설정 수정
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
-3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Edit 버튼을 누릅니다.<br/> 
+3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Edit 버튼을 누릅니다.<br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 4. 변경이 필요한 부분을 수정하고 저장합니다.
 
 ### Email 발송내역 확인
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
-3. Sent Email History 목록을 확인합니다.<br/>이 목록에 저장되는 email 발송 이력은 30일 동안 보관되고 30일 이전의 내용은 삭제됩니다.<br/> 
+3. Sent Email History 목록을 확인합니다.<br/>이 목록에 저장되는 email 발송 이력은 30일 동안 보관되고 30일 이전의 내용은 삭제됩니다.<br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Sent Email History](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-005544.png)
+  <figcaption>
+  Sent Email History
+  </figcaption>
+  </figure>
 
 ### Email Integration 설정 삭제
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다. 
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다. 
 3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Delete 버튼을 누릅니다.<br/>SMTP 설정을 사용하는 Alert, MFA 등의 설정이 존재하는 경우 SMTP 설정을 삭제할 수 없습니다.<br/>먼저 관련 설정을 모두 삭제해야 삭제 가능합니다.<br/>
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 
 ### 사용자 비밀번호 초기화 메일 발송
 

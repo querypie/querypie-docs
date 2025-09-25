@@ -21,10 +21,16 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 </figure>
 
 1.  **Add Resources**  모달 
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073346.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png)
+  </figure>
     1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
     2. Cluster 명으로 리소스 검색이 가능합니다.
     3. 체크박스에 체크한 리소스를 `Add` 버튼을 클릭하여 코드에 삽입합니다.
 2.  **Set Subjects**  모달
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
+  </figure>
     1. Spec: Allow에서만 동작합니다.
     2.  **Kubernetes Groups**  : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다. 
     3.  **Permitted Impersonation**  : (Optional) 해당 필드를 통해 사용자가 클라이언트를 통해 실제 --as, --as-group를 통한 impersonation을 시도할 때 적용 가능한 쿠버네티스 사용자/그룹을 나열합니다.
@@ -33,6 +39,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
         3. ‘,’ 를 통해 다중으로 등록 가능합니다. 
     4. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. 
 3.  **Add Actions**  모달
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
+  </figure>
     1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
     2.  **API Groups** : 디폴트로 "*" 제공; 관리자가 수정 가능하며, ‘,’로 다중 기입 가능합니다.
     3.  **Resources** : 쿠버네티스 리소스를 명시합니다. 
@@ -55,6 +64,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     7. `Add` 버튼을 클릭하여 actions 리스트 중 하나의 액션 세트를 정의할 수 있습니다. 
     8. 코드 상으로 append에 해당하는 부분으로 기존의 추가되었던 액션을 초기화하지 않고 새로 추가가 가능합니다.
 4.  **Set Conditions**  모달
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073628.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png)
+  </figure>
     1. 해당 항목은 모두 선택사항입니다.
     2. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. 
     3.  **Resource Tags**  (Optional)

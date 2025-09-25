@@ -20,6 +20,9 @@ title: 'Request Audit'
     1.  **Name**  : 사용자 이름
     2.  **Cluster Name**  : 쿼리파이 상에 등록된 클러스터 이름
 4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-082906.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png)
+  </figure>
     1.  **Verb**  : 호출된 특정 쿠버네티스 API 액션
         * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
     2.  **Resource**  : 호출된 특정 쿠버네티스 리소스
@@ -50,7 +53,10 @@ title: 'Request Audit'
 
 ### Request Audit 상세 내역 조회하기
 
-1. 각 행을 클릭하면 세부 정보 조회가 가능합니다.
+1. 각 행을 클릭하면 세부 정보 조회가 가능합니다. <br/> 
+  <figure data-layout="center" data-align="center">
+  ![image-20250116-121412.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png)
+  </figure>
     1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:
         1.  **Result**  : API 호출 성공/실패 여부 
             1. :check_mark: Success
@@ -69,7 +75,13 @@ title: 'Request Audit'
         13.  **Pod Session Recording**  : Pod exec API로 실행 시 해당 세션에 대한 레코딩
             1. 세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.
             2. Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 
+              <figure data-layout="center" data-align="center">
+              ![image-20240512-055657.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png)
+              </figure>
             3. 링크 클릭 시 관련 세션 레코딩이 플레이됩니다. 
+              <figure data-layout="center" data-align="center">
+              ![image-20240721-082651.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png)
+              </figure>
         14. 중간 단에는 API 호출 내역에 따른 정보를 노출합니다: 
             1.  **Verb**  : 호출된 특정 쿠버네티스 API 액션
             2.  **Namespace**  : 대상 네임스페이스 

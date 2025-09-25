@@ -27,12 +27,21 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 1.  **DB Connections 메뉴로 이동** 
     * Admin &gt; Databases &gt; Connection Management &gt; DB Connections를 선택합니다.
     * `+ Create Connection` 버튼을 클릭합니다.
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-10.10.11-AM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.10.11-AM.png)
+      </figure>
 2.  **Custom Data Source 생성** 
     *  Custom Data Source 아이콘을 클릭합니다.
-    * 생성 시 다음과 같은 경고 메시지가 표시됩니다: **Restrictions:** 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-10.11.42-AM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.11.42-AM.png)
+      </figure>
+    * 생성 시 다음과 같은 경고 메시지가 표시됩니다: <br/>  **Restrictions:** 
         * Only TCP access control is available; Privileges controland Query Audit are not supported.
         * Access is only possible through a proxy; it cannot be accessed via the web editor.
     * 아래의 연결 정보를 원하는 설정에 맞게 입력합니다. **** 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-12.02.22-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-12.02.22-PM.png)
+      </figure>
         * Connection Name (필수) : 연결 이름 입력
         * Host (필수) : 대상 데이터 소스의 호스트 주소
         * Port (필수) : 대상 데이터 소스의 포트 번호
@@ -49,9 +58,15 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
         * Admin &gt; Databases &gt; Connection Management &gt; DB Connections 목록에서 수정하고 싶은 Custom Data Source를 선택합니다.
         * 원하는 항목을 변경할 수 있으며 Tag를 추가할 수 있습니다.
         * 수정 후 우측 상단의 `Save Changes`버튼을 클릭하여 변경사항을 저장합니다.
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-6.43.08-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.43.08-PM.png)
+          </figure>
     *  **삭제** 
         * DB Connections 목록에서 삭제를 원하는 커넥션의 좌측 체크 박스를 선택 후 `Delete`버튼을 클릭합니다. 
         * “Are you sure you want to delete“ 문구가 나온 후 `OK`버튼을 클릭하여 커넥션을 삭제합니다.
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-6.54.56-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.54.56-PM.png)
+          </figure>
 
 #### Access Control 설정
 
@@ -64,6 +79,9 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
     * Custom Data Source의 Privilege는 별도 타입이 없는 "-"로 표시됩니다.
     * 부여 시 만료일(Expiration Date)을 설정할 수 있습니다.
     * 선택 완료 후 `Grant` 버튼을 눌러 권한을 부여합니다. 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-1.59.53-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-1.59.53-PM.png)
+      </figure>
 
 
 1.  **권한 회수** 
@@ -71,6 +89,9 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
     * 사용자에게 부여된 권한을 중간에 회수하려면 Privilege를 Revoke 합니다.
         * Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User를 선택합니다. 
         * Detail 페이지에서 권한을 회수하기 위한 커넥션을 선택한 뒤 `Revoke` 버튼을 클릭합니다.
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-3.18.12-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-3.18.12-PM.png)
+          </figure>
 
 #### Audit Log 확인
 
