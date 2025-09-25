@@ -29,7 +29,7 @@ npm start
 - Production Deployment
   - [x] https://docs.querypie.com
   - [x] https://docs.querypie.io
-  - [x] https://querypie-docs.vercel.app
+  - [ ] ~~https://querypie-docs.vercel.app~~
 - Staging Deployment
   - [ ] https://docs-staging.querypie.com
   - [x] https://docs-staging.querypie.io
