@@ -990,8 +990,10 @@ class MultiLineParser:
         indent = " " * 4 * (len(self.list_stack) - 1)
         if list_type == 'ul':
             prefix = f"{indent}* "
+            prefix_for_children = f"{indent}  "
         else:
             prefix = f"{indent}{counter}. "
+            prefix_for_children = f"{indent}  "
 
         # Process each child element separately to handle mixed content
         li_itself = []
@@ -1021,7 +1023,7 @@ class MultiLineParser:
         self.markdown_lines.append(f'{prefix}{itself}\n')
         if len(child_markdown) > 0:
             for i in range(len(child_markdown)):
-                child_markdown[i] = prefix + child_markdown[i]
+                child_markdown[i] = prefix_for_children + child_markdown[i]
             self.markdown_lines.extend(child_markdown)
 
         # Handle nested lists
