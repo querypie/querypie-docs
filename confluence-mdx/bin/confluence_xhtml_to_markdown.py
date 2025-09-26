@@ -130,7 +130,7 @@ class Attachment:
 
         if self.filename.endswith('.png'):
             if rehype_attr:
-                attr_str = ' ' + ' '.join(rehype_attr)
+                attr_str = ' '.join(rehype_attr)
                 return f'![{caption}]({self.output_dir}/{self.filename}){{{attr_str}}}'
             else:
                 return f'![{caption}]({self.output_dir}/{self.filename})'
