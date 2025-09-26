@@ -119,11 +119,14 @@ class Attachment:
 
         # Convert align to appropriate Tailwind CSS classes for rehype-attr
         if align == 'left':
-            rehype_attr.append('.float-left').append('.mr-4')
+            rehype_attr.append('.float-left')
+            rehype_attr.append('.mr-4')
         elif align == 'right':
-            rehype_attr.append('.float-right').append('.mr-4')
+            rehype_attr.append('.float-right')
+            rehype_attr.append('.ml-4')
         elif align == 'center':
-            rehype_attr.append('.mx-auto').append('.block')
+            rehype_attr.append('.mx-auto')
+            rehype_attr.append('.block')
 
         if self.filename.endswith('.png'):
             if rehype_attr:
