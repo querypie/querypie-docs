@@ -109,12 +109,26 @@ class Attachment:
             # Change file permission to 0644
             os.chmod(destination_file, 0o644)
 
-    def as_markdown(self, caption: Optional[str] = None, width: Optional[str] = None) -> str:
+    def as_markdown(self, caption: Optional[str] = None, width: Optional[str] = None, align: str = None) -> str:
         if not caption:
             caption = self.filename
+
+        rehype_attr = []
+        if width:
+            rehype_attr.append(f'width={width}')
+
+        # Convert align to appropriate Tailwind CSS classes for rehype-attr
+        if align == 'left':
+            rehype_attr.append('.float-left').append('.mr-4')
+        elif align == 'right':
+            rehype_attr.append('.float-right').append('.mr-4')
+        elif align == 'center':
+            rehype_attr.append('.mx-auto').append('.block')
+
         if self.filename.endswith('.png'):
-            if width:
-                return f'![{caption}]({self.output_dir}/{self.filename}){{width="{width}"}}'
+            if rehype_attr:
+                attr_str = ' ' + ' '.join(rehype_attr)
+                return f'![{caption}]({self.output_dir}/{self.filename}){{{attr_str}}}'
             else:
                 return f'![{caption}]({self.output_dir}/{self.filename})'
         else:
@@ -806,6 +820,9 @@ class SingleLineParser:
             if width:
                 logging.debug(f"Using custom width: {width}")
 
+        # Extract align attribute
+        align = node.get('align', 'center')
+
         # Find the attachment filename
         image_filename = ''
         attachment = node.find('ri:attachment')
@@ -825,7 +842,7 @@ class SingleLineParser:
             for it in attachments:
                 if it.original == image_filename:
                     it.used = True
-                    markdown = it.as_markdown(width=width)
+                    markdown = it.as_markdown(width=width, align=align)
                     break
 
         if not markdown:
@@ -1099,7 +1116,7 @@ class MultiLineParser:
             for it in attachments:
                 if it.original == image_filename:
                     it.used = True
-                    markdown = it.as_markdown(caption_text, width)
+                    markdown = it.as_markdown(caption_text, width, align)
                     break
 
         if not markdown:
