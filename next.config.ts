@@ -1,6 +1,7 @@
 import nextra from 'nextra';
 import remarkEmoji from 'remark-emoji';
 import remarkGfm from 'remark-gfm';
+import rehypeAttrs from 'rehype-attr';
 
 // Set up Nextra with its configuration
 const withNextra = nextra({
@@ -18,6 +19,9 @@ const withNextra = nextra({
   // Add remark plugins for emoji and GitHub Flavored Markdown support
   mdxOptions: {
     remarkPlugins: [remarkEmoji, remarkGfm],
+    rehypePlugins: [
+      [rehypeAttrs, { properties: ['width', 'class'] }]
+    ],
   },
 });
 

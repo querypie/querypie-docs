@@ -37,6 +37,7 @@
     "pino": "^9.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "rehype-attr": "^4.0.2",
     "remark-emoji": "^5.0.2",
     "remark-gfm": "^4.0.1",
     "zod": "^4.1.11"
