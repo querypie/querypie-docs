@@ -1,0 +1,16 @@
+# Test environment files
+node_modules/
+package-lock.json
+.next/
+build.log
+
+# Copied source files
+src/
+public/
+next.config.ts
+package.json
+tsconfig.json
+
+# Build artifacts
+out/
+dist/
