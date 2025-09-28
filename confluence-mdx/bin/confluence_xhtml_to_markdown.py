@@ -156,14 +156,12 @@ HIDDEN_CHARACTERS = {
     '\u3164': ''  # Hangul Filler
 }
 
-
 def confluence_url():
     if GLOBAL_PAGE_V1:
         page_id = GLOBAL_PAGE_V1.get('id')
         return f'https://querypie.atlassian.net/wiki/spaces/QM/pages/{page_id}/'
     else:
         return 'https://querypie.atlassian.net/wiki/spaces/QM/overview'
-
 
 def clean_text(text: Optional[str]) -> Optional[str]:
     """Clean text by removing hidden characters"""
@@ -176,7 +174,6 @@ def clean_text(text: Optional[str]) -> Optional[str]:
     for hidden_char, replacement in HIDDEN_CHARACTERS.items():
         cleaned_text = cleaned_text.replace(hidden_char, replacement)
     return cleaned_text
-
 
 def load_pages_yaml(yaml_path: str, pages_by_title: PagesDict, pages_by_id: PagesDict):
     """
@@ -1693,7 +1690,6 @@ def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_
                         return int(item.get('childPosition', 0))
                     except Exception:
                         return 0
-
                 ordered = sorted(results, key=_pos)
 
                 # Determine where _meta.ts and child mdx files should live
