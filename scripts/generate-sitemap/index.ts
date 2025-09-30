@@ -9,6 +9,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { listGitTrackedFilesInDirectory, type GitTrackedFile } from './git-utils';
 
 // Configuration
 const BASE_URL = 'https://docs.querypie.com';
@@ -17,6 +18,23 @@ const PUBLIC_DIR = path.join(process.cwd(), 'public');
 const LANGUAGES = ['en', 'ko', 'ja'] as const;
 
 type Language = typeof LANGUAGES[number];
+
+/**
+ * Sitemap URL entry type
+ */
+interface SitemapUrl {
+  /** Local file pathname for Git tracking */
+  pathname: string;
+  /** The URL location */
+  loc: string;
+  /** Change frequency (daily, weekly, monthly, yearly, never) */
+  changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  /** Priority value between 0.0 and 1.0 */
+  priority: number;
+  /** Last modification date (optional) */
+  lastmod?: Date;
+}
+
 
 /**
  * Find all MDX files in a directory recursively
@@ -45,12 +63,13 @@ function findMdxFiles(dir: string, baseDir: string, result: string[] = []): stri
 }
 
 /**
- * Convert file path to URL
+ * Convert file path to SitemapUrl entry
  * @param filePath - Path to MDX file
  * @param lang - Language code
- * @returns URL
+ * @param gitTrackedFiles - Array of Git tracked file information
+ * @returns SitemapUrl entry
  */
-function filePathToUrl(filePath: string, lang: Language): string {
+function filePathToSitemapUrl(filePath: string, lang: Language, gitTrackedFiles: GitTrackedFile[]): SitemapUrl {
   // Remove language prefix and file extension
   let urlPath = filePath.replace(`${lang}/`, '').replace('.mdx', '');
 
@@ -59,29 +78,61 @@ function filePathToUrl(filePath: string, lang: Language): string {
     urlPath = urlPath.replace(/index$/, '');
   }
 
-  // Remove trailing slash if present
+  // Remove a trailing slash if present
   if (urlPath.endsWith('/')) {
     urlPath = urlPath.slice(0, -1);
   }
 
   // Construct full URL
-  return `${BASE_URL}/${lang}${urlPath ? '/' + urlPath : ''}`;
+  const loc = `${BASE_URL}/${lang}${urlPath ? '/' + urlPath : ''}`;
+  
+  // Convert absolute filePath to a relative path for Git matching
+  const fullFilePath = path.join(CONTENT_DIR, filePath);
+  const relativePath = path.relative(CONTENT_DIR, fullFilePath);
+  const gitInfo = gitTrackedFiles.find(file => file.pathname === relativePath);
+  
+  // Determine priority based on the file path
+  let priority = 0.7; // Default priority
+  const slashCount = (filePath.match(/\//g) || []).length;
+  if (filePath.includes('index.mdx') || filePath.endsWith('index.mdx')) {
+    priority = 1.0; // Higher priority for index pages
+  } else if (slashCount <= 1) {
+    priority = 0.9; // High priority for pages with one or fewer slashes
+  }
+  
+  // Set change frequency to weekly for all content
+  const changefreq: SitemapUrl['changefreq'] = 'weekly';
+  
+  return {
+    loc,
+    changefreq,
+    priority,
+    pathname: relativePath,
+    lastmod: gitInfo?.modified_at
+  };
 }
 
 /**
- * Generate sitemap XML content
- * @param urls - Array of URLs
+ * Generate sitemap XML content from SitemapUrl entries
+ * @param urls - Array of SitemapUrl entries
  * @returns XML content
  */
-function generateSitemapXml(urls: string[]): string {
+function generateSitemapXml(urls: SitemapUrl[]): string {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
-  for (const url of urls) {
+  for (const urlEntry of urls) {
     xml += '  <url>\n';
-    xml += `    <loc>${url}</loc>\n`;
-    xml += '    <changefreq>weekly</changefreq>\n';
-    xml += '    <priority>0.8</priority>\n';
+    xml += `    <loc>${urlEntry.loc}</loc>\n`;
+    
+    // Add lastmod if available
+    if (urlEntry.lastmod) {
+      const lastmodDate = urlEntry.lastmod.toISOString();
+      xml += `    <lastmod>${lastmodDate}</lastmod>\n`;
+    }
+    
+    xml += `    <changefreq>${urlEntry.changefreq}</changefreq>\n`;
+    xml += `    <priority>${urlEntry.priority}</priority>\n`;
     xml += '  </url>\n';
   }
 
@@ -92,9 +143,10 @@ function generateSitemapXml(urls: string[]): string {
 /**
  * Generate sitemap for a specific language
  * @param lang - Language code
- * @returns Array of URLs
+ * @param gitTrackedFiles - Array of Git tracked file information
+ * @returns Array of SitemapUrl entries
  */
-function generateLanguageSitemap(lang: Language): string[] {
+function generateLanguageSitemap(lang: Language, gitTrackedFiles: GitTrackedFile[]): SitemapUrl[] {
   const langDir = path.join(CONTENT_DIR, lang);
 
   if (!fs.existsSync(langDir)) {
@@ -103,11 +155,11 @@ function generateLanguageSitemap(lang: Language): string[] {
   }
 
   const mdxFiles = findMdxFiles(langDir, CONTENT_DIR);
-  const urls: string[] = [];
+  const urls: SitemapUrl[] = [];
 
   for (const file of mdxFiles) {
-    const url = filePathToUrl(file, lang);
-    urls.push(url);
+    const sitemapUrl = filePathToSitemapUrl(file, lang, gitTrackedFiles);
+    urls.push(sitemapUrl);
   }
 
   return urls;
@@ -125,8 +177,8 @@ function generateSitemapIndex(): string | undefined {
     return undefined;
   }
   
-  // Read template file
-  let templateContent = fs.readFileSync(templateFile, 'utf8');
+  // Read the template file
+  const templateContent = fs.readFileSync(templateFile, 'utf8');
   
   // Generate language-specific sitemap entries
   let languageEntries = '';
@@ -143,7 +195,7 @@ function generateSitemapIndex(): string | undefined {
   // Replace placeholder with language entries
   const xml = templateContent.replace('<!-- LANGUAGE_SITEMAPS_PLACEHOLDER -->', languageEntries);
   
-  // Write sitemap index file
+  // Write a sitemap index file
   const indexFile = path.join(PUBLIC_DIR, 'sitemap.xml');
   fs.writeFileSync(indexFile, xml);
   return indexFile;
@@ -155,7 +207,12 @@ function generateSitemapIndex(): string | undefined {
 function main(): void {
   console.log('Generating language-specific sitemap.xml files...');
 
-  // Ensure public directory exists
+  // Get Git tracked files information
+  console.log('Getting Git tracked files information...');
+  const gitTrackedFiles = listGitTrackedFilesInDirectory('src/content');
+  console.log(`Found ${gitTrackedFiles.length} Git tracked files`);
+
+  // Ensure the public directory exists
   if (!fs.existsSync(PUBLIC_DIR)) {
     fs.mkdirSync(PUBLIC_DIR, { recursive: true });
   }
@@ -164,10 +221,10 @@ function main(): void {
 
   // Process each language and generate separate sitemap files
   for (const lang of LANGUAGES) {
-    const urls = generateLanguageSitemap(lang);
+    const urls = generateLanguageSitemap(lang, gitTrackedFiles);
     
     if (urls.length > 0) {
-      // Create language-specific directory
+      // Create a language-specific directory
       const langDir = path.join(PUBLIC_DIR, lang);
       if (!fs.existsSync(langDir)) {
         fs.mkdirSync(langDir, { recursive: true });
@@ -176,7 +233,7 @@ function main(): void {
       // Generate sitemap XML for this language
       const xml = generateSitemapXml(urls);
       
-      // Write to language-specific directory
+      // Write to the language-specific directory
       const outputFile = path.join(langDir, 'sitemap.xml');
       fs.writeFileSync(outputFile, xml);
       const relativePath = path.relative(process.cwd(), outputFile);
