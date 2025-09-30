@@ -1,6 +1,5 @@
 import {middleware as nextraMiddleware} from 'nextra/locales';
 import {NextRequest, NextResponse} from 'next/server';
-import {handleProxyRequest, shouldProxy} from './lib/proxy';
 import {middlewareLogger} from './lib/logger';
 
 // Supported languages
@@ -76,12 +75,6 @@ Sitemap: https://docs.querypie.com/sitemap.xml
 Disallow: /
 `);
     }
-  }
-
-  // Handle proxy requests before Nextra routing
-  if (shouldProxy(request.nextUrl.pathname)) {
-    middlewareLogger.debug('Proxy request detected, handling with proxy');
-    return handleProxyRequest(request);
   }
 
   middlewareLogger.debug('Handling with Nextra middleware');
