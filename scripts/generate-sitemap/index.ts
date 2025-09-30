@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 /**
  * Sitemap Generator Script
  *
@@ -9,24 +7,25 @@
  * The main public/sitemap.xml is preserved for manual editing.
  */
 
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Configuration
 const BASE_URL = 'https://docs.querypie.com';
 const CONTENT_DIR = path.join(process.cwd(), 'src', 'content');
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
-const LANGUAGES = ['en', 'ko', 'ja'];
+const LANGUAGES = ['en', 'ko', 'ja'] as const;
 
+type Language = typeof LANGUAGES[number];
 
 /**
  * Find all MDX files in a directory recursively
- * @param {string} dir - Directory to scan
- * @param {string} baseDir - Base directory for relative path calculation
- * @param {Array} result - Array to store results
- * @returns {Array} - Array of file paths
+ * @param dir - Directory to scan
+ * @param baseDir - Base directory for relative path calculation
+ * @param result - Array to store results
+ * @returns Array of file paths
  */
-function findMdxFiles(dir, baseDir, result = []) {
+function findMdxFiles(dir: string, baseDir: string, result: string[] = []): string[] {
   const files = fs.readdirSync(dir);
 
   for (const file of files) {
@@ -47,11 +46,11 @@ function findMdxFiles(dir, baseDir, result = []) {
 
 /**
  * Convert file path to URL
- * @param {string} filePath - Path to MDX file
- * @param {string} lang - Language code
- * @returns {string} - URL
+ * @param filePath - Path to MDX file
+ * @param lang - Language code
+ * @returns URL
  */
-function filePathToUrl(filePath, lang) {
+function filePathToUrl(filePath: string, lang: Language): string {
   // Remove language prefix and file extension
   let urlPath = filePath.replace(`${lang}/`, '').replace('.mdx', '');
 
@@ -69,13 +68,12 @@ function filePathToUrl(filePath, lang) {
   return `${BASE_URL}/${lang}${urlPath ? '/' + urlPath : ''}`;
 }
 
-
 /**
  * Generate sitemap XML content
- * @param {Array} urls - Array of URLs
- * @returns {string} - XML content
+ * @param urls - Array of URLs
+ * @returns XML content
  */
-function generateSitemapXml(urls) {
+function generateSitemapXml(urls: string[]): string {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
@@ -93,10 +91,10 @@ function generateSitemapXml(urls) {
 
 /**
  * Generate sitemap for a specific language
- * @param {string} lang - Language code
- * @returns {Array} - Array of URLs
+ * @param lang - Language code
+ * @returns Array of URLs
  */
-function generateLanguageSitemap(lang) {
+function generateLanguageSitemap(lang: Language): string[] {
   const langDir = path.join(CONTENT_DIR, lang);
 
   if (!fs.existsSync(langDir)) {
@@ -105,7 +103,7 @@ function generateLanguageSitemap(lang) {
   }
 
   const mdxFiles = findMdxFiles(langDir, CONTENT_DIR);
-  const urls = [];
+  const urls: string[] = [];
 
   for (const file of mdxFiles) {
     const url = filePathToUrl(file, lang);
@@ -116,9 +114,45 @@ function generateLanguageSitemap(lang) {
 }
 
 /**
+ * Generate sitemap index file based on template
+ * @returns Path to the generated index file
+ */
+function generateSitemapIndex(): string | undefined {
+  const templateFile = path.join(PUBLIC_DIR, '_sitemap.tmpl.xml');
+  
+  if (!fs.existsSync(templateFile)) {
+    console.error(`Template file not found: ${templateFile}`);
+    return undefined;
+  }
+  
+  // Read template file
+  let templateContent = fs.readFileSync(templateFile, 'utf8');
+  
+  // Generate language-specific sitemap entries
+  let languageEntries = '';
+  for (const lang of LANGUAGES) {
+    const sitemapFile = path.join(PUBLIC_DIR, lang, 'sitemap.xml');
+    
+    if (fs.existsSync(sitemapFile)) {
+      languageEntries += '  <sitemap>\n';
+      languageEntries += `    <loc>${BASE_URL}/${lang}/sitemap.xml</loc>\n`;
+      languageEntries += '  </sitemap>\n';
+    }
+  }
+  
+  // Replace placeholder with language entries
+  const xml = templateContent.replace('<!-- LANGUAGE_SITEMAPS_PLACEHOLDER -->', languageEntries);
+  
+  // Write sitemap index file
+  const indexFile = path.join(PUBLIC_DIR, 'sitemap.xml');
+  fs.writeFileSync(indexFile, xml);
+  return indexFile;
+}
+
+/**
  * Main function
  */
-function main() {
+function main(): void {
   console.log('Generating language-specific sitemap.xml files...');
 
   // Ensure public directory exists
@@ -153,45 +187,10 @@ function main() {
 
   // Generate sitemap index file
   const indexFile = generateSitemapIndex();
-  const relativeIndexPath = path.relative(process.cwd(), indexFile);
+  const relativeIndexPath = indexFile ? path.relative(process.cwd(), indexFile) : 'Failed to generate';
 
   console.log(`\nTotal: ${totalUrls} URLs`);
   console.log(`Sitemap index: ${relativeIndexPath}`);
-}
-
-/**
- * Generate sitemap index file based on template
- */
-function generateSitemapIndex() {
-  const templateFile = path.join(PUBLIC_DIR, '_sitemap.tmpl.xml');
-  
-  if (!fs.existsSync(templateFile)) {
-    console.error(`Template file not found: ${templateFile}`);
-    return;
-  }
-  
-  // Read template file
-  let templateContent = fs.readFileSync(templateFile, 'utf8');
-  
-  // Generate language-specific sitemap entries
-  let languageEntries = '';
-  for (const lang of LANGUAGES) {
-    const sitemapFile = path.join(PUBLIC_DIR, lang, 'sitemap.xml');
-    
-    if (fs.existsSync(sitemapFile)) {
-      languageEntries += '  <sitemap>\n';
-      languageEntries += `    <loc>${BASE_URL}/${lang}/sitemap.xml</loc>\n`;
-      languageEntries += '  </sitemap>\n';
-    }
-  }
-  
-  // Replace placeholder with language entries
-  const xml = templateContent.replace('<!-- LANGUAGE_SITEMAPS_PLACEHOLDER -->', languageEntries);
-  
-  // Write sitemap index file
-  const indexFile = path.join(PUBLIC_DIR, 'sitemap.xml');
-  fs.writeFileSync(indexFile, xml);
-  return indexFile;
 }
 
 // Run the script
