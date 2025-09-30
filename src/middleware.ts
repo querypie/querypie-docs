@@ -89,8 +89,10 @@ Disallow: /
 }
 
 export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
+  // Matcher for specific routes that need middleware processing
+  // TODO(JK): Refer to this for more files to exclude, for example: manifest.json, ...
+  // https://nextjs.org/docs/app/api-reference/file-conventions/metadata
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|manifest|_pagefind|sitemap.xml|icon-.*.png).*)',
+    '/((?!_next/static|_next/image|_pagefind|.*\\.ico|.*\\.png|.*\\.mov|.*\\.xml).*)',
   ],
 };
