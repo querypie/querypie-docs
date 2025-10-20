@@ -1,0 +1,66 @@
+---
+title: 'OAuth Client Application'
+---
+
+# OAuth Client Application
+
+### Overview
+
+QueryPie can act as an OAuth 2.0 Provider so that external applications can authenticate users and access data. You can register external applications as clients, and QueryPie issues tokens to securely access QueryPie resources.
+
+### Register an OAuth Client Application
+
+<figure data-layout="center" data-align="center">
+![OAuth Client Application under Admin &gt; General &gt; System &gt; Integrations &gt; Authentication](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-041209.png)
+<figcaption>
+OAuth Client Application under Admin &gt; General &gt; System &gt; Integrations &gt; Authentication
+</figcaption>
+</figure>
+
+* In Admin &gt; General &gt; System &gt; Integrations &gt; Authentication, select OAuth Client Application.
+* Click `+Add`, enter the application information, and click `Save`.
+    *  **Name**  : Enter a recognizable name.
+    *  **Redirect URI**  : Enter the client URL to redirect to after authentication.
+    *  **Access Token Timeout (Minutes)**  : Default 60, minimum 5.
+    *  **Refresh Token Timeout (Minutes)**  : Default 1440, minimum 5.
+
+<figure data-layout="center" data-align="center">
+![Add OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043210.png)
+<figcaption>
+Add OAuth Client Application
+</figcaption>
+</figure>
+
+* After saving, a popup shows the Client ID and Client Secret. Since the Client Secret cannot be retrieved again, copy and store it securely. 
+
+<figure data-layout="center" data-align="center">
+![Client ID and Client Secret](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043334.png)
+<figcaption>
+Client ID and Client Secret
+</figcaption>
+</figure>
+
+### Edit OAuth Client Application settings
+
+<figure data-layout="center" data-align="center">
+![Edit OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044214.png)
+<figcaption>
+Edit OAuth Client Application
+</figcaption>
+</figure>
+
+In the OAuth Client Application list, click a row to:
+
+* Change settings: Name, Redirection URI, Access Token Timeout, Refresh Token Timeout
+* Regenerate Client Secret: Invalidate the previous Client Secret and create a new one
+
+### Delete an OAuth Client Application
+
+To delete a configured OAuth Client Application, select the item in the list and click `Delete`.
+
+<figure data-layout="center" data-align="center">
+![Delete OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044400.png)
+<figcaption>
+Delete OAuth Client Application
+</figcaption>
+</figure>

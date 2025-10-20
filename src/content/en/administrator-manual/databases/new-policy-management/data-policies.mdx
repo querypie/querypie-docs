@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Data Policies is a feature in QueryPie for setting and managing data governance policies such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, personal information protection, and regulatory compliance.
+Data Policies is a feature for setting and managing data governance policies in QueryPie, such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, privacy protection, and regulatory compliance.
+
 
 ### Accessing Policy Creation Screen
 
@@ -20,49 +21,75 @@ Data Policies is a feature in QueryPie for setting and managing data governance 
 2. Click the **Data Policies** menu.
 3. Click the **Create Policy** button at the top to navigate to the policy creation screen.
 
-### Setting Policy Basic Information
+
+### Setting Basic Policy Information
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
 </figure>
 
-Set the following information in the **Information** section of the policy creation screen:
+In the **Information** section of the policy creation screen, set the following information:
 
-1.  **Name** : Enter the policy name. (Required field)
-2.  **Policy Type** : Select the policy type to apply from the dropdown menu. (Required field)
-3.  **Description** : Enter a description of the policy. (Optional)
+1. **Name**: Enter the name of the policy. (Required)
+2. **Policy Type**: Select the policy type to apply from the dropdown menu. (Required)
+3. **Description**: Enter a description of the policy. (Optional)
+
 
 #### Policy Type Introduction
 
 QueryPie provides the following policy types:
 
-1.  **Column Data Masking** 
-    * Applies data masking policies to columns. 
+1. **Column Data Masking** 
+    * Applies data masking policy to columns. 
     * Uses regex-based masking patterns to detect and mask specific data patterns. (Masking Patterns)
-    * When users query the corresponding column, it is displayed in `{masked}` format, and clicking on the cell displays the masked data.<br/>
-2.  **Table Access Restriction** 
-    * Applies access blocking policies to tables.
-    * When users try to query the corresponding table, access is blocked and a no permission message is displayed.
-    * Message: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/>
-3.  **Column Access Restriction** 
-    * Applies access blocking policies to columns.
-    * When users try to query the corresponding column, it is displayed in `{restricted}` format and access is blocked.<br/>
-4.  **Table Access Justification Requirement** 
-    * Enforces reason input for specific table operations.
+    * When users query the column, it displays as `{masked}` and clicking the cell shows the masked data.<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.23.47-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png)
+      </figure>
+2. **Table Access Restriction** 
+    * Applies access blocking policy to tables.
+    * When users try to query the table, access is blocked and a no permission message is displayed.
+    * Message: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.36.58-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png)
+      </figure>
+3. **Column Access Restriction** 
+    * Applies access blocking policy to columns.
+    * When users try to query the column, it displays as `{restricted}` and access is blocked.<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.34.20-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png)
+      </figure>
+4. **Table Access Justification Requirement** 
+    * Enforces reason input when performing operations on specific tables.
     * When users perform selected operations (e.g., SELECT queries, data export), a reason input modal is displayed.
     * The entered reason is recorded in the Execution Reason of Query Audit.<br/>
-5.  **Sensitive Data Access Monitoring** 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-11.01.28-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png)
+      </figure>
+5. **Sensitive Data Access Monitoring** 
     * Allows administrators to designate specific tables or columns as sensitive information and generate alerts when accessed.
-    * Set which paths are sensitive information, and alert settings are configured in General &gt; Company Management &gt; Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert setting feature for new policies is not implemented.)
-6.  **DML Query Approval Enforcement**  
+    * Set which paths are sensitive information, and configure alert settings in General > Company Management > Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert configuration feature for new policies is not yet implemented.)
+6. **DML Query Approval Enforcement**  
     * Forces approval procedures through Workflow when performing `INSERT`, `UPDATE`, `DELETE` queries on specific tables.
-    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General &gt; Workflow Management &gt; Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has been granted the corresponding privilege. To make the person performing the query the requester themselves, "Allow Assignee selection (All Users)" must be selected in the Assignee for Execution item in the Execution section as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` permissions but who are not administrators can perform queries through approval.<br/>
+    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General > Workflow Management > Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has the corresponding privilege. To allow the person executing the query to be the requester, the "Allow Assignee selection (All Users)" option must be selected in the Execution item's Assignee for Execution as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` privileges but who are not administrators can execute queries through approval.<br/>
+      <figure data-layout="center" data-align="center">
+      ![Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
+      <figcaption>
+      Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules
+      </figcaption>
+      </figure>
     * If an Approval Rule is created, you can specify the Approval Rule to link with the policy as shown in the figure below.<br/>
-    * DML Query Approval Enforcement cannot specify targets with tags and must specify specific data paths.
+      <figure data-layout="center" data-align="center">
+      ![Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
+      <figcaption>
+      Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies
+      </figcaption>
+      </figure>
+    * DML Query Approval Enforcement cannot specify targets by tags and must specify specific paths using specific data path.
 
 ### Setting Policy Application Targets
 
-Set the user scope to which the policy will be applied in the **User Scope** section of the policy creation screen.
+In the **User Scope** section of the policy creation screen, set the user scope to which the policy will be applied.
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
@@ -70,20 +97,21 @@ Set the user scope to which the policy will be applied in the **User Scope** sec
 
 #### Scope Type
 
-1.  **Everyone** : The policy is applied to all users. (Default value)
-2.  **Users or Groups** : The policy is applied only to selected specific users or groups.
-3.  **Attribute of Users**  : Used when you want to dynamically apply policies to users with specific attributes. **[11.1.0]** 
+1. **Everyone**: The policy applies to all users. (Default)
+2. **Users or Groups**: The policy applies only to selected specific users or groups.
+3. **Attribute of Users**: Used when you want to dynamically apply policies to users with specific attributes. **[11.1.0]** 
 
 #### Exclusions
 
-You can set targets to exclude from policy application. Exclusion targets can only be specified when the scope type of User scope is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for exceptions, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied during the period the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
+You can set targets to exclude from policy application. Exclusions can only be specified when the User scope's scope type is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for the exception, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied while the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
 
-1.  **None** : Applied to all users according to Scope Type without exclusions. (Default value)
-2.  **Users and Groups** : Excludes selected users or groups from policy application. 
+1. **None**: Applies to all users according to Scope Type without exclusions. (Default)
+2. **Users and Groups**: Excludes selected users or groups from policy application. 
+
 
 ### Setting Policy Target Data
 
-Set the data to which the policy will be applied in the **Data Scope** section of the policy creation screen.
+In the **Data Scope** section of the policy creation screen, set the data to which the policy will be applied.
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
@@ -91,20 +119,37 @@ Set the data to which the policy will be applied in the **Data Scope** section o
 
 #### Scope Type
 
-Currently, policies can only be applied based on tags:
+<Callout type="info">
+In 11.3.0, regular expressions can be used when selecting specific data path for all policy types.
+Also, multiple tables or columns can be selected and registered as targets.
+</Callout>
 
-1.  **Data tags** : Select policy application targets based on tags set in the Data Paths menu.
-    * When this option is selected, you can select tables or columns to apply policies to by specifying tag keys and values.
-2.  **Specific data path** : Option to directly specify specific data paths. (From 11.0.0)
-    * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and you can also use regular expressions. 
+1. **Data tags**: Select policy application targets based on tags set in the Data Paths menu.
+    * When this option is selected, you can select tables or columns to apply the policy by specifying tag keys and values.
+2. **Specific data path**: An option to directly specify specific data paths. **[11.0.0]** 
+    * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and regular expressions can also be used.  <br/>  <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Direct path specification](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
+      <figcaption>
+      Direct path specification
+      </figcaption>
+      </figure>
+      <figure data-layout="center" data-align="center">
+      ![Specifying targets using regular expressions](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png)
+      <figcaption>
+      Specifying targets using regular expressions
+      </figcaption>
+      </figure>
 
-#### Saving Policies
 
-When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. Click the **Cancel** button to cancel saving.
+#### Saving Policy
+
+When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. To cancel saving, click the **Cancel** button.
+
 
 <Callout type="important">
-**Precautions**
+**Important Notes**
 * Since policy settings are based on data tags, appropriate tags must be assigned in the Data Paths menu before setting policies.
-* Policies only support the database types listed below, and policies cannot be applied to unsupported database types.
+* Policies only support the database types listed below, and cannot be applied to unsupported database types.
     *  MySQL, MariaDB, Impala, Single Store, Hive, BigQuery, Oracle, PostgreSQL, SQLServer, Redshift, MS SQL Azure, SAP Hana, Trino, Athena, MongoDB, DocumentDB, Cassandra, ScyllaDB, DynamoDB, Redis
 </Callout>

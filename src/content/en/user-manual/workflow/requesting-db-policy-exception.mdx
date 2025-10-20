@@ -71,10 +71,16 @@ A. If you select an approval rule where the administrator has not allowed Urgent
         * **Column**: You can select one or more columns, up to a maximum of 30 columns.
     * **Tag**: If the applicant knows that a policy is set based on tags for a specific path and knows which tags are assigned, they can apply by specifying tags. Generally, since applicants do not know whether policies are set with tags or which tags are used, they need to get help from administrators first when applying with tags.
         * **Tags**: When Data scope is specified as tags, you can use the tags used in the policy.
-* **Data Access Expiration**: You can set the period for which you want to request data access permission.
-    1. When selecting Time Duration, you can input in minutes, with a minimum of 1 minute and a maximum of 44,640 minutes.
-        1. For Time Duration, it operates based on the approval time.
-        2. When using Urgent Mode, you can access data based on the request registration time.
-    2. When selecting End Date, you can select based on date and time, with a minimum of the current time and a maximum of 180 days.
-* **Reason for Request**: Enter the reason for requesting policy exception. You can enter up to 1000 characters.
-* Click the `Submit` button at the bottom of the page to submit the request.<br/>
+* **Policy Exception Schedule**: You can set the period during which the policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
+    * Specific Period: Specify the start and end times. You can specify in hours.
+    * Time Duration: Specify so that it is valid for the set time from the start time.
+    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
+* **Reason for Request**: Enter the reason for requesting policy exception.
+* Click the `Submit` button at the bottom of the page to submit the request.
+
+<figure data-layout="center" data-align="center">
+![User &gt; Workflow &gt; Submit Request &gt; DB Policy Exception Request](/user-manual/workflow/requesting-db-policy-exception/image-20251009-144630.png)
+<figcaption>
+User &gt; Workflow &gt; Submit Request &gt; DB Policy Exception Request
+</figcaption>
+</figure>

@@ -8,16 +8,24 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-The Licenses page allows you to check the currently active product license information in QueryPie.
+The Licenses page allows you to upload/delete and check the status of product license keys currently active in QueryPie.
+
+<Callout type="info">
+From 11.3.0, administrators can upload license keys in Admin &gt; General &gt; Company Management &gt; Licenses. Also, the license statuses have changed from Active / Expired / Waiting to Activated / Available / Scheduled / Expired.
+</Callout>
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/screenshot-20240804-184804.png)
+![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/image-20250926-124941.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Licenses
 </figcaption>
 </figure>
 
-*  **License Status** : Active, Expired, Waiting (license waiting to be activated after existing license expires)
+*  **License Status**  : Based on license status, it is displayed separated into three sections: Available Licenses, Scheduled Licenses, and Expired Licenses. Detailed statuses are as follows.
+    * Activated : Currently activated
+    * Available : License is available but not activated
+    * Scheduled : Registered but before the license goes into effect
+    * Expired : License usage period has expired
 *  **Product Name** : Displays the currently used QueryPie product name
 *  **Usage Period** : Shows start and end dates
 *  **License Type** : Production (official product license), PoC (PoC license)
@@ -25,3 +33,11 @@ Administrator &gt; General &gt; Company Management &gt; Licenses
 <Callout type="info">
 If your license is about to expire or has expired, please contact us through the [QueryPie Customer Portal](https://help.support.querypie.com/) or your sales representative.
 </Callout>
+
+### License File Upload
+
+* Click the `Upload License Key` button at the top to upload a license key.
+
+### License Deletion
+
+* You can delete a license by clicking the trash icon on the right side of the license you want to delete.

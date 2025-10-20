@@ -6,6 +6,7 @@ import { Callout } from 'nextra/components'
 
 # Connecting to Authorized Servers
 
+
 ### Overview
 
 Users can view the list of authorized servers sorted by server, server group, or Cloud Provider at a glance. After selecting a server to connect to, users can execute commands and perform tasks through web terminal and web SFTP provided through web browsers regardless of operating system.
@@ -59,12 +60,18 @@ A. Connection may fail if the permission status has changed or if you attempt to
 <Callout type="info">
 **Q. How do I connect to Windows Server through RDP?**
 
-A. In QueryPie, you can only connect to Windows Server through QueryPie User Agent. The connection method is as follows:
+A. In QueryPie, you can connect to Windows Server through the QueryPie Agent (User Agent / Multi-Agent) only. The connection method is as follows:
 
-After installing QueryPie User Agent, right-click on the authorized Windows Server, click the `Open Connection with` menu, then click the RDP Client installed on your PC to connect.
+After installing the QueryPie Agent (User Agent / Multi-Agent), right-click the authorized Windows Server, click the `Open Connection with` menu, and then click the RDP Client installed on your PC to connect.
 
 * Windows PC supports the MSTSC program installed by default on the PC.
 * macOS needs to download [Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12) for RDP access.
+
+From version 11.3.0, in Multi-Agent, you can select a Custom Account and manually enter the account password to connect.<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20251010-095324.png](/user-manual/server-access-control/connecting-to-authorized-servers/image-20251010-095324.png)
+</figure>
 </Callout>
 
 <Callout type="info">

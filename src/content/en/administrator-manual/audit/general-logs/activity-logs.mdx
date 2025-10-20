@@ -4,6 +4,8 @@ title: 'Activity Logs'
 
 # Activity Logs
 
+import { Callout } from 'nextra/components'
+
 ### Overview
 
 In Activity logs, you can view the history of resource registration and configuration changes performed by **administrators**.
@@ -33,7 +35,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs
 ### Viewing Activity Logs Details
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-193807.png)
+![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/image-20251009-024238.png)
 <figcaption>
 Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details
 </figcaption>
@@ -47,3 +49,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
 3.  **Related Logs**  : Displays logs that occurred in a chain or simultaneously for the action. Includes both before and after logs.
     1. You can check not only actions directly caused by administrators, but also automatic system actions derived from them.
     2. Action logs displayed in Related Logs are also kept as individual logs.
+
+<Callout type="info">
+From 11.3.0, a "Changes Only" checkbox has been added to the Activity Logs detail view (Drawer) so you can filter to see only changed items. Also, empty values are displayed as "&lt;null&gt;" instead of “-(dash)”.
+</Callout>

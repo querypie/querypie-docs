@@ -321,3 +321,13 @@ QueryPie Web &gt; Databases &gt; Connections
 
 * Users who have been granted privileges with Privilege Setting configured use the DB account mapped to that Privilege as pre-configured by the administrator when connecting, and cannot see the DB Username and Password fields themselves on the Connections access page.
 * The use of that DB account is enforced in connection access such as web editor, agent proxy, SQL Request, Export Request, etc. 
+
+<Callout type="info">
+From 11.3.0, when configuring Advanced privilege, if you do not register a password for a privileged account, the privileged account (administrator account) can manually enter the password when connecting to the target.
+
+<figure data-layout="center" data-align="center">
+![image-20251013-050034.png](/administrator-manual/databases/connection-management/db-connections/image-20251013-050034.png)
+</figure>
+
+To allow manual entry of the DB account password when configuring Advanced privilege, leave the Password field empty and set the "Hide this credential from connection list page" checkbox to unchecked as shown above.
+</Callout>

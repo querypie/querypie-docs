@@ -1,0 +1,76 @@
+---
+title: 'Integrate AWS SSO (SAML 2.0)'
+---
+
+import { Callout } from 'nextra/components'
+
+# Integrate AWS SSO (SAML 2.0)
+
+### Overview
+
+QueryPie supports integrating users from AWS IAM Identity Center with multiple cloud applications via SAML 2.0. You can synchronize users, grant access, and apply policies.
+
+<Callout type="important">
+If you configure SAML under Identity Providers Integration with Type = SAML, periodic synchronization by schedule is not supported.
+</Callout>
+
+### Add QueryPie as an application in AWS IAM Identity Center
+
+<figure data-layout="center" data-align="center">
+![AWS-SSO-01-20230317-044219.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-01-20230317-044219.png)
+</figure>
+
+1. Go to [AWS IAM Identity Center](https://ap-northeast-2.console.aws.amazon.com/singlesignon/applications/home).
+2. Open the Applications menu in the left panel.
+3. Click Add application at the top right.
+4. Select Add a custom SAML 2.0 application and click Next.
+5. In Application configuration &gt; Display name, enter QueryPie.
+6. In Application properties &gt; Application start URL, enter your QueryPie domain as below.
+    1. Application Start URL: https://`{querypie_host}`
+7. Enter the following in Application metadata:
+    1. Application ACS URL: https://`{querypie_host}`/saml/sp/acs
+    2. Application SAML audience: https://`{querypie_host}`/saml/sp/metadata
+8. Click Submit to save.
+
+### Attribute mappings for QueryPie integration
+
+<figure data-layout="center" data-align="center">
+![AWS-SSO-06-20230317-064023.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-06-20230317-064023.png)
+</figure>
+
+1. In the application page, open Actions &gt; Edit attribute mappings at the top right.
+2. Refer to the screenshot and enter values as follows.
+
+|  **Application user attribute**  |  **Value or user attribute in IAM Identity Center**  |  **Format**      |
+| --------------------- | ------------------------------------------------ | ------------ |
+| Subject               | $`{user:email}`                                  | emailAddress |
+| firstName             | $`{user:givenName}`                              | basic        |
+| lastName              | $`{user:familyName}`                             | basic        |
+| loginId               | $`{user:email}`                                  | basic        |
+| email                 | $`{user:email}`                                  | basic        |
+
+Click `Save changes`.
+
+### Configure AWS IAM Identity Center integration in QueryPie
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication ](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20240723-072112.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication 
+</figcaption>
+</figure>
+
+* Go to Administrator &gt; Admin &gt; General &gt; System &gt; Integration, and under Authentication select Identity Provider.
+* Click Add and register the IdP with Type = SAML.
+    *  **Name**  : Enter a suitable name for identification.
+    *  **Type** : Select SAML.
+    *  **Identity Provider Metadata**  : In AWS, go to Application &gt; Actions &gt; Edit configuration and download the IAM Identity Center SAML metadata file. Paste the SAML metadata XML content here.
+* Click `Save`.
+
+### Sign in to QueryPie with SAML
+
+<figure data-layout="center" data-align="center">
+![image-20251020-044838.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20251020-044838.png)
+</figure>
+
+Click `Login with SAML` on the login page to authenticate with AWS and sign in to QueryPie.

@@ -2,6 +2,8 @@
 title: 'General'
 ---
 
+import { Callout } from 'nextra/components'
+
 # General
 
 ### Overview
@@ -132,7 +134,29 @@ This is a feature to hide the Workflow menu from the user dashboard based on spe
 * Users matching the `Key:Value` condition set here will not see the `Workflow` menu in their user dashboard.
 *  **Example:**  If 'Department Code' is selected as `User Attribute Key` and 'Department A' is entered as `Value`, users belonging to that department code will not see the `Workflow` menu.
 
-### SQL Request Execution Throttling Activation (Use throttling when submitting SQL Request in Workflow)
+### Allow Delegated Approval (Enable/Disable)
+
+<Callout type="info">
+The option to enable/disable delegated approval was added in 11.3.0.
+</Callout>
+
+This option allows administrators to enable or disable delegated approval, a feature that delegates the approver role to another user for a certain period. If disabled, the Approver setting menu will not be displayed on the user preferences screen.
+
+<figure data-layout="center" data-align="center">
+![Allow Delegated Approval switch](/administrator-manual/general/company-management/general/image-20250926-112444.png)
+<figcaption>
+Allow Delegated Approval switch
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![Preferences with delegated approval disabled](/administrator-manual/general/company-management/general/image-20250926-112201.png)
+<figcaption>
+Preferences with delegated approval disabled
+</figcaption>
+</figure>
+
+### Use throttling when submitting SQL Request in Workflow
 
 When the toggle is turned on, throttling is applied when executing SQL requests submitted in Workflow.
 
@@ -140,12 +164,11 @@ When the toggle is turned on, throttling is applied when executing SQL requests 
 ![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
 </figure>
 
-
 When this option is enabled, queries are executed continuously for the specified number, then wait for the specified interval (ms). This prevents DB load from large-scale query execution.
 
-*  **Query chunk size**  : Set to a value between 1~999,999, a function to divide multiple queries by that number and execute them sequentially
+*  **Query chunk size**  : Set to a value between 1~999,999, divides multiple queries by that number and executes them sequentially
     * Example) When there are 100 queries, if Query chunk size is set to 10, 10 queries are executed at once.
-*  **Query throttle interval** : Interval between consecutive query executions and next consecutive query execution (1 ~ 9,999 ms)
+*  **Query throttle interval** : Interval between consecutive query executions and the next batch (1 ~ 9,999 ms)
 
 ### Ledger Table DML Workflow Custom URL Redirection Feature
 

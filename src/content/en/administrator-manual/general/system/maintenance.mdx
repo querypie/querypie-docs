@@ -1,0 +1,48 @@
+---
+title: 'Maintenance'
+---
+
+import { Callout } from 'nextra/components'
+
+# Maintenance
+
+### Overview
+
+When upgrading QueryPie, the Log DB can be large and difficult to back up, and key features should not stop recording even during the upgrade. To control the service level appropriately, enable maintenance mode and perform migration.
+
+If QueryPie servers are deployed in an active-active pair, follow the steps below:
+
+1.  **Preparation**: Download the latest package and review configuration files.
+2.  **Enable maintenance mode**: Announce the work and limit service access levels.
+3.  **Prepare the database**: Create schemas for the new version and replicate existing data.
+4.  **Upgrade server B**: Remove server B from the load balancer (LB), migrate, and install the new version.
+5.  **Test server B**: Connect directly to server B and verify the upgrade.
+6.  **Upgrade server A**: Reconnect server B to the LB, detach server A, then install the new version on server A.
+7.  **Final switch**: Reconnect server A to the LB and complete the overall upgrade.
+
+<Callout type="info">
+Maintenance mode is added in version 11.3.0.
+</Callout>
+
+### Configure maintenance mode (Operation Mode)
+
+<Callout type="important">
+Since this affects the entire service, decide carefully and proceed with caution.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; General &gt; System &gt; Maintenance](/administrator-manual/general/system/maintenance/image-20250928-205515.png)
+<figcaption>
+Admin &gt; General &gt; System &gt; Maintenance
+</figcaption>
+</figure>
+
+Available modes:
+
+|  **Mode**        |  **Description**                                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Read Only        | Users can log in, but all features other than read-only operations are disabled. (The first command after switching to Read Only is executed and logged in Audit Log, but subsequent commands are not executed nor logged.) |
+| Active Session   | Existing sessions can execute commands, but new sessions can only read. (Not applicable to DAC / SAC / WAC)                                                      |
+| Allow Connection | Existing and new sessions can execute commands, but actions like submitting workflows or editing settings are not allowed. (Not applicable to KAC / WAC)                                                  |
+| Full Access      | Normal operating mode.                                                                                                                         |
+

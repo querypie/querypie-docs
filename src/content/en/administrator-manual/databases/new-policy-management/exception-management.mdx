@@ -2,6 +2,8 @@
 title: 'Exception Management'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Exception Management
 
 ### Overview
@@ -41,6 +43,14 @@ In the Manual tab of Databases &gt; Policy Management &gt; Exception Management,
 
 #### Setting Policy Exceptions
 
+<Callout type="info">
+The method for specifying expiration dates has been changed in 11.3.0.
+
+The item name has been unified to "Policy Exception Schedule" for both Workflow policy exception requests and administrator manual policy exception settings, and it has been changed to explicitly specify the start and end times of the validity period.
+
+In 11.3.0, it has been changed to allow specifying specific data paths using regular expressions for all policy exception types.
+</Callout>
+
 <figure data-layout="center" data-align="center">
 ![Manual Policy Exception Creation](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
 <figcaption>
@@ -50,16 +60,23 @@ Manual Policy Exception Creation
 
 Click the `+ Create Exception` button and configure settings for the policy exception.
 
-* Exception Name : Enter the name of the policy exception.
-* Exception Type : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
-* Data Scope : Specify target tables or columns for policy exceptions. **[11.1.0]** 
+* **Exception Name** : Enter the name of the policy exception.
+* **Exception Type** : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
+* **Data Scope** : Specify target tables or columns for policy exceptions. **[11.1.0]**
     * When selecting Data Tag, you can specify targets with tags. Only tags set in Databases &gt; Policy Management &gt; Data Paths can be used. Tags with the same key use OR operation, and tags with different keys use AND operation.
-    * When selecting Specific data path, you can directly specify target tables or columns. Regular expressions cannot be used.
-* Allowed User : Specify targets that temporarily need policy exceptions.
+    * When selecting Specific data path, you can directly specify target tables or columns. Regular expressions can also be used. **[11.3.0]**
+* **Allowed User** : Specify targets that temporarily need policy exceptions.
     * User / Group : You can specify users or groups.
     * Attribute of Users : You can dynamically specify targets using Identifier type attributes registered in user profiles. **[11.1.0]** 
-* Exception Expiration : Set the time when the policy exception ends.
-* Description : Enter a brief description of the policy exception.
+* **Policy Exception Schedule** : Set the period during which the policy exception is applied. The maximum validity period for policy exceptions cannot exceed the maximum period set by the administrator (Maximum Policy Exception Period).
+    * Specific Period : Specify the start and end times. Can be specified in hours.
+    * Time Duration : Specify to be valid for a specified time from the start time.
+    * Start On Approval option : For both Specific Period and Time Duration methods, when the Start On Approval option is enabled (checked), the validity takes effect from the approval time. Generally, since the person making the request cannot know the approval time of the approver, using this option is not recommended. (This is because if approval expiration period constraints occur, you may need to make a new request.) Even when using Urgent Mode, the approval time is after the fact and it is unknown when approval will be given, so except for special situations where the Start On Approval option must be used, it is not recommended.
+* **Reason for Request** : Enter a brief description of the policy exception.
+
+<Callout type="info">
+The maximum policy exception period setting is limited by the Maximum Policy Exception Period setting value in Admin &gt; Databases &gt; General &gt; Configurations.
+</Callout>
 
 #### Immediately Changing Policy Exception Status
 

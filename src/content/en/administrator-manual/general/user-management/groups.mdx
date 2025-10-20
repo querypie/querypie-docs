@@ -8,11 +8,12 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie provides group functionality that allows you to bundle users into groups for collective management. Groups can be used as units for granting DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments. The Groups page allows you to view and manage user group lists registered in QueryPie.
+QueryPie provides a group feature that allows users to be grouped and managed in bulk. Groups can be used as units for DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments. The Groups page allows you to view and manage the list of user groups registered in QueryPie.
+
 
 ### Viewing Group List
 
-Navigate to the Administrator > General > User Management > Groups page to view the group list. You can search by group name. The following information is available for viewing:
+When you enter the Administrator > General > User Management > Groups page, you can view the group list. You can search by group name. The viewable information is as follows:
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups](/administrator-manual/general/user-management/groups/image-20240714-053938.png)
@@ -22,25 +23,27 @@ Administrator > General > User Management > Groups
 </figure>
 
 * **Auth Provider**: User authentication provider
-    * Displays QueryPie or IdP Type configured in User Management > Authentication.
-    * Manually registered groups are displayed as QueryPie.
-    * Groups integrated from IdP are displayed with their respective ID Provider names.
+    * Displays the IdP Type set in QueryPie or User Management > Authentication.
+    * For manually registered groups, it displays as QueryPie.
+    * For groups integrated from IdP, it displays as the respective ID Provider name.
 * **Group Name**: Group name
 * **Members**: List of users belonging to the group
 * **Updated At**: Date and time when group information was last changed
 * **Created At**: Group creation date and time
 
+
 ### Manually Adding Groups
 
-Clicking the `Create Group` button in the top right of the Groups page displays a modal. Enter the desired name and click the `Save` button to complete group creation.
+Click the `Create Group` button in the top right of the Groups page to display a modal. Enter the desired name and click the `Save` button to complete group creation.
 
 <Callout type="important">
-Adding or removing users is only possible for manually added groups.<br/>Groups synchronized from IdP only support viewing, and user list and group management must be performed in the IdP.
+User addition or deletion is only possible for manually added groups.<br/>For groups synchronized from IdP, only viewing is supported, and user list and group management must be performed in the IdP.
 </Callout>
+
 
 ### Adding Users to Groups
 
-Clicking on a group in the list where you want to add users opens a Drawer where you can check detailed information.
+Click on the group you want to add users to in the list to open a Drawer where you can view detailed information.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups > Details](/administrator-manual/general/user-management/groups/screenshot-20240726-121151.png)
@@ -49,23 +52,30 @@ Administrator > General > User Management > Groups > Details
 </figcaption>
 </figure>
 
-1. Clicking the `+ Add Users` button displays a modal.
-    1. You can search users by name or email.
-    2. From version 11.2.0, deactivated users synchronized through LDAP are also included and displayed in search results. Inactive users show `(Inactive)` text next to their names.
-    3. Clicking on a user you want to add changes their status to added.
-    4. Clicking the `Check all` button at the bottom selects all users.
-2. Click the `Save` button to save group change history. You can check added users in the group list and details Drawer.
+1. Click the `+ Add Users` button to display the user addition popup.
+    1. You can search for users by name or email.
+    2. From 11.2.0, inactive users synchronized through LDAP are also included in search results. Inactive users are displayed with `(Inactive)` text next to their name.
+    3. Click on the user you want to add to change to added status.
+    4. Click the `Check all` button at the bottom to select all users. <br/>  
+      <figure data-layout="center" data-align="center">
+      ![Adding users to group](/administrator-manual/general/user-management/groups/image-20251009-050919.png)
+      <figcaption>
+      Adding users to group
+      </figcaption>
+      </figure>
+2. Click the `Save` button to save the group changes. You can verify the added users in the group list and detailed information Drawer.
 
 <Callout type="info">
-**Q. I want to add a specific user to a group but they don't appear in the modal.**
-A. The user addition modal only displays users with active status. Check if the user's account status is Inactive on the Users page.
+**Q. I want to add a specific user to a group, but they don't appear in the modal.**
+A. The user addition modal only displays active users. Check in the Users page whether the user's account status is Inactive.
 </Callout>
+
 
 ### Removing Users from Groups
 
-1. In the group details page, select users you want to remove using checkboxes, then click the `Delete` button displayed in the table header.
+1. In the group details page, select the users you want to remove with checkboxes, then click the `Delete` button displayed in the table header.
 2. Click the `OK` button in the user removal confirmation modal.
-3. Once user removal is complete, you can verify it in the user list within the Drawer and the Group list.
+3. When user removal is complete, you can verify it in the user list within the Drawer and the Group list.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups > Details](/administrator-manual/general/user-management/groups/screenshot-20240726-122800.png)
@@ -74,9 +84,10 @@ Administrator > General > User Management > Groups > Details
 </figcaption>
 </figure>
 
+
 ### Changing Group Name
 
-Clicking the `Edit` button at the top of the group details Drawer displays an edit modal. Change the group name and click the `Save` button to save.
+Click the `Edit` button at the top of the group details Drawer to display the edit modal. Change the group name and click the `Save` button to save.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups > Details > Update Group](/administrator-manual/general/user-management/groups/screenshot-20240726-122036.png)
@@ -85,18 +96,19 @@ Administrator > General > User Management > Groups > Details > Update Group
 </figcaption>
 </figure>
 
+
 ### Deleting Groups
 
-Select groups you want to delete using checkboxes in the Groups list. The `Delete` button will appear in the table header. Click the button and click the `OK` button in the confirmation modal to complete deletion.
+Select the group you want to delete with a checkbox in the Groups list. The `Delete` button appears in the table header. Click the button and click the `OK` button in the confirmation modal to complete deletion.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-123314.png](/administrator-manual/general/user-management/groups/screenshot-20240726-123314.png)
 </figure>
 
 <Callout type="info">
-Group name change and deletion are only possible for groups manually added in QueryPie.
+Group name changes and deletion are only possible for groups manually added in QueryPie.
 </Callout>
 
 <Callout type="important">
-When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked. Group deletion cannot be undone, so please exercise caution when executing.
+When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked. Group deletion cannot be undone, so please proceed with caution.
 </Callout>

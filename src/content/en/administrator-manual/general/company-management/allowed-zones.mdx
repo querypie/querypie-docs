@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
 
 The Allowed Zones page allows you to pre-register and manage Allowed Zones to control IP ranges that allow users' QueryPie web console access and DB connections.
 
+<Callout type="info">
+From 11.3.0, the expression has been changed from “IP Band(s)” to “IP Address Range(s)”.
+</Callout>
+
 ### Viewing Registered Allowed Zone List
 
 To view the Allowed Zone list, access the Administrator &gt; General &gt; Company Management &gt; Allowed Zones page. You can search by Allowed Zone name.
@@ -19,7 +23,7 @@ To view the Allowed Zone list, access the Administrator &gt; General &gt; Compan
 </Callout>
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20240714-053215.png)
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20251009-030815.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones
 </figcaption>
@@ -30,7 +34,7 @@ Administrator &gt; General &gt; Company Management &gt; Allowed Zones
 Click on the item you want to view details for in the Allowed Zones list to open a drawer.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-211548.png)
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/image-20251009-031233.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
 </figcaption>
@@ -54,14 +58,14 @@ In the Mapped List by Allowed Zones area within the drawer, you can check DB con
 Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone creation modal.
 
 <figure data-layout="center" data-align="center">
-![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
+![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
 <figcaption>
 Create Allowed Zone Modal
 </figcaption>
 </figure>
 
 *  **Name**  : Allowed Zone name
-*  **IP Band(s)**  : Enter IP addresses or IP address ranges to assign.
+*  **IP Address Range(s)**  : Enter IP addresses or IP address ranges to assign.
     * You can enter one or more IP addresses or IP address ranges.
     * IP address ranges use Classless Inter-Domain Routing (CIDR) notation. Reference: [What is CIDR?](https://aws.amazon.com/ko/what-is/cidr/)
     * When entering two or more IP addresses or IP address ranges, use commas as separators.

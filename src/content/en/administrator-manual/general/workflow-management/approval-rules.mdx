@@ -2,6 +2,8 @@
 title: 'Approval Rules'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Approval Rules
 
 ### Overview
@@ -63,7 +65,13 @@ Administrator > General > Workflow Management > Approval Rules > Add Approval Ru
     * **Reviewer designation methods:**
         * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers. Users submitting approvals with this rule cannot change reviewers.
         * Allow Assignee selection (All Users): Allow approval submitters to directly select reviewers from all active users.
+        * Allow Assignee selection (Admin Only): Only users with administrator privileges can be selected.
         * Connection Owner and Server Owner cannot be designated as fixed reviewers.
+
+<Callout type="info">
+In 11.3.0, the default "Web App Just In Time Access Request" Approval Rule has been changed to allow reviewer designation.
+</Callout>
+
 * **Urgent Mode**: Decide whether to allow post-approval (Urgent Mode) under this approval rule.
     * Default is disallowed (Off), and can be turned On/Off later through Approval Rule modification.
     * This option is displayed only when post-approval is allowed in Workflow Configurations.

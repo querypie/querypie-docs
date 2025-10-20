@@ -70,13 +70,24 @@ You can set password policies for QueryPie accounts.
 You can set timeout policies for web console and agents.
 
 <figure data-layout="center" data-align="center">
-![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
+![image-20251009-051727.png](/administrator-manual/general/company-management/security/image-20251009-051727.png)
 </figure>
 
-*  **Web Inactivity Timeout (Minutes)** : Web console timeout criteria (Default: 60 minutes)
+*  **Web Inactivity Timeout** : Web console timeout criteria (Default: 60 minutes)
     * Timeout processing when there is no activity for the specified time
-*  **Agent Session Timeout (Minutes)** : Agent session timeout criteria (Default: 1,440 minutes)
+*  **Agent Session Timeout** : Agent session timeout criteria (Default: 1,440 minutes)
     * Maintains agent app login for the specified time and processes logout when elapsed
+*  **User Inactivity Timeout (on agent)** : <br/> In addition to the Agent Session Timeout feature, the Agent monitors user mouse and keyboard input and forcibly terminates the session if there is no activity beyond the specified time. In an idle state, even if a long-running query is being executed, if there is no mouse and keyboard movement, the session is terminated and logged out.
+
+<Callout type="info">
+**Example of User Inactivity Timeout (on agent)**
+Assuming Agent Inactivity Timeout is 15 minutes, if user action is detected at 12:09 after 1 minute has passed, the last activity time is considered 12:09 and the expiration is updated to 12:24 (15 minutes later).
+    * Logged in at 12:00
+        1. The initial session expiration time is  **12:15:00** 
+    * If the last activity is detected at 12:08 (t+8 minutes), the expiration is updated to 12:23 (15 minutes later)
+        1. New session expiration time:  **12:23:00** 
+    * New session expiration time:  **12:24:00**
+</Callout>
 
 
 ### QueryPie Web IP Access Control
@@ -162,6 +173,11 @@ DB Connection detail page &gt; Connection Information &gt; Secret Store selectio
 Server Group detail page &gt; Accounts &gt; Secret Store selection
 </figcaption>
 </figure>
+<Callout type="info">
+OAuth Client related settings were added as sub-items under Admin &gt; General &gt; Company Management &gt; Security in 11.1.0. (Only single client configuration is possible)
+In 11.3.0, client configuration was improved to support multiple configurations and moved to Admin &gt; General &gt; System &gt; Integrations.
+</Callout>
+
 ### Others
 
 Manages other security settings.

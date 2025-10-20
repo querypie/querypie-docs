@@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
 
 You can request Privilege for DB connections that need access by following the steps below. After approval is completed, permissions are immediately granted, and you can access the granted connections through the SQL Editor in QueryPie Web or through Agent.
 
+
 ### Requesting DB Access Request
 
 #### 1. Selecting Approval Rules
@@ -47,6 +48,10 @@ You can request Privilege for DB connections that need access by following the s
 </figure>
 
 #### 4. Sending Request with Post-Approval
+
+<Callout type="info">
+From version 11.3.0, when sending a request in post-approval mode, you can no longer specify the Approval Expiration Date.
+</Callout>
 
 * If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
 * After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.

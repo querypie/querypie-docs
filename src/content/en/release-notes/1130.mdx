@@ -1,0 +1,59 @@
+---
+title: '11.3.0'
+---
+
+# 11.3.0
+
+### QueryPie 11.3.0 Release
+
+September 30, 2025
+
+
+**New Feature**
+
+* [Common] Add toggle to enable/disable delegate approval
+* [Common] Service access level control for zero-downtime deployment - provide operation mode
+* [DAC] Support Impala JDBC URL options for handling HTTP requests from 3rd party tools
+* [DAC] Support Lite Proxy for Postgres (PostgreSQL) DB
+* [DAC] Provide manual cluster configuration for Redis Connection
+* [DAC] Add Syslog sending for New Policy events 
+* [SAC] Add Workflow Server Privilege Request to Audit Log Export
+
+
+**Improvement**
+
+* [Common] Improve visibility of changed data in Activity Logs
+* [Common] Show icons for types in Alert Channel selection to improve readability
+* [Common] Show row counts at the bottom of tables in Alert details Logs tab and Job details screens
+* [Common] Change "IP Band(s)" to "IP Address Range(s)" in Allowed Zone settings
+* [Common] Allow multiple OAuth client registrations
+* [Common] Add Timezone to SIEM settings
+* [Common] Show number of selected members when adding users to User Group
+* [Common] Strengthen idle state control for users (reinforce Agent Session Timeout)
+* [Common] Change location and method of Authentication settings
+* [Common] Disallow setting an expiration date when using Urgent Mode (post-approval)
+* [Common] Improve license management
+* [DAC] In Workflow, allow customizing Start Time / End Time for DAC Policy Exception Requests (Unmasking, DataAccess, DB Policy Exception Request)
+* [DAC] With New DAC Policy Management, allow specifying Start/End time for enforcement in DB Policy Exception manually
+* [DAC] Allow setting maximum validity period for policy exceptions
+* [DAC] Show contents of execution plans in SSMS / improve handling of SET STATISTICS PROFILE
+* [DAC] Support CREATE TEMP TABLE for Redshift
+* [DAC] Mask Secret Key configured for Dynamo DB Connection to avoid plain text exposure
+* [DAC] Allocate proxy port even when Document DB instance changes after synchronization
+* [DAC] Allow selective synchronization of specific targets when syncing cloud resources
+* [DAC] Allow sorting by Created At, Updated At in DB Connection list
+* [DAC] In Workflow, allow entering account ID/PW when requesting to Trino
+* [DAC] Unify tag input UI in New Policy
+* [DAC] Allow specifying data scope using regex in New Policy
+* [DAC] Allow selecting multiple tables or columns in New Policy Data scope
+* [DAC] Allow privileged users (like DBA) to enter password directly when using Advanced privilege
+* [SAC] Allow entering account password manually when connecting to Windows Server
+* [SAC] Use windowed mode for RDP session connections
+* [SAC] Add threshold setting for failed attempts in Server Connection Attempt item of Alert
+* [SAC] Improve Action Type filter in Command Audit
+* [SAC] Provide RDP Server Agent download button
+* [SAC] Provide filter to search using server tags when adding a Server to Server Group
+* [WAC] Allow adding Reviewer to Workflow Web Application JIT Request form and Default Rule
+* [WAC] Show banner indicating restart is required after uploading RootCA certificate
+
+

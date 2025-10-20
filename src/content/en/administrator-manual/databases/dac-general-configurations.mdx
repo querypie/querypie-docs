@@ -111,8 +111,27 @@ Query Audit
 
 *  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow. 
     * Only connections registered as connection members in the connection detail screen are exposed in Workflow DB Access Request.<br/>
+      <figure data-layout="center" data-align="center">
+      ![Assign specific users or groups to Connection Member in the detail screen of a specific connection in Databases &gt; Connection Management &gt; DB Connections](/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png)
+      <figcaption>
+      Assign specific users or groups to Connection Member in the detail screen of a specific connection in Databases &gt; Connection Management &gt; DB Connections
+      </figcaption>
+      </figure>
 
 <Callout type="info">
 **Reason Input Mandatory Settings for DB Operations**
 From version 9.17.0, this feature has been changed to detailed connection settings. For detailed configuration methods, please refer to **Additional Settings** in [DB Connections](connection-management/db-connections).
+</Callout>
+
+*  **Maximum Policy Exception Period**  : Sets the maximum validity period (in hours) for policy exceptions such as Unmasking. This setting affects the Workflow application form and the administrator's manual policy settings when the New DAC Policy Management feature is enabled. 
+    * Default: 720 hours (30 days)
+    * Maximum: 8760 hours (1 year)
+    * Minimum: 1 hour
+
+<figure data-layout="center" data-align="center">
+![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
+</figure>
+
+<Callout type="info">
+The Maximum Policy Exception Period setting option is available from version 11.3.0.
 </Callout>

@@ -62,20 +62,23 @@ A. If you select an approval rule where the administrator has not allowed Urgent
 
 #### 5. Entering Request Details
 
+<Callout type="info">
+From version 11.3.0, the way to specify the expiration has changed.<br/>For policy exception requests, the field name is unified as "<strong>Policy Exception Schedule</strong>", and you can explicitly specify the start and end times of validity.
+</Callout>
+
 * **Title**: Enter the request title.
 * **Connection**: Select the connection that contains the table or column for which you want to request access permission.
 * **Table**: Select the target table.
 * **Column**: You can select one or more columns, up to a maximum of 30 columns.
-* **Data Access Expiration**: You can set the period for which you want to request data access permission.
-    1. When selecting Time Duration, you can input in minutes, with a minimum of 1 minute and a maximum of 44,640 minutes.
-        1. For Time Duration, it operates based on the approval time.
-        2. When using Urgent Mode, you can access data based on the request registration time.
-    2. When selecting End Date, you can select based on date and time, with a minimum of the current time and a maximum of 30 days.
-* **Comment**: Enter the reason for requesting access permission.
+* **Policy Exception Schedule**: You can set the period during which the Data Access policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
+    * Specific Period: Specify the start and end times. You can specify in hours.
+    * Time Duration: Specify so that it is valid for the set time from the start time.
+    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
+* **Reason for Request**: Enter the reason for requesting access permission.
 * Click the `Submit` button at the bottom of the page to submit the request.
 
 <figure data-layout="center" data-align="center">
-![User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary](/user-manual/workflow/requesting-restricted-data-access/image-20250626-225723.png)
+![User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary](/user-manual/workflow/requesting-restricted-data-access/image-20251009-140741.png)
 <figcaption>
 User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary
 </figcaption>

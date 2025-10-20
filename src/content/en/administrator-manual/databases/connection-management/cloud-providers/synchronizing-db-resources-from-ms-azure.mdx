@@ -10,7 +10,12 @@ import { Callout } from 'nextra/components'
 
 QueryPie supports MS Azure integration for database registration and management. You can synchronize resources within Azure to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
 
+
 ### Registering Azure Integration Information in QueryPie
+
+<Callout type="info">
+Search Filter functionality has been added in 11.3.0 to synchronize only resources with specific tags.
+</Callout>
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241217-102747.png)
@@ -18,6 +23,7 @@ QueryPie supports MS Azure integration for database registration and management.
 Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
 </figcaption>
 </figure>
+
 
 1. Navigate to the Cloud Provider menu from the Database settings menu.
 2. Click the `Create Provider` button in the top right.
@@ -29,14 +35,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
     * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Client Secret as the Credential type. 
 8. Select the resources you want to synchronize from the **Database Type Filter** field. 
     * Currently, only Azure SQL Database can be synchronized. 
-9. Select the synchronization method from the **Replication Frequency** field.
+9. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
+    1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
+        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
+10. Select the synchronization method from the **Replication Frequency** field.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
-10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+11. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
     * Tag : You can automatically add tags to synchronized DBs.
         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
-11. Click the `Save` button to save the Cloud Provider.
+12. Click the `Save` button to save the Cloud Provider.
 
 <Callout type="important">
 **Save Credential for Synchronization Option**

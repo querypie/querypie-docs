@@ -17,15 +17,26 @@ To connect remotely to Windows Server, you must install QueryPie Server Agent. A
 ![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
 </figure>
 
-1. Access the Server Agent download page.
-    1. You can access the Server Agent download page by adding `/for-agent/server-agent/download` after the installed QueryPie domain address.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
-2. Login to QueryPie is required for agent installation.
-3. Click the Windows button in the center of the screen to download the compressed file.
-4. Extract the compressed file on the Windows server to be installed. The compressed file contains the following two files.
+* Access the Server Agent download page.
+    * You can access the Server Agent download page by adding `/for-agent/server-agent/download` after the installed QueryPie domain address.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+
+<Callout type="info">
+In 11.3.0, administrators can also download server agents through the UI (the `Download Server Agent` button on the Admin &gt; Servers &gt; Connection Management &gt; RDP Server Agent page). You can still download using the existing download link page. (Use this when non-QueryPie users need to download agents externally)
+<figure data-layout="center" data-align="center">
+![RDP Server Agent Download Button Provided](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20251010-085601.png)
+<figcaption>
+RDP Server Agent Download Button Provided
+</figcaption>
+</figure>
+</Callout>
+
+* Login to QueryPie is required for agent installation.
+* Click the Windows button in the center of the screen to download the compressed file.
+* Extract the compressed file on the Windows server to be installed. The compressed file contains the following two files.
     1. QueryPie Server Access Control_(QueryPie Version)_Setup
     2. CONFIG
-5. Place both files in the same path, then run the QueryPie Server Access Control_(QueryPie Version)_Setup file.
-6. Install the file according to the instructions. 
+* Place both files in the same path, then run the QueryPie Server Access Control_(QueryPie Version)_Setup file.
+* Install the file according to the instructions.
 
 <Callout type="info">
 **CONFIG File Description**

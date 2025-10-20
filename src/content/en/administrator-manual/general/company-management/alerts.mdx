@@ -225,6 +225,7 @@ New approval request registration notification
     * Urgent Mode Only : Send notifications only for post-approval requests
 *  **Send email only to those involved in this request :** Displayed when Channel is set to Email. When this option is enabled, notifications containing the Message Template content are sent to those involved in the request (requester, approver, etc.).
 
+
 <Callout type="info">
 **10.2.2 Slack Message Template Changes**
 
@@ -244,6 +245,10 @@ New approval request registration notification
 
 * When Alert's Channel is set to Email, the ability to directly enter Subject Title (email subject) has been added.
 * When setting Workflow-related Alert with Email as Channel, the `Send email only to those involved in this request` option is provided. When this option is enabled, notifications with Message Template content are sent to those involved in the request (requester, approver, etc.).
+
+**11.3.0 Alert Creation Screen Channel Selection Items**
+
+* Icons have been added to the Channel selection items in the Alert creation screen to make it easier to identify targets.
 </Callout>
 
 #### Unusual Login Attempt
@@ -372,9 +377,28 @@ Example) Send alert for bulk data export attempts of 100 or more records
 
 Server connection success or failure notification
 
-*  **Alert Trigger Condition**  : Alert trigger conditions
+*  **Result**  : Alert trigger conditions
     * Success : Send alert when server connection succeeds
     * Failure : Send alert when server connection fails
+
+<Callout type="info">
+From 11.3.0, a sub-option "Set trigger threshold on failed attempt" has been added under Failure, allowing alerts to be triggered based on a threshold of failed attempts.
+
+* Action Count : Number of event occurrences. You can enter 1 or more.
+* Time Interval : Time window in which events occur.
+
+Example) With the following settings, an alert is sent when 3 server connection failure events occur within 5 minutes.
+
+* Action Count : 3
+* Specific Time Internal (Minutes) : 5
+
+<figure data-layout="center" data-align="center">
+![image-20251010-093016.png](/administrator-manual/general/company-management/alerts/image-20251010-093016.png)
+</figure>
+
+
+</Callout>
+
 *  **Connection**  : Target connections for alert (multiple selection)
     * Can select servers and server groups, with duplicate selection allowed
         * Even if targets are duplicated due to multiple selection, alert is sent only once

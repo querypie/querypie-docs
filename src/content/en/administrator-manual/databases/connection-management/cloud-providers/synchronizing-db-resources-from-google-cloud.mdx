@@ -12,6 +12,10 @@ QueryPie supports Google Cloud (GCP) integration for database registration and m
 
 ### Registering GCP Integration Information in QueryPie
 
+<Callout type="info">
+Search Filter functionality has been added in 11.3.0 to synchronize only resources with specific tags.
+</Callout>
+
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
 <figcaption>
@@ -26,15 +30,18 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 5. Enter the project of the resources you want to synchronize in the **Project ID** field.
 6. Enter the **Credential** information required to synchronize resources.
     * Provides a manual synchronization method that enters GCP's Service Account when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Service Account as the Credential type.
-7. Select the resources you want to synchronize from the **Database Type Filter** field. 
-8. Select the synchronization method from the **Replication Frequency** field.
+7. Select the resources you want to synchronize from the **Database Type Filter** field.
+8. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
+    1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
+        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
+9. Select the synchronization method from the **Replication Frequency** field.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
-9. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
     * Tag : You can automatically add tags to synchronized DBs.
         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
-10. Click the `Save` button to save the Cloud Provider.
+11. Click the `Save` button to save the Cloud Provider.
 
 <Callout type="important">
 **Save Credential for Synchronization Option**
