@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # cd confluence-mdx
-# ./bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/ko/
+# ./bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/ko/ --public-dir target/public
 
 mkdir -p target/ko/.
 python bin/confluence_xhtml_to_markdown.py var/608501837/page.xhtml target/ko/querypie-docs.mdx --public-dir=target/public --attachment-dir=/querypie-docs
@@ -9,6 +9,10 @@ echo 'Converted 608501837 to target/ko/querypie-docs.mdx'
 mkdir -p target/ko/.
 python bin/confluence_xhtml_to_markdown.py var/544375335/page.xhtml target/ko/release-notes.mdx --public-dir=target/public --attachment-dir=/release-notes
 echo 'Converted 544375335 to target/ko/release-notes.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1421475841/page.xhtml target/ko/release-notes/1130.mdx --public-dir=target/public --attachment-dir=/release-notes/1130
+echo 'Converted 1421475841 to target/ko/release-notes/1130.mdx'
 
 mkdir -p target/ko/release-notes
 python bin/confluence_xhtml_to_markdown.py var/1291878563/page.xhtml target/ko/release-notes/1120.mdx --public-dir=target/public --attachment-dir=/release-notes/1120
@@ -438,6 +442,18 @@ mkdir -p target/ko/administrator-manual/general/system/integrations/integrating-
 python bin/confluence_xhtml_to_markdown.py var/544378759/page.xhtml target/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types
 echo 'Converted 544378759 to target/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types.mdx'
 
+mkdir -p target/ko/administrator-manual/general/system/integrations
+python bin/confluence_xhtml_to_markdown.py var/1453588486/page.xhtml target/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/integrations/oauth-client-application
+echo 'Converted 1453588486 to target/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx'
+
+mkdir -p target/ko/administrator-manual/general/system/integrations
+python bin/confluence_xhtml_to_markdown.py var/1454342158/page.xhtml target/ko/administrator-manual/general/system/integrations/identity-providers.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/integrations/identity-providers
+echo 'Converted 1454342158 to target/ko/administrator-manual/general/system/integrations/identity-providers.mdx'
+
+mkdir -p target/ko/administrator-manual/general/system/integrations/identity-providers
+python bin/confluence_xhtml_to_markdown.py var/1495433217/page.xhtml target/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20
+echo 'Converted 1495433217 to target/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx'
+
 mkdir -p target/ko/administrator-manual/general/system
 python bin/confluence_xhtml_to_markdown.py var/544377652/page.xhtml target/ko/administrator-manual/general/system/api-token.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/api-token
 echo 'Converted 544377652 to target/ko/administrator-manual/general/system/api-token.mdx'
@@ -445,6 +461,10 @@ echo 'Converted 544377652 to target/ko/administrator-manual/general/system/api-t
 mkdir -p target/ko/administrator-manual/general/system
 python bin/confluence_xhtml_to_markdown.py var/544211220/page.xhtml target/ko/administrator-manual/general/system/jobs.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/jobs
 echo 'Converted 544211220 to target/ko/administrator-manual/general/system/jobs.mdx'
+
+mkdir -p target/ko/administrator-manual/general/system
+python bin/confluence_xhtml_to_markdown.py var/1456144391/page.xhtml target/ko/administrator-manual/general/system/maintenance.mdx --public-dir=target/public --attachment-dir=/administrator-manual/general/system/maintenance
+echo 'Converted 1456144391 to target/ko/administrator-manual/general/system/maintenance.mdx'
 
 mkdir -p target/ko/administrator-manual
 python bin/confluence_xhtml_to_markdown.py var/544379638/page.xhtml target/ko/administrator-manual/databases.mdx --public-dir=target/public --attachment-dir=/administrator-manual/databases

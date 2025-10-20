@@ -31,6 +31,19 @@ pip install requests beautifulsoup4 pyyaml
    - `confluence-mdx/bin/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
    - `confluence-mdx/var/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
 
+무작정 따라해 보기
+```bash
+$ cd confluence-mdx
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip install requests beautifulsoup4 pyyaml
+$ python bin/pages_of_confluence.py --attachments # 2시간 가량, 시간이 오래 걸립니다.
+$ python bin/translate_titles.py
+$ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
+$ ./bin/xhtml2markdown.ko.sh
+# 이제, 변환된 또는 변경된 MDX 파일을 src/content/ko 아래에서 확인할 수 있습니다.
+```
+
 ## 데이터 수집 및 변환 절차 상세 안내
 
 ### 1. Confluence 문서 데이터 수집 (pages_of_confluence.py)
@@ -46,26 +59,36 @@ pip install requests beautifulsoup4 pyyaml
 
 실행 방법:
 ```bash
-# 로컬에서 pages_of_confluence.py 개선 과정에서 사용하는 명령
-python bin/pages_of_confluence.py --local >var/list.txt
-
-# 기본 설정으로 실행
+# 기본 설정으로 실행 - Confluence API 를 호출하고, 그 결과를 var/ 아래에 저장합니다.
 python bin/pages_of_confluence.py
+
+# API 호출과 함께, 첨부파일을 다운로드하여 저장합니다.
+# 첨부파일 변경시에, 이 옵션을 추가하여 실행합니다. 
+# 또는 pages_of_confluence.py 를 처음 실행하는 경우에 사용합니다.
+python bin/pages_of_confluence.py --attachments
 
 # 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
 python bin/pages_of_confluence.py --local
 
-# list.txt 에 파일 목록을 저장
-python bin/pages_of_confluence.py >var/list.txt
+# 로컬에서 pages_of_confluence.py 개선 과정에서, 반복실행할 때 사용하는 명령입니다.
+# 또는, var/list.txt 를 업데이트하고자 하는 경우에 실행합니다.
+python bin/pages_of_confluence.py --local >var/list.txt
 
-# 특정 페이지 ID와 공간 키 지정
+# 특정 페이지 ID와 하위 문서를 내려받습니다. 첨부파일을 포함하여 내려받습니다.
+# 일부 문서만 변경한 경우, 해당 문서와 하위 페이지를 API 로 내려받아 저장할 때 사용합니다.
+python bin/pages_of_confluence.py --page-id 123456789 --attachments
+```
+
+사실상 사용하지 않음. 참고용 기능:
+```bash
+# 특정 페이지 ID와 하위 문서를 내려받습니다.
+python bin/pages_of_confluence.py --page-id 123456789
+
+# 특정 페이지 ID와 공간 키 지정하여, 실행합니다.
 python bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
 python bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
-
-# 첨부파일을 다운로드
-python bin/pages_of_confluence.py --attachments
 
 # 로그 레벨 설정
 python bin/pages_of_confluence.py --log-level DEBUG
@@ -95,6 +118,8 @@ python bin/translate_titles.py
 실행 결과:
 - `var/list.en.txt` 파일이 생성됩니다.
 - 이 파일은 원본 `list.txt`와 동일한 형식이지만 제목이 영어로 번역되어 있습니다.
+- 만일, list.en.txt 에 영어로 번역되지 않은 한국어 문서 제목이 나타나는 경우, etc/korean-titles-translations.txt 를 보완하여,
+  list.en.txt 가 영어로 잘 번역될 수 있도록, 수정하여야 합니다.
 
 ### 3. XHTML을 Markdown으로 변환하기 위한 명령어 생성 (generate_commands_for_xhtml2markdown.py)
 
@@ -105,7 +130,10 @@ python bin/translate_titles.py
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
 python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
+```
 
+사실상 사용하지 않음. 참고용 기능:
+```bash
 # Confluence 디렉토리 지정
 python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/xhtml2markdown.ko.sh
 
