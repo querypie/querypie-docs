@@ -2,6 +2,8 @@
 title: 'Exception Management'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Exception Management
 
 ### Overview
@@ -41,6 +43,14 @@ Databases &gt; Policy Mananagement &gt; Exception Management 의 Manual 탭에�
 
 #### 정책 예외 설정하기
 
+<Callout type="info">
+11.3.0에서 효력 만료일을 지정하는 방식이 변경되었습니다.
+
+Workflow의 정책예외 신청 및 관리자의 수동 정책 예외 설정에서 공통으로 “Policy Exception Schedule” 으로 항목이름이 통일되었고, 효력 시작 시점과 종료시점을 명시적으로 지정할 수 있도록 변경되었습니다.
+
+11.3.0에서 모든 정책예외 유형에 대해 정규식으로 특정 데이터 경로를 지정할 수 있도록 변경되었습니다.
+</Callout>
+
 <figure data-layout="center" data-align="center">
 ![수동 정책 예외 생성](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
 <figcaption>
@@ -50,16 +60,23 @@ Databases &gt; Policy Mananagement &gt; Exception Management 의 Manual 탭에�
 
 `+ Create Exception` 버튼을 클릭하고 정책 예외에 대한 설정을 합니다.
 
-* Exception Name : 정책 예외의 이름을 입력합니다.
-* Exception Type : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
-* Data Scope : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
+*  **Exception Name**  : 정책 예외의 이름을 입력합니다.
+*  **Exception Type**  : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
+*  **Data Scope**  : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
     * Data Tag 를 선택하면 태그로 대상을 지정할 수 있습니다. Databases &gt; Policy Management &gt; Data Paths에 설정한 태그만 사용할 수 있습니다. 태그는 같은 키는 OR 연산이고 다른 키 사이는 AND 연산입니다.
-    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. 정규식을 사용할 수는 없습니다.
-* Allowed User : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
+    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. <br/>정규식으로 지정할 수도 있습니다. **[11.3.0]** 
+*  **Allowed User**  : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
     * User / Group : 사용자 또는 그룹을 지정할 수 있습니다.
     * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. **[11.1.0]** 
-* Exception Expiration : 정책예외가 종료되는 시점을 설정합니다.
-* Description : 정책 예외에 대한 간단한 설명을 입력합니다.
+*  **Policy Exception Schedule**  : 정책 예외가 적용되는 기간을 설정하여 요청할 수 있습니다. 최대 정책 예외의 유효 기간은 관리자가 설정한 최대 기간(Maximum Policy Exception Period)을 넘겨서 신청 수 없습니다.
+    * Specific Period : 시작 시점과 종료 시점을 지정합니다. 시간단위로 지정할 수 있습니다.
+    * Time Duration : 시작 시점으로 부터 지정한 시간까지 유효하도록 지정할 수 있습니다.
+    * Start On Approval 옵션 : Specific Period 또는 Time duration 두가지 방법 모두 Start On Approval 옵션을 활성화(체크)할 경우 승인시점 부터 효력이 발생됩니다. 일반적으로 요청하는 사람이 승인자의 승인 시점을 알 수 없기 때문에 이 옵션을 사용하는 것은 권장하지 않습니다. (승인 만료기간 제약사항이 발생되는 경우 다시 요청을 해야하는 경우가 발생될 수 있기 때문입니다.) Urgent Mode 사용하는 경우도 승인 시점은 사후이고 언제 승인이 될지 알 수 없으므로 가급적 Start On Approval 옵션은 반드시 사용해야 하는 특수한 상황을 제외하고 권장하지 않습니다.
+*  **Reason for Request**  : 정책 예외에 대한 간단한 설명을 입력합니다.
+
+<Callout type="info">
+최대 정책 예외 기간 설정은 Admin &gt; Databases &gt; General &gt; Configurations의 Maximum Policy Exception Period 설정값에 의해 제한됩니다.
+</Callout>
 
 #### 정책 예외의 상태 즉시 변경하기
 

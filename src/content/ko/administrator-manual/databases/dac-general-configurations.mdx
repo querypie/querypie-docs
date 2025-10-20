@@ -67,7 +67,6 @@ SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
 *  **Privilege Deactivation Period** : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
 *  **Maximum Access Duration** : Privilege 요청 및 할당 시 최대 기간
     * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
-
 *  **Display the first 10 rows in Query Audit** : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
 
 <figure data-layout="center" data-align="center">
@@ -100,7 +99,6 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승�
       <figure data-layout="center" data-align="center">
       ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
       </figure>
-
 *  **Query Annotation**  : 쿼리 수행시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화 한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.
     * User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.
     * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.
@@ -127,4 +125,17 @@ Query Audit
 <Callout type="info">
 **DB 작업에 대한 사유 입력 강제 설정**
 9.17.0 버전부터 해당 기능은 커넥션 세부 설정으로 변경되었습니다. 자세한 설정 방법은 [DB Connections](connection-management/db-connections) 내  **추가 설정하기** 를 참고해주세요.
+</Callout>
+
+*  **Maximum Policy Exception Period**  : Unmasking 등 정책예외에 대해 최대 유효기간을 설정할 수 있습니다. (시간단위). 이 설정값은 Workflow 신청양식과 New DAC Policy Management 기능 활성화시 관리자의 수동 정책 설정에 영향을 줍니다. 
+    * 기본값 : 720시간 (30일)
+    * 최대값 : 8760시간 (1년)
+    * 최소값 : 1시간
+
+<figure data-layout="center" data-align="center">
+![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
+</figure>
+
+<Callout type="info">
+Maximum Policy Exception Period 설정 옵션은 11.3.0 부터 제공됩니다.
 </Callout>

@@ -2,6 +2,8 @@
 title: 'General'
 ---
 
+import { Callout } from 'nextra/components'
+
 # General
 
 ### Overview
@@ -143,6 +145,28 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 * 토글을 활성화하면 `User Attribute`의 `Key`와 `Value`를 한 쌍으로 선택하고 입력할 수 있습니다.
 * 여기에 설정된 `Key:Value` 조건과 일치하는 사용자는 사용자 대시보드에 `Workflow` 메뉴가 표시되지 않습니다.
 *  **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
+
+### 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
+
+<Callout type="info">
+대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.
+</Callout>
+
+승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는 옵션입니다. 만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
+
+<figure data-layout="center" data-align="center">
+![Allow Delegated Approval 스위치](/administrator-manual/general/company-management/general/image-20250926-112444.png)
+<figcaption>
+Allow Delegated Approval 스위치
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![대리결재 기능을 비활성화한 상태의 preference](/administrator-manual/general/company-management/general/image-20250926-112201.png)
+<figcaption>
+대리결재 기능을 비활성화한 상태의 preference
+</figcaption>
+</figure>
 
 ### SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
 

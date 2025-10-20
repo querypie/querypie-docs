@@ -2,6 +2,8 @@
 title: 'Activity Logs'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Activity Logs
 
 ### Overview
@@ -33,7 +35,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs
 ### Activity Logs 상세 내용 조회하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-193807.png)
+![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/image-20251009-024238.png)
 <figcaption>
 Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details
 </figcaption>
@@ -47,3 +49,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
 3.  **Related Logs**  : 해당 행위에 대해, 연쇄적으로 또는 동시에 발생한 로그를 표시합니다. 전후 로그를 모두 포함합니다.
     1. 관리자가 직접 일으킨 행위 뿐만 아니라, 그에 따라 파생된 시스템의 자동 행위들을 확인할 수 있습니다.
     2. Related Logs에 표시된 행위 로그들은 각각 개별 로그로도 남아있습니다.
+
+<Callout type="info">
+11.3.0 부터 Activity Logs의 상세 화면(Drawer)에서 Changes Only 체크박스가 추가되어 변경된 항목만 필터링 해서 볼 수 있도록 개선되었습니다. 또한, 빈값의 경우 “-(dash)” 대신 “&lt;null&gt;” 로 표시하도록 변경되었습니다.
+</Callout>

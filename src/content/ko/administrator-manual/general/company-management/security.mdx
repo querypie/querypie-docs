@@ -70,13 +70,24 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
 웹 콘솔과 에이전트의 타임아웃 정책을 설정할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
+![image-20251009-051727.png](/administrator-manual/general/company-management/security/image-20251009-051727.png)
 </figure>
 
-*  **Web Inactivity Timeout (Minutes)** : 웹 콘솔 타임아웃 기준 (Default : 60분)
+*  **Web Inactivity Timeout** : 웹 콘솔 타임아웃 기준 (Default : 60분)
     * 지정된 시간 동안 활동이 없을 경우 타임아웃 처리
-*  **Agent Session Timeout (Minutes)** : 에이전트 세션 타임아웃 기준 (Default : 1,440분)
+*  **Agent Session Timeout** : 에이전트 세션 타임아웃 기준 (Default : 1,440분)
     * 지정된 시간 동안 에이전트 앱 로그인을 유지하고, 경과 시 로그아웃 처리
+*  **User Inactivity Timeout (on agent)** :  <br/> Agent Session Timeout 기능에 추가로 Agent가 사용자의 마우스, 키보드 입력을 모니터링하고 지정된 시간을 초과하여 행위가 없으면 세션을 강제 종료합니다. 유휴 상태인 경우, 장시간 쿼리를 실행하고 있어도 마우스 및 키보드 움직임이 없다면 무조건 세션이 종료되어 로그아웃처리 됩니다. 
+
+<Callout type="info">
+**User Inactivity Timeout (on agent) 설정 예시**
+* Agent Inactivity Timeout 15분일 경우를 가정하면, <br/> 1분이 지난 12:09분에 사용자 액션 감지 했다면4. 12:09분에(t+1분) 마지막 활동을 한것으로 확인되면, 15분 후인 12:24분으로 갱신
+    * 12:00분에 로그인
+        1. 최초 세션 만료 시간은  **12:15:00** 
+    * 12:08분에(t+8분) 마지막 활동을 한것으로 확인되면, 15분 후인 12:23분으로 갱신
+        1. 새로운 세션 만료 시간:  **12:23:00** 
+    * 새로운 세션 만료 시간:  **12:24:00** 한 시간을 검사합니다.
+</Callout>
 
 
 ### QueryPie Web IP Access Control
@@ -162,6 +173,11 @@ DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선�
 Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택
 </figcaption>
 </figure>
+<Callout type="info">
+11.1.0에 OAuth Client 관련 설정이 Admin &gt; General &gt; Company Management &gt; Security 하위 항목으로 추가되었습니다.(단일 클라이언트 설정만 가능)
+11.3.0에 Client 설정을 다중 설정이 가능하도록 개선되면서 Admin &gt; General &gt; System &gt; Integrations 항목으로 이동되었습니다.
+</Callout>
+
 ### 기타
 
 기타 보안 설정을 관리합니다.

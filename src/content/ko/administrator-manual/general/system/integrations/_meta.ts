@@ -6,4 +6,6 @@ export default {
   'integrating-with-event-callback': 'Event Callback 연동',
   'integrating-google-cloud-api-for-oauth-20': 'OAuth 2.0을 사용하기 위한 Google Cloud API 연동',
   'integrating-with-slack-dm': 'Slack DM 연동',
+  'oauth-client-application': 'OAuth Client Application',
+  'identity-providers': 'Identity Providers',
 };

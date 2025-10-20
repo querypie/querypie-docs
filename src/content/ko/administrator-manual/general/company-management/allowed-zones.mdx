@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
 
 Allowed Zones 페이지에서는, 사용자의 QueryPie 웹 콘솔 접근 및 DB 접속을 허용할 IP 대역을 통제하기 위해 사전에 Allowed Zone을 등록 및 관리합니다.
 
+<Callout type="info">
+11.3.0 부터 “IP Band(s)” 대신 “IP Address Range(s)”로 표현이 수정 되었습니다.
+</Callout>
+
 
 ### 등록된 Allowed Zone 목록 조회하기
 
@@ -20,19 +24,18 @@ Allowed Zone의 목록을 조회하기 위해서는 Administrator &gt; General &
 </Callout>
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20240714-053215.png)
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20251009-030815.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones
 </figcaption>
 </figure>
-
 
 ### Allowed Zone 상세 정보 조회하기
 
 Allowed Zones 목록에서 상세 정보를 조회하려는 아이템을 클릭하면 Drawer가 열립니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-211548.png)
+![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/image-20251009-031233.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
 </figcaption>
@@ -54,17 +57,17 @@ Drawer 내 Mapped List by Allowed Zones 영역에서 Allowed Zone이 할당된 D
 
 ### Allowed Zone 추가하기
 
-Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 생성 모달이 출력됩니다.
+Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 입력 항목이 출력됩니다.
 
 <figure data-layout="center" data-align="center">
-![Create Allowed Zone 모달](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
+![Create Allowed Zone 생성시 출력되는 입력항목](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
 <figcaption>
-Create Allowed Zone 모달
+Create Allowed Zone 생성시 출력되는 입력항목
 </figcaption>
 </figure>
 
 *  **Name**  : Allowed Zone 이름 
-*  **IP Band(s)**  : 할당할 IP 주소, 또는 IP 주소 범위를 입력합니다.
+*  **IP Address Range(s)**  : 할당할 IP 주소, 또는 IP 주소 범위를 입력합니다.
     * IP 주소, 또는 IP 주소 범위를 하나 이상 입력할 수 있습니다.
     * IP 주소 범위는 Classless Inter-Domain Routing(CIDR) 표기법을 사용합니다. 참고: [CIDR 이란?](https://aws.amazon.com/ko/what-is/cidr/)
     * 둘 이상의 IP 주소, IP 주소 범위를 입력할 때, 쉼표를 구분자로 하여 입력합니다.

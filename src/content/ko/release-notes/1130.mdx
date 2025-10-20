@@ -1,0 +1,57 @@
+---
+title: '11.3.0'
+---
+
+# 11.3.0
+
+### QueryPie 11.3.0 Release
+
+2025년 09월 30일
+
+
+**New Feature**
+
+* [공통] 대리 결재 기능 On/Off 설정 추가
+* [공통] 무중단 배포용 서비스 접근 수준 제어 - operation mode 기능 제공
+* [DAC] Impala JDBC URL 옵션으로 3rd party tool의 HTTP 요청에 대응할 수 있도록 지원
+* [DAC] Postgres(PostgreSQL) DB에 대한 Lite Proxy 기능 지원
+* [DAC] Redis Connection에 대해 수동 Cluster 설정 기능 제공
+* [DAC] 신정책에 이벤트에 대한 Syslog 전송 기능 추가 
+* [SAC] Audit Log Export에 Workflow Server Privilege Request 추가
+
+
+**Improvement**
+
+* [공통] Activity Logs에서 변경된 데이터에 대한 가시성 개선 
+* [공통] Alert 설정의 Channel 선택 항목에서 유형을 아이콘으로 표시하여 시인성 개선 
+* [공통] Alert 상세 페이지의 Logs 탭, Job 상세 화면에서 테이블 하단에 행수 표시 
+* [공통] Allowed Zone 설정에서 IP Band(s)를 IP Address Range(s)로 변경 
+* [공통] OAuth client 설정을 다중으로 등록할 수 있도록 개선 
+* [공통] SIEM 설정에 Timezone 추가 
+* [공통] User Group에 사용자 추가시 선택된 멤버의 수를 표시하도록 개선 
+* [공통] 사용자의 유휴 상태 제어(Agent Session Timeout 보강) 
+* [공통] Authentication 관련 설정 위치 변경 및 설정 방법 개선 
+* [공통] Urgent Mode (사후승인)을 사용할 경우 승인 만료일 지정을 못하도록 개선
+* [공통] 라이센스 관리 방법 개선
+* [DAC] Workflow에서 DAC 정책 예외 요청 (Unmasking, DataAccess, DB Policy Exception Request) 의 Start Time / End Time을 사용자 정의 할 수 있도록 개선 
+* [DAC] 신정책(New DAC Policy Management) 사용시 수동으로 DB Policy Exception 에서 효력 발생 시점에 Start Time / End Time으로 지정하도록 개선
+* [DAC] 정책 예외에 대해 최대 유효기간을 설정할 수 있도록 개선
+* [DAC] SSMS 에서 실행계획의 내용이 표시되도록 개선 / SET STATISTCS PROFILE 처리 개선 
+* [DAC] Redshift 에서 CREATE TEMP TABLE 구문으로 생성되는 테이블 지원 
+* [DAC] Dynamo DB Connection에 설정한 Secret Key가 평문으로 노출되지 않도록 마스킹 처리 
+* [DAC] Document DB 동기화 뒤 Instance 가 변경되더라도 Proxy port를 할당하도록 개선
+* [DAC] 클라우드 자원의 동기화 시 특정 대상만 선택적으로 동기화 할 수 있도록 개선 
+* [DAC] DB Connection 목록에서 Created At, Updated At 으로 정렬할 수 있도록 개선 
+* [DAC] Workflow 에서 Trino에 대한 요청을 상신을 할 때 계정 ID / PW를 입력할 수 있도록 개선 
+* [DAC] 신정책에서 태그 입력 UI 통일 
+* [DAC] 신정책에서 data scope를 정규식으로도 지정할 수 있도록 개선 
+* [DAC] 신정책의 Data scope에서 여러개의 테이블 또는 여러개의 컬럼을 선택할 수 있도록 개선 
+* [DAC] DBA 등 특권으로 접속해야 하는 사용자가 Advanced privilege 사용시 암호를 직접 입력할 수 있도록 개선
+* [SAC] Windows Server 접속시 계정 암호를 수동으로 입력할 수 있도록 개선
+* [SAC] RDP 세션 연결시 창모드를 사용하도록 개선
+* [SAC] Alert 항목에서 Sever Connection Attempt에 대해 실패 횟수 임계값 설정 옵션 추가 
+* [SAC] Command Audit의 Action Type 필터 개선 
+* [SAC] RDP Server Agent 다운로드 버튼 제공
+* [SAC] Server Group에 Server 를 추가할 때 Server의 태그를 활용하여 검색할 수 있도록 필터 제공
+* [WAC] Workflow Web Application JIT Request 양식 및 Default Rule에 Reviewer을 추가 할 수 있도록 개선 
+* [WAC] RootCA 인증서를 업로드 한 뒤 재시작이 필요하다는 배너 표시 

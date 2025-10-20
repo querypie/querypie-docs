@@ -119,11 +119,14 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
 
 #### Scope Type
 
-현재는 태그 기반으로만 정책을 적용할 수 있습니다:
+<Callout type="info">
+11.3.0 에서 모든 정책 유형에 대해 specific data path 선택시 정규식을 사용할 수 있도록 변경되었습니다.
+또한, 대상인 테이블 또는 컬럼을 여러개 다중으로 선택해서 등록할 수 있도록 변경되었습니다.
+</Callout>
 
 1.  **Data tags** : Data Paths 메뉴에서 설정된 태그를 기반으로 정책 적용 대상을 선택합니다.
     * 이 옵션이 선택되면 태그 키와 값을 지정하여 정책을 적용할 테이블 또는 컬럼을 선택할 수 있습니다.
-2.  **Specific data path** : 특정 데이터 경로를 직접 지정하는 옵션입니다. (11.0.0 부터)
+2.  **Specific data path** : 특정 데이터 경로를 직접 지정하는 옵션입니다. **[11.0.0]** 
     * 이 옵션을 선택한 뒤 Add tartget 버튼을 눌러 출력되는 팝업 대화창에서 Database, Schema, Table, Column을 지정할 수 있고 정규표현식을 사용할 수도 있습니다.  <br/>  <br/> 
       <figure data-layout="center" data-align="center">
       ![직접 경로 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
