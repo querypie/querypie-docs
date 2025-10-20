@@ -8,22 +8,38 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Licensesページは現在QueryPieで有効化された製品ライセンス情報を確認できます。
+Licensesページは現在QueryPieで有効化された製品ライセンスキーをアップロード/削除でき、状態を確認できます。
+
+<Callout type="info">
+11.3.0で管理者がAdmin &gt; General &gt; Company Management &gt; LicensesでLicense keyをアップロードできるよう改善されました。また、License状態がActive / Expired / WaitingからActivated / Available / Scheduled / Expiredに変更されました。
+</Callout>
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/screenshot-20240804-184804.png)
+![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/image-20250926-124941.png)
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; Licenses
 </figcaption>
 </figure>
 
-*  **ライセンス状態** : Active、Expired、Waiting（既存ライセンス有効期限時継続して有効化される待機中ライセンス）
+*  **ライセンス状態** : License状態を基準にAvailable Licenses、Scheduled Licenses、Expired Licenses三つのセクションに分けて表示されます。各詳細状態は以下の通りです。
+    * Activated : 現在有効化された状態
+    * Available : 使用可能なlicenseだが有効化していない状態
+    * Scheduled : 登録はしたがLicense効力日が到来する前の状態
+    * Expired : License使用期間が満了した状態
 *  **製品名** : 現在使用中のQueryPie製品名表示
 *  **使用期間** : 開始日、終了日表記
 *  **ライセンスタイプ** : Production（正式製品ライセンス）、PoC（PoC用ライセンス）
 
 <Callout type="info">
-ライセンスが有効期限予定または有効期限切れの[QueryPie Customer Portal](https://help.support.querypie.com/)または営業担当者を通じてお問い合わせください。
+ライセンスが満了予定または満了した[QueryPie Customer Portal](https://help.support.querypie.com/)または営業担当者を通じてお問い合わせください。
 </Callout>
+
+### Licenseファイルアップロード
+
+* 上部の`Upload License Key`ボタンをクリックしてライセンスキーをアップロードします。
+
+### License削除
+
+* 削除したいライセンスの右側に位置するゴミ箱アイコンをクリックして削除できます。
 
 

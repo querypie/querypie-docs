@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
 
 Allowed Zonesページでは、ユーザーのQueryPieウェブコンソールアクセスおよびDB接続を許可するIP帯域を制御するため、事前にAllowed Zoneを登録および管理します。
 
+<Callout type="info">
+11.3.0から「IP Band(s)」の代わりに「IP Address Range(s)」で表現が修正されました。
+</Callout>
+
 
 ### 登録されたAllowed Zoneリスト照会
 
@@ -64,7 +68,7 @@ Create Allowed Zoneモーダル
 </figure>
 
 *  **Name**  : Allowed Zone名
-*  **IP Band(s)**  : 割り当てるIPアドレス、またはIPアドレス範囲を入力します。
+*  **IP Address Range(s)**  : 割り当てるIPアドレス、またはIPアドレス範囲を入力します。
     * IPアドレス、またはIPアドレス範囲を1つ以上入力できます。
     * IPアドレス範囲はClassless Inter-Domain Routing(CIDR)表記法を使用します。参考：[CIDRとは？](https://aws.amazon.com/ko/what-is/cidr/)
     * 2つ以上のIPアドレス、IPアドレス範囲を入力する時、カンマを区切り文字として入力します。

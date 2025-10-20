@@ -17,15 +17,26 @@ Windows ServerにリモートアクセスするにはQueryPie Server Agentをイ
 ![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
 </figure>
 
-1. Server Agentダウンロードページにアクセスします。
-    1. インストールされたQueryPieドメインアドレス後に`/for-agent/server-agent/download`を付けてServer Agentダウンロードページにアクセスできます。<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
-2. エージェントインストールにはQueryPieにログインが必要です。
-3. 画面中央のWindowsボタンをクリックすると圧縮ファイルがダウンロードされます。
-4. インストールするWindowsサーバーに圧縮ファイルを解凍します。圧縮ファイル内には以下の2つのファイルがあります。
+* Server Agentダウンロードページにアクセスします。
+    * インストールされたQueryPieドメインアドレス後に`/for-agent/server-agent/download`を付けてServer Agentダウンロードページにアクセスできます。<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+
+<Callout type="info">
+11.3.0で管理者がserver agentのダウンロードをUI（Admin &gt; Servers &gt; Connection Management &gt; RDP Server Agentページの`Download Server Agent`ボタン）を通しても受け取れるよう変更されました。既存のようにダウンロードリンクのページを使用してダウンロードを受け取ることもできます。（QueryPie使用者ではない人が外部からエージェントをダウンロードしなければならない場合使用）
+<figure data-layout="center" data-align="center">
+![RDP Server Agentダウンロードボタン提供](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20251010-085601.png)
+<figcaption>
+RDP Server Agentダウンロードボタン提供
+</figcaption>
+</figure>
+</Callout>
+
+* エージェントインストールにはQueryPieにログインが必要です。
+* 画面中央のWindowsボタンをクリックすると圧縮ファイルがダウンロードされます。
+* インストールするWindowsサーバーに圧縮ファイルを解凍します。圧縮ファイル内には以下の2つのファイルがあります。
     1. QueryPie Server Access Control_(QueryPie Version)_Setup
     2. CONFIG
-5. 2つのファイルを同じパスに配置した後、QueryPie Server Access Control_(QueryPie Version)_Setupファイルを実行します。
-6. 案内に従ってファイルをインストールします。
+* 2つのファイルを同じパスに配置した後、QueryPie Server Access Control_(QueryPie Version)_Setupファイルを実行します。
+* 案内に従ってファイルをインストールします。
 
 <Callout type="info">
 **CONFIGファイル説明**

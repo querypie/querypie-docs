@@ -60,12 +60,18 @@ A. 権限の状態が変更されたり接続が許可されていない時間�
 <Callout type="info">
 **Q. RDPを通じたWindows Server接続はどのようにしますか？**
 
-A. QueryPieではQueryPie User Agentを通じてのみWindows Serverに接続が可能です。接続方法は以下の通りです。
+A. QueryPieではQueryPie Agent (User Agent / Multi-Agent)を通じてのみWindows Serverに接続が可能です。接続方法は以下の通りです。
 
-QueryPie User Agentインストール後、権限を付与されたWindows Serverを右クリック、`Open Connection with`メニューをクリック後、PCにインストールされたRDP Clientをクリックして接続します。
+QueryPie Agent (User Agent / Multi-Agent)インストール後、権限を付与されたWindows Serverを右クリック、`Open Connection with`メニューをクリック後、PCにインストールされたRDP Clientをクリックして接続します。
 
 * Windows PCではPCに基本インストールされたMSTSCプログラムをサポートします。
 * macOSはRDP接続のために[Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)をダウンロードする必要があります。
+
+11.3.0からMulti-AgentでCustom Accountを選択してアカウントのパスワードを手動で入力して接続できるよう変更されました。<br/>
+
+<figure data-layout="center" data-align="center">
+![image-20251010-095324.png](/user-manual/server-access-control/connecting-to-authorized-servers/image-20251010-095324.png)
+</figure>
 </Callout>
 
 <Callout type="info">

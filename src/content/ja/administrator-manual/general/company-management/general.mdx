@@ -2,6 +2,8 @@
 title: 'General'
 ---
 
+import { Callout } from 'nextra/components'
+
 # General
 
 ### 概要
@@ -129,6 +131,28 @@ Use User Attribute to Hide Workflow Menuトグルを有効化します。
 * トグルを有効化すると`User Attribute`の`Key`と`Value`を一組で選択し入力できます。
 * ここに設定された`Key:Value`条件と一致するユーザーは、ユーザーダッシュボードに`Workflow`メニューが表示されません。
 *  **例：**  `User Attribute Key`で'部署コード'を選択し、`Value`で'部署A'を入力すると、該当部署コード所属のユーザーには`Workflow`メニューが表示されません。
+
+### 代理決裁機能有効化/無効化オプション (Allow Delegated Approval)
+
+<Callout type="info">
+代理決裁機能有効化/無効化オプションは11.3.0に追加されました。
+</Callout>
+
+承認者役割を一定期間他のユーザーに委任する機能である代理決裁機能を管理者が有効化または無効化できるオプションです。もし無効化する場合、ユーザーpreference画面でApprover settingメニューが表示されません。
+
+<figure data-layout="center" data-align="center">
+![Allow Delegated Approvalスイッチ](/administrator-manual/general/company-management/general/image-20250926-112444.png)
+<figcaption>
+Allow Delegated Approvalスイッチ
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![代理決裁機能を無効化した状態のpreference](/administrator-manual/general/company-management/general/image-20250926-112201.png)
+<figcaption>
+代理決裁機能を無効化した状態のpreference
+</figcaption>
+</figure>
 
 ### SQL要求実行時スロットリング有効化 (Use throttling when submitting SQL Request in Workflow)
 

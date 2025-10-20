@@ -95,12 +95,27 @@ QueryPieは以下のようなポリシータイプを提供します:
 
 #### Scope Type
 
-現在はタグベースでのみポリシーを適用できます:
+<Callout type="info">
+11.3.0で全てのポリシータイプに対してspecific data path選択時正規表現を使用できるよう変更されました。
+また、対象のテーブルまたはカラムを複数選択して登録できるよう変更されました。
+</Callout>
 
 1.  **Data tags** : Data Pathsメニューで設定されたタグを基にポリシー適用対象を選択します。
     * このオプションが選択されるとタグキーと値を指定してポリシーを適用するテーブルまたはカラムを選択できます。
-2.  **Specific data path** : 特定データ経路を直接指定するオプションです。（11.0.0から）
-    * このオプションを選択した後Add tartgetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。 
+2.  **Specific data path** : 特定データ経路を直接指定するオプションです。 **[11.0.0]** 
+    * このオプションを選択した後Add tartgetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。  <br/>  <br/> 
+      <figure data-layout="center" data-align="center">
+      ![直接経路指定](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
+      <figcaption>
+      直接経路指定
+      </figcaption>
+      </figure>
+      <figure data-layout="center" data-align="center">
+      ![正規表現を使用して対象指定](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png)
+      <figcaption>
+      正規表現を使用して対象指定
+      </figcaption>
+      </figure> 
 
 
 #### ポリシー保存

@@ -245,6 +245,10 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 
 * AlertのChannelをEmailで指定する場合、Subject Title（メールタイトル）を直接入力する機能が追加されました。
 * Workflow関連Alert設定時、ChannelがEmailの場合、`Send email only to those involved in this request`オプションを提供します。このオプションを有効化すると、該当リクエストの関係者（リクエスト者、承認者など）にMessage Templateの内容で通知が送信されます。
+
+**11.3.0 Alert生成画面でのChannel選択項目**
+
+* Alert生成画面でChannel選択項目で対象を識別しやすくするためアイコンが追加されました。
 </Callout>
 
 #### Unusual Login Attempt
@@ -373,9 +377,27 @@ Sensitive Data Access通知タイプ使用には機密データポリシーに�
 
 サーバー接続成功または失敗通知
 
-*  **Alert Trigger Condition**  : 通知送信条件
-    * Success : DB接続成功時通知送信
-    * Failure : DB接続失敗時通知送信
+*  **Result**  : 通知送信条件
+    * Success : サーバー接続成功時通知送信
+    * Failure : サーバー接続失敗時通知送信
+
+<Callout type="info">
+11.3.0でFailureの下位オプションとしてSet trigger threshold on failed attemptオプションが追加され、失敗回数の閾値でalertを発生させることができるよう変更されました。
+
+* Action Count : イベントが発生した回数です。1以上の値を入力できます。
+* Time Interval : イベントが発生する時間範囲です。
+
+例）以下のような設定の場合、Server接続失敗イベントが5分以内に3回発生時にアラームを送信します。
+
+* Action Count : 3
+* Specific Time Internal (Minutes) : 5
+
+<figure data-layout="center" data-align="center">
+![image-20251010-093016.png](/administrator-manual/general/company-management/alerts/image-20251010-093016.png)
+</figure>
+
+
+</Callout>
 *  **Connection**  : 通知送信する対象コネクション（複数選択）
     * サーバーおよびサーバーグループ選択可能で、重複選択可能
         * 複数選択により対象が重複選択された場合でも通知は1回のみ送信

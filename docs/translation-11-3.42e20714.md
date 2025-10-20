@@ -1,34 +1,36 @@
 ### 커밋 42e20714d08b7e5dc6596503d57d7df842e3d829 변경에 따른 번역 수행
 
-1. 한국어 원문을 영어, 일본어로 번역하는 일반적인 가이드에 대해, [translation.md](translation.md) 문서를 참조하여 주세요.
+1. 한국어 원문을 영어/일본어로 번역하는 일반적인 가이드에 대해, [translation.md](translation.md) 문서를 참조하여 주세요.
 
 2. 42e20714d08b7e5dc6596503d57d7df842e3d829 에서 다수의 한국어 문서가 업데이트되었습니다.
    이에 따른 변경을 src/content/en/ 디렉토리 아래의 영어 문서에 번역하여 반영하고자 합니다.
-   이 문서에서, 한국어 원문 변경파일의 목록, 영어 문서의 TODO list 를 관리하고 있습니다.
+   이 문서에서, 한국어 원문 변경파일의 목록, 영어/일본어 문서의 TODO list 를 관리하고 있습니다.
    이미 번역된 것은 체크표시되어 있습니다.
 
-3. 번역을 시작하기 전에, 이미 영어 번역된 파일이 존재하는지, 번역문이 올바르게 저장되어 있는지, 확인을 수행하여 주세요.
+3. 번역을 시작하기 전에, 이미 영어/일본어로 번역된 파일이 존재하는지, 번역문이 올바르게 저장되어 있는지, 확인을 수행하여 주세요.
    42e20714d08b7e5dc6596503d57d7df842e3d829 의 commit 을 확인하여, 한국어 문서에서 변경된 부분을 확인하여 주세요.
    문서 전체가 아닌, 문서의 일부분 변경사항이 번역대상인 경우가 다수 있습니다. 한국의 문서의 부분적인 변경사항, 
-   영어 문서의 번역결과물을 확인하여, 중복 번역을 방지하여야 합니다.
+   영어/일본어 문서의 번역결과물을 확인하여, 중복 번역을 방지하여야 합니다.
    이미 번역이 완벽하게 수행된 경우, TODO list 에서 완료표시를 위해 체크하여 주세요.
 
    * 문서의 일부분 변경사항 가운데, bullet list, numbered list 등 Markdown 스타일 변경, 강조표시 변경,
-     공백 변경을 존중하여 주세요. 이러한 변경사항을 영어 번역문에 반영하여야 합니다.
-   * 영어 번역된 문서의 범위를 확인하기 위해, main branch 이후 현재 branch 의 변경사항을 확인하여 주세요.
-   * 한국어 원문의 변경사항 범위와 영어 번역된 문서의 변경사항 범위가 일치하여야 합니다.
+     공백 변경을 존중하여 주세요. 이러한 변경사항을 번역문에 반영하여야 합니다.
+   * 번역된 문서의 범위를 확인하기 위해, main branch 이후 현재 branch 의 변경사항을 확인하여 주세요.
+   * 한국어 원문의 변경사항 범위와 번역된 문서의 변경사항 범위가 일치하여야 합니다.
 
 4. npm run build 검증은 모든 번역이 완료된 후, 일괄적으로 한번에 수행하여 주세요.
 
-5. 지시사항 - 제시된 번역 가이드에 맞추어, src/content/en 의 문서 업데이트를 수행하여 주세요. 최대한 많은 문서를 번역하여 주세요.
+5. 지시사항 - 영어 번역의 경우, 제시된 번역 가이드에 맞추어, src/content/en 의 문서 업데이트를 수행하여 주세요. 최대한 많은 문서를 번역하여 주세요.
+ 
+6. 지시사항 - 일본어 번역의 경우, 제시된 번역 가이드에 맞추어, src/content/ja 의 문서 업데이트를 수행하여 주세요. 최대한 많은 문서를 번역하여 주세요.
 
-### 한국어 원문과 영어 번역문의 비교방법
+### 한국어 원문과 영어, 일본어 번역문의 비교방법
 
 1. 한국어 원문의 변경사항 범위를 확인하기 위해, 42e20714d08b7e5dc6596503d57d7df842e3d829 의 .mdx 파일목록, 
    각 파일에 대한 추가/삭제/대체된 라인수와 위치를 알아냅니다.
-2. 영어 번역된 문서의 변경사항 범위를 확인하기 위해, main branch 이후의 .mdx 파일목록, 각 파일에 대한
+2. 번역된 문서의 변경사항 범위를 확인하기 위해, main branch 이후의 .mdx 파일목록, 각 파일에 대한
    추가/삭제/대체된 라인수와 위치를 알아냅니다.
-3. 위의 두 변경범위를 비교하여, 한국어 원문의 변경사항과 영어 번역된 문서의 변경사항이 일치하는지, 불일치한다면, 어느 정도로
+3. 위의 두 변경범위를 비교하여, 한국어 원문의 변경사항과 번역된 문서의 변경사항이 일치하는지, 불일치한다면, 어느 정도로
    불일치하는지 알아냅니다. 불일치가 발생한 경우, 해당 부분이 올바르게 번역되었는지, 본문을 읽어 검증합니다.
 
 ## 한국어 원문 변경 파일(MDX, _meta.ts)
@@ -113,6 +115,44 @@
 
 참고: 이미지 파일은 공통 자산으로 언어와 무관하게 공유됩니다. 캡션 등의 텍스트는 번역 대상입니다.
 
+## 일본어 문서 업데이트 체크리스트 (src/content/ja)
+
+- [ ] src/content/ja/administrator-manual/audit/general-logs/activity-logs.mdx
+- [ ] src/content/ja/administrator-manual/audit/reports/audit-log-export.mdx
+- [ ] src/content/ja/administrator-manual/audit/server-logs/command-audit.mdx
+- [ ] src/content/ja/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+- [ ] src/content/ja/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+- [ ] src/content/ja/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+- [ ] src/content/ja/administrator-manual/databases/connection-management/db-connections.mdx
+- [ ] src/content/ja/administrator-manual/databases/dac-general-configurations.mdx
+- [ ] src/content/ja/administrator-manual/databases/new-policy-management/data-policies.mdx
+- [ ] src/content/ja/administrator-manual/databases/new-policy-management/exception-management.mdx
+- [ ] src/content/ja/administrator-manual/general/company-management/alerts.mdx
+- [ ] src/content/ja/administrator-manual/general/company-management/allowed-zones.mdx
+- [ ] src/content/ja/administrator-manual/general/company-management/general.mdx
+- [ ] src/content/ja/administrator-manual/general/company-management/licenses.mdx
+- [ ] src/content/ja/administrator-manual/general/company-management/security.mdx
+- [ ] src/content/ja/administrator-manual/general/system/_meta.ts
+- [ ] src/content/ja/administrator-manual/general/system/integrations/_meta.ts
+- [ ] src/content/ja/administrator-manual/general/system/integrations/identity-providers.mdx
+- [ ] src/content/ja/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+- [ ] src/content/ja/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
+- [ ] src/content/ja/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+- [ ] src/content/ja/administrator-manual/general/system/integrations/oauth-client-application.mdx
+- [ ] src/content/ja/administrator-manual/general/system/maintenance.mdx
+- [ ] src/content/ja/administrator-manual/general/user-management/authentication.mdx
+- [ ] src/content/ja/administrator-manual/general/user-management/groups.mdx
+- [ ] src/content/ja/administrator-manual/general/workflow-management/approval-rules.mdx
+- [ ] src/content/ja/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+- [ ] src/content/ja/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+- [ ] src/content/ja/release-notes/1130.mdx
+- [ ] src/content/ja/release-notes/_meta.ts
+- [ ] src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
+- [ ] src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
+- [ ] src/content/ja/user-manual/workflow/requesting-db-access.mdx
+- [ ] src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
+- [ ] src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
+- [ ] src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
 
 ---
 

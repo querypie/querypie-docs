@@ -33,7 +33,7 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
         1. web : QueryPie Webを通じた接続
         2. proxy : AgentまたはSeamless SSH Connectionを通じた接続
     4.  **Action Type** : 記録されたイベントタイプ
-        1. All : すべてのタイプ
+        1. Command : ログに記録されたコマンド
         2. File Download : （SFTP）ファイルダウンロード
         3. File Upload : （SFTP）ファイルアップロード
         4. Process Start : （RDP）プロセス実行
@@ -43,6 +43,16 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
         8. User Input - KeyPress : （RDP）ユーザーキーボード入力
     5.  **Executed At**  : コマンド実行時点
     6.  **Restricted**  : コマンド遮断の有無
+
+<Callout type="info">
+11.3.0でフィルターを使用する際、Action Typeの項目を複数選択できるよう変更されました。
+<figure data-layout="center" data-align="center">
+![フィルターのAction Typeで複数の項目を選択した例](/administrator-manual/audit/server-logs/command-audit/image-20250930-083734.png)
+<figcaption>
+フィルターのAction Typeで複数の項目を選択した例
+</figcaption>
+</figure>
+</Callout>
 5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
 6. テーブルで以下のカラム情報を提供します：
     1.  **No**  : イベント識別番号

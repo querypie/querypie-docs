@@ -1,0 +1,69 @@
+---
+title: 'OAuth Client Application'
+---
+
+# OAuth Client Application
+
+### Overview
+
+他の外部アプリケーションでユーザーを認証し、データにアクセスできるようにQueryPieがOAuth 2.0 Provider役割を実行できます。外部アプリケーションをクライアントとして登録し、QueryPieが認証トークンを発行して安全にクエリパイのリソースにアクセスできるようにします。
+
+### OAuth Client Application登録
+
+<figure data-layout="center" data-align="center">
+![Admin &gt; General &gt; System &gt; IntegrationsのAuthentication下位にあるOAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-041209.png)
+<figcaption>
+Admin &gt; General &gt; System &gt; IntegrationsのAuthentication下位にあるOAuth Client Application
+</figcaption>
+</figure>
+
+* Admin &gt; General &gt; System &gt; IntegrationsのAuthentication下位にあるOAuth Client Application項目を選択します。
+*  `+Add`ボタンを押し、登録するアプリケーションの情報を入力した後`Save`ボタンを押します。
+    *  **Name**  : 識別が便利な名前を入力します。
+    *  **Redirect URI**  : 認証過程が終了後戻すClient URLを入力します。
+    *  **Access Token Timeout (Minutes)**  : 基本値は60、最小値は5です。 
+    *  **Refresh Token Timeout (Minutes)**  : 基本値は1440、最小値は5です。
+
+<figure data-layout="center" data-align="center">
+![Add OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043210.png)
+<figcaption>
+Add OAuth Client Application
+</figcaption>
+</figure>
+
+
+* 設定が保存された後出力されるポップアップでClient IDとClient Secretが出力されます。Client Secretは最初に生成された値を再確認できないため、コピーしてよく保管する必要があります。 
+
+<figure data-layout="center" data-align="center">
+![Client IDおよびClient Secret](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043334.png)
+<figcaption>
+Client IDおよびClient Secret
+</figcaption>
+</figure>
+
+### OAuth Client Application設定修正
+
+<figure data-layout="center" data-align="center">
+![OAuth Client Application設定修正](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044214.png)
+<figcaption>
+OAuth Client Application設定修正
+</figcaption>
+</figure>
+
+OAuth Client Applicationリストで行をクリックすると以下の作業ができます。
+
+* 設定値変更：Name、Redirection URI、Access TokenおよびRefresh Token Timeout
+* Regenerate Client Secret：最初に生成したClient Secretを破棄して新しく生成できます。
+
+### OAuth Client Application設定削除
+
+登録するOAuth Client Application設定を削除するには、リストで削除対象項目をチェックして`Delete`ボタンを押します。
+
+<figure data-layout="center" data-align="center">
+![OAuth Client Application設定削除](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044400.png)
+<figcaption>
+OAuth Client Application設定削除
+</figcaption>
+</figure>
+
+

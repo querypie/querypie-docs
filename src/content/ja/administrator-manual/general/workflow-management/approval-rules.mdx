@@ -2,6 +2,8 @@
 title: 'Approval Rules'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Approval Rules
 
 ### Overview
@@ -65,7 +67,12 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Ap
     *  **参照者指定方式：**
         * Select Assignee(s) / Group(s) **：**管理者が特定ユーザーまたはグループを固定された参照者として事前に指定します。この規則で決裁を上申するユーザーは参照者を変更できません。
         * Allow Assignee selection (All Users) **：**決裁上申者が直接すべての活性ユーザー中から参照者を選択するよう許可します。
+        * Allow Assignee selection (Admin Only): 管理者権限を持つ人のみ選択できます。
         * Connection OwnerとServer Ownerは固定参照者として指定できません。
+
+<Callout type="info">
+11.3.0でDefaultで提供される「Web App Just In Time Access Request」Approval Ruleで参照者を指定できるよう変更されました。
+</Callout>
 *  **Urgent Mode**  ：該当決裁規則下で事後承認（Urgent Mode）を許可するか決定します。
     * 基本値は非許可（Off）で、今後Approval Rule修正を通じてOn/Off可能です。
     * Workflow Configurationsで事後承認が許可されていなければならないこのオプションが表示されます。

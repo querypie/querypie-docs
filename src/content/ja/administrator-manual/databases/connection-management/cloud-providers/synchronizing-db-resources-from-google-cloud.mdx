@@ -12,6 +12,10 @@ QueryPieではデータベース登録および管理のためのGoogle Cloud（
 
 ### QueryPieでGCP連動情報登録
 
+<Callout type="info">
+11.3.0で特定のタグがあるリソースのみ同期できるようにSearch Filter機能が追加されました。
+</Callout>
+
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
 <figcaption>
@@ -27,7 +31,10 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 6. リソースを同期するために必要な**Credential**情報を入力します。
    * `Synchronize`ボタンクリック時にGCPのService Accountを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでService Accountを使用する時もスケジュールを通じた同期が可能になるように改善されました。
 7. **Database Type Filter**項目で同期したいリソースを選択します。
-8. **Replication Frequency**項目で同期方式を選択します。
+8. **Search Filter**を使用して同期したい一部のタイプのリソースリストを取得できます。
+   1. Search FilterはAWSの検索方式と同じように動作します。名前、ホスト、OS、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
+       1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
+9. **Replication Frequency**項目で同期方式を選択します。
    1. Manual : 同期をしたい時点にのみ手動で同期する方式です。
    2. Scheduling : 定期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
 9. **Auto Configuration Upon Initial Synchronization** Cloud Providerで最初に同期するDBの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。

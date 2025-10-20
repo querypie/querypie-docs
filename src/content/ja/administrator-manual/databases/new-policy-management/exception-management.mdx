@@ -2,6 +2,8 @@
 title: 'Exception Management'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Exception Management
 
 ### Overview
@@ -41,6 +43,14 @@ Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで�
 
 #### ポリシー例外設定
 
+<Callout type="info">
+11.3.0で効力期限日を指定する方式が変更されました。
+
+Workflowのポリシー例外申請および管理者の手動ポリシー例外設定で共通に「Policy Exception Schedule」で項目名が統一され、効力開始時点と終了時点を明示的に指定できるよう変更されました。
+
+11.3.0で全てのポリシー例外タイプに対して正規表現で特定データ経路を指定できるよう変更されました。
+</Callout>
+
 <figure data-layout="center" data-align="center">
 ![手動ポリシー例外作成](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
 <figcaption>
@@ -50,16 +60,23 @@ Databases &gt; Policy Mananagement &gt; Exception Management のManualタブで�
 
 `+ Create Exception`ボタンをクリックし、ポリシー例外に対する設定をします。
 
-* Exception Name : ポリシー例外の名前を入力します。
-* Exception Type : Unmasking、Restricted Column Access、Restricted Table Access のようなポリシー例外タイプを選択します。
-* Data Scope : ポリシー例外対象テーブルまたはカラムを指定します。 **[11.1.0]** 
+*  **Exception Name**  : ポリシー例外の名前を入力します。
+*  **Exception Type**  : Unmasking、Restricted Column Access、Restricted Table Access のようなポリシー例外タイプを選択します。
+*  **Data Scope**  : ポリシー例外対象テーブルまたはカラムを指定します。 **[11.1.0]** 
     * Data Tag を選択するとタグで対象を指定できます。Databases &gt; Policy Management &gt; Data Pathsに設定したタグのみ使用できます。タグは同じキーはOR演算で異なるキー間はAND演算です。
-    * Specific data path を選択すると直接対象テーブルまたはカラムを指定できます。正規表現は使用できません。
-* Allowed User : 一時的にポリシー例外が必要な対象を指定します。
+    * Specific data path を選択すると直接対象テーブルまたはカラムを指定できます。 <br/>正規表現で指定することもできます。 **[11.3.0]** 
+*  **Allowed User**  : 一時的にポリシー例外が必要な対象を指定します。
     * User / Group : ユーザーまたはグループを指定できます。
     * Attribute of Users : ユーザーProfileに登録されたIdentifierタイプの属性を使用して動的に対象を指定できます。 **[11.1.0]** 
-* Exception Expiration : ポリシー例外が終了する時点を設定します。
-* Description : ポリシー例外に対する簡単な説明を入力します。
+*  **Policy Exception Schedule**  : ポリシー例外が適用される期間を設定してリクエストできます。最大ポリシー例外の有効期間は管理者が設定した最大期間（Maximum Policy Exception Period）を超えて申請できません。
+    * Specific Period : 開始時点と終了時点を指定します。時間単位で指定できます。
+    * Time Duration : 開始時点から指定した時間まで有効になるよう指定できます。
+    * Start On Approval オプション : Specific PeriodまたはTime duration両方の方法でStart On Approvalオプションを有効化（チェック）した場合承認時点から効力が発生します。一般的にリクエストする人が承認者の承認時点を知ることができないため、このオプションを使用することは推奨しません。（承認期限制約事項が発生する場合再リクエストが必要な場合が発生する可能性があるためです。）Urgent Modeを使用する場合も承認時点は事後でいつ承認されるか分からないため、可能な限りStart On Approvalオプションは必ず使用しなければならない特殊な状況を除いて推奨しません。
+*  **Reason for Request**  : ポリシー例外に対する簡単な説明を入力します。
+
+<Callout type="info">
+最大ポリシー例外期間設定はAdmin &gt; Databases &gt; General &gt; ConfigurationsのMaximum Policy Exception Period設定値によって制限されます。
+</Callout>
 
 #### ポリシー例外の状態即座変更
 

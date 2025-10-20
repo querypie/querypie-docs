@@ -71,10 +71,18 @@ QueryPieは顧客便宜のためTCP、UDP、HTTP、HTTPSプロトコルを使用
     9.  **Description** : 設定情報に対する100文字以内の簡略情報を入力します。
 2. `OK`ボタンを押して設定を保存します。
     1. 設定事項が保存されてもすぐにSyslogが送信されるわけではありません。
-3. 送信開始をするにはページ左上部にあるトグルボタンを：トグル：に切り替えます。
+3. 送信開始をするにはページ左上部にあるトグルボタンを`ON`に切り替えます。
     1. この送信トグルボタンはメンテナンスなど多様な状況で一時的に送信を停止する必要がある場合使用できます。
 4. もしもはやSyslog送信が必要ない場合`Delete`ボタンを通じて設定を削除できます。
     1. ただし、送信中状態では削除できないため送信トグルボタンを：トグルoff：に変更した後削除してください。
+
+<Callout type="info">
+11.3.0でTimezone設定が追加されました。以前Syslog (Legacy)でのみTimezone設定が可能でしたが、SIEM関連設定すべて（Syslog、Splunk）でTimezone設定が可能に変更されました。また、New DAC Policy Management機能により発生したイベントに対するストリーミング送信機能が追加されました。（Select Event ItemsでDAC Policy Audit Logsを選択。）
+</Callout>
+
+<figure data-layout="center" data-align="center">
+![image-20251009-045210.png](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20251009-045210.png)
+</figure>
 
 
 ### 参考

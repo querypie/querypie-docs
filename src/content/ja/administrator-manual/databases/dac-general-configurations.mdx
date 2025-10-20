@@ -94,7 +94,9 @@ Restricted StatementポリシーによってブロックされるクエリはSQL
 
 *  **Justification Length**  : Connection設定で「User Action Purpose Required」オプションが有効化されているか、Ledger table managementポリシーで理由入力を強制した場合、Web EditorまたはAgentを通じて理由入力をする必要があります。この時、入力欄に入力する文字長の最小値および最大値を管理者が指定します。
     * 入力値の最小値は1で最大値は1000です。<br/>
-
+      <figure data-layout="center" data-align="center">
+      ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
+      </figure>
 *  **Query Annotation**  : クエリ実行時に自動で管理者が指定したコメントを記録します。機能を有効化した場合、以下の3つのテンプレートを使用してコメントを記録します。10.4.0基準Redshift限定サポート。
     * User Name: `{{userName}}` : クエリを実行したユーザーのDisplay Nameです。
     * Login ID: `{{loginId}}` : クエリを実行したユーザーのLogin IDです。
@@ -111,8 +113,27 @@ Query Audit
 
 *  **Member based Connection Filtering :** WorkflowでDB Access Requestフォームで特定ユーザーまたはグループに対して全体コネクションを表示せず、指定したコネクションのみ表示するようフィルタリングする機能です。 
     * コネクションの詳細画面でconnection memberに登録されたユーザー/グループのみ該当コネクションがWorkflow DB Access Reqeustに表示されます。<br/>
+      <figure data-layout="center" data-align="center">
+      ![Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て](/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png)
+      <figcaption>
+      Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て
+      </figcaption>
+      </figure>
 
 <Callout type="info">
 **DB作業に対する理由入力強制設定**
 9.17.0バージョンから該当機能はコネクション詳細設定に変更されました。詳細な設定方法は[DB Connections](connection-management/db-connections)内  **追加設定** を参考にしてください。
+</Callout>
+
+*  **Maximum Policy Exception Period**  : Unmasking等のポリシー例外に対して最大有効期間を設定できます。（時間単位）。この設定値はWorkflow申請フォームとNew DAC Policy Management機能有効化時の管理者の手動ポリシー設定に影響を与えます。 
+    * 基本値 : 720時間（30日）
+    * 最大値 : 8760時間（1年）
+    * 最小値 : 1時間
+
+<figure data-layout="center" data-align="center">
+![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
+</figure>
+
+<Callout type="info">
+Maximum Policy Exception Period設定オプションは11.3.0から提供されます。
 </Callout>

@@ -289,7 +289,7 @@ Tagsタブ
 </figcaption>
 </figure>
 
-#### Privilege Setting
+#### Privilege Setting (Advanced Privilege)
 
 DBコネクションにPrivilege別に使用しなければならない接続アカウントを強制指定する機能です。
 
@@ -321,3 +321,13 @@ QueryPie Web > Databases > Connections
 
 * Privilege Settingが設定された権限を付与受けたユーザーはコネクション接続時管理者が事前に設定した通り該当PrivilegeにマッピングされたDBアカウントを使用し、Connections接続ページでDB Username、Password項目自体を見ることができません。
 * Webエディター、エージェントプロキシ、SQL Request、Export Requestなどコネクション接続で該当DBアカウント使用が強制化されます。
+
+<Callout type="info">
+11.3.0でAdvanced privilege設定時、特権アカウントに対してパスワードを登録しない場合、特権アカウント（管理者アカウント）が対象に接続する際に手動でパスワードを入力できるよう変更されました。
+
+<figure data-layout="center" data-align="center">
+![image-20251013-050034.png](/administrator-manual/databases/connection-management/db-connections/image-20251013-050034.png)
+</figure>
+
+Advanced privilege設定時、手動でDBアカウントのパスワードを入力するようにするには、上図のようにPassword欄を空白にしてHide this credential from connection list pageチェックボックスを解除状態に設定する必要があります。
+</Callout>

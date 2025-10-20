@@ -1,0 +1,79 @@
+---
+title: 'AWS SSO連携（SAML 2.0）'
+---
+
+import { Callout } from 'nextra/components'
+
+# AWS SSO連携（SAML 2.0）
+
+### Overview
+
+QueryPieではAWS IAM Identity Centerのユーザーを複数のクラウドアプリケーションおよびSAML 2.0を通じてユーザー連携をサポートします。ユーザーを同期してアクセス権限を付与し、ポリシーを適用できます。
+
+<Callout type="important">
+QueryPieのIdentity Providers Integration設定でSAMLをTypeとして選択して設定すると、スケジュールによる定期的な同期はサポートしません。
+</Callout>
+
+### AWS IAM Identity CenterでQueryPieをアプリケーションとして追加
+
+<figure data-layout="center" data-align="center">
+![AWS-SSO-01-20230317-044219.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-01-20230317-044219.png)
+</figure>
+
+1. [AWS IAM Identity Center](https://ap-northeast-2.console.aws.amazon.com/singlesignon/applications/home)にアクセスします。
+2. 左メニューのアプリケーションメニューに進入します。
+3. 右上のアプリケーション追加ボタンをクリックします。
+4. カスタムSAML 2.0アプリケーション追加オプション選択後、次ボタンをクリックします。
+5. アプリケーション構成 &gt; 表示名にQueryPieを入力します。
+6. アプリケーション属性 &gt; アプリケーション開始URL項目にQueryPieがインストールされたドメインアドレスを以下のように入力します。
+    1. アプリケーションStart URL：https://`{querypie_host}`
+7. アプリケーションメタデータ項目にそれぞれ以下のように入力します。 
+    1. アプリケーションACS URL：https://`{querypie_host}`/saml/sp/acs
+    2. アプリケーションSAML対象：https://`{querypie_host}`/saml/sp/metadata
+8. 提出ボタンをクリックして保存します。
+
+
+### QueryPie連携のための属性マッピング設定
+
+<figure data-layout="center" data-align="center">
+![AWS-SSO-06-20230317-064023.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-06-20230317-064023.png)
+</figure>
+
+1. 生成されたアプリケーション右上で作業 &gt; 属性マッピング編集に移動します。
+2. アプリケーション内ユーザー属性とマッピング値、形式を上のスクリーンショットを参考にして以下のように入力します。
+
+|  **アプリケーション内ユーザー属性**  |  **IAM Identity Centerの文字列値またはユーザー属性でマッピング**  |  **形式**      |
+| --------------------- | ------------------------------------------------ | ------------ |
+| Subject               | $`{user:email}`                                  | emailAddress |
+| firstName             | $`{user:givenName}`                              | basic        |
+| lastName              | $`{user:familyName}`                             | basic        |
+| loginId               | $`{user:email}`                                  | basic        |
+| email                 | $`{user:email}`                                  | basic        |
+
+`変更事項保存`ボタンをクリックして保存します。
+
+### QueryPieでAWS IAM Identity Center連携設定
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; General &gt; User Management &gt; Authentication ](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20240723-072112.png)
+<figcaption>
+Administrator &gt; General &gt; User Management &gt; Authentication 
+</figcaption>
+</figure>
+
+* Administrator &gt; Admin &gt; General &gt; System &gt; IntegrationでAuthenticationセクションの下位でIdentity Providerを選択します。
+* Addボタンを押してSAML形式でIdPを登録します。
+    *  **Name**  : 識別に便利な適切なIdPの名前を入力します。
+    *  **Type** : SAMLを選択します。
+    *  **Identity Provider Metadata**  : AWSでアプリケーション &gt; 作業 &gt; 構成編集画面でIAM Identity Center SAMLメタデータファイルをダウンロードしたSAML metadata XMLの内容をコピーして貼り付けます。
+* `Save`ボタンをクリックして保存します。
+
+### QueryPieでSAMLログイン
+
+<figure data-layout="center" data-align="center">
+![image-20251020-044838.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20251020-044838.png)
+</figure>
+
+ログインページで`Login with SAML`ボタンを通じてAWS認証してQueryPieにログインします。
+
+
