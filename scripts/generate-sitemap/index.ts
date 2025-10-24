@@ -162,6 +162,23 @@ function generateLanguageSitemap(lang: Language, gitTrackedFiles: GitTrackedFile
     urls.push(sitemapUrl);
   }
 
+  // Sort URLs by the last modification date (most recent first)
+  urls.sort((a, b) => {
+    // If both have lastmod dates, sort by date (newest first)
+    if (a.lastmod && b.lastmod) {
+      return b.lastmod.getTime() - a.lastmod.getTime();
+    }
+    // If only one has the lastmod, prioritize it
+    if (a.lastmod && !b.lastmod) {
+      return -1;
+    }
+    if (!a.lastmod && b.lastmod) {
+      return 1;
+    }
+    // If neither has lastmod, maintain the original order
+    return 0;
+  });
+
   return urls;
 }
 
