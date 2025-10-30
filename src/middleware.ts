@@ -86,6 +86,6 @@ export const config = {
   // TODO(JK): Refer to this for more files to exclude, for example: manifest.json, ...
   // https://nextjs.org/docs/app/api-reference/file-conventions/metadata
   matcher: [
-    '/((?!_next/static|_next/image|_pagefind|.*\\.ico|.*\\.png|.*\\.mov|.*\\.xml).*)',
+    '/((?!_next/static|_next/image|_pagefind|google*|.*\\.ico|.*\\.png|.*\\.mov|.*\\.xml).*)',
   ],
 };
