@@ -43,20 +43,26 @@ export async function middleware(request: NextRequest) {
     pathname,
   });
 
-  // Handle root path redirect with dynamic language detection
+  // Handle root path rewrite with dynamic language detection
   if (pathname === '/') {
     const detectedLanguage = detectUserLanguage(request);
-    const redirectUrl = new URL(`/${detectedLanguage}/`, request.url);
+    const rewriteUrl = new URL(`/${detectedLanguage}/`, request.url);
 
-    middlewareLogger.info('Root redirect with dynamic language detection', {
-      from: '/',
-      to: `/${detectedLanguage}/`,
-      detectedLanguage,
-      userAgent: request.headers.get('user-agent'),
-      acceptLanguage: request.headers.get('accept-language'),
-    });
-
-    return NextResponse.redirect(redirectUrl);
+    if (detectedLanguage === 'en') {
+      middlewareLogger.info('Root rewrite with dynamic language detection', {
+        from: pathname,
+        to: rewriteUrl,
+        acceptLanguage: request.headers.get('accept-language'),
+      });
+      return NextResponse.rewrite(rewriteUrl);
+    } else {
+      middlewareLogger.info('Root redirect with dynamic language detection', {
+        from: pathname,
+        to: rewriteUrl,
+        acceptLanguage: request.headers.get('accept-language'),
+      });
+      return NextResponse.redirect(rewriteUrl);
+    }
   }
 
   middlewareLogger.debug('Handling with Nextra middleware');
