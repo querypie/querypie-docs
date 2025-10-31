@@ -2,7 +2,7 @@ import {NextRequest} from 'next/server';
 import {middlewareLogger} from './logger';
 
 // Supported languages
-const supportedLanguages = ['en', 'ko', 'ja'];
+export const supportedLanguages = ['en', 'ko', 'ja'];
 const defaultLanguage = 'en';
 const cookieName = 'NEXT_LOCALE';
 
