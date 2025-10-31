@@ -1,7 +1,7 @@
 import { middleware as nextraMiddleware } from 'nextra/locales';
 import { NextRequest, NextResponse } from 'next/server';
 import { middlewareLogger } from './lib/logger';
-import { detectUserLanguage } from './lib/detect-user-language';
+import { detectUserLanguage, supportedLanguages } from './lib/detect-user-language';
 
 // URIs that should skip Nextra middleware and be handled by route handlers
 const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
@@ -21,12 +21,24 @@ const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
   // Add more URIs here as needed, for example,
 ]);
 
+/**
+ * Splits pathname into slugs and ensures at least one element exists.
+ * For root path '/', returns [''] to ensure slugs[0] is always accessible.
+ * @param pathname The pathname to split
+ * @returns Array of slugs with at least one element
+ */
+function getSlugs(pathname: string): string[] {
+  const slugs = pathname.split('/').slice(1);
+  // Ensure at least one element exists (empty string for root path)
+  return slugs.length > 0 ? slugs : [''];
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const slugs = pathname.split('/').slice(1);
+  const slugs = getSlugs(pathname);
 
   // Skip Nextra middleware for URIs that should be handled by route handlers
-  const skipBySlug = slugs.length > 0 && SKIP_MIDDLEWARE_URIS.has(slugs[0]);
+  const skipBySlug = SKIP_MIDDLEWARE_URIS.has(slugs[0]);
   const skipByPathname = SKIP_MIDDLEWARE_URIS.has(pathname);
   if (skipBySlug || skipByPathname) {
     const reason = skipBySlug ? SKIP_MIDDLEWARE_URIS.get(slugs[0]) : SKIP_MIDDLEWARE_URIS.get(pathname);
@@ -43,10 +55,11 @@ export async function middleware(request: NextRequest) {
     pathname,
   });
 
-  // Handle root path rewrite with dynamic language detection
-  if (pathname === '/') {
+  // Handle path rewrite when the first segment is not a supported language
+  const needsLanguagePrefix = !supportedLanguages.includes(slugs[0]);
+  if (needsLanguagePrefix) {
     const detectedLanguage = detectUserLanguage(request);
-    const rewriteUrl = new URL(`/${detectedLanguage}/`, request.url);
+    const rewriteUrl = new URL(`/${detectedLanguage}${pathname}`, request.url);
 
     if (detectedLanguage === 'en') {
       middlewareLogger.info('Root rewrite with dynamic language detection', {
