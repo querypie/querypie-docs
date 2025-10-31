@@ -1,7 +1,7 @@
-import {middleware as nextraMiddleware} from 'nextra/locales';
-import {NextRequest, NextResponse} from 'next/server';
-import {middlewareLogger} from './lib/logger';
-import {detectUserLanguage} from './lib/detect-user-language';
+import { middleware as nextraMiddleware } from 'nextra/locales';
+import { NextRequest, NextResponse } from 'next/server';
+import { middlewareLogger } from './lib/logger';
+import { detectUserLanguage } from './lib/detect-user-language';
 
 // URIs that should skip Nextra middleware and be handled by route handlers
 const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
@@ -29,10 +29,8 @@ export async function middleware(request: NextRequest) {
   const skipBySlug = slugs.length > 0 && SKIP_MIDDLEWARE_URIS.has(slugs[0]);
   const skipByPathname = SKIP_MIDDLEWARE_URIS.has(pathname);
   if (skipBySlug || skipByPathname) {
-    const reason = skipByPathname 
-      ? SKIP_MIDDLEWARE_URIS.get(pathname)
-      : (slugs.length > 0 ? SKIP_MIDDLEWARE_URIS.get(slugs[0]) : undefined);
-    
+    const reason = skipBySlug ? SKIP_MIDDLEWARE_URIS.get(slugs[0]) : SKIP_MIDDLEWARE_URIS.get(pathname);
+
     middlewareLogger.debug('Skipping Nextra middleware', {
       pathname,
       reason,
@@ -49,7 +47,7 @@ export async function middleware(request: NextRequest) {
   if (pathname === '/') {
     const detectedLanguage = detectUserLanguage(request);
     const redirectUrl = new URL(`/${detectedLanguage}/`, request.url);
-    
+
     middlewareLogger.info('Root redirect with dynamic language detection', {
       from: '/',
       to: `/${detectedLanguage}/`,
