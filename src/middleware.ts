@@ -25,20 +25,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (request.nextUrl.pathname === '/robots.txt') {
-    middlewareLogger.debug('Handling robots.txt request');
-    if (process.env.DEPLOYMENT_ENV === 'production') {
-      return new NextResponse(`User-agent: *
-Allow: /
-Sitemap: https://docs.querypie.com/sitemap.xml
-`);
-    } else {
-      return new NextResponse(`User-agent: *
-Disallow: /
-`);
-    }
-  }
-
   middlewareLogger.debug('Handling with Nextra middleware');
   return nextraMiddleware(request);
 }
