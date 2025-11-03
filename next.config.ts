@@ -27,18 +27,11 @@ const withNextra = nextra({
 
 // Export the final Next.js config with Nextra included
 export default withNextra({
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   poweredByHeader: process.env.NODE_ENV === 'development',
   reactStrictMode: process.env.NODE_ENV === 'development',
   i18n: {
     locales: ['en', 'ko', 'ja'],
     defaultLocale: 'en',
-  },
-  serverRuntimeConfig: {
-    // Enable IP address extraction
-    trustProxy: true,
   },
   // Configure redirects for Previous Version Documentation
   async redirects() {
