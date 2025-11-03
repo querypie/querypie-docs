@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import React from 'react';
+import { LastUpdated } from '@/components/last-updated';
 
 const defaultMetadata: Metadata = {
   title: {
@@ -116,6 +117,7 @@ export default async function RootLayout({ children, params }) {
               </div>
             ),
           }}
+          lastUpdated={<LastUpdated locale={lang} />}
         >
           {children}
         </Layout>
