@@ -75,7 +75,7 @@ export default async function RootLayout({ children, params }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
             <img src="/icon-32.png" alt="QueryPie Logo" width={18} height={18} />
             <div>
-              <b>QueryPie</b> <span style={{ opacity: '60%' }}>Docs</span>
+              <b>QueryPie</b> <span style={{ opacity: '60%' }}>ACP</span>
             </div>
           </div>
         </div>
