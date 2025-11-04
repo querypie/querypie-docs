@@ -10,6 +10,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import React from 'react';
 import { LastUpdated } from '@/components/last-updated';
+import LanguageSelector2 from "@/components/language-selector2";
 
 const defaultMetadata: Metadata = {
   title: {
@@ -110,11 +111,11 @@ export default async function RootLayout({ children, params }) {
           ]}
           sidebar={{ defaultMenuCollapseLevel: 1 }}
           toc={{
-            // TODO(JK): For debugging only. Remote this later.
-            extraContent: (
-              <div>
-                <small>layout={layoutName}</small>
-              </div>
+            title: (
+              <>
+                <LanguageSelector2/>
+                <p>On This Page</p>
+              </>
             ),
           }}
           lastUpdated={<LastUpdated locale={lang} />}
