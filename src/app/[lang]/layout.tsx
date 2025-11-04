@@ -13,13 +13,13 @@ import { LastUpdated } from '@/components/last-updated';
 
 const defaultMetadata: Metadata = {
   title: {
-    default: 'QueryPi Docs',
-    template: '%s - QueryPie Docs',
+    default: 'QueryPie ACP',
+    template: '%s - QueryPie ACP',
   },
-  description: 'QueryPie Docs',
-  applicationName: 'QueryPie Docs',
+  description: 'QueryPie ACP',
+  applicationName: 'QueryPie ACP',
   appleWebApp: {
-    title: 'QueryPie Docs',
+    title: 'QueryPie ACP',
   },
   other: {
     'msapplication-TileImage': '/icon-256.png',
