@@ -3,6 +3,7 @@ import { useMDXComponents as getMDXComponents } from '@/mdx-components';
 import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+import { getCanonicalUrl } from '@/lib/get-canonical-url';
 
 export async function generateStaticParams() {
   const locales = ['en', 'ja', 'ko']; // Same as next.config.mjs
@@ -66,7 +67,18 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
   const { metadata } = await importPage(params.mdxPath, params.lang || 'en');
-  return metadata;
+  
+  // Generate canonical URL
+  const canonicalUrl = await getCanonicalUrl(params);
+  
+  // Add canonical URL to metadata, merging with existing alternates if any
+  return {
+    ...metadata,
+    alternates: {
+      ...metadata.alternates,
+      canonical: canonicalUrl,
+    },
+  };
 }
 
 const Wrapper = getMDXComponents().wrapper;
