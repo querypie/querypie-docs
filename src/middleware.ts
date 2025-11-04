@@ -57,7 +57,9 @@ export async function middleware(request: NextRequest) {
 
   // Handle path rewrite when the first segment is not a supported language
   const needsLanguagePrefix = !supportedLanguages.includes(slugs[0]);
-  if (needsLanguagePrefix) {
+  if (needsLanguagePrefix && pathname === '/') {
+    // NOTE(JK): Apply only for the root path, not subpaths.
+    // Or, pages on the left sidebar won't be listed.
     const detectedLanguage = detectUserLanguage(request);
     const rewriteUrl = new URL(`/${detectedLanguage}${pathname}`, request.url);
 
