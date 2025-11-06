@@ -34,7 +34,7 @@ export const handleLanguageChange = (lang: string, currentLang: string, pathname
 // CSS styles as a string
 export const languageSelectorStyles = `
   .language-selector-toc {
-    padding: 16px;
+    padding: 0px 0px 16px 0px;
     border-bottom: 1px solid #e5e7eb;
     margin-bottom: 16px;
   }
@@ -44,7 +44,7 @@ export const languageSelectorStyles = `
   }
 
   .language-selector-title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #374151;
     margin-bottom: 12px;
@@ -78,7 +78,7 @@ export const languageSelectorStyles = `
     padding: 10px 12px;
     text-decoration: none;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     transition: all 0.2s ease;
     width: 100%;
