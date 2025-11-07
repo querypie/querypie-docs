@@ -69,6 +69,7 @@ export const languageSelectorStyles = `
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width:10em;
   }
 
   .language-button {
@@ -92,47 +93,28 @@ export const languageSelectorStyles = `
     cursor: default;
   }
 
-  .language-button:hover:not(:disabled) {
-    transform: translateY(-1px);
-    text-decoration: none;
-  }
-
   .language-button.active {
-    background: #0070f3;
-    color: white;
+    border: 1px solid #000;
   }
 
   .dark .language-button.active {
-    background: #3b82f6;
-  }
-
-  .language-button.active:hover:not(:disabled) {
-    background: #0051cc;
-    color: white;
-  }
-
-  .dark .language-button.active:hover:not(:disabled) {
-    background: #2563eb;
+    border: 1px solid #fff;
   }
 
   .language-button.inactive {
-    background: #f8f9fa;
     color: #495057;
   }
 
   .dark .language-button.inactive {
-    background: #374151;
     color: #d1d5db;
   }
 
   .language-button.inactive:hover:not(:disabled) {
     background: #e9ecef;
-    color: #495057;
   }
 
   .dark .language-button.inactive:hover:not(:disabled) {
     background: #4b5563;
-    color: #f3f4f6;
   }
 `;
 
