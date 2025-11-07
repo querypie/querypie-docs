@@ -42,7 +42,7 @@ export const metadata: Metadata =
       };
 
 export default async function RootLayout({ children, params }) {
-  const { lang, mdxPath } = await params;
+  const { lang, mdxPath: _mdxPath } = await params;
 
   const navbar = (
     <Navbar
