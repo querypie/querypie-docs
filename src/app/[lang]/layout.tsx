@@ -44,31 +44,9 @@ export const metadata: Metadata =
         },
       };
 
-// Extract layout information from Front Matter of an MDX file
-function getLayoutFromMdx(mdxPath: string[], lang: string): string {
-  const normalizedMdxPath = mdxPath && mdxPath.length > 0 ? mdxPath : ['index'];
-
-  try {
-    const contentPath = path.join(process.cwd(), 'src', 'content', lang, ...normalizedMdxPath) + '.mdx';
-
-    if (!fs.existsSync(contentPath)) {
-      return 'default';
-    }
-
-    const fileContent = fs.readFileSync(contentPath, 'utf-8');
-    const { data } = matter(fileContent);
-
-    return data.layout || 'default';
-  } catch (error) {
-    console.warn(`Failed to parse frontmatter for ${normalizedMdxPath.join('/')}:`, error);
-    return 'default';
-  }
-}
-
 export default async function RootLayout({ children, params }) {
   const { lang, mdxPath } = await params;
 
-  const layoutName = getLayoutFromMdx(mdxPath, lang);
   const navbar = (
     <Navbar
       logo={
