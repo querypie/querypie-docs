@@ -564,12 +564,42 @@ class Stage3Processor(StageBase):
         try:
             attachment_id = attachment["id"]
             filename = clean_text(attachment["title"])
+            filepath = os.path.join(directory, filename)
+
+            # Get expected file size from API metadata
+            expected_size = None
+            extensions = attachment.get("extensions", {})
+            if "fileSize" in extensions:
+                expected_size = extensions["fileSize"]
+
+            # Check if a file already exists and has a correct size
+            if os.path.exists(filepath):
+                local_file_size = os.path.getsize(filepath)
+                if local_file_size > 0:
+                    # If we have an expected size from API, compare it with the local file size
+                    if expected_size is not None:
+                        if local_file_size == expected_size:
+                            self.logger.info(f"Skipping download - attachment already exists with correct size: {filename} (size: {local_file_size} bytes)")
+                            return
+                        else:
+                            self.logger.warning(f"Local file size mismatch for {filename}: local={local_file_size}, expected={expected_size}. Re-downloading.")
+                    else:
+                        # If we don't have an expected size, just check if the file exists and has size > 0
+                        self.logger.info(f"Skipping download - attachment already exists: {filename} (size: {local_file_size} bytes)")
+                        return
 
             content = self.api_client.download_attachment(page_id, attachment_id)
             if content:
-                filepath = os.path.join(directory, filename)
                 self.file_manager.save_file(filepath, content, is_binary=True)
-                self.logger.info(f"Downloaded attachment: {filename}")
+                downloaded_size = len(content)
+                size_info = f" (size: {downloaded_size} bytes"
+                if expected_size is not None:
+                    if downloaded_size == expected_size:
+                        size_info += ", matches expected size"
+                    else:
+                        size_info += f", expected: {expected_size} bytes"
+                size_info += ")"
+                self.logger.info(f"Downloaded attachment: {filename}{size_info}")
         except Exception as e:
             self.logger.error(f"Error downloading attachment {attachment.get('title', 'unknown')}: {str(e)}")
 
