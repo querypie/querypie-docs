@@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 10.3.0 부터 각 Administrator &gt; General &gt; Security 하위에 있던 KAC 관련 설정 항목들이 각 서비스 메뉴의 General &gt; Configurations로 이동되었습니다.
+11.4.0 부터 사용자의 권한 요청 및 관리자의 권한 부여시 최대 기간을 지정할 수 있는 Maximum Access Duration 옵션이 추가되었습니다.
 </Callout>
 
 
@@ -16,8 +17,14 @@ import { Callout } from 'nextra/components'
 쿠버네티스 클러스터 접근 제어, 권한 관리, 세션 정책 등 컨테이너 기반 환경에서의 보안을 위한 설정을 제공합니다.
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240726-152035.png](/administrator-manual/kubernetes/kac-general-configurations/screenshot-20240726-152035.png)
+![Kubernetes Configurations options](/administrator-manual/kubernetes/kac-general-configurations/image-20251107-090909.png)
+<figcaption>
+Kubernetes Configurations options
+</figcaption>
 </figure>
+
 
 * Idle Session Timeout (Minutes) : 파드 세션 타임아웃 (Default : 15)
     * exec, port-forward, attach를 통한 세션 연결 시 유휴 시간 지정
+* Maximum Access Duration : 권한 부여 최대 기간 지정 옵션입니다. 지정한 기간을 초과하는 권한 요청을 작성할 수 없고, 관리자도 이 기간을 초과한 권한 부여를 할 수 없습니다. 이 기간이 만료되면 자동으로 권한이 회수됩니다. 
+    * 최소값 : 1, 최대값 : 9999

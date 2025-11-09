@@ -11,6 +11,10 @@ python bin/confluence_xhtml_to_markdown.py var/544375335/page.xhtml target/ko/re
 echo 'Converted 544375335 to target/ko/release-notes.mdx'
 
 mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1568735233/page.xhtml target/ko/release-notes/1140.mdx --public-dir=target/public --attachment-dir=/release-notes/1140
+echo 'Converted 1568735233 to target/ko/release-notes/1140.mdx'
+
+mkdir -p target/ko/release-notes
 python bin/confluence_xhtml_to_markdown.py var/1421475841/page.xhtml target/ko/release-notes/1130.mdx --public-dir=target/public --attachment-dir=/release-notes/1130
 echo 'Converted 1421475841 to target/ko/release-notes/1130.mdx'
 
