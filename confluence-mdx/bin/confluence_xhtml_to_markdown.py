@@ -1040,7 +1040,7 @@ class MultiLineParser:
             elif child.name in ['ul', 'ol']:
                 pass  # Will be processed later in this method
             else:
-                child_markdown.extend(f'<Unexpected node name={child.name}/>')
+                child_markdown.append(f'(Unexpected node name="{child.name}")')
 
         logging.debug(f'li_itself={li_itself}')
         logging.debug(f'child_markdown={child_markdown}')
