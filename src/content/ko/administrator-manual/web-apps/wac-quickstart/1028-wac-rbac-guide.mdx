@@ -202,7 +202,19 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
 2. 하나의 `spec` 안에서 여러 개의 웹 앱을 나열할 수 있습니다.
-  (Unexpected node name="ac:structured-macro")3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
+  ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/database-settings/policies"
+      - webApp: "QueryPie Customer Portal"
+        urlPathTags: 
+          access: "admin"
+  ```
+3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
     * 글자 수 최대 120자
     * 알파벳 대소문자 (case-sensitive), 숫자 및 일부 특수기호 (`_`, `-`, `(`, `)`, `[`, `]`) 만 허용
     * 공백 허용
@@ -218,12 +230,37 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
 1. Admin &gt; Web App 에 등록된 하위 경로만 등록이 가능합니다.
 2. Base URL을 포함하여, 웹 앱에 존재하는  **모든**  하위 경로에 대해 허용 또는 거부하려면 `urlPaths: ["*"]` 으로 작성합니다.
     * 예: QueryPie Web Admin 의 전체 경로에 대해 접근 차단
-      (Unexpected node name="ac:structured-macro")3. 하위 경로 입력시, 입력한 경로에 대해 정책이 적용됩니다.
+      ```
+spec:
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: ["*"]
+      ```
+3. 하위 경로 입력시, 입력한 경로에 대해 정책이 적용됩니다.
     * 하위 경로는 리스트로 나열하며, 여러 개를 입력할 수 있습니다.
     * 경로의 마지막 부분에 와일드카드를 입력하여, 특정 경로 하위의 모든 경로를 지시할 수 있습니다. (상위 경로는 포함하지 않습니다)
-      (Unexpected node name="ac:structured-macro")    * 입력한 경로 중에 서로 중첩되는 경로를 동시에 입력할 수 없습니다.
+      ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"     # 특정 하위 경로
+          - "/general-settings/user-management/*"   # 특정 경로의 모든 하위 경로
+      ```
+    * 입력한 경로 중에 서로 중첩되는 경로를 동시에 입력할 수 없습니다.
         * 예: QueryPie Web Admin 의 `/general-settings/*` 와 `/general-settings/user-management` 를  **동시에 입력 불가** 
-          (Unexpected node name="ac:structured-macro")4. 경로의 중간 또는 경로명의 일부에 와일드카드를 입력하거나, 정규표현식을 입력할 수  **없습니다** .
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/*"
+          - "/general-settings/user-management"
+          ```
+4. 경로의 중간 또는 경로명의 일부에 와일드카드를 입력하거나, 정규표현식을 입력할 수  **없습니다** .
     * `"/*-settings"` (X)
     * `"/*/edit"` (X)
     * `"^/database-settings/policies/data-.*$"` (X)
@@ -236,9 +273,19 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
 1. 태그는 대소문자를 구분하며, 여러 개를 입력할 수 있습니다.
     * Key가 동일한 태그를 여러 개 입력 시,  **OR**  조건으로 동작합니다.
         * 예: `access: admin` 또는 `access: user` 가 부여된 경로에 대해 접근 허용
-          (Unexpected node name="ac:structured-macro")    * Key가 다른 태그를 여러 개 입력 시,  **AND**  조건으로 동작합니다.
+          ```
+urlPathTags: 
+  "access": "admin"
+  "access": "user"
+          ```
+    * Key가 다른 태그를 여러 개 입력 시,  **AND**  조건으로 동작합니다.
         * 예: `access: admin` 과 `type: general` 가 함께 부여된 경로에 대해 접근 허용
-          (Unexpected node name="ac:structured-macro")
+          ```
+urlPathTags: 
+  "access": "admin"
+  "type": "general"
+          ```
+
 ### Conditions**[OPTIONAL]**
 
 `conditions` 은 규칙 적용 대상 리소스의 범위를 좁히기 위한 조건을 정의합니다. `userAttributes`, `ipAddresses` 두 종류의 조건 지정이 가능합니다.
@@ -259,9 +306,19 @@ QueryPie 사용자의 속성(attribute)을 기준으로 규칙에 의해 리소�
 
 * Key가 동일한 속성을 여러 개 입력 시, OR 조건으로 동작합니다.
     * 예: 부서(department)가 PM 또는 QA인 사용자에 대해 접근 허용
-      (Unexpected node name="ac:structured-macro")* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다.
+      ```
+userAttributes: 
+  "department": "PM"
+  "department": "QA"
+      ```
+* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다.
     * 예: 부서(department)가 PM이고, 직책(title)이 관리자인 사용자에 대해 접근 허용
-      (Unexpected node name="ac:structured-macro")
+      ```
+userAttributes: 
+  "department": "PM"
+  "title": "Manager"
+      ```
+
 #### ipAddresses**[OPTIONAL]**
 
 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.

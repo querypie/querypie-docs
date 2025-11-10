@@ -168,7 +168,7 @@ Vault SSH-OTP 및 SSH-CA 인증 방식에서는 Vault Role Path 필드에 Vault�
 </Callout>
 
 <Callout type="info">
-provisioning account는 실제 서버에 등록된 계정이여야 하며 아래와 같은 설정이 필요합니다.
+Provisioning Account는 실제 서버에 등록된 계정이여야 하며 아래와 같은 설정이 필요합니다.
 * 계정 생성/삭제 권한이 필수입니다.
 * sudo를 쓸 때 패스워드를 입력하지 않도록 설정되어야 합니다.
 </Callout>
@@ -180,9 +180,16 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 �
 
 <Callout type="info">
 **Vault에서 Role을 설정할 때,**
+
 *  **Default extensions** 에 아래 값을 입력해야 합니다.
-    * 
-      (Unexpected node name="ac:structured-macro")*  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
+```
+{
+"permit-port-forwarding": "",
+"permit-pty": ""
+}
+```
+
+*  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
     * QueryPie에서는 인증서의 TTL(Time To Live)은 60초 입니다.
 *  **Signing Algorithm** 은 ras-sha2-256 으로 설정합니다.
 </Callout>

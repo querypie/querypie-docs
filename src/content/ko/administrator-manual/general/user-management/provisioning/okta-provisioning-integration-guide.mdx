@@ -87,7 +87,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
     1. SCIM connector base URL : QueryPie에서 조회한 SCIM Endpoint 값을 삽입합니다. 
     2. Unique identifier field for users : “ **userName** ”
     3. Support provisioning action : 
-      (Unexpected node name="ac:task-list")    4. Authentication Mode : “ **HTTP Header** ”
+      (Unexpected node name="ac:task-list" ac:name="(none)")
+    4. Authentication Mode : “ **HTTP Header** ”
     5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다. 
 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다. 
 4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다. 
@@ -118,52 +119,60 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 5. Attributes 하단의 `Mappings` 버튼을 클릭합니다.
 6. 팝업창 상단의 두 탭 중 “Okta User to `{사용자가 정의한 App명}`” 으로 기재된 탭으로 이동합니다. 
 7. 사용자 임의의 설정에 맞게 항목을 맵핑한 뒤, 하단의 `Save Mappings` 버튼을 클릭합니다.
-8. 하단의 `Apply updates now` 버튼을 클릭합니다. 
+8. 하단의 `Apply updates now` 버튼을 클릭합니다.
+
+#### 일부 Attribute 를 추가적으로 동기화하는 방법
 
 <Callout type="important">
-**일부 Attribute 추가 싱크 방법**
-1. 쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다: 
-    1. secondEmail 
-    2. mobilePhone
-    3. postalAddress (SCIM 스키마에 맞추어 “formatted”로 추가되어 해당 항목을 매핑하면 됩니다.)
-    4. staticIp (쿼리파이 전용 커스텀 속성)
-    5. macAddress (쿼리파이 전용 커스텀 속성)
-2. 해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다. [Okta 예제]
-    1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
-      <figure data-layout="center" data-align="center">
-      ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
-      </figure>
-    2. `Add Attribute` 버튼을 클릭합니다. 
-      <figure data-layout="center" data-align="center">
-      ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
-      </figure>
-    3. 동기화에 필요한 Attribute를 새로 등록합니다. 
-      <figure data-layout="center" data-align="center">
-      ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
-      </figure>
-        1. Data type : 쿼리파이와 동일하게 string 선택합니다.
-        2. Display name : 옥타 내 표기할 속성명을 기입합니다.
-        3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다. 
-            * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다. 
-              <figure data-layout="center" data-align="center">
-              ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
-              </figure>
-        4. External namespace : 해당 정보로 기입합니다. 
-          (Unexpected node name="ac:structured-macro")        5. 이후 `Save` 또는 `Save and Add Another` 버튼을 클릭하여 저장합니다.
-        6. 그 다음 `Mappings` 버튼을 클릭합니다. 
-          <figure data-layout="center" data-align="center">
-          ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
-          </figure>
-        7. 프롬프트 상단의 탭을 2번째 탭(Okta → `{APP}`)으로 선택합니다. 
-          <figure data-layout="center" data-align="center">
-          ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
-          </figure>
-        8. 하단에 새로 생성한 Custom Attribute와 IdP 내 적절한 Attribute를 매핑하고 Save Mappings 버튼을 클릭하여 설정을 저장합니다. 
-          <figure data-layout="center" data-align="center">
-          ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
-          </figure>
-        9. 이후 사용자를 앱에 할당합니다. 
+QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute 항목은 SCIM Integration 의 기본설정에서는 Import 되지 않습니다.
 </Callout>
+
+쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다:
+
+1. secondEmail 
+2. mobilePhone
+3. postalAddress (SCIM 스키마에 맞추어 “formatted”로 추가되어 해당 항목을 매핑하면 됩니다.)
+4. staticIp (쿼리파이 전용 커스텀 속성)
+5. macAddress (쿼리파이 전용 커스텀 속성)
+
+해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다.
+
+##### [Okta 에서 Custom Attribute 를 설정하는 예시]
+
+1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
+  <figure data-layout="center" data-align="center">
+  ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
+  </figure>
+2. `Add Attribute` 버튼을 클릭합니다. 
+  <figure data-layout="center" data-align="center">
+  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  </figure>
+3. 동기화에 필요한 Attribute를 새로 등록합니다. 
+  <figure data-layout="center" data-align="center">
+  ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
+  </figure>
+    1. Data type : 쿼리파이와 동일하게 string 선택합니다.
+    2. Display name : 옥타 내 표기할 속성명을 기입합니다.
+    3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다. 
+        * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다. 
+          <figure data-layout="center" data-align="center">
+          ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
+          </figure>
+    4. External namespace : 아래 값을 기입합니다.<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
+    5. 이후 `Save` 또는 `Save and Add Another` 버튼을 클릭하여 저장합니다.
+4. 그 다음 `Mappings` 버튼을 클릭합니다. 
+  <figure data-layout="center" data-align="center">
+  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  </figure>
+    1. 프롬프트 상단의 탭을 2번째 탭(Okta → `{APP}`)으로 선택합니다. 
+      <figure data-layout="center" data-align="center">
+      ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+      </figure>
+    2. 하단에 새로 생성한 Custom Attribute와 IdP 내 적절한 Attribute를 매핑하고 Save Mappings 버튼을 클릭하여 설정을 저장합니다. 
+      <figure data-layout="center" data-align="center">
+      ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+      </figure>
+5. 이후 사용자를 앱에 할당합니다.
 
 
 ---

@@ -1058,7 +1058,7 @@ class MultiLineParser:
                 code_markdown = MultiLineParser(child).as_markdown_of_two
                 child_markdown.extend(code_markdown)
             else:
-                child_markdown.append(f'(Unexpected node name="{child.name}" ac:name="{attr_name}")')
+                child_markdown.append(f'(Unexpected node name="{child.name}" ac:name="{attr_name}")\n')
 
         logging.debug(f'li_itself={li_itself}')
         logging.debug(f'child_markdown={child_markdown}')
