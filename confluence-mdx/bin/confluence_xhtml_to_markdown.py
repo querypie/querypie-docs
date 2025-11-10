@@ -866,6 +866,20 @@ class MultiLineParser:
         # Return the Markdown lines as a list of strings
         return self.markdown_lines
 
+    @property
+    def as_markdown_of_two(self):
+        """Convert the node to Markdown format for indented list."""
+        self.convert_recursively(self.node)
+
+        if len(self.markdown_lines) >= 2:
+            # Join all items except the last one into a single string
+            first_line = "".join(self.markdown_lines[:-1])
+            # Get the last item in the list
+            last_line = self.markdown_lines[-1]
+            return [first_line, last_line]
+        else:
+            return self.markdown_lines
+
     def append_empty_line_unless_first_child(self, node):
         # Convert generator to list to check length
         children_list = list(node.parent.children)
@@ -1025,6 +1039,7 @@ class MultiLineParser:
         li_itself = []
         child_markdown = []
         for child in node.children:
+            attr_name = child.get('name', '(none)') if not isinstance(child, NavigableString) else '(none)'
             if isinstance(child, NavigableString):
                 if child.text.strip():  # Only process non-empty text nodes
                     li_itself.append(SingleLineParser(child).as_markdown)
@@ -1039,8 +1054,11 @@ class MultiLineParser:
                 child_markdown.extend(image_markdown)
             elif child.name in ['ul', 'ol']:
                 pass  # Will be processed later in this method
+            elif child.name in ['ac:structured-macro'] and attr_name in ['code']:
+                code_markdown = MultiLineParser(child).as_markdown_of_two
+                child_markdown.extend(code_markdown)
             else:
-                child_markdown.append(f'(Unexpected node name="{child.name}")')
+                child_markdown.append(f'(Unexpected node name="{child.name}" ac:name="{attr_name}")')
 
         logging.debug(f'li_itself={li_itself}')
         logging.debug(f'child_markdown={child_markdown}')

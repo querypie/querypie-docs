@@ -38,10 +38,95 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
   ![image-20231227-065951.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png)
   </figure>
 4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/> 
-  (Unexpected node name="ac:structured-macro")5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/> 
+  ```
+    {
+        "display_information": {
+            "name": "{{name}}"
+        },
+        "features": {
+            "bot_user": {
+                "display_name": "{{display_name}}",
+                "always_online": false
+            }
+        },
+        "oauth_config": {
+            "scopes": {
+                "bot": [
+                    "chat:write",
+                    "users:read.email",
+                    "users:read"
+                ]
+            }
+        },
+        "settings": {
+            "interactivity": {
+                "is_enabled": true
+            },
+            "org_deploy_enabled": false,
+            "socket_mode_enabled": true,
+            "token_rotation_enabled": false
+        }
+    }
+  ```
+5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   ![image-20240115-220447.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png)
   </figure>
+
+
+### Test - No indentation
+
+App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.
+
+
+1. [https://api.slack.com/apps](https://api.slack.com/apps) 으로 이동하여 `Create an App` 을 클릭합니다.<br/> <br/>
+<figure data-layout="center" data-align="center">
+    ![image-20231227-065658.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065658.png)
+</figure>
+2. Create an app 모달에서, App 생성 방식을 선택합니다. `From a manifest` 를 클릭합니다.<br/> <br/>
+<figure data-layout="center" data-align="center">
+    ![screenshot-20250218-131725.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-131725.png)
+</figure>
+3. Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.<br/> <br/>
+<figure data-layout="center" data-align="center">
+    ![image-20231227-065951.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png)
+</figure>
+4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/>
+```
+    {
+        "display_information": {
+            "name": "{{name}}"
+        },
+        "features": {
+            "bot_user": {
+                "display_name": "{{display_name}}",
+                "always_online": false
+            }
+        },
+        "oauth_config": {
+            "scopes": {
+                "bot": [
+                    "chat:write",
+                    "users:read.email",
+                    "users:read"
+                ]
+            }
+        },
+        "settings": {
+            "interactivity": {
+                "is_enabled": true
+            },
+            "org_deploy_enabled": false,
+            "socket_mode_enabled": true,
+            "token_rotation_enabled": false
+        }
+    }
+  ```
+5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/>
+<figure data-layout="center" data-align="center">
+    ![image-20240115-220447.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png)
+</figure>
+
 
 ### Slack Workspace에 Slack App 설치
 
