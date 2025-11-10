@@ -27,6 +27,12 @@ import yaml
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 
+try:
+    import emoji
+    EMOJI_AVAILABLE = True
+except ImportError:
+    EMOJI_AVAILABLE = False
+
 
 # Type definitions for page_v1 structure
 class PageV1(TypedDict, total=False):
@@ -735,10 +741,41 @@ class SingleLineParser:
             """
             <ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"
                          ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:"/>
+            or
+            <ac:emoticon ac:name="blue-star" ac:emoji-shortname=":white_check_mark:"
+                         ac:emoji-id="2705" ac:emoji-fallback="✅"/>
             """
-            shortname = node.get('emoji-shortname')
-            if shortname:
-                self.markdown_lines.append(f'{shortname}')
+            # First check ac:emoji-fallback attribute (may already be an emoji character)
+            fallback = node.get('emoji-fallback', '')
+            shortname = node.get('emoji-shortname', '')
+            
+            # Check if fallback is already an emoji character (not in shortname format)
+            if fallback and not fallback.startswith(':'):
+                # Already an actual emoji character
+                self.markdown_lines.append(fallback)
+            elif shortname:
+                # Convert shortname to actual emoji
+                if EMOJI_AVAILABLE:
+                    # Use emoji library to convert shortname to actual emoji
+                    emoji_char = emoji.emojize(shortname, language='alias')
+                    if emoji_char != shortname:
+                        # Conversion successful (converted to actual emoji)
+                        self.markdown_lines.append(emoji_char)
+                    else:
+                        # Conversion failed (use fallback or shortname as-is)
+                        if fallback:
+                            self.markdown_lines.append(fallback)
+                        else:
+                            self.markdown_lines.append(shortname)
+                else:
+                    # emoji library not available, use fallback or shortname
+                    if fallback:
+                        self.markdown_lines.append(fallback)
+                    else:
+                        self.markdown_lines.append(shortname)
+            elif fallback:
+                # No shortname but fallback is available
+                self.markdown_lines.append(fallback)
         elif node.name in ['time']:
             """
             <time datetime="2025-07-02">
