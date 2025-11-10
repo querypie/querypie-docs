@@ -86,8 +86,12 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 2. SCIM Connection의 우측 `Edit` 버튼을 눌러 이하의 값을 채워 수정합니다.
     1. SCIM connector base URL : QueryPie에서 조회한 SCIM Endpoint 값을 삽입합니다. 
     2. Unique identifier field for users : “ **userName** ”
-    3. Support provisioning action : 
-      (Unexpected node name="ac:task-list" ac:name="(none)")
+    3. Supported provisioning action : 다음의 다섯 항목을 모두 선택합니다.
+        * Import New Users and Profile Updates
+        * Push New Users
+        * Push Profile Updates
+        * Push Groups
+        * Import Groups
     4. Authentication Mode : “ **HTTP Header** ”
     5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다. 
 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다. 
