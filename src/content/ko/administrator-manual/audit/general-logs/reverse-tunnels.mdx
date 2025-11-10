@@ -2,13 +2,19 @@
 title: 'Reverse Tunnels'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Reverse Tunnels
 
 ### Overview
 
 QueryPie와 연결된 Reverse Tunnels 세션을 모니터링하는 페이지입니다.
 
-사용자가 인프라 내 설치한 Reverse Tunnel Agent가 QueryPie와 정상 통신을 하는 경우, QueryPie와 Reverse Tunnels 사이에 생성된 세션을 확인할 수 있습니다. 리소스(서버, 클러스터)에 Tag를 추가하여 Reverse Tunnels로 접속 여부를 설정할 수 있습니다.
+사용자가 인프라 내 설치한 Reverse Tunnel Agent가 QueryPie와 정상 통신을 하는 경우, QueryPie와 Reverse Tunnels 사이에 생성된 세션을 확인할 수 있습니다. 리소스(서버, 클러스터)에 Tag를 추가하여 Reverse Tunnels로 접속 여부를 설정할 수 있습니다.<br/>
+
+<Callout type="info">
+11.4.0에서 Reverse Tunnel의 상태 정보를 표시하던 Reverse Tunnels 페이지를 기존 Admin &gt; Audit &gt; General &gt; Reverse Tunnels → Admin &gt; General &gt; System &gt; Reverse Tunnels 로 이동했습니다.<br/>해당 메뉴에 접근하기 위해 “General Setting Full Access” Admin Role이 필요합니다.
+</Callout>
 
 ### Reverse Tunnels 조회하기
 
