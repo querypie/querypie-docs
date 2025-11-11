@@ -1,2 +1,3 @@
 # Ignore auto-generated querypie-docs.mdx in any locale folder directly under this directory
 /*/querypie-docs.mdx
+*.skel.mdx
