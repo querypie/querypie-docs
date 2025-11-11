@@ -83,7 +83,34 @@ Based on the dpkg command.
 
 1. Download querypie-multi-agent.deb.
 2. Run the following command to install the file. Output example
+  ```
+sudo dpkg -i ~/Downloads/querypie-multi-agent.deb
+  ```
+  ```
+Preparing to unpack querypie-multi-agent.deb ...
+Unpacking querypie-multi-agent (3) ...
+Setting up querypie-multi-agent (3) ...
+Processing triggers for gnome-menus (3.36.0-1.1ubuntu3) ...
+Processing triggers for desktop-file-utils (0.27-2build1) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+  ```
 3. Verify the installation. Output example
+  ```
+dpkg -s querypie-multi-agent
+  ```
+  ```
+Package: querypie-multi-agent
+Status: install ok installed
+Priority: optional
+Section: devel
+Maintainer: QueryPie
+Architecture: arm64
+Version: 3
+Depends: libx11-6, libice6, libsm6, libfontconfig1
+Description: QueryPie Multi Agent
+Homepage: https://www.querypie.com/
+Copyright: QueryPie, Inc.
+  ```
 
 #### Uninstall
 
@@ -108,7 +135,35 @@ Based on the rpm command.
 
 1. Download querypie-multi-agent.rpm.
 2. Run the following command in the terminal to install the file. Output example
+  ```
+sudo rpm -i ~/Downloads/querypie-multi-agent.rpm
+  ```
+  ```
+QueryPie Multi Agent has been installed.
+  ```
 3. Verify the installation. Output example
+  ```
+rpm -qi querypie-multi-agent
+  ```
+  ```
+Name        : querypie-multi-agent
+Version     : 3
+Release     : 202503291846
+Architecture: aarch64
+Install Date: Mon 31 Mar 2025 03:02:34 PM KST
+Group       : Applications/Development
+Size        : 493101340
+License     : Proprietary
+Signature   : (none)
+Source RPM  : querypie-multi-agent-3-202503291846.src.rpm
+Build Date  : Sun 30 Mar 2025 03:46:29 AM KST
+Build Host  : localhost
+Vendor      : QueryPie, Inc.
+URL         : https://www.querypie.com/
+Summary     : QueryPie Multi Agent
+Description :
+QueryPie Multi Agent
+  ```
 
 #### Uninstall
 

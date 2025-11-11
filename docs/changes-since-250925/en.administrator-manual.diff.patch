@@ -458,10 +458,26 @@ index 79e39c6..76ef8fb 100644
 +To allow manual entry of the DB account password when configuring Advanced privilege, leave the Password field empty and set the "Hide this credential from connection list page" checkbox to unchecked as shown above.
 +</Callout>
 diff --git a/src/content/en/administrator-manual/databases/dac-general-configurations.mdx b/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
-index 66362ee..5169c31 100644
+index 66362ee..a68765e 100644
 --- a/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
 +++ b/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
-@@ -111,8 +111,27 @@ Query Audit
+@@ -67,7 +67,6 @@ For detailed description, please refer to [Connecting with Web SQL Editor](../..
+ *  **Privilege Deactivation Period** : Long-term unused criteria period for DB privilege expiration (Default: 90 days)
+ *  **Maximum Access Duration** : Maximum period for privilege requests and assignments
+     * Cannot set expiration dates exceeding the specified period when requesting DB Access Request
+-
+ *  **Display the first 10 rows in Query Audit** : Query Audit SELECT statement execution result display method setting (Default: Off, when set to On, only the first 10 rows are displayed instead of showing all results)
+ 
+ <figure data-layout="center" data-align="center">
+@@ -94,7 +93,6 @@ Queries blocked by Restricted Statement policies are blocked from execution even
+ 
+ *  **Justification Length**  : When "User Action Purpose Required" option is activated in Connection settings or reason input is forced by Ledger table management policies, reason input must be made through Web Editor or Agent. Administrators specify the minimum and maximum values for the number of characters entered in the input field.
+     * The minimum input value is 1 and the maximum value is 1000.<br/>
+-
+ *  **Query Annotation**  : Automatically records annotations specified by administrators when performing queries. When the feature is activated, annotations are recorded using the following 3 templates. As of 10.4.0, limited to Redshift support.
+     * User Name: `{{userName}}` : Display Name of the user who performed the query.
+     * Login ID: `{{loginId}}` : Login ID of the user who performed the query.
+@@ -111,8 +109,27 @@ Query Audit
  
  *  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow. 
      * Only connections registered as connection members in the connection detail screen are exposed in Workflow DB Access Request.<br/>
@@ -793,7 +809,7 @@ index 3e4b807..0052efe 100644
      * Can select servers and server groups, with duplicate selection allowed
          * Even if targets are duplicated due to multiple selection, alert is sent only once
 diff --git a/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx b/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
-index 4388497..4eeb840 100644
+index 4388497..6fce568 100644
 --- a/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
 +++ b/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
 @@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
@@ -825,14 +841,19 @@ index 4388497..4eeb840 100644
  <figcaption>
  Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
  </figcaption>
-@@ -54,14 +58,14 @@ In the Mapped List by Allowed Zones area within the drawer, you can check DB con
- Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone creation modal.
+@@ -51,17 +55,17 @@ In the Mapped List by Allowed Zones area within the drawer, you can check DB con
+ 
+ ### Adding Allowed Zones
+ 
+-Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone creation modal.
++Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone input fields.
  
  <figure data-layout="center" data-align="center">
 -![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
-+![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
++![Input fields displayed when creating Allowed Zone](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
  <figcaption>
- Create Allowed Zone Modal
+-Create Allowed Zone Modal
++Input fields displayed when creating Allowed Zone
  </figcaption>
  </figure>
  
