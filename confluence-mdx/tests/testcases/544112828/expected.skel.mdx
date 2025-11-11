@@ -157,29 +157,33 @@ _TEXT_. _TEXT_. _TEXT_.
 
 _TEXT_. _TEXT_.
 ```
-_TEXT_
+$ cd .ssh
 ```
 
 _TEXT_.
 ```
-_TEXT_
+$ vi config
 ```
 
 _TEXT_.
 ```
-_TEXT_
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpa ssh %r %h %p
 ```
 
 <Callout type="info">
 _TEXT_. _TEXT_.
 ```
-_TEXT_
+Host *
+  ProxyCommand qpa ssh %r %h %p
 ```
 </Callout>
 
 _TEXT_. _TEXT_.
 ```
-_TEXT_
+$ ssh deploy@{{Server Name}}
 ```
 
 
@@ -250,12 +254,12 @@ _TEXT_
 
 _TEXT_.
 ```
-_TEXT_
+export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
 ```
 
 _TEXT_.
 ```
-_TEXT_
+export KUBECONFIG="${KUBECONFIG}:<사용자가 지정한 경로>"
 ```
 
 _TEXT_.
@@ -265,7 +269,7 @@ _TEXT_.
 
 _TEXT_
 ```
-_TEXT_
+export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
 
 

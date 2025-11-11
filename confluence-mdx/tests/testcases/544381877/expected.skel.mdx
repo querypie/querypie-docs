@@ -71,11 +71,106 @@ _TEXT_.
 <details>
 <summary>_TEXT_. _TEXT_</summary>
 ```
-_TEXT_
+#!/bin/bash
+
+set -o nounset -o errexit -o pipefail
+
+RESOURCE_PREFIX=querypie
+NAMESPACE=querypie
+
+SERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa
+CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role
+CLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb
+SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret
+
+echo "Creating the Queypie Service Account and grant permission"
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ${CLUSTER_ROLE_NAME}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - users
+  - groups
+  - serviceaccounts
+  verbs:
+  - impersonate
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ${CLUSTER_ROLE_BINDING_NAME}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ${CLUSTER_ROLE_NAME}
+subjects:
+- kind: ServiceAccount
+  name: ${SERVICE_ACCOUNT_NAME}
+  namespace: ${NAMESPACE}
+EOF
+
+
+SA_SECRET_NAME=$(kubectl get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o "jsonpath={.secrets[0]..name}")
+if [ -z $SA_SECRET_NAME ]
+then
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: ${SERVICE_ACCOUNT_SECRET_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    kubernetes.io/service-account.name: "${SERVICE_ACCOUNT_NAME}"
+EOF
+SA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}
+fi
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    BASE64_DECODE_FLAG="-d"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    BASE64_DECODE_FLAG="-D"
+elif [[ "$OSTYPE" == "linux-musl" ]]; then
+    BASE64_DECODE_FLAG="-d"
+else
+    echo "Unknown OS ${OSTYPE}"
+    exit 1
+fi
+
+SA_TOKEN=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['token']}" | base64 ${BASE64_DECODE_FLAG})
+CA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o "jsonpath={.data['ca\.crt']}" | base64 ${BASE64_DECODE_FLAG})
+
+echo "
+Finished successfully.
+Please copy the token and ca cert below and paste them into the credential input box on the querypie clusters page.
+
+>>> Service Account token
+${SA_TOKEN}
+
+--------------
+
+>>> CA Cert
+${CA_CERT}"
 ```
 </details>
 
 * _TEXT_. 
   ```
-_TEXT_
-```
+chmod +x generate_kubepie_sa.sh
+./generate_kubepie_sa.sh
+  ```

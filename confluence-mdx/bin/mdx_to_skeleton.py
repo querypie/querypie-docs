@@ -43,17 +43,17 @@ def extract_code_blocks(text: str) -> Tuple[str, List[ProtectedSection]]:
     placeholder_counter = 0
     
     # Pattern to match code blocks: ```language\ncontent\n```
-    pattern = r'```(\w*)\n(.*?)```'
+    # Match the entire code block including markers to preserve it exactly as-is
+    pattern = r'(```\w*\n.*?```)'
     
     def replace_code_block(match):
         nonlocal placeholder_counter
-        language = match.group(1) or ""
-        content = match.group(2)
+        full_block = match.group(1)  # Entire code block including ``` markers
         placeholder_counter += 1
         placeholder = f"__CODE_BLOCK_{placeholder_counter}__"
-        protected = ProtectedSection(content, placeholder)
+        protected = ProtectedSection(full_block, placeholder)
         code_blocks.append(protected)
-        return f"```{language}\n{placeholder}\n```"
+        return placeholder
     
     modified_text = re.sub(pattern, replace_code_block, text, flags=re.DOTALL)
     return modified_text, code_blocks
@@ -155,6 +155,14 @@ def process_text_line(line: str) -> str:
     
     # Preserve import statements
     if line.strip().startswith('import '):
+        return line
+    
+    # Preserve code block markers and placeholders
+    # Code blocks are already extracted and replaced with placeholders
+    # We need to preserve the entire code block structure (```...```)
+    if line.strip().startswith('```') or line.strip() == '```':
+        return line
+    if '__CODE_BLOCK_' in line:
         return line
     
     # Preserve HTML tags structure but replace text content

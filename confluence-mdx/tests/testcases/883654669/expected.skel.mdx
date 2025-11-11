@@ -39,8 +39,35 @@ _TEXT_. _TEXT_.<br/> <br/>
   </figure>
 _TEXT_. _TEXT_. <br/>_TEXT_.<br/>_TEXT_. <br/> 
   ```
-_TEXT_
-```
+{
+    "display_information": {
+        "name": "{{name}}"
+    },
+    "features": {
+        "bot_user": {
+            "display_name": "{{display_name}}",
+            "always_online": false
+        }
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "chat:write",
+                "users:read.email",
+                "users:read"
+            ]
+        }
+    },
+    "settings": {
+        "interactivity": {
+            "is_enabled": true
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": true,
+        "token_rotation_enabled": false
+    }
+}
+  ```
 _TEXT_. _TEXT_.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![_TEXT_](/883654669/output/image-20240115-220447.png)
