@@ -1,0 +1,8 @@
+ ...ti-agent-linux-installation-and-usage-guide.mdx | 63 ++++++++++++++++++++--
+ .../connecting-to-authorized-servers.mdx           | 10 +++-
+ .../accessing-web-applications-websites.mdx        |  6 +--
+ .../user-manual/workflow/requesting-db-access.mdx  |  4 ++
+ .../workflow/requesting-db-policy-exception.mdx    | 27 +++++-----
+ .../workflow/requesting-restricted-data-access.mdx | 19 ++++---
+ .../requesting-unmasking-mask-removal-request.mdx  | 17 +++---
+ 7 files changed, 110 insertions(+), 36 deletions(-)

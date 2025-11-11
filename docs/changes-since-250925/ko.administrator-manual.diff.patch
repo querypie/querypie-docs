@@ -1,0 +1,2436 @@
+diff --git a/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx b/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
+index 2deb3795..0c2bc118 100644
+--- a/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
++++ b/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
+@@ -2,6 +2,8 @@
+ title: 'Activity Logs'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Activity Logs
+ 
+ ### Overview
+@@ -33,7 +35,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs
+ ### Activity Logs 상세 내용 조회하기
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-193807.png)
++![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/image-20251009-024238.png)
+ <figcaption>
+ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details
+ </figcaption>
+@@ -47,3 +49,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
+ 3.  **Related Logs**  : 해당 행위에 대해, 연쇄적으로 또는 동시에 발생한 로그를 표시합니다. 전후 로그를 모두 포함합니다.
+     1. 관리자가 직접 일으킨 행위 뿐만 아니라, 그에 따라 파생된 시스템의 자동 행위들을 확인할 수 있습니다.
+     2. Related Logs에 표시된 행위 로그들은 각각 개별 로그로도 남아있습니다.
++
++<Callout type="info">
++11.3.0 부터 Activity Logs의 상세 화면(Drawer)에서 Changes Only 체크박스가 추가되어 변경된 항목만 필터링 해서 볼 수 있도록 개선되었습니다. 또한, 빈값의 경우 “-(dash)” 대신 “&lt;null&gt;” 로 표시하도록 변경되었습니다.
++</Callout>
+diff --git a/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx b/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
+index aa2e3b0d..062fc71e 100644
+--- a/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
++++ b/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
+@@ -2,13 +2,19 @@
+ title: 'Reverse Tunnels'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Reverse Tunnels
+ 
+ ### Overview
+ 
+ QueryPie와 연결된 Reverse Tunnels 세션을 모니터링하는 페이지입니다.
+ 
+-사용자가 인프라 내 설치한 Reverse Tunnel Agent가 QueryPie와 정상 통신을 하는 경우, QueryPie와 Reverse Tunnels 사이에 생성된 세션을 확인할 수 있습니다. 리소스(서버, 클러스터)에 Tag를 추가하여 Reverse Tunnels로 접속 여부를 설정할 수 있습니다.
++사용자가 인프라 내 설치한 Reverse Tunnel Agent가 QueryPie와 정상 통신을 하는 경우, QueryPie와 Reverse Tunnels 사이에 생성된 세션을 확인할 수 있습니다. 리소스(서버, 클러스터)에 Tag를 추가하여 Reverse Tunnels로 접속 여부를 설정할 수 있습니다.<br/>
++
++<Callout type="info">
++11.4.0에서 Reverse Tunnel의 상태 정보를 표시하던 Reverse Tunnels 페이지를 기존 Admin &gt; Audit &gt; General &gt; Reverse Tunnels → Admin &gt; General &gt; System &gt; Reverse Tunnels 로 이동했습니다.<br/>해당 메뉴에 접근하기 위해 “General Setting Full Access” Admin Role이 필요합니다.
++</Callout>
+ 
+ ### Reverse Tunnels 조회하기
+ 
+diff --git a/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx b/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
+index 45c0bc9f..3481dd59 100644
+--- a/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
++++ b/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
+@@ -14,42 +14,47 @@ QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내
+ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.
+ </Callout>
+ 
+-<Callout type="important">
+ **추출 지원 로그 종류 (QueryPie v11.0.0 기준)**
+-1. Query Audit [CSV]
+-2. Workflow SQL Request [CSV]
+-3. Workflow SQL Request for Query Details [CSV]
+-4. Workflow SQL Export Request [CSV]
+-5. Workflow DB Access Request [CSV]
+-6. Workflow Server Access Request [JSON]
+-7. User Access History [CSV]
+-8. Admin Role History [CSV]
+-9. DB Access History [CSV]
+-10. DB Account Lock History [CSV]
+-11. DB Access Control Logs [CSV]
+-12. Server Access History [JSON]
+-13. Command Audit [JSON]
+-14. Session Logs [JSON]
+-15. Server Access Control Logs [JSON]
+-16. Server Role History [JSON]
+-17. Activity Logs [JSON]
+-18. DML Snapshot [JSON]
+-19. Server Account Lock History [JSON]
+-20. Request Audit [JSON]
+-21. Kubernetes Role History [JSON]
+-22. Alert Logs [JSON] **[10.3.0]** 
+-23. Restricted Data Access Logs [JSON] **[10.3.0]** 
+-24. Masked Data Access Logs [JSON] **[10.3.0]** 
+-25. Sensitive Data Access Logs [JSON] **[10.3.0]** 
+-26. Web Access History [CSV] **[11.0.0]**
+-27. Web Event Audit [CSV] **[11.0.0]**
+-28. Web App Role History [CSV] **[11.0.0]**
+-29. JIT Access Control Logs [CSV] **[11.0.0]**
+-30. Workflow Unmasking Request Logs [JSON] **[11.0.0]** 
+-31. Workflow Restricted Data Access Request [JSON] **[11.0.0]** 
+-32. Workflow DB Policy Exception Request Logs [JSON] **[11.0.0]** 
+-</Callout>
+ 
++|  **Log Type**                           |  **Release Version**  |  **Format**  |
++| --------------------------------------- | --------------------- | ------------ |
++| Workflow DB Access Request              |                       | CSV          |
++| Workflow SQL Request                    |                       | CSV          |
++| Workflow SQL Request for Query Details  |                       | CSV          |
++| Workflow SQL Export Request             |                       | CSV          |
++| Workflow Restricted Data Access Request | 11.0.0                | JSON         |
++| Workflow DB Policy Exception Request    | 11.0.0                | JSON         |
++| Workflow Unmasking Request              | 11.0.0                | JSON         |
++| Workflow Decryption Request             | 10.3.0                | JSON         |
++| Workflow Server Access Request          |                       | JSON         |
++| Workflow Server Privilege Request       | 11.3.0                | JSON         |
++| Workflow Access Role Request            | 10.0.0                | CSV          |
++| IP Registration Request                 | 11.0.0                | JSON         |
++| User Access History                     |                       | CSV          |
++| Admin Role History                      |                       | CSV          |
++| Activity Logs                           |                       | JSON         |
++| Alert Logs                              | 10.3.0                | JSON         |
++| Query Audit                             |                       | CSV          |
++| DB Access History                       |                       | CSV          |
++| DB Account Lock History                 |                       | CSV          |
++| DB Access Control Logs                  |                       | CSV          |
++| DML Snapshot                            |                       | JSON         |
++| Restricted Data Access Logs (Legacy)    | 10.3.0                | JSON         |
++| Masked Data Access Logs (Legacy)        | 10.3.0                | JSON         |
++| Sensitive Data Access Logs (Legacy)     | 10.3.0                | JSON         |
++| DAC Policy Audit Log                    | 11.3.0                | JSON         |
++| Server Access History                   |                       | JSON         |
++| Command Audit                           |                       | JSON         |
++| Session Logs                            |                       | JSON         |
++| Server Access Control Logs              |                       | JSON         |
++| Server Role History                     |                       | JSON         |
++| Server Account Lock History             |                       | JSON         |
++| Request Audit                           |                       | JSON         |
++| Kubernetes Role History                 |                       | JSON         |
++| Web App Access History                  | 11.0.0                | CSV          |
++| Web App Role History                    | 11.0.0                | CSV          |
++| Web App JIT Access Control Log          | 11.0.0                | CSV          |
++| Web App Event Audit                     | 11.0.0                | CSV          |
+ 
+ ### Audit Log Export 목록 조회하기
+ 
+diff --git a/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx b/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
+index 48d676b6..5f483d65 100644
+--- a/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
++++ b/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
+@@ -19,55 +19,66 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
+ </figcaption>
+ </figure>
+ 
+-1. Administrator &gt; Audit &gt; Servers &gt; Command Audit 메뉴로 이동합니다.
+-2. 접속일 기준으로 로그가 내림차순으로 조회됩니다.
+-3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
+-    1.  **Name**  : 사용자 이름
+-    2.  **Server Name**  : 접속 서버 명
+-    3.  **Command**  : 실행한 명령어
+-    4.  **Role**  : 접속 Role
+-4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
++* Administrator &gt; Audit &gt; Servers &gt; Command Audit 메뉴로 이동합니다.
++* 접속일 기준으로 로그가 내림차순으로 조회됩니다.
++* 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
++    *  **Name**  : 사용자 이름
++    *  **Server Name**  : 접속 서버 명
++    *  **Command**  : 실행한 명령어
++    *  **Role**  : 접속 Role
++* 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
+   <figure data-layout="center" data-align="center">
+   ![image-20240728-171533.png](/administrator-manual/audit/server-logs/command-audit/image-20240728-171533.png)
+   </figure>
+-    1.  **Server OS**  : 접속한 서버의 OS
+-    2.  **Protocol** : 접시 사용한 Protocol
+-    3.  **Executed From** : 접속 방식
+-        1. web : QueryPie Web을 통한 접속
+-        2. proxy : Agent 또는 Seamless SSH Connection을 통한 접속
+-    4.  **Action Type** : 기록된 이벤트 타입
+-        1. All : 모든 타입
+-        2. File Download : (SFTP) 파일 다운로드
+-        3. File Upload : (SFTP) 파일 업로드
+-        4. Process Start : (RDP) 프로세스 실행
+-        5. Process Stop : (RDP) 프로세스 종료
+-        6. User Input - MouseClick : (RDP) 사용자 마우스 클릭
+-        7. User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭
+-        8. User Input - KeyPress : (RDP) 사용자 키보드 입력
+-    5.  **Executed At**  : 명령어 수행 시점
+-    6.  **Restricted**  : 명령어 차단 여부
+-5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
+-6. 테이블에서 이하의 컬럼 정보를 제공합니다:
+-    1.  **No**  : 이벤트 식별 번호
+-    2.  **Executed At**  : 명령어 수행 시점
+-    3.  **Name**  : 대상 사용자 이름
+-    4.  **Email**  : 대상 사용자 이메일
+-    5.  **Role**  : 대상 사용자 접속시 사용된 Role명
+-    6.  **Account**  : 서버 접속 Account
+-    7.  **Command**  : 실행한 명령어
+-    8.  **Restricted**  : 명령어 차단 여부
+-        1. Not Restricted
+-        2. Restricted
+-    9.  **Restricted Command**  : 차단된 명령어
+-    10.  **Server Name**  : 대상 서버명
+-    11.  **Server OS**  : 접속한 서버의 OS
+-    12.  **Host**  : 접속한 서버의 호스트
+-    13.  **Port**  : 접속시 사용된 포트
+-    14.  **Protocol** : 접시 사용한 Protocol
+-    15.  **Client IP**  : 사용자 클라이언트 IP 주소
+-    16.  **Client**   **Name**  : 사용자의 접속 방식
+-    17.  **Action Type** : 기록된 이벤트 타입
+-    18.  **Message**  : 접속 실패 등 특이사항에 대한 기록
++    *  **Server OS**  : 접속한 서버의 OS
++    *  **Protocol** : 접시 사용한 Protocol
++    *  **Executed From** : 접속 방식
++        * web : QueryPie Web을 통한 접속
++        * proxy : Agent 또는 Seamless SSH Connection을 통한 접속
++    *  **Action Type** : 기록된 이벤트 타입
++        * Command : 로그에 기록된 명령어
++        * File Download : (SFTP) 파일 다운로드
++        * File Upload : (SFTP) 파일 업로드
++        * Process Start : (RDP) 프로세스 실행
++        * Process Stop : (RDP) 프로세스 종료
++        * User Input - MouseClick : (RDP) 사용자 마우스 클릭
++        * User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭
++        * User Input - KeyPress : (RDP) 사용자 키보드 입력
++    *  **Executed At**  : 명령어 수행 시점
++    *  **Restricted**  : 명령어 차단 여부
++
++<Callout type="info">
++11.3.0에서 필터를 사용할 때 Action Type의 항목을 다중으로 선택할 수 있도록 변경되었습니다.
++<figure data-layout="center" data-align="center">
++![필터의 Action Type에서 여러개의 항목을 선택한 예시](/administrator-manual/audit/server-logs/command-audit/image-20250930-083734.png)
++<figcaption>
++필터의 Action Type에서 여러개의 항목을 선택한 예시
++</figcaption>
++</figure>
++</Callout>
++
++* 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
++* 테이블에서 이하의 컬럼 정보를 제공합니다:
++    *  **No**  : 이벤트 식별 번호
++    *  **Executed At**  : 명령어 수행 시점
++    *  **Name**  : 대상 사용자 이름
++    *  **Email**  : 대상 사용자 이메일
++    *  **Role**  : 대상 사용자 접속시 사용된 Role명
++    *  **Account**  : 서버 접속 Account
++    *  **Command**  : 실행한 명령어
++    *  **Restricted**  : 명령어 차단 여부
++        * Not Restricted
++        * Restricted
++    *  **Restricted Command**  : 차단된 명령어
++    *  **Server Name**  : 대상 서버명
++    *  **Server OS**  : 접속한 서버의 OS
++    *  **Host**  : 접속한 서버의 호스트
++    *  **Port**  : 접속시 사용된 포트
++    *  **Protocol** : 접시 사용한 Protocol
++    *  **Client IP**  : 사용자 클라이언트 IP 주소
++    *  **Client**   **Name**  : 사용자의 접속 방식
++    *  **Action Type** : 기록된 이벤트 타입
++    *  **Message**  : 접속 실패 등 특이사항에 대한 기록
+ 
+ ### Command Audit 상세 내역 조회하기
+ 
+@@ -82,25 +93,25 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
+ </figure>
+ 
+ * 우측 드로워에는 이하의 정보를 노출합니다:
+-    1.  **Name**  : 대상 사용자 이름
+-    2.  **Action Type** : 기록된 이벤트 타입
+-    3.  **Executed At**  : 명령어 수행 시점
+-    4.  **Executed From** : 접속 방식
+-    5.  **Server Access History** : 해당 세션의 접속 로그
+-    6.  **Session Log**  : 이 명령어를 수행한 세션 레코딩 조회
+-    7.  **Server Name**  : 대상 서버명
+-    8.  **Server OS**  : 접속한 서버의 OS
+-    9.  **Host**  : 접속한 서버의 호스트
+-    10.  **Port**  : 접속시 사용된 포트
+-    11.  **Account**  : 서버 접속 Account
+-    12.  **Protocol** : 접시 사용한 Protocol
+-    13.  **Client**   **Name**  : 사용자의 접속 방식
+-    14.  **Client IP**  : 사용자 클라이언트 IP 주소
+-    15.  **Restricted**  : 명령어 차단 여부
+-    16.  **Restricted Command**  : 차단된 명령어
+-    17.  **Detected Type :** 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)
+-    18.  **Command**  : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)
+-    19.  **Result**  : 명령어 수행 결과
++    *  **Name**  : 대상 사용자 이름
++    *  **Action Type** : 기록된 이벤트 타입
++    *  **Executed At**  : 명령어 수행 시점
++    *  **Executed From** : 접속 방식
++    *  **Server Access History** : 해당 세션의 접속 로그
++    *  **Session Log**  : 이 명령어를 수행한 세션 레코딩 조회
++    *  **Server Name**  : 대상 서버명
++    *  **Server OS**  : 접속한 서버의 OS
++    *  **Host**  : 접속한 서버의 호스트
++    *  **Port**  : 접속시 사용된 포트
++    *  **Account**  : 서버 접속 Account
++    *  **Protocol** : 접시 사용한 Protocol
++    *  **Client**   **Name**  : 사용자의 접속 방식
++    *  **Client IP**  : 사용자 클라이언트 IP 주소
++    *  **Restricted**  : 명령어 차단 여부
++    *  **Restricted Command**  : 차단된 명령어
++    *  **Detected Type :** 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)
++    *  **Command**  : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)
++    *  **Result**  : 명령어 수행 결과
+ 
+ 
+ <Callout type="important">
+diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+index 1331c555..387152a8 100644
+--- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
++++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+@@ -13,6 +13,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을
+ 
+ ### QueryPie 에서 AWS 연동 정보 등록하기
+ 
++<Callout type="info">
++11.3.0에서 특정 태그가 있는 리소스만 동기화 할 수 있도록 Search Filter 기능이 추가 되었습니다.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241217-084317.png)
+ <figcaption>
+@@ -29,14 +33,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+ 6. 리소스를 동기화하기 위해 필요한 Credential 정보를 입력합니다.
+     * 각각의  **Credential**  방식에 대한 설명은 하단의  **Credential 타입별 인증 방식 설정하기** 를 참고합니다.
+ 7.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다. 
+-8.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
++8.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
++    1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력하실 수 있습니다.
++        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
++9.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
+     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
+     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
+-9.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
++10.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+     * Tag : 동기화된 DB에 자동으로 태그를 추가할 수 있습니다.
+         * 태그 값에 `{vpcid}`를 입력하면, 해당 DB가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
+         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
+-10. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
++11. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+ 
+ 
+ ### Credential 타입별 인증 방식 설정하기
+diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+index 6700ea8b..33046331 100644
+--- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
++++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+@@ -12,6 +12,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 Google Cloud(G
+ 
+ ### QueryPie에서 GCP 연동 정보 등록하기
+ 
++<Callout type="info">
++11.3.0에서 특정 태그가 있는 리소스만 동기화 할 수 있도록 Search Filter 기능이 추가 되었습니다.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
+ <figcaption>
+@@ -26,15 +30,18 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+ 5.  **Project ID**  항목에서 동기화하고자 하는 리소스의 프로젝트를 입력합니다.
+ 6. 리소스를 동기화하기 위해 필요한  **Credential**  정보를 입력합니다.
+     * `Synchronize` 버튼 클릭시 GCP의 Service Account를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 Service Account를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
+-7.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다. 
+-8.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
++7.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다.
++8.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
++    1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력하실 수 있습니다.
++        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter 
++9.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
+     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
+     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
+-9.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
++10.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+     * Tag : 동기화된 DB에 자동으로 태그를 추가할 수 있습니다.
+         * 태그 값에 `{vpcid}`를 입력하면, 해당 DB가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
+         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
+-10. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
++11. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+ 
+ <Callout type="important">
+ **Save Credential for Synchronization 옵션**
+diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+index 707ff149..b27f4efd 100644
+--- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
++++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+@@ -13,6 +13,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 MS Azure 연
+ 
+ ### QueryPie 에서 Azure 연동 정보 등록하기
+ 
++<Callout type="info">
++11.3.0에서 특정 태그가 있는 리소스만 동기화 할 수 있도록 Search Filter 기능이 추가 되었습니다.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241217-102747.png)
+ <figcaption>
+@@ -31,14 +35,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
+     * `Synchronize` 버튼 클릭시 Azure의 Client Secret을 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 Client Secret을 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다. 
+ 8.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다. 
+     * 현재 Azure SQL Database 만 동기화 가능합니다. 
+-9.  **Replication**   **Frequency**  항목에서 동기화 방식을 선택합니다.
++9.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
++    1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력하실 수 있습니다.
++        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
++10.  **Replication**   **Frequency**  항목에서 동기화 방식을 선택합니다.
+     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
+     2. Scheduling : 주기적인 스케쥴링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
+-10.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
++11.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+     * Tag : 동기화된 DB에 자동으로 태그를 추가할 수 있습니다.
+         * 태그 값에 `{vpcid}`를 입력하면, 해당 DB가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
+         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
+-11. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
++12. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+ 
+ 
+ <Callout type="important">
+diff --git a/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx b/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
+index a2d2f0ac..1cf7379d 100644
+--- a/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
++++ b/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
+@@ -298,7 +298,7 @@ Tags 탭
+ </figcaption>
+ </figure>
+ 
+-#### Privilege Setting
++#### Privilege Setting (Advanced Privilege)
+ 
+ DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정하는 기능입니다.
+ 
+@@ -330,3 +330,13 @@ QueryPie Web &gt; Databases &gt; Connections
+ 
+ * Privilege Setting 이 설정된 권한을 부여받은 사용자는 커넥션 접속시 관리자가 사전에 설정한대로 해당 Privilege 에 맵핑된 DB 계정을 사용하며, Connections 접속 페이지에서 DB Username, Password 항목 자체를 볼 수 없습니다.
+ * 웹에디터, 에이전트 프록시, SQL Request, Export Request 등 커넥션 접속에서 해당 DB 계정 사용이 강제화됩니다. 
++
++<Callout type="info">
++11.3.0에서 Advanced privilege 설정시 특권 계정에 대해 암호를 등록하지 않으면 특권계정(관리자 계정)이 대상에 접속할 때 수동으로 암호를 입력할 수 있도록 변경되었습니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251013-050034.png](/administrator-manual/databases/connection-management/db-connections/image-20251013-050034.png)
++</figure>
++
++Advanced privilege 설정시 수동으로 DB 계정의 암호를 입력하도록 하기 위해서는 위 그림과 같이 Password 란을 비워두고 Hide this credential from connection list page 체크박스를 해제 상태로 설정해야합니다.
++</Callout>
+diff --git a/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx b/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
+index b2b371bf..9ff40dbf 100644
+--- a/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
++++ b/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
+@@ -67,7 +67,6 @@ SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
+ *  **Privilege Deactivation Period** : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
+ *  **Maximum Access Duration** : Privilege 요청 및 할당 시 최대 기간
+     * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
+-
+ *  **Display the first 10 rows in Query Audit** : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
+ 
+ <figure data-layout="center" data-align="center">
+@@ -100,7 +99,6 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승
+       <figure data-layout="center" data-align="center">
+       ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
+       </figure>
+-
+ *  **Query Annotation**  : 쿼리 수행시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화 한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.
+     * User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.
+     * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID 입니다.
+@@ -128,3 +126,16 @@ Query Audit
+ **DB 작업에 대한 사유 입력 강제 설정**
+ 9.17.0 버전부터 해당 기능은 커넥션 세부 설정으로 변경되었습니다. 자세한 설정 방법은 [DB Connections](connection-management/db-connections) 내  **추가 설정하기** 를 참고해주세요.
+ </Callout>
++
++*  **Maximum Policy Exception Period**  : Unmasking 등 정책예외에 대해 최대 유효기간을 설정할 수 있습니다. (시간단위). 이 설정값은 Workflow 신청양식과 New DAC Policy Management 기능 활성화시 관리자의 수동 정책 설정에 영향을 줍니다. 
++    * 기본값 : 720시간 (30일)
++    * 최대값 : 8760시간 (1년)
++    * 최소값 : 1시간
++
++<figure data-layout="center" data-align="center">
++![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
++</figure>
++
++<Callout type="info">
++Maximum Policy Exception Period 설정 옵션은 11.3.0 부터 제공됩니다.
++</Callout>
+diff --git a/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx b/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
+index 3600438d..70518cf1 100644
+--- a/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
++++ b/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
+@@ -119,11 +119,14 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
+ 
+ #### Scope Type
+ 
+-현재는 태그 기반으로만 정책을 적용할 수 있습니다:
++<Callout type="info">
++11.3.0 에서 모든 정책 유형에 대해 specific data path 선택시 정규식을 사용할 수 있도록 변경되었습니다.
++또한, 대상인 테이블 또는 컬럼을 여러개 다중으로 선택해서 등록할 수 있도록 변경되었습니다.
++</Callout>
+ 
+ 1.  **Data tags** : Data Paths 메뉴에서 설정된 태그를 기반으로 정책 적용 대상을 선택합니다.
+     * 이 옵션이 선택되면 태그 키와 값을 지정하여 정책을 적용할 테이블 또는 컬럼을 선택할 수 있습니다.
+-2.  **Specific data path** : 특정 데이터 경로를 직접 지정하는 옵션입니다. (11.0.0 부터)
++2.  **Specific data path** : 특정 데이터 경로를 직접 지정하는 옵션입니다. **[11.0.0]** 
+     * 이 옵션을 선택한 뒤 Add tartget 버튼을 눌러 출력되는 팝업 대화창에서 Database, Schema, Table, Column을 지정할 수 있고 정규표현식을 사용할 수도 있습니다.  <br/>  <br/> 
+       <figure data-layout="center" data-align="center">
+       ![직접 경로 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
+diff --git a/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx b/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
+index e2b4d8c6..e94e53cd 100644
+--- a/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
++++ b/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
+@@ -2,6 +2,8 @@
+ title: 'Exception Management'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Exception Management
+ 
+ ### Overview
+@@ -41,6 +43,14 @@ Databases &gt; Policy Mananagement &gt; Exception Management 의 Manual 탭에
+ 
+ #### 정책 예외 설정하기
+ 
++<Callout type="info">
++11.3.0에서 효력 만료일을 지정하는 방식이 변경되었습니다.
++
++Workflow의 정책예외 신청 및 관리자의 수동 정책 예외 설정에서 공통으로 “Policy Exception Schedule” 으로 항목이름이 통일되었고, 효력 시작 시점과 종료시점을 명시적으로 지정할 수 있도록 변경되었습니다.
++
++11.3.0에서 모든 정책예외 유형에 대해 정규식으로 특정 데이터 경로를 지정할 수 있도록 변경되었습니다.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![수동 정책 예외 생성](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
+ <figcaption>
+@@ -50,16 +60,23 @@ Databases &gt; Policy Mananagement &gt; Exception Management 의 Manual 탭에
+ 
+ `+ Create Exception` 버튼을 클릭하고 정책 예외에 대한 설정을 합니다.
+ 
+-* Exception Name : 정책 예외의 이름을 입력합니다.
+-* Exception Type : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
+-* Data Scope : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
++*  **Exception Name**  : 정책 예외의 이름을 입력합니다.
++*  **Exception Type**  : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
++*  **Data Scope**  : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
+     * Data Tag 를 선택하면 태그로 대상을 지정할 수 있습니다. Databases &gt; Policy Management &gt; Data Paths에 설정한 태그만 사용할 수 있습니다. 태그는 같은 키는 OR 연산이고 다른 키 사이는 AND 연산입니다.
+-    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. 정규식을 사용할 수는 없습니다.
+-* Allowed User : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
++    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. <br/>정규식으로 지정할 수도 있습니다. **[11.3.0]** 
++*  **Allowed User**  : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
+     * User / Group : 사용자 또는 그룹을 지정할 수 있습니다.
+     * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. **[11.1.0]** 
+-* Exception Expiration : 정책예외가 종료되는 시점을 설정합니다.
+-* Description : 정책 예외에 대한 간단한 설명을 입력합니다.
++*  **Policy Exception Schedule**  : 정책 예외가 적용되는 기간을 설정하여 요청할 수 있습니다. 최대 정책 예외의 유효 기간은 관리자가 설정한 최대 기간(Maximum Policy Exception Period)을 넘겨서 신청 수 없습니다.
++    * Specific Period : 시작 시점과 종료 시점을 지정합니다. 시간단위로 지정할 수 있습니다.
++    * Time Duration : 시작 시점으로 부터 지정한 시간까지 유효하도록 지정할 수 있습니다.
++    * Start On Approval 옵션 : Specific Period 또는 Time duration 두가지 방법 모두 Start On Approval 옵션을 활성화(체크)할 경우 승인시점 부터 효력이 발생됩니다. 일반적으로 요청하는 사람이 승인자의 승인 시점을 알 수 없기 때문에 이 옵션을 사용하는 것은 권장하지 않습니다. (승인 만료기간 제약사항이 발생되는 경우 다시 요청을 해야하는 경우가 발생될 수 있기 때문입니다.) Urgent Mode 사용하는 경우도 승인 시점은 사후이고 언제 승인이 될지 알 수 없으므로 가급적 Start On Approval 옵션은 반드시 사용해야 하는 특수한 상황을 제외하고 권장하지 않습니다.
++*  **Reason for Request**  : 정책 예외에 대한 간단한 설명을 입력합니다.
++
++<Callout type="info">
++최대 정책 예외 기간 설정은 Admin &gt; Databases &gt; General &gt; Configurations의 Maximum Policy Exception Period 설정값에 의해 제한됩니다.
++</Callout>
+ 
+ #### 정책 예외의 상태 즉시 변경하기
+ 
+diff --git a/src/content/ko/administrator-manual/general/company-management/alerts.mdx b/src/content/ko/administrator-manual/general/company-management/alerts.mdx
+index 4a3b25a9..3fd21060 100644
+--- a/src/content/ko/administrator-manual/general/company-management/alerts.mdx
++++ b/src/content/ko/administrator-manual/general/company-management/alerts.mdx
+@@ -245,6 +245,10 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
+ 
+ * Alert의 Channel을 Email로 지정할 경우, Subject Title (이메일 제목) 을 직접 입력하는 기능이 추가되었습니다.
+ * Workflow 관련 Alert 설정 시 Channel이 Email인 경우, `Send email only to those involved in this request` 옵션을 제공합니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용으로 알림이 발송됩니다. 
++
++**11.3.0 Alert 생성화면에서 Channel 선택 항목**
++
++* Alert 생성화면에서 Channel 선택 항목에서 대상을 식별하기 용이하도록 아이콘이 추가되었습니다.
+ </Callout>
+ 
+ #### Unusual Login Attempt
+@@ -373,9 +377,28 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정
+ 
+ 서버 접속 성공 또는 실패 알림
+ 
+-*  **Alert Trigger Condition**  : 알림 발송 조건
+-    * Success : DB 접속 성공 시 알림 발송
+-    * Failure : DB 접속 실패 시 알림 발송
++*  **Result**  : 알림 발송 조건
++    * Success : 서버 접속 성공 시 알림 발송
++    * Failure : 서버 접속 실패 시 알림 발송
++
++<Callout type="info">
++11.3.0 에서 Failure의 하위 옵션으로 Set trigger threshold on failed attempt 옵션이 추가 되어 실패 횟수의 임계값으로 alert 를 발생시킬 수 있도록 변경되었습니다.
++
++* Action Count : 이벤트가 발생한 회수입니다. 1 이상의 값을 입력할 수 있습니다.
++* Time Interval : 이벤트 발생하는 시간 범위입니다.
++
++예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생시 알람을 발송하게 됩니다.
++
++* Action Count : 3
++* Specific Time Internal (Minutes) : 5
++
++<figure data-layout="center" data-align="center">
++![image-20251010-093016.png](/administrator-manual/general/company-management/alerts/image-20251010-093016.png)
++</figure>
++
++
++</Callout>
++
+ *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
+     * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
+         * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
+diff --git a/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx b/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
+index db8df1d5..d754c8ac 100644
+--- a/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
++++ b/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
+@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
+ 
+ Allowed Zones 페이지에서는, 사용자의 QueryPie 웹 콘솔 접근 및 DB 접속을 허용할 IP 대역을 통제하기 위해 사전에 Allowed Zone을 등록 및 관리합니다.
+ 
++<Callout type="info">
++11.3.0 부터 “IP Band(s)” 대신 “IP Address Range(s)”로 표현이 수정 되었습니다.
++</Callout>
++
+ 
+ ### 등록된 Allowed Zone 목록 조회하기
+ 
+@@ -20,19 +24,18 @@ Allowed Zone의 목록을 조회하기 위해서는 Administrator &gt; General &
+ </Callout>
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20240714-053215.png)
++![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20251009-030815.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Allowed Zones
+ </figcaption>
+ </figure>
+ 
+-
+ ### Allowed Zone 상세 정보 조회하기
+ 
+ Allowed Zones 목록에서 상세 정보를 조회하려는 아이템을 클릭하면 Drawer가 열립니다.
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-211548.png)
++![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/image-20251009-031233.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
+ </figcaption>
+@@ -54,17 +57,17 @@ Drawer 내 Mapped List by Allowed Zones 영역에서 Allowed Zone이 할당된 D
+ 
+ ### Allowed Zone 추가하기
+ 
+-Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 생성 모달이 출력됩니다.
++Allowed Zone 목록 페이지에서 `Create Allowed Zone` 버튼을 클릭하면 Allowed Zone 입력 항목이 출력됩니다.
+ 
+ <figure data-layout="center" data-align="center">
+-![Create Allowed Zone 모달](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
++![Create Allowed Zone 생성시 출력되는 입력항목](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
+ <figcaption>
+-Create Allowed Zone 모달
++Create Allowed Zone 생성시 출력되는 입력항목
+ </figcaption>
+ </figure>
+ 
+ *  **Name**  : Allowed Zone 이름 
+-*  **IP Band(s)**  : 할당할 IP 주소, 또는 IP 주소 범위를 입력합니다.
++*  **IP Address Range(s)**  : 할당할 IP 주소, 또는 IP 주소 범위를 입력합니다.
+     * IP 주소, 또는 IP 주소 범위를 하나 이상 입력할 수 있습니다.
+     * IP 주소 범위는 Classless Inter-Domain Routing(CIDR) 표기법을 사용합니다. 참고: [CIDR 이란?](https://aws.amazon.com/ko/what-is/cidr/)
+     * 둘 이상의 IP 주소, IP 주소 범위를 입력할 때, 쉼표를 구분자로 하여 입력합니다.
+diff --git a/src/content/ko/administrator-manual/general/company-management/general.mdx b/src/content/ko/administrator-manual/general/company-management/general.mdx
+index 5435e1b8..5f1431db 100644
+--- a/src/content/ko/administrator-manual/general/company-management/general.mdx
++++ b/src/content/ko/administrator-manual/general/company-management/general.mdx
+@@ -2,6 +2,8 @@
+ title: 'General'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # General
+ 
+ ### Overview
+@@ -83,16 +85,13 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
+ 
+ ### Attribute 기반 승인자 지정 기능
+ 
+-Use User Attribute-Based Approval 토글을 활성화합니다.
+-
+-<figure data-layout="center" data-align="center">
+-![Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.14.55-AM.png)
+-<figcaption>
+-Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations
+-</figcaption>
+-</figure>
++<Callout type="info">
++11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.
++* Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations의 Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.
++* 기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다. 
++</Callout>
+ 
+-이 옵션을 통해 워크플로우 요청 상신 시, 사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할지 여부를 결정합니다. 이를 통해 특정 조건에 맞는 담당자에게 승인 요청이 자동으로 할당되도록 설정할 수 있습니다.
++사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다.
+ 
+ * 중요: 
+     * 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.
+@@ -102,21 +101,11 @@ Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurat
+       Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br/>
+       </figcaption>
+       </figure>
+-    * Attribute 기반 승인자 지정은 1명만 등록할 수 있습니다 (하나의 Attribute에 한 명의 승인자 ID만 지정 가능).
+-* 토글을 활성화한 경우
+-    * 승인자 자동 지정의 기준이 될 DataType이 identifier인 Attribute를 선택하는 드롭다운 목록이 나타납니다. 관리자는 이 목록에서 승인자 지정에 사용할 Attribute (예: teamLeader)를 선택해야 합니다.
+-        * 선택된 Attribute 삭제 제한: 위 설정에서 특정 Attribute가 승인자 자동 지정 기준으로 선택되면, 해당 Attribute는 Administrator &gt; General &gt; Profile Editor에서 삭제할 수 없도록 시스템에 의해 설정됩니다 (예: 삭제 체크박스 비활성화).
+-    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)' 옵션이 표시되며 선택 가능해집니다.
+-        * 이 옵션을 선택하면, 바로 아래에 Workflow Configurations에서 설정한 Attribute (예: teamLeader)가 표시되어, 해당 Attribute 값을 기준으로 승인자가 동적으로 결정됨을 나타냅니다.
+-        * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
+-    * User &gt; Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule이 표시됩니다.
+-* 토글을 비활성화한 경우
+-    * Administrator &gt; General &gt; Workflow Configurations 페이지 내에서 Attribute 선택 드롭다운 목록이 비활성화됩니다.
+-    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 승인 규칙 생성 또는 수정 시 'Assignee for Approval' 항목의 'Allow Assignee selection (Attribute-Based)' 옵션이 더 이상 표시되지 않거나 선택할 수 없게 됩니다.
+-    * 기존에 'Allow Assignee selection (Attribute-Based)' 옵션을 사용하여 생성된 승인 규칙은, 사용자가 새로운 워크플로우를 상신할 때 승인 규칙 선택 목록에서 제외됩니다.
+-        * 주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지 않습니다.
+-        * 관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.
+-    * User &gt; Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다. 
++* Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)'를 선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.<br/>
++  <figure data-layout="center" data-align="center">
++  ![image-20251110-030113.png](/administrator-manual/general/company-management/general/image-20251110-030113.png)
++  </figure>
++    * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
+ * Attribute 값 부재 시 알림
+     * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
+         * 에러 메시지 예시: 
+@@ -144,6 +133,28 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
+ * 여기에 설정된 `Key:Value` 조건과 일치하는 사용자는 사용자 대시보드에 `Workflow` 메뉴가 표시되지 않습니다.
+ *  **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
+ 
++### 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
++
++<Callout type="info">
++대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.<br/>11.4.0 부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다. 해당 로그는 External API ( /api/external/v2/workflows/approval-delegations/logs) 를 사용해서 조회 할 수 있습니다.
++</Callout>
++
++승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는 옵션입니다. 만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
++
++<figure data-layout="center" data-align="center">
++![Allow Delegated Approval 스위치](/administrator-manual/general/company-management/general/image-20250926-112444.png)
++<figcaption>
++Allow Delegated Approval 스위치
++</figcaption>
++</figure>
++
++<figure data-layout="center" data-align="center">
++![대리결재 기능을 비활성화한 상태의 preference](/administrator-manual/general/company-management/general/image-20250926-112201.png)
++<figcaption>
++대리결재 기능을 비활성화한 상태의 preference
++</figcaption>
++</figure>
++
+ ### SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)
+ 
+ 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
+diff --git a/src/content/ko/administrator-manual/general/company-management/licenses.mdx b/src/content/ko/administrator-manual/general/company-management/licenses.mdx
+index 5a7d8fb2..183f9fe8 100644
+--- a/src/content/ko/administrator-manual/general/company-management/licenses.mdx
++++ b/src/content/ko/administrator-manual/general/company-management/licenses.mdx
+@@ -8,16 +8,24 @@ import { Callout } from 'nextra/components'
+ 
+ ### Overview
+ 
+-Licenses 페이지는 현재 QueryPie에서 활성화된 제품 라이선스 정보를 확인할 수 있습니다.
++Licenses 페이지는 현재 QueryPie에서 활성화된 제품 라이선스 키를 업로드 / 삭제 할 수 있고 상태를 확인할 수 있습니다.
++
++<Callout type="info">
++11.3.0에서 관리자가 Admin &gt; General &gt; Company Management &gt; Licenses 에서 License key를 업로드할 수 있도록 개선되었습니다. 또한 License 상태가 Active / Expired / Waiting 에서 Activated / Available / Scheduled / Expired로 변경되었습니다.
++</Callout>
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/screenshot-20240804-184804.png)
++![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/image-20250926-124941.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Licenses
+ </figcaption>
+ </figure>
+ 
+-*  **라이선스 상태** : Active, Expired, Waiting(기존 라이선스 만료 시 이어서 활성화될 대기 중 라이선스)
++*  **라이선스 상태**  : License 상태를 기준으로 Available Licenses, Scheduled Licenses, Expired Licenses 세개의 섹션으로 구분되어 표시됩니다. 각 세부상태는 아래와 같습니다.
++    * Activated : 현재 활성화된 상태
++    * Available : 사용 가능한 license이지만 활성화 하지 않은 상태
++    * Scheduled : 등록은 하였으나 License 효력일이 도래하기 전인 상태
++    * Expired : License 사용기간이 만료된 상태
+ *  **제품명** : 현재 사용중인 QueryPie 제품명 표시
+ *  **사용 기간** : 시작일, 종료일 표기
+ *  **라이선스 타입** : Production(정식 제품 라이선스), PoC(PoC용 라이선스)
+@@ -26,4 +34,10 @@ Administrator &gt; General &gt; Company Management &gt; Licenses
+ 라이선스가 만료 예정이거나 만료된 [QueryPie Customer Portal](https://help.support.querypie.com/) 또는 영업 담당자를 통해 문의주시기 바랍니다.
+ </Callout>
+ 
++### License 파일 업로드
++
++* 상단의 `Upload License Key` 버튼을 클릭하여 라이센스 키를 업로드합니다.
++
++### License 삭제
+ 
++* 삭제를 원하는 라이센스의 오른쪽에 위치한 휴지통 아이콘을 클릭해서 삭제할 수 있습니다. 
+diff --git a/src/content/ko/administrator-manual/general/company-management/security.mdx b/src/content/ko/administrator-manual/general/company-management/security.mdx
+index f492e86b..5f54cbf7 100644
+--- a/src/content/ko/administrator-manual/general/company-management/security.mdx
++++ b/src/content/ko/administrator-manual/general/company-management/security.mdx
+@@ -70,13 +70,24 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
+ 웹 콘솔과 에이전트의 타임아웃 정책을 설정할 수 있습니다.
+ 
+ <figure data-layout="center" data-align="center">
+-![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
++![image-20251009-051727.png](/administrator-manual/general/company-management/security/image-20251009-051727.png)
+ </figure>
+ 
+-*  **Web Inactivity Timeout (Minutes)** : 웹 콘솔 타임아웃 기준 (Default : 60분)
++*  **Web Inactivity Timeout** : 웹 콘솔 타임아웃 기준 (Default : 60분)
+     * 지정된 시간 동안 활동이 없을 경우 타임아웃 처리
+-*  **Agent Session Timeout (Minutes)** : 에이전트 세션 타임아웃 기준 (Default : 1,440분)
++*  **Agent Session Timeout** : 에이전트 세션 타임아웃 기준 (Default : 1,440분)
+     * 지정된 시간 동안 에이전트 앱 로그인을 유지하고, 경과 시 로그아웃 처리
++*  **User Inactivity Timeout (on agent)** :  <br/> Agent Session Timeout 기능에 추가로 Agent가 사용자의 마우스, 키보드 입력을 모니터링하고 지정된 시간을 초과하여 행위가 없으면 세션을 강제 종료합니다. 유휴 상태인 경우, 장시간 쿼리를 실행하고 있어도 마우스 및 키보드 움직임이 없다면 무조건 세션이 종료되어 로그아웃처리 됩니다. 
++
++<Callout type="info">
++**User Inactivity Timeout (on agent) 설정 예시**
++* Agent Inactivity Timeout 15분일 경우를 가정하면, <br/> 1분이 지난 12:09분에 사용자 액션 감지 했다면4. 12:09분에(t+1분) 마지막 활동을 한것으로 확인되면, 15분 후인 12:24분으로 갱신
++    * 12:00분에 로그인
++        1. 최초 세션 만료 시간은  **12:15:00** 
++    * 12:08분에(t+8분) 마지막 활동을 한것으로 확인되면, 15분 후인 12:23분으로 갱신
++        1. 새로운 세션 만료 시간:  **12:23:00** 
++    * 새로운 세션 만료 시간:  **12:24:00** 한 시간을 검사합니다.
++</Callout>
+ 
+ 
+ ### QueryPie Web IP Access Control
+@@ -162,6 +173,11 @@ DB Connection 상세 페이지 내 Connection Information &gt; Secret Store 선
+ Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택
+ </figcaption>
+ </figure>
++<Callout type="info">
++11.1.0에 OAuth Client 관련 설정이 Admin &gt; General &gt; Company Management &gt; Security 하위 항목으로 추가되었습니다.(단일 클라이언트 설정만 가능)
++11.3.0에 Client 설정을 다중 설정이 가능하도록 개선되면서 Admin &gt; General &gt; System &gt; Integrations 항목으로 이동되었습니다.
++</Callout>
++
+ ### 기타
+ 
+ 기타 보안 설정을 관리합니다.
+diff --git a/src/content/ko/administrator-manual/general/system/_meta.ts b/src/content/ko/administrator-manual/general/system/_meta.ts
+index 195e1fdd..0591dc5e 100644
+--- a/src/content/ko/administrator-manual/general/system/_meta.ts
++++ b/src/content/ko/administrator-manual/general/system/_meta.ts
+@@ -2,4 +2,5 @@ export default {
+   'integrations': 'Integrations',
+   'api-token': 'API Token',
+   'jobs': 'Jobs',
++  'maintenance': 'Maintenance',
+ };
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/_meta.ts b/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
+index 90aa304d..b7b209c8 100644
+--- a/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
++++ b/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
+@@ -6,4 +6,6 @@ export default {
+   'integrating-with-event-callback': 'Event Callback 연동',
+   'integrating-google-cloud-api-for-oauth-20': 'OAuth 2.0을 사용하기 위한 Google Cloud API 연동',
+   'integrating-with-slack-dm': 'Slack DM 연동',
++  'oauth-client-application': 'OAuth Client Application',
++  'identity-providers': 'Identity Providers',
+ };
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx b/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx
+new file mode 100644
+index 00000000..18ab4c81
+--- /dev/null
++++ b/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx
+@@ -0,0 +1,526 @@
++---
++title: 'Identity Providers'
++---
++
++import { Callout } from 'nextra/components'
++
++# Identity Providers
++
++### Overview
++
++QueryPie의 사용자 인증 방식은 QueryPie 사용자 계정(ID)과 암호를 사용하는 방식과 외부 Identity Provider(IdP)와 통합하는 방식 크게 두가지가 있습니다. 관리자는 IdP와의 Integration 설정을 통해 QueryPie가 Single-Sign-On을 통해 쉽게 사용자 인증을 처리하고 계정을 동기화 할 수 있습니다.
++
++현재 지원되는 IdP와의 연동 설정은 다음과 같습니다.
++
++* LDAP
++* Okta
++* SAML 2.0
++* OneLogin
++* Swivel Secure
++* Custom Identity Provider (특수 목적 사용)
++
++<Callout type="info">
++* 현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.
++* MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다.
++* Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.
++</Callout>
++
++Admin &gt; General &gt; System &gt; Integration 에서 Authentication 하위 항목으로 Identity Providers 가 있습니다. 항목을 클릭하여 상세페이지로 이동하면 Identity Providers에 관련된 설정을 할 수 있습니다. 기본적으로 사용자 인증은 QueryPie의 Internal database에 저장된 ID / Password를 사용해서 처리되므로 목록에 Internal database 항목이 존재합니다. 이 항목은 삭제 할 수 없습니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-010700.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-010700.png)
++</figure>
++
++#### 기본 인증의 상세 설정
++
++*  **Name**  : 목록에 표시되는 식별 가능한 이름입니다.
++*  **Type**  : QueryPie에서 지원하는 IdP 유형 중 하나가 표시됩니다.
++*  **Multi-Factor Authentication Setting** : MFA 설정을 할 수 있습니다. Google Authenticator, Email을 지원합니다.
++
++<figure data-layout="center" data-align="center">
++![Internal database의 상세 설정](/administrator-manual/general/system/integrations/identity-providers/image-20251014-011706.png)
++<figcaption>
++Internal database의 상세 설정
++</figcaption>
++</figure>
++
++<Callout type="important">
++주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.
++</Callout>
++
++### LDAP 연동
++
++목록 우측 상단의 `+ Add` 버튼을 누르고 팝업되는 화면에서 Type을 LDAP으로 선택하면 LDAP을 IdP로 추가 할 수 있습니다.
++
++*  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++*  **Type** : LDAP를 선택합니다.
++*  **Server URL**  : `ldap://ldap.example.com:389` 과 같은 형식으로 LDAP server의 주소를 입력합니다. LDAPS의 경우 scheme을 ldaps:// 로 입력합니다.
++*  **BindDN**  : LDAP 서버에 접속(바인드)할 때 사용할 서비스 계정의 고유 이름(Distinguished Name, DN)을 입력합니다. 이 계정은 최소한 사용자 정보를 검색(Read)할 수 있는 권한이 필요합니다. <br/> 예시: cn=admin,ou=Services,dc=example,dc=com
++*  **Bind Password**  : BindDN의 암호를 입력합니다.
++
++<figure data-layout="center" data-align="center">
++![LDAP 상세설정](/administrator-manual/general/system/integrations/identity-providers/image-20251014-012049.png)
++<figcaption>
++LDAP 상세설정
++</figcaption>
++</figure>
++
++QueryPie 사용자 계정과 LDAP의 사용자 계정을 동기화하여 매핑할 내용을 입력합니다.
++
++|  **Attribute**     |  **필수 여부**  |  **Description**                                                                                                                  |
++| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
++| User Base DN       | 필수          | LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만 로그인 대상으로 간주됩니다.예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com |
++| User Search Filter | 필수          | 사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다. 예시: (objectClass=inetOrgPerson)                                   |
++| User Name          | 필수          | LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QuerPie 사용자의 Login ID에 매핑됩니다.예시: uid                     |
++| Email              | 필수          | LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QueryPie 사용자의 Email에 매핑됩니다.예시: email                |
++| Display Name       | -           | QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을 입력합니다.예시: cn 또는 displayName 등.                                                 |
++
++LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면  **Use Group 옵션** 을 활성화(체크)하고 필수로 지정된 정보들을 입력합니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-075227.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075227.png)
++</figure>
++
++
++<table data-table-width="760" data-layout="default" local-id="56f8d1f8-9645-460d-a5cb-b6cce53606f2">
++<colgroup>
++<col/>
++<col/>
++<col/>
++</colgroup>
++<tbody>
++<tr>
++<th data-highlight-colour="#f0f1f2">
++**Attribute**
++</th>
++<th data-highlight-colour="#f0f1f2">
++**필수 여부**
++</th>
++<th data-highlight-colour="#f0f1f2">
++**Description**
++</th>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++Group Base DN
++</td>
++<td data-highlight-colour="#ffffff">
++필수
++</td>
++<td data-highlight-colour="#ffffff">
++LDAP 서버의 그룹 Base DN 값을 입력합니다. 이 경로의 하위에 있는 그룹만 Group으로 동기화합니다.
++* 예: `dc=example,dc=com`
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++Group Search Filter
++</td>
++<td data-highlight-colour="#ffffff">
++필수
++</td>
++<td data-highlight-colour="#ffffff">
++LDAP 서버의 그룹을 가져오기 위한 필터 값을 입력합니다.
++* 예: `objectclass=posixGroup`
++</td>
++</tr>
++<tr>
++<td>
++Group ID
++</td>
++<td>
++필수
++</td>
++<td>
++그룹의 식별자로 사용할 속성 값을 입력합니다.
++* 예: `gidNumber`
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff" rowspan="2">
++Membership Type
++</td>
++<td data-highlight-colour="#ffffff" rowspan="2">
++필수
++</td>
++<td data-highlight-colour="#ffffff">
++사용자에 그룹 정보가 포함된 경우, `Include group information in user entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.
++* 예: `member`, `uniqueMember`, `memberUid` 등
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++그룹에 사용자 정보가 포함된 경우, `Include user information in group entries` 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.
++* 예: `gidNumber`
++</td>
++</tr>
++</tbody>
++</table>
++
++LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use Synchronization with the Authentication System**  옵션을 활성화합니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-075127.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075127.png)
++</figure>
++
++
++*  **Replication Frequency**  : 자동 동기화 기능 사용 여부를 설정합니다.
++    * Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 `Synchronize` 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.
++    * Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression 필드가 활성화됩니다.
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
++        * 동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
++    *  **Use an Attribute for Privilege Revoke** : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
++        * 특정 LDAP Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.
++        * LDAP Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
++    *  **Enable Attribute Synchronization :**  LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다.
++        * LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다.
++        * 옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.
++        * 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
++    *  **Allowed User Deletion Rate Threshold :** 
++        * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
++        * 0 ~ 1 사이의 값을 입력합니다. (기본값은 0.1) <br/> 예) 기존 유저 100명, Allowed User Deletion Rate Threshold 0.1일때, 다시 동기화했을때 삭제된 유저가 10명 이상이면 동기화가 실패합니다.<br/>11.3.0 이전에 동기화 설정된 상태에서 11.3.0으로 업데이트 하면 1로 마이그레이션 됩니다. <br/> 
++
++<Callout type="info">
++**LDAP Attribute Mapping**
++
++LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.
++
++우측 상단의 `Add Row` 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.
++
++1. 해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.
++2. QueryPie Attribute인 `Username (loginId)`, `Primary Email (email)` 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다.
++3.  매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.
++</Callout>
++
++
++### Okta 연동
++
++#### Okta에서 QueryPie 를 애플리케이션으로 추가
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064242.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색
++</figcaption>
++</figure>
++
++* [Okta 서비스](https://login.okta.com/)에 접속하여 관리자 계정으로 로그인합니다.
++* 우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.
++* Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
++* `Browse App Catalog` 버튼을 클릭하여 QueryPie 를 검색합니다.
++* QueryPie 애플리케이션 페이지로 들어가 `Add Integration` 버튼을 클릭합니다.
++* Application Label에 QueryPie 로 입력된 것을 확인 후, `Done` 버튼을 클릭하여 애플리케이션을 추가합니다.
++
++#### Okta 계정 연동을 위한 Profile 설정
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064424.png)
++<figcaption>
++Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute
++</figcaption>
++</figure>
++
++* Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
++* Profile 목록 중 ‘QueryPie User’ 를 클릭합니다.
++* Attributes 설정에서 `Add Attribute` 버튼을 클릭합니다.
++* Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
++    * Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another`
++    * Display name : lastName / Variable name : lastName 항목 입력 후 `Save and Add Another`
++    * Display name : email / Variable name : email 항목 입력 후 `Save and Add Another`
++    * Display name : loginId / Variable name : loginId 항목 입력 후 `Save` 클릭
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064721.png)
++<figcaption>
++Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
++</figcaption>
++</figure>
++
++* 4가지 Attribute 가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
++* Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.
++    * user.firstName ↔︎ firstName
++    * user.lastName ↔︎ lastName
++    * user.email ↔︎ email
++    * user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)
++* `Save Mappings` 버튼을 클릭하여 저장합니다.
++
++
++#### Okta에 추가된 QueryPie 애플리케이션에 사용자 할당
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/image-20240723-065134.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
++</figcaption>
++</figure>
++
++* Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
++* 리스트에서 QueryPie 애플리케이션을 클릭합니다.
++* Assignments 탭으로 이동한 뒤 `Assign` 버튼을 클릭하여 `Assign to People` 또는 `Assign to Group`을 선택합니다.
++* Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done 버튼을 클릭합니다.
++    * People 할당시 사용자 정보 확인 후 `Sava and Go Back` 버튼을 클릭합니다.
++    * Group 할당시 loginId 항목을 빈 칸으로 두고 `Save and Go Back` 버튼을 클릭합니다.
++* 사용자 또는 그룹이 QueryPie 애플리케이션에 할당되어 추가된 내역을 확인하실 수 있습니다.
++
++
++#### Okta에서 QueryPie 애플리케이션 연동 정보 설정
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/image-20240723-065346.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
++</figcaption>
++</figure>
++
++* Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.
++* Settings 영역의 `Edit` 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.
++* Metadata URL에 표기된 주소로 별도 탭에서 접근하여 표시되는 XML 정보를 복사합니다.
++
++
++#### 최소 권한의 Okta API 토큰 발급
++
++QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 Okta Admin API 토큰 발급이 필요합니다. 일반적인 방법으로는 이용하고 계신 Okta 최고관리자(Super Administrator)/읽기권한관리자(Read-Only Administrator) 계정으로 API 토큰을 이하의 방법으로 발급하여 적용하는 방법이 있습니다:
++
++* Okta 관리자 페이지 좌측 패널에서 Security &gt; API 메뉴로 이동합니다.
++* API 메뉴에서 Tokens 탭으로 이동합니다.
++* Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.
++
++다만, 보안 수준 향상을 위해 Okta API 토큰의 권한을 최소한으로 부여하도록 조정해야 하는 경우, 이하의 권한 및 방법에 따라 API 토큰을 생성하실 것을 권장드립니다.
++
++<figure data-layout="center" data-align="center">
++![Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role](/administrator-manual/general/system/integrations/identity-providers/image-20240110-042233.png)
++<figcaption>
++Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role
++</figcaption>
++</figure>
++
++* Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다.
++    * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.
++* Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.
++* Create new role을 선택합니다.
++* Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.
++    *  **User** 
++        * View users and their details
++    *  **Group** 
++        * View groups and their details
++    *  **Application** 
++        * View application and their details
++* Save role을 눌러 커스텀 롤을 저장합니다.
++* Resources 탭으로 이동합니다.
++* Create new resource set을 선택합니다.
++    * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.
++* Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다.
++    * User : 쿼리파이 사용자 전부 선택
++    * Group : 쿼리파이 사용 그룹 전부 선택
++    * Application : 쿼리파이 앱으로 한정
++* Create를 선택하여 생성합니다.
++* Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.
++    * Role: MinimumAdminRole | Resource: MinimumResources
++    * Role: Read-Only Administrator
++        * API 토큰 생성메뉴 접근을 위한 임시 부여
++* 쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다.
++* Security &gt; API 메뉴에서 Tokens 탭으로 이동합니다.
++* Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다.
++* 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.
++
++#### QueryPie에서 Okta 연동 및 동기화 설정
++
++목록 우측 상단의 `+ Add` 버튼을 누르고 팝업되는 화면에서 Type을 Okta로 선택하면 Okta를 IdP로 추가 할 수 있습니다.
++
++<figure data-layout="center" data-align="center">
++![Okta 상세설정 (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014729.png)
++<figcaption>
++Okta 상세설정 (1)
++</figcaption>
++</figure>
++
++*  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++*  **Type** : Okta를 선택합니다.
++*  **Identity Provider Metadata**  : <br/>[https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95](https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95) 과정에서 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
++*  **Use SAML Assertion Consumer Service Index**  : Service Provider에서 여러개의 Endpoint 를 사용하는 경우 ACS Index를 사용하여 endpoint를 각각 지정할 수 있습니다.
++    * Entity ID : `https://your-domain.com/saml/sp/metadata` 의 형식으로 입력합니다. Okta SAML 2.0 설정의 Audience URI (SP Entity ID) 값입니다. 
++    * ACS Index : 0 ~ 2,147,483,647 사이의 값을 입력합니다. 기본값은 0 입니다.
++
++<Callout type="info">
++**Assertion Consumer Service (ACS)** : SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다.
++
++<br/> **Assertion Consumer Service Index의 필요성 및 역할**
++
++하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다.
++
++SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다.
++
++이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다.
++
++**주요 사용 사례**
++
++* 다양한 프로토콜 바인딩(Binding) 지원:
++
++SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index="0"은 HTTP POST를 위한 ACS URL을, index="1"은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다.
++
++* 다중 테넌트(Multi-tenant) 아키텍처 지원:
++
++하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다.
++
++* 애플리케이션 내 다른 인증 흐름 구분:
++
++같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다.
++
++* 동적 또는 특수한 ACS URL 처리:
++
++특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.
++
++<figure data-layout="center" data-align="center">
++![okta app 설정의 Audience URI(SP Entity ID) ](/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164255.png)
++<figcaption>
++okta app 설정의 Audience URI(SP Entity ID) 
++</figcaption>
++</figure>
++
++<figure data-layout="center" data-align="center">
++![Other Requestable SSO URLs 의 Index](/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164553.png)
++<figcaption>
++Other Requestable SSO URLs 의 Index
++</figcaption>
++</figure>
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Okta 상세설정 (2)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014805.png)
++<figcaption>
++Okta 상세설정 (2)
++</figcaption>
++</figure>
++
++
++* 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System” 옵션을 활성화(체크)합니다.
++    *  **API URL** : Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.
++    *  **API Token** : Okta 관리자 API 토큰을 기입합니다.
++    *  **Application ID** : Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
++* 주기적인 동기화 기능을 사용하고자 할 경우 **Replication Frequency**  항목에서 Scheduling 을 설정합니다.
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
++    *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
++    *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
++    *  **Allowed User Deletion Rate Threshold :** 
++        * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
++        * 0 ~ 1 사이의 값을 입력합니다. (기본값은 0.1) <br/> 예) 기존 유저 100명, Allowed User Deletion Rate Threshold 0.1일때, 다시 동기화했을때 삭제된 유저가 10명 이상이면 동기화가 실패합니다.<br/>11.3.0 이전 버전에서 동기화 설정이 있는 상태일 때, 11.3.0 이상으로 업데이트 하면 1로 마이그레이션 됩니다.
++* `Dry Run` 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
++* `Save` 버튼을 눌러 저장합니다.
++
++<Callout type="info">
++**Application ID 확인하는 방법**
++2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; QueryPie App 상단 URL](/administrator-manual/general/system/integrations/identity-providers/Authentication-Okta-02.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; QueryPie App 상단 URL
++</figcaption>
++</figure>
++
++
++#### QueryPie에서 Okta 로그인
++
++1. General Settings &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
++2. 이제 로그인 페이지에서 `Login with Okta` 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-082704.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-082704.png)
++</figure>
++
++<Callout type="info">
++해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.
++SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394) 내 절차대로 대신 진행하여 주시기 바랍니다.
++</Callout>
++
++### One Login 연동
++
++목록 우측 상단의 `+ Add` 버튼을 누르고 팝업되는 화면에서 Type을 One Login으로 선택하면 One Login를 IdP로 추가 할 수 있습니다.
++
++*  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++*  **Type** : One Login을 선택합니다.
++
++<Callout type="info">
++One Login SAML Custom Connector 설정 및 Metadata XML 다운로드
++
++* OneLogin에 접속한 후 화면 상단의 Applications &gt; Applications 메뉴를 클릭합니다.
++* `Add App` 버튼을 클릭합니다.
++* 검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.
++* Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator, ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.
++* `Save` 버튼을 눌러 저장합니다. 
++* 화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions &gt; SAML Metadata를 클릭합니다.
++* 다운로드된 XML 파일을 확인합니다.
++
++One Login SAML Custom Connector 설정에 대한 자세한 내용은 [https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f](https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f) 의 내용을 참고 바랍니다.
++</Callout>
++
++*  **Identity Provider Metadata**  : One Login에서 다운로드한 XML 파일의 내용을 복사해서 붙여넣습니다.
++
++<figure data-layout="center" data-align="center">
++![One Login 상세설정 (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251020-001435.png)
++<figcaption>
++One Login 상세설정 (1)
++</figcaption>
++</figure>
++
++* 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System” 옵션을 활성화(체크)합니다.
++* 주기적인 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.
++
++<figure data-layout="center" data-align="center">
++![One Login 상세설정 (2)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014949.png)
++<figcaption>
++One Login 상세설정 (2)
++</figcaption>
++</figure>
++
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
++    *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
++    *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
++    *  **Allowed User Deletion Rate Threshold :** 
++        * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
++        * 0 ~ 1 사이의 값을 입력합니다. (기본값은 0.1) <br/> 예) 기존 유저 100명, Allowed User Deletion Rate Threshold 0.1일때, 다시 동기화했을때 삭제된 유저가 10명 이상이면 동기화가 실패합니다.<br/>11.3.0 이전 버전에서 동기화 설정이 있는 상태일 때, 11.3.0 이상으로 업데이트 하면 1로 마이그레이션 됩니다.
++
++### SAML 2.0 연동 (주기적 동기화 없는 1회용)
++
++주기적인 동기화 없이 1회만 SAML 연동하는 경우 SAML metadata 만 입력하여 설정합니다.
++
++*  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++*  **Type** : SAML 을 선택합니다.
++*  **Identity Provider Metadata**  : IdP에서 확인한 SML metadata XML의 내용을 복사해서 붙여 넣습니다. 
++
++<figure data-layout="center" data-align="center">
++![image-20251014-015015.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015015.png)
++</figure>
++
++&lt; 참고 &gt; [AWS SSO 연동](identity-providers/aws-sso-saml-20)
++
++### Custom Identity Provider
++
++Custom Identity Provider는 인증 API서버를 사용하는 특수한 경우에만 사용합니다.
++
++*  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++*  **Type** : Custom Identity Provider 를 선택합니다.
++*  **API URL**  : API서버의 End-point URL을 입력합니다. 
++*  사용자 정보 동기화를 실행하려는 경우 Use Synchronization with the Authentication System 옵션을 활성화합니다.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-015047.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png)
++</figure>
++
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
++    *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
++    *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
++    *  **Allowed User Deletion Rate Threshold :** 
++        * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
++        * 0 ~ 1 사이의 값을 입력합니다. (기본값은 0.1) <br/> 예) 기존 유저 100명, Allowed User Deletion Rate Threshold 0.1일때, 다시 동기화했을때 삭제된 유저가 10명 이상이면 동기화가 실패합니다.<br/>11.3.0 이전 버전에서 동기화 설정이 있는 상태일 때, 11.3.0 이상으로 업데이트 하면 1로 마이그레이션 됩니다.
++
++
++
++
++
++
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx b/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+new file mode 100644
+index 00000000..550d393f
+--- /dev/null
++++ b/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+@@ -0,0 +1,79 @@
++---
++title: 'AWS SSO 연동하기 (SAML 2.0)'
++---
++
++import { Callout } from 'nextra/components'
++
++# AWS SSO 연동하기 (SAML 2.0)
++
++### Overview
++
++QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 애플리케이션 및 SAML 2.0을 통해 사용자 연동을 지원합니다. 사용자를 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있습니다.
++
++<Callout type="important">
++QueryPie의 Identity Providers Integration 설정에서 SAML을 Type으로 선택하여 설정하면 스케줄에 의한 주기적인 동기화는 지원하지 않습니다.
++</Callout>
++
++### AWS IAM Identity Center에서 QueryPie를 애플리케이션으로 추가
++
++<figure data-layout="center" data-align="center">
++![AWS-SSO-01-20230317-044219.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-01-20230317-044219.png)
++</figure>
++
++1. [AWS IAM Identity Center](https://ap-northeast-2.console.aws.amazon.com/singlesignon/applications/home)에 접속합니다.
++2. 좌측 메뉴의 애플리케이션 메뉴로 진입합니다.
++3. 우측 상단의 애플리케이션 추가 버튼을 클릭합니다.
++4. 사용자 지정 SAML 2.0 애플리케이션 추가 옵션 선택 후 다음 버튼을 클릭합니다.
++5. 애플리케이션 구성 &gt; 표시 이름에 QueryPie를 입력합니다.
++6. 애플리케이션 속성 &gt; 애플리케이션 시작 URL 항목에 QueryPie가 설치된 도메인 주소를 아래와 같이 입력합니다.
++    1. 애플리케이션 Start URL : https://`{querypie_host}`
++7. 애플리케이션 메타 데이터 항목에 각각 다음과 같이 입력합니다. 
++    1. 애플리케이션 ACS URL : https://`{querypie_host}`/saml/sp/acs
++    2. 애플리케이션 SAML 대상 : https://`{querypie_host}`/saml/sp/metadata
++8. 제출 버튼을 클릭하여 저장합니다.
++
++
++### QueryPie 연동을 위한 속성 매핑 설정
++
++<figure data-layout="center" data-align="center">
++![AWS-SSO-06-20230317-064023.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-06-20230317-064023.png)
++</figure>
++
++1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집 으로 이동합니다.
++2. 애플리케이션 내 사용자 속상과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
++
++|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
++| --------------------- | ------------------------------------------------ | ------------ |
++| Subject               | $`{user:email}`                                  | emailAddress |
++| firstName             | $`{user:givenName}`                              | basic        |
++| lastName              | $`{user:familyName}`                             | basic        |
++| loginId               | $`{user:email}`                                  | basic        |
++| email                 | $`{user:email}`                                  | basic        |
++
++`변경 사항 저장` 버튼을 클릭하여 저장합니다.
++
++### QueryPie 에서 AWS IAM Identity Center 연동 설정
++
++<figure data-layout="center" data-align="center">
++![Administrator &gt; General &gt; User Management &gt; Authentication ](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20240723-072112.png)
++<figcaption>
++Administrator &gt; General &gt; User Management &gt; Authentication 
++</figcaption>
++</figure>
++
++* Administrator &gt; Admin &gt; General &gt; System &gt; Integration 에서 Athentication 섹션의 하위에서 Identity Provider를 선택합니다.
++* Add 버튼을 눌러 SAML 형식으로 IdP를 등록합니다.
++    *  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
++    *  **Type** : SAML 을 선택합니다.
++    *  **Identity Provider Metadata**  : AWS에서 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드한 SML metadata XML의 내용을 복사해서 붙여 넣습니다.
++* `Save` 버튼을 클릭하여 저장합니다.
++
++### QueryPie에서 SAML 로그인
++
++<figure data-layout="center" data-align="center">
++![image-20251020-044838.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20251020-044838.png)
++</figure>
++
++로그인 페이지에서 `Login with SAML` 버튼을 통해 AWS 인증하여 QueryPie에 로그인 합니다.
++
++
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
+index 90c49fa6..3fd8f1a1 100644
+--- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
++++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
+@@ -38,7 +38,37 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
+   ![image-20231227-065951.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png)
+   </figure>
+ 4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/> 
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/> 
++  ```
++{
++    "display_information": {
++        "name": "{{name}}"
++    },
++    "features": {
++        "bot_user": {
++            "display_name": "{{display_name}}",
++            "always_online": false
++        }
++    },
++    "oauth_config": {
++        "scopes": {
++            "bot": [
++                "chat:write",
++                "users:read.email",
++                "users:read"
++            ]
++        }
++    },
++    "settings": {
++        "interactivity": {
++            "is_enabled": true
++        },
++        "org_deploy_enabled": false,
++        "socket_mode_enabled": true,
++        "token_rotation_enabled": false
++    }
++}
++  ```
++5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/> 
+   <figure data-layout="center" data-align="center">
+   ![image-20240115-220447.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png)
+   </figure>
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
+index 0d8946e5..3b7bb4b6 100644
+--- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
++++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
+@@ -71,11 +71,19 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
+     9.  **Description** : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
+ 2. `OK` 버튼을 누르고 설정을 저장합니다. 
+     1. 설정 사항이 저장되더라도 바로 Syslog 를 전송되는 것은 아닙니다.
+-3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 :토글:으로 전환합니다. 
++3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 `ON`으로 전환합니다. 
+     1. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
+ 4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 `Delete` 버튼을 통해 설정을 제거할 수 있습니다. 
+     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
+ 
++<Callout type="info">
++11.3.0에서 Timezone 설정이 추가 되었습니다. 전에 Syslog (Legacy)에서만 Timezone 설정을 할 수 있었으나 SIEM 관련 설정 모두 (Syslog, Splunk) Timezone 설정을 할 수 있도록 변경되었습니다. 또한 New DAC Policy Management 기능에 의해 발생된 이벤트에 대한 스트리밍 전송기능이 추가되었습니다. (Select Event Items에서 DAC Policy Audit Logs를 선택.)
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![image-20251009-045210.png](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20251009-045210.png)
++</figure>
++
+ 
+ ### 참고
+ 
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+index 2a59b4c5..938ec92e 100644
+--- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
++++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+@@ -44,7 +44,17 @@ Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Config
+     8. Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
+ 2. `OK` 버튼을 누르고 설정을 저장합니다. 
+     1. 설정 사항을 저장하더라도 바로 Syslog 전송이 활성화되는 것은 아닙니다.
+-3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 :토글:으로 전환합니다. 
++3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 `ON`으로 전환합니다. 
+     1. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
+ 4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 Delete 버튼을 통해 설정을 제거할 수 있습니다. 
+     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
++
++<Callout type="info">
++11.3.0에서 Timezone 설정이 추가 되었습니다. 전에 Syslog (Legacy)에서만 Timezone 설정을 할 수 있었으나 SIEM 관련 설정 모두 (Syslog, Splunk) Timezone 설정을 할 수 있도록 변경되었습니다. 또한 New DAC Policy Management 기능에 의해 발생된 이벤트에 대한 스트리밍 전송기능이 추가되었습니다. (Select Event Items에서 DAC Policy Audit Logs를 선택.)
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![image-20251009-045004.png](/administrator-manual/general/system/integrations/integrating-with-syslog/image-20251009-045004.png)
++</figure>
++
++
+diff --git a/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx b/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx
+new file mode 100644
+index 00000000..562ba82a
+--- /dev/null
++++ b/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx
+@@ -0,0 +1,69 @@
++---
++title: 'OAuth Client Application'
++---
++
++# OAuth Client Application
++
++### Overview
++
++다른 외부 응용프로그램에서 사용자를 인증하고 데이터에 접근할 수 있도록 QueryPie가 OAuth 2.0 Provider 역할을 수행할 수 있습니다. 외부 응용프로그램을 클라이언트로 등록하고 QueryPie가 인증 토큰을 발급하여 안전하게 쿼리파이의 리소스에 접근할 수 있도록 합니다.
++
++### OAuth Client Application 등록
++
++<figure data-layout="center" data-align="center">
++![Admin &gt; General &gt; System &gt; Integrations 의 Authentication 하위에 있는 OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-041209.png)
++<figcaption>
++Admin &gt; General &gt; System &gt; Integrations 의 Authentication 하위에 있는 OAuth Client Application
++</figcaption>
++</figure>
++
++* Admin &gt; General &gt; System &gt; Integrations 의 Authentication 하위에 있는 OAuth Client Application 항목을 선택합니다.
++*  `+Add`버튼을 누르고 등록할 어플리케이션의 정보를 입력한 뒤 `Save` 버튼을 누릅니다.
++    *  **Name**  : 식별이 용이한 이름을 입력합니다.
++    *  **Redirect URI**  : 인증 과정이 끝난후 돌려보낼 Client URL을 입력합니다.
++    *  **Access Token Timeout (Minutes)**  : 기본값은 60, 최소값은 5입니다. 
++    *  **Refresh Token Timeout (Minutes)**  : 기본값은 1440, 최소값은 5입니다.
++
++<figure data-layout="center" data-align="center">
++![Add OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043210.png)
++<figcaption>
++Add OAuth Client Application
++</figcaption>
++</figure>
++
++
++* 설정이 저장된 후 출력되는 팝업에 Client ID와 Client Secret이 출력됩니다. Client Scret은 최초 생성된 값을 다시 확인할 수 없으므로 복사해서 잘 보관해야 합니다. 
++
++<figure data-layout="center" data-align="center">
++![Client ID 및 Client Secret](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043334.png)
++<figcaption>
++Client ID 및 Client Secret
++</figcaption>
++</figure>
++
++### OAuth Client Application 설정 수정
++
++<figure data-layout="center" data-align="center">
++![OAuth Client Application 설정 수정](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044214.png)
++<figcaption>
++OAuth Client Application 설정 수정
++</figcaption>
++</figure>
++
++OAuth Client Application 목록에서 행을 클릭하면 다음의 작업을 할 수 있습니다.
++
++* 설정 값 변경 : Name, Redirection URI, Access Token 및 Refresh Token Timeout
++* Regenerate Client Secret : 최초 생성했던 Client Secret을 버리고 새로 생성할 수 있습니다.
++
++### OAuth Client Application 설정 삭제
++
++등록할 OAuth Client Application 설정을 삭제하려면 목록에서 삭제 대상 항목을 체크하고 `Delete` 버튼을 누릅니다.
++
++<figure data-layout="center" data-align="center">
++![OAuth Client Application 설정 삭제](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044400.png)
++<figcaption>
++OAuth Client Application 설정 삭제
++</figcaption>
++</figure>
++
++
+diff --git a/src/content/ko/administrator-manual/general/system/maintenance.mdx b/src/content/ko/administrator-manual/general/system/maintenance.mdx
+new file mode 100644
+index 00000000..5308067f
+--- /dev/null
++++ b/src/content/ko/administrator-manual/general/system/maintenance.mdx
+@@ -0,0 +1,47 @@
++---
++title: 'Maintenance'
++---
++
++import { Callout } from 'nextra/components'
++
++# Maintenance
++
++### Overview
++
++QueryPie의 버전 업그레이드 작업을 할 경우 QueryPie가 기록하는 Log DB는 대용량이라 백업이 어렵고 주요 기능들이 업그레이드 중에도 기록을 멈추지 않도록 하려면 적절한 서비스 제공 수준의 제어가 필요합니다. 이에 유지보수 모드를 설정하고 마이그레이션 작업을 수행합니다.
++
++참고로, QueryPie 서버가 2대의 서버로 이중화 되어 있는 경우의 업그레이드 절차는 아래와 같습니다.
++
++1.  **준비** : 최신 패키지 다운로드 및 설정 파일을 확인합니다.
++2.  **유지보수 모드 설정** : 작업 공지 후, 시스템의 서비스 접근 수준을 제한합니다.
++3.  **데이터베이스 준비** : 신규 버전용 스키마를 생성하고 기존 데이터를 복제합니다.
++4.  **2번 서버 업그레이드** : LB에서 2번 서버를 분리하고, 마이그레이션 및 2번 서버에 신규 버전을 설치합니다.
++5.  **2번 서버 테스트** : 2번 서버로 직접 접속하여 업그레이드 결과를 확인합니다.
++6.  **1번 서버 업그레이드** : LB에 2번 서버를 다시 연결하고 1번 서버를 분리한 뒤, 1번 서버에 신규 버전을 설치합니다.
++7.  **최종 전환** : LB에 1번 서버를 다시 연결하여 전체 서비스 업그레이드를 종료합니다.
++
++<Callout type="info">
++유지보수 모드 설정 기능은 11.3.0에 추가되었습니다.
++</Callout>
++
++### 유지보수 모드(Operation Mode) 설정
++
++<Callout type="important">
++서비스 전체에 대한 영향을 주기 때문에 신중하게 결정하고 작업을 진행해야 합니다.
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Admin &gt; General &gt; System &gt; Maintenance](/administrator-manual/general/system/maintenance/image-20250928-205515.png)
++<figcaption>
++Admin &gt; General &gt; System &gt; Maintenance
++</figcaption>
++</figure>
++
++설정할 수 있는 Mode는 아래와 같습니다.
++
++|  **Mode**        |  **설명**                                                                                                                                                                                                                 |
++| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
++| Read Only        | 사용자가 Login이 가능하지만 조회를 제외한 다른 기능은 사용할 수 없습니다. Read-Only를 적용한 즉시 새로운 명령은 수행되지 않습니다. 이미 수행된 쿼리 및 명령은 정상 수행 및 종료 됩니다. (SAC의 경우Read Only 상태로 전환된 뒤 최초 명령 수행은 수행되고 Audit Log에 기록되지만 두번째 명령 부터는 수행되지 않고 Audit Log도 기록되지 않습니다.) |
++| Active Session   | 이미 존재하는 세션에서는 명령어 수행이 가능하지만 새로운 세션은 조회를 제외한 명령어 수행을 할 수 없습니다. (WAC에 적용 불가)                                                                                                                                              |
++| Allow Connection | 이미 존재하는 세션과 새로운 세션에서 명령어 수행이 가능하지만 Workflow 상신이나 설정 수정등의 작업은 허용되지 않습니다. (WAC에 적용 불가)                                                                                                                                    |
++| Full Access      | 일반적인 평상시의 동작 모드입니다.                                                                                                                                                                                                     |
+diff --git a/src/content/ko/administrator-manual/general/user-management/authentication.mdx b/src/content/ko/administrator-manual/general/user-management/authentication.mdx
+index 6dec1f9c..15aa2e13 100644
+--- a/src/content/ko/administrator-manual/general/user-management/authentication.mdx
++++ b/src/content/ko/administrator-manual/general/user-management/authentication.mdx
+@@ -10,6 +10,9 @@ import { Callout } from 'nextra/components'
+ 
+ SSO(Single Sign-On) 통합은 사용자 인증 및 액세스 관리를 향상시키는 동시에 안전한 통합 인증 환경을 제공하는 QueryPie 내의 필수 기능입니다. 조직에서 사용하는 계정 시스템을 연동하여 조직 내의 사용자 및 그룹을 QueryPie로 동기화할 수 있습니다. 관리자는 조직 내의 입사자 및 퇴사자를 한 곳에서 관리할 수 있습니다. SSO 통합은 인증 프로세스를 간소화하며 사용자가 조직 내에서 사용 중인 인증 방식으로 QueryPie를 통해 및 데이터베이스 및 시스템에 접근할 수 있도록 합니다. 해당 문서에서는 SSO 연동 방법과 및 주요 고려 사항에 대해 설명합니다.
+ 
++<Callout type="info">
++11.3.0에서 Authentication 관련 설정이 Admin &gt; General &gt; User Management &gt; Authentication 에서 Admin &gt; General &gt; System &gt; Integration의 Authentication 의 하위 항목인 Identity Providers 로 이동되었습니다.
++</Callout>
+ 
+ ### IdP 연동 지원 범위
+ 
+diff --git a/src/content/ko/administrator-manual/general/user-management/groups.mdx b/src/content/ko/administrator-manual/general/user-management/groups.mdx
+index cac27242..e030a2aa 100644
+--- a/src/content/ko/administrator-manual/general/user-management/groups.mdx
++++ b/src/content/ko/administrator-manual/general/user-management/groups.mdx
+@@ -52,15 +52,15 @@ Administrator &gt; General &gt; User Management &gt; Groups &gt; 상세 정보
+ </figcaption>
+ </figure>
+ 
+-1. `+ Add Users` 버튼을 클릭하면 모달이 출력됩니다.
++1. `+ Add Users` 버튼을 클릭하면 사용자 추가 팝업이 출력됩니다.
+     1. 이름 또는 이메일로 사용자를 검색할 수 있습니다.
+     2. 11.2.0부터 LDAP을 통해 동기화된 비활성화 상태의 사용자도 검색 결과에 포함되어 표시됩니다. 비활성 사용자는 이름 옆에 `(Inactive)` 텍스트가 표시됩니다.
+     3. 추가하려는 사용자를 클릭하면 추가 상태로 변경됩니다.
+-    4. 하단 `Check all` 버튼을 클릭하면 전체 사용자가 선택됩니다.<br/> <br/>  <br/>  
++    4. 하단 `Check all` 버튼을 클릭하면 전체 사용자가 선택됩니다. <br/>  
+       <figure data-layout="center" data-align="center">
+-      ![사용자 추가 모달](/administrator-manual/general/user-management/groups/Screenshot-2025-08-27-at-5.10.19-PM.png)
++      ![그룹에 사용자 추가](/administrator-manual/general/user-management/groups/image-20251009-050919.png)
+       <figcaption>
+-      사용자 추가 모달
++      그룹에 사용자 추가
+       </figcaption>
+       </figure>
+ 2. `Save` 버튼을 클릭하여 그룹 변경 내역을 저장합니다. 그룹 리스트 및 상세 정보 Drawer에서 추가된 사용자를 확인할 수 있습니다.
+diff --git a/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx b/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
+index 11f5bd2c..91b7266c 100644
+--- a/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
++++ b/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
+@@ -86,8 +86,13 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
+ 2. SCIM Connection의 우측 `Edit` 버튼을 눌러 이하의 값을 채워 수정합니다.
+     1. SCIM connector base URL : QueryPie에서 조회한 SCIM Endpoint 값을 삽입합니다. 
+     2. Unique identifier field for users : “ **userName** ”
+-    3. Support provisioning action : 
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      t      a      s      k      -      l      i      s      t      /      >    4. Authentication Mode : “ **HTTP Header** ”
++    3. Supported provisioning action : 다음의 다섯 항목을 모두 선택합니다.
++        * Import New Users and Profile Updates
++        * Push New Users
++        * Push Profile Updates
++        * Push Groups
++        * Import Groups
++    4. Authentication Mode : “ **HTTP Header** ”
+     5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다. 
+ 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다. 
+ 4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다. 
+@@ -118,52 +123,60 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
+ 5. Attributes 하단의 `Mappings` 버튼을 클릭합니다.
+ 6. 팝업창 상단의 두 탭 중 “Okta User to `{사용자가 정의한 App명}`” 으로 기재된 탭으로 이동합니다. 
+ 7. 사용자 임의의 설정에 맞게 항목을 맵핑한 뒤, 하단의 `Save Mappings` 버튼을 클릭합니다.
+-8. 하단의 `Apply updates now` 버튼을 클릭합니다. 
++8. 하단의 `Apply updates now` 버튼을 클릭합니다.
++
++#### 일부 Attribute 를 추가적으로 동기화하는 방법
+ 
+ <Callout type="important">
+-**일부 Attribute 추가 싱크 방법**
+-1. 쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다: 
+-    1. secondEmail 
+-    2. mobilePhone
+-    3. postalAddress (SCIM 스키마에 맞추어 “formatted”로 추가되어 해당 항목을 매핑하면 됩니다.)
+-    4. staticIp (쿼리파이 전용 커스텀 속성)
+-    5. macAddress (쿼리파이 전용 커스텀 속성)
+-2. 해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다. [Okta 예제]
+-    1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
+-      <figure data-layout="center" data-align="center">
+-      ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
+-      </figure>
+-    2. `Add Attribute` 버튼을 클릭합니다. 
++QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute 항목은 SCIM Integration 의 기본설정에서는 Import 되지 않습니다.
++</Callout>
++
++쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다:
++
++1. secondEmail 
++2. mobilePhone
++3. postalAddress (SCIM 스키마에 맞추어 “formatted”로 추가되어 해당 항목을 매핑하면 됩니다.)
++4. staticIp (쿼리파이 전용 커스텀 속성)
++5. macAddress (쿼리파이 전용 커스텀 속성)
++
++해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다.
++
++##### [Okta 에서 Custom Attribute 를 설정하는 예시]
++
++1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
++  <figure data-layout="center" data-align="center">
++  ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
++  </figure>
++2. `Add Attribute` 버튼을 클릭합니다. 
++  <figure data-layout="center" data-align="center">
++  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
++  </figure>
++3. 동기화에 필요한 Attribute를 새로 등록합니다. 
++  <figure data-layout="center" data-align="center">
++  ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
++  </figure>
++    1. Data type : 쿼리파이와 동일하게 string 선택합니다.
++    2. Display name : 옥타 내 표기할 속성명을 기입합니다.
++    3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다. 
++        * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다. 
++          <figure data-layout="center" data-align="center">
++          ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
++          </figure>
++    4. External namespace : 아래 값을 기입합니다.<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
++    5. 이후 `Save` 또는 `Save and Add Another` 버튼을 클릭하여 저장합니다.
++4. 그 다음 `Mappings` 버튼을 클릭합니다. 
++  <figure data-layout="center" data-align="center">
++  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
++  </figure>
++    1. 프롬프트 상단의 탭을 2번째 탭(Okta → `{APP}`)으로 선택합니다. 
+       <figure data-layout="center" data-align="center">
+-      ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
++      ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+       </figure>
+-    3. 동기화에 필요한 Attribute를 새로 등록합니다. 
++    2. 하단에 새로 생성한 Custom Attribute와 IdP 내 적절한 Attribute를 매핑하고 Save Mappings 버튼을 클릭하여 설정을 저장합니다. 
+       <figure data-layout="center" data-align="center">
+-      ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
++      ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+       </figure>
+-        1. Data type : 쿼리파이와 동일하게 string 선택합니다.
+-        2. Display name : 옥타 내 표기할 속성명을 기입합니다.
+-        3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다. 
+-            * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다. 
+-              <figure data-layout="center" data-align="center">
+-              ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
+-              </figure>
+-        4. External namespace : 해당 정보로 기입합니다. 
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >        5. 이후 `Save` 또는 `Save and Add Another` 버튼을 클릭하여 저장합니다.
+-        6. 그 다음 `Mappings` 버튼을 클릭합니다. 
+-          <figure data-layout="center" data-align="center">
+-          ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+-          </figure>
+-        7. 프롬프트 상단의 탭을 2번째 탭(Okta → `{APP}`)으로 선택합니다. 
+-          <figure data-layout="center" data-align="center">
+-          ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+-          </figure>
+-        8. 하단에 새로 생성한 Custom Attribute와 IdP 내 적절한 Attribute를 매핑하고 Save Mappings 버튼을 클릭하여 설정을 저장합니다. 
+-          <figure data-layout="center" data-align="center">
+-          ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+-          </figure>
+-        9. 이후 사용자를 앱에 할당합니다. 
+-</Callout>
++5. 이후 사용자를 앱에 할당합니다.
+ 
+ 
+ ---
+diff --git a/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx b/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
+index aadd3766..0e7e1875 100644
+--- a/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
++++ b/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
+@@ -2,6 +2,8 @@
+ title: 'Approval Rules'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Approval Rules
+ 
+ ### Overview
+@@ -65,7 +67,13 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Add
+     *  **참조자 지정 방식:** 
+         * Select Assignee(s) / Group(s) **:** 관리자가 특정 사용자 또는 그룹을 고정된 참조자로 미리 지정합니다. 이 규칙으로 결재를 상신하는 사용자는 참조자를 변경할 수 없습니다.
+         * Allow Assignee selection (All Users) **:** 결재 상신자가 직접 모든 활성 사용자 중에서 참조자를 선택하도록 허용합니다. 
++        * Allow Assignee selection (Admin Only): 관리자 권한을 가진 사람만 선택할 수 있습니다.
+         * Connection Owner와 Server Owner는 고정 참조자로 지정할 수 없습니다.
++
++<Callout type="info">
++11.3.0 에서 Default로 제공되는 “Web App Just In Time Access Request” Approval Rule에서 참조자를 지정할 수 있도록 변경되었습니다.
++</Callout>
++
+ *  **Urgent Mode**  : 해당 결재 규칙 하에서 사후 승인(Urgent Mode)을 허용할지 결정합니다. 
+     * 기본값은 비허용(Off)이며, 추후 Approval Rule 수정을 통해 On/Off 가능합니다.
+     * Workflow Configurations에서 사후 승인이 허용되어 있어야만 이 옵션이 표시됩니다.
+diff --git a/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx b/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+index 0a09cf3a..8a689340 100644
+--- a/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
++++ b/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+@@ -170,4 +170,7 @@ ${CA_CERT}"
+ </details>
+ 
+ * 스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. 
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >
+\ No newline at end of file
++  ```
++chmod +x generate_kubepie_sa.sh
++./generate_kubepie_sa.sh
++  ```
+diff --git a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
+index ce3786da..e4728520 100644
+--- a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
++++ b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
+@@ -34,12 +34,32 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
+     * 그래서 `pods`에 대한 권한만 있다면 `pods`에 대한 그래프만 보이고, 만약 `pods`가 필터링 되어서 일부만 볼 수 있다면 일부만 표시됩니다. 
+     * 다른 리소스들도 마찬가지로 동작합니다.
+     * 추천 스펙
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >*  **Events 파트** 
++      ```
++allow:
++  actions:
++    # Pods만 허용 시 
++    - apiGroups: ["*"]
++      resources: ["pods"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "watch"]
++      ```
++*  **Events 파트** 
+     * 아래 events 항목은 `events` 리소스에 대한 권한에 의해서 보여주는데, 위의 resources 항목과 마찬가지로 namespace, name에 의해서 필터링 되어 보여집니다. 
+     * 다만 `pods`에 대한 권한이 있다고 `pods` 관련 `events`가 보이는것이 아니니, 해당 화면을 보려면 명시적으로 `events` 리소스에 대한 권한을 주어야 합니다. 
+     * `events` 리소스와 `pods` 리소스는 서로 분리된 리소스입니다. 따라서, `events` 리소스 권한이 있는 상태에서 `pods`에 대한 권한만을 주었다고 해서 `events` 중 `pods`에 대한 내역만 조회되지 않아 안내드립니다.
+     * 추천 스펙
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >
++      ```
++allow:
++  actions:
++    # Events를 같이 출력 허용할 시 
++    - apiGroups: ["*"]
++      resources: ["pods", "events"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "watch"]
++      ```
++
+ 
+ ### Verbs 관련 설정 가이드
+ 
+@@ -49,13 +69,44 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
+     * View 권한만을 얻는 사용자의 경우는 `get`, `list`, `watch`를 모두 부여해야 합니다. 
+     * `get`, `list` 만으로 kubectl의 사용은 크게 어렵지 않지만, `watch`가 없다면 lens와 같은 현황 모니터링을 지원하는 툴의 사용이 어렵습니다. 
+     * 권장 스펙
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >*  **Edit 권한** 
++      ```
++allow:
++  actions:
++    - apiGroups: ["*"]
++      resources: ["*"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "watch"]
++      ```
++*  **Edit 권한** 
+     * Edit 권한까지 얻는 사용자의 경우에는 View 권한(최소 `get`, `list`)도 함께 부여해주어야 합니다. kubectl에서도 특정 리소스에 대한 수정 요청을 하면 먼저 조회요청을 하기 때문입니다. 
+     * lens같은 툴에서는 View 권한이 없다면 Edit 화면으로 갈 수 있는 방법이 없습니다.
+     * Edit 중에서도 생성(`create`), 수정(`patch`, `update`), 삭제(`delete`, `deletecollection`) 이렇게 각 역할에 맞춰서 묶어서 주어져야 합니다. 
+     * `deletecollection`은 흔하게 사용되지는 않지만, KAC에서는 `deletecollection`으로 요청이 오더라도 사용자에게 권한이 있는 리소스만을 골라서 삭제처리 하므로 유용하게 사용될 수 있습니다.
+     * 권장 스펙 
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >
++      ```
++allow:
++  actions:
++    # 생성 권한
++    - apiGroups: ["*"]
++      resources: ["*"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "create"]
++    # 수정 권한 
++    - apiGroups: ["*"]
++      resources: ["*"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "patch", "update"]
++    # 삭제 권한
++    - apiGroups: ["*"]
++      resources: ["*"]
++      namespace: "*"
++      name: "*"
++      verbs: ["get", "list", "delete", "deletecollection"]
++      ```
++
+ 
+ ### 기타 추천 설정 가이드
+ 
+diff --git a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
+index 5a907dc8..62084b7f 100644
+--- a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
++++ b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
+@@ -222,12 +222,28 @@ O
+         * 해당 subjects는 Policy-wide 레벨에서 정의할 수 있어야 하며, 최소 하나가 배정되도록 정의되어야 합니다.
+             * Impersonation을 위한 해당 subjects는 다른 Policy들과 하나의 Role 내에서 중첩이 가능합니다.
+         * Resources에 명시된 리소스에 대한 권한 수행이 가능한 kubernetes 측 그룹(단일 또는 복수)을 정의합니다.
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >        * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >2. `impersonation`: **[OPTIONAL]**
++          ```
++kubernetesGroups: 
++  - system:masters
++  - default-group-account
++          ```
++        * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
++          ```
++kubernetesGroups: 
++  - $user.groups
++          ```
++2. `impersonation`: **[OPTIONAL]**
+     * 사용자가 클라이언트 단에서 kubernetes 내 특정 serviceaccount 등의 권한으로 kubectl 명령에 impersonation(--as, --as-group)을 시도하는 경우, 이에 대한 호출 허용 목록을 정의합니다.
+         * `users`: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 "--as" 파라미터에 허용 가능한 값을 나열합니다.
+         * `groups`: 쿠버네티스 내 존재하는 그룹 계정으로 "--as-group" 파라미터에 허용 가능한 값을 나열합니다.
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >        * 와일드카드를 허용합니다. (`"*"`)
++          ```
++impersonation: 
++  users: 
++    - "system:serviceaccount:argocd"
++  groups: 
++    - "system:admin"
++          ```
++        * 와일드카드를 허용합니다. (`"*"`)
+ 
+ 
+ ### Actions 명시 방법
+@@ -248,7 +264,13 @@ O
+     2. 위에 표기되지 않은 리소스 또한 정책에서 수용이 가능합니다. 
+     3. 네임스페이스 하위 리소스만 지정하여 권한을 부여하더라도, Namespace에 대한 ReadOnly 권한이 함께 부여됩니다. 따라서, 리소스 호출 시 매번 네임스페이스 명시해주어야 하는 사례가 발생되지 않습니다. 특정 네임스페이스에 대한 권한 부여를 방지하고자 하는 경우, `spec:deny` 에서 네임스페이스 리소스에 대한 접근 거부를 설정할 수 있습니다. 
+     4. 단일 정책 액션에서 다중으로 리소스 지정이 가능합니다. 
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >    5. 와일드카드를 허용합니다. (`"*"`)
++      ```
++ resources:
++   - "pods"
++   - "deployments"
++   - "configmaps"
++      ```
++    5. 와일드카드를 허용합니다. (`"*"`)
+ 3. `namespace` : 대상 네임스페이스를 정의합니다. 
+     1. 네임스페이스를 액션에서 정의하여 클러스터 내 허용 대상 네임스페이스를 리소스별로 제어할 수 있습니다. 
+     2. 와일드카드와 정규표현식 모두 허용합니다.
+@@ -282,9 +304,22 @@ O
+ `conditions` 항목에는 `resourceTags`, `userAttributes`, `ipAddresses`를 조건으로 정의할 수 있습니다. **[OPTIONAL]**
+ 
+ * `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. 
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >* `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. 
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >
++  ```
++resourceTags: 
++  "region": "ap-northeast-1"
++  "Owner": "Brant"
++  ```
++* `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. 
++  ```
++userAttributes: 
++  "countryCode": "KR"
++  "department": "Infra"
++  ```
++* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
++  ```
++ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
++  ```
++
+ 
+ ### KAC Policy 예시
+ 
+diff --git a/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx b/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
+index 54e77ac2..a1e3a6ad 100644
+--- a/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
++++ b/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
+@@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
+ 
+ <Callout type="info">
+ 10.3.0 부터 각 Administrator &gt; General &gt; Security 하위에 있던 KAC 관련 설정 항목들이 각 서비스 메뉴의 General &gt; Configurations로 이동되었습니다.
++11.4.0 부터 사용자의 권한 요청 및 관리자의 권한 부여시 최대 기간을 지정할 수 있는 Maximum Access Duration 옵션이 추가되었습니다.
+ </Callout>
+ 
+ 
+@@ -16,8 +17,14 @@ import { Callout } from 'nextra/components'
+ 쿠버네티스 클러스터 접근 제어, 권한 관리, 세션 정책 등 컨테이너 기반 환경에서의 보안을 위한 설정을 제공합니다.
+ 
+ <figure data-layout="center" data-align="center">
+-![screenshot-20240726-152035.png](/administrator-manual/kubernetes/kac-general-configurations/screenshot-20240726-152035.png)
++![Kubernetes Configurations options](/administrator-manual/kubernetes/kac-general-configurations/image-20251107-090909.png)
++<figcaption>
++Kubernetes Configurations options
++</figcaption>
+ </figure>
+ 
++
+ * Idle Session Timeout (Minutes) : 파드 세션 타임아웃 (Default : 15)
+     * exec, port-forward, attach를 통한 세션 연결 시 유휴 시간 지정
++* Maximum Access Duration : 권한 부여 최대 기간 지정 옵션입니다. 지정한 기간을 초과하는 권한 요청을 작성할 수 없고, 관리자도 이 기간을 초과한 권한 부여를 할 수 없습니다. 이 기간이 만료되면 자동으로 권한이 회수됩니다. 
++    * 최소값 : 1, 최대값 : 9999
+diff --git a/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx b/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+index 7c0c80c5..c43cd90f 100644
+--- a/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
++++ b/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+@@ -17,15 +17,26 @@ Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를 설
+ ![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
+ </figure>
+ 
+-1. Server Agent 다운로드 페이지에 접속합니다.
+-    1. 설치된 QueryPie 도메인 주소 뒤에 `/for-agent/server-agent/download` 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+-2. 에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.
+-3. 화면 중앙의 Windows 버튼을 클릭하면 압축 파일이 다운로드 됩니다.
+-4. 설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.
++* Server Agent 다운로드 페이지에 접속합니다.
++    * 설치된 QueryPie 도메인 주소 뒤에 `/for-agent/server-agent/download` 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
++
++<Callout type="info">
++11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin &gt; Servers &gt; Connection Management &gt; RDP Server Agent 페이지의 `Download Server Agent` 버튼)를 통해서도 받을 수 있도록 변경되었습니다. 기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드 받아야 하는 경우 사용)
++<figure data-layout="center" data-align="center">
++![RDP Server Agent 다운로드 버튼 제공](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20251010-085601.png)
++<figcaption>
++RDP Server Agent 다운로드 버튼 제공
++</figcaption>
++</figure>
++</Callout>
++
++* 에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.
++* 화면 중앙의 Windows 버튼을 클릭하면 압축 파일이 다운로드 됩니다.
++* 설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.
+     1. QueryPie Server Access Control_(QueryPie Version)_Setup
+     2. CONFIG
+-5. 두 파일을 같은 경로에 위치한 뒤, QueryPie Server Access Control_(QueryPie Version)_Setup 파일을 실행합니다.
+-6. 안내에 따라 파일을 설치합니다. 
++* 두 파일을 같은 경로에 위치한 뒤, QueryPie Server Access Control_(QueryPie Version)_Setup 파일을 실행합니다.
++* 안내에 따라 파일을 설치합니다. 
+ 
+ <Callout type="info">
+ **CONFIG 파일 설명**
+diff --git a/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx b/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+index fee3b9f3..990f9273 100644
+--- a/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
++++ b/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+@@ -65,6 +65,17 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
+     * 해당 팝업창에서 서버 그룹에 추가할 개별 서버를 선택 후 `Add` 버튼을 클릭합니다.
+         * 팝업 내 필터(:필터:) 기능을 이용하여 여러 조건으로 서버를 필터링할 수 있습니다.
+         * 최종 해당 서버 그룹에 추가된 서버들을 확인할 수 있습니다.
++
++<Callout type="info">
++11.3.0에서 Server group에 추가할 서버 목록 팝업에서 태그를 사용하여 대상을 필터를 할 수 있게 되었습니다.
++<figure data-layout="center" data-align="center">
++![Tag로 Server Group에 추가하려는 대상을 필터링 한 예시](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20251010-084037.png)
++<figcaption>
++Tag로 Server Group에 추가하려는 대상을 필터링 한 예시
++</figcaption>
++</figure>
++</Callout>
++
+ * Information의 Server Tags에서 수동 추가된 서버와 관련된 테그를 삭제하더라도, 수동으로 추가된 서버는 서버그룹에서 제외되지 않습니다. Servers 테이블에서 체크박스 선택 후 나오는 `Delete` 버튼을 통한 수동 삭제만 가능합니다.
+ * Test Connection을 통해 Server Group내 추가된 Server와 Account에 대한 계정 정보 확인을 할 수 있습니다.
+     * Test Connection을 사용하기 위해선 최소 1개의 Server와 Account를 Server Group에 추가해야 합니다. 
+@@ -157,7 +168,7 @@ Vault SSH-OTP 및 SSH-CA 인증 방식에서는 Vault Role Path 필드에 Vault
+ </Callout>
+ 
+ <Callout type="info">
+-provisioning account는 실제 서버에 등록된 계정이여야 하며 아래와 같은 설정이 필요합니다.
++Provisioning Account는 실제 서버에 등록된 계정이여야 하며 아래와 같은 설정이 필요합니다.
+ * 계정 생성/삭제 권한이 필수입니다.
+ * sudo를 쓸 때 패스워드를 입력하지 않도록 설정되어야 합니다.
+ </Callout>
+@@ -169,9 +180,16 @@ macOS의 VNC 프로토콜 제한에 의해, VNC를 통한 자동 로그인을 
+ 
+ <Callout type="info">
+ **Vault에서 Role을 설정할 때,**
++
+ *  **Default extensions** 에 아래 값을 입력해야 합니다.
+-    * 
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >*  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
++```
++{
++"permit-port-forwarding": "",
++"permit-pty": ""
++}
++```
++
++*  **TTL / Max TTL**  설정시, 60 이상으로 설정합니다.
+     * QueryPie에서는 인증서의 TTL(Time To Live)은 60초 입니다.
+ *  **Signing Algorithm** 은 ras-sha2-256 으로 설정합니다.
+ </Callout>
+diff --git a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
+index ba953583..fa8c22ee 100644
+--- a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
++++ b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
+@@ -171,7 +171,17 @@ QueryPie에 정의한 웹앱 리소스명을 입력합니다.
+     * `- webApp: "*Query*"` (X)
+     * `- webApp: "QueryPie$"` (X)
+ 2. 하나의 `spec` 안에서 여러 개의 웹 앱을 나열할 수 있습니다.
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
++  ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/user-management"
++          - "/database-settings/policies"
++      - webApp: "QueryPie Customer Portal"
++  ```
++3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
+     * 글자 수 최대 120자
+     * 알파벳 대소문자 (case-sensitive), 숫자 및 일부 특수기호 (`_`, `-`, `(`, `)`, `[`, `]`) 만 허용
+     * 공백 허용
+@@ -186,14 +196,45 @@ QueryPie에 정의한 웹앱 리소스명을 입력합니다.
+ 2. Base URL을 포함하여, 웹 앱에 존재하는  **모든**  하위 경로에 대해 허용 또는 거부하는 방법은 다음과 같습니다.
+     * urlPaths 행을 작성하지 않습니다.
+         * 예: QueryPie Web Admin 의 전체 경로에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    *  `urlPaths: []` 으로 작성합니다.
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++          ```
++    *  `urlPaths: []` 으로 작성합니다.
+         * 예: QueryPie Web Admin 의 전체 경로에 대해 접근 차단
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >3. 특정 하위 경로 입력시, 입력한 경로와 해당 경로의 모든 하위 경로에 정책이 적용됩니다.
++          ```
++spec:
++  deny:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: []
++          ```
++3. 특정 하위 경로 입력시, 입력한 경로와 해당 경로의 모든 하위 경로에 정책이 적용됩니다.
+     * 하위 경로는 리스트로 나열하며, 여러 개를 입력할 수 있습니다.
+         * 예: QueryPie Web Admin 의 `/general-settings/user-management` 와 `/general-settings/user-management/*`, 그리고 `/kubernetes-settings` 와 `/kubernetes-settings/*` 에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    * 하위 경로와 이에 포함된 세부 경로를 동시에 입력할 수 없습니다.
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/user-management"
++          - "/kubernetes-settings"
++          ```
++    * 하위 경로와 이에 포함된 세부 경로를 동시에 입력할 수 없습니다.
+         * 예: QueryPie Web Admin 의 `/general-settings` 와 `/general-settings/user-management` 를  **동시에 입력 불가** 
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings"
++          - "/general-settings/user-management"
++          ```
++
+ <Callout type="info">
+ urlPaths에 특정 하위 경로를 입력하려면 Web App 상세 정보에서 Path Management 활성화가 필요합니다. 등록되지 않은 하위 경로 입력 시 오류가 발생합니다.
+ </Callout>
+@@ -218,16 +259,48 @@ Web App의 Path Management에서 부여된 태그를 기준으로 규칙에 의
+ 1. 태그는 대소문자를 구분하며, 여러 개를 입력할 수 있습니다.
+     * Key가 동일한 태그를 여러 개 입력 시, OR 조건으로 동작합니다. 
+         * 예: `access: admin` 또는 `access: user` 가 부여된 경로에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    * Key가 다른 태그를 여러 개 입력 시, AND 조건으로 동작합니다. 
++          ```
++urlPathTags: 
++  "access": "admin"
++  "access": "user"
++          ```
++    * Key가 다른 태그를 여러 개 입력 시, AND 조건으로 동작합니다. 
+         * 예: `access: admin` 과 `type: general` 가 함께 부여된 경로에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >2. `resources[].urlPaths` 와 연계되어 동작합니다.
++          ```
++urlPathTags: 
++  "access": "admin"
++  "type": "general"
++          ```
++2. `resources[].urlPaths` 와 연계되어 동작합니다.
+     *  **웹앱 리소스의 대상 urlPath가 명시되지 않은 경우** 
+         * 등록된 전체 하위 경로 중 urlPathTag가 있는 경로를 모두 허용합니다.
+         * 예: Web App “QueryPie Web Admin” 에 대해, Path Management에 등록된 전체 하위 경로 중 `access: admin` 태그가 부여된 경로에 한하여 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    *  **웹앱 리소스의 대상 urlPath가 명시된 경우** 
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: []
++    conditions:
++      urlPathTags:
++        "access": "admin"
++          ```
++    *  **웹앱 리소스의 대상 urlPath가 명시된 경우** 
+         * 명시된 경로들 중 urlPathTag가 있는 경로만을 허용합니다.
+         * 예: Web App “QueryPie Web Admin” 에 대해, `resources[].urlPaths` 에 명시된 두 경로 중 Path Management에서 `access: admin` 태그가 부여된 경로에 한하여 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    *  **웹앱 리소스의 대상 urlPath가 명시되었으나 범위 내에서 매칭되는 urlPathTag가 없는 경우** 
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/user-management"
++          - "/database-settings/policies"
++    conditions:
++      urlPathTags:
++        "access": "admin"
++          ```
++    *  **웹앱 리소스의 대상 urlPath가 명시되었으나 범위 내에서 매칭되는 urlPathTag가 없는 경우** 
+         * 조건에 일치하는 urlPath가 존재하지 않으므로, 어떠한 경로도 허용하지 않습니다.
+ 
+ #### userAttributes**[OPTIONAL]**
+@@ -242,9 +315,19 @@ QueryPie 사용자의 속성(attribute)을 기준으로 규칙에 의해 리소
+ 
+ * Key가 동일한 속성을 여러 개 입력 시, OR 조건으로 동작합니다. 
+     * 예: 부서(department)가 PM 또는 QA인 사용자에 대해 접근 허용
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다. 
++      ```
++userAttributes: 
++  "department": "PM"
++  "department": "QA"
++      ```
++* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다. 
+     * 예: 부서(department)가 PM이고, 직책(title)이 관리자인 사용자에 대해 접근 허용
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >
++      ```
++userAttributes: 
++  "department": "PM"
++  "title": "Manager"
++      ```
++
+ #### ipAddresses**[OPTIONAL]**
+ 
+ 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.
+diff --git a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
+index e8786f8b..a90be641 100644
+--- a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
++++ b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
+@@ -202,7 +202,19 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
+     * `- webApp: "*Query*"` (X)
+     * `- webApp: "QueryPie$"` (X)
+ 2. 하나의 `spec` 안에서 여러 개의 웹 앱을 나열할 수 있습니다.
+-  <  U  n  e  x  p  e  c  t  e  d     n  o  d  e     n  a  m  e  =  a  c  :  s  t  r  u  c  t  u  r  e  d  -  m  a  c  r  o  /  >3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
++  ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/user-management"
++          - "/database-settings/policies"
++      - webApp: "QueryPie Customer Portal"
++        urlPathTags: 
++          access: "admin"
++  ```
++3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
+     * 글자 수 최대 120자
+     * 알파벳 대소문자 (case-sensitive), 숫자 및 일부 특수기호 (`_`, `-`, `(`, `)`, `[`, `]`) 만 허용
+     * 공백 허용
+@@ -218,12 +230,37 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
+ 1. Admin &gt; Web App 에 등록된 하위 경로만 등록이 가능합니다.
+ 2. Base URL을 포함하여, 웹 앱에 존재하는  **모든**  하위 경로에 대해 허용 또는 거부하려면 `urlPaths: ["*"]` 으로 작성합니다.
+     * 예: QueryPie Web Admin 의 전체 경로에 대해 접근 차단
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >3. 하위 경로 입력시, 입력한 경로에 대해 정책이 적용됩니다.
++      ```
++spec:
++  deny:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: ["*"]
++      ```
++3. 하위 경로 입력시, 입력한 경로에 대해 정책이 적용됩니다.
+     * 하위 경로는 리스트로 나열하며, 여러 개를 입력할 수 있습니다.
+     * 경로의 마지막 부분에 와일드카드를 입력하여, 특정 경로 하위의 모든 경로를 지시할 수 있습니다. (상위 경로는 포함하지 않습니다)
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >    * 입력한 경로 중에 서로 중첩되는 경로를 동시에 입력할 수 없습니다.
++      ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/user-management"     # 특정 하위 경로
++          - "/general-settings/user-management/*"   # 특정 경로의 모든 하위 경로
++      ```
++    * 입력한 경로 중에 서로 중첩되는 경로를 동시에 입력할 수 없습니다.
+         * 예: QueryPie Web Admin 의 `/general-settings/*` 와 `/general-settings/user-management` 를  **동시에 입력 불가** 
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >4. 경로의 중간 또는 경로명의 일부에 와일드카드를 입력하거나, 정규표현식을 입력할 수  **없습니다** .
++          ```
++spec:
++  allow:
++    resources:
++      - webApp: "Querypie Web Admin"
++        urlPaths: 
++          - "/general-settings/*"
++          - "/general-settings/user-management"
++          ```
++4. 경로의 중간 또는 경로명의 일부에 와일드카드를 입력하거나, 정규표현식을 입력할 수  **없습니다** .
+     * `"/*-settings"` (X)
+     * `"/*/edit"` (X)
+     * `"^/database-settings/policies/data-.*$"` (X)
+@@ -236,9 +273,19 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
+ 1. 태그는 대소문자를 구분하며, 여러 개를 입력할 수 있습니다.
+     * Key가 동일한 태그를 여러 개 입력 시,  **OR**  조건으로 동작합니다.
+         * 예: `access: admin` 또는 `access: user` 가 부여된 경로에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >    * Key가 다른 태그를 여러 개 입력 시,  **AND**  조건으로 동작합니다.
++          ```
++urlPathTags: 
++  "access": "admin"
++  "access": "user"
++          ```
++    * Key가 다른 태그를 여러 개 입력 시,  **AND**  조건으로 동작합니다.
+         * 예: `access: admin` 과 `type: general` 가 함께 부여된 경로에 대해 접근 허용
+-          <          U          n          e          x          p          e          c          t          e          d                     n          o          d          e                     n          a          m          e          =          a          c          :          s          t          r          u          c          t          u          r          e          d          -          m          a          c          r          o          /          >
++          ```
++urlPathTags: 
++  "access": "admin"
++  "type": "general"
++          ```
++
+ ### Conditions**[OPTIONAL]**
+ 
+ `conditions` 은 규칙 적용 대상 리소스의 범위를 좁히기 위한 조건을 정의합니다. `userAttributes`, `ipAddresses` 두 종류의 조건 지정이 가능합니다.
+@@ -259,9 +306,19 @@ QueryPie 사용자의 속성(attribute)을 기준으로 규칙에 의해 리소
+ 
+ * Key가 동일한 속성을 여러 개 입력 시, OR 조건으로 동작합니다.
+     * 예: 부서(department)가 PM 또는 QA인 사용자에 대해 접근 허용
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다.
++      ```
++userAttributes: 
++  "department": "PM"
++  "department": "QA"
++      ```
++* Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다.
+     * 예: 부서(department)가 PM이고, 직책(title)이 관리자인 사용자에 대해 접근 허용
+-      <      U      n      e      x      p      e      c      t      e      d             n      o      d      e             n      a      m      e      =      a      c      :      s      t      r      u      c      t      u      r      e      d      -      m      a      c      r      o      /      >
++      ```
++userAttributes: 
++  "department": "PM"
++  "title": "Manager"
++      ```
++
+ #### ipAddresses**[OPTIONAL]**
+ 
+ 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.

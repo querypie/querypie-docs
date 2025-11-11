@@ -1,0 +1,2014 @@
+diff --git a/src/content/en/administrator-manual/audit/general-logs/activity-logs.mdx b/src/content/en/administrator-manual/audit/general-logs/activity-logs.mdx
+index b9185f81..989fe043 100644
+--- a/src/content/en/administrator-manual/audit/general-logs/activity-logs.mdx
++++ b/src/content/en/administrator-manual/audit/general-logs/activity-logs.mdx
+@@ -4,6 +4,8 @@ title: 'Activity Logs'
+ 
+ # Activity Logs
+ 
++import { Callout } from 'nextra/components'
++
+ ### Overview
+ 
+ In Activity logs, you can view the history of resource registration and configuration changes performed by **administrators**.
+@@ -33,7 +35,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs
+ ### Viewing Activity Logs Details
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/screenshot-20240722-193807.png)
++![Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details](/administrator-manual/audit/general-logs/activity-logs/image-20251009-024238.png)
+ <figcaption>
+ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Details
+ </figcaption>
+@@ -47,3 +49,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
+ 3.  **Related Logs**  : Displays logs that occurred in a chain or simultaneously for the action. Includes both before and after logs.
+     1. You can check not only actions directly caused by administrators, but also automatic system actions derived from them.
+     2. Action logs displayed in Related Logs are also kept as individual logs.
++
++<Callout type="info">
++From 11.3.0, a "Changes Only" checkbox has been added to the Activity Logs detail view (Drawer) so you can filter to see only changed items. Also, empty values are displayed as "&lt;null&gt;" instead of “-(dash)”.
++</Callout>
+diff --git a/src/content/en/administrator-manual/audit/reports/audit-log-export.mdx b/src/content/en/administrator-manual/audit/reports/audit-log-export.mdx
+index fab12963..c5b62306 100644
+--- a/src/content/en/administrator-manual/audit/reports/audit-log-export.mdx
++++ b/src/content/en/administrator-manual/audit/reports/audit-log-export.mdx
+@@ -14,41 +14,47 @@ This is a feature that allows you to extract various audit logs generated in Que
+ With the addition of the Audit Log Export feature, the 'Excel File Download' button that was provided on each log screen has been discontinued from QueryPie v9.15.0.
+ </Callout>
+ 
+-<Callout type="important">
+ **Supported Extraction Log Types (QueryPie v11.0.0)**
+-1. Query Audit [CSV]
+-2. Workflow SQL Request [CSV]
+-3. Workflow SQL Request for Query Details [CSV]
+-4. Workflow SQL Export Request [CSV]
+-5. Workflow DB Access Request [CSV]
+-6. Workflow Server Access Request [JSON]
+-7. User Access History [CSV]
+-8. Admin Role History [CSV]
+-9. DB Access History [CSV]
+-10. DB Account Lock History [CSV]
+-11. DB Access Control Logs [CSV]
+-12. Server Access History [JSON]
+-13. Command Audit [JSON]
+-14. Session Logs [JSON]
+-15. Server Access Control Logs [JSON]
+-16. Server Role History [JSON]
+-17. Activity Logs [JSON]
+-18. DML Snapshot [JSON]
+-19. Server Account Lock History [JSON]
+-20. Request Audit [JSON]
+-21. Kubernetes Role History [JSON]
+-22. Alert Logs [JSON] **[10.3.0]** 
+-23. Restricted Data Access Logs [JSON] **[10.3.0]** 
+-24. Masked Data Access Logs [JSON] **[10.3.0]** 
+-25. Sensitive Data Access Logs [JSON] **[10.3.0]** 
+-26. Web Access History [CSV] **[11.0.0]**
+-27. Web Event Audit [CSV] **[11.0.0]**
+-28. Web App Role History [CSV] **[11.0.0]**
+-29. JIT Access Control Logs [CSV] **[11.0.0]**
+-30. Workflow Unmasking Request Logs [JSON] **[11.0.0]** 
+-31. Workflow Restricted Data Access Request [JSON] **[11.0.0]** 
+-32. Workflow DB Policy Exception Request Logs [JSON] **[11.0.0]** 
+-</Callout>
++
++|  **Log Type**                           |  **Release Version**  |  **Format**  |
++| --------------------------------------- | --------------------- | ------------ |
++| Workflow DB Access Request              |                       | CSV          |
++| Workflow SQL Request                    |                       | CSV          |
++| Workflow SQL Request for Query Details  |                       | CSV          |
++| Workflow SQL Export Request             |                       | CSV          |
++| Workflow Restricted Data Access Request | 11.0.0                | JSON         |
++| Workflow DB Policy Exception Request    | 11.0.0                | JSON         |
++| Workflow Unmasking Request              | 11.0.0                | JSON         |
++| Workflow Decryption Request             | 10.3.0                | JSON         |
++| Workflow Server Access Request          |                       | JSON         |
++| Workflow Server Privilege Request       | 11.3.0                | JSON         |
++| Workflow Access Role Request            | 10.0.0                | CSV          |
++| IP Registration Request                 | 11.0.0                | JSON         |
++| User Access History                     |                       | CSV          |
++| Admin Role History                      |                       | CSV          |
++| Activity Logs                           |                       | JSON         |
++| Alert Logs                              | 10.3.0                | JSON         |
++| Query Audit                             |                       | CSV          |
++| DB Access History                       |                       | CSV          |
++| DB Account Lock History                 |                       | CSV          |
++| DB Access Control Logs                  |                       | CSV          |
++| DML Snapshot                            |                       | JSON         |
++| Restricted Data Access Logs (Legacy)    | 10.3.0                | JSON         |
++| Masked Data Access Logs (Legacy)        | 10.3.0                | JSON         |
++| Sensitive Data Access Logs (Legacy)     | 10.3.0                | JSON         |
++| DAC Policy Audit Log                    | 11.3.0                | JSON         |
++| Server Access History                   |                       | JSON         |
++| Command Audit                           |                       | JSON         |
++| Session Logs                            |                       | JSON         |
++| Server Access Control Logs              |                       | JSON         |
++| Server Role History                     |                       | JSON         |
++| Server Account Lock History             |                       | JSON         |
++| Request Audit                           |                       | JSON         |
++| Kubernetes Role History                 |                       | JSON         |
++| Web App Access History                  | 11.0.0                | CSV          |
++| Web App Role History                    | 11.0.0                | CSV          |
++| Web App JIT Access Control Log          | 11.0.0                | CSV          |
++| Web App Event Audit                     | 11.0.0                | CSV          |
+ 
+ 
+ ### Viewing Audit Log Export List
+diff --git a/src/content/en/administrator-manual/audit/server-logs/command-audit.mdx b/src/content/en/administrator-manual/audit/server-logs/command-audit.mdx
+index 3bbeff21..2b17782a 100644
+--- a/src/content/en/administrator-manual/audit/server-logs/command-audit.mdx
++++ b/src/content/en/administrator-manual/audit/server-logs/command-audit.mdx
+@@ -19,52 +19,63 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
+ </figcaption>
+ </figure>
+ 
+-1. Navigate to the Administrator &gt; Audit &gt; Servers &gt; Command Audit menu.
+-2. Logs are displayed in descending order based on the connection date.
+-3. You can search with the following conditions through the search field in the top left of the table:
+-    1.  **Name**  : User name
+-    2.  **Server Name**  : Connected server name
+-    3.  **Command**  : Executed command
+-    4.  **Role**  : Connection role
+-4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+-    1.  **Server OS**  : OS of the connected server
+-    2.  **Protocol** : Protocol used for connection
+-    3.  **Executed From** : Connection method
+-        1. web : Connection through QueryPie Web
+-        2. proxy : Connection through Agent or Seamless SSH Connection
+-    4.  **Action Type** : Recorded event type
+-        1. All : All types
+-        2. File Download : (SFTP) File download
+-        3. File Upload : (SFTP) File upload
+-        4. Process Start : (RDP) Process execution
+-        5. Process Stop : (RDP) Process termination
+-        6. User Input - MouseClick : (RDP) User mouse click
+-        7. User Input - MouseDoubleClick : (RDP) User mouse double click
+-        8. User Input - KeyPress : (RDP) User keyboard input
+-    5.  **Executed At**  : Command execution time
+-    6.  **Restricted**  : Command blocking status
+-5. You can refresh the log list through the refresh button in the top right of the table.
+-6. The table provides the following column information:
+-    1.  **No**  : Event identification number
+-    2.  **Executed At**  : Command execution time
+-    3.  **Name**  : Target user name
+-    4.  **Email**  : Target user email
+-    5.  **Role**  : Role name used when the target user connected
+-    6.  **Account**  : Server access account
+-    7.  **Command**  : Executed command
+-    8.  **Restricted**  : Command blocking status
+-        1. Not Restricted
+-        2. Restricted
+-    9.  **Restricted Command**  : Blocked command
+-    10.  **Server Name**  : Target server name
+-    11.  **Server OS**  : OS of the connected server
+-    12.  **Host**  : Host of the connected server
+-    13.  **Port**  : Port used for connection
+-    14.  **Protocol** : Protocol used for connection
+-    15.  **Client IP**  : User client IP address
+-    16.  **Client**   **Name**  : User's connection method
+-    17.  **Action Type** : Recorded event type
+-    18.  **Message**  : Records of unusual events such as connection failures
++* Navigate to the Administrator &gt; Audit &gt; Servers &gt; Command Audit menu.
++* Logs are displayed in descending order based on the connection date.
++* You can search with the following conditions through the search field in the top left of the table:
++    *  **Name**  : User name
++    *  **Server Name**  : Connected server name
++    *  **Command**  : Executed command
++    *  **Role**  : Connection role
++* Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
++    *  **Server OS**  : OS of the connected server
++    *  **Protocol** : Protocol used for connection
++    *  **Executed From** : Connection method
++        * web : Connection through QueryPie Web
++        * proxy : Connection through Agent or Seamless SSH Connection
++    *  **Action Type** : Recorded event type
++        * Command : Logged command
++        * File Download : (SFTP) File download
++        * File Upload : (SFTP) File upload
++        * Process Start : (RDP) Process execution
++        * Process Stop : (RDP) Process termination
++        * User Input - MouseClick : (RDP) User mouse click
++        * User Input - MouseDoubleClick : (RDP) User mouse double click
++        * User Input - KeyPress : (RDP) User keyboard input
++    *  **Executed At**  : Command execution time
++    *  **Restricted**  : Command blocking status
++
++<Callout type="info">
++From 11.3.0, when using filters, multiple items can be selected for Action Type.
++<figure data-layout="center" data-align="center">
++![Example of selecting multiple items in Action Type of filter](/administrator-manual/audit/server-logs/command-audit/image-20250930-083734.png)
++<figcaption>
++Example of selecting multiple items in Action Type of filter
++</figcaption>
++</figure>
++</Callout>
++
++* You can refresh the log list through the refresh button in the top right of the table.
++* The table provides the following column information:
++    *  **No**  : Event identification number
++    *  **Executed At**  : Command execution time
++    *  **Name**  : Target user name
++    *  **Email**  : Target user email
++    *  **Role**  : Role name used when the target user connected
++    *  **Account**  : Server access account
++    *  **Command**  : Executed command
++    *  **Restricted**  : Command blocking status
++        * Not Restricted
++        * Restricted
++    *  **Restricted Command**  : Blocked command
++    *  **Server Name**  : Target server name
++    *  **Server OS**  : OS of the connected server
++    *  **Host**  : Host of the connected server
++    *  **Port**  : Port used for connection
++    *  **Protocol** : Protocol used for connection
++    *  **Client IP**  : User client IP address
++    *  **Client**   **Name**  : User's connection method
++    *  **Action Type** : Recorded event type
++    *  **Message**  : Records of unusual events such as connection failures
+ 
+ ### Viewing Command Audit Details
+ 
+@@ -79,25 +90,25 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
+ </figure>
+ 
+ * The right drawer displays the following information:
+-    1.  **Name**  : Target user name
+-    2.  **Action Type** : Recorded event type
+-    3.  **Executed At**  : Command execution time
+-    4.  **Executed From** : Connection method
+-    5.  **Server Access History** : Access log for the corresponding session
+-    6.  **Session Log**  : Session recording view for the session that executed this command
+-    7.  **Server Name**  : Target server name
+-    8.  **Server OS**  : OS of the connected server
+-    9.  **Host**  : Host of the connected server
+-    10.  **Port**  : Port used for connection
+-    11.  **Account**  : Server access account
+-    12.  **Protocol** : Protocol used for connection
+-    13.  **Client**   **Name**  : User's connection method
+-    14.  **Client IP**  : User client IP address
+-    15.  **Restricted**  : Command blocking status
+-    16.  **Restricted Command**  : Blocked command
+-    17.  **Detected Type :** Execution method of the detected blocked command (Shell Script or Alias)
+-    18.  **Command**  : User input command (process name or click coordinates for RDP)
+-    19.  **Result**  : Command execution result
++    *  **Name**  : Target user name
++    *  **Action Type** : Recorded event type
++    *  **Executed At**  : Command execution time
++    *  **Executed From** : Connection method
++    *  **Server Access History** : Access log for the corresponding session
++    *  **Session Log**  : Session recording view for the session that executed this command
++    *  **Server Name**  : Target server name
++    *  **Server OS**  : OS of the connected server
++    *  **Host**  : Host of the connected server
++    *  **Port**  : Port used for connection
++    *  **Account**  : Server access account
++    *  **Protocol** : Protocol used for connection
++    *  **Client**   **Name**  : User's connection method
++    *  **Client IP**  : User client IP address
++    *  **Restricted**  : Command blocking status
++    *  **Restricted Command**  : Blocked command
++    *  **Detected Type :** Execution method of the detected blocked command (Shell Script or Alias)
++    *  **Command**  : User input command (process name or click coordinates for RDP)
++    *  **Result**  : Command execution result
+ 
+ 
+ <Callout type="important">
+diff --git a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+index 53f670a1..82b2bc72 100644
+--- a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
++++ b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+@@ -10,8 +10,13 @@ import { Callout } from 'nextra/components'
+ 
+ QueryPie supports AWS integration for database registration and management. You can synchronize resources within AWS to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
+ 
++
+ ### Registering AWS Integration Information in QueryPie
+ 
++<Callout type="info">
++Search Filter functionality has been added in 11.3.0 to synchronize only resources with specific tags.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241217-084317.png)
+ <figcaption>
+@@ -19,6 +24,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+ </figcaption>
+ </figure>
+ 
++
+ 1. Navigate to the Cloud Provider menu from the Database settings menu.
+ 2. Click the `Create Provider` button in the top right.
+ 3. Enter a name that can distinguish the provider in the Name field.
+@@ -27,14 +33,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+ 6. Enter the Credential information required to synchronize resources.
+     * For descriptions of each **Credential** method, refer to **Setting Up Authentication Methods by Credential Type** below.
+ 7. Select the resources you want to synchronize from the **Database Type Filter** field. 
+-8. Select the synchronization method from the **Replication Frequency** field.
++8. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
++    1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
++        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
++9. Select the synchronization method from the **Replication Frequency** field.
+     1. Manual : A method that synchronizes manually only when you want to synchronize.
+     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
+-9. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
++10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+     * Tag : You can automatically add tags to synchronized DBs.
+         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
+         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
+-10. Click the `Save` button to save the Cloud Provider.
++11. Click the `Save` button to save the Cloud Provider.
+ 
+ ### Setting Up Authentication Methods by Credential Type
+ 
+diff --git a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+index 7087cdea..ab95e83f 100644
+--- a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
++++ b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+@@ -12,6 +12,10 @@ QueryPie supports Google Cloud (GCP) integration for database registration and m
+ 
+ ### Registering GCP Integration Information in QueryPie
+ 
++<Callout type="info">
++Search Filter functionality has been added in 11.3.0 to synchronize only resources with specific tags.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud/image-20241217-123654.png)
+ <figcaption>
+@@ -26,15 +30,18 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
+ 5. Enter the project of the resources you want to synchronize in the **Project ID** field.
+ 6. Enter the **Credential** information required to synchronize resources.
+     * Provides a manual synchronization method that enters GCP's Service Account when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Service Account as the Credential type.
+-7. Select the resources you want to synchronize from the **Database Type Filter** field. 
+-8. Select the synchronization method from the **Replication Frequency** field.
++7. Select the resources you want to synchronize from the **Database Type Filter** field.
++8. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
++    1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
++        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
++9. Select the synchronization method from the **Replication Frequency** field.
+     1. Manual : A method that synchronizes manually only when you want to synchronize.
+     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
+-9. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
++10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+     * Tag : You can automatically add tags to synchronized DBs.
+         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
+         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
+-10. Click the `Save` button to save the Cloud Provider.
++11. Click the `Save` button to save the Cloud Provider.
+ 
+ <Callout type="important">
+ **Save Credential for Synchronization Option**
+diff --git a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+index 45262100..92c8806c 100644
+--- a/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
++++ b/src/content/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+@@ -10,8 +10,13 @@ import { Callout } from 'nextra/components'
+ 
+ QueryPie supports MS Azure integration for database registration and management. You can synchronize resources within Azure to register them as databases managed by QueryPie, and grant access permissions and set policies for users and groups for the synchronized databases.
+ 
++
+ ### Registering Azure Integration Information in QueryPie
+ 
++<Callout type="info">
++Search Filter functionality has been added in 11.3.0 to synchronize only resources with specific tags.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure/image-20241217-102747.png)
+ <figcaption>
+@@ -19,6 +24,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
+ </figcaption>
+ </figure>
+ 
++
+ 1. Navigate to the Cloud Provider menu from the Database settings menu.
+ 2. Click the `Create Provider` button in the top right.
+ 3. Enter a name that can distinguish the provider in the Name field.
+@@ -29,14 +35,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
+     * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Client Secret as the Credential type. 
+ 8. Select the resources you want to synchronize from the **Database Type Filter** field. 
+     * Currently, only Azure SQL Database can be synchronized. 
+-9. Select the synchronization method from the **Replication Frequency** field.
++9. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
++    1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
++        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
++10. Select the synchronization method from the **Replication Frequency** field.
+     1. Manual : A method that synchronizes manually only when you want to synchronize.
+     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
+-10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
++11. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+     * Tag : You can automatically add tags to synchronized DBs.
+         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
+         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
+-11. Click the `Save` button to save the Cloud Provider.
++12. Click the `Save` button to save the Cloud Provider.
+ 
+ <Callout type="important">
+ **Save Credential for Synchronization Option**
+diff --git a/src/content/en/administrator-manual/databases/connection-management/db-connections.mdx b/src/content/en/administrator-manual/databases/connection-management/db-connections.mdx
+index 79e39c65..cfbe0743 100644
+--- a/src/content/en/administrator-manual/databases/connection-management/db-connections.mdx
++++ b/src/content/en/administrator-manual/databases/connection-management/db-connections.mdx
+@@ -321,3 +321,13 @@ QueryPie Web &gt; Databases &gt; Connections
+ 
+ * Users who have been granted privileges with Privilege Setting configured use the DB account mapped to that Privilege as pre-configured by the administrator when connecting, and cannot see the DB Username and Password fields themselves on the Connections access page.
+ * The use of that DB account is enforced in connection access such as web editor, agent proxy, SQL Request, Export Request, etc. 
++
++<Callout type="info">
++From 11.3.0, when configuring Advanced privilege, if you do not register a password for a privileged account, the privileged account (administrator account) can manually enter the password when connecting to the target.
++
++<figure data-layout="center" data-align="center">
++![image-20251013-050034.png](/administrator-manual/databases/connection-management/db-connections/image-20251013-050034.png)
++</figure>
++
++To allow manual entry of the DB account password when configuring Advanced privilege, leave the Password field empty and set the "Hide this credential from connection list page" checkbox to unchecked as shown above.
++</Callout>
+diff --git a/src/content/en/administrator-manual/databases/dac-general-configurations.mdx b/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
+index 66362ee4..5169c31d 100644
+--- a/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
++++ b/src/content/en/administrator-manual/databases/dac-general-configurations.mdx
+@@ -111,8 +111,27 @@ Query Audit
+ 
+ *  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow. 
+     * Only connections registered as connection members in the connection detail screen are exposed in Workflow DB Access Request.<br/>
++      <figure data-layout="center" data-align="center">
++      ![Assign specific users or groups to Connection Member in the detail screen of a specific connection in Databases &gt; Connection Management &gt; DB Connections](/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png)
++      <figcaption>
++      Assign specific users or groups to Connection Member in the detail screen of a specific connection in Databases &gt; Connection Management &gt; DB Connections
++      </figcaption>
++      </figure>
+ 
+ <Callout type="info">
+ **Reason Input Mandatory Settings for DB Operations**
+ From version 9.17.0, this feature has been changed to detailed connection settings. For detailed configuration methods, please refer to **Additional Settings** in [DB Connections](connection-management/db-connections).
+ </Callout>
++
++*  **Maximum Policy Exception Period**  : Sets the maximum validity period (in hours) for policy exceptions such as Unmasking. This setting affects the Workflow application form and the administrator's manual policy settings when the New DAC Policy Management feature is enabled. 
++    * Default: 720 hours (30 days)
++    * Maximum: 8760 hours (1 year)
++    * Minimum: 1 hour
++
++<figure data-layout="center" data-align="center">
++![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
++</figure>
++
++<Callout type="info">
++The Maximum Policy Exception Period setting option is available from version 11.3.0.
++</Callout>
+diff --git a/src/content/en/administrator-manual/databases/new-policy-management/data-policies.mdx b/src/content/en/administrator-manual/databases/new-policy-management/data-policies.mdx
+index ea36494d..7571cde4 100644
+--- a/src/content/en/administrator-manual/databases/new-policy-management/data-policies.mdx
++++ b/src/content/en/administrator-manual/databases/new-policy-management/data-policies.mdx
+@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
+ 
+ ### Overview
+ 
+-Data Policies is a feature in QueryPie for setting and managing data governance policies such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, personal information protection, and regulatory compliance.
++Data Policies is a feature for setting and managing data governance policies in QueryPie, such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, privacy protection, and regulatory compliance.
++
+ 
+ ### Accessing Policy Creation Screen
+ 
+@@ -20,49 +21,75 @@ Data Policies is a feature in QueryPie for setting and managing data governance
+ 2. Click the **Data Policies** menu.
+ 3. Click the **Create Policy** button at the top to navigate to the policy creation screen.
+ 
+-### Setting Policy Basic Information
++
++### Setting Basic Policy Information
+ 
+ <figure data-layout="center" data-align="center">
+ ![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
+ </figure>
+ 
+-Set the following information in the **Information** section of the policy creation screen:
++In the **Information** section of the policy creation screen, set the following information:
++
++1. **Name**: Enter the name of the policy. (Required)
++2. **Policy Type**: Select the policy type to apply from the dropdown menu. (Required)
++3. **Description**: Enter a description of the policy. (Optional)
+ 
+-1.  **Name** : Enter the policy name. (Required field)
+-2.  **Policy Type** : Select the policy type to apply from the dropdown menu. (Required field)
+-3.  **Description** : Enter a description of the policy. (Optional)
+ 
+ #### Policy Type Introduction
+ 
+ QueryPie provides the following policy types:
+ 
+-1.  **Column Data Masking** 
+-    * Applies data masking policies to columns. 
++1. **Column Data Masking** 
++    * Applies data masking policy to columns. 
+     * Uses regex-based masking patterns to detect and mask specific data patterns. (Masking Patterns)
+-    * When users query the corresponding column, it is displayed in `{masked}` format, and clicking on the cell displays the masked data.<br/>
+-2.  **Table Access Restriction** 
+-    * Applies access blocking policies to tables.
+-    * When users try to query the corresponding table, access is blocked and a no permission message is displayed.
+-    * Message: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/>
+-3.  **Column Access Restriction** 
+-    * Applies access blocking policies to columns.
+-    * When users try to query the corresponding column, it is displayed in `{restricted}` format and access is blocked.<br/>
+-4.  **Table Access Justification Requirement** 
+-    * Enforces reason input for specific table operations.
++    * When users query the column, it displays as `{masked}` and clicking the cell shows the masked data.<br/> <br/> 
++      <figure data-layout="center" data-align="center">
++      ![Screenshot-2025-03-07-at-10.23.47-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png)
++      </figure>
++2. **Table Access Restriction** 
++    * Applies access blocking policy to tables.
++    * When users try to query the table, access is blocked and a no permission message is displayed.
++    * Message: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
++      <figure data-layout="center" data-align="center">
++      ![Screenshot-2025-03-07-at-10.36.58-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png)
++      </figure>
++3. **Column Access Restriction** 
++    * Applies access blocking policy to columns.
++    * When users try to query the column, it displays as `{restricted}` and access is blocked.<br/> <br/> 
++      <figure data-layout="center" data-align="center">
++      ![Screenshot-2025-03-07-at-10.34.20-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png)
++      </figure>
++4. **Table Access Justification Requirement** 
++    * Enforces reason input when performing operations on specific tables.
+     * When users perform selected operations (e.g., SELECT queries, data export), a reason input modal is displayed.
+     * The entered reason is recorded in the Execution Reason of Query Audit.<br/>
+-5.  **Sensitive Data Access Monitoring** 
++      <figure data-layout="center" data-align="center">
++      ![Screenshot-2025-03-07-at-11.01.28-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png)
++      </figure>
++5. **Sensitive Data Access Monitoring** 
+     * Allows administrators to designate specific tables or columns as sensitive information and generate alerts when accessed.
+-    * Set which paths are sensitive information, and alert settings are configured in General &gt; Company Management &gt; Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert setting feature for new policies is not implemented.)
+-6.  **DML Query Approval Enforcement**  
++    * Set which paths are sensitive information, and configure alert settings in General > Company Management > Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert configuration feature for new policies is not yet implemented.)
++6. **DML Query Approval Enforcement**  
+     * Forces approval procedures through Workflow when performing `INSERT`, `UPDATE`, `DELETE` queries on specific tables.
+-    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General &gt; Workflow Management &gt; Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has been granted the corresponding privilege. To make the person performing the query the requester themselves, "Allow Assignee selection (All Users)" must be selected in the Assignee for Execution item in the Execution section as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` permissions but who are not administrators can perform queries through approval.<br/>
++    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General > Workflow Management > Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has the corresponding privilege. To allow the person executing the query to be the requester, the "Allow Assignee selection (All Users)" option must be selected in the Execution item's Assignee for Execution as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` privileges but who are not administrators can execute queries through approval.<br/>
++      <figure data-layout="center" data-align="center">
++      ![Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
++      <figcaption>
++      Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules
++      </figcaption>
++      </figure>
+     * If an Approval Rule is created, you can specify the Approval Rule to link with the policy as shown in the figure below.<br/>
+-    * DML Query Approval Enforcement cannot specify targets with tags and must specify specific data paths.
++      <figure data-layout="center" data-align="center">
++      ![Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
++      <figcaption>
++      Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies
++      </figcaption>
++      </figure>
++    * DML Query Approval Enforcement cannot specify targets by tags and must specify specific paths using specific data path.
+ 
+ ### Setting Policy Application Targets
+ 
+-Set the user scope to which the policy will be applied in the **User Scope** section of the policy creation screen.
++In the **User Scope** section of the policy creation screen, set the user scope to which the policy will be applied.
+ 
+ <figure data-layout="center" data-align="center">
+ ![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
+@@ -70,20 +97,21 @@ Set the user scope to which the policy will be applied in the **User Scope** sec
+ 
+ #### Scope Type
+ 
+-1.  **Everyone** : The policy is applied to all users. (Default value)
+-2.  **Users or Groups** : The policy is applied only to selected specific users or groups.
+-3.  **Attribute of Users**  : Used when you want to dynamically apply policies to users with specific attributes. **[11.1.0]** 
++1. **Everyone**: The policy applies to all users. (Default)
++2. **Users or Groups**: The policy applies only to selected specific users or groups.
++3. **Attribute of Users**: Used when you want to dynamically apply policies to users with specific attributes. **[11.1.0]** 
+ 
+ #### Exclusions
+ 
+-You can set targets to exclude from policy application. Exclusion targets can only be specified when the scope type of User scope is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for exceptions, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied during the period the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
++You can set targets to exclude from policy application. Exclusions can only be specified when the User scope's scope type is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for the exception, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied while the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
++
++1. **None**: Applies to all users according to Scope Type without exclusions. (Default)
++2. **Users and Groups**: Excludes selected users or groups from policy application. 
+ 
+-1.  **None** : Applied to all users according to Scope Type without exclusions. (Default value)
+-2.  **Users and Groups** : Excludes selected users or groups from policy application. 
+ 
+ ### Setting Policy Target Data
+ 
+-Set the data to which the policy will be applied in the **Data Scope** section of the policy creation screen.
++In the **Data Scope** section of the policy creation screen, set the data to which the policy will be applied.
+ 
+ <figure data-layout="center" data-align="center">
+ ![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
+@@ -91,20 +119,37 @@ Set the data to which the policy will be applied in the **Data Scope** section o
+ 
+ #### Scope Type
+ 
+-Currently, policies can only be applied based on tags:
++<Callout type="info">
++In 11.3.0, regular expressions can be used when selecting specific data path for all policy types.
++Also, multiple tables or columns can be selected and registered as targets.
++</Callout>
++
++1. **Data tags**: Select policy application targets based on tags set in the Data Paths menu.
++    * When this option is selected, you can select tables or columns to apply the policy by specifying tag keys and values.
++2. **Specific data path**: An option to directly specify specific data paths. **[11.0.0]** 
++    * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and regular expressions can also be used.  <br/>  <br/> 
++      <figure data-layout="center" data-align="center">
++      ![Direct path specification](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
++      <figcaption>
++      Direct path specification
++      </figcaption>
++      </figure>
++      <figure data-layout="center" data-align="center">
++      ![Specifying targets using regular expressions](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png)
++      <figcaption>
++      Specifying targets using regular expressions
++      </figcaption>
++      </figure>
+ 
+-1.  **Data tags** : Select policy application targets based on tags set in the Data Paths menu.
+-    * When this option is selected, you can select tables or columns to apply policies to by specifying tag keys and values.
+-2.  **Specific data path** : Option to directly specify specific data paths. (From 11.0.0)
+-    * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and you can also use regular expressions. 
+ 
+-#### Saving Policies
++#### Saving Policy
++
++When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. To cancel saving, click the **Cancel** button.
+ 
+-When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. Click the **Cancel** button to cancel saving.
+ 
+ <Callout type="important">
+-**Precautions**
++**Important Notes**
+ * Since policy settings are based on data tags, appropriate tags must be assigned in the Data Paths menu before setting policies.
+-* Policies only support the database types listed below, and policies cannot be applied to unsupported database types.
++* Policies only support the database types listed below, and cannot be applied to unsupported database types.
+     *  MySQL, MariaDB, Impala, Single Store, Hive, BigQuery, Oracle, PostgreSQL, SQLServer, Redshift, MS SQL Azure, SAP Hana, Trino, Athena, MongoDB, DocumentDB, Cassandra, ScyllaDB, DynamoDB, Redis
+-</Callout>
++</Callout>
+\ No newline at end of file
+diff --git a/src/content/en/administrator-manual/databases/new-policy-management/exception-management.mdx b/src/content/en/administrator-manual/databases/new-policy-management/exception-management.mdx
+index 12f74e2b..e63fbf13 100644
+--- a/src/content/en/administrator-manual/databases/new-policy-management/exception-management.mdx
++++ b/src/content/en/administrator-manual/databases/new-policy-management/exception-management.mdx
+@@ -2,6 +2,8 @@
+ title: 'Exception Management'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Exception Management
+ 
+ ### Overview
+@@ -41,6 +43,14 @@ In the Manual tab of Databases &gt; Policy Management &gt; Exception Management,
+ 
+ #### Setting Policy Exceptions
+ 
++<Callout type="info">
++The method for specifying expiration dates has been changed in 11.3.0.
++
++The item name has been unified to "Policy Exception Schedule" for both Workflow policy exception requests and administrator manual policy exception settings, and it has been changed to explicitly specify the start and end times of the validity period.
++
++In 11.3.0, it has been changed to allow specifying specific data paths using regular expressions for all policy exception types.
++</Callout>
++
+ <figure data-layout="center" data-align="center">
+ ![Manual Policy Exception Creation](/administrator-manual/databases/new-policy-management/exception-management/image-20250727-210957.png)
+ <figcaption>
+@@ -50,16 +60,23 @@ Manual Policy Exception Creation
+ 
+ Click the `+ Create Exception` button and configure settings for the policy exception.
+ 
+-* Exception Name : Enter the name of the policy exception.
+-* Exception Type : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
+-* Data Scope : Specify target tables or columns for policy exceptions. **[11.1.0]** 
++* **Exception Name** : Enter the name of the policy exception.
++* **Exception Type** : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
++* **Data Scope** : Specify target tables or columns for policy exceptions. **[11.1.0]**
+     * When selecting Data Tag, you can specify targets with tags. Only tags set in Databases &gt; Policy Management &gt; Data Paths can be used. Tags with the same key use OR operation, and tags with different keys use AND operation.
+-    * When selecting Specific data path, you can directly specify target tables or columns. Regular expressions cannot be used.
+-* Allowed User : Specify targets that temporarily need policy exceptions.
++    * When selecting Specific data path, you can directly specify target tables or columns. Regular expressions can also be used. **[11.3.0]**
++* **Allowed User** : Specify targets that temporarily need policy exceptions.
+     * User / Group : You can specify users or groups.
+     * Attribute of Users : You can dynamically specify targets using Identifier type attributes registered in user profiles. **[11.1.0]** 
+-* Exception Expiration : Set the time when the policy exception ends.
+-* Description : Enter a brief description of the policy exception.
++* **Policy Exception Schedule** : Set the period during which the policy exception is applied. The maximum validity period for policy exceptions cannot exceed the maximum period set by the administrator (Maximum Policy Exception Period).
++    * Specific Period : Specify the start and end times. Can be specified in hours.
++    * Time Duration : Specify to be valid for a specified time from the start time.
++    * Start On Approval option : For both Specific Period and Time Duration methods, when the Start On Approval option is enabled (checked), the validity takes effect from the approval time. Generally, since the person making the request cannot know the approval time of the approver, using this option is not recommended. (This is because if approval expiration period constraints occur, you may need to make a new request.) Even when using Urgent Mode, the approval time is after the fact and it is unknown when approval will be given, so except for special situations where the Start On Approval option must be used, it is not recommended.
++* **Reason for Request** : Enter a brief description of the policy exception.
++
++<Callout type="info">
++The maximum policy exception period setting is limited by the Maximum Policy Exception Period setting value in Admin &gt; Databases &gt; General &gt; Configurations.
++</Callout>
+ 
+ #### Immediately Changing Policy Exception Status
+ 
+diff --git a/src/content/en/administrator-manual/general/company-management/alerts.mdx b/src/content/en/administrator-manual/general/company-management/alerts.mdx
+index 3e4b8074..0052efe3 100644
+--- a/src/content/en/administrator-manual/general/company-management/alerts.mdx
++++ b/src/content/en/administrator-manual/general/company-management/alerts.mdx
+@@ -225,6 +225,7 @@ New approval request registration notification
+     * Urgent Mode Only : Send notifications only for post-approval requests
+ *  **Send email only to those involved in this request :** Displayed when Channel is set to Email. When this option is enabled, notifications containing the Message Template content are sent to those involved in the request (requester, approver, etc.).
+ 
++
+ <Callout type="info">
+ **10.2.2 Slack Message Template Changes**
+ 
+@@ -244,6 +245,10 @@ New approval request registration notification
+ 
+ * When Alert's Channel is set to Email, the ability to directly enter Subject Title (email subject) has been added.
+ * When setting Workflow-related Alert with Email as Channel, the `Send email only to those involved in this request` option is provided. When this option is enabled, notifications with Message Template content are sent to those involved in the request (requester, approver, etc.).
++
++**11.3.0 Alert Creation Screen Channel Selection Items**
++
++* Icons have been added to the Channel selection items in the Alert creation screen to make it easier to identify targets.
+ </Callout>
+ 
+ #### Unusual Login Attempt
+@@ -372,9 +377,28 @@ Example) Send alert for bulk data export attempts of 100 or more records
+ 
+ Server connection success or failure notification
+ 
+-*  **Alert Trigger Condition**  : Alert trigger conditions
++*  **Result**  : Alert trigger conditions
+     * Success : Send alert when server connection succeeds
+     * Failure : Send alert when server connection fails
++
++<Callout type="info">
++From 11.3.0, a sub-option "Set trigger threshold on failed attempt" has been added under Failure, allowing alerts to be triggered based on a threshold of failed attempts.
++
++* Action Count : Number of event occurrences. You can enter 1 or more.
++* Time Interval : Time window in which events occur.
++
++Example) With the following settings, an alert is sent when 3 server connection failure events occur within 5 minutes.
++
++* Action Count : 3
++* Specific Time Internal (Minutes) : 5
++
++<figure data-layout="center" data-align="center">
++![image-20251010-093016.png](/administrator-manual/general/company-management/alerts/image-20251010-093016.png)
++</figure>
++
++
++</Callout>
++
+ *  **Connection**  : Target connections for alert (multiple selection)
+     * Can select servers and server groups, with duplicate selection allowed
+         * Even if targets are duplicated due to multiple selection, alert is sent only once
+diff --git a/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx b/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
+index 4388497d..4eeb8408 100644
+--- a/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
++++ b/src/content/en/administrator-manual/general/company-management/allowed-zones.mdx
+@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
+ 
+ The Allowed Zones page allows you to pre-register and manage Allowed Zones to control IP ranges that allow users' QueryPie web console access and DB connections.
+ 
++<Callout type="info">
++From 11.3.0, the expression has been changed from “IP Band(s)” to “IP Address Range(s)”.
++</Callout>
++
+ ### Viewing Registered Allowed Zone List
+ 
+ To view the Allowed Zone list, access the Administrator &gt; General &gt; Company Management &gt; Allowed Zones page. You can search by Allowed Zone name.
+@@ -19,7 +23,7 @@ To view the Allowed Zone list, access the Administrator &gt; General &gt; Compan
+ </Callout>
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20240714-053215.png)
++![Administrator &gt; General &gt; Company Management &gt; Allowed Zones](/administrator-manual/general/company-management/allowed-zones/image-20251009-030815.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Allowed Zones
+ </figcaption>
+@@ -30,7 +34,7 @@ Administrator &gt; General &gt; Company Management &gt; Allowed Zones
+ Click on the item you want to view details for in the Allowed Zones list to open a drawer.
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-211548.png)
++![Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail](/administrator-manual/general/company-management/allowed-zones/image-20251009-031233.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Allowed Zones &gt; Allowed Zones Detail
+ </figcaption>
+@@ -54,14 +58,14 @@ In the Mapped List by Allowed Zones area within the drawer, you can check DB con
+ Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone creation modal.
+ 
+ <figure data-layout="center" data-align="center">
+-![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-215806.png)
++![Create Allowed Zone Modal](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
+ <figcaption>
+ Create Allowed Zone Modal
+ </figcaption>
+ </figure>
+ 
+ *  **Name**  : Allowed Zone name
+-*  **IP Band(s)**  : Enter IP addresses or IP address ranges to assign.
++*  **IP Address Range(s)**  : Enter IP addresses or IP address ranges to assign.
+     * You can enter one or more IP addresses or IP address ranges.
+     * IP address ranges use Classless Inter-Domain Routing (CIDR) notation. Reference: [What is CIDR?](https://aws.amazon.com/ko/what-is/cidr/)
+     * When entering two or more IP addresses or IP address ranges, use commas as separators.
+diff --git a/src/content/en/administrator-manual/general/company-management/general.mdx b/src/content/en/administrator-manual/general/company-management/general.mdx
+index 99fac4cd..e5b08a8d 100644
+--- a/src/content/en/administrator-manual/general/company-management/general.mdx
++++ b/src/content/en/administrator-manual/general/company-management/general.mdx
+@@ -2,6 +2,8 @@
+ title: 'General'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # General
+ 
+ ### Overview
+@@ -132,7 +134,29 @@ This is a feature to hide the Workflow menu from the user dashboard based on spe
+ * Users matching the `Key:Value` condition set here will not see the `Workflow` menu in their user dashboard.
+ *  **Example:**  If 'Department Code' is selected as `User Attribute Key` and 'Department A' is entered as `Value`, users belonging to that department code will not see the `Workflow` menu.
+ 
+-### SQL Request Execution Throttling Activation (Use throttling when submitting SQL Request in Workflow)
++### Allow Delegated Approval (Enable/Disable)
++
++<Callout type="info">
++The option to enable/disable delegated approval was added in 11.3.0.
++</Callout>
++
++This option allows administrators to enable or disable delegated approval, a feature that delegates the approver role to another user for a certain period. If disabled, the Approver setting menu will not be displayed on the user preferences screen.
++
++<figure data-layout="center" data-align="center">
++![Allow Delegated Approval switch](/administrator-manual/general/company-management/general/image-20250926-112444.png)
++<figcaption>
++Allow Delegated Approval switch
++</figcaption>
++</figure>
++
++<figure data-layout="center" data-align="center">
++![Preferences with delegated approval disabled](/administrator-manual/general/company-management/general/image-20250926-112201.png)
++<figcaption>
++Preferences with delegated approval disabled
++</figcaption>
++</figure>
++
++### Use throttling when submitting SQL Request in Workflow
+ 
+ When the toggle is turned on, throttling is applied when executing SQL requests submitted in Workflow.
+ 
+@@ -140,12 +164,11 @@ When the toggle is turned on, throttling is applied when executing SQL requests
+ ![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
+ </figure>
+ 
+-
+ When this option is enabled, queries are executed continuously for the specified number, then wait for the specified interval (ms). This prevents DB load from large-scale query execution.
+ 
+-*  **Query chunk size**  : Set to a value between 1~999,999, a function to divide multiple queries by that number and execute them sequentially
++*  **Query chunk size**  : Set to a value between 1~999,999, divides multiple queries by that number and executes them sequentially
+     * Example) When there are 100 queries, if Query chunk size is set to 10, 10 queries are executed at once.
+-*  **Query throttle interval** : Interval between consecutive query executions and next consecutive query execution (1 ~ 9,999 ms)
++*  **Query throttle interval** : Interval between consecutive query executions and the next batch (1 ~ 9,999 ms)
+ 
+ ### Ledger Table DML Workflow Custom URL Redirection Feature
+ 
+diff --git a/src/content/en/administrator-manual/general/company-management/licenses.mdx b/src/content/en/administrator-manual/general/company-management/licenses.mdx
+index 81c20b39..f697c97d 100644
+--- a/src/content/en/administrator-manual/general/company-management/licenses.mdx
++++ b/src/content/en/administrator-manual/general/company-management/licenses.mdx
+@@ -8,16 +8,24 @@ import { Callout } from 'nextra/components'
+ 
+ ### Overview
+ 
+-The Licenses page allows you to check the currently active product license information in QueryPie.
++The Licenses page allows you to upload/delete and check the status of product license keys currently active in QueryPie.
++
++<Callout type="info">
++From 11.3.0, administrators can upload license keys in Admin &gt; General &gt; Company Management &gt; Licenses. Also, the license statuses have changed from Active / Expired / Waiting to Activated / Available / Scheduled / Expired.
++</Callout>
+ 
+ <figure data-layout="center" data-align="center">
+-![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/screenshot-20240804-184804.png)
++![Administrator &gt; General &gt; Company Management &gt; Licenses](/administrator-manual/general/company-management/licenses/image-20250926-124941.png)
+ <figcaption>
+ Administrator &gt; General &gt; Company Management &gt; Licenses
+ </figcaption>
+ </figure>
+ 
+-*  **License Status** : Active, Expired, Waiting (license waiting to be activated after existing license expires)
++*  **License Status**  : Based on license status, it is displayed separated into three sections: Available Licenses, Scheduled Licenses, and Expired Licenses. Detailed statuses are as follows.
++    * Activated : Currently activated
++    * Available : License is available but not activated
++    * Scheduled : Registered but before the license goes into effect
++    * Expired : License usage period has expired
+ *  **Product Name** : Displays the currently used QueryPie product name
+ *  **Usage Period** : Shows start and end dates
+ *  **License Type** : Production (official product license), PoC (PoC license)
+@@ -25,3 +33,11 @@ Administrator &gt; General &gt; Company Management &gt; Licenses
+ <Callout type="info">
+ If your license is about to expire or has expired, please contact us through the [QueryPie Customer Portal](https://help.support.querypie.com/) or your sales representative.
+ </Callout>
++
++### License File Upload
++
++* Click the `Upload License Key` button at the top to upload a license key.
++
++### License Deletion
++
++* You can delete a license by clicking the trash icon on the right side of the license you want to delete.
+diff --git a/src/content/en/administrator-manual/general/company-management/security.mdx b/src/content/en/administrator-manual/general/company-management/security.mdx
+index c8321c56..f8649f16 100644
+--- a/src/content/en/administrator-manual/general/company-management/security.mdx
++++ b/src/content/en/administrator-manual/general/company-management/security.mdx
+@@ -70,13 +70,24 @@ You can set password policies for QueryPie accounts.
+ You can set timeout policies for web console and agents.
+ 
+ <figure data-layout="center" data-align="center">
+-![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
++![image-20251009-051727.png](/administrator-manual/general/company-management/security/image-20251009-051727.png)
+ </figure>
+ 
+-*  **Web Inactivity Timeout (Minutes)** : Web console timeout criteria (Default: 60 minutes)
++*  **Web Inactivity Timeout** : Web console timeout criteria (Default: 60 minutes)
+     * Timeout processing when there is no activity for the specified time
+-*  **Agent Session Timeout (Minutes)** : Agent session timeout criteria (Default: 1,440 minutes)
++*  **Agent Session Timeout** : Agent session timeout criteria (Default: 1,440 minutes)
+     * Maintains agent app login for the specified time and processes logout when elapsed
++*  **User Inactivity Timeout (on agent)** : <br/> In addition to the Agent Session Timeout feature, the Agent monitors user mouse and keyboard input and forcibly terminates the session if there is no activity beyond the specified time. In an idle state, even if a long-running query is being executed, if there is no mouse and keyboard movement, the session is terminated and logged out.
++
++<Callout type="info">
++**Example of User Inactivity Timeout (on agent)**
++Assuming Agent Inactivity Timeout is 15 minutes, if user action is detected at 12:09 after 1 minute has passed, the last activity time is considered 12:09 and the expiration is updated to 12:24 (15 minutes later).
++    * Logged in at 12:00
++        1. The initial session expiration time is  **12:15:00** 
++    * If the last activity is detected at 12:08 (t+8 minutes), the expiration is updated to 12:23 (15 minutes later)
++        1. New session expiration time:  **12:23:00** 
++    * New session expiration time:  **12:24:00**
++</Callout>
+ 
+ 
+ ### QueryPie Web IP Access Control
+@@ -162,6 +173,11 @@ DB Connection detail page &gt; Connection Information &gt; Secret Store selectio
+ Server Group detail page &gt; Accounts &gt; Secret Store selection
+ </figcaption>
+ </figure>
++<Callout type="info">
++OAuth Client related settings were added as sub-items under Admin &gt; General &gt; Company Management &gt; Security in 11.1.0. (Only single client configuration is possible)
++In 11.3.0, client configuration was improved to support multiple configurations and moved to Admin &gt; General &gt; System &gt; Integrations.
++</Callout>
++
+ ### Others
+ 
+ Manages other security settings.
+diff --git a/src/content/en/administrator-manual/general/system/_meta.ts b/src/content/en/administrator-manual/general/system/_meta.ts
+index 195e1fdd..0591dc5e 100644
+--- a/src/content/en/administrator-manual/general/system/_meta.ts
++++ b/src/content/en/administrator-manual/general/system/_meta.ts
+@@ -2,4 +2,5 @@ export default {
+   'integrations': 'Integrations',
+   'api-token': 'API Token',
+   'jobs': 'Jobs',
++  'maintenance': 'Maintenance',
+ };
+diff --git a/src/content/en/administrator-manual/general/system/integrations/_meta.ts b/src/content/en/administrator-manual/general/system/integrations/_meta.ts
+index 966474ac..2636ce75 100644
+--- a/src/content/en/administrator-manual/general/system/integrations/_meta.ts
++++ b/src/content/en/administrator-manual/general/system/integrations/_meta.ts
+@@ -6,4 +6,6 @@ export default {
+   'integrating-with-event-callback': 'Integrating with Event Callback',
+   'integrating-google-cloud-api-for-oauth-20': 'Integrating Google Cloud API for OAuth 2.0',
+   'integrating-with-slack-dm': 'Integrating with Slack DM',
++  'oauth-client-application': 'OAuth Client Application',
++  'identity-providers': 'Identity Providers',
+ };
+diff --git a/src/content/en/administrator-manual/general/system/integrations/identity-providers.mdx b/src/content/en/administrator-manual/general/system/integrations/identity-providers.mdx
+new file mode 100644
+index 00000000..218f2094
+--- /dev/null
++++ b/src/content/en/administrator-manual/general/system/integrations/identity-providers.mdx
+@@ -0,0 +1,510 @@
++---
++title: 'Identity Providers'
++---
++
++import { Callout } from 'nextra/components'
++
++# Identity Providers
++
++### Overview
++
++QueryPie supports two authentication approaches: using a QueryPie user account (ID/Password) or integrating with an external Identity Provider (IdP). Administrators can configure the IdP integration so that QueryPie handles user authentication via Single Sign-On (SSO) and synchronizes accounts easily.
++
++Currently supported IdP integrations are as follows:
++
++* LDAP
++* Okta
++* SAML 2.0
++* OneLogin
++* Swivel Secure
++* Custom Identity Provider (for special use cases)
++
++<Callout type="info">
++* Multiple Identity Providers are not supported simultaneously. You must choose exactly one IdP other than the internal database (QueryPie user ID/Password).
++* MFA (Multi-factor Authentication) is available only with Internal DB, LDAP, and Custom Identity Provider.
++* Scheduled synchronization is available only for LDAP, Okta, One Login, and Custom Identity Provider.
++</Callout>
++
++Admin &gt; General &gt; System &gt; Integration &gt; Authentication &gt; Identity Providers provides all related settings. By default, QueryPie performs authentication with IDs and passwords stored in the internal database, so an Internal database item always exists and cannot be deleted.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-010700.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-010700.png)
++</figure>
++
++#### Internal authentication details
++
++*  **Name**  : A recognizable name shown in the list.
++*  **Type**  : One of the IdP types supported by QueryPie.
++*  **Multi-Factor Authentication Setting** : Configure MFA. Google Authenticator and Email are supported.
++
++<figure data-layout="center" data-align="center">
++![Internal database details](/administrator-manual/general/system/integrations/identity-providers/image-20251014-011706.png)
++<figcaption>
++Internal database details
++</figcaption>
++</figure>
++
++<Callout type="important">
++Note: Once you have synchronized users even once, you cannot delete the configured IdP and switch to another. If you need to change or remove the IdP, please contact us via the Customer Portal.
++</Callout>
++
++### LDAP Integration
++
++Click the `+ Add` button at the top right of the list and select LDAP for Type to add LDAP as an IdP.
++
++*  **Name**  : Enter a suitable name for identification.
++*  **Type** : Select LDAP.
++*  **Server URL**  : Enter the LDAP server address in the form of `ldap://ldap.example.com:389`. For LDAPS, use the ldaps:// scheme.
++*  **BindDN**  : Enter the Distinguished Name (DN) of the service account used to bind to the LDAP server. This account needs at least read permission for user information. <br/> Example: cn=admin,ou=Services,dc=example,dc=com
++*  **Bind Password**  : Enter the password for the BindDN.
++
++<figure data-layout="center" data-align="center">
++![LDAP details](/administrator-manual/general/system/integrations/identity-providers/image-20251014-012049.png)
++<figcaption>
++LDAP details
++</figcaption>
++</figure>
++
++Enter the mapping configuration to synchronize QueryPie user accounts with LDAP user accounts.
++
++|  **Attribute**     |  **Required**  |  **Description**                                                                                                                  |
++| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
++| User Base DN       | Required    | The starting point in the LDAP tree to search for user accounts. Only users under this path are considered login targets. Example: ou=People,dc=example,dc=com or cn=Users,dc=example,dc=com |
++| User Search Filter | Required    | The query (filter) used to find the user in LDAP based on the login ID. Example: (objectClass=inetOrgPerson)                                   |
++| User Name          | Required    | The LDAP attribute used as the user login ID. This maps to the QueryPie user's Login ID when synchronizing. Example: uid                     |
++| Email              | Required    | The LDAP attribute used as the user's email. This maps to the QueryPie user's Email when synchronizing. Example: email                |
++| Display Name       | Optional    | Enter the LDAP attribute to map to the QueryPie user's display name. Example: cn or displayName.                                                 |
++
++To synchronize user group and membership information from LDAP, enable the **Use Group** option and provide the required values.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-075227.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075227.png)
++</figure>
++
++<table data-table-width="760" data-layout="default" local-id="56f8d1f8-9645-460d-a5cb-b6cce53606f2">
++<colgroup>
++<col/>
++<col/>
++<col/>
++</colgroup>
++<tbody>
++<tr>
++<th data-highlight-colour="#f0f1f2">
++**Attribute**
++</th>
++<th data-highlight-colour="#f0f1f2">
++**Required**
++</th>
++<th data-highlight-colour="#f0f1f2">
++**Description**
++</th>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++Group Base DN
++</td>
++<td data-highlight-colour="#ffffff">
++Required
++</td>
++<td data-highlight-colour="#ffffff">
++Enter the group Base DN value of the LDAP server. Only groups under this path are synchronized as Groups.
++* Example: `dc=example,dc=com`
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++Group Search Filter
++</td>
++<td data-highlight-colour="#ffffff">
++Required
++</td>
++<td data-highlight-colour="#ffffff">
++Enter the filter to fetch groups from the LDAP server.
++* Example: `objectclass=posixGroup`
++</td>
++</tr>
++<tr>
++<td>
++Group ID
++</td>
++<td>
++Required
++</td>
++<td>
++Enter the attribute used as the group's identifier.
++* Example: `gidNumber`
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff" rowspan="2">
++Membership Type
++</td>
++<td data-highlight-colour="#ffffff" rowspan="2">
++Required
++</td>
++<td data-highlight-colour="#ffffff">
++If user entries contain group information, select `Include group information in user entries` and enter the attribute to reference below.
++* Example: `member`, `uniqueMember`, `memberUid`, etc.
++</td>
++</tr>
++<tr>
++<td data-highlight-colour="#ffffff">
++If group entries contain user information, select `Include user information in group entries` and enter the attribute to reference below.
++* Example: `gidNumber`
++</td>
++</tr>
++</tbody>
++</table>
++
++To run user synchronization from LDAP, enable **Use Synchronization with the Authentication System**.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-075127.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075127.png)
++</figure>
++
++*  **Replication Frequency**  : Configure whether to enable automatic synchronization.
++    * Manual: Synchronize only when you click the `Synchronize` button on this page.
++    * Scheduling: Perform periodic synchronization. The "Use cron expression" field is enabled.
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default.
++        * Useful when there are many users or you want to manage access control individually via LDAP authentication.
++    *  **Use an Attribute for Privilege Revoke** : Revoke privileges based on a specific attribute during synchronization.
++        * Enable when you want to automatically revoke DAC privileges based on changes to an LDAP attribute.
++        * Enter the attribute name to monitor for activation changes in the LDAP Attribute input field.
++    *  **Enable Attribute Synchronization :**  Synchronize LDAP user attributes with QueryPie user attributes by mapping.
++        * Enable when you want to link LDAP-managed attributes to QueryPie attributes automatically.
++        * When enabled, an LDAP Attribute Mapping UI appears, allowing you to specify the LDAP and QueryPie attributes to map.
++        * This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
++    *  **Allowed User Deletion Rate Threshold :** 
++        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
++        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading to 11.3.0 from a version configured before 11.3.0, this value migrates to 1.
++
++<Callout type="info">
++**LDAP Attribute Mapping**
++
++To link LDAP-managed user attributes with QueryPie attributes, enable "Enable Attribute Synchronization" and provide the following information:
++
++Click `Add Row` to add a new mapping row. For each row, select an LDAP attribute and a corresponding QueryPie attribute.
++
++1. This feature applies only to QueryPie attributes whose Source Priority is set to "Inherit from profile source" in Admin &gt; General &gt; User Management &gt; Profile Editor.
++2. The QueryPie attributes `Username (loginId)` and `Primary Email (email)` are configured separately in LDAP integration settings and are not exposed in the LDAP–QueryPie Attribute Mapping UI.
++3. When you delete or change a mapping row, click Save to apply changes in the UI, and additionally click Synchronize to actually perform synchronization with LDAP. Save applies the screen changes, while Synchronize applies them to the system.
++</Callout>
++
++### Okta Integration
++
++#### Add QueryPie as an application in Okta
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Search for QueryPie](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064242.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Search for QueryPie
++</figcaption>
++</figure>
++
++* Sign in to [Okta](https://login.okta.com/) with an administrator account.
++* Click your profile at the top right to access Your Org.
++* Go to Applications &gt; Applications in the left panel of the Okta admin page.
++* Click `Browse App Catalog` and search for QueryPie.
++* Open the QueryPie application page and click `Add Integration`.
++* Confirm that Application Label is QueryPie and click `Done`.
++
++#### Profile settings for Okta account integration
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064424.png)
++<figcaption>
++Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute
++</figcaption>
++</figure>
++
++* Go to Directory &gt; Profile Editor in the Okta admin page.
++* Click ‘QueryPie User’ in the profile list.
++* In Attributes, click `Add Attribute`.
++* Add the following four items in order and save:
++    * Display name: firstName / Variable name: firstName, then `Save and Add Another`
++    * Display name: lastName / Variable name: lastName, then `Save and Add Another`
++    * Display name: email / Variable name: email, then `Save and Add Another`
++    * Display name: loginId / Variable name: loginId, then `Save`
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064721.png)
++<figcaption>
++Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
++</figcaption>
++</figure>
++
++* After the four attributes are added, click `Mappings`.
++* Link Okta User Profile attributes to QueryPie User Profile attributes as follows:
++    * user.firstName ↔︎ firstName
++    * user.lastName ↔︎ lastName
++    * user.email ↔︎ email
++    * user.email ↔︎ loginId (Use Okta's email attribute as QueryPie's Login ID.)
++* Click `Save Mappings`.
++
++#### Assign users to the QueryPie application in Okta
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/image-20240723-065134.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
++</figcaption>
++</figure>
++
++* Go to Applications &gt; Applications in the Okta admin page.
++* Click the QueryPie application in the list.
++* Go to the Assignments tab, click `Assign`, and select `Assign to People` or `Assign to Group`.
++* Assign the user(s) or group(s) to allow access to QueryPie and click Done.
++    * For People, review the user information and click `Save and Go Back`.
++    * For Group, leave loginId empty and click `Save and Go Back`.
++* Verify that the user or group is assigned to the QueryPie application.
++
++#### Configure QueryPie application integration settings in Okta
++
++<figure data-layout="center" data-align="center">
++![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/image-20240723-065346.png)
++<figcaption>
++Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
++</figcaption>
++</figure>
++
++* In the QueryPie application page in Okta, go to the Sign On tab.
++* Click `Edit` in Settings and enter the domain where QueryPie is installed in the Base URL field.
++* Access the URL shown in Metadata URL in a separate tab and copy the XML.
++
++#### Issue a minimum-privilege Okta API token
++
++To synchronize users, groups, and group memberships between QueryPie and Okta, an Okta Admin API token is required. Typically, you can issue a token using the Super Administrator or Read-Only Administrator account and apply it as follows:
++
++* In the Okta admin page, go to Security &gt; API.
++* Go to the Tokens tab.
++* Click Create Token to create an API token.
++
++For improved security, we recommend issuing a token with minimum permissions as follows.
++
++<figure data-layout="center" data-align="center">
++![Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role](/administrator-manual/general/system/integrations/identity-providers/image-20240110-042233.png)
++<figcaption>
++Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role
++</figcaption>
++</figure>
++
++* In the Okta admin page, go to Directory &gt; People and click Add Person to create a dedicated integration account.
++    * If you already have such an account, skip this step.
++* Go to Security &gt; Administrators &gt; Roles.
++* Select Create new role.
++* Define Role name (e.g., MinimumAdminRole) and Role description, and check only the following permissions in Select Permissions:
++    *  **User** 
++        * View users and their details
++    *  **Group** 
++        * View groups and their details
++    *  **Application** 
++        * View application and their details
++* Click Save role.
++* Go to the Resources tab.
++* Select Create new resource set.
++    * If you already have a resource set for scoping, skip to step 10.
++* Define Name (e.g., MinimumResources) and Description, then set the scope as follows:
++    * User: All QueryPie users
++    * Group: All QueryPie groups
++    * Application: Limited to the QueryPie app
++* Go to the Admins tab and assign the following to the integration account:
++    * Role: MinimumAdminRole | Resource: MinimumResources
++    * Role: Read-Only Administrator
++        * Temporarily needed to access the API token issuance menu
++* Sign in to the Okta admin console with the integration account.
++* Go to Security &gt; API &gt; Tokens and click Create Token to issue a token and store it securely.
++* Then, sign back in as the original admin and remove Read-Only Administrator from the integration account in Security &gt; Administrators &gt; Admins.
++
++#### Configure Okta integration and synchronization in QueryPie
++
++Click the `+ Add` button at the top right of the list and select Okta for Type to add Okta as an IdP.
++
++<figure data-layout="center" data-align="center">
++![Okta details (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014729.png)
++<figcaption>
++Okta details (1)
++</figcaption>
++</figure>
++
++*  **Name**  : Enter a suitable name for identification.
++*  **Type** : Select Okta.
++*  **Identity Provider Metadata**  : <br/>Paste the XML copied in the process described in [the Okta guide](https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95).
++*  **Use SAML Assertion Consumer Service Index**: When the Service Provider uses multiple endpoints, you can specify each endpoint using the ACS Index.
++    * Entity ID: Enter in the format `https://your-domain.com/saml/sp/metadata`. This is the Audience URI (SP Entity ID) value in Okta's SAML 2.0 settings. 
++    * ACS Index: Enter a value between 0 and 2,147,483,647 (default 0).
++
++<Callout type="info">
++**Assertion Consumer Service (ACS)**: The endpoint URL in the Service Provider (SP) that receives SAML assertions from the IdP, verifies them, and processes user login.
++
++<br/> **Why the Assertion Consumer Service Index matters**
++
++An SP can have multiple ACS URLs for various reasons. The `AssertionConsumerServiceIndex` plays a crucial role here.
++
++When the SP sends the AuthnRequest with this index to the IdP, the IdP sends the assertion to the ACS URL mapped to that index. If the index is not specified, the IdP typically sends the assertion to a predefined default ACS URL.
++
++This index-based routing is useful in the following scenarios:
++
++**Key use cases**
++
++* Support multiple protocol bindings:
++
++SAML assertions can be delivered via various bindings such as HTTP POST and HTTP-Artifact. The SP may maintain separate ACS URLs for each binding. For example, index "0" can point to the ACS URL for HTTP POST, and index "1" can point to HTTP-Artifact.
++
++* Multi-tenant architecture:
++
++A SaaS application supporting multiple customers (tenants) can assign a unique ACS URL per tenant. This isolates and customizes the authentication flow for each tenant.
++
++* Different authentication flows within the same application:
++
++Depending on roles or entry paths, post-login destinations can differ. You may configure different ACS URLs and select them by index.
++
++* Dynamic or special ACS URL handling:
++
++If assertions must be delivered to dynamically generated ACS URLs under specific situations, the index can guide the IdP to one of the statically defined URLs.
++
++<figure data-layout="center" data-align="center">
++![Audience URI (SP Entity ID) in Okta app settings](/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164255.png)
++<figcaption>
++Audience URI (SP Entity ID) in Okta app settings 
++</figcaption>
++</figure>
++
++<figure data-layout="center" data-align="center">
++![Index for Other Requestable SSO URLs](/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164553.png)
++<figcaption>
++Index for Other Requestable SSO URLs
++</figcaption>
++</figure>
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Okta details (2)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014805.png)
++<figcaption>
++Okta details (2)
++</figcaption>
++</figure>
++
++* To enable synchronization, turn on “Use Synchronization with the Authentication System”.
++    *  **API URL**: Click your profile at the top right of the Okta admin page to see `{domain}`.okta.com.
++    *  **API Token**: Enter the Okta Admin API token.
++    *  **Application ID**: Enter only if you use two or more QueryPie apps in Okta.
++* For periodic synchronization, set **Replication Frequency** to Scheduling.
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default**: Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
++    *  **Use an Attribute for Privilege Revoke**: Revoke privileges based on a specific attribute during synchronization. <br/> Enable this if you want to revoke DAC privileges automatically based on changes to a specific attribute. <br/> Enter the attribute name to monitor.
++    *  **Enable Attribute Synchronization**: Synchronize IdP user attributes with QueryPie user attributes by mapping. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears below to configure mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
++    *  **Allowed User Deletion Rate Threshold :** 
++        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
++        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading from a pre-11.3.0 version configured with synchronization to 11.3.0 or later, this value migrates to 1.
++* Click `Dry Run` to verify the input.
++* Click `Save` to store the settings.
++
++<Callout type="info">
++**How to find the Application ID**
++If you use two or more QueryPie applications, go to Okta Admin &gt; Applications, open the details page of the QueryPie app, and check the top URL where the Application ID is highlighted in the screenshot.
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Top URL of Okta Admin &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/Authentication-Okta-02.png)
++<figcaption>
++Top URL of Okta Admin &gt; Applications &gt; QueryPie App
++</figcaption>
++</figure>
++
++#### Sign in to QueryPie with Okta
++
++1. You can verify synchronized users and groups in General Settings &gt; Users or Groups.
++2. You can now sign in to QueryPie using `Login with Okta` on the login page.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-082704.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-082704.png)
++</figure>
++
++<Callout type="info">
++This integration supports one-way synchronization from Okta to QueryPie for users and groups.
++For SCIM provisioning, follow the steps in the [[Okta] Provisioning Integration Guide](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394).
++</Callout>
++
++### One Login Integration
++
++Click the `+ Add` button at the top right of the list and select One Login for Type to add One Login as an IdP.
++
++*  **Name**  : Enter a suitable name for identification.
++*  **Type** : Select One Login.
++
++<Callout type="info">
++One Login SAML Custom Connector configuration and downloading Metadata XML
++
++* Sign in to OneLogin and click Applications &gt; Applications at the top.
++* Click `Add App`.
++* Search for 'SAML Custom Connector (Advanced)' and click the result.
++* For Display Name, paste the value of "Application Name to be used in OneLogin" shown in QueryPie, and also copy Audience (Entity ID), Recipient, ACS (Consumer) URL Validator, and ACS (Consumer) URL into OneLogin settings.
++* Click `Save`. 
++* Select Configuration on the left, then click More Actions &gt; SAML Metadata on the top right.
++* Check the downloaded XML file.
++
++For details on configuring the OneLogin SAML Custom Connector, refer to [https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f](https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f).
++</Callout>
++
++*  **Identity Provider Metadata**  : Paste the contents of the XML file downloaded from One Login.
++
++<figure data-layout="center" data-align="center">
++![One Login details (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251020-001435.png)
++<figcaption>
++One Login details (1)
++</figcaption>
++</figure>
++
++* To enable synchronization, turn on “Use Synchronization with the Authentication System”.
++* For periodic synchronization, set Replication Frequency to Scheduling.
++
++<figure data-layout="center" data-align="center">
++![One Login details (2)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014949.png)
++<figcaption>
++One Login details (2)
++</figcaption>
++</figure>
++
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
++    *  **Use an Attribute for Privilege Revoke**  : Revoke privileges based on a specific attribute during synchronization. <br/> Enable this to automatically revoke DAC privileges based on a specific attribute. <br/> Enter the attribute name to monitor.
++    *  **Enable Attribute Synchronization**  : Synchronize IdP user attributes with QueryPie user attributes by mapping. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears for configuring mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
++    *  **Allowed User Deletion Rate Threshold :** 
++        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
++        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading from a pre-11.3.0 version configured with synchronization to 11.3.0 or later, this value migrates to 1.
++
++### SAML 2.0 Integration (one-off without periodic sync)
++
++If you want a one-time SAML integration without periodic synchronization, provide only the SAML metadata.
++
++*  **Name**  : Enter a suitable name for identification.
++*  **Type** : Select SAML.
++*  **Identity Provider Metadata**  : Paste the SAML metadata XML content downloaded from your IdP.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-015015.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015015.png)
++</figure>
++
++&lt; Note &gt; [AWS SSO Integration](identity-providers/aws-sso-saml-20)
++
++### Custom Identity Provider
++
++Use this only for special cases that require an authentication API server.
++
++*  **Name**  : Enter a suitable name for identification.
++*  **Type** : Select Custom Identity Provider.
++*  **API URL**  : Enter the endpoint URL of your API server. 
++*  To run user synchronization, enable Use Synchronization with the Authentication System.
++
++<figure data-layout="center" data-align="center">
++![image-20251014-015047.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png)
++</figure>
++
++*  **Additional Settings** 
++    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
++    *  **Use an Attribute for Privilege Revoke**  : Revoke privileges based on a specific attribute during synchronization. <br/> Enable this if you want to automatically revoke DAC privileges based on changes to a specific attribute. <br/> Enter the attribute name to monitor.
++    *  **Enable Attribute Synchronization**  : Map and synchronize IdP user attributes with QueryPie user attributes. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears for configuring mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
++    *  **Allowed User Deletion Rate Threshold :** 
++        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
++        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading to 11.3.0 from a version configured before 11.3.0, this value migrates to 1.
+diff --git a/src/content/en/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx b/src/content/en/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+new file mode 100644
+index 00000000..3557b120
+--- /dev/null
++++ b/src/content/en/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+@@ -0,0 +1,76 @@
++---
++title: 'Integrate AWS SSO (SAML 2.0)'
++---
++
++import { Callout } from 'nextra/components'
++
++# Integrate AWS SSO (SAML 2.0)
++
++### Overview
++
++QueryPie supports integrating users from AWS IAM Identity Center with multiple cloud applications via SAML 2.0. You can synchronize users, grant access, and apply policies.
++
++<Callout type="important">
++If you configure SAML under Identity Providers Integration with Type = SAML, periodic synchronization by schedule is not supported.
++</Callout>
++
++### Add QueryPie as an application in AWS IAM Identity Center
++
++<figure data-layout="center" data-align="center">
++![AWS-SSO-01-20230317-044219.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-01-20230317-044219.png)
++</figure>
++
++1. Go to [AWS IAM Identity Center](https://ap-northeast-2.console.aws.amazon.com/singlesignon/applications/home).
++2. Open the Applications menu in the left panel.
++3. Click Add application at the top right.
++4. Select Add a custom SAML 2.0 application and click Next.
++5. In Application configuration &gt; Display name, enter QueryPie.
++6. In Application properties &gt; Application start URL, enter your QueryPie domain as below.
++    1. Application Start URL: https://`{querypie_host}`
++7. Enter the following in Application metadata:
++    1. Application ACS URL: https://`{querypie_host}`/saml/sp/acs
++    2. Application SAML audience: https://`{querypie_host}`/saml/sp/metadata
++8. Click Submit to save.
++
++### Attribute mappings for QueryPie integration
++
++<figure data-layout="center" data-align="center">
++![AWS-SSO-06-20230317-064023.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-06-20230317-064023.png)
++</figure>
++
++1. In the application page, open Actions &gt; Edit attribute mappings at the top right.
++2. Refer to the screenshot and enter values as follows.
++
++|  **Application user attribute**  |  **Value or user attribute in IAM Identity Center**  |  **Format**      |
++| --------------------- | ------------------------------------------------ | ------------ |
++| Subject               | $`{user:email}`                                  | emailAddress |
++| firstName             | $`{user:givenName}`                              | basic        |
++| lastName              | $`{user:familyName}`                             | basic        |
++| loginId               | $`{user:email}`                                  | basic        |
++| email                 | $`{user:email}`                                  | basic        |
++
++Click `Save changes`.
++
++### Configure AWS IAM Identity Center integration in QueryPie
++
++<figure data-layout="center" data-align="center">
++![Administrator &gt; General &gt; User Management &gt; Authentication ](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20240723-072112.png)
++<figcaption>
++Administrator &gt; General &gt; User Management &gt; Authentication 
++</figcaption>
++</figure>
++
++* Go to Administrator &gt; Admin &gt; General &gt; System &gt; Integration, and under Authentication select Identity Provider.
++* Click Add and register the IdP with Type = SAML.
++    *  **Name**  : Enter a suitable name for identification.
++    *  **Type** : Select SAML.
++    *  **Identity Provider Metadata**  : In AWS, go to Application &gt; Actions &gt; Edit configuration and download the IAM Identity Center SAML metadata file. Paste the SAML metadata XML content here.
++* Click `Save`.
++
++### Sign in to QueryPie with SAML
++
++<figure data-layout="center" data-align="center">
++![image-20251020-044838.png](/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/image-20251020-044838.png)
++</figure>
++
++Click `Login with SAML` on the login page to authenticate with AWS and sign in to QueryPie.
+diff --git a/src/content/en/administrator-manual/general/system/integrations/integrating-with-splunk.mdx b/src/content/en/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
+index 986782c3..0f72ac7c 100644
+--- a/src/content/en/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
++++ b/src/content/en/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
+@@ -69,11 +69,19 @@ For reference, Splunk provides SC4S (Splunk connector for syslog) separately for
+     9.  **Description** : Enter brief information within 100 characters about the configuration information.
+ 2. Click the `OK` button to save the settings.
+     1. Even if settings are saved, syslog is not immediately transmitted.
+-3. To start transmission, switch the toggle button in the top left of the page to :toggle:.
++3. To start transmission, switch the toggle button in the top left of the page to `ON`.
+     1. This transmission toggle button can be used when transmission needs to be temporarily stopped for maintenance or various situations.
+ 4. If syslog transmission is no longer needed, you can remove the configuration through the `Delete` button.
+     1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.
+ 
++<Callout type="info">
++Timezone settings have been added in 11.3.0. Previously, Timezone settings were only available in Syslog (Legacy), but now Timezone settings are available for all SIEM-related settings (Syslog, Splunk). Additionally, streaming transmission functionality for events generated by the New DAC Policy Management feature has been added. (Select DAC Policy Audit Logs in Select Event Items.)
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![image-20251009-045210.png](/administrator-manual/general/system/integrations/integrating-with-splunk/image-20251009-045210.png)
++</figure>
++
+ ### Reference
+ 
+ * QueryPie event items transmitted through syslog according to license
+diff --git a/src/content/en/administrator-manual/general/system/integrations/integrating-with-syslog.mdx b/src/content/en/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+index aa11b436..6a720033 100644
+--- a/src/content/en/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
++++ b/src/content/en/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+@@ -43,7 +43,16 @@ Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Config
+     8. Description : Enter brief information within 100 characters about the configuration information.
+ 2. Click the `OK` button to save the settings.
+     1. Even if settings are saved, syslog transmission is not immediately activated.
+-3. To start transmission, switch the toggle button in the top left of the page to :toggle:.
++3. To start transmission, switch the toggle button in the top left of the page to `ON`.
+     1. This transmission toggle button can be used when transmission needs to be temporarily stopped for maintenance or various situations.
+ 4. If syslog transmission is no longer needed, you can remove the configuration through the Delete button.
+     1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.
++
++<Callout type="info">
++Timezone settings have been added in 11.3.0. Previously, Timezone settings were only available in Syslog (Legacy), but now Timezone settings are available for all SIEM-related settings (Syslog, Splunk). Additionally, streaming transmission functionality for events generated by the New DAC Policy Management feature has been added. (Select DAC Policy Audit Logs in Select Event Items.)
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![image-20251009-045004.png](/administrator-manual/general/system/integrations/integrating-with-syslog/image-20251009-045004.png)
++</figure>
++
+diff --git a/src/content/en/administrator-manual/general/system/integrations/oauth-client-application.mdx b/src/content/en/administrator-manual/general/system/integrations/oauth-client-application.mdx
+new file mode 100644
+index 00000000..d6b1678b
+--- /dev/null
++++ b/src/content/en/administrator-manual/general/system/integrations/oauth-client-application.mdx
+@@ -0,0 +1,66 @@
++---
++title: 'OAuth Client Application'
++---
++
++# OAuth Client Application
++
++### Overview
++
++QueryPie can act as an OAuth 2.0 Provider so that external applications can authenticate users and access data. You can register external applications as clients, and QueryPie issues tokens to securely access QueryPie resources.
++
++### Register an OAuth Client Application
++
++<figure data-layout="center" data-align="center">
++![OAuth Client Application under Admin &gt; General &gt; System &gt; Integrations &gt; Authentication](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-041209.png)
++<figcaption>
++OAuth Client Application under Admin &gt; General &gt; System &gt; Integrations &gt; Authentication
++</figcaption>
++</figure>
++
++* In Admin &gt; General &gt; System &gt; Integrations &gt; Authentication, select OAuth Client Application.
++* Click `+Add`, enter the application information, and click `Save`.
++    *  **Name**  : Enter a recognizable name.
++    *  **Redirect URI**  : Enter the client URL to redirect to after authentication.
++    *  **Access Token Timeout (Minutes)**  : Default 60, minimum 5.
++    *  **Refresh Token Timeout (Minutes)**  : Default 1440, minimum 5.
++
++<figure data-layout="center" data-align="center">
++![Add OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043210.png)
++<figcaption>
++Add OAuth Client Application
++</figcaption>
++</figure>
++
++* After saving, a popup shows the Client ID and Client Secret. Since the Client Secret cannot be retrieved again, copy and store it securely. 
++
++<figure data-layout="center" data-align="center">
++![Client ID and Client Secret](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-043334.png)
++<figcaption>
++Client ID and Client Secret
++</figcaption>
++</figure>
++
++### Edit OAuth Client Application settings
++
++<figure data-layout="center" data-align="center">
++![Edit OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044214.png)
++<figcaption>
++Edit OAuth Client Application
++</figcaption>
++</figure>
++
++In the OAuth Client Application list, click a row to:
++
++* Change settings: Name, Redirection URI, Access Token Timeout, Refresh Token Timeout
++* Regenerate Client Secret: Invalidate the previous Client Secret and create a new one
++
++### Delete an OAuth Client Application
++
++To delete a configured OAuth Client Application, select the item in the list and click `Delete`.
++
++<figure data-layout="center" data-align="center">
++![Delete OAuth Client Application](/administrator-manual/general/system/integrations/oauth-client-application/image-20251009-044400.png)
++<figcaption>
++Delete OAuth Client Application
++</figcaption>
++</figure>
+diff --git a/src/content/en/administrator-manual/general/system/maintenance.mdx b/src/content/en/administrator-manual/general/system/maintenance.mdx
+new file mode 100644
+index 00000000..8e4587fd
+--- /dev/null
++++ b/src/content/en/administrator-manual/general/system/maintenance.mdx
+@@ -0,0 +1,48 @@
++---
++title: 'Maintenance'
++---
++
++import { Callout } from 'nextra/components'
++
++# Maintenance
++
++### Overview
++
++When upgrading QueryPie, the Log DB can be large and difficult to back up, and key features should not stop recording even during the upgrade. To control the service level appropriately, enable maintenance mode and perform migration.
++
++If QueryPie servers are deployed in an active-active pair, follow the steps below:
++
++1.  **Preparation**: Download the latest package and review configuration files.
++2.  **Enable maintenance mode**: Announce the work and limit service access levels.
++3.  **Prepare the database**: Create schemas for the new version and replicate existing data.
++4.  **Upgrade server B**: Remove server B from the load balancer (LB), migrate, and install the new version.
++5.  **Test server B**: Connect directly to server B and verify the upgrade.
++6.  **Upgrade server A**: Reconnect server B to the LB, detach server A, then install the new version on server A.
++7.  **Final switch**: Reconnect server A to the LB and complete the overall upgrade.
++
++<Callout type="info">
++Maintenance mode is added in version 11.3.0.
++</Callout>
++
++### Configure maintenance mode (Operation Mode)
++
++<Callout type="important">
++Since this affects the entire service, decide carefully and proceed with caution.
++</Callout>
++
++<figure data-layout="center" data-align="center">
++![Admin &gt; General &gt; System &gt; Maintenance](/administrator-manual/general/system/maintenance/image-20250928-205515.png)
++<figcaption>
++Admin &gt; General &gt; System &gt; Maintenance
++</figcaption>
++</figure>
++
++Available modes:
++
++|  **Mode**        |  **Description**                                                                                                                                     |
++| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
++| Read Only        | Users can log in, but all features other than read-only operations are disabled. (The first command after switching to Read Only is executed and logged in Audit Log, but subsequent commands are not executed nor logged.) |
++| Active Session   | Existing sessions can execute commands, but new sessions can only read. (Not applicable to DAC / SAC / WAC)                                                      |
++| Allow Connection | Existing and new sessions can execute commands, but actions like submitting workflows or editing settings are not allowed. (Not applicable to KAC / WAC)                                                  |
++| Full Access      | Normal operating mode.                                                                                                                         |
++
+diff --git a/src/content/en/administrator-manual/general/user-management/authentication.mdx b/src/content/en/administrator-manual/general/user-management/authentication.mdx
+index 9b229e2a..c0bde4dd 100644
+--- a/src/content/en/administrator-manual/general/user-management/authentication.mdx
++++ b/src/content/en/administrator-manual/general/user-management/authentication.mdx
+@@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
+ 
+ SSO (Single Sign-On) integration is an essential feature within QueryPie that enhances user authentication and access management while providing a secure integrated authentication environment. By integrating with the account system used by your organization, you can synchronize users and groups within your organization to QueryPie. Administrators can manage new hires and departures in one place. SSO integration simplifies the authentication process and allows users to access databases and systems through QueryPie using the authentication method they are using within their organization. This document explains SSO integration methods and key considerations.
+ 
++<Callout type="info">
++In 11.3.0, Authentication-related settings have been moved from Admin > General > User Management > Authentication to Identity Providers, a sub-item of Admin > General > System > Integration > Authentication.
++</Callout>
++
+ ### IdP Integration Support Scope
+ 
+ The IdP services currently supported by QueryPie are as follows.
+@@ -21,6 +25,7 @@ The IdP services currently supported by QueryPie are as follows.
+ * SAML 2.0
+ * Custom Identity Provider : Only API URL input is possible.
+ 
++
+ ### User Management Through Account System Synchronization
+ 
+ * You can configure external account system integration in Administrator &gt; General &gt; User Management &gt; Authentication menu.
+@@ -33,6 +38,7 @@ The IdP services currently supported by QueryPie are as follows.
+ If you need to change the Authentication type, please contact the QueryPie technical support team or Customer Portal.
+ </Callout>
+ 
++
+ ### Group Management Through Account System Synchronization
+ 
+ * For Okta, OneLogin, and LDAP, groups within the account system can be synchronized to QueryPie groups.
+@@ -40,12 +46,14 @@ If you need to change the Authentication type, please contact the QueryPie techn
+ * For Okta and OneLogin types, groups can be synchronized by assigning groups to the QueryPie application.
+ * For LDAP type, Group synchronization option can be used. For detailed information, refer to the detailed integration guide page.
+ 
++
+ ### Using External Account System and QueryPie's Own Accounts Simultaneously
+ 
+ * Even when using external account system integration, you can add and use users and groups within QueryPie itself.
+ * However, Username and Email fields are unique values and cannot be registered as duplicates.
+ 
+-### Local Account Security Enhancement in IDP Integration Environment
++
++### Local Account Security Enhancement in IdP Integration Environment
+ 
+ Multi-Factor Authentication (MFA) functionality is supported to maintain consistent security policies even in hybrid authentication environments where external account systems (IdP) and QueryPie local accounts are used together.
+ 
+diff --git a/src/content/en/administrator-manual/general/user-management/groups.mdx b/src/content/en/administrator-manual/general/user-management/groups.mdx
+index 4343f0c0..aeb6bceb 100644
+--- a/src/content/en/administrator-manual/general/user-management/groups.mdx
++++ b/src/content/en/administrator-manual/general/user-management/groups.mdx
+@@ -8,11 +8,12 @@ import { Callout } from 'nextra/components'
+ 
+ ### Overview
+ 
+-QueryPie provides group functionality that allows you to bundle users into groups for collective management. Groups can be used as units for granting DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments. The Groups page allows you to view and manage user group lists registered in QueryPie.
++QueryPie provides a group feature that allows users to be grouped and managed in bulk. Groups can be used as units for DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments. The Groups page allows you to view and manage the list of user groups registered in QueryPie.
++
+ 
+ ### Viewing Group List
+ 
+-Navigate to the Administrator > General > User Management > Groups page to view the group list. You can search by group name. The following information is available for viewing:
++When you enter the Administrator > General > User Management > Groups page, you can view the group list. You can search by group name. The viewable information is as follows:
+ 
+ <figure data-layout="center" data-align="center">
+ ![Administrator > General > User Management > Groups](/administrator-manual/general/user-management/groups/image-20240714-053938.png)
+@@ -22,25 +23,27 @@ Administrator > General > User Management > Groups
+ </figure>
+ 
+ * **Auth Provider**: User authentication provider
+-    * Displays QueryPie or IdP Type configured in User Management > Authentication.
+-    * Manually registered groups are displayed as QueryPie.
+-    * Groups integrated from IdP are displayed with their respective ID Provider names.
++    * Displays the IdP Type set in QueryPie or User Management > Authentication.
++    * For manually registered groups, it displays as QueryPie.
++    * For groups integrated from IdP, it displays as the respective ID Provider name.
+ * **Group Name**: Group name
+ * **Members**: List of users belonging to the group
+ * **Updated At**: Date and time when group information was last changed
+ * **Created At**: Group creation date and time
+ 
++
+ ### Manually Adding Groups
+ 
+-Clicking the `Create Group` button in the top right of the Groups page displays a modal. Enter the desired name and click the `Save` button to complete group creation.
++Click the `Create Group` button in the top right of the Groups page to display a modal. Enter the desired name and click the `Save` button to complete group creation.
+ 
+ <Callout type="important">
+-Adding or removing users is only possible for manually added groups.<br/>Groups synchronized from IdP only support viewing, and user list and group management must be performed in the IdP.
++User addition or deletion is only possible for manually added groups.<br/>For groups synchronized from IdP, only viewing is supported, and user list and group management must be performed in the IdP.
+ </Callout>
+ 
++
+ ### Adding Users to Groups
+ 
+-Clicking on a group in the list where you want to add users opens a Drawer where you can check detailed information.
++Click on the group you want to add users to in the list to open a Drawer where you can view detailed information.
+ 
+ <figure data-layout="center" data-align="center">
+ ![Administrator > General > User Management > Groups > Details](/administrator-manual/general/user-management/groups/screenshot-20240726-121151.png)
+@@ -49,23 +52,30 @@ Administrator > General > User Management > Groups > Details
+ </figcaption>
+ </figure>
+ 
+-1. Clicking the `+ Add Users` button displays a modal.
+-    1. You can search users by name or email.
+-    2. From version 11.2.0, deactivated users synchronized through LDAP are also included and displayed in search results. Inactive users show `(Inactive)` text next to their names.
+-    3. Clicking on a user you want to add changes their status to added.
+-    4. Clicking the `Check all` button at the bottom selects all users.
+-2. Click the `Save` button to save group change history. You can check added users in the group list and details Drawer.
++1. Click the `+ Add Users` button to display the user addition popup.
++    1. You can search for users by name or email.
++    2. From 11.2.0, inactive users synchronized through LDAP are also included in search results. Inactive users are displayed with `(Inactive)` text next to their name.
++    3. Click on the user you want to add to change to added status.
++    4. Click the `Check all` button at the bottom to select all users. <br/>  
++      <figure data-layout="center" data-align="center">
++      ![Adding users to group](/administrator-manual/general/user-management/groups/image-20251009-050919.png)
++      <figcaption>
++      Adding users to group
++      </figcaption>
++      </figure>
++2. Click the `Save` button to save the group changes. You can verify the added users in the group list and detailed information Drawer.
+ 
+ <Callout type="info">
+-**Q. I want to add a specific user to a group but they don't appear in the modal.**
+-A. The user addition modal only displays users with active status. Check if the user's account status is Inactive on the Users page.
++**Q. I want to add a specific user to a group, but they don't appear in the modal.**
++A. The user addition modal only displays active users. Check in the Users page whether the user's account status is Inactive.
+ </Callout>
+ 
++
+ ### Removing Users from Groups
+ 
+-1. In the group details page, select users you want to remove using checkboxes, then click the `Delete` button displayed in the table header.
++1. In the group details page, select the users you want to remove with checkboxes, then click the `Delete` button displayed in the table header.
+ 2. Click the `OK` button in the user removal confirmation modal.
+-3. Once user removal is complete, you can verify it in the user list within the Drawer and the Group list.
++3. When user removal is complete, you can verify it in the user list within the Drawer and the Group list.
+ 
+ <figure data-layout="center" data-align="center">
+ ![Administrator > General > User Management > Groups > Details](/administrator-manual/general/user-management/groups/screenshot-20240726-122800.png)
+@@ -74,9 +84,10 @@ Administrator > General > User Management > Groups > Details
+ </figcaption>
+ </figure>
+ 
++
+ ### Changing Group Name
+ 
+-Clicking the `Edit` button at the top of the group details Drawer displays an edit modal. Change the group name and click the `Save` button to save.
++Click the `Edit` button at the top of the group details Drawer to display the edit modal. Change the group name and click the `Save` button to save.
+ 
+ <figure data-layout="center" data-align="center">
+ ![Administrator > General > User Management > Groups > Details > Update Group](/administrator-manual/general/user-management/groups/screenshot-20240726-122036.png)
+@@ -85,18 +96,19 @@ Administrator > General > User Management > Groups > Details > Update Group
+ </figcaption>
+ </figure>
+ 
++
+ ### Deleting Groups
+ 
+-Select groups you want to delete using checkboxes in the Groups list. The `Delete` button will appear in the table header. Click the button and click the `OK` button in the confirmation modal to complete deletion.
++Select the group you want to delete with a checkbox in the Groups list. The `Delete` button appears in the table header. Click the button and click the `OK` button in the confirmation modal to complete deletion.
+ 
+ <figure data-layout="center" data-align="center">
+ ![screenshot-20240726-123314.png](/administrator-manual/general/user-management/groups/screenshot-20240726-123314.png)
+ </figure>
+ 
+ <Callout type="info">
+-Group name change and deletion are only possible for groups manually added in QueryPie.
++Group name changes and deletion are only possible for groups manually added in QueryPie.
+ </Callout>
+ 
+ <Callout type="important">
+-When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked. Group deletion cannot be undone, so please exercise caution when executing.
+-</Callout>
++When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked. Group deletion cannot be undone, so please proceed with caution.
++</Callout>
+\ No newline at end of file
+diff --git a/src/content/en/administrator-manual/general/workflow-management/approval-rules.mdx b/src/content/en/administrator-manual/general/workflow-management/approval-rules.mdx
+index 2c4ffce3..d7dccd7f 100644
+--- a/src/content/en/administrator-manual/general/workflow-management/approval-rules.mdx
++++ b/src/content/en/administrator-manual/general/workflow-management/approval-rules.mdx
+@@ -2,6 +2,8 @@
+ title: 'Approval Rules'
+ ---
+ 
++import { Callout } from 'nextra/components'
++
+ # Approval Rules
+ 
+ ### Overview
+@@ -63,7 +65,13 @@ Administrator > General > Workflow Management > Approval Rules > Add Approval Ru
+     * **Reviewer designation methods:**
+         * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers. Users submitting approvals with this rule cannot change reviewers.
+         * Allow Assignee selection (All Users): Allow approval submitters to directly select reviewers from all active users.
++        * Allow Assignee selection (Admin Only): Only users with administrator privileges can be selected.
+         * Connection Owner and Server Owner cannot be designated as fixed reviewers.
++
++<Callout type="info">
++In 11.3.0, the default "Web App Just In Time Access Request" Approval Rule has been changed to allow reviewer designation.
++</Callout>
++
+ * **Urgent Mode**: Decide whether to allow post-approval (Urgent Mode) under this approval rule.
+     * Default is disallowed (Off), and can be turned On/Off later through Approval Rule modification.
+     * This option is displayed only when post-approval is allowed in Workflow Configurations.
+diff --git a/src/content/en/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx b/src/content/en/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+index 654153fe..b91f1102 100644
+--- a/src/content/en/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
++++ b/src/content/en/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+@@ -17,15 +17,26 @@ To connect remotely to Windows Server, you must install QueryPie Server Agent. A
+ ![image-20240728-163032.png](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png)
+ </figure>
+ 
+-1. Access the Server Agent download page.
+-    1. You can access the Server Agent download page by adding `/for-agent/server-agent/download` after the installed QueryPie domain address.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
+-2. Login to QueryPie is required for agent installation.
+-3. Click the Windows button in the center of the screen to download the compressed file.
+-4. Extract the compressed file on the Windows server to be installed. The compressed file contains the following two files.
++* Access the Server Agent download page.
++    * You can access the Server Agent download page by adding `/for-agent/server-agent/download` after the installed QueryPie domain address.<br/>e.g. `https://sac.querypie.io/for-agent/server-agent/download`
++
++<Callout type="info">
++In 11.3.0, administrators can also download server agents through the UI (the `Download Server Agent` button on the Admin &gt; Servers &gt; Connection Management &gt; RDP Server Agent page). You can still download using the existing download link page. (Use this when non-QueryPie users need to download agents externally)
++<figure data-layout="center" data-align="center">
++![RDP Server Agent Download Button Provided](/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20251010-085601.png)
++<figcaption>
++RDP Server Agent Download Button Provided
++</figcaption>
++</figure>
++</Callout>
++
++* Login to QueryPie is required for agent installation.
++* Click the Windows button in the center of the screen to download the compressed file.
++* Extract the compressed file on the Windows server to be installed. The compressed file contains the following two files.
+     1. QueryPie Server Access Control_(QueryPie Version)_Setup
+     2. CONFIG
+-5. Place both files in the same path, then run the QueryPie Server Access Control_(QueryPie Version)_Setup file.
+-6. Install the file according to the instructions. 
++* Place both files in the same path, then run the QueryPie Server Access Control_(QueryPie Version)_Setup file.
++* Install the file according to the instructions.
+ 
+ <Callout type="info">
+ **CONFIG File Description**
+diff --git a/src/content/en/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx b/src/content/en/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+index ad0087bd..278c4200 100644
+--- a/src/content/en/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
++++ b/src/content/en/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+@@ -65,6 +65,17 @@ You can create server groups by entering the information below. Some items can b
+     * In the popup window, select individual servers to add to the server group and click the `Add` button.
+         * You can filter servers with various conditions using the filter(:filter:) function in the popup.
+         * You can check the servers finally added to the server group.
++
++<Callout type="info">
++In 11.3.0, you can now filter targets using tags in the popup for adding servers to Server groups.
++<figure data-layout="center" data-align="center">
++![Example of filtering targets to add to Server Group using tags](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20251010-084037.png)
++<figcaption>
++Example of filtering targets to add to Server Group using tags
++</figcaption>
++</figure>
++</Callout>
++
+ * Even if you delete tags related to manually added servers in the Server Tags of Information, manually added servers are not excluded from the server group. Only manual deletion through the `Delete` button that appears after selecting the checkbox in the Servers table is possible.
+ * You can check account information for Servers and Accounts added to the Server Group through Test Connection.
+     * To use Test Connection, you must add at least 1 Server and Account to the Server Group. 

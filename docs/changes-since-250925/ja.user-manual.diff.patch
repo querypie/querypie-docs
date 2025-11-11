@@ -1,0 +1,184 @@
+diff --git a/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx b/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
+index 9a5fc168..ee95aef7 100644
+--- a/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
++++ b/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
+@@ -60,12 +60,18 @@ A. 権限の状態が変更されたり接続が許可されていない時間
+ <Callout type="info">
+ **Q. RDPを通じたWindows Server接続はどのようにしますか？**
+ 
+-A. QueryPieではQueryPie User Agentを通じてのみWindows Serverに接続が可能です。接続方法は以下の通りです。
++A. QueryPieではQueryPie Agent (User Agent / Multi-Agent)を通じてのみWindows Serverに接続が可能です。接続方法は以下の通りです。
+ 
+-QueryPie User Agentインストール後、権限を付与されたWindows Serverを右クリック、`Open Connection with`メニューをクリック後、PCにインストールされたRDP Clientをクリックして接続します。
++QueryPie Agent (User Agent / Multi-Agent)インストール後、権限を付与されたWindows Serverを右クリック、`Open Connection with`メニューをクリック後、PCにインストールされたRDP Clientをクリックして接続します。
+ 
+ * Windows PCではPCに基本インストールされたMSTSCプログラムをサポートします。
+ * macOSはRDP接続のために[Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)をダウンロードする必要があります。
++
++11.3.0からMulti-AgentでCustom Accountを選択してアカウントのパスワードを手動で入力して接続できるよう変更されました。<br/>
++
++<figure data-layout="center" data-align="center">
++![image-20251010-095324.png](/user-manual/server-access-control/connecting-to-authorized-servers/image-20251010-095324.png)
++</figure>
+ </Callout>
+ 
+ <Callout type="info">
+diff --git a/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx b/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
+index d3947ce4..a50ebaae 100644
+--- a/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
++++ b/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
+@@ -17,9 +17,9 @@ QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role
+ </figcaption>
+ </figure>
+ 
+-1. Web Applicationsメニューへの初回アクセス時に表示されるRole選択画面で、接続に使用するRoleを選択します。
+-    1. Roleに応じてWebサイトアクセス権限が異なり、付与されたRoleがない場合はWorkflowに移動します。
+-    2. Just In Time Roleを選択した場合、自分がWeb AppsのOwnerまたはMemberに指定されたWeb Appが表示され、対象Web Appに接続する前にWorkflowの`Web App Just-In-Time Access Request`を通じて承認を受け、承認を受けた時間中のみ接続できます。
++* Web Applicationsメニューへの初回アクセス時に表示されるRole選択画面で、接続に使用するRoleを選択します。
++    * Roleに応じてWebサイトアクセス権限が異なり、付与されたRoleがない場合はWorkflowに移動します。
++    * Just In Time Roleを選択した場合、自分がWeb AppsのOwnerまたはMemberに指定されたWeb Appが表示され、対象Web Appに接続する前にWorkflowの`Web App Just-In-Time Access Request`を通じて承認を受け、承認を受けた時間中のみ接続できます。
+ 
+ ### Webアプリケーション（Webサイト）への接続
+ 
+diff --git a/src/content/ja/user-manual/workflow/requesting-db-access.mdx b/src/content/ja/user-manual/workflow/requesting-db-access.mdx
+index f24b6f4d..71703907 100644
+--- a/src/content/ja/user-manual/workflow/requesting-db-access.mdx
++++ b/src/content/ja/user-manual/workflow/requesting-db-access.mdx
+@@ -49,6 +49,10 @@ import { Callout } from 'nextra/components'
+ 
+ #### 4. 事後承認で要求送信
+ 
++<Callout type="info">
++11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
++</Callout>
++
+ * 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。 
+ * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
+ 
+diff --git a/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx b/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
+index e54c2011..6232b1ab 100644
+--- a/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
++++ b/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
+@@ -48,6 +48,10 @@ import { Callout } from 'nextra/components'
+ 
+ #### 4. 事後承認で要求を送信
+ 
++<Callout type="info">
++11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
++</Callout>
++
+ * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+ * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+ 
+@@ -71,11 +75,10 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
+         *  **Column :**  1個以上のカラムを選択でき、最大30個まで選択できます。
+     *  **Tag**  : もし申請者が特定の経路に政策がタグベースで設定されていることを知っており、どのタグが付与されているかを知っている場合、タグを指定して申請できます。一般的に申請者が政策がタグで設定されているかどのタグが使用されているかを知らないため、タグで申請する時はまず管理者の助けを受ける必要があります。
+         *  **Tags**  : Data scopeをタグで指定した場合、政策で使用されたタグを使用できます。
+-*  **Data Access Expiration**  : 要求するデータアクセス許可期間を設定できます。
+-    1. Time Duration選択時、分単位で入力可能で最小は1分、最大は44,640分で要求できます。
+-        1. Time Durationの場合、承認時点を基準に動作します。
+-        2. Urgent Modeを使用する場合、Request登録時点を基準にデータにアクセスできます。
+-    2. End Date選択時、日付と時間を基準に選択可能で、最小は現在時間、最大は180日で要求できます。
++*  **Policy Exception Schedule**  : 政策例外が適用される期間を設定して要求できます。最大政策例外の有効期間は管理者が設定した最大期間(Maximum Policy Exception Period)を超えて申請できません。
++    * Specific Period : 開始時点と終了時点を指定します。時間単位で指定できます。
++    * Time Duration : 開始時点から指定した時間まで有効になるよう指定できます。
++    * Start On Approvalオプション : Specific PeriodまたはTime duration二つの方法すべてStart On Approvalオプションを有効化(チェック)する場合、承認時点から効力が発生します。一般的に要求する人が承認者の承認時点を知ることができないため、このオプションを使用することは推奨しません。(承認期限切れ期間制約事項が発生する場合、再要求しなければならない場合が発生する可能性があるためです。) Urgent Modeを使用する場合も承認時点は事後でいつ承認されるか分からないため、可能な限りStart On Approvalオプションは必ず使用しなければならない特殊な状況を除いて推奨しません。
+ *  **Reason for Request**  : 政策例外申請理由を入力します。最大1000文字まで入力できます。
+ * ページ下部の`Submit`ボタンを押して要求を申請します。<br/>
+ 
+diff --git a/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx b/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
+index d4b431d7..f6755b2a 100644
+--- a/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
++++ b/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
+@@ -48,6 +48,10 @@ DACで「Data Access」政策によってアクセスが制限されたテーブ
+ 
+ #### 4. 事後承認で要求を送信
+ 
++<Callout type="info">
++11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
++</Callout>
++
+ * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+ * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+ 
+@@ -62,16 +66,19 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
+ 
+ #### 5. 要求詳細情報の入力
+ 
++<Callout type="info">
++11.3.0で効力期限切れ日を指定する方式が変更されました。<br/>政策例外申請は共通で「 **Policy Exception Schedule** 」で項目名が統一され、効力開始時点と終了時点を明示的に指定できるよう改善されました。
++</Callout>
++
+ *  **Title**  : 要求タイトルを入力します。
+ *  **Connection**  : アクセス許可を要求する対象テーブルまたはカラムが属する接続を選択します。
+ *  **Table :**  対象テーブルを選択します。
+ *  **Column :**  1個以上のカラムを選択でき、最大30個まで選択できます。
+-*  **Data Access Expiration**  : 要求するデータアクセス許可期間を設定できます。
+-    1. Time Duration選択時、分単位で入力可能で最小は1分、最大は44,640分で要求できます。
+-        1. Time Durationの場合、承認時点を基準に動作します。
+-        2. Urgent Modeを使用する場合、Request登録時点を基準にデータにアクセスできます。
+-    2. End Date選択時、日付と時間を基準に選択可能で、最小は現在時間、最大は30日で要求できます。
+-*  **Comment**  : アクセス許可要求理由を入力します。
++*  **Policy Exception Schedule**  : Data Access政策例外が適用される期間を設定して要求できます。最大政策例外の有効期間は管理者が設定した最大期間(Maximum Policy Exception Period)を超えて申請できません。
++    * Specific Period : 開始時点と終了時点を指定します。時間単位で指定できます。
++    * Time Duration : 開始時点から指定した時間まで有効になるよう指定できます。
++    * Start On Approvalオプション : Specific PeriodまたはTime duration二つの方法すべてStart On Approvalオプションを有効化(チェック)する場合、承認時点から効力が発生します。一般的に要求する人が承認者の承認時点を知ることができないため、このオプションを使用することは推奨しません。(承認期限切れ期間制約事項が発生する場合、再要求しなければならない場合が発生する可能性があるためです。) Urgent Modeを使用する場合も承認時点は事後でいつ承認されるか分からないため、可能な限りStart On Approvalオプションは必ず使用しなければならない特殊な状況を除いて推奨しません。
++*  **Reason for Request**  : アクセス許可要求理由を入力します。
+ * ページ下部の`Submit`ボタンを押して要求を申請します。
+ 
+ <figure data-layout="center" data-align="center">
+diff --git a/src/content/ja/user-manual/workflow/requesting-server-access.mdx b/src/content/ja/user-manual/workflow/requesting-server-access.mdx
+index d794f645..4ce46aad 100644
+--- a/src/content/ja/user-manual/workflow/requesting-server-access.mdx
++++ b/src/content/ja/user-manual/workflow/requesting-server-access.mdx
+@@ -49,6 +49,10 @@ import { Callout } from 'nextra/components'
+ 
+ #### 4. 事後承認で要求を送信
+ 
++<Callout type="info">
++11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
++</Callout>
++
+ * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+ * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+ 
+diff --git a/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx b/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
+index a67f0793..51be0b36 100644
+--- a/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
++++ b/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
+@@ -48,6 +48,10 @@ DACでマスキング政策によってマスキングされた項目に対し
+ 
+ #### 4. 事後承認で要求を送信
+ 
++<Callout type="info">
++11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
++</Callout>
++
+ * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
+ * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
+ 
+@@ -62,15 +66,18 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
+ 
+ #### 5. 要求詳細情報の入力
+ 
++<Callout type="info">
++11.3.0で効力期限切れ日を指定する方式が変更されました。<br/>政策例外申請は共通で「 **Policy Exception Schedule** 」で項目名が統一され、効力開始時点と終了時点を明示的に指定できるよう改善されました。
++</Callout>
++
+ *  **Title**  : 要求タイトルを入力します。
+ *  **Connection**  : マスキング解除を要求する対象カラムが属する接続を選択します。
+ *  **Column :**  1個以上のカラムを選択でき、最大30個まで選択できます。
+-*  **Unmasking Expiration**  : マスキング解除を要求する期間を設定できます。
+-    1. Time Duration選択時、分単位で入力可能で最小は1分、最大は44,640分で要求できます。
+-        1. Time Durationの場合、承認時点を基準に動作します。
+-        2. Urgent Modeを使用する場合、Request登録時点を基準にマスキング解除されたデータを確認できます。
+-    2. End Date選択時、日付と時間を基準に選択可能で、最小は現在時間、最大は30日で要求できます。
+-*  **Comment**  : マスキング解除要求理由を入力します。
++*  **Policy Exception Schedule**  : マスキング解除が適用される期間を設定して要求できます。最大政策例外の有効期間は管理者が設定した最大期間(Maximum Policy Exception Period)を超えて申請できません。
++    * Specific Period : 開始時点と終了時点を指定します。時間単位で指定できます。
++    * Time Duration : 開始時点から指定した時間まで有効になるよう指定できます。
++    * Start On Approvalオプション : Specific PeriodまたはTime duration二つの方法すべてStart On Approvalオプションを有効化(チェック)する場合、承認時点から効力が発生します。一般的に要求する人が承認者の承認時点を知ることができないため、このオプションを使用することは推奨しません。(承認期限切れ期間制約事項が発生する場合、再要求しなければならない場合が発生する可能性があるためです。) Urgent Modeを使用する場合も承認時点は事後でいつ承認されるか分からないため、可能な限りStart On Approvalオプションは必ず使用しなければならない特殊な状況を除いて推奨しません。
++*  **Reason for Request**  : マスキング解除要求理由を入力します。
+ * ページ下部の`Submit`ボタンを押して要求を申請します。
+ 
+ <figure data-layout="center" data-align="center">

@@ -1,0 +1,213 @@
+diff --git a/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx b/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
+index 1521c246..e9b91daa 100644
+--- a/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
++++ b/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
+@@ -6,6 +6,7 @@ import { Callout } from 'nextra/components'
+ 
+ # Connecting to Authorized Servers
+ 
++
+ ### Overview
+ 
+ Users can view the list of authorized servers sorted by server, server group, or Cloud Provider at a glance. After selecting a server to connect to, users can execute commands and perform tasks through web terminal and web SFTP provided through web browsers regardless of operating system.
+@@ -59,12 +60,18 @@ A. Connection may fail if the permission status has changed or if you attempt to
+ <Callout type="info">
+ **Q. How do I connect to Windows Server through RDP?**
+ 
+-A. In QueryPie, you can only connect to Windows Server through QueryPie User Agent. The connection method is as follows:
++A. In QueryPie, you can connect to Windows Server through the QueryPie Agent (User Agent / Multi-Agent) only. The connection method is as follows:
+ 
+-After installing QueryPie User Agent, right-click on the authorized Windows Server, click the `Open Connection with` menu, then click the RDP Client installed on your PC to connect.
++After installing the QueryPie Agent (User Agent / Multi-Agent), right-click the authorized Windows Server, click the `Open Connection with` menu, and then click the RDP Client installed on your PC to connect.
+ 
+ * Windows PC supports the MSTSC program installed by default on the PC.
+ * macOS needs to download [Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12) for RDP access.
++
++From version 11.3.0, in Multi-Agent, you can select a Custom Account and manually enter the account password to connect.<br/>
++
++<figure data-layout="center" data-align="center">
++![image-20251010-095324.png](/user-manual/server-access-control/connecting-to-authorized-servers/image-20251010-095324.png)
++</figure>
+ </Callout>
+ 
+ <Callout type="info">
+diff --git a/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx b/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
+index b11d2856..84ab67f5 100644
+--- a/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
++++ b/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
+@@ -6,9 +6,9 @@ title: 'Accessing Web Applications (Websites)'
+ 
+ ### Overview
+ 
+-Users can check the list of web applications (websites) for which they have been granted access permissions and safely work by accessing each web application or SaaS platform. To access, you must first have a Role with access permissions granted to you. You need to select an appropriate Role or apply for web application access permissions through Workflow if you don't have a Role.
++Users can view the list of web applications (websites) they have been granted access to and safely work by connecting to each web application or SaaS platform. To access, you must first have a Role with access permissions. Select an appropriate Role or, if you don't have a Role, request permission to access web applications through Workflow.
+ 
+-### Selecting Role
++### Selecting a Role
+ 
+ <figure data-layout="center" data-align="center">
+ ![QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role](/user-manual/web-access-control/accessing-web-applications-websites/image-20250629-151725.png)
+@@ -17,9 +17,9 @@ QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role
+ </figcaption>
+ </figure>
+ 
+-1. On the Role selection screen displayed when first accessing the Web Applications menu, select the Role you want to use for access.
+-    1. Website access permissions vary by Role, and if you don't have a granted Role, you are redirected to Workflow.
+-    2. When selecting Just In Time Role, Web Apps where you are designated as Owner or Member are displayed, and you can only access the target Web App after receiving approval through Workflow's `Web App Just-In-Time Access Request` and only during the approved time.
++* On the Role selection screen displayed when first accessing the Web Applications menu, select the Role you want to use for access.
++    * Web access permissions vary by Role, and if you don't have an assigned Role, you will be redirected to Workflow.
++    * When selecting a Just In Time Role, you will see Web Apps where you are designated as Owner or Member, and you must receive approval through the `Web App Just-In-Time Access Request` in Workflow before accessing the target Web App. You can only access for the approved duration.
+ 
+ ### Accessing Web Applications (Websites)
+ 
+@@ -30,13 +30,13 @@ QueryPie Web &gt; Web Access Control &gt; Web Apps
+ </figcaption>
+ </figure>
+ 
+-1. After selecting a Role, you can check the list of Web Apps that the current user can access on the screen.
+-2. Click the "..." in the top right inside one Web App icon in the list to open the right panel, displaying web application details and access options.
+-    1. **Expiration Date**: The expiration date and time of the Role is displayed.
+-    2. **Base URL**: The base URL of the web application is displayed.
+-    3. **Description**: A description of the web application is displayed.
+-    4. **Tags**: Tags assigned to the web application are displayed.
+-    5. **User Activity Recording**: In this section, you can check the user activity items set to be recorded.
++1. After selecting a Role, you can view the list of Web Apps that the current user can access on the screen.
++2. Click the "..." in the top right of a Web App icon in the list to open the right panel, which displays web application details and access options.
++    1. **Expiration Date**: Shows the expiration date and time of the Role.
++    2. **Base URL**: Shows the base URL of the web application.
++    3. **Description**: Shows the description of the web application.
++    4. **Tags**: Shows the tags assigned to the web application.
++    5. **User Activity Recording**: In this section, you can view the user activity items configured to be recorded.
+         1. Navigated: Page navigation records
+         2. Mouse Clicked: Mouse click records
+         3. Clipboard Copied: Clipboard copy records
+@@ -44,6 +44,6 @@ QueryPie Web &gt; Web Access Control &gt; Web Apps
+         5. File Downloaded: File download records
+         6. Value Changed: Value change records
+         7. Scrolled Up/Down: Scroll records
+-        8. Print Initiated: Print start records
++        8. Print Initiated: Print initiation records
+     6. **Open**: Click the **Open** button at the bottom to access the selected web application.
+-3. Click on a Web App in the list to access that Web App.
++3. Click on a Web App in the list to access that Web App.
+\ No newline at end of file
+diff --git a/src/content/en/user-manual/workflow/requesting-db-access.mdx b/src/content/en/user-manual/workflow/requesting-db-access.mdx
+index 3d2a735c..18b78b73 100644
+--- a/src/content/en/user-manual/workflow/requesting-db-access.mdx
++++ b/src/content/en/user-manual/workflow/requesting-db-access.mdx
+@@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
+ 
+ You can request Privilege for DB connections that need access by following the steps below. After approval is completed, permissions are immediately granted, and you can access the granted connections through the SQL Editor in QueryPie Web or through Agent.
+ 
++
+ ### Requesting DB Access Request
+ 
+ #### 1. Selecting Approval Rules
+@@ -48,6 +49,10 @@ You can request Privilege for DB connections that need access by following the s
+ 
+ #### 4. Sending Request with Post-Approval
+ 
++<Callout type="info">
++From version 11.3.0, when sending a request in post-approval mode, you can no longer specify the Approval Expiration Date.
++</Callout>
++
+ * If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
+ * After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.
+ 
+diff --git a/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx b/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
+index 2afc6744..464d87f6 100644
+--- a/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
++++ b/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
+@@ -71,10 +71,16 @@ A. If you select an approval rule where the administrator has not allowed Urgent
+         * **Column**: You can select one or more columns, up to a maximum of 30 columns.
+     * **Tag**: If the applicant knows that a policy is set based on tags for a specific path and knows which tags are assigned, they can apply by specifying tags. Generally, since applicants do not know whether policies are set with tags or which tags are used, they need to get help from administrators first when applying with tags.
+         * **Tags**: When Data scope is specified as tags, you can use the tags used in the policy.
+-* **Data Access Expiration**: You can set the period for which you want to request data access permission.
+-    1. When selecting Time Duration, you can input in minutes, with a minimum of 1 minute and a maximum of 44,640 minutes.
+-        1. For Time Duration, it operates based on the approval time.
+-        2. When using Urgent Mode, you can access data based on the request registration time.
+-    2. When selecting End Date, you can select based on date and time, with a minimum of the current time and a maximum of 180 days.
+-* **Reason for Request**: Enter the reason for requesting policy exception. You can enter up to 1000 characters.
+-* Click the `Submit` button at the bottom of the page to submit the request.<br/>
++* **Policy Exception Schedule**: You can set the period during which the policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
++    * Specific Period: Specify the start and end times. You can specify in hours.
++    * Time Duration: Specify so that it is valid for the set time from the start time.
++    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
++* **Reason for Request**: Enter the reason for requesting policy exception.
++* Click the `Submit` button at the bottom of the page to submit the request.
++
++<figure data-layout="center" data-align="center">
++![User &gt; Workflow &gt; Submit Request &gt; DB Policy Exception Request](/user-manual/workflow/requesting-db-policy-exception/image-20251009-144630.png)
++<figcaption>
++User &gt; Workflow &gt; Submit Request &gt; DB Policy Exception Request
++</figcaption>
++</figure>
+diff --git a/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx b/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
+index 8b30f7d8..3644ef6a 100644
+--- a/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
++++ b/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
+@@ -62,20 +62,23 @@ A. If you select an approval rule where the administrator has not allowed Urgent
+ 
+ #### 5. Entering Request Details
+ 
++<Callout type="info">
++From version 11.3.0, the way to specify the expiration has changed.<br/>For policy exception requests, the field name is unified as "<strong>Policy Exception Schedule</strong>", and you can explicitly specify the start and end times of validity.
++</Callout>
++
+ * **Title**: Enter the request title.
+ * **Connection**: Select the connection that contains the table or column for which you want to request access permission.
+ * **Table**: Select the target table.
+ * **Column**: You can select one or more columns, up to a maximum of 30 columns.
+-* **Data Access Expiration**: You can set the period for which you want to request data access permission.
+-    1. When selecting Time Duration, you can input in minutes, with a minimum of 1 minute and a maximum of 44,640 minutes.
+-        1. For Time Duration, it operates based on the approval time.
+-        2. When using Urgent Mode, you can access data based on the request registration time.
+-    2. When selecting End Date, you can select based on date and time, with a minimum of the current time and a maximum of 30 days.
+-* **Comment**: Enter the reason for requesting access permission.
++* **Policy Exception Schedule**: You can set the period during which the Data Access policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
++    * Specific Period: Specify the start and end times. You can specify in hours.
++    * Time Duration: Specify so that it is valid for the set time from the start time.
++    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
++* **Reason for Request**: Enter the reason for requesting access permission.
+ * Click the `Submit` button at the bottom of the page to submit the request.
+ 
+ <figure data-layout="center" data-align="center">
+-![User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary](/user-manual/workflow/requesting-restricted-data-access/image-20250626-225723.png)
++![User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary](/user-manual/workflow/requesting-restricted-data-access/image-20251009-140741.png)
+ <figcaption>
+ User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary
+ </figcaption>
+diff --git a/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx b/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
+index 360699ac..c00e46c6 100644
+--- a/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
++++ b/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
+@@ -62,19 +62,22 @@ A. If you select an approval rule where the administrator has not allowed Urgent
+ 
+ #### 5. Entering Request Details
+ 
++<Callout type="info">
++From version 11.3.0, the way to specify the expiration has changed.<br/>For policy exception requests, the field name is unified as "<strong>Policy Exception Schedule</strong>", and you can explicitly specify the start and end times of validity.
++</Callout>
++
+ * **Title**: Enter the request title.
+ * **Connection**: Select the connection that contains the column for which you want to request mask removal.
+ * **Column**: You can select one or more columns, up to a maximum of 30 columns.
+-* **Unmasking Expiration**: You can set the period for which you want to request mask removal.
+-    1. When selecting Time Duration, you can input in minutes, with a minimum of 1 minute and a maximum of 44,640 minutes.
+-        1. For Time Duration, it operates based on the approval time.
+-        2. When using Urgent Mode, you can view unmasked data based on the request registration time.
+-    2. When selecting End Date, you can select based on date and time, with a minimum of the current time and a maximum of 30 days.
+-* **Comment**: Enter the reason for requesting mask removal.
++* **Policy Exception Schedule**: You can set the period during which the mask removal (unmasking) exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
++    * Specific Period: Specify the start and end times. You can specify in hours.
++    * Time Duration: Specify so that it is valid for the set time from the start time.
++    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
++* **Reason for Request**: Enter the reason for requesting mask removal.
+ * Click the `Submit` button at the bottom of the page to submit the request.
+ 
+ <figure data-layout="center" data-align="center">
+-![User &gt; Workflow &gt; Submit Request &gt; Unmasking Request &gt; Request Summary](/user-manual/workflow/requesting-unmasking-mask-removal-request/image-20241103-071004.png)
++![User &gt; Workflow &gt; Submit Request &gt; Unmasking Request &gt; Request Summary](/user-manual/workflow/requesting-unmasking-mask-removal-request/image-20251009-135940.png)
+ <figcaption>
+ User &gt; Workflow &gt; Submit Request &gt; Unmasking Request &gt; Request Summary
+ </figcaption>
