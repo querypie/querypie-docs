@@ -222,11 +222,27 @@ Controls the target in detail by applying conditions for whether to apply resour
         * These subjects must be definable at the Policy-wide level and must be defined to assign at least one.
             * These subjects for Impersonation can be nested with other Policies within one Role.
         * Defines kubernetes-side groups (single or multiple) that can perform permissions on resources specified in Resources.
+          ```
+kubernetesGroups: 
+  - system:masters
+  - default-group-account
+          ```
         * In kubernetesGroups, Querypie User's Group can be entered in reserved word format. In this case, User's Group must be entered without double quotes (") and when users view the Policy, the actual user Group value is displayed.
+          ```
+kubernetesGroups: 
+  - $user.groups
+          ```
 2. `impersonation`: **[OPTIONAL]**
     * When users attempt impersonation (--as, --as-group) in kubectl commands with permissions of specific serviceaccounts, etc. within kubernetes from the client side, defines the call allowance list for this.
         * `users`: Lists values allowed in the "--as" parameter with users/service accounts existing within Kubernetes.
         * `groups`: Lists values allowed in the "--as-group" parameter with group accounts existing within Kubernetes.
+          ```
+impersonation: 
+  users: 
+    - "system:serviceaccount:argocd"
+  groups: 
+    - "system:admin"
+          ```
         * Wildcards are allowed. (`"*"`)
 
 
@@ -248,6 +264,12 @@ Specifies the Resource API list to allow within the cluster API server. Each act
     2. Resources not listed above are also acceptable in policies. 
     3. Even if you grant permissions only to namespace sub-resources, ReadOnly permissions for Namespace are also granted. Therefore, cases where you need to specify the namespace every time when calling resources do not occur. If you want to prevent granting permissions to specific namespaces, you can set access denial for namespace resources in `spec:deny`. 
     4. Multiple resources can be specified in a single policy action. 
+      ```
+ resources:
+   - "pods"
+   - "deployments"
+   - "configmaps"
+      ```
     5. Wildcards are allowed. (`"*"`)
 3. `namespace` : Defines the target namespace. 
     1. By defining namespaces in actions, you can control allowed namespaces within the cluster for each resource. 
@@ -282,8 +304,21 @@ Specifies the Resource API list to allow within the cluster API server. Each act
 `conditions` items can define `resourceTags`, `userAttributes`, `ipAddresses` as conditions. **[OPTIONAL]**
 
 * `resourceTags` : In tag items, you can filter by resource tag keys and values. 
+  ```
+resourceTags: 
+  "region": "ap-northeast-1"
+  "Owner": "Brant"
+  ```
 * `userAttributes` : Specifies user attributes as conditions and restricts the use of permissions defined in the policy only to users whose values match. 
+  ```
+userAttributes: 
+  "countryCode": "KR"
+  "department": "Infra"
+  ```
 * `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. 
+  ```
+ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+  ``` 
 
 
 ### KAC Policy Example

@@ -202,6 +202,18 @@ Enter the web app resource name defined in QueryPie.
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
 2. Multiple web apps can be listed within one `spec`.
+  ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/database-settings/policies"
+      - webApp: "QueryPie Customer Portal"
+        urlPathTags: 
+          access: "admin"
+  ```
 3. Web app names must meet the following conditions.
     * Maximum 120 characters
     * Only alphabetic case-sensitive letters, numbers, and some special symbols (`_`, `-`, `(`, `)`, `[`, `]`) are allowed
@@ -218,11 +230,36 @@ Specifies the sub-paths of specific web app resources to which you want to apply
 1. Only sub-paths registered in Admin &gt; Web App can be registered.
 2. To allow or deny **all** sub-paths that exist in the web app, including Base URL, write `urlPaths: ["*"]`.
     * Example: Block access to all paths of QueryPie Web Admin
+      ```
+spec:
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: ["*"]
+      ```
 3. When entering sub-paths, policies are applied to the entered paths.
     * Sub-paths are listed and multiple can be entered.
     * You can enter wildcards at the end of paths to indicate all paths under specific paths. (Does not include parent paths)
+      ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"     # Specific sub-path
+          - "/general-settings/user-management/*"   # All sub-paths under specific path
+      ```
     * Overlapping paths cannot be entered simultaneously.
         * Example: **Cannot enter simultaneously** `/general-settings/*` and `/general-settings/user-management` of QueryPie Web Admin 
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/*"
+          - "/general-settings/user-management"
+          ``` 
 4. Wildcards cannot be entered in the middle of paths or as part of path names, and regular expressions cannot be entered.
     * `"/*-settings"` (X)
     * `"/*/edit"` (X)
@@ -236,8 +273,18 @@ Specifies sub-paths to allow access based on URL Path tags assigned to each sub-
 1. Tags are case-sensitive and multiple can be entered.
     * When multiple tags with the same Key are entered, they operate with **OR** conditions.
         * Example: Allow access to paths with `access: admin` or `access: user` tags
+          ```
+urlPathTags: 
+  "access": "admin"
+  "access": "user"
+          ```
     * When multiple tags with different Keys are entered, they operate with **AND** conditions.
         * Example: Allow access to paths with both `access: admin` and `type: general` tags
+          ```
+urlPathTags: 
+  "access": "admin"
+  "type": "general"
+          ```
 
 ### Conditions**[OPTIONAL]**
 
@@ -259,8 +306,18 @@ Attribute information is case-sensitive and multiple can be entered.
 
 * When multiple attributes with the same Key are entered, they operate with OR conditions.
     * Example: Allow access for users whose department is PM or QA
+      ```
+userAttributes: 
+  "department": "PM"
+  "department": "QA"
+      ```
 * When multiple attributes with different Keys are entered, they operate with AND conditions.
     * Example: Allow access for users whose department is PM and title is manager
+      ```
+userAttributes: 
+  "department": "PM"
+  "title": "Manager"
+      ```
 
 #### ipAddresses**[OPTIONAL]**
 

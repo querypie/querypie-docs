@@ -1,5 +1,5 @@
 diff --git a/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx b/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
-index 9a5fc168..ee95aef7 100644
+index 9a5fc16..ee95aef 100644
 --- a/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
 +++ b/src/content/ja/user-manual/server-access-control/connecting-to-authorized-servers.mdx
 @@ -60,12 +60,18 @@ A. 権限の状態が変更されたり接続が許可されていない時間
@@ -24,7 +24,7 @@ index 9a5fc168..ee95aef7 100644
  
  <Callout type="info">
 diff --git a/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx b/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
-index d3947ce4..a50ebaae 100644
+index d3947ce..a50ebaa 100644
 --- a/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
 +++ b/src/content/ja/user-manual/web-access-control/accessing-web-applications-websites.mdx
 @@ -17,9 +17,9 @@ QueryPie Web &gt; Web Access Control &gt; Web Apps &gt; Select a Role
@@ -41,7 +41,7 @@ index d3947ce4..a50ebaae 100644
  ### Webアプリケーション（Webサイト）への接続
  
 diff --git a/src/content/ja/user-manual/workflow/requesting-db-access.mdx b/src/content/ja/user-manual/workflow/requesting-db-access.mdx
-index f24b6f4d..71703907 100644
+index f24b6f4..7170390 100644
 --- a/src/content/ja/user-manual/workflow/requesting-db-access.mdx
 +++ b/src/content/ja/user-manual/workflow/requesting-db-access.mdx
 @@ -49,6 +49,10 @@ import { Callout } from 'nextra/components'
@@ -56,7 +56,7 @@ index f24b6f4d..71703907 100644
  * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
  
 diff --git a/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx b/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
-index e54c2011..6232b1ab 100644
+index e54c201..6232b1a 100644
 --- a/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
 +++ b/src/content/ja/user-manual/workflow/requesting-db-policy-exception.mdx
 @@ -48,6 +48,10 @@ import { Callout } from 'nextra/components'
@@ -87,7 +87,7 @@ index e54c2011..6232b1ab 100644
  * ページ下部の`Submit`ボタンを押して要求を申請します。<br/>
  
 diff --git a/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx b/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
-index d4b431d7..f6755b2a 100644
+index d4b431d..f6755b2 100644
 --- a/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
 +++ b/src/content/ja/user-manual/workflow/requesting-restricted-data-access.mdx
 @@ -48,6 +48,10 @@ DACで「Data Access」政策によってアクセスが制限されたテーブ
@@ -128,7 +128,7 @@ index d4b431d7..f6755b2a 100644
  
  <figure data-layout="center" data-align="center">
 diff --git a/src/content/ja/user-manual/workflow/requesting-server-access.mdx b/src/content/ja/user-manual/workflow/requesting-server-access.mdx
-index d794f645..4ce46aad 100644
+index d794f64..4ce46aa 100644
 --- a/src/content/ja/user-manual/workflow/requesting-server-access.mdx
 +++ b/src/content/ja/user-manual/workflow/requesting-server-access.mdx
 @@ -49,6 +49,10 @@ import { Callout } from 'nextra/components'
@@ -143,7 +143,7 @@ index d794f645..4ce46aad 100644
  * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
  
 diff --git a/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx b/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
-index a67f0793..51be0b36 100644
+index a67f079..51be0b3 100644
 --- a/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
 +++ b/src/content/ja/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
 @@ -48,6 +48,10 @@ DACでマスキング政策によってマスキングされた項目に対し

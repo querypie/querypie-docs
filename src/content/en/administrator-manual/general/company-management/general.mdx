@@ -85,40 +85,39 @@ Activate with the Allow users to submit requests in Urgent mode toggle.
 
 ### Attribute-Based Approver Assignment Feature
 
-Activate the Use User Attribute-Based Approval toggle.
+<Callout type="info">
+From 11.4.0, the attribute-based approver assignment feature has been improved to allow specifying multiple attributes.
+* The Use User Attribute-Based Approval option switch has been removed from Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations.
+* Previously, only one Attribute could be specified for attribute-based approver assignment, but now different Attributes can be selected so that approvers with different attributes can be mapped for each approval stage.
+</Callout>
 
-<figure data-layout="center" data-align="center">
-![Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.14.55-AM.png)
-<figcaption>
-Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations
-</figcaption>
-</figure>
-
-This option determines whether to automatically assign approvers based on specific Attributes (e.g., team leader, department head) in user profiles when submitting workflow requests. This allows approval requests to be automatically assigned to responsible parties who meet specific conditions.
+You can automatically assign approvers based on specific Attributes (e.g., team leader, department head) in user profiles.
 
 * Important: 
     * The value of the selected Attribute must contain the QueryPie Login ID of the approver.
-    * Only one approver can be registered for attribute-based approver assignment (only one approver ID can be specified in one Attribute).
-* When the toggle is activated
-    * A dropdown list appears to select an Attribute with DataType identifier that will be the criteria for automatic approver assignment. Administrators must select the Attribute (e.g., teamLeader) to use for approver assignment from this list.
-        * Selected Attribute deletion restriction: When a specific Attribute is selected as the criteria for automatic approver assignment in the above setting, that Attribute cannot be deleted in Administrator &gt; General &gt; Profile Editor by system settings (e.g., deletion checkbox disabled).
-    * When adding new approval rules or modifying existing rules in the Administrator &gt; General &gt; Workflow Management &gt; Approval Rules page, the 'Allow Assignee selection (Attribute-Based)' option is displayed and selectable in the 'Assignee for Approval' item.
-        * When this option is selected, the Attribute set in Workflow Configurations (e.g., teamLeader) is displayed directly below, indicating that the approver is dynamically determined based on that Attribute value.
-        * Integration when self-approval is disabled: If the 'Self Approval (self-approval)' option is disabled in Approval Rules settings, when the approver determined based on Attributes is the requester themselves, that requester cannot be automatically assigned as an approver. In this case, approver assignment may fail or be processed through other routes according to workflow settings or system policies, so caution is needed.
-    * Approval Rules created with Allow Assignee selection (Attribute-Based) are displayed in the User &gt; Workflow submission page.
-* When the toggle is deactivated
-    * The Attribute selection dropdown list in the Administrator &gt; General &gt; Workflow Configurations page is disabled.
-    * When creating or modifying approval rules in the Administrator &gt; General &gt; Workflow Management &gt; Approval Rules page, the 'Allow Assignee selection (Attribute-Based)' option in the 'Assignee for Approval' item is no longer displayed or cannot be selected.
-    * Approval rules previously created using the 'Allow Assignee selection (Attribute-Based)' option are excluded from the approval rule selection list when users submit new workflows.
-        * Note: This does not affect the approval process of workflows already submitted and in progress with that rule.
-        * When administrators try to modify that rule, attribute-based approver assignment related settings may be disabled or reset, and if required input values are missing, saving is not possible and errors are displayed with red borders.
-    * Approval Rules created with Allow Assignee selection (Attribute-Based) are not displayed in the User &gt; Workflow submission page.
+      <figure data-layout="center" data-align="center">
+      ![Admin &gt; General &gt; Users &gt; Detail page &gt; Profile tab<br/>](/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png)
+      <figcaption>
+      Admin &gt; General &gt; Users &gt; Detail page &gt; Profile tab<br/>
+      </figcaption>
+      </figure>
+* In the Administrator &gt; General &gt; Workflow Management &gt; Approval Rules page, when adding new approval rules or modifying existing rules, select 'Allow Assignee selection (Attribute-Based)' in the 'Assignee for Approval' item, then specify the Attribute (e.g., teamLeader) to map with the approver.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251110-030113.png](/administrator-manual/general/company-management/general/image-20251110-030113.png)
+  </figure>
+    * Integration when self-approval is disabled: If the 'Self Approval (self-approval)' option is disabled in Approval Rules settings, when the approver determined based on Attributes is the requester themselves, that requester cannot be automatically assigned as an approver. In this case, approver assignment may fail or be processed through other routes according to workflow settings or system policies, so caution is needed.
 * Notification when Attribute value is missing
     * If the corresponding Attribute value is empty in the submitter's User Profile (i.e., no approver Login ID is specified), a notification modal with the following content is displayed when submitting workflows and request submission is interrupted. Submitters must contact administrators to set the Attribute value in their profile.
         * Error message example: 
+          <figure data-layout="center" data-align="center">
+          ![image-20250508-022114.png](/administrator-manual/general/company-management/general/image-20250508-022114.png)
+          </figure>
 * When Attribute value exists but the corresponding user is deactivated
     * If the approver specified by the corresponding Attribute value in the submitter's User Profile is deactivated, the specified approver is not displayed in the Approver field when submitting workflows, and a notification modal with the following content is displayed and request submission is interrupted.
         * Error message example:
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-06-16-at-10.30.14-AM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.30.14-AM.png)
+          </figure>
 
 ### Attribute-Based Workflow Menu Hiding Feature (Use User Attribute to Hide Workflow Menu)
 
@@ -137,7 +136,7 @@ This is a feature to hide the Workflow menu from the user dashboard based on spe
 ### Allow Delegated Approval (Enable/Disable)
 
 <Callout type="info">
-The option to enable/disable delegated approval was added in 11.3.0.
+The option to enable/disable delegated approval was added in 11.3.0.<br/>From 11.4.0, audit logs are recorded for user approval delegation assignment/removal events. These logs can be queried using the External API (/api/external/v2/workflows/approval-delegations/logs).
 </Callout>
 
 This option allows administrators to enable or disable delegated approval, a feature that delegates the approver role to another user for a certain period. If disabled, the Approver setting menu will not be displayed on the user preferences screen.

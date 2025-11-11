@@ -174,8 +174,15 @@ Therefore, when accessing macOS servers through QueryPie, users must directly en
 
 <Callout type="info">
 **When setting Roles in Vault,**
+
 * You must enter the following values in **Default extensions**.
-    * 
+```
+{
+"permit-port-forwarding": "",
+"permit-pty": ""
+}
+```
+
 * When setting **TTL / Max TTL**, set it to 60 or higher.
     * In QueryPie, the TTL (Time To Live) of certificates is 60 seconds.
 * Set **Signing Algorithm** to ras-sha2-256.

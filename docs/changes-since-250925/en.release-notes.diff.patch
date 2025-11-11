@@ -1,6 +1,6 @@
 diff --git a/src/content/en/release-notes/1130.mdx b/src/content/en/release-notes/1130.mdx
 new file mode 100644
-index 00000000..3a550fb0
+index 0000000..3a550fb
 --- /dev/null
 +++ b/src/content/en/release-notes/1130.mdx
 @@ -0,0 +1,59 @@
@@ -64,7 +64,7 @@ index 00000000..3a550fb0
 +
 +
 diff --git a/src/content/en/release-notes/_meta.ts b/src/content/en/release-notes/_meta.ts
-index f8677215..5ffccf47 100644
+index f867721..5ffccf4 100644
 --- a/src/content/en/release-notes/_meta.ts
 +++ b/src/content/en/release-notes/_meta.ts
 @@ -1,4 +1,5 @@

@@ -1,6 +1,6 @@
 diff --git a/src/content/ja/release-notes/1130.mdx b/src/content/ja/release-notes/1130.mdx
 new file mode 100644
-index 00000000..f57f7b82
+index 0000000..f57f7b8
 --- /dev/null
 +++ b/src/content/ja/release-notes/1130.mdx
 @@ -0,0 +1,57 @@
@@ -62,7 +62,7 @@ index 00000000..f57f7b82
 +* [WAC] Workflow Web Application JIT Request様式およびDefault RuleにReviewerを追加できるよう改善 
 +* [WAC] RootCA証明書をアップロードした後、再起動が必要だというバナー表示 
 diff --git a/src/content/ja/release-notes/_meta.ts b/src/content/ja/release-notes/_meta.ts
-index f8677215..5ffccf47 100644
+index f867721..5ffccf4 100644
 --- a/src/content/ja/release-notes/_meta.ts
 +++ b/src/content/ja/release-notes/_meta.ts
 @@ -1,4 +1,5 @@

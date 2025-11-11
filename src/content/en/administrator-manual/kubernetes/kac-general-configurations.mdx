@@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 Starting from 10.3.0, KAC-related settings previously under Administrator > General > Security have been moved to each service menu under General > Configurations.
+Starting from 11.4.0, the Maximum Access Duration option has been added to specify the maximum period for user privilege requests and administrator privilege grants.
 </Callout>
 
 ### Kubernetes access control settings
@@ -15,8 +16,13 @@ Starting from 10.3.0, KAC-related settings previously under Administrator > Gene
 Provides settings for security in container-based environments, such as Kubernetes cluster access control, permission management, and session policies.
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240726-152035.png](/administrator-manual/kubernetes/kac-general-configurations/screenshot-20240726-152035.png)
+![Kubernetes Configurations options](/administrator-manual/kubernetes/kac-general-configurations/image-20251107-090909.png)
+<figcaption>
+Kubernetes Configurations options
+</figcaption>
 </figure>
 
 * Idle Session Timeout (Minutes): Pod session timeout (Default: 15)
     * Specify idle time when connecting sessions via exec, port-forward, or attach
+* Maximum Access Duration: Option to specify the maximum period for privilege grants. You cannot create privilege requests exceeding the specified period, and administrators also cannot grant privileges exceeding this period. When this period expires, privileges are automatically revoked. 
+    * Minimum: 1, Maximum: 9999

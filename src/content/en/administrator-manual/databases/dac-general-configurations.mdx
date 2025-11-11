@@ -67,7 +67,6 @@ For detailed description, please refer to [Connecting with Web SQL Editor](../..
 *  **Privilege Deactivation Period** : Long-term unused criteria period for DB privilege expiration (Default: 90 days)
 *  **Maximum Access Duration** : Maximum period for privilege requests and assignments
     * Cannot set expiration dates exceeding the specified period when requesting DB Access Request
-
 *  **Display the first 10 rows in Query Audit** : Query Audit SELECT statement execution result display method setting (Default: Off, when set to On, only the first 10 rows are displayed instead of showing all results)
 
 <figure data-layout="center" data-align="center">
@@ -94,7 +93,6 @@ Queries blocked by Restricted Statement policies are blocked from execution even
 
 *  **Justification Length**  : When "User Action Purpose Required" option is activated in Connection settings or reason input is forced by Ledger table management policies, reason input must be made through Web Editor or Agent. Administrators specify the minimum and maximum values for the number of characters entered in the input field.
     * The minimum input value is 1 and the maximum value is 1000.<br/>
-
 *  **Query Annotation**  : Automatically records annotations specified by administrators when performing queries. When the feature is activated, annotations are recorded using the following 3 templates. As of 10.4.0, limited to Redshift support.
     * User Name: `{{userName}}` : Display Name of the user who performed the query.
     * Login ID: `{{loginId}}` : Login ID of the user who performed the query.
