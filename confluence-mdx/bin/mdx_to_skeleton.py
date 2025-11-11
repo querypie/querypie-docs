@@ -88,6 +88,7 @@ def extract_urls(text: str) -> Tuple[str, List[ProtectedSection]]:
     
     # Pattern to match URLs in markdown links and images
     # Match [text](url) or ![alt](url)
+    # For images, we preserve the URL but will process alt text later
     pattern = r'(!?\[[^\]]*\]\()([^)]+)(\))'
     
     def replace_url(match):
@@ -95,8 +96,16 @@ def extract_urls(text: str) -> Tuple[str, List[ProtectedSection]]:
         prefix = match.group(1)  # [text]( or ![alt](
         url = match.group(2)
         suffix = match.group(3)  # )
-        # Only preserve URLs that look like paths or full URLs
-        if url.startswith('/') or '://' in url or url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')):
+        # For image links with path-like URLs, preserve the URL as-is
+        # We'll process the alt text separately
+        is_image = prefix.startswith('!')
+        is_path_url = url.startswith('/') or '://' in url or url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'))
+        
+        if is_image and is_path_url:
+            # For images with path URLs, keep URL as-is, alt text will be processed later
+            return match.group(0)
+        elif is_path_url:
+            # For regular links with path URLs, preserve URL
             placeholder_counter += 1
             placeholder = f"__URL_{placeholder_counter}__"
             protected = ProtectedSection(url, placeholder)
@@ -207,9 +216,39 @@ def process_markdown_line(line: str) -> str:
 def replace_text_in_content(text: str) -> str:
     """
     Replace text content with _TEXT_ while preserving markdown formatting markers.
+    Process sentences: one sentence becomes _TEXT_. (comma is included in _TEXT_)
     """
     if not text.strip():
         return text
+    
+    # First, protect image links: replace alt text with _TEXT_ but preserve URL
+    # Pattern: ![alt text](url) where url is a path
+    # We need to protect these so they don't get processed again
+    image_links = []
+    placeholder_counter = 0
+    
+    def protect_image_link(match):
+        nonlocal placeholder_counter
+        alt_text = match.group(1)
+        url = match.group(2)
+        # If URL is a path (starts with / or is an image file), preserve it
+        if url.startswith('/') or '://' in url or url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')):
+            placeholder_counter += 1
+            placeholder = f"__IMAGE_LINK_{placeholder_counter}__"
+            image_links.append((placeholder, f'![_TEXT_]({url})'))
+            return placeholder
+        return match.group(0)
+    
+    # Match image links: ![alt](url) and protect them
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', protect_image_link, text)
+    
+    # Check if text is only image link placeholders (no other text)
+    if image_links and re.match(r'^\s*(__IMAGE_LINK_\d+__\s*)+$', text):
+        # Restore image links immediately and return
+        result = text
+        for placeholder, replacement in image_links:
+            result = result.replace(placeholder, replacement)
+        return result
     
     # Preserve bold markers **text** or __text__
     text = re.sub(r'\*\*([^*]+)\*\*', r'**_TEXT_**', text)
@@ -219,24 +258,87 @@ def replace_text_in_content(text: str) -> str:
     text = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'*_TEXT_*', text)
     text = re.sub(r'(?<!_)_([^_]+)_(?!_)', r'_TEXT_', text)
     
-    # Preserve link/image structure [text] or ![alt]
-    text = re.sub(r'!\[([^\]]*)\]', r'![_TEXT_]', text)
+    # Preserve regular link structure [text] (but not images, already handled)
     text = re.sub(r'(?<!!)\[([^\]]*)\]', r'[_TEXT_]', text)
     
-    # Replace remaining text sequences
-    # Match words (Korean, English, Japanese characters, numbers)
-    # But preserve punctuation and whitespace structure
-    words = re.findall(r'[가-힣a-zA-Z0-9]+', text)
-    if words:
-        # Replace each word with _TEXT_, but keep punctuation
-        text = re.sub(r'[가-힣a-zA-Z0-9]+', '_TEXT_', text)
-        # Clean up multiple consecutive _TEXT_
-        text = re.sub(r'(_TEXT_\s*)+', '_TEXT_', text)
-        # Clean up spacing around punctuation
-        text = re.sub(r'_TEXT_([.,;:!?])', r'_TEXT_\1', text)
-        text = re.sub(r'([.,;:!?])\s*_TEXT_', r'\1 _TEXT_', text)
+    # Process sentences: replace each sentence with _TEXT_.
+    # A sentence ends with . ! ? or end of text
+    # Split text into sentences while preserving structure
+    # Find all text segments and replace them sentence by sentence
     
-    return text
+    # Split by sentence boundaries (. ! ?) but keep them
+    # Pattern to match sentences: text ending with . ! ? or end of string
+    def process_sentences(content):
+        # First, check if content is only a placeholder (image link only)
+        if re.match(r'^\s*__IMAGE_LINK_\d+__\s*$', content):
+            return content
+        
+        # First, split content by protected placeholders to preserve them
+        # Split by image link placeholders
+        placeholder_pattern = r'(__IMAGE_LINK_\d+__)'
+        segments = re.split(placeholder_pattern, content)
+        result = []
+        
+        for segment in segments:
+            if re.match(placeholder_pattern, segment):
+                # This is a protected placeholder, keep it as-is
+                result.append(segment)
+            else:
+                # Process this segment for sentences
+                # Split by sentence-ending punctuation, but keep the punctuation
+                parts = re.split(r'([.!?]\s*)', segment)
+                
+                i = 0
+                while i < len(parts):
+                    part = parts[i]
+                    # Check if next part is punctuation
+                    if i + 1 < len(parts) and re.match(r'^[.!?]\s*$', parts[i + 1]):
+                        punctuation = parts[i + 1]
+                        i += 2
+                    else:
+                        punctuation = ''
+                        i += 1
+                    
+                    if not part.strip():
+                        result.append(part)
+                        if punctuation:
+                            result.append(punctuation)
+                        continue
+                    
+                    # Check if part contains any text (Korean, English, numbers)
+                    if re.search(r'[가-힣a-zA-Z0-9]', part):
+                        # Extract leading whitespace
+                        leading_match = re.match(r'^(\s*)', part)
+                        leading_ws = leading_match.group(1) if leading_match else ''
+                        
+                        # Replace entire sentence with _TEXT_ + punctuation
+                        if punctuation:
+                            result.append(leading_ws + '_TEXT_' + punctuation)
+                        else:
+                            # Check if original ended with punctuation
+                            if part.rstrip().endswith(('.', '!', '?')):
+                                result.append(leading_ws + '_TEXT_.')
+                            else:
+                                result.append(leading_ws + '_TEXT_')
+                    else:
+                        result.append(part)
+                        if punctuation:
+                            result.append(punctuation)
+        
+        return ''.join(result)
+    
+    result = process_sentences(text)
+    
+    # Final cleanup: merge consecutive _TEXT_ and handle spacing
+    result = re.sub(r'_TEXT_\s*_TEXT_', '_TEXT_', result)
+    result = re.sub(r'_TEXT_\s*([.,;:!?])', r'_TEXT_\1', result)
+    result = re.sub(r'([.,;:!?])\s*_TEXT_', r'\1 _TEXT_', result)
+    
+    # Restore protected image links
+    for placeholder, replacement in image_links:
+        result = result.replace(placeholder, replacement)
+    
+    return result
 
 
 def convert_mdx_to_skeleton(input_path: Path) -> Path:
