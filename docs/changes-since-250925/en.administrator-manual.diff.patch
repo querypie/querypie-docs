@@ -2216,9 +2216,18 @@ index 2c4ffce..d7dccd7 100644
      * Default is disallowed (Off), and can be turned On/Off later through Approval Rule modification.
      * This option is displayed only when post-approval is allowed in Workflow Configurations.
 diff --git a/src/content/en/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx b/src/content/en/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
-index 1c5592e..708f4a2 100644
+index 1c5592e..679332d 100644
 --- a/src/content/en/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
 +++ b/src/content/en/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+@@ -46,7 +46,7 @@ To manually register individual servers, you need to enter basic server informat
+                 6. `patch`
+                 7. `delete`
+                 8. `deletecollection`
+-            2. :white_check_mark: Select All : Audits all API calls. 
++            2. ✅ Select All : Audits all API calls. 
+         3.  **Pod Session Recording**  : This is an option to enable recording for sessions opened by Pod exec commands within the cluster, and the default is `On`. This function is switched to `Off` if the following conditions are not met: 
+             1. Request Audit must be enabled to `On`. 
+             2. The following verbs must be selected in Request Audit Types:
 @@ -169,4 +169,8 @@ ${CA_CERT}"
  ```
  </details>
@@ -2711,4 +2720,17 @@ index 0d9c352..f0a6e50 100644
 +      ```
  
  #### ipAddresses**[OPTIONAL]**
+ 
+diff --git a/src/content/en/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx b/src/content/en/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
+index 9a9e8c2..bd2f9c0 100644
+--- a/src/content/en/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
++++ b/src/content/en/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
+@@ -38,7 +38,7 @@ Event recording has a certain debouncing time, so if multiple types of events oc
+ 
+ #### I opened a link in the web app with "Open in new tab" but Event Snapshot wasn't recorded.
+ 
+-When opening a link in a new tab, the Extension cannot know the screen loaded in the newly opened tab, so Navigated event screenshots are not captured. :joy:
++When opening a link in a new tab, the Extension cannot know the screen loaded in the newly opened tab, so Navigated event screenshots are not captured. 😂
+ 
+ However, if other events (such as mouse clicks) occur, screenshots are immediately recorded. Please keep this in mind.
  

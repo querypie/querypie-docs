@@ -27,7 +27,7 @@
 4	4	src/content/ko/administrator-manual/general/user-management/groups.mdx
 55	42	src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
 8	0	src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
-4	1	src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+5	2	src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
 55	4	src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
 42	7	src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
 8	1	src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
@@ -35,3 +35,4 @@
 21	3	src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
 94	11	src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
 65	8	src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
+1	1	src/content/ko/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx

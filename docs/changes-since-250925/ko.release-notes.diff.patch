@@ -1,6 +1,6 @@
 diff --git a/src/content/ko/release-notes/1130.mdx b/src/content/ko/release-notes/1130.mdx
 new file mode 100644
-index 00000000..4057b91a
+index 0000000..4057b91
 --- /dev/null
 +++ b/src/content/ko/release-notes/1130.mdx
 @@ -0,0 +1,57 @@
@@ -63,7 +63,7 @@ index 00000000..4057b91a
 +* [WAC] RootCA 인증서를 업로드 한 뒤 재시작이 필요하다는 배너 표시 
 diff --git a/src/content/ko/release-notes/1140.mdx b/src/content/ko/release-notes/1140.mdx
 new file mode 100644
-index 00000000..17d03522
+index 0000000..17d0352
 --- /dev/null
 +++ b/src/content/ko/release-notes/1140.mdx
 @@ -0,0 +1,44 @@
@@ -111,8 +111,21 @@ index 00000000..17d03522
 +* [SAC] Server Access/Privilege Request를 Minute-Based로 요청(상신) 시, Expiration Date 값은 자동으로 계산된 값이 보이도록 비활성화 상태로 표기
 +* [SAC] YAML로 SAC Policy 입력 시, Protocol 항목의 값을 대소문자 구분없이 입력 가능하도록 개선
 +* [WAC] Web Secure 다운로드 화면에서 새로운 설치가이드 페이지로 링크 수정
+diff --git a/src/content/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx b/src/content/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx
+index 8b1761e..65c109e 100644
+--- a/src/content/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx
++++ b/src/content/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx
+@@ -7,7 +7,7 @@ import { Callout } from 'nextra/components'
+ # 메뉴 개선 가이드 (9.12.0)
+ 
+ <Callout type="info" emoji="🟣">
+-**9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요.** :mag_right: )
++**9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요.** 🔎 )
+ </Callout>
+ 
+ <figure data-layout="center" data-align="center">
 diff --git a/src/content/ko/release-notes/_meta.ts b/src/content/ko/release-notes/_meta.ts
-index f8677215..fed32534 100644
+index f867721..fed3253 100644
 --- a/src/content/ko/release-notes/_meta.ts
 +++ b/src/content/ko/release-notes/_meta.ts
 @@ -1,4 +1,6 @@

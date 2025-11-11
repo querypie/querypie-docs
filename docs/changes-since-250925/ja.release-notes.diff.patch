@@ -1,6 +1,6 @@
 diff --git a/src/content/ja/release-notes/1130.mdx b/src/content/ja/release-notes/1130.mdx
 new file mode 100644
-index 00000000..f57f7b82
+index 0000000..f57f7b8
 --- /dev/null
 +++ b/src/content/ja/release-notes/1130.mdx
 @@ -0,0 +1,57 @@
@@ -61,12 +61,77 @@ index 00000000..f57f7b82
 +* [SAC] Server GroupにServerを追加する時、Serverのタグを活用して検索できるようフィルター提供
 +* [WAC] Workflow Web Application JIT Request様式およびDefault RuleにReviewerを追加できるよう改善 
 +* [WAC] RootCA証明書をアップロードした後、再起動が必要だというバナー表示 
+diff --git a/src/content/ja/release-notes/1140.mdx b/src/content/ja/release-notes/1140.mdx
+new file mode 100644
+index 0000000..6be8da5
+--- /dev/null
++++ b/src/content/ja/release-notes/1140.mdx
+@@ -0,0 +1,45 @@
++---
++title: '11.4.0'
++---
++
++# 11.4.0
++
++### QueryPie 11.4.0 Release
++
++2025年10月31日
++
++
++**New Feature**
++
++* [共通] 代理決裁者指定イベントに対する監査ログ記録 
++* [DAC] Web Editorでクエリのサイズ表示
++* [DAC] ShardingSphereサポート
++* [KAC] ConfigurationsにMax Access Duration設定追加
++
++
++**Improvement**
++
++* [共通] 管理者Usersメニューで基本検索条件フィルターをNameに変更
++* [共通] エージェントに登録する3rd party Tool登録失敗時、エラーメッセージ改善
++* [共通] Alertメニューで通知項目作成後、チャネル変更できないよう変更
++* [共通] AlertメニューでChannelをEmailに選択時、Subjectフィールドが表示されるよう改善
++* [共通] Audit Log Export Log Typeソート改善
++* [共通] Event Callback設定時、過負荷状況でなければイベント発生時即座に受信するよう改善
++* [共通] Reverse Tunnelメニュー位置変更
++* [共通] Workflowの「Use User Attribute-Based Approval」に接続されるLDAP Attribute複数個指定できるよう改善
++* [DAC] オラクルプロシージャリスト照会時、ORA-19011 / ORA-01489エラー発生イシュー修正
++* [DAC] DB Access control External API呼び出し時、granted at、expiration dateを結果に含めるよう改善
++* [DAC] Web EditorでImpala / HiveのData Tab無効化
++* [DAC] MySQLパスワード満了時、ユーザーが本人DBアカウントのパスワードを変更できるよう改善
++* [DAC] Trinoに対してDMLオプション無効化に変更
++* [DAC] New DAC Policy Management機能にUnmasking Zone適用
++* [DAC] New DAC Policy Management機能のpolicy audit logをスナップショット形式で改善
++* [KAC] Allowed Kubernetes Usersフィールドplaceholder修正
++* [KAC] 複数Roleが付与されたユーザーが接続時、Role選択する機能削除
++* [SAC] Direct PermissionでAllow形式のCommand Templateサポート
++* [SAC] Multi-Agentでサーバーグループリスト照会改善
++* [SAC] ProxyJump作成時、Jump hostのauth typeを修正してもAccount入力情報を維持するよう改善
++* [SAC] Server Access/Privilege RequestをMinute-Basedで要求（上申）時、Expiration Date値は自動計算された値が見えるよう無効化状態で表示
++* [SAC] YAMLでSAC Policy入力時、Protocol項目の値を大文字小文字区別なく入力できるよう改善
++* [WAC] Web Secureダウンロード画面で新しいインストールガイドページへのリンク修正
++
+diff --git a/src/content/ja/release-notes/9120-91214/menu-improvement-guide-9120.mdx b/src/content/ja/release-notes/9120-91214/menu-improvement-guide-9120.mdx
+index 38b0cb2..9bec4a3 100644
+--- a/src/content/ja/release-notes/9120-91214/menu-improvement-guide-9120.mdx
++++ b/src/content/ja/release-notes/9120-91214/menu-improvement-guide-9120.mdx
+@@ -7,7 +7,7 @@ import { Callout } from 'nextra/components'
+ # メニュー改善ガイド（9.12.0）
+ 
+ <Callout type="info" emoji="🟣">
+-**9.12.0以降から適用される新規メニューガイドです。（クリックして拡大してご覧ください。** :mag_right: )
++**9.12.0以降から適用される新規メニューガイドです。（クリックして拡大してご覧ください。** 🔎 )
+ </Callout>
+ 
+ <figure data-layout="center" data-align="center">
 diff --git a/src/content/ja/release-notes/_meta.ts b/src/content/ja/release-notes/_meta.ts
-index f8677215..5ffccf47 100644
+index f867721..fed3253 100644
 --- a/src/content/ja/release-notes/_meta.ts
 +++ b/src/content/ja/release-notes/_meta.ts
-@@ -1,4 +1,5 @@
+@@ -1,4 +1,6 @@
  export default {
++  '1140': '11.4.0',
 +  '1130': '11.3.0',
    '1120': '11.2.0',
    '1110-1112': '11.1.0 ~ 11.1.2',

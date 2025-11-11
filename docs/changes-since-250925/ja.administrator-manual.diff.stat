@@ -27,7 +27,7 @@
  .../general/user-management/groups.mdx             |  10 +-
  .../okta-provisioning-integration-guide.mdx        |  78 ++-
  .../general/workflow-management/approval-rules.mdx |   7 +
- .../manually-registering-kubernetes-clusters.mdx   |   4 +
+ .../manually-registering-kubernetes-clusters.mdx   |   6 +-
  ...policy-action-configuration-reference-guide.mdx |  51 ++
  .../kubernetes-policy-yaml-code-syntax-guide.mdx   |  35 ++
  .../kubernetes/kac-general-configurations.mdx      |   9 +-
@@ -35,4 +35,5 @@
  .../server-groups/managing-servers-as-groups.mdx   |  21 +-
  .../wac-quickstart/1027-wac-role-policy-guide.mdx  |  83 ++++
  .../wac-quickstart/1028-wac-rbac-guide.mdx         |  57 +++
- 37 files changed, 1483 insertions(+), 202 deletions(-)
+ .../web-apps/wac-quickstart/wac-faq.mdx            |   2 +-
+ 38 files changed, 1485 insertions(+), 204 deletions(-)

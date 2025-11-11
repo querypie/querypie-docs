@@ -1908,9 +1908,18 @@ index 6aa712a..5f25be2 100644
      * 基本値は非許可（Off）で、今後Approval Rule修正を通じてOn/Off可能です。
      * Workflow Configurationsで事後承認が許可されていなければならないこのオプションが表示されます。
 diff --git a/src/content/ja/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx b/src/content/ja/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
-index 8b6f0c0..99dd316 100644
+index 8b6f0c0..e5a559b 100644
 --- a/src/content/ja/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
 +++ b/src/content/ja/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+@@ -46,7 +46,7 @@ QueryPieでは、アクセス制御を適用するオンプレミスなどに位
+                 6. `patch`
+                 7. `delete`
+                 8. `deletecollection`
+-            2. :white_check_mark: Select All : すべてのAPI呼び出しに対して監査を進行します。
++            2. ✅ Select All : すべてのAPI呼び出しに対して監査を進行します。
+         3.  **Pod Session Recording**  : 該当クラスター内Pod execコマンドによって開かれたセッションに対するレコーディング活性化オプションで、Defaultは`On`です。該当機能は以下の条件を満たさないと`Off`に切り替わります：
+             1. Request Auditが`On`で活性化されている必要があります。
+             2. Request Audit Typesに以下のverbが選択されている必要があります：
 @@ -170,3 +170,7 @@ ${CA_CERT}"
  </details>
  
@@ -2409,4 +2418,17 @@ index fddc1f8..f93d0f5 100644
 +      ```
  
  #### ipAddresses**[OPTIONAL]**
+ 
+diff --git a/src/content/ja/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx b/src/content/ja/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
+index 8c145e4..5b75d41 100644
+--- a/src/content/ja/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
++++ b/src/content/ja/administrator-manual/web-apps/wac-quickstart/wac-faq.mdx
+@@ -38,7 +38,7 @@ WebアプリでUser Activity Recordingがオンになっており、スクロー
+ 
+ #### Webアプリ内のリンクを「新しいタブで開く」したらEvent Snapshotが残りません。
+ 
+-新しいタブでリンクを開く場合、新しく開いたタブで読み込まれた画面をExtensionで知ることができず、Navigatedイベント上のスクリーンショットキャプチャがされません。:joy:
++新しいタブでリンクを開く場合、新しく開いたタブで読み込まれた画面をExtensionで知ることができず、Navigatedイベント上のスクリーンショットキャプチャがされません。😂
+ 
+ ただし他のイベント（マウスクリックなど）が発生した場合はスクリーンショットがすぐに残る点を参考にお願いします。
  

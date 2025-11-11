@@ -1,4 +1,5 @@
- src/content/ko/release-notes/1130.mdx | 57 +++++++++++++++++++++++++++++++++++
- src/content/ko/release-notes/1140.mdx | 44 +++++++++++++++++++++++++++
- src/content/ko/release-notes/_meta.ts |  2 ++
- 3 files changed, 103 insertions(+)
+ src/content/ko/release-notes/1130.mdx              | 57 ++++++++++++++++++++++
+ src/content/ko/release-notes/1140.mdx              | 44 +++++++++++++++++
+ .../9120-91214/menu-improvement-guide-9120.mdx     |  2 +-
+ src/content/ko/release-notes/_meta.ts              |  2 +
+ 4 files changed, 104 insertions(+), 1 deletion(-)
