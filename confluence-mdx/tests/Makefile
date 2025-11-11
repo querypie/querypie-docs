@@ -5,6 +5,8 @@
 VENV = source ../../venv/bin/activate
 # Converter script now lives under confluence-mdx/bin/
 SCRIPT = ../bin/confluence_xhtml_to_markdown.py
+# Skeleton converter script
+SKELETON_SCRIPT = ../bin/mdx_to_skeleton.py
 # Testcases live under this directory
 TEST_DIR = testcases
 DIFF = diff -u
@@ -103,20 +105,65 @@ debug-one:
 		echo "  No page.xhtml found for test case $(TEST_ID)"; \
 	fi
 
+# Run skeleton tests
+.PHONY: test-skeleton
+test-skeleton:
+	@echo "Running skeleton tests..."
+	@for test_case in $$(find $(TEST_DIR) -type d -depth 1); do \
+		test_id=$$(basename $$test_case); \
+		if [ -f "$(TEST_DIR)/$$test_id/output.mdx" ]; then \
+			echo "Testing case: $$test_id (Skeleton)"; \
+			echo "  Converting output.mdx to output.skel.mdx"; \
+			$(VENV) && \
+			python $(SKELETON_SCRIPT) $(TEST_DIR)/$$test_id/output.mdx; \
+			if [ -f "$(TEST_DIR)/$$test_id/expected.skel.mdx" ]; then \
+				$(DIFF) $(TEST_DIR)/$$test_id/expected.skel.mdx $(TEST_DIR)/$$test_id/output.skel.mdx || echo "Test $$test_id (Skeleton) failed"; \
+			else \
+				echo "  Warning: expected.skel.mdx not found for test case $$test_id"; \
+			fi; \
+		else \
+			echo "  Skipping $$test_id: output.mdx not found"; \
+		fi; \
+	done
+
+# Run a specific skeleton test
+.PHONY: test-skeleton-one
+test-skeleton-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-skeleton-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@echo "Testing case: $(TEST_ID) (Skeleton)"
+	@if [ -f "$(TEST_DIR)/$(TEST_ID)/output.mdx" ]; then \
+		echo "  Converting output.mdx to output.skel.mdx"; \
+		$(VENV) && \
+		python $(SKELETON_SCRIPT) $(TEST_DIR)/$(TEST_ID)/output.mdx; \
+		if [ -f "$(TEST_DIR)/$(TEST_ID)/expected.skel.mdx" ]; then \
+			$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.skel.mdx $(TEST_DIR)/$(TEST_ID)/output.skel.mdx || echo "Test $(TEST_ID) (Skeleton) failed"; \
+		else \
+			echo "  Warning: expected.skel.mdx not found for test case $(TEST_ID)"; \
+		fi; \
+	else \
+		echo "  No output.mdx found for test case $(TEST_ID)"; \
+	fi
+
 # Clean output files
 .PHONY: clean
 clean:
 	@echo "Cleaning output files..."
 	@find $(TEST_DIR) -name "output.mdx" -type f -delete
+	@find $(TEST_DIR) -name "output.skel.mdx" -type f -delete
 
 # Help
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  all            - Run all tests (default)"
-	@echo "  test           - Run all tests (XHTML only)"
-	@echo "  test-one       - Run a specific test for XHTML, e.g., make test-one TEST_ID=568918170"
-	@echo "  debug          - Run all tests with debug log level (XHTML only)"
-	@echo "  debug-one      - Run a specific test with debug log level for XHTML, e.g., make debug-one TEST_ID=568918170"
-	@echo "  clean          - Remove all output files"
-	@echo "  help           - Show this help message"
+	@echo "  all                - Run all tests (default)"
+	@echo "  test               - Run all tests (XHTML only)"
+	@echo "  test-one           - Run a specific test for XHTML, e.g., make test-one TEST_ID=568918170"
+	@echo "  test-skeleton      - Run all skeleton tests (converts output.mdx to output.skel.mdx and compares with expected.skel.mdx)"
+	@echo "  test-skeleton-one  - Run a specific skeleton test, e.g., make test-skeleton-one TEST_ID=568918170"
+	@echo "  debug              - Run all tests with debug log level (XHTML only)"
+	@echo "  debug-one          - Run a specific test with debug log level for XHTML, e.g., make debug-one TEST_ID=568918170"
+	@echo "  clean              - Remove all output files (output.mdx and output.skel.mdx)"
+	@echo "  help               - Show this help message"
