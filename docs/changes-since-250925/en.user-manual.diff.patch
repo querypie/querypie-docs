@@ -74,7 +74,7 @@ index 3520308..2b7a52a 100644
  #### Uninstall
  
 diff --git a/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx b/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
-index 1521c24..e9b91da 100644
+index 1521c246..e9b91daa 100644
 --- a/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
 +++ b/src/content/en/user-manual/server-access-control/connecting-to-authorized-servers.mdx
 @@ -6,6 +6,7 @@ import { Callout } from 'nextra/components'
@@ -107,7 +107,7 @@ index 1521c24..e9b91da 100644
  
  <Callout type="info">
 diff --git a/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx b/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
-index b11d285..84ab67f 100644
+index b11d2856..84ab67f5 100644
 --- a/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
 +++ b/src/content/en/user-manual/web-access-control/accessing-web-applications-websites.mdx
 @@ -6,9 +6,9 @@ title: 'Accessing Web Applications (Websites)'
@@ -167,7 +167,7 @@ index b11d285..84ab67f 100644
 +3. Click on a Web App in the list to access that Web App.
 \ No newline at end of file
 diff --git a/src/content/en/user-manual/workflow/requesting-db-access.mdx b/src/content/en/user-manual/workflow/requesting-db-access.mdx
-index 3d2a735..18b78b7 100644
+index 3d2a735c..18b78b73 100644
 --- a/src/content/en/user-manual/workflow/requesting-db-access.mdx
 +++ b/src/content/en/user-manual/workflow/requesting-db-access.mdx
 @@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
@@ -190,7 +190,7 @@ index 3d2a735..18b78b7 100644
  * After setting Urgent mode = On and registering the approval request, you can immediately receive permissions or perform tasks.
  
 diff --git a/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx b/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
-index 2afc674..464d87f 100644
+index 2afc6744..464d87f6 100644
 --- a/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
 +++ b/src/content/en/user-manual/workflow/requesting-db-policy-exception.mdx
 @@ -71,10 +71,16 @@ A. If you select an approval rule where the administrator has not allowed Urgent
@@ -218,7 +218,7 @@ index 2afc674..464d87f 100644
 +</figcaption>
 +</figure>
 diff --git a/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx b/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
-index 8b30f7d..3644ef6 100644
+index 8b30f7d8..3644ef6a 100644
 --- a/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
 +++ b/src/content/en/user-manual/workflow/requesting-restricted-data-access.mdx
 @@ -62,20 +62,23 @@ A. If you select an approval rule where the administrator has not allowed Urgent
@@ -253,7 +253,7 @@ index 8b30f7d..3644ef6 100644
  User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary
  </figcaption>
 diff --git a/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx b/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
-index 360699a..c00e46c 100644
+index 360699ac..c00e46c6 100644
 --- a/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
 +++ b/src/content/en/user-manual/workflow/requesting-unmasking-mask-removal-request.mdx
 @@ -62,19 +62,22 @@ A. If you select an approval rule where the administrator has not allowed Urgent

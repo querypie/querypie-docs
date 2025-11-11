@@ -1,6 +1,6 @@
 diff --git a/src/content/ko/release-notes/1130.mdx b/src/content/ko/release-notes/1130.mdx
 new file mode 100644
-index 0000000..4057b91
+index 00000000..4057b91a
 --- /dev/null
 +++ b/src/content/ko/release-notes/1130.mdx
 @@ -0,0 +1,57 @@
@@ -63,7 +63,7 @@ index 0000000..4057b91
 +* [WAC] RootCA 인증서를 업로드 한 뒤 재시작이 필요하다는 배너 표시 
 diff --git a/src/content/ko/release-notes/1140.mdx b/src/content/ko/release-notes/1140.mdx
 new file mode 100644
-index 0000000..17d0352
+index 00000000..17d03522
 --- /dev/null
 +++ b/src/content/ko/release-notes/1140.mdx
 @@ -0,0 +1,44 @@
@@ -112,7 +112,7 @@ index 0000000..17d0352
 +* [SAC] YAML로 SAC Policy 입력 시, Protocol 항목의 값을 대소문자 구분없이 입력 가능하도록 개선
 +* [WAC] Web Secure 다운로드 화면에서 새로운 설치가이드 페이지로 링크 수정
 diff --git a/src/content/ko/release-notes/_meta.ts b/src/content/ko/release-notes/_meta.ts
-index f867721..fed3253 100644
+index f8677215..fed32534 100644
 --- a/src/content/ko/release-notes/_meta.ts
 +++ b/src/content/ko/release-notes/_meta.ts
 @@ -1,4 +1,6 @@

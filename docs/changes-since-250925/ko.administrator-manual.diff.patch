@@ -1,5 +1,5 @@
 diff --git a/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx b/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
-index 2deb379..0c2bc11 100644
+index 2deb3795..0c2bc118 100644
 --- a/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
 +++ b/src/content/ko/administrator-manual/audit/general-logs/activity-logs.mdx
 @@ -2,6 +2,8 @@
@@ -29,7 +29,7 @@ index 2deb379..0c2bc11 100644
 +11.3.0 부터 Activity Logs의 상세 화면(Drawer)에서 Changes Only 체크박스가 추가되어 변경된 항목만 필터링 해서 볼 수 있도록 개선되었습니다. 또한, 빈값의 경우 “-(dash)” 대신 “&lt;null&gt;” 로 표시하도록 변경되었습니다.
 +</Callout>
 diff --git a/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx b/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
-index aa2e3b0..062fc71 100644
+index aa2e3b0d..062fc71e 100644
 --- a/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
 +++ b/src/content/ko/administrator-manual/audit/general-logs/reverse-tunnels.mdx
 @@ -2,13 +2,19 @@
@@ -54,7 +54,7 @@ index aa2e3b0..062fc71 100644
  ### Reverse Tunnels 조회하기
  
 diff --git a/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx b/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
-index 45c0bc9..3481dd5 100644
+index 45c0bc9f..3481dd59 100644
 --- a/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
 +++ b/src/content/ko/administrator-manual/audit/reports/audit-log-export.mdx
 @@ -14,42 +14,47 @@ QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내
@@ -140,7 +140,7 @@ index 45c0bc9..3481dd5 100644
  ### Audit Log Export 목록 조회하기
  
 diff --git a/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx b/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
-index 48d676b..5f483d6 100644
+index 48d676b6..5f483d65 100644
 --- a/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
 +++ b/src/content/ko/administrator-manual/audit/server-logs/command-audit.mdx
 @@ -19,55 +19,66 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
@@ -302,7 +302,7 @@ index 48d676b..5f483d6 100644
  
  <Callout type="important">
 diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
-index 1331c55..387152a 100644
+index 1331c555..387152a8 100644
 --- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
 +++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
 @@ -13,6 +13,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 AWS 연동을
@@ -338,7 +338,7 @@ index 1331c55..387152a 100644
  
  ### Credential 타입별 인증 방식 설정하기
 diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
-index 6700ea8..3304633 100644
+index 6700ea8b..33046331 100644
 --- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
 +++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
 @@ -12,6 +12,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 Google Cloud(G
@@ -376,7 +376,7 @@ index 6700ea8..3304633 100644
  <Callout type="important">
  **Save Credential for Synchronization 옵션**
 diff --git a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
-index 707ff14..b27f4ef 100644
+index 707ff149..b27f4efd 100644
 --- a/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
 +++ b/src/content/ko/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
 @@ -13,6 +13,10 @@ QueryPie 에서는 데이터베이스 등록 및 관리를 위한 MS Azure 연
@@ -412,7 +412,7 @@ index 707ff14..b27f4ef 100644
  
  <Callout type="important">
 diff --git a/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx b/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
-index a2d2f0a..1cf7379 100644
+index a2d2f0ac..1cf7379d 100644
 --- a/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
 +++ b/src/content/ko/administrator-manual/databases/connection-management/db-connections.mdx
 @@ -298,7 +298,7 @@ Tags 탭
@@ -439,7 +439,7 @@ index a2d2f0a..1cf7379 100644
 +Advanced privilege 설정시 수동으로 DB 계정의 암호를 입력하도록 하기 위해서는 위 그림과 같이 Password 란을 비워두고 Hide this credential from connection list page 체크박스를 해제 상태로 설정해야합니다.
 +</Callout>
 diff --git a/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx b/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
-index b2b371b..9ff40db 100644
+index b2b371bf..9ff40dbf 100644
 --- a/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
 +++ b/src/content/ko/administrator-manual/databases/dac-general-configurations.mdx
 @@ -67,7 +67,6 @@ SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
@@ -476,7 +476,7 @@ index b2b371b..9ff40db 100644
 +Maximum Policy Exception Period 설정 옵션은 11.3.0 부터 제공됩니다.
 +</Callout>
 diff --git a/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx b/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
-index 3600438..70518cf 100644
+index 3600438d..70518cf1 100644
 --- a/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
 +++ b/src/content/ko/administrator-manual/databases/new-policy-management/data-policies.mdx
 @@ -119,11 +119,14 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
@@ -497,7 +497,7 @@ index 3600438..70518cf 100644
        <figure data-layout="center" data-align="center">
        ![직접 경로 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
 diff --git a/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx b/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
-index e2b4d8c..e94e53c 100644
+index e2b4d8c6..e94e53cd 100644
 --- a/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
 +++ b/src/content/ko/administrator-manual/databases/new-policy-management/exception-management.mdx
 @@ -2,6 +2,8 @@
@@ -556,7 +556,7 @@ index e2b4d8c..e94e53c 100644
  #### 정책 예외의 상태 즉시 변경하기
  
 diff --git a/src/content/ko/administrator-manual/general/company-management/alerts.mdx b/src/content/ko/administrator-manual/general/company-management/alerts.mdx
-index 4a3b25a..3fd2106 100644
+index 4a3b25a9..3fd21060 100644
 --- a/src/content/ko/administrator-manual/general/company-management/alerts.mdx
 +++ b/src/content/ko/administrator-manual/general/company-management/alerts.mdx
 @@ -245,6 +245,10 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
@@ -603,7 +603,7 @@ index 4a3b25a..3fd2106 100644
      * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
          * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
 diff --git a/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx b/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
-index db8df1d..d754c8a 100644
+index db8df1d5..d754c8ac 100644
 --- a/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
 +++ b/src/content/ko/administrator-manual/general/company-management/allowed-zones.mdx
 @@ -10,6 +10,10 @@ import { Callout } from 'nextra/components'
@@ -662,7 +662,7 @@ index db8df1d..d754c8a 100644
      * IP 주소 범위는 Classless Inter-Domain Routing(CIDR) 표기법을 사용합니다. 참고: [CIDR 이란?](https://aws.amazon.com/ko/what-is/cidr/)
      * 둘 이상의 IP 주소, IP 주소 범위를 입력할 때, 쉼표를 구분자로 하여 입력합니다.
 diff --git a/src/content/ko/administrator-manual/general/company-management/general.mdx b/src/content/ko/administrator-manual/general/company-management/general.mdx
-index 5435e1b..5f1431d 100644
+index 5435e1b8..5f1431db 100644
 --- a/src/content/ko/administrator-manual/general/company-management/general.mdx
 +++ b/src/content/ko/administrator-manual/general/company-management/general.mdx
 @@ -2,6 +2,8 @@
@@ -754,7 +754,7 @@ index 5435e1b..5f1431d 100644
  
  토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
 diff --git a/src/content/ko/administrator-manual/general/company-management/licenses.mdx b/src/content/ko/administrator-manual/general/company-management/licenses.mdx
-index 5a7d8fb..183f9fe 100644
+index 5a7d8fb2..183f9fe8 100644
 --- a/src/content/ko/administrator-manual/general/company-management/licenses.mdx
 +++ b/src/content/ko/administrator-manual/general/company-management/licenses.mdx
 @@ -8,16 +8,24 @@ import { Callout } from 'nextra/components'
@@ -797,7 +797,7 @@ index 5a7d8fb..183f9fe 100644
  
 +* 삭제를 원하는 라이센스의 오른쪽에 위치한 휴지통 아이콘을 클릭해서 삭제할 수 있습니다. 
 diff --git a/src/content/ko/administrator-manual/general/company-management/security.mdx b/src/content/ko/administrator-manual/general/company-management/security.mdx
-index f492e86..5f54cbf 100644
+index f492e86b..5f54cbf7 100644
 --- a/src/content/ko/administrator-manual/general/company-management/security.mdx
 +++ b/src/content/ko/administrator-manual/general/company-management/security.mdx
 @@ -70,13 +70,24 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
@@ -841,7 +841,7 @@ index f492e86..5f54cbf 100644
  
  기타 보안 설정을 관리합니다.
 diff --git a/src/content/ko/administrator-manual/general/system/_meta.ts b/src/content/ko/administrator-manual/general/system/_meta.ts
-index 195e1fd..0591dc5 100644
+index 195e1fdd..0591dc5e 100644
 --- a/src/content/ko/administrator-manual/general/system/_meta.ts
 +++ b/src/content/ko/administrator-manual/general/system/_meta.ts
 @@ -2,4 +2,5 @@ export default {
@@ -851,7 +851,7 @@ index 195e1fd..0591dc5 100644
 +  'maintenance': 'Maintenance',
  };
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/_meta.ts b/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
-index 90aa304..b7b209c 100644
+index 90aa304d..b7b209c8 100644
 --- a/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
 +++ b/src/content/ko/administrator-manual/general/system/integrations/_meta.ts
 @@ -6,4 +6,6 @@ export default {
@@ -863,7 +863,7 @@ index 90aa304..b7b209c 100644
  };
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx b/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx
 new file mode 100644
-index 0000000..18ab4c8
+index 00000000..18ab4c81
 --- /dev/null
 +++ b/src/content/ko/administrator-manual/general/system/integrations/identity-providers.mdx
 @@ -0,0 +1,526 @@
@@ -1395,7 +1395,7 @@ index 0000000..18ab4c8
 +
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx b/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
 new file mode 100644
-index 0000000..550d393
+index 00000000..550d393f
 --- /dev/null
 +++ b/src/content/ko/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
 @@ -0,0 +1,79 @@
@@ -1479,7 +1479,7 @@ index 0000000..550d393
 +
 +
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
-index 90c49fa..3fd8f1a 100644
+index 90c49fa6..3fd8f1a1 100644
 --- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
 +++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
 @@ -38,7 +38,37 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
@@ -1522,7 +1522,7 @@ index 90c49fa..3fd8f1a 100644
    ![image-20240115-220447.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png)
    </figure>
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
-index 0d8946e..3b7bb4b 100644
+index 0d8946e5..3b7bb4b6 100644
 --- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
 +++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
 @@ -71,11 +71,19 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
@@ -1547,7 +1547,7 @@ index 0d8946e..3b7bb4b 100644
  ### 참고
  
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
-index 2a59b4c..938ec92 100644
+index 2a59b4c5..938ec92e 100644
 --- a/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
 +++ b/src/content/ko/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
 @@ -44,7 +44,17 @@ Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Config
@@ -1571,7 +1571,7 @@ index 2a59b4c..938ec92 100644
 +
 diff --git a/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx b/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx
 new file mode 100644
-index 0000000..562ba82
+index 00000000..562ba82a
 --- /dev/null
 +++ b/src/content/ko/administrator-manual/general/system/integrations/oauth-client-application.mdx
 @@ -0,0 +1,69 @@
@@ -1646,7 +1646,7 @@ index 0000000..562ba82
 +
 diff --git a/src/content/ko/administrator-manual/general/system/maintenance.mdx b/src/content/ko/administrator-manual/general/system/maintenance.mdx
 new file mode 100644
-index 0000000..5308067
+index 00000000..5308067f
 --- /dev/null
 +++ b/src/content/ko/administrator-manual/general/system/maintenance.mdx
 @@ -0,0 +1,47 @@
@@ -1698,7 +1698,7 @@ index 0000000..5308067
 +| Allow Connection | 이미 존재하는 세션과 새로운 세션에서 명령어 수행이 가능하지만 Workflow 상신이나 설정 수정등의 작업은 허용되지 않습니다. (WAC에 적용 불가)                                                                                                                                    |
 +| Full Access      | 일반적인 평상시의 동작 모드입니다.                                                                                                                                                                                                     |
 diff --git a/src/content/ko/administrator-manual/general/user-management/authentication.mdx b/src/content/ko/administrator-manual/general/user-management/authentication.mdx
-index 6dec1f9..15aa2e1 100644
+index 6dec1f9c..15aa2e13 100644
 --- a/src/content/ko/administrator-manual/general/user-management/authentication.mdx
 +++ b/src/content/ko/administrator-manual/general/user-management/authentication.mdx
 @@ -10,6 +10,9 @@ import { Callout } from 'nextra/components'
@@ -1712,7 +1712,7 @@ index 6dec1f9..15aa2e1 100644
  ### IdP 연동 지원 범위
  
 diff --git a/src/content/ko/administrator-manual/general/user-management/groups.mdx b/src/content/ko/administrator-manual/general/user-management/groups.mdx
-index cac2724..e030a2a 100644
+index cac27242..e030a2aa 100644
 --- a/src/content/ko/administrator-manual/general/user-management/groups.mdx
 +++ b/src/content/ko/administrator-manual/general/user-management/groups.mdx
 @@ -52,15 +52,15 @@ Administrator &gt; General &gt; User Management &gt; Groups &gt; 상세 정보
@@ -1736,7 +1736,7 @@ index cac2724..e030a2a 100644
        </figure>
  2. `Save` 버튼을 클릭하여 그룹 변경 내역을 저장합니다. 그룹 리스트 및 상세 정보 Drawer에서 추가된 사용자를 확인할 수 있습니다.
 diff --git a/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx b/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
-index 11f5bd2..91b7266 100644
+index 11f5bd2c..91b7266c 100644
 --- a/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
 +++ b/src/content/ko/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
 @@ -86,8 +86,13 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
@@ -1857,7 +1857,7 @@ index 11f5bd2..91b7266 100644
  
  ---
 diff --git a/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx b/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
-index aadd376..0e7e187 100644
+index aadd3766..0e7e1875 100644
 --- a/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
 +++ b/src/content/ko/administrator-manual/general/workflow-management/approval-rules.mdx
 @@ -2,6 +2,8 @@
@@ -1884,7 +1884,7 @@ index aadd376..0e7e187 100644
      * 기본값은 비허용(Off)이며, 추후 Approval Rule 수정을 통해 On/Off 가능합니다.
      * Workflow Configurations에서 사후 승인이 허용되어 있어야만 이 옵션이 표시됩니다.
 diff --git a/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx b/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
-index 0a09cf3..8a68934 100644
+index 0a09cf3a..8a689340 100644
 --- a/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
 +++ b/src/content/ko/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
 @@ -170,4 +170,7 @@ ${CA_CERT}"
@@ -1898,7 +1898,7 @@ index 0a09cf3..8a68934 100644
 +./generate_kubepie_sa.sh
 +  ```
 diff --git a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
-index ce3786d..e472852 100644
+index ce3786da..e4728520 100644
 --- a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
 +++ b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
 @@ -34,12 +34,32 @@ QueryPie KAC에서는 Yaml 형태의 Policy를 통해 k8s에 대한 접근제어
@@ -1984,7 +1984,7 @@ index ce3786d..e472852 100644
  ### 기타 추천 설정 가이드
  
 diff --git a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
-index 5a907dc..62084b7 100644
+index 5a907dc8..62084b7f 100644
 --- a/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
 +++ b/src/content/ko/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
 @@ -222,12 +222,28 @@ O
@@ -2061,7 +2061,7 @@ index 5a907dc..62084b7 100644
  ### KAC Policy 예시
  
 diff --git a/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx b/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
-index 54e77ac..a1e3a6a 100644
+index 54e77ac2..a1e3a6ad 100644
 --- a/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
 +++ b/src/content/ko/administrator-manual/kubernetes/kac-general-configurations.mdx
 @@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
@@ -2089,7 +2089,7 @@ index 54e77ac..a1e3a6a 100644
 +* Maximum Access Duration : 권한 부여 최대 기간 지정 옵션입니다. 지정한 기간을 초과하는 권한 요청을 작성할 수 없고, 관리자도 이 기간을 초과한 권한 부여를 할 수 없습니다. 이 기간이 만료되면 자동으로 권한이 회수됩니다. 
 +    * 최소값 : 1, 최대값 : 9999
 diff --git a/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx b/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
-index 7c0c80c..c43cd90 100644
+index 7c0c80c5..c43cd90f 100644
 --- a/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
 +++ b/src/content/ko/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
 @@ -17,15 +17,26 @@ Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를 설
@@ -2127,7 +2127,7 @@ index 7c0c80c..c43cd90 100644
  <Callout type="info">
  **CONFIG 파일 설명**
 diff --git a/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx b/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
-index fee3b9f..990f927 100644
+index fee3b9f3..990f9273 100644
 --- a/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
 +++ b/src/content/ko/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
 @@ -65,6 +65,17 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
@@ -2177,7 +2177,7 @@ index fee3b9f..990f927 100644
  *  **Signing Algorithm** 은 ras-sha2-256 으로 설정합니다.
  </Callout>
 diff --git a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
-index ba95358..fa8c22e 100644
+index ba953583..fa8c22ee 100644
 --- a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
 +++ b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
 @@ -171,7 +171,17 @@ QueryPie에 정의한 웹앱 리소스명을 입력합니다.
@@ -2325,7 +2325,7 @@ index ba95358..fa8c22e 100644
  
  리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.
 diff --git a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
-index e8786f8..a90be64 100644
+index e8786f8b..a90be641 100644
 --- a/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
 +++ b/src/content/ko/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
 @@ -202,7 +202,19 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
