@@ -2,6 +2,8 @@
 title: 'Activity Logs'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Activity Logs
 
 ### Overview
@@ -47,3 +49,7 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
 3. **Related Logs**: 該当行為について、連鎖的または同時に発生したログを表示します。前後ログをすべて含みます。
    1. 管理者が直接引き起こした行為だけでなく、それに伴って派生したシステムの自動行為を確認できます。
    2. Related Logsに表示された行為ログは、それぞれ個別ログとしても残っています。
+
+<Callout type="info">
+11.3.0からActivity Logsの詳細画面（Drawer）でChanges Onlyチェックボックスが追加され、変更された項目のみをフィルタリングして表示できるよう改善されました。また、空値の場合は「-（ダッシュ）」の代わりに「&lt;null&gt;」で表示されるように変更されました。
+</Callout>

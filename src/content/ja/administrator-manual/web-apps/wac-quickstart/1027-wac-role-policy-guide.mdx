@@ -171,6 +171,16 @@ QueryPieに定義したWebアプリケーションリソース名を入力しま
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
 2. 1つの `spec` 内で複数のWebアプリケーションを列挙できます。
+  ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/database-settings/policies"
+      - webApp: "QueryPie Customer Portal"
+  ```
 3. Webアプリケーション名は以下の条件を満たす必要があります。
     * 文字数最大120文字
     * アルファベット大文字小文字（case-sensitive）、数字および一部特殊記号（`_`、`-`、`(`、`)`、`[`、`]`）のみ許可
@@ -186,13 +196,44 @@ QueryPieに定義したWebアプリケーションリソース名を入力しま
 2. Base URLを含めて、Webアプリケーションに存在する **すべて** のサブパスに対して許可または拒否する方法は以下の通りです。
     * urlPaths行を記述しません。
         * 例：QueryPie Web Admin の全体パスに対してアクセス許可
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+          ```
     *  `urlPaths: []` で記述します。
         * 例：QueryPie Web Admin の全体パスに対してアクセスブロック
+          ```
+spec:
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: []
+          ```
 3. 特定のサブパス入力時、入力したパスと該当パスのすべてのサブパスにポリシーが適用されます。
     * サブパスはリストで列挙し、複数入力できます。
         * 例：QueryPie Web Admin の `/general-settings/user-management` と `/general-settings/user-management/*`、そして `/kubernetes-settings` と `/kubernetes-settings/*` に対してアクセス許可
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/kubernetes-settings"
+          ```
     * サブパスとこれに含まれる詳細パスを同時に入力できません。
         * 例：QueryPie Web Admin の `/general-settings` と `/general-settings/user-management` を **同時に入力不可** 
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings"
+          - "/general-settings/user-management"
+          ``` 
 
 <Callout type="info">
 urlPathsに特定のサブパスを入力するには、Web App詳細情報でPath Managementの有効化が必要です。登録されていないサブパス入力時はエラーが発生します。
@@ -218,15 +259,47 @@ Web AppのPath Managementで付与されたタグを基準にルールによっ�
 1. タグは大文字小文字を区別し、複数入力できます。
     * Keyが同一のタグを複数入力時、OR条件で動作します。 
         * 例：`access: admin` または `access: user` が付与されたパスに対してアクセス許可
+          ```
+urlPathTags: 
+  "access": "admin"
+  "access": "user"
+          ```
     * Keyが異なるタグを複数入力時、AND条件で動作します。 
         * 例：`access: admin` と `type: general` が一緒に付与されたパスに対してアクセス許可
+          ```
+urlPathTags: 
+  "access": "admin"
+  "type": "general"
+          ```
 2. `resources[].urlPaths` と連携して動作します。
     *  **Webアプリケーションリソースの対象urlPathが明示されていない場合** 
         * 登録された全体サブパス中urlPathTagがあるパスをすべて許可します。
         * 例：Web App "QueryPie Web Admin" に対して、Path Managementに登録された全体サブパス中 `access: admin` タグが付与されたパスに限ってアクセス許可
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: []
+    conditions:
+      urlPathTags:
+        "access": "admin"
+          ```
     *  **Webアプリケーションリソースの対象urlPathが明示された場合** 
         * 明示されたパス中urlPathTagがあるパスのみを許可します。
         * 例：Web App "QueryPie Web Admin" に対して、`resources[].urlPaths` に明示された2つのパス中Path Managementで `access: admin` タグが付与されたパスに限ってアクセス許可
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/database-settings/policies"
+    conditions:
+      urlPathTags:
+        "access": "admin"
+          ```
     *  **Webアプリケーションリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合** 
         * 条件に一致するurlPathが存在しないため、いかなるパスも許可しません。
 
@@ -242,8 +315,18 @@ QueryPieユーザーの属性（attribute）を基準にルールによってリ
 
 * Keyが同一の属性を複数入力時、OR条件で動作します。 
     * 例：部署（department）がPMまたはQAのユーザーに対してアクセス許可
+      ```
+userAttributes: 
+  "department": "PM"
+  "department": "QA"
+      ```
 * Keyが異なる属性を複数入力時、AND条件で動作します。 
     * 例：部署（department）がPMで、職位（title）が管理者のユーザーに対してアクセス許可
+      ```
+userAttributes: 
+  "department": "PM"
+  "title": "Manager"
+      ```
 
 #### ipAddresses**[OPTIONAL]**
 

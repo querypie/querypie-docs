@@ -14,43 +14,47 @@ QueryPieで生成された各種監査ログを抽出し、csvファイルでダ
 Audit Log Export機能追加に伴い、各ログ画面で提供されていた'Excel File Download'ボタンはQueryPie v9.15.0からサポートが中断されました。
 </Callout>
 
-<Callout type="important">
 **抽出サポートログ種類（QueryPie v11.0.0基準）**
-1. Query Audit [CSV]
-2. Workflow SQL Request [CSV]
-3. Workflow SQL Request for Query Details [CSV]
-4. Workflow SQL Export Request [CSV]
-5. Workflow DB Access Request [CSV]
-6. Workflow Server Access Request [JSON]
-7. User Access History [CSV]
-8. Admin Role History [CSV]
-9. DB Access History [CSV]
-10. DB Account Lock History [CSV]
-11. DB Access Control Logs [CSV]
-12. Server Access History [JSON]
-13. Command Audit [JSON]
-14. Session Logs [JSON]
-15. Server Access Control Logs [JSON]
-16. Server Role History [JSON]
-17. Activity Logs [JSON]
-18. DML Snapshot [JSON]
-19. Server Account Lock History [JSON]
-20. Request Audit [JSON]
-21. Kubernetes Role History [JSON]
-22. Alert Logs [JSON] **[10.3.0]**
-23. Restricted Data Access Logs [JSON] **[10.3.0]**
-24. Masked Data Access Logs [JSON] **[10.3.0]**
-25. Sensitive Data Access Logs [JSON] **[10.3.0]**
-26. Web Access History [CSV] **[11.0.0]**
-27. Web Event Audit [CSV] **[11.0.0]**
-28. Web App Role History [CSV] **[11.0.0]**
-29. JIT Access Control Logs [CSV] **[11.0.0]**
-30. Workflow Unmasking Request Logs [JSON] **[11.0.0]**
-31. Workflow Restricted Data Access Request [JSON] **[11.0.0]**
-32. Workflow DB Policy Exception Request Logs [JSON] **[11.0.0]**
-33. Workflow Server Privilege Request [JSON] **[11.3.0]**
-</Callout>
 
+|  **Log Type**                           |  **Release Version**  |  **Format**  |
+| --------------------------------------- | --------------------- | ------------ |
+| Workflow DB Access Request              |                       | CSV          |
+| Workflow SQL Request                    |                       | CSV          |
+| Workflow SQL Request for Query Details  |                       | CSV          |
+| Workflow SQL Export Request             |                       | CSV          |
+| Workflow Restricted Data Access Request | 11.0.0                | JSON         |
+| Workflow DB Policy Exception Request    | 11.0.0                | JSON         |
+| Workflow Unmasking Request              | 11.0.0                | JSON         |
+| Workflow Decryption Request             | 10.3.0                | JSON         |
+| Workflow Server Access Request          |                       | JSON         |
+| Workflow Server Privilege Request       | 11.3.0                | JSON         |
+| Workflow Access Role Request            | 10.0.0                | CSV          |
+| IP Registration Request                 | 11.0.0                | JSON         |
+| User Access History                     |                       | CSV          |
+| Admin Role History                      |                       | CSV          |
+| Activity Logs                           |                       | JSON         |
+| Alert Logs                              | 10.3.0                | JSON         |
+| Query Audit                             |                       | CSV          |
+| DB Access History                       |                       | CSV          |
+| DB Account Lock History                 |                       | CSV          |
+| DB Access Control Logs                  |                       | CSV          |
+| DML Snapshot                            |                       | JSON         |
+| Restricted Data Access Logs (Legacy)    | 10.3.0                | JSON         |
+| Masked Data Access Logs (Legacy)        | 10.3.0                | JSON         |
+| Sensitive Data Access Logs (Legacy)     | 10.3.0                | JSON         |
+| DAC Policy Audit Log                    | 11.3.0                | JSON         |
+| Server Access History                   |                       | JSON         |
+| Command Audit                           |                       | JSON         |
+| Session Logs                            |                       | JSON         |
+| Server Access Control Logs              |                       | JSON         |
+| Server Role History                     |                       | JSON         |
+| Server Account Lock History             |                       | JSON         |
+| Request Audit                           |                       | JSON         |
+| Kubernetes Role History                 |                       | JSON         |
+| Web App Access History                  | 11.0.0                | CSV          |
+| Web App Role History                    | 11.0.0                | CSV          |
+| Web App JIT Access Control Log          | 11.0.0                | CSV          |
+| Web App Event Audit                     | 11.0.0                | CSV          |
 
 ### Audit Log Export一覧の照会
 

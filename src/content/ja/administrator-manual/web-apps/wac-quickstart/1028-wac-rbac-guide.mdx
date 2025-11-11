@@ -202,6 +202,18 @@ QueryPieに定義したWebアプリケーションリソース名を入力しま
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
 2. 1つの `spec` 内で複数のWebアプリケーションを列挙できます。
+  ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"
+          - "/database-settings/policies"
+      - webApp: "QueryPie Customer Portal"
+        urlPathTags: 
+          access: "admin"
+  ```
 3. Webアプリケーション名は以下の条件を満たす必要があります。
     * 文字数最大120文字
     * アルファベット大文字小文字（case-sensitive）、数字および一部特殊記号（`_`、`-`、`(`、`)`、`[`、`]`）のみ許可
@@ -218,11 +230,36 @@ Webアプリケーションのサブパスレベルでアクセス制御ポリ�
 1. **Admin > Web App** に登録されたサブパスのみ登録可能です。
 2. Base URLを含めて、Webアプリケーションに存在する **すべて** のサブパスに対して許可または拒否するには `urlPaths: ["*"]` で記述します。
     * 例：QueryPie Web Admin の全体パスに対してアクセスブロック
+      ```
+spec:
+  deny:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: ["*"]
+      ```
 3. サブパス入力時、入力したパスに対してポリシーが適用されます。
     * サブパスはリストで列挙し、複数入力できます。
     * パスの最後の部分にワイルドカードを入力して、特定パス配下のすべてのパスを指示できます。（上位パスは含みません）
+      ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/user-management"     # 特定のサブパス
+          - "/general-settings/user-management/*"   # 特定パスのすべてのサブパス
+      ```
     * 入力したパス中に相互に重複するパスを同時に入力できません。
         * 例：QueryPie Web Admin の `/general-settings/*` と `/general-settings/user-management` を **同時に入力不可** 
+          ```
+spec:
+  allow:
+    resources:
+      - webApp: "Querypie Web Admin"
+        urlPaths: 
+          - "/general-settings/*"
+          - "/general-settings/user-management"
+          ``` 
 4. パスの中間またはパス名の一部にワイルドカードを入力したり、正規表現を入力することは **できません** 。
     * `"/*-settings"` (X)
     * `"/*/edit"` (X)
@@ -236,8 +273,18 @@ Webアプリケーションに登録されたサブパス別URL Pathタグを基
 1. タグは大文字小文字を区別し、複数入力できます。
     * Keyが同一のタグを複数入力時、**OR** 条件で動作します。
         * 例：`access: admin` または `access: user` が付与されたパスに対してアクセス許可
+          ```
+urlPathTags: 
+  "access": "admin"
+  "access": "user"
+          ```
     * Keyが異なるタグを複数入力時、**AND** 条件で動作します。
         * 例：`access: admin` と `type: general` が一緒に付与されたパスに対してアクセス許可
+          ```
+urlPathTags: 
+  "access": "admin"
+  "type": "general"
+          ```
 
 ### Conditions**[OPTIONAL]**
 
@@ -259,8 +306,18 @@ QueryPieユーザーの属性（attribute）を基準にルールによってリ
 
 * Keyが同一の属性を複数入力時、OR条件で動作します。
     * 例：部署（department）がPMまたはQAのユーザーに対してアクセス許可
+      ```
+userAttributes: 
+  "department": "PM"
+  "department": "QA"
+      ```
 * Keyが異なる属性を複数入力時、AND条件で動作します。
     * 例：部署（department）がPMで、職位（title）が管理者のユーザーに対してアクセス許可
+      ```
+userAttributes: 
+  "department": "PM"
+  "title": "Manager"
+      ```
 
 #### ipAddresses**[OPTIONAL]**
 

@@ -19,30 +19,33 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 </figcaption>
 </figure>
 
-1. Administrator &gt; Audit &gt; Servers &gt; Command Auditメニューに移動します。
-2. 接続日基準でログが降順で照会されます。
-3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
-    1.  **Name**  : ユーザー名
-    2.  **Server Name**  : 接続サーバー名
-    3.  **Command**  : 実行したコマンド
-    4.  **Role**  : 接続Role
-4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
-    1.  **Server OS**  : 接続したサーバーのOS
-    2.  **Protocol** : 接続使用したProtocol
-    3.  **Executed From** : 接続方式
-        1. web : QueryPie Webを通じた接続
-        2. proxy : AgentまたはSeamless SSH Connectionを通じた接続
-    4.  **Action Type** : 記録されたイベントタイプ
-        1. Command : ログに記録されたコマンド
-        2. File Download : （SFTP）ファイルダウンロード
-        3. File Upload : （SFTP）ファイルアップロード
-        4. Process Start : （RDP）プロセス実行
-        5. Process Stop : （RDP）プロセス終了
-        6. User Input - MouseClick : （RDP）ユーザーマウスクリック
-        7. User Input - MouseDoubleClick : （RDP）ユーザーマウスダブルクリック
-        8. User Input - KeyPress : （RDP）ユーザーキーボード入力
-    5.  **Executed At**  : コマンド実行時点
-    6.  **Restricted**  : コマンド遮断の有無
+* Administrator &gt; Audit &gt; Servers &gt; Command Auditメニューに移動します。
+* 接続日基準でログが降順で照会されます。
+* テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+    *  **Name**  : ユーザー名
+    *  **Server Name**  : 接続サーバー名
+    *  **Command**  : 実行したコマンド
+    *  **Role**  : 接続Role
+* 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+  <figure data-layout="center" data-align="center">
+  ![image-20240728-171533.png](/administrator-manual/audit/server-logs/command-audit/image-20240728-171533.png)
+  </figure>
+    *  **Server OS**  : 接続したサーバーのOS
+    *  **Protocol** : 接続使用したProtocol
+    *  **Executed From** : 接続方式
+        * web : QueryPie Webを通じた接続
+        * proxy : AgentまたはSeamless SSH Connectionを通じた接続
+    *  **Action Type** : 記録されたイベントタイプ
+        * Command : ログに記録されたコマンド
+        * File Download : （SFTP）ファイルダウンロード
+        * File Upload : （SFTP）ファイルアップロード
+        * Process Start : （RDP）プロセス実行
+        * Process Stop : （RDP）プロセス終了
+        * User Input - MouseClick : （RDP）ユーザーマウスクリック
+        * User Input - MouseDoubleClick : （RDP）ユーザーマウスダブルクリック
+        * User Input - KeyPress : （RDP）ユーザーキーボード入力
+    *  **Executed At**  : コマンド実行時点
+    *  **Restricted**  : コマンド遮断の有無
 
 <Callout type="info">
 11.3.0でフィルターを使用する際、Action Typeの項目を複数選択できるよう変更されました。
@@ -53,28 +56,29 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 </figcaption>
 </figure>
 </Callout>
-5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
-6. テーブルで以下のカラム情報を提供します：
-    1.  **No**  : イベント識別番号
-    2.  **Executed At**  : コマンド実行時点
-    3.  **Name**  : 対象ユーザー名
-    4.  **Email**  : 対象ユーザーメール
-    5.  **Role**  : 対象ユーザー接続時使用されたRole名
-    6.  **Account**  : サーバー接続Account
-    7.  **Command**  : 実行したコマンド
-    8.  **Restricted**  : コマンド遮断の有無
-        1. Not Restricted
-        2. Restricted
-    9.  **Restricted Command**  : 遮断されたコマンド
-    10.  **Server Name**  : 対象サーバー名
-    11.  **Server OS**  : 接続したサーバーのOS
-    12.  **Host**  : 接続したサーバーのホスト
-    13.  **Port**  : 接続時使用されたポート
-    14.  **Protocol** : 接続使用したProtocol
-    15.  **Client IP**  : ユーザークライアントIPアドレス
-    16.  **Client**   **Name**  : ユーザーの接続方式
-    17.  **Action Type** : 記録されたイベントタイプ
-    18.  **Message**  : 接続失敗など特異事項に対する記録
+
+* テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
+* テーブルで以下のカラム情報を提供します：
+    *  **No**  : イベント識別番号
+    *  **Executed At**  : コマンド実行時点
+    *  **Name**  : 対象ユーザー名
+    *  **Email**  : 対象ユーザーメール
+    *  **Role**  : 対象ユーザー接続時使用されたRole名
+    *  **Account**  : サーバー接続Account
+    *  **Command**  : 実行したコマンド
+    *  **Restricted**  : コマンド遮断の有無
+        * Not Restricted
+        * Restricted
+    *  **Restricted Command**  : 遮断されたコマンド
+    *  **Server Name**  : 対象サーバー名
+    *  **Server OS**  : 接続したサーバーのOS
+    *  **Host**  : 接続したサーバーのホスト
+    *  **Port**  : 接続時使用されたポート
+    *  **Protocol** : 接続使用したProtocol
+    *  **Client IP**  : ユーザークライアントIPアドレス
+    *  **Client**   **Name**  : ユーザーの接続方式
+    *  **Action Type** : 記録されたイベントタイプ
+    *  **Message**  : 接続失敗など特異事項に対する記録
 
 ### Command Audit詳細履歴照会
 
@@ -89,25 +93,25 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
 </figure>
 
 * 右側ドロワーには以下の情報を露出します：
-    1.  **Name**  : 対象ユーザー名
-    2.  **Action Type** : 記録されたイベントタイプ
-    3.  **Executed At**  : コマンド実行時点
-    4.  **Executed From** : 接続方式
-    5.  **Server Access History** : 該当セッションの接続ログ
-    6.  **Session Log**  : このコマンドを実行したセッションレコーディング照会
-    7.  **Server Name**  : 対象サーバー名
-    8.  **Server OS**  : 接続したサーバーのOS
-    9.  **Host**  : 接続したサーバーのホスト
-    10.  **Port**  : 接続時使用されたポート
-    11.  **Account**  : サーバー接続Account
-    12.  **Protocol** : 接続使用したProtocol
-    13.  **Client**   **Name**  : ユーザーの接続方式
-    14.  **Client IP**  : ユーザークライアントIPアドレス
-    15.  **Restricted**  : コマンド遮断の有無
-    16.  **Restricted Command**  : 遮断されたコマンド
-    17.  **Detected Type :** 検出された遮断コマンドの実行方式（Shell ScriptまたはAlias）
-    18.  **Command**  : ユーザー入力コマンド（RDPの場合プロセス名またはクリック座標など）
-    19.  **Result**  : コマンド実行結果
+    *  **Name**  : 対象ユーザー名
+    *  **Action Type** : 記録されたイベントタイプ
+    *  **Executed At**  : コマンド実行時点
+    *  **Executed From** : 接続方式
+    *  **Server Access History** : 該当セッションの接続ログ
+    *  **Session Log**  : このコマンドを実行したセッションレコーディング照会
+    *  **Server Name**  : 対象サーバー名
+    *  **Server OS**  : 接続したサーバーのOS
+    *  **Host**  : 接続したサーバーのホスト
+    *  **Port**  : 接続時使用されたポート
+    *  **Account**  : サーバー接続Account
+    *  **Protocol** : 接続使用したProtocol
+    *  **Client**   **Name**  : ユーザーの接続方式
+    *  **Client IP**  : ユーザークライアントIPアドレス
+    *  **Restricted**  : コマンド遮断の有無
+    *  **Restricted Command**  : 遮断されたコマンド
+    *  **Detected Type :** 検出された遮断コマンドの実行方式（Shell ScriptまたはAlias）
+    *  **Command**  : ユーザー入力コマンド（RDPの場合プロセス名またはクリック座標など）
+    *  **Result**  : コマンド実行結果
 
 
 <Callout type="important">

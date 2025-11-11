@@ -70,12 +70,12 @@ QueryPieアカウントのパスワードポリシーを設定できます。
 ウェブコンソールとエージェントのタイムアウトポリシーを設定できます。
 
 <figure data-layout="center" data-align="center">
-![image-20250515-091410.png](/administrator-manual/general/company-management/security/image-20250515-091410.png)
+![image-20251009-051727.png](/administrator-manual/general/company-management/security/image-20251009-051727.png)
 </figure>
 
-*  **Web Inactivity Timeout (Minutes)** : ウェブコンソールタイムアウト基準 (Default : 60分)
+*  **Web Inactivity Timeout** : ウェブコンソールタイムアウト基準 (Default : 60分)
     * 指定された時間活動がない場合タイムアウト処理
-*  **Agent Session Timeout (Minutes)** : エージェントセッションタイムアウト基準 (Default : 1,440分)
+*  **Agent Session Timeout** : エージェントセッションタイムアウト基準 (Default : 1,440分)
     * 指定された時間エージェントアプリログインを維持し、経過時ログアウト処理
 *  **User Inactivity Timeout (on agent)** :  <br/> Agent Session Timeout機能に追加でAgentがユーザーのマウス、キーボード入力をモニタリングし、指定された時間を超過して行動がない場合セッションを強制終了します。アイドル状態の場合、長時間クエリを実行していてもマウスおよびキーボードの動きがないと無条件にセッションが終了されログアウト処理されます。 
 
@@ -173,6 +173,11 @@ DB Connection詳細ページ内Connection Information &gt; Secret Store選択
 Server Group詳細ページ内Accounts &gt; Secret Store選択
 </figcaption>
 </figure>
+<Callout type="info">
+11.1.0にOAuth Client関連設定がAdmin &gt; General &gt; Company Management &gt; Security下の項目として追加されました。(単一クライアント設定のみ可能)
+11.3.0にClient設定を複数設定が可能になるよう改善されながらAdmin &gt; General &gt; System &gt; Integrations項目に移動されました。
+</Callout>
+
 ### その他
 
 その他セキュリティ設定を管理します。

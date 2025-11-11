@@ -1,4 +1,5 @@
 src/content/ja/administrator-manual/audit/general-logs/activity-logs.mdx
+src/content/ja/administrator-manual/audit/general-logs/reverse-tunnels.mdx
 src/content/ja/administrator-manual/audit/reports/audit-log-export.mdx
 src/content/ja/administrator-manual/audit/server-logs/command-audit.mdx
 src/content/ja/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
@@ -17,12 +18,20 @@ src/content/ja/administrator-manual/general/system/_meta.ts
 src/content/ja/administrator-manual/general/system/integrations/_meta.ts
 src/content/ja/administrator-manual/general/system/integrations/identity-providers.mdx
 src/content/ja/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+src/content/ja/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
 src/content/ja/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
 src/content/ja/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
 src/content/ja/administrator-manual/general/system/integrations/oauth-client-application.mdx
 src/content/ja/administrator-manual/general/system/maintenance.mdx
 src/content/ja/administrator-manual/general/user-management/authentication.mdx
 src/content/ja/administrator-manual/general/user-management/groups.mdx
+src/content/ja/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
 src/content/ja/administrator-manual/general/workflow-management/approval-rules.mdx
+src/content/ja/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters.mdx
+src/content/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
+src/content/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
+src/content/ja/administrator-manual/kubernetes/kac-general-configurations.mdx
 src/content/ja/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
 src/content/ja/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups.mdx
+src/content/ja/administrator-manual/web-apps/wac-quickstart/1027-wac-role-policy-guide.mdx
+src/content/ja/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx

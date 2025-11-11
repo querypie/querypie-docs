@@ -83,40 +83,39 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
 
 ### Attribute基盤承認者指定機能
 
-Use User Attribute-Based Approvalトグルを有効化します。
+<Callout type="info">
+11.4.0から属性基盤承認者指定時に複数の属性を指定できるよう改善されました。
+* Admin &gt; General &gt; Company Management &gt; General &gt; Workflow ConfigurationsのUse User Attribute-Based Approvalオプションスイッチが削除されました。
+* 既存のAttribute基盤承認者指定時は一つのAttributeのみ指定できましたが、他のAttributeを選択できるようになり、各承認段階別にそれぞれ異なる属性の承認者がマッピングされるよう改善されました。
+</Callout>
 
-<figure data-layout="center" data-align="center">
-![Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.14.55-AM.png)
-<figcaption>
-Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations
-</figcaption>
-</figure>
-
-このオプションを通じて、ワークフロー要求上申時に、ユーザープロフィールの特定Attribute（例：チームリーダー、部長）を基準に承認者を自動的に指定するかを決定します。これを通じて、特定条件に合う担当者に承認要求が自動的に割り当てられるように設定できます。
+ユーザープロフィールの特定Attribute（例：チームリーダー、部長）を基準に承認者を自動的に指定できます。
 
 * 重要：
     * 選択されたAttributeの値には承認者のQueryPie Login IDが入力されていなければなりません。
-    * Attribute基盤承認者指定は1名のみ登録できます（一つのAttributeに一人の承認者IDのみ指定可能）。
-* トグルを有効化した場合
-    * 承認者自動指定の基準となるDataTypeがidentifierであるAttributeを選択するドロップダウンリストが表示されます。管理者はこのリストから承認者指定に使用するAttribute（例：teamLeader）を選択しなければなりません。
-        * 選択されたAttribute削除制限：上記設定で特定Attributeが承認者自動指定基準として選択されると、該当AttributeはAdministrator &gt; General &gt; Profile Editorで削除できなくなるようシステムによって設定されます（例：削除チェックボックス無効化）。
-    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで新しい承認規則を追加または既存規則を修正する際、'Assignee for Approval'項目に'Allow Assignee selection (Attribute-Based)'オプションが表示され選択可能になります。
-        * このオプションを選択すると、すぐ下にWorkflow Configurationsで設定したAttribute（例：teamLeader）が表示され、該当Attribute値を基準に承認者が動的に決定されることを示します。
-        * 自己承認無効化時連動：もしApproval Rules設定で'Self Approval（自己承認）'オプションが無効化された場合、Attribute基盤で決定された承認者が要求者本人の場合には該当要求者を承認者として自動指定できません。この場合、ワークフロー設定またはシステムポリシーに従って承認者指定が失敗するか他の経路で処理される可能性があるため注意が必要です。
-    * User &gt; Workflow上申ページでAllow Assignee selection (Attribute-Based)で作成されたApproval Ruleが表示されます。
-* トグルを無効化した場合
-    * Administrator &gt; General &gt; Workflow Configurationsページ内でAttribute選択ドロップダウンリストが無効化されます。
-    * Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで承認規則作成または修正時'Assignee for Approval'項目の'Allow Assignee selection (Attribute-Based)'オプションが表示されなくなったり選択できなくなります。
-    * 既存に'Allow Assignee selection (Attribute-Based)'オプションを使用して作成された承認規則は、ユーザーが新しいワークフローを上申する際に承認規則選択リストから除外されます。
-        * 注意：すでに該当規則で上申されて進行中のワークフローの承認プロセスには影響を与えません。
-        * 管理者が該当規則を修正しようとする際、Attribute基盤承認者指定関連設定は無効化または初期化される可能性があり、必須入力値不足時は保存できず赤い枠線でエラーが表示されます。
-    * User &gt; Workflow上申ページでAllow Assignee selection (Attribute-Based)で作成されたApproval Ruleは表示されません。
+      <figure data-layout="center" data-align="center">
+      ![Admin &gt; General &gt; Users &gt; Detail page &gt; Profileタブ<br/>](/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png)
+      <figcaption>
+      Admin &gt; General &gt; Users &gt; Detail page &gt; Profileタブ<br/>
+      </figcaption>
+      </figure>
+* Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで新しい承認規則を追加または既存規則を修正する際、'Assignee for Approval'項目に'Allow Assignee selection (Attribute-Based)'を選択した後、承認者とマッピングするためのAttribute（例：teamLeader）を指定します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251110-030113.png](/administrator-manual/general/company-management/general/image-20251110-030113.png)
+  </figure>
+    * 自己承認無効化時連動：もしApproval Rules設定で'Self Approval（自己承認）'オプションが無効化された場合、Attribute基盤で決定された承認者が要求者本人の場合には該当要求者を承認者として自動指定できません。この場合、ワークフロー設定またはシステムポリシーに従って承認者指定が失敗するか他の経路で処理される可能性があるため注意が必要です。
 * Attribute値不在時通知
     * もし上申者User Profileに該当Attribute値が空の場合（すなわち、承認者のLogin IDが指定されていない場合）、ワークフロー上申時に以下のような内容の通知モーダルが表示され要求提出が中断されます。上申者は管理者に問い合わせてプロフィールのAttribute値を設定しなければなりません。
         * エラーメッセージ例：
+          <figure data-layout="center" data-align="center">
+          ![image-20250508-022114.png](/administrator-manual/general/company-management/general/image-20250508-022114.png)
+          </figure>
 * Attribute値はあるが該当ユーザーが無効化された場合
     * もし上申者User Profileに該当Attribute値で指定された承認者が無効化された場合、ワークフロー上申時にApprover欄に指定された承認者が表記されず、以下のような内容の通知モーダルが表示され要求提出が中断されます。
         * エラーメッセージ例：
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-06-16-at-10.30.14-AM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.30.14-AM.png)
+          </figure>
 
 ### Attribute基盤ワークフローメニュー非表示機能 (Use User Attribute to Hide Workflow Menu)
 
@@ -135,7 +134,7 @@ Use User Attribute to Hide Workflow Menuトグルを有効化します。
 ### 代理決裁機能有効化/無効化オプション (Allow Delegated Approval)
 
 <Callout type="info">
-代理決裁機能有効化/無効化オプションは11.3.0に追加されました。
+代理決裁機能有効化/無効化オプションは11.3.0に追加されました。<br/>11.4.0からユーザーの代理決裁者指定/解除イベントに対して監査ログを記録します。該当ログはExternal API ( /api/external/v2/workflows/approval-delegations/logs) を使用して照会できます。
 </Callout>
 
 承認者役割を一定期間他のユーザーに委任する機能である代理決裁機能を管理者が有効化または無効化できるオプションです。もし無効化する場合、ユーザーpreference画面でApprover settingメニューが表示されません。
@@ -161,6 +160,7 @@ Allow Delegated Approvalスイッチ
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
 </figure>
+
 
 このオプションを有効化する場合、明示された個数分だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。これを通じて大容量クエリ実行に伴うDB負荷を防ぐことができます。
 

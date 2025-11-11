@@ -222,11 +222,27 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
         * 該当subjectsはPolicy-wideレベルで定義でき、最小一つが配定されるように定義されなければなりません。
             * Impersonationのための該当subjectsは他のPolicyたちと一つのRole内で重複が可能です。
         * Resourcesに明示されたリソースに対する権限実行が可能なkubernetes側グループ(単一または複数)を定義します。
+          ```
+kubernetesGroups: 
+  - system:masters
+  - default-group-account
+          ```
         * kubernetesGroupsにはQuerypie UserのGroupを予約語形態で入力できます。この時、UserのGroupは二重引用符(")なしで入力されなければならず、ユーザーがPolicyを見る時は実際のuser Groupの値が表示されます。
+          ```
+kubernetesGroups: 
+  - $user.groups
+          ```
 2. `impersonation`: **[OPTIONAL]**
     * ユーザーがクライアント段階でkubernetes内特定serviceaccountなどの権限でkubectlコマンドにimpersonation(--as, --as-group)を試みる場合、これに対する呼び出し許可リストを定義します。
         * `users`: Kubernetes内存在するユーザー/サービスアカウントで"--as"パラメータに許可可能な値を列挙します。
         * `groups`: Kubernetes内存在するグループアカウントで"--as-group"パラメータに許可可能な値を列挙します。
+          ```
+impersonation: 
+  users: 
+    - "system:serviceaccount:argocd"
+  groups: 
+    - "system:admin"
+          ```
         * ワイルドカードを許可します。(`"*"`)
 
 
@@ -248,6 +264,12 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
     2. 上に表記されていないリソースもポリシーで受容が可能です。
     3. ネームスペース下位リソースだけ指定して権限を付与しても、Namespaceに対するReadOnly権限が一緒に付与されます。したがって、リソース呼び出し時毎回ネームスペース明示してあげる必要がある事例が発生されません。特定ネームスペースに対する権限付与を防止しようとする場合、`spec:deny`でネームスペースリソースに対するアクセス拒否を設定できます。
     4. 単一ポリシーアクションで多重でリソース指定が可能です。
+      ```
+ resources:
+   - "pods"
+   - "deployments"
+   - "configmaps"
+      ```
     5. ワイルドカードを許可します。(`"*"`)
 3. `namespace` : 対象ネームスペースを定義します。
     1. ネームスペースをアクションで定義してクラスター内許可対象ネームスペースをリソース別に制御できます。
@@ -282,8 +304,21 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
 `conditions`項目には`resourceTags`、`userAttributes`、`ipAddresses`を条件で定義できます。**[OPTIONAL]**
 
 * `resourceTags` : タグ項目ではリソースタグのキーと値でフィルタリングできます。
+  ```
+resourceTags: 
+  "region": "ap-northeast-1"
+  "Owner": "Brant"
+  ```
 * `userAttributes` : ユーザーの属性(attribute)を条件で指定し、値がマッチングされるユーザーに限って該当ポリシーで定義された権限の使用を制限します。
+  ```
+userAttributes: 
+  "countryCode": "KR"
+  "department": "Infra"
+  ```
 * `ipAddresses` : リソースに対するIPアクセス統制条件リストを単一IP、CIDR形態で定義します。
+  ```
+ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+  ```
 
 
 ### KAC Policy例
