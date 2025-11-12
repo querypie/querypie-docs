@@ -1,7 +1,4 @@
 import nextra from 'nextra';
-import remarkEmoji from 'remark-emoji';
-import remarkGfm from 'remark-gfm';
-import rehypeAttrs from 'rehype-attr';
 
 // Set up Nextra with its configuration
 const withNextra = nextra({
