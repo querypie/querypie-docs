@@ -16,13 +16,15 @@ const withNextra = nextra({
   // Refer to this: https://nextra.site/docs/advanced/table
   whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 
-  // Add remark plugins for emoji and GitHub Flavored Markdown support
   mdxOptions: {
-    remarkPlugins: [remarkEmoji, remarkGfm],
-    rehypePlugins: [
-      [rehypeAttrs, { properties: ['width', 'class'] }]
+    // Add remark plugins for GitHub Flavored Markdown support
+    remarkPlugins: [
+      require.resolve('remark-gfm')
     ],
-  },
+    rehypePlugins: [
+      [require.resolve('rehype-attr'), { properties: ['width', 'class'] }]
+    ]
+  }
 });
 
 // Export the final Next.js config with Nextra included
