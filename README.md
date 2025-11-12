@@ -2,6 +2,8 @@
 
 This repository contains the official documentation for QueryPie, an integrated security solution that provides **DAC (Database Access Controller), SAC (System Access Controller), KAC (Kubernetes Access Controller), and WAC (Web Access Controller)** in a unified platform.
 
+## debug
+
 ## Purpose
 
 This repository serves as the central hub for maintaining and publishing QueryPie's product documentation, including:
