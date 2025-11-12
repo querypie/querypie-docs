@@ -1,6 +1,7 @@
 import nextra from 'nextra';
 
 // Set up Nextra with its configuration
+// Configure mdxOptions as a function to load plugins at runtime for Turbopack compatibility
 const withNextra = nextra({
   latex: true,
   search: {
@@ -13,14 +14,21 @@ const withNextra = nextra({
   // Refer to this: https://nextra.site/docs/advanced/table
   whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 
-  mdxOptions: {
-    // Add remark plugins for GitHub Flavored Markdown support
-    remarkPlugins: [
-      require.resolve('remark-gfm')
-    ],
-    rehypePlugins: [
-      [require.resolve('rehype-attr'), { properties: ['width', 'class'] }]
-    ]
+  // Configure mdxOptions as a function to load plugins at runtime
+  // This keeps next.config.ts serializable and compatible with Turbopack
+  mdxOptions: () => {
+    // Dynamically load plugins at runtime (synchronous)
+    // Use require to load CommonJS modules
+    const remarkGfm = require('remark-gfm');
+    const rehypeAttrs = require('rehype-attr');
+
+    return {
+      // Add remark plugins for GitHub Flavored Markdown support
+      remarkPlugins: [remarkGfm.default || remarkGfm],
+      rehypePlugins: [
+        [rehypeAttrs.default || rehypeAttrs, { properties: ['width', 'class'] }]
+      ]
+    };
   }
 });
 
