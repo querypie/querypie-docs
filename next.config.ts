@@ -14,11 +14,10 @@ const withNextra = nextra({
   // Refer to this: https://nextra.site/docs/advanced/table
   whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 
-  // Configure mdxOptions as a function to load plugins at runtime
-  // This keeps next.config.ts serializable and compatible with Turbopack
-  mdxOptions: () => {
-    // Dynamically load plugins at runtime (synchronous)
-    // Use require to load CommonJS modules
+  // Configure mdxOptions with plugins loaded via require for Turbopack compatibility
+  // Using require instead of import keeps the config more serializable
+  mdxOptions: (() => {
+    // Load plugins using require to avoid top-level imports
     const remarkGfm = require('remark-gfm');
     const rehypeAttrs = require('rehype-attr');
 
@@ -29,7 +28,7 @@ const withNextra = nextra({
         [rehypeAttrs.default || rehypeAttrs, { properties: ['width', 'class'] }]
       ]
     };
-  }
+  })()
 });
 
 // Export the final Next.js config with Nextra included
