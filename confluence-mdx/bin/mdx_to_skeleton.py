@@ -2,8 +2,8 @@
 """
 MDX to Skeleton Converter
 
-This script converts MDX files to skeleton format by preserving markdown structure
-and replacing text content with _TEXT_ placeholder.
+This script converts MDX files to skeleton format by preserving the markdown structure
+and replacing text content with a _TEXT_ placeholder.
 
 Usage:
     python mdx_to_skeleton.py path/to/filename.mdx
@@ -15,23 +15,24 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Tuple, Dict, Optional
+from typing import List, Tuple, Optional
 
-# Global diff counter for tracking number of diffs found
-_diff_count = 0
-_max_diff = None  # Will be set to 5 (default) when --recursive is used
-_exclude_patterns = ['/index.skel.mdx']  # Default exclude patterns
+# Global diff counter for tracking the number of diffs found
+_diff_count: int = 0
+_max_diff: Optional[int] = None  # Will be set to 5 (default) when --recursive is used
+_exclude_patterns: List[str] = ['/index.skel.mdx']  # Default exclude patterns
 
 
 class ProtectedSection:
     """Represents a protected section that should not be modified"""
+
     def __init__(self, content: str, placeholder: str):
         self.content = content
         self.placeholder = placeholder
 
 
-def extract_yaml_frontmatter(text: str) -> Tuple[str, ProtectedSection]:
-    """Extract YAML frontmatter and replace with placeholder"""
+def extract_yaml_frontmatter(text: str) -> Tuple[str, Optional[ProtectedSection]]:
+    """Extract the YAML frontmatter and replace with a placeholder"""
     pattern = r'^---\n(.*?)\n---\n'
     match = re.match(pattern, text, re.DOTALL)
     if match:
@@ -44,14 +45,14 @@ def extract_yaml_frontmatter(text: str) -> Tuple[str, ProtectedSection]:
 
 
 def extract_code_blocks(text: str) -> Tuple[str, List[ProtectedSection]]:
-    """Extract code blocks and replace with placeholders"""
+    """Extracts code blocks and replaces them with placeholders"""
     code_blocks: List[ProtectedSection] = []
     placeholder_counter = 0
-    
-    # Pattern to match code blocks: ```language\ncontent\n```
+
+    # Pattern to match code blocks: ```language followed by content and closing ```
     # Match the entire code block including markers to preserve it exactly as-is
     pattern = r'(```\w*\n.*?```)'
-    
+
     def replace_code_block(match):
         nonlocal placeholder_counter
         full_block = match.group(1)  # Entire code block including ``` markers
@@ -60,20 +61,20 @@ def extract_code_blocks(text: str) -> Tuple[str, List[ProtectedSection]]:
         protected = ProtectedSection(full_block, placeholder)
         code_blocks.append(protected)
         return placeholder
-    
+
     modified_text = re.sub(pattern, replace_code_block, text, flags=re.DOTALL)
     return modified_text, code_blocks
 
 
 def extract_inline_code(text: str) -> Tuple[str, List[ProtectedSection]]:
-    """Extract inline code and replace with placeholders"""
+    """Extracts inline code and replaces it with placeholders"""
     inline_codes: List[ProtectedSection] = []
     placeholder_counter = 0
-    
+
     # Pattern to match inline code: `code` (avoid matching code block markers)
     # Match backtick, then non-backtick, non-newline content, then backtick
     pattern = r'(?<!`)`([^`\n]+)`(?!`)'
-    
+
     def replace_inline_code(match):
         nonlocal placeholder_counter
         code = match.group(1)
@@ -82,21 +83,21 @@ def extract_inline_code(text: str) -> Tuple[str, List[ProtectedSection]]:
         protected = ProtectedSection(code, placeholder)
         inline_codes.append(protected)
         return f"`{placeholder}`"
-    
+
     modified_text = re.sub(pattern, replace_inline_code, text)
     return modified_text, inline_codes
 
 
 def extract_urls(text: str) -> Tuple[str, List[ProtectedSection]]:
-    """Extract URLs from links and images, preserve them"""
+    """Extracts URLs from links and images and preserves them"""
     urls: List[ProtectedSection] = []
     placeholder_counter = 0
-    
-    # Pattern to match URLs in markdown links and images
+
+    # Pattern to match URLs in Markdown links and images
     # Match [text](url) or ![alt](url)
     # For images, we preserve the URL but will process alt text later
-    pattern = r'(!?\[[^\]]*\]\()([^)]+)(\))'
-    
+    pattern = r'(!?\[[^]]*]\\()([^)]+)(\))'
+
     def replace_url(match):
         nonlocal placeholder_counter
         prefix = match.group(1)  # [text]( or ![alt](
@@ -106,31 +107,31 @@ def extract_urls(text: str) -> Tuple[str, List[ProtectedSection]]:
         # We'll process the alt text separately
         is_image = prefix.startswith('!')
         is_path_url = url.startswith('/') or '://' in url or url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'))
-        
+
         if is_image and is_path_url:
-            # For images with path URLs, keep URL as-is, alt text will be processed later
+            # For images with path URLs, keep the URL as-is, alt text will be processed later
             return match.group(0)
         elif is_path_url:
-            # For regular links with path URLs, preserve URL
+            # For regular links with path URLs, preserve the URL
             placeholder_counter += 1
             placeholder = f"__URL_{placeholder_counter}__"
             protected = ProtectedSection(url, placeholder)
             urls.append(protected)
             return prefix + placeholder + suffix
         return match.group(0)  # Keep as is if not a URL
-    
+
     modified_text = re.sub(pattern, replace_url, text)
     return modified_text, urls
 
 
 def extract_html_entities(text: str) -> Tuple[str, List[ProtectedSection]]:
-    """Extract HTML entities and preserve them"""
+    """Extracts HTML entities and preserves them"""
     entities: List[ProtectedSection] = []
     placeholder_counter = 0
-    
+
     # Pattern to match HTML entities like &gt;, &lt;, &amp;, etc.
     pattern = r'(&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;)'
-    
+
     def replace_entity(match):
         nonlocal placeholder_counter
         entity = match.group(1)
@@ -139,13 +140,13 @@ def extract_html_entities(text: str) -> Tuple[str, List[ProtectedSection]]:
         protected = ProtectedSection(entity, placeholder)
         entities.append(protected)
         return placeholder
-    
+
     modified_text = re.sub(pattern, replace_entity, text)
     return modified_text, entities
 
 
 def restore_protected_sections(text: str, sections: List[ProtectedSection]) -> str:
-    """Restore protected sections from placeholders"""
+    """Restores protected sections from placeholders"""
     for section in sections:
         text = text.replace(section.placeholder, section.content)
     return text
@@ -153,57 +154,57 @@ def restore_protected_sections(text: str, sections: List[ProtectedSection]) -> s
 
 def extract_language_code(file_path: Path) -> Optional[str]:
     """
-    Extract language code from file path.
-    Assumes relative path starting with target/{lang}/.
-    Checks for 'ko', 'en', 'ja' in target/{lang}/ pattern.
+    Extract language code from the file path.
+    Assumes a relative path starting with target/{lang}/.
+    Checks for 'ko', 'en', 'ja' in the target/{lang}/ pattern.
     Returns language code if found, None otherwise.
     """
     path_str = str(file_path)
     path_lower = path_str.lower()
-    
-    # Check for language codes in target/{lang}/ pattern at the start
+
+    # Check for language codes in the target/{lang}/ pattern at the start
     for lang in ['ko', 'en', 'ja']:
         pattern = r'^target[/\\]' + lang + r'[/\\]'
         if re.match(pattern, path_lower, re.IGNORECASE):
             return lang.lower()
-    
+
     return None
 
 
 def get_korean_equivalent_path(file_path: Path) -> Optional[Path]:
     """
-    Get the Korean equivalent path by replacing language code in path.
-    Assumes relative path starting with target/{lang}/.
+    Gets the Korean equivalent path by replacing the language code in the path.
+    Assumes a relative path starting with target/{lang}/.
     If file_path is target/en/file.mdx, returns target/ko/file.mdx.
     If file_path is target/ja/file.mdx, returns target/ko/file.mdx.
     If no language code found, returns None.
     """
     path_str = str(file_path)
     path_lower = path_str.lower()
-    
-    # Try to replace language codes in target/{lang}/ pattern
+
+    # Try to replace language codes in the target/{lang}/ pattern
     for lang in ['en', 'ja']:
-        # Match target/{lang}/ pattern at the start
+        # Match the target/{lang}/ pattern at the start
         pattern = r'^target[/\\]' + lang + r'[/\\]'
         if re.match(pattern, path_lower, re.IGNORECASE):
             # Replace target/{lang}/ with target/ko/
             new_path_str = re.sub(pattern, 'target/ko/', path_str, flags=re.IGNORECASE, count=1)
             return Path(new_path_str)
-    
+
     return None
 
 
 def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
     """
-    Extract path without target/{lang} prefix.
-    Assumes relative path starting with target/{lang}/.
+    Extracts a path without the target/{lang} prefix.
+    Assumes a relative path starting with target/{lang}/.
     For example: target/en/some/path/file.skel.mdx -> /some/path/file.skel.mdx
     Returns None if target/{lang} pattern is not found.
     """
     path_str = str(file_path)
     path_lower = path_str.lower()
-    
-    # Check for target/{lang}/ pattern at the start (relative path only)
+
+    # Check for the target/{lang}/ pattern at the start (relative path only)
     for lang in ['ko', 'en', 'ja']:
         pattern = r'^target[/\\]' + lang + r'[/\\]'
         match = re.match(pattern, path_lower, re.IGNORECASE)
@@ -214,13 +215,13 @@ def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
             if not relative_path.startswith('/'):
                 relative_path = '/' + relative_path
             return relative_path
-    
+
     return None
 
 
 def get_original_mdx_path(skel_path: Path) -> Optional[Path]:
     """
-    Get the original .mdx file path from .skel.mdx path.
+    Gets the original .mdx file path from the .skel.mdx path.
     For example: target/ko/file.skel.mdx -> target/ko/file.mdx
     """
     if not skel_path.name.endswith('.skel.mdx'):
@@ -229,38 +230,38 @@ def get_original_mdx_path(skel_path: Path) -> Optional[Path]:
 
 
 def format_diff_with_original_content(
-    diff_output: str,
-    left_skel_path: Path,
-    right_skel_path: Path
+        diff_output: str,
+        left_skel_path: Path,
+        right_skel_path: Path
 ) -> str:
     """
-    Format diff output by replacing .skel.mdx file paths with .mdx paths
+    Formats diff output by replacing .skel.mdx file paths with .mdx paths
     and replacing diff content lines with original .mdx file content.
-    
+
     Converts skeleton diff (with _TEXT_ placeholders) to original content diff.
     """
     # Get original .mdx file paths
     left_mdx_path = get_original_mdx_path(left_skel_path)
     right_mdx_path = get_original_mdx_path(right_skel_path)
-    
+
     if left_mdx_path is None or right_mdx_path is None:
         return diff_output
-    
+
     # Read original .mdx files
     try:
         left_lines = left_mdx_path.read_text(encoding='utf-8').split('\n')
         right_lines = right_mdx_path.read_text(encoding='utf-8').split('\n')
     except FileNotFoundError:
         return diff_output
-    
+
     # Unified format chunk header pattern: @@ -start,count +start,count @@
     chunk_header_pattern = re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
-    
+
     result_lines = []
     lines = diff_output.split('\n')
     left_line_num = None
     right_line_num = None
-    
+
     for line in lines:
         # Replace file paths in headers
         if line.startswith('--- '):
@@ -269,7 +270,7 @@ def format_diff_with_original_content(
         elif line.startswith('+++ '):
             result_lines.append(line.replace(str(right_skel_path), str(right_mdx_path)))
             continue
-        
+
         # Process chunk header: initialize line number tracking
         match = chunk_header_pattern.match(line)
         if match:
@@ -277,7 +278,7 @@ def format_diff_with_original_content(
             left_line_num = int(match.group(1))
             right_line_num = int(match.group(3))
             continue
-        
+
         # Process content lines within a chunk
         if left_line_num is not None and right_line_num is not None:
             if line.startswith('-'):
@@ -308,53 +309,54 @@ def format_diff_with_original_content(
         else:
             # Outside chunk - keep as is
             result_lines.append(line)
-    
+
     return '\n'.join(result_lines)
 
 
-def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
+def compare_with_korean_skel(current_skel_path: Path) -> bool:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
     If current file is not Korean, find Korean equivalent and run diff.
-    
+
     Returns:
-        True if should continue processing, False if max_diff reached and should stop
+        True if it should continue processing, False if max_diff is reached and should stop
     """
     global _diff_count, _max_diff, _exclude_patterns
-    
+
     current_lang = extract_language_code(current_skel_path)
-    
+
     # If current file is Korean, no need to compare
     if current_lang == 'ko':
         return True
-    
+
     # Check if file path matches exclude patterns
     relative_path = get_path_without_lang_dir(current_skel_path)
     if relative_path and relative_path in _exclude_patterns:
         return True
-    
+
     # Check if max_diff is set and already reached
-    if _max_diff is not None and _diff_count >= _max_diff:
-        return False
-    
+    if _max_diff is not None:
+        if _diff_count >= _max_diff:
+            return False
+
     # Get Korean equivalent path
     korean_skel_path = get_korean_equivalent_path(current_skel_path)
-    
+
     if korean_skel_path is None:
         return True
-    
+
     # Check if Korean .skel.mdx file exists
     if not korean_skel_path.exists():
         return True
-    
+
     # Run diff command
     try:
         # Build diff command with unified format (-U 2 for 2 lines of context)
         diff_cmd = ['diff', '-U', '2', str(korean_skel_path), str(current_skel_path)]
-        
+
         # Print command with "+ " prefix
         print(f"+ {' '.join(diff_cmd)}")
-        
+
         # Run diff and capture output
         result = subprocess.run(
             diff_cmd,
@@ -362,17 +364,17 @@ def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
             text=True,
             check=False  # Don't raise exception on non-zero exit
         )
-        
+
         # Check if files are different (exit code 1 means differences found)
         # Exit code 0 means files are identical
         if result.returncode == 1:
             # Files are different, increment diff count
             _diff_count += 1
-            
+
             # Print diff output
             if result.stdout:
                 print(result.stdout, end='')
-            
+
             # Print original .mdx file diff
             original_diff = format_diff_with_original_content(
                 result.stdout,
@@ -381,33 +383,34 @@ def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
             )
             if original_diff:
                 print(original_diff, end='')
-            
+
             # Check if max_diff reached
-            if _max_diff is not None and _diff_count >= _max_diff:
-                return False
-        
+            if _max_diff is not None:
+                if _diff_count >= _max_diff:
+                    return False
+
         # Print stderr if any (errors)
         if result.stderr:
             print(result.stderr, end='', file=sys.stderr)
-            
+
     except Exception as e:
         print(f"Error running diff: {e}", file=sys.stderr)
-    
+
     return True
 
 
 def process_text_line(line: str) -> str:
     """
-    Process a line of text, replacing content with _TEXT_ while preserving structure.
+    Processes a line of text, replacing content with _TEXT_ while preserving structure.
     """
     # Skip empty lines
     if not line.strip():
         return line
-    
+
     # Preserve import statements
     if line.strip().startswith('import '):
         return line
-    
+
     # Preserve code block markers and placeholders
     # Code blocks are already extracted and replaced with placeholders
     # We need to preserve the entire code block structure (```...```)
@@ -415,7 +418,7 @@ def process_text_line(line: str) -> str:
         return line
     if '__CODE_BLOCK_' in line:
         return line
-    
+
     # Preserve HTML tags structure but replace text content
     if '<' in line and '>' in line:
         # Extract HTML tags and their attributes, replace text between tags
@@ -429,7 +432,7 @@ def process_text_line(line: str) -> str:
                     result.append(line[i:])
                     break
                 # Extract the tag
-                tag = line[i:tag_end+1]
+                tag = line[i:tag_end + 1]
                 result.append(tag)
                 i = tag_end + 1
             else:
@@ -443,13 +446,13 @@ def process_text_line(line: str) -> str:
                 result.append(processed_text)
                 i = text_end
         return ''.join(result)
-    
+
     # Process markdown line
     return process_markdown_line(line)
 
 
 def process_markdown_line(line: str) -> str:
-    """Process a markdown line, preserving structure"""
+    """Processes a markdown line, preserving structure"""
     # Preserve headers
     header_match = re.match(r'^(\s*#+\s+)(.*)$', line)
     if header_match:
@@ -457,7 +460,7 @@ def process_markdown_line(line: str) -> str:
         content = header_match.group(2)
         processed_content = replace_text_in_content(content)
         return prefix + processed_content
-    
+
     # Preserve list items
     list_match = re.match(r'^(\s*)([-*]|\d+\.)(\s+)(.*)$', line)
     if list_match:
@@ -467,40 +470,40 @@ def process_markdown_line(line: str) -> str:
         content = list_match.group(4)
         processed_content = replace_text_in_content(content)
         return indent + marker + spacing + processed_content
-    
+
     # Process as regular text
     return replace_text_in_content(line)
 
 
 def replace_text_in_content(text: str) -> str:
     """
-    Replace text content with _TEXT_ while preserving markdown formatting markers.
-    Process sentences: one sentence becomes _TEXT_. (comma is included in _TEXT_)
+    Replaces text content with _TEXT_ while preserving Markdown formatting markers.
+    Processes sentences: one sentence becomes _TEXT_. (comma is included in _TEXT_)
     """
     if not text.strip():
         return text
-    
-    # First, protect image links: replace alt text with _TEXT_ but preserve URL
-    # Pattern: ![alt text](url) where url is a path
+
+    # First, protect image links: replace alt text with _TEXT_ but preserve the URL
+    # Pattern: ![alt text](url) where the url is a path
     # We need to protect these so they don't get processed again
     image_links = []
     placeholder_counter = 0
-    
+
     def protect_image_link(match):
         nonlocal placeholder_counter
-        alt_text = match.group(1)
+        _alt_text = match.group(1)  # alt_text is extracted but not used
         url = match.group(2)
-        # If URL is a path (starts with / or is an image file), preserve it
+        # If the URL is a path (starts with / or is an image file), preserve it
         if url.startswith('/') or '://' in url or url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')):
             placeholder_counter += 1
-            placeholder = f"__IMAGE_LINK_{placeholder_counter}__"
-            image_links.append((placeholder, f'![_TEXT_]({url})'))
-            return placeholder
+            link_placeholder = f"__IMAGE_LINK_{placeholder_counter}__"
+            image_links.append((link_placeholder, f'![_TEXT_]({url})'))
+            return link_placeholder
         return match.group(0)
-    
+
     # Match image links: ![alt](url) and protect them
-    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', protect_image_link, text)
-    
+    text = re.sub(r'!\[([^]]*)]\(([^)]+)\)', protect_image_link, text)
+
     # Check if text is only image link placeholders (no other text)
     if image_links and re.match(r'^\s*(__IMAGE_LINK_\d+__\s*)+$', text):
         # Restore image links immediately and return
@@ -508,46 +511,46 @@ def replace_text_in_content(text: str) -> str:
         for placeholder, replacement in image_links:
             result = result.replace(placeholder, replacement)
         return result
-    
+
     # Preserve bold markers **text** or __text__
     text = re.sub(r'\*\*([^*]+)\*\*', r'**_TEXT_**', text)
     text = re.sub(r'__([^_]+)__', r'__TEXT__', text)
-    
+
     # Preserve italic markers *text* or _text_ (but not if part of ** or __)
     text = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'*_TEXT_*', text)
     text = re.sub(r'(?<!_)_([^_]+)_(?!_)', r'_TEXT_', text)
-    
+
     # Preserve regular link structure [text] (but not images, already handled)
-    text = re.sub(r'(?<!!)\[([^\]]*)\]', r'[_TEXT_]', text)
-    
+    text = re.sub(r'(?<!!)\[([^]]*)]', r'[_TEXT_]', text)
+
     # Process sentences: replace each sentence with _TEXT_.
     # A sentence ends with . ! ? or end of text
-    # Split text into sentences while preserving structure
-    # Find all text segments and replace them sentence by sentence
-    
+    # Splits text into sentences while preserving structure
+    # Finds all text segments and replaces them sentence by sentence
+
     # Split by sentence boundaries (. ! ?) but keep them
     # Pattern to match sentences: text ending with . ! ? or end of string
     def process_sentences(content):
         # First, check if content is only a placeholder (image link only)
         if re.match(r'^\s*__IMAGE_LINK_\d+__\s*$', content):
             return content
-        
+
         # First, split content by protected placeholders to preserve them
         # Split by image link placeholders
         placeholder_pattern = r'(__IMAGE_LINK_\d+__)'
         segments = re.split(placeholder_pattern, content)
-        result = []
-        
+        sentence_result = []
+
         for segment in segments:
             if re.match(placeholder_pattern, segment):
                 # This is a protected placeholder, keep it as-is
-                result.append(segment)
+                sentence_result.append(segment)
             else:
                 # Process this segment for sentences
                 # Split by sentence-ending punctuation, but keep the punctuation
                 # Include full-width Japanese punctuation: 。！？
                 parts = re.split(r'([.!?。！？]\s*)', segment)
-                
+
                 i = 0
                 while i < len(parts):
                     part = parts[i]
@@ -559,98 +562,98 @@ def replace_text_in_content(text: str) -> str:
                     else:
                         punctuation = ''
                         i += 1
-                    
+
                     if not part.strip():
-                        result.append(part)
+                        sentence_result.append(part)
                         if punctuation:
-                            result.append(punctuation)
+                            sentence_result.append(punctuation)
                         continue
-                    
+
                     # Check if part contains any text (Korean, Japanese, English, numbers)
                     # Japanese ranges: Hiragana (\u3040-\u309F), Katakana (\u30A0-\u30FF), Kanji (\u4E00-\u9FAF)
                     if re.search(r'[가-힣\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAFa-zA-Z0-9]', part):
                         # Extract leading whitespace
                         leading_match = re.match(r'^(\s*)', part)
                         leading_ws = leading_match.group(1) if leading_match else ''
-                        
+
                         # Replace entire sentence with _TEXT_ + punctuation
                         # Normalize punctuation: convert full-width Japanese punctuation to half-width for consistency
                         if punctuation:
                             # Normalize full-width Japanese punctuation to half-width
-                            normalized_punct = punctuation.replace('。', '.').replace('！', '!').replace('？', '?')
-                            result.append(leading_ws + '_TEXT_' + normalized_punct)
+                            normalized_punctuation = punctuation.replace('。', '.').replace('！', '!').replace('？', '?')
+                            sentence_result.append(leading_ws + '_TEXT_' + normalized_punctuation)
                         else:
                             # Check if original ended with punctuation (including full-width Japanese)
                             if part.rstrip().endswith(('.', '!', '?', '。', '！', '？')):
-                                result.append(leading_ws + '_TEXT_.')
+                                sentence_result.append(leading_ws + '_TEXT_.')
                             else:
-                                result.append(leading_ws + '_TEXT_')
+                                sentence_result.append(leading_ws + '_TEXT_')
                     else:
-                        result.append(part)
+                        sentence_result.append(part)
                         if punctuation:
-                            result.append(punctuation)
-        
-        return ''.join(result)
-    
+                            sentence_result.append(punctuation)
+
+        return ''.join(sentence_result)
+
     result = process_sentences(text)
-    
+
     # Final cleanup: merge consecutive _TEXT_ and handle spacing
     result = re.sub(r'_TEXT_\s*_TEXT_', '_TEXT_', result)
     result = re.sub(r'_TEXT_\s*([.,;:!?])', r'_TEXT_\1', result)
     result = re.sub(r'([.,;:!?])\s*_TEXT_', r'\1 _TEXT_', result)
-    
+
     # Restore protected image links
-    for placeholder, replacement in image_links:
-        result = result.replace(placeholder, replacement)
-    
+    for image_placeholder, replacement in image_links:
+        result = result.replace(image_placeholder, replacement)
+
     return result
 
 
 def convert_mdx_to_skeleton(input_path: Path) -> Path:
     """
-    Convert MDX file to skeleton format.
-    Returns path to output file.
+    Converts an MDX file to skeleton format.
+    Returns the path to the output file.
     """
     if not input_path.exists():
         raise FileNotFoundError(f"Input file not found: {input_path}")
-    
+
     if input_path.suffix != '.mdx':
         raise ValueError(f"Input file must have .mdx extension: {input_path}")
-    
+
     # Skip .skel.mdx files to avoid infinite recursion
     if input_path.name.endswith('.skel.mdx'):
         raise ValueError(f"Skipping .skel.mdx file to avoid recursion: {input_path}")
-    
+
     # Read input file
     content = input_path.read_text(encoding='utf-8')
-    
+
     # Step 1: Extract and protect YAML frontmatter
     content, yaml_section = extract_yaml_frontmatter(content)
-    
+
     # Step 2: Extract and protect code blocks
     content, code_blocks = extract_code_blocks(content)
-    
+
     # Step 3: Extract and protect inline code
     content, inline_codes = extract_inline_code(content)
-    
+
     # Step 4: Extract and protect URLs
     content, urls = extract_urls(content)
-    
+
     # Step 5: Extract and protect HTML entities
     content, entities = extract_html_entities(content)
-    
+
     # Step 6: Process lines and replace text content
     lines = content.split('\n')
     processed_lines = []
     in_yaml = False
-    
+
     for line in lines:
         # Handle YAML frontmatter
         if line.strip() == '---':
             processed_lines.append(line)
             in_yaml = not in_yaml
             continue
-        
+
         if in_yaml or (yaml_section and yaml_section.placeholder in line):
             # Process YAML frontmatter: preserve structure but replace content
             if yaml_section and yaml_section.placeholder in line:
@@ -693,29 +696,29 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
                 else:
                     processed_lines.append(line)
             continue
-        
+
         # Process other lines
         processed_line = process_text_line(line)
         processed_lines.append(processed_line)
-    
+
     content = '\n'.join(processed_lines)
-    
+
     # Step 7: Restore all protected sections in reverse order
     # Note: YAML frontmatter is already processed, so we don't restore it
     content = restore_protected_sections(content, entities)
     content = restore_protected_sections(content, urls)
     content = restore_protected_sections(content, inline_codes)
     content = restore_protected_sections(content, code_blocks)
-    
+
     # Generate output path
     output_path = input_path.parent / f"{input_path.stem}.skel.mdx"
 
     # Write output file
     output_path.write_text(content, encoding='utf-8')
-    
+
     # Compare with Korean equivalent if current file is not Korean
-    compare_with_korean_skel(output_path, input_path)
-    
+    compare_with_korean_skel(output_path)
+
     return output_path
 
 
@@ -726,35 +729,35 @@ def process_directory(directory: Path, recursive: bool = False) -> Tuple[int, in
     """
     if not directory.exists():
         raise FileNotFoundError(f"Directory not found: {directory}")
-    
+
     if not directory.is_dir():
         raise ValueError(f"Path is not a directory: {directory}")
-    
+
     success_count = 0
     error_count = 0
-    
+
     # Find all .mdx files
     if recursive:
         mdx_files = list(directory.rglob('*.mdx'))
     else:
         mdx_files = list(directory.glob('*.mdx'))
-    
+
     # Filter out .skel.mdx files
     mdx_files = [f for f in mdx_files if not f.name.endswith('.skel.mdx')]
-    
+
     if not mdx_files:
-        return (0, 0)
-    
+        return 0, 0
+
     for mdx_file in mdx_files:
         # Check if max_diff reached before processing next file
         global _diff_count, _max_diff
         if _max_diff is not None and _diff_count >= _max_diff:
             break
-        
+
         try:
             convert_mdx_to_skeleton(mdx_file)
             success_count += 1
-            
+
             # Check again after processing (compare_with_korean_skel may have incremented _diff_count)
             if _max_diff is not None and _diff_count >= _max_diff:
                 break
@@ -767,8 +770,8 @@ def process_directory(directory: Path, recursive: bool = False) -> Tuple[int, in
         except Exception as e:
             print(f"{mdx_file}: {e}", file=sys.stderr)
             error_count += 1
-    
-    return (success_count, error_count)
+
+    return success_count, error_count
 
 
 def get_mdx_files(directory: Path) -> set[str]:
@@ -778,11 +781,11 @@ def get_mdx_files(directory: Path) -> set[str]:
     """
     if not directory.exists() or not directory.is_dir():
         return set()
-    
+
     mdx_files = list(directory.rglob('*.mdx'))
     # Filter out .skel.mdx files
     mdx_files = [f for f in mdx_files if not f.name.endswith('.skel.mdx')]
-    
+
     # Convert to relative paths from directory root
     relative_paths = set()
     for mdx_file in mdx_files:
@@ -792,7 +795,7 @@ def get_mdx_files(directory: Path) -> set[str]:
         except ValueError:
             # If relative_to fails, use absolute path
             relative_paths.add(str(mdx_file))
-    
+
     return relative_paths
 
 
@@ -800,7 +803,7 @@ def compare_files(verbose: bool = False):
     """
     Compare .mdx files across target/en, target/ja, and target/ko directories.
     Outputs comparison results to stdout.
-    
+
     Args:
         verbose: If False, skip files that exist in all three languages.
                  If True, output all files.
@@ -811,34 +814,34 @@ def compare_files(verbose: bool = False):
         'en': base_dir / 'en',
         'ja': base_dir / 'ja',
     }
-    
+
     # Get file lists for each directory
     file_sets = {}
     for lang, dir_path in dirs.items():
         file_sets[lang] = get_mdx_files(dir_path)
-    
+
     # Get all unique file paths (union of all three sets)
     all_files = file_sets['ko'] | file_sets['en'] | file_sets['ja']
-    
+
     # Sort alphabetically
     sorted_files = sorted(all_files)
-    
+
     # Output comparison results
     for file_path in sorted_files:
         # Check existence in each directory
         ko_exists = file_path in file_sets['ko']
         en_exists = file_path in file_sets['en']
         ja_exists = file_path in file_sets['ja']
-        
+
         # Skip if all three languages exist and not verbose
         if not verbose and ko_exists and en_exists and ja_exists:
             continue
-        
+
         # Format output: /path/to/file.mdx ko en ja
         ko_status = 'ko' if ko_exists else '-'
         en_status = 'en' if en_exists else '-'
         ja_status = 'ja' if ja_exists else '-'
-        
+
         # Ensure path starts with /
         output_path = file_path if file_path.startswith('/') else f'/{file_path}'
         print(f"{output_path} {ko_status} {en_status} {ja_status}")
@@ -858,16 +861,16 @@ def process_directories_recursive(directories: List[Path]) -> int:
             Path('target/en')
         ]
         directories = default_dirs
-    
+
     total_success = 0
     total_errors = 0
-    
+
     for directory in directories:
         # Check if max_diff reached before processing next directory
         global _diff_count, _max_diff
         if _max_diff is not None and _diff_count >= _max_diff:
             break
-        
+
         if not directory.exists():
             print(f"Warning: Directory not found: {directory}", file=sys.stderr)
             continue
@@ -877,18 +880,18 @@ def process_directories_recursive(directories: List[Path]) -> int:
         success_count, error_count = process_directory(directory, recursive=True)
         total_success += success_count
         total_errors += error_count
-        
+
         # Print statistics for this directory
         print(f"{directory}: {success_count} successful, {error_count} errors")
-        
+
         # Check again after processing directory
         if _max_diff is not None and _diff_count >= _max_diff:
             break
-    
+
     # Print overall summary statistics
     if len(directories) > 1:
         print(f"Total: {total_success} successful, {total_errors} errors")
-    
+
     return 0
 
 
@@ -934,9 +937,9 @@ def main():
         metavar='PATH',
         help='Exclude paths from diff comparison. Path should be relative to target/{lang} (e.g., /index.skel.mdx). Can specify multiple paths. Default: /index.skel.mdx'
     )
-    
+
     args = parser.parse_args()
-    
+
     # Set global max_diff and exclude_patterns if recursive mode is used
     global _max_diff, _diff_count, _exclude_patterns
     if args.recursive is not None:
@@ -944,7 +947,7 @@ def main():
         _diff_count = 0  # Reset counter
         # Use exclude patterns from args, or default if empty
         _exclude_patterns = args.exclude if args.exclude and len(args.exclude) > 0 else ['/index.skel.mdx']
-    
+
     try:
         if args.compare:
             # Compare mode
@@ -958,7 +961,7 @@ def main():
             if args.input_path.is_dir():
                 print("Error: Input path is a directory. Use -r option for directory processing.", file=sys.stderr)
                 return 1
-            
+
             output_path = convert_mdx_to_skeleton(args.input_path)
             print(f"Successfully created: {output_path}")
             return 0
