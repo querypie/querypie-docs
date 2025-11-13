@@ -13,7 +13,7 @@ interface CanonicalUrlParams {
 export async function getCanonicalUrl(params: CanonicalUrlParams): Promise<string> {
   /**
    * NOTE(JK): We cannot use `getBaseUrl()` that relies on `headers()` here.
-   * It will throw a DynamicServerError error while responding a request.
+   * It will throw a DynamicServerError error while responding to a request.
    * For more information on DynamicServerError, see:
    * https://nextjs.org/docs/messages/dynamic-server-error
    *
