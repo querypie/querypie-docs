@@ -459,10 +459,10 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     return output_path
 
 
-def process_directory(directory: Path, recursive: bool = False) -> int:
+def process_directory(directory: Path, recursive: bool = False) -> Tuple[int, int]:
     """
     Process all .mdx files in a directory.
-    Returns number of successfully processed files.
+    Returns tuple of (success_count, error_count).
     """
     if not directory.exists():
         raise FileNotFoundError(f"Directory not found: {directory}")
@@ -483,28 +483,23 @@ def process_directory(directory: Path, recursive: bool = False) -> int:
     mdx_files = [f for f in mdx_files if not f.name.endswith('.skel.mdx')]
     
     if not mdx_files:
-        print(f"No .mdx files found in {directory}", file=sys.stderr)
-        return 0
-    
-    print(f"Found {len(mdx_files)} .mdx file(s) to process...")
+        return (0, 0)
     
     for mdx_file in mdx_files:
         try:
-            output_path = convert_mdx_to_skeleton(mdx_file)
-            print(f"Successfully created: {output_path}")
+            convert_mdx_to_skeleton(mdx_file)
             success_count += 1
         except ValueError as e:
             # Skip .skel.mdx files silently
             if '.skel.mdx' in str(e):
                 continue
-            print(f"Error processing {mdx_file}: {e}", file=sys.stderr)
+            print(f"{mdx_file}: {e}", file=sys.stderr)
             error_count += 1
         except Exception as e:
-            print(f"Error processing {mdx_file}: {e}", file=sys.stderr)
+            print(f"{mdx_file}: {e}", file=sys.stderr)
             error_count += 1
     
-    print(f"\nProcessed: {success_count} successful, {error_count} errors")
-    return success_count
+    return (success_count, error_count)
 
 
 def get_mdx_files(directory: Path) -> set[str]:
@@ -572,6 +567,45 @@ def compare_files():
         print(f"{output_path} {ko_status} {en_status} {ja_status}")
 
 
+def process_directories_recursive(directories: List[Path]) -> int:
+    """
+    Process multiple directories recursively.
+    If directories list is empty, uses default directories (target/en, target/ja, target/ko).
+    Returns exit code (0 for success).
+    """
+    if len(directories) == 0:
+        # No directories specified, use defaults
+        default_dirs = [
+            Path('target/en'),
+            Path('target/ja'),
+            Path('target/ko')
+        ]
+        directories = default_dirs
+    
+    total_success = 0
+    total_errors = 0
+    
+    for directory in directories:
+        if not directory.exists():
+            print(f"Warning: Directory not found: {directory}", file=sys.stderr)
+            continue
+        if not directory.is_dir():
+            print(f"Warning: Path is not a directory: {directory}", file=sys.stderr)
+            continue
+        success_count, error_count = process_directory(directory, recursive=True)
+        total_success += success_count
+        total_errors += error_count
+        
+        # Print statistics for this directory
+        print(f"{directory}: {success_count} successful, {error_count} errors")
+    
+    # Print overall summary statistics
+    if len(directories) > 1:
+        print(f"Total: {total_success} successful, {total_errors} errors")
+    
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Convert MDX file(s) to skeleton format by replacing text with _TEXT_'
@@ -604,29 +638,7 @@ def main():
             return 0
         elif args.recursive is not None:
             # Recursive mode: process directories
-            if len(args.recursive) == 0:
-                # No directories specified, use defaults
-                default_dirs = [
-                    Path('target/en'),
-                    Path('target/ja'),
-                    Path('target/ko')
-                ]
-                directories = default_dirs
-            else:
-                directories = args.recursive
-            
-            total_success = 0
-            for directory in directories:
-                if not directory.exists():
-                    print(f"Warning: Directory not found: {directory}", file=sys.stderr)
-                    continue
-                if not directory.is_dir():
-                    print(f"Warning: Path is not a directory: {directory}", file=sys.stderr)
-                    continue
-                success_count = process_directory(directory, recursive=True)
-                total_success += success_count
-            
-            return 0
+            return process_directories_recursive(args.recursive)
         elif args.input_path:
             # Single file mode
             if args.input_path.is_dir():
