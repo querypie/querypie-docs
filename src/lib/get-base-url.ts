@@ -37,18 +37,9 @@ export async function getBaseUrl(): Promise<string> {
     if (error instanceof Error) {
       console.warn('Error getting base URL from headers:', error.message);
     }
-    
-    // Log all environment variables for debugging
-    const timestamp = new Date().toISOString();
-    console.error(`[${timestamp}] Environment variables:`);
-    
-    // Get all environment variables and sort them alphabetically
-    const envVars = Object.keys(process.env)
-      .sort()
-      .map(key => `  ${key}=${process.env[key]}`)
-      .join('\n');
-    
-    console.error(envVars);
+    const timestamp = new Date().toISOString()
+    const next_phase = process.env.NEXT_PHASE
+    console.error(`[${timestamp}] NEXT_PHASE=${next_phase}`)
   }
 
   // Fallback to production URL when headers are unavailable
