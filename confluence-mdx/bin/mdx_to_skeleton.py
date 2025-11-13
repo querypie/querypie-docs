@@ -12,9 +12,15 @@ Usage:
 
 import argparse
 import re
+import subprocess
 import sys
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
+
+# Global diff counter for tracking number of diffs found
+_diff_count = 0
+_max_diff = None  # Will be set to 5 (default) when --recursive is used
+_exclude_patterns = ['/index.skel.mdx']  # Default exclude patterns
 
 
 class ProtectedSection:
@@ -143,6 +149,148 @@ def restore_protected_sections(text: str, sections: List[ProtectedSection]) -> s
     for section in sections:
         text = text.replace(section.placeholder, section.content)
     return text
+
+
+def extract_language_code(file_path: Path) -> Optional[str]:
+    """
+    Extract language code from file path.
+    Assumes relative path starting with target/{lang}/.
+    Checks for 'ko', 'en', 'ja' in target/{lang}/ pattern.
+    Returns language code if found, None otherwise.
+    """
+    path_str = str(file_path)
+    path_lower = path_str.lower()
+    
+    # Check for language codes in target/{lang}/ pattern at the start
+    for lang in ['ko', 'en', 'ja']:
+        pattern = r'^target[/\\]' + lang + r'[/\\]'
+        if re.match(pattern, path_lower, re.IGNORECASE):
+            return lang.lower()
+    
+    return None
+
+
+def get_korean_equivalent_path(file_path: Path) -> Optional[Path]:
+    """
+    Get the Korean equivalent path by replacing language code in path.
+    Assumes relative path starting with target/{lang}/.
+    If file_path is target/en/file.mdx, returns target/ko/file.mdx.
+    If file_path is target/ja/file.mdx, returns target/ko/file.mdx.
+    If no language code found, returns None.
+    """
+    path_str = str(file_path)
+    path_lower = path_str.lower()
+    
+    # Try to replace language codes in target/{lang}/ pattern
+    for lang in ['en', 'ja']:
+        # Match target/{lang}/ pattern at the start
+        pattern = r'^target[/\\]' + lang + r'[/\\]'
+        if re.match(pattern, path_lower, re.IGNORECASE):
+            # Replace target/{lang}/ with target/ko/
+            new_path_str = re.sub(pattern, 'target/ko/', path_str, flags=re.IGNORECASE, count=1)
+            return Path(new_path_str)
+    
+    return None
+
+
+def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
+    """
+    Extract path without target/{lang} prefix.
+    Assumes relative path starting with target/{lang}/.
+    For example: target/en/some/path/file.skel.mdx -> /some/path/file.skel.mdx
+    Returns None if target/{lang} pattern is not found.
+    """
+    path_str = str(file_path)
+    path_lower = path_str.lower()
+    
+    # Check for target/{lang}/ pattern at the start (relative path only)
+    for lang in ['ko', 'en', 'ja']:
+        pattern = r'^target[/\\]' + lang + r'[/\\]'
+        match = re.match(pattern, path_lower, re.IGNORECASE)
+        if match:
+            end = match.end()
+            relative_path = path_str[end:]
+            # Ensure it starts with /
+            if not relative_path.startswith('/'):
+                relative_path = '/' + relative_path
+            return relative_path
+    
+    return None
+
+
+def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
+    """
+    Compare current .skel.mdx file with Korean equivalent if it exists.
+    If current file is not Korean, find Korean equivalent and run diff.
+    
+    Returns:
+        True if should continue processing, False if max_diff reached and should stop
+    """
+    global _diff_count, _max_diff, _exclude_patterns
+    
+    current_lang = extract_language_code(current_skel_path)
+    
+    # If current file is Korean, no need to compare
+    if current_lang == 'ko':
+        return True
+    
+    # Check if file path matches exclude patterns
+    relative_path = get_path_without_lang_dir(current_skel_path)
+    if relative_path and relative_path in _exclude_patterns:
+        return True
+    
+    # Check if max_diff is set and already reached
+    if _max_diff is not None and _diff_count >= _max_diff:
+        return False
+    
+    # Get Korean equivalent path
+    korean_skel_path = get_korean_equivalent_path(current_skel_path)
+    
+    if korean_skel_path is None:
+        return True
+    
+    # Check if Korean .skel.mdx file exists
+    if not korean_skel_path.exists():
+        return True
+    
+    # Run diff command
+    try:
+        # Build diff command
+        diff_cmd = ['diff', str(korean_skel_path), str(current_skel_path)]
+        
+        # Print command with "+ " prefix
+        print(f"+ {' '.join(diff_cmd)}")
+        
+        # Run diff and capture output
+        result = subprocess.run(
+            diff_cmd,
+            capture_output=True,
+            text=True,
+            check=False  # Don't raise exception on non-zero exit
+        )
+        
+        # Check if files are different (exit code 1 means differences found)
+        # Exit code 0 means files are identical
+        if result.returncode == 1:
+            # Files are different, increment diff count
+            _diff_count += 1
+            
+            # Print diff output
+            if result.stdout:
+                print(result.stdout, end='')
+            
+            # Check if max_diff reached
+            if _max_diff is not None and _diff_count >= _max_diff:
+                return False
+        
+        # Print stderr if any (errors)
+        if result.stderr:
+            print(result.stderr, end='', file=sys.stderr)
+            
+    except Exception as e:
+        print(f"Error running diff: {e}", file=sys.stderr)
+    
+    return True
 
 
 def process_text_line(line: str) -> str:
@@ -456,6 +604,9 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     # Write output file
     output_path.write_text(content, encoding='utf-8')
     
+    # Compare with Korean equivalent if current file is not Korean
+    compare_with_korean_skel(output_path, input_path)
+    
     return output_path
 
 
@@ -486,9 +637,18 @@ def process_directory(directory: Path, recursive: bool = False) -> Tuple[int, in
         return (0, 0)
     
     for mdx_file in mdx_files:
+        # Check if max_diff reached before processing next file
+        global _diff_count, _max_diff
+        if _max_diff is not None and _diff_count >= _max_diff:
+            break
+        
         try:
             convert_mdx_to_skeleton(mdx_file)
             success_count += 1
+            
+            # Check again after processing (compare_with_korean_skel may have incremented _diff_count)
+            if _max_diff is not None and _diff_count >= _max_diff:
+                break
         except ValueError as e:
             # Skip .skel.mdx files silently
             if '.skel.mdx' in str(e):
@@ -578,15 +738,15 @@ def compare_files(verbose: bool = False):
 def process_directories_recursive(directories: List[Path]) -> int:
     """
     Process multiple directories recursively.
-    If directories list is empty, uses default directories (target/en, target/ja, target/ko).
+    If directories list is empty, uses default directories (target/ko, target/ja, target/en).
     Returns exit code (0 for success).
     """
     if len(directories) == 0:
-        # No directories specified, use defaults
+        # No directories specified, use defaults (Korean, Japanese, English order)
         default_dirs = [
-            Path('target/en'),
+            Path('target/ko'),
             Path('target/ja'),
-            Path('target/ko')
+            Path('target/en')
         ]
         directories = default_dirs
     
@@ -594,6 +754,11 @@ def process_directories_recursive(directories: List[Path]) -> int:
     total_errors = 0
     
     for directory in directories:
+        # Check if max_diff reached before processing next directory
+        global _diff_count, _max_diff
+        if _max_diff is not None and _diff_count >= _max_diff:
+            break
+        
         if not directory.exists():
             print(f"Warning: Directory not found: {directory}", file=sys.stderr)
             continue
@@ -606,6 +771,10 @@ def process_directories_recursive(directories: List[Path]) -> int:
         
         # Print statistics for this directory
         print(f"{directory}: {success_count} successful, {error_count} errors")
+        
+        # Check again after processing directory
+        if _max_diff is not None and _diff_count >= _max_diff:
+            break
     
     # Print overall summary statistics
     if len(directories) > 1:
@@ -629,7 +798,7 @@ def main():
         nargs='*',
         type=Path,
         metavar='DIR',
-        help='Process directory(ies) recursively. If no directories specified, defaults to target/en, target/ja, target/ko'
+        help='Process directory(ies) recursively. If no directories specified, defaults to target/ko, target/ja, target/en'
     )
     parser.add_argument(
         '--compare',
@@ -641,8 +810,31 @@ def main():
         action='store_true',
         help='When used with --compare, output all files including those that exist in all three languages'
     )
+    parser.add_argument(
+        '--max-diff',
+        type=int,
+        default=5,
+        metavar='N',
+        help='Maximum number of diffs to output before stopping (default: 5). Only applies with --recursive option.'
+    )
+    parser.add_argument(
+        '--exclude',
+        type=str,
+        nargs='*',
+        default=['/index.skel.mdx'],
+        metavar='PATH',
+        help='Exclude paths from diff comparison. Path should be relative to target/{lang} (e.g., /index.skel.mdx). Can specify multiple paths. Default: /index.skel.mdx'
+    )
     
     args = parser.parse_args()
+    
+    # Set global max_diff and exclude_patterns if recursive mode is used
+    global _max_diff, _diff_count, _exclude_patterns
+    if args.recursive is not None:
+        _max_diff = args.max_diff
+        _diff_count = 0  # Reset counter
+        # Use exclude patterns from args, or default if empty
+        _exclude_patterns = args.exclude if args.exclude and len(args.exclude) > 0 else ['/index.skel.mdx']
     
     try:
         if args.compare:
