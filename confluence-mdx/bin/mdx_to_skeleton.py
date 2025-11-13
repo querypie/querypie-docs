@@ -527,10 +527,14 @@ def get_mdx_files(directory: Path) -> set[str]:
     return relative_paths
 
 
-def compare_files():
+def compare_files(verbose: bool = False):
     """
     Compare .mdx files across target/en, target/ja, and target/ko directories.
     Outputs comparison results to stdout.
+    
+    Args:
+        verbose: If False, skip files that exist in all three languages.
+                 If True, output all files.
     """
     base_dir = Path('target')
     dirs = {
@@ -556,6 +560,10 @@ def compare_files():
         ko_exists = file_path in file_sets['ko']
         en_exists = file_path in file_sets['en']
         ja_exists = file_path in file_sets['ja']
+        
+        # Skip if all three languages exist and not verbose
+        if not verbose and ko_exists and en_exists and ja_exists:
+            continue
         
         # Format output: /path/to/file.mdx ko en ja
         ko_status = 'ko' if ko_exists else '-'
@@ -628,13 +636,18 @@ def main():
         action='store_true',
         help='Compare .mdx files across target/en, target/ja, and target/ko directories'
     )
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help='When used with --compare, output all files including those that exist in all three languages'
+    )
     
     args = parser.parse_args()
     
     try:
         if args.compare:
             # Compare mode
-            compare_files()
+            compare_files(verbose=args.verbose)
             return 0
         elif args.recursive is not None:
             # Recursive mode: process directories
