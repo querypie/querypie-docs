@@ -218,6 +218,100 @@ def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
     return None
 
 
+def get_original_mdx_path(skel_path: Path) -> Optional[Path]:
+    """
+    Get the original .mdx file path from .skel.mdx path.
+    For example: target/ko/file.skel.mdx -> target/ko/file.mdx
+    """
+    if not skel_path.name.endswith('.skel.mdx'):
+        return None
+    return skel_path.parent / skel_path.name.replace('.skel.mdx', '.mdx')
+
+
+def format_diff_with_original_content(
+    diff_output: str,
+    left_skel_path: Path,
+    right_skel_path: Path
+) -> str:
+    """
+    Format diff output by replacing .skel.mdx file paths with .mdx paths
+    and replacing diff content lines with original .mdx file content.
+    
+    Converts skeleton diff (with _TEXT_ placeholders) to original content diff.
+    """
+    # Get original .mdx file paths
+    left_mdx_path = get_original_mdx_path(left_skel_path)
+    right_mdx_path = get_original_mdx_path(right_skel_path)
+    
+    if left_mdx_path is None or right_mdx_path is None:
+        return diff_output
+    
+    # Read original .mdx files
+    try:
+        left_lines = left_mdx_path.read_text(encoding='utf-8').split('\n')
+        right_lines = right_mdx_path.read_text(encoding='utf-8').split('\n')
+    except FileNotFoundError:
+        return diff_output
+    
+    # Unified format chunk header pattern: @@ -start,count +start,count @@
+    chunk_header_pattern = re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
+    
+    result_lines = []
+    lines = diff_output.split('\n')
+    left_line_num = None
+    right_line_num = None
+    
+    for line in lines:
+        # Replace file paths in headers
+        if line.startswith('--- '):
+            result_lines.append(line.replace(str(left_skel_path), str(left_mdx_path)))
+            continue
+        elif line.startswith('+++ '):
+            result_lines.append(line.replace(str(right_skel_path), str(right_mdx_path)))
+            continue
+        
+        # Process chunk header: initialize line number tracking
+        match = chunk_header_pattern.match(line)
+        if match:
+            result_lines.append(line)
+            left_line_num = int(match.group(1))
+            right_line_num = int(match.group(3))
+            continue
+        
+        # Process content lines within a chunk
+        if left_line_num is not None and right_line_num is not None:
+            if line.startswith('-'):
+                # Deleted line from left file
+                if 0 < left_line_num <= len(left_lines):
+                    result_lines.append('-' + left_lines[left_line_num - 1])
+                else:
+                    result_lines.append(line)
+                left_line_num += 1
+            elif line.startswith('+'):
+                # Added line to right file
+                if 0 < right_line_num <= len(right_lines):
+                    result_lines.append('+' + right_lines[right_line_num - 1])
+                else:
+                    result_lines.append(line)
+                right_line_num += 1
+            elif line.startswith(' '):
+                # Context line (common to both files)
+                if 0 < left_line_num <= len(left_lines):
+                    result_lines.append(' ' + left_lines[left_line_num - 1])
+                else:
+                    result_lines.append(line)
+                left_line_num += 1
+                right_line_num += 1
+            else:
+                # Empty line or end of chunk - keep as is
+                result_lines.append(line)
+        else:
+            # Outside chunk - keep as is
+            result_lines.append(line)
+    
+    return '\n'.join(result_lines)
+
+
 def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
@@ -255,8 +349,8 @@ def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
     
     # Run diff command
     try:
-        # Build diff command
-        diff_cmd = ['diff', str(korean_skel_path), str(current_skel_path)]
+        # Build diff command with unified format (-U 2 for 2 lines of context)
+        diff_cmd = ['diff', '-U', '2', str(korean_skel_path), str(current_skel_path)]
         
         # Print command with "+ " prefix
         print(f"+ {' '.join(diff_cmd)}")
@@ -278,6 +372,15 @@ def compare_with_korean_skel(current_skel_path: Path, input_path: Path) -> bool:
             # Print diff output
             if result.stdout:
                 print(result.stdout, end='')
+            
+            # Print original .mdx file diff
+            original_diff = format_diff_with_original_content(
+                result.stdout,
+                korean_skel_path,
+                current_skel_path
+            )
+            if original_diff:
+                print(original_diff, end='')
             
             # Check if max_diff reached
             if _max_diff is not None and _diff_count >= _max_diff:
