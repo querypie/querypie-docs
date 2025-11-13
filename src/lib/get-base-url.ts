@@ -37,9 +37,6 @@ export async function getBaseUrl(): Promise<string> {
     if (error instanceof Error) {
       console.warn('Error getting base URL from headers:', error.message);
     }
-    const timestamp = new Date().toISOString()
-    const next_phase = process.env.NEXT_PHASE
-    console.error(`[${timestamp}] NEXT_PHASE=${next_phase}`)
   }
 
   // Fallback to production URL when headers are unavailable
