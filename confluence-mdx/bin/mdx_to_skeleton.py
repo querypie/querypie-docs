@@ -442,13 +442,15 @@ def replace_text_in_content(text: str) -> str:
             else:
                 # Process this segment for sentences
                 # Split by sentence-ending punctuation, but keep the punctuation
-                parts = re.split(r'([.!?]\s*)', segment)
+                # Include full-width Japanese punctuation: 。！？
+                parts = re.split(r'([.!?。！？]\s*)', segment)
                 
                 i = 0
                 while i < len(parts):
                     part = parts[i]
                     # Check if next part is punctuation
-                    if i + 1 < len(parts) and re.match(r'^[.!?]\s*$', parts[i + 1]):
+                    # Include full-width Japanese punctuation: 。！？
+                    if i + 1 < len(parts) and re.match(r'^[.!?。！？]\s*$', parts[i + 1]):
                         punctuation = parts[i + 1]
                         i += 2
                     else:
@@ -461,18 +463,22 @@ def replace_text_in_content(text: str) -> str:
                             result.append(punctuation)
                         continue
                     
-                    # Check if part contains any text (Korean, English, numbers)
-                    if re.search(r'[가-힣a-zA-Z0-9]', part):
+                    # Check if part contains any text (Korean, Japanese, English, numbers)
+                    # Japanese ranges: Hiragana (\u3040-\u309F), Katakana (\u30A0-\u30FF), Kanji (\u4E00-\u9FAF)
+                    if re.search(r'[가-힣\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAFa-zA-Z0-9]', part):
                         # Extract leading whitespace
                         leading_match = re.match(r'^(\s*)', part)
                         leading_ws = leading_match.group(1) if leading_match else ''
                         
                         # Replace entire sentence with _TEXT_ + punctuation
+                        # Normalize punctuation: convert full-width Japanese punctuation to half-width for consistency
                         if punctuation:
-                            result.append(leading_ws + '_TEXT_' + punctuation)
+                            # Normalize full-width Japanese punctuation to half-width
+                            normalized_punct = punctuation.replace('。', '.').replace('！', '!').replace('？', '?')
+                            result.append(leading_ws + '_TEXT_' + normalized_punct)
                         else:
-                            # Check if original ended with punctuation
-                            if part.rstrip().endswith(('.', '!', '?')):
+                            # Check if original ended with punctuation (including full-width Japanese)
+                            if part.rstrip().endswith(('.', '!', '?', '。', '！', '？')):
                                 result.append(leading_ws + '_TEXT_.')
                             else:
                                 result.append(leading_ws + '_TEXT_')
@@ -600,7 +606,7 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     
     # Generate output path
     output_path = input_path.parent / f"{input_path.stem}.skel.mdx"
-    
+
     # Write output file
     output_path.write_text(content, encoding='utf-8')
     
