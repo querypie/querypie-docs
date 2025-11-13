@@ -13,6 +13,6 @@ export function isStaticGeneration(): boolean {
   }
 
   // NEXT_PHASE is set during Next.js build process
-  // 'phase-production-build' indicates static export/generation phase
-  return process.env.NEXT_PHASE === 'phase-production-build';
+  // 'phase-export' indicates static export/generation phase
+  return process.env.NEXT_PHASE === 'phase-export';
 }
