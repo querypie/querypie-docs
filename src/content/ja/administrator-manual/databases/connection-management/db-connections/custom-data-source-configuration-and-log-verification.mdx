@@ -10,79 +10,100 @@ Custom Data SourceはQueryPieで基本的にサポートしないベンダーに
 
 **主要特徴**
 
-* **多様なベンダーサポート**: QueryPieでサポートしないデータソースにアクセス可能
-* **TCPベースアクセス制御**: ユーザーとIPベースのアクセス制御提供
-* **Agentベース接続**: QueryPie Agentを通じてサードパーティSQLツールで接続可能
+*  **多様なベンダーサポート** : QueryPieでサポートしないデータソースにアクセス可能
+*  **TCPベースアクセス制御** : ユーザーとIPベースのアクセス制御提供
+*  **Agentベース接続** : QueryPie Agentを通じてサードパーティSQLツールで接続可能
 
 #### Custom Data Sourceコネクション作成
 
 <Callout type="important">
 **注意**
 * ID/PW、SSL/TLS設定はCustom Data Sourceで管理者ができません。
-  * 必要な場合、ユーザーがサードパーティSQLツールで該当認証情報を直接入力する必要があります。
+    * 必要な場合、ユーザーがサードパーティSQLツールで該当認証情報を直接入力する必要があります。
 * クラスターなしの単純構造の手動登録のみ作成可能です。
 * Query Auditおよび構文制御はサポートしません。
 </Callout>
 
-1. **DB Connectionsメニューに移動**
-   * Admin &gt; Databases &gt; Connection Management &gt; DB Connectionsを選択します。
-   * `+ Create Connection`ボタンをクリックします。
-2. **Custom Data Source作成**
-   * Custom Data Sourceアイコンをクリックします。
-   * 作成時に以下のような警告メッセージが表示されます: **Restrictions:**
-     * Only TCP access control is available; Privileges controland Query Audit are not supported.
-     * Access is only possible through a proxy; it cannot be accessed via the web editor.
-   * 以下の接続情報を希望する設定に合わせて入力します。****
-     * Connection Name（必須）: 接続名入力
-     * Host（必須）: 対象データソースのホストアドレス
-     * Port（必須）: 対象データソースのポート番号
-     * Allowed Zone（必須）: アクセス許可するIP範囲設定
-     * Access Time（選択）: アクセス許可時間設定
-     * Weekday Access（選択）: アクセス許可曜日設定
-     * Proxy Usage : 常にアクティブ状態（非アクティブ不可）
-     * Description（選択）: 必要に応じて説明追加
-   * 入力後、下部の`Next`ボタンをクリックして作成を完了します。
-3. **作成完了**
-   * 作成後、DB Connection一覧でDatabase TypeがCustom Data Sourceで表示されます。
-4. **Custom Data Source修正および削除**
-   * **修正**
-     * Admin &gt; Databases &gt; Connection Management &gt; DB Connections一覧で修正したいCustom Data Sourceを選択します。
-     * 希望する項目を変更でき、Tagを追加できます。
-     * 修正後、右上の`Save Changes`ボタンをクリックして変更事項を保存します。
-   * **削除**
-     * DB Connections一覧で削除を希望するコネクションの左側チェックボックスを選択後`Delete`ボタンをクリックします。
-     * "Are you sure you want to delete"文句が出た後`OK`ボタンをクリックしてコネクションを削除します。
+1.  **DB Connectionsメニューに移動** 
+    * Admin &gt; Databases &gt; Connection Management &gt; DB Connectionsを選択します。
+    * `+ Create Connection`ボタンをクリックします。
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-10.10.11-AM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.10.11-AM.png)
+      </figure>
+2.  **Custom Data Source作成** 
+    *  Custom Data Sourceアイコンをクリックします。
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-10.11.42-AM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.11.42-AM.png)
+      </figure>
+    * 作成時に以下のような警告メッセージが表示されます: <br/>  **Restrictions:** 
+        * Only TCP access control is available; Privileges controland Query Audit are not supported.
+        * Access is only possible through a proxy; it cannot be accessed via the web editor.
+    * 以下の接続情報を希望する設定に合わせて入力します。 **** 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-12.02.22-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-12.02.22-PM.png)
+      </figure>
+        * Connection Name（必須）: 接続名入力
+        * Host（必須）: 対象データソースのホストアドレス
+        * Port（必須）: 対象データソースのポート番号
+        * Allowed Zone（必須）: アクセス許可するIP範囲設定
+        * Access Time（選択）: アクセス許可時間設定
+        * Weekday Access（選択）: アクセス許可曜日設定
+        * Proxy Usage : 常にアクティブ状態（非アクティブ不可）
+        * Description（選択）: 必要に応じて説明追加
+    * 入力後、下部の`Next`ボタンをクリックして作成を完了します。
+3.  **作成完了** 
+    * 作成後、DB Connection一覧でDatabase TypeがCustom Data Sourceで表示されます。
+4.  **Custom Data Source修正および削除** 
+    *  **修正** 
+        * Admin &gt; Databases &gt; Connection Management &gt; DB Connections一覧で修正したいCustom Data Sourceを選択します。
+        * 希望する項目を変更でき、Tagを追加できます。
+        * 修正後、右上の`Save Changes`ボタンをクリックして変更事項を保存します。
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-6.43.08-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.43.08-PM.png)
+          </figure>
+    *  **削除** 
+        * DB Connections一覧で削除を希望するコネクションの左側チェックボックスを選択後`Delete`ボタンをクリックします。
+        * "Are you sure you want to delete"文句が出た後`OK`ボタンをクリックしてコネクションを削除します。
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-6.54.56-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.54.56-PM.png)
+          </figure>
 
 #### Access Control設定
 
-1. **権限付与モーダルに移動**
-   * Admin &gt; Databases &gt; DB Access Control &gt; Access Controlを選択します。
-   * 権限を付与したいユーザーをクリックしてDetailページに移ります。
-   * 右側中段の`+ Grant Privilege`ボタンをクリックします。
-2. **権限付与**
-   * 権限付与モーダル左側チェックボックスでCustom Data Sourceをクリックします。
-   * Custom Data SourceのPrivilegeは別途タイプがない"-"で表示されます。
-   * 付与時、期限日（Expiration Date）を設定できます。
-   * 選択完了後`Grant`ボタンを押して権限を付与します。
+1.  **権限付与モーダルに移動** 
+    * Admin &gt; Databases &gt; DB Access Control &gt; Access Controlを選択します。
+    * 権限を付与したいユーザーをクリックしてDetailページに移ります。
+    * 右側中段の`+ Grant Privilege`ボタンをクリックします。 
+2.  **権限付与** 
+    * 権限付与モーダル左側チェックボックスでCustom Data Sourceをクリックします。
+    * Custom Data SourceのPrivilegeは別途タイプがない"-"で表示されます。
+    * 付与時、期限日（Expiration Date）を設定できます。
+    * 選択完了後`Grant`ボタンを押して権限を付与します。 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-05-at-1.59.53-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-1.59.53-PM.png)
+      </figure>
 
 
-1. **権限回収**
-   * 基本的にはユーザーが申請したExpiration Dateまで権限が維持されます。
-   * ユーザーに付与された権限を途中で回収するにはPrivilegeをRevokeします。
-     * Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Userを選択します。
-     * Detailページで権限を回収するためのコネクションを選択した後`Revoke`ボタンをクリックします。
+1.  **権限回収** 
+    * 基本的にはユーザーが申請したExpiration Dateまで権限が維持されます。
+    * ユーザーに付与された権限を途中で回収するにはPrivilegeをRevokeします。
+        * Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Userを選択します。 
+        * Detailページで権限を回収するためのコネクションを選択した後`Revoke`ボタンをクリックします。
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-03-05-at-3.18.12-PM.png](/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-3.18.12-PM.png)
+          </figure>
 
 #### Audit Log確認
 
-1. **DB Access History**
-   * Admin &gt; Audit &gt; DB Access Historyを選択します。
-   * ログ確認
-     * Database Type: 'Custom Data Source'で表示されます。
-     * Connected From: 'Proxy'で表示されます。
-     * Connect/DisconnectのSuccess/Failure情報確認可能です。
-       * 接続許可時間外接続試行時、すべてのベンダーで同じく"This connection is not accessible at this time. Please ask your administrator."メッセージが表記されます。
-2. **Activity Logs**
-   * 管理者がCustom Data Sourceコネクション情報を作成/修正/削除した場合、記録が残ります。
+1.  **DB Access History** 
+    * Admin &gt; Audit &gt; DB Access Historyを選択します。
+    * ログ確認
+        * Database Type: 'Custom Data Source'で表示されます。
+        * Connected From: 'Proxy'で表示されます。
+        * Connect/DisconnectのSuccess/Failure情報確認可能です。
+            * 接続許可時間外接続試行時、すべてのベンダーで同じく"This connection is not accessible at this time. Please ask your administrator."メッセージが表記されます。
+2.  **Activity Logs** 
+    * 管理者がCustom Data Sourceコネクション情報を作成/修正/削除した場合、記録が残ります。
 
 <Callout type="important">
 **注意**
