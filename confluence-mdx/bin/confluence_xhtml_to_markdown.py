@@ -392,6 +392,8 @@ def split_into_sentences(line):
     
     # Pattern matches sentence-ending punctuation (. ! ?) followed by whitespace
     # Only matches when preceded by 3 non-digit characters
+    #   - This condition prevents splitting on `1. Blah Blah... 2. Answer`.
+    #   - This condition prevents splitting on `Q. Question... A. Answer`.
     # Using positive lookbehind to ensure 3 non-digit characters before punctuation
     # Using capturing group to preserve the punctuation in the split result
     pattern = r'(?<=\D{3})([.!?])\s+'
