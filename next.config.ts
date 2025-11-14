@@ -1,7 +1,6 @@
 import nextra from 'nextra';
 
 // Set up Nextra with its configuration
-// Configure mdxOptions as a function to load plugins at runtime for Turbopack compatibility
 const withNextra = nextra({
   latex: true,
   search: {
@@ -14,21 +13,8 @@ const withNextra = nextra({
   // Refer to this: https://nextra.site/docs/advanced/table
   whiteListTagsStyling: ['table', 'thead', 'tbody', 'tr', 'th', 'td'],
 
-  // Configure mdxOptions with plugins loaded via require for Turbopack compatibility
-  // Using require instead of import keeps the config more serializable
-  mdxOptions: (() => {
-    // Load plugins using require to avoid top-level imports
-    const remarkGfm = require('remark-gfm');
-    const rehypeAttrs = require('rehype-attr');
-
-    return {
-      // Add remark plugins for GitHub Flavored Markdown support
-      remarkPlugins: [remarkGfm.default || remarkGfm],
-      rehypePlugins: [
-        [rehypeAttrs.default || rehypeAttrs, { properties: ['width', 'class'] }]
-      ]
-    };
-  })()
+  // Note: mdxOptions with plugins cannot be serialized in Next.js 16 with Turbopack
+  // Plugins should be configured through other means if needed
 });
 
 // Export the final Next.js config with Nextra included
@@ -123,13 +109,5 @@ export default withNextra({
         permanent: true,
       },
     ];
-  },
-  // Configure webpack to use memory cache to avoid large string serialization warnings
-  webpack: (config, { dev, isServer }) => {
-    // Use memory cache for better performance and to avoid serialization warnings
-    config.cache = {
-      type: 'memory',
-    };
-    return config;
   },
 });
