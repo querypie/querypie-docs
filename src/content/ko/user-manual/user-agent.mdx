@@ -44,7 +44,8 @@ Mac OS 설치 프로그램
 </figcaption>
 </figure>
 
-4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
+4. 설치 완료된 QueryPie Agent를 실행합니다.
+QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; QueryPie Host 입력](/user-manual/user-agent/agent-03.png)
@@ -153,7 +154,8 @@ Agent &gt; Server &gt; Open New Session
 
 #### 3. Seamless SSH 설정하기
 
-Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
+Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
+다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
 
 1) 터미널을 열고, .ssh 폴더로 이동합니다.
 ```
@@ -174,14 +176,16 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
+config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.
+서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
 ```
 </Callout>
 
-4) 이상으로 설정이 완료됩니다. Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.
+4) 이상으로 설정이 완료됩니다.
+Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.
 ```
 $ ssh deploy@{{Server Name}}
 ```
@@ -200,7 +204,8 @@ $ ssh deploy@{{Server Name}}
 
 #### 1. Kubernetes 역할 선택하기
 
-사용자 프로필 영역 하단의 `Role` 버튼을 클릭하면 역할 선택 모달이 열립니다. 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
+사용자 프로필 영역 하단의 `Role` 버튼을 클릭하면 역할 선택 모달이 열립니다.
+원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Kubernetes &gt; Select a Role](/user-manual/user-agent/screenshot-20240730-152705.png)
@@ -216,7 +221,8 @@ Agent &gt; Kubernetes &gt; Select a Role
 
 #### 2. Policy 조회하기
 
-선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 `🔍` 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.
+선택된 역할에 따라 접근 가능한 리소스가 표시됩니다.
+각 클러스터 우측의 `🔍` 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Policy Information](/user-manual/user-agent/screenshot-20240730-161141.png)

@@ -122,7 +122,7 @@ spec:
 </tr>
 <tr>
 <td data-highlight-colour="#ffffff">
-`spec:`<br/> `&lt;effect&gt;`
+`spec:`<br/>  `&lt;effect&gt;`
 </td>
 <td data-highlight-colour="#ffffff">
 -
@@ -186,7 +186,8 @@ spec:
 
 ### Resources**[required]**
 
-허용 또는 차단 정책을 설정하려는 웹 앱 리소스를 지정합니다. 하위에 `webApp`를 필수로 가지며, `urlPaths` 또는 `urlPathTags` 를 가집니다.
+허용 또는 차단 정책을 설정하려는 웹 앱 리소스를 지정합니다.
+하위에 `webApp`를 필수로 가지며, `urlPaths` 또는 `urlPathTags` 를 가집니다.
 
 <Callout type="info">
 `resources`는 `spec: allow`, `spec: deny` 에서 모두 허용됩니다.
@@ -221,7 +222,8 @@ spec:
     * 시작과 끝은 알파벳 대소문자 또는 숫자로 제한
     * 중복 불가
 
-웹 앱의 하위 경로 레벨에서 접근 제어 정책을 운영하기 위해서는 `webApp` 하위에 `urlPaths` 또는 `urlPathTags` 를 입력할 수 있습니다. 하나의 정책 안에서, 한 웹 앱에 대해 `urlPaths` 와 `urlPathTags` 를 동시에 지정하는 것은  **불가능** 합니다.
+웹 앱의 하위 경로 레벨에서 접근 제어 정책을 운영하기 위해서는 `webApp` 하위에 `urlPaths` 또는 `urlPathTags` 를 입력할 수 있습니다.
+하나의 정책 안에서, 한 웹 앱에 대해 `urlPaths` 와 `urlPathTags` 를 동시에 지정하는 것은  **불가능** 합니다.
 
 #### urlPaths**[OPTIONAL]**
 
@@ -299,7 +301,8 @@ urlPathTags:
 QueryPie 사용자의 속성(attribute)을 기준으로 규칙에 의해 리소스 접근이 허용되는 사용자의 범위를 한정합니다.
 
 <Callout type="info">
-사용자 속성은 Administrator &gt; General &gt; Users 메뉴의 사용자별 상세 페이지에서 조회할 수 있습니다. QueryPie에서 추가된 사용자의 속성은 상세 페이지에서 추가/변경/삭제 등이 가능하며, IdP 동기화에 의해 추가된 사용자의 속성은 사용자 원장(Okta, LDAP 등)에서 변경할 수 있습니다.
+사용자 속성은 Administrator &gt; General &gt; Users 메뉴의 사용자별 상세 페이지에서 조회할 수 있습니다.
+QueryPie에서 추가된 사용자의 속성은 상세 페이지에서 추가/변경/삭제 등이 가능하며, IdP 동기화에 의해 추가된 사용자의 속성은 사용자 원장(Okta, LDAP 등)에서 변경할 수 있습니다.
 </Callout>
 
 속성 정보는 대소문자를 구분하며, 여러 개 입력할 수 있습니다.
@@ -355,7 +358,8 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 #### 태그 기반 접근 제어
 
-웹앱에 Path를 등록하고, 각 Path에 적절한 태그를 부여한 후, 정책에서 태그 기반으로 접근을 제어하는 것을 권장합니다. 이 방식을 사용하면 다음과 같은 이점이 있습니다.
+웹앱에 Path를 등록하고, 각 Path에 적절한 태그를 부여한 후, 정책에서 태그 기반으로 접근을 제어하는 것을 권장합니다.
+이 방식을 사용하면 다음과 같은 이점이 있습니다.
 
 *  **역할 기반 정책 관리 용이** : 특정 역할에 필요한 경로들에 동일한 태그를 부여하여 관리 가능
 *  **정책 유지보수 간소화** : 웹앱에 새로운 경로가 추가되더라도 적절한 태그만 부여하면 기존 정책 수정 없이 접근 제어 가능

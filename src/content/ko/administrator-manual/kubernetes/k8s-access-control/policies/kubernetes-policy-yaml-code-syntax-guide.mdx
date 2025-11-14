@@ -13,9 +13,13 @@ import { Callout } from 'nextra/components'
 
 ### 쿼리파이 접근 제어 정책 개요
 
-쿼리파이에서 정의하는 접근 제어 정책은 EABAC(Enhanced Attribute Based Access Control)을 기반으로 동작합니다. EABAC은 쿼리파이 사용자의 역할(Role)과 속성(Attribute)을 기반으로 쿼리파이에 등록된 리소스에 대한 접근을 제어하고 권한 관리를 수행할 수 있는 정책의 통제 방식을 의미합니다. RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based Access Control)의 기능을 결합하여 더욱 유연하고 정교한 접근 제어를 제공합니다. 모든 정책은 All Deny를 전제로 동작합니다.
+쿼리파이에서 정의하는 접근 제어 정책은 EABAC(Enhanced Attribute Based Access Control)을 기반으로 동작합니다.
+EABAC은 쿼리파이 사용자의 역할(Role)과 속성(Attribute)을 기반으로 쿼리파이에 등록된 리소스에 대한 접근을 제어하고 권한 관리를 수행할 수 있는 정책의 통제 방식을 의미합니다.
+RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based Access Control)의 기능을 결합하여 더욱 유연하고 정교한 접근 제어를 제공합니다.
+모든 정책은 All Deny를 전제로 동작합니다.
 
-EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
+EABAC 은 Role, Policy 두 가지로 동작합니다.
+Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 
 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 지원하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
 
@@ -61,7 +65,8 @@ EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하
 O
 </td>
 <td>
-작성된 YAML Code의 버전입니다. 시스템에서 관리하는 값으로, 수정이 불필요합니다.
+작성된 YAML Code의 버전입니다.
+시스템에서 관리하는 값으로, 수정이 불필요합니다.
 </td>
 <td>
 `kubernetes.rbac.querypie.com/v1`
@@ -78,7 +83,8 @@ O
 O
 </td>
 <td>
-작성된 YAML Code의 종류입니다. 시스템에서 관리하는 값으로, 수정이 불필요합니다.
+작성된 YAML Code의 종류입니다.
+시스템에서 관리하는 값으로, 수정이 불필요합니다.
 </td>
 <td>
 `KacPolicy`
@@ -86,7 +92,7 @@ O
 </tr>
 <tr>
 <td>
-`spec:`<br/> `&lt;effect&gt;`
+`spec:`<br/>  `&lt;effect&gt;`
 </td>
 <td>
 -
@@ -140,7 +146,7 @@ O
 * `impersonation` : 클라이언트 단에서 impersonation을 허용할 대상 사용자/그룹을 지정합니다. **[와일드카드 허용]**
 </td>
 <td>
-`kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
+`kubernetesGroups:`<br/>  `- "system:masters"`<br/>  `- $user.groups`
 `impersonation:`<br/>`users:`<br/>`- "system:user"`<br/>`groups:`<br/>`- "system:admin"`
 </td>
 </tr>
@@ -248,7 +254,8 @@ impersonation:
 
 ### Actions 명시 방법
 
-클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다. 각 action에는 `apiGroups`, `resources`, `namespace`, `name`, `verbs` 기입이 필요합니다.
+클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다.
+각 action에는 `apiGroups`, `resources`, `namespace`, `name`, `verbs` 기입이 필요합니다.
 
 1. `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다. 
     1. API 그룹을 정의함으로써 더욱 세부적인 권한 통제가 API 그룹별로 가능합니다. 

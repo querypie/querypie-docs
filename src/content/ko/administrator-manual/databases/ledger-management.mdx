@@ -15,7 +15,8 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-관리자는 Ledger Table Policy 메뉴를 통해 데이터베이스의 테이블 단위로 원장(Ledger) 설정을 할 수 있으며, 테이블에 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 맵핑하면 원장 워크플로우 프로세스를 거치게 됩니다. 원장 전용 승인 규칙을 맵핑함으로써, 해당 테이블은 곧바로 원장 테이블의 성격을 갖게 됩니다.
+관리자는 Ledger Table Policy 메뉴를 통해 데이터베이스의 테이블 단위로 원장(Ledger) 설정을 할 수 있으며, 테이블에 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 맵핑하면 원장 워크플로우 프로세스를 거치게 됩니다.
+원장 전용 승인 규칙을 맵핑함으로써, 해당 테이블은 곧바로 원장 테이블의 성격을 갖게 됩니다.
 
 * 사용자가 원장 테이블을 대상으로 INSERT / UPDATE / DELETE 쿼리 실행시,
     * 해당 테이블에 대해 사용자가 QueryPie Web Editor 및 3rd-party editor에서 수정 쿼리를 시도하면, 사용자는 SQL Request를 거쳐야 한다는 안내를 받게 됩니다.

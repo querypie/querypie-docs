@@ -85,7 +85,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 <Callout type="info">
 **Cluster 모드는 무엇인가요?**
-일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다. 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다. Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, **부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여** 할 수 있습니다.
+일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다.
+수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다.
+Cluster 모드 활용시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, **부하분산 및 권한관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여** 할 수 있습니다.
 </Callout>
 
 
@@ -173,7 +175,8 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connecti
 변경 내용을 저장하려면, 상세 페이지 우상단 `Save Changes` 버튼을 클릭하세요.
 
 <Callout type="info">
-Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활성화하였을 때 표시되며, 실제 Secret Store 사용을 위해서는 Admin &gt; General &gt; Integration &gt; HashiCorp Vault 페이지에서 Vault 등록이 필요합니다. 자세한 내용은 [Secret Store 연동](../../general/system/integrations/integrating-with-secret-store) 문서를 참고하세요.
+Secret Store 항목은 Security 설정 메뉴에서 Secret Store 사용을 활성화하였을 때 표시되며, 실제 Secret Store 사용을 위해서는 Admin &gt; General &gt; Integration &gt; HashiCorp Vault 페이지에서 Vault 등록이 필요합니다.
+자세한 내용은 [Secret Store 연동](../../general/system/integrations/integrating-with-secret-store) 문서를 참고하세요.
 </Callout>
 
 #### 참고. Secret Store 설정 방법
@@ -192,7 +195,8 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 
 ### 추가 설정하기
 
-페이지 하단의 탭 영역에서 DB 커넥션에 대한 추가 설정이 가능합니다. 항목별 설명을 참고하세요.
+페이지 하단의 탭 영역에서 DB 커넥션에 대한 추가 설정이 가능합니다.
+항목별 설명을 참고하세요.
 
 #### Additional Information
 
@@ -252,7 +256,9 @@ Proxy Usage의 옵션
 * Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정정보를 사용합니다.
 * Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
 
-QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다. QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다. 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화한 뒤 암호를 고정하여 사용할 수 있으며, Fixed Credential for Agent는 Oracle, PostgreSQL, MongoDB에 한해서만 가능합니다.
+QueryPie 9.17부터 Proxy에서 지정한 계정정보 사용시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다.
+QueryPie 10.2.2 부터 난수암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다.
+난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화한 뒤 암호를 고정하여 사용할 수 있으며, Fixed Credential for Agent는 Oracle, PostgreSQL, MongoDB에 한해서만 가능합니다.
 </Callout>
 
 #### SSL/SSH Setting
@@ -267,14 +273,16 @@ SSL/SSH Setting 탭
 </figure>
 
 <Callout type="info">
-SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다. 아래 문서를 참고해보세요.
+SSL/SSH 구성 정보는 사전에 등록되어 있어야 합니다.
+아래 문서를 참고해보세요.
 * [SSL Configurations](ssl-configurations)
 * [SSH Configurations](ssh-configurations)
 </Callout>
 
 #### Connection Owner
 
-Connection Owner 탭에서 `Add Connection Owner` 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다. (사용자 또는 그룹 단위로 지정 가능) `Save Changes` 버튼으로 저장합니다.
+Connection Owner 탭에서 `Add Connection Owner` 버튼을 클릭하고, DB 커넥션 별 Connection Owner를 지정할 수 있습니다.
+(사용자 또는 그룹 단위로 지정 가능) `Save Changes` 버튼으로 저장합니다.
 
 <figure data-layout="center" data-align="center">
 ![Connection Owner 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
@@ -289,7 +297,8 @@ Connection Owner는 해당 DB 커넥션에 대한 SQL Request, SQL Export Reques
 
 #### Tags
 
-Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. `Add Tag` 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다. 입력을 완료하고 `Save Changes` 버튼으로 저장합니다.
+Tags 탭에서 DB 커넥션별로 태그를 등록하여 관리할 수 있습니다. `Add Tag` 버튼을 클릭하면 태그 행이 추가되며, Key와 Value를 입력합니다.
+입력을 완료하고 `Save Changes` 버튼으로 저장합니다.
 
 <figure data-layout="center" data-align="center">
 ![Tags 탭](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
@@ -303,7 +312,8 @@ Tags 탭
 DB 커넥션에 Privilege 별로 사용해야할 접속 계정을 강제 지정하는 기능입니다.
 
 <Callout type="info">
-해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다. 자세한 내용은 [Security](../../general/company-management/security) 내  **DB 커넥션 보안 설정**  문서를 참고하세요.
+해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다.
+자세한 내용은 [Security](../../general/company-management/security) 내  **DB 커넥션 보안 설정**  문서를 참고하세요.
 </Callout>
 
 <figure data-layout="center" data-align="center">

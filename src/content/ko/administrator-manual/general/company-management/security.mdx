@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Security 페이지에서 QueryPie 전반에 대한 보안 설정을 관리할 수 있습니다. 이 문서에서는 각 보안 설정에 대한 설명을 제공합니다.
+Security 페이지에서 QueryPie 전반에 대한 보안 설정을 관리할 수 있습니다.
+이 문서에서는 각 보안 설정에 대한 설명을 제공합니다.
 
 <Callout type="info">
 10.3.0 부터 각 서비스 별 설정 항목이 Administrator &gt; General &gt; Security 하위에서 각 서비스(Databases / Servers / Kubernetes) 의 General 하위(Administrator &gt; `{Service}` &gt; General &gt; Configurations)로 이동되었습니다.
@@ -109,7 +110,8 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
 
 <Callout type="info">
 **IP 접근 제어 정책 활성화 시 유의사항**
-`Require Allowed Zones for User Access` 옵션 활성화로 인해 로그인이 차단된 사용자는 'IP Registration Request' 워크플로우를 통해 신규 IP 주소에 대한 접근 허용을 요청할 수 있습니다. (자세한 내용은 [IP Registration Request 요청하기](../../../user-manual/workflow/requesting-ip-registration) 문서를 참고하십시오.)
+`Require Allowed Zones for User Access` 옵션 활성화로 인해 로그인이 차단된 사용자는 'IP Registration Request' 워크플로우를 통해 신규 IP 주소에 대한 접근 허용을 요청할 수 있습니다.
+(자세한 내용은 [IP Registration Request 요청하기](../../../user-manual/workflow/requesting-ip-registration) 문서를 참고하십시오.)
 </Callout>
 
 *  **Admin Page Access Control**  : 관리자 페이지에 접근할 수 있는 관리자의 IP를 제한하는 정책을 설정합니다. 토글을 활성화하여 특정 IP 주소 또는 대역에서 접속하는 관리자만 관리자 페이지에 접근하도록 제한할 수 있습니다.
@@ -122,7 +124,8 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
 
 <Callout type="info">
 **Q. 만약 사용자가 허용되지 않은 IP 에서 QueryPie 웹 콘솔 접속 시도 시 어떤 화면을 보게 되나요?**
-A. 허용되지 않은 IP에서 접속 시도 시 QueryPie 웹 콘솔 내 어떤 페이지이든 접근이 불가하여 아래와 같은 안내 화면을 보게 됩니다. 만약 All Users에 기본값(0.0.0.0/0)이 등록되어 있고, 개별 사용자에게 특정 Allowed Zone 이 설정되어 있다면 로그인 페이지까지는 접속이 가능하나 로그인은 불가하게 됩니다.
+A. 허용되지 않은 IP에서 접속 시도 시 QueryPie 웹 콘솔 내 어떤 페이지이든 접근이 불가하여 아래와 같은 안내 화면을 보게 됩니다.
+만약 All Users에 기본값(0.0.0.0/0)이 등록되어 있고, 개별 사용자에게 특정 Allowed Zone 이 설정되어 있다면 로그인 페이지까지는 접속이 가능하나 로그인은 불가하게 됩니다.
 </Callout>
 <figure data-layout="center" data-align="center">
 ![QueryPie Web Access Control &gt; All Users 에 등록된 IP 와 일치하지 않을 경우](/administrator-manual/general/company-management/security/image-20240121-073718.png)
@@ -138,13 +141,15 @@ Users &gt; Update User 에 등록된 Allowed Zone 과 일치하지 않을 경우
 </figure>
 <Callout type="important">
 **IP 제한 설정 주의**
-Security 페이지의 설정은 저장 즉시 반영됩니다. 따라서 입력한 IP와 해당 옵션을 설정한 관리자의 IP가 일치하지 않을 경우 관리자라 하더라도  **저장**   **즉시 로그아웃 처리** 되니 주의해서 적용해 주시기 바랍니다.
+Security 페이지의 설정은 저장 즉시 반영됩니다.
+따라서 입력한 IP와 해당 옵션을 설정한 관리자의 IP가 일치하지 않을 경우 관리자라 하더라도  **저장**    **즉시 로그아웃 처리** 되니 주의해서 적용해 주시기 바랍니다.
 </Callout>
 
 
 ### Secret Store 설정
 
-Secret Store 사용 여부를 설정합니다. 현재 HashiCorp Vault를 지원하고 있습니다.
+Secret Store 사용 여부를 설정합니다.
+현재 HashiCorp Vault를 지원하고 있습니다.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-152042.png](/administrator-manual/general/company-management/security/screenshot-20240726-152042.png)
@@ -154,7 +159,8 @@ Vault 등록은 General &gt; Integrations 메뉴에서 수행합니다.
 
 <Callout type="info">
 **Q. Secret Store 활성화를 해제하고 싶은데, 토글이 비활성화 상태입니다.**
-A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valut 메뉴에 등록된 Vault 가 남아있는지 확인해보세요. 등록된 Vault가 모두 제거된 후 토글 비활성화 가능합니다.
+A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valut 메뉴에 등록된 Vault 가 남아있는지 확인해보세요.
+등록된 Vault가 모두 제거된 후 토글 비활성화 가능합니다.
 </Callout>
 
 

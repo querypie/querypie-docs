@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie는 권한자의 승인 하에 수행되어야 하는 다양한 작업에 대해 결재를 요청하고 승인할 수 있는 Workflow 기능을 지원합니다. QueryPie를 벗어나지 않고도 통합된 환경에서 요청, 승인, 실행 작업까지 편리하게 진행할 수 있습니다.
+QueryPie는 권한자의 승인 하에 수행되어야 하는 다양한 작업에 대해 결재를 요청하고 승인할 수 있는 Workflow 기능을 지원합니다.
+QueryPie를 벗어나지 않고도 통합된 환경에서 요청, 승인, 실행 작업까지 편리하게 진행할 수 있습니다.
 
 
 ### Workflow 메뉴 진입점
@@ -42,7 +43,8 @@ Workflow 기능 내에서 수행하는 행위에 따라 사용자가 가질 수 
 
 ### Submit Request (결재 요청하기)
 
-Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타입을 선택하면 요청 작성 페이지로 이동합니다. 각 요청 타입별 자세한 작성 방법은 연결된 페이지들을 참고해 주시기 바랍니다.
+Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타입을 선택하면 요청 작성 페이지로 이동합니다.
+각 요청 타입별 자세한 작성 방법은 연결된 페이지들을 참고해 주시기 바랍니다.
 
 * [DB Access Request](workflow/requesting-db-access) : DB 커넥션에 대한 접근 권한을 요청할 수 있고, 승인 즉시 권한이 부여됩니다.
 * [SQL Request](workflow/requesting-sql) : 승인이 필요한 SQL 실행을 요청할 수 있고, 승인 후 1회에 한해 쿼리를 실행할 수 있습니다.
@@ -57,7 +59,10 @@ Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타�
 
 ### 대리 상신 기능 사용 시 유의사항
 
-관리자가 결재 규칙에서 허용한 경우, 다른 사용자를 대신하여 결재를 요청(대리 상신)할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다. 해당 기능의 설정 방법은 [Approval Rules](../administrator-manual/general/workflow-management/approval-rules) 매뉴얼 페이지에서 확인할 수 있습니다. 대리 상신 시에는 다음 기준이 적용됩니다.
+관리자가 결재 규칙에서 허용한 경우, 다른 사용자를 대신하여 결재를 요청(대리 상신)할 수 있습니다.
+대리 상신 시에는 다음 기준이 적용됩니다.
+해당 기능의 설정 방법은 [Approval Rules](../administrator-manual/general/workflow-management/approval-rules) 매뉴얼 페이지에서 확인할 수 있습니다.
+대리 상신 시에는 다음 기준이 적용됩니다.
 
 *  **대리 상신 시 권한 및 DB 표시 기준** 
     *  **DB Access Request** : 대리 상신자는 본인이 조회 가능한 DB 커넥션에 대해서만 요청을 상신할 수 있습니다.
@@ -75,7 +80,9 @@ Workflow 메뉴 내 `Submit Request` 버튼을 누른 뒤, 원하는 요청 타�
 
 ### Received Requests (내가 받은 요청 승인 또는 반려하기)
 
-내가 승인자(Approver)로서 할당받은 요청들의 목록은 Received Requests 하위 메뉴에 표시됩니다. 만약 대리 결재자로 지정된 경우 원결재자가 승인하지 않은 요청 목록도 함께 표시됩니다. 대리 결재 관련 내용은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](workflow/approval-additional-features-proxy-approval-resubmission-etc)에서 자세히 확인하실 수 있습니다.
+내가 승인자(Approver)로서 할당받은 요청들의 목록은 Received Requests 하위 메뉴에 표시됩니다.
+만약 대리 결재자로 지정된 경우 원결재자가 승인하지 않은 요청 목록도 함께 표시됩니다.
+대리 결재 관련 내용은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](workflow/approval-additional-features-proxy-approval-resubmission-etc)에서 자세히 확인하실 수 있습니다.
 
 1. Workflow 목록 중 Received Requests &gt; To Do 메뉴에서 승인이 필요한 요청 목록을 확인합니다. 
 2. 처리하고자 하는 요청을 클릭하여 상세 내용을 확인 후 우측 상단에서 `Approve` 또는 `Reject`를 클릭합니다.
@@ -89,7 +96,8 @@ Workflow &gt; Received Requests &gt; To Do &gt; List Details
 
 <Callout type="info">
 **Q. 사용자가 요청한 DB 커넥션 중 일부만 승인할 수 있나요?**
-A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인이 가능합니다. 사용자가 요청한 DB 커넥션 목록에서 권한을 부여하지 않을 항목의 체크박스를 해제 후 `Approve` 하면 체크한 커넥션에 대해서는 승인 처리가 되며, 체크하지 않은 커넥션에 대해서는 자동 반려 처리됩니다.
+A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인이 가능합니다.
+사용자가 요청한 DB 커넥션 목록에서 권한을 부여하지 않을 항목의 체크박스를 해제 후 `Approve` 하면 체크한 커넥션에 대해서는 승인 처리가 되며, 체크하지 않은 커넥션에 대해서는 자동 반려 처리됩니다.
 </Callout>
 
 1. Comments 팝업창에서 승인 또는 반려 사유를 입력 후 `OK` 버튼을 눌러 처리를 완료합니다. 
@@ -97,7 +105,8 @@ A. DB Access Request의 경우 일부 DB 커넥션에 대해서만 부분 승인
 
 ### Executions (승인된 요청 실행하기)
 
-내가 실행자(Executor)로서 할당받은 요청들의 목록은 Executions 하위 메뉴에 표시됩니다. 실행을 해야할 목록(To Do)과 완료된 목록(Done)이 있으며 실행을 필요로 하는 결재 타입은 SQL Request, SQL Export Request 2가지 입니다.
+내가 실행자(Executor)로서 할당받은 요청들의 목록은 Executions 하위 메뉴에 표시됩니다.
+실행을 해야할 목록(To Do)과 완료된 목록(Done)이 있으며 실행을 필요로 하는 결재 타입은 SQL Request, SQL Export Request 2가지 입니다.
 
 #### SQL Request 실행하기
 
@@ -118,7 +127,9 @@ Workflow &gt; Executions &gt; To Do &gt; List Details
 
 <Callout type="info">
 **Q. 대용량 쿼리 실행 시 QueryPie 백그라운드에서도 쿼리 실행이 유지되나요?**
-A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라우저를 종료하더라도 QueryPie 서버 백그라운드에서 쿼리 실행이 유지됩니다. 웹브라우저 종료 후 QueryPie 재접속 시 서버 백그라운드에서 실행 중인 쿼리는 SQL Request 상세 페이지에서 진행 상태를 확인하실 수 있습니다. 이와 같은 백그라운드 쿼리 실행 기능의 경우 QueryPie v9.15.0 이상의 버전 환경에서만 지원됩니다.
+A. SQL Request를 통해 실행하는 쿼리가 대용량인 경우, 웹브라우저를 종료하더라도 QueryPie 서버 백그라운드에서 쿼리 실행이 유지됩니다.
+웹브라우저 종료 후 QueryPie 재접속 시 서버 백그라운드에서 실행 중인 쿼리는 SQL Request 상세 페이지에서 진행 상태를 확인하실 수 있습니다.
+이와 같은 백그라운드 쿼리 실행 기능의 경우 QueryPie v9.15.0 이상의 버전 환경에서만 지원됩니다.
 </Callout>
 
 #### SQL Export Request 실행하기
@@ -145,7 +156,9 @@ Workflow &gt; Executions &gt; To Do
 
 ### Reviews (참조된 요청 확인하기)
 
-내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다. 참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다. 확인되지 않은 요청을 확인하는 방법은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](workflow/approval-additional-features-proxy-approval-resubmission-etc)를 참고해주세요.
+내가 참조자(Reviewer)로 지정된 요청 중 승인 또는 실행 완료된 요청 건은 Reviews &gt; All Reviews 목록에 표시됩니다.
+참조 상태는 Review Status 컬럼에 Unread, Confirmed 두 가지 값으로 표시됩니다.
+확인되지 않은 요청을 확인하는 방법은 [결재 부가 기능 (대리 결재, 재상신 등) 문서](workflow/approval-additional-features-proxy-approval-resubmission-etc)를 참고해주세요.
 
 <Callout type="info">
 Review 메뉴는 관리자가 사전에 사용 설정을 한 경우에만 표시됩니다.

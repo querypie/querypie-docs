@@ -7,7 +7,8 @@ import { Callout } from 'nextra/components'
 # [Okta] 프로비저닝 연동 가이드
 
 <Callout type="info">
-본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다. 본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다.
+본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다.
+본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다.
 </Callout>
 
 ### Prerequisites
@@ -131,7 +132,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute 항목은 SCIM Integration 의 기본설정에서는 Import 되지 않습니다.
 </Callout>
 
-쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다. 해당 Attribute는 아래와 같습니다:
+쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다.
+해당 Attribute는 아래와 같습니다:
 
 1. secondEmail 
 2. mobilePhone
@@ -216,5 +218,6 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Groups로 이동하여 그룹이 정상 푸시되었는지 확인합니다. 
 
 <Callout type="important">
-Okta 등 타사 Identity Provider(IdP)에서 푸시하여 생성한 Auth Provider가 QueryPie가 아닌 그룹의 경우, 그룹의 삭제를 해당 IdP에서 unlink 후 삭제 처리하시는 것을 권장드립니다. 본 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다.
+Okta 등 타사 Identity Provider(IdP)에서 푸시하여 생성한 Auth Provider가 QueryPie가 아닌 그룹의 경우, 그룹의 삭제를 해당 IdP에서 unlink 후 삭제 처리하시는 것을 권장드립니다.
+본 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다.
 </Callout>

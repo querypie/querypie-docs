@@ -8,12 +8,14 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다. 이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
+사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다.
+이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
 
 
 ### Profile 
 
-사용자의 Attribute(속성)을 조회할 수 있는 탭입니다. 각 Attribute별 설명은 이 페이지 하단의  **참고: 사용자 Attribute 목록**  항목을 참고하여 주시기 바랍니다.
+사용자의 Attribute(속성)을 조회할 수 있는 탭입니다.
+각 Attribute별 설명은 이 페이지 하단의  **참고: 사용자 Attribute 목록**  항목을 참고하여 주시기 바랍니다.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile 탭](/administrator-manual/general/user-management/users/user-profile/image-20240526-063720.png)
@@ -82,7 +84,8 @@ Allowed Zones 탭
 
 #### 워크플로우를 통해 등록된 Static IP삭제하기
 
-워크플로우를 통해 자동으로 등록된 `Static IP` 항목은 `Allowed Zones` 탭에서 직접 `Detach` 할 수 없습니다. 삭제하려면 사용자의  **Profile**  탭으로 이동하여 `Static IP` 속성값 중 원하는 IP 주소를 직접 편집하여 제거해야 합니다. `Static IP` 속성에서 값이 삭제되면 `Allowed Zones` 탭에서도 해당 IP가 즉시 제거되어 접근 권한이 해제됩니다.
+워크플로우를 통해 자동으로 등록된 `Static IP` 항목은 `Allowed Zones` 탭에서 직접 `Detach` 할 수 없습니다.
+삭제하려면 사용자의  **Profile**  탭으로 이동하여 `Static IP` 속성값 중 원하는 IP 주소를 직접 편집하여 제거해야 합니다. `Static IP` 속성에서 값이 삭제되면 `Allowed Zones` 탭에서도 해당 IP가 즉시 제거되어 접근 권한이 해제됩니다.
 
 
 #### 테이블 표시 정보
@@ -94,7 +97,8 @@ Allowed Zones 탭
 
 #### 사용자에게 Allowed Zone 할당하기
 
-Allowed Zones 탭 우측 `Attach Allowed Zones` 버튼을 클릭하면 Allowed Zone 할당 모달이 출력됩니다. 할당하고자 하는 Allowed Zone을 선택하고 `Attach` 버튼을 클릭하여 할당을 완료합니다.
+Allowed Zones 탭 우측 `Attach Allowed Zones` 버튼을 클릭하면 Allowed Zone 할당 모달이 출력됩니다.
+할당하고자 하는 Allowed Zone을 선택하고 `Attach` 버튼을 클릭하여 할당을 완료합니다.
 
 <figure data-layout="center" data-align="center">
 ![Attach Allowed Zone 모달](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214403.png)
@@ -105,7 +109,8 @@ Attach Allowed Zone 모달
 
 #### 사용자에게서 Allowed Zone 할당 해제하기
 
-Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크박스로 선택하면 `Detach` 버튼이 노출됩니다. 버튼을 클릭하고, 확인 모달에서 `Detach` 버튼을 클릭하여 할당 해제를 완료합니다.
+Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크박스로 선택하면 `Detach` 버튼이 노출됩니다.
+버튼을 클릭하고, 확인 모달에서 `Detach` 버튼을 클릭하여 할당 해제를 완료합니다.
 
 <figure data-layout="center" data-align="center">
 ![Allowed Zones 할당 해제](/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214952.png)
@@ -116,7 +121,8 @@ Allowed Zones 할당 해제
 
 <Callout type="info">
 **Q. Tags 탭이 비활성화 되어 있어요.**
-A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는 탭으로 아직 미출시된 기능입니다. 추후 버전에서 지원 예정입니다.
+A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할수 있는 탭으로 아직 미출시된 기능입니다.
+추후 버전에서 지원 예정입니다.
 </Callout>
 
 

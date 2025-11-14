@@ -6,7 +6,9 @@ title: '수동으로 개별 서버 등록하기'
 
 ### Overview
 
-QueryPie에서는 접근 제어를 적용할 서버를 수동으로 등록할 수 있습니다. 등록된 개별 서버는 서버 그룹에 추가하여 접근 권한을 부여하거나 정책 설정을 할 수 있습니다. 단, Windows 서버의 경우 수동 등록이 불가능하며, Server Agent 연동을 통한 자동 등록만 가능합니다.
+QueryPie에서는 접근 제어를 적용할 서버를 수동으로 등록할 수 있습니다.
+등록된 개별 서버는 서버 그룹에 추가하여 접근 권한을 부여하거나 정책 설정을 할 수 있습니다.
+단, Windows 서버의 경우 수동 등록이 불가능하며, Server Agent 연동을 통한 자동 등록만 가능합니다.
 
 
 ### 수동으로 서버 등록하기
@@ -45,7 +47,10 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 ![image-20240723-163036.png](/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240723-163036.png)
 </figure>
 
-필요시 개별 서버에 Tag를 수동으로 입력할 수 있습니다. 이렇게 추가된 Tag는 서버 목록에서 또는 서버 그룹에 서버를 추가할 시 해당 Tag를 활용하여 필터링할 수 있습니다. 또한 Cloud Provider 동기화 해온 태그도 함께 표시됩니다. (단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가)
+필요시 개별 서버에 Tag를 수동으로 입력할 수 있습니다.
+이렇게 추가된 Tag는 서버 목록에서 또는 서버 그룹에 서버를 추가할 시 해당 Tag를 활용하여 필터링할 수 있습니다.
+또한 Cloud Provider 동기화 해온 태그도 함께 표시됩니다.
+(단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가)
 
 1.  **Key**  : 태그를 구분할 수 있는 Key 값을 512자 이내로 입력합니다. Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다. 중복은 대소문자를 구분하여 체크합니다. 
 2.  **Value**  : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.

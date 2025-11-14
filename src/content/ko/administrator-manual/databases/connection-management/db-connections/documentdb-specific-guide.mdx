@@ -12,9 +12,11 @@ Amazon DocumentDB 전용 상세 설정 가이드를 이곳에서 제공합니다
 
 ### Cloud 동기화하는 경우 커넥션 클러스터 구조 조정
 
-클라우드 동기화를 통해 생성된 클러스터 정보를 확인하며, 클러스터 엔드포인트, 읽기 전용 엔드포인트, 인스턴스 엔드포인트를 각각 용도에 맞게 접근할 수 있는 기능으로, 멀티 호스트 환경에서도 효율적으로 작동하도록 설계되었습니다. 해당 기능은 관리자 페이지 &gt; Databases &gt; DB Connections에서 설정할 수 있습니다.
+클라우드 동기화를 통해 생성된 클러스터 정보를 확인하며, 클러스터 엔드포인트, 읽기 전용 엔드포인트, 인스턴스 엔드포인트를 각각 용도에 맞게 접근할 수 있는 기능으로, 멀티 호스트 환경에서도 효율적으로 작동하도록 설계되었습니다.
+해당 기능은 관리자 페이지 &gt; Databases &gt; DB Connections에서 설정할 수 있습니다.
 
-클라우드 동기화 후 아래 화면과 같이 첫번째 클러스터에 Cluster endpoint 주소, 두번째 클러스터에 읽기 전용 endpoint 주소, 세번째 클러스터에 인스턴스 endpoint 주소를 사용한 멀티호스트 connection string을 보여줍니다. 인스턴스 endpoint로 접속하는 것보다 Cluster endpoint 를 사용하는것을 권고합니다.
+클라우드 동기화 후 아래 화면과 같이 첫번째 클러스터에 Cluster endpoint 주소, 두번째 클러스터에 읽기 전용 endpoint 주소, 세번째 클러스터에 인스턴스 endpoint 주소를 사용한 멀티호스트 connection string을 보여줍니다.
+인스턴스 endpoint로 접속하는 것보다 Cluster endpoint 를 사용하는것을 권고합니다.
 
 <figure data-layout="center" data-align="center">
 ![image-20240122-102557.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240122-102557.png)
@@ -22,7 +24,9 @@ Amazon DocumentDB 전용 상세 설정 가이드를 이곳에서 제공합니다
 
 ### Amazon DocumentDB TLS(SSL) 사용하기
 
-AWS에서 새로운 DocumentDB를 생성하면 TLS를 사용하여 전송구간 암호화를 사용할 수 있고 사용자가 선택적으로 옵션을 끌 수 있습니다. Amazon DocumentDB 클러스터에 대한 전송 중 데이터 암호화는 클러스터 파라미터 그룹의 TLS 파라미터를 통해 관리됩니다. AWS Management Console 또는 AWS Command Line Interface (AWS CLI)를 사용하여 Amazon DocumentDB 클러스터 TLS 설정을 관리할 수 있습니다. [참고](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>Amazon DocumentDB에서 TLS가 활성화 되어 있는 경우 접속을 위해 AWS에서 제공하는 CA 번들 인증서가 필요합니다.
+AWS에서 새로운 DocumentDB를 생성하면 TLS를 사용하여 전송구간 암호화를 사용할 수 있고 사용자가 선택적으로 옵션을 끌 수 있습니다.
+Amazon DocumentDB 클러스터에 대한 전송 중 데이터 암호화는 클러스터 파라미터 그룹의 TLS 파라미터를 통해 관리됩니다.
+AWS Management Console 또는 AWS Command Line Interface (AWS CLI)를 사용하여 Amazon DocumentDB 클러스터 TLS 설정을 관리할 수 있습니다. [참고](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>Amazon DocumentDB에서 TLS가 활성화 되어 있는 경우 접속을 위해 AWS에서 제공하는 CA 번들 인증서가 필요합니다.
 
 #### CA 번들 인증서 등록하기
 
