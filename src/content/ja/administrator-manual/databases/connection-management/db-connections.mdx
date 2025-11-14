@@ -105,7 +105,13 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Database Type** ：DBタイプ（eg. MySQL、MairaDB、PostgreSQL…）
     *  **Cloud Provider** ：クラウド提供者タイプ（AWS、Azure、GCP、またはQueryPie Connection）
     *  **Favorite View** ：お気に入り設定有無
-        * テーブル最も右側にお気に入り設定のためのボタンがあります。
+        * テーブル最も右側にお気に入り設定のためのボタンがあります。<br/>  
+          <figure data-layout="center" data-align="center">
+          ![お気に入り設定ボタン](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png)
+          <figcaption>
+          お気に入り設定ボタン
+          </figcaption>
+          </figure>
     *  **SSL Status** ：SSL有効化有無
     *  **Label** ：台帳DB有無
     *  **Tag** ：コネクションに割り当てられたタグ
@@ -226,6 +232,9 @@ Additional Informationタブ
 **User Action Purpose Required** <br/>11.2.0からUser Action Purpose RequiredオプションのSQL Executeイベントに対する理由入力をAgentを通しても受けられるよう改善されました。<br/>&lt; 制約事項 &gt;
 * 3rd party tool（DBeaver、DataGripなど）を使用する時理由入力を強制できるのはSQL Execute項目のみ該当します。
 * 3rd party toolで内部的に送信するクエリ（DBスキーマをツリー構造で見せたりデータタイプをUIで表示してくれる機能を実行するクエリ）もSQL Executeで検出されて理由入力を要求します。例）最初接続した直後クエリを入力しなかったにもかかわらず理由入力ウィンドウがポップアップされます。この場合SQL構文の種類を判断しないため設定に応じて相当不便を招く可能性があります。したがってDatabase &gt; General &gt; ConfigurationsのQuery Purpose Duration for Agentオプションの値を適切に調節しなければなりません。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20250825-020520.png](/administrator-manual/databases/connection-management/db-connections/image-20250825-020520.png)
+  </figure>
 </Callout>
 
 <Callout type="info">

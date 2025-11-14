@@ -67,7 +67,6 @@ SQL Editor画面でクエリ共有機能を使用できます。
 *  **Privilege Deactivation Period** : DB権限（Privilege）の期限切れのための長期未使用基準期間（Default : 90日）
 *  **Maximum Access Duration** : Privilegeリクエストおよび割り当て時の最大期間
     * DB Access Requestリクエスト時に指定された期間を超過した期限日設定不可
-
 *  **Display the first 10 rows in Query Audit** : Query Audit内SELECT文実行結果の表示方式設定（Default : OffでOnに設定した場合、全体結果を表示せず、最初の10行のみ表示されます）
 
 <figure data-layout="center" data-align="center">
@@ -87,6 +86,9 @@ Query Audit Detail
     * Statement : クエリに含まれる場合実行制限したい文字列入力（大文字小文字区別なし）
     * Allowed User : 該当構文実行を許可するユーザー指定（複数選択可能、グループ単位指定不可）
     * 入力されたRestricted Statementを含むクエリ実行時ブロックされる
+      <figure data-layout="center" data-align="center">
+      ![image-20240326-011036.png](/administrator-manual/databases/dac-general-configurations/image-20240326-011036.png)
+      </figure>
 
 <Callout type="important">
 Restricted StatementポリシーによってブロックされるクエリはSQL Requestで承認を受けても実行がブロックされます。ユーザーによって実行を許可すべきクエリを入力しないよう注意してください。
