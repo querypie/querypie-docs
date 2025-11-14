@@ -352,7 +352,7 @@ def backtick_curly_braces(text):
     return re.sub(pattern, r'`\1`', text)
 
 
-def as_markdown(node):
+def navigable_string_as_markdown(node):
     if isinstance(node, NavigableString):
         # This is a leaf node with text
         text = clean_text(node.text)
@@ -371,6 +371,60 @@ def as_markdown(node):
         # Fatal error and crash
         raise TypeError(f"as_markdown() expects a NavigableString, got: {type(node).__name__}")
 
+
+def split_into_sentences(line):
+    """
+    Split a string into sentences using sentence-ending punctuation marks.
+    
+    Sentences are split at patterns matching (. ! ?) followed by whitespace.
+    The punctuation marks are included in the preceding sentence.
+    
+    Args:
+        line (str): The input string to split.
+        
+    Returns:
+        list[str]: A list of sentences. If the string is empty or None,
+                   returns an empty list. If no sentence terminators are found,
+                   returns a list containing the original string.
+    """
+    if not line or not isinstance(line, str):
+        return []
+    
+    # Pattern matches sentence-ending punctuation (. ! ?) followed by whitespace
+    # Only matches when preceded by a non-digit character
+    # Using positive lookbehind to ensure non-digit character before punctuation
+    # Using capturing group to preserve the punctuation in the split result
+    pattern = r'(?<=\D)([.!?])\s+'
+
+    # Split the string and preserve punctuation marks
+    parts = re.split(pattern, line)
+    
+    # Reconstruct sentences: parts[0] is first sentence, parts[1] is punctuation,
+    # parts[2] is next sentence, parts[3] is punctuation, etc.
+    sentences = []
+    current_sentence = ''
+    
+    for i, part in enumerate(parts):
+        if i % 2 == 0:
+            # Even indices are sentence parts
+            current_sentence += part
+        else:
+            # Odd indices are punctuation marks
+            current_sentence += part
+            # Add the completed sentence (with punctuation) to the list
+            if current_sentence.strip():
+                sentences.append(current_sentence.strip())
+            current_sentence = ''
+    
+    # Add the last sentence if there's any remaining text
+    if current_sentence.strip():
+        sentences.append(current_sentence.strip())
+    
+    # If no sentences were found (no sentence terminators), return the original string
+    if not sentences:
+        return [line.strip()] if line.strip() else []
+    
+    return sentences
 
 def ancestors(node):
     max_depth = 20
@@ -576,11 +630,11 @@ class SingleLineParser:
     def convert_recursively(self, node):
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
-            text = as_markdown(node)
+            text = navigable_string_as_markdown(node)
             if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                 self.markdown_lines.append(text.strip())
             else:
-                self.markdown_lines.append(as_markdown(node))
+                self.markdown_lines.append(text)
             return
 
         logging.debug(f"SingleLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
@@ -1012,7 +1066,20 @@ class MultiLineParser:
             child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    child_markdown.append(SingleLineParser(child).as_markdown)
+                    # Problem: A paragraph was in a too long line.
+                    # Resolve:
+                    # - Split a paragraph into sentences. And arrange one sentence in each line.
+                    single_line = SingleLineParser(child).as_markdown
+                    # Preserve a leading whitespace in single_line
+                    if single_line[0].isspace():
+                        child_markdown.append(' ')
+                    multiple_lines = split_into_sentences(single_line)
+                    if multiple_lines:
+                        child_markdown.extend(s + '\n' for s in multiple_lines[:-1])
+                        child_markdown.append(multiple_lines[-1])
+                    # Preserve an ending whitespace in single_line
+                    if single_line[-1].isspace():
+                        child_markdown.append(' ')
                 elif SingleLineParser(child).applicable:
                     child_markdown.append(SingleLineParser(child).as_markdown)
                 else:
