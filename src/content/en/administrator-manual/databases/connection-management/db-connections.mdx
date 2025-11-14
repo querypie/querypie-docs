@@ -105,7 +105,13 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Database Type** : DB type (eg. MySQL, MairaDB, PostgreSQL…)
     *  **Cloud Provider** : Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
     *  **Favorite View** : Favorite setting status
-        * There is a button for favorite setting on the far right of the table. 
+        * There is a button for favorite setting on the far right of the table. <br/>  
+          <figure data-layout="center" data-align="center">
+          ![Favorite setting button](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png)
+          <figcaption>
+          Favorite setting button
+          </figcaption>
+          </figure>
     *  **SSL Status** : SSL activation status
     *  **Label** : Whether it's a ledger DB
     *  **Tag** : Tags assigned to connections
@@ -226,6 +232,9 @@ Additional Information tab
 **User Action Purpose Required** <br/>From 11.2.0, reason input for SQL Execute events in User Action Purpose Required options has been improved to also be received through Agent.<br/>&lt; Limitations &gt;
 * When using 3rd party tools (DBeaver, DataGrip, etc.), only SQL Execute items can be forced to require reason input.
 * Queries sent internally by 3rd party tools (queries that show DB schema in tree structure or display data types in UI) are also detected as SQL Execute and require reason input. Example) Reason input popup appears even when no query is entered immediately after initial connection. In this case, since SQL statement types are not judged, it can cause considerable inconvenience depending on settings. Therefore, the value of the Query Purpose Duration for Agent option in Database &gt; General &gt; Configurations must be adjusted appropriately.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20250825-020520.png](/administrator-manual/databases/connection-management/db-connections/image-20250825-020520.png)
+  </figure>
 </Callout>
 
 <Callout type="info">

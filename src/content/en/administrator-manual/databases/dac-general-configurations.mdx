@@ -86,6 +86,9 @@ Query Audit Detail
     * Statement : Enter strings to restrict execution when included in queries (case insensitive)
     * Allowed User : Specify users allowed to execute the corresponding statement (multiple selection possible, group-level specification not possible)
     * Queries containing entered Restricted Statement are blocked when executed
+      <figure data-layout="center" data-align="center">
+      ![image-20240326-011036.png](/administrator-manual/databases/dac-general-configurations/image-20240326-011036.png)
+      </figure>
 
 <Callout type="important">
 Queries blocked by Restricted Statement policies are blocked from execution even if approved through SQL Request. Do not enter queries that should be allowed for execution by certain users.
@@ -93,6 +96,9 @@ Queries blocked by Restricted Statement policies are blocked from execution even
 
 *  **Justification Length**  : When "User Action Purpose Required" option is activated in Connection settings or reason input is forced by Ledger table management policies, reason input must be made through Web Editor or Agent. Administrators specify the minimum and maximum values for the number of characters entered in the input field.
     * The minimum input value is 1 and the maximum value is 1000.<br/>
+      <figure data-layout="center" data-align="center">
+      ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
+      </figure>
 *  **Query Annotation**  : Automatically records annotations specified by administrators when performing queries. When the feature is activated, annotations are recorded using the following 3 templates. As of 10.4.0, limited to Redshift support.
     * User Name: `{{userName}}` : Display Name of the user who performed the query.
     * Login ID: `{{loginId}}` : Login ID of the user who performed the query.
