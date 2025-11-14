@@ -690,6 +690,119 @@ def replace_text_in_content(text: str) -> str:
     return result
 
 
+def process_yaml_frontmatter_placeholder(
+    line: str,
+    yaml_section: Optional[ProtectedSection],
+    processed_lines: List[str]
+) -> Tuple[bool, bool]:
+    """
+    Process YAML frontmatter placeholder line.
+    
+    Args:
+        line: Current line being processed
+        yaml_section: YAML frontmatter section if extracted
+        processed_lines: List to append processed lines to
+        
+    Returns:
+        Tuple of (should_continue, yaml_frontmatter_processed)
+        should_continue: True if processing should continue to next line
+        yaml_frontmatter_processed: True if YAML frontmatter was processed
+    """
+    if yaml_section and yaml_section.placeholder in line:
+        # Process YAML frontmatter: preserve structure but replace content
+        yaml_lines = yaml_section.content.split('\n')
+        for yaml_line in yaml_lines:
+            if ':' in yaml_line:
+                # Preserve key: structure, replace value
+                parts = yaml_line.split(':', 1)
+                if len(parts) == 2:
+                    key = parts[0].strip()
+                    value = parts[1].strip()
+                    # Replace value with _TEXT_ but preserve quotes if present
+                    if value.startswith("'") and value.endswith("'"):
+                        processed_lines.append(f"{key}: '_TEXT_'")
+                    elif value.startswith('"') and value.endswith('"'):
+                        processed_lines.append(f'{key}: "_TEXT_"')
+                    else:
+                        processed_lines.append(f"{key}: _TEXT_")
+                else:
+                    processed_lines.append(yaml_line)
+            else:
+                processed_lines.append(yaml_line)
+        return True, True  # should_continue=True, yaml_frontmatter_processed=True
+    return False, False  # should_continue=False, yaml_frontmatter_processed=False
+
+
+def process_yaml_delimiter(
+    line: str,
+    yaml_frontmatter_processed: bool,
+    processed_lines: List[str],
+    in_yaml: bool
+) -> Tuple[bool, bool]:
+    """
+    Process YAML frontmatter delimiter (---).
+    
+    Args:
+        line: Current line being processed
+        yaml_frontmatter_processed: Whether YAML frontmatter has been processed
+        processed_lines: List to append processed lines to
+        in_yaml: Current YAML section state
+        
+    Returns:
+        Tuple of (should_continue, new_in_yaml)
+        should_continue: True if processing should continue to next line
+        new_in_yaml: Updated YAML section state
+    """
+    # Handle YAML frontmatter delimiter (only if YAML frontmatter hasn't been processed yet)
+    # After YAML frontmatter is processed, treat --- as regular markdown
+    if line.strip() == '---' and not yaml_frontmatter_processed:
+        processed_lines.append(line)
+        return True, not in_yaml  # should_continue=True, toggle in_yaml
+    return False, in_yaml  # should_continue=False, in_yaml unchanged
+
+
+def process_yaml_line(
+    line: str,
+    in_yaml: bool,
+    yaml_frontmatter_processed: bool,
+    processed_lines: List[str]
+) -> bool:
+    """
+    Process a line within YAML section.
+    
+    Args:
+        line: Current line being processed
+        in_yaml: Whether currently in YAML section
+        yaml_frontmatter_processed: Whether YAML frontmatter has been processed
+        processed_lines: List to append processed lines to
+        
+    Returns:
+        True if line was processed as YAML, False otherwise
+    """
+    if in_yaml and not yaml_frontmatter_processed:
+        # Process YAML line: preserve key: structure, replace value
+        # (This handles YAML frontmatter that wasn't extracted by extract_yaml_frontmatter)
+        # Only process if YAML frontmatter hasn't been processed yet
+        if ':' in line:
+            parts = line.split(':', 1)
+            if len(parts) == 2:
+                key = parts[0].strip()
+                value = parts[1].strip()
+                # Replace value with _TEXT_ but preserve quotes if present
+                if value.startswith("'") and value.endswith("'"):
+                    processed_lines.append(f"{key}: '_TEXT_'")
+                elif value.startswith('"') and value.endswith('"'):
+                    processed_lines.append(f'{key}: "_TEXT_"')
+                else:
+                    processed_lines.append(f"{key}: _TEXT_")
+            else:
+                processed_lines.append(line)
+        else:
+            processed_lines.append(line)
+        return True
+    return False
+
+
 def convert_mdx_to_skeleton(input_path: Path) -> Path:
     """
     Converts an MDX file to skeleton format.
@@ -727,55 +840,29 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     lines = content.split('\n')
     processed_lines = []
     in_yaml = False
+    yaml_frontmatter_processed = False  # Track if YAML frontmatter has been processed
 
     for line in lines:
-        # Handle YAML frontmatter
-        if line.strip() == '---':
-            processed_lines.append(line)
-            in_yaml = not in_yaml
+        # Handle YAML frontmatter placeholder
+        should_continue, was_processed = process_yaml_frontmatter_placeholder(
+            line, yaml_section, processed_lines
+        )
+        if should_continue:
+            yaml_frontmatter_processed = was_processed
+            if was_processed:
+                in_yaml = False  # Reset in_yaml since YAML frontmatter is now processed
             continue
 
-        if in_yaml or (yaml_section and yaml_section.placeholder in line):
-            # Process YAML frontmatter: preserve structure but replace content
-            if yaml_section and yaml_section.placeholder in line:
-                # Replace placeholder with processed YAML content
-                yaml_lines = yaml_section.content.split('\n')
-                for yaml_line in yaml_lines:
-                    if ':' in yaml_line:
-                        # Preserve key: structure, replace value
-                        parts = yaml_line.split(':', 1)
-                        if len(parts) == 2:
-                            key = parts[0].strip()
-                            value = parts[1].strip()
-                            # Replace value with _TEXT_ but preserve quotes if present
-                            if value.startswith("'") and value.endswith("'"):
-                                processed_lines.append(f"{key}: '_TEXT_'")
-                            elif value.startswith('"') and value.endswith('"'):
-                                processed_lines.append(f'{key}: "_TEXT_"')
-                            else:
-                                processed_lines.append(f"{key}: _TEXT_")
-                        else:
-                            processed_lines.append(yaml_line)
-                    else:
-                        processed_lines.append(yaml_line)
-            else:
-                # Process YAML line: preserve key: structure, replace value
-                if ':' in line:
-                    parts = line.split(':', 1)
-                    if len(parts) == 2:
-                        key = parts[0].strip()
-                        value = parts[1].strip()
-                        # Replace value with _TEXT_ but preserve quotes if present
-                        if value.startswith("'") and value.endswith("'"):
-                            processed_lines.append(f"{key}: '_TEXT_'")
-                        elif value.startswith('"') and value.endswith('"'):
-                            processed_lines.append(f'{key}: "_TEXT_"')
-                        else:
-                            processed_lines.append(f"{key}: _TEXT_")
-                    else:
-                        processed_lines.append(line)
-                else:
-                    processed_lines.append(line)
+        # Handle YAML frontmatter delimiter
+        should_continue, new_in_yaml = process_yaml_delimiter(
+            line, yaml_frontmatter_processed, processed_lines, in_yaml
+        )
+        if should_continue:
+            in_yaml = new_in_yaml
+            continue
+
+        # Handle YAML section lines
+        if process_yaml_line(line, in_yaml, yaml_frontmatter_processed, processed_lines):
             continue
 
         # Process other lines
