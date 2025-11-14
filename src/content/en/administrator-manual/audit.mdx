@@ -8,11 +8,13 @@ title: 'Audit'
 
 All activities within QueryPie are recorded in audit logs. User and administrator login/logout, permission grants and revocations, access to databases, servers, and Kubernetes, query or command execution, resource or security configuration changes, and all activity history occurring in QueryPie and access-controlled resources are subject to logging.
 
+
 ### Available Features
 
-* **Audit Log Export**: Audit logs can be extracted and saved as files through the **Audit Log Export** menu.
-* **Report Generation**: QueryPie data status can be output in report format through the **Report** menu.
-* **Audit Log Viewing**: Real-time log viewing, searching, and filtering are available through **individual log pages** under the Audit menu.
+*  **Audit Log Export**  :  Audit logs can be extracted and saved as files through the **Audit Log Export** menu. 
+*  **Report Generation**  :  QueryPie data status can be output in report format through the **Report** menu. 
+*  **Audit Log Viewing**  :  Real-time log viewing, searching, and filtering are available through **individual log pages** under the Audit menu.
+
 
 ### Types of Auditable Logs
 
@@ -20,7 +22,7 @@ All activities within QueryPie are recorded in audit logs. User and administrato
 2. Logs can be searched or filtered by specific column values.
 3. Clicking on a specific log in the list allows you to check detailed information in a Drawer.
 
-The types of auditable logs vary depending on the license you have, and the types of logs provided by license are as follows:
+The types of auditable logs vary depending on the license you have, and the types of logs provided by license are as follows.
 
 <table data-table-width="760" data-layout="default" local-id="2eeba34f-b909-48ea-a011-5381931efcd4">
 <tbody>
@@ -78,33 +80,38 @@ The types of auditable logs vary depending on the license you have, and the type
 
 **1. General**
 
-* User Access History: User login/logout history
-* Activity Logs: Resource registration and configuration change history performed by administrators
-* Admin Role History: Administrator permission grant, change, and revocation history
-* Workflow Logs: Status change history (request, approval, rejection, etc.) for workflow type-specific tasks
-* Reverse Tunnels: Overall monitoring of currently connected reverse tunneling sessions (Reverse Tunnel Agent monitoring)
+* User Access History : User login/logout history
+* Activity Logs : Resource registration and configuration change history performed by administrators
+* Admin Role History : Administrator permission grant, change, and revocation history
+* Workflow Logs : Workflow type-specific task status change history (request, approval, rejection, etc)
+* Reverse Tunnels : Overall monitoring of currently connected reverse tunneling sessions (Reverse Tunnel Agent monitoring)
+
 
 **2. Databases**
 
-* DB Access History: Connection and disconnection history
-* Query Audit: Completed query execution history
-* Running Queries: Currently executing queries
-* DML Snapshot: Before and after data records for INSERT/UPDATE/DELETE query execution completion (separate configuration required for recording)
-* Account Lock History: Connection lock history due to password failures and long-term inactivity
-* Access Control Logs: Connection access permission grant and revocation history
+* DB Access History : Connection and disconnection history
+* Query Audit : Completed query execution history
+* Running Queries : Currently executing queries
+* DML Snapshot : Before and after data records for INSERT/UPDATE/DELETE query execution completion (separate configuration required for recording)
+* Account Lock History : Connection lock history due to password failures and long-term inactivity
+* Access Control Logs : Connection access permission grant and revocation history
+
 
 **3. Servers**
 
-* Server Access History: Server connection and disconnection history
-* Command Audit: Completed command execution history
-* Session Logs: Individual session history and session replay functionality
-* Session Monitoring: Overall monitoring of currently connected sessions (administrators can force terminate sessions when necessary)
-* Access Control Logs: Server access permission grant and revocation history through Direct Permission and Workflow
-* Server Role History: Server access permission grant and revocation history through Role menu
-* Account Lock History: Server access account lock history
+* Server Access History : Server connection and disconnection history
+* Command Audit : Completed command execution history
+* Session Logs : Individual session history and session replay functionality
+* Session Monitoring : Overall monitoring of currently connected sessions (administrators can force terminate sessions when necessary)
+* Access Control Logs : Server access permission grant and revocation history through Direct Permission and Workflow
+* Server Role History : Server access permission grant and revocation history through Role menu
+* Account Lock History : Server access account lock history
+
 
 **4. Kubernetes**
 
-* Request Audit: Kubernetes API server call history
-* Pod Session Recordings: Behavior recording history of Pod Exec and other connection sessions
-* Kubernetes Role History: Kubernetes access permission grant and revocation history
+* Request Audit : Kubernetes API server call history
+* Pod Session Recordings : Behavior recording history of Pod Exec and other connection sessions
+* Kubernetes Role History : Kubernetes access permission grant and revocation history
+
+
