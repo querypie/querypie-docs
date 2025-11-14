@@ -391,10 +391,10 @@ def split_into_sentences(line):
         return []
     
     # Pattern matches sentence-ending punctuation (. ! ?) followed by whitespace
-    # Only matches when preceded by a non-digit character
-    # Using positive lookbehind to ensure non-digit character before punctuation
+    # Only matches when preceded by 3 non-digit characters
+    # Using positive lookbehind to ensure 3 non-digit characters before punctuation
     # Using capturing group to preserve the punctuation in the split result
-    pattern = r'(?<=\D)([.!?])\s+'
+    pattern = r'(?<=\D{3})([.!?])\s+'
 
     # Split the string and preserve punctuation marks
     parts = re.split(pattern, line)
