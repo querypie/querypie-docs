@@ -42,25 +42,49 @@ QueryPieは以下のようなポリシータイプを提供します:
 1.  **Column Data Masking** 
     * カラムを対象にデータマスキングポリシーを適用します。 
     * 正規表現ベースのマスキングパターンを使用して特定データパターンを検出し、マスキングします。（Masking Patterns）
-    * ユーザーが該当カラムを照会する時`{masked}`形態で表示され、セルをクリックするとマスキング処理されたデータが表示されます。<br/>
+    * ユーザーが該当カラムを照会する時`{masked}`形態で表示され、セルをクリックするとマスキング処理されたデータが表示されます。<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.23.47-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png)
+      </figure>
 2.  **Table Access Restriction** 
     * テーブルを対象にアクセス遮断ポリシーを適用します。
     * ユーザーが該当テーブルを照会しようとする時アクセスが遮断され、権限なしメッセージが表示されます。
-    * メッセージ: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/>
+    * メッセージ: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.36.58-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png)
+      </figure>
 3.  **Column Access Restriction** 
     * カラムを対象にアクセス遮断ポリシーを適用します。
-    * ユーザーが該当カラムを照会しようとする時`{restricted}`形態で表示され、アクセスが遮断されます。<br/>
+    * ユーザーが該当カラムを照会しようとする時`{restricted}`形態で表示され、アクセスが遮断されます。<br/> <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-10.34.20-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png)
+      </figure>
 4.  **Table Access Justification Requirement** 
     * 特定テーブルに対する作業時理由入力を強制化します。
     * ユーザーが選択された作業（例：SELECTクエリ、データエクスポート）を実行する時理由入力モーダルが表示されます。
     * 入力された理由はQuery AuditのExecution Reasonに記録されます。<br/>
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-07-at-11.01.28-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png)
+      </figure>
 5.  **Sensitive Data Access Monitoring** 
     * 管理者が特定テーブルまたはカラムを機密情報として指定し、アクセスする場合Alertを発生させます。
     * どの経路が機密情報か設定し、Alert設定はGeneral &gt; Company Management &gt; Alertで設定します。<br/>（11.0.0基準新ポリシー用Sensitive Data Access Monitoring Alert設定機能は未実装状態です。）
 6.  **DML Query Approval Enforcement**  
     * 特定テーブルに対して`INSERT`、`UPDATE`、`DELETE`クエリを実行する場合Workflowで承認手順を経るよう強制します。
     * このポリシーを作成する前にGeneral &gt; Workflow Management &gt; Approval RulesでSQL Request TypeのApproval Ruleをまず作成しておく必要があります。`INSERT`、`UPDATE`、`DELETE`を実行するのは実行する人に該当privilegeが付与されていることを前提とします。クエリを実行する人がリクエスト者本人になるようにするには、以下の図のようにExecution項目のAssignee for Executionに「Allow Assginee selection (All Users)が選択されている必要があり、`INSERT`、`UPDATE`、`DELETE`権限はあるが管理者でない人が承認を経てクエリを実行できます。<br/>
+      <figure data-layout="center" data-align="center">
+      ![General &gt; Workflow Management &gt; Approval RulesにSQL Request形式のApproval ruleを作成](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
+      <figcaption>
+      General &gt; Workflow Management &gt; Approval RulesにSQL Request形式のApproval ruleを作成
+      </figcaption>
+      </figure>
     *  Approval Ruleが作成されていれば以下の図のようにポリシーと連携するApproval Ruleを指定できます。<br/>
+      <figure data-layout="center" data-align="center">
+      ![Databases&gt;Policy Management&gt;Data PoliciesでSQL Request形式の事前に作成したApproval Ruleを指定](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
+      <figcaption>
+      Databases&gt;Policy Management&gt;Data PoliciesでSQL Request形式の事前に作成したApproval Ruleを指定
+      </figcaption>
+      </figure>
     * DML Query Approval Enforcementはタグで対象を指定できず、specific data pathで特定経路を指定する必要があります。
 
 ### ポリシー適用対象設定
@@ -115,7 +139,7 @@ QueryPieは以下のようなポリシータイプを提供します:
       <figcaption>
       正規表現を使用して対象指定
       </figcaption>
-      </figure> 
+      </figure>
 
 
 #### ポリシー保存
