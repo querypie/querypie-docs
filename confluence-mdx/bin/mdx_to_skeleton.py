@@ -96,7 +96,7 @@ def extract_urls(text: str) -> Tuple[str, List[ProtectedSection]]:
     # Pattern to match URLs in Markdown links and images
     # Match [text](url) or ![alt](url)
     # For images, we preserve the URL but will process alt text later
-    pattern = r'(!?\[[^]]*]\\()([^)]+)(\))'
+    pattern = r'(!?\[[^\]]*\]\()([^)]+)(\))'
 
     def replace_url(match):
         nonlocal placeholder_counter
