@@ -655,8 +655,7 @@ def replace_text_in_content(text: str) -> str:
         if re.match(r'^\s*__IMAGE_LINK_\d+__\s*$', content):
             return content
 
-        # First, split content by protected placeholders to preserve them
-        # Split by image link placeholders
+        # Split content by protected placeholders to preserve them
         placeholder_pattern = r'(__IMAGE_LINK_\d+__)'
         segments = re.split(placeholder_pattern, content)
         sentence_result = []
@@ -675,10 +674,21 @@ def replace_text_in_content(text: str) -> str:
                         placeholders.append(placeholder)
                         protected_segment = protected_segment[:match.start()] + placeholder + protected_segment[match.start() + 1:]
                 
+                # Split by sentence boundaries
                 parts = re.split(r'([.!?。！？]\s*)', protected_segment)
+                
+                # Collect text sentences and track punctuation
+                has_text = False
+                leading_ws = ''
+                last_punctuation = ''
+                trailing_ws = ''
+                non_text_parts = []
+                
                 i = 0
                 while i < len(parts):
                     part = parts[i]
+                    punctuation = ''
+                    
                     if i + 1 < len(parts) and is_sentence_ending_punctuation(parts[i + 1]):
                         punctuation_with_space = parts[i + 1]
                         for placeholder in placeholders:
@@ -687,41 +697,53 @@ def replace_text_in_content(text: str) -> str:
                         punctuation = process_punctuation_with_space(punctuation_with_space, is_last_punctuation)
                         i += 2
                     else:
-                        punctuation = ''
                         i += 1
                     
                     # Restore abbreviation periods
                     for placeholder in placeholders:
                         part = part.replace(placeholder, '.')
-
-                    if not part.strip():
-                        sentence_result.append(part)
-                        if punctuation:
-                            sentence_result.append(punctuation)
-                        continue
-
-                    # Check if part contains any text (Korean, Japanese, English, numbers)
-                    # Japanese ranges: Hiragana (\u3040-\u309F), Katakana (\u30A0-\u30FF), Kanji (\u4E00-\u9FAF)
+                    
+                    # Check if part contains any text
                     if contains_text_characters(part):
-                        # Extract leading whitespace
-                        leading_ws = extract_leading_whitespace(part)
-
-                        # Replace entire sentence with _TEXT_ + punctuation
-                        # Normalize punctuation: convert full-width Japanese punctuation to half-width for consistency
+                        has_text = True
+                        if not leading_ws:
+                            leading_ws = extract_leading_whitespace(part)
                         if punctuation:
                             # Normalize full-width Japanese punctuation to half-width
                             normalized_punctuation = punctuation.replace('。', '.').replace('！', '!').replace('？', '?')
-                            sentence_result.append(leading_ws + '_TEXT_' + normalized_punctuation)
-                        else:
-                            # Check if original ended with punctuation (including full-width Japanese)
-                            if part.rstrip().endswith(('.', '!', '?', '。', '！', '？')):
-                                sentence_result.append(leading_ws + '_TEXT_.')
-                            else:
-                                sentence_result.append(leading_ws + '_TEXT_')
+                            last_punctuation = normalized_punctuation
+                            # Extract trailing whitespace from punctuation
+                            if is_last_punctuation:
+                                # Check if there's trailing whitespace after last punctuation
+                                trailing_match = re.search(r'([.!?]\s*)$', protected_segment)
+                                if trailing_match:
+                                    trailing_ws = trailing_match.group(1)[1:]  # Skip punctuation, get whitespace
                     else:
-                        sentence_result.append(part)
-                        if punctuation:
-                            sentence_result.append(punctuation)
+                        # Non-text content - preserve only if no text found yet
+                        if not has_text:
+                            non_text_parts.append(part)
+                            if punctuation:
+                                non_text_parts.append(punctuation)
+                
+                # If we found text, replace all text sentences with single _TEXT_
+                if has_text:
+                    # Add leading whitespace and non-text parts before first text
+                    sentence_result.extend(non_text_parts)
+                    if last_punctuation:
+                        sentence_result.append(leading_ws + '_TEXT_' + last_punctuation + trailing_ws)
+                    else:
+                        # Check if segment ended with punctuation
+                        if protected_segment.rstrip().endswith(('.', '!', '?', '。', '！', '？')):
+                            # Extract trailing whitespace
+                            trailing_match = re.search(r'([.!?。！？]\s*)$', protected_segment)
+                            if trailing_match:
+                                trailing_ws = trailing_match.group(1)[1:]  # Skip punctuation, get whitespace
+                            sentence_result.append(leading_ws + '_TEXT_.' + trailing_ws)
+                        else:
+                            sentence_result.append(leading_ws + '_TEXT_')
+                else:
+                    # No text found, preserve original segment
+                    sentence_result.append(segment)
 
         return ''.join(sentence_result)
 
