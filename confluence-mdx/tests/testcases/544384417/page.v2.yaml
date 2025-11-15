@@ -1,3 +1,19 @@
+"parentType": "page"
+"parentId": "693043522"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T06:34:54.737Z"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "21"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+  "createdAt": "2025-08-22T08:13:34.255Z"
+  "ncsStepVersion": "467"
+"position": !!int "349"
+"id": "544384417"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -1008,24 +1024,8 @@
       \ 구분하지 않습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"복수의 키워드를 입력하는 경우 OR 조건으로 합쳐집니다.\"\
       ,\"type\":\"text\"}]}]}]}]}]}],\"version\":1}"
-"parentId": "693043522"
-"spaceId": "539099246"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T06:34:54.737Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"position": !!int "349"
-"version":
-  "number": !!int "21"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
-  "createdAt": "2025-08-22T08:13:34.255Z"
-  "ncsStepVersion": "467"
-"title": "Reports"
 "status": "current"
-"id": "544384417"
+"title": "Reports"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544384417"
   "webui": "/spaces/QM/pages/544384417/Reports"

@@ -1,6 +1,20 @@
+"parentType": "page"
+"parentId": "544112942"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:03:43.230Z"
+"version":
+  "number": !!int "11"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2025-08-11T16:55:27.456Z"
+  "ncsStepVersion": "15"
+"position": !!int "151369082"
+"id": "544377869"
 "body":
   "atlas_doc_format":
-    "representation": "atlas_doc_format"
     "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
       :2},\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
       ,\"content\":[{\"text\":\"데이터베이스 커넥션 접속시 Proxy 연결을 지원합니다. 기본적으로 QueryPie 에서\
@@ -71,24 +85,10 @@
       \ 수 있고, 필요한 경우 해당 세션을 \",\"type\":\"text\"},{\"text\":\"Kill\",\"type\":\"text\"\
       ,\"marks\":[{\"type\":\"code\"}]},{\"text\":\"할 수 있습니다.\",\"type\":\"text\"\
       }]}]}]},{\"type\":\"paragraph\"}],\"version\":1}"
-"parentId": "544112942"
-"spaceId": "539099246"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:03:43.230Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"version":
-  "number": !!int "11"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
-  "createdAt": "2025-08-11T16:55:27.456Z"
-  "ncsStepVersion": "15"
-"position": !!int "151369082"
-"id": "544377869"
-"title": "Database Proxy 사용 활성화"
+    "representation": "atlas_doc_format"
 "status": "current"
+"title": "Database Proxy 사용 활성화"
+"authorId": "630c844a9796033b256b98a5"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544377869"
   "webui": "/spaces/QM/pages/544377869/Database+Proxy"

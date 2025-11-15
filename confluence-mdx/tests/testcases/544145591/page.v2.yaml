@@ -1,3 +1,18 @@
+"parentType": "page"
+"parentId": "543948978"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "40"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+  "createdAt": "2025-11-10T03:02:00.043Z"
+  "ncsStepVersion": "1290"
+"position": !!int "285287760"
+"createdAt": "2024-07-14T05:26:03.969Z"
+"spaceId": "539099246"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -111,72 +126,41 @@
       토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아\
       \ 있으며, 실행 가능합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"heading\",\"attrs\"\
       :{\"level\":2},\"content\":[{\"text\":\"Attribute 기반 승인자 지정 기능\",\"type\":\"\
-      text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"Use User Attribute-Based\
-      \ Approval 토글을 활성화합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\"\
-      :{\"layout\":\"center\",\"width\":664,\"widthType\":\"pixel\"},\"content\":[{\"\
-      type\":\"media\",\"attrs\":{\"width\":538,\"id\":\"cd253ee0-996d-43d7-979b-a097bd1d07b4\"\
-      ,\"collection\":\"contentId-544145591\",\"type\":\"file\",\"height\":98}},{\"\
-      type\":\"caption\",\"content\":[{\"text\":\"Admin > General > Company Management\
-      \ > General > Workflow Configurations\",\"type\":\"text\"}]}]},{\"type\":\"\
-      paragraph\",\"content\":[{\"text\":\"이 옵션을 통해 워크플로우 요청 상신 시, 사용자 프로필의 특정 Attribute(예:\
-      \ 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할지 여부를 결정합니다. 이를 통해 특정 조건에 맞는 담당자에게 승인 요청이 자동으로\
-      \ 할당되도록 설정할 수 있습니다. \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\"\
-      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
-      text\":\"중요: \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"\
+      text\"}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"11.4.0부터 속성 기반 승인자 지정시 여러개의\
+      \ 속성을 지정할 수 있도록 개선되었습니다. \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"\
+      content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Admin > General > Company Management > General > Workflow Configurations의\
+      \ Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.\",\"type\":\"text\"}]}]},{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
-      :\"선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.\",\"type\":\"text\"\
-      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":712,\"\
-      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
-      :820,\"id\":\"ff938711-2557-49eb-b5fe-c2524dbc14ee\",\"collection\":\"contentId-544145591\"\
-      ,\"type\":\"file\",\"height\":86}},{\"type\":\"caption\",\"content\":[{\"text\"\
-      :\"Admin > General > Users > Detail page > Profile 탭\",\"type\":\"text\"},{\"\
-      type\":\"hardBreak\"}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
-      paragraph\",\"content\":[{\"text\":\"Attribute 기반 승인자 지정은 1명만 등록할 수 있습니다 (하나의\
-      \ Attribute에 한 명의 승인자 ID만 지정 가능).\",\"type\":\"text\"}]}]}]}]},{\"type\":\"\
-      listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"토글을\
-      \ 활성화한 경우\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      승인자 자동 지정의 기준이 될 DataType이 identifier인 Attribute를 선택하는 드롭다운 목록이 나타납니다. 관리자는\
-      \ 이 목록에서 승인자 지정에 사용할 Attribute (예: teamLeader)를 선택해야 합니다.\",\"type\":\"text\"\
-      }]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"선택된 Attribute 삭제 제한: 위 설정에서\
-      \ 특정 Attribute가 승인자 자동 지정 기준으로 선택되면, 해당 Attribute는 Administrator > General >\
-      \ Profile Editor에서 삭제할 수 없도록 시스템에 의해 설정됩니다 (예: 삭제 체크박스 비활성화).\",\"type\":\"\
-      text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"Administrator > General > Workflow Management > Approval\
-      \ Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow\
-      \ Assignee selection (Attribute-Based)' 옵션이 표시되며 선택 가능해집니다.\",\"type\":\"text\"\
-      }]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"이 옵션을 선택하면, 바로 아래에 Workflow\
-      \ Configurations에서 설정한 Attribute (예: teamLeader)가 표시되어, 해당 Attribute 값을 기준으로\
-      \ 승인자가 동적으로 결정됨을 나타냅니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"자가 승인 비활성화 시 연동: 만약 Approval\
-      \ Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자\
-      \ 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이\
-      \ 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"\
-      listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"User\
-      \ > Workflow 상신 페이지에서 Allow Assignee selection (Attribute-Based)으로 생성된 Approval\
-      \ Rule이 표시됩니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"토글을 비활성화한 경우\",\"type\":\"\
-      text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Administrator > General >\
-      \ Workflow Configurations 페이지 내에서 Attribute 선택 드롭다운 목록이 비활성화됩니다.\",\"type\"\
-      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
-      content\":[{\"text\":\"Administrator > General > Workflow Management > Approval\
-      \ Rules 페이지에서 승인 규칙 생성 또는 수정 시 'Assignee for Approval' 항목의 'Allow Assignee selection\
-      \ (Attribute-Based)' 옵션이 더 이상 표시되지 않거나 선택할 수 없게 됩니다.\",\"type\":\"text\"}]}]},{\"\
+      :\"기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록\
+      \ 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.  \",\"type\":\"text\"}]}]}]}]},{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"사용자 프로필의 특정 Attribute(예: 팀 리더,\
+      \ 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다. \",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"중요: \",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야\
+      \ 합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
+      :\"center\",\"width\":712,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"\
+      media\",\"attrs\":{\"width\":820,\"id\":\"ff938711-2557-49eb-b5fe-c2524dbc14ee\"\
+      ,\"collection\":\"contentId-544145591\",\"type\":\"file\",\"height\":86}},{\"\
+      type\":\"caption\",\"content\":[{\"text\":\"Admin > General > Users > Detail\
+      \ page > Profile 탭\",\"type\":\"text\"},{\"type\":\"hardBreak\"}]}]}]}]}]},{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
-      :\"기존에 'Allow Assignee selection (Attribute-Based)' 옵션을 사용하여 생성된 승인 규칙은, 사용자가\
-      \ 새로운 워크플로우를 상신할 때 승인 규칙 선택 목록에서 제외됩니다.\",\"type\":\"text\"}]},{\"type\":\"\
-      bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"주의: 이미 해당 규칙으로 상신되어 진행 중인 워크플로우의 승인 프로세스에는 영향을 미치지\
-      \ 않습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"관리자가 해당 규칙을 수정하려고 할 때, Attribute 기반\
-      \ 승인자 지정 관련 설정은 비활성화되거나 초기화될 수 있으며, 필수 입력 값 누락 시 저장할 수 없고 붉은 테두리로 오류가 표시됩니다.\"\
-      ,\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
-      paragraph\",\"content\":[{\"text\":\"User > Workflow 상신 페이지에서 Allow Assignee\
-      \ selection (Attribute-Based)으로 생성된 Approval Rule은 표시되지 않습니다. \",\"type\":\"\
-      text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      :\"Administrator > General > Workflow Management > Approval Rules 페이지에서 새로운\
+      \ 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection\
+      \ (Attribute-Based)'를 선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.\"\
+      ,\"type\":\"text\"},{\"type\":\"hardBreak\"}]},{\"type\":\"mediaSingle\",\"\
+      attrs\":{\"layout\":\"center\",\"width\":736,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":1524,\"alt\":\"image-20251110-030113.png\"\
+      ,\"id\":\"782575df-fa41-49f4-8569-34461fe2b2c7\",\"collection\":\"contentId-544145591\"\
+      ,\"type\":\"file\",\"height\":832}}]},{\"type\":\"bulletList\",\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된\
+      \ 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우,\
+      \ 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.\",\"type\"\
+      :\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
       ,\"content\":[{\"text\":\"Attribute 값 부재 시 알림\",\"type\":\"text\"}]},{\"type\"\
       :\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"\
       paragraph\",\"content\":[{\"text\":\"만약 상신자 User Profile에 해당 Attribute 값이 비어\
@@ -229,51 +213,74 @@
       \ '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 \",\"type\":\"text\"},{\"text\":\"Workflow\"\
       ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 메뉴가 보이지 않습니다.\"\
       ,\"type\":\"text\"}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\"\
-      :[{\"text\":\"SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request\
-      \ in Workflow)\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"\
-      text\":\"토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.\",\"type\":\"text\"}]},{\"\
-      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":604,\"widthType\"\
-      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":604,\"id\"\
-      :\"8fbfbfd1-cac6-4a6f-a1d3-ba5ee8a1cfa2\",\"collection\":\"contentId-544145591\"\
-      ,\"type\":\"file\",\"height\":159}}]},{\"type\":\"paragraph\"},{\"type\":\"\
-      paragraph\",\"content\":[{\"text\":\"이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한\
-      \ 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.\",\"type\"\
-      :\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"\
-      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Query chunk size\"\
-      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 1~999,999\
-      \ 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능\",\"type\":\"text\"}]},{\"\
-      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"예) 100개의 쿼리가 있을 때, Query chunk size가\
-      \ 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. \",\"type\":\"text\"}]}]}]}]},{\"type\"\
+      :[{\"text\":\"대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)\",\"type\":\"\
+      text\"}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에\
+      \ 추가되었습니다.\",\"type\":\"text\"},{\"type\":\"hardBreak\"},{\"text\":\"11.4.0\
+      \ 부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다. 해당 로그는 External API ( /api/external/v2/workflows/approval-delegations/logs)\
+      \ 를 사용해서 조회 할 수 있습니다.\",\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는\
+      \ 옵션입니다. 만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다. \"\
+      ,\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":253,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":225,\"alt\":\"image-20250926-112444.png\",\"id\":\"4399cb44-2a74-4c33-8155-db62b501e2aa\"\
+      ,\"collection\":\"contentId-544145591\",\"type\":\"file\",\"height\":36},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Allow Delegated Approval\
+      \ 스위치\",\"type\":\"text\"}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
+      :\"center\",\"width\":516,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"\
+      media\",\"attrs\":{\"width\":888,\"alt\":\"image-20250926-112201.png\",\"id\"\
+      :\"a4669109-c152-46b5-b674-a2943aa3e939\",\"collection\":\"contentId-544145591\"\
+      ,\"type\":\"file\",\"height\":649},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":2,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"대리결재 기능을 비활성화한 상태의 preference\",\"type\":\"text\"}]}]},{\"type\":\"\
+      heading\",\"attrs\":{\"level\":2},\"content\":[{\"text\":\"SQL 요청 실행 시 쓰로틀링\
+      \ 활성화 (Use throttling when submitting SQL Request in Workflow)\",\"type\":\"\
+      text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"토글을 켜면 Workflow에서\
+      \ 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":604,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":604,\"id\":\"8fbfbfd1-cac6-4a6f-a1d3-ba5ee8a1cfa2\"\
+      ,\"collection\":\"contentId-544145591\",\"type\":\"file\",\"height\":159},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"paragraph\"},{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리\
+      \ 실행에 따르는 DB 부하를 방지할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Query chunk size\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로\
+      \ 실행하는 기능\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
       :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      Query throttle interval \",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
-      }]},{\"text\":\": 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)\",\"type\":\"\
-      text\"}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{\"\
-      text\":\"Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능\",\"type\":\"text\"}]},{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"Redirect to custom page for SQL Requests\
-      \ 토글을 활성화합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"\
-      layout\":\"center\",\"width\":516,\"widthType\":\"pixel\"},\"content\":[{\"\
-      type\":\"media\",\"attrs\":{\"width\":468,\"id\":\"dc45009b-5de1-48ac-9ec9-836855acafa1\"\
-      ,\"collection\":\"contentId-544145591\",\"type\":\"file\",\"height\":92}}]},{\"\
-      type\":\"paragraph\",\"content\":[{\"text\":\"이 옵션을 통해 User Agent에서 Ledger 테이블\
-      \ 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로 인해 워크플로 승인 요청이 발생할 경우, \",\"type\":\"\
-      text\"},{\"text\":\"Send Request\",\"type\":\"text\",\"marks\":[{\"type\":\"\
-      code\"}]},{\"text\":\" 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를\
-      \ 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.\",\"type\":\"text\"}]},{\"\
-      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"토글을 활성화한 경우\",\"type\":\"text\"}]},{\"\
-      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"Administrator > General > Workflow Configurations\
-      \ 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
-      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"User Agent 사용자가\
-      \ Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을 보낼 경우, \",\"type\":\"text\"},{\"text\":\"\
-      Send Request\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\"\
-      :\" 클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.\",\"type\":\"text\"}]}]}]}]},{\"\
+      예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. \"\
+      ,\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"Query throttle interval \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 연속 쿼리 실행 후, 다음 연속 쿼리\
+      \ 실행 간의 간격 (1 ~ 9,999 ms)\",\"type\":\"text\"}]}]}]},{\"type\":\"heading\",\"\
+      attrs\":{\"level\":2},\"content\":[{\"text\":\"Ledger 테이블 DML 워크플로우 커스텀 URL\
+      \ 리디렉션 기능\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Redirect to custom page for SQL Requests 토글을 활성화합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":516,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :468,\"id\":\"dc45009b-5de1-48ac-9ec9-836855acafa1\",\"collection\":\"contentId-544145591\"\
+      ,\"type\":\"file\",\"height\":92}}]},{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로\
+      \ 인해 워크플로 승인 요청이 발생할 경우, \",\"type\":\"text\"},{\"text\":\"Send Request\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼 클릭 시 사용자를 사전에\
+      \ 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할\
+      \ 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      토글을 활성화한 경우\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"\
       type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
-      :\"토글을 비활성화한 경우\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\"\
-      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
-      text\":\"Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할\
-      \ 수 있는 필드가 표시되지 않습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :\"Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는\
+      \ 필드가 나타납니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"User Agent 사용자가 Ledger 테이블에 대해\
+      \ 변경 쿼리를 실행하고 승인 요청을 보낼 경우, \",\"type\":\"text\"},{\"text\":\"Send Request\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 클릭 시 해당 커스텀\
+      \ URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.\",\"type\":\"text\"}]}]}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      토글을 비활성화한 경우\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는\
+      \ 필드가 표시되지 않습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
       :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"User Agent 사용자가 Ledger 테이블에\
       \ 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, \",\"type\":\"text\"\
       },{\"text\":\"Send Request\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
@@ -398,24 +405,9 @@
       text\":\"관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 “Attach Explain Results”\
       \ 는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야\
       \ 실행계획 결과가 첨부됩니다.\",\"type\":\"text\"}]}],\"version\":1}"
-"parentId": "543948978"
-"spaceId": "539099246"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:26:03.969Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"version":
-  "number": !!int "35"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-  "createdAt": "2025-08-26T02:49:29.239Z"
-  "ncsStepVersion": "4776"
-"position": !!int "285287760"
-"id": "544145591"
-"title": "General​"
 "status": "current"
+"title": "General​"
+"id": "544145591"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544145591"
   "webui": "/spaces/QM/pages/544145591/General"

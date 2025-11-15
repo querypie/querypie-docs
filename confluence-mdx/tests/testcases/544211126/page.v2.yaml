@@ -1,3 +1,19 @@
+"parentType": "page"
+"parentId": "608501837"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:22:27.113Z"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "24"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2025-08-11T17:00:05.104Z"
+  "ncsStepVersion": "414"
+"position": !!int "521757335"
+"id": "544211126"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -130,24 +146,8 @@
       :\"Preferences\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"\
       href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/568950885\"}}]}]}]}]}]}]}]},{\"\
       type\":\"paragraph\"}],\"version\":1}"
-"parentId": "608501837"
-"spaceId": "539099246"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:22:27.113Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"version":
-  "number": !!int "24"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
-  "createdAt": "2025-08-11T17:00:05.104Z"
-  "ncsStepVersion": "414"
-"id": "544211126"
-"position": !!int "521757335"
-"title": "사용자 매뉴얼"
 "status": "current"
+"title": "사용자 매뉴얼"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544211126"
   "webui": "/spaces/QM/pages/544211126"

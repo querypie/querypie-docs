@@ -1,3 +1,18 @@
+"parentType": "page"
+"parentId": "544381839"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "9"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "638d40f6489de2f7f467482a"
+  "createdAt": "2024-08-18T10:02:31.915Z"
+  "ncsStepVersion": "298"
+"position": !!int "444434013"
+"createdAt": "2024-07-14T05:07:11.069Z"
+"spaceId": "539099246"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -195,24 +210,9 @@
       \ 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. \",\"type\":\"text\"}]},{\"type\"\
       :\"codeBlock\",\"content\":[{\"text\":\"chmod +x generate_kubepie_sa.sh\\n./generate_kubepie_sa.sh\"\
       ,\"type\":\"text\"}]}]}]}],\"version\":1}"
-"parentId": "544381839"
-"spaceId": "539099246"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:07:11.069Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"position": !!int "444434013"
-"version":
-  "number": !!int "9"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "638d40f6489de2f7f467482a"
-  "createdAt": "2024-08-18T10:02:31.915Z"
-  "ncsStepVersion": "298"
-"id": "544381877"
-"title": "수동으로 쿠버네티스 클러스터 등록하기"
 "status": "current"
+"title": "수동으로 쿠버네티스 클러스터 등록하기"
+"id": "544381877"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544381877"
   "webui": "/spaces/QM/pages/544381877"

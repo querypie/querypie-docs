@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -172,16 +172,16 @@
       var(--ds-background-accent-gray-subtlest, #F4F5F7)\" class=\"confluenceTh\"\
       ><p><strong>Workflow로 권한 받기 </strong></p></th><td class=\"confluenceTd\"><ul><li><p><a\
       \ href=\"/wiki/spaces/QM/pages/544377968/DB+Access+Request\" data-linked-resource-id=\"\
-      544377968\" data-linked-resource-version=\"28\" data-linked-resource-type=\"\
+      544377968\" data-linked-resource-version=\"29\" data-linked-resource-type=\"\
       page\">DB Access Request 요청하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/544378069/SQL+Request\"\
       \ data-linked-resource-id=\"544378069\" data-linked-resource-version=\"27\"\
       \ data-linked-resource-type=\"page\">SQL Request 요청하기</a></p></li><li><p><a\
       \ href=\"/wiki/spaces/QM/pages/544378182/SQL+Export+Request\" data-linked-resource-id=\"\
       544378182\" data-linked-resource-version=\"20\" data-linked-resource-type=\"\
       page\">SQL Export Request 요청하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/712769539/Unmasking+Request\"\
-      \ data-linked-resource-id=\"712769539\" data-linked-resource-version=\"3\" data-linked-resource-type=\"\
+      \ data-linked-resource-id=\"712769539\" data-linked-resource-version=\"5\" data-linked-resource-type=\"\
       page\">Unmasking Request 요청하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/1060306945/Restricted+Data+Access\"\
-      \ data-linked-resource-id=\"1060306945\" data-linked-resource-version=\"3\"\
+      \ data-linked-resource-id=\"1060306945\" data-linked-resource-version=\"4\"\
       \ data-linked-resource-type=\"page\">Restricted Data Access 요청하기</a></p></li><li><p><a\
       \ href=\"/wiki/spaces/QM/pages/544378348/Access+Role+Request\" data-linked-resource-id=\"\
       544378348\" data-linked-resource-version=\"20\" data-linked-resource-type=\"\
@@ -193,7 +193,7 @@
       \ href=\"/wiki/spaces/QM/pages/1055358996/IP+Registration+Request\" data-linked-resource-id=\"\
       1055358996\" data-linked-resource-version=\"6\" data-linked-resource-type=\"\
       page\">IP Registration Request 요청하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/1070006273/DB+DB+Policy+Exception+Request\"\
-      \ data-linked-resource-id=\"1070006273\" data-linked-resource-version=\"3\"\
+      \ data-linked-resource-id=\"1070006273\" data-linked-resource-version=\"4\"\
       \ data-linked-resource-type=\"page\">DB Policy Exception Request 요청하기</a></p></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">4</td><th data-highlight-colour=\"\
       var(--ds-background-accent-gray-subtlest, #F4F5F7)\" class=\"confluenceTh\"\
@@ -207,7 +207,7 @@
       \ data-linked-resource-id=\"559906893\" data-linked-resource-version=\"9\" data-linked-resource-type=\"\
       page\">에이전트 없이 프록시 접속하기 </a></p></li></ul></li><li><p>Server Access Control</p><ul><li><p><a\
       \ href=\"/wiki/spaces/QM/pages/544381383\" data-linked-resource-id=\"544381383\"\
-      \ data-linked-resource-version=\"14\" data-linked-resource-type=\"page\">접근\
+      \ data-linked-resource-version=\"16\" data-linked-resource-type=\"page\">접근\
       \ 권한이 있는 서버에 접속하기</a> </p></li><li><p><a href=\"/wiki/spaces/QM/pages/544381410\"\
       \ data-linked-resource-id=\"544381410\" data-linked-resource-version=\"9\" data-linked-resource-type=\"\
       page\">웹 터미널 사용하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/544381477/SFTP\"\
@@ -219,13 +219,13 @@
       \ href=\"/wiki/spaces/QM/pages/1073709107/Root+CA+Extension\" data-linked-resource-id=\"\
       1073709107\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
       page\">Root CA 인증 서 및 Extension 설치하기</a></p></li><li><p><a href=\"/wiki/spaces/QM/pages/1064796396\"\
-      \ data-linked-resource-id=\"1064796396\" data-linked-resource-version=\"2\"\
+      \ data-linked-resource-id=\"1064796396\" data-linked-resource-version=\"3\"\
       \ data-linked-resource-type=\"page\">웹 어플리케이션 (웹 사이트) 접속하기</a></p></li></ul></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">5</td><th data-highlight-colour=\"\
       var(--ds-background-accent-gray-subtlest, #F4F5F7)\" class=\"confluenceTh\"\
       ><p><strong>QueryPie Agent로 접속하기</strong></p></th><td class=\"confluenceTd\"\
       ><ul><li><p><a href=\"/wiki/spaces/QM/pages/852066413/Multi+Agent\" data-linked-resource-id=\"\
-      852066413\" data-linked-resource-version=\"19\" data-linked-resource-type=\"\
+      852066413\" data-linked-resource-version=\"20\" data-linked-resource-type=\"\
       page\">Agent</a></p></li></ul></td></tr><tr><td class=\"numberingColumn confluenceTd\"\
       >6</td><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest,\
       \ #F4F5F7)\" class=\"confluenceTh\"><p><strong>개인 설정 둘러보기</strong></p></th><td\

@@ -1,3 +1,19 @@
+"parentType": "page"
+"parentId": "544375659"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:01:45.132Z"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "5"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2025-08-11T16:50:35.792Z"
+  "ncsStepVersion": "12"
+"position": !!int "38055023"
+"id": "544375741"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -122,24 +138,8 @@
       type\":\"text\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\"\
       ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"변경점 없음\",\"type\"\
       :\"text\"}]}]}]}],\"version\":1}"
-"parentId": "544375659"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:01:45.132Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"version":
-  "number": !!int "5"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
-  "createdAt": "2025-08-11T16:50:35.792Z"
-  "ncsStepVersion": "12"
-"position": !!int "38055023"
-"title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
 "status": "current"
-"spaceId": "539099246"
-"id": "544375741"
+"title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544375741"
   "webui": "/spaces/QM/pages/544375741/External+API+9.9.4+9.9.5"

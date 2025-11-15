@@ -1,3 +1,18 @@
+"parentType": "page"
+"parentId": "693043522"
+"spaceId": "539099246"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-07-14T05:04:55.106Z"
+"authorId": "630c844a9796033b256b98a5"
+"position": !!int "26378545"
+"version":
+  "number": !!int "19"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+  "createdAt": "2025-10-10T07:57:06.548Z"
+  "ncsStepVersion": "55"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -9,96 +24,291 @@
       :\"text\"}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"warning\"},\"content\"\
       :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Audit Log Export 기능 추가에 따라,\
       \ 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.\"\
-      ,\"type\":\"text\"}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"note\"\
-      },\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"추출 지원 로그 종류\
-      \ (QueryPie v11.0.0 기준)\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
-      }]}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      Query Audit [CSV]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow SQL Request [CSV]\"\
-      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"Workflow SQL Request for Query Details [CSV]\",\"\
-      type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"Workflow SQL Export Request [CSV]\",\"type\":\"text\"\
-      }]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"Workflow DB Access Request [CSV]\",\"type\":\"text\"}]}]},{\"\
-      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
-      :\"Workflow Server Access Request [JSON]\",\"type\":\"text\"}]}]},{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      User Access History [CSV]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"\
-      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Admin Role History\
-      \ [CSV]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"DB Access History [CSV]\",\"type\":\"\
-      text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"DB Account Lock History [CSV]\",\"type\":\"text\"}]}]},{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      DB Access Control Logs [CSV]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
-      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Server Access\
-      \ History [JSON]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Command Audit [JSON]\",\"\
-      type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"Session Logs [JSON]\",\"type\":\"text\"}]}]},{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      Server Access Control Logs [JSON]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
-      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Server Role History\
-      \ [JSON]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\"\
-      :\"paragraph\",\"content\":[{\"text\":\"Activity Logs [JSON]\",\"type\":\"text\"\
-      }]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"DML Snapshot [JSON]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
-      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Server Account\
-      \ Lock History [JSON]\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Request Audit [JSON]\",\"\
-      type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
-      ,\"content\":[{\"text\":\"Kubernetes Role History [JSON]\",\"type\":\"text\"\
-      }]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"Alert Logs [JSON] \",\"type\":\"text\"},{\"type\":\"status\",\"\
-      attrs\":{\"color\":\"neutral\",\"style\":\"bold\",\"text\":\"10.3.0\",\"localId\"\
-      :\"1d32fd1d-6788-4465-b59d-c07f105107b4\"}},{\"text\":\" \",\"type\":\"text\"\
-      }]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"Restricted Data Access Logs [JSON] \",\"type\":\"text\"},{\"type\"\
-      :\"status\",\"attrs\":{\"color\":\"neutral\",\"style\":\"bold\",\"text\":\"\
-      10.3.0\",\"localId\":\"d5f5d2a0-5879-4a4d-a89e-42e94b9d6430\"}},{\"text\":\"\
-      \ \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
-      paragraph\",\"content\":[{\"text\":\"Masked Data Access Logs [JSON] \",\"type\"\
-      :\"text\"},{\"type\":\"status\",\"attrs\":{\"color\":\"neutral\",\"style\":\"\
-      bold\",\"text\":\"10.3.0\",\"localId\":\"1647c26a-aaa3-48e3-a414-22da2c86fd1c\"\
-      }},{\"text\":\" \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Sensitive Data Access Logs\
-      \ [JSON] \",\"type\":\"text\"},{\"type\":\"status\",\"attrs\":{\"color\":\"\
-      neutral\",\"style\":\"bold\",\"text\":\"10.3.0\",\"localId\":\"0465873b-012d-459c-911c-4a2347faa5cc\"\
-      }},{\"text\":\" \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Web Access History [CSV]\
-      \ \",\"type\":\"text\"},{\"type\":\"status\",\"attrs\":{\"color\":\"neutral\"\
-      ,\"style\":\"bold\",\"text\":\"11.0.0\",\"localId\":\"eea6b136-20bf-4769-a9ca-e03bc869e5ea\"\
-      }}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"Web Event Audit [CSV] \",\"type\":\"text\"},{\"type\":\"status\"\
-      ,\"attrs\":{\"color\":\"neutral\",\"style\":\"bold\",\"text\":\"11.0.0\",\"\
-      localId\":\"6605dc76-cde3-417f-b6c2-0b8c3fe61c3e\"}}]}]},{\"type\":\"listItem\"\
-      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Web App Role\
-      \ History [CSV] \",\"type\":\"text\"},{\"type\":\"status\",\"attrs\":{\"color\"\
-      :\"neutral\",\"style\":\"bold\",\"text\":\"11.0.0\",\"localId\":\"32dc221d-c9ce-4c66-84d2-67e8a3d9daf6\"\
-      }}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
-      :[{\"text\":\"JIT Access Control Logs [CSV] \",\"type\":\"text\"},{\"type\"\
-      :\"status\",\"attrs\":{\"color\":\"neutral\",\"style\":\"bold\",\"text\":\"\
-      11.0.0\",\"localId\":\"abc58b13-e6d2-4265-95b8-537837732417\"}}]}]},{\"type\"\
-      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
-      Workflow Unmasking Request Logs [JSON] \",\"type\":\"text\"},{\"type\":\"status\"\
-      ,\"attrs\":{\"color\":\"neutral\",\"style\":\"bold\",\"text\":\"11.0.0\",\"\
-      localId\":\"5881082a-689d-4487-97be-d5c14fc3b0c5\"}},{\"text\":\" \",\"type\"\
-      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
-      content\":[{\"text\":\"Workflow Restricted Data Access Request [JSON] \",\"\
-      type\":\"text\"},{\"type\":\"status\",\"attrs\":{\"color\":\"neutral\",\"style\"\
-      :\"bold\",\"text\":\"11.0.0\",\"localId\":\"33b74c67-1942-429d-b012-a28be3866c38\"\
-      }},{\"text\":\" \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow DB Policy Exception\
-      \ Request Logs [JSON] \",\"type\":\"text\"},{\"type\":\"status\",\"attrs\":{\"\
-      color\":\"neutral\",\"style\":\"bold\",\"text\":\"11.0.0\",\"localId\":\"82eea7a8-0002-4d53-8a9f-6faf8eacc3a3\"\
-      }},{\"text\":\" \",\"type\":\"text\"}]}]}]}]},{\"type\":\"paragraph\"},{\"type\"\
-      :\"heading\",\"attrs\":{\"level\":2},\"content\":[{\"text\":\"Audit Log Export\
-      \ 목록 조회하기\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\"\
-      :\"center\",\"width\":760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"\
-      media\",\"attrs\":{\"width\":1566,\"alt\":\"image-20240714-063656.png\",\"id\"\
-      :\"c6fb420f-5b2c-4397-8c7b-d750be8d9004\",\"collection\":\"contentId-544379140\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"추출\
+      \ 지원 로그 종류 (QueryPie v11.0.0 기준)\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]}]},{\"type\":\"table\",\"attrs\":{\"layout\":\"default\",\"localId\"\
+      :\"2947c127-97e1-4b3d-82ff-fcecae88fdc1\"},\"content\":[{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#d9d9d9\",\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"marks\":[{\"type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\"\
+      :[{\"text\":\"Log Type\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]}]},{\"\
+      type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\":\"#d9d9d9\",\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"marks\"\
+      :[{\"type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\":[{\"\
+      text\":\"Release Version\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]}]}]},{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\":\"\
+      #d9d9d9\",\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"marks\":[{\"type\":\"alignment\",\"attrs\":{\"align\":\"center\"}}],\"content\"\
+      :[{\"text\":\"Format\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]}]}]},{\"\
+      type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Workflow DB Access Request\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Workflow SQL Request\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"\
+      attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow\
+      \ SQL Request for Query Details\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow\
+      \ SQL Export Request\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow Restricted\
+      \ Data Access Request\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Workflow DB Policy Exception Request\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Workflow Unmasking Request\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"11.0.0\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Workflow\
+      \ Decryption Request\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"10.3.0\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Workflow Server Access Request\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Workflow Server Privilege Request\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"11.3.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Workflow Access Role Request\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"10.0.0\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"IP Registration\
+      \ Request\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"User Access History\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Admin Role History\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Activity Logs\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Alert Logs\",\"type\":\"text\"\
+      }]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"10.3.0\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Query\
+      \ Audit\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"\
+      }]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"CSV\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"DB Access History\",\"type\":\"\
+      text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"DB Account Lock History\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"DB Access Control Logs\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"\
+      attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"DML\
+      \ Snapshot\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"\
+      }]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Restricted Data Access Logs (Legacy)\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"10.3.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Masked Data Access Logs (Legacy)\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"10.3.0\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Sensitive\
+      \ Data Access Logs (Legacy)\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"10.3.0\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"DAC Policy Audit Log\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"11.3.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Server Access History\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"\
+      attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Command\
+      \ Audit\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"\
+      }]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Session Logs\",\"type\":\"text\"\
+      }]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[160.0]},\"content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"\
+      attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Server Access Control Logs\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"\
+      content\":[{\"type\":\"paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Server Role History\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Server\
+      \ Account Lock History\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\"}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"JSON\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Request\
+      \ Audit\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\"\
+      :1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"\
+      }]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Kubernetes Role History\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\"}]},{\"type\":\"\
+      tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"JSON\",\"type\":\"text\"\
+      }]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"Web App Access History\",\"type\":\"text\"\
+      }]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"11.0.0\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Web\
+      \ App Role History\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"CSV\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"\
+      attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Web App JIT Access Control Log\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"CSV\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"tableRow\",\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"\
+      rowspan\":1,\"colwidth\":[498.0]},\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Web App Event Audit\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[160.0]},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[99.0]},\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"CSV\",\"type\":\"\
+      text\"}]}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{\"\
+      text\":\"Audit Log Export 목록 조회하기\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":1566,\"alt\":\"image-20240714-063656.png\"\
+      ,\"id\":\"c6fb420f-5b2c-4397-8c7b-d750be8d9004\",\"collection\":\"contentId-544379140\"\
       ,\"type\":\"file\",\"height\":864},\"marks\":[{\"type\":\"border\",\"attrs\"\
       :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
       text\":\"Administrator > Audit > General > Audit Log Export\",\"type\":\"text\"\
@@ -298,23 +508,8 @@
       \ 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그\
       \ 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.\",\"type\":\"text\"}]}],\"version\"\
       :1}"
-"parentId": "693043522"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:04:55.106Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"version":
-  "number": !!int "18"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-  "createdAt": "2025-08-27T08:51:53.169Z"
-  "ncsStepVersion": "148"
-"position": !!int "26378545"
-"spaceId": "539099246"
-"title": "Audit Log Export"
 "status": "current"
+"title": "Audit Log Export"
 "id": "544379140"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544379140"

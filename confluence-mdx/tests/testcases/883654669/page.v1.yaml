@@ -391,8 +391,7 @@
       \ 1x\"></span><p /></li><li><p>Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를\
       \ 선택한 뒤 다음 단계로 진행합니다.<br/></p><span class=\"confluence-embedded-file-wrapper\
       \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
-      \ confluence-content-image-border image-center\" width=\"710\" loading=\"lazy\"\
-      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20231227-065951.png?version=1&amp;modificationDate=1741580536462&amp;cacheVersion=1&amp;api=v2&amp;width=707&amp;height=443\"\
+      \ image-center\" width=\"710\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20231227-065951.png?version=1&amp;modificationDate=1741580536462&amp;cacheVersion=1&amp;api=v2&amp;width=707&amp;height=443\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/883654669/image-20231227-065951.png?version=1&amp;modificationDate=1741580536462&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"443\" data-width=\"707\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"880772047\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -406,7 +405,7 @@
       \ 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/><img\
       \ class=\"emoticon emoticon-light-on\" data-emoji-id=\"atlassian-light_bulb_on\"\
       \ data-emoji-shortname=\":light_bulb_on:\" data-emoji-fallback=\":light_bulb_on:\"\
-      \ src=\"/wiki/s/27184425/6452/9f2e6d6b8345970b9bbd07f6efacab17fe673179/_/images/icons/emoticons/lightbulb_on.png\"\
+      \ src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/lightbulb_on.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"light-on\" alt=\"(전구)\" /><span\
       \ style=\"background-color: rgb(254,222,200);\"> </span><code>{{..}}</code><span\
       \ style=\"background-color: rgb(254,222,200);\">  안의 값은 원하는 값으로 변경해 주세요.</span></p><div\
@@ -427,8 +426,8 @@
       \ false\n    }\n}</pre>\n</div></div><p /></li><li><p>설정 내용을 검토하고 <code>Create</code>\
       \ 버튼을 클릭하여 App 생성을 완료합니다.<br/></p><span class=\"confluence-embedded-file-wrapper\
       \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
-      \ confluence-content-image-border image-center\" alt=\"image-20240115-220447.png\"\
-      \ width=\"763\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20240115-220447.png?version=1&amp;modificationDate=1741580536470&amp;cacheVersion=1&amp;api=v2&amp;width=574&amp;height=375\"\
+      \ image-center\" alt=\"image-20240115-220447.png\" width=\"763\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20240115-220447.png?version=1&amp;modificationDate=1741580536470&amp;cacheVersion=1&amp;api=v2&amp;width=574&amp;height=375\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/883654669/image-20240115-220447.png?version=1&amp;modificationDate=1741580536470&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"375\" data-width=\"574\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"880772053\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -456,9 +455,8 @@
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20240115-221520.png?version=1&amp;modificationDate=1741580536503&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=531\
       \ 1x\"></span><p /></li><li><p>설정한 Slack Workspace에서 Slack DM 전용 App이 생성된 것을\
       \ 확인할 수 있습니다.</p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
-      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
-      \ image-center\" alt=\"image-20240115-221618.png\" width=\"760\" loading=\"\
-      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20240115-221618.png?version=1&amp;modificationDate=1741580536511&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=463\"\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image image-center\"\
+      \ alt=\"image-20240115-221618.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/image-20240115-221618.png?version=1&amp;modificationDate=1741580536511&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=463\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/883654669/image-20240115-221618.png?version=1&amp;modificationDate=1741580536511&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"991\" data-width=\"1624\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"880772083\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
@@ -605,9 +603,8 @@
       \ 수 있습니다.<br/><strong>Allow Users to approve or reject on Slack DM</strong>\
       \ 설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/></p><span class=\"\
       confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
-      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
-      \ alt=\"스크린샷 2025-02-18 오후 3.22.38.png\" width=\"701\" loading=\"lazy\"\
-      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-18%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.22.38.png?version=1&amp;modificationDate=1741573875731&amp;cacheVersion=1&amp;api=v2&amp;width=701&amp;height=354\"\
+      ><img class=\"confluence-embedded-image image-center\" alt=\"스크린샷 2025-02-18\
+      \ 오후 3.22.38.png\" width=\"701\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/883654669/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-18%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.22.38.png?version=1&amp;modificationDate=1741573875731&amp;cacheVersion=1&amp;api=v2&amp;width=701&amp;height=354\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/883654669/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-18%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.22.38.png?version=1&amp;modificationDate=1741573875731&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"354\" data-width=\"701\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"880542470\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\

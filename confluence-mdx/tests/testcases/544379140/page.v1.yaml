@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -167,95 +167,54 @@
       \ 기능입니다. 장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인 추출 및 다운로드가 가능합니다. 한 번 생성된 로그 추출 파일은\
       \ 30일 동안 다운로드가 가능합니다. 추출 지원 로그는 Query Audit, Workflow SQL Request 등 21종입니다.\
       \ </p><ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"\
-      57ae02ba-2fe3-4a41-8f0d-eaf3a7d35484\"><ac:rich-text-body><p>Audit Log Export\
+      d584e29c-8e4f-4028-96d5-3483b1f27c54\"><ac:rich-text-body><p>Audit Log Export\
       \ 기능 추가에 따라, 각 로그 화면에서 제공되던 &lsquo;Excel File Download&rsquo; 버튼은 QueryPie v9.15.0부터\
-      \ 지원이 중단되었습니다.</p></ac:rich-text-body></ac:structured-macro><ac:adf-extension><ac:adf-node\
-      \ type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p><strong>추출\
-      \ 지원 로그 종류 (QueryPie v11.0.0 기준)</strong></p><ol start=\"1\"><li><p>Query Audit\
-      \ [CSV]</p></li><li><p>Workflow SQL Request [CSV]</p></li><li><p>Workflow SQL\
-      \ Request for Query Details [CSV]</p></li><li><p>Workflow SQL Export Request\
-      \ [CSV]</p></li><li><p>Workflow DB Access Request [CSV]</p></li><li><p>Workflow\
-      \ Server Access Request [JSON]</p></li><li><p>User Access History [CSV]</p></li><li><p>Admin\
-      \ Role History [CSV]</p></li><li><p>DB Access History [CSV]</p></li><li><p>DB\
-      \ Account Lock History [CSV]</p></li><li><p>DB Access Control Logs [CSV]</p></li><li><p>Server\
-      \ Access History [JSON]</p></li><li><p>Command Audit [JSON]</p></li><li><p>Session\
-      \ Logs [JSON]</p></li><li><p>Server Access Control Logs [JSON]</p></li><li><p>Server\
-      \ Role History [JSON]</p></li><li><p>Activity Logs [JSON]</p></li><li><p>DML\
-      \ Snapshot [JSON]</p></li><li><p>Server Account Lock History [JSON]</p></li><li><p>Request\
-      \ Audit [JSON]</p></li><li><p>Kubernetes Role History [JSON]</p></li><li><p>Alert\
-      \ Logs [JSON] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\"\
-      \ ac:macro-id=\"1d32fd1d-6788-4465-b59d-c07f105107b4\"><ac:parameter ac:name=\"\
-      title\">10.3.0</ac:parameter></ac:structured-macro> </p></li><li><p>Restricted\
-      \ Data Access Logs [JSON] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"d5f5d2a0-5879-4a4d-a89e-42e94b9d6430\"><ac:parameter ac:name=\"\
-      title\">10.3.0</ac:parameter></ac:structured-macro> </p></li><li><p>Masked Data\
-      \ Access Logs [JSON] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"1647c26a-aaa3-48e3-a414-22da2c86fd1c\"><ac:parameter ac:name=\"\
-      title\">10.3.0</ac:parameter></ac:structured-macro> </p></li><li><p>Sensitive\
-      \ Data Access Logs [JSON] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"0465873b-012d-459c-911c-4a2347faa5cc\"><ac:parameter ac:name=\"\
-      title\">10.3.0</ac:parameter></ac:structured-macro> </p></li><li><p>Web Access\
-      \ History [CSV] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"eea6b136-20bf-4769-a9ca-e03bc869e5ea\"><ac:parameter ac:name=\"\
-      title\">11.0.0</ac:parameter></ac:structured-macro></p></li><li><p>Web Event\
-      \ Audit [CSV] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\"\
-      \ ac:macro-id=\"6605dc76-cde3-417f-b6c2-0b8c3fe61c3e\"><ac:parameter ac:name=\"\
-      title\">11.0.0</ac:parameter></ac:structured-macro></p></li><li><p>Web App Role\
-      \ History [CSV] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"32dc221d-c9ce-4c66-84d2-67e8a3d9daf6\"><ac:parameter ac:name=\"\
-      title\">11.0.0</ac:parameter></ac:structured-macro></p></li><li><p>JIT Access\
-      \ Control Logs [CSV] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"abc58b13-e6d2-4265-95b8-537837732417\"><ac:parameter ac:name=\"\
-      title\">11.0.0</ac:parameter></ac:structured-macro></p></li><li><p>Workflow\
-      \ Unmasking Request Logs [JSON] <ac:structured-macro ac:name=\"status\" ac:schema-version=\"\
-      1\" ac:macro-id=\"5881082a-689d-4487-97be-d5c14fc3b0c5\"><ac:parameter ac:name=\"\
-      title\">11.0.0</ac:parameter></ac:structured-macro> </p></li><li><p>Workflow\
-      \ Restricted Data Access Request [JSON] <ac:structured-macro ac:name=\"status\"\
-      \ ac:schema-version=\"1\" ac:macro-id=\"33b74c67-1942-429d-b012-a28be3866c38\"\
-      ><ac:parameter ac:name=\"title\">11.0.0</ac:parameter></ac:structured-macro>\
-      \ </p></li><li><p>Workflow DB Policy Exception Request Logs [JSON] <ac:structured-macro\
-      \ ac:name=\"status\" ac:schema-version=\"1\" ac:macro-id=\"82eea7a8-0002-4d53-8a9f-6faf8eacc3a3\"\
-      ><ac:parameter ac:name=\"title\">11.0.0</ac:parameter></ac:structured-macro>\
-      \ </p></li></ol></ac:adf-content></ac:adf-node><ac:adf-fallback><div class=\"\
-      panel conf-macro output-block\" style=\"background-color: rgb(234,230,255);border-color:\
-      \ rgb(153,141,217);border-width: 1.0px;\"><div class=\"panelContent\" style=\"\
-      background-color: rgb(234,230,255);\">\n<p><strong>추출 지원 로그 종류 (QueryPie v11.0.0\
-      \ 기준)</strong></p><ol start=\"1\"><li><p>Query Audit [CSV]</p></li><li><p>Workflow\
-      \ SQL Request [CSV]</p></li><li><p>Workflow SQL Request for Query Details [CSV]</p></li><li><p>Workflow\
-      \ SQL Export Request [CSV]</p></li><li><p>Workflow DB Access Request [CSV]</p></li><li><p>Workflow\
-      \ Server Access Request [JSON]</p></li><li><p>User Access History [CSV]</p></li><li><p>Admin\
-      \ Role History [CSV]</p></li><li><p>DB Access History [CSV]</p></li><li><p>DB\
-      \ Account Lock History [CSV]</p></li><li><p>DB Access Control Logs [CSV]</p></li><li><p>Server\
-      \ Access History [JSON]</p></li><li><p>Command Audit [JSON]</p></li><li><p>Session\
-      \ Logs [JSON]</p></li><li><p>Server Access Control Logs [JSON]</p></li><li><p>Server\
-      \ Role History [JSON]</p></li><li><p>Activity Logs [JSON]</p></li><li><p>DML\
-      \ Snapshot [JSON]</p></li><li><p>Server Account Lock History [JSON]</p></li><li><p>Request\
-      \ Audit [JSON]</p></li><li><p>Kubernetes Role History [JSON]</p></li><li><p>Alert\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">10.3.0</span> </p></li><li><p>Restricted Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">10.3.0</span> </p></li><li><p>Masked Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">10.3.0</span> </p></li><li><p>Sensitive Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">10.3.0</span> </p></li><li><p>Web Access History\
-      \ [CSV] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh conf-macro\
-      \ output-inline\">11.0.0</span></p></li><li><p>Web Event Audit [CSV] <span class=\"\
-      status-macro aui-lozenge aui-lozenge-visual-refresh conf-macro output-inline\"\
-      >11.0.0</span></p></li><li><p>Web App Role History [CSV] <span class=\"status-macro\
-      \ aui-lozenge aui-lozenge-visual-refresh conf-macro output-inline\">11.0.0</span></p></li><li><p>JIT\
-      \ Access Control Logs [CSV] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">11.0.0</span></p></li><li><p>Workflow Unmasking\
-      \ Request Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">11.0.0</span> </p></li><li><p>Workflow Restricted\
-      \ Data Access Request [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">11.0.0</span> </p></li><li><p>Workflow DB Policy\
-      \ Exception Request Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\">11.0.0</span> </p></li></ol>\n</div></div></ac:adf-fallback></ac:adf-extension><p\
-      \ /><h2>Audit Log Export 목록 조회하기</h2><ac:image ac:align=\"center\" ac:layout=\"\
-      center\" ac:original-height=\"864\" ac:original-width=\"1566\" ac:custom-width=\"\
-      true\" ac:alt=\"image-20240714-063656.png\" ac:width=\"760\"><ri:attachment\
-      \ ri:filename=\"image-20240714-063656.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator\
+      \ 지원이 중단되었습니다.</p></ac:rich-text-body></ac:structured-macro><p><strong>추출 지원\
+      \ 로그 종류 (QueryPie v11.0.0 기준)</strong></p><table data-layout=\"default\" ac:local-id=\"\
+      2947c127-97e1-4b3d-82ff-fcecae88fdc1\"><colgroup><col style=\"width: 498.0px;\"\
+      \ /><col style=\"width: 160.0px;\" /><col style=\"width: 99.0px;\" /></colgroup><tbody><tr><th\
+      \ data-highlight-colour=\"#d9d9d9\"><p style=\"text-align: center;\"><strong>Log\
+      \ Type</strong></p></th><th data-highlight-colour=\"#d9d9d9\"><p style=\"text-align:\
+      \ center;\"><strong>Release Version</strong></p></th><th data-highlight-colour=\"\
+      #d9d9d9\"><p style=\"text-align: center;\"><strong>Format</strong></p></th></tr><tr><td><p>Workflow\
+      \ DB Access Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow\
+      \ SQL Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow\
+      \ SQL Request for Query Details</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow\
+      \ SQL Export Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow\
+      \ Restricted Data Access Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ DB Policy Exception Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ Unmasking Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ Decryption Request</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ Server Access Request</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ Server Privilege Request</p></td><td><p>11.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow\
+      \ Access Role Request</p></td><td><p>10.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>IP\
+      \ Registration Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>User\
+      \ Access History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Admin\
+      \ Role History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Activity\
+      \ Logs</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Alert Logs</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Query\
+      \ Audit</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>DB Access History</p></td><td><p\
+      \ /></td><td><p>CSV</p></td></tr><tr><td><p>DB Account Lock History</p></td><td><p\
+      \ /></td><td><p>CSV</p></td></tr><tr><td><p>DB Access Control Logs</p></td><td><p\
+      \ /></td><td><p>CSV</p></td></tr><tr><td><p>DML Snapshot</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Restricted\
+      \ Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Masked\
+      \ Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Sensitive\
+      \ Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>DAC\
+      \ Policy Audit Log</p></td><td><p>11.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Server\
+      \ Access History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Command\
+      \ Audit</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Session Logs</p></td><td><p\
+      \ /></td><td><p>JSON</p></td></tr><tr><td><p>Server Access Control Logs</p></td><td><p\
+      \ /></td><td><p>JSON</p></td></tr><tr><td><p>Server Role History</p></td><td><p\
+      \ /></td><td><p>JSON</p></td></tr><tr><td><p>Server Account Lock History</p></td><td><p\
+      \ /></td><td><p>JSON</p></td></tr><tr><td><p>Request Audit</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Kubernetes\
+      \ Role History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Web\
+      \ App Access History</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web\
+      \ App Role History</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web\
+      \ App JIT Access Control Log</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web\
+      \ App Event Audit</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr></tbody></table><h2>Audit\
+      \ Log Export 목록 조회하기</h2><ac:image ac:align=\"center\" ac:layout=\"center\"\
+      \ ac:original-height=\"864\" ac:original-width=\"1566\" ac:custom-width=\"true\"\
+      \ ac:alt=\"image-20240714-063656.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      image-20240714-063656.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator\
       \ &gt; Audit &gt; General &gt; Audit Log Export</p></ac:caption><ac:adf-mark\
       \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><ol start=\"1\"\
       ><li><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export 메뉴로 이동합니다.</p></li><li><p>현재까지\
@@ -290,7 +249,7 @@
       \ Preview </strong>: 미리보기를 생성합니다. </p><ol start=\"1\"><li><p>미리보기는 필수 단계입니다.</p></li><li><p>미리보기\
       \ 결과를 확인해야 다음 단계인 &lsquo;Create&rsquo;가 가능합니다.</p></li></ol></li><li><p><code>Create</code>\
       \ 버튼 : 로그 추출 작업을 생성합니다. </p></li></ol><ac:structured-macro ac:name=\"info\"\
-      \ ac:schema-version=\"1\" ac:macro-id=\"d97085f3-76e3-45e7-9798-94d3029da504\"\
+      \ ac:schema-version=\"1\" ac:macro-id=\"f453d3e9-c88d-4457-a68f-cb81ce0c1b6b\"\
       ><ac:rich-text-body><p><strong>유의 사항</strong></p><p>당일 날짜를 선택하여 로그를 추출하는 경우,\
       \ 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.</p></ac:rich-text-body></ac:structured-macro><ac:adf-extension><ac:adf-node\
       \ type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p><strong>필터\
@@ -382,67 +341,99 @@
     "_expandable":
       "content": "/rest/api/content/544379140"
   "view":
-    "value": "<h2 id=\"AuditLogExport-Overview\"><style>[data-colorid=uftwhjoqu7]{color:#4c9aff}\
-      \ html[data-color-mode=dark] [data-colorid=uftwhjoqu7]{color:#004eb3}[data-colorid=bpi8wwz51e]{color:#4c9aff}\
-      \ html[data-color-mode=dark] [data-colorid=bpi8wwz51e]{color:#004eb3}</style>Overview</h2><p>QueryPie에서\
+    "value": "<h2 id=\"AuditLogExport-Overview\"><style>[data-colorid=zqzypq01xn]{color:#4c9aff}\
+      \ html[data-color-mode=dark] [data-colorid=zqzypq01xn]{color:#004eb3}[data-colorid=w6z259143m]{color:#4c9aff}\
+      \ html[data-color-mode=dark] [data-colorid=w6z259143m]{color:#004eb3}</style>Overview</h2><p>QueryPie에서\
       \ 생성된 각종 감사 로그를 추출하고 csv 파일로 내려받을 수 있는 기능입니다. 장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인\
       \ 추출 및 다운로드가 가능합니다. 한 번 생성된 로그 추출 파일은 30일 동안 다운로드가 가능합니다. 추출 지원 로그는 Query Audit,\
       \ Workflow SQL Request 등 21종입니다. </p><div class=\"confluence-information-macro\
       \ confluence-information-macro-note conf-macro output-block\" data-hasbody=\"\
-      true\" data-macro-id=\"57ae02ba-2fe3-4a41-8f0d-eaf3a7d35484\" data-macro-name=\"\
+      true\" data-macro-id=\"d584e29c-8e4f-4028-96d5-3483b1f27c54\" data-macro-name=\"\
       note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon\"\
       > </span><div class=\"confluence-information-macro-body\"><p>Audit Log Export\
       \ 기능 추가에 따라, 각 로그 화면에서 제공되던 &lsquo;Excel File Download&rsquo; 버튼은 QueryPie v9.15.0부터\
-      \ 지원이 중단되었습니다.</p></div></div><div class=\"panel conf-macro output-block\" data-hasbody=\"\
-      true\" data-macro-id=\"\" data-macro-name=\"panel\" style=\"background-color:\
-      \ #EAE6FF;border-color: #998DD9;border-width: 1px;\"><div class=\"panelContent\"\
-      \ style=\"background-color: #EAE6FF;\">\n<p><strong>추출 지원 로그 종류 (QueryPie v11.0.0\
-      \ 기준)</strong></p><ol start=\"1\"><li><p>Query Audit [CSV]</p></li><li><p>Workflow\
-      \ SQL Request [CSV]</p></li><li><p>Workflow SQL Request for Query Details [CSV]</p></li><li><p>Workflow\
-      \ SQL Export Request [CSV]</p></li><li><p>Workflow DB Access Request [CSV]</p></li><li><p>Workflow\
-      \ Server Access Request [JSON]</p></li><li><p>User Access History [CSV]</p></li><li><p>Admin\
-      \ Role History [CSV]</p></li><li><p>DB Access History [CSV]</p></li><li><p>DB\
-      \ Account Lock History [CSV]</p></li><li><p>DB Access Control Logs [CSV]</p></li><li><p>Server\
-      \ Access History [JSON]</p></li><li><p>Command Audit [JSON]</p></li><li><p>Session\
-      \ Logs [JSON]</p></li><li><p>Server Access Control Logs [JSON]</p></li><li><p>Server\
-      \ Role History [JSON]</p></li><li><p>Activity Logs [JSON]</p></li><li><p>DML\
-      \ Snapshot [JSON]</p></li><li><p>Server Account Lock History [JSON]</p></li><li><p>Request\
-      \ Audit [JSON]</p></li><li><p>Kubernetes Role History [JSON]</p></li><li><p>Alert\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"1d32fd1d-6788-4465-b59d-c07f105107b4\"\
-      \ data-macro-name=\"status\">10.3.0</span> </p></li><li><p>Restricted Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"d5f5d2a0-5879-4a4d-a89e-42e94b9d6430\"\
-      \ data-macro-name=\"status\">10.3.0</span> </p></li><li><p>Masked Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"1647c26a-aaa3-48e3-a414-22da2c86fd1c\"\
-      \ data-macro-name=\"status\">10.3.0</span> </p></li><li><p>Sensitive Data Access\
-      \ Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"0465873b-012d-459c-911c-4a2347faa5cc\"\
-      \ data-macro-name=\"status\">10.3.0</span> </p></li><li><p>Web Access History\
-      \ [CSV] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh conf-macro\
-      \ output-inline\" data-hasbody=\"false\" data-macro-id=\"eea6b136-20bf-4769-a9ca-e03bc869e5ea\"\
-      \ data-macro-name=\"status\">11.0.0</span></p></li><li><p>Web Event Audit [CSV]\
-      \ <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh conf-macro\
-      \ output-inline\" data-hasbody=\"false\" data-macro-id=\"6605dc76-cde3-417f-b6c2-0b8c3fe61c3e\"\
-      \ data-macro-name=\"status\">11.0.0</span></p></li><li><p>Web App Role History\
-      \ [CSV] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh conf-macro\
-      \ output-inline\" data-hasbody=\"false\" data-macro-id=\"32dc221d-c9ce-4c66-84d2-67e8a3d9daf6\"\
-      \ data-macro-name=\"status\">11.0.0</span></p></li><li><p>JIT Access Control\
-      \ Logs [CSV] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"abc58b13-e6d2-4265-95b8-537837732417\"\
-      \ data-macro-name=\"status\">11.0.0</span></p></li><li><p>Workflow Unmasking\
-      \ Request Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"5881082a-689d-4487-97be-d5c14fc3b0c5\"\
-      \ data-macro-name=\"status\">11.0.0</span> </p></li><li><p>Workflow Restricted\
-      \ Data Access Request [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"33b74c67-1942-429d-b012-a28be3866c38\"\
-      \ data-macro-name=\"status\">11.0.0</span> </p></li><li><p>Workflow DB Policy\
-      \ Exception Request Logs [JSON] <span class=\"status-macro aui-lozenge aui-lozenge-visual-refresh\
-      \ conf-macro output-inline\" data-hasbody=\"false\" data-macro-id=\"82eea7a8-0002-4d53-8a9f-6faf8eacc3a3\"\
-      \ data-macro-name=\"status\">11.0.0</span> </p></li></ol>\n</div></div><p /><h2\
-      \ id=\"AuditLogExport-AuditLogExport목록조회하기\">Audit Log Export 목록 조회하기</h2><span\
-      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      \ 지원이 중단되었습니다.</p></div></div><p><strong>추출 지원 로그 종류 (QueryPie v11.0.0 기준)</strong></p><div\
+      \ class=\"table-wrap\"><table data-layout=\"default\" data-local-id=\"2947c127-97e1-4b3d-82ff-fcecae88fdc1\"\
+      \ class=\"confluenceTable\"><colgroup><col style=\"width: 498.0px;\" /><col\
+      \ style=\"width: 160.0px;\" /><col style=\"width: 99.0px;\" /></colgroup><tbody><tr><th\
+      \ data-highlight-colour=\"#d9d9d9\" class=\"confluenceTh\"><p style=\"text-align:\
+      \ center;\"><strong>Log Type</strong></p></th><th data-highlight-colour=\"#d9d9d9\"\
+      \ class=\"confluenceTh\"><p style=\"text-align: center;\"><strong>Release Version</strong></p></th><th\
+      \ data-highlight-colour=\"#d9d9d9\" class=\"confluenceTh\"><p style=\"text-align:\
+      \ center;\"><strong>Format</strong></p></th></tr><tr><td class=\"confluenceTd\"\
+      ><p>Workflow DB Access Request</p></td><td class=\"confluenceTd\"><p /></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Workflow SQL Request</p></td><td class=\"confluenceTd\"><p /></td><td class=\"\
+      confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"><p>Workflow\
+      \ SQL Request for Query Details</p></td><td class=\"confluenceTd\"><p /></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Workflow SQL Export Request</p></td><td class=\"confluenceTd\"><p /></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Workflow Restricted Data Access Request</p></td><td class=\"confluenceTd\"\
+      ><p>11.0.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Workflow DB Policy Exception Request</p></td><td class=\"\
+      confluenceTd\"><p>11.0.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Workflow Unmasking Request</p></td><td class=\"\
+      confluenceTd\"><p>11.0.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Workflow Decryption Request</p></td><td class=\"\
+      confluenceTd\"><p>10.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Workflow Server Access Request</p></td><td class=\"\
+      confluenceTd\"><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Workflow Server Privilege Request</p></td><td class=\"\
+      confluenceTd\"><p>11.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Workflow Access Role Request</p></td><td class=\"\
+      confluenceTd\"><p>10.0.0</p></td><td class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>IP Registration Request</p></td><td class=\"confluenceTd\"\
+      ><p>11.0.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>User Access History</p></td><td class=\"confluenceTd\"><p\
+      \ /></td><td class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Admin Role History</p></td><td class=\"confluenceTd\"><p /></td><td class=\"\
+      confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"><p>Activity\
+      \ Logs</p></td><td class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"\
+      ><p>JSON</p></td></tr><tr><td class=\"confluenceTd\"><p>Alert Logs</p></td><td\
+      \ class=\"confluenceTd\"><p>10.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Query Audit</p></td><td class=\"confluenceTd\"><p\
+      \ /></td><td class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>DB Access History</p></td><td class=\"confluenceTd\"><p /></td><td class=\"\
+      confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"><p>DB Account\
+      \ Lock History</p></td><td class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"\
+      ><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"><p>DB Access Control Logs</p></td><td\
+      \ class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>DML Snapshot</p></td><td class=\"confluenceTd\"\
+      ><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Restricted Data Access Logs (Legacy)</p></td><td class=\"\
+      confluenceTd\"><p>10.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Masked Data Access Logs (Legacy)</p></td><td class=\"\
+      confluenceTd\"><p>10.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Sensitive Data Access Logs (Legacy)</p></td><td\
+      \ class=\"confluenceTd\"><p>10.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>DAC Policy Audit Log</p></td><td class=\"confluenceTd\"\
+      ><p>11.3.0</p></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Server Access History</p></td><td class=\"confluenceTd\"><p\
+      \ /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Command Audit</p></td><td class=\"confluenceTd\"><p /></td><td class=\"\
+      confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"confluenceTd\"><p>Session\
+      \ Logs</p></td><td class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"\
+      ><p>JSON</p></td></tr><tr><td class=\"confluenceTd\"><p>Server Access Control\
+      \ Logs</p></td><td class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"\
+      ><p>JSON</p></td></tr><tr><td class=\"confluenceTd\"><p>Server Role History</p></td><td\
+      \ class=\"confluenceTd\"><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Server Account Lock History</p></td><td class=\"\
+      confluenceTd\"><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td\
+      \ class=\"confluenceTd\"><p>Request Audit</p></td><td class=\"confluenceTd\"\
+      ><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Kubernetes Role History</p></td><td class=\"confluenceTd\"\
+      ><p /></td><td class=\"confluenceTd\"><p>JSON</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Web App Access History</p></td><td class=\"confluenceTd\"\
+      ><p>11.0.0</p></td><td class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"\
+      confluenceTd\"><p>Web App Role History</p></td><td class=\"confluenceTd\"><p>11.0.0</p></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Web App JIT Access Control Log</p></td><td class=\"confluenceTd\"><p>11.0.0</p></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr><tr><td class=\"confluenceTd\"\
+      ><p>Web App Event Audit</p></td><td class=\"confluenceTd\"><p>11.0.0</p></td><td\
+      \ class=\"confluenceTd\"><p>CSV</p></td></tr></tbody></table></div><h2 id=\"\
+      AuditLogExport-AuditLogExport목록조회하기\">Audit Log Export 목록 조회하기</h2><span class=\"\
+      confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
       ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
       \ alt=\"image-20240714-063656.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544379140/image-20240714-063656.png?version=1&amp;modificationDate=1720939018818&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=419\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544379140/image-20240714-063656.png?version=1&amp;modificationDate=1720939018818&amp;cacheVersion=1&amp;api=v2\"\
@@ -451,7 +442,7 @@
       attachment\" data-linked-resource-default-alias=\"image-20240714-063656.png\"\
       \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544379140\" data-linked-resource-container-version=\"\
-      18\" data-media-id=\"c6fb420f-5b2c-4397-8c7b-d750be8d9004\" data-media-type=\"\
+      19\" data-media-id=\"c6fb420f-5b2c-4397-8c7b-d750be8d9004\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544379140/image-20240714-063656.png?version=1&amp;modificationDate=1720939018818&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=706\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544379140/image-20240714-063656.png?version=1&amp;modificationDate=1720939018818&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=419\
       \ 1x\" /></span><ol start=\"1\"><li><p>Administrator &gt; Audit &gt; General\
@@ -474,13 +465,13 @@
       \ data-linked-resource-type=\"attachment\" data-linked-resource-default-alias=\"\
       스크린샷 2025-01-16 오후 1.18.05.png\" data-base-url=\"https://querypie.atlassian.net/wiki\"\
       \ data-linked-resource-content-type=\"image/png\" data-linked-resource-container-id=\"\
-      544379140\" data-linked-resource-container-version=\"18\" data-media-id=\"d3fc7bfa-bb88-423f-8bd4-7c6d716331ba\"\
+      544379140\" data-linked-resource-container-version=\"19\" data-media-id=\"d3fc7bfa-bb88-423f-8bd4-7c6d716331ba\"\
       \ data-media-type=\"file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544379140/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-01-16%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%201.18.05.png?version=1&amp;modificationDate=1737001636871&amp;cacheVersion=1&amp;api=v2&amp;width=1224&amp;height=822\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544379140/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-01-16%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%201.18.05.png?version=1&amp;modificationDate=1737001636871&amp;cacheVersion=1&amp;api=v2&amp;width=612&amp;height=411\
       \ 1x\" /></span><ol start=\"1\"><li><p><strong>Task Name </strong>: 로그 추출 작업의\
       \ 이름을 입력합니다.</p></li><li><p><strong>Log Type </strong>: 추출 대상 로그의 종류를 선택합니다.\
       \ </p><ol start=\"1\"><li><p>Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.</p></li><li><p>로그\
-      \ 종류 선택 후 <span data-colorid=\"bpi8wwz51e\">See Log Template and Description</span>을\
+      \ 종류 선택 후 <span data-colorid=\"w6z259143m\">See Log Template and Description</span>을\
       \ 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.</p></li></ol></li><li><p><strong>Download\
       \ File Format </strong>: 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이\
       \ 단일로 제한됩니다. 상단의 <strong>&lsquo;추출 지원 로그 종류&rsquo;</strong>을 참고해주시기 바랍니다.) </p></li><li><p><strong>For\
@@ -496,7 +487,7 @@
       \ 결과를 확인해야 다음 단계인 &lsquo;Create&rsquo;가 가능합니다.</p></li></ol></li><li><p><code>Create</code>\
       \ 버튼 : 로그 추출 작업을 생성합니다. </p></li></ol><div class=\"confluence-information-macro\
       \ confluence-information-macro-information conf-macro output-block\" data-hasbody=\"\
-      true\" data-macro-id=\"d97085f3-76e3-45e7-9798-94d3029da504\" data-macro-name=\"\
+      true\" data-macro-id=\"f453d3e9-c88d-4457-a68f-cb81ce0c1b6b\" data-macro-name=\"\
       info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon\"\
       > </span><div class=\"confluence-information-macro-body\"><p><strong>유의 사항</strong></p><p>당일\
       \ 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된\
@@ -504,7 +495,7 @@
       \ data-hasbody=\"true\" data-macro-id=\"\" data-macro-name=\"panel\" style=\"\
       background-color: #EAE6FF;border-color: #998DD9;border-width: 1px;\"><div class=\"\
       panelContent\" style=\"background-color: #EAE6FF;\">\n<p><strong>필터 표현식</strong></p><p>(1)\
-      \ 필터 표현식을 사용하시기 위해 '<span data-colorid=\"uftwhjoqu7\">See Log Template and Description</span>'을\
+      \ 필터 표현식을 사용하시기 위해 '<span data-colorid=\"zqzypq01xn\">See Log Template and Description</span>'을\
       \ 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br /></p><p>(2) 사용 가능한 필터\
       \ 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  </p><p>- Number Type</p><p>지원하는 표현식 : <code>&gt;</code>,\
       \ <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>,\

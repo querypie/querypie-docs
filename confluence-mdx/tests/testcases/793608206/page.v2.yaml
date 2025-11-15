@@ -1,3 +1,19 @@
+"parentType": "page"
+"parentId": "543981760"
+"ownerId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
+"lastOwnerId": !!null "null"
+"createdAt": "2024-12-23T01:38:05.448Z"
+"authorId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
+"version":
+  "number": !!int "3"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2025-08-26T07:01:50.813Z"
+  "ncsStepVersion": "1116"
+"position": !!int "758"
+"id": "793608206"
+"spaceId": "539099246"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -1199,24 +1215,8 @@
       text\":\"IP 주소 \",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"\
       colspan\":1,\"rowspan\":1,\"colwidth\":[130.0]},\"content\":[{\"type\":\"paragraph\"\
       ,\"content\":[{\"text\":\"11.0.0\",\"type\":\"text\"}]}]}]}]}],\"version\":1}"
-"parentId": "543981760"
-"ownerId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-12-23T01:38:05.448Z"
-"parentType": "page"
-"authorId": "712020:8abb7e5d-520e-49ce-bde2-b5fc364cfe6d"
-"position": !!int "758"
-"version":
-  "number": !!int "3"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-  "createdAt": "2025-08-26T07:01:50.813Z"
-  "ncsStepVersion": "1116"
-"id": "793608206"
-"title": "New Request > 요청 타입별 템플릿 변수"
 "status": "current"
-"spaceId": "539099246"
+"title": "New Request > 요청 타입별 템플릿 변수"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=793608206"
   "webui": "/spaces/QM/pages/793608206/New+Request"

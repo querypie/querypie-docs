@@ -1,3 +1,18 @@
+"parentType": "page"
+"parentId": "544380204"
+"ownerId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+"lastOwnerId": !!null "null"
+"createdAt": "2025-03-07T13:06:15.384Z"
+"authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+"version":
+  "number": !!int "1"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
+  "createdAt": "2025-03-07T13:06:35.556Z"
+  "ncsStepVersion": "20"
+"position": !!int "1597"
+"id": "880181257"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -119,24 +134,9 @@
       ,\"attrs\":{\"width\":1512,\"id\":\"d65abe53-b4fe-4503-ab0d-6d727f997799\",\"\
       collection\":\"contentId-880181257\",\"type\":\"file\",\"height\":763}}]}]}]}]}]}],\"\
       version\":1}"
-"parentId": "544380204"
-"spaceId": "539099246"
-"ownerId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-"lastOwnerId": !!null "null"
-"createdAt": "2025-03-07T13:06:15.384Z"
-"authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-"parentType": "page"
-"version":
-  "number": !!int "1"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-  "createdAt": "2025-03-07T13:06:35.556Z"
-  "ncsStepVersion": "20"
-"id": "880181257"
-"position": !!int "1597"
-"title": "Custom Data Source 접속하기"
 "status": "current"
+"title": "Custom Data Source 접속하기"
+"spaceId": "539099246"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=880181257"
   "webui": "/spaces/QM/pages/880181257/Custom+Data+Source"

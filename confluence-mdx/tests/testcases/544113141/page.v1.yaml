@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -273,10 +273,10 @@
       \ / Disconnect 여부</p></li><li><p><strong>Result</strong> : 접속 성공/실패 여부</p><ol\
       \ start=\"1\"><li><p><img class=\"emoticon emoticon-tick\" data-emoji-id=\"\
       atlassian-check_mark\" data-emoji-shortname=\":check_mark:\" data-emoji-fallback=\"\
-      :check_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/check.png\"\
+      :check_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/check.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"tick\" alt=\"(tick)\" /> Success</p></li><li><p><img\
       \ class=\"emoticon emoticon-cross\" data-emoji-id=\"atlassian-cross_mark\" data-emoji-shortname=\"\
-      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/error.png\"\
+      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/error.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(오류)\" /> Failure</p></li></ol></li><li><p><strong>Name</strong>\
       \ : 대상 사용자 이름</p></li><li><p><strong>Email</strong> : 대상 사용자 이메일</p></li><li><p><strong>Cloud\
       \ Provider</strong> : 대상 클라우드 프로바이더명</p></li><li><p><strong>Connection Name</strong>\
@@ -304,10 +304,10 @@
       \ 1x\"></span><ul><li><p>우측 드로워에는 이하의 정보를 노출합니다:</p><ol start=\"1\"><li><p><strong>Result</strong>\
       \ : 접속 성공/실패 여부</p><ol start=\"1\"><li><p><img class=\"emoticon emoticon-tick\"\
       \ data-emoji-id=\"atlassian-check_mark\" data-emoji-shortname=\":check_mark:\"\
-      \ data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/check.png\"\
+      \ data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/check.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"tick\" alt=\"(tick)\" /> Success</p></li><li><p><img\
       \ class=\"emoticon emoticon-cross\" data-emoji-id=\"atlassian-cross_mark\" data-emoji-shortname=\"\
-      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/error.png\"\
+      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/error.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(오류)\" /> Failure</p></li></ol></li><li><p><strong>Name</strong>\
       \ : 대상 사용자 이름</p></li><li><p><strong>Action At</strong> : 접속 시점</p></li><li><p><strong>Action\
       \ Type </strong>: Connect / Disconnect 여부</p></li><li><p><strong>Privilege</strong>\

@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -117,61 +117,51 @@
       center\" ac:original-height=\"555\" ac:original-width=\"785\" ac:custom-width=\"\
       true\" ac:alt=\"스크린샷 2024-08-04 오후 5.30.02.png\" ac:width=\"760\"><ri:attachment\
       \ ri:filename=\"스크린샷 2024-08-04 오후 5.30.02.png\" ri:version-at-save=\"\
-      1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"\
-      17\" /></ri:attachment><ac:caption><p>QueryPie Web &gt; 프로필 메뉴</p></ac:caption><ac:adf-mark\
-      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><p>2. QueryPie\
-      \ Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에\
-      \ 있는 QueryPie URL을 복사해 둡니다. </p><ac:image ac:align=\"center\" ac:layout=\"center\"\
-      \ ac:original-height=\"712\" ac:original-width=\"1280\" ac:custom-width=\"true\"\
-      \ ac:alt=\"image-20240723-154847.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
-      image-20240723-154847.png\" ri:version-at-save=\"1\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>QueryPie\
-      \ Web &gt; Agent Downloads 팝업창</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
-      1\" color=\"#091e4224\" /></ac:image><ac:structured-macro ac:name=\"info\" ac:schema-version=\"\
-      1\" ac:macro-id=\"a19b2299-084c-45a1-93d5-b93fb507dfc0\"><ac:rich-text-body><p>QueryPie\
+      1\" /><ac:caption><p>QueryPie Web &gt; 프로필 메뉴</p></ac:caption><ac:adf-mark key=\"\
+      border\" size=\"1\" color=\"#091e4224\" /></ac:image><p>2. QueryPie Agent Downloads\
+      \ 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을\
+      \ 복사해 둡니다. </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
+      712\" ac:original-width=\"1280\" ac:custom-width=\"true\" ac:alt=\"image-20240723-154847.png\"\
+      \ ac:width=\"760\"><ri:attachment ri:filename=\"image-20240723-154847.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>QueryPie Web &gt; Agent Downloads\
+      \ 팝업창</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\"\
+      \ /></ac:image><ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\"\
+      \ ac:macro-id=\"f99b0d05-b4a8-4196-bae8-511d886ab316\"><ac:rich-text-body><p>QueryPie\
       \ Agent는 Mac, Windows, Linux OS를 지원합니다.</p></ac:rich-text-body></ac:structured-macro><p>3.\
       \ 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다. </p><ac:image ac:align=\"center\"\
       \ ac:layout=\"center\" ac:original-height=\"750\" ac:original-width=\"1070\"\
       \ ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-04 오후 5.40.02.png\"\
       \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-04 오후 5.40.02.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Mac\
-      \ OS 설치 프로그램</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"\
-      #091e4224\" /></ac:image><p>4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에\
-      \ 미리 복사해뒀던 QueryPie URL을 입력하고 <code>Next</code> 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.\
-      \ </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
-      461\" ac:original-width=\"827\" ac:custom-width=\"true\" ac:width=\"760\"><ri:attachment\
-      \ ri:filename=\"agent-03.png\" ri:version-at-save=\"2\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; QueryPie Host 입력</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
-      1\" color=\"#091e4224\" /></ac:image><p /><h2>QueryPie Agent에 로그인하기</h2><p>1.\
-      \ Agent 앱 내 로그인 화면에서 <code>Login</code> 버튼을 클릭합니다.</p><ac:image ac:align=\"\
-      center\" ac:layout=\"center\" ac:original-height=\"961\" ac:original-width=\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Mac OS 설치 프로그램</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><p>4. 설치 완료된 QueryPie\
+      \ Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 <code>Next</code>\
+      \ 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다. </p><ac:image ac:align=\"center\" ac:layout=\"\
+      center\" ac:original-height=\"461\" ac:original-width=\"827\" ac:custom-width=\"\
+      true\" ac:width=\"760\"><ri:attachment ri:filename=\"agent-03.png\" ri:version-at-save=\"\
+      2\" /><ac:caption><p>Agent &gt; QueryPie Host 입력</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><p /><h2>QueryPie\
+      \ Agent에 로그인하기</h2><p>1. Agent 앱 내 로그인 화면에서 <code>Login</code> 버튼을 클릭합니다.</p><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"961\" ac:original-width=\"\
       1494\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-04 오후 5.37.13.png\"\
       \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-04 오후 5.37.13.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:adf-mark key=\"\
-      border\" size=\"1\" color=\"#091e4224\" /></ac:image><p>2. 웹 브라우저가 열리면, 로그인\
-      \ 페이지에서 인증정보를 입력하고, <code>Continue</code> 버튼을 클릭합니다.</p><ac:image ac:align=\"\
-      center\" ac:layout=\"center\" ac:original-height=\"917\" ac:original-width=\"\
-      1548\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-29 오후 5.12.36.png\"\
-      \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-07-29 오후 5.12.36.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>QueryPie\
+      \ ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"\
+      #091e4224\" /></ac:image><p>2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, <code>Continue</code>\
+      \ 버튼을 클릭합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
+      917\" ac:original-width=\"1548\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
+      \ 2024-07-29 오후 5.12.36.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      스크린샷 2024-07-29 오후 5.12.36.png\" ri:version-at-save=\"1\" /><ac:caption><p>QueryPie\
       \ Web &gt; Agent Login Page</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
       1\" color=\"#091e4224\" /></ac:image><p>3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며\
       \ 이후 Agent로 돌아갑니다.</p><ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"\
       917\" ac:original-width=\"1548\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
       \ 2024-07-29 오후 5.13.14.png\" ac:width=\"764\"><ri:attachment ri:filename=\"\
-      스크린샷 2024-07-29 오후 5.13.14.png\" ri:version-at-save=\"1\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>QueryPie\
+      스크린샷 2024-07-29 오후 5.13.14.png\" ri:version-at-save=\"1\" /><ac:caption><p>QueryPie\
       \ Web &gt; Agent Login Success Page</p></ac:caption><ac:adf-mark key=\"border\"\
       \ size=\"1\" color=\"#091e4224\" /></ac:image><p>4. Agent 열기를 명시적으로 수행하여 인증정보를\
       \ Agent로 전달합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
       383\" ac:original-width=\"1063\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
       \ 2024-08-04 오후 5.42.09.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
-      스크린샷 2024-08-04 오후 5.42.09.png\" ri:version-at-save=\"1\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Chrome\
+      스크린샷 2024-08-04 오후 5.42.09.png\" ri:version-at-save=\"1\" /><ac:caption><p>Chrome\
       \ - Agent App 열기 모달</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"\
       #091e4224\" /></ac:image><h2>에이전트로 데이터베이스 접속하기</h2><p>1. 로그인이 정상적으로 완료되면 Agent\
       \ 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.<br />접속할 커넥션에 할당된 <code>Port</code>\
@@ -179,76 +169,73 @@
       \ ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"814\" ac:original-width=\"\
       983\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.10.01.png\"\
       \ ac:width=\"764\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.10.01.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; DB Connection Information</p></ac:caption><ac:adf-mark key=\"border\"\
-      \ size=\"1\" color=\"#091e4224\" /></ac:image><p>2. 위의 접속 정보를 3rd Party 클라이언트에\
-      \ 입력하면 DB 커넥션 접속이 가능합니다.</p><ac:image ac:align=\"center\" ac:layout=\"wide\"\
-      \ ac:original-height=\"461\" ac:original-width=\"827\" ac:custom-width=\"true\"\
-      \ ac:alt=\"agent-07.png\" ac:width=\"764\"><ri:attachment ri:filename=\"agent-07.png\"\
-      \ ri:version-at-save=\"2\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>3rd\
-      \ Party Client를 이용한 DB 커넥션 접속</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
-      1\" color=\"#091e4224\" /></ac:image><p /><h2>에이전트를 통한 서버 접속</h2><p>로그인이 정상적으로\
-      \ 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.</p><h3>1. 서버 역할 선택하기</h3><ul><li><p>사용자\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; DB Connection Information</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><p>2. 위의 접속 정보를\
+      \ 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.</p><ac:image ac:align=\"center\" ac:layout=\"\
+      wide\" ac:original-height=\"461\" ac:original-width=\"827\" ac:custom-width=\"\
+      true\" ac:alt=\"agent-07.png\" ac:width=\"764\"><ri:attachment ri:filename=\"\
+      agent-07.png\" ri:version-at-save=\"2\" /><ac:caption><p>3rd Party Client를 이용한\
+      \ DB 커넥션 접속</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"\
+      #091e4224\" /></ac:image><p /><h2>에이전트를 통한 서버 접속</h2><p>로그인이 정상적으로 완료되면 Agent\
+      \ 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.</p><h3>1. 서버 역할 선택하기</h3><ul><li><p>사용자\
       \ 프로필 영역 하단의 <code>Role</code> 버튼을 클릭하여 원하는 역할을 고르고 <code>OK</code> 버튼을 클릭하세요.</p></li><li><p>Default\
       \ 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. </p></li></ul><ac:image\
       \ ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"542\" ac:original-width=\"\
       939\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.26.53.png\"\
       \ ac:width=\"764\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.26.53.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; Server &gt; Select a Role</p></ac:caption><ac:adf-mark key=\"border\"\
-      \ size=\"1\" color=\"#091e4224\" /></ac:image><ac:structured-macro ac:name=\"\
-      info\" ac:schema-version=\"1\" ac:macro-id=\"bd9c2ba9-1db8-4edd-aecb-874773173e41\"\
-      ><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저\
-      \ 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro><h3><br />2. <ac:inline-comment-marker\
-      \ ac:ref=\"50b132b2-0b7d-413a-805b-ec80489a780b\">Agent로 서버 접속하기</ac:inline-comment-marker></h3><ul><li><p>접속할\
-      \ 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.</p></li></ul><ac:image\
-      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"553\" ac:original-width=\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Server &gt; Select a\
+      \ Role</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\"\
+      \ /></ac:image><ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\"\
+      \ ac:macro-id=\"d1ce310c-4526-4911-b6fd-15e1c369a767\"><ac:rich-text-body><p>역할이\
+      \ 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro><h3><br\
+      \ />2. <ac:inline-comment-marker ac:ref=\"50b132b2-0b7d-413a-805b-ec80489a780b\"\
+      >Agent로 서버 접속하기</ac:inline-comment-marker></h3><ul><li><p>접속할 서버를 우클릭 후 Open\
+      \ Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.</p></li></ul><ac:image ac:align=\"\
+      center\" ac:layout=\"center\" ac:original-height=\"553\" ac:original-width=\"\
       774\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.17.29.png\"\
       \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.17.29.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; Server &gt; Open Connection with</p></ac:caption><ac:adf-mark key=\"\
-      border\" size=\"1\" color=\"#091e4224\" /></ac:image><ul><li><p>이후 해당 서버에 접속\
-      \ 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는 계정을 선택하고 필요시 비밀번호를\
-      \ 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul><ac:image ac:align=\"\
-      center\" ac:layout=\"center\" ac:original-height=\"567\" ac:original-width=\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Server &gt; Open Connection\
+      \ with</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\"\
+      \ /></ac:image><ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는\
+      \ 계정을 선택하고 필요시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"567\" ac:original-width=\"\
       848\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.25.32.png\"\
       \ ac:width=\"746\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.25.32.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; Server &gt;  Open New Session</p></ac:caption></ac:image><h3>3. Seamless\
-      \ SSH 설정하기</h3><p>Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수\
-      \ 있는 기능입니다. 다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.</p><p>1)\
-      \ 터미널을 열고, .ssh 폴더로 이동합니다.</p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"\
-      1\" ac:macro-id=\"1de98306-db73-4eac-b791-0b547d3df79d\"><ac:plain-text-body><![CDATA[$\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Server &gt;  Open New\
+      \ Session</p></ac:caption></ac:image><h3>3. Seamless SSH 설정하기</h3><p>Seamless\
+      \ SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh\
+      \ 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.</p><p>1) 터미널을 열고, .ssh 폴더로\
+      \ 이동합니다.</p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"\
+      ae17bd7b-36ca-4bac-9f76-a2a80df69ed8\"><ac:parameter ac:name=\"breakoutMode\"\
+      >wide</ac:parameter><ac:parameter ac:name=\"breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[$\
       \ cd .ssh]]></ac:plain-text-body></ac:structured-macro><p>2) ssh 폴더에서 config\
       \ 파일을 생성하기 위해 vi 에디터를 엽니다.</p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"\
-      1\" ac:macro-id=\"e97ed0fa-ef78-4d6e-b9bc-1cc0e9841fe0\"><ac:plain-text-body><![CDATA[$\
+      1\" ac:macro-id=\"4ac2ea9a-8d66-4197-bc03-8304a9a0b2a7\"><ac:parameter ac:name=\"\
+      breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[$\
       \ vi config]]></ac:plain-text-body></ac:structured-macro><p><ac:inline-comment-marker\
       \ ac:ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\">3) 아래의 내용을 입력 후, </ac:inline-comment-marker><code><ac:inline-comment-marker\
       \ ac:ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\">wq</ac:inline-comment-marker></code><ac:inline-comment-marker\
       \ ac:ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"> 키를 입력하여 vi 에디터를 나옵니다.</ac:inline-comment-marker></p><ac:structured-macro\
-      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"ea969a7b-3265-4ec9-ae6b-bc72a5d8e759\"\
-      ><ac:plain-text-body><![CDATA[Host {{Server Name}}\n  Hostname {{Server URL}}\n\
-      \  Port {{Server SSH Port}}\n  ProxyCommand qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro><ac:structured-macro\
-      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"a602951d-1254-4c43-b9f3-c9ee269dd369\"\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"23e5d969-15b1-4d4b-a7f2-0c2c38a4dee1\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[Host {{Server\
+      \ Name}}\n  Hostname {{Server URL}}\n  Port {{Server SSH Port}}\n  ProxyCommand\
+      \ qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"56253dda-2fdc-40de-ba7d-2165a1c14c7e\"\
       ><ac:rich-text-body><p>config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL,\
       \ 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p><ac:structured-macro\
-      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"b6f6c7b9-b15c-41a8-8dd7-6957810e92b0\"\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"f8478be5-90b8-4d3c-9c06-7b8dba0b96ad\"\
       ><ac:plain-text-body><![CDATA[Host *\n  ProxyCommand qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro></ac:rich-text-body></ac:structured-macro><p>4)\
       \ 이상으로 설정이 완료됩니다. Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.</p><ac:structured-macro\
-      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"252afd2c-956a-4915-bb49-8794cbb5afc1\"\
-      ><ac:plain-text-body><![CDATA[$ ssh deploy@{{Server Name}}]]></ac:plain-text-body></ac:structured-macro><p\
-      \ /><h2>에이전트를 통한 쿠버네티스 접속 </h2><ac:image ac:align=\"center\" ac:layout=\"wide\"\
-      \ ac:original-height=\"900\" ac:original-width=\"1800\" ac:custom-width=\"true\"\
-      \ ac:width=\"764\"><ri:attachment ri:filename=\"kubernetes-agent-access-flow.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:adf-mark key=\"\
-      border\" size=\"1\" color=\"#091e4224\" /></ac:image><ul><li><p>권한을 부여 받은 사용자는\
-      \ 에이전트 실행 시 현재 정책에 따른 <code>kubeconfig</code> 파일이 자동으로 수신됩니다.</p></li><li><p>이를\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"1c851681-79bb-4775-b25d-ff504b3b7e81\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[$ ssh deploy@{{Server\
+      \ Name}}]]></ac:plain-text-body></ac:structured-macro><p /><h2>에이전트를 통한 쿠버네티스\
+      \ 접속 </h2><ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"\
+      900\" ac:original-width=\"1800\" ac:custom-width=\"true\" ac:width=\"764\"><ri:attachment\
+      \ ri:filename=\"kubernetes-agent-access-flow.png\" ri:version-at-save=\"1\"\
+      \ /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><ul><li><p>권한을\
+      \ 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 <code>kubeconfig</code> 파일이 자동으로 수신됩니다.</p></li><li><p>이를\
       \ 통해 Kubernetes Client(kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.</p></li><li><p>에이전트에서는\
       \ 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.</p></li><li><p>또한 설정 메뉴를\
       \ 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.</p></li></ul><h3>1. Kubernetes 역할 선택하기</h3><p>사용자\
@@ -256,11 +243,10 @@
       \ 버튼을 클릭하세요.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
       572\" ac:original-width=\"958\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
       \ 2024-07-30 오후 3.27.05.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
-      스크린샷 2024-07-30 오후 3.27.05.png\" ri:version-at-save=\"1\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
+      스크린샷 2024-07-30 오후 3.27.05.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent\
       \ &gt; Kubernetes &gt; Select a Role</p></ac:caption><ac:adf-mark key=\"border\"\
       \ size=\"2\" color=\"#091e4224\" /></ac:image><ac:structured-macro ac:name=\"\
-      info\" ac:schema-version=\"1\" ac:macro-id=\"1c4708d7-7443-42fb-8216-64ef6f94e225\"\
+      info\" ac:schema-version=\"1\" ac:macro-id=\"a7a2eaa6-16ef-4ce8-8fbc-ca87a927d4a2\"\
       ><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을\
       \ 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro><p /><h3>2. Policy\
       \ 조회하기</h3><p>선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 <code>\U0001F50D</code>\
@@ -268,16 +254,13 @@
       \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"959\" ac:original-width=\"\
       1024\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.11.41.png\"\
       \ ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.11.41.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
-      \ &gt; Policy Information</p></ac:caption><ac:adf-mark key=\"border\" size=\"\
-      1\" color=\"#091e4224\" /></ac:image><h3>3. Kubeconfig 경로 설정하기</h3><p>Agent\
-      \ 설정 메뉴에서 <code>KubeConfig Path</code> 버튼을 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.</p><ac:image\
-      \ ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"520\" ac:original-width=\"\
-      585\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.46.23.png\"\
-      \ ac:width=\"764\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.46.23.png\"\
-      \ ri:version-at-save=\"1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"\
-      User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>Agent\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Policy Information</p></ac:caption><ac:adf-mark\
+      \ key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><h3>3. Kubeconfig\
+      \ 경로 설정하기</h3><p>Agent 설정 메뉴에서 <code>KubeConfig Path</code> 버튼을 클릭하여 Kubeconfig\
+      \ 경로 설정 모달을 엽니다.</p><ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"\
+      520\" ac:original-width=\"585\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
+      \ 2024-07-30 오후 3.46.23.png\" ac:width=\"764\"><ri:attachment ri:filename=\"\
+      스크린샷 2024-07-30 오후 3.46.23.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent\
       \ &gt; Settings &gt; Configure Kubeconfig Path</p></ac:caption><ac:adf-mark\
       \ key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image><ul><li><p><strong>Path\
       \ Configuration</strong> : Kubeconfig 파일 저장 경로를 사용자가 지정할 수 있습니다.</p><ul><li><p>기본값은\
@@ -286,8 +269,7 @@
       \ /><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
       244\" ac:original-width=\"475\" ac:custom-width=\"true\" ac:alt=\"스크린샷\
       \ 2024-07-30 오후 4.35.30.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
-      스크린샷 2024-07-30 오후 4.35.30.png\" ri:version-at-save=\"1\"><ri:page ri:space-key=\"\
-      QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"17\" /></ri:attachment><ac:caption><p>경로\
+      스크린샷 2024-07-30 오후 4.35.30.png\" ri:version-at-save=\"1\" /><ac:caption><p>경로\
       \ 지정 팝업</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\"\
       \ /></ac:image><ul><li><p><strong>Where</strong> : 우측의 <code>\U0001F53D</code>\
       \ 버튼을 클릭하여 원하는 폴더를 지정합니다.</p></li><li><p><strong>Save As</strong> : Kubeconfig\
@@ -295,39 +277,42 @@
       \ : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.</p></li></ul><p>1) KUBECONFIG 환경\
       \ 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 &quot;<code>${KUBECONFIG}</code>&quot; 값을 사용 전에\
       \ &quot;<code>${HOME}/.kube/config</code>&quot;로 변경해야 합니다. </p><ac:structured-macro\
-      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"ce6c6f0a-b878-4df3-a478-09981ee99d00\"\
-      ><ac:plain-text-body><![CDATA[export KUBECONFIG=\"${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\"\
-      ]]></ac:plain-text-body></ac:structured-macro><p><ac:inline-comment-marker ac:ref=\"\
-      489e3194-1605-43db-8b78-366b9f36e6ec\">2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를\
-      \ 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.</ac:inline-comment-marker></p><ac:structured-macro\
-      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"72444119-bb0a-42ee-9057-d414de3ca3d2\"\
-      ><ac:plain-text-body><![CDATA[export KUBECONFIG=\"${KUBECONFIG}:<사용자가 지정한 경로>\"\
-      ]]></ac:plain-text-body></ac:structured-macro><p>3) 보다 자세한 kubeconfig에 대한 내용은\
-      \ 다음 링크를 참조해주시기 바랍니다.</p><ul><li><p>참고: <a href=\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"80e6e84a-7525-4179-b33a-07b411e24941\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[export KUBECONFIG=\"\
+      ${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\"]]></ac:plain-text-body></ac:structured-macro><p><ac:inline-comment-marker\
+      \ ac:ref=\"489e3194-1605-43db-8b78-366b9f36e6ec\">2) QueryPie에서 제공된 사용자 지정 kubeconfig\
+      \ 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.</ac:inline-comment-marker></p><ac:structured-macro\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"f4c96fe4-8f50-4714-8e1c-1259b38c84a7\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[export KUBECONFIG=\"\
+      ${KUBECONFIG}:<user-specified-path>\"]]></ac:plain-text-body></ac:structured-macro><p>3)\
+      \ 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.</p><ul><li><p>참고: <a href=\"\
+      https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
       >kubeconfig 파일 병합</a></p></li><li><p>참고: <a href=\"https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95\"\
       >KUBECONFIG 환경 변수 설정</a></p></li></ul><p>4) <code>Copy</code> 로 커맨드라인을 복사하여\
       \ 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 </p><ac:structured-macro ac:name=\"\
-      code\" ac:schema-version=\"1\" ac:macro-id=\"4bffd456-0fbd-4502-8b21-fb56a08f8c2a\"\
-      ><ac:plain-text-body><![CDATA[export KUBECONFIG=\"${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig\"\
-      ]]></ac:plain-text-body></ac:structured-macro><p /><h2>QueryPie Agent 세팅 초기화하기</h2><p>세팅을\
-      \ 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다. </p></ac:layout-cell></ac:layout-section><ac:layout-section\
-      \ ac:type=\"two_equal\" ac:breakout-mode=\"default\"><ac:layout-cell><h3>Agent\
-      \ 내 설정 메뉴에서 초기화</h3><p>프로필 영역 우측  <code>⚙️</code> 버튼을 클릭하여 설정 메뉴를 엽니다. <code>Reset\
-      \ All Settings</code> 버튼을 클릭합니다.</p><ac:image ac:align=\"center\" ac:layout=\"\
-      center\" ac:original-height=\"557\" ac:original-width=\"476\" ac:custom-width=\"\
-      true\" ac:alt=\"스크린샷 2024-07-30 오후 3.35.18.png\" ac:width=\"361\"><ri:attachment\
-      \ ri:filename=\"스크린샷 2024-07-30 오후 3.35.18.png\" ri:version-at-save=\"\
-      1\"><ri:page ri:space-key=\"QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"\
-      17\" /></ri:attachment><ac:caption><p>Agent &gt; Settings</p></ac:caption><ac:adf-mark\
+      code\" ac:schema-version=\"1\" ac:macro-id=\"7cf36161-3eb5-4ac5-bc55-4b047bcac967\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[export KUBECONFIG=\"\
+      ${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig\"]]></ac:plain-text-body></ac:structured-macro><p\
+      \ /><h2>QueryPie Agent 세팅 초기화하기</h2><p>세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어\
+      \ 다시 입력할 수 있게 됩니다. </p></ac:layout-cell></ac:layout-section><ac:layout-section\
+      \ ac:type=\"two_equal\" ac:breakout-mode=\"wide\" ac:breakout-width=\"760\"\
+      ><ac:layout-cell><h3>Agent 내 설정 메뉴에서 초기화</h3><p>프로필 영역 우측  <code>⚙️</code> 버튼을\
+      \ 클릭하여 설정 메뉴를 엽니다. <code>Reset All Settings</code> 버튼을 클릭합니다.</p><ac:image ac:align=\"\
+      center\" ac:layout=\"center\" ac:original-height=\"557\" ac:original-width=\"\
+      476\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.35.18.png\"\
+      \ ac:width=\"361\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.35.18.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Settings</p></ac:caption><ac:adf-mark\
       \ key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image><p /></ac:layout-cell><ac:layout-cell><h3>(Mac)\
       \ 메뉴 막대 내 앱 메뉴에서 초기화</h3><p>메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다. <code>Reset\
       \ All Settings</code> 버튼을 클릭합니다.</p><ac:image ac:align=\"center\" ac:layout=\"\
       center\" ac:original-height=\"285\" ac:original-width=\"247\" ac:custom-width=\"\
       true\" ac:alt=\"스크린샷 2024-07-30 오후 3.35.24.png\" ac:width=\"363\"><ri:attachment\
       \ ri:filename=\"스크린샷 2024-07-30 오후 3.35.24.png\" ri:version-at-save=\"\
-      2\"><ri:page ri:space-key=\"QM\" ri:content-title=\"User Agent\" ri:version-at-save=\"\
-      17\" /></ri:attachment><ac:caption><p>Agent &gt; App menu</p></ac:caption><ac:adf-mark\
-      \ key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image><p /></ac:layout-cell></ac:layout-section></ac:layout>"
+      2\" /><ac:caption><p>Agent &gt; App menu</p></ac:caption><ac:adf-mark key=\"\
+      border\" size=\"2\" color=\"#091e4224\" /></ac:image><p /></ac:layout-cell></ac:layout-section></ac:layout>"
     "representation": "storage"
     "embeddedContent": []
     "_expandable":
@@ -354,7 +339,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-04 오후\
       \ 5.30.02.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"67a6943d-652f-4c68-9c0c-d557835738c7\" data-media-type=\"\
+      19\" data-media-id=\"67a6943d-652f-4c68-9c0c-d557835738c7\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.30.02.png?version=1&amp;modificationDate=1722760209840&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=905\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.30.02.png?version=1&amp;modificationDate=1722760209840&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=537\
       \ 1x\"></span><p>2. QueryPie Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에\
@@ -368,11 +353,11 @@
       attachment\" data-linked-resource-default-alias=\"image-20240723-154847.png\"\
       \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"fbe361aa-3dcc-4621-8880-d003d64b15a0\" data-media-type=\"\
+      19\" data-media-id=\"fbe361aa-3dcc-4621-8880-d003d64b15a0\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/image-20240723-154847.png?version=1&amp;modificationDate=1722238373681&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=712\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/image-20240723-154847.png?version=1&amp;modificationDate=1722238373681&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=422\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"a19b2299-084c-45a1-93d5-b93fb507dfc0\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"f99b0d05-b4a8-4196-bae8-511d886ab316\"\
       \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
       \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
       ><p>QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.</p></div></div><p>3. 다운로드받은\
@@ -386,7 +371,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-04 오후\
       \ 5.40.02.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"fd34ea32-ee7c-4b7b-8549-88ee2dc6613c\" data-media-type=\"\
+      19\" data-media-id=\"fd34ea32-ee7c-4b7b-8549-88ee2dc6613c\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.40.02.png?version=1&amp;modificationDate=1722760811440&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=897\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.40.02.png?version=1&amp;modificationDate=1722760811440&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=532\
       \ 1x\"></span><p>4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던\
@@ -400,7 +385,7 @@
       attachment\" data-linked-resource-default-alias=\"agent-03.png\" data-base-url=\"\
       https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"image/png\"\
       \ data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"f3c05cc9-284e-48b3-85d1-9ab82f31dd90\" data-media-type=\"\
+      19\" data-media-id=\"f3c05cc9-284e-48b3-85d1-9ab82f31dd90\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/agent-03.png?version=2&amp;modificationDate=1722238509011&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=714\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/agent-03.png?version=2&amp;modificationDate=1722238509011&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=423\
       \ 1x\"></span><p /><h2 id=\"UserAgent-QueryPieAgent에로그인하기\">QueryPie Agent에\
@@ -415,7 +400,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-04 오후\
       \ 5.37.13.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"52eedd00-2468-4701-929a-e8b6a51d520f\" data-media-type=\"\
+      19\" data-media-id=\"52eedd00-2468-4701-929a-e8b6a51d520f\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.37.13.png?version=1&amp;modificationDate=1722760643582&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=823\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.37.13.png?version=1&amp;modificationDate=1722760643582&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=488\
       \ 1x\"></span><p>2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, <code>Continue</code>\
@@ -429,7 +414,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-29 오후\
       \ 5.12.36.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"74a61ed8-668e-4606-a432-2e126be9a0b8\" data-media-type=\"\
+      19\" data-media-id=\"74a61ed8-668e-4606-a432-2e126be9a0b8\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-29%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.12.36.png?version=1&amp;modificationDate=1722319474888&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=758\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-29%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.12.36.png?version=1&amp;modificationDate=1722319474888&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=450\
       \ 1x\"></span><p>3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.</p><span\
@@ -443,7 +428,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-29 오후\
       \ 5.13.14.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"0276642c-4bc2-422a-a7ef-c5d929d87f55\" data-media-type=\"\
+      19\" data-media-id=\"0276642c-4bc2-422a-a7ef-c5d929d87f55\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-29%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.13.14.png?version=1&amp;modificationDate=1722319518428&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=758\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-29%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.13.14.png?version=1&amp;modificationDate=1722319518428&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=452\
       \ 1x\"></span><p>4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.</p><span class=\"\
@@ -457,7 +442,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-08-04 오후\
       \ 5.42.09.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"6e07127a-484e-48b9-a419-1ee859f89c48\" data-media-type=\"\
+      19\" data-media-id=\"6e07127a-484e-48b9-a419-1ee859f89c48\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.42.09.png?version=1&amp;modificationDate=1722760938320&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=461\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-08-04%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.42.09.png?version=1&amp;modificationDate=1722760938320&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=273\
       \ 1x\"></span><h2 id=\"UserAgent-에이전트로데이터베이스접속하기\">에이전트로 데이터베이스 접속하기</h2><p>1.\
@@ -473,7 +458,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 3.10.01.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"f81ad467-6420-4d51-9ec2-00975dc27a62\" data-media-type=\"\
+      19\" data-media-id=\"f81ad467-6420-4d51-9ec2-00975dc27a62\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.10.01.png?version=1&amp;modificationDate=1722319872213&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=1060\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.10.01.png?version=1&amp;modificationDate=1722319872213&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=632\
       \ 1x\"></span><p>2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.</p><span\
@@ -486,7 +471,7 @@
       attachment\" data-linked-resource-default-alias=\"agent-07.png\" data-base-url=\"\
       https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"image/png\"\
       \ data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"45d35639-b90e-44ba-a829-4a70dd0f3cbe\" data-media-type=\"\
+      19\" data-media-id=\"45d35639-b90e-44ba-a829-4a70dd0f3cbe\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/agent-07.png?version=2&amp;modificationDate=1722319926542&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=714\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/agent-07.png?version=2&amp;modificationDate=1722319926542&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=426\
       \ 1x\"></span><p /><h2 id=\"UserAgent-에이전트를통한서버접속\">에이전트를 통한 서버 접속</h2><p>로그인이\
@@ -504,11 +489,11 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 4.26.53.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"8dc43414-44b2-49cc-b06f-408d6065dbb0\" data-media-type=\"\
+      19\" data-media-id=\"8dc43414-44b2-49cc-b06f-408d6065dbb0\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.26.53.png?version=1&amp;modificationDate=1722324458897&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=739\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.26.53.png?version=1&amp;modificationDate=1722324458897&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=441\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"bd9c2ba9-1db8-4edd-aecb-874773173e41\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"d1ce310c-4526-4911-b6fd-15e1c369a767\"\
       \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
       \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
       ><p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><h3\
@@ -525,35 +510,34 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 4.17.29.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"cc8c961b-b1a6-41fd-9fb8-9a627c856f46\" data-media-type=\"\
+      19\" data-media-id=\"cc8c961b-b1a6-41fd-9fb8-9a627c856f46\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.17.29.png?version=1&amp;modificationDate=1722324286400&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=915\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.17.29.png?version=1&amp;modificationDate=1722324286400&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=543\
       \ 1x\"></span><ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는\
       \ 계정을 선택하고 필요시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul><span\
       \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
-      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
-      \ alt=\"스크린샷 2024-07-30 오후 4.25.32.png\" width=\"746\" loading=\"lazy\"\
-      \ src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.25.32.png?version=1&amp;modificationDate=1722324342397&amp;cacheVersion=1&amp;api=v2&amp;width=746&amp;height=498\"\
+      ><img class=\"confluence-embedded-image image-center\" alt=\"스크린샷 2024-07-30\
+      \ 오후 4.25.32.png\" width=\"746\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.25.32.png?version=1&amp;modificationDate=1722324342397&amp;cacheVersion=1&amp;api=v2&amp;width=746&amp;height=498\"\
       \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.25.32.png?version=1&amp;modificationDate=1722324342397&amp;cacheVersion=1&amp;api=v2\"\
       \ data-height=\"567\" data-width=\"848\" data-unresolved-comment-count=\"0\"\
       \ data-linked-resource-id=\"568885326\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 4.25.32.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"a9d3fd3c-c6f1-4b5d-b1f5-1a64e2071060\" data-media-type=\"\
+      19\" data-media-id=\"a9d3fd3c-c6f1-4b5d-b1f5-1a64e2071060\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.25.32.png?version=1&amp;modificationDate=1722324342397&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=856\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.25.32.png?version=1&amp;modificationDate=1722324342397&amp;cacheVersion=1&amp;api=v2&amp;width=746&amp;height=498\
       \ 1x\"></span><h3 id=\"UserAgent-3.SeamlessSSH설정하기\">3. Seamless SSH 설정하기</h3><p>Seamless\
       \ SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh\
       \ 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.</p><p>1) 터미널을 열고, .ssh 폴더로\
       \ 이동합니다.</p><div class=\"code panel pdl conf-macro output-block\" data-hasbody=\"\
-      true\" data-macro-id=\"1de98306-db73-4eac-b791-0b547d3df79d\" data-macro-name=\"\
+      true\" data-macro-id=\"ae17bd7b-36ca-4bac-9f76-a2a80df69ed8\" data-macro-name=\"\
       code\" style=\"border-width: 1px;\"><div class=\"codeContent panelContent pdl\"\
       >\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"brush:\
       \ java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">$ cd .ssh</pre>\n\
       </div></div><p>2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.</p><div class=\"\
       code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      e97ed0fa-ef78-4d6e-b9bc-1cc0e9841fe0\" data-macro-name=\"code\" style=\"border-width:\
+      4ac2ea9a-8d66-4197-bc03-8304a9a0b2a7\" data-macro-name=\"code\" style=\"border-width:\
       \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">$ vi config</pre>\n</div></div><p><span class=\"\
@@ -562,25 +546,25 @@
       9346ce2e-a893-4aa6-8a8e-808d683cd275\">wq</span></code><span class=\"inline-comment-marker\"\
       \ data-ref=\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"> 키를 입력하여 vi 에디터를 나옵니다.</span></p><div\
       \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      ea969a7b-3265-4ec9-ae6b-bc72a5d8e759\" data-macro-name=\"code\" style=\"border-width:\
+      23e5d969-15b1-4d4b-a7f2-0c2c38a4dee1\" data-macro-name=\"code\" style=\"border-width:\
       \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">Host {{Server Name}}\n  Hostname {{Server URL}}\n\
       \  Port {{Server SSH Port}}\n  ProxyCommand qpa ssh %r %h %p</pre>\n</div></div><div\
       \ class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"a602951d-1254-4c43-b9f3-c9ee269dd369\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"56253dda-2fdc-40de-ba7d-2165a1c14c7e\"\
       \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
       \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
       ><p>config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.\
       \ 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p><div class=\"code panel\
-      \ pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"b6f6c7b9-b15c-41a8-8dd7-6957810e92b0\"\
+      \ pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"f8478be5-90b8-4d3c-9c06-7b8dba0b96ad\"\
       \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
       \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
       brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">Host\
       \ *\n  ProxyCommand qpa ssh %r %h %p</pre>\n</div></div></div></div><p>4) 이상으로\
       \ 설정이 완료됩니다. Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.</p><div\
       \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      252afd2c-956a-4915-bb49-8794cbb5afc1\" data-macro-name=\"code\" style=\"border-width:\
+      1c851681-79bb-4775-b25d-ff504b3b7e81\" data-macro-name=\"code\" style=\"border-width:\
       \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">$ ssh deploy@{{Server Name}}</pre>\n</div></div><p\
@@ -594,7 +578,7 @@
       attachment\" data-linked-resource-default-alias=\"kubernetes-agent-access-flow.png\"\
       \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"913df4f1-45fb-4d52-b2b0-ad195539a5bd\" data-media-type=\"\
+      19\" data-media-id=\"913df4f1-45fb-4d52-b2b0-ad195539a5bd\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/kubernetes-agent-access-flow.png?version=1&amp;modificationDate=1754154817736&amp;cacheVersion=1&amp;api=v2&amp;width=1528&amp;height=764\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/kubernetes-agent-access-flow.png?version=1&amp;modificationDate=1754154817736&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=382\
       \ 1x\"></span><ul><li><p>권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 <code>kubeconfig</code>\
@@ -613,11 +597,11 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 3.27.05.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"6c1725ee-a1a8-497d-b2b0-c67d17f2a217\" data-media-type=\"\
+      19\" data-media-id=\"6c1725ee-a1a8-497d-b2b0-c67d17f2a217\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.27.05.png?version=1&amp;modificationDate=1722320830831&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=764\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.27.05.png?version=1&amp;modificationDate=1722320830831&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=453\
       \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-information\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"1c4708d7-7443-42fb-8216-64ef6f94e225\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"a7a2eaa6-16ef-4ce8-8fbc-ca87a927d4a2\"\
       \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
       \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
       ><p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></div></div><p\
@@ -633,7 +617,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 4.11.41.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"cb86e836-4484-4cd5-90ae-e0f6c4d9d548\" data-media-type=\"\
+      19\" data-media-id=\"cb86e836-4484-4cd5-90ae-e0f6c4d9d548\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.11.41.png?version=1&amp;modificationDate=1722323566875&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=1199\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.11.41.png?version=1&amp;modificationDate=1722323566875&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=711\
       \ 1x\"></span><h3 id=\"UserAgent-3.Kubeconfig경로설정하기\">3. Kubeconfig 경로 설정하기</h3><p>Agent\
@@ -648,7 +632,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 3.46.23.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"26e1ada0-ba93-49ba-a1cd-67cc0598c05c\" data-media-type=\"\
+      19\" data-media-id=\"26e1ada0-ba93-49ba-a1cd-67cc0598c05c\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.46.23.png?version=1&amp;modificationDate=1722323312410&amp;cacheVersion=1&amp;api=v2&amp;width=1170&amp;height=1040\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.46.23.png?version=1&amp;modificationDate=1722323312410&amp;cacheVersion=1&amp;api=v2&amp;width=764&amp;height=679\
       \ 1x\"></span><ul><li><p><strong>Path Configuration</strong> : Kubeconfig 파일\
@@ -664,7 +648,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 4.35.30.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"12e069ee-6586-4353-8ca5-52f557bd8e1f\" data-media-type=\"\
+      19\" data-media-id=\"12e069ee-6586-4353-8ca5-52f557bd8e1f\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.35.30.png?version=1&amp;modificationDate=1722324938555&amp;cacheVersion=1&amp;api=v2&amp;width=950&amp;height=488\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%204.35.30.png?version=1&amp;modificationDate=1722324938555&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=390\
       \ 1x\"></span><ul><li><p><strong>Where</strong> : 우측의 <code>\U0001F53D</code>\
@@ -674,24 +658,24 @@
       \ 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 &quot;<code>${KUBECONFIG}</code>&quot; 값을 사용 전에\
       \ &quot;<code>${HOME}/.kube/config</code>&quot;로 변경해야 합니다. </p><div class=\"\
       code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      ce6c6f0a-b878-4df3-a478-09981ee99d00\" data-macro-name=\"code\" style=\"border-width:\
+      80e6e84a-7525-4179-b33a-07b411e24941\" data-macro-name=\"code\" style=\"border-width:\
       \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
       \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig&quot;</pre>\n\
       </div></div><p><span class=\"inline-comment-marker\" data-ref=\"489e3194-1605-43db-8b78-366b9f36e6ec\"\
       >2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.</span></p><div\
       \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
-      72444119-bb0a-42ee-9057-d414de3ca3d2\" data-macro-name=\"code\" style=\"border-width:\
+      f4c96fe4-8f50-4714-8e1c-1259b38c84a7\" data-macro-name=\"code\" style=\"border-width:\
       \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
       \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
-      \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${KUBECONFIG}:&lt;사용자가 지정한\
-      \ 경로&gt;&quot;</pre>\n</div></div><p>3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기\
-      \ 바랍니다.</p><ul><li><p>참고: <a class=\"external-link\" href=\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
+      \ data-theme=\"Confluence\">export KUBECONFIG=&quot;${KUBECONFIG}:&lt;user-specified-path&gt;&quot;</pre>\n\
+      </div></div><p>3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.</p><ul><li><p>참고:\
+      \ <a class=\"external-link\" href=\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
       >kubeconfig 파일 병합</a></p></li><li><p>참고: <a class=\"external-link\" href=\"\
       https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95\"\
       >KUBECONFIG 환경 변수 설정</a></p></li></ul><p>4) <code>Copy</code> 로 커맨드라인을 복사하여\
       \ 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 </p><div class=\"code panel pdl\
-      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"4bffd456-0fbd-4502-8b21-fb56a08f8c2a\"\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"7cf36161-3eb5-4ac5-bc55-4b047bcac967\"\
       \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
       \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
       brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">export\
@@ -712,7 +696,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 3.35.18.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"63f5e347-f342-42a6-8fc1-25a2f2483ccd\" data-media-type=\"\
+      19\" data-media-id=\"63f5e347-f342-42a6-8fc1-25a2f2483ccd\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.18.png?version=1&amp;modificationDate=1722321634634&amp;cacheVersion=1&amp;api=v2&amp;width=722&amp;height=844\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.18.png?version=1&amp;modificationDate=1722321634634&amp;cacheVersion=1&amp;api=v2&amp;width=361&amp;height=422\
       \ 1x\"></span><p /></div>\n</div>\n<div class=\"cell normal\" data-type=\"normal\"\
@@ -728,7 +712,7 @@
       attachment\" data-linked-resource-default-alias=\"스크린샷 2024-07-30 오후\
       \ 3.35.24.png\" data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
       image/png\" data-linked-resource-container-id=\"544112828\" data-linked-resource-container-version=\"\
-      17\" data-media-id=\"69abf319-7b7c-454a-83a8-d6515180916d\" data-media-type=\"\
+      19\" data-media-id=\"69abf319-7b7c-454a-83a8-d6515180916d\" data-media-type=\"\
       file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.24.png?version=2&amp;modificationDate=1722321750957&amp;cacheVersion=1&amp;api=v2&amp;width=494&amp;height=570\
       \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544112828/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-07-30%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.35.24.png?version=2&amp;modificationDate=1722321750957&amp;cacheVersion=1&amp;api=v2&amp;width=363&amp;height=418\
       \ 1x\"></span><p /></div>\n</div>\n</div>\n</div>"

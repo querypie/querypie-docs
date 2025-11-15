@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -327,11 +327,11 @@
       \ Credential</strong> : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상\
       \ 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다.</p><ul><li><p><img class=\"\
       emoticon emoticon-tick\" data-emoji-id=\"atlassian-check_mark\" data-emoji-shortname=\"\
-      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/check.png\"\
+      :check_mark:\" data-emoji-fallback=\":check_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/check.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"tick\" alt=\"(tick)\" /> <strong>Verified</strong>\
       \ : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다. </p></li><li><p><img class=\"\
       emoticon emoticon-cross\" data-emoji-id=\"atlassian-cross_mark\" data-emoji-shortname=\"\
-      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/2061154395/6452/f5d8de32942bd08b575211389a422f3bd6bca10b/_/images/icons/emoticons/error.png\"\
+      :cross_mark:\" data-emoji-fallback=\":cross_mark:\" src=\"/wiki/s/-586104720/6452/2dc40f90579691982a563ac05a5603c35a1ad4c1/_/images/icons/emoticons/error.png\"\
       \ width=\"16\" height=\"16\" data-emoticon-name=\"cross\" alt=\"(오류)\" /> <strong>Verification\
       \ Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을\
       \ 가능성이 있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging Options</strong>\
@@ -377,10 +377,10 @@
       \ Create Cluster &gt; Credential 안내 박스 내 “download and run this script”의 링크를\
       \ 클릭하여 스크립트를 다운로드할 수 있습니다. </p></li></ul><div class=\"expand-container conf-macro\
       \ output-block\" data-hasbody=\"true\" data-macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"\
-      \ data-macro-name=\"expand\" id=\"expander-1388545300\"><div id=\"expander-control-1388545300\"\
+      \ data-macro-name=\"expand\" id=\"expander-1155548207\"><div id=\"expander-control-1155548207\"\
       \ class=\"expand-control\"><span class=\"expand-control-icon icon\"> </span><span\
       \ class=\"expand-control-text\">generate_kubepie_sa.sh 스크립트 컨텐츠 </span></div><div\
-      \ id=\"expander-content-1388545300\" class=\"expand-content expand-hidden\"\
+      \ id=\"expander-content-1155548207\" class=\"expand-content expand-hidden\"\
       ><div class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\"\
       \ data-macro-id=\"af7dde18-30fb-46b2-9cab-d4ff1b0e1607\" data-macro-name=\"\
       code\" style=\"border-width: 1px;\"><div class=\"codeContent panelContent pdl\"\

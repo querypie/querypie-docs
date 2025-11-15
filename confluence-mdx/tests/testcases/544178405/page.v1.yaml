@@ -10,10 +10,10 @@
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
   "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
   "status": "current"
-  "title": "QueryPie Manual"
+  "title": "QueryPie v10 Manual"
   "macroRenderedOutput": {}
   "extensions":
-    "position": !!int "921"
+    "position": !!int "14426974"
   "_expandable":
     "container": "/rest/api/space/QM"
     "metadata": ""
@@ -189,15 +189,15 @@
       \ class=\"numberingColumn confluenceTd\">1</td><th class=\"confluenceTh\"><p><strong>기본\
       \ 정보 설정하기</strong></p></th><td class=\"confluenceTd\"><ul><li><p><a href=\"\
       /wiki/spaces/QM/pages/544145591/General\" data-linked-resource-id=\"544145591\"\
-      \ data-linked-resource-version=\"35\" data-linked-resource-type=\"page\">General</a>\
+      \ data-linked-resource-version=\"40\" data-linked-resource-type=\"page\">General</a>\
       \ </p><ul><li><p>회사 이름, 타임존, 날짜 표기 방식 등</p></li></ul></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">2</td><th class=\"confluenceTh\"><p><strong>보안\
       \ 정보 설정하기 </strong></p></th><td class=\"confluenceTd\"><ul><li><p><a href=\"\
       /wiki/spaces/QM/pages/544178422/Security\" data-linked-resource-id=\"544178422\"\
-      \ data-linked-resource-version=\"39\" data-linked-resource-type=\"page\">Security</a>\
+      \ data-linked-resource-version=\"41\" data-linked-resource-type=\"page\">Security</a>\
       \ </p><ul><li><p>잠금 정책, 비밀번호 변경 주기, 타임아웃 등</p></li></ul></li><li><p><a href=\"\
       /wiki/spaces/QM/pages/544112846/Allowed+Zones\" data-linked-resource-id=\"544112846\"\
-      \ data-linked-resource-version=\"9\" data-linked-resource-type=\"page\">Allowed\
+      \ data-linked-resource-version=\"10\" data-linked-resource-type=\"page\">Allowed\
       \ Zones</a> </p><ul><li><p>허용할 IP 대역 생성 및 관리</p></li></ul></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">3</td><th class=\"confluenceTh\"><p><strong>사용자\
       \ 및 사용자 그룹 생성하기</strong></p></th><td class=\"confluenceTd\"><ul><li><p>Authentication\
@@ -207,12 +207,12 @@
       \ data-linked-resource-id=\"544376100\" data-linked-resource-version=\"12\"\
       \ data-linked-resource-type=\"page\">Okta 연동하기 </a></p></li><li><p><a href=\"\
       /wiki/spaces/QM/pages/544376183/AWS+SSO\" data-linked-resource-id=\"544376183\"\
-      \ data-linked-resource-version=\"9\" data-linked-resource-type=\"page\">AWS\
+      \ data-linked-resource-version=\"10\" data-linked-resource-type=\"page\">AWS\
       \ SSO 연동하기 </a></p></li></ul></li><li><p>Users </p><ul><li><p><a href=\"/wiki/spaces/QM/pages/544376787\"\
       \ data-linked-resource-id=\"544376787\" data-linked-resource-version=\"13\"\
       \ data-linked-resource-type=\"page\">사용자 프로필 </a></p></li></ul></li><li><p><a\
       \ href=\"/wiki/spaces/QM/pages/544047341/Groups\" data-linked-resource-id=\"\
-      544047341\" data-linked-resource-version=\"10\" data-linked-resource-type=\"\
+      544047341\" data-linked-resource-version=\"12\" data-linked-resource-type=\"\
       page\">Groups</a> </p></li></ul></td></tr><tr><td class=\"numberingColumn confluenceTd\"\
       >4</td><th class=\"confluenceTh\"><p><strong>관리자 역할 할당하기 </strong></p></th><td\
       \ class=\"confluenceTd\"><ul><li><p><a href=\"/wiki/spaces/QM/pages/543948996/Roles\"\
@@ -220,14 +220,14 @@
       page\">Roles</a></p></li></ul></td></tr><tr><td class=\"numberingColumn confluenceTd\"\
       >5</td><th class=\"confluenceTh\"><p><strong>결재 규칙 설정하기</strong></p></th><td\
       \ class=\"confluenceTd\"><ul><li><p><a href=\"/wiki/spaces/QM/pages/544378513/Approval+Rules\"\
-      \ data-linked-resource-id=\"544378513\" data-linked-resource-version=\"22\"\
+      \ data-linked-resource-id=\"544378513\" data-linked-resource-version=\"23\"\
       \ data-linked-resource-type=\"page\">Approval Rules</a></p></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">6</td><th class=\"confluenceTh\"><p><strong>알림\
       \ 설정하기</strong></p></th><td class=\"confluenceTd\"><ul><li><p><a href=\"/wiki/spaces/QM/pages/544243925/Channels\"\
       \ data-linked-resource-id=\"544243925\" data-linked-resource-version=\"17\"\
       \ data-linked-resource-type=\"page\">Channels</a></p></li><li><p><a href=\"\
       /wiki/spaces/QM/pages/543981760/Alerts\" data-linked-resource-id=\"543981760\"\
-      \ data-linked-resource-version=\"22\" data-linked-resource-type=\"page\">Alerts</a></p></li></ul></td></tr><tr><td\
+      \ data-linked-resource-version=\"25\" data-linked-resource-type=\"page\">Alerts</a></p></li></ul></td></tr><tr><td\
       \ class=\"numberingColumn confluenceTd\">7</td><th class=\"confluenceTh\"><p><strong>외부\
       \ 보안 솔루션 연동하기 </strong></p></th><td class=\"confluenceTd\"><ul><li><p><a href=\"\
       /wiki/spaces/QM/pages/544080097/Integrations\" data-linked-resource-id=\"544080097\"\

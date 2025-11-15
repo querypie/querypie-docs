@@ -1,3 +1,19 @@
+"parentId": "544211126"
+"ownerId": "630c844a9796033b256b98a5"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"parentType": "page"
+"version":
+  "number": !!int "19"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2025-11-15T03:45:52.751Z"
+  "ncsStepVersion": "62"
+"id": "544112828"
+"createdAt": "2024-07-14T05:25:02.926Z"
+"spaceId": "539099246"
+"position": !!int "901463041"
 "body":
   "atlas_doc_format":
     "representation": "atlas_doc_format"
@@ -161,10 +177,12 @@
       \ SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다. 다음음의 방법으로 .ssh\
       \ 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.\",\"type\":\"text\"}]},{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"1) 터미널을 열고, .ssh 폴더로 이동합니다.\"\
-      ,\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"content\":[{\"text\":\"$ cd\
+      ,\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"marks\":[{\"type\":\"breakout\"\
+      ,\"attrs\":{\"mode\":\"wide\",\"width\":760}}],\"content\":[{\"text\":\"$ cd\
       \ .ssh\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\"\
       :\"2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.\",\"type\":\"text\"}]},{\"type\"\
-      :\"codeBlock\",\"content\":[{\"text\":\"$ vi config\",\"type\":\"text\"}]},{\"\
+      :\"codeBlock\",\"marks\":[{\"type\":\"breakout\",\"attrs\":{\"mode\":\"wide\"\
+      ,\"width\":760}}],\"content\":[{\"text\":\"$ vi config\",\"type\":\"text\"}]},{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"3) 아래의 내용을 입력 후, \",\"type\":\"\
       text\",\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\":\"\
       inlineComment\",\"id\":\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"}}]},{\"text\"\
@@ -173,21 +191,23 @@
       }},{\"type\":\"code\"}]},{\"text\":\" 키를 입력하여 vi 에디터를 나옵니다.\",\"type\":\"text\"\
       ,\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\":\"inlineComment\"\
       ,\"id\":\"9346ce2e-a893-4aa6-8a8e-808d683cd275\"}}]}]},{\"type\":\"codeBlock\"\
-      ,\"content\":[{\"text\":\"Host {{Server Name}}\\n  Hostname {{Server URL}}\\\
-      n  Port {{Server SSH Port}}\\n  ProxyCommand qpa ssh %r %h %p\",\"type\":\"\
-      text\"}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"config 파일 작성 시 Seamless SSH\
-      \ 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와\
-      \ 같이 입력하여도 접속이 가능합니다.\",\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"content\"\
+      ,\"marks\":[{\"type\":\"breakout\",\"attrs\":{\"mode\":\"wide\",\"width\":760}}],\"\
+      content\":[{\"text\":\"Host {{Server Name}}\\n  Hostname {{Server URL}}\\n \
+      \ Port {{Server SSH Port}}\\n  ProxyCommand qpa ssh %r %h %p\",\"type\":\"text\"\
+      }]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\"},\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"config 파일 작성 시 Seamless SSH 설정하고자\
+      \ 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이\
+      \ 입력하여도 접속이 가능합니다.\",\"type\":\"text\"}]},{\"type\":\"codeBlock\",\"content\"\
       :[{\"text\":\"Host *\\n  ProxyCommand qpa ssh %r %h %p\",\"type\":\"text\"}]}]},{\"\
       type\":\"paragraph\",\"content\":[{\"text\":\"4) 이상으로 설정이 완료됩니다. Agent > Server\
       \ 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
-      :\"codeBlock\",\"content\":[{\"text\":\"$ ssh deploy@{{Server Name}}\",\"type\"\
-      :\"text\"}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\"\
-      :2},\"content\":[{\"text\":\"에이전트를 통한 쿠버네티스 접속 \",\"type\":\"text\"}]},{\"type\"\
-      :\"mediaSingle\",\"attrs\":{\"layout\":\"wide\",\"width\":764,\"widthType\"\
-      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1800,\"id\"\
-      :\"913df4f1-45fb-4d52-b2b0-ad195539a5bd\",\"collection\":\"contentId-544112828\"\
+      :\"codeBlock\",\"marks\":[{\"type\":\"breakout\",\"attrs\":{\"mode\":\"wide\"\
+      ,\"width\":760}}],\"content\":[{\"text\":\"$ ssh deploy@{{Server Name}}\",\"\
+      type\":\"text\"}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\"\
+      :{\"level\":2},\"content\":[{\"text\":\"에이전트를 통한 쿠버네티스 접속 \",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"wide\",\"width\":764,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :1800,\"id\":\"913df4f1-45fb-4d52-b2b0-ad195539a5bd\",\"collection\":\"contentId-544112828\"\
       ,\"type\":\"file\",\"height\":900},\"marks\":[{\"type\":\"border\",\"attrs\"\
       :{\"size\":1,\"color\":\"#091e4224\"}}]}]},{\"type\":\"bulletList\",\"content\"\
       :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
@@ -271,30 +291,34 @@
       text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"\\\" 값을 사용 전에 \\\"\",\"\
       type\":\"text\"},{\"text\":\"${HOME}/.kube/config\",\"type\":\"text\",\"marks\"\
       :[{\"type\":\"code\"}]},{\"text\":\"\\\"로 변경해야 합니다. \",\"type\":\"text\"}]},{\"\
-      type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\"${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\\\
+      type\":\"codeBlock\",\"marks\":[{\"type\":\"breakout\",\"attrs\":{\"mode\":\"\
+      wide\",\"width\":760}}],\"content\":[{\"text\":\"export KUBECONFIG=\\\"${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\\\
       \"\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
       2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.\",\"\
       type\":\"text\",\"marks\":[{\"type\":\"annotation\",\"attrs\":{\"annotationType\"\
       :\"inlineComment\",\"id\":\"489e3194-1605-43db-8b78-366b9f36e6ec\"}}]}]},{\"\
-      type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\"${KUBECONFIG}:<사용자가\
-      \ 지정한 경로>\\\"\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"\
-      text\":\"3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.\",\"type\":\"text\"\
-      }]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\"\
-      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"참고: \",\"type\":\"text\"\
-      },{\"text\":\"kubeconfig 파일 병합\",\"type\":\"text\",\"marks\":[{\"type\":\"link\"\
-      ,\"attrs\":{\"href\":\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
+      type\":\"codeBlock\",\"marks\":[{\"type\":\"breakout\",\"attrs\":{\"mode\":\"\
+      wide\",\"width\":760}}],\"content\":[{\"text\":\"export KUBECONFIG=\\\"${KUBECONFIG}:<user-specified-path>\\\
+      \"\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"참고: \",\"type\":\"text\"},{\"text\"\
+      :\"kubeconfig 파일 병합\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\"\
+      :{\"href\":\"https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9\"\
       }}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
       :[{\"text\":\"참고: \",\"type\":\"text\"},{\"text\":\"KUBECONFIG 환경 변수 설정\",\"\
       type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95\"\
       }}]}]}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"4) \",\"type\":\"\
       text\"},{\"text\":\"Copy\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
       text\":\" 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다 \",\"type\"\
-      :\"text\"}]},{\"type\":\"codeBlock\",\"content\":[{\"text\":\"export KUBECONFIG=\\\
+      :\"text\"}]},{\"type\":\"codeBlock\",\"marks\":[{\"type\":\"breakout\",\"attrs\"\
+      :{\"mode\":\"wide\",\"width\":760}}],\"content\":[{\"text\":\"export KUBECONFIG=\\\
       \"${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig\\\"\",\"type\":\"text\"}]},{\"\
       type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\"\
       :[{\"text\":\"QueryPie Agent 세팅 초기화하기\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
       ,\"content\":[{\"text\":\"세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게\
-      \ 됩니다. \",\"type\":\"text\"}]},{\"type\":\"layoutSection\",\"content\":[{\"\
+      \ 됩니다. \",\"type\":\"text\"}]},{\"type\":\"layoutSection\",\"marks\":[{\"type\"\
+      :\"breakout\",\"attrs\":{\"mode\":\"wide\",\"width\":760}}],\"content\":[{\"\
       type\":\"layoutColumn\",\"attrs\":{\"width\":50.0},\"content\":[{\"type\":\"\
       heading\",\"attrs\":{\"level\":3},\"content\":[{\"text\":\"Agent 내 설정 메뉴에서 초기화\"\
       ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\"프로필 영역\
@@ -321,24 +345,8 @@
       marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
       }}]},{\"type\":\"caption\",\"content\":[{\"text\":\"Agent > App menu\",\"type\"\
       :\"text\"}]}]},{\"type\":\"paragraph\"}]}]}],\"version\":1}"
-"parentId": "544211126"
-"ownerId": "630c844a9796033b256b98a5"
-"lastOwnerId": !!null "null"
-"createdAt": "2024-07-14T05:25:02.926Z"
-"authorId": "630c844a9796033b256b98a5"
-"parentType": "page"
-"position": !!int "901463041"
-"version":
-  "number": !!int "17"
-  "message": ""
-  "minorEdit": !!bool "false"
-  "authorId": "712020:135aab25-6da3-422c-8277-0ed0e5bec77e"
-  "createdAt": "2024-11-21T04:35:26.957Z"
-  "ncsStepVersion": "3"
-"spaceId": "539099246"
-"title": "User Agent"
 "status": "current"
-"id": "544112828"
+"title": "User Agent"
 "_links":
   "editui": "/pages/resumedraft.action?draftId=544112828"
   "webui": "/spaces/QM/pages/544112828/User+Agent"
