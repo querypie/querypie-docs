@@ -122,7 +122,7 @@ spec:
 </tr>
 <tr>
 <td data-highlight-colour="#ffffff">
-`spec:`<br/> `&lt;effect&gt;`
+`spec:`<br/>  `&lt;effect&gt;`
 </td>
 <td data-highlight-colour="#ffffff">
 -
@@ -186,7 +186,8 @@ spec:
 
 ### Resources**[required]**
 
-許可またはブロックポリシーを設定したいWebアプリケーションリソースを指定します。配下に `webApp` を必須で持ち、`urlPaths` または `urlPathTags` を持ちます。
+許可またはブロックポリシーを設定したいWebアプリケーションリソースを指定します。
+配下に `webApp` を必須で持ち、`urlPaths` または `urlPathTags` を持ちます。
 
 <Callout type="info">
 `resources` は `spec: allow`、`spec: deny` で両方とも許可されます。
@@ -221,7 +222,8 @@ spec:
     * 開始と終了はアルファベット大文字小文字または数字に制限
     * 重複不可
 
-Webアプリケーションのサブパスレベルでアクセス制御ポリシーを運用するためには、`webApp` 配下に `urlPaths` または `urlPathTags` を入力できます。1つのポリシー内で、1つのWebアプリケーションに対して `urlPaths` と `urlPathTags` を同時に指定することは **不可能** です。
+Webアプリケーションのサブパスレベルでアクセス制御ポリシーを運用するためには、`webApp` 配下に `urlPaths` または `urlPathTags` を入力できます。
+1つのポリシー内で、1つのWebアプリケーションに対して `urlPaths` と `urlPathTags` を同時に指定することは  **不可能** です。
 
 #### urlPaths**[OPTIONAL]**
 
@@ -259,7 +261,7 @@ spec:
         urlPaths: 
           - "/general-settings/*"
           - "/general-settings/user-management"
-          ``` 
+          ```
 4. パスの中間またはパス名の一部にワイルドカードを入力したり、正規表現を入力することは **できません** 。
     * `"/*-settings"` (X)
     * `"/*/edit"` (X)
@@ -299,7 +301,8 @@ urlPathTags:
 QueryPieユーザーの属性（attribute）を基準にルールによってリソースアクセスが許可されるユーザーの範囲を限定します。
 
 <Callout type="info">
-ユーザー属性はAdministrator > General > Usersメニューのユーザー別詳細ページで照会できます。QueryPieで追加されたユーザーの属性は詳細ページで追加/変更/削除などが可能で、IdP同期によって追加されたユーザーの属性はユーザー元帳（Okta、LDAPなど）で変更できます。
+ユーザー属性はAdministrator > General > Usersメニューのユーザー別詳細ページで照会できます。
+QueryPieで追加されたユーザーの属性は詳細ページで追加/変更/削除などが可能で、IdP同期によって追加されたユーザーの属性はユーザー元帳（Okta、LDAPなど）で変更できます。
 </Callout>
 
 属性情報は大文字小文字を区別し、複数入力できます。
@@ -355,7 +358,8 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 #### タグベースアクセス制御
 
-WebアプリケーションにPathを登録し、各Pathに適切なタグを付与した後、ポリシーでタグベースにアクセスを制御することを推奨します。この方式を使用すると以下のような利点があります。
+WebアプリケーションにPathを登録し、各Pathに適切なタグを付与した後、ポリシーでタグベースにアクセスを制御することを推奨します。
+この方式を使用すると以下のような利点があります。
 
 *  **ロールベースポリシー管理の容易性** : 特定ロールに必要なパスに同一のタグを付与して管理可能
 *  **ポリシー保守の簡素化** : Webアプリケーションに新しいパスが追加されても適切なタグのみ付与すれば既存ポリシー修正なしでアクセス制御可能

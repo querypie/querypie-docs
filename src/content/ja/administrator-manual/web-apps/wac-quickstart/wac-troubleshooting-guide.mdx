@@ -80,7 +80,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 
 **実行方法**
 
-* Chromeブラウザで `chrome://net-export/` を開き、Start Overをクリックします。（Optionsはデフォルト値の `Strip private information` を選択します。）
+* Chromeブラウザで `chrome://net-export/` を開き、Start Overをクリックします。 (Optionsはデフォルト値の `Strip private information` を選択します。)
 
 <figure data-layout="center" data-align="center">
 ![image-20250401-012452.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012452.png)
@@ -129,7 +129,8 @@ QueryPie APIサーバーの障害が発生する場合、Webブラウザ内で�
 
 これによりQueryPie WACを通じてのみアクセスするように  **指定されていない**  Webアプリは正常にブラウジング可能です。
 
-QueryPie APIサーバーの正常化後には再びエクステンションを使用できます。エクステンションを有効化した後、再設定を実行することをお勧めします。
+QueryPie APIサーバーの正常化後には再びエクステンションを使用できます。
+エクステンションを有効化した後、再設定を実行することをお勧めします。
 
 
 #### QueryPie Web Secureログ抽出方法
@@ -142,5 +143,11 @@ QueryPie Web Secure（Extension）に問題が発生した場合、関連ログ�
     3. または、問題が発生したウィンドウでマウス右クリック後コンテキストメニューで `検査` ボタンクリック
 
 1. パネルリストで、 `QueryPie Web Secure` をクリックします。
+  <figure data-layout="center" data-align="center">
+  ![screenshot-20250116-134315.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134315.png)
+  </figure>
 2. 開発者ツールでログ抽出機能が実行されます。 `Export Log` ボタンをクリックするとquerypie-web-secure-logs.jsonファイルの別途保存が実行されます。 `保存` ボタンを押します。
+  <figure data-layout="center" data-align="center">
+  ![screenshot-20250116-134632.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134632.png)
+  </figure>
 3. 保存完了されたログをCSリクエスト時に一緒に添付します。

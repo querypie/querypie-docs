@@ -167,8 +167,20 @@ Admin > Web Apps > Web App Access Control > Access Control > List Details
 
 ### 1. Root CA証明書のインストール
 
-1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。<br/>
-2. QueryPie Web Secure Downloadモーダルが開きます。**A. Install Root CA Certificate** で、Step 1. のDownload Linkをクリックすると証明書ファイルのダウンロードが実行されます。<br/>
+1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。<br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![QueryPie &gt; Profile Menu](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-120321.png)
+  <figcaption>
+  QueryPie &gt; Profile Menu
+  </figcaption>
+  </figure>
+2. QueryPie Web Secure Downloadモーダルが開きます。  **A. Install Root CA Certificate** で、Step 1. のDownload Linkをクリックすると証明書ファイルのダウンロードが実行されます。 <br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![QueryPie Web Secure Download](/administrator-manual/web-apps/wac-quickstart/screenshot-20250116-155957.png)
+  <figcaption>
+  QueryPie Web Secure Download
+  </figcaption>
+  </figure>
 3. [Root CA証明書インストールガイド](wac-quickstart/root-ca-certificate-installation-guide)に従って証明書のインストールと信頼設定を進めます。
 
 ### 2. Extensionのダウンロード
@@ -180,14 +192,27 @@ Admin > Web Apps > Web App Access Control > Access Control > List Details
 
 1. Chromeアドレスバーに `chrome://extensions/` を入力します。
 2. ページ右上の開発者モードトグルを有効にします。
-3. 受け取ったExtensionファイルを **圧縮を解かない** 状態で、拡張機能エリアにドラッグします。<br/>
+3. 受け取ったExtensionファイルを **圧縮を解かない** 状態で、拡張機能エリアにドラッグします。<br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![Chrome &gt; 拡張機能管理](/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192626.png)
+  <figcaption>
+  Chrome &gt; 拡張機能管理
+  </figcaption>
+  </figure>
 4. 新しいタブでHost Configurationページが開きます。QueryPie Hostに現在使用中のQueryPieアドレスを貼り付けて、`Continue` ボタンをクリックします。 
     1. Host情報が有効であれば `Go to Dashboard` ボタンが表示されます。クリックすると新しいタブでQueryPieにアクセスします。<br/>
+      <figure data-layout="center" data-align="center">
+      ![Host Configurationページ](/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192931.png)
+      <figcaption>
+      Host Configurationページ
+      </figcaption>
+      </figure>
 
 <Callout type="important">
 **注意**
 
-WAC拡張機能インストール前に開いていたタブについては管理が保証されません。アクセスポリシーの適用と監査ログに問題が生じる可能性があります。
+WAC拡張機能インストール前に開いていたタブについては管理が保証されません。
+アクセスポリシーの適用と監査ログに問題が生じる可能性があります。
 
 既に開いていたすべてのブラウザタブとウィンドウを閉じてから拡張機能をインストールしてください。
 </Callout>
@@ -198,10 +223,28 @@ WAC拡張機能インストール前に開いていたタブについては管�
     1. 現在QueryPieにログインされている状態であれば、Web App Dashboardが開きます。
     2. ログインされていない状態であればログインページに移動します。ログインを完了し、上部メニューでWeb Appsをクリックしてダッシュボードにアクセスしてください。
     3. ロール選択モーダルが表示されたら、QP Web Testを選択します。
-2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリケーションアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/>
-3. 初回アクセス時、現在のWebセッションが記録されていることを知らせる画面が表示されます。`Continue` ボタンをクリックしてウェブサイトにアクセスします。<br/>
-4. QueryPieホームページにウォーターマークが適用されていることを確認できます。
-5. 許可されていないページ（例：Productsメニュー）にアクセスを試みると、ブロック案内画面にリダイレクトされます。
+2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリケーションアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![QueryPie &gt; Web Apps &gt; Web App Dashboard](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-224323.png)
+  <figcaption>
+  QueryPie &gt; Web Apps &gt; Web App Dashboard
+  </figcaption>
+  </figure>
+3. 初回アクセス時、現在のWebセッションが記録されていることを知らせる画面が表示されます。`Continue` ボタンをクリックしてウェブサイトにアクセスします。<br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![Web Session Monitoring Notification](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113541.png)
+  <figcaption>
+  Web Session Monitoring Notification
+  </figcaption>
+  </figure>
+4. QueryPieホームページにウォーターマークが適用されていることを確認できます。 <br/> 
+5. 許可されていないページ（例：Productsメニュー）にアクセスを試みると、ブロック案内画面にリダイレクトされます。 <br/> 
+  <figure data-layout="center" data-align="center">
+  ![ QueryPie Access Denied](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113037.png)
+  <figcaption>
+   QueryPie Access Denied
+  </figcaption>
+  </figure>
 
 ## Admin-side (again)
 
