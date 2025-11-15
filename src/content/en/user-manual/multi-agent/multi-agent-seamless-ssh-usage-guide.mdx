@@ -60,7 +60,7 @@ For Zsh:
 vi ~/.zshrc
 ```
 
-1. Add the following line to the shell configuration file, then save and exit (press `:wq` to save)
+1. Add the following line to the shell configuration file, then save and exit. (Press `:wq` to save)
 ```
 alias qshdev='ssh -o ProxyCommand="qpctl ssh-proxy %r %h %p"'
 ```
@@ -180,20 +180,20 @@ $ qpctl host use nightly.dev.querypie.io
 
 To use Seamless SSH, either
 
-* configure ~/.ssh/config, or
-* add -o ProxyCommand=qpctl ssh-proxy … to the ssh command
+* configure `~/.ssh/config`, or
+* add `-o ProxyCommand=qpctl ssh-proxy …` to the ssh command
 
 These are not the most natural experiences.
 If you have QueryPie Multi Agent installed, you can use the qpctl command directly for ssh connections.
 
 
-1. Prefix your ssh command with qpctl
+1. Prefix your ssh command with qpctl.
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
 ```
 
 
-1. If you have settings in ~/.ssh/config, just prefix with qpctl as well.
+1. If you have settings in `~/.ssh/config`, just prefix with qpctl as well.
 ```
 $ cat ~/.ssh/config
 

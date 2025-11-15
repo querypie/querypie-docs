@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-You can request Direct Permission for servers that need access by following the steps below. Server Access Request grants permissions immediately upon approval, and you can access the server through web terminal or Proxy.
+You can request Direct Permission for servers that need access by following the steps below.
+Server Access Request grants permissions immediately upon approval, and you can access the server through web terminal or Proxy.
+
 
 ### Requesting Server Access Request
 
@@ -16,7 +18,7 @@ You can request Direct Permission for servers that need access by following the 
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
 * If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
-* **Approval Expiration Date**: Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Access Expiration Date. If exceeded, the request cannot be submitted. If Maximum Approval Duration &gt; Maximum Access Duration, the value of Maximum Approval Duration is applied the same as the value of Maximum Access Duration. Example) If Maximum Approval Duration is 14 days and Maximum Access Duration is 5 days, the value of Maximum Approval Duration is also applied as 5 days.
+*  **Approval Expiration Date** : Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Access Expiration Date. If exceeded, the request cannot be submitted. If Maximum Approval Duration &gt; Maximum Access Duration, the value of Maximum Approval Duration is applied the same as the value of Maximum Access Duration. Example) If Maximum Approval Duration is 14 days and Maximum Access Duration is 5 days, the value of Maximum Approval Duration is also applied as 5 days.
     * However, when submitting in Urgent Mode, the above condition is ignored.
 
 <figure data-layout="center" data-align="center">
@@ -27,7 +29,7 @@ You can request Direct Permission for servers that need access by following the 
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
-* Available approval conditions are as follows:
+* Available approval conditions are as follows.  
     * A single Assignee can complete the approval request: The approval request is approved with just one approval from multiple people.
     * All Assignees must approve this request: All approvers must approve for the approval request to be approved.
 
@@ -81,10 +83,10 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 ![Screenshot-2025-08-26-at-1.05.08-AM.png](/user-manual/workflow/requesting-server-access/Screenshot-2025-08-26-at-1.05.08-AM.png)
 </figure>
 
-* **Start Trigger**: Select the permission grant start condition.
+*  **Start Trigger**  : Select the permission grant start condition.
     * Access to the Server: Permissions are activated immediately when the user accesses the server. Regardless of server session maintenance, server access is possible for the specified period from the activation time.
     * Grant: The timer starts immediately upon permission grant, and permissions are valid only for the specified period regardless of the user's actual access.
-* **Duration(Minutes)**: Enter the time in minutes for which server access permissions are valid. You can set from 1 minute to the maximum allowed time, and access permissions automatically expire after the specified time.
+*  **Duration(Minutes)** : Enter the time in minutes for which server access permissions are valid. You can set from 1 minute to the maximum allowed time, and access permissions automatically expire after the specified time.
 
 ##### When Require Minute-Based Requests is Off
 
@@ -92,11 +94,12 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 ![Screenshot-2025-08-26-at-1.07.26-AM.png](/user-manual/workflow/requesting-server-access/Screenshot-2025-08-26-at-1.07.26-AM.png)
 </figure>
 
-* **Access Expiration Date**: Enter the expiration date of the requested permission. The default value follows the Maximum Access Duration value in SAC configurations &gt; Server Access Request Default Settings in the administrator page.
+*  **Access Expiration Date**  : Enter the expiration date of the requested permission. The default value follows the Maximum Access Duration value in SAC configurations &gt; Server Access Request Default Settings in the administrator page.
     * It is recommended to request only the period necessary for appropriate connection access permission management.
 
 <Callout type="important">
-In Server Access Request, **Direct Permission requests are only possible for one server group at a time**. If you open the Add Servers modal again while servers are already added to the Server List table, all selected content will be reset.
+In Server Access Request, **Direct Permission requests are only possible for one server group at a time**.
+If you open the Add Servers modal again while servers are already added to the Server List table, all selected content will be reset.
 </Callout>
 
 #### 6. Entering Request Information
@@ -108,12 +111,13 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 3
 </figcaption>
 </figure>
 
-* **Title**: Enter the request title.
-* **Reason for Request**: Enter the reason for requesting connection access permission.
-* **Submit**: If you have completed all the requests, click the `Submit` button to complete the submission.
+*  **Title**  : Enter the request title.
+*  **Reason for Request**  : Enter the reason for requesting connection access permission.
+*  **Submit**  : If you have completed all the requests, click the `Submit` button to complete the submission.
 
 For how to access servers with granted permissions, please refer to the [Connecting to Authorized Servers](../server-access-control/connecting-to-authorized-servers) document.
 
 <Callout type="info">
-Permissions granted through Direct Permission are applied when **Default Role** is selected in the server list. Access permission policies are subject to the default server access policies set at the time of Server Access Request application.
+Permissions granted through Direct Permission are applied when **Default Role** is selected in the server list.
+Access permission policies are subject to the default server access policies set at the time of Server Access Request application.
 </Callout>
