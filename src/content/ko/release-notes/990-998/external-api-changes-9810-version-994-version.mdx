@@ -309,7 +309,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 </tbody>
 </table>
 
-* cursor 는 Response 의  **nextCursor** 를  **그대로**  쓰면 됩니다.. 첫 호출이라면 비워놓습니다.
+* cursor 는 Response 의  **nextCursor** 를  **그대로**  쓰면 됩니다. 첫 호출이라면 비워놓습니다.
     * /api/docs 에 나와있는 내용은  **잘못된 내용** 으로 이후 버전에서 수정 예정입니다.
 *  **count** 는 기존 pageSize 와 동일하며,  **max**  값은  **100** 입니다.
 *  **databaseType**  에 `Redis` 가  **추가** 되었습니다.
@@ -413,7 +413,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "execMillis": 200,
       "execResult": false,
       "executedAt": "2019-08-24T14:15:22Z",
-      …   
+      …
 }
 ```
 
@@ -468,7 +468,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "execMillis": 200,
       "execResult": false,
       "executedAt": "2019-08-24T14:15:22Z",
-      …   
+      …
 }
 ```
 
@@ -608,7 +608,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       …
       "subscriptionId": "string",
       "targetArn": "string",
-       …
+      …
     }
   ],
   "page": {
@@ -626,7 +626,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "subscriptionId": "string",
       "synchronizableDatabaseTypes": [],
       "targetArn": "string",
-       …
+      …
     }
   ],
   "page": {
@@ -671,7 +671,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       …
       "subscriptionId": "string",
       "targetArn": "string",
-       …
+      …
 }
 ```
 
@@ -683,7 +683,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "subscriptionId": "string",
       "synchronizableDatabaseTypes": [],
       "targetArn": "string",
-       …
+      …
 }
 ```
 </td>
@@ -718,7 +718,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       …
       "subscriptionId": "string",
       "targetArn": "string",
-       …
+      …
  }
 ```
 </td>
@@ -729,7 +729,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "subscriptionId": "string",
       "synchronizableDatabaseTypes": [],
       "targetArn": "string",
-       …
+      …
 }
 ```
 
@@ -821,7 +821,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       …
       "subscriptionId": "string",
       "targetArn": "string",
-       …
+      …
 }
 ```
 
@@ -833,7 +833,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
       "subscriptionId": "string",
       "synchronizableDatabaseTypes": [],
       "targetArn": "string",
-       …
+      …
 }
 ```
 </td>
@@ -881,13 +881,13 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 {
   "list": [
     {
-      ...
-      “privilegeTypes”: “SELECT“,
-      ...
+      …
+      "privilegeTypes": "SELECT",
+      …
     },
-    ...
+    …
   ],
-  "page": {...}
+  "page": { … }
 }
 ```
 </td>
@@ -896,14 +896,14 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 {
   "list": [
     {
-      ...
-      “privilegeTypes”: “SELECT“,
-      “privilegeVendor”: “SQL",
-      ...
+      …
+      "privilegeTypes": "SELECT",
+      "privilegeVendor": "SQL",
+      …
     },
-    ...
+    …
   ],
-  "page": {...}
+  "page": { … }
 }
 ```
 </td>
@@ -939,7 +939,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 ```json
 {
   …
-  “privilegeTypes”: “ALL“,
+  "privilegeTypes": "ALL",
   …
 }
 ```
@@ -948,8 +948,8 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 ```json
 {
   …
-  “privilegeTypes”: “ALL“,
-  “privilegeVendor”: “SQL",
+  "privilegeTypes": "ALL",
+  "privilegeVendor": "SQL",
   …
 }
 ```
@@ -986,7 +986,7 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 ```json
 {
   …
-  “privilegeTypes”: “ALL“,
+  "privilegeTypes": "ALL",
   …
 }
 ```
@@ -995,8 +995,8 @@ title: 'External API 변경사항 (9.8.10 버전 > 9.9.4 버전)'
 ```json
 {
   …
-  “privilegeTypes”: “ALL“,
-  “privilegeVendor”: “SQL",
+  "privilegeTypes": "ALL",
+  "privilegeVendor": "SQL",
   …
 }
 ```
