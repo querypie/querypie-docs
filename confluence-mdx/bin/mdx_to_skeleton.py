@@ -515,6 +515,14 @@ def extract_leading_whitespace(text: str) -> str:
     return match.group(1) if match else ''
 
 
+def is_abbreviation_period(text: str, period_pos: int) -> bool:
+    """Check if period is part of common abbreviations: e.g., etc., i.e."""
+    if period_pos < 1:
+        return False
+    before = text[max(0, period_pos - 4):period_pos].lower()
+    return before.endswith(('e.g', 'etc', 'i.e'))
+
+
 def process_punctuation_with_space(
     punctuation_with_space: str,
     is_last_punctuation: bool
@@ -617,33 +625,33 @@ def replace_text_in_content(text: str) -> str:
                 # This is a protected placeholder, keep it as-is
                 sentence_result.append(segment)
             else:
-                # Process this segment for sentences
-                # Split by sentence-ending punctuation, but keep the punctuation
-                # Include full-width Japanese punctuation: 。！？
-                parts = re.split(r'([.!?。！？]\s*)', segment)
-
+                # Protect abbreviation periods (e.g., etc., i.e.) before sentence splitting
+                protected_segment = segment
+                placeholders = []
+                for match in reversed(list(re.finditer(r'\.', segment))):
+                    if is_abbreviation_period(segment, match.start()):
+                        placeholder = f"__ABBR_{len(placeholders)}__"
+                        placeholders.append(placeholder)
+                        protected_segment = protected_segment[:match.start()] + placeholder + protected_segment[match.start() + 1:]
+                
+                parts = re.split(r'([.!?。！？]\s*)', protected_segment)
                 i = 0
                 while i < len(parts):
                     part = parts[i]
-                    # Check if next part is punctuation
-                    # Include full-width Japanese punctuation: 。！？
                     if i + 1 < len(parts) and is_sentence_ending_punctuation(parts[i + 1]):
                         punctuation_with_space = parts[i + 1]
-                        # Check if this is the last punctuation in the segment
-                        # Look ahead to see if there's any actual text content after this punctuation
-                        is_last_punctuation = True
-                        for j in range(i + 2, len(parts)):
-                            if parts[j].strip() and contains_text_characters(parts[j]):
-                                is_last_punctuation = False
-                                break
-                        
-                        punctuation = process_punctuation_with_space(
-                            punctuation_with_space, is_last_punctuation
-                        )
+                        for placeholder in placeholders:
+                            punctuation_with_space = punctuation_with_space.replace(placeholder, '.')
+                        is_last_punctuation = not any(parts[j].strip() and contains_text_characters(parts[j]) for j in range(i + 2, len(parts)))
+                        punctuation = process_punctuation_with_space(punctuation_with_space, is_last_punctuation)
                         i += 2
                     else:
                         punctuation = ''
                         i += 1
+                    
+                    # Restore abbreviation periods
+                    for placeholder in placeholders:
+                        part = part.replace(placeholder, '.')
 
                     if not part.strip():
                         sentence_result.append(part)
