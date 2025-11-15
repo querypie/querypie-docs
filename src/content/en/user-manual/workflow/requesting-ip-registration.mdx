@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-You can request registration of IP addresses necessary for system access by following the steps below. After approval is completed, system access from that IP is immediately allowed.
+You can request registration of IP addresses necessary for system access by following the steps below.
+After approval is completed, system access from that IP is immediately allowed.
+
 
 ### Requesting IP Registration Request
 
@@ -16,7 +18,7 @@ You can request registration of IP addresses necessary for system access by foll
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
 * If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
-* **Approval Expiration Date**: Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration.
+*  **Approval Expiration Date** : Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration.
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-12.54.02-AM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-08-26-at-12.54.02-AM.png)
@@ -26,9 +28,9 @@ You can request registration of IP addresses necessary for system access by foll
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
-* Available approval conditions are as follows:
-    * **A single Assignee can complete the approval request**: The approval request is approved with just one approval from multiple people.
-    * **All Assignees must approve this request**: All approvers must approve for the approval request to be approved.
+* Available approval conditions are as follows.
+    *  **A single Assignee can complete the approval request**  : The approval request is approved with just one approval from multiple people.
+    *  **All Assignees must approve this request**  : All approvers must approve for the approval request to be approved.
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-06-26-at-3.56.29-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-3.56.29-PM.png)
@@ -45,6 +47,7 @@ You can request registration of IP addresses necessary for system access by foll
 ![Screenshot-2025-06-26-at-3.57.36-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-3.57.36-PM.png)
 </figure>
 
+
 #### 4. Sending Request with Post-Approval
 
 * If you select an approval rule that allows post-approval functionality, the Urgent Mode switch will be displayed.
@@ -59,14 +62,15 @@ You can request registration of IP addresses necessary for system access by foll
 A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed.
 </Callout>
 
+
 #### 5. Entering Request Information
 
-* **IP Addresses (Required)**:
+*  **IP Addresses (Required)**  :
     * Enter one IP address per line that you want to allow access. (Maximum 20)
     * Press Enter to add a new IP address.
     * Previously registered IP addresses are displayed, but for security reasons, they cannot be modified and can only be deleted.
-* **Title (Required)**: Enter the request title.
-* **Reason for Request (Required)**: Enter the reason for requesting IP address registration.
+*  **Title (Required)**  : Enter the request title.
+*  **Reason for Request (Required)**  : Enter the reason for requesting IP address registration.
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-08-26-at-1.22.57-AM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-08-26-at-1.22.57-AM.png)
@@ -84,21 +88,24 @@ When the IP access control policy (`Require Allowed Zones for User Access`) is a
 
 On this page, you can request IP registration by following the procedures below.
 
-1. **Select Approval Rule**: Select the approval rule to use from the dropdown list.
-2. **Enter IP Addresses**: Enter the IP addresses for which you want to allow access, separated by commas (`,`). (Maximum 20)
-3. **Submit Request**: Click the `Submit` button to submit the request.
+1.  **Select Approval Rule** : Select the approval rule to use from the dropdown list.
+2.  **Enter IP Addresses** : Enter the IP addresses for which you want to allow access, separated by commas (`,`). (Maximum 20)
+3.  **Submit Request** : Click the `Submit` button to submit the request.
+
 
 #### Auto-filled Items
 
 When submitting a request from the login block page, the following items are automatically generated and filled by the system for user convenience.
 
-* **Title**: `IP Registration Request from {User Name} ({Login ID})`
-* **Reason for Request**: `I, {User Name}, am requesting IP registration because I am currently unable to access the system with my existing IP address. Please allow access from the IP address provided.`
-* **Due Date**: Automatically set to one year from the request date.
+*  **Title** : `IP Registration Request from {User Name} ({Login ID})`
+*  **Reason for Request** : `I, {User Name}, am requesting IP registration because I am currently unable to access the system with my existing IP address. Please allow access from the IP address provided.`
+*  **Due Date** : Automatically set to one year from the request date.
+
 
 #### After Request Submission
 
-Once you submit a request, you cannot submit a new IP registration request until that request is processed (approved or rejected). If the request is successfully submitted, a screen indicating that the request has been properly received will be displayed along with the message 'Your IP request has been received.'
+Once you submit a request, you cannot submit a new IP registration request until that request is processed (approved or rejected).
+If the request is successfully submitted, a screen indicating that the request has been properly received will be displayed along with the message 'Your IP request has been received.'
 
 <figure data-layout="center" data-align="center">
 ![Screenshot-2025-06-26-at-4.19.02-PM.png](/user-manual/workflow/requesting-ip-registration/Screenshot-2025-06-26-at-4.19.02-PM.png)
@@ -106,5 +113,6 @@ Once you submit a request, you cannot submit a new IP registration request until
 
 <Callout type="info">
 **Q. Even after receiving IP registration approval, I'm redirected to the IP registration request page instead of the login page. How can I resolve this?**
-A. To resolve this, we have provided a **login page** link on the IP blocking and registration request page. Clicking this link will allow you to access the login page normally.
+A. To resolve this, we have provided a  **login page**  link on the IP blocking and registration request page.
+Clicking this link will allow you to access the login page normally.
 </Callout>

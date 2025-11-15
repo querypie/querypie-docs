@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-When you need access to tables or columns restricted by "Data Access" policies in DAC, you can request temporary access permission from administrators through Workflow. Requests can be made through Workflow, or through the Send Restricted Data Access Request menu that appears when you right-click on the result window in the web SQL editor.
+When you need access to tables or columns restricted by "Data Access" policies in DAC, you can request temporary access permission from administrators through Workflow.
+Requests can be made through Workflow, or through the Send Restricted Data Access Request menu that appears when you right-click on the result window in the web SQL editor.
 
 ### Requesting Restricted Data Access Request
 
@@ -16,7 +17,7 @@ When you need access to tables or columns restricted by "Data Access" policies i
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
 * If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
-* **Approval Expiration Date**: Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Data Access Expiration End Date. If exceeded, the request cannot be submitted.
+*  **Approval Expiration Date** : Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Data Access Expiration End Date. If exceeded, the request cannot be submitted.
     * However, when submitting in Urgent Mode, the above condition is ignored.
 
 <figure data-layout="center" data-align="center">
@@ -27,7 +28,7 @@ When you need access to tables or columns restricted by "Data Access" policies i
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
-* Available approval conditions are as follows:
+* Available approval conditions are as follows.
     * A single Assignee can complete the approval request: The approval request is approved with just one approval from multiple people.
     * All Assignees must approve this request: All approvers must approve for the approval request to be approved.
 
@@ -63,18 +64,18 @@ A. If you select an approval rule where the administrator has not allowed Urgent
 #### 5. Entering Request Details
 
 <Callout type="info">
-From version 11.3.0, the way to specify the expiration has changed.<br/>For policy exception requests, the field name is unified as "<strong>Policy Exception Schedule</strong>", and you can explicitly specify the start and end times of validity.
+From version 11.3.0, the way to specify the expiration has changed.<br/> For policy exception requests, the field name is unified as " **Policy Exception Schedule** ", and you can explicitly specify the start and end times of validity.
 </Callout>
 
-* **Title**: Enter the request title.
-* **Connection**: Select the connection that contains the table or column for which you want to request access permission.
-* **Table**: Select the target table.
-* **Column**: You can select one or more columns, up to a maximum of 30 columns.
-* **Policy Exception Schedule**: You can set the period during which the Data Access policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
-    * Specific Period: Specify the start and end times. You can specify in hours.
-    * Time Duration: Specify so that it is valid for the set time from the start time.
-    * Start On Approval option: For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
-* **Reason for Request**: Enter the reason for requesting access permission.
+*  **Title**  : Enter the request title.
+*  **Connection**  : Select the connection that contains the table or column for which you want to request access permission.
+*  **Table :**  Select the target table.
+*  **Column :** You can select one or more columns, up to a maximum of 30 columns.
+*  **Policy Exception Schedule**  : You can set the period during which the Data Access policy exception will be applied. The maximum validity period of the policy exception cannot exceed the Maximum Policy Exception Period set by the administrator.
+    * Specific Period : Specify the start and end times. You can specify in hours.
+    * Time Duration : Specify so that it is valid for the set time from the start time.
+    * Start On Approval option : For both Specific Period and Time Duration, if you enable (check) Start On Approval, the effect begins at the time of approval. In general, since the requester cannot know the approver's approval time, using this option is not recommended (it may require resubmitting if expiration constraints arise). When using Urgent Mode, approval is post-approval and it's unknown when approval will occur; therefore, except for special situations where it must be used, Start On Approval is not recommended.
+*  **Reason for Request**  : Enter the reason for requesting access permission.
 * Click the `Submit` button at the bottom of the page to submit the request.
 
 <figure data-layout="center" data-align="center">
@@ -83,3 +84,7 @@ From version 11.3.0, the way to specify the expiration has changed.<br/>For poli
 User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary
 </figcaption>
 </figure>
+
+
+
+
