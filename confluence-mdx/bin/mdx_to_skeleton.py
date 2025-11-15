@@ -516,11 +516,44 @@ def extract_leading_whitespace(text: str) -> str:
 
 
 def is_abbreviation_period(text: str, period_pos: int) -> bool:
-    """Check if period is part of common abbreviations: e.g., etc., i.e."""
-    if period_pos < 1:
+    """Check if period is part of common abbreviations: e.g., etc., i.e., 7.0.5, .NET"""
+    if period_pos < 0:
         return False
     before = text[max(0, period_pos - 4):period_pos].lower()
-    return before.endswith(('e.g', 'etc', 'i.e'))
+    # Check common abbreviations
+    if before.endswith(('e.g', 'etc', 'i.e')):
+        return True
+    # Check special cases like ".NET" where period is at start or after space
+    # Pattern: period followed by uppercase letter (e.g., ".NET", ".NET Core")
+    if period_pos + 1 < len(text) and text[period_pos + 1].isupper():
+        # Check if period is at start of text or after space (likely an abbreviation)
+        if period_pos == 0 or (period_pos > 0 and text[period_pos - 1].isspace()):
+            # Check if it's part of ".NET" or similar known abbreviations
+            if period_pos + 3 < len(text):
+                after_period = text[period_pos + 1:period_pos + 4].upper()
+                if after_period == "NET":
+                    return True
+            # More general: if period is followed by uppercase and then another period, space, or lowercase,
+            # it's likely an abbreviation (e.g., ".NET", ".NET Core")
+            if period_pos + 2 < len(text):
+                next_char = text[period_pos + 2]
+                if next_char.isupper() or next_char == '.' or next_char.islower():
+                    return True
+    # Check version numbers (e.g., 7.0.5, 1.2.3, 9.14.0, 10.2.5)
+    # A period is part of a version number if:
+    # - It's between digits (e.g., "9.14" or "10.2")
+    # - It's part of a multi-part version (e.g., "9.14.0" or "10.2.5")
+    if period_pos >= 1 and period_pos < len(text):
+        # Check if before period is a digit
+        if text[period_pos - 1].isdigit():
+            # Check if after period is also a digit (version number pattern)
+            if period_pos + 1 < len(text) and text[period_pos + 1].isdigit():
+                return True
+            # Also check if it's followed by another period and digit (e.g., "9.14.0")
+            if period_pos + 2 < len(text) and text[period_pos + 2] == '.':
+                if period_pos + 3 < len(text) and text[period_pos + 3].isdigit():
+                    return True
+    return False
 
 
 def process_punctuation_with_space(
