@@ -96,4 +96,162 @@ title: '9.12.0 ~ 9.12.14'
 * [User Access History] SAMLログインした場合のログのHostname値が127.0.0.1で残る問題を解決
 ---
 
-（続く文書を次のレスポンスで送信します）
+### QueryPie 9.12.8 Release
+
+2023年07月04日
+
+**Bug Fix & Enhancement**
+
+* [Agent] [Windows10/11] 更新およびインストール後すぐに実行時にログイン失敗する現象を改善
+* MySQLでRoleと一緒にGrantを使用すると発生するエラーを修正
+* [Proxy] 3rd-party toolでmysql作成時、Database Nameを入力しなかった場合、USE文と無関係に必ずスキーマを入力しなければクエリ可能な現象を改善
+---
+
+### QueryPie 9.12.7 Release
+
+2023年06月15日
+
+**Bug Fix & Enhancement**
+
+* [Agent] Agent環境でQuery AuditのIPがcontainer IPで固定されていたものをClient IPが記録されるよう修正
+---
+
+### QueryPie 9.12.6 Release
+
+2023年06月12日
+
+**Bug Fix & Enhancement**
+
+* [MariaDB] SET構文が含まれるとポリシー反映されるよう改善
+* [SQL Server] Proxy未実装タイプを追加実装
+* [SQL Server] Data Access、Data Masking適用時、Proxy環境でエラーを修正
+* [Performance] 同時にDML Snapshotを記録する際、Connection Pool枯渇現象を修正
+* [Performance] API応答が遅延する場合、SQL AuditログがRunning Queryで残る現象を修正
+* [SAML] 初回ログイン時のエラーを修正
+* [MySQL] mysqldumpエラーを修正
+* [Proxy] コネクションを2個以上同時に開こうとする際に発生するエラーを修正
+---
+
+### QueryPie 9.12.5 Release
+
+2023年05月19日
+
+**Bug Fix & Enhancement**
+
+* [Alert] SQL最大長100文字から1000文字に改善
+* [Agent] ログイン時、開くオプションが自動有効化されないよう修正
+* [Agent] エージェントセッションが終了した際、接続が切断されるよう修正
+* [SQL Server] DML Snapshotを有効化するとクエリが実行されないイシューを解決
+* [Agent] MariaDB JDBCドライバー1.x 2.xバージョンを使用してプロキシ接続されるよう改善
+---
+
+### QueryPie 9.12.4 Release
+
+2023年05月17日
+
+**Bug Fix & Enhancement**
+
+* [Agent/Linux] Tray iconが表示されるよう解決
+* [Alert] Executed Result : `{{execResult}}` エラーを解決
+* [Authentication] okta sync中、Cluster Group NotFoundエラー発生を解決
+* [Editor] datetimeカラムの値が正しく表示されるよう解決
+* [MariaDB] Proxyを通じてSet構文実行時、AuditでSQL TypeがSetで残るイシューを解決
+* [MariaDB] SET構文分析に追加対応されるよう改善
+* [Oracle] スクリプト照会クエリを変更
+* [Oracle] スキーマリスト照会クエリを変更
+* [Oracle]SQL Editorで自動補完機能を無効化
+* [Privilege] キャッシュ不一致が発生し、ユーザーの権限チェックエラー発生を解決
+* [Proxy] Datetime形式に無効なデータがある場合、照会クエリ実行時にコネクションが切断される現象を解決
+* [Query Audit] ログ - CSVファイルダウンロード時のDB負荷発生を解決
+* [SQL Job] SQL Jobsタブが有効化可能になるよう修正
+* [Workflow] Canceledされた承認がsent requestのin progressに露出されないよう解決
+---
+
+### QueryPie 9.12.3 Release
+
+2023年05月10日
+
+**Bug Fix**
+
+* [Agent] ユーザーがエージェント接続時、APIがエージェントにノードリストを重複して送信するイシューを解決
+* [Performance] gRPC C Bindingライブラリsigsegv発生およびプロセス終了を解決
+---
+
+### QueryPie 9.12.2 Release
+
+2023年05月02日
+
+**Bug Fix**
+
+* [Proxy] PPv2オプション設定時、Proxyエラー発生を解決
+* [Export] Export時、生成されたtempファイルが削除されずdisk fullになるイシューを解決
+* [License] ライセンス発行基準タイムゾーンをUTC → KSTに変更 
+
+
+---
+
+### QueryPie 9.12.1 Release
+
+2023年04月25日
+
+**Bug Fix**
+
+* [Performance] DMLスナップショットを有効化しなくても、常にスナップショットが発生する欠陥を解決
+* [Performance] 索引処理が漏れ、ロングクエリが発生
+* [PostgreSQL] メモリ使用量に応じてエージェント接続が高頻度でエラー発生
+
+
+---
+
+### QueryPie 9.12.0 Release
+
+2023年04月13日
+
+**New Feature**
+
+* [Menu] クエリパイ全体のメニュー改編およびURL構造を改善
+* [License] ライセンスUIを改善
+* [Application log] メニュー非表示処理
+* [Impala] UIDPWD方式の際、Web Proxyをサポート
+* [Workflow] query audit抽出時、カラムに元帳有無を含める
+* [LDAP] 組織変更に応じたアカウント無効化および無効化時参照フィールドオプションを追加
+
+****
+
+**Bug Fix & Enhancement**
+
+* [Agent] 9.12.0改善
+* [Agent] Linux環境でAgentインストール時の問題を解決 
+* [Alert] Workflow Slack Channel機能エラーを修正 
+* [Authentication] oktaおよびonelogin saml meta dataが正しく表示されないイシューを解決 
+* [Authentication] 同期オプション無効化時、ldapユーザー自動追加機能を復活 
+* [Authentication] SSL Authentication Error発生を解決
+* [AzureSQL] SQL Editor &gt; Object info &gt; Trigger、infoクリック時のエラー発生を解決
+* [Channel] Channel Typeでカカオワークを除外
+* [Cloud Provider] Create Provider &gt; Cloud Providerドロップダウン項目にAWSのみ提供
+* [Connection] Multiple Database Account強制無効化バグを解決
+* [Connection] Multiple Database Accountのツールチップボックスメッセージを変更 
+* [Connection] rpc GrpcGitService.SaveFile呼び出し時、エンジンが死ぬ問題を解決 
+* [DML Snapshot] 11個ベンダーはDML Snapshotオプション横にベータタグを付与
+* [DynamoDB] リターン値指数を元の値で表示されるよう改善 
+* [Export] export時のエラーを解決 
+* [External API] Update Cluster Group (PATCH) External APIエラーを解決 
+* [Impala] Sensitive Dataにカラムを登録後、テーブル照会時に発生するエラーを修正 
+* [LDAP] グループ同期時、グループに含まれていないユーザーがいる場合、エラー発生を修正
+* [Oracle] ORA-00900: invalid SQL statementエラーを修正
+* [Oracle] ウェブSQLでfunction &gt; script照会時に発生するエラーを修正 'ORA-19011 Character string buffer too small' 
+* [Performance] Agentを通じた接続が非常に遅い現象を改善
+* [Performance] クエリ実行前full scan有無をチェックし、警告アラートを追加
+* [Privilege] Copy Clipboard権限がなくてもJson Dataコピー時、最初の権限が遮られない現象を改善
+* [Privilege Type] Tagのフォントがユーザーごとに異なって表示される現象を改善
+* [Proxy/MariaDB] libmariadbドライバー使用時のエラー発生を改善 
+* [Query Audit] SQL Execution Purposeオプション有効化後実行時、Execution Reasonが残らないイシューを解決 
+* [Query Audit] パスワード設定ログにマスキングパターンを適用 (only MySQL)
+* [Redis] Wrongtype DBエラーがEngineエラーで表記されるイシューを解決
+* [Redis] Redis driverでErrorをExceptionで処理する 
+* [Setting] Account Expiration PeriodオプションがLast Loginのみチェックし、Proxyのみ使用時、アカウントがロックされるイシューを解決
+* [SQLServer] 接続時、[ENGINE] Internal connection fatal error.発生を解決
+* [Syslog] IP記録エラーを修正 
+* [Workflow] Access Request時に有効期限指定エラーを修正 
+* [Workflow] キャンセルされた要求件がReviewsでStatusがNoneで表示されるイシューを解決 
+* [Workflow] マルチアカウントのfor user情報でコネクション情報照会不可を解決

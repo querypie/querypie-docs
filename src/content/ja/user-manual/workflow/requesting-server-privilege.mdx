@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Server Privilege Requestを使用すると、サーバーに対する一時的なコマンド使用権限を簡単に要求できます。一時的なコマンド使用時間と権限開始時点（承認即時またはサーバー接続時点から）を選択申請できます。この機能はSSHプロトコル通信のみサポートします。
+Server Privilege Requestを使用すると、サーバーに対する一時的なコマンド使用権限を簡単に要求できます。
+一時的なコマンド使用時間と権限開始時点（承認即時またはサーバー接続時点から）を選択申請できます。
+この機能はSSHプロトコル通信のみサポートします。
 
 ### Server Privilege Request
 
@@ -88,20 +90,28 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
     *  **Commands** に一時使用を申請するコマンドを入力します。
         *  **Keyword**  : コマンドをキーワードで入力できます。
         *  **RegEx**  : コマンドを正規表現形式で入力できます。<br/>
+          <figure data-layout="center" data-align="center">
+          ![image-20250307-124234.png](/user-manual/workflow/requesting-server-privilege/image-20250307-124234.png)
+          </figure>
 
 * Command Template選択時
     * 管理者がAllow Pre-defined Command Templates Onlyオプションを有効にした場合、Commandsを直接入力する代わりにCommand Template選択ボックスが表示されます。
         1. ドロップダウンリストから使用する権限が含まれたテンプレートを選択します。
         2. テンプレートを選択すると、含まれるコマンド（Keyword、RegEx）が画面に表示されますが、直接修正はできません。<br/>
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-07-22-at-3.43.34-PM.png](/user-manual/workflow/requesting-server-privilege/Screenshot-2025-07-22-at-3.43.34-PM.png)
+          </figure>
 
 <Callout type="info">
 **Q. 選択できるテンプレートがないと表示されます。**
-A. 管理者がワークフローで使用するよう許可したテンプレートがない場合です。管理者に設定確認要求をする必要があります。
+A. 管理者がワークフローで使用するよう許可したテンプレートがない場合です。
+管理者に設定確認要求をする必要があります。
 </Callout>
 
 <Callout type="info">
 **要求にLinux以外のサーバーのみが含まれる場合**
-要求対象がWindowsサーバーのようにLinux以外のサーバーで만 구성된場合、この要求は特定のコマンド使用ではなく、サーバーに対する一時的な接続権限を得ることを目的とします。したがって、Commandsを入力または選択するフィールドは画面に表示されません。
+要求対象がWindowsサーバーのようにLinux以外のサーバーで만 구성된場合、この要求は特定のコマンド使用ではなく、サーバーに対する一時的な接続権限を得ることを目的とします。
+したがって、Commandsを入力または選択するフィールドは画面に表示されません。
 </Callout>
 
 #### 8. Server Privilege使用時間の入力

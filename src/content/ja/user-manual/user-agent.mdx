@@ -44,7 +44,8 @@ Mac OSインストールプログラム
 </figcaption>
 </figure>
 
-4. インストール完了されたQueryPie Agentを実行します。QueryPie Host入力欄に事前にコピーしておいたQueryPie URLを入力して`Next`ボタンをクリックするとログイン画面にアクセスします。
+4. インストール完了されたQueryPie Agentを実行します。
+QueryPie Host入力欄に事前にコピーしておいたQueryPie URLを入力して`Next`ボタンをクリックするとログイン画面にアクセスします。
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; QueryPie Host入力](/user-manual/user-agent/agent-03.png)
@@ -153,7 +154,8 @@ Agent &gt; Server &gt; Open New Session
 
 #### 3. Seamless SSH設定
 
-Seamless SSHとは既存ターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。次の方法で.sshフォルダにconfigファイルを作成して簡単にseamless SSH設定が可能です。
+Seamless SSHとは既存ターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。
+次の方法で.sshフォルダにconfigファイルを作成して簡単にseamless SSH設定が可能です。
 
 1) ターミナルを開き、.sshフォルダに移動します。
 ```
@@ -174,14 +176,16 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-configファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続が可能です。
+configファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。
+サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続が可能です。
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
 ```
 </Callout>
 
-4) 以上で設定が完了します。Agent &gt; Serverタブで役割を選択すると既存sshコマンドでサーバーに接続できます。
+4) 以上で設定が完了します。
+Agent &gt; Serverタブで役割を選択すると既存sshコマンドでサーバーに接続できます。
 ```
 $ ssh deploy@{{Server Name}}
 ```
@@ -200,7 +204,8 @@ $ ssh deploy@{{Server Name}}
 
 #### 1. Kubernetes役割選択
 
-ユーザープロフィール領域下部の`Role`ボタンをクリックすると役割選択モーダルが開きます。希望する役割を選び`OK`ボタンをクリックしてください。
+ユーザープロフィール領域下部の`Role`ボタンをクリックすると役割選択モーダルが開きます。
+希望する役割を選び`OK`ボタンをクリックしてください。
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Kubernetes &gt; Select a Role](/user-manual/user-agent/screenshot-20240730-152705.png)
@@ -216,7 +221,8 @@ Agent &gt; Kubernetes &gt; Select a Role
 
 #### 2. Policy照会
 
-選択された役割に応じてアクセス可能なリソースが表示されます。各クラスター右側の`🔍`ボタンを押すとPolicy Informationポップアップウィンドウが現れ、ここで該当クラスターに適用されたポリシー目録を詳しく確認できます。
+選択された役割に応じてアクセス可能なリソースが表示されます。
+各クラスター右側の`🔍`ボタンを押すとPolicy Informationポップアップウィンドウが現れ、ここで該当クラスターに適用されたポリシー目録を詳しく確認できます。
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Policy Information](/user-manual/user-agent/screenshot-20240730-161141.png)

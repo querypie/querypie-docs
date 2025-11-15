@@ -9,7 +9,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-ユーザーは権限のあるサーバーのリストをサーバー、サーバーグループ別またはCloud Provider別にソートして一目で確認できます。接続するサーバーを選択後、ユーザーはオペレーティングシステムに関係なくウェブブラウザを通じて提供されるウェブターミナルとウェブSFTPを通じてコマンドを実行し、作業を実行できます。
+ユーザーは権限のあるサーバーのリストをサーバー、サーバーグループ別またはCloud Provider別にソートして一目で確認できます。
+接続するサーバーを選択後、ユーザーはオペレーティングシステムに関係なくウェブブラウザを通じて提供されるウェブターミナルとウェブSFTPを通じてコマンドを実行し、作業を実行できます。
 
 ### Role選択
 
@@ -54,13 +55,15 @@ QueryPie Web &gt; System Access Control &gt; Servers
 
 <Callout type="info">
 **Q. 接続に失敗したというエラーが表示されます。なぜそうなるのですか？**
-A. 権限の状態が変更されたり接続が許可されていない時間帯、曜日に接続を試行した場合失敗する可能性があります。また、管理者のサーバー情報設定によって接続が不可能な場合があるため、詳細内容は管理者にお問い合わせください。
+A. 権限の状態が変更されたり接続が許可されていない時間帯、曜日に接続を試行した場合失敗する可能性があります。
+また、管理者のサーバー情報設定によって接続が不可能な場合があるため、詳細内容は管理者にお問い合わせください。
 </Callout>
 
 <Callout type="info">
 **Q. RDPを通じたWindows Server接続はどのようにしますか？**
 
-A. QueryPieではQueryPie Agent (User Agent / Multi-Agent)を通じてのみWindows Serverに接続が可能です。接続方法は以下の通りです。
+A. QueryPieではQueryPie Agent (User Agent / Multi-Agent)を通じてのみWindows Serverに接続が可能です。
+接続方法は以下の通りです。
 
 QueryPie Agent (User Agent / Multi-Agent)インストール後、権限を付与されたWindows Serverを右クリック、`Open Connection with`メニューをクリック後、PCにインストールされたRDP Clientをクリックして接続します。
 
@@ -77,9 +80,11 @@ QueryPie Agent (User Agent / Multi-Agent)インストール後、権限を付与
 <Callout type="info">
 **Q. VNCを通じたmacOS接続はどのようにしますか？**
 
-A. ユーザーのPCがmacOSの時、QueryPie User Agentを通じてmacOSに接続が可能です。接続方法は以下の通りです。
+A. ユーザーのPCがmacOSの時、QueryPie User Agentを通じてmacOSに接続が可能です。
+接続方法は以下の通りです。
 
-QueryPie User Agentインストール後、権限を付与されたmacOSを右クリック、`Open Connection with`メニューをクリック後、macOSにインストールされた画面共有.appをクリックして接続します。接続時、macOSのアカウント情報を直接入力する必要があります。
+QueryPie User Agentインストール後、権限を付与されたmacOSを右クリック、`Open Connection with`メニューをクリック後、macOSにインストールされた画面共有.appをクリックして接続します。
+接続時、macOSのアカウント情報を直接入力する必要があります。
 
 * Windows PCではmacOS接続をサポートしません。
 * VNCはmacOSサーバー対象でのみ接続が可能です。

@@ -48,12 +48,30 @@ QueryPieログイン画面
 管理者がMulti-Factor Authentication設定をした場合、ユーザーはログイン時パスワードを入力した後管理者が指定した手段を使用して2次認証を進行しなければなりません。QueryPie 10.2.2基準提供される2次認証手段はGoogle OTP、Email二つです。
 * 管理者がGoogle OTPを2次認証手段として指定した場合
     * ログインページでログインパスワードを入力します。
-    * 初回ログイン時ポップアップウィンドウに出力されるQR Codeを使用してAuthenticatorアプリに登録します。画面に'Google Authenticator、Microsoft Authenticator、Okta Verifyなどのような認証アプリをダウンロードしてください'という案内文句が表示され、App StoreまたはGoogle Play Storeで互換性のある認証アプリを簡単に選択してインストールできます。
+    * 初回ログイン時ポップアップウィンドウに出力されるQR Codeを使用してAuthenticatorアプリに登録します。画面に'Google Authenticator、Microsoft Authenticator、Okta Verifyなどのような認証アプリをダウンロードしてください'という案内文句が表示され、App StoreまたはGoogle Play Storeで互換性のある認証アプリを簡単に選択してインストールできます。 <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Authenticatorアプリ登録用QR code](/user-manual/my-dashboard/image-20250808-063052-(2).png)
+      <figcaption>
+      Authenticatorアプリ登録用QR code
+      </figcaption>
+      </figure>
     * Authenticatorアプリで出力する1回用認証コードを入力します。
+      <figure data-layout="center" data-align="center">
+      ![1回用認証コード入力](/user-manual/my-dashboard/image-20241220-021546.png)
+      <figcaption>
+      1回用認証コード入力
+      </figcaption>
+      </figure>
 * Emailを2次認証手段として指定した場合
     * ログインページでログインパスワードを入力します。
     * 本人メールの受信トレイで受信した認証メールの認証コードを確認します。<br/>認証コードは30分間有効です。 
     * "Resend authentication code"を通じて認証メールの再送信を要求できます。2回目の再送信要求は5分後に可能です。 
+      <figure data-layout="center" data-align="center">
+      ![1回用認証コード入力 (Email)](/user-manual/my-dashboard/image-20241220-021636.png)
+      <figcaption>
+      1回用認証コード入力 (Email)
+      </figcaption>
+      </figure>
 </Callout>
 
 ### ユーザーダッシュボード
