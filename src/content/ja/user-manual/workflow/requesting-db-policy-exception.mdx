@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-10.2.6からサポートするDAC新政策を使用する場合、既存のUnmasking RequestまたはRestricted Data Access Requestを通じてWorkflowで要求できません。つまり、新政策機能を有効化した場合、Requestメニューに表示されるDB Policy Exception Requestを使用します。<br/>DB Policy Exception Requestは既存政策と異なり、UnmaskingとRestricted Data Accessが別々のフォームで分離されていない一つのフォームでException TypeをUnmasking、Restricted Data Accessのいずれかを選択する方式です。
+10.2.6からサポートするDAC新政策を使用する場合、既存のUnmasking RequestまたはRestricted Data Access Requestを通じてWorkflowで要求できません。
+つまり、新政策機能を有効化した場合、Requestメニューに表示されるDB Policy Exception Requestを使用します。 <br/>DB Policy Exception Requestは既存政策と異なり、UnmaskingとRestricted Data Accessが別々のフォームで分離されていない一つのフォームでException TypeをUnmasking、Restricted Data Accessのいずれかを選択する方式です。
 
 ### 政策例外要求
 
@@ -48,10 +49,6 @@ import { Callout } from 'nextra/components'
 
 #### 4. 事後承認で要求を送信
 
-<Callout type="info">
-11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
-</Callout>
-
 * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
 
@@ -88,6 +85,7 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
 User &gt; Workflow &gt; Submit Request &gt; DB Policy Exception Request
 </figcaption>
 </figure>
+
 
 
 

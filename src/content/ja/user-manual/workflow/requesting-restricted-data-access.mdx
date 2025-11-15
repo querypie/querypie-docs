@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-DACで「Data Access」政策によってアクセスが制限されたテーブルまたはカラムに対してアクセスが必要な場合、Workflowを通じて管理者に一時的なアクセス許可を要求できます。要求はWorkflowを通じて行うこともでき、ウェブSQLエディターで結果ウィンドウを右クリックして表示されるSend Restricted Data Access Requestメニューを通じても可能です。
+DACで「Data Access」政策によってアクセスが制限されたテーブルまたはカラムに対してアクセスが必要な場合、Workflowを通じて管理者に一時的なアクセス許可を要求できます。
+要求はWorkflowを通じて行うこともでき、ウェブSQLエディターで結果ウィンドウを右クリックして表示されるSend Restricted Data Access Requestメニューを通じても可能です。
 
 ### Restricted Data Access Request の申請
 
@@ -48,10 +49,6 @@ DACで「Data Access」政策によってアクセスが制限されたテーブ
 
 #### 4. 事後承認で要求を送信
 
-<Callout type="info">
-11.3.0から事後承認で要求する場合決裁期限切れ日を指定できないように変更されました。
-</Callout>
-
 * 事後承認機能が許可された承認ルールを選択した場合、Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後、承認要求を登録すると即座に権限を付与されたり作業を実行できます。
 
@@ -87,6 +84,8 @@ A. 管理者がUrgent Modeを許可していない承認ルールを選択した
 User &gt; Workflow &gt; Submit Request &gt; Restricted Data Access Request &gt; Request Summary
 </figcaption>
 </figure>
+
+
 
 
 
