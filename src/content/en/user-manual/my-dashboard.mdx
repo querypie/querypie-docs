@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-When you successfully log into QueryPie Web, you are redirected to the user dashboard screen. The dashboard allows you to view at a glance basic information such as role permissions granted to the currently logged-in user, groups you belong to, approval status, and recently accessed connection lists.
+When you successfully log into QueryPie Web, you are redirected to the user dashboard screen.
+The dashboard allows you to view at a glance basic information such as role permissions granted to the currently logged-in user, groups you belong to, approval status, and recently accessed connection lists.
 
 ### Logging into QueryPie Web
 
@@ -25,9 +26,16 @@ QueryPie Login Screen
 </figcaption>
 </figure>
 
+
 #### Google Analytics Cookie Usage Notice and Cookie Settings
 
-QueryPie uses cookies to collect information to improve user experience. When you first access the login page, you can agree to or refuse the use of optional analytical cookies, and you can modify your consent or refusal at any time. Individual consent or refusal for optional analytical cookies is possible on the Cookie Settings (Cookie Preferences) screen. Essential cookies cannot be refused as basic functionality may not work if not used. You can also set this on the Cookie & Privacy screen in the user environment settings screen of preferences after logging in. In closed networks where internet communication is not possible, information is not transmitted externally even if you agree. You can check QueryPie's user privacy handling policy through the Privacy Policy link.<br/>
+QueryPie uses cookies to collect information to improve user experience.
+When you first access the login page, you can agree to or refuse the use of optional analytical cookies, and you can modify your consent or refusal at any time.
+Individual consent or refusal for optional analytical cookies is possible on the Cookie Settings (Cookie Preferences) screen.
+Essential cookies cannot be refused as basic functionality may not work if not used.
+You can also set this on the Cookie & Privacy screen in the user environment settings screen of preferences after logging in.
+In closed networks where internet communication is not possible, information is not transmitted externally even if you agree.
+You can check QueryPie's user privacy handling policy through the Privacy Policy link.<br/>
 
 <figure data-layout="center" data-align="center">
 ![Cookie Settings Screen](/user-manual/my-dashboard/image-20250724-094214.png)
@@ -40,24 +48,44 @@ Cookie Settings Screen
 
 #### Entering Account Information
 
-* **SSO Login Button**: Appears when administrators have configured SSO (Single Sign-On), and clicking it connects to the IdP authentication page.
-* **ID/PW Input Fields**: Enter the ID and password registered in QueryPie, then click the `Continue` button to proceed with login.
+*  **SSO Login Button**  : Appears when administrators have configured SSO (Single Sign-On), and clicking it connects to the IdP authentication page.
+*  **ID/PW Input Fields**  : Enter the ID and password registered in QueryPie, then click the `Continue` button to proceed with login.
 
 <Callout type="info">
-When administrators have configured Multi-Factor Authentication, users must proceed with secondary authentication using the means specified by the administrator after entering their password during login. As of QueryPie 10.2.2, the provided secondary authentication means are Google OTP and Email.
+When administrators have configured Multi-Factor Authentication, users must proceed with secondary authentication using the means specified by the administrator after entering their password during login.
+As of QueryPie 10.2.2, the provided secondary authentication means are Google OTP and Email.
 * When administrators specify Google OTP as the secondary authentication means
     * Enter the login password on the login page.
-    * Register with the Authenticator app using the QR Code displayed in the popup window during first login. The screen displays guidance text 'Download an authentication app such as Google Authenticator, Microsoft Authenticator, Okta Verify, etc.' to easily select and install a compatible authentication app from the App Store or Google Play Store.
+    * Register with the Authenticator app using the QR Code displayed in the popup window during first login. The screen displays guidance text 'Download an authentication app such as Google Authenticator, Microsoft Authenticator, Okta Verify, etc.' to easily select and install a compatible authentication app from the App Store or Google Play Store. <br/> 
+      <figure data-layout="center" data-align="center">
+      ![QR Code for Authenticator App Registration](/user-manual/my-dashboard/image-20250808-063052-(2).png)
+      <figcaption>
+      QR Code for Authenticator App Registration
+      </figcaption>
+      </figure>
     * Enter the one-time authentication code output by the Authenticator app.
+      <figure data-layout="center" data-align="center">
+      ![Enter One-Time Authentication Code](/user-manual/my-dashboard/image-20241220-021546.png)
+      <figcaption>
+      Enter One-Time Authentication Code
+      </figcaption>
+      </figure>
 * When Email is specified as the secondary authentication means
     * Enter the login password on the login page.
-    * Check the authentication code in the authentication email received in your inbox.<br/>The authentication code is valid for 30 minutes.
-    * You can request resending of the authentication email through "Resend authentication code". The second resend request is possible after 5 minutes.
+    * Check the authentication code in the authentication email received in your inbox. <br/>The authentication code is valid for 30 minutes. 
+    * You can request resending of the authentication email through "Resend authentication code". The second resend request is possible after 5 minutes. 
+      <figure data-layout="center" data-align="center">
+      ![Enter One-Time Authentication Code (Email)](/user-manual/my-dashboard/image-20241220-021636.png)
+      <figcaption>
+      Enter One-Time Authentication Code (Email)
+      </figcaption>
+      </figure>
 </Callout>
 
 ### User Dashboard
 
-When login is completed normally, you are redirected to the user dashboard screen. The dashboard allows you to view at a glance basic information such as role permissions granted to the currently logged-in user, groups you belong to, approval status, and recently accessed connection lists.
+When login is completed normally, you are redirected to the user dashboard screen.
+The dashboard allows you to view at a glance basic information such as role permissions granted to the currently logged-in user, groups you belong to, approval status, and recently accessed connection lists.
 
 <figure data-layout="center" data-align="center">
 ![My Dashboard](/user-manual/my-dashboard/screenshot-20240801-142503.png)
@@ -68,15 +96,15 @@ My Dashboard
 
 #### User Information
 
-* **Basic Information**: Displays user name (Display Name), email, and last login time.
-* **Groups**: Displays the user groups the user belongs to.
-* **Roles**: Displays the list of roles assigned to the user, separated by product area. For users with administrator (Admin) roles, the assigned Admin Role is also displayed.
+*  **Basic Information**  : Displays user name (Display Name), email, and last login time.
+*  **Groups**  : Displays the user groups the user belongs to.
+*  **Roles**  : Displays the list of roles assigned to the user, separated by product area. For users with administrator (Admin) roles, the assigned Admin Role is also displayed.
 
 #### Workflow Requests
 
-* **Sent Requests**: Displays the number of in-progress requests among the approval requests I sent.
-* **Received Requests**: Displays the number of requests requiring my approval among the requests I received.
-* **Submit Request**: Click this button to immediately enter the approval request creation page from the dashboard.
+*  **Sent**   **Requests**  : Displays the number of in-progress requests among the approval requests I sent.
+*  **Received**   **Requests**  : Displays the number of requests requiring my approval among the requests I received.
+*  **Submit Request**  : Click this button to immediately enter the approval request creation page from the dashboard.
 
 #### Services
 
@@ -86,9 +114,11 @@ My Dashboard
 
 * You can check the list of connections with recent access history for each QueryPie service.
 
+
 ### Navigating to Administrator Page
 
-Only users assigned the QueryPie administrator role can see the `Go to Admin Page` button in the top menu bar that provides access to the administrator page. Clicking this button opens the administrator page in a separate tab.
+Only users assigned the QueryPie administrator role can see the `Go to Admin Page` button in the top menu bar that provides access to the administrator page.
+Clicking this button opens the administrator page in a separate tab.
 
 <figure data-layout="center" data-align="center">
 ![My Dashboard &gt; Top Right Menu](/user-manual/my-dashboard/screenshot-20240801-145006.png)
@@ -96,3 +126,5 @@ Only users assigned the QueryPie administrator role can see the `Go to Admin Pag
 My Dashboard &gt; Top Right Menu
 </figcaption>
 </figure>
+
+

@@ -16,6 +16,7 @@ This document describes how to use Seamless SSH, along with specs and support sc
 
 You can configure the SSH config file to keep using the standard ssh command.
 
+
 1. Navigate to the .ssh directory and create or edit the config file.
 ```
 cd ~/.ssh
@@ -44,6 +45,7 @@ ssh {{Server Account}}@{{Server Name}}
 #### Configure shell alias
 
 You can configure an SSH alias to continue using the ssh command.
+
 
 1. Open your shell configuration file.
 
@@ -81,6 +83,7 @@ Or simply open a new terminal window.
 qpctl host use develop.dev.querypie.io
 qshdev {{Server Account}}@{{Server Name}}
 ```
+
 
 ### Differences from the previous QueryPie User Agent
 
@@ -162,6 +165,7 @@ Selected https://t4.qa.querypie.io
 </figure>
 
 ##### qpctl host use `{QueryPie Host}`
+
 ```
 $ qpctl host use nightly.dev.querypie.io
 ✔ Host changed to https://nightly.dev.querypie.io
@@ -178,12 +182,15 @@ To use Seamless SSH, either
 * configure ~/.ssh/config, or
 * add -o ProxyCommand=qpctl ssh-proxy … to the ssh command
 
-These are not the most natural experiences. If you have QueryPie Multi Agent installed, you can use the qpctl command directly for ssh connections.
+These are not the most natural experiences.
+If you have QueryPie Multi Agent installed, you can use the qpctl command directly for ssh connections.
+
 
 1. Prefix your ssh command with qpctl.
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
 ```
+
 
 1. If you have settings in ~/.ssh/config, just prefix with qpctl as well.
 ```
@@ -196,6 +203,7 @@ IdentityFile ~/.ssh/querypie-dev.pem
 
 $ qpctl ssh core-dev
 ```
+
 
 ### Support scope
 
@@ -211,10 +219,10 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
 
 The qpctl command wraps the ssh client command and automatically adds the ProxyCommand option.
 
-1. qpctl ssh command_line
-2. ssh -G command_line
-    1. Extract username, hostname, port
-3. ssh command_line -o ProxyCommand="qpctl ssh-proxy username hostname port"
+1.  **qpctl**  ssh command_line
+2. ssh  **-G**  command_line
+    1.  **username, hostname, port**  Extract
+3. ssh command_line  **-o ProxyCommand="qpctl ssh-proxy username**   **hostname**   **port"**
 
 #### Unsupported features
 

@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie supports Workflow functionality that allows you to request and approve various tasks that must be performed under the approval of authorized personnel. You can conveniently proceed with request, approval, and execution tasks in an integrated environment without leaving QueryPie.
+QueryPie supports Workflow functionality that allows you to request and approve various tasks that must be performed under the approval of authorized personnel.
+You can conveniently proceed with request, approval, and execution tasks in an integrated environment without leaving QueryPie.
+
 
 ### Workflow Menu Entry Points
 
@@ -28,12 +30,12 @@ My Dashboard &gt; Workflow Requests
 
 ### Roles in Workflow
 
-Depending on the actions performed within the Workflow functionality, users can have the following roles:
+Depending on the actions performed within the Workflow functionality, users can have the following roles.
 
-* **Requester**: Can send Requests.
-* **Approver**: Can review requests and approve or reject them.
-* **Executor**: Can execute approved SQL Request and Export Request items.
-* **Reviewer**: Can review or reference request items.
+*  **Requester**: Can send Requests. 
+*  **Approver**: Can review requests and approve or reject them. 
+*  **Executor**: Can execute approved SQL Request and Export Request items. 
+*  **Reviewer**: Can review or reference request items.
 
 <Callout type="info">
 Approvers and executors for request items can be pre-configured by administrators through [**Approval Rules**](../administrator-manual/general/workflow-management/approval-rules).
@@ -41,7 +43,8 @@ Approvers and executors for request items can be pre-configured by administrator
 
 ### Submit Request (Requesting Approval)
 
-After clicking the `Submit Request` button in the Workflow menu, select the desired request type to move to the request creation page. Please refer to the linked pages for detailed creation methods for each request type.
+After clicking the `Submit Request` button in the Workflow menu, select the desired request type to move to the request creation page.
+Please refer to the linked pages for detailed creation methods for each request type.
 
 * [DB Access Request](workflow/requesting-db-access): You can request access permissions for DB connections, and permissions are granted immediately upon approval.
 * [SQL Request](workflow/requesting-sql): You can request SQL execution that requires approval, and you can execute the query once after approval.
@@ -56,12 +59,15 @@ After clicking the `Submit Request` button in the Workflow menu, select the desi
 
 ### Notes When Using Proxy Submission Feature
 
-When administrators allow it in approval rules, you can request approval on behalf of other users (proxy submission). When using proxy submission, the following criteria apply. The setup method for this feature can be found in the [Approval Rules](../administrator-manual/general/workflow-management/approval-rules) manual page. The following criteria apply when using proxy submission:
+When administrators allow it in approval rules, you can request approval on behalf of other users (proxy submission).
+When using proxy submission, the following criteria apply.
+The setup method for this feature can be found in the [Approval Rules](../administrator-manual/general/workflow-management/approval-rules) manual page.
+When using proxy submission, the following criteria apply.
 
-* **Permission and DB Display Criteria for Proxy Submission**
-    * **DB Access Request**: Proxy submitters can only submit requests for DB connections they can view.
-    * **Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request**: Proxy submitters can only submit the above two requests on behalf of others for connections they have permissions for.
-* **Precautions When Submitting**
+*  **Permission and DB Display Criteria for Proxy Submission** 
+    *  **DB Access Request** : Proxy submitters can only submit requests for DB connections they can view.
+    *  **Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request** : Proxy submitters can only submit the above two requests on behalf of others for connections they have permissions for.
+*  **Precautions When Submitting** 
     * After specifying the target user (`Target User`) who will be subject to the approval, when you hover the mouse cursor over the UI, the following guidance message is displayed along with the list of selected target users.
     * "The following users will be impacted by this request. Please double-check that all settings are correct before proceeding." (These are the targets who will be subject to the current approval. Please make sure all settings are correct.)
 
@@ -69,12 +75,14 @@ When administrators allow it in approval rules, you can request approval on beha
 
 The list of approval requests I submitted as a Requester is displayed in the Sent Requests submenu.
 
-* **In Progress**: Requests that have been submitted for approval but approval has not yet been completed. Requests where either Approval Status or Execution Status is Pending or In Progress are displayed in this list.
-* **Done**: Items where all approvals (or executions) have been completed or the requester has canceled the approval request themselves are displayed.
+*  **In Progress** : Requests that have been submitted for approval but approval has not yet been completed. Requests where either Approval Status or Execution Status is Pending or In Progress are displayed in this list. 
+*  **Done**  : Items where all approvals (or executions) have been completed or the requester has canceled the approval request themselves are displayed.
 
 ### Received Requests (Approving or Rejecting Requests I Received)
 
-The list of requests assigned to me as an Approver is displayed in the Received Requests submenu. If designated as a proxy approver, the list of requests not yet approved by the original approver is also displayed. For detailed information about proxy approval, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
+The list of requests assigned to me as an Approver is displayed in the Received Requests submenu.
+If designated as a proxy approver, the list of requests not yet approved by the original approver is also displayed.
+For detailed information about proxy approval, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
 1. Check the list of requests requiring approval in the Workflow &gt; Received Requests &gt; To Do menu.
 2. Click on the request you want to process to check the details, then click `Approve` or `Reject` in the top right.
@@ -88,7 +96,8 @@ Workflow &gt; Received Requests &gt; To Do &gt; List Details
 
 <Callout type="info">
 **Q. Can I approve only some of the DB connections requested by the user?**
-A. For DB Access Request, partial approval is possible for only some DB connections. You can uncheck the checkboxes for items you don't want to grant permissions to in the DB connection list requested by the user, then `Approve` to approve the checked connections while automatically rejecting the unchecked connections.
+A. For DB Access Request, partial approval is possible for only some DB connections.
+You can uncheck the checkboxes for items you don't want to grant permissions to in the DB connection list requested by the user, then `Approve` to approve the checked connections while automatically rejecting the unchecked connections.
 </Callout>
 
 1. Enter the reason for approval or rejection in the Comments popup window, then click the `OK` button to complete the processing.
@@ -96,7 +105,8 @@ A. For DB Access Request, partial approval is possible for only some DB connecti
 
 ### Executions (Executing Approved Requests)
 
-The list of requests assigned to me as an Executor is displayed in the Executions submenu. There are lists for items to be executed (To Do) and completed items (Done), and the approval types that require execution are SQL Request and SQL Export Request.
+The list of requests assigned to me as an Executor is displayed in the Executions submenu.
+There are lists for items to be executed (To Do) and completed items (Done), and the approval types that require execution are SQL Request and SQL Export Request.
 
 #### Executing SQL Request
 
@@ -117,7 +127,9 @@ Workflow &gt; Executions &gt; To Do &gt; List Details
 
 <Callout type="info">
 **Q. When executing large queries, does query execution continue in the QueryPie background?**
-A. When the query executed through SQL Request is large, query execution continues in the QueryPie server background even if you close the web browser. When you reconnect to QueryPie after closing the web browser, you can check the progress of queries running in the server background on the SQL Request detail page. This background query execution feature is only supported in QueryPie v9.15.0 and above.
+A. When the query executed through SQL Request is large, query execution continues in the QueryPie server background even if you close the web browser.
+When you reconnect to QueryPie after closing the web browser, you can check the progress of queries running in the server background on the SQL Request detail page.
+This background query execution feature is only supported in QueryPie v9.15.0 and above.
 </Callout>
 
 #### Executing SQL Export Request
@@ -133,18 +145,20 @@ Workflow &gt; Executions &gt; To Do
 2. Click on the Export Request item waiting for execution to go to the detail page.
 3. After checking the details, you can click the `Execute` button in the top right to execute or the `Cancel` button to cancel.
 4. Set export options in the Export Option popup window.
-    * **File Type**: Select the file format. You can choose from SQL (default), CSV, JSON, EXCEL.
-    * **Export Option**: Select other export options.
-        * **DROP TABLE syntax**: Apply DROP TABLE syntax.
-        * **Contain Data**: Include data when exporting.
-        * **New INSERT Statement every N Rows**: Specify the number of rows to insert each time for INSERT statements.
+    *  **File Type**  : Select the file format. You can choose from SQL (default), CSV, JSON, EXCEL.
+    *  **Export Option**  : Select other export options.
+        *  **DROP TABLE syntax**  : Apply DROP TABLE syntax.
+        *  **Contain Data**  : Include data when exporting.
+        *  **New INSERT Statement every N Rows**  : Specify the number of rows to insert each time for INSERT statements.
 5. After completing the option settings, click the `Export` button in the modal to finally execute the export.
 6. After the export is completed, you can check the results in the Results tab within the detail page.
 7. You can check the completed export request history in Workflow &gt; Executions &gt; Done menu.
 
 ### Reviews (Checking Referenced Requests)
 
-Requests where I am designated as a Reviewer and that have been approved or executed are displayed in the Reviews &gt; All Reviews list. The review status is displayed in the Review Status column with two values: Unread and Confirmed. For how to check unconfirmed requests, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
+Requests where I am designated as a Reviewer and that have been approved or executed are displayed in the Reviews &gt; All Reviews list.
+The review status is displayed in the Review Status column with two values: Unread and Confirmed.
+For how to check unconfirmed requests, please refer to the [Approval Additional Features (Proxy Approval, Resubmission, etc.) document](workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
 <Callout type="info">
 The Review menu is only displayed when the administrator has pre-configured its use.
@@ -152,7 +166,7 @@ The Review menu is only displayed when the administrator has pre-configured its 
 
 ### Request Status List
 
-The approval status list for requests is as follows:
+The approval status list for requests is as follows.
 
 <table data-table-width="760" data-layout="default" local-id="7a620066-c0b8-4120-ad33-9894d8be7321">
 <tbody>

@@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
 
 By installing QueryPie Agent, you can use SQL Clients like DataGrip and DBeaver, SSH Clients like iTerm and SecureCRT, and 3rd party applications like Lens and k9s.
 
+
 ### Downloading and Running Agent App
 
 1. After logging into QueryPie, click the profile in the top right and click the `Agent Download` button.
@@ -43,7 +44,8 @@ Mac OS Installer
 </figcaption>
 </figure>
 
-4. Run the installed QueryPie Agent. Enter the previously copied QueryPie URL in the QueryPie Host input field and click the `Next` button to enter the login screen.
+4. Run the installed QueryPie Agent.
+Enter the previously copied QueryPie URL in the QueryPie Host input field and click the `Next` button to enter the login screen.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; QueryPie Host Input](/user-manual/user-agent/agent-03.png)
@@ -51,6 +53,7 @@ Mac OS Installer
 Agent &gt; QueryPie Host Input
 </figcaption>
 </figure>
+
 
 ### Logging into QueryPie Agent
 
@@ -107,6 +110,7 @@ DB Connection Access Using 3rd Party Client
 </figcaption>
 </figure>
 
+
 ### Server Access through Agent
 
 After login is completed normally, you can check authorized servers in the Server tab within the Agent app.
@@ -150,7 +154,8 @@ Agent &gt; Server &gt; Open New Session
 
 #### 3. Setting Up Seamless SSH
 
-Seamless SSH is a feature that allows you to connect to servers through QueryPie while maintaining existing terminal usability. You can easily set up seamless SSH by creating a config file in the .ssh folder using the following method.
+Seamless SSH is a feature that allows you to connect to servers through QueryPie while maintaining existing terminal usability.
+You can easily set up seamless SSH by creating a config file in the .ssh folder using the following method.
 
 1) Open a terminal and navigate to the .ssh folder.
 ```
@@ -171,17 +176,20 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-When writing the config file, specify the server by entering the server name, URL, and port for each server you want to set up Seamless SSH. If URLs and ports don't overlap between servers, you can also enter as follows to connect.
+When writing the config file, specify the server by entering the server name, URL, and port for each server you want to set up Seamless SSH.
+If URLs and ports don't overlap between servers, you can also enter as follows to connect.
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
 ```
 </Callout>
 
-4) The setup is now complete. When you select a role in Agent &gt; Server tab, you can connect to the server using the existing ssh command.
+4) The setup is now complete.
+When you select a role in Agent &gt; Server tab, you can connect to the server using the existing ssh command.
 ```
 $ ssh deploy@{{Server Name}}
 ```
+
 
 ### Kubernetes Access through Agent
 
@@ -196,7 +204,8 @@ $ ssh deploy@{{Server Name}}
 
 #### 1. Selecting Kubernetes Role
 
-Click the `Role` button below the user profile area to open the role selection modal. Choose the desired role and click the `OK` button.
+Click the `Role` button below the user profile area to open the role selection modal.
+Choose the desired role and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Kubernetes &gt; Select a Role](/user-manual/user-agent/screenshot-20240730-152705.png)
@@ -209,9 +218,11 @@ Agent &gt; Kubernetes &gt; Select a Role
 If you have two or more roles, you must complete role selection first before using the Kubernetes function after Agent login.
 </Callout>
 
+
 #### 2. Viewing Policy
 
-Resources accessible according to the selected role are displayed. Click the `🔍` button on the right of each cluster to display the Policy Information popup window where you can check the detailed list of policies applied to that cluster.
+Resources accessible according to the selected role are displayed.
+Click the `🔍` button on the right of each cluster to display the Policy Information popup window where you can check the detailed list of policies applied to that cluster.
 
 <figure data-layout="center" data-align="center">
 ![Agent &gt; Policy Information](/user-manual/user-agent/screenshot-20240730-161141.png)
@@ -231,9 +242,10 @@ Agent &gt; Settings &gt; Configure Kubeconfig Path
 </figcaption>
 </figure>
 
-* **Path Configuration**: You can specify the storage path for the Kubeconfig file.
+*  **Path Configuration**  : You can specify the storage path for the Kubeconfig file.
     * The default value is `${HOME}/.kube/querypie-kubeconfig`.
     * Click the `Upload` button on the right of the path field to display a popup where you can specify a local file path.
+
 
 <figure data-layout="center" data-align="center">
 ![Path Selection Popup](/user-manual/user-agent/screenshot-20240730-163530.png)
@@ -242,9 +254,9 @@ Path Selection Popup
 </figcaption>
 </figure>
 
-* **Where**: Click the `🔽` button on the right to specify the desired folder.
-* **Save As**: Enter the name of the Kubeconfig file. If not changed, the default value is applied.
-* **Command Line**: Provides a command line for declaring the KUBECONFIG environment variable.
+*  **Where**  : Click the `🔽` button on the right to specify the desired folder.
+*  **Save As**  : Enter the name of the Kubeconfig file. If not changed, the default value is applied.
+*  **Command Line**  : Provides a command line for declaring the KUBECONFIG environment variable.
 
 1) When setting the KUBECONFIG environment variable for the first time, you must change the default `"${KUBECONFIG}"` value in the command line to `"${HOME}/.kube/config"` before use.
 ```
@@ -256,7 +268,9 @@ export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
 export KUBECONFIG="${KUBECONFIG}:<user-specified path>"
 ```
 
-3) For more detailed information about kubeconfig, please refer to the following links:
+3) For more detailed information about kubeconfig, please refer to the following links.
+
+
 
 * Reference: [kubeconfig file merging](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
 * Reference: [KUBECONFIG environment variable setting](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
@@ -265,6 +279,7 @@ export KUBECONFIG="${KUBECONFIG}:<user-specified path>"
 ```
 export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
+
 
 ### Resetting QueryPie Agent Settings
 
@@ -280,6 +295,7 @@ Agent &gt; Settings
 </figcaption>
 </figure>
 
+
 #### (Mac) Reset from App Menu in Menu Bar
 
 Click the QueryPie Agent icon in the menu bar to open the app menu. Click the `Reset All Settings` button.
@@ -290,3 +306,5 @@ Click the QueryPie Agent icon in the menu bar to open the app menu. Click the `R
 Agent &gt; App menu
 </figcaption>
 </figure>
+
+
