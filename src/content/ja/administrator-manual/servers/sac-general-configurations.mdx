@@ -12,7 +12,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Configurationsページは、QueryPieでサーバーアクセスとセキュリティポリシーを管理できる設定ページです。ログイン失敗閾値設定、セッションタイムアウト、安全でないプロトコル制御など、サーバー接続セキュリティの核心要素を設定できます。これにより、管理者は組織のセキュリティ要件に合わせてサーバー環境を構成し、潜在的な脅威からシステムを保護できます。
+Configurationsページは、QueryPieでサーバーアクセスとセキュリティポリシーを管理できる設定ページです。
+ログイン失敗閾値設定、セッションタイムアウト、安全でないプロトコル制御など、サーバー接続セキュリティの核心要素を設定できます。
+これにより、管理者は組織のセキュリティ要件に合わせてサーバー環境を構成し、潜在的な脅威からシステムを保護できます。
 
 ### サーバー接続セキュリティ設定
 
@@ -62,6 +64,9 @@ Configurationsページは、QueryPieでサーバーアクセスとセキュリ�
     * IPアクセス制御を適用するサーバーをタグ基準で指定
     * User/Groupに付与されたRoleまたはDirect Permissionより優先適用
     * `Add Configuration`ボタンクリック時、モーダルが生成され、以下の情報を記入して`Add`ボタンをクリックして追加（右上の`Save Changes`ボタンクリック以前まで未反映）
+      <figure data-layout="center" data-align="center">
+      ![image-20240829-095257.png](/administrator-manual/servers/sac-general-configurations/image-20240829-095257.png)
+      </figure>
         *  **Server Tag Key**  : サーバータグキーを記入し、一度に一つずつのみ適用可能（使用時記入必須）
         *  **Server Tag Value**  : サーバータグバリューを記入し、一度に一つずつのみ適用可能（使用時記入必須）
         *  **Allowed Zones**  : General &gt; Company Management &gt; Allowed Zones名簿を読み込み、使用時最低1個選択必須
@@ -69,7 +74,8 @@ Configurationsページは、QueryPieでサーバーアクセスとセキュリ�
 
 <Callout type="info">
 **注意事項**
-Allowed Zonesは広い範囲の許可IP帯域を意味します。したがって、表示されたIP帯域内にいても、管理者がデータポリシー（DP/Policy）などを通じて追加的なIP制限を設定した場合、最終アクセスが拒否されることがあります。
+Allowed Zonesは広い範囲の許可IP帯域を意味します。
+したがって、表示されたIP帯域内にいても、管理者がデータポリシー（DP/Policy）などを通じて追加的なIP制限を設定した場合、最終アクセスが拒否されることがあります。
 </Callout>
 
 *  **Password Provisioning :** パスワードプロビジョニング使用可否設定
@@ -102,11 +108,13 @@ Workflow要求を通じたDirect Permission割り当て時に適用されるサ�
 
 <Callout type="important">
 **注意**
-**Workflow要求作成時点**を基準にポリシー内容が反映されます。要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
+**Workflow要求作成時点**を基準にポリシー内容が反映されます。
+要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
 </Callout>
 
 <Callout type="info">
-ユーザーはServer Access Requestを通じてサーバーに対するDirect Permissionを割り当て受けることができます。詳細は[Server Access Request要求する](../../user-manual/workflow/requesting-server-access)を参照してください。
+ユーザーはServer Access Requestを通じてサーバーに対するDirect Permissionを割り当て受けることができます。
+詳細は[Server Access Request要求する](../../user-manual/workflow/requesting-server-access)を参照してください。
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -137,11 +145,13 @@ Workflow要求を通じたDirect Permission割り当て時に適用されるサ�
 
 <Callout type="important">
 **注意**
-**Workflow要求作成時点**を基準にポリシー内容が反映されます。要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
+**Workflow要求作成時点**を基準にポリシー内容が反映されます。
+要求が承認された後、アクセスポリシーを変更しても、既存に承認された要求に遡及適用されません。
 </Callout>
 
 <Callout type="info">
-ユーザーはServer Privilege Requestを通じてサーバーに対する特権を割り当て受けることができます。詳細は[Server Privilege Request要求する](../../user-manual/workflow/requesting-server-privilege)を参照してください。
+ユーザーはServer Privilege Requestを通じてサーバーに対する特権を割り当て受けることができます。
+詳細は[Server Privilege Request要求する](../../user-manual/workflow/requesting-server-privilege)を参照してください。
 </Callout>
 
 <figure data-layout="center" data-align="center">

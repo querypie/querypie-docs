@@ -15,7 +15,8 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 
-管理者はLedger Table Policyメニューを通じてデータベースのテーブル単位で元帳（Ledger）設定ができ、テーブルに「元帳専用承認規則（Ledger Approval Rule）」をマッピングすると元帳ワークフロープロセスを経ることになります。元帳専用承認規則をマッピングすることで、該当テーブルはすぐに元帳テーブルの性格を持つことになります。
+管理者はLedger Table Policyメニューを通じてデータベースのテーブル単位で元帳（Ledger）設定ができ、テーブルに「元帳専用承認規則（Ledger Approval Rule）」をマッピングすると元帳ワークフロープロセスを経ることになります。
+元帳専用承認規則をマッピングすることで、該当テーブルはすぐに元帳テーブルの性格を持つことになります。
 
 * ユーザーが元帳テーブルを対象にINSERT / UPDATE / DELETEクエリ実行時、
     * 該当テーブルに対してユーザーがQueryPie Web Editorおよび3rd-party editorで修正クエリを試行すると、ユーザーはSQL Requestを経なければならないという案内を受けます。
