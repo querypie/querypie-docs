@@ -21,7 +21,7 @@ title: 'External API変更事項（9.10.0バージョン）'
 
 ### 追加されたExternal API
 
-* Workflow API（既存Access Approval APIとApproval APIを代替します。）
+* Workflow API (既存Access Approval APIとApproval APIを代替します.)
     * [Access Request] Detail
     * [Access Request] Approve
     * [Access Request] Reject
@@ -32,7 +32,7 @@ title: 'External API変更事項（9.10.0バージョン）'
     * [SQL Request] Approve
     * [SQL Request] Reject
     * All Requests
-* Approval Rule API V2（既存Approval Rule APIを代替します。）
+* Approval Rule API V2 (既存Approval Rule APIを代替します.)
     * List
     * Add approval rule
     * Remove approval rule
@@ -48,5 +48,319 @@ title: 'External API変更事項（9.10.0バージョン）'
     * Detail
 * Approval API
     * List of Approval
+---
 
-（詳細な変更内容は元のドキュメントを参照してください）
+#### Access Approval API - List of Access Approval
+
+`GET /api/external/access-approvals`
+
+Requestの変更事項
+
+* Query Parameterとして使用できる `status` が変更されました。 `PARTIALLY_APPROVED` が `IN_PROGRESS` に代替され、 `NONE` が削除されました。
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+
+Response変更事項
+
+* `currentDegree` が削除されました。
+* `approvalStatus` が変更されました。
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+* `updatedUser` が削除されました。
+* `lines` の `uuid` が削除されました。
+* `lines` の `degree` が `step` に代替されました。
+* `lines` の `approvedAt` が `actionAt` に代替されました。
+* `lines` の `status` が変更されました。
+    *  **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    *  **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+* `lines` の `type` が変更されました。
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after :** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+* `connections` の `clusterGroupDescription` が削除されました。
+* `connections` の `databaseName` が削除されました。
+* `connections` の `schemaName` が削除されました。
+
+Response変更前例示
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "connections": [
+        {
+          "clusterGroupDescription": "Cluster Group description",
+          "clusterGroupName": "Cluster Group Name",
+          "clusterGroupUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "clusterHost": "Cluster Host",
+          "clusterReplicationType": "`MASTER`, `SLAVE`, `SINGLE`",
+          "clusterUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "databaseName": "Database Name",
+          "roleName": "Role Name",
+          "roleUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "schemaName": "Schema Name",
+          "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+        }
+      ],
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "currentDegree": 1,
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "approvedAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "degree": 1,
+          "status": "APPROVED",
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string",
+          "uuid": "UUID"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "updatedUser": "User Information",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+Response変更後例示
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "connections": [
+        {
+          "clusterGroupName": "Cluster Group Name",
+          "clusterGroupUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "clusterHost": "Cluster Host",
+          "clusterReplicationType": "`MASTER`, `SLAVE`, `SINGLE`",
+          "clusterUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "roleName": "Role Name",
+          "roleUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+          "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+        }
+      ],
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "actionAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "status": "APPROVED",
+          "step": 1,
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+
+---
+
+#### Approval Rule API - Detail
+
+`GET /api/external/approval-rules/{uuid}`
+
+Response変更事項
+
+* `approvalCondition` が削除されました。
+* `executionCondition` が変更されました。
+    *  **before**  : `"NONE"` `"MANUAL"` `"SELF"` `"CONNECTION_OWNER"` `"ANY"`
+    *  **after**  : `"ADMIN_ONLY"` `"ALL_USERS"` `"FIXED"` `"CONNECTION_OWNER"`
+* `reviewEnabled` が削除されました。
+* `urgentMode` が追加されました。
+* `lines` の `degree` が `step` に代替されました。
+* `lines` の `type` が変更されました。
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after**  : `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+* `lines` の `resourceType` が変更されました。
+    *  **before**  : `USER`, `ROLE`
+    *  **after**  : `USER`, `GROUP`
+* `lines` の `uuid` が削除されました。
+
+Response変更前例示
+```
+{
+  "approvalCondition": "MANUAL",
+  "createdAt": "2019-08-24T14:15:22Z",
+  "executionCondition": "MANUAL",
+  "lines": [
+    {
+      "degree": 1,
+      "resourceType": "USER",
+      "resourceUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+      "type": "APPROVER",
+      "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+    }
+  ],
+  "name": "Default Rule",
+  "requestType": "SQL",
+  "reviewEnabled": true,
+  "updatedAt": "2019-08-24T14:15:22Z",
+  "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+}
+```
+
+Response変更後例示
+```
+{
+  "createdAt": "2019-08-24T14:15:22Z",
+  "executionCondition": "ADMIN_ONLY",
+  "lines": [
+    {
+      "resourceType": "USER",
+      "resourceUuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3",
+      "step": 1,
+      "type": "APPROVER"
+    }
+  ],
+  "name": "Default Rule",
+  "requestType": "SQL",
+  "updatedAt": "2019-08-24T14:15:22Z",
+  "urgentMode": true,
+  "uuid": "63d2cc6d-dd83-4a31-a817-fc13f1fc57a3"
+}
+```
+
+
+---
+
+#### Approval API - List of Approval
+
+`GET /api/external/approvals`
+
+Response変更事項
+
+* `currentDegree` が削除されました。
+* `approvalStatus` が変更されました。
+    *  **before**  : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
+    *  **after**  : `"PENDING"` `"CANCELED"` `"REJECTED"` `"IN_PROGRESS"` `"APPROVED"` `"EXPIRED"`
+* `updatedUser` が削除されました。
+* `lines` の `uuid` が削除されました。
+* `lines` の `degree` が `step` に代替されました。
+* `lines` の `approvedAt` が `actionAt` に代替されました。
+* `lines` の `status` が変更されました。
+    *  **before**  : `"PENDING"` `"REQUESTED"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"SQL_EXECUTED"` `"SQL_CANCELED"` `"SQL_SUCCEED"` `"SQL_FAILED"` `"CONFIRMED"`
+    *  **after**  : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
+* `lines` の `type` が変更されました。
+    *  **before**  : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
+    *  **after :** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+
+Response変更前例示
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "currentDegree": 1,
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "approvedAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "degree": 1,
+          "status": "APPROVED",
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string",
+          "uuid": "UUID"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "updatedUser": "User Information",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```
+
+Response変更後例示
+```
+{
+  "list": [
+    {
+      "approvalStatus": "PENDING",
+      "createdAt": "2019-08-24T14:15:22Z",
+      "createdUser": "User Information",
+      "description": "Approval Description",
+      "id": 0,
+      "lines": [
+        {
+          "actionAt": "2019-08-24T14:15:22Z",
+          "comment": "comment",
+          "status": "APPROVED",
+          "step": 1,
+          "type": "APPROVER",
+          "userDepartment": "string",
+          "userEmail": "string",
+          "userLoginId": "string",
+          "userName": "string",
+          "userType": "USER",
+          "userUuid": "string"
+        }
+      ],
+      "title": "Approval Title",
+      "type": "ACCESS",
+      "updatedAt": "2019-08-24T14:15:22Z",
+      "uuid": "UUID"
+    }
+  ],
+  "page": {
+    "currentPage": 0,
+    "pageSize": 0,
+    "totalElements": 0,
+    "totalPages": 0
+  }
+}
+```

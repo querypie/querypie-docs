@@ -8,12 +8,16 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-データベース接続へのアクセス時にProxy接続をサポートしています。基本的にQueryPieが提供するWeb SQLエディターを通じて接続にアクセスできるほか、QueryPieで生成したProxy Credential情報またはAgentを通じた既存のDB username/passwordで使用していたツールから接続にアクセスできます。Web SQLエディターと合わせてProxy接続をサポートすることで、様々なユーザー環境でも問題なく接続アクセスを制御し、ポリシーを適用し、ログを記録できます。現在Proxy接続は、MySQL、MariaDB、Oracle、PostgreSQL、Redshift、Trino、SQLServer、MongoDBをサポートしています。
+データベース接続へのアクセス時にProxy接続をサポートしています。
+基本的にQueryPieが提供するWeb SQLエディターを通じて接続にアクセスできるほか、QueryPieで生成したProxy Credential情報またはAgentを通じた既存のDB username/passwordで使用していたツールから接続にアクセスできます。
+Web SQLエディターと合わせてProxy接続をサポートすることで、様々なユーザー環境でも問題なく接続アクセスを制御し、ポリシーを適用し、ログを記録できます。
+現在Proxy接続は、MySQL、MariaDB、Oracle、PostgreSQL、Redshift、Trino、SQLServer、MongoDBをサポートしています。
 
 
 ### Proxy使用オプションの活性化
 
-基本的にはProxy使用オプションが非活性化されています。アクセスを許可する接続でProxy使用の可否を活性化します。
+基本的にはProxy使用オプションが非活性化されています。
+アクセスを許可する接続でProxy使用の可否を活性化します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Connection Details &gt; Proxy Usage](/querypie-overview/proxy-management/enable-database-proxy/image-20240725-070857.png)
@@ -28,16 +32,18 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 4. `Proxy Usage`オプションをチェックして活性化します。
 5. 2つのProxy認証方式のうち1つを選択します。
     1.  **Use QueryPie registered account** : 管理者が接続情報ページ内に保存したDB username / password基準でProxy接続情報を生成する方式です。ユーザーはAgentまたは別途生成されたProxy Credential情報を利用してProxyに接続できます。
-    2.  **Use existing database account with Agent**  : ユーザーが既存に使用していたDB username / passwordを使用できる方式でProxy接続情報が生成されます。ユーザーはAgentで実行後、localhostとport情報を利用してProxyに接続できます。※ユーザーのDB username / password認証を使用する場合、Agentを通じてのみ接続可能です。
+    2.  **Use existing database account with Agent**  : ユーザーが既存に使用していたDB username / passwordを使用できる方式でProxy接続情報が生成されます。ユーザーはAgentで実行後、localhostとport情報を利用してProxyに接続できます。 <br/> ※ユーザーのDB username / password認証を使用する場合、Agentを通じてのみ接続可能です。
 6.  **Network ID**  : Reverse SSH機能を使用する場合に必要な設定値です。
 
-Proxy Usageオプションを活性化すると、Proxyで接続できるPortが該当接続に割り当てられます。ユーザーは該当オプションが活性化されるとProxy接続情報を確認でき、管理者のみ該当Proxyオプションを設定できます。
+Proxy Usageオプションを活性化すると、Proxyで接続できるPortが該当接続に割り当てられます。
+ユーザーは該当オプションが活性化されるとProxy接続情報を確認でき、管理者のみ該当Proxyオプションを設定できます。
 
 
 ### Proxy使用が活性化された接続を確認する
 
 <Callout type="info">
-10.3.0からDatabases &gt; Connection Management &gt; Proxy ManagementはDatabases &gt; Monitoring &gt; Proxy Managementに移動されました。10.3.0以降のバージョンユーザーは[Proxy Management](../../administrator-manual/databases/monitoring/proxy-management)をご参照ください。
+10.3.0からDatabases &gt; Connection Management &gt; Proxy ManagementはDatabases &gt; Monitoring &gt; Proxy Managementに移動されました。
+10.3.0以降のバージョンユーザーは[Proxy Management](../../administrator-manual/databases/monitoring/proxy-management)をご参照ください。
 </Callout>
 
 <figure data-layout="center" data-align="center">

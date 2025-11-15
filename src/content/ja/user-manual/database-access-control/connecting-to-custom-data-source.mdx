@@ -28,16 +28,25 @@ import { Callout } from 'nextra/components'
 
 1.  **QueryPie Agent実行** 
     * QueryPie Agentを実行します。
-    * Database項目でCustom Data Sourceを確認できます。
+    * Database項目でCustom Data Sourceを確認できます。<br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-06-at-2.05.26-PM.png](/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png)
+      </figure>
 2.  **Connection Guide確認** 
     * AgentでCustom Data Sourceコネクション行をクリックするとPort情報を含む行が見えます。
-    * 上記行を右クリックした後Connection Guideをクリックすると接続情報を確認できます。
+    * 上記行を右クリックした後Connection Guideをクリックすると接続情報を確認できます。<br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-06-at-2.08.11-PM.png](/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png)
+      </figure>
     * UID/PWは修正できないdb username、db passwordで表示されます。
     * Privilegesは"-"で表示されます。
 3.  **SQL Toolで接続** 
     * DataGripやその他のSQL Toolを実行します。
     *  **HostとPortはConnection Guideに明記されている情報を入力する必要があります。**  
     * ベンダーに応じて追加情報を入力します。
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-06-at-2.18.26-PM.png](/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png)
+      </figure>
 
 <Callout type="important">
 **注意事項**
@@ -48,7 +57,13 @@ import { Callout } from 'nextra/components'
 
 1.  **ウェブコネクション目録確認** 
     * ユーザー画面上部Databasesをクリックします。 
-    * 左側コネクション目録でQueryPie Connectionsをクリックするとアクセス権限があるCustom Data Sourceが表示されます。
+    * 左側コネクション目録でQueryPie Connectionsをクリックするとアクセス権限があるCustom Data Sourceが表示されます。<br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-06-at-2.22.22-PM.png](/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.22.22-PM.png)
+      </figure>
 2.  **接続不可案内** 
     * Custom Data Source選択時Connectボタンが非活性化されます。
-    * 下記のようなツールチップが表示されウェブでは接続が不可です。 "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."
+    * 下記のようなツールチップが表示されウェブでは接続が不可です。<br/> "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-03-06-at-2.23.37-PM.png](/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.23.37-PM.png)
+      </figure>

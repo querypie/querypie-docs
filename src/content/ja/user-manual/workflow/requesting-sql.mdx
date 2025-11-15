@@ -100,7 +100,8 @@ Workflow &gt; Executions &gt; To Do &gt; Request Details &gt; Execute
 
 
 <Callout type="info">
-DML Query実行に対する承認プロセスが強制された場合<br/>`INSERT`、`UPDATE`、`DELETE`構文実行時管理者がWorkflowで承認プロセスを経るようポリシーを作成した場合があります。この場合Web Editorでクエリ実行時下記のようなメッセージが出力されます。<br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
+DML Query実行に対する承認プロセスが強制された場合<br/>`INSERT`、`UPDATE`、`DELETE`構文実行時管理者がWorkflowで承認プロセスを経るようポリシーを作成した場合があります。
+この場合Web Editorでクエリ実行時下記のようなメッセージが出力されます。<br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
 
 <figure data-layout="center" data-align="center">
 ![Web Editorで警告文](/user-manual/workflow/requesting-sql/image-20250629-155649.png)
@@ -109,7 +110,8 @@ Web Editorで警告文
 </figcaption>
 </figure>
 
-この場合`SEND SQL Request`ボタンをクリックしてすぐにWorkflowのSQL Request様式に移動して要求を進行できます。<br/>適切なApproval Ruleを選択しなければならずDML可否を選択します。DMLの場合Content TypeでFile添付方式で実行できません。
+この場合`SEND SQL Request`ボタンをクリックしてすぐにWorkflowのSQL Request様式に移動して要求を進行できます。<br/>適切なApproval Ruleを選択しなければならずDML可否を選択します。
+DMLの場合Content TypeでFile添付方式で実行できません。
 
 <figure data-layout="center" data-align="center">
 ![WorkflowのSQL Request様式](/user-manual/workflow/requesting-sql/image-20250629-161143.png)
