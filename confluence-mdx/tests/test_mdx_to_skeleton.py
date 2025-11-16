@@ -169,10 +169,25 @@ def test_text_processor_preserve_markdown_formatting():
     result = processor.replace_text_in_content(text)
     assert "**_TEXT_**" in result
     
-    # Test italic
-    text = "*italic text*"
+    # Test italic - can have spaces inside, must have space or line boundary before and after
+    text = "This is *italic text* here"
     result = processor.replace_text_in_content(text)
     assert "*_TEXT_*" in result
+    
+    # Test italic at start of line
+    text = "*italic text* at start"
+    result = processor.replace_text_in_content(text)
+    assert "*_TEXT_*" in result
+    
+    # Test italic at end of line
+    text = "text *italic text*"
+    result = processor.replace_text_in_content(text)
+    assert "*_TEXT_*" in result
+    
+    # Test italic with underscore at end of line
+    text = "text _italic text_"
+    result = processor.replace_text_in_content(text)
+    assert "_TEXT_" in result
     
     # Test link
     text = "[link text](url)"
@@ -701,7 +716,7 @@ def test_complex_list_item_with_bold_and_inline_code():
         
         expected = """# _TEXT_
 
-1. **_TEXT_** : _TEXT_ `On`_TEXT_
+1. **_TEXT_** _TEXT_ `On`_TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -897,13 +912,13 @@ def test_complex_list_with_html_and_figure():
         content = output_path.read_text()
         
         expected = """
-1.  **_TEXT_**
+1. **_TEXT_**
     * _TEXT_
-    * _TEXT_<br/> 
+    * _TEXT_ <br/> 
       <figure data-layout="center" data-align="center">
       ![_TEXT_](/880181257/output/Screenshot-2025-03-06-at-2.22.22-PM.png)
       </figure>
-2.  **_TEXT_**
+2. **_TEXT_**
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -931,6 +946,212 @@ def test_callout_with_external_link():
 _TEXT_ **_TEXT_** _TEXT_
 _TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)_TEXT_
 </Callout>
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_list_items_with_reference_links():
+    """Test list items with reference links to external documentation"""
+    import tempfile
+    import shutil
+    
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+* 참고: [kubeconfig 파일 병합](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
+* 참고: [KUBECONFIG 환경 변수 설정](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
+""")
+        
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+        
+        expected = """
+* _TEXT_ [_TEXT_](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
+* _TEXT_ [_TEXT_](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_japanese_text_with_multiple_bold_sections():
+    """Test Japanese text with multiple bold sections"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+現在QueryPieは  **データベース、システム、Kubernetesアクセス制御と監査機能** を核心として提供しており、データベース資産を基盤として機密データを自動で識別し分類する**AIデータディスカバリ** 機能も一緒に提供します。
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+_TEXT_ **_TEXT_** _TEXT_ **_TEXT_** _TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_callout_with_bold_html_entities_and_inline_code():
+    """Test Callout component with bold text, HTML entities, and inline code"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+<Callout type="important">
+**다운로드 파일에 암호 포함하기**
+
+다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.
+
+해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting &gt; Security’ 메뉴에서 `Export a file with Encryption` 옵션을 ‘Required’로 지정해야 합니다.
+</Callout>
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+<Callout type="important">
+**_TEXT_**
+
+_TEXT_
+
+_TEXT_ &gt; _TEXT_ `Export a file with Encryption` _TEXT_
+</Callout>
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_list_item_with_html_br_and_emoji():
+    """Test list item with HTML br tag, emoji, and inline code"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/> 
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+4. _TEXT_ <br/>_TEXT_<br/>_TEXT_ `{{..}}` _TEXT_ <br/> 
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_list_item_with_multiple_inline_codes_and_quotes():
+    """Test list item with multiple inline codes and quotes"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 "`${KUBECONFIG}`" 값을 사용 전에 "`${HOME}/.kube/config`"로 변경해야 합니다.
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+_TEXT_ `${KUBECONFIG}`_TEXT_ `${HOME}/.kube/config`_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_complex_workflow_approval_rules_with_figures():
+    """Test complex workflow approval rules with nested lists, HTML entities, figures, and figcaptions"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다.
+
+* 중요: 
+    * 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.
+      <figure data-layout="center" data-align="center">
+      ![Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br/>](/544145591/output/Screenshot-2025-06-12-at-1.33.58-PM.png)
+      <figcaption>
+      Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br/>
+      </figcaption>
+      </figure>
+* Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)'를 선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251110-030113.png](/544145591/output/image-20251110-030113.png)
+  </figure>
+    * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
+* Attribute 값 부재 시 알림
+    * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
+        * 에러 메시지 예시: 
+          <figure data-layout="center" data-align="center">
+          ![image-20250508-022114.png](/544145591/output/image-20250508-022114.png)
+          </figure>
+* Attribute 값은 있지만 해당 사용자가 비활성화된 경우
+    * 만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.
+        * 에러 메세지 예시:
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-06-16-at-10.30.14-AM.png](/544145591/output/Screenshot-2025-06-16-at-10.30.14-AM.png)
+          </figure>
+
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+_TEXT_
+
+* _TEXT_
+    * _TEXT_
+      <figure data-layout="center" data-align="center">
+      ![_TEXT_](/544145591/output/Screenshot-2025-06-12-at-1.33.58-PM.png)
+      <figcaption>
+      _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_<br/>
+      </figcaption>
+      </figure>
+* _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_<br/>
+  <figure data-layout="center" data-align="center">
+  ![_TEXT_](/544145591/output/image-20251110-030113.png)
+  </figure>
+    * _TEXT_
+* _TEXT_
+    * _TEXT_
+        * _TEXT_
+          <figure data-layout="center" data-align="center">
+          ![_TEXT_](/544145591/output/image-20250508-022114.png)
+          </figure>
+* _TEXT_
+    * _TEXT_
+        * _TEXT_
+          <figure data-layout="center" data-align="center">
+          ![_TEXT_](/544145591/output/Screenshot-2025-06-16-at-10.30.14-AM.png)
+          </figure>
+
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -995,6 +1216,12 @@ def run_all_tests():
         test_list_item_with_multiple_inline_codes,
         test_complex_list_with_html_and_figure,
         test_callout_with_external_link,
+        test_list_items_with_reference_links,
+        test_japanese_text_with_multiple_bold_sections,
+        test_callout_with_bold_html_entities_and_inline_code,
+        test_list_item_with_html_br_and_emoji,
+        test_list_item_with_multiple_inline_codes_and_quotes,
+        test_complex_workflow_approval_rules_with_figures,
     ]
     
     passed = 0

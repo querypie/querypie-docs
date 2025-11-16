@@ -45,7 +45,8 @@ Features Preserved:
 Text Replacement Behavior:
     - All text content (Korean, Japanese, Chinese, English, numbers) is replaced with _TEXT_
     - Multiple sentences in a line are replaced with a single _TEXT_ placeholder
-    - Punctuation marks (periods, exclamation marks, question marks) are NOT preserved
+    - Punctuation marks (periods, exclamation marks, question marks, colons, semicolons, commas) are NOT preserved
+    - Colon (:) in general text is treated as regular punctuation and removed (not a markdown syntax element)
     - Consecutive _TEXT_ placeholders are merged into a single _TEXT_
 
 Whitespace Preservation Rules:
@@ -230,168 +231,220 @@ class TextProcessor:
 
         return result
 
+    def _is_boundary_char(self, char: str) -> bool:
+        """Check if character is a word boundary (space, newline, tab, or non-alphanumeric)"""
+        return not char or char in (' ', '\n', '\t') or not char.isalnum()
+    
+    def _match_italic(self, text: str, pos: int, marker: str) -> Optional[Tuple[str, int]]:
+        """Match italic markdown: *text* or _text_. Returns (content, length) if matched, None otherwise."""
+        if text[pos:pos+len(marker)*2] == marker * 2:  # Skip bold markers
+            return None
+        
+        # Check for wildcard pattern (*.csv)
+        if marker == '*' and pos + 1 < len(text) and text[pos + 1] == '.':
+            return None
+        
+        # Check boundary before marker
+        prev_char = text[pos - 1] if pos > 0 else ''
+        if not self._is_boundary_char(prev_char):
+            return None
+        
+        # Match italic content
+        pattern = rf'\{marker}([^{marker}]+?)\{marker}'
+        match = re.match(pattern, text[pos:])
+        if not match:
+            return None
+        
+        # Check boundary after closing marker
+        end_pos = pos + len(match.group(0))
+        next_char = text[end_pos] if end_pos < len(text) else ''
+        if not self._is_boundary_char(next_char):
+            return None
+        
+        return (match.group(1), len(match.group(0)))
+    
+    def _is_underscore_marker(self, text: str, pos: int) -> bool:
+        """Check if _ at pos is a valid italic marker (not part of word/emoji/bold)."""
+        if pos + 1 < len(text) and text[pos + 1] == '_':
+            return False  # Part of __ (bold) or placeholder
+        if re.match(r'__[A-Z_]+_\d+__', text[pos:]):
+            return False  # Part of placeholder
+        # Check boundaries: must be at word boundary (whitespace or start/end)
+        before = text[pos - 1] if pos > 0 else ' '
+        after = text[pos + 1] if pos + 1 < len(text) else ' '
+        return (before in ' \n\t' or pos == 0) and (after in ' \n\t' or pos + 1 >= len(text))
+    
+    def _find_next_marker(self, text: str, start: int) -> int:
+        """Find position of next markdown marker, skipping wildcard patterns."""
+        patterns = [
+            r'`__[A-Z_]+_\d+__`',  # Placeholders with backticks
+            r'__[A-Z_]+_\d+__',     # Placeholders
+            r'\*\*',                # Bold start
+            r'__',                  # Bold start
+            r'`',                   # Code
+            r'\*',                  # Italic or wildcard
+            r'\[',                  # Link
+        ]
+        
+        next_pos = len(text)
+        for pattern in patterns:
+            match = re.search(pattern, text[start:])
+            if match:
+                pos = start + match.start()
+                if text[pos] == '*' and pos + 1 < len(text) and text[pos + 1] == '.':
+                    continue  # Skip wildcard patterns (*.csv)
+                if match.start() < next_pos - start:
+                    next_pos = pos
+        
+        # Check for underscore (_) as italic marker
+        underscore_pos = text.find('_', start)
+        if underscore_pos != -1 and underscore_pos < next_pos and self._is_underscore_marker(text, underscore_pos):
+            next_pos = underscore_pos
+        
+        return next_pos
+    
     def _replace_text_with_placeholders(self, text: str) -> str:
-        """Replace all text content with _TEXT_ while preserving markdown structure using token-based parsing"""
-        # Tokenize: split into protected tokens and text segments
+        """Replace all text content with _TEXT_ while preserving markdown structure"""
         tokens = []
         i = 0
         
         while i < len(text):
-            # Match protected elements in order of specificity
             matched = False
             
-            # 1. ContentProtector placeholders (most specific, must be first)
-            # Match placeholders in parentheses: (__URL_1__) or (__IMAGE_LINK_1__)
-            paren_placeholder_match = re.match(r'\((__[A-Z_]+_\d+__)\)', text[i:])
-            if paren_placeholder_match:
-                tokens.append(('placeholder', paren_placeholder_match.group(0)))
-                i += len(paren_placeholder_match.group(0))
-                matched = True
+            # 1. Placeholders (most specific)
+            if re.match(r'\((__[A-Z_]+_\d+__)\)', text[i:]):
+                match = re.match(r'\((__[A-Z_]+_\d+__)\)', text[i:])
+                tokens.append(('placeholder', match.group(0)))
+                i += len(match.group(0))
                 continue
             
-            # Match other placeholders: `__INLINE_CODE_1__` or __HTML_ENTITY_1__
-            placeholder_match = re.match(r'`__[A-Z_]+_\d+__`|__[A-Z_]+_\d+__', text[i:])
-            if placeholder_match:
-                tokens.append(('placeholder', placeholder_match.group(0)))
-                i += len(placeholder_match.group(0))
-                matched = True
+            match = re.match(r'`__[A-Z_]+_\d+__`|__[A-Z_]+_\d+__', text[i:])
+            if match:
+                tokens.append(('placeholder', match.group(0)))
+                i += len(match.group(0))
                 continue
             
-            # 2. Bold: **text** or __text__
+            # 2. Bold
             if text[i:].startswith('**'):
-                bold_match = re.match(r'\*\*([^*]+)\*\*', text[i:])
-                if bold_match:
-                    tokens.append(('bold', bold_match.group(1)))
-                    i += len(bold_match.group(0))
-                    matched = True
+                match = re.match(r'\*\*([^*]+)\*\*', text[i:])
+                if match:
+                    tokens.append(('bold', match.group(1)))
+                    i += len(match.group(0))
                     continue
+            
             if text[i:].startswith('__') and not re.match(r'__[A-Z_]+_\d+__', text[i:]):
-                bold_match = re.match(r'__([^_]+)__', text[i:])
-                if bold_match:
-                    tokens.append(('bold', bold_match.group(1)))
-                    i += len(bold_match.group(0))
-                    matched = True
+                match = re.match(r'__([^_]+)__', text[i:])
+                if match:
+                    tokens.append(('bold', match.group(1)))
+                    i += len(match.group(0))
                     continue
             
-            # 3. Inline code: `code`
+            # 3. Inline code
             if text[i] == '`':
-                code_match = re.match(r'`([^`]+)`', text[i:])
-                if code_match:
-                    tokens.append(('code', code_match.group(1)))
-                    i += len(code_match.group(0))
-                    matched = True
+                match = re.match(r'`([^`]+)`', text[i:])
+                if match:
+                    tokens.append(('code', match.group(1)))
+                    i += len(match.group(0))
                     continue
             
-            # 4. Italic: *text* or _text_ (but not bold)
-            if text[i] == '*' and not text[i:].startswith('**'):
-                italic_match = re.match(r'\*([^*]+)\*', text[i:])
-                if italic_match:
-                    tokens.append(('italic', italic_match.group(1)))
-                    i += len(italic_match.group(0))
-                    matched = True
-                    continue
-            if text[i] == '_' and not text[i:].startswith('__'):
-                italic_match = re.match(r'_([^_]+)_', text[i:])
-                if italic_match:
-                    tokens.append(('italic', italic_match.group(1)))
-                    i += len(italic_match.group(0))
-                    matched = True
-                    continue
+            # 4. Italic
+            for marker in ['*', '_']:
+                if text[i] == marker:
+                    result = self._match_italic(text, i, marker)
+                    if result:
+                        content, length = result
+                        tokens.append(('italic', content))
+                        i += length
+                        matched = True
+                        break
+            if matched:
+                continue
             
-            # 5. Links: [text] (not images)
+            # 5. Links
             if text[i] == '[' and not text[i:].startswith('!['):
-                link_match = re.match(r'\[([^\]]+)\]', text[i:])
-                if link_match:
-                    tokens.append(('link', link_match.group(1)))
-                    i += len(link_match.group(0))
-                    matched = True
+                # Match link with URL (including placeholder URLs)
+                match = re.match(r'\[([^\]]+)\]\(([^)]+)\)', text[i:])
+                if match:
+                    tokens.append(('link', (match.group(1), match.group(2))))
+                    i += len(match.group(0))
+                    continue
+                
+                match = re.match(r'\[([^\]]+)\]', text[i:])
+                if match:
+                    tokens.append(('link', (match.group(1), None)))
+                    i += len(match.group(0))
                     continue
             
-            # 6. Regular text - find next protected element
-            if not matched:
-                # Find next protected element
-                next_pos = len(text)
-                for pattern in [r'`__[A-Z_]+_\d+__`', r'__[A-Z_]+_\d+__', r'\*\*', r'__', r'`', r'\*', r'_', r'\[']:
-                    match = re.search(pattern, text[i:])
-                    if match and match.start() < next_pos:
-                        next_pos = match.start()
-                
-                if next_pos > 0:
-                    segment = text[i:i+next_pos]
-                    tokens.append(('text', segment))
-                    i += next_pos
-                else:
-                    # End of text
-                    segment = text[i:]
-                    tokens.append(('text', segment))
-                    break
+            # 6. Emoji pattern (before regular text to prevent splitting)
+            # Emoji pattern: :[a-z_]+:
+            emoji_match = re.match(r':[a-z_]+:', text[i:])
+            if emoji_match:
+                tokens.append(('text', emoji_match.group(0)))
+                i += len(emoji_match.group(0))
+                continue
+            
+            # 7. Regular text
+            next_pos = self._find_next_marker(text, i)
+            if next_pos > i:
+                tokens.append(('text', text[i:next_pos]))
+                i = next_pos
+            else:
+                tokens.append(('text', text[i:]))
+                break
+        
+        # Helper functions
+        def needs_space_before():
+            return result_parts and not result_parts[-1].endswith((' ', '\n', '>', '`'))
+        
+        def preserve_space_after(token_idx):
+            """Preserve space if next token is text starting with space."""
+            if token_idx + 1 < len(tokens):
+                next_type, next_content = tokens[token_idx + 1]
+                if next_type == 'text' and next_content and next_content[0] == ' ':
+                    result_parts.append(' ')
         
         # Process tokens
         result_parts = []
         for i, (token_type, content) in enumerate(tokens):
             if token_type == 'placeholder':
-                # Keep ContentProtector placeholders as-is, preserve surrounding spaces
+                if needs_space_before() and (content.startswith('`') or 'HTML_ENTITY' in content):
+                    result_parts.append(' ')
                 result_parts.append(content)
-                # Add space after if next token is text starting with space
-                if i + 1 < len(tokens):
-                    next_type, next_content = tokens[i + 1]
-                    if next_type == 'text' and next_content and next_content[0] == ' ':
-                        result_parts.append(' ')
+                preserve_space_after(i)
             elif token_type == 'bold':
                 result_parts.append('**_TEXT_**')
             elif token_type == 'italic':
                 result_parts.append('*_TEXT_*')
             elif token_type == 'code':
-                # Inline code - preserve with backticks
                 result_parts.append(f'`{content}`')
-                # Add space after if next token is text starting with space
-                if i + 1 < len(tokens):
-                    next_type, next_content = tokens[i + 1]
-                    if next_type == 'text' and next_content and next_content.strip() and next_content[0] == ' ':
-                        result_parts.append(' ')
+                preserve_space_after(i)
             elif token_type == 'link':
-                result_parts.append('[_TEXT_]')
+                if needs_space_before():
+                    result_parts.append(' ')
+                link_text, link_url = content if isinstance(content, tuple) else (content, None)
+                if link_url:
+                    # URL can be a placeholder (__URL_N__) or actual URL
+                    result_parts.append(f'[_TEXT_]({link_url})')
+                else:
+                    result_parts.append('[_TEXT_]')
             elif token_type == 'text':
                 # Preserve spaces in text segments
-                # Remove punctuation except colon (:) which is part of structure
-                cleaned = re.sub(r'[.,;!?。！？]+', '', content)
+                # Remove punctuation marks (periods, exclamation marks, question marks, colons, semicolons, commas)
+                # Note: Colon (:) in general text is NOT a markdown syntax element and is removed like other punctuation
+                cleaned = re.sub(r'[.,;:!?。！？]+', '', content)
                 if cleaned.strip():
-                    # Handle colon separately - preserve it with surrounding spaces
-                    if ':' in content:
-                        # Split by colon to preserve structure
-                        parts = content.split(':', 1)
-                        if len(parts) == 2:
-                            # Before colon
-                            before = parts[0].strip()
-                            if before:
-                                if result_parts and not result_parts[-1].endswith((' ', '\n', '>', '`')):
-                                    if parts[0] and parts[0][0] == ' ':
-                                        result_parts.append(' ')
-                                result_parts.append('_TEXT_')
-                            # Colon with space (only if there's content after)
-                            after = parts[1]
-                            if after.strip():
-                                cleaned_after = re.sub(r'[.,;!?。！？]+', '', after)
-                                if cleaned_after.strip():
-                                    result_parts.append(' :')
-                                    result_parts.append(' _TEXT_')
-                                    if after and after[-1] == ' ' and i + 1 < len(tokens):
-                                        next_type = tokens[i + 1][0]
-                                        if next_type in ('placeholder', 'code', 'bold', 'italic', 'link', 'text'):
-                                            result_parts.append(' ')
-                            # If no content after colon, just skip it (colon is removed)
-                            continue
-                    
                     # Regular text processing
-                    # Add space before _TEXT_ if previous part doesn't end with space
-                    if result_parts and not result_parts[-1].endswith((' ', '\n', '>', '`')):
-                        if content and content[0] == ' ':
-                            result_parts.append(' ')
+                    if needs_space_before() and content and content[0] == ' ':
+                        result_parts.append(' ')
                     result_parts.append('_TEXT_')
-                    # Add space after _TEXT_ if text ends with space
-                    if content and content[-1] == ' ' and i + 1 < len(tokens):
-                        next_type = tokens[i + 1][0]
-                        if next_type in ('placeholder', 'code', 'bold', 'italic', 'link', 'text'):
+                    # Add space after _TEXT_ if next token needs separation
+                    if i + 1 < len(tokens):
+                        next_type, next_content = tokens[i + 1]
+                        if next_type in ('bold', 'italic', 'code', 'link'):
+                            result_parts.append(' ')
+                        elif next_type == 'placeholder' and (next_content.startswith('`') or 'HTML_ENTITY' in next_content):
+                            result_parts.append(' ')
+                        elif content and content[-1] == ' ' and next_type == 'text':
                             result_parts.append(' ')
         
         return ''.join(result_parts)
@@ -459,7 +512,9 @@ def process_text_line(line: str, text_processor: TextProcessor) -> str:
             content = list_match.group(4)
             # Process HTML content
             processed_content = _process_html_line(content, text_processor)
-            return indent + marker + spacing + processed_content
+            # Normalize spacing after marker: use single space if content exists, no space if empty
+            normalized_spacing = ' ' if processed_content.strip() else ''
+            return indent + marker + normalized_spacing + processed_content
         else:
             # Regular HTML line
             return _process_html_line(line, text_processor)
@@ -483,16 +538,21 @@ def _process_html_line(line: str, text_processor: TextProcessor) -> str:
     # Split by HTML tags, keeping the tags
     parts = re.split(r'(<[^>]+>|</[^>]+>)', stripped)
     result = []
-    for part in parts:
+    for i, part in enumerate(parts):
         if part.startswith('<'):
             # HTML tag - keep as-is
             result.append(part)
         elif part.strip():
             # Text content - process it
-            processed_text = text_processor.replace_text_in_content(part)
-            result.append(processed_text)
+            # Preserve trailing space if it exists in the original
+            # This preserves spaces before HTML tags as they appear in the original
+            trailing_space = ''
+            if part.endswith(' '):
+                trailing_space = ' '
+            processed_text = text_processor.replace_text_in_content(part.rstrip())
+            result.append(processed_text + trailing_space)
         else:
-            # Preserve whitespace
+            # Preserve whitespace-only parts
             result.append(part)
     return leading_whitespace + ''.join(result)
 
@@ -518,7 +578,9 @@ def process_markdown_line(line: str, text_processor: TextProcessor) -> str:
         spacing = list_match.group(3)
         content = list_match.group(4)
         processed_content = text_processor.replace_text_in_content(content)
-        return indent + marker + spacing + processed_content
+        # Normalize spacing after marker: use single space if content exists, no space if empty
+        normalized_spacing = ' ' if processed_content.strip() else ''
+        return indent + marker + normalized_spacing + processed_content
 
     # For regular lines, preserve leading whitespace
     leading_whitespace = ''
