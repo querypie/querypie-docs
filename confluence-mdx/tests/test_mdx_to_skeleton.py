@@ -910,6 +910,33 @@ def test_complex_list_with_html_and_figure():
         shutil.rmtree(tmp_dir)
 
 
+def test_callout_with_external_link():
+    """Test Callout component with version information, bold text, and links"""
+    import tempfile
+    import shutil
+    
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""<Callout type="info">
+본 문서는  **10.2.6 또는 그 이상의 버전** 에 적용됩니다.
+10.2.5 또는 그 이하 버전의 Slack 연동 방법은 [10.1.0 버전 매뉴얼 문서](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)를 참고해주세요.
+</Callout>
+""")
+        
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+        
+        expected = """<Callout type="info">
+_TEXT_ **_TEXT_** _TEXT_
+_TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)_TEXT_
+</Callout>
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
 # ============================================================================
 # Test Runner
 # ============================================================================
@@ -966,6 +993,8 @@ def run_all_tests():
         test_list_item_with_html_entities_and_text,
         test_nested_list_items_with_periods,
         test_list_item_with_multiple_inline_codes,
+        test_complex_list_with_html_and_figure,
+        test_callout_with_external_link,
     ]
     
     passed = 0

@@ -241,6 +241,15 @@ class TextProcessor:
             matched = False
             
             # 1. ContentProtector placeholders (most specific, must be first)
+            # Match placeholders in parentheses: (__URL_1__) or (__IMAGE_LINK_1__)
+            paren_placeholder_match = re.match(r'\((__[A-Z_]+_\d+__)\)', text[i:])
+            if paren_placeholder_match:
+                tokens.append(('placeholder', paren_placeholder_match.group(0)))
+                i += len(paren_placeholder_match.group(0))
+                matched = True
+                continue
+            
+            # Match other placeholders: `__INLINE_CODE_1__` or __HTML_ENTITY_1__
             placeholder_match = re.match(r'`__[A-Z_]+_\d+__`|__[A-Z_]+_\d+__', text[i:])
             if placeholder_match:
                 tokens.append(('placeholder', placeholder_match.group(0)))
