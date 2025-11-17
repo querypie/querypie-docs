@@ -403,9 +403,15 @@ Some content here.
         assert output_path.name == "test.skel.mdx"
         
         content = output_path.read_text()
-        assert "title: '_TEXT_'" in content or "title: \"_TEXT_\"" in content
-        assert "# " in content
-        assert "_TEXT_" in content
+        expected = """---
+title: '_TEXT_'
+---
+
+# _TEXT_
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -430,9 +436,15 @@ Some text.
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        assert "```python" in content
-        assert "print('hello')" in content
-        assert "_TEXT_" in content
+        expected = """# _TEXT_
+
+```python
+print('hello')
+```
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -455,11 +467,13 @@ More text.
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        # Image alt text should be replaced with _TEXT_, URL should be preserved
-        # Note: Current implementation may replace entire image with _TEXT_
-        # This test verifies the basic functionality
-        assert "_TEXT_" in content
-        assert "# " in content
+        expected = """# _TEXT_
+
+![_TEXT_](/path/to/image.png)
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -482,13 +496,13 @@ More text.
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        # Link text should be replaced with _TEXT_
-        # Note: Current implementation may not preserve URLs in all cases
-        # This test verifies basic text replacement functionality
-        assert "_TEXT_" in content
-        assert "# " in content
-        # Link structure should be present (brackets)
-        assert "[" in content or "_TEXT_" in content
+        expected = """# _TEXT_
+
+_TEXT_ [_TEXT_](https://google.com) _TEXT_
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -511,9 +525,13 @@ More content.
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        assert "**_TEXT_**" in content
-        assert "*_TEXT_*" in content
-        assert "_TEXT_" in content
+        expected = """# _TEXT_
+
+_TEXT_ **_TEXT_** _TEXT_ *_TEXT_* _TEXT_
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -537,9 +555,14 @@ def test_convert_mdx_to_skeleton_with_lists():
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        assert "* _TEXT_" in content
-        assert "1. _TEXT_" in content
-        assert "2. _TEXT_" in content
+        expected = """# _TEXT_
+
+* _TEXT_
+* _TEXT_
+    1. _TEXT_
+    2. _TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
 
@@ -716,7 +739,7 @@ def test_complex_list_item_with_bold_and_inline_code():
         
         expected = """# _TEXT_
 
-1. **_TEXT_** _TEXT_ `On`_TEXT_
+1. **_TEXT_** _TEXT_ `On` _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -914,7 +937,7 @@ def test_complex_list_with_html_and_figure():
         expected = """
 1. **_TEXT_**
     * _TEXT_
-    * _TEXT_ <br/> 
+    * _TEXT_ <br/>
       <figure data-layout="center" data-align="center">
       ![_TEXT_](/880181257/output/Screenshot-2025-03-06-at-2.22.22-PM.png)
       </figure>
@@ -944,7 +967,7 @@ def test_callout_with_external_link():
         
         expected = """<Callout type="info">
 _TEXT_ **_TEXT_** _TEXT_
-_TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)_TEXT_
+_TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations) _TEXT_
 </Callout>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
@@ -1051,7 +1074,7 @@ def test_list_item_with_html_br_and_emoji():
         content = output_path.read_text()
 
         expected = """
-4. _TEXT_ <br/>_TEXT_<br/>_TEXT_ `{{..}}` _TEXT_ <br/> 
+4. _TEXT_ <br/> _TEXT_ <br/> _TEXT_ `{{..}}` _TEXT_ <br/>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1074,7 +1097,7 @@ def test_list_item_with_multiple_inline_codes_and_quotes():
         content = output_path.read_text()
 
         expected = """
-_TEXT_ `${KUBECONFIG}`_TEXT_ `${HOME}/.kube/config`_TEXT_
+_TEXT_ `${KUBECONFIG}` _TEXT_ `${HOME}/.kube/config` _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1131,10 +1154,10 @@ _TEXT_
       <figure data-layout="center" data-align="center">
       ![_TEXT_](/544145591/output/Screenshot-2025-06-12-at-1.33.58-PM.png)
       <figcaption>
-      _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_<br/>
+      _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ <br/>
       </figcaption>
       </figure>
-* _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_<br/>
+* _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ <br/>
   <figure data-layout="center" data-align="center">
   ![_TEXT_](/544145591/output/image-20251110-030113.png)
   </figure>
@@ -1152,6 +1175,31 @@ _TEXT_
           ![_TEXT_](/544145591/output/Screenshot-2025-06-16-at-10.30.14-AM.png)
           </figure>
 
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_japanese_list_item_with_link_and_bold():
+    """Test Japanese list item with link and bold text"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+    * 자세한 내용은 [DB Connections](connection-management/db-connections) 내 **Privilege Setting** 문서 참고
+    * 詳細内容は[DB Connections](connection-management/db-connections)内 **Privilege Setting** 文書参考
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+    * _TEXT_ [_TEXT_](connection-management/db-connections) _TEXT_ **_TEXT_** _TEXT_
+    * _TEXT_ [_TEXT_](connection-management/db-connections) _TEXT_ **_TEXT_** _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1222,6 +1270,7 @@ def run_all_tests():
         test_list_item_with_html_br_and_emoji,
         test_list_item_with_multiple_inline_codes_and_quotes,
         test_complex_workflow_approval_rules_with_figures,
+        test_japanese_list_item_with_link_and_bold,
     ]
     
     passed = 0

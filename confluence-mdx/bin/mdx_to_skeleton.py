@@ -54,6 +54,33 @@ Whitespace Preservation Rules:
     - This includes spaces and tabs used for list indentation, code blocks, and nested structures
     - The skeleton conversion should maintain the exact same indentation structure as the original MDX
     - Only text content is replaced with _TEXT_; all structural whitespace remains unchanged
+Whitespace Normalization Rules:
+    To ensure consistent spacing across different language versions, the following normalization
+    is applied during skeleton conversion:
+    
+    1. Inline Code
+       - Pattern: `code` followed by non-whitespace text
+       - Normalization: `code`_TEXT_ → `code` _TEXT_
+       - Example: `` `On`입니다 `` → `` `On` _TEXT_ ``
+    
+    2. Links
+       - Pattern: ](url) followed by non-whitespace text
+       - Normalization: ](url)_TEXT_ → ](url) _TEXT_
+       - Example: `[DB Connections](url)内` → `[_TEXT_](url) _TEXT_`
+    
+    3. HTML Tags
+       - Pattern: <br/> or /> followed by non-whitespace text
+       - Normalization: <br/>_TEXT_ → <br/> _TEXT_
+       - Example: `<br/>미리` → `<br/> _TEXT_`
+    
+    4. Markdown Formatting (Bold/Italic)
+       - Pattern: **_TEXT_** or *_TEXT_* followed by non-whitespace text
+       - Normalization: **_TEXT_**_TEXT_ → **_TEXT_** _TEXT_
+       - Example: `**Setting**文書` → `**_TEXT_** _TEXT_`
+    
+    Note: This normalization ensures that skeleton files from different languages have
+    consistent spacing, making diff comparisons more reliable when using diff -b option.
+
 """
 
 import argparse
@@ -450,9 +477,120 @@ class TextProcessor:
         return ''.join(result_parts)
 
     def _cleanup_text(self, text: str) -> str:
-        """Final cleanup: merge consecutive _TEXT_ placeholders"""
-        return re.sub(r'_TEXT_([\s_]*_TEXT_)+', '_TEXT_', text)
-
+        """Final cleanup: merge consecutive _TEXT_ placeholders and normalize spacing after inline code, links, HTML tags, and formatting
+        
+        Uses token-based approach instead of regex to avoid pattern matching issues.
+        """
+        # Step 1: Merge consecutive _TEXT_ placeholders
+        text = re.sub(r'_TEXT_([\s_]*_TEXT_)+', '_TEXT_', text)
+        
+        # Step 2: Tokenize the text
+        tokens = self._tokenize_for_cleanup(text)
+        
+        # Step 3: Normalize spacing between tokens
+        normalized_parts = self._normalize_spacing(tokens)
+        
+        # Step 4: Join tokens back into string
+        return ''.join(normalized_parts)
+    
+    def _tokenize_for_cleanup(self, text: str) -> List[Tuple[str, str]]:
+        """Tokenize text for cleanup processing. Returns list of (type, content) tuples."""
+        tokens = []
+        i = 0
+        
+        while i < len(text):
+            # 1. Bold: **_TEXT_**
+            if text[i:].startswith('**_TEXT_**'):
+                tokens.append(('bold', '**_TEXT_**'))
+                i += len('**_TEXT_**')
+            # 2. Italic: *_TEXT_*
+            elif text[i:].startswith('*_TEXT_*'):
+                tokens.append(('italic', '*_TEXT_*'))
+                i += len('*_TEXT_*')
+            # 3. Inline code: `...`
+            elif text[i] == '`':
+                match = re.match(r'`([^`]+)`', text[i:])
+                if match:
+                    tokens.append(('code', match.group(0)))
+                    i += len(match.group(0))
+                else:
+                    tokens.append(('text', text[i]))
+                    i += 1
+            # 4. Link: [_TEXT_](url)
+            elif text[i] == '[' and text[i:].startswith('[_TEXT_]('):
+                match = re.match(r'\[_TEXT_\]\(([^)]+)\)', text[i:])
+                if match:
+                    tokens.append(('link', match.group(0)))
+                    i += len(match.group(0))
+                else:
+                    tokens.append(('text', text[i]))
+                    i += 1
+            # 5. HTML tag: <br/>, />
+            elif text[i] == '<' and i + 3 < len(text) and text[i:i+3] == '<br':
+                match = re.match(r'<br/?>', text[i:])
+                if match:
+                    tokens.append(('html_tag', match.group(0)))
+                    i += len(match.group(0))
+                else:
+                    tokens.append(('text', text[i]))
+                    i += 1
+            elif i + 1 < len(text) and text[i:i+2] == '/>':
+                tokens.append(('html_tag', '/>'))
+                i += 2
+            # 6. Whitespace
+            elif text[i] in ' \n\t':
+                tokens.append(('whitespace', text[i]))
+                i += 1
+            # 7. _TEXT_ placeholder
+            elif text[i:].startswith('_TEXT_'):
+                tokens.append(('text_placeholder', '_TEXT_'))
+                i += len('_TEXT_')
+            # 8. 기타 문자
+            else:
+                tokens.append(('text', text[i]))
+                i += 1
+        
+        return tokens
+    
+    def _normalize_spacing(self, tokens: List[Tuple[str, str]]) -> List[str]:
+        """Normalize spacing between tokens. Returns list of strings to join."""
+        result = []
+        
+        for i, (token_type, content) in enumerate(tokens):
+            result.append(content)
+            
+            # 다음 토큰 확인
+            if i + 1 < len(tokens):
+                next_type, next_content = tokens[i + 1]
+                
+                # 공백 정규화 규칙 적용
+                needs_space = False
+                
+                # 1. Bold/Italic 다음에 공백이 아닌 텍스트가 오면 공백 추가
+                if token_type in ('bold', 'italic') and next_type not in ('whitespace', 'bold', 'italic'):
+                    needs_space = True
+                
+                # 2. Inline code 다음에 공백이 아닌 텍스트가 오면 공백 추가
+                elif token_type == 'code' and next_type not in ('whitespace', 'code'):
+                    needs_space = True
+                
+                # 3. Link 다음에 공백이 아닌 텍스트가 오면 공백 추가
+                elif token_type == 'link' and next_type not in ('whitespace', 'link'):
+                    needs_space = True
+                
+                # 4. HTML tag 다음에 공백이 아닌 텍스트가 오면 공백 추가
+                elif token_type == 'html_tag' and next_type not in ('whitespace', 'html_tag'):
+                    needs_space = True
+                
+                # 5. _TEXT_ 다음에 HTML tag가 오면 공백 추가 (역방향)
+                elif token_type == 'text_placeholder' and next_type == 'html_tag':
+                    needs_space = True
+                
+                # 공백 추가 (다음 토큰이 공백이 아닐 때만)
+                if needs_space and next_type != 'whitespace':
+                    result.append(' ')
+        
+        return result
 
 def process_yaml_frontmatter(yaml_content: str) -> List[str]:
     """Process YAML frontmatter content, replacing text values with _TEXT_"""
@@ -554,7 +692,11 @@ def _process_html_line(line: str, text_processor: TextProcessor) -> str:
         else:
             # Preserve whitespace-only parts
             result.append(part)
-    return leading_whitespace + ''.join(result)
+    # Join all parts
+    joined_result = ''.join(result)
+    # Apply cleanup to normalize spacing (e.g., <br/>_TEXT_ -> <br/> _TEXT_)
+    cleaned_result = text_processor._cleanup_text(joined_result)
+    return leading_whitespace + cleaned_result
 
 
 def process_markdown_line(line: str, text_processor: TextProcessor) -> str:

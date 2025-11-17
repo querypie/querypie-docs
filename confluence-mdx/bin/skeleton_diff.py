@@ -151,8 +151,9 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
 
     # Run diff command
     try:
-        # Build diff command with unified format (-U 2 for 2 lines of context)
-        diff_cmd = ['diff', '-U', '2', str(korean_skel_path), str(current_skel_path)]
+        # Build diff command with unified format (-U 2 for 2 lines of context, -b to ignore whitespace amount differences)
+        # Note: -b ignores amount of whitespace but preserves line breaks and whitespace presence/absence
+        diff_cmd = ['diff', '-u', '-U', '2', '-b', str(korean_skel_path), str(current_skel_path)]
 
         # Print command with "+ " prefix
         print(f"+ {' '.join(diff_cmd)}")
