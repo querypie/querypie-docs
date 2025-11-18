@@ -22,7 +22,9 @@ Manages settings applied to DB access control.
 
 #### Query Sharing
 
-<br/>Query Sharing is a feature that sends queries written in QueryPie SQL Editor to Git to share with other users. By default, query sharing settings are off, and clicking the `Query Sharing Setting` button opens a settings modal. When Query Sharing option is set to On, additional input fields are displayed.
+<br/>Query Sharing is a feature that sends queries written in QueryPie SQL Editor to Git to share with other users.
+By default, query sharing settings are off, and clicking the `Query Sharing Setting` button opens a settings modal.
+When Query Sharing option is set to On, additional input fields are displayed.
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-145003.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145003.png)
 </figure>
@@ -51,7 +53,7 @@ For descriptions of OAuth or SSH authentication using GitHub, please refer to th
 </Callout>
 
 
-When Query Sharing configuration is complete, Query Sharing is displayed as **On**.
+When Query Sharing configuration is complete, Query Sharing is displayed as  **On** .
 
 You can use the query sharing feature on the SQL Editor screen.
 
@@ -78,7 +80,7 @@ Query Audit Detail
 
 *  **Advanced Privilege Setting**  : Account control by privilege permission (Default: Off)
     * When set to On, Privilege Settings tab is displayed at the bottom of Connection Details page
-    * For detailed information, refer to **Privilege Setting** document in [DB Connections](connection-management/db-connections)
+    * For detailed information, refer to [DB Connections](connection-management/db-connections) for the  **Privilege Setting**  document
 *  **Unmasking Zones** : Setting to allow users who have been granted permission to view masked data through Unmasking request or users registered as allowed users of masking policies to view in unmasked state only when accessing from specific IPs (ranges), even if they are exception targets of masking policies. (Default: Off) <br/>Reference: [Unmasking Zones detailed description](dac-general-configurations/unmasking-zones)
 *  **Ledger Table Management :**  Setting to activate or deactivate Ledger table management functionality that can force workflow approval and reason input by designating specific tables as Ledger. (Default: Off)
 *  **Select Purpose Duration for Agent :**  Setting to prevent re-input for a specified time when users accessing DB through Proxy with 3rd party tools input reasons for reason input mandatory target data. Only configurable when Ledger Table Management is On. (Default: 10 minutes)
@@ -91,7 +93,8 @@ Query Audit Detail
       </figure>
 
 <Callout type="important">
-Queries blocked by Restricted Statement policies are blocked from execution even if approved through SQL Request. Do not enter queries that should be allowed for execution by certain users.
+Queries blocked by Restricted Statement policies are blocked from execution even if approved through SQL Request.
+Do not enter queries that should be allowed for execution by certain users.
 </Callout>
 
 *  **Justification Length**  : When "User Action Purpose Required" option is activated in Connection settings or reason input is forced by Ledger table management policies, reason input must be made through Web Editor or Agent. Administrators specify the minimum and maximum values for the number of characters entered in the input field.
@@ -124,7 +127,8 @@ Query Audit
 
 <Callout type="info">
 **Reason Input Mandatory Settings for DB Operations**
-From version 9.17.0, this feature has been changed to detailed connection settings. For detailed configuration methods, please refer to **Additional Settings** in [DB Connections](connection-management/db-connections).
+From version 9.17.0, this feature has been changed to detailed connection settings.
+For detailed configuration methods, please refer to [DB Connections](connection-management/db-connections) for  **Additional Settings** .
 </Callout>
 
 *  **Maximum Policy Exception Period**  : Sets the maximum validity period (in hours) for policy exceptions such as Unmasking. This setting affects the Workflow application form and the administrator's manual policy settings when the New DAC Policy Management feature is enabled. 
