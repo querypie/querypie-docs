@@ -12,7 +12,8 @@ This section provides detailed setup guides specific to MongoDB.
 
 ### Registering MongoDB Connections
 
-MongoDB often uses multi-host structures such as Replica Set or Sharded Cluster (Sharding) rather than single host configurations. In this case, you need to create multi-host connections.
+MongoDB often uses multi-host structures such as Replica Set or Sharded Cluster (Sharding) rather than single host configurations.
+In this case, you need to create multi-host connections.
 
 #### 1. Understanding Basic MongoDB Connection String Structure
 
@@ -147,7 +148,8 @@ Sharded Cluster has the same setup method as Replica Set, only the Connection St
 
 ##### &lt; +srv Connection &gt;
 
-Just put the tls=true option in Other options after converting to standard string. There's no difference from replica set setup.
+After converting to standard string, simply add the tls=true option to Other options.
+There is no difference from replica set configuration.
 
 <Callout type="info">
 For more detailed information about Cluster mode, you can also check [DB Connections](.).

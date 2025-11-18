@@ -154,10 +154,28 @@ Webhook addition screen in Slack
 #### 2-2. Integrating with API Type
 
 1. Click the created App to enter the app's Settings page, then navigate to the `App Manifest` menu.
-2. Add `chat:write`, `users:read`, `users:read.email` to the scopes area and save.
+2. Add `chat:write`, `users:read`, `users:read.email` to the scopes area and save. <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Slack API &gt; Apps &gt; Settings &gt; App Manifest](/administrator-manual/general/company-management/channels/screenshot-20241211-171140.png)
+  <figcaption>
+  Slack API &gt; Apps &gt; Settings &gt; App Manifest
+  </figcaption>
+  </figure>
 3. Restart the app through `Reinstall your app` via the yellow notification bar at the top. (Required)
 4. Click the `Reinstall to {Workspace_name}` button to select the Slack channel to send notifications to, then click the `Allow` button.
     1. To apply after changing scopes, you must perform this step again.
 5. Go to the corresponding Slack channel and add the created app. (If the app is already added, you can skip this step)
-6. Click the channel name to open the Channel Detail modal, and copy the Channel ID from the bottom of the modal. Paste the copied Channel ID into the QueryPie channel creation modal.
-7. Copy the Bot User OAuth Token from the OAuth & Permissions page and paste it into the QueryPie channel creation modal.
+6. Click the channel name to open the Channel Detail modal, and copy the Channel ID from the bottom of the modal. Paste the copied Channel ID into the QueryPie channel creation modal. <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Slack App &gt; Channel Detail](/administrator-manual/general/company-management/channels/screenshot-20241211-190312.png)
+  <figcaption>
+  Slack App &gt; Channel Detail
+  </figcaption>
+  </figure>
+7. Copy the Bot User OAuth Token from the OAuth & Permissions page and paste it into the QueryPie channel creation modal. 
+  <figure data-layout="center" data-align="center">
+  ![Slack OAuth & Permissions page - Copy token](/administrator-manual/general/company-management/channels/screenshot-20240804-190835.png)
+  <figcaption>
+  Slack OAuth & Permissions page - Copy token
+  </figcaption>
+  </figure>

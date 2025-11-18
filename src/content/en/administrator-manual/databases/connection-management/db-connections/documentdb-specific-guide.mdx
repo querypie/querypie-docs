@@ -12,9 +12,11 @@ This section provides detailed setup guides specific to Amazon DocumentDB.
 
 ### Adjusting Connection Cluster Structure for Cloud Synchronization
 
-This feature allows you to check cluster information created through cloud synchronization and access cluster endpoints, read-only endpoints, and instance endpoints according to their purposes, designed to work efficiently even in multi-host environments. This feature can be configured in Administrator Page &gt; Databases &gt; DB Connections.
+This feature allows you to check cluster information created through cloud synchronization and access cluster endpoints, read-only endpoints, and instance endpoints according to their purposes, designed to work efficiently even in multi-host environments.
+This feature can be configured in Administrator Page &gt; Databases &gt; DB Connections.
 
-After cloud synchronization, as shown in the screen below, it shows multi-host connection strings using Cluster endpoint address for the first cluster, read-only endpoint address for the second cluster, and instance endpoint address for the third cluster. It is recommended to use Cluster endpoint rather than connecting through instance endpoint.
+After cloud synchronization, as shown in the screen below, it shows multi-host connection strings using Cluster endpoint address for the first cluster, read-only endpoint address for the second cluster, and instance endpoint address for the third cluster.
+It is recommended to use Cluster endpoint rather than connecting through instance endpoint.
 
 <figure data-layout="center" data-align="center">
 ![image-20240122-102557.png](/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide/image-20240122-102557.png)
@@ -22,7 +24,9 @@ After cloud synchronization, as shown in the screen below, it shows multi-host c
 
 ### Using Amazon DocumentDB TLS(SSL)
 
-When creating a new DocumentDB in AWS, you can use TLS for transport encryption and users can optionally turn off this option. Data encryption in transit for Amazon DocumentDB clusters is managed through TLS parameters in cluster parameter groups. You can manage Amazon DocumentDB cluster TLS settings using AWS Management Console or AWS Command Line Interface (AWS CLI). [Reference](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>When TLS is enabled in Amazon DocumentDB, a CA bundle certificate provided by AWS is required for connection.
+When creating a new DocumentDB in AWS, you can use TLS for transport encryption and users can optionally turn off this option.
+Data encryption in transit for Amazon DocumentDB clusters is managed through TLS parameters in cluster parameter groups.
+You can manage Amazon DocumentDB cluster TLS settings using AWS Management Console or AWS Command Line Interface (AWS CLI). [Reference](https://docs.aws.amazon.com/ko_kr/documentdb/latest/developerguide/security.encryption.ssl.html#security.encryption.ssl.managing)<br/>When TLS is enabled in Amazon DocumentDB, a CA bundle certificate provided by AWS is required for connection.
 
 #### Registering CA Bundle Certificate
 

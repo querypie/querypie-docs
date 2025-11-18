@@ -175,7 +175,8 @@ Click the `Test Connection` button to verify if the connection access informatio
 To save changes, click the `Save Changes` button in the top right of the detail page.
 
 <Callout type="info">
-The Secret Store item is displayed when Secret Store usage is enabled in the Security settings menu, and to actually use Secret Store, Vault registration is required on the Admin &gt; General &gt; Integration &gt; HashiCorp Vault page. For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
+Secret Store item is displayed when Secret Store usage is enabled in the Security settings menu, and to actually use Secret Store, Vault registration is required on the Admin &gt; General &gt; Integration &gt; HashiCorp Vault page.
+For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
 </Callout>
 
 #### Reference. Secret Store Configuration Method
@@ -255,7 +256,9 @@ Proxy Usage options
 * Use QueryPie registered account : When accessing DB through Proxy, the account information entered in 3rd party tools uses the account information specified by QueryPie's Proxy.
 * Use existing database acount with Agent : When accessing DB through Proxy, the account information entered in 3rd party tools uses the actual DB account information. 
 
-From QueryPie 9.17, when using account information specified by Proxy, it has been changed to use random passwords as a security enhancement measure. From QueryPie 10.2.2, the " **Fixed Credential for Agent** " option is provided to use fixed passwords in situations where random password usage is difficult. When random password usage is difficult, administrators can activate this option and use fixed passwords, and Fixed Credential for Agent is only available for Oracle, PostgreSQL, and MongoDB.
+From QueryPie 9.17, when using account information specified by Proxy, it has been changed to use random passwords as a security enhancement measure.
+From QueryPie 10.2.2, the " **Fixed Credential for Agent** " option is provided to use fixed passwords in situations where random password usage is difficult.
+When random password usage is difficult, administrators can activate this option and use fixed passwords, and Fixed Credential for Agent is only available for Oracle, PostgreSQL, and MongoDB.
 </Callout>
 
 #### SSL/SSH Setting
@@ -270,14 +273,16 @@ SSL/SSH Setting tab
 </figure>
 
 <Callout type="info">
-SSL/SSH configuration information must be pre-registered. Please refer to the following documents:
+SSL/SSH configuration information must be pre-registered.
+Please refer to the following documents:
 * [SSL Configurations](ssl-configurations)
 * [SSH Configurations](ssh-configurations)
 </Callout>
 
 #### Connection Owner
 
-In the Connection Owner tab, click the `Add Connection Owner` button to specify Connection Owners for each DB connection. (Can be specified for users or groups) Save with the `Save Changes` button.
+In the Connection Owner tab, click the `Add Connection Owner` button to specify Connection Owners for each DB connection.
+(Can be specified for users or groups) Save with the `Save Changes` button.
 
 <figure data-layout="center" data-align="center">
 ![Connection Owner tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
@@ -292,7 +297,8 @@ Connection Owner can be specified as approvers or executors for SQL Request, SQL
 
 #### Tags
 
-In the Tags tab, you can register and manage tags for each DB connection. Click the `Add Tag` button to add a tag row, and enter Key and Value. Complete the input and save with the `Save Changes` button.
+In the Tags tab, you can register and manage tags for each DB connection. Click the `Add Tag` button to add a tag row, and enter Key and Value.
+Complete the input and save with the `Save Changes` button.
 
 <figure data-layout="center" data-align="center">
 ![Tags tab](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
@@ -306,7 +312,8 @@ Tags tab
 This is a feature that forces specification of connection accounts to use for each Privilege in DB connections.
 
 <Callout type="info">
-This tab is only displayed when Advanced Privilege Setting is activated in Security. For detailed information, refer to the **DB Connection Security Settings** document in [Security](../../general/company-management/security).
+This tab is only displayed when Advanced Privilege Setting is activated in Security.
+For detailed information, refer to the **DB Connection Security Settings** document in [Security](../../general/company-management/security).
 </Callout>
 
 <figure data-layout="center" data-align="center">
