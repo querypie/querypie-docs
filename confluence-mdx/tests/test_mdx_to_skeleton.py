@@ -1376,6 +1376,8 @@ def test_list_item_with_dac_and_multiple_inline_codes():
         input_file.write_text("""
 * [DAC] MongoDB Atlas Search 관련 `$search`, `$searchMeta` stage 지원
 * [DAC] MongoDB Atlas Search関連`$search`、`$searchMeta`stageサポート
+* [General] 임시 Login Token 을 통한 웹 &lt;-&gt; 에이전트 간 자동로그인 구현
+* [General] 一時Login Tokenを通じたウェブ&lt;-&gt;エージェント間自動ログイン実装
 """)
 
         output_path, _ = convert_mdx_to_skeleton(input_file)
@@ -1384,6 +1386,8 @@ def test_list_item_with_dac_and_multiple_inline_codes():
         expected = """
 * [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
 * [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
+* [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
+* [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
