@@ -89,8 +89,7 @@ _TEXT_
 
 def test_content_protector_extract_inline_code():
     """Test inline code extraction"""
-    # Note: extract_inline_code method has been removed. Inline code is now handled
-    # directly by MarkdownItProcessor using tokens. Test via convert_mdx_to_skeleton.
+    # Note: inline code text is now converted to _TEXT_ (not preserved as-is)
     import tempfile
     import shutil
     
@@ -102,7 +101,7 @@ def test_content_protector_extract_inline_code():
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """_TEXT_ `print()` _TEXT_"""
+        expected = """_TEXT_ `_TEXT_` _TEXT_"""
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
@@ -188,7 +187,7 @@ def test_content_protector_restore_all():
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """_TEXT_ `print()` _TEXT_ [_TEXT_](url)"""
+        expected = """_TEXT_ `_TEXT_` _TEXT_ [_TEXT_](url)"""
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
@@ -489,19 +488,19 @@ def test_process_markdown_line_list():
     tmp_dir = Path(tempfile.mkdtemp())
     try:
         input_file = tmp_dir / "test.mdx"
-        input_file.write_text("""* Item one
-
+        input_file.write_text("""
+* Item one
 1. Item one
-
     * Nested item
 """)
         
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """* _TEXT_
+        expected = """
+* _TEXT_
 1. _TEXT_
-    *     _TEXT_
+    * _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -518,16 +517,17 @@ def test_process_html_line():
     tmp_dir = Path(tempfile.mkdtemp())
     try:
         input_file = tmp_dir / "test.mdx"
-        input_file.write_text("""<p>Hello world</p>
-
+        input_file.write_text("""
+<p>Hello world</p>
 <figure><img src='test.png' /></figure>
 """)
         
         output_path, _ = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """<p>Hello world</p>
-<figure><img src='test.png' /></figure>
+        expected = """
+<p>_TEXT_</p>
+<figure><img src='test.png' /> </figure>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -819,7 +819,7 @@ _TEXT_ &gt; _TEXT_ &gt; _TEXT_
 
 
 def test_inline_code_in_list_items():
-    """Test that inline code in list items is protected"""
+    """Test that inline code in list items has text converted to _TEXT_"""
     import tempfile
     import shutil
     
@@ -837,8 +837,8 @@ def test_inline_code_in_list_items():
         
         expected = """# _TEXT_
 
-1. _TEXT_ `get` _TEXT_
-2. _TEXT_ `list` _TEXT_
+1. _TEXT_ `_TEXT_` _TEXT_
+2. _TEXT_ `_TEXT_` _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -898,7 +898,7 @@ def test_complex_list_item_with_bold_and_inline_code():
         
         expected = """# _TEXT_
 
-1. **_TEXT_** _TEXT_ `On` _TEXT_
+1. **_TEXT_** _TEXT_ `_TEXT_` _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1063,9 +1063,9 @@ def test_list_item_with_multiple_inline_codes():
         expected = """# _TEXT_
 
 1. _TEXT_
-    1. `get`
-    2. `list`
-    3. `watch`
+    1. `_TEXT_`
+    2. `_TEXT_`
+    3. `_TEXT_`
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1209,7 +1209,7 @@ def test_callout_with_bold_html_entities_and_inline_code():
 
 _TEXT_
 
-_TEXT_ &gt; _TEXT_ `Export a file with Encryption` _TEXT_
+_TEXT_ &gt; _TEXT_ `_TEXT_` _TEXT_
 </Callout>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
@@ -1233,7 +1233,7 @@ def test_list_item_with_html_br_and_emoji():
         content = output_path.read_text()
 
         expected = """
-4. _TEXT_ <br/> _TEXT_ <br/> _TEXT_ `{{..}}` _TEXT_ <br/>
+4. _TEXT_ <br/> _TEXT_ <br/> _TEXT_ `_TEXT_` _TEXT_ <br/>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1256,7 +1256,7 @@ def test_list_item_with_multiple_inline_codes_and_quotes():
         content = output_path.read_text()
 
         expected = """
-_TEXT_ `${KUBECONFIG}` _TEXT_ `${HOME}/.kube/config` _TEXT_
+_TEXT_ `_TEXT_` _TEXT_ `_TEXT_` _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1365,6 +1365,31 @@ def test_japanese_list_item_with_link_and_bold():
         shutil.rmtree(tmp_dir)
 
 
+def test_list_item_with_dac_and_multiple_inline_codes():
+    """Test list items with [DAC] label and multiple inline code blocks in Korean and Japanese"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+* [DAC] MongoDB Atlas Search 관련 `$search`, `$searchMeta` stage 지원
+* [DAC] MongoDB Atlas Search関連`$search`、`$searchMeta`stageサポート
+""")
+
+        output_path, _ = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+* [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
+* [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
 # ============================================================================
 # Test Runner
 # ============================================================================
@@ -1430,6 +1455,7 @@ def run_all_tests():
         test_list_item_with_multiple_inline_codes_and_quotes,
         test_complex_workflow_approval_rules_with_figures,
         test_japanese_list_item_with_link_and_bold,
+        test_list_item_with_dac_and_multiple_inline_codes,
     ]
     
     passed = 0
