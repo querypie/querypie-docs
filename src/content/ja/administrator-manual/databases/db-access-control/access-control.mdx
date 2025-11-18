@@ -124,7 +124,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 ![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
 </figure>
 
-1. コネクションロックおよびロック解除履歴はAudit > Databases > Account Lock Historyメニューで確認できます。
+1. コネクションロックおよびロック解除履歴はAudit &gt; Databases &gt; Account Lock Historyメニューで確認できます。
 
 
 <Callout type="info">
@@ -134,15 +134,16 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 ![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
 </figure>
 
-Access Controlで特定ユーザーにアクセス許可されたコネクションに対して特定タグが付与されたテーブルのみアクセス可能になるよう制御できます。この機能を使用するために以下の条件が充足されなければなりません。
+Access Controlで特定ユーザーにアクセス許可されたコネクションに対して特定タグが付与されたテーブルのみアクセス可能になるよう制御できます。
+この機能を使用するために以下の条件が充足されなければなりません。
 
 * New DAC Policy Management機能がEnableでなければなりません。
 * 特定ユーザーに特定コネクションに対するprivilegeが割り当てられていなければなりません。
-* Databases > Policy Management > Data Pathに対象テーブルが経路として登録されていてタグが付与されていなければなりません。
+* Databases &gt; Policy Management &gt; Data Pathに対象テーブルが経路として登録されていてタグが付与されていなければなりません。
 
 条件が満足されれば以下のように設定できます。
 
-1. Databases > DB Access Control > Access Controlで特定ユーザーにprivilegeが割り当てられた特定コネクション詳細画面に移動します。
+1. Databases &gt; DB Access Control &gt; Access Controlで特定ユーザーにprivilegeが割り当てられた特定コネクション詳細画面に移動します。
 2. 詳細画面でAccess TypeをTag-based table accessで選択してタグを追加します。既存のタグ（テーブルに付与されたタグ）のみ選択して使用できます。
 
 <figure data-layout="center" data-align="center">

@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-マスキングポリシーによってマスキングされているデータに対してマスキングを解除した状態で照会するためには、Workflowを通じてUnmasking Requestをリクエストして承認を受けるか、マスキングポリシーでallowed userに登録されている必要があります。一部の環境では、マスキング解除状態で照会できるよう承認されたユーザーであっても特定IP（帯域）からのみマスキングが解除された状態で照会される必要がある場合があります。このような環境をサポートするためにUnmasking Zones機能を提供します。
+マスキングポリシーによってマスキングされているデータに対してマスキングを解除した状態で照会するためには、Workflowを通じてUnmasking Requestをリクエストして承認を受けるか、マスキングポリシーでallowed userに登録されている必要があります。
+一部の環境では、マスキング解除状態で照会できるよう承認されたユーザーであっても特定IP（帯域）からのみマスキングが解除された状態で照会される必要がある場合があります。
+このような環境をサポートするためにUnmasking Zones機能を提供します。
 
 ### Unmasking Zones設定
 
@@ -33,7 +35,9 @@ Unmasking Zonesを設定するには、まず[Allowed Zones設定](../../general
 
 ### Unmasking Zonesに登録されたIP（帯域）修正
 
-Unmasking zones設定はAllowed Zonesの値を使用するため、IP（帯域）を追加または変更するにはAllowed Zonesの該当Allowed Zoneに指定されたIP（帯域）を修正する必要があります。修正するとUnmasking Zonesの設定にも反映されます。（[Allowed Zones設定](../../general/company-management/allowed-zones)参考）
+Unmasking zones設定はAllowed Zonesの値を使用するため、IP（帯域）を追加または変更するにはAllowed Zonesの該当Allowed Zoneに指定されたIP（帯域）を修正する必要があります。
+修正するとUnmasking Zonesの設定にも反映されます。
+([Allowed Zones設定](../../general/company-management/allowed-zones)参考)
 
 ### Unmasking Zones設定解除
 
@@ -44,8 +48,11 @@ Unmasking zones設定はAllowed Zonesの値を使用するため、IP（帯域�
 2. `Save Changes`ボタンを押して変更事項を保存します。
 
 <Callout type="important">
-Unmasking Zonesに割り当てられたAllowed zoneはAllowed Zonesから削除できません。Unmasking Zonesで該当Allowed zoneをまず解除する必要があります。
-Unmasking ZoneにAllowed Zoneを登録した状態でOffに切り替え可能です。Onに切り替えると以前の設定をそのまま使用できます。ただし、Unmasking ZonesにAllowed Zoneを追加/削除した後すぐにOffに切り替えると変更事項が反映されないため、`Save Changes`ボタンを押して保存した後Offに切り替え、`Save Changes`ボタンを押してもう一度状態を保存する必要があります。
+Unmasking Zonesに割り当てられたAllowed zoneはAllowed Zonesから削除できません。
+Unmasking Zonesで該当Allowed zoneをまず解除する必要があります。
+Unmasking ZoneにAllowed Zoneを登録した状態でOffに切り替え可能です。
+Onに切り替えると以前の設定をそのまま使用できます。
+ただし、Unmasking ZonesにAllowed Zoneを追加/削除した後すぐにOffに切り替えると変更事項が反映されないため、`Save Changes`ボタンを押して保存した後Offに切り替え、`Save Changes`ボタンを押してもう一度状態を保存する必要があります。
 </Callout>
 
 <Callout type="info">

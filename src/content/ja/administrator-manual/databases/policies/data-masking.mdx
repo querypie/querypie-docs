@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-組織内で個人情報または機密情報のように管理が必要なデータは照会時マスキングされて表示するようポリシーを設定できます。Data Maskingメニューでポリシーを設定するコネクションを選択してポリシーを生成し、マスキングが必要なデータをカラム基準で規則を登録し管理できます。
+組織内で個人情報または機密情報のように管理が必要なデータは照会時マスキングされて表示するようポリシーを設定できます。
+Data Maskingメニューでポリシーを設定するコネクションを選択してポリシーを生成し、マスキングが必要なデータをカラム基準で規則を登録し管理できます。
 
 
 ### データマスキングポリシー生成
@@ -22,7 +23,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking
 </figcaption>
 </figure>
 
-1. Database設定メニューでPolicies > Data Maskingメニューに移動します。
+1. Database設定メニューでPolicies &gt; Data Maskingメニューに移動します。
 2. 右上の`Create Policy`ボタンをクリックします。
 3. ポリシー生成のための以下の情報を入力します。
     1.  **Policy Name**  ：ポリシーを画面で区別できる名前です。
@@ -35,9 +36,9 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking
 ### データマスキングポリシーに規則登録
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Masking > Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
+![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details](/administrator-manual/databases/policies/data-masking/image-20240725-073032.png)
 <figcaption>
-Administrator &gt; Databases &gt; Policies &gt; Data Masking > Rule Details
+Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details
 </figcaption>
 </figure>
 
@@ -57,12 +58,15 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking > Rule Details
     *  **Allowed Users**  ：該当規則を例外処理するユーザーまたはグループを選択します。
 6. `Ok`ボタンで保存します。
 
-Rule Listタブで規則が登録されたことを確認できます。これでユーザーが該当データを照会する場合、適用したマスキングパターンに従って'*****@gmail.com'のようにマスキングされて表示されます。
+Rule Listタブで規則が登録されたことを確認できます。
+これでユーザーが該当データを照会する場合、適用したマスキングパターンに従って'*****@gmail.com'のようにマスキングされて表示されます。
 
 
 <Callout type="important">
-Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)」エラーが発生します。
-A. この場合、DBアカウント情報設定がされていないか間違った情報で設定されている可能性があります。Database Settings > Connection Management > DB Connectionsメニューで該当コネクション情報クリック後、**Database Username / Password情報を入力して保存**した後再び試行します。
+Database Name選択時「[ENGINE] [30101] Please Check the user credential or IP ACL settings.
+Access denied for user 'username'@'host' (using password: YES)」エラーが発生します。
+A. この場合、DBアカウント情報設定がされていないか間違った情報で設定されている可能性があります。
+Database Settings &gt; Connection Management &gt; DB Connectionsメニューで該当コネクション情報クリック後、**Database Username / Password情報を入力して保存**した後再び試行します。
 </Callout>
 
 ### マスキングポリシーが適用されたカラムに対するアクセスログ確認
