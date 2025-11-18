@@ -11,7 +11,12 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict, Set
+
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 from skeleton_common import (
     extract_language_code,
@@ -25,6 +30,7 @@ _diff_count: int = 0
 _match_count: int = 0  # Counter for matching skeleton diffs
 _max_diff: Optional[int] = None  # Will be set to 5 (default) when --recursive is used
 _exclude_patterns: List[str] = ['/index.skel.mdx']  # Default exclude patterns
+_ignore_rules: Dict[str, Set[int]] = {}  # Dictionary mapping file paths to sets of line numbers to ignore
 
 
 def format_diff_with_original_content(
@@ -111,6 +117,166 @@ def format_diff_with_original_content(
     return '\n'.join(result_lines)
 
 
+def load_ignore_rules(ignore_file_path: Optional[Path] = None) -> Dict[str, Set[int]]:
+    """
+    Load ignore rules from YAML file.
+    
+    Args:
+        ignore_file_path: Path to ignore_skeleton_diff.yaml file. If None, uses default location.
+    
+    Returns:
+        Dictionary mapping file paths (relative to target/{lang}) to sets of line numbers to ignore.
+    """
+    if yaml is None:
+        print("Warning: PyYAML not installed. Ignore rules will not be loaded.", file=sys.stderr)
+        return {}
+    
+    if ignore_file_path is None:
+        # Default location: same directory as this script
+        script_dir = Path(__file__).parent
+        ignore_file_path = script_dir / 'ignore_skeleton_diff.yaml'
+    
+    if not ignore_file_path.exists():
+        # File doesn't exist, return empty rules
+        return {}
+    
+    try:
+        with open(ignore_file_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+        
+        if not data or 'ignores' not in data:
+            return {}
+        
+        ignore_rules = {}
+        for rule in data.get('ignores', []):
+            file_path = rule.get('file')
+            line_numbers = rule.get('line_numbers', [])
+            
+            if file_path:
+                # Normalize path to start with /
+                if not file_path.startswith('/'):
+                    file_path = '/' + file_path
+                
+                # Convert line_numbers to set
+                ignore_rules[file_path] = set(line_numbers)
+        
+        return ignore_rules
+    except Exception as e:
+        print(f"Warning: Failed to load ignore rules from {ignore_file_path}: {e}", file=sys.stderr)
+        return {}
+
+
+def filter_diff_output(
+    diff_output: str,
+    file_path: str,
+    ignore_rules: Dict[str, Set[int]]
+) -> str:
+    """
+    Filter diff output by removing lines that match ignore rules.
+    
+    Args:
+        diff_output: Original diff output (unified format)
+        file_path: File path relative to target/{lang} (e.g., /path/to/file.mdx)
+        ignore_rules: Dictionary mapping file paths to sets of line numbers to ignore
+    
+    Returns:
+        Filtered diff output with ignored lines removed. Returns empty string if all differences are ignored.
+    """
+    # Normalize file path
+    if not file_path.startswith('/'):
+        file_path = '/' + file_path
+    
+    # Get ignore line numbers for this file
+    ignore_lines = ignore_rules.get(file_path, set())
+    
+    if not ignore_lines:
+        # No ignore rules for this file
+        return diff_output
+    
+    # Unified format chunk header pattern: @@ -start,count +start,count @@
+    chunk_header_pattern = re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
+    
+    result_lines = []
+    lines = diff_output.split('\n')
+    i = 0
+    
+    while i < len(lines):
+        line = lines[i]
+        
+        # Keep file headers
+        if line.startswith('--- ') or line.startswith('+++ '):
+            result_lines.append(line)
+            i += 1
+            continue
+        
+        # Process chunk header
+        match = chunk_header_pattern.match(line)
+        if match:
+            chunk_start_left = int(match.group(1))
+            chunk_start_right = int(match.group(3))
+            left_line_num = chunk_start_left
+            right_line_num = chunk_start_right
+            
+            # Collect chunk lines
+            chunk_lines = [line]
+            chunk_has_non_ignored = False
+            i += 1
+            
+            # Process chunk content
+            while i < len(lines):
+                chunk_line = lines[i]
+                
+                # Check if we've reached the end of the chunk
+                if chunk_header_pattern.match(chunk_line):
+                    break
+                if chunk_line.startswith('--- ') or chunk_line.startswith('+++ '):
+                    break
+                
+                # Process chunk content lines
+                if chunk_line.startswith('-'):
+                    # Deleted line from left file
+                    if left_line_num not in ignore_lines:
+                        chunk_has_non_ignored = True
+                        chunk_lines.append(chunk_line)
+                    left_line_num += 1
+                elif chunk_line.startswith('+'):
+                    # Added line to right file
+                    if right_line_num not in ignore_lines:
+                        chunk_has_non_ignored = True
+                        chunk_lines.append(chunk_line)
+                    right_line_num += 1
+                elif chunk_line.startswith(' '):
+                    # Context line - keep if there are non-ignored changes in this chunk
+                    chunk_lines.append(chunk_line)
+                    left_line_num += 1
+                    right_line_num += 1
+                else:
+                    # Empty line or other content
+                    chunk_lines.append(chunk_line)
+                
+                i += 1
+            
+            # Only add chunk if it has non-ignored changes
+            if chunk_has_non_ignored:
+                result_lines.extend(chunk_lines)
+            # Otherwise, skip the entire chunk
+            
+            continue
+        
+        # Lines outside chunks (shouldn't happen in unified format, but handle just in case)
+        result_lines.append(line)
+        i += 1
+    
+    filtered_output = '\n'.join(result_lines)
+    
+    # If only file headers remain, return empty string
+    non_header_lines = [l for l in filtered_output.split('\n') if l and not l.startswith('--- ') and not l.startswith('+++ ')]
+    if not non_header_lines:
+        return ''
+    
+    return filtered_output
+
+
 def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[str]]:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
@@ -121,7 +287,7 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         should_continue: True if it should continue processing, False if max_diff is reached and should stop
         comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
     """
-    global _diff_count, _match_count, _max_diff, _exclude_patterns
+    global _diff_count, _match_count, _max_diff, _exclude_patterns, _ignore_rules
 
     current_lang = extract_language_code(current_skel_path)
 
@@ -169,21 +335,41 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         # Check if files are different (exit code 1 means differences found)
         # Exit code 0 means files are identical
         if result.returncode == 1:
-            # Files are different, increment diff count
-            _diff_count += 1
+            # Get file path for ignore rules (use .mdx path, not .skel.mdx)
+            current_mdx_path = get_original_mdx_path(current_skel_path)
+            file_path_for_ignore = None
+            if current_mdx_path:
+                file_path_for_ignore = get_path_without_lang_dir(current_mdx_path)
+            
+            # Filter diff output using ignore rules
+            filtered_diff = result.stdout
+            if file_path_for_ignore and _ignore_rules:
+                filtered_diff = filter_diff_output(result.stdout, file_path_for_ignore, _ignore_rules)
+            
+            # Check if filtered diff is empty (all differences were ignored)
+            # Remove file headers to check if there's actual content
+            filtered_content = '\n'.join([l for l in filtered_diff.split('\n') 
+                                         if l and not l.startswith('--- ') and not l.startswith('+++ ')])
+            
+            if filtered_content.strip():
+                # Files are different (after filtering), increment diff count
+                _diff_count += 1
 
-            # Print diff output
-            if result.stdout:
-                print(result.stdout, end='')
+                # Print filtered diff output
+                print(filtered_diff, end='')
 
-            # Print original .mdx file diff
-            original_diff = format_diff_with_original_content(
-                result.stdout,
-                korean_skel_path,
-                current_skel_path
-            )
-            if original_diff:
-                print(original_diff, end='')
+                # Print original .mdx file diff (also filtered)
+                original_diff = format_diff_with_original_content(
+                    filtered_diff,
+                    korean_skel_path,
+                    current_skel_path
+                )
+                if original_diff:
+                    print(original_diff, end='')
+            else:
+                # All differences were ignored, treat as matched
+                _match_count += 1
+                return True, 'matched'
 
             # Check if max_diff reached
             if _max_diff is not None:
@@ -342,18 +528,21 @@ def process_directories_recursive(directories: List[Path], convert_func) -> int:
     return 0
 
 
-def initialize_config(max_diff: int, exclude_patterns: List[str]):
+def initialize_config(max_diff: int, exclude_patterns: List[str], ignore_file_path: Optional[Path] = None):
     """
     Initialize global configuration for recursive processing.
     
     Args:
         max_diff: Maximum number of diffs to output before stopping
         exclude_patterns: List of paths to exclude from diff comparison
+        ignore_file_path: Path to ignore_skeleton_diff.yaml file. If None, uses default location.
     """
-    global _diff_count, _match_count, _max_diff, _exclude_patterns
+    global _diff_count, _match_count, _max_diff, _exclude_patterns, _ignore_rules
     _max_diff = max_diff
     _diff_count = 0  # Reset counter
     _match_count = 0  # Reset match counter
     # Use exclude patterns from args, or default if empty
     _exclude_patterns = exclude_patterns if exclude_patterns and len(exclude_patterns) > 0 else ['/index.skel.mdx']
+    # Load ignore rules
+    _ignore_rules = load_ignore_rules(ignore_file_path)
 

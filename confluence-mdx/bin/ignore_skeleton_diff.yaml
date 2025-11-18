@@ -1,0 +1,15 @@
+# Ignore rules for skeleton diff comparison
+# This file specifies which diff results should be ignored when comparing skeleton files
+#
+# Format:
+#   ignores:
+#     - file: /path/to/file.mdx  # Path relative to target/{lang} (e.g., /administrator-manual/databases/db-access-control.mdx)
+#       line_numbers: [10, 20, 30]  # Line numbers in the original .mdx file to ignore
+#
+# Example:
+#   ignores:
+#     - file: /administrator-manual/databases/db-access-control.mdx
+#       line_numbers: [5, 10, 15]
+
+ignores: []
+
