@@ -1378,6 +1378,8 @@ def test_list_item_with_dac_and_multiple_inline_codes():
 * [DAC] MongoDB Atlas Search関連`$search`、`$searchMeta`stageサポート
 * [General] 임시 Login Token 을 통한 웹 &lt;-&gt; 에이전트 간 자동로그인 구현
 * [General] 一時Login Tokenを通じたウェブ&lt;-&gt;エージェント間自動ログイン実装
+4.  **Completion**   **Time** : 전송 완료 또는 전송 실패 시간이 표시됩니다. 
+4.  **Completion Time**：転送完了または転送失敗時間が表示されます。
 """)
 
         output_path, _ = convert_mdx_to_skeleton(input_file)
@@ -1388,6 +1390,8 @@ def test_list_item_with_dac_and_multiple_inline_codes():
 * [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
 * [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
 * [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
+4. **_TEXT_** **_TEXT_** _TEXT_
+4. **_TEXT_** _TEXT_
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
