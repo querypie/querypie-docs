@@ -11,5 +11,7 @@
 #     - file: /administrator-manual/databases/db-access-control.mdx
 #       line_numbers: [5, 10, 15]
 
-ignores: []
+ignores:
+  - file: /administrator-manual/databases/dac-general-configurations.mdx
+    line_numbers: [56, 63, 131]
 
