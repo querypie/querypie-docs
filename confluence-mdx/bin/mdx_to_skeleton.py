@@ -543,15 +543,24 @@ class TextProcessor:
             elif i + 1 < len(text) and text[i:i+2] == '/>':
                 tokens.append(('html_tag', '/>'))
                 i += 2
-            # 6. Whitespace
+            # 6. HTML entity: &lt;, &gt;, &amp;, etc.
+            elif text[i] == '&':
+                match = re.match(r'(&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;)', text[i:])
+                if match:
+                    tokens.append(('html_entity', match.group(0)))
+                    i += len(match.group(0))
+                else:
+                    tokens.append(('text', text[i]))
+                    i += 1
+            # 7. Whitespace
             elif text[i] in ' \n\t':
                 tokens.append(('whitespace', text[i]))
                 i += 1
-            # 7. _TEXT_ placeholder
+            # 8. _TEXT_ placeholder
             elif text[i:].startswith('_TEXT_'):
                 tokens.append(('text_placeholder', '_TEXT_'))
                 i += len('_TEXT_')
-            # 8. 기타 문자
+            # 9. 기타 문자
             else:
                 tokens.append(('text', text[i]))
                 i += 1
@@ -588,15 +597,23 @@ class TextProcessor:
                 elif token_type == 'html_tag' and next_type not in ('whitespace', 'html_tag'):
                     needs_space = True
                 
-                # 5. _TEXT_ 다음에 HTML tag가 오면 공백 추가 (역방향)
+                # 5. HTML entity 다음에 공백이 아닌 텍스트가 오면 공백 추가
+                elif token_type == 'html_entity' and next_type not in ('whitespace', 'html_entity'):
+                    needs_space = True
+                
+                # 6. _TEXT_ 다음에 HTML tag가 오면 공백 추가 (역방향)
                 elif token_type == 'text_placeholder' and next_type == 'html_tag':
                     needs_space = True
                 
-                # 6. _TEXT_ 다음에 inline code가 오면 공백 추가
+                # 7. _TEXT_ 다음에 HTML entity가 오면 공백 추가 (역방향)
+                elif token_type == 'text_placeholder' and next_type == 'html_entity':
+                    needs_space = True
+                
+                # 8. _TEXT_ 다음에 inline code가 오면 공백 추가
                 elif token_type == 'text_placeholder' and next_type == 'code':
                     needs_space = True
                 
-                # 7. _TEXT_ 다음에 _TEXT_가 오면 공백 추가 (변환 결과물 사이 공백 보장)
+                # 9. _TEXT_ 다음에 _TEXT_가 오면 공백 추가 (변환 결과물 사이 공백 보장)
                 elif token_type == 'text_placeholder' and next_type == 'text_placeholder':
                     needs_space = True
                 
@@ -852,6 +869,12 @@ def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str]]:
     content = protector.restore_all(content)
     
     # Step 5: Post-processing to handle special cases
+    # Normalize spacing after HTML entities: ensure space between HTML entity and _TEXT_
+    # Pattern: &lt;_TEXT_ -> &lt; _TEXT_, &gt;_TEXT_ -> &gt; _TEXT_
+    content = re.sub(r'(&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;)(_TEXT_)', r'\1 \2', content)
+    # Pattern: _TEXT_&lt; -> _TEXT_ &lt;, _TEXT_&gt; -> _TEXT_ &gt;
+    content = re.sub(r'(_TEXT_)(&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;)', r'\1 \2', content)
+    
     # Remove trailing spaces after HTML tags at end of lines
     content = re.sub(r'(<br/?>|/>)\s+\n', r'\1\n', content)
     # Remove trailing spaces after HTML tags before newlines (but preserve spaces before other content)
