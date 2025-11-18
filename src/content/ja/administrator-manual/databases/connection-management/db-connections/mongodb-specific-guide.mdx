@@ -12,7 +12,8 @@ MongoDB専用詳細設定ガイドをここで提供します。
 
 ### MongoDBコネクション登録
 
-MongoDBは単一ホストで構成される場合よりReplica SetまたはSharded Cluster（Sharding）形態のマルチホスト構造を使用する場合が多いです。この場合、マルチホスト方式のコネクションを作成する必要があります。
+MongoDBは単一ホストで構成される場合よりReplica SetまたはSharded Cluster（Sharding）形態のマルチホスト構造を使用する場合が多いです。
+この場合、マルチホスト方式のコネクションを作成する必要があります。
 
 #### 1. MongoDBの基本的なConnection String構造理解
 
@@ -29,7 +30,10 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 * options : /? の後に付く接続に関連するオプション。複数のオプションを使用する場合は&で付けて使用します。<br/>ex. /?authSource=admin&replicaSet=rs0
 
 <Callout type="info">
-replica setを使用する場合/? の後にreplicaSet=[replica set名]を入力する必要があります。ex. /?replicaSet=rs0
+replica setを使用する場合 /?
+の後にreplicaSet=[replica set名]を入力する必要があります。
+ex.
+/?replicaSet=rs0
 </Callout>
 
 

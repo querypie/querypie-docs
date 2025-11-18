@@ -18,9 +18,9 @@ DB ConnectionsページでQueryPieに登録されているDBコネクション�
 DB Connectionsページ右上の`Create Connection`ボタンをクリックして手動登録ページに進入します。
 
 <figure data-layout="center" data-align="center">
-![Administrator> Databases> Connection Management> DB Connections> Create Connection> Click here](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.33.36-AM.png)
+![Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.33.36-AM.png)
 <figcaption>
-Administrator> Databases> Connection Management> DB Connections> Create Connection> Click here
+Administrator&gt; Databases&gt; Connection Management&gt; DB Connections&gt; Create Connection&gt; Click here
 </figcaption>
 </figure>
 
@@ -29,9 +29,9 @@ Administrator> Databases> Connection Management> DB Connections> Create Connecti
 このモーダルは主要機能項目（Web Editor、Access Control、Audit Log、Privilege Control、Data Policy、Proxy、DML Snapshot、Ledger Management）で構成されており、各ベンダー別にサポート有無を直感的に確認できるよう助けます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Create Connection](/administrator-manual/databases/connection-management/db-connections/image-20240725-062325.png)
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/image-20240725-062325.png)
 <figcaption>
-Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Create Connection
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
 </figcaption>
 </figure>
 
@@ -64,9 +64,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Cr
 Cloud Providerを通じてリソースを同期する場合、リソースがクラスターで構成されているとClusterモードが有効化されます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > List Details](/administrator-manual/databases/connection-management/db-connections/image-20240725-062536.png)
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/image-20240725-062536.png)
 <figcaption>
-Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > List Details
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
 </figcaption>
 </figure>
 
@@ -85,13 +85,15 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Li
 
 <Callout type="info">
 **Clusterモードとは何ですか？**
-一般的にPrimaryおよびSecondaryクラスターおよびエンドポイント管理のためにCloud Provider同期時にクラスター構造で同期されて登録されます。手動でコネクションを登録する場合にもClusterトグルボタンを通じてクラスター構造でコネクションを登録できます。Clusterモード活用時クラスターおよびインスタンスエンドポイント構造で接続権限を管理でき、**負荷分散および権限管理などの目的で一部ユーザーに特定インスタンスエンドポイントのみ権限を付与**できます。
+一般的にPrimaryおよびSecondaryクラスターおよびエンドポイント管理のためにCloud Provider同期時にクラスター構造で同期されて登録されます。
+手動でコネクションを登録する場合にもClusterトグルボタンを通じてクラスター構造でコネクションを登録できます。
+Clusterモード活用時クラスターおよびインスタンスエンドポイント構造で接続権限を管理でき、**負荷分散および権限管理などの目的で一部ユーザーに特定インスタンスエンドポイントのみ権限を付与**できます。
 </Callout>
 
 
 ### DBコネクションリスト照会
 
-管理者コンソール内Databases設定 > DB Connectionsページで現在QueryPieに登録されたDBコネクションリストを確認できます。
+管理者コンソール内Databases設定 &gt; DB Connectionsページで現在QueryPieに登録されたDBコネクションリストを確認できます。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections](/administrator-manual/databases/connection-management/db-connections/image-20240714-055800.png)
@@ -116,7 +118,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Label** ：台帳DB有無
     *  **Tag** ：コネクションに割り当てられたタグ
         * 各タグ入力方式：Key入力 → エンターキー入力 → 演算子入力 → Value入力 → エンターキー入力
-            * サポートする演算子：`=`、`!=`、`:`、`!:`
+            * サポートする演算子：`=`, `!=`, `:`, `!:`
         * Keyが同じタグを複数入力時OR検索実行（合集合）
         * Keyが異なるタグを複数入力時AND検索実行（交集合）
 
@@ -126,9 +128,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
 DB Connectionsページで詳細情報を照会しようとするアイテムをクリックすると詳細ページに進入します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > List Details](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.37.08-AM.png)
+![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details](/administrator-manual/databases/connection-management/db-connections/Screenshot-2025-04-10-at-11.37.08-AM.png)
 <figcaption>
-Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > List Details
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; List Details
 </figcaption>
 </figure>
 
@@ -139,9 +141,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections > Li
 DBコネクション詳細ページ右上`Accessible Users`ボタンをクリックするとDrawerが開き、該当コネクションにアクセス可能なユーザーリストを照会できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator > Databases > DB Connections > List Details > Accessible Users](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-223340.png)
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-223340.png)
 <figcaption>
-Administrator > Databases > DB Connections > List Details > Accessible Users
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Accessible Users
 </figcaption>
 </figure>
 
@@ -150,9 +152,9 @@ Administrator > Databases > DB Connections > List Details > Accessible Users
 DBコネクション詳細ページ内Connection Information領域で生成時入力した情報を照会し修正できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator > Databases > DB Connections > List Details > Connection Information](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-223248.png)
+![Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-223248.png)
 <figcaption>
-Administrator > Databases > DB Connections > List Details > Connection Information
+Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connection Information
 </figcaption>
 </figure>
 
@@ -173,7 +175,8 @@ Administrator > Databases > DB Connections > List Details > Connection Informati
 変更内容を保存するには、詳細ページ右上`Save Changes`ボタンをクリックしてください。
 
 <Callout type="info">
-Secret Store項目はSecurity設定メニューでSecret Store使用を有効化した時表示され、実際のSecret Store使用のためにはAdmin &gt; General &gt; Integration &gt; HashiCorp VaultページでVault登録が必要です。詳細内容は[Secret Store連動](../../general/system/integrations/integrating-with-secret-store)文書を参照してください。
+Secret Store項目はSecurity設定メニューでSecret Store使用を有効化した時表示され、実際のSecret Store使用のためにはAdmin &gt; General &gt; Integration &gt; HashiCorp VaultページでVault登録が必要です。
+詳細内容は[Secret Store連動](../../general/system/integrations/integrating-with-secret-store)文書を参照してください。
 </Callout>
 
 #### 参照. Secret Store設定方法
@@ -183,7 +186,7 @@ Secret Store設定に保存されたSecret Engineタイプに 따라DB Account�
 * `Secret Engine` = K/V設定時、コネクション情報ページでUsername / Password入力項目が表示されます。
     * Username / Password項目にVaultのPathを入力します。
     * Pathの形態は`prod_db/data/mysql?username`形態で入力できます。
-    * 例基準実際にVault内の経路は`prod_db > mysql`のkeyが`username`の場合です。
+    * 例基準実際にVault内の経路は`prod_db &gt; mysql`のkeyが`username`の場合です。
     * 中間の`/data`経路を追加しなければなりません。
 * `Secret Engine` = Database設定時、コネクション情報ページでAccount入力項目が表示されます。
     * Account項目にVaultのPathを入力します。
@@ -192,7 +195,8 @@ Secret Store設定に保存されたSecret Engineタイプに 따라DB Account�
 
 ### 追加設定
 
-ページ下部のタブ領域でDBコネクションに対する追加設定が可能です。項目別説明を参照してください。
+ページ下部のタブ領域でDBコネクションに対する追加設定が可能です。
+項目別説明を参照してください。
 
 #### Additional Information
 
@@ -218,10 +222,10 @@ Additional Informationタブ
 * `DML Snapshot On/Off`：該当コネクションで実行される前後データを記録するかどうかを選択します。（Default = Off）
 * `User Action Purpose Required`：該当コネクションで理由入力を強制する作業を設定します。
     * Allow reusing the same reason throughout a session：入力された理由を再利用できるよう設定できます。
-    * Export Schema Purpose：Export > SQL > Schema選択後データエクスポート時理由入力有無設定
-    * Import Schema Purpose：Import > SQL > Schema選択後データインポート時理由入力有無設定
-    * Export Data Purpose：Export > CSV / JSON / EXCELでデータエクスポート時理由入力有無設定
-    * Import Data Purpose：Import > CSV / JSON / EXCELでデータインポート時理由入力有無設定
+    * Export Schema Purpose：Export &gt; SQL &gt; Schema選択後データエクスポート時理由入力有無設定
+    * Import Schema Purpose：Import &gt; SQL &gt; Schema選択後データインポート時理由入力有無設定
+    * Export Data Purpose：Export &gt; CSV / JSON / EXCELでデータエクスポート時理由入力有無設定
+    * Import Data Purpose：Import &gt; CSV / JSON / EXCELでデータインポート時理由入力有無設定
     * SQL Execute：SQLクエリ実行およびテーブル照会時理由入力有無を設定します。
 * `Proxy Usage`：該当コネクションのプロキシ使用有無を選択します。詳細説明はProxy設定を参照します。
 * `Character Set`：該当コネクションで使用する文字セットを選択します。
@@ -252,7 +256,9 @@ Proxy Usageのオプション
 * Use QueryPie registered account：Proxyを通じてDBに接続する時3rd party toolに入力するアカウント情報はQueryPieのProxyで指定したアカウント情報を使用します。
 * Use existing database acount with Agent：Proxyを通じてDBに接続する時3rd party toolに入力するアカウント情報は実際のDBアカウントの情報を使用します。
 
-QueryPie 9.17からProxyで指定したアカウント情報使用時セキュリティ強化措置で乱数パスワードを使用するよう変更されました。QueryPie 10.2.2から乱数パスワード使用が困難な状況に対する改善で固定パスワードを使用できる「**Fixed Credential for Agent**」オプションが提供されます。乱数パスワード使用が困難な場合管理者がこのオプションを有効化した後パスワードを固定して使用でき、Fixed Credential for AgentはOracle、PostgreSQL、MongoDBに限ってのみ可能です。
+QueryPie 9.17からProxyで指定したアカウント情報使用時セキュリティ強化措置で乱数パスワードを使用するよう変更されました。
+QueryPie 10.2.2から乱数パスワード使用が困難な状況に対する改善で固定パスワードを使用できる「**Fixed Credential for Agent**」オプションが提供されます。
+乱数パスワード使用が困難な場合管理者がこのオプションを有効化した後パスワードを固定して使用でき、Fixed Credential for AgentはOracle、PostgreSQL、MongoDBに限ってのみ可能です。
 </Callout>
 
 #### SSL/SSH Setting
@@ -267,14 +273,16 @@ SSL/SSH Settingタブ
 </figure>
 
 <Callout type="info">
-SSL/SSH構成情報は事前に登録されていなければなりません。以下の文書を参照してください。
+SSL/SSH構成情報は事前に登録されていなければなりません。
+以下の文書を参照してください。
 * [SSL Configurations](ssl-configurations)
 * [SSH Configurations](ssh-configurations)
 </Callout>
 
 #### Connection Owner
 
-Connection Ownerタブで`Add Connection Owner`ボタンをクリックし、DBコネクション別Connection Ownerを指定できます。（ユーザーまたはグループ単位で指定可能）`Save Changes`ボタンで保存します。
+Connection Ownerタブで`Add Connection Owner`ボタンをクリックし、DBコネクション別Connection Ownerを指定できます。
+（ユーザーまたはグループ単位で指定可能）`Save Changes`ボタンで保存します。
 
 <figure data-layout="center" data-align="center">
 ![Connection Ownerタブ](/administrator-manual/databases/connection-management/db-connections/screenshot-20240726-180851.png)
@@ -289,7 +297,8 @@ Connection Ownerは該当DBコネクションに対するSQL Request、SQL Expor
 
 #### Tags
 
-TagsタブでDBコネクション別にタグを登録して管理できます。`Add Tag`ボタンをクリックするとタグ行が追加され、KeyとValueを入力します。入力完了後`Save Changes`ボタンで保存します。
+TagsタブでDBコネクション別にタグを登録して管理できます。`Add Tag`ボタンをクリックするとタグ行が追加され、KeyとValueを入力します。
+入力完了後`Save Changes`ボタンで保存します。
 
 <figure data-layout="center" data-align="center">
 ![Tagsタブ](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231618.png)
@@ -303,7 +312,8 @@ Tagsタブ
 DBコネクションにPrivilege別に使用しなければならない接続アカウントを強制指定する機能です。
 
 <Callout type="info">
-該当タブはSecurityでAdvanced Privilege Settingを有効化した場合のみ表示されます。詳細内容は[Security](../../general/company-management/security)内**DBコネクションセキュリティ設定**文書を参照してください。
+該当タブはSecurityでAdvanced Privilege Settingを有効化した場合のみ表示されます。
+詳細内容は[Security](../../general/company-management/security)内**DBコネクションセキュリティ設定**文書を参照してください。
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -322,9 +332,9 @@ BigQuery、Dynamo、Athena、Impala、Presto、Trino、RedisベンダーはPrivi
 </Callout>
 
 <figure data-layout="center" data-align="center">
-![QueryPie Web > Databases > Connections](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231958.png)
+![QueryPie Web &gt; Databases &gt; Connections](/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-231958.png)
 <figcaption>
-QueryPie Web > Databases > Connections
+QueryPie Web &gt; Databases &gt; Connections
 </figcaption>
 </figure>
 
