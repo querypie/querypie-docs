@@ -25,7 +25,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 Usersリストで確認可能な情報は以下の通りです。
 
 *  **Auth Provider**  ：ユーザー認証提供者
-    * QueryPieまたはUser Management > Authenticationで設定されたIdP Typeを表示します。
+    * QueryPieまたはUser Management &gt; Authenticationで設定されたIdP Typeを表示します。
     * 手動で登録されたユーザーの場合、QueryPieで表示されます。
     * IdPから連動されたユーザーは各ID Provider名で表示されます。
     * Authentication関連の詳細内容は[Authentication](authentication)文書を参照してください。
@@ -76,7 +76,8 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; Add User
 ユーザーのUsername項目は固有な値で最初の追加以降修正できません。
 </Callout>
 
-該当ユーザーがQueryPie ProviderでUsersリストに追加されたことを確認できます。基本的にAdmin権限のない基本Userで登録されます。
+該当ユーザーがQueryPie ProviderでUsersリストに追加されたことを確認できます。
+基本的にAdmin権限のない基本Userで登録されます。
 
 
 ### ユーザーに管理者役割付与または回収
@@ -164,11 +165,13 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 
 ### ユーザー再有効化
 
-管理者によって手動で無効化されたか、長期未接続により無効化処理されたユーザーのアカウント状態はInactiveで表示されます。このようなユーザーアカウントを再び有効化する方法は大きく2つです。
+管理者によって手動で無効化されたか、長期未接続により無効化処理されたユーザーのアカウント状態はInactiveで表示されます。
+このようなユーザーアカウントを再び有効化する方法は大きく2つです。
 
 #### Usersページで再有効化
 
-ユーザーページ内Statusドロップダウンで、再有効化しようとするユーザーのStatus値をActiveに変更します。理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
+ユーザーページ内Statusドロップダウンで、再有効化しようとするユーザーのStatus値をActiveに変更します。
+理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users](/administrator-manual/general/user-management/users/screenshot-20240726-103711.png)
@@ -179,7 +182,8 @@ Administrator &gt; General &gt; User Management &gt; Users
 
 #### ユーザー詳細ページで再有効化
 
-無効化されたユーザーの詳細ページで`Reactivate`ボタンをクリックします。理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
+無効化されたユーザーの詳細ページで`Reactivate`ボタンをクリックします。
+理由入力モーダルが出力されると変更理由を入力後`OK`ボタンをクリックして変更を完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details ](/administrator-manual/general/user-management/users/screenshot-20240726-103241.png)
@@ -192,10 +196,13 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 ### ユーザー情報修正
 
 <Callout type="important">
-QueryPieで手動に登録したユーザーの情報のみ修正可能です。SCIMを通じて連動してきたユーザー情報修正は台帳データ更新後同期を経て可能です。
+QueryPieで手動に登録したユーザーの情報のみ修正可能です。
+SCIMを通じて連動してきたユーザー情報修正は台帳データ更新後同期を経て可能です。
 </Callout>
 
-ユーザー詳細ページで`Edit`ボタンをクリックすると修正モードに進入します。修正可能なフィールドは有効化されます。入力完了後`Save`ボタンを押して修正を完了します。
+ユーザー詳細ページで`Edit`ボタンをクリックすると修正モードに進入します。
+修正可能なフィールドは有効化されます。
+入力完了後`Save`ボタンを押して修正を完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Edit](/administrator-manual/general/user-management/users/screenshot-20240726-094436.png)
@@ -208,7 +215,8 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 ### ユーザー削除
 
 <Callout type="important">
-QueryPieで手動に登録したユーザーのみ直接削除可能です。SCIMを通じて連動してきたユーザー削除は台帳データ更新後同期を経て可能です。
+QueryPieで手動に登録したユーザーのみ直接削除可能です。
+SCIMを通じて連動してきたユーザー削除は台帳データ更新後同期を経て可能です。
 </Callout>
 
 ユーザー詳細ページで`Delete`ボタンをクリックするとDelete User確認モーダルが露出されます。
@@ -226,10 +234,12 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 ### ユーザーパスワード再設定
 
 <Callout type="important">
-QueryPieで手動に登録したユーザーのみパスワード再設定が可能です。SCIMを通じて連動してきたユーザーの認証手段はSCIMで管理しています。
+QueryPieで手動に登録したユーザーのみパスワード再設定が可能です。
+SCIMを通じて連動してきたユーザーの認証手段はSCIMで管理しています。
 </Callout>
 
-パスワード再設定は一時パスワード発行を通じて進行されます。管理者はユーザー詳細ページで一時パスワードを発行した後、ユーザーに一時パスワードを案内しなければなりません。
+パスワード再設定は一時パスワード発行を通じて進行されます。
+管理者はユーザー詳細ページで一時パスワードを発行した後、ユーザーに一時パスワードを案内しなければなりません。
 
 #### 一時パスワード発行
 
@@ -256,7 +266,9 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 </figcaption>
 </figure>
 
-ユーザーが受信することになるメールの内容は以下のようになります。パスワード初期化リンクは30分間有効です。もし30分を超えてユーザーがこのリンクで接続しない場合、このリンクでパスワードを初期化できませんので、管理者が再び上記手順（User changes own password (via email)）を実行してパスワード初期化メールを発送してあげる必要があります。
+ユーザーが受信することになるメールの内容は以下のようになります。
+パスワード初期化リンクは30分間有効です。
+もし30分を超えてユーザーがこのリンクで接続しない場合、このリンクでパスワードを初期化できませんので、管理者が再び上記手順（User changes own password (via email)）を実行してパスワード初期化メールを発送してあげる必要があります。
 
 <figure data-layout="center" data-align="center">
 ![パスワード初期化メール](/administrator-manual/general/user-management/users/image-20241218-224655.png)
@@ -270,7 +282,8 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 
 #### パスワード再設定（ユーザー）
 
-ユーザーがログインする時、前に設定した一時パスワードを入力すると、すぐにパスワード再設定画面に進入します。パスワードを変更した後`Change Password`ボタンをクリックするとパスワード変更が完了し、新しいパスワードでログインできます。
+ユーザーがログインする時、前に設定した一時パスワードを入力すると、すぐにパスワード再設定画面に進入します。
+パスワードを変更した後`Change Password`ボタンをクリックするとパスワード変更が完了し、新しいパスワードでログインできます。
 
 
 <figure data-layout="center" data-align="center">
@@ -283,11 +296,15 @@ Emailを通じてユーザーが自分のパスワードを直接初期化する
 
 ### ユーザーOTP再設定
 
-Usersページでユーザーをクリックすると詳細情報ページに進入します。OTPを通じて2次認証を設定した場合、OTP再設定機能を提供します。OTP再設定後、ユーザーは自分のOTPを再び設定しなければなりません。OTPを再び設定する方法は[My Dashboard](../../../user-manual/my-dashboard)文書を参照してください。
+Usersページでユーザーをクリックすると詳細情報ページに進入します。
+OTPを通じて2次認証を設定した場合、OTP再設定機能を提供します。
+OTP再設定後、ユーザーは自分のOTPを再び設定しなければなりません。
+OTPを再び設定する方法は[My Dashboard](../../../user-manual/my-dashboard)文書を参照してください。
 
 #### ユーザーOTP再設定
 
-ユーザーの詳細ページで`Reset OTP`ボタンをクリックします。警告モーダルが出力されると`Reset`ボタンをクリックして変更を再設定完了します。
+ユーザーの詳細ページで`Reset OTP`ボタンをクリックします。
+警告モーダルが出力されると`Reset`ボタンをクリックして変更を再設定完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/users/image-20250116-131037.png)

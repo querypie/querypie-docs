@@ -4,7 +4,7 @@ title: '[Okta]プロビジョニング連動ガイド'
 
 import { Callout } from 'nextra/components'
 
-# [Okta]プロビジョニング連動ガイド
+# [Okta] プロビジョニング連動ガイド
 
 <Callout type="info">
 本ガイドは、OktaのApp Integration Wizard（AIW）を基にQueryPieとSCIM連動を実装する方法を案内します。
@@ -97,6 +97,9 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
     5. HTTP Header &gt; Authorization：QueryPieで生成したSCIM専用access token値を挿入します。
 3. Test Connector Configurationボタンを押して接続テストを進行します。
 4. 「*Connector configured successfully*」文句と共にポップアップが現れると、`Close`ボタンをクリックします。
+  <figure data-layout="center" data-align="center">
+  ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png)
+  </figure>
 5. 下部の`Save`ボタンを押して接続設定を保存します。
 
 
@@ -129,7 +132,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 QueryPie Profileの属性のうち、staticIp、macAddressなど一部attribute項目はSCIM Integrationの基本設定ではImportされません。
 </Callout>
 
-QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目がSCIM Integration当時に別途importされません。該当Attributeは以下の通りです：
+QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目がSCIM Integration当時に別途importされません。
+該当Attributeは以下の通りです：
 
 1. secondEmail 
 2. mobilePhone
@@ -182,9 +186,21 @@ QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目
 #### ユーザーProvisioningチェック
 
 1. SCIMアプリに戻ってAssignmentsタブで`Assign`ボタンのオプションを通じてユーザーを割り当てます。
+  <figure data-layout="center" data-align="center">
+  ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png)
+  <figcaption>
+  Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
+  </figcaption>
+  </figure>
     1. **Assign to People**：ユーザー個別単位で割り当て
     2. **Assign to Groups**：ユーザーグループ単位で割り当て
 2. QueryPieアプリに戻ってAdministrator &gt; General &gt; User Management &gt; Usersに移動してユーザーが正常プッシュされたかを確認します。
+  <figure data-layout="center" data-align="center">
+  ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png)
+  <figcaption>
+  Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
+  </figcaption>
+  </figure>
 ---
 
 #### グループProvisioningチェック
@@ -202,5 +218,6 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 2. QueryPieアプリに戻ってAdministrator &gt; General &gt; User Management &gt; Groupsに移動してグループが正常プッシュされたかを確認します。
 
 <Callout type="important">
-Oktaなど他社Identity Provider（IdP）からプッシュして生成したAuth ProviderがQueryPieではないグループの場合、グループの削除を該当IdPでunlink後削除処理することをお勧めします。本製品でグループを削除する場合、該当IdPでの管理フローが絡んで該当削除されたグループ名では製品に再びpushが困難になる可能性があります。
+Oktaなど他社Identity Provider（IdP）からプッシュして生成したAuth ProviderがQueryPieではないグループの場合、グループの削除を該当IdPでunlink後削除処理することをお勧めします。
+本製品でグループを削除する場合、該当IdPでの管理フローが絡んで該当削除されたグループ名では製品に再びpushが困難になる可能性があります。
 </Callout>

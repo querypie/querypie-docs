@@ -8,10 +8,12 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieではOkta連携をサポートします。Oktaのユーザーおよびグループを同期してアクセス権限を付与しポリシーを適用でき、この過程でユーザーに簡素化され便利な環境を提供しながらも厳格なセキュリティポリシーを運営できます。QueryPieとOktaの統合はデータベースおよびシステム管理エコシステムのセキュリティと運営効率性およびユーザー経験が向上させることができます。
+QueryPieではOkta連携をサポートします。
+Oktaのユーザーおよびグループを同期してアクセス権限を付与しポリシーを適用でき、この過程でユーザーに簡素化され便利な環境を提供しながらも厳格なセキュリティポリシーを運営できます。
+QueryPieとOktaの統合はデータベースおよびシステム管理エコシステムのセキュリティと運営効率性およびユーザー経験が向上させることができます。
 
 <Callout type="info">
-SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビジョニング連携ガイド](../provisioning/okta-provisioning-integration-guide)内手順通り代わりに進行してください。下部のOkta APIを活用したアウトバウンドユーザー同期設定を同時に活用する場合、ユーザー同期に影響を受ける可能性がある点ご注意ください。
+SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビジョニング連携ガイド](../provisioning/okta-provisioning-integration-guide) 内手順通り代わりに進行してください。下部のOkta APIを活用したアウトバウンドユーザー同期設定を同時に活用する場合、ユーザー同期に影響を受ける可能性がある点ご注意ください。
 </Callout>
 
 
@@ -100,7 +102,8 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 
 ### 最小権限のOkta APIトークン発行
 
-QueryPie-Okta間ユーザーおよびグループ、グループメンバーシップの同期のためにOkta Admin APIトークン発行が必要です。一般的な方法では利用しているOkta最高管理者（Super Administrator）/読み取り権限管理者（Read-Only Administrator）アカウントでAPIトークンを以下の方法で発行して適用する方法があります：
+QueryPie-Okta間ユーザーおよびグループ、グループメンバーシップの同期のためにOkta Admin APIトークン発行が必要です。
+一般的な方法では利用しているOkta最高管理者（Super Administrator）/読み取り権限管理者（Read-Only Administrator）アカウントでAPIトークンを以下の方法で発行して適用する方法があります：
 
 1. Okta管理者ページ左側パネルでSecurity &gt; APIメニューに移動します。
 2. APIメニューでTokensタブに移動します。
@@ -191,5 +194,5 @@ Okta Admin &gt; Applications &gt; QueryPie App上部URL
 
 <Callout type="info">
 該当連携方式ではユーザーおよびグループはOkta → QueryPieへの単方向同期をサポートします。
-SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビジョニング連携ガイド](../provisioning/okta-provisioning-integration-guide)内手順通り代わりに進行してください。
+SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビジョニング連携ガイド](../provisioning/okta-provisioning-integration-guide) 内手順通り代わりに進行してください。
 </Callout>

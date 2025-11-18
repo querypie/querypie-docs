@@ -22,7 +22,19 @@ OAuth 2.0認証を使用するためのGoogle Cloud API Integration
 1. General &gt; System &gt; Integrationメニューを選択します。
 2. Authentication項目下でGoogle Cloud APIタイルをクリックします。
 3. OAuth 2.0 Client IDs項目の`+Add`ボタンをクリックします。<br/>
+  <figure data-layout="center" data-align="center">
+  ![Client ID追加](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-102818.png)
+  <figcaption>
+  Client ID追加
+  </figcaption>
+  </figure>
 4. ポップアップウィンドウに情報を入力しSaveボタンを押して保存します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![OAuth 2.0 Client ID情報入力](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-103102.png)
+  <figcaption>
+  OAuth 2.0 Client ID情報入力
+  </figcaption>
+  </figure>
     1. Name : リストで識別しやすい名前を入力します。
     2. Client ID : Google API Consoleで確認したClient IDを入力します。
     3. Client Secret : Google API Consoleで確認したClient IDを入力します。
@@ -35,4 +47,16 @@ OAuth 2.0認証を使用するためのGoogle Cloud API Integration
 #### OAuth 2.0 Client ID削除
 
 1. リストで削除を希望する特定Client IDをチェックします。<br/>
+  <figure data-layout="center" data-align="center">
+  ![Client ID削除](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-110050.png)
+  <figcaption>
+  Client ID削除
+  </figcaption>
+  </figure>
 2. 上部のDeleteボタンを押して削除します。<br/>この時削除したいClient IDがコネクション設定と接続されていると以下のような警告メッセージが出力され削除できません。まずコネクション設定でOAuth設定を削除するかコネクションを削除する必要があります。<br/>
+  <figure data-layout="center" data-align="center">
+  ![接続でClient IDを使用中に削除を試みると警告表示](/administrator-manual/general/system/integrations/integrating-google-cloud-api-for-oauth-20/image-20250116-105240.png)
+  <figcaption>
+  接続でClient IDを使用中に削除を試みると警告表示
+  </figcaption>
+  </figure>
