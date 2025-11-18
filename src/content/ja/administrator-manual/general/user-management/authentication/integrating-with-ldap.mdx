@@ -93,7 +93,7 @@ Membership Type
 </td>
 <td>
 ユーザーにグループ情報が含まれる場合、`Include group information in user entries`を選択し、下部フィールドに参照するAttributeを入力します。
-* 例：`member`、`uniqueMember`、`memberUid`など
+* 例：`member`, `uniqueMember`, `memberUid` など
 </td>
 </tr>
 <tr>
@@ -146,7 +146,7 @@ LDAPで管理中のユーザー属性をQueryPie内Attributeとマッピング�
 右上の`Add Row`ボタンをクリックすると新しいマッピング行が追加され、各行ごとにLDAP Attributeと対応するQueryPie Attributeを指定できます。
 
 1. 該当機能はAdmin &gt; General &gt; User Management &gt; Profile EditorでSource PriorityがInherit from profile sourceに設定されたQueryPie Attributeに限り適用されます。
-2. QueryPie Attributeである`Username (loginId)`、`Primary Email (email)`項目はLDAP連携設定時別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
+2. QueryPie Attributeである`Username (loginId)`, `Primary Email (email)` 項目はLDAP連携設定時別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
 3. マッピング行削除または変更時、Save ChangesをクリックしなければUI上で変更事項が反映されず、Synchronizeを追加でクリックしなければLDAPと実際の同期が実行されます。つまり、Save Changesは画面上変更、Synchronizeはシステム反映を意味します。
 </Callout>
 
@@ -188,7 +188,7 @@ LDAP Attribute
 </td>
 <td>
 連携するLDAP Attributeを入力します
-* 例：`manager`、`mobile`など
+* 例：`manager`, `mobile` など
 </td>
 </tr>
 <tr>
@@ -200,7 +200,7 @@ QueryPie Attribute
 </td>
 <td>
 マッピング対象となるQueryPie Attributeを選択します。リストにはProfile EditorでInherit from profile sourceに設定された項目のみ表示され、Display NameとVariable Nameが一緒に表示されます。
-* 例：`Manager ID (managerId)`、<br/>`Mobile Phone (mobilePhone)`など
+* 例：`Manager ID (managerId)`, <br/>`Mobile Phone (mobilePhone)` など
 </td>
 </tr>
 </tbody>
@@ -238,5 +238,17 @@ QueryPie Attribute
 
 ### QueryPieでLDAP認証してログイン
 
-1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。
+1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。 <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Admin &gt; General &gt; User Management &gt; Users](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-215940.png)
+  <figcaption>
+  Admin &gt; General &gt; User Management &gt; Users
+  </figcaption>
+  </figure>
 2. これでログインページでIDおよびPassword項目にLDAP認証情報を入力後ログインできます。
+  <figure data-layout="center" data-align="center">
+  ![QueryPie Log In](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20240723-063737.png)
+  <figcaption>
+  QueryPie Log In
+  </figcaption>
+  </figure>

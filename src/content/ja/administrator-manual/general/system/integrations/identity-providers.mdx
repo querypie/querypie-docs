@@ -49,7 +49,8 @@ Internal databaseの詳細設定
 </figure>
 
 <Callout type="important">
-注意：設定後、一度でもユーザーを同期した場合、設定したIdPを削除（削除後他のIdPに変更）することはできません。IdPを変更または削除する必要がある場合は、Customer Portalを通じてお問い合わせください。
+注意：設定後、一度でもユーザーを同期した場合、設定したIdPを削除（削除後他のIdPに変更）することはできません。
+IdPを変更または削除する必要がある場合は、Customer Portalを通じてお問い合わせください。
 </Callout>
 
 ### LDAP連携
@@ -112,7 +113,8 @@ Group Base DN
 必須
 </td>
 <td data-highlight-colour="#ffffff">
-LDAPサーバーのグループBase DN値を入力します。このパスの下位にあるグループのみがGroupとして同期されます。
+LDAPサーバーのグループBase DN値を入力します。
+このパスの下位にあるグループのみがGroupとして同期されます。
 * 例：`dc=example,dc=com`
 </td>
 </tr>
@@ -149,7 +151,7 @@ Membership Type
 </td>
 <td data-highlight-colour="#ffffff">
 ユーザーにグループ情報が含まれている場合、`Include group information in user entries`を選択し、下位フィールドに参照するAttributeを入力します。
-* 例：`member`、`uniqueMember`、`memberUid`など
+* 例: `member`, `uniqueMember`, `memberUid` 등
 </td>
 </tr>
 <tr>
@@ -193,7 +195,7 @@ LDAPで管理中のユーザー属性をQueryPie内Attributeとマッピング�
 右上の`Add Row`ボタンをクリックすると新しいマッピング行が追加され、各行ごとにLDAP Attributeと対応するQueryPie Attributeを指定できます。
 
 1. 該当機能はAdmin &gt; General &gt; User Management &gt; Profile EditorでSource PriorityがInherit from profile sourceに設定されたQueryPie Attributeに限り適用されます。
-2. QueryPie Attributeの`Username (loginId)`、`Primary Email (email)`項目はLDAP連携設定時に別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
+2. QueryPie Attributeの`Username (loginId)`, `Primary Email (email)`項目はLDAP連携設定時に別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
 3. マッピング行削除または変更時、Saveボタンをクリックする必要があり、UI上で変更事項が反映され、Synchronizeを追加でクリックする必要があり、LDAPと実際の同期が実行されます。つまり、Saveは画面上変更、Synchronizeはシステム反映を意味します。
 </Callout>
 
@@ -529,5 +531,7 @@ Custom Identity Providerは認証APIサーバーを使用する特殊な場合�
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートすると1にマイグレーションされます。
+
+
 
 

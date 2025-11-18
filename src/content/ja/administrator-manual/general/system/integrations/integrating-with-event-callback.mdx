@@ -6,7 +6,8 @@ title: 'Event Callback連携'
 
 ### Overview
 
-Event Callback連携はウェブフック（Webhook）を通じてQueryPieで発生するシステムイベントを顧客社のアプリケーションにリアルタイム送信する機能です。これを通じて主要システムイベント通知を外部サービスと統合して管理できます。
+Event Callback連携はウェブフック（Webhook）を通じてQueryPieで発生するシステムイベントを顧客社のアプリケーションにリアルタイム送信する機能です。
+これを通じて主要システムイベント通知を外部サービスと統合して管理できます。
 
 
 ### Event Callback設定
@@ -36,6 +37,12 @@ Event Callback Integration詳細ページ
         * `USER_DELETED`: ユーザー削除
     *  **Authorization Header** : ウェブフックリクエスト時セキュリティ認証のために必要な認証ヘッダー値を入力します。（例：Authorization: Bearer &lt;token&gt;）
     *  **Description** : 設定に対する説明を入力します。（選択事項）<br/>
+      <figure data-layout="center" data-align="center">
+      ![Event Callback設定ポップアップダイアログ](/administrator-manual/general/system/integrations/integrating-with-event-callback/Screenshot-2025-08-25-at-6.06.50-PM.png)
+      <figcaption>
+      Event Callback設定ポップアップダイアログ
+      </figcaption>
+      </figure>
 
 
 1. `Create`ボタンを押して設定を保存します。
@@ -52,5 +59,8 @@ Event Callback Integration詳細ページ
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Event Callbackタイルをクリックして詳細ページに移動します。
 3. 生成されたEvent Callbackリストで削除したい項目の左側チェックボックスをチェックします。
-4. リスト左上部で`Delete`ボタンをクリックします
+4. リスト左上部で`Delete`ボタンをクリックします <br/> 
+  <figure data-layout="center" data-align="center">
+  ![Screenshot-2025-08-25-at-6.14.27-PM.png](/administrator-manual/general/system/integrations/integrating-with-event-callback/Screenshot-2025-08-25-at-6.14.27-PM.png)
+  </figure>
 5. 確認ウィンドウが表示されると削除を進行して設定を削除します。

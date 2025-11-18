@@ -7,7 +7,8 @@ import { Callout } from 'nextra/components'
 # [Okta]プロビジョニング連動ガイド
 
 <Callout type="info">
-本ガイドは、OktaのApp Integration Wizard（AIW）を基にQueryPieとSCIM連動を実装する方法を案内します。本製品のSCIM機能はRPC 7643を基にSCIM 2.0基本規格に合わせて製作されたため、他社Identity Provider連動時にも該当ガイドに従って必要な情報をQueryPieで収集して連動を進行してください。
+本ガイドは、OktaのApp Integration Wizard（AIW）を基にQueryPieとSCIM連動を実装する方法を案内します。
+本製品のSCIM機能はRPC 7643を基にSCIM 2.0基本規格に合わせて製作されたため、他社Identity Provider連動時にも該当ガイドに従って必要な情報をQueryPieで収集して連動を進行してください。
 </Callout>
 
 ### Prerequisites
@@ -39,15 +40,15 @@ Okta APIを活用したアウトバウンドユーザー同期を設定する予
 #### OktaカスタムSCIMアプリ生成
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console > Applications > Applications > Create App Integration > SAML 2.0 > Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
 <figcaption>
-Okta Admin Console > Applications > Applications > Create App Integration > SAML 2.0 > Configure SAML
+Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML
 </figcaption>
 </figure>
 
 1. [Oktaサービス](https://login.okta.com/)に接続して管理者アカウントでログインします。
 2. 右上の`Admin`ボタンをクリックして管理者コンソールに接続します。
-3. Okta管理者ページの左側パネルでApplications > Applicationsメニューに移動します。
+3. Okta管理者ページの左側パネルでApplications &gt; Applicationsメニューに移動します。
 4. `Create App Integration`ボタンをクリックします。
 5. カスタムSCIM連動を目的としてSign-in methodで**SAML 2.0**オプションを選択した後、`Next`ボタンをクリックします。
 6. General SettingsステップでGeneral Settings内の値を適切に定義した後、下部の`Next`ボタンをクリックします。
@@ -72,9 +73,9 @@ Okta Admin Console > Applications > Applications > Create App Integration > SAML
 #### Okta-QueryPie Provisioning連動
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
 <figcaption>
-Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > Integration
+Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration
 </figcaption>
 </figure>
 
@@ -93,7 +94,7 @@ Okta Admin Console > Applications > Applications > Custom SCIM App > Provisionin
         * Push Groups
         * Import Groups
     4. Authentication Mode：「**HTTP Header**」
-    5. HTTP Header > Authorization：QueryPieで生成したSCIM専用access token値を挿入します。
+    5. HTTP Header &gt; Authorization：QueryPieで生成したSCIM専用access token値を挿入します。
 3. Test Connector Configurationボタンを押して接続テストを進行します。
 4. 「*Connector configured successfully*」文句と共にポップアップが現れると、`Close`ボタンをクリックします。
 5. 下部の`Save`ボタンを押して接続設定を保存します。
@@ -104,9 +105,9 @@ Okta Admin Console > Applications > Applications > Custom SCIM App > Provisionin
 #### SCIM API有効化およびチェック
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
 <figcaption>
-Okta Admin Console > Applications > Applications > Custom SCIM App > Provisioning > To App
+Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App
 </figcaption>
 </figure>
 
@@ -140,7 +141,7 @@ QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目
 
 ##### [OktaでCustom Attributeを設定する例]
 
-1. SCIMアプリのProvisioningタブ > To App下部の`Go to Profile Editor`をクリックします。
+1. SCIMアプリのProvisioningタブ &gt; To App下部の`Go to Profile Editor`をクリックします。
   <figure data-layout="center" data-align="center">
   ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
   </figure>
@@ -189,9 +190,9 @@ QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目
 #### グループProvisioningチェック
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console > Applications > Applications > Custom SCIM App > Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
+![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
 <figcaption>
-Okta Admin Console > Applications > Applications > Custom SCIM App > Push Groups
+Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups
 </figcaption>
 </figure>
 

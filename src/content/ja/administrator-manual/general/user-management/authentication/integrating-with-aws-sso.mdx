@@ -6,7 +6,8 @@ title: 'AWS SSO連携'
 
 ### Overview
 
-QueryPieではAWS IAM Identity Centerのユーザーを複数のクラウドアプリケーションおよびSAML 2.0を通じてユーザー連携をサポートします。ユーザーを同期してアクセス権限を付与しポリシーを適用できます。
+QueryPieではAWS IAM Identity Centerのユーザーを複数のクラウドアプリケーションおよびSAML 2.0を通じてユーザー連携をサポートします。
+ユーザーを同期してアクセス権限を付与しポリシーを適用できます。
 
 ### AWS IAM Identity CenterでQueryPieをアプリケーションとして追加
 
@@ -20,7 +21,7 @@ QueryPieではAWS IAM Identity Centerのユーザーを複数のクラウドア�
 4. ユーザー指定SAML 2.0アプリケーション追加オプション選択後次ボタンをクリックします。
 5. アプリケーション構成 &gt; 表示名にQueryPieを入力します。
 6. アプリケーション属性 &gt; アプリケーション開始URL項目にQueryPieがインストールされたドメインアドレスを以下のように入力します。
-    1. アプリケーションStart URL : https://`{querypie_host}`/saml/login
+    1. アプリケーションStart URL : https://`{querypie_host}`
 7. アプリケーションメタデータ項目にそれぞれ以下のように入力します。
     1. アプリケーションACS URL : https://`{querypie_host}`/saml/sp/acs
     2. アプリケーションSAML対象 : https://`{querypie_host}`/saml/sp/metadata
@@ -44,7 +45,7 @@ QueryPieではAWS IAM Identity Centerのユーザーを複数のクラウドア�
 | loginId               | $`{user:email}`                                  | basic        |
 | email                 | $`{user:email}`                                  | basic        |
 
-`変更事項保存`ボタンをクリックして保存します。
+`変更事項保存` ボタンをクリックして保存します。
 
 ### QueryPieでAWS IAM Identity Center連携設定
 
