@@ -92,7 +92,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 </figure>
 
 1. Authentication DB : Authentication DB（authSource）の値を入力します。
-2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（[Key]=[Value]）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（[Key]=[Vaule]&[Key]=[Value]）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
+2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
 3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
 4. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
 5. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
@@ -143,7 +143,7 @@ Replica Setは replicaSet=[replica set name] オプションが必要ですが�
         1. Scheme選択項目で`mongodb://`を選択します。
         2. 各mongosのホスト名とポートをカンマで区切って入力します。
     3. `Add Instance`ボタンを押して各mongosをインスタンスとして追加します。
-        1. mongodb://ホスト名（ドメインアドレスまたはIP）:[port]形式で入力後、Instance Nameを適切に入力します。
+        1. mongodb://ホスト名（ドメインアドレスまたはIP）:[port] 形式で入力後、Instance Nameを適切に入力します。
         2. Exposeはコネクション情報での露出可否を決定できる値です。
 2. Authentication DB : Authentication DB（authSource）の値を入力します。
 3. Other Options : Sharded clusterは別途追加オプションが必要ない場合があります。

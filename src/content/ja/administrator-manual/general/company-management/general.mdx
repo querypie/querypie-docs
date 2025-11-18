@@ -27,6 +27,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 *  **Audit Log Retention Period** : 監査ログ保存期間を設定します。現在は5年に固定されています。
 *  **Go to System Properties**  : クリックするとシステム設定値の内訳を確認できます。
 
+
 ### System Properties
 
 System Propertiesページでは、QueryPieシステムコンポーネントの設定値を確認し、ファイルで保存できます。
@@ -37,6 +38,7 @@ System Propertiesページでは、QueryPieシステムコンポーネントの�
 Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties
 </figcaption>
 </figure>
+
 
 ### Workflow Configuration
 
@@ -50,13 +52,15 @@ Workflow Configurationsでは、決裁上申および承認関連の設定を変
 
 すべてのワークフロー要求の承認期限を一括的に制限する最大期間を設定します。
 
-管理者はMaximum Approval Duration項目で、承認待ち要求が自動的に期限切れになるまでの期間を1日から最大14日まで設定できます。ここに設定された期間は、ユーザーがワークフローを上申する際に選択するApproval Expiration Date（承認期限日）の最大値として適用されます。
+管理者はMaximum Approval Duration項目で、承認待ち要求が自動的に期限切れになるまでの期間を1日から最大14日まで設定できます。
+ここに設定された期間は、ユーザーがワークフローを上申する際に選択するApproval Expiration Date（承認期限日）の最大値として適用されます。
 
 * Admin &gt; Databases &gt; ConfigurationsのMaximum Access DurationまたはAdmin &gt; Servers &gt; ConfigurationsのMaximum Access DurationがMaximum Approval Durationより短く設定された場合、権限がすでに期限切れになった後に承認が処理される状況を防ぐために、Approval Expiration Dateはより短いAccess Expiration Date（権限期限日）に従います。
 
 ### ワークフロー理由入力文字数制限設定
 
-ワークフローの要求理由Reason for Requestと承認、拒否、キャンセル、確認時に入力するCommentの最小および最大文字数を設定する機能です。この設定を通じて、管理者は組織のポリシーに合わせて入力文字数を管理できます。
+ワークフローの要求理由Reason for Requestと承認、拒否、キャンセル、確認時に入力するCommentの最小および最大文字数を設定する機能です。
+この設定を通じて、管理者は組織のポリシーに合わせて入力文字数を管理できます。
 
 * 管理者はWorkflow Configurationsページで以下の項目に対する文字数範囲を指定できます。
     * Reason for Request: ワークフロー上申時の理由入力に対する最小、最大文字数を設定します。（基本値：最小3文字、最大1000文字）
@@ -134,10 +138,12 @@ Use User Attribute to Hide Workflow Menuトグルを有効化します。
 ### 代理決裁機能有効化/無効化オプション (Allow Delegated Approval)
 
 <Callout type="info">
-代理決裁機能有効化/無効化オプションは11.3.0に追加されました。<br/>11.4.0からユーザーの代理決裁者指定/解除イベントに対して監査ログを記録します。該当ログはExternal API ( /api/external/v2/workflows/approval-delegations/logs) を使用して照会できます。
+代理決裁機能有効化/無効化オプションは11.3.0に追加されました。<br/>11.4.0からユーザーの代理決裁者指定/解除イベントに対して監査ログを記録します。
+該当ログはExternal API ( /api/external/v2/workflows/approval-delegations/logs) を使用して照会できます。
 </Callout>
 
-承認者役割を一定期間他のユーザーに委任する機能である代理決裁機能を管理者が有効化または無効化できるオプションです。もし無効化する場合、ユーザーpreference画面でApprover settingメニューが表示されません。
+承認者役割を一定期間他のユーザーに委任する機能である代理決裁機能を管理者が有効化または無効化できるオプションです。
+もし無効化する場合、ユーザーpreference画面でApprover settingメニューが表示されません。
 
 <figure data-layout="center" data-align="center">
 ![Allow Delegated Approvalスイッチ](/administrator-manual/general/company-management/general/image-20250926-112444.png)
@@ -162,7 +168,8 @@ Allow Delegated Approvalスイッチ
 </figure>
 
 
-このオプションを有効化する場合、明示された個数分だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。これを通じて大容量クエリ実行に伴うDB負荷を防ぐことができます。
+このオプションを有効化する場合、明示された個数分だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。
+これを通じて大容量クエリ実行に伴うDB負荷を防ぐことができます。
 
 *  **Query chunk size**  : 1〜999,999の間の値で設定され、多数のクエリを該当個数分だけ分けて順次実行する機能
     * 例）100個のクエリがある時、Query chunk sizeが10に設定されていると一度に10個のQueryを実行します。
@@ -176,7 +183,8 @@ Redirect to custom page for SQL Requestsトグルを有効化します。
 ![Screenshot-2025-05-09-at-8.33.07-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png)
 </figure>
 
-このオプションを通じて、User AgentでLedgerテーブル対象にINSERT、UPDATE、DELETEクエリ実行によりワークフロー承認要求が発生する場合、`Send Request`ボタンクリック時にユーザーを事前に定義されたカスタムURLページにリダイレクトするかを決定します。これを通じて、顧客社は自社運営中の外部ワークフローシステムとの連携を強化できます。
+このオプションを通じて、User AgentでLedgerテーブル対象にINSERT、UPDATE、DELETEクエリ実行によりワークフロー承認要求が発生する場合、`Send Request`ボタンクリック時にユーザーを事前に定義されたカスタムURLページにリダイレクトするかを決定します。
+これを通じて、顧客社は自社運営中の外部ワークフローシステムとの連携を強化できます。
 
 * トグルを有効化した場合
     * Administrator &gt; General &gt; Workflow ConfigurationsページにカスタムURLを入力できるフィールドが表示されます。

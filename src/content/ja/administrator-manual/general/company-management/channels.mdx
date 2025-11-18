@@ -8,11 +8,13 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-ChannelsページではQueryPieから送信する通知を受信するチャンネルを登録および管理します。現在QueryPieで提供するチャンネルタイプはSlack、Agit、HTTP、Emailの4つであり、チャンネル登録事前に連携のための作業が必要です。
+ChannelsページではQueryPieから送信する通知を受信するチャンネルを登録および管理します。
+現在QueryPieで提供するチャンネルタイプはSlack、Agit、HTTP、Emailの4つであり、チャンネル登録事前に連携のための作業が必要です。
 
 ### 登録されたチャンネル照会
 
-Administrator &gt; General &gt; Company Management &gt; Channelsページで現在登録されたチャンネルリストを照会できます。チャンネル名で検索が可能で、Channel Typeでフィルタリングできます。
+Administrator &gt; General &gt; Company Management &gt; Channelsページで現在登録されたチャンネルリストを照会できます。
+チャンネル名で検索が可能で、Channel Typeでフィルタリングできます。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; Company Management &gt; Channels](/administrator-manual/general/company-management/channels/screenshot-20240808-172741.png)
@@ -103,7 +105,8 @@ Admin &gt; General &gt; System &gt; Integrationメニューに進入後、Email�
 
 ### チャンネル削除
 
-Channelsページ内チャンネルリストで削除したいチャンネルをチェックボックスで選択すると`Delete`ボタンが表示されます。ボタンをクリックすると削除確認モーダルが出力されます。`OK`ボタンをクリックすると削除が完了します。
+Channelsページ内チャンネルリストで削除したいチャンネルをチェックボックスで選択すると`Delete`ボタンが表示されます。
+ボタンをクリックすると削除確認モーダルが出力されます。`OK`ボタンをクリックすると削除が完了します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; Company Management &gt; Channels &gt; Delete確認モーダル](/administrator-manual/general/company-management/channels/screenshot-20240728-222004.png)
@@ -154,10 +157,28 @@ Slack内Webhook追加画面
 #### 2-2. APIタイプで連携
 
 1. 生成したAppをクリックしてアプリのSettingsページに進入した後、`App Manifest`メニューに移動します。
-2. scopes領域に`chat:write`, `users:read`, `users:read.email`を追加した後保存します。
+2. scopes領域に`chat:write`, `users:read`, `users:read.email`を追加した後保存します。 <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Slack API &gt; Apps &gt; Settings &gt; App Manifest](/administrator-manual/general/company-management/channels/screenshot-20241211-171140.png)
+  <figcaption>
+  Slack API &gt; Apps &gt; Settings &gt; App Manifest
+  </figcaption>
+  </figure>
 3. 上部の黄色い通知バーを通じて`Reinstall your app`でアプリを再起動します。（必須）
 4. `Reinstall to {Workspace_name}`ボタンをクリックして通知を送信するSlackチャンネルを選択した後`許可`ボタンをクリックします。
     1. Scopeを変更した後適用するには、この段階を再度実行する必要があります。
 5. 該当Slackチャンネルに移動して生成したアプリを追加します。（既にアプリを追加した状態であればこの段階はスキップできます）
-6. チャンネル名をクリックしてChannel Detailモーダルを開き、モーダル下部でChannel IDをコピーします。コピーしたChannel IDをQueryPieチャンネル作成モーダルに貼り付けます。
-7. OAuth & PermissionsページでBot User OAuth Tokenをコピーし、QueryPieチャンネル作成モーダルに貼り付けます。
+6. チャンネル名をクリックしてChannel Detailモーダルを開き、モーダル下部でChannel IDをコピーします。コピーしたChannel IDをQueryPieチャンネル作成モーダルに貼り付けます。 <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Slack App &gt; Channel Detail](/administrator-manual/general/company-management/channels/screenshot-20241211-190312.png)
+  <figcaption>
+  Slack App &gt; Channel Detail
+  </figcaption>
+  </figure>
+7. OAuth & PermissionsページでBot User OAuth Tokenをコピーし、QueryPieチャンネル作成モーダルに貼り付けます。 
+  <figure data-layout="center" data-align="center">
+  ![Slack内OAuth & Permissionsページ - トークンコピー](/administrator-manual/general/company-management/channels/screenshot-20240804-190835.png)
+  <figcaption>
+  Slack内OAuth & Permissionsページ - トークンコピー
+  </figcaption>
+  </figure>

@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-SecurityページでQueryPie全般のセキュリティ設定を管理できます。この文書では各セキュリティ設定についての説明を提供します。
+SecurityページでQueryPie全般のセキュリティ設定を管理できます。
+この文書では各セキュリティ設定についての説明を提供します。
 
 <Callout type="info">
 10.3.0から各サービス別設定項目がAdministrator &gt; General &gt; Security下で各サービス(Databases / Servers / Kubernetes)のGeneral下(Administrator &gt; `{Service}` &gt; General &gt; Configurations)に移動されました。
@@ -109,7 +110,8 @@ QueryPie接続時IP制限ポリシーを設定できます。
 
 <Callout type="info">
 **IPアクセス制御ポリシー活性化時注意事項**
-`Require Allowed Zones for User Access`オプション活性化によりログインが遮断されたユーザーは'IP Registration Request'ワークフローを通じて新規IPアドレスに対するアクセス許可を要求できます。(詳細内容は[IP Registration Request要求](../../../user-manual/workflow/requesting-ip-registration)文書を参照してください。)
+`Require Allowed Zones for User Access`オプション活性化によりログインが遮断されたユーザーは'IP Registration Request'ワークフローを通じて新規IPアドレスに対するアクセス許可を要求できます。
+(詳細内容は[IP Registration Request要求](../../../user-manual/workflow/requesting-ip-registration)文書を参照してください。)
 </Callout>
 
 *  **Admin Page Access Control**  : 管理者ページにアクセスできる管理者のIPを制限するポリシーを設定します。トグルを活性化して特定IPアドレスまたは帯域から接続する管理者のみ管理者ページにアクセスするよう制限できます。
@@ -122,7 +124,8 @@ QueryPie接続時IP制限ポリシーを設定できます。
 
 <Callout type="info">
 **Q. もしユーザーが許可されていないIPからQueryPieウェブコンソール接続試行時どの画面を見ることになりますか？**
-A. 許可されていないIPから接続試行時QueryPieウェブコンソール内どのページでもアクセス不可で下記のような案内画面を見ることになります。もしAll Usersに基本値(0.0.0.0/0)が登録されており、個別ユーザーに特定Allowed Zoneが設定されているならログインページまでは接続可能ですがログインは不可になります。
+A. 許可されていないIPから接続試行時QueryPieウェブコンソール内どのページでもアクセス不可で下記のような案内画面を見ることになります。
+もしAll Usersに基本値(0.0.0.0/0)が登録されており、個別ユーザーに特定Allowed Zoneが設定されているならログインページまでは接続可能ですがログインは不可になります。
 </Callout>
 <figure data-layout="center" data-align="center">
 ![QueryPie Web Access Control &gt; All Usersに登録されたIPと一致しない場合](/administrator-manual/general/company-management/security/image-20240121-073718.png)
@@ -138,13 +141,15 @@ Users &gt; Update Userに登録されたAllowed Zoneと一致しない場合
 </figure>
 <Callout type="important">
 **IP制限設定注意**
-Securityページの設定は保存即座に反映されます。したがって入力したIPと該当オプションを設定した管理者のIPが一致しない場合管理者であっても  **保存**   **即座にログアウト処理** されるので注意して適用してください。
+Securityページの設定は保存即座に反映されます。
+したがって入力したIPと該当オプションを設定した管理者のIPが一致しない場合管理者であっても  **保存**   **即座にログアウト処理** されるので注意して適用してください。
 </Callout>
 
 
 ### Secret Store設定
 
-Secret Store使用可否を設定します。現在HashiCorp Vaultをサポートしています。
+Secret Store使用可否を設定します。
+現在HashiCorp Vaultをサポートしています。
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-152042.png](/administrator-manual/general/company-management/security/screenshot-20240726-152042.png)
@@ -154,7 +159,8 @@ Vault登録はGeneral &gt; Integrationsメニューで実行します。
 
 <Callout type="info">
 **Q. Secret Store活性化を解除したいのですが、トグルが非活性化状態です。**
-A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valutメニューに登録されたVaultが残っているか確認してください。登録されたVaultがすべて削除された後トグル非活性化可能です。
+A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valutメニューに登録されたVaultが残っているか確認してください。
+登録されたVaultがすべて削除された後トグル非活性化可能です。
 </Callout>
 
 

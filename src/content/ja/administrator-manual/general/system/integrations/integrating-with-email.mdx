@@ -20,7 +20,13 @@ Email送信にはSMTPサーバーが必要で、QueryPieではSMTPサーバー�
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
-3. 詳細ページにある`Configure`ボタンをクリックするとSMTP情報を入力できるポップアップが表示されます。<br/>
+3. 詳細ページにある`Configure`ボタンをクリックするとSMTP情報を入力できるポップアップが表示されます。<br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Email Integration 상세페이지](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163108.png)
+  <figcaption>
+  Email Integration 상세페이지
+  </figcaption>
+  </figure>
 4. SMTP設定を生成するために以下の情報を入力します。
     1.  **Email Server Name**  : 識別が容易になるよう任意の名前を入力します。
     2.  **Host**  : SMTPサーバーのhostname（FQDN）を入力します。
@@ -35,27 +41,51 @@ Email送信にはSMTPサーバーが必要で、QueryPieではSMTPサーバー�
         2. Password : 認証アカウントのパスワードを入力します。
     10.  **Send Workflow Notification via Emailスイッチ**  : 承認リクエスト受信、承認/却下処理などワークフロー関連イベント発生時関係者にメール通知を送信するかどうかを選択します。
     11.  **Testボタン**  : SMTP設定が接続に問題ないか確認します。<br/>
-    12.
+    12.  
+      <figure data-layout="center" data-align="center">
+      ![SMTP 설정 팝업 다이얼로그](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163449.png)
+      <figcaption>
+      SMTP 설정 팝업 다이얼로그
+      </figcaption>
+      </figure>
 5. `OK`ボタンを押して設定を保存します。
 
 ### Email Integration設定修正
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
-3. 詳細ページEmail senderに表示されたSMTP設定に対してEditボタンを押します。<br/>
+3. 詳細ページEmail senderに表示されたSMTP設定に対してEditボタンを押します。<br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 4. 変更が必要な部分を修正し保存します。
 
 ### Email送信履歴確認
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
-3. Sent Email Historyリストを確認します。<br/>このリストに保存されるemail送信履歴は30日間保管され30日以前の内容は削除されます。<br/>
+3. Sent Email Historyリストを確認します。<br/>このリストに保存されるemail送信履歴は30日間保管され30日以前の内容は削除されます。<br/> <br/>  
+  <figure data-layout="center" data-align="center">
+  ![Sent Email History](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-005544.png)
+  <figcaption>
+  Sent Email History
+  </figcaption>
+  </figure>
 
 ### Email Integration設定削除
 
 1. Administrator &gt; General &gt; System &gt; Integrationsメニューに移動します。
 2. Emailタイルをクリックして詳細ページに移動します。
 3. 詳細ページEmail senderに表示されたSMTP設定に対してDeleteボタンを押します。<br/>SMTP設定を使用するAlert、MFAなどの設定が存在する場合SMTP設定を削除できません。<br/>まず関連設定をすべて削除してから削除可能です。<br/>
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 
 ### ユーザーパスワード初期化メール送信
 
@@ -71,7 +101,8 @@ Emailを通じてユーザーが自分のパスワードを初期化するよう
 ### 2次認証手段としてEmail使用
 
 <Callout type="info">
-QueryPie 10.2.2からGoogle OTPとともにEmailを2次認証手段として使用できるようになりました。Email Integration設定がまず必要です。
+QueryPie 10.2.2からGoogle OTPとともにEmailを2次認証手段として使用できるようになりました。
+Email Integration設定がまず必要です。
 </Callout>
 
 2次認証手段としてEmailを使用する方法は以下内容を参照してください。
