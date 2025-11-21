@@ -6,7 +6,8 @@ title: 'Integrating with AWS SSO'
 
 ### Overview
 
-QueryPie supports user integration through multiple cloud applications and SAML 2.0 for users in AWS IAM Identity Center. You can grant access permissions and apply policies by synchronizing users.
+QueryPie supports user integration through multiple cloud applications and SAML 2.0 for users in AWS IAM Identity Center.
+You can grant access permissions and apply policies by synchronizing users.
 
 ### Adding QueryPie as an Application in AWS IAM Identity Center
 
@@ -20,7 +21,7 @@ QueryPie supports user integration through multiple cloud applications and SAML 
 4. Select the Add Custom SAML 2.0 Application option and click Next.
 5. Enter QueryPie in Application Configuration &gt; Display Name.
 6. In Application Attributes &gt; Application Start URL, enter the domain address where QueryPie is installed as follows.
-    1. Application Start URL : https://`{querypie_host}`/saml/login
+    1. Application Start URL : https://`{querypie_host}`
 7. Enter the following values in the Application Metadata section.
     1. Application ACS URL : https://`{querypie_host}`/saml/sp/acs
     2. Application SAML Target : https://`{querypie_host}`/saml/sp/metadata
@@ -67,3 +68,5 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figure>
 
 Now you can authenticate with AWS and log in to QueryPie through the `Login with SAML` button on the login page.
+
+
