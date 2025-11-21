@@ -13,7 +13,7 @@ QueryPie WACは他のQueryPie製品と同様にRBAC（Role-Based Access Control�
 ## WACロールとポリシー
 
 * **ポリシー（Policy）** はWACに登録されたリソースに対してどのようにアクセスを制御するかを記述した仕様で、YAML形式で記述します。
-    * Webアプリケーションリソースに対する許可またはブロックが含まれます。
+    * Webアプリリソースに対する許可またはブロックが含まれます。
 * **ロール（Role）** はユーザーが何をできるかできないかを定義するオブジェクトです。
     * ロール1つの中には複数のポリシーを割り当てることができ、この場合ポリシーはOR条件で結合されます。
     * 同一のWeb Appおよびサブパスに対する複数のポリシーが存在する場合、ブロック（Deny）ポリシーが許可（Allow）ポリシーより優先されます。
@@ -156,7 +156,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 
 ### Resources**[required]**
 
-許可またはブロックポリシーを設定したいWebアプリケーションリソースを指定します。配下に `webApp`、`urlPaths` を持ちます。
+許可またはブロックポリシーを設定したいWebアプリリソースを指定します。配下に `webApp`、`urlPaths` を持ちます。
 
 <Callout type="info">
 `resources` は `spec: allow`、`spec: deny` で両方とも許可されます。
@@ -164,13 +164,13 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 
 #### webApp**[required]**
 
-QueryPieに定義したWebアプリケーションリソース名を入力します。
+QueryPieに定義したWebアプリリソース名を入力します。
 
-1. 明示的にWebアプリケーションを特定する必要があり、ワイルドカードや正規表現は許可されません。 
+1. 明示的にWebアプリを特定する必要があり、ワイルドカードや正規表現は許可されません。 
     * `- webApp: "QueryPie"` (O)
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
-2. 1つの `spec` 内で複数のWebアプリケーションを列挙できます。
+2. 1つの `spec` 内で複数のWebアプリを列挙できます。
   ```
 spec:
   allow:
@@ -181,7 +181,7 @@ spec:
           - "/database-settings/policies"
       - webApp: "QueryPie Customer Portal"
   ```
-3. Webアプリケーション名は以下の条件を満たす必要があります。
+3. Webアプリ名は以下の条件を満たす必要があります。
     * 文字数最大120文字
     * アルファベット大文字小文字（case-sensitive）、数字および一部特殊記号（`_`、`-`、`(`、`)`、`[`、`]`）のみ許可
     * スペース許可
@@ -190,10 +190,10 @@ spec:
 
 #### urlPaths**[OPTIONAL]**
 
-ポリシーを適用したい特定のWebアプリケーションリソースのサブパスを特定します。
+ポリシーを適用したい特定のWebアプリリソースのサブパスを特定します。
 
 1. **Admin > Web App** に登録されたサブパスのみ登録可能です。 
-2. Base URLを含めて、Webアプリケーションに存在する **すべて** のサブパスに対して許可または拒否する方法は以下の通りです。
+2. Base URLを含めて、Webアプリに存在する **すべて** のサブパスに対して許可または拒否する方法は以下の通りです。
     * urlPaths行を記述しません。
         * 例：QueryPie Web Admin の全体パスに対してアクセス許可
           ```
@@ -272,7 +272,7 @@ urlPathTags:
   "type": "general"
           ```
 2. `resources[].urlPaths` と連携して動作します。
-    *  **Webアプリケーションリソースの対象urlPathが明示されていない場合** 
+    *  **Webアプリリソースの対象urlPathが明示されていない場合** 
         * 登録された全体サブパス中urlPathTagがあるパスをすべて許可します。
         * 例：Web App "QueryPie Web Admin" に対して、Path Managementに登録された全体サブパス中 `access: admin` タグが付与されたパスに限ってアクセス許可
           ```
@@ -285,7 +285,7 @@ spec:
       urlPathTags:
         "access": "admin"
           ```
-    *  **Webアプリケーションリソースの対象urlPathが明示された場合** 
+    *  **Webアプリリソースの対象urlPathが明示された場合** 
         * 明示されたパス中urlPathTagがあるパスのみを許可します。
         * 例：Web App "QueryPie Web Admin" に対して、`resources[].urlPaths` に明示された2つのパス中Path Managementで `access: admin` タグが付与されたパスに限ってアクセス許可
           ```
@@ -300,7 +300,7 @@ spec:
       urlPathTags:
         "access": "admin"
           ```
-    *  **Webアプリケーションリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合** 
+    *  **Webアプリリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合** 
         * 条件に一致するurlPathが存在しないため、いかなるパスも許可しません。
 
 #### userAttributes**[OPTIONAL]**
@@ -366,8 +366,8 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 1. Path Managementでアクセス許可が必要なすべてのパスを登録し、Path Tagを適切に付与します。
 2. ポリシー構成時、タグおよびユーザー属性、IPなどの条件を使用します。 
-    1. 制御対象WebアプリケーションのurlPathsを全体で指定しても、タグ条件付与時、Path Managementに登録されたパスを対象にのみポリシーが設定されます。
-    2. 必要時ユーザー属性やIPなど、Webアプリケーションアクセスを許可するユーザーの範囲を指定できます。
+    1. 制御対象WebアプリのurlPathsを全体で指定しても、タグ条件付与時、Path Managementに登録されたパスを対象にのみポリシーが設定されます。
+    2. 必要時ユーザー属性やIPなど、Webアプリアクセスを許可するユーザーの範囲を指定できます。
 
 <Callout type="important">
 **注意**

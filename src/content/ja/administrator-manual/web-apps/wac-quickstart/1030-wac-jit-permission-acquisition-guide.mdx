@@ -26,10 +26,10 @@ JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
 
 ## Admin-side
 
-### 1. Webアプリケーションの登録
+### 1. Webアプリの登録
 
 1. Admin > Web Apps > Connection Management > Web Apps メニューに移動します。
-2. `Create a Web App` ボタンをクリックすると、Webアプリケーション登録ページに移動します。
+2. `Create a Web App` ボタンをクリックすると、Webアプリ登録ページに移動します。
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20250412-225620.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/screenshot-20250412-225620.png)
@@ -42,15 +42,15 @@ JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
     1. Base URLにはサブパス（例：`/ko`）を含めることはできません。
     2. Base URLに `https://` を入力するとエラーメッセージが表示されます。
     3. Base URLに `www.` を入力するとエラーメッセージが表示されます。
-3. Description: Webアプリケーションの説明を入力してください。（例：クエリパイウェブサイト）
+3. Description: Webアプリの説明を入力してください。（例：クエリパイウェブサイト）
 4. URL Paths: サブパスを入力します。ここでは空にしておきます。
-5. Watermark: Webアプリケーションアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
-    1. Webアプリケーションアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
+5. Watermark: Webアプリアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
+    1. Webアプリアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
     2. ガイドではOn状態を前提として案内します。
 6. **User Activity Recording**: ユーザー行動記録の有無
     1. Onで有効化後、すべてのオプションをオンにしてください。
     2. Excluded URL Pathsはユーザー行動記録を除外するパスを入力します。ここでは空にしておきます。
-7. **Tag**: Webアプリケーションのタグです。ここでは空にしておきます。
+7. **Tag**: Webアプリのタグです。ここでは空にしておきます。
 8. `Save` ボタンを押して保存します。
 
 ### 2. Web App Owner / Member登録
@@ -59,14 +59,14 @@ JIT権限取得Guideは `10.3.0` バージョンを基準に説明します。
 ![image-20250513-042540.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-042540.png)
 </figure>
 
-1. Webアプリケーション詳細ページにアクセスします 
+1. Webアプリ詳細ページにアクセスします 
 2. 右上「Owner/Member」ボタンをクリックします。
 3. 右側のドロワーウィンドウが開き、対象者を検索して「Assign as」列で左側Ownerと右側Memberボタンを選択して役割を付与します。
 
 <Callout type="info">
 JIT（Just-in-Time）権限付与には以下の2つの役割があります。
-* Owner: このWebアプリケーションに対するJust-in-time要求を承認できる主体
-* Member: このWebアプリケーションに対するJust-in-time要求を上申できる主体
+* Owner: このWebアプリに対するJust-in-time要求を承認できる主体
+* Member: このWebアプリに対するJust-in-time要求を上申できる主体
 </Callout>
 
 ### 3. 利用者のJIT Web Appアクセス権限申請
@@ -127,7 +127,7 @@ JIT（Just-in-Time）権限申請時、以下のような制約事項があり�
 4. 上部のApproveをクリックします。
 
 
-### 5. QueryPieを通じてWebアプリケーションにアクセス
+### 5. QueryPieを通じてWebアプリにアクセス
 
 <figure data-layout="center" data-align="center">
 ![image-20250513-073501.png](/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png)

@@ -8,9 +8,9 @@ import { Callout } from 'nextra/components'
 
 QueryPieホームページを例に、最もシンプルなWACの使用方法をご案内します。
 
-1. QueryPieホームページをWebアプリケーションとして登録し、Resources配下の一部メニューをサブパスとして登録します。
+1. QueryPieホームページをWebアプリとして登録し、Resources配下の一部メニューをサブパスとして登録します。
 2. 登録されたサブパスにのみアクセスを許可するポリシー（Policy）とロール（Role）を作成します。
-3. 現在のユーザーにこのロールを割り当て、Webアプリケーションアクセス制御の動作を確認します。
+3. 現在のユーザーにこのロールを割り当て、Webアプリアクセス制御の動作を確認します。
 
 <Callout type="info">
 **案内**
@@ -23,11 +23,11 @@ Quickstartは `10.2.8` バージョンを基準に説明します。
 
 ## Admin-side
 
-### 1. Webアプリケーションの登録
+### 1. Webアプリ登録
 
 QueryPieホームページ（`www.querypie.com`）内の `/ko/resources` 配下構造は以下の通りです。
 
-このクイックスタートガイドでは、このうち一部のパスのみをWebアプリケーション配下に登録した後、登録されたパスにのみアクセスを許可するポリシーを作成します。
+このクイックスタートガイドでは、このうち一部のパスのみをWebアプリ配下に登録した後、登録されたパスにのみアクセスを許可するポリシーを作成します。
 ```
 /ko/resources/
 ├── discover/
@@ -45,7 +45,7 @@ QueryPieホームページ（`www.querypie.com`）内の `/ko/resources` 配下�
 
 
 1. Admin > Web Apps > Connection Management > Web Apps メニューに移動します。
-2. `Create a Web App` ボタンをクリックすると、Webアプリケーション登録ページに移動します。<br/>
+2. `Create a Web App` ボタンをクリックすると、Webアプリ登録ページに移動します。<br/>
 
 <figure data-layout="center" data-align="center">
 ![Admin > Web Apps > Create a Web App](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-225620.png)
@@ -61,9 +61,9 @@ Admin > Web Apps > Create a Web App
     1. Base URLにはサブパス（例：`/ko`）を含めることはできません。
     2. Base URLに `https://` を入力するとエラーメッセージが表示されます。
     3. Base URLに `www.` を入力するとエラーメッセージが表示されます。
-3. **Description**: Webアプリケーションの説明を入力してください。（例：クエリパイウェブサイト）
-4. **Watermark**: Webアプリケーションアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
-    1. Webアプリケーションアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
+3. **Description**: Webアプリの説明を入力してください。（例：クエリパイウェブサイト）
+4. **Watermark**: Webアプリアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
+    1. Webアプリアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
     2. ガイドではOn状態を前提として案内します。
 5. **URL Paths**: サブパスを入力します。（選択） 
     1. ガイドではサブパスを入力してみます。`+ Add Path` ボタンをクリックしてサブパスを入力してください。
@@ -87,10 +87,10 @@ Admin > Web Apps > Create a Web App
 1. **User Activity Recording**: ユーザー行動記録の有無
     1. Onで有効化後、すべてのオプションをオンにしてください。
     2. Excluded URL Pathsはユーザー行動記録を除外するパスを入力します。ここでは空にしておきます。
-2. **Tag**: Webアプリケーションのタグです。ここでは空にしておきます。
+2. **Tag**: Webアプリのタグです。ここでは空にしておきます。
 3. `Save` ボタンを押して保存します。
 
-### 2. ポリシーの登録
+### 2. ポリシー登録
 
 次に、QueryPieウェブサイトに対して、登録されたサブパスにのみアクセスを許可するポリシーを作成します。
 
@@ -126,7 +126,7 @@ spec:
 
 1. `Save Changes` ボタンをクリックし、理由入力モーダルで `OK` ボタンを押して保存します。
 
-### 3. ロールの作成
+### 3. ロール生成
 
 今度は新しいロールを作成し、先ほど作成したポリシーを割り当てます。
 
@@ -217,13 +217,13 @@ WAC拡張機能インストール前に開いていたタブについては管�
 既に開いていたすべてのブラウザタブとウィンドウを閉じてから拡張機能をインストールしてください。
 </Callout>
 
-### 4. QueryPieを通じてWebアプリケーションにアクセス
+### 4. QueryPieを通じてWebアプリにアクセス
 
 1. `Go to Dashboard` ボタンをクリックすると新しいタブが開き、QueryPie Webコンソールが開きます。
     1. 現在QueryPieにログインされている状態であれば、Web App Dashboardが開きます。
     2. ログインされていない状態であればログインページに移動します。ログインを完了し、上部メニューでWeb Appsをクリックしてダッシュボードにアクセスしてください。
     3. ロール選択モーダルが表示されたら、QP Web Testを選択します。
-2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリケーションアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/> <br/> 
+2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![QueryPie &gt; Web Apps &gt; Web App Dashboard](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-224323.png)
   <figcaption>
@@ -248,7 +248,7 @@ WAC拡張機能インストール前に開いていたタブについては管�
 
 ## Admin-side (again)
 
-### 1. Webアプリケーションアクセス記録の確認
+### 1. Webアプリアクセス記録の確認
 
 
 <figure data-layout="center" data-align="center">
@@ -260,10 +260,10 @@ Admin > Audit > Web Apps > Web Access History
 
 
 1. Admin > Audit > Web Apps > Web Access History に移動します。
-2. 現在のユーザーがアクセスしたWebアプリケーションアクセス記録を照会できます。
-    1. **Action Type**: Webアプリケーションアクセスの開始と終了
+2. 現在のユーザーがアクセスしたWebアプリアクセス記録を照会できます。
+    1. **Action Type**: Webアプリアクセスの開始と終了
         1. **Connect**: アクセス開始
-            * 該当Webアプリケーションにアクセスした場合に表示されます。サブパスをすべて別々に記録します。
+            * 該当Webアプリにアクセスした場合に表示されます。サブパスをすべて別々に記録します。
         2. **Disconnect**: アクセス終了
             * タブを閉じるか他のページに移動した場合に表示されます
     2. **Result**: 結果
@@ -273,7 +273,7 @@ Admin > Audit > Web Apps > Web Access History
 
 ### 2. ユーザーのセッション記録の確認
 
-Webアプリケーションとロール基準でユーザーが制御対象Webアプリケーションにアクセスしてサブページを探索した記録がすべて表示されます。
+Webアプリとロール基準でユーザーが制御対象Webアプリにアクセスしてサブページを探索した記録がすべて表示されます。
 
 <Callout type="info">
 Web App作成時にUser Activity Recordingをオンにしないと記録が残りません。
