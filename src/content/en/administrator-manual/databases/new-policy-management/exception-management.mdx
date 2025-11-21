@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-There are two types of exception handling for policies: cases where policy exceptions are applied through Workflow policy exception requests and cases where administrators directly set policy exceptions. Previous DAC policies only allowed policy exceptions through Workflow exception requests (Unmasking, Restricted Data Access), but new policies allow administrators to directly set policy exceptions and integrate manage them with Workflow-processed ones.
+There are two types of exception handling for policies: cases where policy exceptions are applied through Workflow policy exception requests and cases where administrators directly set policy exceptions.
+Previous DAC policies only allowed policy exceptions through Workflow exception requests (Unmasking, Restricted Data Access), but new policies allow administrators to directly set policy exceptions and integrate manage them with Workflow-processed ones.
 
 ### Policy Exception Management Through Workflow
 
@@ -58,13 +59,13 @@ Manual Policy Exception Creation
 </figcaption>
 </figure>
 
-Click the `+ Create Exception` button and configure settings for the policy exception.
+`+ Create Exception` Click the button and configure settings for the policy exception.
 
 * **Exception Name** : Enter the name of the policy exception.
 * **Exception Type** : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
 * **Data Scope** : Specify target tables or columns for policy exceptions. **[11.1.0]**
     * When selecting Data Tag, you can specify targets with tags. Only tags set in Databases &gt; Policy Management &gt; Data Paths can be used. Tags with the same key use OR operation, and tags with different keys use AND operation.
-    * When selecting Specific data path, you can directly specify target tables or columns. Regular expressions can also be used. **[11.3.0]**
+    * When selecting Specific data path, you can directly specify target tables or columns. <br/>Regular expressions can also be used. **[11.3.0]** 
 * **Allowed User** : Specify targets that temporarily need policy exceptions.
     * User / Group : You can specify users or groups.
     * Attribute of Users : You can dynamically specify targets using Identifier type attributes registered in user profiles. **[11.1.0]** 
@@ -80,7 +81,8 @@ The maximum policy exception period setting is limited by the Maximum Policy Exc
 
 #### Immediately Changing Policy Exception Status
 
-When administrators create policy exceptions, the policy exception status is maintained until the time specified in Exception Expiration, but in some cases, you may need to immediately release the exception status. You can immediately change the status by selecting Active or Inactive in the Status column of the list, so you can easily respond without deleting or creating new policy exceptions.
+When administrators create policy exceptions, the policy exception status is maintained until the time specified in Exception Expiration, but in some cases, you may need to immediately release the exception status.
+You can immediately change the status by selecting Active or Inactive in the Status column of the list, so you can easily respond without deleting or creating new policy exceptions.
 
 <figure data-layout="center" data-align="center">
 ![image-20250716-055008.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055008.png)
@@ -88,16 +90,19 @@ When administrators create policy exceptions, the policy exception status is mai
 
 #### Modifying Manually Created Policy Exceptions
 
-You can modify the settings by clicking on a specific policy exception row in the list. (Exception Type cannot be changed.)
+You can modify the settings by clicking on a specific policy exception row in the list.
+(Exception Type cannot be changed.)
 
 <figure data-layout="center" data-align="center">
 ![image-20250716-055149.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055149.png)
 </figure>
+
 
 #### Deleting Manually Created Policy Exceptions
 
 <figure data-layout="center" data-align="center">
 ![image-20250716-055525.png](/administrator-manual/databases/new-policy-management/exception-management/image-20250716-055525.png)
 </figure>
+
 
 By default, policy exceptions expire after a specific time, but policy exceptions created manually by administrators can be deleted at any time. Check one or more specific policy exception rows and click the `Delete` button.

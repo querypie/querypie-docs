@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Data Policies is a feature for setting and managing data governance policies in QueryPie, such as data access control, data masking, and enforcement of usage reason input. Through this feature, you can manage data security, privacy protection, and regulatory compliance.
+Data Policies is a feature for setting and managing data governance policies in QueryPie, such as data access control, data masking, and enforcement of usage reason input.
+Through this feature, you can manage data security, privacy protection, and regulatory compliance.
 
 
 ### Accessing Policy Creation Screen
@@ -18,7 +19,7 @@ Data Policies is a feature for setting and managing data governance policies in 
 </figure>
 
 1. Expand the **Policy Management** section in the left sidebar.
-2. Click the **Data Policies** menu.
+2.  **Data Policies**  Click the menu.
 3. Click the **Create Policy** button at the top to navigate to the policy creation screen.
 
 
@@ -31,7 +32,7 @@ Data Policies is a feature for setting and managing data governance policies in 
 In the **Information** section of the policy creation screen, set the following information:
 
 1. **Name**: Enter the name of the policy. (Required)
-2. **Policy Type**: Select the policy type to apply from the dropdown menu. (Required)
+2.  **Policy Type** : Select the policy type to apply from the dropdown menu. (Required)
 3. **Description**: Enter a description of the policy. (Optional)
 
 
@@ -68,21 +69,21 @@ QueryPie provides the following policy types:
       </figure>
 5. **Sensitive Data Access Monitoring** 
     * Allows administrators to designate specific tables or columns as sensitive information and generate alerts when accessed.
-    * Set which paths are sensitive information, and configure alert settings in General > Company Management > Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert configuration feature for new policies is not yet implemented.)
+    * Set which paths are sensitive information, and configure alert settings in General &gt; Company Management &gt; Alert.<br/>(As of 11.0.0, the Sensitive Data Access Monitoring Alert configuration feature for new policies is not yet implemented.)
 6. **DML Query Approval Enforcement**  
     * Forces approval procedures through Workflow when performing `INSERT`, `UPDATE`, `DELETE` queries on specific tables.
-    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General > Workflow Management > Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has the corresponding privilege. To allow the person executing the query to be the requester, the "Allow Assignee selection (All Users)" option must be selected in the Execution item's Assignee for Execution as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` privileges but who are not administrators can execute queries through approval.<br/>
+    * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General &gt; Workflow Management &gt; Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has the corresponding privilege. To allow the person executing the query to be the requester, the "Allow Assignee selection (All Users)" option must be selected in the Execution item's Assignee for Execution as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` privileges but who are not administrators can execute queries through approval.<br/>
       <figure data-layout="center" data-align="center">
-      ![Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
+      ![General &gt; Workflow Management &gt; Approval Rules creating SQL Request format Approval rule](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
       <figcaption>
-      Creating SQL Request format Approval rule in General > Workflow Management > Approval Rules
+      General &gt; Workflow Management &gt; Approval Rules creating SQL Request format Approval rule
       </figcaption>
       </figure>
     * If an Approval Rule is created, you can specify the Approval Rule to link with the policy as shown in the figure below.<br/>
       <figure data-layout="center" data-align="center">
-      ![Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
+      ![Databases&gt;Policy Management&gt;Data Policies specifying pre-created SQL Request format Approval Rule](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
       <figcaption>
-      Specifying pre-created SQL Request format Approval Rule in Databases>Policy Management>Data Policies
+      Databases&gt;Policy Management&gt;Data Policies specifying pre-created SQL Request format Approval Rule
       </figcaption>
       </figure>
     * DML Query Approval Enforcement cannot specify targets by tags and must specify specific paths using specific data path.
@@ -103,7 +104,11 @@ In the **User Scope** section of the policy creation screen, set the user scope 
 
 #### Exclusions
 
-You can set targets to exclude from policy application. Exclusions can only be specified when the User scope's scope type is **Everyone**. The difference from specifying through Policy Exception is that Policy Exception has a set period for the exception, but Exclusion targets have the same lifecycle as the policy. That is, they are always applied while the policy exists. (Policy application targets = All - specific users or groups specified in exclusions.)
+You can set targets to exclude from policy application.
+User scope's scope type is  **Everyone**  Only when Exclusions can be specified.
+The difference from specifying through Policy Exception is that Policy Exception has a set period for the exception, but Exclusion targets have the same lifecycle as the policy.
+That is, they are always applied while the policy exists.
+(Policy application targets = All - specific users or groups specified in exclusions.)
 
 1. **None**: Applies to all users according to Scope Type without exclusions. (Default)
 2. **Users and Groups**: Excludes selected users or groups from policy application. 
@@ -144,7 +149,8 @@ Also, multiple tables or columns can be selected and registered as targets.
 
 #### Saving Policy
 
-When all settings are complete, click the **Save** button at the bottom of the screen to save the policy. To cancel saving, click the **Cancel** button.
+When all settings are complete, click the  **Save**  button at the bottom of the screen to save the policy.
+To cancel saving, click the  **Cancel**  button.
 
 
 <Callout type="important">

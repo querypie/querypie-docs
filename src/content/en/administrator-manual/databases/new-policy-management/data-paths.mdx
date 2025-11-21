@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-The Data Paths menu allows you to assign and manage tags for tables and columns. These configured tags are used for data classification and policy application.
+The Data Paths menu allows you to assign and manage tags for tables and columns.
+These configured tags are used for data classification and policy application.
 
 ### Key Features
 
@@ -17,6 +18,7 @@ The Data Paths menu allows you to assign and manage tags for tables and columns.
 * Table Access Control: You can grant permissions in whitelist mode so that only tables with assigned tags are accessible. 
 *  **Data Classification** : You can classify data by purpose and characteristics through tags.
 *  **Access Control Integration** : You can set access control policies based on assigned tags.
+
 
 ### Assigning Tags to Tables
 
@@ -46,18 +48,21 @@ Table tagging can be managed in the Data Paths menu, allowing you to systematica
     2. When clicking Column Check, the table column list appears on the right. 
 
 <Callout type="important">
-In the table detail screen, you can only manage tags for the table. Column tags are managed in the column detail screen.
+In the table detail screen, you can only manage tags for the table.
+Column tags are managed in the column detail screen.
 </Callout>
+
 
 ### Assigning Tags to Columns
 
-Column tagging can also be managed in the Data Paths menu. You can systematically classify columns through tags and effectively apply policies such as masking in bulk.
+Column tagging can also be managed in the Data Paths menu.
+You can systematically classify columns through tags and effectively apply policies such as masking in bulk.
 
 <figure data-layout="center" data-align="center">
 ![image-20250307-124339.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-124339.png)
 </figure>
 
-1. Select the **Columns** tab from the top tabs of the **Data Paths** menu.
+1.  **Data Paths**  menu's top tabs, select the  **Columns**  tab.
 2. Click the **Add Column** button in the top right.
 3. Enter the following information in the popup window:
     1.  **Connection** : Select database connection from dropdown.
@@ -77,8 +82,10 @@ Column tagging can also be managed in the Data Paths menu. You can systematicall
     2. When clicking Column, it navigates to the table detail page. 
 
 <Callout type="important">
-**Important** : When adding a column while the referenced table is not yet added to Data Paths, the corresponding table is automatically added to Data Paths together. Therefore, you don't need to add the table separately first, and the required table is automatically created during the column addition process.
+**Important** : When adding a column while the referenced table is not yet added to Data Paths, the corresponding table is automatically added to Data Paths together.
+Therefore, you don't need to add the table separately first, and the required table is automatically created during the column addition process.
 </Callout>
+
 
 ### Relationship Between Tables and Columns - Automatic Table Creation Feature
 
@@ -88,9 +95,12 @@ QueryPie provides the following automation features when adding columns to impro
 2.  **Single Process** : Thanks to this feature, users can process everything at once during the column addition process without going through two steps of adding the table first and then adding the column.
 3.  **Consistency Maintenance** : The relationship between automatically created tables and added columns is automatically set, maintaining consistency in data structure.
 
+
 ### Granting Table Access Permissions Based on Tags
 
-You can grant table access permissions based on tags set in the Data Paths menu, and it works in whitelist mode. That is, it allows access only to tables with specific tags and restricts access to other tables. This feature enables fine-grained data access control.
+You can grant table access permissions based on tags set in the Data Paths menu, and it works in whitelist mode.
+That is, it allows access only to tables with specific tags and restricts access to other tables.
+This feature enables fine-grained data access control.
 
 The permission granting process consists of two main steps:
 
@@ -101,11 +111,11 @@ The permission granting process consists of two main steps:
 ![image-20250307-125727.png](/administrator-manual/databases/new-policy-management/data-paths/image-20250307-125727.png)
 </figure>
 
-1. In the **Access Control** menu, select the user to set access permissions and grant permissions through **Grant Permission**. 
+1.  **Access Control**  menu, select the user to set access permissions and  **Grant Permission**  to grant permissions. 
 2. When you click on the granted permission list, the **Privilege Details** screen is displayed.
-3. Select the **Tag-based Table Access** option in the **Access Type** section. 
+3.  **Access Type**  section, select the  **Tag-based Table Access**  option. 
     1. The default value is set to the **All Table Access** option. This option grants access to all tables.
-    2. When you select the **Tag-based Table Access** option, it changes to whitelist mode that allows access only to tables with specific tags.
+    2.  **Tag-based Table Access**  option changes to whitelist mode that allows access only to tables with specific tags.
 
 ### Permission Application Results
 
