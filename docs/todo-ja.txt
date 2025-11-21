@@ -1,14 +1,8 @@
-target/ja/administrator-manual/audit/database-logs/account-lock-history.mdx
-target/ja/administrator-manual/audit/database-logs/dml-snapshots.mdx
-target/ja/administrator-manual/audit/database-logs/policy-audit-logs.mdx
 target/ja/administrator-manual/audit/database-logs/policy-exception-logs.mdx
-target/ja/administrator-manual/audit/database-logs/running-queries.mdx
-target/ja/administrator-manual/audit/general-logs/activity-logs.mdx
 target/ja/administrator-manual/audit/general-logs/reverse-tunnels.mdx
 target/ja/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-clusters-through-reverse-tunnel.mdx
 target/ja/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-db-through-reverse-tunnel.mdx
 target/ja/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-servers-through-reverse-tunnel.mdx
-target/ja/administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
 target/ja/administrator-manual/audit/reports/audit-log-export.mdx
 target/ja/administrator-manual/audit/server-logs/account-lock-history.mdx
 target/ja/administrator-manual/audit/server-logs/command-audit.mdx
@@ -52,4 +46,5 @@ target/ja/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-insta
 target/ja/administrator-manual/web-apps/web-app-access-control/access-control/granting-and-revoking-roles.mdx
 target/ja/administrator-manual/web-apps/web-app-access-control/policies.mdx
 target/ja/administrator-manual/web-apps/web-app-access-control/roles.mdx
+target/ja/release-notes/9100-9104.mdx
 target/ja/release-notes/990-998/external-api-changes-9810-version-994-version.mdx
