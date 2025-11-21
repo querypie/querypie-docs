@@ -20,7 +20,13 @@ An SMTP server is required for email sending, and QueryPie provides methods for 
 
 1. Navigate to Administrator > General > System > Integrations menu.
 2. Click on the Email tile to go to the details page.
-3. Click the `Configure` button on the details page to display a popup for entering SMTP information.
+3. Click the `Configure` button on the details page to display a popup for entering SMTP information.<br/><br/>
+  <figure data-layout="center" data-align="center">
+  ![Email Integration details page](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163108.png)
+  <figcaption>
+  Email Integration details page
+  </figcaption>
+  </figure>
 4. Enter the following information to create SMTP settings:
     1. **Email Server Name**: Enter an arbitrary name for easy identification.
     2. **Host**: Enter the hostname (FQDN) of the SMTP server.
@@ -34,27 +40,52 @@ An SMTP server is required for email sending, and QueryPie provides methods for 
         1. User: Enter the user for authentication. The format is typically an email address.
         2. Password: Enter the password for the authentication account.
     10. **Send Workflow Notification via Email switch**: Select whether to send email notifications to related parties when workflow-related events occur, such as receiving approval requests and processing approvals/rejections.
-    11. **Test button**: Verifies that the SMTP settings can connect without issues.
+    11. **Test button**: Verifies that the SMTP settings can connect without issues.<br/>
+    12.
+      <figure data-layout="center" data-align="center">
+      ![SMTP settings popup dialog](/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163449.png)
+      <figcaption>
+      SMTP settings popup dialog
+      </figcaption>
+      </figure>
 5. Click the `OK` button to save the settings.
 
 ### Modifying Email Integration Settings
 
 1. Navigate to Administrator > General > System > Integrations menu.
 2. Click on the Email tile to go to the details page.
-3. Click the Edit button for the SMTP settings displayed in Email sender on the details page.
+3. Click the Edit button for the SMTP settings displayed in Email sender on the details page.<br/><br/>
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 4. Modify the necessary parts and save.
 
 ### Checking Email Sending History
 
 1. Navigate to Administrator > General > System > Integrations menu.
 2. Click on the Email tile to go to the details page.
-3. Check the Sent Email History list.<br/>Email sending history stored in this list is retained for 30 days and content older than 30 days is deleted.
+3. Check the Sent Email History list.<br/>Email sending history stored in this list is retained for 30 days and content older than 30 days is deleted.<br/><br/>
+  <figure data-layout="center" data-align="center">
+  ![Sent Email History](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-005544.png)
+  <figcaption>
+  Sent Email History
+  </figcaption>
+  </figure>
 
 ### Deleting Email Integration Settings
 
 1. Navigate to Administrator > General > System > Integrations menu.
 2. Click on the Email tile to go to the details page.
-3. Click the Delete button for the SMTP settings displayed in Email sender on the details page.<br/>If there are settings using the SMTP settings such as Alert, MFA, etc., the SMTP settings cannot be deleted.<br/>All related settings must be deleted first before deletion is possible.
+3. Click the Delete button for the SMTP settings displayed in Email sender on the details page.<br/>If there are settings using the SMTP settings such as Alert, MFA, etc., the SMTP settings cannot be deleted.<br/>All related settings must be deleted first before deletion is possible.<br/>
+  <figure data-layout="center" data-align="center">
+  ![Email Sender](/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png)
+  <figcaption>
+  Email Sender
+  </figcaption>
+  </figure>
 
 ### Sending User Password Reset Emails
 
