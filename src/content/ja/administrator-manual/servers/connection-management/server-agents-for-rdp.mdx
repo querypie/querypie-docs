@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieでは、Windows Serverに対するアクセス制御および権限管理ができます。RDP Protocolを通じてリモートアクセスするには、管理しようとするWindows ServerにServer Agentをインストールする必要があります。また、アクセス中のRDPのセッションをリアルタイムで確認でき、Kill Session機能を通じてアクセス中のRDPセッションを強制終了できます。
+QueryPieでは、Windows Serverに対するアクセス制御および権限管理ができます。
+RDP Protocolを通じてリモートアクセスするには、管理しようとするWindows ServerにServer Agentをインストールする必要があります。
+また、アクセス中のRDPのセッションをリアルタイムで確認でき、Kill Session機能を通じてアクセス中のRDPセッションを強制終了できます。
 
 <Callout type="info">
 * Windows Server AgentはWindows Server 2012以上の版のみサポートします。
@@ -60,7 +62,8 @@ RDP Server Agentと接続されたWindows ServerのPortおよびIPは変更で�
 
 Windows ServerにServer Agentインストール後、Server Agents for RDPページにServer Agent情報が表示されますが、StatusがConnection Failedで表示されることがあります。
 
-QueryPieに登録されるServer AgentのHost情報はWindows Serverが持っているIP情報中通信が可能なHostで自動選択されます。ただし、Server AgentからQueryPieに通信はされますが、QueryPieからServer Agentに通信されない場合、Server Agentは追加され、Connection FailedがStatusで表示されます。
+QueryPieに登録されるServer AgentのHost情報はWindows Serverが持っているIP情報中通信が可能なHostで自動選択されます。
+ただし、Server AgentからQueryPieに通信はされますが、QueryPieからServer Agentに通信されない場合、Server Agentは追加され、Connection FailedがStatusで表示されます。
 
 この場合、以下のように解決が可能です。
 
@@ -94,6 +97,7 @@ QueryPieウェブ画面で直接Server Agentを最新版にアップデートで
 4. ポップアップが表示されたら  *DELETE*  文句を入力し、`Delete`ボタンをクリックして削除を進行します。
 
 <Callout type="important">
+
 QueryPieではWindows ServerにインストールされたServer Agentsをまず削除した後、QueryPieのServer Agents for RDPメニューでServer Agents削除する必要があります。
 Windows ServerにインストールされたServer Agentsをまず削除しない場合、Server Agentsが再びQueryPieに登録され、新しいWindows Serverを作成します。
 </Callout>
