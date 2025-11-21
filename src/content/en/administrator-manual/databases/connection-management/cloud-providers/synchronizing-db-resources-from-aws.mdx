@@ -40,11 +40,12 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 9.  **Replication Frequency**  Select the synchronization method.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
-10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
+10.  **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
     * Tag : You can automatically add tags to synchronized DBs.
         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud that the DB belongs to will be automatically filled.
         * Example: If you set the tag Key to "Network" and enter Value as `{vpcid}`, when the DB is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag will be automatically created.
-11. Click the `Save` button to save the Cloud Provider.
+11. `Save` Click the button to save the Cloud Provider.
+
 
 ### Setting Up Authentication Methods by Credential Type
 
@@ -55,9 +56,10 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt;
 </figcaption>
 </figure>
 
+
 *  **Default Credentials (Instance Profile)**  : When the QueryPie server is installed in the same AWS account, you can synchronize resources within the same AWS by assigning policies to the IAM permissions of the EC2 instance where QueryPie is installed. Please assign policies appropriate for the required resources.
 *  **Cross Account Role**  : You can synchronize resources from other AWS accounts by creating IAM roles. Please create permissions for synchronization and assign policies according to the steps displayed on the screen. (To synchronize resources through this Credential, you must set the AWS account where QueryPie is installed in the **AWS_ACCOUNT_ID** field of the environment variable file)
-*  **Access Key**  : Provides a manual synchronization method that enters access key and secret key of the AWS account when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using access key as the Credential type.  **** 
+*  **Access Key**  : `Synchronize` Provides a manual synchronization method that enters access key and secret key of the AWS account when clicking the button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using access key as the Credential type.  **** 
 
 <Callout type="important">
 **Save Credential for Synchronization Option**
@@ -70,9 +72,10 @@ Save Credential for Synchronization
 </figure>
 
 *  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same IAM permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.** 
-* Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page.
+* Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page. 
 * When this option is enabled, you can synchronize manually or set a schedule.
 </Callout>
+
 
 <Callout type="info">
 **Policies Required for Each Database Resource Synchronization**
@@ -83,7 +86,9 @@ Save Credential for Synchronization
 * Redis : AmazonElastiCacheFullAccess
 </Callout>
 
+
 ### Synchronizing and Managing Registered AWS Cloud Provider
+
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details](/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws/image-20241220-100746.png)
@@ -91,6 +96,7 @@ Save Credential for Synchronization
 Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt; Details
 </figcaption>
 </figure>
+
 
 1. Navigate to the Cloud Provider menu from the Database settings menu.
 2. Click on the registered Cloud Provider to enter the detailed information screen.
