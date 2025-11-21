@@ -6,7 +6,9 @@ title: 'DML Snapshots'
 
 ### Overview
 
-Records before and after data when INSERT / UPDATE / DELETE queries are completed in QueryPie. This snapshot stores result information when separate DML Snapshot settings are activated for each DB connection. (Refer to **Additional Settings** in [DB Connections](../../databases/connection-management/db-connections))
+Records before and after data when INSERT / UPDATE / DELETE queries are completed in QueryPie.
+This snapshot stores result information when separate DML Snapshot settings are activated for each DB connection.
+(Refer to **Additional Settings** in [DB Connections](../../databases/connection-management/db-connections))
 
 ### Viewing DML Snapshots
 
@@ -21,6 +23,9 @@ Administrator &gt; Audit &gt; Databases &gt; DML Snapshots
 2. Logs are displayed in descending order based on the query execution month.
 3. You can search by user name through the search field in the top left of the table.
 4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+  <figure data-layout="center" data-align="center">
+  ![image-20240730-094947.png](/administrator-manual/audit/database-logs/dml-snapshots/image-20240730-094947.png)
+  </figure>
     1.  **Connection Name**  : Connected DB connection name
     2.  **Executed At**  : Execution date and time
     3.  **Statement** : Statement type (Insert/Update/Delete)

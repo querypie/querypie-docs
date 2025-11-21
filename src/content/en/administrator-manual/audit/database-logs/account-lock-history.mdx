@@ -6,7 +6,8 @@ title: 'Account Lock History'
 
 ### Overview
 
-Displays the history of connection locks due to connection password failures and long-term inactivity by QueryPie user. It counts all failed connection attempts such as password input errors and unauthorized IP access attempts, and the access account becomes locked when the connection failure threshold set by the administrator is reached.
+Displays the history of connection locks due to connection password failures and long-term inactivity by QueryPie user.
+It counts all failed connection attempts such as password input errors and unauthorized IP access attempts, and the access account becomes locked when the connection failure threshold set by the administrator is reached.
 
 ### Viewing DB Account Lock History
 
@@ -21,6 +22,9 @@ Administrator &gt; Audit &gt; Databases &gt; Account Lock History
 2. Logs are displayed in the list in descending order by occurrence time.
 3. You can search by user name through the search field in the top left of the table.
 4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.
+  <figure data-layout="center" data-align="center">
+  ![image-20240730-071155.png](/administrator-manual/audit/database-logs/account-lock-history/image-20240730-071155.png)
+  </figure>
     1.  **Connection Name**  : Connected DB connection name
     2.  **Database Type** : Database type
     3.  **Lock Status**  : Lock type
