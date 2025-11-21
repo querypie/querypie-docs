@@ -1,3 +1,6 @@
+administrator-manual.mdx
+administrator-manual/audit.mdx
+administrator-manual/audit/database-logs.mdx
 administrator-manual/audit/database-logs/access-control-logs.mdx
 administrator-manual/audit/database-logs/account-lock-history.mdx
 administrator-manual/audit/database-logs/db-access-history.mdx
@@ -5,6 +8,3 @@ administrator-manual/audit/database-logs/dml-snapshots.mdx
 administrator-manual/audit/database-logs/policy-audit-logs.mdx
 administrator-manual/audit/database-logs/policy-exception-logs.mdx
 administrator-manual/audit/database-logs/query-audit.mdx
-administrator-manual/audit/database-logs/running-queries.mdx
-administrator-manual/audit/general-logs/activity-logs.mdx
-administrator-manual/audit/general-logs/reverse-tunnels.mdx
