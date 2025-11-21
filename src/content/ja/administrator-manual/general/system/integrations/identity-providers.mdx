@@ -446,7 +446,7 @@ Okta Admin &gt; Applications &gt; QueryPie App上部URL
 
 <Callout type="info">
 該当連携方式ではユーザーおよびグループはOkta → QueryPieへの単方向同期をサポートします。
-SCIMプロビジョニング連携まで実装したい場合は、[[Okta]プロビジョニング連携ガイド](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394) 内手順に従って代わりに進行してください。
+SCIMプロビジョニング連携まで実装したい場合は、[[Okta] プロビジョニング連携ガイド](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394) 内手順に従って代わりに進行してください。
 </Callout>
 
 ### One Login連携
@@ -531,6 +531,7 @@ Custom Identity Providerは認証APIサーバーを使用する特殊な場合�
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートすると1にマイグレーションされます。
+
 
 
 

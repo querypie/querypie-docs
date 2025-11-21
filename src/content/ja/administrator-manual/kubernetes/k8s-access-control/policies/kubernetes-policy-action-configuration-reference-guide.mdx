@@ -6,7 +6,8 @@ title: 'KubernetesポリシーAction設定参考ガイド'
 
 ### Overview
 
-QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難を経験しないようにしようとします。
+QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。
+この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難を経験しないようにしようとします。
 
 
 ### API Groups関連設定ガイド
@@ -63,7 +64,8 @@ allow:
 
 ### Verbs関連設定ガイド
 
-3rd Party Client Tool使用に最も大きな影響を受ける部分はverbです。管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースに対する範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲をよく設定したとしてもverbの束を適切に設定しなければTool使用が困難です。
+3rd Party Client Tool使用に最も大きな影響を受ける部分はverbです。
+管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースに対する範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲をよく設定したとしてもverbの束を適切に設定しなければTool使用が困難です。
 
 *  **View権限**
     * View権限だけを得るユーザーの場合は`get`、`list`、`watch`をすべて付与する必要があります。
