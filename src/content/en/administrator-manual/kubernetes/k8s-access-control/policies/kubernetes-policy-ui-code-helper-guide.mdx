@@ -21,10 +21,16 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 </figure>
 
 1.  **Add Resources**  modal 
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073346.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png)
+  </figure>
     1. Works the same in both Spec: Allow and Spec: Deny.
     2. You can search resources by cluster name.
     3. Click the `Add` button to insert the checked resources into the code.
 2.  **Set Subjects**  modal
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
+  </figure>
     1. Works only in Spec: Allow.
     2.  **Kubernetes Groups**  : (Required) Specifies the Kubernetes group that QueryPie Proxy will impersonate to perform API calls through this field. 
     3.  **Permitted Impersonation**  : (Optional) Lists the Kubernetes users/groups that can be applied when users attempt impersonation through actual --as, --as-group through clients through this field.
@@ -33,6 +39,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
         3. Multiple registration is possible through ','. 
     4. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
 3.  **Add Actions**  modal
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
+  </figure>
     1. Works the same in both Spec: Allow and Spec: Deny.
     2.  **API Groups** : Provides "*" by default; administrators can modify and enter multiple values with ','.
     3.  **Resources** : Specifies Kubernetes resources. 
@@ -55,6 +64,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     7. Click the `Add` button to define one action set among the actions list. 
     8. In terms of code, it corresponds to the append part, so new additions are possible without initializing previously added actions.
 4.  **Set Conditions**  modal
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073628.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png)
+  </figure>
     1. All items are optional.
     2. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
     3.  **Resource Tags**  (Optional)
