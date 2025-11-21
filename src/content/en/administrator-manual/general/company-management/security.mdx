@@ -85,7 +85,8 @@ Assuming Agent Inactivity Timeout is 15 minutes, if user action is detected at 1
     * Logged in at 12:00
         1. The initial session expiration time is  **12:15:00** 
     * If the last activity is detected at 12:08 (t+8 minutes), the expiration is updated to 12:23 (15 minutes later)
-        1. New session expiration time:  **12:23:00** 
+        1. 
+New session expiration time:  **12:23:00** 
     * New session expiration time:  **12:24:00**
 </Callout>
 
@@ -122,7 +123,8 @@ Users blocked from login due to enabling the `Require Allowed Zones for User Acc
 
 <Callout type="info">
 **Q. What screen do users see when trying to access the QueryPie web console from an unauthorized IP?**
-A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below. If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
+A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below. 
+If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
 </Callout>
 <figure data-layout="center" data-align="center">
 ![When not matching IP registered in QueryPie Web Access Control &gt; All Users](/administrator-manual/general/company-management/security/image-20240121-073718.png)
@@ -138,7 +140,8 @@ When not matching Allowed Zone registered in Users &gt; Update User
 </figure>
 <Callout type="important">
 **IP restriction setting precautions**
-Settings on the Security page are applied immediately upon saving. Therefore, if the entered IP does not match the IP of the administrator who set the option, the administrator will be  **logged out immediately upon saving** , so please apply carefully.
+Settings on the Security page are applied immediately upon saving. 
+Therefore, if the entered IP does not match the IP of the administrator who set the option, the administrator will be  **logged out immediately upon saving** , so please apply carefully.
 </Callout>
 
 
@@ -154,7 +157,8 @@ Vault registration is performed in the General &gt; Integrations menu.
 
 <Callout type="info">
 **Q. I want to disable Secret Store activation, but the toggle is disabled.**
-A. Check if there are any Vaults registered in the Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault menu. The toggle can be disabled after all registered Vaults are removed.
+A. Check if there are any Vaults registered in the Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault menu. 
+The toggle can be disabled after all registered Vaults are removed.
 </Callout>
 
 

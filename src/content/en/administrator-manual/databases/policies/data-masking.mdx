@@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
 
 You can set policies to mask and display data that requires management within your organization, such as personal information or sensitive data, when viewing. In the Data Masking menu, you can select the connection for which to set policies, create policies, and register and manage rules for data that needs masking on a column basis.
 
+
 ### Creating Data Masking Policies
 
 Register new masking policies by connection.
@@ -22,13 +23,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking
 </figure>
 
 1. Navigate to Policies &gt; Data Masking menu in Database settings.
-2. Click the `Create Policy` button in the top right corner.
+2. `Create Policy` Click the button in the top right corner.
 3. Enter the following information for policy creation:
     1.  **Policy Name**  : A name to distinguish the policy on the screen.
     2.  **Target Connection**  : Select the connection to apply the policy to. One policy can be linked to one connection.
-4. Save by clicking the `Save` button.
+4. `Save` Save through the button.
 
 You can confirm that the policy has been created in the Data Masking policy list.
+
 
 ### Registering Rules in Data Masking Policies
 
@@ -42,7 +44,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Rule Details
 After creating a policy, register the path of the data to which the policy will be applied as a rule.
 
 1. Click on the policy you created in the Data Masking menu.
-2. The policy details and rule registration screen will be displayed. Click the `Add Rule List` button on the right.
+2. The policy details and rule registration screen will be displayed. `Add Rule List` Click the button on the right.
 3. Select the path of the data to apply the policy to in order:
     1.  **Database Name**  : Required value for rule registration.
     2.  **Table Name**  : Required value for rule registration.
@@ -53,13 +55,17 @@ After creating a policy, register the path of the data to which the policy will 
     3. You can create detection patterns and masking patterns directly through regular expressions in the Masking Pattern menu.
 5. You can make exceptions to masking rules for users or groups who need to view the data:
     *  **Allowed Users**  : Select users or groups to make exceptions for this rule.
-6. Save by clicking the `Ok` button.
+6. `Ok` Save through the button.
 
-You can confirm that the rule has been registered in the Rule List tab. Now when users view the data, it will be displayed masked according to the applied masking pattern, such as '*****@gmail.com'.
+You can confirm that the rule has been registered in the Rule List tab.
+Now when users view the data, it will be displayed masked according to the applied masking pattern, such as '*****@gmail.com'.
+
 
 <Callout type="important">
 When selecting Database Name, the error "[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)" occurs.
-A. In this case, the DB account information may not be set up or may be set up with incorrect information. Click on the connection information in Database Settings &gt; Connection Management &gt; DB Connections menu, then **enter and save the Database Username / Password information** and try again.
+A. 
+In this case, the DB account information may not be set up or may be set up with incorrect information.
+Click on the connection information in Database Settings &gt; Connection Management &gt; DB Connections menu, then **enter and save the Database Username / Password information** and try again.
 </Callout>
 
 ### Checking Access Logs for Columns with Applied Masking Policies
