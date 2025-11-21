@@ -11,7 +11,8 @@ import { Callout } from 'nextra/components'
 Workflow Configurationsでは、以下のような決裁上申および承認関連設定を変更します。
 
 <Callout type="info">
-10.2.6バージョンからSlack DM通知関連設定位置がIntegrationsに移動しました。使用方法は[Slack DM連動](../system/integrations/integrating-with-slack-dm)文書を参照してください。
+10.2.6バージョンからSlack DM通知関連設定位置がIntegrationsに移動しました。
+使用方法は[Slack DM連動](../system/integrations/integrating-with-slack-dm)文書を参照してください。
 10.2.5以下バージョンでのSlack DM設定方法は[10.1.0バージョンマニュアル文書](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)を参照してください。
 </Callout>
 
@@ -48,7 +49,8 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
 
 トグルをオンにするとWorkflowで上申されたSQL要求実行時スロットリングを適用します。
 
-このオプションを有効化する場合、明示された個数だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。これを通じて大容量クエリ実行に伴うDB負荷を防止できます。
+このオプションを有効化する場合、明示された個数だけクエリを連続的に実行した後、明示された間隔（ms）だけ待機します。
+これを通じて大容量クエリ実行に伴うDB負荷を防止できます。
 
 *  **Maximum concurrent queries**  ：連続実行可能なクエリの最大個数（1～999,999）
 *  **Query throttle interval** ：連続クエリ実行後、次の連続クエリ実行間の間隔（1～9,999 ms）
@@ -60,3 +62,9 @@ Tag Display and Filtering in DAC Workflow Requestsトグルスイッチで有効
 このオプションを有効化する場合、以下の要求様式でタグで対象をフィルタリングできます。
 
 * DB Access Request：DB Connectionに付与されたタグを目録で見ることができ、フィルターを通じて特定タグがあるコネクションのみフィルタリングできます。
+  <figure data-layout="center" data-align="center">
+  ![DB Access Reqeust様式でタグ表示およびフィルタリング](/administrator-manual/general/workflow-management/workflow-configurations/image-20250629-180040.png)
+  <figcaption>
+  DB Access Reqeust様式でタグ表示およびフィルタリング
+  </figcaption>
+  </figure>

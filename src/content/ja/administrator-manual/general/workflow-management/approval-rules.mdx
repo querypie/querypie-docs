@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-決裁規則（Approval Rules）とは、管理者が事前に設定しておいたWorkflow承認プロセスを意味します。決裁規則は要求タイプ別にそれぞれ生成し、承認段階を1～4段階で設定し、各段階別に承認者選択方式を設定できます。Approval Rulesページで提供する機能は以下の通りです。
+決裁規則（Approval Rules）とは、管理者が事前に設定しておいたWorkflow承認プロセスを意味します。
+決裁規則は要求タイプ別にそれぞれ生成し、承認段階を1～4段階で設定し、各段階別に承認者選択方式を設定できます。
+Approval Rulesページで提供する機能は以下の通りです。
 
 1.  **決裁規則リスト照会**  ：登録された決裁規則リストを照会できます。（最近生成順）
 2.  **決裁設定**  ：決裁上申および承認プロセスを設定します。
@@ -37,9 +39,9 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules
 Approval Rulesページ右上の`Add Approval Rule`ボタンをクリックするとモーダルが露出されます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Approval Rule](/administrator-manual/general/workflow-management/approval-rules/Screenshot-2025-08-26-at-4.42.57-PM.png)
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Add Approval Rule](/administrator-manual/general/workflow-management/approval-rules/Screenshot-2025-08-26-at-4.42.57-PM.png)
 <figcaption>
-Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Approval Rule
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Add Approval Rule
 </figcaption>
 </figure>
 
@@ -73,6 +75,7 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Ap
 <Callout type="info">
 11.3.0でDefaultで提供される「Web App Just In Time Access Request」Approval Ruleで参照者を指定できるよう変更されました。
 </Callout>
+
 *  **Urgent Mode**  ：該当決裁規則下で事後承認（Urgent Mode）を許可するか決定します。
     * 基本値は非許可（Off）で、今後Approval Rule修正を通じてOn/Off可能です。
     * Workflow Configurationsで事後承認が許可されていなければならないこのオプションが表示されます。
@@ -80,23 +83,23 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Ap
     1.  **ワークフロー上申ページ**
         1.  **注意：**
             * 特定要求上申後に自己承認規則が変更されても、既に上申された要求には遡及して適用されません。
-        2.  **Allow Assignee selection (Admin-Only)** ：
+        2.  **Allow Assignee selection (Admin-Only)** :
             * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
             * 無効化時：ワークフロー上申ページで承認者選択目録から要求者本人が除外されます。
-        3.  **Allow Assignee selection (All Users)**  ：
+        3.  **Allow Assignee selection (All Users)**  :
             * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
             * 無効化時：ワークフロー上申ページで承認者選択目録から要求者本人が除外されます。
-        4.  **Select Assignees**  ：
+        4.  **Select Assignees**  :
             1. 承認規則に要求者自身のみApproverとして設定された場合：
                 * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
                 * 無効化時：該当Approval Ruleは上申者ページ画面に表示されますが、選択して上申時エラーが発生します。
             2. 承認規則に要求者本人が含まれたグループがApproverとして設定された場合：
                 * 有効化時：ワークフロー上申ページで要求者本人を承認者として指定できます。
                 * 無効化時：要求者は承認者目録に含まれて表示されます。上申は可能ですが、実際の承認者画面では要求者本人の名前が除外され、残りのグループ構成員のみApproverとして登録されます。
-        5.  **Assign Connection Owner** ：
+        5.  **Assign Connection Owner** :
             * 有効化時：本人が含まれた場合自動的に本人が承認者として指定されます。
             * 無効化時：Ownerに要求者本人が含まれていても要求上申ページの承認者目録に表示されません。
-        6.  **Assign Server Group Owners ：**
+        6.  **Assign Server Group Owners :**
             * 有効化時：本人が含まれた場合自動的に本人が承認者として指定されます。
             * 無効化時：Ownerに要求者本人が含まれていても要求上申ページの承認者目録に表示されません。
     2.  **ワークフロー承認ページ**
@@ -115,9 +118,9 @@ Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Add Ap
 Administrator &gt; General &gt; Workflow Management &gt; Approval Rules内決裁規則リスト中詳細内容を確認および修正しようとするアイテムをクリックして、モーダルを開きます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Update Approval Rule](/administrator-manual/general/workflow-management/approval-rules/image-20250512-121540.png)
+![Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Update Approval Rule](/administrator-manual/general/workflow-management/approval-rules/image-20250512-121540.png)
 <figcaption>
-Administrator &gt; General &gt; Workflow Management &gt; Approval Rules > Update Approval Rule
+Administrator &gt; General &gt; Workflow Management &gt; Approval Rules &gt; Update Approval Rule
 </figcaption>
 </figure>
 

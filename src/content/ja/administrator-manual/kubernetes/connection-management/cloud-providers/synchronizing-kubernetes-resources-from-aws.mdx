@@ -8,12 +8,14 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieでは、Kubernetesクラスター登録および管理のためのAWS連携をサポートします。AWS内のリソースを同期し、QueryPieで管理するクラスターに登録し、ユーザーおよびグループに同期してきたクラスターに対するKubernetes APIアクセス権限を付与し、ポリシーを設定することができます。
+QueryPieでは、Kubernetesクラスター登録および管理のためのAWS連携をサポートします。
+AWS内のリソースを同期してQueryPieで管理するクラスターに登録し、ユーザーおよびグループに同期してきたクラスターに対するKubernetes APIアクセス権限を付与し、ポリシーを設定することができます。
 
 <Callout type="info">
 #### 事前準備事項
 
-1. AWSリソースとの同期のために、QueryPieインスタンスに割り当てられたAWS IAMロールに必要なポリシー作業を添付したか確認してください。ポリシーには以下の作業をすべて含める必要があります：
+1. AWSリソースとの同期のために、QueryPieインスタンスに割り当てられたAWS IAMロールに必要なポリシー作業を添付したか確認してください。
+ポリシーには以下の作業をすべて含める必要があります：
 
 * eks:ListClusters
 * eks:DescribeCluster
@@ -27,7 +29,8 @@ QueryPieでは、Kubernetesクラスター登録および管理のためのAWS�
 
 ### AWS EKS認証モード修正
 
-QueryPieは、AWS EKS Kubernetesクラスター接続のために、同期時にEKS access entry APIを活用します。したがって、クラスター認証モードがConfigMapでのみ設定されている場合、接続が困難な部分があり、円滑な同期のためにAWSコンソールでモード変更を事前に作業しておくことをお勧めします。
+QueryPieは、AWS EKS Kubernetesクラスター接続のために、同期時にEKS access entry APIを活用します。
+したがって、クラスター認証モードがConfigMapでのみ設定されている場合、接続が困難な部分があり、円滑な同期のためにAWSコンソールでモード変更を事前に作業しておくことをお勧めします。
 
 <figure data-layout="center" data-align="center">
 ![AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
@@ -62,6 +65,9 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 4.  **Cloud Provider**  項目でAmazon Web Servicesを選択します。
 5.  **Region**  項目で同期したいリソースのリージョンを選択します。
 6. リソースを同期するために必要な  **Credential**  情報を入力します。
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-054206.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png)
+  </figure>
     1.  **Default Credentials**  : QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにIAMロールを割り当てて同じAWS内のリソースを同期することができます。
     2.  **Cross Account Role**  : IAMロールを作成して他のAWSアカウントのリソースを同期することができます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
 7.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得することができます。
@@ -76,7 +82,8 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 
 <Callout type="important">
 **Q. Saveボタンをクリックしたのに「Already exists cloud provider.」というエラーが表示されます。**
-A. すでに  **Credential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。この場合、他の`Region`を選択して登録を試みると正常に保存されます。
+A. すでに  **Credential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。
+この場合、他の`Region`を選択して登録を試みると正常に保存されます。
 </Callout>
 
 

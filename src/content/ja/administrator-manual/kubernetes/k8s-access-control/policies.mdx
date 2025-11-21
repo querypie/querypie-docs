@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-組織で管理するKubernetesクラスターのアクセスポリシー(Policy)に対する照会、作成、修正、削除をサポートします。PolicyはKubernetesアクセス権限を実装および適用するための最も最初の段階です。
+組織で管理するKubernetesクラスターのアクセスポリシー(Policy)に対する照会、作成、修正、削除をサポートします。
+PolicyはKubernetesアクセス権限を実装および適用するための最も最初の段階です。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072128.png)
@@ -38,9 +39,15 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     5.  **Updated By**  : 最終アップデートを実行した管理者名
 5. 各行をクリックするとポリシー詳細情報照会が可能です。
     1.   **Detail**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-072345.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072345.png)
+      </figure>
         1. デフォルトで指定されるタブでポリシーで定義されたコードを照会できます。
         2. Detailタブに位置する時、右側に`Go to Editor Mode`ボタンがあり、これをクリックすると該当Code Editorページ画面に切り替わります。
     2.  **Roles**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-072412.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072412.png)
+      </figure>
         1. 該当ポリシーが割り当てられているRoleリストを列挙します。
         2. リストは各Roleごとに以下の情報を露出します：
             1.  **Name**  : Role名
@@ -48,6 +55,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
             3.  **Assigned At**  : Roleに該当ポリシーが割り当てられた日時
             4.  **Assigned By** : 該当ポリシーをRoleに割り当てた管理者名
         3. 各行をクリックするとRoleに対する詳細情報をドロワー形態で提供します。
+          <figure data-layout="center" data-align="center">
+          ![image-20240721-072435.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072435.png)
+          </figure>
             1.  **Name**  : Role名
                 * 該当ロール詳細ページリンクを提供します。
             2.  **Description**  : Role詳細説明
@@ -57,6 +67,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
             6.  **Updated At**  : Roleアップデート日時
             7.  **Updated By**  : 最終Role修正者名
     3.  **Versions**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-072503.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072503.png)
+      </figure>
         1. 該当ポリシーの各版に対する履歴を列挙します。
             * ポリシー版はCodeが修正されて保存されるとアップデートされます。
         2. リストは各versionごとに以下の情報を露出します：
@@ -65,6 +78,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
             3.  **Updated At**  : 該当版作成日時
             4.  **Updated By**  : 該当版修正者名
         3. 各行をクリックすると版に対する詳細情報をドロワー形態で提供します。
+          <figure data-layout="center" data-align="center">
+          ![image-20240721-072547.png](/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072547.png)
+          </figure>
             1.  **(Title)**  : ポリシー名
             2.  **Version**  : ポリシー版
             3.  **Justification**  : ポリシーアップデート入力事由

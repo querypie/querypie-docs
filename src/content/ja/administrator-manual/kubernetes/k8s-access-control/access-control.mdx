@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieユーザーおよびグループに組織で管理するKubernetesクラスターのアクセス権限に対する付与および回収管理をサポートします。Access ControlはKubernetesアクセス権限を実装および適用するための最終段階を意味します。
+QueryPieユーザーおよびグループに組織で管理するKubernetesクラスターのアクセス権限に対する付与および回収管理をサポートします。
+Access ControlはKubernetesアクセス権限を実装および適用するための最終段階を意味します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control](/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065226.png)
@@ -38,6 +39,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
     5.  **Roles**  : 付与されたRoleの数
 5. Access Controlリストで行をクリックすると、対象ユーザー/グループに対する詳細ページに移動します。
     1.   **Roles**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-065530.png](/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065530.png)
+      </figure>
         1. デフォルトで指定されるタブで付与されたRoleリストを照会できます。
         2. Role名で検索可能です。
         3. リストは各Roleごとに以下の情報を露出します：
@@ -48,6 +52,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
             5.  **Granted At**  : Roleが該当ユーザー/グループに付与された日時
             6.  **Granted By**  : 該当Roleをユーザー/グループに付与した管理者名
         4. 各Role行をクリックすると該当Roleの詳細情報をドロワー形態で提供します。
+          <figure data-layout="center" data-align="center">
+          ![image-20240721-065559.png](/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065559.png)
+          </figure>
             1. 上段には基本情報が以下のように露出されます：
                 1.  **Name**  : Role名
                     * (Role詳細ページリンクを新しいウィンドウで開けます。)
@@ -59,11 +66,17 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
             2. 下段には該当ロールに割り当てられているポリシーがリストで露出されます。
                 1.  **Name**  : Policy名
                     * (ポリシー情報を照会できるリンクを提供します。)
+                      <figure data-layout="center" data-align="center">
+                      ![image-20240721-065637.png](/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065637.png)
+                      </figure>
                 2.  **Description**  : Policy詳細説明
                 3.  **Version**  : Policy版
                 4.  **Assigned At**  : 割り当て日時
                 5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
     2.  **Clusters**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-065710.png](/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065710.png)
+      </figure>
         1. 付与されたRoleによってアクセス可能なKubernetesクラスターリストを列挙します。
         2. Cluster名、Role名で検索可能です。
         3. リストは各クラスターごとに以下の情報を露出します：
