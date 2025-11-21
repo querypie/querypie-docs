@@ -8,20 +8,20 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Approval Rules refer to the Workflow approval processes preset by administrators. Approval rules are created for each request type, allowing you to set approval stages from 1 to 4 levels and configure assignee selection methods for each stage. The Approval Rules page provides the following functions:
+Approval Rules refer to the workflow approval processes preset by administrators. Approval rules are created for each request type, allowing you to configure approval stages from 1 to 4 levels and set assignee selection methods for each stage. The Approval Rules page provides the following functions:
 
-1. **Approval Rules List View**: You can view the list of registered approval rules. (Recent creation order)
-2. **Approval Settings**: Configure approval submission and approval processes.
-    1. For detailed instructions, refer to the [Workflow Configurations](workflow-configurations) document.
-3. **Approval Rule Creation**: Click the `Add Approval Rule` button in the top right of the page.
-4. **Detail Information Check and Edit**: Click on an approval rule in the list to check and edit registered content.
-5. **Approval Rule Deletion**: Select checkboxes in the list to display the `Delete` button in the table header, which can be clicked to delete registered rules.
+1. **Approval Rules List View**: View the list of registered approval rules (sorted by most recent)
+2. **Approval Settings**: Configure approval submission and approval processes
+    1. For detailed instructions, refer to the [Workflow Configurations](workflow-configurations) document
+3. **Approval Rule Creation**: Click the `Add Approval Rule` button in the top right of the page
+4. **View and Edit Details**: Click on an approval rule in the list to view and edit registered content
+5. **Approval Rule Deletion**: Select checkboxes in the list to display the `Delete` button in the table header for deleting registered rules
 
 This document guides you through creating, viewing, modifying, and deleting approval rules.
 
 ### Viewing Approval Rules List
 
-You can view the approval rules list in the Administrator > General > Workflow Management > Approval Rules menu.
+View the approval rules list in the Administrator > General > Workflow Management > Approval Rules menu.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > Workflow Management > Approval Rules](/administrator-manual/general/workflow-management/approval-rules/screenshot-20240723-163151.png)
@@ -32,7 +32,7 @@ Administrator > General > Workflow Management > Approval Rules
 
 ### Creating Approval Rules
 
-Clicking the `Add Approval Rule` button in the top right of the Approval Rules page displays a modal.
+Click the `Add Approval Rule` button in the top right of the Approval Rules page to display a modal.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > Workflow Management > Approval Rules > Add Approval Rule](/administrator-manual/general/workflow-management/approval-rules/Screenshot-2025-08-26-at-4.42.57-PM.png)
@@ -41,76 +41,76 @@ Administrator > General > Workflow Management > Approval Rules > Add Approval Ru
 </figcaption>
 </figure>
 
-* **Rule Name**: A name that can distinguish the approval rule on screen.
-* **Request Type**: Select the request type to add the approval rule to. Approval rules are categorized by request type.
-    * :warning: Request Type **cannot be changed** once an approval rule is created.
-* **Approval Steps**: Configure approval stages and assignee designation methods.
-    * Click the `Add Step` button to add approval stages. Up to 4 stages are possible. (However, Web App JIT Request among Request Types does not support 4-stage approval.)
+* **Rule Name**: A name that can distinguish the approval rule on screen
+* **Request Type**: Select the request type to add the approval rule to. Approval rules are categorized by request type
+    * :warning: Request Type **cannot be changed** once an approval rule is created
+* **Approval Steps**: Configure approval stages and assignee designation methods
+    * Click the `Add Step` button to add approval stages. Up to 4 stages are possible (however, Web App JIT Request does not support 4-stage approval)
     * Assignee designation methods:
-        * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate assignees, but only Owners and administrators with permission to approve the request can be selected.
-        * **Allow Assignee selection (All Users)**: Requesters can directly designate assignees, and all users can be selected.
-            * Selecting this option allows requesters to designate themselves as assignees.
-        * **Assign Connection Owner**: The Connection Owner of the connection selected at request time is designated as the assignee. (Activated only when SQL/Export Request is specified as Request Type)
-        * **Assign Server Group Owners**: The Server Group Owner of the server group selected at request time is designated as the assignee. (Activated only when Server Access Request/Server Privilege Request is specified as Request Type)
-        * **Select Assignees**: Only currently selected users or groups are designated as assignees, and assignees cannot be changed when creating requests.
-        * **Allow Assignee selection (Attribute-Based)**: Automatically designate assignees based on specific user Attribute values in the requester's profile.
-* **Execution Steps**: Configure SQL executor designation methods. (Activated only when SQL/Export Request is specified as Request Type)
-    * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate executors, but only Owners and administrators with permission to approve the request can be selected.
-    * **Allow Assignee selection (All Users)**: Requesters can directly designate executors, and all users can be selected.
-        * Selecting this option allows requesters to designate themselves as executors.
-    * **Assign Connection Owner**: The Connection Owner of the DB connection selected at request time is designated as the executor. Executors cannot be changed when creating requests.
-        * You can check how to designate Connection Owner for each DB connection in [DB Connections](../../databases/connection-management/db-connections).
-    * **Select Assignees**: Only currently selected users or groups are designated as executors, and executors cannot be changed when creating requests.
-* **Review**: Displayed only when the **Activate Review Step to collaborate with others** option is enabled in Administrator > General > Workflow Configurations. Configure the method for designating reviewers for approval requests.
+        * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate assignees, but only Owners and administrators with approval permissions can be selected
+        * **Allow Assignee selection (All Users)**: Requesters can directly designate assignees from all users
+            * Selecting this option allows requesters to designate themselves as assignees
+        * **Assign Connection Owner**: The Connection Owner of the connection selected at request time is designated as the assignee (activated only when SQL/Export Request is specified as Request Type)
+        * **Assign Server Group Owners**: The Server Group Owner of the server group selected at request time is designated as the assignee (activated only when Server Access Request/Server Privilege Request is specified as Request Type)
+        * **Select Assignees**: Only currently selected users or groups are designated as assignees, and assignees cannot be changed when creating requests
+        * **Allow Assignee selection (Attribute-Based)**: Automatically designate assignees based on specific user attribute values in the requester's profile
+* **Execution Steps**: Configure SQL executor designation methods (activated only when SQL/Export Request is specified as Request Type)
+    * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate executors, but only Owners and administrators with approval permissions can be selected
+    * **Allow Assignee selection (All Users)**: Requesters can directly designate executors from all users
+        * Selecting this option allows requesters to designate themselves as executors
+    * **Assign Connection Owner**: The Connection Owner of the DB connection selected at request time is designated as the executor. Executors cannot be changed when creating requests
+        * See [DB Connections](../../databases/connection-management/db-connections) for how to designate Connection Owner for each DB connection
+    * **Select Assignees**: Only currently selected users or groups are designated as executors, and executors cannot be changed when creating requests
+* **Review**: Displayed only when the **Activate Review Step to collaborate with others** option is enabled in Administrator > General > Workflow Configurations. Configure the method for designating reviewers for approval requests
     * **Reviewer designation methods:**
-        * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers. Users submitting approvals with this rule cannot change reviewers.
-        * Allow Assignee selection (All Users): Allow approval submitters to directly select reviewers from all active users.
-        * Allow Assignee selection (Admin Only): Only users with administrator privileges can be selected.
-        * Connection Owner and Server Owner cannot be designated as fixed reviewers.
+        * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers. Users submitting approvals with this rule cannot change reviewers
+        * Allow Assignee selection (All Users): Allow approval submitters to directly select reviewers from all active users
+        * Allow Assignee selection (Admin Only): Only users with administrator privileges can be selected
+        * Connection Owner and Server Owner cannot be designated as fixed reviewers
 
 <Callout type="info">
-In 11.3.0, the default "Web App Just In Time Access Request" Approval Rule has been changed to allow reviewer designation.
+In version 11.3.0, the default "Web App Just In Time Access Request" Approval Rule has been changed to allow reviewer designation.
 </Callout>
 
-* **Urgent Mode**: Decide whether to allow post-approval (Urgent Mode) under this approval rule.
-    * Default is disallowed (Off), and can be turned On/Off later through Approval Rule modification.
-    * This option is displayed only when post-approval is allowed in Workflow Configurations.
-* **Allow Self-Approval**: Decide whether to allow requesters to designate themselves as assignees or directly approve their own requests under this approval rule (Approval Rule).
+* **Urgent Mode**: Decide whether to allow post-approval (Urgent Mode) under this approval rule
+    * Default is disallowed (Off), and can be turned On/Off later through Approval Rule modification
+    * This option is displayed only when post-approval is allowed in Workflow Configurations
+* **Allow Self-Approval**: Decide whether to allow requesters to designate themselves as assignees or directly approve their own requests under this approval rule
     1. **Workflow submission page**
         1. **Note**:
-            * Even if self-approval rules change after submitting a specific request, they are not retroactively applied to already submitted requests.
+            * Even if self-approval rules change after submitting a specific request, they are not retroactively applied to already submitted requests
         2. **Allow Assignee selection (Admin-Only)**:
-            * When enabled: Requesters can designate themselves as assignees on the workflow submission page.
-            * When disabled: Requesters are excluded from the assignee selection list on the workflow submission page.
+            * When enabled: Requesters can designate themselves as assignees on the workflow submission page
+            * When disabled: Requesters are excluded from the assignee selection list on the workflow submission page
         3. **Allow Assignee selection (All Users)**:
-            * When enabled: Requesters can designate themselves as assignees on the workflow submission page.
-            * When disabled: Requesters are excluded from the assignee selection list on the workflow submission page.
+            * When enabled: Requesters can designate themselves as assignees on the workflow submission page
+            * When disabled: Requesters are excluded from the assignee selection list on the workflow submission page
         4. **Select Assignees**:
             1. When the approval rule has only the requester set as Approver:
-                * When enabled: Requesters can designate themselves as assignees on the workflow submission page.
-                * When disabled: The Approval Rule is displayed on the submitter page screen, but an error occurs when selecting and submitting.
+                * When enabled: Requesters can designate themselves as assignees on the workflow submission page
+                * When disabled: The Approval Rule is displayed on the submitter page screen, but an error occurs when selecting and submitting
             2. When the approval rule has a group including the requester set as Approver:
-                * When enabled: Requesters can designate themselves as assignees on the workflow submission page.
-                * When disabled: Requesters are included and displayed in the assignee list. Submission is possible, but the requester's name is excluded from the actual assignee screen and only other group members are registered as Approvers.
+                * When enabled: Requesters can designate themselves as assignees on the workflow submission page
+                * When disabled: Requesters are included and displayed in the assignee list. Submission is possible, but the requester's name is excluded from the actual assignee screen and only other group members are registered as Approvers
         5. **Assign Connection Owner**:
-            * When enabled: If the requester is included, they are automatically designated as the assignee.
-            * When disabled: Even if the requester is included in Owner, they are not displayed in the assignee list on the request submission page.
+            * When enabled: If the requester is included, they are automatically designated as the assignee
+            * When disabled: Even if the requester is included in Owner, they are not displayed in the assignee list on the request submission page
         6. **Assign Server Group Owners**:
-            * When enabled: If the requester is included, they are automatically designated as the assignee.
-            * When disabled: Even if the requester is included in Owner, they are not displayed in the assignee list on the request submission page.
+            * When enabled: If the requester is included, they are automatically designated as the assignee
+            * When disabled: Even if the requester is included in Owner, they are not displayed in the assignee list on the request submission page
     2. **Workflow approval page**
         1. **When new option is disabled**:
-            * If the requester is designated as an assignee, clicking the `Approve` button displays an error message and self-approval is not possible.
+            * If the requester is designated as an assignee, clicking the `Approve` button displays an error message and self-approval is not possible
         2. **When new option is enabled**:
-            * If the requester is designated as an assignee, clicking the `Approve` button enables self-approval.
-* **Allow submitting requests for others**: Allow users to submit workflow requests on behalf of other users (proxy submission).
-    * This feature is activated only when Request Type is `DB Access Request`, `Unmasking Request`, `Restricted Data Access Request`, `DB Policy Exception Request`, or `Decryption Request`.
-    * When selecting an approval rule with the `Allow submitting requests for others` option enabled, a `Target User` item appears on the request submission screen to designate the actual target user for approval.
-* After completing input, click the `OK` button to complete approval rule creation.
+            * If the requester is designated as an assignee, clicking the `Approve` button enables self-approval
+* **Allow submitting requests for others**: Allow users to submit workflow requests on behalf of other users (proxy submission)
+    * This feature is activated only when Request Type is `DB Access Request`, `Unmasking Request`, `Restricted Data Access Request`, `DB Policy Exception Request`, or `Decryption Request`
+    * When selecting an approval rule with the `Allow submitting requests for others` option enabled, a `Target User` field appears on the request submission screen to designate the actual target user for approval
+* After completing input, click the `OK` button to complete approval rule creation
 
-### Checking and Modifying Approval Rules
+### Viewing and Modifying Approval Rules
 
-Click on an item in the approval rules list in Administrator > General > Workflow Management > Approval Rules that you want to check details for and modify to open the modal.
+Click on an item in the approval rules list in Administrator > General > Workflow Management > Approval Rules to open the modal for viewing and modifying details.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > Workflow Management > Approval Rules > Update Approval Rule](/administrator-manual/general/workflow-management/approval-rules/image-20250512-121540.png)
@@ -119,13 +119,13 @@ Administrator > General > Workflow Management > Approval Rules > Update Approval
 </figcaption>
 </figure>
 
-* All items entered during creation are modifiable except for **Request Type**.
-* After completing changes, click the `OK` button to complete approval rule modification. (Update processing occurs even if there are no changes)
-* To cancel changes or close the modal without updates, click the `Cancel` button to close and exit the modal.
+* All items entered during creation are modifiable except for **Request Type**
+* After completing changes, click the `OK` button to complete approval rule modification (update processing occurs even if there are no changes)
+* To cancel changes or close the modal without updates, click the `Cancel` button to close and exit the modal
 
 ### Deleting Approval Rules
 
-You can delete approval rules in the Administrator > General > Workflow Management > Approval Rules list.
+Delete approval rules in the Administrator > General > Workflow Management > Approval Rules list.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > Workflow Management > Approval Rules (Deletion Enabled)](/administrator-manual/general/workflow-management/approval-rules/screenshot-20240725-165423.png)
@@ -134,5 +134,5 @@ Administrator > General > Workflow Management > Approval Rules (Deletion Enabled
 </figcaption>
 </figure>
 
-1. Select the approval rule you want to delete using checkboxes, then click the `Delete` button displayed in the table header.
-2. Click the `OK` button in the deletion confirmation modal to complete the deletion.
+1. Select the approval rule you want to delete using checkboxes, then click the `Delete` button displayed in the table header
+2. Click the `OK` button in the deletion confirmation modal to complete the deletion

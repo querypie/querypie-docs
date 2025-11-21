@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie supports AWS integration for Kubernetes cluster registration and management. You can synchronize resources within AWS, register them as clusters managed by QueryPie, and grant Kubernetes API access permissions and set policies for users and groups on the synchronized clusters.
+QueryPie supports AWS integration for Kubernetes cluster registration and management. You can synchronize resources within AWS, register them as clusters managed by QueryPie, and grant Kubernetes API access permissions and configure policies for users and groups on the synchronized clusters.
 
 <Callout type="info">
 #### Prerequisites
@@ -24,7 +24,6 @@ QueryPie supports AWS integration for Kubernetes cluster registration and manage
 * eks:AssociateAccessPolicy
 </Callout>
 
-
 ### Modifying AWS EKS Authentication Mode
 
 QueryPie utilizes the EKS access entry API during synchronization for AWS EKS Kubernetes cluster connections. Therefore, if the cluster authentication mode is set to ConfigMap only, there may be connection difficulties, and we recommend changing the mode in the AWS console in advance for smooth synchronization.
@@ -36,16 +35,15 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 </figcaption>
 </figure>
 
-1. Access AWS Console with an account that has EKS administrator privileges. 
-2. Navigate to the **Elastic Kubernetes Service (EKS)** menu. 
-3. Move to the region where the target EKS cluster is located. 
+1. Access AWS Console with an account that has EKS administrator privileges
+2. Navigate to the **Elastic Kubernetes Service (EKS)** menu
+3. Move to the region where the target EKS cluster is located
     * Example: ![image-20240512-134604.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134604.png) 
-4. Select the target EKS cluster to move to the detailed page.
-5. Click the Access tab to view the Access configuration status. 
-6. If the Authentication mode is **"ConfigMap"**, click the **Manage access** button on the right. 
-7. Change the Cluster authentication mode to **"EKS API and ConfigMap"**. 
-8. Click `Save changes` to save the changes. 
-
+4. Select the target EKS cluster to navigate to the details page
+5. Click the Access tab to view the Access configuration status
+6. If the Authentication mode is **"ConfigMap"**, click the **Manage access** button on the right
+7. Change the Cluster authentication mode to **"EKS API and ConfigMap"**
+8. Click `Save changes` to save the changes
 
 ### Registering AWS Integration Information in QueryPie
 
@@ -56,29 +54,31 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 </figcaption>
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu.
-2. Click the `+ Create Provider` button in the top right.
-3. Enter a name that can distinguish this provider in the **Name** field.
-4. Select Amazon Web Services from the **Cloud Provider** field.
-5. Select the region of the resources you want to synchronize from the **Region** field.
-6. Enter the **Credential** information required to synchronize resources. 
-    1.  **Default Credentials**  : If the QueryPie server is installed in the same AWS account, you can assign an IAM role to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS.
-    2.  **Cross Account Role**  : You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen.
-7. You can use **Search Filter** to retrieve a list of some types of resources you want to synchronize. 
-    1. Search Filter works the same way as AWS search. You can use values such as names and tags as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order. 
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu
+2. Click the `+ Create Provider` button in the top right
+3. Enter a name that can distinguish this provider in the **Name** field
+4. Select Amazon Web Services from the **Cloud Provider** field
+5. Select the region of the resources you want to synchronize from the **Region** field
+6. Enter the **Credential** information required to synchronize resources
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-054206.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png)
+  </figure>
+    1.  **Default Credentials**  : If the QueryPie server is installed in the same AWS account, you can assign an IAM role to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS
+    2.  **Cross Account Role**  : You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen
+7. Use **Search Filter** to retrieve a list of specific resource types you want to synchronize
+    1. Search Filter works the same way as AWS search. You can use values such as names and tags as filters, and conveniently enter search conditions and filters using the Enter key in the following order:
         1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value value and press Enter 
-    2. For more detailed usage, please refer to [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch). 
-8. Select the synchronization method from the **Replication Frequency** field.
-    1. Manual : A method that synchronizes manually only when you want to synchronize.
-    2. Scheduling : A method that synchronizes resources through periodic scheduling. Cron Expressions are provided.
-9. (You can click the `Dry Run` button to check in advance if there will be any problems with synchronization.)
-10. Click the `Save` button to save the Cloud Provider.
+    2. For more detailed usage, please refer to [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)
+8. Select the synchronization method from the **Replication Frequency** field
+    1. Manual : A method that synchronizes manually only when you want to synchronize
+    2. Scheduling : A method that synchronizes resources through periodic scheduling. Cron Expressions are provided
+9. (You can click the `Dry Run` button to check in advance if there will be any issues with synchronization)
+10. Click the `Save` button to save the Cloud Provider
 
 <Callout type="important">
 **Q. I clicked the Save button but got an error saying "Already exists cloud provider."**
 A. If there is already a Cloud Provider registered with `Default Credentials` as **Credential** and the same `Region`, duplicate registration is not possible. In this case, you can register normally by selecting a different `Region`.
 </Callout>
-
 
 ### Synchronizing and Managing Registered AWS Cloud Provider
 
@@ -89,20 +89,19 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 </figcaption>
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu.
-2. Click on the registered Cloud Provider to enter the detailed information screen.
-3. Click the `Synchronize` button in the top right to synchronize resources from AWS.
-    1. Please refer to **Dry Run/Synchronization Log notation** below for the definition of notation. 
-    2. You can check the synchronization progress in the displayed Synchronization Log, and you can also check the synchronization history in Settings &gt; Systems &gt; Jobs menu.
-4. Once a Cloud Provider is registered, some information of the Provider cannot be changed.
+1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers menu
+2. Click on the registered Cloud Provider to enter the details screen
+3. Click the `Synchronize` button in the top right to synchronize resources from AWS
+    1. Please refer to **Dry Run/Synchronization Log Notation** below for notation definitions
+    2. You can check the synchronization progress in the displayed Synchronization Log, and you can also check the synchronization history in Settings &gt; Systems &gt; Jobs menu
+4. Once a Cloud Provider is registered, some information cannot be changed
     1.  **Name** : Can be changed
     2.  **Cloud Provider** : Cannot be changed
     3.  **Region** : Cannot be changed
     4.  **Credential** : Cannot be changed
-    5.  **Role**   **ARN** : Cannot be changed
-    6.  **Search**   **Filter** : Can be changed
-    7.  **Replication**   **Frequency** : Can be changed
-
+    5.  **Role ARN** : Cannot be changed
+    6.  **Search Filter** : Can be changed
+    7.  **Replication Frequency** : Can be changed
 
 ### Dry Run/Synchronization Log Notation
 
@@ -113,6 +112,6 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 | :check_mark:                                                                                                                                                               | Existing cluster information update completed                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
 | :check_mark:                                                                                                                                                               | Existing cluster removal completed                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
 | :check_mark:                                                                                                                                                               | Dry Run or Synchronize synchronization successfully completed                                                | Cluster synchronization succeeded.                                                                                                                        |
-| ![image-20240822-082024.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png) | Synchronization skipped when EKS cluster authentication mode does not allow EKS API. Need to change from ConfigMap mode to allow EKS API.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
+| ![image-20240822-082024.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png) | Synchronization skipped when EKS cluster authentication mode does not allow EKS API. Need to change from ConfigMap mode to allow EKS API  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
 | :cross_mark:                                                                                                                                                               | Synchronization failed due to duplicate cluster name already confirmed                                                          | Cluster synchronization failed. The cluster name "`{Cluster Name}`" is already in use by another cluster. To synchronize it, delete the existing cluster. |
 | :cross_mark:                                                                                                                                                               | Dry Run or Synchronize synchronization failed                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |
