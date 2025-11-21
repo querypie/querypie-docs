@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-When upgrading QueryPie, the Log DB can be large and difficult to back up, and key features should not stop recording even during the upgrade. To control the service level appropriately, enable maintenance mode and perform migration.
+When upgrading QueryPie, the Log DB can be large and difficult to back up, and key features should not stop recording even during the upgrade.
+To control the service level appropriately, enable maintenance mode and perform migration.
 
 If QueryPie servers are deployed in an active-active pair, follow the steps below:
 
@@ -45,4 +46,5 @@ Available modes:
 | Active Session   | Existing sessions can execute commands, but new sessions can only read. (Not applicable to DAC / SAC / WAC)                                                      |
 | Allow Connection | Existing and new sessions can execute commands, but actions like submitting workflows or editing settings are not allowed. (Not applicable to KAC / WAC)                                                  |
 | Full Access      | Normal operating mode.                                                                                                                         |
+
 

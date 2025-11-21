@@ -6,7 +6,9 @@ title: 'Integrating with Google SAML'
 
 ### Overview
 
-QueryPie supports user integration through SAML 2.0 for Google users. You can grant access permissions and apply policies by synchronizing users.
+QueryPie supports user integration through SAML 2.0 for Google users.
+You can grant access permissions and apply policies by synchronizing users.
+
 
 ### SAML Configuration in Google Workspace
 
@@ -16,19 +18,24 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 ![screenshot-20240902-162650.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-162650.png)
 </figure>
 
+
 2. Click the `Add App` button and then click `Add Custom SAML App`.
 
 <figure data-layout="center" data-align="center">
 ![image-20240902-073821.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/image-20240902-073821.png)
 </figure>
 
-3. This is the step 1 page for entering app details. Enter 'QueryPie-SSO' in the App Name field and click the `Continue` button.
+
+3. This is the step 1 page for entering app details.
+Enter 'QueryPie-SSO' in the App Name field and click the `Continue` button.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240902-164038.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164038.png)
 </figure>
 
-4. On the step 2 page, enter the following values. After entering, click the `Continue` button to proceed to step 3.
+
+4. On the step 2 page, enter the following values.
+After entering, click the `Continue` button to proceed to step 3.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240902-164356.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164356.png)
@@ -37,6 +44,7 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 * ACS URL : `https://{QueryPie Host}/saml/sp/acs`
 * Entity ID : `https://{QueryPie Host}/saml/sp/metadata`
 * Start URL (Optional) : `https://{QueryPie Host}/`
+
 
 5. On the step 3 page, click the `Add Mapping` button, enter all four values below, and click the `Finish` button.
 
@@ -49,17 +57,21 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 * Basic Information : Last name → lastName
 * Basic Information : Primary email → loginId
 
+
 6. Enter your Google authentication password and click `Next` to complete creation.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240902-164955.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-164955.png)
 </figure>
 
-7. When creation is successfully completed, the newly added app will be displayed in the list as shown below. Click on the app to enable it.
+
+7. When creation is successfully completed, the newly added app will be displayed in the list as shown below.
+Click on the app to enable it.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240902-165202.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165202.png)
 </figure>
+
 
 8. In the app details, click `Download Metadata` to download the file, then click the `User Access` item.
 
@@ -67,11 +79,13 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 ![screenshot-20240902-165512.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165512.png)
 </figure>
 
+
 9. Select 'Enable for all users' in Service Status and click the `Save` button.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240902-165647.png](/administrator-manual/general/user-management/authentication/integrating-with-google-saml/screenshot-20240902-165647.png)
 </figure>
+
 
 ### Configuring Authentication Method in QueryPie
 
@@ -85,6 +99,7 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 * Identity Provider Metadata : Open the file (GoogleIDPMetadata.xml) downloaded from the Google Admin Console homepage, copy the content, and paste it here.
 * Click the `Save Changes` button to complete the setup.
 
+
 ### SAML Login in QueryPie
 
 <figure data-layout="center" data-align="center">
@@ -92,3 +107,5 @@ QueryPie supports user integration through SAML 2.0 for Google users. You can gr
 </figure>
 
 Now you can authenticate with Google and log in to QueryPie through the `Login with SAML` button on the login page.
+
+
