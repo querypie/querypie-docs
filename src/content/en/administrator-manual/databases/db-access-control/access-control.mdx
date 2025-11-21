@@ -8,12 +8,13 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-In the Access Control page, administrators can directly grant database access permissions to users or groups.
+On the Access Control page, administrators can directly grant database access permissions to users or groups.
 
 
-### Viewing Access Control List
+### Viewing the Access Control List
 
-In the Access Control page, you can view the DB privileges and administrator role status granted to users and groups registered in QueryPie by user or group. (Searchable by group or user name)
+On the Access Control page, you can view the DB privileges and administrator role status granted to users and groups registered in QueryPie.
+(Searchable by group or user name)
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
@@ -25,26 +26,26 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 
 ### Viewing User/Group Access Control Details
 
-Click on a user or group in the table within the Access Control page to open a drawer.
+Clicking on a user or group in the table on the Access Control page opens a drawer.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
 </figure>
 
-* Search: Can be searched by Connection Name
+* Search: Can search by Connection Name
 * Available filter types
-    *  **Database Type** : Database type (e.g. MySQL, MariaDB, PostgreSQL…)
-    *  **Cloud Provider** : Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
-    *  **Assigned Status** : Whether privileges are assigned
-    *  **Favorite View** : Whether favorite is set (can be set in DB Connections list)
-    *  **Tag** : Tags assigned to connections
-        * Each tag input method: Key input → Enter key → Operator input → Value input → Enter key
+    *  **Database Type**: Database type (e.g. MySQL, MariaDB, PostgreSQL…)
+    *  **Cloud Provider**: Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
+    *  **Assigned Status**: Whether privileges are assigned
+    *  **Favorite View**: Whether favorite is set (can be set in the DB Connections list)
+    *  **Tag**: Tags assigned to connections
+        * Tag input method: Enter Key → Press Enter → Enter Operator → Enter Value → Press Enter
             * Supported operators: `=`, `!=`, `:`, `!:`
-        * When multiple tags with the same key are entered, OR search is performed (union)
-        * When multiple tags with different keys are entered, AND search is performed (intersection)
+        * When multiple tags with the same key are entered, an OR search is performed (union)
+        * When multiple tags with different keys are entered, an AND search is performed (intersection)
 
 
-### Granting Access Control Permissions
+### Granting Access Control Privileges
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege](/administrator-manual/databases/db-access-control/access-control/image-20250820-001735.png)
@@ -54,20 +55,26 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Use
 </figure>
 
 1. Navigate to the Access Control menu from the Database settings menu.
-2. Select the user or group to grant permissions to from the list and go to the detail page.
-3. Find the connection to grant permissions to, select the checkbox, and choose the Privilege Type.
-4. You can also select multiple connections to grant permissions to and grant permissions in bulk.
-5. Set the permission expiration date in the Expiration Date field at the bottom. If not set, permissions are granted without expiration.
+2. Select the user or group to grant privileges to from the list and go to the detail page.
+3. Find the connection to grant privileges to, select the checkbox, and choose the Privilege Type.
+4. You can also select multiple connections to grant privileges in bulk.
+  <figure data-layout="center" data-align="center">
+  ![Select multiple target connections and apply privileges in bulk.](/administrator-manual/databases/db-access-control/access-control/image-20250820-002305.png)
+  <figcaption>
+  Select multiple target connections and apply privileges in bulk.
+  </figcaption>
+  </figure>
+5. Set the privilege expiration date in the Expiration Date field at the bottom. If not set, privileges are granted without an expiration date.
 
-Users who have been granted permissions can now connect to the connection with those permissions, and the permission grant history is recorded as an Access Control Granted item in the Access Control Logs.
+Users who have been granted privileges can now connect to the connection with those privileges, and the privilege grant history is recorded as an Access Control Granted item in the Access Control Logs.
 
 <Callout type="info">
-**What happens when a user is included in a group and different permissions are applied to the same connection for both the group and the user?**
-When a user has multiple privileges granted through both individual user permissions and group permissions, the user can select a Default Privilege and connect when accessing the connection.
+**What happens when a user is included in a group and different privileges are applied to the same connection for both the group and the user?**
+When a user has multiple privileges granted through both individual user privileges and group privileges, the user can select a Default Privilege when connecting to the connection.
 </Callout>
 
 
-### Revoking Access Control Permissions
+### Revoking Access Control Privileges
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details](/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png)
@@ -77,27 +84,27 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 </figure>
 
 1. Navigate to the Access Control menu from the Database settings menu.
-2. Select the user or group to revoke permissions from from the list and go to the detail page.
-3. Find the connection to revoke permissions from, select the checkbox, and revoke permissions through the Revoke button.
-4. You can also select multiple connections to revoke permissions from and revoke permissions in bulk.
+2. Select the user or group to revoke privileges from in the list and go to the detail page.
+3. Find the connection to revoke privileges from, select the checkbox, and revoke privileges through the Revoke button.
+4. You can also select multiple connections to revoke privileges in bulk.
 
-Users whose permissions have been revoked can no longer access the connection, and the permission revocation history is recorded as an Access Control Revoked item in the Access Control Logs.
+Users whose privileges have been revoked can no longer access the connection, and the privilege revocation history is recorded as an Access Control Revoked item in the Access Control Logs.
 
 
 <Callout type="important">
-**Status Description in Access Control Details Panel**
-*  **Active**  : The user has normal permissions for the connection.
-*  **Deactivated**  : The user has permissions for the connection but is in a deactivated state when they have not accessed the connection for a period set by the administrator. In this case, the user cannot temporarily access the connection.
-* You can renew and reactivate deactivated permissions by clicking the button (`Renew`) on the right side of the Deactivated status.
-* When deactivated permissions are renewed, the renewal time is displayed in the **Renewed At** column.
+**Status Descriptions in the Access Control Details Panel**
+*  **Active**: The user has normal privileges for the connection.
+*  **Deactivated**: The user has privileges for the connection but is in a deactivated state because they have not accessed the connection for a period set by the administrator. In this case, the user cannot temporarily access the connection.
+* You can renew and reactivate deactivated privileges by clicking the button (`Renew`) on the right side of the Deactivated status.
+* When deactivated privileges are renewed, the renewal time is displayed in the **Renewed At** column.
 </Callout>
 
 <Callout type="important">
-**Detailed Description of Access Control Details Panel**
-* The initial time when the permission was granted can be checked through the **Granted At** column.
-* The last time the user who was granted the permission accessed the connection can be checked through the **Last Access At** column.
-* The time when the permission will be revoked can be checked through the **Expiration Date** column.
-* If a permission is granted but the **Expiration Date** column shows nothing, the permission is not revoked. However, basic management of the connection permission is affected by the connection long-term non-access setting (Deactivation Period).
+**Detailed Descriptions of the Access Control Details Panel**
+* The initial time when the privilege was granted can be checked through the **Granted At** column.
+* The last time the user who was granted the privilege accessed the connection can be checked through the **Last Access At** column.
+* The time when the privilege will be revoked can be checked through the **Expiration Date** column.
+* If a privilege is granted but the **Expiration Date** column shows nothing, the privilege will not be revoked. However, basic management of the connection privilege is affected by the connection long-term inactivity setting (Deactivation Period).
 </Callout>
 
 
@@ -128,16 +135,17 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 ![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
 </figure>
 
-In Access Control, you can control access to only tables with specific tags for connections that specific users are allowed to access. The following conditions must be met to use this feature.
+In Access Control, you can control access to only tables with specific tags for connections that specific users are allowed to access.
+The following conditions must be met to use this feature:
 
-* New DAC Policy Management feature must be enabled.
+* The New DAC Policy Management feature must be enabled.
 * A specific user must have privileges assigned to a specific connection.
 * The target table must be registered as a path in Databases &gt; Policy Management &gt; Data Path and have tags assigned.
 
 If the conditions are met, you can set it up as follows:
 
 1. Go to the detailed screen of a specific connection with privileges assigned to a specific user in Databases &gt; DB Access Control &gt; Access Control.
-2. In the detailed screen, select Access Type as Tag-based table access and add tags. You can only select and use existing tags (tags assigned to tables).
+2. In the detailed screen, select Tag-based table access as the Access Type and add tags. You can only select and use existing tags (tags assigned to tables).
 
 <figure data-layout="center" data-align="center">
 ![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)

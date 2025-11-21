@@ -6,44 +6,49 @@ title: 'Proxy Management'
 
 ### Overview
 
-Administrators can use Proxy Management to view active proxy-enabled connections and check port status. When users execute queries via 3rd-party tools such as DataGrip or DBeaver, you can view and terminate those sessions as needed.
+Administrators can use Proxy Management to view active proxy connections and check port status.
+When users execute queries via 3rd-party tools such as DataGrip or DBeaver, you can view and terminate those sessions as needed.
 
-### View connections with Proxy enabled
+### Viewing Connections with Proxy Enabled
 
-* Proxy Session: Port information for each data source accessible via the proxy.
-* Connection Name: Name of the connection for which the Use Proxy option is enabled.
-* Data Source Type: Type of DBMS such as MySQL.
-* Cloud Provider: Shows the cloud service provider when the connection is synchronized from the cloud.
-* Session Count: Total number of sessions connected via the proxy.
-* Connected At: Time when the connection was established.
-* Status: Indicates whether the session is active.
+*  **Proxy Session**: Port information for each data source accessible via the proxy.
+*  **Connection Name**: Name of the connection for which the "Use Proxy" option is enabled.
+*  **Data Source Type**: Type of DBMS such as MySQL.
+*  **Cloud Provider**: Shows the cloud service provider information when a connection synchronized from the cloud is used.
+*  **Session Count**: Displays the total number of sessions connected via the proxy.
+*  **Connected At**: Displays the time when the connection was established.
+*  **Status**: Displays whether it is active.
 
 <figure data-layout="center" data-align="center">
-![Administrator > Databases > Monitoring > Proxy Management](/administrator-manual/databases/monitoring/proxy-management/image-20250512-113752.png)
+![Administrator &gt; Databases &gt; Monitoring &gt; Proxy Management](/administrator-manual/databases/monitoring/proxy-management/image-20250512-113752.png)
 <figcaption>
-Administrator > Databases > Monitoring > Proxy Management
+Administrator &gt; Databases &gt; Monitoring &gt; Proxy Management
 </figcaption>
 </figure>
 
-1. In the Databases settings menu, go to Proxy Management.
+
+1. Navigate to the Proxy Management menu from the Database settings menu.
 2. You can view connections with proxy enabled and their port information by cluster.
-3. You can see users connected to a connection via proxy and Kill their sessions if necessary.
+3. You can see users connected to a connection via proxy and `Kill` those sessions if necessary.
 
-### Enable the Proxy option
 
-By default, the Use Proxy option is disabled. Enable it for connections you want to allow proxy access to.
+### Enabling the Proxy Usage Option
+
+By default, the proxy usage option is disabled.
+Enable proxy usage for connections you want to allow access to.
 
 <figure data-layout="center" data-align="center">
 ![image-20240725-070857.png](/administrator-manual/databases/monitoring/proxy-management/image-20240725-070857.png)
 </figure>
 
-1. In the Databases settings menu, go to DB Connections.
-2. Click a registered connection.
-3. Scroll down to Additional Information.
-4. Check Proxy Usage to enable it.
+1. Navigate to the DB Connections menu from the Database settings menu.
+2. Click on a registered connection.
+3. Scroll down to the Additional Information section.
+4. Check the `Proxy Usage` option to enable it.
 5. Choose one of the two proxy authentication methods:
-    1. Use QueryPie registered account: Generates proxy connection info using the DB username/password saved by the administrator on the connection info page. Users can connect to the proxy using an Agent or a separately generated Proxy Credential.
-    2. Use existing database account with Agent: Generates proxy connection info allowing users to use their existing DB username/password. Users can connect to the proxy by running the Agent and connecting to localhost and the provided port. Note: When using the user's DB username/password, connection is only possible via the Agent.
-6. Network ID: Required if you use the Reverse SSH feature.
+    1.  **Use QueryPie registered account**: This method generates proxy connection information based on the DB username / password saved by the administrator on the connection information page. Users can connect to the proxy using an Agent or separately generated Proxy Credentials.
+    2.  **Use existing database account with Agent**: This method generates proxy connection information that allows users to use their existing DB username / password. Users can connect to the proxy by running the Agent and using localhost and port information. <br/> ※ When using the user's DB username / password authentication, connection is only possible through the Agent.
+6.  **Network ID**: A required setting value when using the Reverse SSH feature.
 
-When Proxy Usage is enabled, a port for proxy access is assigned to that connection. Once this option is enabled, users can view proxy connection information, and only administrators can configure the proxy option.
+When the Proxy Usage option is enabled, a port for proxy access is assigned to that connection.
+Once this option is enabled, users can view the proxy connection information, and only administrators can configure this proxy option.

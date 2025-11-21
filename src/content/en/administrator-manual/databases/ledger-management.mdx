@@ -8,24 +8,24 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Ledger table policy is a concept that allows you to manage important tables in a database as a ledger, and for tables managed as a ledger, you can force users to go through a workflow approval process to execute DML queries.
+Ledger table policy is a concept that allows you to manage important tables in a database as ledgers. For tables managed as ledgers, you can force users to go through a workflow approval process to execute DML queries.
 
 <Callout type="important">
-The existing ledger table policy feature was provided as a separate license, but from version 10.2.1, it is provided as an integrated DAC feature.
+The existing ledger table policy feature was provided as a separate license, but from version 10.2.1 onwards, it is provided as an integrated DAC feature.
 </Callout>
 
 
-Administrators can set up ledgers at the table level of the database through the Ledger Table Policy menu, and when a 'Ledger Approval Rule' is mapped to a table, it goes through the ledger workflow process.
-By mapping a ledger approval rule, the table immediately takes on the characteristics of a ledger table.
+Administrators can set up ledgers at the table level of databases through the Ledger Table Policy menu. When a 'Ledger-specific Approval Rule' is mapped to a table, it goes through the ledger workflow process.
+By mapping a ledger-specific approval rule, the table immediately takes on the characteristics of a ledger table.
 
-* When a user executes INSERT / UPDATE / DELETE queries on a ledger table,
-    * When a user attempts to modify queries in QueryPie Web Editor and 3rd-party editor for that table, the user will be notified that they must go through SQL Request.
-    * Users who then enter SQL Request can only select the ledger approval rule (Ledger Approval Rule) that the administrator has previously set for that table, and can force approval based on the table and simultaneously force the approval line.
-* When a user executes SELECT queries on a ledger table,
+* When a user executes INSERT / UPDATE / DELETE queries on a ledger table:
+    * When a user attempts to execute modification queries in QueryPie Web Editor or 3rd-party editors for that table, the user will be notified that they must go through SQL Request.
+    * Users who then enter SQL Request can only select the ledger-specific approval rule (Ledger Approval Rule) that the administrator has previously set for that table. This forces approval based on the table and simultaneously enforces the approval line.
+* When a user executes SELECT queries on a ledger table:
     * When a user executes SELECT queries in QueryPie Web Editor for a ledger table, they can be forced to enter a reason for performing the query.
     * However, reason input cannot be forced in 3rd-party editors.
 
 
-### Ledger Management Guide Quick Access
+### Ledger Management Guide Quick Links
 
 (Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)

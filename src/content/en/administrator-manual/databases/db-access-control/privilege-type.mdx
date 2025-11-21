@@ -8,12 +8,15 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-The Privilege feature allows permission control through SQL statement combinations. In addition, for web editors, you can control data export/import and clipboard copy functions. SQL statements are classified according to ANSI SQL standards, and Redis provides separate Privilege Types.
+The Privilege feature allows privilege control through SQL statement combinations.
+In addition, for web editors, you can control data export/import and clipboard copy functions.
+SQL statements are classified according to ANSI SQL standards, and Redis provides separate Privilege Types.
+
 
 ### Creating Privileges
 
 <Callout type="important">
-When creating permissions, MySQL-based SET, SHOW, DESCRIBE, USE statements are basically included in all permissions.
+When creating privileges, MySQL-based SET, SHOW, DESCRIBE, and USE statements are included in all privileges by default.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -26,20 +29,21 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type
 1. Navigate to DB Access Control &gt; Privilege Type menu from the Database settings menu.
 2. Click the `Create Privilege Type` button in the top right.
 3. Enter the following information for policy creation:
-    1.  **Name**  : Name that can distinguish the permission on screen.
-    2.  **Database Type**  : Select the type of database to which the permission is granted. Basically select General type.
-    3.  **Privilege Type**  : Select the statements to allow execution with this permission. 
-    4.  **Functions**  : Select the operations allowed with this permission. You can control data export/import and clipboard copy functions within web editors.
+    1.  **Name**: Name that can distinguish the privilege on screen.
+    2.  **Database Type**: Select the type of database to which the privilege is granted. By default, select the General type.
+    3.  **Privilege Type**: Select the statements to allow execution with this privilege.
+    4.  **Functions**: Select the operations allowed with this privilege. You can control data export/import and clipboard copy functions within web editors.
 4. Save through the `Save` button.
 
-You can check that the permission has been created in the Privilege Type list.
+You can verify that the privilege has been created in the Privilege Type list.
+
 
 <Callout type="info">
-**How can I create and manage access permissions for Redis connections?**
+**How can I create and manage access privileges for Redis connections?**
 
-When selecting Database Type as Redis in the Privilege creation screen, you can create Privileges with separate Redis-specific permission types.
+When selecting Database Type as Redis in the Privilege creation screen, you can create Privileges with separate Redis-specific privilege types.
 
-* Permissions allowed for execution when accessing Redis are largely classified into Read, Write, Dangerous, Etc. 
-* Read, Write, Dangerous, Etc. categories refer to [Redis ACL Categories](https://redis.io/commands/) standards.
-* Among selected categories, you can restrict by setting commands to restrict execution in Restrict Commands.
+* Privileges allowed for execution when accessing Redis are largely classified into Read, Write, Dangerous, and Etc.
+* Read, Write, Dangerous, and Etc. categories refer to [Redis ACL Categories](https://redis.io/commands/) standards.
+* Among selected categories, you can restrict execution by setting commands to restrict in Restrict Commands.
 </Callout>
