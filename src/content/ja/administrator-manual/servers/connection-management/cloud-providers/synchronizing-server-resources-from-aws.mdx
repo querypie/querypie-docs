@@ -8,7 +8,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieでは、サーバー登録および管理のためのAWS連携をサポートします。AWS内のリソースを同期し、QueryPieで管理するサーバーに登録し、ユーザーおよびグループに同期してきたサーバーに対するアクセス権限を付与し、ポリシーを設定できます。また、Scale-outで増設されたサーバーに自動でサーバーグループを追加して設定しておいたアクセス権限を適用受けることができます。
+QueryPieでは、サーバー登録および管理のためのAWS連携をサポートします。
+AWS内のリソースを同期し、QueryPieで管理するサーバーに登録し、ユーザーおよびグループに同期してきたサーバーに対するアクセス権限を付与し、ポリシーを設定できます。
+また、Scale-outで増設されたサーバーに自動でサーバーグループを追加して設定しておいたアクセス権限を適用受けることができます。
 
 
 ### QueryPieでAWS連携情報登録
@@ -26,7 +28,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 4.  **Cloud Provider**  項目でAmazon Web Servicesを選択します。
 5.  **Region**  項目で同期したいリソースのリージョンを選択します。
 6. リソースを同期するために必要な  **Credential**  情報を入力します。
-    1. 各々のCredential方式に対する説明は下段の<u>Credentialタイプ別認証方式設定</u>を参考にします。
+    1. 各々のCredential方式に対する説明は下段の <u>Credentialタイプ別認証方式設定</u>を参考にします。
 7.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
     1. Search FilterはAWSの検索方式と同じように動作します。名前、ホスト、OS、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
         1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
@@ -43,7 +45,8 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 
 <Callout type="info">
 **Q. Saveボタンをクリックしたのに「Already exists cloud provider.」というエラーが表示されます。なぜそうなるのですか？**
-A. すでに  **Creadential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。この場合、他の`Region`を選択して登録する必要があります。
+A. すでに  **Creadential** が`Default Credentials`でありながら同じ`Region`で登録されたCloud Providerがある場合、重複登録ができません。
+この場合、他の`Region`を選択して登録する必要があります。
 </Callout>
 
 
@@ -102,5 +105,6 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
     7.  **Replication**   **Frequency** : 変更可能 (ただし、CredentialがAccess Keyの場合変更不可)
 
 <Callout type="important">
-"Save Credential for Synchronization"オプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。新しく作成する時と同様にこの設定は  **活性化した後再び非活性化できませんので**  慎重に選択する必要があります。
+"Save Credential for Synchronization"オプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。
+新しく作成する時と同様にこの設定は  **活性化した後再び非活性化できませんので**  慎重に選択する必要があります。
 </Callout>

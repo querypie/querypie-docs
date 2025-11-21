@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-数多くのサーバーをグループ化してアクセス可能なアカウントおよびポリシーを一度に適用できます。目的に応じてサーバーグループを作成した後、一括でポリシーを便利に管理でき、このようにグループ化したサーバーグループ権限を個別ユーザーまたはユーザーグループに一度に付与できます。
+数多くのサーバーをグループ化してアクセス可能なアカウントおよびポリシーを一度に適用できます。
+目的に応じてサーバーグループを作成した後、一括でポリシーを便利に管理でき、このようにグループ化したサーバーグループ権限を個別ユーザーまたはユーザーグループに一度に付与できます。
 
 <Callout type="info">
 サーバーグループ登録に必要な各リソースを事前に登録することをお勧めします。
@@ -36,13 +37,15 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 4. `Save`ボタンを通じて保存します。
 
 <Callout type="info">
-サーバーグループはTagベースでサーバーを管理できます。特定TagをサーバーグループのServer Tagsに指定して、該当Tagがあるすべてのサーバーがサーバーグループに含まれる形態の流動的なサーバー管理が可能です。
+サーバーグループはTagベースでサーバーを管理できます。
+特定TagをサーバーグループのServer Tagsに指定して、該当Tagがあるすべてのサーバーがサーバーグループに含まれる形態の流動的なサーバー管理が可能です。
 </Callout>
 
 
 ### サーバーグループ作成/修正
 
-以下の情報を入力してサーバーグループを作成できます。作成後、一部項目は修正が可能です。
+以下の情報を入力してサーバーグループを作成できます。
+作成後、一部項目は修正が可能です。
 
 #### 1. 基本情報入力およびサーバーをTagで追加
 
@@ -75,6 +78,7 @@ TagでServer Groupに追加しようとする対象をフィルタリングし�
 </figcaption>
 </figure>
 </Callout>
+
 * InformationのServer Tagsで手動追加されたサーバーと関連するタグを削除しても、手動で追加されたサーバーはサーバーグループから除外されません。Serversテーブルでチェックボックス選択後表示される`Delete`ボタンを通じた手動削除のみ可能です。
 * Test Connectionを通じてServer Group内追加されたServerとAccountに対するアカウント情報確認ができます。
     * Test Connectionを使用するには最小1個のServerとAccountをServer Groupに追加する必要があります。
@@ -221,5 +225,6 @@ macOSのVNCプロトコル制限により、VNCを通じた自動ログインを
 4. `Save Changes`ボタンを通じて保存します。
 
 <Callout type="info">
-Workflowで表示されるServer Groupを制限するにはAdmin &gt; Servers &gt; General &gt; Configurationsで「Show Server Groups in Workflow if Assigned as Member」項目を活性化する必要があります。詳細位置は[Server Access Request Default Settings | 基本-サーバー-アクセス-ポリシー-設定](../../sac-general-configurations#%ea%b8%b0%eb%b3%b8-%ec%84%9c%eb%b2%84-%ec%a0%91%ea%b7%bc-%ec%a0%95%ec%b1%85-%ec%84%a4%ec%a0%95)ガイドを参考にお願いします。
+Workflowで表示されるServer Groupを制限するにはAdmin &gt; Servers &gt; General &gt; Configurationsで「Show Server Groups in Workflow if Assigned as Member」項目を活性化する必要があります。
+詳細位置は[Server Access Request Default Settings | 基本-サーバー-アクセス-ポリシー-設定](../../sac-general-configurations#%ea%b8%b0%eb%b3%b8-%ec%84%9c%eb%b2%84-%ec%a0%91%ea%b7%bc-%ec%a0%95%ec%b1%85-%ec%84%a4%ec%a0%95)ガイドを参考にお願いします。
 </Callout>
