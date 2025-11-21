@@ -27,15 +27,15 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 1. Navigate to the Cloud Provider menu from the Database settings menu.
 2. Click the `Create Provider` button in the top right.
 3. Enter a name that can distinguish the provider in the Name field.
-4. Select Google Cloud Platform from the **Cloud Provider** field.
-5. Enter the project of the resources you want to synchronize in the **Project ID** field.
-6. Enter the **Credential** information required to synchronize resources.
+4.  **Cloud Provider**  Select Google Cloud Platform.
+5.  **Project ID**  Enter the project of the resources you want to synchronize.
+6. Enter the  **Credential**  information required to synchronize resources.
     * Provides a manual synchronization method that enters GCP's Service Account when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Service Account as the Credential type.
-7. Select the resources you want to synchronize from the **Database Type Filter** field.
-8. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
+7.  **Database Type Filter**  Select the resources you want to synchronize.
+8.  **Search Filter**  You can get a list of specific types of resources you want to synchronize.
     1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
         1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
-9. Select the synchronization method from the **Replication Frequency** field.
+9.  **Replication Frequency**  Select the synchronization method.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
 10. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
@@ -83,14 +83,14 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 
 <Callout type="important">
 Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page.
-Like when creating new ones, this setting **cannot be disabled again after being enabled**, so you must choose carefully.
+Like when creating new ones, this setting  **cannot be disabled again after being enabled**  so you must choose carefully.
 </Callout>
 
 ### Synchronization through Service Account
 
 1. After registering a Cloud Provider for GCP integration, click the `Synchronize` button on the detail page.
 2. Enter the JSON key value in the displayed Service Account JSON field and click the `Ok` button.
-    * You can create a Service Account in Google Cloud Console &gt; IAM &amp; Admin &gt; Service Accounts menu and issue a JSON key to use. 
+    * You can create a Service Account in Google Cloud Console &gt; IAM & Admin &gt; Service Accounts menu and issue a JSON key to use. 
 3. Resources synchronized with the JSON key can be checked in the DB Connections menu.
 
 <Callout type="info">

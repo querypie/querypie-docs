@@ -29,17 +29,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 1. Navigate to the Cloud Provider menu from the Database settings menu.
 2. Click the `Create Provider` button in the top right.
 3. Enter a name that can distinguish the provider in the Name field.
-4. Select Microsoft Azure from the **Cloud Provider** field.
-5. Enter the **Tenant ID** of the resources you want to synchronize.
-6. Enter the **Subscription ID**.
-7. Enter the **Credential** information required to synchronize resources. Currently, only Client Secret method is supported.
+4.  **Cloud**   **Provider**  Select Microsoft Azure.
+5. Enter the  **Tenant**   **ID**  of the resources you want to synchronize.
+6.  **Subscription**   **ID**  Enter the Subscription ID.
+7. Enter the  **Credential**  information required to synchronize resources. Currently, only Client Secret method is supported.
     * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Client Secret as the Credential type. 
-8. Select the resources you want to synchronize from the **Database Type Filter** field. 
+8.  **Database Type Filter**  Select the resources you want to synchronize. 
     * Currently, only Azure SQL Database can be synchronized. 
-9. You can use **Search Filter** to get a list of specific types of resources you want to synchronize.
+9.  **Search Filter**  You can get a list of specific types of resources you want to synchronize.
     1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
         1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
-10. Select the synchronization method from the **Replication Frequency** field.
+10.  **Replication**   **Frequency**  Select the synchronization method.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Provides Cron Expressions.
 11. **Auto Configuration Upon Initial Synchronization** You can specify some values for DBs that are first synchronized from the Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register it again.
@@ -79,7 +79,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 5. Once a Cloud Provider is registered, the Provider basic information and authentication information cannot be changed.
     1.  **Name**  : Changeable
     2.  **Cloud Provider** : Not changeable
-    3.  **Tenant ID** : Not changeable
+    3.  **Tenant**   **ID** : Not changeable
     4.  **Subscription ID** : Not changeable
     5.  **Credential**  : Not changeable
         1. "Save Credential for Synchronization" : Can be changed from disabled to enabled, but cannot be changed from enabled to disabled
@@ -87,7 +87,8 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
     7.  **Replication Frequency**  : Cloud synchronization settings with the "Save Credential for Synchronization" option enabled can change this value. "Save Credential for Synchronization" is disabled by default.
 
 <Callout type="important">
-Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page. Like when creating new ones, this setting **cannot be disabled again after being enabled**, so you must choose carefully.
+Synchronization settings saved without the "Save Credential for Synchronization" option enabled can be enabled by checking the checkbox on the detail page.
+Like when creating new ones, this setting  **cannot be disabled again after being enabled**  so you must choose carefully.
 </Callout>
 
 <Callout type="info">
