@@ -20,6 +20,9 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
     1.  **Name**  : User name
     2.  **Cluster Name**  : Cluster name registered in QueryPie
 4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-082906.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png)
+  </figure>
     1.  **Verb**  : Specific Kubernetes API action called
         * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
     2.  **Resource**  : Specific Kubernetes resource called
@@ -50,7 +53,10 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
 
 ### Viewing Request Audit Details
 
-1. You can view detailed information by clicking on each row.
+1. You can view detailed information by clicking on each row. <br/> 
+  <figure data-layout="center" data-align="center">
+  ![image-20250116-121412.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png)
+  </figure>
     1. The top displays information based on basic events:
         1.  **Result**  : API call success/failure status 
             1. :check_mark: Success
@@ -69,7 +75,13 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
         13.  **Pod Session Recording**  : Recording for the corresponding session when executed with Pod exec API
             1. This field is viewable in the detail page only for logs where session recording occurred.
             2. When executed with Pod exec API, recording for the corresponding session proceeds, and the "Session Recording" text includes a hyperlink. 
+              <figure data-layout="center" data-align="center">
+              ![image-20240512-055657.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png)
+              </figure>
             3. Clicking the link plays the related session recording. 
+              <figure data-layout="center" data-align="center">
+              ![image-20240721-082651.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png)
+              </figure> 
         14. The middle section displays information based on API call history: 
             1.  **Verb**  : Specific Kubernetes API action called
             2.  **Namespace**  : Target namespace 
