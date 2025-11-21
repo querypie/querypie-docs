@@ -21,33 +21,36 @@ Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit
 1. Administrator &gt; Audit &gt; Web Apps &gt; Web Event Auditメニューに移動します。
 2. 現在月基準でログが降順で照会されます。
 3. テーブル最左上部の検索欄を通じて以下の条件で検索が可能です。
-   1. User Name : ユーザー名
-   2. User Email : ユーザーメール
-   3. Role Name : 役割名
-   4. Web App Name : ウェブアプリケーション名
-   5. Content : コンテンツ内容
-   6. Url : アクセスしたURL
-   7. Session Uuid : セッション固有識別子
-   8. Tab Id : タブ識別子
-   9. Client Ip : クライアントIPアドレス
-   10. Message : メッセージ内容
-4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
-   1. Event Type : イベントタイプ（Mouse Clicked/Clipboard Copiedなど）
-   2. Result : 実行結果（Success/Failure）
-   3. Action At : アクション発生日時範囲
+    1. User Name : ユーザー名
+    2. User Email : ユーザーメール
+    3. Role Name : 役割名
+    4. Web App Name : ウェブアプリケーション名
+    5. Content : コンテンツ内容
+    6. Url : アクセスしたURL
+    7. Session Uuid : セッション固有識別子
+    8. Tab Id : タブ識別子
+    9. Client Ip : クライアントIPアドレス
+    10. Message : メッセージ内容
+4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。 <br/> 
+  <figure data-layout="center" data-align="center">
+  ![image-20250629-173418.png](/administrator-manual/audit/web-app-logs/web-event-audit/image-20250629-173418.png)
+  </figure>
+    1. Event Type : イベントタイプ（Mouse Clicked/Clipboard Copiedなど）
+    2. Result : 実行結果（Success/Failure）
+    3. Action At : アクション発生日時範囲
 5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
 6. テーブルで以下のカラム情報を提供します:
-   1. **No**: 順番
-   2. **Action At**: アクション発生日時
-   3. **Event Type**: イベントタイプ（Mouse Clicked、Clipboard Copiedなど）
-   4. **Result**: 実行結果（Success/Failure）
-   5. **Name**: ユーザー名
-   6. **Email**: ユーザーメール
-   7. **Web App**: ウェブアプリケーション名
-   8. **URL**: アクセスしたURL
-   9. **Session ID**: セッション固有識別子
-   10. **Tab ID**: タブ識別子
-   11. **Client IP**: クライアントIPアドレス
+    1. **No**: 順番
+    2. **Action At**: アクション発生日時
+    3. **Event Type**: イベントタイプ（Mouse Clicked、Clipboard Copiedなど）
+    4. **Result**: 実行結果（Success/Failure）
+    5. **Name**: ユーザー名
+    6. **Email**: ユーザーメール
+    7. **Web App**: ウェブアプリケーション名
+    8. **URL**: アクセスしたURL
+    9. **Session ID**: セッション固有識別子
+    10. **Tab ID**: タブ識別子
+    11. **Client IP**: クライアントIPアドレス
 
 ### Web Event Audit詳細内訳の照会
 
@@ -61,19 +64,19 @@ Administrator &gt; Audit &gt; Web Apps &gt; Web Event Audit &gt; Event Audit Det
 </figure>
 
 * **右側ドロワーには以下の情報を露出します:**
-   1. **Action At**: アクション時点
-   2. **Event Type**: イベントタイプ（Mouse Clicked、Clipboard Copiedなど）
-   3. **Result**: イベント処理成功/失敗の有無
-      1. ✅ Success
-      2. ❌ Failure
-   4. **Client IP**: クライアントIPアドレス
-   5. **Name**: 対象ユーザー名
-   6. **Email**: 対象ユーザーメール
-   7. **Role**: ユーザー役割名
-   8. **Message**: イベント実行など特異事項に対する記録
-   9. **Web App**: ウェブアプリケーション名
-   10. **URL**: イベントが発生したページURL
-   11. **Session ID**: セッション固有識別子
-   12. **Tab ID**: タブ識別子
-   13. **Clicked Text**: クリックされたテキスト内容（Mouse Clickedイベントの場合）
-   14. **Event Snapshot**: イベント発生時点の画面スクリーンショット
+    1. **Action At**: アクション時点
+    2. **Event Type**: イベントタイプ（Mouse Clicked、Clipboard Copiedなど）
+    3. **Result**: イベント処理成功/失敗の有無
+        1. ✅ Success
+        2. ❌ Failure
+    4. **Client IP**: クライアントIPアドレス
+    5. **Name**: 対象ユーザー名
+    6. **Email**: 対象ユーザーメール
+    7. **Role**: ユーザー役割名
+    8. **Message**: イベント実行など特異事項に対する記録
+    9. **Web App**: ウェブアプリケーション名
+    10. **URL**: イベントが発生したページURL
+    11. **Session ID**: セッション固有識別子
+    12. **Tab ID**: タブ識別子
+    13. **Clicked Text**: クリックされたテキスト内容（Mouse Clickedイベントの場合）
+    14. **Event Snapshot**: イベント発生時点の画面スクリーンショット

@@ -32,7 +32,9 @@ Administrator &gt; General &gt; User Management &gt; Authentication &gt; LDAP
 ![image-20250515-095143.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20250515-095143.png)
 </figure>
 
-LDAP連携のための基本的な認証情報および属性情報を入力します。Attributeマッピングのための属性情報の場合、フィールド名はQueryPie Userの属性名で、フィールドにはLDAPで参照するAttribute名を入力します。詳細説明は下部項目を参照してください。
+LDAP連携のための基本的な認証情報および属性情報を入力します。
+Attributeマッピングのための属性情報の場合、フィールド名はQueryPie Userの属性名であり、フィールドにはLDAPで参照するAttribute名を入力します。
+詳細説明は下部項目を参照してください。
 
 #### グループ連携設定
 
@@ -225,7 +227,7 @@ QueryPie Attribute
 * `Save Changes`をクリックすると入力された設定情報をQueryPieに保存します。
 * `Synchronize`ボタンをクリックすると現在入力された設定情報を基盤に同期を実行します。（現在入力した設定情報を保存した後にのみ有効化される）
     * ![image-20241209-124345.png](/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png)ボタンをクリックすると直前の同期履歴を照会できます。
-    * 個別同期中失敗件がある場合、Progress Bar色が黄色で表示されます。
+    * 個別同期中失敗件がある場合、Progress Bar色が黄色で表示されます。 
     * 失敗ログは：cross_mark:アイコンで表示されます。ログをクリックすると詳細なエラーメッセージを確認できます。
 
 
@@ -238,7 +240,7 @@ QueryPie Attribute
 
 ### QueryPieでLDAP認証してログイン
 
-1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。 <br/>  
+1. Administrator &gt; General &gt; User Management &gt; UsersまたはGroupsメニューで同期されたユーザーおよびグループを確認できます。 <br/>
   <figure data-layout="center" data-align="center">
   ![Admin &gt; General &gt; User Management &gt; Users](/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-215940.png)
   <figcaption>

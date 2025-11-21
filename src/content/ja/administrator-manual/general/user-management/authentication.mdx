@@ -8,7 +8,11 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-SSO（Single Sign-On）統合はユーザー認証およびアクセス管理を向上させると同時に安全な統合認証環境を提供するQueryPie内の必須機能です。組織で使用するアカウントシステムを連携して組織内のユーザーおよびグループをQueryPieに同期できます。管理者は組織内の入社者および退社者を一箇所で管理できます。SSO統合は認証プロセスを簡素化し、ユーザーが組織内で使用中の認証方式でQueryPieを通じてデータベースおよびシステムにアクセスできるようにします。該当ドキュメントではSSO連携方法と主要考慮事項について説明します。
+SSO（Single Sign-On）統合はユーザー認証およびアクセス管理を向上させると同時に安全な統合認証環境を提供するQueryPie内の必須機能です。
+組織で使用するアカウントシステムを連携して組織内のユーザーおよびグループをQueryPieに同期できます。
+管理者は組織内の入社者および退社者を一箇所で管理できます。
+SSO統合は認証プロセスを簡素化し、ユーザーが組織内で使用中の認証方式でQueryPieを通じてデータベースおよびシステムにアクセスできるようにします。
+該当ドキュメントではSSO連携方法と主要考慮事項について説明します。
 
 <Callout type="info">
 11.3.0でAuthentication関連設定がAdmin &gt; General &gt; User Management &gt; AuthenticationからAdmin &gt; General &gt; System &gt; IntegrationのAuthenticationの下位項目であるIdentity Providersに移動されました。
@@ -22,7 +26,7 @@ SSO（Single Sign-On）統合はユーザー認証およびアクセス管理を
 * [Okta](authentication/integrating-with-okta)
 * [LDAP](authentication/integrating-with-ldap)
 * Swivel Secure
-* OneLogin
+* OneLogin 
 * SAML 2.0
 * Custom Identity Provider : API URL入力のみ可能です。
 
@@ -50,7 +54,7 @@ Authenticationタイプ変更が必要な場合にはQueryPie技術サポート�
 
 ### 外部アカウントシステムおよびQueryPie自身アカウント同時使用
 
-* 外部アカウントシステム連携機能を使用する場合でも、QueryPie自身でユーザー、グループを追加して使用できます。
+* 外部アカウントシステム連携機能を使用する場合でも、QueryPie自身でユーザー、グループを追加して使用できます。 
 * ただし、UsernameとEmail項目は固有値で重複して登録できません。
 
 
