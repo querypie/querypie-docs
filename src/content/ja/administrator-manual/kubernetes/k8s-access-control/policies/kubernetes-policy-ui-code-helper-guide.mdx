@@ -21,10 +21,16 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 </figure>
 
 1.  **Add Resources**  モーダル
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073346.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png)
+  </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
     2. Cluster名でリソース検索が可能です。
     3. チェックボックスにチェックしたリソースを`Add`ボタンをクリックしてコードに挿入します。
 2.  **Set Subjects**  モーダル
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
+  </figure>
     1. Spec: Allowでのみ動作します。
     2.  **Kubernetes Groups**  : (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを明示します。
     3.  **Permitted Impersonation**  : (Optional) 該当フィールドを通じてユーザーがクライアントを通じて実際の--as、--as-groupを通じたimpersonationを試みる時に適用可能なKubernetesユーザー/グループを列挙します。
@@ -33,6 +39,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
         3. ','を通じて多重で登録可能です。
     4. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。
 3.  **Add Actions**  モーダル
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
+  </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
     2.  **API Groups** : デフォルトで"*"提供；管理者が修正可能で、','で多重入力可能です。
     3.  **Resources** : Kubernetesリソースを明示します。
@@ -55,6 +64,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     7. `Add`ボタンをクリックしてactionsリスト中一つのアクションセットを定義できます。
     8. コード上でappendに該当する部分で既存の追加されたアクションを初期化せずに新しく追加が可能です。
 4.  **Set Conditions**  モーダル
+  <figure data-layout="center" data-align="center">
+  ![image-20240721-073628.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png)
+  </figure>
     1. 該当項目はすべて選択事項です。
     2. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。
     3.  **Resource Tags**  (Optional)

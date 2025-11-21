@@ -39,6 +39,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
     6.  **Updated By**  : 最終アップデートを実行した管理者名
 5. 各行をクリックすると役割詳細情報照会が可能です。
     1.   **Policies**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-070945.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070945.png)
+      </figure>
         1. デフォルトで指定されるタブで割り当てられたポリシーリストを照会できます。
         2. テーブルリストには各ポリシー別に以下の情報を露出します：
             1.  **Name**  : Policy名
@@ -47,6 +50,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             4.  **Assigned At**  : 割り当て日時
             5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
         3. 各ポリシー行をクリックすると該当ポリシーの詳細情報をドロワー形態で提供します。
+          <figure data-layout="center" data-align="center">
+          ![image-20240721-071031.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071031.png)
+          </figure>
             1. 上段には基本情報が以下のように露出されます：
                 1.  **Name**  : Policy名
                     * ポリシー詳細ページリンクを新しいウィンドウで開けます。
@@ -56,6 +62,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
                 5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
             2. 下段にはポリシーがコードで露出されます。
     2.  **Users/Groups**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-071134.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071134.png)
+      </figure>
         1. 該当Roleが付与されているユーザー/グループリストを列挙します。
         2. ユーザー/グループ名で検索可能です。
         3. リストは各ユーザー/グループごとに以下の情報を露出します：
@@ -65,6 +74,9 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             4.  **Expiration Date**  : 期限満了日
             5.  **Granted At**  : ユーザー/グループに該当Roleが付与された日時
     3.  **Clusters**
+      <figure data-layout="center" data-align="center">
+      ![image-20240721-071233.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071233.png)
+      </figure>
         1. 該当Roleによってアクセス可能なKubernetesクラスターリストを列挙します。
         2. Cluster名で検索可能です。
         3. リストは各クラスターごとに以下の情報を露出します：
