@@ -277,15 +277,16 @@ def filter_diff_output(
     return filtered_output
 
 
-def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[str]]:
+def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[str], Optional[Path]]:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
     If current file is not Korean, find Korean equivalent and run diff.
 
     Returns:
-        Tuple of (should_continue, comparison_result)
+        Tuple of (should_continue, comparison_result, unmatched_file_path)
         should_continue: True if it should continue processing, False if max_diff is reached and should stop
         comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
+        unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
     """
     global _diff_count, _match_count, _max_diff, _exclude_patterns, _ignore_rules
 
@@ -293,27 +294,27 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
 
     # If current file is Korean, no need to compare
     if current_lang == 'ko':
-        return True, None
+        return True, None, None
 
     # Check if file path matches exclude patterns
     relative_path = get_path_without_lang_dir(current_skel_path)
     if relative_path and relative_path in _exclude_patterns:
-        return True, None
+        return True, None, None
 
     # Check if max_diff is set and already reached
     if _max_diff is not None:
         if _diff_count >= _max_diff:
-            return False, None
+            return False, None, None
 
     # Get Korean equivalent path
     korean_skel_path = get_korean_equivalent_path(current_skel_path)
 
     if korean_skel_path is None:
-        return True, None
+        return True, None, None
 
     # Check if Korean .skel.mdx file exists
     if not korean_skel_path.exists():
-        return True, None
+        return True, None, None
 
     # Run diff command
     try:
@@ -369,17 +370,20 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
             else:
                 # All differences were ignored, treat as matched
                 _match_count += 1
-                return True, 'matched'
+                return True, 'matched', None
 
+            # Get the original .mdx file path for the unmatched file
+            current_mdx_path = get_original_mdx_path(current_skel_path)
+            
             # Check if max_diff reached
             if _max_diff is not None:
                 if _diff_count >= _max_diff:
-                    return False, 'unmatched'
-            return True, 'unmatched'
+                    return False, 'unmatched', current_mdx_path
+            return True, 'unmatched', current_mdx_path
         elif result.returncode == 0:
             # Files are identical, increment match count
             _match_count += 1
-            return True, 'matched'
+            return True, 'matched', None
 
         # Print stderr if any (errors)
         if result.stderr:
@@ -388,17 +392,17 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
     except Exception as e:
         print(f"Error running diff: {e}", file=sys.stderr)
 
-    return True, None
+    return True, None, None
 
 
-def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int, int, List[str]]:
+def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int, int, List[str], List[Path]]:
     """
     Process all .mdx files in a directory.
-    Returns tuple of (success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files).
+    Returns tuple of (success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files, unmatched_file_paths).
     
     Args:
         directory: Directory to process
-        convert_func: Function to convert MDX to skeleton (takes Path, returns Tuple[Path, Optional[str]])
+        convert_func: Function to convert MDX to skeleton (takes Path, returns Tuple[Path, Optional[str], Optional[Path]])
     """
     if not directory.exists():
         raise FileNotFoundError(f"Directory not found: {directory}")
@@ -412,6 +416,7 @@ def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int
     unmatched_count = 0
     not_compared_count = 0
     not_compared_files = []  # Track files that were not compared
+    unmatched_file_paths = []  # Track paths of unmatched files
 
     # Find all .mdx files (recursively)
     mdx_files = list(directory.rglob('*.mdx'))
@@ -420,7 +425,7 @@ def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int
     mdx_files = [f for f in mdx_files if not f.name.endswith('.skel.mdx')]
 
     if not mdx_files:
-        return 0, 0, 0, 0, 0, []
+        return 0, 0, 0, 0, 0, [], []
 
     for mdx_file in mdx_files:
         # Check if max_diff reached before processing next file
@@ -429,7 +434,7 @@ def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int
             break
 
         try:
-            _, comparison_result = convert_func(mdx_file)
+            _, comparison_result, unmatched_file_path = convert_func(mdx_file)
             success_count += 1
             
             # Count matched/unmatched/not_compared
@@ -437,6 +442,9 @@ def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int
                 matched_count += 1
             elif comparison_result == 'unmatched':
                 unmatched_count += 1
+                # Collect unmatched file path if available
+                if unmatched_file_path is not None:
+                    unmatched_file_paths.append(unmatched_file_path)
             elif comparison_result is None:
                 # Comparison was not performed (e.g., Korean file, no Korean equivalent, etc.)
                 not_compared_count += 1
@@ -460,18 +468,23 @@ def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int
             print(f"{mdx_file}: {e}", file=sys.stderr)
             error_count += 1
 
-    return success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files
+    return success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files, unmatched_file_paths
 
 
-def process_directories_recursive(directories: List[Path], convert_func) -> int:
+def process_directories_recursive(directories: List[Path], convert_func) -> Tuple[int, List[Path]]:
     """
     Process multiple directories recursively.
     If directories list is empty, uses default directories (target/ko, target/ja, target/en).
-    Returns exit code (0 for success).
+    Returns tuple of (exit_code, unmatched_file_paths).
     
     Args:
         directories: List of directories to process
-        convert_func: Function to convert MDX to skeleton (takes Path, returns Tuple[Path, Optional[str]])
+        convert_func: Function to convert MDX to skeleton (takes Path, returns Tuple[Path, Optional[str], Optional[Path]])
+    
+    Returns:
+        Tuple of (exit_code, unmatched_file_paths)
+        - exit_code: Exit code (0 for success)
+        - unmatched_file_paths: List of paths to unmatched .mdx files (with target/{lang} prefix)
     """
     if len(directories) == 0:
         # No directories specified, use defaults (Korean, Japanese, English order)
@@ -487,6 +500,7 @@ def process_directories_recursive(directories: List[Path], convert_func) -> int:
     total_matched = 0
     total_unmatched = 0
     total_not_compared = 0
+    all_unmatched_file_paths = []  # Collect all unmatched file paths
 
     for directory in directories:
         # Check if max_diff reached before processing next directory
@@ -500,12 +514,13 @@ def process_directories_recursive(directories: List[Path], convert_func) -> int:
         if not directory.is_dir():
             print(f"Warning: Path is not a directory: {directory}", file=sys.stderr)
             continue
-        success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files = process_directory(directory, convert_func)
+        success_count, error_count, matched_count, unmatched_count, not_compared_count, not_compared_files, unmatched_file_paths = process_directory(directory, convert_func)
         total_success += success_count
         total_errors += error_count
         total_matched += matched_count
         total_unmatched += unmatched_count
         total_not_compared += not_compared_count
+        all_unmatched_file_paths.extend(unmatched_file_paths)
 
         # Print statistics for this directory
         # Verify: converted = matched + unmatched + not_compared
@@ -525,7 +540,7 @@ def process_directories_recursive(directories: List[Path], convert_func) -> int:
     if len(directories) > 1:
         print(f"Total: {total_success} converted, {total_errors} errors, {total_matched} matched, {total_unmatched} unmatched, {total_not_compared} not_compared")
 
-    return 0
+    return 0, all_unmatched_file_paths
 
 
 def initialize_config(max_diff: int, exclude_patterns: List[str], ignore_file_path: Optional[Path] = None):

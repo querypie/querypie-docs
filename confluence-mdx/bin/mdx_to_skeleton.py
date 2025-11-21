@@ -764,7 +764,7 @@ def process_markdown_line(line: str, text_processor: TextProcessor) -> str:
     return leading_whitespace + processed_content
 
 
-def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str]]:
+def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str], Optional[Path]]:
     """
     Converts an MDX file to skeleton format.
     
@@ -794,9 +794,10 @@ def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str]]:
         input_path: Path to the input MDX file
         
     Returns:
-        Tuple of (output_path, comparison_result)
+        Tuple of (output_path, comparison_result, unmatched_file_path)
         - output_path: Path to the generated skeleton MDX file
         - comparison_result: Optional comparison result with Korean skeleton file
+        - unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
     """
     if not input_path.exists():
         raise FileNotFoundError(f"Input file not found: {input_path}")
@@ -893,9 +894,9 @@ def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str]]:
     output_path.write_text(content, encoding='utf-8')
 
     # Compare with Korean equivalent if current file is not Korean
-    _, comparison_result = compare_with_korean_skel(output_path)
+    _, comparison_result, unmatched_file_path = compare_with_korean_skel(output_path)
 
-    return output_path, comparison_result
+    return output_path, comparison_result, unmatched_file_path
 
 
 def main():
@@ -940,6 +941,12 @@ def main():
         metavar='PATH',
         help='Exclude paths from diff comparison. Path should be relative to target/{lang} (e.g., /index.skel.mdx). Can specify multiple paths. Default: /index.skel.mdx'
     )
+    parser.add_argument(
+        '--output',
+        type=Path,
+        metavar='FILE',
+        help='Output file path to save list of unmatched files (only used with --recursive option). Each line contains a path with target/{lang} prefix.'
+    )
 
     args = parser.parse_args()
 
@@ -955,14 +962,27 @@ def main():
             return 0
         elif args.recursive is not None:
             # Recursive mode: process directories
-            return process_directories_recursive(args.recursive, convert_mdx_to_skeleton)
+            exit_code, unmatched_file_paths = process_directories_recursive(args.recursive, convert_mdx_to_skeleton)
+            
+            # Save unmatched file paths to output file if specified
+            if args.output is not None:
+                try:
+                    # Sort paths for consistent output
+                    sorted_paths = sorted(set(str(path) for path in unmatched_file_paths))
+                    args.output.write_text('\n'.join(sorted_paths) + '\n', encoding='utf-8')
+                    print(f"Unmatched file paths saved to: {args.output}")
+                except Exception as e:
+                    print(f"Error writing output file {args.output}: {e}", file=sys.stderr)
+                    return 1
+            
+            return exit_code
         elif args.input_path:
             # Single file mode
             if args.input_path.is_dir():
                 print("Error: Input path is a directory. Use -r option for directory processing.", file=sys.stderr)
                 return 1
 
-            output_path, _ = convert_mdx_to_skeleton(args.input_path)
+            output_path, _, _ = convert_mdx_to_skeleton(args.input_path)
             print(f"Successfully created: {output_path}")
             return 0
         else:
