@@ -10,7 +10,7 @@ QueryPieと他のNetwork Zoneにあるリソースと通信する手段として
 
 リソース（DB Connection）にTagを追加してReverse Tunnelを通じてQueryPieから他のNetwork Zoneのリソースに通信できます。
 
-### Reverse Tunnels DB Connectionに適用
+### Reverse Tunnels DB Connectionに適用する
 
 <figure data-layout="center" data-align="center">
 ![Admin Page &gt; Servers &gt; Connection Management &gt; DB Connections](/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-db-through-reverse-tunnel/image-20250512-122312.png)
@@ -20,7 +20,7 @@ Admin Page &gt; Servers &gt; Connection Management &gt; DB Connections
 </figure>
 
 1. Administrator &gt; Databases &gt; Connection Management &gt; DB Connectionsメニューに移動します。
-2. リスト内DB Connectionを選択します。DB新規登録時[DB接続手動で登録](../../../databases/connection-management/db-connections)を参照してください。
+2. リスト内のDB Connectionを選択します。DB新規登録時は[DB接続を手動で登録する](../../../databases/connection-management/db-connections)を参照してください。
 3. DB ConnectionのList Detailページ内でTags項目に以下のTagを追加します。
     1. `RTS = TRUE` : このTagがあるDB ConnectionはReverse Tunnelsを通じて接続を試行します。
     2. Reverse Tunnel AgentのTag : 同じTagがあるReverse Tunnel Agentを通じてDBに接続します。同じTagがあるReverse Tunnel Agentがない場合、接続は失敗します。

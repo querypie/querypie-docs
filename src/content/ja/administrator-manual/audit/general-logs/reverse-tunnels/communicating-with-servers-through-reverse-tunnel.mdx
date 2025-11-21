@@ -10,7 +10,7 @@ QueryPieと他のNetwork Zoneにあるリソースと通信する手段として
 
 リソース（サーバー）にTagを追加してReverse Tunnelを通じてQueryPieから他のNetwork Zoneのリソースに通信できます。
 
-### Reverse Tunnelsサーバーに適用
+### Reverse Tunnelsをサーバーに適用する
 
 <figure data-layout="center" data-align="center">
 ![Admin Page &gt; Servers &gt; Connection Management &gt; Servers](/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-servers-through-reverse-tunnel/image-20241209-134405.png)
@@ -20,7 +20,7 @@ Admin Page &gt; Servers &gt; Connection Management &gt; Servers
 </figure>
 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Serversメニューに移動します。
-2. リスト内サーバーを選択します。サーバー新規登録時[手動で個別サーバー登録](../../../servers/connection-management/servers/manually-registering-individual-servers)を参照してください。
+2. リスト内のサーバーを選択します。サーバー新規登録時は[手動で個別サーバーを登録する](../../../servers/connection-management/servers/manually-registering-individual-servers)を参照してください。
 3. ServerのList Detailページ内でTags項目に以下のTagを追加します。
     1. `RTS = TRUE` : このTagがあるServerはReverse Tunnelsを通じて接続を試行します。
     2. Reverse Tunnel AgentのTag : 同じTagがあるReverse Tunnel Agentを通じてサーバーに接続します。同じTagがあるReverse Tunnel Agentがない場合、接続は失敗します。
