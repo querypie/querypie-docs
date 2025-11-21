@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 
 QueryPieを通じて接続したサーバーで実行したコマンドを記録します。Windows Serverの場合、マウスクリック、キーボード入力、実行プロセス名を記録します。
 
-### Command Audit照会
+### Command Auditの照会
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; Servers &gt; Command Audit](/administrator-manual/audit/server-logs/command-audit/image-20240728-171227.png)
@@ -37,13 +37,13 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
         * proxy : AgentまたはSeamless SSH Connectionを通じた接続
     *  **Action Type** : 記録されたイベントタイプ
         * Command : ログに記録されたコマンド
-        * File Download : （SFTP）ファイルダウンロード
-        * File Upload : （SFTP）ファイルアップロード
-        * Process Start : （RDP）プロセス実行
-        * Process Stop : （RDP）プロセス終了
-        * User Input - MouseClick : （RDP）ユーザーマウスクリック
-        * User Input - MouseDoubleClick : （RDP）ユーザーマウスダブルクリック
-        * User Input - KeyPress : （RDP）ユーザーキーボード入力
+        * File Download : (SFTP) ファイルダウンロード
+        * File Upload : (SFTP) ファイルアップロード
+        * Process Start : (RDP) プロセス実行
+        * Process Stop : (RDP) プロセス終了
+        * User Input - MouseClick : (RDP) ユーザーマウスクリック
+        * User Input - MouseDoubleClick : (RDP) ユーザーマウスダブルクリック
+        * User Input - KeyPress : (RDP) ユーザーキーボード入力
     *  **Executed At**  : コマンド実行時点
     *  **Restricted**  : コマンド遮断の有無
 
@@ -57,8 +57,8 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 </figure>
 </Callout>
 
-* テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
-* テーブルで以下のカラム情報を提供します：
+* テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+* テーブルで以下のカラム情報を提供します:
     *  **No**  : イベント識別番号
     *  **Executed At**  : コマンド実行時点
     *  **Name**  : 対象ユーザー名
@@ -80,7 +80,7 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
     *  **Action Type** : 記録されたイベントタイプ
     *  **Message**  : 接続失敗など特異事項に対する記録
 
-### Command Audit詳細履歴照会
+### Command Audit詳細内訳の照会
 
 各行をクリックすると詳細情報照会が可能です。
 
@@ -92,7 +92,7 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
 </figcaption>
 </figure>
 
-* 右側ドロワーには以下の情報を露出します：
+* 右側ドロワーには以下の情報を露出します:
     *  **Name**  : 対象ユーザー名
     *  **Action Type** : 記録されたイベントタイプ
     *  **Executed At**  : コマンド実行時点
@@ -109,8 +109,8 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
     *  **Client IP**  : ユーザークライアントIPアドレス
     *  **Restricted**  : コマンド遮断の有無
     *  **Restricted Command**  : 遮断されたコマンド
-    *  **Detected Type :** 検出された遮断コマンドの実行方式（Shell ScriptまたはAlias）
-    *  **Command**  : ユーザー入力コマンド（RDPの場合プロセス名またはクリック座標など）
+    *  **Detected Type :** 検出された遮断コマンドの実行方式(Shell ScriptまたはAlias)
+    *  **Command**  : ユーザー入力コマンド(RDPの場合プロセス名またはクリック座標など)
     *  **Result**  : コマンド実行結果
 
 

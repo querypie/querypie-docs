@@ -8,7 +8,7 @@ title: 'Server Access History'
 
 組織で管理するサーバー接続履歴を記録します。
 
-### Server Access History照会
+### Server Access Historyの照会
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; Servers &gt; Server Access History](/administrator-manual/audit/server-logs/server-access-history/image-20240728-165641.png)
@@ -29,13 +29,16 @@ Administrator &gt; Audit &gt; Servers &gt; Server Access History
     7.  **Client**   **Name**  : ユーザーの接続方式
     8.  **Role**  : 接続Role
 4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
+  <figure data-layout="center" data-align="center">
+  ![image-20240728-170045.png](/administrator-manual/audit/server-logs/server-access-history/image-20240728-170045.png)
+  </figure>
     1.  **Server OS**  : 接続したサーバーのOS
     2.  **Protocol** : 接続使用したProtocol
     3.  **Result** : 接続試行結果
     4.  **Action Type** : Connect / Disconnectの有無
     5.  **Action At**  : 接続時点
-5. テーブル右上の新規更新ボタンを通じてログリストを最新化できます。
-6. テーブルで以下のカラム情報を提供します：
+5. テーブル右上のリフレッシュボタンを通じてログ一覧を最新化できます。
+6. テーブルで以下のカラム情報を提供します:
     1.  **No**  : イベント識別番号
     2.  **Action At**  : サーバー接続試行日時
     3.  **Result**  : 接続成功/失敗の有無
@@ -54,7 +57,7 @@ Administrator &gt; Audit &gt; Servers &gt; Server Access History
     14.  **Client**   **Name**  : ユーザーの接続方式
     15.  **Message**  : 接続失敗など特異事項に対する記録
 
-### Server Access History詳細履歴照会
+### Server Access History詳細内訳の照会
 
 各行をクリックすると詳細情報照会が可能です。
 
@@ -67,7 +70,7 @@ Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Acc
 </figure>
 
 
-* 右側ドロワーには以下の情報を露出します：
+* 右側ドロワーには以下の情報を露出します:
     1.  **Result**  : サーバー接続成功/失敗の有無
         1. :check_mark: Success
         2. :cross_mark: Failure
