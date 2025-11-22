@@ -6,7 +6,8 @@ title: 'Communicating with Clusters through Reverse Tunnel'
 
 ### Communicating with Clusters through Reverse Tunnel
 
-QueryPie supports Reverse Tunneling as a means to communicate with resources in different Network Zones. When you install a Reverse Tunnel Agent in the Network Zone you want to communicate with, the Reverse Tunnel Agent establishes a connection toward QueryPie (Outbound).
+QueryPie supports Reverse Tunneling as a means to communicate with resources in different Network Zones.
+When you install a Reverse Tunnel Agent in the Network Zone you want to communicate with, the Reverse Tunnel Agent establishes a connection toward QueryPie (Outbound).
 
 You can communicate from QueryPie to resources in different Network Zones through Reverse Tunnels by adding Tags to resources (clusters).
 
@@ -20,7 +21,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; List
 </figure>
 
 1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters menu.
-2. Select a cluster from the list. For new cluster registration, please refer to [Manually Registering Kubernetes Clusters](../../../kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters).
+2. Select a cluster from the list. For new cluster registration, refer to [Manually Registering Kubernetes Clusters](../../../kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters).
 3. Add the following Tag to the Tags section in the Clusters List Detail page.
     1. `RTS = TRUE` : Clusters with this Tag will attempt to communicate through Reverse Tunnels.
     2. Reverse Tunnel Agent Tag : Communicates with the cluster through a Reverse Tunnel Agent with the same Tag. If there is no Reverse Tunnel Agent with the same Tag, communication will fail.

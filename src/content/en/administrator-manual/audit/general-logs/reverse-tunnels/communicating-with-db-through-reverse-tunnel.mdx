@@ -6,7 +6,8 @@ title: 'Communicating with DB through Reverse Tunnel'
 
 ### Communicating with DB through Reverse Tunnel
 
-QueryPie supports Reverse Tunneling as a means to communicate with resources in different Network Zones. When you install a Reverse Tunnel Agent in the Network Zone you want to access, the Reverse Tunnel Agent establishes a connection toward QueryPie (Outbound).
+QueryPie supports Reverse Tunneling as a means to communicate with resources in different Network Zones.
+When you install a Reverse Tunnel Agent in the Network Zone you want to access, the Reverse Tunnel Agent establishes a connection toward QueryPie (Outbound).
 
 You can communicate from QueryPie to resources in different Network Zones through Reverse Tunnels by adding Tags to resources (DB Connection).
 
@@ -20,7 +21,7 @@ Admin Page &gt; Servers &gt; Connection Management &gt; DB Connections
 </figure>
 
 1. Navigate to Administrator &gt; Databases &gt; Connection Management &gt; DB Connections menu.
-2. Select a DB Connection from the list. For new DB registration, please refer to [Manually Registering DB Connections](../../../databases/connection-management/db-connections).
+2. Select a DB Connection from the list. For new DB registration, refer to [Manually Registering DB Connections](../../../databases/connection-management/db-connections).
 3. Add the following Tag to the Tags section in the DB Connection List Detail page.
     1. `RTS = TRUE` : DB Connections with this Tag will attempt to connect through Reverse Tunnels.
     2. Reverse Tunnel Agent Tag : Connects to the DB through a Reverse Tunnel Agent with the same Tag. If there is no Reverse Tunnel Agent with the same Tag, connection will fail.
