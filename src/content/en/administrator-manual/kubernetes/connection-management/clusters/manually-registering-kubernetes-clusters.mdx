@@ -33,7 +33,7 @@ To manually register individual servers, you need to enter basic server informat
             * :check_mark:  **Verified**  : Indicates that the cluster connection was successful and the service account token and CA certificate were entered correctly. 
             * :cross_mark:  **Verification Failed**  : Indicates that the cluster connection failed, there may be an error in the service account token and CA certificate values, or network connection failed. 
     6.  **Logging Options**  : Select logging options for the cluster. 
-        1.  **Request Audit**  : This is an option to enable logging for Kubernetes API call history for the cluster, and the default is `On`. When this function is switched to `Off`, 
+        1.  **Request Audit**  : This is an option to enable logging for Kubernetes API call history for the cluster, and the default is `On`. When this function is switched to `Off`,
             1. Kubernetes API call history for the cluster will not be recorded. 
             2. All Request Audit Types and Pod Session Recording below are bulk deactivated. 
         2.  **Request Audit Types**  : Administrators can select the target Verb to audit for the cluster. The default selects all of the following basic verbs. 
@@ -47,8 +47,8 @@ To manually register individual servers, you need to enter basic server informat
                 7. `delete`
                 8. `deletecollection`
             2. ✅ Select All : Audits all API calls. 
-        3.  **Pod Session Recording**  : This is an option to enable recording for sessions opened by Pod exec commands within the cluster, and the default is `On`. This function is switched to `Off` if the following conditions are not met: 
-            1. Request Audit must be enabled to `On`. 
+        3.  **Pod Session Recording**  : This is an option to enable recording for sessions opened by Pod exec commands within the cluster, and the default is `On`. This function is switched to `Off` if the following conditions are not met:
+            1. Request Audit must be enabled to `On`.
             2. The following verbs must be selected in Request Audit Types:
                 1. `create`
                 2. `get`
@@ -67,7 +67,7 @@ To manually register individual servers, you need to enter basic server informat
 </figure>
 
 * Administrators must be able to access the target Kubernetes cluster in advance.
-* Administrators can download the script by clicking the "download and run this script" link in the Credential information box at Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster. 
+* Administrators can download the script by clicking the "download and run this script" link in the Credential information box at Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster.
 <details>
 <summary>generate_kubepie_sa.sh script content </summary>
 ```

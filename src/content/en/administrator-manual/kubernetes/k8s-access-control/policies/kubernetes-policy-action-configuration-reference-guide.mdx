@@ -9,9 +9,11 @@ title: 'Kubernetes Policy Action Configuration Reference Guide'
 In QueryPie KAC, you configure access control policies for k8s using YAML-based policies.
 This guide explains how to set Actions to avoid difficulties using client tools such as kubectl, Lens, and k9s due to misconfigured policies.
 
+
 ### Guide for API Groups settings
 
 Commonly used resources like pods belong to the core group and thus use an empty string ("") for apiGroups, whereas deployments and replicasets belong to "apps", and ingresses belong to "networking.k8s.io".
+
 It is burdensome for administrators to know and set each value one by one.
 
 While you may need to separate by apiGroups if there are resources with the same name, that is not common.
@@ -60,6 +62,7 @@ allow:
       verbs: ["get", "list", "watch"]
       ```
 
+
 ### Guide for Verbs settings
 
 The part that most affects 3rd-party client tool usage is verbs.
@@ -107,6 +110,7 @@ allow:
       name: "*"
       verbs: ["get", "list", "delete", "deletecollection"]
       ```
+
 
 ### Other recommended configuration examples
 

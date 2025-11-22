@@ -14,7 +14,8 @@ You can synchronize resources within AWS, register them as clusters managed by Q
 <Callout type="info">
 #### Prerequisites
 
-1. To synchronize with AWS resources, ensure that the necessary policy actions have been attached to the AWS IAM role assigned to the QueryPie instance. The policy must include all of the following actions:
+1. To synchronize with AWS resources, ensure that the necessary policy actions have been attached to the AWS IAM role assigned to the QueryPie instance.
+The policy must include all of the following actions:
 
 * eks:ListClusters
 * eks:DescribeCluster
@@ -24,6 +25,7 @@ You can synchronize resources within AWS, register them as clusters managed by Q
 * eks:ListAssociatedAccessPolicies
 * eks:AssociateAccessPolicy
 </Callout>
+
 
 ### Modifying AWS EKS Authentication Mode
 
@@ -46,6 +48,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 6. If the Authentication mode is **"ConfigMap"**, click the **Manage access** button on the right
 7. Change the Cluster authentication mode to **"EKS API and ConfigMap"**
 8. Click `Save changes` to save the changes
+
 
 ### Registering AWS Integration Information in QueryPie
 
@@ -79,10 +82,10 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 
 <Callout type="important">
 **Q. I clicked the Save button but got an error saying "Already exists cloud provider."**
-A.
-If there is already a Cloud Provider registered with `Default Credentials` as **Credential** and the same `Region`, duplicate registration is not possible.
+A. If there is already a Cloud Provider registered with `Default Credentials` as **Credential** and the same `Region`, duplicate registration is not possible.
 In this case, you can register normally by selecting a different `Region`.
 </Callout>
+
 
 ### Synchronizing and Managing Registered AWS Cloud Provider
 
@@ -106,6 +109,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     5.  **Role ARN** : Cannot be changed
     6.  **Search Filter** : Can be changed
     7.  **Replication Frequency** : Can be changed
+
 
 ### Dry Run/Synchronization Log Notation
 
