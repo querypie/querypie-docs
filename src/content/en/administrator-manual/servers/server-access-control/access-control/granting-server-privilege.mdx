@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-You can grant Server Privilege to servers with access permissions through Permission or Role to temporarily allow the use of specific commands. When granting Server Privilege again to a target that already has Server Privilege, the existing Server Privilege is revoked and newly granted again.
+You can grant Server Privilege to servers with access permissions through Permission or Role to temporarily allow the use of specific commands.
+When granting Server Privilege again to a target that already has Server Privilege, the existing Server Privilege is revoked and newly granted again.
 
 
 ### Granting Server Privilege
@@ -34,15 +35,27 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; U
     3.  **Privilege Duration**  : Set the Server Privilege application time. You can enter the time in minutes. The start time varies depending on the Privilege Start Trigger.
     4.  **Privilege Expiration Date**  : Specify the expiration date for the special exception handling for the above commands.
 6. The modal items vary depending on the server's OS and Require Privilege option status.
-    1. When the server's OS is Linux and the Require Privilege option is enabled
-    2. When the server's OS is Linux and the Require Privilege option is disabled
-    3. When the server's OS is not Linux and the Require Privilege option is enabled
-    4. When the server's OS is not Linux and the Require Privilege option is disabled
+    1. When the server's OS is Linux and the Require Privilege option is enabled <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-07-02-at-5.14.50-PM.png](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/Screenshot-2025-07-02-at-5.14.50-PM.png)
+      </figure>
+    2. When the server's OS is Linux and the Require Privilege option is disabled <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-07-01-at-5.58.34-PM.png](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/Screenshot-2025-07-01-at-5.58.34-PM.png)
+      </figure>
+    3. When the server's OS is not Linux and the Require Privilege option is enabled <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-07-01-at-6.02.23-PM.png](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/Screenshot-2025-07-01-at-6.02.23-PM.png)
+      </figure>
+    4. When the server's OS is not Linux and the Require Privilege option is disabled <br/> 
+      <figure data-layout="center" data-align="center">
+      ![Screenshot-2025-07-02-at-5.10.49-PM.png](/administrator-manual/servers/server-access-control/access-control/granting-server-privilege/Screenshot-2025-07-02-at-5.10.49-PM.png)
+      </figure>
 
 <Callout type="info">
 **Q. Is there a place where I can check the history of granted or revoked permissions?**
 
-A. When the target server for setting Server Privilege is granted through Permission, <br/>it is recorded in Audit menu &gt; Servers &gt; Access Control Logs.
+A. When the target server for setting Server Privilege is granted through Permission, <br/>it is recorded in Servers &gt; Access Control Logs in the Audit menu.
 
-When the target server for setting Server Privilege is granted through Role, <br/>it is recorded in Audit menu &gt; Servers &gt; Server Role History.
+When the target server for setting Server Privilege is granted through Role, <br/>it is recorded in Servers &gt; Server Role History in the Audit menu.
 </Callout>
