@@ -11,12 +11,14 @@ import { Callout } from 'nextra/components'
 The Allowed Zones page allows you to pre-register and manage Allowed Zones to control IP ranges that allow users' QueryPie web console access and DB connections.
 
 <Callout type="info">
-From 11.3.0, the expression has been changed from “IP Band(s)” to “IP Address Range(s)”.
+From 11.3.0, the expression has been changed from "IP Band(s)" to "IP Address Range(s)".
 </Callout>
+
 
 ### Viewing Registered Allowed Zone List
 
-To view the Allowed Zone list, access the Administrator &gt; General &gt; Company Management &gt; Allowed Zones page. You can search by Allowed Zone name.
+To view the Allowed Zone list, access the Administrator &gt; General &gt; Company Management &gt; Allowed Zones page.
+You can search by Allowed Zone name.
 
 <Callout type="info">
 **Default** Allowed Zone is created by default during QueryPie installation and has an allow-all (0.0.0.0/0) value.
@@ -49,13 +51,14 @@ In the Mapped List by Allowed Zones area within the drawer, you can check DB con
 * Users tab: List of users whose QueryPie Web access is controlled by this Allowed Zone
 
 <Callout type="info">
-* User-specific Allowed Zone assignment is disabled by default, and Global Option activation is performed in the [Security menu](security).
+* User-specific Allowed Zone assignment is disabled by default, and Global Option activation is performed in the [Security menu](security). 
 * User-specific Allowed Zone assignment is performed in the [user detail page](../user-management/users/user-profile) in the Users menu.
 </Callout>
 
+
 ### Adding Allowed Zones
 
-`Create Allowed Zone` Click the button on the Allowed Zone list page to display the Allowed Zone input fields.
+Click the `Create Allowed Zone` button on the Allowed Zone list page to display the Allowed Zone input fields.
 
 <figure data-layout="center" data-align="center">
 ![Input fields displayed when creating Allowed Zone](/administrator-manual/general/company-management/allowed-zones/image-20251009-031536.png)
@@ -72,9 +75,11 @@ Input fields displayed when creating Allowed Zone
     * Example 1) `1.1.1.1, 2.2.2.2`
     * Example 2) `192.168.10.0/24, 192.169.30.0/24`
 
+
 ### Deleting Allowed Zones
 
-Select the Allowed Zone you want to delete with a checkbox in the Allowed Zone list, and the `Delete` button will appear. Click the button and then click the `Delete` button in the confirmation modal to complete the deletion.
+Select the Allowed Zone you want to delete with a checkbox in the Allowed Zone list, and the `Delete` button will appear.
+Click the button and then click the `Delete` button in the confirmation modal to complete the deletion.
 
 <figure data-layout="center" data-align="center">
 ![Delete Option Activated](/administrator-manual/general/company-management/allowed-zones/screenshot-20240730-220112.png)
@@ -82,3 +87,5 @@ Select the Allowed Zone you want to delete with a checkbox in the Allowed Zone l
 Delete Option Activated
 </figcaption>
 </figure>
+
+
