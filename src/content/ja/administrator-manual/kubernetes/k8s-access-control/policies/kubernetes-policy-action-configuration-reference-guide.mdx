@@ -38,7 +38,7 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
       ```
 allow:
   actions:
-    # Podsのみ許可時
+    # Podsのみ許可時 
     - apiGroups: ["*"]
       resources: ["pods"]
       namespace: "*"
@@ -53,7 +53,7 @@ allow:
       ```
 allow:
   actions:
-    # Eventsを一緒に出力許可時
+    # Eventsを一緒に出力許可時 
     - apiGroups: ["*"]
       resources: ["pods", "events"]
       namespace: "*"
@@ -95,7 +95,7 @@ allow:
       namespace: "*"
       name: "*"
       verbs: ["get", "list", "create"]
-    # 修正権限
+    # 修正権限 
     - apiGroups: ["*"]
       resources: ["*"]
       namespace: "*"
