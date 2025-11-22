@@ -30,8 +30,11 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 * options : Options related to connection attached after /?. When using multiple options, connect them with &. <br/>ex. /?authSource=admin&replicaSet=rs0
 
 <Callout type="info">
-When using replica set, you must enter replicaSet=[replica set name] after /?. ex. /?replicaSet=rs0
+When using replica set, you must enter replicaSet=[replica set name] after /?.
+ex.
+/?replicaSet=rs0
 </Callout>
+
 
 ##### &lt; +srv Connection String Structure &gt;
 
@@ -44,7 +47,9 @@ mongodb+srv://<FQDN>/?[options]
 * options : Options related to connection attached after /?. When using multiple options, connect them with &. <br/>ex. /?authSource=admin&replicaSet=rs0
 
 <Callout type="info">
-Since +srv can dynamically change the address of each host included in the cluster, QueryPie cannot directly use +srv in connections and converts it to standard connection string for use. Due to this conversion process, direct access to subordinate instances is not supported when using +srv for connection. Nevertheless, if direct access to subordinate hosts in +srv connection environment is needed, users must use nslookup command to check each host information through DNS lookup and create separate connections using standard connection string for access.
+Since +srv can dynamically change the address of each host included in the cluster, QueryPie cannot directly use +srv in connections and converts it to standard connection string for use.
+Due to this conversion process, direct access to subordinate instances is not supported when using +srv for connection.
+Nevertheless, if direct access to subordinate hosts in +srv connection environment is needed, users must use nslookup command to check each host information through DNS lookup and create separate connections using standard connection string for access.
 </Callout>
 
 #### 2. Creating MongoDB Connections
@@ -166,11 +171,15 @@ When using Proxy, SSL settings are required in QueryPie separately from TLS sett
 ![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
 </figure>
 
+
 ---
+
 
 ### MongoDB Data Policy and Rule Settings
 
-For data requiring access restrictions such as personal information or sensitive information in MongoDB, you can set data access restrictions and masking policies for Collections and JSON Values so that such data cannot be viewed during queries. Since MongoDB among DBMS supported by QueryPie always stores data in JSON format, separate formatting logic is used.
+For data requiring access restrictions such as personal information or sensitive information in MongoDB, you can set data access restrictions and masking policies for Collections and JSON Values so that such data cannot be viewed during queries.
+Since MongoDB among DBMS supported by QueryPie always stores data in JSON format, separate formatting logic is used.
+
 
 Please check the links below for initial policy creation.
 
@@ -186,7 +195,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
 </figure>
 
-1. After creating a policy, register the data path to which the policy will be applied as rules. You can check that rules are registered in the Rule List tab. Now when users query Documents of the corresponding Collection in MongoDB, the Value of the pre-specified Attribute is masked and displayed according to the applied masking pattern, such as '*****@gmail.com'.
+1. After creating a policy, register the data path to which the policy will be applied as rules. <br/> You can check that rules are registered in the Rule List tab. Now when users query Documents of the corresponding Collection in MongoDB, the Value of the pre-specified Attribute is masked and displayed according to the applied masking pattern, such as '*****@gmail.com'.
     1. Click the policy created in the Data Masking menu.
     2. The policy detail information and rule registration screen is displayed, click the `Add Rule List` button on the right.
     3. Select the data path to which the policy will be applied in order.
@@ -222,7 +231,8 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
     1. Allowed Users : Select users or groups to exception handle the rule.
 5. Save by clicking the `Ok` button.
 
-You can check that rules are registered in the Rule List tab. Now when users query the data, if policy is applied to the table, the table itself cannot be queried, and if rules are applied to columns, it is displayed as *`{RESTRICTED}`*.
+You can check that rules are registered in the Rule List tab.
+Now when users query the data, if policy is applied to the table, the table itself cannot be queried, and if rules are applied to columns, it is displayed as *`{RESTRICTED}`*.
 
 #### JSON PATH Examples
 
