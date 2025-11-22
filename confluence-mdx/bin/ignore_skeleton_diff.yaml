@@ -3,15 +3,15 @@
 #
 # Format:
 #   ignores:
-#     - file: /path/to/file.mdx  # Path relative to target/{lang} (e.g., /administrator-manual/databases/db-access-control.mdx)
+#     - file: target/{lang}/path/to/file.mdx  # Path including target/{lang}/ prefix (e.g., target/ja/administrator-manual/databases/db-access-control.mdx)
 #       line_numbers: [10, 20, 30]  # Line numbers in the original .mdx file to ignore
 #
 # Example:
 #   ignores:
-#     - file: /administrator-manual/databases/db-access-control.mdx
+#     - file: target/ja/administrator-manual/databases/db-access-control.mdx
 #       line_numbers: [5, 10, 15]
 
 ignores:
-  - file: /administrator-manual/databases/dac-general-configurations.mdx
+  - file: target/ja/administrator-manual/databases/dac-general-configurations.mdx
     line_numbers: [56, 63, 131]
 

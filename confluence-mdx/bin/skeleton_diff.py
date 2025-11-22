@@ -125,7 +125,7 @@ def load_ignore_rules(ignore_file_path: Optional[Path] = None) -> Dict[str, Set[
         ignore_file_path: Path to ignore_skeleton_diff.yaml file. If None, uses default location.
     
     Returns:
-        Dictionary mapping file paths (relative to target/{lang}) to sets of line numbers to ignore.
+        Dictionary mapping file paths (including target/{lang}/ prefix) to sets of line numbers to ignore.
     """
     if yaml is None:
         print("Warning: PyYAML not installed. Ignore rules will not be loaded.", file=sys.stderr)
@@ -153,9 +153,11 @@ def load_ignore_rules(ignore_file_path: Optional[Path] = None) -> Dict[str, Set[
             line_numbers = rule.get('line_numbers', [])
             
             if file_path:
-                # Normalize path to start with /
-                if not file_path.startswith('/'):
-                    file_path = '/' + file_path
+                # Normalize path separators (use forward slashes)
+                file_path = file_path.replace('\\', '/')
+                # Remove leading slash if present (to handle both formats)
+                if file_path.startswith('/'):
+                    file_path = file_path[1:]
                 
                 # Convert line_numbers to set
                 ignore_rules[file_path] = set(line_numbers)
@@ -176,15 +178,16 @@ def filter_diff_output(
     
     Args:
         diff_output: Original diff output (unified format)
-        file_path: File path relative to target/{lang} (e.g., /path/to/file.mdx)
+        file_path: File path including target/{lang}/ prefix (e.g., target/ja/path/to/file.mdx)
         ignore_rules: Dictionary mapping file paths to sets of line numbers to ignore
     
     Returns:
         Filtered diff output with ignored lines removed. Returns empty string if all differences are ignored.
     """
-    # Normalize file path
-    if not file_path.startswith('/'):
-        file_path = '/' + file_path
+    # Normalize file path (use forward slashes, remove leading slash if present)
+    file_path = file_path.replace('\\', '/')
+    if file_path.startswith('/'):
+        file_path = file_path[1:]
     
     # Get ignore line numbers for this file
     ignore_lines = ignore_rules.get(file_path, set())
@@ -322,9 +325,6 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         # Note: -b ignores amount of whitespace but preserves line breaks and whitespace presence/absence
         diff_cmd = ['diff', '-u', '-U', '2', '-b', str(korean_skel_path), str(current_skel_path)]
 
-        # Print command with "+ " prefix
-        print(f"+ {' '.join(diff_cmd)}")
-
         # Run diff and capture output
         result = subprocess.run(
             diff_cmd,
@@ -337,10 +337,12 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         # Exit code 0 means files are identical
         if result.returncode == 1:
             # Get file path for ignore rules (use .mdx path, not .skel.mdx)
+            # Use full path including target/{lang}/ prefix
             current_mdx_path = get_original_mdx_path(current_skel_path)
             file_path_for_ignore = None
             if current_mdx_path:
-                file_path_for_ignore = get_path_without_lang_dir(current_mdx_path)
+                # Use full path including target/{lang}/ prefix
+                file_path_for_ignore = str(current_mdx_path)
             
             # Filter diff output using ignore rules
             filtered_diff = result.stdout
@@ -355,6 +357,9 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
             if filtered_content.strip():
                 # Files are different (after filtering), increment diff count
                 _diff_count += 1
+
+                # Print command with "+ " prefix (only when there are actual differences)
+                print(f"+ {' '.join(diff_cmd)}")
 
                 # Print filtered diff output
                 print(filtered_diff, end='')
