@@ -19,7 +19,7 @@ If your QueryPie administrator has set the authentication method for a BigQuery 
   BigQuery connection shown in the connection list in the Database section of the user page
   </figcaption>
   </figure>
-2. Click Connect and select the Google account you will use for sign-in in the popup.
+2. Click the `Connect` button and select the Google account you will use for sign-in in the popup.
   <figure data-layout="center" data-align="center">
   ![image-20250123-110105.png](/user-manual/database-access-control/connecting-via-google-bigquery-oauth-authentication/image-20250123-110105.png)
   </figure>
@@ -39,10 +39,15 @@ If your QueryPie administrator has set the authentication method for a BigQuery 
 ### Reset the refresh token
 
 <Callout type="info">
-With OAuth authentication, you receive an access token and a refresh token when you sign in. After the access token expires, the refresh token is used to reissue a new access token. The refresh token is stored on the client. The refresh token can also expire, or the locally stored refresh token may become invalid for various reasons. In such cases, delete the refresh token stored on the client and obtain a new one.
+With OAuth authentication, you receive an access token and a refresh token when you sign in.
+After the access token expires, the refresh token is used to reissue a new access token.
+The refresh token is stored on the client.
+The refresh token can also expire, or the locally stored refresh token may become invalid for various reasons.
+In such cases, delete the refresh token stored on the client and obtain a new one.
 </Callout>
 
-When you select a BigQuery connection configured for OAuth authentication in the Database section of the user page, you will see a Reset Token button as shown below. Clicking this button deletes the token stored on the client so you can restart the OAuth authentication flow (signing in to the service with your Google account) from the beginning.
+When you select a BigQuery connection configured for OAuth authentication in the Database section of the user page, you will see a `Reset Token` button as shown below.
+Clicking this button deletes the token stored on the client so you can restart the OAuth authentication flow (signing in to the service with your Google account) from the beginning.
 
 <figure data-layout="center" data-align="center">
 ![Reset Token button for BigQuery connection on the user page](/user-manual/database-access-control/connecting-via-google-bigquery-oauth-authentication/image-20250226-020846.png)
@@ -52,5 +57,6 @@ Reset Token button for BigQuery connection on the user page
 </figure>
 
 <Callout type="info">
-The Reset Token button only deletes the stored token and does not initiate the authentication process. To start OAuth authentication, click Connect.
+The `Reset Token` button only deletes the stored token and does not initiate the authentication process.
+To start OAuth authentication, click the `Connect` button.
 </Callout>
