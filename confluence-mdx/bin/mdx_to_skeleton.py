@@ -947,13 +947,27 @@ def main():
         metavar='FILE',
         help='Output file path to save list of unmatched files (only used with --recursive option). Each line contains a path with target/{lang} prefix.'
     )
+    parser.add_argument(
+        '--use-ignore',
+        action='store_true',
+        help='Use ignore_skeleton_diff.yaml patterns when comparing files (only applies to single file mode).'
+    )
+    parser.add_argument(
+        '--ignore-file',
+        type=Path,
+        metavar='FILE',
+        help='Path to ignore_skeleton_diff.yaml file. If not specified, uses default location (same directory as script).'
+    )
 
     args = parser.parse_args()
 
-    # Initialize config if recursive mode is used
-    if args.recursive is not None:
+    # Initialize config if recursive mode is used or if --use-ignore is specified
+    if args.recursive is not None or args.use_ignore:
         exclude_patterns = args.exclude if args.exclude and len(args.exclude) > 0 else ['/index.skel.mdx']
-        initialize_config(args.max_diff, exclude_patterns)
+        # For single file mode, max_diff is not applicable, so use None
+        max_diff_for_config = args.max_diff if args.recursive is not None else None
+        ignore_file_path = args.ignore_file if args.ignore_file else None
+        initialize_config(max_diff_for_config, exclude_patterns, ignore_file_path)
 
     try:
         if args.compare:
@@ -983,7 +997,6 @@ def main():
                 return 1
 
             output_path, _, _ = convert_mdx_to_skeleton(args.input_path)
-            print(f"Successfully created: {output_path}")
             return 0
         else:
             # No arguments provided

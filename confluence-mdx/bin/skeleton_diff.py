@@ -548,12 +548,12 @@ def process_directories_recursive(directories: List[Path], convert_func) -> Tupl
     return 0, all_unmatched_file_paths
 
 
-def initialize_config(max_diff: int, exclude_patterns: List[str], ignore_file_path: Optional[Path] = None):
+def initialize_config(max_diff: Optional[int], exclude_patterns: List[str], ignore_file_path: Optional[Path] = None):
     """
     Initialize global configuration for recursive processing.
     
     Args:
-        max_diff: Maximum number of diffs to output before stopping
+        max_diff: Maximum number of diffs to output before stopping (None for single file mode)
         exclude_patterns: List of paths to exclude from diff comparison
         ignore_file_path: Path to ignore_skeleton_diff.yaml file. If None, uses default location.
     """
