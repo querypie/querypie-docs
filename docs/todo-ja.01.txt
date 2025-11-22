@@ -1,10 +1,12 @@
 target/ja/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types.mdx
 target/ja/administrator-manual/general/user-management/authentication/integrating-with-okta.mdx
 target/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
-target/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide.mdx
 target/ja/administrator-manual/kubernetes/k8s-access-control/roles.mdx
 target/ja/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles.mdx
 target/ja/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
 target/ja/administrator-manual/servers/server-access-control/access-control/granting-server-privilege.mdx
 target/ja/administrator-manual/servers/server-access-control/blocked-accounts.mdx
 target/ja/administrator-manual/servers/server-access-control/command-templates.mdx
+target/ja/administrator-manual/servers/server-access-control/policies.mdx
+target/ja/administrator-manual/servers/server-account-management/account-management.mdx
+target/ja/administrator-manual/web-apps/wac-quickstart.mdx
