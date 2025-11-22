@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-You can manage security settings for QueryPie in the Security page. This document provides descriptions of each security setting.
+You can manage security settings for QueryPie in the Security page.
+This document provides descriptions of each security setting.
 
 <Callout type="info">
 From version 10.3.0, service-specific configuration items have been moved from Administrator &gt; General &gt; Security to each service's General submenu (Administrator &gt; `{Service}` &gt; General &gt; Configurations) for each service (Databases / Servers / Kubernetes).
@@ -81,12 +82,11 @@ You can set timeout policies for web console and agents.
 
 <Callout type="info">
 **Example of User Inactivity Timeout (on agent)**
-Assuming Agent Inactivity Timeout is 15 minutes, if user action is detected at 12:09 after 1 minute has passed, the last activity time is considered 12:09 and the expiration is updated to 12:24 (15 minutes later).
+* Assuming Agent Inactivity Timeout is 15 minutes, if user action is detected at 12:09 after 1 minute has passed, the last activity time is considered 12:09 and the expiration is updated to 12:24 (15 minutes later). <br/>
     * Logged in at 12:00
         1. The initial session expiration time is  **12:15:00** 
     * If the last activity is detected at 12:08 (t+8 minutes), the expiration is updated to 12:23 (15 minutes later)
-        1. 
-New session expiration time:  **12:23:00** 
+        1. New session expiration time:  **12:23:00** 
     * New session expiration time:  **12:24:00**
 </Callout>
 
@@ -101,7 +101,8 @@ You can set IP restriction policies when accessing QueryPie.
 
 *  **All Users**  : IP restriction settings applied to all users (Default: 0.0.0.0/0)
 *  **Each User**  : When toggled on, Allowed Zone settings are possible for individual users
-    * For methods to set Allowed Zones per user, see [User Profile](../user-management/users/user-profile)
+    * For methods to set Allowed Zones per user, see [User Profile](../user-management/users/user-profile) 
+    *  **Use Individual Configuration
     *  **Use Individual Configuration of Allowed Zones for Each User**  : Sets individual IP allowed zones (Allowed Zone) for each user.
         * When enabled, a `View User to Allowed Zone Mappings` link is displayed to check user lists and IP allowed zones assigned to each user.
         *  **View User to Allowed Zone Mappings** : Click to view user-specific Allowed Zone lists in a modal window. You can search by user name (Display Name), and the list shows user names, login IDs, emails, and all assigned IP addresses.
@@ -110,7 +111,9 @@ You can set IP restriction policies when accessing QueryPie.
 
 <Callout type="info">
 **Precautions when enabling IP access control policies**
-Users blocked from login due to enabling the `Require Allowed Zones for User Access` option can request access permission for new IP addresses through the 'IP Registration Request' workflow. (For details, refer to the [Requesting IP Registration](../../../user-manual/workflow/requesting-ip-registration) document.)
+
+Users blocked from login due to enabling the `Require Allowed Zones for User Access` option can request access permission for new IP addresses through the 'IP Registration Request' workflow.
+(For details, refer to the [Requesting IP Registration](../../../user-manual/workflow/requesting-ip-registration) document.)
 </Callout>
 
 *  **Admin Page Access Control**  : Sets policies to restrict IPs of administrators who can access the administrator page. You can restrict access to the administrator page only to administrators connecting from specific IP addresses or ranges by enabling the toggle.
@@ -123,7 +126,7 @@ Users blocked from login due to enabling the `Require Allowed Zones for User Acc
 
 <Callout type="info">
 **Q. What screen do users see when trying to access the QueryPie web console from an unauthorized IP?**
-A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below. 
+A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below.
 If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
 </Callout>
 <figure data-layout="center" data-align="center">
