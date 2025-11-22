@@ -12,7 +12,9 @@ Starting from version 10.3.0, SAC-related configuration items that were previous
 
 ### Overview
 
-The Configurations page is a settings page in QueryPie where you can manage server access and security policies. You can configure core elements of server connection security such as login failure threshold settings, session timeouts, and insecure protocol controls. This allows administrators to configure server environments according to their organization's security requirements and protect systems from potential threats.
+The Configurations page is a settings page in QueryPie where you can manage server access and security policies.
+You can configure core elements of server connection security such as login failure threshold settings, session timeouts, and insecure protocol controls.
+This allows administrators to configure server environments according to their organization's security requirements and protect systems from potential threats.
 
 ### Server Connection Security Settings
 
@@ -62,6 +64,9 @@ Manage basic security settings.
     * Specify servers to apply IP access control by tag criteria
     * Applied with priority over Roles or Direct Permissions granted to Users/Groups
     * When the `Add Configuration` button is clicked, a modal is created and the following information is entered to click the `Add` button (not reflected until the `Save Changes` button in the top right is clicked)
+      <figure data-layout="center" data-align="center">
+      ![image-20240829-095257.png](/administrator-manual/servers/sac-general-configurations/image-20240829-095257.png)
+      </figure>
         *  **Server Tag Key**  : Enter the server tag key, only one can be applied at a time (required when used)
         *  **Server Tag Value**  : Enter the server tag value, only one can be applied at a time (required when used)
         *  **Allowed Zones**  : Loads the list from General &gt; Company Management &gt; Allowed Zones, minimum 1 selection required when used
@@ -69,13 +74,14 @@ Manage basic security settings.
 
 <Callout type="info">
 **Important Notes**
-Allowed Zones represent broad ranges of allowed IP addresses. Therefore, even if you are within the displayed IP range, final access may be denied if administrators have set additional IP restrictions through data policies (DP/Policy), etc.
+Allowed Zones represent broad ranges of allowed IP addresses.
+Therefore, even if you are within the displayed IP range, final access may be denied if administrators have set additional IP restrictions through data policies (DP/Policy), etc.
 </Callout>
 
 *  **Password Provisioning :** Setting for using password provisioning
     * Periodically change passwords for server accounts of registered servers
     * When set to On, the following changes occur:
-        * Account selection options for password provisioning are added in [Managing Servers as Groups | 3.-Registering-Accounts](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)
+        * In [Managing Servers as Groups | 3.-Registering-Accounts](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0), account selection options for password provisioning are added
         * [Password Provisioning](server-account-management/password-provisioning) menu is activated and Password change Jobs can be registered
         * [Account Management](server-account-management/account-management) menu is activated and provides account list lookup functionality for servers managed by QueryPie
 *  **Allow RDP Connection without Server Agent :**  Setting for allowing access to Windows Servers without RDP Server Agent installed
@@ -102,11 +108,13 @@ Manage server access policies applied when assigning Direct Permissions through 
 
 <Callout type="important">
 **Warning**
-Policy content is reflected based on the **Workflow request creation time**. Even if access policies are changed after the request is approved, they are not retroactively applied to previously approved requests.
+Policy content is reflected based on the **Workflow request creation time**.
+Even if access policies are changed after the request is approved, they are not retroactively applied to previously approved requests.
 </Callout>
 
 <Callout type="info">
-Users can be assigned Direct Permissions for servers through Server Access Request. For more details, please refer to [Requesting Server Access Request](../../user-manual/workflow/requesting-server-access).
+Users can be assigned Direct Permissions for servers through Server Access Request.
+For more details, please refer to [Requesting Server Access Request](../../user-manual/workflow/requesting-server-access).
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -137,11 +145,13 @@ Set policies applied when users request server privileges (Server Privilege).
 
 <Callout type="important">
 **Warning**
-Policy content is reflected based on the **Workflow request creation time**. Even if access policies are changed after the request is approved, they are not retroactively applied to previously approved requests.
+Policy content is reflected based on the **Workflow request creation time**.
+Even if access policies are changed after the request is approved, they are not retroactively applied to previously approved requests.
 </Callout>
 
 <Callout type="info">
-Users can be assigned server privileges through Server Privilege Request. For more details, please refer to [Requesting Server Privilege Request](../../user-manual/workflow/requesting-server-privilege).
+Users can be assigned server privileges through Server Privilege Request.
+For more details, please refer to [Requesting Server Privilege Request](../../user-manual/workflow/requesting-server-privilege).
 </Callout>
 
 <figure data-layout="center" data-align="center">
