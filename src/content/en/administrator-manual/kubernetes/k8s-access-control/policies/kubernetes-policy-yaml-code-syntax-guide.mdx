@@ -13,9 +13,13 @@ This document is written based on **QueryPie Enterprise 9.20.0**.
 
 ### QueryPie Access Control Policy Overview
 
-Access control policies defined in QueryPie operate based on EABAC (Enhanced Attribute Based Access Control). EABAC is a policy control method that can control access to resources registered in QueryPie and perform permission management based on the roles and attributes of QueryPie users. It provides more flexible and sophisticated access control by combining the functions of RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control). All policies operate on the premise of All Deny.
+Access control policies defined in QueryPie operate based on EABAC (Enhanced Attribute Based Access Control).
+EABAC is a policy control method that can control access to resources registered in QueryPie and perform permission management based on the roles and attributes of QueryPie users.
+It provides more flexible and sophisticated access control by combining the functions of RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control).
+All policies operate on the premise of All Deny.
 
-EABAC operates in two ways: Role and Policy. Role settings are done through GUI, and Policy definitions are managed through code (YAML).
+EABAC operates in two ways: Role and Policy.
+Role settings are done through GUI, and Policy definitions are managed through code (YAML).
 
 For Kubernetes policies, the specification was created as a comprehensive model that can accommodate both Role limited to namespaces that actually exist in Kubernetes and ClusterRole that supports resources outside the namespace scope.
 
@@ -61,7 +65,8 @@ Wildcard ("*") and regular expression ([RE2 format](https://github.com/girishji/
 O
 </td>
 <td>
-This is the version of the written YAML Code. It is a value managed by the system and does not need to be modified.
+This is the version of the written YAML Code.
+It is a value managed by the system and does not need to be modified.
 </td>
 <td>
 `kubernetes.rbac.querypie.com/v1`
@@ -78,7 +83,8 @@ This is the version of the written YAML Code. It is a value managed by the syste
 O
 </td>
 <td>
-This is the type of the written YAML Code. It is a value managed by the system and does not need to be modified.
+This is the type of the written YAML Code.
+It is a value managed by the system and does not need to be modified.
 </td>
 <td>
 `KacPolicy`
@@ -248,7 +254,8 @@ impersonation:
 
 ### Actions Specification Method
 
-Specifies the Resource API list to allow within the cluster API server. Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entries.
+Specifies the Resource API list to allow within the cluster API server.
+Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entries.
 
 1. `apiGroups` : Defines the Kubernetes API group list. 
     1. By defining API groups, more detailed permission control is possible for each API group. 

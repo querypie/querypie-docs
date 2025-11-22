@@ -8,11 +8,14 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Approval Rules refer to the workflow approval processes preset by administrators. Approval rules are created for each request type, allowing you to configure approval stages from 1 to 4 levels and set assignee selection methods for each stage. The Approval Rules page provides the following functions:
+Approval Rules refer to the workflow approval processes preset by administrators.
+Approval rules are created for each request type, allowing you to configure approval stages from 1 to 4 levels and set assignee selection methods for each stage.
+The Approval Rules page provides the following functions:
 
 1. **Approval Rules List View**: View the list of registered approval rules (sorted by most recent)
 2. **Approval Settings**: Configure approval submission and approval processes
-    1. For detailed instructions, refer to the [Workflow Configurations](workflow-configurations) document
+    1.
+For detailed instructions, refer to the [Workflow Configurations](workflow-configurations) document
 3. **Approval Rule Creation**: Click the `Add Approval Rule` button in the top right of the page
 4. **View and Edit Details**: Click on an approval rule in the list to view and edit registered content
 5. **Approval Rule Deletion**: Select checkboxes in the list to display the `Delete` button in the table header for deleting registered rules
@@ -45,7 +48,8 @@ Administrator > General > Workflow Management > Approval Rules > Add Approval Ru
 * **Request Type**: Select the request type to add the approval rule to. Approval rules are categorized by request type
     * :warning: Request Type **cannot be changed** once an approval rule is created
 * **Approval Steps**: Configure approval stages and assignee designation methods
-    * Click the `Add Step` button to add approval stages. Up to 4 stages are possible (however, Web App JIT Request does not support 4-stage approval)
+    * Click the `Add Step` button to add approval stages.
+Up to 4 stages are possible (however, Web App JIT Request does not support 4-stage approval)
     * Assignee designation methods:
         * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate assignees, but only Owners and administrators with approval permissions can be selected
         * **Allow Assignee selection (All Users)**: Requesters can directly designate assignees from all users
@@ -58,12 +62,14 @@ Administrator > General > Workflow Management > Approval Rules > Add Approval Ru
     * **Allow Assignee selection (Admin-Only)**: Requesters can directly designate executors, but only Owners and administrators with approval permissions can be selected
     * **Allow Assignee selection (All Users)**: Requesters can directly designate executors from all users
         * Selecting this option allows requesters to designate themselves as executors
-    * **Assign Connection Owner**: The Connection Owner of the DB connection selected at request time is designated as the executor. Executors cannot be changed when creating requests
+    * **Assign Connection Owner**: The Connection Owner of the DB connection selected at request time is designated as the executor.
+Executors cannot be changed when creating requests
         * See [DB Connections](../../databases/connection-management/db-connections) for how to designate Connection Owner for each DB connection
     * **Select Assignees**: Only currently selected users or groups are designated as executors, and executors cannot be changed when creating requests
 * **Review**: Displayed only when the **Activate Review Step to collaborate with others** option is enabled in Administrator > General > Workflow Configurations. Configure the method for designating reviewers for approval requests
     * **Reviewer designation methods:**
-        * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers. Users submitting approvals with this rule cannot change reviewers
+        * Select Assignee(s) / Group(s): Administrators pre-designate specific users or groups as fixed reviewers.
+Users submitting approvals with this rule cannot change reviewers
         * Allow Assignee selection (All Users): Allow approval submitters to directly select reviewers from all active users
         * Allow Assignee selection (Admin Only): Only users with administrator privileges can be selected
         * Connection Owner and Server Owner cannot be designated as fixed reviewers
@@ -86,12 +92,15 @@ In version 11.3.0, the default "Web App Just In Time Access Request" Approval Ru
             * When enabled: Requesters can designate themselves as assignees on the workflow submission page
             * When disabled: Requesters are excluded from the assignee selection list on the workflow submission page
         4. **Select Assignees**:
-            1. When the approval rule has only the requester set as Approver:
+            1.
+When the approval rule has only the requester set as Approver:
                 * When enabled: Requesters can designate themselves as assignees on the workflow submission page
                 * When disabled: The Approval Rule is displayed on the submitter page screen, but an error occurs when selecting and submitting
-            2. When the approval rule has a group including the requester set as Approver:
+            2.
+When the approval rule has a group including the requester set as Approver:
                 * When enabled: Requesters can designate themselves as assignees on the workflow submission page
-                * When disabled: Requesters are included and displayed in the assignee list. Submission is possible, but the requester's name is excluded from the actual assignee screen and only other group members are registered as Approvers
+                * When disabled: Requesters are included and displayed in the assignee list.
+Submission is possible, but the requester's name is excluded from the actual assignee screen and only other group members are registered as Approvers
         5. **Assign Connection Owner**:
             * When enabled: If the requester is included, they are automatically designated as the assignee
             * When disabled: Even if the requester is included in Owner, they are not displayed in the assignee list on the request submission page

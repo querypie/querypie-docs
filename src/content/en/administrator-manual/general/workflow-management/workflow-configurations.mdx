@@ -11,7 +11,8 @@ import { Callout } from 'nextra/components'
 Workflow Configurations allows you to modify the following approval submission and approval-related settings.
 
 <Callout type="info">
-Starting from version 10.2.6, Slack DM notification-related settings have been moved to Integrations. Please refer to the [Slack DM Integration](../system/integrations/integrating-with-slack-dm) document for usage.
+Starting from version 10.2.6, Slack DM notification-related settings have been moved to Integrations.
+Please refer to the [Slack DM Integration](../system/integrations/integrating-with-slack-dm) document for usage.
 For Slack DM setup methods in version 10.2.5 and below, please refer to the [10.1.0 version manual document](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations).
 </Callout>
 
@@ -48,7 +49,8 @@ Activate with the "Allow users to submit requests in Urgent mode" toggle.
 
 When the toggle is on, throttling is applied when executing SQL requests submitted in Workflow.
 
-When this option is activated, queries are executed continuously up to the specified number, then wait for the specified interval (ms). This prevents DB load from executing large-scale queries.
+When this option is activated, queries are executed continuously up to the specified number, then wait for the specified interval (ms).
+This prevents DB load from executing large-scale queries.
 
 *  **Maximum concurrent queries**  : Maximum number of queries that can be executed continuously (1 ~ 999,999)
 *  **Query throttle interval** : Interval between continuous query executions (1 ~ 9,999 ms)

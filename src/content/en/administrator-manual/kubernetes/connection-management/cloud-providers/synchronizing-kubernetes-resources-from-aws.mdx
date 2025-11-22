@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie supports AWS integration for Kubernetes cluster registration and management. You can synchronize resources within AWS, register them as clusters managed by QueryPie, and grant Kubernetes API access permissions and configure policies for users and groups on the synchronized clusters.
+QueryPie supports AWS integration for Kubernetes cluster registration and management.
+You can synchronize resources within AWS, register them as clusters managed by QueryPie, and grant Kubernetes API access permissions and configure policies for users and groups on the synchronized clusters.
 
 <Callout type="info">
 #### Prerequisites
@@ -26,7 +27,8 @@ QueryPie supports AWS integration for Kubernetes cluster registration and manage
 
 ### Modifying AWS EKS Authentication Mode
 
-QueryPie utilizes the EKS access entry API during synchronization for AWS EKS Kubernetes cluster connections. Therefore, if the cluster authentication mode is set to ConfigMap only, there may be connection difficulties, and we recommend changing the mode in the AWS console in advance for smooth synchronization.
+QueryPie utilizes the EKS access entry API during synchronization for AWS EKS Kubernetes cluster connections.
+Therefore, if the cluster authentication mode is set to ConfigMap only, there may be connection difficulties, and we recommend changing the mode in the AWS console in advance for smooth synchronization.
 
 <figure data-layout="center" data-align="center">
 ![AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
@@ -77,7 +79,9 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 
 <Callout type="important">
 **Q. I clicked the Save button but got an error saying "Already exists cloud provider."**
-A. If there is already a Cloud Provider registered with `Default Credentials` as **Credential** and the same `Region`, duplicate registration is not possible. In this case, you can register normally by selecting a different `Region`.
+A.
+If there is already a Cloud Provider registered with `Default Credentials` as **Credential** and the same `Region`, duplicate registration is not possible.
+In this case, you can register normally by selecting a different `Region`.
 </Callout>
 
 ### Synchronizing and Managing Registered AWS Cloud Provider
