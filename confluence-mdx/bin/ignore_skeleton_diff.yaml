@@ -13,18 +13,209 @@
 
 ignores:
   # Code block 내부의 한국어 주석이 일본어로 번역된 경우
+  # Line 251:
+  #   KO: # 특정 하위 경로
+  #   JA: # 特定のサブパス
+  # Line 252:
+  #   KO: # 특정 경로의 모든 하위 경로
+  #   JA: # 特定パスのすべてのサブパス
   - file: target/ja/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
     line_numbers: [251, 252]
   
   # Code block 내부의 한국어 텍스트가 일본어로 번역된 경우
+  # Line 67:
+  #   KO: & "{설치파일 경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}" /VERYSILENT
+  #   JA: & "{インストールファイルパス}.exe" /Url="{QueryPieウェブアドレス}" /Port="{RDPに使用するPort}" /VERYSILENT
+  # Line 78:
+  #   KO: "{설치파일 경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}" /VERYSILENT
+  #   JA: "{インストールファイルパス}.exe" /Url="{QueryPieウェブアドレス}" /Port="{RDPに使用するPort}" /VERYSILENT
   - file: target/ja/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
     line_numbers: [67, 78]
   
   # Code block 내부의 한국어 주석이 일본어로 번역된 경우
+  # Line 41:
+  #   KO: # Pods만 허용 시
+  #   JA: # Podsのみ許可時
+  # Line 56:
+  #   KO: # Events를 같이 출력 허용할 시
+  #   JA: # Eventsを一緒に出力許可時
+  # Line 92:
+  #   KO: # 생성 권한
+  #   JA: # 作成権限
+  # Line 98:
+  #   KO: # 수정 권한
+  #   JA: # 修正権限
+  # Line 104:
+  #   KO: # 삭제 권한
+  #   JA: # 削除権限
   - file: target/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
     line_numbers: [41, 56, 92, 98, 104]
   
   # 링크 URL 내부의 한국어 텍스트가 일본어로 번역된 경우
+  # Line 165:
+  #   KO: [Unusual Login Attempt](신규)<br/>`/api/external/alerts/unusual-login-attempt`
+  #   JA: [Unusual Login Attempt](新規)<br/>`/api/external/alerts/unusual-login-attempt`
   - file: target/ja/release-notes/990-998/external-api-changes-9810-version-994-version.mdx
     line_numbers: [165]
+  
+  # Bold or inline code position difference due to natural English word order
+  # Line 11:
+  #   KO: Activity logs에서는  **관리자** 에 의하여 수행되는 리소스 등록 및 설정 변경 이력을 조회할 수 있습니다.
+  #   EN: In Activity logs, you can view the history of resource registration and configuration changes performed by **administrators**.
+  # Line 25:
+  #   KO:     1. 조회 기간 변경을 위해서는 필터 패널을 열고,  **Action At**  에서 조회 기준일을 변경하시기 바랍니다.
+  #   EN:     1. To change the query period, open the filter panel and change the query reference date in **Action At**.
+  - file: target/en/administrator-manual/audit/general-logs/activity-logs.mdx
+    line_numbers: [11, 25]
+  
+  # Bold or inline code position difference due to natural English word order
+  # Line 24:
+  #   KO: 2. 리스트 내 클러스터를 선택합니다. 클러스터 신규 등록시 [수동으로 쿠버네티스 클러스터 등록하기](../../../kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters)를 참고 바랍니다.
+  #   EN: 2. Select a cluster from the list. For new cluster registration, refer to [Manually Registering Kubernetes Clusters](../../../kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters).
+  # Line 28:
+  #   KO: 4. `Save Changes` 버튼을 클릭하여 설정을 저장합니다.
+  #   EN: 4. Click the `Save Changes` button to save the settings.
+  - file: target/en/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-clusters-through-reverse-tunnel.mdx
+    line_numbers: [24, 28]
+  
+  # Bold or inline code position difference due to natural English word order
+  # Line 24:
+  #   KO: 2. 리스트 내 DB Connection을 선택합니다. DB 신규 등록시 [DB 커넥션 수동으로 등록하기](../../../databases/connection-management/db-connections)를 참고 바랍니다.
+  #   EN: 2. Select a DB Connection from the list. For new DB registration, refer to [Manually Registering DB Connections](../../../databases/connection-management/db-connections).
+  # Line 28:
+  #   KO: 4. `Save Changes` 버튼을 클릭하여 설정을 저장합니다.
+  #   EN: 4. Click the `Save Changes` button to save the settings.
+  - file: target/en/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-db-through-reverse-tunnel.mdx
+    line_numbers: [24, 28]
+  
+  # Bold or inline code position difference due to natural English word order
+  # Line 24:
+  #   KO: 2. 리스트 내 서버를 선택합니다. 서버 신규 등록시 [수동으로 개별 서버 등록하기](../../../servers/connection-management/servers/manually-registering-individual-servers)를 참고 바랍니다.
+  #   EN: 2. Select a server from the list. For new server registration, refer to [Manually Registering Individual Servers](../../../servers/connection-management/servers/manually-registering-individual-servers).
+  # Line 28:
+  #   KO: 4. `Save Changes` 버튼을 클릭하여 설정을 저장합니다.
+  #   EN: 4. Click the `Save Changes` button to save the settings.
+  - file: target/en/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-servers-through-reverse-tunnel.mdx
+    line_numbers: [24, 28]
+
+  # Inline code position difference due to natural English word order
+  # Line 83:
+  #   KO:                    3. `Close` 버튼 또는 우측 상단의 `X`를 클릭하면 해당 모달이 닫힙니다.
+  #   EN:                    3. Clicking the `Close` button or the `X` in the top right closes the modal.
+  - file: target/en/administrator-manual/audit/kubernetes-logs/kubernetes-role-history.mdx
+    line_numbers: [83]
+  
+  # Bold position difference due to natural English word order
+  # Line 29:
+  #   KO: 4. 검색 필드 우측 필터 버튼을 클릭하여  **Action At** 에 대한 일시 범위를 재지정하여 필터링이 가능합니다.
+  #   EN: 4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.
+  # Inline code position difference due to natural English word order
+  # Line 65:
+  #   KO:        3. `Close` 버튼을 누르면 창이 닫힙니다.
+  #   EN:        3. Click the `Close` button to close the window.
+  # Line 73:
+  #   KO:        2. `Download` 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다.
+  #   EN:        2. Click the `Download` button to proceed with the download and create a file locally.
+  # Line 74:
+  #   KO:            1. Administrator &gt; General &gt; Company Management &gt; Security &gt; Others &gt; `Export a file with Encryption` 공통 옵션이 `Required`로 활성화 되어 있을 경우, 해당 다운로드 시 암호화 모달이 추가로 나타나고 해당 모달 이후에 다운로드를 실행합니다.  <br/>
+  #   EN:            1. When the common option `Export a file with Encryption` in Administrator &gt; General &gt; Company Management &gt; Security &gt; Others is set to `Required`, an encryption modal appears additionally during the download and the download is executed after the modal.  <br/>
+  - file: target/en/administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
+    line_numbers: [29, 65, 73, 74]
+  
+  # Inline code position difference due to natural English word order
+  # Line 187:
+  #   KO: 해당 압축 파일에 대한 암호를 지정하기 위해서는 'General Setting &gt; Security' 메뉴에서 `Export a file with Encryption` 옵션을 'Required'로 지정해야 합니다.
+  #   EN: To specify a password for the compressed file, you must set the `Export a file with Encryption` option to 'Required' in the 'General Setting &gt; Security' menu.
+  - file: target/en/administrator-manual/audit/reports/audit-log-export.mdx
+    line_numbers: [187]
+  
+  # Inline code position difference due to natural English word order
+  # Line 778:
+  #   KO:    1. `Scheduling`을 `None` 으로 지정한 경우, 이력 데이터의 출력 범위를 지정합니다.
+  #   EN:    1. When `Scheduling` is set to `None`, specify the output range for historical data.
+  # Line 781:
+  #   KO:        1.  `10.2.8` 버전 현재, 오늘로부터 최대 3개월 전의 데이터만 선택할 수 있습니다. 이는 `10.2.9` 버전에서 수정될 예정입니다.
+  #   EN:        1.  As of version `10.2.8`, only data up to 3 months ago from today can be selected. This will be fixed in version `10.2.9`.
+  # Line 784:
+  #   KO:    1. `Scheduling`을 `Daily`, `Weekly`, `Monthly`, 또는 `Quarterly` 로 지정한 경우, 태스크 시작일을 지정합니다.
+  #   EN:    1. When `Scheduling` is set to `Daily`, `Weekly`, `Monthly`, or `Quarterly`, specify the task start date.
+  # Line 794:
+  #   KO: `Save` 버튼을 클릭하여 보고서 태스크를 저장하고 목록으로 돌아갑니다.
+  #   EN: Click the `Save` button to save the report task and return to the list.
+  # Line 827:
+  #   KO:    1. 예: `Service:Homepage` 태그가 달린 DB에 대한 접근 권한 보고서 출력을 원하는 경우
+  #   EN:    1. Example: If you want to output a report on access permissions for DBs tagged with `Service:Homepage`:
+  - file: target/en/administrator-manual/audit/reports/reports.mdx
+    line_numbers: [778, 781, 784, 794, 827]
+  
+  # Bold position difference due to natural English word order
+  # Line 27:
+  #   KO: 4. 검색 필드 우측 필터 버튼을 클릭하여  **Action At** 에 대한 일시 범위를 재지정하여 필터링이 가능합니다.<br/>
+  #   EN: 4. Click the filter button on the right side of the search field to filter by re-specifying the date and time range for **Action At**.<br/>
+  - file: target/en/administrator-manual/audit/server-logs/account-lock-history.mdx
+    line_numbers: [27]
+  
+  # Inline code position difference due to natural English word order
+  # Line 72:
+  #   KO:    3. `Close` 버튼을 누르면 창이 닫힙니다.
+  #   EN:    3. Click the `Close` button to close the window.
+  # Line 78:
+  #   KO:    2. `Download` 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다.
+  #   EN:    2. Click the `Download` button to proceed with the download and create a file locally.
+  - file: target/en/administrator-manual/audit/server-logs/session-logs.mdx
+    line_numbers: [72, 78]
+  
+  # Inline code position difference due to natural English word order
+  # Line 43:
+  #   KO: 4. `Kill Session` 버튼을 클릭합니다.
+  #   EN: 4. Click the `Kill Session` button.
+  - file: target/en/administrator-manual/audit/server-logs/session-monitoring.mdx
+    line_numbers: [43]
+  
+  # Inline code position difference due to natural English word order
+  # Line 30:
+  #   KO:    * `Synchronize` 버튼 클릭시 GCP의 Service Account를 입력하는 수동 동기화 방식을 기본 제공합니다.
+  #   EN:    * Provides a manual synchronization method that enters GCP's Service Account when clicking the `Synchronize` button.
+  # Line 42:
+  #   KO: 11. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+  #   EN: 11. Click the `Save` button to save the Cloud Provider.
+  - file: target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+    line_numbers: [30, 42]
+  
+  # Inline code position difference due to natural English word order
+  # Line 33:
+  #   KO:    * `Synchronize` 버튼 클릭시 Azure의 Client Secret을 입력하는 수동 동기화 방식을 기본 제공합니다.
+  #   EN:    * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button.
+  # Line 46:
+  #   KO: 12. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+  #   EN: 12. Click the `Save` button to save the Cloud Provider.
+  - file: target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+    line_numbers: [33, 46]
+  
+  # Inline code position difference due to natural English word order
+  # Line 71:
+  #   KO: 2. 각각의 클러스터 및 인스턴스의 엔드포인트를 알고 있는 경우 `Add Cluster`를 통해 수동으로 등록할 수 있습니다.
+  #   EN: 2. If you know the endpoints of each cluster and instance, you can register them manually through `Add Cluster`.
+  # Line 183:
+  #   KO: * `Secret Engine` = K/V 설정시, 커넥션 정보 페이지에서 Username / Password 입력 항목이 표시됩니다.
+  #   EN: * When `Secret Engine` = K/V setting, Username / Password input fields are displayed on the connection information page.
+  # Line 186:
+  #   KO: * `Secret Engine` = Database 설정시, 커넥션 정보 페이지에서 Account 입력 항목이 표시됩니다.
+  #   EN: * When `Secret Engine` = Database setting, Account input field is displayed on the connection information page.
+  # Line 313:
+  #   KO: 1. `Add` 버튼을 통해 Privilege 을 선택하고 해당 Privilege 에 고정할 DB Username, Password 를 입력합니다.
+  #   EN: 1. Click the `Add` button to select a Privilege and enter the DB Username and Password to be fixed for that Privilege.
+  # Line 315:
+  #   KO: 2. `Test Connection` 을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
+  #   EN: 2. You can test whether the account is actually accessible through `Test Connection`.
+  # Line 317:
+  #   KO: 3. `Save Changes` 를 통해 해당 정보를 저장하여 설정을 마무리합니다.
+  #   EN: 3. Complete the configuration by saving the information through `Save Changes`.
+  - file: target/en/administrator-manual/databases/connection-management/db-connections.mdx
+    line_numbers: [71, 183, 186, 313, 315, 317]
+
+#############################################################################
+# JK has reviewed the above rules.
+# Below are the rules that are not reviewed yet.
+#############################################################################
 
