@@ -24,15 +24,16 @@ For Slack integration methods for version 10.2.5 or lower, please refer to the [
 
 Create a Slack App dedicated for QueryPie DM integration using App Manifest.
 
-1. Go to [https://api.slack.com/apps](https://api.slack.com/apps) and click `Create an App`.<br/><br/>
+
+1. [https://api.slack.com/apps](https://api.slack.com/apps) and click `Create an App`.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![image-20231227-065658.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065658.png)
   </figure>
-2. In the Create an app modal, select the app creation method. Click `From a manifest`.<br/><br/>
+2. In the Create an app modal, select the app creation method. Click `From a manifest`.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![screenshot-20250218-131725.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-131725.png)
   </figure>
-3. In the Pick a workspace modal, select the Slack Workspace to integrate with QueryPie and proceed to the next step.<br/><br/>
+3. In the Pick a workspace modal, select the Slack Workspace to integrate with QueryPie and proceed to the next step.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![image-20231227-065951.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png)
   </figure>
@@ -67,7 +68,7 @@ Create a Slack App dedicated for QueryPie DM integration using App Manifest.
     }
 }
   ```
-5. Review the settings and click the `Create` button to complete app creation.<br/><br/>
+5. Review the settings and click the `Create` button to complete app creation.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![image-20240115-220447.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png)
   </figure>
@@ -75,7 +76,7 @@ Create a Slack App dedicated for QueryPie DM integration using App Manifest.
 ### Installing Slack App in Slack Workspace
 
 1. In Settings &gt; Install App, click the `Install to Workspace` button to install the created app in the Slack Workspace.
-2. On the permission request page, click `Allow`.<br/>
+2. On the permission request page, click `Allow`.<br/> 
   <figure data-layout="center" data-align="center">
   ![image-20240115-221520.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-221520.png)
   </figure>
@@ -92,6 +93,7 @@ In the OAuth Tokens for Your Workspace section of the Features &gt; OAuth & Perm
 ![image-20240418-022640.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240418-022640.png)
 </figure>
 
+
 ### Creating App-Level Token
 
 <Callout type="info">
@@ -102,11 +104,11 @@ When creating a Slack app with App manifest, you can activate Socket Mode and re
 
 Follow these steps to manually create an App-Level Token.
 
-1. Go to the App-Level Tokens section in Settings &gt; Basic Information menu of the app settings page and click the `Generate Token and Scope` button.<br/><br/>
+1. Go to the App-Level Tokens section in Settings &gt; Basic Information menu of the app settings page and click the `Generate Token and Scope` button.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![screenshot-20250218-140951.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-140951.png)
   </figure>
-2. In the Generate an app-level token modal, click the Add Scope button and add `connections:write`.<br/><br/>
+2. In the Generate an app-level token modal, click the Add Scope button and add `connections:write`.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![screenshot-20250218-141555.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-141555.png)
   </figure>
@@ -114,7 +116,7 @@ Follow these steps to manually create an App-Level Token.
 
 ### Configuring Slack DM in QueryPie
 
-1. Navigate to Admin &gt; General &gt; System &gt; Integrations &gt; Slack menu and click the `Configure` button to open the settings modal.<br/><br/>
+1. Navigate to Admin &gt; General &gt; System &gt; Integrations &gt; Slack menu and click the `Configure` button to open the settings modal.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack Configuration](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113509.png)
   <figcaption>
@@ -124,25 +126,25 @@ Follow these steps to manually create an App-Level Token.
 2. Enter the App Token and Bot User OAuth Token you recorded earlier in the settings modal.
 3. Additional settings are as follows. To receive Workflow notifications via DM and perform approval/rejection within messages, activate all setting toggles.
     *  **Send Workflow Notification via Slack DM**  : Enable Slack DM sending for workflow requests
-    *  **Allow Users to approve or reject on Slack DM**  : Enable approval or rejection functionality within Slack DM<br/><br/>
+    *  **Allow Users to approve or reject on Slack DM**  : Enable approval or rejection functionality within Slack DM<br/> <br/> 
       <figure data-layout="center" data-align="center">
       ![Action-enabled type example (left) / Action-disabled type example (right)](/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231003-054240.png)
       <figcaption>
       Action-enabled type example (left) / Action-disabled type example (right)
       </figcaption>
       </figure>
-4. Click the `Save` button to complete the setup.
+4. `Save` button to complete the setup.
 
 ### Managing Slack DM Settings
 
-1. After registering Slack Configuration, you can check the current settings status on the screen.<br/><br/>
+1. After registering Slack Configuration, you can check the current settings status on the screen.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![Administrator &gt; General &gt; System &gt; Integrations &gt; Slack](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113950.png)
   <figcaption>
   Administrator &gt; General &gt; System &gt; Integrations &gt; Slack
   </figcaption>
   </figure>
-2. Click the `Edit` button to modify the entered settings.<br/>
+2. `Edit` button to modify the entered settings.<br/>
   <figure data-layout="center" data-align="center">
   ![Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Edit the Slack Configuration](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-152840.png)
   <figcaption>
@@ -150,15 +152,16 @@ Follow these steps to manually create an App-Level Token.
   </figcaption>
   </figure>
 
+
 ### Testing Slack DM for Workflow Requests
 
 Using DB Access Request as an example, test whether the Slack DM functionality works properly.
 
-1. In QueryPie User &gt; Workflow page, click the Submit Request button, select DB Access Request to enter the request creation screen. Enter the necessary information in the request creation screen and submit the request.<br/>
+1. In QueryPie User &gt; Workflow page, click the Submit Request button, select DB Access Request to enter the request creation screen. Enter the necessary information in the request creation screen and submit the request.<br/> 
   <figure data-layout="center" data-align="center">
   ![screenshot-20250218-151504.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-151504.png)
   </figure>
-2. Approvers can receive notifications for requests that need approval via DM with the Slack App added earlier.<br/> Since **Allow Users to approve or reject on Slack DM** is enabled, you can directly enter reasons in DM and approve or reject requests.<br/><br/>
+2. Approvers can receive notifications for requests that need approval via DM with the Slack App added earlier.<br/> **Allow Users to approve or reject on Slack DM** is enabled, you can directly enter reasons in DM and approve or reject requests.<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![screenshot-20250218-152238.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-152238.png)
   </figure>

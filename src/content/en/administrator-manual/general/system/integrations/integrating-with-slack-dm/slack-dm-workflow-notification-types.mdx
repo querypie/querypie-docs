@@ -26,13 +26,22 @@ For post-approval (Urgent Mode), four types of notifications are sent as follows
 
 Supports all five types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request, Access Role Request).
 
-Notifications are sent to first-step approvers immediately upon draft creation. When first-step approval is completed, notifications are sent to second-step approvers. Similarly, when second-step approval is completed, notifications are sent to third-step approvers.
+Notifications are sent to first-step approvers immediately upon draft creation.
+When first-step approval is completed, notifications are sent to second-step approvers.
+Similarly, when second-step approval is completed, notifications are sent to third-step approvers.
 
-When there are multiple approvers at each step, messages are sent to all approvers. If any approver has set up proxy approval, messages are also sent to the proxy approver. For detailed proxy approval setup methods, please refer to the **Using Proxy Approval** document in [Request Additional Features](../../../../../user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc).
+When there are multiple approvers at each step, messages are sent to all approvers.
+At this time, if any approver has set up proxy approval, messages are also sent to the proxy approver.
+For detailed proxy approval setup methods, please refer to the **Using Proxy Approval** document in [Request Additional Features](../../../../../user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
-Depending on the QueryPie administrator's pre-configuration, approvers who receive messages can approve/reject in Slack. Please check the 'Configuring Slack DM' above for necessary settings. Even if there are no action buttons, the `Details` button is always included. When clicking this button, a web browser opens and the QueryPie login window appears. Upon successful login, you are redirected to the Workflow detail page.
+Depending on the QueryPie administrator's pre-configuration, approvers who receive messages can approve/reject in Slack.
+Please check the 'Configuring Slack DM' above for necessary settings.
+Even if there are no action buttons, the `Details` button is always included.
+When clicking this button, a web browser opens and the QueryPie login window appears.
+Upon successful login, you are redirected to the Workflow detail page.
 
-For post-approval (Urgent Mode) drafts, the fact is also included in the message as shown below. Since it's a post-approval request, only the `Approve` button appears even when using action buttons.
+For post-approval (Urgent Mode) drafts, the fact is also included in the message as shown below.
+Since it's a post-approval request, only the `Approve` button appears even when using action buttons.
 
 <figure data-layout="center" data-align="center">
 ![Normal Mode Approval Request Example (Left) / Post-Approval Mode Approval Request Example (Right)](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-062427.png)
@@ -47,11 +56,16 @@ Normal Mode Approval Request Example (Left) / Post-Approval Mode Approval Reques
 ![image-20231003-060544.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060544.png)
 </figure>
 
-Supports all four types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request). When an approver rejects the draft at any step, a message is sent to the requester immediately. The rejection reason comment is also included in the message.
+Supports all four types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request).
+When an approver rejects the draft at any step, a message is sent to the requester immediately.
+The rejection reason comment is also included in the message.
 
-No separate action buttons are included, but the `Details` button is included. When clicking this button, a web browser opens and the QueryPie login window appears. Upon successful login, you are redirected to the Workflow detail page.
+No separate action buttons are included, but the `Details` button is included.
+When clicking this button, a web browser opens and the QueryPie login window appears.
+Upon successful login, you are redirected to the Workflow detail page.
 
-For post-approval (Urgent Mode) drafts, rejection cases do not exist. Therefore, rejection messages also do not exist.
+For post-approval (Urgent Mode) drafts, rejection cases do not exist.
+Therefore, rejection messages also do not exist.
 
 ### Approval Completion Notification - to Requester
 
@@ -59,9 +73,12 @@ For post-approval (Urgent Mode) drafts, rejection cases do not exist. Therefore,
 ![image-20231003-060552.png](/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types/image-20231003-060552.png)
 </figure>
 
-Supports all four types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request). A message is sent to the requester when approval is finally completed.
+Supports all four types of Workflows (SQL Request, SQL Export Request, DB Access Request, Server Access Request).
+A message is sent to the requester when approval is finally completed.
 
-No separate action buttons are included, but the `Details` button is included. When clicking this button, a web browser opens and the QueryPie login window appears. Upon successful login, you are redirected to the Workflow detail page.
+No separate action buttons are included, but the `Details` button is included.
+When clicking this button, a web browser opens and the QueryPie login window appears.
+Upon successful login, you are redirected to the Workflow detail page.
 
 For post-approval (Urgent Mode) drafts, this message is also sent to the requester after all post-approvals are completed.
 
@@ -71,7 +88,10 @@ Supports two types (SQL Request, SQL Export Request) that include Execute action
 
 A message is sent to the executor when approval is finally completed.
 
-No separate action buttons are included, but the `Details` button is included. When clicking this button, a web browser opens and the QueryPie login window appears. Upon successful login, you are redirected to the Workflow detail page. On this page, you can execute SQL Request and SQL Export Request.
+No separate action buttons are included, but the `Details` button is included.
+When clicking this button, a web browser opens and the QueryPie login window appears.
+Upon successful login, you are redirected to the Workflow detail page.
+On this page, you can execute SQL Request and SQL Export Request.
 
 For post-approval (Urgent Mode) drafts, a message is sent to the executor immediately upon draft submission.
 
@@ -87,8 +107,14 @@ For post-approval (Urgent Mode) drafts, a message is sent to the executor immedi
 
 Supports two types (SQL Request, SQL Export Request) in Workflow.
 
-This is a message notifying that a draft submitted in Urgent Mode has been unapproved for more than a day. It is sent once every morning to approvers at the corresponding step for all drafts that have been pending for more than a day.
+This is a message notifying that a draft submitted in Urgent Mode has been unapproved for more than a day.
+It is sent once every morning to approvers at the corresponding step for all drafts that have been pending for more than a day.
 
-When there are multiple approvers at each step, messages are sent to all approvers. If any approver has set up proxy approval, messages are also sent to the proxy approver. For detailed proxy approval setup methods, please refer to the **Using Proxy Approval** document in [Request Additional Features](../../../../../user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc).
+When there are multiple approvers at each step, messages are sent to all approvers.
+At this time, if any approver has set up proxy approval, messages are also sent to the proxy approver.
+For detailed proxy approval setup methods, please refer to the **Using Proxy Approval** document in [Request Additional Features](../../../../../user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc).
 
-One message is sent per unapproved draft, so if there are multiple unapproved drafts, multiple messages are sent. The sending time is 10 AM every morning, and it does not distinguish between weekdays and holidays.
+One message is sent per unapproved draft, so if there are multiple unapproved drafts, multiple messages are sent.
+The sending time is 10 AM every morning, and it does not distinguish between weekdays and holidays.
+
+
