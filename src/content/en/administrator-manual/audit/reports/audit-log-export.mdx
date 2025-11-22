@@ -59,7 +59,6 @@ With the addition of the Audit Log Export feature, the 'Excel File Download' but
 | Web App JIT Access Control Log          | 11.0.0                | CSV          |
 | Web App Event Audit                     | 11.0.0                | CSV          |
 
-
 ### Viewing Audit Log Export List
 
 <figure data-layout="center" data-align="center">
@@ -78,9 +77,11 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
 
 ### Creating Log Extraction Task
 
-Audit log extraction and download proceeds through the following major steps: (1) Access related menu → (2) Create log extraction task → (3) Wait until log extraction completion → (4) Download file when extraction is completed
+Audit log extraction and download proceeds through the following major steps.
+(1) Access related menu → (2) Create log extraction task → (3) Wait until log extraction completion → (4) Download file when extraction is completed
 
-To start audit log extraction, you need to access the 'Audit &gt; General &gt; Audit Log Export' menu and click the `Create Task` button in the top right. When you click the button, the following screen appears.
+To start audit log extraction, you need to access the 'Audit &gt; General &gt; Audit Log Export' menu and click the `Create Task` button in the top right.
+When you click the button, the following screen appears.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task](/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png)
@@ -159,7 +160,8 @@ Example: `x[? @ == 'value']`, `list[? @ &gt; `10`]`
 <Callout type="important">
 **Query Audit Export File Privilege Type Specification Criteria**
 
-The 'Privilege Type' column in the export file records which permission was required at the time of execution. It works as follows:
+The 'Privilege Type' column in the export file records which permission was required at the time of execution.
+It works as follows:
 
 1. Commands executed with basic permissions (SET, SHOW, etc.) have blank values in the corresponding column.
 2. Logs performed according to permissions such as INSERT have SQL Type specified. 
@@ -169,7 +171,8 @@ The 'Privilege Type' column in the export file records which permission was requ
 
 ### Downloading Files When Extraction Task is Completed
 
-For short-term queries without separate filtering conditions, log extraction is completed within a few minutes. For logs spanning long periods or with high complexity of filtering conditions, it may take some time for log extraction.
+For short-term queries without separate filtering conditions, log extraction is completed within a few minutes.
+For logs spanning long periods or with high complexity of filtering conditions, it may take some time for log extraction.
 
 After the extraction task is completed, you can download the log file in two ways:
 
@@ -184,7 +187,8 @@ The download target file is a '*.zip file compressed from *.csv or *.json files'
 To specify a password for the compressed file, you must set the `Export a file with Encryption` option to 'Required' in the 'General Setting &gt; Security' menu.
 </Callout>
 
-
 ### Log Extraction File Retention Policy Guide
 
-Extracted log files are retained for 30 days from the task creation date, and unlimited downloads are possible within that period. However, files expire after 30 days. If you need expired log files, please create a new log extraction task.
+Extracted log files are retained for 30 days from the task creation date, and unlimited downloads are possible within that period.
+However, files expire after 30 days.
+However, files expire after 30 days.
