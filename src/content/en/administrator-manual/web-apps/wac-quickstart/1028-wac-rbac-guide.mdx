@@ -186,7 +186,8 @@ Specifies whether to allow or deny specific rules of the policy. Supports `spec:
 
 ### Resources**[required]**
 
-Specifies the web app resources for which you want to set allow or block policies. Must have `webApp` as a required sub-element and can have `urlPaths` or `urlPathTags`.
+Specifies the web app resources for which you want to set allow or block policies.
+Must have `webApp` as a required sub-element and can have `urlPaths` or `urlPathTags`.
 
 <Callout type="info">
 `resources` is allowed in both `spec: allow` and `spec: deny`.
@@ -221,7 +222,8 @@ spec:
     * Start and end are limited to alphabetic case-sensitive letters or numbers
     * No duplicates allowed
 
-To operate access control policies at the sub-path level of web apps, you can enter `urlPaths` or `urlPathTags` under `webApp`. Within one policy, it is **impossible** to specify both `urlPaths` and `urlPathTags` for the same web app.
+To operate access control policies at the sub-path level of web apps, you can enter `urlPaths` or `urlPathTags` under `webApp`.
+Within one policy, it is **impossible** to specify both `urlPaths` and `urlPathTags` for the same web app.
 
 #### urlPaths**[OPTIONAL]**
 
@@ -299,7 +301,8 @@ urlPathTags:
 Limits the scope of users whose resource access is allowed by rules based on QueryPie user attributes.
 
 <Callout type="info">
-User attributes can be viewed in the user detail page in Administrator &gt; General &gt; Users menu. Attributes of users added in QueryPie can be added/changed/deleted in the detail page, and attributes of users added through IdP synchronization can be changed in the user registry (Okta, LDAP, etc.).
+User attributes can be viewed in the user detail page in Administrator &gt; General &gt; Users menu.
+Attributes of users added in QueryPie can be added/changed/deleted in the detail page, and attributes of users added through IdP synchronization can be changed in the user registry (Okta, LDAP, etc.).
 </Callout>
 
 Attribute information is case-sensitive and multiple can be entered.
@@ -355,7 +358,8 @@ Choose one of the following two methods for specifying sub-paths to allow access
 
 #### Tag-based Access Control
 
-We recommend registering Paths in web apps, assigning appropriate tags to each Path, and then controlling access based on tags in policies. Using this method provides the following benefits:
+We recommend registering Paths in web apps, assigning appropriate tags to each Path, and then controlling access based on tags in policies.
+Using this method provides the following benefits:
 
 *  **Easy role-based policy management** : Manage by assigning the same tags to paths needed for specific roles
 *  **Simplified policy maintenance** : Even when new paths are added to web apps, access control is possible without modifying existing policies by just assigning appropriate tags
