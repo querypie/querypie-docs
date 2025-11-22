@@ -1,9 +1,3 @@
-target/en/administrator-manual/audit/server-logs/session-monitoring.mdx
-target/en/administrator-manual/audit/web-app-logs.mdx
-target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
-target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
-target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
-target/en/administrator-manual/databases/connection-management/db-connections.mdx
 target/en/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification.mdx
 target/en/administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
 target/en/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide.mdx
@@ -18,3 +12,9 @@ target/en/administrator-manual/databases/ledger-management/ledger-table-policy.m
 target/en/administrator-manual/databases/monitoring/proxy-management.mdx
 target/en/administrator-manual/databases/monitoring/running-queries.mdx
 target/en/administrator-manual/databases/new-policy-management.mdx
+target/en/administrator-manual/databases/policies/data-access.mdx
+target/en/administrator-manual/databases/policies/data-masking.mdx
+target/en/administrator-manual/databases/policies/masking-pattern.mdx
+target/en/administrator-manual/databases/policies/sensitive-data.mdx
+target/en/administrator-manual/general/company-management/alerts.mdx
+target/en/administrator-manual/general/company-management/alerts/new-request-template-variables-by-request-type.mdx

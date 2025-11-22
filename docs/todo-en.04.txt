@@ -1,11 +1,3 @@
-target/en/administrator-manual/general/system/integrations/integrating-with-secret-store.mdx
-target/en/administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
-target/en/administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types.mdx
-target/en/administrator-manual/general/system/integrations/integrating-with-splunk.mdx
-target/en/administrator-manual/general/system/integrations/integrating-with-syslog.mdx
-target/en/administrator-manual/general/system/integrations/oauth-client-application.mdx
-target/en/administrator-manual/general/system/maintenance.mdx
-target/en/administrator-manual/general/user-management/authentication.mdx
 target/en/administrator-manual/general/user-management/authentication/integrating-with-aws-sso.mdx
 target/en/administrator-manual/general/user-management/authentication/integrating-with-google-saml.mdx
 target/en/administrator-manual/general/user-management/authentication/integrating-with-ldap.mdx
@@ -18,3 +10,11 @@ target/en/administrator-manual/general/user-management/provisioning/activating-p
 target/en/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
 target/en/administrator-manual/general/user-management/roles.mdx
 target/en/administrator-manual/general/user-management/users.mdx
+target/en/administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
+target/en/administrator-manual/general/user-management/users/user-profile.mdx
+target/en/administrator-manual/general/workflow-management.mdx
+target/en/administrator-manual/general/workflow-management/all-requests.mdx
+target/en/administrator-manual/general/workflow-management/approval-rules.mdx
+target/en/administrator-manual/general/workflow-management/workflow-configurations.mdx
+target/en/administrator-manual/kubernetes.mdx
+target/en/administrator-manual/kubernetes/connection-management.mdx

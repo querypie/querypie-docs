@@ -1,7 +1,3 @@
-target/en/administrator-manual/audit/database-logs/account-lock-history.mdx
-target/en/administrator-manual/audit/database-logs/dml-snapshots.mdx
-target/en/administrator-manual/audit/database-logs/query-audit.mdx
-target/en/administrator-manual/audit/database-logs/running-queries.mdx
 target/en/administrator-manual/audit/general-logs/activity-logs.mdx
 target/en/administrator-manual/audit/general-logs/reverse-tunnels.mdx
 target/en/administrator-manual/audit/general-logs/reverse-tunnels/communicating-with-clusters-through-reverse-tunnel.mdx
@@ -18,3 +14,7 @@ target/en/administrator-manual/audit/server-logs/account-lock-history.mdx
 target/en/administrator-manual/audit/server-logs/command-audit.mdx
 target/en/administrator-manual/audit/server-logs/server-role-history.mdx
 target/en/administrator-manual/audit/server-logs/session-logs.mdx
+target/en/administrator-manual/audit/server-logs/session-monitoring.mdx
+target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-google-cloud.mdx
+target/en/administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-ms-azure.mdx
+target/en/administrator-manual/databases/connection-management/db-connections.mdx
