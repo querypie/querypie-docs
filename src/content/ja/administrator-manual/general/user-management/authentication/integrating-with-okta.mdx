@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 
 QueryPieではOkta連携をサポートします。
 Oktaのユーザーおよびグループを同期してアクセス権限を付与しポリシーを適用でき、この過程でユーザーに簡素化され便利な環境を提供しながらも厳格なセキュリティポリシーを運営できます。
-QueryPieとOktaの統合はデータベースおよびシステム管理エコシステムのセキュリティと運営効率性およびユーザー経験が向上させることができます。
+QueryPieとOktaの統合はデータベースおよびシステム管理エコシステムのセキュリティと運営効率性およびユーザーエクスペリエンスが向上します。
 
 <Callout type="info">
 SCIMプロビジョニング連携まで実装したい場合、[[Okta]プロビジョニング連携ガイド](../provisioning/okta-provisioning-integration-guide) 内手順通り代わりに進行してください。下部のOkta APIを活用したアウトバウンドユーザー同期設定を同時に活用する場合、ユーザー同期に影響を受ける可能性がある点ご注意ください。
@@ -81,7 +81,7 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 2. リストでQueryPieアプリケーションをクリックします。
 3. Assignmentsタブに移動した後`Assign`ボタンをクリックして`Assign to People`または`Assign to Group`を選択します。
 4. OktaアカウントでQueryPieアクセスを許可するユーザーまたはグループを割り当てた後Doneボタンをクリックします。
-    1. People割り当て時ユーザー情報確認後`Sava and Go Back`ボタンをクリックします。
+    1. People割り当て時ユーザー情報確認後`Save and Go Back`ボタンをクリックします。
     2. Group割り当て時loginId項目を空白にして`Save and Go Back`ボタンをクリックします。
 5. ユーザーまたはグループがQueryPieアプリケーションに割り当てられ追加された履歴を確認できます。
 
@@ -119,7 +119,7 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 </figure>
 
 1. Okta管理者ページ左側パネルでDirectory &gt; Peopleメニューに移動してAdd Personを押して専用システム連携用アカウントを生成します。 
-    * 既にクエリパイ連携用で使用可能なアカウントがあれば本段階をスキップします。 
+    * 既にQueryPie連携用で使用可能なアカウントがあれば本段階をスキップします。 
 2. Okta管理者ページ左側パネルでSecurity &gt; Administratorsメニューに移動してRolesタブに移動します。 
 3. Create new roleを選択します。 
 4. Role name（例：MinimumAdminRole）およびRole descriptionを定義した後、Select Permisionsで以下の権限のみチェックします。 
@@ -134,15 +134,15 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 7. Create new resource setを選択します。
     * 既に割り当てる権限範囲指定のために作っておいたresource setがあれば本段階をスキップして10番段階を進行します。 
 8. Name（例：MinimumResources）およびDescriptionを定義した後以下の範囲を検索して指定します。 
-    1. User : クエリパイユーザー全部選択 
-    2. Group : クエリパイ使用グループ全部選択 
-    3. Application : クエリパイアプリに限定
+    1. User : QueryPieユーザー全部選択 
+    2. Group : QueryPie使用グループ全部選択 
+    3. Application : QueryPieアプリに限定
 9. Createを選択して生成します。 
-10. Adminsタブに移動してクエリパイ連携用アカウントに以下の権限を割り当てます。
+10. Adminsタブに移動してQueryPie連携用アカウントに以下の権限を割り当てます。
     1. Role: MinimumAdminRole | Resource: MinimumResources
     2. Role: Read-Only Administrator 
         * APIトークン生成メニューアクセスのための一時付与 
-11. クエリパイ連携用アカウントでオクタ管理者コンソールページに認証後アクセスします。 
+11. QueryPie連携用アカウントでOkta管理者コンソールページに認証後アクセスします。 
 12. Security &gt; APIメニューでTokensタブに移動します。
 13. Create Tokenボタンをクリックして認証トークンを生成してこれを保管します。 
 14. その後再び初期作業した管理者アカウントでアクセスしてSecurity &gt; Administrators &gt; Adminsタブで連携用アカウントを編集してRead-Only Adminstrator権限を回収します。 

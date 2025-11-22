@@ -7,14 +7,14 @@ title: 'KubernetesポリシーAction設定参考ガイド'
 ### Overview
 
 QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。
-この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難を経験しないようにしようとします。
+この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難が発生しないようにします。
 
 
 ### API Groups関連設定ガイド
 
-よく使用されるpodsのような場合はapiGroupsがcoreグループなので`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`で管理者が一つ一つ知って設定するのが困難です。
+よく使用されるpodsのような場合はapiGroupsがcoreグループなので`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`で管理者が個別に設定を行うのは困難です。
 
-もちろん同じresource nameを持つ場合、apiGroupsを通じて分離する必要があるかもしれませんが、よくある状況ではありません。
+もちろん同じresource nameを持つ場合、apiGroupsを通じて分離する必要があるかもしれませんが、一般的な状況ではありません。
 
 したがって、Kubernetes API Group管理のミッションがない限り、一般的には`"*"`で設定し、resourcesでアクセス権限を制御する方向で設定することをお勧めします。
 
@@ -48,7 +48,7 @@ allow:
 *  **Eventsパート**
     * 下のevents項目は`events`リソースに対する権限によって表示されますが、上のresources項目と同様にnamespace、nameによってフィルタリングされて表示されます。
     * ただし`pods`に対する権限があるからといって`pods`関連`events`が見えるわけではないので、該当画面を見るには明示的に`events`リソースに対する権限を与える必要があります。
-    * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソース権限がある状態で`pods`に対する権限だけを与えたからといって`events`中`pods`に対する履歴だけ照会されないことをお知らせします。
+    * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソース権限がある状態で`pods`に対する権限だけを与えたとしても`events`中`pods`に対する内容だけが照会されるわけではないことをご案内します。
     * 推奨スペック
       ```
 allow:
@@ -81,7 +81,7 @@ allow:
       verbs: ["get", "list", "watch"]
       ```
 *  **Edit権限**
-    * Edit権限まで得るユーザーの場合はView権限(最小`get`、`list`)も一緒に付与してあげる必要があります。kubectlでも特定リソースに対する修正要求をするとまず照会要求をするためです。
+    * Edit権限まで得るユーザーの場合はView権限(最小`get`、`list`)も一緒に付与する必要があります。kubectlでも特定リソースに対する修正要求をするとまず照会要求をするためです。
     * lensのようなツールではView権限がないとEdit画面に行く方法がありません。
     * Edit中でも作成(`create`)、修正(`patch`、`update`)、削除(`delete`、`deletecollection`)このように各役割に合わせて束にして与えられる必要があります。
     * `deletecollection`はよく使用されるわけではありませんが、KACでは`deletecollection`で要求が来てもユーザーに権限があるリソースだけを選んで削除処理するため、有用に使用できます。

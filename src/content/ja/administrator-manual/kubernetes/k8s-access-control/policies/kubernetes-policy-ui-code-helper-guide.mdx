@@ -8,12 +8,13 @@ title: 'KubernetesポリシーUIコードヘルパー案内'
 
 組織で管理するKubernetesクラスターのアクセスポリシー(Policy)を管理できます。
 KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベースに動作します。
-右側にはPolicy UI便宜機能としてコードエディタに挿入する内容をユーザーがUIで作業できるように助けるモーダルを提供します。KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベースに動作します。右側にはPolicy UI便利機能としてコードエディターに挿入する内容をユーザーがUIで作業できるように助けるモーダルを提供します。
+右側にはPolicy UI便利機能としてコードエディターに挿入する内容をユーザーがUIで作業できるように助けるモーダルを提供します。
 
 
-### UIコードヘルパー利用
+### UIコードヘルパーの使用
 
-コードエディター画面右側に各フィールド別コードサポートモーダルを提供します。モーダルはコード編集を助ける役割で、全体モーダルによって挿入された内容はコードエディター上で削除が可能です。
+コードエディター画面右側に各フィールド別コード支援モーダルを提供します。
+モーダルはコード編集を助ける役割で、全体モーダルによって挿入された内容はコードエディター上で削除が可能です。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png)
@@ -34,10 +35,10 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
   ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
   </figure>
     1. Spec: Allowでのみ動作します。
-    2.  **Kubernetes Groups**  : (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを明示します。
-    3.  **Permitted Impersonation**  : (Optional) 該当フィールドを通じてユーザーがクライアントを通じて実際の--as、--as-groupを通じたimpersonationを試みる時に適用可能なKubernetesユーザー/グループを列挙します。
-        1.  **Allowed Kubernetes Users** : --asパラメータでQueryPieで許可するkubenetes usersを入力します。
-        2.  **Allowed Kubernetes Groups** : --as-groupパラメータでQueryPieで許可するkubernetes groupsを入力します。
+    2.  **Kubernetes Groups**  : (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを指定します。
+    3.  **Permitted Impersonation**  : (Optional) このフィールドでは、ユーザーがクライアント経由で実際に--as、--as-groupによるimpersonationを試行する際に適用可能なKubernetesユーザー/グループをリストアップします。
+        1.  **Allowed Kubernetes Users** : --asパラメータでQueryPieで許可するkubenetes usersを指定します。
+        2.  **Allowed Kubernetes Groups** : --as-groupパラメータでQueryPieで許可するkubernetes groupsを指定します。
         3. ','を通じて多重で登録可能です。
     4. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。
 3.  **Add Actions**  モーダル
@@ -45,25 +46,25 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
   ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
   </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
-    2.  **API Groups** : デフォルトで"*"提供；管理者が修正可能で、','で多重入力可能です。
+    2.  **API Groups** : デフォルトで"*"が提供され、管理者が修正可能で、「,」区切りで複数入力可能です。
     3.  **Resources** : Kubernetesリソースを明示します。
         1. デフォルトで"*"提供；管理者が修正可能で、多重入力可能です。
-        2. 一般的に多く使われるリソースは以下と同じで、フィールドにカーソルを置くと以下のリストで便利にリソースを選択できます：
+        2. 一般的に多く使われるリソースは以下の通りで、フィールドにカーソルを置くと、リストからリソースを簡単に選択できます：
             * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
-        3. 上に表記されていないリソースは直接タイピングしてリスト外リソース(カスタムリソース対応のため)明示が可能です。
+        3. ここに記載されていないリソースは、直接入力してリスト外のリソース（カスタムリソース対応のため）を明記することが可能です。
         4. 指定されるとItemブロックのように表記され、Xを押すと削除されます。
     4.  **Namespace** : ネームスペースを指定してKubernetesリソース範囲を制限します。
-        1. デフォルトで"*"提供；管理者が修正可能で、ワイルドカードおよび正規表現受容が可能です。
+        1. デフォルトで"*"提供；管理者が修正可能で、ワイルドカードおよび正規表現が利用可能です。
         2. Namespace範囲外のResourcesの場合、該当フィールドの値はどのような値が入っても影響を受けません。
             * 範囲外リソース: `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`
-    5.  **Name** : Kubernetesリソース中対象にするリソース名を入力します。
+    5.  **Name** : Kubernetesリソースのうち対象とするリソース名を指定します。
         1. デフォルトで"*"提供；管理者が修正可能で、ワイルドカードおよび正規表現受容が可能です。
     6.  **Verbs** : Kubernetes APIメソッドを多重設定できます。
         1. デフォルトで"*"提供；指定されるとItemブロックのように表記され、Xを押すと削除されます。
         2. 一般的に呼び出されるVerbは以下と同じで、フィールドにカーソルを置くと以下のリストで便利にVerbを選択できます：
             * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
-        3. ユーザーは直接タイピングしてリスト外カスタムリソース専用他のverb明示が可能です。
-    7. `Add`ボタンをクリックしてactionsリスト中一つのアクションセットを定義できます。
+        3. ユーザーは直接入力してリスト外のカスタムリソース専用の他のverbを明記することが可能です。
+    7. `Add`ボタンをクリックしてactionsリストに一つのアクションセットを定義できます。
     8. コード上でappendに該当する部分で既存の追加されたアクションを初期化せずに新しく追加が可能です。
 4.  **Set Conditions**  モーダル
   <figure data-layout="center" data-align="center">
@@ -73,18 +74,18 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     2. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。
     3.  **Resource Tags**  (Optional)
         1. QueryPieリソースに付いたタグを基にポリシー適用範囲縮小が可能です。
-        2. 各行ごとにAND条件で動作し；Valueで','でOR動作します。
+        2. 各行ごとにAND条件で動作し、Valueで「,」区切りでOR動作します。
         3. Insertボタンを押して新しく行を生成できます。
         4. 指定されるとtagブロックのように表記され、Xを押すと削除されます。
         5. 入力項目：
             1.  **Key** : タグキー (正規式、glob未サポート)
-            2.  **Value** : タグバリュー入力 (正規式、globすべてサポート、多重入力サポート)
+            2.  **Value** : タグバリュー入力 (正規式、globすべてサポート、複数入力サポート)
     4.  **User Attributes**  (Optional)
         1. QueryPieユーザー属性を基にポリシー適用対象範囲縮小可能です。
-        2. 該当属性値にすべてマッチングされなければ該当ユーザーは属性値がマッチングされるまでポリシーを割り当てられても使用ができません。
+        2. 該当属性値とすべてマッチしない場合、そのユーザーは属性値がマッチするまでポリシーが割り当てられていても使用できません。
         3. 各行ごとにAND条件で動作し；Valueで','でOR動作します。
         4. Variable Nameで現在サポートするAttributeをドロップダウンリストで提案します。
             * loginId, firstName, lastName, middleName, honorificPrefix, honorificSuffix, email, title, displayName, nickName, profileUrl, secondEmail, mobilePhone, primaryPhone, streetAddress, city, state, zipCode, countryCode, postalAddress, preferredLanguage, locale<br/>timezone, userType, employeeNumber, costCenter, organization, division, department, managerId, manager, endpoints, staticIp, macAddress
     5.  **IP Addresses**  (Optional)
         1. 該当リソースにアクセス可能または不可能なIP帯域を管理者が指定します。
-        2. ','を区分で単一IP、CIDRすべて受容します。
+        2. 「,」区切りで単一IP、CIDRすべてに対応します。

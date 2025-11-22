@@ -1,17 +1,17 @@
 ---
-title: 'Kubernetes役割設定'
+title: 'Kubernetes役割設定方法'
 ---
 
 import { Callout } from 'nextra/components'
 
-# Kubernetes役割設定
+# Kubernetes役割設定方法
 
 ### Overview
 
 Kubernetesに対するユーザーアクセスを許可または制限するために、組織内でのKubernetes役割をベースにする役割ベースアクセス制御(Role-Based Access Control, RBAC)を適用します。ユーザーまたはユーザーグループに設定したRoleを付与できます。Roleは複数のポリシーを総合して単一役割で定義するのに使用されます。
 
 
-### Roleポリシー割り当て
+### Roleポリシーを割り当てる
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071540.png)
@@ -27,10 +27,10 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
   <figure data-layout="center" data-align="center">
   ![image-20240721-071758.png](/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071758.png)
   </figure>
-    1. Policy名で検索可能です。
-    2. 既存にすでに割り当てられているポリシーはチェックボックスが非活性化されます。
-    3. リストリストには各ポリシー別に以下の情報を露出します：
-        *  **Name**  : Policy名
+    1. ポリシー名で検索可能です。
+    2. 既に割り当てられているポリシーはチェックボックスが選択できません。
+    3. リスト目録には各ポリシー別に以下の情報を露出します：
+        *  **Name**  : ポリシー名
             * ポリシー情報を照会できるモーダルリンクを提供します。
               <figure data-layout="center" data-align="center">
               ![image-20240721-071822.png](/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071822.png)
@@ -47,7 +47,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Rolesメニューに移動します。
 2. Rolesリストで対象Role行をクリックして詳細ページに移動します。
-3. Policiesタブで全体選択または個別選択ボックスにチェックするとカラムバーに露出された`Unassign`ボタンをクリックします。
+3. Policiesタブで全体選択または個別選択ボックスにチェックするとカラムバーに表示される`Unassign`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
   ![image-20240721-071940.png](/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071940.png)
   </figure>
@@ -55,5 +55,5 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 5. (`Cancel`ボタンクリック時は確認ウィンドウのみ閉じます。)
 
 <Callout type="important">
-Policy割り当て解除時、該当ポリシーでユーザーおよびグループに付与されていたすべてのアクセス権限が回収されます。
+ポリシー割り当て解除時、該当ポリシーでユーザーおよびグループに付与されていたすべてのアクセス権限が解除されます。
 </Callout>

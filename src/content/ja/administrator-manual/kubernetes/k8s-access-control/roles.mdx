@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-組織で管理するKubernetesクラスターのアクセス権限に応じた役割(Role)に対する照会、作成、修正、削除をサポートします。RoleはKubernetesアクセス権限を実装および適用するためのPolicy以降の段階として、Policyの集合であり、ユーザー/グループとポリシーの連結点になってくれる権限を意味します。
+組織で管理するKubernetesクラスターのアクセス権限に応じた役割(Role)に対する照会、作成、修正、削除をサポートします。RoleはKubernetesアクセス権限を実装および適用するためのPolicy以降の段階として、Policyの集合であり、ユーザー/グループとポリシーの連携を担う権限を意味します。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070743.png)
@@ -18,7 +18,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles
 </figure>
 
 
-### Role照会
+### Roleを照会する
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070912.png)
@@ -30,7 +30,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Rolesメニューに移動します。
 2. テーブル左上の検索欄を通じて、役割名を条件に検索が可能です。
 3. テーブル右上の更新ボタンを通じて、Roleリストを最新化できます。
-4. テーブルでは以下のカラム情報を提供します：
+4. テーブルでは以下の項目情報を提供します：
     1.  **Name**  : Role名
     2.  **Description**  : Role詳細説明
     3.  **Last Access At**  : 該当役割の最終呼び出し日時
@@ -46,8 +46,8 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
         2. テーブルリストには各ポリシー別に以下の情報を露出します：
             1.  **Name**  : Policy名
             2.  **Description**  : Policy詳細説明
-            3.  **Version**  : Policy版
-            4.  **Assigned At**  : 割り当て日時
+            3.  **Version**  : ポリシーバージョン
+            4.  **Assigned At**  : 割り当て日
             5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
         3. 各ポリシー行をクリックすると該当ポリシーの詳細情報をドロワー形態で提供します。
           <figure data-layout="center" data-align="center">
@@ -55,10 +55,10 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
           </figure>
             1. 上段には基本情報が以下のように露出されます：
                 1.  **Name**  : Policy名
-                    * ポリシー詳細ページリンクを新しいウィンドウで開けます。
+                    * ポリシー詳細ページリンクを新しいウィンドウで開くことができます。
                 2.  **Description**  : Policy詳細説明
-                3.  **Version**  : Policy版
-                4.  **Assigned**   **At**  : 割り当て日時
+                3.  **Version**  : ポリシーバージョン
+                4.  **Assigned**   **At**  : 割り当て日
                 5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
             2. 下段にはポリシーがコードで露出されます。
     2.  **Users/Groups**
@@ -68,7 +68,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
         1. 該当Roleが付与されているユーザー/グループリストを列挙します。
         2. ユーザー/グループ名で検索可能です。
         3. リストは各ユーザー/グループごとに以下の情報を露出します：
-            1.  **User Type**  : ユーザー/グループタイプ
+            1.  **User Type**  : ユーザー/グループ種別
             2.  **Name**  : ユーザー/グループ名
             3.  **Last Access At**  : ユーザー/グループの最終呼び出し日時
             4.  **Expiration Date**  : 期限満了日
@@ -81,7 +81,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
         2. Cluster名で検索可能です。
         3. リストは各クラスターごとに以下の情報を露出します：
             1.  **Name**  : クラスター名
-            2.  **Version**  : Kubernetes版
+            2.  **Version**  : Kubernetesバージョン
             3.  **API URL**  : クラスターAPI URL
             4.  **Cloud Provider**  : 接続プラットフォーム (手動クラスターの場合、ハイフンで表記)
             5.  **Tags**  : クラスターに付いたタグリスト
@@ -89,7 +89,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             7.  **Updated At**  : クラスター最終修正日時
 
 
-### Role作成
+### Roleを作成する
 
 <figure data-layout="left" data-align="left">
 ![image-20240721-071306.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071306.png)
@@ -105,7 +105,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 6. Kubernetes役割設定ガイドを参考にしてポリシーを設定します。
 
 
-### Role修正
+### Roleを修正する
 
 <figure data-layout="left" data-align="left">
 ![image-20240721-071337.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071337.png)
@@ -119,7 +119,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 4. `Save`ボタンをクリックして修正を反映します。
 
 
-### Role削除
+### Roleを削除する
 
 <figure data-layout="left" data-align="left">
 ![image-20240721-071429.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071429.png)
@@ -135,5 +135,5 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 3. ポップアップが表示されたら`Delete`ボタンをクリックして削除を進行します。
 
 <Callout type="important">
-Role削除時、該当役割が付与されていたユーザーおよびグループから権限が回収されます。
+Role削除時、該当役割が付与されていたユーザーおよびグループから権限が解除されます。
 </Callout>
