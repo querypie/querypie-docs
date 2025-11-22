@@ -23,4 +23,8 @@ ignores:
   # Code block 내부의 한국어 주석이 일본어로 번역된 경우
   - file: target/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
     line_numbers: [41, 56, 92, 98, 104]
+  
+  # 링크 URL 내부의 한국어 텍스트가 일본어로 번역된 경우
+  - file: target/ja/release-notes/990-998/external-api-changes-9810-version-994-version.mdx
+    line_numbers: [165]
 
