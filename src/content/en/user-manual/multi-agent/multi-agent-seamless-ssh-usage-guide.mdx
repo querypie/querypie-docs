@@ -12,9 +12,9 @@ This document describes how to use Seamless SSH, along with specs and support sc
 
 ### How to use
 
-#### Configure SSH config
+#### SSH config Setup
 
-You can configure the SSH config file to keep using the standard ssh command.
+You can configure the SSH config file to use the existing `ssh` command.
 
 
 1. Navigate to the `.ssh` directory and create or edit the `config` file.
@@ -43,9 +43,9 @@ ssh {{Server Account}}@{{Server Name}}
 ```
 
 
-#### Configure shell alias
+#### Shell Alias Setup
 
-You can configure an SSH alias to continue using the ssh command.
+You can configure an SSH Alias to use the existing `ssh` command.
 
 
 1. Open your shell configuration file.
@@ -102,9 +102,9 @@ qpa ssh %r %h %p
 
 #### How connection errors are displayed
 
-If an error occurred when connecting to the QueryPie Proxy server, the previous User Agent displayed a dialog, which was not terminal-friendly.
+If an error occurred when connecting to the QueryPie Proxy server during the connection stage, the previous User Agent displayed a dialog, which was not terminal-friendly.
 
-Multi Agent now displays the error in the terminal.
+Multi Agent has been changed to  **display error messages in the terminal** .
 ```
 $ qpctl ssh manual@core.dev.querypie.io
 qpctl: error: Connection error: Timeout
@@ -112,14 +112,14 @@ qpctl: error: Connection error: Timeout
 
 ### Newly added features
 
-#### Default host
+#### Default host specification
 
-To use Seamless SSH, you need to enter the QueryPie Host, which can be inconvenient.
+Multi Agent requires entering the QueryPie Host to use Seamless SSH, which can be inconvenient.
 
-We added a feature to set a default server used by the qpctl command.
+We are adding a feature to specify a default server to use for the `qpctl` command.
 
-* When a default server is set, you do not need to enter the QueryPie Host in the qpctl ssh-proxy command.
-* Even if a default server is set, if you provide a QueryPie Host explicitly, that value will be used.
+* When a default server is specified, you do not need to enter the  **QueryPie Host**  in the  **qpctl ssh-proxy**  command.
+* Even if a default server is specified, if you enter a  **QueryPie Host** , that value will be used.
 
 <Callout type="info">
 If you reset the app using Reset All Settings, the default host setting will also be removed.
@@ -178,22 +178,22 @@ $ qpctl host use nightly.dev.querypie.io
 
 #### ⚠️ Experimental feature - Use qpctl directly ⚠️
 
-To use Seamless SSH, either
+To use Seamless SSH
 
-* configure `~/.ssh/config`, or
-* add `-o ProxyCommand=qpctl ssh-proxy …` to the ssh command
+* You can configure `~/.ssh/config`, or
+* Enter `-o ProxyCommand=qpctl ssh-proxy …` in the ssh command
 
-These are not the most natural experiences.
-If you have QueryPie Multi Agent installed, you can use the qpctl command directly for ssh connections.
+The experience is not intuitive.
+If you have QueryPie Multi Agent installed, you can use the `qpctl` command directly for ssh connections.
 
 
-1. Prefix your ssh command with qpctl.
+1. Just add `qpctl` before the ssh command you want to use.
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -i ~/.ssh/querypie-dev.pem
 ```
 
 
-1. If you have settings in `~/.ssh/config`, just prefix with qpctl as well.
+1. For settings in `~/.ssh/config`, just add `qpctl` as well.
 ```
 $ cat ~/.ssh/config
 
@@ -218,18 +218,18 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
 
 #### How it works
 
-The qpctl command wraps the ssh client command and automatically adds the ProxyCommand option.
+The `qpctl` command wraps the `ssh` client command and automatically adds the ProxyCommand option before executing.
 
 1.  **qpctl**  ssh command_line
 2. ssh  **-G**  command_line
-    1.  **username, hostname, port**  Extract
+    1. Extract  **username, hostname, port**
 3. ssh command_line  **-o ProxyCommand="qpctl ssh-proxy username**   **hostname**   **port"**
 
 #### Unsupported features
 
 ##### Custom ProxyCommand
 
-Because qpctl uses ProxyCommand, a custom ProxyCommand cannot be used.
+Because qpctl uses ProxyCommand,  **custom ProxyCommand**  cannot be used.
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
 qpctl: error: ProxyCommand option is not supported
