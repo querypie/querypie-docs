@@ -97,6 +97,7 @@ Ensure you have completed [Activating Provisioning](activating-provisioning) fir
   <figure data-layout="center" data-align="center">
   ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png)
   </figure>
+
 5. Click `Save` at the bottom to store the connection settings.
 
 ---
@@ -144,14 +145,17 @@ If you need to sync these attributes, add Custom Attributes in your IdP such as 
   <figure data-layout="center" data-align="center">
   ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
   </figure>
+
 2. Click `Add Attribute`. 
   <figure data-layout="center" data-align="center">
   ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
   </figure>
+
 3. Register the attribute to be synchronized. 
   <figure data-layout="center" data-align="center">
   ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
   </figure>
+
     1. Data type: Select string, same as in QueryPie.
     2. Display name: Enter the display name for Okta.
     3. Variable name & External name: Enter the variable name for the custom attribute to be synchronized. 
@@ -159,20 +163,24 @@ If you need to sync these attributes, add Custom Attributes in your IdP such as 
           <figure data-layout="center" data-align="center">
           ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
           </figure>
+
     4. External namespace: Enter the following value.<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
     5. Click `Save` or `Save and Add Another` to save.
 4. Then click `Mappings`. 
   <figure data-layout="center" data-align="center">
   ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
   </figure>
+
     1. Select the second tab (Okta → `{APP}`) at the top of the prompt. 
       <figure data-layout="center" data-align="center">
       ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
       </figure>
+
     2. Map the newly created Custom Attribute with the appropriate IdP attribute at the bottom, and click Save Mappings to save the settings. 
       <figure data-layout="center" data-align="center">
       ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
       </figure>
+
 5. Then assign users to the app.
 
 ---
@@ -186,6 +194,7 @@ If you need to sync these attributes, add Custom Attributes in your IdP such as 
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
   </figure>
+
     1. **Assign to People**: Assign by individual users.
     2. **Assign to Groups**: Assign by user group.
 2. Return to the QueryPie app and go to Administrator &gt; General &gt; User Management &gt; Users to confirm users are pushed successfully.
@@ -195,6 +204,7 @@ If you need to sync these attributes, add Custom Attributes in your IdP such as 
   Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
   </figcaption>
   </figure>
+
 ---
 
 #### Verify group provisioning
