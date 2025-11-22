@@ -44,28 +44,28 @@ QueryPieホームページ（`www.querypie.com`）内の `/ko/resources` 配下�
 ```
 
 
-1. Admin > Web Apps > Connection Management > Web Apps メニューへ移動します。
+1. Admin &gt; Web Apps &gt; Connection Management &gt; Web Apps メニューへ移動します。
 2. `Create a Web App` ボタンをクリックすると、Webアプリ登録ページへ移動します。<br/>
 
 <figure data-layout="center" data-align="center">
-![Admin > Web Apps > Create a Web App](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-225620.png)
+![Admin &gt; Web Apps &gt; Create a Web App](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-225620.png)
 <figcaption>
-Admin > Web Apps > Create a Web App
+Admin &gt; Web Apps &gt; Create a Web App
 </figcaption>
 </figure>
 
 以下の情報を入力してください。
 
-1. **Name**: QueryPie Web Site
-2. **Base URL**: `querypie.com` または `10.10.10.10:443` 
+1. Name : QueryPie Web Site
+2. Base URL : `querypie.com` または `10.10.10.10:443` 
     1. Base URLにはサブパス（例：`/ko`）を含めることはできません。
     2. Base URLに `https://` を入力するとエラーメッセージが表示されます。
     3. Base URLに `www.` を入力するとエラーメッセージが表示されます。
-3. **Description**: Webアプリの説明を入力してください。（例：クエリパイウェブサイト）
-4. **Watermark**: Webアプリアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
+3. Description : Webアプリの説明を入力してください。（例：クエリパイウェブサイト）
+4. Watermark : Webアプリアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
     1. Webアプリアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
     2. ガイドではOn状態を前提として案内します。
-5. **URL Paths**: サブパスを入力します。（選択） 
+5. URL Paths : サブパスを入力します。（選択） 
     1. ガイドではサブパスを入力してみます。`+ Add Path` ボタンをクリックしてサブパスを入力してください。
 
 |  **Path**                              |  **Path Tag**  |
@@ -84,10 +84,10 @@ Admin > Web Apps > Create a Web App
 
 続いて残りの情報を入力します。
 
-1. **User Activity Recording**: ユーザー行動記録の有無
+1. User Activity Recording : ユーザー行動記録の有無
     1. Onで有効化後、すべてのオプションをオンにしてください。
     2. Excluded URL Pathsはユーザー行動記録を除外するパスを入力します。ここでは空にしておきます。
-2. **Tag**: Webアプリのタグです。ここでは空にしておきます。
+2. Tag : Webアプリのタグです。ここでは空にしておきます。
 3. `Save` ボタンを押して保存します。
 
 ### 2. ポリシーの登録
@@ -95,15 +95,15 @@ Admin > Web Apps > Create a Web App
 次に、QueryPieウェブサイトに対して、登録されたサブパスにのみアクセスを許可するポリシーを作成します。
 
 <figure data-layout="center" data-align="center">
-![Admin > Web Apps > Web App Access Control > Policies > Edit Policy Code](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-230727.png)
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; Edit Policy Code](/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-230727.png)
 <figcaption>
-Admin > Web Apps > Web App Access Control > Policies > Edit Policy Code
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies &gt; Edit Policy Code
 </figcaption>
 </figure>
 
-1. Admin > Web Apps > Web App Access Control > Policies メニューへ移動します。
+1. Admin &gt; Web Apps &gt; Web App Access Control &gt; Policies メニューへ移動します。
 2. `Create Policy` ボタンをクリックし、Create Policyモーダルに以下を入力します。
-    1. **Name**: QP Web Test
+    1. Name : QP Web Test
 3. `Save` ボタンをクリックして保存します。
 4. 今作成したQP Web Testポリシーをクリックして詳細ページに移動し、`Go to Editor Mode` ボタンをクリックします。
 5. エディターに以下の内容をコピーして貼り付けます。
@@ -131,16 +131,16 @@ spec:
 今度は新しいロールを作成し、先ほど作成したポリシーを割り当てます。
 
 <figure data-layout="center" data-align="center">
-![Admin > Web Apps > Web App Access Control > Roles > List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204911.png)
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204911.png)
 <figcaption>
-Admin > Web Apps > Web App Access Control > Roles > List Details
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles &gt; List Details
 </figcaption>
 </figure>
 
-1. Admin > Web Apps > Web App Access Control > Roles メニューへ移動します。
+1. Admin &gt; Web Apps &gt; Web App Access Control &gt; Roles メニューへ移動します。
 2. `Create Role` ボタンをクリックし、以下を入力します。
-    1. **Name**: QP Web Test
-3. 今作成したロールをクリックして詳細ページ > Policiesタブへ移動します。`Assign Policies` ボタンをクリックします。
+    1. Name : QP Web Test
+3. 今作成したロールをクリックして詳細ページ &gt; Policiesタブへ移動します。`Assign Policies` ボタンをクリックします。
 4. Assign Policiesモーダルで先ほど作成したQP Web Testポリシーを選択し、`Assign` ボタンをクリックして保存し、モーダルを閉じます。
 
 ### 4. ロールのユーザー/グループへの割り当て
@@ -148,16 +148,16 @@ Admin > Web Apps > Web App Access Control > Roles > List Details
 今度は今作成したQP Web Testロールを現在のユーザーに割り当ててみます。
 
 <figure data-layout="center" data-align="center">
-![Admin > Web Apps > Web App Access Control > Access Control > List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204937.png)
+![Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20250330-204937.png)
 <figcaption>
-Admin > Web Apps > Web App Access Control > Access Control > List Details
+Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List Details
 </figcaption>
 </figure>
 
-1. Admin > Web Apps > Web App Access Control > Access Control メニューへ移動します。
+1. Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control メニューへ移動します。
 2. ロールを割り当てたいユーザーまたはグループを選択します。
     1. 今はテスト中の自分を選択してみます。
-3. ユーザー詳細ページ > Rolesタブで、`Grant Roles` ボタンをクリックします。
+3. ユーザー詳細ページ &gt; Rolesタブで、`Grant Roles` ボタンをクリックします。
 4. Grant Rolesモーダルで今作成したQP Web Testを選択し、`Grant` ボタンをクリックして保存します。
     1. 有効期限は変更しなければ今日から1年後に自動設定されます。
 
@@ -167,7 +167,7 @@ Admin > Web Apps > Web App Access Control > Access Control > List Details
 
 ### 1. Root CA証明書のインストール
 
-1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。<br/> <br/> 
+1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから Support &gt; Download Web Secure ボタンをクリックします。<br/> <br/> 
   <figure data-layout="center" data-align="center">
   ![QueryPie &gt; Profile Menu](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-120321.png)
   <figcaption>
@@ -185,12 +185,12 @@ Admin > Web Apps > Web App Access Control > Access Control > List Details
 
 ### 2. Extensionのダウンロード
 
-1. QueryPieプロフィールメニューから **Support > Download Web Secure** ボタンをクリックします。
-2. QueryPie Web Secure Downloadモーダルで **B. Install Chrome Extension** > Step 1. のDownload LinkをクリックしてExtensionファイルのダウンロードを実行します。
+1. QueryPieプロフィールメニューから Support &gt; Download Web Secure ボタンをクリックします。
+2. QueryPie Web Secure Downloadモーダルで  **B. Install Chrome Extension**  &gt; Step 1. のDownload LinkをクリックしてExtensionファイルのダウンロードを実行します。
 
 ### 3. ExtensionのインストールとHost設定
 
-1. Chromeアドレスバーに `chrome://extensions/` を入力します。
+1. Chromeアドレスバーに chrome://extensions/ を入力します。
 2. ページ右上の開発者モードトグルを有効にします。
 3. 受け取ったExtensionファイルを **圧縮を解かない** 状態で、拡張機能エリアにドラッグします。<br/> <br/> 
   <figure data-layout="center" data-align="center">
@@ -252,23 +252,23 @@ WAC拡張機能インストール前に開いていたタブについては管�
 
 
 <figure data-layout="center" data-align="center">
-![Admin > Audit > Web Apps > Web Access History](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115604.png)
+![Admin &gt; Audit &gt; Web Apps &gt; Web Access History](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115604.png)
 <figcaption>
-Admin > Audit > Web Apps > Web Access History
+Admin &gt; Audit &gt; Web Apps &gt; Web Access History
 </figcaption>
 </figure>
 
 
-1. Admin > Audit > Web Apps > Web Access History に移動します。
+1. Admin &gt; Audit &gt; Web Apps &gt; Web Access History に移動します。
 2. 現在のユーザーがアクセスしたWebアプリアクセス記録を照会できます。
-    1. **Action Type**: Webアプリアクセスの開始と終了
-        1. **Connect**: アクセス開始
+    1. Action Type : Webアプリアクセスの開始と終了
+        1. Connect : アクセス開始
             * 該当Webアプリにアクセスした場合に表示されます。サブパスをすべて別々に記録します。
-        2. **Disconnect**: アクセス終了
+        2. Disconnect : アクセス終了
             * タブを閉じるか他のページに移動した場合に表示されます
-    2. **Result**: 結果
-        1. **Success**: アクセス成功
-        2. **Failure**: アクセス失敗
+    2. Result : 結果
+        1. Success : アクセス成功
+        2. Failure : アクセス失敗
             * WACポリシーによってアクセスがブロックされた場合、アクセス失敗として表示されます
 
 ### 2. ユーザーセッション記録の確認
@@ -281,21 +281,21 @@ Web App作成時にUser Activity Recordingをオンにしないと記録が残�
 
 
 <figure data-layout="center" data-align="center">
-![Admin > Audit > Web Apps > User Activity Recordings > Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115805.png)
+![Admin &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; Details](/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-115805.png)
 <figcaption>
-Admin > Audit > Web Apps > User Activity Recordings > Details
+Admin &gt; Audit &gt; Web Apps &gt; User Activity Recordings &gt; Details
 </figcaption>
 </figure>
 
 
-1. Admin > Audit > Web Apps > User Activity Recording に移動します。
+1. Admin &gt; Audit &gt; Web Apps &gt; User Activity Recording に移動します。
 2. 現在のユーザー名で残った記録をクリックすると、詳細ページへ移動します。
 3. Event Timelineでユーザーの行動を時間順で確認できます。
     1. フィルターをクリックすると行動種類別で確認可能です。
     2. 検索可能な値は以下の通りです。
-        1. **Content** (クリックしたテキスト、またはリンク)
-        2. **URL** (アクセスしていたページURL)
-        3. **Tab ID** (使用したタブID)
+        1. Content (クリックしたテキスト、またはリンク)
+        2. URL (アクセスしていたページURL)
+        3. Tab ID (使用したタブID)
 4. イベント別にユーザーが実際に見ていたページのスクリーンショットを残しています。
 
 
