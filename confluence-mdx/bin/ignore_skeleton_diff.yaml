@@ -12,6 +12,15 @@
 #       line_numbers: [5, 10, 15]
 
 ignores:
-  - file: target/ja/administrator-manual/databases/dac-general-configurations.mdx
-    line_numbers: [56, 63, 131]
+  # Code block 내부의 한국어 주석이 일본어로 번역된 경우
+  - file: target/ja/administrator-manual/web-apps/wac-quickstart/1028-wac-rbac-guide.mdx
+    line_numbers: [251, 252]
+  
+  # Code block 내부의 한국어 텍스트가 일본어로 번역된 경우
+  - file: target/ja/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+    line_numbers: [67, 78]
+  
+  # Code block 내부의 한국어 주석이 일본어로 번역된 경우
+  - file: target/ja/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
+    line_numbers: [41, 56, 92, 98, 104]
 
