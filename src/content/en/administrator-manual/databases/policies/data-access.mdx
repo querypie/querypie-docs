@@ -23,7 +23,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access
 </figure>
 
 1. Navigate to Policies &gt; Data Access menu from the Database settings menu.
-2. `Create Policy` Click the button in the top right.
+2. Click the `Create Policy` button in the top right.
 3. Enter the following information for policy creation:
     1.  **Policy Name**  : Name that can distinguish the policy on screen.
     2.  **Target Connection**  : Select the connection to apply the policy to. One policy can be connected to one connection.
@@ -51,7 +51,7 @@ After creating a policy, register the data path to which the policy will be appl
     3.  **Column Name**  : Select when you want to restrict data access by column unit.
 4. Exception handling of table/column access restriction rules can be done for users or groups who need to query the data. 
     *  **Allowed Users**  : Select users or groups to exception handle the rule.
-5. `Ok` Save by clicking the button.
+5. Click the `Ok` button to save.
 
 You can check that rules are registered in the Rule List tab.
 Now when users query the data, if policy is applied to the table, the table itself cannot be queried, and if rules are applied to columns, it is displayed as *`{RESTRICTED}`* .
@@ -64,7 +64,8 @@ SQL Editor &gt; Displayed as *`{RESTRICTED}`* when querying data with applied po
 </figure>
 
 <Callout type="important">
-When selecting Database Name, "[ENGINE] [30101] Please Check the user credential or IP ACL settings. Access denied for user 'username'@'host' (using password: YES)" error occurs.
+When selecting Database Name, "[ENGINE] [30101] Please Check the user credential or IP ACL settings.
+Access denied for user 'username'@'host' (using password: YES)" error occurs.
 A. In this case, DB account information may not be set or may be set with incorrect information.
 Click the corresponding connection information in Administrator &gt; Databases &gt; Connection Management &gt; DB Connections menu, then **enter and save Database Username / Password information** and try again.
 </Callout>
