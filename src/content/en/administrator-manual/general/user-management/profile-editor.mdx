@@ -21,10 +21,10 @@ This enables flexible user information management tailored to each organization'
 
 Source Priority can be specified for each user attribute, and the types are as follows:
 
-1.  **Inherit from profile source** 
+1.  **Inherit from profile source**
     1. This is an option that means allowing updates for that Attribute from external Auth Provider.
     2. The user's Attribute becomes updatable (patch) through SCIM API.
-2.  **Inherit from QueryPie** 
+2.  **Inherit from QueryPie**
     1. This is an option that means managing that Attribute independently within QueryPie even though the user was created from external Auth Provider.
     2. Even if the user's corresponding Attribute is pushed for update through SCIM API, it becomes an Attribute managed independently by QueryPie and ignores changes.
 

@@ -30,10 +30,10 @@ Since general SCIM integration APIs cannot identify the authority, when a user i
 Therefore, we recommend proceeding with the [SSO account system integration](authentication) procedure first for smoother account flow management.
 The system behavior according to this is as follows.
 
-*  **Authentication Not Configured (Default: Internal Database)** 
+*  **Authentication Not Configured (Default: Internal Database)**
     * Auth Provider of users or groups created through SCIM API becomes "QueryPie" and operates as a general bulk import concept.
     * Managed the same as local QueryPie accounts, and users can be edited and deleted in QueryPie.
-*  **Authentication Configured (e.g., Okta)** 
+*  **Authentication Configured (e.g., Okta)**
     * Auth Provider of users or groups created through SCIM API is marked as the corresponding Identity Provider (IdP), and user Attribute profile management is updated and managed according to Administrator &gt; General &gt; User Management &gt; Profile Editor standards.
     * When existing local QueryPie accounts with the same Username (loginId) receive update calls through SCIM API, the user's profile is modified according to IdP, but to maintain granted permissions within QueryPie, the Auth Provider is not changed to the corresponding IdP first. (As of 9.19.0)
         * Still managed the same as local QueryPie accounts, and user profiles and status can be edited and deleted in QueryPie.
