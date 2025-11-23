@@ -30,7 +30,8 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 * options : Options related to connection attached after /?. When using multiple options, connect them with &. <br/>ex. /?authSource=admin&replicaSet=rs0
 
 <Callout type="info">
-When using replica set, you must enter replicaSet=[replica set name] after /?.
+When using replica set, you must enter /?
+followed by replicaSet=[replica set name].
 ex.
 /?replicaSet=rs0
 </Callout>
@@ -127,7 +128,8 @@ For more detailed information about Cluster mode, you can also check [DB Connect
 
 #### 4. Setting Up as Sharded Cluster (Sharding)
 
-Sharded Cluster has the same setup method as Replica Set, only the Connection String options are different. Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster doesn't need this option.
+Sharded Cluster has the same setup method as Replica Set, only the Connection String options are different.
+Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster doesn't need this option.
 
 <figure data-layout="center" data-align="center">
 ![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)

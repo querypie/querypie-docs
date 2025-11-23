@@ -1,0 +1,13 @@
+# Ignore skeleton diff rules for English translation
+# These differences are acceptable due to natural English word order and expression
+
+rules:
+  # MongoDB specific guide - Line 306
+  # Korean: "tags속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 "Column Name" 항목에 $.tags[1]을 입력 후 `OK` 버튼을 클릭합니다."
+  # English: "When setting access restriction policy for the 2nd value in the tags attribute list, enter $.tags[1] in the "Column Name" field and click the `OK` button."
+  # Reason: Natural English requires the sentence to end after "button." while Korean continues the phrase.
+  # The inline code `OK` position differs due to English word order, which is natural and acceptable.
+  - file: target/en/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide.mdx
+    line: 306
+    type: inline_code_position
+    description: "Inline code position differs due to natural English word order"
