@@ -877,7 +877,8 @@ def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str], Opti
     content = re.sub(r'(_TEXT_)(&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;)', r'\1 \2', content)
     
     # Remove trailing spaces after HTML tags at end of lines
-    content = re.sub(r'(<br/?>|/>)\s+\n', r'\1\n', content)
+    # Note: Use [ \t]+ instead of \s+ to avoid matching newlines, which would remove blank lines
+    content = re.sub(r'(<br/?>|/>)[ \t]+\n', r'\1\n', content)
     # Remove trailing spaces after HTML tags before newlines (but preserve spaces before other content)
     lines = content.split('\n')
     processed_final_lines = []
