@@ -1,47 +1,123 @@
-#!/bin/bash
-# Review skeleton diff for files listed in todo file
+#!/usr/bin/env bash
 
-set -e
+set -o nounset -o errtrace -o pipefail
 
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <todo-file>"
-    exit 1
-fi
+# Global variables
+YES_MODE=false
+TODO_FILE=""
+CONFLUENCE_MDX_DIR=""
 
-TODO_FILE="$1"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFLUENCE_MDX_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-
-cd "$CONFLUENCE_MDX_DIR"
-
-# Process each file
-while IFS= read -r file || [ -n "$file" ]; do
-    echo "=========================================="
-    echo "Processing: $file"
-    echo "=========================================="
-    echo ""
-    
-    # Step 1: Run without --use-ignore
-    echo "--- Step 1: mdx_to_skeleton.py (without --use-ignore) ---"
-    bin/mdx_to_skeleton.py "$file" 2>&1
-    echo ""
-    
-    # Step 2: Run with --use-ignore
-    echo "--- Step 2: mdx_to_skeleton.py (with --use-ignore) ---"
-    bin/mdx_to_skeleton.py --use-ignore "$file" 2>&1
-    echo ""
-    
-    # Ask for user confirmation
-    read -p "Continue to next file? (yes/no/quit): " answer < /dev/tty
-    case "$answer" in
-        [Yy]es|[Yy])
-            echo ""
-            ;;
-        *)
-            exit 0
-            ;;
+# Function to parse command line arguments
+function parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --yes)
+      YES_MODE=true
+      shift
+      ;;
+    *)
+      if [[ -z "$TODO_FILE" ]]; then
+        TODO_FILE="$1"
+      else
+        echo >&2 "Error: Multiple todo files specified"
+        exit 1
+      fi
+      shift
+      ;;
     esac
-    
-done < "$TODO_FILE"
+  done
 
-echo "Review completed for all files!"
+  if [[ -z "$TODO_FILE" ]]; then
+    echo >&2 "Usage: $0 [--yes] <todo-file>"
+    exit 1
+  fi
+}
+
+# Function to setup environment: navigate to confluence-mdx directory and activate venv
+function setup_environment() {
+  local script_dir venv_path
+
+  # Get script directory and navigate to confluence-mdx directory
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  CONFLUENCE_MDX_DIR="$(cd "$script_dir/.." && pwd)"
+
+  # Change to confluence-mdx directory
+  cd "$CONFLUENCE_MDX_DIR"
+
+  # Activate venv if it exists
+  venv_path="$CONFLUENCE_MDX_DIR/venv"
+  if [[ -d "$venv_path" ]]; then
+    if [[ -f "$venv_path/bin/activate" ]]; then
+      source "$venv_path/bin/activate"
+      echo >&2 "# Virtual environment activated: $venv_path"
+    else
+      echo >&2 "# Warning: venv directory exists but activate script not found"
+    fi
+  else
+    echo >&2 "# Warning: venv directory not found at $venv_path"
+  fi
+}
+
+# Function to ask user for confirmation to continue
+function ask_continue() {
+  local answer
+  read -p "Continue to next file? (yes/no/quit): " answer </dev/tty
+  case "$answer" in
+  [Yy]es | [Yy])
+    echo ""
+    return 0
+    ;;
+  *)
+    return 1
+    ;;
+  esac
+}
+
+# Function to process a single file
+function process_file() {
+  local file="$1"
+
+  # Skip empty lines
+  [[ -z "$file" ]] && return 0
+  echo "# Target: $file"
+
+  # Step 1: Run without --use-ignore
+  echo "# --- Step 1: mdx_to_skeleton.py (without --use-ignore) ---"
+  bin/mdx_to_skeleton.py "$file" 2>&1
+
+  # Step 2: Run with --use-ignore
+  echo "# --- Step 2: mdx_to_skeleton.py (with --use-ignore) ---"
+  bin/mdx_to_skeleton.py --use-ignore "$file" 2>&1
+
+  # Ask for user confirmation (skip if --yes option is provided)
+  if [[ "$YES_MODE" == false ]]; then
+    if ! ask_continue; then
+      return 1
+    fi
+  fi
+
+  return 0
+}
+
+# Function to process all files from the todo file
+function process_all_files() {
+  local file
+
+  while IFS= read -r file || [[ -n "$file" ]]; do
+    if ! process_file "$file"; then
+      return 1
+    fi
+  done <"$TODO_FILE"
+
+  return 0
+}
+
+# Main function
+function main() {
+  parse_arguments "$@"
+  setup_environment
+
+  process_all_files
+}
+
+main "$@"
