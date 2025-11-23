@@ -881,6 +881,63 @@ def process_markdown_line(line: str, text_processor: TextProcessor) -> str:
     return leading_whitespace + processed_content
 
 
+def delete_skeleton_files(directories: List[Path]) -> int:
+    """
+    Delete all .skel.mdx files in the specified directories recursively.
+    If directories list is empty, uses default directories (target/ko, target/ja, target/en).
+    
+    Args:
+        directories: List of directories to process
+        
+    Returns:
+        Exit code (0 for success, 1 for errors)
+    """
+    if len(directories) == 0:
+        # No directories specified, use defaults (Korean, Japanese, English order)
+        default_dirs = [
+            Path('target/ko'),
+            Path('target/ja'),
+            Path('target/en')
+        ]
+        directories = default_dirs
+    
+    total_deleted = 0
+    total_errors = 0
+    
+    for directory in directories:
+        if not directory.exists():
+            print(f"Warning: Directory not found: {directory}", file=sys.stderr)
+            continue
+        if not directory.is_dir():
+            print(f"Warning: Path is not a directory: {directory}", file=sys.stderr)
+            continue
+        
+        # Find all .skel.mdx files recursively
+        skel_files = list(directory.rglob('*.skel.mdx'))
+        
+        deleted_count = 0
+        error_count = 0
+        
+        for skel_file in skel_files:
+            try:
+                skel_file.unlink()
+                deleted_count += 1
+            except Exception as e:
+                print(f"Error deleting {skel_file}: {e}", file=sys.stderr)
+                error_count += 1
+        
+        total_deleted += deleted_count
+        total_errors += error_count
+        
+        print(f"{directory}: {deleted_count} files deleted, {error_count} errors")
+    
+    # Print overall summary if multiple directories
+    if len(directories) > 1:
+        print(f"Total: {total_deleted} files deleted, {total_errors} errors")
+    
+    return 0 if total_errors == 0 else 1
+
+
 def convert_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optional[str], Optional[Path]]:
     """
     Converts an MDX file to skeleton format.
@@ -1076,6 +1133,13 @@ def main():
         metavar='FILE',
         help='Path to ignore_skeleton_diff.yaml file. If not specified, uses default location (same directory as script).'
     )
+    parser.add_argument(
+        '--reset',
+        nargs='*',
+        type=Path,
+        metavar='DIR',
+        help='Delete all .skel.mdx files in directory(ies) recursively. If no directories specified, defaults to target/ko, target/ja, target/en'
+    )
 
     args = parser.parse_args()
 
@@ -1088,7 +1152,11 @@ def main():
         initialize_config(max_diff_for_config, exclude_patterns, ignore_file_path)
 
     try:
-        if args.compare:
+        if args.reset is not None:
+            # Reset mode: delete skeleton files
+            reset_directories = args.reset if len(args.reset) > 0 else []
+            return delete_skeleton_files(reset_directories)
+        elif args.compare:
             # Compare mode
             compare_files(verbose=args.verbose)
             return 0
