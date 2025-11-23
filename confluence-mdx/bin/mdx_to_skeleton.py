@@ -259,6 +259,117 @@ class TextProcessor:
 
         return result
 
+    def _normalize_pattern_order(self, line: str) -> str:
+        """
+        Normalize the order of patterns in a converted line to reduce differences
+        between Korean and English translations.
+        
+        This function treats patterns in a line as a Set, ensuring:
+        1. Simple _TEXT_ patterns appear before formatted patterns (inline code, bold, etc.)
+        2. Trailing simple _TEXT_ patterns are removed if they appear after formatted patterns
+        3. Structural elements (indentation, list markers, headers) are preserved
+        
+        Examples:
+            "2. _TEXT_ `_TEXT_` _TEXT_" -> "2. _TEXT_ `_TEXT_`"
+            "_TEXT_ **_TEXT_** _TEXT_" -> "_TEXT_ **_TEXT_**"
+            "* `_TEXT_` _TEXT_" -> "* _TEXT_ `_TEXT_`"
+        
+        Args:
+            line: A line of skeleton-converted text
+            
+        Returns:
+            The normalized line with patterns reordered
+        """
+        if not line.strip():
+            return line
+        
+        # Extract structural prefix (indentation, list markers, headers, etc.)
+        # Match: optional whitespace + optional list marker (number, bullet) + required whitespace
+        # or header markers (#)
+        # Note: List marker must be followed by whitespace (not part of markdown formatting)
+        # Pattern: (whitespace)(number. or - or *)(whitespace) or (whitespace)(#+)(whitespace)
+        structural_match = re.match(r'^(\s*)(\d+\.\s+|[-*]\s+|#+\s+)', line)
+        if structural_match:
+            prefix = structural_match.group(0)
+            content = line[len(prefix):]
+        else:
+            # Try to match just whitespace prefix
+            whitespace_match = re.match(r'^(\s+)', line)
+            if whitespace_match:
+                prefix = whitespace_match.group(0)
+                content = line[len(prefix):]
+            else:
+                prefix = ''
+                content = line
+        
+        if not content.strip():
+            return line
+        
+        # Split content by whitespace to get tokens
+        tokens = content.split()
+        
+        # Identify pattern types (order matters: check longer patterns first)
+        # Check bold (**_TEXT_**) before italic (*_TEXT_*) to avoid false matches
+        pattern_types = [
+            ('**_TEXT_**', 'bold'),
+            ('*_TEXT_*', 'italic'),
+            ('`_TEXT_`', 'code'),
+            ('_TEXT_', 'text_placeholder'),
+        ]
+        
+        # Collect patterns and other tokens
+        patterns_found = {
+            'text_placeholder': False,
+            'code': False,
+            'bold': False,
+            'italic': False,
+        }
+        
+        other_tokens = []
+        
+        for token in tokens:
+            pattern_type = None
+            for pattern, ptype in pattern_types:
+                if token == pattern:
+                    pattern_type = ptype
+                    patterns_found[ptype] = True
+                    break
+            
+            if pattern_type is None:
+                # Not a standard pattern - preserve it (could be link, HTML entity, etc.)
+                other_tokens.append(token)
+        
+        # Build normalized pattern list in order: _TEXT_, `_TEXT_`, **_TEXT_**, *_TEXT_*
+        normalized_patterns = []
+        if patterns_found['text_placeholder']:
+            normalized_patterns.append('_TEXT_')
+        if patterns_found['code']:
+            normalized_patterns.append('`_TEXT_`')
+        if patterns_found['bold']:
+            normalized_patterns.append('**_TEXT_**')
+        if patterns_found['italic']:
+            normalized_patterns.append('*_TEXT_*')
+        
+        # Combine: prefix + normalized patterns + other tokens
+        result_parts = []
+        if prefix:
+            result_parts.append(prefix.rstrip())
+        
+        if normalized_patterns:
+            result_parts.extend(normalized_patterns)
+        
+        if other_tokens:
+            result_parts.extend(other_tokens)
+        
+        # Join with single spaces
+        result = ' '.join(result_parts)
+        
+        # Preserve trailing whitespace from original if it exists
+        if line.endswith(' ') and not result.endswith(' '):
+            result += ' '
+        
+        return result
+
     def _is_boundary_char(self, char: str) -> bool:
         """Check if character is a word boundary (space, newline, tab, or non-alphanumeric)"""
         return not char or char in (' ', '\n', '\t') or not char.isalnum()
@@ -683,12 +794,18 @@ def process_text_line(line: str, text_processor: TextProcessor) -> str:
             processed_content = _process_html_line(content, text_processor)
             # Normalize spacing after marker: use single space if content exists, no space if empty
             normalized_spacing = ' ' if processed_content.strip() else ''
-            return indent + marker + normalized_spacing + processed_content
+            result = indent + marker + normalized_spacing + processed_content
+            # Apply pattern normalization
+            return text_processor._normalize_pattern_order(result)
         else:
             # Regular HTML line
-            return _process_html_line(line, text_processor)
+            result = _process_html_line(line, text_processor)
+            # Apply pattern normalization
+            return text_processor._normalize_pattern_order(result)
 
-    return process_markdown_line(line, text_processor)
+    result = process_markdown_line(line, text_processor)
+    # Apply pattern normalization
+    return text_processor._normalize_pattern_order(result)
 
 
 def _process_html_line(line: str, text_processor: TextProcessor) -> str:

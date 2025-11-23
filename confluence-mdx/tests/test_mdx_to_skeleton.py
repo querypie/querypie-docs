@@ -1399,6 +1399,137 @@ def test_list_item_with_dac_and_multiple_inline_codes():
 
 
 # ============================================================================
+# Pattern Normalization Tests
+# ============================================================================
+
+def test_pattern_normalization_remove_trailing_text():
+    """
+    Test pattern normalization: Remove trailing _TEXT_ after formatted patterns
+    
+    Covers cases from db-connections.mdx where trailing _TEXT_ appears after
+    inline code or bold formatting and should be removed.
+    
+    Test cases:
+    - _TEXT_ `_TEXT_` _TEXT_ -> _TEXT_ `_TEXT_`
+    - 2. _TEXT_ `_TEXT_` _TEXT_ -> 2. _TEXT_ `_TEXT_`
+    - _TEXT_ **_TEXT_** _TEXT_ -> _TEXT_ **_TEXT_**
+    """
+    from mdx_to_skeleton import TextProcessor
+    
+    processor = TextProcessor()
+    
+    test_cases = [
+        ("_TEXT_ `_TEXT_` _TEXT_", "_TEXT_ `_TEXT_`"),
+        ("2. _TEXT_ `_TEXT_` _TEXT_", "2. _TEXT_ `_TEXT_`"),
+        ("_TEXT_ **_TEXT_** _TEXT_", "_TEXT_ **_TEXT_**"),
+    ]
+    
+    for input_line, expected in test_cases:
+        normalized = processor._normalize_pattern_order(input_line)
+        assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+def test_pattern_normalization_reorder_inline_code():
+    """
+    Test pattern normalization: Reorder when inline code appears before _TEXT_
+    
+    Covers cases from db-connections.mdx where inline code appears before
+    simple _TEXT_ and should be reordered so _TEXT_ comes first.
+    
+    Test cases:
+    - `_TEXT_` _TEXT_ -> _TEXT_ `_TEXT_`
+    - * `_TEXT_` _TEXT_ -> * _TEXT_ `_TEXT_`
+    - 1. `_TEXT_` _TEXT_ -> 1. _TEXT_ `_TEXT_`
+    - 2. `_TEXT_` _TEXT_ -> 2. _TEXT_ `_TEXT_`
+    - 3. `_TEXT_` _TEXT_ -> 3. _TEXT_ `_TEXT_`
+    """
+    from mdx_to_skeleton import TextProcessor
+    
+    processor = TextProcessor()
+    
+    test_cases = [
+        ("`_TEXT_` _TEXT_", "_TEXT_ `_TEXT_`"),
+        ("* `_TEXT_` _TEXT_", "* _TEXT_ `_TEXT_`"),
+        ("1. `_TEXT_` _TEXT_", "1. _TEXT_ `_TEXT_`"),
+        ("2. `_TEXT_` _TEXT_", "2. _TEXT_ `_TEXT_`"),
+        ("3. `_TEXT_` _TEXT_", "3. _TEXT_ `_TEXT_`"),
+    ]
+    
+    for input_line, expected in test_cases:
+        normalized = processor._normalize_pattern_order(input_line)
+        assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+def test_pattern_normalization_complex_with_links():
+    """
+    Test pattern normalization: Complex cases with links and multiple patterns
+    
+    Covers cases from db-connections.mdx where links and multiple formatted
+    patterns appear together and should be normalized.
+    
+    Test case:
+    - _TEXT_ [_TEXT_](url) _TEXT_ **_TEXT_** _TEXT_ -> _TEXT_ **_TEXT_** [_TEXT_](url)
+    """
+    from mdx_to_skeleton import TextProcessor
+    
+    processor = TextProcessor()
+    
+    input_line = "_TEXT_ [_TEXT_](url) _TEXT_ **_TEXT_** _TEXT_"
+    normalized = processor._normalize_pattern_order(input_line)
+    
+    # Expected: _TEXT_ **_TEXT_** [_TEXT_](url) (trailing _TEXT_ removed, patterns reordered)
+    expected = "_TEXT_ **_TEXT_** [_TEXT_](url)"
+    assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+def test_pattern_normalization_preserves_structure():
+    """
+    Test that pattern normalization preserves markdown structure
+    (headers, list markers, indentation, etc.)
+    """
+    from mdx_to_skeleton import TextProcessor
+    
+    processor = TextProcessor()
+    
+    test_cases = [
+        # (input, expected)
+        ("    * `_TEXT_` _TEXT_", "    * _TEXT_ `_TEXT_`"),  # Preserves indentation
+        ("## _TEXT_ `_TEXT_` _TEXT_", "## _TEXT_ `_TEXT_`"),  # Preserves header
+        ("1. _TEXT_ `_TEXT_` _TEXT_", "1. _TEXT_ `_TEXT_`"),  # Preserves numbered list
+        ("- _TEXT_ **_TEXT_** _TEXT_", "- _TEXT_ **_TEXT_**"),  # Preserves bullet list
+    ]
+    
+    for input_line, expected in test_cases:
+        normalized = processor._normalize_pattern_order(input_line)
+        assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+def test_pattern_normalization_no_change_needed():
+    """
+    Test that lines that don't need normalization remain unchanged
+    Note: Single patterns should remain unchanged, but multiple patterns may be reordered
+    """
+    from mdx_to_skeleton import TextProcessor
+    
+    processor = TextProcessor()
+    
+    test_cases = [
+        ("_TEXT_", "_TEXT_"),
+        ("`_TEXT_`", "`_TEXT_`"),
+        ("**_TEXT_**", "**_TEXT_**"),
+        ("*_TEXT_*", "*_TEXT_*"),
+        ("_TEXT_ `_TEXT_`", "_TEXT_ `_TEXT_`"),  # Already normalized
+        ("_TEXT_ **_TEXT_**", "_TEXT_ **_TEXT_**"),  # Already normalized
+        ("2. _TEXT_", "2. _TEXT_"),
+        ("## _TEXT_", "## _TEXT_"),
+    ]
+    
+    for input_line, expected in test_cases:
+        normalized = processor._normalize_pattern_order(input_line)
+        assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+# ============================================================================
 # Test Runner
 # ============================================================================
 
@@ -1464,6 +1595,13 @@ def run_all_tests():
         test_complex_workflow_approval_rules_with_figures,
         test_japanese_list_item_with_link_and_bold,
         test_list_item_with_dac_and_multiple_inline_codes,
+        
+        # Pattern normalization tests
+        test_pattern_normalization_remove_trailing_text,
+        test_pattern_normalization_reorder_inline_code,
+        test_pattern_normalization_complex_with_links,
+        test_pattern_normalization_preserves_structure,
+        test_pattern_normalization_no_change_needed,
     ]
     
     passed = 0
