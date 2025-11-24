@@ -1398,6 +1398,126 @@ def test_list_item_with_dac_and_multiple_inline_codes():
         shutil.rmtree(tmp_dir)
 
 
+def test_list_item_with_multiple_bold_patterns():
+    """
+    Test that list items with multiple bold patterns (e.g., **Client**   **Name**)
+    are normalized to a single **_TEXT_** pattern.
+    
+    This test covers the issue where:
+    - Input: "16.  **Client**   **Name**  : 이용 클라이언트명"
+    - Expected: "16. _TEXT_ **_TEXT_**"
+    - Previous (incorrect): "16. _TEXT_ **_TEXT_****_TEXT_**"
+    """
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+    14.  **DB User**  : DB 사용자 ID
+    15.  **DB Name**  : DB명
+    16.  **Client**   **Name**  : 이용 클라이언트명 (DataGrip 등)
+    17.  **Error Message**  : 접속 실패 등 특이사항에 대한 기록
+    18.  **Connected**   **From**  : 접속 방식
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+    14. _TEXT_ **_TEXT_**
+    15. _TEXT_ **_TEXT_**
+    16. _TEXT_ **_TEXT_**
+    17. _TEXT_ **_TEXT_**
+    18. _TEXT_ **_TEXT_**
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_callout_with_slack_dm_notification_and_link():
+    """
+    Test Callout component with Slack DM notification text and a reference link.
+    
+    This test covers a Callout with:
+    - Multiple lines of text
+    - A link to another document (relative path)
+    - No bold or special formatting, just plain text and links
+    
+    Relative path links (starting with ../) are now recognized as URLs and preserved.
+    """
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+<Callout type="info">
+Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다.
+Slack DM 알림 관련 자세한 내용은 [Slack DM 개인 알림 사용하기](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types) 문서를 참고해주세요.
+</Callout>
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+<Callout type="info">
+_TEXT_
+_TEXT_ [_TEXT_](../../administrator-manual/general/system/integrations/integrating-with-slack-dm/slack-dm-workflow-notification-types)
+</Callout>
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_nested_list_with_credentials_and_emojis():
+    """
+    Test nested list items with credentials, bold text, and emojis.
+    
+    This test covers:
+    - Multiple levels of nested lists (5., 1., 2., 3., *)
+    - Bold text in list items
+    - Emoji patterns (:check_mark:, :cross_mark:)
+    - Complex text content with Korean text
+    """
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""
+    5.  **Credential**  : 해당 클러스터의 Kubernetes API 서버에 액세스 권한을 부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다. 자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.
+        1.  **Service Account Token**  : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정 토큰 값을 기입합니다. 
+        2.  **Certificate Authority**  : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.
+        3.  **Verify Credential**  : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다.
+            * :check_mark:  **Verified**  : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다. 
+            * :cross_mark:  **Verification Failed**  : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다. 
+    6.  **Logging Options**  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. 
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """
+    5. _TEXT_ **_TEXT_**
+        1. _TEXT_ **_TEXT_**
+        2. _TEXT_ **_TEXT_**
+        3. _TEXT_ **_TEXT_**
+            * _TEXT_ **_TEXT_**
+            * _TEXT_ **_TEXT_**
+    6. _TEXT_ **_TEXT_**
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
 # ============================================================================
 # Pattern Normalization Tests
 # ============================================================================
@@ -1595,6 +1715,9 @@ def run_all_tests():
         test_complex_workflow_approval_rules_with_figures,
         test_japanese_list_item_with_link_and_bold,
         test_list_item_with_dac_and_multiple_inline_codes,
+        test_list_item_with_multiple_bold_patterns,
+        test_callout_with_slack_dm_notification_and_link,
+        test_nested_list_with_credentials_and_emojis,
         
         # Pattern normalization tests
         test_pattern_normalization_remove_trailing_text,

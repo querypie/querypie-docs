@@ -121,8 +121,10 @@ class ProtectedSection:
 def _is_path_url(url: str) -> bool:
     """Check if URL is a path or absolute URL"""
     return (url.startswith('/') or 
+            url.startswith('../') or
+            url.startswith('./') or
             '://' in url or 
-            url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp')))
+            url.endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.md', '.mdx')))
 
 
 class ContentProtector:
@@ -280,6 +282,7 @@ class TextProcessor:
         1. Simple _TEXT_ patterns appear before formatted patterns (inline code, bold, etc.)
         2. Trailing simple _TEXT_ patterns are removed if they appear after formatted patterns
         3. Structural elements (indentation, list markers, headers) are preserved
+        4. Leading whitespace is always preserved exactly as it appears in the original
         
         Examples:
             "2. _TEXT_ `_TEXT_` _TEXT_" -> "2. _TEXT_ `_TEXT_`"
@@ -362,19 +365,83 @@ class TextProcessor:
         if patterns_found['italic']:
             normalized_patterns.append('*_TEXT_*')
         
-        # Combine: prefix + normalized patterns + other tokens
-        result_parts = []
-        if prefix:
-            result_parts.append(prefix.rstrip())
+        # Remove duplicate patterns from other_tokens
+        # If a pattern type is already in normalized_patterns, remove tokens that contain that pattern
+        # This handles cases like "**_TEXT_****_TEXT_**" where multiple patterns are concatenated
+        filtered_other_tokens = []
+        for token in other_tokens:
+            # Check if this token is exactly a pattern that's already in normalized_patterns
+            is_exact_duplicate_pattern = False
+            for pattern in pattern_types:
+                pattern_str, _ = pattern
+                if token == pattern_str:
+                    is_exact_duplicate_pattern = True
+                    break
+            
+            if is_exact_duplicate_pattern:
+                # Skip exact duplicate patterns (they're already in normalized_patterns)
+                continue
+            
+            # Check if token contains patterns that are already in normalized_patterns
+            # For example, "**_TEXT_****_TEXT_**" contains "**_TEXT_**" which is already normalized
+            # BUT: preserve links, HTML entities, and other structural elements even if they contain _TEXT_
+            is_structural_element = (
+                token.startswith('[') and '](' in token and token.endswith(')') or  # Link: [_TEXT_](url)
+                token.startswith('![') and '](' in token and token.endswith(')') or  # Image: ![_TEXT_](url)
+                token.startswith('&') and token.endswith(';') or  # HTML entity: &amp;
+                token.startswith('<') and token.endswith('>')  # HTML tag: <tag>
+            )
+            
+            if is_structural_element:
+                # Preserve structural elements (links, images, HTML entities, tags) even if they contain patterns
+                filtered_other_tokens.append(token)
+                continue
+            
+            contains_duplicate_pattern = False
+            for pattern_str in normalized_patterns:
+                # Check if the pattern appears in the token (as a substring)
+                # Use word boundaries to avoid false matches
+                if pattern_str in token:
+                    # More precise check: pattern should be surrounded by word boundaries or start/end
+                    # For patterns like "**_TEXT_**", check if it appears as a complete pattern
+                    pattern_escaped = re.escape(pattern_str)
+                    if re.search(pattern_escaped, token):
+                        contains_duplicate_pattern = True
+                        break
+            
+            if not contains_duplicate_pattern:
+                filtered_other_tokens.append(token)
         
+        # Combine: prefix + normalized patterns + filtered other tokens
+        # IMPORTANT: Preserve leading whitespace in prefix exactly as it appears
+        content_parts = []
         if normalized_patterns:
-            result_parts.extend(normalized_patterns)
+            content_parts.extend(normalized_patterns)
         
-        if other_tokens:
-            result_parts.extend(other_tokens)
+        if filtered_other_tokens:
+            content_parts.extend(filtered_other_tokens)
         
-        # Join with single spaces
-        result = ' '.join(result_parts)
+        # Join content parts with single spaces
+        content_result = ' '.join(content_parts) if content_parts else ''
+        
+        # Combine prefix (with preserved leading whitespace) and content
+        # If prefix ends with whitespace and content exists, use prefix as-is
+        # Otherwise, ensure proper spacing between prefix and content
+        if prefix:
+            # Preserve prefix exactly, including all leading whitespace
+            if content_result:
+                # Check if prefix already ends with whitespace (for list markers, headers)
+                if prefix.rstrip() != prefix:
+                    # Prefix ends with whitespace (e.g., "  * " or "## ")
+                    result = prefix + content_result
+                else:
+                    # Prefix doesn't end with whitespace, add space before content
+                    result = prefix + ' ' + content_result
+            else:
+                # No content, return prefix as-is (preserving trailing whitespace if any)
+                result = prefix
+        else:
+            result = content_result
         
         # Preserve trailing whitespace from original if it exists
         if line.endswith(' ') and not result.endswith(' '):
@@ -607,6 +674,16 @@ class TextProcessor:
         
         Uses token-based approach instead of regex to avoid pattern matching issues.
         """
+        # Step 0: Separate concatenated patterns (e.g., "**_TEXT_****_TEXT_**" -> "**_TEXT_** **_TEXT_**")
+        # This handles cases where multiple bold/italic patterns are concatenated without spaces
+        text = re.sub(r'(\*\*_TEXT_\*\*)(\*\*_TEXT_\*\*)', r'\1 \2', text)
+        text = re.sub(r'(\*_TEXT_\*)(\*_TEXT_\*)', r'\1 \2', text)
+        text = re.sub(r'(`_TEXT_`)(`_TEXT_`)', r'\1 \2', text)
+        # Separate _TEXT_ followed by bold/italic/code patterns (e.g., "_TEXT_**_TEXT_**" -> "_TEXT_ **_TEXT_**")
+        text = re.sub(r'(_TEXT_)(\*\*_TEXT_\*\*)', r'\1 \2', text)
+        text = re.sub(r'(_TEXT_)(\*_TEXT_\*)', r'\1 \2', text)
+        text = re.sub(r'(_TEXT_)(`_TEXT_`)', r'\1 \2', text)
+        
         # Step 1: Merge consecutive _TEXT_ placeholders
         text = re.sub(r'_TEXT_([\s_]*_TEXT_)+', '_TEXT_', text)
         
