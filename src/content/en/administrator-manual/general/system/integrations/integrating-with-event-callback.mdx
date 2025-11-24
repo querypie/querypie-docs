@@ -9,6 +9,7 @@ title: 'Integrating with Event Callback'
 Event Callback integration delivers system events occurring in QueryPie to your applications in real time via webhooks.
 This allows you to integrate and manage critical system event notifications with external services.
 
+
 ### Configure Event Callback
 
 1. Go to Administrator &gt; General &gt; System &gt; Integrations.
@@ -23,19 +24,19 @@ Event Callback Integration detail page
 </figure>
 
 1. Enter the following information to configure the Event Callback.
-    * Name: Enter an identifiable name.
-    * Callback URL: Enter the webhook URL of the external application that will receive event notifications.
-    * Status: Select the operational status of the webhook.
-        * Enabled: The webhook is active and events are sent in real time.
-        * Paused: Temporarily pause the webhook. Events that occur in this state are accumulated and will all be sent once you switch back to Enabled.
-        * Disabled: Fully deactivate the webhook. Events are neither sent nor accumulated in this state.
-    * Subscribed Events: Select the event types to subscribe to. Currently supported events:
-        * USER_LOCKED: User account locked
-        * USER_LOGIN_SUCCEEDED: User login succeeded
-        * USER_CREATED: User created
-        * USER_DELETED: User deleted
-    * Authorization Header: Enter the authorization header used for securing webhook requests. (e.g., Authorization: Bearer &lt;token&gt;)
-    * Description: Enter a description for this configuration (optional).<br/>
+    *  **Name** : Enter an identifiable name.
+    *  **Callback URL** : Enter the webhook URL of the external application that will receive event notifications.
+    *  **Status** : Select the operational status of the webhook.
+        *  **Enabled** : The webhook is active and events are sent in real time.
+        *  **Paused** : Temporarily pause the webhook. Events that occur in this state are accumulated and will all be sent once you switch back to Enabled.
+        *  **Disabled** : Fully deactivate the webhook. Events are neither sent nor accumulated in this state.
+    *  **Subscribed Events** : Select the event types to subscribe to. Currently supported events:
+        * `USER_LOCKED`: User account locked
+        * `USER_LOGIN_SUCCEEDED`: User login succeeded
+        * `USER_CREATED`: User created
+        * `USER_DELETED`: User deleted
+    *  **Authorization Header** : Enter the authorization header used for securing webhook requests. (e.g., Authorization: Bearer &lt;token&gt;)
+    *  **Description** : Enter a description for this configuration (optional).<br/>
       <figure data-layout="center" data-align="center">
       ![Event Callback settings popup dialog](/administrator-manual/general/system/integrations/integrating-with-event-callback/Screenshot-2025-08-25-at-6.06.50-PM.png)
       <figcaption>
