@@ -156,7 +156,8 @@ Specifies whether to allow or deny specific rules of the policy. Supports `spec:
 
 ### Resources**[required]**
 
-Specifies the web app resources for which you want to set allow or block policies. Must have `webApp` and `urlPaths` as sub-elements.
+Specifies the web app resources for which you want to set allow or block policies.
+Must have `webApp` and `urlPaths` as sub-elements.
 
 <Callout type="info">
 `resources` is allowed in both `spec: allow` and `spec: deny`.
@@ -236,7 +237,8 @@ spec:
           ``` 
 
 <Callout type="info">
-To enter specific sub-paths in urlPaths, Path Management activation is required in Web App details. An error occurs when entering unregistered sub-paths.
+To enter specific sub-paths in urlPaths, Path Management activation is required in Web App details.
+An error occurs when entering unregistered sub-paths.
 </Callout>
 
 1. Wildcards or regular expressions are not supported. 
@@ -308,7 +310,8 @@ spec:
 Limits the scope of users whose resource access is allowed by rules based on QueryPie user attributes.
 
 <Callout type="info">
-User attributes can be viewed in the user detail page in Administrator &gt; General &gt; Users menu. Attributes of users added in QueryPie can be added/changed/deleted in the detail page, and attributes of users added through IdP synchronization can be changed in the user registry (Okta, LDAP, etc.).
+User attributes can be viewed in the user detail page in Administrator &gt; General &gt; Users menu.
+Attributes of users added in QueryPie can be added/changed/deleted in the detail page, and attributes of users added through IdP synchronization can be changed in the user registry (Okta, LDAP, etc.).
 </Callout>
 
 Attribute information is case-sensitive and multiple can be entered.
