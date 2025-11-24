@@ -104,6 +104,10 @@ from skeleton_common import (
 )
 
 # Set up logger
+logging.basicConfig(
+    level=logging.WARNING,
+    format='%(levelname)s: %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 
@@ -1169,12 +1173,6 @@ def convert_and_compare_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optiona
 
 
 def main():
-    # Set up basic logging configuration
-    logging.basicConfig(
-        level=logging.WARNING,
-        format='%(levelname)s: %(message)s'
-    )
-    
     parser = argparse.ArgumentParser(
         description='Convert MDX file(s) to skeleton format by replacing text with _TEXT_'
     )
