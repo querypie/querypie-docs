@@ -10,15 +10,15 @@ import { Callout } from 'nextra/components'
 
 You can request execution of queries for which you do not have permission on specific DB connections by following the steps below.
 After approval, the executor can execute the approved query once and view the results.
- by following the steps below. After approval, the executor can execute the approved query once and view the results.
+
 
 ### Requesting SQL Request
 
 #### 1. Selecting Approval Rules
 
 * Select an Approval Rule to choose the appropriate approval rule for your purpose. The approval target varies depending on the selected rule.
-* If a pre-configured approval rule is selected, the approver is automatically assigned and cannot be added or modified.
-* **Approval Expiration Date**: Enter the approval expiration date. The maximum value can be set through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Execution Expiration Date. If exceeded, the request cannot be submitted.
+* If an approval rule where the administrator has designated approvers is selected, approvers are automatically assigned and cannot be added or modified.
+*  **Approval Expiration Date** : Enter the approval expiration date. You can set the maximum value through Maximum Approval Duration. The Approval Expiration Date cannot exceed the Execution Expiration Date. If exceeded, the request cannot be submitted.
     * However, when submitting in Urgent Mode, the above condition is ignored.
 
 <figure data-layout="center" data-align="center">
@@ -29,9 +29,9 @@ After approval, the executor can execute the approved query once and view the re
 
 * Click the `+` button in the approval line to display a popup window where you can assign step-by-step approvers.
 * In this popup window, add approval conditions and approvers, then click the `Save` button to save the approval line.
-* Available approval conditions are as follows:
-    * **A single Assignee can complete the approval request**: The approval request is approved with just one approval from multiple people.
-    * **All Assignees must approve this request**: All approvers must approve for the approval request to be approved.
+* Available approval conditions are as follows.
+    *  **A single Assignee can complete the approval request**  : The approval request is approved with just one approval from multiple people.
+    *  **All Assignees must approve this request**  : All approvers must approve for the approval request to be approved.
 
 <figure data-layout="center" data-align="center">
 ![image-20240807-125031.png](/user-manual/workflow/requesting-sql/image-20240807-125031.png)
@@ -59,7 +59,7 @@ After approval, the executor can execute the approved query once and view the re
 
 <Callout type="important">
 **Q. I can't see the Urgent Mode switch.**
-A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed as such.
+A. If you select an approval rule where the administrator has not allowed Urgent Mode, this feature will not be displayed.
 </Callout>
 
 #### 5. Entering Request Information
@@ -68,16 +68,17 @@ A. If you select an approval rule where the administrator has not allowed Urgent
 ![Screenshot-2025-08-26-at-12.47.02-AM.png](/user-manual/workflow/requesting-sql/Screenshot-2025-08-26-at-12.47.02-AM.png)
 </figure>
 
-* **Title**: Enter the request title.
-* **Connection**: Select the target connection for which you want to request SQL execution. Only connections for which you have permission can be selected.
-* **Database**: Select the database within the selected connection for which you want to request SQL execution.
-* **Content Type**: Select the method for entering the SQL statement you want to request.
-    * Text: You can write queries up to 9,999 lines, 10 million characters, or 5MB.
-    * File: You can upload .sql files with no execution size limit. However, Storage configuration is required.
-* **Preferred Execution Date**: Select the date when you want the query to be executed. The default selection date is the day of the request.
-* **Execution Expiration Date**: Select the last date when the Executor can execute. The default selection date is one week later.
-* **Reason for Request**: Enter the reason for requesting SQL execution permission.
-* **Submit**: After completing the draft, click the `Submit` button to complete the submission.
+*  **Title**  : Enter the request title.
+*  **Connection**  : Select the target connection for which you want to request SQL execution. Only connections for which you have permission can be selected.
+*  **Database**  : Select the database within the selected connection for which you want to request SQL execution.
+*  **Content Type**  : Select the method for entering the SQL statement you want to request.
+    * Text : You can write queries up to 9,999 lines, 10 million characters, or 5MB.
+    * File : You can upload .sql files with no execution size limit. However, Storage configuration is required.
+*  **Preferred Execution Date**  : Select the date when you want the query to be executed. The default selection date is the day of the request.
+*  **Execution Expiration Date**  : Select the last date when the Executor can execute. The default selection date is one week later.
+*  **Reason for Request**  : Enter the reason for requesting SQL execution permission.
+*  **Submit**  : After completing the draft, click the `Submit` button to complete the submission.
+
 
 ### Executing Approved SQL
 
@@ -97,8 +98,11 @@ Workflow &gt; Executions &gt; To Do &gt; Request Details &gt; Execute
 4. The execution results can be checked in the Results tab within the detail page for success/failure.
 5. You can check the request history where you are the executor in Workflow &gt; Received Requests &gt; Done menu.
 
+
+
 <Callout type="info">
-When approval process is enforced for DML Query execution<br/>When performing `INSERT`, `UPDATE`, `DELETE` statements, administrators may have created policies to force approval processes through Workflow. In this case, the following message appears when performing queries in the Web Editor.<br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
+When approval process is enforced for DML Query execution<br/>When performing `INSERT`, `UPDATE`, `DELETE` statements, administrators may have created policies to force approval processes through Workflow.
+In this case, the following message appears when performing queries in the Web Editor.<br/>`[ENGINE][30105] In this DML operation, you need to get approval throgh SQL Request.`
 
 <figure data-layout="center" data-align="center">
 ![Warning message in Web Editor](/user-manual/workflow/requesting-sql/image-20250629-155649.png)
@@ -107,7 +111,8 @@ Warning message in Web Editor
 </figcaption>
 </figure>
 
-In this case, you can click the `SEND SQL Request` button to immediately move to the SQL Request form in Workflow and proceed with the request.<br/>You must select an appropriate Approval Rule and choose whether it is DML. If it is DML, you cannot use the File attachment method in Content Type.
+In this case, you can click the `SEND SQL Request` button to immediately move to the SQL Request form in Workflow and proceed with the request.<br/>You must select an appropriate Approval Rule and choose whether it is DML.
+If it is DML, you cannot use the File attachment method in Content Type.
 
 <figure data-layout="center" data-align="center">
 ![SQL Request form in Workflow](/user-manual/workflow/requesting-sql/image-20250629-161143.png)
@@ -116,7 +121,5 @@ SQL Request form in Workflow
 </figcaption>
 </figure>
 </Callout>
-
-
 
 
