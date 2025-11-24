@@ -27,13 +27,11 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 
 * mongodb:// : standard connection string scheme
 * Hostname or IP : Full domain name or IP address of mongodb cluster member hosts
-* options : Options related to connection attached after /?. When using multiple options, connect them with &. <br/>ex. /?authSource=admin&replicaSet=rs0
+* options : Options related to connection attached after `/?`. When using multiple options, connect them with `&`. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
-When using replica set, you must enter /?
-followed by replicaSet=[replica set name].
-ex.
-/?replicaSet=rs0
+When using replica set, you must enter `/?` behind replicaSet=[replica set name].
+ex. `/?replicaSet=rs0`
 </Callout>
 
 
@@ -44,8 +42,8 @@ mongodb+srv://<FQDN>/?[options]
 ```
 
 * mongodb+srv:// : +srv connection string scheme
-* FQDN : Fully qualified domain name - Name composed of hostname and domain name combination registered in DNS ex. server1.example.com
-* options : Options related to connection attached after /?. When using multiple options, connect them with &. <br/>ex. /?authSource=admin&replicaSet=rs0
+* Fully Qualified Domain Name (FQDN) : - Name composed of hostname and domain name combination registered in DNS ex. server1.example.com
+* options : Options related to connection attached after `/?`. When using multiple options, connect them with `&`. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
 Since +srv can dynamically change the address of each host included in the cluster, QueryPie cannot directly use +srv in connections and converts it to standard connection string for use.
@@ -78,13 +76,13 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Specify Connection Name.
 3. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, select the default `Primary`.
-    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select "`Expandable`", to prevent viewing, select "`Unexpandable`", to hide the cluster and show only subordinate nodes (hosts or instances), select "`Hidden`". 
+    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`. 
     3. Connection String : 
         1. Select `mongodb://` from the Scheme selection options.
         2. Enter subordinate host names and ports separated by commas.
     4. Click the `Add Instance` button to add each member host as an instance.
         1. Instance Name : Enter a name that can distinguish each host.
-        2. Connection String : Enter each host in `hostname(domain address or IP):[port]` format.
+        2. Connection String : Enter each host in `HOSTNAME(FQDN or IP Address):[PORT]` format.
         3. Expose is an option that can determine the exposure of individual instances in connection information. <br/> **To use multi-host functionality, instances must be in expose state, so be sure to activate the** `Expose` **option.**  
 
 <figure data-layout="center" data-align="center">
@@ -113,7 +111,7 @@ For more detailed information about Cluster mode, you can also check [DB Connect
 2. Specify Connection Name.
 3. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, select the default `Primary`.
-    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select "`Expandable`", to prevent viewing, select "`Unexpandable`", to hide the cluster and show only subordinate nodes (hosts or instances), select "`Hidden`". 
+    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`. 
     3. Connection String : 
         1. Select `mongodb+srv://` from the Scheme selection options.
         2. Enter domain format host name (FQDN).
@@ -143,7 +141,7 @@ Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster d
         1. Select `mongodb://` from the Scheme selection options.
         2. Enter each mongos host name and port separated by commas.
     3. Click the `Add Instance` button to add each mongos as an instance.
-        1. Enter in mongodb://hostname(domain address or IP):[port] format, then enter appropriate Instance Name.
+        1. Enter in `mongodb://HOSTNAME(FQDN or IP Address):[PORT]` format, then enter appropriate Instance Name.
         2. Expose is a value that can determine exposure in connection information.
 2. Authentication DB : Enter the value of Authentication DB (authSource).
 3. Other Options : Sharded cluster may not need additional options.
@@ -197,7 +195,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
 </figure>
 
-1. After creating a policy, register the data path to which the policy will be applied as rules. <br/> You can check that rules are registered in the Rule List tab. Now when users query Documents of the corresponding Collection in MongoDB, the Value of the pre-specified Attribute is masked and displayed according to the applied masking pattern, such as '*****@gmail.com'.
+1. After creating a policy, register the data path to which the policy will be applied as rules. <br/> You can check that rules are registered in the Rule List tab. Now when users query Documents of the corresponding Collection in MongoDB, the Value of the pre-specified Attribute is masked and displayed according to the applied masking pattern, such as `*****@gmail.com`.
     1. Click the policy created in the Data Masking menu.
     2. The policy detail information and rule registration screen is displayed, click the `Add Rule List` button on the right.
     3. Select the data path to which the policy will be applied in order.
@@ -272,7 +270,7 @@ As shown in the screenshot above, you can see that the value of the item("T_PWD"
 
 ##### Case 2. size.h Attribute Access Restriction
 
-When setting access restriction policy for the h attribute under size, enter $.size.h in the "Column Name" field and click the `OK` button.
+When setting access restriction policy for the h attribute under size, enter `$.size.h` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
@@ -289,7 +287,7 @@ As shown in the screenshot above, you can see that the value of the h attribute 
 
 ##### Case 3. All Attributes Under size Access Restriction
 
-When setting access restriction policy for all attributes under size, enter $.size in the "Column Name" field and click the `OK` button.
+When setting access restriction policy for all attributes under size, enter `$.size` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
@@ -306,7 +304,7 @@ As shown in the screenshot above, you can see that the values of all attributes 
 
 ##### Case 4. Access Restriction for 2nd Value in tags Attribute
 
-When setting access restriction policy for the 2nd value in the tags attribute list, enter $.tags[1] in the "Column Name" field and click the `OK` button.
+When setting access restriction policy for the 2nd value in the tags attribute list, enter `$.tags[1]` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)

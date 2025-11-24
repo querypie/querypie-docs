@@ -27,13 +27,11 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 
 * mongodb:// : standard connection string scheme
 * Hostname or IP : mongodbクラスターメンバーホストの全体ドメイン名またはIPアドレス
-* options : /? の後に付く接続に関連するオプション。複数のオプションを使用する場合は&で付けて使用します。<br/>ex. /?authSource=admin&replicaSet=rs0
+* options : `/?` の後に付く接続に関連するオプション。複数のオプションを使用する場合は`&`で付けて使用します。<br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
-replica setを使用する場合 /?
-の後に replicaSet=[replica set名] を入力する必要があります。
-ex.
-/?replicaSet=rs0
+replica setを使用する場合 `/?` の後に replicaSet=[replica set名] を入力する必要があります。
+ex. `/?replicaSet=rs0`
 </Callout>
 
 
@@ -44,8 +42,8 @@ mongodb+srv://<FQDN>/?[options]
 ```
 
 * mongodb+srv:// : +srv connection string scheme
-* FQDN : Fully qualified domain name - DNSに登録されているホスト名とドメイン名の組み合わせで構成された名前 ex. server1.example.com
-* options : /? の後に付く接続に関連するオプション。複数のオプションを使用する場合は&で付けて使用します。<br/>ex. /?authSource=admin&replicaSet=rs0
+* Fully Qualified Domain Name (FQDN) : - DNSに登録されているホスト名とドメイン名の組み合わせで構成された名前 ex. server1.example.com
+* options : `/?` の後に付く接続に関連するオプション。複数のオプションを使用する場合は`&`で付けて使用します。<br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
 +srvはクラスターに含まれている各ホストのアドレスが動的に変わる可能性があるため、QueryPieで+srvを直接コネクションに使用することはできず、standard connection stringに変換して使用します。
@@ -78,13 +76,13 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Connection Nameを指定します。
 3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
     1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
-    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには"`Expandable`"を、展開して見ることができないようにするには"`Unexpandable`"を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには"`Hidden`"を選択します。 
+    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。 
     3. Connection String : 
         1. Scheme選択項目で`mongodb://`を選択します。
         2. 下位ホスト名とポートをカンマで区切って入力します。
     4. `Add Instance`ボタンを押して各メンバーホストをインスタンスとして追加します。
         1. Instance Name : それぞれのホストを区別できる名前を入力します。
-        2. Connection String : 各ホストを`ホストネーム（ドメインアドレスまたはIP）:[port]`形式で入力します。
+        2. Connection String : 各ホストを`HOSTNAME(FQDN or IP Address):[PORT]`形式で入力します。
         3. Exposeはコネクション情報での個別インスタンスの露出可否を決定できるオプションです。<br/>**マルチホスト機能を使用するには必ずインスタンスがexpose状態でなければならないため、必ず**`Expose`**オプションをアクティブにします。**  
 
 <figure data-layout="center" data-align="center">
@@ -113,7 +111,7 @@ Clusterモードに対するより詳細な内容は[DB Connections](.)でも確
 2. Connection Nameを指定します。
 3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
     1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
-    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには"`Expandable`"を、展開して見ることができないようにするには"`Unexpandable`"を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには"`Hidden`"を選択します。 
+    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。 
     3. Connection String : 
         1. Scheme選択項目で`mongodb+srv://`を選択します。
         2. ドメイン形式のホスト名（FQDN）を入力します。
@@ -143,7 +141,7 @@ Replica Setは replicaSet=[replica set name] オプションが必要ですが�
         1. Scheme選択項目で`mongodb://`を選択します。
         2. 各mongosのホスト名とポートをカンマで区切って入力します。
     3. `Add Instance`ボタンを押して各mongosをインスタンスとして追加します。
-        1. mongodb://ホスト名（ドメインアドレスまたはIP）:[port] 形式で入力後、Instance Nameを適切に入力します。
+        1. `mongodb://HOSTNAME(FQDN or IP Address):[PORT]` 形式で入力後、Instance Nameを適切に入力します。
         2. Exposeはコネクション情報での露出可否を決定できる値です。
 2. Authentication DB : Authentication DB（authSource）の値を入力します。
 3. Other Options : Sharded clusterは別途追加オプションが必要ない場合があります。
@@ -197,7 +195,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
 </figure>
 
-1. 政策を作成した後、実際に政策を適用するデータのパスを規則として登録します。 <br/> Rule Listタブで規則が登録されたことを確認できます。これでユーザーがMongoDBで該当CollectionのDocumentを照会する場合、適用したマスキングパターンに従って事前に指定したAttributeのValue値が'*****@gmail.com'のようにマスキングされて表示されます。
+1. 政策を作成した後、実際に政策を適用するデータのパスを規則として登録します。 <br/> Rule Listタブで規則が登録されたことを確認できます。これでユーザーがMongoDBで該当CollectionのDocumentを照会する場合、適用したマスキングパターンに従って事前に指定したAttributeのValue値が`*****@gmail.com`のようにマスキングされて表示されます。
     1. Data Maskingメニューで作成した政策をクリックします。
     2. 政策詳細情報および規則登録画面が表示され、右側で`Add Rule List`ボタンをクリックします。
     3. 政策を適用するデータのパスを順次選択します。
@@ -272,7 +270,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 ##### Case 2. size.h属性アクセス制限
 
-size下位のh属性に対してアクセス制限政策を設定する場合、「Column Name」項目に$.size.hを入力後`OK`ボタンをクリックします。
+size下位のh属性に対してアクセス制限政策を設定する場合、「Column Name」項目に`$.size.h`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
@@ -289,7 +287,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 ##### Case 3. size下位すべての属性アクセス制限
 
-size下位のすべての属性に対してアクセス制限政策を設定する場合、「Column Name」項目に$.sizeを入力後`OK`ボタンをクリックします。
+size下位のすべての属性に対してアクセス制限政策を設定する場合、「Column Name」項目に`$.size`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
@@ -306,7 +304,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 ##### Case 4. tags属性のリスト2番目の値に対するアクセス制限
 
-tags属性のリスト値中2番目の値に対するアクセス制限政策を設定する場合、「Column Name」項目に$.tags[1]を入力後`OK`ボタンをクリックします。
+tags属性のリスト値中2番目の値に対するアクセス制限政策を設定する場合、「Column Name」項目に`$.tags[1]`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)

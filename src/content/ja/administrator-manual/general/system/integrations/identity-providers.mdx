@@ -185,7 +185,9 @@ LDAPサーバーからユーザー情報同期を実行する場合は、**Use S
         * ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
-        * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前に同期設定された状態で11.3.0にアップデートすると1にマイグレーションされます。 <br/> 
+        * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
+            * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
+            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートするとこの値が1.0に基本設定されます。 
 
 <Callout type="info">
 **LDAP Attribute Mapping**
@@ -198,7 +200,6 @@ LDAPで管理中のユーザー属性をQueryPie内Attributeとマッピング�
 2. QueryPie Attributeの`Username (loginId)`, `Primary Email (email)`項目はLDAP連携設定時に別途入力されるため、該当項目はLDAP–QueryPie Attribute Mapping UIには表示されません。
 3. マッピング行削除または変更時、Saveボタンをクリックする必要があり、UI上で変更事項が反映され、Synchronizeを追加でクリックする必要があり、LDAPと実際の同期が実行されます。つまり、Saveは画面上変更、Synchronizeはシステム反映を意味します。
 </Callout>
-
 
 ### Okta連携
 
@@ -265,7 +266,7 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 * リストでQueryPieアプリケーションをクリックします。
 * Assignmentsタブに移動した後`Assign`ボタンをクリックして`Assign to People`または`Assign to Group`を選択します。
 * OktaアカウントでQueryPieアクセスを許可するユーザーまたはグループを割り当てた後Doneボタンをクリックします。
-    * People割り当て時ユーザー情報確認後`Sava and Go Back`ボタンをクリックします。
+    * People割り当て時ユーザー情報確認後`Save and Go Back`ボタンをクリックします。
     * Group割り当て時loginId項目を空白にして`Save and Go Back`ボタンをクリックします。
 * ユーザーまたはグループがQueryPieアプリケーションに割り当てられて追加された履歴を確認できます。
 
@@ -418,7 +419,9 @@ Okta詳細設定（2）
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
-        * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートすると1にマイグレーションされます。
+        * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
+            * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
+            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0に製品をアップグレードするとこの値が1.0に基本設定されます。
 * `Dry Run`ボタンをクリックして連携情報が正常に入力されたか確認します。
 * `Save`ボタンを押して保存します。
 
@@ -495,7 +498,9 @@ One Login詳細設定（2）
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
-        * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートすると1にマイグレーションされます。
+        * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
+            * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
+            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0に製品をアップグレードするとこの値が1.0に基本設定されます。
 
 ### SAML 2.0連携（定期的な同期のない1回用）
 
@@ -530,10 +535,6 @@ Custom Identity Providerは認証APIサーバーを使用する特殊な場合�
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
     *  **Allowed User Deletion Rate Threshold :** 
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
-        * 0～1の間の値を入力します。（基本値は0.1） <br/> 例）既存ユーザー100名、Allowed User Deletion Rate Threshold 0.1の時、再同期時に削除されたユーザーが10名以上なら同期が失敗します。<br/>11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートすると1にマイグレーションされます。
-
-
-
-
-
-
+        * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
+            * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
+            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0に製品をアップグレードするとこの値が1.0に基本設定されます。

@@ -8,9 +8,10 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie supports two authentication approaches: using a QueryPie user account (ID/Password) or integrating with an external Identity Provider (IdP). Administrators can configure the IdP integration so that QueryPie handles user authentication via Single Sign-On (SSO) and synchronizes accounts easily.
+QueryPie supports two main authentication methods: using QueryPie user accounts (ID and password) and integrating with external Identity Providers (IdP).
+Administrators can configure IdP integration settings to enable QueryPie to handle user authentication easily through Single Sign-On and synchronize accounts.
 
-Currently supported IdP integrations are as follows:
+The currently supported IdP integration settings are as follows:
 
 * LDAP
 * Okta
@@ -20,22 +21,25 @@ Currently supported IdP integrations are as follows:
 * Custom Identity Provider (for special use cases)
 
 <Callout type="info">
-* Multiple Identity Providers are not supported simultaneously. You must choose exactly one IdP other than the internal database (QueryPie user ID/Password).
-* MFA (Multi-factor Authentication) is available only with Internal DB, LDAP, and Custom Identity Provider.
-* Scheduled synchronization is available only for LDAP, Okta, One Login, and Custom Identity Provider.
+* Multiple Identity Providers are not currently supported simultaneously. You must use one IdP in addition to Internal database (QueryPie user ID/PW) authentication.
+* MFA (Multi-factor Authentication) support is available only with Internal DB, LDAP, and Custom Identity Provider.
+* Scheduled periodic synchronization is available only for LDAP, Okta, One Login, and Custom Identity Provider.
 </Callout>
 
-Admin &gt; General &gt; System &gt; Integration &gt; Authentication &gt; Identity Providers provides all related settings. By default, QueryPie performs authentication with IDs and passwords stored in the internal database, so an Internal database item always exists and cannot be deleted.
+Identity Providers is available under Authentication in Admin &gt; General &gt; System &gt; Integration.
+Click the item to navigate to the detail page where you can configure settings related to Identity Providers.
+By default, user authentication is handled using IDs and passwords stored in QueryPie's Internal database, so the Internal database item exists in the list.
+This item cannot be deleted.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-010700.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-010700.png)
 </figure>
 
-#### Internal authentication details
+#### Default authentication details
 
-*  **Name**  : A recognizable name shown in the list.
-*  **Type**  : One of the IdP types supported by QueryPie.
-*  **Multi-Factor Authentication Setting** : Configure MFA. Google Authenticator and Email are supported.
+*  **Name**  : A recognizable name displayed in the list.
+*  **Type**  : One of the IdP types supported by QueryPie is displayed.
+*  **Multi-Factor Authentication Setting** : You can configure MFA. Google Authenticator and Email are supported.
 
 <figure data-layout="center" data-align="center">
 ![Internal database details](/administrator-manual/general/system/integrations/identity-providers/image-20251014-011706.png)
@@ -45,17 +49,18 @@ Internal database details
 </figure>
 
 <Callout type="important">
-Note: Once you have synchronized users even once, you cannot delete the configured IdP and switch to another. If you need to change or remove the IdP, please contact us via the Customer Portal.
+Warning: Once you have synchronized users even once after configuration, you cannot delete the configured IdP (delete and switch to another IdP).
+If you need to change or delete the IdP, please contact us through the Customer Portal.
 </Callout>
 
 ### LDAP Integration
 
-`+ Add` Click the button at the top right of the list and select LDAP for Type to add LDAP as an IdP.
+Click the `+ Add` button at the top right of the list, and select LDAP for Type in the popup screen to add LDAP as an IdP.
 
-*  **Name**  : Enter a suitable name for identification.
+*  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select LDAP.
-*  **Server URL**  : Enter the LDAP server address in the form of `ldap://ldap.example.com:389`. For LDAPS, use the ldaps:// scheme.
-*  **BindDN**  : Enter the Distinguished Name (DN) of the service account used to bind to the LDAP server. This account needs at least read permission for user information. <br/> Example: cn=admin,ou=Services,dc=example,dc=com
+*  **Server URL**  : Enter the LDAP server address in the format `ldap://ldap.example.com:389`. For LDAPS, enter the scheme as ldaps://.
+*  **BindDN**  : Enter the Distinguished Name (DN) of the service account used to bind to the LDAP server. This account requires at least read permission for user information. <br/> Example: cn=admin,ou=Services,dc=example,dc=com
 *  **Bind Password**  : Enter the password for the BindDN.
 
 <figure data-layout="center" data-align="center">
@@ -65,21 +70,22 @@ LDAP details
 </figcaption>
 </figure>
 
-Enter the mapping configuration to synchronize QueryPie user accounts with LDAP user accounts.
+Enter the mapping information to synchronize and map QueryPie user accounts with LDAP user accounts.
 
 |  **Attribute**     |  **Required**  |  **Description**                                                                                                                  |
 | ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| User Base DN       | Required    | The starting point in the LDAP tree to search for user accounts. Only users under this path are considered login targets. Example: ou=People,dc=example,dc=com or cn=Users,dc=example,dc=com |
-| User Search Filter | Required    | The query (filter) used to find the user in LDAP based on the login ID. Example: (objectClass=inetOrgPerson)                                   |
-| User Name          | Required    | The LDAP attribute used as the user login ID. This maps to the QueryPie user's Login ID when synchronizing. Example: uid                     |
-| Email              | Required    | The LDAP attribute used as the user's email. This maps to the QueryPie user's Email when synchronizing. Example: email                |
-| Display Name       | Optional    | Enter the LDAP attribute to map to the QueryPie user's display name. Example: cn or displayName.                                                 |
+| User Base DN       | Required    | The starting location in the LDAP tree to search for user accounts. Only users under this path are considered login targets. Example: ou=People,dc=example,dc=com or cn=Users,dc=example,dc=com |
+| User Search Filter | Required    | Enter the query (filter) used to find the user in LDAP based on the login ID entered by the user. Example: (objectClass=inetOrgPerson)                                   |
+| User Name          | Required    | Enter the name of the attribute used as the user's login ID in the LDAP server. This maps to the QueryPie user's Login ID when synchronizing with QueryPie. Example: uid                     |
+| Email              | Required    | Enter the name of the attribute used as the user's email address in the LDAP server. This maps to the QueryPie user's Email when synchronizing with QueryPie. Example: email                |
+| Display Name       | -           | Enter the attribute used in the LDAP server to map to the QueryPie user's Display Name. Example: cn or displayName, etc.                                                 |
 
-To synchronize user group and membership information from LDAP, enable the **Use Group** option and provide the required values.
+To synchronize user group information and membership information from LDAP, enable (check) the **Use Group option** and enter the required information.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-075227.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075227.png)
 </figure>
+
 
 <table data-table-width="760" data-layout="default" local-id="56f8d1f8-9645-460d-a5cb-b6cce53606f2">
 <colgroup>
@@ -107,7 +113,8 @@ Group Base DN
 Required
 </td>
 <td data-highlight-colour="#ffffff">
-Enter the group Base DN value of the LDAP server. Only groups under this path are synchronized as Groups.
+Enter the group Base DN value of the LDAP server.
+Only groups under this path are synchronized as Groups.
 * Example: `dc=example,dc=com`
 </td>
 </tr>
@@ -119,7 +126,7 @@ Group Search Filter
 Required
 </td>
 <td data-highlight-colour="#ffffff">
-Enter the filter to fetch groups from the LDAP server.
+Enter the filter value to fetch groups from the LDAP server.
 * Example: `objectclass=posixGroup`
 </td>
 </tr>
@@ -131,7 +138,7 @@ Group ID
 Required
 </td>
 <td>
-Enter the attribute used as the group's identifier.
+Enter the attribute value to use as the group identifier.
 * Example: `gidNumber`
 </td>
 </tr>
@@ -143,52 +150,55 @@ Membership Type
 Required
 </td>
 <td data-highlight-colour="#ffffff">
-If user entries contain group information, select `Include group information in user entries` and enter the attribute to reference below.
+If user entries contain group information, select `Include group information in user entries` and enter the attribute to reference in the field below.
 * Example: `member`, `uniqueMember`, `memberUid`, etc.
 </td>
 </tr>
 <tr>
 <td data-highlight-colour="#ffffff">
-If group entries contain user information, select `Include user information in group entries` and enter the attribute to reference below.
+If group entries contain user information, select `Include user information in group entries` and enter the attribute to reference in the field below.
 * Example: `gidNumber`
 </td>
 </tr>
 </tbody>
 </table>
 
-To run user synchronization from LDAP, enable **Use Synchronization with the Authentication System**.
+To run user information synchronization from the LDAP server, enable the **Use Synchronization with the Authentication System** option.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-075127.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-075127.png)
 </figure>
 
-*  **Replication Frequency**  : Configure whether to enable automatic synchronization.
-    * Manual: Synchronize only when you click the `Synchronize` button on this page.
-    * Scheduling: Perform periodic synchronization. The "Use cron expression" field is enabled.
+
+*  **Replication Frequency**  : Configure whether to use automatic synchronization.
+    * Manual : Synchronization is performed only manually. User information is fetched from the LDAP server only when you click the `Synchronize` button on the current page.
+    * Scheduling : Periodic synchronization is performed. The "Use cron expression" field below is enabled.
 *  **Additional Settings** 
-    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default.
-        * Useful when there are many users or you want to manage access control individually via LDAP authentication.
-    *  **Use an Attribute for Privilege Revoke** : Revoke privileges based on a specific attribute during synchronization.
-        * Enable when you want to automatically revoke DAC privileges based on changes to an LDAP attribute.
+    *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing.
+        * We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via LDAP authentication.
+    *  **Use an Attribute for Privilege Revoke** : Select whether to revoke Privileges based on a specific Attribute during synchronization.
+        * Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific LDAP Attribute.
         * Enter the attribute name to monitor for activation changes in the LDAP Attribute input field.
-    *  **Enable Attribute Synchronization :**  Synchronize LDAP user attributes with QueryPie user attributes by mapping.
-        * Enable when you want to link LDAP-managed attributes to QueryPie attributes automatically.
-        * When enabled, an LDAP Attribute Mapping UI appears, allowing you to specify the LDAP and QueryPie attributes to map.
-        * This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
+    *  **Enable Attribute Synchronization :**  Select whether to map and synchronize LDAP user attributes with QueryPie user attributes.
+        * We recommend enabling this option when you want to automatically link user attributes managed in LDAP with Attributes in QueryPie.
+        * When the option is enabled, an LDAP Attribute Mapping UI is displayed below, allowing you to specify the LDAP Attribute and QueryPie Attribute to link through mapping.
+        * However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
     *  **Allowed User Deletion Rate Threshold :** 
-        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
-        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading to 11.3.0 from a version configured before 11.3.0, this value migrates to 1.
+        * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
+        * Enter a value between 0.0 and 1.0 (default is 0.1).
+            * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
+            * When upgrading the product to 11.3.0 from a version before 11.3.0 with synchronization configured, this value is set to 1.0 by default.
 
 <Callout type="info">
 **LDAP Attribute Mapping**
 
-To link LDAP-managed user attributes with QueryPie attributes, enable "Enable Attribute Synchronization" and provide the following information:
+To map and synchronize user attributes managed in LDAP with QueryPie Attributes, enable the Enable Attribute Synchronization option and enter the following information.
 
-Click `Add Row` to add a new mapping row. For each row, select an LDAP attribute and a corresponding QueryPie attribute.
+Click the `Add Row` button at the top right to add a new mapping row, and you can specify the LDAP Attribute and corresponding QueryPie Attribute for each row.
 
-1. This feature applies only to QueryPie attributes whose Source Priority is set to "Inherit from profile source" in Admin &gt; General &gt; User Management &gt; Profile Editor.
-2. The QueryPie attributes `Username (loginId)` and `Primary Email (email)` are configured separately in LDAP integration settings and are not exposed in the LDAP–QueryPie Attribute Mapping UI.
-3. When you delete or change a mapping row, click Save to apply changes in the UI, and additionally click Synchronize to actually perform synchronization with LDAP. Save applies the screen changes, while Synchronize applies them to the system.
+1. This feature applies only to QueryPie Attributes whose Source Priority is set to Inherit from profile source in Admin &gt; General &gt; User Management &gt; Profile Editor.
+2. The QueryPie Attributes `Username (loginId)` and `Primary Email (email)` are entered separately during LDAP integration configuration, so these items are not exposed in the LDAP–QueryPie Attribute Mapping UI.
+3. When deleting or changing a mapping row, you must click Save for the changes to be reflected in the UI, and you must additionally click Synchronize for actual synchronization with LDAP to be performed. In other words, Save means changes on the screen, and Synchronize means system reflection.
 </Callout>
 
 ### Okta Integration
@@ -202,12 +212,12 @@ Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Sear
 </figcaption>
 </figure>
 
-* Sign in to [Okta](https://login.okta.com/) with an administrator account.
+* Access the [Okta service](https://login.okta.com/) and sign in with an administrator account.
 * Click your profile at the top right to access Your Org.
 * Go to Applications &gt; Applications in the left panel of the Okta admin page.
-* Click `Browse App Catalog` and search for QueryPie.
-* Open the QueryPie application page and click `Add Integration`.
-* Confirm that Application Label is QueryPie and click `Done`.
+* Click the `Browse App Catalog` button to search for QueryPie.
+* Open the QueryPie application page and click the `Add Integration` button.
+* Confirm that Application Label is set to QueryPie, then click the `Done` button to add the application.
 
 #### Profile settings for Okta account integration
 
@@ -218,14 +228,14 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attrib
 </figcaption>
 </figure>
 
-* Go to Directory &gt; Profile Editor in the Okta admin page.
-* Click ‘QueryPie User’ in the profile list.
-* In Attributes, click `Add Attribute`.
-* Add the following four items in order and save:
-    * Display name: firstName / Variable name: firstName, then `Save and Add Another`
-    * Display name: lastName / Variable name: lastName, then `Save and Add Another`
-    * Display name: email / Variable name: email, then `Save and Add Another`
-    * Display name: loginId / Variable name: loginId, then `Save`
+* Go to Directory &gt; Profile Editor in the left panel of the Okta admin page.
+* Click 'QueryPie User' in the Profile list.
+* Click the `Add Attribute` button in Attributes settings.
+* In the Add Attribute screen, enter the following four items in order and save:
+    * Display name: firstName / Variable name: firstName, then click `Save and Add Another`
+    * Display name: lastName / Variable name: lastName, then click `Save and Add Another`
+    * Display name: email / Variable name: email, then click `Save and Add Another`
+    * Display name: loginId / Variable name: loginId, then click `Save`
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings](/administrator-manual/general/system/integrations/identity-providers/image-20240723-064721.png)
@@ -234,15 +244,16 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
 </figcaption>
 </figure>
 
-* After the four attributes are added, click `Mappings`.
-* Link Okta User Profile attributes to QueryPie User Profile attributes as follows:
+* After confirming that the four Attributes have been added, click the `Mappings` button.
+* Link Okta User Profile Attributes to QueryPie User Profile Attributes as follows:
     * user.firstName ↔︎ firstName
     * user.lastName ↔︎ lastName
     * user.email ↔︎ email
     * user.email ↔︎ loginId (Use Okta's email attribute as QueryPie's Login ID.)
-* Click `Save Mappings`.
+* Click the `Save Mappings` button to save.
 
-#### Assign users to the QueryPie application in Okta
+
+#### Assign users to the QueryPie application added in Okta
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/system/integrations/identity-providers/image-20240723-065134.png)
@@ -251,13 +262,14 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 </figcaption>
 </figure>
 
-* Go to Applications &gt; Applications in the Okta admin page.
+* Go to Applications &gt; Applications in the left panel of the Okta admin page.
 * Click the QueryPie application in the list.
-* Go to the Assignments tab, click `Assign`, and select `Assign to People` or `Assign to Group`.
-* Assign the user(s) or group(s) to allow access to QueryPie and click Done.
-    * For People, review the user information and click `Save and Go Back`.
-    * For Group, leave loginId empty and click `Save and Go Back`.
-* Verify that the user or group is assigned to the QueryPie application.
+* Go to the Assignments tab, click the `Assign` button, and select `Assign to People` or `Assign to Group`.
+* Assign the user(s) or group(s) to allow QueryPie access with Okta accounts, then click the Done button.
+    * For People assignment, review the user information and click the `Sava and Go Back` button.
+    * For Group assignment, leave the loginId field empty and click the `Save and Go Back` button.
+* You can verify that the user(s) or group(s) have been added and assigned to the QueryPie application.
+
 
 #### Configure QueryPie application integration settings in Okta
 
@@ -269,18 +281,20 @@ Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 </figure>
 
 * In the QueryPie application page in Okta, go to the Sign On tab.
-* Click `Edit` in Settings and enter the domain where QueryPie is installed in the Base URL field.
-* Access the URL shown in Metadata URL in a separate tab and copy the XML.
+* Click the `Edit` button in the Settings area, enter the domain address where QueryPie is installed in the Base URL field, and save.
+* Access the address shown in Metadata URL in a separate tab and copy the displayed XML information.
+
 
 #### Issue a minimum-privilege Okta API token
 
-To synchronize users, groups, and group memberships between QueryPie and Okta, an Okta Admin API token is required. Typically, you can issue a token using the Super Administrator or Read-Only Administrator account and apply it as follows:
+An Okta Admin API token is required to synchronize users, groups, and group memberships between QueryPie and Okta.
+Typically, you can issue an API token using your Okta Super Administrator/Read-Only Administrator account and apply it as follows:
 
-* In the Okta admin page, go to Security &gt; API.
-* Go to the Tokens tab.
-* Click Create Token to create an API token.
+* Go to Security &gt; API in the left panel of the Okta admin page.
+* Go to the Tokens tab in the API menu.
+* Click the Create Token button to create an authentication token.
 
-For improved security, we recommend issuing a token with minimum permissions as follows.
+However, to improve security, we recommend creating an API token with minimum permissions according to the following permissions and methods.
 
 <figure data-layout="center" data-align="center">
 ![Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role](/administrator-manual/general/system/integrations/identity-providers/image-20240110-042233.png)
@@ -289,36 +303,38 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 </figcaption>
 </figure>
 
-* In the Okta admin page, go to Directory &gt; People and click Add Person to create a dedicated integration account.
-    * If you already have such an account, skip this step.
-* Go to Security &gt; Administrators &gt; Roles.
+* Go to Directory &gt; People in the left panel of the Okta admin page, click Add Person, and create a dedicated system integration account.
+    * If you already have an account available for QueryPie integration, skip this step.
+* Go to Security &gt; Administrators in the left panel of the Okta admin page and go to the Roles tab.
 * Select Create new role.
-* Define Role name (e.g., MinimumAdminRole) and Role description, and check only the following permissions in Select Permissions:
+* Define Role name (e.g., MinimumAdminRole) and Role description, then check only the following permissions in Select Permisions:
     *  **User** 
         * View users and their details
     *  **Group** 
         * View groups and their details
     *  **Application** 
         * View application and their details
-* Click Save role.
+* Click Save role to save the custom role.
 * Go to the Resources tab.
 * Select Create new resource set.
-    * If you already have a resource set for scoping, skip to step 10.
-* Define Name (e.g., MinimumResources) and Description, then set the scope as follows:
-    * User: All QueryPie users
-    * Group: All QueryPie groups
+    * If you already have a resource set created for specifying the permission scope to assign, skip this step and proceed to step 10.
+* Define Name (e.g., MinimumResources) and Description, then search for and specify the following scope:
+    * User: Select all QueryPie users
+    * Group: Select all QueryPie user groups
     * Application: Limited to the QueryPie app
-* Go to the Admins tab and assign the following to the integration account:
+* Select Create to create it.
+* Go to the Admins tab and assign the following permissions to the QueryPie integration account.
     * Role: MinimumAdminRole | Resource: MinimumResources
     * Role: Read-Only Administrator
-        * Temporarily needed to access the API token issuance menu
-* Sign in to the Okta admin console with the integration account.
-* Go to Security &gt; API &gt; Tokens and click Create Token to issue a token and store it securely.
-* Then, sign back in as the original admin and remove Read-Only Administrator from the integration account in Security &gt; Administrators &gt; Admins.
+        * Temporarily granted to access the API token creation menu
+* Sign in to the Okta admin console page with the QueryPie integration account.
+* Go to Security &gt; API in the API menu and go to the Tokens tab.
+* Click the Create Token button to create an authentication token and store it securely.
+* Then, sign back in with the original administrator account you worked with initially, go to Security &gt; Administrators &gt; Admins tab, edit the integration account, and revoke the Read-Only Adminstrator permission.
 
 #### Configure Okta integration and synchronization in QueryPie
 
-`+ Add` Click the button at the top right of the list and select Okta for Type to add Okta as an IdP.
+Click the `+ Add` button at the top right of the list, and select Okta for Type in the popup screen to add Okta as an IdP.
 
 <figure data-layout="center" data-align="center">
 ![Okta details (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014729.png)
@@ -327,46 +343,52 @@ Okta details (1)
 </figcaption>
 </figure>
 
-*  **Name**  : Enter a suitable name for identification.
+*  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select Okta.
-*  **Identity Provider Metadata**  : <br/>Paste the XML copied in the process described in [the Okta guide](https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95).
-*  **Use SAML Assertion Consumer Service Index**: When the Service Provider uses multiple endpoints, you can specify each endpoint using the ACS Index.
-    * Entity ID: Enter in the format `https://your-domain.com/saml/sp/metadata`. This is the Audience URI (SP Entity ID) value in Okta's SAML 2.0 settings. 
-    * ACS Index: Enter a value between 0 and 2,147,483,647 (default 0).
+*  **Identity Provider Metadata**  : <br/>Paste the XML information copied in the process described in [https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95](https://querypie.atlassian.net/wiki/spaces/QM/pages/edit-v2/1454342158#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95) into the Identity Provider Metadata field.
+*  **Use SAML Assertion Consumer Service Index**  : When the Service Provider uses multiple Endpoints, you can use the ACS Index to specify each endpoint.
+    * Entity ID : Enter in the format `https://your-domain.com/saml/sp/metadata`. This is the Audience URI (SP Entity ID) value in Okta SAML 2.0 settings. 
+    * ACS Index : Enter a value between 0 and 2,147,483,647 (default is 0).
 
 <Callout type="info">
-**Assertion Consumer Service (ACS)**: The endpoint URL in the Service Provider (SP) that receives SAML assertions from the IdP, verifies them, and processes user login.
+**Assertion Consumer Service (ACS)** : A specific Endpoint (URL) located in the SP (Service provider) that receives SAML Assertions from the IdP, verifies them, and processes user login.
 
-<br/> **Why the Assertion Consumer Service Index matters**
+<br/> **Why the Assertion Consumer Service Index is needed and its role**
 
-An SP can have multiple ACS URLs for various reasons. The `AssertionConsumerServiceIndex` plays a crucial role here.
+A single SP can have multiple ACS URLs for various reasons.
+In this case, AssertionConsumerServiceIndex plays an essential role.
 
-When the SP sends the AuthnRequest with this index to the IdP, the IdP sends the assertion to the ACS URL mapped to that index. If the index is not specified, the IdP typically sends the assertion to a predefined default ACS URL.
+When the SP sends a SAML message (AuthnRequest) requesting authentication to the IdP with this index value included, the IdP sends the SAML assertion to the ACS URL mapped to that index.
+If this index is not specified, the assertion is typically sent to a pre-agreed default ACS URL.
 
-This index-based routing is useful in the following scenarios:
+This index-based routing is very useful in the following specific situations.
 
 **Key use cases**
 
-* Support multiple protocol bindings:
+* Support for various protocol bindings:
 
-SAML assertions can be delivered via various bindings such as HTTP POST and HTTP-Artifact. The SP may maintain separate ACS URLs for each binding. For example, index "0" can point to the ACS URL for HTTP POST, and index "1" can point to HTTP-Artifact.
+SAML assertions can be delivered via multiple methods such as HTTP POST and HTTP-Artifact.
+The SP can operate separate ACS URLs for each binding method.
+For example, index="0" can point to an ACS URL for HTTP POST, and index="1" can point to an ACS URL for HTTP-Artifact.
 
-* Multi-tenant architecture:
+* Support for multi-tenant architecture:
 
-A SaaS application supporting multiple customers (tenants) can assign a unique ACS URL per tenant. This isolates and customizes the authentication flow for each tenant.
+When a single SaaS application supports multiple customers (tenants), a unique ACS URL can be assigned for each tenant.
+This allows isolation and customized management of the authentication flow for each customer.
 
-* Different authentication flows within the same application:
+* Distinguishing different authentication flows within an application:
 
-Depending on roles or entry paths, post-login destinations can differ. You may configure different ACS URLs and select them by index.
+Even for the same application, different post-authentication processing may be needed depending on the user's role or access path.
+For example, when you want to set different post-login redirect pages for regular users and administrators, you can use different ACS URLs and distinguish them by index.
 
 * Dynamic or special ACS URL handling:
 
-If assertions must be delivered to dynamically generated ACS URLs under specific situations, the index can guide the IdP to one of the statically defined URLs.
+When assertions must be received at a dynamically generated ACS URL depending on specific situations or client requirements, you can guide the selection of one of the statically defined URLs through the index.
 
 <figure data-layout="center" data-align="center">
 ![Audience URI (SP Entity ID) in Okta app settings](/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164255.png)
 <figcaption>
-Audience URI (SP Entity ID) in Okta app settings 
+Audience URI (SP Entity ID) in Okta app settings
 </figcaption>
 </figure>
 
@@ -385,24 +407,27 @@ Okta details (2)
 </figcaption>
 </figure>
 
-* To enable synchronization, turn on “Use Synchronization with the Authentication System”.
-    *  **API URL**: Click your profile at the top right of the Okta admin page to see `{domain}`.okta.com.
-    *  **API Token**: Enter the Okta Admin API token.
-    *  **Application ID**: Enter only if you use two or more QueryPie apps in Okta.
-* For periodic synchronization, set **Replication Frequency** to Scheduling.
+
+* To configure synchronization, enable (check) the "Use Synchronization with the Authentication System" option.
+    *  **API URL** : Click your profile at the top right of the Okta admin page to see a URL in the format `{domain}`.okta.com.
+    *  **API Token** : Enter the Okta Admin API token.
+    *  **Application ID** : Enter this when using two or more QueryPie Apps in Okta.
+* To use periodic synchronization, configure Scheduling in the **Replication Frequency** field.
 *  **Additional Settings** 
-    *  **Make New Users Inactive by Default**: Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
-    *  **Use an Attribute for Privilege Revoke**: Revoke privileges based on a specific attribute during synchronization. <br/> Enable this if you want to revoke DAC privileges automatically based on changes to a specific attribute. <br/> Enter the attribute name to monitor.
-    *  **Enable Attribute Synchronization**: Synchronize IdP user attributes with QueryPie user attributes by mapping. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears below to configure mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
+    *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
+    *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
+    *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
     *  **Allowed User Deletion Rate Threshold :** 
-        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
-        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading from a pre-11.3.0 version configured with synchronization to 11.3.0 or later, this value migrates to 1.
-* Click `Dry Run` to verify the input.
-* Click `Save` to store the settings.
+        * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
+        * Enter a value between 0.0 and 1.0 (default is 0.1).
+            * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
+            * When upgrading the product to 11.3.0 from a version before 11.3.0 with synchronization configured, this value is set to 1.0 by default.
+* Click the `Dry Run` button to verify that the integration information has been entered correctly.
+* Click the `Save` button to save.
 
 <Callout type="info">
 **How to find the Application ID**
-If you use two or more QueryPie applications, go to Okta Admin &gt; Applications, open the details page of the QueryPie app, and check the top URL where the Application ID is highlighted in the screenshot.
+When using two or more QueryPie Applications, go to Okta Admin &gt; Applications, open the detail screen of the QueryPie app, and you can find the Application ID in the top URL as shown in the screenshot above.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -412,42 +437,43 @@ Top URL of Okta Admin &gt; Applications &gt; QueryPie App
 </figcaption>
 </figure>
 
+
 #### Sign in to QueryPie with Okta
 
-1. You can verify synchronized users and groups in General Settings &gt; Users or Groups.
-2. You can now sign in to QueryPie using `Login with Okta` on the login page.
+1. You can verify synchronized users and groups in General Settings &gt; Users or Groups menu.
+2. You can now sign in to QueryPie with an Okta account using the `Login with Okta` button on the login page.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-082704.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-082704.png)
 </figure>
 
 <Callout type="info">
-This integration supports one-way synchronization from Okta to QueryPie for users and groups.
-For SCIM provisioning, follow the steps in the [[Okta] Provisioning Integration Guide](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394).
+This integration method supports one-way synchronization of users and groups from Okta to QueryPie.
+If you want to implement SCIM provisioning integration, please follow the procedures in the [[Okta] Provisioning Integration Guide](https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394) instead.
 </Callout>
 
 ### One Login Integration
 
-`+ Add` Click the button at the top right of the list and select One Login for Type to add One Login as an IdP.
+Click the `+ Add` button at the top right of the list, and select One Login for Type in the popup screen to add One Login as an IdP.
 
-*  **Name**  : Enter a suitable name for identification.
+*  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select One Login.
 
 <Callout type="info">
-One Login SAML Custom Connector configuration and downloading Metadata XML
+One Login SAML Custom Connector configuration and Metadata XML download
 
-* Sign in to OneLogin and click Applications &gt; Applications at the top.
-* Click `Add App`.
-* Search for 'SAML Custom Connector (Advanced)' and click the result.
-* For Display Name, paste the value of "Application Name to be used in OneLogin" shown in QueryPie, and also copy Audience (Entity ID), Recipient, ACS (Consumer) URL Validator, and ACS (Consumer) URL into OneLogin settings.
-* Click `Save`. 
-* Select Configuration on the left, then click More Actions &gt; SAML Metadata on the top right.
+* After accessing OneLogin, click Applications &gt; Applications menu at the top of the screen.
+* Click the `Add App` button.
+* Enter 'SAML Custom Connector (Advanced)' in the search area and click the search result.
+* For Display Name, copy and paste the content of "Application Name to be used in OneLogin" confirmed in QueryPie, and also copy Audience (Entity ID), Recipient, ACS (Consumer) URL Validator, and ACS (Consumer) URL into the One Login settings.
+* Click the `Save` button to save. 
+* Select the Configuration menu on the left, then click More Actions &gt; SAML Metadata at the top right.
 * Check the downloaded XML file.
 
-For details on configuring the OneLogin SAML Custom Connector, refer to [https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f](https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f).
+For detailed information on One Login SAML Custom Connector configuration, please refer to [https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f](https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f).
 </Callout>
 
-*  **Identity Provider Metadata**  : Paste the contents of the XML file downloaded from One Login.
+*  **Identity Provider Metadata**  : Copy and paste the contents of the XML file downloaded from One Login.
 
 <figure data-layout="center" data-align="center">
 ![One Login details (1)](/administrator-manual/general/system/integrations/identity-providers/image-20251020-001435.png)
@@ -456,8 +482,8 @@ One Login details (1)
 </figcaption>
 </figure>
 
-* To enable synchronization, turn on “Use Synchronization with the Authentication System”.
-* For periodic synchronization, set Replication Frequency to Scheduling.
+* To configure synchronization, enable (check) the "Use Synchronization with the Authentication System" option.
+* To use periodic synchronization, configure Scheduling in the Replication Frequency field.
 
 <figure data-layout="center" data-align="center">
 ![One Login details (2)](/administrator-manual/general/system/integrations/identity-providers/image-20251014-014949.png)
@@ -467,44 +493,48 @@ One Login details (2)
 </figure>
 
 *  **Additional Settings** 
-    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
-    *  **Use an Attribute for Privilege Revoke**  : Revoke privileges based on a specific attribute during synchronization. <br/> Enable this to automatically revoke DAC privileges based on a specific attribute. <br/> Enter the attribute name to monitor.
-    *  **Enable Attribute Synchronization**  : Synchronize IdP user attributes with QueryPie user attributes by mapping. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears for configuring mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
+    *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
+    *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
+    *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
     *  **Allowed User Deletion Rate Threshold :** 
-        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
-        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading from a pre-11.3.0 version configured with synchronization to 11.3.0 or later, this value migrates to 1.
+        * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
+        * Enter a value between 0.0 and 1.0 (default is 0.1).
+            * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
+            * When upgrading the product to 11.3.0 from a version before 11.3.0 with synchronization configured, this value is set to 1.0 by default.
 
-### SAML 2.0 Integration (one-off without periodic sync)
+### SAML 2.0 Integration (one-time without periodic synchronization)
 
-If you want a one-time SAML integration without periodic synchronization, provide only the SAML metadata.
+For a one-time SAML integration without periodic synchronization, configure by entering only the SAML metadata.
 
-*  **Name**  : Enter a suitable name for identification.
+*  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select SAML.
-*  **Identity Provider Metadata**  : Paste the SAML metadata XML content downloaded from your IdP.
+*  **Identity Provider Metadata**  : Copy and paste the contents of the SML metadata XML confirmed in the IdP.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-015015.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015015.png)
 </figure>
 
-&lt; Note &gt; [AWS SSO Integration](identity-providers/aws-sso-saml-20)
+&lt; Reference &gt; [AWS SSO Integration](identity-providers/aws-sso-saml-20)
 
 ### Custom Identity Provider
 
-Use this only for special cases that require an authentication API server.
+Custom Identity Provider is used only for special cases that use an authentication API server.
 
-*  **Name**  : Enter a suitable name for identification.
+*  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select Custom Identity Provider.
-*  **API URL**  : Enter the endpoint URL of your API server. 
-*  To run user synchronization, enable Use Synchronization with the Authentication System.
+*  **API URL**  : Enter the End-point URL of the API server. 
+* To run user information synchronization, enable the Use Synchronization with the Authentication System option.
 
 <figure data-layout="center" data-align="center">
 ![image-20251014-015047.png](/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png)
 </figure>
 
 *  **Additional Settings** 
-    *  **Make New Users Inactive by Default** : Add newly synchronized users as inactive by default. <br/> Enable this when you have many users or want to manage QueryPie access individually via authentication.
-    *  **Use an Attribute for Privilege Revoke**  : Revoke privileges based on a specific attribute during synchronization. <br/> Enable this if you want to automatically revoke DAC privileges based on changes to a specific attribute. <br/> Enter the attribute name to monitor.
-    *  **Enable Attribute Synchronization**  : Map and synchronize IdP user attributes with QueryPie user attributes. <br/> Enable this to automatically link attributes managed by the IdP to QueryPie attributes. <br/> When enabled, an Attribute Mapping UI appears for configuring mappings. <br/> This applies only to attributes whose Source Priority is set to "Inherit from profile source" in Profile Editor (Admin &gt; General &gt; User Management &gt; Profile Editor).
+    *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
+    *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
+    *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
     *  **Allowed User Deletion Rate Threshold :** 
-        * If the percentage of deleted existing users during synchronization is greater than or equal to this value, the synchronization fails.
-        * Enter a value between 0 and 1 (default is 0.1). <br/> Example: If there are 100 existing users and the threshold is 0.1, synchronization fails when 10 or more users would be deleted. <br/> When upgrading to 11.3.0 from a version configured before 11.3.0, this value migrates to 1.
+        * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
+        * Enter a value between 0.0 and 1.0 (default is 0.1).
+            * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
+            * When upgrading the product to 11.3.0 from a version before 11.3.0 with synchronization configured, this value is set to 1.0 by default.
