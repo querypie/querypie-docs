@@ -13,6 +13,8 @@ You can create server groups according to purpose and conveniently manage polici
 
 <Callout type="info">
 We recommend registering each resource required for server group registration in advance.
+1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates** 
+2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations** 
 </Callout>
 
 
@@ -35,7 +37,8 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 4. Save through the `Save` button. 
 
 <Callout type="info">
-Server groups can manage servers based on Tags. By specifying specific Tags in the Server Tags of server groups, flexible server management is possible where all servers with those Tags are included in the server group.
+Server groups can manage servers based on Tags.
+By specifying specific Tags in the Server Tags of server groups, flexible server management is possible where all servers with those Tags are included in the server group.
 </Callout>
 
 
@@ -94,8 +97,14 @@ Test Connection can only be used after saving the Server Group.
     1. You can load already registered Accounts from the Server Account Templates menu at once by pressing the `Copy` button.
         1. For how to register Server Account Template, refer to [Server Account Templates](../../server-account-management/server-account-templates). 
     2. Or you can manually add Accounts using the `Add Account` function. 
-        1. When clicking the `Add Account` button, a modal window for account settings is displayed. Items to be entered differ for each selected Category. 
+        1. When clicking the `Add Account` button, a modal window for account settings is displayed. Items to be entered differ for each selected Category.  <br/> 
+          <figure data-layout="center" data-align="center">
+          ![Screenshot-2025-07-27-at-10.37.35-PM.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.37.35-PM.png)
+          </figure>
 2. Accounts designated as Provisioning accounts display a key icon next to the Account.
+  <figure data-layout="center" data-align="center">
+  ![Screenshot-2025-07-27-at-10.35.23-PM.png](/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.35.23-PM.png)
+  </figure>
 3. You can set accounts by category. 
     1. Category : You must first select a Category that defines the authentication method and type of the account. The setting items displayed below change dynamically according to the selected Category.
     2.  **Caution** : After creating an account, the Category cannot be modified, so you must choose carefully.
@@ -216,5 +225,6 @@ You can register server group members to specify Server Groups displayed in user
 4. Save through the `Save Changes` button. 
 
 <Callout type="info">
-To limit Server Groups shown in Workflow, you must activate the "Show Server Groups in Workflow if Assigned as Member" item in Admin &gt; Servers &gt; General &gt; Configurations. For detailed location, please refer to the [Server Access Request Default Settings | Basic Server Access Policy Settings](../../sac-general-configurations#%ea%b8%b0%eb%b3%b8-%ec%84%9c%eb%b2%84-%ec%a0%91%ea%b7%bc-%ec%a0%95%ec%b1%85-%ec%84%a4%ec%a0%95) guide.
+To limit Server Groups shown in Workflow, you must activate the "Show Server Groups in Workflow if Assigned as Member" item in Admin &gt; Servers &gt; General &gt; Configurations.
+For detailed location, please refer to the [Server Access Request Default Settings | Basic Server Access Policy Settings](../../sac-general-configurations#%ea%b8%b0%eb%b3%b8-%ec%84%9c%eb%b2%84-%ec%a0%91%ea%b7%bc-%ec%a0%95%ec%b1%85-%ec%84%a4%ec%a0%95) guide.
 </Callout>
