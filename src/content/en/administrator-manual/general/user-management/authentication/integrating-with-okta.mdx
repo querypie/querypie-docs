@@ -20,83 +20,83 @@ If you also plan to implement SCIM provisioning integration, please follow the s
 ### Add QueryPie as an application in Okta
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Applications > Applications > Browse App Catalog > Search QueryPie](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png)
+![Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Search QueryPie](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png)
 <figcaption>
-Okta Admin > Applications > Applications > Browse App Catalog > Search QueryPie
+Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Search QueryPie
 </figcaption>
 </figure>
 
 1. Sign in to the [Okta service](https://login.okta.com/) with an admin account.
 2. Click your profile in the upper-right and go to Your Org.
-3. In the left panel, navigate to Applications > Applications.
-4. Click Browse App Catalog and search for QueryPie.
-5. On the QueryPie application page, click Add Integration.
-6. Confirm that Application Label is QueryPie, then click Done to add the application.
+3. In the left panel of the Okta Admin Console, navigate to Applications &gt; Applications.
+4. Click the `Browse App Catalog` button and search for QueryPie.
+5. On the QueryPie application page, click the `Add Integration` button.
+6. Confirm that Application Label is set to QueryPie, then click the `Done` button to add the application.
 
 
 ### Profile settings for Okta account integration
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Directory > Profile Editor > QueryPie User > Add Attribute](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png)
+![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png)
 <figcaption>
-Okta Admin > Directory > Profile Editor > QueryPie User > Add Attribute
+Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute
 </figcaption>
 </figure>
 
-1. In the left panel of the Okta Admin Console, go to Directory > Profile Editor.
-2. From the Profile list, click QueryPie User.
-3. In Attributes, click Add Attribute.
+1. In the left panel of the Okta Admin Console, go to Directory &gt; Profile Editor.
+2. From the Profile list, click 'QueryPie User'.
+3. In the Attributes section, click the `Add Attribute` button.
 4. In the Add Attribute screen, enter the following four items in order and save:
-    1. Display name: firstName / Variable name: firstName, then click Save and Add Another
-    2. Display name: lastName / Variable name: lastName, then click Save and Add Another
-    3. Display name: email / Variable name: email, then click Save and Add Another
-    4. Display name: loginId / Variable name: loginId, then click Save
+    1. Display name: firstName / Variable name: firstName, then click `Save and Add Another`
+    2. Display name: lastName / Variable name: lastName, then click `Save and Add Another`
+    3. Display name: email / Variable name: email, then click `Save and Add Another`
+    4. Display name: loginId / Variable name: loginId, then click `Save`
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Directory > Profile Editor > QueryPie User > Mappings](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064721.png)
+![Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064721.png)
 <figcaption>
-Okta Admin > Directory > Profile Editor > QueryPie User > Mappings
+Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
 </figcaption>
 </figure>
 
-1. After confirming the four attributes have been added, click Mappings.
+1. After confirming the four attributes have been added, click the `Mappings` button.
 2. Map Okta User Profile attributes to QueryPie User Profile attributes as follows:
     1. user.firstName ↔︎ firstName
     2. user.lastName ↔︎ lastName
     3. user.email ↔︎ email
     4. user.email ↔︎ loginId (Use Okta's email as QueryPie's login ID.)
-3. Click Save Mappings.
+3. Click the `Save Mappings` button to save.
 
 
 ### Assign users to the QueryPie application added in Okta
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Applications > Applications > QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png)
+![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png)
 <figcaption>
-Okta Admin > Applications > Applications > QueryPie App
+Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 </figcaption>
 </figure>
 
-1. In the left panel, navigate to Applications > Applications.
+1. In the left panel of the Okta Admin Console, navigate to Applications &gt; Applications.
 2. From the list, click the QueryPie application.
-3. Go to the Assignments tab, click Assign, and choose Assign to People or Assign to Group.
-4. Assign users or groups who should have access to QueryPie, then click Done.
+3. Go to the Assignments tab, click the `Assign` button, and choose `Assign to People` or `Assign to Group`.
+4. Assign users or groups who should have access to QueryPie via Okta accounts, then click the Done button.
     1. When assigning People: review user info and click `Save and Go Back`.
-    2. When assigning Groups: leave loginId blank and click Save and Go Back.
+    2. When assigning Groups: leave the loginId field blank and click the `Save and Go Back` button.
 5. You can now confirm that the users or groups are assigned to the QueryPie application.
 
 
 ### Configure integration information for the QueryPie application in Okta
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Applications > Applications > QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png)
+![Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png)
 <figcaption>
-Okta Admin > Applications > Applications > QueryPie App
+Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
 </figcaption>
 </figure>
 
-1. On the QueryPie application page in Okta, go to the Sign On tab.
-2. Click Edit in the Settings area, enter the domain where QueryPie is installed into Base URL, and save.
+1. On the QueryPie application page in Okta, navigate to the Sign On tab.
+2. Click the `Edit` button in the Settings area, enter the domain where QueryPie is installed into the Base URL field, and save.
 3. Open the URL shown in Metadata URL in a separate tab and copy the XML displayed there.
 
 
@@ -105,31 +105,31 @@ Okta Admin > Applications > Applications > QueryPie App
 To synchronize users, groups, and group memberships between QueryPie and Okta, you need an Okta Admin API token.
 Typically, you can generate an API token using a Super Administrator or Read-Only Administrator account as follows:
 
-1. In the left panel, go to Security > API.
-2. In API, go to the Tokens tab.
-3. Click Create Token to generate an access token.
+1. In the left panel of the Okta Admin Console, go to Security &gt; API.
+2. In the API menu, go to the Tokens tab.
+3. Click the Create Token button to generate an authentication token.
 
 However, to enhance security by minimizing permissions for the Okta API token, we recommend creating a token with the following roles and steps:
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console > Security > Administrators > Roles > Create new role](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240110-042233.png)
+![Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240110-042233.png)
 <figcaption>
-Okta Admin Console > Security > Administrators > Roles > Create new role
+Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role
 </figcaption>
 </figure>
 
-1. In the left panel, go to Directory > People and click Add Person to create a dedicated system-integration account.
+1. In the left panel of the Okta Admin Console, go to Directory &gt; People and click Add Person to create a dedicated system integration account.
     * If you already have an account for QueryPie integration, skip this step.
-2. Go to Security > Administrators and open the Roles tab.
+2. In the left panel of the Okta Admin Console, go to Security &gt; Administrators and navigate to the Roles tab.
 3. Select Create new role.
 4. Define Role name (e.g., MinimumAdminRole) and Role description, and in Select Permissions, check only the following:
-    1. User
+    1. **User**
         * View users and their details
-    2. Group
+    2. **Group**
         * View groups and their details
-    3. Application
+    3. **Application**
         * View application and their details
-5. Click Save role to store the custom role.
+5. Click Save role to save the custom role.
 6. Go to the Resources tab.
 7. Select Create new resource set.
     * If you already have a resource set for scoping, skip to step 10.
@@ -143,21 +143,21 @@ Okta Admin Console > Security > Administrators > Roles > Create new role
     2. Role: Read-Only Administrator
         * Temporary assignment to access the API token creation menu
 11. Sign in to the Okta Admin Console with the integration account.
-12. Go to Security > API and open the Tokens tab.
-13. Click Create Token to generate a token and store it securely.
-14. Then sign back in with your original admin account and remove the Read-Only Administrator role from the integration account under Security > Administrators > Admins.
+12. Go to Security &gt; API menu and navigate to the Tokens tab.
+13. Click the Create Token button to generate an authentication token and store it.
+14. Then sign back in with the original admin account you were working with and edit the integration account under Security &gt; Administrators &gt; Admins tab to revoke the Read-Only Administrator permission.
 
 
 ### Configure Okta integration and synchronization in QueryPie
 
 <figure data-layout="center" data-align="center">
-![Administrator > General > User Management > Authentication](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png)
+![Administrator &gt; General &gt; User Management &gt; Authentication](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png)
 <figcaption>
-Administrator > General > User Management > Authentication
+Administrator &gt; General &gt; User Management &gt; Authentication
 </figcaption>
 </figure>
 
-1. In QueryPie, go to Administrator > General > User Management > Authentication.
+1. In QueryPie, go to Administrator &gt; General &gt; User Management &gt; Authentication.
 2. Select Okta as the Authentication Type.
 3. Paste the copied XML into Identity Provider Metadata.
 4. To enable automatic synchronization, check "Use Synchronization with the Authentication System".
@@ -165,28 +165,28 @@ Administrator > General > User Management > Authentication
     2. API Token: Enter the Okta Admin API token.
     3. Application ID: Enter if you use two or more QueryPie apps in Okta.
 5. To use automatic synchronization, set Scheduling in Replication Frequency.
-6. Click Dry Run to validate the configuration.
-7. Click Save Changes.
-8. Click Synchronize to synchronize users from Okta.
+6. Click the `Dry Run` button to verify that the integration information has been entered correctly.
+7. Save with `Save Changes`.
+8. Click the `Synchronize` button to synchronize users from Okta.
 
 
 <Callout type="info">
-How to find the Application ID
-If you use two or more QueryPie applications, go to Okta Admin > Applications and open the details page of the QueryPie app. You can find the Application ID in the URL at the top, as shown in the screenshot above.
+**How to find the Application ID**
+If you use two or more QueryPie applications, go to Okta Admin &gt; Applications and open the details page of the QueryPie app. You can find the Application ID in the URL at the top, as shown in the screenshot above.
 </Callout>
 
 <figure data-layout="center" data-align="center">
-![Okta Admin > Applications > QueryPie App URL at the top](/administrator-manual/general/user-management/authentication/integrating-with-okta/Authentication-Okta-02.png)
+![Okta Admin &gt; Applications &gt; QueryPie App URL at the top](/administrator-manual/general/user-management/authentication/integrating-with-okta/Authentication-Okta-02.png)
 <figcaption>
-Okta Admin > Applications > QueryPie App URL at the top
+Okta Admin &gt; Applications &gt; QueryPie App URL at the top
 </figcaption>
 </figure>
 
 
 ### Log in to QueryPie using Okta
 
-1. In General Settings > Users or Groups, you can confirm the synchronized users and groups.
-2. You can now log in to QueryPie with your Okta account by clicking Login with Okta on the sign-in page.
+1. In General Settings &gt; Users or Groups menu, you can verify the synchronized users and groups.
+2. You can now log in to QueryPie with your Okta account by clicking the `Login with Okta` button on the sign-in page.
 
 <figure data-layout="center" data-align="center">
 ![image-20240723-070449.png](/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-070449.png)
