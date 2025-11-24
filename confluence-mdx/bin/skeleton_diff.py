@@ -280,10 +280,19 @@ def filter_diff_output(
     return filtered_output
 
 
-def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[str], Optional[Path]]:
+def compare_with_korean_skel(current_skel_path: Path, convert_func=None) -> Tuple[bool, Optional[str], Optional[Path]]:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
     If current file is not Korean, find Korean equivalent and run diff.
+    
+    Before comparing, regenerates both .skel.mdx files from their original .mdx files
+    to ensure fresh comparison.
+
+    Args:
+        current_skel_path: Path to the current .skel.mdx file
+        convert_func: Optional function to convert .mdx to .skel.mdx. 
+                     Takes Path and returns Tuple[Path, Optional[str], Optional[Path]].
+                     If provided, will regenerate skeleton files before comparison.
 
     Returns:
         Tuple of (should_continue, comparison_result, unmatched_file_path)
@@ -315,9 +324,26 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
     if korean_skel_path is None:
         return True, None, None
 
-    # Check if Korean .skel.mdx file exists
-    if not korean_skel_path.exists():
+    # Get original .mdx file paths
+    current_mdx_path = get_original_mdx_path(current_skel_path)
+    korean_mdx_path = get_original_mdx_path(korean_skel_path)
+
+    # Check if original .mdx files exist
+    if current_mdx_path is None or not current_mdx_path.exists():
         return True, None, None
+    if korean_mdx_path is None or not korean_mdx_path.exists():
+        return True, None, None
+
+    # Regenerate skeleton files from original .mdx files if convert_func is provided
+    if convert_func is not None:
+        try:
+            # Regenerate current skeleton file (convert_func only converts, doesn't compare)
+            current_skel_path = convert_func(current_mdx_path)
+            # Regenerate Korean skeleton file (convert_func only converts, doesn't compare)
+            korean_skel_path = convert_func(korean_mdx_path)
+        except Exception as e:
+            print(f"Error regenerating skeleton files: {e}", file=sys.stderr)
+            return True, None, None
 
     # Run diff command
     try:
