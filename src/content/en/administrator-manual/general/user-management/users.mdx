@@ -10,6 +10,7 @@ import { Callout } from 'nextra/components'
 
 The User page allows you to view the list of users currently registered in QueryPie and perform various management tasks.
 
+
 ### Viewing User List
 
 You can view the user list in the User page, and search and filter functions are provided.
@@ -49,9 +50,11 @@ Description Display by Type
 
 *  **Status**  : Account activation status (Active or Inactive)
 
+
 ### Adding Users Manually
 
-Add new users to your organization manually. After adding users, you can assign them to groups and policies and grant permissions.
+Add new users to your organization manually.
+After adding users, you can assign them to groups and policies and grant permissions.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; Add User](/administrator-manual/general/user-management/users/screenshot-20240726-093805.png)
@@ -73,7 +76,9 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; Add User
 The user's Username field is a unique value and cannot be modified after initial addition.
 </Callout>
 
-You can confirm that the user has been added to the Users list as QueryPie Provider. By default, they are registered as a basic User without Admin privileges.
+You can confirm that the user has been added to the Users list as QueryPie Provider.
+By default, they are registered as a basic User without Admin privileges.
+
 
 ### Granting or Revoking Administrator Roles to Users
 
@@ -101,9 +106,14 @@ Administrator &gt; General &gt; User Management &gt; Users
 For methods to manage administrator roles themselves, please refer to the [Roles](roles) documentation.
 </Callout>
 
+
 ### Viewing User Details
 
-Click on a user in the Users page to enter the detail information page. You can view registered information and perform user management tasks. Attribute-based Access Control (ABAC) can be implemented with attributes registered in the user profile. User detail information is divided into Profile, Groups, Admin Roles, Allowed Zones, and Tags tabs. For descriptions of each item, please refer to the [User Profile documentation](users/user-profile).
+Click on a user in the Users page to enter the detail information page.
+You can view registered information and perform user management tasks.
+Attribute-based Access Control (ABAC) can be implemented with attributes registered in the user profile.
+User detail information is divided into Profile, Groups, Admin Roles, Allowed Zones, and Tags tabs.
+For descriptions of each item, please refer to the [User Profile documentation](users/user-profile).
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/users/screenshot-20240726-093748.png)
@@ -115,6 +125,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 <Callout type="info">
 Only users registered through QueryPie can modify Profile information and delete users, and users integrated through SCIM must reflect modifications through ledger data updates.
 </Callout>
+
 
 ### Deactivating Users
 
@@ -150,13 +161,16 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 The account status of deactivated users is displayed as Inactive, and Description shows Locked Manually.
 </Callout>
 
+
 ### Reactivating Users
 
-User accounts that have been manually deactivated by administrators or deactivated due to long-term inactivity are displayed with Inactive status. There are two main methods to reactivate these user accounts.
+User accounts that have been manually deactivated by administrators or deactivated due to long-term inactivity are displayed with Inactive status.
+There are two main methods to reactivate these user accounts.
 
 #### Reactivating from Users Page
 
-In the Status dropdown within the user page, change the Status value of the user you want to reactivate to Active. When a reason input modal is displayed, enter the reason for change and click the `OK` button to complete the change.
+In the Status dropdown within the user page, change the Status value of the user you want to reactivate to Active.
+When a reason input modal is displayed, enter the reason for change and click the `OK` button to complete the change.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users](/administrator-manual/general/user-management/users/screenshot-20240726-103711.png)
@@ -167,7 +181,8 @@ Administrator &gt; General &gt; User Management &gt; Users
 
 #### Reactivating from User Detail Page
 
-Click the `Reactivate` button in the detail page of the deactivated user. When a reason input modal is displayed, enter the reason for change and click the `OK` button to complete the change.
+Click the `Reactivate` button in the detail page of the deactivated user.
+When a reason input modal is displayed, enter the reason for change and click the `OK` button to complete the change.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details ](/administrator-manual/general/user-management/users/screenshot-20240726-103241.png)
@@ -176,13 +191,17 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 </figcaption>
 </figure>
 
+
 ### Modifying User Information
 
 <Callout type="important">
-Only information of users manually registered in QueryPie can be modified. Modifying user information integrated through SCIM is possible after ledger data updates and synchronization.
+Only information of users manually registered in QueryPie can be modified.
+Modifying user information integrated through SCIM is possible after ledger data updates and synchronization.
 </Callout>
 
-Click the `Edit` button in the user detail page to enter edit mode. Modifiable fields are activated. After completing input, click the `Save` button to complete the modification.
+Click the `Edit` button in the user detail page to enter edit mode.
+Modifiable fields are activated.
+After completing input, click the `Save` button to complete the modification.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Edit](/administrator-manual/general/user-management/users/screenshot-20240726-094436.png)
@@ -191,10 +210,12 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figcaption>
 </figure>
 
+
 ### Deleting Users
 
 <Callout type="important">
-Only users manually registered in QueryPie can be directly deleted. Deleting users integrated through SCIM is possible after ledger data updates and synchronization.
+Only users manually registered in QueryPie can be directly deleted.
+Deleting users integrated through SCIM is possible after ledger data updates and synchronization.
 </Callout>
 
 Click the `Delete` button in the user detail page to display the Delete User confirmation modal.
@@ -208,13 +229,16 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 </figcaption>
 </figure>
 
+
 ### Resetting User Passwords
 
 <Callout type="important">
-Only users manually registered in QueryPie can have their passwords reset. Authentication methods for users integrated through SCIM are managed in SCIM.
+Only users manually registered in QueryPie can have their passwords reset.
+Authentication methods for users integrated through SCIM are managed in SCIM.
 </Callout>
 
-Password reset is performed through temporary password issuance. Administrators must issue temporary passwords in the user detail page and guide users to the temporary passwords.
+Password reset is performed through temporary password issuance.
+Administrators must issue temporary passwords in the user detail page and guide users to the temporary passwords.
 
 #### Issuing Temporary Passwords
 
@@ -254,7 +278,9 @@ Password Reset Email
 
 #### Password Reset (User)
 
-When users log in with the temporary password set earlier, they immediately enter the password reset screen. After changing the password, click the `Change Password` button to complete the password change, and they can log in with the new password.
+When users log in with the temporary password set earlier, they immediately enter the password reset screen.
+After changing the password, click the `Change Password` button to complete the password change, and they can log in with the new password.
+
 
 <figure data-layout="center" data-align="center">
 ![Password Reset Screen](/administrator-manual/general/user-management/users/image-20241220-014612.png)
@@ -263,13 +289,18 @@ Password Reset Screen
 </figcaption>
 </figure>
 
+
 ### Resetting User OTP
 
-Click on a user in the Users page to enter the detail information page. If 2FA is configured through OTP, OTP reset functionality is provided. After OTP reset, users must reconfigure their OTP. For methods to reconfigure OTP, please refer to the [My Dashboard](../../../user-manual/my-dashboard) documentation.
+Click on a user in the Users page to enter the detail information page.
+If 2FA is configured through OTP, OTP reset functionality is provided.
+After OTP reset, users must reconfigure their OTP.
+For methods to reconfigure OTP, please refer to the [My Dashboard](../../../user-manual/my-dashboard) documentation.
 
 #### User OTP Reset
 
-Click the `Reset OTP` button in the user's detail page. When a warning modal is displayed, click the `Reset` button to complete the reset.
+Click the `Reset OTP` button in the user's detail page.
+When a warning modal is displayed, click the `Reset` button to complete the reset.
 
 <figure data-layout="center" data-align="center">
 ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/users/image-20250116-131037.png)

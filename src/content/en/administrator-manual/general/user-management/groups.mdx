@@ -8,12 +8,16 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie provides a group feature that allows users to be grouped and managed in bulk. Groups can be used as units for DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments. The Groups page allows you to view and manage the list of user groups registered in QueryPie.
+QueryPie provides a group feature that allows users to be grouped and managed in bulk.
+Groups can be used as units for DB access permissions, Workflow approval/reviewer roles, and server or Kubernetes role assignments.
+The Groups page allows you to view and manage the list of user groups registered in QueryPie.
 
 
 ### Viewing Group List
 
-When you enter the Administrator > General > User Management > Groups page, you can view the group list. You can search by group name. The viewable information is as follows:
+When you enter the Administrator &gt; General &gt; User Management &gt; Groups page, you can view the group list.
+You can search by group name.
+The viewable information is as follows:
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups](/administrator-manual/general/user-management/groups/image-20240714-053938.png)
@@ -63,12 +67,12 @@ Administrator &gt; General &gt; User Management &gt; Groups &gt; Details
       Adding users to group
       </figcaption>
       </figure>
-
 2. Click the `Save` button to save the group changes. You can verify the added users in the group list and detailed information Drawer.
 
 <Callout type="info">
 **Q. I want to add a specific user to a group, but they don't appear in the modal.**
-A. The user addition modal only displays active users. Check in the Users page whether the user's account status is Inactive.
+A. The user addition modal only displays active users.
+Check in the Users page whether the user's account status is Inactive.
 </Callout>
 
 
@@ -88,7 +92,8 @@ Administrator &gt; General &gt; User Management &gt; Groups &gt; Details
 
 ### Changing Group Name
 
-Click the `Edit` button at the top of the group details Drawer to display the edit modal. Change the group name and click the `Save` button to save.
+Click the `Edit` button at the top of the group details Drawer to display the edit modal.
+Change the group name and click the `Save` button to save.
 
 <figure data-layout="center" data-align="center">
 ![Administrator > General > User Management > Groups > Details > Update Group](/administrator-manual/general/user-management/groups/screenshot-20240726-122036.png)
@@ -100,7 +105,9 @@ Administrator &gt; General &gt; User Management &gt; Groups &gt; Details &gt; Up
 
 ### Deleting Groups
 
-Select the group you want to delete with a checkbox in the Groups list. The `Delete` button appears in the table header. Click the button and click the `OK` button in the confirmation modal to complete deletion.
+Select the group you want to delete with a checkbox in the Groups list.
+The `Delete` button appears in the table header.
+Click the button and click the `OK` button in the confirmation modal to complete deletion.
 
 <figure data-layout="center" data-align="center">
 ![screenshot-20240726-123314.png](/administrator-manual/general/user-management/groups/screenshot-20240726-123314.png)
@@ -111,5 +118,6 @@ Group name changes and deletion are only possible for groups manually added in Q
 </Callout>
 
 <Callout type="important">
-When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked. Group deletion cannot be undone, so please proceed with caution.
+When a group is deleted, users belonging to the group are not deleted, but permissions and roles granted through the group are immediately revoked.
+Group deletion cannot be undone, so please proceed with caution.
 </Callout>
