@@ -675,14 +675,25 @@ class TextProcessor:
         Uses token-based approach instead of regex to avoid pattern matching issues.
         """
         # Step 0: Separate concatenated patterns (e.g., "**_TEXT_****_TEXT_**" -> "**_TEXT_** **_TEXT_**")
-        # This handles cases where multiple bold/italic patterns are concatenated without spaces
-        text = re.sub(r'(\*\*_TEXT_\*\*)(\*\*_TEXT_\*\*)', r'\1 \2', text)
-        text = re.sub(r'(\*_TEXT_\*)(\*_TEXT_\*)', r'\1 \2', text)
-        text = re.sub(r'(`_TEXT_`)(`_TEXT_`)', r'\1 \2', text)
-        # Separate _TEXT_ followed by bold/italic/code patterns (e.g., "_TEXT_**_TEXT_**" -> "_TEXT_ **_TEXT_**")
-        text = re.sub(r'(_TEXT_)(\*\*_TEXT_\*\*)', r'\1 \2', text)
-        text = re.sub(r'(_TEXT_)(\*_TEXT_\*)', r'\1 \2', text)
-        text = re.sub(r'(_TEXT_)(`_TEXT_`)', r'\1 \2', text)
+        # This handles cases where multiple patterns are concatenated without spaces
+        # Define all patterns that need spacing when concatenated
+        patterns = [
+            r'\*\*_TEXT_\*\*',  # Bold: **_TEXT_**
+            r'\*_TEXT_\*',      # Italic: *_TEXT_*
+            r'`_TEXT_`',        # Inline code: `_TEXT_`
+            r'_TEXT_',          # Text placeholder: _TEXT_
+        ]
+        
+        # Add space between any two patterns (same or different) that are concatenated without space
+        # This handles:
+        # - Same patterns (e.g., "**_TEXT_****_TEXT_**" -> "**_TEXT_** **_TEXT_**")
+        # - Different patterns in any order (e.g., "_TEXT_**_TEXT_**" or "*_TEXT_*_TEXT_")
+        # Process all combinations to ensure both directions are handled
+        for pattern1 in patterns:
+            for pattern2 in patterns:
+                # Create regex pattern: (pattern1)(pattern2) -> (pattern1) (pattern2)
+                regex_pattern = f'({pattern1})({pattern2})'
+                text = re.sub(regex_pattern, r'\1 \2', text)
         
         # Step 1: Merge consecutive _TEXT_ placeholders
         text = re.sub(r'_TEXT_([\s_]*_TEXT_)+', '_TEXT_', text)
