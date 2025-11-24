@@ -280,25 +280,116 @@ def filter_diff_output(
     return filtered_output
 
 
-def compare_with_korean_skel(current_skel_path: Path, convert_func=None) -> Tuple[bool, Optional[str], Optional[Path]]:
+def _compare_two_skeleton_files(
+    korean_skel_path: Path,
+    translation_skel_path: Path,
+    translation_mdx_path: Path
+) -> Tuple[bool, Optional[str], Optional[Path]]:
+    """
+    Internal function to compare two skeleton files.
+    
+    Args:
+        korean_skel_path: Path to the Korean skeleton MDX file
+        translation_skel_path: Path to the translation skeleton MDX file
+        translation_mdx_path: Path to the original translation MDX file (for error reporting)
+    
+    Returns:
+        Tuple of (should_continue, comparison_result, unmatched_file_path)
+    """
+    global _diff_count, _match_count, _max_diff, _ignore_rules
+    
+    # Check if max_diff is set and already reached
+    if _max_diff is not None:
+        if _diff_count >= _max_diff:
+            return False, None, None
+    
+    # Run diff command
+    try:
+        # Build diff command with unified format (-U 2 for 2 lines of context, -b to ignore whitespace amount differences)
+        # Note: -b ignores amount of whitespace but preserves line breaks and whitespace presence/absence
+        diff_cmd = ['diff', '-u', '-U', '2', '-b', str(korean_skel_path), str(translation_skel_path)]
+        
+        # Run diff and capture output
+        result = subprocess.run(
+            diff_cmd,
+            capture_output=True,
+            text=True,
+            check=False  # Don't raise exception on non-zero exit
+        )
+        
+        # Check if files are different (exit code 1 means differences found)
+        # Exit code 0 means files are identical
+        if result.returncode == 1:
+            # Get file path for ignore rules (use .mdx path, not .skel.mdx)
+            # Use full path including target/{lang}/ prefix
+            file_path_for_ignore = str(translation_mdx_path)
+            
+            # Filter diff output using ignore rules
+            filtered_diff = result.stdout
+            if file_path_for_ignore and _ignore_rules:
+                filtered_diff = filter_diff_output(result.stdout, file_path_for_ignore, _ignore_rules)
+            
+            # Check if filtered diff is empty (all differences were ignored)
+            # Remove file headers to check if there's actual content
+            filtered_content = '\n'.join([l for l in filtered_diff.split('\n') 
+                                         if l and not l.startswith('--- ') and not l.startswith('+++ ')])
+            
+            if filtered_content.strip():
+                # Files are different (after filtering), increment diff count
+                _diff_count += 1
+                
+                # Print command with "+ " prefix (only when there are actual differences)
+                print(f"+ {' '.join(diff_cmd)}")
+                
+                # Print filtered diff output
+                print(filtered_diff, end='')
+                
+                # Print original .mdx file diff (also filtered)
+                original_diff = format_diff_with_original_content(
+                    filtered_diff,
+                    korean_skel_path,
+                    translation_skel_path
+                )
+                if original_diff:
+                    print(original_diff, end='')
+            else:
+                # All differences were ignored, treat as matched
+                _match_count += 1
+                return True, 'matched', None
+            
+            # Check if max_diff reached
+            if _max_diff is not None:
+                if _diff_count >= _max_diff:
+                    return False, 'unmatched', translation_mdx_path
+            return True, 'unmatched', translation_mdx_path
+        elif result.returncode == 0:
+            # Files are identical, increment match count
+            _match_count += 1
+            return True, 'matched', None
+        
+        # Print stderr if any (errors)
+        if result.stderr:
+            print(result.stderr, end='', file=sys.stderr)
+    
+    except Exception as e:
+        print(f"Error running diff: {e}", file=sys.stderr)
+    
+    return True, None, None
+
+
+def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[str], Optional[Path]]:
     """
     Compare current .skel.mdx file with Korean equivalent if it exists.
-    If current file is not Korean, find Korean equivalent and run diff.
+    This function only performs comparison and does not modify or regenerate skeleton files.
     
-    Before comparing, regenerates both .skel.mdx files from their original .mdx files
-    to ensure fresh comparison.
-
     Args:
-        current_skel_path: Path to the current .skel.mdx file
-        convert_func: Optional function to convert .mdx to .skel.mdx. 
-                     Takes Path and returns Tuple[Path, Optional[str], Optional[Path]].
-                     If provided, will regenerate skeleton files before comparison.
+        current_skel_path: Path to the current .skel.mdx file to compare
 
     Returns:
         Tuple of (should_continue, comparison_result, unmatched_file_path)
-        should_continue: True if it should continue processing, False if max_diff is reached and should stop
-        comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
-        unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
+        - should_continue: True if it should continue processing, False if max_diff is reached and should stop
+        - comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
+        - unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
     """
     global _diff_count, _match_count, _max_diff, _exclude_patterns, _ignore_rules
 
@@ -319,111 +410,28 @@ def compare_with_korean_skel(current_skel_path: Path, convert_func=None) -> Tupl
             return False, None, None
 
     # Get Korean equivalent path
-    korean_skel_path = get_korean_equivalent_path(current_skel_path)
+    korean_skel_path, korean_exists = get_korean_equivalent_path(current_skel_path)
 
     if korean_skel_path is None:
         return True, None, None
 
-    # Get original .mdx file paths
+    # Check if skeleton files exist
+    if not current_skel_path.exists():
+        return True, None, None
+    if not korean_exists:
+        return True, None, None
+
+    # Get the original .mdx file path for comparison
     current_mdx_path = get_original_mdx_path(current_skel_path)
-    korean_mdx_path = get_original_mdx_path(korean_skel_path)
-
-    # Check if original .mdx files exist
-    if current_mdx_path is None or not current_mdx_path.exists():
-        return True, None, None
-    if korean_mdx_path is None or not korean_mdx_path.exists():
+    if current_mdx_path is None:
         return True, None, None
 
-    # Regenerate skeleton files from original .mdx files if convert_func is provided
-    if convert_func is not None:
-        try:
-            # Regenerate current skeleton file (convert_func only converts, doesn't compare)
-            current_skel_path = convert_func(current_mdx_path)
-            # Regenerate Korean skeleton file (convert_func only converts, doesn't compare)
-            korean_skel_path = convert_func(korean_mdx_path)
-        except Exception as e:
-            print(f"Error regenerating skeleton files: {e}", file=sys.stderr)
-            return True, None, None
-
-    # Run diff command
-    try:
-        # Build diff command with unified format (-U 2 for 2 lines of context, -b to ignore whitespace amount differences)
-        # Note: -b ignores amount of whitespace but preserves line breaks and whitespace presence/absence
-        diff_cmd = ['diff', '-u', '-U', '2', '-b', str(korean_skel_path), str(current_skel_path)]
-
-        # Run diff and capture output
-        result = subprocess.run(
-            diff_cmd,
-            capture_output=True,
-            text=True,
-            check=False  # Don't raise exception on non-zero exit
-        )
-
-        # Check if files are different (exit code 1 means differences found)
-        # Exit code 0 means files are identical
-        if result.returncode == 1:
-            # Get file path for ignore rules (use .mdx path, not .skel.mdx)
-            # Use full path including target/{lang}/ prefix
-            current_mdx_path = get_original_mdx_path(current_skel_path)
-            file_path_for_ignore = None
-            if current_mdx_path:
-                # Use full path including target/{lang}/ prefix
-                file_path_for_ignore = str(current_mdx_path)
-            
-            # Filter diff output using ignore rules
-            filtered_diff = result.stdout
-            if file_path_for_ignore and _ignore_rules:
-                filtered_diff = filter_diff_output(result.stdout, file_path_for_ignore, _ignore_rules)
-            
-            # Check if filtered diff is empty (all differences were ignored)
-            # Remove file headers to check if there's actual content
-            filtered_content = '\n'.join([l for l in filtered_diff.split('\n') 
-                                         if l and not l.startswith('--- ') and not l.startswith('+++ ')])
-            
-            if filtered_content.strip():
-                # Files are different (after filtering), increment diff count
-                _diff_count += 1
-
-                # Print command with "+ " prefix (only when there are actual differences)
-                print(f"+ {' '.join(diff_cmd)}")
-
-                # Print filtered diff output
-                print(filtered_diff, end='')
-
-                # Print original .mdx file diff (also filtered)
-                original_diff = format_diff_with_original_content(
-                    filtered_diff,
-                    korean_skel_path,
-                    current_skel_path
-                )
-                if original_diff:
-                    print(original_diff, end='')
-            else:
-                # All differences were ignored, treat as matched
-                _match_count += 1
-                return True, 'matched', None
-
-            # Get the original .mdx file path for the unmatched file
-            current_mdx_path = get_original_mdx_path(current_skel_path)
-            
-            # Check if max_diff reached
-            if _max_diff is not None:
-                if _diff_count >= _max_diff:
-                    return False, 'unmatched', current_mdx_path
-            return True, 'unmatched', current_mdx_path
-        elif result.returncode == 0:
-            # Files are identical, increment match count
-            _match_count += 1
-            return True, 'matched', None
-
-        # Print stderr if any (errors)
-        if result.stderr:
-            print(result.stderr, end='', file=sys.stderr)
-
-    except Exception as e:
-        print(f"Error running diff: {e}", file=sys.stderr)
-
-    return True, None, None
+    # Use the common comparison function
+    return _compare_two_skeleton_files(
+        korean_skel_path,
+        current_skel_path,
+        current_mdx_path
+    )
 
 
 def process_directory(directory: Path, convert_func) -> Tuple[int, int, int, int, int, List[str], List[Path]]:

@@ -8,7 +8,7 @@ It includes functions for path manipulation and language code extraction.
 
 import re
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 
 def extract_language_code(file_path: Path) -> Optional[str]:
@@ -24,33 +24,45 @@ def extract_language_code(file_path: Path) -> Optional[str]:
     # Check for language codes in the target/{lang}/ pattern at the start
     for lang in ['ko', 'en', 'ja']:
         pattern = r'^target[/\\]' + lang + r'[/\\]'
-        if re.match(pattern, path_lower, re.IGNORECASE):
+        if re.match(pattern, path_lower):
             return lang.lower()
 
     return None
 
 
-def get_korean_equivalent_path(file_path: Path) -> Optional[Path]:
+def get_korean_equivalent_path(file_path: Path) -> Tuple[Path, bool]:
     """
     Gets the Korean equivalent path by replacing the language code in the path.
     Assumes a relative path starting with target/{lang}/.
-    If file_path is target/en/file.mdx, returns target/ko/file.mdx.
-    If file_path is target/ja/file.mdx, returns target/ko/file.mdx.
-    If no language code found, returns None.
+    If file_path is target/en/file.mdx, returns (target/ko/file.mdx, True/False).
+    If file_path is target/ja/file.mdx, returns (target/ko/file.mdx, True/False).
+    If no language code found, returns (None, False).
+    
+    Args:
+        file_path: Path to the file
+        
+    Returns:
+        Tuple of (path, exists):
+        - path: Path to the Korean equivalent file, or None if not found
+        - exists: True if the Korean equivalent path actually exists, False otherwise
     """
     path_str = str(file_path)
-    path_lower = path_str.lower()
-
-    # Try to replace language codes in the target/{lang}/ pattern
-    for lang in ['en', 'ja']:
-        # Match the target/{lang}/ pattern at the start
-        pattern = r'^target[/\\]' + lang + r'[/\\]'
-        if re.match(pattern, path_lower, re.IGNORECASE):
-            # Replace target/{lang}/ with target/ko/
-            new_path_str = re.sub(pattern, 'target/ko/', path_str, flags=re.IGNORECASE, count=1)
-            return Path(new_path_str)
-
-    return None
+    # Split path by '/'
+    path_parts = path_str.split('/')
+    
+    # Find and replace language code (en, ja) with ko
+    for i, part in enumerate(path_parts):
+        if part in ['en', 'ja']:
+            # Replace with 'ko'
+            korean_parts = path_parts[:]
+            korean_parts[i] = 'ko'
+            korean_path_str = '/'.join(korean_parts)
+            korean_path = Path(korean_path_str)
+            # Check if the path actually exists
+            exists = korean_path.exists()
+            return korean_path, exists
+    
+    return file_path, False
 
 
 def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
@@ -66,7 +78,7 @@ def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
     # Check for the target/{lang}/ pattern at the start (relative path only)
     for lang in ['ko', 'en', 'ja']:
         pattern = r'^target[/\\]' + lang + r'[/\\]'
-        match = re.match(pattern, path_lower, re.IGNORECASE)
+        match = re.match(pattern, path_lower)
         if match:
             end = match.end()
             relative_path = path_str[end:]
