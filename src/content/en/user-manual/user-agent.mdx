@@ -243,7 +243,7 @@ Agent &gt; Settings &gt; Configure Kubeconfig Path
 </figure>
 
 *  **Path Configuration**  : You can specify the storage path for the Kubeconfig file.
-    * The default value is `${HOME}/.kube/querypie-kubeconfig` setting.
+    * The default value is `$HOME/.kube/querypie-kubeconfig`.
     * Click the `Upload` button on the right of the path field to display a popup where you can specify a local file path. 
 
 
@@ -270,8 +270,8 @@ export KUBECONFIG="${KUBECONFIG}:<user-specified-path>"
 
 3) For more detailed information about kubeconfig, please refer to the following links.
 
-* Reference: [kubeconfig file merging](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
-* Reference: [KUBECONFIG environment variable setting](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
+* Reference: [Organizing Cluster Access Using kubeconfig Files](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+* Reference: [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
 
 4) `Copy` the command line to copy it, declare it in the client, and you can switch the context to an accessible cluster.
 ```
