@@ -8,7 +8,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie supports integrating users from AWS IAM Identity Center with multiple cloud applications via SAML 2.0. You can synchronize users, grant access, and apply policies.
+QueryPie supports integrating users from AWS IAM Identity Center with multiple cloud applications via SAML 2.0.
+You can synchronize users, grant access, and apply policies.
 
 <Callout type="important">
 If you configure SAML under Identity Providers Integration with Type = SAML, periodic synchronization by schedule is not supported.
@@ -31,6 +32,7 @@ If you configure SAML under Identity Providers Integration with Type = SAML, per
     1. Application ACS URL: https://`{querypie_host}`/saml/sp/acs
     2. Application SAML audience: https://`{querypie_host}`/saml/sp/metadata
 8. Click Submit to save.
+
 
 ### Attribute mappings for QueryPie integration
 
@@ -74,3 +76,5 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figure>
 
 Click `Login with SAML` on the login page to authenticate with AWS and sign in to QueryPie.
+
+

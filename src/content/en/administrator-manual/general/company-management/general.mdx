@@ -52,13 +52,15 @@ Workflow Configurations allows you to change settings related to approval submis
 
 Sets the maximum period to uniformly limit the approval expiration date for all workflow requests.
 
-Administrators can set the period until approval pending requests are automatically expired from 1 day to a maximum of 14 days in the Maximum Approval Duration item. The period set here is applied as the maximum value for the Approval Expiration Date (approval expiration date) that users select when submitting workflows.
+Administrators can set the period until approval pending requests are automatically expired from 1 day to a maximum of 14 days in the Maximum Approval Duration item.
+The period set here is applied as the maximum value for the Approval Expiration Date (approval expiration date) that users select when submitting workflows.
 
 * If the Maximum Access Duration in Admin &gt; Databases &gt; Configurations or the Maximum Access Duration in Admin &gt; Servers &gt; Configurations is set shorter than the Maximum Approval Duration, the Approval Expiration Date follows the shorter Access Expiration Date (access expiration date) to prevent situations where approval is processed after permissions have already expired.
 
 ### Workflow Reason Input Character Count Limit Setting
 
-This is a feature to set the minimum and maximum character count for Reason for Request in workflows and Comments entered when approving, rejecting, canceling, or confirming. Through this setting, administrators can manage input character count according to organizational policies.
+This is a feature to set the minimum and maximum character count for Reason for Request in workflows and Comments entered when approving, rejecting, canceling, or confirming.
+Through this setting, administrators can manage input character count according to organizational policies.
 
 * Administrators can specify character count ranges for the following items on the Workflow Configurations page.
     * Reason for Request: Sets the minimum and maximum character count for reason input when submitting workflows. (Default: minimum 3 characters, maximum 1000 characters)
@@ -136,10 +138,12 @@ This is a feature to hide the Workflow menu from the user dashboard based on spe
 ### Allow Delegated Approval (Enable/Disable)
 
 <Callout type="info">
-The option to enable/disable delegated approval was added in 11.3.0.<br/>From 11.4.0, audit logs are recorded for user approval delegation assignment/removal events. These logs can be queried using the External API (/api/external/v2/workflows/approval-delegations/logs).
+The option to enable/disable delegated approval was added in 11.3.0.<br/>From 11.4.0, audit logs are recorded for user approval delegation assignment/removal events.
+These logs can be queried using the External API (/api/external/v2/workflows/approval-delegations/logs).
 </Callout>
 
-This option allows administrators to enable or disable delegated approval, a feature that delegates the approver role to another user for a certain period. If disabled, the Approver setting menu will not be displayed on the user preferences screen.
+This option allows administrators to enable or disable delegated approval, a feature that delegates the approver role to another user for a certain period.
+If disabled, the Approver setting menu will not be displayed on the user preferences screen.
 
 <figure data-layout="center" data-align="center">
 ![Allow Delegated Approval switch](/administrator-manual/general/company-management/general/image-20250926-112444.png)
@@ -163,7 +167,9 @@ When the toggle is turned on, throttling is applied when executing SQL requests 
 ![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
 </figure>
 
-When this option is enabled, queries are executed continuously for the specified number, then wait for the specified interval (ms). This prevents DB load from large-scale query execution.
+
+When this option is enabled, queries are executed continuously for the specified number, then wait for the specified interval (ms).
+This prevents DB load from large-scale query execution.
 
 *  **Query chunk size**  : Set to a value between 1~999,999, divides multiple queries by that number and executes them sequentially
     * Example) When there are 100 queries, if Query chunk size is set to 10, 10 queries are executed at once.
@@ -177,7 +183,8 @@ Activate the Redirect to custom page for SQL Requests toggle.
 ![Screenshot-2025-05-09-at-8.33.07-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png)
 </figure>
 
-This option determines whether to redirect users to a pre-defined custom URL page when `Send Request` clicking the button when workflow approval requests occur due to INSERT, UPDATE, DELETE query execution on Ledger tables in User Agent. This allows customers to strengthen integration with their own external workflow systems.
+This option determines whether to redirect users to a pre-defined custom URL page when `Send Request` clicking the button when workflow approval requests occur due to INSERT, UPDATE, DELETE query execution on Ledger tables in User Agent.
+This allows customers to strengthen integration with their own external workflow systems.
 
 * When the toggle is activated
     * A field to input custom URLs appears in the Administrator &gt; General &gt; Workflow Configurations page.
