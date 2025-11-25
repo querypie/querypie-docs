@@ -43,8 +43,15 @@ services:
     env_file:
       - .env
     volumes:
-      # Mount output directory to host
-      - ./target:/workdir/target
+      # Mount output directories to host (matching symlink structure in target/)
+      # target/ko -> ../../src/content/ko
+      - ../src/content/ko:/workdir/target/ko
+      # target/en -> ../../src/content/en
+      - ../src/content/en:/workdir/target/en
+      # target/ja -> ../../src/content/ja
+      - ../src/content/ja:/workdir/target/ja
+      # target/public -> ../../public
+      - ../public:/workdir/target/public
       # Mount log files to host (optional)
       - ./logs:/workdir/logs
     # Default command is help (modify command section to change)
