@@ -30,8 +30,8 @@ QueryPieでは、アクセス制御を適用するオンプレミスなどに位
         1.  **Service Account Token**  : QueryPie ProxyでユーザーKubernetes API呼び出し時に使用するKubernetesクラスターのサービスアカウントトークン値を入力します。
         2.  **Certificate Authority**  : QueryPieでKubernetes APIサーバー証明書を検証するCA証明書を入力します。
         3.  **Verify Credential**  : サービスアカウントトークンおよびCA証明書をすべて入力すると該当ボタンが活性化されます。ボタンをクリックすると正常接続が可能かどうかをチェックできます。実行結果に応じて以下のように結果が表示されます。
-            * :check_mark:  **Verified**  : クラスター接続成功でサービスアカウントトークンおよびCA証明書が正常に入力されたことを意味します。
-            * :cross_mark:  **Verification Failed**  : クラスター接続失敗でサービスアカウントトークンおよびCA証明書中に値のエラーがあるか、ネットワーク接続に失敗した可能性があることを意味します。
+            * ✔️  **Verified**  : クラスター接続成功でサービスアカウントトークンおよびCA証明書が正常に入力されたことを意味します。
+            * ❌  **Verification Failed**  : クラスター接続失敗でサービスアカウントトークンおよびCA証明書中に値のエラーがあるか、ネットワーク接続に失敗した可能性があることを意味します。
     6.  **Logging Options**  : 該当クラスターに対するログオプションを選択します。
         1.  **Request Audit**  : 該当クラスターに対するKubernetes API呼び出し履歴に対するログ活性化オプションで、Defaultは`On`です。該当機能を`Off`に切り替えると、
             1. 該当クラスターを対象に呼び出されるKubernetes API履歴が残りません。

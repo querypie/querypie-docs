@@ -30,8 +30,8 @@ To manually register individual servers, you need to enter basic server informat
         1.  **Service Account Token**  : Enter the service account token value of the Kubernetes cluster that will be used when QueryPie Proxy makes user Kubernetes API calls. 
         2.  **Certificate Authority**  : Enter the CA certificate that QueryPie will use to verify the Kubernetes API server certificate.
         3.  **Verify Credential**  : This button is activated when both the service account token and CA certificate are entered. Click the button to check if normal connection is possible. The result is displayed as follows based on the execution result:
-            * :check_mark:  **Verified**  : Indicates that the cluster connection was successful and the service account token and CA certificate were entered correctly. 
-            * :cross_mark:  **Verification Failed**  : Indicates that the cluster connection failed, there may be an error in the service account token and CA certificate values, or network connection failed. 
+            * ✔️  **Verified**  : Indicates that the cluster connection was successful and the service account token and CA certificate were entered correctly. 
+            * ❌  **Verification Failed**  : Indicates that the cluster connection failed, there may be an error in the service account token and CA certificate values, or network connection failed. 
     6.  **Logging Options**  : Select logging options for the cluster. 
         1.  **Request Audit**  : This is an option to enable logging for Kubernetes API call history for the cluster, and the default is `On`. When this function is switched to `Off`,
             1. Kubernetes API call history for the cluster will not be recorded. 
