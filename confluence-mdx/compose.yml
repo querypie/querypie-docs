@@ -1,5 +1,5 @@
 # ============================================================================
-# Confluence-MDX Docker Compose Configuration and Usage Guide
+# Confluence-MDX Container Compose Configuration and Usage Guide
 # ============================================================================
 #
 # Quick Start:
@@ -18,7 +18,7 @@
 #   - Convert: docker compose run --rm confluence-mdx convert
 #   - Interactive shell: docker compose run --rm confluence-mdx bash
 #
-# Docker Commands (without compose):
+# Container Commands (without compose):
 #   - Build: docker build -t docker.io/querypie/confluence-mdx:latest .
 #   - Run: docker run docker.io/querypie/confluence-mdx:latest help
 #   - Push: docker push docker.io/querypie/confluence-mdx:latest
@@ -30,8 +30,6 @@
 #
 # ============================================================================
 
-version: '3.8'
-
 services:
   confluence-mdx:
     build:
@@ -40,17 +38,15 @@ services:
     image: docker.io/querypie/confluence-mdx:latest
     container_name: confluence-mdx
     working_dir: /workdir
+    # Load environment variables from .env file (if exists)
+    # Create .env file with: ATLASSIAN_USERNAME=your-email@example.com and ATLASSIAN_API_TOKEN=your-token
+    env_file:
+      - .env
     volumes:
       # Mount output directory to host
       - ./target:/workdir/target
       # Mount log files to host (optional)
       - ./logs:/workdir/logs
-    environment:
-      # Confluence API authentication (set in .env file if needed)
-      # ATLASSIAN_USERNAME: Confluence user email
-      # ATLASSIAN_API_TOKEN: Confluence API token
-      - ATLASSIAN_USERNAME=${ATLASSIAN_USERNAME:-}
-      - ATLASSIAN_API_TOKEN=${ATLASSIAN_API_TOKEN:-}
     # Default command is help (modify command section to change)
     command: ["help"]
     # Uncomment below to keep container running after exit

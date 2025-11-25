@@ -1,4 +1,4 @@
-# Confluence-MDX Docker Image
+# Confluence-MDX Container Image
 # Use Python 3.9 based image
 FROM python:3.9-slim
 

@@ -3,30 +3,39 @@ set -e
 
 case "$1" in
   pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|confluence_xhtml_to_markdown.py)
+    echo "+ python bin/$@"
     exec python "bin/$@"
     ;;
   generate_commands)
     shift
+    echo "+ python bin/generate_commands_for_xhtml2markdown.py $@"
     python bin/generate_commands_for_xhtml2markdown.py "$@"
     ;;
   convert)
+    echo "+ bash bin/xhtml2markdown.ko.sh"
     exec bash bin/xhtml2markdown.ko.sh
     ;;
   full)
     # Execute full workflow
-    echo "Starting full workflow..."
-    python bin/pages_of_confluence.py --attachments || true
+    echo "# Starting full workflow..."
+    echo "+ python bin/pages_of_confluence.py --attachments"
+    python bin/pages_of_confluence.py --attachments
+    echo "+ python bin/translate_titles.py"
     python bin/translate_titles.py
+    echo "+ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh"
     python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh
+    echo "+ chmod +x bin/xhtml2markdown.ko.sh"
     chmod +x bin/xhtml2markdown.ko.sh
+    echo "+ bash bin/xhtml2markdown.ko.sh"
     bash bin/xhtml2markdown.ko.sh
     ;;
   bash|sh)
+    echo "+ $@"
     exec "$@"
     ;;
   help|--help|-h)
     cat << EOF
-Confluence-MDX Docker Container
+Confluence-MDX Container
 
 Usage:
   docker run <image> <command> [args...]
@@ -53,6 +62,7 @@ Environment Variables:
 EOF
     ;;
   *)
+    echo "+ $@"
     exec "$@"
     ;;
 esac

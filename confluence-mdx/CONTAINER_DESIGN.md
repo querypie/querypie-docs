@@ -1,11 +1,11 @@
-# Confluence-MDX Docker 설계 및 계획
+# Confluence-MDX Container 설계 및 계획
 
 ## 1. 개요
 
-이 문서는 `confluence-mdx` 프로젝트를 Dockerize하기 위한 설계와 계획을 설명합니다.
+이 문서는 `confluence-mdx` 프로젝트를 Containerize하기 위한 설계와 계획을 설명합니다.
 
 ### 목표
-- Python venv 설치 과정을 Docker 이미지로 대체
+- Python venv 설치 과정을 Container 이미지로 대체
 - `var/` 디렉토리의 데이터를 컨테이너 내부에 저장
 - 이미지를 빌드하여 다른 컴퓨터에서 재사용 가능하도록 구성
 
@@ -52,7 +52,7 @@ confluence-mdx/
 3. **명령어 생성**: `generate_commands_for_xhtml2markdown.py` → `bin/xhtml2markdown.ko.sh` 생성
 4. **변환 실행**: `xhtml2markdown.ko.sh` → `target/`에 MDX 파일 생성
 
-## 3. Docker 설계
+## 3. Container 설계
 
 ### 3.1 이미지 구조
 
@@ -131,7 +131,7 @@ docker run -it docker.io/querypie/confluence-mdx:latest bash
 ```
 confluence-mdx/
 ├── Dockerfile
-├── .dockerignore
+├── .dockerignore (또는 .containerignore)
 ├── requirements.txt
 ├── compose.yml (선택사항)
 └── scripts/
@@ -189,7 +189,7 @@ pyyaml>=6.0
 emoji>=2.8.0
 ```
 
-### 4.4 .dockerignore
+### 4.4 .dockerignore (또는 .containerignore)
 
 ```
 venv/
@@ -239,7 +239,7 @@ case "$1" in
     ;;
   help|--help|-h)
     cat << EOF
-Confluence-MDX Docker Container
+Confluence-MDX Container
 
 Usage:
   docker run <image> <command> [args...]
@@ -279,7 +279,7 @@ docker build -t docker.io/querypie/confluence-mdx:latest .
 ### 5.2 이미지 태그 및 푸시
 
 ```bash
-# Docker Hub에 푸시
+# Container Registry에 푸시
 docker push docker.io/querypie/confluence-mdx:latest
 
 # 또는 Private Registry에 푸시
@@ -302,7 +302,7 @@ docker run -v $(pwd)/output:/workdir/target \
 
 ### 6.1 이미지 크기
 - `var/` 디렉토리가 크면 이미지 크기가 증가할 수 있음
-- 필요시 `.dockerignore`에서 불필요한 파일 제외
+- 필요시 `.dockerignore` 또는 `.containerignore`에서 불필요한 파일 제외
 - Multi-stage build로 최적화 가능
 
 ### 6.2 데이터 업데이트
@@ -333,7 +333,7 @@ docker run -v $(pwd)/output:/workdir/target \
 
 - [ ] `requirements.txt` 생성
 - [ ] `Dockerfile` 작성
-- [ ] `.dockerignore` 작성
+- [ ] `.dockerignore` (또는 `.containerignore`) 작성
 - [ ] `entrypoint.sh` 작성
 - [ ] 이미지 빌드 테스트
 - [ ] 각 스크립트 실행 테스트
