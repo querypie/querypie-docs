@@ -78,16 +78,15 @@ You can set timeout policies for web console and agents.
     * Timeout processing when there is no activity for the specified time
 *  **Agent Session Timeout** : Agent session timeout criteria (Default: 1,440 minutes)
     * Maintains agent app login for the specified time and processes logout when elapsed
-*  **User Inactivity Timeout (on agent)** : <br/> In addition to the Agent Session Timeout feature, the Agent monitors user mouse and keyboard input and forcibly terminates the session if there is no activity beyond the specified time. In an idle state, even if a long-running query is being executed, if there is no mouse and keyboard movement, the session is terminated and logged out.
+*  **User Inactivity Timeout (on agent)** : <br/> In addition to the Agent Session Timeout feature, the Agent monitors user mouse and keyboard input and forcibly terminates the session if there is no activity (keyboard key input, mouse click, mouse pointer movement, mouse wheel operation, mouse drag) beyond the specified time. In an idle state, even if a long-running query is being executed, if there is no mouse and keyboard movement, the session is terminated and logged out. User activity monitoring is performed every 30 seconds. The maximum idle expiration time cannot exceed the Agent Session Timeout.
 
 <Callout type="info">
 **Example of User Inactivity Timeout (on agent)**
-* Assuming Agent Inactivity Timeout is 15 minutes, <br/> if user action is detected at 12:09 after 1 minute has passed, the last activity time is considered 12:09 and the expiration is updated to 12:24 (15 minutes later).
-    * Logged in at 12:00
-        1. The initial session expiration time is  **12:15:00** 
-    * If the last activity is detected at 12:08 (t+8 minutes), the expiration is updated to 12:23 (15 minutes later)
-        1. New session expiration time:  **12:23:00** 
-    * New session expiration time:  **12:24:00**
+* Assuming Agent Session Timeout is 30 minutes and User Inactivity Timeout is 15 minutes, the following applies:
+    * When logged in at 12:00, the initial idle expiration time is  **12:15:00** .
+    * If the last activity is detected at 12:08 (t+8 minutes), the new idle expiration time is  **12:23:00** .
+    * If activity is detected 1 minute later at 12:09, the new idle expiration time is  **12:24:00** .
+    * Since Agent Session Timeout is 30 minutes, the session terminates at  **12:30:00** regardless of user activity.
 </Callout>
 
 
