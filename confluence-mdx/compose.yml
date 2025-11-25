@@ -1,0 +1,57 @@
+# ============================================================================
+# Confluence-MDX Docker Compose Configuration and Usage Guide
+# ============================================================================
+#
+# Quick Start:
+#   1. Build image: docker compose build
+#   2. Show help: docker compose run --rm confluence-mdx help
+#   3. Full workflow: docker compose run --rm confluence-mdx full
+#
+# Environment Variables (.env file):
+#   ATLASSIAN_USERNAME=your-email@example.com
+#   ATLASSIAN_API_TOKEN=your-api-token
+#
+# Main Commands:
+#   - Full workflow: docker compose run --rm confluence-mdx full
+#   - Collect data: docker compose run --rm confluence-mdx pages_of_confluence.py --attachments
+#   - Translate titles: docker compose run --rm confluence-mdx translate_titles.py
+#   - Convert: docker compose run --rm confluence-mdx convert
+#   - Interactive shell: docker compose run --rm confluence-mdx bash
+#
+# Docker Commands (without compose):
+#   - Build: docker build -t docker.io/querypie/confluence-mdx:latest .
+#   - Run: docker run docker.io/querypie/confluence-mdx:latest help
+#   - Push: docker push docker.io/querypie/confluence-mdx:latest
+#
+# Notes:
+#   - var/ data is included in the image, so image rebuild is required when updating
+#   - target/ directory is volume mounted and saved to host
+#   - Network connection is required for Confluence API calls
+#
+# ============================================================================
+
+version: '3.8'
+
+services:
+  confluence-mdx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker.io/querypie/confluence-mdx:latest
+    container_name: confluence-mdx
+    working_dir: /workdir
+    volumes:
+      # Mount output directory to host
+      - ./target:/workdir/target
+      # Mount log files to host (optional)
+      - ./logs:/workdir/logs
+    environment:
+      # Confluence API authentication (set in .env file if needed)
+      # ATLASSIAN_USERNAME: Confluence user email
+      # ATLASSIAN_API_TOKEN: Confluence API token
+      - ATLASSIAN_USERNAME=${ATLASSIAN_USERNAME:-}
+      - ATLASSIAN_API_TOKEN=${ATLASSIAN_API_TOKEN:-}
+    # Default command is help (modify command section to change)
+    command: ["help"]
+    # Uncomment below to keep container running after exit
+    # restart: "no"
