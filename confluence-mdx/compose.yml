@@ -12,7 +12,9 @@
 #   ATLASSIAN_API_TOKEN=your-api-token
 #
 # Main Commands:
-#   - Full workflow: docker compose run --rm confluence-mdx full
+#   - Full workflow (without attachments): docker compose run --rm confluence-mdx full
+#   - Full workflow with attachments: docker compose run --rm confluence-mdx full --attachments
+#   - Full workflow with local files (no API calls): docker compose run --rm confluence-mdx full --local
 #   - Collect data: docker compose run --rm confluence-mdx pages_of_confluence.py --attachments
 #   - Translate titles: docker compose run --rm confluence-mdx translate_titles.py
 #   - Convert: docker compose run --rm confluence-mdx convert
@@ -24,8 +26,8 @@
 #   - Push: docker push docker.io/querypie/confluence-mdx:latest
 #
 # Notes:
-#   - var/ data is included in the image, so image rebuild is required when updating
-#   - target/ directory is volume mounted and saved to host
+#   - Data in var/ directory is included in the image, so image rebuild is required when updating
+#   - target/ directory is volume mounted and persisted on the host
 #   - Network connection is required for Confluence API calls
 #
 # ============================================================================
@@ -38,11 +40,15 @@ services:
     image: docker.io/querypie/confluence-mdx:latest
     container_name: confluence-mdx
     working_dir: /workdir
-    # Load environment variables from .env file (if exists)
+    # Load environment variables from .env file (if it exists)
     # Create .env file with: ATLASSIAN_USERNAME=your-email@example.com and ATLASSIAN_API_TOKEN=your-token
     env_file:
       - .env
     volumes:
+      # Mount files in var to host
+      - ./var/pages.yaml:/workdir/var/pages.yaml
+      - ./var/list.en.txt:/workdir/var/list.en.txt
+      - ./var/list.txt:/workdir/var/list.txt
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
       - ../src/content/ko:/workdir/target/ko
@@ -54,7 +60,7 @@ services:
       - ../public:/workdir/target/public
       # Mount log files to host (optional)
       - ./logs:/workdir/logs
-    # Default command is help (modify command section to change)
+    # Default command is 'help' (modify command section to override)
     command: ["help"]
     # Uncomment below to keep container running after exit
     # restart: "no"

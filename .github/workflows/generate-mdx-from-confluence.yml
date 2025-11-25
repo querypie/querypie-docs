@@ -1,0 +1,92 @@
+name: Generate MDX from Confluence
+
+on:
+  workflow_dispatch:
+    inputs:
+      use_local:
+        description: 'Use local files (--local option)'
+        required: false
+        default: true
+        type: boolean
+      use_attachments:
+        description: 'Download attachments from Confluence pages (--attachments option)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  generate-mdx:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 전체 히스토리 가져오기 (git status를 위해 필요)
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Pull latest Docker image
+        working-directory: ./confluence-mdx
+        run: |
+          docker compose pull confluence-mdx
+      
+      - name: Generate MDX files
+        working-directory: ./confluence-mdx
+        run: |
+          # 옵션 구성
+          OPTIONS=""
+          
+          if [ "${{ inputs.use_local }}" == "true" ]; then
+            OPTIONS="$OPTIONS --local"
+          fi
+          if [ "${{ inputs.use_attachments }}" == "true" ]; then
+            OPTIONS="$OPTIONS --attachments"
+          fi
+          
+          # 명령어 실행 (--no-build 옵션으로 로컬 빌드 방지)
+          echo "Running: docker compose run --rm --no-build confluence-mdx full $OPTIONS"
+          docker compose run --rm --no-build confluence-mdx full $OPTIONS
+      
+      - name: Check for changes
+        run: |
+          echo "## Changed Files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # git status로 변경된 파일 확인
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "### Modified Files" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            git status --short >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # target 디렉토리 관련 변경사항만 별도로 표시
+            echo "### Changes in target directory" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # 전체 변경사항 통계
+            echo "### Change Statistics" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            git diff --stat HEAD >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No changes detected." >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # 콘솔에도 출력
+          echo "=== Git Status ==="
+          git status
+          
+          echo ""
+          echo "=== Changes in target-related directories ==="
+          git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories"
+          
+          echo ""
+          echo "=== Change Statistics ==="
+          git diff --stat HEAD || echo "No changes to show"
+

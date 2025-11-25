@@ -1,7 +1,8 @@
 #!/bin/bash
-set -e
 
-case "$1" in
+set -o errexit -o nounset
+
+case "${1:-help}" in
   pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|confluence_xhtml_to_markdown.py)
     echo "+ python bin/$@"
     exec python "bin/$@"
@@ -15,11 +16,11 @@ case "$1" in
     echo "+ bash bin/xhtml2markdown.ko.sh"
     exec bash bin/xhtml2markdown.ko.sh
     ;;
-  full)
-    # Execute full workflow
+  full) # Execute full workflow
+    shift
     echo "# Starting full workflow..."
-    echo "+ python bin/pages_of_confluence.py --attachments"
-    python bin/pages_of_confluence.py --attachments
+    echo "+ python bin/pages_of_confluence.py $@"
+    python bin/pages_of_confluence.py "$@"
     echo "+ python bin/translate_titles.py"
     python bin/translate_titles.py
     echo "+ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh"
