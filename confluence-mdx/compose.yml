@@ -34,6 +34,7 @@
 
 services:
   confluence-mdx:
+    platform: linux/amd64  # GitHub Actions runner는 x86_64 아키텍처 사용
     build:
       context: .
       dockerfile: Dockerfile
