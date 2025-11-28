@@ -66,6 +66,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # gh CLI 인증 설정
+          echo "$GITHUB_TOKEN" | gh auth login --with-token
+          
           # src/content/ 변경사항 확인
           # git status --porcelain 출력 형식: " M file" (unstaged), "M  file" (staged), "MM file" (both)
           if ! git status --porcelain src/content/ | grep -q "[AM]"; then
@@ -101,6 +104,9 @@ jobs:
           
           # 커밋
           git commit -m "mdx: Updates from Confluence"
+          
+          # 브랜치 푸시 (PR 생성 전에 필요)
+          git push -u origin "$BRANCH_NAME"
           
           # PR Description 생성 (요청하신 형식에 맞춤)
           # heredoc 대신 printf를 사용하여 YAML 파서 오류 방지
