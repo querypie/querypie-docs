@@ -2,7 +2,7 @@
 """
 Confluence Page Tree Generator
 
-This script generates a list of all subpages from a specified document in a Confluence space.
+This script generates a list of pages from a Confluence space.
 Output format: page_id \t breadcrumbs
 
 The document processing follows 4 distinct stages:
@@ -11,14 +11,18 @@ The document processing follows 4 distinct stages:
 3. Attachment Download: Download attachments if specified
 4. Document Listing: Generate and output a document list with breadcrumbs
 
-The script outputs the page list to stdout and saves the structured data to pages.yaml.
+Modes:
+  --local: Process local files only, starting from default_start_page_id hierarchically
+  --remote: Download and process via API, starting from default_start_page_id hierarchically
+  --recent: Download recently modified pages, then process like --local (default)
 
 Usage examples:
-  python pages_of_confluence.py
-  python pages_of_confluence.py --page-id 123456789
-  python pages_of_confluence.py --email user@example.com --api-token your-api-token
-  python pages_of_confluence.py --attachments # Download page content with attachments
-  python pages_of_confluence.py --local # Use local YAML files instead of making API calls
+  python pages_of_confluence.py  # Same as --recent: download recent pages then process locally
+  python pages_of_confluence.py --local  # Process existing local files hierarchically
+  python pages_of_confluence.py --remote  # Download and process via API hierarchically
+  python pages_of_confluence.py --recent  # Download recent pages then process locally
+  python pages_of_confluence.py --days 14  # Fetch pages modified in last 14 days (with --recent)
+  python pages_of_confluence.py --attachments  # Download page content with attachments
 """
 import argparse
 import logging
@@ -27,8 +31,10 @@ import re
 import sys
 import traceback
 import unicodedata
+from datetime import datetime, timedelta
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Any, Generator, Protocol
+from urllib.parse import quote
 
 import requests
 import yaml
@@ -43,14 +49,16 @@ from requests.auth import HTTPBasicAuth
 class Config:
     """Centralized configuration management"""
     base_url: str = "https://querypie.atlassian.net/wiki"
-    default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs"
+    space_key: str = "QM"  # Confluence space key
+    days: int = 7  # Number of days to look back for modified pages
+    default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "var"
     translations_file: str = "etc/korean-titles-translations.txt"
     email: str = None
     api_token: str = None
     download_attachments: bool = False
-    use_local_files: bool = False
+    mode: str = "recent"  # Mode: "local", "remote", or "recent"
 
     def __post_init__(self):
         if self.email is None:
@@ -271,6 +279,57 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
         return self.make_request(url, "V1 API attachments")
 
+    def get_recently_modified_pages(self, days: int = 7, space_key: str = "QM") -> List[str]:
+        """Get list of page IDs modified in the last N days from the specified space"""
+        try:
+            # Calculate the date threshold
+            threshold_date = datetime.now() - timedelta(days=days)
+            # Format date for CQL: YYYY-MM-DD
+            date_str = threshold_date.strftime("%Y-%m-%d")
+            
+            # Build CQL query
+            cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}"'
+            encoded_query = quote(cql_query)
+            
+            # Use CQL search API
+            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}&limit=1000"
+            
+            self.logger.info(f"Searching for pages modified in last {days} days in space {space_key}")
+            self.logger.debug(f"CQL query: {cql_query}")
+            
+            page_ids = []
+            start = 0
+            limit = 100
+            
+            while True:
+                paginated_url = f"{url}&start={start}&limit={limit}"
+                response_data = self.make_request(paginated_url, "CQL search for recently modified pages")
+                
+                if not response_data:
+                    break
+                
+                results = response_data.get("results", [])
+                if not results:
+                    break
+                
+                for result in results:
+                    page_id = result.get("id")
+                    if page_id:
+                        page_ids.append(page_id)
+                
+                # Check if there are more results
+                if len(results) < limit:
+                    break
+                
+                start += limit
+            
+            self.logger.info(f"Found {len(page_ids)} pages modified in last {days} days")
+            return page_ids
+            
+        except Exception as e:
+            self.logger.error(f"Error getting recently modified pages: {str(e)}")
+            raise ApiError(f"Failed to get recently modified pages: {str(e)}")
+
     def download_attachment(self, page_id: str, attachment_id: str) -> Optional[bytes]:
         """Download attachment content"""
         try:
@@ -420,8 +479,8 @@ class Stage1Processor(StageBase):
     def process(self, page_id: str) -> None:
         self.logger.info(f"Stage 1: Collecting API data for page ID {page_id}")
 
-        # Skip API calls if using local files
-        if self.config.use_local_files:
+        # Skip API calls if using local mode
+        if self.config.mode == "local":
             self.logger.info(f"Stage 1 skipped for page ID {page_id} (local mode)")
             return
 
@@ -534,8 +593,8 @@ class Stage3Processor(StageBase):
             self.logger.info(f"Stage 3 skipped for page ID {page_id} (attachments not requested)")
             return True
 
-        # Skip attachment download if using local files
-        if self.config.use_local_files:
+        # Skip attachment download if using local mode
+        if self.config.mode == "local":
             self.logger.info(f"Stage 3 skipped for page ID {page_id} (local mode)")
             return True
 
@@ -750,7 +809,7 @@ class ConfluencePageProcessor:
             self.logger.error(f"Error getting child page IDs for page ID {page_id}: {str(e)}")
             return []
 
-    def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None) -> Generator[Page, None, None]:
+    def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None, use_local: bool = False) -> Generator[Page, None, None]:
         """Recursively fetch page tree through all 4 stages"""
         try:
             self.logger.info(f"Processing page tree for page ID {page_id}")
@@ -760,7 +819,13 @@ class ConfluencePageProcessor:
                 start_page_id = page_id
 
             # Process current page through all 4 stages
-            page = self.process_page_complete(page_id, start_page_id)
+            if use_local:
+                # In local mode, skip Stage 1 (API calls) and Stage 3 (attachment download)
+                # Only process Stage 2 (content extraction) and Stage 4 (document listing)
+                self.stage2.process(page_id)
+                page = self.stage4.process(page_id, start_page_id)
+            else:
+                page = self.process_page_complete(page_id, start_page_id)
 
             if page:
                 # Update translations if available
@@ -776,7 +841,7 @@ class ConfluencePageProcessor:
                 # Process child pages recursively
                 child_ids = self.get_child_page_ids(page_id)
                 for child_id in child_ids:
-                    yield from self.fetch_page_tree_recursive(child_id, start_page_id)
+                    yield from self.fetch_page_tree_recursive(child_id, start_page_id, use_local)
         except Exception as e:
             self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
             self.logger.debug(traceback.format_exc())
@@ -784,8 +849,6 @@ class ConfluencePageProcessor:
     def run(self) -> None:
         """Main execution function"""
         try:
-            self.logger.info(f"Starting to fetch page tree from page ID: {self.config.default_start_page_id}")
-
             # Check if output directory exists
             if not os.path.exists(self.config.default_output_dir):
                 self.file_manager.ensure_directory(self.config.default_output_dir)
@@ -793,26 +856,98 @@ class ConfluencePageProcessor:
 
             # Prepare output file path
             output_yaml_path = os.path.join(self.config.default_output_dir, "pages.yaml")
+            output_list_path = os.path.join(self.config.default_output_dir, "list.txt")
 
-            # Fetch a page tree through all 4 stages
-            page_count = 0
-            yaml_entries = []
+            start_page_id = self.config.default_start_page_id
 
-            for page in self.fetch_page_tree_recursive(self.config.default_start_page_id):
-                if page:
-                    # Print to stdout for backward compatibility (page_id and breadcrumbs only)
-                    breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
-                    print(f"{page.page_id}\t{breadcrumbs_str}")
-                    page_count += 1
+            # Handle different modes
+            if self.config.mode == "recent":
+                # --recent mode: Download recently modified pages first, then process like --local
+                self.logger.info(f"Recent mode: Fetching pages modified in last {self.config.days} days from space {self.config.space_key}")
+                page_ids = self.api_client.get_recently_modified_pages(
+                    days=self.config.days,
+                    space_key=self.config.space_key
+                )
+                
+                # Download each page through all 4 stages and output to stdout
+                self.logger.warning(f"Downloading {len(page_ids)} recently modified pages")
+                for page_id in page_ids:
+                    try:
+                        page = self.process_page_complete(page_id, start_page_id)
+                        if page:
+                            # Update translations if available
+                            if self.translation_service.translations:
+                                self.translation_service.translate_page(page)
+                            else:
+                                page.breadcrumbs_en = page.breadcrumbs
+                                page.path = [slugify(crumb) for crumb in page.breadcrumbs]
+                            
+                            # Output to stdout during download
+                            breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
+                            print(f"{page.page_id}\t{breadcrumbs_str}")
+                    except Exception as e:
+                        self.logger.error(f"Error downloading page ID {page_id}: {str(e)}")
+                        continue
+                
+                # After downloading, process like local mode (hierarchical traversal from start_page_id)
+                # No stdout output in this phase (like --local mode)
+                self.logger.warning(f"Processing page tree from start page ID {start_page_id} (local mode)")
+                page_count = 0
+                yaml_entries = []
+                list_lines = []
 
-                    # Add to YAML entries
-                    yaml_entries.append(page.to_dict())
+                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
+                    if page:
+                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
+                        # No stdout output in local mode
+                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        page_count += 1
+                        yaml_entries.append(page.to_dict())
+
+            elif self.config.mode == "local":
+                # --local mode: Process existing local files hierarchically from start_page_id
+                # No stdout output in local mode
+                self.logger.warning(f"Local mode: Processing page tree from start page ID {start_page_id}")
+                page_count = 0
+                yaml_entries = []
+                list_lines = []
+
+                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
+                    if page:
+                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
+                        # No stdout output in local mode
+                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        page_count += 1
+                        yaml_entries.append(page.to_dict())
+
+            elif self.config.mode == "remote":
+                # --remote mode: Download and process hierarchically from start_page_id via API
+                # Output to stdout during download
+                self.logger.warning(f"Remote mode: Processing page tree from start page ID {start_page_id} via API")
+                page_count = 0
+                yaml_entries = []
+                list_lines = []
+
+                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=False):
+                    if page:
+                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
+                        # Output to stdout during download
+                        print(f"{page.page_id}\t{breadcrumbs_str}")
+                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        page_count += 1
+                        yaml_entries.append(page.to_dict())
 
             # Save YAML file
-            self.file_manager.save_yaml(output_yaml_path, yaml_entries)
-            self.logger.info(f"YAML data saved to {output_yaml_path}")
+            if yaml_entries:
+                self.file_manager.save_yaml(output_yaml_path, yaml_entries)
+                self.logger.info(f"YAML data saved to {output_yaml_path}")
 
-            self.logger.info(f"Completed processing {page_count} pages through all 4 stages")
+            # Save list.txt file
+            if list_lines:
+                self.file_manager.save_file(output_list_path, "".join(list_lines))
+                self.logger.info(f"List file saved to {output_list_path}")
+
+            self.logger.info(f"Completed processing {page_count} pages")
         except Exception as e:
             self.logger.error(f"Error in main execution: {str(e)}")
             self.logger.debug(traceback.format_exc())
@@ -826,18 +961,29 @@ class ConfluencePageProcessor:
 def main():
     """Main function"""
     # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Generate a list of all subpages from a specified Confluence document")
-    parser.add_argument("--page-id", default=Config().default_start_page_id,
-                        help="ID of the starting page (default: %(default)s)")
-    parser.add_argument("--quick-start", action="store_true",
-                        help=f"Use QUICK_START_PAGE_ID ({Config().quick_start_page_id}) for faster testing")
-
+    parser = argparse.ArgumentParser(
+        description="Generate a list of pages from a Confluence space"
+    )
+    parser.add_argument("--space-key", default=Config().space_key,
+                        help=f"Confluence space key (default: %(default)s)")
+    parser.add_argument("--days", type=int, default=Config().days,
+                        help=f"Number of days to look back for modified pages (default: %(default)s, used with --recent)")
+    parser.add_argument("--start-page-id", default=Config().default_start_page_id,
+                        help="Root page ID for building breadcrumbs (default: %(default)s)")
     parser.add_argument("--base-url", default=Config().base_url, help="Confluence base URL (default: %(default)s)")
     parser.add_argument("--email", default=Config().email, help="Confluence email for authentication")
     parser.add_argument("--api-token", default=Config().api_token, help="Confluence API token for authentication")
     parser.add_argument("--attachments", action="store_true", help="Download page content with attachments")
-    parser.add_argument("--local", action="store_true",
-                        help="Use local page.v1.yaml and page.v2.yaml files instead of making API calls")
+    
+    # Mode selection (mutually exclusive)
+    mode_group = parser.add_mutually_exclusive_group()
+    mode_group.add_argument("--local", action="store_const", dest="mode", const="local",
+                            help="Process local files only, starting from default_start_page_id hierarchically")
+    mode_group.add_argument("--remote", action="store_const", dest="mode", const="remote",
+                            help="Download and process via API, starting from default_start_page_id hierarchically")
+    mode_group.add_argument("--recent", action="store_const", dest="mode", const="recent",
+                            help="Download recently modified pages, then process like --local")
+    
     parser.add_argument("--output-dir", default=Config().default_output_dir,
                         help="Directory to store output files (default: %(default)s)")
     parser.add_argument("--log-level", default="WARNING", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
@@ -851,24 +997,21 @@ def main():
         stream=sys.stderr
     )
 
+    # Determine mode (default to "recent" if not specified)
+    mode = args.mode if args.mode else "recent"
+
     # Create configuration
     config = Config(
         base_url=args.base_url,
+        space_key=args.space_key,
+        days=args.days,
         email=args.email,
         api_token=args.api_token,
         default_output_dir=args.output_dir,
+        default_start_page_id=args.start_page_id,
         download_attachments=args.attachments,
-        use_local_files=args.local
+        mode=mode
     )
-
-    # Handle page-id and quick-start options
-    if args.quick_start:
-        config.default_start_page_id = config.quick_start_page_id
-        logging.getLogger(__name__).info(f"Quick start mode enabled, using page ID: {config.quick_start_page_id}")
-    elif args.page_id != Config().default_start_page_id:
-        # Only update if page-id was explicitly provided and different from default
-        config.default_start_page_id = args.page_id
-        logging.getLogger(__name__).info(f"Using custom page ID: {args.page_id}")
 
     # Create processor and run
     logger = logging.getLogger(__name__)

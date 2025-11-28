@@ -6,7 +6,7 @@ on:
       use_local:
         description: 'Use local files (--local option)'
         required: false
-        default: true
+        default: false
         type: boolean
       use_attachments:
         description: 'Download attachments from Confluence pages (--attachments option)'
