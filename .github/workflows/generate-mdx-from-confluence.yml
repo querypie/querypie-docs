@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # 전체 히스토리 가져오기 (git status를 위해 필요)
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Workflow Options
         run: |
@@ -58,42 +59,61 @@ jobs:
 
       - name: Check for changes
         run: |
-          echo "## Changed Files" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          # git status로 변경된 파일 확인
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "### Modified Files" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git status --short >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          
-            # target 디렉토리 관련 변경사항만 별도로 표시
-            echo "### Changes in target directory" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          
-            # 전체 변경사항 통계
-            echo "### Change Statistics" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git diff --stat HEAD >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "No changes detected." >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          # 콘솔에도 출력
           echo "=== Git Status ==="
           git status
+
+      - name: Create Pull Request for src/content changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # src/content/ 변경사항 확인
+          # git status --porcelain 출력 형식: " M file" (unstaged), "M  file" (staged), "MM file" (both)
+          if ! git status --porcelain src/content/ | grep -q "[AM]"; then
+            echo "No changes in src/content/ directory"
+            exit 0
+          fi
           
-          echo ""
-          echo "=== Changes in target-related directories ==="
-          git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories"
+          # 변경사항 통계를 커밋 전에 저장
+          CHANGES_STATUS=$(git status --short src/content/ || echo "")
+          CHANGES_STAT=$(git diff --stat HEAD src/content/ || echo "")
           
-          echo ""
-          echo "=== Change Statistics ==="
-          git diff --stat HEAD || echo "No changes to show"
+          if [[ -z "$CHANGES_STATUS" ]]; then
+            echo "No changes in src/content/ directory"
+            exit 0
+          fi
+          
+          # 브랜치 이름 생성 (타임스탬프 기반)
+          BRANCH_NAME="mdx/confluence-updates-$(date +%Y%m%d-%H%M%S)"
+          
+          # 브랜치 생성 및 체크아웃
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@querypie.com"
+          git checkout -b "$BRANCH_NAME"
+          
+          # src/content/ 변경사항만 스테이징
+          git add src/content/
+          
+          # 변경사항이 있는지 확인
+          if [[ -z "$(git diff --cached --name-only)" ]]; then
+            echo "No staged changes in src/content/"
+            exit 0
+          fi
+          
+          # 커밋
+          git commit -m "mdx: Updates from Confluence"
+          
+          # PR Description 생성 (요청하신 형식에 맞춤)
+          # heredoc 대신 printf를 사용하여 YAML 파서 오류 방지
+          PR_BODY=$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
+            "=== Changes in target-related directories ===" \
+            "$CHANGES_STATUS" \
+            "=== Change Statistics ===" \
+            "$CHANGES_STAT")
+          
+          # PR 생성
+          gh pr create \
+            --title "mdx: Updates from Confluence" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH_NAME"
 
