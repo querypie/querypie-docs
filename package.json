@@ -4,8 +4,8 @@
   "private": true,
   "description": "QueryPie Docs",
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build --webpack",
+    "dev": "next dev",
+    "build": "next build",
     "postbuild": "npm run generate-pagefind && npm run generate-sitemap",
     "start": "next start",
     "lint": "eslint src --max-warnings 0",
