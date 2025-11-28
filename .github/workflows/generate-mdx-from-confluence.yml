@@ -17,6 +17,9 @@ on:
 jobs:
   generate-mdx:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to create a branch and push changes
+      pull-requests: write # to create a PR
     
     steps:
       - name: Checkout repository
@@ -58,42 +61,77 @@ jobs:
 
       - name: Check for changes
         run: |
-          echo "## Changed Files" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          # git status로 변경된 파일 확인
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "### Modified Files" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git status --short >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          
-            # target 디렉토리 관련 변경사항만 별도로 표시
-            echo "### Changes in target directory" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          
-            # 전체 변경사항 통계
-            echo "### Change Statistics" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            git diff --stat HEAD >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "No changes detected." >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          # 콘솔에도 출력
           echo "=== Git Status ==="
           git status
+
+      - name: Create Pull Request for src/content changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o errexit -o nounset -o pipefail -o xtrace
           
-          echo ""
-          echo "=== Changes in target-related directories ==="
-          git status --short confluence-mdx/target/ src/content/ public/ 2>/dev/null || echo "No changes in target-related directories"
+          # Git 사용자 설정
+          # Schedule을 통해 실행한 경우 github-actions[bot] 사용
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+          else
+            # workflow를 실행한 이용자의 정보 사용
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor }}@users.noreply.github.com"
+          fi
           
-          echo ""
-          echo "=== Change Statistics ==="
-          git diff --stat HEAD || echo "No changes to show"
+          # src/content/ 변경사항 확인 (unstaged 상태)
+          if ! git status --porcelain src/content/ | grep -q "[AM]"; then
+            echo "No changes in src/content/ directory"
+            exit 0
+          fi
+          
+          # 브랜치 이름 생성 (타임스탬프)
+          BRANCH_NAME="mdx/confluence-updates-$(date +%Y%m%d-%H%M%S)"
+          
+          # 브랜치 생성 및 체크아웃
+          git checkout -b "$BRANCH_NAME"
+          
+          # src/content/ 변경사항만 스테이징
+          git add src/content/
+          
+          # 스테이징된 변경사항 확인
+          STAGED_FILES=$(git diff --cached --name-only)
+          if [[ -z "$STAGED_FILES" ]]; then
+            echo "No staged changes in src/content/"
+            exit 0
+          fi
+          
+          # 변경사항 정보 수집 (스테이징 후)
+          CHANGES_STATUS=$(git status --short src/content/)
+          CHANGES_STAT=$(git diff --cached --stat HEAD)
+          
+          # 커밋
+          git commit -m "mdx: Updates from Confluence"
+          
+          # 브랜치 푸시 (PR 생성 전에 필요)
+          if ! git push -u origin "$BRANCH_NAME"; then
+            echo "Failed to push branch $BRANCH_NAME"
+            exit 1
+          fi
+          
+          # PR Description 생성
+          PR_BODY=$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
+            "### Changes" \
+            "$CHANGES_STATUS" \
+            "### Change Statistics" \
+            "$CHANGES_STAT")
+          
+          # PR 생성
+          if ! gh pr create \
+            --title "mdx: Updates from Confluence" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH_NAME"; then
+            echo "Failed to create PR for branch $BRANCH_NAME"
+            exit 1
+          fi
+          
+          echo "Pull request created successfully for branch $BRANCH_NAME"
 
