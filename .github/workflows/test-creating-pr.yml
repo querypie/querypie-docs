@@ -109,7 +109,7 @@ jobs:
             --body "$PR_BODY" \
             --base main \
             --head "$BRANCH_NAME"; then
-            echo "Failed to create PR. Branch $BRANCH_NAME has been pushed."
+            echo "Failed to create PR for branch $BRANCH_NAME"
             exit 1
           fi
           
