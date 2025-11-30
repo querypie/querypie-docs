@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # 전체 히스토리 가져오기 (git status를 위해 필요)
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Workflow Options
         run: |
@@ -45,22 +44,16 @@ jobs:
             OPTIONS="$OPTIONS --attachments"
           fi
           set -o xtrace
-          echo $OPTIONS >>target/ko/index.mdx
-          echo $OPTIONS >>target/en/index.mdx
-          echo $OPTIONS >>target/ja/index.mdx
+          echo "$OPTIONS" >>target/ko/index.mdx
+          echo "$OPTIONS" >>target/en/index.mdx
+          echo "$OPTIONS" >>target/ja/index.mdx
 
       - name: Check for changes
         run: |
           echo "=== Git Status ==="
           git status
 
-      - name: Verify GitHub CLI
-        run: |
-          gh --version || (echo "GitHub CLI not available" && exit 1)
-
       - name: Create Pull Request for src/content changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
           
@@ -68,11 +61,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # src/content/ 변경사항 확인
-          # git status --porcelain 출력 형식: " M file" (unstaged), "M  file" (staged), "MM file" (both)
-          CHANGES_STATUS=$(git status --short src/content/ || echo "")
-          
-          if [[ -z "$CHANGES_STATUS" ]] || ! echo "$CHANGES_STATUS" | grep -q "[AM]"; then
+          # src/content/ 변경사항 확인 (unstaged 상태)
+          if ! git status --porcelain src/content/ | grep -q "[AM]"; then
             echo "No changes in src/content/ directory"
             exit 0
           fi
@@ -93,8 +83,9 @@ jobs:
             exit 0
           fi
           
-          # 변경사항 통계 (스테이징 후에 확인)
-          CHANGES_STAT=$(git diff --cached --stat HEAD || echo "")
+          # 변경사항 정보 수집 (스테이징 후)
+          CHANGES_STATUS=$(git status --short src/content/)
+          CHANGES_STAT=$(git diff --cached --stat HEAD)
           
           # 커밋
           git commit -m "test: Updates from Confluence (do not merge)"
