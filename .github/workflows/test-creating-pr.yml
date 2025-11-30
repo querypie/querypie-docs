@@ -68,7 +68,7 @@ jobs:
           fi
           
           # 브랜치 이름 생성 (타임스탬프)
-          BRANCH_NAME="test/mdx-updates-$(date +%Y%m%d-%H%M%S)"
+          BRANCH_NAME="test/mdx-updates-$(date +%m%d-%H%M%S)"
           
           # 브랜치 생성 및 체크아웃
           git checkout -b "$BRANCH_NAME"
