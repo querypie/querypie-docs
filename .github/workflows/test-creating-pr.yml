@@ -68,9 +68,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # gh CLI 인증 설정
-          echo "$GITHUB_TOKEN" | gh auth login --with-token
-          
           # src/content/ 변경사항 확인
           # git status --porcelain 출력 형식: " M file" (unstaged), "M  file" (staged), "MM file" (both)
           CHANGES_STATUS=$(git status --short src/content/ || echo "")
