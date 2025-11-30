@@ -31,6 +31,8 @@ jobs:
         run: |
           echo "Use local files (--local): ${{ inputs.use_local }}"
           echo "Download attachments (--attachments): ${{ inputs.use_attachments }}"
+          echo "GitHub Event Name: ${{ github.event_name }}"
+          echo "GitHub Actor: ${{ github.actor }}"
 
       - name: Modify MDX files
         working-directory: ./confluence-mdx
@@ -60,8 +62,15 @@ jobs:
           set -o errexit -o nounset -o pipefail -o xtrace
           
           # Git 사용자 설정
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Schedule을 통해 실행한 경우 github-actions[bot] 사용
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+          else
+            # workflow를 실행한 이용자의 정보 사용
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor }}@users.noreply.github.com"
+          fi
           
           # src/content/ 변경사항 확인 (unstaged 상태)
           if ! git status --porcelain src/content/ | grep -q "[AM]"; then
