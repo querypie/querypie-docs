@@ -18,15 +18,14 @@ jobs:
   generate-mdx:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
-    
+      contents: write # to create a branch and push changes
+      pull-requests: write # to create a PR
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # 전체 히스토리 가져오기 (git status를 위해 필요)
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Workflow Options
         run: |
@@ -45,43 +44,33 @@ jobs:
             OPTIONS="$OPTIONS --attachments"
           fi
           set -o xtrace
-          echo $OPTIONS >>target/ko/index.mdx
-          echo $OPTIONS >>target/en/index.mdx
-          echo $OPTIONS >>target/ja/index.mdx
+          echo "$OPTIONS" >>target/ko/index.mdx
+          echo "$OPTIONS" >>target/en/index.mdx
+          echo "$OPTIONS" >>target/ja/index.mdx
 
       - name: Check for changes
         run: |
           echo "=== Git Status ==="
           git status
 
-      - name: Verify GitHub CLI
-        run: |
-          gh --version || (echo "GitHub CLI not available" && exit 1)
-
       - name: Create Pull Request for src/content changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
+          set -o errexit -o nounset -o pipefail -o xtrace
           
           # Git 사용자 설정
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # gh CLI 인증 설정
-          echo "$GITHUB_TOKEN" | gh auth login --with-token
-          
-          # src/content/ 변경사항 확인
-          # git status --porcelain 출력 형식: " M file" (unstaged), "M  file" (staged), "MM file" (both)
-          CHANGES_STATUS=$(git status --short src/content/ || echo "")
-          
-          if [[ -z "$CHANGES_STATUS" ]] || ! echo "$CHANGES_STATUS" | grep -q "[AM]"; then
+          # src/content/ 변경사항 확인 (unstaged 상태)
+          if ! git status --porcelain src/content/ | grep -q "[AM]"; then
             echo "No changes in src/content/ directory"
             exit 0
           fi
           
           # 브랜치 이름 생성 (타임스탬프)
-          BRANCH_NAME="test/mdx-updates-$(date +%Y%m%d-%H%M%S)"
+          BRANCH_NAME="test/mdx-updates-$(date +%m%d-%H%M%S)"
           
           # 브랜치 생성 및 체크아웃
           git checkout -b "$BRANCH_NAME"
@@ -96,8 +85,9 @@ jobs:
             exit 0
           fi
           
-          # 변경사항 통계 (스테이징 후에 확인)
-          CHANGES_STAT=$(git diff --cached --stat HEAD || echo "")
+          # 변경사항 정보 수집 (스테이징 후)
+          CHANGES_STATUS=$(git status --short src/content/)
+          CHANGES_STAT=$(git diff --cached --stat HEAD)
           
           # 커밋
           git commit -m "test: Updates from Confluence (do not merge)"
@@ -110,9 +100,9 @@ jobs:
           
           # PR Description 생성
           PR_BODY=$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
-            "=== Changes ===" \
+            "### Changes" \
             "$CHANGES_STATUS" \
-            "=== Change Statistics ===" \
+            "### Change Statistics" \
             "$CHANGES_STAT")
           
           # PR 생성
@@ -121,7 +111,7 @@ jobs:
             --body "$PR_BODY" \
             --base main \
             --head "$BRANCH_NAME"; then
-            echo "Failed to create PR. Branch $BRANCH_NAME has been pushed."
+            echo "Failed to create PR for branch $BRANCH_NAME"
             exit 1
           fi
           
