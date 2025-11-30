@@ -55,6 +55,8 @@ jobs:
           git status
 
       - name: Create Pull Request for src/content changes
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
           
