@@ -54,13 +54,13 @@ function copy_numeric_dirs_from_image() {
   local dir
 
   echo >&2 "# Pulling Docker image: $image_name"
-  if ! docker pull "$image_name"; then
+  if ! docker pull --platform linux/amd64 "$image_name"; then
     echo >&2 "# Error: Failed to pull Docker image $image_name"
     return 1
   fi
 
   echo >&2 "# Creating temporary container from image..."
-  container_id="$(docker create "$image_name")"
+  container_id="$(docker create --platform linux/amd64 "$image_name")"
   if [[ -z "$container_id" ]]; then
     echo >&2 "# Error: Failed to create container from image"
     return 1
