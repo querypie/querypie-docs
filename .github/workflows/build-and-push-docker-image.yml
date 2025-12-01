@@ -53,5 +53,5 @@ jobs:
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
           touch .env
-          docker compose push
+          docker compose --progress=plain push
 
