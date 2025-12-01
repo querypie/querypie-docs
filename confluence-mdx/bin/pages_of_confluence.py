@@ -870,7 +870,9 @@ class ConfluencePageProcessor:
                 )
                 
                 # Download each page through all 4 stages and output to stdout
+                # Store downloaded pages for list.txt
                 self.logger.warning(f"Downloading {len(page_ids)} recently modified pages")
+                downloaded_list_lines = []
                 for page_id in page_ids:
                     try:
                         page = self.process_page_complete(page_id, start_page_id)
@@ -885,24 +887,27 @@ class ConfluencePageProcessor:
                             # Output to stdout during download
                             breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                             print(f"{page.page_id}\t{breadcrumbs_str}")
+                            # Store for list.txt (only downloaded pages)
+                            downloaded_list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                     except Exception as e:
                         self.logger.error(f"Error downloading page ID {page_id}: {str(e)}")
                         continue
                 
                 # After downloading, process like local mode (hierarchical traversal from start_page_id)
+                # Generate pages.yaml with full hierarchical tree (like --local mode)
                 # No stdout output in this phase (like --local mode)
                 self.logger.warning(f"Processing page tree from start page ID {start_page_id} (local mode)")
                 page_count = 0
                 yaml_entries = []
-                list_lines = []
 
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
                     if page:
-                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                         # No stdout output in local mode
-                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
+                
+                # list.txt contains only downloaded pages
+                list_lines = downloaded_list_lines
 
             elif self.config.mode == "local":
                 # --local mode: Process existing local files hierarchically from start_page_id
