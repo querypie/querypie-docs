@@ -28,6 +28,7 @@ import argparse
 import logging
 import os
 import re
+import shutil
 import sys
 import traceback
 import unicodedata
@@ -54,6 +55,7 @@ class Config:
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "var"
+    cache_dir: str = "cache"
     translations_file: str = "etc/korean-titles-translations.txt"
     email: str = None
     api_token: str = None
@@ -472,6 +474,10 @@ class StageBase:
         """Return the directory path for a specific page."""
         return os.path.join(self.config.default_output_dir, page_id)
 
+    def get_cache_page_directory(self, page_id: str) -> str:
+        """Return the cache directory path for a specific page."""
+        return os.path.join(self.config.cache_dir, page_id)
+
 
 class Stage1Processor(StageBase):
     """Stage 1: API Data Collection - Fetch and save API responses to YAML files."""
@@ -631,22 +637,28 @@ class Stage3Processor(StageBase):
             if "fileSize" in extensions:
                 expected_size = extensions["fileSize"]
 
-            # Check if a file already exists and has a correct size
-            if os.path.exists(filepath):
-                local_file_size = os.path.getsize(filepath)
-                if local_file_size > 0:
-                    # If we have an expected size from API, compare it with the local file size
+            # Check cache directory for the file before downloading from API
+            cache_page_dir = self.get_cache_page_directory(page_id)
+            cache_filepath = os.path.join(cache_page_dir, filename)
+            if os.path.exists(cache_filepath):
+                cache_file_size = os.path.getsize(cache_filepath)
+                if cache_file_size > 0:
+                    # Verify size if expected size is available
                     if expected_size is not None:
-                        if local_file_size == expected_size:
-                            self.logger.info(f"Skipping download - attachment already exists with correct size: {filename} (size: {local_file_size} bytes)")
+                        if cache_file_size == expected_size:
+                            # Copy from cache
+                            shutil.copy2(cache_filepath, filepath)
+                            self.logger.info(f"Copied attachment from cache: {filename} (size: {cache_file_size} bytes, matches expected size)")
                             return
                         else:
-                            self.logger.warning(f"Local file size mismatch for {filename}: local={local_file_size}, expected={expected_size}. Re-downloading.")
+                            self.logger.warning(f"Cache file size mismatch for {filename}: cache={cache_file_size}, expected={expected_size}. Downloading from API.")
                     else:
-                        # If we don't have an expected size, just check if the file exists and has size > 0
-                        self.logger.info(f"Skipping download - attachment already exists: {filename} (size: {local_file_size} bytes)")
+                        # Copy from cache if no expected size available
+                        shutil.copy2(cache_filepath, filepath)
+                        self.logger.info(f"Copied attachment from cache: {filename} (size: {cache_file_size} bytes)")
                         return
 
+            # Download from API if not found in cache (always overwrite existing files in var directory)
             content = self.api_client.download_attachment(page_id, attachment_id)
             if content:
                 self.file_manager.save_file(filepath, content, is_binary=True)
@@ -658,7 +670,7 @@ class Stage3Processor(StageBase):
                     else:
                         size_info += f", expected: {expected_size} bytes"
                 size_info += ")"
-                self.logger.info(f"Downloaded attachment: {filename}{size_info}")
+                self.logger.warning(f"Downloaded attachment from API: {filename}{size_info}")
         except Exception as e:
             self.logger.error(f"Error downloading attachment {attachment.get('title', 'unknown')}: {str(e)}")
 

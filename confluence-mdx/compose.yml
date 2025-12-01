@@ -3,7 +3,8 @@
 # ============================================================================
 #
 # Quick Start:
-#   1. Build image: docker compose build
+#   1. Build image: docker compose --progress=plain build
+#      (Use --progress=plain to see raw command output without Docker formatting)
 #   2. Show help: docker compose run --rm confluence-mdx help
 #   3. Full workflow: docker compose run --rm confluence-mdx full
 #
@@ -12,8 +13,8 @@
 #   ATLASSIAN_API_TOKEN=your-api-token
 #
 # Main Commands:
-#   - Full workflow (without attachments): docker compose run --rm confluence-mdx full
-#   - Full workflow with attachments: docker compose run --rm confluence-mdx full --attachments
+#   - Full workflow for recent updates: docker compose run --rm confluence-mdx full
+#   - Full workflow with attachments: docker compose run --rm confluence-mdx full --remote --attachments
 #   - Full workflow with local files (no API calls): docker compose run --rm confluence-mdx full --local
 #   - Collect data: docker compose run --rm confluence-mdx pages_of_confluence.py --attachments
 #   - Translate titles: docker compose run --rm confluence-mdx translate_titles.py
@@ -21,7 +22,8 @@
 #   - Interactive shell: docker compose run --rm confluence-mdx bash
 #
 # Container Commands (without compose):
-#   - Build: docker build -t docker.io/querypie/confluence-mdx:latest .
+#   - Build: docker build --platform linux/amd64 --progress=plain -t docker.io/querypie/confluence-mdx:latest .
+#     (Use --progress=plain to see raw command output without Docker formatting)
 #   - Run: docker run docker.io/querypie/confluence-mdx:latest help
 #   - Push: docker push docker.io/querypie/confluence-mdx:latest
 #

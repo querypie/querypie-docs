@@ -1,5 +1,7 @@
 # Confluence-MDX Container Image
 # Use Python 3.9 based image
+# Platform: linux/amd64
+# Build with: docker build --platform linux/amd64 -t <image-name> .
 FROM python:3.9-slim
 
 # Set working directory
@@ -17,17 +19,18 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY bin/ ./bin/
+RUN chmod +x bin/*.py bin/*.sh
 COPY etc/ ./etc/
 COPY tests/ ./tests/
 
-# Copy var/ data (included in image)
-COPY var/ ./var/
+# Copy cache/ data (included in image)
+COPY cache/ ./cache/
+
+# Populate var/ directory by running pages_of_confluence.py --remote --attachments
+RUN python3 bin/pages_of_confluence.py --remote --attachments
 
 # Create target/ directory
 RUN mkdir -p target/ko target/en target/ja target/public
-
-# Grant execute permissions
-RUN chmod +x bin/*.py bin/*.sh 2>/dev/null || true
 
 # Set entrypoint
 COPY scripts/entrypoint.sh /entrypoint.sh
