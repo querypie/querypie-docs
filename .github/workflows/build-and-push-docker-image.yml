@@ -52,5 +52,6 @@ jobs:
         working-directory: ./confluence-mdx
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
+          touch .env
           docker compose push
 
