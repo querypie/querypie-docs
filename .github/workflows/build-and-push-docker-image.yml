@@ -1,0 +1,56 @@
+name: Build and Push Docker Image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'confluence-mdx/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'confluence-mdx/**'
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup cache directory
+        working-directory: ./confluence-mdx
+        run: |
+          set -o errexit -o nounset -o pipefail -o xtrace
+          ./bin/1-setup-cache.sh
+
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.CONTAINER_REGISTRY_CREDENTIAL }}
+
+      - name: Build Docker image
+        working-directory: ./confluence-mdx
+        run: |
+          set -o errexit -o nounset -o pipefail -o xtrace
+          docker compose --progress=plain build
+
+      - name: Push Docker image
+        if: github.event_name != 'pull_request'
+        working-directory: ./confluence-mdx
+        run: |
+          set -o errexit -o nounset -o pipefail -o xtrace
+          docker compose push
+
