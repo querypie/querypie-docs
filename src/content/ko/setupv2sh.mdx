@@ -1,0 +1,271 @@
+---
+title: '설치 가이드 - setup.v2.sh'
+---
+
+import { Callout } from 'nextra/components'
+
+# 설치 가이드 - setup.v2.sh
+
+
+## 소개
+
+이 설치 가이드는 하나의 서버 컴퓨터에 QueryPie 서버를 설치하는 간단한 구성의 설치 방법을 안내합니다.
+간단한 구성으로 설치하더라도, 대부분의 쿼리파이 기능을 시험해 볼 수 있습니다.
+
+이 가이드에서 안내하는 setup.v2.sh 설치 프로그램은 기존의 설치 과정을 자동으로 수행합니다.
+자동화된 설치 과정은 기존의 설치 과정과 주요 부분이 동일합니다.
+기존 설치 과정은 이 문서를 참조하세요: [https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE](https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE)
+
+이 설치 방식은 실제 운영 환경에서 사용하기에는 적합하지 않습니다.
+실제 운영 환경에 사용하기에 적합한 설치 방법은 별도로 제공되는 [QueryPie Installation Guide]를 참고하십시오.
+
+<Callout type="info">
+QueryPie 10.3.0 또는 이후 버전을 대상으로 하는 PoC 용도의 설치 가이드입니다.
+</Callout>
+
+## 설치 전 준비사항
+
+설치를 진행하기 전에, 다음의 사항을 준비해야 합니다.
+간단히 요약하면, 다음과 같습니다.
+
+* Linux 서버 1대
+* 웹 브라우저가 설치된 PC 1대
+
+자세한 것은 다음 문서를 참조하세요: [설치 전 준비사항 - 간단한 구성](.)
+
+## 시스템 아키텍처
+
+다음 문서를 참조하세요: [시스템 아키텍처와 네트워크 접근제어](.)
+
+## 설치 과정
+
+### setup.v2.sh 실행
+
+QueryPie 를 설치할 리눅스 서버의 shell 에서, `setup.v2.sh` 스크립트를 내려받고, 실행합니다.
+setup.sh 가 실제로 수행하는 명령은 실행 과정에서 확인할 수 있습니다.
+```bash
+$ # Download setup.v2.sh and execute it.
+$ bash <(curl -s https://dl.querypie.com/setup.v2.sh)
+```
+
+다음과 같이 `setup.v2.sh` 를 파일로 저장한 후, 실행하여도 됩니다.
+```bash
+$ curl -s https://dl.querypie.com/setup.v2.sh -o setup.v2.sh
+$ bash setup.v2.sh
+```
+
+`setup.v2.sh` 는 제조사에서 권장하는 버전을 자동을 선택하여 설치합니다.
+특정한 버전을 지정하여 설치하려는 경우, 다음과 같은 명령을 사용할 수 있습니다.
+```bash
+$ bash setup.v2.sh --install 10.3.4
+$ bash setup.v2.sh --upgrade 11.0.1
+$ bash setup.v2.sh --help
+#### setup.v2.sh - QueryPie Installer 25.08.8, /usr/bin/bash 4.4.20(1)-release on Linux x86_64 ####
+setup.v2.sh 25.08.8, the QueryPie installation script.
+Usage: setup.v2.sh [options]
+    or setup.v2.sh [options] --install <version>
+    or setup.v2.sh [options] --install-container-engine
+    or setup.v2.sh [options] --install-compose-package <version>
+    or setup.v2.sh [options] --upgrade <version>
+    or setup.v2.sh [options] --uninstall
+    or setup.v2.sh [options] --help
+
+FOR AWS AMI BUILD MAINTAINER:
+    or setup.v2.sh [options] --install-partially-for-ami <version>
+    or setup.v2.sh [options] --resume
+    or setup.v2.sh [options] --verify-installation
+    or setup.v2.sh [options] --verify-not-installed
+    or setup.v2.sh [options] --populate-env <env-file>
+    or setup.v2.sh [options] --reset-credential <env-file>
+
+ENVIRONMENT VARIABLES:
+
+  DOCKER_REGISTRY                Default: 'docker.io/querypie/'
+    The Docker registry to pull images from.
+    You may specify a private registry such as 'myregistry.example.com/querypie/'.
+    Note that the trailing slash is required, if you set this variable.
+    Actual image names will be like 'myregistry.example.com/querypie/querypie:11.1.1'.
+
+OPTIONS:
+  --yes               Assume "yes" to all prompts and run non-interactively.
+  -V, --version       Show the version of this script.
+  -x, --xtrace        Print commands and their arguments as they are executed.
+  -h, --help          Show this help message.
+$ 
+```
+
+### Podman 환경에서 QueryPie 설치하기
+
+`setup.v2.sh`  `25.08.8` 버전부터는 Podman + Docker Compose 조합의 실행환경을 지원합니다.
+
+다음의 리눅스 배포본에서는 Podman + Docker Compose 조합의 실행환경을 권장합니다.
+
+* Red Hat Enterprise Linux 8, 9, 10
+* Rocky 8, 9
+
+자세한 설치 방법은 이 문서를 참조하세요: [Podman 으로 Rootless Mode 구성하기](podman-rootless-mode)
+
+### setup.v2.sh 가 자동으로 수행하는 작업
+
+`setup.v2.sh` 는 다음의 주요 설치 절차를 자동으로 진행합니다.
+
+1. `docker-compose.yml` , `.env` 등 Compose 를 위한 설정파일을 내려 받기
+    * 기존의 `compose-env` 라는 환경변수 설정 파일의 이름이 `.env` 로 바뀌었습니다. `compose-env` 는 설정파일 생성을 위한 template 으로 사용됩니다.
+2.  `.env` 에 환경변수 값을 설정하기
+    * 각 환경변수에 대한 설명은 [컨테이너 환경변수 안내](.) 문서를 참고해주세요.
+3. docker image 내려받기
+    * `docker.io/querypie/` registry 에서 image 를 내려받습니다. 따라서, Harbor login 과정이 필요하지 않습니다.
+4. mysql, redis container 실행하기
+5. querypie-tools container 실행하고, migration 수행하기
+6. querypie-app container 실행하기
+7. `./querypie/current` 라는 심볼릭 링크를 생성하여, 현재 작동 중인 버전을 가리킵니다.
+
+`setup.v2.sh` 가 querypie-app container 를 정상적으로 기동하고 나면, 다음과 같은 실행 성공 안내 메시지를 만나게 됩니다.
+```
++ docker exec querypie-app-1 readyz
+########################################################################
+#                                                                      #
+#     ██████╗ ██╗   ██╗███████╗██████╗ ██╗   ██╗██████╗ ██╗███████╗    #
+#    ██╔═══██╗██║   ██║██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗██║██╔════╝    #
+#    ██║   ██║██║   ██║█████╗  ██████╔╝ ╚████╔╝ ██████╔╝██║█████╗      #
+#    ██║▄▄ ██║██║   ██║██╔══╝  ██╔══██╗  ╚██╔╝  ██╔═══╝ ██║██╔══╝      #
+#    ╚██████╔╝╚██████╔╝███████╗██║  ██║   ██║   ██║     ██║███████╗    #
+#     ╚══▀▀═╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚══════╝    #
+#                                                                      #
+########################################################################
+.--------------------------------------------------------.
+|  🚀 QueryPie Server has been successfully started! 🚀  |
+|  Timestamp in UTC: Mon Jul 28 17:04:31 UTC 2025        |
+|  Timestamp in KST: Tue Jul 29 02:04:31 KST 2025        |
+'--------------------------------------------------------'
++ popd
+~
+## Create a symbolic link 'current' pointing to 11.0.1
++ pushd ./querypie/
+~/querypie ~
++ rm -f current
++ ln -s 11.0.1 current
++ popd
+~
+### Installation completed successfully
+### Access QueryPie at http://172.31.11.201:8000 or https://172.31.11.201:8443 in your browser
+### Determine the public IP address of your host machine if needed
+[ec2-user@ip-172-31-11-201 ~]$ 
+```
+
+### 설치 완료
+
+수고하셨습니다.
+이제 QueryPie 가 작동하는 모습을 볼 수 있습니다.
+
+`setup.v2.sh` 의 실행 마지막에 보이는 `http://172.31.11.201:8000` 와 같은 URL 에 접속을 시도하여 보십시오.
+이 주소는 Local PC 에서 Linux Server 로 연결하기 위한 IP Address 를 사용합니다.
+네트워크 연결 구성을 참조하여, Firewall, AWS Security Group 설정 등을 변경하여야 할 수 있습니다: [시스템 아키텍처와 네트워크 접근제어](.)
+
+### License 입력하기
+
+License 파일은 웹콘솔 화면에서 입력할 수 있습니다.
+
+<figure data-layout="left" data-align="left">
+![Enter the license in PEM format.](/setupv2sh/image-20250718-063723.png)
+<figcaption>
+Enter the license in PEM format.
+</figcaption>
+</figure>
+
+## 기본 설정 절차
+
+운영 환경에 따라 설치 이후 필수적으로 수행이 필요한 설정들을 안내합니다.
+
+### 공통 설정
+
+설치 직후 QueryPie 사용 시 필요한 공통 절차 입니다.
+
+#### QueryPie Web Base URL 설정
+
+> 설정 경로: Admin Page → General
+Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다. <br/>(예시. `https://querypie.customer.com`)<br/>이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
+
+이 URL 은 `/` 로 끝나지 않아야 합니다. `https://querypie.customer.com/` 와 같이 URL 의 마지막에 `/` 를 붙이지 않도록 주의하여 주세요.
+
+이 URL 은 아래의 용도로 사용됩니다.
+
+* SSO Integration 의 인증 과정에서, callback 주소로 사용됩니다.
+* Web Console 에서 User Agent 를 내려받는 링크에 사용됩니다.
+* 그 외 자세한 용도는, [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310) 를 참조하시기 바랍니다.
+
+<figure data-layout="center" data-align="center">
+![image-20250520-081112.png](/setupv2sh/image-20250520-081112.png)
+</figure>
+
+### 제품별 설정
+
+#### DAC/SAC: Proxy 접속 주소 설정
+
+QueryPie Database 에 접속하여, DAC/SAC 의 Proxy 접속을 위한 주소를 등록합니다.
+
+<Callout type="info">
+QueryPie Web Console 에서 QueryPie Database 에 연결하려면, DB 연결 설정이 필요합니다:[DB Connections](administrator-manual/databases/connection-management/db-connections)
+
+Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Password 가 필요합니다.
+
+* Hostname: `host.docker.internal`
+* Username: `querypie` (기본 설정의 경우)
+* Password: (QueryPie 를 설치한 디렉토리의 .env 파일에서 DB_PASSWORD 를 확인하세요.)
+
+.env 에 설정된 값 중 DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY 등은 안전하게 보관하여야 합니다.
+다른 사람에게 이 값을 노출하지 않도록 주의하여 주세요.
+</Callout>
+
+아래 `&lt;customer-proxy-address&gt;` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+
+<Callout type="important">
+해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안됩니다.
+</Callout>
+```
+UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
+```
+
+쿼리 실행에 에러 없이 정상적으로 수행이 확인되었으면, 아래 쿼리를 수행하여 등록이 되었는지 확인합니다.
+```
+SELECT * FROM querypie.proxies;
+```
+
+Proxy 접속을 위한 주소를 QueryPie Database 에 등록한 이후, Server Container 를 재시작하지 않아도 됩니다.
+User Agent 에서 로그인을 시도하면, 웹브라우저를 통해 인증을 진행한 이후, User Agent 를 사용할 수 있는 상태가 됩니다.
+
+<figure data-layout="center" data-align="center">
+![image-20250520-082706.png](/setupv2sh/image-20250520-082706.png)
+</figure>
+
+#### KAC: Proxy 접속 주소 설정
+
+QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등록합니다.
+
+아래 `&lt;customer-proxy-fqdn&gt;` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+
+특이사항으로 DAC/SAC 설정과는 다르게 `http`  `https` 와 같은 Scheme을 자유롭게 입력 가능합니다.
+
+<Callout type="important">
+설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
+</Callout>
+```
+UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
+```
+
+<figure data-layout="center" data-align="center">
+![image-20250520-084243.png](/setupv2sh/image-20250520-084243.png)
+</figure>
+
+#### WAC: Proxy 접속 주소 설정
+
+> 설정 경로: Admin Page → Web Apps → Web App Configurations
+WAC의 Proxy 접속 주소 설정은 Web Console 에서 수행 가능합니다.
+
+자세한 설정 절차는 다음 문서를 참조하세요: [Web App Configurations에서 WAC 초기 설정하기](administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
+
+<Callout type="important">
+설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
+</Callout>
+
+

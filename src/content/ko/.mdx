@@ -1,0 +1,52 @@
+---
+title: '설치하기'
+---
+
+# 설치하기
+
+QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라, 안내 문서가 구분되어 제공됩니다.
+
+### Compose Tool 로 Container 를 실행하기
+
+일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다.
+Docker Compose 를 활용하여, Container Image 를 내려받고, 실행, 종료하는 방식입니다.
+
+이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.
+
+#### setup.sh 로 설치하기
+
+QueryPie Version 9 시절부터 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다.
+Harbor 라는 Container Registry 에 계정을 발급받아 Container Image 를 내려받을 수 있습니다.
+
+릴리즈된 모든 버전의 제품을 설치할 수 있습니다.
+
+자세한 설치 방법은 이 문서를 참조하세요: [설치 가이드 - 간단한 구성](.)
+
+
+#### setup.v2.sh 로 설치하기
+
+2025년 8월 출시된 QueryPie ACP Community Edition 의 출시와 함께 최종 고객사와 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다.
+Docker Hub 에 공개된 Container Image 를 내려받아 설치하는 방식입니다.
+
+설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다.
+그러나, 실질적인 설치 과정은 setup.sh 의 설치 방식과 setup.v2.sh 의 설치 방식이 동등하며, setup.v2.sh 는 그 과정이 자동화되었고, Version 10 등 구버전의 설치를 지원하지 않는다는 차이가 있습니다.
+
+Apple Silicon 을 사용하는 macOS 환경의 설치를 지원합니다.
+
+릴리즈된 모든 버전의 제품이 제공되지 않습니다.
+2025년 12월 현재 Version 11.1.2 가 제공됩니다.
+
+자세한 설치 방법은 이 문서를 참조하세요: [Installation Guide - setup.v2.sh (KO)](setupv2sh)
+
+
+### Kubernetes 환경에 설치하기
+
+QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다.
+Compose Tool 을 이용해 설치, 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.
+
+Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
+
+* AWS EKS 환경 : [AWS EKS 환경에서 설치하기](aws-eks) 
+* Helm Chart : [https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment) 
+
+
