@@ -3,13 +3,23 @@ name: Generate MDX from Confluence
 on:
   workflow_dispatch:
     inputs:
-      use_local:
-        description: 'Use local files (--local option)'
+      use_recent:
+        description: 'Update recent files (--recent option)'
+        required: false
+        default: false
+        type: boolean
+      use_remote:
+        description: 'Update all the files in the Confluence Space (--remote option)'
         required: false
         default: false
         type: boolean
       use_attachments:
         description: 'Download attachments from Confluence pages (--attachments option)'
+        required: false
+        default: false
+        type: boolean
+      use_local:
+        description: 'Use local files (--local option)'
         required: false
         default: false
         type: boolean
@@ -49,11 +59,17 @@ jobs:
         run: |
           # 옵션 구성
           OPTIONS=""
-          if [[ "${{ inputs.use_local }}" == "true" ]]; then
-            OPTIONS="$OPTIONS --local"
+          if [[ "${{ inputs.use_recent }}" == "true" ]]; then
+            OPTIONS="$OPTIONS --recent"
+          fi
+          if [[ "${{ inputs.use_remote }}" == "true" ]]; then
+            OPTIONS="$OPTIONS --remote"
           fi
           if [[ "${{ inputs.use_attachments }}" == "true" ]]; then
             OPTIONS="$OPTIONS --attachments"
+          fi
+          if [[ "${{ inputs.use_local }}" == "true" ]]; then
+            OPTIONS="$OPTIONS --local"
           fi
           set -o xtrace
           touch .env # Create an empty .env to prevent missing .env error.

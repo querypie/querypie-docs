@@ -1,4 +1,64 @@
+# Container 환경에서 실행하기
+
+GitHub Action 을 이용한 자동화를 위해 Container 환경을 제공합니다. 다음의 작업을 수행할 수 있습니다.
+
+1. Container Image 빌드
+    - [docker.io/querypie/confluence-mdx:latest](https://hub.docker.com/r/querypie/confluence-mdx) 이미지를 빌드합니다.
+2. 한국어 MDX 파일을 업데이트합니다.
+    - [QueryPie ACP Manual](https://querypie.atlassian.net/wiki/spaces/QM/pages/608501837/QueryPie+Docs) 의 문서를 
+      한국어 MDX 문서로 변환하여 업데이트합니다.
+
+## Container Image 빌드하기
+
+```bash
+# confluence-mdx 디렉토리로 이동
+cd querpie-docs/confluence-mdx
+
+# cache 디렉토리에 데이터를 채우기
+# - 기존 confluence-mdx:latest 이미지에 포함된 /workdir/var/ 아래의 데이터를 cache/ 에 옮깁니다.
+# - var/ 아래의 <page_id> 디렉토리의 데이터를 옮기는 것과 동등합니다.
+1-setup-cache.sh
+
+# confluence-mdx:latest 이미지를 빌드하기
+docker compose --progress=plain build
+```
+
+cache/ 디렉토리를 채우는 경우,  bin/pages_of_confluence.py 를 실행하여 첨부파일을 내려받을 때 캐시로 작동합니다.
+
+## 한국어 MDX 파일을 업데이트하기
+
+최근 1주일 Confluence Space 에서 업데이트된 문서를 한국어 MDX 로 변환합니다.
+```bash
+# --recent 옵션이 기본 적용됩니다.
+docker compose --progress=plain full
+docker compose --progress=plain full --recent
+```
+
+전체 Confluence Space 문서를 내려받아 한국어 MDX 로 변환합니다.
+```bash
+# --remote: Confluence API 를 호출하여 var/ 데이터를 업데이트합니다.
+docker compose --progress=plain full --remote
+# --attachments: 첨부파일을 내려받아 변환하는 작업을 포함합니다.
+docker compose --progress=plain full --remote --attachments
+```
+
+Confluence API 를 호출하지 않고, `var/`에 저장된 데이터를 이용하여 한국어 MDX 전체를 변환합니다.
+```bash
+# --local: Confluence API 를 호출하지 않습니다.
+docker compose --progress=plain full --local
+```
+
+## GitHub Action 설정
+
+- [build-and-push-docker-image.yml](../.github/workflows/build-and-push-docker-image.yml)
+  - Container Image 를 빌드하고, DockerHub Registry 에 push 합니다.
+- [generate-mdx-from-confluence.yml](../.github/workflows/generate-mdx-from-confluence.yml)
+  - Confluence Space 문서를 한국어 MDX 로 변환합니다.
+  - `--remote`, `--local` 등 옵션을 선택하여 지정할 수 있습니다.
+
 # Python 환경 설정과 Python 스크립트 사용법 안내
+
+Python 스크립트의 기능을 개선하거나 디버깅할 때에는, Python 가상환경(venv)에서 실행하는 것이 좋습니다.
 
 ## Python 가상환경(venv) 생성 및 필수 모듈 설치
 
@@ -37,7 +97,7 @@ $ cd confluence-mdx
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install requests beautifulsoup4 pyyaml
-$ python bin/pages_of_confluence.py --attachments # 2시간 가량, 시간이 오래 걸립니다.
+$ python bin/pages_of_confluence.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
 $ python bin/translate_titles.py
 $ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
 $ ./bin/xhtml2markdown.ko.sh
