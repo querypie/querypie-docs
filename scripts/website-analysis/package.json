@@ -11,7 +11,7 @@
     "test": "node analyze_website_enhanced.js"
   },
   "dependencies": {
-    "puppeteer": "^24.16.2"
+    "puppeteer": "^24.32.0"
   },
   "engines": {
     "node": ">=18.0.0"
