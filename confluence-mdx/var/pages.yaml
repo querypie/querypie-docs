@@ -349,6 +349,18 @@
   - "QueryPie Overview"
   "path":
   - "querypie-overview"
+- "page_id": "544375859"
+  "title": "시스템 구성도 개요"
+  "title_orig": "시스템 구성도 개요"
+  "breadcrumbs":
+  - "QueryPie Overview"
+  - "시스템 구성도 개요"
+  "breadcrumbs_en":
+  - "QueryPie Overview"
+  - "System Architecture Overview"
+  "path":
+  - "querypie-overview"
+  - "system-architecture-overview"
 - "page_id": "544112942"
   "title": "Proxy Management"
   "title_orig": "Proxy Management"
@@ -376,30 +388,6 @@
   - "querypie-overview"
   - "proxy-management"
   - "enable-database-proxy"
-- "page_id": "544375859"
-  "title": "시스템 구성도 개요"
-  "title_orig": "시스템 구성도 개요"
-  "breadcrumbs":
-  - "QueryPie Overview"
-  - "시스템 구성도 개요"
-  "breadcrumbs_en":
-  - "QueryPie Overview"
-  - "System Architecture Overview"
-  "path":
-  - "querypie-overview"
-  - "system-architecture-overview"
-- "page_id": "544375808"
-  "title": "Installation and Customer Support"
-  "title_orig": "Installation and Customer Support"
-  "breadcrumbs":
-  - "QueryPie Overview"
-  - "Installation and Customer Support"
-  "breadcrumbs_en":
-  - "QueryPie Overview"
-  - "Installation and Customer Support"
-  "path":
-  - "querypie-overview"
-  - "installation-and-customer-support"
 - "page_id": "544211126"
   "title": "사용자 매뉴얼"
   "title_orig": "사용자 매뉴얼"
@@ -4445,3 +4433,261 @@
   "path":
   - "administrator-manual"
   - "multi-agent-limitations"
+- "page_id": "544375808"
+  "title": "제품 설치와 기술지원"
+  "title_orig": "제품 설치와 기술지원"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  "path":
+  - "installation-and-customer-support"
+- "page_id": "862126081"
+  "title": "설치 전 준비사항"
+  "title_orig": "설치 전 준비사항"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치 전 준비사항"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Prerequisites"
+  "path":
+  - "installation-and-customer-support"
+  - "prerequisites"
+- "page_id": "1298530305"
+  "title": "리눅스 배포본과 Docker, Podman 지원 현황"
+  "title_orig": "리눅스 배포본과 Docker, Podman 지원 현황"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치 전 준비사항"
+  - "리눅스 배포본과 Docker, Podman 지원 현황"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Prerequisites"
+  - "Linux Distribution and Docker, Podman Support Status"
+  "path":
+  - "installation-and-customer-support"
+  - "prerequisites"
+  - "linux-distribution-and-docker-podman-support-status"
+- "page_id": "1297383451"
+  "title": "Podman 으로 Rootless Mode 구성하기"
+  "title_orig": "Podman 으로 Rootless Mode 구성하기"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치 전 준비사항"
+  - "Podman 으로 Rootless Mode 구성하기"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Prerequisites"
+  - "Configuring Rootless Mode with Podman"
+  "path":
+  - "installation-and-customer-support"
+  - "prerequisites"
+  - "configuring-rootless-mode-with-podman"
+- "page_id": "1689387010"
+  "title": "설치하기"
+  "title_orig": "설치하기"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치하기"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Installation"
+  "path":
+  - "installation-and-customer-support"
+  - "installation"
+- "page_id": "964952065"
+  "title": "설치 가이드 - 간단한 구성"
+  "title_orig": "설치 가이드 - 간단한 구성"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치하기"
+  - "설치 가이드 - 간단한 구성"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Installation"
+  - "Installation Guide - Simple Configuration"
+  "path":
+  - "installation-and-customer-support"
+  - "installation"
+  - "installation-guide-simple-configuration"
+- "page_id": "1177321474"
+  "title": "설치 가이드 - setup.v2.sh"
+  "title_orig": "설치 가이드 - setup.v2.sh"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치하기"
+  - "설치 가이드 - setup.v2.sh"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Installation"
+  - "Installation Guide - setup.v2.sh"
+  "path":
+  - "installation-and-customer-support"
+  - "installation"
+  - "installation-guide-setupv2sh"
+- "page_id": "1261895760"
+  "title": "setup.sh, setup.v2.sh 비교"
+  "title_orig": "setup.sh, setup.v2.sh 비교"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치하기"
+  - "setup.sh, setup.v2.sh 비교"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Installation"
+  - "Comparison of setup.sh and setup.v2.sh"
+  "path":
+  - "installation-and-customer-support"
+  - "installation"
+  - "comparison-of-setupsh-and-setupv2sh"
+- "page_id": "815235967"
+  "title": "AWS EKS 환경에서 설치하기"
+  "title_orig": "AWS EKS 환경에서 설치하기"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "설치하기"
+  - "AWS EKS 환경에서 설치하기"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Installation"
+  - "Installing on AWS EKS"
+  "path":
+  - "installation-and-customer-support"
+  - "installation"
+  - "installing-on-aws-eks"
+- "page_id": "862093313"
+  "title": "시스템 아키텍처와 네트워크 접근제어"
+  "title_orig": "시스템 아키텍처와 네트워크 접근제어"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "시스템 아키텍처와 네트워크 접근제어"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "System Architecture and Network Access Control"
+  "path":
+  - "installation-and-customer-support"
+  - "system-architecture-and-network-access-control"
+- "page_id": "954761289"
+  "title": "컨테이너 환경변수"
+  "title_orig": "컨테이너 환경변수"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "컨테이너 환경변수"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Container Environment Variables"
+  "path":
+  - "installation-and-customer-support"
+  - "container-environment-variables"
+- "page_id": "876937310"
+  "title": "QUERYPIE_WEB_URL"
+  "title_orig": "QUERYPIE_WEB_URL"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "컨테이너 환경변수"
+  - "QUERYPIE_WEB_URL"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Container Environment Variables"
+  - "QUERYPIE_WEB_URL"
+  "path":
+  - "installation-and-customer-support"
+  - "container-environment-variables"
+  - "querypieweburl"
+- "page_id": "938016931"
+  "title": "DB_MAX_CONNECTION_SIZE 최적화"
+  "title_orig": "DB_MAX_CONNECTION_SIZE 최적화"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "컨테이너 환경변수"
+  - "DB_MAX_CONNECTION_SIZE 최적화"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Container Environment Variables"
+  - "Optimizing DB_MAX_CONNECTION_SIZE"
+  "path":
+  - "installation-and-customer-support"
+  - "container-environment-variables"
+  - "optimizing-dbmaxconnectionsize"
+- "page_id": "912326893"
+  "title": "라이선스 설치"
+  "title_orig": "라이선스 설치"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "라이선스 설치"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "License Installation"
+  "path":
+  - "installation-and-customer-support"
+  - "license-installation"
+- "page_id": "1690402874"
+  "title": "서버구성 요구사항"
+  "title_orig": "서버구성 요구사항"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "서버구성 요구사항"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Server Configuration Requirements"
+  "path":
+  - "installation-and-customer-support"
+  - "server-configuration-requirements"
+- "page_id": "903086124"
+  "title": "Public Cloud 운영서버 요구사항"
+  "title_orig": "Public Cloud 운영서버 요구사항"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "서버구성 요구사항"
+  - "Public Cloud 운영서버 요구사항"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Server Configuration Requirements"
+  - "Public Cloud Production Server Requirements"
+  "path":
+  - "installation-and-customer-support"
+  - "server-configuration-requirements"
+  - "public-cloud-production-server-requirements"
+- "page_id": "1688371232"
+  "title": "On-Premise VM 요구사항"
+  "title_orig": "On-Premise VM 요구사항"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "서버구성 요구사항"
+  - "On-Premise VM 요구사항"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Server Configuration Requirements"
+  - "On-Premise VM Requirements"
+  "path":
+  - "installation-and-customer-support"
+  - "server-configuration-requirements"
+  - "on-premise-vm-requirements"
+- "page_id": "1692303361"
+  "title": "서버구성 요구사항 요약표"
+  "title_orig": "서버구성 요구사항 요약표"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "서버구성 요구사항"
+  - "서버구성 요구사항 요약표"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "Server Configuration Requirements"
+  - "Server Configuration Requirements Summary"
+  "path":
+  - "installation-and-customer-support"
+  - "server-configuration-requirements"
+  - "server-configuration-requirements-summary"
+- "page_id": "1239416833"
+  "title": "QueryPie ACP Community Edition"
+  "title_orig": "QueryPie ACP Community Edition"
+  "breadcrumbs":
+  - "제품 설치와 기술지원"
+  - "QueryPie ACP Community Edition"
+  "breadcrumbs_en":
+  - "Installation and Customer Support"
+  - "QueryPie ACP Community Edition"
+  "path":
+  - "installation-and-customer-support"
+  - "querypie-acp-community-edition"
