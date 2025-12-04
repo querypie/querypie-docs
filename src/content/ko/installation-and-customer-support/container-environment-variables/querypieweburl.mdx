@@ -1,0 +1,52 @@
+---
+title: 'QUERYPIE_WEB_URL'
+---
+
+import { Callout } from 'nextra/components'
+
+# QUERYPIE_WEB_URL
+
+---
+---
+
+## 개요
+
+QUERYPIE_WEB_URL은 서비스 접근, 인증 연동, 데이터 다운로드, 외부 연동 및 Proxy 설정 등 다양한 경로에서 사용되어 필수로 설정이 필요합니다.
+
+<Callout type="important">
+**QueryPie 버전 10.2.8 부터 해당 환경변수는 사용되지 않습니다. General 메뉴의 Web Base URL로 대체됩니다.**
+<figure data-layout="center" data-align="center">
+![screenshot-20250312-112533.png](/installation-and-customer-support/container-environment-variables/querypieweburl/screenshot-20250312-112533.png)
+</figure>
+</Callout>
+
+## 사용처
+
+* SAML/Google BigQuery OAuth 등 인증 연동을 위한 Redirect URL
+* SCIM 연동을 위한 엔드포인트 URL
+* 다른 서버에 설치하는 컴포넌트 NOVAc 등에서 QueryPie Container 로 연결하는 URL
+* Alert, 이메일, Slack DM 등에서 QueryPie 로 이동하는 링크의 URL
+* User Agent 설치를 위해 파일을 내려 받는 링크의 URL
+* Server Agent 설치를 위해 파일을 내려 받는 링크의 URL
+* Audit Export Log/Report 감사 로그 및 보고서 파일을 내려받는 링크의 URL
+* AiDD 스캔 결과를 내려받는 링크의 URL
+* 세션 레코딩 파일을 내려받는 링크의 URL
+* Proxy 환경에서 필요한 QueryPie 호스트 정보
+
+## Q&A
+
+**Q. 내부망에서만 사용하는 경우에도 도메인 설정이 필요한가요?** <br/> **A.**  IP를 사용하셔도 무방합니다.
+다만, 사용자 PC에서 접근할 수 있는 주소(IP 또는 도메인)여야 합니다.
+사용자 PC 에서 접근할 수 없는 Private IP Address 를 사용하지 않아야 합니다.
+
+
+**Q. IdP로 Okta를 사용하는 경우에 도메인 설정이 필요한가요?** <br/> **A.**  네, 필요합니다.
+Okta에서는 Base URL 입력 시 반드시 https:// 프로토콜을 포함한 URL을 사용해야 합니다.
+만약 http:// 또는 IP 주소만 입력할 경우, 아래와 같은 오류가 발생하며 설정이 불가능합니다.
+
+<Callout type="error">
+*Please review the form to correct the following error(s):*
+*Is not an HTTPS URL. Valid example:* [https://www.okta.com](https://www.okta.com)
+</Callout>
+
+따라서, 도메인을 포함한 HTTPS URL을 사용하여 설정해 주시기 바랍니다.

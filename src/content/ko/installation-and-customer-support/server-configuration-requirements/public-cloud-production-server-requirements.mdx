@@ -1,0 +1,159 @@
+---
+title: 'Public Cloud 운영서버 요구사항'
+---
+
+# Public Cloud 운영서버 요구사항
+
+### 개요
+
+QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 다음과 같은 구성을 적용하는 것을 권장합니다.
+
+* High Availability 구성 적용
+    * Application Load Balancer, Network Load Balancer 를 적용하여, 고가용성, 부하분산에 적합한 구성을 적용합니다.
+    * 2개 이상의 VM Instance 를 Load Balancer 의 Upstream 서버로 둡니다. 요구되는 처리용량이 높은 경우, VM Instance 의 수를 늘이는 Scale-Out 방식의 구성을 적용합니다.
+* QueryPie MySQL, Redis 를 VM 이 아닌, Managed Service 방식의 MySQL, Redis 를 적용합니다.
+    * AWS 의 경우 Aurora RDS for MySQL, Aurora RDS for MariaDB, ElastiCache 를 사용하는 것을 권장합니다.
+* VM 의 OS 는 Linux 배포본은 대부분 지원합니다. 다만, docker daemon 을 설치하여 사용할 수 있어야 합니다.
+    * AWS 의 경우, Amazon Linux 를 추천합니다.
+    * GCP 의 경우, Ubuntu 24.04 LTS (또는 이후의 최신 LTS 버전)를 추천합니다.
+
+### QueryPie Container 용 VM 모델
+
+기본사양 : CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB 이상, Disk 100 GiB, CPU AMD
+
+* 기본사양의 VM 을 두 개 이상 생성하여, Scale-Out 구성을 적용하는 것을 권장합니다.
+* AWS EC2 Instance Type: m6i.xlarge, m7i.xlarge
+* GCP Compute Engine Machine Type : c4-standard-4, n4-standard-4 ( 또는 AMD64 아키텍처의 -standard-4 모델 )
+* Disk IO 성능 : 범용 Disk Volume 을 적용합니다. AWS 의 경우, EBS General Purpose SSD (gp3) 를 적용합니다.
+
+높은 처리량이 필요한 경우 권장사양 : CPU 8 vCPUs AMD64 Architecture, Memory 30 GiB 이상, Disk 100 GiB
+
+* 권장사양의 VM 을 두 개 이상 생성하여, Scale-Out 구성을 적용하는 것을 권장합니다.
+* AWS EC2 : m6i.2xlarge, m7i.2xlarge
+* GCP Compute Engine : c4-standard-8, n4-standard-8 ( 또는 AMD64 아키텍처의 -standard-8 모델 )
+* Disk IO 성능 : 높은 IOPS 의 Volume 을 적용합니다. AWS 의 EBS Provisioned IOPS SSD (io1) 또는 그 이상 성능의 Volume 을 적용합니다.
+
+### QueryPie MySQL
+
+기본사양 : CPU 2 vCPUs, Memory 16 GiB 이상, Disk 100 GiB 이상
+
+* Managed Service 방식의 MySQL 또는 MariaDB 를 사용하는 것을 권장합니다.
+* AWS Aurora : db.r7g.large, db.r6g.large
+* Disk IO 성능 : 범용 Disk Volume 을 적용합니다. AWS 의 경우, EBS General Purpose SSD (gp3) 를 적용합니다.
+
+높은 처리량이 필요한 경우 권장사양 : CPU 4 vCPUs, Memory 32 GiB 이상, Disk 100 GiB 이상 ( **저장용량 크기는 별도 산정 필요** )
+
+* Managed Service 방식의 MySQL 또는 MariaDB 를 사용하는 것을 권장합니다.
+* AWS Aurora : db.r7g.xlarge, db.r6g.xlarge
+* Disk IO 성능 : 높은 IOPS 의 Volume 을 적용합니다. AWS 의 EBS Provisioned IOPS SSD (io1) 또는 그 이상 성능의 Volume 을 적용합니다.
+* Disk 용량 : QueryPie 에서 기록하는 Audit Log 를 MySQL 에 저장합니다. Audit Log 가 기록되는 빈도, 평균 크기, 보관 기간에 따라, 저장공간의 크기를 적절히 산정할 필요가 있습니다.
+
+### QueryPie Redis
+
+기본사양 : CPU 2 vCPUs, Memory 1 GiB 이상
+
+* Managed Service 방식의 Redis 호환 서비스를 사용하는 것을 권장합니다.
+* AWS ElastiCache On-Demand Nodes : cache.t4g.small 또는 비슷한 모델
+
+높은 처리량이 필요한 경우 권장사양 : CPU 2 vCPUs, Memory 3 GiB 이상
+
+* Managed Service 방식의 Redis 호환 서비스를 사용하는 것을 권장합니다.
+* AWS ElastiCache On-Demand Nodes : cache.t4g.medium 또는 비슷한 모델
+
+
+### Availability Zone 에 따른 VM 구성 방법
+
+가용영역(Availability Zone)에 따라 VM 을 배치하고, VM 의 사양을 조정하는 방법을 안내합니다.
+
+#### 운영환경에서는 가용영역 3개 (또는 4개) 에 각각 VM 을 생성하여 배치합니다.
+
+하나의 가용영역에 VM 이 집중되지 않도록, 각 가용영역에 골고루 VM 을 분산하여 배치합니다.
+
+서비스 이용량이 높지 않아, VM 서버의 CPU 자원에 여유가 많은 경우, 2개의 VM 으로 서비스를 구성하여도 좋습니다.
+서비스 이용량이 높아지면, VM 의 수를 늘여, 평소에 측정되는 최대 이용량이 일정 수준 이하를 유지하도록 조정합니다.
+구체적인 조정 기준은 아래에서 설명합니다.
+
+#### 하나의 VM Instance 가 서비스를 중단하게 되더라도, 평소에 측정되는 최대 이용량을 처리 가능하도록, VM 의 사양을 조정합니다.
+
+예를 들어, 3개의 VM 을 구성하여 서비스를 제공하는 경우, 2개의 VM 만으로 최대 이용량을 처리 가능하도록 VM 의 사양을 조정합니다.
+2개의 VM 이 최대 이용량을 처리하는 시점에, CPU 사용량이 85% 를 넘지 않도록 조정합니다.
+2개의 VM 이 85% CPU 사용량을 보인다면, 합계 170% 의 CPU 를 사용하는 셈입니다.
+이 부하를 3개의 VM 이 나누어 처리하면, 하나의 VM 에서는 약 56% 의 CPU 를 사용하게 됩니다.
+따라서, 3개의 VM 이 정상적으로 작동하는 경우, 최대 이용량을 보여주는 시기에, CPU 사용량 56% 를 넘지 않는 것이 필요합니다.
+
+|  **VM 갯수**  |  **1개 인스턴스 정지시**            |  **정상 운영시 최대 CPU 사용량**       |
+| ----------- | --------------------------- | ---------------------------- |
+| 2개          | 1개 x 85% CPU = 85% CPU 사용량  | 85% CPU / 2개 = 43% CPU / 1개  |
+| 3개          | 2개 x 85% CPU = 170% CPU 사용량 | 170% CPU / 3개 = 56% CPU / 1개 |
+| 4개          | 3개 x 85% CPU = 255% CPU 사용량 | 255% CPU / 4개 = 63% CPU / 1개 |
+| 5개          | 4개 x 85% CPU = 340% CPU 사용량 | 340% CPU / 5개 = 68% CPU / 1개 |
+
+VM 갯수를 늘이는 Scale-Out 구성을 적용하는 경우, 정상 운영시 최대 CPU 사용량으로 허용할 수 있는 수준이 더 높아지게 됩니다.
+이러한 방식으로, 1개 VM 장애시, 나머지 VM 으로 정상적으로 서비스를 제공하면서, 평소에 VM 의 자원 사용률을 높여, 비용 대비 처리 성능을 높일 수 있습니다.
+
+VM 갯수를 늘이지 않고, 2개 또는 3개를 고정으로 두는 경우, 정상 운영시 최대 CPU 사용량으로 계산된 기준값보다 더 높은 실제 사용량을 보일 경우, VM 의 CPU 수를 늘이거나, Instance Type 을 고사양으로 변경하여, 계산된 기준값보다 더 낮은 실제 사용량을 보이도록 조정합니다.
+
+#### Auto Scaling Group 설정을 적용하지 않습니다.
+
+서비스가 처리하는 트래픽, 부하의 정도에 따라 Upstream 서버를 자동으로 늘이거나 줄이는 Auto Scaling Group 설정을 적용하지 않습니다.
+
+QueryPie 는 웹애플리케이션을 특성을 갖고 있으나, 일반적인 웹애플리케이션과 달리, 이용자의 접속에 따라, 특정 DB, 시스템과 연결을 맺고, 이 연결을 통해 SQL Query 를 실행하고, ssh 를 통해 시스템 명령을 수행하는 기능적 특성을 갖고 있습니다.
+이에 따라, 이용자가 접속한 특정 Server Container 내에서 DB 연결, ssh 연결을 유지하고, 후속하는 질의, 명령을 실행하는 방식으로 작동합니다.
+
+Auto Scaling Group 을 적용하는 경우, Upstream 서버 수가 변경될 때, Web Console 에 연결된 세션의 인증이 끊기고, 다시 로그인을 요구하는 현상이 발생할 수 있습니다.
+
+참조 - [HA 구성에서 Sticky Session이 왜 필요한가요?](#target-title-not-found)
+
+
+### 요구되는 성능에 대한 근거
+
+#### QueryPie Server 가 요구하는 컴퓨팅 자원의 유형
+
+QueryPie Server Container 와 MySQL 은 다음과 같은 유형의 작업을 처리하는데, 컴퓨팅 자원을 주로 사용합니다.
+
+* 이용자의 접속, 쿼리실행, 명령실행 등에 따라 Audit Log 를 기록하는 기능이 MySQL 이 데이터를 저장합니다.
+* 이용자의 접속, 쿼리실행, 명령실행에 따라, 접근제어 정책을 조회하고, 허용 또는 거부합니다.
+* 다수의 SQL 쿼리를 포함하는 Workflow 작업을 백그라운드에서 실행합니다.
+* SSO Integration 에 따라, 주기적으로 다수 이용자의 목록을 전송 받고, 각 이용자의 QueryPie 계정 정보를 업데이트합니다.
+* External API 를 이용해, 다수의 DB, Server 자산을 등록하거나 변경하고, 접근제어 정책을 변경합니다.
+
+#### QueryPie Container 가 요구하는 메모리 크기
+
+* QueryPie Container 는 초기 실행시에 약 7 GiB 의 메모리를 사용합니다. 이용자의 사용에 따라, Container 가 사용하는 메모리가 2~3 GiB 가량 증가할 수 있습니다.
+* Mongo, Document DB 에 접근하는 경우, 메모리 사용량이 1 GiB 이상 증가할 수 있습니다.
+* 대량의 Result Set 을 내려받는 SQL 질의를 실행하는 경우, 메모리 사용량이 증가할 수 있습니다.
+* Audit Log 를 기록하는 과정에서, Container 내부에서 임시 파일을 생성하여 사용합니다. 이에 따라, Disk 장치를 위한 OS 의 Cache 를 위한 메모리를 1~2 GiB 가량 할당해 줄 필요가 있습니다.
+
+
+### FAQ
+
+#### Q: 이용자 수에 따라 서버 처리용량을 추정하는 가이드를 제공해 주세요.
+
+A: 고객사의 이용자 수에 따라 서버 처리용량을 추정하는 가이드를 일반적으로 제공하기 어렵습니다.
+가이드를 제공하기 어려운 이유에 대해 설명을 드리겠습니다.
+
+QueryPie 는 일반적으로, 사람 이용자의 접속, 쿼리실행, 명령실행에 대해 접근 제어를 하고, 감사 로그를 기록하는 조건으로 사용하는 것을 권장합니다.
+사람 이용자가 아닌 이용자의 경우는, Application, Program 이 QueryPie 를 통해 대상 시스템에 접속하는 경우입니다.
+
+QueryPie 는 기본사양의 VM 1대에서, DAC 기준으로 간단한 쿼리의 경우, 1초당 70건 이상의 쿼리를 낮은 Latency 로 처리하는 성능을 보유하고 있습니다.
+1초당 70건의 쿼리를 처리한다는 것은, 1분에 4,200건, 1시간에 25만건의 쿼리를 처리할 수 있는 성능을 의미합니다.
+
+수백명 또는 수천명의 이용자가 일상적으로 가벼운 쿼리를 실행하는 경우, 기본사양의 VM 1대 또는 2대에서 충분히 여유있게 처리 가능한 처리성능을 제공합니다.
+
+그러나, 다음의 유형의 쿼리, 접근 방식을 사용하는 경우, 요구되는 서버 처리용량이 크게 늘어나게 되며, 이때 실제 요구되는 서버 처리용량을 일반적으로 추정하기 어렵습니다.
+
+* 사람 이용자가 수만개 이상의 Statement 로 구성된 SQL Query 를 실행하는 경우
+* 사람 이용자가 수십만건 이상의 ResultSet 을 얻는 SQL Query 를 실행하는 경우
+* 사람 이용자가 아닌, Application, Program 에서 DB 에 연결하여 작동하는 경우
+* QueryPie 를 통해 DB 에 연결된 상태에서, 애플리케이션 성능 테스트 프로그램을 실행하는 경우
+* QueryPie 를 통해 DB 에 연결된 상태에서, 애플리케이션의 테스트 코드, 통합테스트 케이스를 실행하는 경우
+* 1만개 이상의 DB, System 자산을 External API 를 통해 등록, 관리하는 과정을 자동화한 경우
+
+고객사에서 QueryPie 의 서버 처리용량이 부족하다고 보고된 사례들은, 대부분 위와 같은 사례입니다.
+이러한 경우는, 사전에 요구되는 처리용량의 추정을 시도할 수 있지만, 정확히 또는 유의미하게 추정하기 어려운 한계가 있습니다.
+이러한 경우에는 다음과 같은 방식으로 접근하는 것을 권장해 드립니다.
+
+* QueryPie 를 신규 도입하는 경우, 내부 이용자에 대해 점진적으로 배포를 수행하며, VM 의 CPU, Memory, Disk IO 사용량 지표를 모니터링하고, 성능이 부족하지 않은지, 모니터링합니다.
+* 기존 사용 중인 접근제어 시스템이 있는 경우, 이용자의 사용량 지표를 제공받아, 분석합니다. 1일 또는 1주일 정도의 기간 동안, 이용자의 접속 건수, 쿼리 실행 건수, ResultSet 의 크기, 생성된 Audit Log 의 크기 등 사용량 지표를 필요로 합니다.
+
+

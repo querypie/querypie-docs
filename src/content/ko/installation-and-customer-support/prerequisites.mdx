@@ -1,0 +1,108 @@
+---
+title: '설치 전 준비사항'
+---
+
+import { Callout } from 'nextra/components'
+
+# 설치 전 준비사항
+
+
+### 요약
+
+설치를 진행하기 전에, 다음의 사항을 준비해야 합니다.
+간단히 요약하면, 다음과 같습니다.
+
+* Linux 서버 1대
+* 웹 브라우저가 설치된 PC 1대
+
+### 서버 환경
+
+* Linux OS 가 설치된 서버 컴퓨터 1대 : 아래에서 `Server VM`이라고 표기합니다.
+    * AWS, Azure, Google Cloud Platform 등의 클라우드 서비스를 이용해도 무방합니다.
+* Hardware 성능과 용량
+    * 서버 컴퓨터의 사양은 4 vCPUs, 16GiB Memory 을 기본 사양으로 제시합니다. 이 성능 사양은 QueryPie 의 여러가지 기능 테스트에 적합합니다.
+    * 수백명 이상의 여러 이용자가 많은 트래픽으로 이용하는 경우, 8 vCPUs, 32 GiB Memory 를 권장 사양으로 제시합니다.
+    * Root file system 의 크기를 100GiB 이상으로 구성하는 것을 권장합니다.
+* CPU Architecture
+    * CPU 는 x86_64 또는 AMD64 아키텍처를 권장합니다. AMD64, Intel Xeon 등 CPU 를 적용하여 주세요.
+    * **[BETA]** QueryPie version 11.1.1 부터, ARM64 아키텍처의 CPU 를 지원합니다.
+        * Production 수준의 기능 테스트를 수행하지 못하였기에, 개발환경에서의 기능테스트, 시험사용 용도로 권장합니다.
+        * AWS 의 경우, `t4g.xlarge`, `m7g.xlarge` 등의 인스턴스 유형을 사용할 수 있습니다.
+    * **[BETA]** QueryPie version 11.1.1 부터, Apple Silicon CPU 를 사용하는 macOS 환경을 지원합니다.
+* `Server VM`에 이용자가 접속할 수 있는 IP 주소가 있어야 합니다.
+    * Fully Qualified Domain Name(FQDN) 를 설정하여 연결하는 것을 권장합니다.
+* `Server VM`에는 다음의 포트가 열려 있어야 합니다.
+    * TCP 80 : QueryPie 웹 서비스 포트
+    * TCP 9000 : QueryPie User Agent 가 QueryPie Server 에 연결하는 포트
+    * (선택) : 80 이 아닌 443 TLS(SSL) 포트를 사용하여 HTTPS 로 접근하려는 경우, TCP 443 포트 접근이 가능해야 합니다.
+
+<Callout type="info">
+Production 환경을 위한 서버 권장 사양을 요약합니다.
+* 기본 사양 : Hardware: CPU 4 vCPUs, AMD64 Architecture, Memory 16 GiB, Disk 100 GiB+
+    * AWS EC2 : m6i.xlarge, m7i.xlarge, 
+    * GCP Compute Engine : c4-standard-4, n4-standard-4 ( 또는 AMD64 아키텍처의 -standard-4 모델 )
+* 다수 이용자 운영환경의 권장 사양 : Hardware: CPU 4 또는 8 vCPUs, AMD64 Architecture, Memory 32 GiB, Disk 100 GiB+
+    * AWS EC2 : m6i.2xlarge, m7i.2xlarge, r6i.xlarge
+    * GCP Compute Engine : c4-standard-8, n4-standard-8 ( 또는 AMD64 아키텍처의 -standard-8 모델 )
+* OS: Linux ( docker daemon 을 설치하여 사용 )
+</Callout>
+
+### 리눅스 배포본
+
+QueryPie ACP 는 Docker, Podman 을 사용할 수 있는 대부분의 리눅스 배포본에서 정상적으로 작동합니다.
+그리고, 몇가지 리눅스 배포본에서 QueryPie ACP 제품을 사용하는 경우, 기술지원을 효과적으로 제공받을 수 있습니다.
+
+#### 설치, 운영 과정이 검증된 리눅스 배포본
+
+* Amazon Linux 2, Amazon Linux 2023 : AWS Cloud 에서만 제공됩니다.
+* Ubuntu Server 22.04 LTS, 24.04 LTS
+* Red Hat Enterprise Linux 8, 9, 10
+* Rocky Linux 8, 9
+
+여러 리눅스 배포본과 Docker, Podman 의 지원 현황에 대한 상세한 정보는 이 문서를 참조하세요: [리눅스 배포본과 Docker, Podman 지원 현황](prerequisites/linux-distribution-and-docker-podman-support-status)
+
+### Container Engine 과 Compose Tool
+
+QueryPie 는 Container 방식으로 제공됩니다.
+따라서, Container Engine 을 필수로 요구합니다.
+Docker, Podman 과 같이 Image 로부터 Container 를 생성, 실행, 종료하기 위한 도구를 Container Engine 이라고 합니다.
+또한, Container Engine 을 손쉽게 사용하기 위하여, Compose Tool 를 필요로 합니다.
+Docker Compose 를 Compose Tool 이라고 합니다.
+
+#### Container Engine 과 버전
+
+* Docker Desktop : 20.10 또는 이후 버전
+* Docker Community Edition : 20.10 또는 이후 버전
+* Docker Enterprise Edition : Docker Desktop 으로 제품의 이름이 변경되었습니다.
+* Podman : 4.9.0 또는 이후 버전
+
+#### Compose Tool 과 버전
+
+* Docker Compose : 2.29.0 또는 이후 버전
+    * Podman Compose 보다 Docker Compose 사용을 권장합니다. Podman 과 Docker Compose 조합에서 정상적으로 작동하는 것을 검증하였습니다.
+* Podman Compose : 1.5.0 또는 이후 버전
+
+### 서버의 FQDN 설정과, TLS Certificate
+
+이 항목은 필수로 요구되는 것은 아닙니다.
+그러나, 보안 측면과 이용자의 사용성 측면에서, 권장하는 항목입니다.
+
+* `Server VM` 에 연결되는 Fully Qualified Domain Name (FQDN) 을 준비합니다.
+    * `Server VM` 의 IP 주소에 연결된 DNS 설정을 적용하여, FQDN 으로 해당 호스트에 연결할 수 있는 설정을 준비합니다.
+* FQDN 에 해당하는 TLS 인증서 Certificate 를 준비합니다.
+    * `https` 주소로 접근하는데 사용됩니다.
+
+### 이용자의 PC 환경
+
+* 웹 브라우저가 설치된 PC : 아래에서 `User PC`라고 표기합니다.
+    * Chrome, Firefox, Safari, Edge 등의 최신 버전 브라우저를 사용합니다.
+    * 웹 브라우저를 이용하는 것은 필수입니다. QueryPie User Agent 를 사용하는 경우에도, 웹 브라우저를 이용한 연결이 필요합니다.
+* `User PC`에서 `Server VM`의 IP 주소 또는 FQDN 으로 웹 브라우저를 열어 QueryPie 웹 서비스에 접속할 수 있어야 합니다.
+* QueryPie User Agent 를 설치하는 경우, 몇몇 OS 에서만 지원됩니다. .NET8 이상을 지원하는 OS 에서 사용할 수 있습니다.
+    * QueryPie User Agent 는 Windows, MacOS, Linux OS 에서 동작합니다.
+        * Windows OS 의 경우, Windows 8 or later 버전을 사용해야 합니다.
+        * MacOS OS 의 경우, MacOS 10.15 or later 버전을 사용해야 합니다. MacOS 12 (Monterey) 또는 이후 버전을 권장합니다.
+        * Linux OS 의 경우, Debian 9 or later, Ubuntu 16.04 or later, Fedora 30 or later 버전을 사용해야 합니다.
+    * Linux OS 의 경우, headless 모드를 지원하지 않습니다. X-Window, VNC 등을 사용하여 GUI 환경에서 실행해야 합니다.
+    * User Agent 를 사용하지 않고 웹 브라우저만을 이용해 QueryPie 를 사용하는 경우, 이 항목은 무시하셔도 됩니다.
+

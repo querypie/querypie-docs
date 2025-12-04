@@ -1,0 +1,104 @@
+---
+title: 'setup.sh, setup.v2.sh 비교'
+---
+
+# setup.sh, setup.v2.sh 비교
+
+### 들어가기
+
+2025년 8월 현재, setup.sh 는 파트너를 위해 제공된 QueryPie 설치 프로그램입니다.
+setup.v2.sh 는 QueryPie Community Edition 출시와 함께 제공되는 QueryPie 설치 프로그램입니다.
+
+이 두 가지 설치 프로그램의 작동 방식, 특징과 차이점을 이 문서에서 살펴봅니다.
+
+### 설치 프로그램의 기능 범위
+
+#### setup.sh 의 설치 기능
+
+* Container Engine, Compose Tool 이 발견되지 않은 경우, 이를 설치합니다.
+    * Container Engine : Docker
+    * Compose Tool : Docker Compose
+* `./querypie/version` 경로에 Compose 를 위한 package.tar.gz 을 설치합니다.
+
+#### setup.v2.sh 의 설치 기능
+
+* Container Engine, Compose Tool 이 발견되지 않은 경우, 이를 설치합니다.
+    * Container Engine : Docker 또는 Podman
+    * Compose Tool: Docker Compose
+* `./querypie/&lt;version&gt;` 경로에 Compose 를 위한 package.tar.gz 을 설치합니다.
+* SELinux 설정을 점검하고, Container Volume Mount 를 위한 `chcon` 명령을 수행합니다.
+* 환경변수 설정파일 `.env` 의 설정값을 자동으로 채웁니다.
+* Container Image 를 내려받습니다.
+* QueryPie MySQL 의 Migration 을 수행하고, QueryPie App Container 를 실행합니다.
+* `./querypie/current` 라는 Symbolic Link 를 `./querypie/&lt;version&gt;` 으로 연결하여, 현재 작동 중인 버전을 명시합니다.
+
+#### setup.v2.sh 의 업그레이드, 삭제 등 추가 기능
+
+setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니다.
+
+* Upgrade 를 자동으로 실행할 수 있습니다.
+* 설치된 제품을 삭제하는 Uninstall 을 실행할 수 있습니다.
+* Container Engine (Docker 또는 Podman) 만 설치할 수 있습니다.
+* setup.sh 와 동등하게, Compose Package 설치까지만 수행하는 모드를 제공합니다.
+* **[검토 중]** 환경변수 설정파일 `.env` 의 설정값을 이용자 확인, 입력을 거쳐 채웁니다.
+
+### Compose 설정과 환경설정의 차이
+
+|  **Topic**        |  **setup.sh**                                              |  **setup.v2.sh**                                   |
+| ----------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| Image Registry    | `harbor.chequer.io/querypie/`                              | `docker.io/querypie/`                              |
+| 환경변수 설정파일         | `compose-env`                                              | `.env`                                             |
+| Compose as Plugin | 미지원<br/>`docker-compose` 명령을 사용                            | 지원<br/>`docker compose` 또는 `podman compose` 명령을 사용 |
+| MySQL Data Dir    | `./querypie/&lt;version&gt;/mysql/`                        | `./querypie/mysql/`                                |
+| Application Log   | `/var/log/querypie/` - 10.2.x<br/>`./querypie/log/` - 11.x | `./querypie/log/`                                  |
+| 작동 중 버전의 Symlink  | (없음)                                                       | `./querypie/current`                               |
+
+### MySQL Data Dir 의 위치 변경
+
+MySQL Data Dir 의 경로가 변경되면서, 다음의 장점이 생깁니다.
+
+* 업그레이드를 수행하면서, 여러 버전을 설치한 경우, 최초 설치 버전의 경로를 유지해야 하는 제약이 사라졌습니다. 업그레이드 완료 이후, 구버전 Compose Package 를 삭제할 수 있습니다.
+* QueryPie MySQL Container 를 실행하는 경로 위치에 영향 받지 않습니다. 구버전 Compose Package, 신버전 Compose Package, 어느 경로에서 실행하더라도, 문제가 발생하지 않습니다.
+
+두 가지 유의사항이 있습니다.
+
+* setup.sh 는 기존 QueryPie MySQL Container 를 최초 설치 버전의 경로에서 작동하는 MySQL Container 를 유지하여야 합니다. setup.v2.sh 는  **현재 설치 버전의 경로에서 MySQL Container 를 실행** 합니다.
+* setup.sh 로 제품을 이미 설치한 서버에, setup.v2.sh 를 이용해 새로운 버전을 설치할 수 있습니다. 그러나, MySQL Data Dir 변경에 따라,  **기존 데이터가 자동으로 이관되지 않습니다** . 새로운 설치, 업그레이드 등 목적에 따라, MySQL Data 디렉토리를 설치 담당자가 적절히 이동하여야 합니다.
+
+
+### Rootless Mode 지원
+
+setup.sh 로 설치하는 경우, Rootless Mode 의 Docker 환경에서 실행하기 위해, 추가적인 설정 변경이 필요합니다.
+
+setup.v2.sh 로 설치하는 경우, Rootless Mode 의 Docker, Podman 환경에서 실행하기 위해, 추가적인 설정 변경이 필요하지 않습니다.
+
+#### setup.v2.sh - Rootless Mode 설정 방법
+
+Rootless Mode 로 Container Engine 을 실행하도록 먼저 환경을 구성합니다.
+setup.v2.sh 를 이용하여 Podman 을 설치하는 경우, 기본적으로 Rootless Mode 환경이 적용됩니다.
+Docker 를 사용하는 경우, 별도의 문서를 참조하여, Rootless Mode 설정을 수행하여야 합니다.
+
+이후, `setup.v2.sh` 를 실행할 때, `--universal` 옵션을 추가하여, QueryPie 를 설치하면, Rootless Mode 에 적합한 Compose package.tar.gz 이 설치됩니다.
+
+
+### setup.v2.sh 문제현상, 오류 신고하기
+
+setup.v2.sh 는 실행 초기에, 스크립트 버전, 환경 정보를 콘솔에 출력합니다.
+
+setup.v2.sh 와 관련된 문제 현상을 신고할 때에는, 다음의 두 가지 정보를 포함하여 신고하여 주세요.
+
+* setup.v2.sh 실행시 옵션을 포함한 명령줄, 스크립트 버전을 포함한 콘솔 로그 앞부분 5줄
+* 문제 현상이 발생한 마지막 콘솔 로그 5줄 또는 관련 내용
+
+#### 스크립트 버전을 포함한 콘솔 로그의 예시
+
+```
+jk@host ~ % ./setup.v2.sh --universal
+#### QueryPie Installer 25.08.4, /opt/homebrew/bin/bash 5.2.26(1)-release on Darwin arm64 ####
+### Install QueryPie version 11.1.1 ###
+# Directory ./querypie/ does not exist. QueryPie has not been installed on this system.
+Do you want to install QueryPie (11.1.1)?
+
+```
+
+
