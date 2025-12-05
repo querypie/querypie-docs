@@ -73,7 +73,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # 필수 모듈 설치
-pip install requests beautifulsoup4 pyyaml
+pip3 install requests beautifulsoup4 pyyaml
 ```
 
 ## 데이터 수집, 변환 절차의 개요
@@ -96,10 +96,10 @@ pip install requests beautifulsoup4 pyyaml
 $ cd confluence-mdx
 $ python3 -m venv venv
 $ source venv/bin/activate
-$ pip install requests beautifulsoup4 pyyaml
-$ python bin/pages_of_confluence.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
-$ python bin/translate_titles.py
-$ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
+$ pip3 install requests beautifulsoup4 pyyaml
+$ python3 bin/pages_of_confluence.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
+$ python3 bin/translate_titles.py
+$ python3 bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
 $ ./bin/xhtml2markdown.ko.sh
 # 이제, 변환된 또는 변경된 MDX 파일을 src/content/ko 아래에서 확인할 수 있습니다.
 ```

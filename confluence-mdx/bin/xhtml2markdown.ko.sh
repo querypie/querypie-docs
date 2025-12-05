@@ -1051,78 +1051,78 @@ python bin/confluence_xhtml_to_markdown.py var/851280543/page.xhtml target/ko/ad
 echo 'Converted 851280543 to target/ko/administrator-manual/multi-agent-limitations.mdx'
 
 mkdir -p target/ko/.
-python bin/confluence_xhtml_to_markdown.py var/544375808/page.xhtml target/ko/installation-and-customer-support.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support
-echo 'Converted 544375808 to target/ko/installation-and-customer-support.mdx'
+python bin/confluence_xhtml_to_markdown.py var/544375808/page.xhtml target/ko/installation.mdx --public-dir=target/public --attachment-dir=/installation
+echo 'Converted 544375808 to target/ko/installation.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/862126081/page.xhtml target/ko/installation-and-customer-support/prerequisites.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/prerequisites
-echo 'Converted 862126081 to target/ko/installation-and-customer-support/prerequisites.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/862126081/page.xhtml target/ko/installation/prerequisites.mdx --public-dir=target/public --attachment-dir=/installation/prerequisites
+echo 'Converted 862126081 to target/ko/installation/prerequisites.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/prerequisites
-python bin/confluence_xhtml_to_markdown.py var/1298530305/page.xhtml target/ko/installation-and-customer-support/prerequisites/linux-distribution-and-docker-podman-support-status.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/prerequisites/linux-distribution-and-docker-podman-support-status
-echo 'Converted 1298530305 to target/ko/installation-and-customer-support/prerequisites/linux-distribution-and-docker-podman-support-status.mdx'
+mkdir -p target/ko/installation/prerequisites
+python bin/confluence_xhtml_to_markdown.py var/1298530305/page.xhtml target/ko/installation/prerequisites/linux-distribution-and-docker-podman-support-status.mdx --public-dir=target/public --attachment-dir=/installation/prerequisites/linux-distribution-and-docker-podman-support-status
+echo 'Converted 1298530305 to target/ko/installation/prerequisites/linux-distribution-and-docker-podman-support-status.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/prerequisites
-python bin/confluence_xhtml_to_markdown.py var/1297383451/page.xhtml target/ko/installation-and-customer-support/prerequisites/configuring-rootless-mode-with-podman.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/prerequisites/configuring-rootless-mode-with-podman
-echo 'Converted 1297383451 to target/ko/installation-and-customer-support/prerequisites/configuring-rootless-mode-with-podman.mdx'
+mkdir -p target/ko/installation/prerequisites
+python bin/confluence_xhtml_to_markdown.py var/1297383451/page.xhtml target/ko/installation/prerequisites/configuring-rootless-mode-with-podman.mdx --public-dir=target/public --attachment-dir=/installation/prerequisites/configuring-rootless-mode-with-podman
+echo 'Converted 1297383451 to target/ko/installation/prerequisites/configuring-rootless-mode-with-podman.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/1689387010/page.xhtml target/ko/installation-and-customer-support/installation.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/installation
-echo 'Converted 1689387010 to target/ko/installation-and-customer-support/installation.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/1689387010/page.xhtml target/ko/installation/installation.mdx --public-dir=target/public --attachment-dir=/installation/installation
+echo 'Converted 1689387010 to target/ko/installation/installation.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/installation
-python bin/confluence_xhtml_to_markdown.py var/964952065/page.xhtml target/ko/installation-and-customer-support/installation/installation-guide-simple-configuration.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/installation/installation-guide-simple-configuration
-echo 'Converted 964952065 to target/ko/installation-and-customer-support/installation/installation-guide-simple-configuration.mdx'
+mkdir -p target/ko/installation/installation
+python bin/confluence_xhtml_to_markdown.py var/964952065/page.xhtml target/ko/installation/installation/installation-guide-simple-configuration.mdx --public-dir=target/public --attachment-dir=/installation/installation/installation-guide-simple-configuration
+echo 'Converted 964952065 to target/ko/installation/installation/installation-guide-simple-configuration.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/installation
-python bin/confluence_xhtml_to_markdown.py var/1177321474/page.xhtml target/ko/installation-and-customer-support/installation/installation-guide-setupv2sh.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/installation/installation-guide-setupv2sh
-echo 'Converted 1177321474 to target/ko/installation-and-customer-support/installation/installation-guide-setupv2sh.mdx'
+mkdir -p target/ko/installation/installation
+python bin/confluence_xhtml_to_markdown.py var/1177321474/page.xhtml target/ko/installation/installation/installation-guide-setupv2sh.mdx --public-dir=target/public --attachment-dir=/installation/installation/installation-guide-setupv2sh
+echo 'Converted 1177321474 to target/ko/installation/installation/installation-guide-setupv2sh.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/installation
-python bin/confluence_xhtml_to_markdown.py var/1261895760/page.xhtml target/ko/installation-and-customer-support/installation/comparison-of-setupsh-and-setupv2sh.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/installation/comparison-of-setupsh-and-setupv2sh
-echo 'Converted 1261895760 to target/ko/installation-and-customer-support/installation/comparison-of-setupsh-and-setupv2sh.mdx'
+mkdir -p target/ko/installation/installation
+python bin/confluence_xhtml_to_markdown.py var/1261895760/page.xhtml target/ko/installation/installation/comparison-of-setupsh-and-setupv2sh.mdx --public-dir=target/public --attachment-dir=/installation/installation/comparison-of-setupsh-and-setupv2sh
+echo 'Converted 1261895760 to target/ko/installation/installation/comparison-of-setupsh-and-setupv2sh.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/installation
-python bin/confluence_xhtml_to_markdown.py var/815235967/page.xhtml target/ko/installation-and-customer-support/installation/installing-on-aws-eks.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/installation/installing-on-aws-eks
-echo 'Converted 815235967 to target/ko/installation-and-customer-support/installation/installing-on-aws-eks.mdx'
+mkdir -p target/ko/installation/installation
+python bin/confluence_xhtml_to_markdown.py var/815235967/page.xhtml target/ko/installation/installation/installing-on-aws-eks.mdx --public-dir=target/public --attachment-dir=/installation/installation/installing-on-aws-eks
+echo 'Converted 815235967 to target/ko/installation/installation/installing-on-aws-eks.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/862093313/page.xhtml target/ko/installation-and-customer-support/system-architecture-and-network-access-control.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/system-architecture-and-network-access-control
-echo 'Converted 862093313 to target/ko/installation-and-customer-support/system-architecture-and-network-access-control.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/862093313/page.xhtml target/ko/installation/system-architecture-and-network-access-control.mdx --public-dir=target/public --attachment-dir=/installation/system-architecture-and-network-access-control
+echo 'Converted 862093313 to target/ko/installation/system-architecture-and-network-access-control.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/954761289/page.xhtml target/ko/installation-and-customer-support/container-environment-variables.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/container-environment-variables
-echo 'Converted 954761289 to target/ko/installation-and-customer-support/container-environment-variables.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/954761289/page.xhtml target/ko/installation/container-environment-variables.mdx --public-dir=target/public --attachment-dir=/installation/container-environment-variables
+echo 'Converted 954761289 to target/ko/installation/container-environment-variables.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/container-environment-variables
-python bin/confluence_xhtml_to_markdown.py var/876937310/page.xhtml target/ko/installation-and-customer-support/container-environment-variables/querypieweburl.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/container-environment-variables/querypieweburl
-echo 'Converted 876937310 to target/ko/installation-and-customer-support/container-environment-variables/querypieweburl.mdx'
+mkdir -p target/ko/installation/container-environment-variables
+python bin/confluence_xhtml_to_markdown.py var/876937310/page.xhtml target/ko/installation/container-environment-variables/querypieweburl.mdx --public-dir=target/public --attachment-dir=/installation/container-environment-variables/querypieweburl
+echo 'Converted 876937310 to target/ko/installation/container-environment-variables/querypieweburl.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/container-environment-variables
-python bin/confluence_xhtml_to_markdown.py var/938016931/page.xhtml target/ko/installation-and-customer-support/container-environment-variables/optimizing-dbmaxconnectionsize.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/container-environment-variables/optimizing-dbmaxconnectionsize
-echo 'Converted 938016931 to target/ko/installation-and-customer-support/container-environment-variables/optimizing-dbmaxconnectionsize.mdx'
+mkdir -p target/ko/installation/container-environment-variables
+python bin/confluence_xhtml_to_markdown.py var/938016931/page.xhtml target/ko/installation/container-environment-variables/optimizing-dbmaxconnectionsize.mdx --public-dir=target/public --attachment-dir=/installation/container-environment-variables/optimizing-dbmaxconnectionsize
+echo 'Converted 938016931 to target/ko/installation/container-environment-variables/optimizing-dbmaxconnectionsize.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/912326893/page.xhtml target/ko/installation-and-customer-support/license-installation.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/license-installation
-echo 'Converted 912326893 to target/ko/installation-and-customer-support/license-installation.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/912326893/page.xhtml target/ko/installation/license-installation.mdx --public-dir=target/public --attachment-dir=/installation/license-installation
+echo 'Converted 912326893 to target/ko/installation/license-installation.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/1690402874/page.xhtml target/ko/installation-and-customer-support/server-configuration-requirements.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/server-configuration-requirements
-echo 'Converted 1690402874 to target/ko/installation-and-customer-support/server-configuration-requirements.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/1690402874/page.xhtml target/ko/installation/server-configuration-requirements.mdx --public-dir=target/public --attachment-dir=/installation/server-configuration-requirements
+echo 'Converted 1690402874 to target/ko/installation/server-configuration-requirements.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/server-configuration-requirements
-python bin/confluence_xhtml_to_markdown.py var/903086124/page.xhtml target/ko/installation-and-customer-support/server-configuration-requirements/public-cloud-production-server-requirements.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/server-configuration-requirements/public-cloud-production-server-requirements
-echo 'Converted 903086124 to target/ko/installation-and-customer-support/server-configuration-requirements/public-cloud-production-server-requirements.mdx'
+mkdir -p target/ko/installation/server-configuration-requirements
+python bin/confluence_xhtml_to_markdown.py var/903086124/page.xhtml target/ko/installation/server-configuration-requirements/public-cloud-production-server-requirements.mdx --public-dir=target/public --attachment-dir=/installation/server-configuration-requirements/public-cloud-production-server-requirements
+echo 'Converted 903086124 to target/ko/installation/server-configuration-requirements/public-cloud-production-server-requirements.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/server-configuration-requirements
-python bin/confluence_xhtml_to_markdown.py var/1688371232/page.xhtml target/ko/installation-and-customer-support/server-configuration-requirements/on-premise-vm-requirements.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/server-configuration-requirements/on-premise-vm-requirements
-echo 'Converted 1688371232 to target/ko/installation-and-customer-support/server-configuration-requirements/on-premise-vm-requirements.mdx'
+mkdir -p target/ko/installation/server-configuration-requirements
+python bin/confluence_xhtml_to_markdown.py var/1688371232/page.xhtml target/ko/installation/server-configuration-requirements/on-premise-vm-requirements.mdx --public-dir=target/public --attachment-dir=/installation/server-configuration-requirements/on-premise-vm-requirements
+echo 'Converted 1688371232 to target/ko/installation/server-configuration-requirements/on-premise-vm-requirements.mdx'
 
-mkdir -p target/ko/installation-and-customer-support/server-configuration-requirements
-python bin/confluence_xhtml_to_markdown.py var/1692303361/page.xhtml target/ko/installation-and-customer-support/server-configuration-requirements/server-configuration-requirements-summary.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/server-configuration-requirements/server-configuration-requirements-summary
-echo 'Converted 1692303361 to target/ko/installation-and-customer-support/server-configuration-requirements/server-configuration-requirements-summary.mdx'
+mkdir -p target/ko/installation/server-configuration-requirements
+python bin/confluence_xhtml_to_markdown.py var/1692303361/page.xhtml target/ko/installation/server-configuration-requirements/server-configuration-requirements-summary.mdx --public-dir=target/public --attachment-dir=/installation/server-configuration-requirements/server-configuration-requirements-summary
+echo 'Converted 1692303361 to target/ko/installation/server-configuration-requirements/server-configuration-requirements-summary.mdx'
 
-mkdir -p target/ko/installation-and-customer-support
-python bin/confluence_xhtml_to_markdown.py var/1239416833/page.xhtml target/ko/installation-and-customer-support/querypie-acp-community-edition.mdx --public-dir=target/public --attachment-dir=/installation-and-customer-support/querypie-acp-community-edition
-echo 'Converted 1239416833 to target/ko/installation-and-customer-support/querypie-acp-community-edition.mdx'
+mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/1239416833/page.xhtml target/ko/installation/querypie-acp-community-edition.mdx --public-dir=target/public --attachment-dir=/installation/querypie-acp-community-edition
+echo 'Converted 1239416833 to target/ko/installation/querypie-acp-community-edition.mdx'
 

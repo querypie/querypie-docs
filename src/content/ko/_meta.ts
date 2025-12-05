@@ -18,7 +18,7 @@ export default {
     type: 'page',
     title: '릴리즈 노트',
   },
-  'installation-and-customer-support': {
+  'installation': {
     type: 'page',
     title: '제품 설치와 기술지원',
   },

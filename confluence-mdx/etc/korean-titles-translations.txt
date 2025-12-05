@@ -140,8 +140,8 @@ Reverse Tunnel을 통해 서버에 통신하기 | Communicating with Servers thr
 Reverse Tunnel을 통해 클러스터에 통신하기 | Communicating with Clusters through Reverse Tunnel
 Reverse Tunnel을 통해 DB에 통신하기 | Communicating with DB through Reverse Tunnel
 
-# Installation and Customer Support
-제품 설치와 기술지원 | Installation and Customer Support
+# Installation
+제품 설치와 기술지원 | Installation
 설치 전 준비사항 | Prerequisites
 리눅스 배포본과 Docker, Podman 지원 현황 | Linux Distribution and Docker, Podman Support Status
 Podman 으로 Rootless Mode 구성하기 | Configuring Rootless Mode with Podman

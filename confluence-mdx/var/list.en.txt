@@ -260,22 +260,22 @@
 1070563469	Administrator Manual />> Audit />> Web App Logs />> Web App Role History
 1070694552	Administrator Manual />> Audit />> Web App Logs />> JIT Access Control Logs
 851280543	Administrator Manual />> Multi Agent Limitations
-544375808	Installation and Customer Support
-862126081	Installation and Customer Support />> Prerequisites
-1298530305	Installation and Customer Support />> Prerequisites />> Linux Distribution and Docker, Podman Support Status
-1297383451	Installation and Customer Support />> Prerequisites />> Configuring Rootless Mode with Podman
-1689387010	Installation and Customer Support />> Installation
-964952065	Installation and Customer Support />> Installation />> Installation Guide - Simple Configuration
-1177321474	Installation and Customer Support />> Installation />> Installation Guide - setup.v2.sh
-1261895760	Installation and Customer Support />> Installation />> Comparison of setup.sh and setup.v2.sh
-815235967	Installation and Customer Support />> Installation />> Installing on AWS EKS
-862093313	Installation and Customer Support />> System Architecture and Network Access Control
-954761289	Installation and Customer Support />> Container Environment Variables
-876937310	Installation and Customer Support />> Container Environment Variables />> QUERYPIE_WEB_URL
-938016931	Installation and Customer Support />> Container Environment Variables />> Optimizing DB_MAX_CONNECTION_SIZE
-912326893	Installation and Customer Support />> License Installation
-1690402874	Installation and Customer Support />> Server Configuration Requirements
-903086124	Installation and Customer Support />> Server Configuration Requirements />> Public Cloud Production Server Requirements
-1688371232	Installation and Customer Support />> Server Configuration Requirements />> On-Premise VM Requirements
-1692303361	Installation and Customer Support />> Server Configuration Requirements />> Server Configuration Requirements Summary
-1239416833	Installation and Customer Support />> QueryPie ACP Community Edition
+544375808	Installation
+862126081	Installation />> Prerequisites
+1298530305	Installation />> Prerequisites />> Linux Distribution and Docker, Podman Support Status
+1297383451	Installation />> Prerequisites />> Configuring Rootless Mode with Podman
+1689387010	Installation />> Installation
+964952065	Installation />> Installation />> Installation Guide - Simple Configuration
+1177321474	Installation />> Installation />> Installation Guide - setup.v2.sh
+1261895760	Installation />> Installation />> Comparison of setup.sh and setup.v2.sh
+815235967	Installation />> Installation />> Installing on AWS EKS
+862093313	Installation />> System Architecture and Network Access Control
+954761289	Installation />> Container Environment Variables
+876937310	Installation />> Container Environment Variables />> QUERYPIE_WEB_URL
+938016931	Installation />> Container Environment Variables />> Optimizing DB_MAX_CONNECTION_SIZE
+912326893	Installation />> License Installation
+1690402874	Installation />> Server Configuration Requirements
+903086124	Installation />> Server Configuration Requirements />> Public Cloud Production Server Requirements
+1688371232	Installation />> Server Configuration Requirements />> On-Premise VM Requirements
+1692303361	Installation />> Server Configuration Requirements />> Server Configuration Requirements Summary
+1239416833	Installation />> QueryPie ACP Community Edition
