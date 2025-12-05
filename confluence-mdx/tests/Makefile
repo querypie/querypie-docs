@@ -2,7 +2,7 @@
 
 # Variables
 # Activate virtualenv located at project root: ../../venv
-VENV = source ../../venv/bin/activate
+VENV = source ../venv/bin/activate
 # Converter script now lives under confluence-mdx/bin/
 SCRIPT = ../bin/confluence_xhtml_to_markdown.py
 # Skeleton converter script
