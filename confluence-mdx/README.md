@@ -120,38 +120,38 @@ $ bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 설정으로 실행 - Confluence API 를 호출하고, 그 결과를 var/ 아래에 저장합니다.
-python bin/pages_of_confluence.py
+bin/pages_of_confluence.py
 
 # API 호출과 함께, 첨부파일을 다운로드하여 저장합니다.
 # 첨부파일 변경시에, 이 옵션을 추가하여 실행합니다. 
 # 또는 pages_of_confluence.py 를 처음 실행하는 경우에 사용합니다.
-python bin/pages_of_confluence.py --attachments
+bin/pages_of_confluence.py --attachments
 
 # 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
-python bin/pages_of_confluence.py --local
+bin/pages_of_confluence.py --local
 
 # 로컬에서 pages_of_confluence.py 개선 과정에서, 반복실행할 때 사용하는 명령입니다.
 # 또는, var/list.txt 를 업데이트하고자 하는 경우에 실행합니다.
-python bin/pages_of_confluence.py --local >var/list.txt
+bin/pages_of_confluence.py --local >var/list.txt
 
 # 특정 페이지 ID와 하위 문서를 내려받습니다. 첨부파일을 포함하여 내려받습니다.
 # 일부 문서만 변경한 경우, 해당 문서와 하위 페이지를 API 로 내려받아 저장할 때 사용합니다.
-python bin/pages_of_confluence.py --page-id 123456789 --attachments
+bin/pages_of_confluence.py --page-id 123456789 --attachments
 ```
 
 사실상 사용하지 않음. 참고용 기능:
 ```bash
 # 특정 페이지 ID와 하위 문서를 내려받습니다.
-python bin/pages_of_confluence.py --page-id 123456789
+bin/pages_of_confluence.py --page-id 123456789
 
 # 특정 페이지 ID와 공간 키 지정하여, 실행합니다.
-python bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
+bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
-python bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
+bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
 
 # 로그 레벨 설정
-python bin/pages_of_confluence.py --log-level DEBUG
+bin/pages_of_confluence.py --log-level DEBUG
 ```
 
 실행 결과:
@@ -172,7 +172,7 @@ python bin/pages_of_confluence.py --log-level DEBUG
 실행 방법:
 ```bash
 # 스크립트 실행
-python bin/translate_titles.py
+bin/translate_titles.py
 ```
 
 실행 결과:
@@ -189,16 +189,16 @@ python bin/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
 ```
 
 사실상 사용하지 않음. 참고용 기능:
 ```bash
 # Confluence 디렉토리 지정
-python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
 chmod +x bin/xhtml2markdown.ko.sh
@@ -216,7 +216,7 @@ chmod +x bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 스크립트 실행
-./bin/xhtml2markdown.ko.sh
+bin/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
@@ -237,10 +237,10 @@ chmod +x bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 실행
-python bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
 
 # 로그 레벨 설정
-python bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
+bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
 ```
 
 실행 결과:
