@@ -97,6 +97,7 @@ from skeleton_diff import (
     compare_with_korean_skel,
     process_directories_recursive,
     initialize_config,
+    should_exclude_file,
 )
 from skeleton_common import (
     extract_language_code,
@@ -1221,6 +1222,15 @@ def convert_and_compare_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optiona
     Raises:
         FileNotFoundError: If Korean MDX file is not found
     """
+    # Check if file should be excluded from comparison
+    if should_exclude_file(input_path):
+        # Still convert to skeleton, but skip comparison
+        output_path = input_path.parent / f"{input_path.stem}.skel.mdx"
+        if output_path.exists():
+            output_path.unlink()
+        output_path = convert_mdx_to_skeleton(input_path)
+        return output_path, None, None
+    
     # Step 1: Convert input MDX to skeleton MDX
     # Delete existing skeleton file if it exists
     output_path = input_path.parent / f"{input_path.stem}.skel.mdx"
@@ -1242,7 +1252,7 @@ def convert_and_compare_mdx_to_skeleton(input_path: Path) -> Tuple[Path, Optiona
     if not korean_exists:
         logger.warning(f"Corresponding Korean MDX file not found: {korean_mdx_path}")
         return output_path, None, None
-
+    
     # Step 3: Convert Korean MDX to skeleton MDX
     # Delete existing skeleton file if it exists
     korean_skel_path = korean_mdx_path.parent / f"{korean_mdx_path.stem}.skel.mdx"

@@ -391,7 +391,7 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         - comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
         - unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
     """
-    global _diff_count, _match_count, _max_diff, _exclude_patterns, _ignore_rules
+    global _diff_count, _match_count, _max_diff, _ignore_rules
 
     current_lang = extract_language_code(current_skel_path)
 
@@ -400,8 +400,7 @@ def compare_with_korean_skel(current_skel_path: Path) -> Tuple[bool, Optional[st
         return True, None, None
 
     # Check if file path matches exclude patterns
-    relative_path = get_path_without_lang_dir(current_skel_path)
-    if relative_path and relative_path in _exclude_patterns:
+    if should_exclude_file(current_skel_path):
         return True, None, None
 
     # Check if max_diff is set and already reached
@@ -580,6 +579,33 @@ def process_directories_recursive(directories: List[Path], convert_func) -> Tupl
         print(f"Total: {total_success} converted, {total_errors} errors, {total_matched} matched, {total_unmatched} unmatched, {total_not_compared} not_compared")
 
     return 0, all_unmatched_file_paths
+
+
+def should_exclude_file(file_path: Path) -> bool:
+    """
+    Check if a file should be excluded from comparison based on exclude patterns.
+    
+    Args:
+        file_path: Path to the file to check (can be .mdx or .skel.mdx)
+    
+    Returns:
+        True if the file should be excluded, False otherwise
+    """
+    global _exclude_patterns
+    
+    # Convert .mdx to .skel.mdx path for pattern matching
+    if file_path.name.endswith('.mdx') and not file_path.name.endswith('.skel.mdx'):
+        # Create .skel.mdx path for pattern matching
+        skel_path = file_path.parent / f"{file_path.stem}.skel.mdx"
+    else:
+        skel_path = file_path
+    
+    # Get relative path without lang dir
+    relative_path = get_path_without_lang_dir(skel_path)
+    if relative_path and relative_path in _exclude_patterns:
+        return True
+    
+    return False
 
 
 def initialize_config(max_diff: Optional[int], exclude_patterns: List[str], ignore_file_path: Optional[Path] = None):
