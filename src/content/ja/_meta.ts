@@ -18,10 +18,9 @@ export default {
     type: 'page',
     title: 'リリースノート',
   },
-  aiHubManual: {
+  'installation': {
     type: 'page',
-    title: 'AIP マニュアル',
-    href: 'https://aihub-docs.app.querypie.com/ja',
+    title: '製品インストールと技術サポート',
   },
   contactUs: {
     type: 'page',

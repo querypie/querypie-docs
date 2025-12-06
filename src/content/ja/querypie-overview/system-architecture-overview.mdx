@@ -17,9 +17,8 @@ QueryPieは、Linux VM上でDockerコンテナ形式で動作するのが一般�
 
 QueryPieのバイナリパッケージはDockerイメージとして作成されており、OSおよびDockerデーモンが最新バージョンの場合、Azure、AWS、GCPのLinux VMまたは物理的なLinuxサーバーにデプロイできるように準備されています。
 また、ネイティブでKubernetesをサポートしていますが、主にKubernetes DevOpsチームがあるお客様を対象に推奨されます。
-試用評価用のバイナリパッケージは、お客様に提供されるバージョンと同じです。
-製品の機能は、供給者がリモートで提供しインストールするインストール済みライセンスによって管理されます。
-評価ライセンスは、一般的に2週間から4週間の使用期間を提供します。
+
+製品を試用したいお客様のために、Community Editionを提供します: [QueryPie ACP Community Edition](../installation/querypie-acp-community-edition) Community Edition利用者には1年間製品を使用できるライセンスが提供され、1年以降もライセンスを延長して継続使用できます。
 
 ### 試用評価のための簡単な構成
 
@@ -50,7 +49,7 @@ QueryPieは、https://querypie-poc.customer.com/のようなTLS証明書が適�
     * Azureの場合、[Application Gateway](https://learn.microsoft.com/en-us/azure/application-gateway/overview)がこれに該当します。
     * GCPの場合、[Application Load Balancer](https://cloud.google.com/load-balancing/docs/application-load-balancer)がこれに該当します。
 3. QueryPieを実行するLinux VM
-    * 評価目的では、2つのvCPUと8GiBメモリを使用することを推奨します。
+    * 評価目的では、4つのvCPUと16GiBメモリを使用することを推奨します。
     * ロードバランサーを適用することは必須ですが、2つ以上のVMインスタンスを構成する必要はありません。
     * QueryPieを単一VMにインストールしても、製品の機能を効果的にテストできます。
 4. お客様のLinux VM環境へのリモートアクセスを一時的に許可してください。
