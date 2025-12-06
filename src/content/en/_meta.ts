@@ -20,7 +20,7 @@ export default {
   },
   'installation': {
     type: 'page',
-    title: 'Installation and Customer Support',
+    title: 'Installation and Technical Support',
   },
   contactUs: {
     type: 'page',
