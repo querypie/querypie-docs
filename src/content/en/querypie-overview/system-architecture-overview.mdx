@@ -17,9 +17,8 @@ Redis is utilized as temporary storage for fast response times.
 
 QueryPie's binary package is built as a Docker image and is prepared for deployment on Linux VMs or physical Linux servers in Azure, AWS, and GCP when the OS and Docker daemon are recent versions.
 It also natively supports Kubernetes, but is primarily recommended for customers with Kubernetes DevOps teams.
-The trial evaluation binary package is identical to the version provided to customers.
-Product features are managed by licenses installed and provided remotely by the vendor.
-Evaluation licenses typically provide a usage period of 2-4 weeks.
+
+For customers who want to try out the product, we offer the Community Edition: [QueryPie ACP Community Edition](../installation/querypie-acp-community-edition) Community Edition users are provided with a license to use the product for one year, and they can continue using it by renewing the license even after one year.
 
 ### Simple Configuration for Trial Evaluation
 
@@ -50,7 +49,7 @@ The following preparations are necessary to install QueryPie for testing and eva
     * For Azure, [Application Gateway](https://learn.microsoft.com/en-us/azure/application-gateway/overview) corresponds to this.
     * For GCP, [Application Load Balancer](https://cloud.google.com/load-balancing/docs/application-load-balancer) corresponds to this.
 3. Linux VM to run QueryPie
-    * For evaluation purposes, it is recommended to use 2 vCPUs and 8GiB memory.
+    * For evaluation purposes, it is recommended to use 4 vCPUs and 16GiB memory.
     * While applying a load balancer is essential, there is no need to configure 2 or more VM instances. 
     * Even if QueryPie is installed on a single VM, you can effectively test the product's features.
 4. Please temporarily allow remote access to your company's Linux VM environment.
