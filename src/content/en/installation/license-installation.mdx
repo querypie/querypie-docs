@@ -1,0 +1,197 @@
+---
+title: 'License Installation'
+---
+
+# License Installation
+
+This guide explains how to install a Product License for QueryPie products for initial installation and upgrade installation.
+
+### When Installing QueryPie for the First Time
+
+When installing QueryPie for the first time, you can install the Product License by running a component called QueryPie Tools.
+QueryPie Tools is a tool that works separately from QueryPie Server and is used for product installation, upgrades, license installation, etc.
+
+The method of installing a Product License using QueryPie Tools is briefly explained as follows.
+
+Run the QueryPie Tools Container using the `docker-compose` command.
+```
+ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
+[+] Running 1/1
+ ⠿ Container querypie-tools-1  Started                                                                                                             0.2s
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+Install the license file named `license.crt` through the QueryPie Tools API using the `curl` command. The `license.crt` license file name is an example, and it is the product license file received from the technical support representative and moved and saved on the server.
+You may use a different file name.
+```
+ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
+[License] Upload: Success
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+If you see the response message `[License] Upload: Success`, the license has been installed successfully.
+
+For detailed explanations of the overall product installation process and Product License installation steps, please refer to the following document: [Installation Guide - Simple Configuration](installation/installation-guide-simple-configuration)
+
+### When Extending the License of QueryPie in Use
+
+There may be cases where you want to extend the license of QueryPie currently in use.
+For example, assume a case where you want to install a Production License on a QueryPie Server Instance that was running PoC and extend the existing PoC License.
+
+If the validity period of the new Production license does not overlap with the validity period of the existing PoC license, you can simply add and install the new Production license.
+The procedure is as follows.
+
+Run the QueryPie Tools Container using the `docker-compose` command.
+
+`docker-compose --env-file compose-env --profile tools up -d`
+```
+ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
+[+] Running 1/1
+ ⠿ Container querypie-tools-1  Started 0.2s
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+Install the license file named `license.crt` through the QueryPie Tools API using the `curl` command. The `license.crt` license file name is an example, and it is the product license file received from the technical support representative and moved and saved on the server.
+You may use a different file name.
+
+`curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt`
+```
+ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
+[License] Upload: Success
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+If you see the response message `[License] Upload: Success`, the license has been installed successfully.
+
+Looking at the detailed process, it is the same as the license installation process at the time of initial installation.
+
+However, in some cases, you may encounter the response message `[License] Upload: The periods overlap.`, and in this case, the new license installation has failed.
+If you encounter this response message, please refer to the "When Replacing the License of QueryPie in Use" section for how to handle it.
+
+
+### When Replacing the License of QueryPie in Use
+
+QueryPie's License management function has one limitation: if the validity period of an existing license partially overlaps with the validity period of a new license, the new license cannot be installed additionally.
+Due to this, when trying to install a license with overlapping validity periods, you must delete the existing license through a separate procedure and then install a new license.
+
+( We recognize that this limitation causes customer inconvenience, but changing the license function is an issue under internal review.
+)
+
+There are two main methods to delete an existing license.
+
+* Using mysql client inside Docker Container to delete the existing license
+* Connecting to QueryPie MySQL from QueryPie Web Console to delete the existing license
+    * For customers using QueryPie DAC functionality, they can connect to the QueryPie MySQL Database by adding a DAC Database Connection. The detailed method is not explained in this document.
+
+This document explains how to delete an existing license using mysql client inside Docker Container.
+
+#### Deleting an Existing License
+
+Connect to the Linux server where QueryPie Server Container is running via terminal.
+
+Execute the docker exec command to run bash inside the QueryPie Server Container.
+
+`docker exec -it querypie-app-1 bash`
+```
+ubuntu@querypie:~/querypie/10.2.4$ docker exec -it querypie-app-1 bash
+022f073afae5:/app# 
+```
+
+Run mysql client inside the Container to connect to QueryPie MySQL.
+Inside the Container, environment variables are defined, so information for connecting to QueryPie MySQL is provided.
+Please note that in the `mysql` command below, there is no space between the option name and option value, such as `-h`, `$DB_HOST`, etc.
+
+`mysql -h$DB_HOST -u$DB_USERNAME -p$DB_PASSWORD $DB_CATALOG`
+```
+ubuntu@querypie:~/querypie/10.2.4$ docker exec -it querypie-app-1 bash
+022f073afae5:/app# mysql -h$DB_HOST -u$DB_USERNAME -p$DB_PASSWORD $DB_CATALOG
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 257
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [querypie]> 
+```
+
+Execute the following SQL to check the number of installed license files.
+If this value is 0, the license has not been installed yet.
+
+`SELECT COUNT(*) FROM certificates;`
+```
+MySQL [querypie]> SELECT COUNT(*) FROM certificates;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.001 sec)
+
+MySQL [querypie]> 
+```
+
+Executing the following SQL will delete the installed license file.
+
+`DELETE FROM certificates;`
+```
+MySQL [querypie]> DELETE FROM certificates;
+Query OK, 1 row affected (0.007 sec)
+
+MySQL [querypie]> 
+```
+
+After that, enter the exit command to exit from inside the Container.
+```
+MySQL [querypie]> exit
+Bye
+022f073afae5:/app# exit
+exit
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+
+#### Running QueryPie Tools to Install License
+
+Now run QueryPie Tools to install the License.
+You can install the license in the same way as during initial installation.
+
+Run the QueryPie Tools Container using the `docker-compose` command.
+
+`docker-compose --env-file compose-env --profile tools up -d`
+```
+ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
+[+] Running 1/1
+ ⠿ Container querypie-tools-1  Started  0.2s
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+Install the license file named `license.crt` through the QueryPie Tools API using the `curl` command. The `license.crt` license file name is an example, and it is the product license file received from the technical support representative and moved and saved on the server.
+You may use a different file name.
+
+`curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt`
+```
+ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
+[License] Upload: Success
+ubuntu@querypie:~/querypie/10.2.4$ 
+```
+
+If you see the response message `[License] Upload: Success`, the license has been installed successfully.
+
+#### Restarting QueryPie Server Container
+
+Now, please restart the QueryPie Server Container.
+
+* `docker-compose --env-file compose-env --profile querypie down`
+* `docker-compose --env-file compose-env --profile querypie up -d`
+
+Please check in the installed QueryPie Web Console whether the product is working properly.
+
+So far, we have looked at the process of replacing an existing license and installing a new license.
+Thank you for your work.
+
+

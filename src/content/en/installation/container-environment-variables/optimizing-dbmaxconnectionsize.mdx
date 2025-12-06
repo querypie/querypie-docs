@@ -1,0 +1,154 @@
+---
+title: 'Optimizing DB_MAX_CONNECTION_SIZE'
+---
+
+# Optimizing DB_MAX_CONNECTION_SIZE
+
+### Overview
+
+This guide explains how to optimize the Database Connection Pool Size used in QueryPie MySQL connection settings.
+
+#### QueryPie MySQL Configuration
+
+QueryPie Server operates by configuring Meta DB, Snapshot DB, and Log DB in a MySQL Database.
+
+* Meta DB: Data for features provided by the QueryPie Web Console, such as user accounts, connection settings, and access control policies, is stored in the Meta DB.
+* Snapshot DB: A data store temporarily used to record Audit Logs during SQL query execution.
+* Log DB: A data store that stores audit logs such as user access records and SQL execution records.
+
+QueryPie Server has components that use the Spring framework, and these components configure a Database Connection Pool to store data in QueryPie MySQL.
+
+### Setting Database Connection Pool Size
+
+When running the QueryPie Server Container, you can set the Database Connection Pool Size using environment variables.
+
+#### `DB_MAX_CONNECTION_SIZE`
+
+Specifies the DB Connection Pool Size for Meta DB.
+The default value is 20.
+
+#### `LOG_DB_MAX_CONNECTION_SIZE`
+
+Specifies the DB Connection Pool Size for Log DB.
+The default value is the value set in `DB_MAX_CONNECTION_SIZE`.
+If you do not separately set `LOG_DB_MAX_CONNECTION_SIZE`, it will be set to the same value as `DB_MAX_CONNECTION_SIZE`.
+
+Since users have low need to control the Connection Pool Size of Snapshot DB, we do not provide an environment variable to control this value.
+
+### For General User Usage and Load
+
+We recommend using the default value of 20 for `DB_MAX_CONNECTION_SIZE`.
+This is a Connection Pool Size that can be used generally in typical cases.
+We recommend this default value as it can provide sufficient processing performance not only in PoC environments but also in general Production environments.
+
+### For High Usage and High Load
+
+We recommend setting the value of `DB_MAX_CONNECTION_SIZE` between 20 and 40.
+Within an appropriate range, as `DB_MAX_CONNECTION_SIZE` increases, the amount of load that QueryPie can process simultaneously increases.
+
+If the DB server has high processing performance and many CPUs, increase `DB_MAX_CONNECTION_SIZE`.
+If the Linux VM where the Server Container operates has high processing performance and many CPUs, increase `DB_MAX_CONNECTION_SIZE`.
+If the number of Server Containers increases, decrease `DB_MAX_CONNECTION_SIZE`.
+
+### `DB_MAX_CONNECTION_SIZE` Configuration Value Summary Table
+
+|  **DB_MAX_CONNECTION_SIZE**  |  **Description**                                                                 |
+| ---------------------------- | -------------------------------------------------------------------------------- |
+| 40                           | Suitable when MySQL DB has high throughput and high-performance hardware processing capabilities. We do not recommend using configuration values higher than 40. |
+| 30                           | Suitable when MySQL DB has high throughput and high-performance hardware processing capabilities.                                 |
+|  **20**                      |  **Recommended value suitable for production environments. A configuration value that can handle many requests universally.**                            |
+| 10                           | Suitable when you want to reduce the number of MySQL connections in a production environment.                                           |
+| 5                            | Suitable when performing functional tests in PoC or when there are few users in a production environment.                             |
+
+### Relationship Formula Between `DB_MAX_CONNECTION_SIZE` and Hardware Capacity
+
+Through internal performance optimization tests by the development team, we have derived the following relationship formula between `DB_MAX_CONNECTION_SIZE` and the hardware processing capacity of the QueryPie Server VM and DB.
+By setting the `DB_MAX_CONNECTION_SIZE` value with reference to this relationship formula, you can obtain optimal processing performance while setting the smallest possible `DB_MAX_CONNECTION_SIZE` value.
+
+#### When Configuring QueryPie MySQL Separately
+
+This is when you do not run the QueryPie Server Container and QueryPie MySQL together in one Linux VM, but instead configure a separate MySQL Instance using a separate VM or Cloud Service.
+We recommend applying this in Production environments.
+
+`DB_MAX_CONNECTION_SIZE` = `minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10`
+
+* Application_CPU_Count - Number of vCPUs in the Linux VM where the QueryPie Server Container runs
+* Application_Node_Count - Number of QueryPie Server Containers, or number of Linux VMs running, or number of Kubernetes Pods.
+    * For dual configuration, it becomes 2; for triple configuration, it becomes 3.
+* RDS_CPU_Count - Number of vCPUs in the VM Instance where the separately configured QueryPie MySQL runs
+* minimum ( a, b, c, … ) - Selects the smallest value among multiple values separated by `,`.
+
+Example 1) The Linux VM where the Server Container runs has 4 vCPUs, and you operate 2 Linux VMs.
+AWS Aurora MySQL has 4 vCPUs.
+```
+minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10
+= minimum ( 4 / 2, 4 ) * 10
+= 2 * 10
+= 20
+```
+
+Example 2) The Linux VM where the Server Container runs has 8 vCPUs, and you operate 3 Linux VMs.
+AWS Aurora MySQL has 8 vCPUs.
+```
+minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10
+= minimum ( 8 / 3, 8 ) * 10
+= 2.66 * 10
+= 27
+```
+
+#### For Single Linux VM Configuration
+
+This is when you run the QueryPie Server Container and QueryPie MySQL together on one Linux VM.
+This is suitable for use in PoC environments.
+
+`DB_MAX_CONNECTION_SIZE` = `Application_CPU_Count * 2.5`
+
+* Application_CPU_Count - Number of vCPUs in the Linux VM where the QueryPie Server Container runs
+
+Example 1) The Linux VM where the Server Container runs has 4 vCPUs, and you run MySQL together.
+In this case, it is appropriate to set `DB_MAX_CONNECTION_SIZE` to 10.
+```
+Application_CPU_Count * 2.5
+= 4 * 2.5
+= 10
+```
+
+
+### Allowing Sufficient Connections in QueryPie MySQL Settings
+
+QueryPie Server connects to QueryPie MySQL using a Connection Pool.
+If the MySQL Database Server does not allow sufficient connections, QueryPie Server will fail to create connections to MySQL and malfunction.
+This problem occurs when the number of DB connections required by QueryPie Server is greater than the number of connections allowed by QueryPie MySQL.
+
+#### Failure to Create DB Connections
+
+You will encounter the error message `[API] Could not open JPA EntityManager for transaction` in the Web Console.
+
+<figure data-layout="center" data-align="center">
+![[API] Could not open JPA EntityManager for transaction](/installation/container-environment-variables/optimizing-dbmaxconnectionsize/Screenshot-2025-04-24-at-9.38.20-PM.png)
+<figcaption>
+[API] Could not open JPA EntityManager for transaction
+</figcaption>
+</figure>
+
+
+#### Solution 1) Increase the Number of Connections Allowed by QueryPie MySQL
+
+You can apply settings to increase both configuration values to 500 or more.
+This allows you to set the number of connections allowed by QueryPie MySQL to be greater than the number of DB connections required by QueryPie Server.
+
+* MAX_USER_CONNECTIONS 
+    * [https://dev.mysql.com/doc/refman/8.0/en/user-resources.html](https://dev.mysql.com/doc/refman/8.0/en/user-resources.html)
+    * `ALTER USER 'querypie'@'%' WITH MAX_USER_CONNECTIONS 500;`
+* max_connections
+    * [https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_connections](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_connections)
+
+#### Solution 2) Reduce DB_MAX_CONNECTION_SIZE
+
+If there are few QueryPie users and the usage load is low, you can reduce the `DB_MAX_CONNECTION_SIZE` configuration value.
+This allows you to set the number of DB connections required by QueryPie Server to be smaller than the number of connections allowed by QueryPie MySQL.
+
+Set `DB_MAX_CONNECTION_SIZE` to 10 or 5 instead of the default value of 20.
+In PoC environments, even if you set `DB_MAX_CONNECTION_SIZE` to 5, you can smoothly perform general functional tests.
+
+
