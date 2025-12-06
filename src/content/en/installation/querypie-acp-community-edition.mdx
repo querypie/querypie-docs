@@ -1,0 +1,192 @@
+---
+title: 'QueryPie ACP Community Edition'
+---
+
+# QueryPie ACP Community Edition
+
+### 🧭 Before You Start
+
+**QueryPie Community Edition** allows you to experience the core features provided by **QueryPie Enterprise**.
+
+* Database Access Controller
+* System Access Controller
+* Kubernetes Access Controller
+* Web Access Controller
+
+However, Community Edition supports **up to 5 active users**. *(If you need to register more than 5 users, please consider upgrading to the* [ *Enterprise Plan* ](https://www.querypie.com/ko/plans) *.)*
+
+QueryPie runs as a typical web application and also includes proxy-based network server functionality.
+
+### 🖥️ Recommended Server Specifications
+
+For smooth installation and operation of QueryPie Community Edition, the following system environment is recommended.
+
+<table data-table-width="834" data-layout="center" local-id="7fd726e9-fc83-4263-a08f-8daf43a53c3b">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**Type**
+</th>
+<th>
+**Specifications**
+</th>
+</tr>
+<tr>
+<td>
+Basic Specifications
+</td>
+<td>
+* Hardware : AMD64 Architecture, CPU 4 vCPUs, Memory 16 GiB, Disk 100 GiB+
+* AWS EC2 : m6i.xlarge, m7i.xlarge
+* GCP Compute Engine : c4-standard-4, n4-standard-4 (or AMD64 architecture -standard-4 models)
+</td>
+</tr>
+<tr>
+<td>
+Trial Use
+</td>
+<td>
+* Hardware: ARM64 Architecture, 4 vCPUs, Memory 16 GiB, Disk 30 GiB+
+* AWS EC2 : t4g.xlarge, m7g.xlarge
+* OS: Linux or macOS with Docker
+</td>
+</tr>
+<tr>
+<td>
+Recommended Specifications for Production Environment with Multiple Users
+</td>
+<td>
+* Hardware: AMD64 Architecture, 8 vCPUs, Memory 32 GiB, Disk 100 GiB+
+* AWS EC2 : m6i.2xlarge, m7i.2xlarge
+* GCP Compute Engine : c4-standard-8, n4-standard-8 (or AMD64 architecture -standard-8 models)
+</td>
+</tr>
+<tr>
+<td>
+OS
+</td>
+<td>
+Linux with Docker or Podman
+</td>
+</tr>
+</tbody>
+</table>
+
+ARM64 Architecture CPU environments or macOS environments are recommended for trial use and testing purposes for developers.
+
+For detailed requirements, please refer to the following document: [Prerequisites - Simple Configuration](prerequisites)
+
+### 🐳 Installation Method
+
+#### 1. Execute Command in Terminal
+
+After connecting to the terminal of the Linux server, execute the following command in the home directory:
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh)
+```
+
+⏱️ Installation usually takes **7~10 minutes**.
+
+<figure data-layout="center" data-align="center">
+![Screen when installation starts](/installation/querypie-acp-community-edition/image-20250718-063107.png)
+<figcaption>
+Screen when installation starts
+</figcaption>
+</figure>
+
+
+<figure data-layout="center" data-align="center">
+![Screen when installation is completed](/installation/querypie-acp-community-edition/image-20250718-063140.png)
+<figcaption>
+Screen when installation is completed
+</figcaption>
+</figure>
+
+#### 2. Apply for License During Installation
+
+QueryPie Community Edition requires license registration.
+While installation is in progress, [submit a license application](https://querypie.com/querypie/license/community/apply), and a `.crt` text file will be sent to the email address entered during application.
+
+#### 3. Access After Installation
+
+After installation is complete, access the following address in your browser:
+```
+http://<server IP address>  
+or 
+https://<server IP address> 
+```
+
+The IP address of the Linux server where QueryPie is installed must be accessible from the user's PC.
+
+#### 4. License Registration
+
+Upload the `.crt` file received by email, or copy and paste the PEM format text content.
+
+<figure data-layout="center" data-align="center">
+![License input screen in PEM format](/installation/querypie-acp-community-edition/image-20250718-063723.png)
+<figcaption>
+License input screen in PEM format
+</figcaption>
+</figure>
+
+#### 5. Login
+
+Log in with the default account.
+For security, you will be asked to change your password on first login.
+After setting a new password, you can use the service.
+
+* ID: `qp-admin`
+* Password: `querypie`
+
+<figure data-layout="center" data-align="center">
+![Initial login screen](/installation/querypie-acp-community-edition/image-20250718-063822.png)
+<figcaption>
+Initial login screen
+</figcaption>
+</figure>
+
+#### 6. Installation Complete 🎉
+
+Installation has been completed successfully.
+Please refer to the Administrator Manual for environment configuration: [Administrator Manual](../administrator-manual)
+
+<figure data-layout="center" data-align="center">
+![First guide screen after login](/installation/querypie-acp-community-edition/image-20250718-064043.png)
+<figcaption>
+First guide screen after login
+</figcaption>
+</figure>
+
+
+### 🔑 License Information
+
+* To use QueryPie, you must register a valid license after installation.
+* Licenses are provided as text files with `.crt` extension.
+* Licenses are sent to the email address entered during application.
+* Each license is valid for 1 year from the date of issue.
+* Licenses are issued to the applicant and cannot be transferred to third parties.
+
+### 💬 Support and Inquiries
+
+If you have any questions during QueryPie Community installation and use, you can contact us directly through [QueryPie AIP](https://app.querypie.com/).
+By following the procedure below to set up the **QueryPie Customer Center** preset in MCP, you can receive support directly in the chat window.
+
+<figure data-layout="center" data-align="center">
+![image-20250718-070933.png](/installation/querypie-acp-community-edition/image-20250718-070933.png)
+</figure>
+
+1. Integration tab → Click Install QueryPie Customer Center.
+2. Preset tab → Select New Preset and enter as follows, then click `Save Changes`:
+
+* Name: Enter `QueryPie` (recommended).
+* MCP Servers & Tools: Select `Select All`.
+
+1. Chat tab → Select `@QueryPie` and enter your question.
+
+You can also join the [official QueryPie Discord channel](https://discord.gg/NsP98BHBm2) to share questions and experiences with other users.
+
+

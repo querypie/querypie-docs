@@ -1,0 +1,241 @@
+---
+title: 'Container Environment Variables'
+---
+
+import { Callout } from 'nextra/components'
+
+# Container Environment Variables
+
+This document provides guidance on the environment variables required to run the QueryPie ACP Server Container.
+This document applies to QueryPie 10.3.0 or later versions.
+
+### Basic Environment Variables
+
+|  **Environment Variable Name**  |  **Default Value**         |  **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| VERSION                         |                            | QueryPie installation version. Example) `10.3.0` This environment variable value specifies the tag of the Container Image.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| AGENT_SECRET                    |                            | Recommended value: 32-char random string via `openssl rand -hex 16` This is the secret key used for encrypted communication between the QueryPie Container and User Agent. It must be set to 32 ASCII characters. In a High Availability (HA) configuration, the `AGENT_SECRET` values in the `compose-env` of two or more QueryPie Server Containers must all be identical.                                                                                                                                                                                                                                                                                                 |
+| KEY_ENCRYPTION_KEY              |                            | Recommended value: 16-char random string via `openssl rand -hex 8` This is the Key used to encrypt and store the Data Encryption Key (DEK) that encrypts sensitive data in the QueryPie Meta DB. KEK is used to encrypt the DEK to prevent its exposure. DEK is the Key that encrypts secrets (Credentials) for DB connections and SSH server connections stored in the QueryPie Meta DB.                                                                                                                                                                                                                                                                                                                                                      |
+| DB_HOST                         |                            | Hostname or IP Address of MySQL used as Meta DB, Log DB, and Snapshot DB. For PoC purposes, if you install QueryPie Container, MySQL Container, etc. all on a Single Machine, you can enter `host.docker.internal`. If you configure a separate MySQL such as AWS Aurora instead of the Machine where the QueryPie Container is installed, enter the Hostname or IP Address of that MySQL.                                                                                                                                                                                                                                                                                                            |
+| DB_PORT                         | `3306`                     | TCP Port of MySQL used as Meta DB, Log DB, and Snapshot DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| DB_CATALOG                      | `querypie`                 | Catalog to be used by Meta DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| LOG_DB_CATALOG                  | `querypie_log`             | Catalog to be used by Log DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ENG_DB_CATALOG                  | `querypie_snapshot`        | Catalog to be used by Snapshot DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| DB_USERNAME                     |                            | Recommended value: `querypie` Username of MySQL used as Meta DB, Log DB, and Snapshot DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| DB_PASSWORD                     |                            | Recommended value: 16-char random string via `openssl rand -hex 8` Password of MySQL used as Meta DB, Log DB, and Snapshot DB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| DB_MAX_CONNECTION_SIZE          | `20`                       | Maximum number of connections QueryPie uses for Meta DB connection (recommended to use 20)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| DB_DRIVER_CLASS                 | `org.mariadb.jdbc.Driver`  | If Meta DB is AWS Aurora, it supports Failover in case of Aurora Instance partial failure. If you want to use the Failover feature with AWS Aurora, specify the dedicated driver `software.amazon.jdbc.Driver` provided by AWS.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| REDIS_NODES                     |                            | Enter Host and Port information to connect to QueryPie Redis. When entering two or more Host and Port information, you can separate them with `,` like `Host1:Port1,Host2:Port2`. For PoC purposes, if you install QueryPie Container, Redis Container, etc. all on a Single Machine, you can enter `host.docker.internal:6379`. The Host can be entered in IP Address format or as an FQDN.                                                                                                                                                                                                                                                                                                            |
+| REDIS_PASSWORD                  |                            | Recommended value: 16-char random string via `openssl rand -hex 8` Redis Password                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| DAC_SKIP_SQL_COMMAND_RULE_FILE  | `skip_command_config.json` | Configure to not record SQL Queries automatically executed by tools (DataGrip, DBeaver, and other workbench tools), rather than queries entered by users, in the Audit Log. SQL Queries automatically executed by tools are sometimes called formatted queries because they have a fixed pattern of syntax. If you configure to not record these formatted queries in the Audit Log, the response speed of 3rd Party Tools perceived by users will be faster. It helps reduce the performance load on the QueryPie Server. For more details, please refer to the documentation at [https://chequer.atlassian.net/wiki/spaces/QCP/pages/851346405/10.2.x#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%B6%94%EA%B0%80.2](https://chequer.atlassian.net/wiki/spaces/QCP/pages/851346405/10.2.x#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%B6%94%EA%B0%80.2). |
+
+
+### Deprecated Environment Variables
+
+<table data-table-width="1800" data-layout="default" local-id="c5fb16aa-9f97-493c-b628-440e4446f3b1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<td data-highlight-colour="#f4f5f7">
+**Environment Variable Name**
+</td>
+<td data-highlight-colour="#f4f5f7">
+**Default Value**
+</td>
+<td data-highlight-colour="#f4f5f7">
+**Description**
+</td>
+</tr>
+<tr>
+<td>
+QUERYPIE_WEB_URL
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+In version 10.2.8 or later, this value is configured in the Web Console.
+It is not configured in environment variables.
+</Callout>
+This is the QueryPie URL address for accessing the Web Console. <br/>(Example: `https://querypie.customer.com`)<br/>This URL is also called the Base URL of QueryPie.
+This URL should not end with `/`. Please be careful not to add `/` at the end of the URL like `https://querypie.customer.com/`.
+This URL is used for the following purposes:
+* Used as the callback address in the SSO Integration authentication process.
+* Used in the link for downloading User Agent from the Web Console.
+* For other detailed purposes, please refer to [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310).
+</td>
+</tr>
+<tr>
+<td>
+AWS_ACCOUNT_ID
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+In version 10.3.0 or later, you do not need to enter this value.
+This value is automatically selected.
+</Callout>
+This is the value used when configuring QueryPie Admin &gt; CloudProvider &gt; CrossAccountRole.<br/>Please enter the Account ID of the AWS account where QueryPie is installed.
+Leave it empty in environments other than AWS.
+</td>
+</tr>
+<tr>
+<td>
+REDIS_HOST
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+In version 10.2.1 or later, this value has been replaced with REDIS_NODES.
+</Callout>
+Redis Hostname or IP Address - Used by QueryPie Container to store cache data.
+For PoC purposes, if you install QueryPie Container, Redis Container, etc. all on a Single Machine, you can enter `host.docker.internal`.
+If you configure a separate Redis such as AWS ElastiCache instead of the Machine where the QueryPie Container is installed, enter the Hostname or IP Address of that Redis.
+</td>
+</tr>
+<tr>
+<td>
+REDIS_PORT
+</td>
+<td>
+`6379`
+</td>
+<td>
+<Callout type="info">
+In version 10.2.1 or later, this value has been replaced with REDIS_NODES.
+</Callout>
+Redis TCP Port
+</td>
+</tr>
+<tr>
+<td>
+REDIS_CONNECTION_MODE
+</td>
+<td>
+`STANDALONE`
+</td>
+<td>
+<Callout type="info">
+In version 10.3.0 or later, you do not need to enter this value.
+This value is automatically selected.
+</Callout>
+Use the value `STANDALONE` or `CLUSTER`.
+For PoC purposes, if you install QueryPie Container, Redis Container, etc. all on a Single Machine, you can enter `STANDALONE`.
+If you use QueryPie Redis in Cluster mode, enter `CLUSTER`. When using `CLUSTER` mode, you will enter multiple address values in `REDIS_NODES`.
+</td>
+</tr>
+<tr>
+<td>
+CABINET_DATA_DIR
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+In version 10.2.8 or later, you do not need to enter this value.
+It is replaced with the OVEN component configuration.
+</Callout>
+This is the location where images used for SAC &gt; RDP(WinSAC) session recording are stored in the EC2 instance server filesystem.
+(`/data` is recommended)
+</td>
+</tr>
+</tbody>
+</table>
+
+
+### FAQ
+
+#### Q: Can I use 127.0.0.1 or localhost for DB_HOST and REDIS_HOST?
+
+A: You cannot use `127.0.0.1` or `localhost` for DB_HOST and REDIS_HOST.
+
+In a Single Machine configuration, you can install MySQL and Redis all on one Linux machine.
+At this time, the QueryPie Container uses bridge mode, which is the default network mode.
+In bridge mode, `127.0.0.1` and `localhost` can only communicate between processes inside the container.
+Since MySQL and Redis run in separate Containers, the QueryPie Container cannot connect to MySQL and Redis using `127.0.0.1` or `localhost` addresses.
+
+In this case, you can use the `host.docker.internal` address to connect to the host network of the Docker Host, that is, the Linux machine where the docker daemon is running.
+
+
+#### Q: Is it okay to change AGENT_SECRET during operation?
+
+A: The change procedure is complex and inconvenient for customer users, so we recommend not changing it.
+
+If you change this value, you must apply the following procedure:
+
+* You must change the value in the compose-env file and restart the QueryPie Container.
+* In a redundancy or multi-configuration, all QueryPie Containers must have the same value.
+* ⚠️ User Agent users must delete and uninstall the installed User Agent, then reinstall and use it.
+
+If you are unsure what value to generate initially, you can simply use the value generated from `uuidgen | tr -d '-'` in the Linux terminal.
+
+There is a plan to replace this environment variable with a method that configures itself within the server without user input.
+
+#### Q: Can I change KEY_ENCRYPTION_KEY during operation?
+
+A: You cannot change this value.
+You **must** keep the value used during the initial installation.
+
+If you lose this value or specify a changed value as an environment variable, the QueryPie Container cannot read the encrypted sensitive data in the operating QueryPie Meta DB.
+As a result, the QueryPie Container will not operate normally.
+
+There are no constraints on the length or type of characters required for this environment variable value.
+For example, there are no constraints such as it must be 8 characters or more, or it must contain special characters.
+Although we do not recommend actually using such a value, even if the user sets a simple value like `1`, QueryPie will function normally.
+
+However, we recommend consulting with the customer's security officer and configuring it according to the internal information security policies and guidelines of the customer.
+
+
+#### Q: Is AWS_ACCOUNT_ID a required value? What value should I enter?
+
+A: In QueryPie 10.3.0 or later versions, you do not need to enter AWS_ACCOUNT_ID.
+The QueryPie Server Container finds this value on its own.
+
+The AWS_ACCOUNT_ID environment variable value is used as the default value when creating a Role in the target Account when using CrossAccount Role in the Cloud Provider configuration in the Web Console.
+The Account ID value shown in the screenshot below is the value provided in the AWS_ACCOUNT_ID environment variable.
+
+
+<details>
+<summary>It is used in the Account ID section as shown in the figure below.</summary>
+
+<figure data-layout="center" data-align="center">
+![image-20241031-062026.png](/installation/container-environment-variables/image-20241031-062026.png)
+</figure>
+
+</details>
+
+
+#### Q: We do not use SAC or RDP features. Can I remove the CABINET_DATA_DIR item?
+
+A: In QueryPie 10.3.0 or later versions, the CABINET_DATA_DIR item is not used.
+It has been replaced with the configuration value of the OVEN component.
+
+
+#### Q: Is Redis configuration required?
+
+A: The QueryPie Container server software requires Redis as an essential component.
+
+Redis is used for the following purposes:
+
+* To cache session meta information of connected web servers
+* Message queue for background tasks within the server application
+
+However, even if the data stored in Redis is lost, no critical issues occur.
+Specific tasks and user requests running at that time will fail.
+After restarting Redis and the QueryPie Container, the QueryPie Container will operate normally.
+
+### Environment Variables for Advanced Features
+
+Please refer to the [Environment Variables for Advanced Setup - 10.3.x (KO)](#target-title-not-found) page.
+
+
