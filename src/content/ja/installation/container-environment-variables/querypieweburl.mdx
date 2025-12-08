@@ -1,0 +1,53 @@
+---
+title: 'QUERYPIE_WEB_URL'
+---
+
+import { Callout } from 'nextra/components'
+
+# QUERYPIE_WEB_URL
+
+---
+---
+
+## 概要
+
+QUERYPIE_WEB_URLはサービスアクセス、認証連携、データダウンロード、外部連携およびProxy設定など様々な経路で使用され、必須で設定が必要です。
+
+<Callout type="important">
+**QueryPieバージョン10.2.8から該当環境変数は使用されません。GeneralメニューのWeb Base URLに置き換えられます。**
+<figure data-layout="center" data-align="center">
+![screenshot-20250312-112533.png](/installation/container-environment-variables/querypieweburl/screenshot-20250312-112533.png)
+</figure>
+</Callout>
+
+## 使用箇所
+
+* SAML/Google BigQuery OAuthなど認証連携のためのRedirect URL
+* SCIM連携のためのエンドポイントURL
+* 他のサーバにインストールするコンポーネントNOVAcなどからQueryPie Containerに接続するURL
+* Alert、メール、Slack DMなどでQueryPieに移動するリンクのURL
+* User AgentインストールのためにファイルをダウンロードするリンクのURL
+* Server AgentインストールのためにファイルをダウンロードするリンクのURL
+* Audit Export Log/Report監査ログおよびレポートファイルをダウンロードするリンクのURL
+* AiDDスキャン結果をダウンロードするリンクのURL
+* セッション録画ファイルをダウンロードするリンクのURL
+* Proxy環境で必要なQueryPieホスト情報
+
+## Q&A
+
+**Q. 内部ネットワークでのみ使用する場合にもドメイン設定が必要ですか？** <br/> **A.** IPを使用しても問題ありません。
+ただし、利用者PCからアクセス可能なアドレス（IPまたはドメイン）である必要があります。
+利用者PCからアクセスできないPrivate IP Addressを使用してはいけません。
+
+
+**Q. IdPとしてOktaを使用する場合にドメイン設定が必要ですか？** <br/> **A.** はい、必要です。
+OktaではBase URL入力時に必ずhttps://プロトコルを含むURLを使用する必要があります。
+もしhttp://またはIPアドレスのみを入力する場合、以下のようなエラーが発生し、設定が不可能です。
+
+<Callout type="error">
+*Please review the form to correct the following error(s):*
+*Is not an HTTPS URL. Valid example:* [https://www.okta.com](https://www.okta.com)
+</Callout>
+
+したがって、ドメインを含むHTTPS URLを使用して設定してください。
+

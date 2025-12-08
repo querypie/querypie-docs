@@ -1,0 +1,126 @@
+---
+title: 'PodmanでRootless Mode構成'
+---
+
+# PodmanでRootless Mode構成
+
+PodmanはDockerを代替できるコンテナエンジンです。
+QueryPieはDockerとPodman、2つのコンテナエンジン環境をすべてサポートします。
+Podmanは基本的なインストール構成でRootless Modeで動作します。
+これにより、顧客社のセキュリティポリシーに従ってRootless Mode環境を構成する必要がある場合、Podmanで実装することを推奨します。
+
+### Podmanを簡単にインストールする
+
+setup.v2.shを利用すると、Podmanを簡単にインストールできます。
+setup.v2.shが自動的にインストールするPodmanはRootless Modeを基本として適用します。
+
+setup.v2.shを利用してPodmanをインストールする方法は以下のとおりです。
+```bash
+$ bash <(curl -s https://dl.querypie.com/setup.v2.sh) --install-container-engine
+```
+
+このコマンドは該当サーバのLinuxディストリビューションを自動的に検出し、Podmanが円滑にサポートされる場合、Podmanをインストールしてくれます。
+PodmanをインストールしてくれるLinuxディストリビューションは以下のとおりです。
+
+* Red Hat Enterprise Linux 8、9、10
+* Rocky 8、9
+* Ubuntu 24.04 LTS
+
+Podmanをインストールせず、DockerをインストールしてくれるLinuxディストリビューションは以下のとおりです。
+以下のLinuxディストリビューションでDockerを使用しなければならない理由についてはこの文書を参照してください：[https://querypie.atlassian.net/wiki/spaces/QCP/pages/1298530305/Docker+Podman+and+Linux+Distributions+KO?atl_f=PAGETREE](https://querypie.atlassian.net/wiki/spaces/QCP/pages/1298530305/Docker+Podman+and+Linux+Distributions+KO?atl_f=PAGETREE)
+
+* Amazon Linux 2、Amazon Linux 2023
+* Ubuntu 22.04 LTS
+
+### Rootless Mode Podmanを手作業でインストールする
+
+Red Hat Enterprise Linux、Rockyでは次のコマンドでPodmanを手作業で直接インストールできます。
+```bash
+$ sudo dnf -y -q --best install podman podman-plugins podman-manpages podman-docker
+$ systemctl --user enable --now podman.socket
+```
+
+`systemctl`コマンドで`podman.socket`サービスを有効化する必要があることに注意してください。`podman.socket`サービスを有効化して、Docker ComposeとPodmanを一緒に使用できます。
+
+`systemctl`コマンドで、`--user`オプションを使用する場合、Rootless Modeでインストールされます。`--user`オプションを使用しない場合、Rootful Modeでインストールされます。
+
+Ubuntu 24.04 LTSでは次のコマンドでPodmanを手作業で直接インストールできます。
+```bash
+$ sudo apt -qq update
+$ sudo apt-get -y -qq install podman podman-docker
+$ systemctl --user enable --now podman.socket
+```
+
+### Rootless Mode PodmanでQueryPieインストール
+
+setup.v2.shを利用すると、Rootless Mode Podman環境でQueryPieを簡単にインストールできます。
+
+QueryPieを初めてインストールする場合、Compose packageをインストールするLinuxアカウントのホームディレクトリで、次のコマンドを実行します。
+setup.v2.shが推奨するバージョンのQueryPieが自動的にインストールされます。
+```bash
+$ bash <(curl -s https://dl.querypie.com/setup.v2.sh)
+```
+
+QueryPieバージョンを指定してインストールする場合、以下のようにバージョンを明示できます。
+```bash
+$ bash <(curl -s https://dl.querypie.com/setup.v2.sh) --install 11.0.1
+```
+
+上のコマンドを実行すると、Composeのためのpackage.tar.gz設定、`.env`環境変数設定、Containerイメージダウンロード、Migration実行、Container実行、Rootless Mode Podmanのためのsystemd service登録など全体インストール過程が自動的に実行されます。
+
+#### Linuxサーバ再起動とsystemd service登録
+
+Rootless Mode Podmanの場合、Linuxサーバが再起動する場合、追加的な設定をしないと、Containerが自動的に実行されません。
+これはRootless Mode Podmanの特性です。
+
+Linuxサーバ再起動時に、Containerが自動的に実行されるには、`podman compose up -d`コマンドを実行するsystemd serviceを登録して有効化する必要があります。
+QueryPieのためのsystemd serviceファイルはComposeのためのpackage.tar.gzで基本として提供されます。
+
+`setup.v2.sh`を利用してQueryPieをインストールした場合、このようなsystemd service登録、有効化過程を自動的に実行します。
+したがって、利用者がこの部分を直接実行する必要はありません。
+
+しかし、QueryPieインストール、運用を円滑に実行するには、systemd service登録、有効化過程に関する理解が必要で、直接systemd serviceを制御して問題を解決できます。
+
+まず、systemd user modeのserviceが自動的に有効化されるシステム設定が必要です。`loginctl`コマンドでこの利用者に対してlinger modeをオンにする必要があります。
+この設定を適用しないと、利用者がLinuxシステムにログインした後でなければ、systemd serviceが動作します。
+利用者がLinuxサーバにログインしていない状態で、自動的にsystemd serviceを有効化するために、linger modeをオンにしてください。
+```bash
+$ sudo loginctl enable-linger $USER
+```
+
+systemd serviceファイルを指すシンボリックリンクを`$HOME/.config/systemd/user/`下に作成します。
+```bash
+$ systemctl --user link querypie/current/systemd/podman-querypie-database.service
+Created symlink /home/ec2-user/.config/systemd/user/podman-querypie-database.service → /home/ec2-user/querypie/current/systemd/podman-querypie-database.service.
+$ systemctl --user link querypie/current/systemd/podman-querypie-app.service
+Created symlink /home/ec2-user/.config/systemd/user/podman-querypie-app.service → /home/ec2-user/querypie/current/systemd/podman-querypie-app.service.
+```
+
+systemd enableコマンドでサービスを動作させます。
+```bash
+$ systemctl --user enable --now podman-querypie-database.service
+Created symlink /home/ec2-user/.config/systemd/user/default.target.wants/podman-querypie-database.service → /home/ec2-user/querypie/11.1.1/systemd/podman-querypie-database.service.
+$ systemctl --user enable --now podman-querypie-app.service
+Created symlink /home/ec2-user/.config/systemd/user/default.target.wants/podman-querypie-app.service → /home/ec2-user/querypie/11.1.1/systemd/podman-querypie-app.service.
+```
+
+別途構成されたMySQLを使用する場合
+
+基本提供される`./querypie/&lt;version&gt;/compose.yml`を利用して、1つのLinuxサーバでMySQLを実行せず、別途構成されたMySQLを使用する場合、systemd service動作範囲を変更すればよいです。
+
+`podman-querypie-database.service`を動作させなければよいです。
+動作中のsystemd serviceを次のコマンドでオフにできます。
+```bash
+$ systemctl --user disable podman-querypie-database.service
+```
+
+QueryPieを円滑に運用するには、`systemctl`コマンドを利用してsystemd serviceを管理する方法に慣れている必要があります。
+しかし、この文書では`systemctl`コマンドを利用してsystemd serviceを管理する方法を詳しく扱いません。
+
+### 参考資料
+
+* Red Hat Enterprise Linux、Rootless Podman環境でsystemd serviceを利用してcontainerを自動的に実行する
+    * [https://www.redhat.com/en/blog/container-systemd-persist-reboot](https://www.redhat.com/en/blog/container-systemd-persist-reboot)
+    * [https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_porting-containers-to-systemd-using-podman_building-running-and-managing-containers](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_porting-containers-to-systemd-using-podman_building-running-and-managing-containers)
+
+

@@ -1,0 +1,38 @@
+---
+title: 'On-Premise VM要件'
+---
+
+# On-Premise VM要件
+
+### 概要
+
+On-Premise物理サーバで動作するVirtual Machine上で、QueryPie Server Containerを運用する場合に関する指針を提供します。
+Production環境の運用のために、以下のような構成を適用することを推奨します。
+
+* High Availability構成適用
+* L7 Load Balancer、L4 Load Balancerを適用して、高可用性、負荷分散に適した構成を適用します。
+* 2つ以上のVM InstanceをLoad BalancerのUpstreamサーバとします。要求される処理容量が高い場合、VM Instanceの数を増やすScale-Out方式の構成を適用します。
+
+### QueryPie Container用VMモデル
+
+基本仕様：CPU 4 vCPUs AMD64 Architecture、Memory 15 GiB以上、Disk 100 GiB、CPU AMD
+
+* 基本仕様のVMを2つ以上作成して、Scale-Out構成を適用することを推奨します。
+
+高い処理量が必要な場合推奨仕様：CPU 8 vCPUs AMD64 Architecture、Memory 30 GiB以上、Disk 100 GiB
+
+* 推奨仕様のVMを2つ以上作成して、Scale-Out構成を適用することを推奨します。
+
+### QueryPie MySQL用VMモデル
+
+基本仕様：CPU 2 vCPUs、Memory 8 GiB以上、Disk 100 GiB以上
+
+高い処理量が必要な場合推奨仕様：CPU 8 vCPUs、Memory 32 GiB以上、Disk 100 GiB以上（**保存容量サイズは別途算定必要**）
+
+### QueryPie Redis用VMモデル
+
+基本仕様：CPU 2 vCPUs、Memory 1 GiB以上
+
+高い処理量が必要な場合推奨仕様：CPU 2 vCPUs、Memory 3 GiB以上
+
+

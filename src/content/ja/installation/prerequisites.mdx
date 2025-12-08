@@ -1,0 +1,108 @@
+---
+title: 'インストール前の準備事項'
+---
+
+import { Callout } from 'nextra/components'
+
+# インストール前の準備事項
+
+
+### 要約
+
+インストールを進行する前に、次の事項を準備する必要があります。
+簡単に要約すると、以下のとおりです。
+
+* Linuxサーバ1台
+* ウェブブラウザがインストールされたPC 1台
+
+### サーバ環境
+
+* Linux OSがインストールされたサーバコンピュータ1台：以下で`Server VM`と表記します。
+    * AWS、Azure、Google Cloud Platformなどのクラウドサービスを利用しても問題ありません。
+* Hardware性能と容量
+    * サーバコンピュータの仕様は4 vCPUs、16GiB Memoryを基本仕様として提示します。この性能仕様はQueryPieの様々な機能テストに適しています。
+    * 数百名以上の複数の利用者が多くのトラフィックで利用する場合、8 vCPUs、32 GiB Memoryを推奨仕様として提示します。
+    * Root file systemのサイズを100GiB以上で構成することを推奨します。
+* CPU Architecture
+    * CPUはx86_64またはAMD64アーキテクチャを推奨します。AMD64、Intel XeonなどのCPUを適用してください。
+    * **[BETA]** QueryPie version 11.1.1から、ARM64アーキテクチャのCPUをサポートします。
+        * Productionレベルの機能テストを実行できなかったため、開発環境での機能テスト、試験使用用途として推奨します。
+        * AWSの場合、`t4g.xlarge`、`m7g.xlarge`などのインスタンスタイプを使用できます。
+    * **[BETA]** QueryPie version 11.1.1から、Apple Silicon CPUを使用するmacOS環境をサポートします。
+* `Server VM`に利用者が接続できるIPアドレスが必要です。
+    * Fully Qualified Domain Name(FQDN)を設定して接続することを推奨します。
+* `Server VM`には次のポートが開いている必要があります。
+    * TCP 80：QueryPieウェブサービスポート
+    * TCP 9000：QueryPie User AgentがQueryPie Serverに接続するポート
+    * （選択）：80ではなく443 TLS(SSL)ポートを使用してHTTPSでアクセスする場合、TCP 443ポートアクセスが可能である必要があります。
+
+<Callout type="info">
+Production環境のためのサーバ推奨仕様を要約します。
+* 基本仕様：Hardware: CPU 4 vCPUs、AMD64 Architecture、Memory 16 GiB、Disk 100 GiB+
+    * AWS EC2：m6i.xlarge、m7i.xlarge、
+    * GCP Compute Engine：c4-standard-4、n4-standard-4（またはAMD64アーキテクチャの-standard-4モデル）
+* 多数利用者運用環境の推奨仕様：Hardware: CPU 4または8 vCPUs、AMD64 Architecture、Memory 32 GiB、Disk 100 GiB+
+    * AWS EC2：m6i.2xlarge、m7i.2xlarge、r6i.xlarge
+    * GCP Compute Engine：c4-standard-8、n4-standard-8（またはAMD64アーキテクチャの-standard-8モデル）
+* OS: Linux（docker daemonをインストールして使用）
+</Callout>
+
+### Linuxディストリビューション
+
+QueryPie ACPはDocker、Podmanを使用できるほとんどのLinuxディストリビューションで正常に動作します。
+そして、いくつかのLinuxディストリビューションでQueryPie ACP製品を使用する場合、技術サポートを効果的に提供できます。
+
+#### インストール、運用過程が検証されたLinuxディストリビューション
+
+* Amazon Linux 2、Amazon Linux 2023：AWS Cloudでのみ提供されます。
+* Ubuntu Server 22.04 LTS、24.04 LTS
+* Red Hat Enterprise Linux 8、9、10
+* Rocky Linux 8、9
+
+複数のLinuxディストリビューションとDocker、Podmanのサポート現況に関する詳細情報はこの文書を参照してください：[LinuxディストリビューションとDocker、Podmanサポート現況](prerequisites/linux-distribution-and-docker-podman-support-status)
+
+### Container EngineとCompose Tool
+
+QueryPieはContainer方式で提供されます。
+したがって、Container Engineを必須として要求します。
+Docker、PodmanのようにImageからContainerを生成、実行、終了するためのツールをContainer Engineといいます。
+また、Container Engineを簡単に使用するために、Compose Toolが必要です。
+Docker ComposeをCompose Toolといいます。
+
+#### Container Engineとバージョン
+
+* Docker Desktop：20.10以降のバージョン
+* Docker Community Edition：20.10以降のバージョン
+* Docker Enterprise Edition：Docker Desktopに製品名が変更されました。
+* Podman：4.9.0以降のバージョン
+
+#### Compose Toolとバージョン
+
+* Docker Compose：2.29.0以降のバージョン
+    * Podman ComposeよりDocker Compose使用を推奨します。PodmanとDocker Compose組み合わせで正常に動作することを検証しました。
+* Podman Compose：1.5.0以降のバージョン
+
+### サーバのFQDN設定と、TLS Certificate
+
+この項目は必須として要求されるものではありません。
+しかし、セキュリティ面と利用者の使用性の面から、推奨する項目です。
+
+* `Server VM`に接続されるFully Qualified Domain Name (FQDN)を準備します。
+    * `Server VM`のIPアドレスに接続されたDNS設定を適用して、FQDNで該当ホストに接続できる設定を準備します。
+* FQDNに対応するTLS証明書Certificateを準備します。
+    * `https`アドレスでアクセスするために使用されます。
+
+### 利用者のPC環境
+
+* ウェブブラウザがインストールされたPC：以下で`User PC`と表記します。
+    * Chrome、Firefox、Safari、Edgeなどの最新バージョンブラウザを使用します。
+    * ウェブブラウザを利用することは必須です。QueryPie User Agentを使用する場合でも、ウェブブラウザを利用した接続が必要です。
+* `User PC`から`Server VM`のIPアドレスまたはFQDNでウェブブラウザを開いてQueryPieウェブサービスに接続できる必要があります。
+* QueryPie User Agentをインストールする場合、いくつかのOSでのみサポートされます。.NET8以上をサポートするOSで使用できます。
+    * QueryPie User AgentはWindows、MacOS、Linux OSで動作します。
+        * Windows OSの場合、Windows 8 or laterバージョンを使用する必要があります。
+        * MacOS OSの場合、MacOS 10.15 or laterバージョンを使用する必要があります。MacOS 12 (Monterey)以降のバージョンを推奨します。
+        * Linux OSの場合、Debian 9 or later、Ubuntu 16.04 or later、Fedora 30 or laterバージョンを使用する必要があります。
+    * Linux OSの場合、headlessモードをサポートしません。X-Window、VNCなどを使用してGUI環境で実行する必要があります。
+    * User Agentを使用せずウェブブラウザのみを利用してQueryPieを使用する場合、この項目は無視しても問題ありません。
+

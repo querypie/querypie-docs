@@ -1,0 +1,241 @@
+---
+title: 'コンテナ環境変数'
+---
+
+import { Callout } from 'nextra/components'
+
+# コンテナ環境変数
+
+QueryPie ACPのServer Containerを実行するために必要な環境変数に関する案内を提供します。
+この文書はQueryPie 10.3.0以降のバージョンに適用されます。
+
+### 基本環境変数
+
+|  **Environment Variable Name**  |  **Default Value**         |  **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| VERSION                         |                            | QueryPieインストールバージョンです。例）`10.3.0`この環境変数の値でContainer Imageのtagを指定します。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| AGENT_SECRET                    |                            | 推奨値：32-char random string via `openssl rand -hex 16`QueryPie ContainerとUser Agent間の暗号化通信に使用する秘密鍵です。ASCII 32文字で設定する必要があります。High Availability (HA)構成を適用した場合、2つ以上のQueryPie Server Containerの`compose-env`で、`AGENT_SECRET`値がすべて同一である必要があります。                                                                                                                                                                                                                                                                                                                                                 |
+| KEY_ENCRYPTION_KEY              |                            | 推奨値：16-char random string via `openssl rand -hex 8`QueryPie Meta DBの機密データを暗号化するData Encryption Key (DEK)を暗号化して保管するためのKeyです。KEKはDEKを露出しないように暗号化するために使用されます。DEKはQueryPie Meta DBに保存するDB接続、SSHサーバ接続のための秘密値(Credential)を暗号化するKeyです。                                                                                                                                                                                                                                                                                                                                                      |
+| DB_HOST                         |                            | Meta DB、Log DB、Snapshot DBとして使用するMySQLのHostnameまたはIP Addressです。PoC用途でSingle MachineにQueryPie Container、MySQL Containerなどをすべてインストールする場合、`host.docker.internal`を入力すればよいです。QueryPie ContainerがインストールされたMachineではない、AWS Auroraなど分離されたMySQLを構成する場合、そのMySQLのHostnameまたはIP Addressを入力してください。                                                                                                                                                                                                                                                                                                            |
+| DB_PORT                         | `3306`                     | Meta DB、Log DB、Snapshot DBとして使用するMySQLのTCP Port                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| DB_CATALOG                      | `querypie`                 | Meta DBが使用するcatalog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| LOG_DB_CATALOG                  | `querypie_log`             | Log DBが使用するcatalog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ENG_DB_CATALOG                  | `querypie_snapshot`        | Snapshot DBが使用するcatalog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| DB_USERNAME                     |                            | 推奨値：`querypie`Meta DB、Log DB、Snapshot DBとして使用するMySQLのUsername                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| DB_PASSWORD                     |                            | 推奨値：16-char random string via `openssl rand -hex 8`Meta DB、Log DB、Snapshot DBとして使用するMySQLのPassword                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| DB_MAX_CONNECTION_SIZE          | `20`                       | QueryPieがMeta DB接続に使用する最大connection数（20使用推奨）                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| DB_DRIVER_CLASS                 | `org.mariadb.jdbc.Driver`  | Meta DBがAWS Auroraの場合、Aurora Instance部分障害時にFailoverをサポートします。AWS Auroraを適用してFailover機能を使用する場合、AWSが提供する専用ドライバ`software.amazon.jdbc.Driver`を指定します。                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| REDIS_NODES                     |                            | QueryPie Redisに接続するためのHost、Port情報を入力します。2つ以上のHost、Port情報を入力する場合、`Host1:Port1,Host2:Port2`のように、`,`で区切って入力できます。PoC用途でSingle MachineにQueryPie Container、Redis Containerなどをすべてインストールする場合、`host.docker.internal:6379`を入力すればよいです。HostはIP Address形式を入力してもよく、FQDNを入力してもよいです。                                                                                                                                                                                                                                                                                                            |
+| REDIS_PASSWORD                  |                            | 推奨値：16-char random string via `openssl rand -hex 8`Redis Password                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| DAC_SKIP_SQL_COMMAND_RULE_FILE  | `skip_command_config.json` | 3rd Party Tool（DataGrip、DBeaverなどのワークベンチツール）で利用者が入力するクエリではない、ツールが自動的に実行するSQL QueryをAudit Logに残さないように設定します。ツールが自動的に実行するSQL Queryは構文のパターンが決まっているという意味で、定型化されたQueryとも呼ばれます。このような定型化されたQueryをAudit Logに残さないように設定すると、利用者が体感する3rd Party Toolの応答速度が速くなります。QueryPie Serverの性能負荷を減少させるのに、役立ちます。詳細は[https://chequer.atlassian.net/wiki/spaces/QCP/pages/851346405/10.2.x#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%B6%94%EA%B0%80.2](https://chequer.atlassian.net/wiki/spaces/QCP/pages/851346405/10.2.x#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%B6%94%EA%B0%80.2)文書で確認できます。 |
+
+
+### 使用されなくなった環境変数
+
+<table data-table-width="1800" data-layout="default" local-id="c5fb16aa-9f97-493c-b628-440e4446f3b1">
+<colgroup>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<td data-highlight-colour="#f4f5f7">
+**Environment Variable Name**
+</td>
+<td data-highlight-colour="#f4f5f7">
+**Default Value**
+</td>
+<td data-highlight-colour="#f4f5f7">
+**Description**
+</td>
+</tr>
+<tr>
+<td>
+QUERYPIE_WEB_URL
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+10.2.8以降のバージョンでは、Web Consoleでこの値を設定します。
+環境変数では設定しません。
+</Callout>
+Web ConsoleにアクセスするためのQueryPieのURLアドレスです。<br/>（例：`https://querypie.customer.com`）<br/>このURLはQueryPieのBase URLとも呼ばれます。
+このURLは`/`で終わってはいけません。`https://querypie.customer.com/`のようにURLの最後に`/`を付けないよう注意してください。
+このURLは以下の用途で使用されます。
+* SSO Integrationの認証過程で、callbackアドレスとして使用されます。
+* Web ConsoleでUser Agentをダウンロードするリンクに使用されます。
+* その他詳細な用途は、[https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310)を参照してください。
+</td>
+</tr>
+<tr>
+<td>
+AWS_ACCOUNT_ID
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+10.3.0以降のバージョンでは、この値を入力しません。
+自動的にこの値が選択されます。
+</Callout>
+QueryPie Admin &gt; CloudProvider &gt; CrossAccountRole設定時に使用される値です。<br/>QueryPieがインストールされたAWSアカウントのAccount IDを入力してください。
+AWSではない環境では空の値にしておきます。
+</td>
+</tr>
+<tr>
+<td>
+REDIS_HOST
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+10.2.1以降のバージョンで、この値がREDIS_NODESに置き換えられました。
+</Callout>
+Redis Hostname or IP Address - QueryPie Containerがキャッシュデータ保存のために使用します。
+PoC用途でSingle MachineにQueryPie Container、Redis Containerなどをすべてインストールする場合、`host.docker.internal`を入力すればよいです。
+QueryPie ContainerがインストールされたMachineではない、AWS ElastiCacheなど分離されたRedisを構成する場合、そのRedisのHostnameまたはIP Addressを入力してください。
+</td>
+</tr>
+<tr>
+<td>
+REDIS_PORT
+</td>
+<td>
+`6379`
+</td>
+<td>
+<Callout type="info">
+10.2.1以降のバージョンで、この値がREDIS_NODESに置き換えられました。
+</Callout>
+Redis TCP Port
+</td>
+</tr>
+<tr>
+<td>
+REDIS_CONNECTION_MODE
+</td>
+<td>
+`STANDALONE`
+</td>
+<td>
+<Callout type="info">
+10.3.0以降のバージョンでは、この値を入力しません。
+自動的にこの値が選択されます。
+</Callout>
+`STANDALONE`または`CLUSTER`という値を使用します。
+PoC用途でSingle MachineにQueryPie Container、Redis Containerなどをすべてインストールする場合、`STANDALONE`を入力すればよいです。
+QueryPie RedisをClusterモードで使用する場合`CLUSTER`を入力すればよいです。`CLUSTER`モードで使用する場合、複数のアドレスの値を`REDIS_NODES`に入力することになります。
+</td>
+</tr>
+<tr>
+<td>
+CABINET_DATA_DIR
+</td>
+<td>
+
+</td>
+<td>
+<Callout type="info">
+10.2.8以降のバージョンでは、この値を入力しません。
+OVENコンポーネント設定に置き換えられます。
+</Callout>
+SAC &gt; RDP(WinSAC)セッション録画に使用するイメージをEC2インスタンスサーバファイルシステムに保存する位置です。
+（`/data`使用推奨）
+</td>
+</tr>
+</tbody>
+</table>
+
+
+### FAQ
+
+#### Q: DB_HOST、REDIS_HOSTに127.0.0.1やlocalhostを使用できますか？
+
+A: DB_HOST、REDIS_HOSTに`127.0.0.1`、`localhost`を使用できません。
+
+Single Machine構成の場合、1つのLinux machineにMySQL、Redisをすべてインストールできます。
+このとき、QueryPie Containerはdefault network modeであるbridge modeが使用されます。
+bridge modeでは`127.0.0.1`、`localhost`はcontainer内部のプロセス間でのみ通信が可能です。
+MySQL、Redisは別個のContainerで実行されるため、QueryPie Containerから`127.0.0.1`、`localhost`アドレスを利用してMySQL、Redisに接続できません。
+
+この場合、`host.docker.internal`アドレスを使用して、Docker Host、すなわちdocker daemonが実行中のLinux machineのhost networkに接続できます。
+
+
+#### Q: 運用中にAGENT_SECRETを変更しても問題ありませんか？
+
+A: 変更する手順が複雑で顧客社利用者に不便を及ぼすため、変更しないことを推奨します。
+
+この値を変更する場合、次の手順を適用する必要があります。
+
+* compose-envファイルで該当値を変更し、QueryPie Containerを再起動する必要があります。
+* 二重化、多重化構成の場合、すべてのQueryPie Containerが同一の値を持つ必要があります。
+* ⚠️ User Agent利用者はインストールしたUser Agentを削除、Uninstallした後、再インストールして使用する必要があります。
+
+初期にどの値で生成すべきか曖昧な場合は、Linuxターミナルで`uuidgen | tr -d '-'`で生成された値を使用してもよいです。
+
+該当環境変数は利用者が入力せず、サーバ内で自ら構成する方式に置き換える計画があります。
+
+#### Q. 運用中にKEY_ENCRYPTION_KEYを変更できますか？
+
+A: この値を変更することはできません。
+初回インストール時に使用した値を**必ず**保管しておく必要があります。
+
+もしこの値を失うか、変更された値を環境変数として指定する場合、運用中のQueryPie Meta DB内暗号化された機密データをQueryPie Containerが読み取れません。
+これにより、QueryPie Containerが正常に動作できなくなります。
+
+この環境変数の値で要求される長さ、文字の種類に関する制約はありません。
+例えば8文字以上でなければならない、特殊文字が入らなければならないなどの制約はありません。
+実際にこのような値を使用することを推奨しませんが、利用者が`1`という簡単な値を設定しても、QueryPieが機能的に正常動作します。
+
+しかし、顧客社のセキュリティ担当者に問い合わせて、顧客社内部の情報セキュリティポリシー、ガイドラインに従って設定することを推奨します。
+
+
+#### Q:AWS_ACCOUNT_IDは必ず入力する必要がある値ですか？どの値を入力すればよいですか？
+
+A: QueryPie 10.3.0以降のバージョンでは、AWS_ACCOUNT_IDを入力しません。
+QueryPie Server Containerが自らこの値を検出します。
+
+AWS_ACCOUNT_ID環境変数値はWeb ConsoleでCloud Providerを設定で、CrossAccount Role使用時にターゲットAccountにRoleを作成するとき、デフォルト値として使用されます。
+以下のスクリーンショットで表示されるAccount ID値はAWS_ACCOUNT_ID環境変数から提供された値です。
+
+
+<details>
+<summary>以下の図のようにAccount ID部分で使用されます。</summary>
+
+<figure data-layout="center" data-align="center">
+![image-20241031-062026.png](/installation/container-environment-variables/image-20241031-062026.png)
+</figure>
+
+</details>
+
+
+#### Q: SAC、RDP機能を使用しません。CABINET_DATA_DIR項目を削除してもよいですか？
+
+A: QueryPie 10.3.0以降のバージョンでは、CABINET_DATA_DIR項目を使用しません。
+OVENコンポーネントの設定値に置き換えられました。
+
+
+#### Q:Redis設定は必須ですか？
+
+A: QueryPie ContainerのサーバソフトウェアはRedisを必須要素として使用しています。
+
+Redisは以下のような目的で使用されます。
+
+* 接続中のウェブサーバのセッションメタ情報をキャッシュする用途
+* サーバアプリケーション内バックグラウンド作業のためのメッセージキュー
+
+しかし、Redis内に保存されたデータが消失しても、クリティカルな問題が発生しません。
+その時点で実行中だった特定の作業、利用者リクエストが失敗します。
+RedisとQueryPie Containerを再起動すると、QueryPie Containerが正常に動作します。
+
+### 高度な機能のための環境変数
+
+[Environment Variables for Advanced Setup - 10.3.x (KO)](#target-title-not-found)ページを参照してください。
+
+

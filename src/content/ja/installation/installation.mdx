@@ -1,0 +1,52 @@
+---
+title: 'インストール'
+---
+
+# インストール
+
+QueryPie ACP製品をインストールする方法は、Container実行方式、インストール支援プログラムのバージョンによって、案内文書が区分されて提供されます。
+
+### Compose ToolでContainerを実行する
+
+一般的なインストール、実行方法であり、製造元で推奨するインストール方法です。
+Docker Composeを活用して、Container Imageをダウンロードし、実行、終了する方式です。
+
+この場合、インストール支援プログラムのバージョンによって、2つのインストール方式が提供されます。
+
+#### setup.shでインストールする
+
+QueryPie Version 9時代からパートナーエンジニアに提供されたインストール支援プログラムです。
+HarborというContainer Registryにアカウントを発行してContainer Imageをダウンロードできます。
+
+リリースされたすべてのバージョンの製品をインストールできます。
+
+詳細なインストール方法はこの文書を参照してください：[インストールガイド - 簡単な構成](installation/installation-guide-simple-configuration)
+
+
+#### setup.v2.shでインストールする
+
+2025年8月リリースされたQueryPie ACP Community Editionのリリースとともに最終顧客社とパートナーエンジニアに提供されたインストール支援プログラムです。
+Docker Hubに公開されたContainer Imageをダウンロードしてインストールする方式です。
+
+インストール過程が自動化されており、初めてインストールする利用者が製品を簡単にインストールできます。
+しかし、実質的なインストール過程はsetup.shのインストール方式とsetup.v2.shのインストール方式が同等であり、setup.v2.shはその過程が自動化されており、Version 10などの旧バージョンのインストールをサポートしないという違いがあります。
+
+Apple Siliconを使用するmacOS環境のインストールをサポートします。
+
+リリースされたすべてのバージョンの製品が提供されません。
+2025年12月現在Version 11.1.2が提供されます。
+
+詳細なインストール方法はこの文書を参照してください：[Installation Guide - setup.v2.sh (KO)](installation/installation-guide-setupv2sh)
+
+
+### Kubernetes環境にインストールする
+
+QueryPie ACPはContainer環境で動作するソフトウェア製品です。
+Compose Toolを利用してインストール、実行するのが一般的ですが、Kubernetes環境でもスムーズに動作します。
+
+Kubenetes環境で製品をインストールする場合、AWS EKS、GCP GKEなどのManaged Kubernetes ClusterとSelf-Hosted Cluster、すべて使用可能です。
+
+* AWS EKS環境：[AWS EKS環境でインストールする](installation/installing-on-aws-eks)
+* Helm Chart：[https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment)
+
+

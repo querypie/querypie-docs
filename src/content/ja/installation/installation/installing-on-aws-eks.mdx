@@ -1,0 +1,702 @@
+---
+title: 'AWS EKS環境でインストール'
+---
+
+# AWS EKS環境でインストール
+
+### 1. 概要
+
+#### 1.1 目的
+
+* AWS EKSクラスタにQueryPieをインストールし、構成する全体過程案内
+* 安定的な運用のための設定ガイド提供
+
+#### 1.2 対象読者
+
+* Kubernetes基本概念（Pod、Service、Deploymentなど）を理解しているエンジニア
+* AWS EKS使用経験があるエンジニア
+
+#### 1.3 予想所要時間
+
+* 全体インストール過程：約1時間
+* 環境構成：15分
+* 基本コンポーネント（MySQL、Redis）インストール：15分
+* QueryPieインストール：20分
+* インストール検証および初期設定：10分
+
+### 2. 事前要件
+
+#### 2.1 インフラ要件
+
+* EKSクラスタ
+    * 推奨ノード仕様：r5.xlarge（4 vCPU、32GB RAM）
+    * Kubernetesバージョン：1.24以上
+    * 必要ノード数：最小1個（Production環境は3個以上推奨）
+
+#### 2.2 ローカル環境準備事項
+
+1. AWS CLIインストールおよび構成
+  ```bash
+brew install awscli
+aws configure  # Access Key、Secret Key必要
+  ```
+2. kubectlインストール
+  ```bash
+brew install kubectl
+  ```
+3. Helmインストール（バージョン3.10.0以上必須）
+  ```bash
+brew install helm
+  ```
+4. 選択的ツールインストール（推奨）
+  ```bash
+brew install kubectx  # コンテキスト切り替えツール
+brew install fzf      # コマンドライン曖昧検索
+  ```
+
+#### 2.3 アクセス権限要件
+
+* Harborレジストリアクセス権限
+    * アカウント情報（Username/Password）
+    * QueryPieイメージアクセス権限
+
+#### 2.4 ネットワーク要件
+
+* インターネット接続（イメージダウンロード用）
+* EKSクラスタアクセス可能なネットワーク環境
+* LoadBalancer使用可能な環境（Ingress構成用）
+
+### 3. 基本コンポーネントインストール
+
+1. 始める前にQueryPieをインストールするためにnamespacesを作成します。
+```
+kubectl create namespace querypie
+```
+
+#### 3.1 MetaDB(MySQL)インストール
+
+MySQLはQueryPieのメタデータを保存するデータベースとして使用されます。
+
+##### 3.1.1 Persistent Volume生成
+
+1. 以下の内容で`pv.yml`ファイルを生成します。
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+  labels:
+    app: mysql     
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/lib/mysql
+    type: DirectoryOrCreate
+```
+
+1. PVを生成します。
+```bash
+kubectl apply -f pv.yml
+```
+
+##### 3.1.2 MySQL StatefulSet配布
+
+1. 以下の内容で`mysql.yml`ファイルを生成します。
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: querypie
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: querypie
+            - name: MYSQL_DATABASE
+              value: querypie
+            - name: MYSQL_USER
+              value: querypie
+            - name: MYSQL_PASSWORD
+              value: querypie
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "2Gi"
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: ""              
+        selector:                       
+          matchLabels:
+            app: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: querypie
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: mysql
+```
+
+1. MySQL StatefulSetとServiceを生成します。
+```bash
+kubectl apply -f mysql.yml
+```
+
+1. MySQL Podが正常に実行されるまで待ちます。
+```bash
+kubectl get pods -w -n querypie | grep mysql
+```
+
+##### 3.1.3 データベース初期化
+
+1. MySQLに接続します。
+```bash
+kubectl exec -it mysql-0 -n querypie -- mysql -u root -p
+# パスワード：querypie
+```
+
+1. 必要なデータベースを生成します。
+```sql
+DROP DATABASE IF EXISTS querypie;
+DROP DATABASE IF EXISTS querypie_log;
+DROP DATABASE IF EXISTS querypie_snapshot;
+
+CREATE database querypie CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE database querypie_log CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE database querypie_snapshot CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+GRANT ALL privileges ON querypie.* TO querypie@'%';
+GRANT ALL privileges ON querypie_log.* TO querypie@'%';
+GRANT ALL privileges ON querypie_snapshot.* TO querypie@'%';
+
+FLUSH PRIVILEGES;
+```
+
+1. MySQLを終了します。
+```sql
+exit
+```
+
+#### 3.2 Redisインストール
+
+RedisはQueryPieのセッションおよびキャッシュ保存庫として使用されます。
+
+1. 以下の内容で`redis.yml`ファイルを生成します。
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: querypie
+  labels:
+    app: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          imagePullPolicy: IfNotPresent
+          args: ["--requirepass", "querypie"]
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "1Gi"
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      restartPolicy: Always
+      volumes:
+        - name: redis-data
+          emptyDir: {}   # パッド再起動時データ削除（キャッシュ用途ならOK）
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: querypie
+  labels:
+    app: redis
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+```
+
+1. Redis DeploymentとServiceを生成します。
+```bash
+kubectl apply -f redis.yml
+```
+
+1. Redis Podが正常に実行されるまで待ちます。
+```bash
+kubectl get pods -w -n querypie | grep redis
+```
+
+### 4. QueryPieインストール
+
+#### 4.1 Secret設定
+
+##### 4.1.1 Harborレジストリ認証情報登録
+
+```bash
+kubectl create secret docker-registry querypie-regcred \
+  --docker-server=harbor.chequer.io \
+  --docker-username='{harbor-id}' \
+  --docker-password='{harbor-pw}' \
+  -n querypie
+```
+
+##### 4.1.2 QueryPie環境設定
+
+1. 以下の内容で`querypie.env`ファイルを生成します。
+```ini
+# Agent Secret（32文字任意の文字列）
+AGENT_SECRET=01234567890123456789012345678912
+KEK=querypie
+
+# QueryPie Meta DB接続情報
+DB_CATALOG=querypie
+DB_HOST=mysql
+DB_USERNAME=querypie
+DB_PASSWORD=querypie
+DB_PORT=3306
+
+# QueryPie Log DB接続情報
+LOG_DB_CATALOG=querypie_log
+LOG_DB_HOST=mysql
+LOG_DB_USERNAME=querypie
+LOG_DB_PASSWORD=querypie
+LOG_DB_PORT=3306
+
+# QueryPie Snapshot DB接続情報
+ENG_DB_CATALOG=querypie_snapshot
+ENG_DB_HOST=mysql
+ENG_DB_USERNAME=querypie
+ENG_DB_PASSWORD=querypie
+ENG_DB_PORT=3306
+
+# Redis接続情報
+REDIS_NODES=redis:6379
+REDIS_PASSWORD=querypie
+```
+
+1. 環境設定ファイルをSecretとして登録します。
+```bash
+kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
+```
+
+#### 4.2 Helm Chart設定
+
+##### 4.2.1 Helm Repository追加
+
+```bash
+# Repository追加
+helm repo add querypie https://chequer-io.github.io/querypie-deployment/helm-chart
+
+# Repositoryリスト確認
+helm repo list
+```
+
+##### 4.2.2 values.yaml設定
+
+1. 以下の内容で`values.yml`ファイルを生成します。
+```yaml
+appVersion: &version 11.3.0
+
+global:
+  image: 
+    # -- Default registry used for all images
+    registry: harbor.chequer.io
+    # -- Default image tags used for all images
+    tag: *version
+    # -- Default image pull policy for all images
+    pullPolicy: IfNotPresent
+  # -- Default labels for all resources deployed by the chart
+  labels: {}
+
+# -- ServiceAccount for QueryPie and QueryPie tools pods
+# It is created for authenticating private image registry and AWS API.
+# @default -- {}
+serviceAccount:
+  labels: {}
+  annotations: {}
+  # -- The name of the secret used for pulling the QueryPie image from the private registry.
+  # To create, run `kubectl create secret docker-registry querypie-regcred --docker-server=harbor.chequer.io --docker-username=admin --docker-password=your-password`
+  imagePullSecrets:
+    - name: querypie-regcred
+
+querypie:
+  # -- Labels used for QueryPie pods.
+  labels: {}
+  # -- Annotations used for QueryPie pods.
+  annotations: {}
+  tolerations: {}
+  # -- NodeSelector for QueryPie pods
+  nodeSelector: {}
+  replicas: 1
+  # -- PodManagementPolicy for QueryPie pods. OrderedReady is fine for most cases, but Parallel is also good for large-scale deployments.
+  podManagementPolicy: Parallel
+  image:
+    # -- (string) Registry used for the QueryPie image. If not set, the global registry will be used.
+    registry:
+    # -- (string) Tag used for the QueryPie image. If not set, the global tag will be used.
+    tag:
+    # -- (string) PullPolicy used for the QueryPie image. If not set, the global pullPolicy will be used.
+    pullPolicy:
+    # -- Repository used for the QueryPie image. (required)
+    repository: querypie/querypie
+  ingress:
+    # -- (bool) If true, Ingress resource for QueryPie will be created.
+    enabled: true
+    labels: {}
+    # -- Annotations used for the Ingress resource.
+    # It is useful when you want to enable controller-specific feature for the Ingress resource.
+    annotations: {}
+    # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
+    ingressClassName: ""
+    # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
+    host: querypie.querypie.io #実際設定されたurl入力
+    # -- Extra paths used for the Ingress resource.
+    # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
+
+  proxyService:
+    # -- Create a service resource for QueryPie Agent connections.
+    # Basically, it opens 9000/tcp port for the QueryPie Agent, and 40000~/tcp for the Agentless connections.
+    enabled: true
+    labels: {}
+    # -- Annotations used for the Service resource.
+    # It is useful when you want to enable controller-specific feature for the Service resource.
+    annotations: {}
+    type: LoadBalancer
+    loadBalancerClass: ""
+    # -- Set the externalTrafficPolicy to Local is recommended for auditing the real client IP address.
+    externalTrafficPolicy: "Local"
+    # -- SessionAffinity is not required for the QueryPie.
+    sessionAffinity: "None"
+  updateStrategy:
+    # -- The strategy used for updating the QueryPie pods.
+    # It is generally recommended to use the RollingUpdate strategy.
+    # But if required, you can change it to OnDelete for manual operations.
+    type: RollingUpdate
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: 16Gi
+    limits:
+      # -- More than 2 CPU cores are recommended.
+      cpu: "2000m"
+      # -- More than 16Gi memory is recommended.
+      memory: 16Gi
+  logrotator:
+    image:
+      # -- (string) Registry used for the Logrotate image. If not set, the global registry will be used.
+      repository: querypie/logrotate
+      # -- (string) Tag used for the Logrotate image. If not set, the global tag will be used.
+      tag: latest
+  # -- External storage for the QueryPie Object Storage.
+  externalStorage:
+    # -- Type of the external storage.
+    # - none: No external storage.
+    # - persistentVolumeClaim: using a single Persistent Volume Claim for all QueryPie pods.
+    type: none
+    # -- Use a persistent volume claim for the external storage. It will be available if the type is persistentVolumeClaim.
+    persistentVolumeClaim:
+      # -- Use an existing Persistent Volume Claim for the external storage.
+      # If you set this to true, this helm chart will not create a new Persistent Volume Claim.
+      useExisting: false
+      # -- The name of the existing Persistent Volume Claim to be used.
+      claimName: ""
+      # -- Metadata of the Persistent Volume Claim.
+      metadata:
+        annotations: {}
+        labels: {}
+      # -- Spec of the Persistent Volume Claim.
+      spec:
+        storageClassName: ""
+        resources:
+          requests:
+            storage: 100Gi
+        # -- It is required to have ReadWriteMany access mode on production.
+        accessModes:
+          - ReadWriteMany
+  # -- Extra environment variables used for the QueryPie pods.
+  # This is useful for experimental features, debugging, workaround, and so on.
+  # for example:
+  # API_JVM_HEAPSIZE: '2g' will set the JVM heap size to 2GB.
+  extraEnvs: {}
+
+tools:
+  image:
+    # -- Registry used for the QueryPie tools image. If not set, the global registry will be used.
+    repository: querypie/querypie-tools
+
+config:
+  # -- External URL that users use to access the QueryPie via web.
+  # Specify the scheme, hostname, and port is required.
+  externalURL: "https://querypie.querypie.io" #実際設定されたurl入力
+  secretName: "querypie-secret"
+
+  database:
+    querypie:
+      # -- The maximum number of connections that QueryPie can use for "metastore" purposes.
+      connectionPoolSize: 20
+
+  dac:
+    # -- This setting is used to ignore simple queries sent by client tools such as DataGrip.
+    # Please refer to the commented-out example below.
+    skipCommandConfigData: "{}"
+    # skipCommandConfig: |
+    #   {
+    #     "mysql": [
+    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+@@session\\s*\\.\\s*\\w+\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+session\\s+transaction\\s+\\w+(\\s+\\w+)*\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+net_write_timeout\\s*=\\s*\\d+\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+database\\s*\\(\\s*\\)\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+SQL_SELECT_LIMIT\\s*=\\s*\\w+$",
+    #       "^SHOW\\s+VARIABLES\\s+LIKE\\s+'aurora\\\\_version'\\s*$",
+    #       "^SELECT\\s+version\\s*\\(\\s*\\)\\s*,\\s*@@version_comment\\s*,\\s*database\\s*\\(\\s*\\)\\s*$",
+    #       "^SET\\s+autocommit\\s*=\\s*\\d+$",
+    #       "^(/\\*.*?\\*/)\\s*SELECT\\s+((@@session\\s*\\.\\s*|@@)\\w+(\\s+AS\\s+\\w+)?(\\s*,\\s*)?)+\\s*$"
+    #     ]
+    #   }
+    # -- The path where the skip command config file will be mounted.
+    skipCommandConfigFile: /app/arisa/skip_command_config.json
+```
+
+#### 4.3 QueryPieインストール
+
+1. Helmを使用してQueryPieをインストールします。
+```bash
+helm upgrade --install poc querypie/querypie --version 1.4.1 -n querypie -f values.yaml
+```
+
+1. データベースマイグレーションを実行します。
+```bash
+kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
+```
+
+1. ライセンスを登録します。（ライセンスファイルを準備しておきます。）
+```bash
+kubectl port-forward -n querypie deploy/poc-querypie-tools 8050:8050 &
+curl -X POST http://127.0.0.1:8050/license/upload -F file=@license.crt
+[License] Upload: Success  # 結果
+# port-forward終了
+jobs
+kill %1
+```
+
+#### 4.4 インストール確認
+
+1. Pod状態を確認します。
+```bash
+kubectl get pods -n querypie
+```
+
+1. ログを確認します。
+```bash
+kubectl logs pod/poc-querypie-0 -f
+```
+
+1. サービス接続を確認します。
+```bash
+kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
+```
+
+### 5. 問題解決ガイド
+
+#### 5.1 インストール前確認事項
+
+##### 5.1.1 クラスタアクセス権限確認
+
+```bash
+# クラスタアクセス確認
+kubectl cluster-info
+
+# 現在のcontext確認
+kubectl config current-context
+
+# namespaceアクセス権限確認
+kubectl auth can-i create deployment -n querypie
+```
+
+##### 5.1.2 リソース状態確認
+
+```bash
+# ノードリソース状態確認
+kubectl top nodes
+
+# 使用可能なストレージクラス確認
+kubectl get storageclass
+```
+
+#### 5.2 一般的な問題解決
+
+##### 5.2.1 Pod状態確認
+
+```bash
+# Pod状態照会
+kubectl get pods -n querypie
+
+# Pod詳細情報確認
+kubectl describe pod <pod-name> -n querypie
+
+# Podログ確認
+kubectl logs <pod-name> -n querypie
+kubectl logs <pod-name> -n querypie --previous  # 再起動された場合以前のログ確認
+```
+
+主要問題状態および確認事項：
+
+* `ImagePullBackOff`: Harborレジストリ認証情報確認
+* `Pending`: ノードのリソース不足の有無確認
+* `CrashLoopBackOff`: ログを通じてアプリケーションエラー確認
+
+##### 5.2.2 サービス接続確認
+
+```bash
+# Service状態確認
+kubectl get svc -n querypie
+
+# Endpoint確認
+kubectl get endpoints -n querypie
+
+# MySQL Service接続テスト
+kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
+
+# Redis Service接続テスト
+kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
+```
+
+##### 5.2.3 Ingress確認
+
+```bash
+# Ingress状態確認
+kubectl get ingress -n querypie
+
+# Ingress詳細情報確認
+kubectl describe ingress -n querypie
+```
+
+#### 5.3 リソースモニタリング
+
+```bash
+# Pod CPU/Memory使用量確認
+kubectl top pods -n querypie
+
+# Node CPU/Memory使用量確認
+kubectl top nodes
+
+# 特定Podのリソース制限確認
+kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
+```
+
+#### 5.4 インストール構成確認
+
+```bash
+# ConfigMap確認
+kubectl get configmap -n querypie
+
+# Secretリスト確認
+kubectl get secrets -n querypie
+
+# PV/PVC状態確認
+kubectl get pv
+kubectl get pvc -n querypie
+```
+
+#### 5.5 サポート依頼時に必要な情報
+
+問題解決が困難な場合、次の情報を収集してサポートチームに問い合わせてください：
+
+1. 環境情報
+```bash
+# Kubernetesバージョン
+kubectl version --short
+
+# Node情報
+kubectl get nodes -o wide
+
+# Helmバージョン
+helm version
+```
+
+1. QueryPie状態情報
+```bash
+# Helm配布状態
+helm status poc -n querypie
+
+# Pod詳細情報
+kubectl describe pod/poc-querypie-0 -n querypie
+
+# 最近のイベントリスト
+kubectl get events -n querypie --sort-by='.lastTimestamp'
+```
+
+1. ログ情報
+```bash
+# QueryPieログ保存
+kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
+
+# 関連コンポーネントログ保存
+kubectl logs mysql-0 > mysql.log
+kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
+```
+
+### 6. 参考資料
+
+* [Amazon EKS Workshop](https://www.eksworkshop.com)
+* [Amazon EKS文書](https://docs.aws.amazon.com/eks/)
+* [Kubernetes公式文書](https://kubernetes.io/docs/)
+

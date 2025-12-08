@@ -1,0 +1,75 @@
+---
+title: 'サーバ構成要件要約表'
+---
+
+# サーバ構成要件要約表
+
+QueryPieサーバのハードウェア処理容量要件に関するガイドを簡単に整理した要約表です。
+
+### 配布環境別推奨構成
+
+#### Public Cloud環境（AWS、GCP、Azure）
+
+| 構成要素   | 推奨事項                                                   |
+| ------- | ------------------------------------------------------- |
+| 高可用性構成 | Application Load Balancer、Network Load Balancer適用     |
+| VMインスタンス | 2つ以上のVMをUpstreamサーバで構成（Scale-Out方式）               |
+| データベース  | Managed Service方式のMySQL/MariaDB（AWS Auroraなど）        |
+| キャッシュサービス  | Managed Service方式のRedis（AWS ElastiCacheなど）           |
+| OS      | Linuxディストリビューション（AWS: Amazon Linux、GCP: Ubuntu 24.04 LTS推奨） |
+
+#### On-Premise環境
+
+| 構成要素   | 推奨事項                                     |
+| ------- | ----------------------------------------- |
+| 高可用性構成 | L7 Load Balancer、L4 Load Balancer適用     |
+| VMインスタンス | 2つ以上のVMをUpstreamサーバで構成（Scale-Out方式） |
+
+### コンポーネント別、容量別仕様
+
+#### QueryPie Container VM仕様
+
+| 区分                 | 基本仕様                         | 推奨仕様                             |
+| ------------------ | ----------------------------- | --------------------------------- |
+| CPU                | 4 vCPUs（AMD64アーキテクチャ）          | 8 vCPUs（AMD64アーキテクチャ）              |
+| メモリ                | 15 GiB以上                     | 30 GiB以上                         |
+| ディスク                | 100 GiB                       | 100 GiB                           |
+| AWS EC2インスタンス       | m6i.xlarge、m7i.xlarge        | m6i.2xlarge、m7i.2xlarge          |
+| GCP Compute Engine | c4-standard-4、n4-standard-4  | c4-standard-8、n4-standard-8      |
+| ディスクIO性能          | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1)以上 |
+| 推奨構成              | 基本仕様VM 2つ以上                 | 推奨仕様VM 2つ以上                     |
+
+#### QueryPie MySQL仕様
+
+| 区分              | 基本仕様                         | 推奨仕様                             |
+| --------------- | ----------------------------- | --------------------------------- |
+| CPU             | 2 vCPUs                       | 4 vCPUs                           |
+| メモリ             | 16 GiB以上                     | 32 GiB以上                         |
+| ディスク             | 100 GiB以上                    | 100 GiB以上（保存容量別途算定）           |
+| AWS Auroraインスタンス | db.r7g.large、db.r6g.large    | db.r7g.xlarge、db.r6g.xlarge      |
+| ディスクIO性能       | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1)以上 |
+| 参考事項            | Managed Service方式推奨         | Managed Service方式推奨             |
+
+#### QueryPie Redis仕様
+
+| 区分              | 基本仕様                 | 推奨仕様                 |
+| --------------- | --------------------- | --------------------- |
+| CPU             | 2 vCPUs               | 2 vCPUs               |
+| メモリ             | 1 GiB以上              | 3 GiB以上              |
+| AWS ElastiCache | cache.t4g.small       | cache.t4g.medium      |
+| 参考事項            | Managed Service方式推奨 | Managed Service方式推奨 |
+
+### メモリ使用量参考事項
+
+| 区分                        | 使用量      |
+| ------------------------- | -------- |
+| 初期実行時                   | 約7 GiB  |
+| 利用者使用による増加             | 2～3 GiB  |
+| Mongo/Document DBアクセス時追加 | 1 GiB以上 |
+| OSキャッシュ用追加メモリ             | 1～2 GiB  |
+
+### 性能参考事項
+
+* 基本仕様VM 1台：DAC基準簡単なクエリ秒あたり70件以上処理可能（1分に4,200件、1時間に25万件）
+* 数百～数千名の利用者が日常的な軽いクエリ実行時基本仕様VM 1-2台で十分に処理可能
+

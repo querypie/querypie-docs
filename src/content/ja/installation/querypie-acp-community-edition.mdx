@@ -1,0 +1,192 @@
+---
+title: 'QueryPie ACP Community Edition'
+---
+
+# QueryPie ACP Community Edition
+
+### 🧭 始める前に
+
+**QueryPie Community Edition**は**QueryPie Enterprise**で提供される核心機能を体験できるようにします。
+
+* Database Access Controller
+* System Access Controller
+* Kubernetes Access Controller
+* Web Access Controller
+
+ただし、Community Editionは**最大5名の利用者アクティベーション**をサポートします。*（5名以上を登録する必要がある場合、*[*Enterprise Plan*](https://www.querypie.com/ko/plans)*アップグレードを検討してください。）*
+
+QueryPieは一般的なウェブアプリケーション形式で実行され、プロキシベースネットワークサーバ機能も含んでいます。
+
+### 🖥️ 推奨サーバ仕様
+
+QueryPie Community Editionの円滑なインストールおよび運用のために以下のようなシステム環境を推奨します。
+
+<table data-table-width="834" data-layout="center" local-id="7fd726e9-fc83-4263-a08f-8daf43a53c3b">
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**タイプ**
+</th>
+<th>
+**仕様**
+</th>
+</tr>
+<tr>
+<td>
+基本仕様
+</td>
+<td>
+* Hardware：AMD64 Architecture、CPU 4 vCPUs、Memory 16 GiB、Disk 100 GiB+
+* AWS EC2：m6i.xlarge、m7i.xlarge
+* GCP Compute Engine：c4-standard-4、n4-standard-4（or AMD64 architecture -standard-4 models）
+</td>
+</tr>
+<tr>
+<td>
+試験使用
+</td>
+<td>
+* Hardware: ARM64 Architecture、4 vCPUs、Memory 16 GiB、Disk 30 GiB+
+* AWS EC2：t4g.xlarge、m7g.xlarge
+* OS: Linux or macOS with Docker
+</td>
+</tr>
+<tr>
+<td>
+複数利用者のためのProduction環境推奨仕様
+</td>
+<td>
+* Hardware: AMD64 Architecture、8 vCPUs、Memory 32 GiB、Disk 100 GiB+
+* AWS EC2：m6i.2xlarge、m7i.2xlarge
+* GCP Compute Engine：c4-standard-8、n4-standard-8（or AMD64 architecture -standard-8 models）
+</td>
+</tr>
+<tr>
+<td>
+OS
+</td>
+<td>
+Linux with Docker or Podman
+</td>
+</tr>
+</tbody>
+</table>
+
+ARM64 Architecture CPU環境またはmacOS環境は開発者のための試験使用、テスト用途として推奨します。
+
+詳細な要件は以下の文書を参照してください：[インストール前の準備事項 - 簡単な構成](prerequisites)
+
+### 🐳 インストール方法
+
+#### 1. ターミナルでコマンド実行
+
+Linuxサーバのターミナルに接続した後、ホームディレクトリで次のコマンドを実行してください：
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh)
+```
+
+⏱️ インストールは通常**7～10分**程度かかります。
+
+<figure data-layout="center" data-align="center">
+![インストールが開始された画面](/installation/querypie-acp-community-edition/image-20250718-063107.png)
+<figcaption>
+インストールが開始された画面
+</figcaption>
+</figure>
+
+
+<figure data-layout="center" data-align="center">
+![インストールが完了した画面](/installation/querypie-acp-community-edition/image-20250718-063140.png)
+<figcaption>
+インストールが完了した画面
+</figcaption>
+</figure>
+
+#### 2. インストール中にライセンス発行を受ける
+
+QueryPie Community Editionはライセンス登録が必要です。
+インストールが進行中に[ライセンス申請書を提出](https://querypie.com/querypie/license/community/apply)すると、申請時に入力したメールアドレスに`.crt`テキストファイルが送信されます。
+
+#### 3. インストール後接続
+
+インストールが完了するとブラウザで次のアドレスに接続してください：
+```
+http://<server IP address>  
+or 
+https://<server IP address> 
+```
+
+QueryPieがインストールされたLinuxサーバのIPアドレスは利用者PCからアクセス可能である必要があります。
+
+#### 4. ライセンス登録
+
+メールで受け取った`.crt`ファイルをアップロードするか、PEM形式のテキスト内容をコピーして貼り付けてください。
+
+<figure data-layout="center" data-align="center">
+![PEM形式ライセンス入力画面](/installation/querypie-acp-community-edition/image-20250718-063723.png)
+<figcaption>
+PEM形式ライセンス入力画面
+</figcaption>
+</figure>
+
+#### 5. ログイン
+
+基本アカウントでログインしてください。
+初回ログイン時にセキュリティのためにパスワード変更を要求されます。
+新しいパスワードを設定した後サービスを使用できます。
+
+* ID: `qp-admin`
+* Password: `querypie`
+
+<figure data-layout="center" data-align="center">
+![初期ログイン画面](/installation/querypie-acp-community-edition/image-20250718-063822.png)
+<figcaption>
+初期ログイン画面
+</figcaption>
+</figure>
+
+#### 6. インストール完了 🎉
+
+インストールが正常に完了しました。
+環境設定のために管理者マニュアルを参照してください：[管理者マニュアル](../administrator-manual)
+
+<figure data-layout="center" data-align="center">
+![ログイン後最初の案内画面](/installation/querypie-acp-community-edition/image-20250718-064043.png)
+<figcaption>
+ログイン後最初の案内画面
+</figcaption>
+</figure>
+
+
+### 🔑 ライセンス案内
+
+* QueryPieを使用するにはインストール後必ず有効なライセンスを登録する必要があります。
+* ライセンスは`.crt`拡張子のテキストファイルで提供されます。
+* ライセンスは申請時に入力したメールアドレスに送信されます。
+* 各ライセンスは発行日から1年間有効です。
+* ライセンスは申請者本人に発行され、第三者に譲渡できません。
+
+### 💬 サポートおよび問い合わせ
+
+QueryPie Communityインストールおよび使用中に疑問点があれば[QueryPie AIP](https://app.querypie.com/)を通じて直接問い合わせできます。
+以下の手順に従ってMCPで**QueryPie顧客センター**プリセットを設定すると、チャット画面で直接サポートを受けられます。
+
+<figure data-layout="center" data-align="center">
+![image-20250718-070933.png](/installation/querypie-acp-community-edition/image-20250718-070933.png)
+</figure>
+
+1. Integrationタブ → Install QueryPie Customer Centerクリック。
+2. Presetタブ → New Preset選択後、以下のように入力して`Save Changes`クリック：
+
+* Name: `QueryPie`を入力（推奨）。
+* MCP Servers & Tools: `Select All`を選択。
+
+1. Chatタブ → `@QueryPie`選択後、質問入力。
+
+また、[公式QueryPie Discordチャネル](https://discord.gg/NsP98BHBm2)に参加して他の利用者と質問と経験を共有することもできます。
+
+

@@ -1,0 +1,154 @@
+---
+title: 'DB_MAX_CONNECTION_SIZE最適化'
+---
+
+# DB_MAX_CONNECTION_SIZE最適化
+
+### Overview
+
+QueryPie MySQL接続設定に使用されるDatabase Connection Pool Sizeを最適化する方法を案内します。
+
+#### QueryPie MySQLの構成
+
+QueryPie ServerはMySQL DatabaseにMeta DB、Snapshot DB、Log DBを構成して動作します。
+
+* Meta DB：利用者アカウント、接続設定、アクセス制御ポリシーなどQueryPie Web Consoleで提供する機能のためのデータがMeta DBに保存されます。
+* Snapshot DB：SQLクエリ実行過程でAudit Logを記録するために一時的に使用するデータ保存庫です。
+* Log DB：利用者のアクセス記録、SQL実行記録など監査ログ（Audit Log）を保存するデータ保存庫です。
+
+QueryPie ServerはSpring frameworkを使用するコンポーネントを持っており、このコンポーネントではDatabase Connection Poolを構成して、QueryPie MySQLにデータを保存します。
+
+### Database Connection Pool Size設定
+
+QueryPie Server Containerを実行するとき、環境変数を使用して、Database Connection Pool Sizeを設定できます。
+
+#### `DB_MAX_CONNECTION_SIZE`
+
+Meta DBのためのDB Connection Pool Sizeを指定します。
+デフォルト値は20です。
+
+#### `LOG_DB_MAX_CONNECTION_SIZE`
+
+Log DBのためのDB Connection Pool Sizeを指定します。
+デフォルト値は`DB_MAX_CONNECTION_SIZE`に設定された値です。
+別途`LOG_DB_MAX_CONNECTION_SIZE`を設定しない場合、`DB_MAX_CONNECTION_SIZE`の値と同一の値が設定されます。
+
+Snapshot DBのConnection Pool Sizeは利用者が制御する必要性が低いため、この値を制御するための環境変数を提供しません。
+
+### 一般的な利用者使用量、負荷発生の場合
+
+`DB_MAX_CONNECTION_SIZE`のデフォルト値20をそのまま使用することを推奨します。
+一般的な場合に広く使用できるConnection Pool Sizeの大きさです。
+PoC環境だけでなく、一般的なProduction環境で十分に処理性能を発揮できる数値をデフォルト値として推奨しています。
+
+### 多くの使用量、高い負荷発生の場合
+
+`DB_MAX_CONNECTION_SIZE`の値を20～40の間の値に設定することを推奨します。
+適切な範囲内で`DB_MAX_CONNECTION_SIZE`が高くなると、QueryPieが同時に処理可能な負荷の量が増えます。
+
+DBサーバの処理性能が高く、CPU数が多い場合、`DB_MAX_CONNECTION_SIZE`を高くします。
+Server Containerが動作するLinux VMの処理性能が高く、CPU数が多い場合、`DB_MAX_CONNECTION_SIZE`を高くします。
+Server Containerの数が増えると、`DB_MAX_CONNECTION_SIZE`を低くします。
+
+### `DB_MAX_CONNECTION_SIZE`設定値要約表
+
+|  **DB_MAX_CONNECTION_SIZE**  |  **Description**                                                                 |
+| ---------------------------- | -------------------------------------------------------------------------------- |
+| 40                           | MySQL DBの処理量が多く、高スペックハードウェア処理性能を持つ場合に適しています。40より高い設定値を使用することは推奨しません。 |
+| 30                           | MySQL DBの処理量が多く、高スペックハードウェア処理性能を持つ場合に適しています。                                 |
+|  **20**                      |  **運用環境に適した推奨値です。汎用的に多くのリクエストを処理できる設定値です。**                            |
+| 10                           | 運用環境で、MySQL接続数を減らしたい場合に適しています。                                           |
+| 5                            | PoCで機能テストを実行する場合、運用環境で利用者数が少ない場合に適しています。                             |
+
+### `DB_MAX_CONNECTION_SIZE`とハードウェア容量の関係式
+
+開発チーム内部の性能最適化テストを通じて、`DB_MAX_CONNECTION_SIZE`とQueryPie Server VM、DBのハードウェア処理容量の間に次の関係式があることを導出しました。
+この関係式を参照して、`DB_MAX_CONNECTION_SIZE`値を設定すると、最適の処理性能を得ると同時に、可能な限り小さな`DB_MAX_CONNECTION_SIZE`値を設定できます。
+
+#### QueryPie MySQLを分離構成する場合
+
+1つのLinux VM内にQueryPie Server ContainerとQueryPie MySQLを一緒に実行せず、別のVMまたはCloud Serviceを利用して、分離されたMySQL Instanceを構成する場合です。
+Production環境に適用することを推奨します。
+
+`DB_MAX_CONNECTION_SIZE` = `minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10`
+
+* Application_CPU_Count - QueryPie Server Containerが実行されるLinux VMのvCPU数
+* Application_Node_Count - QueryPie Server Containerの数、または実行されるLinux VMの数、またはKubernetes Podの数。
+    * 二重化構成の場合、2、三重化構成の場合、3になります。
+* RDS_CPU_Count - 別途構成されたQueryPie MySQLが実行されるVM InstanceのvCPU数
+* minimum ( a, b, c, … ) - `,`で区切られた複数の値のうち、最も小さい値を選択します。
+
+例1）Server Containerが実行されるLinuxのVMが4 vCPUで、2つのLinux VMを運用します。
+AWS Aurora MySQLが4 vCPUです。
+```
+minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10
+= minimum ( 4 / 2, 4 ) * 10
+= 2 * 10
+= 20
+```
+
+例2）Server Containerが実行されるLinuxのVMが8 vCPUで、3つのLinux VMを運用します。
+AWS Aurora MySQLが8 vCPUです。
+```
+minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10
+= minimum ( 8 / 3, 8 ) * 10
+= 2.66 * 10
+= 27
+```
+
+#### 単一Linux VM構成の場合
+
+1つのLinux VMにQueryPie Server Container、QueryPie MySQLを一緒に実行する場合です。
+PoC環境に使用するのが適切です。
+
+`DB_MAX_CONNECTION_SIZE` = `Application_CPU_Count * 2.5`
+
+* Application_CPU_Count - QueryPie Server Containerが実行されるLinux VMのvCPU数
+
+例1）Server Containerが実行されるLinuxのVMが4 vCPUで、MySQLを一緒に実行します。
+この場合、`DB_MAX_CONNECTION_SIZE`を10に設定するのが適切です。
+```
+Application_CPU_Count * 2.5
+= 4 * 2.5
+= 10
+```
+
+
+### QueryPie MySQL設定で十分な接続数を許可する
+
+QueryPie ServerはConnection Poolを利用してQueryPie MySQLに接続を確立します。
+もし、MySQL Database Serverが十分な接続数を許可しない場合、QueryPie ServerがMySQLに接続を生成できず、誤動作する現象が発生します。
+この問題現象はQueryPie MySQLが許可する接続数より、QueryPie Serverが要求するDB接続数がより大きい場合に発生します。
+
+#### DB接続を生成できない現象
+
+Web Consoleで、`[API] Could not open JPA EntityManager for transaction`というエラーメッセージに遭遇します。
+
+<figure data-layout="center" data-align="center">
+![[API] Could not open JPA EntityManager for transaction](/installation/container-environment-variables/optimizing-dbmaxconnectionsize/Screenshot-2025-04-24-at-9.38.20-PM.png)
+<figcaption>
+[API] Could not open JPA EntityManager for transaction
+</figcaption>
+</figure>
+
+
+#### 問題解決方法1）QueryPie MySQLが許可する接続数を増やす
+
+2つの設定値を500以上に増やす設定を適用できます。
+これにより、QueryPie Serverが要求するDB接続数より、QueryPie MySQLが許可する接続数をより大きく設定できます。
+
+* MAX_USER_CONNECTIONS
+    * [https://dev.mysql.com/doc/refman/8.0/en/user-resources.html](https://dev.mysql.com/doc/refman/8.0/en/user-resources.html)
+    * `ALTER USER 'querypie'@'%' WITH MAX_USER_CONNECTIONS 500;`
+* max_connections
+    * [https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_connections](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_max_connections)
+
+#### 問題解決方法2）DB_MAX_CONNECTION_SIZEを減らす
+
+QueryPie利用者数が少なく、使用量負荷が低い場合、`DB_MAX_CONNECTION_SIZE`設定値を減らすことができます。
+これにより、QueryPie MySQLが許可する接続数より、QueryPie Serverが要求するDB接続数をより小さく設定できます。
+
+`DB_MAX_CONNECTION_SIZE`をデフォルト値20ではなく、10または5に下げて設定します。
+PoC環境の場合、`DB_MAX_CONNECTION_SIZE`を5に設定しても、一般的な機能テストを円滑に実行できます。
+
+
