@@ -11,38 +11,38 @@ import { Callout } from 'nextra/components'
 
 ## Overview
 
-QUERYPIE_WEB_URL is required for various paths such as service access, authentication integration, data download, external integration, and Proxy settings, so it must be configured.
+QUERYPIE_WEB_URL is used in various paths such as service access, authentication integration, data download, external integration, and Proxy settings, and must be configured.
 
 <Callout type="important">
-**Starting from QueryPie version 10.2.8, this environment variable is no longer used. It is replaced with Web Base URL in the General menu.**
+**Starting from QueryPie version 10.2.8, this environment variable is no longer used. It has been replaced by Web Base URL in the General menu.**
 <figure data-layout="center" data-align="center">
 ![screenshot-20250312-112533.png](/installation/container-environment-variables/querypieweburl/screenshot-20250312-112533.png)
 </figure>
 </Callout>
 
-## Use Cases
+## Usage
 
 * Redirect URL for authentication integration such as SAML/Google BigQuery OAuth
 * Endpoint URL for SCIM integration
-* URL for connecting to QueryPie Container from components installed on other servers, such as NOVAc
-* URL for links to navigate to QueryPie in Alerts, emails, Slack DMs, etc.
-* URL for the link to download files for User Agent installation
-* URL for the link to download files for Server Agent installation
-* URL for the link to download Audit Export Log/Report audit logs and report files
-* URL for the link to download AiDD scan results
-* URL for the link to download session recording files
-* QueryPie host information needed in Proxy environments
+* URL for components such as NOVAc installed on other servers to connect to QueryPie Container
+* URL for links to move to QueryPie in Alerts, emails, Slack DMs, etc.
+* URL for links to download files for User Agent installation
+* URL for links to download files for Server Agent installation
+* URL for links to download Audit Export Log/Report audit logs and report files
+* URL for links to download AiDD scan results
+* URL for links to download session recording files
+* QueryPie host information required in Proxy environments
 
 ## Q&A
 
-**Q. Is domain configuration required even when using only in an internal network?** <br/> **A.** You may use an IP address.
-However, it must be an address (IP or domain) that can be accessed from the user's PC.
-Do not use a Private IP Address that cannot be accessed from the user's PC.
+**Q. Is domain configuration necessary even when using only in an internal network?** <br/> **A.**  You can use an IP.
+However, it must be an address (IP or domain) that can be accessed from user PCs.
+You should not use a Private IP Address that cannot be accessed from user PCs.
 
 
-**Q. Is domain configuration required when using Okta as IdP?** <br/> **A.** Yes, it is required.
-In Okta, when entering the Base URL, you must use a URL that includes the https:// protocol.
-If you enter only http:// or an IP address, the following error will occur and configuration will not be possible.
+**Q. Is domain configuration necessary when using Okta as IdP?** <br/> **A.**  Yes, it is necessary.
+Okta requires a URL that includes the https:// protocol when entering the Base URL.
+If you enter only http:// or an IP address, the following error occurs and configuration is not possible.
 
 <Callout type="error">
 *Please review the form to correct the following error(s):*

@@ -1,0 +1,390 @@
+---
+title: 'Installation Guide - Simple Configuration'
+---
+
+import { Callout } from 'nextra/components'
+
+# Installation Guide - Simple Configuration
+
+
+## Introduction
+
+This installation guide explains how to install QueryPie ACP server on a single server computer in a simple configuration.
+Even with a simple configuration installation, you can test most QueryPie features.
+
+However, this installation method is not suitable for use in actual production environments.
+For installation methods suitable for actual production environments, please refer to the separately provided [QueryPie Installation Guide].
+
+<Callout type="info">
+This is an installation guide for PoC purposes targeting QueryPie 10.3.0 or later versions.
+</Callout>
+
+## Prerequisites
+
+Before proceeding with installation, you must prepare the following.
+In summary, they are as follows.
+
+* 1 Linux server
+* 1 PC with a web browser installed
+
+For details, please refer to the following document: [Prerequisites - Simple Configuration](../prerequisites)
+
+## System Architecture
+
+Please refer to the following document: [System Architecture and Network Access Control](../system-architecture-and-network-access-control)
+
+## Installation Process
+
+### Running setup.sh
+
+Download and run the `setup.sh` script that can easily perform QueryPie installation.
+You can see the commands that setup.sh actually performs during the execution process.
+The "Manual steps replacing setup.sh" item below contains the commands that `setup.sh` executes.
+
+Install docker and docker-compose for QueryPie Service, and install configuration files such as docker-compose.yml.
+
+<Callout type="info">
+QP_VERSION and DOWNLOAD_VERSION presented below are examples.
+Please check with the technical support manager which version to install.
+</Callout>
+```bash
+# Download and run ./setup.sh with required environment variables.
+curl -L https://dl.querypie.com/releases/compose/setup.sh -o setup.sh
+chmod +x setup.sh
+export DOWNLOAD_VERSION=10.3.x
+export QP_VERSION=10.3.0
+./setup.sh
+
+# Grant permission of docker group
+sudo usermod -aG docker $USER
+
+# Please logout and ssh again to run docker command.
+```
+
+If you install docker for the first time, the current shell does not yet have permissions for the docker group.
+After logout, reconnect via ssh.
+
+<Callout type="important">
+If setup.sh does not run normally depending on OS version or type, install as follows.
+</Callout>
+<details>
+<summary>Manual steps replacing setup.sh</summary>
+```bash
+# Install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+# Install docker-compose
+curl -SL https://dl.querypie.com/releases/bin/v2.29.7/docker-compose-linux-x86_64 -o docker-compose
+chmod +x docker-compose
+sudo install -m 755 docker-compose /usr/local/bin/
+
+# Install docker-compose.yml and config files
+# NOTE: Please use the actual version number instead of '10.3.0'.
+mkdir -p querypie/10.3.0
+cd querypie/10.3.0
+curl -L https://dl.querypie.com/releases/compose/10.3.x/package.tar.gz -o package.tar.gz
+tar zxvf package.tar.gz
+
+# Install logrotate config for docker daemon
+sudo cp logrotate /etc/logrotate.d/querypie
+
+```
+</details>
+
+### Harbor Login
+
+Log in to Harbor Docker Registry to download QueryPie Docker Images.
+
+<Callout type="info">
+Harbor accounts for customers are issued and provided in advance during initial installation.
+</Callout>
+```bash
+docker login harbor.chequer.io
+Username:
+Password:
+```
+
+If a message like the following appears, you have successfully logged into Harbor.
+```bash
+WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credential-stores 
+
+Login Succeeded
+```
+
+### compose-env Configuration
+
+When you run the `./setup.sh` script, it creates configuration files such as `docker-compose.yml` and `compose-env` in the `querypie/&lt;version&gt;/` directory.
+Move into this directory and edit the configuration file named `compose-env`.
+
+For descriptions of each environment variable, please refer to the following document: [Container Environment Variables](../container-environment-variables)
+```bash
+# Version of QueryPie Docker Image to run: 10.3.0 or later.
+VERSION=10.3.0
+
+# Common
+## Secret key for encrypting communication between QueryPie client agents and QueryPie over port 9000/tcp.
+## Must be exactly 32 characters in length.
+## Suggested: 32-char random string via `openssl rand -hex 16`
+AGENT_SECRET=
+
+## Secret key used to encrypt sensitive information, such as database connection strings and SSH private keys.
+## This key can be any string but is immutable once set.
+## Suggested: 16-char random string via `openssl rand -hex 8`
+KEY_ENCRYPTION_KEY=
+
+# DB
+## Suggested: host.docker.internal
+DB_HOST=
+DB_PORT=3306
+DB_CATALOG=querypie
+LOG_DB_CATALOG=querypie_log
+ENG_DB_CATALOG=querypie_snapshot
+## Suggested: querypie
+DB_USERNAME=
+## Suggested: 16-char random string via `openssl rand -hex 8`
+DB_PASSWORD=
+DB_MAX_CONNECTION_SIZE=20
+## If you're using AWS Aurora, use the software.amazon.jdbc.Driver instead of org.mariadb.jdbc.Driver for automatic failover handling.
+DB_DRIVER_CLASS=org.mariadb.jdbc.Driver
+
+# Redis
+## REDIS_NODES should be specified as a "Host:Port" combination.
+## In CLUSTER MODE, when specifying multiple nodes, separate each address with a comma.
+## Example: Host1:6379,Host2:6379,Host3:6379
+## Suggested: host.docker.internal:6379
+REDIS_NODES=
+## Suggested: 16-char random string via `openssl rand -hex 8`
+REDIS_PASSWORD=
+
+DAC_SKIP_SQL_COMMAND_RULE_FILE=skip_command_config.json
+```
+
+### MySQL / Redis Startup
+
+In Single machine configuration, QueryPie MySQL and QueryPie Redis are run in Container mode within one VM.
+Run MySQL and Redis with the following commands.
+When running for the first time, it creates default accounts by applying the Username and Password defined in the `compose-env` file.
+```
+docker-compose --env-file compose-env --profile database up -d
+```
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+### Tools Startup
+
+QueryPie Tools is a tool used during the installation process.
+QueryPie Tools provides functionality to create Tables, Procedures, etc. in QueryPie MySQL.
+Database Tables, etc. in MySQL change according to product version, and configuration is managed using an open-source tool called Flyway.
+QueryPie Tools provides functionality to install product licenses.
+
+QueryPie Tools operates as an API server that accepts requests on TCP Port 8050.
+
+#### Running Tools
+
+Execute the following command to run QueryPie Tools.
+After that, you can check if the Container is running normally with the `docker ps` command. You can check Container logs with the `docker logs -f querypie-tools-1` command.
+```
+docker-compose --env-file compose-env --profile tools up -d
+```
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+6e867d744acb  harbor.chequer.io/querypie/querypie-tools:10.3.0 ... querypie-tools-1
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+#### Running Migration
+
+The work of creating MySQL Tables, Procedures, etc. required by QueryPie is called Migration.
+Execute the following command to run Migration.
+For initial installation, it takes about 1~2 minutes in the process of creating hundreds of DB Tables.
+```
+docker exec -it querypie-tools-1 /app/script/migrate.sh runall
+```
+```
+[2025-05-20 07:43:15] QueryPie migration is started.
+--------------------------------------------------------------------------------
+[2025-05-20 07:43:15] QueryPie `V67.11__9.10.0.11_workflow_rule_migration.sql` is started.
+[2025-05-20 07:43:18] QueryPie `V67.11__9.10.0.11_workflow_rule_migration.sql` is finished.
+
+...
+[2025-05-20 07:44:17] QueryPie Snapshot `V5.0__10.2.8.0_oven_diary_tables_alter_json_column_type.sql` is started.
+[2025-05-20 07:44:17] QueryPie Snapshot `V5.0__10.2.8.0_oven_diary_tables_alter_json_column_type.sql` is finished.
+[2025-05-20 07:44:17] QueryPie Snapshot migration is finished.
+--------------------------------------------------------------------------------
+```
+
+#### License Installation
+
+You can install license files in QueryPie Tools with the following command. The file name `license.crt` is an example.
+Specify the name of the license file received from the technical support manager.
+License files are certificate files in x509 format, which are text files.
+```
+curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
+```
+```
+[License] Upload: Success
+```
+
+#### Stopping Tools
+
+Since the intermediate process for installation is complete, stop QueryPie Tools.
+```
+docker-compose --env-file compose-env --profile tools down
+```
+
+### QueryPie Startup
+
+After creating MySQL Database Tables and installing License using QueryPie Tools, the basic installation process is almost complete.
+Now you can use QueryPie by running QueryPie Server Container.
+Execute the following command to run QueryPie Server Container.
+```
+docker-compose --env-file compose-env --profile querypie up -d
+```
+
+QueryPie Container will run after about 1 minute 50 seconds to 2 minutes 10 seconds in a general server environment.
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+69353ab980d8  harbor.chequer.io/querypie/querypie:10.3.0       ... querypie-app-1
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+After QueryPie Container's processes start normally, you will see the following execution success notification message in Container Log.
+```
+docker logs -f querypie-app-1
+
+....
+READYZ             | ########################################################################
+READYZ             | #                                                                      #
+READYZ             | #     ██████╗ ██╗   ██╗███████╗██████╗ ██╗   ██╗██████╗ ██╗███████╗    #
+READYZ             | #    ██╔═══██╗██║   ██║██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗██║██╔════╝    #
+READYZ             | #    ██║   ██║██║   ██║█████╗  ██████╔╝ ╚████╔╝ ██████╔╝██║█████╗      #
+READYZ             | #    ██║▄▄ ██║██║   ██║██╔══╝  ██╔══██╗  ╚██╔╝  ██╔═══╝ ██║██╔══╝      #
+READYZ             | #    ╚██████╔╝╚██████╔╝███████╗██║  ██║   ██║   ██║     ██║███████╗    #
+READYZ             | #     ╚══▀▀═╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚══════╝    #
+READYZ             | #                                                                      #
+READYZ             | ########################################################################
+READYZ             | .--------------------------------------------------------.
+READYZ             | |  🚀 QueryPie Server has been successfully started! 🚀  |
+READYZ             | |  Timestamp in UTC: Sun Jan 26 15:00:56 UTC 2025        |
+READYZ             | |  Timestamp in KST: Mon Jan 27 00:00:56 KST 2025        |
+READYZ             | '--------------------------------------------------------'
+....
+```
+
+### Installation Complete
+
+Great job.
+Now you can see QueryPie in action.
+
+## Basic Configuration Procedures
+
+This guide explains settings that must be performed after installation according to the operating environment.
+
+### Common Settings
+
+Common procedures required when using QueryPie immediately after installation.
+
+#### QueryPie Web Base URL Settings
+
+> Configuration path: Admin Page → General
+This is the URL address of QueryPie for accessing the Web Console. <br/>(Example. `https://querypie.customer.com`)<br/>This URL is also called the Base URL of QueryPie.
+
+This URL must not end with `/`. Please be careful not to add `/` at the end of the URL like `https://querypie.customer.com/`.
+
+This URL is used for the following purposes.
+
+* Used as a callback address in the authentication process of SSO Integration.
+* Used in links to download User Agent from Web Console.
+* For other detailed purposes, please refer to [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310).
+
+<figure data-layout="center" data-align="center">
+![image-20250520-081112.png](/installation/installation/installation-guide-simple-configuration/image-20250520-081112.png)
+</figure>
+
+### Product-Specific Settings
+
+#### DAC/SAC: Proxy Access Address Settings
+
+Connect to QueryPie Database and register the address for DAC/SAC Proxy access.
+
+<Callout type="info">
+To connect to QueryPie Database from QueryPie Web Console, DB connection settings are required:[DB Connections](../../administrator-manual/databases/connection-management/db-connections)
+
+During the Database connection setup process, you need the Hostname, Username, and Password of QueryPie MySQL.
+
+* Hostname: `host.docker.internal`
+* Username: `querypie` (in case of default settings)
+* Password: (Check DB_PASSWORD in the compose-env file in the directory where QueryPie is installed.)
+
+Values set in compose-env such as DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY must be kept secure.
+Please be careful not to expose these values to others.
+</Callout>
+
+Replace the `<customer-proxy-address>` part below with your customer's Proxy access IP or domain and execute the query.
+
+<Callout type="important">
+This address should not have a Scheme such as `http` or `https` attached.
+</Callout>
+```
+UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
+```
+
+If the query execution is confirmed to be normal without errors, execute the following query to check if it has been registered.
+```
+SELECT * FROM querypie.proxies;
+```
+
+After registering the address for Proxy access in QueryPie Database, you do not need to restart the Server Container.
+When you attempt to log in from User Agent, after authentication through a web browser, you can use User Agent.
+
+<figure data-layout="center" data-align="center">
+![image-20250520-082706.png](/installation/installation/installation-guide-simple-configuration/image-20250520-082706.png)
+</figure>
+
+#### KAC: Proxy Access Address Settings
+
+Connect to QueryPie Database and register the address for KAC Proxy access.
+
+Replace the `<customer-proxy-fqdn>` part below with your customer's Proxy access IP or domain and execute the query.
+
+As a special note, unlike DAC/SAC settings, you can freely enter Schemes such as `http` or `https`.
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+```
+UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
+```
+
+<figure data-layout="center" data-align="center">
+![image-20250520-084243.png](/installation/installation/installation-guide-simple-configuration/image-20250520-084243.png)
+</figure>
+
+#### WAC: Proxy Access Address Settings
+
+> Configuration path: Admin Page → Web Apps → Web App Configurations
+WAC Proxy access address settings can be performed from the Web Console.
+
+For detailed configuration procedures, please refer to the following document: [Initial WAC Setup in Web App Configurations](../../administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+
+

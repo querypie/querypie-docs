@@ -1,0 +1,38 @@
+---
+title: 'On-Premise VM Requirements'
+---
+
+# On-Premise VM Requirements
+
+### Overview
+
+This guide provides instructions for operating QueryPie Server Container on a Virtual Machine running on an On-Premise physical server.
+For production environment operation, we recommend applying the following configuration.
+
+* Apply High Availability configuration
+* Apply L7 Load Balancer and L4 Load Balancer for high availability and load distribution suitable configuration.
+* Place 2 or more VM Instances as Upstream servers of Load Balancer. If the required processing capacity is high, apply Scale-Out configuration by increasing the number of VM Instances.
+
+### QueryPie Container VM Model
+
+Basic specifications: CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB or more, Disk 100 GiB, CPU AMD
+
+* We recommend creating two or more VMs with basic specifications and applying Scale-Out configuration.
+
+Recommended specifications for high throughput: CPU 8 vCPUs AMD64 Architecture, Memory 30 GiB or more, Disk 100 GiB
+
+* We recommend creating two or more VMs with recommended specifications and applying Scale-Out configuration.
+
+### QueryPie MySQL VM Model
+
+Basic specifications: CPU 2 vCPUs, Memory 8 GiB or more, Disk 100 GiB or more
+
+Recommended specifications for high throughput: CPU 8 vCPUs, Memory 32 GiB or more, Disk 100 GiB or more ( **storage capacity size needs separate calculation** )
+
+### QueryPie Redis VM Model
+
+Basic specifications: CPU 2 vCPUs, Memory 1 GiB or more
+
+Recommended specifications for high throughput: CPU 2 vCPUs, Memory 3 GiB or more
+
+

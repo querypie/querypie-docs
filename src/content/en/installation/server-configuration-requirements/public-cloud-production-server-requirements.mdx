@@ -1,0 +1,159 @@
+---
+title: 'Public Cloud Production Server Requirements'
+---
+
+# Public Cloud Production Server Requirements
+
+### Overview
+
+When operating QueryPie servers on Public Cloud such as AWS, GCP, Azure, we recommend applying the following configuration.
+
+* Apply High Availability configuration
+    * Apply Application Load Balancer and Network Load Balancer for high availability and load distribution suitable configuration.
+    * Place 2 or more VM Instances as Upstream servers of Load Balancer. If the required processing capacity is high, apply Scale-Out configuration by increasing the number of VM Instances.
+* Apply Managed Service MySQL and Redis instead of VM for QueryPie MySQL and Redis.
+    * For AWS, we recommend using Aurora RDS for MySQL, Aurora RDS for MariaDB, and ElastiCache.
+* VM OS supports most Linux distributions. However, you must be able to install and use docker daemon.
+    * For AWS, we recommend Amazon Linux.
+    * For GCP, we recommend Ubuntu 24.04 LTS (or the latest LTS version after that).
+
+### QueryPie Container VM Model
+
+Basic specifications: CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB or more, Disk 100 GiB, CPU AMD
+
+* We recommend creating two or more VMs with basic specifications and applying Scale-Out configuration.
+* AWS EC2 Instance Type: m6i.xlarge, m7i.xlarge
+* GCP Compute Engine Machine Type: c4-standard-4, n4-standard-4 (or AMD64 architecture -standard-4 models)
+* Disk IO performance: Apply general-purpose Disk Volume. For AWS, apply EBS General Purpose SSD (gp3).
+
+Recommended specifications for high throughput: CPU 8 vCPUs AMD64 Architecture, Memory 30 GiB or more, Disk 100 GiB
+
+* We recommend creating two or more VMs with recommended specifications and applying Scale-Out configuration.
+* AWS EC2: m6i.2xlarge, m7i.2xlarge
+* GCP Compute Engine: c4-standard-8, n4-standard-8 (or AMD64 architecture -standard-8 models)
+* Disk IO performance: Apply Volume with high IOPS. Apply AWS EBS Provisioned IOPS SSD (io1) or Volume with higher performance.
+
+### QueryPie MySQL
+
+Basic specifications: CPU 2 vCPUs, Memory 16 GiB or more, Disk 100 GiB or more
+
+* We recommend using Managed Service MySQL or MariaDB.
+* AWS Aurora: db.r7g.large, db.r6g.large
+* Disk IO performance: Apply general-purpose Disk Volume. For AWS, apply EBS General Purpose SSD (gp3).
+
+Recommended specifications for high throughput: CPU 4 vCPUs, Memory 32 GiB or more, Disk 100 GiB or more ( **storage capacity size needs separate calculation** )
+
+* We recommend using Managed Service MySQL or MariaDB.
+* AWS Aurora: db.r7g.xlarge, db.r6g.xlarge
+* Disk IO performance: Apply Volume with high IOPS. Apply AWS EBS Provisioned IOPS SSD (io1) or Volume with higher performance.
+* Disk capacity: QueryPie stores Audit Log recorded by QueryPie in MySQL. You need to appropriately calculate the storage space size according to the frequency of Audit Log recording, average size, and retention period.
+
+### QueryPie Redis
+
+Basic specifications: CPU 2 vCPUs, Memory 1 GiB or more
+
+* We recommend using Managed Service Redis-compatible services.
+* AWS ElastiCache On-Demand Nodes: cache.t4g.small or similar models
+
+Recommended specifications for high throughput: CPU 2 vCPUs, Memory 3 GiB or more
+
+* We recommend using Managed Service Redis-compatible services.
+* AWS ElastiCache On-Demand Nodes: cache.t4g.medium or similar models
+
+
+### VM Configuration Method by Availability Zone
+
+This guide explains how to place VMs and adjust VM specifications according to Availability Zones.
+
+#### In production environments, create and place VMs in 3 (or 4) Availability Zones.
+
+Distribute VMs evenly across each Availability Zone so that VMs are not concentrated in one Availability Zone.
+
+If service usage is not high and there is plenty of CPU resources on VM servers, you can configure the service with 2 VMs.
+If service usage increases, increase the number of VMs to keep the maximum usage normally measured below a certain level.
+Specific adjustment criteria are explained below.
+
+#### Adjust VM specifications so that maximum usage normally measured can be processed even if one VM Instance stops service.
+
+For example, when configuring 3 VMs to provide service, adjust VM specifications so that maximum usage can be processed with only 2 VMs.
+Adjust so that CPU usage does not exceed 85% when 2 VMs are processing maximum usage.
+If 2 VMs show 85% CPU usage, that means using a total of 170% CPU.
+If 3 VMs divide and process this load, one VM will use approximately 56% CPU.
+Therefore, when 3 VMs are operating normally, CPU usage should not exceed 56% during the period showing maximum usage.
+
+|  **Number of VMs**  |  **When 1 Instance Stops**            |  **Maximum CPU Usage During Normal Operation**       |
+| ----------- | --------------------------- | ---------------------------- |
+| 2           | 1 x 85% CPU = 85% CPU Usage  | 85% CPU / 2 = 43% CPU / 1  |
+| 3           | 2 x 85% CPU = 170% CPU Usage | 170% CPU / 3 = 56% CPU / 1 |
+| 4           | 3 x 85% CPU = 255% CPU Usage | 255% CPU / 4 = 63% CPU / 1 |
+| 5           | 4 x 85% CPU = 340% CPU Usage | 340% CPU / 5 = 68% CPU / 1 |
+
+When applying Scale-Out configuration by increasing the number of VMs, the acceptable level for maximum CPU usage during normal operation becomes higher.
+In this way, when 1 VM fails, you can provide service normally with the remaining VMs while increasing VM resource utilization normally, improving processing performance relative to cost.
+
+If you do not increase the number of VMs and keep 2 or 3 fixed, if actual usage is higher than the calculated reference value for maximum CPU usage during normal operation, increase the number of CPUs in VMs or change Instance Type to high specifications to show actual usage lower than the calculated reference value.
+
+#### Do not apply Auto Scaling Group settings.
+
+Do not apply Auto Scaling Group settings that automatically increase or decrease Upstream servers according to the traffic and load level processed by the service.
+
+QueryPie has web application characteristics, but unlike general web applications, it has functional characteristics where it establishes connections with specific DBs and systems according to user access, executes SQL Queries through these connections, and performs system commands through ssh.
+Accordingly, it operates by maintaining DB connections and ssh connections within specific Server Containers where users are connected and executing subsequent queries and commands.
+
+When applying Auto Scaling Group, when the number of Upstream servers changes, authentication of sessions connected to Web Console may be disconnected, requiring re-login.
+
+Reference - [Why is Sticky Session necessary in HA configuration?](#target-title-not-found)
+
+
+### Basis for Required Performance
+
+#### Types of Computing Resources Required by QueryPie Server
+
+QueryPie Server Container and MySQL mainly use computing resources to process the following types of tasks.
+
+* MySQL stores data for the function of recording Audit Log according to user access, query execution, command execution, etc.
+* Query and allow or deny access control policies according to user access, query execution, command execution.
+* Execute Workflow tasks including multiple SQL queries in the background.
+* According to SSO Integration, periodically receive lists of multiple users and update each user's QueryPie account information.
+* Register or change multiple DB and Server assets and change access control policies using External API.
+
+#### Memory Size Required by QueryPie Container
+
+* QueryPie Container uses approximately 7 GiB of memory at initial execution. Depending on user usage, the memory used by Container can increase by about 2~3 GiB.
+* When accessing Mongo or Document DB, memory usage can increase by 1 GiB or more.
+* When executing SQL queries that receive large amounts of Result Set, memory usage can increase.
+* During the process of recording Audit Log, temporary files are created and used inside the Container. Accordingly, you need to allocate about 1~2 GiB of memory for OS Cache for Disk devices.
+
+
+### FAQ
+
+#### Q: Please provide a guide for estimating server processing capacity according to the number of users.
+
+A: It is difficult to generally provide a guide for estimating server processing capacity according to the number of users in your customer's company.
+I will explain why it is difficult to provide a guide.
+
+QueryPie is generally recommended to be used under conditions where access control and audit logs are recorded for human user access, query execution, and command execution.
+For non-human users, it is when Applications or Programs access target systems through QueryPie.
+
+QueryPie has performance that can process 70 or more queries per second with low Latency for simple queries based on DAC on 1 basic specification VM.
+Processing 70 queries per second means performance that can process 4,200 queries per minute and 250,000 queries per hour.
+
+For cases where hundreds or thousands of users execute light queries daily, it provides processing performance that can be processed sufficiently with 1 or 2 basic specification VMs.
+
+However, when using the following types of queries and access methods, the required server processing capacity increases significantly, and it is generally difficult to estimate the actual required server processing capacity at this time.
+
+* When human users execute SQL Queries consisting of tens of thousands or more Statements
+* When human users execute SQL Queries that obtain hundreds of thousands or more ResultSets
+* When non-human users, Applications or Programs connect to DB and operate
+* When running application performance test programs while connected to DB through QueryPie
+* When running application test code and integration test cases while connected to DB through QueryPie
+* When automating the process of registering and managing 10,000 or more DB and System assets through External API
+
+Most cases reported by customers where QueryPie's server processing capacity is insufficient are the cases above.
+For such cases, you can attempt to estimate the required processing capacity in advance, but there are limitations in accurately or meaningfully estimating it.
+For such cases, we recommend approaching in the following way.
+
+* When newly introducing QueryPie, perform gradual deployment for internal users, monitor VM CPU, Memory, and Disk IO usage indicators, and monitor whether performance is sufficient.
+* If there is an existing access control system in use, receive and analyze user usage indicators. We need usage indicators such as user access count, query execution count, ResultSet size, generated Audit Log size, etc. for a period of about 1 day or 1 week.
+
+

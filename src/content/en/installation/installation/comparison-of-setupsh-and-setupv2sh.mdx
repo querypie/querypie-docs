@@ -1,0 +1,104 @@
+---
+title: 'Comparison of setup.sh and setup.v2.sh'
+---
+
+# Comparison of setup.sh and setup.v2.sh
+
+### Introduction
+
+As of August 2025, setup.sh is a QueryPie installation program provided for partners.
+setup.v2.sh is a QueryPie installation program provided along with the release of QueryPie Community Edition.
+
+This document examines how these two installation programs work, their features, and differences.
+
+### Installation Program Feature Scope
+
+#### Installation Features of setup.sh
+
+* Installs Container Engine and Compose Tool if not found.
+    * Container Engine: Docker
+    * Compose Tool: Docker Compose
+* Installs package.tar.gz for Compose at the `./querypie/version` path.
+
+#### Installation Features of setup.v2.sh
+
+* Installs Container Engine and Compose Tool if not found.
+    * Container Engine: Docker or Podman
+    * Compose Tool: Docker Compose
+* Installs package.tar.gz for Compose at the `./querypie/&lt;version&gt;` path.
+* Checks SELinux settings and performs `chcon` command for Container Volume Mount.
+* Automatically fills in setting values in the environment variable configuration file `.env`.
+* Downloads Container Images.
+* Performs QueryPie MySQL Migration and runs QueryPie App Container.
+* Creates a Symbolic Link `./querypie/current` pointing to `./querypie/&lt;version&gt;` to indicate the currently running version.
+
+#### Additional Features of setup.v2.sh for Upgrade, Deletion, etc.
+
+setup.v2.sh provides other major features in addition to product installation.
+
+* Can automatically run Upgrade.
+* Can run Uninstall to remove the installed product.
+* Can install only Container Engine (Docker or Podman).
+* Provides a mode that performs only Compose Package installation, equivalent to setup.sh.
+* **[Under Review]** Fills in setting values in the environment variable configuration file `.env` through user confirmation and input.
+
+### Differences in Compose Settings and Environment Configuration
+
+|  **Topic**        |  **setup.sh**                                              |  **setup.v2.sh**                                   |
+| ----------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| Image Registry    | `harbor.chequer.io/querypie/`                              | `docker.io/querypie/`                              |
+| Environment Variable Configuration File         | `compose-env`                                              | `.env`                                             |
+| Compose as Plugin | Not supported<br/>Uses `docker-compose` command                            | Supported<br/>Uses `docker compose` or `podman compose` command |
+| MySQL Data Dir    | `./querypie/&lt;version&gt;/mysql/`                        | `./querypie/mysql/`                                |
+| Application Log   | `/var/log/querypie/` - 10.2.x<br/>`./querypie/log/` - 11.x | `./querypie/log/`                                  |
+| Symlink for Running Version  | (None)                                                       | `./querypie/current`                               |
+
+### MySQL Data Dir Location Change
+
+As the MySQL Data Dir path has changed, the following advantages have emerged.
+
+* The constraint of having to maintain the path of the initial installation version when installing multiple versions during upgrade has been removed. After upgrade completion, you can delete old version Compose Packages.
+* It is not affected by the path location where QueryPie MySQL Container runs. There are no problems whether you run it from an old version Compose Package or a new version Compose Package.
+
+There are two things to note.
+
+* setup.sh must maintain the QueryPie MySQL Container running from the path of the initial installation version. setup.v2.sh runs the MySQL Container from the current installation version's path.
+* You can install a new version using setup.v2.sh on a server where the product has already been installed with setup.sh. However, due to the MySQL Data Dir change, existing data is not automatically migrated. The installation manager must appropriately move the MySQL Data directory according to the purpose, such as new installation or upgrade.
+
+
+### Rootless Mode Support
+
+When installing with setup.sh, additional configuration changes are required to run in a Rootless Mode Docker environment.
+
+When installing with setup.v2.sh, no additional configuration changes are required to run in a Rootless Mode Docker or Podman environment.
+
+#### setup.v2.sh - Rootless Mode Configuration Method
+
+First, configure the environment to run Container Engine in Rootless Mode.
+If you install Podman using setup.v2.sh, Rootless Mode environment is applied by default.
+If you use Docker, you must perform Rootless Mode configuration by referring to separate documentation.
+
+Then, when running `setup.v2.sh`, add the `--universal` option to install QueryPie, and a Compose package.tar.gz suitable for Rootless Mode will be installed.
+
+
+### Reporting setup.v2.sh Issues and Errors
+
+setup.v2.sh outputs script version and environment information to the console at the beginning of execution.
+
+When reporting issues related to setup.v2.sh, please include the following two pieces of information.
+
+* Command line including options when running setup.v2.sh, first 5 lines of console log including script version
+* Last 5 lines of console log or related content when the issue occurred
+
+#### Example of Console Log Including Script Version
+
+```
+jk@host ~ % ./setup.v2.sh --universal
+#### QueryPie Installer 25.08.4, /opt/homebrew/bin/bash 5.2.26(1)-release on Darwin arm64 ####
+### Install QueryPie version 11.1.1 ###
+# Directory ./querypie/ does not exist. QueryPie has not been installed on this system.
+Do you want to install QueryPie (11.1.1)?
+
+```
+
+

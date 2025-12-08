@@ -1,0 +1,75 @@
+---
+title: 'Server Configuration Requirements Summary Table'
+---
+
+# Server Configuration Requirements Summary Table
+
+This is a summary table that briefly organizes the hardware processing capacity requirements guide for QueryPie servers.
+
+### Recommended Configuration by Deployment Environment
+
+#### Public Cloud Environment (AWS, GCP, Azure)
+
+| Component   | Recommendation                                                   |
+| ------- | ------------------------------------------------------- |
+| High Availability Configuration | Apply Application Load Balancer, Network Load Balancer     |
+| VM Instances | Configure 2 or more VMs as Upstream servers (Scale-Out method)               |
+| Database  | Managed Service MySQL/MariaDB (AWS Aurora, etc.)        |
+| Cache Service  | Managed Service Redis (AWS ElastiCache, etc.)           |
+| OS      | Linux distribution (AWS: Amazon Linux, GCP: Ubuntu 24.04 LTS recommended) |
+
+#### On-Premise Environment
+
+| Component   | Recommendation                                     |
+| ------- | ----------------------------------------- |
+| High Availability Configuration | Apply L7 Load Balancer, L4 Load Balancer     |
+| VM Instances | Configure 2 or more VMs as Upstream servers (Scale-Out method) |
+
+### Specifications by Component and Capacity
+
+#### QueryPie Container VM Specifications
+
+| Category                 | Basic Specifications                         | Recommended Specifications                             |
+| ------------------ | ----------------------------- | --------------------------------- |
+| CPU                | 4 vCPUs (AMD64 architecture)          | 8 vCPUs (AMD64 architecture)              |
+| Memory                | 15 GiB or more                     | 30 GiB or more                         |
+| Disk                | 100 GiB                       | 100 GiB                           |
+| AWS EC2 Instance       | m6i.xlarge, m7i.xlarge        | m6i.2xlarge, m7i.2xlarge          |
+| GCP Compute Engine | c4-standard-4, n4-standard-4  | c4-standard-8, n4-standard-8      |
+| Disk IO Performance          | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1) or higher |
+| Recommended Configuration              | 2 or more basic specification VMs                 | 2 or more recommended specification VMs                     |
+
+#### QueryPie MySQL Specifications
+
+| Category              | Basic Specifications                         | Recommended Specifications                             |
+| --------------- | ----------------------------- | --------------------------------- |
+| CPU             | 2 vCPUs                       | 4 vCPUs                           |
+| Memory             | 16 GiB or more                     | 32 GiB or more                         |
+| Disk             | 100 GiB or more                    | 100 GiB or more (storage capacity separate calculation)           |
+| AWS Aurora Instance | db.r7g.large, db.r6g.large    | db.r7g.xlarge, db.r6g.xlarge      |
+| Disk IO Performance       | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1) or higher |
+| Notes            | Managed Service method recommended         | Managed Service method recommended             |
+
+#### QueryPie Redis Specifications
+
+| Category              | Basic Specifications                 | Recommended Specifications                 |
+| --------------- | --------------------- | --------------------- |
+| CPU             | 2 vCPUs               | 2 vCPUs               |
+| Memory             | 1 GiB or more              | 3 GiB or more              |
+| AWS ElastiCache | cache.t4g.small       | cache.t4g.medium      |
+| Notes            | Managed Service method recommended | Managed Service method recommended |
+
+### Memory Usage Reference
+
+| Category                        | Usage      |
+| ------------------------- | -------- |
+| Initial execution                   | Approximately 7 GiB  |
+| Increase due to user usage             | 2~3 GiB  |
+| Additional when accessing Mongo/Document DB | 1 GiB or more |
+| Additional memory for OS cache             | 1~2 GiB  |
+
+### Performance Reference
+
+* Basic specification VM 1 unit: Can process 70 or more simple queries per second for DAC (4,200 per minute, 250,000 per hour)
+* For hundreds to thousands of users running daily light queries, 1-2 basic specification VMs are sufficient
+

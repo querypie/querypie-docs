@@ -1,0 +1,702 @@
+---
+title: 'Installing on AWS EKS Environment'
+---
+
+# Installing on AWS EKS Environment
+
+### 1. Overview
+
+#### 1.1 Purpose
+
+* Guide for the entire process of installing and configuring QueryPie on AWS EKS cluster
+* Provide configuration guide for stable operation
+
+#### 1.2 Target Audience
+
+* Engineers who understand basic Kubernetes concepts (Pod, Service, Deployment, etc.)
+* Engineers with AWS EKS experience
+
+#### 1.3 Estimated Time
+
+* Entire installation process: approximately 1 hour
+* Environment configuration: 15 minutes
+* Basic component (MySQL, Redis) installation: 15 minutes
+* QueryPie installation: 20 minutes
+* Installation verification and initial configuration: 10 minutes
+
+### 2. Prerequisites
+
+#### 2.1 Infrastructure Requirements
+
+* EKS cluster
+    * Recommended node specifications: r5.xlarge (4 vCPU, 32GB RAM)
+    * Kubernetes version: 1.24 or higher
+    * Required number of nodes: minimum 1 (3 or more recommended for production environments)
+
+#### 2.2 Local Environment Preparation
+
+1. Install and configure AWS CLI
+  ```bash
+brew install awscli
+aws configure  # Access Key, Secret Key required
+  ```
+2. Install kubectl
+  ```bash
+brew install kubectl
+  ```
+3. Install Helm (version 3.10.0 or higher required)
+  ```bash
+brew install helm
+  ```
+4. Install optional tools (recommended)
+  ```bash
+brew install kubectx  # Context switching tool
+brew install fzf      # Command-line fuzzy finder
+  ```
+
+#### 2.3 Access Permission Requirements
+
+* Harbor registry access permissions
+    * Account information (Username/Password)
+    * QueryPie image access permissions
+
+#### 2.4 Network Requirements
+
+* Internet connection (for image download)
+* Network environment accessible to EKS cluster
+* Environment where LoadBalancer can be used (for Ingress configuration)
+
+### 3. Basic Component Installation
+
+1. Before starting, create namespaces for QueryPie installation.
+```
+kubectl create namespace querypie
+```
+
+#### 3.1 MetaDB (MySQL) Installation
+
+MySQL is used as the database that stores QueryPie's metadata.
+
+##### 3.1.1 Create Persistent Volume
+
+1. Create a `pv.yml` file with the following content.
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+  labels:
+    app: mysql     
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/lib/mysql
+    type: DirectoryOrCreate
+```
+
+1. Create PV.
+```bash
+kubectl apply -f pv.yml
+```
+
+##### 3.1.2 Deploy MySQL StatefulSet
+
+1. Create a `mysql.yml` file with the following content.
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: querypie
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: querypie
+            - name: MYSQL_DATABASE
+              value: querypie
+            - name: MYSQL_USER
+              value: querypie
+            - name: MYSQL_PASSWORD
+              value: querypie
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "2Gi"
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: ""              
+        selector:                       
+          matchLabels:
+            app: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: querypie
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: mysql
+```
+
+1. Create MySQL StatefulSet and Service.
+```bash
+kubectl apply -f mysql.yml
+```
+
+1. Wait until MySQL Pod runs normally.
+```bash
+kubectl get pods -w -n querypie | grep mysql
+```
+
+##### 3.1.3 Database Initialization
+
+1. Connect to MySQL.
+```bash
+kubectl exec -it mysql-0 -n querypie -- mysql -u root -p
+# Password: querypie
+```
+
+1. Create necessary databases.
+```sql
+DROP DATABASE IF EXISTS querypie;
+DROP DATABASE IF EXISTS querypie_log;
+DROP DATABASE IF EXISTS querypie_snapshot;
+
+CREATE database querypie CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE database querypie_log CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE database querypie_snapshot CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+GRANT ALL privileges ON querypie.* TO querypie@'%';
+GRANT ALL privileges ON querypie_log.* TO querypie@'%';
+GRANT ALL privileges ON querypie_snapshot.* TO querypie@'%';
+
+FLUSH PRIVILEGES;
+```
+
+1. Exit MySQL.
+```sql
+exit
+```
+
+#### 3.2 Redis Installation
+
+Redis is used as QueryPie's session and cache storage.
+
+1. Create a `redis.yml` file with the following content.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: querypie
+  labels:
+    app: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          imagePullPolicy: IfNotPresent
+          args: ["--requirepass", "querypie"]
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "1Gi"
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      restartPolicy: Always
+      volumes:
+        - name: redis-data
+          emptyDir: {}   # Data deleted on pod restart (OK for cache purposes)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: querypie
+  labels:
+    app: redis
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+```
+
+1. Create Redis Deployment and Service.
+```bash
+kubectl apply -f redis.yml
+```
+
+1. Wait until Redis Pod runs normally.
+```bash
+kubectl get pods -w -n querypie | grep redis
+```
+
+### 4. QueryPie Installation
+
+#### 4.1 Secret Configuration
+
+##### 4.1.1 Register Harbor Registry Authentication Information
+
+```bash
+kubectl create secret docker-registry querypie-regcred \
+  --docker-server=harbor.chequer.io \
+  --docker-username='{harbor-id}' \
+  --docker-password='{harbor-pw}' \
+  -n querypie
+```
+
+##### 4.1.2 QueryPie Environment Configuration
+
+1. Create a `querypie.env` file with the following content.
+```ini
+# Agent Secret (32-character random string)
+AGENT_SECRET=01234567890123456789012345678912
+KEK=querypie
+
+# QueryPie Meta DB connection information
+DB_CATALOG=querypie
+DB_HOST=mysql
+DB_USERNAME=querypie
+DB_PASSWORD=querypie
+DB_PORT=3306
+
+# QueryPie Log DB connection information
+LOG_DB_CATALOG=querypie_log
+LOG_DB_HOST=mysql
+LOG_DB_USERNAME=querypie
+LOG_DB_PASSWORD=querypie
+LOG_DB_PORT=3306
+
+# QueryPie Snapshot DB connection information
+ENG_DB_CATALOG=querypie_snapshot
+ENG_DB_HOST=mysql
+ENG_DB_USERNAME=querypie
+ENG_DB_PASSWORD=querypie
+ENG_DB_PORT=3306
+
+# Redis connection information
+REDIS_NODES=redis:6379
+REDIS_PASSWORD=querypie
+```
+
+1. Register the environment configuration file as a Secret.
+```bash
+kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
+```
+
+#### 4.2 Helm Chart Configuration
+
+##### 4.2.1 Add Helm Repository
+
+```bash
+# Add repository
+helm repo add querypie https://chequer-io.github.io/querypie-deployment/helm-chart
+
+# Check repository list
+helm repo list
+```
+
+##### 4.2.2 values.yaml Configuration
+
+1. Create a `values.yml` file with the following content.
+```yaml
+appVersion: &version 11.3.0
+
+global:
+  image: 
+    # -- Default registry used for all images
+    registry: harbor.chequer.io
+    # -- Default image tags used for all images
+    tag: *version
+    # -- Default image pull policy for all images
+    pullPolicy: IfNotPresent
+  # -- Default labels for all resources deployed by the chart
+  labels: {}
+
+# -- ServiceAccount for QueryPie and QueryPie tools pods
+# It is created for authenticating private image registry and AWS API.
+# @default -- {}
+serviceAccount:
+  labels: {}
+  annotations: {}
+  # -- The name of the secret used for pulling the QueryPie image from the private registry.
+  # To create, run `kubectl create secret docker-registry querypie-regcred --docker-server=harbor.chequer.io --docker-username=admin --docker-password=your-password`
+  imagePullSecrets:
+    - name: querypie-regcred
+
+querypie:
+  # -- Labels used for QueryPie pods.
+  labels: {}
+  # -- Annotations used for QueryPie pods.
+  annotations: {}
+  tolerations: {}
+  # -- NodeSelector for QueryPie pods
+  nodeSelector: {}
+  replicas: 1
+  # -- PodManagementPolicy for QueryPie pods. OrderedReady is fine for most cases, but Parallel is also good for large-scale deployments.
+  podManagementPolicy: Parallel
+  image:
+    # -- (string) Registry used for the QueryPie image. If not set, the global registry will be used.
+    registry:
+    # -- (string) Tag used for the QueryPie image. If not set, the global tag will be used.
+    tag:
+    # -- (string) PullPolicy used for the QueryPie image. If not set, the global pullPolicy will be used.
+    pullPolicy:
+    # -- Repository used for the QueryPie image. (required)
+    repository: querypie/querypie
+  ingress:
+    # -- (bool) If true, Ingress resource for QueryPie will be created.
+    enabled: true
+    labels: {}
+    # -- Annotations used for the Ingress resource.
+    # It is useful when you want to enable controller-specific feature for the Ingress resource.
+    annotations: {}
+    # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
+    ingressClassName: ""
+    # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
+    host: querypie.querypie.io #Enter the actually configured url
+    # -- Extra paths used for the Ingress resource.
+    # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
+
+  proxyService:
+    # -- Create a service resource for QueryPie Agent connections.
+    # Basically, it opens 9000/tcp port for the QueryPie Agent, and 40000~/tcp for the Agentless connections.
+    enabled: true
+    labels: {}
+    # -- Annotations used for the Service resource.
+    # It is useful when you want to enable controller-specific feature for the Service resource.
+    annotations: {}
+    type: LoadBalancer
+    loadBalancerClass: ""
+    # -- Set the externalTrafficPolicy to Local is recommended for auditing the real client IP address.
+    externalTrafficPolicy: "Local"
+    # -- SessionAffinity is not required for the QueryPie.
+    sessionAffinity: "None"
+  updateStrategy:
+    # -- The strategy used for updating the QueryPie pods.
+    # It is generally recommended to use the RollingUpdate strategy.
+    # But if required, you can change it to OnDelete for manual operations.
+    type: RollingUpdate
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: 16Gi
+    limits:
+      # -- More than 2 CPU cores are recommended.
+      cpu: "2000m"
+      # -- More than 16Gi memory is recommended.
+      memory: 16Gi
+  logrotator:
+    image:
+      # -- (string) Registry used for the Logrotate image. If not set, the global registry will be used.
+      repository: querypie/logrotate
+      # -- (string) Tag used for the Logrotate image. If not set, the global tag will be used.
+      tag: latest
+  # -- External storage for the QueryPie Object Storage.
+  externalStorage:
+    # -- Type of the external storage.
+    # - none: No external storage.
+    # - persistentVolumeClaim: using a single Persistent Volume Claim for all QueryPie pods.
+    type: none
+    # -- Use a persistent volume claim for the external storage. It will be available if the type is persistentVolumeClaim.
+    persistentVolumeClaim:
+      # -- Use an existing Persistent Volume Claim for the external storage.
+      # If you set this to true, this helm chart will not create a new Persistent Volume Claim.
+      useExisting: false
+      # -- The name of the existing Persistent Volume Claim to be used.
+      claimName: ""
+      # -- Metadata of the Persistent Volume Claim.
+      metadata:
+        annotations: {}
+        labels: {}
+      # -- Spec of the Persistent Volume Claim.
+      spec:
+        storageClassName: ""
+        resources:
+          requests:
+            storage: 100Gi
+        # -- It is required to have ReadWriteMany access mode on production.
+        accessModes:
+          - ReadWriteMany
+  # -- Extra environment variables used for the QueryPie pods.
+  # This is useful for experimental features, debugging, workaround, and so on.
+  # for example:
+  # API_JVM_HEAPSIZE: '2g' will set the JVM heap size to 2GB.
+  extraEnvs: {}
+
+tools:
+  image:
+    # -- Registry used for the QueryPie tools image. If not set, the global registry will be used.
+    repository: querypie/querypie-tools
+
+config:
+  # -- External URL that users use to access the QueryPie via web.
+  # Specify the scheme, hostname, and port is required.
+  externalURL: "https://querypie.querypie.io" #Enter the actually configured url
+  secretName: "querypie-secret"
+
+  database:
+    querypie:
+      # -- The maximum number of connections that QueryPie can use for "metastore" purposes.
+      connectionPoolSize: 20
+
+  dac:
+    # -- This setting is used to ignore simple queries sent by client tools such as DataGrip.
+    # Please refer to the commented-out example below.
+    skipCommandConfigData: "{}"
+    # skipCommandConfig: |
+    #   {
+    #     "mysql": [
+    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+@@session\\s*\\.\\s*\\w+\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+session\\s+transaction\\s+\\w+(\\s+\\w+)*\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+net_write_timeout\\s*=\\s*\\d+\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+database\\s*\\(\\s*\\)\\s*$",
+    #       "^(/\\*.*?\\*/)?\\s*SET\\s+SQL_SELECT_LIMIT\\s*=\\s*\\w+$",
+    #       "^SHOW\\s+VARIABLES\\s+LIKE\\s+'aurora\\\\_version'\\s*$",
+    #       "^SELECT\\s+version\\s*\\(\\s*\\)\\s*,\\s*@@version_comment\\s*,\\s*database\\s*\\(\\s*\\)\\s*$",
+    #       "^SET\\s+autocommit\\s*=\\s*\\d+$",
+    #       "^(/\\*.*?\\*/)\\s*SELECT\\s+((@@session\\s*\\.\\s*|@@)\\w+(\\s+AS\\s+\\w+)?(\\s*,\\s*)?)+\\s*$"
+    #     ]
+    #   }
+    # -- The path where the skip command config file will be mounted.
+    skipCommandConfigFile: /app/arisa/skip_command_config.json
+```
+
+#### 4.3 QueryPie Installation
+
+1. Install QueryPie using Helm.
+```bash
+helm upgrade --install poc querypie/querypie --version 1.4.1 -n querypie -f values.yaml
+```
+
+1. Run database migration.
+```bash
+kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
+```
+
+1. Register license. (Prepare license file.)
+```bash
+kubectl port-forward -n querypie deploy/poc-querypie-tools 8050:8050 &
+curl -X POST http://127.0.0.1:8050/license/upload -F file=@license.crt
+[License] Upload: Success  # Result
+# Stop port-forward
+jobs
+kill %1
+```
+
+#### 4.4 Installation Verification
+
+1. Check Pod status.
+```bash
+kubectl get pods -n querypie
+```
+
+1. Check logs.
+```bash
+kubectl logs pod/poc-querypie-0 -f
+```
+
+1. Check service access.
+```bash
+kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
+```
+
+### 5. Troubleshooting Guide
+
+#### 5.1 Pre-Installation Checks
+
+##### 5.1.1 Check Cluster Access Permissions
+
+```bash
+# Check cluster access
+kubectl cluster-info
+
+# Check current context
+kubectl config current-context
+
+# Check namespace access permissions
+kubectl auth can-i create deployment -n querypie
+```
+
+##### 5.1.2 Check Resource Status
+
+```bash
+# Check node resource status
+kubectl top nodes
+
+# Check available storage classes
+kubectl get storageclass
+```
+
+#### 5.2 General Troubleshooting
+
+##### 5.2.1 Check Pod Status
+
+```bash
+# Query Pod status
+kubectl get pods -n querypie
+
+# Check Pod detailed information
+kubectl describe pod <pod-name> -n querypie
+
+# Check Pod logs
+kubectl logs <pod-name> -n querypie
+kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restarted
+```
+
+Key problem statuses and checks:
+
+* `ImagePullBackOff`: Check Harbor registry authentication information
+* `Pending`: Check if node resources are insufficient
+* `CrashLoopBackOff`: Check application errors through logs
+
+##### 5.2.2 Check Service Connections
+
+```bash
+# Check Service status
+kubectl get svc -n querypie
+
+# Check Endpoints
+kubectl get endpoints -n querypie
+
+# Test MySQL Service connection
+kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
+
+# Test Redis Service connection
+kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
+```
+
+##### 5.2.3 Check Ingress
+
+```bash
+# Check Ingress status
+kubectl get ingress -n querypie
+
+# Check Ingress detailed information
+kubectl describe ingress -n querypie
+```
+
+#### 5.3 Resource Monitoring
+
+```bash
+# Check Pod CPU/Memory usage
+kubectl top pods -n querypie
+
+# Check Node CPU/Memory usage
+kubectl top nodes
+
+# Check resource limits of specific Pod
+kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
+```
+
+#### 5.4 Check Installation Configuration
+
+```bash
+# Check ConfigMap
+kubectl get configmap -n querypie
+
+# Check Secret list
+kubectl get secrets -n querypie
+
+# Check PV/PVC status
+kubectl get pv
+kubectl get pvc -n querypie
+```
+
+#### 5.5 Information Required for Support Requests
+
+If troubleshooting is difficult, collect the following information and contact the support team:
+
+1. Environment information
+```bash
+# Kubernetes version
+kubectl version --short
+
+# Node information
+kubectl get nodes -o wide
+
+# Helm version
+helm version
+```
+
+1. QueryPie status information
+```bash
+# Helm deployment status
+helm status poc -n querypie
+
+# Pod detailed information
+kubectl describe pod/poc-querypie-0 -n querypie
+
+# Recent event list
+kubectl get events -n querypie --sort-by='.lastTimestamp'
+```
+
+1. Log information
+```bash
+# Save QueryPie logs
+kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
+
+# Save related component logs
+kubectl logs mysql-0 > mysql.log
+kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
+```
+
+### 6. References
+
+* [Amazon EKS Workshop](https://www.eksworkshop.com)
+* [Amazon EKS Documentation](https://docs.aws.amazon.com/eks/)
+* [Kubernetes Official Documentation](https://kubernetes.io/docs/)
+

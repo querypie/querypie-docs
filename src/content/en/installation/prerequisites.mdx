@@ -9,8 +9,8 @@ import { Callout } from 'nextra/components'
 
 ### Summary
 
-Before proceeding with installation, you need to prepare the following items.
-In summary, they are as follows:
+Before proceeding with installation, you must prepare the following.
+In summary, they are as follows.
 
 * 1 Linux server
 * 1 PC with a web browser installed
@@ -18,91 +18,91 @@ In summary, they are as follows:
 ### Server Environment
 
 * 1 server computer with Linux OS installed: referred to as `Server VM` below.
-    * You may use cloud services such as AWS, Azure, Google Cloud Platform, etc.
+    * You can also use cloud services such as AWS, Azure, Google Cloud Platform.
 * Hardware performance and capacity
-    * The server computer specifications are presented with 4 vCPUs and 16GiB Memory as the basic specifications. This performance specification is suitable for testing various QueryPie features.
-    * For cases where hundreds or more users use it with high traffic, 8 vCPUs and 32 GiB Memory are recommended as the recommended specifications.
-    * It is recommended to configure the root file system size to 100GiB or more.
+    * Server computer specifications are presented with 4 vCPUs and 16GiB Memory as basic specifications. This performance specification is suitable for testing various QueryPie features.
+    * For cases where hundreds or more users use it with high traffic, we recommend 8 vCPUs and 32 GiB Memory as recommended specifications.
+    * We recommend configuring the Root file system size to 100GiB or more.
 * CPU Architecture
-    * CPU with x86_64 or AMD64 architecture is recommended. Please apply CPUs such as AMD64, Intel Xeon, etc.
-    * **[BETA]** Starting from QueryPie version 11.1.1, CPUs with ARM64 architecture are supported.
-        * Since production-level feature testing has not been performed, it is recommended for feature testing in development environments and trial use.
-        * For AWS, instance types such as `t4g.xlarge`, `m7g.xlarge` can be used.
-    * **[BETA]** Starting from QueryPie version 11.1.1, macOS environments using Apple Silicon CPUs are supported.
+    * CPU recommends x86_64 or AMD64 architecture. Please apply CPUs such as AMD64, Intel Xeon.
+    * **[BETA]** Starting from QueryPie version 11.1.1, it supports CPUs with ARM64 architecture.
+        * Since production-level functional testing has not been performed, it is recommended for functional testing and trial use in development environments.
+        * For AWS, you can use instance types such as `t4g.xlarge`, `m7g.xlarge`.
+    * **[BETA]** Starting from QueryPie version 11.1.1, it supports macOS environments using Apple Silicon CPU.
 * `Server VM` must have an IP address that users can access.
-    * It is recommended to set up a Fully Qualified Domain Name (FQDN) for connection.
-* The following ports must be open on `Server VM`:
+    * We recommend setting a Fully Qualified Domain Name (FQDN) for connection.
+* The following ports must be open on `Server VM`.
     * TCP 80: QueryPie web service port
     * TCP 9000: Port for QueryPie User Agent to connect to QueryPie Server
-    * (Optional): If you want to access via HTTPS using port 443 TLS(SSL) instead of 80, TCP 443 port access must be available.
+    * (Optional): If you want to access via HTTPS using port 443 TLS(SSL) instead of 80, TCP 443 port access must be possible.
 
 <Callout type="info">
-Summary of recommended server specifications for production environments.
+This summarizes server recommended specifications for Production environments.
 * Basic specifications: Hardware: CPU 4 vCPUs, AMD64 Architecture, Memory 16 GiB, Disk 100 GiB+
     * AWS EC2: m6i.xlarge, m7i.xlarge, 
-    * GCP Compute Engine: c4-standard-4, n4-standard-4 (or -standard-4 models with AMD64 architecture)
+    * GCP Compute Engine: c4-standard-4, n4-standard-4 (or AMD64 architecture -standard-4 models)
 * Recommended specifications for multi-user production environments: Hardware: CPU 4 or 8 vCPUs, AMD64 Architecture, Memory 32 GiB, Disk 100 GiB+
     * AWS EC2: m6i.2xlarge, m7i.2xlarge, r6i.xlarge
-    * GCP Compute Engine: c4-standard-8, n4-standard-8 (or -standard-8 models with AMD64 architecture)
+    * GCP Compute Engine: c4-standard-8, n4-standard-8 (or AMD64 architecture -standard-8 models)
 * OS: Linux (install and use docker daemon)
 </Callout>
 
 ### Linux Distributions
 
-QueryPie ACP works properly on most Linux distributions that can use Docker and Podman.
-And, when using QueryPie ACP products on some Linux distributions, you can receive technical support effectively.
+QueryPie ACP works normally on most Linux distributions that can use Docker and Podman.
+And when using QueryPie ACP product on some Linux distributions, you can receive technical support effectively.
 
 #### Verified Linux Distributions for Installation and Operation
 
-* Amazon Linux 2, Amazon Linux 2023: Only available on AWS Cloud.
+* Amazon Linux 2, Amazon Linux 2023: Only provided on AWS Cloud.
 * Ubuntu Server 22.04 LTS, 24.04 LTS
 * Red Hat Enterprise Linux 8, 9, 10
 * Rocky Linux 8, 9
 
-For detailed information on the support status of various Linux distributions and Docker, Podman, please refer to this document: [Linux Distribution and Docker, Podman Support Status](prerequisites/linux-distribution-and-docker-podman-support-status)
+For detailed information on support status of various Linux distributions and Docker, Podman, please refer to this document: [Linux Distribution and Docker, Podman Support Status](prerequisites/linux-distribution-and-docker-podman-support-status)
 
 ### Container Engine and Compose Tool
 
 QueryPie is provided in Container format.
-Therefore, a Container Engine is required.
-Tools that create, run, and stop containers from images, such as Docker and Podman, are called Container Engines.
-Also, to easily use Container Engines, a Compose Tool is required.
-Docker Compose is called a Compose Tool.
+Therefore, Container Engine is required.
+Container Engine refers to tools for creating, running, and stopping Containers from Images, such as Docker and Podman.
+Also, Compose Tool is required to easily use Container Engine.
+Docker Compose is called Compose Tool.
 
-#### Container Engine and Version
+#### Container Engine and Versions
 
 * Docker Desktop: Version 20.10 or later
 * Docker Community Edition: Version 20.10 or later
-* Docker Enterprise Edition: The product name has been changed to Docker Desktop.
+* Docker Enterprise Edition: Product name has been changed to Docker Desktop.
 * Podman: Version 4.9.0 or later
 
-#### Compose Tool and Version
+#### Compose Tool and Versions
 
 * Docker Compose: Version 2.29.0 or later
-    * Docker Compose is recommended over Podman Compose. It has been verified to work properly with the combination of Podman and Docker Compose.
+    * We recommend using Docker Compose over Podman Compose. We have verified that it works normally with Podman and Docker Compose combination.
 * Podman Compose: Version 1.5.0 or later
 
-### Server FQDN Setup and TLS Certificate
+### Server FQDN Settings and TLS Certificate
 
 This item is not required.
 However, it is a recommended item from both security and user usability perspectives.
 
 * Prepare a Fully Qualified Domain Name (FQDN) connected to `Server VM`.
-    * Apply DNS settings connected to the IP address of `Server VM` to prepare settings that can connect to the host with FQDN.
-* Prepare a TLS certificate Certificate corresponding to FQDN.
-    * It is used to access with `https` address.
+    * Prepare settings to connect to the host with FQDN by applying DNS settings connected to the IP address of `Server VM`.
+* Prepare a TLS Certificate Certificate corresponding to FQDN.
+    * Used to access with `https` address.
 
 ### User PC Environment
 
 * PC with web browser installed: referred to as `User PC` below.
-    * Use the latest versions of browsers such as Chrome, Firefox, Safari, Edge, etc.
-    * Using a web browser is required. Even when using QueryPie User Agent, a connection via web browser is required.
-* `User PC` must be able to open a web browser with the IP address or FQDN of `Server VM` and access the QueryPie web service.
-* When installing QueryPie User Agent, it is only supported on some OS. It can be used on OS that supports .NET8 or higher.
+    * Use the latest versions of browsers such as Chrome, Firefox, Safari, Edge.
+    * Using a web browser is required. Even when using QueryPie User Agent, a web browser connection is required.
+* `User PC` must be able to open a web browser with the IP address or FQDN of `Server VM` and access QueryPie web service.
+* When installing QueryPie User Agent, it is only supported on some OSes. It can be used on OSes that support .NET8 or higher.
     * QueryPie User Agent runs on Windows, MacOS, and Linux OS.
-        * For Windows OS, Windows 8 or later version must be used.
-        * For MacOS OS, MacOS 10.15 or later version must be used. MacOS 12 (Monterey) or later version is recommended.
-        * For Linux OS, Debian 9 or later, Ubuntu 16.04 or later, Fedora 30 or later versions must be used.
+        * For Windows OS, you must use Windows 8 or later.
+        * For MacOS OS, you must use MacOS 10.15 or later. We recommend MacOS 12 (Monterey) or later.
+        * For Linux OS, you must use Debian 9 or later, Ubuntu 16.04 or later, Fedora 30 or later.
     * For Linux OS, headless mode is not supported. It must be run in a GUI environment using X-Window, VNC, etc.
-    * If you use QueryPie only with a web browser without using User Agent, you may ignore this item.
+    * If you use QueryPie only with a web browser without using User Agent, you can ignore this item.
 

@@ -7,12 +7,12 @@ title: 'System Architecture and Network Access Control'
 
 ### System Architecture
 
-Learn how QueryPie Server, QueryPie User Agent, User PC's Web Browser, and systems such as Database and Linux Server that users want to access are configured and connected.
+Learn how QueryPie Server, QueryPie User Agent, Web Browser on User PC, and systems such as Database and Linux Server that users want to access are configured and connected.
 
 #### System Architecture Diagram
 
 This system architecture is for the case of installing QueryPie Service on a single Linux server.
-It does not include web services with TLS certificates applied, multi-node configurations for high availability, etc.
+It does not include web services with TLS certificates applied, multi-configuration for high availability, etc.
 
 <figure data-layout="center" data-align="center">
 ![Overview of QueryPie System Architecture ](/installation/system-architecture-and-network-access-control/image-20251204-043839.png)
@@ -23,19 +23,19 @@ Overview of QueryPie System Architecture
 
 Descriptions of each component are as follows.
 
-#### User PC's Web Browser
+#### Web Browser on User PC
 
 Users access QueryPie web service through a web browser on their PC.
-A web browser is required to use QueryPie.
+A web browser is essential to use QueryPie.
 QueryPie administrators and security policy operators manage QueryPie services through QueryPie Web Console.
 
 Also, QueryPie users can access target systems through QueryPie Web SQL Editor and Web Terminal.
 
-#### User PC's QueryPie User Agent
+#### QueryPie User Agent on User PC
 
-When using Database Client Application or SSH Client Application running on User PC, QueryPie User Agent is required.
-QueryPie User Agent serves as a Local Proxy Agent running on User PC.
-You can download QueryPie User Agent after logging into QueryPie Web Console.
+When using Database Client Applications or SSH Client Applications running on User PC, QueryPie User Agent is required.
+QueryPie User Agent performs the role of a Local Proxy Agent running on User PC.
+You can download QueryPie User Agent by logging into QueryPie Web Console.
 
 QueryPie User Agent supports most Database Client Applications and SSH Client Applications running on User PC.
 (Hereafter referred to as `3rd Party Tool`.) For specific examples, please refer to this document: [Supported 3rd Party Tools (KO)](#target-title-not-found)
@@ -43,7 +43,7 @@ QueryPie User Agent supports most Database Client Applications and SSH Client Ap
 #### QueryPie Server
 
 QueryPie Server running on Linux VM provides Web Console, Web SQL Editor, and Web Terminal as web services.
-It also plays a key role in providing a Proxy server that understands SQL protocol and ssh protocol and performs access control.
+It also performs a core role of providing a Proxy server that understands SQL protocol and ssh protocol and performs access control.
 
 QueryPie Server requires two components.
 
@@ -52,29 +52,29 @@ QueryPie Server requires two components.
 
 #### QueryPie Database
 
-QueryPie Database stores data necessary for QueryPie Server to operate.
+QueryPie Database stores data for QueryPie Server operation.
 It stores QueryPie's User Account, Admin Account, information about systems to connect to, access control policies, etc.
-In addition, it stores audit information such as User's Query Log and System Access Log.
+It also stores Audit information such as User's Query Log and System Access Log.
 
-MySQL, MariaDB, or compatible Databases can be used as QueryPie Database.
+You can use MySQL, MariaDB, or compatible Databases as QueryPie Database.
 
 * AWS Aurora MySQL
 * GCP Cloud SQL for MySQL
 
 #### QueryPie Redis
 
-QueryPie Redis serves as a Cache for QueryPie Server to operate.
-It is a component that is required for QueryPie Server to operate.
+QueryPie Redis performs a Cache role for QueryPie Server operation.
+It is a component that is essential for QueryPie Server to operate.
 
 #### Target Database
 
-The Database server that users want to access.
-QueryPie Server serves as an intermediary between users and Target Database.
+This is the Database server that users want to access.
+QueryPie Server performs an intermediary role between users and Target Database.
 
 #### Target Server System
 
-Systems such as Linux Server and Windows Server that users want to access.
-QueryPie Server serves as an intermediary between users and Target Server System.
+This is a system such as Linux Server or Windows Server that users want to access.
+QueryPie Server performs an intermediary role between users and Target Server System.
 
 ### Network Access Control Settings
 
@@ -82,19 +82,19 @@ QueryPie Server serves as an intermediary between users and Target Server System
 
 Centered on the Linux VM where QueryPie is installed, network connections are divided into two types: Outbound and Inbound.
 
-* Outbound : Network access from the Linux VM where QueryPie is installed to the external internet.
-* Inbound : Network access from user's PC or customer's internal network to the Linux VM where QueryPie is installed.
+* Outbound: Network access from the Linux VM where QueryPie is installed to the external internet.
+* Inbound: Network access from user PCs or customer's internal network to the Linux VM where QueryPie is installed.
 
 #### Network Access for Software Installation
 
 |  **Access Type**  |  **Source**     |  **Destination**                                                                                                      |  **Protocol**  |  **Port**  |  **Description**                                                             |
 | ----------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- | ---------- | ---------------------------------------------------------------------------- |
-| Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | Website for downloading configuration files for product installation.                                            |
-| Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | Website for downloading Docker Images for product installation. In Docker terms, it is a Docker Registry. |
+| Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | This is a website for downloading configuration files for product installation.                                            |
+| Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | This is a website for downloading Docker Images for product installation. In Docker terms, this is a Docker Registry. |
 
 #### Network Access for Product Use
 
-The items below describe network access for product use.
+The items below explain network access for product use.
 They are divided into Common, DAC, SAC, KAC, and WAC according to QueryPie product features.
 
 #### Common
@@ -136,13 +136,13 @@ They are divided into Common, DAC, SAC, KAC, and WAC according to QueryPie produ
 
 #### WAC
 
-|  **Access Ty** pe |  **Source**        |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                 |
+|  **Access Type** |  **Source**        |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                 |
 | ----------------- | ------------------ | ------------------------------------------------ | ---------- | -------------- | ---------- | -------------------------------- |
 | Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP            | 7447       | From Users to QueryPie WAC Proxy |
 
 ### Load Balancer Settings
 
-This table explains the settings for applying Load Balancer to QueryPie Service for load balancing and fault tolerance.
+This table explains settings for applying Load Balancer to QueryPie Service for load distribution and fault tolerance.
 
 |  **LB**                            |  **Listener**  |  **Target**        |  **Health Check**         |  **LB Option**  |  **Description**          |
 | ---------------------------------- | -------------- | ------------------ | ------------------------- | --------------- | ------------------------- |
@@ -151,5 +151,4 @@ This table explains the settings for applying Load Balancer to QueryPie Service 
 | Network Load Balancer<br/>(L4)     | TCP / 9000     | querypie:9000      | http://querypie:80/readyz | default         | QueryPie Agent (DAC, SAC) |
 | Network Load Balancer<br/>(L4)     | TCP / 6443     | querypie:6443      | http://querypie:80/readyz | default         | QueryPie Agent (KAC)      |
 | Network Load Balancer<br/>(L4)     | TCP / 7447     | querypie:7447      | http://querypie:80/readyz | default         | QueryPie Agent (WAC)      |
-
 

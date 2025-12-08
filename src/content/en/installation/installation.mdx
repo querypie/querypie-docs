@@ -4,19 +4,19 @@ title: 'Installation'
 
 # Installation
 
-The methods for installing QueryPie ACP products are provided in separate guide documents according to the Container execution method and the version of the installation helper program.
+QueryPie ACP product installation methods are categorized and provided according to the Container execution method and the version of the installation helper program.
 
-### Running Containers with Compose Tool
+### Running Container with Compose Tool
 
-This is the general installation and execution method, and the installation method recommended by the manufacturer.
-This method involves downloading, running, and stopping Container Images using Docker Compose.
+This is a general installation and execution method, and is the installation method recommended by the manufacturer.
+This method uses Docker Compose to download, run, and stop Container Images.
 
-In this case, two installation methods are provided depending on the version of the installation helper program.
+In this case, two installation methods are provided according to the version of the installation helper program.
 
 #### Installing with setup.sh
 
-This is the installation helper program provided to partner engineers since QueryPie Version 9.
-You can download Container Images by obtaining an account on the Container Registry called Harbor.
+This is an installation helper program that has been provided to partner engineers since QueryPie Version 9.
+You can download Container Images by obtaining an account for Harbor, a Container Registry.
 
 You can install all released versions of the product.
 
@@ -25,13 +25,13 @@ For detailed installation methods, please refer to this document: [Installation 
 
 #### Installing with setup.v2.sh
 
-This is the installation helper program provided to end customers and partner engineers with the release of QueryPie ACP Community Edition released in August 2025.
-This method involves downloading and installing Container Images published on Docker Hub.
+This is an installation helper program provided to end customers and partner engineers along with the release of QueryPie ACP Community Edition in August 2025.
+This method downloads and installs Container Images published on Docker Hub.
 
-The installation process is automated, making it easy for first-time users to install the product.
-However, the actual installation process is equivalent between the setup.sh installation method and the setup.v2.sh installation method, with the difference being that setup.v2.sh has an automated process and does not support installation of older versions such as Version 10.
+The installation process is automated, making it easy for first-time installers to install the product.
+However, the actual installation process is equivalent between setup.sh and setup.v2.sh, with the difference that setup.v2.sh automates the process and does not support installation of older versions such as Version 10.
 
-It supports installation in macOS environments using Apple Silicon.
+It supports installation on macOS environments using Apple Silicon.
 
 Not all released versions of the product are provided.
 As of December 2025, Version 11.1.2 is provided.
@@ -39,14 +39,13 @@ As of December 2025, Version 11.1.2 is provided.
 For detailed installation methods, please refer to this document: [Installation Guide - setup.v2.sh (KO)](installation/installation-guide-setupv2sh)
 
 
-### Installing in Kubernetes Environment
+### Installing on Kubernetes Environment
 
 QueryPie ACP is a software product that operates in a Container environment.
-While installation and execution using Compose Tool is typical, it also operates smoothly in Kubernetes environments.
+While it is common to install and run using Compose Tool, it also works smoothly in Kubernetes environments.
 
-When installing the product in a Kubernetes environment, both Managed Kubernetes Clusters such as AWS EKS and GCP GKE, and Self-Hosted Clusters can be used.
+When installing the product in a Kubernetes environment, both Managed Kubernetes Clusters such as AWS EKS, GCP GKE, and Self-Hosted Clusters can be used.
 
-* AWS EKS Environment: [Installing on AWS EKS](installation/installing-on-aws-eks)
-* Helm Chart: [https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment)
-
+* AWS EKS environment: [Installing on AWS EKS Environment](installation/installing-on-aws-eks) 
+* Helm Chart: [https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment) 
 

@@ -1,0 +1,271 @@
+---
+title: 'Installation Guide - setup.v2.sh'
+---
+
+import { Callout } from 'nextra/components'
+
+# Installation Guide - setup.v2.sh
+
+
+## Introduction
+
+This installation guide explains how to install QueryPie server on a single server computer in a simple configuration.
+Even with a simple configuration installation, you can test most QueryPie features.
+
+The setup.v2.sh installation program introduced in this guide automatically performs the existing installation process.
+The automated installation process is largely the same as the existing installation process.
+For the existing installation process, please refer to this document: [https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE](https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE)
+
+This installation method is not suitable for use in actual production environments.
+For installation methods suitable for actual production environments, please refer to the separately provided [QueryPie Installation Guide].
+
+<Callout type="info">
+This is an installation guide for PoC purposes targeting QueryPie 10.3.0 or later versions.
+</Callout>
+
+## Prerequisites
+
+Before proceeding with installation, you must prepare the following.
+In summary, they are as follows.
+
+* 1 Linux server
+* 1 PC with a web browser installed
+
+For details, please refer to the following document: [Prerequisites - Simple Configuration](../prerequisites)
+
+## System Architecture
+
+Please refer to the following document: [System Architecture and Network Access Control](../system-architecture-and-network-access-control)
+
+## Installation Process
+
+### Running setup.v2.sh
+
+Download and run the `setup.v2.sh` script from the shell of the Linux server where you will install QueryPie.
+You can see the commands that setup.sh actually performs during the execution process.
+```bash
+$ # Download setup.v2.sh and execute it.
+$ bash <(curl -s https://dl.querypie.com/setup.v2.sh)
+```
+
+You can also save `setup.v2.sh` as a file and then run it as follows.
+```bash
+$ curl -s https://dl.querypie.com/setup.v2.sh -o setup.v2.sh
+$ bash setup.v2.sh
+```
+
+`setup.v2.sh` automatically selects and installs the version recommended by the manufacturer.
+If you want to install a specific version, you can use the following commands.
+```bash
+$ bash setup.v2.sh --install 10.3.4
+$ bash setup.v2.sh --upgrade 11.0.1
+$ bash setup.v2.sh --help
+#### setup.v2.sh - QueryPie Installer 25.08.8, /usr/bin/bash 4.4.20(1)-release on Linux x86_64 ####
+setup.v2.sh 25.08.8, the QueryPie installation script.
+Usage: setup.v2.sh [options]
+    or setup.v2.sh [options] --install <version>
+    or setup.v2.sh [options] --install-container-engine
+    or setup.v2.sh [options] --install-compose-package <version>
+    or setup.v2.sh [options] --upgrade <version>
+    or setup.v2.sh [options] --uninstall
+    or setup.v2.sh [options] --help
+
+FOR AWS AMI BUILD MAINTAINER:
+    or setup.v2.sh [options] --install-partially-for-ami <version>
+    or setup.v2.sh [options] --resume
+    or setup.v2.sh [options] --verify-installation
+    or setup.v2.sh [options] --verify-not-installed
+    or setup.v2.sh [options] --populate-env <env-file>
+    or setup.v2.sh [options] --reset-credential <env-file>
+
+ENVIRONMENT VARIABLES:
+
+  DOCKER_REGISTRY                Default: 'docker.io/querypie/'
+    The Docker registry to pull images from.
+    You may specify a private registry such as 'myregistry.example.com/querypie/'.
+    Note that the trailing slash is required, if you set this variable.
+    Actual image names will be like 'myregistry.example.com/querypie/querypie:11.1.1'.
+
+OPTIONS:
+  --yes               Assume "yes" to all prompts and run non-interactively.
+  -V, --version       Show the version of this script.
+  -x, --xtrace        Print commands and their arguments as they are executed.
+  -h, --help          Show this help message.
+$ 
+```
+
+### Installing QueryPie in Podman Environment
+
+Starting from `setup.v2.sh` version `25.08.8`, it supports execution environments with Podman + Docker Compose combination.
+
+The following Linux distributions recommend execution environments with Podman + Docker Compose combination.
+
+* Red Hat Enterprise Linux 8, 9, 10
+* Rocky 8, 9
+
+For detailed installation methods, please refer to this document: [Configuring Rootless Mode with Podman](../prerequisites/configuring-rootless-mode-with-podman)
+
+### Tasks Automatically Performed by setup.v2.sh
+
+`setup.v2.sh` automatically proceeds with the following main installation procedures.
+
+1. Download configuration files for Compose such as `docker-compose.yml` and `.env`
+    * The name of the environment variable configuration file `compose-env` has been changed to `.env`. `compose-env` is used as a template for creating configuration files.
+2. Set environment variable values in `.env`
+    * For descriptions of each environment variable, please refer to the [Container Environment Variables](../container-environment-variables) document.
+3. Download docker images
+    * Downloads images from the `docker.io/querypie/` registry. Therefore, Harbor login process is not required.
+4. Run mysql and redis containers
+5. Run querypie-tools container and perform migration
+6. Run querypie-app container
+7. Create a symbolic link `./querypie/current` pointing to the currently running version.
+
+After `setup.v2.sh` successfully starts the querypie-app container, you will see the following execution success notification message.
+```
++ docker exec querypie-app-1 readyz
+########################################################################
+#                                                                      #
+#     ██████╗ ██╗   ██╗███████╗██████╗ ██╗   ██╗██████╗ ██╗███████╗    #
+#    ██╔═══██╗██║   ██║██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗██║██╔════╝    #
+#    ██║   ██║██║   ██║█████╗  ██████╔╝ ╚████╔╝ ██████╔╝██║█████╗      #
+#    ██║▄▄ ██║██║   ██║██╔══╝  ██╔══██╗  ╚██╔╝  ██╔═══╝ ██║██╔══╝      #
+#    ╚██████╔╝╚██████╔╝███████╗██║  ██║   ██║   ██║     ██║███████╗    #
+#     ╚══▀▀═╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚══════╝    #
+#                                                                      #
+########################################################################
+.--------------------------------------------------------.
+||  🚀 QueryPie Server has been successfully started! 🚀  |
+||  Timestamp in UTC: Mon Jul 28 17:04:31 UTC 2025        |
+||  Timestamp in KST: Tue Jul 29 02:04:31 KST 2025        |
+'--------------------------------------------------------'
++ popd
+~
+## Create a symbolic link 'current' pointing to 11.0.1
++ pushd ./querypie/
+~/querypie ~
++ rm -f current
++ ln -s 11.0.1 current
++ popd
+~
+### Installation completed successfully
+### Access QueryPie at http://172.31.11.201:8000 or https://172.31.11.201:8443 in your browser
+### Determine the public IP address of your host machine if needed
+[ec2-user@ip-172-31-11-201 ~]$ 
+```
+
+### Installation Complete
+
+Great job.
+Now you can see QueryPie in action.
+
+Please try accessing the URL like `http://172.31.11.201:8000` shown at the end of `setup.v2.sh` execution.
+This address uses the IP Address to connect from Local PC to Linux Server.
+You may need to change Firewall, AWS Security Group settings, etc. by referring to network connection configuration: [System Architecture and Network Access Control](../system-architecture-and-network-access-control)
+
+### Entering License
+
+License files can be entered on the web console screen.
+
+<figure data-layout="left" data-align="left">
+![Enter the license in PEM format.](/installation/installation/installation-guide-setupv2sh/image-20250718-063723.png)
+<figcaption>
+Enter the license in PEM format.
+</figcaption>
+</figure>
+
+## Basic Configuration Procedures
+
+This guide explains settings that must be performed after installation according to the operating environment.
+
+### Common Settings
+
+Common procedures required when using QueryPie immediately after installation.
+
+#### QueryPie Web Base URL Settings
+
+> Configuration path: Admin Page → General
+This is the URL address of QueryPie for accessing the Web Console. <br/>(Example. `https://querypie.customer.com`)<br/>This URL is also called the Base URL of QueryPie.
+
+This URL must not end with `/`. Please be careful not to add `/` at the end of the URL like `https://querypie.customer.com/`.
+
+This URL is used for the following purposes.
+
+* Used as a callback address in the authentication process of SSO Integration.
+* Used in links to download User Agent from Web Console.
+* For other detailed purposes, please refer to [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310).
+
+<figure data-layout="center" data-align="center">
+![image-20250520-081112.png](/installation/installation/installation-guide-setupv2sh/image-20250520-081112.png)
+</figure>
+
+### Product-Specific Settings
+
+#### DAC/SAC: Proxy Access Address Settings
+
+Connect to QueryPie Database and register the address for DAC/SAC Proxy access.
+
+<Callout type="info">
+To connect to QueryPie Database from QueryPie Web Console, DB connection settings are required:[DB Connections](../../administrator-manual/databases/connection-management/db-connections)
+
+During the Database connection setup process, you need the Hostname, Username, and Password of QueryPie MySQL.
+
+* Hostname: `host.docker.internal`
+* Username: `querypie` (in case of default settings)
+* Password: (Check DB_PASSWORD in the .env file in the directory where QueryPie is installed.)
+
+Values set in .env such as DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY must be kept secure.
+Please be careful not to expose these values to others.
+</Callout>
+
+Replace the `<customer-proxy-address>` part below with your customer's Proxy access IP or domain and execute the query.
+
+<Callout type="important">
+This address should not have a Scheme such as `http` or `https` attached.
+</Callout>
+```
+UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
+```
+
+If the query execution is confirmed to be normal without errors, execute the following query to check if it has been registered.
+```
+SELECT * FROM querypie.proxies;
+```
+
+After registering the address for Proxy access in QueryPie Database, you do not need to restart the Server Container.
+When you attempt to log in from User Agent, after authentication through a web browser, you can use User Agent.
+
+<figure data-layout="center" data-align="center">
+![image-20250520-082706.png](/installation/installation/installation-guide-setupv2sh/image-20250520-082706.png)
+</figure>
+
+#### KAC: Proxy Access Address Settings
+
+Connect to QueryPie Database and register the address for KAC Proxy access.
+
+Replace the `<customer-proxy-fqdn>` part below with your customer's Proxy access IP or domain and execute the query.
+
+As a special note, unlike DAC/SAC settings, you can freely enter Schemes such as `http` or `https`.
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+```
+UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
+```
+
+<figure data-layout="center" data-align="center">
+![image-20250520-084243.png](/installation/installation/installation-guide-setupv2sh/image-20250520-084243.png)
+</figure>
+
+#### WAC: Proxy Access Address Settings
+
+> Configuration path: Admin Page → Web Apps → Web App Configurations
+WAC Proxy access address settings can be performed from the Web Console.
+
+For detailed configuration procedures, please refer to the following document: [Initial WAC Setup in Web App Configurations](../../administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+
+
