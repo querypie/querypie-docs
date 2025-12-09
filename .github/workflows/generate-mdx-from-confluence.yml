@@ -1,5 +1,5 @@
 name: Generate MDX from Confluence
-run-name: "Generate MDX from Confluence - ${{ inputs.arguments }}, "
+run-name: "Generate MDX from Confluence - ${{ inputs.arguments }}"
 
 on:
   workflow_dispatch:
@@ -10,30 +10,11 @@ on:
         type: choice
         options:
           - '--recent'
+          - '--recent --attachments'
           - '--remote'
-          - '--attachments'
+          - '--remote --attachments'
           - '--local'
         default: '--recent'
-      use_recent:
-        description: 'Update recent files (--recent option)'
-        required: false
-        default: false
-        type: boolean
-      use_remote:
-        description: 'Update all the files in the Confluence Space (--remote option)'
-        required: false
-        default: false
-        type: boolean
-      use_attachments:
-        description: 'Download attachments from Confluence pages (--attachments option)'
-        required: false
-        default: false
-        type: boolean
-      use_local:
-        description: 'Use local files (--local option)'
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   generate-mdx:
@@ -48,10 +29,9 @@ jobs:
         with:
           fetch-depth: 0  # 전체 히스토리 가져오기 (git status를 위해 필요)
 
-      - name: Workflow Options
+      - name: Workflow Arguments
         run: |
-          echo "Use local files (--local): ${{ inputs.use_local }}"
-          echo "Download attachments (--attachments): ${{ inputs.use_attachments }}"
+          echo "Arguments: ${{ inputs.arguments }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -68,23 +48,9 @@ jobs:
       - name: Generate MDX files
         working-directory: ./confluence-mdx
         run: |
-          # 옵션 구성
-          OPTIONS=""
-          if [[ "${{ inputs.use_recent }}" == "true" ]]; then
-            OPTIONS="$OPTIONS --recent"
-          fi
-          if [[ "${{ inputs.use_remote }}" == "true" ]]; then
-            OPTIONS="$OPTIONS --remote"
-          fi
-          if [[ "${{ inputs.use_attachments }}" == "true" ]]; then
-            OPTIONS="$OPTIONS --attachments"
-          fi
-          if [[ "${{ inputs.use_local }}" == "true" ]]; then
-            OPTIONS="$OPTIONS --local"
-          fi
           set -o xtrace
           touch .env # Create an empty .env to prevent missing .env error.
-          docker compose run --rm confluence-mdx full $OPTIONS
+          docker compose run --rm confluence-mdx full ${{ inputs.arguments }}
 
       - name: Check for changes
         run: |
