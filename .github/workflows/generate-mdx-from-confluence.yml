@@ -1,8 +1,19 @@
 name: Generate MDX from Confluence
+run-name: "Generate MDX from Confluence - ${{ inputs.arguments }}, "
 
 on:
   workflow_dispatch:
     inputs:
+      arguments:
+        description: 'Arguments for pages_of_confluence.py'
+        required: false
+        type: choice
+        options:
+          - '--recent'
+          - '--remote'
+          - '--attachments'
+          - '--local'
+        default: '--recent'
       use_recent:
         description: 'Update recent files (--recent option)'
         required: false
