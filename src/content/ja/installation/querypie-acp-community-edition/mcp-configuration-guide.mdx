@@ -1,0 +1,284 @@
+---
+title: 'MCP設定ガイド'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP設定ガイド
+
+### Overview
+
+QueryPie ACP (Access Control Platform) Community Edition 11.5.0にRemote MCP (Model Context Protocol) Server機能が追加されました。
+これにより、様々なAIコーディングアシスタントでLLMを使用して、QueryPie ACPのアクセス制御下で安全に様々な作業を実行できるようになりました。
+
+<Callout type="info">
+MCP関連参考資料
+
+[https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro)
+
+[https://modelcontextprotocol.io/docs/learn/architecture](https://modelcontextprotocol.io/docs/learn/architecture)
+
+[https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers)
+</Callout>
+
+#### サポートされているAIコーディングアシスタント
+
+* [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+* [gemini-cli](https://geminicli.com/)
+* [Cursor](https://www.cursor.com/)
+* [Windsurf](https://codeium.com/windsurf)
+
+#### 前提条件
+
+* 実行中のQueryPie ACP Community Edition 11.5.0以上
+* QueryPie ACP Community Editionに作成された有効なユーザーアカウント
+
+
+### Integration
+
+#### MCP Server URL
+
+AIコーディングアシスタントを設定するには、MCP Serverの役割を果たすQueryPie ACPのURLを入力する必要があります。
+このMCP Server URLの設定は、複数のAIコーディングアシスタントで共通して行う必要があります。
+```
+{QueryPie_URL}/api/mcp
+```
+
+`{QueryPie_URL}`は実行中のQueryPie ACP Community Editionのアドレスです。
+
+例) `https://querypie.example.com/api/mcp`
+---
+
+#### Claude Code
+
+##### 1. MCPサーバーアドレスを追加します。
+
+```
+claude mcp add querypie --transport http {QuerPie_URL}/api/mcp
+```
+
+例) `claude mcp add querypie --transport http https://querypie.example.com/api/mcp`
+
+<figure data-layout="center" data-align="center">
+![MCP server追加](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-091753.png)
+<figcaption>
+MCP server追加
+</figcaption>
+</figure>
+
+##### 2. OAuthログインを実行します。
+
+* `/mcp`を入力します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-092208.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092208.png)
+  </figure>
+* リストから`querypie`を選択します。
+* `Authenticate`を選択します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-092454.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092454.png)
+  </figure>
+* ブラウザが開いたら、QueryPieログインページでログインします。 <br/>正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。<br/> <br/> Claude Codeでも「Authentication successful. Connect to querypie.」メッセージが表示されます。 <br/> 
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-092741.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092741.png)
+  </figure>
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-092842.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092842.png)
+  </figure>
+
+##### 3. MCP接続を確認します。
+
+* 次のコマンドで接続を確認します: `claude mcp list`
+* クエリを通じて作業を実行してみます。<br/> <br/> 
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-093056.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
+  </figure>
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-093130.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
+  </figure>
+* 認証管理: Claude Codeで`/mcp`コマンドを実行して認証状態を管理できます。
+    * 認証トークンは自動的に更新されます。
+    * 「Clear authentication」オプションで認証を解除できます。
+---
+
+#### gemini-cli
+
+##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
+
+* 設定ファイル編集: `~/.gemini/settings.json`ファイルを編集します。
+```
+{
+  "mcpServers": {
+    "acp": {
+      "httpUrl": "https://acp.example.com/api/mcp"
+    }
+  }
+}
+```
+
+* OAuthをサポートするサーバーは自動的に検出されます。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-102950.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-102950.png)
+</figure>
+
+##### 2. OAuthログインを実行します。
+
+* Gemini CLIで`/mcp auth`コマンドを使用して認証を進めます。
+  ```
+/mcp auth acp
+  ```
+* ブラウザが開いたら、QueryPieログインページでログインします。 <br/>正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251211-104053.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-104053.png)
+  </figure>
+
+<figure data-layout="center" data-align="center">
+![image-20251211-103846.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-103846.png)
+</figure>
+
+ブラウザが自動的に開かない場合は、上図のように画面上に表示されるアドレスをブラウザに貼り付けて進めることもできます。
+---
+
+#### Cursor
+
+##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
+
+設定ファイル編集: `~/.cursor/mcp.json`ファイルを作成または編集します:
+```
+{
+  "mcpServers": {
+    "acp": {
+      "url": "https://querypie.example.com/api/mcp"
+    }
+  }
+}
+```
+
+##### 2. OAuthログインを実行します。
+
+* Cursorを再起動するか、MCPサーバーリストを更新します。
+* MCPサーバーリストでacpサーバーの認証ボタンをクリックします。
+* Webブラウザが開き、ACPのログインページが表示されます。
+* ACPで認証を完了すると、CursorでMCP機能を使用できます。
+
+##### 3. MCP接続を確認します。
+
+Cursor SettingsでMCPツールが正しく連携されているか確認します。
+
+<figure data-layout="center" data-align="center">
+![image-20251212-012243.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251212-012243.png)
+</figure>
+---
+
+#### Windsurf
+
+##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
+
+設定ファイルを作成または編集します: `~/.codeium/windsurf/mcp_config.json`
+```
+{
+  "mcpServers": {
+    "acp": {
+      "serverUrl": "https://querypie.example.com/api/mcp"
+    }
+  }
+}
+```
+
+##### 2. OAuthログインを実行します。
+
+* Windsurfを再起動するか、MCPサーバーリストを更新します。
+* MCPサーバーリストでacpサーバーの認証ボタンをクリックします。
+* Webブラウザが開き、ACPのログインページが表示されます。
+* ACPで認証を完了すると、WindsurfでMCP機能を使用できます。
+
+##### 3. MCP接続を確認します。
+
+Windsurf Agents画面でMCPツールが正しく連携されているか確認します。
+
+<figure data-layout="center" data-align="center">
+![image-20251212-012554.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251212-012554.png)
+</figure>
+
+
+### QueryPie ACP Community Edition MCP serverのサポートTool一覧
+
+#### DAC (Database Access Control)
+
+データベースアクセスおよびクエリ実行関連のツールです。
+
+| Tool                              | 説明                                       |
+| --------------------------------- | ---------------------------------------- |
+| `dac_list_accessible_connections` | 現在のユーザーがアクセス可能なDB接続一覧の照会（ページネーション対応）   |
+| `dac_execute_query`               | 指定したDB接続でSQLクエリを実行。SELECTはCSV結果を返す |
+---
+
+#### SAC (Server Access Control)
+
+サーバーアクセスおよびSSHシェルセッション関連のツールです。
+
+| Tool                          | 説明                   |
+| ----------------------------- | -------------------- |
+| `sac_list_assigned_roles`     | 現在のユーザーに割り当てられたロール一覧   |
+| `sac_select_role`             | ロール選択/適用             |
+| `sac_list_accessible_servers` | 選択したロールでアクセス可能なサーバー一覧 |
+| `sac_start_shell`             | サーバーにSSHシェルセッションを開始      |
+| `sac_list_running_shell`      | 実行中のシェルセッション一覧        |
+| `sac_execute_command`         | シェルセッションでコマンドを実行        |
+| `sac_get_shell_output`        | 以前のコマンドの出力を照会        |
+| `sac_stop_shell`              | シェルセッションを終了              |
+---
+
+#### KAC (Kubernetes Access Control)
+
+Kubernetesクラスター管理およびリソース操作ツールです。
+
+##### User Tools
+
+一般ユーザーが割り当てられた権限内で使用できるツールです。
+
+| Tool                            | 説明                  |
+| ------------------------------- | ------------------- |
+| `kac_list_accessible_clusters`  | アクセス可能なK8sクラスター一覧  |
+| `kac_analyze_kube_cluster`      | クラスター状態分析および問題レポート |
+| `kac_execute_list_resources`    | K8sリソース一覧の照会       |
+| `kac_execute_get_resource`      | K8sリソースの詳細情報を照会    |
+| `kac_execute_create_resource`   | K8sリソースを作成          |
+| `kac_execute_update_resource`   | K8sリソースを更新        |
+| `kac_execute_delete_resource`   | K8sリソースを削除          |
+| `kac_execute_list_node_metrics` | ノードメトリクスの照会           |
+| `kac_execute_list_events`       | クラスターイベントの照会         |
+
+##### Admin Tools
+
+管理者権限が必要なツールです。
+
+| Tool                             | 説明                        |
+| -------------------------------- | ------------------------- |
+| `kac_create_cloud_provider`      | クラウドプロバイダーを追加（AWS対応）    |
+| `kac_synchronize_cloud_provider` | クラウドプロバイダーからクラスターを同期     |
+| `kac_create_policy`              | K8sアクセス制御ポリシーを作成（YAML形式） |
+| `kac_create_role`                | ロールを作成（ポリシーグループ）             |
+| `kac_assign_role_me`             | 現在のユーザーにロールを割り当て            |
+---
+
+### 権限およびセキュリティ
+
+* 各ToolはACP権限システム（`@Authorization`）に従います。
+* ACPで各利用者に提供されるDACのDB接続、Privilege Typeに応じたアクセス制御ポリシー、SACのサーバーアクセス制御ポリシー、KACのアクセス制御ポリシーに従い、自分に付与された権限範囲内でのみToolを使用できます。
+* すべてのTool呼び出しはACPの監査ログに記録されます。
+* ACPのIPアクセス制御ポリシーが適用されます。
+
+### トラブルシューティング
+
+#### 接続失敗
+
+* ACP APIサーバーが実行中か確認
+* ネットワーク/ファイアウォール設定を確認
+
+#### 権限エラー
+
+* 該当Toolに必要な権限があるか確認
+* ロールが正しく割り当てられているか確認
+* IP許可リストに現在のIPが含まれているか確認
+
