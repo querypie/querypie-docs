@@ -40,7 +40,7 @@ MCP関連参考資料
 
 AIコーディングアシスタントを設定するには、MCP Serverの役割を果たすQueryPie ACPのURLを入力する必要があります。
 このMCP Server URLの設定は、複数のAIコーディングアシスタントで共通して行う必要があります。
-```
+```text
 {QueryPie_URL}/api/mcp
 ```
 
@@ -53,7 +53,7 @@ AIコーディングアシスタントを設定するには、MCP Serverの役�
 
 ##### 1. MCPサーバーアドレスを追加します。
 
-```
+```bash
 claude mcp add querypie --transport http {QuerPie_URL}/api/mcp
 ```
 
@@ -105,7 +105,7 @@ MCP server追加
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
 * 設定ファイル編集: `~/.gemini/settings.json`ファイルを編集します。
-```
+```json
 {
   "mcpServers": {
     "acp": {
@@ -124,7 +124,7 @@ MCP server追加
 ##### 2. OAuthログインを実行します。
 
 * Gemini CLIで`/mcp auth`コマンドを使用して認証を進めます。
-  ```
+  ```bash
 /mcp auth acp
   ```
 * ブラウザが開いたら、QueryPieログインページでログインします。 <br/>正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。<br/>
@@ -144,7 +144,7 @@ MCP server追加
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
 設定ファイル編集: `~/.cursor/mcp.json`ファイルを作成または編集します:
-```
+```json
 {
   "mcpServers": {
     "acp": {
@@ -175,7 +175,7 @@ Cursor SettingsでMCPツールが正しく連携されているか確認しま�
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
 設定ファイルを作成または編集します: `~/.codeium/windsurf/mcp_config.json`
-```
+```json
 {
   "mcpServers": {
     "acp": {

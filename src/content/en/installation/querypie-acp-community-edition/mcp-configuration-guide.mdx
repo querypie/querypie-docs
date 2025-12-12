@@ -40,7 +40,7 @@ MCP Reference Materials
 
 To configure AI coding assistants, you need to enter the URL of QueryPie ACP that acts as an MCP Server.
 Setting this MCP Server URL is a common step required across multiple AI coding assistants.
-```
+```text
 {QueryPie_URL}/api/mcp
 ```
 
@@ -53,7 +53,7 @@ Example: `https://querypie.example.com/api/mcp`
 
 ##### 1. Add MCP server address.
 
-```
+```bash
 claude mcp add querypie --transport http {QuerPie_URL}/api/mcp
 ```
 
@@ -105,7 +105,7 @@ Add MCP server
 ##### 1. Edit configuration file to add MCP server address.
 
 * Edit configuration file: Edit the `~/.gemini/settings.json` file.
-```
+```json
 {
   "mcpServers": {
     "acp": {
@@ -124,7 +124,7 @@ Add MCP server
 ##### 2. Perform OAuth login.
 
 * Use the `/mcp auth` command in Gemini CLI to proceed with authentication.
-  ```
+  ```bash
 /mcp auth acp
   ```
 * When the browser opens, log in on the QueryPie login page. <br/>If login is successful, the browser will display "Authentication Successful".<br/>
@@ -144,7 +144,7 @@ If the browser does not open automatically, you can also proceed by copying and 
 ##### 1. Edit configuration file to add MCP server address.
 
 Edit configuration file: Create or edit the `~/.cursor/mcp.json` file:
-```
+```json
 {
   "mcpServers": {
     "acp": {
@@ -175,7 +175,7 @@ Check in Cursor Settings that MCP tools are properly integrated.
 ##### 1. Edit configuration file to add MCP server address.
 
 Create or edit configuration file: `~/.codeium/windsurf/mcp_config.json`
-```
+```json
 {
   "mcpServers": {
     "acp": {
