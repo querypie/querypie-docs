@@ -22,7 +22,8 @@ The currently supported IdP integration settings are as follows:
 
 <Callout type="info">
 * Multiple Identity Providers are not currently supported simultaneously. You must use one IdP in addition to Internal database (QueryPie user ID/PW) authentication.
-* MFA (Multi-factor Authentication) support is available only with Internal DB, LDAP, and Custom Identity Provider.
+* MFA (Multi-factor Authentication) support is available only with Internal DB, LDAP, and Custom Identity Provider. 
+* Starting from 11.5.0, when using Internal DB with LDAP or Internal DB with Custom Identity Provider, you can use MFA in each respective setting.<br/>For example, if MFA is set in LDAP and MFA is set in Internal DB, user accounts that are LDAP accounts are controlled by LDAP's MFA settings, and user accounts in Internal DB are controlled by Internal DB's MFA settings.
 * Scheduled periodic synchronization is available only for LDAP, Okta, One Login, and Custom Identity Provider.
 </Callout>
 
@@ -94,68 +95,68 @@ To synchronize user group information and membership information from LDAP, enab
 <col/>
 </colgroup>
 <tbody>
-<tr>
-<th data-highlight-colour="#f0f1f2">
+<tr local-id="cfa528d4-7ee6-483e-8b39-8d8a70310476">
+<th data-highlight-colour="#f0f1f2" local-id="2cdeca85-1e14-4556-8faf-7e77b327d3b9">
 **Attribute**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th data-highlight-colour="#f0f1f2" local-id="53109c7a-a40d-4a4e-9d6a-73c4ddc826c4">
 **Required**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th data-highlight-colour="#f0f1f2" local-id="e24af88f-9192-424a-b43f-025bb31f869d">
 **Description**
 </th>
 </tr>
-<tr>
-<td data-highlight-colour="#ffffff">
+<tr local-id="75805077-450e-4657-bfe4-3cf78a4d5928">
+<td data-highlight-colour="#ffffff" local-id="ea2a1ab7-7f7f-496d-9a6c-da87bf25e27e">
 Group Base DN
 </td>
-<td data-highlight-colour="#ffffff">
+<td data-highlight-colour="#ffffff" local-id="b89474cb-0a96-449d-8a83-c1ca1e5a2b56">
 Required
 </td>
-<td data-highlight-colour="#ffffff">
+<td data-highlight-colour="#ffffff" local-id="45f67115-11f7-474d-b15e-7189fd10c205">
 Enter the group Base DN value of the LDAP server.
 Only groups under this path are synchronized as Groups.
 * Example: `dc=example,dc=com`
 </td>
 </tr>
-<tr>
-<td data-highlight-colour="#ffffff">
+<tr local-id="acfd3ac8-1ccf-4790-87fa-969d15cf52d6">
+<td data-highlight-colour="#ffffff" local-id="18032ff5-11ab-427f-85c6-a8246f91a155">
 Group Search Filter
 </td>
-<td data-highlight-colour="#ffffff">
+<td data-highlight-colour="#ffffff" local-id="646d1d8d-c6ab-4445-976e-a92acb4ad672">
 Required
 </td>
-<td data-highlight-colour="#ffffff">
+<td data-highlight-colour="#ffffff" local-id="51af7682-029c-474f-b1d7-9658042490f0">
 Enter the filter value to fetch groups from the LDAP server.
 * Example: `objectclass=posixGroup`
 </td>
 </tr>
-<tr>
-<td>
+<tr local-id="5c723610-073d-4379-a2fe-ee2392355478">
+<td local-id="ec5bca28-b3ec-4bdb-be11-90e106ad68b3">
 Group ID
 </td>
-<td>
+<td local-id="7ae2e57e-9b05-42b5-a721-e2289dc4a1ea">
 Required
 </td>
-<td>
+<td local-id="588d0912-0f58-4f46-9b25-c50c90650b50">
 Enter the attribute value to use as the group identifier.
 * Example: `gidNumber`
 </td>
 </tr>
-<tr>
-<td data-highlight-colour="#ffffff" rowspan="2">
+<tr local-id="f6c5bd3a-d125-41ed-a76f-09b7ba17f1b1">
+<td data-highlight-colour="#ffffff" rowspan="2" local-id="22031ab0-9082-4f3f-bc9f-c375ce2a39a5">
 Membership Type
 </td>
-<td data-highlight-colour="#ffffff" rowspan="2">
+<td data-highlight-colour="#ffffff" rowspan="2" local-id="7db6a6a6-8fcc-4a8f-b59e-544ccd580c72">
 Required
 </td>
-<td data-highlight-colour="#ffffff">
+<td data-highlight-colour="#ffffff" local-id="1dc8e309-8401-4397-ba11-1dfda8f45536">
 If user entries contain group information, select `Include group information in user entries` and enter the attribute to reference in the field below.
 * Example: `member`, `uniqueMember`, `memberUid`, etc.
 </td>
 </tr>
-<tr>
-<td data-highlight-colour="#ffffff">
+<tr local-id="97e7cec3-7328-4f30-8b01-295ca445a63f">
+<td data-highlight-colour="#ffffff" local-id="01bae4e3-5d99-4208-ba57-3880491c4780">
 If group entries contain user information, select `Include user information in group entries` and enter the attribute to reference in the field below.
 * Example: `gidNumber`
 </td>
