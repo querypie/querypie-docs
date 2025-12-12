@@ -51,7 +51,7 @@ class Config:
     """Centralized configuration management"""
     base_url: str = "https://querypie.atlassian.net/wiki"
     space_key: str = "QM"  # Confluence space key
-    days: int = 7  # Number of days to look back for modified pages
+    days: int = 21  # Number of days to look back for modified pages
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "var"
@@ -281,8 +281,8 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
         return self.make_request(url, "V1 API attachments")
 
-    def get_recently_modified_pages(self, days: int = 7, space_key: str = "QM") -> List[str]:
-        """Get list of page IDs modified in the last N days from the specified space"""
+    def get_recently_modified_pages(self, days: int, space_key: str) -> List[str]:
+        """Get a list of page IDs modified in the last N days from the specified space"""
         try:
             # Calculate the date threshold
             threshold_date = datetime.now() - timedelta(days=days)

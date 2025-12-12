@@ -4,8 +4,17 @@ set -o errexit -o nounset
 
 case "${1:-help}" in
   pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|confluence_xhtml_to_markdown.py)
-    echo "+ python bin/$@"
-    exec python "bin/$@"
+    command=$1
+    shift
+    echo "+ python bin/$command $@"
+    exec python bin/$command "$@"
+    ;;
+  title)
+    shift
+    echo "+ python bin/pages_of_confluence.py $@"
+    python bin/pages_of_confluence.py "$@"
+    echo "+ python bin/translate_titles.py"
+    python bin/translate_titles.py
     ;;
   generate_commands)
     shift

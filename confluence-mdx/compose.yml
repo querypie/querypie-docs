@@ -48,6 +48,8 @@ services:
     env_file:
       - .env
     volumes:
+      # Use translation file from host
+      - ./etc/korean-titles-translations.txt:/workdir/etc/korean-titles-translations.txt
       # Mount files in var to host
       - ./var/pages.yaml:/workdir/var/pages.yaml
       - ./var/list.en.txt:/workdir/var/list.en.txt

@@ -30,22 +30,22 @@ cache/ 디렉토리를 채우는 경우,  bin/pages_of_confluence.py 를 실행�
 최근 1주일 Confluence Space 에서 업데이트된 문서를 한국어 MDX 로 변환합니다.
 ```bash
 # --recent 옵션이 기본 적용됩니다.
-docker compose --progress=plain full
-docker compose --progress=plain full --recent
+docker compose --progress=plain run --rm confluence-mdx full
+docker compose --progress=plain run --rm confluence-mdx full --recent
 ```
 
 전체 Confluence Space 문서를 내려받아 한국어 MDX 로 변환합니다.
 ```bash
 # --remote: Confluence API 를 호출하여 var/ 데이터를 업데이트합니다.
-docker compose --progress=plain full --remote
+docker compose --progress=plain run --rm confluence-mdx full --remote
 # --attachments: 첨부파일을 내려받아 변환하는 작업을 포함합니다.
-docker compose --progress=plain full --remote --attachments
+docker compose --progress=plain run --rm confluence-mdx full --remote --attachments
 ```
 
 Confluence API 를 호출하지 않고, `var/`에 저장된 데이터를 이용하여 한국어 MDX 전체를 변환합니다.
 ```bash
 # --local: Confluence API 를 호출하지 않습니다.
-docker compose --progress=plain full --local
+docker compose --progress=plain run --rm confluence-mdx full --local
 ```
 
 ## GitHub Action 설정
