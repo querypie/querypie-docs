@@ -1107,7 +1107,9 @@ class MultiLineParser:
         elif node.name in ['a']:
             self.markdown_lines.append(SingleLineParser(node).as_markdown)
         elif node.name in ['hr']:
-            self.markdown_lines.append(f'---\n')
+            # Using --- after a sentence means an H2 heading.
+            # To prevent ambiguity with headings, use ______ for a horizontal rule.
+            self.markdown_lines.append(f'______\n')
         else:
             logging.warning(f"MultiLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]\n')
