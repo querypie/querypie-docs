@@ -881,6 +881,14 @@ class ConfluencePageProcessor:
                     space_key=self.config.space_key
                 )
                 
+                # Exclude specific page_id from collection (576585864)
+                # 576585864 - https://querypie.atlassian.net/wiki/spaces/QM/overview
+                excluded_page_id = "576585864"
+                original_count = len(page_ids)
+                page_ids = [pid for pid in page_ids if pid != excluded_page_id]
+                if original_count != len(page_ids):
+                    self.logger.info(f"Excluded page ID {excluded_page_id} from collection ({original_count} -> {len(page_ids)} pages)")
+                
                 # Download each page through all 4 stages and output to stdout
                 # Store downloaded pages for list.txt
                 self.logger.warning(f"Downloading {len(page_ids)} recently modified pages")
