@@ -11,7 +11,8 @@ import {
   BookOpenIcon,
   UserIcon,
   Cog6ToothIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline';
 
 # QueryPie ACP 제품 문서에 오신 것을 환영합니다
@@ -64,14 +65,14 @@ QueryPie ACP를 처음 접하시는 분들을 위한 가이드입니다.
 <DescriptionCards num="2">
   <DescriptionCards.Card
     title="Overview"
-    description="제품 전체 이해 및 주요 특징"
+    description="제품 전체를 이해하기 위한 소개, 주요 특징을 설명합니다."
     href="/ko/querypie-overview"
     icon={<BookOpenIcon />}
     arrow
   />
   <DescriptionCards.Card
     title="사용자 매뉴얼"
-    description="기본 사용법 및 기능 학습"
+    description="대상 시스템에 접근하는 이용자를 대상으로 사용법을 안내합니다."
     href="/ko/user-manual"
     icon={<UserIcon />}
     arrow
@@ -84,16 +85,23 @@ QueryPie ACP를 처음 접하시는 분들을 위한 가이드입니다.
 <DescriptionCards num="2">
   <DescriptionCards.Card
     title="관리자 매뉴얼"
-    description="설정, 보안정책 관리"
+    description="연결하려는 시스템의 설정, 접근제어와 감사로깅을 위한 보안정책을 관리하는 방법을 안내합니다."
     href="/ko/administrator-manual"
     icon={<Cog6ToothIcon />}
     arrow
   />
   <DescriptionCards.Card
     title="Release Notes"
-    description="최신 업데이트 및 변경사항"
+    description="최신 릴리스에 대한 정보, 기능 개선사항과 버그픽스 내역을 안내합니다."
     href="/ko/release-notes"
     icon={<NewspaperIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="제품 설치와 기술지원"
+    description="제품 설치, 인프라 구성, MCP 설정 등 기술지원 정보를 제공합니다."
+    href="/ko/installation"
+    icon={<WrenchScrewdriverIcon />}
     arrow
   />
 </DescriptionCards>
@@ -107,7 +115,7 @@ Docker 기반의 간단한 설치로 7-10분 내에 바로 시작할 수 있습�
 한 줄 명령어 `bash <(curl https://dl.querypie.com/setup.v2.sh)`로 자동 설치가 가능하며, 1년간 유효한 무료 라이선스를 제공합니다.
 유효기간이 만료된 시기에, Community Edition 라이선스를 무료로 연장하여 사용할 수 있습니다.
 
-* **[QueryPie ACP 커뮤니티 에디션 설치 가이드](https://www.querypie.com/ko/features/documentation/querypie-install-guide)** - 무료 설치 및 체험 가이드
+* **[QueryPie ACP 커뮤니티 에디션 설치 가이드](installation/querypie-acp-community-edition)** - 무료 설치 및 체험 가이드
 
 ## 기술 지원
 

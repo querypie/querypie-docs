@@ -11,7 +11,8 @@ import {
   BookOpenIcon,
   UserIcon,
   Cog6ToothIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline';
 
 # Welcome to QueryPie ACP Product Documentation
@@ -64,14 +65,14 @@ A guide for those who are new to QueryPie ACP.
 <DescriptionCards num="2">
   <DescriptionCards.Card
     title="Overview"
-    description="Overall product understanding and key features"
+    description="Introduction to understand the overall product and explanation of key features."
     href="/en/querypie-overview"
     icon={<BookOpenIcon />}
     arrow
   />
   <DescriptionCards.Card
     title="User Manual"
-    description="Basic usage and feature learning"
+    description="Guide for users who access target systems on how to use the system."
     href="/en/user-manual"
     icon={<UserIcon />}
     arrow
@@ -84,16 +85,23 @@ Documentation for those responsible for system setup and management.
 <DescriptionCards num="2">
   <DescriptionCards.Card
     title="Administrator Manual"
-    description="Configuration and security policy management"
+    description="Guide on how to manage configuration of systems to connect, and security policies for access control and audit logging."
     href="/en/administrator-manual"
     icon={<Cog6ToothIcon />}
     arrow
   />
   <DescriptionCards.Card
     title="Release Notes"
-    description="Latest updates and changes"
+    description="Information about the latest release, feature improvements, and bug fixes."
     href="/en/release-notes"
     icon={<NewspaperIcon />}
+    arrow
+  />
+  <DescriptionCards.Card
+    title="Product Installation and Technical Support"
+    description="Technical support information including product installation, infrastructure configuration, and MCP setup."
+    href="/en/installation"
+    icon={<WrenchScrewdriverIcon />}
     arrow
   />
 </DescriptionCards>
@@ -107,7 +115,7 @@ You can get started immediately within 7-10 minutes with Docker-based simple ins
 Automatic installation is possible with a one-line command `bash <(curl https://dl.querypie.com/setup.v2.sh)`, and provides a free license valid for 1 year.
 When the validity period expires, you can extend the Community Edition license for free.
 
-* **[QueryPie ACP Community Edition Installation Guide](https://www.querypie.com/en/features/documentation/querypie-install-guide)** - Free installation and trial guide
+* **[QueryPie ACP Community Edition Installation Guide](installation/querypie-acp-community-edition)** - Free installation and trial guide
 
 ## Technical Support
 
