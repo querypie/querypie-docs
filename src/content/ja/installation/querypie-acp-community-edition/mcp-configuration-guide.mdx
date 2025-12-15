@@ -37,14 +37,13 @@ MCP関連参考資料
 
 AIコーディングアシスタントを設定するには、MCP Serverの役割を果たすQueryPie ACPのURLを入力する必要があります。
 このMCP Server URLの設定は、複数のAIコーディングアシスタントで共通して行う必要があります。
-```
-{QueryPie_URL}/api/mcp
-```
+
+`{QueryPie_URL}/api/mcp`
 
 `{QueryPie_URL}`は実行中のQueryPie ACP Community Editionのアドレスです。
 
 例) `https://querypie.example.com/api/mcp`
----
+______
 
 #### Claude Code
 
@@ -94,28 +93,39 @@ Connect to querypie.」メッセージが表示されます。
 
 ##### 3. MCP接続を確認します。
 
-次のコマンドで接続を確認します: `claude mcp list`
+claude codeを実行していない状態であれば`claude mcp list`コマンドでmcp接続を確認できます。
+
+<figure data-layout="center" data-align="center">
+![claude mcp listコマンド実行結果](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232657.png)
+<figcaption>
+claude mcp listコマンド実行結果
+</figcaption>
+</figure>
 
 クエリを通じて作業を実行してみます。
 
 <figure data-layout="center" data-align="center">
-!["アクセス可能なdb connectionの一覧を表示してください。"](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
+![クエリ例](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232033.png)
 <figcaption>
-"アクセス可能なdb connectionの一覧を表示してください。"
+クエリ例
 </figcaption>
 </figure>
 
+使用可能なツールの確認ができれば、進行に関するクエリが出力されます。
+'yes'または'yes, and don't ask again for querypie -…'を選択します。
+
 <figure data-layout="center" data-align="center">
-![MCPを通じてアクセス可能なDB接続設定を表示します。](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
+![回答例](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232144.png)
 <figcaption>
-MCPを通じてアクセス可能なDB接続設定を表示します。
+回答例
 </figcaption>
 </figure>
+
 
 認証管理: Claude Codeで`/mcp`コマンドを実行して認証状態を管理できます。
 認証トークンは自動的に更新されます。
 「Clear authentication」オプションで認証を解除できます。
----
+______
 
 #### gemini-cli
 
@@ -157,7 +167,7 @@ Gemini CLIで`/mcp auth`コマンドを使用して認証を進めます。
 </figure>
 
 ブラウザが自動的に開かない場合は、上図のように画面上に表示されるアドレスをブラウザに貼り付けて進めることもできます。
----
+______
 
 #### Cursor
 
@@ -188,7 +198,7 @@ Cursor SettingsでMCPツールが正しく連携されているか確認しま�
 <figure data-layout="center" data-align="center">
 ![image-20251212-012243.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251212-012243.png)
 </figure>
----
+______
 
 #### Windsurf
 
@@ -231,7 +241,7 @@ Windsurf Agents画面でMCPツールが正しく連携されているか確認�
 | --------------------------------- | ---------------------------------------- |
 | `dac_list_accessible_connections` | 現在のユーザーがアクセス可能なDB接続一覧の照会（ページネーション対応）   |
 | `dac_execute_query`               | 指定したDB接続でSQLクエリを実行。SELECTはCSV結果を返す |
----
+______
 
 #### SAC (Server Access Control)
 
@@ -247,7 +257,7 @@ Windsurf Agents画面でMCPツールが正しく連携されているか確認�
 | `sac_execute_command`         | シェルセッションでコマンドを実行        |
 | `sac_get_shell_output`        | 以前のコマンドの出力を照会        |
 | `sac_stop_shell`              | シェルセッションを終了              |
----
+______
 
 #### KAC (Kubernetes Access Control)
 
@@ -280,11 +290,11 @@ Kubernetesクラスター管理およびリソース操作ツールです。
 | `kac_create_policy`              | K8sアクセス制御ポリシーを作成（YAML形式） |
 | `kac_create_role`                | ロールを作成（ポリシーグループ）             |
 | `kac_assign_role_me`             | 現在のユーザーにロールを割り当て            |
----
+______
 
 ### 権限およびセキュリティ
 
-* 各ToolはACP権限システム（`@Authorization`）に従います。
+* 各ToolはACP権限システムに従います。
 * ACPで各利用者に提供されるDACのDB接続、Privilege Typeに応じたアクセス制御ポリシー、SACのサーバーアクセス制御ポリシー、KACのアクセス制御ポリシーに従い、自分に付与された権限範囲内でのみToolを使用できます。
 * すべてのTool呼び出しはACPの監査ログに記録されます。
 * ACPのIPアクセス制御ポリシーが適用されます。

@@ -37,14 +37,13 @@ MCP Reference Materials
 
 To configure AI coding assistants, you need to enter the URL of QueryPie ACP that acts as an MCP Server.
 Setting this MCP Server URL is a common step required across multiple AI coding assistants.
-```
-{QueryPie_URL}/api/mcp
-```
+
+`{QueryPie_URL}/api/mcp`
 
 `{QueryPie_URL}` is the address of the running QueryPie ACP Community Edition.
 
 Example: `https://querypie.example.com/api/mcp`
----
+______
 
 #### Claude Code
 
@@ -94,28 +93,39 @@ Connect to querypie." message.
 
 ##### 3. Verify MCP connection.
 
-Verify the connection with the following command: `claude mcp list`
+If Claude Code is not running, you can verify the MCP connection with the `claude mcp list` command.
+
+<figure data-layout="center" data-align="center">
+![Result of executing claude mcp list command](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232657.png)
+<figcaption>
+Result of executing claude mcp list command
+</figcaption>
+</figure>
 
 Try performing tasks through queries.
 
 <figure data-layout="center" data-align="center">
-!["Show me the list of accessible db connections."](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
+![Query example](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232033.png)
 <figcaption>
-"Show me the list of accessible db connections."
+Query example
 </figcaption>
 </figure>
 
+When available tools are confirmed, a query about proceeding will be displayed.
+Select 'yes' or 'yes, and don't ask again for querypie -…'.
+
 <figure data-layout="center" data-align="center">
-![Shows DB connection settings accessible through MCP.](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
+![Response example](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232144.png)
 <figcaption>
-Shows DB connection settings accessible through MCP.
+Response example
 </figcaption>
 </figure>
+
 
 Authentication management: You can manage authentication status by running the `/mcp` command in Claude Code.
 Authentication tokens are automatically renewed.
 You can clear authentication using the "Clear authentication" option.
----
+______
 
 #### gemini-cli
 
@@ -284,7 +294,7 @@ Tools that require administrator privileges.
 
 ### Permissions and Security
 
-* Each Tool follows the ACP permission system (`@Authorization`).
+* Each Tool follows the ACP permission system.
 * Based on the DAC DB connections, access control policies according to Privilege Type, SAC server access control policies, and KAC access control policies provided to each user in ACP, users can only use Tools within the scope of permissions granted to them.
 * All Tool calls are recorded in ACP audit logs.
 * ACP IP access control policies are applied.
