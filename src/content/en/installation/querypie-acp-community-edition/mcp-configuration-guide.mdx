@@ -13,12 +13,9 @@ You can now safely perform various tasks using LLMs in various AI coding assista
 
 <Callout type="info">
 MCP Reference Materials
-
-[https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro)
-
-[https://modelcontextprotocol.io/docs/learn/architecture](https://modelcontextprotocol.io/docs/learn/architecture)
-
-[https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers)
+* [https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro) 
+* [https://modelcontextprotocol.io/docs/learn/architecture](https://modelcontextprotocol.io/docs/learn/architecture)
+* [https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers) 
 </Callout>
 
 #### Supported AI Coding Assistants
@@ -40,7 +37,7 @@ MCP Reference Materials
 
 To configure AI coding assistants, you need to enter the URL of QueryPie ACP that acts as an MCP Server.
 Setting this MCP Server URL is a common step required across multiple AI coding assistants.
-```text
+```
 {QueryPie_URL}/api/mcp
 ```
 
@@ -53,7 +50,7 @@ Example: `https://querypie.example.com/api/mcp`
 
 ##### 1. Add MCP server address.
 
-```bash
+```
 claude mcp add querypie --transport http {QuerPie_URL}/api/mcp
 ```
 
@@ -68,44 +65,64 @@ Add MCP server
 
 ##### 2. Perform OAuth login.
 
-* Enter `/mcp`.<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092208.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092208.png)
-  </figure>
-* Select `querypie` from the list.
-* Select `Authenticate`.<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092454.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092454.png)
-  </figure>
-* When the browser opens, log in on the QueryPie login page. <br/>If login is successful, the browser will display "Authentication Successful".<br/> <br/> Claude Code will also display "Authentication successful. Connect to querypie." <br/> 
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092741.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092741.png)
-  </figure>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092842.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092842.png)
-  </figure>
+First, enter `/mcp` to check the status of currently configured MCP Servers.
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092208.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092208.png)
+</figure>
+
+Select `querypie` from the list.
+Then, select `Authenticate`.
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092454.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092454.png)
+</figure>
+
+When the browser opens, log in on the QueryPie login page.
+If login is successful, the browser will display "Authentication Successful".
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092741.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092741.png)
+</figure>
+
+Claude Code will also display "Authentication successful.
+Connect to querypie." message.
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092842.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092842.png)
+</figure>
 
 ##### 3. Verify MCP connection.
 
-* Verify the connection with the following command: `claude mcp list`
-* Try performing tasks through queries.<br/> <br/> 
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-093056.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
-  </figure>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-093130.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
-  </figure>
-* Authentication management: You can manage authentication status by running the `/mcp` command in Claude Code.
-    * Authentication tokens are automatically renewed.
-    * You can clear authentication using the "Clear authentication" option.
+Verify the connection with the following command: `claude mcp list`
+
+Try performing tasks through queries.
+
+<figure data-layout="center" data-align="center">
+!["Show me the list of accessible db connections."](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
+<figcaption>
+"Show me the list of accessible db connections."
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![Shows DB connection settings accessible through MCP.](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
+<figcaption>
+Shows DB connection settings accessible through MCP.
+</figcaption>
+</figure>
+
+Authentication management: You can manage authentication status by running the `/mcp` command in Claude Code.
+Authentication tokens are automatically renewed.
+You can clear authentication using the "Clear authentication" option.
 ---
 
 #### gemini-cli
 
 ##### 1. Edit configuration file to add MCP server address.
 
-* Edit configuration file: Edit the `~/.gemini/settings.json` file.
-```json
+Edit configuration file: Edit the `~/.gemini/settings.json` file.
+```
 {
   "mcpServers": {
     "acp": {
@@ -115,7 +132,7 @@ Add MCP server
 }
 ```
 
-* Servers that support OAuth are automatically detected.
+Servers that support OAuth are automatically detected.
 
 <figure data-layout="center" data-align="center">
 ![image-20251211-102950.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-102950.png)
@@ -123,14 +140,17 @@ Add MCP server
 
 ##### 2. Perform OAuth login.
 
-* Use the `/mcp auth` command in Gemini CLI to proceed with authentication.
-  ```bash
-/mcp auth acp
-  ```
-* When the browser opens, log in on the QueryPie login page. <br/>If login is successful, the browser will display "Authentication Successful".<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-104053.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-104053.png)
-  </figure>
+Use the `/mcp auth` command in Gemini CLI to proceed with authentication.
+```
+ /mcp auth acp
+```
+
+When the browser opens, log in on the QueryPie login page.
+If login is successful, the browser will display "Authentication Successful".
+
+<figure data-layout="center" data-align="center">
+![image-20251211-104053.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-104053.png)
+</figure>
 
 <figure data-layout="center" data-align="center">
 ![image-20251211-103846.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-103846.png)
@@ -144,7 +164,7 @@ If the browser does not open automatically, you can also proceed by copying and 
 ##### 1. Edit configuration file to add MCP server address.
 
 Edit configuration file: Create or edit the `~/.cursor/mcp.json` file:
-```json
+```
 {
   "mcpServers": {
     "acp": {
@@ -175,7 +195,7 @@ Check in Cursor Settings that MCP tools are properly integrated.
 ##### 1. Edit configuration file to add MCP server address.
 
 Create or edit configuration file: `~/.codeium/windsurf/mcp_config.json`
-```json
+```
 {
   "mcpServers": {
     "acp": {

@@ -13,12 +13,9 @@ QueryPie ACP (Access Control Platform) Community Edition 11.5.0にRemote MCP (Mo
 
 <Callout type="info">
 MCP関連参考資料
-
-[https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro)
-
-[https://modelcontextprotocol.io/docs/learn/architecture](https://modelcontextprotocol.io/docs/learn/architecture)
-
-[https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers)
+* [https://modelcontextprotocol.io/docs/getting-started/intro](https://modelcontextprotocol.io/docs/getting-started/intro) 
+* [https://modelcontextprotocol.io/docs/learn/architecture](https://modelcontextprotocol.io/docs/learn/architecture)
+* [https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers) 
 </Callout>
 
 #### サポートされているAIコーディングアシスタント
@@ -40,7 +37,7 @@ MCP関連参考資料
 
 AIコーディングアシスタントを設定するには、MCP Serverの役割を果たすQueryPie ACPのURLを入力する必要があります。
 このMCP Server URLの設定は、複数のAIコーディングアシスタントで共通して行う必要があります。
-```text
+```
 {QueryPie_URL}/api/mcp
 ```
 
@@ -53,7 +50,7 @@ AIコーディングアシスタントを設定するには、MCP Serverの役�
 
 ##### 1. MCPサーバーアドレスを追加します。
 
-```bash
+```
 claude mcp add querypie --transport http {QuerPie_URL}/api/mcp
 ```
 
@@ -68,44 +65,64 @@ MCP server追加
 
 ##### 2. OAuthログインを実行します。
 
-* `/mcp`を入力します。<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092208.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092208.png)
-  </figure>
-* リストから`querypie`を選択します。
-* `Authenticate`を選択します。<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092454.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092454.png)
-  </figure>
-* ブラウザが開いたら、QueryPieログインページでログインします。 <br/>正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。<br/> <br/> Claude Codeでも「Authentication successful. Connect to querypie.」メッセージが表示されます。 <br/> 
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092741.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092741.png)
-  </figure>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-092842.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092842.png)
-  </figure>
+まず、`/mcp`を入力して、現在設定されているMCP Serverの状態を確認します。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092208.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092208.png)
+</figure>
+
+リストから`querypie`を選択します。
+その後、`Authenticate`を選択します。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092454.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092454.png)
+</figure>
+
+ブラウザが開いたら、QueryPieログインページでログインします。
+正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092741.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092741.png)
+</figure>
+
+Claude Codeでも「Authentication successful.
+Connect to querypie.」メッセージが表示されます。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-092842.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-092842.png)
+</figure>
 
 ##### 3. MCP接続を確認します。
 
-* 次のコマンドで接続を確認します: `claude mcp list`
-* クエリを通じて作業を実行してみます。<br/> <br/> 
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-093056.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
-  </figure>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-093130.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
-  </figure>
-* 認証管理: Claude Codeで`/mcp`コマンドを実行して認証状態を管理できます。
-    * 認証トークンは自動的に更新されます。
-    * 「Clear authentication」オプションで認証を解除できます。
+次のコマンドで接続を確認します: `claude mcp list`
+
+クエリを通じて作業を実行してみます。
+
+<figure data-layout="center" data-align="center">
+!["アクセス可能なdb connectionの一覧を表示してください。"](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093056.png)
+<figcaption>
+"アクセス可能なdb connectionの一覧を表示してください。"
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+![MCPを通じてアクセス可能なDB接続設定を表示します。](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-093130.png)
+<figcaption>
+MCPを通じてアクセス可能なDB接続設定を表示します。
+</figcaption>
+</figure>
+
+認証管理: Claude Codeで`/mcp`コマンドを実行して認証状態を管理できます。
+認証トークンは自動的に更新されます。
+「Clear authentication」オプションで認証を解除できます。
 ---
 
 #### gemini-cli
 
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
-* 設定ファイル編集: `~/.gemini/settings.json`ファイルを編集します。
-```json
+設定ファイル編集: `~/.gemini/settings.json`ファイルを編集します。
+```
 {
   "mcpServers": {
     "acp": {
@@ -115,7 +132,7 @@ MCP server追加
 }
 ```
 
-* OAuthをサポートするサーバーは自動的に検出されます。
+OAuthをサポートするサーバーは自動的に検出されます。
 
 <figure data-layout="center" data-align="center">
 ![image-20251211-102950.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-102950.png)
@@ -123,14 +140,17 @@ MCP server追加
 
 ##### 2. OAuthログインを実行します。
 
-* Gemini CLIで`/mcp auth`コマンドを使用して認証を進めます。
-  ```bash
-/mcp auth acp
-  ```
-* ブラウザが開いたら、QueryPieログインページでログインします。 <br/>正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。<br/>
-  <figure data-layout="center" data-align="center">
-  ![image-20251211-104053.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-104053.png)
-  </figure>
+Gemini CLIで`/mcp auth`コマンドを使用して認証を進めます。
+```
+ /mcp auth acp
+```
+
+ブラウザが開いたら、QueryPieログインページでログインします。
+正常にログインすると、ブラウザに「Authentication Successful」メッセージが表示されます。
+
+<figure data-layout="center" data-align="center">
+![image-20251211-104053.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-104053.png)
+</figure>
 
 <figure data-layout="center" data-align="center">
 ![image-20251211-103846.png](/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251211-103846.png)
@@ -144,7 +164,7 @@ MCP server追加
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
 設定ファイル編集: `~/.cursor/mcp.json`ファイルを作成または編集します:
-```json
+```
 {
   "mcpServers": {
     "acp": {
@@ -175,7 +195,7 @@ Cursor SettingsでMCPツールが正しく連携されているか確認しま�
 ##### 1. 設定ファイルを編集してMCPサーバーアドレスを追加します。
 
 設定ファイルを作成または編集します: `~/.codeium/windsurf/mcp_config.json`
-```json
+```
 {
   "mcpServers": {
     "acp": {
