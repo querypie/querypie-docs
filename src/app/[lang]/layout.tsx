@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import React from 'react';
 import { LastUpdated } from '@/components/last-updated';
 import LanguageSelector2 from "@/components/language-selector2";
+import TableWidthFix from "@/components/table-width-fix";
 
 const defaultMetadata: Metadata = {
   title: {
@@ -95,6 +96,7 @@ export default async function RootLayout({ children, params }) {
           }}
           lastUpdated={<LastUpdated locale={lang} />}
         >
+          <TableWidthFix />
           {children}
         </Layout>
       </body>

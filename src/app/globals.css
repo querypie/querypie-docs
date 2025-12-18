@@ -31,4 +31,106 @@ article main figure figcaption {
 /* Custom styles for QueryPie branding */
 .querypie-custom {
   /* Add QueryPie specific styles here */
-} 
+}
+
+/* Table overflow fix - Ensure tables fit within main element width */
+/* Fix for tables with data-table-width attribute that exceed parent width */
+/* 
+ * When a table has data-table-width attribute and its content exceeds the parent width,
+ * we make the table itself a scrollable container while maintaining its internal table structure.
+ */
+article main table[data-table-width] {
+  display: block;
+  overflow-x: auto;
+  overflow-y: visible;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Restore table display for table children to maintain proper table structure */
+article main table[data-table-width] > thead,
+article main table[data-table-width] > tbody,
+article main table[data-table-width] > tfoot {
+  display: table;
+  width: 100%;
+  table-layout: auto;
+}
+
+article main table[data-table-width] > colgroup {
+  display: table-column-group;
+}
+
+article main table[data-table-width] > colgroup > col {
+  display: table-column;
+}
+
+/* Ensure table rows and cells maintain proper table layout */
+article main table[data-table-width] tr {
+  display: table-row;
+}
+
+article main table[data-table-width] td,
+article main table[data-table-width] th {
+  display: table-cell;
+  white-space: normal;
+  word-wrap: break-word;
+  vertical-align: top;
+}
+
+/* Fix for all tables (including GFM markdown tables) to fit within main element width */
+/* Override Nextra's table styles to ensure tables don't overflow main element */
+/* Use block display with overflow for scrolling, but maintain table structure internally */
+article main > table,
+article main > * > table {
+  display: block !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Restore table display for table children to maintain proper table structure */
+/* Important: Use fixed layout to ensure all rows use the same column widths */
+/* Make thead and tbody share the same table structure with fixed layout */
+article main > table > thead,
+article main > table > tbody,
+article main > table > tfoot,
+article main > * > table > thead,
+article main > * > table > tbody,
+article main > * > table > tfoot {
+  display: table !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+article main > table > colgroup,
+article main > * > table > colgroup {
+  display: table-column-group !important;
+}
+
+article main > table > colgroup > col,
+article main > * > table > colgroup > col {
+  display: table-column !important;
+}
+
+/* Ensure table rows and cells maintain proper table layout */
+article main > table tr,
+article main > * > table tr {
+  display: table-row !important;
+}
+
+article main > table td,
+article main > table th,
+article main > * > table td,
+article main > * > table th {
+  display: table-cell !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  vertical-align: top;
+}
