@@ -149,11 +149,11 @@ DB_USERNAME=
 ## Suggested: 16-char random string via `openssl rand -hex 8`
 DB_PASSWORD=
 DB_MAX_CONNECTION_SIZE=20
-## If you're using AWS Aurora, use the software.amazon.jdbc.Driver instead of org.mariadb.jdbc.Driver for automatic failover handling.
+## If you’re using AWS Aurora, use the software.amazon.jdbc.Driver instead of org.mariadb.jdbc.Driver for automatic failover handling.
 DB_DRIVER_CLASS=org.mariadb.jdbc.Driver
 
 # Redis
-## REDIS_NODES should be specified as a "Host:Port" combination.
+## REDIS_NODES should be specified as a “Host:Port” combination.
 ## In CLUSTER MODE, when specifying multiple nodes, separate each address with a comma.
 ## Example: Host1:6379,Host2:6379,Host3:6379
 ## Suggested: host.docker.internal:6379
@@ -336,7 +336,7 @@ Values set in compose-env such as DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KE
 Please be careful not to expose these values to others.
 </Callout>
 
-Replace the `<customer-proxy-address>` part below with your customer's Proxy access IP or domain and execute the query.
+Replace the `&lt;customer-proxy-address&gt;` part below with your customer's Proxy access IP or domain and execute the query.
 
 <Callout type="important">
 This address should not have a Scheme such as `http` or `https` attached.
@@ -361,7 +361,7 @@ When you attempt to log in from User Agent, after authentication through a web b
 
 Connect to QueryPie Database and register the address for KAC Proxy access.
 
-Replace the `<customer-proxy-fqdn>` part below with your customer's Proxy access IP or domain and execute the query.
+Replace the `&lt;customer-proxy-fqdn&gt;` part below with your customer's Proxy access IP or domain and execute the query.
 
 As a special note, unlike DAC/SAC settings, you can freely enter Schemes such as `http` or `https`.
 

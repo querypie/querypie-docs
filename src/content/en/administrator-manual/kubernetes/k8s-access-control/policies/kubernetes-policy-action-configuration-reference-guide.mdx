@@ -12,11 +12,11 @@ This guide explains how to set Actions to avoid difficulties using client tools 
 
 ### API Groups Configuration Guide
 
-Commonly used resources like pods belong to the core group and thus use an empty string ("") for apiGroups, whereas deployments and replicasets belong to "apps", and ingresses belong to "networking.k8s.io".
+Commonly used resources like pods belong to the core group and thus use an empty string `""` for apiGroups, whereas deployments and replicasets belong to `"apps"`, and ingresses belong to `"networking.k8s.io"`.
 
 Of course, if resources have the same name, you may need to separate them via apiGroups, but that is not a common situation.
 
-Therefore, unless you have a specific mission to manage Kubernetes API Groups, it is generally recommended to set apiGroups to "*" and control access via resources.
+Therefore, unless you have a specific mission to manage Kubernetes API Groups, it is generally recommended to set apiGroups to `"*"` and control access via resources.
 
 
 ### Resources Configuration Guide
@@ -30,7 +30,7 @@ Therefore, unless you have a specific mission to manage Kubernetes API Groups, i
 
 When using 3rd-party client tools, you can monitor status within the permitted resource scope.
 
-* Resources section
+* **Resources section**
     * In the screen above, only resources for which you have permissions are displayed.
     * So if you only have permission for `pods`, only the graph for `pods` is shown, and if `pods` are filtered so you can only view some, only some are displayed.
     * Other resources work the same way.
@@ -45,7 +45,7 @@ allow:
       name: "*"
       verbs: ["get", "list", "watch"]
       ```
-* Events section
+* **Events section**
     * The events section below is displayed based on permissions for the `events` resource, and like the resources section above, it is filtered and displayed by namespace and name.
     * However, having permission for `pods` does not mean `events` related to `pods` are displayed, so to view that screen, you must explicitly grant permission for the `events` resource.
     * The `events` resource and `pods` resource are separate resources. Therefore, if you only grant permission for `pods` while having permission for the `events` resource, it does not mean only the history of `events` related to `pods` is retrieved.
@@ -66,9 +66,8 @@ allow:
 
 The part that most affects 3rd-party client tool usage is verbs.
 Administrators specify the scope of resources users can access through apiGroups, resources, namespace, and name, and specify which APIs can be called via verbs, but even if you set the resource scope well, if you do not properly configure the verb groupings, tool usage becomes difficult.
-Even if you set the resource scope well, using the wrong verb combinations makes tools hard to use.
 
-* View permissions
+* **View permissions**
     * For users who only get View permissions, grant `get`, `list`, and `watch` all together.
     * Using kubectl is not too difficult with just `get` and `list`, but without `watch`, tools like Lens that support live monitoring are difficult to use.
     * Recommended spec
@@ -81,7 +80,7 @@ allow:
       name: "*"
       verbs: ["get", "list", "watch"]
       ```
-* Edit permissions
+* **Edit permissions**
     * For users who also get Edit permissions, you must also grant View permissions (at minimum, `get` and `list`). This is because kubectl first performs a read before issuing a modification request for a given resource.
     * In tools like Lens, without View permissions there is no way to reach the Edit screen.
     * For Edit, group the verbs by role: create (`create`), modify (`patch`, `update`), delete (`delete`, `deletecollection`).

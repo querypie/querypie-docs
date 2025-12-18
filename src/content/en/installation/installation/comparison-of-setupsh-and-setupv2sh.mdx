@@ -62,8 +62,8 @@ As the MySQL Data Dir path has changed, the following advantages have emerged.
 
 There are two things to note.
 
-* setup.sh must maintain the QueryPie MySQL Container running from the path of the initial installation version. setup.v2.sh runs the MySQL Container from the current installation version's path.
-* You can install a new version using setup.v2.sh on a server where the product has already been installed with setup.sh. However, due to the MySQL Data Dir change, existing data is not automatically migrated. The installation manager must appropriately move the MySQL Data directory according to the purpose, such as new installation or upgrade.
+* setup.sh must maintain the QueryPie MySQL Container running from the path of the initial installation version. setup.v2.sh **runs the MySQL Container from the current installation version's path**.
+* You can install a new version using setup.v2.sh on a server where the product has already been installed with setup.sh. However, due to the MySQL Data Dir change, **existing data is not automatically migrated**. The installation manager must appropriately move the MySQL Data directory according to the purpose, such as new installation or upgrade.
 
 
 ### Rootless Mode Support
