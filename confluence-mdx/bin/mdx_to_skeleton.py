@@ -134,6 +134,7 @@ class ContentProtector:
     
     This class protects the following content types from being modified:
     - YAML frontmatter
+    - Import statements (import ... from '...')
     - Code blocks (```...```)
     - URLs in links and images
     - HTML entities (&amp;, &lt;, etc.)
@@ -164,6 +165,59 @@ class ContentProtector:
             modified_text = re.sub(pattern, f"---\n{placeholder}\n---\n", text, count=1, flags=re.DOTALL)
             return modified_text, protected
         return text, None
+
+    def extract_import_statements(self, text: str) -> str:
+        """
+        Extracts import statements (single-line and multi-line) and replaces them with placeholders.
+        
+        Handles patterns like:
+        - import DefaultExport from 'module';
+        - import { ... } from 'module';
+        - import * as name from 'module';
+        - Multi-line imports with braces
+        """
+        lines = text.split('\n')
+        result_lines = []
+        i = 0
+        
+        while i < len(lines):
+            line = lines[i]
+            
+            # Check if this line starts with 'import'
+            if line.strip().startswith('import'):
+                # Collect all lines until we find the complete import statement
+                import_lines = [line]
+                j = i + 1
+                
+                # Check if this is a single-line import
+                if re.search(r'from\s+["\'][^"\']+["\']', line):
+                    # Single-line import - already complete
+                    j = i + 1
+                else:
+                    # Multi-line import - collect lines until we find 'from ...'
+                    while j < len(lines):
+                        next_line = lines[j]
+                        import_lines.append(next_line)
+                        if re.search(r'from\s+["\'][^"\']+["\']', next_line):
+                            j += 1
+                            break
+                        j += 1
+                
+                # Join the import lines
+                import_statement = '\n'.join(import_lines)
+                
+                # Create placeholder and protect
+                placeholder = self._create_placeholder("IMPORT")
+                protected = ProtectedSection(import_statement, placeholder)
+                self.protected_sections.append(protected)
+                
+                result_lines.append(placeholder)
+                i = j
+            else:
+                result_lines.append(line)
+                i += 1
+        
+        return '\n'.join(result_lines)
 
     def extract_code_blocks(self, text: str) -> str:
         """Extracts code blocks and replaces them with placeholders"""
@@ -867,7 +921,9 @@ def process_text_line(line: str, text_processor: TextProcessor) -> str:
     if not line.strip():
         return line
 
-    if line.strip().startswith('import '):
+    # Import statements are now handled by ContentProtector.extract_import_statements
+    # Check if this line is an import placeholder
+    if re.match(r'^__IMPORT_\d+__$', line.strip()):
         return line
 
     if line.strip().startswith('```') or line.strip() == '```':
@@ -1090,13 +1146,16 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     # Step 1: Extract and protect YAML frontmatter
     content, yaml_section = protector.extract_yaml_frontmatter(content)
 
-    # Step 2: Extract and protect other content sections
+    # Step 2: Extract and protect import statements
+    content = protector.extract_import_statements(content)
+
+    # Step 3: Extract and protect other content sections
     content = protector.extract_code_blocks(content)
     # Note: inline code is no longer protected - its text content will be converted to _TEXT_
     content = protector.extract_urls(content)  # Now handles both links and images
     content = protector.extract_html_entities(content)
 
-    # Step 3: Process YAML frontmatter if present
+    # Step 4: Process YAML frontmatter if present
     yaml_start_idx = None
     yaml_end_idx = None
     if yaml_section:
@@ -1120,7 +1179,7 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
     else:
         lines = content.split('\n')
 
-    # Step 4: Process lines and replace text content
+    # Step 5: Process lines and replace text content
     if lines is None:
         lines = content.split('\n')
     processed_lines = []
@@ -1138,7 +1197,7 @@ def convert_mdx_to_skeleton(input_path: Path) -> Path:
 
     content = '\n'.join(processed_lines)
 
-    # Step 4: Restore all protected sections (including image links)
+    # Step 6: Restore all protected sections (including import statements, image links, etc.)
     content = protector.restore_all(content)
     
     # Step 5: Post-processing to handle special cases
