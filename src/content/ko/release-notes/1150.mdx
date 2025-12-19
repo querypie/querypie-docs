@@ -1,0 +1,54 @@
+---
+title: '11.5.0'
+---
+
+# 11.5.0
+
+### QueryPie 11.5.0 Release
+
+2025년 12월 15일
+
+
+**New Feature**
+
+* [공통] 권한 만료(Deactivated) 알림 메일 발송 기능 추가 
+* [공통] 허용되지 않은 IP에서 접속 시도 시 로그 기록 기능 추가
+* [DAC] Google Spanner 정책 및 Proxy 지원 
+* [DAC] ClickHouse 정책 및 Proxy 지원 
+* [DAC] 스키마 접근제어 구현 및 결재 요청 연동 
+
+
+**Improvement**
+
+* [공통] SAML 인증을 사용할 때 Display Name 표시 개선
+* [공통] Identity Provider의 MFA 적용 개선 
+* [공통] Admin Role - Database Access Control Read-only 권한 추가 
+* [공통] Workflow Approval Rule에서 DB Access Request Connection Owner 선택 개선 
+* [공통] 잘못된 라이선스 처리 개선
+* [공통] API Docs의 required 필드 표시 개선 
+* [공통] Multi Agent에서 만료된 토큰으로 연결 재시도 하는 문제 수정 
+* [공통] IP 접근 제한 화면에 현재 IP 주소 표시 
+* [공통] IdP 설정에서 Dry run 진행 중에 로그인 시도시 Lock wait timeout 에러 발생 문제 수정
+* [DAC] SQL Request, SQL Export Request 승인자 반려 시 Execution Status 개선 
+* [DAC] Exception Management workflow 권한 상세 상태 관리 개선
+* [DAC] Web Editor의 Import 팝업 창의 테이블 명 표시 개선 
+* [DAC] MongoDB Ledger Table 조회 시 Query Audit Label 표시 수정
+* [DAC] Workflow에서 Urgent mode의 경우 수행자가 취소했을 때 표시되는 방식 수정 
+* [DAC] MySQL 커넥션에 계정 정보(Id/Password) 없을 때 에러 처리 개선
+* [DAC] Excel Import 시 시트 변경 시 컬럼 정보 업데이트 개선 
+* [DAC] Max Display Rows 설정 동작 개선
+* [DAC] MongoDB 마스킹 대상 필드가 Array인 경우 처리 개선
+* [DAC] PostgreSQL Prepare Statement Integer Null Parameter 처리 개선
+* [DAC] Redis Cluster 활성화 시 Proxy Usage 검증 강화 
+* [DAC] DB Policy Exception Request에서 태그를 다중 선택 가능하도록 수정
+* [DAC] Engine 비정상 종료 시 JDBC.NET Process 종료 되지 않는 문제 수정
+* [DAC] PostgreSQL/Redshift Import 시 에러 발생 문제 수정 
+* [DAC] Trino TLS 연결 시 사설 인증서 지원 
+* [DAC] Connection Accessible Users 목록에서 만료된 사용자 제외 
+* [DAC] Web Editor에서 사유 입력 시 이전 사유 재사용 할 수 있도록 개선 
+* [DAC] MongoDB / DocumentDB의 Data Tab 페이지 사이즈 100으로 제한 
+* [DAC] Ledger Workflow 실행 시 Query Audit에 Ledger로 기록되지 않던 문제 수정
+* [DAC] Vertica 비밀번호 만료 시 비밀번호 변경 UI 지원
+* [DAC] DELETE FROM table 구문에서 table alias를 제대로 분석하지 못하는 문제 수정
+* [SAC] 금지 명령어 동작 개선 - 히스토리 편집 케이스 처리 
+* [SAC] Session Monitoring 메뉴 위치 변경 및 Server Monitoring Full Access 권한 추가 

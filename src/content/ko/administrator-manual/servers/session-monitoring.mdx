@@ -11,22 +11,27 @@ import { Callout } from 'nextra/components'
 QueryPie를 통한 서버 접속 세션을 조회할 수 있습니다.
 또한 접속 중인 세션을 강제종료 할 수 있습니다.
 
+<Callout type="info">
+11.5.0 부터 Audit 하위 메뉴 항목인 Session Monitoring 은 Servers &gt; Monitoring &gt; Session Monitoring으로 이동되었습니다.
+</Callout>
+
 ### Session Monitoring 조회하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Audit &gt; Servers &gt; Session Monitoring](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173632.png)
+![Administrator &gt; Servers &gt; Monitoring &gt; Session Monitoring](/administrator-manual/servers/session-monitoring/image-20251218-073053.png)
 <figcaption>
-Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
+Administrator &gt; Servers &gt; Monitoring &gt; Session Monitoring
 </figcaption>
 </figure>
 
-1. Administrator &gt; Audit &gt; Servers &gt; Server Monitoring 메뉴로 이동합니다.
+
+1. Administrator &gt; Servers &gt; Monitoring &gt; Session Monitoring 메뉴로 이동합니다.
 2. 현재 접속중인 세션을 조회합니다.
 3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
     1.  **Server Name**  : 접속 서버 명
         1. 하단에는 해당 서버에 접속중인 사용자 명 표시
     2.  **Account**  : 서버 접속 Account
-    3.  **Protocol** : 접시 사용한 Protocol
+    3.  **Protocol** : 접속시 사용한 Protocol
     4.  **Connected At**  : 접속 시간
     5.  **Connected From**  : 연결 방식의 주체
         1. Web
@@ -37,8 +42,9 @@ Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
 ### Session 강제종료
 
 <figure data-layout="center" data-align="center">
-![image-20240728-173640.png](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173640.png)
+![image-20251218-073257.png](/administrator-manual/servers/session-monitoring/image-20251218-073257.png)
 </figure>
+
 
 1. Administrator &gt; Audit &gt; Servers &gt; Server Monitoring 메뉴로 이동합니다.
 2. 현재 접속중인 세션을 조회합니다.

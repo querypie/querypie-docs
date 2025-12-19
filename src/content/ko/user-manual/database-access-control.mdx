@@ -11,12 +11,26 @@ import { Callout } from 'nextra/components'
 커넥션에 대해 접속 권한을 부여받은 사용자는 통제된 환경에서 웹 SQL 에디터 또는 프록시를 통해 데이터베이스 커넥션에 접속할 수 있습니다.
 접속 권한은 개별 사용자에게 부여될 수도 있고, 사용자 그룹에 부여될 수도 있습니다.
 
+<Callout type="info">
+11.5.0 부터 Schema Level 접근제어 기능이 추가되어 schema(Logical DB) 단위로 privilege를 할당 받을 수 있습니다.
+어떤 방식으로 privilege를 할당 받았는지에 따라 Privilege 항목에 표시되는 내용이 다릅니다.
+</Callout>
+
 <figure data-layout="center" data-align="center">
-![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/image-20240724-051755.png)
+![Host Level privilege가 할당된 경우 접속화면](/user-manual/database-access-control/image-20251218-114957.png)
 <figcaption>
-QueryPie Web &gt; Database Access Control &gt; Databases
+Host Level privilege가 할당된 경우 접속화면
 </figcaption>
 </figure>
+
+
+<figure data-layout="center" data-align="center">
+![Schema Level privilege가 할당된 경우 접속화면](/user-manual/database-access-control/image-20251218-114753.png)
+<figcaption>
+Schema Level privilege가 할당된 경우 접속화면
+</figcaption>
+</figure>
+
 
 아래의 방법을 통해 데이터베이스 커넥션에 접속 및 쿼리를 실행하여 데이터를 조회할 수 있습니다.
 
@@ -43,4 +57,8 @@ Redash, Tableau, Zepplin 과 같은  **웹 서비스에서 DB 에 연결하고�
 
 ### 데이터베이스 접속 가이드 바로가기
 
-(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)
+* [웹 SQL 에디터로 접속하기](database-access-control/connecting-with-web-sql-editor)
+* [Default Privilege 설정하기](database-access-control/setting-default-privilege)
+* [에이전트 없이 프록시 접속하기](database-access-control/connecting-to-proxy-without-agent)
+* [Google BigQuery OAuth 인증을 통해 접속하기](database-access-control/connecting-via-google-bigquery-oauth-authentication)
+* [Custom Data Source 접속하기](database-access-control/connecting-to-custom-data-source)

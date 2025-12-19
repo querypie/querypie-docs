@@ -2,6 +2,8 @@
 title: 'Server Logs'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Server Logs
 
 ### Overview
@@ -16,22 +18,22 @@ QueryPie의 System Access Control에서 발생하는 로그들을 Server Logs에
 
 <table data-table-width="507" data-layout="default" local-id="95470ac3-09e4-4695-80b7-6e7d4ff27bf8">
 <tbody>
-<tr>
-<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+<tr local-id="8534186b-2033-4cc7-877e-dda79ee3b5b3">
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)" local-id="70f8197e-b83d-409e-bcbf-5e95dc6d6c13">
 **공통 로그**
 </th>
-<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)" local-id="d3c87cc4-a023-4553-83b5-32808f0bcd35">
 **SAC 전용 로그**
 </th>
 </tr>
-<tr>
-<td>
+<tr local-id="606bc709-5042-4fee-a00f-ad8452b791a9">
+<td local-id="33649f7e-f4b6-4a70-99c7-2aadea2b484f">
 **General**
 * User Access History
 * Activity Logs
 * Admin Role History
 </td>
-<td>
+<td local-id="a584fa3d-0929-4abe-8ac4-551670a70a00">
 **Servers**
 * Server Access History
 * Command Audit
@@ -47,16 +49,22 @@ QueryPie의 System Access Control에서 발생하는 로그들을 Server Logs에
 
 1.  **General** 
 
-* User Access History : 사용자 로그인, 로그아웃 이력
-* Activity Logs : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
-* Admin Role History : 관리자 권한 부여, 변경, 회수 이력
+* [User Access History](general-logs/user-access-history) : 사용자 로그인, 로그아웃 이력
+* [Activity Logs](general-logs/activity-logs) : 관리자가 수행하는 리소스 등록 및 설정 변경 이력
+* [Admin Role History](general-logs/admin-role-history) : 관리자 권한 부여, 변경, 회수 이력
 
 1.  **Servers** 
 
 * [Server Access History](server-logs/server-access-history) : Server 접속 이력
 * [Command Audit](server-logs/command-audit) : Server내 수행 명령어 이력
 * [Session Logs](server-logs/session-logs) : 연결 세션 내 행위 녹화 내역 
-* [Session Monitoring](server-logs/session-monitoring) : 접속한 세션 리스트 조회 
-* [Access Control Logs](server-logs/access-control-logs) : Direct Permission 부여 이역
+* [Session Monitoring (Moved)](server-logs/session-monitoring-moved) : 접속한 세션 리스트 조회
+* [Access Control Logs](server-logs/access-control-logs) : Direct Permission 부여 이력
 * [Server Role History](server-logs/server-role-history) : Role 부여 이력
 * [Account Lock History](server-logs/account-lock-history) : QueryPie사용자별 서버 접속 계정 잠금 및 해제 이력 
+
+<Callout type="info">
+11.5.0 부터 Audit 하위 메뉴 항목인 Session Monitoring 은 Servers &gt; Monitoring &gt; Session Monitoring으로 이동되었습니다.
+</Callout>
+
+

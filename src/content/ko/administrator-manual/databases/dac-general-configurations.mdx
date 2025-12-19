@@ -8,15 +8,18 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 10.3.0 부터 Administrator &gt; General &gt; Security 하위에 있던 DAC 관련 설정 항목들이 각 서비스 메뉴의 General &gt; Configurations로 이동되었습니다.
+
 11.2.0 부터 Administrator &gt; General &gt; Company Management &gt; General 하위에 있던 Query Sharing이 Administrator &gt; Databases &gt; General &gt; Configurations 로 이동되었습니다.
+
+11.5.0 부터 권한 만료(Privilege Expiration, Policy Exception Expiration)전 이메일 알림 기능이 추가되었습니다.
 </Callout>
 
 ### 데이터베이스 접근 제어 설정
 
-DB 접근 제어에 적용되는 설정을 관리합니다.
+DB 접근 제어에 적용되는 설정을 관리합니다.<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20250822-104340.png](/administrator-manual/databases/dac-general-configurations/image-20250822-104340.png)
+![image-20251218-083844.png](/administrator-manual/databases/dac-general-configurations/image-20251218-083844.png)
 </figure>
 
 
@@ -61,6 +64,8 @@ SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
 * Queries 패널 &gt; QueryPie Git Sharing 폴더에서 Repository에 저장된 쿼리 파일을 불러올 수 있습니다.
 
 자세한 설명은 [웹 SQL 에디터로 접속하기](../../user-manual/database-access-control/connecting-with-web-sql-editor)를 참고해주세요.
+
+
 ______
 
 #### 접근제어 설정
@@ -69,6 +74,10 @@ ______
 *  **Privilege Deactivation Period** : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
 *  **Maximum Access Duration** : Privilege 요청 및 할당 시 최대 기간
     * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
+*  **Notification of Access Expiration**  : 사용자의 권한 만료(Privilege Expiration, Policy Exception Expiration) 전 이메일로 사전 알림을 받을 수 있도록 합니다.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-084512.png](/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png)
+  </figure>
 *  **Display the first 10 rows in Query Audit** : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
 
 <figure data-layout="center" data-align="center">

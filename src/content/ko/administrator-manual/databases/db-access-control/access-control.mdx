@@ -10,14 +10,19 @@ import { Callout } from 'nextra/components'
 
 Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터베이스 접근 권한을 직접 부여할 수 있습니다.
 
+<Callout type="info">
+11.5.0 부터 스키마(논리DB) 수준의 접근제어 기능이 추가되었습니다.
+</Callout>
 
 ### Access Control 목록 조회하기
 
 Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별로 부여된 DB 권한(Privilege) 및 관리자 역할 현황을 조회할 수 있습니다.
-(그룹 또는 사용자 이름으로 검색 가능)
+
+* Group / Users 탭 : Group 및 사용자의 목록을 표시하고 현황을 볼 수 있습니다.
+* Locked Accounts : 계정 잠금 조건으로 인해 잠긴 사용자를 확인할 수 있고 잠금을 해제 할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -26,47 +31,99 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 
 ### 사용자/그룹별 Access Control 상세 내역 조회하기
 
-Access Control 페이지 내 테이블에서 조회하려는 사용자 또는 그룹을 클릭하면 Drawer가 열립니다.
+Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자 또는 그룹 행을 클릭하면 상세 화면에서 privilege를 부여받은 대상 정보를 확인할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
-</figure>
-
-* 검색 : Connection Name 으로 조회 가능
-* 제공 필터 타입
-    *  **Database Type** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
-    *  **Cloud Provider** : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
-    *  **Assigned Status** : 권한 할당 여부
-    *  **Favorite View** : 즐겨찾기 설정 여부 (DB Connections 목록에서 즐겨찾기 설정 가능)
-    *  **Tag** : 커넥션에 할당된 태그
-        * 각 태그 입력 방식 : Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력
-            * 지원하는 연산자 : `=`, `!=`, `:`, `!:`
-        * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
-        * Key가 다른 태그를 여러 개 입력 시 AND 검색 수행 (교집합)
-
-
-### Access Control 권한 부여하기
-
-<figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege](/administrator-manual/databases/db-access-control/access-control/image-20250820-001735.png)
+![특정 사용자의 접근제어 상세 페이지](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
 <figcaption>
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege
+특정 사용자의 접근제어 상세 페이지
 </figcaption>
 </figure>
 
-1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
-2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 디테일 페이지로 이동합니다.
-3. 권한을 부여할 커넥션을 찾아 체크박스 선택 후 Privilege Type 을 선택합니다. 
-4. 권한을 부여할 커넥션 여러 개를 선택하여 일괄적으로 권한을 부여할 수도 있습니다. 
-  <figure data-layout="center" data-align="center">
-  ![대상 커넥션을 다중 선택하고 Privilege를 일괄 적용합니다. ](/administrator-manual/databases/db-access-control/access-control/image-20250820-002305.png)
-  <figcaption>
-  대상 커넥션을 다중 선택하고 Privilege를 일괄 적용합니다. 
-  </figcaption>
-  </figure>
-5. 하단의 Expiration Date 항목에서 권한 만료일을 설정합니다. 미설정시 만료일 없이 권한이 부여됩니다. 
 
-이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 항목으로 기록됩니다.
+* 검색 : Connection Name 으로 조회 가능
+* 기본 정보
+    * Type : USER 또는 Group으로 분류 유형을 표시합니다.
+    * Auth Provider : 해당 사용자가 인증에 사용하는 인증서비스 제공자가 무엇인지 표시합니다.
+    * Admin Roles : 해당 사용자에게 할당되어 있는 Admin Role을 표시합니다.
+    * Members : 선택한 대상이 Group일 경우 해당 group의 구성원을 표시합니다.
+    * Email : 해당 사용자의 email 주소입니다.
+* Privilege를 부여받은 대상 목록 : privilege를 부여받은 connection이 없는 경우 목록에는 아무것도 표시되지 않습니다.
+    * Connection Name : 대상 커넥션의 이름입니다.
+    * Database Type **** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
+    * Host : 커넥션에 등록된 Host 주소입니다.
+    * Port : 커넥션에 등록된 Port 주소입니다.
+    * Access Control Level : access control의 수준을 나타냅니다. 11.5.0 부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다. 
+    * Assigned Privilege : 대상에 할당된 privilege입니다.
+    * Status : privilege 의 상태 표시입니다,.
+        * Active ; 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태
+        * Deactivated : 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간동안 커넥션에 접속하지 않은 경우 비활성화된 상태
+        * Expired : 해당 사용자의 권한이 만료일자에 도래하여 회수된 상태
+    * Expiration date : Privilege 만료일
+    * Renewed At : deactivated 상태에서 다시 관리자에 의해 active 상태가 된 시점입니다.
+    * Granted At : privilege를 부여받은 시점입니다.
+    * Last Accessed At : 사용자 대상에 접근한 가장 최근 시점입니다.
+    * Granted By : privilege를 부여한 관리자 또는 승인자입니다.
+
+
+### Access Control 권한 부여하기 - Host Level
+
+1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
+2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 상세 페이지로 이동합니다.
+3. `Grant Privilege` 버튼을 클릭합니다.
+4. 팝업 창에서 Access Control Level 에서 Host 를 선택합니다. (기본값 : Host)<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
+  </figure>
+5. privilege를 부여할 커넥션을 선택하고 특정 privilege type을 선택합니다.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  </figure>
+6. 필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
+7. 권한을 부여할 커넥션 여러 개를 선택하여 일괄적으로 권한을 부여할 수도 있습니다. <br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  </figure>
+
+
+이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 이벤트로 기록됩니다.
+
+
+### Access Control 권한 부여하기 - Schema(Logical DB) Level
+
+<Callout type="info">
+11.5.0 버전 현재 Schema Level 권한 부여가 가능한 DBMS :<br/>Athena,Azure SQL, BigQuery, Cassandra, ClickHouse, DocumentDB, DynamoDB, Hive, Impala, MariaDB, MongoDB, MySQL, Oracle, PostgreSQL, Redshift, SAP Hana, ScyllaDB, ShardingSphere, Single Store, Spanner, SQLServer, Trino, Vertica
+</Callout>
+
+1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
+2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 상세 페이지로 이동합니다.
+3. `Grant Privilege` 버튼을 클릭합니다.
+4. 팝업 창에서 Access Control Level 에서 Schema(Logical DB) 를 선택합니다. (기본값 : Host)
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  </figure>
+5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한번에 여러개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege를 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장드립니다.
+6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item`버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila 
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  </figure>
+7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) 
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  </figure>
+8. 아래에 표시되는 Host Level Others, Host Level Functions는 설정을 보기만 할 수 있습니다. 수정하기 위해서는 Databases &gt; DB Access Control &gt; Privilege Type 메뉴에서 해당 Privilege Type을 수정해야 합니다. Host Level의 Privilege의 속성에 의해 Schema Level 도 privilege가 종속되기 때문에 상위의 정보를 확인하는 용도로 사용됩니다.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  </figure>
+9.  필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
+
+이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 이벤트로 기록됩니다.
+
+<Callout type="important">
+* PostgreSQL은 schema level 제어 대상이 Database 입니다. PotgreSql은 schema 라는 이름의 구조를 가지고 있으나 이는 privilege 할당의 대상이 되는 것이 아니라 구분의 용도로 사용되기 때문입니다.
+* Oracle, Presto, Trino, SAP HANA는 schema level 제어 대상이 Schema입니다. 
+* Schema 또는 Logical DB 대상 입력을 할 때 정규식을 사용할 수 있습니다. 이 때 단어의 시작을 나타내는 ^, 단어의 끝을 나타내는 $를 사용할 수 없을 수 있습니다. 내부적으로 database.schema.table의 구조를 모두 인식하여 처리하기 때문에 schema 이름에 해당하는 정규식만 입력하면 오류가 발생합니다. 
+</Callout>
 
 <Callout type="info">
 **사용자가 그룹에 포함된 경우, 그룹과 사용자를 대상으로 같은 커넥션에 대해 각각 다른 권한을 적용하면 어떻게 되나요?**

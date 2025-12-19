@@ -11,6 +11,10 @@ python bin/confluence_xhtml_to_markdown.py var/544375335/page.xhtml target/ko/re
 echo 'Converted 544375335 to target/ko/release-notes.mdx'
 
 mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1751810049/page.xhtml target/ko/release-notes/1150.mdx --public-dir=target/public --attachment-dir=/release-notes/1150
+echo 'Converted 1751810049 to target/ko/release-notes/1150.mdx'
+
+mkdir -p target/ko/release-notes
 python bin/confluence_xhtml_to_markdown.py var/1568735233/page.xhtml target/ko/release-notes/1140.mdx --public-dir=target/public --attachment-dir=/release-notes/1140
 echo 'Converted 1568735233 to target/ko/release-notes/1140.mdx'
 
@@ -703,6 +707,10 @@ python bin/confluence_xhtml_to_markdown.py var/619380898/page.xhtml target/ko/ad
 echo 'Converted 619380898 to target/ko/administrator-manual/servers/server-account-management/password-provisioning/creating-password-change-job.mdx'
 
 mkdir -p target/ko/administrator-manual/servers
+python bin/confluence_xhtml_to_markdown.py var/1760657435/page.xhtml target/ko/administrator-manual/servers/session-monitoring.mdx --public-dir=target/public --attachment-dir=/administrator-manual/servers/session-monitoring
+echo 'Converted 1760657435 to target/ko/administrator-manual/servers/session-monitoring.mdx'
+
+mkdir -p target/ko/administrator-manual/servers
 python bin/confluence_xhtml_to_markdown.py var/543949216/page.xhtml target/ko/administrator-manual/servers/server-access-control.mdx --public-dir=target/public --attachment-dir=/administrator-manual/servers/server-access-control
 echo 'Converted 543949216 to target/ko/administrator-manual/servers/server-access-control.mdx'
 
@@ -991,8 +999,8 @@ python bin/confluence_xhtml_to_markdown.py var/544014927/page.xhtml target/ko/ad
 echo 'Converted 544014927 to target/ko/administrator-manual/audit/server-logs/session-logs.mdx'
 
 mkdir -p target/ko/administrator-manual/audit/server-logs
-python bin/confluence_xhtml_to_markdown.py var/544014940/page.xhtml target/ko/administrator-manual/audit/server-logs/session-monitoring.mdx --public-dir=target/public --attachment-dir=/administrator-manual/audit/server-logs/session-monitoring
-echo 'Converted 544014940 to target/ko/administrator-manual/audit/server-logs/session-monitoring.mdx'
+python bin/confluence_xhtml_to_markdown.py var/544014940/page.xhtml target/ko/administrator-manual/audit/server-logs/session-monitoring-moved.mdx --public-dir=target/public --attachment-dir=/administrator-manual/audit/server-logs/session-monitoring-moved
+echo 'Converted 544014940 to target/ko/administrator-manual/audit/server-logs/session-monitoring-moved.mdx'
 
 mkdir -p target/ko/administrator-manual/audit/server-logs
 python bin/confluence_xhtml_to_markdown.py var/544244234/page.xhtml target/ko/administrator-manual/audit/server-logs/access-control-logs.mdx --public-dir=target/public --attachment-dir=/administrator-manual/audit/server-logs/access-control-logs
@@ -1125,4 +1133,8 @@ echo 'Converted 1692303361 to target/ko/installation/server-configuration-requir
 mkdir -p target/ko/installation
 python bin/confluence_xhtml_to_markdown.py var/1239416833/page.xhtml target/ko/installation/querypie-acp-community-edition.mdx --public-dir=target/public --attachment-dir=/installation/querypie-acp-community-edition
 echo 'Converted 1239416833 to target/ko/installation/querypie-acp-community-edition.mdx'
+
+mkdir -p target/ko/installation/querypie-acp-community-edition
+python bin/confluence_xhtml_to_markdown.py var/1735589937/page.xhtml target/ko/installation/querypie-acp-community-edition/mcp-configuration-guide.mdx --public-dir=target/public --attachment-dir=/installation/querypie-acp-community-edition/mcp-configuration-guide
+echo 'Converted 1735589937 to target/ko/installation/querypie-acp-community-edition/mcp-configuration-guide.mdx'
 
