@@ -113,7 +113,13 @@ QueryPie接続時IP制限ポリシーを設定できます。
 (詳細内容は[IP Registration Request要求](../../../user-manual/workflow/requesting-ip-registration)文書を参照してください。)
 </Callout>
 
-*  **Admin Page Access Control**  : 管理者ページにアクセスできる管理者のIPを制限するポリシーを設定します。トグルを活性化して特定IPアドレスまたは帯域から接続する管理者のみ管理者ページにアクセスするよう制限できます。
+*  **Admin Page Access Control**  : 管理者ページにアクセスできる管理者のIPを制限するポリシーを設定します。トグルを活性化して特定IPアドレスまたは帯域から接続する管理者のみ管理者ページにアクセスするよう制限できます。<br/>
+  <figure data-layout="center" data-align="center">
+  ![AdminページIPアクセス遮断時画面](/administrator-manual/general/company-management/security/image-20251212-161723.png)
+  <figcaption>
+  AdminページIPアクセス遮断時画面
+  </figcaption>
+  </figure>
     *  **アクセス要求条件:** 
         * ユーザーは管理者権限を持っている必要があります。
         * ユーザーの接続IPは'All Users'に設定されたIP帯域に含まれている必要があります。
@@ -126,18 +132,22 @@ QueryPie接続時IP制限ポリシーを設定できます。
 A. 許可されていないIPから接続試行時QueryPieウェブコンソール内どのページでもアクセス不可で下記のような案内画面を見ることになります。
 もしAll Usersに基本値(0.0.0.0/0)が登録されており、個別ユーザーに特定Allowed Zoneが設定されているならログインページまでは接続可能ですがログインは不可になります。
 </Callout>
+
 <figure data-layout="center" data-align="center">
-![QueryPie Web Access Control &gt; All Usersに登録されたIPと一致しない場合](/administrator-manual/general/company-management/security/image-20240121-073718.png)
+![Each User設定のIPアクセス遮断時画面](/administrator-manual/general/company-management/security/image-20251218-082726.png)
 <figcaption>
-QueryPie Web Access Control &gt; All Usersに登録されたIPと一致しない場合
+Each User設定のIPアクセス遮断時画面
 </figcaption>
 </figure>
+
 <figure data-layout="center" data-align="center">
-![Users &gt; Update Userに登録されたAllowed Zoneと一致しない場合](/administrator-manual/general/company-management/security/image-20240121-074246.png)
+![All User設定のIPアクセス遮断時画面](/administrator-manual/general/company-management/security/image-20251212-162103.png)
 <figcaption>
-Users &gt; Update Userに登録されたAllowed Zoneと一致しない場合
+All User設定のIPアクセス遮断時画面
 </figcaption>
 </figure>
+
+
 <Callout type="important">
 **IP制限設定注意**
 Securityページの設定は保存即座に反映されます。

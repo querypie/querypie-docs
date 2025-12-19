@@ -103,3 +103,43 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
     *  **Read-Only権限**  : SELECTのみ可能な権限です。
     *  **その他権限**  : 管理者が追加で作成した権限で作成した権限がない場合は上記二つの権限のみ表示されます。 
 * 決裁ルール指定および要求本文入力が完了したらページ下部の`Submit`ボタンを押して要求を上申します。
+
+### DB Access Request要求（Schema Level）
+
+<Callout type="info">
+11.5.0からSchema（Logical DB）単位のアクセス申請が可能です。
+以下の内容は共通部分は省略し、異なる部分中心で説明しました。
+</Callout>
+
+1. Submit Requestボタンを押し、メニューで「DB Access Request（Schema Level）」を選択します。
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-120432.png](/user-manual/workflow/requesting-db-access/image-20251218-120432.png)
+  </figure>
+2. `Add Item`ボタンを押します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-120721.png](/user-manual/workflow/requesting-db-access/image-20251218-120721.png)
+  </figure>
+3. 左側パネルで接続するコネクションを選択します。
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-121011.png](/user-manual/workflow/requesting-db-access/image-20251218-121011.png)
+  </figure>
+4. コネクションを選択すると右側のprivilege項目に基本的にselect権限が必要なスキーマに自動的にSELECT privilegeが付与されたことが見えます。この項目を削除することもできますが、その場合Web editorまたはproxyでスキーマ構造を照会する時点にエラーが発生する可能性があるため、やむを得ない場合でなければこの項目を削除しません。<br/>`Add Item`ボタンを押します。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-121402.png](/user-manual/workflow/requesting-db-access/image-20251218-121402.png)
+  </figure>
+5. 下に対象を追加できる行が追加されます。schema構造があるDBMS（Oracle、Postgresなど）は対象名を入力する時、必ず`{database名}`.`{schema名}`の形式で入力する必要があります。MySQLのようにschema構造がないDBMSは論理DB名のみ入力すれば 됩니다。
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122027.png](/user-manual/workflow/requesting-db-access/image-20251218-122027.png)
+  </figure>
+    * Oracle例：ORCLDB.TESTUSER
+    * PostgreSQL例：testdb.test_schema
+    * MySQL例：sakila<br/>
+6. privilege割り当てはまずポップアップウィンドウ右側上部のHost Level Privilege項目で希望するprivilege typeを選択します。（スキーマレベルprivilegeはhost level privilegeの範囲内でのみ付与が可能なためです。例えばRead/WriteをHost Level Privilegeで選択した場合、その範囲内でSELECT、INSERTなどを付与できますが、Read-OnlyをHost Level Privilegeで選択した場合、SELECTのみ指定できます。）Host Level privilegeに割り当てが必要なprivilegeがない場合、管理者に該当コネクションに対して特定privilegeがあるprivilege typeを作成してほしいと要求する必要があります。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122450.png](/user-manual/workflow/requesting-db-access/image-20251218-122450.png)
+  </figure>
+7. 下に表示されるHost Level Others、Host Level Functionsは設定を見るだけです。Host LevelのPrivilegeの属性によりSchema Levelもprivilegeが従属するため、上位の情報を確認する用途で使用されます。
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122702.png](/user-manual/workflow/requesting-db-access/image-20251218-122702.png)
+  </figure>
+8. `OK`ボタンを押し、フォームの残りの部分を入力した後`Submit`ボタンを押して要求を完了します。

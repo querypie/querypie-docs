@@ -10,14 +10,19 @@ import { Callout } from 'nextra/components'
 
 Access Controlページで管理者はユーザーまたはグループにデータベースアクセス権限を直接付与できます。
 
+<Callout type="info">
+11.5.0からスキーマ（論理DB）レベルのアクセス制御機能が追加されました。
+</Callout>
 
 ### Access Controlリスト照会
 
 Access Controlページでは、QueryPieに登録されたユーザーおよびグループ別に付与されたDB権限（Privilege）および管理者役割現況を照会できます。
-（グループまたはユーザー名で検索可能）
+
+* Group / Usersタブ：Groupおよびユーザーのリストを表示し現況を見ることができます。
+* Locked Accounts：アカウントロック条件によりロックされたユーザーを確認でき、ロックを解除できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -26,47 +31,99 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 
 ### ユーザー/グループ別Access Control詳細履歴照会
 
-Access Controlページ内テーブルで照会しようとするユーザーまたはグループをクリックするとDrawerが開きます。
+Access Controlページ内Groups / Usersタブのリストで特定ユーザーまたはグループ行をクリックすると詳細画面でprivilegeを付与された対象情報を確認できます。
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
-</figure>
-
-* 検索：Connection Nameで照会可能
-* 提供フィルタータイプ
-    *  **Database Type** ：DBタイプ（eg. MySQL、MariaDB、PostgreSQL…）
-    *  **Cloud Provider** ：クラウド提供者タイプ（AWS、Azure、GCP、またはQueryPie Connection）
-    *  **Assigned Status** ：権限割り当て有無
-    *  **Favorite View** ：お気に入り設定有無（DB Connectionsリストでお気に入り設定可能）
-    *  **Tag** ：コネクションに割り当てられたタグ
-        * 各タグ入力方式：Key入力 → エンターキー入力 → 演算子入力 → Value入力 → エンターキー入力
-            * サポートする演算子：`=`, `!=`, `:`, `!:`
-        * Keyが同じタグを複数入力時OR検索実行（合集合）
-        * Keyが異なるタグを複数入力時AND検索実行（交集合）
-
-
-### Access Control権限付与
-
-<figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege](/administrator-manual/databases/db-access-control/access-control/image-20250820-001735.png)
+![特定ユーザーのアクセス制御詳細ページ](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
 <figcaption>
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege
+特定ユーザーのアクセス制御詳細ページ
 </figcaption>
 </figure>
 
-1. Database設定メニューでAccess Controlメニューに移動します。
-2. リストで権限を付与しようとするユーザーまたはグループを選択してディテールページに移動します。
-3. 権限を付与しようとするコネクションを見つけてチェックボックス選択後Privilege Typeを選択します。
-4. 権限を付与しようとするコネクション複数個を選択して一括的に権限を付与することもできます。
-  <figure data-layout="center" data-align="center">
-  ![対象コネクションを複数選択してPrivilegeを一括適用します。 ](/administrator-manual/databases/db-access-control/access-control/image-20250820-002305.png)
-  <figcaption>
-  対象コネクションを複数選択してPrivilegeを一括適用します。 
-  </figcaption>
-  </figure>
-5. 下部のExpiration Date項目で権限有効期限を設定します。未設定時有効期限なしに権限が付与されます。
 
-これで権限を付与受けたユーザーは該当権限でコネクションに接続でき、権限付与履歴はAccess Control LogsログにAccess Control Granted項目として記録されます。
+* 検索：Connection Nameで照会可能
+* 基本情報
+    * Type：USERまたはGroupで分類タイプを表示します。
+    * Auth Provider：該当ユーザーが認証に使用する認証サービス提供者が何かを表示します。
+    * Admin Roles：該当ユーザーに割り当てられているAdmin Roleを表示します。
+    * Members：選択した対象がGroupの場合、該当groupの構成員を表示します。
+    * Email：該当ユーザーのemailアドレスです。
+* Privilegeを付与された対象リスト：privilegeを付与されたconnectionがない場合、リストには何も表示されません。
+    * Connection Name：対象コネクションの名前です。
+    * Database Type ****：DBタイプ（eg. MySQL、MariaDB、PostgreSQL…）
+    * Host：コネクションに登録されたHostアドレスです。
+    * Port：コネクションに登録されたPortアドレスです。
+    * Access Control Level：access controlのレベルを表します。11.5.0からスキーマ（論理DB）レベルの制御ができるようになり、HostまたはSchema（Logical DB）で表示されます。
+    * Assigned Privilege：対象に割り当てられたprivilegeです。
+    * Status：privilegeの状態表示です。
+        * Active：該当ユーザーにコネクションの権限が正常に付与されている状態
+        * Deactivated：コネクションに対する権限があるが、管理者によって設定された期間中コネクションに接続しなかった場合無効化された状態
+        * Expired：該当ユーザーの権限が期限切れ日に達して回収された状態
+    * Expiration date：Privilege期限切れ日
+    * Renewed At：deactivated状態から再度管理者によってactive状態になった時点です。
+    * Granted At：privilegeを付与された時点です。
+    * Last Accessed At：ユーザーが対象にアクセスした最も最近の時点です。
+    * Granted By：privilegeを付与した管理者または承認者です。
+
+
+### Access Control権限付与 - Host Level
+
+1. Database設定メニューでAccess Controlメニューに移動します。
+2. リストで権限を付与しようとするユーザーまたはグループを選択して詳細ページに移動します。
+3. `Grant Privilege`ボタンをクリックします。
+4. ポップアップウィンドウでAccess Control LevelでHostを選択します。（基本値：Host）<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
+  </figure>
+5. privilegeを付与するコネクションを選択し、特定privilege typeを選択します。
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  </figure>
+6. 必要な場合、Expiration dateでprivilege期限切れ日を設定した後`Grant`ボタンを押します。
+7. 権限を付与するコネクション複数個を選択して一括的に権限を付与することもできます。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  </figure>
+
+
+これで権限を付与受けたユーザーは該当権限でコネクションに接続でき、権限付与履歴はAccess Control LogsログにAccess Control Grantedイベントとして記録されます。
+
+
+### Access Control権限付与 - Schema（Logical DB）Level
+
+<Callout type="info">
+11.5.0バージョン現在Schema Level権限付与が可能なDBMS：<br/>Athena、Azure SQL、BigQuery、Cassandra、ClickHouse、DocumentDB、DynamoDB、Hive、Impala、MariaDB、MongoDB、MySQL、Oracle、PostgreSQL、Redshift、SAP Hana、ScyllaDB、ShardingSphere、Single Store、Spanner、SQLServer、Trino、Vertica
+</Callout>
+
+1. Database設定メニューでAccess Controlメニューに移動します。
+2. リストで権限を付与しようとするユーザーまたはグループを選択して詳細ページに移動します。
+3. `Grant Privilege`ボタンをクリックします。
+4. ポップアップウィンドウでAccess Control LevelでSchema（Logical DB）を選択します。（基本値：Host）
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  </figure>
+5. Connections項目で対象コネクションを選択します。スキーマレベルは一度に複数のコネクションに多重設定が不可能です。コネクションを選択すると右側のprivilege項目に基本的にselect権限が必要なスキーマに自動的にSELECT privilegeが付与されたことが見えます。管理者はこの項目を削除することもできますが、その場合Web editorまたはproxyでスキーマ構造を照会する時点にエラーが発生する可能性があるため、可能な限りこの項目を削除しないことをお勧めします。
+6. privilegeを割り当てる特定スキーマ（論理DB）を指定するために`Add Item`ボタンを押します。<br/>下に対象を追加できる行が追加されます。schema構造があるDBMS（Oracle、Postgresなど）は対象名を入力する時、必ず`{database名}`.`{schema名}`の形式で入力する必要があります。MySQLのようにschema構造がないDBMSは論理DB名のみ入力すれば 됩니다。<br/>- Oracle例：ORCLDB.TESTUSER<br/>- PostgreSQL例：testdb.test_schema<br/>- MySQL例：sakila
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  </figure>
+7. privilege割り当てはまずポップアップウィンドウ右側上部のHost Level Privilege項目で希望するprivilege typeを選択します。（スキーマレベルprivilegeはhost level privilegeの範囲内でのみ付与が可能なためです。例えばRead/WriteをHost Level Privilegeで選択した場合、その範囲内でSELECT、INSERTなどを付与できますが、Read-OnlyをHost Level Privilegeで選択した場合、SELECTのみ指定できます。）
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  </figure>
+8. 下に表示されるHost Level Others、Host Level Functionsは設定を見るだけです。修正するためにはDatabases &gt; DB Access Control &gt; Privilege Typeメニューで該当Privilege Typeを修正する必要があります。Host LevelのPrivilegeの属性によりSchema Levelもprivilegeが従属するため、上位の情報を確認する用途で使用されます。<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  </figure>
+9. 必要な場合、Expiration dateでprivilege期限切れ日を設定した後`Grant`ボタンを押します。
+
+これで権限を付与受けたユーザーは該当権限でコネクションに接続でき、権限付与履歴はAccess Control LogsログにAccess Control Grantedイベントとして記録されます。
+
+<Callout type="important">
+* PostgreSQLはschema level制御対象がDatabaseです。PostgreSQLはschemaという名前の構造を持っていますが、これはprivilege割り当ての対象になるものではなく、区分の用途で使用されるためです。
+* Oracle、Presto、Trino、SAP HANAはschema level制御対象がSchemaです。
+* SchemaまたはLogical DB対象入力をする時、正規表現を使用できます。この時、単語の開始を表す^、単語の終わりを表す$を使用できない場合があります。内部的にdatabase.schema.tableの構造をすべて認識して処理するため、schema名に該当する正規表現のみ入力するとエラーが発生します。
+</Callout>
 
 <Callout type="info">
 **ユーザーがグループに含まれた場合、グループとユーザーを対象に同じコネクションに対してそれぞれ異なる権限を適用するとどうなりますか？**
@@ -84,7 +141,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 </figure>
 
 1. Database設定メニューでAccess Controlメニューに移動します。
-2. リストで権限を回収しようとするユーザーまたはグループを選択してディテールページに移動します。
+2. リストで権限を回収しようとするユーザーまたはグループを選択して詳細ページに移動します。
 3. 権限を回収しようとするコネクションを見つけてチェックボックス選択後Revokeボタンで権限を回収します。
 4. 権限を回収しようとするコネクション複数個を選択して一括的に権限を回収することもできます。
 

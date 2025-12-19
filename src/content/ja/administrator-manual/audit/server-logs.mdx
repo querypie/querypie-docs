@@ -2,6 +2,8 @@
 title: 'Server Logs'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Server Logs
 
 ### Overview
@@ -16,22 +18,22 @@ QueryPieのSystem Access Controlで発生するログをServer Logsで確認で�
 
 <table data-table-width="507" data-layout="default" local-id="95470ac3-09e4-4695-80b7-6e7d4ff27bf8">
 <tbody>
-<tr>
-<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+<tr local-id="8534186b-2033-4cc7-877e-dda79ee3b5b3">
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)" local-id="70f8197e-b83d-409e-bcbf-5e95dc6d6c13">
 **共通ログ**
 </th>
-<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)">
+<th data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)" local-id="d3c87cc4-a023-4553-83b5-32808f0bcd35">
 **SAC専用ログ**
 </th>
 </tr>
-<tr>
-<td>
+<tr local-id="606bc709-5042-4fee-a00f-ad8452b791a9">
+<td local-id="33649f7e-f4b6-4a70-99c7-2aadea2b484f">
 **General**
 * User Access History
 * Activity Logs
 * Admin Role History
 </td>
-<td>
+<td local-id="a584fa3d-0929-4abe-8ac4-551670a70a00">
 **Servers**
 * Server Access History
 * Command Audit
@@ -47,16 +49,22 @@ QueryPieのSystem Access Controlで発生するログをServer Logsで確認で�
 
 1.  **General** 
 
-* User Access History : ユーザーログイン、ログアウト履歴
-* Activity Logs : 管理者が実行するリソース登録および設定変更履歴
-* Admin Role History : 管理者権限付与、変更、回収履歴
+* [User Access History](general-logs/user-access-history) : ユーザーログイン、ログアウト履歴
+* [Activity Logs](general-logs/activity-logs) : 管理者が実行するリソース登録および設定変更履歴
+* [Admin Role History](general-logs/admin-role-history) : 管理者権限付与、変更、回収履歴
 
 1.  **Servers** 
 
 * [Server Access History](server-logs/server-access-history) : Server接続履歴
 * [Command Audit](server-logs/command-audit) : Server内実行コマンド履歴
 * [Session Logs](server-logs/session-logs) : 接続セッション内行為録画履歴
-* [Session Monitoring](server-logs/session-monitoring) : 接続したセッションリスト照会
+* [Session Monitoring (Moved)](server-logs/session-monitoring-moved) : 接続したセッションリスト照会
 * [Access Control Logs](server-logs/access-control-logs) : Direct Permission付与履歴
 * [Server Role History](server-logs/server-role-history) : Role付与履歴
 * [Account Lock History](server-logs/account-lock-history) : QueryPieユーザー別サーバー接続アカウントロックおよび解除履歴
+
+<Callout type="info">
+11.5.0からAudit配下メニュー項目であるSession MonitoringはServers &gt; Monitoring &gt; Session Monitoringに移動されました。
+</Callout>
+
+

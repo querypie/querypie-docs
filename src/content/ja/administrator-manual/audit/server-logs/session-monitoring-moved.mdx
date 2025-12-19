@@ -1,20 +1,24 @@
 ---
-title: 'Session Monitoring'
+title: 'Session Monitoring (Moved)'
 ---
 
 import { Callout } from 'nextra/components'
 
-# Session Monitoring
+# Session Monitoring (Moved)
 
 ### Overview
 
 QueryPieを通じたサーバー接続セッションを照会できます。
 また、接続中のセッションを強制終了できます。
 
-### Session Monitoringの照会
+<Callout type="info">
+11.5.0からAudit配下メニュー項目であるSession MonitoringはServers &gt; Monitoring &gt; Session Monitoringに移動されました。
+</Callout>
+
+### Session Monitoring照会
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Audit &gt; Servers &gt; Session Monitoring](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173632.png)
+![Administrator &gt; Audit &gt; Servers &gt; Session Monitoring](/administrator-manual/audit/server-logs/session-monitoring-moved/image-20240728-173632.png)
 <figcaption>
 Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
 </figcaption>
@@ -22,11 +26,11 @@ Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
 
 1. Administrator &gt; Audit &gt; Servers &gt; Server Monitoringメニューに移動します。
 2. 現在接続中のセッションを照会します。
-3. テーブル左上の検索欄を通じて以下の条件で検索が可能です。
+3. テーブル左側上部の検索欄を通じて以下の条件で検索が可能です。
     1.  **Server Name**  : 接続サーバー名
         1. 下部には該当サーバーに接続中のユーザー名表示
     2.  **Account**  : サーバー接続Account
-    3.  **Protocol** : 接続使用したProtocol
+    3.  **Protocol** : 接続時使用したProtocol
     4.  **Connected At**  : 接続時間
     5.  **Connected From**  : 接続方式の主体
         1. Web
@@ -34,10 +38,10 @@ Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
 
 
 
-### Sessionの強制終了
+### Session強制終了
 
 <figure data-layout="center" data-align="center">
-![image-20240728-173640.png](/administrator-manual/audit/server-logs/session-monitoring/image-20240728-173640.png)
+![image-20240728-173640.png](/administrator-manual/audit/server-logs/session-monitoring-moved/image-20240728-173640.png)
 </figure>
 
 1. Administrator &gt; Audit &gt; Servers &gt; Server Monitoringメニューに移動します。

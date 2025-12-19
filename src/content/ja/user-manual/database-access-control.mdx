@@ -11,12 +11,26 @@ import { Callout } from 'nextra/components'
 コネクションに対して接続権限を付与されたユーザーは制御された環境でウェブSQLエディターまたはプロキシを通じてデータベースコネクションに接続できます。
 接続権限は個別ユーザーに付与されることもあり、ユーザーグループに付与されることもあります。
 
+<Callout type="info">
+11.5.0からSchema Levelアクセス制御機能が追加され、schema（Logical DB）単位でprivilegeを割り当て受けることができます。
+どの方式でprivilegeを割り当て受けたかによってPrivilege項目に表示される内容が異なります。
+</Callout>
+
 <figure data-layout="center" data-align="center">
-![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/image-20240724-051755.png)
+![Host Level privilegeが割り当てられた場合接続画面](/user-manual/database-access-control/image-20251218-114957.png)
 <figcaption>
-QueryPie Web &gt; Database Access Control &gt; Databases
+Host Level privilegeが割り当てられた場合接続画面
 </figcaption>
 </figure>
+
+
+<figure data-layout="center" data-align="center">
+![Schema Level privilegeが割り当てられた場合接続画面](/user-manual/database-access-control/image-20251218-114753.png)
+<figcaption>
+Schema Level privilegeが割り当てられた場合接続画面
+</figcaption>
+</figure>
+
 
 下記の方法を通じてデータベースコネクションに接続およびクエリを実行してデータを照会できます。
 
@@ -43,4 +57,8 @@ Redash、Tableau、Zepplinのような**ウェブサービスでDBに接続し�
 
 ### データベース接続ガイドアクセス
 
-(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)
+* [ウェブSQLエディターで接続](database-access-control/connecting-with-web-sql-editor)
+* [Default Privilege設定](database-access-control/setting-default-privilege)
+* [エージェントなしでプロキシ接続](database-access-control/connecting-to-proxy-without-agent)
+* [Google BigQuery OAuth認証を通じて接続](database-access-control/connecting-via-google-bigquery-oauth-authentication)
+* [Custom Data Source接続](database-access-control/connecting-to-custom-data-source)
