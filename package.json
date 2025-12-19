@@ -13,6 +13,7 @@
     "format": "npx prettier --write .",
     "generate-pagefind": "pagefind --site .next/server/app --output-path public/_pagefind",
     "generate-sitemap": "npx tsx scripts/generate-sitemap/index.ts",
+    "fetch-openapi-spec": "npx tsx scripts/fetch-openapi-spec/index.ts",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run"

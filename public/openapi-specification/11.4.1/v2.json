@@ -76338,7 +76338,7 @@
             "description": "Vault database engine account"
           }
         },
-        "description": "Database Connection Username-Password Admin Accounts"
+        "description": "Database Connection Username-Password Proxy Accounts"
       },
       "com.querypie.dbam.controller.dto.ExternalConnectionDto$UsernamePasswordResponse": {
         "required": [
@@ -76351,7 +76351,7 @@
             "description": "Username-Password username"
           }
         },
-        "description": "Database Connection Username-Password Admin Accounts"
+        "description": "Database Connection Username-Password Proxy Accounts"
       },
       "com.querypie.dbam.controller.dto.ExternalConnectionDto$UsernamePasswords": {
         "type": "object",
