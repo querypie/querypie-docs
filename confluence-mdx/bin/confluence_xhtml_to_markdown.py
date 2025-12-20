@@ -489,6 +489,14 @@ def get_html_attributes(node):
         # class="numberingColumn" might be the cause of broken table rendering.
         if attr_name in ['style', 'class']:
             continue
+        
+        # Remove local-id attribute (Confluence-specific, not needed in MDX)
+        if attr_name == 'local-id':
+            continue
+        
+        # Remove all data-* attributes (Confluence-specific metadata, not needed in MDX)
+        if attr_name.startswith('data-'):
+            continue
 
         if isinstance(attr_value, list):
             # Convert list-type attribute values (e.g., class) to a space-separated string
