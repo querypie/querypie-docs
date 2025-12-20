@@ -33,7 +33,7 @@ function getSlugs(pathname: string): string[] {
   return slugs.length > 0 ? slugs : [''];
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const slugs = getSlugs(pathname);
 
