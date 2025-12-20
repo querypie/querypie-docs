@@ -113,7 +113,13 @@ Users blocked from login due to enabling the `Require Allowed Zones for User Acc
 (For details, refer to the [Requesting IP Registration](../../../user-manual/workflow/requesting-ip-registration) document.)
 </Callout>
 
-*  **Admin Page Access Control**  : Sets policies to restrict IPs of administrators who can access the administrator page. You can restrict access to the administrator page only to administrators connecting from specific IP addresses or ranges by enabling the toggle.
+*  **Admin Page Access Control**  : Sets policies to restrict IPs of administrators who can access the administrator page. You can restrict access to the administrator page only to administrators connecting from specific IP addresses or ranges by enabling the toggle.<br/>
+  <figure data-layout="center" data-align="center">
+  ![Screen when Admin page IP access is blocked](/administrator-manual/general/company-management/security/image-20251212-161723.png)
+  <figcaption>
+  Screen when Admin page IP access is blocked
+  </figcaption>
+  </figure>
     *  **Access Requirements:** 
         * Users must have administrator privileges.
         * User's connection IP must be included in the IP range set in 'All Users'.
@@ -126,18 +132,22 @@ Users blocked from login due to enabling the `Require Allowed Zones for User Acc
 A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below. 
 If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
 </Callout>
+
 <figure data-layout="center" data-align="center">
-![When not matching IP registered in QueryPie Web Access Control &gt; All Users](/administrator-manual/general/company-management/security/image-20240121-073718.png)
+![Screen when IP access is blocked by Each User settings](/administrator-manual/general/company-management/security/image-20251218-082726.png)
 <figcaption>
-When not matching IP registered in QueryPie Web Access Control &gt; All Users
+Screen when IP access is blocked by Each User settings
 </figcaption>
 </figure>
+
 <figure data-layout="center" data-align="center">
-![When not matching Allowed Zone registered in Users &gt; Update User](/administrator-manual/general/company-management/security/image-20240121-074246.png)
+![Screen when IP access is blocked by All User settings](/administrator-manual/general/company-management/security/image-20251212-162103.png)
 <figcaption>
-When not matching Allowed Zone registered in Users &gt; Update User
+Screen when IP access is blocked by All User settings
 </figcaption>
 </figure>
+
+
 <Callout type="important">
 **IP restriction setting precautions**
 Settings on the Security page are applied immediately upon saving. 

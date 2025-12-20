@@ -2,7 +2,7 @@ export default {
   'server-access-history': 'Server Access History',
   'command-audit': 'Command Audit',
   'session-logs': 'Session Logs',
-  'session-monitoring': 'Session Monitoring',
+  'session-monitoring-moved': 'Session Monitoring (Moved)',
   'access-control-logs': 'Access Control Logs',
   'server-role-history': 'Server Role History',
   'account-lock-history': 'Account Lock History',

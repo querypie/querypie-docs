@@ -1,0 +1,54 @@
+---
+title: '11.5.0'
+---
+
+# 11.5.0
+
+### QueryPie 11.5.0 Release
+
+December 15, 2025
+
+
+**New Feature**
+
+* [Common] Email notification functionality for privilege expiration (Deactivated) added
+* [Common] Logging functionality for access attempts from unauthorized IPs added
+* [DAC] Google Spanner policy and Proxy support
+* [DAC] ClickHouse policy and Proxy support
+* [DAC] Schema access control implementation and approval request integration
+
+
+**Improvement**
+
+* [Common] Display Name display improvement when using SAML authentication
+* [Common] MFA application improvement for Identity Provider
+* [Common] Admin Role - Database Access Control Read-only permission added
+* [Common] DB Access Request Connection Owner selection improvement in Workflow Approval Rule
+* [Common] Invalid license handling improvement
+* [Common] API Docs required field display improvement
+* [Common] Fixed issue where Multi Agent retried connection with expired token
+* [Common] Current IP address display on IP access restriction screen
+* [Common] Fixed Lock wait timeout error when attempting login during Dry run in IdP settings
+* [DAC] Execution Status improvement when approver rejects SQL Request, SQL Export Request
+* [DAC] Exception Management workflow privilege detail status management improvement
+* [DAC] Table name display improvement in Web Editor Import popup window
+* [DAC] Query Audit Label display fix when querying MongoDB Ledger Table
+* [DAC] Display method fix when executor cancels in Urgent mode in Workflow
+* [DAC] Error handling improvement when MySQL connection has no account information (Id/Password)
+* [DAC] Column information update improvement when changing sheets in Excel Import
+* [DAC] Max Display Rows setting behavior improvement
+* [DAC] Handling improvement when MongoDB masking target field is Array
+* [DAC] PostgreSQL Prepare Statement Integer Null Parameter handling improvement
+* [DAC] Proxy Usage validation strengthening when Redis Cluster is enabled
+* [DAC] Modified to allow multiple tag selection in DB Policy Exception Request
+* [DAC] Fixed issue where JDBC.NET Process did not terminate when Engine abnormally terminated
+* [DAC] Fixed error occurrence issue when importing PostgreSQL/Redshift
+* [DAC] Private certificate support when connecting Trino with TLS
+* [DAC] Excluded expired users from Connection Accessible Users list
+* [DAC] Improvement to allow reusing previous reason when entering reason in Web Editor
+* [DAC] MongoDB / DocumentDB Data Tab page size limited to 100
+* [DAC] Fixed issue where Ledger was not recorded in Query Audit when executing Ledger Workflow
+* [DAC] Password change UI support when Vertica password expires
+* [DAC] Fixed issue where table alias was not properly analyzed in DELETE FROM table statement
+* [SAC] Prohibited command behavior improvement - history edit case handling
+* [SAC] Session Monitoring menu location change and Server Monitoring Full Access permission added

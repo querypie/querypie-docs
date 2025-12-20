@@ -1,0 +1,56 @@
+---
+title: 'Session Monitoring (Moved)'
+---
+
+import { Callout } from 'nextra/components'
+
+# Session Monitoring (Moved)
+
+### Overview
+
+You can view server connection sessions through QueryPie.
+You can also force terminate connected sessions.
+
+<Callout type="info">
+From 11.5.0, Session Monitoring, which was a submenu item under Audit, has been moved to Servers &gt; Monitoring &gt; Session Monitoring.
+</Callout>
+
+### Viewing Session Monitoring
+
+<figure data-layout="center" data-align="center">
+![Administrator &gt; Audit &gt; Servers &gt; Session Monitoring](/administrator-manual/audit/server-logs/session-monitoring-moved/image-20240728-173632.png)
+<figcaption>
+Administrator &gt; Audit &gt; Servers &gt; Session Monitoring
+</figcaption>
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Servers &gt; Server Monitoring menu.
+2. View currently connected sessions.
+3. You can search using the following criteria through the search box at the top left of the table.
+    1.  **Server Name**  : Name of the connected server
+        1. User names connected to that server are displayed below
+    2.  **Account**  : Server connection Account
+    3.  **Protocol** : Protocol used for connection
+    4.  **Connected At**  : Connection time
+    5.  **Connected From**  : Source of the connection method
+        1. Web
+        2. Proxy
+
+
+
+### Force Terminating Sessions
+
+<figure data-layout="center" data-align="center">
+![image-20240728-173640.png](/administrator-manual/audit/server-logs/session-monitoring-moved/image-20240728-173640.png)
+</figure>
+
+1. Navigate to Administrator &gt; Audit &gt; Servers &gt; Server Monitoring menu.
+2. View currently connected sessions.
+3. Click the checkbox in front of the session to force terminate.
+4. Click the `Kill Session` button.
+5. Click the `OK` button in the popup that appears.
+
+<Callout type="info">
+Force terminating a session does not block the user.
+If necessary, please separately block the user who was connected.
+</Callout>

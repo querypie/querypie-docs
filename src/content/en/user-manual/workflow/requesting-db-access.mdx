@@ -103,3 +103,43 @@ Bulk application through checkboxes and Apply button
     *  **Read-Only Permission**  : Permission to only SELECT.
     *  **Other Permissions**  : Permissions additionally created by administrators, and if no permissions are created, only the above two permissions are displayed. 
 * If you have completed specifying the approval rules and entering the request body, click the `Submit` button at the bottom of the page to submit the request.
+
+### Requesting DB Access Request (Schema Level)
+
+<Callout type="info">
+From 11.5.0, schema (Logical DB) level access requests are possible.
+The following content omits common parts and focuses on the different parts.
+</Callout>
+
+1. Click the Submit Request button and select "DB Access Request (Schema Level)" from the menu.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-120432.png](/user-manual/workflow/requesting-db-access/image-20251218-120432.png)
+  </figure>
+2. Click the `Add Item` button. <br/>  
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-120721.png](/user-manual/workflow/requesting-db-access/image-20251218-120721.png)
+  </figure>
+3. Select the connection to connect to from the left panel.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-121011.png](/user-manual/workflow/requesting-db-access/image-20251218-121011.png)
+  </figure>
+4. When you select a connection, you can see that SELECT privilege is automatically granted to schemas that require select privilege in the privilege item on the right. You can remove this item, but if you do, errors may occur when querying schema structure in Web editor or proxy, so do not remove this item unless necessary.<br/>Click the `Add Item` button.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-121402.png](/user-manual/workflow/requesting-db-access/image-20251218-121402.png)
+  </figure>
+5. A row is added below where you can add targets. For DBMS with schema structure (Oracle, Postgres, etc.), you must enter the target name in the format `{database name}`.`{schema name}`. For DBMS without schema structure like MySQL, enter only the logical DB name.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122027.png](/user-manual/workflow/requesting-db-access/image-20251218-122027.png)
+  </figure>
+    * Oracle example: ORCLDB.TESTUSER
+    * PostgreSQL example: testdb.test_schema
+    * MySQL example: sakila<br/>
+6. To assign privileges, first select the desired privilege type from the Host Level Privilege item at the top right of the popup window. (Schema level privileges can only be granted within the scope of host level privileges. For example, if you select Read/Write as Host Level Privilege, you can grant SELECT, INSERT, etc. within that scope, but if you select Read-Only as Host Level Privilege, you can only specify SELECT.) If there are no privileges needed for Host Level privilege assignment, you must request the administrator to create a privilege type with specific privileges for that connection.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122450.png](/user-manual/workflow/requesting-db-access/image-20251218-122450.png)
+  </figure>
+7. Host Level Others and Host Level Functions displayed below are read-only. They are used to check upper-level information because Schema Level privileges are dependent on the properties of Host Level Privileges.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-122702.png](/user-manual/workflow/requesting-db-access/image-20251218-122702.png)
+  </figure>
+8. Click the `OK` button, enter the remaining parts of the form, and click the `Submit` button to complete the request.

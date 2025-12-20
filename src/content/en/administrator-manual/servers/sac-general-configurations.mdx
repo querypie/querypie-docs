@@ -8,6 +8,7 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 Starting from version 10.3.0, SAC-related configuration items that were previously under Administrator &gt; General &gt; Security have been moved to General &gt; Configurations under each service menu.
+From 11.5.0, email notification functionality has been added to notify users before permission expiration (Permission Expiration, Privilege Expiration, Role Expiration).
 </Callout>
 
 ### Overview
@@ -25,8 +26,9 @@ Manage security settings applied to server access control.
 Manage basic security settings.
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-08-25-at-9.28.10-PM.png](/administrator-manual/servers/sac-general-configurations/Screenshot-2025-08-25-at-9.28.10-PM.png)
+![image-20251218-084954.png](/administrator-manual/servers/sac-general-configurations/image-20251218-084954.png)
 </figure>
+
 
 *  **Permission Revocation Period :** Automatic revocation of server permissions for long-term inactive users
     * When Enable is selected, server access permissions granted to users are automatically revoked if they do not access the server for the specified period (days). 
@@ -34,6 +36,7 @@ Manage basic security settings.
         * This only applies to Direct Permissions or Role permissions with expiration dates that are directly granted to users.
         * Permissions inherited from groups or permanent permissions without specified expiration dates are not affected by this feature.
         * If a user has never accessed the server after being granted permission, the period is calculated from the time the permission was granted.
+*  **Notification of Access Expiration**  : Enables email notifications before permission expiration (Permission Expiration, Privilege Expiration, Role Expiration).
 *  **Maximum OS Account Login Failures before Lockout** : Account lockout policy for login failures
     * Specify the maximum number of server login failures allowed
     * When Enable is selected, additional input is possible based on count and time range criteria (e.g., account lockout after 2 failures within 11 minutes)

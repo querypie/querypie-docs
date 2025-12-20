@@ -11,12 +11,26 @@ import { Callout } from 'nextra/components'
 Users who have been granted access permissions for connections can access database connections through the Web SQL Editor or proxy in a controlled environment.
 Access permissions can be granted to individual users or user groups.
 
+<Callout type="info">
+From 11.5.0, Schema Level access control functionality has been added, allowing privileges to be assigned at the schema (Logical DB) level.
+The content displayed in the Privilege item differs depending on how privileges were assigned.
+</Callout>
+
 <figure data-layout="center" data-align="center">
-![QueryPie Web &gt; Database Access Control &gt; Databases](/user-manual/database-access-control/image-20240724-051755.png)
+![Connection screen when Host Level privilege is assigned](/user-manual/database-access-control/image-20251218-114957.png)
 <figcaption>
-QueryPie Web &gt; Database Access Control &gt; Databases
+Connection screen when Host Level privilege is assigned
 </figcaption>
 </figure>
+
+
+<figure data-layout="center" data-align="center">
+![Connection screen when Schema Level privilege is assigned](/user-manual/database-access-control/image-20251218-114753.png)
+<figcaption>
+Connection screen when Schema Level privilege is assigned
+</figcaption>
+</figure>
+
 
 You can access database connections and execute queries to retrieve data through the following methods.
 
@@ -43,4 +57,8 @@ In summary, since the Web SQL Editor and proxy methods each have their own advan
 
 ### Database Access Guide Quick Links
 
-(Unsupported xhtml node: &lt;ac:structured-macro name="children"&gt;)
+* [Connecting with Web SQL Editor](database-access-control/connecting-with-web-sql-editor)
+* [Setting Default Privilege](database-access-control/setting-default-privilege)
+* [Connecting to Proxy without Agent](database-access-control/connecting-to-proxy-without-agent)
+* [Connecting via Google BigQuery OAuth Authentication](database-access-control/connecting-via-google-bigquery-oauth-authentication)
+* [Connecting to Custom Data Source](database-access-control/connecting-to-custom-data-source)

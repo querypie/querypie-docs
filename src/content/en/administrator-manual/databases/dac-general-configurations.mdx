@@ -8,15 +8,18 @@ import { Callout } from 'nextra/components'
 
 <Callout type="info">
 From 10.3.0, DAC-related setting items that were under Administrator &gt; General &gt; Security have been moved to General &gt; Configurations in each service menu.
+
 From 11.2.0, Query Sharing that was under Administrator &gt; General &gt; Company Management &gt; General has been moved to Administrator &gt; Databases &gt; General &gt; Configurations.
+
+From 11.5.0, email notification functionality has been added to notify users before privilege expiration (Privilege Expiration, Policy Exception Expiration).
 </Callout>
 
 ### Database Access Control Settings
 
-Manages settings applied to DB access control.
+Manages settings applied to DB access control.<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20250822-104340.png](/administrator-manual/databases/dac-general-configurations/image-20250822-104340.png)
+![image-20251218-083844.png](/administrator-manual/databases/dac-general-configurations/image-20251218-083844.png)
 </figure>
 
 
@@ -61,6 +64,8 @@ You can use the query sharing feature on the SQL Editor screen.
 * You can load query files stored in the repository from Queries panel &gt; QueryPie Git Sharing folder.
 
 For detailed description, please refer to [Connecting with Web SQL Editor](../../user-manual/database-access-control/connecting-with-web-sql-editor).
+
+
 ______
 
 #### Access Control Settings
@@ -69,6 +74,10 @@ ______
 *  **Privilege Deactivation Period** : Long-term unused criteria period for DB privilege expiration (Default: 90 days)
 *  **Maximum Access Duration** : Maximum period for privilege requests and assignments
     * Cannot set expiration dates exceeding the specified period when requesting DB Access Request
+*  **Notification of Access Expiration**  : Enables email notifications to users before privilege expiration (Privilege Expiration, Policy Exception Expiration).
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-084512.png](/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png)
+  </figure>
 *  **Display the first 10 rows in Query Audit** : Query Audit SELECT statement execution result display method setting (Default: Off, when set to On, only the first 10 rows are displayed instead of showing all results)
 
 <figure data-layout="center" data-align="center">

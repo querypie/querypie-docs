@@ -2,6 +2,8 @@
 title: 'Server Logs'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Server Logs
 
 ### Overview
@@ -47,16 +49,22 @@ In addition to the audit logs commonly provided by QueryPie, when you have a Que
 
 1.  **General** 
 
-* User Access History : User login and logout history
-* Activity Logs : History of resource registration and configuration changes performed by administrators
-* Admin Role History : History of administrator permission grants, changes, and revocations
+* [User Access History](general-logs/user-access-history) : User login and logout history
+* [Activity Logs](general-logs/activity-logs) : History of resource registration and configuration changes performed by administrators
+* [Admin Role History](general-logs/admin-role-history) : History of administrator permission grants, changes, and revocations
 
 1.  **Servers** 
 
 * [Server Access History](server-logs/server-access-history) : Server connection history
 * [Command Audit](server-logs/command-audit) : History of commands executed within servers
 * [Session Logs](server-logs/session-logs) : Recording history of actions within connection sessions 
-* [Session Monitoring](server-logs/session-monitoring) : View list of connected sessions 
+* [Session Monitoring (Moved)](server-logs/session-monitoring-moved) : View list of connected sessions
 * [Access Control Logs](server-logs/access-control-logs) : Direct Permission grant history
 * [Server Role History](server-logs/server-role-history) : Role grant history
-* [Account Lock History](server-logs/account-lock-history) : History of server access account locks and releases by QueryPie user 
+* [Account Lock History](server-logs/account-lock-history) : History of server access account locks and releases by QueryPie user
+
+<Callout type="info">
+From 11.5.0, Session Monitoring, which was a submenu item under Audit, has been moved to Servers &gt; Monitoring &gt; Session Monitoring.
+</Callout>
+
+

@@ -10,14 +10,19 @@ import { Callout } from 'nextra/components'
 
 On the Access Control page, administrators can directly grant database access permissions to users or groups.
 
+<Callout type="info">
+From 11.5.0, schema (logical DB) level access control functionality has been added.
+</Callout>
 
 ### Viewing the Access Control List
 
 On the Access Control page, you can view the DB privileges and administrator role status granted to users and groups registered in QueryPie.
-(Searchable by group or user name)
+
+* Group / Users tab: Displays the list of groups and users and shows their status.
+* Locked Accounts: You can check users who are locked due to account lock conditions and unlock them.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-113502.png)
+![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -26,47 +31,99 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 
 ### Viewing User/Group Access Control Details
 
-Clicking on a user or group in the table on the Access Control page opens a drawer.
+Clicking on a specific user or group row in the Groups / Users tab list on the Access Control page opens a detail screen where you can view information about targets that have been granted privileges.
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240731-115424.png](/administrator-manual/databases/db-access-control/access-control/screenshot-20240731-115424.png)
-</figure>
-
-* Search: Can search by Connection Name
-* Available filter types
-    *  **Database Type**: Database type (e.g. MySQL, MariaDB, PostgreSQL…)
-    *  **Cloud Provider**: Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
-    *  **Assigned Status**: Whether privileges are assigned
-    *  **Favorite View**: Whether favorite is set (can be set in the DB Connections list)
-    *  **Tag**: Tags assigned to connections
-        * Tag input method: Enter Key → Press Enter → Enter Operator → Enter Value → Press Enter
-            * Supported operators: `=`, `!=`, `:`, `!:`
-        * When multiple tags with the same key are entered, an OR search is performed (union)
-        * When multiple tags with different keys are entered, an AND search is performed (intersection)
-
-
-### Granting Access Control Privileges
-
-<figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege](/administrator-manual/databases/db-access-control/access-control/image-20250820-001735.png)
+![Access control detail page for a specific user](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
 <figcaption>
-Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User Details &gt; Grant Privilege
+Access control detail page for a specific user
 </figcaption>
 </figure>
 
+
+* Search: Can search by Connection Name
+* Basic information
+    * Type: Displays the classification type as USER or Group.
+    * Auth Provider: Displays which authentication service provider the user uses for authentication.
+    * Admin Roles: Displays the Admin Role assigned to the user.
+    * Members: If the selected target is a Group, displays the members of that group.
+    * Email: The user's email address.
+* List of targets granted privileges: If there are no connections with privileges granted, nothing is displayed in the list.
+    * Connection Name: The name of the target connection.
+    * Database Type **** : Database type (e.g. MySQL, MariaDB, PostgreSQL…)
+    * Host: The Host address registered in the connection.
+    * Port: The Port address registered in the connection.
+    * Access Control Level: Indicates the level of access control. From 11.5.0, schema (logical DB) level control is available, so it is displayed as Host or Schema(Logical DB).
+    * Assigned Privilege: The privilege assigned to the target.
+    * Status: Displays the status of the privilege.
+        * Active: The user has normal privileges for the connection.
+        * Deactivated: The user has privileges for the connection but is in a deactivated state because they have not accessed the connection for a period set by the administrator.
+        * Expired: The user's privilege has been revoked because the expiration date has been reached.
+    * Expiration date: Privilege expiration date
+    * Renewed At: The time when the status was changed from deactivated to active by the administrator.
+    * Granted At: The time when the privilege was granted.
+    * Last Accessed At: The most recent time the user accessed the target.
+    * Granted By: The administrator or approver who granted the privilege.
+
+
+### Granting Access Control Privileges - Host Level
+
 1. Navigate to the Access Control menu from the Database settings menu.
 2. Select the user or group to grant privileges to from the list and go to the detail page.
-3. Find the connection to grant privileges to, select the checkbox, and choose the Privilege Type.
-4. You can also select multiple connections to grant privileges in bulk.
+3. Click the `Grant Privilege` button.
+4. In the popup window, select Host from Access Control Level. (Default: Host)<br/>
   <figure data-layout="center" data-align="center">
-  ![Select multiple target connections and apply privileges in bulk.](/administrator-manual/databases/db-access-control/access-control/image-20250820-002305.png)
-  <figcaption>
-  Select multiple target connections and apply privileges in bulk.
-  </figcaption>
+  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
   </figure>
-5. Set the privilege expiration date in the Expiration Date field at the bottom. If not set, privileges are granted without an expiration date.
+5. Select the connection to grant privileges to and choose a specific privilege type.
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  </figure>
+6. If necessary, set the privilege expiration date in Expiration date and click the `Grant` button.
+7. You can also select multiple connections to grant privileges in bulk. <br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  </figure>
 
-Users who have been granted privileges can now connect to the connection with those privileges, and the privilege grant history is recorded as an Access Control Granted item in the Access Control Logs.
+
+Users who have been granted privileges can now connect to the connection with those privileges, and the privilege grant history is recorded as an Access Control Granted event in the Access Control Logs.
+
+
+### Granting Access Control Privileges - Schema(Logical DB) Level
+
+<Callout type="info">
+DBMS that support Schema Level privilege assignment as of version 11.5.0:<br/>Athena, Azure SQL, BigQuery, Cassandra, ClickHouse, DocumentDB, DynamoDB, Hive, Impala, MariaDB, MongoDB, MySQL, Oracle, PostgreSQL, Redshift, SAP Hana, ScyllaDB, ShardingSphere, Single Store, Spanner, SQLServer, Trino, Vertica
+</Callout>
+
+1. Navigate to the Access Control menu from the Database settings menu.
+2. Select the user or group to grant privileges to from the list and go to the detail page.
+3. Click the `Grant Privilege` button.
+4. In the popup window, select Schema(Logical DB) from Access Control Level. (Default: Host)
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  </figure>
+5. Select the target connection from the Connections item. Schema level does not support multiple settings for multiple connections at once. When you select a connection, you can see that SELECT privilege is automatically granted to schemas that require select privilege in the privilege item on the right. Administrators can remove this item, but if they do, errors may occur when querying schema structure in Web editor or proxy, so it is recommended not to remove this item if possible.
+6. Click the `Add Item` button to specify a specific schema (logical DB) to assign privileges to. <br/> A row is added below where you can add targets. For DBMS with schema structure (Oracle, Postgres, etc.), you must enter the target name in the format `{database name}`.`{schema name}`. For DBMS without schema structure like MySQL, enter only the logical DB name.<br/>- Oracle example: ORCLDB.TESTUSER<br/>- PostgreSQL example: testdb.test_schema<br/>- MySQL example: sakila
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  </figure>
+7. To assign privileges, first select the desired privilege type from the Host Level Privilege item at the top right of the popup window. (Schema level privileges can only be granted within the scope of host level privileges. For example, if you select Read/Write as Host Level Privilege, you can grant SELECT, INSERT, etc. within that scope, but if you select Read-Only as Host Level Privilege, you can only specify SELECT.)
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  </figure>
+8. Host Level Others and Host Level Functions displayed below are read-only. To modify them, you must modify the corresponding Privilege Type in the Databases &gt; DB Access Control &gt; Privilege Type menu. They are used to check upper-level information because Schema Level privileges are dependent on the properties of Host Level Privileges.<br/>
+  <figure data-layout="center" data-align="center">
+  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  </figure>
+9. If necessary, set the privilege expiration date in Expiration date and click the `Grant` button.
+
+Users who have been granted privileges can now connect to the connection with those privileges, and the privilege grant history is recorded as an Access Control Granted event in the Access Control Logs.
+
+<Callout type="important">
+* For PostgreSQL, the schema level control target is Database. PostgreSQL has a structure called schema, but this is used for distinction purposes, not as a target for privilege assignment.
+* For Oracle, Presto, Trino, and SAP HANA, the schema level control target is Schema.
+* You can use regular expressions when entering Schema or Logical DB targets. However, you may not be able to use ^ (start of word) and $ (end of word). Since the system internally recognizes and processes the entire database.schema.table structure, entering only the regular expression for the schema name will cause an error.
+</Callout>
 
 <Callout type="info">
 **What happens when a user is included in a group and different privileges are applied to the same connection for both the group and the user?**
@@ -88,7 +145,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 3. Find the connection to revoke privileges from, select the checkbox, and revoke privileges through the Revoke button.
 4. You can also select multiple connections to revoke privileges in bulk.
 
-Users whose privileges have been revoked can no longer access the connection, and the privilege revocation history is recorded as an Access Control Revoked item in the Access Control Logs.
+Users whose privileges have been revoked can no longer access the connection, and the privilege revocation history is recorded as an Access Control Revoked event in the Access Control Logs.
 
 
 <Callout type="important">
@@ -102,7 +159,7 @@ Users whose privileges have been revoked can no longer access the connection, an
 <Callout type="important">
 **Detailed Descriptions of the Access Control Details Panel**
 * The initial time when the privilege was granted can be checked through the **Granted At** column.
-* The last time the user who was granted the privilege accessed the connection can be checked through the **Last Access At** column.
+* The last time the user who was granted the privilege accessed the connection can be checked through the **Last Accessed At** column.
 * The time when the privilege will be revoked can be checked through the **Expiration Date** column.
 * If a privilege is granted but the **Expiration Date** column shows nothing, the privilege will not be revoked. However, basic management of the connection privilege is affected by the connection long-term inactivity setting (Deactivation Period).
 </Callout>
