@@ -1,6 +1,6 @@
 import { middleware as nextraMiddleware } from 'nextra/locales';
 import { NextRequest, NextResponse } from 'next/server';
-import { middlewareLogger } from './lib/logger';
+import { proxyLogger } from './lib/logger';
 import { detectUserLanguage, supportedLanguages } from './lib/detect-user-language';
 
 // URIs that should skip Nextra middleware and be handled by route handlers
@@ -43,14 +43,14 @@ export async function proxy(request: NextRequest) {
   if (skipBySlug || skipByPathname) {
     const reason = skipBySlug ? SKIP_MIDDLEWARE_URIS.get(slugs[0]) : SKIP_MIDDLEWARE_URIS.get(pathname);
 
-    middlewareLogger.debug('Skipping Nextra middleware', {
+    proxyLogger.debug('Skipping Nextra Proxy', {
       pathname,
       reason,
     });
     return NextResponse.next();
   }
 
-  middlewareLogger.debug('Middleware request', {
+  proxyLogger.debug('Proxy request', {
     method: request.method,
     pathname,
   });
@@ -64,14 +64,14 @@ export async function proxy(request: NextRequest) {
     const rewriteUrl = new URL(`/${detectedLanguage}${pathname}`, request.url);
 
     if (detectedLanguage === 'en') {
-      middlewareLogger.info('Root rewrite with dynamic language detection', {
+      proxyLogger.info('Root rewrite with dynamic language detection', {
         from: pathname,
         to: rewriteUrl,
         acceptLanguage: request.headers.get('accept-language'),
       });
       return NextResponse.rewrite(rewriteUrl);
     } else {
-      middlewareLogger.info('Root redirect with dynamic language detection', {
+      proxyLogger.info('Root redirect with dynamic language detection', {
         from: pathname,
         to: rewriteUrl,
         acceptLanguage: request.headers.get('accept-language'),
@@ -80,7 +80,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  middlewareLogger.debug('Handling with Nextra middleware');
+  proxyLogger.debug('Handling with Nextra middleware');
   return nextraMiddleware(request);
 }
 

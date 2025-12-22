@@ -1,5 +1,5 @@
 import {NextRequest} from 'next/server';
-import {middlewareLogger} from './logger';
+import { proxyLogger } from './logger';
 
 // Supported languages
 export const supportedLanguages = ['en', 'ko', 'ja'];
@@ -15,7 +15,7 @@ function detectLanguageFromCookie(request: NextRequest): string | null {
   const cookieValue = request.cookies.get(cookieName)?.value;
   
   if (!cookieValue) {
-    middlewareLogger.debug('NEXT_LOCALE cookie not found');
+    proxyLogger.debug('NEXT_LOCALE cookie not found');
     return null;
   }
 
@@ -23,14 +23,14 @@ function detectLanguageFromCookie(request: NextRequest): string | null {
   const langCode = cookieValue.split('-')[0].toLowerCase();
   
   if (supportedLanguages.includes(langCode)) {
-    middlewareLogger.debug('Language detected from NEXT_LOCALE cookie', { 
+    proxyLogger.debug('Language detected from NEXT_LOCALE cookie', { 
       lang: langCode,
       cookieValue 
     });
     return langCode;
   }
 
-  middlewareLogger.debug('Invalid language in NEXT_LOCALE cookie', { 
+  proxyLogger.debug('Invalid language in NEXT_LOCALE cookie', { 
     cookieValue,
     langCode 
   });
@@ -46,7 +46,7 @@ function detectLanguageFromAcceptHeader(request: NextRequest): string | null {
   const acceptLanguage = request.headers.get('accept-language');
   
   if (!acceptLanguage) {
-    middlewareLogger.debug('Accept-Language header not found');
+    proxyLogger.debug('Accept-Language header not found');
     return null;
   }
 
@@ -65,7 +65,7 @@ function detectLanguageFromAcceptHeader(request: NextRequest): string | null {
   // Find the first supported language
   for (const lang of languages) {
     if (supportedLanguages.includes(lang.code)) {
-      middlewareLogger.debug('Language detected from Accept-Language header', { 
+      proxyLogger.debug('Language detected from Accept-Language header', { 
         lang: lang.code, 
         quality: lang.quality,
         acceptLanguage 
@@ -74,7 +74,7 @@ function detectLanguageFromAcceptHeader(request: NextRequest): string | null {
     }
   }
 
-  middlewareLogger.debug('No supported language found in Accept-Language header', { 
+  proxyLogger.debug('No supported language found in Accept-Language header', { 
     acceptLanguage 
   });
   return null;
@@ -100,7 +100,7 @@ export function detectUserLanguage(request: NextRequest): string {
   }
 
   // Default fallback
-  middlewareLogger.debug('Using default language', { lang: defaultLanguage });
+  proxyLogger.debug('Using default language', { lang: defaultLanguage });
   return defaultLanguage;
 }
 
