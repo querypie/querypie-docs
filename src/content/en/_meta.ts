@@ -22,6 +22,10 @@ export default {
     type: 'page',
     title: 'Installation and Technical Support',
   },
+  'api-reference': {
+    type: 'page',
+    title: 'API Reference',
+  },
   contactUs: {
     type: 'page',
     title: 'Contact Us',

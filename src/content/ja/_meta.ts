@@ -22,6 +22,10 @@ export default {
     type: 'page',
     title: '製品インストールと技術サポート',
   },
+  'api-reference': {
+    type: 'page',
+    title: 'APIリファレンス',
+  },
   contactUs: {
     type: 'page',
     title: 'お問い合わせ',

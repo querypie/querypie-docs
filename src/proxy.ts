@@ -11,6 +11,7 @@ const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
   // slugs[0] - Served in public
   ['BingSiteAuth.xml', 'Served in public'],
   ['google7b73baf7a3209e6f.html', 'Served in public'],
+  ['openapi-specification', 'Served in public'],
   // slugs[0] - Handled in /src/app/
   ['favicon.ico', 'Handled by favicon.ico route handler'],
   // pathname

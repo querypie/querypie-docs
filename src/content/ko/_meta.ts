@@ -22,6 +22,10 @@ export default {
     type: 'page',
     title: '제품 설치와 기술지원',
   },
+  'api-reference': {
+    type: 'page',
+    title: 'API 레퍼런스',
+  },
   contactUs: {
     type: 'page',
     title: '문의하기',

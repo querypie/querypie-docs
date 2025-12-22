@@ -344,6 +344,49 @@ scripts/fetch-openapi-spec/
 - 사내 인스턴스 접근 권한 (방법 2 사용 시)
 - GitHub Actions Secrets에 민감 정보 저장
 
+### 6. Phase 3 구현 시 고려사항
+
+#### 6.1 번들 크기 최적화
+
+- OpenAPI Spec JSON 파일은 매우 큼 (약 84,000줄)
+- 클라이언트 사이드에서 로드하므로 번들 크기 고려 필요
+- **해결 방안:**
+  - JSON 파일은 `public` 폴더에 저장하여 별도 번들로 처리
+  - 동적 import 사용: `import('@redocly/react-doc')`
+  - 코드 스플리팅 활용
+
+#### 6.2 성능 최적화
+
+- **초기 로딩 시간:**
+  - JSON 파일 크기가 크므로 로딩 시간 고려
+  - 로딩 스피너 및 진행 상태 표시 필요
+  
+- **캐싱 전략:**
+  - 브라우저 캐싱 활용 (JSON 파일은 변경 빈도 낮음)
+  - Next.js 정적 생성 활용
+  - CDN 캐싱 고려
+
+#### 6.3 SEO 최적화
+
+- MDX 파일 사용으로 SEO 자동 지원
+- 페이지 메타데이터(front matter) 설정
+- 구조화된 데이터(JSON-LD) 추가 고려
+- 버전별 canonical URL 설정
+
+#### 6.4 다국어 지원
+
+- 기존 Next.js i18n 설정과 일치
+- 각 언어별 MDX 파일 생성
+- 버전 정보 및 설명 다국어화
+- 언어별 사이드바 네비게이션 구성
+
+#### 6.5 버전 관리
+
+- 새로운 QueryPie 버전 출시 시 자동 MDX 파일 생성
+- 레거시 버전 유지 정책 결정
+- 버전 선택 UI 구현 (선택사항)
+- 최신 버전 자동 감지 및 표시
+
 ## 구현 우선순위
 
 ### Phase 1: 기본 기능 구현
@@ -357,9 +400,310 @@ scripts/fetch-openapi-spec/
 3. PR 자동 생성 기능
 
 ### Phase 3: 문서 통합
-1. OpenAPI Spec 표시 컴포넌트 개발
-2. 문서 페이지 생성
-3. 버전별 라우팅 설정
+
+이 단계에서는 `public/openapi-specification/` 디렉토리에 저장된 OpenAPI Spec JSON 파일을 웹 문서 사이트에서 표시하는 기능을 구현합니다.
+
+#### 3.1 URI 체계 설계
+
+**권장 URI 구조:**
+```
+/{lang}/api-reference/{querypie-version}/{api-version}
+```
+
+**예시:**
+- `/en/api-reference/11.4.1/v2` - 영어, QueryPie 11.4.1, V2 API
+- `/ko/api-reference/11.4.1/v0.9` - 한국어, QueryPie 11.4.1, V0.9 API
+- `/ja/api-reference/11.5.0/v2` - 일본어, QueryPie 11.5.0, V2 API
+
+**라우팅 규칙:**
+- `{lang}`: 다국어 지원 (en, ko, ja) - 기존 Next.js i18n 설정과 일치
+- `{querypie-version}`: QueryPie 버전 (예: 11.4.1, 11.5.0)
+- `{api-version}`: API 버전 (v0.9 또는 v2)
+
+**대체 URI 구조 (선택사항):**
+```
+/{lang}/api-reference/{querypie-version}?apiVersion={api-version}
+```
+- 쿼리 파라미터 방식은 URL이 더 짧지만, SEO와 공유 측면에서 덜 유리
+
+#### 3.2 구현 방식 결정
+
+**선택: 하이브리드 방식 (MDX 파일 + React 컴포넌트)**
+
+**이유:**
+1. **MDX 파일의 장점:**
+   - Nextra와의 자연스러운 통합
+   - 페이지 메타데이터(front matter) 관리 용이
+   - 검색 엔진 최적화(SEO) 지원
+   - 사이드바 네비게이션 자동 생성
+   - 다국어 지원 구조와 일치
+
+2. **React 컴포넌트의 장점:**
+   - OpenAPI Spec JSON 동적 로드
+   - 클라이언트 사이드 렌더링으로 대용량 JSON 처리
+   - 인터랙티브 UI 라이브러리 통합 용이
+   - 버전별 동적 라우팅 처리
+
+**구현 구조:**
+```
+src/content/{lang}/api-reference/
+  _meta.ts                          # 사이드바 메타데이터
+  {querypie-version}/
+    _meta.ts                        # 버전별 메타데이터
+    {api-version}.mdx               # MDX 페이지 파일 (예: v2.mdx, v0.9.mdx)
+```
+
+**대안 방식 비교:**
+
+| 방식 | 장점 | 단점 | 권장도 |
+|------|------|------|--------|
+| **MDX 파일 + React 컴포넌트** | Nextra 통합, SEO, 메타데이터 관리 | 파일 생성 필요 | ⭐⭐⭐⭐⭐ |
+| Next.js API Route | 동적 라우팅, 서버 사이드 처리 | SEO 제한, 메타데이터 관리 복잡 | ⭐⭐⭐ |
+| 순수 MDX 파일 | 단순함 | 대용량 JSON 처리 어려움 | ⭐⭐ |
+
+#### 3.3 OpenAPI 렌더링 라이브러리 선택
+
+**권장: Redoc 또는 Swagger UI React**
+
+**옵션 1: Redoc (권장)**
+- **장점:**
+  - 깔끔하고 읽기 쉬운 UI
+  - 3-panel 레이아웃 (메뉴, 요청/응답, 코드 샘플)
+  - React 컴포넌트 제공 (`@redocly/react-doc`)
+  - 번들 크기 최적화
+  - 다크 모드 지원
+- **단점:**
+  - Swagger UI 대비 커스터마이징 옵션 제한
+- **설치:**
+  ```bash
+  npm install @redocly/react-doc
+  ```
+
+**옵션 2: Swagger UI React**
+- **장점:**
+  - 널리 사용되는 표준 도구
+  - Try it out 기능 (실제 API 호출 테스트)
+  - 풍부한 커스터마이징 옵션
+- **단점:**
+  - 번들 크기가 큼
+  - UI가 Redoc 대비 다소 복잡
+- **설치:**
+  ```bash
+  npm install swagger-ui-react
+  ```
+
+**옵션 3: ReDocly (Redocly)**
+- Redoc의 상용 버전
+- 추가 기능: 검색, 다중 스펙 지원 등
+- 무료 버전도 제공
+
+**최종 권장: Redoc (`@redocly/react-doc`)**
+- 문서 사이트에 적합한 깔끔한 UI
+- React 통합 용이
+- 적절한 번들 크기
+
+#### 3.4 React 컴포넌트 구현
+
+**컴포넌트 구조:**
+```
+src/components/
+  openapi-viewer/
+    index.tsx                      # 메인 컴포넌트
+    OpenApiViewer.tsx              # OpenAPI Spec 렌더링 컴포넌트
+    VersionSelector.tsx            # 버전 선택 드롭다운 (선택사항)
+    types.ts                        # TypeScript 타입 정의
+```
+
+**주요 기능:**
+1. **OpenAPI Spec 로드:**
+   - `public/openapi-specification/{version}/{api-version}.json` 파일 로드
+   - 클라이언트 사이드에서 `fetch` 또는 Next.js `public` 폴더 직접 참조
+   - 로딩 상태 표시
+
+2. **에러 처리:**
+   - 파일이 없을 경우 404 에러 표시
+   - JSON 파싱 오류 처리
+   - 네트워크 오류 처리
+
+3. **버전 정보 표시:**
+   - QueryPie 버전 표시
+   - API 버전 표시
+   - 마지막 업데이트 날짜 (선택사항)
+
+**구현 예시:**
+```tsx
+// src/components/openapi-viewer/OpenApiViewer.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+import { RedocStandalone } from '@redocly/react-doc';
+
+interface OpenApiViewerProps {
+  querypieVersion: string;
+  apiVersion: 'v0.9' | 'v2';
+  lang: string;
+}
+
+export function OpenApiViewer({ 
+  querypieVersion, 
+  apiVersion,
+  lang 
+}: OpenApiViewerProps) {
+  const [spec, setSpec] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const specPath = `/openapi-specification/${querypieVersion}/${apiVersion}.json`;
+    
+    fetch(specPath)
+      .then(res => {
+        if (!res.ok) throw new Error(`Failed to load: ${res.statusText}`);
+        return res.json();
+      })
+      .then(data => {
+        setSpec(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [querypieVersion, apiVersion]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!spec) return null;
+
+  return (
+    <div>
+      <RedocStandalone 
+        spec={spec}
+        options={{
+          theme: {
+            colors: {
+              primary: {
+                main: '#0070f3'
+              }
+            }
+          }
+        }}
+      />
+    </div>
+  );
+}
+```
+
+#### 3.5 MDX 페이지 파일 생성
+
+**파일 구조:**
+```
+src/content/{lang}/api-reference/
+  _meta.ts
+  {querypie-version}/
+    _meta.ts
+    v2.mdx
+    v0.9.mdx
+```
+
+**MDX 파일 예시:**
+```mdx
+---
+title: API Reference - V2
+description: QueryPie API V2 Specification
+sidebarTitle: V2 API
+---
+
+import { OpenApiViewer } from '@/components/openapi-viewer';
+
+# QueryPie API Reference - V2
+
+<OpenApiViewer 
+  querypieVersion="11.4.1"
+  apiVersion="v2"
+  lang="en"
+/>
+```
+
+**메타데이터 파일 (`_meta.ts`):**
+```typescript
+// src/content/en/api-reference/_meta.ts
+export default {
+  '11.4.1': {
+    title: 'Version 11.4.1',
+    type: 'page',
+    children: {
+      'v2': {
+        title: 'V2 API',
+        type: 'page'
+      },
+      'v0.9': {
+        title: 'V0.9 API',
+        type: 'page'
+      }
+    }
+  }
+};
+```
+
+#### 3.6 동적 라우팅 구현 (선택사항)
+
+**방법 1: 정적 MDX 파일 생성 (권장)**
+- 각 버전별로 MDX 파일을 수동 또는 자동 생성
+- 빌드 타임에 모든 페이지 생성
+- SEO와 성능에 유리
+
+**방법 2: Next.js 동적 라우트**
+- `app/[lang]/api-reference/[version]/[apiVersion]/page.tsx` 사용
+- 런타임에 JSON 파일 로드
+- 파일 생성 불필요하지만 SEO 제한
+
+**권장: 방법 1 (정적 MDX 파일)**
+- OpenAPI Spec은 자주 변경되지 않음
+- 정적 생성이 성능과 SEO에 유리
+- MDX 파일은 `fetch-openapi-spec` 스크립트 실행 시 자동 생성 가능
+
+#### 3.7 자동 MDX 파일 생성 스크립트
+
+**스크립트 위치:** `scripts/generate-api-reference-pages/`
+
+**기능:**
+1. `public/openapi-specification/` 디렉토리 스캔
+2. 각 버전별로 MDX 파일 자동 생성
+3. `_meta.ts` 파일 자동 업데이트
+4. 다국어 지원 (en, ko, ja)
+
+**실행 시점:**
+- `fetch-openapi-spec` 스크립트 실행 후 자동 실행
+- 또는 수동으로 `npm run generate-api-reference-pages` 실행
+
+#### 3.8 구현 단계별 계획
+
+**3.8.1 컴포넌트 개발**
+1. OpenAPI Viewer 컴포넌트 구현
+2. 에러 처리 및 로딩 상태 구현
+3. 버전 정보 표시 컴포넌트 구현
+
+**3.8.2 MDX 파일 구조 생성**
+1. `src/content/{lang}/api-reference/` 디렉토리 생성
+2. 샘플 MDX 파일 생성 (11.4.1/v2.mdx)
+3. `_meta.ts` 파일 생성
+
+**3.8.3 자동화 스크립트 개발**
+1. MDX 파일 자동 생성 스크립트 개발
+2. `_meta.ts` 자동 업데이트 스크립트 개발
+3. `fetch-openapi-spec` 스크립트와 통합
+
+**3.8.4 테스트 및 검증**
+1. 로컬 환경에서 페이지 렌더링 테스트
+2. 다양한 버전 조합 테스트
+3. 다국어 지원 테스트
+4. 빌드 및 배포 테스트
+
+**3.8.5 문서화**
+1. API Reference 페이지 접근 방법 문서화
+2. 버전 선택 가이드 작성
+3. 개발자 가이드 업데이트
 
 ### Phase 4: 최적화
 1. Git LFS 적용 (필요 시)
@@ -368,15 +712,57 @@ scripts/fetch-openapi-spec/
 
 ## 참고 자료
 
+### OpenAPI 관련
 - [SpringDoc OpenAPI](https://springdoc.org/)
 - [OpenAPI Specification](https://swagger.io/specification/)
 - [Redoc](https://github.com/Redocly/redoc)
+- [Redocly React Doc](https://github.com/Redocly/react-doc)
+- [Swagger UI React](https://github.com/swagger-api/swagger-ui)
+
+### Next.js 및 Nextra 관련
 - [Next.js Static File Serving](https://nextjs.org/docs/app/building-your-application/optimizing/static-assets)
+- [Next.js Dynamic Routes](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes)
+- [Nextra Content Directory](https://nextra.site/docs/file-conventions/content-directory)
+- [Nextra MDX Components](https://nextra.site/docs/file-conventions/mdx-components-file)
+
+### 구현 참고
+- [Redocly Documentation](https://redocly.com/docs)
+- [MDX Documentation](https://mdxjs.com/)
+- [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components)
 
 ## 다음 단계
 
-1. Docker 이미지 접근 방법 확인 및 테스트
-2. 스크립트 프로토타입 개발
-3. GitHub Actions 워크플로우 설계
-4. OpenAPI Spec 표시 컴포넌트 선택 및 구현
+### Phase 1 완료 후
+1. ✅ Docker 이미지 접근 방법 확인 및 테스트
+2. ✅ 스크립트 프로토타입 개발
+3. ✅ 수동 실행 가능한 스크립트 완성
+
+### Phase 2 진행 중
+1. GitHub Actions 워크플로우 설계
+2. 수동 트리거 및 스케줄 트리거 설정
+3. PR 자동 생성 기능 구현
+
+### Phase 3 준비
+1. **OpenAPI 렌더링 라이브러리 선택 및 설치**
+   - Redoc (`@redocly/react-doc`) 또는 Swagger UI React 평가
+   - 프로토타입 컴포넌트 개발
+
+2. **React 컴포넌트 개발**
+   - `OpenApiViewer` 컴포넌트 구현
+   - 에러 처리 및 로딩 상태 구현
+   - 버전 정보 표시 컴포넌트 구현
+
+3. **MDX 파일 구조 설계**
+   - `src/content/{lang}/api-reference/` 디렉토리 구조 설계
+   - 샘플 MDX 파일 생성
+   - `_meta.ts` 파일 구조 설계
+
+4. **자동화 스크립트 개발**
+   - MDX 파일 자동 생성 스크립트 개발
+   - `fetch-openapi-spec` 스크립트와 통합
+
+5. **테스트 및 검증**
+   - 로컬 환경 테스트
+   - 빌드 및 배포 테스트
+   - 다국어 지원 검증
 
