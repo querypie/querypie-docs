@@ -58,7 +58,7 @@ spec:
 
 ### YAML 명세
 
-<table data-table-width="760" data-layout="default" local-id="bb2479df-82c8-474e-8723-247d4037944a">
+<table>
 <colgroup>
 <col/>
 <col/>
@@ -68,107 +68,107 @@ spec:
 </colgroup>
 <tbody>
 <tr>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Category**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Property**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Required**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Description**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Valid Values**
 </th>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `apiVersion`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 작성된 YAML Code의 버전
 시스템에서 관리하는 값으로, 수정 불필요
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `webApp.rbac.querypie.com/v1`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `kind`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 작성된 YAML Code의 종류
 시스템에서 관리하는 값으로, 수정 불필요
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `WacPolicy`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `spec:`<br/>  `&lt;effect&gt;`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 정책 내 세부 규칙 (허용 또는 거부)
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `allow`, `deny`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `resources`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 접근을 허용/거부할 리소스 지정
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `webApp`, `urlPaths`, `urlPathTags` (urlPathTags는 `spec: allow` 에서만 사용 가능)
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `conditions`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[OPTIONAL]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 규칙 적용 대상에 대한 세부 조건
 (현재 `spec: allow` 에서만 사용 가능)
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `userAttributes`, `ipAddresses`
 </td>
 </tr>

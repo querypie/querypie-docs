@@ -58,7 +58,7 @@ spec:
 
 ### YAML Specification
 
-<table data-table-width="760" data-layout="default" local-id="bb2479df-82c8-474e-8723-247d4037944a">
+<table>
 <colgroup>
 <col/>
 <col/>
@@ -68,107 +68,107 @@ spec:
 </colgroup>
 <tbody>
 <tr>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Category**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Property**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Required**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Description**
 </th>
-<th data-highlight-colour="#f0f1f2">
+<th>
 **Valid Values**
 </th>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `apiVersion`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 Version of the written YAML Code
 System-managed value, no modification needed
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `webApp.rbac.querypie.com/v1`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `kind`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 Type of the written YAML Code
 System-managed value, no modification needed
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `WacPolicy`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 `spec:`<br/> `&lt;effect&gt;`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 -
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 Detailed rules within the policy (allow or deny)
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `allow`, `deny`
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `resources`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[required]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 Specify resources to allow/deny access
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `webApp`, `urlPaths`, `urlPathTags` (urlPathTags can only be used in `spec: allow`)
 </td>
 </tr>
 <tr>
-<td data-highlight-colour="#ffffff">
+<td>
 
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `conditions`
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 **[OPTIONAL]**
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 Detailed conditions for rule application targets
 (Currently only available in `spec: allow`)
 </td>
-<td data-highlight-colour="#ffffff">
+<td>
 `userAttributes`, `ipAddresses`
 </td>
 </tr>

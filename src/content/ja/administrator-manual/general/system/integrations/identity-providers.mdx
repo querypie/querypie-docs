@@ -88,75 +88,75 @@ LDAPからユーザーグループ情報および所属情報を同期するに�
 </figure>
 
 
-<table data-table-width="760" data-layout="default" local-id="56f8d1f8-9645-460d-a5cb-b6cce53606f2">
+<table>
 <colgroup>
 <col/>
 <col/>
 <col/>
 </colgroup>
 <tbody>
-<tr local-id="cfa528d4-7ee6-483e-8b39-8d8a70310476">
-<th data-highlight-colour="#f0f1f2" local-id="2cdeca85-1e14-4556-8faf-7e77b327d3b9">
+<tr>
+<th>
 **Attribute**
 </th>
-<th data-highlight-colour="#f0f1f2" local-id="53109c7a-a40d-4a4e-9d6a-73c4ddc826c4">
+<th>
 **必須**
 </th>
-<th data-highlight-colour="#f0f1f2" local-id="e24af88f-9192-424a-b43f-025bb31f869d">
+<th>
 **Description**
 </th>
 </tr>
-<tr local-id="75805077-450e-4657-bfe4-3cf78a4d5928">
-<td data-highlight-colour="#ffffff" local-id="ea2a1ab7-7f7f-496d-9a6c-da87bf25e27e">
+<tr>
+<td>
 Group Base DN
 </td>
-<td data-highlight-colour="#ffffff" local-id="b89474cb-0a96-449d-8a83-c1ca1e5a2b56">
+<td>
 必須
 </td>
-<td data-highlight-colour="#ffffff" local-id="45f67115-11f7-474d-b15e-7189fd10c205">
+<td>
 LDAPサーバーのグループBase DN値を入力します。
 このパスの下位にあるグループのみがGroupとして同期されます。
 * 例：`dc=example,dc=com`
 </td>
 </tr>
-<tr local-id="acfd3ac8-1ccf-4790-87fa-969d15cf52d6">
-<td data-highlight-colour="#ffffff" local-id="18032ff5-11ab-427f-85c6-a8246f91a155">
+<tr>
+<td>
 Group Search Filter
 </td>
-<td data-highlight-colour="#ffffff" local-id="646d1d8d-c6ab-4445-976e-a92acb4ad672">
+<td>
 必須
 </td>
-<td data-highlight-colour="#ffffff" local-id="51af7682-029c-474f-b1d7-9658042490f0">
+<td>
 LDAPサーバーのグループを取得するためのフィルター値を入力します。
 * 例：`objectclass=posixGroup`
 </td>
 </tr>
-<tr local-id="5c723610-073d-4379-a2fe-ee2392355478">
-<td local-id="ec5bca28-b3ec-4bdb-be11-90e106ad68b3">
+<tr>
+<td>
 Group ID
 </td>
-<td local-id="7ae2e57e-9b05-42b5-a721-e2289dc4a1ea">
+<td>
 必須
 </td>
-<td local-id="588d0912-0f58-4f46-9b25-c50c90650b50">
+<td>
 グループの識別子として使用する属性値を入力します。
 * 例：`gidNumber`
 </td>
 </tr>
-<tr local-id="f6c5bd3a-d125-41ed-a76f-09b7ba17f1b1">
-<td data-highlight-colour="#ffffff" rowspan="2" local-id="22031ab0-9082-4f3f-bc9f-c375ce2a39a5">
+<tr>
+<td rowspan="2">
 Membership Type
 </td>
-<td data-highlight-colour="#ffffff" rowspan="2" local-id="7db6a6a6-8fcc-4a8f-b59e-544ccd580c72">
+<td rowspan="2">
 必須
 </td>
-<td data-highlight-colour="#ffffff" local-id="1dc8e309-8401-4397-ba11-1dfda8f45536">
+<td>
 ユーザーにグループ情報が含まれている場合、`Include group information in user entries`を選択し、下位フィールドに参照するAttributeを入力します。
 * 例：`member`、`uniqueMember`、`memberUid`等
 </td>
 </tr>
-<tr local-id="97e7cec3-7328-4f30-8b01-295ca445a63f">
-<td data-highlight-colour="#ffffff" local-id="01bae4e3-5d99-4208-ba57-3880491c4780">
+<tr>
+<td>
 グループにユーザー情報が含まれている場合、`Include user information in group entries`を選択し、下位フィールドに参照するAttributeを入力します。
 * 例：`gidNumber`
 </td>
