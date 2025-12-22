@@ -103,29 +103,51 @@ jobs:
             exit 0
           fi
           
-          # Collect change information (after staging)
-          CHANGES_STATUS=$(git status --short public/openapi-specification/)
-          CHANGES_STAT=$(git diff --cached --stat HEAD)
+          # Create temporary files for change information
+          TEMP_DIR=$(mktemp -d)
+          VERSION_INFO_FILE="${TEMP_DIR}/version_info.txt"
+          CHANGES_STATUS_FILE="${TEMP_DIR}/changes_status.txt"
+          CHANGES_STAT_FILE="${TEMP_DIR}/changes_stat.txt"
+          COMMIT_MSG_FILE="${TEMP_DIR}/commit_msg.txt"
+          PR_BODY_FILE="${TEMP_DIR}/pr_body.txt"
           
-          # Get version information from changed files
-          VERSION_INFO=""
+          # Write version information to file
           for file in $(git diff --cached --name-only public/openapi-specification/); do
             if [[ "$file" =~ public/openapi-specification/([^/]+)/(v0\.9|v2)\.json ]]; then
               VERSION="${BASH_REMATCH[1]}"
               API_VERSION="${BASH_REMATCH[2]}"
-              VERSION_INFO="${VERSION_INFO}- ${VERSION}/${API_VERSION}.json\n"
+              echo "- ${VERSION}/${API_VERSION}.json" >> "$VERSION_INFO_FILE"
             fi
           done
           
-          # Commit changes
-          COMMIT_MSG="chore: Update OpenAPI Specification files
-
-Automatically updated OpenAPI Specification files from QueryPie instance.
-
-Updated files:
-${VERSION_INFO}"
+          # Write change status and statistics to files
+          git status --short public/openapi-specification/ > "$CHANGES_STATUS_FILE"
+          git diff --cached --stat HEAD > "$CHANGES_STAT_FILE"
           
-          git commit -m "$COMMIT_MSG"
+          # Write commit message and PR description to file (same content)
+          {
+            echo "chore: Update OpenAPI Specification files"
+            echo ""
+            echo "Automatically updated OpenAPI Specification files from QueryPie instance."
+            echo ""
+            echo "Updated files:"
+            cat "$VERSION_INFO_FILE"
+            echo ""
+            echo "### Change Details"
+            echo "\`\`\`"
+            cat "$CHANGES_STATUS_FILE"
+            echo "\`\`\`"
+            echo "### Change Statistics"
+            echo "\`\`\`"
+            cat "$CHANGES_STAT_FILE"
+            echo "\`\`\`"
+          } > "$COMMIT_MSG_FILE"
+          
+          # Copy to PR body file (same content)
+          cp "$COMMIT_MSG_FILE" "$PR_BODY_FILE"
+          
+          # Commit changes
+          git commit -F "$COMMIT_MSG_FILE"
           
           # Push branch (required before creating PR)
           git push -u origin "$BRANCH_NAME"
@@ -133,18 +155,10 @@ ${VERSION_INFO}"
           # Create PR
           gh pr create \
             --title "chore: Update OpenAPI Specification" \
-            --body "This PR contains automatically updated OpenAPI Specification files from the QueryPie instance.
-
-### Updated Files
-${VERSION_INFO}
-### Change Details
-\`\`\`
-${CHANGES_STATUS}
-\`\`\`
-### Change Statistics
-\`\`\`
-${CHANGES_STAT}
-\`\`\`" \
+            --body-file "$PR_BODY_FILE" \
             --base main \
             --head "$BRANCH_NAME"
+          
+          # Clean up temporary files
+          rm -rf "$TEMP_DIR"
 
