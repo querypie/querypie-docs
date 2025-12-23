@@ -25,6 +25,7 @@ export default {
   'api-reference': {
     type: 'page',
     title: 'API Reference',
+    display: 'hidden',
   },
   contactUs: {
     type: 'page',
