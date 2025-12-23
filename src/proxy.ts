@@ -7,7 +7,8 @@ import { detectUserLanguage, supportedLanguages } from './lib/detect-user-langua
 const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
   // slugs[0]
   ['_next', 'Handled by Next.js'],
-  ['robots.txt', 'Handled by static app route'],
+  ['robots.txt', 'Handled by route handler'],
+  ['.well-known', 'Handled by route handler'],
   // slugs[0] - Served in public
   ['BingSiteAuth.xml', 'Served in public'],
   ['google7b73baf7a3209e6f.html', 'Served in public'],
