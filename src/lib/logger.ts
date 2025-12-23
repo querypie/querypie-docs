@@ -2,6 +2,7 @@
 // Uses console.log in development, structured JSON logging in production (Vercel)
 
 import { pino } from 'pino';
+import isProduction from './is-production';
 
 // Environment detection
 const isVercel = process.env.VERCEL === '1';
@@ -44,6 +45,7 @@ function formatLogForDevelopment(
 // Create a logger instance for a specific module
 // In development: uses console.log with formatted output
 // In production (Vercel): uses structured JSON logging via pino
+// In production: only warning and error logs are shown, debug and info are ignored
 function createModuleLogger(module: string): LoggerInterface {
   // In development, use simple console logging
   if (isDevelopment && !isVercel) {
@@ -67,10 +69,31 @@ function createModuleLogger(module: string): LoggerInterface {
     };
   }
 
+  // In production, only log warning and error levels
+  if (isProduction()) {
+    return {
+      debug: (_message: string, _data?: Record<string, unknown>) => {
+        // No-op in production
+      },
+      info: (_message: string, _data?: Record<string, unknown>) => {
+        // No-op in production
+      },
+      warn: (message: string, data?: Record<string, unknown>) => {
+        const formatted = formatLogForDevelopment('warn', module, message, data);
+        console.warn(formatted);
+      },
+      error: (message: string, data?: Record<string, unknown>) => {
+        const formatted = formatLogForDevelopment('error', module, message, data);
+        console.error(formatted);
+      },
+    };
+  }
+
   // In production (Vercel), use pino for structured JSON logging
   // This allows better log aggregation and analysis in Vercel's logging system
+  // In production, only log warning and error levels
   const logger = pino({
-    level: process.env.LOG_LEVEL || 'info',
+    level: isProduction() ? 'warn' : process.env.LOG_LEVEL || 'info',
     base: {
       env: process.env.NODE_ENV,
       vercel: isVercel,
@@ -90,10 +113,16 @@ function createModuleLogger(module: string): LoggerInterface {
 
   return {
     debug: (message: string, data?: Record<string, unknown>) => {
-      logger.debug(data || {}, message);
+      if (!isProduction()) {
+        logger.debug(data || {}, message);
+      }
+      // No-op in production
     },
     info: (message: string, data?: Record<string, unknown>) => {
-      logger.info(data || {}, message);
+      if (!isProduction()) {
+        logger.info(data || {}, message);
+      }
+      // No-op in production
     },
     warn: (message: string, data?: Record<string, unknown>) => {
       logger.warn(data || {}, message);
@@ -103,6 +132,9 @@ function createModuleLogger(module: string): LoggerInterface {
     },
   };
 }
+
+// Export createModuleLogger for use in other modules
+export { createModuleLogger };
 
 // Proxy-specific logger (renamed from middlewareLogger to reflect Next.js proxy naming)
 export const proxyLogger = createModuleLogger('proxy');
