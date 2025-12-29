@@ -31,6 +31,11 @@ interface OpenApiSpec {
     version?: string;
     'x-querypie-version'?: string;
     description?: string;
+    contact?: {
+      name?: string;
+      url?: string;
+      email?: string;
+    };
     'x-logo'?: {
       url?: string;
       altText?: string;
@@ -84,7 +89,7 @@ export function OpenApiViewer({
         return res.json();
       })
       .then((data: OpenApiSpec) => {
-        // Remove x-logo from spec to prevent Redoc from rendering default logo
+        // Remove x-logo and contact from spec to prevent Redoc from rendering them
         // Also update title and description if title/description props are provided
         const modifiedSpec = { ...data };
         if (!modifiedSpec.info) {
@@ -92,6 +97,9 @@ export function OpenApiViewer({
         }
         if (modifiedSpec.info['x-logo']) {
           delete modifiedSpec.info['x-logo'];
+        }
+        if (modifiedSpec.info.contact) {
+          delete modifiedSpec.info.contact;
         }
         // Override title and description with props if provided
         if (title) {
