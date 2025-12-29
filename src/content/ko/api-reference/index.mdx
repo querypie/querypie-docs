@@ -80,78 +80,115 @@ API 토큰 생성, 수정, 삭제에 대한 자세한 내용은 [API 토큰 문�
 
 ## 주요 기능 영역
 
-QueryPie ACP External API는 다음과 같은 주요 기능 영역으로 구성되어 있습니다:
+QueryPie ACP External API는 관리자 웹 콘솔의 기능 구조에 대응하도록 구현되어 있습니다.
+다음과 같은 주요 기능 영역으로 구성되어 있습니다:
 
-### 사용자 및 그룹 관리
+### General (일반 관리)
+
+#### User Management (사용자 관리)
 
 - **User Management API**: 사용자 생성, 수정, 삭제 및 상태 관리
 - **User Group Management API**: 사용자 그룹 관리
 - **Group Member Operations API**: 그룹 멤버십 관리
 - **Users - Allowed Zone Mapping API**: 사용자별 IP 접근 제어 설정
 
-### 서버 및 데이터베이스 관리
-
-- **Servers API**: 서버 등록 및 관리
-- **Server Groups API**: 서버 그룹 관리
-- **Server Roles API**: 서버 역할 관리
-- **Server Accounts API**: 서버 OS 계정 관리
-- **Server SSH Key Configurations API**: 서버 SSH 키 설정
-- **Server Tags API**: 서버 태그 관리
-- **Server Cloud Providers API**: 서버 클라우드 프로바이더 관리
-- **Command Templates API**: 서버 명령 템플릿 관리
-- **DB Connections API**: 데이터베이스 연결 관리
-- **DB Connection Member Operations API**: 데이터베이스 연결 멤버십 관리
-- **Cloud Providers for DB API**: 데이터베이스용 클라우드 프로바이더 관리
-
-### 정책 관리
-
-- **Data Policy Management API**: 데이터 접근 정책 관리
-- **Policy Rules API**: 정책 규칙 관리 (데이터 마스킹, 데이터 접근, 민감 데이터 정책)
-- **Ledger Table Policy API**: Ledger 테이블 정책 관리
-- **Ledger Approval Rules API**: Ledger 승인 규칙 관리
-- **Manual Policy Exception Management API**: 수동 정책 예외 관리
-- **Server Policy API**: 서버 정책 관리
-- **Direct Permissions API**: 서버 직접 권한 관리
-
-### Kubernetes 관리
-
-- **Kubernetes Clusters API**: Kubernetes 클러스터 관리
-- **Kubernetes Cluster Policy API**: Kubernetes 클러스터 정책 관리
-- **Kubernetes Cluster Role API**: Kubernetes 클러스터 역할 관리
-- **Kubernetes Access Control API**: Kubernetes 액세스 제어 관리
-
-### 감사 및 모니터링
-
-- **Query Audit API**: 쿼리 실행 감사 로그 조회
-- **DB Access History API**: 데이터베이스 접근 이력 조회
-- **User Access History API**: 사용자 로그인/로그아웃 이력 조회
-- **DB Account Lock History API**: 데이터베이스 계정 잠금 이력 조회
-- **DB Account Locks API**: 데이터베이스 계정 잠금 상태 조회 및 해제
-- **Activity Logs API**: QueryPie ACP 설정 변경 이력 조회
-- **DML Snapshots API**: DML 스냅샷 조회 (INSERT/UPDATE/DELETE 실행 전후 데이터)
-- **Admin Role History API**: 관리자 권한 부여/변경/해제 이력 조회
-- **DB Access Control Logs API**: 데이터베이스 접근 권한 부여/해제 이력 조회
-- **Audit Log Export API**: 감사 로그 내보내기
-- **Jobs API**: 작업 이력 조회 (클라우드 프로바이더 동기화 등)
-
-### 워크플로우 관리
+#### Workflow Management (워크플로우 관리)
 
 - **Workflow Requests API**: 워크플로우 요청 관리
 - **Workflow Approval Delegation Logs API**: 워크플로우 승인 위임 로그 조회
 
-### 보안 설정
+#### System (시스템 관리)
 
 - **Security Settings API**: QueryPie ACP 보안 설정 조회 및 구성
 - **Authentication API (Beta)**: 인증 설정 관리 (베타)
+- **Jobs API**: 작업 이력 조회 (클라우드 프로바이더 동기화 등)
 - **Secret Stores API**: 외부 시크릿 스토어 관리 (HashiCorp Vault 등)
-- **Privileges API**: 데이터베이스 권한 관리
-- **DB Access Control API**: 데이터베이스 접근 제어 관리
-- **Server Access Control API**: 서버 접근 제어 관리
-- **Server Groups Owners API**: 서버 그룹 소유자 관리
 
-### 기타
+### Databases (데이터베이스 관리)
+
+#### Connection Management (연결 관리)
+
+- **DB Connections API**: 데이터베이스 연결 관리
+- **DB Connection Member Operations API**: 데이터베이스 연결 멤버십 관리
+- **Cloud Providers for DB API**: 데이터베이스용 클라우드 프로바이더 관리
+
+#### DB Access Control (데이터베이스 접근 제어)
+
+- **DB Access Control API**: 데이터베이스 접근 제어 관리
+- **DB Access Control Logs API**: 데이터베이스 접근 권한 부여/해제 이력 조회
+- **Privileges API**: 데이터베이스 권한 관리
+
+#### Policies (정책 관리)
+
+- **Data Policy Management API**: 데이터 접근 정책 관리
+- **Policy Rules API**: 정책 규칙 관리 (데이터 마스킹, 데이터 접근, 민감 데이터 정책)
+- **Manual Policy Exception Management API**: 수동 정책 예외 관리
+
+#### Ledger Management (Ledger 관리)
+
+- **Ledger Table Policy API**: Ledger 테이블 정책 관리
+- **Ledger Approval Rules API**: Ledger 승인 규칙 관리
+
+### Servers (서버 관리)
+
+#### Connection Management (연결 관리)
+
+- **Servers API**: 서버 등록 및 관리
+- **Server Groups API**: 서버 그룹 관리
+- **Server Groups Owners API**: 서버 그룹 소유자 관리
+- **Server Cloud Providers API**: 서버 클라우드 프로바이더 관리
+- **Server SSH Key Configurations API**: 서버 SSH 키 설정
+- **Server Tags API**: 서버 태그 관리
+
+#### Server Account Management (서버 계정 관리)
+
+- **Server Accounts API**: 서버 OS 계정 관리
+
+#### Server Access Control (서버 접근 제어)
+
+- **Server Access Control API**: 서버 접근 제어 관리
+- **Server Roles API**: 서버 역할 관리
+- **Server Policy API**: 서버 정책 관리
+- **Direct Permissions API**: 서버 직접 권한 관리
+- **Command Templates API**: 서버 명령 템플릿 관리
+
+### Kubernetes (Kubernetes 관리)
+
+#### Connection Management (연결 관리)
+
+- **Kubernetes Clusters API**: Kubernetes 클러스터 관리
+
+#### K8s Access Control (Kubernetes 접근 제어)
+
+- **Kubernetes Access Control API**: Kubernetes 액세스 제어 관리
+- **Kubernetes Cluster Role API**: Kubernetes 클러스터 역할 관리
+- **Kubernetes Cluster Policy API**: Kubernetes 클러스터 정책 관리
+
+### Web Apps (웹 앱 관리)
+
+#### Connection Management (연결 관리)
 
 - **Web Apps API**: 웹 앱 관리
+
+### Audit (감사 및 모니터링)
+
+#### General Logs (일반 로그)
+
+- **User Access History API**: 사용자 로그인/로그아웃 이력 조회
+- **Activity Logs API**: QueryPie ACP 설정 변경 이력 조회
+- **Admin Role History API**: 관리자 권한 부여/변경/해제 이력 조회
+
+#### Database Logs (데이터베이스 로그)
+
+- **Query Audit API**: 쿼리 실행 감사 로그 조회
+- **DB Access History API**: 데이터베이스 접근 이력 조회
+- **DB Account Lock History API**: 데이터베이스 계정 잠금 이력 조회
+- **DB Account Locks API**: 데이터베이스 계정 잠금 상태 조회 및 해제
+- **DML Snapshots API**: DML 스냅샷 조회 (INSERT/UPDATE/DELETE 실행 전후 데이터)
+
+#### Reports (보고서)
+
+- **Audit Log Export API**: 감사 로그 내보내기
 
 ## API 버전
 
@@ -162,7 +199,8 @@ QueryPie ACP External API는 두 가지 버전을 지원합니다:
 - **현재 권장되는 API 버전**입니다.
 - QueryPie ACP 버전 9.16.1부터 지원됩니다.
 - 호출 경로: `{querypie url}/api/external/v2/`
-- 기존 V0.9 API와 호환됩니다.
+- 기존 V0.9 API와 호환되지 않습니다.
+- V0.9 API와는 다른 엔드포인트 구조와 요청/응답 형식을 사용합니다.
 - 더 많은 기능과 개선된 구조를 제공합니다.
 
 ### V0.9 API
