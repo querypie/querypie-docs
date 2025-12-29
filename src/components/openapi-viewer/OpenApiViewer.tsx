@@ -14,6 +14,10 @@ interface OpenApiViewerProps {
   apiVersion: 'v0.9' | 'v2';
   /** Language code (optional, defaults to "en") */
   lang?: string;
+  /** Custom title text to display in Redoc (optional) */
+  title?: string;
+  /** Custom description text to display in Redoc (optional) */
+  description?: string;
 }
 
 /**
@@ -55,6 +59,8 @@ export function OpenApiViewer({
   querypieVersion,
   apiVersion,
   lang: _lang = 'en',
+  title,
+  description,
 }: OpenApiViewerProps) {
   const [spec, setSpec] = useState<OpenApiSpec | null>(null);
   const [loading, setLoading] = useState(true);
@@ -79,9 +85,20 @@ export function OpenApiViewer({
       })
       .then((data: OpenApiSpec) => {
         // Remove x-logo from spec to prevent Redoc from rendering default logo
+        // Also update title and description if title/description props are provided
         const modifiedSpec = { ...data };
-        if (modifiedSpec.info?.['x-logo']) {
+        if (!modifiedSpec.info) {
+          modifiedSpec.info = {};
+        }
+        if (modifiedSpec.info['x-logo']) {
           delete modifiedSpec.info['x-logo'];
+        }
+        // Override title and description with props if provided
+        if (title) {
+          modifiedSpec.info.title = title;
+        }
+        if (description) {
+          modifiedSpec.info.description = description;
         }
         setSpec(modifiedSpec);
         setLoading(false);
@@ -90,7 +107,7 @@ export function OpenApiViewer({
         setError(err.message);
         setLoading(false);
       });
-  }, [querypieVersion, apiVersion]);
+  }, [querypieVersion, apiVersion, title, description]);
 
   // Loading state
   if (loading) {

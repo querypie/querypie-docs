@@ -85,33 +85,25 @@ function getLocalizedText(
 ): {
   title: string;
   description: string;
-  heading: string;
-  intro: string;
 } {
   const upperApiVersion = apiVersion.toUpperCase();
 
   switch (lang) {
     case 'ko':
       return {
-        title: `API 레퍼런스 - ${upperApiVersion}`,
-        description: `QueryPie API ${upperApiVersion} 명세서 (버전 ${acpVersion})`,
-        heading: `QueryPie API 레퍼런스 - ${upperApiVersion}`,
-        intro: `이 페이지는 QueryPie API ${upperApiVersion} (버전 ${acpVersion})의 전체 OpenAPI 명세서를 제공합니다.`,
+        title: `QueryPie ACP API 레퍼런스 - ${upperApiVersion}`,
+        description: `이 페이지는 QueryPie ACP API ${upperApiVersion} (버전 ${acpVersion})의 전체 OpenAPI 명세서를 제공합니다.`,
       };
     case 'ja':
       return {
-        title: `APIリファレンス - ${upperApiVersion}`,
-        description: `QueryPie API ${upperApiVersion} 仕様書 (バージョン ${acpVersion})`,
-        heading: `QueryPie APIリファレンス - ${upperApiVersion}`,
-        intro: `このページは、QueryPie API ${upperApiVersion} (バージョン ${acpVersion}) の完全なOpenAPI仕様書を提供します。`,
+        title: `QueryPie ACP APIリファレンス - ${upperApiVersion}`,
+        description: `このページは、QueryPie ACP API ${upperApiVersion} (バージョン ${acpVersion}) の完全なOpenAPI仕様書を提供します。`,
       };
     case 'en':
     default:
       return {
-        title: `API Reference - ${upperApiVersion}`,
-        description: `QueryPie API ${upperApiVersion} Specification (Version ${acpVersion})`,
-        heading: `QueryPie API Reference - ${upperApiVersion}`,
-        intro: `This page provides the complete OpenAPI specification for QueryPie API ${upperApiVersion} (Version ${acpVersion}).`,
+        title: `QueryPie ACP API Reference - ${upperApiVersion}`,
+        description: `This page provides the complete OpenAPI specification for QueryPie ACP API ${upperApiVersion} (Version ${acpVersion}).`,
       };
   }
 }
@@ -190,18 +182,16 @@ export default async function ApiReferencePage(props: {
     notFound();
   }
 
-  const { heading, intro } = getLocalizedText(lang, apiVersion, acpVersion);
+  const { title, description } = getLocalizedText(lang, apiVersion, acpVersion);
 
   return (
     <div className="api-reference-page">
-      <div className="mb-8">
-        <h1 className="mb-4 text-4xl font-bold">{heading}</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">{intro}</p>
-      </div>
       <OpenApiViewer
         querypieVersion={acpVersion}
         apiVersion={apiVersion as 'v2' | 'v0.9'}
         lang={lang}
+        title={title}
+        description={description}
       />
     </div>
   );
