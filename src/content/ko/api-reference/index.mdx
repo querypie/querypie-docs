@@ -5,22 +5,18 @@ description: QueryPie API 레퍼런스 문서
 
 # API 레퍼런스
 
-QueryPie API 레퍼런스 문서에 오신 것을 환영합니다. 이 섹션은 QueryPie REST API에 대한 포괄적인 문서를 제공합니다.
-
-## 사용 가능한 버전
-
-### 버전 11.4.1
-- [V2 API](/ko/api-reference/11.4.1/v2) - 최신 API 버전
-- [V0.9 API](/ko/api-reference/11.4.1/v0.9) - 레거시 API 버전
+QueryPie ACP 의 API 레퍼런스 문서에 오신 것을 환영합니다.
 
 ## API 소개
 
-QueryPie API를 사용하면 QueryPie Access Control Platform (ACP)과 프로그래밍 방식으로 상호작용할 수 있습니다. API를 사용하여 다음을 수행할 수 있습니다:
+QueryPie ACP 는 [RESTful API](https://restfulapi.net/) 방식으로 구현된 API를 이용자에게 제공합니다.
+QueryPie ACP 의 API를 사용하면 QueryPie Access Control Platform (ACP)과 프로그래밍 방식으로 상호작용할 수 있습니다.
+이용자는 API를 사용하여 다음을 수행할 수 있습니다:
 
 - 사용자, 그룹 및 역할 관리
 - 데이터베이스 연결 및 서버 구성
-- 감사 로그 및 보고서 모니터링
 - 액세스 권한 제어
+- 감사 로그 및 보고서 모니터링
 - 기타 다양한 기능
 
 ## 인증
@@ -31,8 +27,8 @@ QueryPie API를 사용하면 QueryPie Access Control Platform (ACP)과 프로그
 
 QueryPie API는 두 가지 버전을 지원합니다:
 
-- **V2**: 현재 권장되는 API 버전
-- **V0.9**: 레거시 API 버전 (하위 호환성을 위해 유지됨)
+- **V2**: 현재 권장되는 API 버전입니다.
+- **V0.9**: 레거시 API 버전으로, Version 9.16 이전에 제공하던 API 입니다. 하위 호환성을 위해 유지됩니다.
 
 ## 시작하기
 
@@ -40,5 +36,7 @@ QueryPie API는 두 가지 버전을 지원합니다:
 2. `Authorization` 헤더를 사용하여 API 요청에 토큰을 포함합니다
 3. 아래의 대화형 문서를 사용하여 API 엔드포인트를 탐색합니다
 
-자세한 내용은 [관리자 매뉴얼](/ko/administrator-manual)을 참조하세요.
+### 버전 11.4.1
+- [External API V2](api-reference/11.4.1/v2) - 현행 API
+- [External API V0.9](api-reference/11.4.1/v0.9) - 레거시 API
 
