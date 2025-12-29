@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import React from 'react';
 import { LastUpdated } from '@/components/last-updated';
 import LanguageSelector2 from "@/components/language-selector2";
+import { QueryPieLogo } from '@/components/querypie-logo';
 
 const defaultMetadata: Metadata = {
   title: {
@@ -46,16 +47,7 @@ export default async function RootLayout({ children, params }) {
 
   const navbar = (
     <Navbar
-      logo={
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <img src="/icon-32.png" alt="QueryPie Logo" width={18} height={18} />
-            <div>
-              <b>QueryPie</b> <span style={{ opacity: '60%' }}>ACP</span>
-            </div>
-          </div>
-        </div>
-      }
+      logo={<QueryPieLogo />}
       logoLink={`/${lang}/`}
     />
   );
