@@ -27,6 +27,10 @@ interface OpenApiSpec {
     version?: string;
     'x-querypie-version'?: string;
     description?: string;
+    'x-logo'?: {
+      url?: string;
+      altText?: string;
+    };
   };
   [key: string]: unknown;
 }
@@ -74,7 +78,12 @@ export function OpenApiViewer({
         return res.json();
       })
       .then((data: OpenApiSpec) => {
-        setSpec(data);
+        // Remove x-logo from spec to prevent Redoc from rendering default logo
+        const modifiedSpec = { ...data };
+        if (modifiedSpec.info?.['x-logo']) {
+          delete modifiedSpec.info['x-logo'];
+        }
+        setSpec(modifiedSpec);
         setLoading(false);
       })
       .catch((err: Error) => {
@@ -129,6 +138,14 @@ export function OpenApiViewer({
     disableSearch: false,
     nativeScrollbars: false,
     pathInMiddlePanel: false,
+    // Hide default logo using theme option
+    theme: {
+      logo: {
+        maxHeight: '0px',
+        maxWidth: '0px',
+        gutter: '0px',
+      },
+    },
   };
 
   return (
