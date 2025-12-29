@@ -1,21 +1,21 @@
 ---
 title: API 레퍼런스
-description: QueryPie API 레퍼런스 문서
+description: QueryPie ACP API 레퍼런스 문서
 ---
 
 # API 레퍼런스
 
-QueryPie External API 레퍼런스 문서에 오신 것을 환영합니다.
+QueryPie ACP External API 레퍼런스 문서에 오신 것을 환영합니다.
 이 문서는 QueryPie Access Control Platform (ACP)과 프로그래밍 방식으로 상호작용할 수 있는 RESTful API에 대한 종합적인 가이드를 제공합니다.
 
 ## API 소개
 
-QueryPie External API는 [RESTful API](https://restfulapi.net/) 방식으로 구현된 API입니다.
-QueryPie의 주요 기능을 웹 콘솔 외부에서도 사용할 수 있도록 합니다.
+QueryPie ACP External API는 [RESTful API](https://restfulapi.net/) 방식으로 구현된 API입니다.
+QueryPie ACP의 주요 기능을 웹 콘솔 외부에서도 사용할 수 있도록 합니다.
 현재 **180개 이상의 엔드포인트**를 제공합니다.
-QueryPie의 다양한 관리 기능을 프로그래밍 방식으로 제어할 수 있습니다.
+QueryPie ACP의 다양한 관리 기능을 프로그래밍 방식으로 제어할 수 있습니다.
 
-QueryPie External API를 사용하면 다음을 수행할 수 있습니다:
+ACP External API를 사용하면 다음을 수행할 수 있습니다:
 
 - 사용자, 그룹 및 역할 관리
 - 데이터베이스 연결 및 서버 구성
@@ -28,12 +28,12 @@ QueryPie External API를 사용하면 다음을 수행할 수 있습니다:
 
 ## 시작하기
 
-QueryPie External API를 사용하기 위한 빠른 시작 가이드는 다음과 같습니다:
+QueryPie ACP External API를 사용하기 위한 빠른 시작 가이드는 다음과 같습니다:
 
 ### 1. API 토큰 획득
 
 모든 API 요청에는 인증이 필요합니다.
-QueryPie 관리자로부터 API 토큰을 획득해야 합니다.
+QueryPie ACP 관리자로부터 API 토큰을 획득해야 합니다.
 API 토큰 생성 및 관리 방법에 대한 자세한 내용은 [API 토큰 문서](/ko/administrator-manual/general/system/api-token)를 참조하세요.
 
 ### 2. API 호출 기본 구조
@@ -80,7 +80,7 @@ API 토큰 생성, 수정, 삭제에 대한 자세한 내용은 [API 토큰 문�
 
 ## 주요 기능 영역
 
-QueryPie External API는 다음과 같은 주요 기능 영역으로 구성되어 있습니다:
+QueryPie ACP External API는 다음과 같은 주요 기능 영역으로 구성되어 있습니다:
 
 ### 사용자 및 그룹 관리
 
@@ -127,7 +127,7 @@ QueryPie External API는 다음과 같은 주요 기능 영역으로 구성되�
 - **User Access History API**: 사용자 로그인/로그아웃 이력 조회
 - **DB Account Lock History API**: 데이터베이스 계정 잠금 이력 조회
 - **DB Account Locks API**: 데이터베이스 계정 잠금 상태 조회 및 해제
-- **Activity Logs API**: QueryPie 설정 변경 이력 조회
+- **Activity Logs API**: QueryPie ACP 설정 변경 이력 조회
 - **DML Snapshots API**: DML 스냅샷 조회 (INSERT/UPDATE/DELETE 실행 전후 데이터)
 - **Admin Role History API**: 관리자 권한 부여/변경/해제 이력 조회
 - **DB Access Control Logs API**: 데이터베이스 접근 권한 부여/해제 이력 조회
@@ -141,7 +141,7 @@ QueryPie External API는 다음과 같은 주요 기능 영역으로 구성되�
 
 ### 보안 설정
 
-- **Security Settings API**: QueryPie 보안 설정 조회 및 구성
+- **Security Settings API**: QueryPie ACP 보안 설정 조회 및 구성
 - **Authentication API (Beta)**: 인증 설정 관리 (베타)
 - **Secret Stores API**: 외부 시크릿 스토어 관리 (HashiCorp Vault 등)
 - **Privileges API**: 데이터베이스 권한 관리
@@ -155,12 +155,12 @@ QueryPie External API는 다음과 같은 주요 기능 영역으로 구성되�
 
 ## API 버전
 
-QueryPie External API는 두 가지 버전을 지원합니다:
+QueryPie ACP External API는 두 가지 버전을 지원합니다:
 
 ### V2 API
 
 - **현재 권장되는 API 버전**입니다.
-- QueryPie 버전 9.16.1부터 지원됩니다.
+- QueryPie ACP 버전 9.16.1부터 지원됩니다.
 - 호출 경로: `{querypie url}/api/external/v2/`
 - 기존 V0.9 API와 호환됩니다.
 - 더 많은 기능과 개선된 구조를 제공합니다.
@@ -168,14 +168,16 @@ QueryPie External API는 두 가지 버전을 지원합니다:
 ### V0.9 API
 
 - **레거시 API 버전**으로, Version 9.16 이전에 제공하던 API입니다.
-- 하위 호환성을 위해 유지됩니다.
-- 기존 시스템과의 통합을 위해 계속 지원됩니다.
+- **2026년 상반기 릴리즈에서 Deprecate 예정**입니다.
+- **2026년 하반기 릴리즈에서 제거 예정**입니다.
+- 하위 호환성을 위해 현재까지 유지되고 있습니다.
+- 기존 시스템과의 통합을 위해 제한적으로 지원됩니다.
 - 호출 경로: `{querypie url}/api/external/v0.9/`
 
 ### 버전 선택 가이드
 
-- 새로운 프로젝트나 통합의 경우 **V2 API** 사용을 권장합니다.
-- 기존 시스템과의 호환성이 필요한 경우 V0.9 API를 계속 사용할 수 있습니다.
+- 새로운 프로젝트나 통합의 경우 **V2 API** 사용을 강력히 권장합니다.
+- V0.9 API는 Deprecate 예정이므로, 가능한 한 빠른 시일 내에 V2 API로 마이그레이션하는 것을 권장합니다.
 - V0.9에서 V2로의 마이그레이션을 고려하는 경우, 각 버전의 상세 문서를 참조하여 차이점을 확인하세요.
 
 ## 상세 문서
@@ -185,18 +187,10 @@ QueryPie External API는 두 가지 버전을 지원합니다:
 
 ### 버전 11.4.1
 
-- [External API V2](api-reference/11.4.1/v2) - 현행 API (권장)
-- [External API V0.9](api-reference/11.4.1/v0.9) - 레거시 API
-
-각 문서에서는 다음을 확인할 수 있습니다:
-
-- 모든 API 엔드포인트의 상세 명세
-- 요청 파라미터 및 응답 형식
-- 인증 및 권한 요구사항
-- 에러 코드 및 처리 방법
-- 실제 API 호출 테스트
+- [ACP External API V2](api-reference/11.4.1/v2) - 현행 API (권장)
+- [ACP External API V0.9](api-reference/11.4.1/v0.9) - 레거시 API (Deprecate 예정)
 
 ## 관련 문서
 
 - [API 토큰 관리](/ko/administrator-manual/general/system/api-token) - API 토큰 생성 및 관리 방법
-- [Administrator Manual](/ko/administrator-manual) - QueryPie 관리자 매뉴얼
+- [Administrator Manual](/ko/administrator-manual) - QueryPie ACP 관리자 매뉴얼
