@@ -5,38 +5,198 @@ description: QueryPie API 레퍼런스 문서
 
 # API 레퍼런스
 
-QueryPie ACP 의 API 레퍼런스 문서에 오신 것을 환영합니다.
+QueryPie External API 레퍼런스 문서에 오신 것을 환영합니다.
+이 문서는 QueryPie Access Control Platform (ACP)과 프로그래밍 방식으로 상호작용할 수 있는 RESTful API에 대한 종합적인 가이드를 제공합니다.
 
 ## API 소개
 
-QueryPie ACP 는 [RESTful API](https://restfulapi.net/) 방식으로 구현된 API를 이용자에게 제공합니다.
-QueryPie ACP 의 API를 사용하면 QueryPie Access Control Platform (ACP)과 프로그래밍 방식으로 상호작용할 수 있습니다.
-이용자는 API를 사용하여 다음을 수행할 수 있습니다:
+QueryPie External API는 [RESTful API](https://restfulapi.net/) 방식으로 구현된 API입니다.
+QueryPie의 주요 기능을 웹 콘솔 외부에서도 사용할 수 있도록 합니다.
+현재 **180개 이상의 엔드포인트**를 제공합니다.
+QueryPie의 다양한 관리 기능을 프로그래밍 방식으로 제어할 수 있습니다.
+
+QueryPie External API를 사용하면 다음을 수행할 수 있습니다:
 
 - 사용자, 그룹 및 역할 관리
 - 데이터베이스 연결 및 서버 구성
-- 액세스 권한 제어
+- 액세스 권한 제어 및 정책 관리
 - 감사 로그 및 보고서 모니터링
-- 기타 다양한 기능
-
-## 인증
-
-모든 API 요청에는 인증이 필요합니다. API 토큰을 획득하고 사용하는 방법에 대한 자세한 내용은 [API 토큰 문서](/ko/administrator-manual/general/system/api-token)를 참조하세요.
-
-## API 버전
-
-QueryPie API는 두 가지 버전을 지원합니다:
-
-- **V2**: 현재 권장되는 API 버전입니다.
-- **V0.9**: 레거시 API 버전으로, Version 9.16 이전에 제공하던 API 입니다. 하위 호환성을 위해 유지됩니다.
+- Kubernetes 클러스터 관리
+- 워크플로우 및 승인 프로세스 관리
+- 보안 설정 및 인증 관리
+- 기타 다양한 관리 기능
 
 ## 시작하기
 
-1. QueryPie 관리자로부터 API 토큰을 획득합니다
-2. `Authorization` 헤더를 사용하여 API 요청에 토큰을 포함합니다
-3. 아래의 대화형 문서를 사용하여 API 엔드포인트를 탐색합니다
+QueryPie External API를 사용하기 위한 빠른 시작 가이드는 다음과 같습니다:
+
+### 1. API 토큰 획득
+
+모든 API 요청에는 인증이 필요합니다.
+QueryPie 관리자로부터 API 토큰을 획득해야 합니다.
+API 토큰 생성 및 관리 방법에 대한 자세한 내용은 [API 토큰 문서](/ko/administrator-manual/general/system/api-token)를 참조하세요.
+
+### 2. API 호출 기본 구조
+
+API 호출 시 다음 정보가 필요합니다:
+
+- **기본 URL**: `{querypie url}/api/external/v2/`
+- **인증 헤더**: `Authorization: {api token}`
+- **Content-Type**: `application/json`
+
+### 3. API 호출 예시
+
+다음은 curl을 사용한 기본 API 호출 예시입니다:
+
+```bash
+curl -X GET "https://your-querypie-instance.com/api/external/v2/users" \
+  -H "Authorization: your-api-token" \
+  -H "Content-Type: application/json"
+```
+
+### 4. 대화형 문서 활용
+
+아래의 버전별 상세 문서에서 대화형 API 문서를 통해 각 엔드포인트를 탐색하고 테스트할 수 있습니다.
+
+## 인증
+
+모든 API 요청에는 인증이 필요합니다.
+API 토큰을 `Authorization` 헤더에 포함하여 요청해야 합니다.
+
+### Authorization 헤더 형식
+
+```
+Authorization: {api token}
+```
+
+### API 토큰 관리
+
+- API 토큰은 Owner 권한 사용자 또는 해당 메뉴 접근 권한이 있는 관리자가 발급할 수 있습니다.
+- 토큰은 최초 발급 시에만 전체 노출됩니다.
+- 이후에는 앞의 8자리를 제외한 나머지를 마스킹하여 표시합니다.
+- 토큰 키를 분실한 경우, 기존 키를 삭제하고 새로 발급받아 사용하는 것을 권장합니다.
+
+API 토큰 생성, 수정, 삭제에 대한 자세한 내용은 [API 토큰 문서](/ko/administrator-manual/general/system/api-token)를 참조하세요.
+
+## 주요 기능 영역
+
+QueryPie External API는 다음과 같은 주요 기능 영역으로 구성되어 있습니다:
+
+### 사용자 및 그룹 관리
+
+- **User Management API**: 사용자 생성, 수정, 삭제 및 상태 관리
+- **User Group Management API**: 사용자 그룹 관리
+- **Group Member Operations API**: 그룹 멤버십 관리
+- **Users - Allowed Zone Mapping API**: 사용자별 IP 접근 제어 설정
+
+### 서버 및 데이터베이스 관리
+
+- **Servers API**: 서버 등록 및 관리
+- **Server Groups API**: 서버 그룹 관리
+- **Server Roles API**: 서버 역할 관리
+- **Server Accounts API**: 서버 OS 계정 관리
+- **Server SSH Key Configurations API**: 서버 SSH 키 설정
+- **Server Tags API**: 서버 태그 관리
+- **Server Cloud Providers API**: 서버 클라우드 프로바이더 관리
+- **Command Templates API**: 서버 명령 템플릿 관리
+- **DB Connections API**: 데이터베이스 연결 관리
+- **DB Connection Member Operations API**: 데이터베이스 연결 멤버십 관리
+- **Cloud Providers for DB API**: 데이터베이스용 클라우드 프로바이더 관리
+
+### 정책 관리
+
+- **Data Policy Management API**: 데이터 접근 정책 관리
+- **Policy Rules API**: 정책 규칙 관리 (데이터 마스킹, 데이터 접근, 민감 데이터 정책)
+- **Ledger Table Policy API**: Ledger 테이블 정책 관리
+- **Ledger Approval Rules API**: Ledger 승인 규칙 관리
+- **Manual Policy Exception Management API**: 수동 정책 예외 관리
+- **Server Policy API**: 서버 정책 관리
+- **Direct Permissions API**: 서버 직접 권한 관리
+
+### Kubernetes 관리
+
+- **Kubernetes Clusters API**: Kubernetes 클러스터 관리
+- **Kubernetes Cluster Policy API**: Kubernetes 클러스터 정책 관리
+- **Kubernetes Cluster Role API**: Kubernetes 클러스터 역할 관리
+- **Kubernetes Access Control API**: Kubernetes 액세스 제어 관리
+
+### 감사 및 모니터링
+
+- **Query Audit API**: 쿼리 실행 감사 로그 조회
+- **DB Access History API**: 데이터베이스 접근 이력 조회
+- **User Access History API**: 사용자 로그인/로그아웃 이력 조회
+- **DB Account Lock History API**: 데이터베이스 계정 잠금 이력 조회
+- **DB Account Locks API**: 데이터베이스 계정 잠금 상태 조회 및 해제
+- **Activity Logs API**: QueryPie 설정 변경 이력 조회
+- **DML Snapshots API**: DML 스냅샷 조회 (INSERT/UPDATE/DELETE 실행 전후 데이터)
+- **Admin Role History API**: 관리자 권한 부여/변경/해제 이력 조회
+- **DB Access Control Logs API**: 데이터베이스 접근 권한 부여/해제 이력 조회
+- **Audit Log Export API**: 감사 로그 내보내기
+- **Jobs API**: 작업 이력 조회 (클라우드 프로바이더 동기화 등)
+
+### 워크플로우 관리
+
+- **Workflow Requests API**: 워크플로우 요청 관리
+- **Workflow Approval Delegation Logs API**: 워크플로우 승인 위임 로그 조회
+
+### 보안 설정
+
+- **Security Settings API**: QueryPie 보안 설정 조회 및 구성
+- **Authentication API (Beta)**: 인증 설정 관리 (베타)
+- **Secret Stores API**: 외부 시크릿 스토어 관리 (HashiCorp Vault 등)
+- **Privileges API**: 데이터베이스 권한 관리
+- **DB Access Control API**: 데이터베이스 접근 제어 관리
+- **Server Access Control API**: 서버 접근 제어 관리
+- **Server Groups Owners API**: 서버 그룹 소유자 관리
+
+### 기타
+
+- **Web Apps API**: 웹 앱 관리
+
+## API 버전
+
+QueryPie External API는 두 가지 버전을 지원합니다:
+
+### V2 API
+
+- **현재 권장되는 API 버전**입니다.
+- QueryPie 버전 9.16.1부터 지원됩니다.
+- 호출 경로: `{querypie url}/api/external/v2/`
+- 기존 V0.9 API와 호환됩니다.
+- 더 많은 기능과 개선된 구조를 제공합니다.
+
+### V0.9 API
+
+- **레거시 API 버전**으로, Version 9.16 이전에 제공하던 API입니다.
+- 하위 호환성을 위해 유지됩니다.
+- 기존 시스템과의 통합을 위해 계속 지원됩니다.
+- 호출 경로: `{querypie url}/api/external/v0.9/`
+
+### 버전 선택 가이드
+
+- 새로운 프로젝트나 통합의 경우 **V2 API** 사용을 권장합니다.
+- 기존 시스템과의 호환성이 필요한 경우 V0.9 API를 계속 사용할 수 있습니다.
+- V0.9에서 V2로의 마이그레이션을 고려하는 경우, 각 버전의 상세 문서를 참조하여 차이점을 확인하세요.
+
+## 상세 문서
+
+각 버전별 상세 API 문서는 대화형 문서 형식으로 제공됩니다.
+모든 엔드포인트의 상세한 명세, 요청/응답 예시, 파라미터 설명 등을 확인할 수 있습니다.
 
 ### 버전 11.4.1
-- [External API V2](api-reference/11.4.1/v2) - 현행 API
+
+- [External API V2](api-reference/11.4.1/v2) - 현행 API (권장)
 - [External API V0.9](api-reference/11.4.1/v0.9) - 레거시 API
 
+각 문서에서는 다음을 확인할 수 있습니다:
+
+- 모든 API 엔드포인트의 상세 명세
+- 요청 파라미터 및 응답 형식
+- 인증 및 권한 요구사항
+- 에러 코드 및 처리 방법
+- 실제 API 호출 테스트
+
+## 관련 문서
+
+- [API 토큰 관리](/ko/administrator-manual/general/system/api-token) - API 토큰 생성 및 관리 방법
+- [Administrator Manual](/ko/administrator-manual) - QueryPie 관리자 매뉴얼
