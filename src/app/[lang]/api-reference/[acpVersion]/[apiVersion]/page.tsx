@@ -91,19 +91,19 @@ function getLocalizedText(
   switch (lang) {
     case 'ko':
       return {
-        title: `QueryPie ACP API 레퍼런스 - ${upperApiVersion}`,
-        description: `이 페이지는 QueryPie ACP API ${upperApiVersion} (버전 ${acpVersion})의 전체 OpenAPI 명세서를 제공합니다.`,
+        title: `QueryPie ACP External API 레퍼런스 - ${upperApiVersion}`,
+        description: `이 페이지는 QueryPie ACP External API ${upperApiVersion} (버전 ${acpVersion})의 전체 OpenAPI 명세서를 제공합니다.`,
       };
     case 'ja':
       return {
-        title: `QueryPie ACP APIリファレンス - ${upperApiVersion}`,
-        description: `このページは、QueryPie ACP API ${upperApiVersion} (バージョン ${acpVersion}) の完全なOpenAPI仕様書を提供します。`,
+        title: `QueryPie ACP External APIリファレンス - ${upperApiVersion}`,
+        description: `このページは、QueryPie ACP External API ${upperApiVersion} (バージョン ${acpVersion}) の完全なOpenAPI仕様書を提供します。`,
       };
     case 'en':
     default:
       return {
-        title: `QueryPie ACP API Reference - ${upperApiVersion}`,
-        description: `This page provides the complete OpenAPI specification for QueryPie ACP API ${upperApiVersion} (Version ${acpVersion}).`,
+        title: `QueryPie ACP External API Reference - ${upperApiVersion}`,
+        description: `This page provides the complete OpenAPI specification for QueryPie ACP External API ${upperApiVersion} (Version ${acpVersion}).`,
       };
   }
 }
@@ -148,7 +148,7 @@ export async function generateMetadata(props: {
 /**
  * API Reference Page Component
  *
- * Displays the OpenAPI specification for a specific QueryPie API version.
+ * Displays the OpenAPI specification for a specific QueryPie ACP External API version.
  * Replaces the functionality of the v2.mdx file.
  */
 export default async function ApiReferencePage(props: {
