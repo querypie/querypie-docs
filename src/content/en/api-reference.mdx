@@ -1,0 +1,234 @@
+---
+title: API Reference
+description: QueryPie ACP API Reference Documentation
+---
+
+# API Reference
+
+Welcome to the QueryPie ACP External API Reference documentation.
+This document provides a comprehensive guide to the RESTful API that allows you to interact programmatically with QueryPie Access Control Platform (ACP).
+
+## About the API
+
+QueryPie ACP External API is implemented as a [RESTful API](https://restfulapi.net/).
+It enables you to use the main features of QueryPie ACP outside of the web console.
+It currently provides **more than 180 endpoints**.
+You can control various management features of QueryPie ACP programmatically.
+
+With ACP External API, you can:
+
+- Manage users, groups, and roles
+- Configure database connections and servers
+- Control access permissions and manage policies
+- Monitor audit logs and reports
+- Manage Kubernetes clusters
+- Manage workflows and approval processes
+- Manage security settings and authentication
+- And many other management features
+
+## Getting Started
+
+Here is a quick start guide for using QueryPie ACP External API:
+
+### 1. Obtain an API Token
+
+All API requests require authentication.
+You need to obtain an API token from the QueryPie ACP administrator.
+For detailed information on creating and managing API tokens, please refer to the [API Token documentation](administrator-manual/general/system/api-token).
+
+### 2. Basic API Call Structure
+
+The following information is required when making API calls:
+
+- **Base URL**: `{querypie url}/api/external/v2/`
+- **Authorization Header**: `Authorization: {api token}`
+- **Content-Type**: `application/json`
+
+### 3. API Call Example
+
+The following is a basic API call example using curl:
+
+```bash
+curl -X GET "https://your-querypie-instance.com/api/external/v2/users" \
+  -H "Authorization: your-api-token" \
+  -H "Content-Type: application/json"
+```
+
+### 4. Using Interactive Documentation
+
+In the detailed documentation by version below, you can explore and test each endpoint through the interactive API documentation.
+
+## Authentication
+
+All API requests require authentication.
+You must include the API token in the `Authorization` header when making requests.
+
+### Authorization Header Format
+
+```
+Authorization: {api token}
+```
+
+### API Token Management
+
+- API tokens can be issued by users with Owner permissions or administrators with access to the relevant menu.
+- The token is fully displayed only when first issued.
+- After that, all characters except the first 8 characters are masked.
+- If you lose the token key, we recommend deleting the existing key and issuing a new one.
+
+For detailed information on creating, modifying, and deleting API tokens, please refer to the [API Token documentation](administrator-manual/general/system/api-token).
+
+## Main Feature Areas
+
+QueryPie ACP External API is implemented to correspond to the feature structure of the administrator web console.
+It consists of the following main feature areas:
+
+### General (General Management)
+
+#### User Management (User Management)
+
+- **User Management API**: User creation, modification, deletion, and status management
+- **User Group Management API**: User group management
+- **Group Member Operations API**: Group membership management
+- **Users - Allowed Zone Mapping API**: IP access control settings per user
+
+#### Workflow Management (Workflow Management)
+
+- **Workflow Requests API**: Workflow request management
+- **Workflow Approval Delegation Logs API**: Workflow approval delegation log queries
+
+#### System (System Management)
+
+- **Security Settings API**: QueryPie ACP security settings query and configuration
+- **Authentication API (Beta)**: Authentication settings management (Beta)
+- **Jobs API**: Job history queries (cloud provider synchronization, etc.)
+- **Secret Stores API**: External secret store management (HashiCorp Vault, etc.)
+
+### Databases (Database Management)
+
+#### Connection Management (Connection Management)
+
+- **DB Connections API**: Database connection management
+- **DB Connection Member Operations API**: Database connection membership management
+- **Cloud Providers for DB API**: Cloud provider management for databases
+
+#### DB Access Control (Database Access Control)
+
+- **DB Access Control API**: Database access control management
+- **DB Access Control Logs API**: Database access permission grant/revoke history queries
+- **Privileges API**: Database privilege management
+
+#### Policies (Policy Management)
+
+- **Data Policy Management API**: Data access policy management
+- **Policy Rules API**: Policy rule management (data masking, data access, sensitive data policies)
+- **Manual Policy Exception Management API**: Manual policy exception management
+
+#### Ledger Management (Ledger Management)
+
+- **Ledger Table Policy API**: Ledger table policy management
+- **Ledger Approval Rules API**: Ledger approval rule management
+
+### Servers (Server Management)
+
+#### Connection Management (Connection Management)
+
+- **Servers API**: Server registration and management
+- **Server Groups API**: Server group management
+- **Server Groups Owners API**: Server group owner management
+- **Server Cloud Providers API**: Server cloud provider management
+- **Server SSH Key Configurations API**: Server SSH key configuration
+- **Server Tags API**: Server tag management
+
+#### Server Account Management (Server Account Management)
+
+- **Server Accounts API**: Server OS account management
+
+#### Server Access Control (Server Access Control)
+
+- **Server Access Control API**: Server access control management
+- **Server Roles API**: Server role management
+- **Server Policy API**: Server policy management
+- **Direct Permissions API**: Server direct permission management
+- **Command Templates API**: Server command template management
+
+### Kubernetes (Kubernetes Management)
+
+#### Connection Management (Connection Management)
+
+- **Kubernetes Clusters API**: Kubernetes cluster management
+
+#### K8s Access Control (Kubernetes Access Control)
+
+- **Kubernetes Access Control API**: Kubernetes access control management
+- **Kubernetes Cluster Role API**: Kubernetes cluster role management
+- **Kubernetes Cluster Policy API**: Kubernetes cluster policy management
+
+### Web Apps (Web App Management)
+
+#### Connection Management (Connection Management)
+
+- **Web Apps API**: Web app management
+
+### Audit (Audit and Monitoring)
+
+#### General Logs (General Logs)
+
+- **User Access History API**: User login/logout history queries
+- **Activity Logs API**: QueryPie ACP configuration change history queries
+- **Admin Role History API**: Administrator permission grant/change/revoke history queries
+
+#### Database Logs (Database Logs)
+
+- **Query Audit API**: Query execution audit log queries
+- **DB Access History API**: Database access history queries
+- **DB Account Lock History API**: Database account lock history queries
+- **DB Account Locks API**: Database account lock status queries and release
+- **DML Snapshots API**: DML snapshot queries (data before and after INSERT/UPDATE/DELETE execution)
+
+#### Reports (Reports)
+
+- **Audit Log Export API**: Audit log export
+
+## API Versions
+
+QueryPie ACP External API supports two versions:
+
+### V2 API
+
+- This is the **currently recommended API version**.
+- Supported since QueryPie ACP version 9.16.1.
+- Call path: `{querypie url}/api/external/v2/`
+- Not compatible with the existing V0.9 API.
+- Uses a different endpoint structure and request/response format than the V0.9 API.
+- Provides more features and an improved structure.
+
+### V0.9 API
+
+- Legacy API version that was provided before Version 9.16.
+- Scheduled to be deprecated in the first half of 2026.
+- Scheduled to be removed in the second half of 2026.
+- Currently maintained for backward compatibility.
+- Limited support for integration with existing systems.
+- Call path: `{querypie url}/api/external/v0.9/`
+
+### Version Selection Guide
+
+- For new projects or integrations, **using the V2 API is strongly recommended**.
+- Since the V0.9 API is scheduled to be deprecated, we recommend migrating to the V2 API as soon as possible.
+- If you are considering migrating from V0.9 to V2, please refer to the detailed documentation for each version to check the differences.
+
+## Detailed Documentation
+
+Detailed API documentation for each version is provided in an interactive documentation format.
+You can check detailed specifications for all endpoints, request/response examples, parameter descriptions, and more.
+
+### Version 11.4.1
+
+- [ACP External API V2](api-reference/11.4.1/v2) - Current API (Recommended)
+- [ACP External API V0.9](api-reference/11.4.1/v0.9) - Legacy API (Scheduled for Deprecation)
+
+## Related Documentation
+
+- [API Token Management](administrator-manual/general/system/api-token) - How to create and manage API tokens
+- [Administrator Manual](administrator-manual) - QueryPie ACP Administrator Manual

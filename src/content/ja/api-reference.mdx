@@ -1,0 +1,234 @@
+---
+title: APIリファレンス
+description: QueryPie ACP APIリファレンスドキュメント
+---
+
+# APIリファレンス
+
+QueryPie ACP External APIリファレンスドキュメントへようこそ。
+このドキュメントは、QueryPie Access Control Platform (ACP) とプログラム的にやり取りできるRESTful APIに関する包括的なガイドを提供します。
+
+## APIについて
+
+QueryPie ACP External APIは、[RESTful API](https://restfulapi.net/)方式で実装されたAPIです。
+QueryPie ACPの主要機能をWebコンソール以外でも使用できるようにします。
+現在、**180以上のエンドポイント**を提供しています。
+QueryPie ACPの様々な管理機能をプログラム的に制御できます。
+
+ACP External APIを使用すると、以下を実行できます:
+
+- ユーザー、グループ、ロールの管理
+- データベース接続とサーバーの設定
+- アクセス権限の制御とポリシーの管理
+- 監査ログとレポートの監視
+- Kubernetesクラスターの管理
+- ワークフローと承認プロセスの管理
+- セキュリティ設定と認証の管理
+- その他多くの管理機能
+
+## はじめに
+
+QueryPie ACP External APIを使用するためのクイックスタートガイドは以下の通りです:
+
+### 1. APIトークンの取得
+
+すべてのAPIリクエストには認証が必要です。
+QueryPie ACP管理者からAPIトークンを取得する必要があります。
+APIトークンの作成と管理方法の詳細については、[APIトークンドキュメント](administrator-manual/general/system/api-token)を参照してください。
+
+### 2. API呼び出しの基本構造
+
+API呼び出しには、以下の情報が必要です:
+
+- **ベースURL**: `{querypie url}/api/external/v2/`
+- **認証ヘッダー**: `Authorization: {api token}`
+- **Content-Type**: `application/json`
+
+### 3. API呼び出しの例
+
+以下は、curlを使用した基本的なAPI呼び出しの例です:
+
+```bash
+curl -X GET "https://your-querypie-instance.com/api/external/v2/users" \
+  -H "Authorization: your-api-token" \
+  -H "Content-Type: application/json"
+```
+
+### 4. インタラクティブドキュメントの活用
+
+以下のバージョン別詳細ドキュメントでは、インタラクティブなAPIドキュメントを通じて各エンドポイントを探索し、テストできます。
+
+## 認証
+
+すべてのAPIリクエストには認証が必要です。
+APIトークンを`Authorization`ヘッダーに含めてリクエストする必要があります。
+
+### Authorizationヘッダーの形式
+
+```
+Authorization: {api token}
+```
+
+### APIトークンの管理
+
+- APIトークンは、Owner権限を持つユーザーまたは該当メニューへのアクセス権限を持つ管理者が発行できます。
+- トークンは最初に発行された時のみ完全に表示されます。
+- その後は、最初の8文字を除いた残りの文字がマスキングされて表示されます。
+- トークンキーを紛失した場合、既存のキーを削除して新しく発行することをお勧めします。
+
+APIトークンの作成、変更、削除の詳細については、[APIトークンドキュメント](administrator-manual/general/system/api-token)を参照してください。
+
+## 主要機能領域
+
+QueryPie ACP External APIは、管理者Webコンソールの機能構造に対応するように実装されています。
+以下の主要機能領域で構成されています:
+
+### General (一般管理)
+
+#### User Management (ユーザー管理)
+
+- **User Management API**: ユーザーの作成、変更、削除、状態管理
+- **User Group Management API**: ユーザーグループの管理
+- **Group Member Operations API**: グループメンバーシップの管理
+- **Users - Allowed Zone Mapping API**: ユーザー別IPアクセス制御設定
+
+#### Workflow Management (ワークフロー管理)
+
+- **Workflow Requests API**: ワークフローリクエストの管理
+- **Workflow Approval Delegation Logs API**: ワークフロー承認委任ログの照会
+
+#### System (システム管理)
+
+- **Security Settings API**: QueryPie ACPセキュリティ設定の照会と構成
+- **Authentication API (Beta)**: 認証設定の管理 (ベータ)
+- **Jobs API**: ジョブ履歴の照会 (クラウドプロバイダーの同期など)
+- **Secret Stores API**: 外部シークレットストアの管理 (HashiCorp Vaultなど)
+
+### Databases (データベース管理)
+
+#### Connection Management (接続管理)
+
+- **DB Connections API**: データベース接続の管理
+- **DB Connection Member Operations API**: データベース接続メンバーシップの管理
+- **Cloud Providers for DB API**: データベース用クラウドプロバイダーの管理
+
+#### DB Access Control (データベースアクセス制御)
+
+- **DB Access Control API**: データベースアクセス制御の管理
+- **DB Access Control Logs API**: データベースアクセス権限の付与/解除履歴の照会
+- **Privileges API**: データベース権限の管理
+
+#### Policies (ポリシー管理)
+
+- **Data Policy Management API**: データアクセスポリシーの管理
+- **Policy Rules API**: ポリシールールの管理 (データマスキング、データアクセス、機密データポリシー)
+- **Manual Policy Exception Management API**: 手動ポリシー例外の管理
+
+#### Ledger Management (Ledger管理)
+
+- **Ledger Table Policy API**: Ledgerテーブルポリシーの管理
+- **Ledger Approval Rules API**: Ledger承認ルールの管理
+
+### Servers (サーバー管理)
+
+#### Connection Management (接続管理)
+
+- **Servers API**: サーバーの登録と管理
+- **Server Groups API**: サーバーグループの管理
+- **Server Groups Owners API**: サーバーグループ所有者の管理
+- **Server Cloud Providers API**: サーバークラウドプロバイダーの管理
+- **Server SSH Key Configurations API**: サーバーSSHキー設定
+- **Server Tags API**: サーバータグの管理
+
+#### Server Account Management (サーバーアカウント管理)
+
+- **Server Accounts API**: サーバーOSアカウントの管理
+
+#### Server Access Control (サーバーアクセス制御)
+
+- **Server Access Control API**: サーバーアクセス制御の管理
+- **Server Roles API**: サーバーロールの管理
+- **Server Policy API**: サーバーポリシーの管理
+- **Direct Permissions API**: サーバー直接権限の管理
+- **Command Templates API**: サーバーコマンドテンプレートの管理
+
+### Kubernetes (Kubernetes管理)
+
+#### Connection Management (接続管理)
+
+- **Kubernetes Clusters API**: Kubernetesクラスターの管理
+
+#### K8s Access Control (Kubernetesアクセス制御)
+
+- **Kubernetes Access Control API**: Kubernetesアクセス制御の管理
+- **Kubernetes Cluster Role API**: Kubernetesクラスターロールの管理
+- **Kubernetes Cluster Policy API**: Kubernetesクラスターポリシーの管理
+
+### Web Apps (Webアプリ管理)
+
+#### Connection Management (接続管理)
+
+- **Web Apps API**: Webアプリの管理
+
+### Audit (監査とモニタリング)
+
+#### General Logs (一般ログ)
+
+- **User Access History API**: ユーザーログイン/ログアウト履歴の照会
+- **Activity Logs API**: QueryPie ACP設定変更履歴の照会
+- **Admin Role History API**: 管理者権限の付与/変更/解除履歴の照会
+
+#### Database Logs (データベースログ)
+
+- **Query Audit API**: クエリ実行監査ログの照会
+- **DB Access History API**: データベースアクセス履歴の照会
+- **DB Account Lock History API**: データベースアカウントロック履歴の照会
+- **DB Account Locks API**: データベースアカウントロック状態の照会と解除
+- **DML Snapshots API**: DMLスナップショットの照会 (INSERT/UPDATE/DELETE実行前後のデータ)
+
+#### Reports (レポート)
+
+- **Audit Log Export API**: 監査ログのエクスポート
+
+## APIバージョン
+
+QueryPie ACP External APIは、2つのバージョンをサポートしています:
+
+### V2 API
+
+- これは**現在推奨されているAPIバージョン**です。
+- QueryPie ACPバージョン9.16.1以降でサポートされています。
+- 呼び出しパス: `{querypie url}/api/external/v2/`
+- 既存のV0.9 APIとは互換性がありません。
+- V0.9 APIとは異なるエンドポイント構造とリクエスト/レスポンス形式を使用します。
+- より多くの機能と改善された構造を提供します。
+
+### V0.9 API
+
+- レガシーAPIバージョンで、Version 9.16以前に提供されていたAPIです。
+- 2026年前半リリースで非推奨予定です。
+- 2026年後半リリースで削除予定です。
+- 下位互換性のために現在まで維持されています。
+- 既存システムとの統合のために限定的にサポートされています。
+- 呼び出しパス: `{querypie url}/api/external/v0.9/`
+
+### バージョン選択ガイド
+
+- 新しいプロジェクトや統合の場合、**V2 APIの使用を強く推奨**します。
+- V0.9 APIは非推奨予定のため、可能な限り早急にV2 APIに移行することをお勧めします。
+- V0.9からV2への移行を検討する場合は、各バージョンの詳細ドキュメントを参照して、違いを確認してください。
+
+## 詳細ドキュメント
+
+各バージョン別の詳細APIドキュメントは、インタラクティブなドキュメント形式で提供されています。
+すべてのエンドポイントの詳細な仕様、リクエスト/レスポンスの例、パラメータの説明などを確認できます。
+
+### バージョン 11.4.1
+
+- [ACP External API V2](api-reference/11.4.1/v2) - 現行API (推奨)
+- [ACP External API V0.9](api-reference/11.4.1/v0.9) - レガシーAPI (非推奨予定)
+
+## 関連ドキュメント
+
+- [APIトークン管理](administrator-manual/general/system/api-token) - APIトークンの作成と管理方法
+- [管理者マニュアル](administrator-manual) - QueryPie ACP管理者マニュアル
