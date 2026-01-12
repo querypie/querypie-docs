@@ -202,6 +202,14 @@ LDAPで管理中のユーザー属性をQueryPie内Attributeとマッピング�
 3. マッピング行削除または変更時、Saveボタンをクリックする必要があり、UI上で変更事項が反映され、Synchronizeを追加でクリックする必要があり、LDAPと実際の同期が実行されます。つまり、Saveは画面上変更、Synchronizeはシステム反映を意味します。
 </Callout>
 
+<Callout type="important">
+Active DirectoryをLDAP連携する場合、Anonymous項目を必ずfalseに設定しなければなりません。
+ADは基本的に匿名バインド状態での検索作業を許可しません。
+<figure data-layout="center" data-align="center">
+![image-20251222-023912.png](/administrator-manual/general/system/integrations/identity-providers/image-20251222-023912.png)
+</figure>
+</Callout>
+
 ### Okta連携
 
 #### OktaでQueryPieをアプリケーションとして追加

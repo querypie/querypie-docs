@@ -2,6 +2,8 @@
 title: 'QueryPie ACP Community Edition'
 ---
 
+import { Callout } from 'nextra/components'
+
 # QueryPie ACP Community Edition
 
 ### 🧭 始める前に
@@ -13,7 +15,7 @@ title: 'QueryPie ACP Community Edition'
 * Kubernetes Access Controller
 * Web Access Controller
 
-ただし、Community Editionは**最大5名の利用者アクティベーション**をサポートします。*（5名以上を登録する必要がある場合、*[*Enterprise Plan*](https://www.querypie.com/ko/plans)*アップグレードを検討してください。）*
+ただし、Community Editionは**最大5名のユーザーアクティベーション**をサポートします。*（5名以上を登録する必要がある場合、*[*Enterprise Plan*](https://www.querypie.com/ko/plans)*アップグレードを検討してください。）*
 
 QueryPieは一般的なウェブアプリケーション形式で実行され、プロキシベースネットワークサーバ機能も含んでいます。
 
@@ -57,7 +59,7 @@ QueryPie Community Editionの円滑なインストールおよび運用のため
 </tr>
 <tr>
 <td>
-複数利用者のためのProduction環境推奨仕様
+複数ユーザーのためのProduction環境推奨仕様
 </td>
 <td>
 * Hardware: AMD64 Architecture、8 vCPUs、Memory 32 GiB、Disk 100 GiB+
@@ -78,7 +80,7 @@ Linux with Docker or Podman
 
 ARM64 Architecture CPU環境またはmacOS環境は開発者のための試験使用、テスト用途として推奨します。
 
-詳細な要件は以下の文書を参照してください：[インストール前の準備事項 - 簡単な構成](prerequisites)
+詳細な要件は以下の文書を参照してください：[インストール前の準備事項](prerequisites)
 
 ### 🐳 インストール方法
 
@@ -115,12 +117,12 @@ QueryPie Community Editionはライセンス登録が必要です。
 
 インストールが完了するとブラウザで次のアドレスに接続してください：
 ```
-http://<server IP address>  
-or 
-https://<server IP address> 
+http://<server IP address>
+or
+https://<server IP address>
 ```
 
-QueryPieがインストールされたLinuxサーバのIPアドレスは利用者PCからアクセス可能である必要があります。
+QueryPieがインストールされたLinuxサーバのIPアドレスはユーザーPCからアクセス可能である必要があります。
 
 #### 4. ライセンス登録
 
@@ -133,6 +135,15 @@ PEM形式ライセンス入力画面
 </figcaption>
 </figure>
 
+<Callout type="info">
+**ライセンス案内**
+* QueryPieを使用するにはインストール後必ず有効なライセンスを登録する必要があります。
+* ライセンスは`.crt`拡張子のテキストファイルで提供されます。
+* ライセンスは申請時に入力したメールアドレスに送信されます。
+* 各ライセンスは発行日から1年間有効です。
+* ライセンスは申請者本人に発行され、第三者に譲渡できません。
+</Callout>
+
 #### 5. ログイン
 
 基本アカウントでログインしてください。
@@ -143,32 +154,84 @@ PEM形式ライセンス入力画面
 * Password: `querypie`
 
 <figure data-layout="center" data-align="center">
-![初期ログイン画面](/installation/querypie-acp-community-edition/image-20250718-063822.png)
+![初期ログイン画面](/installation/querypie-acp-community-edition/image-20260107-080840.png)
 <figcaption>
 初期ログイン画面
+</figcaption>
+</figure>
+
+qp-adminアカウントでログイン後、基本パスワードを別のパスワードに変更します。
+
+<figure data-layout="center" data-align="center">
+![初期パスワード変更画面](/installation/querypie-acp-community-edition/image-20260107-080542.png)
+<figcaption>
+初期パスワード変更画面
 </figcaption>
 </figure>
 
 #### 6. インストール完了 🎉
 
 インストールが正常に完了しました。
-環境設定のために管理者マニュアルを参照してください：[管理者マニュアル](../administrator-manual)
+環境設定のために管理者マニュアルを参照してください：[管理者マニュアル](../administrator-manual)<br/>管理者ページに移動するには、右上の`Go to Admin Page`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
-![ログイン後最初の案内画面](/installation/querypie-acp-community-edition/image-20250718-064043.png)
+![ログイン後に表示されるユーザーダッシュボード](/installation/querypie-acp-community-edition/image-20260107-081618.png)
 <figcaption>
-ログイン後最初の案内画面
+ログイン後に表示されるユーザーダッシュボード
 </figcaption>
 </figure>
 
+<Callout type="info">
+**QueryPie ACP Community Editionのインストール場所**
 
-### 🔑 ライセンス案内
+* Mac, Linux：インストールスクリプトを実行したフォルダ/querypie/&lt;バージョン&gt;
+    * 例：/Users/brendon/querypie/11.5.0または/home/brendon/querypie/11.5.0（ユーザーホームディレクトリでインストールスクリプトが実行された場合）
 
-* QueryPieを使用するにはインストール後必ず有効なライセンスを登録する必要があります。
-* ライセンスは`.crt`拡張子のテキストファイルで提供されます。
-* ライセンスは申請時に入力したメールアドレスに送信されます。
-* 各ライセンスは発行日から1年間有効です。
-* ライセンスは申請者本人に発行され、第三者に譲渡できません。
+**QueryPie ACP Community Editionの手動起動**
+
+* インストール場所に移動します。
+```
+ cd ~/querypie/11.5.0
+```
+
+* 手動起動：database起動 → app起動の順序で起動します。
+```
+docker compose --profile=database up -d
+docker compose --profile=app up -d
+```
+
+* 正常起動確認
+```
+docker compose --profile=app exec app readyz
+```
+
+正常に起動した場合、以下のような画面が出力されます。
+
+<figure data-layout="center" data-align="center">
+![正常に起動した場合](/installation/querypie-acp-community-edition/image-20260107-083457.png)
+<figcaption>
+正常に起動した場合
+</figcaption>
+</figure>
+
+**QueryPie ACP Community Editionの手動停止**
+
+* インストール場所に移動します。
+```
+ cd ~/querypie/11.5.0
+```
+
+* 手動停止：app停止 → database停止の順序で停止します。
+```
+docker compose --profile=app down
+docker compose --profile=database down
+```
+
+* 正常終了確認
+```
+docker compose ps
+```
+</Callout>
 
 ### 💬 サポートおよび問い合わせ
 
@@ -182,11 +245,11 @@ QueryPie Communityインストールおよび使用中に疑問点があれば[Q
 1. Integrationタブ → Install QueryPie Customer Centerクリック。
 2. Presetタブ → New Preset選択後、以下のように入力して`Save Changes`クリック：
 
-* Name: `QueryPie`を入力（推奨）。
-* MCP Servers & Tools: `Select All`を選択。
+* Name：`QueryPie`を入力（推奨）。
+* MCP Servers & Tools：`Select All`を選択。
 
 1. Chatタブ → `@QueryPie`選択後、質問入力。
 
-また、[公式QueryPie Discordチャネル](https://discord.gg/NsP98BHBm2)に参加して他の利用者と質問と経験を共有することもできます。
+また、[公式QueryPie Discordチャネル](https://discord.gg/NsP98BHBm2)に参加して他のユーザーと質問と経験を共有することもできます。
 
 

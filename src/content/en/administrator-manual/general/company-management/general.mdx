@@ -20,7 +20,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 ### Basic Settings
 
 *  **Company Name**  : Enter the company name to be displayed in profile areas, etc.
-*  **Web Base URL**  : Basic domain address used to access QueryPie service
+*  **Web Base URL**  : The basic domain address used to access the QueryPie service. [[More details]](../../../installation/container-environment-variables/querypieweburl)
 *  **Timezone**  : Set the timezone to be applied to date and time information displayed throughout QueryPie.
 *  **Date Format**  : Specify the date notation method.
 *  **Default Display Language**  : Set the default language setting for QueryPie. (Default: English) 
@@ -63,9 +63,12 @@ This is a feature to set the minimum and maximum character count for Reason for 
 Through this setting, administrators can manage input character count according to organizational policies.
 
 * Administrators can specify character count ranges for the following items on the Workflow Configurations page.
-    * Reason for Request: Sets the minimum and maximum character count for reason input when submitting workflows. (Default: minimum 3 characters, maximum 1000 characters)
-    * Comments: Sets the minimum and maximum character count for input values when approving, rejecting, executing undo, or reviewing confirmation in workflows. (Default: minimum 3 characters, maximum 300 characters)
-* Character count ranges can only be set between a minimum of 3 and a maximum of 1000 characters.
+    * Reason for Request: Sets the minimum and maximum character count for reason input when submitting workflows.
+        * Minimum length: Min 3, Max 1000, Default 3
+        * Maximum length: Min = value entered in minimum length, Max 1000, Default 1000
+    * Comments: Sets the minimum and maximum character count for input values when approving, rejecting, executing undo, or reviewing confirmation in workflows.
+        * Minimum length: Min 3, Max 1000, Default 3
+        * Maximum length: Min = value entered in minimum length, Max 1000, Default 300
 
 ### Reviewer Assignment Activation
 

@@ -202,6 +202,14 @@ Click the `Add Row` button at the top right to add a new mapping row, and you ca
 3. When deleting or changing a mapping row, you must click Save for the changes to be reflected in the UI, and you must additionally click Synchronize for actual synchronization with LDAP to be performed. In other words, Save means changes on the screen, and Synchronize means system reflection.
 </Callout>
 
+<Callout type="important">
+When integrating Active Directory with LDAP, you must set the Anonymous option to false.
+AD does not allow search operations in an anonymous bind state by default.
+<figure data-layout="center" data-align="center">
+![image-20251222-023912.png](/administrator-manual/general/system/integrations/identity-providers/image-20251222-023912.png)
+</figure>
+</Callout>
+
 ### Okta Integration
 
 #### Add QueryPie as an application in Okta

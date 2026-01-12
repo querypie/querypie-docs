@@ -20,7 +20,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 ### 基本設定
 
 *  **Company Name**  : プロフィール領域などに表示する会社名を入力します。
-*  **Web Base URL**  : QueryPieサービスにアクセスするために使用する基本ドメインアドレス
+*  **Web Base URL**  : QueryPieサービスにアクセスするために使用する基本ドメインアドレスです。[[詳細]](../../../installation/container-environment-variables/querypieweburl)
 *  **Timezone**  : QueryPie全体で表示される日付および時刻情報に適用されるタイムゾーンを設定します。
 *  **Date Format**  : 日付表記方式を指定します。
 *  **Default Display Language**  : QueryPieの基本言語設定を設定します。（デフォルト：英語）
@@ -63,9 +63,12 @@ Workflow Configurationsでは、決裁上申および承認関連の設定を変
 この設定を通じて、管理者は組織のポリシーに合わせて入力文字数を管理できます。
 
 * 管理者はWorkflow Configurationsページで以下の項目に対する文字数範囲を指定できます。
-    * Reason for Request: ワークフロー上申時の理由入力に対する最小、最大文字数を設定します。（基本値：最小3文字、最大1000文字）
-    * Comments: ワークフロー承認、拒否、実行キャンセル、レビュー確認時の入力値に対する最小、最大文字数を設定します。（基本値：最小3文字、最大300文字）
-* 文字数範囲は最小3文字から最大1000文字の間でのみ設定できます。
+    * Reason for Request: ワークフロー上申時の理由入力に対する最小、最大文字数を設定します。
+        * Minimum length: 最小 3、最大 1000、基本値 3
+        * Maximum length: 最小 = minimum lengthに記入した値、最大 1000、基本値 1000
+    * Comments: ワークフロー承認、拒否、実行キャンセル、レビュー確認時の入力値に対する最小、最大文字数を設定します。
+        * Minimum length: 最小 3、最大 1000、基本値 3
+        * Maximum length: 最小 = minimum lengthに記入した値、最大 1000、基本値 300
 
 ### 参照者指定有効化
 

@@ -2,6 +2,8 @@
 title: 'QueryPie ACP Community Edition'
 ---
 
+import { Callout } from 'nextra/components'
+
 # QueryPie ACP Community Edition
 
 ### 🧭 Before You Start
@@ -78,7 +80,7 @@ Linux with Docker or Podman
 
 ARM64 Architecture CPU environments or macOS environments are recommended for trial use and testing purposes for developers.
 
-For detailed requirements, please refer to the following document: [Prerequisites - Simple Configuration](prerequisites)
+For detailed requirements, please refer to the following document: [Prerequisites](prerequisites)
 
 ### 🐳 Installation Method
 
@@ -115,9 +117,9 @@ While installation is in progress, [submit a license application form](https://q
 
 After installation is complete, access the following address in your browser:
 ```
-http://<server IP address>  
-or 
-https://<server IP address> 
+http://<server IP address>
+or
+https://<server IP address>
 ```
 
 The IP address of the Linux server where QueryPie is installed must be accessible from user PCs.
@@ -133,6 +135,15 @@ License input screen in PEM format
 </figcaption>
 </figure>
 
+<Callout type="info">
+**License Information**
+* To use QueryPie, you must register a valid license after installation.
+* Licenses are provided as text files with `.crt` extension.
+* Licenses are sent to the email address entered during application.
+* Each license is valid for 1 year from the date of issuance.
+* Licenses are issued to the applicant and cannot be transferred to third parties.
+</Callout>
+
 #### 5. Login
 
 Log in with the default account.
@@ -143,32 +154,84 @@ After setting a new password, you can use the service.
 * Password: `querypie`
 
 <figure data-layout="center" data-align="center">
-![Initial login screen](/installation/querypie-acp-community-edition/image-20250718-063822.png)
+![Initial login screen](/installation/querypie-acp-community-edition/image-20260107-080840.png)
 <figcaption>
 Initial login screen
+</figcaption>
+</figure>
+
+After logging in with the qp-admin account, change the default password to a different password.
+
+<figure data-layout="center" data-align="center">
+![Initial password change screen](/installation/querypie-acp-community-edition/image-20260107-080542.png)
+<figcaption>
+Initial password change screen
 </figcaption>
 </figure>
 
 #### 6. Installation Complete 🎉
 
 Installation has been successfully completed.
-Please refer to the administrator manual for environment configuration: [Administrator Manual](../administrator-manual)
+Please refer to the administrator manual for environment configuration: [Administrator Manual](../administrator-manual)<br/>To navigate to the administrator page, click the `Go to Admin Page` button in the top right corner.
 
 <figure data-layout="center" data-align="center">
-![First guide screen after login](/installation/querypie-acp-community-edition/image-20250718-064043.png)
+![User dashboard displayed after login](/installation/querypie-acp-community-edition/image-20260107-081618.png)
 <figcaption>
-First guide screen after login
+User dashboard displayed after login
 </figcaption>
 </figure>
 
+<Callout type="info">
+**Installation Location of QueryPie ACP Community Edition**
 
-### 🔑 License Information
+* Mac, Linux: Folder where the installation script was executed/querypie/&lt;version&gt;
+    * Example: /Users/brendon/querypie/11.5.0 or /home/brendon/querypie/11.5.0 (when the installation script was run from the user's home directory)
 
-* To use QueryPie, you must register a valid license after installation.
-* Licenses are provided as text files with `.crt` extension.
-* Licenses are sent to the email address entered during application.
-* Each license is valid for 1 year from the date of issuance.
-* Licenses are issued to the applicant and cannot be transferred to third parties.
+**Manual Start of QueryPie ACP Community Edition**
+
+* Navigate to the installation location.
+```
+ cd ~/querypie/11.5.0
+```
+
+* Manual start: Start in the order of database start → app start.
+```
+docker compose --profile=database up -d
+docker compose --profile=app up -d
+```
+
+* Verify normal startup
+```
+docker compose --profile=app exec app readyz
+```
+
+If started normally, a screen similar to the following will be displayed.
+
+<figure data-layout="center" data-align="center">
+![When started normally](/installation/querypie-acp-community-edition/image-20260107-083457.png)
+<figcaption>
+When started normally
+</figcaption>
+</figure>
+
+**Manual Stop of QueryPie ACP Community Edition**
+
+* Navigate to the installation location.
+```
+ cd ~/querypie/11.5.0
+```
+
+* Manual stop: Stop in the order of app stop → database stop.
+```
+docker compose --profile=app down
+docker compose --profile=database down
+```
+
+* Verify normal shutdown
+```
+docker compose ps
+```
+</Callout>
 
 ### 💬 Support and Inquiries
 
