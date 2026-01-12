@@ -7,6 +7,10 @@ export async function GET() {
     const baseUrl = await getBaseUrl();
     return new NextResponse(`User-agent: *
 Allow: /
+
+Disallow: /_next/
+Disallow: /api/
+
 Sitemap: ${baseUrl}/sitemap.xml
 `);
   } else {
