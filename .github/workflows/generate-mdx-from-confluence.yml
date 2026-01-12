@@ -57,7 +57,7 @@ jobs:
           echo "=== Git Status ==="
           git status
 
-      - name: Create Pull Request for src/content changes
+      - name: Create Pull Request for src/content and public changes
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -74,9 +74,9 @@ jobs:
             git config user.email "${{ github.actor }}@users.noreply.github.com"
           fi
           
-          # src/content/ 변경사항 확인 (unstaged 상태)
-          if ! git status --porcelain src/content/ | grep -q "[AM]"; then
-            echo "No changes in src/content/ directory"
+          # src/content/ 및 public/ 변경사항 확인 (unstaged 상태)
+          if ! git status --porcelain src/content/ public/ | grep -q "[AM]"; then
+            echo "No changes in src/content/ or public/ directory"
             exit 0
           fi
           
@@ -86,18 +86,18 @@ jobs:
           # 브랜치 생성 및 체크아웃
           git checkout -b "$BRANCH_NAME"
           
-          # src/content/ 변경사항만 스테이징
-          git add src/content/
-          
+          # src/content/ 및 public/ 변경사항 스테이징
+          git add src/content/ public/
+
           # 스테이징된 변경사항 확인
           STAGED_FILES=$(git diff --cached --name-only)
           if [[ -z "$STAGED_FILES" ]]; then
-            echo "No staged changes in src/content/"
+            echo "No staged changes in src/content/ or public/"
             exit 0
           fi
-          
+
           # 변경사항 정보 수집 (스테이징 후)
-          CHANGES_STATUS=$(git status --short src/content/)
+          CHANGES_STATUS=$(git status --short src/content/ public/)
           CHANGES_STAT=$(git diff --cached --stat HEAD)
           
           # 커밋
