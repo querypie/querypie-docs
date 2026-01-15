@@ -46,7 +46,7 @@ export const QUERYPIE_LOGO_HTML = `
 export function QueryPieLogo() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-      <QueryPie2019 width={100} height={21} />
+      <QueryPie2019 width={85} height={18} style={{ position: 'relative', top: '2px' }} />
       <span style={{ opacity: '60%' }}>ACP</span>
     </div>
   );
