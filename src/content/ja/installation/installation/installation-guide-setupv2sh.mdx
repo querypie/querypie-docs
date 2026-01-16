@@ -14,7 +14,7 @@ import { Callout } from 'nextra/components'
 
 このガイドで案内するsetup.v2.shインストールプログラムは既存のインストール過程を自動的に実行します。
 自動化されたインストール過程は既存のインストール過程と主要部分が同一です。
-既存インストール過程はこの文書を参照してください：[https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE](https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-?atl_f=PAGETREE)
+既存インストール過程はこの文書を参照してください：[インストールガイド - 簡単な構成](installation-guide-simple-configuration)
 
 このインストール方式は実際の運用環境で使用するには適していません。
 実際の運用環境で使用するのに適したインストール方法は別途提供される[QueryPie Installation Guide]を参照してください。
@@ -31,7 +31,7 @@ QueryPie 10.3.0以降のバージョンを対象とするPoC用途のインス�
 * Linuxサーバ1台
 * ウェブブラウザがインストールされたPC 1台
 
-詳細は次の文書を参照してください：[インストール前の準備事項 - 簡単な構成](../prerequisites)
+詳細は次の文書を参照してください：[インストール前の準備事項](../prerequisites)
 
 ## システムアーキテクチャ
 
@@ -112,7 +112,7 @@ $
 1. `docker-compose.yml`、`.env`などComposeのための設定ファイルをダウンロード
     * 既存の`compose-env`という環境変数設定ファイルの名前が`.env`に変わりました。`compose-env`は設定ファイル生成のためのtemplateとして使用されます。
 2.  `.env`に環境変数値を設定
-    * 各環境変数に関する説明は[コンテナ環境変数案内](../container-environment-variables)文書を参照してください。
+    * 各環境変数に関する説明は[コンテナ環境変数](../container-environment-variables)文書を参照してください。
 3. docker imageダウンロード
     * `docker.io/querypie/` registryからimageをダウンロードします。したがって、Harbor login過程は必要ありません。
 4. mysql、redis container実行
