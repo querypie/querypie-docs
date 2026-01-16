@@ -11,7 +11,7 @@ on:
 
 jobs:
   fetch-openapi-spec:
-    runs-on: ubuntu-latest
+    runs-on: ["os:ubuntu", "purpose:ci"]
     permissions:
       contents: write # to create a branch and push changes
       pull-requests: write # to create a PR
