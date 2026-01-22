@@ -26,6 +26,18 @@ export default withNextra({
   // Configure redirects for Previous Version Documentation
   async redirects() {
     return [
+      // querypie-overview -> overview 경로 변경에 대한 redirect (2026-01-22)
+      {
+        source: '/:locale(ko|en|ja)/querypie-overview/:path*',
+        destination: '/:locale/overview/:path*',
+        permanent: true,
+      },
+      {
+        source: '/querypie-overview/:path*',
+        destination: '/overview/:path*',
+        permanent: true,
+      },
+
       // Korean (ko) redirects
       {
         source: '/ko/querypie-manual/11.2.0/:path*',
@@ -67,7 +79,7 @@ export default withNextra({
         destination: 'https://querypie.atlassian.net/wiki/spaces/QS1/pages/524944097/',
         permanent: true,
       },
-      
+
       // English (en) redirects
       {
         source: '/en/querypie-manual/11.0.0/:path*',
@@ -99,7 +111,7 @@ export default withNextra({
         destination: 'https://querypie.atlassian.net/wiki/spaces/QS1/pages/369951121/',
         permanent: true,
       },
-      
+
       // Japanese (ja) redirects
       {
         source: '/ja/querypie-manual/10.2.0/:path*',

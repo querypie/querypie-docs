@@ -7,132 +7,20 @@ python bin/confluence_xhtml_to_markdown.py var/608501837/page.xhtml target/ko/qu
 echo 'Converted 608501837 to target/ko/querypie-docs.mdx'
 
 mkdir -p target/ko/.
-python bin/confluence_xhtml_to_markdown.py var/544375335/page.xhtml target/ko/release-notes.mdx --public-dir=target/public --attachment-dir=/release-notes
-echo 'Converted 544375335 to target/ko/release-notes.mdx'
+python bin/confluence_xhtml_to_markdown.py var/544375784/page.xhtml target/ko/overview.mdx --public-dir=target/public --attachment-dir=/overview
+echo 'Converted 544375784 to target/ko/overview.mdx'
 
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1751810049/page.xhtml target/ko/release-notes/1150.mdx --public-dir=target/public --attachment-dir=/release-notes/1150
-echo 'Converted 1751810049 to target/ko/release-notes/1150.mdx'
+mkdir -p target/ko/overview
+python bin/confluence_xhtml_to_markdown.py var/544375859/page.xhtml target/ko/overview/system-architecture-overview.mdx --public-dir=target/public --attachment-dir=/overview/system-architecture-overview
+echo 'Converted 544375859 to target/ko/overview/system-architecture-overview.mdx'
 
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1568735233/page.xhtml target/ko/release-notes/1140.mdx --public-dir=target/public --attachment-dir=/release-notes/1140
-echo 'Converted 1568735233 to target/ko/release-notes/1140.mdx'
+mkdir -p target/ko/overview
+python bin/confluence_xhtml_to_markdown.py var/544112942/page.xhtml target/ko/overview/proxy-management.mdx --public-dir=target/public --attachment-dir=/overview/proxy-management
+echo 'Converted 544112942 to target/ko/overview/proxy-management.mdx'
 
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1421475841/page.xhtml target/ko/release-notes/1130.mdx --public-dir=target/public --attachment-dir=/release-notes/1130
-echo 'Converted 1421475841 to target/ko/release-notes/1130.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1291878563/page.xhtml target/ko/release-notes/1120.mdx --public-dir=target/public --attachment-dir=/release-notes/1120
-echo 'Converted 1291878563 to target/ko/release-notes/1120.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1171488777/page.xhtml target/ko/release-notes/1110-1112.mdx --public-dir=target/public --attachment-dir=/release-notes/1110-1112
-echo 'Converted 1171488777 to target/ko/release-notes/1110-1112.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/1064830173/page.xhtml target/ko/release-notes/1100.mdx --public-dir=target/public --attachment-dir=/release-notes/1100
-echo 'Converted 1064830173 to target/ko/release-notes/1100.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/954335909/page.xhtml target/ko/release-notes/1030-1034.mdx --public-dir=target/public --attachment-dir=/release-notes/1030-1034
-echo 'Converted 954335909 to target/ko/release-notes/1030-1034.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/703463517/page.xhtml target/ko/release-notes/1020-10212.mdx --public-dir=target/public --attachment-dir=/release-notes/1020-10212
-echo 'Converted 703463517 to target/ko/release-notes/1020-10212.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/604995641/page.xhtml target/ko/release-notes/1010-10111.mdx --public-dir=target/public --attachment-dir=/release-notes/1010-10111
-echo 'Converted 604995641 to target/ko/release-notes/1010-10111.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375355/page.xhtml target/ko/release-notes/1000-1002.mdx --public-dir=target/public --attachment-dir=/release-notes/1000-1002
-echo 'Converted 544375355 to target/ko/release-notes/1000-1002.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375370/page.xhtml target/ko/release-notes/9200-9202.mdx --public-dir=target/public --attachment-dir=/release-notes/9200-9202
-echo 'Converted 544375370 to target/ko/release-notes/9200-9202.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375385/page.xhtml target/ko/release-notes/9190.mdx --public-dir=target/public --attachment-dir=/release-notes/9190
-echo 'Converted 544375385 to target/ko/release-notes/9190.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375399/page.xhtml target/ko/release-notes/9180-9183.mdx --public-dir=target/public --attachment-dir=/release-notes/9180-9183
-echo 'Converted 544375399 to target/ko/release-notes/9180-9183.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375414/page.xhtml target/ko/release-notes/9170-9171.mdx --public-dir=target/public --attachment-dir=/release-notes/9170-9171
-echo 'Converted 544375414 to target/ko/release-notes/9170-9171.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375429/page.xhtml target/ko/release-notes/9160-9164.mdx --public-dir=target/public --attachment-dir=/release-notes/9160-9164
-echo 'Converted 544375429 to target/ko/release-notes/9160-9164.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375443/page.xhtml target/ko/release-notes/9150-9154.mdx --public-dir=target/public --attachment-dir=/release-notes/9150-9154
-echo 'Converted 544375443 to target/ko/release-notes/9150-9154.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375457/page.xhtml target/ko/release-notes/9140-9143.mdx --public-dir=target/public --attachment-dir=/release-notes/9140-9143
-echo 'Converted 544375457 to target/ko/release-notes/9140-9143.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375471/page.xhtml target/ko/release-notes/9130-9135.mdx --public-dir=target/public --attachment-dir=/release-notes/9130-9135
-echo 'Converted 544375471 to target/ko/release-notes/9130-9135.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375485/page.xhtml target/ko/release-notes/9120-91214.mdx --public-dir=target/public --attachment-dir=/release-notes/9120-91214
-echo 'Converted 544375485 to target/ko/release-notes/9120-91214.mdx'
-
-mkdir -p target/ko/release-notes/9120-91214
-python bin/confluence_xhtml_to_markdown.py var/544375505/page.xhtml target/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx --public-dir=target/public --attachment-dir=/release-notes/9120-91214/menu-improvement-guide-9120
-echo 'Converted 544375505 to target/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375587/page.xhtml target/ko/release-notes/9110-9115.mdx --public-dir=target/public --attachment-dir=/release-notes/9110-9115
-echo 'Converted 544375587 to target/ko/release-notes/9110-9115.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375607/page.xhtml target/ko/release-notes/9100-9104.mdx --public-dir=target/public --attachment-dir=/release-notes/9100-9104
-echo 'Converted 544375607 to target/ko/release-notes/9100-9104.mdx'
-
-mkdir -p target/ko/release-notes/9100-9104
-python bin/confluence_xhtml_to_markdown.py var/544375624/page.xhtml target/ko/release-notes/9100-9104/external-api-changes-9100-version.mdx --public-dir=target/public --attachment-dir=/release-notes/9100-9104/external-api-changes-9100-version
-echo 'Converted 544375624 to target/ko/release-notes/9100-9104/external-api-changes-9100-version.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375659/page.xhtml target/ko/release-notes/990-998.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998
-echo 'Converted 544375659 to target/ko/release-notes/990-998.mdx'
-
-mkdir -p target/ko/release-notes/990-998
-python bin/confluence_xhtml_to_markdown.py var/544375685/page.xhtml target/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998/external-api-changes-9810-version-994-version
-echo 'Converted 544375685 to target/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx'
-
-mkdir -p target/ko/release-notes/990-998
-python bin/confluence_xhtml_to_markdown.py var/544375741/page.xhtml target/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998/external-api-changes-994-version-995-version
-echo 'Converted 544375741 to target/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx'
-
-mkdir -p target/ko/release-notes
-python bin/confluence_xhtml_to_markdown.py var/544375768/page.xhtml target/ko/release-notes/980-9812.mdx --public-dir=target/public --attachment-dir=/release-notes/980-9812
-echo 'Converted 544375768 to target/ko/release-notes/980-9812.mdx'
-
-mkdir -p target/ko/.
-python bin/confluence_xhtml_to_markdown.py var/544375784/page.xhtml target/ko/querypie-overview.mdx --public-dir=target/public --attachment-dir=/querypie-overview
-echo 'Converted 544375784 to target/ko/querypie-overview.mdx'
-
-mkdir -p target/ko/querypie-overview
-python bin/confluence_xhtml_to_markdown.py var/544375859/page.xhtml target/ko/querypie-overview/system-architecture-overview.mdx --public-dir=target/public --attachment-dir=/querypie-overview/system-architecture-overview
-echo 'Converted 544375859 to target/ko/querypie-overview/system-architecture-overview.mdx'
-
-mkdir -p target/ko/querypie-overview
-python bin/confluence_xhtml_to_markdown.py var/544112942/page.xhtml target/ko/querypie-overview/proxy-management.mdx --public-dir=target/public --attachment-dir=/querypie-overview/proxy-management
-echo 'Converted 544112942 to target/ko/querypie-overview/proxy-management.mdx'
-
-mkdir -p target/ko/querypie-overview/proxy-management
-python bin/confluence_xhtml_to_markdown.py var/544377869/page.xhtml target/ko/querypie-overview/proxy-management/enable-database-proxy.mdx --public-dir=target/public --attachment-dir=/querypie-overview/proxy-management/enable-database-proxy
-echo 'Converted 544377869 to target/ko/querypie-overview/proxy-management/enable-database-proxy.mdx'
+mkdir -p target/ko/overview/proxy-management
+python bin/confluence_xhtml_to_markdown.py var/544377869/page.xhtml target/ko/overview/proxy-management/enable-database-proxy.mdx --public-dir=target/public --attachment-dir=/overview/proxy-management/enable-database-proxy
+echo 'Converted 544377869 to target/ko/overview/proxy-management/enable-database-proxy.mdx'
 
 mkdir -p target/ko/.
 python bin/confluence_xhtml_to_markdown.py var/544211126/page.xhtml target/ko/user-manual.mdx --public-dir=target/public --attachment-dir=/user-manual
@@ -1059,6 +947,118 @@ python bin/confluence_xhtml_to_markdown.py var/851280543/page.xhtml target/ko/ad
 echo 'Converted 851280543 to target/ko/administrator-manual/multi-agent-limitations.mdx'
 
 mkdir -p target/ko/.
+python bin/confluence_xhtml_to_markdown.py var/544375335/page.xhtml target/ko/release-notes.mdx --public-dir=target/public --attachment-dir=/release-notes
+echo 'Converted 544375335 to target/ko/release-notes.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1751810049/page.xhtml target/ko/release-notes/1150.mdx --public-dir=target/public --attachment-dir=/release-notes/1150
+echo 'Converted 1751810049 to target/ko/release-notes/1150.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1568735233/page.xhtml target/ko/release-notes/1140.mdx --public-dir=target/public --attachment-dir=/release-notes/1140
+echo 'Converted 1568735233 to target/ko/release-notes/1140.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1421475841/page.xhtml target/ko/release-notes/1130.mdx --public-dir=target/public --attachment-dir=/release-notes/1130
+echo 'Converted 1421475841 to target/ko/release-notes/1130.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1291878563/page.xhtml target/ko/release-notes/1120.mdx --public-dir=target/public --attachment-dir=/release-notes/1120
+echo 'Converted 1291878563 to target/ko/release-notes/1120.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1171488777/page.xhtml target/ko/release-notes/1110-1112.mdx --public-dir=target/public --attachment-dir=/release-notes/1110-1112
+echo 'Converted 1171488777 to target/ko/release-notes/1110-1112.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/1064830173/page.xhtml target/ko/release-notes/1100.mdx --public-dir=target/public --attachment-dir=/release-notes/1100
+echo 'Converted 1064830173 to target/ko/release-notes/1100.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/954335909/page.xhtml target/ko/release-notes/1030-1034.mdx --public-dir=target/public --attachment-dir=/release-notes/1030-1034
+echo 'Converted 954335909 to target/ko/release-notes/1030-1034.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/703463517/page.xhtml target/ko/release-notes/1020-10212.mdx --public-dir=target/public --attachment-dir=/release-notes/1020-10212
+echo 'Converted 703463517 to target/ko/release-notes/1020-10212.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/604995641/page.xhtml target/ko/release-notes/1010-10111.mdx --public-dir=target/public --attachment-dir=/release-notes/1010-10111
+echo 'Converted 604995641 to target/ko/release-notes/1010-10111.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375355/page.xhtml target/ko/release-notes/1000-1002.mdx --public-dir=target/public --attachment-dir=/release-notes/1000-1002
+echo 'Converted 544375355 to target/ko/release-notes/1000-1002.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375370/page.xhtml target/ko/release-notes/9200-9202.mdx --public-dir=target/public --attachment-dir=/release-notes/9200-9202
+echo 'Converted 544375370 to target/ko/release-notes/9200-9202.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375385/page.xhtml target/ko/release-notes/9190.mdx --public-dir=target/public --attachment-dir=/release-notes/9190
+echo 'Converted 544375385 to target/ko/release-notes/9190.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375399/page.xhtml target/ko/release-notes/9180-9183.mdx --public-dir=target/public --attachment-dir=/release-notes/9180-9183
+echo 'Converted 544375399 to target/ko/release-notes/9180-9183.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375414/page.xhtml target/ko/release-notes/9170-9171.mdx --public-dir=target/public --attachment-dir=/release-notes/9170-9171
+echo 'Converted 544375414 to target/ko/release-notes/9170-9171.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375429/page.xhtml target/ko/release-notes/9160-9164.mdx --public-dir=target/public --attachment-dir=/release-notes/9160-9164
+echo 'Converted 544375429 to target/ko/release-notes/9160-9164.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375443/page.xhtml target/ko/release-notes/9150-9154.mdx --public-dir=target/public --attachment-dir=/release-notes/9150-9154
+echo 'Converted 544375443 to target/ko/release-notes/9150-9154.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375457/page.xhtml target/ko/release-notes/9140-9143.mdx --public-dir=target/public --attachment-dir=/release-notes/9140-9143
+echo 'Converted 544375457 to target/ko/release-notes/9140-9143.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375471/page.xhtml target/ko/release-notes/9130-9135.mdx --public-dir=target/public --attachment-dir=/release-notes/9130-9135
+echo 'Converted 544375471 to target/ko/release-notes/9130-9135.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375485/page.xhtml target/ko/release-notes/9120-91214.mdx --public-dir=target/public --attachment-dir=/release-notes/9120-91214
+echo 'Converted 544375485 to target/ko/release-notes/9120-91214.mdx'
+
+mkdir -p target/ko/release-notes/9120-91214
+python bin/confluence_xhtml_to_markdown.py var/544375505/page.xhtml target/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx --public-dir=target/public --attachment-dir=/release-notes/9120-91214/menu-improvement-guide-9120
+echo 'Converted 544375505 to target/ko/release-notes/9120-91214/menu-improvement-guide-9120.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375587/page.xhtml target/ko/release-notes/9110-9115.mdx --public-dir=target/public --attachment-dir=/release-notes/9110-9115
+echo 'Converted 544375587 to target/ko/release-notes/9110-9115.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375607/page.xhtml target/ko/release-notes/9100-9104.mdx --public-dir=target/public --attachment-dir=/release-notes/9100-9104
+echo 'Converted 544375607 to target/ko/release-notes/9100-9104.mdx'
+
+mkdir -p target/ko/release-notes/9100-9104
+python bin/confluence_xhtml_to_markdown.py var/544375624/page.xhtml target/ko/release-notes/9100-9104/external-api-changes-9100-version.mdx --public-dir=target/public --attachment-dir=/release-notes/9100-9104/external-api-changes-9100-version
+echo 'Converted 544375624 to target/ko/release-notes/9100-9104/external-api-changes-9100-version.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375659/page.xhtml target/ko/release-notes/990-998.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998
+echo 'Converted 544375659 to target/ko/release-notes/990-998.mdx'
+
+mkdir -p target/ko/release-notes/990-998
+python bin/confluence_xhtml_to_markdown.py var/544375685/page.xhtml target/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998/external-api-changes-9810-version-994-version
+echo 'Converted 544375685 to target/ko/release-notes/990-998/external-api-changes-9810-version-994-version.mdx'
+
+mkdir -p target/ko/release-notes/990-998
+python bin/confluence_xhtml_to_markdown.py var/544375741/page.xhtml target/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx --public-dir=target/public --attachment-dir=/release-notes/990-998/external-api-changes-994-version-995-version
+echo 'Converted 544375741 to target/ko/release-notes/990-998/external-api-changes-994-version-995-version.mdx'
+
+mkdir -p target/ko/release-notes
+python bin/confluence_xhtml_to_markdown.py var/544375768/page.xhtml target/ko/release-notes/980-9812.mdx --public-dir=target/public --attachment-dir=/release-notes/980-9812
+echo 'Converted 544375768 to target/ko/release-notes/980-9812.mdx'
+
+mkdir -p target/ko/.
 python bin/confluence_xhtml_to_markdown.py var/544375808/page.xhtml target/ko/installation.mdx --public-dir=target/public --attachment-dir=/installation
 echo 'Converted 544375808 to target/ko/installation.mdx'
 
@@ -1137,4 +1137,12 @@ echo 'Converted 1239416833 to target/ko/installation/querypie-acp-community-edit
 mkdir -p target/ko/installation/querypie-acp-community-edition
 python bin/confluence_xhtml_to_markdown.py var/1735589937/page.xhtml target/ko/installation/querypie-acp-community-edition/mcp-configuration-guide.mdx --public-dir=target/public --attachment-dir=/installation/querypie-acp-community-edition/mcp-configuration-guide
 echo 'Converted 1735589937 to target/ko/installation/querypie-acp-community-edition/mcp-configuration-guide.mdx'
+
+mkdir -p target/ko/.
+python bin/confluence_xhtml_to_markdown.py var/1844969501/page.xhtml target/ko/support.mdx --public-dir=target/public --attachment-dir=/support
+echo 'Converted 1844969501 to target/ko/support.mdx'
+
+mkdir -p target/ko/support
+python bin/confluence_xhtml_to_markdown.py var/1853358081/page.xhtml target/ko/support/premium-support.mdx --public-dir=target/public --attachment-dir=/support/premium-support
+echo 'Converted 1853358081 to target/ko/support/premium-support.mdx'
 

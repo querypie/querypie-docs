@@ -2,7 +2,12 @@ export default {
   index: {
     display: 'hidden',
   },
+  // 2026-01-22 旧パスから新パスへのリダイレクト（SEOとブックマーク互換性）
   'querypie-overview': {
+    type: 'redirect',
+    href: '/ja/overview',
+  },
+  'overview': {
     type: 'page',
     title: '概要',
   },

@@ -7,397 +7,52 @@
   - "QueryPie Docs"
   "path":
   - "querypie-docs"
-- "page_id": "544375335"
-  "title": "Release Notes"
-  "title_orig": "Release Notes"
-  "breadcrumbs":
-  - "Release Notes"
-  "breadcrumbs_en":
-  - "Release Notes"
-  "path":
-  - "release-notes"
-- "page_id": "1751810049"
-  "title": "11.5.0"
-  "title_orig": "11.5.0"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.5.0"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.5.0"
-  "path":
-  - "release-notes"
-  - "1150"
-- "page_id": "1568735233"
-  "title": "11.4.0"
-  "title_orig": "11.4.0"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.4.0"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.4.0"
-  "path":
-  - "release-notes"
-  - "1140"
-- "page_id": "1421475841"
-  "title": "11.3.0"
-  "title_orig": "11.3.0"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.3.0"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.3.0"
-  "path":
-  - "release-notes"
-  - "1130"
-- "page_id": "1291878563"
-  "title": "11.2.0"
-  "title_orig": "11.2.0"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.2.0"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.2.0"
-  "path":
-  - "release-notes"
-  - "1120"
-- "page_id": "1171488777"
-  "title": "11.1.0 ~ 11.1.2"
-  "title_orig": "11.1.0 ~ 11.1.2"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.1.0 ~ 11.1.2"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.1.0 ~ 11.1.2"
-  "path":
-  - "release-notes"
-  - "1110-1112"
-- "page_id": "1064830173"
-  "title": "11.0.0"
-  "title_orig": "11.0.0"
-  "breadcrumbs":
-  - "Release Notes"
-  - "11.0.0"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "11.0.0"
-  "path":
-  - "release-notes"
-  - "1100"
-- "page_id": "954335909"
-  "title": "10.3.0 ~ 10.3.4"
-  "title_orig": "10.3.0 ~ 10.3.4"
-  "breadcrumbs":
-  - "Release Notes"
-  - "10.3.0 ~ 10.3.4"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "10.3.0 ~ 10.3.4"
-  "path":
-  - "release-notes"
-  - "1030-1034"
-- "page_id": "703463517"
-  "title": "10.2.0 ~ 10.2.12"
-  "title_orig": "10.2.0 ~ 10.2.12"
-  "breadcrumbs":
-  - "Release Notes"
-  - "10.2.0 ~ 10.2.12"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "10.2.0 ~ 10.2.12"
-  "path":
-  - "release-notes"
-  - "1020-10212"
-- "page_id": "604995641"
-  "title": "10.1.0 ~ 10.1.11"
-  "title_orig": "10.1.0 ~ 10.1.11"
-  "breadcrumbs":
-  - "Release Notes"
-  - "10.1.0 ~ 10.1.11"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "10.1.0 ~ 10.1.11"
-  "path":
-  - "release-notes"
-  - "1010-10111"
-- "page_id": "544375355"
-  "title": "10.0.0 ~ 10.0.2"
-  "title_orig": "10.0.0 ~ 10.0.2"
-  "breadcrumbs":
-  - "Release Notes"
-  - "10.0.0 ~ 10.0.2"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "10.0.0 ~ 10.0.2"
-  "path":
-  - "release-notes"
-  - "1000-1002"
-- "page_id": "544375370"
-  "title": "9.20.0 ~ 9.20.2"
-  "title_orig": "9.20.0 ​~ 9.20.2"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.20.0 ~ 9.20.2"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.20.0 ~ 9.20.2"
-  "path":
-  - "release-notes"
-  - "9200-9202"
-- "page_id": "544375385"
-  "title": "9.19.0 "
-  "title_orig": "9.19.0 ​"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.19.0 "
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.19.0 "
-  "path":
-  - "release-notes"
-  - "9190"
-- "page_id": "544375399"
-  "title": "9.18.0 ~ 9.18.3"
-  "title_orig": "9.18.0 ~ 9.18.3"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.18.0 ~ 9.18.3"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.18.0 ~ 9.18.3"
-  "path":
-  - "release-notes"
-  - "9180-9183"
-- "page_id": "544375414"
-  "title": "9.17.0 ~ 9.17.1"
-  "title_orig": "9.17.0 ~ 9.17.1"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.17.0 ~ 9.17.1"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.17.0 ~ 9.17.1"
-  "path":
-  - "release-notes"
-  - "9170-9171"
-- "page_id": "544375429"
-  "title": "9.16.0 ~ 9.16.4"
-  "title_orig": "9.16.0 ~ 9.16.4"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.16.0 ~ 9.16.4"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.16.0 ~ 9.16.4"
-  "path":
-  - "release-notes"
-  - "9160-9164"
-- "page_id": "544375443"
-  "title": "9.15.0 ~ 9.15.4"
-  "title_orig": "9.15.0 ~ 9.15.4"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.15.0 ~ 9.15.4"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.15.0 ~ 9.15.4"
-  "path":
-  - "release-notes"
-  - "9150-9154"
-- "page_id": "544375457"
-  "title": "9.14.0 ~ 9.14.3"
-  "title_orig": "9.14.0 ~ 9.14.3"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.14.0 ~ 9.14.3"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.14.0 ~ 9.14.3"
-  "path":
-  - "release-notes"
-  - "9140-9143"
-- "page_id": "544375471"
-  "title": "9.13.0 ~ 9.13.5"
-  "title_orig": "9.13.0 ~ 9.13.5"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.13.0 ~ 9.13.5"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.13.0 ~ 9.13.5"
-  "path":
-  - "release-notes"
-  - "9130-9135"
-- "page_id": "544375485"
-  "title": "9.12.0 ~ 9.12.14"
-  "title_orig": "9.12.0 ~ 9.12.14"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.12.0 ~ 9.12.14"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.12.0 ~ 9.12.14"
-  "path":
-  - "release-notes"
-  - "9120-91214"
-- "page_id": "544375505"
-  "title": "메뉴 개선 가이드 (9.12.0)"
-  "title_orig": "메뉴 개선 가이드 (9.12.0)"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.12.0 ~ 9.12.14"
-  - "메뉴 개선 가이드 (9.12.0)"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.12.0 ~ 9.12.14"
-  - "Menu Improvement Guide (9.12.0)"
-  "path":
-  - "release-notes"
-  - "9120-91214"
-  - "menu-improvement-guide-9120"
-- "page_id": "544375587"
-  "title": "9.11.0 ~ 9.11.5"
-  "title_orig": "9.11.0 ~ 9.11.5"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.11.0 ~ 9.11.5"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.11.0 ~ 9.11.5"
-  "path":
-  - "release-notes"
-  - "9110-9115"
-- "page_id": "544375607"
-  "title": "9.10.0 - 9.10.4"
-  "title_orig": "9.10.0 - 9.10.4"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.10.0 - 9.10.4"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.10.0 - 9.10.4"
-  "path":
-  - "release-notes"
-  - "9100-9104"
-- "page_id": "544375624"
-  "title": "External API 변경사항 (9.10.0 버전)"
-  "title_orig": "External API 변경사항 (9.10.0 버전)"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.10.0 - 9.10.4"
-  - "External API 변경사항 (9.10.0 버전)"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.10.0 - 9.10.4"
-  - "External API Changes (9.10.0 Version)"
-  "path":
-  - "release-notes"
-  - "9100-9104"
-  - "external-api-changes-9100-version"
-- "page_id": "544375659"
-  "title": "9.9.0 ~ 9.9.8"
-  "title_orig": "9.9.0 ~ 9.9.8"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  "path":
-  - "release-notes"
-  - "990-998"
-- "page_id": "544375685"
-  "title": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
-  "title_orig": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  - "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  - "External API Changes (9.8.10 Version > 9.9.4 Version)"
-  "path":
-  - "release-notes"
-  - "990-998"
-  - "external-api-changes-9810-version-994-version"
-- "page_id": "544375741"
-  "title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
-  "title_orig": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  - "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.9.0 ~ 9.9.8"
-  - "External API Changes (9.9.4 Version > 9.9.5 Version)"
-  "path":
-  - "release-notes"
-  - "990-998"
-  - "external-api-changes-994-version-995-version"
-- "page_id": "544375768"
-  "title": "9.8.0 ~ 9.8.12"
-  "title_orig": "9.8.0 ~ 9.8.12"
-  "breadcrumbs":
-  - "Release Notes"
-  - "9.8.0 ~ 9.8.12"
-  "breadcrumbs_en":
-  - "Release Notes"
-  - "9.8.0 ~ 9.8.12"
-  "path":
-  - "release-notes"
-  - "980-9812"
 - "page_id": "544375784"
-  "title": "QueryPie Overview"
-  "title_orig": "QueryPie Overview"
+  "title": "Overview"
+  "title_orig": "Overview"
   "breadcrumbs":
-  - "QueryPie Overview"
+  - "Overview"
   "breadcrumbs_en":
-  - "QueryPie Overview"
+  - "Overview"
   "path":
-  - "querypie-overview"
+  - "overview"
 - "page_id": "544375859"
   "title": "시스템 구성도 개요"
   "title_orig": "시스템 구성도 개요"
   "breadcrumbs":
-  - "QueryPie Overview"
+  - "Overview"
   - "시스템 구성도 개요"
   "breadcrumbs_en":
-  - "QueryPie Overview"
+  - "Overview"
   - "System Architecture Overview"
   "path":
-  - "querypie-overview"
+  - "overview"
   - "system-architecture-overview"
 - "page_id": "544112942"
   "title": "Proxy Management"
   "title_orig": "Proxy Management"
   "breadcrumbs":
-  - "QueryPie Overview"
+  - "Overview"
   - "Proxy Management"
   "breadcrumbs_en":
-  - "QueryPie Overview"
+  - "Overview"
   - "Proxy Management"
   "path":
-  - "querypie-overview"
+  - "overview"
   - "proxy-management"
 - "page_id": "544377869"
   "title": "Database Proxy 사용 활성화"
   "title_orig": "Database Proxy 사용 활성화"
   "breadcrumbs":
-  - "QueryPie Overview"
+  - "Overview"
   - "Proxy Management"
   - "Database Proxy 사용 활성화"
   "breadcrumbs_en":
-  - "QueryPie Overview"
+  - "Overview"
   - "Proxy Management"
   - "Enable Database Proxy"
   "path":
-  - "querypie-overview"
+  - "overview"
   - "proxy-management"
   - "enable-database-proxy"
 - "page_id": "544211126"
@@ -4460,6 +4115,351 @@
   "path":
   - "administrator-manual"
   - "multi-agent-limitations"
+- "page_id": "544375335"
+  "title": "Release Notes"
+  "title_orig": "Release Notes"
+  "breadcrumbs":
+  - "Release Notes"
+  "breadcrumbs_en":
+  - "Release Notes"
+  "path":
+  - "release-notes"
+- "page_id": "1751810049"
+  "title": "11.5.0"
+  "title_orig": "11.5.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.5.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.5.0"
+  "path":
+  - "release-notes"
+  - "1150"
+- "page_id": "1568735233"
+  "title": "11.4.0"
+  "title_orig": "11.4.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.4.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.4.0"
+  "path":
+  - "release-notes"
+  - "1140"
+- "page_id": "1421475841"
+  "title": "11.3.0"
+  "title_orig": "11.3.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.3.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.3.0"
+  "path":
+  - "release-notes"
+  - "1130"
+- "page_id": "1291878563"
+  "title": "11.2.0"
+  "title_orig": "11.2.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.2.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.2.0"
+  "path":
+  - "release-notes"
+  - "1120"
+- "page_id": "1171488777"
+  "title": "11.1.0 ~ 11.1.2"
+  "title_orig": "11.1.0 ~ 11.1.2"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.1.0 ~ 11.1.2"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.1.0 ~ 11.1.2"
+  "path":
+  - "release-notes"
+  - "1110-1112"
+- "page_id": "1064830173"
+  "title": "11.0.0"
+  "title_orig": "11.0.0"
+  "breadcrumbs":
+  - "Release Notes"
+  - "11.0.0"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "11.0.0"
+  "path":
+  - "release-notes"
+  - "1100"
+- "page_id": "954335909"
+  "title": "10.3.0 ~ 10.3.4"
+  "title_orig": "10.3.0 ~ 10.3.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.3.0 ~ 10.3.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.3.0 ~ 10.3.4"
+  "path":
+  - "release-notes"
+  - "1030-1034"
+- "page_id": "703463517"
+  "title": "10.2.0 ~ 10.2.12"
+  "title_orig": "10.2.0 ~ 10.2.12"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.2.0 ~ 10.2.12"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.2.0 ~ 10.2.12"
+  "path":
+  - "release-notes"
+  - "1020-10212"
+- "page_id": "604995641"
+  "title": "10.1.0 ~ 10.1.11"
+  "title_orig": "10.1.0 ~ 10.1.11"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.1.0 ~ 10.1.11"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.1.0 ~ 10.1.11"
+  "path":
+  - "release-notes"
+  - "1010-10111"
+- "page_id": "544375355"
+  "title": "10.0.0 ~ 10.0.2"
+  "title_orig": "10.0.0 ~ 10.0.2"
+  "breadcrumbs":
+  - "Release Notes"
+  - "10.0.0 ~ 10.0.2"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "10.0.0 ~ 10.0.2"
+  "path":
+  - "release-notes"
+  - "1000-1002"
+- "page_id": "544375370"
+  "title": "9.20.0 ~ 9.20.2"
+  "title_orig": "9.20.0 ​~ 9.20.2"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.20.0 ~ 9.20.2"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.20.0 ~ 9.20.2"
+  "path":
+  - "release-notes"
+  - "9200-9202"
+- "page_id": "544375385"
+  "title": "9.19.0 "
+  "title_orig": "9.19.0 ​"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.19.0 "
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.19.0 "
+  "path":
+  - "release-notes"
+  - "9190"
+- "page_id": "544375399"
+  "title": "9.18.0 ~ 9.18.3"
+  "title_orig": "9.18.0 ~ 9.18.3"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.18.0 ~ 9.18.3"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.18.0 ~ 9.18.3"
+  "path":
+  - "release-notes"
+  - "9180-9183"
+- "page_id": "544375414"
+  "title": "9.17.0 ~ 9.17.1"
+  "title_orig": "9.17.0 ~ 9.17.1"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.17.0 ~ 9.17.1"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.17.0 ~ 9.17.1"
+  "path":
+  - "release-notes"
+  - "9170-9171"
+- "page_id": "544375429"
+  "title": "9.16.0 ~ 9.16.4"
+  "title_orig": "9.16.0 ~ 9.16.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.16.0 ~ 9.16.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.16.0 ~ 9.16.4"
+  "path":
+  - "release-notes"
+  - "9160-9164"
+- "page_id": "544375443"
+  "title": "9.15.0 ~ 9.15.4"
+  "title_orig": "9.15.0 ~ 9.15.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.15.0 ~ 9.15.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.15.0 ~ 9.15.4"
+  "path":
+  - "release-notes"
+  - "9150-9154"
+- "page_id": "544375457"
+  "title": "9.14.0 ~ 9.14.3"
+  "title_orig": "9.14.0 ~ 9.14.3"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.14.0 ~ 9.14.3"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.14.0 ~ 9.14.3"
+  "path":
+  - "release-notes"
+  - "9140-9143"
+- "page_id": "544375471"
+  "title": "9.13.0 ~ 9.13.5"
+  "title_orig": "9.13.0 ~ 9.13.5"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.13.0 ~ 9.13.5"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.13.0 ~ 9.13.5"
+  "path":
+  - "release-notes"
+  - "9130-9135"
+- "page_id": "544375485"
+  "title": "9.12.0 ~ 9.12.14"
+  "title_orig": "9.12.0 ~ 9.12.14"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  "path":
+  - "release-notes"
+  - "9120-91214"
+- "page_id": "544375505"
+  "title": "메뉴 개선 가이드 (9.12.0)"
+  "title_orig": "메뉴 개선 가이드 (9.12.0)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  - "메뉴 개선 가이드 (9.12.0)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.12.0 ~ 9.12.14"
+  - "Menu Improvement Guide (9.12.0)"
+  "path":
+  - "release-notes"
+  - "9120-91214"
+  - "menu-improvement-guide-9120"
+- "page_id": "544375587"
+  "title": "9.11.0 ~ 9.11.5"
+  "title_orig": "9.11.0 ~ 9.11.5"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.11.0 ~ 9.11.5"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.11.0 ~ 9.11.5"
+  "path":
+  - "release-notes"
+  - "9110-9115"
+- "page_id": "544375607"
+  "title": "9.10.0 - 9.10.4"
+  "title_orig": "9.10.0 - 9.10.4"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  "path":
+  - "release-notes"
+  - "9100-9104"
+- "page_id": "544375624"
+  "title": "External API 변경사항 (9.10.0 버전)"
+  "title_orig": "External API 변경사항 (9.10.0 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  - "External API 변경사항 (9.10.0 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.10.0 - 9.10.4"
+  - "External API Changes (9.10.0 Version)"
+  "path":
+  - "release-notes"
+  - "9100-9104"
+  - "external-api-changes-9100-version"
+- "page_id": "544375659"
+  "title": "9.9.0 ~ 9.9.8"
+  "title_orig": "9.9.0 ~ 9.9.8"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  "path":
+  - "release-notes"
+  - "990-998"
+- "page_id": "544375685"
+  "title": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "title_orig": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API Changes (9.8.10 Version > 9.9.4 Version)"
+  "path":
+  - "release-notes"
+  - "990-998"
+  - "external-api-changes-9810-version-994-version"
+- "page_id": "544375741"
+  "title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "title_orig": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.9.0 ~ 9.9.8"
+  - "External API Changes (9.9.4 Version > 9.9.5 Version)"
+  "path":
+  - "release-notes"
+  - "990-998"
+  - "external-api-changes-994-version-995-version"
+- "page_id": "544375768"
+  "title": "9.8.0 ~ 9.8.12"
+  "title_orig": "9.8.0 ~ 9.8.12"
+  "breadcrumbs":
+  - "Release Notes"
+  - "9.8.0 ~ 9.8.12"
+  "breadcrumbs_en":
+  - "Release Notes"
+  - "9.8.0 ~ 9.8.12"
+  "path":
+  - "release-notes"
+  - "980-9812"
 - "page_id": "544375808"
   "title": "제품 설치와 기술지원"
   "title_orig": "제품 설치와 기술지원"
@@ -4733,3 +4733,24 @@
   - "installation"
   - "querypie-acp-community-edition"
   - "mcp-configuration-guide"
+- "page_id": "1844969501"
+  "title": "지원"
+  "title_orig": "지원"
+  "breadcrumbs":
+  - "지원"
+  "breadcrumbs_en":
+  - "Support"
+  "path":
+  - "support"
+- "page_id": "1853358081"
+  "title": "프리미엄 지원"
+  "title_orig": "프리미엄 지원"
+  "breadcrumbs":
+  - "지원"
+  - "프리미엄 지원"
+  "breadcrumbs_en":
+  - "Support"
+  - "Premium Support"
+  "path":
+  - "support"
+  - "premium-support"
