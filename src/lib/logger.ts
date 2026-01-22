@@ -1,11 +1,7 @@
 // Simple logger implementation for Next.js proxy and other modules
-// Uses console.log in development, structured JSON logging in production (Vercel)
-
-import { pino } from 'pino';
-import isProduction from './is-production';
+// Uses console-based logging compatible with Edge runtime
 
 // Environment detection
-const isVercel = process.env.VERCEL === '1';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Logger interface for type safety
@@ -44,11 +40,10 @@ function formatLogForDevelopment(
 
 // Create a logger instance for a specific module
 // In development: uses console.log with formatted output
-// In production (Vercel): uses structured JSON logging via pino
 // In production: only warning and error logs are shown, debug and info are ignored
 function createModuleLogger(module: string): LoggerInterface {
-  // In development, use simple console logging
-  if (isDevelopment && !isVercel) {
+  // In development, use simple console logging with all levels
+  if (isDevelopment) {
     return {
       debug: (message: string, data?: Record<string, unknown>) => {
         const formatted = formatLogForDevelopment('debug', module, message, data);
@@ -70,65 +65,20 @@ function createModuleLogger(module: string): LoggerInterface {
   }
 
   // In production, only log warning and error levels
-  if (isProduction()) {
-    return {
-      debug: (_message: string, _data?: Record<string, unknown>) => {
-        // No-op in production
-      },
-      info: (_message: string, _data?: Record<string, unknown>) => {
-        // No-op in production
-      },
-      warn: (message: string, data?: Record<string, unknown>) => {
-        const formatted = formatLogForDevelopment('warn', module, message, data);
-        console.warn(formatted);
-      },
-      error: (message: string, data?: Record<string, unknown>) => {
-        const formatted = formatLogForDevelopment('error', module, message, data);
-        console.error(formatted);
-      },
-    };
-  }
-
-  // In production (Vercel), use pino for structured JSON logging
-  // This allows better log aggregation and analysis in Vercel's logging system
-  // In production, only log warning and error levels
-  const logger = pino({
-    level: isProduction() ? 'warn' : process.env.LOG_LEVEL || 'info',
-    base: {
-      env: process.env.NODE_ENV,
-      vercel: isVercel,
-      vercelEnv: process.env.VERCEL_ENV,
-      vercelRegion: process.env.VERCEL_REGION,
-      revision: process.env.VERCEL_GIT_COMMIT_SHA || 'unknown',
-      deploymentId: process.env.VERCEL_DEPLOYMENT_ID,
-      module,
-    },
-    messageKey: 'msg',
-    // Performance optimization for Vercel
-    ...(isVercel && {
-      sync: false,
-      buffer: true,
-    }),
-  });
-
   return {
-    debug: (message: string, data?: Record<string, unknown>) => {
-      if (!isProduction()) {
-        logger.debug(data || {}, message);
-      }
+    debug: (_message: string, _data?: Record<string, unknown>) => {
       // No-op in production
     },
-    info: (message: string, data?: Record<string, unknown>) => {
-      if (!isProduction()) {
-        logger.info(data || {}, message);
-      }
+    info: (_message: string, _data?: Record<string, unknown>) => {
       // No-op in production
     },
     warn: (message: string, data?: Record<string, unknown>) => {
-      logger.warn(data || {}, message);
+      const formatted = formatLogForDevelopment('warn', module, message, data);
+      console.warn(formatted);
     },
     error: (message: string, data?: Record<string, unknown>) => {
-      logger.error(data || {}, message);
+      const formatted = formatLogForDevelopment('error', module, message, data);
+      console.error(formatted);
     },
   };
 }
