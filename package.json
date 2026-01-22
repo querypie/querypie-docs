@@ -4,7 +4,7 @@
   "private": true,
   "description": "QueryPie Docs",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "npm run generate-pagefind && npm run generate-sitemap",
     "start": "next start",
@@ -39,8 +39,6 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "redoc": "^2.5.2",
-    "rehype-attr": "^4.1.1",
-    "remark-gfm": "^4.0.1",
     "styled-components": "^6.1.19",
     "zod": "^4.1.13"
   },
