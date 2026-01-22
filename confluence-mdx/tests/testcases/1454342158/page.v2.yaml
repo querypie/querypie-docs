@@ -1,0 +1,1319 @@
+"parentType": "page"
+"parentId": "544080097"
+"ownerId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+"createdAt": "2025-10-09T11:15:26.406Z"
+"lastOwnerId": !!null "null"
+"authorId": "712020:c9d41987-5b60-4342-b42f-f27fa2da28ae"
+"position": !!int "60655410"
+"version":
+  "number": !!int "12"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2026-01-22T05:50:05.870Z"
+  "ncsStepVersion": "999"
+"id": "1454342158"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"extension\",\"attrs\":{\"\
+      layout\":\"default\",\"extensionType\":\"com.atlassian.confluence.macro.core\"\
+      ,\"extensionKey\":\"toc\",\"parameters\":{\"macroParams\":{\"style\":{\"value\"\
+      :\"none\"}},\"macroMetadata\":{\"macroId\":{\"value\":\"4bf11cf0-a391-4df4-8bb5-cf9f8a69d4e3\"\
+      },\"schemaVersion\":{\"value\":\"1\"},\"title\":\"목차\"}},\"localId\":\"a34579e0-6e7f-4fe8-8ceb-781a67dd1695\"\
+      }},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\":\"b1ac29de-93b9-46c4-a63b-2210f3d9d3d6\"\
+      },\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"19194ec6-73a1-4442-a1e9-5bbabcd94fae\"},\"content\"\
+      :[{\"text\":\"QueryPie의 사용자 인증 방식은 QueryPie 사용자 계정(ID)과 암호를 사용하는 방식과 외부 Identity\
+      \ Provider(IdP)와 통합하는 방식 크게 두가지가 있습니다. 관리자는 IdP와의 Integration 설정을 통해 QueryPie가\
+      \ Single-Sign-On을 통해 쉽게 사용자 인증을 처리하고 계정을 동기화 할 수 있습니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"81ef5935-d1f0-420b-992e-7771bb5943ab\"\
+      },\"content\":[{\"text\":\"현재 지원되는 IdP와의 연동 설정은 다음과 같습니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"1caf306a-3aa7-4f2c-a2fb-a1985b7dac2b\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"f352fe8d-8b18-471b-900a-b1b89091923c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ffd6e7dc-1d82-4ad6-b2f2-d5c70c3cad48\"\
+      },\"content\":[{\"text\":\"LDAP\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"16256ac7-678c-44cd-b6ae-eda9f84621f4\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"243ee5a7-ac8f-49fc-8bcf-37df8bcd041c\"\
+      },\"content\":[{\"text\":\"Okta\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"b8c1ba67-8f4d-46b7-8816-940f57515607\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"72298bf5-55a2-4a51-b81d-81a03139241f\"\
+      },\"content\":[{\"text\":\"SAML 2.0\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"dcd07f64-c68f-49aa-b77f-a806ae985405\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"32ae0844-7298-4350-84f2-9ffb60598692\"\
+      },\"content\":[{\"text\":\"OneLogin\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"014459a9-fa2f-49ac-aaa6-58ba389ab13c\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"e72b8b93-6e45-49d5-9108-36f5704c5ded\"\
+      },\"content\":[{\"text\":\"Swivel Secure\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"e8963695-a01c-490f-810c-7a4ebc354310\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"7399e07d-e478-48e5-96b8-f0f62115cd3b\"\
+      },\"content\":[{\"text\":\"Custom Identity Provider (특수 목적 사용)\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\",\"localId\"\
+      :\"d7d7fd61-ae0d-46db-924d-837a3652ee72\"},\"content\":[{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"547528e7-aafd-430b-ba34-9ed1e900ca31\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"15d5ccf9-dbfb-417a-b74f-508c0491b67f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"aed13c8a-9a60-4c1c-93ec-22e678f4dd8b\"\
+      },\"content\":[{\"text\":\"현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal\
+      \ database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"1c801a91-eaaf-400a-8ae7-5ca6128be941\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"38d6b143-7ffb-4412-96b5-4a6ac945ee6e\"\
+      },\"content\":[{\"text\":\"MFA (Multi-factor Authentication) 지원은 Internal DB,\
+      \ LDAP, Custom Identity Provider에서만 가능합니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"df6078f9-0c46-480a-92f0-65a778d5824c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ba46e062-e86b-4f9c-9d64-8f0295758702\"\
+      },\"content\":[{\"text\":\"11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom\
+      \ Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.\",\"type\":\"text\"\
+      },{\"type\":\"hardBreak\"},{\"text\":\"예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를\
+      \ 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal\
+      \ DB의 MFA 설정에 의해 제어됩니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"f98093ff-8e09-4f18-aa7f-ffbe18d3ad3b\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"cf109ff3-20ce-4eea-834b-451078901b40\"\
+      },\"content\":[{\"text\":\"Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom\
+      \ Identity Provider에서만 가능합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"96bfca74-58f1-4a03-8e63-ccf0aad4c0a8\"},\"content\"\
+      :[{\"text\":\"Admin > General > System > Integration 에서 Authentication 하위 항목으로\
+      \ Identity Providers 가 있습니다. 항목을 클릭하여 상세페이지로 이동하면 Identity Providers에 관련된 설정을\
+      \ 할 수 있습니다. 기본적으로 사용자 인증은 QueryPie의 Internal database에 저장된 ID / Password를 사용해서\
+      \ 처리되므로 목록에 Internal database 항목이 존재합니다. 이 항목은 삭제 할 수 없습니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :1463,\"alt\":\"image-20251014-010700.png\",\"id\":\"0fa94bc0-a837-4291-bfdf-8c8d07397df6\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"1fd21f29-384b-468a-82d4-f33609e3f113\"\
+      ,\"height\":916}}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\"\
+      :\"a2bef088-07cc-4422-b792-309f38972f74\"},\"content\":[{\"text\":\"기본 인증의 상세\
+      \ 설정\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"eabdcc33-edb4-4304-8c43-3b3734e64299\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"3140631f-a5e1-4c99-b392-e896a235d0e5\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2caa5c85-e7e4-4c73-bf91-c21d2bbc2457\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 목록에 표시되는 식별 가능한 이름입니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"ea52f8fd-a244-46f7-9685-e1bb92be04cc\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"47413bce-b2a8-4cc6-8266-71683df89406\"\
+      },\"content\":[{\"text\":\"Type\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : QueryPie에서 지원하는 IdP 유형 중 하나가 표시됩니다.\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"123b8a45-d002-4fb8-87e3-78a5edfacba4\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"6411cdca-2b5e-4508-a038-cebabdef5fe4\"\
+      },\"content\":[{\"text\":\"Multi-Factor Authentication Setting \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": MFA 설정을 할 수 있습니다. Google\
+      \ Authenticator, Email을 지원합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":532,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":532,\"alt\":\"image-20251014-011706.png\"\
+      ,\"id\":\"3f4c5b2c-2ff7-4e46-aba2-e8ecfbb30f4b\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"071fcdef-70a9-4596-9494-665586c4359f\",\"height\"\
+      :316},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"14bea67b-b5fd-4210-a996-5a429f2956af\"\
+      },\"content\":[{\"text\":\"Internal database의 상세 설정\",\"type\":\"text\"}]}]},{\"\
+      type\":\"panel\",\"attrs\":{\"panelType\":\"warning\",\"localId\":\"043a4d66-8c4b-4576-90e1-dcc9628418ed\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"8928ed6d-12c8-4984-93c4-cfac592ba470\"\
+      },\"content\":[{\"text\":\"주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로\
+      \ 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\"\
+      :\"e55e5a31-fe15-4901-9742-38145d59c632\"},\"content\":[{\"text\":\"LDAP 연동\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2da2246d-0387-4ac9-b433-88d8439ecd80\"\
+      },\"content\":[{\"text\":\"목록 우측 상단의 \",\"type\":\"text\"},{\"text\":\"+ Add\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르고 팝업되는\
+      \ 화면에서 Type을 LDAP으로 선택하면 LDAP을 IdP로 추가 할 수 있습니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"attrs\":{\"localId\":\"aab52419-8353-48ea-be62-f7dc3e4fb686\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"2ffb37f8-7f05-49eb-971f-94c476fa3b41\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4545a465-5710-413a-9d4e-8df869ee47bc\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"58059589-f7b4-48fa-8479-a6a8bbed32b7\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4139e9b4-9d34-4b6e-b822-f69b1523773d\"\
+      },\"content\":[{\"text\":\"Type\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": LDAP를 선택합니다.\",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"c809f46f-7155-4433-8ba0-fae4830a6e60\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b98e4211-0d1d-4a61-8e5d-ef0b9b429d3e\"\
+      },\"content\":[{\"text\":\"Server URL\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : \",\"type\":\"text\"},{\"text\":\"ldap://ldap.example.com:389\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 과 같은 형식으로 \
+      \ LDAP server의 주소를 입력합니다. LDAPS의 경우 scheme을 ldaps:// 로 입력합니다.\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"3ef9202c-2dd3-4a92-bb96-61dacf60be49\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2d47a4ae-286e-4a6f-8dc6-bf8fb36bba80\"\
+      },\"content\":[{\"text\":\"BindDN\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" :  LDAP 서버에 접속(바인드)할 때 사용할 서비스 계정의 고유 이름(Distinguished\
+      \ Name, DN)을 입력합니다. 이 계정은 최소한 사용자 정보를 검색(Read)할 수 있는 권한이 필요합니다.\",\"type\":\"\
+      text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ae925ed0-1488-45b9-affd-1e0868b04a44\"\
+      },\"content\":[{\"text\":\"예시: cn=admin,ou=Services,dc=example,dc=com\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"2fcb3cf3-8b76-439e-910e-72ba0eafe048\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"412a5041-aebf-45d9-8ac2-d1ccf9fd564f\"\
+      },\"content\":[{\"text\":\"Bind Password\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]},{\"text\":\" : BindDN의 암호를 입력합니다.\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":481,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\"\
+      :\"image-20251014-012049.png\",\"id\":\"0c19fd59-00d2-4368-9f61-0c8819268a80\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"56eaaa18-2186-45b9-967c-68de67c23065\"\
+      ,\"height\":776},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"8dd473e8-6a7f-4eb6-ac9d-0ffb503255a8\"\
+      },\"content\":[{\"text\":\"LDAP 상세설정\",\"type\":\"text\"}]}]},{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"08a886e7-acfd-492f-851b-9b26472cc74b\"},\"content\"\
+      :[{\"text\":\"QueryPie 사용자 계정과 LDAP의 사용자 계정을 동기화하여 매핑할 내용을 입력합니다. \",\"type\"\
+      :\"text\"}]},{\"type\":\"table\",\"attrs\":{\"layout\":\"default\",\"width\"\
+      :760.0,\"localId\":\"91bf4962-93a1-4502-9ecd-6b9289c26d7e\"},\"content\":[{\"\
+      type\":\"tableRow\",\"attrs\":{\"localId\":\"1a1705b7-25f6-4e90-933a-d6fcccbbf25e\"\
+      },\"content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[204.0],\"localId\":\"79f92dd8-5c7a-4465-818b-57366de42b3a\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"856003c0-d1cd-450c-a6f1-36e707a4234a\"\
+      },\"content\":[{\"text\":\"Attribute\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]},{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[103.0],\"localId\":\"db194e23-4bb4-4322-8a03-416234ca5eab\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"354b0e87-a530-4e63-a6b4-9f25334a064a\"\
+      },\"content\":[{\"text\":\"필수 여부\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]}]}]},{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[451.0],\"localId\":\"ee8eca02-767c-42c2-9f2d-796f9f02a274\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"cd184ea8-bae5-4fd7-8d74-6d9695c06406\"\
+      },\"content\":[{\"text\":\"Description\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]}]},{\"type\":\"tableRow\",\"attrs\":{\"localId\":\"3c59cdf7-d770-4546-a4a8-bc85c9280cc4\"\
+      },\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[204.0],\"localId\":\"308ce979-4a78-47aa-a17a-cd687da8ca92\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"00c872f9-5f12-4b62-bfd2-be889e757442\"\
+      },\"content\":[{\"text\":\"User Base DN\",\"type\":\"text\"}]}]},{\"type\":\"\
+      tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[103.0],\"localId\"\
+      :\"14c308d5-77e3-4a66-9dac-6ede22bb05c5\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"238870b9-2285-4b30-8304-ed0a1ffde5f1\"},\"content\"\
+      :[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[451.0],\"localId\":\"7f90afc3-f3c2-4325-a206-e44ab7686f24\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"5f04abec-63ce-4f6c-8921-a3486cb78e67\"\
+      },\"content\":[{\"text\":\"LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만\
+      \ 로그인 대상으로 간주됩니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"\
+      localId\":\"497b48a6-6ae3-4512-9615-d2757eb74db5\"},\"content\":[{\"text\":\"\
+      예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"tableRow\",\"attrs\":{\"localId\":\"9fd14e7b-2772-4ef2-8c5f-1dcc08f3dd77\"\
+      },\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[204.0],\"localId\":\"237bd477-1be2-4aa4-8bd4-0fa708727203\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"202729dd-3c94-4da2-8041-a9bf99f1ce91\"\
+      },\"content\":[{\"text\":\"User Search Filter\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[103.0],\"\
+      localId\":\"f1a8a0e7-1900-440e-bf40-154783b856d7\"},\"content\":[{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"5378217f-590e-403d-9436-563dd7989280\"\
+      },\"content\":[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[451.0],\"localId\":\"\
+      2e4965f0-d72a-43da-ab2c-7b035b1a5369\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"878dd6d8-a199-425e-b8dd-f09033cc410e\"},\"content\"\
+      :[{\"text\":\"사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다.\
+      \ \",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"\
+      a18f1452-b638-4c47-a05c-33088cf53aef\"},\"content\":[{\"text\":\"예시: (objectClass=inetOrgPerson)\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\",\"attrs\":{\"localId\":\"ee854e5a-ea7c-4b52-af84-71cd1d4e6361\"\
+      },\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\"\
+      :1,\"colwidth\":[204.0],\"localId\":\"6dfed504-d8e0-4de5-9b56-242d322b3a2c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"490a6f22-83b2-442d-96f2-fc7970f6411a\"\
+      },\"content\":[{\"text\":\"User Name\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[103.0],\"localId\":\"\
+      114df58d-55d2-4de0-9d7d-699fe0de0879\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"066e171d-72a3-4eb0-86c2-1fea515b887b\"},\"content\"\
+      :[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[451.0],\"localId\":\"4cecd77e-b08f-4433-a21e-ca1494b30860\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1aceca0b-3401-4172-b155-87bf03509b5f\"\
+      },\"content\":[{\"text\":\"LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다.\
+      \ QueryPie와 동기화 할 때 QuerPie 사용자의 Login ID에 매핑됩니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"a283e0fd-86bb-437a-8ee3-5a1d3b1d3a9c\"\
+      },\"content\":[{\"text\":\"예시: uid\",\"type\":\"text\"}]}]}]},{\"type\":\"tableRow\"\
+      ,\"attrs\":{\"localId\":\"3a87b88f-2377-460b-a9e7-ddc0fb49fcaa\"},\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[204.0],\"localId\":\"de607a77-ae1d-46ad-87d6-a40740224f63\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"e283c7be-6c82-4406-a5cb-8945cace82c7\"\
+      },\"content\":[{\"text\":\"Email\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[103.0],\"localId\":\"\
+      1f084f9f-4040-4e0b-b598-bffee1e16cd9\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"d2ff59a0-cb82-464e-b447-f9e61cf08027\"},\"content\"\
+      :[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\"\
+      :{\"colspan\":1,\"rowspan\":1,\"colwidth\":[451.0],\"localId\":\"53432ec3-d7b7-4772-a2b5-b046427a31a5\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d06ba1b7-ad80-4ce6-acab-76f589313871\"\
+      },\"content\":[{\"text\":\"LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의\
+      \ 이름을 입력합니다. QueryPie와 동기화 할 때 QueryPie 사용자의 Email에 매핑됩니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"585f09ba-4b76-4871-9cf3-48e513e8cb0a\"\
+      },\"content\":[{\"text\":\"예시: email\",\"type\":\"text\"}]}]}]},{\"type\":\"\
+      tableRow\",\"attrs\":{\"localId\":\"9d5342ec-81ed-4612-9552-452272751a44\"},\"\
+      content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"\
+      colwidth\":[204.0],\"localId\":\"48e35255-409d-44dd-8580-8c42a4c5ba33\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4d4e0d89-403c-4a3d-9bbb-faee3c3be5cb\"\
+      },\"content\":[{\"text\":\"Display Name\",\"type\":\"text\"}]}]},{\"type\":\"\
+      tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[103.0],\"localId\"\
+      :\"f7425453-cac3-4530-a2a5-6e65e2fa408f\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"dcef8d6a-a713-4bb5-8139-9b884fbf7243\"},\"content\"\
+      :[{\"text\":\"-\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\",\"attrs\":{\"\
+      colspan\":1,\"rowspan\":1,\"colwidth\":[451.0],\"localId\":\"68c3cd10-bef2-4931-8356-49d70ab709b4\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"22d39f27-ba79-422f-9bad-62576b30ee06\"\
+      },\"content\":[{\"text\":\"QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을\
+      \ 입력합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"c9bc298d-a2ac-4495-9654-7c46680bbec8\"},\"content\":[{\"text\":\"예시: cn 또는\
+      \ displayName 등.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"41fa5268-0b4b-4f2c-8114-8a0228629f13\"},\"content\":[{\"text\"\
+      :\"LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면 \",\"type\":\"text\"},{\"text\":\"Use Group\
+      \ 옵션\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\"을 활성화(체크)하고\
+      \ 필수로 지정된 정보들을 입력합니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\"\
+      :{\"layout\":\"center\",\"width\":407,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":407,\"alt\":\"image-20251014-075227.png\"\
+      ,\"id\":\"fd76222f-436c-4bdc-a4de-21fcb3aae1cc\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"942428ec-b972-4cfe-b75a-60fe123a839f\",\"height\"\
+      :212},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ecfbd495-3619-41e9-b363-8fc6aed8cd2c\"\
+      }},{\"type\":\"table\",\"attrs\":{\"layout\":\"default\",\"width\":760.0,\"\
+      localId\":\"56f8d1f8-9645-460d-a5cb-b6cce53606f2\"},\"content\":[{\"type\":\"\
+      tableRow\",\"attrs\":{\"localId\":\"cfa528d4-7ee6-483e-8b39-8d8a70310476\"},\"\
+      content\":[{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#f0f1f2\",\"rowspan\":1,\"colwidth\":[171.0],\"localId\":\"2cdeca85-1e14-4556-8faf-7e77b327d3b9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"61f6df6f-6caf-4198-9eaf-898ce09184f6\"\
+      },\"content\":[{\"text\":\"Attribute\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]},{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#f0f1f2\",\"rowspan\":1,\"colwidth\":[89.0],\"localId\":\"53109c7a-a40d-4a4e-9d6a-73c4ddc826c4\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"476880bd-30ff-4f99-9b69-cd49f428caf0\"\
+      },\"content\":[{\"text\":\"필수 여부\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]}]}]},{\"type\":\"tableHeader\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#f0f1f2\",\"rowspan\":1,\"colwidth\":[496.0],\"localId\":\"e24af88f-9192-424a-b43f-025bb31f869d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"39e9cfdb-7358-45d3-979e-f38ebc684a6a\"\
+      },\"content\":[{\"text\":\"Description\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]}]}]},{\"type\":\"tableRow\",\"attrs\":{\"localId\":\"75805077-450e-4657-bfe4-3cf78a4d5928\"\
+      },\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#ffffff\",\"rowspan\":1,\"colwidth\":[171.0],\"localId\":\"ea2a1ab7-7f7f-496d-9a6c-da87bf25e27e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"e15f6072-1eea-4bb8-8415-0925e2be5f1a\"\
+      },\"content\":[{\"text\":\"Group Base DN\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"rowspan\"\
+      :1,\"colwidth\":[89.0],\"localId\":\"b89474cb-0a96-449d-8a83-c1ca1e5a2b56\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"f38ab132-36f5-4c36-bd67-4d92cfb0edcb\"\
+      },\"content\":[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"rowspan\":1,\"colwidth\"\
+      :[496.0],\"localId\":\"45f67115-11f7-474d-b15e-7189fd10c205\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"362bc186-5206-4523-a803-2d8aedc2f4d6\"\
+      },\"content\":[{\"text\":\"LDAP 서버의 그룹 Base DN 값을 입력합니다. 이 경로의 하위에 있는 그룹만 Group으로\
+      \ 동기화합니다. \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"cf8dfae6-81db-4442-9261-0c467ea2f02c\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"6ef4255d-a6cd-47aa-a884-c7a821c7e627\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"943d18d4-97dc-48ed-87fe-b964502fc64f\"\
+      },\"content\":[{\"text\":\"예: \",\"type\":\"text\"},{\"text\":\"dc=example,dc=com\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]}]}]}]}]}]},{\"type\":\"tableRow\"\
+      ,\"attrs\":{\"localId\":\"acfd3ac8-1ccf-4790-87fa-969d15cf52d6\"},\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\"\
+      ,\"rowspan\":1,\"colwidth\":[171.0],\"localId\":\"18032ff5-11ab-427f-85c6-a8246f91a155\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c5f3fe04-b258-45b0-96f0-ad61621d0bb2\"\
+      },\"content\":[{\"text\":\"Group Search Filter\",\"type\":\"text\"}]}]},{\"\
+      type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"\
+      rowspan\":1,\"colwidth\":[89.0],\"localId\":\"646d1d8d-c6ab-4445-976e-a92acb4ad672\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"f009218a-07a4-48b9-b357-93f57da726f9\"\
+      },\"content\":[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"rowspan\":1,\"colwidth\"\
+      :[496.0],\"localId\":\"51af7682-029c-474f-b1d7-9658042490f0\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"968aa711-f826-45e1-83b6-a95da883c7a9\"\
+      },\"content\":[{\"text\":\"LDAP 서버의 그룹을 가져오기 위한 필터 값을 입력합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"33c2ae87-9ec7-46ad-8209-5f35f25e9c1b\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"afdd0347-d329-481b-8623-069c8dfe863c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"433b7ced-b74a-48a8-984f-eb0facfa871d\"\
+      },\"content\":[{\"text\":\"예: \",\"type\":\"text\"},{\"text\":\"objectclass=posixGroup\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]}]}]}]}]}]},{\"type\":\"tableRow\"\
+      ,\"attrs\":{\"localId\":\"5c723610-073d-4379-a2fe-ee2392355478\"},\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\"\
+      :[171.0],\"localId\":\"ec5bca28-b3ec-4bdb-be11-90e106ad68b3\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"72795697-1b46-4a6d-b678-d14e79361cdc\"\
+      },\"content\":[{\"text\":\"Group ID\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[89.0],\"localId\":\"7ae2e57e-9b05-42b5-a721-e2289dc4a1ea\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"adf36fda-62d0-49c2-a9f4-e765807d790e\"\
+      },\"content\":[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"rowspan\":1,\"colwidth\":[496.0],\"localId\":\"\
+      588d0912-0f58-4f46-9b25-c50c90650b50\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"a28b2dbc-1cae-468c-8652-bb80a5f6143d\"},\"content\"\
+      :[{\"text\":\"그룹의 식별자로 사용할 속성 값을 입력합니다.\",\"type\":\"text\"}]},{\"type\":\"\
+      bulletList\",\"attrs\":{\"localId\":\"370186f9-817f-494c-b19e-62f0a8a462ba\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"62c76406-2d0a-4037-b487-624c0842d14e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"5b05c77c-1198-4549-9b64-9b79d4907be3\"\
+      },\"content\":[{\"text\":\"예: \",\"type\":\"text\"},{\"text\":\"gidNumber\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]}]}]}]}]}]},{\"type\":\"tableRow\"\
+      ,\"attrs\":{\"localId\":\"f6c5bd3a-d125-41ed-a76f-09b7ba17f1b1\"},\"content\"\
+      :[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\"\
+      ,\"rowspan\":2,\"colwidth\":[171.0],\"localId\":\"22031ab0-9082-4f3f-bc9f-c375ce2a39a5\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c4718adc-a2ed-4bb1-8e32-614222524a65\"\
+      },\"content\":[{\"text\":\"Membership Type\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"tableCell\",\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"rowspan\"\
+      :2,\"colwidth\":[89.0],\"localId\":\"7db6a6a6-8fcc-4a8f-b59e-544ccd580c72\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"bf90fa09-7db9-4940-b830-c1ac543b0cc8\"\
+      },\"content\":[{\"text\":\"필수\",\"type\":\"text\"}]}]},{\"type\":\"tableCell\"\
+      ,\"attrs\":{\"colspan\":1,\"background\":\"#ffffff\",\"rowspan\":1,\"colwidth\"\
+      :[496.0],\"localId\":\"1dc8e309-8401-4397-ba11-1dfda8f45536\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"4b9ff187-a186-4d72-8d4d-a659e1b8def9\"\
+      },\"content\":[{\"text\":\"사용자에 그룹 정보가 포함된 경우, \",\"type\":\"text\"},{\"text\"\
+      :\"Include group information in user entries\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"55c55671-2645-4660-9dd7-1d56015a3094\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"b3e08ef1-bc14-4c26-801f-ebd5a1d7b19f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"3e135f07-f888-4555-9b0f-204eb0084e47\"\
+      },\"content\":[{\"text\":\"예: \",\"type\":\"text\"},{\"text\":\"member\",\"\
+      type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\", \",\"type\":\"\
+      text\"},{\"text\":\"uniqueMember\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\", \",\"type\":\"text\"},{\"text\":\"memberUid\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 등\",\"type\":\"text\"\
+      }]}]}]}]}]},{\"type\":\"tableRow\",\"attrs\":{\"localId\":\"97e7cec3-7328-4f30-8b01-295ca445a63f\"\
+      },\"content\":[{\"type\":\"tableCell\",\"attrs\":{\"colspan\":1,\"background\"\
+      :\"#ffffff\",\"rowspan\":1,\"colwidth\":[89.0],\"localId\":\"01bae4e3-5d99-4208-ba57-3880491c4780\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"084f00e3-712c-49aa-8bba-9d866948f4a4\"\
+      },\"content\":[{\"text\":\"그룹에 사용자 정보가 포함된 경우, \",\"type\":\"text\"},{\"text\"\
+      :\"Include user information in group entries\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"95aa4947-c0c9-49f9-a42d-4b4348e29672\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a3b5b242-733f-4026-a850-a8f3a544c31a\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c26e4763-b108-47b1-96dd-7a731194e434\"\
+      },\"content\":[{\"text\":\"예: \",\"type\":\"text\"},{\"text\":\"gidNumber\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]}]}]}]}]}]}]},{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"cce3b8a8-f048-4768-9c48-65f9b0530d81\"\
+      },\"content\":[{\"text\":\"LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우 \",\"type\":\"text\"\
+      },{\"text\":\"Use Synchronization with the Authentication System\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" 옵션을 활성화합니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\"\
+      :408,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"\
+      width\":408,\"alt\":\"image-20251014-075127.png\",\"id\":\"93f39666-d4d4-4632-9e7e-78472c77482d\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"ceda6df7-6b78-4d66-ae57-03b5e71fbf8c\"\
+      ,\"height\":726},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"fc447349-4fc5-4d43-a574-435409ca59c7\"\
+      }},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"c2f5ad84-5707-40d1-a5fe-d794454851ec\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"f3d9589b-7118-4e18-b18f-66e6853e4255\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"bf2acb73-aa51-432d-8ddd-ea254727cee8\"\
+      },\"content\":[{\"text\":\"Replication Frequency\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" : 자동 동기화 기능 사용 여부를 설정합니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"eaf66415-597e-4f9f-8803-b2534b7f28ad\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"f3901d3e-1fc3-4fd7-b5e2-9670e69b0ec2\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"5c63e214-64c6-4ab6-bc54-00a314ef7826\"\
+      },\"content\":[{\"text\":\"Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 \",\"type\":\"\
+      text\"},{\"text\":\"Synchronize\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"78599de0-8714-4107-81b0-3043aa290070\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"628b3e4b-6e49-4882-b9d0-1d9ffcc95297\"\
+      },\"content\":[{\"text\":\"Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression\
+      \ 필드가 활성화됩니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"39bfe512-54a5-4f45-9c74-f1bf1840cc8f\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"19bb31ed-7ba5-4933-b51c-204a8d80cfff\"\
+      },\"content\":[{\"text\":\"Additional Settings\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"3fbe79d4-8a87-439d-9b85-3175c305f05f\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"3b4a2e51-80f3-463a-bcba-2fee6c3207be\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"85da999c-af7f-4442-8305-250b4d9228df\"\
+      },\"content\":[{\"text\":\"Make New Users Inactive by Default \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 동기화 시 새로운 사용자를 비활성화\
+      \ 상태로 추가할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"4c16d097-6a60-4727-91ab-4e084d93cde5\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"e3a4a898-2b82-4dfd-bcdb-b01d4c2d5e9b\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1523dc52-ee3e-4862-a6d2-2e067dd6201c\"\
+      },\"content\":[{\"text\":\"동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로\
+      \ 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"1f1020c9-22c9-44dc-b71f-3e4cb19bba90\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"7608448e-3f00-4f45-b1ee-a60ed058ab95\"\
+      },\"content\":[{\"text\":\"Use an Attribute for Privilege Revoke \",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 동기화 시 특정 Attribute에\
+      \ 따라 Privilege를 회수할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"8056eaad-6550-4b11-b1a8-da71c42dbf0c\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c5f512dd-e4fe-4745-b42c-2de748b424e2\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"05362b51-948f-4cdb-bfd0-5d2ae2e23554\"\
+      },\"content\":[{\"text\":\"특정 LDAP Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자\
+      \ 하는 경우 이 옵션을 활성화하세요.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"307dea71-efa3-44bb-b945-b16ce354f114\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"061e86e1-8758-4e1a-a0b3-63e64b8376d5\"\
+      },\"content\":[{\"text\":\"LDAP Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을\
+      \ 입력합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"c5053ea5-db4b-44cd-a323-5ae049548947\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"ffed4ba9-bea5-4709-9594-b882908c5e8a\"},\"content\"\
+      :[{\"text\":\"Enable Attribute Synchronization :\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지\
+      \ 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"e2b2c1f5-4ecf-4d9c-9786-1ae4c56a9240\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"d78dbe73-cd92-411d-bc48-75824971791c\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d229e16c-9dd0-461a-adac-8bee63479dff\"\
+      },\"content\":[{\"text\":\"LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자\
+      \ 하는 경우, 해당 옵션을 활성화하시기 바랍니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"db3bf0dd-b3e5-4d80-9cfa-a8d87eb201d2\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0de0f142-5ce5-4d4c-9eaf-d4aa04af2380\"\
+      },\"content\":[{\"text\":\"옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑\
+      \ 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a90e3753-f823-47f9-8a4a-bb1113be7c15\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"f983c9da-60b4-4d8f-91e7-3cb04e3f49be\"\
+      },\"content\":[{\"text\":\"단, 해당 기능은 Profile Editor(Admin> General > User Management\
+      \ > Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에\
+      \ 한해 적용됩니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"\
+      localId\":\"9f211a15-8738-4e57-ba97-114f7411d06e\"},\"content\":[{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"d778515d-17df-40d4-9705-c6961a8d9c2f\"\
+      },\"content\":[{\"text\":\"Allowed User Deletion Rate Threshold : \",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"aa8a5808-5823-4fb1-b9b3-fd36e836b409\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"a5c211af-efa8-4b71-a82f-b2f0a24549c8\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"6d732a15-cdf0-4f23-82ef-a6de2a422cba\"\
+      },\"content\":[{\"text\":\"동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는\
+      \ 기능입니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"b48ee7ef-3b63-47c8-9230-f5958d45d5bf\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"de1972e4-7172-415d-915c-fcba5923c251\"},\"content\"\
+      :[{\"text\":\"0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"attrs\":{\"localId\":\"e33eb2f9-aa98-40b8-a700-1b75c9a45619\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c6463ab0-4b4b-44ff-aefd-9a1d67e80ed6\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"8e72f932-0467-4fe2-88bd-0443ad8d4772\"\
+      },\"content\":[{\"text\":\"예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold\
+      \ 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"ae2079a6-365d-40d4-84a8-395a1056d8aa\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"91b568cb-ab57-4504-818d-b01528eeae81\"\
+      },\"content\":[{\"text\":\"11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면\
+      \ 이 값이 1.0 으로 기본 설정됩니다.\",\"type\":\"text\"}]}]}]}]}]}]}]}]}]},{\"type\":\"\
+      panel\",\"attrs\":{\"panelType\":\"info\",\"localId\":\"f274adf5-56bf-4f3d-9ed5-a241501928b9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0d3ca9eb-d222-4cea-83c1-c361de77c421\"\
+      },\"content\":[{\"text\":\"LDAP Attribute Mapping\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"\
+      3ca4b1d9-800e-424a-aaec-32d0c66693ea\"},\"content\":[{\"text\":\"LDAP에서 관리 중인\
+      \ 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization\
+      \ 옵션을 활성화하고 아래 정보를 입력합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"\
+      attrs\":{\"localId\":\"20b36119-12a8-42c7-ba7e-02da385c9828\"},\"content\":[{\"\
+      text\":\"우측 상단의 \",\"type\":\"text\"},{\"text\":\"Add Row\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다\
+      \ LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"orderedList\",\"attrs\":{\"localId\":\"571c3c3b-cc85-4876-bb70-703f9f1ccf68\"\
+      ,\"order\":1},\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"\
+      33079fcd-4944-4136-af93-05e4606832f0\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"a0cbbc66-233d-49ac-8c2c-d2b0cbe7ab65\"},\"content\"\
+      :[{\"text\":\"해당 기능은 Admin > General > User Management > Profile Editor에서 Source\
+      \ Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"ff9e5c76-2fa7-47ba-b395-c048124fe8c0\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b3835627-f4b3-4c2c-8513-d88714b38494\"\
+      },\"content\":[{\"text\":\"QueryPie Attribute인 \",\"type\":\"text\"},{\"text\"\
+      :\"Username (loginId)\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\", \",\"type\":\"text\"},{\"text\":\"Primary Email (email)\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 항목은 LDAP 연동 설정 시 별도로\
+      \ 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다.\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"ba3c265b-a2c8-4738-b3f6-34cb6f821972\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"5ba4ad57-cab6-484c-9a81-6bfdd019183f\"\
+      },\"content\":[{\"text\":\" 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며,\
+      \ Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템\
+      \ 반영을 의미합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"panel\",\"attrs\":{\"\
+      panelType\":\"note\",\"localId\":\"d956bb1e-9c00-4e80-bb4b-e233f5ed72b9\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c9b7ee04-1638-4c6d-a7ae-b0814cd90bd1\"\
+      },\"content\":[{\"text\":\"Active Directory를 LDAP 연동할 경우 Anonymous 항목을 반드시 false로\
+      \ 설정해야합니다. AD는 기본적으로 익명 바인드 상태에서의 검색 작업을 허용하지 않습니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":491,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\"\
+      :\"image-20251222-023912.png\",\"id\":\"62149a0b-9e5d-4e56-bab5-17b8a0d84da5\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"2c94be62-2ca7-423e-b1df-202d0d779704\"\
+      ,\"height\":776}}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\"\
+      :\"88217bbf-9522-43ee-89d5-c4adb2cd5c29\"},\"content\":[{\"text\":\"Okta 연동\"\
+      ,\"type\":\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\"\
+      :\"36281952-d30e-44a4-baea-9df36bb640d6\"},\"content\":[{\"text\":\"Okta에서 QueryPie\
+      \ 를 애플리케이션으로 추가\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"\
+      layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":2880,\"alt\":\"image-20240723-064242.png\"\
+      ,\"id\":\"ef43bd74-8168-420d-9b95-0b90516b9db8\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"e315448a-98d5-4a48-a231-17ceb4d1273d\",\"height\"\
+      :1800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"6c053004-5978-4883-9ff1-baa10aaf9bc2\"\
+      },\"content\":[{\"text\":\"Okta Admin > Applications > Applications > Browse\
+      \ App Catalog > QueryPie 검색\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"2a2f8cd7-fede-4345-bbfa-d417217a71a5\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"939ce070-e2ec-4200-b214-6e857a00a2e6\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b2670226-2074-45d9-82ca-a5ff925604a5\"\
+      },\"content\":[{\"text\":\"Okta 서비스\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"underline\"},{\"type\":\"link\",\"attrs\":{\"href\":\"https://login.okta.com/\"\
+      }}]},{\"text\":\"에 접속하여 관리자 계정으로 로그인합니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"0dda8451-7e94-4f7d-b615-57773e3c5f08\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"24d1165e-23a3-42f0-8b5d-4e0ccabc0ff8\"\
+      },\"content\":[{\"text\":\"우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"7dba717f-ba9d-4e7f-b914-d0d91b2aefa7\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0c88adc1-551c-47bd-a058-d6770284dcd1\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지의 좌측 패널에서 Applications > Applications\
+      \ 메뉴로 이동합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"94fefc04-3618-4d40-982d-7760d694e2d9\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"27f4a0b8-e36c-4e38-8e27-52a877b99459\"},\"content\"\
+      :[{\"text\":\"Browse App Catalog\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 버튼을 클릭하여 QueryPie 를 검색합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"9a9979f2-9e3c-42bb-9bfe-7f25ec51c3cc\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ee2f608f-ea04-48a3-92e3-d34b46e5a8be\"\
+      },\"content\":[{\"text\":\"QueryPie 애플리케이션 페이지로 들어가 \",\"type\":\"text\"},{\"\
+      text\":\"Add Integration\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"b3166851-f141-4ef7-8c27-afa527bbd80a\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"25b5a488-e2f4-41ff-9107-54a4de81a61c\"\
+      },\"content\":[{\"text\":\"Application Label에 QueryPie 로 입력된 것을 확인 후, \",\"\
+      type\":\"text\"},{\"text\":\"Done\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 버튼을 클릭하여 애플리케이션을 추가합니다.\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"heading\",\"attrs\":{\"level\":3,\"localId\":\"6ee88d9f-8432-4e83-aab9-ea0e394367d5\"\
+      },\"content\":[{\"text\":\"Okta 계정 연동을 위한 Profile 설정\",\"type\":\"text\"}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":2880,\"alt\"\
+      :\"image-20240723-064424.png\",\"id\":\"df0e9c24-6701-4e3b-8e0b-e6f33e9cb259\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"08c3b276-5c79-40b7-9974-86a1e1706559\"\
+      ,\"height\":1800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"33fd9202-9dab-4a8d-aa73-247e60770333\"\
+      },\"content\":[{\"text\":\"Okta Admin > Directory > Profile Editor > QueryPie\
+      \ User > Add Attribute\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\",\"\
+      attrs\":{\"localId\":\"a612d4fd-ce2f-40cc-bca5-88c583318e33\"},\"content\":[{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"4e1d8f3f-12db-4190-adfe-c14b61f11e9f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"e6e3d831-a386-4982-be8e-54d7dcc0fe2c\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지의 좌측 패널에서 Directory > Profile Editor\
+      \ 메뉴로 이동합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"1edec981-f826-478c-9cf8-b8ff029444c1\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"76a83d03-b7da-4fba-ab15-d3048c12f423\"},\"content\"\
+      :[{\"text\":\"Profile 목록 중 ‘QueryPie User’ 를 클릭합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"d40ff0a7-1d22-4284-8c7f-1f8e376d9d73\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"584776ac-fc42-430f-9647-5e0ed8b026f9\"\
+      },\"content\":[{\"text\":\"Attributes 설정에서 \",\"type\":\"text\"},{\"text\":\"\
+      Add Attribute\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\"\
+      :\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"\
+      localId\":\"164ed9fe-2987-418f-bbea-abc630e52c71\"},\"content\":[{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"db1ed5c9-f848-46c7-b250-fb307e609291\"\
+      },\"content\":[{\"text\":\"Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.\",\"\
+      type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"3f3930c0-98a8-4901-8d28-55368b9cd022\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"446f91f0-7a96-4958-b079-4a3b9fda0386\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b55cf1f1-0763-4b19-ba8f-8f5c521c71a3\"\
+      },\"content\":[{\"text\":\"Display name : firstName / Variable name : firstName\
+      \ 항목 입력 후 \",\"type\":\"text\"},{\"text\":\"Save and Add Another\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"1ae330fd-71b5-4ba0-b675-308b62ba000a\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"eaa9b1dc-1610-489c-b7f8-ba18cf25c614\"\
+      },\"content\":[{\"text\":\"Display name : lastName / Variable name : lastName\
+      \ 항목 입력 후 \",\"type\":\"text\"},{\"text\":\"Save and Add Another\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"906796d7-9b5f-4843-9cb5-ca3693085eb5\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"a5cb77e9-d7c1-4203-872c-264134511cfd\"\
+      },\"content\":[{\"text\":\"Display name : email / Variable name : email 항목 입력\
+      \ 후 \",\"type\":\"text\"},{\"text\":\"Save and Add Another\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"code\"}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"d05fbdef-9a84-491a-84df-4195cb1edc8e\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"65720323-04b9-41ed-bd6e-ff91698e94e6\"},\"content\"\
+      :[{\"text\":\"Display name : loginId / Variable name : loginId 항목 입력 후 \",\"\
+      type\":\"text\"},{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\"  클릭\",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":2880,\"alt\":\"image-20240723-064721.png\"\
+      ,\"id\":\"c7b26031-b467-4db3-90b3-991e8f178728\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"ea2580a0-f85e-421e-8d4d-e4b35667d16e\",\"height\"\
+      :1800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"28c7e3e1-48ee-418e-85d0-3c052c6f102c\"\
+      },\"content\":[{\"text\":\"Okta Admin > Directory > Profile Editor > QueryPie\
+      \ User > Mappings\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"86bff399-fb99-4cee-baa4-ac56e094b0eb\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"d437d0f5-dba4-46ba-9b84-41058e231ec5\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1e9b422e-1ed6-440e-b451-83559f89ec42\"\
+      },\"content\":[{\"text\":\"4가지 Attribute 가 추가된 것을 확인 후 \",\"type\":\"text\"\
+      },{\"text\":\"Mappings\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"d56ce34f-d0ff-465a-b932-e4a9cdfa19d6\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"1393f2b0-cf1e-4dbb-b0dc-47e750d4e9e9\"\
+      },\"content\":[{\"text\":\"Okta User Profile Attribute 항목을 아래와 같이 QueryPie User\
+      \ Profile의 Attribute 와 연결합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"c4f5de20-7302-4617-906f-63597bae7839\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"dd921e90-2a69-43cc-8ec5-63ea3d398914\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"17bd63ba-f902-42db-ab6c-4d3433d73c76\"\
+      },\"content\":[{\"text\":\"user.firstName ↔︎ firstName\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"b6de401e-f12e-450f-9f24-36527aa3b7dd\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d321c2b8-096c-497d-aab0-17107219c8f6\"\
+      },\"content\":[{\"text\":\"user.lastName ↔︎ lastName\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"c183d519-01e9-4d71-bb7c-8a07b9429d0b\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"3faa4703-c024-4b38-8a89-7c7f2d20c2ef\"\
+      },\"content\":[{\"text\":\"user.email ↔︎ email\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"3c198a0d-1abb-4b38-8046-f98afc3ce1dc\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2492acdd-7985-4591-8d1a-04969e3ff09c\"\
+      },\"content\":[{\"text\":\"user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie\
+      \ 의 로그인 Id 로 사용합니다.)\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"\
+      attrs\":{\"localId\":\"94570a38-0c21-4b07-adb6-54e42829fea1\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"12c3089d-c0a2-4a1c-97c6-fe5843d0e453\"\
+      },\"content\":[{\"text\":\"Save Mappings\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 저장합니다.\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"a4e3b530-2bdc-4b21-9d4f-723b251688b8\"\
+      },\"content\":[{\"text\":\" \",\"type\":\"text\"}]},{\"type\":\"heading\",\"\
+      attrs\":{\"level\":3,\"localId\":\"5861f265-8be0-4349-9792-86f1429b5031\"},\"\
+      content\":[{\"text\":\"Okta에 추가된 QueryPie 애플리케이션에 사용자 할당\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :2880,\"alt\":\"image-20240723-065134.png\",\"id\":\"ecdf06c0-ab28-4d94-b228-a3b885aabdfb\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"f07ab4f1-e646-4a90-87e7-b8a9e86a6a06\"\
+      ,\"height\":1800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"926af8b6-dcf1-45bb-b1fd-7fc5311b399d\"\
+      },\"content\":[{\"text\":\"Okta Admin > Applications > Applications > QueryPie\
+      \ App\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"52f3c443-059e-46ad-9cd3-b9dd1429ea24\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"f3518e63-427d-41c7-be0a-cdf3fbbcca0a\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"f63c5f97-9c82-4217-b70d-7ee60673e138\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지의 좌측 패널에서 Applications > Applications\
+      \ 메뉴로 이동합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"c1bcabf0-3716-4b4c-9e0d-81f8c74536d0\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"7eb35527-3e1e-4cd9-970e-2f86c5d7e80d\"},\"content\"\
+      :[{\"text\":\"리스트에서 QueryPie 애플리케이션을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"8785aece-d024-4624-bcc9-5209dd4da8e1\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c3add963-b9fc-48e7-8b6e-fa6357e4672e\"\
+      },\"content\":[{\"text\":\"Assignments 탭으로 이동한 뒤 \",\"type\":\"text\"},{\"text\"\
+      :\"Assign\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"\
+      \ 버튼을 클릭하여 \",\"type\":\"text\"},{\"text\":\"Assign to People\",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 또는 \",\"type\":\"text\"\
+      },{\"text\":\"Assign to Group\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
+      }]},{\"text\":\"을 선택합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"\
+      attrs\":{\"localId\":\"3f3e859d-23d2-4d67-b3fd-efbe91036a4e\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"684893dd-08eb-4f60-9019-9a639619d995\"\
+      },\"content\":[{\"text\":\"Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done\
+      \ 버튼을 클릭합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"ffd21c42-077f-42b8-ac20-5a0b843567c8\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"199fa757-5ea0-4cba-940e-fb2e1c28b100\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0bd5628e-3296-4611-a0e7-580d4d78b92d\"\
+      },\"content\":[{\"text\":\"People 할당시 사용자 정보 확인 후 \",\"type\":\"text\"},{\"\
+      text\":\"Sava and Go Back\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
+      }]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"24033203-d8dc-493e-85c1-f3e640c2a398\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"94907314-d8a2-4ab1-8808-b6a85e521ee5\"\
+      },\"content\":[{\"text\":\"Group 할당시 loginId 항목을 빈 칸으로 두고 \",\"type\":\"text\"\
+      },{\"text\":\"Save and Go Back\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
+      }]},{\"text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"1ee49a04-6840-4685-9c49-45677643b07a\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9c2dfd60-590e-482e-8350-9c571e2b96c4\"\
+      },\"content\":[{\"text\":\"사용자 또는 그룹이 QueryPie 애플리케이션에 할당되어 추가된 내역을 확인하실 수 있습니다.\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"\
+      c16a2872-2a97-4d9c-9d55-aff2780fe297\"},\"content\":[{\"text\":\" \",\"type\"\
+      :\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\":\"bca75f44-667a-4c6d-8b29-d3846b4c7a62\"\
+      },\"content\":[{\"text\":\"Okta에서 QueryPie 애플리케이션 연동 정보 설정\",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :2880,\"alt\":\"image-20240723-065346.png\",\"id\":\"7fe0532d-0e8c-407c-b893-aba3c509664c\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"fb537cf6-f329-4304-8e76-e5595387a5d5\"\
+      ,\"height\":1800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"677ebc2f-2e8c-40b8-bb6b-863b16112444\"\
+      },\"content\":[{\"text\":\"Okta Admin > Applications > Applications > QueryPie\
+      \ App\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"f65bf592-81a9-442c-945c-fbcbe7638945\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"1193e095-289c-48d2-9d46-d4c8bfd8f7a2\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"759fa864-3906-4476-9dd9-9965120ee9f2\"\
+      },\"content\":[{\"text\":\"Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"d35fd180-54eb-4efd-91a8-e12c0559b56e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9ee530ee-5130-4ff9-bd13-588da4b09a5b\"\
+      },\"content\":[{\"text\":\"Settings 영역의 \",\"type\":\"text\"},{\"text\":\"Edit\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 클릭하여 QueryPie\
+      \ 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"3b2ce36e-252f-4821-aa96-117b80169d6c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"05ac5441-57d5-406a-acc6-5b888a6102d2\"\
+      },\"content\":[{\"text\":\"Metadata URL에 표기된 주소로 별도 탭에서 접근하여 표시되는 XML 정보를 복사합니다.\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"\
+      d042eb64-a23f-4743-9ac6-bcb3a0401bad\"},\"content\":[{\"text\":\" \",\"type\"\
+      :\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\":\"ee367613-c45f-4145-94a5-f1ec237820b1\"\
+      },\"content\":[{\"text\":\"최소 권한의 Okta API 토큰 발급\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"f2ab1744-d0f6-4061-b5d1-e267d27db7cc\"\
+      },\"content\":[{\"text\":\"QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 Okta Admin\
+      \ API 토큰 발급이 필요합니다. 일반적인 방법으로는 이용하고 계신 Okta 최고관리자(Super Administrator)/읽기권한관리자(Read-Only\
+      \ Administrator) 계정으로 API 토큰을 이하의 방법으로 발급하여 적용하는 방법이 있습니다:\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"91ce3471-a505-4b97-95f7-6cc359428961\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a067662b-24d6-4a41-8937-f39eee5c3b6b\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"49a0c43d-5e6a-4898-a089-d0da9cbe2e72\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지 좌측 패널에서 Security > API 메뉴로 이동합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c69a88a0-562c-45f6-b318-db6eec7e7d19\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9063fae3-51ef-43e0-abc7-3048bfb3332b\"\
+      },\"content\":[{\"text\":\"API 메뉴에서 Tokens 탭으로 이동합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"1d05f0da-4a9d-4618-8501-e7dccc1c06f4\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d6efbac8-715b-4080-89a1-50df2746669f\"\
+      },\"content\":[{\"text\":\"Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.\",\"type\"\
+      :\"text\"}]}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4f00e1a4-7aaf-4dd7-9789-8947d0c84b7d\"\
+      },\"content\":[{\"text\":\"다만, 보안 수준 향상을 위해 Okta API 토큰의 권한을 최소한으로 부여하도록 조정해야\
+      \ 하는 경우, 이하의 권한 및 방법에 따라 API 토큰을 생성하실 것을 권장드립니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":762,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":997,\"alt\"\
+      :\"image-20240110-042233.png\",\"id\":\"b0e2bf28-7e31-4383-9a70-8245d4222676\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"ef0e193d-ad31-4465-9345-2502d032753f\"\
+      ,\"height\":800},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"df583eb7-8ccb-445c-86a8-a0ece754dafd\"\
+      },\"content\":[{\"text\":\"Okta Admin Console > Security > Administrators >\
+      \ Roles > Create new role\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"bd4d8d20-0c67-4838-95f7-a2faa333c028\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"0d7aa352-0583-4cca-a8a9-a68c32a53759\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"feaff031-fc6c-45a4-a6fb-2c66ce388eb7\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지 좌측 패널에서 Directory > People 메뉴로 이동하여\
+      \ Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"9ff9dfa3-0802-4ab6-b541-0144f8e97f81\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"6f17c99e-8244-4886-9a0d-ad5943e790f8\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"3ad0bf38-932c-4213-b25e-af6fda008ae0\"\
+      },\"content\":[{\"text\":\"이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.\",\"type\"\
+      :\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"3dc163f2-9e2e-42a0-85c7-545bea834318\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1c668964-1080-4ecb-b2be-283613754704\"\
+      },\"content\":[{\"text\":\"Okta 관리자 페이지 좌측 패널에서 Security > Administrators 메뉴로\
+      \ 이동하여 Roles탭으로 이동합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"426e38b7-67fa-4c43-a5ec-947c07e7c2f5\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"a582fa4a-8164-46a3-a399-badf2a83b4f1\"\
+      },\"content\":[{\"text\":\"Create new role을 선택합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"a45621fe-c0c7-4db3-a0c4-3ff8af0ac18e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"fe1e902d-97ae-4e36-b17a-a4b44ccb9fee\"\
+      },\"content\":[{\"text\":\"Role name (예. MinimumAdminRole) 및 Role description을\
+      \ 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"bulletList\",\"attrs\":{\"localId\":\"490a47e3-7782-4409-a42d-febb568a4cef\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"851d3e89-95df-4e4e-a32d-5f2c6eb340b2\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2477792c-adbe-4121-9143-bc9a051e5a86\"\
+      },\"content\":[{\"text\":\"User\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"8b8fce47-d4c4-41e1-b7b9-fe8c794fa897\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"b43fe0ad-4275-442f-b0c1-2589fee8431a\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4b9e61eb-fc84-4667-aa25-867a7bfb99e0\"\
+      },\"content\":[{\"text\":\"View users and their details\",\"type\":\"text\"\
+      }]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c353acbc-5a72-4c7a-9b2b-2e4b2790b4ca\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"91c61fa0-125b-4836-83b0-dfc2777e26cb\"\
+      },\"content\":[{\"text\":\"Group\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"63ada6c3-ca8c-41d7-b14f-7d26634effbe\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"d9e9a5af-86cc-4f89-9bf1-be5f8ecb5a23\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"95ee7268-3783-42d9-aee4-5f19c365d7d5\"\
+      },\"content\":[{\"text\":\"View groups and their details\",\"type\":\"text\"\
+      }]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"5d7096c9-6823-45b7-95f2-d0efc0a719ac\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0bfa0159-0a39-4910-8332-bf26e5d2682b\"\
+      },\"content\":[{\"text\":\"Application\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"eee5a883-978d-483b-8a2b-1b7004ba446c\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"696360ac-5229-49ac-adf0-120909478a8a\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"7b5e5ee1-c279-4a48-940f-afc54f1f7d16\"\
+      },\"content\":[{\"text\":\"View application and their details\",\"type\":\"\
+      text\"}]}]}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a197f01b-8fdb-42a0-8068-0cc41fc00a08\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"216e401f-c33c-4e2e-9bc8-60078ddc1e06\"\
+      },\"content\":[{\"text\":\"Save role을 눌러 커스텀 롤을 저장합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"5fcd910d-3fe2-47dc-b5c2-412d305c7ab9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"6fa271ff-cdec-47dc-b22f-6d8fbb22b3bf\"\
+      },\"content\":[{\"text\":\"Resources 탭으로 이동합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"6d47a252-b528-48c1-83d4-22589e1648f7\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"e0a47b87-4435-4c57-98b8-47133c8d7bd0\"\
+      },\"content\":[{\"text\":\"Create new resource set을 선택합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"1c4322a8-2162-43ab-96c3-a801e7e126cd\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"e69a19dc-df17-496f-b901-644b4c12e4dd\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"faca2603-7a67-443b-aea3-620f0aafca89\"\
+      },\"content\":[{\"text\":\"이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를\
+      \ 넘어가 10번 단계를 진행합니다.\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"\
+      attrs\":{\"localId\":\"6fabeb69-f87b-439c-b2b1-207ebf38aa96\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"f45edbb5-0e90-4616-b2f4-08342383fcc0\"\
+      },\"content\":[{\"text\":\"Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의\
+      \ 범위를 검색하여 지정합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"9fe2cd8c-341b-4547-ab1f-a731794362b1\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"62e669ab-ea66-459f-bea1-e58a5af4d824\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"28192c74-2877-49b8-aa10-f4108fad6801\"\
+      },\"content\":[{\"text\":\"User : 쿼리파이 사용자 전부 선택\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"bb51f49e-341d-41cf-8650-d6da609fbc76\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1d2340d0-4b81-45dc-a31c-adfde153df99\"\
+      },\"content\":[{\"text\":\"Group : 쿼리파이 사용 그룹 전부 선택\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"93c34fb0-f59a-47d4-9ab0-3c627829c417\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1246e6e7-3f76-4736-b7ee-5b4f2b1afab7\"\
+      },\"content\":[{\"text\":\"Application : 쿼리파이 앱으로 한정\",\"type\":\"text\"}]}]}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"83bd826c-2970-4b30-8ea9-e96eb7f27417\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c3a6fd88-45fa-49d1-98e4-09d73ca7fbe6\"\
+      },\"content\":[{\"text\":\"Create를 선택하여 생성합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"0cfdfd5e-f03f-4d83-95b4-c90327cfa166\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"eadd409d-a52e-472a-84be-7a855b49cca9\"\
+      },\"content\":[{\"text\":\"Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.\",\"\
+      type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"ac4a164d-f4c1-4317-a228-6ea1fdd63801\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a49903b8-7553-4f04-b84f-a47e16229dff\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"3466e226-26d0-4127-924b-98048d090f32\"\
+      },\"content\":[{\"text\":\"Role: MinimumAdminRole | Resource: MinimumResources\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"cd97ba28-b404-4dfe-8b60-f9701e3e04b4\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"648c28a9-cff1-4938-9767-54dd31886aa0\"\
+      },\"content\":[{\"text\":\"Role: Read-Only Administrator\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"7e088562-b500-4f4b-bf4e-e7ac85bec28e\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"1ca2298a-34bf-4f9a-a265-a82db7a3db54\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b45daa14-6c36-44f1-911a-10afcaaafcae\"\
+      },\"content\":[{\"text\":\"API 토큰 생성메뉴 접근을 위한 임시 부여\",\"type\":\"text\"}]}]}]}]}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"dac66fb0-e45d-43cf-9ab7-80a7d9ad6bcd\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"074e44ae-cf9e-482a-b6f1-32a2efba6205\"\
+      },\"content\":[{\"text\":\"쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"109c30a1-8e67-4f5b-a350-a0f3b2bf972f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2dd0f32f-fb30-4595-81e0-6381b0115daf\"\
+      },\"content\":[{\"text\":\"Security > API 메뉴에서 Tokens 탭으로 이동합니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"8064c917-857c-44ce-acf0-f55304d646f8\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"217b1212-316f-4772-88e7-85ef9fd15f2c\"\
+      },\"content\":[{\"text\":\"Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"85088b06-9fa5-4ab5-bca3-4ab1401122fd\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"dc380fc7-15fd-44d1-9c82-e461496b8630\"\
+      },\"content\":[{\"text\":\"이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security > Administrators\
+      \ > Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\":\"bcbf3745-3525-4f33-86ab-c137b11e08ea\"\
+      },\"content\":[{\"text\":\"QueryPie에서 Okta 연동 및 동기화 설정\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"211e06af-e8c5-4d34-b755-45ce684dbcdb\"\
+      },\"content\":[{\"text\":\"목록 우측 상단의 \",\"type\":\"text\"},{\"text\":\"+ Add\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르고 팝업되는\
+      \ 화면에서 Type을 Okta로 선택하면 Okta를 IdP로 추가 할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":481,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\"\
+      :\"image-20251014-014729.png\",\"id\":\"6cc01825-2b1b-4958-9338-4ccb075698d3\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"e2b94f40-2c20-4957-b8e8-b1cd08adc9a5\"\
+      ,\"height\":725},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"0f85908f-8d1c-41ef-b57a-789232041814\"\
+      },\"content\":[{\"text\":\"Okta 상세설정 (1)\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"bulletList\",\"attrs\":{\"localId\":\"d82641dc-e0ab-463a-9d6e-af5efb5b25de\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"4430a11a-2178-4f75-9f3a-467a5edcb450\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"90314a5c-2dfb-4b14-bb38-097f83ca07fa\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"ceba9cea-ed69-4fe7-9de8-294fb66eef2d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"63a96e04-de92-49b2-b006-587a5ac75079\"\
+      },\"content\":[{\"text\":\"Type\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": Okta를 선택합니다.\",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"ce513bfb-8db1-4cc8-ac0e-3da5baf08d64\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"5decc6f1-5677-436c-9471-fa7203647cb3\"\
+      },\"content\":[{\"text\":\"Identity Provider Metadata\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"strong\"}]},{\"text\":\" : \",\"type\":\"text\"},{\"type\"\
+      :\"hardBreak\"},{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"a91d0714-d152-47c4-99af-b66571579021\"\
+      ,\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1454342158/Identity+Providers#Okta%EC%97%90%EC%84%9C-QueryPie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95\"\
+      }},{\"text\":\" 단계에서 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"98240cd5-0365-4cbd-9920-885d97a1dac8\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"feeb482f-317b-40ea-a908-7b403c54525b\"\
+      },\"content\":[{\"text\":\"Use SAML Assertion Consumer Service Index\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : Service Provider에서\
+      \ 여러개의 Endpoint 를 사용하는 경우 ACS Index를 사용하여 endpoint를 각각 지정할 수 있습니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"f147427c-27ba-40d0-a571-b6d47e0268eb\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"79a46e2c-c084-4fc4-a60f-61622cbe620f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b9950836-a017-4a6c-96d6-f0ad0a46fc77\"\
+      },\"content\":[{\"text\":\"Entity ID : \",\"type\":\"text\"},{\"text\":\"https://your-domain.com/saml/sp/metadata\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 의 형식으로 입력합니다.\
+      \ Okta SAML 2.0 설정의 Audience URI (SP Entity ID) 값입니다. \",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"bd8a653f-e3a8-4788-ba11-61abefcb0c6f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"7b6ae443-4c2e-4b25-91ff-598afc2cf504\"\
+      },\"content\":[{\"text\":\"ACS Index :  0 ~ 2,147,483,647 사이의 값을 입력합니다. 기본값은\
+      \ 0 입니다.\",\"type\":\"text\"}]}]}]}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\"\
+      :\"info\",\"localId\":\"07adb3b7-c972-4dbd-93ec-eb4e6de7c37a\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"25539719-c103-4734-b6f5-b927bf6bcb46\"\
+      },\"content\":[{\"text\":\"Assertion Consumer Service (ACS)\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": SP(Service provider)에 위치한\
+      \ 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다.\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"23c401f0-b8fe-4d6e-b172-dd21c5e63e77\"\
+      },\"content\":[{\"type\":\"hardBreak\"},{\"text\":\"Assertion Consumer Service\
+      \ Index의 필요성 및 역할\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"3e4b69b0-dca2-4f38-b79f-823ecc8ab8e7\"\
+      },\"content\":[{\"text\":\"하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가\
+      \ 필수적인 역할을 합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"\
+      localId\":\"6236e1d6-7d18-406f-88fd-db7bb6a5d931\"},\"content\":[{\"text\":\"\
+      SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된\
+      \ ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default)\
+      \ ACS URL로 어설션을 보내게 됩니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"b270db97-2fa5-468b-adf8-8b4f09bcec63\"},\"content\":[{\"text\"\
+      :\"이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"ce1d538f-9ddf-4b86-9af0-1db9a209934f\"\
+      },\"content\":[{\"text\":\"주요 사용 사례\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"5bab435f-eac7-477b-8b68-0c79cacf242a\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"fc84509a-eaf6-4423-aaf2-0c14e0413f1d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9add9093-a1f2-4123-9af5-759947631579\"\
+      },\"content\":[{\"text\":\"다양한 프로토콜 바인딩(Binding) 지원:\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"c73a544d-b65b-49b7-8409-9d68aa218d93\"\
+      },\"content\":[{\"text\":\"SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될\
+      \ 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index=\\\"0\\\"은\
+      \ HTTP POST를 위한 ACS URL을, index=\\\"1\\\"은 HTTP-Artifact를 위한 ACS URL을 가리키도록\
+      \ 설정할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"\
+      localId\":\"af72bf57-8f3c-4387-849b-04691d324149\"},\"content\":[{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"fb23141a-9fc5-45e1-b0cb-d09b681b40ce\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c1b361f5-b7d9-4e05-aa60-7629761eb5d8\"\
+      },\"content\":[{\"text\":\"다중 테넌트(Multi-tenant) 아키텍처 지원:\",\"type\":\"text\"\
+      }]}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b8e9f64d-6339-4948-8f28-16eeb0c380d3\"\
+      },\"content\":[{\"text\":\"하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한\
+      \ ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다.\",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"6236af1c-30d7-417a-9583-d241f2981f64\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"1c87f554-ac5b-4420-96ac-98d5aa43d53f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c5d27ab9-1e1c-4575-a061-fdf3912eb45b\"\
+      },\"content\":[{\"text\":\"애플리케이션 내 다른 인증 흐름 구분:\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"1316536c-a3a9-41ea-9983-2574f19a329b\"\
+      },\"content\":[{\"text\":\"같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할\
+      \ 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을\
+      \ 사용하고 이를 인덱스로 구분할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"\
+      attrs\":{\"localId\":\"5bca6c79-7185-46f4-997e-5e262f0dc302\"},\"content\":[{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"937b7b13-a750-4640-b3dd-c3d2c4bd7000\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"22652b66-ffcb-4a4a-9be8-97af864027d3\"\
+      },\"content\":[{\"text\":\"동적 또는 특수한 ACS URL 처리:\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"5d580d33-639a-4ab1-8b95-92f2ac7a65cf\"\
+      },\"content\":[{\"text\":\"특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야\
+      \ 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.\",\"type\":\"text\"}]},{\"\
+      type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":690,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":2784,\"alt\"\
+      :\"스크린샷 2025-01-24 오후 4.42.55.png\",\"id\":\"8c010450-7999-4111-999f-e3c2e9ed8b78\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"bda697a7-d60e-4ab6-98a1-dba02eaeed64\"\
+      ,\"height\":2224}},{\"type\":\"caption\",\"attrs\":{\"localId\":\"d9311e5e-73b1-475d-a8c0-1ed2c48e4def\"\
+      },\"content\":[{\"text\":\"okta app 설정의 Audience URI(SP Entity ID) \",\"type\"\
+      :\"text\"}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"\
+      width\":694,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\"\
+      :{\"width\":2784,\"alt\":\"스크린샷 2025-01-24 오후 4.45.53.png\",\"id\":\"\
+      a93f5422-83b5-4dd0-bdff-880aab778be4\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"b2b1ef03-330b-4c89-9296-a18eecdd548f\",\"height\"\
+      :2224}},{\"type\":\"caption\",\"attrs\":{\"localId\":\"e7477d9b-de79-4938-ae02-b0d5e357dea1\"\
+      },\"content\":[{\"text\":\"Other Requestable SSO URLs 의 Index\",\"type\":\"\
+      text\"}]}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"\
+      width\":481,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\"\
+      :{\"width\":481,\"alt\":\"image-20251014-014805.png\",\"id\":\"d1b9dc53-a709-40ad-8193-222121f2e488\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"4e02d82b-86ea-4bfe-8a60-afd5e499ee21\"\
+      ,\"height\":473},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"2e64ed2e-dc77-4743-bcf0-902e4fd26e81\"\
+      },\"content\":[{\"text\":\"Okta 상세설정 (2)\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"00af5494-f11f-45cd-9035-d9497a9573ca\"\
+      }},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"1cdcbe2f-dba4-4c63-bdb4-fea14da71567\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"812b33ba-fe81-460f-aff3-dbb5f4aa3287\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ab121eee-2578-46cb-94bf-bea7e5c6f5f7\"\
+      },\"content\":[{\"text\":\"동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication\
+      \ System” 옵션을 활성화(체크)합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"\
+      attrs\":{\"localId\":\"e79fa936-b39c-4cf1-b129-06ced44a99f6\"},\"content\":[{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"de6700ff-f044-4715-8532-89490fe23c19\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"a84e145b-5ecc-4ef8-b45a-d213fafd28fd\"\
+      },\"content\":[{\"text\":\"API URL\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\": Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 {domain}.okta.com\
+      \ 형식의 URL 을 확인할 수 있습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"e34ab429-84eb-4ea6-81d5-ffeb02d77c32\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"343cc504-ef0d-4fe0-b17a-95ce59235a4a\"\
+      },\"content\":[{\"text\":\"API Token\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\": Okta 관리자 API 토큰을 기입합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"412dd35a-d64c-474d-8a1a-f352c18e34f9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"fa30e44d-8d28-47ee-b708-50c7b927ec5e\"\
+      },\"content\":[{\"text\":\"Application ID\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]},{\"text\":\": Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.\"\
+      ,\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"\
+      6a4a816d-627d-4e41-87ca-5dcc1057b72b\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"0ce66525-967e-44c8-af9b-9daf5c7b492c\"},\"content\"\
+      :[{\"text\":\"주기적인 동기화 기능을 사용하고자 할 경우\",\"type\":\"text\"},{\"text\":\" Replication\
+      \ Frequency\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\"\
+      :\" 항목에서 Scheduling 을 설정합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"e0ce9dae-e774-4a43-a01b-2a9bcb4575d3\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b70f10ba-eb9b-47c3-a0dd-dd6d4bc49250\"\
+      },\"content\":[{\"text\":\"Additional Settings\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"94a2d09b-fb56-47d7-aab3-8cf3bd5988d4\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"cd851b41-7038-4bab-b0ad-b19ca5ef64e8\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"dda858f8-83b2-4d48-bca4-796a74a370a4\"\
+      },\"content\":[{\"text\":\"Make New Users Inactive by Default \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 동기화 시 새로운 사용자를 비활성화\
+      \ 상태로 추가할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"5c6ceec3-ab60-43f4-9359-ecfe679d4158\"},\"content\":[{\"text\"\
+      :\"동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기\
+      \ 바랍니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"c27f7485-663e-4c11-90ad-9d9c87f14366\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"fa9568cf-3197-4f92-ab1c-01a5c8fe5955\"},\"content\"\
+      :[{\"text\":\"Use an Attribute for Privilege Revoke\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지\
+      \ 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"7dc77d91-b960-4186-bc14-87b06c695da6\"},\"content\":[{\"text\":\"특정 Attribute의\
+      \ 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"692cccab-3fed-4c74-8752-c960d37db20b\"\
+      },\"content\":[{\"text\":\"Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"011af9b1-e935-4f57-b919-49ea58302071\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d9dd7da3-c3c8-4fe5-abf3-5e77153a4ade\"\
+      },\"content\":[{\"text\":\"Enable Attribute Synchronization\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : IdP의 사용자 속성과 QueryPie 사용자\
+      \ 속성을 매핑하여 동기화할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"\
+      attrs\":{\"localId\":\"b2dc7751-5904-4855-82a2-c5f3af883247\"},\"content\":[{\"\
+      text\":\"IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을\
+      \ 활성화하시기 바랍니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"\
+      localId\":\"da93bdad-e851-45ff-99bd-34eaabf92eb3\"},\"content\":[{\"text\":\"\
+      옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie\
+      \ Attribute를 지정할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"97fb1f24-9902-4456-b39c-981bf482d0bb\"},\"content\":[{\"text\"\
+      :\"단, 해당 기능은 Profile Editor(Admin> General > User Management > Profile Editor)에서\
+      \ Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"83a8acd5-70dd-4c84-9630-9832fb5b8094\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"26746e39-03b5-4b13-a0d0-a959281632d7\"\
+      },\"content\":[{\"text\":\"Allowed User Deletion Rate Threshold : \",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"c64e0454-5370-4456-8a17-a3e7599bdbcb\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"829c02cb-b243-441f-8d57-33b92e3d2ba1\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"cd49b970-43a9-4f25-8ef1-522f9d85306b\"\
+      },\"content\":[{\"text\":\"동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는\
+      \ 기능입니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"cbae955f-0a60-4efd-8ace-5e35e192dd1a\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"8b20ab57-ce1c-4d20-98c0-96e8e2d08bf0\"},\"content\"\
+      :[{\"text\":\"0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"attrs\":{\"localId\":\"eb81a75e-1bac-4d32-bfbb-44e25d803ef0\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"22588f39-1628-497c-ac50-31a8b18e5385\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"044d0fa4-c3ab-49cc-a154-dd8911c84e26\"\
+      },\"content\":[{\"text\":\"예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold\
+      \ 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"6b7cb6d0-4c28-4892-850e-0a86589e39c9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d926ab4c-ae15-44bf-a993-437eb1d79735\"\
+      },\"content\":[{\"text\":\"11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면\
+      \ 이 값이 1.0 으로 기본 설정됩니다.\",\"type\":\"text\"}]}]}]}]}]}]}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"9c790849-a6c6-4e88-8709-c38ca89fc1ab\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"d9b9890e-8b88-4495-be53-0059ecfcddef\"\
+      },\"content\":[{\"text\":\"Dry Run\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"code\"}]},{\"text\":\" 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"434216b9-3069-47f7-8a34-7d1fc2631403\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"dc2a551a-8cc8-4f21-afca-1e00555a03df\"\
+      },\"content\":[{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 버튼을 눌러 저장합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"\
+      panel\",\"attrs\":{\"panelType\":\"info\",\"localId\":\"318fe127-350a-478f-bbc7-ee840f7f94ed\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"e8ffb179-8020-46ef-89a4-7ac022e3c383\"\
+      },\"content\":[{\"text\":\"Application ID 확인하는 방법\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"\
+      6c4c9441-b313-4111-b169-2c14c19d2428\"},\"content\":[{\"text\":\"2개 이상의 QueryPie\
+      \ Application 을 사용하는 경우, Okta Admin > Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로\
+      \ 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"\
+      width\":760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\"\
+      :{\"width\":827,\"id\":\"ab28cb73-1dc0-4e29-bdd3-696a42e9d4b9\",\"collection\"\
+      :\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"b01cb13a-1a9e-4504-9406-34103df4c418\"\
+      ,\"height\":364},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"f861cbba-5ef4-49ce-8d06-af62cc5d0493\"\
+      },\"content\":[{\"text\":\"Okta Admin > Applications > QueryPie App 상단 URL\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9a457f57-5e66-4169-9186-c8d85e2e59bb\"\
+      },\"content\":[{\"text\":\" \",\"type\":\"text\"}]},{\"type\":\"heading\",\"\
+      attrs\":{\"level\":3,\"localId\":\"5e2b8bb8-9110-4ec9-9e15-31448c19132f\"},\"\
+      content\":[{\"text\":\"QueryPie에서 Okta 로그인\",\"type\":\"text\"}]},{\"type\"\
+      :\"orderedList\",\"attrs\":{\"localId\":\"5cfcb4b5-0648-4bd7-a52e-ce55f0cf60e7\"\
+      ,\"order\":1},\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"\
+      32f72632-110a-4f56-8632-1fa6ece8b64f\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"c9f75c6c-44bd-4a25-9508-3acc6a962517\"},\"content\"\
+      :[{\"text\":\"General Settings > Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c8346e27-78d5-4cd6-a52b-785fe3b8de32\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"faf5a49a-e8ea-4525-9692-d9cbb502c802\"\
+      },\"content\":[{\"text\":\"이제 로그인 페이지에서 \",\"type\":\"text\"},{\"text\":\"Login\
+      \ with Okta\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\"\
+      \ 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1462,\"alt\"\
+      :\"image-20251014-082704.png\",\"id\":\"5c816501-9991-4e50-8f87-d83fd26dcd74\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"d888dff9-d4ed-4fd0-904e-0df60d8bbd86\"\
+      ,\"height\":922},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"info\",\"\
+      localId\":\"22b57ba2-a194-470b-ba2d-f0143fa0dbc5\"},\"content\":[{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"477d6cee-e036-48cb-a0ab-2d7a5e634837\"\
+      },\"content\":[{\"text\":\"해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를\
+      \ 지원합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"931a5d14-764d-45ce-a395-0bfccfeabd9b\"},\"content\":[{\"text\":\"SCIM 프로비저닝\
+      \ 연동까지 구현하고자 하는 경우, \",\"type\":\"text\"},{\"text\":\"[Okta] 프로비저닝 연동 가이드\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"underline\"},{\"type\":\"link\",\"\
+      attrs\":{\"href\":\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394\"\
+      }}]},{\"text\":\" 내 절차대로 대신 진행하여 주시기 바랍니다.\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"heading\",\"attrs\":{\"level\":2,\"localId\":\"201b5f13-31e1-4260-95c5-d5a286408c1a\"\
+      },\"content\":[{\"text\":\"One Login 연동\",\"type\":\"text\"}]},{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"d0f8748b-73bf-40aa-9be6-93acf507b5e9\"\
+      },\"content\":[{\"text\":\"목록 우측 상단의 \",\"type\":\"text\"},{\"text\":\"+ Add\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르고 팝업되는\
+      \ 화면에서 Type을 One Login으로 선택하면 One Login를 IdP로 추가 할 수 있습니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"e05420b9-8d10-4b2a-9b5f-f506da0470be\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"06d641c5-0559-4c40-bd65-73bc35f69898\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"40aa05bf-a885-4741-900b-e8573f740e24\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"2753e66a-10a3-4b1a-93f7-ff79b31ca828\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"60e4bf1c-7440-428a-bb4f-a7b0c2a5e74b\"\
+      },\"content\":[{\"text\":\"Type\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": One Login을 선택합니다.\",\"type\":\"text\"}]}]}]},{\"type\"\
+      :\"panel\",\"attrs\":{\"panelType\":\"info\",\"localId\":\"899e5a2d-a485-4bc7-b92d-8467f21579c8\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b6c3a5ba-6128-43a0-bc20-3480b634773d\"\
+      },\"content\":[{\"text\":\"One Login SAML Custom Connector 설정 및 Metadata XML\
+      \ 다운로드 \",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"89238760-f0e9-4a52-9615-fbce9a3a9d88\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"8d114134-ba87-4d6f-aba9-9f708741e3b4\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"dae1231d-73f2-4e3f-a40a-130cd0b34a84\"\
+      },\"content\":[{\"text\":\"OneLogin에 접속한 후 화면 상단의 Applications > Applications\
+      \ 메뉴를 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"c120ffef-09c6-4e4a-bcce-3adfc60bc8a9\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"3644ce3b-bb37-401d-996a-0e5c15b645d4\"},\"content\"\
+      :[{\"text\":\"Add App\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"989ea0b8-6ee6-4fa6-913e-9c6d5f018be1\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"58b12de2-95d5-447b-96a2-89fc14466a8d\"\
+      },\"content\":[{\"text\":\"검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후\
+      \ 검색 결과를 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"\
+      localId\":\"a3cf81ec-3002-4f85-81e6-a6c5ac3a02f3\"},\"content\":[{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"0698f378-67e8-4158-9e39-058e86abde83\"\
+      },\"content\":[{\"text\":\"Display Name에 QueryPie에서 확인된 Application Name to\
+      \ be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer)\
+      \ URL Validator,  ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"950211e4-e8a3-48e6-beda-b9d8a00b915f\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"37c9f49a-ba48-415a-9702-4884f1237f0a\"\
+      },\"content\":[{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      code\"}]},{\"text\":\" 버튼을 눌러 저장합니다. \",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"3a4000f9-38e7-4708-9b5b-055d78599df4\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ce96dd6f-e43d-4532-aaf3-8358bd6aca25\"\
+      },\"content\":[{\"text\":\"화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions\
+      \ > SAML Metadata를 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"\
+      attrs\":{\"localId\":\"2276d0e5-d4d9-4d11-b551-e64e4575dda8\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"91c09747-22da-4c1d-a071-5d83a50e9e42\"\
+      },\"content\":[{\"text\":\"다운로드된 XML 파일을 확인합니다.\",\"type\":\"text\"}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"5fde0355-784e-4e48-9f65-1b6810d0c76e\"\
+      },\"content\":[{\"text\":\"One Login SAML Custom Connector 설정에 대한 자세한 내용은 \"\
+      ,\"type\":\"text\"},{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"c63fb6aa-e140-448f-8909-9298951a9783\"\
+      ,\"url\":\"https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f\"\
+      }},{\"text\":\" 의 내용을 참고 바랍니다.\",\"type\":\"text\"}]}]},{\"type\":\"bulletList\"\
+      ,\"attrs\":{\"localId\":\"b6c709ad-c679-4991-a7fd-67698b421d14\"},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"91daa80d-746e-4c53-a25f-2c4066878157\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"6fcf02a4-ae7c-4c30-b2df-5fe2aaed8639\"\
+      },\"content\":[{\"text\":\"Identity Provider Metadata\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"strong\"}]},{\"text\":\" : One Login에서 다운로드한 XML 파일의 내용을\
+      \ 복사해서 붙여넣습니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\",\"attrs\"\
+      :{\"layout\":\"center\",\"width\":480,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":480,\"alt\":\"image-20251020-001435.png\"\
+      ,\"id\":\"a6d86354-0575-436f-b361-372c5c445465\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"f18a5d41-6721-4fe2-9dce-4ee001e11588\",\"height\"\
+      :688},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"551076dd-cb63-4dcc-b806-94203ca3ecb1\"\
+      },\"content\":[{\"text\":\"One Login 상세설정 (1)\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"bulletList\",\"attrs\":{\"localId\":\"ca40341b-40ec-41f0-9a0a-637b0577c827\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c724dda1-56f8-4f69-b9b4-3b0634bdad16\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c586772f-f5a2-4db7-a3d4-baff29444c28\"\
+      },\"content\":[{\"text\":\"동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication\
+      \ System” 옵션을 활성화(체크)합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"\
+      attrs\":{\"localId\":\"dd43541e-312d-465e-abd2-d5b649894ece\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"3f5c5aad-35a4-4933-ad3d-27940487346a\"\
+      },\"content\":[{\"text\":\"주기적인 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서\
+      \ Scheduling 을 설정합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\",\"\
+      attrs\":{\"layout\":\"center\",\"width\":481,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\":\"image-20251014-014949.png\"\
+      ,\"id\":\"67fabadd-5f3f-455a-bafa-25936a481ebd\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"c13fecc0-c023-4886-af5f-9c8af2e1ed6f\",\"height\"\
+      :471},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"1e2de297-d24c-4211-a193-5cc21f27c2d0\"\
+      },\"content\":[{\"text\":\"One Login 상세설정 (2)\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"bulletList\",\"attrs\":{\"localId\":\"43faf7fc-06c5-4d55-8b50-3554d51cc41e\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"e384b2f5-8f0d-48b8-8062-ca1f7b06eaef\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b9535b5b-f243-4650-9333-76f61ae13225\"\
+      },\"content\":[{\"text\":\"Additional Settings\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"5adff487-e1c4-4e1b-9d65-209635ea9ccf\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"0ddb6ad2-0a63-4812-85ac-6f90e9d6df96\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"02572332-f57a-42d1-ad39-6572850cbcd6\"\
+      },\"content\":[{\"text\":\"Make New Users Inactive by Default \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 동기화 시 새로운 사용자를 비활성화\
+      \ 상태로 추가할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"2db8300e-7318-4b32-8812-ce62142763c4\"},\"content\":[{\"text\"\
+      :\"동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기\
+      \ 바랍니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"38300ced-9fe5-4254-9a20-31e70d9bf696\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"5f968a07-7315-4414-8d1f-c843212f5e35\"},\"content\"\
+      :[{\"text\":\"Use an Attribute for Privilege Revoke\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지\
+      \ 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"f11992b6-45df-47e9-a1ce-062f92150120\"},\"content\":[{\"text\":\"특정 Attribute의\
+      \ 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"98778f6e-af9c-4dfb-bb61-75e1b69363cb\"\
+      },\"content\":[{\"text\":\"Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"50790995-689f-49b0-a645-37dfa5dd581b\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"87543926-dc12-4e61-8786-df3f49b1fcc7\"\
+      },\"content\":[{\"text\":\"Enable Attribute Synchronization\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : IdP의 사용자 속성과 QueryPie 사용자\
+      \ 속성을 매핑하여 동기화할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"\
+      attrs\":{\"localId\":\"d8ab43e9-61dd-44a2-a47e-76d4bf08a5d7\"},\"content\":[{\"\
+      text\":\"IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을\
+      \ 활성화하시기 바랍니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"\
+      localId\":\"d7d2fee3-7c4b-49da-a58c-399d69222d50\"},\"content\":[{\"text\":\"\
+      옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie\
+      \ Attribute를 지정할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"5e15e8cc-7550-4c6c-9673-acf992a0b1dc\"},\"content\":[{\"text\"\
+      :\"단, 해당 기능은 Profile Editor(Admin> General > User Management > Profile Editor)에서\
+      \ Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"8f73a8a1-d4a7-4438-9418-2839366dac05\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"69c33b98-3139-438f-b060-7ffa9a16490d\"\
+      },\"content\":[{\"text\":\"Allowed User Deletion Rate Threshold : \",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"f05077b7-ad07-4700-951a-96bae75cef09\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"3d2755d1-420c-41b5-ba4f-1dc452438be9\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9f312f70-969e-4c5c-8ff8-9aa50ace71b7\"\
+      },\"content\":[{\"text\":\"동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는\
+      \ 기능입니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"5b8c34ba-1935-4404-8acb-6b0b777f3356\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"d5620706-5940-43c8-a667-a24ae8059db0\"},\"content\"\
+      :[{\"text\":\"0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"attrs\":{\"localId\":\"7988ba4f-ab08-4e6d-aa61-d58e57054563\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"77db4f16-ff18-4fc6-a2d3-c05cc44cf58c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ce9a4769-11ad-448e-8e2a-87a47bcc314f\"\
+      },\"content\":[{\"text\":\"예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold\
+      \ 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"e1dbe3bc-b494-4c79-8e25-76eb2ad5dc02\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"667f1d94-b7c8-40a1-ac70-9167738d9531\"\
+      },\"content\":[{\"text\":\"11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면\
+      \ 이 값이 1.0 으로 기본 설정됩니다.\",\"type\":\"text\"}]}]}]}]}]}]}]}]}]},{\"type\":\"\
+      heading\",\"attrs\":{\"level\":2,\"localId\":\"d2fa7f54-35fa-44fb-ad8f-66d556dc78c0\"\
+      },\"content\":[{\"text\":\"SAML 2.0 연동 (주기적 동기화 없는 1회용)\",\"type\":\"text\"\
+      }]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1e74cb53-f79c-4b70-8964-89a539b8fe9f\"\
+      },\"content\":[{\"text\":\"주기적인 동기화 없이 1회만 SAML 연동하는 경우 SAML metadata 만 입력하여\
+      \ 설정합니다.\",\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"dc50ffec-dfc8-4c36-828c-840148b29d1d\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"1ae95943-a4ea-440d-a236-dd2444ba2ba1\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"39065f26-927b-4d67-aef8-ecdbc276bf21\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"315c937d-e887-4466-bde4-0592b5facf20\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"852b2906-ea36-49ab-80e0-cf892f623f50\"\
+      },\"content\":[{\"text\":\"Type \",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": SAML 을 선택합니다.\",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"attrs\":{\"localId\":\"7013ef1a-42c7-46b4-ab14-bddd2000ccc7\"},\"\
+      content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"1a69a06d-19f6-4c72-afc6-358d76dd5713\"\
+      },\"content\":[{\"text\":\"Identity Provider Metadata\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"strong\"}]},{\"text\":\" : IdP에서 확인한 SML metadata XML의\
+      \ 내용을 복사해서 붙여 넣습니다. \",\"type\":\"text\"}]}]}]},{\"type\":\"mediaSingle\",\"\
+      attrs\":{\"layout\":\"center\",\"width\":481,\"widthType\":\"pixel\"},\"content\"\
+      :[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\":\"image-20251014-015015.png\"\
+      ,\"id\":\"ae476387-9ab0-4280-844c-a3c9e2caf824\",\"collection\":\"contentId-1454342158\"\
+      ,\"type\":\"file\",\"localId\":\"8cfb0bba-72dd-4e56-b3f7-6f8c23a655ce\",\"height\"\
+      :581},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c74fa862-d4e9-4922-ac72-d3bcb99508cb\"\
+      },\"content\":[{\"text\":\"< 참고 > \",\"type\":\"text\"},{\"text\":\"AWS SSO\
+      \ 연동\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"\
+      https://querypie.atlassian.net/wiki/spaces/QM/pages/1495433217\"}}]},{\"text\"\
+      :\" \",\"type\":\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"\
+      localId\":\"15136b36-31b1-400b-bd75-c10637feac29\"},\"content\":[{\"text\":\"\
+      Custom Identity Provider\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"17bc779c-6223-4bdf-b9b2-05a2a9b080ff\"},\"content\":[{\"text\"\
+      :\"Custom Identity Provider는 인증 API서버를 사용하는 특수한 경우에만 사용합니다.\",\"type\":\"text\"\
+      }]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"07b6f676-cd36-4d30-9dd7-53822ae3c585\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"485b8ca1-9772-4a25-aaeb-1695ee418892\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"c4efae49-8023-40b9-b2bd-6b681d555f78\"\
+      },\"content\":[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\" : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"10b50081-b1f8-40cc-accc-83fcde7c6b7d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"485bb97b-19e5-45d4-bb00-86aa1de1c810\"\
+      },\"content\":[{\"text\":\"Type \",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": Custom Identity Provider 를 선택합니다.\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"f6a6c9ec-b939-4897-ae6b-cf8d58c53a06\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"ab5bb769-d554-46fe-8193-88ddedd7069b\"\
+      },\"content\":[{\"text\":\"API URL\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : API서버의 End-point URL을 입력합니다. \",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"5c1578b9-c252-46b0-a990-0a1e38758fcf\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"8f204698-5d47-4274-8ef9-e1a1fbaef450\"\
+      },\"content\":[{\"text\":\" 사용자 정보 동기화를 실행하려는 경우 Use Synchronization with the\
+      \ Authentication System 옵션을 활성화합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"\
+      mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":481,\"widthType\":\"\
+      pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":481,\"alt\":\"\
+      image-20251014-015047.png\",\"id\":\"774d6da7-50b0-481b-b042-b269c9c9ac7f\"\
+      ,\"collection\":\"contentId-1454342158\",\"type\":\"file\",\"localId\":\"ed5ffb55-0ffc-48e3-986f-a4e7b7eeb760\"\
+      ,\"height\":581},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":2,\"color\"\
+      :\"#091e4224\"}}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"fc66289c-2511-430a-ae52-739a42ff237b\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"405918b9-ab5d-45be-a833-0150d09f7e55\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4a9cf30f-caf4-46d6-bf49-ca71de7be649\"\
+      },\"content\":[{\"text\":\"Additional Settings\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\"\
+      :\"7df64d18-e809-486d-a5ae-44b4fc4471be\"},\"content\":[{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"2cb0f891-1094-4d90-97e0-420bb80f215a\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"728588d5-28a5-41f9-8e2d-d7676bb2c4a1\"\
+      },\"content\":[{\"text\":\"Make New Users Inactive by Default \",\"type\":\"\
+      text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 동기화 시 새로운 사용자를 비활성화\
+      \ 상태로 추가할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"fc5ee0b1-6f5a-40dd-a84e-9eecab2606db\"},\"content\":[{\"text\"\
+      :\"동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기\
+      \ 바랍니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"a1e45257-8479-41c8-9c20-5142473bc665\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"dd3b7508-8d53-4d70-9013-68bb02c48494\"},\"content\"\
+      :[{\"text\":\"Use an Attribute for Privilege Revoke\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지\
+      \ 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"18306950-fab2-4005-9ce0-e478e27c70bd\"},\"content\":[{\"text\":\"특정 Attribute의\
+      \ 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"ee906509-47ae-424b-ba9e-563f85fb01ef\"\
+      },\"content\":[{\"text\":\"Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"62664dc5-8697-4483-9531-30500cf314cb\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b24f8473-8289-4277-b9eb-2a2f65e95e86\"\
+      },\"content\":[{\"text\":\"Enable Attribute Synchronization\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : IdP의 사용자 속성과 QueryPie 사용자\
+      \ 속성을 매핑하여 동기화할지 여부를 선택합니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"\
+      attrs\":{\"localId\":\"06a025e5-54bb-4999-8c48-a490d0a13634\"},\"content\":[{\"\
+      text\":\"IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을\
+      \ 활성화하시기 바랍니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"\
+      localId\":\"4728776c-ff40-4d50-b69d-586fb9be5df2\"},\"content\":[{\"text\":\"\
+      옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie\
+      \ Attribute를 지정할 수 있습니다.\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\"\
+      :{\"localId\":\"846ebea8-f153-4809-ba78-1ade073e5905\"},\"content\":[{\"text\"\
+      :\"단, 해당 기능은 Profile Editor(Admin> General > User Management > Profile Editor)에서\
+      \ Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"1e9e04e3-64fe-44e6-8fc9-305221a05e54\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"15d7194d-a210-4c7b-afb0-8d23d501bf67\"\
+      },\"content\":[{\"text\":\"Allowed User Deletion Rate Threshold : \",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]}]},{\"type\":\"bulletList\",\"attrs\"\
+      :{\"localId\":\"2c2e695b-dbed-4cd9-b61e-48e6bac0e476\"},\"content\":[{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"b88cd542-bbbd-49c4-ab41-5b6d3ca9b4b5\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"96dad8cc-61f7-4fe2-81f6-8a23c2c725eb\"\
+      },\"content\":[{\"text\":\"동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는\
+      \ 기능입니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"47cdf98a-ae89-4d7c-be09-f14f99b95c14\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"ef274842-7f58-47f3-994f-817924ce8668\"},\"content\"\
+      :[{\"text\":\"0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)\",\"type\":\"text\"}]},{\"\
+      type\":\"bulletList\",\"attrs\":{\"localId\":\"e2532552-f23f-49fa-95d2-28c7b1419eb4\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"0e7ff511-2d7f-4135-b17f-361a5e5d0b8e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"b94521d9-6d74-4193-bbd1-a51381a97df0\"\
+      },\"content\":[{\"text\":\"예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold\
+      \ 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"9f77123f-344f-4f62-ace8-d372f0892de2\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0ad270f5-3ad0-4d52-a6ec-b478830ca40e\"\
+      },\"content\":[{\"text\":\"11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면\
+      \ 이 값이 1.0 으로 기본 설정됩니다.\",\"type\":\"text\"}]}]}]}]}]}]}]}]}]},{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"1e0537aa-06f7-434f-bc53-1585da5db3a8\"\
+      }}],\"version\":1}"
+"status": "current"
+"spaceId": "539099246"
+"title": "Identity Providers"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=1454342158"
+  "webui": "/spaces/QM/pages/1454342158/Identity+Providers"
+  "edituiv2": "/spaces/QM/pages/edit-v2/1454342158"
+  "tinyui": "/x/DoCvVg"
+  "base": "https://querypie.atlassian.net/wiki"
