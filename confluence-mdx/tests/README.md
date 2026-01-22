@@ -1,102 +1,102 @@
-# Confluence XHTML to Markdown Converter Tests
+# Confluence XHTML to Markdown 변환기 테스트
 
-This directory contains test cases for the `confluence_xhtml_to_markdown.py` script, which converts Confluence XHTML exports to Markdown format.
+이 디렉토리는 Confluence XHTML 내보내기를 Markdown 형식으로 변환하는 `confluence_xhtml_to_markdown.py` 스크립트의 테스트 케이스를 포함합니다.
 
-## Directory Structure
+## 디렉토리 구조
 
 ```
 confluence-mdx/tests/
-├── README.md                 # This file
-├── Makefile                  # Test runner
+├── README.md                 # 이 파일
+├── Makefile                  # 테스트 실행기
 ├── copy-files-to-testcases.sh
 ├── update-expected-mdx.sh
-└── testcases/                # Test cases directory
-    └── 568918170/            # Test case ID (Confluence page ID)
-        ├── page.xhtml        # Input XHTML file
-        ├── expected.mdx      # Expected output MDX file
-        └── output.mdx        # Actual output MDX file (generated during tests)
+└── testcases/                # 테스트 케이스 디렉토리
+    └── 568918170/            # 테스트 케이스 ID (Confluence 페이지 ID)
+        ├── page.xhtml        # 입력 XHTML 파일
+        ├── expected.mdx      # 예상 출력 MDX 파일
+        └── output.mdx        # 실제 출력 MDX 파일 (테스트 실행 시 생성)
 ```
 
-## Adding New Test Cases
+## 새 테스트 케이스 추가
 
-To add a new test case:
+새 테스트 케이스를 추가하려면:
 
-1. Create a new directory under `testcases/` with the Confluence page ID or a descriptive name
-2. Populate `testcases/<page-id>` with input files.
-   - Option A: Run `./copy-files-to-testcases.sh` to copy files from `../../docs/latest-ko-confluence/<page-id>/` into `testcases/<page-id>/`.
-   - Option B: Manually place `page.xhtml` (and any related assets) under `testcases/<page-id>/`.
-3. Generate the expected output by running:
+1. `testcases/` 아래에 Confluence 페이지 ID 또는 설명적인 이름으로 새 디렉토리를 생성합니다.
+2. `testcases/<page-id>`에 입력 파일을 추가합니다.
+   - 방법 A: `./copy-files-to-testcases.sh`를 실행하여 `../../docs/latest-ko-confluence/<page-id>/`의 파일을 `testcases/<page-id>/`로 복사합니다.
+   - 방법 B: `page.xhtml` (및 관련 에셋)을 `testcases/<page-id>/` 아래에 수동으로 배치합니다.
+3. 다음 명령을 실행하여 예상 출력을 생성합니다:
    ```
    source ../../venv/bin/activate
    python ../../scripts/confluence_xhtml_to_markdown.py testcases/<page-id>/page.xhtml testcases/<page-id>/expected.mdx
    ```
-   Run the above from this directory: confluence-mdx/tests.
-4. Consider the newly generated `output.mdx` as the baseline expected output when appropriate.
-   - Run `./update-expected-mdx.sh` to copy `output.mdx` to `expected.mdx` for the test case.
+   위 명령은 이 디렉토리(confluence-mdx/tests)에서 실행합니다.
+4. 적절한 경우 새로 생성된 `output.mdx`를 기준 예상 출력으로 사용합니다.
+   - `./update-expected-mdx.sh`를 실행하여 해당 테스트 케이스의 `output.mdx`를 `expected.mdx`로 복사합니다.
 
 
-## Running Tests
+## 테스트 실행
 
-Tests are run using the Makefile in this directory.
+테스트는 이 디렉토리의 Makefile을 사용하여 실행합니다.
 
-### Run all tests
+### 모든 테스트 실행
 
 ```bash
 cd confluence-mdx/tests
 make test
 ```
 
-### Run a specific test
+### 특정 테스트 실행
 
 ```bash
 cd confluence-mdx/tests
 make test-one TEST_ID=568918170
 ```
 
-### Clean output files
+### 출력 파일 정리
 
 ```bash
 cd confluence-mdx/tests
 make clean
 ```
 
-## Update input files and expected output
+## 입력 파일 및 예상 출력 업데이트
 
-How to update input files
-- Ensure your Confluence data has been refreshed under `confluence-mdx/var/<page-id>/`.
-- From this directory, run:
+입력 파일 업데이트 방법
+- `confluence-mdx/var/<page-id>/` 아래의 Confluence 데이터가 새로고침되었는지 확인합니다.
+- 이 디렉토리에서 다음을 실행합니다:
   ```bash
   ./copy-files-to-testcases.sh
   ```
-  This copies the latest files (e.g., `page.xhtml`, `page.yaml`, attachments) for each `<page-id>` into the matching `testcases/<page-id>/` directory.
-- Alternatively, manually copy or edit `testcases/<page-id>/page.xhtml` if you are crafting a synthetic test case.
+  이 명령은 각 `<page-id>`의 최신 파일(예: `page.xhtml`, `page.yaml`, 첨부파일)을 해당하는 `testcases/<page-id>/` 디렉토리로 복사합니다.
+- 또는 합성 테스트 케이스를 만드는 경우 `testcases/<page-id>/page.xhtml`을 수동으로 복사하거나 편집합니다.
 
-How to update expected outputs
-- Activate the Python virtual environment and generate fresh outputs for all cases by running the tests:
+예상 출력 업데이트 방법
+- Python 가상 환경을 활성화하고 테스트를 실행하여 모든 케이스의 새로운 출력을 생성합니다:
   ```bash
   source ../../venv/bin/activate
   make test-xhtml
   ```
-  This regenerates `testcases/<page-id>/output.mdx` for each case.
-- If the new outputs are correct, and you want to accept them as the expected baselines, run:
+  이 명령은 각 케이스의 `testcases/<page-id>/output.mdx`를 재생성합니다.
+- 새 출력이 정확하고 이를 예상 기준으로 사용하려면 다음을 실행합니다:
   ```bash
   ./update-expected-mdx.sh
   ```
-  This replaces each `expected.mdx` with the corresponding `output.mdx`.
-- For a single test case, you can update just one expected file:
+  이 명령은 각 `expected.mdx`를 해당 `output.mdx`로 교체합니다.
+- 단일 테스트 케이스의 경우 하나의 예상 파일만 업데이트할 수 있습니다:
   ```bash
   source ../../venv/bin/activate
   make test-one-xhtml TEST_ID=<page-id>
   cp testcases/<page-id>/output.mdx testcases/<page-id>/expected.mdx
   ```
 
-## Test Process
+## 테스트 프로세스
 
-The test process:
+테스트 프로세스:
 
-1. Activates the Python virtual environment
-2. Runs the conversion script on the input XHTML file
-3. Compares the generated output with the expected output
-4. Reports any differences
+1. Python 가상 환경을 활성화합니다.
+2. 입력 XHTML 파일에 대해 변환 스크립트를 실행합니다.
+3. 생성된 출력을 예상 출력과 비교합니다.
+4. 차이점을 보고합니다.
 
-This allows for regression testing when making changes to the conversion script.
+이를 통해 변환 스크립트를 변경할 때 회귀 테스트를 수행할 수 있습니다.
