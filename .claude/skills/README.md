@@ -6,12 +6,23 @@
 
 ### 문서 작성 Skills
 - **documentation.md** - MDX 문서 파일 작성 및 편집 가이드라인
-- **translation.md** - 다국어 간 콘텐츠 번역 가이드라인 (en, ja, ko)
-- **confluence-mdx.md** - Confluence에서 MDX로 변환하는 워크플로우 가이드라인
-- **mdx-skeleton-comparison.md** - 스켈레톤 비교를 통해 원문과 번역본 MDX 파일 간의 불일치 감지 가이드라인
+- **translation.md** - 다국어 번역 가이드라인 (ko → en, ja)
+- **confluence-mdx.md** - Confluence에서 MDX로 변환 워크플로우
+- **mdx-skeleton-comparison.md** - 스켈레톤 비교를 통한 번역 일관성 검증
 
 ### 개발 Skills
-- **code-review.md** - 이 저장소의 코드 변경 사항 검토 가이드라인
+- **code-review.md** - 코드 변경 사항 검토 가이드라인
+
+## Skills과 참조 문서 관계
+
+각 skill은 핵심 원칙과 빠른 시작 가이드를 제공하며, 상세 내용은 프로젝트의 다른 문서를 참조합니다:
+
+| Skill | 참조 문서 |
+|-------|----------|
+| translation.md | [docs/translation.md](/docs/translation.md) |
+| confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
+| mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
+| documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
 
 ## 사용법
 
@@ -37,4 +48,5 @@
 - 소스 콘텐츠: `src/content/{lang}/`
 - Confluence 변환 스크립트: `confluence-mdx/bin/`
 - 공용 자산: `public/`
+- 프로젝트 문서: `docs/`
 
