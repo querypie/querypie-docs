@@ -8,7 +8,7 @@ const useLocale = (defaultLocale: string = 'en'): string => {
   const pathname = usePathname();
 
   let locale = defaultLocale;
-  if (i18n.length) {
+  if (i18n.length && pathname) {
     const pathSegments = pathname.split('/').filter(Boolean); // Remove empty strings
 
     if (pathSegments.length > 0) {
