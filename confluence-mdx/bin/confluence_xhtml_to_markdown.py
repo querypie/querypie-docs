@@ -204,6 +204,51 @@ def parse_confluence_url(href: str) -> Optional[Dict[str, str]]:
     }
 
 
+def convert_confluence_url(href: str) -> tuple[str, Optional[str]]:
+    """
+    Convert a Confluence URL to an internal markdown link.
+
+    Args:
+        href: The URL to convert
+
+    Returns:
+        tuple: (converted_href, readable_anchor_text)
+               readable_anchor_text is provided when the original link text (URL) should be replaced
+    """
+    parsed = parse_confluence_url(href)
+    if not parsed:
+        return href, None
+
+    current_page_id = GLOBAL_PAGE_V1.get('id', '') if GLOBAL_PAGE_V1 else ''
+    target_page_id = parsed['page_id']
+    anchor = parsed['anchor']
+
+    if target_page_id == current_page_id and anchor:
+        # Same page segment link - convert to internal anchor
+        decoded_anchor = unquote(anchor).lower()
+        readable_text = unquote(anchor).replace('-', ' ')
+        logging.debug(f"Converted same-page segment link to #{decoded_anchor}")
+        return f'#{decoded_anchor}', readable_text
+
+    if anchor:
+        # Different page with anchor
+        target_page = PAGES_BY_ID.get(target_page_id)
+        if target_page:
+            target_path = relative_path_to_titled_page(target_page.get('title', ''))
+            decoded_anchor = unquote(anchor).lower()
+            readable_text = unquote(anchor).replace('-', ' ')
+            return f'{target_path}#{decoded_anchor}', readable_text
+        logging.warning(f"Target page {target_page_id} not found in pages dictionary")
+        return href, None
+
+    # Different page without anchor
+    target_page = PAGES_BY_ID.get(target_page_id)
+    if target_page:
+        return relative_path_to_titled_page(target_page.get('title', '')), None
+    logging.warning(f"Target page {target_page_id} not found in pages dictionary")
+    return href, None
+
+
 def clean_text(text: Optional[str]) -> Optional[str]:
     """Clean text by removing hidden characters"""
     if text is None:
@@ -765,53 +810,11 @@ class SingleLineParser:
             # <br/> is a line break. Just keep using <br/>.
             self.markdown_lines.append("<br/>")
         elif node.name in ['a']:
-            href = node.get('href', '#')
-            readable_anchor_text = None  # Used when link text is a URL
-
-            # Parse Confluence URL to handle segment links
-            parsed_url = parse_confluence_url(href)
-            if parsed_url:
-                current_page_id = GLOBAL_PAGE_V1.get('id', '') if GLOBAL_PAGE_V1 else ''
-                target_page_id = parsed_url['page_id']
-                anchor = parsed_url['anchor']
-
-                if target_page_id == current_page_id and anchor:
-                    # Same page segment link - convert to internal anchor
-                    decoded_anchor = unquote(anchor).lower()
-                    href = f'#{decoded_anchor}'
-                    # Store readable anchor text for when link text is a URL
-                    readable_anchor_text = unquote(anchor).replace('-', ' ')
-                    logging.debug(f"Converted same-page segment link to {href}")
-                elif anchor:
-                    # Different page with anchor - use relative path with anchor
-                    target_page = PAGES_BY_ID.get(target_page_id)
-                    if target_page:
-                        target_path = relative_path_to_titled_page(target_page.get('title', ''))
-                        decoded_anchor = unquote(anchor).lower()
-                        href = f'{target_path}#{decoded_anchor}'
-                        readable_anchor_text = unquote(anchor).replace('-', ' ')
-                    else:
-                        logging.warning(f"Target page {target_page_id} not found in pages dictionary")
-                else:
-                    # Different page without anchor
-                    target_page = PAGES_BY_ID.get(target_page_id)
-                    if target_page:
-                        href = relative_path_to_titled_page(target_page.get('title', ''))
-                    else:
-                        logging.warning(f"Target page {target_page_id} not found in pages dictionary")
-
-            # Get link text from children
-            link_text_parts = []
-            for child in node.children:
-                link_text_parts.append(SingleLineParser(child).as_markdown)
-            link_text = ''.join(link_text_parts)
-
-            # If link text is a URL and we have a readable anchor, use the anchor text instead
+            href, readable_anchor_text = convert_confluence_url(node.get('href', '#'))
+            link_text = ''.join(SingleLineParser(child).as_markdown for child in node.children)
             if readable_anchor_text and link_text.startswith('http'):
                 link_text = readable_anchor_text
-
             self.markdown_lines.append(f"[{link_text}]({href})")
-            logging.debug(f"SingleLineParser: {print_node_with_properties(node)} from {ancestors(node)} in {confluence_url()}")
         elif node.name in ['ac:link']:
             """
             <ac:link>
