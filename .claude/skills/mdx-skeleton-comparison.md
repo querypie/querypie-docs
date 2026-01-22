@@ -1,117 +1,117 @@
-# MDX Skeleton Comparison Guidelines
+# MDX 스켈레톤 비교 가이드라인
 
-## Overview
+## 개요
 
-This skill provides guidelines for detecting inconsistencies between original Korean MDX files and their translations (English and Japanese) using the `mdx_to_skeleton.py` tool. The tool converts MDX files to skeleton format (replacing text content with `_TEXT_` placeholders) to compare document structure across languages.
+이 skill은 `mdx_to_skeleton.py` 도구를 사용하여 한국어 원본 MDX 파일과 번역본(영어 및 일본어) 간의 불일치를 감지하기 위한 가이드라인을 제공합니다. 이 도구는 MDX 파일을 스켈레톤 형식(텍스트 콘텐츠를 `_TEXT_` 플레이스홀더로 대체)으로 변환하여 언어 간 문서 구조를 비교합니다.
 
-## Purpose
+## 목적
 
-The goal is to identify structural inconsistencies between:
-- **Original MDX files** (Korean): Located in `confluence-mdx/target/ko/`
-- **Translated MDX files** (English): Located in `confluence-mdx/target/en/`
-- **Translated MDX files** (Japanese): Located in `confluence-mdx/target/ja/`
+불일치를 감지하는 대상:
+- **원본 MDX 파일** (한국어): `confluence-mdx/target/ko/`에 위치
+- **번역 MDX 파일** (영어): `confluence-mdx/target/en/`에 위치
+- **번역 MDX 파일** (일본어): `confluence-mdx/target/ja/`에 위치
 
-## Tool: mdx_to_skeleton.py
+## 도구: mdx_to_skeleton.py
 
-### Location
+### 위치
 
-The tool is located at: `confluence-mdx/bin/mdx_to_skeleton.py`
+도구 위치: `confluence-mdx/bin/mdx_to_skeleton.py`
 
-### How It Works
+### 작동 방식
 
-The `mdx_to_skeleton.py` script converts MDX files to skeleton format by:
-1. Preserving document structure (headers, lists, code blocks, links, etc.)
-2. Replacing all text content with `_TEXT_` placeholder
-3. Maintaining whitespace and formatting structure
-4. Generating `.skel.mdx` files alongside original `.mdx` files
+`mdx_to_skeleton.py` 스크립트는 MDX 파일을 다음과 같이 스켈레톤 형식으로 변환합니다:
+1. 문서 구조 보존 (헤더, 목록, 코드 블록, 링크 등)
+2. 모든 텍스트 콘텐츠를 `_TEXT_` 플레이스홀더로 대체
+3. 공백 및 포맷팅 구조 유지
+4. 원본 `.mdx` 파일과 함께 `.skel.mdx` 파일 생성
 
-This allows comparison of document structure across languages without being affected by actual text content differences.
+이를 통해 실제 텍스트 콘텐츠 차이에 영향받지 않고 언어 간 문서 구조를 비교할 수 있습니다.
 
-### Usage
+### 사용법
 
-To check for inconsistencies between original and translated MDX files:
+원본과 번역 MDX 파일 간의 불일치를 확인하려면:
 
 ```bash
 cd confluence-mdx/
-source venv/bin/activate  # Activate Python virtual environment
+source venv/bin/activate  # Python 가상 환경 활성화
 bin/mdx_to_skeleton.py --recursive --max-diff=20
 ```
 
-**Command Options:**
-- `--recursive`: Process directories recursively (defaults to `target/ko`, `target/ja`, `target/en` if no directories specified)
-- `--max-diff=20`: Maximum number of differences to output before stopping (default: 20)
+**명령어 옵션:**
+- `--recursive`: 디렉토리를 재귀적으로 처리 (디렉토리 미지정 시 기본값은 `target/ko`, `target/ja`, `target/en`)
+- `--max-diff=20`: 중지 전 출력할 최대 차이 수 (기본값: 20)
 
-**What It Does:**
-1. Converts all `.mdx` files in `target/ko/`, `target/ja/`, and `target/en/` to `.skel.mdx` format
-2. Compares each translated skeleton file (English/Japanese) with its Korean equivalent
-3. Reports differences in document structure (whitespace, line breaks, formatting)
-4. Shows original `.mdx` file content for each difference found
+**수행 작업:**
+1. `target/ko/`, `target/ja/`, `target/en/`의 모든 `.mdx` 파일을 `.skel.mdx` 형식으로 변환
+2. 각 번역 스켈레톤 파일(영어/일본어)을 한국어 원본과 비교
+3. 문서 구조의 차이 보고 (공백, 줄 바꿈, 포맷팅)
+4. 발견된 각 차이에 대해 원본 `.mdx` 파일 내용 표시
 
-## Workflow: Detecting and Fixing Inconsistencies
+## 워크플로우: 불일치 감지 및 수정
 
-### Step 1: Run the Comparison Tool
+### 1단계: 비교 도구 실행
 
-Execute the command as shown above. The tool will:
-- Process all MDX files recursively
-- Generate skeleton files (`.skel.mdx`)
-- Compare translated versions with Korean originals
-- Output differences found (up to `--max-diff` limit)
+위에 표시된 명령어를 실행합니다. 도구는 다음을 수행합니다:
+- 모든 MDX 파일을 재귀적으로 처리
+- 스켈레톤 파일(`.skel.mdx`) 생성
+- 번역 버전을 한국어 원본과 비교
+- 발견된 차이 출력 (`--max-diff` 제한까지)
 
-### Step 2: Analyze the Results
+### 2단계: 결과 분석
 
-The tool outputs differences in two formats:
-1. **Skeleton diff**: Shows differences in `.skel.mdx` files (structure comparison)
-2. **Original content diff**: Shows differences in original `.mdx` files (actual content)
+도구는 두 가지 형식으로 차이를 출력합니다:
+1. **스켈레톤 diff**: `.skel.mdx` 파일의 차이 표시 (구조 비교)
+2. **원본 콘텐츠 diff**: 원본 `.mdx` 파일의 차이 표시 (실제 콘텐츠)
 
-Look for patterns indicating:
-- Whitespace differences (spaces, tabs, indentation)
-- Line break differences
-- Formatting structure differences
+다음 패턴을 찾습니다:
+- 공백 차이 (스페이스, 탭, 들여쓰기)
+- 줄 바꿈 차이
+- 포맷팅 구조 차이
 
-### Step 3: Determine the Cause
+### 3단계: 원인 파악
 
-There are three possible scenarios when inconsistencies are found:
+불일치가 발견되면 세 가지 시나리오가 가능합니다:
 
-#### Case 1: Original File Changes (Source Document Updates)
+#### 사례 1: 원본 파일 변경 (소스 문서 업데이트)
 
-**Symptom**: The skeleton comparison shows differences because the original Korean `.mdx` file has been updated after the translation was completed.
+**증상**: 번역 완료 후 한국어 원본 `.mdx` 파일이 업데이트되어 스켈레톤 비교에서 차이가 표시됨.
 
-**Cause**: The original Korean file was changed for various reasons:
-- Image insertions or additions
-- Typo corrections
-- Product feature improvements requiring documentation updates
-- Document error corrections
-- Content additions or modifications
+**원인**: 다양한 이유로 한국어 원본 파일이 변경됨:
+- 이미지 삽입 또는 추가
+- 오타 수정
+- 제품 기능 개선에 따른 문서 업데이트
+- 문서 오류 수정
+- 콘텐츠 추가 또는 수정
 
-**Solution**: Compare the original and translated `.mdx` files to identify differences, then update the translation file to reflect the changes in the original.
+**해결책**: 원본과 번역 `.mdx` 파일을 비교하여 차이를 파악한 후, 원본의 변경 사항을 반영하도록 번역 파일을 업데이트합니다.
 
-**Important Notes:**
-- Check the git log of the original Korean MDX file to see when changes were made
-- **For large-scale batch translations completed by September 25, 2025**: Check the git log to identify changes made after that date
-- The git log will show all modifications to the original file since the batch translation
-- Update the translation to match the current state of the original
-- Ensure all new content is properly translated
-- Maintain consistency with the updated original structure
+**중요 참고사항:**
+- 한국어 원본 MDX 파일의 git 로그를 확인하여 변경 시점 파악
+- **2025년 9월 25일까지 완료된 대규모 일괄 번역의 경우**: git 로그를 확인하여 해당 날짜 이후의 변경 사항 파악
+- git 로그에서 일괄 번역 이후 원본 파일의 모든 수정 사항 확인 가능
+- 원본의 현재 상태에 맞게 번역 업데이트
+- 모든 새 콘텐츠가 올바르게 번역되었는지 확인
+- 업데이트된 원본 구조와 일관성 유지
 
-**How to Identify:**
-- Use `git log` to check when the original file was last modified:
+**파악 방법:**
+- `git log`를 사용하여 원본 파일의 마지막 수정 시점 확인:
   ```bash
   git log --follow --oneline src/content/ko/path/to/file.mdx
   ```
-- For files in `confluence-mdx/target/ko/`:
+- `confluence-mdx/target/ko/`의 파일:
   ```bash
   git log --follow --oneline confluence-mdx/target/ko/path/to/file.mdx
   ```
-- Filter changes after September 25, 2025 (post-batch-translation):
+- 2025년 9월 25일 이후 변경 사항 필터링 (일괄 번역 이후):
   ```bash
   git log --follow --oneline --since="2025-09-25" src/content/ko/path/to/file.mdx
   ```
-- Compare the original file with the translation file
-- Look for added sections, modified content, or structural changes
-- Check if images were added or modified
+- 원본 파일과 번역 파일 비교
+- 추가된 섹션, 수정된 콘텐츠, 구조 변경 확인
+- 이미지가 추가 또는 수정되었는지 확인
 
-**Example Fix:**
-If the Korean original was updated to add a new section:
+**수정 예시:**
+한국어 원본에 새 섹션이 추가된 경우:
 ```markdown
 ## 설정
 
@@ -122,7 +122,7 @@ If the Korean original was updated to add a new section:
 이제 자동 백업을 지원합니다.
 ```
 
-The English translation should be updated to include the new section:
+영어 번역에 새 섹션을 포함하도록 업데이트:
 ```markdown
 ## Setting
 
@@ -133,72 +133,72 @@ You can connect to the database.
 Automatic backup is now supported.
 ```
 
-**Workflow for Case 1:**
-1. Check git history of the original Korean file to identify when changes were made (especially changes after September 25, 2025 for post-batch-translation updates)
-2. Review the git log to understand what was changed and why (image additions, typo fixes, feature updates, etc.)
-3. Compare the current original file with the translation file
-4. Identify all differences (added, modified, or removed content)
-5. Translate and add new content following `translation.md` guidelines
-6. Update modified sections to match the original
-7. Remove any content that was removed from the original
+**사례 1 워크플로우:**
+1. 한국어 원본 파일의 git 히스토리를 확인하여 변경 시점 파악 (특히 일괄 번역 이후인 2025년 9월 25일 이후 변경 사항)
+2. git 로그를 검토하여 변경 내용과 이유 파악 (이미지 추가, 오타 수정, 기능 업데이트 등)
+3. 현재 원본 파일과 번역 파일 비교
+4. 모든 차이점 파악 (추가, 수정, 삭제된 콘텐츠)
+5. `translation.md` 가이드라인에 따라 새 콘텐츠 번역 및 추가
+6. 수정된 섹션을 원본에 맞게 업데이트
+7. 원본에서 삭제된 콘텐츠 제거
 
-#### Case 2: Translation Errors (Incorrect or Incomplete Translation)
+#### 사례 2: 번역 오류 (잘못되거나 불완전한 번역)
 
-**Symptom**: The skeleton comparison shows differences indicating issues in the translation file, such as:
-- Whitespace, line breaks, or formatting differences
-- Missing content (parts of the original were not translated)
-- Untranslated content (original Korean text left in translation)
-- Incorrectly translated content (not following guidelines)
-- Added content (text that doesn't exist in the original)
+**증상**: 스켈레톤 비교에서 번역 파일의 문제를 나타내는 차이 표시:
+- 공백, 줄 바꿈, 포맷팅 차이
+- 누락된 콘텐츠 (원본의 일부가 번역되지 않음)
+- 번역되지 않은 콘텐츠 (원본 한국어 텍스트가 번역에 남아 있음)
+- 잘못 번역된 콘텐츠 (가이드라인을 따르지 않음)
+- 추가된 콘텐츠 (원본에 없는 텍스트가 추가됨)
 
-**Cause**: The translation process failed to follow guidelines or had errors, resulting in:
-- **Whitespace/formatting differences**: The translated `.mdx` file has different whitespace or line breaks compared to the Korean original
-- **Translation not following guidelines**: Content translated incorrectly or not according to `translation.md` guidelines
-- **Missing content**: Parts of the original Korean text were not translated (content omission)
-- **Untranslated content**: Original Korean text was left in the translation file instead of being translated
-- **Added content**: Text that doesn't exist in the original Korean file was added to the translation
+**원인**: 번역 과정에서 가이드라인을 따르지 않거나 오류 발생:
+- **공백/포맷팅 차이**: 번역된 `.mdx` 파일이 한국어 원본과 다른 공백 또는 줄 바꿈을 가짐
+- **가이드라인 미준수 번역**: 콘텐츠가 잘못 번역되었거나 `translation.md` 가이드라인을 따르지 않음
+- **누락된 콘텐츠**: 원본 한국어 텍스트의 일부가 번역되지 않음 (콘텐츠 누락)
+- **번역되지 않은 콘텐츠**: 원본 한국어 텍스트가 번역 파일에 그대로 남아 있음
+- **추가된 콘텐츠**: 원본 한국어 파일에 없는 텍스트가 번역에 추가됨
 
-**Solution**: Compare the original and translated `.mdx` files to identify differences, then fix and supplement the translation file to match the original.
+**해결책**: 원본과 번역 `.mdx` 파일을 비교하여 차이를 파악한 후, 원본에 맞게 번역 파일을 수정하고 보완합니다.
 
-**Important Notes:**
-- Do NOT modify `mdx_to_skeleton.py` to fix translation issues
-- The translation file should match the original's formatting exactly (spaces, tabs, line breaks, indentation)
-- Review the original Korean file and the translated file side by side
-- Ensure all content from the original is properly translated
-- Remove any untranslated Korean text
-- Remove any content that doesn't exist in the original
-- Follow `translation.md` guidelines for proper translation
-- Maintain the same document structure as the original
-- Refer to `translation.md` guidelines for translation formatting requirements
+**중요 참고사항:**
+- 번역 문제를 해결하기 위해 `mdx_to_skeleton.py`를 수정하지 마세요
+- 번역 파일은 원본의 포맷팅과 정확히 일치해야 함 (스페이스, 탭, 줄 바꿈, 들여쓰기)
+- 한국어 원본 파일과 번역 파일을 나란히 검토
+- 원본의 모든 콘텐츠가 올바르게 번역되었는지 확인
+- 번역되지 않은 한국어 텍스트 제거
+- 원본에 없는 콘텐츠 제거
+- 올바른 번역을 위해 `translation.md` 가이드라인 따르기
+- 원본과 동일한 문서 구조 유지
+- 번역 포맷팅 요구사항은 `translation.md` 가이드라인 참조
 
-**How to Identify:**
-- Check the original content diff output from the tool
-- Look for whitespace differences (missing spaces after markdown elements)
-- Look for missing sections, paragraphs, or sentences
-- Look for Korean text in English/Japanese translations
-- Look for content in translations that doesn't appear in the original
+**파악 방법:**
+- 도구의 원본 콘텐츠 diff 출력 확인
+- 공백 차이 확인 (마크다운 요소 뒤 스페이스 누락)
+- 누락된 섹션, 단락, 문장 확인
+- 영어/일본어 번역에서 한국어 텍스트 확인
+- 원본에 없는 번역 콘텐츠 확인
 
-**Example Fixes:**
+**수정 예시:**
 
-**Whitespace/Formatting Fix:**
-If Korean original has:
+**공백/포맷팅 수정:**
+한국어 원본:
 ```markdown
 **Setting** 문서
 ```
 
-And Japanese translation has:
+일본어 번역:
 ```markdown
 **Setting**文書
 ```
 
-The Japanese translation should be fixed to:
+일본어 번역 수정:
 ```markdown
 **Setting** 文書
 ```
-(Note the space after `**Setting**`)
+(`**Setting**` 뒤에 스페이스 추가)
 
-**Missing Content Fix:**
-If Korean original has:
+**누락된 콘텐츠 수정:**
+한국어 원본:
 ```markdown
 ## 설정
 
@@ -209,14 +209,14 @@ If Korean original has:
 이 기능은 관리자 권한이 필요합니다.
 ```
 
-And English translation has:
+영어 번역:
 ```markdown
 ## Setting
 
 You can connect to the database.
 ```
 
-The English translation should be updated to include the missing section:
+누락된 섹션을 포함하도록 영어 번역 업데이트:
 ```markdown
 ## Setting
 
@@ -227,46 +227,46 @@ You can connect to the database.
 This feature requires administrator privileges.
 ```
 
-#### Case 3: MDX Skeleton Comparison Tool Error
+#### 사례 3: MDX 스켈레톤 비교 도구 오류
 
-**Symptom**: The skeleton comparison shows differences because the original Korean `.mdx` file has been updated after the translation was completed.
+**증상**: 번역 완료 후 한국어 원본 `.mdx` 파일이 업데이트되어 스켈레톤 비교에서 차이가 표시됨.
 
-**Cause**: The original Korean file was changed for various reasons:
-- Image insertions or additions
-- Typo corrections
-- Product feature improvements requiring documentation updates
-- Document error corrections
-- Content additions or modifications
+**원인**: 다양한 이유로 한국어 원본 파일이 변경됨:
+- 이미지 삽입 또는 추가
+- 오타 수정
+- 제품 기능 개선에 따른 문서 업데이트
+- 문서 오류 수정
+- 콘텐츠 추가 또는 수정
 
-**Solution**: Compare the original and translated `.mdx` files to identify differences, then update the translation file to reflect the changes in the original.
+**해결책**: 원본과 번역 `.mdx` 파일을 비교하여 차이를 파악한 후, 원본의 변경 사항을 반영하도록 번역 파일을 업데이트합니다.
 
-**Important Notes:**
-- Check the git log of the original Korean MDX file to see when changes were made
-- **For large-scale batch translations completed by September 25, 2025**: Check the git log to identify changes made after that date
-- The git log will show all modifications to the original file since the batch translation
-- Update the translation to match the current state of the original
-- Ensure all new content is properly translated
-- Maintain consistency with the updated original structure
+**중요 참고사항:**
+- 한국어 원본 MDX 파일의 git 로그를 확인하여 변경 시점 파악
+- **2025년 9월 25일까지 완료된 대규모 일괄 번역의 경우**: git 로그를 확인하여 해당 날짜 이후의 변경 사항 파악
+- git 로그에서 일괄 번역 이후 원본 파일의 모든 수정 사항 확인 가능
+- 원본의 현재 상태에 맞게 번역 업데이트
+- 모든 새 콘텐츠가 올바르게 번역되었는지 확인
+- 업데이트된 원본 구조와 일관성 유지
 
-**How to Identify:**
-- Use `git log` to check when the original file was last modified:
+**파악 방법:**
+- `git log`를 사용하여 원본 파일의 마지막 수정 시점 확인:
   ```bash
   git log --follow --oneline src/content/ko/path/to/file.mdx
   ```
-- For files in `confluence-mdx/target/ko/`:
+- `confluence-mdx/target/ko/`의 파일:
   ```bash
   git log --follow --oneline confluence-mdx/target/ko/path/to/file.mdx
   ```
-- Filter changes after September 25, 2025 (post-batch-translation):
+- 2025년 9월 25일 이후 변경 사항 필터링 (일괄 번역 이후):
   ```bash
   git log --follow --oneline --since="2025-09-25" src/content/ko/path/to/file.mdx
   ```
-- Compare the original file with the translation file
-- Look for added sections, modified content, or structural changes
-- Check if images were added or modified
+- 원본 파일과 번역 파일 비교
+- 추가된 섹션, 수정된 콘텐츠, 구조 변경 확인
+- 이미지가 추가 또는 수정되었는지 확인
 
-**Example Fix:**
-If the Korean original was updated to add a new section:
+**수정 예시:**
+한국어 원본에 새 섹션이 추가된 경우:
 ```markdown
 ## 설정
 
@@ -277,7 +277,7 @@ If the Korean original was updated to add a new section:
 이제 자동 백업을 지원합니다.
 ```
 
-The English translation should be updated to include the new section:
+영어 번역에 새 섹션을 포함하도록 업데이트:
 ```markdown
 ## Setting
 
@@ -288,63 +288,63 @@ You can connect to the database.
 Automatic backup is now supported.
 ```
 
-**Workflow for Case 1:**
-1. Check git history of the original Korean file to identify when changes were made (especially changes after September 25, 2025 for post-batch-translation updates)
-2. Review the git log to understand what was changed and why (image additions, typo fixes, feature updates, etc.)
-3. Compare the current original file with the translation file
-4. Identify all differences (added, modified, or removed content)
-5. Translate and add new content following `translation.md` guidelines
-6. Update modified sections to match the original
-7. Remove any content that was removed from the original
+**사례 1 워크플로우:**
+1. 한국어 원본 파일의 git 히스토리를 확인하여 변경 시점 파악 (특히 일괄 번역 이후인 2025년 9월 25일 이후 변경 사항)
+2. git 로그를 검토하여 변경 내용과 이유 파악 (이미지 추가, 오타 수정, 기능 업데이트 등)
+3. 현재 원본 파일과 번역 파일 비교
+4. 모든 차이점 파악 (추가, 수정, 삭제된 콘텐츠)
+5. `translation.md` 가이드라인에 따라 새 콘텐츠 번역 및 추가
+6. 수정된 섹션을 원본에 맞게 업데이트
+7. 원본에서 삭제된 콘텐츠 제거
 
-## Best Practices
+## 모범 사례
 
-### When to Check for Inconsistencies
+### 불일치 확인 시점
 
-- After bulk translation updates
-- Before committing translation changes
-- When reviewing translation quality
-- After manual edits to translated files
-- **After updates to original Korean files**: Check git log for changes made after September 25, 2025 (the date when large-scale batch translation was completed) to identify post-translation updates (Case 1)
-- When reviewing translation completeness
-- When original files are updated due to product feature improvements, typo corrections, or documentation fixes
+- 일괄 번역 업데이트 후
+- 번역 변경 사항 커밋 전
+- 번역 품질 검토 시
+- 번역 파일 수동 편집 후
+- **한국어 원본 파일 업데이트 후**: 일괄 번역 이후인 2025년 9월 25일 이후 변경 사항을 git 로그에서 확인 (사례 1)
+- 번역 완전성 검토 시
+- 제품 기능 개선, 오타 수정, 문서 수정으로 인해 원본 파일이 업데이트된 경우
 
-### Translation Guidelines
+### 번역 가이드라인
 
-When fixing translation files (Case 1, Case 2), follow these guidelines from `translation.md`:
+번역 파일 수정 시 (사례 1, 사례 2), `translation.md`의 다음 가이드라인을 따르세요:
 
-1. **Preserve Formatting**: Maintain exact markdown formatting, line breaks, and whitespace from the Korean original
-2. **Whitespace Consistency**: Ensure spaces around markdown elements match the original
-   - After inline code: `` `code` text `` (space after backtick)
-   - After links: `[text](url) text` (space after closing parenthesis)
-   - After HTML tags: `<br/> text` (space after tag)
-   - After formatting: `**text** text` (space after closing markers)
-3. **Line Breaks**: Match line breaks exactly with the original
-4. **Indentation**: Preserve indentation for lists, code blocks, and nested structures
+1. **포맷팅 보존**: 한국어 원본의 정확한 마크다운 포맷팅, 줄 바꿈, 공백 유지
+2. **공백 일관성**: 마크다운 요소 주변의 스페이스가 원본과 일치하도록 확인
+   - 인라인 코드 뒤: `` `code` text `` (백틱 뒤 스페이스)
+   - 링크 뒤: `[text](url) text` (닫는 괄호 뒤 스페이스)
+   - HTML 태그 뒤: `<br/> text` (태그 뒤 스페이스)
+   - 포맷팅 뒤: `**text** text` (닫는 마커 뒤 스페이스)
+3. **줄 바꿈**: 원본과 정확히 일치하도록 줄 바꿈 맞추기
+4. **들여쓰기**: 목록, 코드 블록, 중첩 구조의 들여쓰기 보존
 
-### Excluding Files from Comparison
+### 비교에서 파일 제외
 
-Some files may be intentionally different across languages. To exclude files from comparison:
+일부 파일은 언어 간 의도적으로 다를 수 있습니다. 비교에서 파일을 제외하려면:
 
-1. Use `--exclude` option:
+1. `--exclude` 옵션 사용:
    ```bash
    bin/mdx_to_skeleton.py --recursive --max-diff=5 --exclude /index.skel.mdx /other-file.skel.mdx
    ```
 
-2. Or configure in `ignore_skeleton_diff.yaml` (see script documentation)
+2. 또는 `ignore_skeleton_diff.yaml`에서 구성 (스크립트 문서 참조)
 
-## Related Files
+## 관련 파일
 
-- **Tool Script**: `confluence-mdx/bin/mdx_to_skeleton.py`
-- **Supporting Modules**: 
-  - `confluence-mdx/bin/skeleton_diff.py` - Comparison logic
-  - `confluence-mdx/bin/skeleton_common.py` - Common utilities
-- **Translation Guidelines**: `docs/translation.md`
-- **Test Files**: `confluence-mdx/tests/test_mdx_to_skeleton.py`
+- **도구 스크립트**: `confluence-mdx/bin/mdx_to_skeleton.py`
+- **지원 모듈**:
+  - `confluence-mdx/bin/skeleton_diff.py` - 비교 로직
+  - `confluence-mdx/bin/skeleton_common.py` - 공통 유틸리티
+- **번역 가이드라인**: `docs/translation.md`
+- **테스트 파일**: `confluence-mdx/tests/test_mdx_to_skeleton.py`
 
-## Example Output
+## 출력 예시
 
-When differences are found, the tool outputs:
+차이가 발견되면 도구는 다음과 같이 출력합니다:
 
 ```
 + diff -u -U 2 -b target/ko/path/file.skel.mdx target/en/path/file.skel.mdx
@@ -352,13 +352,13 @@ When differences are found, the tool outputs:
 +++ target/en/path/file.skel.mdx
 @@ -10,7 +10,7 @@
   ## _TEXT_
-  
+
   _TEXT_
 -**_TEXT_** _TEXT_
 +**_TEXT_**_TEXT_
-  
+
   _TEXT_
 ```
 
-This shows that the English translation is missing a space after `**_TEXT_**`, which should be fixed in the English `.mdx` file.
+이는 영어 번역에서 `**_TEXT_**` 뒤에 스페이스가 누락되었음을 보여주며, 영어 `.mdx` 파일에서 수정해야 합니다.
 

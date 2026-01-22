@@ -1,128 +1,128 @@
-# Documentation Writing Guidelines
+# 문서 작성 가이드라인
 
-## Overview
+## 개요
 
-This skill provides guidelines for writing and editing MDX documentation files in the QueryPie documentation repository.
+이 skill은 QueryPie 문서 저장소에서 MDX 문서 파일을 작성하고 편집하기 위한 가이드라인을 제공합니다.
 
-## Project Context
+## 프로젝트 컨텍스트
 
-- **Framework**: Next.js 15 with Nextra 4
-- **Content Format**: MDX (Markdown with JSX)
-- **Languages**: English (en), Japanese (ja), Korean (ko)
-- **Content Location**: `src/content/{lang}/`
+- **프레임워크**: Next.js 15 + Nextra 4
+- **콘텐츠 형식**: MDX (Markdown with JSX)
+- **언어**: 영어 (en), 일본어 (ja), 한국어 (ko)
+- **콘텐츠 위치**: `src/content/{lang}/`
 
-## MDX File Structure
+## MDX 파일 구조
 
 ### Frontmatter
 
-Every MDX file must start with frontmatter:
+모든 MDX 파일은 frontmatter로 시작해야 합니다:
 
 ```yaml
 ---
-title: 'Page Title'
+title: '페이지 제목'
 ---
 ```
 
-### Common Imports
+### 일반적인 Imports
 
-For components from Nextra:
+Nextra 컴포넌트용:
 
 ```jsx
 import { Callout } from 'nextra/components'
 ```
 
-## Writing Guidelines
+## 작성 가이드라인
 
-### Language-Specific Considerations
+### 언어별 고려사항
 
-1. **English (en)**: Primary language, should be clear and professional
-2. **Korean (ko)**: Should maintain consistency with English version
-3. **Japanese (ja)**: Should maintain consistency with English version
+1. **영어 (en)**: 기본 언어, 명확하고 전문적이어야 함
+2. **한국어 (ko)**: 영어 버전과 일관성 유지
+3. **일본어 (ja)**: 영어 버전과 일관성 유지
 
-### Content Structure
+### 콘텐츠 구조
 
-- Use clear headings (H1 for main title, H2 for major sections, H3 for subsections)
-- Include overview sections when appropriate
-- Use Callout components for important information:
+- 명확한 제목 사용 (H1은 메인 제목, H2는 주요 섹션, H3은 하위 섹션)
+- 적절한 경우 개요 섹션 포함
+- 중요한 정보에는 Callout 컴포넌트 사용:
   ```jsx
   <Callout type="info">
-    Important information here
+    중요한 정보를 여기에 작성
   </Callout>
   ```
 
-### Images
+### 이미지
 
-- Store images in `public/` directory
-- Reference images with relative paths: `/user-manual/workflow/screenshot.png`
-- Use figure components for images with captions:
+- 이미지는 `public/` 디렉토리에 저장
+- 상대 경로로 참조: `/user-manual/workflow/screenshot.png`
+- 캡션이 있는 이미지에는 figure 컴포넌트 사용:
   ```jsx
   <figure data-layout="center" data-align="center">
-    ![Image Description](/path/to/image.png)
+    ![이미지 설명](/path/to/image.png)
     <figcaption>
-      Caption text
+      캡션 텍스트
     </figcaption>
   </figure>
   ```
 
-### Tables
+### 테이블
 
-- Use standard markdown tables
-- Tables can include data attributes for styling:
+- 표준 마크다운 테이블 사용
+- 테이블에 스타일링을 위한 data 속성 포함 가능:
   ```markdown
   <table data-table-width="760" data-layout="default">
   ```
 
-### Links
+### 링크
 
-- Use relative paths for internal links
-- Format: `[Link Text](relative/path/to/page)`
-- For cross-language links, maintain the same structure
+- 내부 링크에는 상대 경로 사용
+- 형식: `[링크 텍스트](relative/path/to/page)`
+- 다국어 링크의 경우 동일한 구조 유지
 
-## File Naming Conventions
+## 파일 네이밍 규칙
 
-- Use kebab-case for file names
-- Match the structure across all languages
-- Example: `user-manual/workflow.mdx` exists in `en/`, `ja/`, and `ko/`
+- 파일 이름에 kebab-case 사용
+- 모든 언어에서 동일한 구조 유지
+- 예: `user-manual/workflow.mdx`는 `en/`, `ja/`, `ko/`에 존재
 
-## Best Practices
+## 모범 사례
 
-1. **Consistency**: Maintain the same structure across all language versions
-2. **Clarity**: Write clear, concise documentation
-3. **Completeness**: Ensure all three language versions are updated
-4. **Testing**: Verify MDX files render correctly with `npm run dev`
-5. **Accessibility**: Use descriptive alt text for images
-6. **Code Comments**: Write code comments in English (as per project preference)
+1. **일관성**: 모든 언어 버전에서 동일한 구조 유지
+2. **명확성**: 명확하고 간결한 문서 작성
+3. **완전성**: 세 가지 언어 버전 모두 업데이트 확인
+4. **테스트**: `npm run dev`로 MDX 파일이 올바르게 렌더링되는지 확인
+5. **접근성**: 이미지에 설명적인 alt 텍스트 사용
+6. **코드 주석**: 코드 주석은 영어로 작성 (프로젝트 규칙)
 
-## Common Tasks
+## 일반적인 작업
 
-### Adding a New Page
+### 새 페이지 추가
 
-1. Create MDX file in `src/content/{lang}/` for each language
-2. Add frontmatter with title
-3. Write content following the structure guidelines
-4. Add navigation entries if needed
-5. Test locally with `npm run dev`
+1. 각 언어에 대해 `src/content/{lang}/`에 MDX 파일 생성
+2. 제목이 있는 frontmatter 추가
+3. 구조 가이드라인에 따라 콘텐츠 작성
+4. 필요시 네비게이션 항목 추가
+5. `npm run dev`로 로컬 테스트
 
-### Editing Existing Content
+### 기존 콘텐츠 편집
 
-1. Locate the file in the appropriate language directory
-2. Make changes while maintaining consistency with other language versions
-3. Update all three language versions if the change affects structure
-4. Test the changes locally
+1. 해당 언어 디렉토리에서 파일 찾기
+2. 다른 언어 버전과 일관성을 유지하며 변경
+3. 변경이 구조에 영향을 미치면 세 가지 언어 버전 모두 업데이트
+4. 변경 사항을 로컬에서 테스트
 
-### Adding Images
+### 이미지 추가
 
-1. Place image in appropriate `public/` subdirectory
-2. Reference with absolute path from root: `/path/to/image.png`
-3. Use figure component for better presentation
+1. 적절한 `public/` 하위 디렉토리에 이미지 배치
+2. 루트에서 절대 경로로 참조: `/path/to/image.png`
+3. 더 나은 표현을 위해 figure 컴포넌트 사용
 
-## Code Examples
+## 코드 예시
 
-When including code examples:
+코드 예시를 포함할 때:
 
-- Use appropriate language tags
-- Keep examples simple and relevant
-- Include comments for clarity (in English)
+- 적절한 언어 태그 사용
+- 예시를 간단하고 관련성 있게 유지
+- 명확성을 위해 주석 포함 (영어로)
 
 ```bash
 npm run dev
@@ -133,15 +133,15 @@ npm run dev
 const example: string = "value";
 ```
 
-## Review Checklist
+## 검토 체크리스트
 
-Before committing documentation changes:
+문서 변경 사항을 커밋하기 전:
 
-- [ ] Frontmatter is correct
-- [ ] All three language versions are updated (if applicable)
-- [ ] Images are properly referenced
-- [ ] Links are working
-- [ ] Content renders correctly in local dev server
-- [ ] Code examples are accurate
-- [ ] No broken markdown syntax
+- [ ] Frontmatter가 올바름
+- [ ] 세 가지 언어 버전 모두 업데이트됨 (해당되는 경우)
+- [ ] 이미지가 올바르게 참조됨
+- [ ] 링크가 작동함
+- [ ] 로컬 개발 서버에서 콘텐츠가 올바르게 렌더링됨
+- [ ] 코드 예시가 정확함
+- [ ] 깨진 마크다운 구문 없음
 

@@ -1,257 +1,257 @@
-# Code Review Guidelines
+# 코드 리뷰 가이드라인
 
-## Overview
+## 개요
 
-This skill provides guidelines for reviewing code changes in the QueryPie documentation repository.
+이 skill은 QueryPie 문서 저장소의 코드 변경 사항을 검토하기 위한 가이드라인을 제공합니다.
 
-## Project Context
+## 프로젝트 컨텍스트
 
-- **Framework**: Next.js 15 with Nextra 4
-- **Language**: TypeScript 5, React 19
-- **Content**: MDX files for documentation
-- **Build System**: npm-based with Vercel deployment
+- **프레임워크**: Next.js 15 + Nextra 4
+- **언어**: TypeScript 5, React 19
+- **콘텐츠**: MDX 파일 (문서용)
+- **빌드 시스템**: npm 기반, Vercel 배포
 
-## Review Focus Areas
+## 검토 중점 영역
 
-### 1. Code Quality
+### 1. 코드 품질
 
 #### TypeScript
 
-- **Type Safety**: Ensure proper type annotations
-- **No `any` Types**: Avoid `any` unless absolutely necessary
-- **Type Definitions**: Check that types are properly defined
-- **Error Handling**: Verify error handling is appropriate
+- **타입 안전성**: 적절한 타입 어노테이션 확인
+- **`any` 타입 금지**: 반드시 필요한 경우가 아니라면 `any` 사용 지양
+- **타입 정의**: 타입이 올바르게 정의되었는지 확인
+- **에러 처리**: 에러 처리가 적절한지 확인
 
-#### React Components
+#### React 컴포넌트
 
-- **Component Structure**: Check component organization
-- **Props Types**: Verify prop types are defined
-- **Hooks Usage**: Ensure hooks follow React rules
-- **Performance**: Look for unnecessary re-renders
+- **컴포넌트 구조**: 컴포넌트 구성 확인
+- **Props 타입**: prop 타입이 정의되었는지 확인
+- **Hooks 사용**: hooks가 React 규칙을 따르는지 확인
+- **성능**: 불필요한 리렌더링 확인
 
-#### Code Style
+#### 코드 스타일
 
-- **Consistency**: Follow existing code style
-- **Naming**: Use clear, descriptive names
-- **Comments**: Code comments should be in English (project preference)
-- **Formatting**: Check indentation and spacing
+- **일관성**: 기존 코드 스타일 따르기
+- **네이밍**: 명확하고 설명적인 이름 사용
+- **주석**: 코드 주석은 영어로 작성 (프로젝트 규칙)
+- **포맷팅**: 들여쓰기와 간격 확인
 
-### 2. Documentation Content
+### 2. 문서 콘텐츠
 
-#### MDX Files
+#### MDX 파일
 
-- **Frontmatter**: Verify frontmatter is correct
-- **Structure**: Check heading hierarchy
-- **Links**: Verify internal and external links work
-- **Images**: Ensure image paths are correct
-- **Multi-language**: Check all three language versions (en, ja, ko) if applicable
+- **Frontmatter**: frontmatter가 올바른지 확인
+- **구조**: 제목 계층 구조 확인
+- **링크**: 내부 및 외부 링크 작동 확인
+- **이미지**: 이미지 경로가 올바른지 확인
+- **다국어**: 세 가지 언어 버전 (en, ja, ko) 모두 확인 (해당되는 경우)
 
-#### Content Quality
+#### 콘텐츠 품질
 
-- **Accuracy**: Verify technical accuracy
-- **Completeness**: Check that content is complete
-- **Consistency**: Ensure consistency across language versions
-- **Formatting**: Verify markdown formatting is correct
+- **정확성**: 기술적 정확성 확인
+- **완전성**: 콘텐츠가 완전한지 확인
+- **일관성**: 언어 버전 간 일관성 확인
+- **포맷팅**: 마크다운 포맷팅이 올바른지 확인
 
-### 3. Build and Deployment
+### 3. 빌드 및 배포
 
-#### Build Process
+#### 빌드 프로세스
 
-- **No Build Errors**: Ensure `npm run build` succeeds
-- **Type Errors**: Check for TypeScript compilation errors
-- **Linting**: Verify no linting errors
-- **Warnings**: Review and address warnings
+- **빌드 오류 없음**: `npm run build` 성공 확인
+- **타입 오류**: TypeScript 컴파일 오류 확인
+- **린팅**: 린팅 오류 없음 확인
+- **경고**: 경고 검토 및 해결
 
-#### Deployment
+#### 배포
 
-- **Vercel Configuration**: Check `vercel.json` if modified
-- **Environment Variables**: Verify environment variables are documented
-- **Deployment Scripts**: Review `scripts/deploy/` changes
+- **Vercel 설정**: `vercel.json` 수정 시 확인
+- **환경 변수**: 환경 변수가 문서화되었는지 확인
+- **배포 스크립트**: `scripts/deploy/` 변경 사항 검토
 
-### 4. Testing
+### 4. 테스트
 
-#### Test Coverage
+#### 테스트 커버리지
 
-- **New Features**: Ensure new features have tests
-- **Test Quality**: Verify tests are meaningful
-- **Test Execution**: Check that tests pass
+- **새 기능**: 새 기능에 테스트가 있는지 확인
+- **테스트 품질**: 테스트가 의미 있는지 확인
+- **테스트 실행**: 테스트 통과 확인
 
-#### Manual Testing
+#### 수동 테스트
 
-- **Local Dev**: Verify `npm run dev` works
-- **Content Rendering**: Check that MDX renders correctly
-- **Navigation**: Verify navigation works
-- **Responsive**: Check responsive design if UI changes
+- **로컬 개발**: `npm run dev` 작동 확인
+- **콘텐츠 렌더링**: MDX가 올바르게 렌더링되는지 확인
+- **네비게이션**: 네비게이션 작동 확인
+- **반응형**: UI 변경 시 반응형 디자인 확인
 
-## Review Checklist
+## 검토 체크리스트
 
-### Pre-Review
+### 사전 검토
 
-- [ ] PR description is clear
-- [ ] Changes are logically grouped
-- [ ] Related issues are referenced
+- [ ] PR 설명이 명확함
+- [ ] 변경 사항이 논리적으로 그룹화됨
+- [ ] 관련 이슈가 참조됨
 
-### Code Review
+### 코드 검토
 
-- [ ] Code follows project conventions
-- [ ] No obvious bugs or issues
-- [ ] Error handling is appropriate
-- [ ] Performance considerations addressed
-- [ ] Security concerns addressed (if applicable)
+- [ ] 코드가 프로젝트 규칙을 따름
+- [ ] 명백한 버그나 문제 없음
+- [ ] 에러 처리가 적절함
+- [ ] 성능 고려사항 해결됨
+- [ ] 보안 문제 해결됨 (해당되는 경우)
 
-### Documentation Review
+### 문서 검토
 
-- [ ] MDX files have correct frontmatter
-- [ ] All three language versions updated (if applicable)
-- [ ] Links are working
-- [ ] Images are properly referenced
-- [ ] Content is accurate and complete
-- [ ] Formatting is consistent
+- [ ] MDX 파일에 올바른 frontmatter가 있음
+- [ ] 세 가지 언어 버전 모두 업데이트됨 (해당되는 경우)
+- [ ] 링크가 작동함
+- [ ] 이미지가 올바르게 참조됨
+- [ ] 콘텐츠가 정확하고 완전함
+- [ ] 포맷팅이 일관됨
 
-### Build and Test
+### 빌드 및 테스트
 
-- [ ] Build succeeds without errors
-- [ ] No TypeScript errors
-- [ ] No linting errors
-- [ ] Tests pass (if applicable)
-- [ ] Local dev server works
+- [ ] 오류 없이 빌드 성공
+- [ ] TypeScript 오류 없음
+- [ ] 린팅 오류 없음
+- [ ] 테스트 통과 (해당되는 경우)
+- [ ] 로컬 개발 서버 작동
 
-### Final Check
+### 최종 확인
 
-- [ ] All review comments addressed
-- [ ] No merge conflicts
-- [ ] Ready for merge
+- [ ] 모든 리뷰 코멘트 해결됨
+- [ ] 머지 충돌 없음
+- [ ] 머지 준비 완료
 
-## Common Issues to Watch For
+## 주의해야 할 일반적인 문제
 
-### TypeScript Issues
+### TypeScript 문제
 
-- Missing type annotations
-- Use of `any` type
-- Incorrect type definitions
-- Missing null checks
+- 타입 어노테이션 누락
+- `any` 타입 사용
+- 잘못된 타입 정의
+- null 체크 누락
 
-### React Issues
+### React 문제
 
-- Missing key props in lists
-- Incorrect hook usage
-- Memory leaks (missing cleanup)
-- Unnecessary re-renders
+- 리스트에서 key prop 누락
+- 잘못된 hook 사용
+- 메모리 누수 (cleanup 누락)
+- 불필요한 리렌더링
 
-### MDX Issues
+### MDX 문제
 
-- Missing frontmatter
-- Broken markdown syntax
-- Incorrect image paths
-- Broken internal links
-- Inconsistent structure across languages
+- frontmatter 누락
+- 마크다운 구문 오류
+- 잘못된 이미지 경로
+- 깨진 내부 링크
+- 언어 간 일관되지 않은 구조
 
-### Build Issues
+### 빌드 문제
 
-- Import errors
-- Missing dependencies
-- Configuration errors
-- Type errors
+- import 오류
+- 누락된 의존성
+- 설정 오류
+- 타입 오류
 
-## Review Comments
+## 리뷰 코멘트
 
-### Providing Feedback
+### 피드백 제공
 
-1. **Be Specific**: Point to exact lines or sections
-2. **Be Constructive**: Suggest improvements, not just problems
-3. **Be Respectful**: Maintain professional tone
-4. **Explain Why**: Help understand the reasoning
+1. **구체적으로**: 정확한 라인이나 섹션 지정
+2. **건설적으로**: 문제뿐만 아니라 개선안 제안
+3. **존중하며**: 전문적인 톤 유지
+4. **이유 설명**: 근거 이해를 돕기
 
-### Comment Types
+### 코멘트 유형
 
-- **Must Fix**: Critical issues that must be addressed
-- **Should Fix**: Important issues that should be addressed
-- **Nice to Have**: Suggestions for improvement
-- **Questions**: Clarifications needed
+- **반드시 수정**: 반드시 해결해야 하는 중요한 문제
+- **수정 권장**: 해결해야 하는 중요한 문제
+- **있으면 좋음**: 개선을 위한 제안
+- **질문**: 필요한 명확화
 
-## Language-Specific Considerations
+## 언어별 고려사항
 
-### Multi-language Content
+### 다국어 콘텐츠
 
-When reviewing documentation changes:
+문서 변경 사항 검토 시:
 
-1. **Check All Languages**: Verify en, ja, ko versions
-2. **Structure Alignment**: Ensure same structure across languages
-3. **Link Consistency**: Check links work in all languages
-4. **Translation Quality**: Verify translations are accurate
+1. **모든 언어 확인**: en, ja, ko 버전 확인
+2. **구조 정렬**: 언어 간 동일한 구조 확인
+3. **링크 일관성**: 모든 언어에서 링크 작동 확인
+4. **번역 품질**: 번역이 정확한지 확인
 
-### Code Comments
+### 코드 주석
 
-- Code comments should be in English (project preference)
-- Comments should explain "why" not "what"
-- Keep comments up to date with code changes
+- 코드 주석은 영어로 작성 (프로젝트 규칙)
+- 주석은 "무엇"이 아닌 "왜"를 설명
+- 코드 변경과 함께 주석도 업데이트
 
-## Automated Checks
+## 자동화된 검사
 
-### Before Review
+### 검토 전
 
-- Check CI/CD status
-- Review automated test results
-- Check linting results
-- Verify build status
+- CI/CD 상태 확인
+- 자동화된 테스트 결과 검토
+- 린팅 결과 확인
+- 빌드 상태 확인
 
-### Tools
+### 도구
 
-- **TypeScript Compiler**: Type checking
-- **ESLint**: Code linting
-- **Build Process**: Compilation check
-- **Vercel Preview**: Deployment preview
+- **TypeScript 컴파일러**: 타입 검사
+- **ESLint**: 코드 린팅
+- **빌드 프로세스**: 컴파일 검사
+- **Vercel 미리보기**: 배포 미리보기
 
-## Best Practices
+## 모범 사례
 
-1. **Review Promptly**: Don't let PRs sit for too long
-2. **Be Thorough**: Check all aspects, not just code
-3. **Test Locally**: If possible, test changes locally
-4. **Communicate Clearly**: Use clear, specific feedback
-5. **Approve When Ready**: Don't block on minor issues
-6. **Follow Up**: Check that feedback is addressed
+1. **신속한 검토**: PR이 오래 방치되지 않도록
+2. **철저한 검토**: 코드뿐만 아니라 모든 측면 확인
+3. **로컬 테스트**: 가능하면 변경 사항을 로컬에서 테스트
+4. **명확한 소통**: 명확하고 구체적인 피드백 사용
+5. **준비되면 승인**: 사소한 문제로 블로킹하지 않기
+6. **후속 조치**: 피드백이 해결되었는지 확인
 
-## Special Cases
+## 특수한 경우
 
-### Large PRs
+### 대규모 PR
 
-- Break into smaller PRs if possible
-- Focus on high-level structure first
-- Review incrementally if needed
+- 가능하면 더 작은 PR로 분할
+- 먼저 고수준 구조에 집중
+- 필요시 점진적으로 검토
 
-### Refactoring
+### 리팩토링
 
-- Ensure functionality is preserved
-- Check test coverage
-- Verify no regressions
+- 기능이 보존되었는지 확인
+- 테스트 커버리지 확인
+- 회귀 없음 확인
 
-### New Features
+### 새 기능
 
-- Check documentation is updated
-- Verify all language versions updated
-- Ensure tests are included
+- 문서가 업데이트되었는지 확인
+- 모든 언어 버전이 업데이트되었는지 확인
+- 테스트가 포함되었는지 확인
 
-### Bug Fixes
+### 버그 수정
 
-- Verify the fix addresses the issue
-- Check for similar issues elsewhere
-- Ensure tests prevent regression
+- 수정이 이슈를 해결하는지 확인
+- 다른 곳에 유사한 문제가 있는지 확인
+- 테스트가 회귀를 방지하는지 확인
 
-## Approval Criteria
+## 승인 기준
 
-A PR should be approved when:
+PR은 다음 조건을 충족할 때 승인되어야 합니다:
 
-1. Code quality is good
-2. Documentation is accurate and complete
-3. Build succeeds
-4. Tests pass (if applicable)
-5. No critical issues remain
-6. Minor issues can be addressed in follow-up
+1. 코드 품질이 좋음
+2. 문서가 정확하고 완전함
+3. 빌드 성공
+4. 테스트 통과 (해당되는 경우)
+5. 중요한 문제가 남아있지 않음
+6. 사소한 문제는 후속 작업에서 해결 가능
 
-## Resources
+## 리소스
 
-- **Project README**: `/README.md`
-- **Development Guide**: `/docs/DEVELOPMENT.md`
-- **Confluence Workflow**: `/confluence-mdx/README.md`
-- **Build Commands**: See `package.json` scripts
+- **프로젝트 README**: `/README.md`
+- **개발 가이드**: `/docs/DEVELOPMENT.md`
+- **Confluence 워크플로우**: `/confluence-mdx/README.md`
+- **빌드 명령어**: `package.json` scripts 참조
 

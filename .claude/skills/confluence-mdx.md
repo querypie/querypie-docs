@@ -1,232 +1,232 @@
-# Confluence to MDX Conversion Guidelines
+# Confluence에서 MDX로 변환 가이드라인
 
-## Overview
+## 개요
 
-This skill provides guidelines for working with the Confluence to MDX conversion workflow in the QueryPie documentation repository.
+이 skill은 QueryPie 문서 저장소에서 Confluence에서 MDX로 변환하는 워크플로우에 대한 가이드라인을 제공합니다.
 
-## Project Context
+## 프로젝트 컨텍스트
 
-- **Conversion Scripts**: Located in `confluence-mdx/bin/`
-- **Python Environment**: Uses Python 3 with virtual environment
-- **Input Format**: Confluence XHTML exports
-- **Output Format**: MDX files in `src/content/{lang}/`
-- **Workflow**: Multi-step process from Confluence to final MDX
+- **변환 스크립트**: `confluence-mdx/bin/`에 위치
+- **Python 환경**: 가상 환경을 사용하는 Python 3
+- **입력 형식**: Confluence XHTML 내보내기
+- **출력 형식**: `src/content/{lang}/`의 MDX 파일
+- **워크플로우**: Confluence에서 최종 MDX까지 다단계 프로세스
 
-## Directory Structure
+## 디렉토리 구조
 
 ```
 confluence-mdx/
-├── bin/                    # Conversion scripts
+├── bin/                    # 변환 스크립트
 │   ├── pages_of_confluence.py
 │   ├── translate_titles.py
 │   ├── generate_commands_for_xhtml2markdown.py
 │   ├── confluence_xhtml_to_markdown.py
 │   └── xhtml2markdown.ko.sh
-├── var/                    # Working directory for Confluence data
-│   ├── list.txt           # Page list (Korean titles)
-│   ├── list.en.txt        # Page list (English titles)
-│   └── {page_id}/         # Per-page data
-│       ├── page.yaml      # Page metadata
-│       └── page.xhtml     # Page content
-├── etc/                    # Configuration and translation files
+├── var/                    # Confluence 데이터용 작업 디렉토리
+│   ├── list.txt           # 페이지 목록 (한국어 제목)
+│   ├── list.en.txt        # 페이지 목록 (영어 제목)
+│   └── {page_id}/         # 페이지별 데이터
+│       ├── page.yaml      # 페이지 메타데이터
+│       └── page.xhtml     # 페이지 콘텐츠
+├── etc/                    # 설정 및 번역 파일
 │   └── korean-titles-translations.txt
-├── target/                 # Output directory
+├── target/                 # 출력 디렉토리
 │   ├── en/
 │   ├── ja/
 │   ├── ko/
-│   └── public/            # Public assets
-└── tests/                  # Test cases
+│   └── public/            # 공용 자산
+└── tests/                  # 테스트 케이스
     └── testcases/
 ```
 
-## Conversion Workflow
+## 변환 워크플로우
 
-### Step 1: Collect Confluence Data
+### 1단계: Confluence 데이터 수집
 
-**Script**: `pages_of_confluence.py`
+**스크립트**: `pages_of_confluence.py`
 
-**Purpose**: Download pages and metadata from Confluence API
+**목적**: Confluence API에서 페이지와 메타데이터 다운로드
 
-**Usage**:
+**사용법**:
 ```bash
 cd confluence-mdx
 source venv/bin/activate
 
-# Full download with attachments (first time or when attachments change)
+# 첨부파일 포함 전체 다운로드 (처음 또는 첨부파일 변경 시)
 python bin/pages_of_confluence.py --attachments
 
-# Regular update (pages only)
+# 일반 업데이트 (페이지만)
 python bin/pages_of_confluence.py
 
-# Update specific page and children
+# 특정 페이지와 하위 페이지 업데이트
 python bin/pages_of_confluence.py --page-id 123456789 --attachments
 
-# Generate/update list.txt from local data
+# 로컬 데이터에서 list.txt 생성/업데이트
 python bin/pages_of_confluence.py --local >var/list.txt
 ```
 
-**Output**:
-- `var/list.txt`: Tab-separated list of pages (ID, path, title)
-- `var/{page_id}/page.yaml`: Page metadata
-- `var/{page_id}/page.xhtml`: Page content in XHTML format
-- `var/{page_id}/attachments/`: Downloaded attachments (if `--attachments` used)
+**출력**:
+- `var/list.txt`: 탭으로 구분된 페이지 목록 (ID, 경로, 제목)
+- `var/{page_id}/page.yaml`: 페이지 메타데이터
+- `var/{page_id}/page.xhtml`: XHTML 형식의 페이지 콘텐츠
+- `var/{page_id}/attachments/`: 다운로드된 첨부파일 (`--attachments` 사용 시)
 
-### Step 2: Translate Titles
+### 2단계: 제목 번역
 
-**Script**: `translate_titles.py`
+**스크립트**: `translate_titles.py`
 
-**Purpose**: Translate Korean page titles to English
+**목적**: 한국어 페이지 제목을 영어로 번역
 
-**Usage**:
+**사용법**:
 ```bash
 python bin/translate_titles.py
 ```
 
-**Input**: `var/list.txt` (Korean titles)
-**Output**: `var/list.en.txt` (English titles)
-**Translation Source**: `etc/korean-titles-translations.txt`
+**입력**: `var/list.txt` (한국어 제목)
+**출력**: `var/list.en.txt` (영어 제목)
+**번역 소스**: `etc/korean-titles-translations.txt`
 
-**Note**: If titles are not translated, update `etc/korean-titles-translations.txt`
+**참고**: 제목이 번역되지 않으면 `etc/korean-titles-translations.txt`를 업데이트하세요.
 
-### Step 3: Generate Conversion Commands
+### 3단계: 변환 명령어 생성
 
-**Script**: `generate_commands_for_xhtml2markdown.py`
+**스크립트**: `generate_commands_for_xhtml2markdown.py`
 
-**Purpose**: Generate shell script with conversion commands
+**목적**: 변환 명령어가 포함된 셸 스크립트 생성
 
-**Usage**:
+**사용법**:
 ```bash
 python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
 chmod +x bin/xhtml2markdown.ko.sh
 ```
 
-**Output**: `bin/xhtml2markdown.ko.sh` - Executable script with conversion commands
+**출력**: `bin/xhtml2markdown.ko.sh` - 변환 명령어가 포함된 실행 가능한 스크립트
 
-### Step 4: Convert XHTML to MDX
+### 4단계: XHTML을 MDX로 변환
 
-**Script**: `xhtml2markdown.ko.sh` (generated in step 3)
+**스크립트**: `xhtml2markdown.ko.sh` (3단계에서 생성됨)
 
-**Purpose**: Execute conversion of all XHTML files to MDX
+**목적**: 모든 XHTML 파일을 MDX로 변환 실행
 
-**Usage**:
+**사용법**:
 ```bash
 ./bin/xhtml2markdown.ko.sh
 ```
 
-**Process**: 
-- Calls `confluence_xhtml_to_markdown.py` for each page
-- Converts XHTML to Markdown/MDX format
-- Handles special cases: code blocks, tables, macros, etc.
+**프로세스**:
+- 각 페이지에 대해 `confluence_xhtml_to_markdown.py` 호출
+- XHTML을 Markdown/MDX 형식으로 변환
+- 특수 케이스 처리: 코드 블록, 테이블, 매크로 등
 
-**Output**:
-- `target/ko/`: MDX files for Korean content
-- `target/public/`: Public assets (images, attachments)
+**출력**:
+- `target/ko/`: 한국어 콘텐츠용 MDX 파일
+- `target/public/`: 공용 자산 (이미지, 첨부파일)
 
-## Core Conversion Script
+## 핵심 변환 스크립트
 
 ### confluence_xhtml_to_markdown.py
 
-**Purpose**: Convert individual XHTML file to Markdown/MDX
+**목적**: 개별 XHTML 파일을 Markdown/MDX로 변환
 
-**Usage**:
+**사용법**:
 ```bash
 python bin/confluence_xhtml_to_markdown.py input.xhtml output.mdx
 ```
 
-**Features**:
-- Handles CDATA sections in code blocks
-- Converts tables with colspan/rowspan
-- Processes Confluence-specific macros
-- Preserves structure and formatting
+**기능**:
+- 코드 블록의 CDATA 섹션 처리
+- colspan/rowspan이 있는 테이블 변환
+- Confluence 전용 매크로 처리
+- 구조 및 포맷팅 보존
 
-## Testing
+## 테스트
 
-### Test Framework
+### 테스트 프레임워크
 
-**Location**: `confluence-mdx/tests/`
+**위치**: `confluence-mdx/tests/`
 
-**Test Cases**: `tests/testcases/`
-- Each test case has:
-  - `page.xhtml`: Input XHTML
-  - `expected.mdx`: Expected output
-  - `output.mdx`: Generated output (created during test)
+**테스트 케이스**: `tests/testcases/`
+- 각 테스트 케이스에 포함:
+  - `page.xhtml`: 입력 XHTML
+  - `expected.mdx`: 예상 출력
+  - `output.mdx`: 생성된 출력 (테스트 중 생성)
 
-### Running Tests
+### 테스트 실행
 
 ```bash
 cd confluence-mdx/tests
 
-# Run all tests
+# 모든 테스트 실행
 make test
 
-# Run specific test
+# 특정 테스트 실행
 make test-one TEST_ID=<test_id>
 
-# Run with debug logging
+# 디버그 로깅과 함께 실행
 make debug
 
-# Clean output files
+# 출력 파일 정리
 make clean
 ```
 
-## Common Tasks
+## 일반적인 작업
 
-### Adding New Pages from Confluence
+### Confluence에서 새 페이지 추가
 
-1. Download new pages:
+1. 새 페이지 다운로드:
    ```bash
    python bin/pages_of_confluence.py --page-id <new_page_id> --attachments
    ```
 
-2. Update list:
+2. 목록 업데이트:
    ```bash
    python bin/pages_of_confluence.py --local >var/list.txt
    ```
 
-3. Translate titles:
+3. 제목 번역:
    ```bash
    python bin/translate_titles.py
    ```
 
-4. Regenerate conversion script:
+4. 변환 스크립트 재생성:
    ```bash
    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
    ```
 
-5. Convert:
+5. 변환:
    ```bash
    ./bin/xhtml2markdown.ko.sh
    ```
 
-### Updating Existing Pages
+### 기존 페이지 업데이트
 
-1. Download updated pages:
+1. 업데이트된 페이지 다운로드:
    ```bash
    python bin/pages_of_confluence.py --page-id <page_id>
    ```
 
-2. Convert only changed pages:
+2. 변경된 페이지만 변환:
    ```bash
-   # Manual conversion for specific page
+   # 특정 페이지 수동 변환
    python bin/confluence_xhtml_to_markdown.py \
      var/{page_id}/page.xhtml \
      target/ko/path/to/page.mdx
    ```
 
-### Handling Translation Issues
+### 번역 문제 처리
 
-If titles are not properly translated:
+제목이 제대로 번역되지 않은 경우:
 
-1. Check `etc/korean-titles-translations.txt`
-2. Add missing translations in format:
+1. `etc/korean-titles-translations.txt` 확인
+2. 다음 형식으로 누락된 번역 추가:
    ```
-   Korean Title<TAB>English Title
+   한국어 제목<TAB>영어 제목
    ```
-3. Re-run `translate_titles.py`
+3. `translate_titles.py` 재실행
 
-## Python Environment Setup
+## Python 환경 설정
 
-### Initial Setup
+### 초기 설정
 
 ```bash
 cd confluence-mdx
@@ -235,64 +235,64 @@ source venv/bin/activate
 pip install requests beautifulsoup4 pyyaml
 ```
 
-### Activating Environment
+### 환경 활성화
 
 ```bash
 cd confluence-mdx
 source venv/bin/activate
 ```
 
-### Deactivating Environment
+### 환경 비활성화
 
 ```bash
 deactivate
 ```
 
-## Best Practices
+## 모범 사례
 
-1. **Backup Before Conversion**: Always backup existing MDX files before running conversion
-2. **Test Locally**: Test converted files with `npm run dev` before committing
-3. **Review Changes**: Manually review converted content, especially:
-   - Code blocks
-   - Tables
-   - Images and links
-   - Special formatting
-4. **Incremental Updates**: Use `--page-id` for updating specific pages instead of full conversion
-5. **Attachment Handling**: Use `--attachments` flag when attachments are updated
-6. **Version Control**: Commit `var/list.txt` and `var/list.en.txt` for tracking
-7. **Translation Maintenance**: Keep `korean-titles-translations.txt` updated
+1. **변환 전 백업**: 변환 실행 전 기존 MDX 파일 항상 백업
+2. **로컬 테스트**: 커밋 전 `npm run dev`로 변환된 파일 테스트
+3. **변경 사항 검토**: 변환된 콘텐츠 수동 검토, 특히:
+   - 코드 블록
+   - 테이블
+   - 이미지 및 링크
+   - 특수 포맷팅
+4. **점진적 업데이트**: 전체 변환 대신 `--page-id`로 특정 페이지 업데이트
+5. **첨부파일 처리**: 첨부파일이 업데이트된 경우 `--attachments` 플래그 사용
+6. **버전 관리**: 추적을 위해 `var/list.txt`와 `var/list.en.txt` 커밋
+7. **번역 유지 관리**: `korean-titles-translations.txt` 최신 상태 유지
 
-## Troubleshooting
+## 문제 해결
 
-### Common Issues
+### 일반적인 문제
 
-1. **Missing Translations**: Update `etc/korean-titles-translations.txt`
-2. **Broken Links**: Check image paths and internal links after conversion
-3. **Formatting Issues**: Review special cases in `confluence_xhtml_to_markdown.py`
-4. **API Errors**: Check Confluence API credentials and rate limits
-5. **Test Failures**: Compare `output.mdx` with `expected.mdx` to identify issues
+1. **누락된 번역**: `etc/korean-titles-translations.txt` 업데이트
+2. **깨진 링크**: 변환 후 이미지 경로 및 내부 링크 확인
+3. **포맷팅 문제**: `confluence_xhtml_to_markdown.py`의 특수 케이스 검토
+4. **API 오류**: Confluence API 자격 증명 및 속도 제한 확인
+5. **테스트 실패**: 문제 파악을 위해 `output.mdx`와 `expected.mdx` 비교
 
-### Debug Mode
+### 디버그 모드
 
-Enable debug logging:
+디버그 로깅 활성화:
 ```bash
 python bin/confluence_xhtml_to_markdown.py input.xhtml output.mdx --log-level debug
 ```
 
-## Integration with Documentation Workflow
+## 문서 워크플로우와의 통합
 
-After conversion:
+변환 후:
 
-1. Review converted MDX files in `target/ko/`
-2. Copy to `src/content/ko/` (if needed)
-3. Test with local dev server: `npm run dev`
-4. Make manual adjustments if needed
-5. Update other language versions (en, ja) if structure changes
+1. `target/ko/`의 변환된 MDX 파일 검토
+2. 필요시 `src/content/ko/`로 복사
+3. 로컬 개발 서버로 테스트: `npm run dev`
+4. 필요시 수동 조정
+5. 구조가 변경된 경우 다른 언어 버전 (en, ja) 업데이트
 
-## Notes
+## 참고사항
 
-- Conversion is primarily for Korean (ko) content
-- English and Japanese versions may need separate workflows
-- Manual editing is often required after conversion
-- Test cases help ensure conversion quality
+- 변환은 주로 한국어 (ko) 콘텐츠용
+- 영어 및 일본어 버전은 별도 워크플로우가 필요할 수 있음
+- 변환 후 수동 편집이 종종 필요
+- 테스트 케이스가 변환 품질을 보장하는 데 도움
 
