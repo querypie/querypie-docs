@@ -25,12 +25,12 @@ setup.v2.sh 는 QueryPie Community Edition 출시와 함께 제공되는 QueryPi
 * Container Engine, Compose Tool 이 발견되지 않은 경우, 이를 설치합니다.
     * Container Engine : Docker 또는 Podman
     * Compose Tool: Docker Compose
-* `./querypie/&lt;version&gt;` 경로에 Compose 를 위한 package.tar.gz 을 설치합니다.
+* `./querypie/<version>` 경로에 Compose 를 위한 package.tar.gz 을 설치합니다.
 * SELinux 설정을 점검하고, Container Volume Mount 를 위한 `chcon` 명령을 수행합니다.
 * 환경변수 설정파일 `.env` 의 설정값을 자동으로 채웁니다.
 * Container Image 를 내려받습니다.
 * QueryPie MySQL 의 Migration 을 수행하고, QueryPie App Container 를 실행합니다.
-* `./querypie/current` 라는 Symbolic Link 를 `./querypie/&lt;version&gt;` 으로 연결하여, 현재 작동 중인 버전을 명시합니다.
+* `./querypie/current` 라는 Symbolic Link 를 `./querypie/<version>` 으로 연결하여, 현재 작동 중인 버전을 명시합니다.
 
 #### setup.v2.sh 의 업그레이드, 삭제 등 추가 기능
 
@@ -49,7 +49,7 @@ setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니�
 | Image Registry    | `harbor.chequer.io/querypie/`                              | `docker.io/querypie/`                              |
 | 환경변수 설정파일         | `compose-env`                                              | `.env`                                             |
 | Compose as Plugin | 미지원<br/>`docker-compose` 명령을 사용                            | 지원<br/>`docker compose` 또는 `podman compose` 명령을 사용 |
-| MySQL Data Dir    | `./querypie/&lt;version&gt;/mysql/`                        | `./querypie/mysql/`                                |
+| MySQL Data Dir    | `./querypie/<version>/mysql/`                              | `./querypie/mysql/`                                |
 | Application Log   | `/var/log/querypie/` - 10.2.x<br/>`./querypie/log/` - 11.x | `./querypie/log/`                                  |
 | 작동 중 버전의 Symlink  | (없음)                                                       | `./querypie/current`                               |
 
