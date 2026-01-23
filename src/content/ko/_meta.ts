@@ -2,11 +2,6 @@ export default {
   index: {
     display: 'hidden',
   },
-  // 2026-01-22 기존 경로에서 새 경로로 redirect (SEO 및 북마크 호환성)
-  'querypie-overview': {
-    type: 'redirect',
-    href: '/ko/overview',
-  },
   'overview': {
     type: 'page',
     title: 'QueryPie Overview',

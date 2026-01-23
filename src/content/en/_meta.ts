@@ -2,11 +2,6 @@ export default {
   index: {
     display: 'hidden',
   },
-  // 2026-01-22 Redirect from old path to new path (SEO and bookmark compatibility)
-  'querypie-overview': {
-    type: 'redirect',
-    href: '/en/overview',
-  },
   'overview': {
     type: 'page',
     title: 'Overview',
