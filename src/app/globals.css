@@ -24,6 +24,22 @@ article main figure {
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
 }
+article main figure[data-align="center"] {
+    text-align: center;
+}
+article main figure[data-align="center"] img {
+    margin-left: auto;
+    margin-right: auto;
+}
+article main figure[data-align="left"] {
+    text-align: left;
+}
+article main figure[data-align="right"] {
+    text-align: right;
+}
+article main figure[data-align="right"] img {
+    margin-left: auto;
+}
 article main figure figcaption {
     text-align: center;
 }
