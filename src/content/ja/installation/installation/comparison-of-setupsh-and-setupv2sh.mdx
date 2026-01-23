@@ -25,12 +25,12 @@ setup.v2.shはQueryPie Community Editionリリースとともに提供されるQ
 * Container Engine、Compose Toolが発見されない場合、これらをインストールします。
     * Container Engine：DockerまたはPodman
     * Compose Tool: Docker Compose
-* `./querypie/&lt;version&gt;`経路にComposeのためのpackage.tar.gzをインストールします。
+* `./querypie/<version>`経路にComposeのためのpackage.tar.gzをインストールします。
 * SELinux設定を点検し、Container Volume Mountのための`chcon`コマンドを実行します。
 * 環境変数設定ファイル`.env`の設定値を自動的に埋めます。
 * Container Imageをダウンロードします。
 * QueryPie MySQLのMigrationを実行し、QueryPie App Containerを実行します。
-* `./querypie/current`というSymbolic Linkを`./querypie/&lt;version&gt;`に接続して、現在動作中のバージョンを明示します。
+* `./querypie/current`というSymbolic Linkを`./querypie/<version>`に接続して、現在動作中のバージョンを明示します。
 
 #### setup.v2.shのアップグレード、削除など追加機能
 
@@ -49,7 +49,7 @@ setup.v2.shは製品のインストール以外にも他の主要機能を提供
 | Image Registry    | `harbor.chequer.io/querypie/`                              | `docker.io/querypie/`                              |
 | 環境変数設定ファイル         | `compose-env`                                              | `.env`                                             |
 | Compose as Plugin | 未サポート<br/>`docker-compose`コマンドを使用                            | サポート<br/>`docker compose`または`podman compose`コマンドを使用 |
-| MySQL Data Dir    | `./querypie/&lt;version&gt;/mysql/`                        | `./querypie/mysql/`                                |
+| MySQL Data Dir    | `./querypie/<version>/mysql/`                              | `./querypie/mysql/`                                |
 | Application Log   | `/var/log/querypie/` - 10.2.x<br/>`./querypie/log/` - 11.x | `./querypie/log/`                                  |
 | 動作中バージョンのSymlink  | （なし）                                                       | `./querypie/current`                               |
 

@@ -118,7 +118,7 @@ Login Succeeded
 
 ### compose-env設定
 
-`./setup.sh`スクリプトを実行すると、`querypie/&lt;version&gt;/`ディレクトリ内に`docker-compose.yml`、`compose-env`など設定ファイルを生成します。
+`./setup.sh`スクリプトを実行すると、`querypie/<version>/`ディレクトリ内に`docker-compose.yml`、`compose-env`など設定ファイルを生成します。
 このディレクトリ内に移動して、`compose-env`という名前の設定ファイルを編集します。
 
 各環境変数に関する説明は次の文書を参照してください：[コンテナ環境変数案内](../container-environment-variables)
@@ -336,7 +336,7 @@ compose-envに設定された値のうちDB_PASSWORD、REDIS_PASSWORD、KEY_ENCR
 他の人にこの値を露出しないよう注意してください。
 </Callout>
 
-以下`&lt;customer-proxy-address&gt;`部分を顧客社のProxy接続IPまたはドメインに置き換えてクエリを実行します。
+以下`<customer-proxy-address>`部分を顧客社のProxy接続IPまたはドメインに置き換えてクエリを実行します。
 
 <Callout type="important">
 該当アドレスは`http` `https`のようなSchemeを付けてはいけません。
@@ -361,7 +361,7 @@ User Agentからログインを試みると、ウェブブラウザを通じて�
 
 QueryPie Databaseに接続して、KACのProxy接続のためのアドレスを登録します。
 
-以下`&lt;customer-proxy-fqdn&gt;`部分を顧客社のProxy接続IPまたはドメインに置き換えてクエリを実行します。
+以下`<customer-proxy-fqdn>`部分を顧客社のProxy接続IPまたはドメインに置き換えてクエリを実行します。
 
 特記事項としてDAC/SAC設定とは異なり`http` `https`のようなSchemeを自由に入力可能です。
 

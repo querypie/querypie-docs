@@ -106,7 +106,7 @@ Created symlink /home/ec2-user/.config/systemd/user/default.target.wants/podman-
 
 別途構成されたMySQLを使用する場合
 
-基本提供される`./querypie/&lt;version&gt;/compose.yml`を利用して、1つのLinuxサーバでMySQLを実行せず、別途構成されたMySQLを使用する場合、systemd service動作範囲を変更すればよいです。
+基本提供される`./querypie/<version>/compose.yml`を利用して、1つのLinuxサーバでMySQLを実行せず、別途構成されたMySQLを使用する場合、systemd service動作範囲を変更すればよいです。
 
 `podman-querypie-database.service`を動作させなければよいです。
 動作中のsystemd serviceを次のコマンドでオフにできます。
