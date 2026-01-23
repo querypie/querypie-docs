@@ -1,0 +1,13 @@
+{
+  "name": "image-rendering-test",
+  "version": "1.0.0",
+  "description": "Playwright-based image rendering measurement tool",
+  "type": "module",
+  "scripts": {
+    "test": "node measure.js",
+    "compare": "node compare.js"
+  },
+  "dependencies": {
+    "playwright": "^1.57.0"
+  }
+}
