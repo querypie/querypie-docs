@@ -436,14 +436,15 @@ def navigable_string_as_markdown(node):
         # This is a leaf node with text
         text = clean_text(node.text)
         text = text.replace('\n', ' ')  # Replace newlines with space
-        # Encode < and > to prevent conflict with JSX syntax.
-        text = text.replace('<', '&lt;').replace('>', '&gt;')
         # Normalize multiple spaces to a single space
         text = re.sub(r'\s+', ' ', text)
         if node.parent.name == 'code':
-            # Do not backtick_curly_braces if the parent node is `<code>`, as it is backticked already.
+            # Do not encode < and > or backtick_curly_braces if the parent node is `<code>`,
+            # as it is backticked already and characters will be displayed correctly.
             pass
         else:
+            # Encode < and > to prevent conflict with JSX syntax.
+            text = text.replace('<', '&lt;').replace('>', '&gt;')
             text = backtick_curly_braces(text)
         return text
     else:
