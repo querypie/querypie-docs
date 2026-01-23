@@ -2,6 +2,28 @@
 
 Playwright 기반 이미지 렌더링 크기 측정 도구입니다.
 
+## 용도
+
+이 도구는 **Confluence에서 변환된 문서의 이미지가 원본과 동일한 크기로 렌더링되는지 검증**하기 위해 만들어졌습니다.
+
+### 배경
+
+- Confluence에서 작성된 문서를 MDX로 변환하여 docs.querypie.com에 배포합니다.
+- 변환 과정에서 이미지 크기 정보가 손실되면, Next.js Image 컴포넌트가 이미지를 컨테이너 너비에 맞게 확대하여 표시합니다.
+- 이로 인해 Confluence에서 480px로 표시되던 이미지가 832px로 확대되는 등의 문제가 발생했습니다.
+
+### 해결하는 문제
+
+- Confluence 원본과 docs.querypie.com 간의 이미지 렌더링 크기 차이 측정
+- Vercel Preview 배포 후 수정 사항 검증
+- 이미지 크기 관련 이슈에 대한 정량적 리포트 생성
+
+### 관련 이슈
+
+- [#508](https://github.com/querypie/querypie-docs/issues/508) - 이미지 크기 불일치 최초 보고
+- [#518](https://github.com/querypie/querypie-docs/issues/518) - 이미지 렌더링 크기 측정 결과
+- [#529](https://github.com/querypie/querypie-docs/issues/529) - img 태그 변환 개선 후 비교
+
 ## 설치
 
 ```bash
