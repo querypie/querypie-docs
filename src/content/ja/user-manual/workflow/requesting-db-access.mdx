@@ -22,7 +22,7 @@ import { Callout } from 'nextra/components'
     * ただし、Urgent Modeで上申時、上記条件を無視します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-08-26-at-12.21.07-AM.png](/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.21.07-AM.png)
+<img src="/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.21.07-AM.png" alt="Screenshot-2025-08-26-at-12.21.07-AM.png" width="760" />
 </figure>
 
 #### 2. 承認者指定
@@ -34,7 +34,7 @@ import { Callout } from 'nextra/components'
     * All Assignees must approve this request : すべての承認者が承認しなければ決裁要求が承認処理されます。
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240724-154729.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-154729.png)
+<img src="/user-manual/workflow/requesting-db-access/screenshot-20240724-154729.png" alt="screenshot-20240724-154729.png" width="763" />
 </figure>
 
 #### 3. 参照者指定
@@ -45,7 +45,7 @@ import { Callout } from 'nextra/components'
 * `Save`ボタンを押してモーダルを閉じ参照者指定を完了します。
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240724-171350.png](/user-manual/workflow/requesting-db-access/screenshot-20240724-171350.png)
+<img src="/user-manual/workflow/requesting-db-access/screenshot-20240724-171350.png" alt="screenshot-20240724-171350.png" width="760" />
 </figure>
 
 #### 4. 事後承認で要求送信
@@ -58,7 +58,7 @@ import { Callout } from 'nextra/components'
 * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
 
 <figure data-layout="center" data-align="center">
-![screenshot-20240523-184245.png](/user-manual/workflow/requesting-db-access/screenshot-20240523-184245.png)
+<img src="/user-manual/workflow/requesting-db-access/screenshot-20240523-184245.png" alt="screenshot-20240523-184245.png" width="760" />
 </figure>
 
 <Callout type="important">
@@ -73,7 +73,7 @@ A. 管理者がUrgent Modeを許可しない決裁ルールを選択した場合
 *  **Reason for Request**  : アクセス権限を要求する理由を入力します。 
 
 <figure data-layout="center" data-align="center">
-![User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summary](/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.24.44-AM.png)
+<img src="/user-manual/workflow/requesting-db-access/Screenshot-2025-08-26-at-12.24.44-AM.png" alt="User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summary" width="729" />
 <figcaption>
 User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summary
 </figcaption>
@@ -87,13 +87,13 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
     *  **Expiration Date**  : 現在該当コネクションに付与されている権限の期限切れ日を表示します。
 * アクセス権限を要求するDBコネクションをチェックボックスで選択後下記二つの方法でPrivilege Typeを選択できます。
 <figure data-layout="center" data-align="center">
-![ドロップダウンを通じてコネクション別に指定](/user-manual/workflow/requesting-db-access/screenshot-20240801-191054.png)
+<img src="/user-manual/workflow/requesting-db-access/screenshot-20240801-191054.png" alt="ドロップダウンを通じてコネクション別に指定" width="362" />
 <figcaption>
 ドロップダウンを通じてコネクション別に指定
 </figcaption>
 </figure>
 <figure data-layout="center" data-align="center">
-![チェックボックスおよびApplyボタンを通じた一括適用](/user-manual/workflow/requesting-db-access/screenshot-20240801-191152.png)
+<img src="/user-manual/workflow/requesting-db-access/screenshot-20240801-191152.png" alt="チェックボックスおよびApplyボタンを通じた一括適用" width="362" />
 <figcaption>
 チェックボックスおよびApplyボタンを通じた一括適用
 </figcaption>
@@ -113,33 +113,33 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
 
 1. Submit Requestボタンを押し、メニューで「DB Access Request（Schema Level）」を選択します。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-120432.png](/user-manual/workflow/requesting-db-access/image-20251218-120432.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-120432.png" alt="image-20251218-120432.png" width="736" />
   </figure>
 2. `Add Item`ボタンを押します。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-120721.png](/user-manual/workflow/requesting-db-access/image-20251218-120721.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-120721.png" alt="image-20251218-120721.png" width="736" />
   </figure>
 3. 左側パネルで接続するコネクションを選択します。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-121011.png](/user-manual/workflow/requesting-db-access/image-20251218-121011.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-121011.png" alt="image-20251218-121011.png" width="736" />
   </figure>
 4. コネクションを選択すると右側のprivilege項目に基本的にselect権限が必要なスキーマに自動的にSELECT privilegeが付与されたことが見えます。この項目を削除することもできますが、その場合Web editorまたはproxyでスキーマ構造を照会する時点にエラーが発生する可能性があるため、やむを得ない場合でなければこの項目を削除しません。<br/>`Add Item`ボタンを押します。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-121402.png](/user-manual/workflow/requesting-db-access/image-20251218-121402.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-121402.png" alt="image-20251218-121402.png" width="736" />
   </figure>
 5. 下に対象を追加できる行が追加されます。schema構造があるDBMS（Oracle、Postgresなど）は対象名を入力する時、必ず`{database名}`.`{schema名}`の形式で入力する必要があります。MySQLのようにschema構造がないDBMSは論理DB名のみ入力すれば 됩니다。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-122027.png](/user-manual/workflow/requesting-db-access/image-20251218-122027.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-122027.png" alt="image-20251218-122027.png" width="736" />
   </figure>
     * Oracle例：ORCLDB.TESTUSER
     * PostgreSQL例：testdb.test_schema
     * MySQL例：sakila<br/>
 6. privilege割り当てはまずポップアップウィンドウ右側上部のHost Level Privilege項目で希望するprivilege typeを選択します。（スキーマレベルprivilegeはhost level privilegeの範囲内でのみ付与が可能なためです。例えばRead/WriteをHost Level Privilegeで選択した場合、その範囲内でSELECT、INSERTなどを付与できますが、Read-OnlyをHost Level Privilegeで選択した場合、SELECTのみ指定できます。）Host Level privilegeに割り当てが必要なprivilegeがない場合、管理者に該当コネクションに対して特定privilegeがあるprivilege typeを作成してほしいと要求する必要があります。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-122450.png](/user-manual/workflow/requesting-db-access/image-20251218-122450.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-122450.png" alt="image-20251218-122450.png" width="736" />
   </figure>
 7. 下に表示されるHost Level Others、Host Level Functionsは設定を見るだけです。Host LevelのPrivilegeの属性によりSchema Levelもprivilegeが従属するため、上位の情報を確認する用途で使用されます。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-122702.png](/user-manual/workflow/requesting-db-access/image-20251218-122702.png)
+  <img src="/user-manual/workflow/requesting-db-access/image-20251218-122702.png" alt="image-20251218-122702.png" width="736" />
   </figure>
 8. `OK`ボタンを押し、フォームの残りの部分を入力した後`Submit`ボタンを押して要求を完了します。

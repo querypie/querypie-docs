@@ -19,7 +19,7 @@ import { Callout } from 'nextra/components'
 DBアクセス制御に適用される設定を管理します。<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20251218-083844.png](/administrator-manual/databases/dac-general-configurations/image-20251218-083844.png)
+<img src="/administrator-manual/databases/dac-general-configurations/image-20251218-083844.png" alt="image-20251218-083844.png" width="463" />
 </figure>
 
 
@@ -29,10 +29,10 @@ DBアクセス制御に適用される設定を管理します。<br/>
 基本的にクエリ共有設定はオフになっており、`Query Sharing Setting`ボタンをクリックすると設定モーダルがポップアップします。
 Query SharingオプションをOnに選択すると、追加入力項目が表示されます。
 <figure data-layout="center" data-align="center">
-![screenshot-20240726-145003.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145003.png)
+<img src="/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145003.png" alt="screenshot-20240726-145003.png" width="624" />
 </figure>
 <figure data-layout="center" data-align="center">
-![screenshot-20240726-145650.png](/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145650.png)
+<img src="/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145650.png" alt="screenshot-20240726-145650.png" width="350" />
 </figure>
 
 *  **Git Repository URL**  : クエリを送信するGit Repository URL
@@ -76,12 +76,12 @@ ______
     * DB Access Requestリクエスト時に指定された期間を超過した期限日設定不可
 *  **Notification of Access Expiration**  : ユーザーの権限期限切れ（Privilege Expiration、Policy Exception Expiration）前にメールで事前通知を受けることができます。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-084512.png](/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png)
+  <img src="/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png" alt="image-20251218-084512.png" width="620" />
   </figure>
 *  **Display the first 10 rows in Query Audit** : Query Audit内SELECT文実行結果の表示方式設定（Default : OffでOnに設定した場合、全体結果を表示せず、最初の10行のみ表示されます）
 
 <figure data-layout="center" data-align="center">
-![Query Audit Detail](/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png)
+<img src="/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png" alt="Query Audit Detail" width="736" />
 <figcaption>
 Query Audit Detail
 </figcaption>
@@ -98,7 +98,7 @@ Query Audit Detail
     * Allowed User : 該当構文実行を許可するユーザー指定（複数選択可能、グループ単位指定不可）
     * 入力されたRestricted Statementを含むクエリ実行時ブロックされる
       <figure data-layout="center" data-align="center">
-      ![image-20240326-011036.png](/administrator-manual/databases/dac-general-configurations/image-20240326-011036.png)
+      <img src="/administrator-manual/databases/dac-general-configurations/image-20240326-011036.png" alt="image-20240326-011036.png" width="735" />
       </figure>
 
 <Callout type="important">
@@ -109,7 +109,7 @@ Restricted StatementポリシーによってブロックされるクエリはSQL
 *  **Justification Length**  : Connection設定で「User Action Purpose Required」オプションが有効化されているか、Ledger table managementポリシーで理由入力を強制した場合、Web EditorまたはAgentを通じて理由入力をする必要があります。この時、入力欄に入力する文字長の最小値および最大値を管理者が指定します。
     * 入力値の最小値は1で最大値は1000です。<br/>
       <figure data-layout="center" data-align="center">
-      ![image-20250824-233845.png](/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png)
+      <img src="/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png" alt="image-20250824-233845.png" width="712" />
       </figure>
 *  **Query Annotation**  : クエリ実行時に自動で管理者が指定したコメントを記録します。機能を有効化した場合、以下の3つのテンプレートを使用してコメントを記録します。10.4.0基準Redshift限定サポート。
     * User Name: `{{userName}}` : クエリを実行したユーザーのDisplay Nameです。
@@ -117,7 +117,7 @@ Restricted StatementポリシーによってブロックされるクエリはSQL
     * Execute From: `{{executedFrom}}` : クエリを実行した手段です。10.4.0基準Web Editorのみ記録されます。 
 
 <figure data-layout="center" data-align="center">
-![Query Audit](/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png)
+<img src="/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png" alt="Query Audit" width="556" />
 <figcaption>
 Query Audit
 </figcaption>
@@ -128,7 +128,7 @@ Query Audit
 *  **Member based Connection Filtering :** WorkflowでDB Access Requestフォームで特定ユーザーまたはグループに対して全体コネクションを表示せず、指定したコネクションのみ表示するようフィルタリングする機能です。 
     * コネクションの詳細画面でconnection memberに登録されたユーザー/グループのみ該当コネクションがWorkflow DB Access Reqeustに表示されます。<br/>
       <figure data-layout="center" data-align="center">
-      ![Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て](/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png)
+      <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png" alt="Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て" width="712" />
       <figcaption>
       Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て
       </figcaption>
@@ -146,7 +146,7 @@ Query Audit
     * 最小値 : 1時間
 
 <figure data-layout="center" data-align="center">
-![image-20251009-150744.png](/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png)
+<img src="/administrator-manual/databases/dac-general-configurations/image-20251009-150744.png" alt="image-20251009-150744.png" width="426" />
 </figure>
 
 <Callout type="info">

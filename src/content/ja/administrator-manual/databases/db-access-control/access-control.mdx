@@ -22,7 +22,7 @@ Access Controlページでは、QueryPieに登録されたユーザーおよび�
 * Locked Accounts：アカウントロック条件によりロックされたユーザーを確認でき、ロックを解除できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -34,7 +34,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 Access Controlページ内Groups / Usersタブのリストで特定ユーザーまたはグループ行をクリックすると詳細画面でprivilegeを付与された対象情報を確認できます。
 
 <figure data-layout="center" data-align="center">
-![特定ユーザーのアクセス制御詳細ページ](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png" alt="特定ユーザーのアクセス制御詳細ページ" width="760" />
 <figcaption>
 特定ユーザーのアクセス制御詳細ページ
 </figcaption>
@@ -73,16 +73,16 @@ Access Controlページ内Groups / Usersタブのリストで特定ユーザー�
 3. `Grant Privilege`ボタンをクリックします。
 4. ポップアップウィンドウでAccess Control LevelでHostを選択します。（基本値：Host）<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png" alt="image-20251218-095117.png" width="736" />
   </figure>
 5. privilegeを付与するコネクションを選択し、特定privilege typeを選択します。
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png" alt="image-20251218-095406.png" width="736" />
   </figure>
 6. 必要な場合、Expiration dateでprivilege期限切れ日を設定した後`Grant`ボタンを押します。
 7. 権限を付与するコネクション複数個を選択して一括的に権限を付与することもできます。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png" alt="image-20251218-095817.png" width="736" />
   </figure>
 
 
@@ -100,20 +100,20 @@ Access Controlページ内Groups / Usersタブのリストで特定ユーザー�
 3. `Grant Privilege`ボタンをクリックします。
 4. ポップアップウィンドウでAccess Control LevelでSchema（Logical DB）を選択します。（基本値：Host）
   <figure data-layout="center" data-align="center">
-  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
 5. Connections項目で対象コネクションを選択します。スキーマレベルは一度に複数のコネクションに多重設定が不可能です。コネクションを選択すると右側のprivilege項目に基本的にselect権限が必要なスキーマに自動的にSELECT privilegeが付与されたことが見えます。管理者はこの項目を削除することもできますが、その場合Web editorまたはproxyでスキーマ構造を照会する時点にエラーが発生する可能性があるため、可能な限りこの項目を削除しないことをお勧めします。
 6. privilegeを割り当てる特定スキーマ（論理DB）を指定するために`Add Item`ボタンを押します。<br/>下に対象を追加できる行が追加されます。schema構造があるDBMS（Oracle、Postgresなど）は対象名を入力する時、必ず`{database名}`.`{schema名}`の形式で入力する必要があります。MySQLのようにschema構造がないDBMSは論理DB名のみ入力すれば 됩니다。<br/>- Oracle例：ORCLDB.TESTUSER<br/>- PostgreSQL例：testdb.test_schema<br/>- MySQL例：sakila
   <figure data-layout="center" data-align="center">
-  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
 7. privilege割り当てはまずポップアップウィンドウ右側上部のHost Level Privilege項目で希望するprivilege typeを選択します。（スキーマレベルprivilegeはhost level privilegeの範囲内でのみ付与が可能なためです。例えばRead/WriteをHost Level Privilegeで選択した場合、その範囲内でSELECT、INSERTなどを付与できますが、Read-OnlyをHost Level Privilegeで選択した場合、SELECTのみ指定できます。）
   <figure data-layout="center" data-align="center">
-  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png" alt="image-20251218-110506.png" width="736" />
   </figure>
 8. 下に表示されるHost Level Others、Host Level Functionsは設定を見るだけです。修正するためにはDatabases &gt; DB Access Control &gt; Privilege Typeメニューで該当Privilege Typeを修正する必要があります。Host LevelのPrivilegeの属性によりSchema Levelもprivilegeが従属するため、上位の情報を確認する用途で使用されます。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png" alt="image-20251218-111204.png" width="732" />
   </figure>
 9. 必要な場合、Expiration dateでprivilege期限切れ日を設定した後`Grant`ボタンを押します。
 
@@ -134,7 +134,7 @@ Access Controlページ内Groups / Usersタブのリストで特定ユーザー�
 ### Access Control権限回収
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details](/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details
 </figcaption>
@@ -168,7 +168,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 ### コネクションロックアカウント解除（Locked Account）
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account](/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account
 </figcaption>
@@ -179,7 +179,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 3. ロック解除しようとする項目を選択後右側`Unlock`をクリックしてコネクションロックを解除します。
 
 <figure data-layout="center" data-align="center">
-![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png" alt="image-20241209-123358.png" width="760" />
 </figure>
 
 1. コネクションロックおよびロック解除履歴はAudit &gt; Databases &gt; Account Lock Historyメニューで確認できます。
@@ -189,7 +189,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 **テーブルタグでアクセス制御** <br/><br/>Databases &gt; General &gt; ConfigurationsでNew DAC Policy Managementを有効化した場合、
 
 <figure data-layout="center" data-align="center">
-![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png" alt="image-20250703-050924.png" width="551" />
 </figure>
 
 Access Controlで特定ユーザーにアクセス許可されたコネクションに対して特定タグが付与されたテーブルのみアクセス可能になるよう制御できます。
@@ -205,7 +205,7 @@ Access Controlで特定ユーザーにアクセス許可されたコネクショ
 2. 詳細画面でAccess TypeをTag-based table accessで選択してタグを追加します。既存のタグ（テーブルに付与されたタグ）のみ選択して使用できます。
 
 <figure data-layout="center" data-align="center">
-![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png" alt="image-20250703-051824.png" width="700" />
 </figure>
 
 もしTag-based table access機能を有効化した状態でどのタグも登録しないと該当コネクションのすべてのテーブルにアクセスできなくなります。<br/>

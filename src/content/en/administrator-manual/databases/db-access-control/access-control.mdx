@@ -22,7 +22,7 @@ On the Access Control page, you can view the DB privileges and administrator rol
 * Locked Accounts: You can check users who are locked due to account lock conditions and unlock them.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -34,7 +34,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 Clicking on a specific user or group row in the Groups / Users tab list on the Access Control page opens a detail screen where you can view information about targets that have been granted privileges.
 
 <figure data-layout="center" data-align="center">
-![Access control detail page for a specific user](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png" alt="Access control detail page for a specific user" width="760" />
 <figcaption>
 Access control detail page for a specific user
 </figcaption>
@@ -73,16 +73,16 @@ Access control detail page for a specific user
 3. Click the `Grant Privilege` button.
 4. In the popup window, select Host from Access Control Level. (Default: Host)<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png" alt="image-20251218-095117.png" width="736" />
   </figure>
 5. Select the connection to grant privileges to and choose a specific privilege type.
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png" alt="image-20251218-095406.png" width="736" />
   </figure>
 6. If necessary, set the privilege expiration date in Expiration date and click the `Grant` button.
 7. You can also select multiple connections to grant privileges in bulk. <br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png" alt="image-20251218-095817.png" width="736" />
   </figure>
 
 
@@ -100,20 +100,20 @@ DBMS that support Schema Level privilege assignment as of version 11.5.0:<br/>At
 3. Click the `Grant Privilege` button.
 4. In the popup window, select Schema(Logical DB) from Access Control Level. (Default: Host)
   <figure data-layout="center" data-align="center">
-  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
 5. Select the target connection from the Connections item. Schema level does not support multiple settings for multiple connections at once. When you select a connection, you can see that SELECT privilege is automatically granted to schemas that require select privilege in the privilege item on the right. Administrators can remove this item, but if they do, errors may occur when querying schema structure in Web editor or proxy, so it is recommended not to remove this item if possible.
 6. Click the `Add Item` button to specify a specific schema (logical DB) to assign privileges to. <br/> A row is added below where you can add targets. For DBMS with schema structure (Oracle, Postgres, etc.), you must enter the target name in the format `{database name}`.`{schema name}`. For DBMS without schema structure like MySQL, enter only the logical DB name.<br/>- Oracle example: ORCLDB.TESTUSER<br/>- PostgreSQL example: testdb.test_schema<br/>- MySQL example: sakila
   <figure data-layout="center" data-align="center">
-  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
 7. To assign privileges, first select the desired privilege type from the Host Level Privilege item at the top right of the popup window. (Schema level privileges can only be granted within the scope of host level privileges. For example, if you select Read/Write as Host Level Privilege, you can grant SELECT, INSERT, etc. within that scope, but if you select Read-Only as Host Level Privilege, you can only specify SELECT.)
   <figure data-layout="center" data-align="center">
-  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png" alt="image-20251218-110506.png" width="736" />
   </figure>
 8. Host Level Others and Host Level Functions displayed below are read-only. To modify them, you must modify the corresponding Privilege Type in the Databases &gt; DB Access Control &gt; Privilege Type menu. They are used to check upper-level information because Schema Level privileges are dependent on the properties of Host Level Privileges.<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png" alt="image-20251218-111204.png" width="732" />
   </figure>
 9. If necessary, set the privilege expiration date in Expiration date and click the `Grant` button.
 
@@ -134,7 +134,7 @@ When a user has multiple privileges granted through both individual user privile
 ### Revoking Access Control Privileges
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details](/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details
 </figcaption>
@@ -168,7 +168,7 @@ Users whose privileges have been revoked can no longer access the connection, an
 ### Unlocking Locked Connection Accounts
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account](/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account
 </figcaption>
@@ -179,7 +179,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 3. Select the item you want to unlock and click `Unlock` on the right to unlock the connection.
 
 <figure data-layout="center" data-align="center">
-![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png" alt="image-20241209-123358.png" width="760" />
 </figure>
 
 1. Connection lock and unlock history can be checked in the Audit &gt; Databases &gt; Account Lock History menu.
@@ -189,7 +189,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 **Access Control with Table Tags** <br/><br/>When New DAC Policy Management is enabled in Databases &gt; General &gt; Configurations,
 
 <figure data-layout="center" data-align="center">
-![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png" alt="image-20250703-050924.png" width="551" />
 </figure>
 
 In Access Control, you can control access to only tables with specific tags for connections that specific users are allowed to access.
@@ -205,7 +205,7 @@ If the conditions are met, you can set it up as follows:
 2. In the detailed screen, select Tag-based table access as the Access Type and add tags. You can only select and use existing tags (tags assigned to tables).
 
 <figure data-layout="center" data-align="center">
-![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png" alt="image-20250703-051824.png" width="700" />
 </figure>
 
 If you enable the Tag-based table access feature but don't register any tags, you won't be able to access any tables in that connection.<br/>

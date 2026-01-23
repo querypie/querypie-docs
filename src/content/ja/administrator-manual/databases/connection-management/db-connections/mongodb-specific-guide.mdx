@@ -54,7 +54,7 @@ mongodb+srv://<FQDN>/?[options]
 #### 2. MongoDBコネクション作成
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png" alt="Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
 </figcaption>
@@ -69,7 +69,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 ##### &lt; Standard Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png" alt="image-20240730-114050.png" width="633" />
 </figure>
 
 1. Allowed Zoneに適切なネットワークzone設定をします。
@@ -86,7 +86,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
         3. Exposeはコネクション情報での個別インスタンスの露出可否を決定できるオプションです。<br/>**マルチホスト機能を使用するには必ずインスタンスがexpose状態でなければならないため、必ず**`Expose`**オプションをアクティブにします。**  
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Authentication DB（authSource）の値を入力します。
@@ -104,7 +104,7 @@ ______
 ##### &lt; +srv Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png" alt="image-20240730-114540.png" width="633" />
 </figure>
 
 1. Allowed Zoneに適切なネットワークzone設定をします。
@@ -130,7 +130,7 @@ Sharded ClusterはReplica SetとConnection Stringのオプションのみ異な�
 Replica Setは replicaSet=[replica set name] オプションが必要ですが、Sharded Clusterはこのオプションが不要です。
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png" alt="image-20240730-114833.png" width="636" />
 </figure>
 
 ##### &lt; Standard Connection &gt;
@@ -168,7 +168,7 @@ Clusterモードに対するより詳細な内容は[DB Connections](.)でも確
 Proxyを使用する場合、DataGripなどのSQL ClientでTLS設定と別にQueryPieでもSSL設定が必要です。<br/>[SSL Configurations](../ssl-configurations)を参照して設定後、コネクションのSSL設定に反映する必要があります。<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png" alt="image-20240731-050745.png" width="654" />
 </figure>
 
 
@@ -189,7 +189,7 @@ QueryPieでサポートするDBMS中MongoDBの場合は常にデータをJSON形
 #### マスキング政策に規則登録
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
@@ -215,7 +215,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 政策を作成した後、実際に政策を適用するデータのパスを規則として登録します。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -254,7 +254,7 @@ Rule Listタブで規則が登録されたことを確認できます。
 ##### Case 1. item属性アクセス制限
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -263,7 +263,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 1つの属性に対してアクセス制限政策を設定する場合、「Column Name」項目に該当するitemを入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120312.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png" alt="image-20240730-120312.png" width="760" />
 </figure>
 
 上スクリーンショットのようにitem（"T_PWD"）属性の値が"Restricted Column"で表示されることを確認できます。
@@ -273,14 +273,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 size下位のh属性に対してアクセス制限政策を設定する場合、「Column Name」項目に`$.size.h`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120215.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png" alt="image-20240730-120215.png" width="731" />
 </figure>
 
 上スクリーンショットのようにsize下位のh属性の値が"Restricted Column"で表示されることを確認できます。
@@ -290,14 +290,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 size下位のすべての属性に対してアクセス制限政策を設定する場合、「Column Name」項目に`$.size`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120421.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png" alt="image-20240730-120421.png" width="729" />
 </figure>
 
 上スクリーンショットのようにsize下位のすべての属性の値が"Restricted Column"で表示されることを確認できます。
@@ -307,14 +307,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 tags属性のリスト値中2番目の値に対するアクセス制限政策を設定する場合、「Column Name」項目に`$.tags[1]`を入力後`OK`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120544.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png" alt="image-20240730-120544.png" width="731" />
 </figure>
 
 上スクリーンショットのようにtags属性の2番目の値が"Restricted Column"で表示されることを確認できます。

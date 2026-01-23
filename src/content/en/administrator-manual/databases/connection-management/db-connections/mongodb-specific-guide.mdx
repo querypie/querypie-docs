@@ -54,7 +54,7 @@ Nevertheless, if direct access to subordinate hosts in +srv connection environme
 #### 2. Creating MongoDB Connections
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png" alt="Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
 </figcaption>
@@ -69,7 +69,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 ##### &lt; Standard Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png" alt="image-20240730-114050.png" width="633" />
 </figure>
 
 1. Set appropriate network zone settings in Allowed Zone.
@@ -86,7 +86,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
         3. Expose is an option that can determine the exposure of individual instances in connection information. <br/> **To use multi-host functionality, instances must be in expose state, so be sure to activate the** `Expose` **option.**  
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Enter the value of Authentication DB (authSource).
@@ -104,7 +104,7 @@ ______
 ##### &lt; +srv Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png" alt="image-20240730-114540.png" width="633" />
 </figure>
 
 1. Set appropriate network zone settings in Allowed Zone.
@@ -130,7 +130,7 @@ Sharded Cluster has the same setup method as Replica Set, only the Connection St
 Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster doesn't need this option.
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png" alt="image-20240730-114833.png" width="636" />
 </figure>
 
 ##### &lt; Standard Connection &gt;
@@ -168,7 +168,7 @@ As mentioned above, when using QueryPie's SQL editor for connection, tls=true is
 When using Proxy, SSL settings are required in QueryPie separately from TLS settings in SQL clients like DataGrip.<br/>Refer to [SSL Configurations](../ssl-configurations) for setup and reflect in the connection's SSL settings.<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png" alt="image-20240731-050745.png" width="654" />
 </figure>
 
 
@@ -189,7 +189,7 @@ Please check the links below for initial policy creation.
 #### Registering Rules in Masking Policy
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
@@ -215,7 +215,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 After creating a policy, register the data path to which the policy will be applied as rules.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -254,7 +254,7 @@ Examples of MongoDB data to which policies are applied are as follows:
 ##### Case 1. item Attribute Access Restriction
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -263,7 +263,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 When setting access restriction policy for one attribute, enter the corresponding item in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120312.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png" alt="image-20240730-120312.png" width="760" />
 </figure>
 
 As shown in the screenshot above, you can see that the value of the item("T_PWD") attribute is displayed as "Restricted Column".
@@ -273,14 +273,14 @@ As shown in the screenshot above, you can see that the value of the item("T_PWD"
 When setting access restriction policy for the h attribute under size, enter `$.size.h` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120215.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png" alt="image-20240730-120215.png" width="731" />
 </figure>
 
 As shown in the screenshot above, you can see that the value of the h attribute under size is displayed as "Restricted Column".
@@ -290,14 +290,14 @@ As shown in the screenshot above, you can see that the value of the h attribute 
 When setting access restriction policy for all attributes under size, enter `$.size` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120421.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png" alt="image-20240730-120421.png" width="729" />
 </figure>
 
 As shown in the screenshot above, you can see that the values of all attributes under size are displayed as "Restricted Column".
@@ -307,14 +307,14 @@ As shown in the screenshot above, you can see that the values of all attributes 
 When setting access restriction policy for the 2nd value in the tags attribute list, enter `$.tags[1]` in the "Column Name" field and click the `OK` button.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120544.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png" alt="image-20240730-120544.png" width="731" />
 </figure>
 
 As shown in the screenshot above, you can see that the 2nd value of the tags attribute is displayed as "Restricted Column".

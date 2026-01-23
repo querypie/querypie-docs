@@ -15,7 +15,7 @@ Through this feature, you can manage data security, privacy protection, and regu
 ### Accessing Policy Creation Screen
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png" alt="image-20250307-131024.png" width="760" />
 </figure>
 
 1. Expand the **Policy Management** section in the left sidebar.
@@ -26,7 +26,7 @@ Through this feature, you can manage data security, privacy protection, and regu
 ### Setting Basic Policy Information
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png" alt="image-20250307-131052.png" width="760" />
 </figure>
 
 In the **Information** section of the policy creation screen, set the following information:
@@ -45,27 +45,27 @@ QueryPie provides the following policy types:
     * Uses regex-based masking patterns to detect and mask specific data patterns. (Masking Patterns)
     * When users query the column, it displays as `{masked}` and clicking the cell shows the masked data.<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.23.47-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png" alt="Screenshot-2025-03-07-at-10.23.47-PM.png" width="712" />
       </figure>
 2. **Table Access Restriction** 
     * Applies access blocking policy to tables.
     * When users try to query the table, access is blocked and a no permission message is displayed.
     * Message: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.36.58-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png" alt="Screenshot-2025-03-07-at-10.36.58-PM.png" width="712" />
       </figure>
 3. **Column Access Restriction** 
     * Applies access blocking policy to columns.
     * When users try to query the column, it displays as `{restricted}` and access is blocked.<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.34.20-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png" alt="Screenshot-2025-03-07-at-10.34.20-PM.png" width="712" />
       </figure>
 4. **Table Access Justification Requirement** 
     * Enforces reason input when performing operations on specific tables.
     * When users perform selected operations (e.g., SELECT queries, data export), a reason input modal is displayed.
     * The entered reason is recorded in the Execution Reason of Query Audit.<br/>
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-11.01.28-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png" alt="Screenshot-2025-03-07-at-11.01.28-PM.png" width="712" />
       </figure>
 5. **Sensitive Data Access Monitoring** 
     * Allows administrators to designate specific tables or columns as sensitive information and generate alerts when accessed.
@@ -74,14 +74,14 @@ QueryPie provides the following policy types:
     * Forces approval procedures through Workflow when performing `INSERT`, `UPDATE`, `DELETE` queries on specific tables.
     * Before creating this policy, you must first create an Approval Rule of SQL Request Type in General &gt; Workflow Management &gt; Approval Rules. Performing `INSERT`, `UPDATE`, `DELETE` assumes that the person performing has the corresponding privilege. To allow the person executing the query to be the requester, the "Allow Assignee selection (All Users)" option must be selected in the Execution item's Assignee for Execution as shown in the figure below, so that people with `INSERT`, `UPDATE`, `DELETE` privileges but who are not administrators can execute queries through approval.<br/>
       <figure data-layout="center" data-align="center">
-      ![General &gt; Workflow Management &gt; Approval Rules creating SQL Request format Approval rule](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png" alt="General &gt; Workflow Management &gt; Approval Rules creating SQL Request format Approval rule" width="419" />
       <figcaption>
       General &gt; Workflow Management &gt; Approval Rules creating SQL Request format Approval rule
       </figcaption>
       </figure>
     * If an Approval Rule is created, you can specify the Approval Rule to link with the policy as shown in the figure below.<br/>
       <figure data-layout="center" data-align="center">
-      ![Databases&gt;Policy Management&gt;Data Policies specifying pre-created SQL Request format Approval Rule](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png" alt="Databases&gt;Policy Management&gt;Data Policies specifying pre-created SQL Request format Approval Rule" width="494" />
       <figcaption>
       Databases&gt;Policy Management&gt;Data Policies specifying pre-created SQL Request format Approval Rule
       </figcaption>
@@ -93,7 +93,7 @@ QueryPie provides the following policy types:
 In the **User Scope** section of the policy creation screen, set the user scope to which the policy will be applied.
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png" alt="image-20250307-131315.png" width="760" />
 </figure>
 
 #### Scope Type
@@ -119,7 +119,7 @@ That is, they are always applied while the policy exists.
 In the **Data Scope** section of the policy creation screen, set the data to which the policy will be applied.
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png" alt="image-20250307-131634.png" width="760" />
 </figure>
 
 #### Scope Type
@@ -134,13 +134,13 @@ Also, multiple tables or columns can be selected and registered as targets.
 2. **Specific data path**: An option to directly specify specific data paths. **[11.0.0]** 
     * After selecting this option, click the Add target button to specify Database, Schema, Table, Column in the popup dialog, and regular expressions can also be used.  <br/>  <br/> 
       <figure data-layout="center" data-align="center">
-      ![Direct path specification](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png" alt="Direct path specification" width="505" />
       <figcaption>
       Direct path specification
       </figcaption>
       </figure>
       <figure data-layout="center" data-align="center">
-      ![Specifying targets using regular expressions](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png" alt="Specifying targets using regular expressions" width="498" />
       <figcaption>
       Specifying targets using regular expressions
       </figcaption>

@@ -33,7 +33,7 @@ QueryPie utilizes the EKS access entry API during synchronization for AWS EKS Ku
 Therefore, if the cluster authentication mode is set to ConfigMap only, there may be connection difficulties, and we recommend changing the mode in the AWS console in advance for smooth synchronization.
 
 <figure data-layout="center" data-align="center">
-![AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png)
+<img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png" alt="AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access" width="760" />
 <figcaption>
 AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access
 </figcaption>
@@ -42,7 +42,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 1. Access AWS Console with an account that has EKS administrator privileges
 2. Navigate to the **Elastic Kubernetes Service (EKS)** menu
 3. Move to the region where the target EKS cluster is located
-    * Example: ![image-20240512-134604.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134604.png) 
+    * 예) <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134604.png" alt="image-20240512-134604.png" /> 
 4. Select the target EKS cluster to navigate to the details page
 5. Click the Access tab to view the Access configuration status
 6. If the Authentication mode is **"ConfigMap"**, click the **Manage access** button on the right
@@ -53,7 +53,7 @@ AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access conf
 ### Registering AWS Integration Information in QueryPie
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png)
+<img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054036.png" alt="Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; Create Provider
 </figcaption>
@@ -66,7 +66,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 5. Select the region of the resources you want to synchronize from the **Region** field
 6. Enter the **Credential** information required to synchronize resources
   <figure data-layout="center" data-align="center">
-  ![image-20240721-054206.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png)
+  <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png" alt="image-20240721-054206.png" width="510" />
   </figure>
     1.  **Default Credentials**  : If the QueryPie server is installed in the same AWS account, you can assign an IAM role to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS
     2.  **Cross Account Role**  : You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen
@@ -90,7 +90,7 @@ In this case, you can register normally by selecting a different `Region`.
 ### Synchronizing and Managing Registered AWS Cloud Provider
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png)
+<img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054313.png" alt="Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &gt; List Details
 </figcaption>
@@ -113,13 +113,13 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 
 ### Dry Run/Synchronization Log Notation
 
-|                                                                                                                                                                            |  **Occurrence Time**                                                                         |  **Text**                                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✔️                                                                                                                                                                         | Dry Run or Synchronize synchronization start                                                      | Cluster synchronization started.                                                                                                                          |
-| ✔️                                                                                                                                                                         | New cluster addition completed                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
-| ✔️                                                                                                                                                                         | Existing cluster information update completed                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
-| ✔️                                                                                                                                                                         | Existing cluster removal completed                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
-| ✔️                                                                                                                                                                         | Dry Run or Synchronize synchronization successfully completed                                                | Cluster synchronization succeeded.                                                                                                                        |
-| ![image-20240822-082024.png](/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png) | Synchronization skipped when EKS cluster authentication mode does not allow EKS API. Need to change from ConfigMap mode to allow EKS API  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
-| ❌                                                                                                                                                                          | Synchronization failed due to duplicate cluster name already confirmed                                                          | Cluster synchronization failed. The cluster name "`{Cluster Name}`" is already in use by another cluster. To synchronize it, delete the existing cluster. |
-| ❌                                                                                                                                                                          | Dry Run or Synchronize synchronization failed                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |
+|                                                                                                                                                                                                       |  **발생 시점**                                                                         |  **문구**                                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✔️                                                                                                                                                                                                    | Dry Run 또는 Synchronize 동기화 시작                                                      | Cluster synchronization started.                                                                                                                          |
+| ✔️                                                                                                                                                                                                    | 신규 클러스터 추가 완료                                                                      | New Cluster is added: `{Cluster Name}` (`{API URL}`).                                                                                                     |
+| ✔️                                                                                                                                                                                                    | 기존 클러스터 정보 업데이트 완료                                                                 | Cluster `{Cluster Name}` is updated                                                                                                                       |
+| ✔️                                                                                                                                                                                                    | 기존 클러스터 제거 완료                                                                      | Cluster `{Cluster Name}` is removed                                                                                                                       |
+| ✔️                                                                                                                                                                                                    | Dry Run 또는 Synchronize 동기화 성공적으로 종료                                                | Cluster synchronization succeeded.                                                                                                                        |
+| <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240822-082024.png" alt="image-20240822-082024.png" width="24" /> | EKS 클러스터의 인증 모드가 EKS API를 허용하지 않는 경우 동기화 스킵. ConfigMap 모드에서 EKS API를 허용하도록 변경 필요.  | Skipping sync. Cluster `{Cluster Name}`'s authentication mode blocks EKS access entry API. To manage access, enable EKS API access.                       |
+| ❌                                                                                                                                                                                                     | 이미 중복된 클러스터명이 확인되어 동기화 실패                                                          | Cluster synchronization failed. The cluster name “`{Cluster Name}`” is already in use by another cluster. To synchronize it, delete the existing cluster. |
+| ❌                                                                                                                                                                                                     | Dry Run 또는 Synchronize 동기화 실패 종료                                                   | Cluster synchronization failed. + `{additional statement}`                                                                                                |

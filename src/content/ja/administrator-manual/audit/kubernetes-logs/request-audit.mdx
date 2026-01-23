@@ -11,7 +11,7 @@ title: 'Request Audit'
 ### Request Auditの照会
 
 <figure data-layout="center" data-align="center">
-![image-20240721-082824.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png)
+<img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png" alt="image-20240721-082824.png" width="760" />
 </figure>
 
 1. Administrator &gt; Audit &gt; Kubernetes &gt; Request Auditメニューに移動します。
@@ -21,7 +21,7 @@ title: 'Request Audit'
     2.  **Cluster Name**  : クエリパイ上に登録されたクラスター名
 4. 検索フィールド右側フィルターボタンをクリックしてAND/OR条件で以下のフィルタリングが可能です。
   <figure data-layout="center" data-align="center">
-  ![image-20240721-082906.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png)
+  <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png" alt="image-20240721-082906.png" width="736" />
   </figure>
     1.  **Verb**  : 呼び出された特定のKubernetes APIアクション
         * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
@@ -55,7 +55,7 @@ title: 'Request Audit'
 
 1. 各行をクリックすると詳細情報照会が可能です。 <br/>
   <figure data-layout="center" data-align="center">
-  ![image-20250116-121412.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png)
+  <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png" alt="image-20250116-121412.png" width="736" />
   </figure>
     1. 最上位には基本イベントに基づく情報を露出します:
         1.  **Result**  : API呼び出し成功/失敗の有無
@@ -76,11 +76,11 @@ title: 'Request Audit'
             1. セッションレコーディングが発生されたログに限り該当フィールドが詳細ページで照会可能です。
             2. Pod exec APIで実行時、該当セッションに対するレコーディングが進行され、該当「Session Recording」文句にハイパーリンクが含まれます。
               <figure data-layout="center" data-align="center">
-              ![image-20240512-055657.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png)
+              <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png" alt="image-20240512-055657.png" width="218" />
               </figure>
             3. リンククリック時、関連セッションレコーディングがプレイされます。
               <figure data-layout="center" data-align="center">
-              ![image-20240721-082651.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png)
+              <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png" alt="image-20240721-082651.png" width="382" />
               </figure>
         14. 中間段にはAPI呼び出し内訳に基づく情報を露出します:
             1.  **Verb**  : 呼び出された特定のKubernetes APIアクション

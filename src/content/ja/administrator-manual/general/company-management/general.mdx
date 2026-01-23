@@ -11,7 +11,7 @@ import { Callout } from 'nextra/components'
 Generalページでは、QueryPie全体の基本設定を変更できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; General](/administrator-manual/general/company-management/general/image-20250822-103044.png)
+<img src="/administrator-manual/general/company-management/general/image-20250822-103044.png" alt="Administrator &gt; General &gt; Company Management &gt; General" width="760" />
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; General
 </figcaption>
@@ -33,7 +33,7 @@ Administrator &gt; General &gt; Company Management &gt; General
 System Propertiesページでは、QueryPieシステムコンポーネントの設定値を確認し、ファイルで保存できます。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties](/administrator-manual/general/company-management/general/image-20240805-014838.png)
+<img src="/administrator-manual/general/company-management/general/image-20240805-014838.png" alt="Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties" width="760" />
 <figcaption>
 Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties
 </figcaption>
@@ -45,7 +45,7 @@ Administrator &gt; General &gt; Company Management &gt; General &gt; System Prop
 Workflow Configurationsでは、決裁上申および承認関連の設定を変更します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-08-25-at-5.36.19-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png)
+<img src="/administrator-manual/general/company-management/general/Screenshot-2025-08-25-at-5.36.19-PM.png" alt="Screenshot-2025-08-25-at-5.36.19-PM.png" width="543" />
 </figure>
 
 ### 最大承認期間設定
@@ -101,27 +101,27 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
 * 重要：
     * 選択されたAttributeの値には承認者のQueryPie Login IDが入力されていなければなりません。
       <figure data-layout="center" data-align="center">
-      ![Admin &gt; General &gt; Users &gt; Detail page &gt; Profileタブ<br/>](/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png)
+      <img src="/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png" alt="Admin &gt; General &gt; Users &gt; Detail page &gt; Profileタブ<br/>" width="712" />
       <figcaption>
       Admin &gt; General &gt; Users &gt; Detail page &gt; Profileタブ<br/>
       </figcaption>
       </figure>
 * Administrator &gt; General &gt; Workflow Management &gt; Approval Rulesページで新しい承認規則を追加または既存規則を修正する際、'Assignee for Approval'項目に'Allow Assignee selection (Attribute-Based)'を選択した後、承認者とマッピングするためのAttribute（例：teamLeader）を指定します。<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251110-030113.png](/administrator-manual/general/company-management/general/image-20251110-030113.png)
+  <img src="/administrator-manual/general/company-management/general/image-20251110-030113.png" alt="image-20251110-030113.png" width="736" />
   </figure>
     * 自己承認無効化時連動：もしApproval Rules設定で'Self Approval（自己承認）'オプションが無効化された場合、Attribute基盤で決定された承認者が要求者本人の場合には該当要求者を承認者として自動指定できません。この場合、ワークフロー設定またはシステムポリシーに従って承認者指定が失敗するか他の経路で処理される可能性があるため注意が必要です。
 * Attribute値不在時通知
     * もし上申者User Profileに該当Attribute値が空の場合（すなわち、承認者のLogin IDが指定されていない場合）、ワークフロー上申時に以下のような内容の通知モーダルが表示され要求提出が中断されます。上申者は管理者に問い合わせてプロフィールのAttribute値を設定しなければなりません。
         * エラーメッセージ例：
           <figure data-layout="center" data-align="center">
-          ![image-20250508-022114.png](/administrator-manual/general/company-management/general/image-20250508-022114.png)
+          <img src="/administrator-manual/general/company-management/general/image-20250508-022114.png" alt="image-20250508-022114.png" width="688" />
           </figure>
 * Attribute値はあるが該当ユーザーが無効化された場合
     * もし上申者User Profileに該当Attribute値で指定された承認者が無効化された場合、ワークフロー上申時にApprover欄に指定された承認者が表記されず、以下のような内容の通知モーダルが表示され要求提出が中断されます。
         * エラーメッセージ例：
           <figure data-layout="center" data-align="center">
-          ![Screenshot-2025-06-16-at-10.30.14-AM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.30.14-AM.png)
+          <img src="/administrator-manual/general/company-management/general/Screenshot-2025-06-16-at-10.30.14-AM.png" alt="Screenshot-2025-06-16-at-10.30.14-AM.png" width="615" />
           </figure>
 
 ### Attribute基盤ワークフローメニュー非表示機能 (Use User Attribute to Hide Workflow Menu)
@@ -129,7 +129,7 @@ Allow users to submit requests in Urgent modeトグルで有効化します。
 Use User Attribute to Hide Workflow Menuトグルを有効化します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-06-26-at-6.35.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.35.32-PM.png)
+<img src="/administrator-manual/general/company-management/general/Screenshot-2025-06-26-at-6.35.32-PM.png" alt="Screenshot-2025-06-26-at-6.35.32-PM.png" width="670" />
 </figure>
 
 特定ユーザー属性（User Attribute）を基準にユーザーダッシュボードでWorkflowメニューを表示しないように設定する機能です。
@@ -149,14 +149,14 @@ Use User Attribute to Hide Workflow Menuトグルを有効化します。
 もし無効化する場合、ユーザーpreference画面でApprover settingメニューが表示されません。
 
 <figure data-layout="center" data-align="center">
-![Allow Delegated Approvalスイッチ](/administrator-manual/general/company-management/general/image-20250926-112444.png)
+<img src="/administrator-manual/general/company-management/general/image-20250926-112444.png" alt="Allow Delegated Approvalスイッチ" width="253" />
 <figcaption>
 Allow Delegated Approvalスイッチ
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![代理決裁機能を無効化した状態のpreference](/administrator-manual/general/company-management/general/image-20250926-112201.png)
+<img src="/administrator-manual/general/company-management/general/image-20250926-112201.png" alt="代理決裁機能を無効化した状態のpreference" width="516" />
 <figcaption>
 代理決裁機能を無効化した状態のpreference
 </figcaption>
@@ -167,7 +167,7 @@ Allow Delegated Approvalスイッチ
 トグルをオンにすると、Workflowで上申されたSQL要求実行時にスロットリングを適用します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-05-09-at-3.18.32-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png)
+<img src="/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-3.18.32-PM.png" alt="Screenshot-2025-05-09-at-3.18.32-PM.png" width="604" />
 </figure>
 
 
@@ -183,7 +183,7 @@ Allow Delegated Approvalスイッチ
 Redirect to custom page for SQL Requestsトグルを有効化します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-05-09-at-8.33.07-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png)
+<img src="/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.33.07-PM.png" alt="Screenshot-2025-05-09-at-8.33.07-PM.png" width="516" />
 </figure>
 
 このオプションを通じて、User AgentでLedgerテーブル対象にINSERT、UPDATE、DELETEクエリ実行によりワークフロー承認要求が発生する場合、`Send Request`ボタンクリック時にユーザーを事前に定義されたカスタムURLページにリダイレクトするかを決定します。
@@ -201,7 +201,7 @@ Redirect to custom page for SQL Requestsトグルを有効化します。
 Select Request Types Allowed for Usersトグルを有効化します。
 
 <figure data-layout="center" data-align="center">
-![Screenshot-2025-05-09-at-8.40.28-PM.png](/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.40.28-PM.png)
+<img src="/administrator-manual/general/company-management/general/Screenshot-2025-05-09-at-8.40.28-PM.png" alt="Screenshot-2025-05-09-at-8.40.28-PM.png" width="352" />
 </figure>
 
 このオプションを通じて、管理者がユーザーがアクセスし要求できるワークフローの要求（Request）タイプを選択的に制御できるようにします。
@@ -227,7 +227,7 @@ Select Request Types Allowed for Usersトグルを有効化します。
 Workflowを通じてDB Access Requestを上申する場合、要求する権限に従って決裁線（Approval Rule）を特定できるようにするには「Use DB Privilege Type Based Approval」トグルを有効化します。
 
 <figure data-layout="center" data-align="center">
-![Use DB Privilege Type Based Approval](/administrator-manual/general/company-management/general/image-20250822-111454.png)
+<img src="/administrator-manual/general/company-management/general/image-20250822-111454.png" alt="Use DB Privilege Type Based Approval" width="507" />
 <figcaption>
 Use DB Privilege Type Based Approval
 </figcaption>
@@ -236,7 +236,7 @@ Use DB Privilege Type Based Approval
 `+Routing Rule`ボタンを押すと、privilegeに対する条件を指定して決裁線に対するルーティングを指定できます。
 
 <figure data-layout="center" data-align="center">
-![image-20250822-112026.png](/administrator-manual/general/company-management/general/image-20250822-112026.png)
+<img src="/administrator-manual/general/company-management/general/image-20250822-112026.png" alt="image-20250822-112026.png" width="432" />
 </figure>
 
 *  **Routing Rule Name**  : 識別しやすいルーティング規則の名前を入力します。
@@ -262,7 +262,7 @@ Use DB Privilege Type Based Approval
 WorkflowのSQL Requestを通じて実行するクエリを上申する際に実行計画結果を添付する「Attach Explain Results」機能を有効または無効化できるオプションを提供します。
 
 <figure data-layout="center" data-align="center">
-![image-20250825-002423.png](/administrator-manual/general/company-management/general/image-20250825-002423.png)
+<img src="/administrator-manual/general/company-management/general/image-20250825-002423.png" alt="image-20250825-002423.png" width="425" />
 </figure>
 
 管理者がこのオプションを有効化しても、WorkflowのSQL Request様式で「Attach Explain Results」はOffになっているため、ユーザーが必要時に明示的に「Attatch Explain Results」トグルスイッチをOnに変更しなければ実行計画結果が添付されます。

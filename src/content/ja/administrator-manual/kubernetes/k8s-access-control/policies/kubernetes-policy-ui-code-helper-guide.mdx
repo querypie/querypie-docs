@@ -17,7 +17,7 @@ KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベ
 モーダルはコード編集を助ける役割で、全体モーダルによって挿入された内容はコードエディター上で削除が可能です。
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
 </figcaption>
@@ -25,14 +25,14 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 
 1.  **Add Resources**  モーダル
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073346.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png" alt="image-20240721-073346.png" width="426" />
   </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
     2. Cluster名でリソース検索が可能です。
     3. チェックボックスにチェックしたリソースを`Add`ボタンをクリックしてコードに挿入します。
 2.  **Set Subjects**  モーダル
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png" alt="image-20240721-073434.png" width="424" />
   </figure>
     1. Spec: Allowでのみ動作します。
     2.  **Kubernetes Groups**  : (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを指定します。
@@ -43,7 +43,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     4. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。
 3.  **Add Actions**  モーダル
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png" alt="image-20240721-073515.png" width="420" />
   </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
     2.  **API Groups** : デフォルトで"*"が提供され、管理者が修正可能で、「,」区切りで複数入力可能です。
@@ -68,7 +68,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     8. コード上でappendに該当する部分で既存の追加されたアクションを初期化せずに新しく追加が可能です。
 4.  **Set Conditions**  モーダル
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073628.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png" alt="image-20240721-073628.png" width="384" />
   </figure>
     1. 該当項目はすべて選択事項です。
     2. エディターにある内容を基にモーダルが既存の情報を一緒に表記し、`Set`ボタンを押すと変更事項をエディターで上書きします。

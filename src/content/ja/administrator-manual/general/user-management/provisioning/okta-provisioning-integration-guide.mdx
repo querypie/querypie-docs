@@ -40,7 +40,7 @@ ______
 #### OktaカスタムSCIMアプリ生成
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML
 </figcaption>
@@ -73,7 +73,7 @@ ______
 #### Okta-QueryPie Provisioning連動
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration
 </figcaption>
@@ -98,7 +98,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 3. Test Connector Configurationボタンを押して接続テストを進行します。
 4. 「*Connector configured successfully*」文句と共にポップアップが現れると、`Close`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
-  ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png" alt="image-20240430-025059.png" width="324" />
   </figure>
 5. 下部の`Save`ボタンを押して接続設定を保存します。
 
@@ -108,7 +108,7 @@ ______
 #### SCIM API有効化およびチェック
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App
 </figcaption>
@@ -147,36 +147,36 @@ QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目
 
 1. SCIMアプリのProvisioningタブ &gt; To App下部の`Go to Profile Editor`をクリックします。
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png" alt="image-20240712-082412.png" width="518" />
   </figure>
 2. `Add Attribute`ボタンをクリックします。 
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
 3. 同期に必要なAttributeを新たに登録します。 
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png" alt="image-20240712-082453.png" width="314" />
   </figure>
     1. Data type：QueryPieと同様にstringを選択します。
     2. Display name：Okta内表記する属性名を記入します。
     3. Variable name & External name：同期するcustom attribute変数名を記入します。 
         * QueryPieユーザープロファイルでも括弧で変数名確認が可能です。 
           <figure data-layout="center" data-align="center">
-          ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
+          <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png" alt="image-20240712-083117.png" width="144" />
           </figure>
     4. External namespace：以下の値を記入します。<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
     5. 以降`Save`または`Save and Add Another`ボタンをクリックして保存します。
 4. 次に`Mappings`ボタンをクリックします。 
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
     1. プロンプト上部のタブを2番目のタブ（Okta → `{APP}`）で選択します。 
       <figure data-layout="center" data-align="center">
-      ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+      <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png" alt="image-20240712-083618.png" width="285" />
       </figure>
     2. 下部に新たに生成したCustom AttributeとIdP内適切なAttributeをマッピングしてSave Mappingsボタンをクリックして設定を保存します。 
       <figure data-layout="center" data-align="center">
-      ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+      <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png" alt="image-20240712-085207.png" width="450" />
       </figure>
 5. 以降ユーザーをアプリに割り当てます。
 
@@ -187,7 +187,7 @@ ______
 
 1. SCIMアプリに戻ってAssignmentsタブで`Assign`ボタンのオプションを通じてユーザーを割り当てます。
   <figure data-layout="center" data-align="center">
-  ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments" width="736" />
   <figcaption>
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
@@ -196,7 +196,7 @@ ______
     2. **Assign to Groups**：ユーザーグループ単位で割り当て
 2. QueryPieアプリに戻ってAdministrator &gt; General &gt; User Management &gt; Usersに移動してユーザーが正常プッシュされたかを確認します。
   <figure data-layout="center" data-align="center">
-  ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details" width="736" />
   <figcaption>
   Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
   </figcaption>
@@ -206,7 +206,7 @@ ______
 #### グループProvisioningチェック
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups
 </figcaption>

@@ -16,7 +16,7 @@ WACエクステンションインストール前に開いていたタブに対�
 #### WebAppに接続できず、ブラウザに`ERR_TIMED_OUT`エラーメッセージが表示される場合
 
 <figure data-layout="center" data-align="center">
-![image-20250401-011848.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png)
+<img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-011848.png" alt="image-20250401-011848.png" width="760" />
 </figure>
 
 ブラウザがWAC Proxyと接続できずに発生する現象の可能性があります。
@@ -24,7 +24,7 @@ WACエクステンションインストール前に開いていたタブに対�
 まずAdmin &gt; Web Apps &gt; Web app ConfigurationメニューでWAC Proxyアドレスがよく設定されているか確認します。
 
 <figure data-layout="center" data-align="center">
-![image-20250401-012042.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012042.png)
+<img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012042.png" alt="image-20250401-012042.png" width="760" />
 </figure>
 
 問題が発生したブラウザのローカルターミナルで以下のコマンドを実行してWAC Proxyに接続できるか確認します。
@@ -83,7 +83,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 * Chromeブラウザで `chrome://net-export/` を開き、Start Overをクリックします。 (Optionsはデフォルト値の `Strip private information` を選択します。)
 
 <figure data-layout="center" data-align="center">
-![image-20250401-012452.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012452.png)
+<img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012452.png" alt="image-20250401-012452.png" width="760" />
 </figure>
 
 * Chromeブラウザで接続できないWebAppアドレスを入力して移動します。
@@ -97,7 +97,7 @@ $ $ curl -v -k https://internal-proxy.querypie.io:7447
 * 左側Eventsメニューでネットワーク送受信内容を確認します。
 
 <figure data-layout="center" data-align="center">
-![image-20250401-012759.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012759.png)
+<img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/image-20250401-012759.png" alt="image-20250401-012759.png" width="760" />
 </figure>
 
 
@@ -144,10 +144,10 @@ QueryPie Web Secure（Extension）に問題が発生した場合、関連ログ�
 
 1. パネルリストで、 `QueryPie Web Secure` をクリックします。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250116-134315.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134315.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134315.png" alt="screenshot-20250116-134315.png" width="612" />
   </figure>
 2. 開発者ツールでログ抽出機能が実行されます。 `Export Log` ボタンをクリックするとquerypie-web-secure-logs.jsonファイルの別途保存が実行されます。 `保存` ボタンを押します。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250116-134632.png](/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134632.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/wac-troubleshooting-guide/screenshot-20250116-134632.png" alt="screenshot-20250116-134632.png" width="588" />
   </figure>
 3. 保存完了されたログをCSリクエスト時に一緒に添付します。

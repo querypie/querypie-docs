@@ -31,12 +31,12 @@ Webブラウザに以下のパスを入力すると、環境に適したRoot CA�
 2. キーチェーンアクセスアプリ画面に、ダウンロードした証明書ファイルをドラッグして貼り付けます。新規インストールされたquerypie証明書は信頼された状態ではありません。
 3. querypie証明書をダブルクリックしてモーダルを開き、信頼項目をクリックして折りたたまれた領域を展開した後、**この証明書使用時** : `システム初期設定使用` を `常に信頼` に変更し、モーダルを閉じます。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-201320.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201320.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201320.png" alt="screenshot-20250113-201320.png" width="600" />
   </figure>
 4. システム証明書信頼設定変更のために追加認証を実行します。
 5. 新規インストールされたquerypie証明書はすべてのユーザーに対して信頼されたものとして表示されます。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-201143.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201143.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201143.png" alt="screenshot-20250113-201143.png" width="600" />
   </figure>
 
 またはTerminalで以下のコマンドを実行して同様に設定できます。
@@ -53,24 +53,24 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 2. 証明書ファイルに対して右クリックし、コンテキストメニューで `証明書インストール(I)` を選択して証明書インポートウィザードを開始します。
 3. 証明書インポートウィザードウィンドウが開いたら、保存場所を `現在のユーザー(C)` で選択し、`次へ(N)` ボタンをクリックします。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202645.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202645.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202645.png" alt="screenshot-20250113-202645.png" width="450" />
   </figure>
 4. 証明書保存場所について、`すべての証明書を以下の保存場所に保存(P)` オプションを選択し、`参照(R)...` ボタンをクリックします。 
 5. **証明書保存場所選択** モーダルが開いたら、信頼できるルート証明機関を選択します。実際の保存場所表示オプションは解除状態を維持します。確認ボタンをクリックします。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202727.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202727.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202727.png" alt="screenshot-20250113-202727.png" width="456" />
   </figure>
 6. 証明書保存場所設定を確認し、`次へ(N)` ボタンをクリックします。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202738.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202738.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202738.png" alt="screenshot-20250113-202738.png" width="456" />
   </figure>
 7. 設定した内容を確認し、`完了(F)` ボタンを押します。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-203130.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203130.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203130.png" alt="screenshot-20250113-203130.png" width="458" />
   </figure>
 8. セキュリティ警告モーダルが出力されます。`はい(Y)` ボタンを押すと即座に証明書インポートが実行されます。インポート完了モーダルで確認ボタンをクリックします。
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-203453.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203453.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203453.png" alt="screenshot-20250113-203453.png" width="407" />
   </figure>
 
 ### 3. Chrome証明書設定確認

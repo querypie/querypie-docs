@@ -40,7 +40,7 @@ ______
 #### Create an Okta custom SCIM app
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-050205.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integration &gt; SAML 2.0 &gt; Configure SAML
 </figcaption>
@@ -73,7 +73,7 @@ ______
 #### Okta-QueryPie Provisioning integration
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-054522.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; Integration
 </figcaption>
@@ -98,7 +98,7 @@ You must complete the [Activating Provisioning](activating-provisioning) step fi
 3. Click the Test Connector Configuration button to test the connection.
 4. When a popup appears with the message "*Connector configured successfully*", click the `Close` button.
   <figure data-layout="center" data-align="center">
-  ![image-20240430-025059.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png" alt="image-20240430-025059.png" width="324" />
   </figure>
 5. Click the `Save` button at the bottom to save the connection settings.
 
@@ -108,7 +108,7 @@ ______
 #### Enable and verify SCIM API
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-034915.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Provisioning &gt; To App
 </figcaption>
@@ -147,36 +147,36 @@ If you need to sync these attribute information together, you can add Custom Att
 
 1. Click `Go to Profile Editor` under Provisioning &gt; To App in the SCIM app's Provisioning tab.
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082412.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png" alt="image-20240712-082412.png" width="518" />
   </figure>
 2. Click the `Add Attribute` button.
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
 3. Register a new attribute needed for synchronization.
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082453.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png" alt="image-20240712-082453.png" width="314" />
   </figure>
     1. Data type: Select string, same as in QueryPie.
     2. Display name: Enter the attribute name to display in Okta.
     3. Variable name & External name: Enter the variable name of the custom attribute to synchronize.
         * You can also check the variable names in the QueryPie user profile (shown in parentheses).
           <figure data-layout="center" data-align="center">
-          ![image-20240712-083117.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png)
+          <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png" alt="image-20240712-083117.png" width="144" />
           </figure>
     4. External namespace: Enter the following value.<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
     5. Then click the `Save` or `Save and Add Another` button to save.
 4. Then click the `Mappings` button.
   <figure data-layout="center" data-align="center">
-  ![image-20240712-082549.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
     1. Select the second tab (Okta → `{APP}`) at the top of the prompt.
       <figure data-layout="center" data-align="center">
-      ![image-20240712-083618.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png)
+      <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png" alt="image-20240712-083618.png" width="285" />
       </figure>
     2. Map the newly created Custom Attribute with the appropriate Attribute in IdP at the bottom and click the Save Mappings button to save the settings.
       <figure data-layout="center" data-align="center">
-      ![image-20240712-085207.png](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png)
+      <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png" alt="image-20240712-085207.png" width="450" />
       </figure>
 5. Then assign users to the app.
 
@@ -187,7 +187,7 @@ ______
 
 1. Return to the SCIM app and assign users through the options of the `Assign` button in the Assignments tab.
   <figure data-layout="center" data-align="center">
-  ![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-035937.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments" width="736" />
   <figcaption>
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
@@ -196,7 +196,7 @@ ______
     2. **Assign to Groups**: Assign by user group
 2. Return to the QueryPie app and go to Administrator &gt; General &gt; User Management &gt; Users to verify that users have been pushed successfully.
   <figure data-layout="center" data-align="center">
-  ![Administrator &gt; General &gt; User Management &gt; Users &gt; List Details](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png)
+  <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details" width="736" />
   <figcaption>
   Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
   </figcaption>
@@ -206,7 +206,7 @@ ______
 #### Verify group provisioning
 
 <figure data-layout="center" data-align="center">
-![Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups](/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png)
+<img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-062231.png" alt="Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups" width="760" />
 <figcaption>
 Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Push Groups
 </figcaption>

@@ -11,7 +11,7 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
 ### Viewing Request Audit
 
 <figure data-layout="center" data-align="center">
-![image-20240721-082824.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png)
+<img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082824.png" alt="image-20240721-082824.png" width="760" />
 </figure>
 
 1. Navigate to the Administrator &gt; Audit &gt; Kubernetes &gt; Request Audit menu.
@@ -21,7 +21,7 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
     2.  **Cluster Name**  : Cluster name registered in QueryPie
 4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
   <figure data-layout="center" data-align="center">
-  ![image-20240721-082906.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png)
+  <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082906.png" alt="image-20240721-082906.png" width="736" />
   </figure>
     1.  **Verb**  : Specific Kubernetes API action called
         * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
@@ -55,7 +55,7 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
 
 1. You can view detailed information by clicking on each row. <br/> 
   <figure data-layout="center" data-align="center">
-  ![image-20250116-121412.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png)
+  <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png" alt="image-20250116-121412.png" width="736" />
   </figure>
     1. The top displays information based on basic events:
         1.  **Result**  : API call success/failure status 
@@ -76,11 +76,11 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
             1. This field is viewable in the detail page only for logs where session recording occurred.
             2. When executed with Pod exec API, recording for the corresponding session proceeds, and the "Session Recording" text includes a hyperlink. 
               <figure data-layout="center" data-align="center">
-              ![image-20240512-055657.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png)
+              <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png" alt="image-20240512-055657.png" width="218" />
               </figure>
             3. Clicking the link plays the related session recording. 
               <figure data-layout="center" data-align="center">
-              ![image-20240721-082651.png](/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png)
+              <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png" alt="image-20240721-082651.png" width="382" />
               </figure> 
         14. The middle section displays information based on API call history: 
             1.  **Verb**  : Specific Kubernetes API action called
