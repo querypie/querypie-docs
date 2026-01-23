@@ -41,6 +41,9 @@
     "styled-components": "^6.1.19",
     "zod": "^4.1.13"
   },
+  "overrides": {
+    "lodash-es": "^4.17.23"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.1",
