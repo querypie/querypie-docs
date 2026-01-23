@@ -119,22 +119,13 @@ class Attachment:
         if not caption:
             caption = self.filename
 
-        rehype_attr = []
-        if width:
-            rehype_attr.append(f'width={width}')
-
-        # Convert align to appropriate Tailwind CSS classes for rehype-attr
-        if align == 'left':
-            rehype_attr.append('class="float-left mr-4"')
-        elif align == 'right':
-            rehype_attr.append('class="float-right ml-4"')
-        elif align == 'center':
-            rehype_attr.append('class="mx-auto block"')
-
-        if self.filename.endswith('.png'):
-            # TODO(JK): For now, do not use rehype-attr for images.
-            # Otherwise, `npm run build` fails with 'Could not parse expression with acorn'
-            return f'![{caption}]({self.output_dir}/{self.filename})'
+        image_extensions = ('.png', '.gif', '.jpg', '.jpeg', '.webp', '.svg')
+        if self.filename.lower().endswith(image_extensions):
+            safe_caption = caption.replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
+            attrs = [f'src="{self.output_dir}/{self.filename}"', f'alt="{safe_caption}"']
+            if width:
+                attrs.append(f'width="{width}"')
+            return f'<img {" ".join(attrs)} />'
         else:
             return f'[{caption}]({self.output_dir}/{self.filename})'
 
