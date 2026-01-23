@@ -64,8 +64,9 @@ function parseArgs(args) {
 
 async function measureImages(page, url, minSize) {
   console.error(`Loading: ${url}`);
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
-  await page.waitForTimeout(3000);
+  await page.goto(url, { waitUntil: 'load', timeout: 60000 });
+  // Wait for images to load
+  await page.waitForTimeout(5000);
 
   const images = await page.evaluate((minSize) => {
     const imgs = document.querySelectorAll('img');
@@ -74,13 +75,42 @@ async function measureImages(page, url, minSize) {
         const rect = img.getBoundingClientRect();
         const src = img.src || img.getAttribute('src') || '';
 
+        // Extract filename - try multiple sources
         let filename = '';
-        try {
-          const urlObj = new URL(src, window.location.origin);
-          const pathname = urlObj.pathname;
-          filename = decodeURIComponent(pathname.split('/').pop() || src);
-        } catch {
-          filename = src.split('/').pop() || src;
+
+        // 1. Try data-filename attribute (Confluence)
+        filename = img.getAttribute('data-filename') || '';
+
+        // 2. Try alt attribute if it looks like a filename
+        if (!filename || filename === 'cdn') {
+          const alt = img.alt || '';
+          if (alt && (alt.includes('.png') || alt.includes('.jpg') || alt.includes('.gif') || alt.includes('.webp'))) {
+            filename = alt;
+          }
+        }
+
+        // 3. Try to extract from URL pathname
+        if (!filename || filename === 'cdn') {
+          try {
+            const urlObj = new URL(src, window.location.origin);
+            const pathname = urlObj.pathname;
+            const pathFilename = decodeURIComponent(pathname.split('/').pop() || '');
+            if (pathFilename && pathFilename !== 'cdn' && pathFilename.length > 0) {
+              filename = pathFilename;
+            }
+          } catch {
+            // ignore
+          }
+        }
+
+        // 4. Try title attribute
+        if (!filename || filename === 'cdn') {
+          filename = img.title || '';
+        }
+
+        // 5. Fallback to index-based name
+        if (!filename || filename === 'cdn') {
+          filename = `image-${index + 1}`;
         }
 
         return {
