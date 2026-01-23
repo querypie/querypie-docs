@@ -20,7 +20,11 @@ export default {
   },
   'installation': {
     type: 'page',
-    title: 'Installation and Technical Support',
+    title: 'Installation',
+  },
+  'support': {
+    type: 'page',
+    title: 'Support',
   },
   'api-reference': {
     type: 'page',

@@ -20,7 +20,11 @@ export default {
   },
   'installation': {
     type: 'page',
-    title: '제품 설치와 기술지원',
+    title: '제품 설치',
+  },
+  'support': {
+    type: 'page',
+    title: '지원',
   },
   'api-reference': {
     type: 'page',

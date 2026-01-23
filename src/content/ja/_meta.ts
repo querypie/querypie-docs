@@ -20,7 +20,11 @@ export default {
   },
   'installation': {
     type: 'page',
-    title: '製品インストールと技術サポート',
+    title: '製品インストール',
+  },
+  'support': {
+    type: 'page',
+    title: 'サポート',
   },
   'api-reference': {
     type: 'page',
