@@ -170,15 +170,11 @@ function formatTable(result) {
   );
 
   result.images.forEach((img, i) => {
-    const filename =
-      img.filename.length > 35
-        ? img.filename.substring(0, 32) + '...'
-        : img.filename;
     const rendered = `${img.rendered.width} x ${img.rendered.height}`;
     const natural = `${img.natural.width} x ${img.natural.height}`;
     const htmlWidth = img.attributes.width || '-';
     lines.push(
-      `| ${i + 1} | ${filename} | ${rendered} | ${natural} | ${htmlWidth} |`
+      `| ${i + 1} | ${img.filename} | ${rendered} | ${natural} | ${htmlWidth} |`
     );
   });
 
@@ -210,12 +206,8 @@ function formatMarkdown(result) {
   );
 
   result.images.forEach((img, i) => {
-    const filename =
-      img.filename.length > 40
-        ? img.filename.substring(0, 37) + '...'
-        : img.filename;
     lines.push(
-      `| ${i + 1} | ${filename} | ${img.rendered.width} | ${img.rendered.height} | ${img.natural.width} | ${img.natural.height} | ${img.attributes.width || '-'} |`
+      `| ${i + 1} | ${img.filename} | ${img.rendered.width} | ${img.rendered.height} | ${img.natural.width} | ${img.natural.height} | ${img.attributes.width || '-'} |`
     );
   });
 

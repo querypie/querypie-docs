@@ -204,11 +204,6 @@ function formatTable(result, options) {
   lines.push('|---|----------|----------------|----------------|------------|');
 
   result.comparisons.forEach((comp, i) => {
-    const filename =
-      comp.filename.length > 30
-        ? comp.filename.substring(0, 27) + '...'
-        : comp.filename;
-
     const size1 = comp.url1
       ? `${comp.url1.rendered.width} x ${comp.url1.rendered.height}`
       : '-';
@@ -228,7 +223,7 @@ function formatTable(result, options) {
       }
     }
 
-    lines.push(`| ${i + 1} | ${filename} | ${size1} | ${size2} | ${diff} |`);
+    lines.push(`| ${i + 1} | ${comp.filename} | ${size1} | ${size2} | ${diff} |`);
   });
 
   lines.push('');
@@ -266,11 +261,6 @@ function formatMarkdown(result, options) {
   );
 
   result.comparisons.forEach((comp, i) => {
-    const filename =
-      comp.filename.length > 35
-        ? comp.filename.substring(0, 32) + '...'
-        : comp.filename;
-
     const w1 = comp.url1 ? comp.url1.rendered.width : '-';
     const h1 = comp.url1 ? comp.url1.rendered.height : '-';
     const w2 = comp.url2 ? comp.url2.rendered.width : '-';
@@ -298,7 +288,7 @@ function formatMarkdown(result, options) {
     }
 
     lines.push(
-      `| ${i + 1} | ${filename} | ${w1} | ${h1} | ${w2} | ${h2} | ${diff} | ${status} |`
+      `| ${i + 1} | ${comp.filename} | ${w1} | ${h1} | ${w2} | ${h2} | ${diff} | ${status} |`
     );
   });
 
