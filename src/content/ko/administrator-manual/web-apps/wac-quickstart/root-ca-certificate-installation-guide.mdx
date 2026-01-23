@@ -31,12 +31,12 @@ WAC을 통한 웹 어플리케이션 접근 통제를 이용하려면, 사용자
 2. 키체인 접근 앱 화면에, 다운로드 받은 인증서 파일을 드래그하여 붙여넣습니다. 신규 설치된 querypie 인증서는 신뢰된 상태가 아닙니다.
 3. querypie 인증서를 더블클릭하여 모달을 열고, 신뢰 항목을 클릭하여 접힌 영역을 펼친 뒤,  **이 인증서 사용 시**  : `시스템 초기 설정 사용` 을 `항상 신뢰` 로 변경하고, 모달을 닫습니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-201320.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201320.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201320.png" alt="screenshot-20250113-201320.png" width="600" />
   </figure>
 4. 시스템 인증서 신뢰 설정 변경을 위하여 추가 인증을 수행합니다.
 5. 신규 설치된 querypie 인증서는 모든 사용자에 대해 신뢰된 것으로 표시됩니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-201143.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201143.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-201143.png" alt="screenshot-20250113-201143.png" width="600" />
   </figure>
 
 또는 Terminal에서 다음 명령어를 실행하여 동일하게 설정할 수 있습니다.
@@ -53,24 +53,24 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 2. 인증서 파일에 대해 우클릭하고, 컨텍스트 메뉴에서 `인증서 설치(I)` 를 선택하여 인증서 가져오기 마법사를 시작합니다.
 3. 인증서 가져오기 마법사 창이 열리면, 저장소 위치를 `현재 사용자(C)` 로 선택하고, `다음(N)` 버튼을 클릭합니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202645.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202645.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202645.png" alt="screenshot-20250113-202645.png" width="450" />
   </figure>
 4. 인증서 저장소에 대하여, `모든 인증서를 다음 저장소에 저장(P)` 옵션을 선택하고, `찾아보기(R)...` 버튼을 클릭합니다. 
 5.  **인증서 저장소 선택**  모달이 열리면, 신뢰할 수 있는 루트 인증 기관을 선택합니다. 실제 저장소 표시 옵션은 해제 상태를 유지합니다. 확인 버튼을 클릭합니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202727.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202727.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202727.png" alt="screenshot-20250113-202727.png" width="456" />
   </figure>
 6. 인증서 저장소 설정을 확인하고, `다음(N)` 버튼을 클릭합니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-202738.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202738.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-202738.png" alt="screenshot-20250113-202738.png" width="456" />
   </figure>
 7. 설정한 내용을 확인하고, `마침(F)` 버튼을 누릅니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-203130.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203130.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203130.png" alt="screenshot-20250113-203130.png" width="458" />
   </figure>
 8. 보안 경고 모달이 출력됩니다. `예(Y)` 버튼을 누르면 즉시 인증서 가져오기가 실행됩니다. 가져오기 완료 모달에서 확인 버튼을 클릭합니다.
   <figure data-layout="center" data-align="center">
-  ![screenshot-20250113-203453.png](/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203453.png)
+  <img src="/administrator-manual/web-apps/wac-quickstart/root-ca-certificate-installation-guide/screenshot-20250113-203453.png" alt="screenshot-20250113-203453.png" width="407" />
   </figure>
 
 ### 3. Chrome 인증서 설정 확인

@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 Role은 쿠버네티스 접근 권한을 구현 및 적용하기 위한 Policy 이후의 단계로서, Policy의 집합이자, 사용자/그룹과 정책의 연결고리가 되어주는 권한을 의미합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070743.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070743.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles
 </figcaption>
@@ -22,7 +22,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles
 ### Role 조회하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070912.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070912.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details
 </figcaption>
@@ -41,7 +41,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 5. 각 행을 클릭하면 역할 세부 정보 조회가 가능합니다.
     1.   **Policies** 
       <figure data-layout="center" data-align="center">
-      ![image-20240721-070945.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070945.png)
+      <img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-070945.png" alt="image-20240721-070945.png" width="712" />
       </figure>
         1. 디폴트로 지정되는 탭으로 할당된 정책 목록을 조회할 수 있습니다.
         2. 테이블 목록에는 각 정책별 이하의 정보를 노출합니다:
@@ -52,7 +52,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             5.  **Assigned By**  : 해당 정책을 할당한 관리자명
         3. 각 정책 행을 클릭 해당 정책의 상세 정보를 드로워 형태로 제공합니다.
           <figure data-layout="center" data-align="center">
-          ![image-20240721-071031.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071031.png)
+          <img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071031.png" alt="image-20240721-071031.png" width="688" />
           </figure>
             1. 상단에는 기본 정보가 아래와 같이 노출됩니다:
                 1.  **Name**  : Policy명 
@@ -64,7 +64,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             2. 하단에는 정책이 코드로 노출됩니다.
     2.  **Users/Groups** 
       <figure data-layout="center" data-align="center">
-      ![image-20240721-071134.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071134.png)
+      <img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071134.png" alt="image-20240721-071134.png" width="712" />
       </figure>
         1. 해당 Role이 부여되어 있는 사용자/그룹 목록을 나열합니다.
         2. 사용자/그룹명으로 검색 가능합니다. 
@@ -76,7 +76,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
             5.  **Granted At**  : 사용자/그룹에 해당 Role이 부여된 일시
     3.  **Clusters** 
       <figure data-layout="center" data-align="center">
-      ![image-20240721-071233.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071233.png)
+      <img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071233.png" alt="image-20240721-071233.png" width="712" />
       </figure>
         1. 해당 Role에 의해 접근 가능한 쿠버네티스 클러스터 목록을 나열합니다.
         2. Cluster명으로 검색 가능합니다.
@@ -93,7 +93,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 ### Role 생성하기
 
 <figure data-layout="left" data-align="left">
-![image-20240721-071306.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071306.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071306.png" alt="image-20240721-071306.png" width="697" />
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles 메뉴로 이동합니다.
@@ -109,7 +109,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 ### Role 수정하기
 
 <figure data-layout="left" data-align="left">
-![image-20240721-071337.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071337.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071337.png" alt="image-20240721-071337.png" width="697" />
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles 메뉴로 이동합니다.
@@ -123,7 +123,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 ### Role 삭제하기
 
 <figure data-layout="left" data-align="left">
-![image-20240721-071429.png](/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071429.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/roles/image-20240721-071429.png" alt="image-20240721-071429.png" width="697" />
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles 메뉴로 이동합니다.

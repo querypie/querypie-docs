@@ -54,7 +54,7 @@ mongodb+srv://<FQDN>/?[options]
 #### 2. MongoDB 커넥션 생성하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-113638.png" alt="Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Create Connection
 </figcaption>
@@ -69,7 +69,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 ##### &lt; Standard Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114050.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114050.png" alt="image-20240730-114050.png" width="633" />
 </figure>
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
@@ -86,7 +86,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
         3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시** `Expose` **옵션을 활성화 시킵니다.**  
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114226.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
@@ -104,7 +104,7 @@ ______
 ##### &lt; +srv Connection &gt;
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114540.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114540.png" alt="image-20240730-114540.png" width="633" />
 </figure>
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
@@ -130,7 +130,7 @@ Sharded Cluster는 Replica Set과 Connection String의 옵션만 다르고 설�
 Replica Set은 replicaSet=[replica set name] 옵션이 필요하지만 Sharded Cluster는 이 옵션이 필요 없습니다.
 
 <figure data-layout="center" data-align="center">
-![image-20240730-114833.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114833.png" alt="image-20240730-114833.png" width="636" />
 </figure>
 
 ##### &lt; Standard Connection &gt;
@@ -168,7 +168,7 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 �
 Proxy를 사용하는 경우 DataGrip등의 SQL Client에서 TLS 설정과 별개로 QueryPie에서도 SSL 설정이 필요합니다.<br/>[SSL Configurations](../ssl-configurations)를 참고하여 설정 후 커넥션의 SSL 설정에 반영해야 합니다.<br/>
 
 <figure data-layout="center" data-align="center">
-![image-20240731-050745.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240731-050745.png" alt="image-20240731-050745.png" width="654" />
 </figure>
 
 
@@ -189,7 +189,7 @@ QueryPie에서 지원하는 DBMS 중 MongoDB의 경우 항상 데이터를 JSON 
 #### 마스킹 정책에 규칙 등록하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115120.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
@@ -215,7 +215,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -254,7 +254,7 @@ Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다.
 ##### Case 1. item 속성 접근 제한
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-115402.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
@@ -263,7 +263,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 하나의 속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 해당하는 item을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120312.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120312.png" alt="image-20240730-120312.png" width="760" />
 </figure>
 
 위 스크린샷과 같이 item(“T_PWD”) 속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
@@ -273,14 +273,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 size하위의 h속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 `$.size.h`을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120215.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png" alt="image-20240730-120215.png" width="731" />
 </figure>
 
 위 스크린샷과 같이 size 하위의 h속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
@@ -290,14 +290,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 size 하위의 모든 속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 `$.size`을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120351.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120421.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png" alt="image-20240730-120421.png" width="729" />
 </figure>
 
 위 스크린샷과 같이 size 하위의 모든속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
@@ -307,14 +307,14 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 tags속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 “Column Name” 항목에 `$.tags[1]`을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 </figcaption>
 </figure>
 
 <figure data-layout="center" data-align="center">
-![image-20240730-120544.png](/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png)
+<img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png" alt="image-20240730-120544.png" width="731" />
 </figure>
 
 위 스크린샷과 같이 tags속성의 2번째 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.

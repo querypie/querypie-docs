@@ -22,7 +22,7 @@ Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별�
 * Locked Accounts : 계정 잠금 조건으로 인해 잠긴 사용자를 확인할 수 있고 잠금을 해제 할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control](/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 </figcaption>
@@ -34,7 +34,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자 또는 그룹 행을 클릭하면 상세 화면에서 privilege를 부여받은 대상 정보를 확인할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![특정 사용자의 접근제어 상세 페이지](/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png" alt="특정 사용자의 접근제어 상세 페이지" width="760" />
 <figcaption>
 특정 사용자의 접근제어 상세 페이지
 </figcaption>
@@ -73,16 +73,16 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 3. `Grant Privilege` 버튼을 클릭합니다.
 4. 팝업 창에서 Access Control Level 에서 Host 를 선택합니다. (기본값 : Host)<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095117.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png" alt="image-20251218-095117.png" width="736" />
   </figure>
 5. privilege를 부여할 커넥션을 선택하고 특정 privilege type을 선택합니다.
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095406.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png" alt="image-20251218-095406.png" width="736" />
   </figure>
 6. 필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
 7. 권한을 부여할 커넥션 여러 개를 선택하여 일괄적으로 권한을 부여할 수도 있습니다. <br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-095817.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png" alt="image-20251218-095817.png" width="736" />
   </figure>
 
 
@@ -100,20 +100,20 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 3. `Grant Privilege` 버튼을 클릭합니다.
 4. 팝업 창에서 Access Control Level 에서 Schema(Logical DB) 를 선택합니다. (기본값 : Host)
   <figure data-layout="center" data-align="center">
-  ![image-20251218-104148.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
 5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한번에 여러개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege를 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장드립니다.
 6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item`버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila 
   <figure data-layout="center" data-align="center">
-  ![image-20251218-105030.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
 7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) 
   <figure data-layout="center" data-align="center">
-  ![image-20251218-110506.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png" alt="image-20251218-110506.png" width="736" />
   </figure>
 8. 아래에 표시되는 Host Level Others, Host Level Functions는 설정을 보기만 할 수 있습니다. 수정하기 위해서는 Databases &gt; DB Access Control &gt; Privilege Type 메뉴에서 해당 Privilege Type을 수정해야 합니다. Host Level의 Privilege의 속성에 의해 Schema Level 도 privilege가 종속되기 때문에 상위의 정보를 확인하는 용도로 사용됩니다.<br/>
   <figure data-layout="center" data-align="center">
-  ![image-20251218-111204.png](/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png)
+  <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png" alt="image-20251218-111204.png" width="732" />
   </figure>
 9.  필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
 
@@ -134,7 +134,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 ### Access Control 권한 회수하기
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details](/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-122146.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Details
 </figcaption>
@@ -168,7 +168,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 ### 커넥션 잠금 계정 해제하기 (Locked Account)
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account](/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123011.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account" width="760" />
 <figcaption>
 Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Locked Account
 </figcaption>
@@ -179,7 +179,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 3. 잠금해제 하고자하는 항목을 선택 후 우측 `Unlock`을 클릭하여 커넥션 잠금을 해제합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20241209-123358.png](/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png" alt="image-20241209-123358.png" width="760" />
 </figure>
 
 1. 커넥션 잠금 및 잠금해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인하실 수 있습니다. 
@@ -189,7 +189,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 **테이블 태그로 접근제어하기** <br/><br/>Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우,
 
 <figure data-layout="center" data-align="center">
-![image-20250703-050924.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png" alt="image-20250703-050924.png" width="551" />
 </figure>
 
 Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다.
@@ -205,7 +205,7 @@ Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 �
 2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
-![image-20250703-051824.png](/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png)
+<img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png" alt="image-20250703-051824.png" width="700" />
 </figure>
 
 만약 Tag-based table access 기능을 활성화한 상태에서 어떤 태그도 등록하지 않으면 해당 커넥션의 모든 테이블에 접근할 수 없게 됩니다.<br/>

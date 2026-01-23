@@ -15,7 +15,7 @@ Data Policies는 QueryPie에서 데이터 접근 제어, 데이터 마스킹, �
 ### 정책 생성 화면 접근하기
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131024.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131024.png" alt="image-20250307-131024.png" width="760" />
 </figure>
 
 1. 좌측 사이드바에서  **Policy Management**  섹션을 펼칩니다.
@@ -26,7 +26,7 @@ Data Policies는 QueryPie에서 데이터 접근 제어, 데이터 마스킹, �
 ### 정책 기본 정보 설정하기
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131052.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131052.png" alt="image-20250307-131052.png" width="760" />
 </figure>
 
 정책 생성 화면의  **Information**  섹션에서 다음 정보를 설정합니다:
@@ -45,27 +45,27 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
     * 정규식 기반의 마스킹 패턴을 사용하여 특정 데이터 패턴을 감지하고 마스킹합니다. (Masking Patterns)
     * 사용자가 해당 컬럼을 조회할 때 `{masked}` 형태로 표시되며, 셀을 클릭하면 마스킹 처리된 데이터가 표시됩니다.<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.23.47-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png" alt="Screenshot-2025-03-07-at-10.23.47-PM.png" width="712" />
       </figure>
 2.  **Table Access Restriction** 
     * 테이블을 대상으로 접근 차단 정책을 적용합니다.
     * 사용자가 해당 테이블을 조회하려고 할 때 접근이 차단되며, 권한 없음 메시지가 표시됩니다.
     * 메시지: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.36.58-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png" alt="Screenshot-2025-03-07-at-10.36.58-PM.png" width="712" />
       </figure>
 3.  **Column Access Restriction** 
     * 컬럼을 대상으로 접근 차단 정책을 적용합니다.
     * 사용자가 해당 컬럼을 조회하려고 할 때 `{restricted}` 형태로 표시되며 접근이 차단됩니다.<br/> <br/> 
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-10.34.20-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png" alt="Screenshot-2025-03-07-at-10.34.20-PM.png" width="712" />
       </figure>
 4.  **Table Access Justification Requirement** 
     * 특정 테이블에 대한 작업 시 사유 입력을 강제화합니다.
     * 사용자가 선택된 작업(예: SELECT 쿼리, 데이터 내보내기)을 수행할 때 사유 입력 모달이 표시됩니다.
     * 입력된 사유는 Query Audit의 Execution Reason에 기록됩니다.<br/>
       <figure data-layout="center" data-align="center">
-      ![Screenshot-2025-03-07-at-11.01.28-PM.png](/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png" alt="Screenshot-2025-03-07-at-11.01.28-PM.png" width="712" />
       </figure>
 5.  **Sensitive Data Access Monitoring** 
     * 관리자가 특정 테이블 또는 컬럼을 민감 정보로 지정하고 접근할 경우 Alert을 발생시키도록 합니다.
@@ -74,14 +74,14 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
     * 특정 테이블에 대해 `INSERT`, `UPDATE`, `DELETE` 쿼리를 수행할 경우 Workflow로 승인 절차를 거치도록 강제합니다.
     * 이 정책을 생성하기 전 General &gt; Workflow Management &gt; Approval Rules에서 SQL Request Type의 Approval Rule을 먼저 생성해 두어야 합니다. `INSERT`, `UPDATE`, `DELETE`를 수행하는 것은 수행하는 사람에게 해당 privilege가 부여되어 있다는 것을 전제로 합니다. 쿼리를 수행하는 사람이 요청자 본인이 되도록 하려면 아래 그림과 같이 Execution 항목의 Assignee for Execution 에 “Allow Assginee selection (All Users)가 선택되어 있어야 `INSERT`, `UPDATE`, `DELETE` 권한이 있지만 관리자가 아닌사람이 승인을 거쳐 쿼리를 수행할 수 있습니다.<br/>
       <figure data-layout="center" data-align="center">
-      ![General &gt; Workflow Management &gt; Approval Rules에 SQL Request 형식의 Approval rule을 생성](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png" alt="General &gt; Workflow Management &gt; Approval Rules에 SQL Request 형식의 Approval rule을 생성" width="419" />
       <figcaption>
       General &gt; Workflow Management &gt; Approval Rules에 SQL Request 형식의 Approval rule을 생성
       </figcaption>
       </figure>
     *  Approval Rule이 생성되어 있으면 아래 그림과 같이 정책과 연계할 Approval Rule을 지정할 수 있습니다.<br/>
       <figure data-layout="center" data-align="center">
-      ![Databases&gt;Policy Management&gt;Data Policies에서 SQL Request 형식의 미리 생성한 Approval Rule을 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-154218.png" alt="Databases&gt;Policy Management&gt;Data Policies에서 SQL Request 형식의 미리 생성한 Approval Rule을 지정" width="494" />
       <figcaption>
       Databases&gt;Policy Management&gt;Data Policies에서 SQL Request 형식의 미리 생성한 Approval Rule을 지정
       </figcaption>
@@ -93,7 +93,7 @@ QueryPie는 다음과 같은 정책 타입을 제공합니다:
 정책 생성 화면의  **User Scope**  섹션에서 정책이 적용될 사용자 범위를 설정합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131315.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131315.png" alt="image-20250307-131315.png" width="760" />
 </figure>
 
 #### Scope Type
@@ -119,7 +119,7 @@ User scope의 scope type이  **Everyone** 인 경우만 Exclusion 대상을 지�
 정책 생성 화면의  **Data Scope**  섹션에서 정책이 적용될 데이터를 설정합니다.
 
 <figure data-layout="center" data-align="center">
-![image-20250307-131634.png](/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png)
+<img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250307-131634.png" alt="image-20250307-131634.png" width="760" />
 </figure>
 
 #### Scope Type
@@ -134,13 +134,13 @@ User scope의 scope type이  **Everyone** 인 경우만 Exclusion 대상을 지�
 2.  **Specific data path** : 특정 데이터 경로를 직접 지정하는 옵션입니다. **[11.0.0]** 
     * 이 옵션을 선택한 뒤 Add tartget 버튼을 눌러 출력되는 팝업 대화창에서 Database, Schema, Table, Column을 지정할 수 있고 정규표현식을 사용할 수도 있습니다.  <br/>  <br/> 
       <figure data-layout="center" data-align="center">
-      ![직접 경로 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png" alt="직접 경로 지정" width="505" />
       <figcaption>
       직접 경로 지정
       </figcaption>
       </figure>
       <figure data-layout="center" data-align="center">
-      ![정규식을 사용하여 대상 지정](/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png)
+      <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162448.png" alt="정규식을 사용하여 대상 지정" width="498" />
       <figcaption>
       정규식을 사용하여 대상 지정
       </figcaption>

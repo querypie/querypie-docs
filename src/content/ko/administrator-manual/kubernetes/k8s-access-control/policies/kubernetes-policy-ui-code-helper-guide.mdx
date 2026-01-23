@@ -17,7 +17,7 @@ title: '쿠버네티스 정책 UI 코드 헬퍼 안내'
 모달은 코드 편집을 도와주는 역할로, 전체 모달에 의해 삽입된 내용은 코드 에디터 상에서 제거가 가능합니다.
 
 <figure data-layout="center" data-align="center">
-![Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png)
+<img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073114.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
 <figcaption>
 Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
 </figcaption>
@@ -25,14 +25,14 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 
 1.  **Add Resources**  모달 
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073346.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png" alt="image-20240721-073346.png" width="426" />
   </figure>
     1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
     2. Cluster 명으로 리소스 검색이 가능합니다.
     3. 체크박스에 체크한 리소스를 `Add` 버튼을 클릭하여 코드에 삽입합니다.
 2.  **Set Subjects**  모달
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073434.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png" alt="image-20240721-073434.png" width="424" />
   </figure>
     1. Spec: Allow에서만 동작합니다.
     2.  **Kubernetes Groups**  : (Required) 해당 필드를 통해 KubePie Proxy가 API 호출 수행을 위해 impersonate할 쿠버네티스 그룹을 명시합니다. 
@@ -43,7 +43,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     4. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. 
 3.  **Add Actions**  모달
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073515.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png" alt="image-20240721-073515.png" width="420" />
   </figure>
     1. Spec: Allow, Spec: Deny 두 곳에서 동일하게 동작합니다.
     2.  **API Groups** : 디폴트로 "*" 제공; 관리자가 수정 가능하며, ‘,’로 다중 기입 가능합니다.
@@ -68,7 +68,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     8. 코드 상으로 append에 해당하는 부분으로 기존의 추가되었던 액션을 초기화하지 않고 새로 추가가 가능합니다.
 4.  **Set Conditions**  모달
   <figure data-layout="center" data-align="center">
-  ![image-20240721-073628.png](/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png)
+  <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png" alt="image-20240721-073628.png" width="384" />
   </figure>
     1. 해당 항목은 모두 선택사항입니다.
     2. 에디터에 있는 내용을 바탕으로 모달이 기존의 정보를 함께 표기하며, `Set` 버튼을 누르면 변경사항을 에디터에서 덮어씁니다. 
