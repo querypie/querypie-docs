@@ -23,6 +23,7 @@
 | confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
 | documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
+| commit.md (commands) | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) |
 
 ## 사용법
 
