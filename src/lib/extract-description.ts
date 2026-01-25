@@ -7,10 +7,9 @@ import path from 'path';
  * 추출 규칙:
  * 1. Frontmatter 제거
  * 2. Import 문 제거
- * 3. 첫 번째 h1 heading (# title) 제거 (페이지 제목)
+ * 3. 모든 heading 제거 (#, ##, ### 등)
  * 4. JSX/HTML 태그 제거
- * 5. 나머지 heading (##, ### 등)은 포함
- * 6. 첫 번째 의미있는 텍스트 추출 (maxLength 이내)
+ * 5. 첫 번째 의미있는 텍스트 추출 (maxLength 이내)
  */
 export function extractDescriptionFromMdx(
   mdxPath: string[],
@@ -38,8 +37,8 @@ export function extractDescriptionFromMdx(
   // 2. Import 문 제거
   text = text.replace(/^import\s+.*$/gm, '');
 
-  // 3. 첫 번째 h1 heading만 제거 (페이지 제목)
-  text = text.replace(/^#\s+.+$/m, '');
+  // 3. 모든 heading 제거 (#, ##, ### 등)
+  text = text.replace(/^#{1,6}\s+.+$/gm, '');
 
   // 4. JSX/HTML 태그 제거 (멀티라인 포함)
   // Self-closing 태그
@@ -55,27 +54,24 @@ export function extractDescriptionFromMdx(
   // 6. Markdown 링크는 텍스트만 유지
   text = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
 
-  // 7. Heading 마커(##, ### 등) 제거하되 텍스트는 유지
-  text = text.replace(/^#{2,}\s+/gm, '');
-
-  // 8. Bold, Italic, Code 마커 제거하되 텍스트는 유지
+  // 7. Bold, Italic, Code 마커 제거하되 텍스트는 유지
   text = text.replace(/\*\*([^*]+)\*\*/g, '$1');
   text = text.replace(/\*([^*]+)\*/g, '$1');
   text = text.replace(/`([^`]+)`/g, '$1');
 
-  // 9. 리스트 마커 제거
+  // 8. 리스트 마커 제거
   text = text.replace(/^[\s]*[-*]\s+/gm, '');
   text = text.replace(/^[\s]*\d+\.\s+/gm, '');
 
-  // 10. 여러 줄바꿈을 하나로, 공백 정리
+  // 9. 여러 줄바꿈을 하나로, 공백 정리
   text = text.replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
 
-  // 11. 빈 문자열이면 반환
+  // 10. 빈 문자열이면 반환
   if (!text) {
     return '';
   }
 
-  // 12. maxLength 이내로 truncate (OG 이미지에서 CSS line-clamp로 처리하므로 여유있게 설정)
+  // 11. maxLength 이내로 truncate (OG 이미지에서 CSS line-clamp로 처리하므로 여유있게 설정)
   if (text.length <= maxLength) {
     return text;
   }
