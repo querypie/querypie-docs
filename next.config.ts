@@ -23,6 +23,22 @@ export default withNextra({
     locales: ['en', 'ko', 'ja'],
     defaultLocale: 'en',
   },
+  // Skip i18n for API routes
+  skipTrailingSlashRedirect: true,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // API 경로는 i18n 리다이렉트를 건너뛰도록 처리
+        {
+          source: '/api/:path*',
+          destination: '/api/:path*',
+          locale: false,
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   // Configure redirects for Previous Version Documentation
   async redirects() {
     return [

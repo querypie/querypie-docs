@@ -67,16 +67,37 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
   const { metadata } = await importPage(params.mdxPath, params.lang || 'en');
-  
+
   // Generate canonical URL
   const canonicalUrl = await getCanonicalUrl(params);
-  
-  // Add canonical URL to metadata, merging with existing alternates if any
+
+  // Generate OG image URL with query parameters
+  const title = metadata.title ? encodeURIComponent(String(metadata.title)) : '';
+  const description = metadata.description ? encodeURIComponent(String(metadata.description)) : '';
+  const ogImagePath = `/api/og?lang=${params.lang}&title=${title}&description=${description}`;
+
+  // Add canonical URL and OG image to metadata
   return {
     ...metadata,
     alternates: {
       ...metadata.alternates,
       canonical: canonicalUrl,
+    },
+    openGraph: {
+      ...metadata.openGraph,
+      images: [
+        {
+          url: ogImagePath,
+          width: 1200,
+          height: 630,
+          alt: metadata.title ? String(metadata.title) : 'QueryPie Documentation',
+        },
+      ],
+    },
+    twitter: {
+      ...metadata.twitter,
+      card: 'summary_large_image',
+      images: [ogImagePath],
     },
   };
 }
