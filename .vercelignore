@@ -1,0 +1,15 @@
+# Confluence to MDX conversion tools (947MB)
+confluence-mdx/
+
+# Test files (13MB)
+tests/
+
+# Internal documentation - development guides, not site content (1.4MB)
+docs/
+
+# IDE settings
+.cursor/
+.idea/
+
+# Claude Code settings
+.claude/
