@@ -19,6 +19,19 @@ const withNextra = nextra({
 export default withNextra({
   poweredByHeader: process.env.NODE_ENV === 'development',
   reactStrictMode: process.env.NODE_ENV === 'development',
+  // Exclude large public directories from serverless function bundles
+  // These are static assets served directly by CDN, not needed in serverless functions
+  // This fixes "A Serverless Function has exceeded the unzipped maximum size of 250 MB" error
+  outputFileTracingExcludes: {
+    '*': [
+      './public/administrator-manual/**',
+      './public/user-manual/**',
+      './public/installation/**',
+      './public/release-notes/**',
+      './public/overview/**',
+      './public/_pagefind/**',
+    ],
+  },
   i18n: {
     locales: ['en', 'ko', 'ja'],
     defaultLocale: 'en',
