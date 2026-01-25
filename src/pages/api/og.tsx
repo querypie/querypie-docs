@@ -41,16 +41,6 @@ export default async function handler(req: NextRequest) {
   const title = searchParams.get('title') || 'QueryPie Documentation';
   const description = searchParams.get('description') || '';
 
-  // 제목이 너무 길면 자르기
-  const maxTitleLength = 50;
-  const displayTitle =
-    title.length > maxTitleLength ? title.substring(0, maxTitleLength) + '...' : title;
-
-  // 설명이 너무 길면 자르기
-  const maxDescLength = 120;
-  const displayDescription =
-    description.length > maxDescLength ? description.substring(0, maxDescLength) + '...' : description;
-
   // 리소스 병렬 로드 (배경 이미지, 폰트)
   const [backgroundImageData, notoSansFont, notoSansJPFont] = await Promise.all([
     fetch(`${origin}/og-background.png`)
@@ -94,12 +84,12 @@ export default async function handler(req: NextRequest) {
           ...backgroundStyle,
         }}
       >
-        {/* 제목 영역 */}
+        {/* 제목 영역 - 최대 3줄 */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            height: 240,
+            maxHeight: 240,
             marginBottom: 21,
           }}
         >
@@ -109,23 +99,33 @@ export default async function handler(req: NextRequest) {
               fontWeight: 700,
               color: '#ffffff',
               lineHeight: 1.2,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              maxWidth: '100%',
             }}
           >
-            {displayTitle}
+            {title}
           </div>
         </div>
 
-        {/* 설명 영역 */}
-        {displayDescription && (
+        {/* 설명 영역 - 최대 3줄 */}
+        {description && (
           <div
             style={{
               fontSize: 32,
               fontWeight: 400,
               color: 'rgba(255,255,255,0.85)',
               lineHeight: 1.5,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              maxWidth: '100%',
             }}
           >
-            {displayDescription}
+            {description}
           </div>
         )}
       </div>

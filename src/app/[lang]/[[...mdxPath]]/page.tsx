@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { getCanonicalUrl } from '@/lib/get-canonical-url';
+import { extractDescriptionFromMdx } from '@/lib/extract-description';
 
 export async function generateStaticParams() {
   const locales = ['en', 'ja', 'ko']; // Same as next.config.mjs
@@ -73,7 +74,9 @@ export async function generateMetadata(props: {
 
   // Generate OG image URL with query parameters
   const title = metadata.title ? encodeURIComponent(String(metadata.title)) : '';
-  const description = metadata.description ? encodeURIComponent(String(metadata.description)) : '';
+  const description = metadata.description
+    ? encodeURIComponent(String(metadata.description))
+    : encodeURIComponent(extractDescriptionFromMdx(params.mdxPath, params.lang));
   const ogImagePath = `/api/og?lang=${params.lang}&title=${title}&description=${description}`;
 
   // Add canonical URL and OG image to metadata
