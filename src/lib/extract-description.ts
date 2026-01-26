@@ -59,7 +59,10 @@ export function extractDescriptionFromMdx(
   // 1. Frontmatter 제거
   let text = content.replace(/^---[\s\S]*?---\n*/m, '');
 
-  // 2. Import 문 제거
+  // 2. Import 문 제거 (멀티라인 포함)
+  // Multi-line: import { ... } from '...'
+  text = text.replace(/^import\s*\{[\s\S]*?\}\s*from\s*['"][^'"]*['"];?\s*/gm, '');
+  // Single-line: import ... from '...' or import '...'
   text = text.replace(/^import\s+.*$/gm, '');
 
   // 3. 모든 heading 제거 (#, ##, ### 등)
