@@ -32,14 +32,17 @@ const Badge: FC<{
     <span
       style={{
         display: 'inline-block',
-        padding: '2px 8px',
+        padding: '2px 5px 2px 4px',
+        margin: '0 2px',
         borderRadius: '3px',
         fontSize: '0.75em',
         fontWeight: 700,
-        lineHeight: 1.4,
+        lineHeight: 1.1,
+        letterSpacing: '-0.3px',
         textTransform: 'uppercase',
         whiteSpace: 'nowrap',
-        verticalAlign: 'middle',
+        position: 'relative',
+        top: '-1px',
         backgroundColor: styles.background,
         color: styles.color,
       }}
