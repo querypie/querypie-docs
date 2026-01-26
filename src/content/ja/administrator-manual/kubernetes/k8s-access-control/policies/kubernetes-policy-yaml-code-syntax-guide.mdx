@@ -123,7 +123,7 @@ O
 O
 </td>
 <td>
-アクセスを許可/拒否するリソースを指定します。**[ワイルドカードおよび正規表現許可]**
+アクセスを許可/拒否するリソースを指定します。 <Badge color="blue">ワイルドカードおよび正規表現許可</Badge>
 </td>
 <td>
 `- "cluster:*"`
@@ -143,7 +143,7 @@ O
 <td>
 KubernetesコマンドをimpersonateするKubernetesユーザー/グループを指定します。
 * `kubernetesGroups` : QueryPie Proxyが利用するkubernetes groupを指定します。
-* `impersonation` : クライアント段階でimpersonationを許可する対象ユーザー/グループを指定します。**[ワイルドカード許可]**
+* `impersonation` : クライアント段階でimpersonationを許可する対象ユーザー/グループを指定します。 <Badge color="green">ワイルドカード許可</Badge>
 </td>
 <td>
 `kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
@@ -161,12 +161,12 @@ KubernetesコマンドをimpersonateするKubernetesユーザー/グループを
 O
 </td>
 <td>
-KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明示します。**[ワイルドカードおよび正規表現許可]**
-* `apiGroups` : Kubernetes APIグループリストを定義します。**[ワイルドカード許可]**
-* `resources` : Kubernetesリソースを定義します。**[ワイルドカード許可]**
-* `namespace` : 対象ネームスペースを定義します。**[ワイルドカードおよび正規表現許可]**
-* `name` : 対象リソース名を定義します。**[ワイルドカードおよび正規表現許可]**
-* `verbs` : 作業を許可または拒否するkubernetes内の権限を明示します。**[ワイルドカード許可]**
+KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明示します。 <Badge color="blue">ワイルドカードおよび正規表現許可</Badge>
+* `apiGroups` : Kubernetes APIグループリストを定義します。 <Badge color="green">ワイルドカード許可</Badge>
+* `resources` : Kubernetesリソースを定義します。 <Badge color="green">ワイルドカード許可</Badge>
+* `namespace` : 対象ネームスペースを定義します。 <Badge color="blue">ワイルドカードおよび正規表現許可</Badge>
+* `name` : 対象リソース名を定義します。 <Badge color="blue">ワイルドカードおよび正規表現許可</Badge>
+* `verbs` : 作業を許可または拒否するkubernetes内の権限を明示します。 <Badge color="green">ワイルドカード許可</Badge>
 </td>
 <td>
 `- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
@@ -184,9 +184,9 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
 </td>
 <td>
 リソースアクセスポリシー適用の可否を条件で適用対象を細部制御します。
-* `resourceTags` : リソースタグのキーと値でフィルタリングできます。**[Valueワイルドカードおよび正規表現許可]**
-* `userAttributes` : ユーザーのattributeを条件で権限使用を制限します。**[Valueワイルドカードおよび正規表現許可]**
-* `ipAddresses` : リソースに対するIPアクセス統制条件リストを単一IP、CIDR形態で定義します。**[ワイルドカード許可]**
+* `resourceTags` : リソースタグのキーと値でフィルタリングできます。 <Badge color="purple">Valueワイルドカードおよび正規表現許可</Badge>
+* `userAttributes` : ユーザーのattributeを条件で権限使用を制限します。 <Badge color="purple">Valueワイルドカードおよび正規表現許可</Badge>
+* `ipAddresses` : リソースに対するIPアクセス統制条件リストを単一IP、CIDR形態で定義します。 <Badge color="green">ワイルドカード許可</Badge>
 </td>
 <td>
 `resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
@@ -200,7 +200,7 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
 
 `resources`は <u>Kubernetesのリソースではない</u>QueryPieに登録されたKubernetesクラスターに対するリソースを定義します。
 
-1. 該当`resources`フィールドに対する定義は必須です。**[required]**
+1. 該当 `resources` フィールドに対する定義は必須です。 <Badge color="red">required</Badge> 
 2. Kubernetesクラスター名を基に入力します。
     * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
 3. Kubernetesクラスター名は以下の基準で確立されます。
@@ -223,7 +223,7 @@ KubernetesクラスターAPIサーバー内許可/拒否するResource APIを明
 
 `subjects`はKubernetesコマンドをimpersonateするKubernetes内ユーザー/グループを定義します。`subjects`はspec:allowに限って適用が必要なフィールドで、spec:denyでは文法的に許可されません。
 
-1. `kubernetesGroups`: **[required]**
+1. `kubernetesGroups`: <Badge color="red">required</Badge>
     * リソースに対するAPI実行のためにQueryPie Proxyがimpersonateするkubernetesグループアカウントを定義します。
         * 該当subjectsはPolicy-wideレベルで定義でき、最小一つが配定されるように定義されなければなりません。
             * Impersonationのための該当subjectsは他のPolicyたちと一つのRole内で重複が可能です。
@@ -238,7 +238,7 @@ kubernetesGroups:
 kubernetesGroups: 
   - $user.groups
           ```
-2. `impersonation`: **[OPTIONAL]**
+2. `impersonation`: <Badge color="yellow">OPTIONAL</Badge>
     * ユーザーがクライアント段階でkubernetes内特定serviceaccountなどの権限でkubectlコマンドにimpersonation(--as, --as-group)を試みる場合、これに対する呼び出し許可リストを定義します。
         * `users`: Kubernetes内存在するユーザー/サービスアカウントで"--as"パラメータに許可可能な値を列挙します。
         * `groups`: Kubernetes内存在するグループアカウントで"--as-group"パラメータに許可可能な値を列挙します。
@@ -308,7 +308,7 @@ impersonation:
 
 ### Conditions明示方法
 
-`conditions`項目には`resourceTags`、`userAttributes`、`ipAddresses`を条件で定義できます。**[OPTIONAL]**
+`conditions`項目には`resourceTags`、`userAttributes`、`ipAddresses`を条件で定義できます。 <Badge color="yellow">OPTIONAL</Badge>
 
 * `resourceTags` : タグ項目ではリソースタグのキーと値でフィルタリングできます。
   ```

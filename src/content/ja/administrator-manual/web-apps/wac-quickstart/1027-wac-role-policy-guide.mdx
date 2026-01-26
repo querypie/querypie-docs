@@ -62,7 +62,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 記述されたYAML Codeのバージョン
@@ -80,7 +80,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 記述されたYAML Codeの種類
@@ -98,7 +98,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 ポリシー内の詳細ルール（許可または拒否）
@@ -115,7 +115,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 `resources`
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 アクセスを許可/拒否するリソース指定
@@ -132,7 +132,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 `conditions`
 </td>
 <td>
-**[OPTIONAL]**
+<Badge color="green">OPTIONAL</Badge>
 </td>
 <td>
 ルール適用対象に対する詳細条件
@@ -147,14 +147,14 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 
 以下でポリシー記述に必要なQueryPie WAC Policy YAML文法を説明します。
 
-### spec: &lt;effect&gt;**[required]**
+### spec: &lt;effect&gt;<Badge color="red">required</Badge>
 
 ポリシーの具体的なルールの許可または拒否の有無を指定します。`spec: allow` または `spec: deny` をサポートします。
 
 1. 1つのポリシーには最大1回の `allow`、1回の `deny` のみが存在できます。
 2. ポリシー内で同一の要素に対して `deny` と `allow` が同時に宣言された場合、`deny` が優先されます。
 
-### Resources**[required]**
+### Resources<Badge color="red">required</Badge>
 
 許可またはブロックポリシーを設定したいWebアプリリソースを指定します。
 配下に `webApp`、`urlPaths` を持ちます。
@@ -163,7 +163,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 `resources` は `spec: allow`、`spec: deny` で両方とも許可されます。
 </Callout>
 
-#### webApp**[required]**
+#### webApp<Badge color="red">required</Badge>
 
 QueryPieに定義したWebアプリリソース名を入力します。
 
@@ -189,7 +189,7 @@ spec:
     * 開始と終了はアルファベット大文字小文字または数字に制限
     * 重複不可
 
-#### urlPaths**[OPTIONAL]**
+#### urlPaths<Badge color="green">OPTIONAL</Badge>
 
 ポリシーを適用したい特定のWebアプリリソースのサブパスを特定します。
 
@@ -246,7 +246,7 @@ urlPathsに特定のサブパスを入力するには、Web App詳細情報でPa
     * `"^/database-settings/policies/data-.*$"` (X)
 2. 同一のリソース（およびサブパス）に対してブロックポリシーと許可ポリシーが重複する場合、**ブロックポリシーが優先**です。
 
-### Conditions**[OPTIONAL]**
+### Conditions<Badge color="green">OPTIONAL</Badge>
 
 `conditions` はルール適用対象リソースの範囲を狭めるための条件を定義します。`urlPathTags`、`userAttributes`、`ipAddresses` 3種類の条件指定が可能です。
 
@@ -254,7 +254,7 @@ urlPathsに特定のサブパスを入力するには、Web App詳細情報でPa
 `conditions` はspec:allowでのみ文法的に許可されます。
 </Callout>
 
-#### urlPathTags**[OPTIONAL]**
+#### urlPathTags<Badge color="green">OPTIONAL</Badge>
 
 Web AppのPath Managementで付与されたタグを基準にルールによってアクセスが許可されるリソース範囲を限定します。
 
@@ -305,7 +305,7 @@ spec:
     *  **Webアプリリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合** 
         * 条件に一致するurlPathが存在しないため、いかなるパスも許可しません。
 
-#### userAttributes**[OPTIONAL]**
+#### userAttributes<Badge color="green">OPTIONAL</Badge>
 
 QueryPieユーザーの属性（attribute）を基準にルールによってリソースアクセスが許可されるユーザーの範囲を限定します。
 
@@ -331,7 +331,7 @@ userAttributes:
   "title": "Manager"
       ```
 
-#### ipAddresses**[OPTIONAL]**
+#### ipAddresses<Badge color="green">OPTIONAL</Badge>
 
 リソースに対するIPアクセス制御条件リストを単一IP、CIDR形式で定義します。
 ```
