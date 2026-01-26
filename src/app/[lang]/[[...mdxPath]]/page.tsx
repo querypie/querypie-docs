@@ -48,14 +48,12 @@ export async function generateStaticParams() {
       const mdxFiles = findMdxFiles(localeDir);
 
       for (const pathSegments of mdxFiles) {
-        const fullPath = path.join(localeDir, ...pathSegments) + '.mdx';
-
-        if (fs.existsSync(fullPath)) {
-          paramsList.push({
-            lang: locale,
-            mdxPath: pathSegments || [], // Set mdx file path
-          });
-        }
+        // findMdxFiles already returns only existing .mdx files
+        // No need to check fs.existsSync again
+        paramsList.push({
+          lang: locale,
+          mdxPath: pathSegments || [], // Set mdx file path
+        });
       }
     }
   }
