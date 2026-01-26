@@ -2,6 +2,41 @@ import fs from 'fs';
 import path from 'path';
 
 /**
+ * MDX 파일의 경로를 resolve 합니다.
+ * mdxPath + '.mdx' 파일이 없으면 index.mdx를 시도합니다.
+ */
+function resolveMdxFilePath(mdxPath: string[], lang: string): string | null {
+  const basePath = path.resolve('src', 'content');
+  const filePath = path.join(basePath, lang, ...mdxPath) + '.mdx';
+
+  if (fs.existsSync(filePath)) {
+    return filePath;
+  }
+
+  const indexPath = path.join(basePath, lang, ...mdxPath, 'index.mdx');
+  if (fs.existsSync(indexPath)) {
+    return indexPath;
+  }
+
+  return null;
+}
+
+/**
+ * MDX 파일의 frontmatter에서 title을 추출합니다.
+ */
+export function extractTitleFromMdx(mdxPath: string[], lang: string): string | null {
+  const filePath = resolveMdxFilePath(mdxPath, lang);
+  if (!filePath) return null;
+
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---/m);
+  if (!frontmatterMatch) return null;
+
+  const titleMatch = frontmatterMatch[1].match(/^title:\s*['"](.+?)['"]\s*$/m);
+  return titleMatch ? titleMatch[1] : null;
+}
+
+/**
  * MDX 파일 본문에서 description을 추출합니다.
  *
  * 추출 규칙:
@@ -16,18 +51,8 @@ export function extractDescriptionFromMdx(
   lang: string,
   maxLength: number = 300
 ): string | null {
-  const basePath = path.resolve('src', 'content');
-  let filePath = path.join(basePath, lang, ...mdxPath) + '.mdx';
-
-  // 파일이 없으면 index.mdx 시도
-  if (!fs.existsSync(filePath)) {
-    const indexPath = path.join(basePath, lang, ...mdxPath, 'index.mdx');
-    if (fs.existsSync(indexPath)) {
-      filePath = indexPath;
-    } else {
-      return null;
-    }
-  }
+  const filePath = resolveMdxFilePath(mdxPath, lang);
+  if (!filePath) return null;
 
   const content = fs.readFileSync(filePath, 'utf-8');
 

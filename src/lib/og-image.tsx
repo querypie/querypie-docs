@@ -1,9 +1,4 @@
 import { ImageResponse } from 'next/og';
-import type { NextRequest } from 'next/server';
-
-export const config = {
-  runtime: 'edge',
-};
 
 const size = {
   width: 1200,
@@ -21,9 +16,6 @@ const FONT_URLS = {
     'https://fonts.gstatic.com/s/notosansjp/v53/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEi75vY0rw-oME.ttf',
 };
 
-/**
- * 원격 폰트를 로드합니다.
- */
 async function loadFont(url: string): Promise<ArrayBuffer | null> {
   try {
     const response = await fetch(url);
@@ -36,11 +28,18 @@ async function loadFont(url: string): Promise<ArrayBuffer | null> {
   return null;
 }
 
-export default async function handler(req: NextRequest) {
-  const { searchParams, origin } = new URL(req.url);
-  const title = searchParams.get('title') || 'QueryPie Documentation';
-  const description = searchParams.get('description') || '';
-
+/**
+ * OG 이미지를 생성합니다.
+ *
+ * @param title - 페이지 제목
+ * @param description - 페이지 설명
+ * @param origin - 배경 이미지를 로드하기 위한 origin URL (예: https://docs.querypie.com)
+ */
+export async function generateOgImage(
+  title: string,
+  description: string,
+  origin: string
+): Promise<ImageResponse> {
   // 리소스 병렬 로드 (배경 이미지, 폰트)
   const [backgroundImageData, notoSansFont, notoSansJPFont] = await Promise.all([
     fetch(`${origin}/og-background.png`)

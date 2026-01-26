@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { getCanonicalUrl } from '@/lib/get-canonical-url';
-import { extractDescriptionFromMdx } from '@/lib/extract-description';
+import { buildOgMetadata } from '@/lib/og-metadata';
 
 export async function generateStaticParams() {
   const locales = ['en', 'ja', 'ko']; // Same as next.config.mjs
@@ -72,42 +72,16 @@ export async function generateMetadata(props: {
   // Generate canonical URL
   const canonicalUrl = await getCanonicalUrl(params);
 
-  // Generate OG image URL with query parameters
-  const title = metadata.title ? String(metadata.title) : '';
-  const extractedDescription = metadata.description
-    ? String(metadata.description)
-    : extractDescriptionFromMdx(mdxPath, lang);
+  // OG 이미지 메타데이터 생성
+  const ogMetadata = buildOgMetadata(metadata, mdxPath, lang);
 
-  // OG 이미지: title과 description 모두 유효한 경우에만 생성
-  const ogImage = title && extractedDescription
-    ? {
-        openGraph: {
-          ...metadata.openGraph,
-          images: [
-            {
-              url: `/api/og?lang=${lang}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(extractedDescription)}`,
-              width: 1200,
-              height: 630,
-              alt: metadata.title ? String(metadata.title) : 'QueryPie Documentation',
-            },
-          ],
-        },
-        twitter: {
-          ...metadata.twitter,
-          card: 'summary_large_image' as const,
-          images: [`/api/og?lang=${lang}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(extractedDescription)}`],
-        },
-      }
-    : {};
-
-  // Add canonical URL and OG image to metadata
   return {
     ...metadata,
     alternates: {
       ...metadata.alternates,
       canonical: canonicalUrl,
     },
-    ...ogImage,
+    ...ogMetadata,
   };
 }
 
