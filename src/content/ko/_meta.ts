@@ -4,7 +4,7 @@ export default {
   },
   'overview': {
     type: 'page',
-    title: 'QueryPie Overview',
+    title: 'Overview',
   },
   'user-manual': {
     type: 'page',
