@@ -15,7 +15,7 @@ export async function GET(
   const { lang, mdxPath = [] } = await params;
   const { origin } = new URL(req.url);
 
-  const title = extractTitleFromMdx(mdxPath, lang) || 'QueryPie ACP Product Documentation';
+  const title = extractTitleFromMdx(mdxPath, lang) || 'QueryPie ACP Documentation';
   const description = extractDescriptionFromMdx(mdxPath, lang) || '';
 
   return generateOgImage(title, description, origin);

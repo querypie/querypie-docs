@@ -32,7 +32,7 @@ export function buildOgMetadata(
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: title || 'QueryPie ACP Product Documentation',
+          alt: title || 'QueryPie ACP Documentation',
         },
       ],
     },

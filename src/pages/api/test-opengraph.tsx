@@ -13,7 +13,7 @@ export const config = {
  */
 export default async function handler(req: NextRequest) {
   const { searchParams, origin } = new URL(req.url);
-  const title = searchParams.get('title') || 'QueryPie ACP Product Documentation';
+  const title = searchParams.get('title') || 'QueryPie ACP Documentation';
   const description = searchParams.get('description') || '';
 
   return generateOgImage(title, description, origin);
