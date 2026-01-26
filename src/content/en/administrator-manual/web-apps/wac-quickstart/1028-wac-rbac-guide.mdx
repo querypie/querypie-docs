@@ -92,7 +92,7 @@ spec:
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 Version of the written YAML Code
@@ -110,7 +110,7 @@ System-managed value, no modification needed
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 Type of the written YAML Code
@@ -128,7 +128,7 @@ System-managed value, no modification needed
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 Detailed rules within the policy (allow or deny)
@@ -145,7 +145,7 @@ Detailed rules within the policy (allow or deny)
 `resources`
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 Specify resources to allow/deny access
@@ -162,7 +162,7 @@ Specify resources to allow/deny access
 `conditions`
 </td>
 <td>
-**[OPTIONAL]**
+<Badge color="green">OPTIONAL</Badge>
 </td>
 <td>
 Detailed conditions for rule application targets
@@ -177,14 +177,14 @@ Detailed conditions for rule application targets
 
 Below is the QueryPie WAC Policy YAML syntax needed for policy writing.
 
-### spec: &lt;effect&gt;**[required]**
+### spec: &lt;effect&gt;<Badge color="red">required</Badge>
 
 Specifies whether to allow or deny specific rules of the policy. Supports `spec: allow` or `spec: deny`.
 
 1. A policy can have a maximum of 1 `allow` and 1 `deny`.
 2. When `deny` and `allow` are declared simultaneously for the same element within a policy, `deny` takes precedence.
 
-### Resources**[required]**
+### Resources<Badge color="red">required</Badge>
 
 Specifies the web app resources for which you want to set allow or block policies.
 Must have `webApp` as a required sub-element and can have `urlPaths` or `urlPathTags`.
@@ -194,7 +194,7 @@ Must have `webApp` as a required sub-element and can have `urlPaths` or `urlPath
 However, specification through `urlPathTags` is only supported in `spec: allow`.
 </Callout>
 
-#### webApp**[required]**
+#### webApp<Badge color="red">required</Badge>
 
 Enter the web app resource name defined in QueryPie.
 
@@ -225,7 +225,7 @@ spec:
 To operate access control policies at the sub-path level of web apps, you can enter `urlPaths` or `urlPathTags` under `webApp`.
 Within one policy, it is **impossible** to specify both `urlPaths` and `urlPathTags` for the same web app.
 
-#### urlPaths**[OPTIONAL]**
+#### urlPaths<Badge color="green">OPTIONAL</Badge>
 
 Specifies the sub-paths of specific web app resources to which you want to apply policies.
 
@@ -268,7 +268,7 @@ spec:
     * `"^/database-settings/policies/data-.*$"` (X)
 5. When deny and allow policies overlap for the same resource (and sub-paths), **deny policies are applied first**.
 
-#### urlPathTags**[OPTIONAL]**
+#### urlPathTags<Badge color="green">OPTIONAL</Badge>
 
 Specifies sub-paths to allow access based on URL Path tags assigned to each sub-path registered in the web app.
 
@@ -288,7 +288,7 @@ urlPathTags:
   "type": "general"
           ```
 
-### Conditions**[OPTIONAL]**
+### Conditions<Badge color="green">OPTIONAL</Badge>
 
 `conditions` defines conditions to narrow the scope of resources to which rules apply. Two types of condition specifications are possible: `userAttributes` and `ipAddresses`.
 
@@ -296,7 +296,7 @@ urlPathTags:
 `conditions` is only syntactically allowed in spec:allow.
 </Callout>
 
-#### userAttributes**[OPTIONAL]**
+#### userAttributes<Badge color="green">OPTIONAL</Badge>
 
 Limits the scope of users whose resource access is allowed by rules based on QueryPie user attributes.
 
@@ -322,7 +322,7 @@ userAttributes:
   "title": "Manager"
       ```
 
-#### ipAddresses**[OPTIONAL]**
+#### ipAddresses<Badge color="green">OPTIONAL</Badge>
 
 Defines a list of IP access control conditions for resources in single IP, CIDR format.
 ```

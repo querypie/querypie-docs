@@ -123,7 +123,7 @@ Specifies whether to allow or deny specific rules of the policy.
 O
 </td>
 <td>
-Specifies resources to allow/deny access. **[Wildcard and regular expressions allowed]**
+Specifies resources to allow/deny access. <Badge color="blue">Wildcard and Regular Expression Allowed</Badge>
 </td>
 <td>
 `- "cluster:*"`
@@ -143,7 +143,7 @@ O
 <td>
 Specifies Kubernetes users/groups to impersonate Kubernetes commands.
 * `kubernetesGroups` : Specifies the kubernetes group to be used by QueryPie Proxy.
-* `impersonation` : Specifies target users/groups to allow impersonation from the client side. **[Wildcard allowed]**
+* `impersonation` : Specifies target users/groups to allow impersonation at the client level. <Badge color="green">Wildcard Allowed</Badge>
 </td>
 <td>
 `kubernetesGroups:`<br/> `- "system:masters"`<br/> `- $user.groups`
@@ -161,12 +161,12 @@ Specifies Kubernetes users/groups to impersonate Kubernetes commands.
 O
 </td>
 <td>
-Specifies the Resource API list to allow/deny within the Kubernetes cluster API server. **[Wildcard and regular expressions allowed]**
-* `apiGroups` : Defines the Kubernetes API group list. **[Wildcard allowed]**
-* `resources` : Defines Kubernetes resources. **[Wildcard allowed]**
-* `namespace` : Defines the target namespace. **[Wildcard and regular expressions allowed]**
-* `name` : Defines the target resource name. **[Wildcard and regular expressions allowed]**
-* `verbs` : Specifies permissions within Kubernetes to allow or deny operations. **[Wildcard allowed]**
+Specifies the Resource API list to allow/deny within the Kubernetes cluster API server. <Badge color="blue">Wildcard and Regular Expression Allowed</Badge>
+* `apiGroups` : Defines the Kubernetes API group list. <Badge color="green">Wildcard Allowed</Badge>
+* `resources` : Defines Kubernetes resources. <Badge color="green">Wildcard Allowed</Badge>
+* `namespace` : Defines the target namespace. <Badge color="blue">Wildcard and Regular Expression Allowed</Badge>
+* `name` : Defines the target resource name. <Badge color="blue">Wildcard and Regular Expression Allowed</Badge>
+* `verbs` : Specifies permissions within kubernetes to allow or deny operations. <Badge color="green">Wildcard Allowed</Badge>
 </td>
 <td>
 `- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
@@ -184,9 +184,9 @@ Specifies the Resource API list to allow/deny within the Kubernetes cluster API 
 </td>
 <td>
 Controls the target in detail by applying conditions for whether to apply resource access policies.
-* `resourceTags` : Can be filtered by resource tag keys and values. **[Value wildcard and regular expressions allowed]** 
-* `userAttributes` : Restricts policy usage by using user attributes as conditions. **[Value wildcard and regular expressions allowed]**
-* `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. **[Wildcard allowed]**
+* `resourceTags` : Can be filtered by resource tag keys and values. <Badge color="purple">Value Wildcard and Regular Expression Allowed</Badge> 
+* `userAttributes` : Restricts policy usage by using user attributes as conditions. <Badge color="purple">Value Wildcard and Regular Expression Allowed</Badge>
+* `ipAddresses` : Defines IP access control condition lists for resources in single IP, CIDR format. <Badge color="green">Wildcard Allowed</Badge>
 </td>
 <td>
 `resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
@@ -200,7 +200,7 @@ Controls the target in detail by applying conditions for whether to apply resour
 
 `resources` defines resources for Kubernetes clusters registered in QueryPie, <u>not Kubernetes resources</u>.
 
-1. Definition for the `resources` field is required. **[required]** 
+1. Definition of the `resources` field is required. <Badge color="red">required</Badge> 
 2. Enter based on the Kubernetes cluster name.
     * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
 3. Kubernetes cluster names are established based on the following criteria. 
@@ -223,7 +223,7 @@ Controls the target in detail by applying conditions for whether to apply resour
 
 `subjects` defines users/groups within Kubernetes to impersonate Kubernetes commands. `subjects` is a field that needs to be applied only in spec:allow, and is not syntactically allowed in spec:deny.
 
-1. `kubernetesGroups`: **[required]**
+1. `kubernetesGroups`: <Badge color="red">required</Badge>
     * Defines the kubernetes group account that QueryPie Proxy will impersonate to perform APIs on resources.
         * These subjects must be definable at the Policy-wide level and must be defined to assign at least one.
             * These subjects for Impersonation can be nested with other Policies within one Role.
@@ -238,7 +238,7 @@ kubernetesGroups:
 kubernetesGroups: 
   - $user.groups
           ```
-2. `impersonation`: **[OPTIONAL]**
+2. `impersonation`: <Badge color="yellow">OPTIONAL</Badge>
     * When users attempt impersonation (--as, --as-group) in kubectl commands with permissions of specific serviceaccounts, etc. within kubernetes from the client side, defines the call allowance list for this.
         * `users`: Lists values allowed in the "--as" parameter with users/service accounts existing within Kubernetes.
         * `groups`: Lists values allowed in the "--as-group" parameter with group accounts existing within Kubernetes.
@@ -308,7 +308,7 @@ Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entr
 
 ### Conditions Specification Method
 
-`conditions` items can define `resourceTags`, `userAttributes`, `ipAddresses` as conditions. **[OPTIONAL]**
+The `conditions` item can define `resourceTags`, `userAttributes`, and `ipAddresses` as conditions. <Badge color="yellow">OPTIONAL</Badge>
 
 * `resourceTags` : In tag items, you can filter by resource tag keys and values. 
   ```

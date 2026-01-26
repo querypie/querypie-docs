@@ -63,12 +63,12 @@ Manual Policy Exception Creation
 
 * **Exception Name** : Enter the name of the policy exception.
 * **Exception Type** : Select policy exception types such as Unmasking, Restricted Column Access, Restricted Table Access.
-* **Data Scope** : Specify target tables or columns for policy exceptions. **[11.1.0]**
+*  **Data Scope**  : Specify target tables or columns for policy exceptions. <Badge color="grey">11.1.0</Badge> 
     * When selecting Data Tag, you can specify targets with tags. Only tags set in Databases &gt; Policy Management &gt; Data Paths can be used. Tags with the same key use OR operation, and tags with different keys use AND operation.
-    * When selecting Specific data path, you can directly specify target tables or columns. <br/>Regular expressions can also be used. **[11.3.0]** 
+    * When selecting Specific data path, you can directly specify target tables or columns. <br/>You can also specify using regular expressions. <Badge color="grey">11.3.0</Badge> 
 * **Allowed User** : Specify targets that temporarily need policy exceptions.
     * User / Group : You can specify users or groups.
-    * Attribute of Users : You can dynamically specify targets using Identifier type attributes registered in user profiles. **[11.1.0]** 
+    * Attribute of Users : You can dynamically specify targets using Identifier-type attributes registered in the user Profile. <Badge color="grey">11.1.0</Badge> 
 * **Policy Exception Schedule** : Set the period during which the policy exception is applied. The maximum validity period for policy exceptions cannot exceed the maximum period set by the administrator (Maximum Policy Exception Period).
     * Specific Period : Specify the start and end times. Can be specified in hours.
     * Time Duration : Specify to be valid for a specified time from the start time.
