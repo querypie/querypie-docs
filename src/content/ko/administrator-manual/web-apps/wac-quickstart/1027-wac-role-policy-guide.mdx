@@ -62,7 +62,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 작성된 YAML Code의 버전
@@ -80,7 +80,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 작성된 YAML Code의 종류
@@ -98,7 +98,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 -
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 정책 내 세부 규칙 (허용 또는 거부)
@@ -115,7 +115,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 `resources`
 </td>
 <td>
-**[required]**
+<Badge color="red">required</Badge>
 </td>
 <td>
 접근을 허용/거부할 리소스 지정
@@ -132,7 +132,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 `conditions`
 </td>
 <td>
-**[OPTIONAL]**
+<Badge color="green">OPTIONAL</Badge>
 </td>
 <td>
 규칙 적용 대상에 대한 세부 조건
@@ -147,14 +147,14 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 
 아래에서 정책 작성에 필요한 QueryPie WAC Policy YAML 문법을 안내합니다.
 
-### spec: &lt;effect&gt;**[required]**
+### spec: &lt;effect&gt;<Badge color="red">required</Badge>
 
 정책의 구체적인 규칙의 허용 또는 거부 여부를 지정합니다. `spec: allow` 또는 `spec: deny` 를 지원합니다.
 
 1. 한 정책에는 최대 1회의 `allow`, 1회의 `deny` 만이 존재할 수 있습니다.
 2. 정책 내에서 동일한 요소에 대해 `deny`와 `allow`가 동시에 선언된 경우 `deny`가 우선입니다.
 
-### Resources**[required]**
+### Resources<Badge color="red">required</Badge>
 
 허용 또는 차단 정책을 설정하려는 웹 앱 리소스를 지정합니다.
 하위에 `webApp`, `urlPaths`를 가집니다.
@@ -163,7 +163,7 @@ WAC의 정책은 YAML 형식으로 작성되며, 그 기본 구조는 다음과 
 `resources`는 `spec: allow`, `spec: deny` 에서 모두 허용됩니다.
 </Callout>
 
-#### webApp**[required]**
+#### webApp<Badge color="red">required</Badge>
 
 QueryPie에 정의한 웹앱 리소스명을 입력합니다.
 
@@ -189,7 +189,7 @@ spec:
     * 시작과 끝은 알파벳 대소문자 또는 숫자로 제한
     * 중복 불가
 
-#### urlPaths**[OPTIONAL]**
+#### urlPaths<Badge color="green">OPTIONAL</Badge>
 
 정책을 적용하려는 특정 웹앱 리소스의 하위 경로를 특정합니다.
 
@@ -246,7 +246,7 @@ urlPaths에 특정 하위 경로를 입력하려면 Web App 상세 정보에서 
     * `"^/database-settings/policies/data-.*$"` (X)
 2. 동일한 리소스(및 하위 경로)에 대하여 차단 정책과 허용 정책이 중첩되는 경우,  **차단 정책이 우선** 입니다.
 
-### Conditions**[OPTIONAL]**
+### Conditions<Badge color="green">OPTIONAL</Badge>
 
 `conditions` 은 규칙 적용 대상 리소스의 범위를 좁히기 위한 조건을 정의합니다. `urlPathTags`, `userAttributes`, `ipAddresses` 세 종류의 조건 지정이 가능합니다.
 
@@ -254,7 +254,7 @@ urlPaths에 특정 하위 경로를 입력하려면 Web App 상세 정보에서 
 `conditions`는 spec:allow에서만 문법적으로 허용됩니다.
 </Callout>
 
-#### urlPathTags**[OPTIONAL]**
+#### urlPathTags<Badge color="green">OPTIONAL</Badge>
 
 Web App의 Path Management에서 부여된 태그를 기준으로 규칙에 의해 접근이 허용되는 리소스 범위를 한정합니다.
 
@@ -305,7 +305,7 @@ spec:
     *  **웹앱 리소스의 대상 urlPath가 명시되었으나 범위 내에서 매칭되는 urlPathTag가 없는 경우** 
         * 조건에 일치하는 urlPath가 존재하지 않으므로, 어떠한 경로도 허용하지 않습니다.
 
-#### userAttributes**[OPTIONAL]**
+#### userAttributes<Badge color="green">OPTIONAL</Badge>
 
 QueryPie 사용자의 속성(attribute)을 기준으로 규칙에 의해 리소스 접근이 허용되는 사용자의 범위를 한정합니다.
 
@@ -331,7 +331,7 @@ userAttributes:
   "title": "Manager"
       ```
 
-#### ipAddresses**[OPTIONAL]**
+#### ipAddresses<Badge color="green">OPTIONAL</Badge>
 
 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.
 ```

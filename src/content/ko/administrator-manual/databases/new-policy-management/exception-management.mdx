@@ -63,12 +63,12 @@ Workflow의 정책예외 신청 및 관리자의 수동 정책 예외 설정에�
 
 *  **Exception Name**  : 정책 예외의 이름을 입력합니다.
 *  **Exception Type**  : Unmasking, Restricted Column Access, Restricted Table Access 와 같이 정책 예외 유형을 선택합니다.
-*  **Data Scope**  : 정책예외 대상 테이블 또는 컬럼을 지정합니다. **[11.1.0]** 
+*  **Data Scope**  : 정책예외 대상 테이블 또는 컬럼을 지정합니다. <Badge color="grey">11.1.0</Badge> 
     * Data Tag 를 선택하면 태그로 대상을 지정할 수 있습니다. Databases &gt; Policy Management &gt; Data Paths에 설정한 태그만 사용할 수 있습니다. 태그는 같은 키는 OR 연산이고 다른 키 사이는 AND 연산입니다.
-    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. <br/>정규식으로 지정할 수도 있습니다. **[11.3.0]** 
+    * Specific data path 를 선택하면 직접 대상 테이블 또는 컬럼을 지정할 수 있습니다. <br/>정규식으로 지정할 수도 있습니다. <Badge color="grey">11.3.0</Badge> 
 *  **Allowed User**  : 일시적으로 정책 예외가 필요한 대상을 지정합니다.
     * User / Group : 사용자 또는 그룹을 지정할 수 있습니다.
-    * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. **[11.1.0]** 
+    * Attribute of Users : 사용자 Profile에 등록된 Identifier 유형의 속성을 사용하여 동적으로 대상을 지정할 수 있습니다. <Badge color="grey">11.1.0</Badge> 
 *  **Policy Exception Schedule**  : 정책 예외가 적용되는 기간을 설정하여 요청할 수 있습니다. 최대 정책 예외의 유효 기간은 관리자가 설정한 최대 기간(Maximum Policy Exception Period)을 넘겨서 신청 수 없습니다.
     * Specific Period : 시작 시점과 종료 시점을 지정합니다. 시간단위로 지정할 수 있습니다.
     * Time Duration : 시작 시점으로 부터 지정한 시간까지 유효하도록 지정할 수 있습니다.

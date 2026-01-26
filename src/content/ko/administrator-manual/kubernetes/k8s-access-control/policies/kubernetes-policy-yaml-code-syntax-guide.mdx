@@ -123,7 +123,7 @@ O
 O
 </td>
 <td>
-접근을 허용/거부할 리소스를 지정합니다. **[와일드카드 및 정규표현식 허용]**
+접근을 허용/거부할 리소스를 지정합니다. <Badge color="blue">와일드카드 및 정규표현식 허용</Badge>
 </td>
 <td>
 `- "cluster:*"`
@@ -143,7 +143,7 @@ O
 <td>
 쿠버네티스 명령을 impersonate할 쿠버네티스 사용자/그룹을 지정합니다.
 * `kubernetesGroups` : 쿼리파이 Proxy가 이용할 kubernetes group을 지정합니다.
-* `impersonation` : 클라이언트 단에서 impersonation을 허용할 대상 사용자/그룹을 지정합니다. **[와일드카드 허용]**
+* `impersonation` : 클라이언트 단에서 impersonation을 허용할 대상 사용자/그룹을 지정합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
 <td>
 `kubernetesGroups:`<br/>  `- "system:masters"`<br/>  `- $user.groups`
@@ -161,12 +161,12 @@ O
 O
 </td>
 <td>
-쿠버네티스 클러스터 API 서버 내 허용/거부할 Resource API를 명시합니다. **[와일드카드 및 정규표현식 허용]**
-* `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다. **[와일드카드 허용]**
-* `resources` : 쿠버네티스 리소스를 정의합니다. **[와일드카드 허용]**
-* `namespace` : 대상 네임스페이스를 정의합니다. **[와일드카드 및 정규표현식 허용]**
-* `name` : 대상 리소스명을 정의합니다. **[와일드카드 및 정규표현식 허용]**
-* `verbs` : 작업을 허용하거나 거부할 kubernetes 내의 권한을 명시합니다. **[와일드카드 허용]**
+쿠버네티스 클러스터 API 서버 내 허용/거부할 Resource API를 명시합니다. <Badge color="blue">와일드카드 및 정규표현식 허용</Badge>
+* `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다. <Badge color="green">와일드카드 허용</Badge>
+* `resources` : 쿠버네티스 리소스를 정의합니다. <Badge color="green">와일드카드 허용</Badge>
+* `namespace` : 대상 네임스페이스를 정의합니다. <Badge color="blue">와일드카드 및 정규표현식 허용</Badge>
+* `name` : 대상 리소스명을 정의합니다. <Badge color="blue">와일드카드 및 정규표현식 허용</Badge>
+* `verbs` : 작업을 허용하거나 거부할 kubernetes 내의 권한을 명시합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
 <td>
 `- apiGroups: ["*"]`<br/>`resources:`<br/>`- "*"`<br/>`namespace: "*"`<br/>`name: "*"`<br/>`verbs: ["*"]`
@@ -184,9 +184,9 @@ O
 </td>
 <td>
 리소스 접근 정책 적용 여부를 조건으로 적용 대상을 세부 제어합니다.
-* `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. **[Value 와일드카드 및 정규표현식 허용]** 
-* `userAttributes` : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. **[Value 와일드카드 및 정규표현식 허용]**
-* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. **[와일드카드 허용]**
+* `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge> 
+* `userAttributes` : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
+* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
 <td>
 `resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
@@ -200,7 +200,7 @@ O
 
 `resources`는 <u>쿠버네티스의 리소스가 아닌</u> 쿼리파이에 등록된 쿠버네티스 클러스터에 대한 리소스를 정의합니다.
 
-1. 해당 `resources` 필드에 대한 정의는 필수입니다. **[required]** 
+1. 해당 `resources` 필드에 대한 정의는 필수입니다. <Badge color="red">required</Badge> 
 2. 쿠버네티스 클러스터명을 바탕으로 입력합니다.
     * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
 3. 쿠버네티스 클러스터명은 이하의 기준으로 정립됩니다. 
@@ -223,7 +223,7 @@ O
 
 `subjects`는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. `subjects`는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.
 
-1. `kubernetesGroups`: **[required]**
+1. `kubernetesGroups`: <Badge color="red">required</Badge>
     * 리소스에 대한 API 수행을 위해 쿼리파이 Proxy가 impersonate할 kubernetes 그룹 계정을 정의합니다.
         * 해당 subjects는 Policy-wide 레벨에서 정의할 수 있어야 하며, 최소 하나가 배정되도록 정의되어야 합니다.
             * Impersonation을 위한 해당 subjects는 다른 Policy들과 하나의 Role 내에서 중첩이 가능합니다.
@@ -238,7 +238,7 @@ kubernetesGroups:
 kubernetesGroups: 
   - $user.groups
           ```
-2. `impersonation`: **[OPTIONAL]**
+2. `impersonation`: <Badge color="yellow">OPTIONAL</Badge>
     * 사용자가 클라이언트 단에서 kubernetes 내 특정 serviceaccount 등의 권한으로 kubectl 명령에 impersonation(--as, --as-group)을 시도하는 경우, 이에 대한 호출 허용 목록을 정의합니다.
         * `users`: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 "--as" 파라미터에 허용 가능한 값을 나열합니다.
         * `groups`: 쿠버네티스 내 존재하는 그룹 계정으로 "--as-group" 파라미터에 허용 가능한 값을 나열합니다.
@@ -308,7 +308,7 @@ impersonation:
 
 ### Conditions 명시 방법
 
-`conditions` 항목에는 `resourceTags`, `userAttributes`, `ipAddresses`를 조건으로 정의할 수 있습니다. **[OPTIONAL]**
+`conditions` 항목에는 `resourceTags`, `userAttributes`, `ipAddresses`를 조건으로 정의할 수 있습니다. <Badge color="yellow">OPTIONAL</Badge>
 
 * `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. 
   ```
