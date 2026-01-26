@@ -153,6 +153,17 @@ HIDDEN_CHARACTERS = {
     '\u3164': ''  # Hangul Filler
 }
 
+# Confluence status macro color to Badge component color mapping
+CONFLUENCE_COLOR_TO_BADGE_COLOR = {
+    'Green': 'green',
+    'Blue': 'blue',
+    'Red': 'red',
+    'Yellow': 'yellow',
+    'Grey': 'grey',
+    'Gray': 'grey',
+    'Purple': 'purple',
+}
+
 def confluence_url():
     if GLOBAL_PAGE_V1:
         page_id = GLOBAL_PAGE_V1.get('id')
@@ -780,18 +791,32 @@ class SingleLineParser:
     <ac:parameter ac:name="title">Step 1</ac:parameter>
     <ac:parameter ac:name="colour">Blue</ac:parameter>
 </ac:structured-macro>
+
+            Converts to:
+            <Badge color="blue">Step 1</Badge>
+
+            Note: Badge is registered as a global MDX component in src/mdx-components.js,
+            so no import statement is needed in the generated MDX files.
             """
             if node.get('name') == 'status':
-                self.markdown_lines.append("**[")
+                title = ''
+                color = 'grey'  # default color
                 for child in node.children:
-                    self.convert_recursively(child)
-                self.markdown_lines.append("]**")
+                    if isinstance(child, Tag) and child.name == 'ac:parameter':
+                        if child.get('name') == 'title':
+                            title = SingleLineParser(child).markdown_of_children(child)
+                        elif child.get('name') == 'colour':
+                            confluence_color = child.text.strip()
+                            color = CONFLUENCE_COLOR_TO_BADGE_COLOR.get(confluence_color, 'grey')
+                self.markdown_lines.append(f'<Badge color="{color}">{title}</Badge>')
             else:
                 # For other structured macros, we can just log or skip
                 logging.warning(f"SingleLineParser: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {INPUT_FILE_PATH}")
                 for child in node.children:
                     self.convert_recursively(child)
         elif node.name in ['ac:parameter']:
+            # ac:parameter nodes are now handled within their parent ac:structured-macro
+            # This block should only be reached if ac:parameter appears in unexpected contexts
             if node.get('name') == 'title':
                 for child in node.children:
                     self.convert_recursively(child)
