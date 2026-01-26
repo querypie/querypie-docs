@@ -67,17 +67,40 @@ export async function generateMetadata(props: {
   params: Promise<{ lang: string; mdxPath: string[] }>;
 }): Promise<Metadata> {
   const params = await props.params;
-  const { metadata } = await importPage(params.mdxPath, params.lang || 'en');
+  const mdxPath = params.mdxPath || [];
+  const lang = params.lang || 'en';
+  const { metadata } = await importPage(mdxPath, lang);
 
   // Generate canonical URL
   const canonicalUrl = await getCanonicalUrl(params);
 
   // Generate OG image URL with query parameters
-  const title = metadata.title ? encodeURIComponent(String(metadata.title)) : '';
-  const description = metadata.description
-    ? encodeURIComponent(String(metadata.description))
-    : encodeURIComponent(extractDescriptionFromMdx(params.mdxPath, params.lang));
-  const ogImagePath = `/api/og?lang=${params.lang}&title=${title}&description=${description}`;
+  const title = metadata.title ? String(metadata.title) : '';
+  const extractedDescription = metadata.description
+    ? String(metadata.description)
+    : extractDescriptionFromMdx(mdxPath, lang);
+
+  // OG 이미지: title과 description 모두 유효한 경우에만 생성
+  const ogImage = title && extractedDescription
+    ? {
+        openGraph: {
+          ...metadata.openGraph,
+          images: [
+            {
+              url: `/api/og?lang=${lang}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(extractedDescription)}`,
+              width: 1200,
+              height: 630,
+              alt: metadata.title ? String(metadata.title) : 'QueryPie Documentation',
+            },
+          ],
+        },
+        twitter: {
+          ...metadata.twitter,
+          card: 'summary_large_image' as const,
+          images: [`/api/og?lang=${lang}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(extractedDescription)}`],
+        },
+      }
+    : {};
 
   // Add canonical URL and OG image to metadata
   return {
@@ -86,22 +109,7 @@ export async function generateMetadata(props: {
       ...metadata.alternates,
       canonical: canonicalUrl,
     },
-    openGraph: {
-      ...metadata.openGraph,
-      images: [
-        {
-          url: ogImagePath,
-          width: 1200,
-          height: 630,
-          alt: metadata.title ? String(metadata.title) : 'QueryPie Documentation',
-        },
-      ],
-    },
-    twitter: {
-      ...metadata.twitter,
-      card: 'summary_large_image',
-      images: [ogImagePath],
-    },
+    ...ogImage,
   };
 }
 

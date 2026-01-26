@@ -15,7 +15,7 @@ export function extractDescriptionFromMdx(
   mdxPath: string[],
   lang: string,
   maxLength: number = 300
-): string {
+): string | null {
   const basePath = path.resolve('src', 'content');
   let filePath = path.join(basePath, lang, ...mdxPath) + '.mdx';
 
@@ -25,7 +25,7 @@ export function extractDescriptionFromMdx(
     if (fs.existsSync(indexPath)) {
       filePath = indexPath;
     } else {
-      return '';
+      return null;
     }
   }
 
