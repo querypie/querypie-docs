@@ -28,6 +28,33 @@ async function loadFont(url: string): Promise<ArrayBuffer | null> {
   return null;
 }
 
+// --- Module-level 캐싱 ---
+// 폰트와 배경 이미지를 서버 인스턴스당 1회만 로드합니다.
+// Serverless 환경에서 동일 인스턴스 내 후속 요청은 캐시된 데이터를 재사용합니다.
+
+let cachedFonts: Promise<{ notoSans: ArrayBuffer | null; notoSansJP: ArrayBuffer | null }> | null =
+  null;
+
+function getFonts() {
+  if (!cachedFonts) {
+    cachedFonts = Promise.all([loadFont(FONT_URLS.notoSans), loadFont(FONT_URLS.notoSansJP)]).then(
+      ([notoSans, notoSansJP]) => ({ notoSans, notoSansJP })
+    );
+  }
+  return cachedFonts;
+}
+
+let cachedBackgroundImage: Promise<ArrayBuffer | null> | null = null;
+
+function getBackgroundImage(origin: string) {
+  if (!cachedBackgroundImage) {
+    cachedBackgroundImage = fetch(`${origin}/og-background.png`)
+      .then((res) => (res.ok ? res.arrayBuffer() : null))
+      .catch(() => null);
+  }
+  return cachedBackgroundImage;
+}
+
 /**
  * OG 이미지를 생성합니다.
  *
@@ -40,14 +67,9 @@ export async function generateOgImage(
   description: string,
   origin: string
 ): Promise<ImageResponse> {
-  // 리소스 병렬 로드 (배경 이미지, 폰트)
-  const [backgroundImageData, notoSansFont, notoSansJPFont] = await Promise.all([
-    fetch(`${origin}/og-background.png`)
-      .then((res) => (res.ok ? res.arrayBuffer() : null))
-      .catch(() => null),
-    loadFont(FONT_URLS.notoSans),
-    loadFont(FONT_URLS.notoSansJP),
-  ]);
+  // 리소스 병렬 로드 (캐시된 경우 즉시 반환)
+  const [{ notoSans: notoSansFont, notoSansJP: notoSansJPFont }, backgroundImageData] =
+    await Promise.all([getFonts(), getBackgroundImage(origin)]);
 
   // 배경 스타일
   const backgroundStyle = backgroundImageData
@@ -139,6 +161,9 @@ export async function generateOgImage(
     {
       ...size,
       fonts: fonts.length > 0 ? fonts : undefined,
+      headers: {
+        'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800',
+      },
     }
   );
 }
