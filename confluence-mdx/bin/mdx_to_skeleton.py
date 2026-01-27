@@ -968,7 +968,7 @@ def process_text_line(line: str, text_processor: TextProcessor) -> str:
 def _process_html_line(line: str, text_processor: TextProcessor) -> str:
     """
     Process HTML tags structure but replace text content using regex.
-    
+
     IMPORTANT: Leading whitespace (indentation) MUST be preserved.
     The function preserves leading whitespace at the beginning of the line.
     """
@@ -977,13 +977,26 @@ def _process_html_line(line: str, text_processor: TextProcessor) -> str:
     stripped = line.lstrip()
     if stripped != line:
         leading_whitespace = line[:len(line) - len(stripped)]
-    
+
+    # Process <img> tags to replace alt attribute text with _TEXT_
+    # Pattern: <img ... alt="some text" ... />
+    # Replace alt attribute content with _TEXT_
+    def replace_img_alt(match):
+        tag = match.group(0)
+        # Replace alt="..." with alt="_TEXT_"
+        # Handle both alt="..." and alt='...'
+        tag = re.sub(r'alt="[^"]*"', 'alt="_TEXT_"', tag)
+        tag = re.sub(r"alt='[^']*'", "alt='_TEXT_'", tag)
+        return tag
+
+    stripped = re.sub(r'<img[^>]*>', replace_img_alt, stripped)
+
     # Split by HTML tags, keeping the tags
     parts = re.split(r'(<[^>]+>|</[^>]+>)', stripped)
     result = []
     for i, part in enumerate(parts):
         if part.startswith('<'):
-            # HTML tag - keep as-is
+            # HTML tag - keep as-is (alt already processed for img tags)
             result.append(part)
         elif part.strip():
             # Text content - process it
