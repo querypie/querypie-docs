@@ -93,17 +93,20 @@ export async function generateOgImage(
           }}
         >
           <div
-            style={{
-              fontSize: 64,
-              fontWeight: 700,
-              color: '#ffffff',
-              lineHeight: 1.2,
-              display: '-webkit-box',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              maxWidth: '100%',
-            }}
+            style={
+              {
+                fontSize: 64,
+                fontWeight: 700,
+                color: '#ffffff',
+                lineHeight: 1.2,
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%',
+              } as React.CSSProperties
+            }
           >
             {title}
           </div>
@@ -112,17 +115,21 @@ export async function generateOgImage(
         {/* 설명 영역 - 최대 4줄 */}
         {description && (
           <div
-            style={{
-              fontSize: 32,
-              fontWeight: 400,
-              color: 'rgba(255,255,255,0.85)',
-              lineHeight: 1.5,
-              display: '-webkit-box',
-              WebkitLineClamp: 4,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              maxWidth: '100%',
-            }}
+            style={
+              {
+                fontSize: 32,
+                fontWeight: 400,
+                color: 'rgba(255,255,255,0.85)',
+                lineHeight: 1.5,
+                display: '-webkit-box',
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%',
+                maxHeight: 192,
+              } as React.CSSProperties
+            }
           >
             {description}
           </div>
