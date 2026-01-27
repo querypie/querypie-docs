@@ -81,4 +81,10 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 2.  **macOS에서 가져온 인증서 보기 또는 Windows에서 가져온 인증서 보기** 를 클릭합니다.
 3. 신뢰할 수 있는 인증서 목록에서 querypie 인증서를 확인합니다.
 
+### 4. 인증서 호환성 안내
 
+Root CA 인증서를 설치할 때는 아래 알고리즘 조건을 참고하세요:
+
+* RSA 및 ECDSA (예: P-256, P-384) 기반 인증서는 대부분의 OS 및 브라우저에서 정상적으로 설치·신뢰 설정이 가능합니다.
+* Ed25519 기반 인증서는 암호학적으로 유효하나, macOS Keychain 및 Windows 신뢰 저장소에서는 Root CA로 사용이 지원되지 않을 수 있습니다. 
+* 이로 인해 Ed25519 인증서는 OS 인증서 저장소에 추가/신뢰 설정이 실패할 수 있으니, 루트 CA 용도로는 RSA 또는 ECDSA 인증서를 사용하는 것을 권장합니다.
