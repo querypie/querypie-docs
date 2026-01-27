@@ -1475,6 +1475,71 @@ _TEXT_ [_TEXT_](../../administrator-manual/general/system/integrations/integrati
         shutil.rmtree(tmp_dir)
 
 
+def test_horizontal_rule_with_underscores():
+    """Test that horizontal rules with underscores (___, _____, ______) are preserved"""
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""# Test
+
+Some text before
+
+___
+
+Text after three underscores
+
+_____
+
+Text after five underscores
+
+______
+
+Text after six underscores
+
+***
+
+Text after asterisks
+
+- - -
+
+Text after spaced dashes
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        expected = """# _TEXT_
+
+_TEXT_
+
+___
+
+_TEXT_
+
+_____
+
+_TEXT_
+
+______
+
+_TEXT_
+
+***
+
+_TEXT_
+
+- - -
+
+_TEXT_
+"""
+        assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
 def test_nested_list_with_credentials_and_emojis():
     """
     Test nested list items with credentials, bold text, and emojis.

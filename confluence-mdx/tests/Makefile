@@ -24,7 +24,7 @@ test: test-xhtml
 .PHONY: test-xhtml
 test-xhtml:
 	@echo "Running XHTML tests..."
-	@for test_case in $$(find $(TEST_DIR) -type d -depth 1); do \
+	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
@@ -69,7 +69,7 @@ debug: debug-xhtml
 .PHONY: debug-xhtml
 debug-xhtml:
 	@echo "Running XHTML tests with debug log level..."
-	@for test_case in $$(find $(TEST_DIR) -type d -depth 1); do \
+	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
@@ -109,7 +109,7 @@ debug-one:
 .PHONY: test-skeleton
 test-skeleton:
 	@echo "Running skeleton tests..."
-	@for test_case in $$(find $(TEST_DIR) -type d -depth 1); do \
+	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/output.mdx" ]; then \
 			echo "Testing case: $$test_id (Skeleton)"; \

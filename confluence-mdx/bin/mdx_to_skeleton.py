@@ -933,8 +933,10 @@ def process_text_line(line: str, text_processor: TextProcessor) -> str:
     
     # Don't skip lines with placeholders - they may contain text that needs processing
 
-    # Preserve separator lines (---) that are not YAML delimiters
-    if line.strip() == '---':
+    # Preserve horizontal rules (---, ___, ***, or with spaces like - - -)
+    # Markdown horizontal rule: 3 or more of the SAME character (-, _, or *) with optional spaces
+    # Must use the same character type throughout (e.g., --- is valid, but *-* is not)
+    if re.match(r'^\s*([-](\s*[-]){2,}|[_](\s*[_]){2,}|[*](\s*[*]){2,})\s*$', line.strip()):
         return line
 
     # Check if line contains HTML tags - process HTML first
