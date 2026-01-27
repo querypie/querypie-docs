@@ -78,7 +78,7 @@ export async function generateOgImage(
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          padding: '150px 80px 60px 80px',
+          padding: '110px 72px 65px 72px',
           fontFamily,
           ...backgroundStyle,
         }}
@@ -88,7 +88,7 @@ export async function generateOgImage(
           style={{
             display: 'flex',
             alignItems: 'center',
-            maxHeight: 240,
+            height: 240,
             marginBottom: 21,
           }}
         >
@@ -109,7 +109,7 @@ export async function generateOgImage(
           </div>
         </div>
 
-        {/* 설명 영역 - 최대 3줄 */}
+        {/* 설명 영역 - 최대 4줄 */}
         {description && (
           <div
             style={{
@@ -118,7 +118,7 @@ export async function generateOgImage(
               color: 'rgba(255,255,255,0.85)',
               lineHeight: 1.5,
               display: '-webkit-box',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: 4,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
               maxWidth: '100%',
