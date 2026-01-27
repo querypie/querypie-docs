@@ -1,0 +1,46 @@
+name: Test Confluence MDX Converter
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'confluence-mdx/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'confluence-mdx/**'
+
+jobs:
+  test:
+    name: Test Confluence MDX Converter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Create virtual environment and install dependencies
+        working-directory: ./confluence-mdx
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run XHTML to MDX tests
+        working-directory: ./confluence-mdx/tests
+        run: |
+          source ../venv/bin/activate
+          make test
+
+      - name: Run Skeleton MDX tests
+        working-directory: ./confluence-mdx/tests
+        run: |
+          source ../venv/bin/activate
+          make test-skeleton
