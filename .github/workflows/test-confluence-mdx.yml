@@ -33,6 +33,12 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Run Python unit tests
+        working-directory: ./confluence-mdx/tests
+        run: |
+          source ../venv/bin/activate
+          python -m pytest test_mdx_to_skeleton.py -v
+
       - name: Run XHTML to MDX tests
         working-directory: ./confluence-mdx/tests
         run: |

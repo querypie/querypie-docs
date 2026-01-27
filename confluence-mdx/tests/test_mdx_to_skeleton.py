@@ -72,7 +72,7 @@ print('hello')
 More text
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """
@@ -98,10 +98,10 @@ def test_content_protector_extract_inline_code():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("Use `print()` function")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """_TEXT_ `_TEXT_` _TEXT_"""
+        expected = """_TEXT_ `_TEXT_`"""
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
@@ -120,7 +120,7 @@ def test_content_protector_extract_urls():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("Visit [Google](https://google.com)")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """_TEXT_ [_TEXT_](https://google.com)"""
@@ -141,7 +141,7 @@ def test_content_protector_extract_image_links():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("![Alt text](/path/to/image.png)")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """![_TEXT_](/path/to/image.png)"""
@@ -163,10 +163,10 @@ def test_content_protector_extract_html_entities():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("Use &amp; and &lt; symbols")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """_TEXT_ &amp; _TEXT_ &lt; _TEXT_"""
+        expected = """_TEXT_ &amp; &lt;"""
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
@@ -184,10 +184,10 @@ def test_content_protector_restore_all():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("Code: `print()` and link [text](url)")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
-        expected = """_TEXT_ `_TEXT_` _TEXT_ [_TEXT_](url)"""
+        expected = """_TEXT_ `_TEXT_` [_TEXT_](url)"""
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
         shutil.rmtree(tmp_dir)
@@ -210,7 +210,7 @@ def test_text_processor_replace_text_in_content_empty():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("   ")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = "   "
@@ -242,14 +242,14 @@ text _italic text_
 [link text](url)
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """**_TEXT_**
 
-_TEXT_ *_TEXT_* _TEXT_
+_TEXT_ *_TEXT_*
 
-*_TEXT_* _TEXT_
+_TEXT_ *_TEXT_*
 
 _TEXT_ *_TEXT_*
 
@@ -279,14 +279,14 @@ Hello, world!
 **bold** and more text
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """_TEXT_
 
 _TEXT_
 
-**_TEXT_** _TEXT_
+_TEXT_ **_TEXT_**
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -305,7 +305,7 @@ def test_text_processor_cleanup_text():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("Multiple words here")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """_TEXT_"""
@@ -331,12 +331,12 @@ This is **bold** text
 Hello, world! How are you?
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """_TEXT_
 
-_TEXT_ **_TEXT_** _TEXT_
+_TEXT_ **_TEXT_**
 
 _TEXT_
 """
@@ -397,7 +397,7 @@ def test_process_text_line_empty():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("   ")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = "   "
@@ -419,7 +419,7 @@ def test_process_text_line_import():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("import { Component } from 'react'")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """import { Component } from 'react'"""
@@ -440,7 +440,7 @@ def test_process_text_line_code_block():
         input_file = tmp_dir / "test.mdx"
         input_file.write_text("```python\ncode here\n```")
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """```python
@@ -466,7 +466,7 @@ def test_process_markdown_line_header():
 ## Subheader
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -494,7 +494,7 @@ def test_process_markdown_line_list():
     * Nested item
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """
@@ -522,7 +522,7 @@ def test_process_html_line():
 <figure><img src='test.png' /></figure>
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """
@@ -556,7 +556,7 @@ title: 'Test Title'
 Some content here.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         
         assert output_path.exists()
         assert output_path.name == "test.skel.mdx"
@@ -592,7 +592,7 @@ print('hello')
 Some text.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -623,7 +623,7 @@ def test_convert_mdx_to_skeleton_with_images():
 More text.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -652,12 +652,12 @@ Visit [Google](https://google.com) for search.
 More text.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-_TEXT_ [_TEXT_](https://google.com) _TEXT_
+_TEXT_ [_TEXT_](https://google.com)
 
 _TEXT_
 """
@@ -681,12 +681,12 @@ This is **bold** and *italic* text.
 More content.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-_TEXT_ **_TEXT_** _TEXT_ *_TEXT_* _TEXT_
+_TEXT_ **_TEXT_** *_TEXT_*
 
 _TEXT_
 """
@@ -711,7 +711,7 @@ def test_convert_mdx_to_skeleton_with_lists():
     2. Nested two
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -780,7 +780,7 @@ def test_list_item_with_period_at_end():
 2. Item two.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -806,12 +806,12 @@ def test_html_entities_in_text():
 Administrator &gt; Kubernetes &gt; Connection Management
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-_TEXT_ &gt; _TEXT_ &gt; _TEXT_
+_TEXT_ &gt; &gt;
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -832,13 +832,13 @@ def test_inline_code_in_list_items():
 2. Use `list` command
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-1. _TEXT_ `_TEXT_` _TEXT_
-2. _TEXT_ `_TEXT_` _TEXT_
+1. _TEXT_ `_TEXT_`
+2. _TEXT_ `_TEXT_`
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -863,7 +863,7 @@ Administrator &gt; General &gt; Company Management
 </figure>
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -871,7 +871,7 @@ Administrator &gt; General &gt; Company Management
 <figure>
 <img src="test.png" />
 <figcaption>
-_TEXT_ &gt; _TEXT_ &gt; _TEXT_
+_TEXT_ &gt; &gt;
 </figcaption>
 </figure>
 """
@@ -893,12 +893,12 @@ def test_complex_list_item_with_bold_and_inline_code():
 1. **Request Audit** : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 `On`입니다.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-1. **_TEXT_** _TEXT_ `_TEXT_` _TEXT_
+1. _TEXT_ `_TEXT_` **_TEXT_**
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -927,7 +927,7 @@ Content here.
 ---
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """---
@@ -967,7 +967,7 @@ import { Callout } from 'nextra/components'
 </Callout>
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """---
@@ -977,7 +977,7 @@ title: '_TEXT_'
 import { Callout } from 'nextra/components'
 
 <Callout type="info">
-_TEXT_ **_TEXT_** _TEXT_
+_TEXT_ **_TEXT_**
 </Callout>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
@@ -998,12 +998,12 @@ def test_list_item_with_html_entities_and_text():
 1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters 메뉴로 이동합니다.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
 
-1. _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_
+1. _TEXT_ &gt; &gt; &gt;
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1026,7 +1026,7 @@ def test_nested_list_items_with_periods():
 2. Item two.
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -1057,7 +1057,7 @@ def test_list_item_with_multiple_inline_codes():
     3. `watch`
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """# _TEXT_
@@ -1090,7 +1090,7 @@ def test_complex_list_with_html_and_figure():
 2.  **접속 불가 안내** 
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """
@@ -1121,12 +1121,12 @@ def test_callout_with_external_link():
 </Callout>
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """<Callout type="info">
-_TEXT_ **_TEXT_** _TEXT_
-_TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations) _TEXT_
+_TEXT_ **_TEXT_**
+_TEXT_ [_TEXT_](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)
 </Callout>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
@@ -1147,7 +1147,7 @@ def test_list_items_with_reference_links():
 * 참고: [KUBECONFIG 환경 변수 설정](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
 """)
         
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
         
         expected = """
@@ -1171,11 +1171,11 @@ def test_japanese_text_with_multiple_bold_sections():
 現在QueryPieは  **データベース、システム、Kubernetesアクセス制御と監査機能** を核心として提供しており、データベース資産を基盤として機密データを自動で識別し分類する**AIデータディスカバリ** 機能も一緒に提供します。
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
-_TEXT_ **_TEXT_** _TEXT_ **_TEXT_** _TEXT_
+_TEXT_ **_TEXT_**
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1200,7 +1200,7 @@ def test_callout_with_bold_html_entities_and_inline_code():
 </Callout>
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
@@ -1209,7 +1209,7 @@ def test_callout_with_bold_html_entities_and_inline_code():
 
 _TEXT_
 
-_TEXT_ &gt; _TEXT_ `_TEXT_` _TEXT_
+_TEXT_ `_TEXT_` &gt;
 </Callout>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
@@ -1229,11 +1229,11 @@ def test_list_item_with_html_br_and_emoji():
 4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/> 
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
-4. _TEXT_ <br/> _TEXT_ <br/> _TEXT_ `_TEXT_` _TEXT_ <br/>
+4. _TEXT_ `_TEXT_` <br/> <br/> <br/>
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1252,11 +1252,11 @@ def test_list_item_with_multiple_inline_codes_and_quotes():
 1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 "`${KUBECONFIG}`" 값을 사용 전에 "`${HOME}/.kube/config`"로 변경해야 합니다.
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
-_TEXT_ `_TEXT_` _TEXT_ `_TEXT_` _TEXT_
+_TEXT_ `_TEXT_`
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1302,7 +1302,7 @@ def test_complex_workflow_approval_rules_with_figures():
 
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
@@ -1313,10 +1313,10 @@ _TEXT_
       <figure data-layout="center" data-align="center">
       ![_TEXT_](/544145591/output/Screenshot-2025-06-12-at-1.33.58-PM.png)
       <figcaption>
-      _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ <br/>
+      _TEXT_ &gt; &gt; &gt; &gt; <br/>
       </figcaption>
       </figure>
-* _TEXT_ &gt; _TEXT_ &gt; _TEXT_ &gt; _TEXT_ <br/>
+* _TEXT_ &gt; &gt; &gt; <br/>
   <figure data-layout="center" data-align="center">
   ![_TEXT_](/544145591/output/image-20251110-030113.png)
   </figure>
@@ -1353,12 +1353,12 @@ def test_japanese_list_item_with_link_and_bold():
     * 詳細内容は[DB Connections](connection-management/db-connections)内 **Privilege Setting** 文書参考
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
-    * _TEXT_ [_TEXT_](connection-management/db-connections) _TEXT_ **_TEXT_** _TEXT_
-    * _TEXT_ [_TEXT_](connection-management/db-connections) _TEXT_ **_TEXT_** _TEXT_
+    * _TEXT_ **_TEXT_** [_TEXT_](connection-management/db-connections)
+    * _TEXT_ **_TEXT_** [_TEXT_](connection-management/db-connections)
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
@@ -1382,16 +1382,16 @@ def test_list_item_with_dac_and_multiple_inline_codes():
 4.  **Completion Time**：転送完了または転送失敗時間が表示されます。
 """)
 
-        output_path, _ = convert_mdx_to_skeleton(input_file)
+        output_path = convert_mdx_to_skeleton(input_file)
         content = output_path.read_text()
 
         expected = """
-* [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
-* [_TEXT_] _TEXT_ `_TEXT_` `_TEXT_` _TEXT_
-* [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
-* [_TEXT_] _TEXT_ &lt; _TEXT_ &gt; _TEXT_
-4. **_TEXT_** **_TEXT_** _TEXT_
-4. **_TEXT_** _TEXT_
+* _TEXT_ `_TEXT_`
+* _TEXT_ `_TEXT_`
+* _TEXT_ &gt;
+* _TEXT_
+4. _TEXT_ **_TEXT_**
+4. _TEXT_ **_TEXT_**
 """
         assert content == expected, f"Expected:\n{expected!r}\nGot:\n{content!r}"
     finally:
