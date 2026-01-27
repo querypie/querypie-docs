@@ -1,8 +1,8 @@
 # Confluence-MDX Container Image
-# Use Python 3.9 based image
+# Use Python 3.12 based image
 # Platform: linux/amd64
 # Build with: docker build --platform linux/amd64 -t <image-name> .
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /workdir

@@ -57,10 +57,10 @@ confluence-mdx/
 ### 3.1 이미지 구조
 
 #### Base Image
-- `python:3.9-slim`: 경량화된 Python 3.9 이미지 사용
+- `python:3.12-slim`: 경량화된 Python 3.12 이미지 사용
 
 #### 레이어 구성
-1. **Base Layer**: Python 3.9 설치
+1. **Base Layer**: Python 3.12 설치
 2. **Dependencies Layer**: Python 패키지 설치
 3. **Application Layer**: 스크립트 및 설정 파일 복사
 4. **Data Layer**: `var/` 디렉토리 데이터 포함
@@ -142,7 +142,7 @@ confluence-mdx/
 
 ```dockerfile
 # Multi-stage build 고려 (필요시)
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # 작업 디렉토리 설정
 WORKDIR /workdir
