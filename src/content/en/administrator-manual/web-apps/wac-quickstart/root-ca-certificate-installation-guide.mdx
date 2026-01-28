@@ -81,4 +81,11 @@ The following method can be used to verify that the certificate has been set up 
 2. Click **View certificates imported from macOS or View certificates imported from Windows**.
 3. Check the querypie certificate in the list of trusted certificates.
 
+### 4. Certificate Compatibility Notes
+
+Please refer to the following algorithm requirements when installing a Root CA certificate:
+
+* RSA and ECDSA (e.g., P-256, P-384) based certificates can be installed and trusted on most operating systems and browsers without issues.
+* Ed25519 based certificates are cryptographically valid, but may not be supported as a Root CA in macOS Keychain and Windows trust stores.
+* Due to this limitation, adding or trusting Ed25519 certificates in OS certificate stores may fail. We recommend using RSA or ECDSA certificates for Root CA purposes.
 
