@@ -883,8 +883,9 @@ class SingleLineParser:
                             href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
                             logging.info(f"Generated external Confluence space link for title '{target_title}' in space '{space_key}': {href}")
                         else:
-                            # No space key - fallback to #target-title-not-found
-                            href = relative_path_to_titled_page(target_title)
+                            # No space key - show simple error message
+                            href = '#link-error'
+                            logging.warning(f"No space key found for external link to '{target_title}', using error anchor: {href}")
 
             self.markdown_lines.append(f'[{link_body}{decoded_anchor}]({href}{lowercased_fragment})')
         elif node.name in ['ri:page']:
