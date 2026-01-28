@@ -861,12 +861,30 @@ class SingleLineParser:
                 lowercased_fragment = ''
 
             href = '#'
+            ri_page = None
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
                     link_body = SingleLineParser(child).as_markdown
                 if isinstance(child, Tag) and child.name == 'ri:page':
+                    ri_page = child
                     target_title = child.get('content-title', '')
-                    href = relative_path_to_titled_page(target_title)
+                    space_key = child.get('space-key', '')
+
+                    # Check if the target page is in pages.yaml
+                    target_page = PAGES_BY_TITLE.get(target_title)
+
+                    if target_page:
+                        # Internal link - use relative path
+                        href = relative_path_to_titled_page(target_title)
+                    else:
+                        # External link - generate Confluence URL
+                        if space_key:
+                            # Use space overview URL since we don't have page_id
+                            href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
+                            logging.info(f"Generated external Confluence space link for title '{target_title}' in space '{space_key}': {href}")
+                        else:
+                            # No space key - fallback to #target-title-not-found
+                            href = relative_path_to_titled_page(target_title)
 
             self.markdown_lines.append(f'[{link_body}{decoded_anchor}]({href}{lowercased_fragment})')
         elif node.name in ['ri:page']:
