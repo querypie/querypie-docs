@@ -1,7 +1,8 @@
-results: []
-start: 0
-limit: 25
-size: 0
-_links:
-  self: https://querypie.atlassian.net/wiki/api/v2/pages/1844969501/children?limit=25
-  base: https://querypie.atlassian.net/wiki
+"results":
+- "id": "1853358081"
+  "status": "current"
+  "title": "프리미엄 지원"
+  "spaceId": "539099246"
+  "childPosition": !!int "402"
+"_links":
+  "base": "https://querypie.atlassian.net/wiki"

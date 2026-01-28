@@ -862,9 +862,20 @@ class SingleLineParser:
 
             href = '#'
             ri_page = None
+            ri_space = None
             for child in node.children:
                 if isinstance(child, Tag) and child.name == 'ac:link-body':
                     link_body = SingleLineParser(child).as_markdown
+                if isinstance(child, Tag) and child.name == 'ri:space':
+                    # Handle space links: <ac:link><ri:space ri:space-key="QCP" /></ac:link>
+                    ri_space = child
+                    space_key = child.get('space-key', '')
+                    if space_key:
+                        href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
+                        logging.info(f"Generated Confluence space overview link for space '{space_key}': {href}")
+                    else:
+                        href = '#link-error'
+                        logging.warning(f"No space key found in ri:space tag, using error anchor: {href}")
                 if isinstance(child, Tag) and child.name == 'ri:page':
                     ri_page = child
                     target_title = child.get('content-title', '')

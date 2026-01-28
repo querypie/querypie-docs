@@ -1,0 +1,112 @@
+"parentType": "page"
+"parentId": "608501837"
+"createdAt": "2026-01-20T13:05:57.074Z"
+"lastOwnerId": !!null "null"
+"ownerId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+"authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+"version":
+  "number": !!int "11"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2026-01-24T06:55:01.114Z"
+  "ncsStepVersion": "1141"
+"position": !!int "521758245"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"extension\",\"attrs\":{\"\
+      layout\":\"default\",\"extensionType\":\"com.atlassian.confluence.macro.core\"\
+      ,\"extensionKey\":\"toc\",\"parameters\":{\"macroParams\":{\"style\":{\"value\"\
+      :\"none\"}},\"macroMetadata\":{\"macroId\":{\"value\":\"7bdc2ece-abbc-4741-a900-a08feb04a9a2\"\
+      },\"schemaVersion\":{\"value\":\"1\"},\"title\":\"목차\"}},\"localId\":\"e73631cc-f0eb-448b-9354-c7ec94a27e77\"\
+      }},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\":\"da628dd2-12f3-4651-ab59-c77494309797\"\
+      },\"content\":[{\"text\":\"공통 리소스\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"7aeaf0a8-a18a-4de2-9abf-78d440337552\"},\"content\"\
+      :[{\"text\":\"모든 QueryPie 고객이 이용할 수 있는 자료입니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"heading\",\"attrs\":{\"level\":3,\"localId\":\"edf077b3-5199-49e6-8392-6fd115decf62\"\
+      },\"content\":[{\"text\":\"Documentation\",\"type\":\"text\"}]},{\"type\":\"\
+      paragraph\",\"attrs\":{\"localId\":\"1405d1f5-07b4-4058-a676-97f9b3a66479\"\
+      },\"content\":[{\"text\":\"이 웹사이트, \",\"type\":\"text\"},{\"text\":\"docs.querypie.com\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"http://docs.querypie.com\"\
+      }}]},{\"text\":\" 에서 다음 자료를 확인할 수 있습니다:\",\"type\":\"text\"}]},{\"type\":\"\
+      bulletList\",\"attrs\":{\"localId\":\"9ef82e17-4026-4cbe-9696-e3226a7357b1\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"a4dae406-dcd8-40dc-95ec-424085d2a50c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"07de2fcc-6c47-4e84-a213-bc5e28bea2b8\"\
+      },\"content\":[{\"text\":\"이용자 매뉴얼\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"56c6e2fe-e0df-4f66-986e-684355eb9dbd\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"27a26caa-20d9-47ff-85d8-97deba0d7593\"\
+      },\"content\":[{\"text\":\"관리자 매뉴얼\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"attrs\":{\"localId\":\"f877543f-6756-4036-9150-4c61e8fe1a7d\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"bea6b957-601b-44fe-baa8-a8e4aaa3b2c0\"\
+      },\"content\":[{\"text\":\"API Reference\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"8b26ca51-0984-47fa-ada6-8b6467c18b9e\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"fbe95a8b-88ee-4f0d-97ca-4f4bb4de47e9\"\
+      },\"content\":[{\"text\":\"릴리스 노트\",\"type\":\"text\"}]}]}]},{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"711c3c85-02f2-422b-b768-5296b59156b5\"},\"content\"\
+      :[{\"text\":\"기술지원을 위한 \",\"type\":\"text\"},{\"text\":\"Confluence Space\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QCP\"\
+      }}]},{\"text\":\" 에서 상세한 기술지원 자료를 확인할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"bulletList\",\"attrs\":{\"localId\":\"1dc6fa88-2805-4e4e-a0de-3bb29c246c62\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"30c1a3a7-8ebb-4c88-ae8d-31b94e59a68b\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"dec58e05-5910-4e21-985b-560b5f70e229\"\
+      },\"content\":[{\"text\":\"QueryPie Architecture\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QCP/pages/400064797\"\
+      }}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"9f7893d4-abad-4a93-b9bf-14e5cedbd44c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"37c3db5a-5873-466c-808a-68a83e62f57a\"\
+      },\"content\":[{\"text\":\"Advanced Environment Setup\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QCP/pages/887947577\"\
+      }}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"6b8334f2-b334-487b-9539-f19ae402bf96\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"9e849d92-d344-4ec4-9478-f0bb3c64867e\"\
+      },\"content\":[{\"text\":\"Advanced Integration Guide\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QCP/pages/841449834\"\
+      }}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"92aa4792-7e4f-4522-8fba-a66e26afbc58\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"994e1893-08ee-4242-ba5b-0b803ef22dac\"\
+      },\"content\":[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"2c6f6eb0-6fc2-4900-aa7f-6ecc3fd87d57\"\
+      ,\"url\":\"https://querypie.atlassian.net/wiki/spaces/QCP/pages/841351486\"\
+      }}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"4cb99bfb-1f32-4ed2-a2d0-a7c61ae9fc17\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"683eb18e-d18b-418e-83cf-3fe165846630\"\
+      },\"content\":[{\"text\":\"Troubleshooting\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QCP/pages/920486841\"\
+      }}]}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\":\"44974faa-fab5-416c-87d5-664d7219f126\"\
+      },\"content\":[{\"text\":\"Product Demo - YouTube\",\"type\":\"text\"}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"ff1d3c6f-ff30-4a5e-85c3-b78ee962bf03\"\
+      },\"content\":[{\"text\":\"Product Demo - YouTube\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"link\",\"attrs\":{\"href\":\"https://www.youtube.com/playlist?list=PLB6l6itD4YrpMXRtprvUdR3hIHVbT8IhZ\"\
+      }}]},{\"text\":\" 채널에서 QueryPie ACP 제품의 여러 기능을 영상으로 살펴볼 수 있습니다.\",\"type\":\"\
+      text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"44e8c253-aceb-45f0-bd97-f18771246887\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\"\
+      },\"content\":[{\"text\":\"DAC: 데이터베이스 접근 제어 기능 튜토리얼\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\"\
+      },\"content\":[{\"text\":\"SAC: 서버 접근 제어 기능 튜토리얼\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"de0dde4b-8ae2-4b41-b6ce-557f972db058\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"52268ffc-bc5a-47f0-b1f0-3cd5ae6aa123\"\
+      },\"content\":[{\"text\":\"KAC: Kubernetes 접근 제어 기능 튜토리얼\",\"type\":\"text\"\
+      }]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"ae112e65-e714-4dbf-b7a4-6013a99e2311\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"27e21136-ba15-465f-b039-26163ddaa103\"\
+      },\"content\":[{\"text\":\"General: SSO 통합, 감사 로그, BI 도구 연동 (Tableau, Redash)\"\
+      ,\"type\":\"text\"}]}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\"\
+      :\"4561f9b5-2678-4159-8991-7ffbff223048\"},\"content\":[{\"text\":\"커뮤니티 지원\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"6fe65f82-af0d-4894-b0ac-5508285bc762\"\
+      },\"content\":[{\"text\":\"대상: Community Edition, Standard Edition 을 이용하는 고객\"\
+      ,\"type\":\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":3,\"localId\"\
+      :\"68d99482-0c37-450d-892e-2143a15addba\"},\"content\":[{\"text\":\"GitHub Discussion\"\
+      ,\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"328c698b-d652-484a-9a2b-21addf7e26fc\"\
+      },\"content\":[{\"text\":\"설치 및 사용 중 궁금한 점을 \",\"type\":\"text\"},{\"text\"\
+      :\"GitHub Discussion\",\"type\":\"text\",\"marks\":[{\"type\":\"link\",\"attrs\"\
+      :{\"href\":\"https://github.com/querypie/querypie-community/discussions\"}}]},{\"\
+      text\":\" 에서 문의하거나, 다른 사용자들과 경험을 공유할 수 있습니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"bd55c917-a378-4083-8710-9e8b75b3a7b3\"\
+      }}],\"version\":1}"
+"status": "current"
+"spaceId": "539099246"
+"title": "지원"
+"id": "1844969501"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=1844969501"
+  "webui": "/spaces/QM/pages/1844969501"
+  "edituiv2": "/spaces/QM/pages/edit-v2/1844969501"
+  "tinyui": "/x/HQD4bQ"
+  "base": "https://querypie.atlassian.net/wiki"

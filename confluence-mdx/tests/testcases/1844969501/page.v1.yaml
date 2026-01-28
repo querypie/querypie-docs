@@ -1,10 +1,41 @@
 "id": "1844969501"
 "type": "page"
 "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/1844969501"
-"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOnBhZ2UvMTg0NDk2OTUwMQ=="
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvMTg0NDk2OTUwMQ=="
 "status": "current"
-"title": "External Links Test Page"
+"title": "지원"
 "ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie v10 Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "14426974"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
 - "id": "608501837"
   "type": "page"
   "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
@@ -16,23 +47,171 @@
     "position": !!int "9"
   "_expandable":
     "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
   "_links":
     "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
     "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
     "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
 "macroRenderedOutput": {}
 "body":
   "storage":
-    "value": "<h2>External Links Test</h2><p>This page contains links to pages outside the conversion scope.</p>"
+    "value": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"\
+      default\" ac:local-id=\"e73631cc-f0eb-448b-9354-c7ec94a27e77\" ac:macro-id=\"\
+      7bdc2ece-abbc-4741-a900-a08feb04a9a2\"><ac:parameter ac:name=\"style\">none</ac:parameter></ac:structured-macro><h2\
+      \ local-id=\"da628dd2-12f3-4651-ab59-c77494309797\">공통 리소스</h2><p local-id=\"\
+      7aeaf0a8-a18a-4de2-9abf-78d440337552\">모든 QueryPie 고객이 이용할 수 있는 자료입니다.</p><h3\
+      \ local-id=\"edf077b3-5199-49e6-8392-6fd115decf62\">Documentation</h3><p local-id=\"\
+      1405d1f5-07b4-4058-a676-97f9b3a66479\">이 웹사이트, <a href=\"http://docs.querypie.com\"\
+      >docs.querypie.com</a> 에서 다음 자료를 확인할 수 있습니다:</p><ul local-id=\"9ef82e17-4026-4cbe-9696-e3226a7357b1\"\
+      ><li local-id=\"a4dae406-dcd8-40dc-95ec-424085d2a50c\"><p local-id=\"07de2fcc-6c47-4e84-a213-bc5e28bea2b8\"\
+      >이용자 매뉴얼</p></li><li local-id=\"56c6e2fe-e0df-4f66-986e-684355eb9dbd\"><p local-id=\"\
+      27a26caa-20d9-47ff-85d8-97deba0d7593\">관리자 매뉴얼</p></li><li local-id=\"f877543f-6756-4036-9150-4c61e8fe1a7d\"\
+      ><p local-id=\"bea6b957-601b-44fe-baa8-a8e4aaa3b2c0\">API Reference</p></li><li\
+      \ local-id=\"8b26ca51-0984-47fa-ada6-8b6467c18b9e\"><p local-id=\"fbe95a8b-88ee-4f0d-97ca-4f4bb4de47e9\"\
+      >릴리스 노트</p></li></ul><p local-id=\"711c3c85-02f2-422b-b768-5296b59156b5\">기술지원을\
+      \ 위한 <ac:link><ri:space ri:space-key=\"QCP\" /><ac:link-body>Confluence Space</ac:link-body></ac:link>\
+      \ 에서 상세한 기술지원 자료를 확인할 수 있습니다.</p><ul local-id=\"1dc6fa88-2805-4e4e-a0de-3bb29c246c62\"\
+      ><li local-id=\"30c1a3a7-8ebb-4c88-ae8d-31b94e59a68b\"><p local-id=\"dec58e05-5910-4e21-985b-560b5f70e229\"\
+      ><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"QueryPie Architecture\
+      \ (KO)\" ri:version-at-save=\"6\" /><ac:link-body>QueryPie Architecture</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"9f7893d4-abad-4a93-b9bf-14e5cedbd44c\"><p local-id=\"37c3db5a-5873-466c-808a-68a83e62f57a\"\
+      ><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"Advanced Environment\
+      \ Setup (KO)\" ri:version-at-save=\"4\" /><ac:link-body>Advanced Environment\
+      \ Setup</ac:link-body></ac:link></p></li><li local-id=\"6b8334f2-b334-487b-9539-f19ae402bf96\"\
+      ><p local-id=\"9e849d92-d344-4ec4-9478-f0bb3c64867e\"><ac:link><ri:page ri:space-key=\"\
+      QCP\" ri:content-title=\"Advanced Integration Guide (KO)\" ri:version-at-save=\"\
+      5\" /><ac:link-body>Advanced Integration Guide</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"92aa4792-7e4f-4522-8fba-a66e26afbc58\"><p local-id=\"994e1893-08ee-4242-ba5b-0b803ef22dac\"\
+      ><ac:link ac:local-id=\"2c6f6eb0-6fc2-4900-aa7f-6ecc3fd87d57\" ac:card-appearance=\"\
+      inline\"><ri:page ri:space-key=\"QCP\" ri:content-title=\"릴리스 버전 별 문서\" ri:version-at-save=\"\
+      1\" /><ac:link-body>릴리스 버전 별 문서</ac:link-body></ac:link></p></li><li local-id=\"\
+      4cb99bfb-1f32-4ed2-a2d0-a7c61ae9fc17\"><p local-id=\"683eb18e-d18b-418e-83cf-3fe165846630\"\
+      ><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"Troubleshooting (KO)\"\
+      \ ri:version-at-save=\"5\" /><ac:link-body>Troubleshooting</ac:link-body></ac:link></p></li></ul><h3\
+      \ local-id=\"44974faa-fab5-416c-87d5-664d7219f126\">Product Demo - YouTube</h3><p\
+      \ local-id=\"ff1d3c6f-ff30-4a5e-85c3-b78ee962bf03\"><a href=\"https://www.youtube.com/playlist?list=PLB6l6itD4YrpMXRtprvUdR3hIHVbT8IhZ\"\
+      >Product Demo - YouTube</a> 채널에서 QueryPie ACP 제품의 여러 기능을 영상으로 살펴볼 수 있습니다.</p><ul\
+      \ local-id=\"44e8c253-aceb-45f0-bd97-f18771246887\"><li local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"\
+      ><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\">DAC: 데이터베이스 접근 제어 기능 튜토리얼</p></li><li\
+      \ local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\"\
+      >SAC: 서버 접근 제어 기능 튜토리얼</p></li><li local-id=\"de0dde4b-8ae2-4b41-b6ce-557f972db058\"\
+      ><p local-id=\"52268ffc-bc5a-47f0-b1f0-3cd5ae6aa123\">KAC: Kubernetes 접근 제어\
+      \ 기능 튜토리얼</p></li><li local-id=\"ae112e65-e714-4dbf-b7a4-6013a99e2311\"><p local-id=\"\
+      27e21136-ba15-465f-b039-26163ddaa103\">General: SSO 통합, 감사 로그, BI 도구 연동 (Tableau,\
+      \ Redash)</p></li></ul><h2 local-id=\"4561f9b5-2678-4159-8991-7ffbff223048\"\
+      >커뮤니티 지원</h2><p local-id=\"6fe65f82-af0d-4894-b0ac-5508285bc762\">대상: Community\
+      \ Edition, Standard Edition 을 이용하는 고객</p><h3 local-id=\"68d99482-0c37-450d-892e-2143a15addba\"\
+      >GitHub Discussion</h3><p local-id=\"328c698b-d652-484a-9a2b-21addf7e26fc\"\
+      >설치 및 사용 중 궁금한 점을 <a href=\"https://github.com/querypie/querypie-community/discussions\"\
+      >GitHub Discussion</a> 에서 문의하거나, 다른 사용자들과 경험을 공유할 수 있습니다.</p><p local-id=\"\
+      bd55c917-a378-4083-8710-9e8b75b3a7b3\" />"
     "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/1844969501"
+  "view":
+    "value": "<div class=\"toc-macro client-side-toc-macro  conf-macro output-block\"\
+      \ data-cssliststyle=\"none\" data-hasbody=\"false\" data-headerelements=\"H1,H2,H3,H4,H5,H6,H7\"\
+      \ data-layout=\"default\" data-local-id=\"e73631cc-f0eb-448b-9354-c7ec94a27e77\"\
+      \ data-macro-id=\"7bdc2ece-abbc-4741-a900-a08feb04a9a2\" data-macro-name=\"\
+      toc\"> </div><h2 local-id=\"da628dd2-12f3-4651-ab59-c77494309797\" id=\"id-지원-공통리소스\"\
+      >공통 리소스</h2><p local-id=\"7aeaf0a8-a18a-4de2-9abf-78d440337552\">모든 QueryPie\
+      \ 고객이 이용할 수 있는 자료입니다.</p><h3 local-id=\"edf077b3-5199-49e6-8392-6fd115decf62\"\
+      \ id=\"id-지원-Documentation\">Documentation</h3><p local-id=\"1405d1f5-07b4-4058-a676-97f9b3a66479\"\
+      >이 웹사이트, <a class=\"external-link\" href=\"http://docs.querypie.com\">docs.querypie.com</a>\
+      \ 에서 다음 자료를 확인할 수 있습니다:</p><ul local-id=\"9ef82e17-4026-4cbe-9696-e3226a7357b1\"\
+      ><li local-id=\"a4dae406-dcd8-40dc-95ec-424085d2a50c\"><p local-id=\"07de2fcc-6c47-4e84-a213-bc5e28bea2b8\"\
+      >이용자 매뉴얼</p></li><li local-id=\"56c6e2fe-e0df-4f66-986e-684355eb9dbd\"><p local-id=\"\
+      27a26caa-20d9-47ff-85d8-97deba0d7593\">관리자 매뉴얼</p></li><li local-id=\"f877543f-6756-4036-9150-4c61e8fe1a7d\"\
+      ><p local-id=\"bea6b957-601b-44fe-baa8-a8e4aaa3b2c0\">API Reference</p></li><li\
+      \ local-id=\"8b26ca51-0984-47fa-ada6-8b6467c18b9e\"><p local-id=\"fbe95a8b-88ee-4f0d-97ca-4f4bb4de47e9\"\
+      >릴리스 노트</p></li></ul><p local-id=\"711c3c85-02f2-422b-b768-5296b59156b5\">기술지원을\
+      \ 위한 <a href=\"/wiki/spaces/QCP\">Confluence Space</a> 에서 상세한 기술지원 자료를 확인할 수\
+      \ 있습니다.</p><ul local-id=\"1dc6fa88-2805-4e4e-a0de-3bb29c246c62\"><li local-id=\"\
+      30c1a3a7-8ebb-4c88-ae8d-31b94e59a68b\"><p local-id=\"dec58e05-5910-4e21-985b-560b5f70e229\"\
+      ><a href=\"/wiki/spaces/QCP/pages/400064797/QueryPie+Architecture+KO\" data-linked-resource-id=\"\
+      400064797\" data-linked-resource-version=\"6\" data-linked-resource-type=\"\
+      page\">QueryPie Architecture</a></p></li><li local-id=\"9f7893d4-abad-4a93-b9bf-14e5cedbd44c\"\
+      ><p local-id=\"37c3db5a-5873-466c-808a-68a83e62f57a\"><a href=\"/wiki/spaces/QCP/pages/887947577/Advanced+Environment+Setup+KO\"\
+      \ data-linked-resource-id=\"887947577\" data-linked-resource-version=\"4\" data-linked-resource-type=\"\
+      page\">Advanced Environment Setup</a></p></li><li local-id=\"6b8334f2-b334-487b-9539-f19ae402bf96\"\
+      ><p local-id=\"9e849d92-d344-4ec4-9478-f0bb3c64867e\"><a href=\"/wiki/spaces/QCP/pages/841449834/Advanced+Integration+Guide+KO\"\
+      \ data-linked-resource-id=\"841449834\" data-linked-resource-version=\"5\" data-linked-resource-type=\"\
+      page\">Advanced Integration Guide</a></p></li><li local-id=\"92aa4792-7e4f-4522-8fba-a66e26afbc58\"\
+      ><p local-id=\"994e1893-08ee-4242-ba5b-0b803ef22dac\"><a href=\"/wiki/spaces/QCP/pages/841351486\"\
+      \ data-linked-resource-id=\"841351486\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      page\">릴리스 버전 별 문서</a></p></li><li local-id=\"4cb99bfb-1f32-4ed2-a2d0-a7c61ae9fc17\"\
+      ><p local-id=\"683eb18e-d18b-418e-83cf-3fe165846630\"><a href=\"/wiki/spaces/QCP/pages/920486841/Troubleshooting+KO\"\
+      \ data-linked-resource-id=\"920486841\" data-linked-resource-version=\"5\" data-linked-resource-type=\"\
+      page\">Troubleshooting</a></p></li></ul><h3 local-id=\"44974faa-fab5-416c-87d5-664d7219f126\"\
+      \ id=\"id-지원-ProductDemo-YouTube\">Product Demo - YouTube</h3><p local-id=\"\
+      ff1d3c6f-ff30-4a5e-85c3-b78ee962bf03\"><a class=\"external-link\" href=\"https://www.youtube.com/playlist?list=PLB6l6itD4YrpMXRtprvUdR3hIHVbT8IhZ\"\
+      >Product Demo - YouTube</a> 채널에서 QueryPie ACP 제품의 여러 기능을 영상으로 살펴볼 수 있습니다.</p><ul\
+      \ local-id=\"44e8c253-aceb-45f0-bd97-f18771246887\"><li local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"\
+      ><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\">DAC: 데이터베이스 접근 제어 기능 튜토리얼</p></li><li\
+      \ local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\"\
+      >SAC: 서버 접근 제어 기능 튜토리얼</p></li><li local-id=\"de0dde4b-8ae2-4b41-b6ce-557f972db058\"\
+      ><p local-id=\"52268ffc-bc5a-47f0-b1f0-3cd5ae6aa123\">KAC: Kubernetes 접근 제어\
+      \ 기능 튜토리얼</p></li><li local-id=\"ae112e65-e714-4dbf-b7a4-6013a99e2311\"><p local-id=\"\
+      27e21136-ba15-465f-b039-26163ddaa103\">General: SSO 통합, 감사 로그, BI 도구 연동 (Tableau,\
+      \ Redash)</p></li></ul><h2 local-id=\"4561f9b5-2678-4159-8991-7ffbff223048\"\
+      \ id=\"id-지원-커뮤니티지원\">커뮤니티 지원</h2><p local-id=\"6fe65f82-af0d-4894-b0ac-5508285bc762\"\
+      >대상: Community Edition, Standard Edition 을 이용하는 고객</p><h3 local-id=\"68d99482-0c37-450d-892e-2143a15addba\"\
+      \ id=\"id-지원-GitHubDiscussion\">GitHub Discussion</h3><p local-id=\"328c698b-d652-484a-9a2b-21addf7e26fc\"\
+      >설치 및 사용 중 궁금한 점을 <a class=\"external-link\" href=\"https://github.com/querypie/querypie-community/discussions\"\
+      >GitHub Discussion</a> 에서 문의하거나, 다른 사용자들과 경험을 공유할 수 있습니다.</p><p local-id=\"\
+      bd55c917-a378-4083-8710-9e8b75b3a7b3\" />"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/1844969501"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
 "extensions":
-  "position": !!int "1"
+  "position": !!int "521758245"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/1844969501/restriction/byOperation"
+  "history": "/rest/api/content/1844969501/history"
+  "version": ""
+  "descendants": "/rest/api/content/1844969501/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/1844969501/child"
+  "draftVersion": ""
 "_links":
   "editui": "/pages/resumedraft.action?draftId=1844969501"
-  "webui": "/spaces/QM/pages/1844969501/External+Links+Test+Page"
+  "webui": "/spaces/QM/pages/1844969501"
   "edituiv2": "/spaces/QM/pages/edit-v2/1844969501"
   "context": "/wiki"
   "self": "https://querypie.atlassian.net/wiki/rest/api/content/1844969501"
-  "tinyui": "/x/HQFuI"
+  "tinyui": "/x/HQD4bQ"
   "collection": "/rest/api/content"
   "base": "https://querypie.atlassian.net/wiki"
