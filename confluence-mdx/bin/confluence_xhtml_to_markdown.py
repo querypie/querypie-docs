@@ -472,6 +472,45 @@ def build_link_mapping(page_v1: Optional[PageV1]) -> Dict[str, str]:
     return link_map
 
 
+def resolve_external_link(link_text: str, space_key: str, target_title: str) -> str:
+    """
+    Resolve external Confluence link URL using pageId from global link mapping
+
+    This function attempts to generate an accurate Confluence URL for external links
+    (links to pages outside the current conversion scope) by looking up the pageId
+    from GLOBAL_LINK_MAPPING. If pageId is not found, it falls back to space overview
+    or error link.
+
+    Args:
+        link_text (str): The link body text to match in GLOBAL_LINK_MAPPING
+        space_key (str): The Confluence space key
+        target_title (str): The target page title (for logging purposes)
+
+    Returns:
+        str: The resolved URL in one of these formats:
+            - With pageId: https://querypie.atlassian.net/wiki/spaces/{space_key}/pages/{page_id}
+            - Without pageId but with space_key: https://querypie.atlassian.net/wiki/spaces/{space_key}/overview
+            - Without space_key: #link-error
+    """
+    page_id = GLOBAL_LINK_MAPPING.get(link_text)
+
+    if page_id and space_key:
+        # Generate accurate URL with pageId
+        href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/pages/{page_id}'
+        logging.info(f"Generated external Confluence link with pageId for '{link_text}' (title: '{target_title}'): {href}")
+        return href
+    elif space_key:
+        # Fallback to space overview URL if no pageId found
+        href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
+        logging.warning(f"No pageId found for '{link_text}', using space overview for '{target_title}' in space '{space_key}': {href}")
+        return href
+    else:
+        # No space key - show simple error message
+        href = '#link-error'
+        logging.warning(f"No space key found for external link to '{target_title}', using error anchor: {href}")
+        return href
+
+
 def backtick_curly_braces(text):
     """
     Wrap text embraced by curly braces with backticks.
@@ -936,24 +975,11 @@ class SingleLineParser:
                         # Internal link - use relative path
                         href = relative_path_to_titled_page(target_title)
                     else:
-                        # External link - try to get pageId from link mapping
-                        # We need to get the link_body early to look up pageId
+                        # External link - resolve using pageId from link mapping
+                        # Get link_body explicitly to ensure we have the correct text for lookup
                         link_body_node = node.find('ac:link-body')
                         current_link_body = SingleLineParser(link_body_node).as_markdown if link_body_node else link_body
-                        page_id = GLOBAL_LINK_MAPPING.get(current_link_body)
-
-                        if page_id and space_key:
-                            # Generate accurate URL with pageId
-                            href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/pages/{page_id}'
-                            logging.info(f"Generated external Confluence link with pageId for '{current_link_body}' (title: '{target_title}'): {href}")
-                        elif space_key:
-                            # Fallback to space overview URL if no pageId found
-                            href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
-                            logging.warning(f"No pageId found for '{current_link_body}', using space overview for '{target_title}' in space '{space_key}': {href}")
-                        else:
-                            # No space key - show simple error message
-                            href = '#link-error'
-                            logging.warning(f"No space key found for external link to '{target_title}', using error anchor: {href}")
+                        href = resolve_external_link(current_link_body, space_key, target_title)
 
             self.markdown_lines.append(f'[{link_body}{decoded_anchor}]({href}{lowercased_fragment})')
         elif node.name in ['ri:page']:
