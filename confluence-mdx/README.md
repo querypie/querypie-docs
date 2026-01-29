@@ -106,6 +106,12 @@ $ bin/xhtml2markdown.ko.sh
 
 ## 데이터 수집 및 변환 절차 상세 안내
 
+> **주의:** 아래의 모든 스크립트 실행 예시는 **venv 가상환경이 활성화된 상태**에서 실행해야 합니다.
+> ```bash
+> cd querypie-docs/confluence-mdx
+> source venv/bin/activate  # venv 활성화 필수
+> ```
+
 ### 1. Confluence 문서 데이터 수집 (pages_of_confluence.py)
 
 `pages_of_confluence.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 페이지들을 수집하여 저장하는 스크립트입니다. 
