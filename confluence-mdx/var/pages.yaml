@@ -226,21 +226,6 @@
   - "user-manual"
   - "workflow"
   - "requesting-server-privilege"
-- "page_id": "544378348"
-  "title": "Access Role Request 요청하기"
-  "title_orig": "Access Role Request 요청하기"
-  "breadcrumbs":
-  - "사용자 매뉴얼"
-  - "Workflow"
-  - "Access Role Request 요청하기"
-  "breadcrumbs_en":
-  - "User Manual"
-  - "Workflow"
-  - "Requesting Access Role"
-  "path":
-  - "user-manual"
-  - "workflow"
-  - "requesting-access-role"
 - "page_id": "1055358996"
   "title": "IP Registration Request 요청하기"
   "title_orig": "IP Registration Request 요청하기"
@@ -4733,6 +4718,18 @@
   - "installation"
   - "querypie-acp-community-edition"
   - "mcp-configuration-guide"
+- "page_id": "1881243653"
+  "title": "제품 버전"
+  "title_orig": "제품 버전"
+  "breadcrumbs":
+  - "제품 설치"
+  - "제품 버전"
+  "breadcrumbs_en":
+  - "Installation"
+  - "Product Versions"
+  "path":
+  - "installation"
+  - "product-versions"
 - "page_id": "1844969501"
   "title": "지원"
   "title_orig": "지원"
