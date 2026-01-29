@@ -60,15 +60,26 @@ if ! git push -u origin "$BRANCH_NAME"; then
 fi
 
 # PR Description 생성
-PR_BODY="## Description"$'\n\n'
-PR_BODY+="This PR contains automatically generated MDX files from Confluence documentation."$'\n\n'
-PR_BODY+="> **Note for AI Agents**: This is an auto-generated PR by the workflow \`.github/workflows/generate-mdx-from-confluence.yml\`. The MDX files are synchronized from Confluence pages and should be reviewed before merging."$'\n\n'
-PR_BODY+="### Translation Required"$'\n\n'
-PR_BODY+="If this PR includes changes to Korean (\`ko\`) documentation, corresponding translations to English (\`en\`) and Japanese (\`ja\`) are required before merging."$'\n\n'
-PR_BODY+="## Changes"$'\n\n'
-PR_BODY+="$CHANGES_STATUS"$'\n\n'
-PR_BODY+="## Change Statistics"$'\n\n'
-PR_BODY+="$CHANGES_STAT"
+PR_BODY=$(cat <<EOF
+## Description
+
+This PR contains automatically generated MDX files from Confluence documentation.
+
+> **Note for AI Agents**: This is an auto-generated PR by the workflow \`.github/workflows/generate-mdx-from-confluence.yml\`. The MDX files are synchronized from Confluence pages and should be reviewed before merging.
+
+### Translation Required
+
+If this PR includes changes to Korean (\`ko\`) documentation, corresponding translations to English (\`en\`) and Japanese (\`ja\`) are required before merging.
+
+## Changes
+
+$CHANGES_STATUS
+
+## Change Statistics
+
+$CHANGES_STAT
+EOF
+)
 
 # PR 생성
 if ! gh pr create \
