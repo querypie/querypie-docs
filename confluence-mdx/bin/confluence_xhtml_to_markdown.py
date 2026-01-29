@@ -143,6 +143,7 @@ PAGES_BY_TITLE: PagesDict = {}
 PAGES_BY_ID: PagesDict = {}
 GLOBAL_PAGE_V1: Optional[PageV1] = None
 GLOBAL_ATTACHMENTS: List[Attachment] = []
+GLOBAL_LINK_MAPPING: Dict[str, str] = {}  # Mapping of link text -> pageId from page.v1.yaml
 
 # Hidden characters for text cleaning
 HIDDEN_CHARACTERS = {
@@ -422,6 +423,53 @@ def load_page_v1_yaml(yaml_path: str) -> Optional[PageV1]:
     except Exception as e:
         logging.error(f"Error loading page.v1.yaml from {yaml_path}: {e}")
         return None
+
+
+def build_link_mapping(page_v1: Optional[PageV1]) -> Dict[str, str]:
+    """
+    Build a mapping of link text -> pageId from page.v1.yaml body.view HTML
+
+    This function parses the rendered HTML in page.v1.yaml's body.view section
+    to extract links with their pageIds. This allows us to generate accurate
+    Confluence URLs for external links (links to pages outside the current conversion scope).
+
+    Args:
+        page_v1 (Optional[PageV1]): The page.v1.yaml data structure
+
+    Returns:
+        Dict[str, str]: Mapping of link text to pageId
+    """
+    link_map = {}
+
+    if not page_v1:
+        logging.warning("No page.v1 data available to build link mapping")
+        return link_map
+
+    try:
+        view_html = page_v1.get('body', {}).get('view', {}).get('value', '')
+
+        if not view_html:
+            logging.warning("No body.view HTML found in page.v1.yaml")
+            return link_map
+
+        soup = BeautifulSoup(view_html, 'html.parser')
+
+        # Find all links with data-linked-resource-id attribute
+        for link in soup.find_all('a', {'data-linked-resource-id': True}):
+            text = link.get_text()
+            page_id = link.get('data-linked-resource-id', '')
+            resource_type = link.get('data-linked-resource-type', '')
+
+            if text and page_id and resource_type == 'page':
+                link_map[text] = page_id
+                logging.debug(f"Link mapping: '{text}' -> pageId {page_id}")
+
+        logging.info(f"Built link mapping with {len(link_map)} entries")
+
+    except Exception as e:
+        logging.error(f"Error building link mapping from page.v1.yaml: {e}")
+
+    return link_map
 
 
 def backtick_curly_braces(text):
@@ -888,11 +936,20 @@ class SingleLineParser:
                         # Internal link - use relative path
                         href = relative_path_to_titled_page(target_title)
                     else:
-                        # External link - generate Confluence URL
-                        if space_key:
-                            # Use space overview URL since we don't have page_id
+                        # External link - try to get pageId from link mapping
+                        # We need to get the link_body early to look up pageId
+                        link_body_node = node.find('ac:link-body')
+                        current_link_body = SingleLineParser(link_body_node).as_markdown if link_body_node else link_body
+                        page_id = GLOBAL_LINK_MAPPING.get(current_link_body)
+
+                        if page_id and space_key:
+                            # Generate accurate URL with pageId
+                            href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/pages/{page_id}'
+                            logging.info(f"Generated external Confluence link with pageId for '{current_link_body}' (title: '{target_title}'): {href}")
+                        elif space_key:
+                            # Fallback to space overview URL if no pageId found
                             href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
-                            logging.info(f"Generated external Confluence space link for title '{target_title}' in space '{space_key}': {href}")
+                            logging.warning(f"No pageId found for '{current_link_body}', using space overview for '{target_title}' in space '{space_key}': {href}")
                         else:
                             # No space key - show simple error message
                             href = '#link-error'
@@ -2080,6 +2137,10 @@ def main():
         # Load page.v1.yaml from the same directory as the input file
         page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
         set_page_v1(page_v1)
+
+        # Build link mapping from page.v1.yaml for external link pageId resolution
+        global GLOBAL_LINK_MAPPING
+        GLOBAL_LINK_MAPPING = build_link_mapping(page_v1)
 
         converter = ConfluenceToMarkdown(html_content)
         converter.load_attachments(input_dir, output_dir, args.public_dir)
