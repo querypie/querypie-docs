@@ -914,20 +914,20 @@ class ConfluencePageProcessor:
                         continue
                 
                 # After downloading, process like local mode (hierarchical traversal from start_page_id)
-                # Generate pages.yaml with full hierarchical tree (like --local mode)
+                # Generate pages.yaml and list.txt with full hierarchical tree (like --local mode)
                 # No stdout output in this phase (like --local mode)
                 self.logger.warning(f"Processing page tree from start page ID {start_page_id} (local mode)")
                 page_count = 0
                 yaml_entries = []
+                list_lines = []
 
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
                     if page:
+                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                         # No stdout output in local mode
+                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
-                
-                # list.txt contains only downloaded pages
-                list_lines = downloaded_list_lines
 
             elif self.config.mode == "local":
                 # --local mode: Process existing local files hierarchically from start_page_id
