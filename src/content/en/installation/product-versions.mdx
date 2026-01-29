@@ -1,0 +1,52 @@
+---
+title: 'Product Versions'
+---
+
+# Product Versions
+
+This page provides information about official releases of QueryPie ACP.
+
+### Available Versions
+
+These are the official QueryPie ACP releases currently available for installation and operation.
+
+|  **Version**  |  **Build Tag**   |  **Release Date**  |  **Status**  |  **Link**                                                                                                                                       |
+| ------------- | ---------------- | ------------------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11.5.1        | `11.5.1-e0fc574` | Jan 23, 2026       | Active       | [11.5.1](https://hub.docker.com/layers/querypie/querypie/11.5.1/images/sha256-d02cd800c179d9ac3b53525157358724e56f1aa88f541edd8ccdb0b8d2e1d577) |
+| 11.5.0        | `11.5.0-dce9f84` | Dec 16, 2025       | Active       | [11.5.0](https://hub.docker.com/layers/querypie/querypie/11.5.0/images/sha256-27c7837d75a526927a82db9a8d8092871531f4f1cd8991dc69f014787c5ce42d) |
+| 11.3.5        | `11.3.5-099bd6b` | Nov 27, 2025       | Active       | [11.3.5](https://hub.docker.com/layers/querypie/querypie/11.3.5/images/sha256-4bc60f0d1f4fea62d5f862249cfadb454e1874c7bb290af39bae29f38cdb6e69) |
+| 11.3.0        | `11.3.0-559d539` | Sep 26, 2025       | Deprecated   | [11.3.0](https://hub.docker.com/layers/querypie/querypie/11.3.0/images/sha256-acfa0fd47e3e7f70790c32a22b138c4aebf42a9b211dc1124eebc07dec2d9098) |
+| 11.1.2        | `11.1.2-1eaa817` | Aug 19, 2025       | Active       | [11.1.2](https://hub.docker.com/layers/querypie/querypie/11.1.2/images/sha256-5266931ba9cabfab197775fbf3c032e187adb04384ff7d22461f7c3a0cc69fba) |
+
+#### Status
+
+* Active: Recommended for new installations and upgrades.
+* Deprecated: Maintained for existing environment compatibility. Not recommended for new installations and may be discontinued in the future.
+
+### Container Registry
+
+QueryPie ACP provides container images through the following container registries.
+
+#### Docker Hub (Recommended)
+
+Registry location: `docker.io/querypie` ([https://hub.docker.com/u/querypie](https://hub.docker.com/u/querypie))
+
+Example: `docker pull docker.io/querypie/querypie:11.5.1`
+
+* Available for Community / Standard / Enterprise Editions.
+* Recommended for new installations.
+* No authentication required.
+* Provides `linux/amd64`, `linux/arm64`, and multi-platform images.
+
+#### Harbor Registry
+
+Registry location: `harbor.chequer.io/querypie`
+
+This is a private container registry provided for compatibility with existing installation and operation environments. You must authenticate using the `docker login` command to download container images.
+Please contact your technical support partner to obtain the username and password for accessing this container registry.
+
+#### Edition Compatibility
+
+Community / Standard / Enterprise Editions all use the same container image.
+There are no functional differences based on registry selection.
+
