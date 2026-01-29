@@ -1061,19 +1061,67 @@ class SingleLineParser:
         """
         Convert ac:link node to markdown link format
 
-        Handles various types of Confluence links:
-        - Internal page links (ri:page with content in pages.yaml)
-        - External page links (ri:page outside conversion scope)
-        - Space links (ri:space)
+        Handles various types of Confluence links and generates appropriate markdown output:
 
-        Example XHTML:
-            <ac:link>
-                <ri:page ri:content-title="Page Title" ri:space-key="QCP"/>
-                <ac:link-body>Link Text</ac:link-body>
-            </ac:link>
+        1. Internal Page Link (target page in pages.yaml):
+           XHTML:
+               <ac:link>
+                   <ri:page ri:content-title="User Guide"/>
+                   <ac:link-body>User Guide</ac:link-body>
+               </ac:link>
+           Output:
+               [User Guide](../../user-guide)
+
+        2. External Page Link with pageId (target page in page.v1.yaml link mapping):
+           XHTML:
+               <ac:link>
+                   <ri:page ri:space-key="QCP" ri:content-title="QueryPie Architecture (KO)"/>
+                   <ac:link-body>QueryPie Architecture</ac:link-body>
+               </ac:link>
+           Output:
+               [QueryPie Architecture](https://querypie.atlassian.net/wiki/spaces/QCP/pages/400064797)
+
+        3. External Page Link without pageId (fallback to space overview):
+           XHTML:
+               <ac:link>
+                   <ri:page ri:space-key="QCP" ri:content-title="Unknown Page"/>
+                   <ac:link-body>Unknown Page</ac:link-body>
+               </ac:link>
+           Output:
+               [Unknown Page](https://querypie.atlassian.net/wiki/spaces/QCP/overview)
+
+        4. Space Link:
+           XHTML:
+               <ac:link>
+                   <ri:space ri:space-key="QCP"/>
+                   <ac:link-body>Confluence Space</ac:link-body>
+               </ac:link>
+           Output:
+               [Confluence Space](https://querypie.atlassian.net/wiki/spaces/QCP/overview)
+
+        5. Link with Anchor Fragment:
+           XHTML:
+               <ac:link ac:anchor="section-name">
+                   <ri:page ri:content-title="My Dashboard"/>
+                   <ac:link-body>My Dashboard</ac:link-body>
+               </ac:link>
+           Output:
+               [My Dashboard | section-name](../../my-dashboard#section-name)
+
+        6. Error Case (no space key):
+           XHTML:
+               <ac:link>
+                   <ri:page ri:content-title="Missing Page"/>
+                   <ac:link-body>Missing Page</ac:link-body>
+               </ac:link>
+           Output:
+               [Missing Page](#link-error)
+
+        Args:
+            node (Tag): BeautifulSoup Tag object representing ac:link node
 
         Returns:
-            str: Markdown link in format [link_body](href)
+            str: Markdown link in format [link_body](href) or [link_body | anchor](href#fragment)
         """
         link_body = '(ERROR: Link body not found)'
         anchor = node.get('anchor', '')
