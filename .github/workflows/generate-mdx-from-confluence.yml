@@ -57,7 +57,7 @@ jobs:
           echo "=== Git Status ==="
           git status
 
-      - name: Create Pull Request for src/content and public changes
+      - name: Create Pull Request for changes
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -74,9 +74,9 @@ jobs:
             git config user.email "${{ github.actor }}@users.noreply.github.com"
           fi
           
-          # src/content/ 및 public/ 변경사항 확인 (unstaged 상태)
-          if ! git status --porcelain src/content/ public/ | grep -q "[AM]"; then
-            echo "No changes in src/content/ or public/ directory"
+          # src/content/, public/, confluence-mdx/var/ 변경사항 확인 (unstaged 상태, untracked 파일 포함)
+          if ! git status --porcelain src/content/ public/ confluence-mdx/var/ | grep -q .; then
+            echo "No changes in src/content/, public/, or confluence-mdx/var/ directory"
             exit 0
           fi
           
@@ -86,18 +86,18 @@ jobs:
           # 브랜치 생성 및 체크아웃
           git checkout -b "$BRANCH_NAME"
           
-          # src/content/ 및 public/ 변경사항 스테이징
-          git add src/content/ public/
+          # src/content/, public/, confluence-mdx/var/ 변경사항 스테이징
+          git add src/content/ public/ confluence-mdx/var/
 
           # 스테이징된 변경사항 확인
           STAGED_FILES=$(git diff --cached --name-only)
           if [[ -z "$STAGED_FILES" ]]; then
-            echo "No staged changes in src/content/ or public/"
+            echo "No staged changes in src/content/, public/, or confluence-mdx/var/"
             exit 0
           fi
 
           # 변경사항 정보 수집 (스테이징 후)
-          CHANGES_STATUS=$(git status --short src/content/ public/)
+          CHANGES_STATUS=$(git status --short src/content/ public/ confluence-mdx/var/)
           CHANGES_STAT=$(git diff --cached --stat HEAD)
           
           # 커밋
@@ -110,15 +110,28 @@ jobs:
           fi
           
           # PR Description 생성
-          PR_BODY=$(printf '%s\n\n%s\n\n%s\n\n%s\n' \
-            "### Changes" \
-            "$CHANGES_STATUS" \
-            "### Change Statistics" \
-            "$CHANGES_STAT")
-          
+          PR_BODY=$(cat <<'EOF'
+## Description
+
+This PR contains automatically generated MDX files from Confluence documentation.
+
+> **Note for AI Agents**: This is an auto-generated PR by the workflow `.github/workflows/generate-mdx-from-confluence.yml`. The MDX files are synchronized from Confluence pages and should be reviewed before merging.
+
+### Translation Required
+
+If this PR includes changes to Korean (`ko`) documentation, corresponding translations to English (`en`) and Japanese (`ja`) are required before merging.
+
+## Changes
+
+EOF
+)
+          PR_BODY+=$'\n'"$CHANGES_STATUS"$'\n\n'
+          PR_BODY+="## Change Statistics"$'\n\n'
+          PR_BODY+="$CHANGES_STAT"
+
           # PR 생성
           if ! gh pr create \
-            --title "mdx: Updates from Confluence" \
+            --title "mdx: Sync documentation updates from Confluence" \
             --body "$PR_BODY" \
             --base main \
             --head "$BRANCH_NAME"; then
