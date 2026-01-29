@@ -1,4 +1,5 @@
 export default {
+  'product-versions': '製品バージョン',
   'prerequisites': 'インストール前の準備事項',
   'installation': 'インストール',
   'system-architecture-and-network-access-control': 'システムアーキテクチャとネットワークアクセス制御',

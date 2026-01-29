@@ -1063,6 +1063,10 @@ python bin/confluence_xhtml_to_markdown.py var/544375808/page.xhtml target/ko/in
 echo 'Converted 544375808 to target/ko/installation.mdx'
 
 mkdir -p target/ko/installation
+python bin/confluence_xhtml_to_markdown.py var/1881243653/page.xhtml target/ko/installation/product-versions.mdx --public-dir=target/public --attachment-dir=/installation/product-versions
+echo 'Converted 1881243653 to target/ko/installation/product-versions.mdx'
+
+mkdir -p target/ko/installation
 python bin/confluence_xhtml_to_markdown.py var/862126081/page.xhtml target/ko/installation/prerequisites.mdx --public-dir=target/public --attachment-dir=/installation/prerequisites
 echo 'Converted 862126081 to target/ko/installation/prerequisites.mdx'
 

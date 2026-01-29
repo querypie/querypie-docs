@@ -27,7 +27,7 @@ In summary, they are as follows.
 * 1 Linux server
 * 1 PC with a web browser installed
 
-For details, please refer to the following document: [Prerequisites - Simple Configuration](../prerequisites)
+For details, please refer to the following document: [Prerequisites](../prerequisites)
 
 ## System Architecture
 
@@ -45,7 +45,7 @@ Install docker and docker-compose for QueryPie Service, and install configuratio
 
 <Callout type="info">
 QP_VERSION and DOWNLOAD_VERSION presented below are examples.
-Please check with the technical support manager which version to install.
+For version to install, please refer to [Product Versions](../product-versions) or check with the technical support manager.
 </Callout>
 ```bash
 # Download and run ./setup.sh with required environment variables.
@@ -94,6 +94,7 @@ sudo cp logrotate /etc/logrotate.d/querypie
 ```
 </details>
 
+
 ### Harbor Login
 
 Log in to Harbor Docker Registry to download QueryPie Docker Images.
@@ -115,6 +116,7 @@ https://docs.docker.com/engine/reference/commandline/login/#credential-stores
 
 Login Succeeded
 ```
+
 
 ### compose-env Configuration
 
@@ -164,6 +166,7 @@ REDIS_PASSWORD=
 DAC_SKIP_SQL_COMMAND_RULE_FILE=skip_command_config.json
 ```
 
+
 ### MySQL / Redis Startup
 
 In Single machine configuration, QueryPie MySQL and QueryPie Redis are run in Container mode within one VM.
@@ -179,6 +182,7 @@ CONTAINER ID  IMAGE                                            ... NAMES
 0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
 6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
 ```
+
 
 ### Tools Startup
 
@@ -287,10 +291,12 @@ READYZ             | '--------------------------------------------------------'
 ....
 ```
 
+
 ### Installation Complete
 
 Great job.
 Now you can see QueryPie in action.
+
 
 ## Basic Configuration Procedures
 
@@ -312,6 +318,7 @@ This URL is used for the following purposes.
 * Used as a callback address in the authentication process of SSO Integration.
 * Used in links to download User Agent from Web Console.
 * For other detailed purposes, please refer to [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310).
+
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/installation/installation-guide-simple-configuration/image-20250520-081112.png" alt="image-20250520-081112.png" width="1074" />
@@ -375,6 +382,7 @@ UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
 <figure data-layout="center" data-align="center">
 <img src="/installation/installation/installation-guide-simple-configuration/image-20250520-084243.png" alt="image-20250520-084243.png" width="1096" />
 </figure>
+
 
 #### WAC: Proxy Access Address Settings
 

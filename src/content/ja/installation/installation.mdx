@@ -13,31 +13,26 @@ Docker Composeを活用して、Container Imageをダウンロードし、実行
 
 この場合、インストール支援プログラムのバージョンによって、2つのインストール方式が提供されます。
 
-#### setup.shでインストールする
-
-QueryPie Version 9時代からパートナーエンジニアに提供されたインストール支援プログラムです。
-HarborというContainer Registryにアカウントを発行してContainer Imageをダウンロードできます。
-
-リリースされたすべてのバージョンの製品をインストールできます。
-
-詳細なインストール方法はこの文書を参照してください：[インストールガイド - 簡単な構成](installation/installation-guide-simple-configuration)
-
-
 #### setup.v2.shでインストールする
 
-2025年8月リリースされたQueryPie ACP Community Editionのリリースとともに最終顧客社とパートナーエンジニアに提供されたインストール支援プログラムです。
+2025年8月リリースされたQueryPie ACP Community Editionのリリースとともに最終顧客社とパートナーエンジニアに提供されるインストール支援プログラムです。
 Docker Hubに公開されたContainer Imageをダウンロードしてインストールする方式です。
 
 インストール過程が自動化されており、初めてインストールする利用者が製品を簡単にインストールできます。
-しかし、実質的なインストール過程はsetup.shのインストール方式とsetup.v2.shのインストール方式が同等であり、setup.v2.shはその過程が自動化されており、Version 10などの旧バージョンのインストールをサポートしないという違いがあります。
+setup.v2.shが実際に実行するインストール過程はsetup.shのインストール方式と同等です。
+setup.v2.shはその過程が自動化されており、Version 10などの旧バージョンのインストールをサポートしないという違いがあります。
+より詳細な違いはこの文書を参照してください：[setup.shとsetup.v2.shの比較](installation/comparison-of-setupsh-and-setupv2sh)
 
 Apple Siliconを使用するmacOS環境のインストールをサポートします。
 
-リリースされたすべてのバージョンの製品が提供されません。
-2025年12月現在Version 11.1.2が提供されます。
+詳細なインストール方法はこの文書を参照してください：[インストールガイド - setup.v2.sh](installation/installation-guide-setupv2sh)
 
-詳細なインストール方法はこの文書を参照してください：[Installation Guide - setup.v2.sh (KO)](installation/installation-guide-setupv2sh)
+#### setup.shでインストールする
 
+QueryPie ACP Version 9時代からパートナーエンジニアに提供されたインストール支援プログラムです。
+HarborというContainer Registryにアカウントを発行してContainer Imageをダウンロードできます。
+
+詳細なインストール方法はこの文書を参照してください：[インストールガイド - 簡単な構成](installation/installation-guide-simple-configuration)
 
 ### Kubernetes環境にインストールする
 

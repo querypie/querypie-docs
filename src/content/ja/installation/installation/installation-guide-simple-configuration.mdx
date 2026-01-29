@@ -27,7 +27,7 @@ QueryPie 10.3.0以降のバージョンを対象とするPoC用途のインス�
 * Linuxサーバ1台
 * ウェブブラウザがインストールされたPC 1台
 
-詳細は次の文書を参照してください：[インストール前の準備事項 - 簡単な構成](../prerequisites)
+詳細は次の文書を参照してください：[インストール前の準備事項](../prerequisites)
 
 ## システムアーキテクチャ
 
@@ -45,7 +45,7 @@ QueryPie Serviceのためのdocker、docker-composeをインストールし、do
 
 <Callout type="info">
 以下に提示されたQP_VERSION、DOWNLOAD_VERSIONは例です。
-どのバージョンをインストールするか、技術サポート担当者に確認してください。
+インストールするバージョンは[製品バージョン](../product-versions)文書を参照するか、技術サポート担当者に確認してください。
 </Callout>
 ```bash
 # Download and run ./setup.sh with required environment variables.
@@ -94,6 +94,7 @@ sudo cp logrotate /etc/logrotate.d/querypie
 ```
 </details>
 
+
 ### Harbor Login
 
 QueryPie Docker Imageをダウンロードできるように、Harbor Docker Registryにログインします。
@@ -116,12 +117,13 @@ https://docs.docker.com/engine/reference/commandline/login/#credential-stores
 Login Succeeded
 ```
 
+
 ### compose-env設定
 
 `./setup.sh`スクリプトを実行すると、`querypie/<version>/`ディレクトリ内に`docker-compose.yml`、`compose-env`など設定ファイルを生成します。
 このディレクトリ内に移動して、`compose-env`という名前の設定ファイルを編集します。
 
-各環境変数に関する説明は次の文書を参照してください：[コンテナ環境変数案内](../container-environment-variables)
+各環境変数に関する説明は次の文書を参照してください：[コンテナ環境変数](../container-environment-variables)
 ```bash
 # Version of QueryPie Docker Image to run: 10.3.0 or later.
 VERSION=10.3.0
@@ -164,6 +166,7 @@ REDIS_PASSWORD=
 DAC_SKIP_SQL_COMMAND_RULE_FILE=skip_command_config.json
 ```
 
+
 ### MySQL / Redis起動
 
 Single machine構成では、1つのVM内にQueryPie MySQL、QueryPie RedisをContainer方式で実行します。
@@ -179,6 +182,7 @@ CONTAINER ID  IMAGE                                            ... NAMES
 0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
 6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
 ```
+
 
 ### Tools起動
 
@@ -287,10 +291,12 @@ READYZ             | '--------------------------------------------------------'
 ....
 ```
 
+
 ### インストール完了
 
 お疲れさまでした。
 これでQueryPieが動作する様子を見ることができます。
+
 
 ## 基本設定手順
 
@@ -312,6 +318,7 @@ Web ConsoleにアクセスするためのQueryPieのURLアドレスです。<br/
 * SSO Integrationの認証過程で、callbackアドレスとして使用されます。
 * Web ConsoleでUser Agentをダウンロードするリンクに使用されます。
 * その他詳細な用途は、[https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310)を参照してください。
+
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/installation/installation-guide-simple-configuration/image-20250520-081112.png" alt="image-20250520-081112.png" width="1074" />
@@ -375,6 +382,7 @@ UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
 <figure data-layout="center" data-align="center">
 <img src="/installation/installation/installation-guide-simple-configuration/image-20250520-084243.png" alt="image-20250520-084243.png" width="1096" />
 </figure>
+
 
 #### WAC: Proxy接続アドレス設定
 

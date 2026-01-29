@@ -55,6 +55,8 @@ $ bash setup.v2.sh
 ```
 
 `setup.v2.sh`は製造元で推奨するバージョンを自動的に選択してインストールします。
+インストール可能なバージョンはこの文書を参照してください：[製品バージョン](../product-versions)
+
 特定のバージョンを指定してインストールする場合、以下のようなコマンドを使用できます。
 ```bash
 $ bash setup.v2.sh --install 10.3.4
@@ -93,7 +95,6 @@ OPTIONS:
   -h, --help          Show this help message.
 $ 
 ```
-
 
 ### Podman環境でQueryPieインストール
 
@@ -154,7 +155,6 @@ $
 [ec2-user@ip-172-31-11-201 ~]$ 
 ```
 
-
 ### インストール完了
 
 お疲れさまでした。
@@ -175,7 +175,6 @@ Enter the license in PEM format.
 </figcaption>
 </figure>
 
-
 ## 基本設定手順
 
 運用環境に従ってインストール以降必須的に実行が必要な設定を案内します。
@@ -187,7 +186,8 @@ Enter the license in PEM format.
 #### QueryPie Web Base URL設定
 
 > 設定経路：Admin Page → General
-Web ConsoleにアクセスするためのQueryPieのURLアドレスです。<br/>（例：`https://querypie.customer.com`）<br/>このURLはQueryPieのBase URLとも呼ばれます。
+Web ConsoleにアクセスするためのQueryPieのURLアドレスです。
+（例：`https://querypie.customer.com`）このURLはQueryPieのBase URLとも呼ばれます。
 
 このURLは`/`で終わってはいけません。`https://querypie.customer.com/`のようにURLの最後に`/`を付けないよう注意してください。
 

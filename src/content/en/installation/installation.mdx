@@ -13,31 +13,26 @@ This method uses Docker Compose to download, run, and stop Container Images.
 
 In this case, two installation methods are provided according to the version of the installation helper program.
 
-#### Installing with setup.sh
-
-This is an installation helper program that has been provided to partner engineers since QueryPie Version 9.
-You can download Container Images by obtaining an account for Harbor, a Container Registry.
-
-You can install all released versions of the product.
-
-For detailed installation methods, please refer to this document: [Installation Guide - Simple Configuration](installation/installation-guide-simple-configuration)
-
-
 #### Installing with setup.v2.sh
 
 This is an installation helper program provided to end customers and partner engineers along with the release of QueryPie ACP Community Edition in August 2025.
 This method downloads and installs Container Images published on Docker Hub.
 
 The installation process is automated, making it easy for first-time installers to install the product.
-However, the actual installation process is equivalent between setup.sh and setup.v2.sh, with the difference that setup.v2.sh automates the process and does not support installation of older versions such as Version 10.
+The actual installation process that setup.v2.sh executes is equivalent to setup.sh.
+setup.v2.sh automates the process and does not support installation of older versions such as Version 10.
+For more detailed differences, please refer to this document: [Comparison of setup.sh and setup.v2.sh](installation/comparison-of-setupsh-and-setupv2sh)
 
 It supports installation on macOS environments using Apple Silicon.
 
-Not all released versions of the product are provided.
-As of December 2025, Version 11.1.2 is provided.
+For detailed installation methods, please refer to this document: [Installation Guide - setup.v2.sh](installation/installation-guide-setupv2sh)
 
-For detailed installation methods, please refer to this document: [Installation Guide - setup.v2.sh (KO)](installation/installation-guide-setupv2sh)
+#### Installing with setup.sh
 
+This is an installation helper program that has been provided to partner engineers since QueryPie ACP Version 9.
+You can download Container Images by obtaining an account for Harbor, a Container Registry.
+
+For detailed installation methods, please refer to this document: [Installation Guide - Simple Configuration](installation/installation-guide-simple-configuration)
 
 ### Installing on Kubernetes Environment
 

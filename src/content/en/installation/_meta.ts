@@ -1,4 +1,5 @@
 export default {
+  'product-versions': 'Product Versions',
   'prerequisites': 'Prerequisites',
   'installation': 'Installation',
   'system-architecture-and-network-access-control': 'System Architecture and Network Access Control',

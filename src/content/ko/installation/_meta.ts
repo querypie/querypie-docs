@@ -1,4 +1,5 @@
 export default {
+  'product-versions': '제품 버전',
   'prerequisites': '설치 전 준비사항',
   'installation': '설치하기',
   'system-architecture-and-network-access-control': '시스템 아키텍처와 네트워크 접근제어',
