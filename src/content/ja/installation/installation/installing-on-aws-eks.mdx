@@ -436,7 +436,7 @@ querypie:
     # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
     ingressClassName: ""
     # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
-    host: querypie.querypie.io # 実際に設定されたURLを入力
+    host: querypie.querypie.io # Replace with your actual URL
     # -- Extra paths used for the Ingress resource.
     # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
 
@@ -468,13 +468,13 @@ querypie:
       cpu: "2000m"
       # -- More than 16Gi memory is recommended.
       memory: 16Gi
-  # -- Logrotator設定
-  # バージョン11.3.0からログローテーションはメインコンテナに組み込まれています。
-  # logrotatorイメージはHarborレジストリでのみ利用可能です。
-  # Docker Hub使用時はこれを無効にする必要があります。
+  # -- Logrotator configuration
+  # Starting from version 11.3.0, log rotation is built into the main container.
+  # The logrotator image is only available on Harbor registry.
+  # When using Docker Hub, this must be disabled.
   logrotator:
     enabled: false
-    # Harbor registry使用時は以下のコメントを解除してenabled: trueに設定してください：
+    # Uncomment below and set enabled: true when using Harbor registry:
     # image:
     #   repository: querypie/logrotate
     #   tag: latest
@@ -518,7 +518,7 @@ tools:
 config:
   # -- External URL that users use to access the QueryPie via web.
   # Specify the scheme, hostname, and port is required.
-  externalURL: "https://querypie.querypie.io" # 実際に設定されたURLを入力
+  externalURL: "https://querypie.querypie.io" # Replace with your actual URL
   secretName: "querypie-secret"
 
   database:
@@ -600,23 +600,23 @@ kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ##### 5.1.1 クラスタアクセス権限確認
 
 ```bash
-# クラスタアクセス確認
+# Verify cluster access
 kubectl cluster-info
 
-# 現在のcontext確認
+# Check current context
 kubectl config current-context
 
-# namespaceアクセス権限確認
+# Verify namespace access permissions
 kubectl auth can-i create deployment -n querypie
 ```
 
 ##### 5.1.2 リソース状態確認
 
 ```bash
-# ノードリソース状態確認
+# Check node resource status
 kubectl top nodes
 
-# 使用可能なストレージクラス確認
+# Check available storage classes
 kubectl get storageclass
 ```
 
@@ -625,15 +625,15 @@ kubectl get storageclass
 ##### 5.2.1 Pod状態確認
 
 ```bash
-# Pod状態照会
+# Check pod status
 kubectl get pods -n querypie
 
-# Pod詳細情報確認
+# Check pod details
 kubectl describe pod <pod-name> -n querypie
 
-# Podログ確認
+# Check pod logs
 kubectl logs <pod-name> -n querypie
-kubectl logs <pod-name> -n querypie --previous  # 再起動された場合以前のログ確認
+kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restarted
 ```
 
 主要問題状態および確認事項：
@@ -649,52 +649,52 @@ kubectl logs <pod-name> -n querypie --previous  # 再起動された場合以前
 ##### 5.2.2 サービス接続確認
 
 ```bash
-# Service状態確認
+# Check service status
 kubectl get svc -n querypie
 
-# Endpoint確認
+# Check endpoints
 kubectl get endpoints -n querypie
 
-# MySQL Service接続テスト
+# Test MySQL service connection
 kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
 
-# Redis Service接続テスト
+# Test Redis service connection
 kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
 ```
 
 ##### 5.2.3 Ingress確認
 
 ```bash
-# Ingress状態確認
+# Check ingress status
 kubectl get ingress -n querypie
 
-# Ingress詳細情報確認
+# Check ingress details
 kubectl describe ingress -n querypie
 ```
 
 #### 5.3 リソースモニタリング
 
 ```bash
-# Pod CPU/Memory使用量確認
+# Check pod CPU/Memory usage
 kubectl top pods -n querypie
 
-# Node CPU/Memory使用量確認
+# Check node CPU/Memory usage
 kubectl top nodes
 
-# 特定Podのリソース制限確認
+# Check resource limits for a specific pod
 kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
 ```
 
 #### 5.4 インストール構成確認
 
 ```bash
-# ConfigMap確認
+# Check ConfigMap
 kubectl get configmap -n querypie
 
-# Secretリスト確認
+# Check Secret list
 kubectl get secrets -n querypie
 
-# PV/PVC状態確認
+# Check PV/PVC status
 kubectl get pv
 kubectl get pvc -n querypie
 ```
@@ -706,36 +706,36 @@ kubectl get pvc -n querypie
 ##### 5.5.1 環境情報
 
 ```bash
-# Kubernetesバージョン
+# Kubernetes version
 kubectl version --short
 
-# Node情報
+# Node information
 kubectl get nodes -o wide
 
-# Helmバージョン
+# Helm version
 helm version
 ```
 
 ##### 5.5.2 QueryPie状態情報
 
 ```bash
-# Helm配布状態
+# Helm deployment status
 helm status poc -n querypie
 
-# Pod詳細情報
+# Pod details
 kubectl describe pod/poc-querypie-0 -n querypie
 
-# 最近のイベントリスト
+# Recent events list
 kubectl get events -n querypie --sort-by='.lastTimestamp'
 ```
 
 ##### 5.5.3 ログ情報
 
 ```bash
-# QueryPieログ保存
+# Save QueryPie logs
 kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
 
-# 関連コンポーネントログ保存
+# Save related component logs
 kubectl logs mysql-0 > mysql.log
 kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
 ```
@@ -745,4 +745,3 @@ kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.nam
 * [Amazon EKS Workshop](https://www.eksworkshop.com)
 * [Amazon EKS文書](https://docs.aws.amazon.com/eks/)
 * [Kubernetes公式文書](https://kubernetes.io/docs/)
-
