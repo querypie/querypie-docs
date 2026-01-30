@@ -37,24 +37,27 @@ import { Callout } from 'nextra/components'
 
 #### 2.2 로컬 환경 준비사항
 
-1. AWS CLI 설치 및 구성
-  ```bash
+AWS CLI 설치 및 구성
+```bash
 brew install awscli
 aws configure  # Requires Access Key and Secret Key
-  ```
-2. kubectl 설치
-  ```bash
+```
+
+kubectl 설치
+```bash
 brew install kubectl
-  ```
-3. Helm 설치 (버전 3.10.0 이상 필수)
-  ```bash
+```
+
+Helm 설치 (버전 3.10.0 이상 필수)
+```bash
 brew install helm
-  ```
-4. 선택적 도구 설치 (추천)
-  ```bash
+```
+
+선택적 도구 설치 (추천)
+```bash
 brew install kubectx  # Context switching tool
 brew install fzf      # Command-line fuzzy finder
-  ```
+```
 
 #### 2.3 접근 권한 요구사항
 
@@ -345,7 +348,7 @@ REDIS_NODES=redis:6379
 REDIS_PASSWORD={your-redis-password}
 ```
 
-1. 환경 설정 파일을 Secret으로 등록합니다.
+환경 설정 파일을 Secret으로 등록합니다.
 ```bash
 kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
 ```
@@ -396,9 +399,12 @@ serviceAccount:
   labels: {}
   annotations: {}
   # -- The name of the secret used for pulling the QueryPie image from the private registry.
-  # To create, run `kubectl create secret docker-registry querypie-regcred --docker-server=harbor.chequer.io --docker-username=admin --docker-password=your-password`
-  imagePullSecrets:
-    - name: querypie-regcred
+  # For Docker Hub: Set imagePullSecrets to an empty array ([]) or remove this section.
+  # For Harbor: Create the querypie-regcred secret and uncomment below.
+  imagePullSecrets: []
+  # Uncomment below when using Harbor registry:
+  # imagePullSecrets:
+  #   - name: querypie-regcred
 
 querypie:
   # -- Labels used for QueryPie pods.
@@ -430,7 +436,7 @@ querypie:
     # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
     ingressClassName: ""
     # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
-    host: querypie.querypie.io #실제 설정된 url 입력
+    host: querypie.querypie.io # Replace with your actual URL
     # -- Extra paths used for the Ingress resource.
     # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
 
@@ -462,12 +468,16 @@ querypie:
       cpu: "2000m"
       # -- More than 16Gi memory is recommended.
       memory: 16Gi
+  # -- Logrotator configuration
+  # Starting from version 11.3.0, log rotation is built into the main container.
+  # The logrotator image is only available on Harbor registry.
+  # When using Docker Hub, this must be disabled.
   logrotator:
-    image:
-      # -- (string) Registry used for the Logrotate image. If not set, the global registry will be used.
-      repository: querypie/logrotate
-      # -- (string) Tag used for the Logrotate image. If not set, the global tag will be used.
-      tag: latest
+    enabled: false
+    # Uncomment below and set enabled: true when using Harbor registry:
+    # image:
+    #   repository: querypie/logrotate
+    #   tag: latest
   # -- External storage for the QueryPie Object Storage.
   externalStorage:
     # -- Type of the external storage.
@@ -508,7 +518,7 @@ tools:
 config:
   # -- External URL that users use to access the QueryPie via web.
   # Specify the scheme, hostname, and port is required.
-  externalURL: "https://querypie.querypie.io" #실제 설정된 url 입력
+  externalURL: "https://querypie.querypie.io" # Replace with your actual URL
   secretName: "querypie-secret"
 
   database:
@@ -540,42 +550,48 @@ config:
 
 #### 4.3 QueryPie 설치
 
-1. Helm을 사용하여 QueryPie를 설치합니다.
+Helm을 사용하여 QueryPie ACP 를 설치합니다.
+QueryPie ACP 의 [제품 버전](../product-versions)에 따라, Helm 버전을 선택합니다.
+이 문서의 Chart 버전은 예시로 제시된 것입니다.
 ```bash
-helm upgrade --install poc querypie/querypie --version 1.4.1 -n querypie -f values.yaml
+helm upgrade --install poc querypie/querypie --version 1.4.4 -n querypie -f values.yaml
 ```
 
-1. 데이터베이스 마이그레이션을 실행합니다.
+데이터베이스 마이그레이션을 실행합니다.
+
+<Callout type="important">
+이 단계는 반드시 실행해야 합니다.
+
+실행하지 않으면 `Table 'querypie.system_settings' doesn't exist` 오류가 발생하며 QueryPie Pod가 정상적으로 시작되지 않습니다.
+
+이 명령은 MySQL 데이터베이스에 필요한 스키마와 초기 데이터를 생성합니다.
+</Callout>
 ```bash
 kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
 ```
 
-1. 라이선스를 등록합니다. (라이선스 파일를 준비해 둡니다.)
-```bash
-kubectl port-forward -n querypie deploy/poc-querypie-tools 8050:8050 &
-curl -X POST http://127.0.0.1:8050/license/upload -F file=@license.crt
-[License] Upload: Success  # 결과
-# port-forward 종료
-jobs
-kill %1
-```
 
 #### 4.4 설치 확인
 
-1. Pod 상태를 확인합니다.
+Pod 상태를 확인합니다.
 ```bash
 kubectl get pods -n querypie
 ```
 
-1. 로그를 확인합니다.
+로그를 확인합니다.
 ```bash
 kubectl logs pod/poc-querypie-0 -f
 ```
 
-1. 서비스 접속을 확인합니다.
+서비스 접속을 확인합니다.
 ```bash
 kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ```
+
+이후, 처음 설정 과정을 진행합니다.
+
+* [라이선스 설치](../license-installation)
+* [설치 가이드 - setup.v2.sh](installation-guide-setupv2sh) 의 기본 설정 절차를 진행합니다. 공통 설정, 제품별 설정으로 구분된 절차를 진행합니다.
 
 ### 5. 문제 해결 가이드
 
@@ -584,23 +600,23 @@ kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ##### 5.1.1 클러스터 접근 권한 확인
 
 ```bash
-# 클러스터 접근 확인
+# Verify cluster access
 kubectl cluster-info
 
-# 현재 context 확인
+# Check current context
 kubectl config current-context
 
-# namespace 접근 권한 확인
+# Verify namespace access permissions
 kubectl auth can-i create deployment -n querypie
 ```
 
 ##### 5.1.2 리소스 상태 확인
 
 ```bash
-# 노드 리소스 상태 확인
+# Check node resource status
 kubectl top nodes
 
-# 사용 가능한 스토리지 클래스 확인
+# Check available storage classes
 kubectl get storageclass
 ```
 
@@ -609,72 +625,76 @@ kubectl get storageclass
 ##### 5.2.1 Pod 상태 확인
 
 ```bash
-# Pod 상태 조회
+# Check pod status
 kubectl get pods -n querypie
 
-# Pod 상세 정보 확인
+# Check pod details
 kubectl describe pod <pod-name> -n querypie
 
-# Pod 로그 확인
+# Check pod logs
 kubectl logs <pod-name> -n querypie
-kubectl logs <pod-name> -n querypie --previous  # 재시작된 경우 이전 로그 확인
+kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restarted
 ```
 
 주요 문제 상태 및 확인사항:
 
-* `ImagePullBackOff`: Harbor 레지스트리 인증 정보 확인
+* `ImagePullBackOff`: Container Registry 인증 정보 확인
+    * Docker Hub 사용 시: `values.yaml`에서 `registry: docker.io` 설정 확인, `imagePullSecrets: []` 설정 확인
+    * Harbor 사용 시: `querypie-regcred` Secret 생성 여부 확인
+* `logrotator` 이미지 오류 시: `logrotator.enabled: false` 설정 확인 (Docker Hub에서는 logrotator 이미지가 제공되지 않음)
 * `Pending`: 노드의 리소스 부족 여부 확인
 * `CrashLoopBackOff`: 로그를 통해 애플리케이션 오류 확인
+* `Table 'querypie.system_settings' doesn't exist` 오류: DB 마이그레이션 미실행 → `migrate.sh runall` 명령 실행 필요
 
 ##### 5.2.2 서비스 연결 확인
 
 ```bash
-# Service 상태 확인
+# Check service status
 kubectl get svc -n querypie
 
-# Endpoint 확인
+# Check endpoints
 kubectl get endpoints -n querypie
 
-# MySQL Service 연결 테스트
+# Test MySQL service connection
 kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
 
-# Redis Service 연결 테스트
+# Test Redis service connection
 kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
 ```
 
 ##### 5.2.3 Ingress 확인
 
 ```bash
-# Ingress 상태 확인
+# Check ingress status
 kubectl get ingress -n querypie
 
-# Ingress 상세 정보 확인
+# Check ingress details
 kubectl describe ingress -n querypie
 ```
 
 #### 5.3 리소스 모니터링
 
 ```bash
-# Pod CPU/Memory 사용량 확인
+# Check pod CPU/Memory usage
 kubectl top pods -n querypie
 
-# Node CPU/Memory 사용량 확인
+# Check node CPU/Memory usage
 kubectl top nodes
 
-# 특정 Pod의 리소스 제한 확인
+# Check resource limits for a specific pod
 kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
 ```
 
 #### 5.4 설치 구성 확인
 
 ```bash
-# ConfigMap 확인
+# Check ConfigMap
 kubectl get configmap -n querypie
 
-# Secret 목록 확인
+# Check Secret list
 kubectl get secrets -n querypie
 
-# PV/PVC 상태 확인
+# Check PV/PVC status
 kubectl get pv
 kubectl get pvc -n querypie
 ```
@@ -683,36 +703,39 @@ kubectl get pvc -n querypie
 
 문제 해결이 어려운 경우, 다음 정보를 수집하여 지원팀에 문의하세요:
 
-1. 환경 정보
+##### 5.5.1 환경 정보
+
 ```bash
-# Kubernetes 버전
+# Kubernetes version
 kubectl version --short
 
-# Node 정보
+# Node information
 kubectl get nodes -o wide
 
-# Helm 버전
+# Helm version
 helm version
 ```
 
-1. QueryPie 상태 정보
+##### 5.5.2 QueryPie 상태 정보
+
 ```bash
-# Helm 배포 상태
+# Helm deployment status
 helm status poc -n querypie
 
-# Pod 상세 정보
+# Pod details
 kubectl describe pod/poc-querypie-0 -n querypie
 
-# 최근 이벤트 목록
+# Recent events list
 kubectl get events -n querypie --sort-by='.lastTimestamp'
 ```
 
-1. 로그 정보
+##### 5.5.3 로그 정보
+
 ```bash
-# QueryPie 로그 저장
+# Save QueryPie logs
 kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
 
-# 연관 컴포넌트 로그 저장
+# Save related component logs
 kubectl logs mysql-0 > mysql.log
 kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
 ```

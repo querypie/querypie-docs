@@ -2,11 +2,39 @@
 title: '라이선스 설치'
 ---
 
+import { Callout } from 'nextra/components'
+
 # 라이선스 설치
 
 QueryPie 제품의 License 를 최초 설치, 업그레이드 설치하는 방법을 안내합니다.
 
-### QueryPie 를 처음 설치하는 경우
+### QueryPie 를 처음 설치하는 경우<Badge color="grey">11.3.0</Badge>
+
+QueryPie ACP 를 처음 설치하여 실행하는 경우, 웹브라우저로 웹콘솔에 접속하게 되면, 라이선스 입력을 요구합니다.
+라이선스를 정상적으로 입력하게 되면, 로그인 화면을 만나게 됩니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/license-installation/image-20260130-054810.png" alt="PEM 형식 라이선스 입력 화면" width="760" />
+<figcaption>
+PEM 형식 라이선스 입력 화면
+</figcaption>
+</figure>
+
+### 라이선스를 추가, 교체하기<Badge color="grey">11.3.0</Badge>
+
+11.3.0 또는 이후 버전에서는 웹콘솔에서 제품의 License 를 설치, 추가, 교체할 수 있습니다: [Licenses](../administrator-manual/general/company-management/licenses)
+
+#### 다수의 라이선스 설치 후 관리하기
+
+11.3.0 이전 버전에는 License 의 유효기간이 겹치는 라이선스를 추가 설치할 수 없는 제약이 있었으나, 11.3.0 부터는 유효기간이 겹치는 라이선스를 추가 설치할 수 있습니다.
+유효한 라이선스가 둘 이상인 경우, 유효한 라이선스를 관리자가 지정할 수 있습니다.
+
+유효한 라이선스의 상태는 활성화 여부에 따라, 다음과 같이 구분됩니다.
+
+* Activated : 현재 활성화된 상태
+* Available : 사용 가능한 license이지만 활성화 하지 않은 상태
+
+### QueryPie 를 처음 설치하는 경우<Badge color="grey">Deprecated</Badge>
 
 QueryPie 를 처음 설치하는 경우, QueryPie Tools 라는 컴포넌트를 실행하여, Product License 를 설치할 수 있습니다.
 QueryPie Tools 는 QueryPie Server 와 별개로 작동하는 도구로, 제품 설치, 업그레이드, 라이선스 설치 등에 사용하는 도구입니다.
@@ -33,7 +61,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 
 전반적인 제품 설치 과정과 Product License 설치 단계에 대한 상세한 설명은 다음 문서를 참조하여 주세요: [설치 가이드 - 간단한 구성](installation/installation-guide-simple-configuration)
 
-### 사용 중인 QueryPie 의 라이선스를 연장하는 경우
+### 사용 중인 QueryPie 의 라이선스를 연장하는 경우<Badge color="grey">Deprecated</Badge>
 
 현재 사용 중인 QueryPie 에 라이선스를 연장하고자 하는 경우가 있습니다.
 예를 들어, PoC 진행 중이던 QueryPie Server Instance 에 Production License 를 설치하여, 기존 PoC License 를 연장하고자 하는 경우를 가정합니다.
@@ -69,13 +97,15 @@ ubuntu@querypie:~/querypie/10.2.4$
 이 응답 메시지를 만난 경우 대처 방법은, “사용 중인 QueryPie 의 라이선스를 교체하는 경우” 섹션을 참고하시기 바랍니다.
 
 
-### 사용 중인 QueryPie 의 라이선스를 교체하는 경우
+### 사용 중인 QueryPie 의 라이선스를 교체하는 경우<Badge color="grey">Deprecated</Badge>
 
 QueryPie 의 License 관리 기능에는 한가지 제약사항이 있어서, 기존 라이선스의 유효기간과 새 라이선스의 유효기간이 일부 겹치는 경우, 새 라이선스를 추가로 설치하지 못합니다.
 이로 인해, 유효기간이 겹치는 라이선스를 설치하려는 경우, 별도 절차를 통하여 기존 라이선스를 삭제한 후, 새로운 라이선스를 설치하여야 합니다.
 
-( 이 부분의 제약은 고객 불편함이 있다는 것을 인지하고 있으나, 라이선스 기능의 변경을 내부에서 검토 중인 사안입니다.
-)
+<Callout type="important">
+11.3.0 또는 이후 버전에는 이 제약이 해소되었습니다.
+참조: [Licenses](../administrator-manual/general/company-management/licenses)
+</Callout>
 
 기존 라이선스를 삭제하는 방법은 크게 두 가지가 있습니다.
 
