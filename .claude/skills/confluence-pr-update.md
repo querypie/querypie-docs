@@ -89,18 +89,18 @@ python3 bin/mdx_to_skeleton.py ../src/content/en/path/to/file.mdx
 
 **중요**: 코드 블록 내용은 한국어/영어/일본어 문서에서 **동일**해야 합니다.
 
-```markdown
-# 잘못된 예 - 코드 블록 내 주석을 번역함
+**잘못된 예** - 코드 블록 내 주석을 번역함:
+
 ```bash
 # クラスタアクセス確認  ← 일본어로 번역 (잘못됨)
 kubectl get nodes
 ```
 
-# 올바른 예 - 코드 블록 내용 동일
+**올바른 예** - 코드 블록 내용 동일:
+
 ```bash
 # Verify cluster access  ← 원본 그대로 유지
 kubectl get nodes
-```
 ```
 
 코드 블록 내 주석은 번역하지 않고 원본(주로 영어) 그대로 유지합니다.
