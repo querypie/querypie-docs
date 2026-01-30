@@ -551,10 +551,15 @@ config:
 #### 4.3 QueryPie Installation
 
 Install QueryPie ACP using Helm.
+
 Select the Helm version according to the [Product Versions](../product-versions) of QueryPie ACP.
+
+* QueryPie ACP 11.3.0 or later: Use the latest version of Helm Chart 1.5.0 or higher.
+* QueryPie ACP before 11.3.0: Use Helm Chart 1.4.4.
+
 The Chart version in this document is provided as an example.
 ```bash
-helm upgrade --install poc querypie/querypie --version 1.4.4 -n querypie -f values.yaml
+helm upgrade --install poc querypie/querypie --version 1.5.0 -n querypie -f values.yaml
 ```
 
 Run database migration.
@@ -641,10 +646,10 @@ Key problem statuses and checks:
 * `ImagePullBackOff`: Check Container Registry authentication information
     * When using Docker Hub: Check `registry: docker.io` setting in `values.yaml`, verify `imagePullSecrets: []` setting
     * When using Harbor: Verify `querypie-regcred` Secret creation
-* `logrotator` image error: Check `logrotator.enabled: false` setting (logrotator image is not provided on Docker Hub)
+    * `logrotator` image error: Check `logrotator.enabled: false` setting (logrotator image is not provided on Docker Hub)
 * `Pending`: Check if node resources are insufficient
 * `CrashLoopBackOff`: Check application errors through logs
-* `Table 'querypie.system_settings' doesn't exist` error: DB migration not executed → Need to run `migrate.sh runall` command
+    * `Table 'querypie.system_settings' doesn't exist` error: DB migration not executed → Need to run `migrate.sh runall` command
 
 ##### 5.2.2 Check Service Connections
 
