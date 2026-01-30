@@ -2,11 +2,39 @@
 title: 'ライセンスインストール'
 ---
 
+import { Callout } from 'nextra/components'
+
 # ライセンスインストール
 
 QueryPie製品のLicenseを初回インストール、アップグレードインストールする方法を案内します。
 
-### QueryPieを初めてインストールする場合
+### QueryPieを初めてインストールする場合<Badge color="grey">11.3.0</Badge>
+
+QueryPie ACPを初めてインストールして実行する場合、Webブラウザでウェブコンソールにアクセスすると、ライセンス入力が要求されます。
+ライセンスを正常に入力すると、ログイン画面が表示されます。
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/license-installation/image-20260130-054810.png" alt="PEM形式ライセンス入力画面" width="760" />
+<figcaption>
+PEM形式ライセンス入力画面
+</figcaption>
+</figure>
+
+### ライセンスを追加、交換する<Badge color="grey">11.3.0</Badge>
+
+11.3.0以降のバージョンでは、ウェブコンソールで製品のLicenseをインストール、追加、交換できます：[Licenses](../administrator-manual/general/company-management/licenses)
+
+#### 複数のライセンスをインストール後に管理する
+
+11.3.0以前のバージョンでは、Licenseの有効期間が重なるライセンスを追加インストールできない制約がありましたが、11.3.0からは有効期間が重なるライセンスを追加インストールできます。
+有効なライセンスが2つ以上ある場合、管理者が有効なライセンスを指定できます。
+
+有効なライセンスの状態は、活性化の有無によって次のように区分されます。
+
+* Activated：現在活性化された状態
+* Available：使用可能なlicenseだが活性化していない状態
+
+### QueryPieを初めてインストールする場合<Badge color="grey">Deprecated</Badge>
 
 QueryPieを初めてインストールする場合、QueryPie Toolsというコンポーネントを実行して、Product Licenseをインストールできます。
 QueryPie ToolsはQueryPie Serverとは別に動作するツールで、製品インストール、アップグレード、ライセンスインストールなどに使用するツールです。
@@ -18,7 +46,7 @@ QueryPie Toolsを利用してProduct Licenseをインストールする方法を
 ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
 [+] Running 1/1
  ⠿ Container querypie-tools-1  Started                                                                                                             0.2s
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `curl`コマンドで`license.crt`というライセンスファイルをQueryPie ToolsのAPIを通じてインストールします。`license.crt`ライセンスファイル名は例であり、技術サポート担当者から受け取った製品のライセンスファイルをサーバに移動して保存したものです。
@@ -26,14 +54,14 @@ ubuntu@querypie:~/querypie/10.2.4$
 ```
 ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
 [License] Upload: Success
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `[License] Upload: Success`という応答メッセージに遭遇した場合、正常にライセンスがインストールされたものです。
 
 全般的な製品インストール過程とProduct Licenseインストール段階に関する詳細な説明は次の文書を参照してください：[インストールガイド - 簡単な構成](installation/installation-guide-simple-configuration)
 
-### 使用中のQueryPieのライセンスを延長する場合
+### 使用中のQueryPieのライセンスを延長する場合<Badge color="grey">Deprecated</Badge>
 
 現在使用中のQueryPieにライセンスを延長したい場合があります。
 例えば、PoC進行中だったQueryPie Server InstanceにProduction Licenseをインストールして、既存PoC Licenseを延長したい場合を想定します。
@@ -48,7 +76,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
 [+] Running 1/1
  ⠿ Container querypie-tools-1  Started 0.2s
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `curl`コマンドで`license.crt`というライセンスファイルをQueryPie ToolsのAPIを通じてインストールします。`license.crt`ライセンスファイル名は例であり、技術サポート担当者から受け取った製品のライセンスファイルをサーバに移動して保存したものです。
@@ -58,7 +86,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 ```
 ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
 [License] Upload: Success
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `[License] Upload: Success`という応答メッセージに遭遇した場合、正常にライセンスがインストールされたものです。
@@ -69,13 +97,15 @@ ubuntu@querypie:~/querypie/10.2.4$
 この応答メッセージに遭遇した場合の対処方法は、「使用中のQueryPieのライセンスを交換する場合」セクションを参照してください。
 
 
-### 使用中のQueryPieのライセンスを交換する場合
+### 使用中のQueryPieのライセンスを交換する場合<Badge color="grey">Deprecated</Badge>
 
 QueryPieのLicense管理機能には1つの制約事項があり、既存ライセンスの有効期間と新ライセンスの有効期間が一部重なる場合、新ライセンスを追加でインストールできません。
 これにより、有効期間が重なるライセンスをインストールしようとする場合、別途手順を通じて既存ライセンスを削除した後、新しいライセンスをインストールする必要があります。
 
-（この部分の制約は顧客の不便があることを認識していますが、ライセンス機能の変更を内部で検討中の案件です。
-）
+<Callout type="important">
+11.3.0以降のバージョンではこの制約が解消されました。
+参照：[Licenses](../administrator-manual/general/company-management/licenses)
+</Callout>
 
 既存ライセンスを削除する方法は大きく2つあります。
 
@@ -94,7 +124,7 @@ docker execコマンドを実行して、QueryPie Server Container内部のbash�
 `docker exec -it querypie-app-1 bash`
 ```
 ubuntu@querypie:~/querypie/10.2.4$ docker exec -it querypie-app-1 bash
-022f073afae5:/app# 
+022f073afae5:/app#
 ```
 
 Container内部でmysql clientを実行して、QueryPie MySQLに接続します。
@@ -116,7 +146,7 @@ Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-MySQL [querypie]> 
+MySQL [querypie]>
 ```
 
 次のSQLを実行して、インストールされたライセンスファイルの数を確認します。
@@ -132,7 +162,7 @@ MySQL [querypie]> SELECT COUNT(*) FROM certificates;
 +----------+
 1 row in set (0.001 sec)
 
-MySQL [querypie]> 
+MySQL [querypie]>
 ```
 
 次のSQLを実行すると、インストールされたライセンスファイルを削除します。
@@ -142,7 +172,7 @@ MySQL [querypie]>
 MySQL [querypie]> DELETE FROM certificates;
 Query OK, 1 row affected (0.007 sec)
 
-MySQL [querypie]> 
+MySQL [querypie]>
 ```
 
 その後exitコマンドを入力して、Container内部から抜け出します。
@@ -151,7 +181,7 @@ MySQL [querypie]> exit
 Bye
 022f073afae5:/app# exit
 exit
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 
@@ -167,7 +197,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 ubuntu@querypie:~/querypie/10.2.4$ docker-compose --env-file compose-env --profile tools up -d
 [+] Running 1/1
  ⠿ Container querypie-tools-1  Started  0.2s
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `curl`コマンドで`license.crt`というライセンスファイルをQueryPie ToolsのAPIを通じてインストールします。`license.crt`ライセンスファイル名は例であり、技術サポート担当者から受け取った製品のライセンスファイルをサーバに移動して保存したものです。
@@ -177,7 +207,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 ```
 ubuntu@querypie:~/querypie/10.2.4$ curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
 [License] Upload: Success
-ubuntu@querypie:~/querypie/10.2.4$ 
+ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 `[License] Upload: Success`という応答メッセージに遭遇した場合、正常にライセンスがインストールされたものです。

@@ -37,24 +37,27 @@ import { Callout } from 'nextra/components'
 
 #### 2.2 Local Environment Preparation
 
-1. Install and configure AWS CLI
-  ```bash
+AWS CLI installation and configuration
+```bash
 brew install awscli
 aws configure  # Requires Access Key and Secret Key
-  ```
-2. Install kubectl
-  ```bash
+```
+
+kubectl installation
+```bash
 brew install kubectl
-  ```
-3. Install Helm (version 3.10.0 or higher required)
-  ```bash
+```
+
+Helm installation (version 3.10.0 or higher required)
+```bash
 brew install helm
-  ```
-4. Install optional tools (recommended)
-  ```bash
+```
+
+Optional tools installation (recommended)
+```bash
 brew install kubectx  # Context switching tool
 brew install fzf      # Command-line fuzzy finder
-  ```
+```
 
 #### 2.3 Access Permission Requirements
 
@@ -345,7 +348,7 @@ REDIS_NODES=redis:6379
 REDIS_PASSWORD={your-redis-password}
 ```
 
-1. Register the environment configuration file as a Secret.
+Register the environment configuration file as a Secret.
 ```bash
 kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
 ```
@@ -396,9 +399,12 @@ serviceAccount:
   labels: {}
   annotations: {}
   # -- The name of the secret used for pulling the QueryPie image from the private registry.
-  # To create, run `kubectl create secret docker-registry querypie-regcred --docker-server=harbor.chequer.io --docker-username=admin --docker-password=your-password`
-  imagePullSecrets:
-    - name: querypie-regcred
+  # For Docker Hub: Set imagePullSecrets to an empty array ([]) or remove this section.
+  # For Harbor: Create the querypie-regcred secret and uncomment below.
+  imagePullSecrets: []
+  # Uncomment below when using Harbor registry:
+  # imagePullSecrets:
+  #   - name: querypie-regcred
 
 querypie:
   # -- Labels used for QueryPie pods.
@@ -430,7 +436,7 @@ querypie:
     # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
     ingressClassName: ""
     # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
-    host: querypie.querypie.io #Enter the actually configured url
+    host: querypie.querypie.io # Replace with your actual URL
     # -- Extra paths used for the Ingress resource.
     # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
 
@@ -462,12 +468,16 @@ querypie:
       cpu: "2000m"
       # -- More than 16Gi memory is recommended.
       memory: 16Gi
+  # -- Logrotator configuration
+  # Starting from version 11.3.0, log rotation is built into the main container.
+  # The logrotator image is only available on Harbor registry.
+  # When using Docker Hub, this must be disabled.
   logrotator:
-    image:
-      # -- (string) Registry used for the Logrotate image. If not set, the global registry will be used.
-      repository: querypie/logrotate
-      # -- (string) Tag used for the Logrotate image. If not set, the global tag will be used.
-      tag: latest
+    enabled: false
+    # Uncomment below and set enabled: true when using Harbor registry:
+    # image:
+    #   repository: querypie/logrotate
+    #   tag: latest
   # -- External storage for the QueryPie Object Storage.
   externalStorage:
     # -- Type of the external storage.
@@ -508,7 +518,7 @@ tools:
 config:
   # -- External URL that users use to access the QueryPie via web.
   # Specify the scheme, hostname, and port is required.
-  externalURL: "https://querypie.querypie.io" #Enter the actually configured url
+  externalURL: "https://querypie.querypie.io" # Replace with your actual URL
   secretName: "querypie-secret"
 
   database:
@@ -540,42 +550,48 @@ config:
 
 #### 4.3 QueryPie Installation
 
-1. Install QueryPie using Helm.
+Install QueryPie ACP using Helm.
+Select the Helm version according to the [Product Versions](../product-versions) of QueryPie ACP.
+The Chart version in this document is provided as an example.
 ```bash
-helm upgrade --install poc querypie/querypie --version 1.4.1 -n querypie -f values.yaml
+helm upgrade --install poc querypie/querypie --version 1.4.4 -n querypie -f values.yaml
 ```
 
-1. Run database migration.
+Run database migration.
+
+<Callout type="important">
+This step must be executed.
+
+If not executed, the error `Table 'querypie.system_settings' doesn't exist` will occur and the QueryPie Pod will not start normally.
+
+This command creates the required schema and initial data in the MySQL database.
+</Callout>
 ```bash
 kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
 ```
 
-1. Register license. (Prepare license file.)
-```bash
-kubectl port-forward -n querypie deploy/poc-querypie-tools 8050:8050 &
-curl -X POST http://127.0.0.1:8050/license/upload -F file=@license.crt
-[License] Upload: Success  # Result
-# Stop port-forward
-jobs
-kill %1
-```
 
 #### 4.4 Installation Verification
 
-1. Check Pod status.
+Check Pod status.
 ```bash
 kubectl get pods -n querypie
 ```
 
-1. Check logs.
+Check logs.
 ```bash
 kubectl logs pod/poc-querypie-0 -f
 ```
 
-1. Check service access.
+Check service access.
 ```bash
 kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ```
+
+Then proceed with initial setup.
+
+* [License Installation](../license-installation)
+* Proceed with the basic setup procedures in [Installation Guide - setup.v2.sh](installation-guide-setupv2sh). Follow the procedures divided into common settings and product-specific settings.
 
 ### 5. Troubleshooting Guide
 
@@ -584,13 +600,13 @@ kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ##### 5.1.1 Check Cluster Access Permissions
 
 ```bash
-# Check cluster access
+# Verify cluster access
 kubectl cluster-info
 
 # Check current context
 kubectl config current-context
 
-# Check namespace access permissions
+# Verify namespace access permissions
 kubectl auth can-i create deployment -n querypie
 ```
 
@@ -609,59 +625,63 @@ kubectl get storageclass
 ##### 5.2.1 Check Pod Status
 
 ```bash
-# Query Pod status
+# Check pod status
 kubectl get pods -n querypie
 
-# Check Pod detailed information
+# Check pod details
 kubectl describe pod <pod-name> -n querypie
 
-# Check Pod logs
+# Check pod logs
 kubectl logs <pod-name> -n querypie
 kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restarted
 ```
 
 Key problem statuses and checks:
 
-* `ImagePullBackOff`: Check Harbor registry authentication information
+* `ImagePullBackOff`: Check Container Registry authentication information
+    * When using Docker Hub: Check `registry: docker.io` setting in `values.yaml`, verify `imagePullSecrets: []` setting
+    * When using Harbor: Verify `querypie-regcred` Secret creation
+* `logrotator` image error: Check `logrotator.enabled: false` setting (logrotator image is not provided on Docker Hub)
 * `Pending`: Check if node resources are insufficient
 * `CrashLoopBackOff`: Check application errors through logs
+* `Table 'querypie.system_settings' doesn't exist` error: DB migration not executed → Need to run `migrate.sh runall` command
 
 ##### 5.2.2 Check Service Connections
 
 ```bash
-# Check Service status
+# Check service status
 kubectl get svc -n querypie
 
-# Check Endpoints
+# Check endpoints
 kubectl get endpoints -n querypie
 
-# Test MySQL Service connection
+# Test MySQL service connection
 kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
 
-# Test Redis Service connection
+# Test Redis service connection
 kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
 ```
 
 ##### 5.2.3 Check Ingress
 
 ```bash
-# Check Ingress status
+# Check ingress status
 kubectl get ingress -n querypie
 
-# Check Ingress detailed information
+# Check ingress details
 kubectl describe ingress -n querypie
 ```
 
 #### 5.3 Resource Monitoring
 
 ```bash
-# Check Pod CPU/Memory usage
+# Check pod CPU/Memory usage
 kubectl top pods -n querypie
 
-# Check Node CPU/Memory usage
+# Check node CPU/Memory usage
 kubectl top nodes
 
-# Check resource limits of specific Pod
+# Check resource limits for a specific pod
 kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
 ```
 
@@ -683,7 +703,8 @@ kubectl get pvc -n querypie
 
 If troubleshooting is difficult, collect the following information and contact the support team:
 
-1. Environment information
+##### 5.5.1 Environment Information
+
 ```bash
 # Kubernetes version
 kubectl version --short
@@ -695,19 +716,21 @@ kubectl get nodes -o wide
 helm version
 ```
 
-1. QueryPie status information
+##### 5.5.2 QueryPie Status Information
+
 ```bash
 # Helm deployment status
 helm status poc -n querypie
 
-# Pod detailed information
+# Pod details
 kubectl describe pod/poc-querypie-0 -n querypie
 
-# Recent event list
+# Recent events list
 kubectl get events -n querypie --sort-by='.lastTimestamp'
 ```
 
-1. Log information
+##### 5.5.3 Log Information
+
 ```bash
 # Save QueryPie logs
 kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
@@ -722,3 +745,4 @@ kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.nam
 * [Amazon EKS Workshop](https://www.eksworkshop.com)
 * [Amazon EKS Documentation](https://docs.aws.amazon.com/eks/)
 * [Kubernetes Official Documentation](https://kubernetes.io/docs/)
+

@@ -37,24 +37,27 @@ import { Callout } from 'nextra/components'
 
 #### 2.2 ローカル環境準備事項
 
-1. AWS CLIインストールおよび構成
-  ```bash
+AWS CLIインストールおよび構成
+```bash
 brew install awscli
 aws configure  # Requires Access Key and Secret Key
-  ```
-2. kubectlインストール
-  ```bash
+```
+
+kubectlインストール
+```bash
 brew install kubectl
-  ```
-3. Helmインストール（バージョン3.10.0以上必須）
-  ```bash
+```
+
+Helmインストール（バージョン3.10.0以上必須）
+```bash
 brew install helm
-  ```
-4. 選択的ツールインストール（推奨）
-  ```bash
+```
+
+選択的ツールインストール（推奨）
+```bash
 brew install kubectx  # Context switching tool
 brew install fzf      # Command-line fuzzy finder
-  ```
+```
 
 #### 2.3 アクセス権限要件
 
@@ -345,7 +348,7 @@ REDIS_NODES=redis:6379
 REDIS_PASSWORD={your-redis-password}
 ```
 
-1. 環境設定ファイルをSecretとして登録します。
+環境設定ファイルをSecretとして登録します。
 ```bash
 kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
 ```
@@ -396,9 +399,12 @@ serviceAccount:
   labels: {}
   annotations: {}
   # -- The name of the secret used for pulling the QueryPie image from the private registry.
-  # To create, run `kubectl create secret docker-registry querypie-regcred --docker-server=harbor.chequer.io --docker-username=admin --docker-password=your-password`
-  imagePullSecrets:
-    - name: querypie-regcred
+  # For Docker Hub: Set imagePullSecrets to an empty array ([]) or remove this section.
+  # For Harbor: Create the querypie-regcred secret and uncomment below.
+  imagePullSecrets: []
+  # Uncomment below when using Harbor registry:
+  # imagePullSecrets:
+  #   - name: querypie-regcred
 
 querypie:
   # -- Labels used for QueryPie pods.
@@ -430,7 +436,7 @@ querypie:
     # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
     ingressClassName: ""
     # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
-    host: querypie.querypie.io #実際設定されたurl入力
+    host: querypie.querypie.io # 実際に設定されたURLを入力
     # -- Extra paths used for the Ingress resource.
     # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
 
@@ -462,12 +468,16 @@ querypie:
       cpu: "2000m"
       # -- More than 16Gi memory is recommended.
       memory: 16Gi
+  # -- Logrotator設定
+  # バージョン11.3.0からログローテーションはメインコンテナに組み込まれています。
+  # logrotatorイメージはHarborレジストリでのみ利用可能です。
+  # Docker Hub使用時はこれを無効にする必要があります。
   logrotator:
-    image:
-      # -- (string) Registry used for the Logrotate image. If not set, the global registry will be used.
-      repository: querypie/logrotate
-      # -- (string) Tag used for the Logrotate image. If not set, the global tag will be used.
-      tag: latest
+    enabled: false
+    # Harbor registry使用時は以下のコメントを解除してenabled: trueに設定してください：
+    # image:
+    #   repository: querypie/logrotate
+    #   tag: latest
   # -- External storage for the QueryPie Object Storage.
   externalStorage:
     # -- Type of the external storage.
@@ -508,7 +518,7 @@ tools:
 config:
   # -- External URL that users use to access the QueryPie via web.
   # Specify the scheme, hostname, and port is required.
-  externalURL: "https://querypie.querypie.io" #実際設定されたurl入力
+  externalURL: "https://querypie.querypie.io" # 実際に設定されたURLを入力
   secretName: "querypie-secret"
 
   database:
@@ -540,42 +550,48 @@ config:
 
 #### 4.3 QueryPieインストール
 
-1. Helmを使用してQueryPieをインストールします。
+Helmを使用してQueryPie ACPをインストールします。
+QueryPie ACPの[製品バージョン](../product-versions)に従って、Helmバージョンを選択します。
+この文書のChartバージョンは例として示されたものです。
 ```bash
-helm upgrade --install poc querypie/querypie --version 1.4.1 -n querypie -f values.yaml
+helm upgrade --install poc querypie/querypie --version 1.4.4 -n querypie -f values.yaml
 ```
 
-1. データベースマイグレーションを実行します。
+データベースマイグレーションを実行します。
+
+<Callout type="important">
+このステップは必ず実行する必要があります。
+
+実行しないと`Table 'querypie.system_settings' doesn't exist`エラーが発生し、QueryPie Podが正常に起動しません。
+
+このコマンドはMySQLデータベースに必要なスキーマと初期データを作成します。
+</Callout>
 ```bash
 kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
 ```
 
-1. ライセンスを登録します。（ライセンスファイルを準備しておきます。）
-```bash
-kubectl port-forward -n querypie deploy/poc-querypie-tools 8050:8050 &
-curl -X POST http://127.0.0.1:8050/license/upload -F file=@license.crt
-[License] Upload: Success  # 結果
-# port-forward終了
-jobs
-kill %1
-```
 
 #### 4.4 インストール確認
 
-1. Pod状態を確認します。
+Pod状態を確認します。
 ```bash
 kubectl get pods -n querypie
 ```
 
-1. ログを確認します。
+ログを確認します。
 ```bash
 kubectl logs pod/poc-querypie-0 -f
 ```
 
-1. サービス接続を確認します。
+サービス接続を確認します。
 ```bash
 kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 ```
+
+その後、初期設定過程を進行します。
+
+* [ライセンスインストール](../license-installation)
+* [インストールガイド - setup.v2.sh](installation-guide-setupv2sh)の基本設定手順を進行します。共通設定、製品別設定に分かれた手順を進行します。
 
 ### 5. 問題解決ガイド
 
@@ -622,9 +638,13 @@ kubectl logs <pod-name> -n querypie --previous  # 再起動された場合以前
 
 主要問題状態および確認事項：
 
-* `ImagePullBackOff`: Harborレジストリ認証情報確認
+* `ImagePullBackOff`: Container Registry認証情報確認
+    * Docker Hub使用時：`values.yaml`で`registry: docker.io`設定確認、`imagePullSecrets: []`設定確認
+    * Harbor使用時：`querypie-regcred` Secret作成有無確認
+* `logrotator`イメージエラー時：`logrotator.enabled: false`設定確認（Docker Hubではlogrotatorイメージが提供されません）
 * `Pending`: ノードのリソース不足の有無確認
 * `CrashLoopBackOff`: ログを通じてアプリケーションエラー確認
+* `Table 'querypie.system_settings' doesn't exist`エラー：DBマイグレーション未実行 → `migrate.sh runall`コマンド実行が必要
 
 ##### 5.2.2 サービス接続確認
 
@@ -683,7 +703,8 @@ kubectl get pvc -n querypie
 
 問題解決が困難な場合、次の情報を収集してサポートチームに問い合わせてください：
 
-1. 環境情報
+##### 5.5.1 環境情報
+
 ```bash
 # Kubernetesバージョン
 kubectl version --short
@@ -695,7 +716,8 @@ kubectl get nodes -o wide
 helm version
 ```
 
-1. QueryPie状態情報
+##### 5.5.2 QueryPie状態情報
+
 ```bash
 # Helm配布状態
 helm status poc -n querypie
@@ -707,7 +729,8 @@ kubectl describe pod/poc-querypie-0 -n querypie
 kubectl get events -n querypie --sort-by='.lastTimestamp'
 ```
 
-1. ログ情報
+##### 5.5.3 ログ情報
+
 ```bash
 # QueryPieログ保存
 kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
@@ -722,3 +745,4 @@ kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.nam
 * [Amazon EKS Workshop](https://www.eksworkshop.com)
 * [Amazon EKS文書](https://docs.aws.amazon.com/eks/)
 * [Kubernetes公式文書](https://kubernetes.io/docs/)
+
