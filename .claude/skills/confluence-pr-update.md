@@ -83,6 +83,8 @@ python3 bin/mdx_to_skeleton.py --recursive --max-diff=10
 python3 bin/mdx_to_skeleton.py ../src/content/en/path/to/file.mdx
 ```
 
+**중요**: Skeleton MDX 비교는 빈 줄의 누락/추가 차이도 감지합니다. 영어/일본어 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다. Skeleton 비교에서 발견된 빈 줄 차이를 무시하지 마세요.
+
 **상세**: [.claude/skills/mdx-skeleton-comparison.md](/.claude/skills/mdx-skeleton-comparison.md)
 
 ### Step 6: 코드 블록 일치 확인
@@ -105,24 +107,7 @@ kubectl get nodes
 
 코드 블록 내 주석은 번역하지 않고 원본(주로 영어) 그대로 유지합니다.
 
-### Step 7: 라인 수 및 빈 줄 위치 일치 (필수)
-
-**필수 요건**: 영어/일본어 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다.
-
-- 파일의 총 라인 수가 동일해야 합니다.
-- 빈 줄의 위치가 동일해야 합니다.
-- 파일 끝의 빈 줄 유무도 한국어 원본과 동일해야 합니다.
-
-```bash
-# 라인 수 비교
-wc -l src/content/ko/path/to/file.mdx
-wc -l src/content/en/path/to/file.mdx
-wc -l src/content/ja/path/to/file.mdx
-```
-
-라인 수가 다르면 빈 줄을 추가하거나 제거하여 한국어 원본과 일치시킵니다.
-
-### Step 8: 변경사항 커밋
+### Step 7: 변경사항 커밋
 
 ```bash
 # 변경사항 확인
@@ -145,7 +130,7 @@ EOF
 git push origin HEAD
 ```
 
-### Step 9: PR 제목/설명 업데이트 (필요 시)
+### Step 8: PR 제목/설명 업데이트 (필요 시)
 
 ```bash
 # PR 제목 업데이트
@@ -173,9 +158,8 @@ EOF
 - [ ] 첨부파일 누락 시 `--attachments` 옵션으로 동기화 재실행
 - [ ] 영어 번역 완료
 - [ ] 일본어 번역 완료
-- [ ] Skeleton MDX 비교 통과
+- [ ] Skeleton MDX 비교 통과 (빈 줄 차이 포함)
 - [ ] 코드 블록 내용 일치 확인
-- [ ] 후행 공백 줄 제거
 - [ ] 커밋 및 푸시
 - [ ] PR 제목/설명 업데이트
 
