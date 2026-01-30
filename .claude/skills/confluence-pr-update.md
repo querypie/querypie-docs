@@ -21,9 +21,19 @@ git fetch origin
 git checkout mdx/confluence-updates-YYYYMMDD-HHMMSS
 ```
 
-### Step 2: Confluence 동기화 재실행 (이미지 포함)
+### Step 2: 첨부파일 누락 확인 및 동기화 재실행
 
-워크플로우에서 `--recent` 옵션만 사용한 경우, 이미지를 포함하려면 로컬에서 재실행합니다:
+MDX 파일에서 참조하는 이미지가 `public/` 디렉토리에 존재하는지 확인합니다. **첨부파일이 누락된 경우에만** 로컬에서 동기화를 재실행합니다.
+
+```bash
+# 변경된 MDX 파일에서 참조하는 이미지 경로 확인
+# 예: <figure src="/path/to/image.png" ... />
+
+# 해당 이미지가 public/ 디렉토리에 존재하는지 확인
+ls public/path/to/image.png
+```
+
+**첨부파일이 누락된 경우에만** 다음을 실행합니다:
 
 ```bash
 cd confluence-mdx
@@ -33,7 +43,7 @@ source venv/bin/activate
 python3 bin/pages_of_confluence.py --recent --attachments
 ```
 
-**참고**: `--attachments` 옵션은 Confluence 페이지의 첨부 이미지를 `public/` 디렉토리에 복사합니다.
+**참고**: `--attachments` 옵션은 Confluence 페이지의 첨부 이미지를 `public/` 디렉토리에 복사합니다. 이미 모든 첨부파일이 존재하면 이 단계를 건너뜁니다.
 
 ### Step 3: 변경된 한국어 문서 확인
 
@@ -147,7 +157,7 @@ EOF
 ## 체크리스트
 
 - [ ] PR 브랜치 체크아웃
-- [ ] `--attachments` 옵션으로 이미지 포함 확인
+- [ ] 첨부파일 누락 시 `--attachments` 옵션으로 동기화 재실행
 - [ ] 영어 번역 완료
 - [ ] 일본어 번역 완료
 - [ ] Skeleton MDX 비교 통과
