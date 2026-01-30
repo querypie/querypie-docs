@@ -7,750 +7,219 @@ import { Callout } from 'nextra/components'
 
 # AWS EKS 환경에서 설치하기
 
-### 1. 개요
+## 1. 개요
 
-#### 1.1 목적
+### 1.1 목적
 
-* AWS EKS 클러스터에 QueryPie를 설치하고 구성하는 전체 과정 안내
-* 안정적인 운영을 위한 설정 가이드 제공
+* AWS EKS 클러스터에 QueryPie ACP를 Helm Chart로 설치하는 전체 과정 안내
+* Demo 모드(빠른 시작)와 Production 모드(외부 관리형 DB) 설치 방법 제공
 
-#### 1.2 대상 독자
+### 1.2 대상 독자
 
 * Kubernetes 기본 개념(Pod, Service, Deployment 등)을 이해하고 있는 엔지니어
 * AWS EKS 사용 경험이 있는 엔지니어
 
-#### 1.3 예상 소요 시간
+## 2. 아키텍처
 
-* 전체 설치 과정: 약 1시간
-* 환경 구성: 15분
-* 기본 컴포넌트(MySQL, Redis) 설치: 15분
-* QueryPie 설치: 20분
-* 설치 검증 및 초기 설정: 10분
+### 2.1 시스템 구성도
 
-### 2. 사전 요구사항
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         AWS Cloud                               │
+│                                                                 │
+│    ┌─────────────────┐         ┌─────────────────┐              │
+│    │    Route53      │         │      ACM        │              │
+│    │ (DNS Records)   │         │ (TLS Certificate)│             │
+│    └────────┬────────┘         └────────┬────────┘              │
+│             │                           │                       │
+│             ▼                           ▼                       │
+│    ┌─────────────────────────────────────────────┐              │
+│    │        ALB (Application Load Balancer)      │              │
+│    │           HTTPS:443 termination             │              │
+│    └─────────────────────┬───────────────────────┘              │
+│                          │                                      │
+│    ┌─────────────────────┴───────────────────────┐              │
+│    │              EKS Cluster                    │              │
+│    │  ┌───────────────────────────────────────┐  │              │
+│    │  │      AWS Load Balancer Controller     │  │              │
+│    │  │           (Ingress Controller)        │  │              │
+│    │  └───────────────────┬───────────────────┘  │              │
+│    │                      │                      │              │
+│    │  ┌───────────────────┴───────────────────┐  │              │
+│    │  │         Namespace: querypie           │  │              │
+│    │  │  ┌─────────────────────────────────┐  │  │              │
+│    │  │  │      QueryPie StatefulSet       │  │  │              │
+│    │  │  │         (querypie-0)            │  │  │              │
+│    │  │  └──────────────┬──────────────────┘  │  │              │
+│    │  │                 │                     │  │              │
+│    │  │       ┌─────────┴─────────┐           │  │              │
+│    │  │       ▼                   ▼           │  │              │
+│    │  │  ┌─────────┐        ┌─────────┐       │  │              │
+│    │  │  │  MySQL  │        │  Redis  │       │  │              │
+│    │  │  │ (Demo)  │        │ (Demo)  │       │  │              │
+│    │  │  └─────────┘        └─────────┘       │  │              │
+│    │  └───────────────────────────────────────┘  │              │
+│    └─────────────────────────────────────────────┘              │
+│                                                                 │
+│    ┌─────────────────┐                                          │
+│    │  NLB (Proxy)    │  ← User Agent 연결용                      │
+│    │  TCP: 9000,     │    (DAC/SAC/KAC/WAC)                      │
+│    │  6443, 7447     │                                          │
+│    └─────────────────┘                                          │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-#### 2.1 인프라 요구사항
+### 2.2 구성 요소
 
-* EKS 클러스터
-    * 권장 노드 사양: m7i.xlarge (4 vCPU, 16GB RAM)
-    * Kubernetes 버전: 1.24 이상
-    * 필요 노드 수: 최소 1개 (프로덕션 환경은 3개 이상 권장)
+| 구성 요소 | 설명 |
+|----------|------|
+| ALB (Application Load Balancer) | HTTPS 트래픽 처리, ACM 인증서로 TLS 종료 |
+| NLB (Network Load Balancer) | User Agent 연결용 TCP 트래픽 처리 (9000, 6443, 7447 포트) |
+| AWS Load Balancer Controller | Kubernetes Ingress를 ALB/NLB로 프로비저닝 |
+| QueryPie StatefulSet | QueryPie 애플리케이션 컨테이너 |
+| MySQL (Demo) | 메타데이터 저장소 (Demo 모드에서 자동 배포) |
+| Redis (Demo) | 세션 및 캐시 저장소 (Demo 모드에서 자동 배포) |
 
-#### 2.2 로컬 환경 준비사항
+## 3. 설치 방식 선택
 
-AWS CLI 설치 및 구성
+QueryPie EKS 설치는 두 가지 모드를 지원합니다.
+
+### 3.1 Demo 모드 (권장: PoC/테스트 환경)
+
+Helm Chart의 `demo.enabled: true` 옵션을 사용하여 MySQL과 Redis를 EKS 클러스터 내에 자동 배포합니다.
+
+**장점:**
+* 빠른 설치 (외부 DB 설정 불필요)
+* 단일 Helm 명령으로 전체 스택 배포
+* PoC, 데모, 개발 환경에 적합
+
+**제약:**
+* 단일 노드 DB (고가용성 미지원)
+* 데이터 백업/복구는 수동 관리 필요
+
+### 3.2 Production 모드
+
+외부 관리형 데이터베이스를 사용합니다.
+
+**권장 구성:**
+* MySQL: Amazon RDS for MySQL 또는 Aurora MySQL
+* Redis: Amazon ElastiCache for Redis
+
+**장점:**
+* 고가용성 및 자동 백업
+* 독립적인 DB 스케일링
+* 프로덕션 환경에 적합
+
+## 4. 사전 요구사항
+
+### 4.1 EKS 클러스터 요구사항
+
+| 항목 | 요구사항 |
+|------|---------|
+| Kubernetes 버전 | 1.24 이상 |
+| 노드 타입 | m7i.xlarge (4 vCPU, 16GB RAM) 이상 권장 |
+| 노드 수 | 최소 2개 (프로덕션 환경은 3개 이상 권장) |
+
+<Callout type="warning">
+**메모리 설정 주의사항**
+
+m7i.xlarge 노드(16GB RAM)의 실제 allocatable memory는 약 15Gi입니다.
+Helm values에서 메모리를 16Gi로 설정하면 `Insufficient memory` 에러가 발생합니다.
+Demo/PoC 환경에서는 8Gi 설정을 권장합니다.
+</Callout>
+
+### 4.2 필수 AWS 구성 요소
+
+EKS 클러스터에 QueryPie를 설치하기 전에 다음 AWS 리소스를 구성해야 합니다:
+
+| 구성 요소 | 설명 | 필수 여부 |
+|----------|------|----------|
+| OIDC Provider | IAM Role과 Kubernetes Service Account 연동 | 필수 |
+| EBS CSI Driver | PersistentVolume 프로비저닝 | 필수 |
+| AWS Load Balancer Controller | ALB/NLB Ingress 프로비저닝 | 필수 |
+| ACM 인증서 | HTTPS 통신용 TLS 인증서 | 권장 |
+
+<Callout type="important">
+위 구성 요소가 없으면 PersistentVolume 생성 실패, ALB 미생성 등의 문제가 발생합니다.
+[Part 1: AWS 환경 설정](installing-on-aws-eks-part1-aws-setup) 가이드를 먼저 완료하세요.
+</Callout>
+
+### 4.3 로컬 환경 준비사항
+
+**필수 도구:**
+
 ```bash
+# AWS CLI
 brew install awscli
-aws configure  # Requires Access Key and Secret Key
-```
 
-kubectl 설치
-```bash
+# eksctl (EKS 관리 도구)
+brew tap weaveworks/tap
+brew install weaveworks/tap/eksctl
+
+# kubectl
 brew install kubectl
-```
 
-Helm 설치 (버전 3.10.0 이상 필수)
-```bash
+# Helm (버전 3.10.0 이상 필수)
 brew install helm
 ```
 
-선택적 도구 설치 (추천)
-```bash
-brew install kubectx  # Context switching tool
-brew install fzf      # Command-line fuzzy finder
-```
-
-#### 2.3 접근 권한 요구사항
-
-Container Registry 접근 권한
-
-* Docker Hub: 인증 없이 공개 이미지 사용 가능 (`docker.io/querypie`)
-* Harbor: 별도 계정 정보 필요 (`harbor.chequer.io`)
-    * 계정 정보 (Username/Password)
-    * QueryPie 이미지 접근 권한
-
-#### 2.4 네트워크 요구사항
-
-* 인터넷 연결 (이미지 다운로드용)
-* EKS 클러스터 접근 가능한 네트워크 환경
-* LoadBalancer 사용 가능한 환경 (Ingress 구성용)
-
-### 3. 기본 컴포넌트 설치
-
-시작하기 전에 QueryPie를 설치를 위해 namespaces를 만듭니다.
-```
-kubectl create namespace querypie
-```
-
-#### 3.1 MetaDB(MySQL) 설치
-
-MySQL은 QueryPie의 메타데이터를 저장하는 데이터베이스로 사용됩니다.
-
-##### 3.1.1 Persistent Volume 생성
-
-아래 내용으로 `pv.yml` 파일을 생성합니다.
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: local-pv
-  labels:
-    app: mysql     
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /var/lib/mysql
-    type: DirectoryOrCreate
-```
-
-PV를 생성합니다.
-```bash
-kubectl apply -f pv.yml
-```
-
-##### 3.1.2 MySQL StatefulSet 배포
-
-아래 내용으로 `mysql.yml` 파일을 생성합니다. `MYSQL_PASSWORD` 의 비밀번호는 고객사의 정책에 따라 다른 값을 지정합니다.
-```yaml
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: mysql
-  namespace: querypie
-spec:
-  selector:
-    matchLabels:
-      app: mysql
-  serviceName: mysql
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-        - name: mysql
-          image: mysql:8.0
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: querypie
-            - name: MYSQL_DATABASE
-              value: querypie
-            - name: MYSQL_USER
-              value: querypie
-            - name: MYSQL_PASSWORD
-              value: "{your-mysql-password}"
-          resources:
-            requests:
-              cpu: "0.5"
-              memory: "2Gi"
-          ports:
-            - containerPort: 3306
-              name: mysql
-          volumeMounts:
-            - name: data
-              mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 50Gi
-        storageClassName: ""              
-        selector:                       
-          matchLabels:
-            app: mysql
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  namespace: querypie
-  labels:
-    app: mysql
-spec:
-  type: ClusterIP
-  selector:
-    app: mysql
-  ports:
-    - port: 3306
-      targetPort: 3306
-      protocol: TCP
-      name: mysql
-```
-
-MySQL StatefulSet과 Service를 생성합니다.
-```bash
-kubectl apply -f mysql.yml
-```
-
-MySQL Pod가 정상적으로 실행될 때까지 기다립니다.
-```bash
-kubectl get pods -w -n querypie | grep mysql
-```
-
-##### 3.1.3 데이터베이스 초기화
-
-MySQL에 접속합니다.
-```bash
-kubectl exec -it mysql-0 -n querypie -- mysql -u root -p
-# The password is {your-mysql-password} in above example.
-```
-
-필요한 데이터베이스를 생성합니다.
-```sql
-DROP DATABASE IF EXISTS querypie;
-DROP DATABASE IF EXISTS querypie_log;
-DROP DATABASE IF EXISTS querypie_snapshot;
-
-CREATE database querypie CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-CREATE database querypie_log CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-CREATE database querypie_snapshot CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-GRANT ALL privileges ON querypie.* TO querypie@'%';
-GRANT ALL privileges ON querypie_log.* TO querypie@'%';
-GRANT ALL privileges ON querypie_snapshot.* TO querypie@'%';
-
-FLUSH PRIVILEGES;
-```
-
-MySQL을 종료합니다.
-```sql
-exit
-```
-
-#### 3.2 Redis 설치
-
-Redis는 QueryPie의 세션 및 캐시 저장소로 사용됩니다.
-아래 내용으로 `redis.yml` 파일을 생성합니다. `{your-redis-password}` 에는 고객사의 정책에 따라 다른 값을 지정합니다.
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: redis
-  namespace: querypie
-  labels:
-    app: redis
-spec:
-  selector:
-    matchLabels:
-      app: redis
-  template:
-    metadata:
-      labels:
-        app: redis
-    spec:
-      containers:
-        - name: redis
-          image: redis:7
-          imagePullPolicy: IfNotPresent
-          args: ["--requirepass", "{your-redis-password}"]
-          ports:
-            - containerPort: 6379
-              protocol: TCP
-          resources:
-            limits:
-              cpu: "0.1"
-              memory: "1Gi"
-          volumeMounts:
-            - name: redis-data
-              mountPath: /data
-      restartPolicy: Always
-      volumes:
-        - name: redis-data
-          emptyDir: {}
-          # Data is deleted on pod restart. It is OK for cache purposes.
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-  namespace: querypie
-  labels:
-    app: redis
-spec:
-  type: ClusterIP
-  selector:
-    app: redis
-  ports:
-    - port: 6379
-      targetPort: 6379
-      protocol: TCP
-```
-
-Redis Deployment와 Service를 생성합니다.
-```bash
-kubectl apply -f redis.yml
-```
-
-Redis Pod가 정상적으로 실행될 때까지 기다립니다.
-```bash
-kubectl get pods -w -n querypie | grep redis
-```
-
-### 4. QueryPie 설치
-
-#### 4.1 Secret 설정
-
-##### 4.1.1 Container Registry 인증 정보 등록
-
-**Docker Hub 사용 시**
-
-Docker Hub의 공개 이미지를 사용하는 경우, 이 단계를 건너뛰어도 됩니다. `values.yaml`에서 `registry: docker.io`로 설정하면 인증 없이 이미지를 다운로드할 수 있습니다.
-
-**Harbor 사용 시**
-
-Harbor 레지스트리를 사용하는 경우, 아래 명령으로 인증 정보를 등록합니다.
-```bash
-kubectl create secret docker-registry querypie-regcred \
-  --docker-server=harbor.chequer.io \
-  --docker-username='{harbor-id}' \
-  --docker-password='{harbor-pw}' \
-  -n querypie
-```
-
-##### 4.1.2 QueryPie 환경 설정
-
-아래 내용으로 `querypie.env` 파일을 생성합니다.
-환경변수에 대한 가이드를 참조하세요: [컨테이너 환경변수](../container-environment-variables)
-```ini
-# Agent Secret (32-character random string)
-AGENT_SECRET=01234567890123456789012345678912
-KEK=querypie
-
-# QueryPie Meta DB connection info
-DB_CATALOG=querypie
-DB_HOST=mysql
-DB_USERNAME=querypie
-DB_PASSWORD={your-mysql-password}
-DB_PORT=3306
-
-# QueryPie Log DB connection info
-LOG_DB_CATALOG=querypie_log
-LOG_DB_HOST=mysql
-LOG_DB_USERNAME=querypie
-LOG_DB_PASSWORD={your-mysql-password}
-LOG_DB_PORT=3306
-
-# QueryPie Snapshot DB connection info
-ENG_DB_CATALOG=querypie_snapshot
-ENG_DB_HOST=mysql
-ENG_DB_USERNAME=querypie
-ENG_DB_PASSWORD={your-mysql-password}
-ENG_DB_PORT=3306
-
-# Redis connection info
-REDIS_NODES=redis:6379
-REDIS_PASSWORD={your-redis-password}
-```
-
-환경 설정 파일을 Secret으로 등록합니다.
-```bash
-kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
-```
-
-#### 4.2 Helm Chart 설정
-
-##### 4.2.1 Helm Repository 추가
+**AWS 자격 증명 설정:**
 
 ```bash
-# Add repository
-helm repo add querypie https://chequer-io.github.io/querypie-deployment/helm-chart
+# AWS 자격 증명 확인
+aws sts get-caller-identity
 
-# Verify repository list
-helm repo list
+# EKS 클러스터 kubeconfig 설정
+aws eks update-kubeconfig --name <cluster-name> --region <region>
+
+# 클러스터 연결 확인
+kubectl get nodes
 ```
 
-##### 4.2.2 values.yaml 설정
-
-아래 내용으로 `values.yml` 파일을 생성합니다.
-
-<Callout type="info">
-**참고** : 아래 예시는 Docker Hub를 사용하는 사례를 기준으로 합니다.
-Harbor Registry 사용 시 `registry: harbor.chequer.io`로 변경하세요.
-설치할 제품 버전은 [제품 버전](../product-versions) 문서를 참조하여 지정하세요.
-</Callout>
-```yaml
-# -- appVersion: QueryPie version to install. This is an example value.
-# -- Please refer to the Product Versions document for available versions.
-appVersion: &version 11.5.1
-
-global:
-  image:
-    # -- Default registry used for all images
-    # For Docker Hub: docker.io
-    # For Harbor: harbor.chequer.io
-    registry: docker.io
-    # -- Default image tags used for all images
-    tag: *version
-    # -- Default image pull policy for all images
-    pullPolicy: IfNotPresent
-  # -- Default labels for all resources deployed by the chart
-  labels: {}
-
-# -- ServiceAccount for QueryPie and QueryPie tools pods
-# It is created for authenticating private image registry and AWS API.
-# @default -- {}
-serviceAccount:
-  labels: {}
-  annotations: {}
-  # -- The name of the secret used for pulling the QueryPie image from the private registry.
-  # For Docker Hub: Set imagePullSecrets to an empty array ([]) or remove this section.
-  # For Harbor: Create the querypie-regcred secret and uncomment below.
-  imagePullSecrets: []
-  # Uncomment below when using Harbor registry:
-  # imagePullSecrets:
-  #   - name: querypie-regcred
-
-querypie:
-  # -- Labels used for QueryPie pods.
-  labels: {}
-  # -- Annotations used for QueryPie pods.
-  annotations: {}
-  tolerations: {}
-  # -- NodeSelector for QueryPie pods
-  nodeSelector: {}
-  replicas: 1
-  # -- PodManagementPolicy for QueryPie pods. OrderedReady is fine for most cases, but Parallel is also good for large-scale deployments.
-  podManagementPolicy: Parallel
-  image:
-    # -- (string) Registry used for the QueryPie image. If not set, the global registry will be used.
-    registry:
-    # -- (string) Tag used for the QueryPie image. If not set, the global tag will be used.
-    tag:
-    # -- (string) PullPolicy used for the QueryPie image. If not set, the global pullPolicy will be used.
-    pullPolicy:
-    # -- Repository used for the QueryPie image. (required)
-    repository: querypie/querypie
-  ingress:
-    # -- (bool) If true, Ingress resource for QueryPie will be created.
-    enabled: true
-    labels: {}
-    # -- Annotations used for the Ingress resource.
-    # It is useful when you want to enable controller-specific feature for the Ingress resource.
-    annotations: {}
-    # -- (string) Class used for the Ingress resource. If not set, the default class will be used.
-    ingressClassName: ""
-    # -- Hostname used for the Ingress resource. If not set, every hostname will be accepted.
-    host: querypie.querypie.io # Replace with your actual URL
-    # -- Extra paths used for the Ingress resource.
-    # It is mostly used for redirecting HTTP to HTTPS if the ingress controller does not support redirect by default.
-
-  proxyService:
-    # -- Create a service resource for QueryPie Agent connections.
-    # Basically, it opens 9000/tcp port for the QueryPie Agent, and 40000~/tcp for the Agentless connections.
-    enabled: true
-    labels: {}
-    # -- Annotations used for the Service resource.
-    # It is useful when you want to enable controller-specific feature for the Service resource.
-    annotations: {}
-    type: LoadBalancer
-    loadBalancerClass: ""
-    # -- Set the externalTrafficPolicy to Local is recommended for auditing the real client IP address.
-    externalTrafficPolicy: "Local"
-    # -- SessionAffinity is not required for the QueryPie.
-    sessionAffinity: "None"
-  updateStrategy:
-    # -- The strategy used for updating the QueryPie pods.
-    # It is generally recommended to use the RollingUpdate strategy.
-    # But if required, you can change it to OnDelete for manual operations.
-    type: RollingUpdate
-  resources:
-    requests:
-      cpu: "2000m"
-      memory: 16Gi
-    limits:
-      # -- More than 2 CPU cores are recommended.
-      cpu: "2000m"
-      # -- More than 16Gi memory is recommended.
-      memory: 16Gi
-  # -- Logrotator configuration
-  # Starting from version 11.3.0, log rotation is built into the main container.
-  # The logrotator image is only available on Harbor registry.
-  # When using Docker Hub, this must be disabled.
-  logrotator:
-    enabled: false
-    # Uncomment below and set enabled: true when using Harbor registry:
-    # image:
-    #   repository: querypie/logrotate
-    #   tag: latest
-  # -- External storage for the QueryPie Object Storage.
-  externalStorage:
-    # -- Type of the external storage.
-    # - none: No external storage.
-    # - persistentVolumeClaim: using a single Persistent Volume Claim for all QueryPie pods.
-    type: none
-    # -- Use a persistent volume claim for the external storage. It will be available if the type is persistentVolumeClaim.
-    persistentVolumeClaim:
-      # -- Use an existing Persistent Volume Claim for the external storage.
-      # If you set this to true, this helm chart will not create a new Persistent Volume Claim.
-      useExisting: false
-      # -- The name of the existing Persistent Volume Claim to be used.
-      claimName: ""
-      # -- Metadata of the Persistent Volume Claim.
-      metadata:
-        annotations: {}
-        labels: {}
-      # -- Spec of the Persistent Volume Claim.
-      spec:
-        storageClassName: ""
-        resources:
-          requests:
-            storage: 100Gi
-        # -- It is required to have ReadWriteMany access mode on production.
-        accessModes:
-          - ReadWriteMany
-  # -- Extra environment variables used for the QueryPie pods.
-  # This is useful for experimental features, debugging, workaround, and so on.
-  # for example:
-  # API_JVM_HEAPSIZE: '2g' will set the JVM heap size to 2GB.
-  extraEnvs: {}
-
-tools:
-  image:
-    # -- Registry used for the QueryPie tools image. If not set, the global registry will be used.
-    repository: querypie/querypie-tools
-
-config:
-  # -- External URL that users use to access the QueryPie via web.
-  # Specify the scheme, hostname, and port is required.
-  externalURL: "https://querypie.querypie.io" # Replace with your actual URL
-  secretName: "querypie-secret"
-
-  database:
-    querypie:
-      # -- The maximum number of connections that QueryPie can use for "metastore" purposes.
-      connectionPoolSize: 20
-
-  dac:
-    # -- This setting is used to ignore simple queries sent by client tools such as DataGrip.
-    # Please refer to the commented-out example below.
-    skipCommandConfigData: "{}"
-    # skipCommandConfig: |
-    #   {
-    #     "mysql": [
-    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+@@session\\s*\\.\\s*\\w+\\s*$",
-    #       "^(/\\*.*?\\*/)?\\s*SET\\s+session\\s+transaction\\s+\\w+(\\s+\\w+)*\\s*$",
-    #       "^(/\\*.*?\\*/)?\\s*SET\\s+net_write_timeout\\s*=\\s*\\d+\\s*$",
-    #       "^(/\\*.*?\\*/)?\\s*SELECT\\s+database\\s*\\(\\s*\\)\\s*$",
-    #       "^(/\\*.*?\\*/)?\\s*SET\\s+SQL_SELECT_LIMIT\\s*=\\s*\\w+$",
-    #       "^SHOW\\s+VARIABLES\\s+LIKE\\s+'aurora\\\\_version'\\s*$",
-    #       "^SELECT\\s+version\\s*\\(\\s*\\)\\s*,\\s*@@version_comment\\s*,\\s*database\\s*\\(\\s*\\)\\s*$",
-    #       "^SET\\s+autocommit\\s*=\\s*\\d+$",
-    #       "^(/\\*.*?\\*/)\\s*SELECT\\s+((@@session\\s*\\.\\s*|@@)\\w+(\\s+AS\\s+\\w+)?(\\s*,\\s*)?)+\\s*$"
-    #     ]
-    #   }
-    # -- The path where the skip command config file will be mounted.
-    skipCommandConfigFile: /app/arisa/skip_command_config.json
-```
-
-#### 4.3 QueryPie 설치
-
-Helm을 사용하여 QueryPie ACP 를 설치합니다.
-
-QueryPie ACP 의 [제품 버전](../product-versions)에 따라, Helm 버전을 선택합니다.
-
-* QueryPie ACP 11.3.0 또는 이후: Helm Chart 1.5.0 이상의 최신 버전을 사용하세요.
-* QueryPie ACP 11.3.0 이전: Helm Chart 1.4.4 를 사용하세요.
-
-이 문서의 Chart 버전은 예시로 제시된 것입니다.
-```bash
-helm upgrade --install poc querypie/querypie --version 1.5.0 -n querypie -f values.yaml
-```
-
-데이터베이스 마이그레이션을 실행합니다.
-
-<Callout type="important">
-이 단계는 반드시 실행해야 합니다.
-
-실행하지 않으면 `Table 'querypie.system_settings' doesn't exist` 오류가 발생하며 QueryPie Pod가 정상적으로 시작되지 않습니다.
-
-이 명령은 MySQL 데이터베이스에 필요한 스키마와 초기 데이터를 생성합니다.
-</Callout>
-```bash
-kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migrate.sh runall
-```
-
-
-#### 4.4 설치 확인
-
-Pod 상태를 확인합니다.
-```bash
-kubectl get pods -n querypie
-```
-
-로그를 확인합니다.
-```bash
-kubectl logs pod/poc-querypie-0 -f
-```
-
-서비스 접속을 확인합니다.
-```bash
-kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
-```
-
-이후, 처음 설정 과정을 진행합니다.
-
-* [라이선스 설치](../license-installation)
-* [설치 후 초기 설정](../post-installation-setup)문서를 참조하여 공통 설정, 제품별 설정을 진행합니다.
-
-이것으로 제품 설치 과정이 완료되었습니다.
-수고하셨습니다~!
-
-### 5. 문제 해결 가이드
-
-#### 5.1 설치 전 확인사항
-
-##### 5.1.1 클러스터 접근 권한 확인
-
-```bash
-# Verify cluster access
-kubectl cluster-info
-
-# Check current context
-kubectl config current-context
-
-# Verify namespace access permissions
-kubectl auth can-i create deployment -n querypie
-```
-
-##### 5.1.2 리소스 상태 확인
-
-```bash
-# Check node resource status
-kubectl top nodes
-
-# Check available storage classes
-kubectl get storageclass
-```
-
-#### 5.2 일반적인 문제 해결
-
-##### 5.2.1 Pod 상태 확인
-
-```bash
-# Check pod status
-kubectl get pods -n querypie
-
-# Check pod details
-kubectl describe pod <pod-name> -n querypie
-
-# Check pod logs
-kubectl logs <pod-name> -n querypie
-kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restarted
-```
-
-주요 문제 상태 및 확인사항:
-
-* `ImagePullBackOff`: Container Registry 인증 정보 확인
-    * Docker Hub 사용 시: `values.yaml`에서 `registry: docker.io` 설정 확인, `imagePullSecrets: []` 설정 확인
-    * Harbor 사용 시: `querypie-regcred` Secret 생성 여부 확인
-    * `logrotator` 이미지 오류 시: `logrotator.enabled: false` 설정 확인 (Docker Hub에서는 logrotator 이미지가 제공되지 않음)
-* `Pending`: 노드의 리소스 부족 여부 확인
-* `CrashLoopBackOff`: 로그를 통해 애플리케이션 오류 확인
-    * `Table 'querypie.system_settings' doesn't exist` 오류: DB 마이그레이션 미실행 → `migrate.sh runall` 명령 실행 필요
-
-##### 5.2.2 서비스 연결 확인
-
-```bash
-# Check service status
-kubectl get svc -n querypie
-
-# Check endpoints
-kubectl get endpoints -n querypie
-
-# Test MySQL service connection
-kubectl exec -it mysql-0 -- mysql -u querypie -p -h mysql querypie
-
-# Test Redis service connection
-kubectl exec -it $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') -- redis-cli -a querypie ping
-```
-
-##### 5.2.3 Ingress 확인
-
-```bash
-# Check ingress status
-kubectl get ingress -n querypie
-
-# Check ingress details
-kubectl describe ingress -n querypie
-```
-
-#### 5.3 리소스 모니터링
-
-```bash
-# Check pod CPU/Memory usage
-kubectl top pods -n querypie
-
-# Check node CPU/Memory usage
-kubectl top nodes
-
-# Check resource limits for a specific pod
-kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
-```
-
-#### 5.4 설치 구성 확인
-
-```bash
-# Check ConfigMap
-kubectl get configmap -n querypie
-
-# Check Secret list
-kubectl get secrets -n querypie
-
-# Check PV/PVC status
-kubectl get pv
-kubectl get pvc -n querypie
-```
-
-#### 5.5 지원 요청 시 필요한 정보
-
-문제 해결이 어려운 경우, 다음 정보를 수집하여 지원팀에 문의하세요:
-
-##### 5.5.1 환경 정보
-
-```bash
-# Kubernetes version
-kubectl version --short
-
-# Node information
-kubectl get nodes -o wide
-
-# Helm version
-helm version
-```
-
-##### 5.5.2 QueryPie 상태 정보
-
-```bash
-# Helm deployment status
-helm status poc -n querypie
-
-# Pod details
-kubectl describe pod/poc-querypie-0 -n querypie
-
-# Recent events list
-kubectl get events -n querypie --sort-by='.lastTimestamp'
-```
-
-##### 5.5.3 로그 정보
-
-```bash
-# Save QueryPie logs
-kubectl logs pod/poc-querypie-0 -n querypie > querypie.log
-
-# Save related component logs
-kubectl logs mysql-0 > mysql.log
-kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
-```
-
-### 6. 참고 자료
-
-* [Amazon EKS Workshop](https://www.eksworkshop.com)
+### 4.4 네트워크 요구사항
+
+자세한 네트워크 포트 정보는 [시스템 아키텍처와 네트워크 접근제어](../system-architecture-and-network-access-control) 문서를 참조하세요.
+
+## 5. 설치 가이드
+
+설치는 두 단계로 진행됩니다:
+
+### Part 1: AWS 환경 설정
+
+EKS 외부의 AWS 리소스(OIDC Provider, EBS CSI Driver, ALB Controller, ACM 인증서)를 구성합니다.
+
+**[Part 1: AWS 환경 설정 가이드로 이동](installing-on-aws-eks-part1-aws-setup)**
+
+### Part 2: Helm 배포
+
+Kubernetes 리소스를 생성하고 QueryPie를 Helm Chart로 배포합니다.
+
+**[Part 2: Helm 배포 가이드로 이동](installing-on-aws-eks-part2-helm-deployment)**
+
+## 6. 설치 후 설정
+
+설치가 완료되면 다음 설정을 진행합니다.
+
+### 6.1 라이선스 설치
+
+QueryPie 웹 콘솔에 처음 접속하면 라이선스 입력 화면이 표시됩니다.
+PEM 형식의 라이선스를 입력하여 제품을 활성화합니다.
+
+자세한 내용은 [라이선스 설치](../license-installation) 문서를 참조하세요.
+
+### 6.2 기본 설정
+
+라이선스 활성화 후 다음 설정을 진행합니다:
+
+* **QueryPie Web Base URL 설정**: Admin Page → General에서 외부 접근 URL 설정
+* **Proxy 주소 설정**: DAC/SAC, KAC, WAC 기능별 Proxy 접속 주소 설정
+
+자세한 설정 절차는 [설치 가이드 - setup.v2.sh](installation-guide-setupv2sh#기본-설정-절차) 문서의 "기본 설정 절차" 섹션을 참조하세요.
+
+## 7. 참고 자료
+
+* [QueryPie Helm Chart GitHub](https://github.com/chequer-io/querypie-deployment)
+* [제품 버전](../product-versions)
+* [컨테이너 환경변수](../container-environment-variables)
 * [Amazon EKS 문서](https://docs.aws.amazon.com/eks/)
-* [Kubernetes 공식 문서](https://kubernetes.io/docs/)
+* [AWS Load Balancer Controller 문서](https://kubernetes-sigs.github.io/aws-load-balancer-controller/)

@@ -1,0 +1,339 @@
+---
+title: 'AWS EKS 환경에서 설치하기 - Part 1: AWS 환경 설정'
+---
+
+import { Callout } from 'nextra/components'
+
+# AWS EKS 환경에서 설치하기 - Part 1: AWS 환경 설정
+
+EKS 클러스터에 QueryPie를 설치하기 전에 필요한 AWS 리소스를 구성합니다.
+
+<Callout type="info">
+이 가이드는 [AWS EKS 환경에서 설치하기](installing-on-aws-eks)의 Part 1입니다.
+전체 개요와 사전 요구사항은 메인 가이드를 참조하세요.
+</Callout>
+
+## 1. 개요
+
+### 1.1 이 가이드에서 설정하는 항목
+
+| 구성 요소 | 설명 | 필수 여부 |
+|----------|------|----------|
+| OIDC Provider | IAM Role과 Kubernetes Service Account 연동 | 필수 |
+| EBS CSI Driver | PersistentVolume 동적 프로비저닝 | 필수 |
+| AWS Load Balancer Controller | ALB/NLB 자동 생성 | 필수 |
+| ACM 인증서 | HTTPS 통신용 TLS 인증서 | 권장 |
+
+### 1.2 아키텍처
+
+```
+                    Internet
+                        │
+                        ▼
+        ┌───────────────────────────────┐
+        │           Route53             │
+        │      (DNS A Record)           │
+        └───────────────────────────────┘
+                        │
+                        ▼
+        ┌───────────────────────────────┐
+        │    ALB (Application LB)       │
+        │  - HTTPS termination (ACM)    │
+        │  - Health check               │
+        └───────────────────────────────┘
+                        │
+                        ▼
+        ┌───────────────────────────────┐
+        │  AWS Load Balancer Controller │
+        │      (Ingress Controller)     │
+        └───────────────────────────────┘
+                        │
+                        ▼
+        ┌───────────────────────────────┐
+        │         EKS Cluster           │
+        │    ┌─────────────────────┐    │
+        │    │   EBS CSI Driver    │    │
+        │    │  (PV Provisioning)  │    │
+        │    └─────────────────────┘    │
+        └───────────────────────────────┘
+```
+
+## 2. OIDC Provider 연결
+
+EKS 클러스터에서 IAM Role을 Kubernetes Service Account와 연동하려면 OIDC Provider가 필요합니다.
+
+```bash
+eksctl utils associate-iam-oidc-provider \
+  --cluster <cluster-name> \
+  --region <region> \
+  --approve
+```
+
+**확인:**
+
+```bash
+# OIDC Provider URL 확인
+aws eks describe-cluster --name <cluster-name> --region <region> \
+  --query "cluster.identity.oidc.issuer" --output text
+```
+
+## 3. EBS CSI Driver 설치
+
+QueryPie는 PersistentVolume을 사용하므로 EBS CSI Driver가 필수입니다.
+
+<Callout type="warning">
+EBS CSI Driver가 없으면 MySQL PVC 생성 시 다음 에러가 발생합니다:
+```
+failed to provision volume: rpc error: AccessDeniedException:
+User is not authorized to perform: sts:AssumeRoleWithWebIdentity
+```
+</Callout>
+
+### 3.1 IAM Role 생성
+
+```bash
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster <cluster-name> \
+  --region <region> \
+  --role-name AmazonEKS_EBS_CSI_DriverRole_<cluster-name> \
+  --role-only \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve
+```
+
+### 3.2 EBS CSI Driver 애드온 설치
+
+```bash
+# AWS Account ID 확인
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+
+# 애드온 설치
+eksctl create addon \
+  --name aws-ebs-csi-driver \
+  --cluster <cluster-name> \
+  --region <region> \
+  --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole_<cluster-name> \
+  --force
+```
+
+### 3.3 설치 확인
+
+```bash
+kubectl get pods -n kube-system | grep ebs
+```
+
+예상 출력:
+```
+ebs-csi-controller-xxxxx   6/6     Running   0          1m
+ebs-csi-node-xxxxx         3/3     Running   0          1m
+```
+
+## 4. AWS Load Balancer Controller 설치
+
+Kubernetes Ingress 리소스를 AWS ALB로 프로비저닝하는 Controller입니다.
+
+### 4.1 IAM Policy 생성
+
+<Callout type="info">
+이미 `AWSLoadBalancerControllerIAMPolicy`가 존재하는 경우 이 단계를 건너뛰고 4.2로 진행하세요.
+```bash
+# 기존 Policy 확인
+aws iam list-policies --scope Local \
+  --query "Policies[?PolicyName=='AWSLoadBalancerControllerIAMPolicy'].Arn" --output text
+```
+</Callout>
+
+**신규 생성:**
+
+```bash
+# 최신 Policy 다운로드
+curl -o iam_policy.json \
+  https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.11.0/docs/install/iam_policy.json
+
+# IAM Policy 생성
+aws iam create-policy \
+  --policy-name AWSLoadBalancerControllerIAMPolicy \
+  --policy-document file://iam_policy.json
+```
+
+### 4.2 IAM Policy 업데이트 (기존 Policy가 있는 경우)
+
+<Callout type="warning">
+AWS Load Balancer Controller v2.11+ 버전에서는 `DescribeListenerAttributes` 권한이 필요합니다.
+기존 Policy에 이 권한이 없으면 다음 에러가 발생합니다:
+```
+AccessDenied: User is not authorized to perform:
+elasticloadbalancing:DescribeListenerAttributes
+```
+</Callout>
+
+```bash
+# 최신 Policy 다운로드
+curl -o iam_policy_latest.json \
+  https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.11.0/docs/install/iam_policy.json
+
+# AWS Account ID 확인
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+
+# Policy 버전 업데이트
+aws iam create-policy-version \
+  --policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy \
+  --policy-document file://iam_policy_latest.json \
+  --set-as-default
+```
+
+### 4.3 Service Account 생성
+
+```bash
+# AWS Account ID 확인
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+
+eksctl create iamserviceaccount \
+  --cluster <cluster-name> \
+  --region <region> \
+  --namespace kube-system \
+  --name aws-load-balancer-controller \
+  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy \
+  --override-existing-serviceaccounts \
+  --approve
+```
+
+### 4.4 Helm으로 Controller 설치
+
+```bash
+# Helm repo 추가
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update
+
+# VPC ID 조회
+VPC_ID=$(aws eks describe-cluster --name <cluster-name> --region <region> \
+  --query "cluster.resourcesVpcConfig.vpcId" --output text)
+
+# Controller 설치
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=<cluster-name> \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller \
+  --set region=<region> \
+  --set vpcId=${VPC_ID}
+```
+
+### 4.5 설치 확인
+
+```bash
+kubectl get deployment -n kube-system aws-load-balancer-controller
+kubectl get pods -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller
+```
+
+예상 출력:
+```
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+aws-load-balancer-controller   2/2     2            2           1m
+```
+
+## 5. ACM 인증서 생성
+
+HTTPS 통신을 위한 TLS 인증서를 AWS Certificate Manager(ACM)에서 발급합니다.
+
+### 5.1 인증서 요청
+
+```bash
+aws acm request-certificate \
+  --domain-name <your-domain.example.com> \
+  --validation-method DNS \
+  --region <region>
+```
+
+### 5.2 DNS 검증
+
+```bash
+# 인증서 ARN 조회
+CERT_ARN=$(aws acm list-certificates --region <region> \
+  --query "CertificateSummaryList[?DomainName=='<your-domain.example.com>'].CertificateArn" \
+  --output text)
+
+echo "Certificate ARN: $CERT_ARN"
+
+# DNS 검증 정보 조회
+aws acm describe-certificate --certificate-arn $CERT_ARN --region <region> \
+  --query "Certificate.DomainValidationOptions"
+```
+
+Route53에서 출력된 CNAME 레코드를 추가하면 자동으로 검증됩니다.
+
+### 5.3 검증 완료 확인
+
+```bash
+aws acm describe-certificate --certificate-arn $CERT_ARN --region <region> \
+  --query "Certificate.Status"
+```
+
+`ISSUED` 상태가 되면 인증서 사용 가능합니다.
+
+<Callout type="info">
+인증서 ARN은 Part 2 Helm 배포에서 사용됩니다. 메모해 두세요.
+```
+arn:aws:acm:<region>:<account-id>:certificate/<certificate-id>
+```
+</Callout>
+
+## 6. 트러블슈팅
+
+### 6.1 EBS CSI Driver 관련
+
+| 증상 | 원인 | 해결책 |
+|------|------|--------|
+| `AccessDeniedException: sts:AssumeRoleWithWebIdentity` | OIDC Trust Policy 미설정 | 섹션 2, 3 재수행 |
+| PVC가 Pending 상태 | EBS CSI Driver 미설치 | 섹션 3 수행 |
+
+```bash
+# EBS CSI Controller 로그 확인
+kubectl logs -n kube-system -l app=ebs-csi-controller
+```
+
+### 6.2 ALB Controller 관련
+
+| 증상 | 원인 | 해결책 |
+|------|------|--------|
+| `DescribeListenerAttributes` 권한 오류 | IAM Policy 버전 구버전 | 섹션 4.2 수행 |
+| ALB가 생성되지 않음 | Controller Pod 미실행 | Controller 로그 확인 |
+
+```bash
+# ALB Controller 로그 확인
+kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller
+```
+
+### 6.3 ACM 인증서 관련
+
+| 증상 | 원인 | 해결책 |
+|------|------|--------|
+| 인증서 상태가 `PENDING_VALIDATION` | DNS 검증 레코드 미추가 | Route53에 CNAME 레코드 추가 |
+| 인증서를 찾을 수 없음 | 리전 불일치 | ALB와 동일한 리전에 인증서 생성 |
+
+## 7. 다음 단계
+
+AWS 환경 설정이 완료되었습니다.
+
+**[Part 2: Helm 배포 가이드로 이동](installing-on-aws-eks-part2-helm-deployment)**
+
+## 8. 정리 (삭제)
+
+테스트 완료 후 리소스를 삭제하려면:
+
+```bash
+# AWS Load Balancer Controller 삭제
+helm uninstall aws-load-balancer-controller -n kube-system
+
+# Service Account 삭제
+eksctl delete iamserviceaccount \
+  --cluster <cluster-name> \
+  --region <region> \
+  --namespace kube-system \
+  --name aws-load-balancer-controller
+
+# ACM 인증서 삭제 (선택)
+aws acm delete-certificate --certificate-arn $CERT_ARN --region <region>
+```
