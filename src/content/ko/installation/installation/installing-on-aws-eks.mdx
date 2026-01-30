@@ -551,10 +551,15 @@ config:
 #### 4.3 QueryPie 설치
 
 Helm을 사용하여 QueryPie ACP 를 설치합니다.
+
 QueryPie ACP 의 [제품 버전](../product-versions)에 따라, Helm 버전을 선택합니다.
+
+* QueryPie ACP 11.3.0 또는 이후: Helm Chart 1.5.0 이상의 최신 버전을 사용하세요.
+* QueryPie ACP 11.3.0 이전: Helm Chart 1.4.4 를 사용하세요.
+
 이 문서의 Chart 버전은 예시로 제시된 것입니다.
 ```bash
-helm upgrade --install poc querypie/querypie --version 1.4.4 -n querypie -f values.yaml
+helm upgrade --install poc querypie/querypie --version 1.5.0 -n querypie -f values.yaml
 ```
 
 데이터베이스 마이그레이션을 실행합니다.
@@ -641,10 +646,10 @@ kubectl logs <pod-name> -n querypie --previous  # Check previous logs if restart
 * `ImagePullBackOff`: Container Registry 인증 정보 확인
     * Docker Hub 사용 시: `values.yaml`에서 `registry: docker.io` 설정 확인, `imagePullSecrets: []` 설정 확인
     * Harbor 사용 시: `querypie-regcred` Secret 생성 여부 확인
-* `logrotator` 이미지 오류 시: `logrotator.enabled: false` 설정 확인 (Docker Hub에서는 logrotator 이미지가 제공되지 않음)
+    * `logrotator` 이미지 오류 시: `logrotator.enabled: false` 설정 확인 (Docker Hub에서는 logrotator 이미지가 제공되지 않음)
 * `Pending`: 노드의 리소스 부족 여부 확인
 * `CrashLoopBackOff`: 로그를 통해 애플리케이션 오류 확인
-* `Table 'querypie.system_settings' doesn't exist` 오류: DB 마이그레이션 미실행 → `migrate.sh runall` 명령 실행 필요
+    * `Table 'querypie.system_settings' doesn't exist` 오류: DB 마이그레이션 미실행 → `migrate.sh runall` 명령 실행 필요
 
 ##### 5.2.2 서비스 연결 확인
 
