@@ -2,6 +2,8 @@
 title: 'AWS EKS環境でインストール'
 ---
 
+import { Callout } from 'nextra/components'
+
 # AWS EKS環境でインストール
 
 ### 1. 概要
@@ -29,7 +31,7 @@ title: 'AWS EKS環境でインストール'
 #### 2.1 インフラ要件
 
 * EKSクラスタ
-    * 推奨ノード仕様：r5.xlarge（4 vCPU、32GB RAM）
+    * 推奨ノード仕様：m7i.xlarge（4 vCPU、16GB RAM）
     * Kubernetesバージョン：1.24以上
     * 必要ノード数：最小1個（Production環境は3個以上推奨）
 
@@ -38,7 +40,7 @@ title: 'AWS EKS環境でインストール'
 1. AWS CLIインストールおよび構成
   ```bash
 brew install awscli
-aws configure  # Access Key、Secret Key必要
+aws configure  # Requires Access Key and Secret Key
   ```
 2. kubectlインストール
   ```bash
@@ -50,13 +52,16 @@ brew install helm
   ```
 4. 選択的ツールインストール（推奨）
   ```bash
-brew install kubectx  # コンテキスト切り替えツール
-brew install fzf      # コマンドライン曖昧検索
+brew install kubectx  # Context switching tool
+brew install fzf      # Command-line fuzzy finder
   ```
 
 #### 2.3 アクセス権限要件
 
-* Harborレジストリアクセス権限
+Container Registryアクセス権限
+
+* Docker Hub：認証なしで公開イメージ使用可能（`docker.io/querypie`）
+* Harbor：別途アカウント情報必要（`harbor.chequer.io`）
     * アカウント情報（Username/Password）
     * QueryPieイメージアクセス権限
 
@@ -68,7 +73,7 @@ brew install fzf      # コマンドライン曖昧検索
 
 ### 3. 基本コンポーネントインストール
 
-1. 始める前にQueryPieをインストールするためにnamespacesを作成します。
+始める前にQueryPieをインストールするためにnamespacesを作成します。
 ```
 kubectl create namespace querypie
 ```
@@ -79,14 +84,14 @@ MySQLはQueryPieのメタデータを保存するデータベースとして使�
 
 ##### 3.1.1 Persistent Volume生成
 
-1. 以下の内容で`pv.yml`ファイルを生成します。
+以下の内容で`pv.yml`ファイルを生成します。
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: local-pv
   labels:
-    app: mysql     
+    app: mysql
 spec:
   capacity:
     storage: 50Gi
@@ -97,14 +102,14 @@ spec:
     type: DirectoryOrCreate
 ```
 
-1. PVを生成します。
+PVを生成します。
 ```bash
 kubectl apply -f pv.yml
 ```
 
 ##### 3.1.2 MySQL StatefulSet配布
 
-1. 以下の内容で`mysql.yml`ファイルを生成します。
+以下の内容で`mysql.yml`ファイルを生成します。`MYSQL_PASSWORD`のパスワードは顧客社のポリシーに従って異なる値を指定します。
 ```yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -133,7 +138,7 @@ spec:
             - name: MYSQL_USER
               value: querypie
             - name: MYSQL_PASSWORD
-              value: querypie
+              value: "{your-mysql-password}"
           resources:
             requests:
               cpu: "0.5"
@@ -152,8 +157,8 @@ spec:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: ""              
-        selector:                       
+        storageClassName: ""
+        selector:
           matchLabels:
             app: mysql
 ---
@@ -175,25 +180,25 @@ spec:
       name: mysql
 ```
 
-1. MySQL StatefulSetとServiceを生成します。
+MySQL StatefulSetとServiceを生成します。
 ```bash
 kubectl apply -f mysql.yml
 ```
 
-1. MySQL Podが正常に実行されるまで待ちます。
+MySQL Podが正常に実行されるまで待ちます。
 ```bash
 kubectl get pods -w -n querypie | grep mysql
 ```
 
 ##### 3.1.3 データベース初期化
 
-1. MySQLに接続します。
+MySQLに接続します。
 ```bash
 kubectl exec -it mysql-0 -n querypie -- mysql -u root -p
-# パスワード：querypie
+# The password is {your-mysql-password} in above example.
 ```
 
-1. 必要なデータベースを生成します。
+必要なデータベースを生成します。
 ```sql
 DROP DATABASE IF EXISTS querypie;
 DROP DATABASE IF EXISTS querypie_log;
@@ -210,7 +215,7 @@ GRANT ALL privileges ON querypie_snapshot.* TO querypie@'%';
 FLUSH PRIVILEGES;
 ```
 
-1. MySQLを終了します。
+MySQLを終了します。
 ```sql
 exit
 ```
@@ -218,8 +223,7 @@ exit
 #### 3.2 Redisインストール
 
 RedisはQueryPieのセッションおよびキャッシュ保存庫として使用されます。
-
-1. 以下の内容で`redis.yml`ファイルを生成します。
+以下の内容で`redis.yml`ファイルを生成します。`{your-redis-password}`には顧客社のポリシーに従って異なる値を指定します。
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -241,7 +245,7 @@ spec:
         - name: redis
           image: redis:7
           imagePullPolicy: IfNotPresent
-          args: ["--requirepass", "querypie"]
+          args: ["--requirepass", "{your-redis-password}"]
           ports:
             - containerPort: 6379
               protocol: TCP
@@ -255,7 +259,8 @@ spec:
       restartPolicy: Always
       volumes:
         - name: redis-data
-          emptyDir: {}   # パッド再起動時データ削除（キャッシュ用途ならOK）
+          emptyDir: {}
+          # Data is deleted on pod restart. It is OK for cache purposes.
 ---
 apiVersion: v1
 kind: Service
@@ -274,12 +279,12 @@ spec:
       protocol: TCP
 ```
 
-1. Redis DeploymentとServiceを生成します。
+Redis DeploymentとServiceを生成します。
 ```bash
 kubectl apply -f redis.yml
 ```
 
-1. Redis Podが正常に実行されるまで待ちます。
+Redis Podが正常に実行されるまで待ちます。
 ```bash
 kubectl get pods -w -n querypie | grep redis
 ```
@@ -288,8 +293,15 @@ kubectl get pods -w -n querypie | grep redis
 
 #### 4.1 Secret設定
 
-##### 4.1.1 Harborレジストリ認証情報登録
+##### 4.1.1 Container Registry認証情報登録
 
+**Docker Hub使用時**
+
+Docker Hubの公開イメージを使用する場合、このステップをスキップしても構いません。`values.yaml`で`registry: docker.io`に設定すれば認証なしでイメージをダウンロードできます。
+
+**Harbor使用時**
+
+Harborレジストリを使用する場合、以下のコマンドで認証情報を登録します。
 ```bash
 kubectl create secret docker-registry querypie-regcred \
   --docker-server=harbor.chequer.io \
@@ -300,36 +312,37 @@ kubectl create secret docker-registry querypie-regcred \
 
 ##### 4.1.2 QueryPie環境設定
 
-1. 以下の内容で`querypie.env`ファイルを生成します。
+以下の内容で`querypie.env`ファイルを生成します。
+環境変数に関するガイドを参照してください：[コンテナ環境変数](../container-environment-variables)
 ```ini
-# Agent Secret（32文字任意の文字列）
+# Agent Secret (32-character random string)
 AGENT_SECRET=01234567890123456789012345678912
 KEK=querypie
 
-# QueryPie Meta DB接続情報
+# QueryPie Meta DB connection info
 DB_CATALOG=querypie
 DB_HOST=mysql
 DB_USERNAME=querypie
-DB_PASSWORD=querypie
+DB_PASSWORD={your-mysql-password}
 DB_PORT=3306
 
-# QueryPie Log DB接続情報
+# QueryPie Log DB connection info
 LOG_DB_CATALOG=querypie_log
 LOG_DB_HOST=mysql
 LOG_DB_USERNAME=querypie
-LOG_DB_PASSWORD=querypie
+LOG_DB_PASSWORD={your-mysql-password}
 LOG_DB_PORT=3306
 
-# QueryPie Snapshot DB接続情報
+# QueryPie Snapshot DB connection info
 ENG_DB_CATALOG=querypie_snapshot
 ENG_DB_HOST=mysql
 ENG_DB_USERNAME=querypie
-ENG_DB_PASSWORD=querypie
+ENG_DB_PASSWORD={your-mysql-password}
 ENG_DB_PORT=3306
 
-# Redis接続情報
+# Redis connection info
 REDIS_NODES=redis:6379
-REDIS_PASSWORD=querypie
+REDIS_PASSWORD={your-redis-password}
 ```
 
 1. 環境設定ファイルをSecretとして登録します。
@@ -342,23 +355,33 @@ kubectl create secret generic querypie-secret --from-env-file=querypie.env -n qu
 ##### 4.2.1 Helm Repository追加
 
 ```bash
-# Repository追加
+# Add repository
 helm repo add querypie https://chequer-io.github.io/querypie-deployment/helm-chart
 
-# Repositoryリスト確認
+# Verify repository list
 helm repo list
 ```
 
 ##### 4.2.2 values.yaml設定
 
-1. 以下の内容で`values.yml`ファイルを生成します。
+以下の内容で`values.yml`ファイルを生成します。
+
+<Callout type="info">
+**参考**：以下の例はDocker Hubを使用する事例を基準にしています。
+Harbor Registry使用時は`registry: harbor.chequer.io`に変更してください。
+インストールする製品バージョンは[製品バージョン](../product-versions)文書を参照して指定してください。
+</Callout>
 ```yaml
-appVersion: &version 11.3.0
+# -- appVersion: QueryPie version to install. This is an example value.
+# -- Please refer to the Product Versions document for available versions.
+appVersion: &version 11.5.1
 
 global:
-  image: 
+  image:
     # -- Default registry used for all images
-    registry: harbor.chequer.io
+    # For Docker Hub: docker.io
+    # For Harbor: harbor.chequer.io
+    registry: docker.io
     # -- Default image tags used for all images
     tag: *version
     # -- Default image pull policy for all images

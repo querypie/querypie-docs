@@ -2,6 +2,8 @@
 title: 'Installing on AWS EKS Environment'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Installing on AWS EKS Environment
 
 ### 1. Overview
@@ -29,7 +31,7 @@ title: 'Installing on AWS EKS Environment'
 #### 2.1 Infrastructure Requirements
 
 * EKS cluster
-    * Recommended node specifications: r5.xlarge (4 vCPU, 32GB RAM)
+    * Recommended node specifications: m7i.xlarge (4 vCPU, 16GB RAM)
     * Kubernetes version: 1.24 or higher
     * Required number of nodes: minimum 1 (3 or more recommended for production environments)
 
@@ -38,7 +40,7 @@ title: 'Installing on AWS EKS Environment'
 1. Install and configure AWS CLI
   ```bash
 brew install awscli
-aws configure  # Access Key, Secret Key required
+aws configure  # Requires Access Key and Secret Key
   ```
 2. Install kubectl
   ```bash
@@ -56,7 +58,10 @@ brew install fzf      # Command-line fuzzy finder
 
 #### 2.3 Access Permission Requirements
 
-* Harbor registry access permissions
+Container Registry access permissions
+
+* Docker Hub: Public images available without authentication (`docker.io/querypie`)
+* Harbor: Separate account information required (`harbor.chequer.io`)
     * Account information (Username/Password)
     * QueryPie image access permissions
 
@@ -68,7 +73,7 @@ brew install fzf      # Command-line fuzzy finder
 
 ### 3. Basic Component Installation
 
-1. Before starting, create namespaces for QueryPie installation.
+Before starting, create namespaces for QueryPie installation.
 ```
 kubectl create namespace querypie
 ```
@@ -79,14 +84,14 @@ MySQL is used as the database that stores QueryPie's metadata.
 
 ##### 3.1.1 Create Persistent Volume
 
-1. Create a `pv.yml` file with the following content.
+Create a `pv.yml` file with the following content.
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: local-pv
   labels:
-    app: mysql     
+    app: mysql
 spec:
   capacity:
     storage: 50Gi
@@ -97,14 +102,14 @@ spec:
     type: DirectoryOrCreate
 ```
 
-1. Create PV.
+Create PV.
 ```bash
 kubectl apply -f pv.yml
 ```
 
 ##### 3.1.2 Deploy MySQL StatefulSet
 
-1. Create a `mysql.yml` file with the following content.
+Create a `mysql.yml` file with the following content. Set the `MYSQL_PASSWORD` password according to your company's policy.
 ```yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -133,7 +138,7 @@ spec:
             - name: MYSQL_USER
               value: querypie
             - name: MYSQL_PASSWORD
-              value: querypie
+              value: "{your-mysql-password}"
           resources:
             requests:
               cpu: "0.5"
@@ -152,8 +157,8 @@ spec:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: ""              
-        selector:                       
+        storageClassName: ""
+        selector:
           matchLabels:
             app: mysql
 ---
@@ -175,25 +180,25 @@ spec:
       name: mysql
 ```
 
-1. Create MySQL StatefulSet and Service.
+Create MySQL StatefulSet and Service.
 ```bash
 kubectl apply -f mysql.yml
 ```
 
-1. Wait until MySQL Pod runs normally.
+Wait until MySQL Pod runs normally.
 ```bash
 kubectl get pods -w -n querypie | grep mysql
 ```
 
 ##### 3.1.3 Database Initialization
 
-1. Connect to MySQL.
+Connect to MySQL.
 ```bash
 kubectl exec -it mysql-0 -n querypie -- mysql -u root -p
-# Password: querypie
+# The password is {your-mysql-password} in above example.
 ```
 
-1. Create necessary databases.
+Create necessary databases.
 ```sql
 DROP DATABASE IF EXISTS querypie;
 DROP DATABASE IF EXISTS querypie_log;
@@ -210,7 +215,7 @@ GRANT ALL privileges ON querypie_snapshot.* TO querypie@'%';
 FLUSH PRIVILEGES;
 ```
 
-1. Exit MySQL.
+Exit MySQL.
 ```sql
 exit
 ```
@@ -218,8 +223,7 @@ exit
 #### 3.2 Redis Installation
 
 Redis is used as QueryPie's session and cache storage.
-
-1. Create a `redis.yml` file with the following content.
+Create a `redis.yml` file with the following content. Set `{your-redis-password}` according to your company's policy.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -241,7 +245,7 @@ spec:
         - name: redis
           image: redis:7
           imagePullPolicy: IfNotPresent
-          args: ["--requirepass", "querypie"]
+          args: ["--requirepass", "{your-redis-password}"]
           ports:
             - containerPort: 6379
               protocol: TCP
@@ -255,7 +259,8 @@ spec:
       restartPolicy: Always
       volumes:
         - name: redis-data
-          emptyDir: {}   # Data deleted on pod restart (OK for cache purposes)
+          emptyDir: {}
+          # Data is deleted on pod restart. It is OK for cache purposes.
 ---
 apiVersion: v1
 kind: Service
@@ -274,12 +279,12 @@ spec:
       protocol: TCP
 ```
 
-1. Create Redis Deployment and Service.
+Create Redis Deployment and Service.
 ```bash
 kubectl apply -f redis.yml
 ```
 
-1. Wait until Redis Pod runs normally.
+Wait until Redis Pod runs normally.
 ```bash
 kubectl get pods -w -n querypie | grep redis
 ```
@@ -288,8 +293,15 @@ kubectl get pods -w -n querypie | grep redis
 
 #### 4.1 Secret Configuration
 
-##### 4.1.1 Register Harbor Registry Authentication Information
+##### 4.1.1 Register Container Registry Authentication Information
 
+**When using Docker Hub**
+
+If using public images from Docker Hub, you can skip this step. Setting `registry: docker.io` in `values.yaml` allows you to download images without authentication.
+
+**When using Harbor**
+
+If using Harbor registry, register authentication information with the following command.
 ```bash
 kubectl create secret docker-registry querypie-regcred \
   --docker-server=harbor.chequer.io \
@@ -300,36 +312,37 @@ kubectl create secret docker-registry querypie-regcred \
 
 ##### 4.1.2 QueryPie Environment Configuration
 
-1. Create a `querypie.env` file with the following content.
+Create a `querypie.env` file with the following content.
+Refer to the environment variables guide: [Container Environment Variables](../container-environment-variables)
 ```ini
 # Agent Secret (32-character random string)
 AGENT_SECRET=01234567890123456789012345678912
 KEK=querypie
 
-# QueryPie Meta DB connection information
+# QueryPie Meta DB connection info
 DB_CATALOG=querypie
 DB_HOST=mysql
 DB_USERNAME=querypie
-DB_PASSWORD=querypie
+DB_PASSWORD={your-mysql-password}
 DB_PORT=3306
 
-# QueryPie Log DB connection information
+# QueryPie Log DB connection info
 LOG_DB_CATALOG=querypie_log
 LOG_DB_HOST=mysql
 LOG_DB_USERNAME=querypie
-LOG_DB_PASSWORD=querypie
+LOG_DB_PASSWORD={your-mysql-password}
 LOG_DB_PORT=3306
 
-# QueryPie Snapshot DB connection information
+# QueryPie Snapshot DB connection info
 ENG_DB_CATALOG=querypie_snapshot
 ENG_DB_HOST=mysql
 ENG_DB_USERNAME=querypie
-ENG_DB_PASSWORD=querypie
+ENG_DB_PASSWORD={your-mysql-password}
 ENG_DB_PORT=3306
 
-# Redis connection information
+# Redis connection info
 REDIS_NODES=redis:6379
-REDIS_PASSWORD=querypie
+REDIS_PASSWORD={your-redis-password}
 ```
 
 1. Register the environment configuration file as a Secret.
@@ -345,20 +358,30 @@ kubectl create secret generic querypie-secret --from-env-file=querypie.env -n qu
 # Add repository
 helm repo add querypie https://chequer-io.github.io/querypie-deployment/helm-chart
 
-# Check repository list
+# Verify repository list
 helm repo list
 ```
 
 ##### 4.2.2 values.yaml Configuration
 
-1. Create a `values.yml` file with the following content.
+Create a `values.yml` file with the following content.
+
+<Callout type="info">
+**Note**: The example below is based on using Docker Hub.
+When using Harbor Registry, change to `registry: harbor.chequer.io`.
+Refer to the [Product Versions](../product-versions) document to specify the product version to install.
+</Callout>
 ```yaml
-appVersion: &version 11.3.0
+# -- appVersion: QueryPie version to install. This is an example value.
+# -- Please refer to the Product Versions document for available versions.
+appVersion: &version 11.5.1
 
 global:
-  image: 
+  image:
     # -- Default registry used for all images
-    registry: harbor.chequer.io
+    # For Docker Hub: docker.io
+    # For Harbor: harbor.chequer.io
+    registry: docker.io
     # -- Default image tags used for all images
     tag: *version
     # -- Default image pull policy for all images
