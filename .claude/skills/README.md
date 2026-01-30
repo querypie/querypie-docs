@@ -8,6 +8,8 @@
 - **documentation.md** - MDX 문서 파일 작성 및 편집 가이드라인
 - **translation.md** - 다국어 번역 가이드라인 (ko → en, ja)
 - **confluence-mdx.md** - Confluence에서 MDX로 변환 워크플로우
+- **confluence-pr-update.md** - Confluence MDX PR 수정 워크플로우
+- **sync-ko-to-en-ja.md** - 한국어 MDX 변경사항을 영어/일본어에 동기화
 - **mdx-skeleton-comparison.md** - 스켈레톤 비교를 통한 번역 일관성 검증
 
 ### 개발 Skills
@@ -21,6 +23,8 @@
 |-------|----------|
 | translation.md | [docs/translation.md](/docs/translation.md) |
 | confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
+| confluence-pr-update.md | confluence-mdx.md, translation.md, mdx-skeleton-comparison.md |
+| sync-ko-to-en-ja.md | [docs/translation.md](/docs/translation.md) |
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
 | documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
 | commit.md (commands) | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
