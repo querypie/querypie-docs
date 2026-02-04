@@ -27,6 +27,8 @@ import yaml
 from bs4 import BeautifulSoup, Tag, NavigableString
 from bs4.element import CData
 
+from text_utils import clean_text
+
 try:
     import emoji
     EMOJI_AVAILABLE = True
@@ -145,15 +147,6 @@ GLOBAL_PAGE_V1: Optional[PageV1] = None
 GLOBAL_ATTACHMENTS: List[Attachment] = []
 GLOBAL_LINK_MAPPING: Dict[str, str] = {}  # Mapping of link text -> pageId from page.v1.yaml
 
-# Hidden characters for text cleaning
-HIDDEN_CHARACTERS = {
-    '\u00A0': ' ',  # Non-Breaking Space
-    '\u202f': ' ',  # Narrow No-Break Space
-    '\u200b': '',  # Zero Width Space
-    '\u200e': '',  # Left-to-Right Mark
-    '\u3164': ''  # Hangul Filler
-}
-
 # Confluence status macro color to Badge component color mapping
 CONFLUENCE_COLOR_TO_BADGE_COLOR = {
     'Green': 'green',
@@ -260,18 +253,6 @@ def convert_confluence_url(href: str) -> tuple[str, Optional[str]]:
     return href, 'Unknown Title'
 
 
-def clean_text(text: Optional[str]) -> Optional[str]:
-    """Clean text by removing hidden characters"""
-    if text is None:
-        return None
-
-    # Apply unicodedata.normalize to prevent unmatched string comparison.
-    # Use Normalization Form Canonical Composition for the unicode normalization.
-    cleaned_text = unicodedata.normalize('NFC', text)
-    for hidden_char, replacement in HIDDEN_CHARACTERS.items():
-        cleaned_text = cleaned_text.replace(hidden_char, replacement)
-    return cleaned_text
-
 def load_pages_yaml(yaml_path: str, pages_by_title: PagesDict, pages_by_id: PagesDict):
     """
     Load the pages.yaml file and populate the provided dictionaries with page information
@@ -310,7 +291,7 @@ def load_pages_yaml(yaml_path: str, pages_by_title: PagesDict, pages_by_id: Page
                     pages_by_title[title_orig] = page
                     pages_by_id[page['page_id']] = page
 
-            logging.info(f"Successfully loaded pages.yaml from {yaml_path} with {len(pages_dict)} pages")
+            logging.info(f"Successfully loaded pages.yaml from {yaml_path} with {len(pages_by_id)} pages")
             return pages_dict
     except FileNotFoundError:
         logging.warning(f"Pages YAML file not found: {yaml_path}")
@@ -2132,14 +2113,8 @@ def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_
                         logging.warning(f"Child page id {child_id} has no valid path in pages.yaml; skipping entry in _meta.ts")
                         continue
 
-                    # Validate mdx file existence next to _meta.ts
-                    child_mdx_path = os.path.join(meta_dir, f"{slug_key}.mdx")
-                    if not os.path.exists(child_mdx_path):
-                        logging.warning(f"Skipping '{slug_key}' in _meta.ts because MDX file not found: {child_mdx_path}")
-                        continue
-
                     key_repr = f"'{slug_key}'"
-                    title_repr = (title or '').replace("'", "\\'")
+                    title_repr = (title or '').strip().replace("'", "\\'")
                     entries.append(f"  {key_repr}: '{title_repr}',")
 
                 if entries:
@@ -2149,7 +2124,7 @@ def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_
                         mf.write(content)
                     logging.info(f"Generated sidebar meta at {meta_path} from {children_yaml_path}")
                 else:
-                    logging.info("No sidebar entries generated: children list empty after processing or all entries skipped due to missing MDX files")
+                    logging.info("No sidebar entries generated: children list empty after processing")
             else:
                 logging.info("children.v2.yaml has no 'results' or it is empty; skipping _meta.ts")
         else:

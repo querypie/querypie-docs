@@ -1410,14 +1410,14 @@
   - "System"
   - "Integrations"
   - "Identity Providers"
-  - "AWS SSO 연동하기 (SAML 2.0)"
+  - "Integrating with AWS SSO (SAML 2.0)"
   "path":
   - "administrator-manual"
   - "general"
   - "system"
   - "integrations"
   - "identity-providers"
-  - "aws-sso-saml-20"
+  - "integrating-with-aws-sso-saml-20"
 - "page_id": "544377652"
   "title": "API Token"
   "title_orig": "API Token"
@@ -4135,7 +4135,7 @@
   - "11.5.0"
   "path":
   - "release-notes"
-  - "1150"
+  - "11.5.0"
 - "page_id": "1568735233"
   "title": "11.4.0"
   "title_orig": "11.4.0"
@@ -4147,7 +4147,7 @@
   - "11.4.0"
   "path":
   - "release-notes"
-  - "1140"
+  - "11.4.0"
 - "page_id": "1421475841"
   "title": "11.3.0"
   "title_orig": "11.3.0"
@@ -4159,7 +4159,7 @@
   - "11.3.0"
   "path":
   - "release-notes"
-  - "1130"
+  - "11.3.0"
 - "page_id": "1291878563"
   "title": "11.2.0"
   "title_orig": "11.2.0"
@@ -4171,7 +4171,7 @@
   - "11.2.0"
   "path":
   - "release-notes"
-  - "1120"
+  - "11.2.0"
 - "page_id": "1171488777"
   "title": "11.1.0 ~ 11.1.2"
   "title_orig": "11.1.0 ~ 11.1.2"
@@ -4183,7 +4183,7 @@
   - "11.1.0 ~ 11.1.2"
   "path":
   - "release-notes"
-  - "1110-1112"
+  - "11.1.0-11.1.2"
 - "page_id": "1064830173"
   "title": "11.0.0"
   "title_orig": "11.0.0"
@@ -4195,7 +4195,7 @@
   - "11.0.0"
   "path":
   - "release-notes"
-  - "1100"
+  - "11.0.0"
 - "page_id": "954335909"
   "title": "10.3.0 ~ 10.3.4"
   "title_orig": "10.3.0 ~ 10.3.4"
@@ -4207,7 +4207,7 @@
   - "10.3.0 ~ 10.3.4"
   "path":
   - "release-notes"
-  - "1030-1034"
+  - "10.3.0-10.3.4"
 - "page_id": "703463517"
   "title": "10.2.0 ~ 10.2.12"
   "title_orig": "10.2.0 ~ 10.2.12"
@@ -4219,7 +4219,7 @@
   - "10.2.0 ~ 10.2.12"
   "path":
   - "release-notes"
-  - "1020-10212"
+  - "10.2.0-10.2.12"
 - "page_id": "604995641"
   "title": "10.1.0 ~ 10.1.11"
   "title_orig": "10.1.0 ~ 10.1.11"
@@ -4231,7 +4231,7 @@
   - "10.1.0 ~ 10.1.11"
   "path":
   - "release-notes"
-  - "1010-10111"
+  - "10.1.0-10.1.11"
 - "page_id": "544375355"
   "title": "10.0.0 ~ 10.0.2"
   "title_orig": "10.0.0 ~ 10.0.2"
@@ -4243,7 +4243,7 @@
   - "10.0.0 ~ 10.0.2"
   "path":
   - "release-notes"
-  - "1000-1002"
+  - "10.0.0-10.0.2"
 - "page_id": "544375370"
   "title": "9.20.0 ~ 9.20.2"
   "title_orig": "9.20.0 ​~ 9.20.2"
@@ -4255,7 +4255,7 @@
   - "9.20.0 ~ 9.20.2"
   "path":
   - "release-notes"
-  - "9200-9202"
+  - "9.20.0-9.20.2"
 - "page_id": "544375385"
   "title": "9.19.0 "
   "title_orig": "9.19.0 ​"
@@ -4267,7 +4267,7 @@
   - "9.19.0 "
   "path":
   - "release-notes"
-  - "9190"
+  - "9.19.0"
 - "page_id": "544375399"
   "title": "9.18.0 ~ 9.18.3"
   "title_orig": "9.18.0 ~ 9.18.3"
@@ -4279,7 +4279,7 @@
   - "9.18.0 ~ 9.18.3"
   "path":
   - "release-notes"
-  - "9180-9183"
+  - "9.18.0-9.18.3"
 - "page_id": "544375414"
   "title": "9.17.0 ~ 9.17.1"
   "title_orig": "9.17.0 ~ 9.17.1"
@@ -4291,7 +4291,7 @@
   - "9.17.0 ~ 9.17.1"
   "path":
   - "release-notes"
-  - "9170-9171"
+  - "9.17.0-9.17.1"
 - "page_id": "544375429"
   "title": "9.16.0 ~ 9.16.4"
   "title_orig": "9.16.0 ~ 9.16.4"
@@ -4303,7 +4303,7 @@
   - "9.16.0 ~ 9.16.4"
   "path":
   - "release-notes"
-  - "9160-9164"
+  - "9.16.0-9.16.4"
 - "page_id": "544375443"
   "title": "9.15.0 ~ 9.15.4"
   "title_orig": "9.15.0 ~ 9.15.4"
@@ -4315,7 +4315,7 @@
   - "9.15.0 ~ 9.15.4"
   "path":
   - "release-notes"
-  - "9150-9154"
+  - "9.15.0-9.15.4"
 - "page_id": "544375457"
   "title": "9.14.0 ~ 9.14.3"
   "title_orig": "9.14.0 ~ 9.14.3"
@@ -4327,7 +4327,7 @@
   - "9.14.0 ~ 9.14.3"
   "path":
   - "release-notes"
-  - "9140-9143"
+  - "9.14.0-9.14.3"
 - "page_id": "544375471"
   "title": "9.13.0 ~ 9.13.5"
   "title_orig": "9.13.0 ~ 9.13.5"
@@ -4339,7 +4339,7 @@
   - "9.13.0 ~ 9.13.5"
   "path":
   - "release-notes"
-  - "9130-9135"
+  - "9.13.0-9.13.5"
 - "page_id": "544375485"
   "title": "9.12.0 ~ 9.12.14"
   "title_orig": "9.12.0 ~ 9.12.14"
@@ -4351,7 +4351,7 @@
   - "9.12.0 ~ 9.12.14"
   "path":
   - "release-notes"
-  - "9120-91214"
+  - "9.12.0-9.12.14"
 - "page_id": "544375505"
   "title": "메뉴 개선 가이드 (9.12.0)"
   "title_orig": "메뉴 개선 가이드 (9.12.0)"
@@ -4365,7 +4365,7 @@
   - "Menu Improvement Guide (9.12.0)"
   "path":
   - "release-notes"
-  - "9120-91214"
+  - "9.12.0-9.12.14"
   - "menu-improvement-guide-9120"
 - "page_id": "544375587"
   "title": "9.11.0 ~ 9.11.5"
@@ -4378,33 +4378,33 @@
   - "9.11.0 ~ 9.11.5"
   "path":
   - "release-notes"
-  - "9110-9115"
+  - "9.11.0-9.11.5"
 - "page_id": "544375607"
-  "title": "9.10.0 - 9.10.4"
-  "title_orig": "9.10.0 - 9.10.4"
+  "title": "9.10.0 ~ 9.10.4"
+  "title_orig": "9.10.0 ~ 9.10.4"
   "breadcrumbs":
   - "Release Notes"
-  - "9.10.0 - 9.10.4"
+  - "9.10.0 ~ 9.10.4"
   "breadcrumbs_en":
   - "Release Notes"
-  - "9.10.0 - 9.10.4"
+  - "9.10.0 ~ 9.10.4"
   "path":
   - "release-notes"
-  - "9100-9104"
+  - "9.10.0-9.10.4"
 - "page_id": "544375624"
   "title": "External API 변경사항 (9.10.0 버전)"
   "title_orig": "External API 변경사항 (9.10.0 버전)"
   "breadcrumbs":
   - "Release Notes"
-  - "9.10.0 - 9.10.4"
+  - "9.10.0 ~ 9.10.4"
   - "External API 변경사항 (9.10.0 버전)"
   "breadcrumbs_en":
   - "Release Notes"
-  - "9.10.0 - 9.10.4"
+  - "9.10.0 ~ 9.10.4"
   - "External API Changes (9.10.0 Version)"
   "path":
   - "release-notes"
-  - "9100-9104"
+  - "9.10.0-9.10.4"
   - "external-api-changes-9100-version"
 - "page_id": "544375659"
   "title": "9.9.0 ~ 9.9.8"
@@ -4417,7 +4417,7 @@
   - "9.9.0 ~ 9.9.8"
   "path":
   - "release-notes"
-  - "990-998"
+  - "9.9.0-9.9.8"
 - "page_id": "544375685"
   "title": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
   "title_orig": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
@@ -4431,7 +4431,7 @@
   - "External API Changes (9.8.10 Version > 9.9.4 Version)"
   "path":
   - "release-notes"
-  - "990-998"
+  - "9.9.0-9.9.8"
   - "external-api-changes-9810-version-994-version"
 - "page_id": "544375741"
   "title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
@@ -4446,7 +4446,7 @@
   - "External API Changes (9.9.4 Version > 9.9.5 Version)"
   "path":
   - "release-notes"
-  - "990-998"
+  - "9.9.0-9.9.8"
   - "external-api-changes-994-version-995-version"
 - "page_id": "544375768"
   "title": "9.8.0 ~ 9.8.12"
@@ -4459,7 +4459,7 @@
   - "9.8.0 ~ 9.8.12"
   "path":
   - "release-notes"
-  - "980-9812"
+  - "9.8.0-9.8.12"
 - "page_id": "544375808"
   "title": "제품 설치"
   "title_orig": "제품 설치"

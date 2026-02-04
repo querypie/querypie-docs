@@ -41,6 +41,8 @@ import requests
 import yaml
 from requests.auth import HTTPBasicAuth
 
+from text_utils import slugify, clean_text
+
 
 # ============================================================================
 # Configuration Management
@@ -140,50 +142,6 @@ class TranslationServiceProtocol(Protocol):
 
     def translate_page(self, page: 'Page') -> None:
         ...
-
-
-# ============================================================================
-# Utility Functions
-# ============================================================================
-
-def slugify(text: str) -> str:
-    """
-    Convert text to a URL-friendly slug format.
-    Replace spaces with hyphens and remove special characters.
-    """
-    # Convert to lowercase
-    text = text.lower()
-    # Replace spaces with hyphens
-    text = re.sub(r'\s+', '-', text)
-    # Remove special characters
-    text = re.sub(r'[^a-z0-9-]', '', text)
-    # Remove multiple consecutive hyphens
-    text = re.sub(r'-+', '-', text)
-    # Remove leading and trailing hyphens
-    text = text.strip('-')
-    return text
-
-
-def clean_text(text: Optional[str]) -> Optional[str]:
-    """Clean text by removing hidden characters"""
-    if text is None:
-        return None
-
-    # Hidden characters for text cleaning
-    hidden_characters = {
-        '\u00A0': ' ',  # Non-Breaking Space
-        '\u202f': ' ',  # Narrow No-Break Space
-        '\u200b': '',  # Zero Width Space
-        '\u200e': '',  # Left-to-Right Mark
-        '\u3164': ''  # Hangul Filler
-    }
-
-    # Apply unicodedata.normalize to prevent unmatched string comparison.
-    # Use Normalization Form Canonical Composition for the unicode normalization.
-    cleaned_text = unicodedata.normalize('NFC', text)
-    for hidden_char, replacement in hidden_characters.items():
-        cleaned_text = cleaned_text.replace(hidden_char, replacement)
-    return cleaned_text
 
 
 # ============================================================================
@@ -925,7 +883,9 @@ class ConfluencePageProcessor:
                     if page:
                         breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                         # No stdout output in local mode
-                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        # Exclude start_page_id from list.txt (root page is not converted to MDX)
+                        if page.page_id != start_page_id:
+                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
@@ -941,7 +901,9 @@ class ConfluencePageProcessor:
                     if page:
                         breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                         # No stdout output in local mode
-                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        # Exclude start_page_id from list.txt (root page is not converted to MDX)
+                        if page.page_id != start_page_id:
+                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
@@ -956,9 +918,10 @@ class ConfluencePageProcessor:
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=False):
                     if page:
                         breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
-                        # Output to stdout during download
-                        print(f"{page.page_id}\t{breadcrumbs_str}")
-                        list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
+                        # Exclude start_page_id from stdout and list.txt (root page is not converted to MDX)
+                        if page.page_id != start_page_id:
+                            print(f"{page.page_id}\t{breadcrumbs_str}")
+                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 

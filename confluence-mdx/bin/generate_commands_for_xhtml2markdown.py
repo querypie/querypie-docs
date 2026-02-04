@@ -12,25 +12,9 @@ appropriate directory structure based on the breadcrumbs.
 
 import os
 import argparse
-import re
 from pathlib import Path
 
-def slugify(text):
-    """
-    Convert text to a URL-friendly slug format.
-    Replace spaces with hyphens and remove special characters.
-    """
-    # Convert to lowercase
-    text = text.lower()
-    # Replace spaces with hyphens
-    text = re.sub(r'\s+', '-', text)
-    # Remove special characters
-    text = re.sub(r'[^a-z0-9-]', '', text)
-    # Remove multiple consecutive hyphens
-    text = re.sub(r'-+', '-', text)
-    # Remove leading and trailing hyphens
-    text = text.strip('-')
-    return text
+from text_utils import slugify
 
 def process_breadcrumbs(breadcrumbs):
     """
