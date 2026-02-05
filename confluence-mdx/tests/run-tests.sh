@@ -116,17 +116,29 @@ run_skeleton_test() {
     python "${SKELETON_SCRIPT}" "${test_path}/output.mdx"
 
     if [[ ! -f "${test_path}/expected.skel.mdx" ]]; then
-        log_skipped "no expected.skel.mdx"
-        return 2  # Skip, not failure
+        echo "  Error: expected.skel.mdx not found"
+        return 1  # Failure
     fi
 
     diff -u "${test_path}/expected.skel.mdx" "${test_path}/output.skel.mdx"
+}
+
+# Check if test case has required input files
+has_xhtml_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]]
+}
+
+has_skeleton_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/output.mdx" ]] && [[ -f "${TEST_DIR}/${test_id}/expected.skel.mdx" ]]
 }
 
 # Run all tests of specified type
 run_all_tests() {
     local test_func="$1"
     local test_label="$2"
+    local input_check="$3"
     local failed=0
     local passed=0
     local skipped=0
@@ -138,19 +150,16 @@ run_all_tests() {
         local test_id
         test_id=$(basename "${test_case}")
 
-        echo "Testing case: ${test_id}"
-
-        local result=0
-        if ! ${test_func} "${test_id}" > /dev/null 2>&1; then
-            result=$?
+        # Skip if required input files don't exist
+        if ! ${input_check} "${test_id}"; then
+            continue
         fi
 
-        if [[ $result -eq 0 ]]; then
+        echo "Testing case: ${test_id}"
+
+        if ${test_func} "${test_id}" > /dev/null 2>&1; then
             log_ok
             passed=$((passed + 1))
-        elif [[ $result -eq 2 ]]; then
-            # Already logged as skipped in the test function
-            skipped=$((skipped + 1))
         else
             log_failed
             # Show diff output
@@ -160,7 +169,7 @@ run_all_tests() {
     done
 
     echo ""
-    echo "Results: ${passed} passed, ${failed} failed, ${skipped} skipped"
+    echo "Results: ${passed} passed, ${failed} failed"
 
     if [[ $failed -gt 0 ]]; then
         exit 1
@@ -178,12 +187,9 @@ run_single_test() {
     if ${test_func} "${test_id}"; then
         log_ok
     else
-        local result=$?
-        if [[ $result -ne 2 ]]; then
-            log_failed
-            ${test_func} "${test_id}" || true
-            exit 1
-        fi
+        log_failed
+        ${test_func} "${test_id}" || true
+        exit 1
     fi
 }
 
@@ -196,14 +202,14 @@ main() {
             if [[ -n "${TEST_ID}" ]]; then
                 run_single_test run_xhtml_test "XHTML" "${TEST_ID}"
             else
-                run_all_tests run_xhtml_test "XHTML"
+                run_all_tests run_xhtml_test "XHTML" has_xhtml_input
             fi
             ;;
         skeleton)
             if [[ -n "${TEST_ID}" ]]; then
                 run_single_test run_skeleton_test "Skeleton" "${TEST_ID}"
             else
-                run_all_tests run_skeleton_test "Skeleton"
+                run_all_tests run_skeleton_test "Skeleton" has_skeleton_input
             fi
             ;;
         *)
