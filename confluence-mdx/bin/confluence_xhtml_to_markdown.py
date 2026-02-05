@@ -1238,6 +1238,30 @@ class MultiLineParser:
         else:
             return self.markdown_lines
 
+    @property
+    def is_standalone_dash(self):
+        """
+        Check if the node contains only a plain standalone dash character.
+
+        This is used to detect table cells with just '-' which would be
+        incorrectly interpreted as a markdown list marker by MDX.
+
+        Returns False if the dash has any formatting (italic, bold, etc.)
+        since formatted dashes render as *-* or **-** which are not list markers.
+        """
+        # First check: text content must be just '-'
+        if self.node.get_text(strip=True) != '-':
+            return False
+
+        # Second check: must not have formatting tags (em, strong, etc.)
+        # If there are formatting tags, the markdown output will be *-* or **-**
+        # which won't be interpreted as a list marker
+        formatting_tags = {'em', 'strong', 'b', 'i', 'u', 'code'}
+        if any(self.node.find(tag) for tag in formatting_tags):
+            return False
+
+        return True
+
     def append_empty_line_unless_first_child(self, node):
         # Convert generator to list to check length
         children_list = list(node.parent.children)
@@ -1782,6 +1806,9 @@ class TableToHtmlTable:
                     self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
                 elif SingleLineParser(child).applicable:
                     self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
+                elif MultiLineParser(child).is_standalone_dash:
+                    # Wrap dash in <p> to prevent MDX interpreting it as a list marker
+                    self.markdown_lines.append(f'<p>-</p>\n')
                 else:
                     self.markdown_lines.extend(MultiLineParser(child).as_markdown)
 
