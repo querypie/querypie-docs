@@ -43,7 +43,7 @@ jobs:
         working-directory: ./confluence-mdx/tests
         run: |
           source ../venv/bin/activate
-          make test
+          make test-xhtml
 
       - name: Run Skeleton MDX tests
         working-directory: ./confluence-mdx/tests
