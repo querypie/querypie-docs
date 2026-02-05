@@ -6,7 +6,6 @@ import { Callout } from 'nextra/components'
 
 # インストール後の初期設定
 
-
 運用環境に応じて、インストール後に必ず実行する必要がある設定について説明します。
 
 ### 共通設定
@@ -16,7 +15,8 @@ import { Callout } from 'nextra/components'
 #### QueryPie Web Base URL設定
 
 > 設定パス: Admin Page → General
-Web Consoleにアクセスするための QueryPie の URL アドレスです。<br/>(例: `https://querypie.customer.com`)<br/>この URL は QueryPie の Base URL とも呼ばれます。
+Web Consoleにアクセスするための QueryPie の URL アドレスです。
+(例: `https://querypie.customer.com`) この URL は QueryPie の Base URL とも呼ばれます。
 
 この URL は `/` で終わってはいけません。`https://querypie.customer.com/` のように URL の末尾に `/` を付けないように注意してください。
 
@@ -47,9 +47,11 @@ Database接続設定の過程で、QueryPie MySQLのHostname、Username、Passwo
 
 * Hostname: `host.docker.internal`
 * Username: `querypie` (デフォルト設定の場合)
-* Password: (QueryPieをインストールしたディレクトリのcompose-envファイルでDB_PASSWORDを確認してください。)
+* Password: QueryPieをインストールしたディレクトリの環境変数ファイルで`DB_PASSWORD`を確認してください。
+    * setup.v2.shでインストールした場合: `.env`ファイル
+    * setup.shでインストールした場合: `compose-env`ファイル
 
-compose-envに設定された値のうち、DB_PASSWORD、REDIS_PASSWORD、KEY_ENCRYPTION_KEYなどは安全に保管する必要があります。
+環境変数ファイルに設定された値のうち、`DB_PASSWORD`、`REDIS_PASSWORD`、`KEY_ENCRYPTION_KEY`などは安全に保管する必要があります。
 これらの値を他の人に公開しないように注意してください。
 </Callout>
 

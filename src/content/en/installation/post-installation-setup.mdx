@@ -6,7 +6,6 @@ import { Callout } from 'nextra/components'
 
 # Post Installation Setup
 
-
 This guide explains settings that must be performed after installation according to the operating environment.
 
 ### Common Settings
@@ -16,7 +15,8 @@ Common procedures required when using QueryPie immediately after installation.
 #### QueryPie Web Base URL Settings
 
 > Configuration path: Admin Page → General
-This is the URL address of QueryPie for accessing the Web Console. <br/>(Example. `https://querypie.customer.com`)<br/>This URL is also called the Base URL of QueryPie.
+This is the URL address of QueryPie for accessing the Web Console.
+(Example. `https://querypie.customer.com`) This URL is also called the Base URL of QueryPie.
 
 This URL must not end with `/`. Please be careful not to add `/` at the end of the URL like `https://querypie.customer.com/`.
 
@@ -47,9 +47,11 @@ The following information is required for Database connection settings: QueryPie
 
 * Hostname: `host.docker.internal`
 * Username: `querypie` (for default settings)
-* Password: (Check DB_PASSWORD in the compose-env file in the QueryPie installation directory.)
+* Password: Check `DB_PASSWORD` in the environment variable file in the QueryPie installation directory.
+    * If installed with setup.v2.sh: `.env` file
+    * If installed with setup.sh: `compose-env` file
 
-Values set in compose-env such as DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY must be stored securely.
+Values set in the environment variable file such as `DB_PASSWORD`, `REDIS_PASSWORD`, `KEY_ENCRYPTION_KEY` must be stored securely.
 Please be careful not to expose these values to others.
 </Callout>
 
