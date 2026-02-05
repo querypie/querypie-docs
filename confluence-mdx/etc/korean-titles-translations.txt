@@ -149,11 +149,11 @@ Reverse Tunnel을 통해 DB에 통신하기 | Communicating with DB through Reve
 리눅스 배포본과 Docker, Podman 지원 현황 | Linux Distribution and Docker, Podman Support Status
 Podman 으로 Rootless Mode 구성하기 | Configuring Rootless Mode with Podman
 설치하기 | Installation
-설치 후 초기 설정 | Post Installation Setup
 설치 가이드 - 간단한 구성 | Installation Guide - Simple Configuration
 설치 가이드 - setup.v2.sh | Installation Guide - setup.v2.sh
 setup.sh, setup.v2.sh 비교 | Comparison of setup.sh and setup.v2.sh
 AWS EKS 환경에서 설치하기 | Installing on AWS EKS
+설치 후 초기 설정 | Post Installation Setup
 시스템 아키텍처와 네트워크 접근제어 | System Architecture and Network Access Control
 컨테이너 환경변수 | Container Environment Variables
 DB_MAX_CONNECTION_SIZE 최적화 | Optimizing DB_MAX_CONNECTION_SIZE
