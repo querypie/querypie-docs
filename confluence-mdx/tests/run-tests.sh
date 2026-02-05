@@ -52,6 +52,19 @@ log_skipped() {
     echo -e "  ${YELLOW}SKIPPED${NC} ($1)"
 }
 
+# Print command if verbose mode
+log_cmd() {
+    if [[ "${VERBOSE}" == "true" ]]; then
+        echo -e "${YELLOW}+ $*${NC}"
+    fi
+}
+
+# Run command with optional verbose logging
+run_cmd() {
+    log_cmd "$@"
+    "$@"
+}
+
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -96,18 +109,18 @@ run_xhtml_test() {
         return 1
     fi
 
-    python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
+    run_cmd python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
         "${test_path}/page.xhtml" \
         "${test_path}/output.mdx" \
         --public-dir="${TEST_DIR}" \
         --attachment-dir="/${test_id}/output"
 
     if [[ ! -f "${test_path}/expected.mdx" ]]; then
-        echo "  Warning: expected.mdx not found"
+        echo "  Error: expected.mdx not found"
         return 1
     fi
 
-    diff -u "${test_path}/expected.mdx" "${test_path}/output.mdx"
+    run_cmd diff -u "${test_path}/expected.mdx" "${test_path}/output.mdx"
 }
 
 # Run skeleton test for a single test case
@@ -119,14 +132,14 @@ run_skeleton_test() {
         return 1
     fi
 
-    python "${SKELETON_SCRIPT}" "${test_path}/output.mdx"
+    run_cmd python "${SKELETON_SCRIPT}" "${test_path}/output.mdx"
 
     if [[ ! -f "${test_path}/expected.skel.mdx" ]]; then
         echo "  Error: expected.skel.mdx not found"
         return 1  # Failure
     fi
 
-    diff -u "${test_path}/expected.skel.mdx" "${test_path}/output.skel.mdx"
+    run_cmd diff -u "${test_path}/expected.skel.mdx" "${test_path}/output.skel.mdx"
 }
 
 # Check if test case has required input files
