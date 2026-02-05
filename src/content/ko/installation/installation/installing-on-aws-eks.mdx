@@ -7,19 +7,19 @@ import { Callout } from 'nextra/components'
 
 # AWS EKS 환경에서 설치하기
 
-### 1. 개요
+## 1. 개요
 
-#### 1.1 목적
+### 1.1 목적
 
 * AWS EKS 클러스터에 QueryPie를 설치하고 구성하는 전체 과정 안내
 * 안정적인 운영을 위한 설정 가이드 제공
 
-#### 1.2 대상 독자
+### 1.2 대상 독자
 
 * Kubernetes 기본 개념(Pod, Service, Deployment 등)을 이해하고 있는 엔지니어
 * AWS EKS 사용 경험이 있는 엔지니어
 
-#### 1.3 예상 소요 시간
+### 1.3 예상 소요 시간
 
 * 전체 설치 과정: 약 1시간
 * 환경 구성: 15분
@@ -27,16 +27,16 @@ import { Callout } from 'nextra/components'
 * QueryPie 설치: 20분
 * 설치 검증 및 초기 설정: 10분
 
-### 2. 사전 요구사항
+## 2. 사전 요구사항
 
-#### 2.1 인프라 요구사항
+### 2.1 인프라 요구사항
 
 * EKS 클러스터
     * 권장 노드 사양: m7i.xlarge (4 vCPU, 16GB RAM)
     * Kubernetes 버전: 1.24 이상
     * 필요 노드 수: 최소 1개 (프로덕션 환경은 3개 이상 권장)
 
-#### 2.2 로컬 환경 준비사항
+### 2.2 로컬 환경 준비사항
 
 AWS CLI 설치 및 구성
 ```bash
@@ -60,7 +60,7 @@ brew install kubectx  # Context switching tool
 brew install fzf      # Command-line fuzzy finder
 ```
 
-#### 2.3 접근 권한 요구사항
+### 2.3 접근 권한 요구사항
 
 Container Registry 접근 권한
 
@@ -69,20 +69,20 @@ Container Registry 접근 권한
     * 계정 정보 (Username/Password)
     * QueryPie 이미지 접근 권한
 
-#### 2.4 네트워크 요구사항
+### 2.4 네트워크 요구사항
 
 * 인터넷 연결 (이미지 다운로드용)
 * EKS 클러스터 접근 가능한 네트워크 환경
 * LoadBalancer 사용 가능한 환경 (Ingress 구성용)
 
-### 3. 기본 컴포넌트 설치
+## 3. 기본 컴포넌트 설치
 
 시작하기 전에 QueryPie를 설치를 위해 namespaces를 만듭니다.
 ```
 kubectl create namespace querypie
 ```
 
-#### 3.1 MetaDB(MySQL) 설치
+### 3.1 MetaDB(MySQL) 설치
 
 MySQL은 QueryPie의 메타데이터를 저장하는 데이터베이스로 사용됩니다.
 
@@ -224,7 +224,7 @@ MySQL을 종료합니다.
 exit
 ```
 
-#### 3.2 Redis 설치
+### 3.2 Redis 설치
 
 Redis는 QueryPie의 세션 및 캐시 저장소로 사용됩니다.
 아래 내용으로 `redis.yml` 파일을 생성합니다. `{your-redis-password}` 에는 고객사의 정책에 따라 다른 값을 지정합니다.
@@ -293,9 +293,9 @@ Redis Pod가 정상적으로 실행될 때까지 기다립니다.
 kubectl get pods -w -n querypie | grep redis
 ```
 
-### 4. QueryPie 설치
+## 4. QueryPie 설치
 
-#### 4.1 Secret 설정
+### 4.1 Secret 설정
 
 ##### 4.1.1 Container Registry 인증 정보 등록
 
@@ -354,7 +354,7 @@ REDIS_PASSWORD={your-redis-password}
 kubectl create secret generic querypie-secret --from-env-file=querypie.env -n querypie
 ```
 
-#### 4.2 Helm Chart 설정
+### 4.2 Helm Chart 설정
 
 ##### 4.2.1 Helm Repository 추가
 
@@ -549,7 +549,7 @@ config:
     skipCommandConfigFile: /app/arisa/skip_command_config.json
 ```
 
-#### 4.3 QueryPie 설치
+### 4.3 QueryPie 설치
 
 Helm을 사용하여 QueryPie ACP 를 설치합니다.
 
@@ -577,7 +577,7 @@ kubectl exec -it deployments/poc-querypie-tools -n querypie -- /app/script/migra
 ```
 
 
-#### 4.4 설치 확인
+### 4.4 설치 확인
 
 Pod 상태를 확인합니다.
 ```bash
@@ -602,9 +602,9 @@ kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 이것으로 제품 설치 과정이 완료되었습니다.
 수고하셨습니다~!
 
-### 5. 문제 해결 가이드
+## 5. 문제 해결 가이드
 
-#### 5.1 설치 전 확인사항
+### 5.1 설치 전 확인사항
 
 ##### 5.1.1 클러스터 접근 권한 확인
 
@@ -629,7 +629,7 @@ kubectl top nodes
 kubectl get storageclass
 ```
 
-#### 5.2 일반적인 문제 해결
+### 5.2 일반적인 문제 해결
 
 ##### 5.2.1 Pod 상태 확인
 
@@ -681,7 +681,7 @@ kubectl get ingress -n querypie
 kubectl describe ingress -n querypie
 ```
 
-#### 5.3 리소스 모니터링
+### 5.3 리소스 모니터링
 
 ```bash
 # Check pod CPU/Memory usage
@@ -694,7 +694,7 @@ kubectl top nodes
 kubectl get pod <pod-name> -n querypie -o jsonpath='{.spec.containers[0].resources}'
 ```
 
-#### 5.4 설치 구성 확인
+### 5.4 설치 구성 확인
 
 ```bash
 # Check ConfigMap
@@ -708,7 +708,7 @@ kubectl get pv
 kubectl get pvc -n querypie
 ```
 
-#### 5.5 지원 요청 시 필요한 정보
+### 5.5 지원 요청 시 필요한 정보
 
 문제 해결이 어려운 경우, 다음 정보를 수집하여 지원팀에 문의하세요:
 
@@ -749,7 +749,7 @@ kubectl logs mysql-0 > mysql.log
 kubectl logs $(kubectl get pod -l app=redis -o jsonpath='{.items[0].metadata.name}') > redis.log
 ```
 
-### 6. 참고 자료
+## 6. 참고 자료
 
 * [Amazon EKS Workshop](https://www.eksworkshop.com)
 * [Amazon EKS 문서](https://docs.aws.amazon.com/eks/)
