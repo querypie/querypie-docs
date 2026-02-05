@@ -6,12 +6,13 @@ VERBOSE_FLAG = $(if $(VERBOSE),--verbose,)
 
 # Default target
 .PHONY: all
-all: test
+all: test-xhtml test-skeleton
+	@echo ""
+	@echo "All tests completed."
 
-# Run all tests
+# Run XHTML tests (alias)
 .PHONY: test
 test: test-xhtml
-	@echo "All tests completed."
 
 # Run XHTML tests only
 .PHONY: test-xhtml
@@ -72,15 +73,20 @@ clean:
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  all                - Run all tests (default)"
-	@echo "  test               - Run all tests (XHTML only)"
+	@echo "  all                - Run all tests: XHTML + Skeleton (default)"
+	@echo "  test               - Run XHTML tests only"
 	@echo "  test-one           - Run a specific XHTML test, e.g., make test-one TEST_ID=568918170"
-	@echo "  test-skeleton      - Run all skeleton tests"
-	@echo "  test-skeleton-one  - Run a specific skeleton test, e.g., make test-skeleton-one TEST_ID=568918170"
-	@echo "  debug              - Run all XHTML tests with debug log level"
+	@echo "  test-skeleton      - Run Skeleton tests only"
+	@echo "  test-skeleton-one  - Run a specific Skeleton test, e.g., make test-skeleton-one TEST_ID=568918170"
+	@echo "  debug              - Run XHTML tests with debug log level"
 	@echo "  debug-one          - Run a specific XHTML test with debug, e.g., make debug-one TEST_ID=568918170"
 	@echo "  clean              - Remove all output files"
 	@echo "  help               - Show this help message"
 	@echo ""
 	@echo "Options:"
-	@echo "  VERBOSE=1          - Show converter output, e.g., make test VERBOSE=1"
+	@echo "  VERBOSE=1          - Show executed commands and converter output"
+	@echo ""
+	@echo "Examples:"
+	@echo "  make                           # Run all tests"
+	@echo "  make test VERBOSE=1            # Run XHTML tests with verbose output"
+	@echo "  make test-one TEST_ID=568918170 VERBOSE=1"
