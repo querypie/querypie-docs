@@ -1,0 +1,123 @@
+---
+title: 'Post Installation Setup'
+---
+
+import { Callout } from 'nextra/components'
+
+# Post Installation Setup
+
+
+This guide explains settings that must be performed after installation according to the operating environment.
+
+### Common Settings
+
+Common procedures required when using QueryPie immediately after installation.
+
+#### QueryPie Web Base URL Settings
+
+> Configuration path: Admin Page → General
+This is the URL address of QueryPie for accessing the Web Console. <br/>(Example. `https://querypie.customer.com`)<br/>This URL is also called the Base URL of QueryPie.
+
+This URL must not end with `/`. Please be careful not to add `/` at the end of the URL like `https://querypie.customer.com/`.
+
+This URL is used for the following purposes.
+
+* Used as a callback address in the authentication process of SSO Integration.
+* Used in links to download User Agent from Web Console.
+* For other detailed purposes, please refer to [https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310](https://chequer.atlassian.net/wiki/spaces/QCP/pages/876937310).
+
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-081112.png" alt="QueryPie Web Base URL Settings Screen" width="1074" />
+<figcaption>
+QueryPie Web Base URL Settings Screen
+</figcaption>
+</figure>
+
+### Product-specific Settings
+
+#### DAC/SAC: Proxy Connection Address Settings
+
+Connect to QueryPie Database and register the address for DAC/SAC Proxy connection.
+
+<Callout type="info">
+To connect to QueryPie Database from QueryPie Web Console, DB connection settings are required: [DB Connections](../administrator-manual/databases/connection-management/db-connections)
+
+The following information is required for Database connection settings: QueryPie MySQL Hostname, Username, Password.
+
+* Hostname: `host.docker.internal`
+* Username: `querypie` (for default settings)
+* Password: (Check DB_PASSWORD in the compose-env file in the QueryPie installation directory.)
+
+Values set in compose-env such as DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY must be stored securely.
+Please be careful not to expose these values to others.
+</Callout>
+
+Replace the `<customer-proxy-address>` part below with your company's Proxy connection IP or domain and execute the query.
+
+<Callout type="important">
+The address must not include a Scheme such as `http` or `https`.
+</Callout>
+```
+UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
+```
+
+If the query executes without errors, run the following query to verify the registration.
+```
+SELECT * FROM querypie.proxies;
+```
+
+After registering the Proxy connection address in QueryPie Database, you do not need to restart the Server Container.
+When you try to log in from User Agent, after authentication through the web browser, User Agent will be ready to use.
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-082706.png" alt="DAC/SAC Proxy Connection Address Settings Screen" width="1100" />
+<figcaption>
+DAC/SAC Proxy Connection Address Settings Screen
+</figcaption>
+</figure>
+
+#### KAC: Proxy Connection Address Settings
+
+Connect to QueryPie Database and register the address for KAC Proxy connection.
+
+Replace the `<customer-proxy-fqdn>` part below with your company's Proxy connection IP or domain and execute the query.
+
+Unlike DAC/SAC settings, you can freely enter a Scheme such as `http` or `https`.
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+```
+UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
+```
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-084243.png" alt="KAC Proxy Connection Address Settings Screen" width="1096" />
+<figcaption>
+KAC Proxy Connection Address Settings Screen
+</figcaption>
+</figure>
+
+
+#### WAC: Proxy Connection Address Settings
+
+> Configuration path: Admin Page → Web Apps → Web App Configurations
+WAC Proxy connection address settings can be performed in Web Console.
+
+For detailed configuration procedures, please refer to the following document: [Initial WAC Setup in Web App Configurations](../administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
+
+<Callout type="important">
+After configuration, QueryPie Container restart is required to issue TLS certificates matching the registered address internally.
+</Callout>
+
+
+### Product Installation Complete
+
+By completing the post-installation setup process, QueryPie ACP product is now ready to use.
+Great work!
+
+From here, please refer to the following documents to proceed with administrator settings and use the product.
+
+* [Administrator Manual](../administrator-manual)
+* [User Manual](../user-manual)

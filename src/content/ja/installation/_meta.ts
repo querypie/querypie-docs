@@ -2,6 +2,7 @@ export default {
   'product-versions': '製品バージョン',
   'prerequisites': 'インストール前の準備事項',
   'installation': 'インストール',
+  'post-installation-setup': 'インストール後の初期設定',
   'system-architecture-and-network-access-control': 'システムアーキテクチャとネットワークアクセス制御',
   'container-environment-variables': 'コンテナ環境変数',
   'license-installation': 'ライセンスインストール',
