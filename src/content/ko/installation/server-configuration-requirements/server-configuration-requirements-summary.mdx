@@ -7,9 +7,9 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1692303361'
 
 QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를 간단하게 정리한 요약표입니다.
 
-### 배포 환경별 권장 구성
+## 배포 환경별 권장 구성
 
-#### Public Cloud 환경 (AWS, GCP, Azure)
+### Public Cloud 환경 (AWS, GCP, Azure)
 
 | 구성 요소   | 권장 사항                                                   |
 | ------- | ------------------------------------------------------- |
@@ -19,16 +19,16 @@ QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를
 | 캐시 서비스  | Managed Service 방식의 Redis (AWS ElastiCache 등)           |
 | OS      | Linux 배포판 (AWS: Amazon Linux, GCP: Ubuntu 24.04 LTS 권장) |
 
-#### On-Premise 환경
+### On-Premise 환경
 
 | 구성 요소   | 권장 사항                                     |
 | ------- | ----------------------------------------- |
 | 고가용성 구성 | L7 Load Balancer, L4 Load Balancer 적용     |
 | VM 인스턴스 | 2개 이상의 VM을 Upstream 서버로 구성 (Scale-Out 방식) |
 
-### 컴포넌트별, 용량별 사양
+## 컴포넌트별, 용량별 사양
 
-#### QueryPie Container VM 사양
+### QueryPie Container VM 사양
 
 | 구분                 | 기본 사양                         | 권장 사양                             |
 | ------------------ | ----------------------------- | --------------------------------- |
@@ -40,7 +40,7 @@ QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를
 | 디스크 IO 성능          | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1) 이상 |
 | 권장 구성              | 기본사양 VM 2개 이상                 | 권장사양 VM 2개 이상                     |
 
-#### QueryPie MySQL 사양
+### QueryPie MySQL 사양
 
 | 구분              | 기본 사양                         | 권장 사양                             |
 | --------------- | ----------------------------- | --------------------------------- |
@@ -51,7 +51,7 @@ QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를
 | 디스크 IO 성능       | EBS General Purpose SSD (gp3) | EBS Provisioned IOPS SSD (io1) 이상 |
 | 참고사항            | Managed Service 방식 권장         | Managed Service 방식 권장             |
 
-#### QueryPie Redis 사양
+### QueryPie Redis 사양
 
 | 구분              | 기본 사양                 | 권장 사양                 |
 | --------------- | --------------------- | --------------------- |
@@ -60,7 +60,7 @@ QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를
 | AWS ElastiCache | cache.t4g.small       | cache.t4g.medium      |
 | 참고사항            | Managed Service 방식 권장 | Managed Service 방식 권장 |
 
-### 메모리 사용량 참고사항
+## 메모리 사용량 참고사항
 
 | 구분                        | 사용량      |
 | ------------------------- | -------- |
@@ -69,7 +69,7 @@ QueryPie 서버의 하드웨어 처리용량 요구사항에 대한 가이드를
 | Mongo/Document DB 접근 시 추가 | 1 GiB 이상 |
 | OS 캐시용 추가 메모리             | 1~2 GiB  |
 
-### 성능 참고사항
+## 성능 참고사항
 
 * 기본사양 VM 1대: DAC 기준 간단한 쿼리 초당 70건 이상 처리 가능 (1분에 4,200건, 1시간에 25만건)
 * 수백~수천 명의 이용자가 일상적인 가벼운 쿼리 실행 시 기본사양 VM 1-2대로 충분히 처리 가능
