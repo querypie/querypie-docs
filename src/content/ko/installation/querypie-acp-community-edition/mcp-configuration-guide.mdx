@@ -7,7 +7,7 @@ import { Callout } from 'nextra/components'
 
 # MCP 설정 가이드
 
-### Overview
+## Overview
 
 QueryPie ACP (Access Control Platform) Community Edition 11.5.0에 Remote MCP (Model Context Protocol) Server 기능이 추가 되었습니다.
 이제 다양한 AI 코딩 어시스턴트에서 LLM을 사용해서 다양한 작업을 QueryPie ACP의 접근통제하에 안전하게 수행할 수 있습니다.
@@ -19,22 +19,22 @@ MCP 관련 참고 자료
 * [https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers](https://modelcontextprotocol.io/docs/develop/connect-remote-servers#understanding-remote-mcp-servers) 
 </Callout>
 
-#### 지원하는 AI 코딩 어시스턴트
+### 지원하는 AI 코딩 어시스턴트
 
 * [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 * [gemini-cli](https://geminicli.com/)
 * [Cursor](https://www.cursor.com/)
 * [Windsurf](https://codeium.com/windsurf)
 
-#### 사전 요구사항
+### 사전 요구사항
 
 * 실행 중인 QueryPie ACP Community Edition 11.5.0 이상
 * QueryPie ACP Community Edition에 생성된 유효한 사용자 계정
 
 
-### Integration
+## Integration
 
-#### MCP Server URL
+### MCP Server URL
 
 AI 코딩 어시스턴트를 설정하기 위해, MCP Server 역할을 수행하는 QueryPie ACP 의 URL 을 입력하여야 합니다.
 이 MCP Server URL 을 설정하는 것은 여러 AI 코딩 어시스턴트에서 공통적으로 수행하여야 합니다.
@@ -46,7 +46,7 @@ AI 코딩 어시스턴트를 설정하기 위해, MCP Server 역할을 수행하
 예시) `https://querypie.example.com/api/mcp`
 ______
 
-#### Claude Code
+### Claude Code
 
 ##### 1. MCP 서버 주소를 추가합니다.
 
@@ -129,7 +129,7 @@ claude mcp list 명령 수행 결과
 “Clear authentication” 옵션으로 인증을 해제할 수 있습니다.
 ______
 
-#### gemini-cli
+### gemini-cli
 
 ##### 1. 설정파일을 편집하여 MCP 서버 주소를 추가합니다.
 
@@ -171,7 +171,7 @@ Gemini CLI에서 `/mcp auth` 명령을 사용하여 인증을 진행합니다.
 자동으로 브라우저가 열리지 않는 경우 위 그림과 같이 화면에 출력되는 주소를 브라우저에 붙여넣어 진행할 수도 있습니다.
 ______
 
-#### Cursor
+### Cursor
 
 ##### 1. 설정파일을 편집하여 MCP 서버 주소를 추가합니다.
 
@@ -202,7 +202,7 @@ Cursor Settings에서 MCP 툴이 올바르게 연동 되는지 확인합니다.
 </figure>
 ______
 
-#### Windsurf
+### Windsurf
 
 ##### 1. 설정파일을 편집하여 MCP 서버 주소를 추가합니다.
 
@@ -233,9 +233,9 @@ Windsurf Agents 화면에서 MCP 툴이 올바르게 연동 되는지 확인합�
 </figure>
 
 
-### QueryPie ACP Community Edition MCP server의 지원 Tool 목록
+## QueryPie ACP Community Edition MCP server의 지원 Tool 목록
 
-#### DAC (Database Access Control)
+### DAC (Database Access Control)
 
 데이터베이스 접근 및 쿼리 실행 관련 도구입니다.
 
@@ -245,7 +245,7 @@ Windsurf Agents 화면에서 MCP 툴이 올바르게 연동 되는지 확인합�
 | `dac_execute_query`               | 지정한 DB 연결에서 SQL 쿼리 실행. SELECT는 CSV 결과 반환 |
 ______
 
-#### SAC (Server Access Control)
+### SAC (Server Access Control)
 
 서버 접근 및 SSH 셸 세션 관련 도구입니다.
 
@@ -261,7 +261,7 @@ ______
 | `sac_stop_shell`              | 셸 세션 종료              |
 ______
 
-#### KAC (Kubernetes Access Control)
+### KAC (Kubernetes Access Control)
 
 Kubernetes 클러스터 관리 및 리소스 조작 도구입니다.
 
@@ -294,21 +294,21 @@ Kubernetes 클러스터 관리 및 리소스 조작 도구입니다.
 | `kac_assign_role_me`             | 현재 사용자에게 역할 할당            |
 ______
 
-### 권한 및 보안
+## 권한 및 보안
 
 * 각 Tool은 ACP 권한 체계를 따릅니다.
 * ACP 에서 각 이용자에게 제공되는 DAC 의 DB 연결, Privilege Type 에 따른 접근 제어 정책, SAC 의 서버 접근 제어 정책, KAC 의 접근제어 정책에 따라, 자신에게 부여된 권한 범위 내에서만 Tool을 사용할 수 있습니다.
 * 모든 Tool 호출은 ACP 의 감사 로그에 기록됩니다.
 * ACP 의 IP 접근 제어 정책이 적용됩니다.
 
-### 문제 해결
+## 문제 해결
 
-#### 연결 실패
+### 연결 실패
 
 * ACP API 서버가 실행 중인지 확인
 * 네트워크/방화벽 설정 확인
 
-#### 권한 오류
+### 권한 오류
 
 * 해당 Tool에 필요한 권한이 있는지 확인
 * 역할이 올바르게 할당되었는지 확인
