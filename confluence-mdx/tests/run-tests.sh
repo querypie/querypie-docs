@@ -9,6 +9,7 @@
 #   --type TYPE       Test type: xhtml (default), skeleton
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
+#   --verbose, -v     Show converter output (stdout/stderr)
 #   --help            Show this help message
 
 set -o nounset -o errexit -o pipefail
@@ -26,6 +27,7 @@ SKELETON_SCRIPT="${BIN_DIR}/mdx_to_skeleton.py"
 TEST_TYPE="xhtml"
 LOG_LEVEL="warning"
 TEST_ID=""
+VERBOSE=false
 
 # Colors for output
 RED='\033[0;31m'
@@ -64,6 +66,10 @@ while [[ $# -gt 0 ]]; do
         --test-id)
             TEST_ID="$2"
             shift 2
+            ;;
+        --verbose|-v)
+            VERBOSE=true
+            shift
             ;;
         --help|-h)
             usage
@@ -141,7 +147,6 @@ run_all_tests() {
     local input_check="$3"
     local failed=0
     local passed=0
-    local skipped=0
 
     echo "Running ${test_label} tests..."
     echo ""
@@ -157,14 +162,26 @@ run_all_tests() {
 
         echo "Testing case: ${test_id}"
 
-        if ${test_func} "${test_id}" > /dev/null 2>&1; then
-            log_ok
-            passed=$((passed + 1))
+        if [[ "${VERBOSE}" == "true" ]]; then
+            # Show all output in verbose mode
+            if ${test_func} "${test_id}"; then
+                log_ok
+                passed=$((passed + 1))
+            else
+                log_failed
+                failed=$((failed + 1))
+            fi
         else
-            log_failed
-            # Show diff output
-            ${test_func} "${test_id}" 2>&1 || true
-            failed=$((failed + 1))
+            # Suppress output, show only on failure
+            if ${test_func} "${test_id}" > /dev/null 2>&1; then
+                log_ok
+                passed=$((passed + 1))
+            else
+                log_failed
+                # Show diff output on failure
+                ${test_func} "${test_id}" 2>&1 || true
+                failed=$((failed + 1))
+            fi
         fi
     done
 
@@ -184,12 +201,23 @@ run_single_test() {
 
     echo "Testing case: ${test_id} (${test_label})"
 
-    if ${test_func} "${test_id}"; then
-        log_ok
+    if [[ "${VERBOSE}" == "true" ]]; then
+        # Show all output in verbose mode
+        if ${test_func} "${test_id}"; then
+            log_ok
+        else
+            log_failed
+            exit 1
+        fi
     else
-        log_failed
-        ${test_func} "${test_id}" || true
-        exit 1
+        # Suppress output, show only on failure
+        if ${test_func} "${test_id}" > /dev/null 2>&1; then
+            log_ok
+        else
+            log_failed
+            ${test_func} "${test_id}" || true
+            exit 1
+        fi
     fi
 }
 

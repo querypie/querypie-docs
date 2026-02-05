@@ -2,6 +2,7 @@
 
 # Variables
 TEST_SCRIPT = ./run-tests.sh
+VERBOSE_FLAG = $(if $(VERBOSE),--verbose,)
 
 # Default target
 .PHONY: all
@@ -15,7 +16,7 @@ test: test-xhtml
 # Run XHTML tests only
 .PHONY: test-xhtml
 test-xhtml:
-	@$(TEST_SCRIPT) --type xhtml --log-level warning
+	@$(TEST_SCRIPT) --type xhtml --log-level warning $(VERBOSE_FLAG)
 
 # Run a specific XHTML test
 .PHONY: test-one
@@ -24,7 +25,7 @@ test-one:
 		echo "Usage: make test-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
-	@$(TEST_SCRIPT) --type xhtml --log-level warning --test-id $(TEST_ID)
+	@$(TEST_SCRIPT) --type xhtml --log-level warning --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
 # Run XHTML tests with debug log level
 .PHONY: debug
@@ -34,7 +35,7 @@ debug: debug-xhtml
 # Run XHTML tests with debug log level
 .PHONY: debug-xhtml
 debug-xhtml:
-	@$(TEST_SCRIPT) --type xhtml --log-level debug
+	@$(TEST_SCRIPT) --type xhtml --log-level debug $(VERBOSE_FLAG)
 
 # Run a specific XHTML test with debug log level
 .PHONY: debug-one
@@ -43,12 +44,12 @@ debug-one:
 		echo "Usage: make debug-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
-	@$(TEST_SCRIPT) --type xhtml --log-level debug --test-id $(TEST_ID)
+	@$(TEST_SCRIPT) --type xhtml --log-level debug --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
 # Run skeleton tests
 .PHONY: test-skeleton
 test-skeleton:
-	@$(TEST_SCRIPT) --type skeleton
+	@$(TEST_SCRIPT) --type skeleton $(VERBOSE_FLAG)
 
 # Run a specific skeleton test
 .PHONY: test-skeleton-one
@@ -57,7 +58,7 @@ test-skeleton-one:
 		echo "Usage: make test-skeleton-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
-	@$(TEST_SCRIPT) --type skeleton --test-id $(TEST_ID)
+	@$(TEST_SCRIPT) --type skeleton --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
 # Clean output files
 .PHONY: clean
@@ -80,3 +81,6 @@ help:
 	@echo "  debug-one          - Run a specific XHTML test with debug, e.g., make debug-one TEST_ID=568918170"
 	@echo "  clean              - Remove all output files"
 	@echo "  help               - Show this help message"
+	@echo ""
+	@echo "Options:"
+	@echo "  VERBOSE=1          - Show converter output, e.g., make test VERBOSE=1"
