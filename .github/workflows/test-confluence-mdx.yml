@@ -26,6 +26,15 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
       - name: Create virtual environment and install dependencies
         working-directory: ./confluence-mdx
         run: |
@@ -43,3 +52,7 @@ jobs:
       - name: Run Skeleton MDX tests
         working-directory: ./confluence-mdx/tests
         run: make test-skeleton
+
+      - name: Run MDX Render tests
+        working-directory: ./confluence-mdx/tests
+        run: make test-render
