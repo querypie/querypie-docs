@@ -5,16 +5,17 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1688371232/O
 
 # On-Premise VM 요구사항
 
-### 개요
+On-Premise 물리서버의 Virtual Machine에서 QueryPie를 운영하기 위한 가이드입니다.
 
-On-Premise 물리서버에서 작동하는 Virtual Machine 위에서, QueryPie Server Container 를 운영하는 경우에 대한 지침을 제공합니다.
-Production 환경의 운영을 위해, 다음과 같은 구성을 적용하는 것을 권장합니다.
+## 개요
+
+Production 환경의 운영을 위해 다음과 같은 구성을 권장합니다.
 
 * High Availability 구성 적용
-* L7 Load Balancer, L4 Load Balancer 를 적용하여, 고가용성, 부하분산에 적합한 구성을 적용합니다.
-* 2개 이상의 VM Instance 를 Load Balancer 의 Upstream 서버로 둡니다. 요구되는 처리용량이 높은 경우, VM Instance 의 수를 늘이는 Scale-Out 방식의 구성을 적용합니다.
+* L7/L4 Load Balancer를 적용하여 고가용성, 부하분산 구성
+* 2개 이상의 VM Instance를 Upstream 서버로 구성 (Scale-Out 방식)
 
-### QueryPie Container 용 VM 모델
+## QueryPie Container용 VM 모델
 
 기본사양 : CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB 이상, Disk 100 GiB, CPU AMD
 
@@ -24,13 +25,13 @@ Production 환경의 운영을 위해, 다음과 같은 구성을 적용하는 �
 
 * 권장사양의 VM 을 두 개 이상 생성하여, Scale-Out 구성을 적용하는 것을 권장합니다.
 
-### QueryPie MySQL 용 VM 모델
+## QueryPie MySQL용 VM 모델
 
 기본사양 : CPU 2 vCPUs, Memory 8 GiB 이상, Disk 100 GiB 이상
 
 높은 처리량이 필요한 경우 권장사양 : CPU 8 vCPUs, Memory 32 GiB 이상, Disk 100 GiB 이상 ( **저장용량 크기는 별도 산정 필요** )
 
-### QueryPie Redis 용 VM 모델
+## QueryPie Redis용 VM 모델
 
 기본사양 : CPU 2 vCPUs, Memory 1 GiB 이상
 

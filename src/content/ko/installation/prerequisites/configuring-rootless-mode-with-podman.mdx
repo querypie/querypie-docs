@@ -10,7 +10,7 @@ QueryPie 는 Docker 와 Podman, 두 컨테이너 엔진 환경을 모두 지원�
 Podman 은 기본적인 설치 구성에서 Rootless Mode 로 작동합니다.
 이에 따라, 고객사의 보안정책에 따라 Rootless Mode 환경을 구성해야 경우, Podman 으로 구현하는 것을 권장합니다.
 
-### Podman 을 간편하게 설치하기
+## Podman을 간편하게 설치하기
 
 setup.v2.sh 를 이용하면, Podman 을 간편하게 설치할 수 있습니다.
 setup.v2.sh 가 자동으로 설치하는 Podman 은 Rootless Mode 를 기본으로 적용합니다.
@@ -33,7 +33,7 @@ Podman 을 설치하지 않고, Docker 를 설치하여 주는 리눅스 배포�
 * Amazon Linux 2, Amazon Linux 2023
 * Ubuntu 22.04 LTS
 
-### Rootless Mode Podman 을 수작업으로 설치하기
+## Rootless Mode Podman을 수작업으로 설치하기
 
 Red Hat Enterprise Linux, Rocky 에서는 다음 명령으로 Podman 을 수작업으로 직접 설치할 수 있습니다.
 ```bash
@@ -52,7 +52,7 @@ $ sudo apt-get -y -qq install podman podman-docker
 $ systemctl --user enable --now podman.socket
 ```
 
-### Rootless Mode Podman 에서 QueryPie 설치하기
+## Rootless Mode Podman에서 QueryPie 설치하기
 
 setup.v2.sh 를 이용하면, Rootless Mode Podman 환경에서 QueryPie 를 간편하게 설치할 수 있습니다.
 
@@ -69,7 +69,7 @@ $ bash <(curl -s https://dl.querypie.com/setup.v2.sh) --install 11.0.1
 
 위의 명령을 실행하면, Compose 를 위한 package.tar.gz 설정, `.env` 환경변수 설정, Container 이미지 내려받기, Migration 실행하기, Container 실행하기, Rootless Mode Podman 을 위한 systemd service 등록 등 전체 설치 과정이 자동으로 수행됩니다.
 
-#### 리눅스 서버 재시작과 systemd service 등록
+### 리눅스 서버 재시작과 systemd service 등록
 
 Rootless Mode Podman 의 경우, 리눅스 서버가 재시작하는 경우, 추가적인 설정을 하지 않으면, Container 가 자동으로 실행되지 않습니다.
 이는 Rootless Mode Podman 의 특성입니다.
@@ -118,7 +118,7 @@ $ systemctl --user disable podman-querypie-database.service
 QueryPie 를 원활히 운영하려면, `systemctl` 명령을 이용하여 systemd service 를 관리하는 방법에 익숙하여야 합니다.
 그러나, 이 문서에서는 `systemctl` 명령을 이용하여 systemd service 를 관리하는 방법을 상세히 다루지 않습니다.
 
-### 참고자료
+## 참고자료
 
 * Red Hat Enterprise Linux, Rootless Podman 환경에서 systemd service 를 이용해 container 를 자동으로 실행하기
     * [https://www.redhat.com/en/blog/container-systemd-persist-reboot](https://www.redhat.com/en/blog/container-systemd-persist-reboot) 
