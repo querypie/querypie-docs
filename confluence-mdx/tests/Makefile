@@ -24,20 +24,33 @@ test: test-xhtml
 .PHONY: test-xhtml
 test-xhtml:
 	@echo "Running XHTML tests..."
-	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
+	@failed=0; \
+	for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d | sort); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
-			echo "  Processing page.xhtml"; \
 			$(VENV) && \
 			python $(SCRIPT) --log-level warning \
 				$(TEST_DIR)/$$test_id/page.xhtml \
 				$(TEST_DIR)/$$test_id/output.mdx \
 				--public-dir=$(TEST_DIR) \
 				--attachment-dir=/$$test_id/output; \
-			$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id (XHTML) failed"; \
+			if ! $(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx > /dev/null 2>&1; then \
+				echo "  FAILED"; \
+				$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || true; \
+				failed=$$((failed + 1)); \
+			else \
+				echo "  OK"; \
+			fi; \
 		fi; \
-	done
+	done; \
+	echo ""; \
+	if [ $$failed -gt 0 ]; then \
+		echo "$$failed test(s) failed."; \
+		exit 1; \
+	else \
+		echo "All tests passed."; \
+	fi
 
 # Run a specific test
 .PHONY: test-one
@@ -48,16 +61,22 @@ test-one:
 	fi
 	@echo "Testing case: $(TEST_ID) (XHTML)"
 	@if [ -f "$(TEST_DIR)/$(TEST_ID)/page.xhtml" ]; then \
-		echo "  Processing page.xhtml"; \
 		$(VENV) && \
 		python $(SCRIPT) --log-level warning \
 			$(TEST_DIR)/$(TEST_ID)/page.xhtml \
 			$(TEST_DIR)/$(TEST_ID)/output.mdx \
 			--public-dir=$(TEST_DIR) \
 			--attachment-dir=/$(TEST_ID)/output; \
-		$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) (XHTML) failed"; \
+		if ! $(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx > /dev/null 2>&1; then \
+			echo "  FAILED"; \
+			$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || true; \
+			exit 1; \
+		else \
+			echo "  OK"; \
+		fi; \
 	else \
 		echo "  No page.xhtml found for test case $(TEST_ID)"; \
+		exit 1; \
 	fi
 
 # Run tests with debug log level
@@ -69,20 +88,33 @@ debug: debug-xhtml
 .PHONY: debug-xhtml
 debug-xhtml:
 	@echo "Running XHTML tests with debug log level..."
-	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
+	@failed=0; \
+	for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d | sort); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/page.xhtml" ]; then \
 			echo "Testing case: $$test_id (XHTML)"; \
-			echo "  Processing page.xhtml"; \
 			$(VENV) && \
 			python $(SCRIPT) --log-level debug \
-			 	$(TEST_DIR)/$$test_id/page.xhtml \
-			 	$(TEST_DIR)/$$test_id/output.mdx \
-			 	--public-dir=$(TEST_DIR) \
-			 	--attachment-dir=/$$test_id/output; \
-			$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || echo "Test $$test_id (XHTML) failed"; \
+				$(TEST_DIR)/$$test_id/page.xhtml \
+				$(TEST_DIR)/$$test_id/output.mdx \
+				--public-dir=$(TEST_DIR) \
+				--attachment-dir=/$$test_id/output; \
+			if ! $(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx > /dev/null 2>&1; then \
+				echo "  FAILED"; \
+				$(DIFF) $(TEST_DIR)/$$test_id/expected.mdx $(TEST_DIR)/$$test_id/output.mdx || true; \
+				failed=$$((failed + 1)); \
+			else \
+				echo "  OK"; \
+			fi; \
 		fi; \
-	done
+	done; \
+	echo ""; \
+	if [ $$failed -gt 0 ]; then \
+		echo "$$failed test(s) failed."; \
+		exit 1; \
+	else \
+		echo "All tests passed."; \
+	fi
 
 # Run a specific test with debug log level
 .PHONY: debug-one
@@ -93,38 +125,57 @@ debug-one:
 	fi
 	@echo "Testing case: $(TEST_ID) (XHTML) with debug log level"
 	@if [ -f "$(TEST_DIR)/$(TEST_ID)/page.xhtml" ]; then \
-		echo "  Processing page.xhtml"; \
 		$(VENV) && \
 		python $(SCRIPT) --log-level debug \
 			$(TEST_DIR)/$(TEST_ID)/page.xhtml \
 			$(TEST_DIR)/$(TEST_ID)/output.mdx \
 			--public-dir=$(TEST_DIR) \
 			--attachment-dir=/$(TEST_ID)/output; \
-		$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || echo "Test $(TEST_ID) (XHTML) failed"; \
+		if ! $(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx > /dev/null 2>&1; then \
+			echo "  FAILED"; \
+			$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.mdx $(TEST_DIR)/$(TEST_ID)/output.mdx || true; \
+			exit 1; \
+		else \
+			echo "  OK"; \
+		fi; \
 	else \
 		echo "  No page.xhtml found for test case $(TEST_ID)"; \
+		exit 1; \
 	fi
 
 # Run skeleton tests
 .PHONY: test-skeleton
 test-skeleton:
 	@echo "Running skeleton tests..."
-	@for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d); do \
+	@failed=0; \
+	for test_case in $$(find $(TEST_DIR) -mindepth 1 -maxdepth 1 -type d | sort); do \
 		test_id=$$(basename $$test_case); \
 		if [ -f "$(TEST_DIR)/$$test_id/output.mdx" ]; then \
 			echo "Testing case: $$test_id (Skeleton)"; \
-			echo "  Converting output.mdx to output.skel.mdx"; \
 			$(VENV) && \
 			python $(SKELETON_SCRIPT) $(TEST_DIR)/$$test_id/output.mdx; \
 			if [ -f "$(TEST_DIR)/$$test_id/expected.skel.mdx" ]; then \
-				$(DIFF) $(TEST_DIR)/$$test_id/expected.skel.mdx $(TEST_DIR)/$$test_id/output.skel.mdx || echo "Test $$test_id (Skeleton) failed"; \
+				if ! $(DIFF) $(TEST_DIR)/$$test_id/expected.skel.mdx $(TEST_DIR)/$$test_id/output.skel.mdx > /dev/null 2>&1; then \
+					echo "  FAILED"; \
+					$(DIFF) $(TEST_DIR)/$$test_id/expected.skel.mdx $(TEST_DIR)/$$test_id/output.skel.mdx || true; \
+					failed=$$((failed + 1)); \
+				else \
+					echo "  OK"; \
+				fi; \
 			else \
-				echo "  Warning: expected.skel.mdx not found for test case $$test_id"; \
+				echo "  SKIPPED (no expected.skel.mdx)"; \
 			fi; \
 		else \
 			echo "  Skipping $$test_id: output.mdx not found"; \
 		fi; \
-	done
+	done; \
+	echo ""; \
+	if [ $$failed -gt 0 ]; then \
+		echo "$$failed test(s) failed."; \
+		exit 1; \
+	else \
+		echo "All skeleton tests passed."; \
+	fi
 
 # Run a specific skeleton test
 .PHONY: test-skeleton-one
@@ -135,16 +186,22 @@ test-skeleton-one:
 	fi
 	@echo "Testing case: $(TEST_ID) (Skeleton)"
 	@if [ -f "$(TEST_DIR)/$(TEST_ID)/output.mdx" ]; then \
-		echo "  Converting output.mdx to output.skel.mdx"; \
 		$(VENV) && \
 		python $(SKELETON_SCRIPT) $(TEST_DIR)/$(TEST_ID)/output.mdx; \
 		if [ -f "$(TEST_DIR)/$(TEST_ID)/expected.skel.mdx" ]; then \
-			$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.skel.mdx $(TEST_DIR)/$(TEST_ID)/output.skel.mdx || echo "Test $(TEST_ID) (Skeleton) failed"; \
+			if ! $(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.skel.mdx $(TEST_DIR)/$(TEST_ID)/output.skel.mdx > /dev/null 2>&1; then \
+				echo "  FAILED"; \
+				$(DIFF) $(TEST_DIR)/$(TEST_ID)/expected.skel.mdx $(TEST_DIR)/$(TEST_ID)/output.skel.mdx || true; \
+				exit 1; \
+			else \
+				echo "  OK"; \
+			fi; \
 		else \
-			echo "  Warning: expected.skel.mdx not found for test case $(TEST_ID)"; \
+			echo "  SKIPPED (no expected.skel.mdx)"; \
 		fi; \
 	else \
 		echo "  No output.mdx found for test case $(TEST_ID)"; \
+		exit 1; \
 	fi
 
 # Clean output files
