@@ -1,3 +1,4 @@
 /*.log
 /venv
 /bin/__pycache__/
+tests/testcases/*/output.html

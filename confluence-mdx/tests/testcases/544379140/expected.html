@@ -1,0 +1,249 @@
+<link rel="preload" as="image" href="/544379140/output/image-20240714-063656.png"/><link rel="preload" as="image" href="/544379140/output/screenshot-20250116-131805.png"/><h1>Audit Log Export</h1>
+
+<h3>Overview</h3>
+
+<p>QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내려받을 수 있는 기능입니다.
+장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인 추출 및 다운로드가 가능합니다.
+한 번 생성된 로그 추출 파일은 30일 동안 다운로드가 가능합니다.
+추출 지원 로그는 Query Audit, Workflow SQL Request 등 21종입니다.</p>
+
+<div class="callout callout-important" data-type="important"><p>Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.</p>
+</div>
+
+<p><strong>추출 지원 로그 종류 (QueryPie v11.0.0 기준)</strong></p>
+
+<p>|  <strong>Log Type</strong>                           |  <strong>Release Version</strong>  |  <strong>Format</strong>  |
+| --------------------------------------- | --------------------- | ------------ |
+| Workflow DB Access Request              |                       | CSV          |
+| Workflow SQL Request                    |                       | CSV          |
+| Workflow SQL Request for Query Details  |                       | CSV          |
+| Workflow SQL Export Request             |                       | CSV          |
+| Workflow Restricted Data Access Request | 11.0.0                | JSON         |
+| Workflow DB Policy Exception Request    | 11.0.0                | JSON         |
+| Workflow Unmasking Request              | 11.0.0                | JSON         |
+| Workflow Decryption Request             | 10.3.0                | JSON         |
+| Workflow Server Access Request          |                       | JSON         |
+| Workflow Server Privilege Request       | 11.3.0                | JSON         |
+| Workflow Access Role Request            | 10.0.0                | CSV          |
+| IP Registration Request                 | 11.0.0                | JSON         |
+| User Access History                     |                       | CSV          |
+| Admin Role History                      |                       | CSV          |
+| Activity Logs                           |                       | JSON         |
+| Alert Logs                              | 10.3.0                | JSON         |
+| Query Audit                             |                       | CSV          |
+| DB Access History                       |                       | CSV          |
+| DB Account Lock History                 |                       | CSV          |
+| DB Access Control Logs                  |                       | CSV          |
+| DML Snapshot                            |                       | JSON         |
+| Restricted Data Access Logs (Legacy)    | 10.3.0                | JSON         |
+| Masked Data Access Logs (Legacy)        | 10.3.0                | JSON         |
+| Sensitive Data Access Logs (Legacy)     | 10.3.0                | JSON         |
+| DAC Policy Audit Log                    | 11.3.0                | JSON         |
+| Server Access History                   |                       | JSON         |
+| Command Audit                           |                       | JSON         |
+| Session Logs                            |                       | JSON         |
+| Server Access Control Logs              |                       | JSON         |
+| Server Role History                     |                       | JSON         |
+| Server Account Lock History             |                       | JSON         |
+| Request Audit                           |                       | JSON         |
+| Kubernetes Role History                 |                       | JSON         |
+| Web App Access History                  | 11.0.0                | CSV          |
+| Web App Role History                    | 11.0.0                | CSV          |
+| Web App JIT Access Control Log          | 11.0.0                | CSV          |
+| Web App Event Audit                     | 11.0.0                | CSV          |</p>
+
+<h3>Audit Log Export 목록 조회하기</h3>
+
+<figure data-layout="center" data-align="center"><img src="/544379140/output/image-20240714-063656.png" alt="Administrator &gt; Audit &gt; General &gt; Audit Log Export" width="760"/><figcaption><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export</p>
+</figcaption>
+</figure>
+
+<ol>
+<li>Administrator &gt; Audit &gt; General &gt; Audit Log Export 메뉴로 이동합니다.</li>
+
+<li>현재까지 생성된 Audit Log Export 태스크 목록을 확인할 수 있습니다.</li>
+
+<li>Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.
+<ul>
+<li><strong>Processing</strong>  : 감사 로그 추출이 진행 중입니다.</li>
+
+<li><strong>Completed</strong>  : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)</li>
+
+<li><strong>Failed</strong>  : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.</li>
+
+</ul>
+
+</li>
+
+</ol>
+
+<h3>로그 추출 작업 생성하기</h3>
+
+<p>감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다.
+(1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드</p>
+
+<p>감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의 <code>Create Task</code> 버튼을 클릭해야 합니다.
+해당 버튼 클릭시 아래와 같은 화면이 나타납니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/544379140/output/screenshot-20250116-131805.png" alt="Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task" width="612"/><figcaption><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task</p>
+</figcaption>
+</figure>
+
+<ol>
+<li><strong>Task Name</strong> : 로그 추출 작업의 이름을 입력합니다.</li>
+
+<li><strong>Log Type</strong> : 추출 대상 로그의 종류를 선택합니다.
+<ol>
+<li>Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.</li>
+
+<li>로그 종류 선택 후 See Log Template and Description을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.</li>
+
+</ol>
+
+</li>
+
+<li><strong>Download File Format</strong> : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  <strong>‘추출 지원 로그 종류’</strong> 을 참고해주시기 바랍니다.)</li>
+
+<li><strong>For Text Exceeding 32,000 Characters</strong>  : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.
+<ol>
+<li>Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.</li>
+
+<li>No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.</li>
+
+</ol>
+
+</li>
+
+<li><strong>From</strong>  : 추출 시작 날짜를 지정합니다.</li>
+
+<li><strong>To</strong> : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다.</li>
+
+<li><strong>Filter Expression</strong>  : 필터 표현식을 지정합니다.
+<ol>
+<li>조건 입력 방법 및 예시는 하단의 ‘ <strong>필터 표현식</strong> ’을 참고해주시기 바랍니다.</li>
+
+</ol>
+
+</li>
+
+<li><strong>Generate Preview</strong> : 미리보기를 생성합니다.
+<ol>
+<li>미리보기는 필수 단계입니다.</li>
+
+<li>미리보기 결과를 확인해야 다음 단계인 ‘Create’가 가능합니다.</li>
+
+</ol>
+
+</li>
+
+<li><code>Create</code> 버튼 : 로그 추출 작업을 생성합니다.</li>
+
+</ol>
+
+<div class="callout callout-info" data-type="info"><p><strong>유의 사항</strong>
+당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.</p>
+</div>
+
+<div class="callout callout-important" data-type="important"><p><strong>필터 표현식</strong></p>
+<p>(1) 필터 표현식을 사용하시기 위해 &#x27;See Log Template and Description&#x27;을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/></p>
+<p>(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.</p>
+<ul>
+<li>Number Type</li>
+
+</ul>
+<p>지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code><br/>예 : <code>x &gt; </code>10<code>, `x == `10</code></p>
+<ul>
+<li>String Type</li>
+
+</ul>
+<p>지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>, <code>contains</code><br/>예 : <code>x == &#x27;abc&#x27;</code>, <code>x != &#x27;abc&#x27;</code>, <code>contains(x, &#x27;ab&#x27;)</code></p>
+<ul>
+<li>Boolean Type</li>
+
+</ul>
+<p>지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>, <code>&amp;&amp; (and)</code>, <code>|| (or)</code><br/>예 : <code>x == </code>true``,<code>x &amp;&amp; y</code>, <code>(x &gt; </code>0<code>) &amp;&amp; (y == </code>0<code>)</code></p>
+<ul>
+<li>Array Type</li>
+
+</ul>
+<p>예 : <code>x[? @ == &#x27;value&#x27;]</code>, <code>list[? @ &gt; </code>10<code>]</code></p>
+<p>(3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p>
+<ul>
+<li>
+<p>AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p>
+
+</li>
+
+<li>
+<p>OR 조건 : <code>||</code> 연산자를 활용합니다.</p>
+
+</li>
+
+<li>
+<p>복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.</p>
+
+</li>
+
+</ul>
+<p>(4) 예시</p>
+<ul>
+<li>
+<p>Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == &#x27;SQL_EXECUTION&#x27;</code></p>
+
+</li>
+
+<li>
+<p>Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == &#x27;SQL_EXECUTION&#x27; &amp;&amp; executedFrom == &#x27;WEB_EDITOR&#x27;</code></p>
+
+</li>
+
+<li>
+<p>DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == &#x27;database1&#x27; || connectionName == &#x27;database2&#x27;</code></p>
+
+</li>
+
+<li>
+<p>DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == &#x27;database1&#x27; || connectionName == &#x27;database2&#x27;) &amp;&amp; replicationType == &#x27;SINGLE&#x27;</code></p>
+
+</li>
+
+</ul>
+</div>
+
+<div class="callout callout-important" data-type="important"><p><strong>Query Audit의 내보내기 파일의 Privilege Type 명시 기준</strong></p>
+<p>내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다.
+아래와 같이 작동합니다.</p>
+<ol>
+<li>기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</li>
+
+<li>INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다.</li>
+
+<li>Redis의 경우에는 커맨드명이 명시됩니다.</li>
+
+</ol>
+</div>
+
+<h3>추출 작업 완료시 파일 내려받기</h3>
+
+<p>별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다.
+장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.</p>
+
+<p>추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.</p>
+
+<ol>
+<li>목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.</li>
+
+<li>상세 페이지에서 다운로드: 목록 페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.</li>
+
+</ol>
+
+<div class="callout callout-important" data-type="important"><p><strong>다운로드 파일에 암호 포함하기</strong></p>
+<p>다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.</p>
+<p>해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting &gt; Security’ 메뉴에서 <code>Export a file with Encryption</code> 옵션을 ‘Required’로 지정해야 합니다.</p>
+</div>
+
+<h3>로그 추출 파일 보관 기간 정책 안내</h3>
+
+<p>추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다.
+하지만 30일이 경과하면 파일이 만료됩니다.
+만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.</p>

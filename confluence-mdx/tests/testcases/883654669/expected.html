@@ -1,0 +1,218 @@
+<link rel="preload" as="image" href="/883654669/output/image-20231227-065658.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-131725.png"/><link rel="preload" as="image" href="/883654669/output/image-20231227-065951.png"/><link rel="preload" as="image" href="/883654669/output/image-20240115-220447.png"/><link rel="preload" as="image" href="/883654669/output/image-20240115-221520.png"/><link rel="preload" as="image" href="/883654669/output/image-20240115-221618.png"/><link rel="preload" as="image" href="/883654669/output/image-20240418-022640.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-140951.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-141555.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250310-113509.png"/><link rel="preload" as="image" href="/883654669/output/image-20231003-054240.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250310-113950.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-152840.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-151504.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-152238.png"/><link rel="preload" as="image" href="/883654669/output/screenshot-20250218-152527.png"/><h1>Slack DM 연동</h1>
+
+<h3>Overview</h3>
+
+<p>Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 수신할 수 있습니다.</p>
+
+<div class="callout callout-info" data-type="info"><p>본 문서는  <strong>10.2.6 또는 그 이상의 버전</strong> 에 적용됩니다.
+10.2.5 또는 그 이하 버전의 Slack 연동 방법은 <a href="https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations">10.1.0 버전 매뉴얼 문서</a>를 참고해주세요.</p>
+</div>
+
+<h4>구성 시 사전에 필요한 권한</h4>
+
+<ul>
+<li>Slack Workspace 관리자 권한 계정 (Slack Workspace에 App을 설치하기 위해 필요)</li>
+
+<li>QueryPie Owner 및 Approval Admin 권한 계정</li>
+
+</ul>
+
+<h3>Slack API 에서 DM App 생성 (via Manifest Files)</h3>
+
+<p>App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.</p>
+
+<ol>
+<li><a href="https://api.slack.com/apps">https://api.slack.com/apps</a> 으로 이동하여 <code>Create an App</code> 을 클릭합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20231227-065658.png" alt="image-20231227-065658.png" width="760"/></figure>
+
+<ol start="2">
+<li>Create an app 모달에서, App 생성 방식을 선택합니다. <code>From a manifest</code> 를 클릭합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-131725.png" alt="screenshot-20250218-131725.png" width="712"/></figure>
+
+<ol start="3">
+<li>Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20231227-065951.png" alt="image-20231227-065951.png" width="710"/></figure>
+
+<ol start="4">
+<li>Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: <code>{{..}}</code> 안의 값은 원하는 값으로 변경해 주세요. <br/></li>
+
+</ol>
+
+<pre><code>{
+  &quot;display_information&quot;: {
+      &quot;name&quot;: &quot;{{name}}&quot;
+  },
+  &quot;features&quot;: {
+      &quot;bot_user&quot;: {
+          &quot;display_name&quot;: &quot;{{display_name}}&quot;,
+          &quot;always_online&quot;: false
+      }
+  },
+  &quot;oauth_config&quot;: {
+      &quot;scopes&quot;: {
+          &quot;bot&quot;: [
+              &quot;chat:write&quot;,
+              &quot;users:read.email&quot;,
+              &quot;users:read&quot;
+          ]
+      }
+  },
+  &quot;settings&quot;: {
+      &quot;interactivity&quot;: {
+          &quot;is_enabled&quot;: true
+      },
+      &quot;org_deploy_enabled&quot;: false,
+      &quot;socket_mode_enabled&quot;: true,
+      &quot;token_rotation_enabled&quot;: false
+  }
+}
+</code></pre>
+
+<ol start="5">
+<li>설정 내용을 검토하고 <code>Create</code> 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20240115-220447.png" alt="image-20240115-220447.png" width="763"/></figure>
+
+<h3>Slack Workspace에 Slack App 설치</h3>
+
+<ol>
+<li>Settings &gt; Install App에서 <code>Install to Workspace</code> 버튼을 클릭하여 생성된 앱을 Slack Workspace에 설치합니다.</li>
+
+<li>권한 요청 페이지에서, <code>허용</code>을 클릭합니다. <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20240115-221520.png" alt="image-20240115-221520.png" width="760"/></figure>
+
+<ol start="3">
+<li>설정한 Slack Workspace에서 Slack DM 전용 App이 생성된 것을 확인할 수 있습니다.</li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20240115-221618.png" alt="image-20240115-221618.png" width="760"/></figure>
+
+<h3>Bot User OAuth Token 획득</h3>
+
+<p>Features &gt; OAuth &amp; Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서,  <strong>Bot User OAuth Token</strong>  을 복사하여 기록해 둡니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20240418-022640.png" alt="image-20240418-022640.png" width="764"/></figure>
+
+<h3>App-Level Token 생성</h3>
+
+<div class="callout callout-info" data-type="info"><p>App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 활성화할 수는 있지만, App Level Token(xapp-)은 자동으로 생성되지 않습니다.</p>
+<ul>
+<li>App Level Token은 보안 자격 증명(security credential)이기 때문에 manifest로 자동 생성/노출되면 보안상 위험</li>
+
+<li>App manifest는 앱의 구성(configuration)만 정의하고, 실제 인증 토큰들은 별도로 생성/관리됨</li>
+
+</ul>
+</div>
+
+<p>다음 단계를 수행하여 App-Level Token을 수동으로 생성합니다.</p>
+
+<ol>
+<li>앱 설정 페이지의 Settings &gt; Basic Information 메뉴의 App-Level Tokens 섹션으로 이동하고, <code>Generate Token and Scope</code> 버튼을 클릭합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-140951.png" alt="screenshot-20250218-140951.png" width="736"/></figure>
+
+<ol start="2">
+<li>Generate an app-level token 모달에서, Add Scope 버튼을 클릭한 뒤 <code>connections:write</code> 를 추가합니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-141555.png" alt="screenshot-20250218-141555.png" width="736"/></figure>
+
+<ol start="3">
+<li>생성된 App-Level Token 모달에서, 앱 토큰을 복사하여 따로 기록해 둡니다. App-Level Token은 <code>xapp-</code> 으로 시작합니다.</li>
+
+</ol>
+
+<h3>QueryPie에서 Slack DM 설정하기</h3>
+
+<ol>
+<li>Admin &gt; General &gt; System &gt; Integrations &gt; Slack 메뉴로 진입한 뒤, <code>Configure</code> 버튼을 클릭하여 설정 모달을 엽니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250310-113509.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack Configuration" width="736"/><figcaption><p>Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack Configuration</p>
+</figcaption>
+</figure>
+
+<ol start="2">
+<li>설정 모달에 아까 기록해둔 App Token과 Bot User OAuth Token을 입력합니다.</li>
+
+<li>추가 설정 값은 다음과 같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화 합니다.
+<ul>
+<li><strong>Send Workflow Notification via Slack DM</strong>  : 워크플로우 요청에 대한 Slack DM 전송 활성화</li>
+
+<li><strong>Allow Users to approve or reject on Slack DM</strong>  : Slack DM 내에서 승인 또는 거절 기능 활성화<br/> <br/></li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/image-20231003-054240.png" alt="액션 허용타입 예시 (좌) / 액션 비허용 타입 예시 (우)" width="760"/><figcaption><p>액션 허용타입 예시 (좌) / 액션 비허용 타입 예시 (우)</p>
+</figcaption>
+</figure>
+
+</li>
+
+<li><code>Save</code> 버튼을 누르고 설정을 완료합니다.</li>
+
+</ol>
+
+<h3>Slack DM 설정 관리하기</h3>
+
+<ol>
+<li>Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250310-113950.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack" width="736"/><figcaption><p>Administrator &gt; General &gt; System &gt; Integrations &gt; Slack</p>
+</figcaption>
+</figure>
+
+<ol start="2">
+<li><code>Edit</code> 버튼을 클릭하여 입력한 설정을 변경할 수 있습니다.<br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-152840.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Edit the Slack Configuration" width="736"/><figcaption><p>Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Edit the Slack Configuration</p>
+</figcaption>
+</figure>
+
+<h3>Workflow 요청 시 Slack DM 테스트</h3>
+
+<p>DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.</p>
+
+<ol>
+<li>QueryPie User &gt; Workflow 페이지에서 Submit Request 버튼을 클릭한 뒤, DB Access Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고, 요청을 상신합니다. <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-151504.png" alt="screenshot-20250218-151504.png" width="736"/></figure>
+
+<ol start="2">
+<li>승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/> <strong>Allow Users to approve or reject on Slack DM</strong>  설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/> <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-152238.png" alt="screenshot-20250218-152238.png" width="701"/></figure>
+
+<ol start="3">
+<li>DM에서 <code>Details</code> 버튼을 클릭 시, QueryPie Admin에서 결재 요청에 대한 상세 내용을 확인하고 승인 또는 거절할 수 있습니다.<br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/883654669/output/screenshot-20250218-152527.png" alt="screenshot-20250218-152527.png" width="736"/></figure>

@@ -3,10 +3,11 @@
 # Variables
 TEST_SCRIPT = ./run-tests.sh
 VERBOSE_FLAG = $(if $(VERBOSE),--verbose,)
+PROJECT_ROOT = $(shell cd ../.. && pwd)
 
 # Default target
 .PHONY: all
-all: test-xhtml test-skeleton
+all: test-xhtml test-skeleton test-render
 	@echo ""
 	@echo "All tests completed."
 
@@ -52,23 +53,40 @@ test-skeleton-one:
 	fi
 	@$(TEST_SCRIPT) --type skeleton --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
+# Run render tests (MDX to HTML)
+.PHONY: test-render
+test-render:
+	@cd $(PROJECT_ROOT) && npx vitest run --config confluence-mdx/tests/render/vitest.config.ts
+
+# Run a specific render test
+.PHONY: test-render-one
+test-render-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-render-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@cd $(PROJECT_ROOT) && npx vitest run --config confluence-mdx/tests/render/vitest.config.ts -t "$(TEST_ID)"
+
 # Clean output files
 .PHONY: clean
 clean:
 	@echo "Cleaning output files..."
 	@find testcases -name "output.mdx" -type f -delete
 	@find testcases -name "output.skel.mdx" -type f -delete
+	@find testcases -name "output.html" -type f -delete
 	@find testcases -name "_meta.ts" -path "*/output/*" -type f -delete
 
 # Help
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  all                - Run all tests: XHTML + Skeleton (default)"
+	@echo "  all                - Run all tests: XHTML + Skeleton + Render (default)"
 	@echo "  test-xhtml         - Run XHTML tests"
 	@echo "  test-xhtml-one     - Run a specific XHTML test"
 	@echo "  test-skeleton      - Run Skeleton tests"
 	@echo "  test-skeleton-one  - Run a specific Skeleton test"
+	@echo "  test-render        - Run Render tests (MDX to HTML)"
+	@echo "  test-render-one    - Run a specific Render test"
 	@echo "  debug-xhtml        - Run XHTML tests with debug log level"
 	@echo "  debug-xhtml-one    - Run a specific XHTML test with debug log level"
 	@echo "  clean              - Remove all output files"
@@ -82,4 +100,4 @@ help:
 	@echo "  make                                           # Run all tests"
 	@echo "  make test-xhtml VERBOSE=1                      # Run XHTML tests with verbose"
 	@echo "  make test-xhtml-one TEST_ID=568918170          # Run specific XHTML test"
-	@echo "  make debug-xhtml-one TEST_ID=568918170 VERBOSE=1"
+	@echo "  make test-render-one TEST_ID=544382364         # Run specific Render test"

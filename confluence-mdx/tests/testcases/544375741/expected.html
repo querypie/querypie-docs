@@ -1,0 +1,143 @@
+<h1>External API 변경사항 (9.9.4 버전 &gt; 9.9.5 버전)</h1>
+
+<hr/>
+<h2>API Docs Json File</h2>
+
+<p>:paperclip: <a href="994_external.json">994_external.json</a>
+:paperclip: <a href="995_external.json">995_external.json</a></p>
+
+<hr/>
+<h2>1. Access Approval API</h2>
+
+<h4>(GET) List</h4>
+
+<h5>Request</h5>
+
+<ul>
+<li>변경점 없음</li>
+
+</ul>
+
+<h5>Response</h5>
+
+<table><colgroup><col/><col/></colgroup><tbody><tr><th><p><strong>변경 전</strong></p>
+</th><th><p><strong>변경 후</strong></p>
+</th></tr>
+<tr><td></td><td><ul>
+<li>id</li>
+
+</ul>
+</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>id</strong>  가  <strong>추가</strong> 되었습니다.</li>
+
+</ul>
+
+<hr/>
+<h2>2. Approval API</h2>
+
+<h4>(GET) List</h4>
+
+<h5>Request</h5>
+
+<ul>
+<li>변경점 없음</li>
+
+</ul>
+
+<h5>Response</h5>
+
+<table><colgroup><col/><col/></colgroup><tbody><tr><th><p><strong>변경 전</strong></p>
+</th><th><p><strong>변경 후</strong></p>
+</th></tr>
+<tr><td></td><td><ul>
+<li>id</li>
+
+</ul>
+</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>id</strong>  가  <strong>추가</strong> 되었습니다.</li>
+
+</ul>
+
+<hr/>
+<h2>3. Audit Log API</h2>
+
+<h4>(GET) List of Approval</h4>
+
+<p><code>/api/external/audit-logs</code></p>
+
+<h5>Request</h5>
+
+<ul>
+<li>Query Parameter</li>
+
+<li>/api/docs 에 잘못 표기 되어 있던  <strong>cursor</strong>  에 대한 내용이 수정되었습니다.</li>
+
+</ul>
+
+<h5>Response</h5>
+
+<ul>
+<li>/api/docs 에 잘못 표기 되어 있던  <strong>nextCursor</strong>  에 대한 내용이 수정되었습니다.</li>
+
+</ul>
+
+<hr/>
+<h2>4. Notification Channels API</h2>
+
+<h4>(GET) List</h4>
+
+<p><code>/api/external/notification-channels</code></p>
+
+<h5>Request</h5>
+
+<ul>
+<li>Query Parameter</li>
+
+</ul>
+
+<table><colgroup><col/><col/></colgroup><tbody><tr><th><p><strong>변경 전</strong></p>
+</th><th><p><strong>변경 후</strong></p>
+</th></tr>
+<tr><td><ul>
+<li>dataFlowRequest.filterKey</li>
+
+<li>dataFlowRequest.filterValue</li>
+
+<li>dataFlowRequest.sortKey</li>
+
+<li>dataFlowRequest.sortType</li>
+
+</ul>
+</td><td><ul>
+<li>filterKey</li>
+
+<li>filterValue</li>
+
+<li>sortKey</li>
+
+<li>sortType</li>
+
+</ul>
+</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>이름</strong> 이  <strong>변경</strong> 되었습니다.</li>
+
+</ul>
+
+<h5>Response</h5>
+
+<ul>
+<li>변경점 없음</li>
+
+</ul>

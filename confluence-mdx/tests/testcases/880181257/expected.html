@@ -1,0 +1,131 @@
+<link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-1.19.24-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-1.22.28-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-2.05.26-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-2.08.11-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-2.18.26-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-2.22.22-PM.png"/><link rel="preload" as="image" href="/880181257/output/Screenshot-2025-03-06-at-2.23.37-PM.png"/><h1>Custom Data Source 접속하기</h1>
+
+<h4>Custom Data Source 접근 요청</h4>
+
+<ol>
+<li>사용자 화면 상단 Workflow 메뉴로 이동합니다.</li>
+
+<li>좌측 상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다. <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-1.19.24-PM.png" alt="Screenshot-2025-03-06-at-1.19.24-PM.png" width="712"/></figure>
+
+<ol start="3">
+<li>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</li>
+
+<li>DB Connection 목록에서 Type이 &#x27;Custom Data Source&#x27;인 항목을 선택합니다.</li>
+
+<li>다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다.</li>
+
+<li>Expiration Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다. <br/></li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-1.22.28-PM.png" alt="Screenshot-2025-03-06-at-1.22.28-PM.png" width="712"/></figure>
+
+<ol start="7">
+<li>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.</li>
+
+<li>관리자의 승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</li>
+
+</ol>
+
+<div class="callout callout-important" data-type="important"><p><strong>Custom Data Source Type 외 다중 요청 시 주의사항</strong></p>
+<ul>
+<li>Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다.</li>
+
+<li>이 경우 다음 메시지가 표시됩니다: &quot;Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection.&quot;</li>
+
+<li>같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.</li>
+
+</ul>
+</div>
+
+<h4><br/>Agent를 통한 접속</h4>
+
+<ol>
+<li><strong>QueryPie Agent 실행</strong>
+<ul>
+<li>QueryPie Agent를 실행합니다.</li>
+
+<li>Database 항목에서 Custom Data Source를 확인할 수 있습니다. <br/>
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-2.05.26-PM.png" alt="Screenshot-2025-03-06-at-2.05.26-PM.png" width="400"/></figure>
+
+</li>
+
+</ul>
+
+</li>
+
+<li><strong>Connection Guide 확인</strong>
+<ul>
+<li>Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.</li>
+
+<li>위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다. <br/>
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-2.08.11-PM.png" alt="Screenshot-2025-03-06-at-2.08.11-PM.png" width="712"/></figure>
+
+</li>
+
+<li>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</li>
+
+<li>Privileges는 &quot;-&quot;로 표시됩니다.</li>
+
+</ul>
+
+</li>
+
+<li><strong>SQL Tool에서 접속</strong>
+<ul>
+<li>DataGrip이나 기타 SQL Tool을 실행합니다.</li>
+
+<li><strong>Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.</strong></li>
+
+<li>벤더에 따라 추가 정보를 입력합니다.
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-2.18.26-PM.png" alt="Screenshot-2025-03-06-at-2.18.26-PM.png" width="712"/></figure>
+
+</li>
+
+</ul>
+
+</li>
+
+</ol>
+
+<div class="callout callout-important" data-type="important"><p><strong>주의사항</strong></p>
+<ul>
+<li>관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</li>
+
+</ul>
+</div>
+
+<h4>웹으로 접속 시도하는 경우</h4>
+
+<ol>
+<li><strong>웹 커넥션 목록 확인</strong>
+<ul>
+<li>사용자 화면 상단 Databases를 클릭합니다.</li>
+
+<li>좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다. <br/>
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-2.22.22-PM.png" alt="Screenshot-2025-03-06-at-2.22.22-PM.png" width="712"/></figure>
+
+</li>
+
+</ul>
+
+</li>
+
+<li><strong>접속 불가 안내</strong>
+<ul>
+<li>Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.</li>
+
+<li>아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다.  <br/> &quot;Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source.&quot;
+<figure data-layout="center" data-align="center"><img src="/880181257/output/Screenshot-2025-03-06-at-2.23.37-PM.png" alt="Screenshot-2025-03-06-at-2.23.37-PM.png" width="712"/></figure>
+
+</li>
+
+</ul>
+
+</li>
+
+</ol>

@@ -1,0 +1,761 @@
+<link rel="preload" as="image" href="/1454342158/output/image-20251014-010700.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-011706.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-012049.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-075227.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-075127.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251222-023912.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240723-064242.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240723-064424.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240723-064721.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240723-065134.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240723-065346.png"/><link rel="preload" as="image" href="/1454342158/output/image-20240110-042233.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-014729.png"/><link rel="preload" as="image" href="/1454342158/output/screenshot-20250124-164255.png"/><link rel="preload" as="image" href="/1454342158/output/screenshot-20250124-164553.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-014805.png"/><link rel="preload" as="image" href="/1454342158/output/Authentication-Okta-02.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-082704.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251020-001435.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-014949.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-015015.png"/><link rel="preload" as="image" href="/1454342158/output/image-20251014-015047.png"/><h1>Identity Providers</h1>
+
+<h3>Overview</h3>
+
+<p>QueryPie의 사용자 인증 방식은 QueryPie 사용자 계정(ID)과 암호를 사용하는 방식과 외부 Identity Provider(IdP)와 통합하는 방식 크게 두가지가 있습니다.
+관리자는 IdP와의 Integration 설정을 통해 QueryPie가 Single-Sign-On을 통해 쉽게 사용자 인증을 처리하고 계정을 동기화 할 수 있습니다.</p>
+
+<p>현재 지원되는 IdP와의 연동 설정은 다음과 같습니다.</p>
+
+<ul>
+<li>LDAP</li>
+
+<li>Okta</li>
+
+<li>SAML 2.0</li>
+
+<li>OneLogin</li>
+
+<li>Swivel Secure</li>
+
+<li>Custom Identity Provider (특수 목적 사용)</li>
+
+</ul>
+
+<div class="callout callout-info" data-type="info"><ul>
+<li>현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.</li>
+
+<li>MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다.</li>
+
+<li>11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.<br/>예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal DB의 MFA 설정에 의해 제어됩니다.</li>
+
+<li>Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.</li>
+
+</ul>
+</div>
+
+<p>Admin &gt; General &gt; System &gt; Integration 에서 Authentication 하위 항목으로 Identity Providers 가 있습니다.
+항목을 클릭하여 상세페이지로 이동하면 Identity Providers에 관련된 설정을 할 수 있습니다.
+기본적으로 사용자 인증은 QueryPie의 Internal database에 저장된 ID / Password를 사용해서 처리되므로 목록에 Internal database 항목이 존재합니다.
+이 항목은 삭제 할 수 없습니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-010700.png" alt="image-20251014-010700.png" width="760"/></figure>
+
+<h4>기본 인증의 상세 설정</h4>
+
+<ul>
+<li><strong>Name</strong>  : 목록에 표시되는 식별 가능한 이름입니다.</li>
+
+<li><strong>Type</strong>  : QueryPie에서 지원하는 IdP 유형 중 하나가 표시됩니다.</li>
+
+<li><strong>Multi-Factor Authentication Setting</strong> : MFA 설정을 할 수 있습니다. Google Authenticator, Email을 지원합니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-011706.png" alt="Internal database의 상세 설정" width="532"/><figcaption><p>Internal database의 상세 설정</p>
+</figcaption>
+</figure>
+
+<div class="callout callout-important" data-type="important"><p>주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다.
+IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.</p>
+</div>
+
+<h3>LDAP 연동</h3>
+
+<p>목록 우측 상단의 <code>+ Add</code> 버튼을 누르고 팝업되는 화면에서 Type을 LDAP으로 선택하면 LDAP을 IdP로 추가 할 수 있습니다.</p>
+
+<ul>
+<li><strong>Name</strong>  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.</li>
+
+<li><strong>Type</strong> : LDAP를 선택합니다.</li>
+
+<li><strong>Server URL</strong>  : <code>ldap://ldap.example.com:389</code> 과 같은 형식으로 LDAP server의 주소를 입력합니다. LDAPS의 경우 scheme을 ldaps:// 로 입력합니다.</li>
+
+<li><strong>BindDN</strong>  : LDAP 서버에 접속(바인드)할 때 사용할 서비스 계정의 고유 이름(Distinguished Name, DN)을 입력합니다. 이 계정은 최소한 사용자 정보를 검색(Read)할 수 있는 권한이 필요합니다. <br/> 예시: cn=admin,ou=Services,dc=example,dc=com</li>
+
+<li><strong>Bind Password</strong>  : BindDN의 암호를 입력합니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-012049.png" alt="LDAP 상세설정" width="481"/><figcaption><p>LDAP 상세설정</p>
+</figcaption>
+</figure>
+
+<p>QueryPie 사용자 계정과 LDAP의 사용자 계정을 동기화하여 매핑할 내용을 입력합니다.</p>
+
+<p>|  <strong>Attribute</strong>     |  <strong>필수 여부</strong>  |  <strong>Description</strong>                                                                                                                  |
+| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| User Base DN       | 필수          | LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만 로그인 대상으로 간주됩니다.예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com |
+| User Search Filter | 필수          | 사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다. 예시: (objectClass=inetOrgPerson)                                   |
+| User Name          | 필수          | LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QuerPie 사용자의 Login ID에 매핑됩니다.예시: uid                     |
+| Email              | 필수          | LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QueryPie 사용자의 Email에 매핑됩니다.예시: email                |
+| Display Name       | -           | QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을 입력합니다.예시: cn 또는 displayName 등.                                                 |</p>
+
+<p>LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면  <strong>Use Group 옵션</strong> 을 활성화(체크)하고 필수로 지정된 정보들을 입력합니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-075227.png" alt="image-20251014-075227.png" width="407"/></figure>
+
+<table><colgroup><col/><col/><col/></colgroup><tbody><tr><th><p><strong>Attribute</strong></p>
+</th><th><p><strong>필수 여부</strong></p>
+</th><th><p><strong>Description</strong></p>
+</th></tr>
+<tr><td><p>Group Base DN</p>
+</td><td><p>필수</p>
+</td><td><p>LDAP 서버의 그룹 Base DN 값을 입력합니다.
+이 경로의 하위에 있는 그룹만 Group으로 동기화합니다.</p>
+<ul>
+<li>예: <code>dc=example,dc=com</code></li>
+
+</ul>
+</td></tr>
+<tr><td><p>Group Search Filter</p>
+</td><td><p>필수</p>
+</td><td><p>LDAP 서버의 그룹을 가져오기 위한 필터 값을 입력합니다.</p>
+<ul>
+<li>예: <code>objectclass=posixGroup</code></li>
+
+</ul>
+</td></tr>
+<tr><td><p>Group ID</p>
+</td><td><p>필수</p>
+</td><td><p>그룹의 식별자로 사용할 속성 값을 입력합니다.</p>
+<ul>
+<li>예: <code>gidNumber</code></li>
+
+</ul>
+</td></tr>
+<tr><td rowspan="2"><p>Membership Type</p>
+</td><td rowspan="2"><p>필수</p>
+</td><td><p>사용자에 그룹 정보가 포함된 경우, <code>Include group information in user entries</code> 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.</p>
+<ul>
+<li>예: <code>member</code>, <code>uniqueMember</code>, <code>memberUid</code> 등</li>
+
+</ul>
+</td></tr>
+<tr><td><p>그룹에 사용자 정보가 포함된 경우, <code>Include user information in group entries</code> 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.</p>
+<ul>
+<li>예: <code>gidNumber</code></li>
+
+</ul>
+</td></tr>
+</tbody>
+</table>
+
+<p>LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  <strong>Use Synchronization with the Authentication System</strong>  옵션을 활성화합니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-075127.png" alt="image-20251014-075127.png" width="408"/></figure>
+
+<ul>
+<li><strong>Replication Frequency</strong>  : 자동 동기화 기능 사용 여부를 설정합니다.
+<ul>
+<li>Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 <code>Synchronize</code> 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.</li>
+
+<li>Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression 필드가 활성화됩니다.</li>
+
+</ul>
+
+</li>
+
+<li><strong>Additional Settings</strong>
+<ul>
+<li><strong>Make New Users Inactive by Default</strong> : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
+<ul>
+<li>동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.</li>
+
+</ul>
+
+</li>
+
+<li><strong>Use an Attribute for Privilege Revoke</strong> : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
+<ul>
+<li>특정 LDAP Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.</li>
+
+<li>LDAP Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.</li>
+
+</ul>
+
+</li>
+
+<li><strong>Enable Attribute Synchronization :</strong>  LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다.
+<ul>
+<li>LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다.</li>
+
+<li>옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.</li>
+
+<li>단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.</li>
+
+</ul>
+
+</li>
+
+<li><strong>Allowed User Deletion Rate Threshold :</strong>
+<ul>
+<li>동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.</li>
+
+<li>0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
+<ul>
+<li>예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.</li>
+
+<li>11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면 이 값이 1.0 으로 기본 설정됩니다.</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+<div class="callout callout-info" data-type="info"><p><strong>LDAP Attribute Mapping</strong></p>
+<p>LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.</p>
+<p>우측 상단의 <code>Add Row</code> 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.</p>
+<ol>
+<li>해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.</li>
+
+<li>QueryPie Attribute인 <code>Username (loginId)</code>, <code>Primary Email (email)</code> 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다.</li>
+
+<li>매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.</li>
+
+</ol>
+</div>
+
+<div class="callout callout-important" data-type="important"><p>Active Directory를 LDAP 연동할 경우 Anonymous 항목을 반드시 false로 설정해야합니다.
+AD는 기본적으로 익명 바인드 상태에서의 검색 작업을 허용하지 않습니다.</p>
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251222-023912.png" alt="image-20251222-023912.png" width="491"/></figure>
+</div>
+
+<h3>Okta 연동</h3>
+
+<h4>Okta에서 QueryPie 를 애플리케이션으로 추가</h4>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240723-064242.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색" width="760"/><figcaption><p>Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색</p>
+</figcaption>
+</figure>
+
+<ul>
+<li><a href="https://login.okta.com/">Okta 서비스</a>에 접속하여 관리자 계정으로 로그인합니다.</li>
+
+<li>우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.</li>
+
+<li>Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.</li>
+
+<li><code>Browse App Catalog</code> 버튼을 클릭하여 QueryPie 를 검색합니다.</li>
+
+<li>QueryPie 애플리케이션 페이지로 들어가 <code>Add Integration</code> 버튼을 클릭합니다.</li>
+
+<li>Application Label에 QueryPie 로 입력된 것을 확인 후, <code>Done</code> 버튼을 클릭하여 애플리케이션을 추가합니다.</li>
+
+</ul>
+
+<h4>Okta 계정 연동을 위한 Profile 설정</h4>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240723-064424.png" alt="Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute" width="760"/><figcaption><p>Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.</li>
+
+<li>Profile 목록 중 ‘QueryPie User’ 를 클릭합니다.</li>
+
+<li>Attributes 설정에서 <code>Add Attribute</code> 버튼을 클릭합니다.</li>
+
+<li>Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
+<ul>
+<li>Display name : firstName / Variable name : firstName 항목 입력 후 <code>Save and Add Another</code></li>
+
+<li>Display name : lastName / Variable name : lastName 항목 입력 후 <code>Save and Add Another</code></li>
+
+<li>Display name : email / Variable name : email 항목 입력 후 <code>Save and Add Another</code></li>
+
+<li>Display name : loginId / Variable name : loginId 항목 입력 후 <code>Save</code> 클릭</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240723-064721.png" alt="Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings" width="760"/><figcaption><p>Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>4가지 Attribute 가 추가된 것을 확인 후 <code>Mappings</code> 버튼을 클릭합니다.</li>
+
+<li>Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.
+<ul>
+<li>user.firstName ↔︎ firstName</li>
+
+<li>user.lastName ↔︎ lastName</li>
+
+<li>user.email ↔︎ email</li>
+
+<li>user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)</li>
+
+</ul>
+
+</li>
+
+<li><code>Save Mappings</code> 버튼을 클릭하여 저장합니다.</li>
+
+</ul>
+
+<h4>Okta에 추가된 QueryPie 애플리케이션에 사용자 할당</h4>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240723-065134.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App" width="760"/><figcaption><p>Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.</li>
+
+<li>리스트에서 QueryPie 애플리케이션을 클릭합니다.</li>
+
+<li>Assignments 탭으로 이동한 뒤 <code>Assign</code> 버튼을 클릭하여 <code>Assign to People</code> 또는 <code>Assign to Group</code>을 선택합니다.</li>
+
+<li>Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done 버튼을 클릭합니다.
+<ul>
+<li>People 할당시 사용자 정보 확인 후 <code>Sava and Go Back</code> 버튼을 클릭합니다.</li>
+
+<li>Group 할당시 loginId 항목을 빈 칸으로 두고 <code>Save and Go Back</code> 버튼을 클릭합니다.</li>
+
+</ul>
+
+</li>
+
+<li>사용자 또는 그룹이 QueryPie 애플리케이션에 할당되어 추가된 내역을 확인하실 수 있습니다.</li>
+
+</ul>
+
+<h4>Okta에서 QueryPie 애플리케이션 연동 정보 설정</h4>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240723-065346.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App" width="760"/><figcaption><p>Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.</li>
+
+<li>Settings 영역의 <code>Edit</code> 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.</li>
+
+<li>Metadata URL에 표기된 주소로 별도 탭에서 접근하여 표시되는 XML 정보를 복사합니다.</li>
+
+</ul>
+
+<h4>최소 권한의 Okta API 토큰 발급</h4>
+
+<p>QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 Okta Admin API 토큰 발급이 필요합니다.
+일반적인 방법으로는 이용하고 계신 Okta 최고관리자(Super Administrator)/읽기권한관리자(Read-Only Administrator) 계정으로 API 토큰을 이하의 방법으로 발급하여 적용하는 방법이 있습니다:</p>
+
+<ul>
+<li>Okta 관리자 페이지 좌측 패널에서 Security &gt; API 메뉴로 이동합니다.</li>
+
+<li>API 메뉴에서 Tokens 탭으로 이동합니다.</li>
+
+<li>Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.</li>
+
+</ul>
+
+<p>다만, 보안 수준 향상을 위해 Okta API 토큰의 권한을 최소한으로 부여하도록 조정해야 하는 경우, 이하의 권한 및 방법에 따라 API 토큰을 생성하실 것을 권장드립니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20240110-042233.png" alt="Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role" width="762"/><figcaption><p>Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다.
+<ul>
+<li>이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.</li>
+
+</ul>
+
+</li>
+
+<li>Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.</li>
+
+<li>Create new role을 선택합니다.</li>
+
+<li>Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.
+<ul>
+<li><strong>User</strong>
+<ul>
+<li>View users and their details</li>
+
+</ul>
+
+</li>
+
+<li><strong>Group</strong>
+<ul>
+<li>View groups and their details</li>
+
+</ul>
+
+</li>
+
+<li><strong>Application</strong>
+<ul>
+<li>View application and their details</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+<li>Save role을 눌러 커스텀 롤을 저장합니다.</li>
+
+<li>Resources 탭으로 이동합니다.</li>
+
+<li>Create new resource set을 선택합니다.
+<ul>
+<li>이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.</li>
+
+</ul>
+
+</li>
+
+<li>Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다.
+<ul>
+<li>User : 쿼리파이 사용자 전부 선택</li>
+
+<li>Group : 쿼리파이 사용 그룹 전부 선택</li>
+
+<li>Application : 쿼리파이 앱으로 한정</li>
+
+</ul>
+
+</li>
+
+<li>Create를 선택하여 생성합니다.</li>
+
+<li>Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.
+<ul>
+<li>Role: MinimumAdminRole | Resource: MinimumResources</li>
+
+<li>Role: Read-Only Administrator
+<ul>
+<li>API 토큰 생성메뉴 접근을 위한 임시 부여</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+<li>쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다.</li>
+
+<li>Security &gt; API 메뉴에서 Tokens 탭으로 이동합니다.</li>
+
+<li>Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다.</li>
+
+<li>이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.</li>
+
+</ul>
+
+<h4>QueryPie에서 Okta 연동 및 동기화 설정</h4>
+
+<p>목록 우측 상단의 <code>+ Add</code> 버튼을 누르고 팝업되는 화면에서 Type을 Okta로 선택하면 Okta를 IdP로 추가 할 수 있습니다.</p>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-014729.png" alt="Okta 상세설정 (1)" width="481"/><figcaption><p>Okta 상세설정 (1)</p>
+</figcaption>
+</figure>
+
+<ul>
+<li><strong>Name</strong>  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.</li>
+
+<li><strong>Type</strong> : Okta를 선택합니다.</li>
+
+<li><strong>Identity Provider Metadata</strong>  : <br/><a href="#okta%EC%97%90%EC%84%9C-querypie-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98-%EC%97%B0%EB%8F%99-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95">#Okta에서 QueryPie 애플리케이션 연동 정보 설정</a> 단계에서 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.</li>
+
+<li><strong>Use SAML Assertion Consumer Service Index</strong>  : Service Provider에서 여러개의 Endpoint 를 사용하는 경우 ACS Index를 사용하여 endpoint를 각각 지정할 수 있습니다.
+<ul>
+<li>Entity ID : <code>https://your-domain.com/saml/sp/metadata</code> 의 형식으로 입력합니다. Okta SAML 2.0 설정의 Audience URI (SP Entity ID) 값입니다.</li>
+
+<li>ACS Index : 0 ~ 2,147,483,647 사이의 값을 입력합니다. 기본값은 0 입니다.</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+<div class="callout callout-info" data-type="info"><p><strong>Assertion Consumer Service (ACS)</strong> : SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다.</p>
+<p><br/> <strong>Assertion Consumer Service Index의 필요성 및 역할</strong></p>
+<p>하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다.
+이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다.</p>
+<p>SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다.
+만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다.</p>
+<p>이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다.</p>
+<p><strong>주요 사용 사례</strong></p>
+<ul>
+<li>다양한 프로토콜 바인딩(Binding) 지원:</li>
+
+</ul>
+<p>SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다.
+SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다.
+예를 들어, index=&quot;0&quot;은 HTTP POST를 위한 ACS URL을, index=&quot;1&quot;은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다.</p>
+<ul>
+<li>다중 테넌트(Multi-tenant) 아키텍처 지원:</li>
+
+</ul>
+<p>하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다.
+이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다.</p>
+<ul>
+<li>애플리케이션 내 다른 인증 흐름 구분:</li>
+
+</ul>
+<p>같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다.
+예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다.</p>
+<ul>
+<li>동적 또는 특수한 ACS URL 처리:</li>
+
+</ul>
+<p>특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.</p>
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/screenshot-20250124-164255.png" alt="okta app 설정의 Audience URI(SP Entity ID) " width="690"/><figcaption><p>okta app 설정의 Audience URI(SP Entity ID)</p>
+</figcaption>
+</figure>
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/screenshot-20250124-164553.png" alt="Other Requestable SSO URLs 의 Index" width="694"/><figcaption><p>Other Requestable SSO URLs 의 Index</p>
+</figcaption>
+</figure>
+</div>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-014805.png" alt="Okta 상세설정 (2)" width="481"/><figcaption><p>Okta 상세설정 (2)</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System” 옵션을 활성화(체크)합니다.
+<ul>
+<li><strong>API URL</strong> : Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 <code>{domain}</code>.okta.com 형식의 URL 을 확인할 수 있습니다.</li>
+
+<li><strong>API Token</strong> : Okta 관리자 API 토큰을 기입합니다.</li>
+
+<li><strong>Application ID</strong> : Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.</li>
+
+</ul>
+
+</li>
+
+<li>주기적인 동기화 기능을 사용하고자 할 경우 <strong>Replication Frequency</strong>  항목에서 Scheduling 을 설정합니다.</li>
+
+<li><strong>Additional Settings</strong>
+<ul>
+<li><strong>Make New Users Inactive by Default</strong> : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.</li>
+
+<li><strong>Use an Attribute for Privilege Revoke</strong>  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.</li>
+
+<li><strong>Enable Attribute Synchronization</strong>  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.</li>
+
+<li><strong>Allowed User Deletion Rate Threshold :</strong>
+<ul>
+<li>동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.</li>
+
+<li>0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
+<ul>
+<li>예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.</li>
+
+<li>11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면 이 값이 1.0 으로 기본 설정됩니다.</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+<li><code>Dry Run</code> 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.</li>
+
+<li><code>Save</code> 버튼을 눌러 저장합니다.</li>
+
+</ul>
+
+<div class="callout callout-info" data-type="info"><p><strong>Application ID 확인하는 방법</strong>
+2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.</p>
+</div>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/Authentication-Okta-02.png" alt="Okta Admin &gt; Applications &gt; QueryPie App 상단 URL" width="760"/><figcaption><p>Okta Admin &gt; Applications &gt; QueryPie App 상단 URL</p>
+</figcaption>
+</figure>
+
+<h4>QueryPie에서 Okta 로그인</h4>
+
+<ol>
+<li>General Settings &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.</li>
+
+<li>이제 로그인 페이지에서 <code>Login with Okta</code> 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.</li>
+
+</ol>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-082704.png" alt="image-20251014-082704.png" width="760"/></figure>
+
+<div class="callout callout-info" data-type="info"><p>해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.
+SCIM 프로비저닝 연동까지 구현하고자 하는 경우, <a href="https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394">[Okta] 프로비저닝 연동 가이드</a> 내 절차대로 대신 진행하여 주시기 바랍니다.</p>
+</div>
+
+<h3>One Login 연동</h3>
+
+<p>목록 우측 상단의 <code>+ Add</code> 버튼을 누르고 팝업되는 화면에서 Type을 One Login으로 선택하면 One Login를 IdP로 추가 할 수 있습니다.</p>
+
+<ul>
+<li><strong>Name</strong>  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.</li>
+
+<li><strong>Type</strong> : One Login을 선택합니다.</li>
+
+</ul>
+
+<div class="callout callout-info" data-type="info"><p>One Login SAML Custom Connector 설정 및 Metadata XML 다운로드</p>
+<ul>
+<li>OneLogin에 접속한 후 화면 상단의 Applications &gt; Applications 메뉴를 클릭합니다.</li>
+
+<li><code>Add App</code> 버튼을 클릭합니다.</li>
+
+<li>검색 영역에 &#x27;SAML Custom Connector (Advanced)&#x27;을 입력한 후 검색 결과를 클릭합니다.</li>
+
+<li>Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator, ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.</li>
+
+<li><code>Save</code> 버튼을 눌러 저장합니다.</li>
+
+<li>화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions &gt; SAML Metadata를 클릭합니다.</li>
+
+<li>다운로드된 XML 파일을 확인합니다.</li>
+
+</ul>
+<p>One Login SAML Custom Connector 설정에 대한 자세한 내용은 <a href="https://onelogin.service-now.com/support?id=kb_article&amp;sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&amp;kb_category=de885d2187372d10695f0f66cebb351f">https://onelogin.service-now.com/support?id=kb_article&amp;sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&amp;kb_category=de885d2187372d10695f0f66cebb351f</a> 의 내용을 참고 바랍니다.</p>
+</div>
+
+<ul>
+<li><strong>Identity Provider Metadata</strong>  : One Login에서 다운로드한 XML 파일의 내용을 복사해서 붙여넣습니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251020-001435.png" alt="One Login 상세설정 (1)" width="480"/><figcaption><p>One Login 상세설정 (1)</p>
+</figcaption>
+</figure>
+
+<ul>
+<li>동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System” 옵션을 활성화(체크)합니다.</li>
+
+<li>주기적인 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-014949.png" alt="One Login 상세설정 (2)" width="481"/><figcaption><p>One Login 상세설정 (2)</p>
+</figcaption>
+</figure>
+
+<ul>
+<li><strong>Additional Settings</strong>
+<ul>
+<li><strong>Make New Users Inactive by Default</strong> : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.</li>
+
+<li><strong>Use an Attribute for Privilege Revoke</strong>  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.</li>
+
+<li><strong>Enable Attribute Synchronization</strong>  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.</li>
+
+<li><strong>Allowed User Deletion Rate Threshold :</strong>
+<ul>
+<li>동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.</li>
+
+<li>0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
+<ul>
+<li>예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.</li>
+
+<li>11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면 이 값이 1.0 으로 기본 설정됩니다.</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+<h3>SAML 2.0 연동 (주기적 동기화 없는 1회용)</h3>
+
+<p>주기적인 동기화 없이 1회만 SAML 연동하는 경우 SAML metadata 만 입력하여 설정합니다.</p>
+
+<ul>
+<li><strong>Name</strong>  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.</li>
+
+<li><strong>Type</strong> : SAML 을 선택합니다.</li>
+
+<li><strong>Identity Provider Metadata</strong>  : IdP에서 확인한 SML metadata XML의 내용을 복사해서 붙여 넣습니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-015015.png" alt="image-20251014-015015.png" width="481"/></figure>
+
+<p>&lt; 참고 &gt; <a href="#link-error">AWS SSO 연동</a></p>
+
+<h3>Custom Identity Provider</h3>
+
+<p>Custom Identity Provider는 인증 API서버를 사용하는 특수한 경우에만 사용합니다.</p>
+
+<ul>
+<li><strong>Name</strong>  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.</li>
+
+<li><strong>Type</strong> : Custom Identity Provider 를 선택합니다.</li>
+
+<li><strong>API URL</strong>  : API서버의 End-point URL을 입력합니다.</li>
+
+<li>사용자 정보 동기화를 실행하려는 경우 Use Synchronization with the Authentication System 옵션을 활성화합니다.</li>
+
+</ul>
+
+<figure data-layout="center" data-align="center"><img src="/1454342158/output/image-20251014-015047.png" alt="image-20251014-015047.png" width="481"/></figure>
+
+<ul>
+<li><strong>Additional Settings</strong>
+<ul>
+<li><strong>Make New Users Inactive by Default</strong> : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.</li>
+
+<li><strong>Use an Attribute for Privilege Revoke</strong>  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.</li>
+
+<li><strong>Enable Attribute Synchronization</strong>  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.</li>
+
+<li><strong>Allowed User Deletion Rate Threshold :</strong>
+<ul>
+<li>동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.</li>
+
+<li>0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
+<ul>
+<li>예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.</li>
+
+<li>11.3.0 이전 버전에서 동기화 설정된 상태에서, 11.3.0으로 제품을 업그레이드하면 이 값이 1.0 으로 기본 설정됩니다.</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
