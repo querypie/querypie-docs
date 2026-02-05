@@ -14,11 +14,14 @@
 
 set -o nounset -o errexit -o pipefail
 
-# Configuration
+# Change to script directory for relative paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TEST_DIR="${SCRIPT_DIR}/testcases"
-BIN_DIR="${SCRIPT_DIR}/../bin"
-VENV_DIR="${SCRIPT_DIR}/../venv"
+cd "${SCRIPT_DIR}"
+
+# Configuration (relative paths from script directory)
+TEST_DIR="testcases"
+BIN_DIR="../bin"
+VENV_DIR="../venv"
 
 CONVERTER_SCRIPT="${BIN_DIR}/confluence_xhtml_to_markdown.py"
 SKELETON_SCRIPT="${BIN_DIR}/mdx_to_skeleton.py"
