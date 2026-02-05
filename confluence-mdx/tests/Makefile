@@ -10,28 +10,19 @@ all: test-xhtml test-skeleton
 	@echo ""
 	@echo "All tests completed."
 
-# Run XHTML tests (alias)
-.PHONY: test
-test: test-xhtml
-
 # Run XHTML tests only
 .PHONY: test-xhtml
 test-xhtml:
 	@$(TEST_SCRIPT) --type xhtml --log-level warning $(VERBOSE_FLAG)
 
 # Run a specific XHTML test
-.PHONY: test-one
-test-one:
+.PHONY: test-xhtml-one
+test-xhtml-one:
 	@if [ -z "$(TEST_ID)" ]; then \
-		echo "Usage: make test-one TEST_ID=<test_id>"; \
+		echo "Usage: make test-xhtml-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
 	@$(TEST_SCRIPT) --type xhtml --log-level warning --test-id $(TEST_ID) $(VERBOSE_FLAG)
-
-# Run XHTML tests with debug log level
-.PHONY: debug
-debug: debug-xhtml
-	@echo "All debug tests completed."
 
 # Run XHTML tests with debug log level
 .PHONY: debug-xhtml
@@ -39,10 +30,10 @@ debug-xhtml:
 	@$(TEST_SCRIPT) --type xhtml --log-level debug $(VERBOSE_FLAG)
 
 # Run a specific XHTML test with debug log level
-.PHONY: debug-one
-debug-one:
+.PHONY: debug-xhtml-one
+debug-xhtml-one:
 	@if [ -z "$(TEST_ID)" ]; then \
-		echo "Usage: make debug-one TEST_ID=<test_id>"; \
+		echo "Usage: make debug-xhtml-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
 	@$(TEST_SCRIPT) --type xhtml --log-level debug --test-id $(TEST_ID) $(VERBOSE_FLAG)
@@ -74,12 +65,12 @@ clean:
 help:
 	@echo "Available targets:"
 	@echo "  all                - Run all tests: XHTML + Skeleton (default)"
-	@echo "  test, test-xhtml   - Run XHTML tests only"
-	@echo "  test-one           - Run a specific XHTML test"
-	@echo "  test-skeleton      - Run Skeleton tests only"
+	@echo "  test-xhtml         - Run XHTML tests"
+	@echo "  test-xhtml-one     - Run a specific XHTML test"
+	@echo "  test-skeleton      - Run Skeleton tests"
 	@echo "  test-skeleton-one  - Run a specific Skeleton test"
-	@echo "  debug, debug-xhtml - Run XHTML tests with debug log level"
-	@echo "  debug-one          - Run a specific XHTML test with debug log level"
+	@echo "  debug-xhtml        - Run XHTML tests with debug log level"
+	@echo "  debug-xhtml-one    - Run a specific XHTML test with debug log level"
 	@echo "  clean              - Remove all output files"
 	@echo "  help               - Show this help message"
 	@echo ""
@@ -88,7 +79,7 @@ help:
 	@echo "  VERBOSE=1          - Show executed commands and converter output"
 	@echo ""
 	@echo "Examples:"
-	@echo "  make                                      # Run all tests"
-	@echo "  make test-xhtml VERBOSE=1                 # Run XHTML tests with verbose"
-	@echo "  make test-one TEST_ID=568918170           # Run specific XHTML test"
-	@echo "  make debug-one TEST_ID=568918170 VERBOSE=1"
+	@echo "  make                                           # Run all tests"
+	@echo "  make test-xhtml VERBOSE=1                      # Run XHTML tests with verbose"
+	@echo "  make test-xhtml-one TEST_ID=568918170          # Run specific XHTML test"
+	@echo "  make debug-xhtml-one TEST_ID=568918170 VERBOSE=1"
