@@ -194,44 +194,28 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </li>
 
 <li>Resources에 명시된 리소스에 대한 권한 수행이 가능한 kubernetes 측 그룹(단일 또는 복수)을 정의합니다.
-<pre><code></code></pre>
+<pre><code>kubernetesGroups: 
+  - system:masters
+  - default-group-account
+</code></pre>
 
 </li>
 
-</ul>
-
-</li>
-
-</ul>
-
-</li>
-
-</ol>
-
-<p>kubernetesGroups:</p>
-
-<ul>
-<li>system:masters</li>
-
-<li>default-group-account
-<pre><code>* kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
+<li>kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
+<pre><code>kubernetesGroups: 
+  - $user.groups
 </code></pre>
 
 </li>
 
 </ul>
 
-<p>kubernetesGroups:</p>
-
-<ul>
-<li>$user.groups
-<pre><code></code></pre>
-
 </li>
 
 </ul>
 
-<ol start="2">
+</li>
+
 <li><code>impersonation</code>: <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#F9C84E;color:#292A2E">OPTIONAL</span>
 <ul>
 <li>사용자가 클라이언트 단에서 kubernetes 내 특정 serviceaccount 등의 권한으로 kubectl 명령에 impersonation(--as, --as-group)을 시도하는 경우, 이에 대한 호출 허용 목록을 정의합니다.
@@ -239,9 +223,16 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <li><code>users</code>: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 &quot;--as&quot; 파라미터에 허용 가능한 값을 나열합니다.</li>
 
 <li><code>groups</code>: 쿠버네티스 내 존재하는 그룹 계정으로 &quot;--as-group&quot; 파라미터에 허용 가능한 값을 나열합니다.
-<pre><code></code></pre>
+<pre><code>impersonation: 
+  users: 
+    - &quot;system:serviceaccount:argocd&quot;
+  groups: 
+    - &quot;system:admin&quot;
+</code></pre>
 
 </li>
+
+<li>와일드카드를 허용합니다. (<code>&quot;*&quot;</code>)</li>
 
 </ul>
 
@@ -252,22 +243,6 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </li>
 
 </ol>
-
-<p>impersonation:
-users:</p>
-
-<ul>
-<li>&quot;system:serviceaccount:argocd&quot;
-groups:</li>
-
-<li>&quot;system:admin&quot;
-<pre><code>* 와일드카드를 허용합니다. (`&quot;*&quot;`)
-
-</code></pre>
-
-</li>
-
-</ul>
 
 <h3>Actions 명시 방법</h3>
 
@@ -321,28 +296,18 @@ groups:</li>
 
 </ol>
 
-<pre><code></code></pre>
-
-</li>
-
-</ol>
-
-<p>resources:</p>
-
-<ul>
-<li>&quot;pods&quot;</li>
-
-<li>&quot;deployments&quot;</li>
-
-<li>&quot;configmaps&quot;
-<pre><code></code></pre>
-
-</li>
-
-</ul>
+<pre><code> resources:
+   - &quot;pods&quot;
+   - &quot;deployments&quot;
+   - &quot;configmaps&quot;
+</code></pre>
 
 <ol start="5">
 <li>와일드카드를 허용합니다. (<code>&quot;*&quot;</code>)</li>
+
+</ol>
+
+</li>
 
 <li><code>namespace</code> : 대상 네임스페이스를 정의합니다.
 <ol>
@@ -440,96 +405,70 @@ groups:</li>
 
 <ul>
 <li><code>resourceTags</code> : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다.
-<pre><code></code></pre>
-
-</li>
-
-</ul>
-
-<p>resourceTags:
-&quot;region&quot;: &quot;ap-northeast-1&quot;
-&quot;Owner&quot;: &quot;Brant&quot;</p>
-
-<pre><code>* `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. 
+<pre><code>resourceTags: 
+  &quot;region&quot;: &quot;ap-northeast-1&quot;
+  &quot;Owner&quot;: &quot;Brant&quot;
 </code></pre>
 
-<p>userAttributes:
-&quot;countryCode&quot;: &quot;KR&quot;
-&quot;department&quot;: &quot;Infra&quot;</p>
+</li>
 
-<pre><code>* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
+<li><code>userAttributes</code> : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다.
+<pre><code>userAttributes: 
+  &quot;countryCode&quot;: &quot;KR&quot;
+  &quot;department&quot;: &quot;Infra&quot;
 </code></pre>
 
-<p>ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;]</p>
+</li>
 
-<pre><code>
-
-### KAC Policy 예시
-
+<li><code>ipAddresses</code> : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.
+<pre><code>ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;]
 </code></pre>
 
-<p>apiVersion: kubernetes.rbac.querypie.com/v1
-kind: KacPolicy</p>
-
-<p>spec:
-allow:
-resources:</p>
-
-<ul>
-<li>&quot;cluster:*&quot;
-subjects:
-kubernetesGroups:
-<ul>
-<li>&quot;system:masters&quot;
-impersonation:
-users: [&quot;system:serviceaccount:argocd&quot;]
-groups: [&quot;system:admin&quot;]<br/>
-actions:</li>
-
-</ul>
-
-</li>
-
-<li>apiGroups: [&quot;*&quot;]
-resources:
-<ul>
-<li>&quot;pods&quot;
-namespace: &quot;<em>&quot;
-name: &quot;</em>&quot;
-verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;]
-conditions:
-resourceTags:
-&quot;Owner&quot;: [&quot;Kenny&quot;, &quot;Brant&quot;]
-&quot;Team&quot;: &quot;DevSecOps&quot;
-userAttributes:
-&quot;countryCode&quot;: &quot;KR&quot;
-&quot;department&quot;: &quot;Infra&quot;
-ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;]
-deny:
-resources:</li>
-
-</ul>
-
-</li>
-
-<li>&quot;cluster:kubepie-*&quot;
-actions:</li>
-
-<li>apiGroups: [&quot;*&quot;]
-resources:
-<ul>
-<li>&quot;<em>&quot;
-namespace: &quot;production&quot;
-name: &quot;</em>&quot;
-verbs: [&quot;*&quot;]
-conditions:
-resourceTags:
-&quot;Owner&quot;: &quot;Brant&quot;</li>
-
-</ul>
-
 </li>
 
 </ul>
 
-<pre><code></code></pre>
+<h3>KAC Policy 예시</h3>
+
+<pre><code>apiVersion: kubernetes.rbac.querypie.com/v1 
+kind: KacPolicy
+
+spec:
+  allow: 
+    resources: 
+      - &quot;cluster:*&quot;
+    subjects: 
+      kubernetesGroups: 
+        - &quot;system:masters&quot;
+      impersonation: 
+        users: [&quot;system:serviceaccount:argocd&quot;] 
+        groups: [&quot;system:admin&quot;]  
+    actions: 
+      - apiGroups: [&quot;*&quot;] 
+        resources: 
+          - &quot;pods&quot;
+        namespace: &quot;*&quot; 
+        name: &quot;*&quot; 
+        verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;]
+    conditions: 
+      resourceTags: 
+        &quot;Owner&quot;: [&quot;Kenny&quot;, &quot;Brant&quot;]
+        &quot;Team&quot;: &quot;DevSecOps&quot; 
+      userAttributes: 
+        &quot;countryCode&quot;: &quot;KR&quot;
+        &quot;department&quot;: &quot;Infra&quot;
+      ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;] 
+  deny: 
+    resources: 
+      - &quot;cluster:kubepie-*&quot;
+    actions: 
+      - apiGroups: [&quot;*&quot;]
+        resources: 
+          - &quot;*&quot;
+        namespace: &quot;production&quot;
+        name: &quot;*&quot;
+        verbs: [&quot;*&quot;]
+    conditions: 
+      resourceTags: 
+        &quot;Owner&quot;: &quot;Brant&quot;
+</code></pre>

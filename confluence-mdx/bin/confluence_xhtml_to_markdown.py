@@ -1225,20 +1225,6 @@ class MultiLineParser:
         return self.markdown_lines
 
     @property
-    def as_markdown_of_two(self):
-        """Convert the node to Markdown format for indented list."""
-        self.convert_recursively(self.node)
-
-        if len(self.markdown_lines) >= 2:
-            # Join all items except the last one into a single string
-            first_line = "".join(self.markdown_lines[:-1])
-            # Get the last item in the list
-            last_line = self.markdown_lines[-1]
-            return [first_line, last_line]
-        else:
-            return self.markdown_lines
-
-    @property
     def is_standalone_dash(self):
         """
         Check if the node contains only a plain standalone dash character.
@@ -1452,7 +1438,7 @@ class MultiLineParser:
             elif child.name in ['ul', 'ol']:
                 pass  # Will be processed later in this method
             elif child.name in ['ac:structured-macro'] and attr_name in ['code']:
-                code_markdown = MultiLineParser(child).as_markdown_of_two
+                code_markdown = MultiLineParser(child).as_markdown
                 child_markdown.extend(code_markdown)
             else:
                 child_markdown.append(f'(Unexpected node name="{child.name}" ac:name="{attr_name}")\n')
@@ -1462,10 +1448,8 @@ class MultiLineParser:
 
         itself = ' '.join(li_itself)
         self.markdown_lines.append(f'{prefix}{itself}\n')
-        if len(child_markdown) > 0:
-            for i in range(len(child_markdown)):
-                child_markdown[i] = prefix_for_children + child_markdown[i]
-            self.markdown_lines.extend(child_markdown)
+        for line in child_markdown:
+            self.markdown_lines.append(prefix_for_children + line)
 
         # Handle nested lists
         for child in node.children:
@@ -1568,7 +1552,8 @@ class MultiLineParser:
                 if isinstance(item, CData):
                     cdata = str(item)  # Convert CData object to string
                     break
-        self.markdown_lines.append(f"{cdata}\n")
+        for line in cdata.rstrip('\n').split('\n'):
+            self.markdown_lines.append(f"{line}\n")
         self.markdown_lines.append("```\n")
 
     def convert_structured_macro_expand(self, node):
