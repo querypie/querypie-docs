@@ -72,7 +72,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </td></tr>
 <tr><td></td><td><p><code>resources</code></p>
 </td><td><p>O</p>
-</td><td><p>접근을 허용/거부할 리소스를 지정합니다. <span class="badge" data-color="blue" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></p>
+</td><td><p>접근을 허용/거부할 리소스를 지정합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></p>
 </td><td><p><code>- &quot;cluster:*&quot;</code>
 <code>- &quot;cluster:^eks-.*$&quot;</code></p>
 </td></tr>
@@ -82,7 +82,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <ul>
 <li><code>kubernetesGroups</code> : 쿼리파이 Proxy가 이용할 kubernetes group을 지정합니다.</li>
 
-<li><code>impersonation</code> : 클라이언트 단에서 impersonation을 허용할 대상 사용자/그룹을 지정합니다. <span class="badge" data-color="green" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
+<li><code>impersonation</code> : 클라이언트 단에서 impersonation을 허용할 대상 사용자/그룹을 지정합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
 
 </ul>
 </td><td><p><code>kubernetesGroups:</code><br/>  <code>- &quot;system:masters&quot;</code><br/>  <code>- $user.groups</code>
@@ -90,17 +90,17 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </td></tr>
 <tr><td></td><td><p><code>actions</code></p>
 </td><td><p>O</p>
-</td><td><p>쿠버네티스 클러스터 API 서버 내 허용/거부할 Resource API를 명시합니다. <span class="badge" data-color="blue" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></p>
+</td><td><p>쿠버네티스 클러스터 API 서버 내 허용/거부할 Resource API를 명시합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></p>
 <ul>
-<li><code>apiGroups</code> : 쿠버네티스 API 그룹 리스트를 정의합니다. <span class="badge" data-color="green" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
+<li><code>apiGroups</code> : 쿠버네티스 API 그룹 리스트를 정의합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
 
-<li><code>resources</code> : 쿠버네티스 리소스를 정의합니다. <span class="badge" data-color="green" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
+<li><code>resources</code> : 쿠버네티스 리소스를 정의합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
 
-<li><code>namespace</code> : 대상 네임스페이스를 정의합니다. <span class="badge" data-color="blue" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></li>
+<li><code>namespace</code> : 대상 네임스페이스를 정의합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></li>
 
-<li><code>name</code> : 대상 리소스명을 정의합니다. <span class="badge" data-color="blue" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></li>
+<li><code>name</code> : 대상 리소스명을 정의합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#8FB8F6;color:#292A2E">와일드카드 및 정규표현식 허용</span></li>
 
-<li><code>verbs</code> : 작업을 허용하거나 거부할 kubernetes 내의 권한을 명시합니다. <span class="badge" data-color="green" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
+<li><code>verbs</code> : 작업을 허용하거나 거부할 kubernetes 내의 권한을 명시합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
 
 </ul>
 </td><td><p><code>- apiGroups: [&quot;*&quot;]</code><br/><code>resources:</code><br/><code>- &quot;*&quot;</code><br/><code>namespace: &quot;*&quot;</code><br/><code>name: &quot;*&quot;</code><br/><code>verbs: [&quot;*&quot;]</code></p>
@@ -108,11 +108,11 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <tr><td></td><td><p><code>conditions</code></p>
 </td><td></td><td><p>리소스 접근 정책 적용 여부를 조건으로 적용 대상을 세부 제어합니다.</p>
 <ul>
-<li><code>resourceTags</code> : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <span class="badge" data-color="purple" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#D8A0F7;color:#292A2E">Value 와일드카드 및 정규표현식 허용</span></li>
+<li><code>resourceTags</code> : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#D8A0F7;color:#292A2E">Value 와일드카드 및 정규표현식 허용</span></li>
 
-<li><code>userAttributes</code> : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <span class="badge" data-color="purple" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#D8A0F7;color:#292A2E">Value 와일드카드 및 정규표현식 허용</span></li>
+<li><code>userAttributes</code> : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#D8A0F7;color:#292A2E">Value 와일드카드 및 정규표현식 허용</span></li>
 
-<li><code>ipAddresses</code> : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. <span class="badge" data-color="green" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
+<li><code>ipAddresses</code> : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#B3DF72;color:#292A2E">와일드카드 허용</span></li>
 
 </ul>
 </td><td><p><code>resourceTags:</code><br/><code>- &quot;Owner&quot;: &quot;Daniel&quot;</code><br/><code>userAttributes:</code><br/><code>- &quot;department&quot;: &quot;DevOps&quot; ipAddresses:</code><br/><code>- &quot;10.10.10.0/24&quot;</code></p>
@@ -125,7 +125,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <p><code>resources</code>는 <u>쿠버네티스의 리소스가 아닌</u> 쿼리파이에 등록된 쿠버네티스 클러스터에 대한 리소스를 정의합니다.</p>
 
 <ol>
-<li>해당 <code>resources</code> 필드에 대한 정의는 필수입니다. <span class="badge" data-color="red" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#FD9891;color:#292A2E">required</span></li>
+<li>해당 <code>resources</code> 필드에 대한 정의는 필수입니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#FD9891;color:#292A2E">required</span></li>
 
 <li>쿠버네티스 클러스터명을 바탕으로 입력합니다.
 <ul>
@@ -190,7 +190,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <p><code>subjects</code>는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. <code>subjects</code>는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.</p>
 
 <ol>
-<li><code>kubernetesGroups</code>: <span class="badge" data-color="red" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#FD9891;color:#292A2E">required</span>
+<li><code>kubernetesGroups</code>: <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#FD9891;color:#292A2E">required</span>
 <ul>
 <li>리소스에 대한 API 수행을 위해 쿼리파이 Proxy가 impersonate할 kubernetes 그룹 계정을 정의합니다.
 <ul>
@@ -241,7 +241,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </ul>
 
 <ol start="2">
-<li><code>impersonation</code>: <span class="badge" data-color="yellow" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#F9C84E;color:#292A2E">OPTIONAL</span>
+<li><code>impersonation</code>: <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#F9C84E;color:#292A2E">OPTIONAL</span>
 <ul>
 <li>사용자가 클라이언트 단에서 kubernetes 내 특정 serviceaccount 등의 권한으로 kubectl 명령에 impersonation(--as, --as-group)을 시도하는 경우, 이에 대한 호출 허용 목록을 정의합니다.
 <ul>
@@ -445,7 +445,7 @@ groups:</li>
 
 <h3>Conditions 명시 방법</h3>
 
-<p><code>conditions</code> 항목에는 <code>resourceTags</code>, <code>userAttributes</code>, <code>ipAddresses</code>를 조건으로 정의할 수 있습니다. <span class="badge" data-color="yellow" style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#F9C84E;color:#292A2E">OPTIONAL</span></p>
+<p><code>conditions</code> 항목에는 <code>resourceTags</code>, <code>userAttributes</code>, <code>ipAddresses</code>를 조건으로 정의할 수 있습니다. <span style="display:inline-block;padding:2px 5px 2px 4px;margin:0 2px;border-radius:3px;font-size:0.75em;font-weight:700;line-height:1.1;letter-spacing:-0.3px;text-transform:uppercase;white-space:nowrap;position:relative;top:-1px;background-color:#F9C84E;color:#292A2E">OPTIONAL</span></p>
 
 <ul>
 <li><code>resourceTags</code> : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다.
