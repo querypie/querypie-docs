@@ -36,14 +36,14 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
     * 他のリソースも同様に動作します。
     * 推奨スペック
       ```
-allow:
-  actions:
-    # Podsのみ許可時 
-    - apiGroups: ["*"]
-      resources: ["pods"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          # Podsのみ許可時
+          - apiGroups: ["*"]
+            resources: ["pods"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 *  **Eventsパート**
     * 下のevents項目は`events`リソースに対する権限によって表示されますが、上のresources項目と同様にnamespace、nameによってフィルタリングされて表示されます。
@@ -51,14 +51,14 @@ allow:
     * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソース権限がある状態で`pods`に対する権限だけを与えたとしても`events`中`pods`に対する内容だけが照会されるわけではないことをご案内します。
     * 推奨スペック
       ```
-allow:
-  actions:
-    # Eventsを一緒に出力許可時 
-    - apiGroups: ["*"]
-      resources: ["pods", "events"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          # Eventsを一緒に出力許可時
+          - apiGroups: ["*"]
+            resources: ["pods", "events"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 
 
@@ -72,13 +72,13 @@ allow:
     * `get`、`list`だけでもkubectlの使用は大きく困難ではありませんが、`watch`がないとlensのような現況モニタリングをサポートするツールの使用が困難です。
     * 推奨スペック
       ```
-allow:
-  actions:
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 *  **Edit権限**
     * Edit権限まで得るユーザーの場合はView権限(最小`get`、`list`)も一緒に付与する必要があります。kubectlでも特定リソースに対する修正要求をするとまず照会要求をするためです。
@@ -87,26 +87,26 @@ allow:
     * `deletecollection`はよく使用されるわけではありませんが、KACでは`deletecollection`で要求が来てもユーザーに権限があるリソースだけを選んで削除処理するため、有用に使用できます。
     * 推奨スペック
       ```
-allow:
-  actions:
-    # 作成権限
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "create"]
-    # 修正権限 
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "patch", "update"]
-    # 削除権限
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "delete", "deletecollection"]
+      allow:
+        actions:
+          # 作成権限
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "create"]
+          # 修正権限
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "patch", "update"]
+          # 削除権限
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "delete", "deletecollection"]
       ```
 
 

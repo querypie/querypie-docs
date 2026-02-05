@@ -39,34 +39,34 @@ App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
   </figure>
 4. Create app from manifestモーダルでJSON形式のApp Manifestを入力します。<br/>事前に埋められている内容を削除し以下のApp Manifestを貼り付けた後次の段階に進行します。<br/>:light_bulb_on: `{{..}}`内の値は希望する値に変更してください。 <br/>
   ```
-{
-    "display_information": {
-        "name": "{{name}}"
-    },
-    "features": {
-        "bot_user": {
-            "display_name": "{{display_name}}",
-            "always_online": false
-        }
-    },
-    "oauth_config": {
-        "scopes": {
-            "bot": [
-                "chat:write",
-                "users:read.email",
-                "users:read"
-            ]
-        }
-    },
-    "settings": {
-        "interactivity": {
-            "is_enabled": true
-        },
-        "org_deploy_enabled": false,
-        "socket_mode_enabled": true,
-        "token_rotation_enabled": false
-    }
-}
+  {
+      "display_information": {
+          "name": "{{name}}"
+      },
+      "features": {
+          "bot_user": {
+              "display_name": "{{display_name}}",
+              "always_online": false
+          }
+      },
+      "oauth_config": {
+          "scopes": {
+              "bot": [
+                  "chat:write",
+                  "users:read.email",
+                  "users:read"
+              ]
+          }
+      },
+      "settings": {
+          "interactivity": {
+              "is_enabled": true
+          },
+          "org_deploy_enabled": false,
+          "socket_mode_enabled": true,
+          "token_rotation_enabled": false
+      }
+  }
   ```
 5. 設定内容を検討し`Create`ボタンをクリックしてApp生成を完了します。<br/> <br/> 
   <figure data-layout="center" data-align="center">

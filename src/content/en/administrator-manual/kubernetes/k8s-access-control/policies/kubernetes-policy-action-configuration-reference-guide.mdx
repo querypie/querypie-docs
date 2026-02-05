@@ -36,14 +36,14 @@ When using 3rd-party client tools, you can monitor status within the permitted r
     * Other resources work the same way.
     * Recommended spec
       ```
-allow:
-  actions:
-    # When allowing only Pods 
-    - apiGroups: ["*"]
-      resources: ["pods"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          # When allowing only Pods
+          - apiGroups: ["*"]
+            resources: ["pods"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 * **Events section**
     * The events section below is displayed based on permissions for the `events` resource, and like the resources section above, it is filtered and displayed by namespace and name.
@@ -51,14 +51,14 @@ allow:
     * The `events` resource and `pods` resource are separate resources. Therefore, if you only grant permission for `pods` while having permission for the `events` resource, it does not mean only the history of `events` related to `pods` is retrieved.
     * Recommended spec
       ```
-allow:
-  actions:
-    # When allowing Events output together 
-    - apiGroups: ["*"]
-      resources: ["pods", "events"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          # When allowing Events output together
+          - apiGroups: ["*"]
+            resources: ["pods", "events"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 
 
@@ -72,41 +72,41 @@ Administrators specify the scope of resources users can access through apiGroups
     * Using kubectl is not too difficult with just `get` and `list`, but without `watch`, tools like Lens that support live monitoring are difficult to use.
     * Recommended spec
       ```
-allow:
-  actions:
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "watch"]
+      allow:
+        actions:
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "watch"]
       ```
 * **Edit permissions**
     * For users who also get Edit permissions, you must also grant View permissions (at minimum, `get` and `list`). This is because kubectl first performs a read before issuing a modification request for a given resource.
     * In tools like Lens, without View permissions there is no way to reach the Edit screen.
     * For Edit, group the verbs by role: create (`create`), modify (`patch`, `update`), delete (`delete`, `deletecollection`).
     * Although `deletecollection` is not commonly used, in KAC, even when a `deletecollection` request is made, only resources for which the user has permissions are selected and deleted, so it can be useful.
-    * Recommended spec 
+    * Recommended spec
       ```
-allow:
-  actions:
-    # Create permissions
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "create"]
-    # Update permissions 
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "patch", "update"]
-    # Delete permissions
-    - apiGroups: ["*"]
-      resources: ["*"]
-      namespace: "*"
-      name: "*"
-      verbs: ["get", "list", "delete", "deletecollection"]
+      allow:
+        actions:
+          # Create permissions
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "create"]
+          # Update permissions
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "patch", "update"]
+          # Delete permissions
+          - apiGroups: ["*"]
+            resources: ["*"]
+            namespace: "*"
+            name: "*"
+            verbs: ["get", "list", "delete", "deletecollection"]
       ```
 
 
