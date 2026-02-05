@@ -6,7 +6,6 @@ import { Callout } from 'nextra/components'
 
 # 설치 후 초기 설정
 
-
 운영 환경에 따라 설치 이후 필수적으로 수행이 필요한 설정들을 안내합니다.
 
 ### 공통 설정
@@ -16,7 +15,8 @@ import { Callout } from 'nextra/components'
 #### QueryPie Web Base URL 설정
 
 > 설정 경로: Admin Page → General
-Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다. <br/>(예시. `https://querypie.customer.com`)<br/>이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
+Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다.
+(예시. `https://querypie.customer.com`) 이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
 
 이 URL 은 `/` 로 끝나지 않아야 합니다. `https://querypie.customer.com/` 와 같이 URL 의 마지막에 `/` 를 붙이지 않도록 주의하여 주세요.
 
@@ -47,9 +47,11 @@ Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Passw
 
 * Hostname: `host.docker.internal`
 * Username: `querypie` (기본 설정의 경우)
-* Password: (QueryPie 설치한 디렉토리의 compose-env 파일에서 DB_PASSWORD 를 확인하세요.)
+* Password: QueryPie 를 설치한 디렉토리의 환경변수 파일에서 `DB_PASSWORD` 를 확인하세요.
+    * setup.v2.sh 로 설치한 경우: `.env` 파일
+    * setup.sh 로 설치한 경우: `compose-env` 파일
 
-compose-env 에 설정된 값 중 DB_PASSWORD, REDIS_PASSWORD, KEY_ENCRYPTION_KEY 등은 안전하게 보관하여야 합니다.
+환경변수 파일에 설정된 값 중 `DB_PASSWORD`, `REDIS_PASSWORD`, `KEY_ENCRYPTION_KEY` 등은 안전하게 보관하여야 합니다.
 다른 사람에게 이 값을 노출하지 않도록 주의하여 주세요.
 </Callout>
 

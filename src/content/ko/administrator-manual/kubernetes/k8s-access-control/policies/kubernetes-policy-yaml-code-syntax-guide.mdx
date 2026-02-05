@@ -59,7 +59,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 `apiVersion`
 </td>
 <td>
--
+<p>-</p>
 </td>
 <td>
 O
@@ -77,7 +77,7 @@ O
 `kind`
 </td>
 <td>
--
+<p>-</p>
 </td>
 <td>
 O
@@ -95,7 +95,7 @@ O
 `spec:`<br/>  `<effect>`
 </td>
 <td>
--
+<p>-</p>
 </td>
 <td>
 O
@@ -229,25 +229,25 @@ O
             * Impersonation을 위한 해당 subjects는 다른 Policy들과 하나의 Role 내에서 중첩이 가능합니다.
         * Resources에 명시된 리소스에 대한 권한 수행이 가능한 kubernetes 측 그룹(단일 또는 복수)을 정의합니다.
           ```
-kubernetesGroups: 
-  - system:masters
-  - default-group-account
+          kubernetesGroups: 
+            - system:masters
+            - default-group-account
           ```
         * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
           ```
-kubernetesGroups: 
-  - $user.groups
+          kubernetesGroups: 
+            - $user.groups
           ```
 2. `impersonation`: <Badge color="yellow">OPTIONAL</Badge>
     * 사용자가 클라이언트 단에서 kubernetes 내 특정 serviceaccount 등의 권한으로 kubectl 명령에 impersonation(--as, --as-group)을 시도하는 경우, 이에 대한 호출 허용 목록을 정의합니다.
         * `users`: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 "--as" 파라미터에 허용 가능한 값을 나열합니다.
         * `groups`: 쿠버네티스 내 존재하는 그룹 계정으로 "--as-group" 파라미터에 허용 가능한 값을 나열합니다.
           ```
-impersonation: 
-  users: 
-    - "system:serviceaccount:argocd"
-  groups: 
-    - "system:admin"
+          impersonation: 
+            users: 
+              - "system:serviceaccount:argocd"
+            groups: 
+              - "system:admin"
           ```
         * 와일드카드를 허용합니다. (`"*"`)
 
@@ -272,10 +272,10 @@ impersonation:
     3. 네임스페이스 하위 리소스만 지정하여 권한을 부여하더라도, Namespace에 대한 ReadOnly 권한이 함께 부여됩니다. 따라서, 리소스 호출 시 매번 네임스페이스 명시해주어야 하는 사례가 발생되지 않습니다. 특정 네임스페이스에 대한 권한 부여를 방지하고자 하는 경우, `spec:deny` 에서 네임스페이스 리소스에 대한 접근 거부를 설정할 수 있습니다. 
     4. 단일 정책 액션에서 다중으로 리소스 지정이 가능합니다. 
       ```
- resources:
-   - "pods"
-   - "deployments"
-   - "configmaps"
+       resources:
+         - "pods"
+         - "deployments"
+         - "configmaps"
       ```
     5. 와일드카드를 허용합니다. (`"*"`)
 3. `namespace` : 대상 네임스페이스를 정의합니다. 
@@ -312,19 +312,19 @@ impersonation:
 
 * `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. 
   ```
-resourceTags: 
-  "region": "ap-northeast-1"
-  "Owner": "Brant"
+  resourceTags: 
+    "region": "ap-northeast-1"
+    "Owner": "Brant"
   ```
 * `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. 
   ```
-userAttributes: 
-  "countryCode": "KR"
-  "department": "Infra"
+  userAttributes: 
+    "countryCode": "KR"
+    "department": "Infra"
   ```
 * `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
   ```
-ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+  ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
   ```
 
 
