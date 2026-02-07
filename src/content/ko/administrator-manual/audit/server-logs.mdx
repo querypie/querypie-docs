@@ -11,11 +11,11 @@ import { Callout } from 'nextra/components'
 
 QueryPie의 System Access Control에서 발생하는 로그들을 Server Logs에서 확인할 수 있습니다.
 서버 접속 권한 부여와 회수, 서버 로그인/로그아웃, 수행한 명령어 이력 등의 정보를 확인할 수 있습니다.
-그 외, QueryPie를 통해 접속한 세션 리스트을 조회하거나 세션을 강제종료 할 수 있습니다.
+그 외, QueryPie를 통해 접속한 세션 리스트를 조회하거나 세션을 강제 종료할 수 있습니다.
 
 ### 연관 감사 로그 종류
 
-쿼리파이 공통으로 제공되는 감사 로그에 더하여 쿼리파이 시스템 접근제어 (QueryPie SAC) 라이선스 보유 시, 이하의 감사 로그의 종류 제공합니다.
+쿼리파이 공통으로 제공되는 감사 로그에 더하여 쿼리파이 시스템 접근제어 (QueryPie SAC) 라이선스 보유 시, 이하의 감사 로그의 종류를 제공합니다.
 
 <table>
 <tbody>
@@ -57,12 +57,12 @@ QueryPie의 System Access Control에서 발생하는 로그들을 Server Logs에
 1.  **Servers** 
 
 * [Server Access History](server-logs/server-access-history) : Server 접속 이력
-* [Command Audit](server-logs/command-audit) : Server내 수행 명령어 이력
+* [Command Audit](server-logs/command-audit) : Server 내 수행 명령어 이력
 * [Session Logs](server-logs/session-logs) : 연결 세션 내 행위 녹화 내역 
 * [Session Monitoring (Moved)](server-logs/session-monitoring-moved) : 접속한 세션 리스트 조회
 * [Access Control Logs](server-logs/access-control-logs) : Direct Permission 부여 이력
 * [Server Role History](server-logs/server-role-history) : Role 부여 이력
-* [Account Lock History](server-logs/account-lock-history) : QueryPie사용자별 서버 접속 계정 잠금 및 해제 이력 
+* [Account Lock History](server-logs/account-lock-history) : QueryPie 사용자별 서버 접속 계정 잠금 및 해제 이력 
 
 <Callout type="info">
 11.5.0 부터 Audit 하위 메뉴 항목인 Session Monitoring 은 Servers &gt; Monitoring &gt; Session Monitoring으로 이동되었습니다.
