@@ -9,6 +9,7 @@ Usage:
 import argparse
 import json
 import shutil
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,6 +21,35 @@ from block_diff import diff_blocks, BlockChange
 from mapping_recorder import record_mapping, BlockMapping
 from xhtml_patcher import patch_xhtml
 from roundtrip_verifier import verify_roundtrip
+
+
+def _forward_convert(patched_xhtml: str, output_mdx_path: str, page_id: str) -> str:
+    """patched XHTML을 forward converter로 MDX로 변환한다.
+
+    converter는 {input_dir}/page.v1.yaml 을 자동 로드하므로,
+    var/<page_id>/ 에 임시 XHTML 파일을 작성하여 기존 메타데이터를 활용한다.
+    모든 경로를 절대 경로로 변환하여 cwd에 의존하지 않도록 한다.
+    """
+    bin_dir = Path(__file__).parent
+    converter = bin_dir / 'confluence_xhtml_to_markdown.py'
+    var_dir = Path(f'var/{page_id}').resolve()
+
+    tmp_input = var_dir / '_verify_input.xhtml'
+    tmp_input.write_text(patched_xhtml)
+    abs_output = Path(output_mdx_path).resolve()
+    try:
+        result = subprocess.run(
+            [sys.executable, str(converter), '--log-level', 'warning',
+             str(tmp_input), str(abs_output),
+             '--public-dir', str(var_dir.parent),
+             '--attachment-dir', f'/{page_id}/rsync'],
+            capture_output=True, text=True,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(f"Forward converter failed: {result.stderr}")
+        return abs_output.read_text()
+    finally:
+        tmp_input.unlink(missing_ok=True)
 
 
 def _rsync_dir(page_id: str) -> Path:
@@ -99,18 +129,21 @@ def run_verify(
     (rsync / 'mapping.verify.yaml').write_text(
         yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
 
-    # Step 6: Forward 변환 + 완전 일치 검증 → result.yaml 저장
-    # (forward converter 호출 — 실제 구현 시 완성)
-    # verify_mdx = forward_convert(patched_xhtml, page_id)
-    # (rsync / 'verify.mdx').write_text(verify_mdx)
-    # verify_result = verify_roundtrip(expected_mdx=improved_mdx, actual_mdx=verify_mdx)
+    # Step 6: Forward 변환 → verify.mdx 저장
+    verify_mdx_path = str(rsync / 'verify.mdx')
+    verify_mdx = _forward_convert(patched_xhtml, verify_mdx_path, page_id)
 
-    # 임시: forward 변환 미구현 시 patched 상태로 저장
+    # Step 7: 완전 일치 검증 → result.yaml 저장
+    verify_result = verify_roundtrip(expected_mdx=improved_mdx, actual_mdx=verify_mdx)
+    status = 'pass' if verify_result.passed else 'fail'
     result = {
         'page_id': page_id, 'created_at': now,
-        'status': 'patched',  # forward 변환 구현 후 pass/fail 로 변경
+        'status': status,
         'changes_count': len(changes),
-        'verification': {'exact_match': None, 'diff_report': ''},
+        'verification': {
+            'exact_match': verify_result.passed,
+            'diff_report': verify_result.diff_report,
+        },
     }
     (rsync / 'result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
