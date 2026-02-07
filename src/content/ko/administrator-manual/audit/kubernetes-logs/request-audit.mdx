@@ -7,7 +7,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544383587/Re
 
 ### Overview
 
-조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 내역을 쿼리파이 프록시에서 각 호출 별로 모니터링하고 감사 로그를 기록합니다.
+조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 내역을 쿼리파이 프록시에서 각 호출별로 모니터링하고 감사 로그를 기록합니다.
 
 ### Request Audit 조회하기
 
@@ -72,7 +72,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544383587/Re
         9.  **Role**  : 액션을 행사할 수 있었던 Role명
         10.  **Cluster Endpoint**  : 호출된 타겟 API 엔드포인트
         11.  **Reverse Tunnel Agent Name** : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent 명
-        12.  **Tag** : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는데 사용된 Tag
+        12.  **Tag** : Reverse Tunnel을 통해 접속된 경우, 통신에 사용된 Reverse Tunnel Agent를 선택하는 데 사용된 Tag
         13.  **Pod Session Recording**  : Pod exec API로 실행 시 해당 세션에 대한 레코딩
             1. 세션 레코딩이 발생된 로그에 한해 해당 필드가 상세 페이지에서 조회 가능합니다.
             2. Pod exec API로 실행 시 해당 세션에 대한 레코딩이 진행되며, 해당 “Session Recording” 문구에 하이퍼링크가 포함됩니다. 
