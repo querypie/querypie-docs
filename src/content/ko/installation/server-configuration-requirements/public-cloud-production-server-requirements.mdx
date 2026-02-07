@@ -7,6 +7,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/903086124/Pu
 
 AWS, GCP, Azure 등 Public Cloud에서 QueryPie를 운영하기 위한 서버 구성 가이드입니다.
 
+## 요약
+
+| 컴포넌트 | 기본 사양 | 권장 사양 (높은 처리량) |
+| --- | --- | --- |
+| QueryPie Container VM | m6i.xlarge (4 vCPUs, 16 GiB) | m6i.2xlarge (8 vCPUs, 32 GiB) |
+| QueryPie MySQL | db.r7g.large (2 vCPUs, 16 GiB) | db.r7g.xlarge (4 vCPUs, 32 GiB) |
+| QueryPie Redis | cache.t4g.small (2 vCPUs, 1 GiB) | cache.t4g.medium (2 vCPUs, 3 GiB) |
+
 ## 개요
 
 Public Cloud에서는 다음과 같은 구성을 권장합니다.
