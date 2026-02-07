@@ -35,4 +35,7 @@ export default {
     title: '문의하기',
     href: 'https://www.querypie.com/company/contact-us',
   },
+  unreleased: {
+    display: 'hidden',
+  },
 };

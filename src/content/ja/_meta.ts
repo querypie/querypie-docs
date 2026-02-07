@@ -35,4 +35,7 @@ export default {
     title: 'お問い合わせ',
     href: 'https://www.querypie.com/company/contact-us',
   },
+  unreleased: {
+    display: 'hidden',
+  },
 };
