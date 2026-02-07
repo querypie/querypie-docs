@@ -233,7 +233,7 @@ def main():
         from reverse_sync.confluence_client import ConfluenceConfig, get_page_version, update_page_body
         config = ConfluenceConfig()
         if not config.email or not config.api_token:
-            print('Error: ATLASSIAN_USERNAME, ATLASSIAN_API_TOKEN 환경변수를 설정하세요.')
+            print('Error: ~/.config/atlassian/confluence.conf 파일을 설정하세요. (형식: email:api_token)')
             sys.exit(1)
 
         # 최신 버전 조회

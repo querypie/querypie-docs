@@ -135,8 +135,6 @@ def test_push_success(setup_push_var, monkeypatch):
         yaml.dump({'status': 'pass', 'page_id': page_id}))
     (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated content</p>')
 
-    monkeypatch.setenv('ATLASSIAN_USERNAME', 'test@example.com')
-    monkeypatch.setenv('ATLASSIAN_API_TOKEN', 'test-token')
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
 
     mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test Page'})
@@ -145,8 +143,10 @@ def test_push_success(setup_push_var, monkeypatch):
         'version': {'number': 6},
         '_links': {'webui': '/spaces/QP/pages/test-page-001'},
     })
+    mock_load = MagicMock(return_value=('test@example.com', 'test-token'))
 
-    with patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
+    with patch('reverse_sync.confluence_client._load_credentials', mock_load), \
+         patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
          patch('reverse_sync.confluence_client.update_page_body', mock_update), \
          patch('builtins.print') as mock_print:
         main()

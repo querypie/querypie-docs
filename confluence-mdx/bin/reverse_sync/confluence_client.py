@@ -1,20 +1,32 @@
 """Confluence API 클라이언트 — reverse sync push용."""
-import os
+from pathlib import Path
 
 import requests
-from dataclasses import dataclass, field
-from typing import Dict, Any
+from dataclasses import dataclass
+from typing import Dict, Any, Tuple
+
+CONFIG_FILE = Path.home() / '.config' / 'atlassian' / 'confluence.conf'
 
 
-def _env(key: str) -> str:
-    return os.environ.get(key, '')
+def _load_credentials() -> Tuple[str, str]:
+    """~/.config/atlassian/confluence.conf 에서 인증 정보를 로드한다."""
+    if CONFIG_FILE.exists():
+        line = CONFIG_FILE.read_text().strip().split('\n')[0]
+        if ':' in line:
+            email, token = line.split(':', 1)
+            return email, token
+    return '', ''
 
 
 @dataclass
 class ConfluenceConfig:
     base_url: str = "https://querypie.atlassian.net/wiki"
-    email: str = field(default_factory=lambda: _env('ATLASSIAN_USERNAME'))
-    api_token: str = field(default_factory=lambda: _env('ATLASSIAN_API_TOKEN'))
+    email: str = ''
+    api_token: str = ''
+
+    def __post_init__(self):
+        if not self.email or not self.api_token:
+            self.email, self.api_token = _load_credentials()
 
 
 def get_page_version(config: ConfluenceConfig, page_id: str) -> Dict[str, Any]:
