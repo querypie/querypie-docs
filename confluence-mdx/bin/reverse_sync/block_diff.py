@@ -1,7 +1,7 @@
 """Block Diff — 두 MDX 블록 시퀀스를 비교하여 변경된 블록을 추출한다."""
 from dataclasses import dataclass
 from typing import List
-from mdx_block_parser import MdxBlock
+from reverse_sync.mdx_block_parser import MdxBlock
 
 
 @dataclass

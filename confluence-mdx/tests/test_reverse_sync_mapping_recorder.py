@@ -1,6 +1,6 @@
 import pytest
 import yaml
-from mapping_recorder import record_mapping, BlockMapping
+from reverse_sync.mapping_recorder import record_mapping, BlockMapping
 
 
 def test_simple_mapping():

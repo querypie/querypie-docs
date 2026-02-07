@@ -2,7 +2,7 @@ import os
 import pytest
 from pathlib import Path
 from unittest.mock import patch
-from reverse_sync import run_verify
+from reverse_sync_cli import run_verify
 
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def test_verify_no_changes(setup_var, tmp_path):
         improved_mdx_path=str(improved),
     )
     assert result['status'] == 'no_changes'
-    assert (var_dir / "rsync" / "result.yaml").exists()
+    assert (var_dir / "reverse-sync.result.yaml").exists()
 
 
 def test_verify_detects_changes(setup_var, tmp_path):
@@ -44,11 +44,11 @@ def test_verify_detects_changes(setup_var, tmp_path):
     improved.write_text("## Title\n\nModified.\n")
 
     # forward converter를 mock: verify.mdx에 improved_mdx 내용을 그대로 써서 pass 유도
-    def mock_forward_convert(patched_xhtml, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
-    with patch('reverse_sync._forward_convert', side_effect=mock_forward_convert):
+    with patch('reverse_sync_cli._forward_convert', side_effect=mock_forward_convert):
         result = run_verify(
             page_id=page_id,
             original_mdx_path=str(original),
@@ -57,13 +57,12 @@ def test_verify_detects_changes(setup_var, tmp_path):
     assert result['changes_count'] == 1
     assert result['status'] == 'pass'
     assert result['verification']['exact_match'] is True
-    rsync_dir = var_dir / "rsync"
-    assert (rsync_dir / "diff.yaml").exists()
-    assert (rsync_dir / "mapping.original.yaml").exists()
-    assert (rsync_dir / "mapping.verify.yaml").exists()
-    assert (rsync_dir / "patched.xhtml").exists()
-    assert (rsync_dir / "verify.mdx").exists()
-    assert (rsync_dir / "result.yaml").exists()
+    assert (var_dir / "reverse-sync.diff.yaml").exists()
+    assert (var_dir / "reverse-sync.mapping.original.yaml").exists()
+    assert (var_dir / "reverse-sync.mapping.patched.yaml").exists()
+    assert (var_dir / "reverse-sync.patched.xhtml").exists()
+    assert (var_dir / "verify.mdx").exists()
+    assert (var_dir / "reverse-sync.result.yaml").exists()
 
 
 def test_verify_roundtrip_fail(setup_var, tmp_path):
@@ -74,13 +73,13 @@ def test_verify_roundtrip_fail(setup_var, tmp_path):
     original.write_text("## Title\n\nParagraph.\n")
     improved.write_text("## Title\n\nModified.\n")
 
-    def mock_forward_convert(patched_xhtml, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
         # 다른 내용을 반환하여 roundtrip 실패 유도
         content = "## Title\n\nDifferent output.\n"
         Path(output_mdx_path).write_text(content)
         return content
 
-    with patch('reverse_sync._forward_convert', side_effect=mock_forward_convert):
+    with patch('reverse_sync_cli._forward_convert', side_effect=mock_forward_convert):
         result = run_verify(
             page_id=page_id,
             original_mdx_path=str(original),

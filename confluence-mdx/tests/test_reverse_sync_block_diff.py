@@ -1,6 +1,6 @@
 import pytest
-from mdx_block_parser import parse_mdx_blocks
-from block_diff import diff_blocks, BlockChange
+from reverse_sync.mdx_block_parser import parse_mdx_blocks
+from reverse_sync.block_diff import diff_blocks, BlockChange
 
 
 def test_no_changes():

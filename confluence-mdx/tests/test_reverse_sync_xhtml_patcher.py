@@ -1,5 +1,5 @@
 import pytest
-from xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patcher import patch_xhtml
 
 
 def test_simple_text_replacement():

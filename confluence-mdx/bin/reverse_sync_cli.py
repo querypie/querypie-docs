@@ -1,10 +1,10 @@
 """Reverse Sync — MDX 변경사항을 Confluence XHTML에 역반영하는 파이프라인.
 
-중간 파일은 var/<page_id>/rsync/ 하위에 저장된다.
+중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 
 Usage:
-    python reverse_sync.py verify --page-id <id> --original-mdx <path> --improved-mdx <path>
-    python reverse_sync.py push --page-id <id>
+    python reverse_sync_cli.py verify --page-id <id> --original-mdx <path> --improved-mdx <path>
+    python reverse_sync_cli.py push --page-id <id>
 """
 import argparse
 import json
@@ -16,49 +16,49 @@ from pathlib import Path
 from typing import Dict, Any, List
 
 import yaml
-from mdx_block_parser import parse_mdx_blocks, MdxBlock
-from block_diff import diff_blocks, BlockChange
-from mapping_recorder import record_mapping, BlockMapping
-from xhtml_patcher import patch_xhtml
-from roundtrip_verifier import verify_roundtrip
+from reverse_sync.mdx_block_parser import parse_mdx_blocks, MdxBlock
+from reverse_sync.block_diff import diff_blocks, BlockChange
+from reverse_sync.mapping_recorder import record_mapping, BlockMapping
+from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.roundtrip_verifier import verify_roundtrip
 
 
-def _forward_convert(patched_xhtml: str, output_mdx_path: str, page_id: str) -> str:
-    """patched XHTML을 forward converter로 MDX로 변환한다.
+def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
+    """patched XHTML 파일을 forward converter로 MDX로 변환한다.
 
-    converter는 {input_dir}/page.v1.yaml 을 자동 로드하므로,
-    var/<page_id>/ 에 임시 XHTML 파일을 작성하여 기존 메타데이터를 활용한다.
+    입력 파일이 var/<page_id>/ 에 직접 있으므로 메타데이터를 자동 발견한다.
     모든 경로를 절대 경로로 변환하여 cwd에 의존하지 않도록 한다.
     """
     bin_dir = Path(__file__).parent
     converter = bin_dir / 'confluence_xhtml_to_markdown.py'
     var_dir = Path(f'var/{page_id}').resolve()
 
-    tmp_input = var_dir / '_verify_input.xhtml'
-    tmp_input.write_text(patched_xhtml)
+    abs_input = Path(patched_xhtml_path).resolve()
     abs_output = Path(output_mdx_path).resolve()
-    try:
-        result = subprocess.run(
-            [sys.executable, str(converter), '--log-level', 'warning',
-             str(tmp_input), str(abs_output),
-             '--public-dir', str(var_dir.parent),
-             '--attachment-dir', f'/{page_id}/rsync'],
-            capture_output=True, text=True,
-        )
-        if result.returncode != 0:
-            raise RuntimeError(f"Forward converter failed: {result.stderr}")
-        return abs_output.read_text()
-    finally:
-        tmp_input.unlink(missing_ok=True)
+    result = subprocess.run(
+        [sys.executable, str(converter), '--log-level', 'warning',
+         str(abs_input), str(abs_output),
+         '--public-dir', str(var_dir.parent),
+         '--attachment-dir', f'/{page_id}/verify'],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"Forward converter failed: {result.stderr}")
+    return abs_output.read_text()
 
 
-def _rsync_dir(page_id: str) -> Path:
-    """var/<page_id>/rsync/ 경로를 반환하고, 디렉토리를 초기화한다."""
-    d = Path(f'var/{page_id}/rsync')
-    if d.exists():
-        shutil.rmtree(d)
-    d.mkdir(parents=True, exist_ok=True)
-    return d
+def _clean_reverse_sync_artifacts(page_id: str) -> Path:
+    """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
+    var_dir = Path(f'var/{page_id}')
+    for f in var_dir.glob('reverse-sync.*'):
+        f.unlink()
+    verify_mdx = var_dir / 'verify.mdx'
+    if verify_mdx.exists():
+        verify_mdx.unlink()
+    verify_dir = var_dir / 'verify'
+    if verify_dir.exists():
+        shutil.rmtree(verify_dir)
+    return var_dir
 
 
 def run_verify(
@@ -69,10 +69,10 @@ def run_verify(
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
 
-    모든 중간 파일을 var/<page_id>/rsync/ 에 저장한다.
+    모든 중간 파일을 var/<page_id>/ 에 reverse-sync. prefix로 저장한다.
     """
     now = datetime.now(timezone.utc).isoformat()
-    rsync = _rsync_dir(page_id)
+    var_dir = _clean_reverse_sync_artifacts(page_id)
 
     original_mdx = Path(original_mdx_path).read_text()
     improved_mdx = Path(improved_mdx_path).read_text()
@@ -88,7 +88,7 @@ def run_verify(
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
                   'status': 'no_changes', 'changes_count': 0}
-        (rsync / 'result.yaml').write_text(
+        (var_dir / 'reverse-sync.result.yaml').write_text(
             yaml.dump(result, allow_unicode=True, default_flow_style=False))
         return result
 
@@ -103,7 +103,7 @@ def run_verify(
             for c in changes
         ],
     }
-    (rsync / 'diff.yaml').write_text(
+    (var_dir / 'reverse-sync.diff.yaml').write_text(
         yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
 
     # Step 3: 원본 매핑 생성 → mapping.original.yaml 저장
@@ -112,26 +112,30 @@ def run_verify(
         'page_id': page_id, 'created_at': now, 'source_xhtml': 'page.xhtml',
         'blocks': [m.__dict__ for m in original_mappings],
     }
-    (rsync / 'mapping.original.yaml').write_text(
+    (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 4: XHTML 패치 → patched.xhtml 저장
     patches = _build_patches(changes, original_blocks, improved_blocks, original_mappings)
     patched_xhtml = patch_xhtml(xhtml, patches)
-    (rsync / 'patched.xhtml').write_text(patched_xhtml)
+    (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
-    # Step 5: 검증 매핑 생성 → mapping.verify.yaml 저장
+    # Step 5: 검증 매핑 생성 → mapping.patched.yaml 저장
     verify_mappings = record_mapping(patched_xhtml)
     verify_mapping_data = {
         'page_id': page_id, 'created_at': now, 'source_xhtml': 'patched.xhtml',
         'blocks': [m.__dict__ for m in verify_mappings],
     }
-    (rsync / 'mapping.verify.yaml').write_text(
+    (var_dir / 'reverse-sync.mapping.patched.yaml').write_text(
         yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 6: Forward 변환 → verify.mdx 저장
-    verify_mdx_path = str(rsync / 'verify.mdx')
-    verify_mdx = _forward_convert(patched_xhtml, verify_mdx_path, page_id)
+    _forward_convert(
+        str(var_dir / 'reverse-sync.patched.xhtml'),
+        str(var_dir / 'verify.mdx'),
+        page_id,
+    )
+    verify_mdx = (var_dir / 'verify.mdx').read_text()
 
     # Step 7: 완전 일치 검증 → result.yaml 저장
     verify_result = verify_roundtrip(expected_mdx=improved_mdx, actual_mdx=verify_mdx)
@@ -145,7 +149,7 @@ def run_verify(
             'diff_report': verify_result.diff_report,
         },
     }
-    (rsync / 'result.yaml').write_text(
+    (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
 
     return result
@@ -213,8 +217,8 @@ def main():
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     elif args.command == 'push':
-        rsync = Path(f'var/{args.page_id}/rsync')
-        result_path = rsync / 'result.yaml'
+        var_dir = Path(f'var/{args.page_id}')
+        result_path = var_dir / 'reverse-sync.result.yaml'
         if not result_path.exists():
             print('Error: verify를 먼저 실행하세요.')
             sys.exit(1)
@@ -222,7 +226,7 @@ def main():
         if result.get('status') != 'pass':
             print(f"Error: 검증 상태가 '{result.get('status')}'입니다. pass만 push 가능.")
             sys.exit(1)
-        patched_path = rsync / 'patched.xhtml'
+        patched_path = var_dir / 'reverse-sync.patched.xhtml'
         print(f"Push {patched_path} to Confluence page {args.page_id} — not yet implemented")
         sys.exit(1)
 

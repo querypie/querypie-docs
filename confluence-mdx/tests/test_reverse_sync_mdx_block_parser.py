@@ -1,5 +1,5 @@
 import pytest
-from mdx_block_parser import MdxBlock, parse_mdx_blocks
+from reverse_sync.mdx_block_parser import MdxBlock, parse_mdx_blocks
 
 
 def test_parse_simple_document():

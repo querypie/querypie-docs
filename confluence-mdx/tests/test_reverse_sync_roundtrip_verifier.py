@@ -1,5 +1,5 @@
 import pytest
-from roundtrip_verifier import verify_roundtrip, VerifyResult
+from reverse_sync.roundtrip_verifier import verify_roundtrip, VerifyResult
 
 
 def test_identical_mdx_passes():

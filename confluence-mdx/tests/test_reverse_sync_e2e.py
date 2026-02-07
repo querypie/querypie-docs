@@ -3,11 +3,11 @@ import shutil
 
 import pytest
 from pathlib import Path
-from mdx_block_parser import parse_mdx_blocks
-from block_diff import diff_blocks
-from mapping_recorder import record_mapping
-from xhtml_patcher import patch_xhtml
-from reverse_sync import _build_patches, run_verify
+from reverse_sync.mdx_block_parser import parse_mdx_blocks
+from reverse_sync.block_diff import diff_blocks
+from reverse_sync.mapping_recorder import record_mapping
+from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync_cli import _build_patches, run_verify
 
 
 TESTCASE_DIR = Path(__file__).parent / "testcases" / "793608206"
@@ -169,4 +169,4 @@ class TestE2ERoundTrip:
         assert result['changes_count'] > 0
         assert result['verification']['exact_match'] is not None
         # verify.mdx 파일이 생성되었는지 확인
-        assert (var_dir / "rsync" / "verify.mdx").exists()
+        assert (var_dir / "verify.mdx").exists()
