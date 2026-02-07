@@ -29,10 +29,10 @@
   "homepage": "https://github.com/querypie/querypie-docs#readme",
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@next/third-parties": "^16.0.10",
+    "@next/third-parties": "^16.1.5",
     "@theguild/remark-mermaid": "^0.3.0",
     "gray-matter": "^4.0.3",
-    "next": "^16.0.10",
+    "next": "^16.1.5",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",
     "react": "^19.2.3",
@@ -42,7 +42,9 @@
     "zod": "^4.1.13"
   },
   "overrides": {
-    "lodash-es": "^4.17.23"
+    "lodash-es": "^4.17.23",
+    "@isaacs/brace-expansion": "^5.0.1",
+    "fast-xml-parser": "^5.3.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
@@ -55,7 +57,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitest/ui": "^4.0.15",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.10",
+    "eslint-config-next": "^16.1.5",
     "eslint-plugin-unused-imports": "^4.3.0",
     "jsdom": "^26.1.0",
     "pagefind": "^1.4.0",
