@@ -7,8 +7,8 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1070694532/P
 
 ### Overview
 
-정책의 생성과 상태에 대해 Audit Log에 기록하고 누가 어떤 정책에 적용되고 어떤 이벤트가 발생되었는지 확인할 수 있도록 합니다.
-신규 DAC 정책을 활성화 한 경우 기록이 시작되고 메뉴에 노출됩니다.
+정책의 생성과 상태에 대해 Audit Log에 기록하고 누가 어떤 정책에 적용되고 어떤 이벤트가 발생했는지 확인할 수 있도록 합니다.
+신규 DAC 정책을 활성화한 경우 기록이 시작되고 메뉴에 노출됩니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/audit/database-logs/policy-audit-logs/image-20250629-174715.png" alt="Audit &gt; Databases &gt; Policy Audit Logs" width="760" />
@@ -26,16 +26,16 @@ Audit &gt; Databases &gt; Policy Audit Logs
     * Access Denied : Column 또는 Table Data Access 정책에 의해 접근이 차단된 이벤트
     * Data Masked : Column Data Masking 정책에 의해 접근이 차단된 이벤트
     * Alert Triggered : Sensitive Data Access Monitoring 정책에 의해 Alert 을 발생시킨 이벤트
-    * Justification Requirement Triggered : Table Access Justification Requirement 정책에 의해 사유입력 하도록 한 이벤트
+    * Justification Requirement Triggered : Table Access Justification Requirement 정책에 의해 사유를 입력하도록 한 이벤트
     * Approval Enforcement Triggered : DML Query Approval Enforcement 정책에 의해 결재 요구된 이벤트
-    * Exception Column Access : Column Data Access 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
-    * Exception Table Access : Table Data Access 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
-    * Exception Unmasking : Column Data Masking 정책이 걸려있는 대상에 접근하였으나 정책 예외에 의해 마스킹이 해제된 이벤트
+    * Exception Column Access : Column Data Access 정책이 걸려 있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
+    * Exception Table Access : Table Data Access 정책이 걸려 있는 대상에 접근하였으나 정책 예외에 의해 접근이 허용된 이벤트
+    * Exception Unmasking : Column Data Masking 정책이 걸려 있는 대상에 접근하였으나 정책 예외에 의해 마스킹이 해제된 이벤트
 * Policy Type (정책 유형) : 정책 유형을 표시합니다.
 * Policy Name (정책 이름): 적용된 정책의 이름을 표시하고 링크를 누르면 해당 정책 페이지로 이동할 수 있습니다.
 * Name (사용자 이름): 데이터를 조회한 사용자의 이름입니다.
-* Login ID (Login ID) : 데이터를 조회한 사용자의 login ID 입니다.
-* Email (사용자 이메일): 데이터를 조회한 사용자의 이메일 주소 입니다.
+* Login ID (Login ID) : 데이터를 조회한 사용자의 login ID입니다.
+* Email (사용자 이메일): 데이터를 조회한 사용자의 이메일 주소입니다.
 * Connection (연결): 데이터가 조회된 커넥션 이름입니다.
 * Data Path : Database 이름, Schema 이름, Table 이름, Column 이름을 포함한 경로입니다. 
 
@@ -46,6 +46,6 @@ Audit &gt; Databases &gt; Policy Audit Logs
 * Schema (스키마): 조회된 데이터가 속한 스키마의 이름입니다. 
 * Table (테이블): 조회된 데이터가 포함된 테이블의 이름입니다.
 * Column (컬럼): 조회된 데이터가 포함된 컬럼의 이름입니다.
-* Rows : 쿼리 영향 받은 행수. 상세 드로워에서 표시
-* Query (쿼리): 상세 화면에서 표시됩니다. 사용자가 실행한 SQL 쿼리를 볼수 있습니다.
-* Tag (태그): (11.0.0 부터) 해당 쿼리 수행시 트리거된 테이블 또는 컬럼의 태그 정보 표시. 2개 이상의 태그 조건에 해당되는 경우 모두 표시합니다.
+* Rows : 쿼리 영향을 받은 행 수. 상세 드로워에서 표시
+* Query (쿼리): 상세 화면에서 표시됩니다. 사용자가 실행한 SQL 쿼리를 볼 수 있습니다.
+* Tag (태그): (11.0.0 부터) 해당 쿼리 수행 시 트리거된 테이블 또는 컬럼의 태그 정보 표시. 2개 이상의 태그 조건에 해당되는 경우 모두 표시합니다.
