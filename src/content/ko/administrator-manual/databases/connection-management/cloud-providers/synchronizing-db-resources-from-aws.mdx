@@ -60,7 +60,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt;
 
 *  **Default Credentials (Instance Profile)**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스 IAM 권한에 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다. 필요한 리소스에 맞는 정책을 할당해주세요.
 *  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주세요. (해당 Credential 을 통해 리소스를 동기화하기 위해서는 환경변수 파일  **AWS_ACCOUNT_ID**  항목에 QueryPie 가 설치된 AWS 계정을 설정해야 합니다)
-*  **Access Key**  : `Synchronize` 버튼 클릭 시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  **** 
+*  **Access Key**  : `Synchronize` 버튼 클릭 시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  ****
 
 <Callout type="important">
 **Save Credential for Synchronization 옵션**
@@ -72,8 +72,8 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.** 
-* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.**
+* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
 * 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
 
