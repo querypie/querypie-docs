@@ -1,8 +1,9 @@
+import json
 import os
 import pytest
 from pathlib import Path
-from unittest.mock import patch
-from reverse_sync_cli import run_verify
+from unittest.mock import patch, MagicMock
+from reverse_sync_cli import run_verify, main
 
 
 @pytest.fixture
@@ -88,3 +89,84 @@ def test_verify_roundtrip_fail(setup_var, tmp_path):
     assert result['status'] == 'fail'
     assert result['verification']['exact_match'] is False
     assert result['verification']['diff_report'] != ''
+
+
+# --- push command tests ---
+
+
+@pytest.fixture
+def setup_push_var(tmp_path, monkeypatch):
+    """push 테스트용 var/<page_id>/ 구조 생성."""
+    monkeypatch.chdir(tmp_path)
+    page_id = "test-page-001"
+    var_dir = tmp_path / "var" / page_id
+    var_dir.mkdir(parents=True)
+    return page_id, var_dir
+
+
+def test_push_requires_verify_first(setup_push_var, monkeypatch):
+    """result.yaml 없으면 에러."""
+    page_id, var_dir = setup_push_var
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
+    with pytest.raises(SystemExit) as exc_info:
+        main()
+    assert exc_info.value.code == 1
+
+
+def test_push_rejects_non_pass(setup_push_var, monkeypatch):
+    """status가 pass가 아니면 에러."""
+    page_id, var_dir = setup_push_var
+    import yaml
+    (var_dir / 'reverse-sync.result.yaml').write_text(
+        yaml.dump({'status': 'fail', 'page_id': page_id}))
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
+    with pytest.raises(SystemExit) as exc_info:
+        main()
+    assert exc_info.value.code == 1
+
+
+def test_push_success(setup_push_var, monkeypatch):
+    """mock API로 정상 push 확인."""
+    page_id, var_dir = setup_push_var
+    import yaml
+
+    # verify pass 결과 + patched xhtml 준비
+    (var_dir / 'reverse-sync.result.yaml').write_text(
+        yaml.dump({'status': 'pass', 'page_id': page_id}))
+    (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated content</p>')
+
+    monkeypatch.setenv('ATLASSIAN_USERNAME', 'test@example.com')
+    monkeypatch.setenv('ATLASSIAN_API_TOKEN', 'test-token')
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
+
+    mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test Page'})
+    mock_update = MagicMock(return_value={
+        'title': 'Test Page',
+        'version': {'number': 6},
+        '_links': {'webui': '/spaces/QP/pages/test-page-001'},
+    })
+
+    with patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
+         patch('reverse_sync.confluence_client.update_page_body', mock_update), \
+         patch('builtins.print') as mock_print:
+        main()
+
+    # get_page_version 호출 확인
+    mock_get_version.assert_called_once()
+    call_args = mock_get_version.call_args
+    assert call_args[0][1] == page_id
+
+    # update_page_body 호출 확인
+    mock_update.assert_called_once()
+    call_args = mock_update.call_args
+    assert call_args[0][1] == page_id
+    assert call_args[1]['title'] == 'Test Page'
+    assert call_args[1]['version'] == 6
+    assert call_args[1]['xhtml_body'] == '<p>Updated content</p>'
+
+    # 출력 JSON 확인
+    output = mock_print.call_args[0][0]
+    result = json.loads(output)
+    assert result['page_id'] == page_id
+    assert result['version'] == 6
+    assert result['title'] == 'Test Page'

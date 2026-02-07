@@ -226,9 +226,31 @@ def main():
         if result.get('status') != 'pass':
             print(f"Error: 검증 상태가 '{result.get('status')}'입니다. pass만 push 가능.")
             sys.exit(1)
+
         patched_path = var_dir / 'reverse-sync.patched.xhtml'
-        print(f"Push {patched_path} to Confluence page {args.page_id} — not yet implemented")
-        sys.exit(1)
+        xhtml_body = patched_path.read_text()
+
+        from reverse_sync.confluence_client import ConfluenceConfig, get_page_version, update_page_body
+        config = ConfluenceConfig()
+        if not config.email or not config.api_token:
+            print('Error: ATLASSIAN_USERNAME, ATLASSIAN_API_TOKEN 환경변수를 설정하세요.')
+            sys.exit(1)
+
+        # 최신 버전 조회
+        page_info = get_page_version(config, args.page_id)
+        new_version = page_info['version'] + 1
+
+        # 업데이트
+        resp = update_page_body(config, args.page_id,
+                                title=page_info['title'],
+                                version=new_version,
+                                xhtml_body=xhtml_body)
+        print(json.dumps({
+            'page_id': args.page_id,
+            'title': resp.get('title', page_info['title']),
+            'version': resp.get('version', {}).get('number', new_version),
+            'url': resp.get('_links', {}).get('webui', ''),
+        }, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':
