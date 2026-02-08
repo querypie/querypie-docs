@@ -38,14 +38,14 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 4. `Save` 버튼을 통해 저장합니다. 
 
 <Callout type="info">
-서버 그룹은 Tag 기반으로 서버를 관리 할 수 있습니다.
+서버 그룹은 Tag 기반으로 서버를 관리할 수 있습니다.
 특정 Tag를 서버그룹의 Server Tags에 지정하여, 해당 Tag가 있는 모든 서버가 서버그룹에 포함되는 형태의 유동적인 서버 관리가 가능합니다.
 </Callout>
 
 
 ### 서버 그룹 생성/수정하기
 
-아래 정보를 입력하여 서버 그룹을 생성하실 수 있습니다.
+아래 정보를 입력하여 서버 그룹을 생성할 수 있습니다.
 생성 후 일부 항목은 수정이 가능합니다.
 
 #### 1. 기본 정보 입력 및 서버를 Tag 로 추가하기
@@ -147,11 +147,11 @@ Test Connection은 Server Group을 저장한 후에만 사용할 수 있습니�
         4. `Vault - SSH - OTP` **** : Vault의 SSH OTP 엔진을 사용합니다.
             * 입력 및 선택이 필요한 항목: Account, Secret Store, Vault Role Path
                 * Secret Store : 엔진타입이 OTP 타입인 항목만 필터되어 표기됩니다. 
-            * Hashicorp Vault의 SSH OTP 엔진을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, 서버에 vault의 server agent인 vault-ssh-helper를 설치를 해야합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp)를 참조 해주세요.
+            * Hashicorp Vault의 SSH OTP 엔진을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, 서버에 vault의 server agent인 vault-ssh-helper를 설치해야 합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp)를 참조해 주세요.
         5. `Vault - SSH - CA` **** : Vault의 SSH CA 엔진을 사용합니다.
             * 입력 및 선택이 필요한 항목: Account, Secret Store, Vault Role Path
                 * Secret Store : 엔진타입이 CA 타입인 항목만 필터되어 표기됩니다. 
-            * Hashicorp Vault의 SSH CA 엔진(Signed SSH certificates)을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, vault ca 엔진에서 발급한 Public Key를 접속할 서버의 TrustedUserCAKeys에 추가해야 합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates)를 참조 해주세요.
+            * Hashicorp Vault의 SSH CA 엔진(Signed SSH certificates)을 사용하여, Passwordless 형태로 서버 계정을 관리할 수 있습니다. 단, vault ca 엔진에서 발급한 Public Key를 접속할 서버의 TrustedUserCAKeys에 추가해야 합니다. 자세한 가이드는 [Hashicorp Vault 공식 가이드](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates)를 참조해 주세요.
 
 <Callout type="info">
 **공통 항목: Account**
