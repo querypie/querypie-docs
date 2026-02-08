@@ -53,6 +53,20 @@ test-skeleton-one:
 	fi
 	@$(TEST_SCRIPT) --type skeleton --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
+# Run reverse-sync tests
+.PHONY: test-reverse-sync
+test-reverse-sync:
+	@$(TEST_SCRIPT) --type reverse-sync $(VERBOSE_FLAG)
+
+# Run a specific reverse-sync test
+.PHONY: test-reverse-sync-one
+test-reverse-sync-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-reverse-sync-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@$(TEST_SCRIPT) --type reverse-sync --test-id $(TEST_ID) $(VERBOSE_FLAG)
+
 # Run render tests (MDX to HTML)
 .PHONY: test-render
 test-render:
@@ -75,6 +89,7 @@ clean:
 	@find testcases -name "output.skel.mdx" -type f -delete
 	@find testcases -name "output.html" -type f -delete
 	@find testcases -name "_meta.ts" -path "*/output/*" -type f -delete
+	@find testcases -name "output.reverse-sync.*" -type f -delete
 
 # Help
 .PHONY: help
@@ -85,6 +100,8 @@ help:
 	@echo "  test-xhtml-one     - Run a specific XHTML test"
 	@echo "  test-skeleton      - Run Skeleton tests"
 	@echo "  test-skeleton-one  - Run a specific Skeleton test"
+	@echo "  test-reverse-sync      - Run Reverse-Sync tests"
+	@echo "  test-reverse-sync-one  - Run a specific Reverse-Sync test"
 	@echo "  test-render        - Run Render tests (MDX to HTML)"
 	@echo "  test-render-one    - Run a specific Render test"
 	@echo "  debug-xhtml        - Run XHTML tests with debug log level"
@@ -100,4 +117,5 @@ help:
 	@echo "  make                                           # Run all tests"
 	@echo "  make test-xhtml VERBOSE=1                      # Run XHTML tests with verbose"
 	@echo "  make test-xhtml-one TEST_ID=568918170          # Run specific XHTML test"
+	@echo "  make test-reverse-sync-one TEST_ID=1911652402   # Run specific Reverse-Sync test"
 	@echo "  make test-render-one TEST_ID=544382364         # Run specific Render test"

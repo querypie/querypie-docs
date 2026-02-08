@@ -6,7 +6,7 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: xhtml (default), skeleton
+#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
 #   --verbose, -v     Show converter output (stdout/stderr)
@@ -156,6 +156,41 @@ has_skeleton_input() {
     [[ -f "${TEST_DIR}/${test_id}/output.mdx" ]] && [[ -f "${TEST_DIR}/${test_id}/expected.skel.mdx" ]]
 }
 
+# Run reverse-sync test for a single test case
+run_reverse_sync_test() {
+    local test_id="$1"
+    local test_path="${TEST_DIR}/${test_id}"
+
+    # verify 실행 (cwd를 confluence-mdx root로 이동 — CLI가 var/<page_id>/에 중간 파일을 쓰므로)
+    pushd .. > /dev/null
+    run_cmd env PYTHONPATH=bin python bin/reverse_sync_cli.py verify \
+        --page-id "${test_id}" \
+        --original-mdx "tests/${test_path}/original.mdx" \
+        --improved-mdx "tests/${test_path}/improved.mdx" \
+        --xhtml "tests/${test_path}/page.xhtml"
+    popd > /dev/null
+
+    # var/에 생성된 중간 파일을 output.*으로 복사
+    local var_dir="../var/${test_id}"
+    cp "${var_dir}/reverse-sync.result.yaml"   "${test_path}/output.reverse-sync.result.yaml"
+    cp "${var_dir}/reverse-sync.patched.xhtml"  "${test_path}/output.reverse-sync.patched.xhtml"
+    cp "${var_dir}/reverse-sync.diff.yaml"      "${test_path}/output.reverse-sync.diff.yaml"
+
+    # expected와 비교 (timestamp/경로 필드 제외)
+    diff -u <(grep -v 'created_at' "${test_path}/expected.reverse-sync.result.yaml") \
+            <(grep -v 'created_at' "${test_path}/output.reverse-sync.result.yaml")
+    diff -u "${test_path}/expected.reverse-sync.patched.xhtml" \
+            "${test_path}/output.reverse-sync.patched.xhtml"
+    diff -u <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/expected.reverse-sync.diff.yaml") \
+            <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/output.reverse-sync.diff.yaml")
+}
+
+has_reverse_sync_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]]
+}
+
 # Run all tests of specified type
 run_all_tests() {
     local test_func="$1"
@@ -254,6 +289,13 @@ main() {
                 run_single_test run_skeleton_test "Skeleton" "${TEST_ID}"
             else
                 run_all_tests run_skeleton_test "Skeleton" has_skeleton_input
+            fi
+            ;;
+        reverse-sync)
+            if [[ -n "${TEST_ID}" ]]; then
+                run_single_test run_reverse_sync_test "Reverse-Sync" "${TEST_ID}"
+            else
+                run_all_tests run_reverse_sync_test "Reverse-Sync" has_reverse_sync_input
             fi
             ;;
         *)
