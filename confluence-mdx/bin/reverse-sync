@@ -2,8 +2,8 @@
 """Reverse Sync CLI — executable entry point.
 
 Usage:
-    reverse-sync verify --improved-mdx <ref:path|path> [--original-mdx <ref:path|path>]
-    reverse-sync push --mdx-path <src/content/ko/...mdx>
+    reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
+    reverse-sync verify <mdx> [--original-mdx <mdx>]
 """
 import sys
 from pathlib import Path
