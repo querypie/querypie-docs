@@ -172,9 +172,11 @@ run_reverse_sync_test() {
 
     # var/에 생성된 중간 파일을 output.*으로 복사
     local var_dir="../var/${test_id}"
-    cp "${var_dir}/reverse-sync.result.yaml"   "${test_path}/output.reverse-sync.result.yaml"
-    cp "${var_dir}/reverse-sync.patched.xhtml"  "${test_path}/output.reverse-sync.patched.xhtml"
-    cp "${var_dir}/reverse-sync.diff.yaml"      "${test_path}/output.reverse-sync.diff.yaml"
+    cp "${var_dir}/reverse-sync.result.yaml"           "${test_path}/output.reverse-sync.result.yaml"
+    cp "${var_dir}/reverse-sync.patched.xhtml"          "${test_path}/output.reverse-sync.patched.xhtml"
+    cp "${var_dir}/reverse-sync.diff.yaml"              "${test_path}/output.reverse-sync.diff.yaml"
+    cp "${var_dir}/reverse-sync.mapping.original.yaml"  "${test_path}/output.reverse-sync.mapping.original.yaml"
+    cp "${var_dir}/reverse-sync.mapping.patched.yaml"   "${test_path}/output.reverse-sync.mapping.patched.yaml"
 
     # expected와 비교 (timestamp/경로 필드 제외)
     diff -u <(grep -v 'created_at' "${test_path}/expected.reverse-sync.result.yaml") \
@@ -183,6 +185,10 @@ run_reverse_sync_test() {
             "${test_path}/output.reverse-sync.patched.xhtml"
     diff -u <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/expected.reverse-sync.diff.yaml") \
             <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/output.reverse-sync.diff.yaml")
+    diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.original.yaml") \
+            <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.original.yaml")
+    diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.patched.yaml") \
+            <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.patched.yaml")
 }
 
 has_reverse_sync_input() {

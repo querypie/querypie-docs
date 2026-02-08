@@ -1,0 +1,241 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다.
+  xhtml_text: QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다.
+  xhtml_xpath: p[1]
+- block_id: paragraph-3
+  children: []
+  type: paragraph
+  xhtml_element_index: 2
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[2]
+- block_id: heading-4
+  children: []
+  type: heading
+  xhtml_element_index: 3
+  xhtml_plain_text: 수동으로 클러스터 등록하기
+  xhtml_text: 수동으로 클러스터 등록하기
+  xhtml_xpath: h2[2]
+- block_id: paragraph-5
+  children: []
+  type: paragraph
+  xhtml_element_index: 4
+  xhtml_plain_text: 개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이 필요합니다.
+  xhtml_text: 개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이 필요합니다.
+  xhtml_xpath: p[3]
+- block_id: html_block-6
+  children: []
+  type: html_block
+  xhtml_element_index: 5
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240721-054859.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="1800" ac:original-width="2880" ac:width="760"><ri:attachment
+    ri:filename="image-20240721-054859.png" ri:version-at-save="2"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: list-7
+  children: []
+  type: list
+  xhtml_element_index: 6
+  xhtml_plain_text: 'Administrator > Kubernetes > Connection Management > Clusters
+    메뉴로 이동합니다.우측 상단의 + Create Cluster 버튼을 클릭합니다.Information : 클러스터 수동 등록을 위한 다음의 정보들을
+    입력합니다Name : 해당 클러스터를 식별할 수 있는 이름을 입력합니다. (필수) 해당 정보는 향후 수정이 불가한 항목입니다. Version
+    : 클러스터의 버전을 기입합니다. (선택) 이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다. API URL : Kubernetes
+    API를 수신할 클러스터의 API URL을 기입합니다. Credential : 해당 클러스터의 Kubernetes API 서버에 액세스 권한을
+    부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다. 자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.Service
+    Account Token : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정
+    토큰 값을 기입합니다. Certificate Authority : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA
+    인증서를 기입합니다.Verify Credential : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면
+    정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다. Verified : 클러스터 연결 성공으로
+    서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.  Verification Failed : 클러스터 연결 실패로 서비스 계정
+    토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다. Logging Options  : 해당
+    클러스터에 대한 로깅 옵션을 선택합니다. Request Audit : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅
+    활성화 옵션으로, Default는 On입니다. 해당 기능을 Off로 전환 시, 해당 클러스터를 대상으로 호출되는 Kubernetes API
+    이력이 남지 않습니다. 하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.   Request
+    Audit Types : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를
+    선택하고 있습니다. Verb 종류: get list watch createupdate patchdeletedeletecollection  Select
+    All : 모든 API 호출에 대해 감사를 진행합니다.  Pod Session Recording : 해당 클러스터 내 Pod exec 명령에
+    의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는 On입니다. 해당 기능은 이하의 조건을 충족하지 못하면 Off로 전환됩니다:
+    Request Audit이 On으로 활성화되어야 합니다. Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:createget
+    Tags : 필요 시 개별 클러스터에 Tag를 수동으로 입력할 수 있으며 Cloud Provider를 통해 동기화된 클러스터의 경우 동기화해
+    온 태그도 함께 표시됩니다. (단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가합니다.) + Add Tag 버튼을 클릭하여 새 행을 추가하고
+    원하는 태그 값을 기입할 수 있으며 태그는 key-value 형태로 기입해야 합니다. Key : 태그를 구분할 수 있는 Key 값을 512자
+    이내로 입력합니다. Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다. 중복은 대소문자를 구분하여 체크합니다. Value
+    : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.위 과정을 거친 후 최종 Save 버튼을 클릭하면 클러스터가 성공적으로 등록됩니다.'
+  xhtml_text: '<ol start="1"><li><p>Administrator &gt; Kubernetes &gt; Connection
+    Management &gt; Clusters 메뉴로 이동합니다.</p></li><li><p>우측 상단의 <code>+ Create Cluster</code>
+    버튼을 클릭합니다.</p></li><li><p><strong>Information</strong> : 클러스터 수동 등록을 위한 다음의 정보들을
+    입력합니다</p><ol start="1"><li><p><strong>Name</strong> : 해당 클러스터를 식별할 수 있는 이름을 입력합니다.
+    (필수) </p><ul><li><p>해당 정보는 향후 수정이 불가한 항목입니다. </p></li></ul></li><li><p><strong>Version</strong>
+    : 클러스터의 버전을 기입합니다. (선택) </p><ul><li><p>이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다.
+    </p></li></ul></li><li><p><strong>API URL</strong> : Kubernetes API를 수신할 클러스터의
+    API URL을 기입합니다. </p></li><li><p></p></li><li><p><strong>Credential</strong> :
+    해당 클러스터의 Kubernetes API 서버에 액세스 권한을 부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다.
+    자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.</p><ol start="1"><li><p><strong>Service Account
+    Token</strong> : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스
+    계정 토큰 값을 기입합니다. </p></li><li><p><strong>Certificate Authority</strong> : QueryPie에서
+    Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.</p></li><li><p><strong>Verify Credential</strong>
+    : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다.
+    수행 결과에 따라 다음과 같이 결과가 표시됩니다.</p><ul><li><p><ac:emoticon ac:emoji-fallback=":check_mark:"
+    ac:emoji-id="atlassian-check_mark" ac:emoji-shortname=":check_mark:" ac:name="tick"></ac:emoticon>
+    <strong>Verified</strong> : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다.
+    </p></li><li><p><ac:emoticon ac:emoji-fallback=":cross_mark:" ac:emoji-id="atlassian-cross_mark"
+    ac:emoji-shortname=":cross_mark:" ac:name="cross"></ac:emoticon> <strong>Verification
+    Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이
+    있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging Options</strong>  :
+    해당 클러스터에 대한 로깅 옵션을 선택합니다. </p><ol start="1"><li><p><strong>Request Audit</strong>
+    : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 <code>On</code>입니다.
+    해당 기능을 <code>Off</code>로 전환 시, </p><ol start="1"><li><p>해당 클러스터를 대상으로 호출되는 Kubernetes
+    API 이력이 남지 않습니다. </p></li><li><p>하위의 Request Audit Types 및 Pod Session Recording
+    모두 일괄 비활성화 처리됩니다.   </p></li></ol></li><li><p><strong>Request Audit Types</strong>
+    : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를 선택하고 있습니다. </p><ol
+    start="1"><li><p>Verb 종류: </p><ol start="1"><li><p><code>get</code> </p></li><li><p><code>list</code>
+    </p></li><li><p><code>watch</code> </p></li><li><p><code>create</code></p></li><li><p><code>update
+    </code></p></li><li><p><code>patch</code></p></li><li><p><code>delete</code></p></li><li><p><code>deletecollection
+    </code></p></li></ol></li><li><p><ac:emoticon ac:emoji-fallback="✅" ac:emoji-id="2705"
+    ac:emoji-shortname=":white_check_mark:" ac:name="blue-star"></ac:emoticon> Select
+    All : 모든 API 호출에 대해 감사를 진행합니다.  </p></li></ol></li><li><p><strong>Pod Session
+    Recording</strong> : 해당 클러스터 내 Pod exec 명령에 의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는
+    <code>On</code>입니다. 해당 기능은 이하의 조건을 충족하지 못하면 <code>Off</code>로 전환됩니다: </p><ol start="1"><li><p>Request
+    Audit이 <code>On</code>으로 활성화되어야 합니다. </p></li><li><p>Request Audit Types에 이하의
+    verb가 선택되어 있어야 합니다:</p><ol start="1"><li><p><code>create</code></p></li><li><p><code>get
+    </code></p></li></ol></li></ol></li></ol></li></ol></li><li><p><strong>Tags</strong>
+    : 필요 시 개별 클러스터에 Tag를 수동으로 입력할 수 있으며 Cloud Provider를 통해 동기화된 클러스터의 경우 동기화해 온 태그도
+    함께 표시됩니다. (단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가합니다.) <code>+ Add Tag</code> 버튼을 클릭하여
+    새 행을 추가하고 원하는 태그 값을 기입할 수 있으며 태그는 key-value 형태로 기입해야 합니다. </p><ol start="1"><li><p><strong>Key</strong>
+    : 태그를 구분할 수 있는 Key 값을 512자 이내로 입력합니다. </p><ol start="1"><li><p>Key 값을 필수로 입력해야
+    하며, 이미 등록된 키는 중복 입력이 불가합니다. </p></li><li><p>중복은 대소문자를 구분하여 체크합니다. </p></li></ol></li><li><p><strong>Value</strong>
+    : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.</p></li></ol></li><li><p>위 과정을 거친 후 최종 <code>Save</code>
+    버튼을 클릭하면 클러스터가 성공적으로 등록됩니다. </p></li></ol>'
+  xhtml_xpath: ol[1]
+- block_id: paragraph-8
+  children: []
+  type: paragraph
+  xhtml_element_index: 7
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[4]
+- block_id: heading-9
+  children: []
+  type: heading
+  xhtml_element_index: 8
+  xhtml_plain_text: 쿠버네티스 클러스터 연동용 스크립트 이용 안내
+  xhtml_text: 쿠버네티스 클러스터 연동용 스크립트 이용 안내
+  xhtml_xpath: h2[3]
+- block_id: html_block-10
+  children: []
+  type: html_block
+  xhtml_element_index: 9
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240511-033842.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="1980" ac:original-width="1796" ac:width="760"><ri:attachment
+    ri:filename="image-20240511-033842.png" ri:version-at-save="2"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[2]
+- block_id: list-11
+  children: []
+  type: list
+  xhtml_element_index: 10
+  xhtml_plain_text: 관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.관리자는 Administrator >
+    Kubernetes > Connection Management > Clusters > Create Cluster > Credential 안내
+    박스 내 “download and run this script”의 링크를 클릭하여 스크립트를 다운로드할 수 있습니다.
+  xhtml_text: <ul><li><p>관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.</p></li><li><p>관리자는
+    Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create
+    Cluster &gt; Credential 안내 박스 내 “download and run this script”의 링크를 클릭하여 스크립트를
+    다운로드할 수 있습니다. </p></li></ul>
+  xhtml_xpath: ul[1]
+- block_id: html_block-12
+  children: []
+  type: html_block
+  xhtml_element_index: 11
+  xhtml_plain_text: "generate_kubepie_sa.sh 스크립트 컨텐츠 #!/bin/bash\n\nset -o nounset\
+    \ -o errexit -o pipefail\n\nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\n\
+    CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role\nCLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb\n\
+    SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret\n\necho \"Creating\
+    \ the Queypie Service Account and grant permission\"\nkubectl apply -f - <<EOF\n\
+    apiVersion: v1\nkind: Namespace\nmetadata:\n  name: ${NAMESPACE}\n---\napiVersion:\
+    \ v1\nkind: ServiceAccount\nmetadata:\n  name: ${SERVICE_ACCOUNT_NAME}\n  namespace:\
+    \ ${NAMESPACE}\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRole\n\
+    metadata:\n  name: ${CLUSTER_ROLE_NAME}\nrules:\n- apiGroups:\n  - \"\"\n  resources:\n\
+    \  - users\n  - groups\n  - serviceaccounts\n  verbs:\n  - impersonate\n---\n\
+    apiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n\
+    \  name: ${CLUSTER_ROLE_BINDING_NAME}\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n\
+    \  kind: ClusterRole\n  name: ${CLUSTER_ROLE_NAME}\nsubjects:\n- kind: ServiceAccount\n\
+    \  name: ${SERVICE_ACCOUNT_NAME}\n  namespace: ${NAMESPACE}\nEOF\n\n\nSA_SECRET_NAME=$(kubectl\
+    \ get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o \"jsonpath={.secrets[0]..name}\"\
+    )\nif [ -z $SA_SECRET_NAME ]\nthen\nkubectl apply -f - <<EOF\napiVersion: v1\n\
+    kind: Secret\ntype: kubernetes.io/service-account-token\nmetadata:\n  name: ${SERVICE_ACCOUNT_SECRET_NAME}\n\
+    \  namespace: ${NAMESPACE}\n  annotations:\n    kubernetes.io/service-account.name:\
+    \ \"${SERVICE_ACCOUNT_NAME}\"\nEOF\nSA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}\n\
+    fi\n\nif [[ \"$OSTYPE\" == \"linux-gnu\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\
+    \nelif [[ \"$OSTYPE\" == \"darwin\"* ]]; then\n    BASE64_DECODE_FLAG=\"-D\"\n\
+    elif [[ \"$OSTYPE\" == \"linux-musl\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\n\
+    else\n    echo \"Unknown OS ${OSTYPE}\"\n    exit 1\nfi\n\nSA_TOKEN=$(kubectl\
+    \ get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o \"jsonpath={.data['token']}\"\
+    \ | base64 ${BASE64_DECODE_FLAG})\nCA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME}\
+    \ -o \"jsonpath={.data['ca\\.crt']}\" | base64 ${BASE64_DECODE_FLAG})\n\necho\
+    \ \"\nFinished successfully.\nPlease copy the token and ca cert below and paste\
+    \ them into the credential input box on the querypie clusters page.\n\n>>> Service\
+    \ Account token\n${SA_TOKEN}\n\n--------------\n\n>>> CA Cert\n${CA_CERT}\""
+  xhtml_text: "<ac:structured-macro ac:macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"\
+    \ ac:name=\"expand\" ac:schema-version=\"1\"><ac:parameter ac:name=\"title\">generate_kubepie_sa.sh\
+    \ 스크립트 컨텐츠 </ac:parameter><ac:rich-text-body><ac:structured-macro ac:macro-id=\"\
+    af7dde18-30fb-46b2-9cab-d4ff1b0e1607\" ac:name=\"code\" ac:schema-version=\"1\"\
+    ><ac:plain-text-body><![CDATA[#!/bin/bash\n\nset -o nounset -o errexit -o pipefail\n\
+    \nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\n\
+    CLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role\nCLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb\n\
+    SERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret\n\necho \"Creating\
+    \ the Queypie Service Account and grant permission\"\nkubectl apply -f - <<EOF\n\
+    apiVersion: v1\nkind: Namespace\nmetadata:\n  name: ${NAMESPACE}\n---\napiVersion:\
+    \ v1\nkind: ServiceAccount\nmetadata:\n  name: ${SERVICE_ACCOUNT_NAME}\n  namespace:\
+    \ ${NAMESPACE}\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRole\n\
+    metadata:\n  name: ${CLUSTER_ROLE_NAME}\nrules:\n- apiGroups:\n  - \"\"\n  resources:\n\
+    \  - users\n  - groups\n  - serviceaccounts\n  verbs:\n  - impersonate\n---\n\
+    apiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n\
+    \  name: ${CLUSTER_ROLE_BINDING_NAME}\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n\
+    \  kind: ClusterRole\n  name: ${CLUSTER_ROLE_NAME}\nsubjects:\n- kind: ServiceAccount\n\
+    \  name: ${SERVICE_ACCOUNT_NAME}\n  namespace: ${NAMESPACE}\nEOF\n\n\nSA_SECRET_NAME=$(kubectl\
+    \ get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o \"jsonpath={.secrets[0]..name}\"\
+    )\nif [ -z $SA_SECRET_NAME ]\nthen\nkubectl apply -f - <<EOF\napiVersion: v1\n\
+    kind: Secret\ntype: kubernetes.io/service-account-token\nmetadata:\n  name: ${SERVICE_ACCOUNT_SECRET_NAME}\n\
+    \  namespace: ${NAMESPACE}\n  annotations:\n    kubernetes.io/service-account.name:\
+    \ \"${SERVICE_ACCOUNT_NAME}\"\nEOF\nSA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}\n\
+    fi\n\nif [[ \"$OSTYPE\" == \"linux-gnu\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\
+    \nelif [[ \"$OSTYPE\" == \"darwin\"* ]]; then\n    BASE64_DECODE_FLAG=\"-D\"\n\
+    elif [[ \"$OSTYPE\" == \"linux-musl\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\n\
+    else\n    echo \"Unknown OS ${OSTYPE}\"\n    exit 1\nfi\n\nSA_TOKEN=$(kubectl\
+    \ get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o \"jsonpath={.data['token']}\"\
+    \ | base64 ${BASE64_DECODE_FLAG})\nCA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME}\
+    \ -o \"jsonpath={.data['ca\\.crt']}\" | base64 ${BASE64_DECODE_FLAG})\n\necho\
+    \ \"\nFinished successfully.\nPlease copy the token and ca cert below and paste\
+    \ them into the credential input box on the querypie clusters page.\n\n>>> Service\
+    \ Account token\n${SA_TOKEN}\n\n--------------\n\n>>> CA Cert\n${CA_CERT}\"]]></ac:plain-text-body></ac:structured-macro></ac:rich-text-body></ac:structured-macro>"
+  xhtml_xpath: macro-expand[1]
+- block_id: list-13
+  children: []
+  type: list
+  xhtml_element_index: 12
+  xhtml_plain_text: '스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. chmod
+    +x generate_kubepie_sa.sh
+
+    ./generate_kubepie_sa.sh'
+  xhtml_text: '<ul><li><p>스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. </p><ac:structured-macro
+    ac:macro-id="0a1a2ec5-0106-4f75-8c06-79da67839e78" ac:name="code" ac:schema-version="1"><ac:plain-text-body><![CDATA[chmod
+    +x generate_kubepie_sa.sh
+
+    ./generate_kubepie_sa.sh]]></ac:plain-text-body></ac:structured-macro></li></ul>'
+  xhtml_xpath: ul[2]
+created_at: '2026-02-08T11:01:32.854157+00:00'
+page_id: '544381877'
+source_xhtml: page.xhtml

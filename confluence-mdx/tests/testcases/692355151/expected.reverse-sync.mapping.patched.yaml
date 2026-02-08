@@ -1,0 +1,214 @@
+blocks:
+- block_id: html_block-1
+  children: []
+  type: html_block
+  xhtml_element_index: 0
+  xhtml_plain_text: 10.2.0 부터 추가된 기능입니다. (10.2.0 기준 MySQL만 지원합니다.)11.2.0 부터 관리자가 이
+    기능을 비활성화 할 수 있도록 변경되었습니다. 사용자가 이 기능을 사용할 수 없는 경우 관리자가 정책적으로 비활성화한 것입니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="d17430fb-9447-470e-83ac-d17ab23b1c3b"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>10.2.0 부터 추가된 기능입니다.
+    (10.2.0 기준 MySQL만 지원합니다.)</p><p>11.2.0 부터 관리자가 이 기능을 비활성화 할 수 있도록 변경되었습니다. 사용자가
+    이 기능을 사용할 수 없는 경우 관리자가 정책적으로 비활성화한 것입니다.</p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[1]
+- block_id: heading-2
+  children: []
+  type: heading
+  xhtml_element_index: 1
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-3
+  children: []
+  type: paragraph
+  xhtml_element_index: 2
+  xhtml_plain_text: 사용자가 Workflow를 통해 SQL Request를 요청할 때 해당 쿼리에 대해 DBMS에서 제공하는 실행
+    계획(Explain 구문)을 사용하여 쿼리에 대한 제한적인 절차 정보를 확인할 수 있습니다.  이 기능은 DBMS에 종속된 기능이므로 Workflow의
+    SQL Request 작성할 때 커넥션에 해당하는 DBMS 마다 차이가 있을 수 있습니다.
+  xhtml_text: 사용자가 Workflow를 통해 SQL Request를 요청할 때 해당 쿼리에 대해 DBMS에서 제공하는 실행 계획(Explain
+    구문)을 사용하여 쿼리에 대한 제한적인 절차 정보를 확인할 수 있습니다.  이 기능은 DBMS에 종속된 기능이므로 Workflow의 SQL
+    Request 작성할 때 커넥션에 해당하는 DBMS 마다 차이가 있을 수 있습니다.
+  xhtml_xpath: p[1]
+- block_id: html_block-4
+  children: []
+  type: html_block
+  xhtml_element_index: 3
+  xhtml_plain_text: 실행계획이란?데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다.
+    단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="4352403e-dc94-4062-93c6-154a747a602f"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>실행계획이란?<br/>데이터베이스의
+    옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을
+    볼 수 있습니다. </p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[2]
+- block_id: heading-5
+  children: []
+  type: heading
+  xhtml_element_index: 4
+  xhtml_plain_text: SQL Request 작성 및 실행계획(Explain) 실행하기
+  xhtml_text: SQL Request 작성 및 실행계획(Explain) 실행하기
+  xhtml_xpath: h2[2]
+- block_id: paragraph-6
+  children: []
+  type: paragraph
+  xhtml_element_index: 5
+  xhtml_plain_text: 'QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : SQL
+    Request 요청하기)'
+  xhtml_text: 'QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : <ac:link
+    ac:card-appearance="inline"><ri:page ri:content-title="SQL Request 요청하기" ri:version-at-save="26"></ri:page><ac:link-body>SQL
+    Request 요청하기</ac:link-body></ac:link>)'
+  xhtml_xpath: p[2]
+- block_id: list-7
+  children: []
+  type: list
+  xhtml_element_index: 6
+  xhtml_plain_text: MySQL Connection 및 Database 선택 쿼리를 실행할 MySQL Connection 과 Database를
+    선택하고 쿼리를 입력합니다.
+  xhtml_text: <ol start="1"><li><p> MySQL Connection 및 Database 선택 <br/>쿼리를 실행할 MySQL
+    Connection 과 Database를 선택하고 쿼리를 입력합니다. </p></li></ol>
+  xhtml_xpath: ol[1]
+- block_id: html_block-8
+  children: []
+  type: html_block
+  xhtml_element_index: 7
+  xhtml_plain_text: Content Type은 “Text”만 지원합니다. “File”을 선택하면 실행 계획(Explain)기능을 사용할
+    수 없습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="426a0df6-e9e8-4f8e-95c2-7e96de40ba61"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><p>Content Type은 “Text”만
+    지원합니다. “File”을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다.</p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[1]
+- block_id: html_block-9
+  children: []
+  type: html_block
+  xhtml_element_index: 8
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20241029-234721.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="531" ac:original-width="776" ac:width="760"><ri:attachment
+    ri:filename="image-20241029-234721.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: list-10
+  children: []
+  type: list
+  xhtml_element_index: 9
+  xhtml_plain_text: '실행계획(Explain) 옵션 및 실행계획 수행쿼리 에디터 하단에 있는 옵션을 선택하고 Explain 버튼을
+    누릅니다.Attach Explain Results : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은
+    OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) 결과 표시 방식 선택Table : 테이블 형태로
+    결과가 표시됩니다.JSON : JSON 형태로 결과가 표시됩니다.'
+  xhtml_text: '<ol start="2"><li><p>실행계획(Explain) 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을
+    선택하고 <code>Explain</code> 버튼을 누릅니다.</p><ol start="1"><li><p><strong>Attach Explain
+    Results</strong> : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다.
+    필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) </p></li><li><p>결과 표시 방식 선택</p><ol
+    start="1"><li><p><strong>Table</strong> : 테이블 형태로 결과가 표시됩니다.</p></li><li><p><strong>JSON</strong>
+    : JSON 형태로 결과가 표시됩니다. </p></li></ol></li></ol></li></ol>'
+  xhtml_xpath: ol[2]
+- block_id: html_block-11
+  children: []
+  type: html_block
+  xhtml_element_index: 10
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20241029-235845.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="537" ac:original-width="682" ac:width="682"><ri:attachment
+    ri:filename="image-20241029-235845.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[2]
+- block_id: html_block-12
+  children: []
+  type: html_block
+  xhtml_element_index: 11
+  xhtml_plain_text: 실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. MySQL은 5.6 이후 부터 Explain의
+    결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="f0d417a3-d230-473c-ad86-b389329dc1c2"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><ul><li><p>실행계획 대상이 되는
+    쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. </p></li><li><p>MySQL은 5.6 이후 부터 Explain의 결과를
+    JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.</p></li></ul><ac:image
+    ac:align="center" ac:alt="image-20241030-001252.png" ac:custom-width="true" ac:layout="center"
+    ac:original-height="392" ac:original-width="719" ac:width="682"><ri:attachment
+    ri:filename="image-20241030-001252.png" ri:version-at-save="1"></ri:attachment></ac:image></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[2]
+- block_id: list-13
+  children: []
+  type: list
+  xhtml_element_index: 12
+  xhtml_plain_text: 실행계획(Explain) 결과 확인Table 형태의 결과 확인아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는
+    MySQL reference 문서를 참고 바랍니다. JSON 형태의 결과 확인JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과
+    같은 결과가 표시됩니다. {JSON} 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.{JSON}을 클릭하면 전체 내용을 볼수 있습니다.
+    JSON 결과의 복사와 내보내기가 가능합니다. 내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.
+  xhtml_text: <ol start="3"><li><p>실행계획(Explain) 결과 확인</p><ol start="1"><li><p>Table
+    형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/></p><ac:image
+    ac:align="center" ac:alt="image-20241030-002325.png" ac:custom-width="true" ac:layout="center"
+    ac:original-height="271" ac:original-width="1080" ac:width="712"><ri:attachment
+    ri:filename="image-20241030-002325.png" ri:version-at-save="1"></ri:attachment></ac:image><p>
+    </p></li><li><p>JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다.
+    {JSON} 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/></p><ac:image ac:align="center" ac:alt="image-20241030-003040.png"
+    ac:custom-width="true" ac:layout="center" ac:original-height="270" ac:original-width="1078"
+    ac:width="712"><ri:attachment ri:filename="image-20241030-003040.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>{JSON}을
+    클릭하면 전체 내용을 볼수 있습니다.</p></ac:caption></ac:image><p> <br/></p><ac:image ac:align="center"
+    ac:alt="image-20241030-003129.png" ac:custom-width="true" ac:layout="center" ac:original-height="680"
+    ac:original-width="760" ac:width="560"><ri:attachment ri:filename="image-20241030-003129.png"
+    ri:version-at-save="1"></ri:attachment><ac:caption><p>JSON 결과의 복사와 내보내기가 가능합니다.</p></ac:caption></ac:image><p>
+    <br/>내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.</p></li></ol></li></ol>
+  xhtml_xpath: ol[3]
+- block_id: heading-14
+  children: []
+  type: heading
+  xhtml_element_index: 13
+  xhtml_plain_text: 기타 참고사항
+  xhtml_text: 기타 참고사항
+  xhtml_xpath: h2[3]
+- block_id: list-15
+  children: []
+  type: list
+  xhtml_element_index: 14
+  xhtml_plain_text: 결재자(Approver)의 실행계획(Explain)결과 확인결재자는 Explain Results 탭에서 첨부된
+    실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.
+  xhtml_text: <ol start="1"><li><p>결재자(Approver)의 실행계획(Explain)결과 확인<br/>결재자는 Explain
+    Results 탭에서 첨부된 실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.</p><ac:image ac:align="center"
+    ac:alt="image-20241030-004258.png" ac:custom-width="true" ac:layout="center" ac:original-height="249"
+    ac:original-width="1139" ac:width="736"><ri:attachment ri:filename="image-20241030-004258.png"
+    ri:version-at-save="1"></ri:attachment></ac:image></li></ol>
+  xhtml_xpath: ol[4]
+- block_id: html_block-16
+  children: []
+  type: html_block
+  xhtml_element_index: 15
+  xhtml_plain_text: 결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다.
+    즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로
+    바꿀 수 없습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="2b5b3cc5-8cdf-4782-b102-7fb0d83a152f"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><p>결재자가 볼 수 있는 실행계획(Explain)
+    결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여
+    상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다. </p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[3]
+- block_id: list-17
+  children: []
+  type: list
+  xhtml_element_index: 16
+  xhtml_plain_text: MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문MySQL은 버전별로 실행계획을 통해 분석하는 지원
+    구문이 다릅니다.
+  xhtml_text: <ol start="2"><li><p>MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br/>MySQL은
+    버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다. </p></li></ol>
+  xhtml_xpath: ol[5]
+- block_id: table-18
+  children: []
+  type: table
+  xhtml_element_index: 17
+  xhtml_plain_text: MySQL 5.6.3 이전MySQL 5.6.3 이후SELECTSELECT , DELETE , INSERT , REPLACE
+    , UPDATE
+  xhtml_text: '<table ac:local-id="2ff2c2d5-c31c-463e-b8d8-2e44a15a51c5" data-layout="default"
+    data-table-width="760"><colgroup><col style="width: 381.0px;"/><col style="width:
+    379.0px;"/></colgroup><tbody><tr><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    var(--ds-background-accent-gray-subtlest, #F1F2F4))"><p><strong>MySQL 5.6.3 이전</strong></p></th><th
+    data-highlight-colour="var(--ds-background-accent-gray-subtlest, var(--ds-background-accent-gray-subtlest,
+    #F1F2F4))"><p><strong>MySQL 5.6.3 이후</strong></p></th></tr><tr><td><p>SELECT</p></td><td><p>SELECT
+    , DELETE , INSERT , REPLACE , UPDATE</p></td></tr></tbody></table>'
+  xhtml_xpath: table[1]
+- block_id: html_block-19
+  children: []
+  type: html_block
+  xhtml_element_index: 18
+  xhtml_plain_text: optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행
+    기능에서 지원하지 않습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="8ef7997a-646b-4e96-97a5-42d91c92abe8"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><p>optimizer_trace, analyze
+    는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다. </p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[4]
+created_at: '2026-02-08T11:01:33.356864+00:00'
+page_id: '692355151'
+source_xhtml: patched.xhtml

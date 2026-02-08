@@ -1,0 +1,152 @@
+blocks:
+- block_id: paragraph-1
+  children: []
+  type: paragraph
+  xhtml_element_index: 0
+  xhtml_plain_text: QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라,
+    안내 문서가 구분되어 제공됩니다.
+  xhtml_text: QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라, 안내 문서가
+    구분되어 제공됩니다.
+  xhtml_xpath: p[1]
+- block_id: heading-2
+  children: []
+  type: heading
+  xhtml_element_index: 1
+  xhtml_plain_text: Compose Tool 로 Container 를 실행하기
+  xhtml_text: Compose Tool 로 Container 를 실행하기
+  xhtml_xpath: h2[1]
+- block_id: paragraph-3
+  children: []
+  type: paragraph
+  xhtml_element_index: 2
+  xhtml_plain_text: 일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다. Docker Compose 를 활용하여,
+    Container Image 를 내려받고, 실행, 종료하는 방식입니다.
+  xhtml_text: 일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다. Docker Compose 를 활용하여, Container
+    Image 를 내려받고, 실행, 종료하는 방식입니다.
+  xhtml_xpath: p[2]
+- block_id: paragraph-4
+  children: []
+  type: paragraph
+  xhtml_element_index: 3
+  xhtml_plain_text: 이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.
+  xhtml_text: 이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.
+  xhtml_xpath: p[3]
+- block_id: heading-5
+  children: []
+  type: heading
+  xhtml_element_index: 4
+  xhtml_plain_text: setup.v2.sh 로 설치하기
+  xhtml_text: setup.v2.sh 로 설치하기
+  xhtml_xpath: h3[1]
+- block_id: paragraph-6
+  children: []
+  type: paragraph
+  xhtml_element_index: 5
+  xhtml_plain_text: 2025년 8월 출시된 QueryPie ACP Community Edition 의 출시와 함께 최종 고객사와 파트너
+    엔지니어에게 제공되는 설치 도우미 프로그램입니다. Docker Hub 에 공개된 Container Image 를 내려받아 설치하는 방식입니다.
+  xhtml_text: 2025년 8월 출시된 QueryPie ACP Community Edition 의 출시와 함께 최종 고객사와 파트너 엔지니어에게
+    제공되는 설치 도우미 프로그램입니다. Docker Hub 에 공개된 Container Image 를 내려받아 설치하는 방식입니다.
+  xhtml_xpath: p[4]
+- block_id: paragraph-7
+  children: []
+  type: paragraph
+  xhtml_element_index: 6
+  xhtml_plain_text: '설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다. setup.v2.sh 가 실제로
+    실행하는 설치 과정은 setup.sh 의 설치 방식과 동등합니다. setup.v2.sh 는 그 과정이 자동화되었고, Version 10 등
+    구버전의 설치를 지원하지 않는다는 차이가 있습니다. 더 상세한 차이점은 이 문서를 참조하세요: setup.sh, setup.v2.sh 비교'
+  xhtml_text: '설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다. setup.v2.sh 가 실제로 실행하는
+    설치 과정은 setup.sh 의 설치 방식과 동등합니다. setup.v2.sh 는 그 과정이 자동화되었고, Version 10 등 구버전의
+    설치를 지원하지 않는다는 차이가 있습니다. 더 상세한 차이점은 이 문서를 참조하세요: <ac:link ac:card-appearance="inline"
+    ac:local-id="af972ffe-4ea0-411c-91b5-eb9fcf92df45"><ri:page ri:content-title="setup.sh,
+    setup.v2.sh 비교" ri:version-at-save="6"></ri:page><ac:link-body>setup.sh, setup.v2.sh
+    비교</ac:link-body></ac:link>'
+  xhtml_xpath: p[5]
+- block_id: paragraph-8
+  children: []
+  type: paragraph
+  xhtml_element_index: 7
+  xhtml_plain_text: Apple Silicon 을 사용하는 macOS 환경의 설치를 지원합니다.
+  xhtml_text: Apple Silicon 을 사용하는 macOS 환경의 설치를 지원합니다.
+  xhtml_xpath: p[6]
+- block_id: paragraph-9
+  children: []
+  type: paragraph
+  xhtml_element_index: 8
+  xhtml_plain_text: '자세한 설치 방법은 이 문서를 참조하세요: 설치 가이드 - setup.v2.sh'
+  xhtml_text: '자세한 설치 방법은 이 문서를 참조하세요: <ac:link ac:card-appearance="inline" ac:local-id="7dca62d4-0f35-4664-bde0-49f59210d90e"><ri:page
+    ri:content-title="설치 가이드 - setup.v2.sh" ri:version-at-save="30"></ri:page><ac:link-body>설치
+    가이드 - setup.v2.sh</ac:link-body></ac:link>'
+  xhtml_xpath: p[7]
+- block_id: heading-10
+  children: []
+  type: heading
+  xhtml_element_index: 9
+  xhtml_plain_text: setup.sh 로 설치하기
+  xhtml_text: setup.sh 로 설치하기
+  xhtml_xpath: h3[2]
+- block_id: paragraph-11
+  children: []
+  type: paragraph
+  xhtml_element_index: 10
+  xhtml_plain_text: QueryPie ACP Version 9 시절부터 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다. Harbor
+    라는 Container Registry 에 계정을 발급받아 Container Image 를 내려받을 수 있습니다.
+  xhtml_text: QueryPie ACP Version 9 시절부터 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다. Harbor 라는
+    Container Registry 에 계정을 발급받아 Container Image 를 내려받을 수 있습니다.
+  xhtml_xpath: p[8]
+- block_id: paragraph-12
+  children: []
+  type: paragraph
+  xhtml_element_index: 11
+  xhtml_plain_text: '자세한 설치 방법은 이 문서를 참조하세요: 설치 가이드 - 간단한 구성'
+  xhtml_text: '자세한 설치 방법은 이 문서를 참조하세요: <ac:link ac:card-appearance="inline" ac:local-id="4599bf9f-cf7c-4699-99fe-ac48128efd92"><ri:page
+    ri:content-title="설치 가이드 - 간단한 구성" ri:version-at-save="14"></ri:page><ac:link-body>설치
+    가이드 - 간단한 구성</ac:link-body></ac:link>'
+  xhtml_xpath: p[9]
+- block_id: heading-13
+  children: []
+  type: heading
+  xhtml_element_index: 12
+  xhtml_plain_text: Kubernetes 환경에 설치하기
+  xhtml_text: Kubernetes 환경에 설치하기
+  xhtml_xpath: h2[2]
+- block_id: paragraph-14
+  children: []
+  type: paragraph
+  xhtml_element_index: 13
+  xhtml_plain_text: QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다. Compose Tool 을
+    이용해 설치, 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.
+  xhtml_text: QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다. Compose Tool 을 이용해 설치,
+    실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.
+  xhtml_xpath: p[10]
+- block_id: paragraph-15
+  children: []
+  type: paragraph
+  xhtml_element_index: 14
+  xhtml_plain_text: Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes
+    Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
+  xhtml_text: Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster
+    와 Self-Hosted Cluster, 모두 사용 가능합니다.
+  xhtml_xpath: p[11]
+- block_id: list-16
+  children: []
+  type: list
+  xhtml_element_index: 15
+  xhtml_plain_text: 'AWS EKS 환경 : AWS EKS 환경에서 설치하기 Helm Chart : https://github.com/chequer-io/querypie-deployment'
+  xhtml_text: '<ul local-id="7460d9b4-35a0-4f98-8637-724391d4c7a0"><li local-id="9288d6aa-077f-4639-848e-7375d83e4ada"><p
+    local-id="22b709c0d310">AWS EKS 환경 : <ac:link ac:card-appearance="inline" ac:local-id="2aa65d2a-300b-4e8f-8818-953c28d9481f"><ri:page
+    ri:content-title="AWS EKS 환경에서 설치하기" ri:version-at-save="36"></ri:page><ac:link-body>AWS
+    EKS 환경에서 설치하기</ac:link-body></ac:link> </p></li><li local-id="f9425b39-37a3-473d-b0c1-b59523f81c9a"><p
+    local-id="6512b1edb160">Helm Chart : <a data-card-appearance="inline" href="https://github.com/chequer-io/querypie-deployment"
+    local-id="39207560-10d4-4ec7-9c01-921457a5d9bf">https://github.com/chequer-io/querypie-deployment</a>
+    </p></li></ul>'
+  xhtml_xpath: ul[1]
+- block_id: paragraph-17
+  children: []
+  type: paragraph
+  xhtml_element_index: 16
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[12]
+created_at: '2026-02-08T11:01:30.830282+00:00'
+page_id: '1911652402'
+source_xhtml: page.xhtml

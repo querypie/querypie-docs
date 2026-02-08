@@ -1,0 +1,357 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 받기할
+    수 있습니다.
+  xhtml_text: Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 받기할 수 있습니다.
+  xhtml_xpath: p[1]
+- block_id: html_block-3
+  children: []
+  type: html_block
+  xhtml_element_index: 2
+  xhtml_plain_text: 본 문서는 10.2.6 또는 그 이상의 버전에 적용됩니다.10.2.5 또는 그 이하 버전의 Slack 연동 방법은
+    10.1.0 버전 매뉴얼 문서를 참고해주세요.
+  xhtml_text: <ac:structured-macro ac:macro-id="44cc9f0c-9c85-4681-b6ed-75010e6450ce"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>본 문서는 <strong>10.2.6
+    또는 그 이상의 버전</strong>에 적용됩니다.</p><p>10.2.5 또는 그 이하 버전의 Slack 연동 방법은 <a href="https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations">10.1.0
+    버전 매뉴얼 문서</a>를 참고해주세요.</p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[1]
+- block_id: html_block-4
+  children: []
+  type: html_block
+  xhtml_element_index: 3
+  xhtml_plain_text: 12falsediscOverviewlisttrue
+  xhtml_text: <ac:structured-macro ac:local-id="c3d00c63-12a9-4498-b3e2-1f6e7e91066f"
+    ac:macro-id="20a50dd1-17d2-461f-b2d3-cf8e141d0c23" ac:name="toc" ac:schema-version="1"
+    data-layout="default"><ac:parameter ac:name="minLevel">1</ac:parameter><ac:parameter
+    ac:name="maxLevel">2</ac:parameter><ac:parameter ac:name="outline">false</ac:parameter><ac:parameter
+    ac:name="style">disc</ac:parameter><ac:parameter ac:name="exclude">Overview</ac:parameter><ac:parameter
+    ac:name="type">list</ac:parameter><ac:parameter ac:name="printable">true</ac:parameter></ac:structured-macro>
+  xhtml_xpath: macro-toc[1]
+- block_id: heading-5
+  children: []
+  type: heading
+  xhtml_element_index: 4
+  xhtml_plain_text: 구성 시 사전에 필요한 권한
+  xhtml_text: 구성 시 사전에 필요한 권한
+  xhtml_xpath: h3[1]
+- block_id: list-6
+  children: []
+  type: list
+  xhtml_element_index: 5
+  xhtml_plain_text: Slack Workspace 관리자 권한 계정 (Slack Workspace에 App을 설치하기 위해 필요)QueryPie
+    Owner 및 Approval Admin 권한 계정
+  xhtml_text: <ul><li><p>Slack Workspace 관리자 권한 계정 (Slack Workspace에 App을 설치하기 위해
+    필요)</p></li><li><p>QueryPie Owner 및 Approval Admin 권한 계정</p></li></ul>
+  xhtml_xpath: ul[1]
+- block_id: heading-7
+  children: []
+  type: heading
+  xhtml_element_index: 6
+  xhtml_plain_text: Slack API 에서 DM App 생성 (via Manifest Files)
+  xhtml_text: Slack API 에서 DM App 생성 (via Manifest Files)
+  xhtml_xpath: h2[2]
+- block_id: paragraph-8
+  children: []
+  type: paragraph
+  xhtml_element_index: 7
+  xhtml_plain_text: App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.
+  xhtml_text: App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.
+  xhtml_xpath: p[2]
+- block_id: paragraph-9
+  children: []
+  type: paragraph
+  xhtml_element_index: 8
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[3]
+- block_id: list-10
+  children: []
+  type: list
+  xhtml_element_index: 9
+  xhtml_plain_text: "https://api.slack.com/apps 으로 이동하여 Create an App 을 클릭합니다.Create\
+    \ an app 모달에서, App 생성 방식을 선택합니다. From a manifest 를 클릭합니다.Pick a workspace 모달에서\
+    \ QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.Create app from manifest 모달에서\
+    \ JSON 형식의 App Manifest를 입력합니다. 미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음\
+    \ 단계로 진행합니다. {{..}}  안의 값은 원하는 값으로 변경해 주세요.{\n    \"display_information\": {\n\
+    \        \"name\": \"{{name}}\"\n    },\n    \"features\": {\n        \"bot_user\"\
+    : {\n            \"display_name\": \"{{display_name}}\",\n            \"always_online\"\
+    : false\n        }\n    },\n    \"oauth_config\": {\n        \"scopes\": {\n \
+    \           \"bot\": [\n                \"chat:write\",\n                \"users:read.email\"\
+    ,\n                \"users:read\"\n            ]\n        }\n    },\n    \"settings\"\
+    : {\n        \"interactivity\": {\n            \"is_enabled\": true\n        },\n\
+    \        \"org_deploy_enabled\": false,\n        \"socket_mode_enabled\": true,\n\
+    \        \"token_rotation_enabled\": false\n    }\n}설정 내용을 검토하고 Create 버튼을 클릭하여\
+    \ App 생성을 완료합니다."
+  xhtml_text: "<ol start=\"1\"><li><p><a href=\"https://api.slack.com/apps\">https://api.slack.com/apps</a>\
+    \ 으로 이동하여 <code>Create an App</code> 을 클릭합니다.<br/></p><ac:image ac:align=\"center\"\
+    \ ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"1203\" ac:original-width=\"\
+    2317\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20231227-065658.png\"\
+    \ ri:version-at-save=\"1\"></ri:attachment><ac:adf-mark color=\"#091e4224\" key=\"\
+    border\" size=\"2\"></ac:adf-mark></ac:image><p></p></li><li><p>Create an app\
+    \ 모달에서, App 생성 방식을 선택합니다. <code>From a manifest</code> 를 클릭합니다.<br/></p><ac:image\
+    \ ac:align=\"center\" ac:alt=\"스크린샷 2025-02-18 오후 1.17.25.png\" ac:custom-width=\"\
+    true\" ac:layout=\"center\" ac:original-height=\"507\" ac:original-width=\"712\"\
+    \ ac:width=\"712\"><ri:attachment ri:filename=\"스크린샷 2025-02-18 오후 1.17.25.png\"\
+    \ ri:version-at-save=\"1\"></ri:attachment><ac:adf-mark color=\"#091e4224\" key=\"\
+    border\" size=\"2\"></ac:adf-mark></ac:image><p></p></li><li><p>Pick a workspace\
+    \ 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.<br/></p><ac:image ac:align=\"\
+    center\" ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"443\"\
+    \ ac:original-width=\"707\" ac:width=\"710\"><ri:attachment ri:filename=\"image-20231227-065951.png\"\
+    \ ri:version-at-save=\"1\"></ri:attachment></ac:image><p></p></li><li><p>Create\
+    \ app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고\
+    \ 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/><ac:emoticon ac:emoji-fallback=\"\
+    :light_bulb_on:\" ac:emoji-id=\"atlassian-light_bulb_on\" ac:emoji-shortname=\"\
+    :light_bulb_on:\" ac:name=\"light-on\"></ac:emoticon><span style=\"background-color:\
+    \ rgb(254,222,200);\"> </span><code>{{..}}</code><span style=\"background-color:\
+    \ rgb(254,222,200);\">  안의 값은 원하는 값으로 변경해 주세요.</span></p><ac:structured-macro\
+    \ ac:macro-id=\"7431661e-8f16-40dd-8edf-84e7b117492f\" ac:name=\"code\" ac:schema-version=\"\
+    1\"><ac:plain-text-body><![CDATA[{\n    \"display_information\": {\n        \"\
+    name\": \"{{name}}\"\n    },\n    \"features\": {\n        \"bot_user\": {\n \
+    \           \"display_name\": \"{{display_name}}\",\n            \"always_online\"\
+    : false\n        }\n    },\n    \"oauth_config\": {\n        \"scopes\": {\n \
+    \           \"bot\": [\n                \"chat:write\",\n                \"users:read.email\"\
+    ,\n                \"users:read\"\n            ]\n        }\n    },\n    \"settings\"\
+    : {\n        \"interactivity\": {\n            \"is_enabled\": true\n        },\n\
+    \        \"org_deploy_enabled\": false,\n        \"socket_mode_enabled\": true,\n\
+    \        \"token_rotation_enabled\": false\n    }\n}]]></ac:plain-text-body></ac:structured-macro><p></p></li><li><p>설정\
+    \ 내용을 검토하고 <code>Create</code> 버튼을 클릭하여 App 생성을 완료합니다.<br/></p><ac:image ac:align=\"\
+    center\" ac:alt=\"image-20240115-220447.png\" ac:custom-width=\"true\" ac:layout=\"\
+    center\" ac:original-height=\"375\" ac:original-width=\"574\" ac:width=\"763\"\
+    ><ri:attachment ri:filename=\"image-20240115-220447.png\" ri:version-at-save=\"\
+    1\"></ri:attachment></ac:image><p></p></li></ol>"
+  xhtml_xpath: ol[1]
+- block_id: heading-11
+  children: []
+  type: heading
+  xhtml_element_index: 10
+  xhtml_plain_text: Slack Workspace에 Slack App 설치
+  xhtml_text: Slack Workspace에 Slack App 설치
+  xhtml_xpath: h2[3]
+- block_id: list-12
+  children: []
+  type: list
+  xhtml_element_index: 11
+  xhtml_plain_text: Settings > Install App에서 Install to Workspace 버튼을 클릭하여 생성된 앱을
+    Slack Workspace에 설치합니다. 권한 요청 페이지에서, 허용을 클릭합니다.설정한 Slack Workspace에서 Slack DM
+    전용 App이 생성된 것을 확인할 수 있습니다.
+  xhtml_text: <ol start="1"><li><p>Settings &gt; Install App에서 <code>Install to Workspace</code>
+    버튼을 클릭하여 생성된 앱을 Slack Workspace에 설치합니다. </p></li><li><p>권한 요청 페이지에서, <code>허용</code>을
+    클릭합니다.</p><ac:image ac:align="center" ac:alt="image-20240115-221520.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="1203" ac:original-width="1720" ac:width="760"><ri:attachment
+    ri:filename="image-20240115-221520.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image><p></p></li><li><p>설정한
+    Slack Workspace에서 Slack DM 전용 App이 생성된 것을 확인할 수 있습니다.</p><ac:image ac:align="center"
+    ac:alt="image-20240115-221618.png" ac:custom-width="true" ac:layout="center" ac:original-height="991"
+    ac:original-width="1624" ac:width="760"><ri:attachment ri:filename="image-20240115-221618.png"
+    ri:version-at-save="1"></ri:attachment></ac:image></li></ol>
+  xhtml_xpath: ol[2]
+- block_id: heading-13
+  children: []
+  type: heading
+  xhtml_element_index: 12
+  xhtml_plain_text: Bot User OAuth Token 획득
+  xhtml_text: Bot User OAuth Token 획득
+  xhtml_xpath: h2[4]
+- block_id: paragraph-14
+  children: []
+  type: paragraph
+  xhtml_element_index: 13
+  xhtml_plain_text: Features > OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace
+    섹션에서, Bot User OAuth Token 을 복사하여 기록해 둡니다.
+  xhtml_text: Features > OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace
+    섹션에서, <strong>Bot User OAuth Token</strong> 을 복사하여 기록해 둡니다.
+  xhtml_xpath: p[4]
+- block_id: html_block-15
+  children: []
+  type: html_block
+  xhtml_element_index: 14
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240418-022640.png" ac:custom-width="true"
+    ac:layout="wide" ac:original-height="1526" ac:original-width="3024" ac:width="764"><ri:attachment
+    ri:filename="image-20240418-022640.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: paragraph-16
+  children: []
+  type: paragraph
+  xhtml_element_index: 15
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[5]
+- block_id: heading-17
+  children: []
+  type: heading
+  xhtml_element_index: 16
+  xhtml_plain_text: App-Level Token 생성
+  xhtml_text: App-Level Token 생성
+  xhtml_xpath: h2[5]
+- block_id: html_block-18
+  children: []
+  type: html_block
+  xhtml_element_index: 17
+  xhtml_plain_text: App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 활성화할 수는 있지만,
+    App Level Token(xapp-)은 자동으로 생성되지 않습니다.App Level Token은 보안 자격 증명(security credential)이기
+    때문에 manifest로 자동 생성/노출되면 보안상 위험App manifest는 앱의 구성(configuration)만 정의하고, 실제 인증
+    토큰들은 별도로 생성/관리됨
+  xhtml_text: <ac:structured-macro ac:macro-id="63581712-0376-4c4c-96cb-846de5153704"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>App manifest로 Slack
+    app을 생성할 때 Socket Mode와 관련 권한들을 활성화할 수는 있지만, App Level Token(xapp-)은 자동으로 생성되지
+    않습니다.</p><ul><li><p>App Level Token은 보안 자격 증명(security credential)이기 때문에 manifest로
+    자동 생성/노출되면 보안상 위험</p></li><li><p>App manifest는 앱의 구성(configuration)만 정의하고, 실제
+    인증 토큰들은 별도로 생성/관리됨</p></li></ul></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[2]
+- block_id: paragraph-19
+  children: []
+  type: paragraph
+  xhtml_element_index: 18
+  xhtml_plain_text: 다음 단계를 수행하여 App-Level Token을 수동으로 생성합니다.
+  xhtml_text: 다음 단계를 수행하여 App-Level Token을 수동으로 생성합니다.
+  xhtml_xpath: p[6]
+- block_id: list-20
+  children: []
+  type: list
+  xhtml_element_index: 19
+  xhtml_plain_text: 앱 설정 페이지의 Settings > Basic Information 메뉴의 App-Level Tokens 섹션으로
+    이동하고, Generate Token and Scope 버튼을 클릭합니다.Generate an app-level token 모달에서, Add
+    Scope 버튼을 클릭한 뒤 connections:write 를 추가합니다.생성된 App-Level Token 모달에서, 앱 토큰을 복사하여
+    따로 기록해 둡니다. App-Level Token은 xapp- 으로 시작합니다.
+  xhtml_text: <ol start="1"><li><p>앱 설정 페이지의 Settings &gt; Basic Information 메뉴의 App-Level
+    Tokens 섹션으로 이동하고, <code>Generate Token and Scope</code> 버튼을 클릭합니다.<br/></p><ac:image
+    ac:align="center" ac:alt="스크린샷 2025-02-18 오후 2.09.51.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="794" ac:original-width="1169" ac:width="736"><ri:attachment
+    ri:filename="스크린샷 2025-02-18 오후 2.09.51.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image><p></p></li><li><p>Generate
+    an app-level token 모달에서, Add Scope 버튼을 클릭한 뒤 <code>connections:write</code> 를
+    추가합니다.<br/></p><ac:image ac:align="center" ac:alt="스크린샷 2025-02-18 오후
+    2.15.55.png" ac:custom-width="true" ac:layout="center" ac:original-height="756"
+    ac:original-width="804" ac:width="736"><ri:attachment ri:filename="스크린샷
+    2025-02-18 오후 2.15.55.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image><p></p></li><li><p>생성된
+    App-Level Token 모달에서, 앱 토큰을 복사하여 따로 기록해 둡니다. App-Level Token은 <code>xapp-</code>
+    으로 시작합니다.</p></li></ol>
+  xhtml_xpath: ol[3]
+- block_id: heading-21
+  children: []
+  type: heading
+  xhtml_element_index: 20
+  xhtml_plain_text: QueryPie에서 Slack DM 설정하기
+  xhtml_text: QueryPie에서 Slack DM 설정하기
+  xhtml_xpath: h2[6]
+- block_id: list-22
+  children: []
+  type: list
+  xhtml_element_index: 21
+  xhtml_plain_text: 'Admin > General > System > Integrations > Slack 메뉴로 진입한 뒤, Configure
+    버튼을 클릭하여 설정 모달을 엽니다.Administrator > General > System > Integrations > Slack >
+    Create a New Slack Configuration설정 모달에 아까 기록해둔 App Token과 Bot User OAuth Token을
+    입력합니다.추가 설정 값은 다음과 같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화
+    합니다.Send Workflow Notification via Slack DM : 워크플로우 요청에 대한 Slack DM 전송 활성화Allow
+    Users to approve or reject on Slack DM : Slack DM 내에서 승인 또는 거절 기능 활성화액션 허용타입 예시
+    (좌) / 액션 비허용 타입 예시 (우)Save 버튼을 누르고 설정을 완료합니다.'
+  xhtml_text: '<ol start="1"><li><p>Admin &gt; General &gt; System &gt; Integrations
+    &gt; Slack 메뉴로 진입한 뒤, <code>Configure</code> 버튼을 클릭하여 설정 모달을 엽니다.<br/></p><ac:image
+    ac:align="center" ac:alt="스크린샷 2025-03-10 오전 11.35.09.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="822" ac:original-width="1272" ac:width="736"><ri:attachment
+    ri:filename="스크린샷 2025-03-10 오전 11.35.09.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack
+    Configuration</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image><p></p></li><li><p>설정
+    모달에 아까 기록해둔 App Token과 Bot User OAuth Token을 입력합니다.</p></li><li><p>추가 설정 값은 다음과
+    같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화 합니다.</p><ul><li><p><strong>Send
+    Workflow Notification via Slack DM</strong> : 워크플로우 요청에 대한 Slack DM 전송 활성화</p></li><li><p><strong>Allow
+    Users to approve or reject on Slack DM</strong> : Slack DM 내에서 승인 또는 거절 기능 활성화<br/></p><ac:image
+    ac:align="center" ac:custom-width="true" ac:layout="center" ac:original-height="300"
+    ac:original-width="480" ac:width="760"><ri:attachment ri:filename="image-20231003-054240.png"
+    ri:version-at-save="1"></ri:attachment><ac:caption><p>액션 허용타입 예시 (좌) / 액션 비허용
+    타입 예시 (우)</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image><p></p></li></ul></li><li><p><code>Save</code>
+    버튼을 누르고 설정을 완료합니다.</p></li></ol>'
+  xhtml_xpath: ol[4]
+- block_id: heading-23
+  children: []
+  type: heading
+  xhtml_element_index: 22
+  xhtml_plain_text: Slack DM 설정 관리하기
+  xhtml_text: Slack DM 설정 관리하기
+  xhtml_xpath: h2[7]
+- block_id: list-24
+  children: []
+  type: list
+  xhtml_element_index: 23
+  xhtml_plain_text: Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.Administrator
+    > General > System > Integrations > SlackEdit 버튼을 클릭하여 입력한 설정을 변경할 수 있습니다.Administrator
+    > General > System > Integrations > Slack > Edit the Slack Configuration
+  xhtml_text: <ol start="1"><li><p>Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할
+    수 있습니다.<br/></p><ac:image ac:align="center" ac:alt="스크린샷 2025-03-10 오전
+    11.39.50.png" ac:custom-width="true" ac:layout="center" ac:original-height="822"
+    ac:original-width="1272" ac:width="736"><ri:attachment ri:filename="스크린샷
+    2025-03-10 오전 11.39.50.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; System &gt; Integrations &gt; Slack</p></ac:caption><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image><p></p></li><li><p><code>Edit</code>
+    버튼을 클릭하여 입력한 설정을 변경할 수 있습니다.<br/></p><ac:image ac:align="center" ac:alt="스크린샷
+    2025-02-18 오후 3.28.40.png" ac:custom-width="true" ac:layout="center" ac:original-height="817"
+    ac:original-width="1260" ac:width="736"><ri:attachment ri:filename="스크린샷
+    2025-02-18 오후 3.28.40.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Edit the Slack Configuration</p></ac:caption><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image></li></ol>
+  xhtml_xpath: ol[5]
+- block_id: paragraph-25
+  children: []
+  type: paragraph
+  xhtml_element_index: 24
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[7]
+- block_id: heading-26
+  children: []
+  type: heading
+  xhtml_element_index: 25
+  xhtml_plain_text: Workflow 요청 시 Slack DM 테스트
+  xhtml_text: Workflow 요청 시 Slack DM 테스트
+  xhtml_xpath: h2[8]
+- block_id: paragraph-27
+  children: []
+  type: paragraph
+  xhtml_element_index: 26
+  xhtml_plain_text: DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.
+  xhtml_text: DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.
+  xhtml_xpath: p[8]
+- block_id: list-28
+  children: []
+  type: list
+  xhtml_element_index: 27
+  xhtml_plain_text: QueryPie User > Workflow 페이지에서 Submit Request 버튼을 클릭한 뒤, DB Access
+    Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고, 요청을 상신합니다.승인자는 앞에서 추가한
+    Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.Allow Users to approve or reject on
+    Slack DM 설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.DM에서 Details 버튼을 클릭
+    시, QueryPie Admin에서 결재 요청에 대한 상세 내용을 확인하고 승인 또는 거절할 수 있습니다.
+  xhtml_text: <ol start="1"><li><p>QueryPie User &gt; Workflow 페이지에서 Submit Request
+    버튼을 클릭한 뒤, DB Access Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고,
+    요청을 상신합니다.</p><ac:image ac:align="center" ac:alt="스크린샷 2025-02-18 오후 3.15.04.png"
+    ac:custom-width="true" ac:layout="center" ac:original-height="817" ac:original-width="1260"
+    ac:width="736"><ri:attachment ri:filename="스크린샷 2025-02-18 오후 3.15.04.png"
+    ri:version-at-save="1"></ri:attachment><ac:adf-mark color="#091e4224" key="border"
+    size="2"></ac:adf-mark></ac:image><p></p></li><li><p>승인자는 앞에서 추가한 Slack App과의
+    DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/><strong>Allow Users to approve or reject on
+    Slack DM</strong> 설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/></p><ac:image
+    ac:align="center" ac:alt="스크린샷 2025-02-18 오후 3.22.38.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="354" ac:original-width="701" ac:width="701"><ri:attachment
+    ri:filename="스크린샷 2025-02-18 오후 3.22.38.png" ri:version-at-save="1"></ri:attachment></ac:image><p></p></li><li><p>DM에서
+    <code>Details</code> 버튼을 클릭 시, QueryPie Admin에서 결재 요청에 대한 상세 내용을 확인하고 승인 또는 거절할
+    수 있습니다.<br/></p><ac:image ac:align="center" ac:alt="스크린샷 2025-02-18 오후
+    3.25.27.png" ac:custom-width="true" ac:layout="center" ac:original-height="817"
+    ac:original-width="1260" ac:width="736"><ri:attachment ri:filename="스크린샷
+    2025-02-18 오후 3.25.27.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image></li></ol>
+  xhtml_xpath: ol[6]
+created_at: '2026-02-08T11:01:34.886050+00:00'
+page_id: '883654669'
+source_xhtml: patched.xhtml
