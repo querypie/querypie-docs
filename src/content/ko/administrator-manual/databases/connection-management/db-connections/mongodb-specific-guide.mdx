@@ -28,7 +28,7 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 
 * mongodb:// : standard connection string scheme
 * Hostname or IP : mongodb 클러스터 멤버 호스트의 전체 도메인이름 또는 IP 주소
-* options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
+* options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러 개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
 replica set 을 사용하는 경우 `/?` 뒤에 replicaSet=[replica set 이름] 을 입력해야 합니다.
@@ -44,7 +44,7 @@ mongodb+srv://<FQDN>/?[options]
 
 * mongodb+srv:// : +srv connection string scheme
 * Fully Qualified Domain Name (FQDN) : - DNS에 등록되어 있는 호스트네임과 도메인네임의 조합으로 이루어진 이름 ex. server1.example.com
-* options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
+* options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러 개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
 +srv 는 클러스터에 포함되어 있는 각각의 호스트의 주소가 동적으로 바뀔 수 있기 때문에 QueryPie에서 +srv를 직접 커넥션에 사용할 수는 없고 standard connection string으로 변환해서 사용하게 됩니다.
