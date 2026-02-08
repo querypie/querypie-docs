@@ -2039,7 +2039,8 @@ class ConfluenceToMarkdown:
         else:
             self._imports[module_name] = False
 
-    def load_attachments(self, input_dir: str, output_dir: str, public_dir: str) -> None:
+    def load_attachments(self, input_dir: str, output_dir: str, public_dir: str,
+                         skip_image_copy: bool = False) -> None:
         # Find all ac:image nodes first
         ac_image_nodes = self.soup.find_all('ac:image')
         attachments: List[Attachment] = []
@@ -2049,7 +2050,8 @@ class ConfluenceToMarkdown:
             for node in attachment_nodes:
                 logging.debug(f"add attachment of <ac:image>{node}")
                 attachment = Attachment(node, input_dir, output_dir, public_dir)
-                attachment.copy_to_destination()
+                if not skip_image_copy:
+                    attachment.copy_to_destination()
                 attachments.append(attachment)
 
         logging.debug(f"attachments: {attachments}")
@@ -2154,6 +2156,8 @@ def main():
                         help='/public directory path')
     parser.add_argument('--attachment-dir',
                         help='Directory to save attachments (default: output file directory)')
+    parser.add_argument('--skip-image-copy', action='store_true',
+                        help='이미지 파일 복사를 생략 (경로만 지정대로 생성)')
     parser.add_argument('--log-level',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         default='info',
@@ -2218,7 +2222,8 @@ def main():
         GLOBAL_LINK_MAPPING = build_link_mapping(page_v1)
 
         converter = ConfluenceToMarkdown(html_content)
-        converter.load_attachments(input_dir, output_dir, args.public_dir)
+        converter.load_attachments(input_dir, output_dir, args.public_dir,
+                                   skip_image_copy=args.skip_image_copy)
         markdown_content = converter.as_markdown()
 
         with open(args.output_file, 'w', encoding='utf-8') as f:

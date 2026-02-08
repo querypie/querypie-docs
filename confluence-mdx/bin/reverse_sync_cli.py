@@ -87,6 +87,15 @@ def _resolve_page_id(ko_mdx_path: str) -> str:
     raise ValueError(f"MDX path '{ko_mdx_path}' not found in var/pages.yaml")
 
 
+def _resolve_attachment_dir(page_id: str) -> str:
+    """page_id에서 pages.yaml의 path를 조회하여 attachment-dir를 반환."""
+    pages = yaml.safe_load(Path('var/pages.yaml').read_text())
+    for page in pages:
+        if page['page_id'] == page_id:
+            return '/' + '/'.join(page['path'])
+    raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
+
+
 def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
     """patched XHTML 파일을 forward converter로 MDX로 변환한다.
 
@@ -99,11 +108,13 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
 
     abs_input = Path(patched_xhtml_path).resolve()
     abs_output = Path(output_mdx_path).resolve()
+    attachment_dir = _resolve_attachment_dir(page_id)
     result = subprocess.run(
         [sys.executable, str(converter), '--log-level', 'warning',
          str(abs_input), str(abs_output),
          '--public-dir', str(var_dir.parent),
-         '--attachment-dir', f'/{page_id}/verify'],
+         '--attachment-dir', attachment_dir,
+         '--skip-image-copy'],
         capture_output=True, text=True,
     )
     if result.returncode != 0:
