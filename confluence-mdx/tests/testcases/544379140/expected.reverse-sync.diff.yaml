@@ -1,0 +1,14 @@
+changes:
+- block_id: heading-17
+  change_type: modified
+  index: 17
+  new_content: '### Audit Log Export 목록 확인하기
+
+    '
+  old_content: '### Audit Log Export 목록 조회하기
+
+    '
+created_at: '2026-02-08T11:00:34.653093+00:00'
+improved_mdx: tests/testcases/544379140/improved.mdx
+original_mdx: tests/testcases/544379140/original.mdx
+page_id: '544379140'

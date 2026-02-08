@@ -1,0 +1,14 @@
+changes:
+- block_id: heading-6
+  change_type: modified
+  index: 6
+  new_content: '#### Custom Data Source 액세스 요청
+
+    '
+  old_content: '#### Custom Data Source 접근 요청
+
+    '
+created_at: '2026-02-08T11:00:37.520949+00:00'
+improved_mdx: tests/testcases/880181257/improved.mdx
+original_mdx: tests/testcases/880181257/original.mdx
+page_id: '880181257'
