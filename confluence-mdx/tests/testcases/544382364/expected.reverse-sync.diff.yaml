@@ -1,0 +1,16 @@
+changes:
+- block_id: paragraph-16
+  change_type: modified
+  index: 16
+  new_content: '쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 제공하는
+    ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
+
+    '
+  old_content: '쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 지원하는
+    ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
+
+    '
+created_at: '2026-02-08T11:28:57.068374+00:00'
+improved_mdx: tests/testcases/544382364/improved.mdx
+original_mdx: tests/testcases/544382364/original.mdx
+page_id: '544382364'

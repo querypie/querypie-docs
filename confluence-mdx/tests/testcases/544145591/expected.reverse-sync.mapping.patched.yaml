@@ -1,0 +1,717 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
+  xhtml_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
+  xhtml_xpath: p[1]
+- block_id: html_block-3
+  children: []
+  type: html_block
+  xhtml_element_index: 2
+  xhtml_plain_text: Administrator > General > Company Management > General
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250822-103044.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="952" ac:original-width="908" ac:width="760"><ri:attachment
+    ri:filename="image-20250822-103044.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; Company Management &gt; General</p></ac:caption><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: html_block-4
+  children: []
+  type: html_block
+  xhtml_element_index: 3
+  xhtml_plain_text: 12falsediscOverviewlisttrue
+  xhtml_text: <ac:structured-macro ac:local-id="454bb818-ff05-4fd2-b617-5d2d7943c70e"
+    ac:macro-id="0fbab51a-0a60-4ccb-abe1-80e8ff989f27" ac:name="toc" ac:schema-version="1"
+    data-layout="default"><ac:parameter ac:name="minLevel">1</ac:parameter><ac:parameter
+    ac:name="maxLevel">2</ac:parameter><ac:parameter ac:name="outline">false</ac:parameter><ac:parameter
+    ac:name="style">disc</ac:parameter><ac:parameter ac:name="exclude">Overview</ac:parameter><ac:parameter
+    ac:name="type">list</ac:parameter><ac:parameter ac:name="printable">true</ac:parameter></ac:structured-macro>
+  xhtml_xpath: macro-toc[1]
+- block_id: heading-5
+  children: []
+  type: heading
+  xhtml_element_index: 4
+  xhtml_plain_text: 기본 설정
+  xhtml_text: 기본 설정
+  xhtml_xpath: h2[2]
+- block_id: list-6
+  children: []
+  type: list
+  xhtml_element_index: 5
+  xhtml_plain_text: 'Company Name : 프로필 영역 등에 표시할 회사 이름을 입력합니다.Web Base URL : QueryPie
+    서비스에 접근하기 위해 사용하는 기본 도메인 주소Timezone : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.Date
+    Format : 날짜 표기 방식을 지정합니다.Default Display Language : QueryPie의 기본 언어 설정을 설정합니다.
+    (디폴트: 영어) Audit Log Retention Period : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.Go
+    to System Properties : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.'
+  xhtml_text: '<ul><li><p><strong>Company Name</strong> : 프로필 영역 등에 표시할 회사 이름을 입력합니다.</p></li><li><p><strong>Web
+    Base URL</strong> : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소</p></li><li><p><strong>Timezone</strong>
+    : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.</p></li><li><p><strong>Date Format</strong>
+    : 날짜 표기 방식을 지정합니다.</p></li><li><p><strong>Default Display Language</strong> :
+    QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) </p></li><li><p><strong>Audit Log Retention
+    Period </strong>: 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.</p></li><li><p><strong>Go
+    to System Properties</strong> : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. </p></li></ul>'
+  xhtml_xpath: ul[1]
+- block_id: paragraph-7
+  children: []
+  type: paragraph
+  xhtml_element_index: 6
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[2]
+- block_id: heading-8
+  children: []
+  type: heading
+  xhtml_element_index: 7
+  xhtml_plain_text: System Properties
+  xhtml_text: System Properties
+  xhtml_xpath: h2[3]
+- block_id: paragraph-9
+  children: []
+  type: paragraph
+  xhtml_element_index: 8
+  xhtml_plain_text: System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할
+    수 있습니다.
+  xhtml_text: System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할 수 있습니다.
+  xhtml_xpath: p[3]
+- block_id: html_block-10
+  children: []
+  type: html_block
+  xhtml_element_index: 9
+  xhtml_plain_text: Administrator > General > Company Management > General > System
+    Properties
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240805-014838.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="1028" ac:original-width="1747" ac:width="760"><ri:attachment
+    ri:filename="image-20240805-014838.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; Company Management &gt; General &gt; System Properties</p></ac:caption><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[2]
+- block_id: paragraph-11
+  children: []
+  type: paragraph
+  xhtml_element_index: 10
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[4]
+- block_id: heading-12
+  children: []
+  type: heading
+  xhtml_element_index: 11
+  xhtml_plain_text: Workflow Configuration
+  xhtml_text: Workflow Configuration
+  xhtml_xpath: h2[4]
+- block_id: paragraph-13
+  children: []
+  type: paragraph
+  xhtml_element_index: 12
+  xhtml_plain_text: Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
+  xhtml_text: Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.
+  xhtml_xpath: p[5]
+- block_id: html_block-14
+  children: []
+  type: html_block
+  xhtml_element_index: 13
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="1040" ac:original-width="755" ac:width="543"><ri:attachment
+    ri:filename="Screenshot 2025-08-25 at 5.36.19 PM.png" ri:version-at-save="2"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[3]
+- block_id: heading-15
+  children: []
+  type: heading
+  xhtml_element_index: 14
+  xhtml_plain_text: 최대 승인 기간 설정
+  xhtml_text: 최대 승인 기간 설정
+  xhtml_xpath: h2[5]
+- block_id: paragraph-16
+  children: []
+  type: paragraph
+  xhtml_element_index: 15
+  xhtml_plain_text: 모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.
+  xhtml_text: 모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.
+  xhtml_xpath: p[6]
+- block_id: paragraph-17
+  children: []
+  type: paragraph
+  xhtml_element_index: 16
+  xhtml_plain_text: 관리자는 Maximum Approval Duration 항목에서 승인 대기 요청이 자동으로 만료될 때까지의 기간을
+    1일에서 최대 14일까지 설정할 수 있습니다. 이곳에 설정된 기간은 사용자가 워크플로우를 상신할 때 선택하는 Approval Expiration
+    Date (승인 만료일)의 최대값으로 적용됩니다.
+  xhtml_text: 관리자는 Maximum Approval Duration 항목에서 승인 대기 요청이 자동으로 만료될 때까지의 기간을 1일에서
+    최대 14일까지 설정할 수 있습니다. 이곳에 설정된 기간은 사용자가 워크플로우를 상신할 때 선택하는 Approval Expiration Date
+    (승인 만료일)의 최대값으로 적용됩니다.
+  xhtml_xpath: p[7]
+- block_id: list-18
+  children: []
+  type: list
+  xhtml_element_index: 17
+  xhtml_plain_text: Admin > Databases > Configurations의 Maximum Access Duration 또는
+    Admin > Servers > Configurations의 Maximum Access Duration이 Maximum Approval Duration보다
+    짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access
+    Expiration Date (권한 만료일)을 따라갑니다.
+  xhtml_text: <ul><li><p>Admin &gt; Databases &gt; Configurations의 Maximum Access
+    Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum
+    Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration
+    Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다. </p></li></ul>
+  xhtml_xpath: ul[2]
+- block_id: heading-19
+  children: []
+  type: heading
+  xhtml_element_index: 18
+  xhtml_plain_text: 워크플로우 사유입력 글자 수 제한 설정
+  xhtml_text: 워크플로우 사유입력 글자 수 제한 설정
+  xhtml_xpath: h2[6]
+- block_id: paragraph-20
+  children: []
+  type: paragraph
+  xhtml_element_index: 19
+  xhtml_plain_text: 워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의
+    최소 및 최대 글자 수를 설정하는 기능입니다. 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
+  xhtml_text: 워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및
+    최대 글자 수를 설정하는 기능입니다. 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
+  xhtml_xpath: p[8]
+- block_id: list-21
+  children: []
+  type: list
+  xhtml_element_index: 20
+  xhtml_plain_text: '관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할 수 있습니다.Reason
+    for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 1000자)Comments:
+    워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 300자)글자
+    수 범위는 최소 3자에서 최대 1000자 사이에서만 설정할 수 있습니다.'
+  xhtml_text: '<ul><li><p>관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할
+    수 있습니다.</p><ul><li><p>Reason for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다.
+    (기본값: 최소 3자, 최대 1000자)</p></li><li><p>Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에
+    대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 300자)</p></li></ul></li><li><p>글자 수 범위는
+    최소 3자에서 최대 1000자 사이에서만 설정할 수 있습니다.</p></li></ul>'
+  xhtml_xpath: ul[3]
+- block_id: heading-22
+  children: []
+  type: heading
+  xhtml_element_index: 21
+  xhtml_plain_text: 참조자 지정 활성화
+  xhtml_text: 참조자 지정 활성화
+  xhtml_xpath: h2[7]
+- block_id: paragraph-23
+  children: []
+  type: paragraph
+  xhtml_element_index: 22
+  xhtml_plain_text: Activate Review Step to collaborate with others 토글로 활성화합니다.
+  xhtml_text: Activate Review Step to collaborate with others 토글로 활성화합니다.
+  xhtml_xpath: p[9]
+- block_id: list-24
+  children: []
+  type: list
+  xhtml_element_index: 23
+  xhtml_plain_text: Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.토글을 켜면 요청 생성 화면의 결재 규칙
+    지정 영역에서 참조자 지정 버튼이 표시됩니다.토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수
+    있습니다.)
+  xhtml_text: <ul><li><p>Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.</p></li><li><p>토글을
+    켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.</p></li><li><p>토글을 끄면 해당 버튼이 제거됩니다.
+    (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)</p></li></ul>
+  xhtml_xpath: ul[4]
+- block_id: heading-25
+  children: []
+  type: heading
+  xhtml_element_index: 24
+  xhtml_plain_text: 사후 승인 허용
+  xhtml_text: 사후 승인 허용
+  xhtml_xpath: h2[8]
+- block_id: paragraph-26
+  children: []
+  type: paragraph
+  xhtml_element_index: 25
+  xhtml_plain_text: Allow users to submit requests in Urgent mode 토글로 활성화합니다.
+  xhtml_text: Allow users to submit requests in Urgent mode 토글로 활성화합니다.
+  xhtml_xpath: p[10]
+- block_id: list-27
+  children: []
+  type: list
+  xhtml_element_index: 26
+  xhtml_plain_text: 'Workflow 요청을 상신할 때 사후 승인 모드(Urgent Mode)를 허용할지 결정합니다.토글을 켜면 다음의
+    영역에서 사후 승인 관련 토글이 표시됩니다.Approval Rules : 결재 규칙 생성 및 수정Submit Request : 요청 생성 화면의
+    결재 규칙 지정 영역토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한
+    내역은 그대로 남아 있으며, 실행 가능합니다.'
+  xhtml_text: '<ul><li><p>Workflow 요청을 상신할 때 사후 승인 모드(Urgent Mode)를 허용할지 결정합니다.</p></li><li><p>토글을
+    켜면 다음의 영역에서 사후 승인 관련 토글이 표시됩니다.</p><ul><li><p>Approval Rules : 결재 규칙 생성 및 수정</p></li><li><p>Submit
+    Request : 요청 생성 화면의 결재 규칙 지정 영역</p></li></ul></li><li><p>토글을 끄면 위 영역에서 사후 승인 관련
+    토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아 있으며, 실행 가능합니다.</p></li></ul>'
+  xhtml_xpath: ul[5]
+- block_id: heading-28
+  children: []
+  type: heading
+  xhtml_element_index: 27
+  xhtml_plain_text: Attribute 기반 승인자 지정 기능
+  xhtml_text: Attribute 기반 승인자 지정 기능
+  xhtml_xpath: h2[9]
+- block_id: html_block-29
+  children: []
+  type: html_block
+  xhtml_element_index: 28
+  xhtml_plain_text: 11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다. Admin > General
+    > Company Management > General > Workflow Configurations의 Use User Attribute-Based
+    Approval 옵션 스위치가 제거되었습니다.기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른
+    Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="761a1bb7-13c0-403d-8614-5a77bbbad0ad"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>11.4.0부터 속성 기반 승인자
+    지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다. </p><ul><li><p>Admin &gt; General &gt; Company
+    Management &gt; General &gt; Workflow Configurations의 Use User Attribute-Based
+    Approval 옵션 스위치가 제거되었습니다.</p></li><li><p>기존 Attribute 기반 승인자 지정시 하나의 Attribute만
+    지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.  </p></li></ul></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[1]
+- block_id: paragraph-30
+  children: []
+  type: paragraph
+  xhtml_element_index: 29
+  xhtml_plain_text: '사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다.'
+  xhtml_text: '사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다.'
+  xhtml_xpath: p[11]
+- block_id: list-31
+  children: []
+  type: list
+  xhtml_element_index: 30
+  xhtml_plain_text: '중요: 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.Admin
+    > General > Users > Detail page > Profile 탭Administrator > General > Workflow
+    Management > Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, ''Assignee for
+    Approval'' 항목에 ''Allow Assignee selection (Attribute-Based)''를 선택한 뒤 승인자와 매핑하기
+    위한 Attribute (예: teamLeader)를 지정합니다.자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 ''Self
+    Approval (자가 승인)'' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를
+    승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니
+    주의가 필요합니다.Attribute 값 부재 시 알림만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉,
+    승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는
+    관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.에러 메시지 예시: Attribute 값은 있지만 해당 사용자가 비활성화된
+    경우만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에
+    지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.에러 메세지 예시:'
+  xhtml_text: '<ul><li><p>중요: </p><ul><li><p>선택된 Attribute의 값으로는 승인자의 QueryPie Login
+    ID가 입력되어 있어야 합니다.</p><ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="86" ac:original-width="820" ac:width="712"><ri:attachment
+    ri:filename="Screenshot 2025-06-12 at 1.33.58 PM.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Admin
+    &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br/></p></ac:caption></ac:image></li></ul></li><li><p>Administrator
+    &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나
+    기존 규칙을 수정할 때, ''Assignee for Approval'' 항목에 ''Allow Assignee selection (Attribute-Based)''를
+    선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.<br/></p><ac:image ac:align="center"
+    ac:alt="image-20251110-030113.png" ac:custom-width="true" ac:layout="center" ac:original-height="832"
+    ac:original-width="1524" ac:width="736"><ri:attachment ri:filename="image-20251110-030113.png"
+    ri:version-at-save="1"></ri:attachment></ac:image><ul><li><p>자가 승인 비활성화 시 연동:
+    만약 Approval Rules 설정에서 ''Self Approval (자가 승인)'' 옵션이 비활성화된 경우, Attribute 기반으로
+    결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라
+    승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.</p></li></ul></li><li><p>Attribute 값
+    부재 시 알림</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login
+    ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여
+    프로필의 Attribute 값을 설정해야 합니다.</p><ul><li><p>에러 메시지 예시: </p><ac:image ac:align="center"
+    ac:alt="image-20250508-022114.png" ac:custom-width="true" ac:layout="center" ac:original-height="512"
+    ac:original-width="942" ac:width="688"><ri:attachment ri:filename="image-20250508-022114.png"
+    ri:version-at-save="2"></ri:attachment></ac:image></li></ul></li></ul></li><li><p>Attribute
+    값은 있지만 해당 사용자가 비활성화된 경우</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값으로 지정된
+    승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며
+    요청 제출이 중단됩니다.</p><ul><li><p>에러 메세지 예시:</p><ac:image ac:align="center" ac:custom-width="true"
+    ac:layout="center" ac:original-height="260" ac:original-width="615" ac:width="615"><ri:attachment
+    ri:filename="Screenshot 2025-06-16 at 10.30.14 AM.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image></li></ul></li></ul></li></ul>'
+  xhtml_xpath: ul[6]
+- block_id: heading-32
+  children: []
+  type: heading
+  xhtml_element_index: 31
+  xhtml_plain_text: Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow
+    Menu)
+  xhtml_text: Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow Menu)
+  xhtml_xpath: h2[10]
+- block_id: paragraph-33
+  children: []
+  type: paragraph
+  xhtml_element_index: 32
+  xhtml_plain_text: Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
+  xhtml_text: Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
+  xhtml_xpath: p[12]
+- block_id: html_block-34
+  children: []
+  type: html_block
+  xhtml_element_index: 33
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="90" ac:original-width="484" ac:width="670"><ri:attachment
+    ri:filename="Screenshot 2025-06-26 at 6.35.32 PM.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[4]
+- block_id: paragraph-35
+  children: []
+  type: paragraph
+  xhtml_element_index: 34
+  xhtml_plain_text: 특정 사용자 속성(User Attribute)을 기준으로 사용자 대시보드에서 Workflow 메뉴를 보이지 않도록
+    설정하는 기능입니다.
+  xhtml_text: 특정 사용자 속성(User Attribute)을 기준으로 사용자 대시보드에서 Workflow 메뉴를 보이지 않도록 설정하는
+    기능입니다.
+  xhtml_xpath: p[13]
+- block_id: list-36
+  children: []
+  type: list
+  xhtml_element_index: 35
+  xhtml_plain_text: '토글을 활성화하면 User Attribute의 Key와 Value를 한 쌍으로 선택하고 입력할 수 있습니다.여기에
+    설정된 Key:Value 조건과 일치하는 사용자는 사용자 대시보드에 Workflow 메뉴가 표시되지 않습니다.예시: User Attribute
+    Key로 ''부서코드''를 선택하고, Value로 ''부서 A''를 입력하면 해당 부서코드 소속의 사용자에게는 Workflow 메뉴가 보이지
+    않습니다.'
+  xhtml_text: <ul><li><p>토글을 활성화하면 <code>User Attribute</code>의 <code>Key</code>와
+    <code>Value</code>를 한 쌍으로 선택하고 입력할 수 있습니다.</p></li><li><p>여기에 설정된 <code>Key:Value</code>
+    조건과 일치하는 사용자는 사용자 대시보드에 <code>Workflow</code> 메뉴가 표시되지 않습니다.</p></li><li><p><strong>예시:</strong>
+    <code>User Attribute Key</code>로 '부서코드'를 선택하고, <code>Value</code>로 '부서 A'를 입력하면
+    해당 부서코드 소속의 사용자에게는 <code>Workflow</code> 메뉴가 보이지 않습니다.</p></li></ul>
+  xhtml_xpath: ul[7]
+- block_id: heading-37
+  children: []
+  type: heading
+  xhtml_element_index: 36
+  xhtml_plain_text: 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
+  xhtml_text: 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
+  xhtml_xpath: h2[11]
+- block_id: html_block-38
+  children: []
+  type: html_block
+  xhtml_element_index: 37
+  xhtml_plain_text: 대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.11.4.0 부터 사용자의 대리결재자 지정
+    / 해제 이벤트에 대해 감사로그를 기록합니다. 해당 로그는 External API ( /api/external/v2/workflows/approval-delegations/logs)
+    를 사용해서 조회 할 수 있습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="090050c3-368a-432c-8a9c-ced74bd0d3b8"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>대리결재 기능 활성화 / 비활성화
+    옵션은 11.3.0에 추가되었습니다.<br/>11.4.0 부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다. 해당
+    로그는 External API ( /api/external/v2/workflows/approval-delegations/logs) 를 사용해서
+    조회 할 수 있습니다.</p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[2]
+- block_id: paragraph-39
+  children: []
+  type: paragraph
+  xhtml_element_index: 38
+  xhtml_plain_text: 승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는
+    옵션입니다. 만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
+  xhtml_text: 승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는 옵션입니다.
+    만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
+  xhtml_xpath: p[14]
+- block_id: html_block-40
+  children: []
+  type: html_block
+  xhtml_element_index: 39
+  xhtml_plain_text: Allow Delegated Approval 스위치
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250926-112444.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="36" ac:original-width="225" ac:width="253"><ri:attachment
+    ri:filename="image-20250926-112444.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Allow
+    Delegated Approval 스위치</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
+    size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[5]
+- block_id: html_block-41
+  children: []
+  type: html_block
+  xhtml_element_index: 40
+  xhtml_plain_text: 대리결재 기능을 비활성화한 상태의 preference
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250926-112201.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="649" ac:original-width="888" ac:width="516"><ri:attachment
+    ri:filename="image-20250926-112201.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>대리결재
+    기능을 비활성화한 상태의 preference</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
+    size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[6]
+- block_id: heading-42
+  children: []
+  type: heading
+  xhtml_element_index: 41
+  xhtml_plain_text: SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request
+    in Workflow)
+  xhtml_text: SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in
+    Workflow)
+  xhtml_xpath: h2[12]
+- block_id: paragraph-43
+  children: []
+  type: paragraph
+  xhtml_element_index: 42
+  xhtml_plain_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
+  xhtml_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
+  xhtml_xpath: p[15]
+- block_id: html_block-44
+  children: []
+  type: html_block
+  xhtml_element_index: 43
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="159" ac:original-width="604" ac:width="604"><ri:attachment
+    ri:filename="Screenshot 2025-05-09 at 3.18.32 PM.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[7]
+- block_id: paragraph-45
+  children: []
+  type: paragraph
+  xhtml_element_index: 44
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[16]
+- block_id: paragraph-46
+  children: []
+  type: paragraph
+  xhtml_element_index: 45
+  xhtml_plain_text: 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다.
+    이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
+  xhtml_text: 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해
+    대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
+  xhtml_xpath: p[17]
+- block_id: list-47
+  children: []
+  type: list
+  xhtml_element_index: 46
+  xhtml_plain_text: 'Query chunk size : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어
+    순차적으로 실행하는 기능예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를
+    실행합니다. Query throttle interval : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)'
+  xhtml_text: '<ul><li><p><strong>Query chunk size</strong> : 1~999,999 사이의 값으로 설정되며,
+    다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능</p><ul><li><p>예) 100개의 쿼리가 있을 때, Query chunk
+    size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. </p></li></ul></li><li><p><strong>Query
+    throttle interval </strong>: 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)</p></li></ul>'
+  xhtml_xpath: ul[8]
+- block_id: heading-48
+  children: []
+  type: heading
+  xhtml_element_index: 47
+  xhtml_plain_text: Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
+  xhtml_text: Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
+  xhtml_xpath: h2[13]
+- block_id: paragraph-49
+  children: []
+  type: paragraph
+  xhtml_element_index: 48
+  xhtml_plain_text: Redirect to custom page for SQL Requests 토글을 활성화합니다.
+  xhtml_text: Redirect to custom page for SQL Requests 토글을 활성화합니다.
+  xhtml_xpath: p[18]
+- block_id: html_block-50
+  children: []
+  type: html_block
+  xhtml_element_index: 49
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="92" ac:original-width="468" ac:width="516"><ri:attachment
+    ri:filename="Screenshot 2025-05-09 at 8.33.07 PM.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[8]
+- block_id: paragraph-51
+  children: []
+  type: paragraph
+  xhtml_element_index: 50
+  xhtml_plain_text: 이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리
+    실행으로 인해 워크플로 승인 요청이 발생할 경우, Send Request 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지
+    여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.
+  xhtml_text: 이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로
+    인해 워크플로 승인 요청이 발생할 경우, <code>Send Request</code> 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL
+    페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.
+  xhtml_xpath: p[19]
+- block_id: list-52
+  children: []
+  type: list
+  xhtml_element_index: 51
+  xhtml_plain_text: 토글을 활성화한 경우Administrator > General > Workflow Configurations 페이지에
+    커스텀 URL을 입력할 수 있는 필드가 나타납니다.User Agent 사용자가 Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을
+    보낼 경우, Send Request 클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.토글을 비활성화한
+    경우Administrator > General > Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가
+    표시되지 않습니다.User Agent 사용자가 Ledger 테이블에 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로
+    승인 요청 모달이 표시될 때, Send Request 버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다
+  xhtml_text: <ul><li><p>토글을 활성화한 경우</p><ul><li><p>Administrator &gt; General &gt;
+    Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.</p></li><li><p>User
+    Agent 사용자가 Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을 보낼 경우, <code>Send Request</code>
+    클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.</p></li></ul></li><li><p>토글을
+    비활성화한 경우</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations
+    페이지에 커스텀 URL을 입력할 수 있는 필드가 표시되지 않습니다.</p></li><li><p>User Agent 사용자가 Ledger 테이블에
+    대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, <code>Send Request</code>
+    버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다</p></li></ul></li></ul>
+  xhtml_xpath: ul[9]
+- block_id: heading-53
+  children: []
+  type: heading
+  xhtml_element_index: 52
+  xhtml_plain_text: 워크플로우 Request 타입별 사용자 노출 제어 기능
+  xhtml_text: 워크플로우 Request 타입별 사용자 노출 제어 기능
+  xhtml_xpath: h2[14]
+- block_id: paragraph-54
+  children: []
+  type: paragraph
+  xhtml_element_index: 53
+  xhtml_plain_text: Select Request Types Allowed for Users 토글을 활성화합니다.
+  xhtml_text: Select Request Types Allowed for Users 토글을 활성화합니다.
+  xhtml_xpath: p[20]
+- block_id: html_block-55
+  children: []
+  type: html_block
+  xhtml_element_index: 54
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="574" ac:original-width="352" ac:width="352"><ri:attachment
+    ri:filename="Screenshot 2025-05-09 at 8.40.28 PM.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[9]
+- block_id: paragraph-56
+  children: []
+  type: paragraph
+  xhtml_element_index: 55
+  xhtml_plain_text: 이 옵션을 통해 관리자가 사용자가 접근하고 요청할 수 있는 워크플로우의 요청(Request) 타입을 선택적으로
+    제어할 수 있도록 합니다.
+  xhtml_text: 이 옵션을 통해 관리자가 사용자가 접근하고 요청할 수 있는 워크플로우의 요청(Request) 타입을 선택적으로 제어할 수
+    있도록 합니다.
+  xhtml_xpath: p[21]
+- block_id: list-57
+  children: []
+  type: list
+  xhtml_element_index: 56
+  xhtml_plain_text: '토글을 활성화(On)한 경우:Administrator > General > Workflow Configurations
+    페이지에서:Select Request Types Allowed for Users 토글 아래에 제품별(Databases (DAC), Servers
+    (SAC), Kubernetes (KAC), Web Apps (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.관리자는 이
+    체크박스를 사용하여 사용자에게 노출할 요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.사용자
+    워크플로우 상신 화면:관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.Access Role Request의 특별 동작:Servers
+    (SAC), Kubernetes (KAC), Web Apps (WAC) 중 하나 이상의 제품에서 Access Role Request가 선택되어야
+    사용자에게 Access Role Request 항목이 노출됩니다.Access Role Request 요청 시, 내부 Service 항목에는
+    관리자가 선택한 제품(예: "Server Access Control")만 표시됩니다.토글을 비활성화(Off)한 경우 (기본값):Administrator
+    > General > Workflow Configurations 페이지에서:요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.사용자
+    워크플로우 상신 화면:기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.Access
+    Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.'
+  xhtml_text: '<ul><li><p>토글을 활성화(On)한 경우:</p><ul><li><p>Administrator &gt; General
+    &gt; Workflow Configurations 페이지에서:</p><ul><li><p>Select Request Types Allowed
+    for Users 토글 아래에 제품별(Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps
+    (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.</p></li><li><p>관리자는 이 체크박스를 사용하여 사용자에게 노출할
+    요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.</p></li></ul></li><li><p>사용자
+    워크플로우 상신 화면:</p><ul><li><p>관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.</p></li></ul></li><li><p>Access
+    Role Request의 특별 동작:</p><ul><li><p>Servers (SAC), Kubernetes (KAC), Web Apps (WAC)
+    중 하나 이상의 제품에서 Access Role Request가 선택되어야 사용자에게 Access Role Request 항목이 노출됩니다.</p></li><li><p>Access
+    Role Request 요청 시, 내부 Service 항목에는 관리자가 선택한 제품(예: "Server Access Control")만 표시됩니다.</p></li></ul></li></ul></li><li><p>토글을
+    비활성화(Off)한 경우 (기본값):</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations
+    페이지에서:</p><ul><li><p>요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.</p></li></ul></li><li><p>사용자
+    워크플로우 상신 화면:</p><ul><li><p>기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이
+    노출되고 요청 가능합니다.</p></li><li><p>Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.</p></li></ul></li></ul></li></ul>'
+  xhtml_xpath: ul[10]
+- block_id: heading-58
+  children: []
+  type: heading
+  xhtml_element_index: 57
+  xhtml_plain_text: DB access 요청 권한 별 결재선 지정 기능
+  xhtml_text: DB access 요청 권한 별 결재선 지정 기능
+  xhtml_xpath: h2[15]
+- block_id: paragraph-59
+  children: []
+  type: paragraph
+  xhtml_element_index: 58
+  xhtml_plain_text: Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval
+    Rule)을 특정할 수 있도록 하려면 “Use DB Privilege Type Based Approval” 토글을 활성화합니다.
+  xhtml_text: Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval Rule)을
+    특정할 수 있도록 하려면 “Use DB Privilege Type Based Approval” 토글을 활성화합니다.
+  xhtml_xpath: p[22]
+- block_id: html_block-60
+  children: []
+  type: html_block
+  xhtml_element_index: 59
+  xhtml_plain_text: Use DB Privilege Type Based Approval
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250822-111454.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="350" ac:original-width="623" ac:width="507"><ri:attachment
+    ri:filename="image-20250822-111454.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Use
+    DB Privilege Type Based Approval</p></ac:caption><ac:adf-mark color="#091e4224"
+    key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[10]
+- block_id: paragraph-61
+  children: []
+  type: paragraph
+  xhtml_element_index: 60
+  xhtml_plain_text: +Routing Rule 버튼을 누르면 privilege 에 대한 조건을 지정하여 결재선에 대한 라우팅을 지정할
+    수 있습니다.
+  xhtml_text: <code>+Routing Rule</code> 버튼을 누르면 privilege 에 대한 조건을 지정하여 결재선에 대한 라우팅을
+    지정할 수 있습니다.
+  xhtml_xpath: p[23]
+- block_id: html_block-62
+  children: []
+  type: html_block
+  xhtml_element_index: 61
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250822-112026.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="427" ac:original-width="512" ac:width="432"><ri:attachment
+    ri:filename="image-20250822-112026.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[11]
+- block_id: list-63
+  children: []
+  type: list
+  xhtml_element_index: 62
+  xhtml_plain_text: 'Routing Rule Name : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.Condition : Privilege에
+    대한 조건을 지정합니다.All Match : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두
+    같은 종류인 경우 동작하는 조건입니다.Contains : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이
+    하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다. Requested Privilege Type : Administrator > Databases
+    > DB Access Control > Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.Approval
+    Rule : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.'
+  xhtml_text: '<ul><li><p><strong>Routing Rule Name</strong> : 식별하기 쉬운 라우팅 규칙의 이름을
+    입력합니다.</p></li><li><p><strong>Condition</strong> : Privilege에 대한 조건을 지정합니다.</p><ul><li><p><strong>All
+    Match</strong> : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인
+    경우 동작하는 조건입니다.</p></li><li><p><strong>Contains </strong>: 사용자가 DB Access Request
+    를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.</p></li></ul></li><li><p>
+    <strong>Requested Privilege Type</strong> : Administrator &gt; Databases &gt;
+    DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.</p></li><li><p><strong>Approval
+    Rule</strong> : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.</p></li></ul>'
+  xhtml_xpath: ul[11]
+- block_id: heading-64
+  children: []
+  type: heading
+  xhtml_element_index: 63
+  xhtml_plain_text: Routing Rule 지정 예시
+  xhtml_text: Routing Rule 지정 예시
+  xhtml_xpath: h3[1]
+- block_id: list-65
+  children: []
+  type: list
+  xhtml_element_index: 64
+  xhtml_plain_text: '만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가
+    모두  “Read-Only” 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 Add 버튼을 누릅니다.Condition:
+    All Match 선택.Requested Privilege Type : Read-Only 선택.Approval Rule : 강제하기 원하는
+    Approval Rule 선택. 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가
+    하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 Add
+    버튼을 누릅니다.Condition: Contains 선택.Requested Privilege Type : Read/Write 선택.Approval
+    Rule : 강제하기 원하는 Approval Rule 선택.'
+  xhtml_text: '<ul><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한
+    privilege가 모두  “Read-Only” 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고
+    <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: All Match 선택.</p></li><li><p>Requested
+    Privilege Type : Read-Only 선택.</p></li><li><p>Approval Rule : 강제하기 원하는 Approval
+    Rule 선택. </p></li></ul></li><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한
+    대상 커넥션에 지정한 privilege가 하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기
+    원한다면, 아래와 같이 설정하고 <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: Contains
+    선택.</p></li><li><p>Requested Privilege Type : Read/Write 선택.</p></li><li><p>Approval
+    Rule : 강제하기 원하는 Approval Rule 선택.</p></li></ul></li></ul>'
+  xhtml_xpath: ul[12]
+- block_id: heading-66
+  children: []
+  type: heading
+  xhtml_element_index: 65
+  xhtml_plain_text: SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
+  xhtml_text: SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
+  xhtml_xpath: h2[16]
+- block_id: paragraph-67
+  children: []
+  type: paragraph
+  xhtml_element_index: 66
+  xhtml_plain_text: Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 “Attach
+    Explain Results” 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.
+  xhtml_text: Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 “Attach Explain
+    Results” 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.
+  xhtml_xpath: p[24]
+- block_id: html_block-68
+  children: []
+  type: html_block
+  xhtml_element_index: 67
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20250825-002423.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="46" ac:original-width="425" ac:width="425"><ri:attachment
+    ri:filename="image-20250825-002423.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[12]
+- block_id: paragraph-69
+  children: []
+  type: paragraph
+  xhtml_element_index: 68
+  xhtml_plain_text: 관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 “Attach Explain
+    Results” 는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로
+    변경해야 실행계획 결과가 첨부됩니다.
+  xhtml_text: 관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 “Attach Explain Results”
+    는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야 실행계획
+    결과가 첨부됩니다.
+  xhtml_xpath: p[25]
+created_at: '2026-02-08T11:28:56.530258+00:00'
+page_id: '544145591'
+source_xhtml: patched.xhtml

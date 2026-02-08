@@ -47,7 +47,7 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
     index = int(match.group(2))  # 1-based
 
     count = 0
-    for child in soup.descendants:
+    for child in soup.children:
         if isinstance(child, Tag) and child.name == tag_name:
             count += 1
             if count == index:
