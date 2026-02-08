@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -8,7 +8,7 @@
+ 
+ ### Overview
+ 
+-Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 수신할 수 있습니다.
++Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 받기할 수 있습니다.
+ 
+ <Callout type="info">
+ 본 문서는  **10.2.6 또는 그 이상의 버전** 에 적용됩니다.

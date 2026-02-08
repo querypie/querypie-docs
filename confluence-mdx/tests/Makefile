@@ -90,6 +90,7 @@ clean:
 	@find testcases -name "output.html" -type f -delete
 	@find testcases -name "_meta.ts" -path "*/output/*" -type f -delete
 	@find testcases -name "output.reverse-sync.*" -type f -delete
+	@find testcases -name "output.mdx.diff" -type f -delete
 
 # Help
 .PHONY: help

@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -8,7 +8,7 @@
+ 
+ ### Overview
+ 
+-General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
++General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
+ 
+ <figure data-layout="center" data-align="center">
+ <img src="/544145591/verify/image-20250822-103044.png" alt="Administrator &gt; General &gt; Company Management &gt; General" width="760" />

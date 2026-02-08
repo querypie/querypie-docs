@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -8,7 +8,7 @@
+ 
+ ### Overview
+ 
+-QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
++QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
+ 
+ 
+ ### 에이전트 앱 다운로드 및 실행하기

@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -59,7 +59,7 @@
+ | Web App JIT Access Control Log          | 11.0.0                | CSV          |
+ | Web App Event Audit                     | 11.0.0                | CSV          |
+ 
+-### Audit Log Export 목록 조회하기
++### Audit Log Export 목록 확인하기
+ 
+ <figure data-layout="center" data-align="center">
+ <img src="/544379140/verify/image-20240714-063656.png" alt="Administrator &gt; Audit &gt; General &gt; Audit Log Export" width="760" />

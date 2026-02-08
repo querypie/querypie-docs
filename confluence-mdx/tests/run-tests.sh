@@ -178,6 +178,12 @@ run_reverse_sync_test() {
     cp "${var_dir}/reverse-sync.mapping.original.yaml"  "${test_path}/output.reverse-sync.mapping.original.yaml"
     cp "${var_dir}/reverse-sync.mapping.patched.yaml"   "${test_path}/output.reverse-sync.mapping.patched.yaml"
 
+    # MDX diff 검증: original.mdx ↔ improved.mdx 차이가 expected와 일치하는지 확인
+    diff -u --label a/original.mdx --label b/improved.mdx \
+        "${test_path}/original.mdx" "${test_path}/improved.mdx" \
+        > "${test_path}/output.mdx.diff" || true
+    diff -u "${test_path}/expected.mdx.diff" "${test_path}/output.mdx.diff"
+
     # expected와 비교 (timestamp/경로 필드 제외)
     diff -u <(grep -v 'created_at' "${test_path}/expected.reverse-sync.result.yaml") \
             <(grep -v 'created_at' "${test_path}/output.reverse-sync.result.yaml")

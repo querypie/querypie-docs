@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -14,7 +14,7 @@
+ 현재 Proxy 연결은 MySQL, MariaDB, Oracle, PostgreSQL, Redshift, Trino, SQLServer, MongoDB 를 지원합니다.
+ 
+ 
+-### Proxy 사용 옵션 활성화
++### Proxy 사용 옵션 사용
+ 
+ 기본적으로는 Proxy 사용 옵션이 비활성화되어 있습니다.
+ 접속을 허용할 커넥션에서 Proxy 사용 여부를 활성화합니다.

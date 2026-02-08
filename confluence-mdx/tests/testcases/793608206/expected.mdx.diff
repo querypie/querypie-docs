@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -4,7 +4,7 @@
+ 
+ # New Request > 요청 타입별 템플릿 변수
+ 
+-Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.
++Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 제공 내용은 다음과 같습니다.
+ 
+ ### 공통 변수
+ 

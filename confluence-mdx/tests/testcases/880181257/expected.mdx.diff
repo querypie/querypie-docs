@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -6,7 +6,7 @@
+ 
+ # Custom Data Source 접속하기
+ 
+-#### Custom Data Source 접근 요청
++#### Custom Data Source 액세스 요청
+ 
+ 1. 사용자 화면 상단 Workflow 메뉴로 이동합니다.
+ 2. 좌측 상단 `Submit Request` 버튼 클릭후 DB Access Request 항목을 선택합니다. <br/> 

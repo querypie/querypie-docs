@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -6,7 +6,7 @@
+ 
+ ### Overview
+ 
+-조직에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.
++기관에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.
+ 
+ ### DB Access History 조회하기
+ 

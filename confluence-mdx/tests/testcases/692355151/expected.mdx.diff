@@ -1,0 +1,11 @@
+--- a/original.mdx
++++ b/improved.mdx
+@@ -23,7 +23,7 @@
+ 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다.
+ </Callout>
+ 
+-### SQL Request 작성 및 실행계획(Explain) 수행하기
++### SQL Request 작성 및 실행계획(Explain) 실행하기
+ 
+ QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다.
+ (참고 : [SQL Request 요청하기](.))
