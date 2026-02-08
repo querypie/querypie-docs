@@ -7,7 +7,7 @@ from reverse_sync.mdx_block_parser import parse_mdx_blocks
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
-from reverse_sync_cli import _build_patches, run_verify
+from reverse_sync_cli import _build_patches, run_verify, MdxSource
 
 
 TESTCASE_DIR = Path(__file__).parent / "testcases" / "793608206"
@@ -109,27 +109,23 @@ class TestE2ERoundTrip:
             shutil.copy2(pages_yaml, tmp_path / "var" / "pages.yaml")
         return dest
 
-    def test_roundtrip_no_changes(self, setup_var_793608206, tmp_path):
+    def test_roundtrip_no_changes(self, setup_var_793608206):
         """변경 없으면 no_changes 상태."""
         var_dir = setup_var_793608206
         mdx_path = TESTCASE_DIR / "expected.mdx"
         if not mdx_path.exists():
             pytest.skip("expected.mdx not found")
 
-        original = tmp_path / "original.mdx"
-        improved = tmp_path / "improved.mdx"
         mdx_content = mdx_path.read_text()
-        original.write_text(mdx_content)
-        improved.write_text(mdx_content)
 
         result = run_verify(
             page_id="793608206",
-            original_mdx_path=str(original),
-            improved_mdx_path=str(improved),
+            original_src=MdxSource(content=mdx_content, descriptor="expected.mdx"),
+            improved_src=MdxSource(content=mdx_content, descriptor="expected.mdx"),
         )
         assert result['status'] == 'no_changes'
 
-    def test_roundtrip_with_text_change(self, setup_var_793608206, tmp_path):
+    def test_roundtrip_with_text_change(self, setup_var_793608206):
         """텍스트 변경 후 full round-trip: forward converter를 실제 호출."""
         var_dir = setup_var_793608206
         mdx_path = TESTCASE_DIR / "expected.mdx"
@@ -155,15 +151,10 @@ class TestE2ERoundTrip:
         if improved_mdx == original_mdx:
             pytest.skip("변경 적용 불가")
 
-        original = tmp_path / "original.mdx"
-        improved = tmp_path / "improved.mdx"
-        original.write_text(original_mdx)
-        improved.write_text(improved_mdx)
-
         result = run_verify(
             page_id="793608206",
-            original_mdx_path=str(original),
-            improved_mdx_path=str(improved),
+            original_src=MdxSource(content=original_mdx, descriptor="original.mdx"),
+            improved_src=MdxSource(content=improved_mdx, descriptor="improved.mdx"),
         )
         assert result['status'] in ('pass', 'fail')
         assert result['changes_count'] > 0

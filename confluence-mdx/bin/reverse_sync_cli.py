@@ -3,7 +3,7 @@
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 
 Usage:
-    python reverse_sync_cli.py verify --page-id <id> --original-mdx <path> --improved-mdx <path>
+    python reverse_sync_cli.py verify --page-id <id> --original-mdx <path|ref:path|ref> --improved-mdx <path|ref:path|ref>
     python reverse_sync_cli.py push --page-id <id>
 """
 import argparse
@@ -11,6 +11,7 @@ import json
 import shutil
 import subprocess
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List
@@ -21,6 +22,68 @@ from reverse_sync.block_diff import diff_blocks, BlockChange
 from reverse_sync.mapping_recorder import record_mapping, BlockMapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
+
+
+@dataclass
+class MdxSource:
+    """MDX 파일의 내용과 출처 정보."""
+    content: str        # MDX 파일 내용
+    descriptor: str     # 출처 표시 (예: "main:src/content/ko/...", 파일 경로 등)
+
+
+def _is_valid_git_ref(ref: str) -> bool:
+    """ref가 유효한 git ref인지 확인한다."""
+    result = subprocess.run(
+        ['git', 'rev-parse', '--verify', ref],
+        capture_output=True, text=True,
+    )
+    return result.returncode == 0
+
+
+def _get_file_from_git(ref: str, path: str) -> str:
+    """git show <ref>:<path>로 파일 내용을 반환한다."""
+    result = subprocess.run(
+        ['git', 'show', f'{ref}:{path}'],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        raise ValueError(f"Failed to get {path} at ref {ref}: {result.stderr.strip()}")
+    return result.stdout
+
+
+def _resolve_mdx_path_from_page_id(page_id: str) -> str:
+    """var/pages.yaml에서 page_id로 MDX 경로를 유도한다."""
+    pages_path = Path('var/pages.yaml')
+    if not pages_path.exists():
+        raise ValueError("var/pages.yaml not found")
+    pages = yaml.safe_load(pages_path.read_text())
+    for page in pages:
+        if page.get('page_id') == page_id:
+            path_parts = page.get('path', [])
+            return 'src/content/ko/' + '/'.join(path_parts) + '.mdx'
+    raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
+
+
+def _resolve_mdx_source(arg: str, page_id: str) -> MdxSource:
+    """3-tier MDX 소스 해석: ref:path → 파일 경로 → bare ref."""
+    # 1. ref:path 형식
+    if ':' in arg:
+        ref, path = arg.split(':', 1)
+        if _is_valid_git_ref(ref):
+            content = _get_file_from_git(ref, path)
+            return MdxSource(content=content, descriptor=f'{ref}:{path}')
+
+    # 2. 파일 경로
+    if Path(arg).is_file():
+        return MdxSource(content=Path(arg).read_text(), descriptor=arg)
+
+    # 3. bare ref → pages.yaml로 경로 자동 유도
+    if _is_valid_git_ref(arg):
+        mdx_path = _resolve_mdx_path_from_page_id(page_id)
+        content = _get_file_from_git(arg, mdx_path)
+        return MdxSource(content=content, descriptor=f'{arg}:{mdx_path}')
+
+    raise ValueError(f"Cannot resolve MDX source '{arg}': not a file path, ref:path, or valid git ref")
 
 
 def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
@@ -63,8 +126,8 @@ def _clean_reverse_sync_artifacts(page_id: str) -> Path:
 
 def run_verify(
     page_id: str,
-    original_mdx_path: str,
-    improved_mdx_path: str,
+    original_src: MdxSource,
+    improved_src: MdxSource,
     xhtml_path: str = None,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
@@ -74,8 +137,8 @@ def run_verify(
     now = datetime.now(timezone.utc).isoformat()
     var_dir = _clean_reverse_sync_artifacts(page_id)
 
-    original_mdx = Path(original_mdx_path).read_text()
-    improved_mdx = Path(improved_mdx_path).read_text()
+    original_mdx = original_src.content
+    improved_mdx = improved_src.content
     if not xhtml_path:
         xhtml_path = f'var/{page_id}/page.xhtml'
     xhtml = Path(xhtml_path).read_text()
@@ -95,7 +158,7 @@ def run_verify(
     # diff.yaml 저장
     diff_data = {
         'page_id': page_id, 'created_at': now,
-        'original_mdx': original_mdx_path, 'improved_mdx': improved_mdx_path,
+        'original_mdx': original_src.descriptor, 'improved_mdx': improved_src.descriptor,
         'changes': [
             {'index': c.index, 'block_id': f'{c.old_block.type}-{c.index}',
              'change_type': c.change_type,
@@ -197,8 +260,10 @@ def main():
     # verify
     verify_parser = subparsers.add_parser('verify', help='로컬 검증')
     verify_parser.add_argument('--page-id', required=True, help='Confluence page ID')
-    verify_parser.add_argument('--original-mdx', required=True, help='원본 MDX 경로')
-    verify_parser.add_argument('--improved-mdx', required=True, help='개선 MDX 경로')
+    verify_parser.add_argument('--original-mdx', required=True,
+                               help='원본 MDX (파일 경로, ref:path, 또는 bare git ref)')
+    verify_parser.add_argument('--improved-mdx', required=True,
+                               help='개선 MDX (파일 경로, ref:path, 또는 bare git ref)')
     verify_parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
 
     # push
@@ -208,10 +273,16 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'verify':
+        try:
+            original_src = _resolve_mdx_source(args.original_mdx, args.page_id)
+            improved_src = _resolve_mdx_source(args.improved_mdx, args.page_id)
+        except ValueError as e:
+            print(f'Error: {e}', file=sys.stderr)
+            sys.exit(1)
         result = run_verify(
             page_id=args.page_id,
-            original_mdx_path=args.original_mdx,
-            improved_mdx_path=args.improved_mdx,
+            original_src=original_src,
+            improved_src=improved_src,
             xhtml_path=args.xhtml,
         )
         print(json.dumps(result, ensure_ascii=False, indent=2))
