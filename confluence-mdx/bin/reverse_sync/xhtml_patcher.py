@@ -38,6 +38,17 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     return str(soup)
 
 
+def _iter_block_children(parent):
+    """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
+    for child in parent.children:
+        if isinstance(child, Tag) and child.name == 'ac:layout':
+            for section in child.find_all('ac:layout-section', recursive=False):
+                for cell in section.find_all('ac:layout-cell', recursive=False):
+                    yield from cell.children
+        else:
+            yield child
+
+
 def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
     """간이 XPath (예: "p[1]", "h2[3]")로 요소를 찾는다."""
     match = re.match(r'([a-z0-9:-]+)\[(\d+)\]', xpath)
@@ -47,7 +58,7 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
     index = int(match.group(2))  # 1-based
 
     count = 0
-    for child in soup.children:
+    for child in _iter_block_children(soup):
         if isinstance(child, Tag) and child.name == tag_name:
             count += 1
             if count == index:
