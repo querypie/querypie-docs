@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Reverse Sync CLI — executable entry point.
+
+Usage:
+    reverse-sync verify --improved-mdx <ref:path|path> [--original-mdx <ref:path|path>]
+    reverse-sync push --mdx-path <src/content/ko/...mdx>
+"""
+import sys
+from pathlib import Path
+
+# bin/ 디렉토리를 Python path에 추가하여 reverse_sync 패키지 import 가능
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from reverse_sync_cli import main
+
+main()

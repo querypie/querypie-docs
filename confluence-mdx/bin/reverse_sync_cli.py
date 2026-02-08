@@ -1,10 +1,6 @@
 """Reverse Sync — MDX 변경사항을 Confluence XHTML에 역반영하는 파이프라인.
 
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
-
-Usage:
-    python reverse_sync_cli.py verify --improved-mdx <ref:path|path> [--original-mdx <ref:path|path>]
-    python reverse_sync_cli.py push --mdx-path <src/content/ko/...mdx>
 """
 import argparse
 import json
@@ -258,86 +254,187 @@ def _build_patches(
     return patches
 
 
+_USAGE_SUMMARY = """\
+reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
+
+Usage:
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
+  reverse-sync verify <mdx> [--original-mdx <mdx>]
+  reverse-sync -h | --help
+
+Commands:
+  push     verify 수행 후 Confluence에 반영 (--dry-run으로 검증만 가능)
+  verify   push --dry-run의 alias
+
+Arguments:
+  <mdx>
+    MDX 소스를 지정한다. 두 가지 형식을 사용할 수 있다:
+
+    ref:path  git ref와 파일 경로를 콜론으로 구분
+              예) main:src/content/ko/user-manual/user-agent.mdx
+                  proofread/fix-typo:src/content/ko/overview.mdx
+                  HEAD~1:src/content/ko/admin/audit.mdx
+
+    path      로컬 파일 시스템 경로
+              예) src/content/ko/user-manual/user-agent.mdx
+                  /tmp/improved.mdx
+
+    page-id는 경로의 src/content/ko/ 부분에서 var/pages.yaml을 통해
+    자동 유도된다.
+
+Examples:
+  # 검증만 수행 (Confluence 반영 없음)
+  reverse-sync verify "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # 검증 + Confluence 반영
+  reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # push --dry-run = verify
+  reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+Run 'reverse-sync <command> -h' for command-specific help and more examples.
+"""
+
+_PUSH_HELP = """\
+MDX 변경사항을 XHTML에 패치하고, round-trip 검증 후 Confluence에 반영한다.
+
+파이프라인:
+  1. original / improved MDX를 블록 단위로 파싱
+  2. 블록 diff 추출
+  3. 원본 XHTML 블록 매핑 생성
+  4. XHTML 패치 적용
+  5. 패치된 XHTML을 다시 MDX로 forward 변환 (round-trip)
+  6. improved MDX와 비교하여 pass/fail 판정
+  7. pass인 경우 Confluence API로 업데이트 (--dry-run 시 생략)
+
+중간 산출물은 var/<page-id>/ 에 reverse-sync.* prefix로 저장된다.
+
+MDX 소스 지정 방식:
+  ref:path  git ref와 파일 경로를 콜론으로 구분
+            예) main:src/content/ko/user-manual/user-agent.mdx
+                proofread/fix-typo:src/content/ko/overview.mdx
+  path      로컬 파일 시스템 경로
+            예) /tmp/improved.mdx
+
+Examples:
+  # 검증 + Confluence 반영
+  reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # 검증만 수행 (= verify)
+  reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # original을 명시적으로 지정
+  reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx" \\
+    --original-mdx "main:src/content/ko/user-manual/user-agent.mdx"
+
+  # 로컬 파일로 검증
+  reverse-sync push --dry-run /tmp/improved.mdx \\
+    --original-mdx /tmp/original.mdx \\
+    --xhtml /tmp/page.xhtml
+"""
+
+
+def _add_common_args(parser: argparse.ArgumentParser):
+    """verify/push 공통 인자를 등록한다."""
+    parser.add_argument('improved_mdx',
+                        help='개선 MDX (ref:path 또는 파일 경로)')
+    parser.add_argument('--original-mdx',
+                        help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
+    parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
+
+
+def _do_verify(args) -> dict:
+    """공통 verify 로직: MDX 소스 해석 → run_verify() 실행 → 결과 반환."""
+    improved_src = _resolve_mdx_source(args.improved_mdx)
+    if args.original_mdx:
+        original_src = _resolve_mdx_source(args.original_mdx)
+    else:
+        ko_path = _extract_ko_mdx_path(improved_src.descriptor)
+        original_src = _resolve_mdx_source(f'main:{ko_path}')
+    page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
+    return run_verify(
+        page_id=page_id,
+        original_src=original_src,
+        improved_src=improved_src,
+        xhtml_path=args.xhtml,
+    )
+
+
+def _do_push(page_id: str):
+    """verify 통과 후 Confluence에 push한다."""
+    var_dir = Path(f'var/{page_id}')
+    patched_path = var_dir / 'reverse-sync.patched.xhtml'
+    xhtml_body = patched_path.read_text()
+
+    from reverse_sync.confluence_client import ConfluenceConfig, get_page_version, update_page_body
+    config = ConfluenceConfig()
+    if not config.email or not config.api_token:
+        print('Error: ~/.config/atlassian/confluence.conf 파일을 설정하세요. (형식: email:api_token)',
+              file=sys.stderr)
+        sys.exit(1)
+
+    page_info = get_page_version(config, page_id)
+    new_version = page_info['version'] + 1
+    resp = update_page_body(config, page_id,
+                            title=page_info['title'],
+                            version=new_version,
+                            xhtml_body=xhtml_body)
+    return {
+        'page_id': page_id,
+        'title': resp.get('title', page_info['title']),
+        'version': resp.get('version', {}).get('number', new_version),
+        'url': resp.get('_links', {}).get('webui', ''),
+    }
+
+
 def main():
-    parser = argparse.ArgumentParser(description='Reverse Sync: MDX → Confluence XHTML')
-    subparsers = parser.add_subparsers(dest='command', required=True)
+    # -h/--help 또는 인자 없음 → 사용법 출력 (argparse 자동 생성 우회)
+    if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help', 'help'):
+        print(_USAGE_SUMMARY, file=sys.stderr if len(sys.argv) < 2 else sys.stdout)
+        sys.exit(0 if len(sys.argv) >= 2 else 1)
 
-    # verify
-    verify_parser = subparsers.add_parser('verify', help='로컬 검증')
-    verify_parser.add_argument('--improved-mdx', required=True,
-                               help='개선 MDX (ref:path 또는 파일 경로)')
-    verify_parser.add_argument('--original-mdx',
-                               help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
-    verify_parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
+    parser = argparse.ArgumentParser(prog='reverse-sync', add_help=False)
+    subparsers = parser.add_subparsers(dest='command')
 
-    # push
-    push_parser = subparsers.add_parser('push', help='Confluence 반영')
-    push_parser.add_argument('--mdx-path', required=True,
-                             help='ko MDX 경로 (예: src/content/ko/user-manual/user-agent.mdx)')
+    # push (primary command)
+    push_parser = subparsers.add_parser(
+        'push', prog='reverse-sync push',
+        description=_PUSH_HELP,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    _add_common_args(push_parser)
+    push_parser.add_argument('--dry-run', action='store_true',
+                             help='검증만 수행, Confluence 반영 안 함 (= verify)')
+
+    # verify (= push --dry-run alias)
+    verify_parser = subparsers.add_parser(
+        'verify', prog='reverse-sync verify',
+        description=_PUSH_HELP,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    _add_common_args(verify_parser)
 
     args = parser.parse_args()
 
-    if args.command == 'verify':
+    if args.command in ('verify', 'push'):
+        dry_run = args.command == 'verify' or getattr(args, 'dry_run', False)
+
         try:
-            improved_src = _resolve_mdx_source(args.improved_mdx)
-            if args.original_mdx:
-                original_src = _resolve_mdx_source(args.original_mdx)
-            else:
-                ko_path = _extract_ko_mdx_path(improved_src.descriptor)
-                original_src = _resolve_mdx_source(f'main:{ko_path}')
-            page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
+            result = _do_verify(args)
         except ValueError as e:
             print(f'Error: {e}', file=sys.stderr)
             sys.exit(1)
-        result = run_verify(
-            page_id=page_id,
-            original_src=original_src,
-            improved_src=improved_src,
-            xhtml_path=args.xhtml,
-        )
+
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
-    elif args.command == 'push':
-        try:
-            page_id = _resolve_page_id(args.mdx_path)
-        except ValueError as e:
-            print(f'Error: {e}', file=sys.stderr)
+        if not dry_run and result.get('status') == 'pass':
+            page_id = result['page_id']
+            push_result = _do_push(page_id)
+            print(json.dumps(push_result, ensure_ascii=False, indent=2))
+        elif not dry_run and result.get('status') != 'pass':
+            print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
+                  file=sys.stderr)
             sys.exit(1)
-
-        var_dir = Path(f'var/{page_id}')
-        result_path = var_dir / 'reverse-sync.result.yaml'
-        if not result_path.exists():
-            print('Error: verify를 먼저 실행하세요.')
-            sys.exit(1)
-        result = yaml.safe_load(result_path.read_text())
-        if result.get('status') != 'pass':
-            print(f"Error: 검증 상태가 '{result.get('status')}'입니다. pass만 push 가능.")
-            sys.exit(1)
-
-        patched_path = var_dir / 'reverse-sync.patched.xhtml'
-        xhtml_body = patched_path.read_text()
-
-        from reverse_sync.confluence_client import ConfluenceConfig, get_page_version, update_page_body
-        config = ConfluenceConfig()
-        if not config.email or not config.api_token:
-            print('Error: ~/.config/atlassian/confluence.conf 파일을 설정하세요. (형식: email:api_token)')
-            sys.exit(1)
-
-        # 최신 버전 조회
-        page_info = get_page_version(config, page_id)
-        new_version = page_info['version'] + 1
-
-        # 업데이트
-        resp = update_page_body(config, page_id,
-                                title=page_info['title'],
-                                version=new_version,
-                                xhtml_body=xhtml_body)
-        print(json.dumps({
-            'page_id': page_id,
-            'title': resp.get('title', page_info['title']),
-            'version': resp.get('version', {}).get('number', new_version),
-            'url': resp.get('_links', {}).get('webui', ''),
-        }, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':

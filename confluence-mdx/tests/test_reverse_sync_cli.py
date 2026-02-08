@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
-    _extract_ko_mdx_path, _resolve_page_id,
+    _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
 )
 
 
@@ -85,88 +85,88 @@ def test_verify_roundtrip_fail(setup_var):
 # --- push command tests ---
 
 
-@pytest.fixture
-def setup_push_var(tmp_path, monkeypatch):
-    """push 테스트용 var/<page_id>/ 구조 생성."""
+def test_push_verify_fail_exits(monkeypatch):
+    """push 시 verify가 fail이면 exit 1."""
+    mdx_arg = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
+    fail_result = {'status': 'fail', 'page_id': 'test-page-001'}
+    with patch('reverse_sync_cli._do_verify', return_value=fail_result), \
+         patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+    assert exc_info.value.code == 1
+
+
+def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
+    """push 시 verify pass → _do_push 호출."""
+    page_id = 'test-page-001'
+    mdx_arg = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
     monkeypatch.chdir(tmp_path)
-    page_id = "test-page-001"
-    var_dir = tmp_path / "var" / page_id
+
+    # var 디렉토리에 patched xhtml 준비
+    var_dir = tmp_path / 'var' / page_id
     var_dir.mkdir(parents=True)
-    return page_id, var_dir
+    (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated</p>')
 
+    pass_result = {'status': 'pass', 'page_id': page_id, 'changes_count': 1}
+    push_result = {'page_id': page_id, 'title': 'Test', 'version': 6, 'url': '/test'}
 
-def test_push_requires_verify_first(setup_push_var, monkeypatch):
-    """result.yaml 없으면 에러."""
-    page_id, var_dir = setup_push_var
-    mdx_path = 'src/content/ko/test/page.mdx'
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
-    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id):
-        with pytest.raises(SystemExit) as exc_info:
-            main()
-    assert exc_info.value.code == 1
-
-
-def test_push_rejects_non_pass(setup_push_var, monkeypatch):
-    """status가 pass가 아니면 에러."""
-    page_id, var_dir = setup_push_var
-    import yaml
-    mdx_path = 'src/content/ko/test/page.mdx'
-    (var_dir / 'reverse-sync.result.yaml').write_text(
-        yaml.dump({'status': 'fail', 'page_id': page_id}))
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
-    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id):
-        with pytest.raises(SystemExit) as exc_info:
-            main()
-    assert exc_info.value.code == 1
-
-
-def test_push_success(setup_push_var, monkeypatch):
-    """mock API로 정상 push 확인."""
-    page_id, var_dir = setup_push_var
-    import yaml
-    mdx_path = 'src/content/ko/test/page.mdx'
-
-    # verify pass 결과 + patched xhtml 준비
-    (var_dir / 'reverse-sync.result.yaml').write_text(
-        yaml.dump({'status': 'pass', 'page_id': page_id}))
-    (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated content</p>')
-
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
-
-    mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test Page'})
+    mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test'})
     mock_update = MagicMock(return_value={
-        'title': 'Test Page',
-        'version': {'number': 6},
-        '_links': {'webui': '/spaces/QP/pages/test-page-001'},
+        'title': 'Test', 'version': {'number': 6},
+        '_links': {'webui': '/test'},
     })
-    mock_load = MagicMock(return_value=('test@example.com', 'test-token'))
 
-    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id), \
-         patch('reverse_sync.confluence_client._load_credentials', mock_load), \
+    with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+         patch('reverse_sync.confluence_client._load_credentials',
+               return_value=('e@x.com', 'tok')), \
          patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
          patch('reverse_sync.confluence_client.update_page_body', mock_update), \
          patch('builtins.print') as mock_print:
         main()
 
-    # get_page_version 호출 확인
-    mock_get_version.assert_called_once()
-    call_args = mock_get_version.call_args
-    assert call_args[0][1] == page_id
-
-    # update_page_body 호출 확인
+    # push API 호출 확인
     mock_update.assert_called_once()
     call_args = mock_update.call_args
     assert call_args[0][1] == page_id
-    assert call_args[1]['title'] == 'Test Page'
-    assert call_args[1]['version'] == 6
-    assert call_args[1]['xhtml_body'] == '<p>Updated content</p>'
+    assert call_args[1]['xhtml_body'] == '<p>Updated</p>'
 
-    # 출력 JSON 확인
-    output = mock_print.call_args[0][0]
-    result = json.loads(output)
-    assert result['page_id'] == page_id
-    assert result['version'] == 6
-    assert result['title'] == 'Test Page'
+    # 출력 확인: verify 결과 + push 결과 2번 출력
+    assert mock_print.call_count == 2
+    push_output = json.loads(mock_print.call_args_list[1][0][0])
+    assert push_output['page_id'] == page_id
+    assert push_output['version'] == 6
+
+
+def test_push_dry_run_skips_push(monkeypatch):
+    """push --dry-run은 verify만 수행하고 push하지 않는다."""
+    mdx_arg = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--dry-run', mdx_arg])
+    pass_result = {'status': 'pass', 'page_id': 'test-page-001', 'changes_count': 1}
+
+    with patch('reverse_sync_cli._do_verify', return_value=pass_result) as mock_verify, \
+         patch('reverse_sync_cli._do_push') as mock_push, \
+         patch('builtins.print'):
+        main()
+
+    mock_verify.assert_called_once()
+    mock_push.assert_not_called()
+
+
+def test_verify_is_dry_run_alias(monkeypatch):
+    """verify 커맨드는 push --dry-run과 동일하게 동작한다."""
+    mdx_arg = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'verify', mdx_arg])
+    pass_result = {'status': 'pass', 'page_id': 'test-page-001', 'changes_count': 1}
+
+    with patch('reverse_sync_cli._do_verify', return_value=pass_result) as mock_verify, \
+         patch('reverse_sync_cli._do_push') as mock_push, \
+         patch('builtins.print'):
+        main()
+
+    mock_verify.assert_called_once()
+    mock_push.assert_not_called()
 
 
 # --- _resolve_mdx_source tests ---
