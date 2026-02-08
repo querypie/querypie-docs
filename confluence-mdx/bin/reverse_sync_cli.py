@@ -3,8 +3,8 @@
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 
 Usage:
-    python reverse_sync_cli.py verify --page-id <id> --original-mdx <path|ref:path|ref> --improved-mdx <path|ref:path|ref>
-    python reverse_sync_cli.py push --page-id <id>
+    python reverse_sync_cli.py verify --improved-mdx <ref:path|path> [--original-mdx <ref:path|path>]
+    python reverse_sync_cli.py push --mdx-path <src/content/ko/...mdx>
 """
 import argparse
 import json
@@ -51,21 +51,8 @@ def _get_file_from_git(ref: str, path: str) -> str:
     return result.stdout
 
 
-def _resolve_mdx_path_from_page_id(page_id: str) -> str:
-    """var/pages.yaml에서 page_id로 MDX 경로를 유도한다."""
-    pages_path = Path('var/pages.yaml')
-    if not pages_path.exists():
-        raise ValueError("var/pages.yaml not found")
-    pages = yaml.safe_load(pages_path.read_text())
-    for page in pages:
-        if page.get('page_id') == page_id:
-            path_parts = page.get('path', [])
-            return 'src/content/ko/' + '/'.join(path_parts) + '.mdx'
-    raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
-
-
-def _resolve_mdx_source(arg: str, page_id: str) -> MdxSource:
-    """3-tier MDX 소스 해석: ref:path → 파일 경로 → bare ref."""
+def _resolve_mdx_source(arg: str) -> MdxSource:
+    """2-tier MDX 소스 해석: ref:path → 파일 경로."""
     # 1. ref:path 형식
     if ':' in arg:
         ref, path = arg.split(':', 1)
@@ -77,13 +64,31 @@ def _resolve_mdx_source(arg: str, page_id: str) -> MdxSource:
     if Path(arg).is_file():
         return MdxSource(content=Path(arg).read_text(), descriptor=arg)
 
-    # 3. bare ref → pages.yaml로 경로 자동 유도
-    if _is_valid_git_ref(arg):
-        mdx_path = _resolve_mdx_path_from_page_id(page_id)
-        content = _get_file_from_git(arg, mdx_path)
-        return MdxSource(content=content, descriptor=f'{arg}:{mdx_path}')
+    raise ValueError(f"Cannot resolve MDX source '{arg}': not a file path or ref:path")
 
-    raise ValueError(f"Cannot resolve MDX source '{arg}': not a file path, ref:path, or valid git ref")
+
+def _extract_ko_mdx_path(descriptor: str) -> str:
+    """descriptor에서 src/content/ko/...mdx 경로를 추출한다."""
+    path = descriptor.split(':', 1)[-1] if ':' in descriptor else descriptor
+    prefix = 'src/content/ko/'
+    if prefix in path and path.endswith('.mdx'):
+        idx = path.index(prefix)
+        return path[idx:]
+    raise ValueError(f"Cannot extract ko MDX path from '{descriptor}'")
+
+
+def _resolve_page_id(ko_mdx_path: str) -> str:
+    """src/content/ko/...mdx 경로에서 pages.yaml을 이용해 page_id를 유도한다."""
+    rel = ko_mdx_path.removeprefix('src/content/ko/').removesuffix('.mdx')
+    path_parts = rel.split('/')
+    pages_path = Path('var/pages.yaml')
+    if not pages_path.exists():
+        raise ValueError("var/pages.yaml not found")
+    pages = yaml.safe_load(pages_path.read_text())
+    for page in pages:
+        if page.get('path') == path_parts:
+            return page['page_id']
+    raise ValueError(f"MDX path '{ko_mdx_path}' not found in var/pages.yaml")
 
 
 def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
@@ -259,28 +264,33 @@ def main():
 
     # verify
     verify_parser = subparsers.add_parser('verify', help='로컬 검증')
-    verify_parser.add_argument('--page-id', required=True, help='Confluence page ID')
-    verify_parser.add_argument('--original-mdx', required=True,
-                               help='원본 MDX (파일 경로, ref:path, 또는 bare git ref)')
     verify_parser.add_argument('--improved-mdx', required=True,
-                               help='개선 MDX (파일 경로, ref:path, 또는 bare git ref)')
+                               help='개선 MDX (ref:path 또는 파일 경로)')
+    verify_parser.add_argument('--original-mdx',
+                               help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
     verify_parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
 
     # push
     push_parser = subparsers.add_parser('push', help='Confluence 반영')
-    push_parser.add_argument('--page-id', required=True, help='Confluence page ID')
+    push_parser.add_argument('--mdx-path', required=True,
+                             help='ko MDX 경로 (예: src/content/ko/user-manual/user-agent.mdx)')
 
     args = parser.parse_args()
 
     if args.command == 'verify':
         try:
-            original_src = _resolve_mdx_source(args.original_mdx, args.page_id)
-            improved_src = _resolve_mdx_source(args.improved_mdx, args.page_id)
+            improved_src = _resolve_mdx_source(args.improved_mdx)
+            if args.original_mdx:
+                original_src = _resolve_mdx_source(args.original_mdx)
+            else:
+                ko_path = _extract_ko_mdx_path(improved_src.descriptor)
+                original_src = _resolve_mdx_source(f'main:{ko_path}')
+            page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
         except ValueError as e:
             print(f'Error: {e}', file=sys.stderr)
             sys.exit(1)
         result = run_verify(
-            page_id=args.page_id,
+            page_id=page_id,
             original_src=original_src,
             improved_src=improved_src,
             xhtml_path=args.xhtml,
@@ -288,7 +298,13 @@ def main():
         print(json.dumps(result, ensure_ascii=False, indent=2))
 
     elif args.command == 'push':
-        var_dir = Path(f'var/{args.page_id}')
+        try:
+            page_id = _resolve_page_id(args.mdx_path)
+        except ValueError as e:
+            print(f'Error: {e}', file=sys.stderr)
+            sys.exit(1)
+
+        var_dir = Path(f'var/{page_id}')
         result_path = var_dir / 'reverse-sync.result.yaml'
         if not result_path.exists():
             print('Error: verify를 먼저 실행하세요.')
@@ -308,16 +324,16 @@ def main():
             sys.exit(1)
 
         # 최신 버전 조회
-        page_info = get_page_version(config, args.page_id)
+        page_info = get_page_version(config, page_id)
         new_version = page_info['version'] + 1
 
         # 업데이트
-        resp = update_page_body(config, args.page_id,
+        resp = update_page_body(config, page_id,
                                 title=page_info['title'],
                                 version=new_version,
                                 xhtml_body=xhtml_body)
         print(json.dumps({
-            'page_id': args.page_id,
+            'page_id': page_id,
             'title': resp.get('title', page_info['title']),
             'version': resp.get('version', {}).get('number', new_version),
             'url': resp.get('_links', {}).get('webui', ''),

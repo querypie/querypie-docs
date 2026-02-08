@@ -3,7 +3,10 @@ import os
 import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
-from reverse_sync_cli import run_verify, main, MdxSource, _resolve_mdx_source
+from reverse_sync_cli import (
+    run_verify, main, MdxSource, _resolve_mdx_source,
+    _extract_ko_mdx_path, _resolve_page_id,
+)
 
 
 @pytest.fixture
@@ -95,9 +98,11 @@ def setup_push_var(tmp_path, monkeypatch):
 def test_push_requires_verify_first(setup_push_var, monkeypatch):
     """result.yaml 없으면 에러."""
     page_id, var_dir = setup_push_var
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
-    with pytest.raises(SystemExit) as exc_info:
-        main()
+    mdx_path = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
+    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
     assert exc_info.value.code == 1
 
 
@@ -105,11 +110,13 @@ def test_push_rejects_non_pass(setup_push_var, monkeypatch):
     """status가 pass가 아니면 에러."""
     page_id, var_dir = setup_push_var
     import yaml
+    mdx_path = 'src/content/ko/test/page.mdx'
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump({'status': 'fail', 'page_id': page_id}))
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
-    with pytest.raises(SystemExit) as exc_info:
-        main()
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
+    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
     assert exc_info.value.code == 1
 
 
@@ -117,13 +124,14 @@ def test_push_success(setup_push_var, monkeypatch):
     """mock API로 정상 push 확인."""
     page_id, var_dir = setup_push_var
     import yaml
+    mdx_path = 'src/content/ko/test/page.mdx'
 
     # verify pass 결과 + patched xhtml 준비
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump({'status': 'pass', 'page_id': page_id}))
     (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated content</p>')
 
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--page-id', page_id])
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--mdx-path', mdx_path])
 
     mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test Page'})
     mock_update = MagicMock(return_value={
@@ -133,7 +141,8 @@ def test_push_success(setup_push_var, monkeypatch):
     })
     mock_load = MagicMock(return_value=('test@example.com', 'test-token'))
 
-    with patch('reverse_sync.confluence_client._load_credentials', mock_load), \
+    with patch('reverse_sync_cli._resolve_page_id', return_value=page_id), \
+         patch('reverse_sync.confluence_client._load_credentials', mock_load), \
          patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
          patch('reverse_sync.confluence_client.update_page_body', mock_update), \
          patch('builtins.print') as mock_print:
@@ -167,7 +176,7 @@ def test_resolve_mdx_source_file_path(tmp_path):
     """파일 경로로 MdxSource를 생성한다."""
     mdx_file = tmp_path / "test.mdx"
     mdx_file.write_text("## Hello\n")
-    src = _resolve_mdx_source(str(mdx_file), "dummy-page-id")
+    src = _resolve_mdx_source(str(mdx_file))
     assert src.content == "## Hello\n"
     assert src.descriptor == str(mdx_file)
 
@@ -176,21 +185,9 @@ def test_resolve_mdx_source_ref_path():
     """ref:path 형식으로 MdxSource를 생성한다."""
     with patch('reverse_sync_cli._is_valid_git_ref', return_value=True), \
          patch('reverse_sync_cli._get_file_from_git', return_value="## From Git\n"):
-        src = _resolve_mdx_source("main:src/content/ko/test.mdx", "dummy")
+        src = _resolve_mdx_source("main:src/content/ko/test.mdx")
     assert src.content == "## From Git\n"
     assert src.descriptor == "main:src/content/ko/test.mdx"
-
-
-def test_resolve_mdx_source_bare_ref():
-    """bare ref로 pages.yaml에서 경로를 유도하여 MdxSource를 생성한다."""
-    with patch('reverse_sync_cli._is_valid_git_ref', return_value=True), \
-         patch('reverse_sync_cli._resolve_mdx_path_from_page_id',
-               return_value='src/content/ko/user-manual/user-agent.mdx'), \
-         patch('reverse_sync_cli._get_file_from_git', return_value="## Agent\n"), \
-         patch('pathlib.Path.is_file', return_value=False):
-        src = _resolve_mdx_source("main", "544112828")
-    assert src.content == "## Agent\n"
-    assert src.descriptor == "main:src/content/ko/user-manual/user-agent.mdx"
 
 
 def test_resolve_mdx_source_invalid():
@@ -198,4 +195,57 @@ def test_resolve_mdx_source_invalid():
     with patch('reverse_sync_cli._is_valid_git_ref', return_value=False), \
          patch('pathlib.Path.is_file', return_value=False):
         with pytest.raises(ValueError, match="Cannot resolve MDX source"):
-            _resolve_mdx_source("nonexistent", "dummy")
+            _resolve_mdx_source("nonexistent")
+
+
+# --- _extract_ko_mdx_path tests ---
+
+
+def test_extract_ko_mdx_path_from_ref_path():
+    """ref:path descriptor에서 ko MDX 경로를 추출한다."""
+    result = _extract_ko_mdx_path("main:src/content/ko/user-manual/user-agent.mdx")
+    assert result == "src/content/ko/user-manual/user-agent.mdx"
+
+
+def test_extract_ko_mdx_path_from_file_path():
+    """파일 경로 descriptor에서 ko MDX 경로를 추출한다."""
+    result = _extract_ko_mdx_path("src/content/ko/user-manual/user-agent.mdx")
+    assert result == "src/content/ko/user-manual/user-agent.mdx"
+
+
+def test_extract_ko_mdx_path_invalid():
+    """ko MDX 경로가 없으면 ValueError를 발생시킨다."""
+    with pytest.raises(ValueError, match="Cannot extract ko MDX path"):
+        _extract_ko_mdx_path("some/other/path.txt")
+
+
+# --- _resolve_page_id tests ---
+
+
+def test_resolve_page_id(tmp_path, monkeypatch):
+    """pages.yaml에서 MDX 경로로 page_id를 유도한다."""
+    import yaml
+    monkeypatch.chdir(tmp_path)
+    var_dir = tmp_path / "var"
+    var_dir.mkdir()
+    pages = [
+        {'page_id': '544112828', 'path': ['user-manual', 'user-agent']},
+        {'page_id': '123456789', 'path': ['overview']},
+    ]
+    (var_dir / 'pages.yaml').write_text(yaml.dump(pages))
+
+    result = _resolve_page_id('src/content/ko/user-manual/user-agent.mdx')
+    assert result == '544112828'
+
+
+def test_resolve_page_id_not_found(tmp_path, monkeypatch):
+    """pages.yaml에 없는 경로이면 ValueError를 발생시킨다."""
+    import yaml
+    monkeypatch.chdir(tmp_path)
+    var_dir = tmp_path / "var"
+    var_dir.mkdir()
+    pages = [{'page_id': '111', 'path': ['other']}]
+    (var_dir / 'pages.yaml').write_text(yaml.dump(pages))
+
+    with pytest.raises(ValueError, match="not found in var/pages.yaml"):
+        _resolve_page_id('src/content/ko/nonexistent/page.mdx')

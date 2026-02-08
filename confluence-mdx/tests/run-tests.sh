@@ -161,13 +161,13 @@ run_reverse_sync_test() {
     local test_id="$1"
     local test_path="${TEST_DIR}/${test_id}"
 
-    # verify 실행 (cwd를 confluence-mdx root로 이동 — CLI가 var/<page_id>/에 중간 파일을 쓰므로)
+    # verify 실행 (cwd를 confluence-mdx root로 이동 — run_verify()가 var/<page_id>/에 중간 파일을 쓰므로)
     pushd .. > /dev/null
-    run_cmd env PYTHONPATH=bin python bin/reverse_sync_cli.py verify \
-        --page-id "${test_id}" \
-        --original-mdx "tests/${test_path}/original.mdx" \
-        --improved-mdx "tests/${test_path}/improved.mdx" \
-        --xhtml "tests/${test_path}/page.xhtml"
+    run_cmd env PYTHONPATH=bin python3 bin/reverse_sync_test_verify.py \
+        "${test_id}" \
+        "tests/${test_path}/original.mdx" \
+        "tests/${test_path}/improved.mdx" \
+        "tests/${test_path}/page.xhtml"
     popd > /dev/null
 
     # var/에 생성된 중간 파일을 output.*으로 복사
