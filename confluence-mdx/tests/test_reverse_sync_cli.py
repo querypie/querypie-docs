@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
+    _get_changed_ko_mdx_files, _do_verify_batch,
 )
 
 
@@ -249,3 +250,206 @@ def test_resolve_page_id_not_found(tmp_path, monkeypatch):
 
     with pytest.raises(ValueError, match="not found in var/pages.yaml"):
         _resolve_page_id('src/content/ko/nonexistent/page.mdx')
+
+
+# --- _get_changed_ko_mdx_files tests ---
+
+
+def test_get_changed_ko_mdx_files():
+    """git diff mock → 변경된 ko MDX 파일 목록을 반환한다."""
+    git_output = (
+        "src/content/ko/user-manual/user-agent.mdx\n"
+        "src/content/ko/overview.mdx\n"
+        "src/content/ko/admin/audit.mdx\n"
+    )
+    mock_diff = MagicMock(returncode=0, stdout=git_output, stderr='')
+    with patch('reverse_sync_cli._is_valid_git_ref', return_value=True), \
+         patch('reverse_sync_cli.subprocess.run', return_value=mock_diff):
+        files = _get_changed_ko_mdx_files('proofread/fix-typo')
+    assert files == [
+        'src/content/ko/user-manual/user-agent.mdx',
+        'src/content/ko/overview.mdx',
+        'src/content/ko/admin/audit.mdx',
+    ]
+
+
+def test_get_changed_ko_mdx_files_filters_non_mdx():
+    """MDX가 아닌 파일은 필터링된다."""
+    git_output = (
+        "src/content/ko/overview.mdx\n"
+        "src/content/ko/images/logo.png\n"
+        "src/content/en/other.mdx\n"
+    )
+    mock_diff = MagicMock(returncode=0, stdout=git_output, stderr='')
+    with patch('reverse_sync_cli._is_valid_git_ref', return_value=True), \
+         patch('reverse_sync_cli.subprocess.run', return_value=mock_diff):
+        files = _get_changed_ko_mdx_files('proofread/fix-typo')
+    assert files == ['src/content/ko/overview.mdx']
+
+
+def test_get_changed_ko_mdx_files_invalid_ref():
+    """잘못된 git ref → ValueError."""
+    with patch('reverse_sync_cli._is_valid_git_ref', return_value=False):
+        with pytest.raises(ValueError, match="Invalid git ref"):
+            _get_changed_ko_mdx_files('nonexistent-branch')
+
+
+# --- _do_verify_batch tests ---
+
+
+def test_do_verify_batch_all_pass():
+    """3파일 모두 pass."""
+    files = [
+        'src/content/ko/a.mdx',
+        'src/content/ko/b.mdx',
+        'src/content/ko/c.mdx',
+    ]
+    pass_result = {'status': 'pass', 'page_id': 'p1', 'changes_count': 1}
+
+    with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=files), \
+         patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+         patch('builtins.print'):
+        results = _do_verify_batch('proofread/fix-typo')
+
+    assert len(results) == 3
+    assert all(r['status'] == 'pass' for r in results)
+
+
+def test_do_verify_batch_with_error():
+    """1파일 에러, 나머지 계속 처리."""
+    files = [
+        'src/content/ko/a.mdx',
+        'src/content/ko/b.mdx',
+        'src/content/ko/c.mdx',
+    ]
+    pass_result = {'status': 'pass', 'page_id': 'p1', 'changes_count': 1}
+    call_count = 0
+
+    def mock_do_verify(args):
+        nonlocal call_count
+        call_count += 1
+        if call_count == 2:
+            raise ValueError("page not found")
+        return pass_result
+
+    with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=files), \
+         patch('reverse_sync_cli._do_verify', side_effect=mock_do_verify), \
+         patch('builtins.print'):
+        results = _do_verify_batch('proofread/fix-typo')
+
+    assert len(results) == 3
+    assert results[0]['status'] == 'pass'
+    assert results[1]['status'] == 'error'
+    assert 'page not found' in results[1]['error']
+    assert results[2]['status'] == 'pass'
+
+
+def test_do_verify_batch_no_changes():
+    """변경 파일 없으면 no_changes 반환."""
+    with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=[]):
+        results = _do_verify_batch('proofread/fix-typo')
+
+    assert len(results) == 1
+    assert results[0]['status'] == 'no_changes'
+    assert results[0]['branch'] == 'proofread/fix-typo'
+
+
+# --- main() batch tests ---
+
+
+def test_main_verify_branch(monkeypatch):
+    """main() 통합 테스트 — 배치 verify."""
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'verify', '--branch', 'proofread/fix-typo'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+        {'status': 'pass', 'page_id': 'p2', 'changes_count': 2},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
+         patch('reverse_sync_cli._do_push') as mock_push, \
+         patch('builtins.print'):
+        main()
+
+    mock_batch.assert_called_once_with('proofread/fix-typo')
+    mock_push.assert_not_called()
+
+
+def test_main_push_branch(tmp_path, monkeypatch):
+    """main() 통합 테스트 — 배치 push (all pass)."""
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
+    monkeypatch.chdir(tmp_path)
+
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+        {'status': 'pass', 'page_id': 'p2', 'changes_count': 2},
+    ]
+    push_result = {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+         patch('reverse_sync_cli._do_push', return_value=push_result) as mock_push, \
+         patch('builtins.print'):
+        main()
+
+    assert mock_push.call_count == 2
+    mock_push.assert_any_call('p1')
+    mock_push.assert_any_call('p2')
+
+
+def test_main_push_branch_with_failure(monkeypatch):
+    """배치 push 시 일부 fail → exit 1, push 안 함."""
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+        {'status': 'fail', 'page_id': 'p2', 'changes_count': 1},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+         patch('reverse_sync_cli._do_push') as mock_push, \
+         patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+    mock_push.assert_not_called()
+
+
+def test_main_branch_mutual_exclusive(monkeypatch):
+    """<mdx> + --branch 동시 사용 → exit 1."""
+    monkeypatch.setattr('sys.argv', [
+        'reverse_sync_cli.py', 'verify',
+        'src/content/ko/test/page.mdx',
+        '--branch', 'proofread/fix-typo',
+    ])
+
+    with patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+
+
+def test_main_branch_no_input(monkeypatch):
+    """<mdx>도 --branch도 없음 → exit 1."""
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'verify'])
+
+    with patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+
+
+def test_main_verify_branch_with_failure_exits(monkeypatch):
+    """verify --branch에서 fail 있으면 exit 1."""
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'verify', '--branch', 'proofread/fix-typo'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+        {'status': 'error', 'file': 'src/content/ko/b.mdx', 'error': 'not found'},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+         patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1

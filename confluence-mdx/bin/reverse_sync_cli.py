@@ -73,6 +73,20 @@ def _extract_ko_mdx_path(descriptor: str) -> str:
     raise ValueError(f"Cannot extract ko MDX path from '{descriptor}'")
 
 
+def _get_changed_ko_mdx_files(branch: str) -> List[str]:
+    """브랜치에서 변경된 src/content/ko/**/*.mdx 파일 목록을 반환한다."""
+    if not _is_valid_git_ref(branch):
+        raise ValueError(f"Invalid git ref: {branch}")
+    result = subprocess.run(
+        ['git', 'diff', '--name-only', f'main...{branch}', '--', 'src/content/ko/'],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        raise ValueError(f"Failed to get changed files: {result.stderr.strip()}")
+    files = [l.strip() for l in result.stdout.strip().split('\n') if l.strip()]
+    return [f for f in files if f.startswith('src/content/ko/') and f.endswith('.mdx')]
+
+
 def _resolve_page_id(ko_mdx_path: str) -> str:
     """src/content/ko/...mdx 경로에서 pages.yaml을 이용해 page_id를 유도한다."""
     rel = ko_mdx_path.removeprefix('src/content/ko/').removesuffix('.mdx')
@@ -269,8 +283,10 @@ _USAGE_SUMMARY = """\
 reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
 
 Usage:
-  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
   reverse-sync verify <mdx> [--original-mdx <mdx>]
+  reverse-sync verify --branch <branch>
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
+  reverse-sync push   --branch <branch> [--dry-run]
   reverse-sync -h | --help
 
 Commands:
@@ -293,12 +309,23 @@ Arguments:
     page-id는 경로의 src/content/ko/ 부분에서 var/pages.yaml을 통해
     자동 유도된다.
 
+Options:
+  --branch <branch>
+    브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 배치 처리한다.
+    <mdx>와 동시에 사용할 수 없다.
+
 Examples:
-  # 검증만 수행 (Confluence 반영 없음)
+  # 단일 파일 검증
   reverse-sync verify "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # 브랜치 전체 배치 검증
+  reverse-sync verify --branch proofread/fix-typo
 
   # 검증 + Confluence 반영
   reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # 브랜치 전체 배치 push
+  reverse-sync push --branch proofread/fix-typo
 
   # push --dry-run = verify
   reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
@@ -327,12 +354,22 @@ MDX 소스 지정 방식:
   path      로컬 파일 시스템 경로
             예) /tmp/improved.mdx
 
+  --branch <branch>
+            브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 배치 처리한다.
+            <mdx>, --original-mdx, --xhtml과 동시에 사용할 수 없다.
+
 Examples:
   # 검증 + Confluence 반영
   reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
   # 검증만 수행 (= verify)
   reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+  # 브랜치 전체 배치 검증
+  reverse-sync verify --branch proofread/fix-typo
+
+  # 브랜치 전체 배치 push
+  reverse-sync push --branch proofread/fix-typo
 
   # original을 명시적으로 지정
   reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx" \\
@@ -347,8 +384,10 @@ Examples:
 
 def _add_common_args(parser: argparse.ArgumentParser):
     """verify/push 공통 인자를 등록한다."""
-    parser.add_argument('improved_mdx',
+    parser.add_argument('improved_mdx', nargs='?',
                         help='개선 MDX (ref:path 또는 파일 경로)')
+    parser.add_argument('--branch',
+                        help='브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 처리')
     parser.add_argument('--original-mdx',
                         help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
     parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
@@ -369,6 +408,29 @@ def _do_verify(args) -> dict:
         improved_src=improved_src,
         xhtml_path=args.xhtml,
     )
+
+
+def _do_verify_batch(branch: str) -> List[dict]:
+    """브랜치의 모든 변경 ko MDX 파일을 배치 verify 처리한다."""
+    files = _get_changed_ko_mdx_files(branch)
+    if not files:
+        return [{'status': 'no_changes', 'branch': branch, 'changes_count': 0}]
+    print(f"Processing {len(files)} file(s) from branch {branch}...", file=sys.stderr)
+    results = []
+    for idx, ko_path in enumerate(files, 1):
+        print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
+        try:
+            args = argparse.Namespace(
+                improved_mdx=f"{branch}:{ko_path}",
+                original_mdx=None, xhtml=None,
+            )
+            result = _do_verify(args)
+            print(result.get('status', 'unknown'), file=sys.stderr)
+            results.append(result)
+        except Exception as e:
+            print("error", file=sys.stderr)
+            results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
+    return results
 
 
 def _do_push(page_id: str):
@@ -431,20 +493,47 @@ def main():
         dry_run = args.command == 'verify' or getattr(args, 'dry_run', False)
 
         try:
-            result = _do_verify(args)
+            # 인자 검증
+            if not args.improved_mdx and not getattr(args, 'branch', None):
+                print('Error: <mdx> 또는 --branch 중 하나를 지정하세요.', file=sys.stderr)
+                sys.exit(1)
+            if args.improved_mdx and getattr(args, 'branch', None):
+                print('Error: <mdx>와 --branch는 동시에 사용할 수 없습니다.', file=sys.stderr)
+                sys.exit(1)
+            if getattr(args, 'branch', None) and (args.original_mdx or args.xhtml):
+                print('Error: --branch와 --original-mdx/--xhtml는 동시에 사용할 수 없습니다.', file=sys.stderr)
+                sys.exit(1)
+
+            if getattr(args, 'branch', None):
+                # 배치 모드
+                results = _do_verify_batch(args.branch)
+                print(json.dumps(results, ensure_ascii=False, indent=2))
+                has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
+                if not dry_run:
+                    passed = [r for r in results if r.get('status') == 'pass']
+                    if has_failure:
+                        print(f"Error: 일부 파일이 검증에 실패했습니다. push하지 않습니다.", file=sys.stderr)
+                        sys.exit(1)
+                    for r in passed:
+                        push_result = _do_push(r['page_id'])
+                        print(json.dumps(push_result, ensure_ascii=False, indent=2))
+                elif has_failure:
+                    sys.exit(1)
+            else:
+                # 기존 단일 파일 모드
+                result = _do_verify(args)
+                print(json.dumps(result, ensure_ascii=False, indent=2))
+
+                if not dry_run and result.get('status') == 'pass':
+                    page_id = result['page_id']
+                    push_result = _do_push(page_id)
+                    print(json.dumps(push_result, ensure_ascii=False, indent=2))
+                elif not dry_run and result.get('status') != 'pass':
+                    print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
+                          file=sys.stderr)
+                    sys.exit(1)
         except ValueError as e:
             print(f'Error: {e}', file=sys.stderr)
-            sys.exit(1)
-
-        print(json.dumps(result, ensure_ascii=False, indent=2))
-
-        if not dry_run and result.get('status') == 'pass':
-            page_id = result['page_id']
-            push_result = _do_push(page_id)
-            print(json.dumps(push_result, ensure_ascii=False, indent=2))
-        elif not dry_run and result.get('status') != 'pass':
-            print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
-                  file=sys.stderr)
             sys.exit(1)
 
 
