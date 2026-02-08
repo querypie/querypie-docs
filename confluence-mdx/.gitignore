@@ -1,4 +1,5 @@
 /*.log
 /venv
 /bin/__pycache__/
-tests/testcases/*/output.html
+/bin/reverse_sync/__pycache__/
+/tests/__pycache__/
