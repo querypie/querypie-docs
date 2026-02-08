@@ -9,7 +9,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie에서 기록하는 감사 로그를 Splunk를 통하여 외부로 전송하는 기능을 제공합니다.
+QueryPie에서 기록하는 감사 로그를 Splunk를 통해 외부로 전송하는 기능을 제공합니다.
 
 <Callout type="info">
 Integration 설정을 위해서는 System admin 권한이 필요합니다.
@@ -64,7 +64,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
         2. Splunk 메뉴에서 HTTP/HTTPS 프로토콜을 선택한 경우:
             * Splunk HTTP Event Collector의 global option에 설정된 port 번호를 입력합니다. 기본값은 8088입니다.
             * Splunk Cloud 사용자에게는 443을 입력합니다.
-    5.  **HEC Token** : HTTP, HTTPS 프로토콜의 경우 Splunk의 HEC설정시 생성하는 token 값을 입력해야 합니다.
+    5.  **HEC Token** : HTTP, HTTPS 프로토콜의 경우 Splunk의 HEC 설정 시 생성하는 token 값을 입력해야 합니다.
     6.  **Test Connection 버튼**  : TCP, HTTP, HTTPS 프로토콜은 대상과 통신상태를 점검할 수 있습니다. 
         * UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
     7.  **Select Event Items**  : 이벤트 항목을 선택적으로 전송할 수 있습니다. 하단 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
