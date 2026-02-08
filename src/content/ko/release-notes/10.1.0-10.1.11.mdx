@@ -13,7 +13,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 **Bug Fix**
 
 * [General] Audit Log Export 시 예상치 못한 예외 발생할 경우 멈추는 현상 개선
-* [DAC] Ledger 대상 DML 쿼리 실행 후 워크플로 전환시 커스텀 링크로 리다이렉션
+* [DAC] Ledger 대상 DML 쿼리 실행 후 워크플로 전환 시 커스텀 링크로 리다이렉션
 * [Agent] Mac에서 Agent 실행 시 /bin/bash: osascript: command not found 개선
 
 
@@ -23,7 +23,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 
 **Bug Fix**
 
-* [DAC] Oracle Proxy 접속시 Query Audit 메뉴에서 Rows가 제대로 조회되지 않는 이슈 해결
+* [DAC] Oracle Proxy 접속 시 Query Audit 메뉴에서 Rows가 제대로 조회되지 않는 이슈 해결
 * [DAC] 쿼리 수행 시 DB 조회하는 구간에 SystemSetting 로컬 캐시 적용
 
 
@@ -36,7 +36,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 
 * [DAC] MongoDB 'MongoDB.Bson.BsonInt64' 관련 오류 해결
 * [DAC] OCI EXACS 접속 시 ORA-03113 관련 오류 해결 
-* [DAC] MongDB UPSERT 시도시 DML Snapshot 기록 관련 이슈 해결
+* [DAC] MongDB UPSERT 시도 시 DML Snapshot 기록 관련 이슈 해결
 * [DAC] SQLServer 프록시를 통한 TablePlus 연결 관련 이슈 해결 
 * [DAC] PostgreSQL 접속 후 WITH을 사용한 UPDATE 구문 사용 권한 관련 이슈 해결
 * [DAC] 일부 벤더에서 숫자로 시작하는 데이터베이스 대상으로 USE 구문 실행 오류 해결 
@@ -53,21 +53,21 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 
 **Enhancement**
 
-* [IDP] IdP 동기화시 Job 중복실행 이슈 개선을 위해 사용자 단위로 동기화하도록 개선
-* [DAC] Oracle, MongoDB, PostgreSQL 에이전트를 통한 접속시 접속 계정의 패스워드를 지정할 수 있는 기능 제공
+* [IDP] IdP 동기화 시 Job 중복실행 이슈 개선을 위해 사용자 단위로 동기화하도록 개선
+* [DAC] Oracle, MongoDB, PostgreSQL 에이전트를 통한 접속 시 접속 계정의 패스워드를 지정할 수 있는 기능 제공
 
 **Bug Fix**
 
 * [DAC] 추가된 instance에 대한 port 할당이 이루어지지 않는 이슈 해결
-* [DAC] SQLServer 쿼리 실행시 UPDATE 구문 내에서 Alias 사용 관련 이슈 해결
-* [DAC] Hive 웹에디터에서 접속시 우측 개체정보 패널에서 일시적으로 JSON 문자열 보이는 이슈 해결
+* [DAC] SQLServer 쿼리 실행 시 UPDATE 구문 내에서 Alias 사용 관련 이슈 해결
+* [DAC] Hive 웹에디터에서 접속 시 우측 개체정보 패널에서 일시적으로 JSON 문자열 보이는 이슈 해결
 * [DAC] SQLServer DML Snapshot이 켜진 상태에서 `INSERT`구문 서브쿼리에 PK를 포함한 경우 정상적으로 실행되지 않는 이슈 해결
 * [DAC] Oracle Toad 접속 관련 Explain Plan 실행 시 프록시 행 발생하는 이슈 해결
 * [DAC] SQLGate에서 dbms_output이 정상적으로 동작하지 않는 이슈 해결
-* [DAC] AWS SCT-Oracle 커넥션 생성시 정상적으로 접속하지 않는 이슈 해결
+* [DAC] AWS SCT-Oracle 커넥션 생성 시 정상적으로 접속하지 않는 이슈 해결
 * [Agent] 쿼리파이 에이전트 세션 언락 후 토큰 만료 확인 전 네트워크 연결 대기 이슈 해결
 * [SAC] Querypie SAC Agent 접속 및 패스워드 한글로 입력 시 접속 실패 현상 해결
-* [SAC] 사용자 서버 접속 시도시 Server group not found 오류 발생하는 문제 해결
+* [SAC] 사용자 서버 접속 시도 시 Server group not found 오류 발생하는 문제 해결
 * [SAC] SSH 접속 후 입력이 없을 경우 Session Timeout 정상적으로 동작하지 않는 이슈 해결
 * [공통] Alert HTTP 에서 NAT Gateway를 통한 Lambda 호출 시 RST 패킷 반환으로 인해 Connection reset by peer 오류가 발생하는 문제 해결
 * [Workflow] DB Access Request 에서 요청한 커넥션이 많은 경우 오류가 발생하는 문제 해결
@@ -83,12 +83,12 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 
 * [Agent] Proxy Throttling 기능 구현
 * [DAC] DataGrip 등 클라이언트 툴에서 전송하는 반복적인 쿼리는 로깅 예외 처리 적용
-* [DAC] Oracle OCI 접속시 에이전트에서 개인 계정 사용 가능하도록 개선
+* [DAC] Oracle OCI 접속 시 에이전트에서 개인 계정 사용 가능하도록 개선
 
 **Bug Fix**
 
 * [DAC] Oracle OCI 접속 관련 로그 남지 않는 이슈 해결
-* [DAC] 토드 툴을 통해 Oracle 쿼리 실행시 오류 해결
+* [DAC] 토드 툴을 통해 Oracle 쿼리 실행 시 오류 해결
 * [DAC] PostgreSQL 정책 적용된 경우 LEFT OUTER JOIN 쿼리 수행 관련 오류 해결
 * [공통] refresh-token-expired 오류 팝업 표시 후 로그인 불가능한 이슈 해결
 * [API] External API 를 통한 First 10 Rows 조회 관련 이슈 해결
@@ -110,7 +110,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 * [General] Loading chunk 721 failed 오류 수정
 * [DAC] PostgreSQL 프록시 접속 후 서로 다른 툴에서 동시에 쿼리를 전송한 경우 세션 종류 이슈 해결
 * [DAC] MySQL 에서 useServerPrepStmts = true 인 경우 DML 스냅샷 기능 충돌 이슈 해결
-* [SAC] tmux를 통한 세션 동시 호출시 끊어지는 이슈 해결
+* [SAC] tmux를 통한 세션 동시 호출 시 끊어지는 이슈 해결
 * [DAC] MongoDB sleep() 쿼리 지원
 * [DAC] DocumentDB 쿼리 실행 시 Wrong Data Type 오류 해결
 * [DAC] Workflow Status 변경 관련 오작동 수정
@@ -123,7 +123,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/604995641/10
 **Bug Fix**
 
 * [DAC] 쿼리 실행 중 SecurityContext is null 오류 발생 수정
-* [DAC] AWS 클라우드 동기화 Modifying 상태의 인스턴스는 동기화시 Skip 되도록 처리
+* [DAC] AWS 클라우드 동기화 Modifying 상태의 인스턴스는 동기화 시 Skip 되도록 처리
 * [DAC] 에이전트 오라클 접속 후 쿼리 시 Unauthorized 오류 수정
 * [DAC] 오라클 사용량이 많은 경우 Proxy 접속이 간헐적으로 종료되는 이슈 수정
 * [DAC] 동일한 BLOB 데이터가 존재할 경우 오라클 프록시가 제대로 동작하지 않는 이슈 수정
