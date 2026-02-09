@@ -540,7 +540,7 @@ def test_build_patches_index_mapping():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
     assert patches[0]['old_plain_text'] == 'Old text.'
-    assert patches[0]['new_plain_text'] == 'New text.'
+    assert patches[0]['new_inner_xhtml'] == 'New text.'
 
 
 def test_build_patches_skips_non_content():

@@ -20,6 +20,7 @@ from reverse_sync.block_diff import diff_blocks, BlockChange
 from reverse_sync.mapping_recorder import record_mapping, BlockMapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_inner_xhtml
 
 
 @dataclass
@@ -306,7 +307,7 @@ def _build_patches(
             patches.append({
                 'xhtml_xpath': mapping.xhtml_xpath,
                 'old_plain_text': mapping.xhtml_plain_text,
-                'new_plain_text': _normalize_mdx_to_plain(
+                'new_inner_xhtml': mdx_block_to_inner_xhtml(
                     new_block.content, new_block.type),
             })
 

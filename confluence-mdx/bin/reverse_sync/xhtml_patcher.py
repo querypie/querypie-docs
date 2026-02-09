@@ -12,8 +12,9 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
         xhtml: 원본 XHTML 문자열
         patches: 패치 목록. 각 패치는 dict:
             - xhtml_xpath: 간이 XPath (예: "p[1]", "h2[3]")
-            - old_plain_text: 원본 평문 텍스트
-            - new_plain_text: 변경할 평문 텍스트
+            - old_plain_text: 원본 평문 텍스트 (검증용)
+            - new_inner_xhtml: 새 inner HTML (있으면 innerHTML 교체)
+            - new_plain_text: 변경할 평문 텍스트 (legacy path)
 
     Returns:
         패치된 XHTML 문자열
@@ -22,20 +23,32 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
 
     for patch in patches:
         xpath = patch['xhtml_xpath']
-        old_text = patch['old_plain_text']
-        new_text = patch['new_plain_text']
 
         element = _find_element_by_xpath(soup, xpath)
         if element is None:
             continue
 
-        current_plain = element.get_text()
-        if current_plain.strip() != old_text.strip():
-            continue
+        if 'new_inner_xhtml' in patch:
+            _replace_inner_html(element, patch['new_inner_xhtml'])
+        else:
+            old_text = patch['old_plain_text']
+            new_text = patch['new_plain_text']
 
-        _apply_text_changes(element, old_text, new_text)
+            current_plain = element.get_text()
+            if current_plain.strip() != old_text.strip():
+                continue
+
+            _apply_text_changes(element, old_text, new_text)
 
     return str(soup)
+
+
+def _replace_inner_html(element: Tag, new_inner_xhtml: str):
+    """요소의 innerHTML을 통째로 교체한다."""
+    element.clear()
+    new_content = BeautifulSoup(new_inner_xhtml, 'html.parser')
+    for child in list(new_content.children):
+        element.append(child.extract())
 
 
 def _iter_block_children(parent):
