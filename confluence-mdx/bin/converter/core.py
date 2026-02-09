@@ -96,7 +96,7 @@ class Attachment:
             # Change file permission to 0644
             os.chmod(destination_file, 0o644)
 
-    def as_markdown(self, caption: Optional[str] = None, width: Optional[str] = None, align: str = None) -> str:
+    def as_markdown(self, caption: Optional[str] = None, width: Optional[str] = None, align: Optional[str] = None) -> str:
         if not caption:
             caption = self.filename
 
