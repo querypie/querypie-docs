@@ -4,7 +4,7 @@ Generate commands to convert Confluence XHTML to Markdown
 
 This script reads a list of Confluence pages from a file (list.en.txt),
 extracts the Page_ID, breadcrumbs, and document titles, and generates
-commands to run confluence_xhtml_to_markdown.py for each document.
+commands to run converter/cli.py for each document.
 
 The commands will convert the XHTML files to Markdown files in the
 appropriate directory structure based on the breadcrumbs.
@@ -93,7 +93,7 @@ def generate_commands(list_file, confluence_dir='var/', output_base_dir='target/
             mkdir_cmd = f"mkdir -p {output_dir}"
             
             # Generate conversion command with new options
-            convert_cmd = f"python bin/confluence_xhtml_to_markdown.py {input_file} {output_file} --public-dir={public_dir} --attachment-dir={attachment_dir}"
+            convert_cmd = f"python bin/converter/cli.py {input_file} {output_file} --public-dir={public_dir} --attachment-dir={attachment_dir}"
             
             # Add commands to the list
             commands.append(mkdir_cmd)

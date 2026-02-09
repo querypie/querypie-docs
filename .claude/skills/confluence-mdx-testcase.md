@@ -2,7 +2,7 @@
 
 ## 개요
 
-이 skill은 `confluence_xhtml_to_markdown.py` 스크립트의 테스트케이스를 추가하는 방법을 안내합니다.
+이 skill은 `converter/cli.py` 스크립트의 테스트케이스를 추가하는 방법을 안내합니다.
 
 **상세 사용법**: [confluence-mdx/tests/README.md](/confluence-mdx/tests/README.md)를 참조하세요.
 
@@ -27,7 +27,7 @@ mkdir -p testcases/<page-id>
 ./copy-files-to-testcases.sh
 
 # 3. 예상 출력 생성
-python ../bin/confluence_xhtml_to_markdown.py \
+python ../bin/converter/cli.py \
   testcases/<page-id>/page.xhtml \
   testcases/<page-id>/output.mdx
 
@@ -47,7 +47,7 @@ mkdir -p testcases/<descriptive-name>
 # testcases/<descriptive-name>/page.xhtml 파일 생성
 
 # 3. 예상 출력 생성 및 검토
-python ../bin/confluence_xhtml_to_markdown.py \
+python ../bin/converter/cli.py \
   testcases/<descriptive-name>/page.xhtml \
   testcases/<descriptive-name>/output.mdx
 

@@ -61,7 +61,7 @@ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2ma
 python bin/pages_of_confluence.py --page-id <page_id> --attachments
 
 # 단일 파일 수동 변환
-python bin/confluence_xhtml_to_markdown.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
+python bin/converter/cli.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
 ```
 
 ### 번역 문제 처리

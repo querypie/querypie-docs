@@ -23,7 +23,7 @@ TEST_DIR="testcases"
 BIN_DIR="../bin"
 VENV_DIR="../venv"
 
-CONVERTER_SCRIPT="${BIN_DIR}/confluence_xhtml_to_markdown.py"
+CONVERTER_SCRIPT="${BIN_DIR}/converter/cli.py"
 SKELETON_SCRIPT="${BIN_DIR}/skeleton/cli.py"
 
 # Ensure bin/ is on PYTHONPATH so skeleton package imports resolve

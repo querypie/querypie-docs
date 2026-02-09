@@ -1,6 +1,6 @@
 # Confluence XHTML to Markdown 변환기 테스트
 
-이 디렉토리는 Confluence XHTML 내보내기를 Markdown 형식으로 변환하는 `confluence_xhtml_to_markdown.py` 스크립트의 테스트 케이스를 포함합니다.
+이 디렉토리는 Confluence XHTML 내보내기를 Markdown 형식으로 변환하는 `converter/cli.py` 스크립트의 테스트 케이스를 포함합니다.
 
 ## 디렉토리 구조
 
@@ -28,7 +28,7 @@ confluence-mdx/tests/
 3. 다음 명령을 실행하여 예상 출력을 생성합니다:
    ```
    source ../../venv/bin/activate
-   python ../../scripts/confluence_xhtml_to_markdown.py testcases/<page-id>/page.xhtml testcases/<page-id>/expected.mdx
+   python ../../scripts/converter/cli.py testcases/<page-id>/page.xhtml testcases/<page-id>/expected.mdx
    ```
    위 명령은 이 디렉토리(confluence-mdx/tests)에서 실행합니다.
 4. 적절한 경우 새로 생성된 `output.mdx`를 기준 예상 출력으로 사용합니다.

@@ -1,4 +1,4 @@
-# Makefile for testing confluence_xhtml_to_markdown.py
+# Makefile for testing converter/cli.py
 
 # Variables
 TEST_SCRIPT = ./run-tests.sh

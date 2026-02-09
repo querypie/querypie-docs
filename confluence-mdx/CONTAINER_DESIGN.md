@@ -26,7 +26,8 @@ confluence-mdx/
 │   ├── pages_of_confluence.py
 │   ├── translate_titles.py
 │   ├── generate_commands_for_xhtml2markdown.py
-│   ├── confluence_xhtml_to_markdown.py
+│   ├── converter/
+│   │   └── cli.py
 │   └── generated/
 │       └── xhtml2markdown.ko.sh
 ├── var/                    # 입력 데이터 (컨테이너 내부 저장)
@@ -217,7 +218,7 @@ target/
 set -e
 
 case "$1" in
-  pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|confluence_xhtml_to_markdown.py)
+  pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
     exec python "bin/$@"
     ;;
   generate_commands)

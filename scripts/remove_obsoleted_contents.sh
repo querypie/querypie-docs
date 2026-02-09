@@ -45,10 +45,10 @@ END_OF_USAGE
     \! -path 'docs/latest-ko-confluence/.gitignore' \
     -"$command"
   find \
-    scripts/tests/confluence_xhtml_to_markdown/testcases/[0-9]* \
+    scripts/tests/converter/testcases/[0-9]* \
     -type f -name '*' \
     -mtime +2d \
-    \! -path 'scripts/tests/confluence_xhtml_to_markdown/testcases/*/expected.mdx' \
+    \! -path 'scripts/tests/converter/testcases/*/expected.mdx' \
     -"$command"
 }
 

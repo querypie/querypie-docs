@@ -217,7 +217,7 @@ chmod +x bin/generated/xhtml2markdown.ko.sh
 ### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.ko.sh)
 
 `xhtml2markdown.ko.sh`는 `generate_commands_for_xhtml2markdown.py`에 의해 생성된 스크립트로, 각 XHTML 파일을 Markdown으로 변환하는 명령어들을 실행합니다. 
-이 스크립트는 `confluence_xhtml_to_markdown.py`를 사용하여 변환 작업을 수행합니다.
+이 스크립트는 `converter/cli.py`를 사용하여 변환 작업을 수행합니다.
 
 실행 방법:
 ```bash
@@ -231,9 +231,9 @@ bin/generated/xhtml2markdown.ko.sh
 
 ## Confluence xhtml 을 Markdown 으로 변환하기
 
-### confluence_xhtml_to_markdown.py
+### converter/cli.py
 
-`confluence_xhtml_to_markdown.py`는 Confluence XHTML 내보내기를 깔끔한 Markdown으로 변환하는 스크립트입니다.
+`converter/cli.py`는 Confluence XHTML 내보내기를 깔끔한 Markdown으로 변환하는 스크립트입니다.
 이 스크립트는 다음과 같은 특수 케이스를 처리합니다:
 
 - 코드 블록의 CDATA 섹션
@@ -243,19 +243,19 @@ bin/generated/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 실행
-bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md
+bin/converter/cli.py input_file.xhtml output_file.md
 
 # 로그 레벨 설정
-bin/confluence_xhtml_to_markdown.py input_file.xhtml output_file.md --log-level debug
+bin/converter/cli.py input_file.xhtml output_file.md --log-level debug
 ```
 
 실행 결과:
 - 지정된 출력 파일에 Markdown 형식으로 변환된 내용이 저장됩니다.
 - 이 스크립트는 일반적으로 `xhtml2markdown.ko.sh`에 의해 자동으로 호출됩니다.
 
-### Makefile (confluence_xhtml_to_markdown.py 테스트용)
+### Makefile (converter/cli.py 테스트용)
 
-`Makefile`은 `confluence_xhtml_to_markdown.py` 스크립트의 테스트를 자동화하기 위한 파일입니다. 이 Makefile은 다음과 같은 기능을 제공합니다:
+`Makefile`은 `converter/cli.py` 스크립트의 테스트를 자동화하기 위한 파일입니다. 이 Makefile은 다음과 같은 기능을 제공합니다:
 
 - 모든 테스트 케이스 실행
 - 특정 테스트 케이스 실행

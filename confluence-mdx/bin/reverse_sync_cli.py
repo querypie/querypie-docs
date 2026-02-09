@@ -120,7 +120,7 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
     모든 경로를 절대 경로로 변환하여 cwd에 의존하지 않도록 한다.
     """
     bin_dir = Path(__file__).parent
-    converter = bin_dir / 'confluence_xhtml_to_markdown.py'
+    converter = bin_dir / 'converter' / 'cli.py'
     var_dir = Path(f'var/{page_id}').resolve()
 
     abs_input = Path(patched_xhtml_path).resolve()

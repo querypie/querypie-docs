@@ -113,7 +113,7 @@ latest-ko-confluence/544383110/page.xhtml
     - src/content/ko/user-manual.mdx: Confluence Space 의 "User Manual" 또는 "사용자 매뉴얼" 에 대응합니다.
     - src/content/ko/user-manual/: Confluence Space 의 "User Manual" 하위 문서가 저장됩니다.
 
-## 수행할 작업 1: list.en.txt 파일을 읽고, confluence_xhtml_to_markdown.py 를 실행하는 명령을 생성합니다.
+## 수행할 작업 1: list.en.txt 파일을 읽고, converter/cli.py 를 실행하는 명령을 생성합니다.
 
 - 입력파일: confluence-mdx/var/list.en.txt
     - list.en.txt 의 각 줄은 하나의 문서에 대한 Page_ID, 탐색경로, 문서의 제목을 가리킵니다.

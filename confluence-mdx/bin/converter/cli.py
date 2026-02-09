@@ -16,6 +16,11 @@ from typing import Optional, List
 
 import yaml
 
+# Ensure bin/ is on sys.path when run as a script (e.g. python bin/converter/cli.py)
+_bin_dir = str(Path(__file__).resolve().parent.parent)
+if _bin_dir not in sys.path:
+    sys.path.insert(0, _bin_dir)
+
 import converter.context as ctx
 from converter.context import (
     PAGES_BY_TITLE, PAGES_BY_ID,
