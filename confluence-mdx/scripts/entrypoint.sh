@@ -22,8 +22,8 @@ case "${1:-help}" in
     python bin/generate_commands_for_xhtml2markdown.py "$@"
     ;;
   convert)
-    echo "+ bash bin/xhtml2markdown.ko.sh"
-    exec bash bin/xhtml2markdown.ko.sh
+    echo "+ bash bin/generated/xhtml2markdown.ko.sh"
+    exec bash bin/generated/xhtml2markdown.ko.sh
     ;;
   full) # Execute full workflow
     shift
@@ -32,12 +32,12 @@ case "${1:-help}" in
     python bin/pages_of_confluence.py "$@"
     echo "+ python bin/translate_titles.py"
     python bin/translate_titles.py
-    echo "+ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh"
-    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh
-    echo "+ chmod +x bin/xhtml2markdown.ko.sh"
-    chmod +x bin/xhtml2markdown.ko.sh
-    echo "+ bash bin/xhtml2markdown.ko.sh"
-    bash bin/xhtml2markdown.ko.sh
+    echo "+ python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh"
+    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh
+    echo "+ chmod +x bin/generated/xhtml2markdown.ko.sh"
+    chmod +x bin/generated/xhtml2markdown.ko.sh
+    echo "+ bash bin/generated/xhtml2markdown.ko.sh"
+    bash bin/generated/xhtml2markdown.ko.sh
     ;;
   bash|sh)
     echo "+ $@"

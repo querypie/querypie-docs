@@ -47,7 +47,7 @@ def print_bash_header():
     """
     print("#!/usr/bin/env bash")
     print("# cd confluence-mdx")
-    print("# ./bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/ko/ --public-dir target/public")
+    print("# ./bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/ko/ --public-dir target/public > bin/generated/xhtml2markdown.ko.sh")
     print()
 
 def generate_commands(list_file, confluence_dir='var/', output_base_dir='target/ko/', public_dir='target/public'):

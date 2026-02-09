@@ -27,7 +27,8 @@ confluence-mdx/
 │   ├── translate_titles.py
 │   ├── generate_commands_for_xhtml2markdown.py
 │   ├── confluence_xhtml_to_markdown.py
-│   └── xhtml2markdown.ko.sh
+│   └── generated/
+│       └── xhtml2markdown.ko.sh
 ├── var/                    # 입력 데이터 (컨테이너 내부 저장)
 │   ├── list.txt
 │   ├── list.en.txt
@@ -49,7 +50,7 @@ confluence-mdx/
 ### 2.3 주요 워크플로우
 1. **데이터 수집**: `pages_of_confluence.py` → `var/`에 저장
 2. **제목 번역**: `translate_titles.py` → `var/list.en.txt` 생성
-3. **명령어 생성**: `generate_commands_for_xhtml2markdown.py` → `bin/xhtml2markdown.ko.sh` 생성
+3. **명령어 생성**: `generate_commands_for_xhtml2markdown.py` → `bin/generated/xhtml2markdown.ko.sh` 생성
 4. **변환 실행**: `xhtml2markdown.ko.sh` → `target/`에 MDX 파일 생성
 
 ## 3. Container 설계
@@ -224,15 +225,15 @@ case "$1" in
     python bin/generate_commands_for_xhtml2markdown.py "$@"
     ;;
   convert)
-    exec bash bin/xhtml2markdown.ko.sh
+    exec bash bin/generated/xhtml2markdown.ko.sh
     ;;
   full)
     # 전체 워크플로우 실행
     python bin/pages_of_confluence.py --attachments || true
     python bin/translate_titles.py
-    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/xhtml2markdown.ko.sh
-    chmod +x bin/xhtml2markdown.ko.sh
-    bash bin/xhtml2markdown.ko.sh
+    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh
+    chmod +x bin/generated/xhtml2markdown.ko.sh
+    bash bin/generated/xhtml2markdown.ko.sh
     ;;
   bash|sh)
     exec "$@"

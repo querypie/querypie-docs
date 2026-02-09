@@ -17,7 +17,7 @@ cd querpie-docs/confluence-mdx
 # cache 디렉토리에 데이터를 채우기
 # - 기존 confluence-mdx:latest 이미지에 포함된 /workdir/var/ 아래의 데이터를 cache/ 에 옮깁니다.
 # - var/ 아래의 <page_id> 디렉토리의 데이터를 옮기는 것과 동등합니다.
-1-setup-cache.sh
+setup-cache.sh
 
 # confluence-mdx:latest 이미지를 빌드하기
 docker compose --progress=plain build
@@ -85,10 +85,10 @@ pip3 install requests beautifulsoup4 pyyaml
 2. `confluence-mdx/var/list.en.txt`를 생성합니다.
    - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
    - `translate_titles.py`를 사용합니다.
-3. `confluence-mdx/bin/xhtml2markdown.ko.sh`를 생성합니다.
+3. `confluence-mdx/bin/generated/xhtml2markdown.ko.sh`를 생성합니다.
    - `generate_commands_for_xhtml2markdown.py`를 사용합니다.
 4. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
-   - `confluence-mdx/bin/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
+   - `confluence-mdx/bin/generated/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
    - `confluence-mdx/var/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
 
 무작정 따라해 보기
@@ -99,8 +99,8 @@ $ source venv/bin/activate
 $ pip3 install requests beautifulsoup4 pyyaml
 $ bin/pages_of_confluence.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
 $ bin/translate_titles.py
-$ bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
-$ bin/xhtml2markdown.ko.sh
+$ bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/generated/xhtml2markdown.ko.sh
+$ bin/generated/xhtml2markdown.ko.sh
 # 이제, 변환된 또는 변경된 MDX 파일을 src/content/ko 아래에서 확인할 수 있습니다.
 ```
 
@@ -195,23 +195,23 @@ bin/translate_titles.py
 실행 방법:
 ```bash
 # 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/generated/xhtml2markdown.ko.sh
 ```
 
 사실상 사용하지 않음. 참고용 기능:
 ```bash
 # Confluence 디렉토리 지정
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/generated/xhtml2markdown.ko.sh
 
 # 출력 디렉토리 지정
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/xhtml2markdown.ko.sh
+bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/generated/xhtml2markdown.ko.sh
 
 # 생성된 스크립트에 실행 권한 부여
-chmod +x bin/xhtml2markdown.ko.sh
+chmod +x bin/generated/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
-- `bin/xhtml2markdown.ko.sh` 파일이 생성됩니다.
+- `bin/generated/xhtml2markdown.ko.sh` 파일이 생성됩니다.
 - 이 파일은 각 XHTML 파일을 Markdown으로 변환하기 위한 명령어들을 포함하고 있습니다.
 
 ### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.ko.sh)
@@ -222,7 +222,7 @@ chmod +x bin/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 스크립트 실행
-bin/xhtml2markdown.ko.sh
+bin/generated/xhtml2markdown.ko.sh
 ```
 
 실행 결과:
