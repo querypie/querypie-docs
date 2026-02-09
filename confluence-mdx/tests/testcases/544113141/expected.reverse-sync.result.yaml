@@ -1,7 +1,29 @@
 changes_count: 1
-created_at: '2026-02-08T11:00:33.319083+00:00'
+created_at: '2026-02-09T10:04:24.134228+00:00'
 page_id: '544113141'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -6,12 +6,12\
+    \ @@ \n ### Overview\n \n-기관에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.\n+조직에서 관리하는 DB\
+    \ 커넥션 연결 및 연결해제 이력을 기록합니다.\n \n-### DB Access History 조회하기\n+### 기관에서 관리하는 DB\
+    \ 커넥션 연결 및 연결해제 이력을 기록합니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-<img src=\"/544113141/verify/image-20240730-070842.png\" alt=\"Administrator\
+    \ &gt; Audit &gt; Databases &gt; DB Access History\" width=\"760\" />\n+<img src=\"\
+    /administrator-manual/audit/database-logs/db-access-history/image-20240730-070842.png\"\
+    \ alt=\"Administrator &gt; Audit &gt; Databases &gt; DB Access History\" width=\"\
+    760\" />\n <figcaption>\n Administrator &gt; Audit &gt; Databases &gt; DB Access\
+    \ History\n </figcaption>\n@@ -25,7 +25,7 @@     3.  **Client IP**  : 사용자 IP\n\
+    \ 4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.\n   <figure data-layout=\"\
+    center\" data-align=\"center\">\n-  <img src=\"/544113141/verify/image-20240730-064139.png\"\
+    \ alt=\"image-20240730-064139.png\" width=\"736\" />\n+  <img src=\"/administrator-manual/audit/database-logs/db-access-history/image-20240730-064139.png\"\
+    \ alt=\"image-20240730-064139.png\" width=\"736\" />\n   </figure>\n     1.  **Connection\
+    \ Name**  : 접속한 DB 커넥션명\n     2.  **Database Type** : 데이터베이스 유형\n@@ -60,7 +60,7\
+    \ @@ 각 행을 클릭하면 세부 정보 조회가 가능합니다.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544113141/verify/image-20240730-065045.png\" alt=\"Administrator\
+    \ &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details\"\
+    \ width=\"760\" />\n+<img src=\"/administrator-manual/audit/database-logs/db-access-history/image-20240730-065045.png\"\
+    \ alt=\"Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB\
+    \ Access History Details\" width=\"760\" />\n <figcaption>\n Administrator &gt;\
+    \ Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details\n\
+    \ </figcaption>\n"
+  exact_match: false

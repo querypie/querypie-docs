@@ -1,7 +1,20 @@
 changes_count: 1
-created_at: '2026-02-08T11:00:35.127449+00:00'
+created_at: '2026-02-09T10:04:26.461258+00:00'
 page_id: '544381877'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -6,15 +6,16\
+    \ @@ \n ### Overview\n \n+QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로\
+    \ 등록할 수 있습니다.\n+\n QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 추가할 수\
+    \ 있습니다.\n-\n \n ### 수동으로 클러스터 등록하기\n \n 개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이\
+    \ 필요합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
+    /544381877/verify/image-20240721-054859.png\" alt=\"image-20240721-054859.png\"\
+    \ width=\"760\" />\n+<img src=\"/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters/image-20240721-054859.png\"\
+    \ alt=\"image-20240721-054859.png\" width=\"760\" />\n </figure>\n \n 1. Administrator\
+    \ &gt; Kubernetes &gt; Connection Management &gt; Clusters 메뉴로 이동합니다.\n@@ -63,7\
+    \ +64,7 @@ ### 쿠버네티스 클러스터 연동용 스크립트 이용 안내\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544381877/verify/image-20240511-033842.png\" alt=\"image-20240511-033842.png\"\
+    \ width=\"760\" />\n+<img src=\"/administrator-manual/kubernetes/connection-management/clusters/manually-registering-kubernetes-clusters/image-20240511-033842.png\"\
+    \ alt=\"image-20240511-033842.png\" width=\"760\" />\n </figure>\n \n * 관리자는 사전에\
+    \ 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.\n"
+  exact_match: false

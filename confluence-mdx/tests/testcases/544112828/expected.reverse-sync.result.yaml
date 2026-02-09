@@ -1,7 +1,119 @@
 changes_count: 1
-created_at: '2026-02-08T11:41:07.473641+00:00'
+created_at: '2026-02-09T10:04:23.524612+00:00'
 page_id: '544112828'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -8,7 +8,7\
+    \ @@ \n ### Overview\n \n-QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client,\
+    \ iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n\
+    +QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH\
+    \ Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n \n \n ### 에이전트 앱 다운로드\
+    \ 및 실행하기\n@@ -16,7 +16,7 @@ 1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download`\
+    \ 버튼을 클릭합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
+    \ src=\"/544112828/verify/screenshot-20240804-173002.png\" alt=\"QueryPie Web\
+    \ &gt; 프로필 메뉴\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-173002.png\"\
+    \ alt=\"QueryPie Web &gt; 프로필 메뉴\" width=\"760\" />\n <figcaption>\n QueryPie\
+    \ Web &gt; 프로필 메뉴\n </figcaption>\n@@ -25,7 +25,7 @@ 2. QueryPie Agent Downloads\
+    \ 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을\
+    \ 복사해 둡니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
+    /544112828/verify/image-20240723-154847.png\" alt=\"QueryPie Web &gt; Agent Downloads\
+    \ 팝업창\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/image-20240723-154847.png\"\
+    \ alt=\"QueryPie Web &gt; Agent Downloads 팝업창\" width=\"760\" />\n <figcaption>\n\
+    \ QueryPie Web &gt; Agent Downloads 팝업창\n </figcaption>\n@@ -38,7 +38,7 @@ 3.\
+    \ 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.\n \n <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240804-174002.png\"\
+    \ alt=\"Mac OS 설치 프로그램\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-174002.png\"\
+    \ alt=\"Mac OS 설치 프로그램\" width=\"760\" />\n <figcaption>\n Mac OS 설치 프로그램\n </figcaption>\n\
+    @@ -48,7 +48,7 @@ QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면\
+    \ 로그인 화면으로 진입하게 됩니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-<img src=\"/544112828/verify/agent-03.png\" alt=\"Agent &gt; QueryPie Host\
+    \ 입력\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/agent-03.png\" alt=\"\
+    Agent &gt; QueryPie Host 입력\" width=\"760\" />\n <figcaption>\n Agent &gt; QueryPie\
+    \ Host 입력\n </figcaption>\n@@ -60,13 +60,13 @@ 1. Agent 앱 내 로그인 화면에서 `Login` 버튼을\
+    \ 클릭합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
+    /544112828/verify/screenshot-20240804-173713.png\" alt=\"screenshot-20240804-173713.png\"\
+    \ width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-173713.png\"\
+    \ alt=\"screenshot-20240804-173713.png\" width=\"760\" />\n </figure>\n \n 2.\
+    \ 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, `Continue` 버튼을 클릭합니다.\n \n <figure data-layout=\"\
+    center\" data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240729-171236.png\"\
+    \ alt=\"QueryPie Web &gt; Agent Login Page\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240729-171236.png\"\
+    \ alt=\"QueryPie Web &gt; Agent Login Page\" width=\"760\" />\n <figcaption>\n\
+    \ QueryPie Web &gt; Agent Login Page\n </figcaption>\n@@ -75,7 +75,7 @@ 3. 로그인을\
+    \ 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.\n \n <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240729-171314.png\"\
+    \ alt=\"QueryPie Web &gt; Agent Login Success Page\" width=\"764\" />\n+<img src=\"\
+    /user-manual/user-agent/screenshot-20240729-171314.png\" alt=\"QueryPie Web &gt;\
+    \ Agent Login Success Page\" width=\"764\" />\n <figcaption>\n QueryPie Web &gt;\
+    \ Agent Login Success Page\n </figcaption>\n@@ -84,7 +84,7 @@ 4. Agent 열기를 명시적으로\
+    \ 수행하여 인증정보를 Agent로 전달합니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-<img src=\"/544112828/verify/screenshot-20240804-174209.png\" alt=\"Chrome\
+    \ - Agent App 열기 모달\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-174209.png\"\
+    \ alt=\"Chrome - Agent App 열기 모달\" width=\"760\" />\n <figcaption>\n Chrome -\
+    \ Agent App 열기 모달\n </figcaption>\n@@ -95,7 +95,7 @@ 1. 로그인이 정상적으로 완료되면 Agent\
+    \ 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.<br/>접속할 커넥션에 할당된 `Port` 를 클릭하면,\
+    \ 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.\n \n <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240730-151001.png\"\
+    \ alt=\"Agent &gt; DB Connection Information\" width=\"764\" />\n+<img src=\"\
+    /user-manual/user-agent/screenshot-20240730-151001.png\" alt=\"Agent &gt; DB Connection\
+    \ Information\" width=\"764\" />\n <figcaption>\n Agent &gt; DB Connection Information\n\
+    \ </figcaption>\n@@ -104,7 +104,7 @@ 2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션\
+    \ 접속이 가능합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
+    \ src=\"/544112828/verify/agent-07.png\" alt=\"3rd Party Client를 이용한 DB 커넥션 접속\"\
+    \ width=\"764\" />\n+<img src=\"/user-manual/user-agent/agent-07.png\" alt=\"\
+    3rd Party Client를 이용한 DB 커넥션 접속\" width=\"764\" />\n <figcaption>\n 3rd Party\
+    \ Client를 이용한 DB 커넥션 접속\n </figcaption>\n@@ -121,7 +121,7 @@ * Default 역할 선택시,\
+    \ Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. \n \n <figure\
+    \ data-layout=\"center\" data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240730-162653.png\"\
+    \ alt=\"Agent &gt; Server &gt; Select a Role\" width=\"764\" />\n+<img src=\"\
+    /user-manual/user-agent/screenshot-20240730-162653.png\" alt=\"Agent &gt; Server\
+    \ &gt; Select a Role\" width=\"764\" />\n <figcaption>\n Agent &gt; Server &gt;\
+    \ Select a Role\n </figcaption>\n@@ -136,7 +136,7 @@ * 접속할 서버를 우클릭 후 Open Connection\
+    \ with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544112828/verify/screenshot-20240730-161729.png\" alt=\"\
+    Agent &gt; Server &gt; Open Connection with\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-161729.png\"\
+    \ alt=\"Agent &gt; Server &gt; Open Connection with\" width=\"760\" />\n <figcaption>\n\
+    \ Agent &gt; Server &gt; Open Connection with\n </figcaption>\n@@ -146,7 +146,7\
+    \ @@ * 사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n \n <figure data-layout=\"\
+    center\" data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240730-162532.png\"\
+    \ alt=\"Agent &gt; Server &gt; Open New Session\" width=\"746\" />\n+<img src=\"\
+    /user-manual/user-agent/screenshot-20240730-162532.png\" alt=\"Agent &gt; Server\
+    \ &gt; Open New Session\" width=\"746\" />\n <figcaption>\n Agent &gt; Server\
+    \ &gt; Open New Session\n </figcaption>\n@@ -194,7 +194,7 @@ ### 에이전트를 통한 쿠버네티스\
+    \ 접속\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
+    /544112828/verify/kubernetes-agent-access-flow.png\" alt=\"kubernetes-agent-access-flow.png\"\
+    \ width=\"764\" />\n+<img src=\"/user-manual/user-agent/kubernetes-agent-access-flow.png\"\
+    \ alt=\"kubernetes-agent-access-flow.png\" width=\"764\" />\n </figure>\n \n *\
+    \ 권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 `kubeconfig` 파일이 자동으로 수신됩니다.\n@@ -208,7 +208,7\
+    \ @@ 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544112828/verify/screenshot-20240730-152705.png\" alt=\"\
+    Agent &gt; Kubernetes &gt; Select a Role\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-152705.png\"\
+    \ alt=\"Agent &gt; Kubernetes &gt; Select a Role\" width=\"760\" />\n <figcaption>\n\
+    \ Agent &gt; Kubernetes &gt; Select a Role\n </figcaption>\n@@ -225,7 +225,7 @@\
+    \ 각 클러스터 우측의 `\U0001F50D` 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된\
+    \ 정책 목록을 자세히 확인할 수 있습니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-<img src=\"/544112828/verify/screenshot-20240730-161141.png\" alt=\"Agent\
+    \ &gt; Policy Information\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-161141.png\"\
+    \ alt=\"Agent &gt; Policy Information\" width=\"760\" />\n <figcaption>\n Agent\
+    \ &gt; Policy Information\n </figcaption>\n@@ -236,7 +236,7 @@ Agent 설정 메뉴에서 `KubeConfig\
+    \ Path` 버튼을 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.\n \n <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240730-154623.png\"\
+    \ alt=\"Agent &gt; Settings &gt; Configure Kubeconfig Path\" width=\"764\" />\n\
+    +<img src=\"/user-manual/user-agent/screenshot-20240730-154623.png\" alt=\"Agent\
+    \ &gt; Settings &gt; Configure Kubeconfig Path\" width=\"764\" />\n <figcaption>\n\
+    \ Agent &gt; Settings &gt; Configure Kubeconfig Path\n </figcaption>\n@@ -248,7\
+    \ +248,7 @@ \n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
+    \ src=\"/544112828/verify/screenshot-20240730-163530.png\" alt=\"경로 지정 팝업\" width=\"\
+    760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-163530.png\"\
+    \ alt=\"경로 지정 팝업\" width=\"760\" />\n <figcaption>\n 경로 지정 팝업\n </figcaption>\n\
+    @@ -287,7 +287,7 @@ 프로필 영역 우측 `⚙️` 버튼을 클릭하여 설정 메뉴를 엽니다. `Reset All Settings` 버튼을\
+    \ 클릭합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
+    /544112828/verify/screenshot-20240730-153518.png\" alt=\"Agent &gt; Settings\"\
+    \ width=\"361\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-153518.png\"\
+    \ alt=\"Agent &gt; Settings\" width=\"361\" />\n <figcaption>\n Agent &gt; Settings\n\
+    \ </figcaption>\n@@ -299,7 +299,7 @@ 메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다.\
+    \ `Reset All Settings` 버튼을 클릭합니다.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544112828/verify/screenshot-20240730-153524.png\" alt=\"\
+    Agent &gt; App menu\" width=\"363\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240730-153524.png\"\
+    \ alt=\"Agent &gt; App menu\" width=\"363\" />\n <figcaption>\n Agent &gt; App\
+    \ menu\n </figcaption>\n"
+  exact_match: false

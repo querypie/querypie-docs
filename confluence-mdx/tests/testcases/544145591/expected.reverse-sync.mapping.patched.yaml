@@ -10,19 +10,17 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 1
-  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
-  xhtml_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
+  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
+  xhtml_text: General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
   xhtml_xpath: p[1]
 - block_id: html_block-3
   children: []
   type: html_block
   xhtml_element_index: 2
-  xhtml_plain_text: Administrator > General > Company Management > General
+  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
   xhtml_text: <ac:image ac:align="center" ac:alt="image-20250822-103044.png" ac:custom-width="true"
-    ac:layout="center" ac:original-height="952" ac:original-width="908" ac:width="760"><ri:attachment
-    ri:filename="image-20250822-103044.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
-    &gt; General &gt; Company Management &gt; General</p></ac:caption><ac:adf-mark
-    color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
+    ac:layout="center" ac:original-height="952" ac:original-width="908" ac:width="760">General
+    페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.</ac:image>
   xhtml_xpath: ac:image[1]
 - block_id: html_block-4
   children: []
@@ -712,6 +710,6 @@ blocks:
     는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야 실행계획
     결과가 첨부됩니다.
   xhtml_xpath: p[25]
-created_at: '2026-02-08T11:28:56.530258+00:00'
+created_at: '2026-02-09T10:04:24.691747+00:00'
 page_id: '544145591'
 source_xhtml: patched.xhtml

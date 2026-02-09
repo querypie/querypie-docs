@@ -1,7 +1,55 @@
 changes_count: 1
-created_at: '2026-02-08T11:00:37.520949+00:00'
+created_at: '2026-02-09T10:04:30.212880+00:00'
 page_id: '880181257'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -11,14 +11,14\
+    \ @@ 1. 사용자 화면 상단 Workflow 메뉴로 이동합니다.\n 2. 좌측 상단 `Submit Request` 버튼 클릭후 DB Access\
+    \ Request 항목을 선택합니다. <br/> \n   <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-  <img src=\"/880181257/verify/Screenshot-2025-03-06-at-1.19.24-PM.png\" alt=\"\
+    Screenshot-2025-03-06-at-1.19.24-PM.png\" width=\"712\" />\n+  <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-1.19.24-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-1.19.24-PM.png\" width=\"712\" />\n   </figure>\n\
+    \ 3. Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.\n 4. DB Connection 목록에서 Type이 'Custom\
+    \ Data Source'인 항목을 선택합니다.\n 5. 다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 “-”로 표기됩니다.\
+    \ \n 6. Expiration Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다. <br/> \n  \
+    \ <figure data-layout=\"center\" data-align=\"center\">\n-  <img src=\"/880181257/verify/Screenshot-2025-03-06-at-1.22.28-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-1.22.28-PM.png\" width=\"712\" />\n+  <img src=\"\
+    /user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-1.22.28-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-1.22.28-PM.png\" width=\"712\" />\n   </figure>\n\
+    \ 7. 작성을 완료했다면 하단 `Submit`버튼을 클릭하여 신청을 완료합니다. \n 8. 관리자의 승인을 받았다면 좌측 Workflow\
+    \ &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.\n@@ -36,13 +36,13 @@     * QueryPie\
+    \ Agent를 실행합니다.\n     * Database 항목에서 Custom Data Source를 확인할 수 있습니다. <br/> \n\
+    \       <figure data-layout=\"center\" data-align=\"center\">\n-      <img src=\"\
+    /880181257/verify/Screenshot-2025-03-06-at-2.05.26-PM.png\" alt=\"Screenshot-2025-03-06-at-2.05.26-PM.png\"\
+    \ width=\"400\" />\n+      <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.05.26-PM.png\" width=\"400\" />\n       </figure>\n\
+    \ 2.  **Connection Guide 확인** \n     * Agent에서 Custom Data Source 커넥션 행을 클릭하면\
+    \ Port 정보를 담은 행이 보입니다.\n     * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할\
+    \ 수 있습니다. <br/> \n       <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-      <img src=\"/880181257/verify/Screenshot-2025-03-06-at-2.08.11-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.08.11-PM.png\" width=\"712\" />\n+      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.08.11-PM.png\" width=\"712\" />\n       </figure>\n\
+    \     * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.\n     * Privileges는\
+    \ \"-\"로 표시됩니다.\n@@ -51,7 +51,7 @@     *  **Host와 Port는 Connection Guide에 명시되어있는\
+    \ 정보를 입력해야합니다.**  \n     * 벤더에 따라 추가 정보를 입력합니다.\n       <figure data-layout=\"\
+    center\" data-align=\"center\">\n-      <img src=\"/880181257/verify/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n+      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n       </figure>\n\
+    \ \n <Callout type=\"important\">\n@@ -65,11 +65,11 @@     * 사용자 화면 상단 Databases를\
+    \ 클릭합니다. \n     * 좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data\
+    \ Source가 표시됩니다. <br/> \n       <figure data-layout=\"center\" data-align=\"center\"\
+    >\n-      <img src=\"/880181257/verify/Screenshot-2025-03-06-at-2.22.22-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.22.22-PM.png\" width=\"712\" />\n+      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.22.22-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.22.22-PM.png\" width=\"712\" />\n       </figure>\n\
+    \ 2.  **접속 불가 안내** \n     * Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.\n   \
+    \  * 아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다.  <br/> \"Access is only possible through\
+    \ a proxy and cannot be accessed through the web. Please open the QueryPie Agent\
+    \ to connect to the Custom Data Source.\"\n       <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n-      <img src=\"/880181257/verify/Screenshot-2025-03-06-at-2.23.37-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.23.37-PM.png\" width=\"712\" />\n+      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.23.37-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.23.37-PM.png\" width=\"712\" />\n       </figure>\n"
+  exact_match: false

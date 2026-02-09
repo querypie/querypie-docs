@@ -1,7 +1,23 @@
 changes_count: 1
-created_at: '2026-02-08T11:00:34.255092+00:00'
+created_at: '2026-02-09T10:04:25.311336+00:00'
 page_id: '544377869'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -20,7 +20,7\
+    \ @@ 접속을 허용할 커넥션에서 Proxy 사용 여부를 활성화합니다.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544377869/verify/image-20240725-070857.png\" alt=\"Administrator\
+    \ &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Connection\
+    \ Details &gt; Proxy Usage\" width=\"760\" />\n+<img src=\"/overview/proxy-management/enable-database-proxy/image-20240725-070857.png\"\
+    \ alt=\"Administrator &gt; Databases &gt; Connection Management &gt; DB Connections\
+    \ &gt; Connection Details &gt; Proxy Usage\" width=\"760\" />\n <figcaption>\n\
+    \ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections\
+    \ &gt; Connection Details &gt; Proxy Usage\n </figcaption>\n@@ -47,7 +47,7 @@\
+    \ </Callout>\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
+    \ src=\"/544377869/verify/image-20240725-071030.png\" alt=\"Administrator &gt;\
+    \ Databases &gt; Connection Management &gt; DB Connections &gt; Proxy Management\"\
+    \ width=\"760\" />\n+<img src=\"/overview/proxy-management/enable-database-proxy/image-20240725-071030.png\"\
+    \ alt=\"Administrator &gt; Databases &gt; Connection Management &gt; DB Connections\
+    \ &gt; Proxy Management\" width=\"760\" />\n <figcaption>\n Administrator &gt;\
+    \ Databases &gt; Connection Management &gt; DB Connections &gt; Proxy Management\n\
+    \ </figcaption>\n"
+  exact_match: false
