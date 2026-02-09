@@ -77,10 +77,10 @@ cd confluence-mdx
 source venv/bin/activate
 
 # 전체 비교
-python3 bin/mdx_to_skeleton.py --recursive --max-diff=10
+python3 bin/skeleton/cli.py --recursive --max-diff=10
 
 # 특정 파일만 비교
-python3 bin/mdx_to_skeleton.py ../src/content/en/path/to/file.mdx
+python3 bin/skeleton/cli.py ../src/content/en/path/to/file.mdx
 ```
 
 **중요**: Skeleton MDX 비교는 빈 줄의 누락/추가 차이도 감지합니다. 영어/일본어 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다. Skeleton 비교에서 발견된 빈 줄 차이를 무시하지 마세요.
@@ -180,7 +180,7 @@ git status public/
 
 1. 불일치 내용 확인:
    ```bash
-   python3 bin/mdx_to_skeleton.py ../src/content/en/path/to/file.mdx
+   python3 bin/skeleton/cli.py ../src/content/en/path/to/file.mdx
    ```
 2. 번역 파일의 구조를 한국어 원본과 동일하게 수정
 3. 공백, 줄 바꿈을 원본과 정확히 일치시킴

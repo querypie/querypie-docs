@@ -18,7 +18,7 @@ try:
 except ImportError:
     yaml = None
 
-from skeleton_common import (
+from skeleton.common import (
     extract_language_code,
     get_korean_equivalent_path,
     get_path_without_lang_dir,
@@ -134,7 +134,7 @@ def load_ignore_rules(ignore_file_path: Optional[Path] = None) -> Dict[str, Set[
     if ignore_file_path is None:
         # Default location: same directory as this script
         script_dir = Path(__file__).parent
-        ignore_file_path = script_dir / 'ignore_skeleton_diff.yaml'
+        ignore_file_path = script_dir / 'ignore_rules.yaml'
     
     if not ignore_file_path.exists():
         # File doesn't exist, return empty rules

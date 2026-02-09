@@ -82,12 +82,12 @@ function process_file() {
   echo "# Target: $file"
 
   # Step 1: Run without --use-ignore
-  echo "# --- Step 1: mdx_to_skeleton.py (without --use-ignore) ---"
-  bin/mdx_to_skeleton.py "$file" 2>&1
+  echo "# --- Step 1: skeleton/cli.py (without --use-ignore) ---"
+  PYTHONPATH=bin bin/skeleton/cli.py "$file" 2>&1
 
   # Step 2: Run with --use-ignore
-  echo "# --- Step 2: mdx_to_skeleton.py (with --use-ignore) ---"
-  bin/mdx_to_skeleton.py --use-ignore "$file" 2>&1
+  echo "# --- Step 2: skeleton/cli.py (with --use-ignore) ---"
+  PYTHONPATH=bin bin/skeleton/cli.py --use-ignore "$file" 2>&1
 
   # Ask for user confirmation (skip if --yes option is provided)
   if [[ "$YES_MODE" == false ]]; then

@@ -2,14 +2,14 @@
 
 ## 개요
 
-이 skill은 `mdx_to_skeleton.py` 도구를 사용하여 한국어 원본 MDX 파일과 번역본(영어/일본어) 간의 불일치를 감지하기 위한 가이드라인을 제공합니다.
+이 skill은 `skeleton/cli.py` 도구를 사용하여 한국어 원본 MDX 파일과 번역본(영어/일본어) 간의 불일치를 감지하기 위한 가이드라인을 제공합니다.
 
 **Skeleton MDX 개념**: [docs/translation.md](/docs/translation.md)의 "Skeleton MDX 를 비교하기" 섹션을 참조하세요.
 
 ## 도구 위치
 
-- **스크립트**: `confluence-mdx/bin/mdx_to_skeleton.py`
-- **지원 모듈**: `confluence-mdx/bin/skeleton_diff.py`, `skeleton_common.py`
+- **스크립트**: `confluence-mdx/bin/skeleton/cli.py`
+- **지원 모듈**: `confluence-mdx/bin/skeleton/diff.py`, `skeleton/common.py`
 
 ## 빠른 시작
 
@@ -18,10 +18,10 @@ cd confluence-mdx/
 source venv/bin/activate
 
 # 전체 비교 실행 (최대 20개 차이까지 출력)
-bin/mdx_to_skeleton.py --recursive --max-diff=20
+bin/skeleton/cli.py --recursive --max-diff=20
 
 # 특정 파일 비교
-bin/mdx_to_skeleton.py target/en/path/to/file.mdx
+bin/skeleton/cli.py target/en/path/to/file.mdx
 ```
 
 ## 작동 방식
@@ -69,7 +69,7 @@ bin/mdx_to_skeleton.py target/en/path/to/file.mdx
 ## 비교에서 파일 제외
 
 ```bash
-bin/mdx_to_skeleton.py --recursive --max-diff=5 --exclude /index.skel.mdx
+bin/skeleton/cli.py --recursive --max-diff=5 --exclude /index.skel.mdx
 ```
 
 ## 정상적인 차이 예외
@@ -80,7 +80,7 @@ bin/mdx_to_skeleton.py --recursive --max-diff=5 --exclude /index.skel.mdx
 
 ## 번역 수정 시 주의사항
 
-- `mdx_to_skeleton.py` 스크립트를 수정하지 않음
+- `skeleton/cli.py` 스크립트를 수정하지 않음
 - [docs/translation.md](/docs/translation.md)의 번역 규칙 준수
 - 마크다운 포맷팅을 원본과 정확히 일치시킴
 

@@ -6,7 +6,7 @@ This script converts MDX files to skeleton format by preserving the markdown str
 and replacing text content with a _TEXT_ placeholder.
 
 Usage:
-    python mdx_to_skeleton.py path/to/filename.mdx
+    python skeleton/cli.py path/to/filename.mdx
     # Creates path/to/filename.skel.mdx
 
 Features Preserved:
@@ -92,14 +92,14 @@ from pathlib import Path
 from typing import List, Tuple, Optional
 
 # Import modules for recursive processing and comparison
-from skeleton_compare import compare_files
-from skeleton_diff import (
+from skeleton.compare import compare_files
+from skeleton.diff import (
     compare_with_korean_skel,
     process_directories_recursive,
     initialize_config,
     should_exclude_file,
 )
-from skeleton_common import (
+from skeleton.common import (
     extract_language_code,
     get_korean_equivalent_path,
 )
@@ -1265,7 +1265,7 @@ def compare_skeleton_files(
         - comparison_result: 'matched' if files are identical, 'unmatched' if different, None if not compared
         - unmatched_file_path: Path to the unmatched .mdx file (with target/{lang} prefix) if unmatched, None otherwise
     """
-    import skeleton_diff
+    from skeleton import diff as skeleton_diff
     # Access the internal comparison function
     return skeleton_diff._compare_two_skeleton_files(
         korean_skel_path,

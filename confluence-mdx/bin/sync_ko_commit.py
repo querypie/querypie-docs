@@ -55,7 +55,7 @@
 │ Step 5: 번역 결과 적용 및 검증                                       │
 │                                                                 │
 │ - 번역된 라인으로 파일 업데이트                                        │
-│ - mdx_to_skeleton.py로 구조 일치 확인                               │
+│ - skeleton/cli.py로 구조 일치 확인                               │
 │ - npm run build로 빌드 확인                                        │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -73,7 +73,7 @@ $ python bin/sync_ko_commit.py ae93da7e --dry-run
 $ python bin/sync_ko_commit.py ae93da7e --lang en
 
 # 검증
-$ cd confluence-mdx && bin/mdx_to_skeleton.py --recursive --max-diff=10
+$ cd confluence-mdx && bin/skeleton/cli.py --recursive --max-diff=10
 ```
 
 ## 제약사항 및 가정
@@ -317,7 +317,7 @@ def main():
         print("Next steps:")
         print("  1. Review changes: git diff src/content/en src/content/ja")
         print("  2. Translate Korean text in changed lines to English/Japanese")
-        print("  3. Verify: cd confluence-mdx && bin/mdx_to_skeleton.py --recursive --max-diff=10")
+        print("  3. Verify: cd confluence-mdx && bin/skeleton/cli.py --recursive --max-diff=10")
         print("  4. Build: npm run build")
         print("  5. Commit: git add src/content/en src/content/ja && git commit")
 

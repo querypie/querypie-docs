@@ -89,7 +89,7 @@ git diff src/content/ja/
 ```bash
 # Skeleton 구조 일치 확인
 cd confluence-mdx
-python3 bin/mdx_to_skeleton.py --recursive --max-diff=10
+python3 bin/skeleton/cli.py --recursive --max-diff=10
 
 # 빌드 확인
 cd ..
@@ -109,7 +109,7 @@ python3 bin/sync_ko_commit.py ae93da7e
 python3 bin/restore_alt_from_diff.py --apply
 
 # 3. 검증
-python3 bin/mdx_to_skeleton.py --recursive --max-diff=10
+python3 bin/skeleton/cli.py --recursive --max-diff=10
 ```
 
 ## 주의사항

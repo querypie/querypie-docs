@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Unit tests for mdx_to_skeleton.py
+Unit tests for skeleton/cli.py
 
-This test suite validates all modules and functions in mdx_to_skeleton.py:
+This test suite validates all modules and functions in skeleton/cli.py:
 - ContentProtector class
 - TextProcessor class
 - Utility functions (process_yaml_frontmatter, process_text_line, etc.)
@@ -19,10 +19,10 @@ import sys
 import os
 from pathlib import Path
 
-# Add the bin directory to the path so we can import mdx_to_skeleton
+# Add the bin directory to the path so we can import skeleton package
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'bin'))
 
-from mdx_to_skeleton import (
+from skeleton.cli import (
     ContentProtector,
     process_yaml_frontmatter,
     convert_mdx_to_skeleton,
@@ -1599,7 +1599,7 @@ def test_pattern_normalization_remove_trailing_text():
     - 2. _TEXT_ `_TEXT_` _TEXT_ -> 2. _TEXT_ `_TEXT_`
     - _TEXT_ **_TEXT_** _TEXT_ -> _TEXT_ **_TEXT_**
     """
-    from mdx_to_skeleton import TextProcessor
+    from skeleton.cli import TextProcessor
     
     processor = TextProcessor()
     
@@ -1628,7 +1628,7 @@ def test_pattern_normalization_reorder_inline_code():
     - 2. `_TEXT_` _TEXT_ -> 2. _TEXT_ `_TEXT_`
     - 3. `_TEXT_` _TEXT_ -> 3. _TEXT_ `_TEXT_`
     """
-    from mdx_to_skeleton import TextProcessor
+    from skeleton.cli import TextProcessor
     
     processor = TextProcessor()
     
@@ -1655,7 +1655,7 @@ def test_pattern_normalization_complex_with_links():
     Test case:
     - _TEXT_ [_TEXT_](url) _TEXT_ **_TEXT_** _TEXT_ -> _TEXT_ **_TEXT_** [_TEXT_](url)
     """
-    from mdx_to_skeleton import TextProcessor
+    from skeleton.cli import TextProcessor
     
     processor = TextProcessor()
     
@@ -1672,7 +1672,7 @@ def test_pattern_normalization_preserves_structure():
     Test that pattern normalization preserves markdown structure
     (headers, list markers, indentation, etc.)
     """
-    from mdx_to_skeleton import TextProcessor
+    from skeleton.cli import TextProcessor
     
     processor = TextProcessor()
     
@@ -1694,7 +1694,7 @@ def test_pattern_normalization_no_change_needed():
     Test that lines that don't need normalization remain unchanged
     Note: Single patterns should remain unchanged, but multiple patterns may be reordered
     """
-    from mdx_to_skeleton import TextProcessor
+    from skeleton.cli import TextProcessor
     
     processor = TextProcessor()
     
@@ -1795,7 +1795,7 @@ def run_all_tests():
     passed = 0
     failed = 0
     
-    print("Running unit tests for mdx_to_skeleton.py")
+    print("Running unit tests for skeleton/cli.py")
     print("=" * 60)
     
     for test_func in test_functions:

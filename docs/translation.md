@@ -36,20 +36,20 @@
 
 ## Skeleton MDX 를 비교하기
 
-- `confluence-mdx/bin/mdx_to_skeleton.py` 를 실행하여, `filename.mdx`에서 생성한 `filename.skel.mdx` 를 Skeleton MDX 라고 합니다.
+- `confluence-mdx/bin/skeleton/cli.py` 를 실행하여, `filename.mdx`에서 생성한 `filename.skel.mdx` 를 Skeleton MDX 라고 합니다.
     - 이 파일은 자연어로 작성된 MDX 문서에서 Markdown, MDX 문법 요소만을 남겨두고, 자연어 문장을 _TEXT_ 와 같은 키워드로 대체한 파일입니다.
     - 한국어, 일본어, 영어 등 원문의 언어와 무관하게, Skeleton MDX 는 동일한 내용의 파일이 생성되는 것이 특징입니다.
     - 이 Skeleton MDX 파일을 비교하여, 원문과 번역문의 MDX 파일이 동일한 구성을 갖고 있는지, 문장의 수가 동일한지, Image link 가 동일한
       파일을 가리키는지, 검증할 수 있습니다.
-- `mdx_to_skeleton.py`는 venv 환경에서 실행할 수 있습니다.
-    - `cd confluence-mdx; source venv/bin/activate; python bin/mdx_to_skeleton.py filename.mdx` 와 같이 실행할 수 있습니다.
+- `skeleton/cli.py`는 venv 환경에서 실행할 수 있습니다.
+    - `cd confluence-mdx; source venv/bin/activate; python bin/skeleton/cli.py filename.mdx` 와 같이 실행할 수 있습니다.
     - Skeleton MDX 파일은 원문 MDX 파일과 동일한 디렉토리에 생성됩니다.
-- `bin/mdx_to_skeleton.py --recursive`를 실행하면, target 디렉토리 아래의 모든 MDX 파일에 대해 Skeleton MDX 를 생성하고,
+- `bin/skeleton/cli.py --recursive`를 실행하면, target 디렉토리 아래의 모든 MDX 파일에 대해 Skeleton MDX 를 생성하고,
   한국어 원문 MDX 와 번역문 MDX 의 Skeleton MDX 를 비교하여 줍니다. 이때, diff 결과와 유사한 형식의 결과가 출력되는데, Skeleton MDX 의 비교와 함께
   원문 MDX 와 번역문 MDX 의 해당 라인을 diff 형식과 유사하게 보여줍니다. 이를 활용하여, 원문 MDX 와 번역문 MDX 의 차이가 발생한 부분을 효과적으로
   파악할 수 있습니다.
 - 특정 번역문과 원문의 Skeleton MDX 를 비교하는 방법
-    1. `bin/mdx_to_skeleton.py target/en/path/to/file.mdx`와 같이 실행합니다. target/en, target/ja 아래에는 src/content/en, src/content/ja 아래의
+    1. `bin/skeleton/cli.py target/en/path/to/file.mdx`와 같이 실행합니다. target/en, target/ja 아래에는 src/content/en, src/content/ja 아래의
        디렉토리 경로가 Symbolic link 로 연결되어 있고, MDX 파일에서 Skeleton MDX 를 생성하여 비교하는 기능이 작동합니다.
 - Skeleton MDX 에서 원문과 번역문은 줄바꿈, 공백 차이가 없어야 합니다.
 - 그러나, 몇몇 예외적인 경우, 원문과 번역문의 Skeleton MDX 의 차이가 발생할 수 있으며, 이는 정상적인 번역 결과로 간주합니다.

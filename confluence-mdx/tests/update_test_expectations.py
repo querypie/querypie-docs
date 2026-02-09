@@ -20,7 +20,7 @@ from pathlib import Path
 # Add the bin directory to the path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'bin'))
 
-from mdx_to_skeleton import convert_mdx_to_skeleton
+from skeleton.cli import convert_mdx_to_skeleton
 
 
 def extract_test_input(test_code: str) -> str:
