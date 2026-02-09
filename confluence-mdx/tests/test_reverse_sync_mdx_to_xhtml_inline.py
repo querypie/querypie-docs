@@ -201,6 +201,37 @@ class TestReplaceInnerHtml:
         assert '<li><p>new item1</p></li>' in result
         assert '<li><p>new item2</p></li>' in result
 
+    def test_skip_when_old_plain_text_mismatch(self):
+        """old_plain_text와 요소 텍스트가 불일치하면 패치를 건너뛴다."""
+        from reverse_sync.xhtml_patcher import patch_xhtml
+
+        xhtml = '<p>Actual content</p>'
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': 'Different text',
+            'new_inner_xhtml': '<strong>Should not appear</strong>',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert 'Actual content' in result
+        assert 'Should not appear' not in result
+
+    def test_skip_preserves_complex_children(self):
+        """검증 가드가 Confluence 전용 자식 요소 파괴를 방지한다."""
+        from reverse_sync.xhtml_patcher import patch_xhtml
+
+        xhtml = (
+            '<p>Paragraph text</p>'
+            '<ac:image><ri:attachment ri:filename="img.png"></ri:attachment></ac:image>'
+        )
+        patches = [{
+            'xhtml_xpath': 'ac:image[1]',
+            'old_plain_text': 'Not matching text',
+            'new_inner_xhtml': 'Wrong replacement',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert 'ri:attachment' in result
+        assert 'Wrong replacement' not in result
+
 
 # --- 중첩 리스트 테스트 ---
 

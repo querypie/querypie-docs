@@ -29,6 +29,10 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
             continue
 
         if 'new_inner_xhtml' in patch:
+            old_text = patch.get('old_plain_text', '')
+            current_plain = element.get_text()
+            if old_text and current_plain.strip() != old_text.strip():
+                continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
         else:
             old_text = patch['old_plain_text']
