@@ -7,16 +7,14 @@ Structure of list.txt in Korean
 - <page_id> \t <first-breadcrumb> ' />> ' <second-breadcrumb> ' />> ' ...
 """
 
-# Paths
-TRANSLATIONS_FILE = "etc/korean-titles-translations.txt"
-INPUT_FILE = "var/list.txt"
-OUTPUT_FILE = "var/list.en.txt"
+import argparse
+import sys
 
 
-def load_translations():
+def load_translations(translations_file: str) -> dict:
     """Load translations from the translations file"""
     translations = {}
-    with open(TRANSLATIONS_FILE, 'r', encoding='utf-8') as f:
+    with open(translations_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith('#') or '|' not in line:
@@ -32,9 +30,9 @@ def load_translations():
     return translations
 
 
-def translate_file(translations):
-    """Translate Korean titles in list.en.txt to English"""
-    with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+def translate_file(translations: dict, input_file: str, output_file: str) -> None:
+    """Translate Korean titles in input file to English and write to output file"""
+    with open(input_file, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # Sort translations by length (longest first) to avoid partial matches
@@ -47,18 +45,28 @@ def translate_file(translations):
         content = content.replace(f"\t{korean}", f"\t{english}")
 
     # Write the translated content to the output file
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(content)
 
 
 def main():
     """Main function"""
-    translations = load_translations()
+    parser = argparse.ArgumentParser(
+        description='Translate Korean titles in list.txt to English')
+    parser.add_argument('--translations', default='etc/korean-titles-translations.txt',
+                        help='Path to translations file (default: etc/korean-titles-translations.txt)')
+    parser.add_argument('--input', default='var/list.txt',
+                        help='Path to input file (default: var/list.txt)')
+    parser.add_argument('--output', default='var/list.en.txt',
+                        help='Path to output file (default: var/list.en.txt)')
+    args = parser.parse_args()
+
+    translations = load_translations(args.translations)
     print(f"Loaded {len(translations)} translations")
 
-    translate_file(translations)
-    print(f"Translated file saved to {OUTPUT_FILE}")
+    translate_file(translations, args.input, args.output)
+    print(f"Translated file saved to {args.output}")
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

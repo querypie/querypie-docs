@@ -59,8 +59,8 @@ class Config:
     default_output_dir: str = "var"
     cache_dir: str = "cache"
     translations_file: str = "etc/korean-titles-translations.txt"
-    email: str = None
-    api_token: str = None
+    email: Optional[str] = None
+    api_token: Optional[str] = None
     download_attachments: bool = False
     mode: str = "recent"  # Mode: "local", "remote", or "recent"
 
@@ -154,9 +154,9 @@ class Page:
     page_id: str
     title: str
     title_orig: str
-    breadcrumbs: List[str] = None
-    breadcrumbs_en: List[str] = None
-    path: List[str] = None
+    breadcrumbs: Optional[List[str]] = None
+    breadcrumbs_en: Optional[List[str]] = None
+    path: Optional[List[str]] = None
 
     def __post_init__(self):
         if self.breadcrumbs is None:
