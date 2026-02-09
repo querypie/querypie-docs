@@ -3,7 +3,9 @@
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 """
 import argparse
+import html as html_module
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -244,37 +246,69 @@ def run_verify(
     return result
 
 
+_NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
+
+
+def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
+    """MDX 블록 content를 XHTML plain text와 대응하는 형태로 변환한다."""
+    text = content.strip()
+
+    if block_type == 'heading':
+        return text.lstrip('#').strip()
+
+    lines = text.split('\n')
+    parts = []
+    for line in lines:
+        s = line.strip()
+        if not s:
+            continue
+        if s.startswith('<figure') or s.startswith('<img') or s.startswith('</figure'):
+            continue
+        s = re.sub(r'^\d+\.\s+', '', s)
+        s = re.sub(r'^[-*+]\s+', '', s)
+        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
+        s = re.sub(r'`([^`]+)`', r'\1', s)
+        s = re.sub(r'<[^>]+/?>', '', s)
+        s = html_module.unescape(s)
+        s = s.strip()
+        if s:
+            parts.append(s)
+    return ''.join(parts)
+
+
 def _build_patches(
     changes: List[BlockChange],
     original_blocks: List[MdxBlock],
     improved_blocks: List[MdxBlock],
     mappings: List[BlockMapping],
 ) -> List[Dict[str, str]]:
-    """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다."""
+    """diff 변경과 매핑을 인덱스 기반으로 결합하여 XHTML 패치 목록을 구성한다.
+
+    MDX content 블록(empty/frontmatter/import 제외)과 XHTML 매핑은
+    같은 문서를 순서대로 파싱한 결과이므로 순번이 1:1 대응된다.
+    """
+    # MDX 블록 index → XHTML mapping index
+    content_idx = 0
+    block_to_mapping: Dict[int, int] = {}
+    for i, block in enumerate(original_blocks):
+        if block.type not in _NON_CONTENT_TYPES:
+            block_to_mapping[i] = content_idx
+            content_idx += 1
+
     patches = []
-
     for change in changes:
-        old_block = change.old_block
-        if old_block.type in ('empty', 'frontmatter', 'import_statement'):
+        if change.old_block.type in _NON_CONTENT_TYPES:
             continue
-
-        old_plain = old_block.content.strip()
-        if old_block.type == 'heading':
-            old_plain = old_plain.lstrip('#').strip()
-
-        for mapping in mappings:
-            if mapping.xhtml_plain_text.strip() == old_plain:
-                new_block = change.new_block
-                new_plain = new_block.content.strip()
-                if new_block.type == 'heading':
-                    new_plain = new_plain.lstrip('#').strip()
-
-                patches.append({
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': new_plain,
-                })
-                break
+        mapping_idx = block_to_mapping.get(change.index)
+        if mapping_idx is not None and mapping_idx < len(mappings):
+            mapping = mappings[mapping_idx]
+            new_block = change.new_block
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': _normalize_mdx_to_plain(
+                    new_block.content, new_block.type),
+            })
 
     return patches
 

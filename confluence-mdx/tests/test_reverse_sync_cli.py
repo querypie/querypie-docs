@@ -7,6 +7,7 @@ from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch,
+    _normalize_mdx_to_plain, _build_patches,
 )
 
 
@@ -453,3 +454,119 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
+
+
+# --- _normalize_mdx_to_plain tests ---
+
+
+def test_normalize_mdx_heading():
+    """## Title → Title"""
+    assert _normalize_mdx_to_plain('## Title', 'heading') == 'Title'
+    assert _normalize_mdx_to_plain('### Sub Title', 'heading') == 'Sub Title'
+
+
+def test_normalize_mdx_paragraph():
+    """**bold** and `code` → bold and code"""
+    result = _normalize_mdx_to_plain('**bold** and `code`', 'paragraph')
+    assert result == 'bold and code'
+
+
+def test_normalize_mdx_list():
+    """리스트 마커, bold, entities 제거 + 연결."""
+    content = (
+        "1. Administrator &gt; Audit &gt; ... 메뉴로 이동합니다.\n"
+        "2. 당월 기준으로...\n"
+        "    4.  **Access Control Updated**  : 커넥션 접근 권한 수정이력"
+    )
+    result = _normalize_mdx_to_plain(content, 'paragraph')
+    expected = (
+        "Administrator > Audit > ... 메뉴로 이동합니다."
+        "당월 기준으로..."
+        "Access Control Updated  : 커넥션 접근 권한 수정이력"
+    )
+    assert result == expected
+
+
+def test_normalize_mdx_list_with_figure():
+    """figure/img 라인은 스킵된다."""
+    content = (
+        "1. 첫 번째 항목\n"
+        '<figure><img src="test.png" /></figure>\n'
+        "2. 두 번째 항목"
+    )
+    result = _normalize_mdx_to_plain(content, 'paragraph')
+    assert result == '첫 번째 항목두 번째 항목'
+
+
+# --- _build_patches index-based mapping tests ---
+
+
+def test_build_patches_index_mapping():
+    """인덱스 기반 매핑으로 올바른 XHTML 노드를 찾는다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+
+    original_blocks = [
+        MdxBlock('frontmatter', '---\ntitle: T\n---\n', 1, 3),
+        MdxBlock('empty', '\n', 4, 4),
+        MdxBlock('heading', '## Title\n', 5, 5),       # content idx 0
+        MdxBlock('empty', '\n', 6, 6),
+        MdxBlock('paragraph', 'Old text.\n', 7, 7),    # content idx 1
+    ]
+    improved_blocks = [
+        MdxBlock('frontmatter', '---\ntitle: T\n---\n', 1, 3),
+        MdxBlock('empty', '\n', 4, 4),
+        MdxBlock('heading', '## Title\n', 5, 5),
+        MdxBlock('empty', '\n', 6, 6),
+        MdxBlock('paragraph', 'New text.\n', 7, 7),
+    ]
+    changes = [
+        BlockChange(index=4, change_type='modified',
+                    old_block=original_blocks[4],
+                    new_block=improved_blocks[4]),
+    ]
+    mappings = [
+        BlockMapping(block_id='heading-1', type='heading', xhtml_xpath='h2[1]',
+                     xhtml_text='Title', xhtml_plain_text='Title',
+                     xhtml_element_index=0),
+        BlockMapping(block_id='paragraph-2', type='paragraph', xhtml_xpath='p[1]',
+                     xhtml_text='Old text.', xhtml_plain_text='Old text.',
+                     xhtml_element_index=1),
+    ]
+
+    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'p[1]'
+    assert patches[0]['old_plain_text'] == 'Old text.'
+    assert patches[0]['new_plain_text'] == 'New text.'
+
+
+def test_build_patches_skips_non_content():
+    """empty/frontmatter/import 블록은 패치하지 않는다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+
+    original_blocks = [
+        MdxBlock('empty', '\n', 1, 1),
+        MdxBlock('paragraph', 'Text.\n', 2, 2),
+    ]
+    improved_blocks = [
+        MdxBlock('empty', '\n\n', 1, 1),
+        MdxBlock('paragraph', 'Text.\n', 2, 2),
+    ]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    mappings = [
+        BlockMapping(block_id='paragraph-1', type='paragraph', xhtml_xpath='p[1]',
+                     xhtml_text='Text.', xhtml_plain_text='Text.',
+                     xhtml_element_index=0),
+    ]
+
+    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+    assert len(patches) == 0
