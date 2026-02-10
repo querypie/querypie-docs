@@ -1,0 +1,11 @@
+--- testcases/544379140/page.xhtml
++++ testcases/544379140/expected.reverse-sync.patched.xhtml
+@@ -657,7 +657,7 @@
+  </tbody>
+ </table>
+ <h2>
+- Audit Log Export 목록 조회하기
++ Audit Log Export 목록 확인하기
+ </h2>
+ <ac:image ac:align="center" ac:alt="image-20240714-063656.png" ac:custom-width="true" ac:layout="center" ac:original-height="864" ac:original-width="1566" ac:width="760">
+  <ri:attachment ri:filename="image-20240714-063656.png" ri:version-at-save="1">

@@ -6,7 +6,7 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync, image-copy
+#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync, image-copy, xhtml-diff
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
 #   --verbose, -v     Show converter output (stdout/stderr)
@@ -267,6 +267,26 @@ has_image_copy_input() {
     [[ -f "${TEST_DIR}/${test_id}/expected-images.txt" ]]
 }
 
+# Run xhtml-diff test: beautify-diff between page.xhtml and patched.xhtml
+run_xhtml_diff_test() {
+    local test_id="$1"
+    local test_path="${TEST_DIR}/${test_id}"
+
+    run_cmd python "${BIN_DIR}/xhtml_beautify_diff.py" \
+        "${test_path}/page.xhtml" \
+        "${test_path}/expected.reverse-sync.patched.xhtml" \
+        > "${test_path}/output.beautify-diff" || true
+
+    diff -u "${test_path}/expected.beautify-diff" "${test_path}/output.beautify-diff"
+}
+
+has_xhtml_diff_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/expected.reverse-sync.patched.xhtml" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/expected.beautify-diff" ]]
+}
+
 # Run all tests of specified type
 run_all_tests() {
     local test_func="$1"
@@ -379,6 +399,13 @@ main() {
                 run_single_test run_image_copy_test "Image-Copy" "${TEST_ID}"
             else
                 run_all_tests run_image_copy_test "Image-Copy" has_image_copy_input
+            fi
+            ;;
+        xhtml-diff)
+            if [[ -n "${TEST_ID}" ]]; then
+                run_single_test run_xhtml_diff_test "XHTML-Diff" "${TEST_ID}"
+            else
+                run_all_tests run_xhtml_diff_test "XHTML-Diff" has_xhtml_diff_input
             fi
             ;;
         *)

@@ -1,0 +1,11 @@
+--- testcases/692355151/page.xhtml
++++ testcases/692355151/expected.reverse-sync.patched.xhtml
+@@ -24,7 +24,7 @@
+  </ac:rich-text-body>
+ </ac:structured-macro>
+ <h2>
+- SQL Request 작성 및 실행계획(Explain) 수행하기
++ SQL Request 작성 및 실행계획(Explain) 실행하기
+ </h2>
+ <p>
+  QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 :

@@ -1,0 +1,11 @@
+--- testcases/544381877/page.xhtml
++++ testcases/544381877/expected.reverse-sync.patched.xhtml
+@@ -2,7 +2,7 @@
+  Overview
+ </h2>
+ <p>
+- QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다.
++ QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 추가할 수 있습니다.
+ </p>
+ <p>
+ </p>

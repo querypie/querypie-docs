@@ -1,0 +1,11 @@
+--- testcases/544377869/page.xhtml
++++ testcases/544377869/expected.reverse-sync.patched.xhtml
+@@ -7,7 +7,7 @@
+ <p>
+ </p>
+ <h2>
+- Proxy 사용 옵션 활성화
++ Proxy 사용 옵션 사용
+ </h2>
+ <p>
+  기본적으로는 Proxy 사용 옵션이 비활성화되어 있습니다. 접속을 허용할 커넥션에서 Proxy 사용 여부를 활성화합니다.

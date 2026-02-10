@@ -1,0 +1,11 @@
+--- testcases/1911652402/page.xhtml
++++ testcases/1911652402/expected.reverse-sync.patched.xhtml
+@@ -62,7 +62,7 @@
+  QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다. Compose Tool 을 이용해 설치, 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.
+ </p>
+ <p local-id="cf6bccb44758">
+- Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
++ Kubernetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
+ </p>
+ <ul local-id="7460d9b4-35a0-4f98-8637-724391d4c7a0">
+  <li local-id="9288d6aa-077f-4639-848e-7375d83e4ada">

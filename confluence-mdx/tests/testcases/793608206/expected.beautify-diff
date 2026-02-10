@@ -1,0 +1,9 @@
+--- testcases/793608206/page.xhtml
++++ testcases/793608206/expected.reverse-sync.patched.xhtml
+@@ -1,5 +1,5 @@
+ <p>
+- Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.
++ Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 제공 내용은 다음과 같습니다.
+ </p>
+ <h2>
+  공통 변수

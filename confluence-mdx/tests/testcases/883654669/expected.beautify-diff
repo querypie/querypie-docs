@@ -1,0 +1,11 @@
+--- testcases/883654669/page.xhtml
++++ testcases/883654669/expected.reverse-sync.patched.xhtml
+@@ -2,7 +2,7 @@
+  Overview
+ </h2>
+ <p>
+- Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 수신할 수 있습니다.
++ Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 받기할 수 있습니다.
+ </p>
+ <ac:structured-macro ac:macro-id="44cc9f0c-9c85-4681-b6ed-75010e6450ce" ac:name="info" ac:schema-version="1">
+  <ac:rich-text-body>

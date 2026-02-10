@@ -1,0 +1,11 @@
+--- testcases/568918170/page.xhtml
++++ testcases/568918170/expected.reverse-sync.patched.xhtml
+@@ -5,7 +5,7 @@
+     Overview
+    </h2>
+    <p>
+-    Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다.
++    Workflow 이용 시 편리함을 더해주는 부가 기능을 소개합니다.
+    </p>
+    <ac:structured-macro ac:local-id="fffae0b9-84f6-42d8-b6f2-b38fd4a694ce" ac:macro-id="334477e7-dc7b-494d-9513-c21c2ccabe57" ac:name="toc" ac:schema-version="1" data-layout="default">
+     <ac:parameter ac:name="maxLevel">
