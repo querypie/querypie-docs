@@ -299,6 +299,9 @@ def _strip_frontmatter(mdx: str) -> str:
 
 
 _NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
+_EMOJI_RE = re.compile(
+    r'[\U0001F000-\U0001F9FF\u2700-\u27BF\uFE00-\uFE0F\u200D]+'
+)
 
 
 def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
@@ -382,6 +385,17 @@ def _find_mapping_by_text(
             if mdx_nospace == xhtml_nospace:
                 return m
 
+    # 3.5차: 공백+이모지 무시 비교 (Confluence ac:emoticon → MDX 이모지 차이 대응)
+    mdx_clean = _EMOJI_RE.sub('', mdx_nospace)
+    if mdx_clean and mdx_clean != mdx_nospace:
+        for m in mappings:
+            if _excluded(m):
+                continue
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            xhtml_clean = _EMOJI_RE.sub('', xhtml_nospace)
+            if mdx_clean == xhtml_clean:
+                return m
+
     # 4차: 리스트 마커 제거 후 공백 무시 비교
     # (ac:adf-content 내 <p> 요소가 "- " 등 리스트 마커를 포함하는 경우 대응)
     mdx_unmarked = _strip_list_marker(mdx_nospace)
@@ -414,24 +428,33 @@ def _strip_list_marker(text: str) -> str:
 def _align_chars(source: str, target: str) -> dict:
     """source와 target의 문자를 정렬하여 source index → target index 맵을 반환한다.
 
-    두 텍스트는 같은 비공백 콘텐츠를 갖되 공백 배치만 다를 때 사용한다.
+    1단계: 비공백 문자를 SequenceMatcher로 전역 정렬 (이모지 drift 방지)
+    2단계: 인접 비공백 앵커 사이의 공백을 위치순으로 매핑
     """
+    src_nonspace = [(i, c) for i, c in enumerate(source) if not c.isspace()]
+    tgt_nonspace = [(i, c) for i, c in enumerate(target) if not c.isspace()]
+
+    src_chars = ''.join(c for _, c in src_nonspace)
+    tgt_chars = ''.join(c for _, c in tgt_nonspace)
+
+    matcher = difflib.SequenceMatcher(None, src_chars, tgt_chars, autojunk=False)
     mapping = {}
-    si, ti = 0, 0
-    while si < len(source) and ti < len(target):
-        sc, tc = source[si], target[ti]
-        if sc == tc:
-            mapping[si] = ti
-            si += 1
-            ti += 1
-        elif sc.isspace():
-            si += 1
-        elif tc.isspace():
-            ti += 1
-        else:
-            # 비공백 문자 불일치 — 하나씩 전진하여 복구 시도
-            si += 1
-            ti += 1
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == 'equal':
+            for k in range(i2 - i1):
+                mapping[src_nonspace[i1 + k][0]] = tgt_nonspace[j1 + k][0]
+
+    # 2단계: 인접 앵커 사이의 공백을 위치순으로 매핑
+    anchors = sorted(mapping.items())
+    boundaries = [(-1, -1)] + anchors + [(len(source), len(target))]
+    for idx in range(len(boundaries) - 1):
+        s_lo, t_lo = boundaries[idx]
+        s_hi, t_hi = boundaries[idx + 1]
+        s_spaces = [j for j in range(s_lo + 1, s_hi) if source[j].isspace()]
+        t_spaces = [j for j in range(t_lo + 1, t_hi) if target[j].isspace()]
+        for s, t in zip(s_spaces, t_spaces):
+            mapping[s] = t
+
     return mapping
 
 
