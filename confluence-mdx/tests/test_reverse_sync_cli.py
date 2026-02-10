@@ -373,7 +373,7 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False)
     mock_push.assert_not_called()
 
 
