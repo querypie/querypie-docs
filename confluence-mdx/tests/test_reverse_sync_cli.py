@@ -13,8 +13,8 @@ from reverse_sync_cli import (
 
 @pytest.fixture
 def setup_var(tmp_path, monkeypatch):
-    """var/<page_id>/ 구조를 tmp_path에 생성하고 작업 디렉토리를 변경."""
-    monkeypatch.chdir(tmp_path)
+    """var/<page_id>/ 구조를 tmp_path에 생성하고 _PROJECT_DIR을 패치."""
+    monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
     page_id = "test-page-001"
     var_dir = tmp_path / "var" / page_id
     var_dir.mkdir(parents=True)
@@ -103,8 +103,8 @@ def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
     """push 시 verify pass → _do_push 호출."""
     page_id = 'test-page-001'
     mdx_arg = 'src/content/ko/test/page.mdx'
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--json', mdx_arg])
+    monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     # var 디렉토리에 patched xhtml 준비
     var_dir = tmp_path / 'var' / page_id
@@ -371,14 +371,14 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo')
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0)
     mock_push.assert_not_called()
 
 
 def test_main_push_branch(tmp_path, monkeypatch):
     """main() 통합 테스트 — 배치 push (all pass)."""
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
-    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     batch_results = [
         {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
