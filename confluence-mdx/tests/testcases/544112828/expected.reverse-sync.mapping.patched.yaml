@@ -10,9 +10,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 1
-  xhtml_plain_text: QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
+  xhtml_plain_text: QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
     같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-  xhtml_text: QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
+  xhtml_text: QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
     같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
   xhtml_xpath: p[1]
 - block_id: html_block-3
@@ -806,6 +806,6 @@ blocks:
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[36]
-created_at: '2026-02-09T10:04:23.524612+00:00'
+created_at: '2026-02-10T04:13:20.647933+00:00'
 page_id: '544112828'
 source_xhtml: patched.xhtml

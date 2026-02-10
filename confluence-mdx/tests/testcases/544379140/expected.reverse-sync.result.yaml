@@ -1,25 +1,17 @@
 changes_count: 1
-created_at: '2026-02-09T10:04:25.853841+00:00'
+created_at: '2026-02-10T04:13:23.014619+00:00'
 page_id: '544379140'
 status: fail
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -59,21 +59,14\
-    \ @@ | Web App JIT Access Control Log          | 11.0.0                | CSV \
-    \         |\n | Web App Event Audit                     | 11.0.0             \
-    \   | CSV          |\n \n-### Audit Log Export 목록 확인하기\n+### Audit Log Export\
-    \ 목록 조회하기\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
-    /544379140/verify/image-20240714-063656.png\" alt=\"Administrator &gt; Audit &gt;\
-    \ General &gt; Audit Log Export\" width=\"760\" />\n+<img src=\"/administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png\"\
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -62,7 +62,7\
+    \ @@ ### Audit Log Export 목록 확인하기\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/544379140/verify/image-20240714-063656.png\" alt=\"Administrator\
+    \ &gt; Audit &gt; General &gt; Audit Log Export\" width=\"760\" />\n+<img src=\"\
+    /administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png\"\
     \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export\" width=\"\
     760\" />\n <figcaption>\n Administrator &gt; Audit &gt; General &gt; Audit Log\
-    \ Export\n </figcaption>\n </figure>\n-\n-1. Administrator &gt; Audit &gt; General\
-    \ &gt; Audit Log Export 메뉴로 이동합니다.\n-2. 현재까지 생성된 Audit Log Export 태스크 목록을 확인할\
-    \ 수 있습니다.\n-3. Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.\n-    *  **Processing**  : 감사\
-    \ 로그 추출이 진행 중입니다.\n-    *  **Completed**  : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다.\
-    \ (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)\n-    *  **Failed**  : 감사 로그 추출이\
-    \ 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.\n \n ### 로그 추출 작업 생성하기\n \n\
-    @@ -84,7 +77,7 @@ 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.\n \n <figure data-layout=\"center\"\
-    \ data-align=\"center\">\n-<img src=\"/544379140/verify/screenshot-20250116-131805.png\"\
+    \ Export\n </figcaption>\n@@ -84,7 +84,7 @@ 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.\n \n <figure\
+    \ data-layout=\"center\" data-align=\"center\">\n-<img src=\"/544379140/verify/screenshot-20250116-131805.png\"\
     \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create\
     \ New Task\" width=\"612\" />\n+<img src=\"/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png\"\
     \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create\

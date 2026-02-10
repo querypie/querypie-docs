@@ -277,39 +277,67 @@ def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
     return ''.join(parts)
 
 
+def _collapse_ws(text: str) -> str:
+    """연속 공백을 하나의 스페이스로 축약한다."""
+    return ' '.join(text.split())
+
+
+def _find_mapping_by_text(
+    mdx_plain: str,
+    mappings: List[BlockMapping],
+) -> 'BlockMapping | None':
+    """MDX normalized plain text와 가장 잘 매칭되는 XHTML mapping을 찾는다."""
+    mdx_norm = _collapse_ws(mdx_plain)
+    if not mdx_norm:
+        return None
+
+    # 1차: 완전 일치
+    for m in mappings:
+        if _collapse_ws(m.xhtml_plain_text) == mdx_norm:
+            return m
+
+    # 2차: prefix 일치 (50자 이상)
+    min_prefix = 50
+    for m in mappings:
+        xhtml_norm = _collapse_ws(m.xhtml_plain_text)
+        if len(mdx_norm) >= min_prefix and xhtml_norm.startswith(mdx_norm[:min_prefix]):
+            return m
+        if len(xhtml_norm) >= min_prefix and mdx_norm.startswith(xhtml_norm[:min_prefix]):
+            return m
+
+    return None
+
+
 def _build_patches(
     changes: List[BlockChange],
     original_blocks: List[MdxBlock],
     improved_blocks: List[MdxBlock],
     mappings: List[BlockMapping],
 ) -> List[Dict[str, str]]:
-    """diff 변경과 매핑을 인덱스 기반으로 결합하여 XHTML 패치 목록을 구성한다.
+    """diff 변경과 매핑을 텍스트 기반으로 결합하여 XHTML 패치 목록을 구성한다.
 
-    MDX content 블록(empty/frontmatter/import 제외)과 XHTML 매핑은
-    같은 문서를 순서대로 파싱한 결과이므로 순번이 1:1 대응된다.
+    MDX 블록의 normalized plain text와 XHTML 매핑의 xhtml_plain_text를
+    비교하여 올바른 대상 요소를 찾는다.
     """
-    # MDX 블록 index → XHTML mapping index
-    content_idx = 0
-    block_to_mapping: Dict[int, int] = {}
-    for i, block in enumerate(original_blocks):
-        if block.type not in _NON_CONTENT_TYPES:
-            block_to_mapping[i] = content_idx
-            content_idx += 1
-
     patches = []
     for change in changes:
         if change.old_block.type in _NON_CONTENT_TYPES:
             continue
-        mapping_idx = block_to_mapping.get(change.index)
-        if mapping_idx is not None and mapping_idx < len(mappings):
-            mapping = mappings[mapping_idx]
-            new_block = change.new_block
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping.xhtml_plain_text,
-                'new_inner_xhtml': mdx_block_to_inner_xhtml(
-                    new_block.content, new_block.type),
-            })
+
+        old_plain = _normalize_mdx_to_plain(
+            change.old_block.content, change.old_block.type)
+        mapping = _find_mapping_by_text(old_plain, mappings)
+
+        if mapping is None:
+            continue
+
+        new_block = change.new_block
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_inner_xhtml': mdx_block_to_inner_xhtml(
+                new_block.content, new_block.type),
+        })
 
     return patches
 

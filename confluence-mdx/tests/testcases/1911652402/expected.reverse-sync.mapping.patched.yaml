@@ -122,20 +122,23 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 14
-  xhtml_plain_text: Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes
+  xhtml_plain_text: Kubernetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes
     Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
-  xhtml_text: Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster
+  xhtml_text: Kubernetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster
     와 Self-Hosted Cluster, 모두 사용 가능합니다.
   xhtml_xpath: p[11]
 - block_id: list-16
   children: []
   type: list
   xhtml_element_index: 15
-  xhtml_plain_text: Kubernetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes
-    Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.
-  xhtml_text: <ul local-id="7460d9b4-35a0-4f98-8637-724391d4c7a0">Kubernetes 환경에서
-    제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster,
-    모두 사용 가능합니다.</ul>
+  xhtml_plain_text: 'AWS EKS 환경 : AWS EKS 환경에서 설치하기 Helm Chart : https://github.com/chequer-io/querypie-deployment'
+  xhtml_text: '<ul local-id="7460d9b4-35a0-4f98-8637-724391d4c7a0"><li local-id="9288d6aa-077f-4639-848e-7375d83e4ada"><p
+    local-id="22b709c0d310">AWS EKS 환경 : <ac:link ac:card-appearance="inline" ac:local-id="2aa65d2a-300b-4e8f-8818-953c28d9481f"><ri:page
+    ri:content-title="AWS EKS 환경에서 설치하기" ri:version-at-save="36"></ri:page><ac:link-body>AWS
+    EKS 환경에서 설치하기</ac:link-body></ac:link> </p></li><li local-id="f9425b39-37a3-473d-b0c1-b59523f81c9a"><p
+    local-id="6512b1edb160">Helm Chart : <a data-card-appearance="inline" href="https://github.com/chequer-io/querypie-deployment"
+    local-id="39207560-10d4-4ec7-9c01-921457a5d9bf">https://github.com/chequer-io/querypie-deployment</a>
+    </p></li></ul>'
   xhtml_xpath: ul[1]
 - block_id: paragraph-17
   children: []
@@ -144,6 +147,6 @@ blocks:
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[12]
-created_at: '2026-02-09T10:04:22.974535+00:00'
+created_at: '2026-02-10T04:13:20.094831+00:00'
 page_id: '1911652402'
 source_xhtml: patched.xhtml

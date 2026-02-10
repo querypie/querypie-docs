@@ -1,14 +1,11 @@
 changes_count: 1
-created_at: '2026-02-09T10:04:28.970546+00:00'
+created_at: '2026-02-10T04:13:26.150267+00:00'
 page_id: '692355151'
 status: fail
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -23,7 +23,7\
-    \ @@ 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다.\n </Callout>\n \n-### SQL Request 작성\
-    \ 및 실행계획(Explain) 실행하기\n+### SQL Request 작성 및 실행계획(Explain) 수행하기\n \n QueryPie\
-    \ Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다.\n (참고 : [SQL Request 요청하기](.))\n\
-    @@ -36,7 +36,7 @@ </Callout>\n \n <figure data-layout=\"center\" data-align=\"\
-    center\">\n-<img src=\"/692355151/verify/image-20241029-234721.png\" alt=\"image-20241029-234721.png\"\
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -36,7 +36,7\
+    \ @@ </Callout>\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
+    \ src=\"/692355151/verify/image-20241029-234721.png\" alt=\"image-20241029-234721.png\"\
     \ width=\"760\" />\n+<img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png\"\
     \ alt=\"image-20241029-234721.png\" width=\"760\" />\n </figure>\n \n 1. 실행계획(Explain)\
     \ 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 `Explain` 버튼을 누릅니다.\n@@ -46,31 +46,31\

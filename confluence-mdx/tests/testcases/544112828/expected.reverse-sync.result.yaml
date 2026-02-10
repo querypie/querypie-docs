@@ -1,17 +1,12 @@
 changes_count: 1
-created_at: '2026-02-09T10:04:23.524612+00:00'
+created_at: '2026-02-10T04:13:20.647933+00:00'
 page_id: '544112828'
 status: fail
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -8,7 +8,7\
-    \ @@ \n ### Overview\n \n-QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client,\
-    \ iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n\
-    +QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH\
-    \ Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n \n \n ### 에이전트 앱 다운로드\
-    \ 및 실행하기\n@@ -16,7 +16,7 @@ 1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download`\
-    \ 버튼을 클릭합니다.\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
-    \ src=\"/544112828/verify/screenshot-20240804-173002.png\" alt=\"QueryPie Web\
-    \ &gt; 프로필 메뉴\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-173002.png\"\
+  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -16,7 +16,7\
+    \ @@ 1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download` 버튼을 클릭합니다.\n \n <figure\
+    \ data-layout=\"center\" data-align=\"center\">\n-<img src=\"/544112828/verify/screenshot-20240804-173002.png\"\
+    \ alt=\"QueryPie Web &gt; 프로필 메뉴\" width=\"760\" />\n+<img src=\"/user-manual/user-agent/screenshot-20240804-173002.png\"\
     \ alt=\"QueryPie Web &gt; 프로필 메뉴\" width=\"760\" />\n <figcaption>\n QueryPie\
     \ Web &gt; 프로필 메뉴\n </figcaption>\n@@ -25,7 +25,7 @@ 2. QueryPie Agent Downloads\
     \ 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을\

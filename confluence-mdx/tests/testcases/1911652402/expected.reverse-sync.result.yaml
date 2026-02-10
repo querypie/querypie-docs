@@ -1,14 +1,7 @@
 changes_count: 1
-created_at: '2026-02-09T10:04:22.974535+00:00'
+created_at: '2026-02-10T04:13:20.094831+00:00'
 page_id: '1911652402'
-status: fail
+status: pass
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -39,9 +39,6\
-    \ @@ QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다.\n Compose Tool 을 이용해 설치,\
-    \ 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.\n \n-Kubernetes 환경에서 제품을 설치하는 경우,\
-    \ AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.\n\
-    -\n-* AWS EKS 환경 : [AWS EKS 환경에서 설치하기](../installation/installation/installing-on-aws-eks)\
-    \ \n-* Helm Chart : [https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment)\
-    \ \n+Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster\
-    \ 와 Self-Hosted Cluster, 모두 사용 가능합니다.\n \n \n"
-  exact_match: false
+  diff_report: ''
+  exact_match: true
