@@ -15,6 +15,7 @@
 ### 개발 Skills
 - **code-review.md** - 코드 변경 사항 검토 가이드라인
 - **reverse-sync.md** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
+- **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
 - **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
 
 ## Skills과 참조 문서 관계
@@ -30,6 +31,7 @@
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
 | documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
 | reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
+| sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
 | commit.md (commands) | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
 
