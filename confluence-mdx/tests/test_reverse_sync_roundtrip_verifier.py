@@ -20,12 +20,13 @@ def test_different_mdx_fails():
     assert result.diff_report != ""
 
 
-def test_whitespace_difference_fails():
+def test_trailing_whitespace_normalized():
+    """trailing whitespace 차이는 정규화되어 통과해야 한다."""
     result = verify_roundtrip(
         expected_mdx="# Title\n\nParagraph. \n",  # trailing space
         actual_mdx="# Title\n\nParagraph.\n",
     )
-    assert result.passed is False
+    assert result.passed is True
 
 
 def test_diff_report_shows_line_numbers():
