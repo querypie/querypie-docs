@@ -27,7 +27,7 @@ from bs4.element import CData
 import converter.context as ctx
 from converter.context import (
     PAGES_BY_TITLE,
-    CONFLUENCE_COLOR_TO_BADGE_COLOR, EMOJI_AVAILABLE,
+    CONFLUENCE_COLOR_TO_BADGE_COLOR,
     confluence_url, parse_confluence_url, convert_confluence_url,
     get_page_v1, get_attachments, set_page_v1, set_attachments,
     relative_path_to_titled_page, resolve_external_link,
@@ -333,24 +333,13 @@ class SingleLineParser:
                 self.markdown_lines.append(fallback)
             elif shortname:
                 # Convert shortname to actual emoji
-                if EMOJI_AVAILABLE:
-                    # Use emoji library to convert shortname to actual emoji
-                    emoji_char = emoji.emojize(shortname, language='alias')
-                    if emoji_char != shortname:
-                        # Conversion successful (converted to actual emoji)
-                        self.markdown_lines.append(emoji_char)
-                    else:
-                        # Conversion failed (use fallback or shortname as-is)
-                        if fallback:
-                            self.markdown_lines.append(fallback)
-                        else:
-                            self.markdown_lines.append(shortname)
+                emoji_char = emoji.emojize(shortname, language='alias')
+                if emoji_char != shortname:
+                    self.markdown_lines.append(emoji_char)
+                elif fallback:
+                    self.markdown_lines.append(fallback)
                 else:
-                    # emoji library not available, use fallback or shortname
-                    if fallback:
-                        self.markdown_lines.append(fallback)
-                    else:
-                        self.markdown_lines.append(shortname)
+                    self.markdown_lines.append(shortname)
             elif fallback:
                 # No shortname but fallback is available
                 self.markdown_lines.append(fallback)

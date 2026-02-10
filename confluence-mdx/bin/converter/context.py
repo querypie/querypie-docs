@@ -21,9 +21,11 @@ from text_utils import clean_text
 
 try:
     import emoji
-    EMOJI_AVAILABLE = True
 except ImportError:
-    EMOJI_AVAILABLE = False
+    raise SystemExit(
+        "Required package 'emoji' is not installed.\n"
+        "Run: pip install 'emoji>=2.8.0'"
+    )
 
 
 # Type definitions for page_v1 structure
