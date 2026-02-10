@@ -82,10 +82,10 @@ export default async function RootLayout({ children, params }) {
             title: (
               <>
                 <LanguageSelector2/>
-                <ConfluenceSourceLink/>
                 <p>On This Page</p>
               </>
             ),
+            extraContent: <ConfluenceSourceLink/>,
           }}
           lastUpdated={<LastUpdated locale={lang} />}
         >
