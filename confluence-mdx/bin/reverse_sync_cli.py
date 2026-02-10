@@ -503,11 +503,13 @@ def _print_diff_block(lines: str, label: str, c, BOLD, CYAN, RED, GREEN, DIM) ->
             print(line)
 
 
-def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = False) -> None:
+def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = False,
+                   failures_only: bool = False) -> None:
     """검증 결과를 컬러 diff 포맷으로 출력한다.
 
     show_all_diffs=True (debug 모드): MDX diff, XHTML diff, Verify diff 모두 출력.
     show_all_diffs=False (verify 모드): Verify diff만 출력 (FAIL 시).
+    failures_only=True: pass/no_changes 결과를 출력에서 제외.
     """
     use_color = _supports_color()
 
@@ -518,6 +520,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
 
     for r in results:
         status = r.get('status', 'unknown')
+        if failures_only and status in ('pass', 'no_changes'):
+            continue
         file_path = r.get('file', r.get('page_id', '?'))
         changes = r.get('changes_count', 0)
 
@@ -704,6 +708,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
     parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
     parser.add_argument('--limit', type=int, default=0,
                         help='배치 모드에서 최대 처리 파일 수 (기본: 0=전체)')
+    parser.add_argument('--failures-only', action='store_true',
+                        help='실패한 결과만 출력 (--limit와 함께 사용 시 실패 건수 기준으로 제한)')
 
 
 def _do_verify(args) -> dict:
@@ -723,16 +729,17 @@ def _do_verify(args) -> dict:
     )
 
 
-def _do_verify_batch(branch: str, limit: int = 0) -> List[dict]:
+def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False) -> List[dict]:
     """브랜치의 모든 변경 ko MDX 파일을 배치 verify 처리한다."""
     files = _get_changed_ko_mdx_files(branch)
     if not files:
         return [{'status': 'no_changes', 'branch': branch, 'changes_count': 0}]
     total = len(files)
-    if limit > 0:
+    if limit > 0 and not failures_only:
         files = files[:limit]
-    print(f"Processing {len(files)}/{total} file(s) from branch {branch}...", file=sys.stderr)
+    print(f"Processing {'up to ' + str(total) if failures_only and limit > 0 else str(len(files))}/{total} file(s) from branch {branch}...", file=sys.stderr)
     results = []
+    failure_count = 0
     for idx, ko_path in enumerate(files, 1):
         print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
         try:
@@ -747,6 +754,10 @@ def _do_verify_batch(branch: str, limit: int = 0) -> List[dict]:
         except Exception as e:
             print("error", file=sys.stderr)
             results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
+        if results[-1].get('status') not in ('pass', 'no_changes'):
+            failure_count += 1
+        if failures_only and limit > 0 and failure_count >= limit:
+            break
     return results
 
 
@@ -837,14 +848,20 @@ def main():
                 sys.exit(1)
 
             use_json = getattr(args, 'json', False)
+            failures_only = getattr(args, 'failures_only', False)
 
             if getattr(args, 'branch', None):
                 # 배치 모드
-                results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0))
+                results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
+                                           failures_only=failures_only)
                 if use_json:
-                    print(json.dumps(results, ensure_ascii=False, indent=2))
+                    output = results
+                    if failures_only:
+                        output = [r for r in results if r.get('status') not in ('pass', 'no_changes')]
+                    print(json.dumps(output, ensure_ascii=False, indent=2))
                 else:
-                    _print_results(results, show_all_diffs=show_all_diffs)
+                    _print_results(results, show_all_diffs=show_all_diffs,
+                                   failures_only=failures_only)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
                 if not dry_run:
                     passed = [r for r in results if r.get('status') == 'pass']
