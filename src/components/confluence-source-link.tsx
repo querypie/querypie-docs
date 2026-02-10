@@ -1,6 +1,7 @@
 'use client';
 
 import cn from 'clsx';
+import { Anchor } from 'nextra/components';
 import { useConfig } from 'nextra-theme-docs';
 import useLocale from '@/lib/use-locale';
 
@@ -19,13 +20,11 @@ export default function ConfluenceSourceLink() {
   if (locale !== 'ko' || !confluenceUrl) return null;
 
   return (
-    <a
+    <Anchor
       className={linkClassName}
       href={confluenceUrl}
-      target="_blank"
-      rel="noopener noreferrer"
     >
       View original on Confluence
-    </a>
+    </Anchor>
   );
 }
