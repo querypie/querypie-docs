@@ -1,7 +1,14 @@
 changes_count: 1
-created_at: '2026-02-10T05:55:14.438201+00:00'
+created_at: '2026-02-10T17:12:26.022716+00:00'
+mdx_diff_report: "--- tests/testcases/880181257/original.mdx+++ tests/testcases/880181257/improved.mdx@@\
+  \ -3,7 +3,7 @@ \n # Custom Data Source 접속하기\n \n-#### Custom Data Source 접근 요청\n\
+  +#### Custom Data Source 액세스 요청\n \n 1. 사용자 화면 상단 Workflow 메뉴로 이동합니다.\n 2. 좌측 상단\
+  \ `Submit Request` 버튼 클릭후 DB Access Request 항목을 선택합니다. <br/> \n"
 page_id: '880181257'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -19,7 +19,7\
+  \ @@\n  </ac:parameter>\n </ac:structured-macro>\n <h3>\n- Custom Data Source 접근\
+  \ 요청\n+ Custom Data Source 액세스 요청\n </h3>\n <ol start=\"1\">\n  <li>"

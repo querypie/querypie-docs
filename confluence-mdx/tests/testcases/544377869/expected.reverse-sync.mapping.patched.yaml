@@ -104,7 +104,8 @@ blocks:
   xhtml_text: Proxy 사용 활성화된 커넥션 확인하기
   xhtml_xpath: h2[3]
 - block_id: html_block-11
-  children: []
+  children:
+  - paragraph-12
   type: html_block
   xhtml_element_index: 10
   xhtml_plain_text: 10.3.0 부터 Databases > Connection Management > Proxy Management
@@ -117,10 +118,22 @@ blocks:
     ri:content-title="Proxy Management​" ri:version-at-save="4"></ri:page><ac:link-body>Proxy
     Management​</ac:link-body></ac:link> 를 참고하시기 바랍니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[1]
-- block_id: html_block-12
+- block_id: paragraph-12
+  children: []
+  type: paragraph
+  xhtml_element_index: 11
+  xhtml_plain_text: 10.3.0 부터 Databases > Connection Management > Proxy Management
+    는 Databases > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 Proxy
+    Management​ 를 참고하시기 바랍니다.
+  xhtml_text: 10.3.0 부터 Databases > Connection Management > Proxy Management 는 Databases
+    > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 <ac:link ac:card-appearance="inline"><ri:page
+    ri:content-title="Proxy Management​" ri:version-at-save="4"></ri:page><ac:link-body>Proxy
+    Management​</ac:link-body></ac:link> 를 참고하시기 바랍니다.
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: html_block-13
   children: []
   type: html_block
-  xhtml_element_index: 11
+  xhtml_element_index: 12
   xhtml_plain_text: Administrator > Databases > Connection Management > DB Connections
     > Proxy Management
   xhtml_text: <ac:image ac:align="center" ac:alt="image-20240725-071030.png" ac:custom-width="true"
@@ -129,10 +142,10 @@ blocks:
     &gt; Databases &gt; Connection Management &gt; DB Connections &gt; Proxy Management</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[2]
-- block_id: list-13
+- block_id: list-14
   children: []
   type: list
-  xhtml_element_index: 12
+  xhtml_element_index: 13
   xhtml_plain_text: Database 설정 메뉴에서 Proxy Manangement 메뉴로 이동합니다.클러스터 기준으로 Proxy 사용이
     활성화된 커넥션과 Port 정보를 확인할 수 있습니다.Proxy 접속을 통해 커넥션에 연결 중인 사용자를 확인할 수 있고, 필요한 경우 해당
     세션을 Kill할 수 있습니다.
@@ -140,13 +153,13 @@ blocks:
     기준으로 Proxy 사용이 활성화된 커넥션과 Port 정보를 확인할 수 있습니다.</p></li><li><p>Proxy 접속을 통해 커넥션에
     연결 중인 사용자를 확인할 수 있고, 필요한 경우 해당 세션을 <code>Kill</code>할 수 있습니다.</p></li></ol>
   xhtml_xpath: ol[2]
-- block_id: paragraph-14
+- block_id: paragraph-15
   children: []
   type: paragraph
-  xhtml_element_index: 13
+  xhtml_element_index: 14
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[6]
-created_at: '2026-02-10T04:13:22.467561+00:00'
+created_at: '2026-02-10T17:12:16.133150+00:00'
 page_id: '544377869'
 source_xhtml: patched.xhtml

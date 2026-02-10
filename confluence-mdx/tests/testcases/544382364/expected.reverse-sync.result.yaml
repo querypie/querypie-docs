@@ -1,7 +1,19 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:24.206680+00:00'
+created_at: '2026-02-10T17:12:19.607273+00:00'
+mdx_diff_report: "--- tests/testcases/544382364/original.mdx+++ tests/testcases/544382364/improved.mdx@@\
+  \ -18,7 +18,7 @@ EABAC 은 Role, Policy 두 가지로 동작합니다.\n Role 설정은 GUI 로 하며, Policy 정의는\
+  \ 코드(YAML)로 관리합니다.\n \n-쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위\
+  \ 외 리소스를 지원하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.\n+쿠버네티스 정책의 경우, 실제\
+  \ 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 제공하는 ClusterRole 양측 모두를 수용할 수\
+  \ 있는 종합적 모델로 스펙이 제작되었습니다.\n \n \n ### 쿠버네티스 정책 YAML 기본 구조\n"
 page_id: '544382364'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -44,7 +44,7\
+  \ @@\n  EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로\
+  \ 관리합니다.\n </p>\n <p>\n- 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스\
+  \ 범위 외 리소스를 지원하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.\n+ 쿠버네티스 정책의 경우,\
+  \ 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 제공하는 ClusterRole 양측 모두를 수용할\
+  \ 수 있는 종합적 모델로 스펙이 제작되었습니다.\n </p>\n <p>\n </p>"

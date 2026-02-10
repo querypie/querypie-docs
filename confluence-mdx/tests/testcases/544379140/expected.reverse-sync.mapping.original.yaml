@@ -18,7 +18,8 @@ blocks:
     로그는 Query Audit, Workflow SQL Request 등 21종입니다.
   xhtml_xpath: p[1]
 - block_id: html_block-3
-  children: []
+  children:
+  - paragraph-4
   type: html_block
   xhtml_element_index: 2
   xhtml_plain_text: Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’
@@ -31,13 +32,22 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 3
+  xhtml_plain_text: Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’
+    버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.
+  xhtml_text: Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은
+    QueryPie v9.15.0부터 지원이 중단되었습니다.
+  xhtml_xpath: macro-note[1]/p[1]
+- block_id: paragraph-5
+  children: []
+  type: paragraph
+  xhtml_element_index: 4
   xhtml_plain_text: 추출 지원 로그 종류 (QueryPie v11.0.0 기준)
   xhtml_text: <strong>추출 지원 로그 종류 (QueryPie v11.0.0 기준)</strong>
   xhtml_xpath: p[2]
-- block_id: table-5
+- block_id: table-6
   children: []
   type: table
-  xhtml_element_index: 4
+  xhtml_element_index: 5
   xhtml_plain_text: Log TypeRelease VersionFormatWorkflow DB Access RequestCSVWorkflow
     SQL RequestCSVWorkflow SQL Request for Query DetailsCSVWorkflow SQL Export RequestCSVWorkflow
     Restricted Data Access Request11.0.0JSONWorkflow DB Policy Exception Request11.0.0JSONWorkflow
@@ -92,17 +102,17 @@ blocks:
     App JIT Access Control Log</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web
     App Event Audit</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr></tbody></table>'
   xhtml_xpath: table[1]
-- block_id: heading-6
+- block_id: heading-7
   children: []
   type: heading
-  xhtml_element_index: 5
+  xhtml_element_index: 6
   xhtml_plain_text: Audit Log Export 목록 조회하기
   xhtml_text: Audit Log Export 목록 조회하기
   xhtml_xpath: h2[2]
-- block_id: html_block-7
+- block_id: html_block-8
   children: []
   type: html_block
-  xhtml_element_index: 6
+  xhtml_element_index: 7
   xhtml_plain_text: Administrator > Audit > General > Audit Log Export
   xhtml_text: <ac:image ac:align="center" ac:alt="image-20240714-063656.png" ac:custom-width="true"
     ac:layout="center" ac:original-height="864" ac:original-width="1566" ac:width="760"><ri:attachment
@@ -110,10 +120,10 @@ blocks:
     &gt; Audit &gt; General &gt; Audit Log Export</p></ac:caption><ac:adf-mark color="#091e4224"
     key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[1]
-- block_id: list-8
+- block_id: list-9
   children: []
   type: list
-  xhtml_element_index: 7
+  xhtml_element_index: 8
   xhtml_plain_text: 'Administrator > Audit > General > Audit Log Export 메뉴로 이동합니다.현재까지
     생성된 Audit Log Export 태스크 목록을 확인할 수 있습니다.Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.Processing
     : 감사 로그 추출이 진행 중입니다.Completed : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다. (추출 완료 후 30일이
@@ -126,35 +136,35 @@ blocks:
     다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)</p></li><li><p><strong>Failed</strong>
     : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.</p></li></ul></li></ol>'
   xhtml_xpath: ol[1]
-- block_id: heading-9
+- block_id: heading-10
   children: []
   type: heading
-  xhtml_element_index: 8
+  xhtml_element_index: 9
   xhtml_plain_text: 로그 추출 작업 생성하기
   xhtml_text: 로그 추출 작업 생성하기
   xhtml_xpath: h2[3]
-- block_id: paragraph-10
+- block_id: paragraph-11
   children: []
   type: paragraph
-  xhtml_element_index: 9
+  xhtml_element_index: 10
   xhtml_plain_text: 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출
     작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
   xhtml_text: 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성
     → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
   xhtml_xpath: p[3]
-- block_id: paragraph-11
+- block_id: paragraph-12
   children: []
   type: paragraph
-  xhtml_element_index: 10
+  xhtml_element_index: 11
   xhtml_plain_text: 감사 로그 추출을 시작하기 위해서는 ‘Audit > General > Audit Log Export’ 메뉴 접근
     후, 우측 상단의 Create Task 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
   xhtml_text: 감사 로그 추출을 시작하기 위해서는 ‘Audit > General > Audit Log Export’ 메뉴 접근 후, 우측
     상단의 <code>Create Task</code> 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
   xhtml_xpath: p[4]
-- block_id: html_block-12
+- block_id: html_block-13
   children: []
   type: html_block
-  xhtml_element_index: 11
+  xhtml_element_index: 12
   xhtml_plain_text: Administrator > Audit > General > Audit Log Export > Create New
     Task
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2025-01-16 오후 1.18.05.png"
@@ -164,10 +174,10 @@ blocks:
     &gt; General &gt; Audit Log Export &gt; Create New Task</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[2]
-- block_id: list-13
+- block_id: list-14
   children: []
   type: list
-  xhtml_element_index: 12
+  xhtml_element_index: 13
   xhtml_plain_text: 'Task Name : 로그 추출 작업의 이름을 입력합니다.Log Type : 추출 대상 로그의 종류를 선택합니다.
     Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.로그 종류 선택 후 See Log Template and Description을
     클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.Download File Format : 로그 출력 파일 형식을 지정합니다.
@@ -197,10 +207,12 @@ blocks:
     단계인 ‘Create’가 가능합니다.</p></li></ol></li><li><p><code>Create</code> 버튼 : 로그 추출 작업을
     생성합니다. </p></li></ol>'
   xhtml_xpath: ol[2]
-- block_id: html_block-14
-  children: []
+- block_id: html_block-15
+  children:
+  - paragraph-16
+  - paragraph-17
   type: html_block
-  xhtml_element_index: 13
+  xhtml_element_index: 14
   xhtml_plain_text: 유의 사항당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와
     실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.
   xhtml_text: <ac:structured-macro ac:macro-id="f453d3e9-c88d-4457-a68f-cb81ce0c1b6b"
@@ -208,10 +220,26 @@ blocks:
     날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의
     내용이 다를 수 있습니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[1]
-- block_id: html_block-15
+- block_id: paragraph-16
+  children: []
+  type: paragraph
+  xhtml_element_index: 15
+  xhtml_plain_text: 유의 사항
+  xhtml_text: <strong>유의 사항</strong>
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: paragraph-17
+  children: []
+  type: paragraph
+  xhtml_element_index: 16
+  xhtml_plain_text: 당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제
+    Create를 통해 생성된 파일의 내용이 다를 수 있습니다.
+  xhtml_text: 당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를
+    통해 생성된 파일의 내용이 다를 수 있습니다.
+  xhtml_xpath: macro-info[1]/p[2]
+- block_id: html_block-18
   children: []
   type: html_block
-  xhtml_element_index: 14
+  xhtml_element_index: 17
   xhtml_plain_text: 'note필터 표현식(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을
     통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라
     아래와 같이 나뉩니다.  - Number Type지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10`-
@@ -290,17 +318,17 @@ blocks:
 
     </div></div></ac:adf-fallback></ac:adf-extension>'
   xhtml_xpath: ac:adf-extension[1]
-- block_id: paragraph-16
+- block_id: paragraph-19
   children: []
   type: paragraph
-  xhtml_element_index: 15
+  xhtml_element_index: 18
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[5]
-- block_id: html_block-17
+- block_id: html_block-20
   children: []
   type: html_block
-  xhtml_element_index: 16
+  xhtml_element_index: 19
   xhtml_plain_text: 'noteQuery Audit의 내보내기 파일의 Privilege Type 명시 기준내보내기 파일의 ‘Privilege
     Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 기본 권한으로 실행되는 명령어(SET, SHOW
     등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이
@@ -325,49 +353,49 @@ blocks:
 
     </div></div></ac:adf-fallback></ac:adf-extension>'
   xhtml_xpath: ac:adf-extension[2]
-- block_id: paragraph-18
+- block_id: paragraph-21
   children: []
   type: paragraph
-  xhtml_element_index: 17
+  xhtml_element_index: 20
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[6]
-- block_id: heading-19
+- block_id: heading-22
   children: []
   type: heading
-  xhtml_element_index: 18
+  xhtml_element_index: 21
   xhtml_plain_text: 추출 작업 완료시 파일 내려받기
   xhtml_text: 추출 작업 완료시 파일 내려받기
   xhtml_xpath: h2[4]
-- block_id: paragraph-20
+- block_id: paragraph-23
   children: []
   type: paragraph
-  xhtml_element_index: 19
+  xhtml_element_index: 22
   xhtml_plain_text: 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나
     필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
   xhtml_text: 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링
     조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
   xhtml_xpath: p[7]
-- block_id: paragraph-21
+- block_id: paragraph-24
   children: []
   type: paragraph
-  xhtml_element_index: 20
+  xhtml_element_index: 23
   xhtml_plain_text: 추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.
   xhtml_text: 추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.
   xhtml_xpath: p[8]
-- block_id: list-22
+- block_id: list-25
   children: []
   type: list
-  xhtml_element_index: 21
+  xhtml_element_index: 24
   xhtml_plain_text: '목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.상세 페이지에서 다운로드: 목록
     페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.'
   xhtml_text: '<ol start="1"><li><p>목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.</p></li><li><p>상세
     페이지에서 다운로드: 목록 페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.</p></li></ol>'
   xhtml_xpath: ol[3]
-- block_id: html_block-23
+- block_id: html_block-26
   children: []
   type: html_block
-  xhtml_element_index: 22
+  xhtml_element_index: 25
   xhtml_plain_text: "note다운로드 파일에 암호 포함하기다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip\
     \ 파일’입니다. 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 Export\
     \ a file with Encryption 옵션을 ‘Required’로 지정해야 합니다.  \n다운로드 파일에 암호 포함하기다운로드 대상\
@@ -388,29 +416,29 @@ blocks:
 
     </div></div></ac:adf-fallback></ac:adf-extension>'
   xhtml_xpath: ac:adf-extension[3]
-- block_id: paragraph-24
+- block_id: paragraph-27
   children: []
   type: paragraph
-  xhtml_element_index: 23
+  xhtml_element_index: 26
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[9]
-- block_id: heading-25
+- block_id: heading-28
   children: []
   type: heading
-  xhtml_element_index: 24
+  xhtml_element_index: 27
   xhtml_plain_text: 로그 추출 파일 보관 기간 정책 안내
   xhtml_text: 로그 추출 파일 보관 기간 정책 안내
   xhtml_xpath: h2[5]
-- block_id: paragraph-26
+- block_id: paragraph-29
   children: []
   type: paragraph
-  xhtml_element_index: 25
+  xhtml_element_index: 28
   xhtml_plain_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가
     가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다.
     하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_xpath: p[10]
-created_at: '2026-02-10T04:13:23.014619+00:00'
+created_at: '2026-02-10T17:12:17.480813+00:00'
 page_id: '544379140'
 source_xhtml: page.xhtml

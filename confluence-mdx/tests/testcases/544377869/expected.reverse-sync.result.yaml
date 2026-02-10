@@ -1,7 +1,14 @@
 changes_count: 1
-created_at: '2026-02-10T05:55:08.950568+00:00'
+created_at: '2026-02-10T17:12:16.133150+00:00'
+mdx_diff_report: "--- tests/testcases/544377869/original.mdx+++ tests/testcases/544377869/improved.mdx@@\
+  \ -11,7 +11,7 @@ 현재 Proxy 연결은 MySQL, MariaDB, Oracle, PostgreSQL, Redshift, Trino,\
+  \ SQLServer, MongoDB 를 지원합니다.\n \n \n-### Proxy 사용 옵션 활성화\n+### Proxy 사용 옵션 사용\n\
+  \ \n 기본적으로는 Proxy 사용 옵션이 비활성화되어 있습니다.\n 접속을 허용할 커넥션에서 Proxy 사용 여부를 활성화합니다.\n"
 page_id: '544377869'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -7,7 +7,7 @@\n\
+  \ <p>\n </p>\n <h2>\n- Proxy 사용 옵션 활성화\n+ Proxy 사용 옵션 사용\n </h2>\n <p>\n  기본적으로는\
+  \ Proxy 사용 옵션이 비활성화되어 있습니다. 접속을 허용할 커넥션에서 Proxy 사용 여부를 활성화합니다."

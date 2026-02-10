@@ -42,7 +42,9 @@ blocks:
     좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol>
   xhtml_xpath: ol[1]
 - block_id: html_block-4
-  children: []
+  children:
+  - paragraph-5
+  - list-6
   type: html_block
   xhtml_element_index: 3
   xhtml_plain_text: 'Custom Data Source Type 외 다중 요청 시 주의사항Custom Data Source와 다른
@@ -58,17 +60,38 @@ blocks:
     Data Source). Please assign privileges separately for each connection."</p></li><li><p>같은
     권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>'
   xhtml_xpath: macro-note[1]
-- block_id: heading-5
+- block_id: paragraph-5
   children: []
-  type: heading
+  type: paragraph
   xhtml_element_index: 4
-  xhtml_plain_text: Agent를 통한 접속
-  xhtml_text: <br/>Agent를 통한 접속
-  xhtml_xpath: h3[2]
+  xhtml_plain_text: Custom Data Source Type 외 다중 요청 시 주의사항
+  xhtml_text: <strong>Custom Data Source Type 외 다중 요청 시 주의사항</strong>
+  xhtml_xpath: macro-note[1]/p[1]
 - block_id: list-6
   children: []
   type: list
   xhtml_element_index: 5
+  xhtml_plain_text: 'Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할
+    수 없습니다. 이 경우 다음 메시지가 표시됩니다: "Privileges cannot be applied across different types
+    at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately
+    for each connection."같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.'
+  xhtml_text: '<ul><li><p>Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로
+    선택할 수 없습니다. </p></li><li><p>이 경우 다음 메시지가 표시됩니다: "Privileges cannot be applied
+    across different types at once (e.g., General, Redis, Custom Data Source). Please
+    assign privileges separately for each connection."</p></li><li><p>같은 권한 타입의 커넥션끼리는
+    일괄 적용이 가능합니다.</p></li></ul>'
+  xhtml_xpath: macro-note[1]/ul[1]
+- block_id: heading-7
+  children: []
+  type: heading
+  xhtml_element_index: 6
+  xhtml_plain_text: Agent를 통한 접속
+  xhtml_text: <br/>Agent를 통한 접속
+  xhtml_xpath: h3[2]
+- block_id: list-8
+  children: []
+  type: list
+  xhtml_element_index: 7
   xhtml_plain_text: QueryPie Agent 실행QueryPie Agent를 실행합니다.Database 항목에서 Custom Data
     Source를 확인할 수 있습니다.Connection Guide 확인Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port
     정보를 담은 행이 보입니다.위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.UID/PW는 수정할
@@ -92,26 +115,42 @@ blocks:
     ac:original-height="680" ac:original-width="800" ac:width="712"><ri:attachment
     ri:filename="Screenshot 2025-03-06 at 2.18.26 PM.png" ri:version-at-save="1"></ri:attachment></ac:image></li></ul></li></ol>
   xhtml_xpath: ol[2]
-- block_id: html_block-7
-  children: []
+- block_id: html_block-9
+  children:
+  - paragraph-10
+  - list-11
   type: html_block
-  xhtml_element_index: 6
+  xhtml_element_index: 8
   xhtml_plain_text: 주의사항관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.
   xhtml_text: <ac:structured-macro ac:macro-id="4de93d75-70f3-4361-aa97-fca387cd343e"
     ac:name="note" ac:schema-version="1"><ac:rich-text-body><p><strong>주의사항</strong></p><ul><li><p>관리자가
     설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-note[2]
-- block_id: heading-8
+- block_id: paragraph-10
+  children: []
+  type: paragraph
+  xhtml_element_index: 9
+  xhtml_plain_text: 주의사항
+  xhtml_text: <strong>주의사항</strong>
+  xhtml_xpath: macro-note[2]/p[1]
+- block_id: list-11
+  children: []
+  type: list
+  xhtml_element_index: 10
+  xhtml_plain_text: 관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.
+  xhtml_text: <ul><li><p>관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul>
+  xhtml_xpath: macro-note[2]/ul[1]
+- block_id: heading-12
   children: []
   type: heading
-  xhtml_element_index: 7
+  xhtml_element_index: 11
   xhtml_plain_text: 웹으로 접속 시도하는 경우
   xhtml_text: 웹으로 접속 시도하는 경우
   xhtml_xpath: h3[3]
-- block_id: list-9
+- block_id: list-13
   children: []
   type: list
-  xhtml_element_index: 8
+  xhtml_element_index: 12
   xhtml_plain_text: 웹 커넥션 목록 확인사용자 화면 상단 Databases를 클릭합니다. 좌측 커넥션 목록에서 QueryPie Connections를
     클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.접속 불가 안내Custom Data Source 선택 시 Connect
     버튼이 비활성화됩니다.아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다. "Access is only possible through a
@@ -129,6 +168,6 @@ blocks:
     ac:layout="center" ac:original-height="763" ac:original-width="1512" ac:width="712"><ri:attachment
     ri:filename="Screenshot 2025-03-06 at 2.23.37 PM.png" ri:version-at-save="1"></ri:attachment></ac:image></li></ul></li></ol>
   xhtml_xpath: ol[3]
-created_at: '2026-02-10T04:13:27.412275+00:00'
+created_at: '2026-02-10T17:12:26.022716+00:00'
 page_id: '880181257'
 source_xhtml: page.xhtml

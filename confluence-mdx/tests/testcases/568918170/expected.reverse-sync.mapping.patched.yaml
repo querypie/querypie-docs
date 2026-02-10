@@ -165,7 +165,8 @@ blocks:
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[4]
 - block_id: html_block-19
-  children: []
+  children:
+  - paragraph-20
   type: html_block
   xhtml_element_index: 18
   xhtml_plain_text: 대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval
@@ -174,17 +175,26 @@ blocks:
     ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>대리 결재 설정 기간 중 기안 요청자에게는
     별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[1]
-- block_id: heading-20
+- block_id: paragraph-20
+  children: []
+  type: paragraph
+  xhtml_element_index: 19
+  xhtml_plain_text: 대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval
+    Rule 및 Approver를 선택하면 됩니다.
+  xhtml_text: 대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule
+    및 Approver를 선택하면 됩니다.
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: heading-21
   children: []
   type: heading
-  xhtml_element_index: 19
+  xhtml_element_index: 20
   xhtml_plain_text: 3. 위임받은 대리 결재 요청 처리하기
   xhtml_text: 3. 위임받은 대리 결재 요청 처리하기
   xhtml_xpath: h3[3]
-- block_id: list-21
+- block_id: list-22
   children: []
   type: list
-  xhtml_element_index: 20
+  xhtml_element_index: 21
   xhtml_plain_text: '대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. Received Requests
     > To Do : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함Received Requests > Done :
     대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.상세 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는
@@ -194,10 +204,10 @@ blocks:
     Requests &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세
     페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul>'
   xhtml_xpath: ul[2]
-- block_id: html_block-22
+- block_id: html_block-23
   children: []
   type: html_block
-  xhtml_element_index: 21
+  xhtml_element_index: 22
   xhtml_plain_text: ''
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-08-02 오후 12.46.38.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="928" ac:original-width="1433"
@@ -205,32 +215,32 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:adf-mark color="#091e4224" key="border"
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[5]
-- block_id: heading-23
+- block_id: heading-24
   children: []
   type: heading
-  xhtml_element_index: 22
+  xhtml_element_index: 23
   xhtml_plain_text: 4. 대리 결재 처리된 요청 건 확인하기
   xhtml_text: 4. 대리 결재 처리된 요청 건 확인하기
   xhtml_xpath: h3[4]
-- block_id: list-24
+- block_id: list-25
   children: []
   type: list
-  xhtml_element_index: 23
+  xhtml_element_index: 24
   xhtml_plain_text: 다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다.
   xhtml_text: <ul><li><p>다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수
     있습니다.  </p></li></ul>
   xhtml_xpath: ul[3]
-- block_id: paragraph-25
+- block_id: paragraph-26
   children: []
   type: paragraph
-  xhtml_element_index: 24
+  xhtml_element_index: 25
   xhtml_plain_text: 원 결재자가 처리한 경우
   xhtml_text: <strong>원 결재자가 처리한 경우</strong>
   xhtml_xpath: p[7]
-- block_id: html_block-26
+- block_id: html_block-27
   children: []
   type: html_block
-  xhtml_element_index: 25
+  xhtml_element_index: 26
   xhtml_plain_text: 대리 결재 관련 문구 없음
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-25 오후 3.35.33.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="576" ac:original-width="676"
@@ -238,17 +248,17 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>대리 결재 관련 문구 없음</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[6]
-- block_id: paragraph-27
+- block_id: paragraph-28
   children: []
   type: paragraph
-  xhtml_element_index: 26
+  xhtml_element_index: 27
   xhtml_plain_text: 대리 결재자가 처리한 경우
   xhtml_text: <strong>대리 결재자가 처리한 경우</strong>
   xhtml_xpath: p[8]
-- block_id: html_block-28
+- block_id: html_block-29
   children: []
   type: html_block
-  xhtml_element_index: 27
+  xhtml_element_index: 28
   xhtml_plain_text: 대리 결재자가 Done by the delegate와 함께 표기됨
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-25 오후 3.21.41.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="571" ac:original-width="662"
@@ -256,10 +266,11 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>대리 결재자가 Done by the delegate와
     함께 표기됨</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[7]
-- block_id: html_block-29
-  children: []
+- block_id: html_block-30
+  children:
+  - paragraph-31
   type: html_block
-  xhtml_element_index: 28
+  xhtml_element_index: 29
   xhtml_plain_text: Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다.
     Slack DM 알림 관련 자세한 내용은 Slack DM 개인 알림 사용하기 문서를 참고해주세요.
   xhtml_text: <ac:structured-macro ac:macro-id="0d492211-666c-4cf5-b197-36ab604842b9"
@@ -268,47 +279,58 @@ blocks:
     ri:content-title="Slack DM - Workflow 알림 유형" ri:version-at-save="14"></ri:page><ac:link-body>Slack
     DM 개인 알림 사용하기</ac:link-body></ac:link> 문서를 참고해주세요. </p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[2]
-- block_id: heading-30
+- block_id: paragraph-31
+  children: []
+  type: paragraph
+  xhtml_element_index: 30
+  xhtml_plain_text: Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다.
+    Slack DM 알림 관련 자세한 내용은 Slack DM 개인 알림 사용하기 문서를 참고해주세요.
+  xhtml_text: Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack
+    DM 알림 관련 자세한 내용은 <ac:link><ri:page ri:content-title="Slack DM - Workflow 알림 유형"
+    ri:version-at-save="14"></ri:page><ac:link-body>Slack DM 개인 알림 사용하기</ac:link-body></ac:link>
+    문서를 참고해주세요.
+  xhtml_xpath: macro-info[2]/p[1]
+- block_id: heading-32
   children: []
   type: heading
-  xhtml_element_index: 29
+  xhtml_element_index: 31
   xhtml_plain_text: 5. 대리 결재 설정 종료 이후의 기안 조회 방법
   xhtml_text: 5. 대리 결재 설정 종료 이후의 기안 조회 방법
   xhtml_xpath: h3[5]
-- block_id: list-31
+- block_id: list-33
   children: []
   type: list
-  xhtml_element_index: 30
+  xhtml_element_index: 32
   xhtml_plain_text: 대리 결재 설정 기간이 종료되었다 하더라도 Received Requests > Done 목록에서, 대리 결재 설정
     기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다.
   xhtml_text: <ul><li><p>대리 결재 설정 기간이 종료되었다 하더라도 Received Requests &gt; Done 목록에서,
     대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다. </p></li></ul>
   xhtml_xpath: ul[4]
-- block_id: paragraph-32
-  children: []
-  type: paragraph
-  xhtml_element_index: 31
-  xhtml_plain_text: ''
-  xhtml_text: ''
-  xhtml_xpath: p[9]
-- block_id: heading-33
-  children: []
-  type: heading
-  xhtml_element_index: 32
-  xhtml_plain_text: 기존 요청 건 재상신하기
-  xhtml_text: 기존 요청 건 재상신하기
-  xhtml_xpath: h2[4]
 - block_id: paragraph-34
   children: []
   type: paragraph
   xhtml_element_index: 33
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[9]
+- block_id: heading-35
+  children: []
+  type: heading
+  xhtml_element_index: 34
+  xhtml_plain_text: 기존 요청 건 재상신하기
+  xhtml_text: 기존 요청 건 재상신하기
+  xhtml_xpath: h2[4]
+- block_id: paragraph-36
+  children: []
+  type: paragraph
+  xhtml_element_index: 35
   xhtml_plain_text: 동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다.
   xhtml_text: 동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다.
   xhtml_xpath: p[10]
-- block_id: html_block-35
+- block_id: html_block-37
   children: []
   type: html_block
-  xhtml_element_index: 34
+  xhtml_element_index: 36
   xhtml_plain_text: Workflow > Sent Requests > Done > List Details
   xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="wide"
     ac:original-height="235" ac:original-width="575" ac:width="768"><ri:attachment
@@ -316,18 +338,19 @@ blocks:
     &gt; Sent Requests &gt; Done &gt; List Details</p></ac:caption><ac:adf-mark color="#091e4224"
     key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[8]
-- block_id: list-36
+- block_id: list-38
   children: []
   type: list
-  xhtml_element_index: 35
+  xhtml_element_index: 37
   xhtml_plain_text: Sent Requests > Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다.
   xhtml_text: <ol start="1"><li><p>Sent Requests &gt; Done 목록에서 재상신을 원하는 요청 건을 클릭하여
     상세 페이지로 진입합니다. </p></li></ol>
   xhtml_xpath: ol[2]
-- block_id: html_block-37
-  children: []
+- block_id: html_block-39
+  children:
+  - paragraph-40
   type: html_block
-  xhtml_element_index: 36
+  xhtml_element_index: 38
   xhtml_plain_text: 이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 Deleted로 표시되는 것을 확인할 수 있으며,
     삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다.
   xhtml_text: '<ac:structured-macro ac:macro-id="131be646-3aa7-492b-902a-32bf694b89af"
@@ -335,10 +358,19 @@ blocks:
     승인자, 서버, 계정 등)는 <em><span style="color: rgb(255,86,48);">Deleted</span></em>로
     표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></ac:rich-text-body></ac:structured-macro>'
   xhtml_xpath: macro-info[3]
-- block_id: list-38
+- block_id: paragraph-40
+  children: []
+  type: paragraph
+  xhtml_element_index: 39
+  xhtml_plain_text: 이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 Deleted로 표시되는 것을 확인할 수 있으며,
+    삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다.
+  xhtml_text: '이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 <em><span style="color: rgb(255,86,48);">Deleted</span></em>로
+    표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다.'
+  xhtml_xpath: macro-info[3]/p[1]
+- block_id: list-41
   children: []
   type: list
-  xhtml_element_index: 37
+  xhtml_element_index: 40
   xhtml_plain_text: 우측 상단에 있는 Resubmit 버튼을 클릭하여 재상신 페이지로 진입합니다. 재상신 페이지 내에서 수정을 원하는
     값이 있을 경우 수정을 합니다. Save 버튼을 통해 저장합니다.Workflow > Sent Request > In Progress 메뉴에서
     본인의 요청 내역과 승인 현황을 확인할 수 있습니다.
@@ -347,6 +379,6 @@ blocks:
     버튼을 통해 저장합니다.</p></li><li><p>Workflow &gt; Sent Request &gt; In Progress 메뉴에서
     본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol>
   xhtml_xpath: ol[3]
-created_at: '2026-02-10T04:13:25.496044+00:00'
+created_at: '2026-02-10T17:12:22.554854+00:00'
 page_id: '568918170'
 source_xhtml: patched.xhtml

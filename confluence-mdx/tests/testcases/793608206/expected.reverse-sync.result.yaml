@@ -1,7 +1,15 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:26.729416+00:00'
+created_at: '2026-02-10T17:12:24.576334+00:00'
+mdx_diff_report: "--- tests/testcases/793608206/original.mdx+++ tests/testcases/793608206/improved.mdx@@\
+  \ -1,7 +1,7 @@ \n # New Request > 요청 타입별 템플릿 변수\n \n-Alert Type을 New Request로 선택한\
+  \ 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.\n+Alert Type을 New Request로 선택한 경우,\
+  \ Request Type에 따른 템플릿 변수 제공 내용은 다음과 같습니다.\n \n ### 공통 변수\n \n"
 page_id: '793608206'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -1,5 +1,5 @@\n\
+  \ <p>\n- Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.\n\
+  + Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 제공 내용은 다음과 같습니다.\n </p>\n\
+  \ <h2>\n  공통 변수"

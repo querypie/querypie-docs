@@ -82,7 +82,8 @@ blocks:
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[2]
 - block_id: html_block-10
-  children: []
+  children:
+  - paragraph-11
   type: html_block
   xhtml_element_index: 9
   xhtml_plain_text: QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
@@ -94,13 +95,20 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 10
+  xhtml_plain_text: QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
+  xhtml_text: QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: paragraph-12
+  children: []
+  type: paragraph
+  xhtml_element_index: 11
   xhtml_plain_text: 3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.
   xhtml_text: 3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.
   xhtml_xpath: p[5]
-- block_id: html_block-12
+- block_id: html_block-13
   children: []
   type: html_block
-  xhtml_element_index: 11
+  xhtml_element_index: 12
   xhtml_plain_text: Mac OS 설치 프로그램
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-08-04 오후 5.40.02.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="750" ac:original-width="1070"
@@ -108,19 +116,19 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Mac OS 설치 프로그램</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[3]
-- block_id: paragraph-13
+- block_id: paragraph-14
   children: []
   type: paragraph
-  xhtml_element_index: 12
+  xhtml_element_index: 13
   xhtml_plain_text: 4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie
     URL을 입력하고 Next 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
   xhtml_text: 4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie
     URL을 입력하고 <code>Next</code> 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
   xhtml_xpath: p[6]
-- block_id: html_block-14
+- block_id: html_block-15
   children: []
   type: html_block
-  xhtml_element_index: 13
+  xhtml_element_index: 14
   xhtml_plain_text: Agent > QueryPie Host 입력
   xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
     ac:original-height="461" ac:original-width="827" ac:width="760"><ri:attachment
@@ -128,31 +136,31 @@ blocks:
     &gt; QueryPie Host 입력</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[4]
-- block_id: paragraph-15
+- block_id: paragraph-16
   children: []
   type: paragraph
-  xhtml_element_index: 14
+  xhtml_element_index: 15
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[7]
-- block_id: heading-16
+- block_id: heading-17
   children: []
   type: heading
-  xhtml_element_index: 15
+  xhtml_element_index: 16
   xhtml_plain_text: QueryPie Agent에 로그인하기
   xhtml_text: QueryPie Agent에 로그인하기
   xhtml_xpath: h2[3]
-- block_id: paragraph-17
+- block_id: paragraph-18
   children: []
   type: paragraph
-  xhtml_element_index: 16
+  xhtml_element_index: 17
   xhtml_plain_text: 1. Agent 앱 내 로그인 화면에서 Login 버튼을 클릭합니다.
   xhtml_text: 1. Agent 앱 내 로그인 화면에서 <code>Login</code> 버튼을 클릭합니다.
   xhtml_xpath: p[8]
-- block_id: html_block-18
+- block_id: html_block-19
   children: []
   type: html_block
-  xhtml_element_index: 17
+  xhtml_element_index: 18
   xhtml_plain_text: ''
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-08-04 오후 5.37.13.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="961" ac:original-width="1494"
@@ -160,17 +168,17 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:adf-mark color="#091e4224" key="border"
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[5]
-- block_id: paragraph-19
+- block_id: paragraph-20
   children: []
   type: paragraph
-  xhtml_element_index: 18
+  xhtml_element_index: 19
   xhtml_plain_text: 2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, Continue 버튼을 클릭합니다.
   xhtml_text: 2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, <code>Continue</code> 버튼을 클릭합니다.
   xhtml_xpath: p[9]
-- block_id: html_block-20
+- block_id: html_block-21
   children: []
   type: html_block
-  xhtml_element_index: 19
+  xhtml_element_index: 20
   xhtml_plain_text: QueryPie Web > Agent Login Page
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-29 오후 5.12.36.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="917" ac:original-width="1548"
@@ -178,17 +186,17 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>QueryPie Web &gt; Agent
     Login Page</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[6]
-- block_id: paragraph-21
+- block_id: paragraph-22
   children: []
   type: paragraph
-  xhtml_element_index: 20
+  xhtml_element_index: 21
   xhtml_plain_text: 3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.
   xhtml_text: 3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.
   xhtml_xpath: p[10]
-- block_id: html_block-22
+- block_id: html_block-23
   children: []
   type: html_block
-  xhtml_element_index: 21
+  xhtml_element_index: 22
   xhtml_plain_text: QueryPie Web > Agent Login Success Page
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-29 오후 5.13.14.png"
     ac:custom-width="true" ac:layout="wide" ac:original-height="917" ac:original-width="1548"
@@ -197,17 +205,17 @@ blocks:
     Login Success Page</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[7]
-- block_id: paragraph-23
+- block_id: paragraph-24
   children: []
   type: paragraph
-  xhtml_element_index: 22
+  xhtml_element_index: 23
   xhtml_plain_text: 4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.
   xhtml_text: 4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.
   xhtml_xpath: p[11]
-- block_id: html_block-24
+- block_id: html_block-25
   children: []
   type: html_block
-  xhtml_element_index: 23
+  xhtml_element_index: 24
   xhtml_plain_text: Chrome - Agent App 열기 모달
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-08-04 오후 5.42.09.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="383" ac:original-width="1063"
@@ -215,27 +223,27 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Chrome - Agent App 열기 모달</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[8]
-- block_id: heading-25
+- block_id: heading-26
   children: []
   type: heading
-  xhtml_element_index: 24
+  xhtml_element_index: 25
   xhtml_plain_text: 에이전트로 데이터베이스 접속하기
   xhtml_text: 에이전트로 데이터베이스 접속하기
   xhtml_xpath: h2[4]
-- block_id: paragraph-26
+- block_id: paragraph-27
   children: []
   type: paragraph
-  xhtml_element_index: 25
+  xhtml_element_index: 26
   xhtml_plain_text: 1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를
     확인할 수 있습니다.접속할 커넥션에 할당된 Port 를 클릭하면, 해당 커넥션의 Proxy Credentials 정보를 확인할 수 있습니다.
   xhtml_text: 1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수
     있습니다.<br/>접속할 커넥션에 할당된 <code>Port</code> 를 클릭하면, 해당 커넥션의 <code>Proxy Credentials</code>
     정보를 확인할 수 있습니다.
   xhtml_xpath: p[12]
-- block_id: html_block-27
+- block_id: html_block-28
   children: []
   type: html_block
-  xhtml_element_index: 26
+  xhtml_element_index: 27
   xhtml_plain_text: Agent > DB Connection Information
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 3.10.01.png"
     ac:custom-width="true" ac:layout="wide" ac:original-height="814" ac:original-width="983"
@@ -243,17 +251,17 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; DB Connection
     Information</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[9]
-- block_id: paragraph-28
+- block_id: paragraph-29
   children: []
   type: paragraph
-  xhtml_element_index: 27
+  xhtml_element_index: 28
   xhtml_plain_text: 2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.
   xhtml_text: 2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.
   xhtml_xpath: p[13]
-- block_id: html_block-29
+- block_id: html_block-30
   children: []
   type: html_block
-  xhtml_element_index: 28
+  xhtml_element_index: 29
   xhtml_plain_text: 3rd Party Client를 이용한 DB 커넥션 접속
   xhtml_text: <ac:image ac:align="center" ac:alt="agent-07.png" ac:custom-width="true"
     ac:layout="wide" ac:original-height="461" ac:original-width="827" ac:width="764"><ri:attachment
@@ -261,48 +269,48 @@ blocks:
     Party Client를 이용한 DB 커넥션 접속</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
     size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[10]
-- block_id: paragraph-30
+- block_id: paragraph-31
   children: []
   type: paragraph
-  xhtml_element_index: 29
+  xhtml_element_index: 30
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[14]
-- block_id: heading-31
+- block_id: heading-32
   children: []
   type: heading
-  xhtml_element_index: 30
+  xhtml_element_index: 31
   xhtml_plain_text: 에이전트를 통한 서버 접속
   xhtml_text: 에이전트를 통한 서버 접속
   xhtml_xpath: h2[5]
-- block_id: paragraph-32
+- block_id: paragraph-33
   children: []
   type: paragraph
-  xhtml_element_index: 31
+  xhtml_element_index: 32
   xhtml_plain_text: 로그인이 정상적으로 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.
   xhtml_text: 로그인이 정상적으로 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.
   xhtml_xpath: p[15]
-- block_id: heading-33
+- block_id: heading-34
   children: []
   type: heading
-  xhtml_element_index: 32
+  xhtml_element_index: 33
   xhtml_plain_text: 1. 서버 역할 선택하기
   xhtml_text: 1. 서버 역할 선택하기
   xhtml_xpath: h3[1]
-- block_id: list-34
+- block_id: list-35
   children: []
   type: list
-  xhtml_element_index: 33
+  xhtml_element_index: 34
   xhtml_plain_text: 사용자 프로필 영역 하단의 Role 버튼을 클릭하여 원하는 역할을 고르고 OK 버튼을 클릭하세요.Default
     역할 선택시, Workflow > Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.
   xhtml_text: <ul><li><p>사용자 프로필 영역 하단의 <code>Role</code> 버튼을 클릭하여 원하는 역할을 고르고 <code>OK</code>
     버튼을 클릭하세요.</p></li><li><p>Default 역할 선택시, Workflow &gt; Server Access Request
     요청에 의해 할당받은 서버 권한을 사용합니다. </p></li></ul>
   xhtml_xpath: ul[1]
-- block_id: html_block-35
+- block_id: html_block-36
   children: []
   type: html_block
-  xhtml_element_index: 34
+  xhtml_element_index: 35
   xhtml_plain_text: Agent > Server > Select a Role
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 4.26.53.png"
     ac:custom-width="true" ac:layout="wide" ac:original-height="542" ac:original-width="939"
@@ -310,35 +318,43 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Server &gt; Select
     a Role</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[11]
-- block_id: html_block-36
-  children: []
+- block_id: html_block-37
+  children:
+  - paragraph-38
   type: html_block
-  xhtml_element_index: 35
+  xhtml_element_index: 36
   xhtml_plain_text: 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
   xhtml_text: <ac:structured-macro ac:macro-id="d1ce310c-4526-4911-b6fd-15e1c369a767"
     ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent
     로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[2]
-- block_id: heading-37
+- block_id: paragraph-38
+  children: []
+  type: paragraph
+  xhtml_element_index: 37
+  xhtml_plain_text: 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
+  xhtml_text: 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
+  xhtml_xpath: macro-info[2]/p[1]
+- block_id: heading-39
   children: []
   type: heading
-  xhtml_element_index: 36
+  xhtml_element_index: 38
   xhtml_plain_text: 2. Agent로 서버 접속하기
   xhtml_text: <br/>2. <ac:inline-comment-marker ac:ref="50b132b2-0b7d-413a-805b-ec80489a780b">Agent로
     서버 접속하기</ac:inline-comment-marker>
   xhtml_xpath: h3[2]
-- block_id: list-38
+- block_id: list-40
   children: []
   type: list
-  xhtml_element_index: 37
+  xhtml_element_index: 39
   xhtml_plain_text: 접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
   xhtml_text: <ul><li><p>접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을
     선택합니다.</p></li></ul>
   xhtml_xpath: ul[2]
-- block_id: html_block-39
+- block_id: html_block-41
   children: []
   type: html_block
-  xhtml_element_index: 38
+  xhtml_element_index: 40
   xhtml_plain_text: Agent > Server > Open Connection with
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 4.17.29.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="553" ac:original-width="774"
@@ -346,19 +362,19 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Server &gt; Open
     Connection with</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[12]
-- block_id: list-40
+- block_id: list-42
   children: []
   type: list
-  xhtml_element_index: 39
+  xhtml_element_index: 41
   xhtml_plain_text: 이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. 사용하려는 계정을 선택하고
     필요시 비밀번호를 입력한 뒤, OK 버튼을 클릭하여 세션을 엽니다.
   xhtml_text: <ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는
     계정을 선택하고 필요시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul>
   xhtml_xpath: ul[3]
-- block_id: html_block-41
+- block_id: html_block-43
   children: []
   type: html_block
-  xhtml_element_index: 40
+  xhtml_element_index: 42
   xhtml_plain_text: Agent > Server >  Open New Session
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 4.25.32.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="567" ac:original-width="848"
@@ -366,67 +382,67 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Server &gt;  Open
     New Session</p></ac:caption></ac:image>
   xhtml_xpath: ac:image[13]
-- block_id: heading-42
+- block_id: heading-44
   children: []
   type: heading
-  xhtml_element_index: 41
+  xhtml_element_index: 43
   xhtml_plain_text: 3. Seamless SSH 설정하기
   xhtml_text: 3. Seamless SSH 설정하기
   xhtml_xpath: h3[3]
-- block_id: paragraph-43
+- block_id: paragraph-45
   children: []
   type: paragraph
-  xhtml_element_index: 42
+  xhtml_element_index: 44
   xhtml_plain_text: Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는
     기능입니다. 다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
   xhtml_text: Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
     다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
   xhtml_xpath: p[16]
-- block_id: paragraph-44
+- block_id: paragraph-46
   children: []
   type: paragraph
-  xhtml_element_index: 43
+  xhtml_element_index: 45
   xhtml_plain_text: 1) 터미널을 열고, .ssh 폴더로 이동합니다.
   xhtml_text: 1) 터미널을 열고, .ssh 폴더로 이동합니다.
   xhtml_xpath: p[17]
-- block_id: code-45
+- block_id: code-47
   children: []
   type: code
-  xhtml_element_index: 44
+  xhtml_element_index: 46
   xhtml_plain_text: $ cd .ssh
   xhtml_text: <ac:structured-macro ac:macro-id="ae17bd7b-36ca-4bac-9f76-a2a80df69ed8"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[$ cd .ssh]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[1]
-- block_id: paragraph-46
+- block_id: paragraph-48
   children: []
   type: paragraph
-  xhtml_element_index: 45
+  xhtml_element_index: 47
   xhtml_plain_text: 2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.
   xhtml_text: 2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.
   xhtml_xpath: p[18]
-- block_id: code-47
+- block_id: code-49
   children: []
   type: code
-  xhtml_element_index: 46
+  xhtml_element_index: 48
   xhtml_plain_text: $ vi config
   xhtml_text: <ac:structured-macro ac:macro-id="4ac2ea9a-8d66-4197-bc03-8304a9a0b2a7"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[$ vi config]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[2]
-- block_id: paragraph-48
+- block_id: paragraph-50
   children: []
   type: paragraph
-  xhtml_element_index: 47
+  xhtml_element_index: 49
   xhtml_plain_text: 3) 아래의 내용을 입력 후, wq 키를 입력하여 vi 에디터를 나옵니다.
   xhtml_text: <ac:inline-comment-marker ac:ref="9346ce2e-a893-4aa6-8a8e-808d683cd275">3)
     아래의 내용을 입력 후, </ac:inline-comment-marker><code><ac:inline-comment-marker ac:ref="9346ce2e-a893-4aa6-8a8e-808d683cd275">wq</ac:inline-comment-marker></code><ac:inline-comment-marker
     ac:ref="9346ce2e-a893-4aa6-8a8e-808d683cd275"> 키를 입력하여 vi 에디터를 나옵니다.</ac:inline-comment-marker>
   xhtml_xpath: p[19]
-- block_id: code-49
+- block_id: code-51
   children: []
   type: code
-  xhtml_element_index: 48
+  xhtml_element_index: 50
   xhtml_plain_text: "Host {{Server Name}}\n  Hostname {{Server URL}}\n  Port {{Server\
     \ SSH Port}}\n  ProxyCommand qpa ssh %r %h %p"
   xhtml_text: "<ac:structured-macro ac:macro-id=\"23e5d969-15b1-4d4b-a7f2-0c2c38a4dee1\"\
@@ -435,10 +451,11 @@ blocks:
     \ {{Server Name}}\n  Hostname {{Server URL}}\n  Port {{Server SSH Port}}\n  ProxyCommand\
     \ qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro>"
   xhtml_xpath: macro-code[3]
-- block_id: html_block-50
-  children: []
+- block_id: html_block-52
+  children:
+  - paragraph-53
   type: html_block
-  xhtml_element_index: 49
+  xhtml_element_index: 51
   xhtml_plain_text: "config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써\
     \ 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.Host *\n  ProxyCommand\
     \ qpa ssh %r %h %p"
@@ -449,53 +466,62 @@ blocks:
     \ ac:name=\"code\" ac:schema-version=\"1\"><ac:plain-text-body><![CDATA[Host *\n\
     \  ProxyCommand qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro></ac:rich-text-body></ac:structured-macro>"
   xhtml_xpath: macro-info[3]
-- block_id: paragraph-51
+- block_id: paragraph-53
   children: []
   type: paragraph
-  xhtml_element_index: 50
+  xhtml_element_index: 52
+  xhtml_plain_text: config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써
+    서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
+  xhtml_text: config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를
+    특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
+  xhtml_xpath: macro-info[3]/p[1]
+- block_id: paragraph-54
+  children: []
+  type: paragraph
+  xhtml_element_index: 53
   xhtml_plain_text: 4) 이상으로 설정이 완료됩니다. Agent > Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에
     접속할 수 있습니다.
   xhtml_text: 4) 이상으로 설정이 완료됩니다. Agent > Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수
     있습니다.
   xhtml_xpath: p[20]
-- block_id: code-52
+- block_id: code-55
   children: []
   type: code
-  xhtml_element_index: 51
+  xhtml_element_index: 54
   xhtml_plain_text: $ ssh deploy@{{Server Name}}
   xhtml_text: <ac:structured-macro ac:macro-id="1c851681-79bb-4775-b25d-ff504b3b7e81"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[$ ssh deploy@{{Server
     Name}}]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[4]
-- block_id: paragraph-53
+- block_id: paragraph-56
   children: []
   type: paragraph
-  xhtml_element_index: 52
+  xhtml_element_index: 55
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[21]
-- block_id: heading-54
+- block_id: heading-57
   children: []
   type: heading
-  xhtml_element_index: 53
+  xhtml_element_index: 56
   xhtml_plain_text: 에이전트를 통한 쿠버네티스 접속
   xhtml_text: 에이전트를 통한 쿠버네티스 접속
   xhtml_xpath: h2[6]
-- block_id: html_block-55
+- block_id: html_block-58
   children: []
   type: html_block
-  xhtml_element_index: 54
+  xhtml_element_index: 57
   xhtml_plain_text: ''
   xhtml_text: <ac:image ac:align="center" ac:custom-width="true" ac:layout="wide"
     ac:original-height="900" ac:original-width="1800" ac:width="764"><ri:attachment
     ri:filename="kubernetes-agent-access-flow.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[14]
-- block_id: list-56
+- block_id: list-59
   children: []
   type: list
-  xhtml_element_index: 55
+  xhtml_element_index: 58
   xhtml_plain_text: 권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 kubeconfig 파일이 자동으로 수신됩니다.이를
     통해 Kubernetes Client(kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.에이전트에서는
     접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.또한 설정 메뉴를 통해 kubeconfig파일의 위치를
@@ -506,26 +532,26 @@ blocks:
     각 클러스터에 적용된 정책을 확인할 수 있습니다.</p></li><li><p>또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및
     수정할 수 있습니다.</p></li></ul>
   xhtml_xpath: ul[4]
-- block_id: heading-57
+- block_id: heading-60
   children: []
   type: heading
-  xhtml_element_index: 56
+  xhtml_element_index: 59
   xhtml_plain_text: 1. Kubernetes 역할 선택하기
   xhtml_text: 1. Kubernetes 역할 선택하기
   xhtml_xpath: h3[4]
-- block_id: paragraph-58
+- block_id: paragraph-61
   children: []
   type: paragraph
-  xhtml_element_index: 57
+  xhtml_element_index: 60
   xhtml_plain_text: 사용자 프로필 영역 하단의 Role 버튼을 클릭하면 역할 선택 모달이 열립니다. 원하는 역할을 고르고 OK 버튼을
     클릭하세요.
   xhtml_text: 사용자 프로필 영역 하단의 <code>Role</code> 버튼을 클릭하면 역할 선택 모달이 열립니다. 원하는 역할을 고르고
     <code>OK</code> 버튼을 클릭하세요.
   xhtml_xpath: p[22]
-- block_id: html_block-59
+- block_id: html_block-62
   children: []
   type: html_block
-  xhtml_element_index: 58
+  xhtml_element_index: 61
   xhtml_plain_text: Agent > Kubernetes > Select a Role
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 3.27.05.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="572" ac:original-width="958"
@@ -533,43 +559,52 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Kubernetes &gt;
     Select a Role</p></ac:caption><ac:adf-mark color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[15]
-- block_id: html_block-60
-  children: []
+- block_id: html_block-63
+  children:
+  - paragraph-64
   type: html_block
-  xhtml_element_index: 59
+  xhtml_element_index: 62
   xhtml_plain_text: 역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야
     합니다.
   xhtml_text: <ac:structured-macro ac:macro-id="a7a2eaa6-16ef-4ce8-8fbc-ca87a927d4a2"
     ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent
     로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[4]
-- block_id: paragraph-61
+- block_id: paragraph-64
   children: []
   type: paragraph
-  xhtml_element_index: 60
+  xhtml_element_index: 63
+  xhtml_plain_text: 역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야
+    합니다.
+  xhtml_text: 역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
+  xhtml_xpath: macro-info[4]/p[1]
+- block_id: paragraph-65
+  children: []
+  type: paragraph
+  xhtml_element_index: 64
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[23]
-- block_id: heading-62
+- block_id: heading-66
   children: []
   type: heading
-  xhtml_element_index: 61
+  xhtml_element_index: 65
   xhtml_plain_text: 2. Policy 조회하기
   xhtml_text: 2. Policy 조회하기
   xhtml_xpath: h3[5]
-- block_id: paragraph-63
+- block_id: paragraph-67
   children: []
   type: paragraph
-  xhtml_element_index: 62
+  xhtml_element_index: 66
   xhtml_plain_text: 선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 🔍 버튼을 누르면 Policy Information
     팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.
   xhtml_text: 선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 <code>🔍</code> 버튼을 누르면 Policy
     Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.
   xhtml_xpath: p[24]
-- block_id: html_block-64
+- block_id: html_block-68
   children: []
   type: html_block
-  xhtml_element_index: 63
+  xhtml_element_index: 67
   xhtml_plain_text: Agent > Policy Information
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 4.11.41.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="959" ac:original-width="1024"
@@ -577,25 +612,25 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Policy Information</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[16]
-- block_id: heading-65
+- block_id: heading-69
   children: []
   type: heading
-  xhtml_element_index: 64
+  xhtml_element_index: 68
   xhtml_plain_text: 3. Kubeconfig 경로 설정하기
   xhtml_text: 3. Kubeconfig 경로 설정하기
   xhtml_xpath: h3[6]
-- block_id: paragraph-66
+- block_id: paragraph-70
   children: []
   type: paragraph
-  xhtml_element_index: 65
+  xhtml_element_index: 69
   xhtml_plain_text: Agent 설정 메뉴에서 KubeConfig Path 버튼을 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.
   xhtml_text: Agent 설정 메뉴에서 <code>KubeConfig Path</code> 버튼을 클릭하여 Kubeconfig 경로 설정
     모달을 엽니다.
   xhtml_xpath: p[25]
-- block_id: html_block-67
+- block_id: html_block-71
   children: []
   type: html_block
-  xhtml_element_index: 66
+  xhtml_element_index: 70
   xhtml_plain_text: Agent > Settings > Configure Kubeconfig Path
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 3.46.23.png"
     ac:custom-width="true" ac:layout="wide" ac:original-height="520" ac:original-width="585"
@@ -604,10 +639,10 @@ blocks:
     Configure Kubeconfig Path</p></ac:caption><ac:adf-mark color="#091e4224" key="border"
     size="2"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[17]
-- block_id: list-68
+- block_id: list-72
   children: []
   type: list
-  xhtml_element_index: 67
+  xhtml_element_index: 71
   xhtml_plain_text: 'Path Configuration : Kubeconfig 파일 저장 경로를 사용자가 지정할 수 있습니다.기본값은
     $HOME/.kube/querypie-kubeconfig 입니다.경로 필드 우측 Upload 버튼을 누르면 로컬 파일 경로를 지정할 수 있는
     팝업이 나타납니다.'
@@ -616,17 +651,17 @@ blocks:
     입니다.</p></li><li><p>경로 필드 우측 <code>Upload</code> 버튼을 누르면 로컬 파일 경로를 지정할 수 있는 팝업이
     나타납니다. </p></li></ul></li></ul>'
   xhtml_xpath: ul[5]
-- block_id: paragraph-69
+- block_id: paragraph-73
   children: []
   type: paragraph
-  xhtml_element_index: 68
+  xhtml_element_index: 72
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[26]
-- block_id: html_block-70
+- block_id: html_block-74
   children: []
   type: html_block
-  xhtml_element_index: 69
+  xhtml_element_index: 73
   xhtml_plain_text: 경로 지정 팝업
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 4.35.30.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="244" ac:original-width="475"
@@ -634,10 +669,10 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>경로 지정 팝업</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[18]
-- block_id: list-71
+- block_id: list-75
   children: []
   type: list
-  xhtml_element_index: 70
+  xhtml_element_index: 74
   xhtml_plain_text: 'Where : 우측의 🔽 버튼을 클릭하여 원하는 폴더를 지정합니다.Save As : Kubeconfig 파일의
     이름을 입력합니다. 변경하지 않으면 기본값으로 적용됩니다.Command Line : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을
     제공합니다.'
@@ -646,118 +681,118 @@ blocks:
     변경하지 않으면 기본값으로 적용됩니다.</p></li><li><p><strong>Command Line</strong> : KUBECONFIG
     환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.</p></li></ul>'
   xhtml_xpath: ul[6]
-- block_id: paragraph-72
+- block_id: paragraph-76
   children: []
   type: paragraph
-  xhtml_element_index: 71
+  xhtml_element_index: 75
   xhtml_plain_text: 1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 "${KUBECONFIG}" 값을
     사용 전에 "${HOME}/.kube/config"로 변경해야 합니다.
   xhtml_text: 1) KUBECONFIG 환경 변수를 최초 설정하는 경우, 명령 줄 내의 디폴트 "<code>${KUBECONFIG}</code>"
     값을 사용 전에 "<code>${HOME}/.kube/config</code>"로 변경해야 합니다.
   xhtml_xpath: p[27]
-- block_id: code-73
+- block_id: code-77
   children: []
   type: code
-  xhtml_element_index: 72
+  xhtml_element_index: 76
   xhtml_plain_text: export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
   xhtml_text: <ac:structured-macro ac:macro-id="80e6e84a-7525-4179-b33a-07b411e24941"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[export
     KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[5]
-- block_id: paragraph-74
+- block_id: paragraph-78
   children: []
   type: paragraph
-  xhtml_element_index: 73
+  xhtml_element_index: 77
   xhtml_plain_text: 2) QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시
     선언해야 합니다.
   xhtml_text: <ac:inline-comment-marker ac:ref="489e3194-1605-43db-8b78-366b9f36e6ec">2)
     QueryPie에서 제공된 사용자 지정 kubeconfig 경로를 변경한 경우 새 경로로 환경 변수를 다시 선언해야 합니다.</ac:inline-comment-marker>
   xhtml_xpath: p[28]
-- block_id: code-75
+- block_id: code-79
   children: []
   type: code
-  xhtml_element_index: 74
+  xhtml_element_index: 78
   xhtml_plain_text: export KUBECONFIG="${KUBECONFIG}:<user-specified-path>"
   xhtml_text: <ac:structured-macro ac:macro-id="f4c96fe4-8f50-4714-8e1c-1259b38c84a7"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[export
     KUBECONFIG="${KUBECONFIG}:<user-specified-path>"]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[6]
-- block_id: paragraph-76
+- block_id: paragraph-80
   children: []
   type: paragraph
-  xhtml_element_index: 75
+  xhtml_element_index: 79
   xhtml_plain_text: 3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.
   xhtml_text: 3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.
   xhtml_xpath: p[29]
-- block_id: list-77
+- block_id: list-81
   children: []
   type: list
-  xhtml_element_index: 76
+  xhtml_element_index: 80
   xhtml_plain_text: '참고: kubeconfig 파일 병합참고: KUBECONFIG 환경 변수 설정'
   xhtml_text: '<ul><li><p>참고: <a href="https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9">kubeconfig
     파일 병합</a></p></li><li><p>참고: <a href="https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95">KUBECONFIG
     환경 변수 설정</a></p></li></ul>'
   xhtml_xpath: ul[7]
-- block_id: paragraph-78
+- block_id: paragraph-82
   children: []
   type: paragraph
-  xhtml_element_index: 77
+  xhtml_element_index: 81
   xhtml_plain_text: 4) Copy 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다
   xhtml_text: 4) <code>Copy</code> 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할
     수 있습니다
   xhtml_xpath: p[30]
-- block_id: code-79
+- block_id: code-83
   children: []
   type: code
-  xhtml_element_index: 78
+  xhtml_element_index: 82
   xhtml_plain_text: export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
   xhtml_text: <ac:structured-macro ac:macro-id="7cf36161-3eb5-4ac5-bc55-4b047bcac967"
     ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
     ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[export
     KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"]]></ac:plain-text-body></ac:structured-macro>
   xhtml_xpath: macro-code[7]
-- block_id: paragraph-80
-  children: []
-  type: paragraph
-  xhtml_element_index: 79
-  xhtml_plain_text: ''
-  xhtml_text: ''
-  xhtml_xpath: p[31]
-- block_id: heading-81
-  children: []
-  type: heading
-  xhtml_element_index: 80
-  xhtml_plain_text: QueryPie Agent 세팅 초기화하기
-  xhtml_text: QueryPie Agent 세팅 초기화하기
-  xhtml_xpath: h2[7]
-- block_id: paragraph-82
-  children: []
-  type: paragraph
-  xhtml_element_index: 81
-  xhtml_plain_text: 세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다.
-  xhtml_text: 세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다.
-  xhtml_xpath: p[32]
-- block_id: heading-83
-  children: []
-  type: heading
-  xhtml_element_index: 82
-  xhtml_plain_text: Agent 내 설정 메뉴에서 초기화
-  xhtml_text: Agent 내 설정 메뉴에서 초기화
-  xhtml_xpath: h3[7]
 - block_id: paragraph-84
   children: []
   type: paragraph
   xhtml_element_index: 83
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[31]
+- block_id: heading-85
+  children: []
+  type: heading
+  xhtml_element_index: 84
+  xhtml_plain_text: QueryPie Agent 세팅 초기화하기
+  xhtml_text: QueryPie Agent 세팅 초기화하기
+  xhtml_xpath: h2[7]
+- block_id: paragraph-86
+  children: []
+  type: paragraph
+  xhtml_element_index: 85
+  xhtml_plain_text: 세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다.
+  xhtml_text: 세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다.
+  xhtml_xpath: p[32]
+- block_id: heading-87
+  children: []
+  type: heading
+  xhtml_element_index: 86
+  xhtml_plain_text: Agent 내 설정 메뉴에서 초기화
+  xhtml_text: Agent 내 설정 메뉴에서 초기화
+  xhtml_xpath: h3[7]
+- block_id: paragraph-88
+  children: []
+  type: paragraph
+  xhtml_element_index: 87
   xhtml_plain_text: 프로필 영역 우측  ⚙️ 버튼을 클릭하여 설정 메뉴를 엽니다. Reset All Settings 버튼을 클릭합니다.
   xhtml_text: 프로필 영역 우측  <code>⚙️</code> 버튼을 클릭하여 설정 메뉴를 엽니다. <code>Reset All Settings</code>
     버튼을 클릭합니다.
   xhtml_xpath: p[33]
-- block_id: html_block-85
+- block_id: html_block-89
   children: []
   type: html_block
-  xhtml_element_index: 84
+  xhtml_element_index: 88
   xhtml_plain_text: Agent > Settings
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 3.35.18.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="557" ac:original-width="476"
@@ -765,33 +800,33 @@ blocks:
     ri:version-at-save="1"></ri:attachment><ac:caption><p>Agent &gt; Settings</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[19]
-- block_id: paragraph-86
+- block_id: paragraph-90
   children: []
   type: paragraph
-  xhtml_element_index: 85
+  xhtml_element_index: 89
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[34]
-- block_id: heading-87
+- block_id: heading-91
   children: []
   type: heading
-  xhtml_element_index: 86
+  xhtml_element_index: 90
   xhtml_plain_text: (Mac) 메뉴 막대 내 앱 메뉴에서 초기화
   xhtml_text: (Mac) 메뉴 막대 내 앱 메뉴에서 초기화
   xhtml_xpath: h3[8]
-- block_id: paragraph-88
+- block_id: paragraph-92
   children: []
   type: paragraph
-  xhtml_element_index: 87
+  xhtml_element_index: 91
   xhtml_plain_text: 메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다. Reset All Settings
     버튼을 클릭합니다.
   xhtml_text: 메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다. <code>Reset All Settings</code>
     버튼을 클릭합니다.
   xhtml_xpath: p[35]
-- block_id: html_block-89
+- block_id: html_block-93
   children: []
   type: html_block
-  xhtml_element_index: 88
+  xhtml_element_index: 92
   xhtml_plain_text: Agent > App menu
   xhtml_text: <ac:image ac:align="center" ac:alt="스크린샷 2024-07-30 오후 3.35.24.png"
     ac:custom-width="true" ac:layout="center" ac:original-height="285" ac:original-width="247"
@@ -799,13 +834,13 @@ blocks:
     ri:version-at-save="2"></ri:attachment><ac:caption><p>Agent &gt; App menu</p></ac:caption><ac:adf-mark
     color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image>
   xhtml_xpath: ac:image[20]
-- block_id: paragraph-90
+- block_id: paragraph-94
   children: []
   type: paragraph
-  xhtml_element_index: 89
+  xhtml_element_index: 93
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[36]
-created_at: '2026-02-10T04:13:20.647933+00:00'
+created_at: '2026-02-10T17:12:12.679694+00:00'
 page_id: '544112828'
 source_xhtml: page.xhtml

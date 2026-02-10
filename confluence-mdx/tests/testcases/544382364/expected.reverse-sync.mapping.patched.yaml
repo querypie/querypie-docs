@@ -1,6 +1,7 @@
 blocks:
 - block_id: html_block-1
-  children: []
+  children:
+  - paragraph-2
   type: html_block
   xhtml_element_index: 0
   xhtml_plain_text: 해당 문서는 QueryPie Enterprise 9.20.0 기준으로 작성되었습니다.
@@ -8,10 +9,17 @@ blocks:
     ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>해당 문서는 <strong>QueryPie
     Enterprise 9.20.0 기준</strong>으로 작성되었습니다.</p></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[1]
-- block_id: html_block-2
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: 해당 문서는 QueryPie Enterprise 9.20.0 기준으로 작성되었습니다.
+  xhtml_text: 해당 문서는 <strong>QueryPie Enterprise 9.20.0 기준</strong>으로 작성되었습니다.
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: html_block-3
   children: []
   type: html_block
-  xhtml_element_index: 1
+  xhtml_element_index: 2
   xhtml_plain_text: 16falsedisc토픽listtrue
   xhtml_text: <ac:structured-macro ac:local-id="7044a520-d23f-4ce1-9d21-1ec2df329420"
     ac:macro-id="908303f4-956c-42f6-934c-e029e57519ad" ac:name="toc" ac:schema-version="1"
@@ -20,24 +28,24 @@ blocks:
     ac:name="style">disc</ac:parameter><ac:parameter ac:name="exclude">토픽</ac:parameter><ac:parameter
     ac:name="type">list</ac:parameter><ac:parameter ac:name="printable">true</ac:parameter></ac:structured-macro>
   xhtml_xpath: macro-toc[1]
-- block_id: paragraph-3
+- block_id: paragraph-4
   children: []
   type: paragraph
-  xhtml_element_index: 2
+  xhtml_element_index: 3
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[1]
-- block_id: heading-4
+- block_id: heading-5
   children: []
   type: heading
-  xhtml_element_index: 3
+  xhtml_element_index: 4
   xhtml_plain_text: 쿼리파이 접근 제어 정책 개요
   xhtml_text: 쿼리파이 접근 제어 정책 개요
   xhtml_xpath: h2[1]
-- block_id: paragraph-5
+- block_id: paragraph-6
   children: []
   type: paragraph
-  xhtml_element_index: 4
+  xhtml_element_index: 5
   xhtml_plain_text: 쿼리파이에서 정의하는 접근 제어 정책은 EABAC(Enhanced Attribute Based Access Control)을
     기반으로 동작합니다. EABAC은 쿼리파이 사용자의 역할(Role)과 속성(Attribute)을 기반으로 쿼리파이에 등록된 리소스에 대한 접근을
     제어하고 권한 관리를 수행할 수 있는 정책의 통제 방식을 의미합니다. RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based
@@ -47,51 +55,51 @@ blocks:
     제어하고 권한 관리를 수행할 수 있는 정책의 통제 방식을 의미합니다. RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based
     Access Control)의 기능을 결합하여 더욱 유연하고 정교한 접근 제어를 제공합니다. 모든 정책은 All Deny를 전제로 동작합니다.
   xhtml_xpath: p[2]
-- block_id: paragraph-6
+- block_id: paragraph-7
   children: []
   type: paragraph
-  xhtml_element_index: 5
+  xhtml_element_index: 6
   xhtml_plain_text: EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하며, Policy 정의는
     코드(YAML)로 관리합니다.
   xhtml_text: EABAC 은 Role, Policy 두 가지로 동작합니다. Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로
     관리합니다.
   xhtml_xpath: p[3]
-- block_id: paragraph-7
+- block_id: paragraph-8
   children: []
   type: paragraph
-  xhtml_element_index: 6
+  xhtml_element_index: 7
   xhtml_plain_text: 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를
     제공하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
   xhtml_text: 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 제공하는
     ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
   xhtml_xpath: p[4]
-- block_id: paragraph-8
+- block_id: paragraph-9
   children: []
   type: paragraph
-  xhtml_element_index: 7
+  xhtml_element_index: 8
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[5]
-- block_id: heading-9
+- block_id: heading-10
   children: []
   type: heading
-  xhtml_element_index: 8
+  xhtml_element_index: 9
   xhtml_plain_text: 쿠버네티스 정책 YAML 기본 구조
   xhtml_text: 쿠버네티스 정책 YAML 기본 구조
   xhtml_xpath: h2[2]
-- block_id: paragraph-10
+- block_id: paragraph-11
   children: []
   type: paragraph
-  xhtml_element_index: 9
+  xhtml_element_index: 10
   xhtml_plain_text: '일부 항목을 제외한 전반 정책 코드에서 와일드카드(“*”) 및 정규표현식(RE2 형식: ^$ 명시 필수) 패턴을
     지원합니다.'
   xhtml_text: '일부 항목을 제외한 전반 정책 코드에서 와일드카드(“*”) 및 정규표현식(<a href="https://github.com/girishji/re2/wiki/Syntax">RE2
     형식</a>: <code>^$</code> 명시 필수) 패턴을 지원합니다.'
   xhtml_xpath: p[6]
-- block_id: table-11
+- block_id: table-12
   children: []
   type: table
-  xhtml_element_index: 10
+  xhtml_element_index: 11
   xhtml_plain_text: 'CategoryPropertyRequiredDescriptionValid ValuesapiVersion-O작성된
     YAML Code의 버전입니다. 시스템에서 관리하는 값으로, 수정이 불필요합니다.kubernetes.rbac.querypie.com/v1kind-O작성된
     YAML Code의 종류입니다. 시스템에서 관리하는 값으로, 수정이 불필요합니다.KacPolicyspec: <effect>-O정책의 구체적인
@@ -171,32 +179,32 @@ blocks:
     "Owner": "Daniel"</code><br/><code>userAttributes:    </code><br/><code>  - "department":
     "DevOps"   ipAddresses: </code><br/><code>  - "10.10.10.0/24"</code></p></td></tr></tbody></table>'
   xhtml_xpath: table[1]
-- block_id: paragraph-12
+- block_id: paragraph-13
   children: []
   type: paragraph
-  xhtml_element_index: 11
+  xhtml_element_index: 12
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[7]
-- block_id: heading-13
+- block_id: heading-14
   children: []
   type: heading
-  xhtml_element_index: 12
+  xhtml_element_index: 13
   xhtml_plain_text: Resources 명시 방법
   xhtml_text: Resources 명시 방법
   xhtml_xpath: h2[3]
-- block_id: paragraph-14
+- block_id: paragraph-15
   children: []
   type: paragraph
-  xhtml_element_index: 13
+  xhtml_element_index: 14
   xhtml_plain_text: resources는 쿠버네티스의 리소스가 아닌 쿼리파이에 등록된 쿠버네티스 클러스터에 대한 리소스를 정의합니다.
   xhtml_text: <code>resources</code>는 <u>쿠버네티스의 리소스가 아닌</u> 쿼리파이에 등록된 쿠버네티스 클러스터에
     대한 리소스를 정의합니다.
   xhtml_xpath: p[8]
-- block_id: list-15
+- block_id: list-16
   children: []
   type: list
-  xhtml_element_index: 14
+  xhtml_element_index: 15
   xhtml_plain_text: 해당 resources 필드에 대한 정의는 필수입니다. requiredRed 쿠버네티스 클러스터명을 바탕으로 입력합니다."cluster:{Kubernetes
     Cluster Name in QueryPie}"쿠버네티스 클러스터명은 이하의 기준으로 정립됩니다. 문자 길이 100자 제한알파벳 대소문자 (case-sensitive),
     숫자 및 이하 특수기호만 허용underscore (_)hyphen (-)이름 시작과 끝은 알파벳 대소문자 또는 숫자로 제한클러스터명은 중복을
@@ -215,33 +223,33 @@ blocks:
     "cluster:kubepie-dev-2"]</code></p></li></ul></li><li><p>경로는 와일드카드를 허용합니다.</p><ul><li><p><code>"cluster:kubepie-dev-*"</code></p></li></ul></li><li><p>경로는
     정규표현식을 허용합니다.</p><ul><li><p><code>"cluster:^kubepie-dev-.*$"</code></p></li></ul></li></ol>
   xhtml_xpath: ol[1]
-- block_id: paragraph-16
+- block_id: paragraph-17
   children: []
   type: paragraph
-  xhtml_element_index: 15
+  xhtml_element_index: 16
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[9]
-- block_id: heading-17
+- block_id: heading-18
   children: []
   type: heading
-  xhtml_element_index: 16
+  xhtml_element_index: 17
   xhtml_plain_text: Subjects 명시 방법
   xhtml_text: Subjects 명시 방법
   xhtml_xpath: h2[4]
-- block_id: paragraph-18
+- block_id: paragraph-19
   children: []
   type: paragraph
-  xhtml_element_index: 17
+  xhtml_element_index: 18
   xhtml_plain_text: subjects는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. subjects는
     spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.
   xhtml_text: <code>subjects</code>는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다.
     <code>subjects</code>는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.
   xhtml_xpath: p[10]
-- block_id: list-19
+- block_id: list-20
   children: []
   type: list
-  xhtml_element_index: 18
+  xhtml_element_index: 19
   xhtml_plain_text: "kubernetesGroups: requiredRed리소스에 대한 API 수행을 위해 쿼리파이 Proxy가 impersonate할\
     \ kubernetes 그룹 계정을 정의합니다.해당 subjects는 Policy-wide 레벨에서 정의할 수 있어야 하며, 최소 하나가 배정되도록\
     \ 정의되어야 합니다.Impersonation을 위한 해당 subjects는 다른 Policy들과 하나의 Role 내에서 중첩이 가능합니다.Resources에\
@@ -280,34 +288,34 @@ blocks:
     \n  groups: \n    - \"system:admin\"]]></ac:plain-text-body></ac:structured-macro></li><li><p>와일드카드를\
     \ 허용합니다. (<code>\"*\"</code>)</p></li></ul></li></ul></li></ol>"
   xhtml_xpath: ol[2]
-- block_id: paragraph-20
+- block_id: paragraph-21
   children: []
   type: paragraph
-  xhtml_element_index: 19
+  xhtml_element_index: 20
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[11]
-- block_id: heading-21
+- block_id: heading-22
   children: []
   type: heading
-  xhtml_element_index: 20
+  xhtml_element_index: 21
   xhtml_plain_text: Actions 명시 방법
   xhtml_text: Actions 명시 방법
   xhtml_xpath: h2[5]
-- block_id: paragraph-22
+- block_id: paragraph-23
   children: []
   type: paragraph
-  xhtml_element_index: 21
+  xhtml_element_index: 22
   xhtml_plain_text: 클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다. 각 action에는 apiGroups,
     resources, namespace, name, verbs 기입이 필요합니다.
   xhtml_text: 클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다. 각 action에는 <code>apiGroups</code>,
     <code>resources</code>, <code>namespace</code>, <code>name</code>, <code>verbs</code>
     기입이 필요합니다.
   xhtml_xpath: p[12]
-- block_id: list-23
+- block_id: list-24
   children: []
   type: list
-  xhtml_element_index: 22
+  xhtml_element_index: 23
   xhtml_plain_text: "apiGroups : 쿠버네티스 API 그룹 리스트를 정의합니다. API 그룹을 정의함으로써 더욱 세부적인 권한\
     \ 통제가 API 그룹별로 가능합니다. 커스텀 리소스에 대한 통제가 필요 시, apiGroups에 명시하여 커스텀 리소스에 한하여 통제도 가능합니다.\
     \ 참고: API Groups 안내 API Group 목록 와일드카드를 허용하여 API 그룹 전체를 포괄적으로 지정하는 것이 가능합니다.apiGroups:\
@@ -377,24 +385,24 @@ blocks:
     \ exec명령을 통한 컨테이너 쉘 접속 세션 생성을 위해서는 일반적으로 <code>create</code> verb 명시가 필요합니다. </p></li><li><p>와일드카드를\
     \ 허용합니다. </p><ul><li><p><code>verbs: [\"*\"]</code></p></li></ul></li></ul></li></ol>"
   xhtml_xpath: ol[3]
-- block_id: paragraph-24
+- block_id: paragraph-25
   children: []
   type: paragraph
-  xhtml_element_index: 23
+  xhtml_element_index: 24
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[13]
-- block_id: heading-25
+- block_id: heading-26
   children: []
   type: heading
-  xhtml_element_index: 24
+  xhtml_element_index: 25
   xhtml_plain_text: Conditions 명시 방법
   xhtml_text: Conditions 명시 방법
   xhtml_xpath: h2[6]
-- block_id: paragraph-26
+- block_id: paragraph-27
   children: []
   type: paragraph
-  xhtml_element_index: 25
+  xhtml_element_index: 26
   xhtml_plain_text: conditions 항목에는 resourceTags, userAttributes, ipAddresses를 조건으로
     정의할 수 있습니다. OPTIONALYellow
   xhtml_text: <code>conditions</code> 항목에는 <code>resourceTags</code>, <code>userAttributes</code>,
@@ -402,10 +410,10 @@ blocks:
     ac:name="status" ac:schema-version="1"><ac:parameter ac:name="title">OPTIONAL</ac:parameter><ac:parameter
     ac:name="colour">Yellow</ac:parameter></ac:structured-macro>
   xhtml_xpath: p[14]
-- block_id: list-27
+- block_id: list-28
   children: []
   type: list
-  xhtml_element_index: 26
+  xhtml_element_index: 27
   xhtml_plain_text: "resourceTags : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. resourceTags:\
     \ \n  \"region\": \"ap-northeast-1\"\n  \"Owner\": \"Brant\"userAttributes : 사용자의\
     \ 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. userAttributes:\
@@ -424,24 +432,24 @@ blocks:
     f47b9722-b2b5-4d60-931d-dd5abf4ee359\" ac:name=\"code\" ac:schema-version=\"1\"\
     ><ac:plain-text-body><![CDATA[ipAddresses: [\"10.10.0.0/24\", \"10.11.10.1\"]]]></ac:plain-text-body></ac:structured-macro></li></ul>"
   xhtml_xpath: ul[1]
-- block_id: paragraph-28
+- block_id: paragraph-29
   children: []
   type: paragraph
-  xhtml_element_index: 27
+  xhtml_element_index: 28
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[15]
-- block_id: heading-29
+- block_id: heading-30
   children: []
   type: heading
-  xhtml_element_index: 28
+  xhtml_element_index: 29
   xhtml_plain_text: KAC Policy 예시
   xhtml_text: KAC Policy 예시
   xhtml_xpath: h2[7]
-- block_id: code-30
+- block_id: code-31
   children: []
   type: code
-  xhtml_element_index: 29
+  xhtml_element_index: 30
   xhtml_plain_text: "apiVersion: kubernetes.rbac.querypie.com/v1 \nkind: KacPolicy\n\
     \nspec:\n  allow: \n    resources: \n      - \"cluster:*\"\n    subjects: \n \
     \     kubernetesGroups: \n        - \"system:masters\"\n      impersonation: \n\
@@ -472,6 +480,6 @@ blocks:
     \n        namespace: \"production\"\n        name: \"*\"\n        verbs: [\"*\"\
     ]\n    conditions: \n      resourceTags: \n        \"Owner\": \"Brant\"]]></ac:plain-text-body></ac:structured-macro>"
   xhtml_xpath: macro-code[1]
-created_at: '2026-02-10T04:13:24.206680+00:00'
+created_at: '2026-02-10T17:12:19.607273+00:00'
 page_id: '544382364'
 source_xhtml: patched.xhtml
