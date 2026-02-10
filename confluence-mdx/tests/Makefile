@@ -7,37 +7,37 @@ PROJECT_ROOT = $(shell cd ../.. && pwd)
 
 # Default target
 .PHONY: all
-all: test-xhtml test-skeleton test-render
+all: test-convert test-skeleton test-render
 	@echo ""
 	@echo "All tests completed."
 
-# Run XHTML tests only
-.PHONY: test-xhtml
-test-xhtml:
-	@$(TEST_SCRIPT) --type xhtml --log-level warning $(VERBOSE_FLAG)
+# Run convert tests (XHTML → MDX)
+.PHONY: test-convert
+test-convert:
+	@$(TEST_SCRIPT) --type convert --log-level warning $(VERBOSE_FLAG)
 
-# Run a specific XHTML test
-.PHONY: test-xhtml-one
-test-xhtml-one:
+# Run a specific convert test
+.PHONY: test-convert-one
+test-convert-one:
 	@if [ -z "$(TEST_ID)" ]; then \
-		echo "Usage: make test-xhtml-one TEST_ID=<test_id>"; \
+		echo "Usage: make test-convert-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
-	@$(TEST_SCRIPT) --type xhtml --log-level warning --test-id $(TEST_ID) $(VERBOSE_FLAG)
+	@$(TEST_SCRIPT) --type convert --log-level warning --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
-# Run XHTML tests with debug log level
-.PHONY: debug-xhtml
-debug-xhtml:
-	@$(TEST_SCRIPT) --type xhtml --log-level debug $(VERBOSE_FLAG)
+# Run convert tests with debug log level
+.PHONY: debug-convert
+debug-convert:
+	@$(TEST_SCRIPT) --type convert --log-level debug $(VERBOSE_FLAG)
 
-# Run a specific XHTML test with debug log level
-.PHONY: debug-xhtml-one
-debug-xhtml-one:
+# Run a specific convert test with debug log level
+.PHONY: debug-convert-one
+debug-convert-one:
 	@if [ -z "$(TEST_ID)" ]; then \
-		echo "Usage: make debug-xhtml-one TEST_ID=<test_id>"; \
+		echo "Usage: make debug-convert-one TEST_ID=<test_id>"; \
 		exit 1; \
 	fi
-	@$(TEST_SCRIPT) --type xhtml --log-level debug --test-id $(TEST_ID) $(VERBOSE_FLAG)
+	@$(TEST_SCRIPT) --type convert --log-level debug --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
 # Run skeleton tests
 .PHONY: test-skeleton
@@ -67,6 +67,34 @@ test-reverse-sync-one:
 	fi
 	@$(TEST_SCRIPT) --type reverse-sync --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
+# Run image-copy tests
+.PHONY: test-image-copy
+test-image-copy:
+	@$(TEST_SCRIPT) --type image-copy $(VERBOSE_FLAG)
+
+# Run a specific image-copy test
+.PHONY: test-image-copy-one
+test-image-copy-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-image-copy-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@$(TEST_SCRIPT) --type image-copy --test-id $(TEST_ID) $(VERBOSE_FLAG)
+
+# Run xhtml-diff tests
+.PHONY: test-xhtml-diff
+test-xhtml-diff:
+	@$(TEST_SCRIPT) --type xhtml-diff $(VERBOSE_FLAG)
+
+# Run a specific xhtml-diff test
+.PHONY: test-xhtml-diff-one
+test-xhtml-diff-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-xhtml-diff-one TEST_ID=<test_id>"; \
+		exit 1; \
+	fi
+	@$(TEST_SCRIPT) --type xhtml-diff --test-id $(TEST_ID) $(VERBOSE_FLAG)
+
 # Run render tests (MDX to HTML)
 .PHONY: test-render
 test-render:
@@ -91,32 +119,49 @@ clean:
 	@find testcases -name "_meta.ts" -path "*/output/*" -type f -delete
 	@find testcases -name "output.reverse-sync.*" -type f -delete
 	@find testcases -name "output.mdx.diff" -type f -delete
+	@find testcases -name "output.beautify-diff" -type f -delete
 
 # Help
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  all                - Run all tests: XHTML + Skeleton + Render (default)"
-	@echo "  test-xhtml         - Run XHTML tests"
-	@echo "  test-xhtml-one     - Run a specific XHTML test"
-	@echo "  test-skeleton      - Run Skeleton tests"
-	@echo "  test-skeleton-one  - Run a specific Skeleton test"
-	@echo "  test-reverse-sync      - Run Reverse-Sync tests"
-	@echo "  test-reverse-sync-one  - Run a specific Reverse-Sync test"
-	@echo "  test-render        - Run Render tests (MDX to HTML)"
-	@echo "  test-render-one    - Run a specific Render test"
-	@echo "  debug-xhtml        - Run XHTML tests with debug log level"
-	@echo "  debug-xhtml-one    - Run a specific XHTML test with debug log level"
-	@echo "  clean              - Remove all output files"
-	@echo "  help               - Show this help message"
+	@echo ""
+	@echo "  all (default)"
+	@echo "    test-convert + test-skeleton + test-render 를 순서대로 실행"
+	@echo ""
+	@echo "  test-convert / test-convert-one"
+	@echo "    XHTML → MDX 정방향 변환. expected.mdx 와 비교"
+	@echo ""
+	@echo "  test-skeleton / test-skeleton-one"
+	@echo "    MDX → skeleton MDX 변환. expected.skel.mdx 와 비교"
+	@echo ""
+	@echo "  test-reverse-sync / test-reverse-sync-one"
+	@echo "    MDX 편집분을 XHTML 에 역패치."
+	@echo "    patched.xhtml, diff.yaml 등 5개 산출물 비교"
+	@echo ""
+	@echo "  test-image-copy / test-image-copy-one"
+	@echo "    이미지 파일 복사 및 파일명 sanitize 검증"
+	@echo ""
+	@echo "  test-xhtml-diff / test-xhtml-diff-one"
+	@echo "    page.xhtml ↔ patched.xhtml beautify-diff."
+	@echo "    serializer 부산물 무시, 실제 변경만 검증"
+	@echo ""
+	@echo "  test-render / test-render-one"
+	@echo "    MDX → HTML 렌더링(vitest). expected.html 과 비교"
+	@echo ""
+	@echo "  debug-convert / debug-convert-one"
+	@echo "    test-convert 와 동일하나 debug 로그 출력"
+	@echo ""
+	@echo "  clean    output.* 생성 파일 삭제"
+	@echo "  help     이 도움말"
 	@echo ""
 	@echo "Options:"
-	@echo "  TEST_ID=<id>       - Specify test case ID for *-one targets"
-	@echo "  VERBOSE=1          - Show executed commands and converter output"
+	@echo "  TEST_ID=<id>   *-one 타겟에서 실행할 testcase ID"
+	@echo "  VERBOSE=1      실행 명령과 변환기 출력 표시"
 	@echo ""
 	@echo "Examples:"
-	@echo "  make                                           # Run all tests"
-	@echo "  make test-xhtml VERBOSE=1                      # Run XHTML tests with verbose"
-	@echo "  make test-xhtml-one TEST_ID=568918170          # Run specific XHTML test"
-	@echo "  make test-reverse-sync-one TEST_ID=1911652402   # Run specific Reverse-Sync test"
-	@echo "  make test-render-one TEST_ID=544382364         # Run specific Render test"
+	@echo "  make"
+	@echo "  make test-convert VERBOSE=1"
+	@echo "  make test-convert-one TEST_ID=568918170"
+	@echo "  make test-reverse-sync-one TEST_ID=1911652402"
+	@echo "  make test-render-one TEST_ID=544382364"

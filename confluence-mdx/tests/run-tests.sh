@@ -6,7 +6,7 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync, image-copy, xhtml-diff
+#   --type TYPE       Test type: convert (default), skeleton, reverse-sync, image-copy, xhtml-diff
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
 #   --verbose, -v     Show converter output (stdout/stderr)
@@ -30,7 +30,7 @@ SKELETON_SCRIPT="${BIN_DIR}/skeleton/cli.py"
 export PYTHONPATH="${BIN_DIR}:${PYTHONPATH:-}"
 
 # Default options
-TEST_TYPE="xhtml"
+TEST_TYPE="convert"
 LOG_LEVEL="warning"
 TEST_ID=""
 VERBOSE=false
@@ -121,8 +121,8 @@ sys.exit(1)
 " "${page_id}"
 }
 
-# Run XHTML test for a single test case
-run_xhtml_test() {
+# Run convert test for a single test case (XHTML → MDX)
+run_convert_test() {
     local test_id="$1"
     local test_path="${TEST_DIR}/${test_id}"
 
@@ -168,7 +168,7 @@ run_skeleton_test() {
 }
 
 # Check if test case has required input files
-has_xhtml_input() {
+has_convert_input() {
     local test_id="$1"
     [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]]
 }
@@ -184,6 +184,7 @@ run_reverse_sync_test() {
     local test_path="${TEST_DIR}/${test_id}"
 
     # verify 실행 (cwd를 confluence-mdx root로 이동 — run_verify()가 var/<page_id>/에 중간 파일을 쓰므로)
+    mkdir -p "../var/${test_id}"
     pushd .. > /dev/null
     run_cmd env PYTHONPATH=bin python3 bin/reverse_sync_test_verify.py \
         "${test_id}" \
@@ -373,11 +374,11 @@ main() {
     activate_venv
 
     case "${TEST_TYPE}" in
-        xhtml)
+        convert)
             if [[ -n "${TEST_ID}" ]]; then
-                run_single_test run_xhtml_test "XHTML" "${TEST_ID}"
+                run_single_test run_convert_test "Convert" "${TEST_ID}"
             else
-                run_all_tests run_xhtml_test "XHTML" has_xhtml_input
+                run_all_tests run_convert_test "Convert" has_convert_input
             fi
             ;;
         skeleton)

@@ -43,15 +43,27 @@ jobs:
 
       - name: Run Python unit tests
         working-directory: ./confluence-mdx/tests
-        run: ../venv/bin/python -m pytest test_mdx_to_skeleton.py -v
+        run: ../venv/bin/python -m pytest test_mdx_to_skeleton.py test_xhtml_beautify_diff.py -v
 
-      - name: Run XHTML to MDX tests
+      - name: Run XHTML to MDX convert tests
         working-directory: ./confluence-mdx/tests
-        run: make test-xhtml
+        run: make test-convert
 
       - name: Run Skeleton MDX tests
         working-directory: ./confluence-mdx/tests
         run: make test-skeleton
+
+      - name: Run Reverse-Sync tests
+        working-directory: ./confluence-mdx/tests
+        run: make test-reverse-sync
+
+      - name: Run Image-Copy tests
+        working-directory: ./confluence-mdx/tests
+        run: make test-image-copy
+
+      - name: Run XHTML-Diff tests
+        working-directory: ./confluence-mdx/tests
+        run: make test-xhtml-diff
 
       - name: Run MDX Render tests
         working-directory: ./confluence-mdx/tests

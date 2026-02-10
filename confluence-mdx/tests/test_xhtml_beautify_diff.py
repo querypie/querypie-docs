@@ -193,7 +193,7 @@ class TestCli:
         result = subprocess.run(
             [sys.executable, "bin/xhtml_beautify_diff.py", str(file_a), str(file_b)],
             capture_output=True, text=True,
-            cwd="/Users/jk/workspace/querypie-docs/confluence-mdx",
+            cwd=str(Path(__file__).resolve().parent.parent),
         )
         assert result.returncode == 0
         assert result.stdout.strip() == ""
@@ -208,7 +208,7 @@ class TestCli:
         result = subprocess.run(
             [sys.executable, "bin/xhtml_beautify_diff.py", str(file_a), str(file_b)],
             capture_output=True, text=True,
-            cwd="/Users/jk/workspace/querypie-docs/confluence-mdx",
+            cwd=str(Path(__file__).resolve().parent.parent),
         )
         assert result.returncode == 1
         assert "Old" in result.stdout
@@ -223,7 +223,7 @@ class TestCli:
             [sys.executable, "bin/xhtml_beautify_diff.py",
              str(file_a), str(tmp_path / "nonexistent.xhtml")],
             capture_output=True, text=True,
-            cwd="/Users/jk/workspace/querypie-docs/confluence-mdx",
+            cwd=str(Path(__file__).resolve().parent.parent),
         )
         assert result.returncode == 2
         assert "not found" in result.stderr
@@ -238,6 +238,6 @@ class TestCli:
         result = subprocess.run(
             [sys.executable, "bin/xhtml_beautify_diff.py", str(file_a), str(file_b)],
             capture_output=True, text=True,
-            cwd="/Users/jk/workspace/querypie-docs/confluence-mdx",
+            cwd=str(Path(__file__).resolve().parent.parent),
         )
         assert result.returncode == 0
