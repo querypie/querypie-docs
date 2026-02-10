@@ -15,10 +15,32 @@ def _normalize_trailing_ws(text: str) -> str:
     return re.sub(r'[ \t]+$', '', text, flags=re.MULTILINE)
 
 
+_MONTH_KO_TO_EN = {
+    '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+    '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
+    '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec',
+}
+_KO_DATE_RE = re.compile(
+    r'^(\d{4})년\s*(\d{2})월\s*(\d{2})일[ \t]*$', re.MULTILINE)
+
+
+def _normalize_dates(text: str) -> str:
+    """독립 행의 한국어 날짜를 영문 형식으로 변환한다.
+
+    Forward converter가 Confluence <time> 요소를 영문으로 포맷하므로,
+    비교 시 동일한 형식으로 정규화한다.
+    """
+    def _replace(m):
+        y, mo, d = m.group(1), m.group(2), m.group(3)
+        return f'{_MONTH_KO_TO_EN.get(mo, mo)} {d}, {y}'
+    return _KO_DATE_RE.sub(_replace, text)
+
+
 def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
-    trailing whitespace만 정규화. 그 외 공백, 줄바꿈, 모든 문자가 동일해야 PASS.
+    trailing whitespace, 날짜 형식을 정규화. 그 외 공백, 줄바꿈, 모든 문자가
+    동일해야 PASS.
 
     Args:
         expected_mdx: 개선 MDX (의도한 결과)
@@ -29,6 +51,8 @@ def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
     """
     expected_mdx = _normalize_trailing_ws(expected_mdx)
     actual_mdx = _normalize_trailing_ws(actual_mdx)
+    expected_mdx = _normalize_dates(expected_mdx)
+    actual_mdx = _normalize_dates(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")
