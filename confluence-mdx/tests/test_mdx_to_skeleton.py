@@ -1690,9 +1690,9 @@ def test_pattern_normalization_no_change_needed():
     Note: Single patterns should remain unchanged, but multiple patterns may be reordered
     """
     from skeleton.cli import TextProcessor
-    
+
     processor = TextProcessor()
-    
+
     test_cases = [
         ("_TEXT_", "_TEXT_"),
         ("`_TEXT_`", "`_TEXT_`"),
@@ -1703,10 +1703,149 @@ def test_pattern_normalization_no_change_needed():
         ("2. _TEXT_", "2. _TEXT_"),
         ("## _TEXT_", "## _TEXT_"),
     ]
-    
+
     for input_line, expected in test_cases:
         normalized = processor._normalize_pattern_order(input_line)
         assert normalized == expected, f"Input: {input_line!r}, Expected: {expected!r}, Got: {normalized!r}"
+
+
+# ============================================================================
+# Badge Tag Bug Fix Tests (Issue #567)
+# ============================================================================
+
+def test_badge_tag_with_attributes():
+    """
+    Test that Badge tags with attributes are preserved correctly.
+
+    This test verifies the fix for issue #567 where HTML tags with attributes
+    (like <Badge color="green">text</Badge>) were truncated to incomplete opening
+    tags (like <Badge).
+    """
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""# Test
+
+Group Status <Badge color="green">added-10.2.2</Badge>
+
+API Version <Badge color="blue">v1.0</Badge>
+
+Feature <Badge color='red'>deprecated</Badge>
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        # All Badge tags should be complete with closing tags
+        assert "</Badge>" in content, "Badge closing tags should be preserved"
+        assert content.count("</Badge>") == 3, "All 3 Badge tags should be complete"
+
+        # Verify that Badge tags with attributes are preserved
+        assert '<Badge color="green">_TEXT_</Badge>' in content or \
+               '_TEXT_ <Badge color="green">_TEXT_</Badge>' in content, \
+               "Badge with green color should be preserved"
+
+        assert '<Badge color="blue">_TEXT_</Badge>' in content or \
+               '_TEXT_ <Badge color="blue">_TEXT_</Badge>' in content, \
+               "Badge with blue color should be preserved"
+
+        assert "<Badge color='red'>_TEXT_</Badge>" in content or \
+               "_TEXT_ <Badge color='red'>_TEXT_</Badge>" in content, \
+               "Badge with red color (single quotes) should be preserved"
+
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_html_tags_with_multiple_attributes():
+    """
+    Test that various HTML tags with multiple attributes are preserved correctly.
+
+    Tests div, span, and other HTML tags with:
+    - Multiple attributes
+    - Attribute values with spaces
+    - Different quote styles
+    """
+    import tempfile
+    import shutil
+
+    tmp_dir = Path(tempfile.mkdtemp())
+    try:
+        input_file = tmp_dir / "test.mdx"
+        input_file.write_text("""# Test
+
+<div class="container" id="main">Content here</div>
+
+<span style="color: red; font-size: 14px">Styled text</span>
+
+<img src="test.png" alt="Test Image" width="100" />
+""")
+
+        output_path = convert_mdx_to_skeleton(input_file)
+        content = output_path.read_text()
+
+        # Verify div with multiple attributes
+        assert 'class="container"' in content, "div class attribute should be preserved"
+        assert 'id="main"' in content, "div id attribute should be preserved"
+        assert "</div>" in content, "div closing tag should be preserved"
+
+        # Verify span with style attribute containing spaces
+        assert 'style="color: red; font-size: 14px"' in content or \
+               "style='color: red; font-size: 14px'" in content, \
+               "span style attribute with spaces should be preserved"
+        assert "</span>" in content, "span closing tag should be preserved"
+
+        # Verify self-closing img tag with multiple attributes
+        # Note: alt text is converted to _TEXT_ like other text content
+        assert 'src="test.png"' in content, "img src attribute should be preserved"
+        assert 'alt="_TEXT_"' in content or 'alt="Test Image"' in content, \
+            "img alt attribute should be preserved (text may be converted to _TEXT_)"
+        assert 'width="100"' in content, "img width attribute should be preserved"
+
+    finally:
+        shutil.rmtree(tmp_dir)
+
+
+def test_pattern_normalization_with_badge_tags():
+    """
+    Test _normalize_pattern_order() directly with Badge tags to ensure they're preserved.
+
+    This test verifies that the pattern normalization logic doesn't break Badge tags
+    by testing the method directly.
+    """
+    from skeleton.cli import TextProcessor
+
+    processor = TextProcessor()
+
+    test_cases = [
+        # Badge tags should be preserved as other_tokens
+        (
+            '_TEXT_ <Badge color="green">_TEXT_</Badge>',
+            '_TEXT_ <Badge color="green">_TEXT_</Badge>'
+        ),
+        (
+            '_TEXT_ <Badge color="blue">_TEXT_</Badge> _TEXT_',
+            '_TEXT_ <Badge color="blue">_TEXT_</Badge>'
+        ),
+        # Multiple Badge tags
+        (
+            '<Badge color="green">_TEXT_</Badge> <Badge color="red">_TEXT_</Badge>',
+            '<Badge color="green">_TEXT_</Badge> <Badge color="red">_TEXT_</Badge>'
+        ),
+        # Badge tag with list marker
+        (
+            '* _TEXT_ <Badge color="grey">_TEXT_</Badge>',
+            '* _TEXT_ <Badge color="grey">_TEXT_</Badge>'
+        ),
+    ]
+
+    for input_line, expected in test_cases:
+        normalized = processor._normalize_pattern_order(input_line)
+        assert normalized == expected, \
+            f"Input: {input_line!r}\nExpected: {expected!r}\nGot: {normalized!r}"
 
 
 # ============================================================================
@@ -1785,6 +1924,11 @@ def run_all_tests():
         test_pattern_normalization_complex_with_links,
         test_pattern_normalization_preserves_structure,
         test_pattern_normalization_no_change_needed,
+
+        # Badge tag bug fix tests (Issue #567)
+        test_badge_tag_with_attributes,
+        test_html_tags_with_multiple_attributes,
+        test_pattern_normalization_with_badge_tags,
     ]
     
     passed = 0

@@ -328,6 +328,58 @@ class TextProcessor:
 
         return result
 
+    def _split_preserving_html_tags(self, text: str) -> list[str]:
+        """
+        Split by whitespace, but preserve spaces inside <...> tag brackets.
+
+        content.split() breaks HTML tags with attributes because it splits on
+        the space inside <Badge color="green">. This method avoids splitting
+        on whitespace that falls between < and >.
+
+        Examples:
+            "_TEXT_ <Badge color='green'>_TEXT_</Badge>"
+            -> ["_TEXT_", "<Badge color='green'>_TEXT_</Badge>"]
+
+            "_TEXT_ <br/> <Badge color='green'>_TEXT_</Badge>"
+            -> ["_TEXT_", "<br/>", "<Badge color='green'>_TEXT_</Badge>"]
+        """
+        if not text:
+            return []
+
+        tokens = []
+        current = []
+        in_tag = False
+        in_quote = False
+        quote_char = None
+
+        for i, char in enumerate(text):
+            if in_tag:
+                current.append(char)
+                if in_quote:
+                    if char == quote_char:
+                        in_quote = False
+                elif char in ('"', "'"):
+                    in_quote = True
+                    quote_char = char
+                elif char == '>':
+                    in_tag = False
+            elif char == '<' and i + 1 < len(text) and (text[i + 1].isalpha() or text[i + 1] == '/'):
+                # Only treat < as tag start if followed by a letter or /
+                # This avoids false positives like <=, <`, etc.
+                current.append(char)
+                in_tag = True
+            elif char.isspace():
+                if current:
+                    tokens.append(''.join(current))
+                    current = []
+            else:
+                current.append(char)
+
+        if current:
+            tokens.append(''.join(current))
+
+        return tokens
+
     def _normalize_pattern_order(self, line: str) -> str:
         """
         Normalize the order of patterns in a converted line to reduce differences
@@ -374,9 +426,9 @@ class TextProcessor:
         
         if not content.strip():
             return line
-        
-        # Split content by whitespace to get tokens
-        tokens = content.split()
+
+        # Split content by whitespace to get tokens, preserving complete HTML tags
+        tokens = self._split_preserving_html_tags(content)
         
         # Identify pattern types (order matters: check longer patterns first)
         # Check bold (**_TEXT_**) before italic (*_TEXT_*) to avoid false matches
