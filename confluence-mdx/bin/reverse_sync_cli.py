@@ -26,6 +26,7 @@ from reverse_sync.block_diff import diff_blocks, BlockChange
 from reverse_sync.mapping_recorder import record_mapping, BlockMapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
+from xhtml_beautify_diff import xhtml_diff
 
 
 @dataclass
@@ -184,7 +185,8 @@ def run_verify(
 
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
-                  'status': 'no_changes', 'changes_count': 0}
+                  'status': 'no_changes', 'changes_count': 0,
+                  'mdx_diff_report': '', 'xhtml_diff_report': ''}
         (var_dir / 'reverse-sync.result.yaml').write_text(
             yaml.dump(result, allow_unicode=True, default_flow_style=False))
         return result
@@ -217,6 +219,13 @@ def run_verify(
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
+    # XHTML beautify-diff (page.xhtml → patched.xhtml)
+    xhtml_diff_lines = xhtml_diff(
+        xhtml, patched_xhtml,
+        label_a="page.xhtml", label_b="reverse-sync.patched.xhtml",
+    )
+    xhtml_diff_report = '\n'.join(xhtml_diff_lines)
+
     # Step 5: 검증 매핑 생성 → mapping.patched.yaml 저장
     verify_mappings = record_mapping(patched_xhtml)
     verify_mapping_data = {
@@ -234,19 +243,44 @@ def run_verify(
     )
     verify_mdx = (var_dir / 'verify.mdx').read_text()
 
-    # Step 7: 완전 일치 검증 → result.yaml 저장
-    verify_result = verify_roundtrip(
-        expected_mdx=_strip_frontmatter(improved_mdx),
-        actual_mdx=_strip_frontmatter(verify_mdx),
+    # MDX input diff (original → improved)
+    orig_stripped = _strip_frontmatter(original_mdx)
+    impr_stripped = _strip_frontmatter(improved_mdx)
+    mdx_input_diff = difflib.unified_diff(
+        orig_stripped.splitlines(keepends=True),
+        impr_stripped.splitlines(keepends=True),
+        fromfile=original_src.descriptor,
+        tofile=improved_src.descriptor,
+        lineterm='',
     )
+    mdx_diff_report = ''.join(mdx_input_diff)
+
+    # Step 7: 완전 일치 검증 → result.yaml 저장
+    verify_stripped = _strip_frontmatter(verify_mdx)
+    verify_result = verify_roundtrip(
+        expected_mdx=impr_stripped,
+        actual_mdx=verify_stripped,
+    )
+    # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
+    roundtrip_diff_lines = difflib.unified_diff(
+        impr_stripped.splitlines(keepends=True),
+        verify_stripped.splitlines(keepends=True),
+        fromfile='improved.mdx',
+        tofile='verify.mdx (from patched XHTML)',
+        lineterm='',
+    )
+    roundtrip_diff_report = ''.join(roundtrip_diff_lines)
+
     status = 'pass' if verify_result.passed else 'fail'
     result = {
         'page_id': page_id, 'created_at': now,
         'status': status,
         'changes_count': len(changes),
+        'mdx_diff_report': mdx_diff_report,
+        'xhtml_diff_report': xhtml_diff_report,
         'verification': {
             'exact_match': verify_result.passed,
-            'diff_report': verify_result.diff_report,
+            'diff_report': roundtrip_diff_report,
         },
     }
     (var_dir / 'reverse-sync.result.yaml').write_text(
@@ -452,8 +486,29 @@ def _supports_color() -> bool:
     return hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
 
 
-def _print_results(results: List[Dict[str, Any]]) -> None:
-    """검증 결과를 컬러 diff 포맷으로 출력한다."""
+def _print_diff_block(lines: str, label: str, c, BOLD, CYAN, RED, GREEN, DIM) -> None:
+    """컬러 diff 블록 하나를 출력한다."""
+    print(c(DIM, '─' * 72))
+    print(c(BOLD, f'  {label}'))
+    for line in lines.splitlines():
+        if line.startswith('---') or line.startswith('+++'):
+            print(c(BOLD, line))
+        elif line.startswith('@@'):
+            print(c(CYAN, line))
+        elif line.startswith('-'):
+            print(c(RED, line))
+        elif line.startswith('+'):
+            print(c(GREEN, line))
+        else:
+            print(line)
+
+
+def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = False) -> None:
+    """검증 결과를 컬러 diff 포맷으로 출력한다.
+
+    show_all_diffs=True (debug 모드): MDX diff, XHTML diff, Verify diff 모두 출력.
+    show_all_diffs=False (verify 모드): Verify diff만 출력 (FAIL 시).
+    """
     use_color = _supports_color()
 
     def c(code: str, text: str) -> str:
@@ -483,23 +538,34 @@ def _print_results(results: List[Dict[str, Any]]) -> None:
             print(f'  {c(RED, r.get("error", ""))}')
             continue
 
-        # diff 출력
-        diff_report = (r.get('verification') or {}).get('diff_report', '')
-        if not diff_report:
-            continue
+        if show_all_diffs:
+            # MDX diff (original → improved)
+            mdx_diff_report = r.get('mdx_diff_report', '')
+            if mdx_diff_report:
+                _print_diff_block(mdx_diff_report,
+                                  'MDX diff (original → improved):',
+                                  c, BOLD, CYAN, RED, GREEN, DIM)
 
-        print(c(DIM, '─' * 72))
-        for line in diff_report.splitlines():
-            if line.startswith('---') or line.startswith('+++'):
-                print(c(BOLD, line))
-            elif line.startswith('@@'):
-                print(c(CYAN, line))
-            elif line.startswith('-'):
-                print(c(RED, line))
-            elif line.startswith('+'):
-                print(c(GREEN, line))
-            else:
-                print(line)
+            # XHTML diff (page.xhtml → patched.xhtml)
+            xhtml_diff_report = r.get('xhtml_diff_report', '')
+            if xhtml_diff_report:
+                _print_diff_block(xhtml_diff_report,
+                                  'XHTML diff (page.xhtml → patched.xhtml):',
+                                  c, BOLD, CYAN, RED, GREEN, DIM)
+
+            # Verify diff (improved.mdx → verify.mdx)
+            diff_report = (r.get('verification') or {}).get('diff_report', '')
+            if diff_report:
+                _print_diff_block(diff_report,
+                                  'Verify diff (improved.mdx → verify.mdx):',
+                                  c, BOLD, CYAN, RED, GREEN, DIM)
+        else:
+            # verify 모드: FAIL 시에만 Verify diff 출력
+            diff_report = (r.get('verification') or {}).get('diff_report', '')
+            if diff_report:
+                _print_diff_block(diff_report,
+                                  'Verify diff (improved.mdx → verify.mdx):',
+                                  c, BOLD, CYAN, RED, GREEN, DIM)
 
     # 요약
     total = len(results)
@@ -527,6 +593,8 @@ reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
 Usage:
   reverse-sync verify <mdx> [--original-mdx <mdx>]
   reverse-sync verify --branch <branch>
+  reverse-sync debug  <mdx> [--original-mdx <mdx>]
+  reverse-sync debug  --branch <branch>
   reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
   reverse-sync push   --branch <branch> [--dry-run]
   reverse-sync -h | --help
@@ -534,6 +602,7 @@ Usage:
 Commands:
   push     verify 수행 후 Confluence에 반영 (--dry-run으로 검증만 가능)
   verify   push --dry-run의 alias
+  debug    verify + MDX diff, XHTML diff, Verify diff 상세 출력
 
 Arguments:
   <mdx>
@@ -739,10 +808,21 @@ def main():
     verify_parser.add_argument('--json', action='store_true',
                                help='결과를 JSON 형식으로 출력')
 
+    # debug (= verify + 상세 diff 출력)
+    debug_parser = subparsers.add_parser(
+        'debug', prog='reverse-sync debug',
+        description='verify와 동일하되 MDX diff, XHTML diff, Verify diff를 모두 출력한다.',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    _add_common_args(debug_parser)
+    debug_parser.add_argument('--json', action='store_true',
+                              help='결과를 JSON 형식으로 출력')
+
     args = parser.parse_args()
 
-    if args.command in ('verify', 'push'):
-        dry_run = args.command == 'verify' or getattr(args, 'dry_run', False)
+    if args.command in ('verify', 'push', 'debug'):
+        dry_run = args.command in ('verify', 'debug') or getattr(args, 'dry_run', False)
+        show_all_diffs = args.command == 'debug'
 
         try:
             # 인자 검증
@@ -764,7 +844,7 @@ def main():
                 if use_json:
                     print(json.dumps(results, ensure_ascii=False, indent=2))
                 else:
-                    _print_results(results)
+                    _print_results(results, show_all_diffs=show_all_diffs)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
                 if not dry_run:
                     passed = [r for r in results if r.get('status') == 'pass']
@@ -782,7 +862,7 @@ def main():
                 if use_json:
                     print(json.dumps(result, ensure_ascii=False, indent=2))
                 else:
-                    _print_results([result])
+                    _print_results([result], show_all_diffs=show_all_diffs)
 
                 if not dry_run and result.get('status') == 'pass':
                     page_id = result['page_id']

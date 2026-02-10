@@ -741,6 +741,62 @@ def test_transfer_text_changes_multiple_inserts():
 # --- _build_patches with table/list blocks ---
 
 
+def test_verify_result_includes_xhtml_diff(setup_var):
+    """run_verify() 결과에 xhtml_diff_report 필드가 포함된다."""
+    page_id, var_dir = setup_var
+
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+        Path(output_mdx_path).write_text("## Title\n\nModified.\n")
+        return "## Title\n\nModified.\n"
+
+    with patch('reverse_sync_cli._forward_convert', side_effect=mock_forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(content="## Title\n\nParagraph.\n", descriptor="original.mdx"),
+            improved_src=MdxSource(content="## Title\n\nModified.\n", descriptor="improved.mdx"),
+        )
+    assert 'xhtml_diff_report' in result
+    assert isinstance(result['xhtml_diff_report'], str)
+    # 패치가 적용되었으므로 XHTML diff가 비어있지 않아야 한다
+    assert result['xhtml_diff_report'] != ''
+
+
+def test_verify_result_includes_mdx_diff(setup_var):
+    """run_verify() 결과에 mdx_diff_report (original→improved) 필드가 포함된다."""
+    page_id, var_dir = setup_var
+
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+        Path(output_mdx_path).write_text("## Title\n\nModified.\n")
+        return "## Title\n\nModified.\n"
+
+    with patch('reverse_sync_cli._forward_convert', side_effect=mock_forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(content="## Title\n\nParagraph.\n", descriptor="original.mdx"),
+            improved_src=MdxSource(content="## Title\n\nModified.\n", descriptor="improved.mdx"),
+        )
+    assert 'mdx_diff_report' in result
+    assert isinstance(result['mdx_diff_report'], str)
+    assert result['mdx_diff_report'] != ''
+    # diff에 변경 내용이 포함되어야 한다
+    assert 'Paragraph.' in result['mdx_diff_report']
+    assert 'Modified.' in result['mdx_diff_report']
+
+
+def test_verify_no_changes_has_empty_diffs(setup_var):
+    """변경 없으면 mdx_diff_report, xhtml_diff_report 모두 빈 문자열이다."""
+    page_id, var_dir = setup_var
+    mdx_content = "## Title\n\nParagraph.\n"
+
+    result = run_verify(
+        page_id=page_id,
+        original_src=MdxSource(content=mdx_content, descriptor="original.mdx"),
+        improved_src=MdxSource(content=mdx_content, descriptor="improved.mdx"),
+    )
+    assert result['mdx_diff_report'] == ''
+    assert result['xhtml_diff_report'] == ''
+
+
 def test_build_patches_table_block():
     """테이블 html_block에서 셀 경계 공백 차이가 있어도 패치가 생성된다."""
     from reverse_sync.mdx_block_parser import MdxBlock
