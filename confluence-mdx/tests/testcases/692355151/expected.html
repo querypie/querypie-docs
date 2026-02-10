@@ -1,4 +1,4 @@
-<link rel="preload" as="image" href="/692355151/output/image-20241029-234721.png"/><link rel="preload" as="image" href="/692355151/output/image-20241029-235845.png"/><link rel="preload" as="image" href="/692355151/output/image-20241030-001252.png"/><link rel="preload" as="image" href="/692355151/output/image-20241030-002325.png"/><link rel="preload" as="image" href="/692355151/output/image-20241030-003040.png"/><link rel="preload" as="image" href="/692355151/output/image-20241030-003129.png"/><link rel="preload" as="image" href="/692355151/output/image-20241030-004258.png"/><h1>실행 계획(Explain) 기능 사용하기</h1>
+<link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003040.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003129.png"/><link rel="preload" as="image" href="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-004258.png"/><h1>실행 계획(Explain) 기능 사용하기</h1>
 
 <div class="callout callout-info" data-type="info"><p>10.2.0 부터 추가된 기능입니다.
 (10.2.0 기준 MySQL만 지원합니다.)
@@ -29,7 +29,7 @@
 “File”을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다.</p>
 </div>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241029-234721.png" alt="image-20241029-234721.png" width="760"/></figure>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png" alt="image-20241029-234721.png" width="760"/></figure>
 
 <ol>
 <li>실행계획(Explain) 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 <code>Explain</code> 버튼을 누릅니다.
@@ -52,7 +52,7 @@
 
 </ol>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241029-235845.png" alt="image-20241029-235845.png" width="682"/></figure>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png" alt="image-20241029-235845.png" width="682"/></figure>
 
 <div class="callout callout-important" data-type="important"><ul>
 <li>실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다.</li>
@@ -60,7 +60,7 @@
 <li>MySQL은 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.</li>
 
 </ul>
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241030-001252.png" alt="image-20241030-001252.png" width="682"/></figure>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png" alt="image-20241030-001252.png" width="682"/></figure>
 </div>
 
 <ol>
@@ -70,18 +70,18 @@
 
 </ol>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241030-002325.png" alt="image-20241030-002325.png" width="712"/></figure>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png" alt="image-20241030-002325.png" width="712"/></figure>
 
 <ol start="2">
 <li>JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. <code>{JSON}</code> 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/> <br/>  <br/> <br/>  <br/>내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.</li>
 
 </ol>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241030-003040.png" alt="`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다." width="712"/><figcaption><p><code>{JSON}</code>을 클릭하면 전체 내용을 볼수 있습니다.</p>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003040.png" alt="`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다." width="712"/><figcaption><p><code>{JSON}</code>을 클릭하면 전체 내용을 볼수 있습니다.</p>
 </figcaption>
 </figure>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241030-003129.png" alt="JSON 결과의 복사와 내보내기가 가능합니다." width="560"/><figcaption><p>JSON 결과의 복사와 내보내기가 가능합니다.</p>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003129.png" alt="JSON 결과의 복사와 내보내기가 가능합니다." width="560"/><figcaption><p>JSON 결과의 복사와 내보내기가 가능합니다.</p>
 </figcaption>
 </figure>
 
@@ -96,7 +96,7 @@
 
 </ol>
 
-<figure data-layout="center" data-align="center"><img src="/692355151/output/image-20241030-004258.png" alt="image-20241030-004258.png" width="736"/></figure>
+<figure data-layout="center" data-align="center"><img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-004258.png" alt="image-20241030-004258.png" width="736"/></figure>
 
 <div class="callout callout-important" data-type="important"><p>결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다.
 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다.</p>
