@@ -1386,6 +1386,11 @@ class ConfluenceToMarkdown:
             title = clean_text(page_v1.get("title")).strip()
             # repr() generates a valid value of string for yaml.
             remarks.append(f'title: {repr(title)}\n')
+        links = (page_v1 or {}).get("_links", {})
+        base = links.get("base", "")
+        webui = links.get("webui", "")
+        if base and webui:
+            remarks.append(f"confluenceUrl: '{base}{webui}'\n")
 
         if len(remarks) > 0:
             return ["---\n"] + remarks + ["---\n", "\n"]

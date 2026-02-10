@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import React from 'react';
 import { LastUpdated } from '@/components/last-updated';
 import LanguageSelector2 from "@/components/language-selector2";
+import ConfluenceSourceLink from "@/components/confluence-source-link";
 import { QueryPieLogo } from '@/components/querypie-logo';
 
 const defaultMetadata: Metadata = {
@@ -81,6 +82,7 @@ export default async function RootLayout({ children, params }) {
             title: (
               <>
                 <LanguageSelector2/>
+                <ConfluenceSourceLink/>
                 <p>On This Page</p>
               </>
             ),
