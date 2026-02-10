@@ -15,12 +15,7 @@ Usage:
     python3 test_mdx_to_skeleton.py
 """
 
-import sys
-import os
 from pathlib import Path
-
-# Add the bin directory to the path so we can import skeleton package
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'bin'))
 
 from skeleton.cli import (
     ContentProtector,
@@ -1833,5 +1828,6 @@ if __name__ == "__main__":
     except ImportError:
         # Otherwise, run our simple test runner
         # Note: Integration tests require pytest for tmp_path fixture
+        import sys
         sys.exit(run_all_tests())
 
