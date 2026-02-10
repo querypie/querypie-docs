@@ -97,7 +97,7 @@ class TestE2ERoundTrip:
 
     @pytest.fixture
     def setup_var_793608206(self, tmp_path, monkeypatch):
-        """var/793608206/ 구조를 tmp_path에 복사하고 작업 디렉토리 변경."""
+        """var/793608206/ 구조를 tmp_path에 복사하고 _PROJECT_DIR을 패치."""
         if not VAR_DIR.exists():
             pytest.skip("var/793608206 not found")
         monkeypatch.chdir(tmp_path)
@@ -107,6 +107,9 @@ class TestE2ERoundTrip:
         pages_yaml = VAR_DIR.parent / "pages.yaml"
         if pages_yaml.exists():
             shutil.copy2(pages_yaml, tmp_path / "var" / "pages.yaml")
+        # _PROJECT_DIR을 tmp_path로 패치하여 run_verify가 tmp_path/var/ 를 사용하도록 함
+        import reverse_sync_cli
+        monkeypatch.setattr(reverse_sync_cli, '_PROJECT_DIR', tmp_path)
         return dest
 
     def test_roundtrip_no_changes(self, setup_var_793608206):
