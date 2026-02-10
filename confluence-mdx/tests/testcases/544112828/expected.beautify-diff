@@ -1,11 +1,21 @@
 --- testcases/544112828/page.xhtml
 +++ testcases/544112828/expected.reverse-sync.patched.xhtml
-@@ -5,7 +5,7 @@
-     Overview
-    </h2>
-    <p>
--    QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-+    QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-    </p>
-    <ac:structured-macro ac:local-id="93991f90-344b-497e-8886-42bac10548aa" ac:macro-id="334477e7-dc7b-494d-9513-c21c2ccabe57" ac:name="toc" ac:schema-version="1" data-layout="default">
-     <ac:parameter ac:name="maxLevel">
+@@ -294,12 +294,12 @@
+    <ul>
+     <li>
+      <p>
+-      이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다.
+-     </p>
+-    </li>
+-    <li>
+-     <p>
+-      사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤,
++      이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.
++     </p>
++    </li>
++    <li>
++     <p>
++      사용하려는 계정을 선택하고 필요 시 비밀번호를 입력한 뒤,
+       <code>
+        OK
+       </code>

@@ -1,14 +1,38 @@
 changes:
-- block_id: heading-6
+- block_id: list-16
   change_type: modified
-  index: 6
-  new_content: '#### Custom Data Source 액세스 요청
-
-    '
-  old_content: '#### Custom Data Source 접근 요청
-
-    '
-created_at: '2026-02-10T17:12:26.022716+00:00'
+  index: 16
+  new_content: "1.  **QueryPie Agent 실행** \n    * QueryPie Agent를 실행합니다.\n    * Database\
+    \ 항목에서 Custom Data Source를 확인할 수 있습니다. <br/> \n      <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n      <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.05.26-PM.png\" width=\"400\" />\n      </figure>\n\
+    2.  **Connection Guide 확인** \n    * Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port\
+    \ 정보를 담은 행이 보입니다.\n    * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.\
+    \ <br/> \n      <figure data-layout=\"center\" data-align=\"center\">\n      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.08.11-PM.png\" width=\"712\" />\n      </figure>\n\
+    \    * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.\n    * Privileges는 \"\
+    -\"로 표시됩니다.\n3.  **SQL Tool에서 접속** \n    * DataGrip이나 기타 SQL Tool을 실행합니다.\n  \
+    \  *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.**  \n    * 벤더에 따라 추가\
+    \ 정보를 입력합니다.\n      <figure data-layout=\"center\" data-align=\"center\">\n  \
+    \    <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n      </figure>\n"
+  old_content: "1.  **QueryPie Agent 실행** \n    * QueryPie Agent를 실행합니다.\n    * Database\
+    \ 항목에서 Custom Data Source를 확인할 수 있습니다. <br/> \n      <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n      <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.05.26-PM.png\" width=\"400\" />\n      </figure>\n\
+    2.  **Connection Guide 확인** \n    * Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port\
+    \ 정보를 담은 행이 보입니다.\n    * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.\
+    \ <br/> \n      <figure data-layout=\"center\" data-align=\"center\">\n      <img\
+    \ src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.08.11-PM.png\" width=\"712\" />\n      </figure>\n\
+    \    * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.\n    * Privileges는 \"\
+    -\"로 표시됩니다.\n3.  **SQL Tool에서 접속** \n    * DataGrip이나 기타 SQL Tool을 실행합니다.\n  \
+    \  *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.**  \n    * 벤더에 따라 추가\
+    \ 정보를 입력합니다.\n      <figure data-layout=\"center\" data-align=\"center\">\n  \
+    \    <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
+    \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n      </figure>\n"
+created_at: '2026-02-10T19:50:59.732394+00:00'
 improved_mdx: tests/testcases/880181257/improved.mdx
 original_mdx: tests/testcases/880181257/original.mdx
 page_id: '880181257'

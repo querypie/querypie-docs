@@ -1,0 +1,121 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: 환영합니다.
+  xhtml_text: 환영합니다.
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: 이곳에서 QueryPie의 사용자가 어떻게 QueryPie Web에 접속하여 리소스(DB, System, Cluster)에
+    대한 접근 권한을 받고, 원하는 리소스에 안전하게 접속할 수 있는지에 대한 가이드를 제공합니다.
+  xhtml_text: 이곳에서 QueryPie의 사용자가 어떻게 QueryPie Web에 접속하여 리소스(DB, System, Cluster)에
+    대한 접근 권한을 받고, 원하는 리소스에 안전하게 접속할 수 있는지에 대한 가이드를 제공합니다.
+  xhtml_xpath: p[1]
+- block_id: paragraph-3
+  children: []
+  type: paragraph
+  xhtml_element_index: 2
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[2]
+- block_id: heading-4
+  children: []
+  type: heading
+  xhtml_element_index: 3
+  xhtml_plain_text: QueryPie가 처음이신가요?
+  xhtml_text: QueryPie가 처음이신가요?
+  xhtml_xpath: h2[2]
+- block_id: paragraph-5
+  children: []
+  type: paragraph
+  xhtml_element_index: 4
+  xhtml_plain_text: 아래 순서를 따라 사용해 보세요. 각 항목을 클릭하면 자세한 사용 방법을 확인할 수 있습니다.
+  xhtml_text: 아래 순서를 따라 사용해 보세요. 각 항목을 클릭하면 자세한 사용 방법을 확인할 수 있습니다.
+  xhtml_xpath: p[3]
+- block_id: table-6
+  children: []
+  type: table
+  xhtml_element_index: 5
+  xhtml_plain_text: 사용 순서기능1로그인My Dashboard 2대시보드 둘러보기My Dashboard 3Workflow로 권한 받기
+    DB Access Request 요청하기SQL Request 요청하기SQL Export Request 요청하기Unmasking Request
+    요청하기Restricted Data Access 요청하기Server Access Request 요청하기Server Privilege Request
+    요청하기Access Role Request 요청하기IP Registration Request 요청하기DB Policy Exception Request
+    요청하기4QueryPie Web에서 접속하기 Database Access Control 웹 SQL 에디터로 접속하기Default Privilege
+    설정하기 에이전트 없이 프록시 접속하기 Server Access Control접근 권한이 있는 서버에 접속하기 웹 터미널 사용하기웹 SFTP
+    사용하기 Kubernetes Access Control접근 권한 목록 확인하기Web Access ControlRoot CA 인증 서 및 Extension
+    설치하기웹 어플리케이션 (웹 사이트) 접속하기5QueryPie Agent로 접속하기Agent6개인 설정 둘러보기Preferences
+  xhtml_text: '<table ac:local-id="c53b8e8a-3f68-476f-aa0a-03f2f0eb700f" data-layout="default"
+    data-table-width="760"><colgroup><col/><col style="width: 247.0px;"/><col style="width:
+    512.0px;"/></colgroup><tbody><tr><th class="numberingColumn"></th><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    #F4F5F7)"><p style="text-align: center;"><strong>사용 순서</strong></p></th><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    #F4F5F7)"><p style="text-align: center;"><strong>기능</strong></p></th></tr><tr><td
+    class="numberingColumn">1</td><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    #F4F5F7)"><p><strong>로그인</strong></p></th><td><ul><li><p><ac:link ac:anchor="QueryPie-Web%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0"
+    ac:card-appearance="inline"><ri:page ri:content-title="My Dashboard" ri:version-at-save="12"></ri:page><ac:link-body>My
+    Dashboard</ac:link-body></ac:link> </p></li></ul></td></tr><tr><td class="numberingColumn">2</td><th
+    data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)"><p><strong>대시보드
+    둘러보기</strong></p></th><td><ul><li><p><ac:link ac:anchor="%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C"
+    ac:card-appearance="inline"><ri:page ri:content-title="My Dashboard" ri:version-at-save="12"></ri:page><ac:link-body>My
+    Dashboard</ac:link-body></ac:link> </p></li></ul></td></tr><tr><td class="numberingColumn">3</td><th
+    data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)"><p><strong>Workflow로
+    권한 받기 </strong></p></th><td><ul><li><p><ac:link ac:card-appearance="inline"><ri:page
+    ri:content-title="DB Access Request 요청하기" ri:version-at-save="25"></ri:page><ac:link-body>DB
+    Access Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link ac:card-appearance="inline"><ri:page
+    ri:content-title="SQL Request 요청하기" ri:version-at-save="26"></ri:page><ac:link-body>SQL
+    Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="SQL
+    Export Request 요청하기" ri:version-at-save="19"></ri:page><ac:link-body>SQL Export
+    Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="Unmasking
+    Request 요청하기 (마스킹 해제 요청)" ri:version-at-save="2"></ri:page><ac:link-body>Unmasking
+    Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="Restricted
+    Data Access 요청하기 (제한된 데이터 접근 요청)" ri:version-at-save="1"></ri:page><ac:link-body>Restricted
+    Data Access 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="Access
+    Role Request 요청하기" ri:version-at-save="19"></ri:page><ac:link-body>Server Access
+    Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="Server
+    Privilege Request 요청하기" ri:version-at-save="5"></ri:page><ac:link-body>Server
+    Privilege Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page
+    ri:content-title="Access Role Request 요청하기" ri:version-at-save="19"></ri:page><ac:link-body>Access
+    Role Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="IP
+    Registration Request 요청하기" ri:version-at-save="5"></ri:page><ac:link-body>IP Registration
+    Request 요청하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="DB
+    정책 예외 요청하기 (DB Policy Exception Request)" ri:version-at-save="2"></ri:page><ac:link-body>DB
+    Policy Exception Request 요청하기</ac:link-body></ac:link></p></li></ul></td></tr><tr><td
+    class="numberingColumn">4</td><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    #F4F5F7)"><p><strong>QueryPie Web에서 접속하기 </strong></p></th><td><ul><li><p>Database
+    Access Control </p><ul><li><p><ac:link><ri:page ri:content-title="웹 SQL 에디터로 접속하기"
+    ri:version-at-save="19"></ri:page><ac:link-body>웹 SQL 에디터로 접속하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page
+    ri:content-title="Default Privilege 설정하기" ri:version-at-save="10"></ri:page><ac:link-body>Default
+    Privilege 설정하기 </ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="에이전트
+    없이 프록시 접속하기" ri:version-at-save="9"></ri:page><ac:link-body>에이전트 없이 프록시 접속하기 </ac:link-body></ac:link></p></li></ul></li><li><p>Server
+    Access Control</p><ul><li><p><ac:link><ri:page ri:content-title="권한이 있는 서버에 접속하기"
+    ri:version-at-save="12"></ri:page><ac:link-body>접근 권한이 있는 서버에 접속하기</ac:link-body></ac:link>
+    </p></li><li><p><ac:link><ri:page ri:content-title="웹 터미널 사용하기" ri:version-at-save="8"></ri:page><ac:link-body>웹
+    터미널 사용하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="웹
+    SFTP 사용하기" ri:version-at-save="6"></ri:page><ac:link-body>웹 SFTP 사용하기 </ac:link-body></ac:link></p></li></ul></li><li><p>Kubernetes
+    Access Control</p><ul><li><p><ac:link><ri:page ri:content-title="접근 권한 목록 확인하기"
+    ri:version-at-save="13"></ri:page><ac:link-body>접근 권한 목록 확인하기</ac:link-body></ac:link></p></li></ul></li><li><p>Web
+    Access Control</p><ul><li><p><ac:link><ri:page ri:content-title="Root CA 인증서 및
+    Extension 설치하기" ri:version-at-save="1"></ri:page><ac:link-body>Root CA 인증 서 및
+    Extension 설치하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title="웹
+    어플리케이션 (웹 사이트) 접속하기" ri:version-at-save="2"></ri:page><ac:link-body>웹 어플리케이션 (웹
+    사이트) 접속하기</ac:link-body></ac:link></p></li></ul></li></ul></td></tr><tr><td class="numberingColumn">5</td><th
+    data-highlight-colour="var(--ds-background-accent-gray-subtlest, #F4F5F7)"><p><strong>QueryPie
+    Agent로 접속하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title="Multi
+    Agent" ri:version-at-save="14"></ri:page><ac:link-body>Agent</ac:link-body></ac:link></p></li></ul></td></tr><tr><td
+    class="numberingColumn">6</td><th data-highlight-colour="var(--ds-background-accent-gray-subtlest,
+    #F4F5F7)"><p><strong>개인 설정 둘러보기</strong></p></th><td><ul><li><p><ac:link><ri:page
+    ri:content-title="Preferences" ri:version-at-save="18"></ri:page><ac:link-body>Preferences</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table>'
+  xhtml_xpath: table[1]
+- block_id: paragraph-7
+  children: []
+  type: paragraph
+  xhtml_element_index: 6
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[4]
+created_at: '2026-02-10T19:50:50.473929+00:00'
+page_id: '544211126'
+source_xhtml: patched.xhtml

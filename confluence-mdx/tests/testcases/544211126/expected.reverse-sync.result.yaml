@@ -1,0 +1,15 @@
+changes_count: 1
+created_at: '2026-02-10T19:50:50.473929+00:00'
+mdx_diff_report: "--- tests/testcases/544211126/original.mdx+++ tests/testcases/544211126/improved.mdx@@\
+  \ -9,7 +9,7 @@ ### QueryPie가 처음이신가요?\n \n 아래 순서를 따라 사용해 보세요.\n-각 항목을 클릭하면 자세한 사용\
+  \ 방법을 확인하실 수 있습니다.\n+각 항목을 클릭하면 자세한 사용 방법을 확인할 수 있습니다.\n \n <table>\n <colgroup>\n"
+page_id: '544211126'
+status: pass
+verification:
+  diff_report: ''
+  exact_match: true
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -10,7 +10,7\
+  \ @@\n  QueryPie가 처음이신가요?\n </h2>\n <p>\n- 아래 순서를 따라 사용해 보세요. 각 항목을 클릭하면 자세한 사용\
+  \ 방법을 확인하실 수 있습니다.\n+ 아래 순서를 따라 사용해 보세요. 각 항목을 클릭하면 자세한 사용 방법을 확인할 수 있습니다.\n </p>\n\
+  \ <table ac:local-id=\"c53b8e8a-3f68-476f-aa0a-03f2f0eb700f\" data-layout=\"default\"\
+  \ data-table-width=\"760\">\n  <colgroup>"

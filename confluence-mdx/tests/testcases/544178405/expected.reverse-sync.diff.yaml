@@ -1,0 +1,364 @@
+changes:
+- block_id: paragraph-6
+  change_type: modified
+  index: 6
+  new_content: 'QueryPie의 관리자는 QueryPie Web 또는 API를 통해 리소스 및 권한, 솔루션 보안, 알림 설정 등 쿼리파이
+    전반의 솔루션을 관리할 수 있습니다.
+
+    공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게 보이는 설정 메뉴가 상이합니다.
+
+    '
+  old_content: 'QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스 및 권한, 솔루션 보안, 알림 설정 등
+    쿼리파이 전반 솔루션 관리를 진행할 수 있습니다.
+
+    공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게 보여지는 설정 메뉴가 상이합니다.
+
+    '
+- block_id: paragraph-8
+  change_type: modified
+  index: 8
+  new_content: '관리자 페이지에 진입하려면 먼저 QueryPie에 로그인합니다.
+
+    로그인이 정상적으로 완료되었다면 사용자 대시보드로 이동하게 되며, QueryPie 관리자 역할을 할당받은 사용자일 경우 우측 상단에 `Go
+    to Admin Page` 버튼이 표시됩니다.
+
+    이 버튼을 클릭하여 관리자 페이지를 새 탭으로 열 수 있습니다.
+
+    '
+  old_content: '관리자 페이지를 진입하기 위해서는 먼저 QueryPie 로그인을 진행합니다.
+
+    로그인이 정상적으로 완료되었다면 사용자 대시보드 이동하게 되며 만약 QueryPie 관리자 역할을 할당받은 사용자일 경우 우측 상단에 `Go
+    to Admin Page` 버튼이 표시됩니다.
+
+    이 버튼을 클릭하여 관리자 페이지를 새 탭으로 열 수 있습니다.
+
+    '
+- block_id: paragraph-15
+  change_type: modified
+  index: 15
+  new_content: 'Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 기본적으로 설정해야 하는 항목들이
+    있습니다.
+
+    특히 보안 설정, 사용자 설정, 관리자 역할 할당은 필수적으로 설정하는 것을 권장합니다.
+
+    '
+  old_content: 'Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 기본적으로 설정해야하는 항목들이
+    있습니다.
+
+    특히 보안 설정, 사용자 설정, 관리자 역할 할당은 필수적으로 설정하시는 것을 권장해 드립니다.
+
+    '
+- block_id: paragraph-22
+  change_type: modified
+  index: 22
+  new_content: '기본 설정을 마쳤다면 서비스별 설정이 남았습니다.
+
+    QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요.
+
+    서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인할 수 있습니다.
+
+    뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.
+
+    '
+  old_content: '기본 설정을 마쳤다면 서비스별 설정이 남았습니다.
+
+    QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요.
+
+    서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인하실 수 있습니다.
+
+    뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.
+
+    '
+- block_id: html_block-24
+  change_type: modified
+  index: 24
+  new_content: '<table>
+
+    <colgroup>
+
+    <col/>
+
+    <col/>
+
+    <col/>
+
+    </colgroup>
+
+    <tbody>
+
+    <tr>
+
+    <th>
+
+    </th>
+
+    <th>
+
+    **설정 순서**
+
+    </th>
+
+    <th>
+
+    **설정 항목**
+
+    </th>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    1
+
+    </td>
+
+    <th>
+
+    **Database Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/databases/connection-management)
+
+    * [DB Access Control](administrator-manual/databases/db-access-control)
+
+    * [Policies](administrator-manual/databases/policies)
+
+    * [Ledger Management](administrator-manual/databases/ledger-management)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    2
+
+    </td>
+
+    <th>
+
+    **Server Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/servers/connection-management)
+
+    * [Server Access Control ](user-manual/server-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    3
+
+    </td>
+
+    <th>
+
+    **Kubernetes Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/kubernetes/connection-management)
+
+    * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    4
+
+    </td>
+
+    <th>
+
+    **감사 로그 확인하기**
+
+    </th>
+
+    <td>
+
+    * [General Logs](administrator-manual/audit/general-logs)
+
+    * [Database Logs](administrator-manual/audit/database-logs)
+
+    * [Server Logs](administrator-manual/audit/server-logs)
+
+    * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+
+    </td>
+
+    </tr>
+
+    </tbody>
+
+    </table>
+
+    '
+  old_content: '<table>
+
+    <colgroup>
+
+    <col/>
+
+    <col/>
+
+    <col/>
+
+    </colgroup>
+
+    <tbody>
+
+    <tr>
+
+    <th>
+
+    </th>
+
+    <th>
+
+    **설정 순서**
+
+    </th>
+
+    <th>
+
+    **설정 항목**
+
+    </th>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    1
+
+    </td>
+
+    <th>
+
+    **Databased Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/databases/connection-management)
+
+    * [DB Access Control](administrator-manual/databases/db-access-control)
+
+    * [Policies](administrator-manual/databases/policies)
+
+    * [Ledger Management](administrator-manual/databases/ledger-management)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    2
+
+    </td>
+
+    <th>
+
+    **Server Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/servers/connection-management)
+
+    * [Server Access Control ](user-manual/server-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    3
+
+    </td>
+
+    <th>
+
+    **Kubernetes Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/kubernetes/connection-management)
+
+    * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    4
+
+    </td>
+
+    <th>
+
+    **감사 로그 확인하기**
+
+    </th>
+
+    <td>
+
+    * [General Logs](administrator-manual/audit/general-logs)
+
+    * [Database Logs](administrator-manual/audit/database-logs)
+
+    * [Server Logs](administrator-manual/audit/server-logs)
+
+    * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+
+    </td>
+
+    </tr>
+
+    </tbody>
+
+    </table>
+
+    '
+created_at: '2026-02-10T19:50:48.929677+00:00'
+improved_mdx: tests/testcases/544178405/improved.mdx
+original_mdx: tests/testcases/544178405/original.mdx
+page_id: '544178405'

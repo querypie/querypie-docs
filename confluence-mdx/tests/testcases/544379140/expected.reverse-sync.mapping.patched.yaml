@@ -106,8 +106,8 @@ blocks:
   children: []
   type: heading
   xhtml_element_index: 6
-  xhtml_plain_text: Audit Log Export 목록 확인하기
-  xhtml_text: Audit Log Export 목록 확인하기
+  xhtml_plain_text: Audit Log Export 목록 조회하기
+  xhtml_text: Audit Log Export 목록 조회하기
   xhtml_xpath: h2[2]
 - block_id: html_block-8
   children: []
@@ -148,18 +148,18 @@ blocks:
   type: paragraph
   xhtml_element_index: 10
   xhtml_plain_text: 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출
-    작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
+    작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료 시 파일 다운로드
   xhtml_text: 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성
-    → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
+    → (3) 로그 추출 완료까지 대기 → (4) 추출 완료 시 파일 다운로드
   xhtml_xpath: p[3]
 - block_id: paragraph-12
   children: []
   type: paragraph
   xhtml_element_index: 11
   xhtml_plain_text: 감사 로그 추출을 시작하기 위해서는 ‘Audit > General > Audit Log Export’ 메뉴 접근
-    후, 우측 상단의 Create Task 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
+    후, 우측 상단의 Create Task 버튼을 클릭해야 합니다. 해당 버튼 클릭 시 아래와 같은 화면이 나타납니다.
   xhtml_text: 감사 로그 추출을 시작하기 위해서는 ‘Audit > General > Audit Log Export’ 메뉴 접근 후, 우측
-    상단의 <code>Create Task</code> 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
+    상단의 <code>Create Task</code> 버튼을 클릭해야 합니다. 해당 버튼 클릭 시 아래와 같은 화면이 나타납니다.
   xhtml_xpath: p[4]
 - block_id: html_block-13
   children: []
@@ -180,24 +180,24 @@ blocks:
   xhtml_element_index: 13
   xhtml_plain_text: 'Task Name : 로그 추출 작업의 이름을 입력합니다.Log Type : 추출 대상 로그의 종류를 선택합니다.
     Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.로그 종류 선택 후 See Log Template and Description을
-    클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.Download File Format : 로그 출력 파일 형식을 지정합니다.
+    클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.Download File Format : 로그 출력 파일 형식을 지정합니다.
     (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의 ‘추출 지원 로그 종류’을 참고해주시기 바랍니다.) For
     Text Exceeding 32,000 Characters : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수
     있습니다.Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에
-    셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.From
-    : 추출 시작 날짜를 지정합니다.To : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다.
-    Filter Expression : 필터 표현식을 지정합니다. 조건 입력 방법 및 예시는 하단의 ‘필터 표현식’을 참고해주시기 바랍니다.Generate
+    셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.From :
+    추출 시작 날짜를 지정합니다.To : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다. Filter
+    Expression : 필터 표현식을 지정합니다. 조건 입력 방법 및 예시는 하단의 ‘필터 표현식’을 참고해주시기 바랍니다.Generate
     Preview : 미리보기를 생성합니다. 미리보기는 필수 단계입니다.미리보기 결과를 확인해야 다음 단계인 ‘Create’가 가능합니다.Create
     버튼 : 로그 추출 작업을 생성합니다.'
   xhtml_text: '<ol start="1"><li><p><strong>Task Name </strong>: 로그 추출 작업의 이름을 입력합니다.</p></li><li><p><strong>Log
     Type </strong>: 추출 대상 로그의 종류를 선택합니다. </p><ol start="1"><li><p>Query Audit 등 추출하기
     원하는 로그 타입을 선택합니다.</p></li><li><p>로그 종류 선택 후 <span style="color: rgb(76,154,255);">See
-    Log Template and Description</span>을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.</p></li></ol></li><li><p><strong>Download
+    Log Template and Description</span>을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.</p></li></ol></li><li><p><strong>Download
     File Format </strong>: 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로
     제한됩니다. 상단의 <strong>‘추출 지원 로그 종류’</strong>을 참고해주시기 바랍니다.) </p></li><li><p><strong>For
     Text Exceeding 32,000 Characters</strong> : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지
     여부를 선택할 수 있습니다.</p><ol start="1"><li><p>Trim Overflowing Text - 32,000자를 초과하는
-    글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.</p></li><li><p>No
+    글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.</p></li><li><p>No
     Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.</p></li></ol></li><li><p><strong>From</strong>
     : 추출 시작 날짜를 지정합니다.</p></li><li><p><strong>To </strong>: 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터
     당일 날짜를 선택할 수 있도록 개선되었습니다. </p></li><li><p><strong>Filter Expression</strong> :
@@ -262,20 +262,20 @@ blocks:
   - paragraph-40
   type: html_block
   xhtml_element_index: 17
-  xhtml_plain_text: 'note필터 표현식(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을
+  xhtml_plain_text: 'note필터 표현식(1) 필터 표현식을 사용하기 위해 ''See Log Template and Description''을
     통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라
     아래와 같이 나뉩니다.  - Number Type지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10`-
     String Type지원하는 표현식 :  == (equals), != (not equals), contains예 : x == ''abc'',
     x != ''abc'',     contains(x, ''ab'')- Boolean Type 지원하는 표현식 : == (equals), != (not equals), &&
     (and), || (or)예 : x == `true`, x && y,     (x > `0`) && (y == `0`)- Array Type예 : x[? @ == ''value''], list[? @ > `10`](3)
     여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.- AND 조건 : && 연산자를 활용합니다.- OR 조건 : || 연산자를
-    활용합니다.- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.(4) 예시- Query Audit 중 쿼리 실행 로그만
-    추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION''- Query Audit 중 웹에디터에 수행한 쿼리
-    실행 로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION'' && executedFrom == ''WEB_EDITOR''-
-    DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName == ''database1''
-    || connectionName == ''database2''- DB Access History 중 특정 데이터베이스 2종류이면서 Replication
-    Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == ''database1'' ||
-    connectionName == ''database2'') && replicationType == ''SINGLE''
+    활용합니다.- 복합 조건 : 함께 처리해야 하는 조건은 괄호(( ))로 묶어서 활용합니다.(4) 예시- Query Audit 중 쿼리 실행
+    로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION''- Query Audit 중 웹에디터에 수행한
+    쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION'' && executedFrom ==
+    ''WEB_EDITOR''- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : connectionName
+    == ''database1'' || connectionName == ''database2''- DB Access History 중 특정 데이터베이스
+    2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName ==
+    ''database1'' || connectionName == ''database2'') && replicationType == ''SINGLE''
 
     필터 표현식(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을 통해 로그별 key와 각각의
     type 및 포함하는 value를 참고해주시기 바랍니다.(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  -
@@ -291,7 +291,7 @@ blocks:
     2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName ==
     ''database1'' || connectionName == ''database2'') && replicationType == ''SINGLE'''
   xhtml_text: '<ac:adf-extension><ac:adf-node type="panel"><ac:adf-attribute key="panel-type">note</ac:adf-attribute><ac:adf-content><p><strong>필터
-    표현식</strong></p><p>(1) 필터 표현식을 사용하시기 위해 ''<span style="color: rgb(76,154,255);">See
+    표현식</strong></p><p>(1) 필터 표현식을 사용하기 위해 ''<span style="color: rgb(76,154,255);">See
     Log Template and Description</span>''을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기
     바랍니다.<br/></p><p>(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  </p><p>- Number
     Type</p><p>지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>,
@@ -303,12 +303,12 @@ blocks:
     <code>|| (or)</code><br/>예 : <code>x == `true`</code>,<code> x &amp;&amp; y</code>,     <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code></p><p>- Array Type</p><p>예 : <code>x[?
     @ == ''value'']</code>, <code>list[? @ &gt; `10`]</code></p><p></p><p>(3) 여러 조건을
     함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p><p>- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p><p>-
-    OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로
-    묶어서 활용합니다.</p><p></p><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식
-    : <code>actionType == ''SQL_EXECUTION''</code></p><p>- Query Audit 중 웹에디터에 수행한
-    쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION'' &amp;&amp;
-    executedFrom == ''WEB_EDITOR''</code></p><p>- DB Access History 중 특정 데이터베이스 2종류
-    대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == ''database1'' || connectionName
+    OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야 하는 조건은 괄호(<code>(
+    )</code>)로 묶어서 활용합니다.</p><p></p><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는
+    경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION''</code></p><p>- Query Audit
+    중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION''
+    &amp;&amp; executedFrom == ''WEB_EDITOR''</code></p><p>- DB Access History 중 특정
+    데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == ''database1'' || connectionName
     == ''database2''</code></p><p>- DB Access History 중 특정 데이터베이스 2종류이면서 Replication
     Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == ''database1''
     || connectionName == ''database2'') &amp;&amp; replicationType == ''SINGLE''</code></p></ac:adf-content></ac:adf-node><ac:adf-fallback><div
@@ -351,9 +351,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 19
-  xhtml_plain_text: (1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별
+  xhtml_plain_text: (1) 필터 표현식을 사용하기 위해 'See Log Template and Description'을 통해 로그별
     key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.
-  xhtml_text: '(1) 필터 표현식을 사용하시기 위해 ''<span style="color: rgb(76,154,255);">See Log
+  xhtml_text: '(1) 필터 표현식을 사용하기 위해 ''<span style="color: rgb(76,154,255);">See Log
     Template and Description</span>''을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>'
   xhtml_xpath: ac:adf-extension[1]/p[2]
 - block_id: paragraph-21
@@ -458,8 +458,8 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 33
-  xhtml_plain_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.'
-  xhtml_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.'
+  xhtml_plain_text: '- 복합 조건 : 함께 처리해야 하는 조건은 괄호(( ))로 묶어서 활용합니다.'
+  xhtml_text: '- 복합 조건 : 함께 처리해야 하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.'
   xhtml_xpath: ac:adf-extension[1]/p[16]
 - block_id: paragraph-35
   children: []
@@ -495,9 +495,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 38
-  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName
-    == ''database1'' || connectionName == ''database2'''
-  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName
+  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 :
+    connectionName == ''database1'' || connectionName == ''database2'''
+  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName
     == ''database1'' || connectionName == ''database2''</code>'
   xhtml_xpath: ac:adf-extension[1]/p[21]
 - block_id: paragraph-40
@@ -526,7 +526,7 @@ blocks:
   type: html_block
   xhtml_element_index: 41
   xhtml_plain_text: 'noteQuery Audit의 내보내기 파일의 Privilege Type 명시 기준내보내기 파일의 ‘Privilege
-    Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 기본 권한으로 실행되는 명령어(SET, SHOW
+    Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 기본 권한으로 실행되는 명령어(SET, SHOW
     등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이
     명시됩니다.
 
@@ -535,7 +535,7 @@ blocks:
     등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이 명시됩니다.'
   xhtml_text: '<ac:adf-extension><ac:adf-node type="panel"><ac:adf-attribute key="panel-type">note</ac:adf-attribute><ac:adf-content><p><strong>Query
     Audit의 내보내기 파일의 Privilege Type 명시 기준</strong></p><p>내보내기 파일의 ‘Privilege Type’
-    컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. </p><ol start="1"><li><p>기본 권한으로
+    컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. </p><ol start="1"><li><p>기본 권한으로
     실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</p></li><li><p>INSERT 등 권한에 따라 수행된 로그에는
     SQL Type이 명시됩니다. </p></li><li><p>Redis의 경우에는 커맨드명이 명시됩니다.</p></li></ol></ac:adf-content></ac:adf-node><ac:adf-fallback><div
     class="panel conf-macro output-block" style="background-color: rgb(234,230,255);border-color:
@@ -560,9 +560,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 43
-  xhtml_plain_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와
+  xhtml_plain_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와
     같이 작동합니다.
-  xhtml_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
+  xhtml_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
   xhtml_xpath: ac:adf-extension[2]/p[2]
 - block_id: list-45
   children: []
@@ -584,8 +584,8 @@ blocks:
   children: []
   type: heading
   xhtml_element_index: 46
-  xhtml_plain_text: 추출 작업 완료시 파일 내려받기
-  xhtml_text: 추출 작업 완료시 파일 내려받기
+  xhtml_plain_text: 추출 작업 완료 시 파일 내려받기
+  xhtml_text: 추출 작업 완료 시 파일 내려받기
   xhtml_xpath: h2[4]
 - block_id: paragraph-48
   children: []
@@ -685,6 +685,6 @@ blocks:
   xhtml_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다.
     하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_xpath: p[10]
-created_at: '2026-02-10T17:29:42.861384+00:00'
+created_at: '2026-02-10T19:50:53.237420+00:00'
 page_id: '544379140'
 source_xhtml: patched.xhtml

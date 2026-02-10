@@ -1,14 +1,18 @@
 changes_count: 1
-created_at: '2026-02-10T17:12:26.022716+00:00'
+created_at: '2026-02-10T19:50:59.732394+00:00'
 mdx_diff_report: "--- tests/testcases/880181257/original.mdx+++ tests/testcases/880181257/improved.mdx@@\
-  \ -3,7 +3,7 @@ \n # Custom Data Source 접속하기\n \n-#### Custom Data Source 접근 요청\n\
-  +#### Custom Data Source 액세스 요청\n \n 1. 사용자 화면 상단 Workflow 메뉴로 이동합니다.\n 2. 좌측 상단\
-  \ `Submit Request` 버튼 클릭후 DB Access Request 항목을 선택합니다. <br/> \n"
+  \ -45,7 +45,7 @@     * Privileges는 \"-\"로 표시됩니다.\n 3.  **SQL Tool에서 접속** \n    \
+  \ * DataGrip이나 기타 SQL Tool을 실행합니다.\n-    *  **Host와 Port는 Connection Guide에 명시되어있는\
+  \ 정보를 입력해야합니다.**  \n+    *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.**\
+  \  \n     * 벤더에 따라 추가 정보를 입력합니다.\n       <figure data-layout=\"center\" data-align=\"\
+  center\">\n       <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
+  \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n"
 page_id: '880181257'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
-xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -19,7 +19,7\
-  \ @@\n  </ac:parameter>\n </ac:structured-macro>\n <h3>\n- Custom Data Source 접근\
-  \ 요청\n+ Custom Data Source 액세스 요청\n </h3>\n <ol start=\"1\">\n  <li>"
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -189,7 +189,7\
+  \ @@\n    <li>\n     <p>\n      <strong>\n-      Host와 Port는 Connection Guide에 명시되어있는\
+  \ 정보를 입력해야합니다.\n+      Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.\n    \
+  \  </strong>\n     </p>\n    </li>"

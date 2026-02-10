@@ -1,11 +1,11 @@
 --- testcases/880181257/page.xhtml
 +++ testcases/880181257/expected.reverse-sync.patched.xhtml
-@@ -19,7 +19,7 @@
-  </ac:parameter>
- </ac:structured-macro>
- <h3>
-- Custom Data Source 접근 요청
-+ Custom Data Source 액세스 요청
- </h3>
- <ol start="1">
-  <li>
+@@ -189,7 +189,7 @@
+    <li>
+     <p>
+      <strong>
+-      Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.
++      Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.
+      </strong>
+     </p>
+    </li>

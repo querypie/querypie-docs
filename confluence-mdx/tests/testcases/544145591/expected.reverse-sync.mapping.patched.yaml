@@ -10,8 +10,8 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 1
-  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
-  xhtml_text: General 페이지에서는 QueryPie 전체의 기본 구성을 변경할 수 있습니다.
+  xhtml_plain_text: General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
+  xhtml_text: General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다.
   xhtml_xpath: p[1]
 - block_id: html_block-3
   children: []
@@ -258,35 +258,35 @@ blocks:
   - list-31
   type: html_block
   xhtml_element_index: 28
-  xhtml_plain_text: 11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다. Admin > General
+  xhtml_plain_text: 11.4.0부터 속성 기반 승인자 지정 시 여러 개의 속성을 지정할 수 있도록 개선되었습니다. Admin > General
     > Company Management > General > Workflow Configurations의 Use User Attribute-Based
-    Approval 옵션 스위치가 제거되었습니다.기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른
+    Approval 옵션 스위치가 제거되었습니다.기존 Attribute 기반 승인자 지정 시 하나의 Attribute만 지정할 수 있었으나 다른
     Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.
   xhtml_text: <ac:structured-macro ac:macro-id="761a1bb7-13c0-403d-8614-5a77bbbad0ad"
     ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>11.4.0부터 속성 기반 승인자
-    지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다. </p><ul><li><p>Admin &gt; General &gt; Company
+    지정 시 여러 개의 속성을 지정할 수 있도록 개선되었습니다. </p><ul><li><p>Admin &gt; General &gt; Company
     Management &gt; General &gt; Workflow Configurations의 Use User Attribute-Based
-    Approval 옵션 스위치가 제거되었습니다.</p></li><li><p>기존 Attribute 기반 승인자 지정시 하나의 Attribute만
+    Approval 옵션 스위치가 제거되었습니다.</p></li><li><p>기존 Attribute 기반 승인자 지정 시 하나의 Attribute만
     지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.  </p></li></ul></ac:rich-text-body></ac:structured-macro>
   xhtml_xpath: macro-info[1]
 - block_id: paragraph-30
   children: []
   type: paragraph
   xhtml_element_index: 29
-  xhtml_plain_text: 11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.
-  xhtml_text: 11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.
+  xhtml_plain_text: 11.4.0부터 속성 기반 승인자 지정 시 여러 개의 속성을 지정할 수 있도록 개선되었습니다.
+  xhtml_text: 11.4.0부터 속성 기반 승인자 지정 시 여러 개의 속성을 지정할 수 있도록 개선되었습니다.
   xhtml_xpath: macro-info[1]/p[1]
 - block_id: list-31
   children: []
   type: list
   xhtml_element_index: 30
   xhtml_plain_text: Admin > General > Company Management > General > Workflow Configurations의
-    Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.기존 Attribute 기반 승인자 지정시 하나의
+    Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.기존 Attribute 기반 승인자 지정 시 하나의
     Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록
     개선되었습니다.
   xhtml_text: <ul><li><p>Admin &gt; General &gt; Company Management &gt; General &gt;
     Workflow Configurations의 Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.</p></li><li><p>기존
-    Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인
+    Attribute 기반 승인자 지정 시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인
     단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.  </p></li></ul>
   xhtml_xpath: macro-info[1]/ul[1]
 - block_id: paragraph-32
@@ -311,7 +311,7 @@ blocks:
     승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는
     관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.에러 메시지 예시: Attribute 값은 있지만 해당 사용자가 비활성화된
     경우만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에
-    지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.에러 메세지 예시:'
+    지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.에러 메시지 예시:'
   xhtml_text: '<ul><li><p>중요: </p><ul><li><p>선택된 Attribute의 값으로는 승인자의 QueryPie Login
     ID가 입력되어 있어야 합니다.</p><ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
     ac:original-height="86" ac:original-width="820" ac:width="712"><ri:attachment
@@ -334,7 +334,7 @@ blocks:
     ri:version-at-save="2"></ri:attachment></ac:image></li></ul></li></ul></li><li><p>Attribute
     값은 있지만 해당 사용자가 비활성화된 경우</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값으로 지정된
     승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며
-    요청 제출이 중단됩니다.</p><ul><li><p>에러 메세지 예시:</p><ac:image ac:align="center" ac:custom-width="true"
+    요청 제출이 중단됩니다.</p><ul><li><p>에러 메시지 예시:</p><ac:image ac:align="center" ac:custom-width="true"
     ac:layout="center" ac:original-height="260" ac:original-width="615" ac:width="615"><ri:attachment
     ri:filename="Screenshot 2025-06-16 at 10.30.14 AM.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
     color="#091e4224" key="border" size="2"></ac:adf-mark></ac:image></li></ul></li></ul></li></ul>'
@@ -462,8 +462,8 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 45
-  xhtml_plain_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
-  xhtml_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.
+  xhtml_plain_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행 시 쓰로틀링을 적용합니다.
+  xhtml_text: 토글을 켜면 Workflow에서 상신된 SQL 요청 실행 시 쓰로틀링을 적용합니다.
   xhtml_xpath: p[15]
 - block_id: html_block-47
   children: []
@@ -486,9 +486,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 48
-  xhtml_plain_text: 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다.
+  xhtml_plain_text: 이 옵션을 활성화하는 경우, 명시된 개수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다.
     이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
-  xhtml_text: 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해
+  xhtml_text: 이 옵션을 활성화하는 경우, 명시된 개수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해
     대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
   xhtml_xpath: p[17]
 - block_id: list-50
@@ -746,6 +746,6 @@ blocks:
     는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야 실행계획
     결과가 첨부됩니다.
   xhtml_xpath: p[25]
-created_at: '2026-02-10T17:12:14.785588+00:00'
+created_at: '2026-02-10T19:50:47.478125+00:00'
 page_id: '544145591'
 source_xhtml: patched.xhtml

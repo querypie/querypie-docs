@@ -1,11 +1,82 @@
 --- testcases/544379140/page.xhtml
 +++ testcases/544379140/expected.reverse-sync.patched.xhtml
-@@ -657,7 +657,7 @@
-  </tbody>
- </table>
- <h2>
-- Audit Log Export 목록 조회하기
-+ Audit Log Export 목록 확인하기
+@@ -717,14 +717,14 @@
+  로그 추출 작업 생성하기
  </h2>
- <ac:image ac:align="center" ac:alt="image-20240714-063656.png" ac:custom-width="true" ac:layout="center" ac:original-height="864" ac:original-width="1566" ac:width="760">
-  <ri:attachment ri:filename="image-20240714-063656.png" ri:version-at-save="1">
+ <p>
+- 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
++ 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료 시 파일 다운로드
+ </p>
+ <p>
+  감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의
+  <code>
+   Create Task
+  </code>
+- 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
++ 버튼을 클릭해야 합니다. 해당 버튼 클릭 시 아래와 같은 화면이 나타납니다.
+ </p>
+ <ac:image ac:align="center" ac:alt="스크린샷 2025-01-16 오후 1.18.05.png" ac:custom-width="true" ac:layout="center" ac:original-height="1005" ac:original-width="1494" ac:width="612">
+  <ri:attachment ri:filename="스크린샷 2025-01-16 오후 1.18.05.png" ri:version-at-save="1">
+@@ -765,7 +765,7 @@
+      <span style="color: rgb(76,154,255);">
+       See Log Template and Description
+      </span>
+-     을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
++     을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
+     </p>
+    </li>
+   </ol>
+@@ -792,7 +792,7 @@
+   <ol start="1">
+    <li>
+     <p>
+-     Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
++     Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
+     </p>
+    </li>
+    <li>
+@@ -890,7 +890,7 @@
+     </strong>
+    </p>
+    <p>
+-    (1) 필터 표현식을 사용하시기 위해 '
++    (1) 필터 표현식을 사용하기 위해 '
+     <span style="color: rgb(76,154,255);">
+      See Log Template and Description
+     </span>
+@@ -1035,7 +1035,7 @@
+     연산자를 활용합니다.
+    </p>
+    <p>
+-    - 복합 조건 : 함께 처리해야하는 조건은 괄호(
++    - 복합 조건 : 함께 처리해야 하는 조건은 괄호(
+     <code>
+      ( )
+     </code>
+@@ -1059,7 +1059,7 @@
+     </code>
+    </p>
+    <p>
+-    - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 :
++    - DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 :
+     <code>
+      connectionName == 'database1' || connectionName == 'database2'
+     </code>
+@@ -1279,7 +1279,7 @@
+     </strong>
+    </p>
+    <p>
+-    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
++    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
+    </p>
+    <ol start="1">
+     <li>
+@@ -1335,7 +1335,7 @@
+ <p>
+ </p>
+ <h2>
+- 추출 작업 완료시 파일 내려받기
++ 추출 작업 완료 시 파일 내려받기
+ </h2>
+ <p>
+  별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.

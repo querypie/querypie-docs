@@ -1,16 +1,12 @@
 changes:
-- block_id: paragraph-8
+- block_id: list-82
   change_type: modified
-  index: 8
-  new_content: 'QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
-    같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-
-    '
-  old_content: 'QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
-    같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-
-    '
-created_at: '2026-02-10T17:12:12.679694+00:00'
+  index: 82
+  new_content: "* 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. \n* 사용하려는 계정을 선택하고\
+    \ 필요 시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n"
+  old_content: "* 이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. \n* 사용하려는 계정을 선택하고\
+    \ 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n"
+created_at: '2026-02-10T19:50:45.385058+00:00'
 improved_mdx: tests/testcases/544112828/improved.mdx
 original_mdx: tests/testcases/544112828/original.mdx
 page_id: '544112828'

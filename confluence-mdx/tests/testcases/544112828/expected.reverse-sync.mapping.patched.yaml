@@ -10,9 +10,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 1
-  xhtml_plain_text: QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
+  xhtml_plain_text: QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
     같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-  xhtml_text: QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
+  xhtml_text: QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와
     같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
   xhtml_xpath: p[1]
 - block_id: html_block-3
@@ -366,10 +366,10 @@ blocks:
   children: []
   type: list
   xhtml_element_index: 41
-  xhtml_plain_text: 이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. 사용하려는 계정을 선택하고
-    필요시 비밀번호를 입력한 뒤, OK 버튼을 클릭하여 세션을 엽니다.
-  xhtml_text: <ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는
-    계정을 선택하고 필요시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul>
+  xhtml_plain_text: 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. 사용하려는 계정을 선택하고
+    필요 시 비밀번호를 입력한 뒤, OK 버튼을 클릭하여 세션을 엽니다.
+  xhtml_text: <ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는
+    계정을 선택하고 필요 시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul>
   xhtml_xpath: ul[3]
 - block_id: html_block-43
   children: []
@@ -841,6 +841,6 @@ blocks:
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[36]
-created_at: '2026-02-10T17:12:12.679694+00:00'
+created_at: '2026-02-10T19:50:45.385058+00:00'
 page_id: '544112828'
 source_xhtml: patched.xhtml

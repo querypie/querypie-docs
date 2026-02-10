@@ -1,21 +1,20 @@
 changes_count: 1
-created_at: '2026-02-10T17:12:12.679694+00:00'
+created_at: '2026-02-10T19:50:45.385058+00:00'
 mdx_diff_report: "--- tests/testcases/544112828/original.mdx+++ tests/testcases/544112828/improved.mdx@@\
-  \ -5,7 +5,7 @@ \n ### Overview\n \n-QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은\
-  \ SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할\
-  \ 수 있습니다.\n+QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와\
-  \ 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n \n \n ### 에이전트 앱\
-  \ 다운로드 및 실행하기\n"
+  \ -139,8 +139,8 @@ </figcaption>\n </figure>\n \n-* 이후 해당 서버에 접속 가능한 계정이 여러개라면,\
+  \ Account 선택창이 열립니다. \n-* 사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n\
+  +* 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. \n+* 사용하려는 계정을 선택하고 필요 시 비밀번호를\
+  \ 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n \n <figure data-layout=\"center\" data-align=\"\
+  center\">\n <img src=\"/user-manual/user-agent/screenshot-20240730-162532.png\"\
+  \ alt=\"Agent &gt; Server &gt; Open New Session\" width=\"746\" />\n"
 page_id: '544112828'
 status: pass
 verification:
   diff_report: ''
   exact_match: true
-xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -5,7 +5,7 @@\n\
-  \     Overview\n    </h2>\n    <p>\n-    QueryPie Agent를 설치하면, DataGrip, DBeaver와\
-  \ 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을\
-  \ 사용할 수 있습니다.\n+    QueryPie Agent를 설정하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와\
-  \ 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.\n    </p>\n    <ac:structured-macro\
-  \ ac:local-id=\"93991f90-344b-497e-8886-42bac10548aa\" ac:macro-id=\"334477e7-dc7b-494d-9513-c21c2ccabe57\"\
-  \ ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\">\n     <ac:parameter\
-  \ ac:name=\"maxLevel\">"
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -294,12 +294,12\
+  \ @@\n    <ul>\n     <li>\n      <p>\n-      이후 해당 서버에 접속 가능한 계정이 여러개라면, Account\
+  \ 선택창이 열립니다.\n-     </p>\n-    </li>\n-    <li>\n-     <p>\n-      사용하려는 계정을 선택하고\
+  \ 필요시 비밀번호를 입력한 뒤,\n+      이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.\n+  \
+  \   </p>\n+    </li>\n+    <li>\n+     <p>\n+      사용하려는 계정을 선택하고 필요 시 비밀번호를 입력한\
+  \ 뒤,\n       <code>\n        OK\n       </code>"
