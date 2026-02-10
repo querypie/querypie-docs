@@ -7,7 +7,7 @@ from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch,
-    _normalize_mdx_to_plain, _build_patches,
+    _normalize_mdx_to_plain, _build_patches, _strip_frontmatter,
 )
 
 
@@ -570,3 +570,54 @@ def test_build_patches_skips_non_content():
 
     patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
     assert len(patches) == 0
+
+
+# --- _strip_frontmatter tests ---
+
+
+def test_strip_frontmatter():
+    """frontmatter 블록을 제거한다."""
+    mdx = "---\ntitle: '관리자 매뉴얼'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n"
+    result = _strip_frontmatter(mdx)
+    assert result == "\n## Title\n"
+
+
+def test_strip_frontmatter_no_frontmatter():
+    """frontmatter가 없으면 원문을 그대로 반환한다."""
+    mdx = "## Title\n\nParagraph.\n"
+    assert _strip_frontmatter(mdx) == mdx
+
+
+# --- _normalize_mdx_to_plain with markdown links ---
+
+
+def test_normalize_mdx_with_links():
+    """마크다운 링크 [text](url) → text로 정규화한다."""
+    content = "[Connection Management](/docs/connection) and **bold**"
+    result = _normalize_mdx_to_plain(content, 'paragraph')
+    assert result == "Connection Management and bold"
+
+
+# --- verify ignores frontmatter diff ---
+
+
+def test_verify_ignores_frontmatter_diff(setup_var):
+    """roundtrip verify 시 frontmatter 차이는 무시된다."""
+    page_id, var_dir = setup_var
+
+    improved_mdx = "---\ntitle: 'Test'\n---\n\n## Title\n\nModified.\n"
+    # forward converter가 confluenceUrl을 추가한 verify.mdx를 생성
+    verify_content = "---\ntitle: 'Test'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n\nModified.\n"
+
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+        Path(output_mdx_path).write_text(verify_content)
+        return verify_content
+
+    with patch('reverse_sync_cli._forward_convert', side_effect=mock_forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(content="---\ntitle: 'Test'\n---\n\n## Title\n\nParagraph.\n", descriptor="original.mdx"),
+            improved_src=MdxSource(content=improved_mdx, descriptor="improved.mdx"),
+        )
+    assert result['status'] == 'pass'
+    assert result['verification']['exact_match'] is True
