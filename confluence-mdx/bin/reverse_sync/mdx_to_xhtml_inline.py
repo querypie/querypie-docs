@@ -50,7 +50,7 @@ def _convert_paragraph(text: str) -> str:
         if not line:
             continue
         converted.append(_convert_inline(line))
-    return ''.join(converted)
+    return ' '.join(converted)
 
 
 def _convert_code_block(text: str) -> str:
