@@ -337,14 +337,24 @@ def _collapse_ws(text: str) -> str:
 def _find_mapping_by_text(
     mdx_plain: str,
     mappings: List[BlockMapping],
+    exclude: 'set | None' = None,
 ) -> 'BlockMapping | None':
-    """MDX normalized plain text와 가장 잘 매칭되는 XHTML mapping을 찾는다."""
+    """MDX normalized plain text와 가장 잘 매칭되는 XHTML mapping을 찾는다.
+
+    Args:
+        exclude: 이미 사용된 mapping block_id 집합. 중복 매칭을 방지한다.
+    """
     mdx_norm = _collapse_ws(mdx_plain)
     if not mdx_norm:
         return None
 
+    def _excluded(m):
+        return exclude is not None and m.block_id in exclude
+
     # 1차: 완전 일치
     for m in mappings:
+        if _excluded(m):
+            continue
         if _collapse_ws(m.xhtml_plain_text) == mdx_norm:
             return m
 
@@ -352,6 +362,8 @@ def _find_mapping_by_text(
     min_prefix = 50
     candidates = []
     for m in mappings:
+        if _excluded(m):
+            continue
         xhtml_norm = _collapse_ws(m.xhtml_plain_text)
         if len(mdx_norm) >= min_prefix and xhtml_norm.startswith(mdx_norm[:min_prefix]):
             candidates.append(m)
@@ -364,6 +376,8 @@ def _find_mapping_by_text(
     mdx_nospace = re.sub(r'\s+', '', mdx_norm)
     if mdx_nospace:
         for m in mappings:
+            if _excluded(m):
+                continue
             xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
             if mdx_nospace == xhtml_nospace:
                 return m
@@ -373,6 +387,8 @@ def _find_mapping_by_text(
     mdx_unmarked = _strip_list_marker(mdx_nospace)
     if mdx_unmarked and mdx_unmarked != mdx_nospace:
         for m in mappings:
+            if _excluded(m):
+                continue
             xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
             xhtml_unmarked = _strip_list_marker(xhtml_nospace)
             if mdx_unmarked == xhtml_unmarked:
@@ -380,6 +396,8 @@ def _find_mapping_by_text(
     # 양쪽 모두 마커 제거 시도
     if mdx_nospace:
         for m in mappings:
+            if _excluded(m):
+                continue
             xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
             xhtml_unmarked = _strip_list_marker(xhtml_nospace)
             if xhtml_unmarked != xhtml_nospace and mdx_nospace == xhtml_unmarked:
@@ -472,20 +490,23 @@ def _build_patches(
     비교하여 올바른 대상 요소를 찾는다.
     """
     patches = []
+    used_ids: set = set()  # 이미 매칭된 mapping block_id (중복 매칭 방지)
     for change in changes:
         if change.old_block.type in _NON_CONTENT_TYPES:
             continue
 
         old_plain = _normalize_mdx_to_plain(
             change.old_block.content, change.old_block.type)
-        mapping = _find_mapping_by_text(old_plain, mappings)
+        mapping = _find_mapping_by_text(old_plain, mappings, exclude=used_ids)
 
         if mapping is None:
             # 리스트 블록: 항목별로 분리하여 개별 매핑 시도
             if change.old_block.type == 'list':
-                patches.extend(_build_list_item_patches(change, mappings))
+                patches.extend(
+                    _build_list_item_patches(change, mappings, used_ids))
             continue
 
+        used_ids.add(mapping.block_id)
         new_block = change.new_block
         new_plain = _normalize_mdx_to_plain(new_block.content, new_block.type)
 
@@ -531,6 +552,7 @@ def _split_list_items(content: str) -> List[str]:
 def _build_list_item_patches(
     change: BlockChange,
     mappings: List[BlockMapping],
+    used_ids: 'set | None' = None,
 ) -> List[Dict[str, str]]:
     """리스트 블록의 각 항목을 개별 매핑과 대조하여 패치를 생성한다."""
     old_items = _split_list_items(change.old_block.content)
@@ -543,9 +565,11 @@ def _build_list_item_patches(
         if old_item == new_item:
             continue
         old_plain = _normalize_mdx_to_plain(old_item, 'list')
-        mapping = _find_mapping_by_text(old_plain, mappings)
+        mapping = _find_mapping_by_text(old_plain, mappings, exclude=used_ids)
         if mapping is None:
             continue
+        if used_ids is not None:
+            used_ids.add(mapping.block_id)
         new_plain = _normalize_mdx_to_plain(new_item, 'list')
 
         xhtml_text = mapping.xhtml_plain_text
