@@ -368,7 +368,29 @@ def _find_mapping_by_text(
             if mdx_nospace == xhtml_nospace:
                 return m
 
+    # 4차: 리스트 마커 제거 후 공백 무시 비교
+    # (ac:adf-content 내 <p> 요소가 "- " 등 리스트 마커를 포함하는 경우 대응)
+    mdx_unmarked = _strip_list_marker(mdx_nospace)
+    if mdx_unmarked and mdx_unmarked != mdx_nospace:
+        for m in mappings:
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            xhtml_unmarked = _strip_list_marker(xhtml_nospace)
+            if mdx_unmarked == xhtml_unmarked:
+                return m
+    # 양쪽 모두 마커 제거 시도
+    if mdx_nospace:
+        for m in mappings:
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            xhtml_unmarked = _strip_list_marker(xhtml_nospace)
+            if xhtml_unmarked != xhtml_nospace and mdx_nospace == xhtml_unmarked:
+                return m
+
     return None
+
+
+def _strip_list_marker(text: str) -> str:
+    """공백 없는 텍스트에서 선행 리스트 마커를 제거한다."""
+    return re.sub(r'^[-*+]|^\d+\.', '', text)
 
 
 def _align_chars(source: str, target: str) -> dict:
@@ -459,6 +481,9 @@ def _build_patches(
         mapping = _find_mapping_by_text(old_plain, mappings)
 
         if mapping is None:
+            # 리스트 블록: 항목별로 분리하여 개별 매핑 시도
+            if change.old_block.type == 'list':
+                patches.extend(_build_list_item_patches(change, mappings))
             continue
 
         new_block = change.new_block
@@ -479,6 +504,73 @@ def _build_patches(
         })
 
     return patches
+
+
+def _split_list_items(content: str) -> List[str]:
+    """리스트 블록 content를 개별 항목으로 분리한다."""
+    items = []
+    current: List[str] = []
+    for line in content.split('\n'):
+        stripped = line.strip()
+        if not stripped:
+            if current:
+                items.append('\n'.join(current))
+                current = []
+            continue
+        # 새 리스트 항목 시작
+        if (re.match(r'^[-*+]\s+', stripped) or re.match(r'^\d+\.\s+', stripped)) and current:
+            items.append('\n'.join(current))
+            current = [line]
+        else:
+            current.append(line)
+    if current:
+        items.append('\n'.join(current))
+    return items
+
+
+def _build_list_item_patches(
+    change: BlockChange,
+    mappings: List[BlockMapping],
+) -> List[Dict[str, str]]:
+    """리스트 블록의 각 항목을 개별 매핑과 대조하여 패치를 생성한다."""
+    old_items = _split_list_items(change.old_block.content)
+    new_items = _split_list_items(change.new_block.content)
+    if len(old_items) != len(new_items):
+        return []
+
+    patches = []
+    for old_item, new_item in zip(old_items, new_items):
+        if old_item == new_item:
+            continue
+        old_plain = _normalize_mdx_to_plain(old_item, 'list')
+        mapping = _find_mapping_by_text(old_plain, mappings)
+        if mapping is None:
+            continue
+        new_plain = _normalize_mdx_to_plain(new_item, 'list')
+
+        xhtml_text = mapping.xhtml_plain_text
+        # XHTML 텍스트에 리스트 마커 prefix가 있으면 제거 후 전이, 이후 복원
+        prefix = _extract_list_marker_prefix(xhtml_text)
+        if prefix and _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
+            xhtml_body = xhtml_text[len(prefix):]
+            if _collapse_ws(old_plain) != _collapse_ws(xhtml_body):
+                new_plain = _transfer_text_changes(old_plain, new_plain, xhtml_body)
+            new_plain = prefix + new_plain
+        elif _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
+            new_plain = _transfer_text_changes(old_plain, new_plain, xhtml_text)
+
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': xhtml_text,
+            'new_plain_text': new_plain,
+        })
+    return patches
+
+
+def _extract_list_marker_prefix(text: str) -> str:
+    """텍스트에서 선행 리스트 마커 prefix를 추출한다."""
+    m = re.match(r'^([-*+]\s+|\d+\.\s+)', text)
+    return m.group(0) if m else ''
 
 
 def _supports_color() -> bool:

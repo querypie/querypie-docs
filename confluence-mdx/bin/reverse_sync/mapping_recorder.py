@@ -78,6 +78,15 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
                     parent_mapping = mappings[-1]
                     _add_rich_text_body_children(
                         child, parent_mapping, mappings, counters)
+        elif tag_name == 'ac:adf-extension':
+            panel_type = _get_adf_panel_type(child)
+            plain = child.get_text()
+            _add_mapping(mappings, counters, tag_name, str(child), plain,
+                         block_type='html_block')
+            if panel_type in _CALLOUT_MACRO_NAMES:
+                parent_mapping = mappings[-1]
+                _add_adf_content_children(
+                    child, parent_mapping, mappings, counters)
         else:
             plain = child.get_text() if hasattr(child, 'get_text') else str(child)
             inner = str(child)
@@ -125,6 +134,72 @@ def _add_rich_text_body_children(
     parent_xpath = parent_mapping.xhtml_xpath  # 예: "macro-info[1]"
 
     for child in rich_body.children:
+        if not isinstance(child, Tag):
+            continue
+        tag = child.name
+        if tag not in ('p', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table'):
+            continue
+
+        child_counters[tag] = child_counters.get(tag, 0) + 1
+        child_xpath = f"{parent_xpath}/{tag}[{child_counters[tag]}]"
+
+        plain = child.get_text()
+        if tag in ('ul', 'ol', 'table'):
+            inner = str(child)
+        else:
+            inner = ''.join(str(c) for c in child.children)
+
+        block_type = 'heading' if tag in HEADING_TAGS else (
+            'list' if tag in ('ul', 'ol') else (
+            'table' if tag == 'table' else 'paragraph'))
+
+        block_id = f"{block_type}-{len(mappings) + 1}"
+        child_mapping = BlockMapping(
+            block_id=block_id,
+            type=block_type,
+            xhtml_xpath=child_xpath,
+            xhtml_text=inner.strip(),
+            xhtml_plain_text=plain.strip(),
+            xhtml_element_index=len(mappings),
+        )
+        mappings.append(child_mapping)
+        parent_mapping.children.append(block_id)
+
+
+def _get_adf_panel_type(element: Tag) -> str:
+    """ac:adf-extension 요소에서 panel-type을 추출한다."""
+    node = element.find('ac:adf-node')
+    if node is None:
+        return ''
+    attr = node.find('ac:adf-attribute', attrs={'key': 'panel-type'})
+    if attr is None:
+        return ''
+    return attr.get_text().strip()
+
+
+def _get_adf_content_body(element: Tag):
+    """ac:adf-extension 요소에서 ac:adf-content를 찾는다."""
+    node = element.find('ac:adf-node')
+    if node is None:
+        return None
+    return node.find('ac:adf-content')
+
+
+def _add_adf_content_children(
+    adf_element: Tag,
+    parent_mapping: BlockMapping,
+    mappings: List[BlockMapping],
+    counters: dict,
+):
+    """ac:adf-extension의 ac:adf-content 내 자식 요소를 개별 매핑으로 추가한다."""
+    content_body = _get_adf_content_body(adf_element)
+    if content_body is None:
+        return
+
+    child_counters: dict = {}
+    parent_xpath = parent_mapping.xhtml_xpath
+
+    for child in content_body.children:
         if not isinstance(child, Tag):
             continue
         tag = child.name

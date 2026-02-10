@@ -102,6 +102,62 @@ def test_non_callout_macro_no_children():
     assert mappings[0].children == []
 
 
+def test_adf_extension_callout_generates_child_mappings():
+    """ac:adf-extension panel-type=note의 ac:adf-content 자식이 개별 매핑으로 생성된다."""
+    xhtml = (
+        '<ac:adf-extension>'
+        '<ac:adf-node type="panel">'
+        '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+        '<ac:adf-content>'
+        '<p>First paragraph.</p>'
+        '<p>Second paragraph.</p>'
+        '</ac:adf-content>'
+        '</ac:adf-node>'
+        '<ac:adf-fallback><div><div>'
+        '<p>First paragraph.</p>'
+        '<p>Second paragraph.</p>'
+        '</div></div></ac:adf-fallback>'
+        '</ac:adf-extension>'
+    )
+    mappings = record_mapping(xhtml)
+
+    # 부모 매핑 1개 + 자식 2개 = 총 3개
+    assert len(mappings) == 3
+
+    parent = mappings[0]
+    assert parent.type == 'html_block'
+    assert parent.xhtml_xpath == 'ac:adf-extension[1]'
+    assert len(parent.children) == 2
+
+    child_p1 = mappings[1]
+    assert child_p1.type == 'paragraph'
+    assert child_p1.xhtml_xpath == 'ac:adf-extension[1]/p[1]'
+    assert child_p1.xhtml_plain_text == 'First paragraph.'
+
+    child_p2 = mappings[2]
+    assert child_p2.type == 'paragraph'
+    assert child_p2.xhtml_xpath == 'ac:adf-extension[1]/p[2]'
+    assert child_p2.xhtml_plain_text == 'Second paragraph.'
+
+
+def test_adf_extension_non_callout_no_children():
+    """panel-type이 callout이 아닌 ac:adf-extension은 자식 매핑을 생성하지 않는다."""
+    xhtml = (
+        '<ac:adf-extension>'
+        '<ac:adf-node type="panel">'
+        '<ac:adf-attribute key="panel-type">custom</ac:adf-attribute>'
+        '<ac:adf-content>'
+        '<p>Content.</p>'
+        '</ac:adf-content>'
+        '</ac:adf-node>'
+        '<ac:adf-fallback><div><div><p>Content.</p></div></div></ac:adf-fallback>'
+        '</ac:adf-extension>'
+    )
+    mappings = record_mapping(xhtml)
+    assert len(mappings) == 1
+    assert mappings[0].children == []
+
+
 from pathlib import Path
 
 def test_mapping_real_testcase():

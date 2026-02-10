@@ -76,16 +76,16 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
     if len(parts) == 1:
         return _find_element_by_simple_xpath(soup, xpath)
 
-    # 복합 xpath: 먼저 부모 매크로를 찾고, ac:rich-text-body 내에서 자식 검색
+    # 복합 xpath: 먼저 부모를 찾고, 내부 컨테이너에서 자식 검색
     parent = _find_element_by_simple_xpath(soup, parts[0])
     if parent is None:
         return None
 
-    rich_body = parent.find('ac:rich-text-body')
-    if rich_body is None:
+    container = _find_content_container(parent)
+    if container is None:
         return None
 
-    return _find_child_in_element(rich_body, parts[1])
+    return _find_child_in_element(container, parts[1])
 
 
 def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):
@@ -117,6 +117,23 @@ def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):
             count += 1
             if count == index:
                 return child
+    return None
+
+
+def _find_content_container(parent: Tag):
+    """복합 xpath의 부모 요소에서 자식 콘텐츠 컨테이너를 찾는다.
+
+    ac:structured-macro → ac:rich-text-body
+    ac:adf-extension → ac:adf-node > ac:adf-content
+    """
+    rich_body = parent.find('ac:rich-text-body')
+    if rich_body is not None:
+        return rich_body
+    node = parent.find('ac:adf-node')
+    if node is not None:
+        content = node.find('ac:adf-content')
+        if content is not None:
+            return content
     return None
 
 

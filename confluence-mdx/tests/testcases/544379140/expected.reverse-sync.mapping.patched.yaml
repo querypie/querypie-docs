@@ -237,7 +237,29 @@ blocks:
     통해 생성된 파일의 내용이 다를 수 있습니다.
   xhtml_xpath: macro-info[1]/p[2]
 - block_id: html_block-18
-  children: []
+  children:
+  - paragraph-19
+  - paragraph-20
+  - paragraph-21
+  - paragraph-22
+  - paragraph-23
+  - paragraph-24
+  - paragraph-25
+  - paragraph-26
+  - paragraph-27
+  - paragraph-28
+  - paragraph-29
+  - paragraph-30
+  - paragraph-31
+  - paragraph-32
+  - paragraph-33
+  - paragraph-34
+  - paragraph-35
+  - paragraph-36
+  - paragraph-37
+  - paragraph-38
+  - paragraph-39
+  - paragraph-40
   type: html_block
   xhtml_element_index: 17
   xhtml_plain_text: 'note필터 표현식(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을
@@ -322,13 +344,187 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 18
+  xhtml_plain_text: 필터 표현식
+  xhtml_text: <strong>필터 표현식</strong>
+  xhtml_xpath: ac:adf-extension[1]/p[1]
+- block_id: paragraph-20
+  children: []
+  type: paragraph
+  xhtml_element_index: 19
+  xhtml_plain_text: (1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별
+    key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.
+  xhtml_text: '(1) 필터 표현식을 사용하시기 위해 ''<span style="color: rgb(76,154,255);">See Log
+    Template and Description</span>''을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>'
+  xhtml_xpath: ac:adf-extension[1]/p[2]
+- block_id: paragraph-21
+  children: []
+  type: paragraph
+  xhtml_element_index: 20
+  xhtml_plain_text: (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
+  xhtml_text: (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
+  xhtml_xpath: ac:adf-extension[1]/p[3]
+- block_id: paragraph-22
+  children: []
+  type: paragraph
+  xhtml_element_index: 21
+  xhtml_plain_text: '- Number Type'
+  xhtml_text: '- Number Type'
+  xhtml_xpath: ac:adf-extension[1]/p[4]
+- block_id: paragraph-23
+  children: []
+  type: paragraph
+  xhtml_element_index: 22
+  xhtml_plain_text: '지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10`'
+  xhtml_text: '지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>,
+    <code>&gt;=</code>, <code>==</code>, <code>!=</code><br/>예 : <code>x &gt; `10`</code>,
+    <code>x == `10`</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[5]
+- block_id: paragraph-24
+  children: []
+  type: paragraph
+  xhtml_element_index: 23
+  xhtml_plain_text: '- String Type'
+  xhtml_text: '- String Type'
+  xhtml_xpath: ac:adf-extension[1]/p[6]
+- block_id: paragraph-25
+  children: []
+  type: paragraph
+  xhtml_element_index: 24
+  xhtml_plain_text: '지원하는 표현식 :  == (equals), != (not equals), contains예 : x == ''abc'',
+    x != ''abc'',     contains(x, ''ab'')'
+  xhtml_text: '지원하는 표현식 :  <code>== (equals)</code>, <code>!= (not equals)</code>,
+    <code>contains</code><br/>예 : <code>x == ''abc''</code>, <code>x != ''abc''</code>,     <code>contains(x, ''ab'')</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[7]
+- block_id: paragraph-26
+  children: []
+  type: paragraph
+  xhtml_element_index: 25
+  xhtml_plain_text: '- Boolean Type'
+  xhtml_text: '- Boolean Type'
+  xhtml_xpath: ac:adf-extension[1]/p[8]
+- block_id: paragraph-27
+  children: []
+  type: paragraph
+  xhtml_element_index: 26
+  xhtml_plain_text: '지원하는 표현식 : == (equals), != (not equals), && (and), || (or)예 :
+    x == `true`, x && y,     (x > `0`) && (y == `0`)'
+  xhtml_text: '지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>,
+    <code>&amp;&amp; (and)</code>, <code>|| (or)</code><br/>예 : <code>x == `true`</code>,<code>
+    x &amp;&amp; y</code>,     <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[9]
+- block_id: paragraph-28
+  children: []
+  type: paragraph
+  xhtml_element_index: 27
+  xhtml_plain_text: '- Array Type'
+  xhtml_text: '- Array Type'
+  xhtml_xpath: ac:adf-extension[1]/p[10]
+- block_id: paragraph-29
+  children: []
+  type: paragraph
+  xhtml_element_index: 28
+  xhtml_plain_text: '예 : x[? @ == ''value''], list[? @ > `10`]'
+  xhtml_text: '예 : <code>x[? @ == ''value'']</code>, <code>list[? @ &gt; `10`]</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[11]
+- block_id: paragraph-30
+  children: []
+  type: paragraph
+  xhtml_element_index: 29
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: ac:adf-extension[1]/p[12]
+- block_id: paragraph-31
+  children: []
+  type: paragraph
+  xhtml_element_index: 30
+  xhtml_plain_text: (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.
+  xhtml_text: (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.
+  xhtml_xpath: ac:adf-extension[1]/p[13]
+- block_id: paragraph-32
+  children: []
+  type: paragraph
+  xhtml_element_index: 31
+  xhtml_plain_text: '- AND 조건 : && 연산자를 활용합니다.'
+  xhtml_text: '- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.'
+  xhtml_xpath: ac:adf-extension[1]/p[14]
+- block_id: paragraph-33
+  children: []
+  type: paragraph
+  xhtml_element_index: 32
+  xhtml_plain_text: '- OR 조건 : || 연산자를 활용합니다.'
+  xhtml_text: '- OR 조건 : <code>||</code> 연산자를 활용합니다.'
+  xhtml_xpath: ac:adf-extension[1]/p[15]
+- block_id: paragraph-34
+  children: []
+  type: paragraph
+  xhtml_element_index: 33
+  xhtml_plain_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.'
+  xhtml_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.'
+  xhtml_xpath: ac:adf-extension[1]/p[16]
+- block_id: paragraph-35
+  children: []
+  type: paragraph
+  xhtml_element_index: 34
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: ac:adf-extension[1]/p[17]
+- block_id: paragraph-36
+  children: []
+  type: paragraph
+  xhtml_element_index: 35
+  xhtml_plain_text: (4) 예시
+  xhtml_text: (4) 예시
+  xhtml_xpath: ac:adf-extension[1]/p[18]
+- block_id: paragraph-37
+  children: []
+  type: paragraph
+  xhtml_element_index: 36
+  xhtml_plain_text: '- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION'''
+  xhtml_text: '- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION''</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[19]
+- block_id: paragraph-38
+  children: []
+  type: paragraph
+  xhtml_element_index: 37
+  xhtml_plain_text: '- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType
+    == ''SQL_EXECUTION'' && executedFrom == ''WEB_EDITOR'''
+  xhtml_text: '- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType
+    == ''SQL_EXECUTION'' &amp;&amp; executedFrom == ''WEB_EDITOR''</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[20]
+- block_id: paragraph-39
+  children: []
+  type: paragraph
+  xhtml_element_index: 38
+  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName
+    == ''database1'' || connectionName == ''database2'''
+  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName
+    == ''database1'' || connectionName == ''database2''</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[21]
+- block_id: paragraph-40
+  children: []
+  type: paragraph
+  xhtml_element_index: 39
+  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인
+    경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == ''database1'' || connectionName
+    == ''database2'') && replicationType == ''SINGLE'''
+  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에
+    대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == ''database1'' || connectionName
+    == ''database2'') &amp;&amp; replicationType == ''SINGLE''</code>'
+  xhtml_xpath: ac:adf-extension[1]/p[22]
+- block_id: paragraph-41
+  children: []
+  type: paragraph
+  xhtml_element_index: 40
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[5]
-- block_id: html_block-20
-  children: []
+- block_id: html_block-42
+  children:
+  - paragraph-43
+  - paragraph-44
+  - list-45
   type: html_block
-  xhtml_element_index: 19
+  xhtml_element_index: 41
   xhtml_plain_text: 'noteQuery Audit의 내보내기 파일의 Privilege Type 명시 기준내보내기 파일의 ‘Privilege
     Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 기본 권한으로 실행되는 명령어(SET, SHOW
     등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이
@@ -353,49 +549,76 @@ blocks:
 
     </div></div></ac:adf-fallback></ac:adf-extension>'
   xhtml_xpath: ac:adf-extension[2]
-- block_id: paragraph-21
+- block_id: paragraph-43
   children: []
   type: paragraph
-  xhtml_element_index: 20
+  xhtml_element_index: 42
+  xhtml_plain_text: Query Audit의 내보내기 파일의 Privilege Type 명시 기준
+  xhtml_text: <strong>Query Audit의 내보내기 파일의 Privilege Type 명시 기준</strong>
+  xhtml_xpath: ac:adf-extension[2]/p[1]
+- block_id: paragraph-44
+  children: []
+  type: paragraph
+  xhtml_element_index: 43
+  xhtml_plain_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와
+    같이 작동합니다.
+  xhtml_text: 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.
+  xhtml_xpath: ac:adf-extension[2]/p[2]
+- block_id: list-45
+  children: []
+  type: list
+  xhtml_element_index: 44
+  xhtml_plain_text: 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라
+    수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이 명시됩니다.
+  xhtml_text: <ol start="1"><li><p>기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</p></li><li><p>INSERT
+    등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. </p></li><li><p>Redis의 경우에는 커맨드명이 명시됩니다.</p></li></ol>
+  xhtml_xpath: ac:adf-extension[2]/ol[1]
+- block_id: paragraph-46
+  children: []
+  type: paragraph
+  xhtml_element_index: 45
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[6]
-- block_id: heading-22
+- block_id: heading-47
   children: []
   type: heading
-  xhtml_element_index: 21
+  xhtml_element_index: 46
   xhtml_plain_text: 추출 작업 완료시 파일 내려받기
   xhtml_text: 추출 작업 완료시 파일 내려받기
   xhtml_xpath: h2[4]
-- block_id: paragraph-23
+- block_id: paragraph-48
   children: []
   type: paragraph
-  xhtml_element_index: 22
+  xhtml_element_index: 47
   xhtml_plain_text: 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나
     필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
   xhtml_text: 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링
     조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
   xhtml_xpath: p[7]
-- block_id: paragraph-24
+- block_id: paragraph-49
   children: []
   type: paragraph
-  xhtml_element_index: 23
+  xhtml_element_index: 48
   xhtml_plain_text: 추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.
   xhtml_text: 추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다.
   xhtml_xpath: p[8]
-- block_id: list-25
+- block_id: list-50
   children: []
   type: list
-  xhtml_element_index: 24
+  xhtml_element_index: 49
   xhtml_plain_text: '목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.상세 페이지에서 다운로드: 목록
     페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.'
   xhtml_text: '<ol start="1"><li><p>목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.</p></li><li><p>상세
     페이지에서 다운로드: 목록 페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.</p></li></ol>'
   xhtml_xpath: ol[3]
-- block_id: html_block-26
-  children: []
+- block_id: html_block-51
+  children:
+  - paragraph-52
+  - paragraph-53
+  - paragraph-54
   type: html_block
-  xhtml_element_index: 25
+  xhtml_element_index: 50
   xhtml_plain_text: "note다운로드 파일에 암호 포함하기다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip\
     \ 파일’입니다. 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 Export\
     \ a file with Encryption 옵션을 ‘Required’로 지정해야 합니다.  \n다운로드 파일에 암호 포함하기다운로드 대상\
@@ -416,29 +639,52 @@ blocks:
 
     </div></div></ac:adf-fallback></ac:adf-extension>'
   xhtml_xpath: ac:adf-extension[3]
-- block_id: paragraph-27
+- block_id: paragraph-52
   children: []
   type: paragraph
-  xhtml_element_index: 26
+  xhtml_element_index: 51
+  xhtml_plain_text: 다운로드 파일에 암호 포함하기
+  xhtml_text: <strong>다운로드 파일에 암호 포함하기</strong>
+  xhtml_xpath: ac:adf-extension[3]/p[1]
+- block_id: paragraph-53
+  children: []
+  type: paragraph
+  xhtml_element_index: 52
+  xhtml_plain_text: 다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.
+  xhtml_text: 다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.
+  xhtml_xpath: ac:adf-extension[3]/p[2]
+- block_id: paragraph-54
+  children: []
+  type: paragraph
+  xhtml_element_index: 53
+  xhtml_plain_text: 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 Export
+    a file with Encryption 옵션을 ‘Required’로 지정해야 합니다.
+  xhtml_text: 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 <code>Export
+    a file with Encryption</code> 옵션을 ‘Required’로 지정해야 합니다.
+  xhtml_xpath: ac:adf-extension[3]/p[3]
+- block_id: paragraph-55
+  children: []
+  type: paragraph
+  xhtml_element_index: 54
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[9]
-- block_id: heading-28
+- block_id: heading-56
   children: []
   type: heading
-  xhtml_element_index: 27
+  xhtml_element_index: 55
   xhtml_plain_text: 로그 추출 파일 보관 기간 정책 안내
   xhtml_text: 로그 추출 파일 보관 기간 정책 안내
   xhtml_xpath: h2[5]
-- block_id: paragraph-29
+- block_id: paragraph-57
   children: []
   type: paragraph
-  xhtml_element_index: 28
+  xhtml_element_index: 56
   xhtml_plain_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가
     가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다.
     하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_xpath: p[10]
-created_at: '2026-02-10T17:12:17.480813+00:00'
+created_at: '2026-02-10T17:29:42.861384+00:00'
 page_id: '544379140'
 source_xhtml: patched.xhtml

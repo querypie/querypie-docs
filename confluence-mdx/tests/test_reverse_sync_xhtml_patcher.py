@@ -110,3 +110,29 @@ def test_compound_xpath_nonexistent_parent():
     ]
     result = patch_xhtml(xhtml, patches)
     assert result == xhtml  # 변경 없음
+
+
+def test_compound_xpath_adf_extension():
+    """ac:adf-extension 내부 자식 요소를 복합 xpath로 패치한다."""
+    xhtml = (
+        '<ac:adf-extension>'
+        '<ac:adf-node type="panel">'
+        '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+        '<ac:adf-content>'
+        '<p>Original text.</p>'
+        '<p>Second para.</p>'
+        '</ac:adf-content>'
+        '</ac:adf-node>'
+        '<ac:adf-fallback><div><p>Original text.</p></div></ac:adf-fallback>'
+        '</ac:adf-extension>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ac:adf-extension[1]/p[1]',
+            'old_plain_text': 'Original text.',
+            'new_plain_text': 'Updated text.',
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+    assert 'Updated text.' in result
+    assert 'Second para.' in result
