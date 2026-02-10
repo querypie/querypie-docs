@@ -36,6 +36,72 @@ def test_mapping_to_yaml():
     assert 'type: paragraph' in yaml_str
 
 
+def test_callout_macro_generates_child_mappings():
+    """Callout 매크로(info, note 등)의 ac:rich-text-body 자식이 개별 매핑으로 생성된다."""
+    xhtml = (
+        '<ac:structured-macro ac:name="info">'
+        '<ac:rich-text-body>'
+        '<p>First paragraph.</p>'
+        '<p>Second paragraph.</p>'
+        '<ul><li>item 1</li></ul>'
+        '</ac:rich-text-body>'
+        '</ac:structured-macro>'
+    )
+    mappings = record_mapping(xhtml)
+
+    # 부모 매크로 매핑 1개 + 자식 3개 = 총 4개
+    assert len(mappings) == 4
+
+    parent = mappings[0]
+    assert parent.type == 'html_block'
+    assert parent.xhtml_xpath == 'macro-info[1]'
+    assert len(parent.children) == 3
+
+    child_p1 = mappings[1]
+    assert child_p1.type == 'paragraph'
+    assert child_p1.xhtml_xpath == 'macro-info[1]/p[1]'
+    assert child_p1.xhtml_plain_text == 'First paragraph.'
+
+    child_p2 = mappings[2]
+    assert child_p2.type == 'paragraph'
+    assert child_p2.xhtml_xpath == 'macro-info[1]/p[2]'
+    assert child_p2.xhtml_plain_text == 'Second paragraph.'
+
+    child_ul = mappings[3]
+    assert child_ul.type == 'list'
+    assert child_ul.xhtml_xpath == 'macro-info[1]/ul[1]'
+    assert 'item 1' in child_ul.xhtml_plain_text
+
+
+def test_callout_macro_multiple_types():
+    """tip, note, warning, panel 등 다양한 callout 매크로가 자식 매핑을 생성한다."""
+    for macro_name in ('tip', 'note', 'warning', 'panel'):
+        xhtml = (
+            f'<ac:structured-macro ac:name="{macro_name}">'
+            '<ac:rich-text-body>'
+            '<p>Content inside.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        mappings = record_mapping(xhtml)
+        assert len(mappings) == 2, f"Failed for macro: {macro_name}"
+        assert mappings[0].children == [mappings[1].block_id]
+
+
+def test_non_callout_macro_no_children():
+    """code 이외의 비-callout 매크로는 자식 매핑을 생성하지 않는다."""
+    xhtml = (
+        '<ac:structured-macro ac:name="expand">'
+        '<ac:rich-text-body>'
+        '<p>Hidden content.</p>'
+        '</ac:rich-text-body>'
+        '</ac:structured-macro>'
+    )
+    mappings = record_mapping(xhtml)
+    assert len(mappings) == 1
+    assert mappings[0].children == []
+
+
 from pathlib import Path
 
 def test_mapping_real_testcase():

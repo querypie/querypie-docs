@@ -67,6 +67,28 @@ def _iter_block_children(parent):
 
 
 def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
+    """간이 XPath로 요소를 찾는다.
+
+    단일 xpath: "p[1]", "h2[3]", "macro-info[1]"
+    복합 xpath: "macro-info[1]/p[1]", "macro-note[2]/ul[1]"
+    """
+    parts = xpath.split('/')
+    if len(parts) == 1:
+        return _find_element_by_simple_xpath(soup, xpath)
+
+    # 복합 xpath: 먼저 부모 매크로를 찾고, ac:rich-text-body 내에서 자식 검색
+    parent = _find_element_by_simple_xpath(soup, parts[0])
+    if parent is None:
+        return None
+
+    rich_body = parent.find('ac:rich-text-body')
+    if rich_body is None:
+        return None
+
+    return _find_child_in_element(rich_body, parts[1])
+
+
+def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):
     """간이 XPath (예: "p[1]", "h2[3]", "macro-info[1]")로 요소를 찾는다.
 
     macro-* 패턴은 ac:structured-macro[ac:name="*"]로 해석한다.
@@ -92,6 +114,25 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
                 if count == index:
                     return child
         elif child.name == tag_name:
+            count += 1
+            if count == index:
+                return child
+    return None
+
+
+def _find_child_in_element(parent: Tag, xpath_part: str):
+    """부모 요소 내에서 간이 xpath로 직접 자식을 찾는다."""
+    match = re.match(r'([a-z0-9:-]+)\[(\d+)\]', xpath_part)
+    if not match:
+        return None
+    tag_name = match.group(1)
+    index = int(match.group(2))
+
+    count = 0
+    for child in parent.children:
+        if not isinstance(child, Tag):
+            continue
+        if child.name == tag_name:
             count += 1
             if count == index:
                 return child

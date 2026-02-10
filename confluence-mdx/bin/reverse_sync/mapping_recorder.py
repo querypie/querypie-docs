@@ -17,6 +17,8 @@ class BlockMapping:
 
 HEADING_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
 
+_CALLOUT_MACRO_NAMES = frozenset({'tip', 'info', 'note', 'warning', 'panel'})
+
 
 def _iter_block_children(parent):
     """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
@@ -71,6 +73,11 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
                 plain = child.get_text()
                 _add_mapping(mappings, counters, f'macro-{macro_name}', str(child), plain,
                              block_type='html_block')
+                # Callout 매크로: 자식 요소 개별 매핑 추가
+                if macro_name in _CALLOUT_MACRO_NAMES:
+                    parent_mapping = mappings[-1]
+                    _add_rich_text_body_children(
+                        child, parent_mapping, mappings, counters)
         else:
             plain = child.get_text() if hasattr(child, 'get_text') else str(child)
             inner = str(child)
@@ -101,3 +108,50 @@ def _add_mapping(
         xhtml_plain_text=xhtml_plain_text.strip(),
         xhtml_element_index=len(mappings),
     ))
+
+
+def _add_rich_text_body_children(
+    macro_element: Tag,
+    parent_mapping: BlockMapping,
+    mappings: List[BlockMapping],
+    counters: dict,
+):
+    """Callout 매크로의 ac:rich-text-body 내 자식 요소를 개별 매핑으로 추가한다."""
+    rich_body = macro_element.find('ac:rich-text-body')
+    if rich_body is None:
+        return
+
+    child_counters: dict = {}  # 매크로 내부 전용 카운터
+    parent_xpath = parent_mapping.xhtml_xpath  # 예: "macro-info[1]"
+
+    for child in rich_body.children:
+        if not isinstance(child, Tag):
+            continue
+        tag = child.name
+        if tag not in ('p', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table'):
+            continue
+
+        child_counters[tag] = child_counters.get(tag, 0) + 1
+        child_xpath = f"{parent_xpath}/{tag}[{child_counters[tag]}]"
+
+        plain = child.get_text()
+        if tag in ('ul', 'ol', 'table'):
+            inner = str(child)
+        else:
+            inner = ''.join(str(c) for c in child.children)
+
+        block_type = 'heading' if tag in HEADING_TAGS else (
+            'list' if tag in ('ul', 'ol') else (
+            'table' if tag == 'table' else 'paragraph'))
+
+        block_id = f"{block_type}-{len(mappings) + 1}"
+        child_mapping = BlockMapping(
+            block_id=block_id,
+            type=block_type,
+            xhtml_xpath=child_xpath,
+            xhtml_text=inner.strip(),
+            xhtml_plain_text=plain.strip(),
+            xhtml_element_index=len(mappings),
+        )
+        mappings.append(child_mapping)
+        parent_mapping.children.append(block_id)
