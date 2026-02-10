@@ -59,7 +59,7 @@ Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 �
 | Web App JIT Access Control Log          | 11.0.0                | CSV          |
 | Web App Event Audit                     | 11.0.0                | CSV          |
 
-### Audit Log Export 목록 확인하기
+### Audit Log Export 목록 조회하기
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png" alt="Administrator &gt; Audit &gt; General &gt; Audit Log Export" width="760" />
@@ -78,10 +78,10 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
 ### 로그 추출 작업 생성하기
 
 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다.
-(1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
+(1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료 시 파일 다운로드
 
 감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴 접근 후, 우측 상단의 `Create Task` 버튼을 클릭해야 합니다.
-해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
+해당 버튼 클릭 시 아래와 같은 화면이 나타납니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png" alt="Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task" width="612" />
@@ -93,10 +93,10 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 1.  **Task Name** : 로그 추출 작업의 이름을 입력합니다.
 2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다. 
     1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.
-    2. 로그 종류 선택 후 See Log Template and Description을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
+    2. 로그 종류 선택 후 See Log Template and Description을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
 3.  **Download File Format** : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.) 
 4.  **For Text Exceeding 32,000 Characters**  : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.
-    1. Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
+    1. Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
     2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.
 5.  **From**  : 추출 시작 날짜를 지정합니다.
 6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다. 
@@ -115,7 +115,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 <Callout type="important">
 **필터 표현식**
 
-(1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>
+(1) 필터 표현식을 사용하기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>
 
 (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
 
@@ -142,7 +142,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 
 - OR 조건 : `||` 연산자를 활용합니다.
 
-- 복합 조건 : 함께 처리해야하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
+- 복합 조건 : 함께 처리해야 하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
 
 
 (4) 예시
@@ -151,7 +151,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 
 - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
 
-- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
+- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
 
 - DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
 </Callout>
@@ -160,7 +160,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 <Callout type="important">
 **Query Audit의 내보내기 파일의 Privilege Type 명시 기준**
 
-내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다.
+내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다.
 아래와 같이 작동합니다.
 
 1. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.
@@ -169,7 +169,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </Callout>
 
 
-### 추출 작업 완료시 파일 내려받기
+### 추출 작업 완료 시 파일 내려받기
 
 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다.
 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.
