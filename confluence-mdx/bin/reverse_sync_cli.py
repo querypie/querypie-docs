@@ -302,6 +302,10 @@ _NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 _EMOJI_RE = re.compile(
     r'[\U0001F000-\U0001F9FF\u2700-\u27BF\uFE00-\uFE0F\u200D]+'
 )
+# Confluence XHTML에 포함될 수 있는 보이지 않는 문자 (zero-width space, Hangul filler 등)
+_INVISIBLE_RE = re.compile(
+    r'[\u200B\u200C\u200D\u2060\uFEFF\u00AD\u3164\u115F\u1160]+'
+)
 
 
 def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
@@ -383,6 +387,27 @@ def _find_mapping_by_text(
                 continue
             xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
             if mdx_nospace == xhtml_nospace:
+                return m
+
+    # 3.2차: 공백+보이지 않는 문자 무시 비교
+    # (Confluence XHTML에 zero-width space, Hangul filler 등이 포함된 경우 대응)
+    mdx_visible = _INVISIBLE_RE.sub('', mdx_nospace)
+    if mdx_visible and mdx_visible != mdx_nospace:
+        for m in mappings:
+            if _excluded(m):
+                continue
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            xhtml_visible = _INVISIBLE_RE.sub('', xhtml_nospace)
+            if mdx_visible == xhtml_visible:
+                return m
+    # XHTML 쪽에만 보이지 않는 문자가 있는 경우도 검사
+    if mdx_nospace:
+        for m in mappings:
+            if _excluded(m):
+                continue
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            xhtml_visible = _INVISIBLE_RE.sub('', xhtml_nospace)
+            if xhtml_visible != xhtml_nospace and mdx_nospace == xhtml_visible:
                 return m
 
     # 3.5차: 공백+이모지 무시 비교 (Confluence ac:emoticon → MDX 이모지 차이 대응)
@@ -584,34 +609,88 @@ def _build_list_item_patches(
         return []
 
     patches = []
+    # 매칭 실패한 항목을 상위 블록 기준으로 그룹화
+    containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for old_item, new_item in zip(old_items, new_items):
         if old_item == new_item:
             continue
         old_plain = _normalize_mdx_to_plain(old_item, 'list')
         mapping = _find_mapping_by_text(old_plain, mappings, exclude=used_ids)
-        if mapping is None:
-            continue
-        if used_ids is not None:
-            used_ids.add(mapping.block_id)
-        new_plain = _normalize_mdx_to_plain(new_item, 'list')
 
+        if mapping is not None:
+            # 정확 매칭: 기존 로직대로 패치 생성
+            if used_ids is not None:
+                used_ids.add(mapping.block_id)
+            new_plain = _normalize_mdx_to_plain(new_item, 'list')
+
+            xhtml_text = mapping.xhtml_plain_text
+            prefix = _extract_list_marker_prefix(xhtml_text)
+            if prefix and _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
+                xhtml_body = xhtml_text[len(prefix):]
+                if _collapse_ws(old_plain) != _collapse_ws(xhtml_body):
+                    new_plain = _transfer_text_changes(
+                        old_plain, new_plain, xhtml_body)
+                new_plain = prefix + new_plain
+            elif _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
+                new_plain = _transfer_text_changes(
+                    old_plain, new_plain, xhtml_text)
+
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': xhtml_text,
+                'new_plain_text': new_plain,
+            })
+        else:
+            # 정확 매칭 실패: substring 매칭으로 상위 블록 탐색
+            new_plain = _normalize_mdx_to_plain(new_item, 'list')
+            container = _find_containing_mapping(
+                old_plain, mappings, exclude=used_ids)
+            if container is not None:
+                bid = container.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (container, [])
+                containing_changes[bid][1].append((old_plain, new_plain))
+
+    # 상위 블록에 대한 그룹화된 변경 적용
+    for bid, (mapping, item_changes) in containing_changes.items():
         xhtml_text = mapping.xhtml_plain_text
-        # XHTML 텍스트에 리스트 마커 prefix가 있으면 제거 후 전이, 이후 복원
-        prefix = _extract_list_marker_prefix(xhtml_text)
-        if prefix and _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
-            xhtml_body = xhtml_text[len(prefix):]
-            if _collapse_ws(old_plain) != _collapse_ws(xhtml_body):
-                new_plain = _transfer_text_changes(old_plain, new_plain, xhtml_body)
-            new_plain = prefix + new_plain
-        elif _collapse_ws(old_plain) != _collapse_ws(xhtml_text):
-            new_plain = _transfer_text_changes(old_plain, new_plain, xhtml_text)
-
+        for old_plain, new_plain in item_changes:
+            xhtml_text = _transfer_text_changes(
+                old_plain, new_plain, xhtml_text)
         patches.append({
             'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': xhtml_text,
-            'new_plain_text': new_plain,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
         })
+        if used_ids is not None:
+            used_ids.add(bid)
+
     return patches
+
+
+def _find_containing_mapping(
+    mdx_plain: str,
+    mappings: List[BlockMapping],
+    exclude: 'set | None' = None,
+) -> 'BlockMapping | None':
+    """MDX 텍스트를 포함하는 XHTML 매핑 블록을 찾는다 (substring 매칭)."""
+    mdx_nospace = re.sub(r'\s+', '', mdx_plain)
+    mdx_visible = _INVISIBLE_RE.sub('', mdx_nospace)
+    if not mdx_visible or len(mdx_visible) < 10:
+        return None  # 너무 짧은 텍스트는 오탐 위험
+
+    candidates = []
+    for m in mappings:
+        if exclude is not None and m.block_id in exclude:
+            continue
+        xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+        xhtml_visible = _INVISIBLE_RE.sub('', xhtml_nospace)
+        if mdx_visible in xhtml_visible:
+            candidates.append((m, len(xhtml_visible)))
+    if not candidates:
+        return None
+    # 가장 작은 (가장 구체적인) 상위 블록 선택
+    return min(candidates, key=lambda x: x[1])[0]
 
 
 def _extract_list_marker_prefix(text: str) -> str:
