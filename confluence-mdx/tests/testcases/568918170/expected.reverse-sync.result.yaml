@@ -1,49 +1,7 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:25.496044+00:00'
+created_at: '2026-02-10T05:55:12.426926+00:00'
 page_id: '568918170'
-status: fail
+status: pass
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -14,7 +14,7\
-    \ @@ ### 참조된 요청 확인 처리하기\n \n <figure data-layout=\"center\" data-align=\"center\"\
-    >\n-<img src=\"/568918170/verify/screenshot-20240802-114129.png\" alt=\"Workflow\
-    \ &gt; Reviews &gt; All Reviews &gt; Review Details\" width=\"760\" />\n+<img\
-    \ src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-114129.png\"\
-    \ alt=\"Workflow &gt; Reviews &gt; All Reviews &gt; Review Details\" width=\"\
-    760\" />\n <figcaption>\n Workflow &gt; Reviews &gt; All Reviews &gt; Review Details\n\
-    \ </figcaption>\n@@ -37,7 +37,7 @@ #### 1. 대리 결재 사용 설정하기\n \n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/568918170/verify/screenshot-20240802-120401.png\"\
-    \ alt=\"User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences\" width=\"760\" />\n+<img src=\"\
-    /user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120401.png\"\
-    \ alt=\"User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences\" width=\"760\" />\n <figcaption>\n\
-    \ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences\n </figcaption>\n@@ -53,13 +53,13\
-    \ @@ \n 대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.\n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/568918170/verify/screenshot-20240802-120741.png\"\
-    \ alt=\"원 결재자 기준 표시 내용\" width=\"594\" />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120741.png\"\
-    \ alt=\"원 결재자 기준 표시 내용\" width=\"594\" />\n <figcaption>\n 원 결재자 기준 표시 내용\n </figcaption>\n\
-    \ </figure>\n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
-    /568918170/verify/screenshot-20240802-120854.png\" alt=\"대리 결재자 기준 표시 내용\" width=\"\
-    594\" />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-120854.png\"\
-    \ alt=\"대리 결재자 기준 표시 내용\" width=\"594\" />\n <figcaption>\n 대리 결재자 기준 표시 내용\n\
-    \ </figcaption>\n@@ -77,7 +77,7 @@ * 상세 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는\
-    \ 대리 결재 중임을 알리는 문구가 표시됩니다. \n \n <figure data-layout=\"center\" data-align=\"\
-    center\">\n-<img src=\"/568918170/verify/screenshot-20240802-124638.png\" alt=\"\
-    screenshot-20240802-124638.png\" width=\"760\" />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240802-124638.png\"\
-    \ alt=\"screenshot-20240802-124638.png\" width=\"760\" />\n </figure>\n \n ####\
-    \ 4. 대리 결재 처리된 요청 건 확인하기\n@@ -85,14 +85,14 @@ * 다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자\
-    \ 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다. \n **원 결재자가 처리한 경우**\n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/568918170/verify/screenshot-20240725-153533.png\"\
-    \ alt=\"대리 결재 관련 문구 없음\" width=\"363\" />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-153533.png\"\
-    \ alt=\"대리 결재 관련 문구 없음\" width=\"363\" />\n <figcaption>\n 대리 결재 관련 문구 없음\n </figcaption>\n\
-    \ </figure>\n **대리 결재자가 처리한 경우**\n <figure data-layout=\"center\" data-align=\"\
-    center\">\n-<img src=\"/568918170/verify/screenshot-20240725-152141.png\" alt=\"\
-    대리 결재자가 Done by the delegate와 함께 표기됨\" width=\"363\" />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/screenshot-20240725-152141.png\"\
-    \ alt=\"대리 결재자가 Done by the delegate와 함께 표기됨\" width=\"363\" />\n <figcaption>\n\
-    \ 대리 결재자가 Done by the delegate와 함께 표기됨\n </figcaption>\n@@ -112,7 +112,7 @@ 동일한\
-    \ 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다.\n \n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/568918170/verify/image-20230824-110815.png\"\
-    \ alt=\"Workflow &gt; Sent Requests &gt; Done &gt; List Details\" width=\"768\"\
-    \ />\n+<img src=\"/user-manual/workflow/approval-additional-features-proxy-approval-resubmission-etc/image-20230824-110815.png\"\
-    \ alt=\"Workflow &gt; Sent Requests &gt; Done &gt; List Details\" width=\"768\"\
-    \ />\n <figcaption>\n Workflow &gt; Sent Requests &gt; Done &gt; List Details\n\
-    \ </figcaption>\n"
-  exact_match: false
+  diff_report: ''
+  exact_match: true

@@ -1,46 +1,7 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:26.150267+00:00'
+created_at: '2026-02-10T05:55:13.067704+00:00'
 page_id: '692355151'
-status: fail
+status: pass
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -36,7 +36,7\
-    \ @@ </Callout>\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
-    \ src=\"/692355151/verify/image-20241029-234721.png\" alt=\"image-20241029-234721.png\"\
-    \ width=\"760\" />\n+<img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png\"\
-    \ alt=\"image-20241029-234721.png\" width=\"760\" />\n </figure>\n \n 1. 실행계획(Explain)\
-    \ 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 `Explain` 버튼을 누릅니다.\n@@ -46,31 +46,31\
-    \ @@         2.  **JSON**  : JSON 형태로 결과가 표시됩니다. \n \n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/692355151/verify/image-20241029-235845.png\"\
-    \ alt=\"image-20241029-235845.png\" width=\"682\" />\n+<img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png\"\
-    \ alt=\"image-20241029-235845.png\" width=\"682\" />\n </figure>\n \n <Callout\
-    \ type=\"important\">\n * 실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. \n * MySQL은\
-    \ 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시\
-    \ JSON으로 출력할 수 없습니다.\n <figure data-layout=\"center\" data-align=\"center\">\n\
-    -<img src=\"/692355151/verify/image-20241030-001252.png\" alt=\"image-20241030-001252.png\"\
-    \ width=\"682\" />\n+<img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png\"\
-    \ alt=\"image-20241030-001252.png\" width=\"682\" />\n </figure>\n </Callout>\n\
-    \ \n 1. 실행계획(Explain) 결과 확인\n     1. Table 형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다.\
-    \ 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/> <br/>  \n       <figure data-layout=\"\
-    center\" data-align=\"center\">\n-      <img src=\"/692355151/verify/image-20241030-002325.png\"\
-    \ alt=\"image-20241030-002325.png\" width=\"712\" />\n+      <img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png\"\
-    \ alt=\"image-20241030-002325.png\" width=\"712\" />\n       </figure>\n     2.\
-    \ JSON 형태의 결과 확인<br/>JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. `{JSON}`\
-    \ 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br/> <br/>  <br/> <br/>  <br/>내보내기(Export)를\
-    \ 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.\n       <figure data-layout=\"center\"\
-    \ data-align=\"center\">\n-      <img src=\"/692355151/verify/image-20241030-003040.png\"\
-    \ alt=\"`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다.\" width=\"712\" />\n+      <img src=\"\
-    /user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003040.png\"\
-    \ alt=\"`{JSON}`을 클릭하면 전체 내용을 볼수 있습니다.\" width=\"712\" />\n       <figcaption>\n\
-    \       `{JSON}`을 클릭하면 전체 내용을 볼수 있습니다.\n       </figcaption>\n       </figure>\n\
-    \       <figure data-layout=\"center\" data-align=\"center\">\n-      <img src=\"\
-    /692355151/verify/image-20241030-003129.png\" alt=\"JSON 결과의 복사와 내보내기가 가능합니다.\"\
-    \ width=\"560\" />\n+      <img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-003129.png\"\
-    \ alt=\"JSON 결과의 복사와 내보내기가 가능합니다.\" width=\"560\" />\n       <figcaption>\n  \
-    \     JSON 결과의 복사와 내보내기가 가능합니다.\n       </figcaption>\n@@ -80,7 +80,7 @@ \n 1.\
-    \ 결재자(Approver)의 실행계획(Explain)결과 확인<br/>결재자는 Explain Results 탭에서 첨부된 실행계획(Explain)결과를\
-    \ 확인하고 승인의 참고자료로 활용할 수 있습니다.\n   <figure data-layout=\"center\" data-align=\"\
-    center\">\n-  <img src=\"/692355151/verify/image-20241030-004258.png\" alt=\"\
-    image-20241030-004258.png\" width=\"736\" />\n+  <img src=\"/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-004258.png\"\
-    \ alt=\"image-20241030-004258.png\" width=\"736\" />\n   </figure>\n \n <Callout\
-    \ type=\"important\">\n"
-  exact_match: false
+  diff_report: ''
+  exact_match: true

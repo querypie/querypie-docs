@@ -1,20 +1,7 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:23.014619+00:00'
+created_at: '2026-02-10T05:55:09.638179+00:00'
 page_id: '544379140'
-status: fail
+status: pass
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -62,7 +62,7\
-    \ @@ ### Audit Log Export 목록 확인하기\n \n <figure data-layout=\"center\" data-align=\"\
-    center\">\n-<img src=\"/544379140/verify/image-20240714-063656.png\" alt=\"Administrator\
-    \ &gt; Audit &gt; General &gt; Audit Log Export\" width=\"760\" />\n+<img src=\"\
-    /administrator-manual/audit/reports/audit-log-export/image-20240714-063656.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export\" width=\"\
-    760\" />\n <figcaption>\n Administrator &gt; Audit &gt; General &gt; Audit Log\
-    \ Export\n </figcaption>\n@@ -84,7 +84,7 @@ 해당 버튼 클릭시 아래와 같은 화면이 나타납니다.\n \n <figure\
-    \ data-layout=\"center\" data-align=\"center\">\n-<img src=\"/544379140/verify/screenshot-20250116-131805.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create\
-    \ New Task\" width=\"612\" />\n+<img src=\"/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create\
-    \ New Task\" width=\"612\" />\n <figcaption>\n Administrator &gt; Audit &gt; General\
-    \ &gt; Audit Log Export &gt; Create New Task\n </figcaption>\n"
-  exact_match: false
+  diff_report: ''
+  exact_match: true

@@ -5,3 +5,5 @@
 /bin/skeleton/__pycache__/
 /bin/reverse_sync/__pycache__/
 /tests/__pycache__/
+/tests/testcases/*/output/
+/tests/testcases/*/output-images/

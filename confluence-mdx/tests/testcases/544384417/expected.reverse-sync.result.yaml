@@ -1,34 +1,7 @@
 changes_count: 1
-created_at: '2026-02-10T04:13:24.831861+00:00'
+created_at: '2026-02-10T05:55:11.689314+00:00'
 page_id: '544384417'
-status: fail
+status: pass
 verification:
-  diff_report: "--- expected (improved MDX)+++ actual (roundtrip MDX)@@ -685,7 +685,7\
-    \ @@ \n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
-    /544384417/verify/screenshot-20241223-112238.png\" alt=\"Administrator &gt; Audit\
-    \ &gt; Reports &gt; Reports\" width=\"760\" />\n+<img src=\"/administrator-manual/audit/reports/reports/screenshot-20241223-112238.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; Reports &gt; Reports\" width=\"760\" />\n\
-    \ <figcaption>\n Administrator &gt; Audit &gt; Reports &gt; Reports\n </figcaption>\n\
-    @@ -724,7 +724,7 @@ \n \n <figure data-layout=\"center\" data-align=\"center\"\
-    >\n-<img src=\"/544384417/verify/screenshot-20241223-112524.png\" alt=\"Administrator\
-    \ &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail\" width=\"760\" />\n\
-    +<img src=\"/administrator-manual/audit/reports/reports/screenshot-20241223-112524.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Report Detail\"\
-    \ width=\"760\" />\n <figcaption>\n Administrator &gt; Audit &gt; Reports &gt;\
-    \ Reports &gt; Report Detail\n </figcaption>\n@@ -763,7 +763,7 @@ 태스크 이름, 보고서\
-    \ 유형, 스케줄링 관련 내용을 입력하고, 섹션 단위로 보고서 출력 항목 및 적용할 필터를 지정할 수 있습니다. `+ Add Section`\
-    \ 버튼을 클릭하여 섹션을 추가할 수 있습니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
-    >\n-<img src=\"/544384417/verify/screenshot-20241209-104337.png\" alt=\"Administrator\
-    \ &gt; Audit &gt; Reports &gt; Reports &gt; Create\" width=\"760\" />\n+<img src=\"\
-    /administrator-manual/audit/reports/reports/screenshot-20241209-104337.png\" alt=\"\
-    Administrator &gt; Audit &gt; Reports &gt; Reports &gt; Create\" width=\"760\"\
-    \ />\n <figcaption>\n Administrator &gt; Audit &gt; Reports &gt; Reports &gt;\
-    \ Create\n </figcaption>\n@@ -799,7 +799,7 @@ ### 보고서 복제하기<Badge color=\"grey\"\
-    >10.2.2</Badge>\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img\
-    \ src=\"/544384417/verify/screenshot-20241223-104529.png\" alt=\"Administrator\
-    \ &gt; Audit &gt; Reports &gt; Reports - Duplicate Task\" width=\"589\" />\n+<img\
-    \ src=\"/administrator-manual/audit/reports/reports/screenshot-20241223-104529.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task\"\
-    \ width=\"589\" />\n <figcaption>\n Administrator &gt; Audit &gt; Reports &gt;\
-    \ Reports - Duplicate Task\n </figcaption>\n"
-  exact_match: false
+  diff_report: ''
+  exact_match: true

@@ -6,7 +6,7 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync
+#   --type TYPE       Test type: xhtml (default), skeleton, reverse-sync, image-copy
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
 #   --verbose, -v     Show converter output (stdout/stderr)
@@ -106,6 +106,21 @@ activate_venv() {
     source "${VENV_DIR}/bin/activate"
 }
 
+# Resolve page_id → slug path from pages.yaml
+resolve_slug_path() {
+    local page_id="$1"
+    python3 -c "
+import sys, yaml
+pages = yaml.safe_load(open('${VENV_DIR}/../var/pages.yaml'))
+for p in pages:
+    if str(p.get('page_id', '')) == sys.argv[1]:
+        print('/' + '/'.join(p['path']))
+        sys.exit(0)
+print(f'ERROR: page_id {sys.argv[1]} not found in pages.yaml', file=sys.stderr)
+sys.exit(1)
+" "${page_id}"
+}
+
 # Run XHTML test for a single test case
 run_xhtml_test() {
     local test_id="$1"
@@ -115,11 +130,15 @@ run_xhtml_test() {
         return 1
     fi
 
+    local slug_path
+    slug_path=$(resolve_slug_path "${test_id}" 2>/dev/null) || slug_path=""
+
     run_cmd python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
         "${test_path}/page.xhtml" \
         "${test_path}/output.mdx" \
         --public-dir="${TEST_DIR}" \
-        --attachment-dir="/${test_id}/output"
+        --attachment-dir="${slug_path}" \
+        --skip-image-copy
 
     if [[ ! -f "${test_path}/expected.mdx" ]]; then
         echo "  Error: expected.mdx not found"
@@ -204,6 +223,48 @@ has_reverse_sync_input() {
     local test_id="$1"
     [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
     [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]]
+}
+
+# Run image-copy test: verify converter copies and sanitizes image files correctly
+run_image_copy_test() {
+    local test_id="$1"
+    local test_path="${TEST_DIR}/${test_id}"
+
+    if [[ ! -f "${test_path}/page.xhtml" ]]; then
+        return 1
+    fi
+
+    local slug_path
+    slug_path=$(resolve_slug_path "${test_id}")
+
+    # Image copy destination (temporary)
+    local img_output_dir="${test_path}/output-images"
+    rm -rf "${img_output_dir}"
+
+    # Run WITHOUT --skip-image-copy → images get copied
+    run_cmd python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
+        "${test_path}/page.xhtml" \
+        "${test_path}/output-images.mdx" \
+        --public-dir="${TEST_DIR}" \
+        --attachment-dir="/${test_id}/output-images"
+
+    if [[ ! -d "${img_output_dir}" ]]; then
+        echo "  Error: output-images directory was not created"
+        return 1
+    fi
+
+    # Compare actual file list with expected
+    diff -u "${test_path}/expected-images.txt" \
+            <(cd "${img_output_dir}" && ls -1 | sort)
+
+    # Cleanup
+    rm -rf "${img_output_dir}" "${test_path}/output-images.mdx"
+}
+
+has_image_copy_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/expected-images.txt" ]]
 }
 
 # Run all tests of specified type
@@ -311,6 +372,13 @@ main() {
                 run_single_test run_reverse_sync_test "Reverse-Sync" "${TEST_ID}"
             else
                 run_all_tests run_reverse_sync_test "Reverse-Sync" has_reverse_sync_input
+            fi
+            ;;
+        image-copy)
+            if [[ -n "${TEST_ID}" ]]; then
+                run_single_test run_image_copy_test "Image-Copy" "${TEST_ID}"
+            else
+                run_all_tests run_image_copy_test "Image-Copy" has_image_copy_input
             fi
             ;;
         *)
