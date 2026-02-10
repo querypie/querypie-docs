@@ -44,7 +44,27 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
 
             _apply_text_changes(element, old_text, new_text)
 
-    return str(soup)
+    result = str(soup)
+    result = _restore_cdata(result)
+    return result
+
+
+def _restore_cdata(xhtml: str) -> str:
+    """BeautifulSoup가 제거한 CDATA 래핑을 ac:plain-text-body에 복원한다."""
+    def _wrap_cdata(m):
+        tag_open = m.group(1)
+        content = m.group(2)
+        tag_close = m.group(3)
+        # 이미 CDATA 래핑이 있으면 건드리지 않음
+        if '<![CDATA[' in content:
+            return m.group(0)
+        return f'{tag_open}<![CDATA[{content.strip()}]]>{tag_close}'
+    return re.sub(
+        r'(<ac:plain-text-body[^>]*>)(.*?)(</ac:plain-text-body>)',
+        _wrap_cdata,
+        xhtml,
+        flags=re.DOTALL,
+    )
 
 
 def _replace_inner_html(element: Tag, new_inner_xhtml: str):
