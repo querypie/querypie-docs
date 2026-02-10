@@ -93,7 +93,7 @@ def generate_commands(list_file, confluence_dir='var/', output_base_dir='target/
             mkdir_cmd = f"mkdir -p {output_dir}"
             
             # Generate conversion command with new options
-            convert_cmd = f"python bin/converter/cli.py {input_file} {output_file} --public-dir={public_dir} --attachment-dir={attachment_dir}"
+            convert_cmd = f"python3 bin/converter/cli.py {input_file} {output_file} --public-dir={public_dir} --attachment-dir={attachment_dir}"
             
             # Add commands to the list
             commands.append(mkdir_cmd)

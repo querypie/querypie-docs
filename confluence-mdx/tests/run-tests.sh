@@ -133,7 +133,7 @@ run_xhtml_test() {
     local slug_path
     slug_path=$(resolve_slug_path "${test_id}" 2>/dev/null) || slug_path=""
 
-    run_cmd python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
+    run_cmd python3 "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
         "${test_path}/page.xhtml" \
         "${test_path}/output.mdx" \
         --public-dir="${TEST_DIR}" \
@@ -157,7 +157,7 @@ run_skeleton_test() {
         return 1
     fi
 
-    run_cmd python "${SKELETON_SCRIPT}" "${test_path}/output.mdx"
+    run_cmd python3 "${SKELETON_SCRIPT}" "${test_path}/output.mdx"
 
     if [[ ! -f "${test_path}/expected.skel.mdx" ]]; then
         echo "  Error: expected.skel.mdx not found"
@@ -242,7 +242,7 @@ run_image_copy_test() {
     rm -rf "${img_output_dir}"
 
     # Run WITHOUT --skip-image-copy → images get copied
-    run_cmd python "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
+    run_cmd python3 "${CONVERTER_SCRIPT}" --log-level "${LOG_LEVEL}" \
         "${test_path}/page.xhtml" \
         "${test_path}/output-images.mdx" \
         --public-dir="${TEST_DIR}" \
@@ -272,7 +272,7 @@ run_xhtml_diff_test() {
     local test_id="$1"
     local test_path="${TEST_DIR}/${test_id}"
 
-    run_cmd python "${BIN_DIR}/xhtml_beautify_diff.py" \
+    run_cmd python3 "${BIN_DIR}/xhtml_beautify_diff.py" \
         "${test_path}/page.xhtml" \
         "${test_path}/expected.reverse-sync.patched.xhtml" \
         > "${test_path}/output.beautify-diff" || true
