@@ -8,6 +8,8 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch,
     _normalize_mdx_to_plain, _build_patches, _strip_frontmatter,
+    _transfer_text_changes, _find_mapping_by_text,
+    _align_chars, _find_insert_pos,
 )
 
 
@@ -606,7 +608,6 @@ def test_verify_ignores_frontmatter_diff(setup_var):
     page_id, var_dir = setup_var
 
     improved_mdx = "---\ntitle: 'Test'\n---\n\n## Title\n\nModified.\n"
-    # forward converter가 confluenceUrl을 추가한 verify.mdx를 생성
     verify_content = "---\ntitle: 'Test'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n\nModified.\n"
 
     def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
@@ -621,3 +622,151 @@ def test_verify_ignores_frontmatter_diff(setup_var):
         )
     assert result['status'] == 'pass'
     assert result['verification']['exact_match'] is True
+
+
+
+# --- _find_mapping_by_text tests ---
+
+
+def test_find_mapping_spaceless_match():
+    """셀 경계 공백 차이가 있는 테이블 블록도 공백 무시 비교로 매핑한다."""
+    from reverse_sync.mapping_recorder import BlockMapping
+
+    mdx_plain = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
+    mapping = BlockMapping(
+        block_id='table-12', type='table', xhtml_xpath='table[2]',
+        xhtml_text='...', xhtml_element_index=11,
+        xhtml_plain_text='설정 순서설정 항목1Databased Access Control 설정하기',
+    )
+
+    result = _find_mapping_by_text(mdx_plain, [mapping])
+    assert result is not None
+    assert result.xhtml_xpath == 'table[2]'
+
+
+def test_find_mapping_prefix_prefers_best_length():
+    """prefix 매칭 시 길이가 가장 유사한 후보를 선택한다."""
+    from reverse_sync.mapping_recorder import BlockMapping
+
+    prefix = 'Administrator > Audit > Databases > Access Control Logs'
+    mdx_plain = prefix + ' 메뉴로 이동합니다. 당월 기준으로 내림차순으로 로그가 조회됩니다.'
+
+    caption_mapping = BlockMapping(
+        block_id='image-1', type='html_block', xhtml_xpath='ac:image[1]',
+        xhtml_text='...', xhtml_element_index=0,
+        xhtml_plain_text=prefix,
+    )
+    list_mapping = BlockMapping(
+        block_id='list-2', type='list', xhtml_xpath='ol[1]',
+        xhtml_text='...', xhtml_element_index=1,
+        xhtml_plain_text=prefix + ' 메뉴로 이동합니다.당월 기준으로 내림차순으로 로그가 조회됩니다.',
+    )
+
+    result = _find_mapping_by_text(mdx_plain, [caption_mapping, list_mapping])
+    assert result is not None
+    assert result.xhtml_xpath == 'ol[1]'
+
+
+# --- _align_chars tests ---
+
+
+def test_align_chars_same_text():
+    """동일 텍스트는 모든 위치가 매핑된다."""
+    mapping = _align_chars('hello', 'hello')
+    assert mapping == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
+
+
+def test_align_chars_extra_spaces_in_source():
+    """source에 여분 공백이 있으면 건너뛴다."""
+    mapping = _align_chars('A B', 'AB')
+    assert mapping[0] == 0
+    assert mapping[2] == 1
+    assert 1 not in mapping
+
+
+def test_align_chars_extra_spaces_in_target():
+    """target에 여분 공백이 있으면 건너뛴다."""
+    mapping = _align_chars('AB', 'A B')
+    assert mapping[0] == 0
+    assert mapping[1] == 2
+
+
+# --- _transfer_text_changes tests ---
+
+
+def test_transfer_text_changes_replace():
+    """MDX 간 텍스트 변경이 XHTML plain text에 올바르게 전이된다."""
+    mdx_old = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
+    mdx_new = '설정 순서 설정 항목 1 Database Access Control 설정하기'
+    xhtml_text = '설정 순서설정 항목1Databased Access Control 설정하기'
+
+    result = _transfer_text_changes(mdx_old, mdx_new, xhtml_text)
+    assert result == '설정 순서설정 항목1Database Access Control 설정하기'
+
+
+def test_transfer_text_changes_no_change():
+    """변경이 없으면 XHTML 원문이 그대로 반환된다."""
+    result = _transfer_text_changes('Hello world', 'Hello world', 'Helloworld')
+    assert result == 'Helloworld'
+
+
+def test_transfer_text_changes_insert():
+    """insert opcode (공백/문자 삽입)가 올바르게 전이된다."""
+    result = _transfer_text_changes(
+        '잠금해제 수행자 정보', '잠금 해제 수행자 정보', '잠금해제 수행자 정보')
+    assert result == '잠금 해제 수행자 정보'
+
+
+def test_transfer_text_changes_preserves_unrelated_text():
+    """변경되지 않은 텍스트의 공백이 보존된다."""
+    result = _transfer_text_changes(
+        'Action At : 시점입니다. login ID 입니다.',
+        'Action At : 시점입니다. login ID입니다.',
+        'Action At : 시점입니다.login ID 입니다.')
+    assert 'Action At : ' in result
+    assert 'login ID입니다.' in result
+
+
+def test_transfer_text_changes_multiple_inserts():
+    """여러 insert 변경이 동시에 올바르게 전이된다."""
+    result = _transfer_text_changes(
+        '영향 받은 행수. 볼수 있습니다.',
+        '영향을 받은 행 수. 볼 수 있습니다.',
+        '영향 받은 행수.볼수 있습니다.')
+    assert '영향을 받은' in result
+    assert '행 수.' in result
+    assert '볼 수 있습니다.' in result
+
+
+# --- _build_patches with table/list blocks ---
+
+
+def test_build_patches_table_block():
+    """테이블 html_block에서 셀 경계 공백 차이가 있어도 패치가 생성된다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+
+    old_table = '<table>\n<th>\n**Databased Access Control**\n</th>\n</table>\n'
+    new_table = '<table>\n<th>\n**Database Access Control**\n</th>\n</table>\n'
+
+    original_blocks = [MdxBlock('html_block', old_table, 1, 5)]
+    improved_blocks = [MdxBlock('html_block', new_table, 1, 5)]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    mappings = [
+        BlockMapping(block_id='table-1', type='table', xhtml_xpath='table[1]',
+                     xhtml_text='<table>...</table>',
+                     xhtml_plain_text='Databased Access Control',
+                     xhtml_element_index=0),
+    ]
+
+    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'table[1]'
+    assert patches[0]['old_plain_text'] == 'Databased Access Control'
+    assert patches[0]['new_plain_text'] == 'Database Access Control'

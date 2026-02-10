@@ -3,6 +3,7 @@
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 """
 import argparse
+import difflib
 import html as html_module
 import json
 import re
@@ -25,7 +26,6 @@ from reverse_sync.block_diff import diff_blocks, BlockChange
 from reverse_sync.mapping_recorder import record_mapping, BlockMapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
-
 
 
 @dataclass
@@ -314,16 +314,94 @@ def _find_mapping_by_text(
         if _collapse_ws(m.xhtml_plain_text) == mdx_norm:
             return m
 
-    # 2차: prefix 일치 (50자 이상)
+    # 2차: prefix 일치 (50자 이상) — 길이가 가장 유사한 후보 선택
     min_prefix = 50
+    candidates = []
     for m in mappings:
         xhtml_norm = _collapse_ws(m.xhtml_plain_text)
         if len(mdx_norm) >= min_prefix and xhtml_norm.startswith(mdx_norm[:min_prefix]):
-            return m
-        if len(xhtml_norm) >= min_prefix and mdx_norm.startswith(xhtml_norm[:min_prefix]):
-            return m
+            candidates.append(m)
+        elif len(xhtml_norm) >= min_prefix and mdx_norm.startswith(xhtml_norm[:min_prefix]):
+            candidates.append(m)
+    if candidates:
+        return min(candidates, key=lambda m: abs(len(_collapse_ws(m.xhtml_plain_text)) - len(mdx_norm)))
+
+    # 3차: 공백 무시 비교 (table/html_block/list 등 셀/항목 경계 공백 차이 대응)
+    mdx_nospace = re.sub(r'\s+', '', mdx_norm)
+    if mdx_nospace:
+        for m in mappings:
+            xhtml_nospace = re.sub(r'\s+', '', m.xhtml_plain_text)
+            if mdx_nospace == xhtml_nospace:
+                return m
 
     return None
+
+
+def _align_chars(source: str, target: str) -> dict:
+    """source와 target의 문자를 정렬하여 source index → target index 맵을 반환한다.
+
+    두 텍스트는 같은 비공백 콘텐츠를 갖되 공백 배치만 다를 때 사용한다.
+    """
+    mapping = {}
+    si, ti = 0, 0
+    while si < len(source) and ti < len(target):
+        sc, tc = source[si], target[ti]
+        if sc == tc:
+            mapping[si] = ti
+            si += 1
+            ti += 1
+        elif sc.isspace():
+            si += 1
+        elif tc.isspace():
+            ti += 1
+        else:
+            # 비공백 문자 불일치 — 하나씩 전진하여 복구 시도
+            si += 1
+            ti += 1
+    return mapping
+
+
+def _find_insert_pos(char_map: dict, mdx_pos: int) -> int:
+    """MDX 삽입 위치에 대응하는 XHTML 위치를 찾는다."""
+    for k in range(mdx_pos - 1, -1, -1):
+        if k in char_map:
+            return char_map[k] + 1
+    return 0
+
+
+def _transfer_text_changes(mdx_old: str, mdx_new: str, xhtml_text: str) -> str:
+    """MDX 블록 간의 텍스트 변경을 XHTML plain text에 전이한다.
+
+    MDX old와 XHTML text의 문자 정렬(alignment)을 구축하고,
+    MDX old→new 변경의 위치를 XHTML 상의 위치로 매핑하여 적용한다.
+    이를 통해 XHTML의 공백 구조를 보존하면서 콘텐츠만 업데이트한다.
+    """
+    # 1. MDX old ↔ XHTML text 문자 정렬
+    char_map = _align_chars(mdx_old, xhtml_text)
+
+    # 2. MDX old → new 변경 추출
+    matcher = difflib.SequenceMatcher(None, mdx_old, mdx_new)
+
+    # 3. 변경을 XHTML 위치로 매핑
+    edits = []  # (xhtml_start, xhtml_end, replacement)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == 'equal':
+            continue
+        replacement = mdx_new[j1:j2] if tag != 'delete' else ''
+        if tag in ('replace', 'delete'):
+            mapped = sorted(char_map[k] for k in range(i1, i2) if k in char_map)
+            if not mapped:
+                continue  # MDX 전용 공백 — XHTML에 대응 없음
+            edits.append((mapped[0], mapped[-1] + 1, replacement))
+        elif tag == 'insert':
+            xpos = _find_insert_pos(char_map, i1)
+            edits.append((xpos, xpos, replacement))
+
+    # 4. 역순 적용 (위치 보존)
+    chars = list(xhtml_text)
+    for xstart, xend, repl in reversed(edits):
+        chars[xstart:xend] = list(repl)
+    return ''.join(chars)
 
 
 def _build_patches(
@@ -351,6 +429,15 @@ def _build_patches(
 
         new_block = change.new_block
         new_plain = _normalize_mdx_to_plain(new_block.content, new_block.type)
+
+        # MDX와 XHTML의 공백 구조가 같으면 (paragraph/heading 등)
+        # MDX normalized text를 직접 사용.
+        # 다르면 (table/html_block/list 등 셀/항목 경계 공백 차이)
+        # XHTML 공백 구조를 보존하면서 콘텐츠 변경만 전이.
+        if _collapse_ws(old_plain) != _collapse_ws(mapping.xhtml_plain_text):
+            new_plain = _transfer_text_changes(
+                old_plain, new_plain, mapping.xhtml_plain_text)
+
         patches.append({
             'xhtml_xpath': mapping.xhtml_xpath,
             'old_plain_text': mapping.xhtml_plain_text,
