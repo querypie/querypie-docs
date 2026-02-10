@@ -67,16 +67,31 @@ def _iter_block_children(parent):
 
 
 def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
-    """간이 XPath (예: "p[1]", "h2[3]")로 요소를 찾는다."""
+    """간이 XPath (예: "p[1]", "h2[3]", "macro-info[1]")로 요소를 찾는다.
+
+    macro-* 패턴은 ac:structured-macro[ac:name="*"]로 해석한다.
+    """
     match = re.match(r'([a-z0-9:-]+)\[(\d+)\]', xpath)
     if not match:
         return None
     tag_name = match.group(1)
     index = int(match.group(2))  # 1-based
 
+    # macro-{name} → ac:structured-macro[ac:name="{name}"] 매핑
+    macro_name = None
+    if tag_name.startswith('macro-'):
+        macro_name = tag_name[len('macro-'):]
+
     count = 0
     for child in _iter_block_children(soup):
-        if isinstance(child, Tag) and child.name == tag_name:
+        if not isinstance(child, Tag):
+            continue
+        if macro_name:
+            if child.name == 'ac:structured-macro' and child.get('ac:name') == macro_name:
+                count += 1
+                if count == index:
+                    return child
+        elif child.name == tag_name:
             count += 1
             if count == index:
                 return child
