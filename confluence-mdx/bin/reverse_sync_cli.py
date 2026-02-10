@@ -15,6 +15,11 @@ from pathlib import Path
 from typing import Dict, Any, List
 
 import yaml
+# 스크립트 위치 기반 경로 상수
+_SCRIPT_DIR = Path(__file__).resolve().parent   # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent               # confluence-mdx/
+_REPO_ROOT = _PROJECT_DIR.parent                # 레포 루트
+
 from reverse_sync.mdx_block_parser import parse_mdx_blocks, MdxBlock
 from reverse_sync.block_diff import diff_blocks, BlockChange
 from reverse_sync.mapping_recorder import record_mapping, BlockMapping
@@ -82,7 +87,7 @@ def _get_changed_ko_mdx_files(branch: str) -> List[str]:
         raise ValueError(f"Invalid git ref: {branch}")
     result = subprocess.run(
         ['git', 'diff', '--name-only', f'main...{branch}', '--', 'src/content/ko/'],
-        capture_output=True, text=True,
+        capture_output=True, text=True, cwd=str(_REPO_ROOT),
     )
     if result.returncode != 0:
         raise ValueError(f"Failed to get changed files: {result.stderr.strip()}")
@@ -94,7 +99,7 @@ def _resolve_page_id(ko_mdx_path: str) -> str:
     """src/content/ko/...mdx 경로에서 pages.yaml을 이용해 page_id를 유도한다."""
     rel = ko_mdx_path.removeprefix('src/content/ko/').removesuffix('.mdx')
     path_parts = rel.split('/')
-    pages_path = Path('var/pages.yaml')
+    pages_path = _PROJECT_DIR / 'var' / 'pages.yaml'
     if not pages_path.exists():
         raise ValueError("var/pages.yaml not found")
     pages = yaml.safe_load(pages_path.read_text())
@@ -106,7 +111,7 @@ def _resolve_page_id(ko_mdx_path: str) -> str:
 
 def _resolve_attachment_dir(page_id: str) -> str:
     """page_id에서 pages.yaml의 path를 조회하여 attachment-dir를 반환."""
-    pages = yaml.safe_load(Path('var/pages.yaml').read_text())
+    pages = yaml.safe_load((_PROJECT_DIR / 'var' / 'pages.yaml').read_text())
     for page in pages:
         if page['page_id'] == page_id:
             return '/' + '/'.join(page['path'])
@@ -121,7 +126,7 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
     """
     bin_dir = Path(__file__).parent
     converter = bin_dir / 'converter' / 'cli.py'
-    var_dir = Path(f'var/{page_id}').resolve()
+    var_dir = (_PROJECT_DIR / 'var' / page_id).resolve()
 
     abs_input = Path(patched_xhtml_path).resolve()
     abs_output = Path(output_mdx_path).resolve()
@@ -141,7 +146,7 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
 
 def _clean_reverse_sync_artifacts(page_id: str) -> Path:
     """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
-    var_dir = Path(f'var/{page_id}')
+    var_dir = _PROJECT_DIR / 'var' / page_id
     for f in var_dir.glob('reverse-sync.*'):
         f.unlink()
     verify_mdx = var_dir / 'verify.mdx'
@@ -169,7 +174,7 @@ def run_verify(
     original_mdx = original_src.content
     improved_mdx = improved_src.content
     if not xhtml_path:
-        xhtml_path = f'var/{page_id}/page.xhtml'
+        xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
     xhtml = Path(xhtml_path).read_text()
 
     # Step 1: MDX 블록 파싱 + Step 2: 블록 Diff 추출
@@ -342,6 +347,80 @@ def _build_patches(
     return patches
 
 
+def _supports_color() -> bool:
+    """stdout가 컬러 출력을 지원하는지 확인한다."""
+    return hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+
+
+def _print_results(results: List[Dict[str, Any]]) -> None:
+    """검증 결과를 컬러 diff 포맷으로 출력한다."""
+    use_color = _supports_color()
+
+    def c(code: str, text: str) -> str:
+        return f'\033[{code}m{text}\033[0m' if use_color else text
+
+    RED, GREEN, CYAN, YELLOW, BOLD, DIM = '31', '32', '36', '33', '1', '2'
+
+    for r in results:
+        status = r.get('status', 'unknown')
+        file_path = r.get('file', r.get('page_id', '?'))
+        changes = r.get('changes_count', 0)
+
+        # 상태별 컬러 배지
+        if status == 'pass':
+            badge = c(GREEN, 'PASS')
+        elif status == 'no_changes':
+            badge = c(DIM, 'NO CHANGES')
+        elif status == 'error':
+            badge = c(YELLOW, 'ERROR')
+        else:
+            badge = c(RED, 'FAIL')
+
+        print(f'\n{c(BOLD, file_path)}  {badge}  ({changes} change(s))')
+
+        # 에러 메시지
+        if status == 'error':
+            print(f'  {c(RED, r.get("error", ""))}')
+            continue
+
+        # diff 출력
+        diff_report = (r.get('verification') or {}).get('diff_report', '')
+        if not diff_report:
+            continue
+
+        print(c(DIM, '─' * 72))
+        for line in diff_report.splitlines():
+            if line.startswith('---') or line.startswith('+++'):
+                print(c(BOLD, line))
+            elif line.startswith('@@'):
+                print(c(CYAN, line))
+            elif line.startswith('-'):
+                print(c(RED, line))
+            elif line.startswith('+'):
+                print(c(GREEN, line))
+            else:
+                print(line)
+
+    # 요약
+    total = len(results)
+    passed = sum(1 for r in results if r.get('status') == 'pass')
+    failed = sum(1 for r in results if r.get('status') == 'fail')
+    errors = sum(1 for r in results if r.get('status') == 'error')
+    no_chg = sum(1 for r in results if r.get('status') == 'no_changes')
+
+    parts = []
+    if passed:
+        parts.append(c(GREEN, f'{passed} passed'))
+    if failed:
+        parts.append(c(RED, f'{failed} failed'))
+    if errors:
+        parts.append(c(YELLOW, f'{errors} errors'))
+    if no_chg:
+        parts.append(c(DIM, f'{no_chg} no changes'))
+
+    print(f'\n{c(BOLD, "Summary:")} {", ".join(parts)} / {total} total')
+
+
 _USAGE_SUMMARY = """\
 reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
 
@@ -454,6 +533,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
     parser.add_argument('--original-mdx',
                         help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
     parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
+    parser.add_argument('--limit', type=int, default=0,
+                        help='배치 모드에서 최대 처리 파일 수 (기본: 0=전체)')
 
 
 def _do_verify(args) -> dict:
@@ -473,12 +554,15 @@ def _do_verify(args) -> dict:
     )
 
 
-def _do_verify_batch(branch: str) -> List[dict]:
+def _do_verify_batch(branch: str, limit: int = 0) -> List[dict]:
     """브랜치의 모든 변경 ko MDX 파일을 배치 verify 처리한다."""
     files = _get_changed_ko_mdx_files(branch)
     if not files:
         return [{'status': 'no_changes', 'branch': branch, 'changes_count': 0}]
-    print(f"Processing {len(files)} file(s) from branch {branch}...", file=sys.stderr)
+    total = len(files)
+    if limit > 0:
+        files = files[:limit]
+    print(f"Processing {len(files)}/{total} file(s) from branch {branch}...", file=sys.stderr)
     results = []
     for idx, ko_path in enumerate(files, 1):
         print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
@@ -488,6 +572,7 @@ def _do_verify_batch(branch: str) -> List[dict]:
                 original_mdx=None, xhtml=None,
             )
             result = _do_verify(args)
+            result['file'] = ko_path
             print(result.get('status', 'unknown'), file=sys.stderr)
             results.append(result)
         except Exception as e:
@@ -498,7 +583,7 @@ def _do_verify_batch(branch: str) -> List[dict]:
 
 def _do_push(page_id: str):
     """verify 통과 후 Confluence에 push한다."""
-    var_dir = Path(f'var/{page_id}')
+    var_dir = _PROJECT_DIR / 'var' / page_id
     patched_path = var_dir / 'reverse-sync.patched.xhtml'
     xhtml_body = patched_path.read_text()
 
@@ -541,6 +626,8 @@ def main():
     _add_common_args(push_parser)
     push_parser.add_argument('--dry-run', action='store_true',
                              help='검증만 수행, Confluence 반영 안 함 (= verify)')
+    push_parser.add_argument('--json', action='store_true',
+                             help='결과를 JSON 형식으로 출력')
 
     # verify (= push --dry-run alias)
     verify_parser = subparsers.add_parser(
@@ -549,6 +636,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     _add_common_args(verify_parser)
+    verify_parser.add_argument('--json', action='store_true',
+                               help='결과를 JSON 형식으로 출력')
 
     args = parser.parse_args()
 
@@ -567,10 +656,15 @@ def main():
                 print('Error: --branch와 --original-mdx/--xhtml는 동시에 사용할 수 없습니다.', file=sys.stderr)
                 sys.exit(1)
 
+            use_json = getattr(args, 'json', False)
+
             if getattr(args, 'branch', None):
                 # 배치 모드
-                results = _do_verify_batch(args.branch)
-                print(json.dumps(results, ensure_ascii=False, indent=2))
+                results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0))
+                if use_json:
+                    print(json.dumps(results, ensure_ascii=False, indent=2))
+                else:
+                    _print_results(results)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
                 if not dry_run:
                     passed = [r for r in results if r.get('status') == 'pass']
@@ -585,7 +679,10 @@ def main():
             else:
                 # 기존 단일 파일 모드
                 result = _do_verify(args)
-                print(json.dumps(result, ensure_ascii=False, indent=2))
+                if use_json:
+                    print(json.dumps(result, ensure_ascii=False, indent=2))
+                else:
+                    _print_results([result])
 
                 if not dry_run and result.get('status') == 'pass':
                     page_id = result['page_id']
