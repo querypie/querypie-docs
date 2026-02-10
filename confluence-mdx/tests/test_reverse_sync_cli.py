@@ -480,8 +480,8 @@ def test_normalize_mdx_list():
     )
     result = _normalize_mdx_to_plain(content, 'paragraph')
     expected = (
-        "Administrator > Audit > ... 메뉴로 이동합니다."
-        "당월 기준으로..."
+        "Administrator > Audit > ... 메뉴로 이동합니다. "
+        "당월 기준으로... "
         "Access Control Updated  : 커넥션 접근 권한 수정이력"
     )
     assert result == expected
@@ -495,7 +495,7 @@ def test_normalize_mdx_list_with_figure():
         "2. 두 번째 항목"
     )
     result = _normalize_mdx_to_plain(content, 'paragraph')
-    assert result == '첫 번째 항목두 번째 항목'
+    assert result == '첫 번째 항목 두 번째 항목'
 
 
 # --- _build_patches index-based mapping tests ---
@@ -540,7 +540,7 @@ def test_build_patches_index_mapping():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
     assert patches[0]['old_plain_text'] == 'Old text.'
-    assert patches[0]['new_inner_xhtml'] == 'New text.'
+    assert patches[0]['new_plain_text'] == 'New text.'
 
 
 def test_build_patches_skips_non_content():
