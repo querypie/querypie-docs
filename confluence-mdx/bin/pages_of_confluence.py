@@ -829,19 +829,19 @@ class ConfluencePageProcessor:
             self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
             self.logger.debug(traceback.format_exc())
 
-    def _get_fetch_state_path(self) -> str:
-        """Return the path to the fetch state file."""
-        return os.path.join(self.config.default_output_dir, ".fetch_state.yaml")
+    def _get_fetch_state_path(self, start_page_id: str) -> str:
+        """Return the path to the fetch state file for a specific start_page_id."""
+        return os.path.join(self.config.default_output_dir, start_page_id, "fetch_state.yaml")
 
-    def _load_fetch_state(self) -> Dict:
-        """Load fetch state from .fetch_state.yaml."""
-        state_path = self._get_fetch_state_path()
+    def _load_fetch_state(self, start_page_id: str) -> Dict:
+        """Load fetch state from var/<start_page_id>/fetch_state.yaml."""
+        state_path = self._get_fetch_state_path(start_page_id)
         state = self.file_manager.load_yaml(state_path)
         return state if state else {}
 
-    def _save_fetch_state(self, state: Dict) -> None:
-        """Save fetch state to .fetch_state.yaml."""
-        state_path = self._get_fetch_state_path()
+    def _save_fetch_state(self, start_page_id: str, state: Dict) -> None:
+        """Save fetch state to var/<start_page_id>/fetch_state.yaml."""
+        state_path = self._get_fetch_state_path(start_page_id)
         self.file_manager.save_yaml(state_path, state)
         self.logger.warning(f"Fetch state saved to {state_path}")
 
@@ -886,16 +886,15 @@ class ConfluencePageProcessor:
                     self.logger.warning(f"Recent mode: Fetching pages modified in last {effective_days} days (--days specified)")
                 else:
                     # Auto-detect from fetch state
-                    fetch_state = self._load_fetch_state()
-                    start_page_state = fetch_state.get(start_page_id, {})
-                    since_date = start_page_state.get("last_modified_seen")
+                    fetch_state = self._load_fetch_state(start_page_id)
+                    since_date = fetch_state.get("last_modified_seen")
                     if since_date:
                         try:
                             parsed = datetime.fromisoformat(since_date.replace("Z", "+00:00"))
                             days_ago = (datetime.now(timezone.utc) - parsed).days
-                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from .fetch_state.yaml (~{days_ago} days ago)")
+                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from fetch_state.yaml (~{days_ago} days ago)")
                         except Exception:
-                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from .fetch_state.yaml")
+                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from fetch_state.yaml")
                     else:
                         self.logger.warning(f"Recent mode: No fetch state for start_page_id {start_page_id}, using default {effective_days} days")
 
@@ -996,9 +995,8 @@ class ConfluencePageProcessor:
                 all_page_ids = [entry['page_id'] for entry in yaml_entries]
                 max_modified = self._compute_max_modified_date(all_page_ids)
                 if max_modified:
-                    fetch_state = self._load_fetch_state()
+                    prev_state = self._load_fetch_state(start_page_id)
                     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
-                    prev_state = fetch_state.get(start_page_id, {})
 
                     new_state = {
                         "last_modified_seen": max_modified,
@@ -1012,8 +1010,7 @@ class ConfluencePageProcessor:
                         new_state["last_full_fetch"] = prev_state.get("last_full_fetch")
                         new_state["last_recent_fetch"] = now
 
-                    fetch_state[start_page_id] = new_state
-                    self._save_fetch_state(fetch_state)
+                    self._save_fetch_state(start_page_id, new_state)
                     self.logger.info(f"Updated fetch state: last_modified_seen={max_modified}, pages_fetched={len(yaml_entries)}")
 
             # Save YAML file
