@@ -539,6 +539,8 @@ def _build_patches(
     """
     patches = []
     used_ids: set = set()  # 이미 매칭된 mapping block_id (중복 매칭 방지)
+    # 상위 블록에 대한 그룹화된 변경 (substring 매칭 fallback)
+    containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for change in changes:
         if change.old_block.type in _NON_CONTENT_TYPES:
             continue
@@ -552,6 +554,18 @@ def _build_patches(
             if change.old_block.type == 'list':
                 patches.extend(
                     _build_list_item_patches(change, mappings, used_ids))
+                continue
+
+            # html_block 등: substring 매칭으로 상위 블록 탐색
+            new_plain = _normalize_mdx_to_plain(
+                change.new_block.content, change.new_block.type)
+            container = _find_containing_mapping(
+                old_plain, mappings, exclude=used_ids)
+            if container is not None:
+                bid = container.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (container, [])
+                containing_changes[bid][1].append((old_plain, new_plain))
             continue
 
         used_ids.add(mapping.block_id)
@@ -571,6 +585,19 @@ def _build_patches(
             'old_plain_text': mapping.xhtml_plain_text,
             'new_plain_text': new_plain,
         })
+
+    # 상위 블록에 대한 그룹화된 변경 적용
+    for bid, (mapping, item_changes) in containing_changes.items():
+        xhtml_text = mapping.xhtml_plain_text
+        for old_plain, new_plain in item_changes:
+            xhtml_text = _transfer_text_changes(
+                old_plain, new_plain, xhtml_text)
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        })
+        used_ids.add(bid)
 
     return patches
 
