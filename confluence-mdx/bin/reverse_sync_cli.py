@@ -327,7 +327,13 @@ def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
         s = re.sub(r'^[-*+]\s+', '', s)
         s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
-        s = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', s)
+        # Confluence 링크 패턴: "[Title | Anchor](url)" → Title만 추출
+        # (XHTML ac:link-body에는 Title만 포함됨)
+        s = re.sub(
+            r'\[([^\]]+)\]\([^)]+\)',
+            lambda m: m.group(1).split(' | ')[0] if ' | ' in m.group(1) else m.group(1),
+            s,
+        )
         s = re.sub(r'<[^>]+/?>', '', s)
         s = html_module.unescape(s)
         s = s.strip()
