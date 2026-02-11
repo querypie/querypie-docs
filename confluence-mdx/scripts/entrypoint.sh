@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 
 case "${1:-help}" in
-  fetch_cli.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
+  fetch_cli.py|convert_all.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
     command=$1
     shift
     echo "+ python3 bin/$command $@"
@@ -30,14 +30,8 @@ case "${1:-help}" in
     echo "# Starting full workflow..."
     echo "+ python3 bin/fetch_cli.py $@"
     python3 bin/fetch_cli.py "$@"
-    echo "+ python3 bin/translate_titles.py"
-    python3 bin/translate_titles.py
-    echo "+ python3 bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh"
-    python3 bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh
-    echo "+ chmod +x bin/generated/xhtml2markdown.ko.sh"
-    chmod +x bin/generated/xhtml2markdown.ko.sh
-    echo "+ bash bin/generated/xhtml2markdown.ko.sh"
-    bash bin/generated/xhtml2markdown.ko.sh
+    echo "+ python3 bin/convert_all.py"
+    python3 bin/convert_all.py
     ;;
   bash|sh)
     echo "+ $@"
@@ -52,18 +46,17 @@ Usage:
 
 Commands:
   fetch_cli.py [args...]            - Collect Confluence data
-  translate_titles.py               - Translate titles
-  generate_commands <list_file>     - Generate conversion commands
-  convert                           - Convert XHTML to MDX
-  full                              - Execute full workflow
+  convert_all.py [args...]          - Convert all pages to MDX
+  full [fetch args...]              - Execute full workflow (fetch + convert)
+  converter/cli.py <in> <out>       - Convert a single XHTML to MDX
   bash                              - Run interactive shell
   help                              - Show this help message
 
 Examples:
+  docker run docker.io/querypie/confluence-mdx:latest full
+  docker run docker.io/querypie/confluence-mdx:latest full --recent
+  docker run docker.io/querypie/confluence-mdx:latest convert_all.py
   docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
-  docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
-  docker run docker.io/querypie/confluence-mdx:latest generate_commands var/list.en.txt
-  docker run docker.io/querypie/confluence-mdx:latest convert
   docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest convert
 
 Environment Variables:

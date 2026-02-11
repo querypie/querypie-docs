@@ -79,17 +79,12 @@ pip3 install requests beautifulsoup4 pyyaml
 ## 데이터 수집, 변환 절차의 개요
 
 1. `confluence-mdx/var/`에 Confluence 문서 데이터를 저장합니다.
-    - 문서의 목록인 `list.txt`를 저장합니다.
-    - 개별 문서마다 `<page_id>/page.yaml`, `<page_id>/page.xhtml`을 저장합니다.
+    - 개별 문서마다 `<page_id>/page.xhtml`, `<page_id>/page.v1.yaml` 등을 저장합니다.
+    - 전체 문서 목록을 `var/pages.yaml`에 저장합니다.
     - `fetch_cli.py`를 사용합니다.
-2. `confluence-mdx/var/list.en.txt`를 생성합니다.
-   - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
-   - `translate_titles.py`를 사용합니다.
-3. `confluence-mdx/bin/generated/xhtml2markdown.ko.sh`를 생성합니다.
-   - `generate_commands_for_xhtml2markdown.py`를 사용합니다.
-4. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
-   - `confluence-mdx/bin/generated/xhtml2markdown.ko.sh`를 실행하면, MDX 문서가 생성됩니다.
-   - `confluence-mdx/var/` 아래의 `<page_id>/page.xhtml`을 입력 데이터로 사용합니다.
+2. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
+    - `var/pages.yaml`을 기반으로 모든 페이지를 변환합니다.
+    - `convert_all.py`를 사용합니다.
 
 무작정 따라해 보기
 ```bash
@@ -97,10 +92,8 @@ $ cd confluence-mdx
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip3 install requests beautifulsoup4 pyyaml
-$ bin/fetch_cli.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
-$ bin/translate_titles.py
-$ bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/generated/xhtml2markdown.ko.sh
-$ bin/generated/xhtml2markdown.ko.sh
+$ bin/fetch_cli.py --remote --attachments  # 2시간 가량, 시간이 오래 걸립니다.
+$ bin/convert_all.py                        # 전체 변환
 # 이제, 변환된 또는 변경된 MDX 파일을 src/content/ko 아래에서 확인할 수 있습니다.
 ```
 
@@ -165,69 +158,28 @@ bin/fetch_cli.py --log-level DEBUG
 - 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
 - `>list.txt`로 stdout 을 redirect 하면, `list.txt` 파일에 문서 목록이 저장됩니다.
 
-### 2. 문서 제목 번역 (translate_titles.py)
+### 2. 전체 변환 (convert_all.py)
 
-`translate_titles.py`는 문서 제목을 번역하여 `list.en.txt` 파일을 생성하는 스크립트입니다. 
-이 스크립트는 `list.txt` 파일을 입력으로 사용하여 한국어 제목을 영어로 번역합니다.
-
-> 참고: 이 스크립트는 현재 하드코딩된 파일 경로를 사용합니다:
-> - 입력 파일: var/list.txt
-> - 출력 파일: var/list.en.txt
-> - 번역 파일: etc/korean-titles-translations.txt
+`convert_all.py`는 `var/pages.yaml`을 기반으로 모든 페이지를 MDX로 변환하는 스크립트입니다.
+변환 전에 번역 누락을 자동 검증합니다.
 
 실행 방법:
 ```bash
-# 스크립트 실행
-bin/translate_titles.py
+# 전체 변환 (번역 검증 포함)
+bin/convert_all.py
+
+# 번역 검증만 수행 (변환하지 않음)
+bin/convert_all.py --verify-translations
+
+# 디버깅용 list.txt / list.en.txt 생성 (변환도 함께 수행)
+bin/convert_all.py --generate-list
 ```
 
 실행 결과:
-- `var/list.en.txt` 파일이 생성됩니다.
-- 이 파일은 원본 `list.txt`와 동일한 형식이지만 제목이 영어로 번역되어 있습니다.
-- 만일, list.en.txt 에 영어로 번역되지 않은 한국어 문서 제목이 나타나는 경우, etc/korean-titles-translations.txt 를 보완하여,
-  list.en.txt 가 영어로 잘 번역될 수 있도록, 수정하여야 합니다.
-
-### 3. XHTML을 Markdown으로 변환하기 위한 명령어 생성 (generate_commands_for_xhtml2markdown.py)
-
-`generate_commands_for_xhtml2markdown.py`는 Confluence XHTML 파일을 Markdown으로 변환하기 위한 명령어를 생성하는 스크립트입니다. 
-이 스크립트는 `list.en.txt` 파일을 읽어 각 문서에 대한 변환 명령어를 생성합니다.
-
-실행 방법:
-```bash
-# 기본 설정으로 실행하여 xhtml2markdown.ko.sh 파일 생성
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/generated/xhtml2markdown.ko.sh
-```
-
-사실상 사용하지 않음. 참고용 기능:
-```bash
-# Confluence 디렉토리 지정
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --confluence-dir var/ >bin/generated/xhtml2markdown.ko.sh
-
-# 출력 디렉토리 지정
-bin/generate_commands_for_xhtml2markdown.py var/list.en.txt --output-dir target/content/custom-path/ >bin/generated/xhtml2markdown.ko.sh
-
-# 생성된 스크립트에 실행 권한 부여
-chmod +x bin/generated/xhtml2markdown.ko.sh
-```
-
-실행 결과:
-- `bin/generated/xhtml2markdown.ko.sh` 파일이 생성됩니다.
-- 이 파일은 각 XHTML 파일을 Markdown으로 변환하기 위한 명령어들을 포함하고 있습니다.
-
-### 4. XHTML을 Markdown으로 변환 (xhtml2markdown.ko.sh)
-
-`xhtml2markdown.ko.sh`는 `generate_commands_for_xhtml2markdown.py`에 의해 생성된 스크립트로, 각 XHTML 파일을 Markdown으로 변환하는 명령어들을 실행합니다. 
-이 스크립트는 `converter/cli.py`를 사용하여 변환 작업을 수행합니다.
-
-실행 방법:
-```bash
-# 스크립트 실행
-bin/generated/xhtml2markdown.ko.sh
-```
-
-실행 결과:
-- `target/ko/` 디렉토리에 MDX 파일들이 생성됩니다. `target/public/` 디렉토리에 첨부파일에 저장됩니다.
-- 각 MDX 파일은 원본 XHTML 파일의 내용을 Markdown 형식으로 변환한 것입니다.
+- `target/ko/` 디렉토리에 MDX 파일들이 생성됩니다.
+- `target/public/` 디렉토리에 첨부파일이 저장됩니다.
+- 한국어 제목의 번역이 누락된 경우, 오류와 함께 누락 목록을 출력합니다.
+  - `etc/korean-titles-translations.txt`에 번역을 추가한 후 재실행합니다.
 
 ## Confluence xhtml 을 Markdown 으로 변환하기
 
@@ -251,7 +203,7 @@ bin/converter/cli.py input_file.xhtml output_file.md --log-level debug
 
 실행 결과:
 - 지정된 출력 파일에 Markdown 형식으로 변환된 내용이 저장됩니다.
-- 이 스크립트는 일반적으로 `xhtml2markdown.ko.sh`에 의해 자동으로 호출됩니다.
+- 이 스크립트는 일반적으로 `convert_all.py`에 의해 자동으로 호출됩니다.
 
 ### Makefile (converter/cli.py 테스트용)
 
