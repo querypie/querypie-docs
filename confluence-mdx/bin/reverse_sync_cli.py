@@ -323,6 +323,13 @@ def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
             continue
         if s.startswith('<figure') or s.startswith('<img') or s.startswith('</figure'):
             continue
+        # Markdown table separator 행 건너뛰기 (| --- | --- | ...)
+        if re.match(r'^\|[\s\-:|]+\|$', s):
+            continue
+        # Markdown table row: | 구분자 제거하여 셀 내용만 추출
+        if s.startswith('|') and s.endswith('|'):
+            cells = [c.strip() for c in s.split('|')[1:-1]]
+            s = ' '.join(c for c in cells if c)
         s = re.sub(r'^\d+\.\s+', '', s)
         s = re.sub(r'^[-*+]\s+', '', s)
         s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
@@ -562,6 +569,12 @@ def _build_patches(
                     _build_list_item_patches(change, mappings, used_ids))
                 continue
 
+            # Markdown table이 paragraph로 파싱된 경우: 행별 분리 매칭
+            if _is_markdown_table(change.old_block.content):
+                patches.extend(
+                    _build_table_row_patches(change, mappings, used_ids))
+                continue
+
             # html_block 등: substring 매칭으로 상위 블록 탐색
             new_plain = _normalize_mdx_to_plain(
                 change.new_block.content, change.new_block.type)
@@ -604,6 +617,92 @@ def _build_patches(
             'new_plain_text': xhtml_text,
         })
         used_ids.add(bid)
+
+    return patches
+
+
+def _is_markdown_table(content: str) -> bool:
+    """Content가 Markdown table 형식인지 판별한다."""
+    lines = [l.strip() for l in content.strip().split('\n') if l.strip()]
+    if len(lines) < 2:
+        return False
+    pipe_lines = sum(1 for l in lines if l.startswith('|') and l.endswith('|'))
+    return pipe_lines >= 2
+
+
+def _split_table_rows(content: str) -> List[str]:
+    """Markdown table content를 데이터 행(non-separator) 목록으로 분리한다."""
+    rows = []
+    for line in content.strip().split('\n'):
+        s = line.strip()
+        if not s:
+            continue
+        # separator 행 건너뛰기 (| --- | --- | ...)
+        if re.match(r'^\|[\s\-:|]+\|$', s):
+            continue
+        if s.startswith('|') and s.endswith('|'):
+            rows.append(s)
+    return rows
+
+
+def _normalize_table_row(row: str) -> str:
+    """Markdown table row를 XHTML plain text 대응 형태로 변환한다."""
+    cells = [c.strip() for c in row.split('|')[1:-1]]
+    parts = []
+    for cell in cells:
+        s = cell
+        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
+        s = re.sub(r'`([^`]+)`', r'\1', s)
+        s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)
+        s = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', s)
+        s = re.sub(r'<[^>]+/?>', '', s)
+        s = html_module.unescape(s)
+        s = s.strip()
+        if s:
+            parts.append(s)
+    return ' '.join(parts)
+
+
+def _build_table_row_patches(
+    change: 'BlockChange',
+    mappings: List[BlockMapping],
+    used_ids: 'set | None' = None,
+) -> List[Dict[str, str]]:
+    """Markdown table 블록의 변경된 행을 XHTML table에 substring 매칭으로 패치한다."""
+    old_rows = _split_table_rows(change.old_block.content)
+    new_rows = _split_table_rows(change.new_block.content)
+    if len(old_rows) != len(new_rows):
+        return []
+
+    patches = []
+    containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
+    for old_row, new_row in zip(old_rows, new_rows):
+        if old_row == new_row:
+            continue
+        old_plain = _normalize_table_row(old_row)
+        new_plain = _normalize_table_row(new_row)
+        if not old_plain or old_plain == new_plain:
+            continue
+        container = _find_containing_mapping(
+            old_plain, mappings, exclude=used_ids)
+        if container is not None:
+            bid = container.block_id
+            if bid not in containing_changes:
+                containing_changes[bid] = (container, [])
+            containing_changes[bid][1].append((old_plain, new_plain))
+
+    for bid, (mapping, item_changes) in containing_changes.items():
+        xhtml_text = mapping.xhtml_plain_text
+        for old_plain, new_plain in item_changes:
+            xhtml_text = _transfer_text_changes(
+                old_plain, new_plain, xhtml_text)
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        })
+        if used_ids is not None:
+            used_ids.add(bid)
 
     return patches
 

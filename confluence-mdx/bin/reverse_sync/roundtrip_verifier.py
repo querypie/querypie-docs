@@ -36,6 +36,22 @@ def _normalize_dates(text: str) -> str:
     return _KO_DATE_RE.sub(_replace, text)
 
 
+def _normalize_table_cell_padding(text: str) -> str:
+    """Markdown table 행의 셀 패딩 공백을 정규화한다.
+
+    XHTML→MDX forward 변환 시 테이블 셀의 컬럼 폭 계산이 원본 MDX와
+    1~2자 차이날 수 있으므로, 연속 공백을 단일 공백으로 축약한다.
+    """
+    lines = text.split('\n')
+    result = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('|') and stripped.endswith('|'):
+            line = re.sub(r'  +', ' ', line)
+        result.append(line)
+    return '\n'.join(result)
+
+
 def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
@@ -53,6 +69,8 @@ def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
     actual_mdx = _normalize_trailing_ws(actual_mdx)
     expected_mdx = _normalize_dates(expected_mdx)
     actual_mdx = _normalize_dates(actual_mdx)
+    expected_mdx = _normalize_table_cell_padding(expected_mdx)
+    actual_mdx = _normalize_table_cell_padding(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")
