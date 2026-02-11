@@ -47,11 +47,10 @@ convert_all.py           # 2. 전체 변환 (pages.yaml 기반)
 - 모두 커버되면 통과 메시지를 출력합니다.
 - `convert_all.py` 실행 시에도 변환 전 자동으로 검증을 수행합니다.
 
-### R4. 기존 도구 보존
+### R4. 불필요한 도구 삭제
 
+- `translate_titles.py`, `generate_commands_for_xhtml2markdown.py`, `bin/generated/` 디렉토리를 삭제합니다.
 - `converter/cli.py`는 단일 파일 변환 도구로 유지합니다 (인터페이스 변경 없음).
-- `translate_titles.py`, `generate_commands_for_xhtml2markdown.py`는 삭제하지 않고 유지합니다.
-  - 단, `entrypoint.sh`의 `full` 워크플로우는 `convert_all.py`를 사용하도록 변경합니다.
 
 ### R5. `entrypoint.sh` / `Dockerfile` 업데이트
 

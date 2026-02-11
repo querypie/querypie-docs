@@ -25,15 +25,11 @@ confluence-mdx/
 ├── bin/                    # 실행 스크립트들
 │   ├── fetch_cli.py
 │   ├── fetch/
-│   ├── translate_titles.py
-│   ├── generate_commands_for_xhtml2markdown.py
-│   ├── converter/
-│   │   └── cli.py
-│   └── generated/
-│       └── xhtml2markdown.ko.sh
+│   ├── convert_all.py
+│   └── converter/
+│       └── cli.py
 ├── var/                    # 입력 데이터 (컨테이너 내부 저장)
 │   ├── list.txt
-│   ├── list.en.txt
 │   ├── pages.yaml
 │   └── <page_id>/         # 각 페이지별 디렉토리
 │       ├── page.xhtml
@@ -50,10 +46,8 @@ confluence-mdx/
 ```
 
 ### 2.3 주요 워크플로우
-1. **데이터 수집**: `fetch_cli.py` → `var/`에 저장
-2. **제목 번역**: `translate_titles.py` → `var/list.en.txt` 생성
-3. **명령어 생성**: `generate_commands_for_xhtml2markdown.py` → `bin/generated/xhtml2markdown.ko.sh` 생성
-4. **변환 실행**: `xhtml2markdown.ko.sh` → `target/`에 MDX 파일 생성
+1. **데이터 수집**: `fetch_cli.py` → `var/`에 저장 (`pages.yaml`, 개별 페이지 데이터)
+2. **전체 변환**: `convert_all.py` → `pages.yaml` 기반으로 `target/`에 MDX 파일 생성
 
 ## 3. Container 설계
 
@@ -112,14 +106,8 @@ docker run docker.io/querypie/confluence-mdx:latest full
 # 데이터 수집
 docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
 
-# 제목 번역
-docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
-
-# 명령어 생성
-docker run docker.io/querypie/confluence-mdx:latest generate_commands var/list.en.txt
-
-# 변환 실행
-docker run docker.io/querypie/confluence-mdx:latest convert
+# 전체 변환
+docker run docker.io/querypie/confluence-mdx:latest convert_all.py
 ```
 
 #### 모드 3: 대화형 실행
@@ -216,28 +204,25 @@ target/
 
 ```bash
 #!/bin/bash
-set -e
+set -o errexit -o nounset
 
-case "$1" in
-  fetch_cli.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
-    exec python "bin/$@"
-    ;;
-  generate_commands)
+case "${1:-help}" in
+  fetch_cli.py|convert_all.py|converter/cli.py)
+    command=$1
     shift
-    python bin/generate_commands_for_xhtml2markdown.py "$@"
+    echo "+ python3 bin/$command $@"
+    exec python3 bin/$command "$@"
     ;;
-  convert)
-    exec bash bin/generated/xhtml2markdown.ko.sh
-    ;;
-  full)
-    # 전체 워크플로우 실행
-    python bin/fetch_cli.py --attachments || true
-    python bin/translate_titles.py
-    python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh
-    chmod +x bin/generated/xhtml2markdown.ko.sh
-    bash bin/generated/xhtml2markdown.ko.sh
+  full) # Execute full workflow
+    shift
+    echo "# Starting full workflow..."
+    echo "+ python3 bin/fetch_cli.py $@"
+    python3 bin/fetch_cli.py "$@"
+    echo "+ python3 bin/convert_all.py"
+    python3 bin/convert_all.py
     ;;
   bash|sh)
+    echo "+ $@"
     exec "$@"
     ;;
   help|--help|-h)
@@ -248,23 +233,23 @@ Usage:
   docker run <image> <command> [args...]
 
 Commands:
-  fetch_cli.py [args...]  - Confluence 데이터 수집
-  translate_titles.py               - 제목 번역
-  generate_commands <list_file>     - 변환 명령어 생성
-  convert                           - XHTML을 MDX로 변환
-  full                              - 전체 워크플로우 실행
-  bash                              - 대화형 쉘 실행
-  help                              - 이 도움말 표시
+  fetch_cli.py [args...]            - Collect Confluence data
+  convert_all.py [args...]          - Convert all pages to MDX
+  full [fetch args...]              - Execute full workflow (fetch + convert)
+  converter/cli.py <in> <out>       - Convert a single XHTML to MDX
+  bash                              - Run interactive shell
+  help                              - Show this help message
 
 Examples:
+  docker run docker.io/querypie/confluence-mdx:latest full
+  docker run docker.io/querypie/confluence-mdx:latest full --recent
+  docker run docker.io/querypie/confluence-mdx:latest convert_all.py
   docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
-  docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
-  docker run docker.io/querypie/confluence-mdx:latest generate_commands var/list.en.txt
-  docker run docker.io/querypie/confluence-mdx:latest convert
-  docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest convert
+  docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest full --local
 EOF
     ;;
   *)
+    echo "+ $@"
     exec "$@"
     ;;
 esac

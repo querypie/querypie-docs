@@ -3,27 +3,11 @@
 set -o errexit -o nounset
 
 case "${1:-help}" in
-  fetch_cli.py|convert_all.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
+  fetch_cli.py|convert_all.py|converter/cli.py)
     command=$1
     shift
     echo "+ python3 bin/$command $@"
     exec python3 bin/$command "$@"
-    ;;
-  title)
-    shift
-    echo "+ python3 bin/fetch_cli.py $@"
-    python3 bin/fetch_cli.py "$@"
-    echo "+ python3 bin/translate_titles.py"
-    python3 bin/translate_titles.py
-    ;;
-  generate_commands)
-    shift
-    echo "+ python3 bin/generate_commands_for_xhtml2markdown.py $@"
-    python3 bin/generate_commands_for_xhtml2markdown.py "$@"
-    ;;
-  convert)
-    echo "+ bash bin/generated/xhtml2markdown.ko.sh"
-    exec bash bin/generated/xhtml2markdown.ko.sh
     ;;
   full) # Execute full workflow
     shift
@@ -57,7 +41,7 @@ Examples:
   docker run docker.io/querypie/confluence-mdx:latest full --recent
   docker run docker.io/querypie/confluence-mdx:latest convert_all.py
   docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
-  docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest convert
+  docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest full --local
 
 Environment Variables:
   ATLASSIAN_USERNAME  - Confluence user email

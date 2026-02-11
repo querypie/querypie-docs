@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY bin/ ./bin/
-RUN chmod +x bin/*.py bin/*.sh bin/generated/*.sh
+RUN chmod +x bin/*.py bin/*.sh
 COPY etc/ ./etc/
 COPY tests/ ./tests/
 

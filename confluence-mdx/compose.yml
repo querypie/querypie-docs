@@ -17,8 +17,7 @@
 #   - Full workflow with attachments: docker compose run --rm confluence-mdx full --remote --attachments
 #   - Full workflow with local files (no API calls): docker compose run --rm confluence-mdx full --local
 #   - Collect data: docker compose run --rm confluence-mdx fetch_cli.py --attachments
-#   - Translate titles: docker compose run --rm confluence-mdx translate_titles.py
-#   - Convert: docker compose run --rm confluence-mdx convert
+#   - Convert all pages: docker compose run --rm confluence-mdx convert_all.py
 #   - Interactive shell: docker compose run --rm confluence-mdx bash
 #
 # Container Commands (without compose):
@@ -52,7 +51,6 @@ services:
       - ./etc/korean-titles-translations.txt:/workdir/etc/korean-titles-translations.txt
       # Mount files in var to host
       - ./var/pages.yaml:/workdir/var/pages.yaml
-      - ./var/list.en.txt:/workdir/var/list.en.txt
       - ./var/list.txt:/workdir/var/list.txt
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
