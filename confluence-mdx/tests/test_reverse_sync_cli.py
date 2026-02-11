@@ -6,11 +6,14 @@ from unittest.mock import patch, MagicMock
 from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
-    _get_changed_ko_mdx_files, _do_verify_batch,
-    _normalize_mdx_to_plain, _build_patches, _strip_frontmatter,
-    _transfer_text_changes, _find_mapping_by_text,
-    _align_chars, _find_insert_pos,
+    _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
 )
+from reverse_sync.text_normalizer import normalize_mdx_to_plain
+from reverse_sync.text_transfer import (
+    align_chars, find_insert_pos, transfer_text_changes,
+)
+from reverse_sync.block_matcher import find_mapping_by_text
+from reverse_sync.patch_builder import build_patches
 
 
 @pytest.fixture
@@ -458,18 +461,18 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
     assert exc_info.value.code == 1
 
 
-# --- _normalize_mdx_to_plain tests ---
+# --- normalize_mdx_to_plain tests ---
 
 
 def test_normalize_mdx_heading():
     """## Title → Title"""
-    assert _normalize_mdx_to_plain('## Title', 'heading') == 'Title'
-    assert _normalize_mdx_to_plain('### Sub Title', 'heading') == 'Sub Title'
+    assert normalize_mdx_to_plain('## Title', 'heading') == 'Title'
+    assert normalize_mdx_to_plain('### Sub Title', 'heading') == 'Sub Title'
 
 
 def test_normalize_mdx_paragraph():
     """**bold** and `code` → bold and code"""
-    result = _normalize_mdx_to_plain('**bold** and `code`', 'paragraph')
+    result = normalize_mdx_to_plain('**bold** and `code`', 'paragraph')
     assert result == 'bold and code'
 
 
@@ -480,7 +483,7 @@ def test_normalize_mdx_list():
         "2. 당월 기준으로...\n"
         "    4.  **Access Control Updated**  : 커넥션 접근 권한 수정이력"
     )
-    result = _normalize_mdx_to_plain(content, 'paragraph')
+    result = normalize_mdx_to_plain(content, 'paragraph')
     expected = (
         "Administrator > Audit > ... 메뉴로 이동합니다. "
         "당월 기준으로... "
@@ -496,14 +499,14 @@ def test_normalize_mdx_list_with_figure():
         '<figure><img src="test.png" /></figure>\n'
         "2. 두 번째 항목"
     )
-    result = _normalize_mdx_to_plain(content, 'paragraph')
+    result = normalize_mdx_to_plain(content, 'paragraph')
     assert result == '첫 번째 항목 두 번째 항목'
 
 
-# --- _build_patches index-based mapping tests ---
+# --- build_patches index-based mapping tests ---
 
 
-def test_build_patches_index_mapping():
+def testbuild_patches_index_mapping():
     """인덱스 기반 매핑으로 올바른 XHTML 노드를 찾는다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
@@ -537,7 +540,7 @@ def test_build_patches_index_mapping():
                      xhtml_element_index=1),
     ]
 
-    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
@@ -545,7 +548,7 @@ def test_build_patches_index_mapping():
     assert patches[0]['new_plain_text'] == 'New text.'
 
 
-def test_build_patches_skips_non_content():
+def testbuild_patches_skips_non_content():
     """empty/frontmatter/import 블록은 패치하지 않는다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
@@ -570,7 +573,7 @@ def test_build_patches_skips_non_content():
                      xhtml_element_index=0),
     ]
 
-    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
     assert len(patches) == 0
 
 
@@ -590,13 +593,13 @@ def test_strip_frontmatter_no_frontmatter():
     assert _strip_frontmatter(mdx) == mdx
 
 
-# --- _normalize_mdx_to_plain with markdown links ---
+# --- normalize_mdx_to_plain with markdown links ---
 
 
 def test_normalize_mdx_with_links():
     """마크다운 링크 [text](url) → text로 정규화한다."""
     content = "[Connection Management](/docs/connection) and **bold**"
-    result = _normalize_mdx_to_plain(content, 'paragraph')
+    result = normalize_mdx_to_plain(content, 'paragraph')
     assert result == "Connection Management and bold"
 
 
@@ -625,7 +628,7 @@ def test_verify_ignores_frontmatter_diff(setup_var):
 
 
 
-# --- _find_mapping_by_text tests ---
+# --- find_mapping_by_text tests ---
 
 
 def test_find_mapping_spaceless_match():
@@ -639,7 +642,7 @@ def test_find_mapping_spaceless_match():
         xhtml_plain_text='설정 순서설정 항목1Databased Access Control 설정하기',
     )
 
-    result = _find_mapping_by_text(mdx_plain, [mapping])
+    result = find_mapping_by_text(mdx_plain, [mapping])
     assert result is not None
     assert result.xhtml_xpath == 'table[2]'
 
@@ -662,64 +665,64 @@ def test_find_mapping_prefix_prefers_best_length():
         xhtml_plain_text=prefix + ' 메뉴로 이동합니다.당월 기준으로 내림차순으로 로그가 조회됩니다.',
     )
 
-    result = _find_mapping_by_text(mdx_plain, [caption_mapping, list_mapping])
+    result = find_mapping_by_text(mdx_plain, [caption_mapping, list_mapping])
     assert result is not None
     assert result.xhtml_xpath == 'ol[1]'
 
 
-# --- _align_chars tests ---
+# --- align_chars tests ---
 
 
-def test_align_chars_same_text():
+def testalign_chars_same_text():
     """동일 텍스트는 모든 위치가 매핑된다."""
-    mapping = _align_chars('hello', 'hello')
+    mapping = align_chars('hello', 'hello')
     assert mapping == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
 
 
-def test_align_chars_extra_spaces_in_source():
+def testalign_chars_extra_spaces_in_source():
     """source에 여분 공백이 있으면 건너뛴다."""
-    mapping = _align_chars('A B', 'AB')
+    mapping = align_chars('A B', 'AB')
     assert mapping[0] == 0
     assert mapping[2] == 1
     assert 1 not in mapping
 
 
-def test_align_chars_extra_spaces_in_target():
+def testalign_chars_extra_spaces_in_target():
     """target에 여분 공백이 있으면 건너뛴다."""
-    mapping = _align_chars('AB', 'A B')
+    mapping = align_chars('AB', 'A B')
     assert mapping[0] == 0
     assert mapping[1] == 2
 
 
-# --- _transfer_text_changes tests ---
+# --- transfer_text_changes tests ---
 
 
-def test_transfer_text_changes_replace():
+def testtransfer_text_changes_replace():
     """MDX 간 텍스트 변경이 XHTML plain text에 올바르게 전이된다."""
     mdx_old = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
     mdx_new = '설정 순서 설정 항목 1 Database Access Control 설정하기'
     xhtml_text = '설정 순서설정 항목1Databased Access Control 설정하기'
 
-    result = _transfer_text_changes(mdx_old, mdx_new, xhtml_text)
+    result = transfer_text_changes(mdx_old, mdx_new, xhtml_text)
     assert result == '설정 순서설정 항목1Database Access Control 설정하기'
 
 
-def test_transfer_text_changes_no_change():
+def testtransfer_text_changes_no_change():
     """변경이 없으면 XHTML 원문이 그대로 반환된다."""
-    result = _transfer_text_changes('Hello world', 'Hello world', 'Helloworld')
+    result = transfer_text_changes('Hello world', 'Hello world', 'Helloworld')
     assert result == 'Helloworld'
 
 
-def test_transfer_text_changes_insert():
+def testtransfer_text_changes_insert():
     """insert opcode (공백/문자 삽입)가 올바르게 전이된다."""
-    result = _transfer_text_changes(
+    result = transfer_text_changes(
         '잠금해제 수행자 정보', '잠금 해제 수행자 정보', '잠금해제 수행자 정보')
     assert result == '잠금 해제 수행자 정보'
 
 
-def test_transfer_text_changes_preserves_unrelated_text():
+def testtransfer_text_changes_preserves_unrelated_text():
     """변경되지 않은 텍스트의 공백이 보존된다."""
-    result = _transfer_text_changes(
+    result = transfer_text_changes(
         'Action At : 시점입니다. login ID 입니다.',
         'Action At : 시점입니다. login ID입니다.',
         'Action At : 시점입니다.login ID 입니다.')
@@ -727,9 +730,9 @@ def test_transfer_text_changes_preserves_unrelated_text():
     assert 'login ID입니다.' in result
 
 
-def test_transfer_text_changes_multiple_inserts():
+def testtransfer_text_changes_multiple_inserts():
     """여러 insert 변경이 동시에 올바르게 전이된다."""
-    result = _transfer_text_changes(
+    result = transfer_text_changes(
         '영향 받은 행수. 볼수 있습니다.',
         '영향을 받은 행 수. 볼 수 있습니다.',
         '영향 받은 행수.볼수 있습니다.')
@@ -738,7 +741,7 @@ def test_transfer_text_changes_multiple_inserts():
     assert '볼 수 있습니다.' in result
 
 
-# --- _build_patches with table/list blocks ---
+# --- build_patches with table/list blocks ---
 
 
 def test_verify_result_includes_xhtml_diff(setup_var):
@@ -797,7 +800,7 @@ def test_verify_no_changes_has_empty_diffs(setup_var):
     assert result['xhtml_diff_report'] == ''
 
 
-def test_build_patches_table_block():
+def testbuild_patches_table_block():
     """테이블 html_block에서 셀 경계 공백 차이가 있어도 패치가 생성된다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
@@ -820,7 +823,7 @@ def test_build_patches_table_block():
                      xhtml_element_index=0),
     ]
 
-    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
