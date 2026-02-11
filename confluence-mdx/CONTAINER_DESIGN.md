@@ -23,7 +23,8 @@
 ```
 confluence-mdx/
 ├── bin/                    # 실행 스크립트들
-│   ├── pages_of_confluence.py
+│   ├── fetch_cli.py
+│   ├── fetch/
 │   ├── translate_titles.py
 │   ├── generate_commands_for_xhtml2markdown.py
 │   ├── converter/
@@ -49,7 +50,7 @@ confluence-mdx/
 ```
 
 ### 2.3 주요 워크플로우
-1. **데이터 수집**: `pages_of_confluence.py` → `var/`에 저장
+1. **데이터 수집**: `fetch_cli.py` → `var/`에 저장
 2. **제목 번역**: `translate_titles.py` → `var/list.en.txt` 생성
 3. **명령어 생성**: `generate_commands_for_xhtml2markdown.py` → `bin/generated/xhtml2markdown.ko.sh` 생성
 4. **변환 실행**: `xhtml2markdown.ko.sh` → `target/`에 MDX 파일 생성
@@ -109,7 +110,7 @@ docker run docker.io/querypie/confluence-mdx:latest full
 #### 모드 2: 개별 스크립트 실행
 ```bash
 # 데이터 수집
-docker run docker.io/querypie/confluence-mdx:latest pages_of_confluence.py --attachments
+docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
 
 # 제목 번역
 docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
@@ -218,7 +219,7 @@ target/
 set -e
 
 case "$1" in
-  pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
+  fetch_cli.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
     exec python "bin/$@"
     ;;
   generate_commands)
@@ -230,7 +231,7 @@ case "$1" in
     ;;
   full)
     # 전체 워크플로우 실행
-    python bin/pages_of_confluence.py --attachments || true
+    python bin/fetch_cli.py --attachments || true
     python bin/translate_titles.py
     python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh
     chmod +x bin/generated/xhtml2markdown.ko.sh
@@ -247,7 +248,7 @@ Usage:
   docker run <image> <command> [args...]
 
 Commands:
-  pages_of_confluence.py [args...]  - Confluence 데이터 수집
+  fetch_cli.py [args...]  - Confluence 데이터 수집
   translate_titles.py               - 제목 번역
   generate_commands <list_file>     - 변환 명령어 생성
   convert                           - XHTML을 MDX로 변환
@@ -256,7 +257,7 @@ Commands:
   help                              - 이 도움말 표시
 
 Examples:
-  docker run docker.io/querypie/confluence-mdx:latest pages_of_confluence.py --attachments
+  docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
   docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
   docker run docker.io/querypie/confluence-mdx:latest generate_commands var/list.en.txt
   docker run docker.io/querypie/confluence-mdx:latest convert
@@ -320,7 +321,7 @@ docker run -v $(pwd)/output:/workdir/target \
   ```bash
   docker run -e ATLASSIAN_USERNAME=user@example.com \
              -e ATLASSIAN_API_TOKEN=token \
-             docker.io/querypie/confluence-mdx:latest pages_of_confluence.py
+             docker.io/querypie/confluence-mdx:latest fetch_cli.py
   ```
 
 ## 7. 향후 개선 사항

@@ -26,8 +26,8 @@ COPY tests/ ./tests/
 # Copy cache/ data (included in image)
 COPY cache/ ./cache/
 
-# Populate var/ directory by running pages_of_confluence.py --remote --attachments
-RUN python3 bin/pages_of_confluence.py --remote --attachments
+# Populate var/ directory by running fetch_cli.py --remote --attachments
+RUN python3 bin/fetch_cli.py --remote --attachments
 
 # Create target/ directory
 RUN mkdir -p target/ko target/en target/ja target/public

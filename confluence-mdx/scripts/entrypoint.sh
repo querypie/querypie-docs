@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 
 case "${1:-help}" in
-  pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
+  fetch_cli.py|pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
     command=$1
     shift
     echo "+ python3 bin/$command $@"
@@ -11,8 +11,8 @@ case "${1:-help}" in
     ;;
   title)
     shift
-    echo "+ python3 bin/pages_of_confluence.py $@"
-    python3 bin/pages_of_confluence.py "$@"
+    echo "+ python3 bin/fetch_cli.py $@"
+    python3 bin/fetch_cli.py "$@"
     echo "+ python3 bin/translate_titles.py"
     python3 bin/translate_titles.py
     ;;
@@ -28,8 +28,8 @@ case "${1:-help}" in
   full) # Execute full workflow
     shift
     echo "# Starting full workflow..."
-    echo "+ python3 bin/pages_of_confluence.py $@"
-    python3 bin/pages_of_confluence.py "$@"
+    echo "+ python3 bin/fetch_cli.py $@"
+    python3 bin/fetch_cli.py "$@"
     echo "+ python3 bin/translate_titles.py"
     python3 bin/translate_titles.py
     echo "+ python3 bin/generate_commands_for_xhtml2markdown.py var/list.en.txt > bin/generated/xhtml2markdown.ko.sh"
@@ -51,7 +51,7 @@ Usage:
   docker run <image> <command> [args...]
 
 Commands:
-  pages_of_confluence.py [args...]  - Collect Confluence data
+  fetch_cli.py [args...]            - Collect Confluence data
   translate_titles.py               - Translate titles
   generate_commands <list_file>     - Generate conversion commands
   convert                           - Convert XHTML to MDX
@@ -60,7 +60,7 @@ Commands:
   help                              - Show this help message
 
 Examples:
-  docker run docker.io/querypie/confluence-mdx:latest pages_of_confluence.py --attachments
+  docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
   docker run docker.io/querypie/confluence-mdx:latest translate_titles.py
   docker run docker.io/querypie/confluence-mdx:latest generate_commands var/list.en.txt
   docker run docker.io/querypie/confluence-mdx:latest convert

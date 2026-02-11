@@ -23,7 +23,7 @@ setup-cache.sh
 docker compose --progress=plain build
 ```
 
-cache/ 디렉토리를 채우는 경우,  bin/pages_of_confluence.py 를 실행하여 첨부파일을 내려받을 때 캐시로 작동합니다.
+cache/ 디렉토리를 채우는 경우,  bin/fetch_cli.py 를 실행하여 첨부파일을 내려받을 때 캐시로 작동합니다.
 
 ## 한국어 MDX 파일을 업데이트하기
 
@@ -81,7 +81,7 @@ pip3 install requests beautifulsoup4 pyyaml
 1. `confluence-mdx/var/`에 Confluence 문서 데이터를 저장합니다.
     - 문서의 목록인 `list.txt`를 저장합니다.
     - 개별 문서마다 `<page_id>/page.yaml`, `<page_id>/page.xhtml`을 저장합니다.
-    - `pages_of_confluence.py`를 사용합니다.
+    - `fetch_cli.py`를 사용합니다.
 2. `confluence-mdx/var/list.en.txt`를 생성합니다.
    - `list.en.txt`는 `list.txt`를 영어로 번역한 것입니다.
    - `translate_titles.py`를 사용합니다.
@@ -97,7 +97,7 @@ $ cd confluence-mdx
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip3 install requests beautifulsoup4 pyyaml
-$ bin/pages_of_confluence.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
+$ bin/fetch_cli.py --remote --attachments # 2시간 가량, 시간이 오래 걸립니다.
 $ bin/translate_titles.py
 $ bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/generated/xhtml2markdown.ko.sh
 $ bin/generated/xhtml2markdown.ko.sh
@@ -112,9 +112,9 @@ $ bin/generated/xhtml2markdown.ko.sh
 > source venv/bin/activate  # venv 활성화 필수
 > ```
 
-### 1. Confluence 문서 데이터 수집 (pages_of_confluence.py)
+### 1. Confluence 문서 데이터 수집 (fetch_cli.py)
 
-`pages_of_confluence.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 페이지들을 수집하여 저장하는 스크립트입니다. 
+`fetch_cli.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 페이지들을 수집하여 저장하는 스크립트입니다. 
 이 스크립트는 다음과 같은 기능을 수행합니다:
 
 - 각 페이지의 ID, 탐색 경로(breadcrumbs), 제목을 탭으로 구분된 형식으로 출력합니다.
@@ -126,38 +126,38 @@ $ bin/generated/xhtml2markdown.ko.sh
 실행 방법:
 ```bash
 # 기본 설정으로 실행 - Confluence API 를 호출하고, 그 결과를 var/ 아래에 저장합니다.
-bin/pages_of_confluence.py
+bin/fetch_cli.py
 
 # API 호출과 함께, 첨부파일을 다운로드하여 저장합니다.
 # 첨부파일 변경시에, 이 옵션을 추가하여 실행합니다. 
-# 또는 pages_of_confluence.py 를 처음 실행하는 경우에 사용합니다.
-bin/pages_of_confluence.py --attachments
+# 또는 fetch_cli.py 를 처음 실행하는 경우에 사용합니다.
+bin/fetch_cli.py --attachments
 
 # 로컬에 저장한 데이터파일을 이용해, 목록을 생성하고, page.xhtml 을 업데이트
-bin/pages_of_confluence.py --local
+bin/fetch_cli.py --local
 
-# 로컬에서 pages_of_confluence.py 개선 과정에서, 반복실행할 때 사용하는 명령입니다.
+# 로컬에서 fetch_cli.py 개선 과정에서, 반복실행할 때 사용하는 명령입니다.
 # 또는, var/list.txt 를 업데이트하고자 하는 경우에 실행합니다.
-bin/pages_of_confluence.py --local >var/list.txt
+bin/fetch_cli.py --local >var/list.txt
 
 # 특정 페이지 ID와 하위 문서를 내려받습니다. 첨부파일을 포함하여 내려받습니다.
 # 일부 문서만 변경한 경우, 해당 문서와 하위 페이지를 API 로 내려받아 저장할 때 사용합니다.
-bin/pages_of_confluence.py --page-id 123456789 --attachments
+bin/fetch_cli.py --page-id 123456789 --attachments
 ```
 
 사실상 사용하지 않음. 참고용 기능:
 ```bash
 # 특정 페이지 ID와 하위 문서를 내려받습니다.
-bin/pages_of_confluence.py --page-id 123456789
+bin/fetch_cli.py --page-id 123456789
 
 # 특정 페이지 ID와 공간 키 지정하여, 실행합니다.
-bin/pages_of_confluence.py --page-id 123456789 --space-key DOCS
+bin/fetch_cli.py --page-id 123456789 --space-key DOCS
 
 # 인증 정보 지정
-bin/pages_of_confluence.py --email user@example.com --api-token your-api-token
+bin/fetch_cli.py --email user@example.com --api-token your-api-token
 
 # 로그 레벨 설정
-bin/pages_of_confluence.py --log-level DEBUG
+bin/fetch_cli.py --log-level DEBUG
 ```
 
 실행 결과:

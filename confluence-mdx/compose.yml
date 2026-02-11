@@ -16,7 +16,7 @@
 #   - Full workflow for recent updates: docker compose run --rm confluence-mdx full
 #   - Full workflow with attachments: docker compose run --rm confluence-mdx full --remote --attachments
 #   - Full workflow with local files (no API calls): docker compose run --rm confluence-mdx full --local
-#   - Collect data: docker compose run --rm confluence-mdx pages_of_confluence.py --attachments
+#   - Collect data: docker compose run --rm confluence-mdx fetch_cli.py --attachments
 #   - Translate titles: docker compose run --rm confluence-mdx translate_titles.py
 #   - Convert: docker compose run --rm confluence-mdx convert
 #   - Interactive shell: docker compose run --rm confluence-mdx bash
