@@ -313,7 +313,12 @@ def _normalize_mdx_to_plain(content: str, block_type: str) -> str:
     text = content.strip()
 
     if block_type == 'heading':
-        return text.lstrip('#').strip()
+        s = text.lstrip('#').strip()
+        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
+        s = re.sub(r'`([^`]+)`', r'\1', s)
+        s = re.sub(r'<[^>]+/?>', '', s)
+        s = html_module.unescape(s)
+        return s.strip()
 
     lines = text.split('\n')
     parts = []
