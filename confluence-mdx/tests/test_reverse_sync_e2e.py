@@ -7,7 +7,8 @@ from reverse_sync.mdx_block_parser import parse_mdx_blocks
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
-from reverse_sync_cli import _build_patches, run_verify, MdxSource
+from reverse_sync_cli import run_verify, MdxSource
+from reverse_sync.patch_builder import build_patches
 
 
 TESTCASE_DIR = Path(__file__).parent / "testcases" / "793608206"
@@ -68,7 +69,7 @@ def test_e2e_text_replacement(testcase_data):
     assert len(mappings) > 0
 
     # Step 4: XHTML 패치
-    patches = _build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
 
     if patches:
         patched = patch_xhtml(xhtml, patches)
