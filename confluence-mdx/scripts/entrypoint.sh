@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 
 case "${1:-help}" in
-  fetch_cli.py|pages_of_confluence.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
+  fetch_cli.py|translate_titles.py|generate_commands_for_xhtml2markdown.py|converter/cli.py)
     command=$1
     shift
     echo "+ python3 bin/$command $@"
