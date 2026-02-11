@@ -32,7 +32,7 @@ import shutil
 import sys
 import traceback
 import unicodedata
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Any, Generator, Protocol
 from urllib.parse import quote
@@ -53,7 +53,7 @@ class Config:
     """Centralized configuration management"""
     base_url: str = "https://querypie.atlassian.net/wiki"
     space_key: str = "QM"  # Confluence space key
-    days: int = 21  # Number of days to look back for modified pages
+    days: Optional[int] = None  # Number of days to look back (None = auto-detect from .fetch_state.yaml)
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "var"
@@ -239,22 +239,35 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
         return self.make_request(url, "V1 API attachments")
 
-    def get_recently_modified_pages(self, days: int, space_key: str) -> List[str]:
-        """Get a list of page IDs modified in the last N days from the specified space"""
+    def get_recently_modified_pages(self, days: int, space_key: str, since_date: Optional[str] = None) -> List[str]:
+        """Get a list of page IDs modified since a date or in the last N days.
+
+        Args:
+            days: Number of days to look back (used when since_date is not provided)
+            space_key: Confluence space key
+            since_date: ISO 8601 date string (e.g. version.createdAt from page.v2.yaml).
+                        If provided, overrides days parameter. A 1-day safety margin is subtracted.
+        """
         try:
-            # Calculate the date threshold
-            threshold_date = datetime.now() - timedelta(days=days)
-            # Format date for CQL: YYYY-MM-DD
-            date_str = threshold_date.strftime("%Y-%m-%d")
-            
+            if since_date:
+                # Parse ISO 8601 date and apply 1-day safety margin
+                parsed_date = datetime.fromisoformat(since_date.replace("Z", "+00:00"))
+                threshold_date = parsed_date - timedelta(days=1)
+                date_str = threshold_date.strftime("%Y-%m-%d")
+                self.logger.info(f"Using since_date: {since_date} (with 1-day margin: {date_str})")
+            else:
+                # Calculate the date threshold from days
+                threshold_date = datetime.now() - timedelta(days=days)
+                date_str = threshold_date.strftime("%Y-%m-%d")
+                self.logger.info(f"Searching for pages modified in last {days} days in space {space_key}")
+
             # Build CQL query
             cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}"'
             encoded_query = quote(cql_query)
-            
+
             # Use CQL search API
             url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}&limit=1000"
-            
-            self.logger.info(f"Searching for pages modified in last {days} days in space {space_key}")
+
             self.logger.debug(f"CQL query: {cql_query}")
             
             page_ids = []
@@ -283,7 +296,7 @@ class ApiClient:
                 
                 start += limit
             
-            self.logger.info(f"Found {len(page_ids)} pages modified in last {days} days")
+            self.logger.info(f"Found {len(page_ids)} recently modified pages")
             return page_ids
             
         except Exception as e:
@@ -816,6 +829,37 @@ class ConfluencePageProcessor:
             self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
             self.logger.debug(traceback.format_exc())
 
+    def _get_fetch_state_path(self) -> str:
+        """Return the path to the fetch state file."""
+        return os.path.join(self.config.default_output_dir, ".fetch_state.yaml")
+
+    def _load_fetch_state(self) -> Dict:
+        """Load fetch state from .fetch_state.yaml."""
+        state_path = self._get_fetch_state_path()
+        state = self.file_manager.load_yaml(state_path)
+        return state if state else {}
+
+    def _save_fetch_state(self, state: Dict) -> None:
+        """Save fetch state to .fetch_state.yaml."""
+        state_path = self._get_fetch_state_path()
+        self.file_manager.save_yaml(state_path, state)
+        self.logger.warning(f"Fetch state saved to {state_path}")
+
+    def _compute_max_modified_date(self, page_ids: List[str]) -> Optional[str]:
+        """Scan page.v2.yaml files for the given page IDs and return the maximum version.createdAt."""
+        max_date = None
+        for page_id in page_ids:
+            v2_path = os.path.join(self.config.default_output_dir, page_id, "page.v2.yaml")
+            try:
+                v2_data = self.file_manager.load_yaml(v2_path)
+                if v2_data and "version" in v2_data:
+                    created_at = v2_data["version"].get("createdAt")
+                    if created_at and (max_date is None or created_at > max_date):
+                        max_date = created_at
+            except Exception:
+                continue
+        return max_date
+
     def run(self) -> None:
         """Main execution function"""
         try:
@@ -833,10 +877,32 @@ class ConfluencePageProcessor:
             # Handle different modes
             if self.config.mode == "recent":
                 # --recent mode: Download recently modified pages first, then process like --local
-                self.logger.info(f"Recent mode: Fetching pages modified in last {self.config.days} days from space {self.config.space_key}")
+                since_date = None
+                effective_days = 21  # default fallback
+
+                if self.config.days is not None:
+                    # User explicitly specified --days, use it directly
+                    effective_days = self.config.days
+                    self.logger.warning(f"Recent mode: Fetching pages modified in last {effective_days} days (--days specified)")
+                else:
+                    # Auto-detect from fetch state
+                    fetch_state = self._load_fetch_state()
+                    start_page_state = fetch_state.get(start_page_id, {})
+                    since_date = start_page_state.get("last_modified_seen")
+                    if since_date:
+                        try:
+                            parsed = datetime.fromisoformat(since_date.replace("Z", "+00:00"))
+                            days_ago = (datetime.now(timezone.utc) - parsed).days
+                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from .fetch_state.yaml (~{days_ago} days ago)")
+                        except Exception:
+                            self.logger.warning(f"Recent mode: Auto-detected since_date {since_date} from .fetch_state.yaml")
+                    else:
+                        self.logger.warning(f"Recent mode: No fetch state for start_page_id {start_page_id}, using default {effective_days} days")
+
                 page_ids = self.api_client.get_recently_modified_pages(
-                    days=self.config.days,
-                    space_key=self.config.space_key
+                    days=effective_days,
+                    space_key=self.config.space_key,
+                    since_date=since_date
                 )
                 
                 # Exclude specific page_id from collection (576585864)
@@ -925,6 +991,31 @@ class ConfluencePageProcessor:
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
+            # Update fetch state for remote and recent modes
+            if self.config.mode in ("remote", "recent") and yaml_entries:
+                all_page_ids = [entry['page_id'] for entry in yaml_entries]
+                max_modified = self._compute_max_modified_date(all_page_ids)
+                if max_modified:
+                    fetch_state = self._load_fetch_state()
+                    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+                    prev_state = fetch_state.get(start_page_id, {})
+
+                    new_state = {
+                        "last_modified_seen": max_modified,
+                        "pages_fetched": len(yaml_entries),
+                    }
+
+                    if self.config.mode == "remote":
+                        new_state["last_full_fetch"] = now
+                        new_state["last_recent_fetch"] = prev_state.get("last_recent_fetch")
+                    else:  # recent
+                        new_state["last_full_fetch"] = prev_state.get("last_full_fetch")
+                        new_state["last_recent_fetch"] = now
+
+                    fetch_state[start_page_id] = new_state
+                    self._save_fetch_state(fetch_state)
+                    self.logger.info(f"Updated fetch state: last_modified_seen={max_modified}, pages_fetched={len(yaml_entries)}")
+
             # Save YAML file
             if yaml_entries:
                 self.file_manager.save_yaml(output_yaml_path, yaml_entries)
@@ -954,8 +1045,8 @@ def main():
     )
     parser.add_argument("--space-key", default=Config().space_key,
                         help=f"Confluence space key (default: %(default)s)")
-    parser.add_argument("--days", type=int, default=Config().days,
-                        help=f"Number of days to look back for modified pages (default: %(default)s, used with --recent)")
+    parser.add_argument("--days", type=int, default=None,
+                        help="Number of days to look back for modified pages (default: auto-detect from .fetch_state.yaml, fallback: 21)")
     parser.add_argument("--start-page-id", default=Config().default_start_page_id,
                         help="Root page ID for building breadcrumbs (default: %(default)s)")
     parser.add_argument("--base-url", default=Config().base_url, help="Confluence base URL (default: %(default)s)")
