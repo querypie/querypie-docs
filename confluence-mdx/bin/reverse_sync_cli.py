@@ -545,6 +545,21 @@ def _build_patches(
     """
     patches = []
     used_ids: set = set()  # 이미 매칭된 mapping block_id (중복 매칭 방지)
+    # child → parent 역참조 맵 (부모-자식 간 중복 매칭 방지)
+    child_to_parent: dict = {}
+    for m in mappings:
+        for child_id in m.children:
+            child_to_parent[child_id] = m.block_id
+
+    def _mark_used(block_id: str, m: BlockMapping):
+        """매핑 사용 시 부모/자식도 함께 사용 완료로 표시."""
+        used_ids.add(block_id)
+        for child_id in m.children:
+            used_ids.add(child_id)
+        parent_id = child_to_parent.get(block_id)
+        if parent_id:
+            used_ids.add(parent_id)
+
     # 상위 블록에 대한 그룹화된 변경 (substring 매칭 fallback)
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for change in changes:
@@ -574,7 +589,7 @@ def _build_patches(
                 containing_changes[bid][1].append((old_plain, new_plain))
             continue
 
-        used_ids.add(mapping.block_id)
+        _mark_used(mapping.block_id, mapping)
         new_block = change.new_block
         new_plain = _normalize_mdx_to_plain(new_block.content, new_block.type)
 
