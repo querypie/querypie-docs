@@ -801,3 +801,250 @@ def testbuild_patches_table_block():
     assert patches[0]['xhtml_xpath'] == 'table[1]'
     assert patches[0]['old_plain_text'] == 'Databased Access Control'
     assert patches[0]['new_plain_text'] == 'Database Access Control'
+
+
+# --- sidecar 전용 매칭 코드 경로 테스트 ---
+
+
+def testbuild_patches_child_resolved():
+    """parent+children 매핑에서 child 해석 성공 시 child xpath로 패치한다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
+
+    original_blocks = [
+        MdxBlock('paragraph', 'Old child text.\n', 1, 1),
+    ]
+    improved_blocks = [
+        MdxBlock('paragraph', 'New child text.\n', 1, 1),
+    ]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    parent = BlockMapping(
+        block_id='callout-1', type='html_block',
+        xhtml_xpath='macro-info[1]',
+        xhtml_text='<p>Old child text.</p>',
+        xhtml_plain_text='Old child text.',
+        xhtml_element_index=0,
+        children=['paragraph-2'],
+    )
+    child = BlockMapping(
+        block_id='paragraph-2', type='paragraph',
+        xhtml_xpath='macro-info[1]/p[1]',
+        xhtml_text='Old child text.',
+        xhtml_plain_text='Old child text.',
+        xhtml_element_index=1,
+    )
+    mappings = [parent, child]
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='macro-info[1]', xhtml_type='html_block',
+                        mdx_blocks=[0]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'macro-info[1]/p[1]'
+    assert patches[0]['new_plain_text'] == 'New child text.'
+
+
+def testbuild_patches_child_fallback_to_parent_containing():
+    """child 해석 실패 시 parent를 containing block으로 사용하여 패치한다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
+
+    original_blocks = [
+        MdxBlock('paragraph', 'Unresolvable old text.\n', 1, 1),
+    ]
+    improved_blocks = [
+        MdxBlock('paragraph', 'Unresolvable new text.\n', 1, 1),
+    ]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    # parent의 xhtml_plain_text에 "Unresolvable old text."가 포함됨
+    parent = BlockMapping(
+        block_id='callout-1', type='html_block',
+        xhtml_xpath='macro-info[1]',
+        xhtml_text='...',
+        xhtml_plain_text='Prefix. Unresolvable old text. Suffix.',
+        xhtml_element_index=0,
+        children=['paragraph-2'],
+    )
+    # child의 텍스트가 MDX와 불일치 → _resolve_child_mapping 실패
+    child = BlockMapping(
+        block_id='paragraph-2', type='paragraph',
+        xhtml_xpath='macro-info[1]/p[1]',
+        xhtml_text='Completely different.',
+        xhtml_plain_text='Completely different.',
+        xhtml_element_index=1,
+    )
+    mappings = [parent, child]
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='macro-info[1]', xhtml_type='html_block',
+                        mdx_blocks=[0]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
+    assert patches[0]['old_plain_text'] == 'Prefix. Unresolvable old text. Suffix.'
+    assert 'Unresolvable new text.' in patches[0]['new_plain_text']
+
+
+def testbuild_patches_unmapped_block_skipped():
+    """sidecar에 없고 list/table도 아닌 블록은 skip된다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
+
+    original_blocks = [
+        MdxBlock('paragraph', 'Mapped text.\n', 1, 1),
+        MdxBlock('html_block', '<div>Old html</div>\n', 2, 2),
+    ]
+    improved_blocks = [
+        MdxBlock('paragraph', 'Mapped text.\n', 1, 1),
+        MdxBlock('html_block', '<div>New html</div>\n', 2, 2),
+    ]
+    changes = [
+        BlockChange(index=1, change_type='modified',
+                    old_block=original_blocks[1],
+                    new_block=improved_blocks[1]),
+    ]
+    mappings = [
+        BlockMapping(block_id='paragraph-1', type='paragraph', xhtml_xpath='p[1]',
+                     xhtml_text='Mapped text.', xhtml_plain_text='Mapped text.',
+                     xhtml_element_index=0),
+    ]
+    # sidecar에 index 1 엔트리 없음
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='p[1]', xhtml_type='paragraph', mdx_blocks=[0]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
+
+    assert len(patches) == 0
+
+
+def testbuild_patches_list_item_child_resolved():
+    """리스트 블록에서 sidecar parent의 children으로 개별 항목을 매칭한다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
+
+    old_list = '- Item A old\n- Item B\n'
+    new_list = '- Item A new\n- Item B\n'
+
+    original_blocks = [MdxBlock('list', old_list, 1, 2)]
+    improved_blocks = [MdxBlock('list', new_list, 1, 2)]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    parent = BlockMapping(
+        block_id='list-1', type='list', xhtml_xpath='ul[1]',
+        xhtml_text='<li>Item A old</li><li>Item B</li>',
+        xhtml_plain_text='Item A old Item B',
+        xhtml_element_index=0,
+        children=['li-2', 'li-3'],
+    )
+    child_a = BlockMapping(
+        block_id='li-2', type='paragraph', xhtml_xpath='ul[1]/li[1]',
+        xhtml_text='Item A old', xhtml_plain_text='Item A old',
+        xhtml_element_index=1,
+    )
+    child_b = BlockMapping(
+        block_id='li-3', type='paragraph', xhtml_xpath='ul[1]/li[2]',
+        xhtml_text='Item B', xhtml_plain_text='Item B',
+        xhtml_element_index=2,
+    )
+    mappings = [parent, child_a, child_b]
+    # sidecar에 list block index 없음 → build_list_item_patches 경로
+    mdx_to_sidecar = {}
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+    id_to_mapping = {m.block_id: m for m in mappings}
+
+    from reverse_sync.patch_builder import build_list_item_patches
+    patches = build_list_item_patches(
+        changes[0], mappings, set(),
+        mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+    # sidecar에 parent가 없으므로 매칭 불가 → 빈 패치
+    assert len(patches) == 0
+
+    # sidecar에 parent가 있는 경우
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='ul[1]', xhtml_type='list', mdx_blocks=[0]),
+    }
+    patches = build_list_item_patches(
+        changes[0], mappings, set(),
+        mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'ul[1]/li[1]'
+    assert patches[0]['new_plain_text'] == 'Item A new'
+
+
+def testbuild_patches_list_item_fallback_to_parent():
+    """리스트 항목의 child 해석 실패 시 parent containing block으로 패치한다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
+
+    old_list = '- 변경할 텍스트입니다\n'
+    new_list = '- 변경된 텍스트입니다\n'
+
+    original_blocks = [MdxBlock('list', old_list, 1, 1)]
+    improved_blocks = [MdxBlock('list', new_list, 1, 1)]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    # parent에 children이 있지만 텍스트가 불일치
+    parent = BlockMapping(
+        block_id='list-1', type='list', xhtml_xpath='ul[1]',
+        xhtml_text='<li>변경할 텍스트입니다</li>',
+        xhtml_plain_text='변경할 텍스트입니다',
+        xhtml_element_index=0,
+        children=['li-2'],
+    )
+    child = BlockMapping(
+        block_id='li-2', type='paragraph', xhtml_xpath='ul[1]/li[1]',
+        xhtml_text='Mismatched child', xhtml_plain_text='Mismatched child',
+        xhtml_element_index=1,
+    )
+    mappings = [parent, child]
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='ul[1]', xhtml_type='list', mdx_blocks=[0]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+    id_to_mapping = {m.block_id: m for m in mappings}
+
+    from reverse_sync.patch_builder import build_list_item_patches
+    patches = build_list_item_patches(
+        changes[0], mappings, set(),
+        mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'ul[1]'
+    assert '변경된 텍스트입니다' in patches[0]['new_plain_text']
