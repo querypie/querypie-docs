@@ -161,6 +161,9 @@ def main():
         with open(args.input_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
 
+        # 원본 XHTML 보존 (namespace prefix 제거 전) — sidecar mapping에서 사용
+        xhtml_original = html_content
+
         # Replace XML namespace prefixes
         html_content = re.sub(r'\sac:', ' ', html_content)
         html_content = re.sub(r'\sri:', ' ', html_content)
@@ -190,6 +193,19 @@ def main():
                 logging.debug(f'Attachment {it} is used.')
             else:
                 logging.warning(f'Attachment {it} is NOT used.')
+
+        # Sidecar mapping 생성 (실패해도 변환 자체는 차단하지 않음)
+        try:
+            from converter.sidecar_mapping import generate_sidecar_mapping
+            generate_sidecar_mapping(
+                xhtml_content=xhtml_original,
+                mdx_content=markdown_content,
+                page_id=str(page_v1.get('id')) if page_v1 else None,
+                input_dir=input_dir,
+                output_file_path=args.output_file,
+            )
+        except Exception as e:
+            logging.warning(f"Sidecar mapping 생성 실패 (변환은 성공): {e}")
 
         # Generate _meta.ts from children.v2.yaml to preserve child order for Netra sidebar
         generate_meta_from_children(input_dir, ctx.OUTPUT_FILE_PATH, PAGES_BY_ID)
