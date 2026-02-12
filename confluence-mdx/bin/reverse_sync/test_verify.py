@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """run-tests.sh용 thin wrapper — run_verify()를 page_id와 함께 직접 호출한다.
 
 Usage:
