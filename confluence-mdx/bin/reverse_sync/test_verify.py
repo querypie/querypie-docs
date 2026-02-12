@@ -1,7 +1,7 @@
 """run-tests.sh용 thin wrapper — run_verify()를 page_id와 함께 직접 호출한다.
 
 Usage:
-    python reverse_sync_test_verify.py <page_id> <original_mdx_path> <improved_mdx_path> <xhtml_path>
+    python -m reverse_sync.test_verify <page_id> <original_mdx_path> <improved_mdx_path> <xhtml_path>
 """
 import json
 import sys
