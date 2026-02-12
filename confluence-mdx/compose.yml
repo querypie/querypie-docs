@@ -51,7 +51,6 @@ services:
       - ./etc/korean-titles-translations.txt:/workdir/etc/korean-titles-translations.txt
       # Mount files in var to host
       - ./var/pages.yaml:/workdir/var/pages.yaml
-      - ./var/list.txt:/workdir/var/list.txt
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
       - ../src/content/ko:/workdir/target/ko
