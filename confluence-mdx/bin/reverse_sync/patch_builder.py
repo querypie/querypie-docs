@@ -1,14 +1,17 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 import html as html_module
 import re
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.text_normalizer import normalize_mdx_to_plain, collapse_ws
+from reverse_sync.text_normalizer import (
+    normalize_mdx_to_plain, collapse_ws, strip_list_marker,
+)
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.block_matcher import find_mapping_by_text, find_containing_mapping
+from reverse_sync.sidecar_lookup import find_mapping_by_sidecar, SidecarEntry
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
@@ -19,11 +22,13 @@ def build_patches(
     original_blocks: List[MdxBlock],
     improved_blocks: List[MdxBlock],
     mappings: List[BlockMapping],
+    mdx_to_sidecar: Optional[Dict[int, SidecarEntry]] = None,
+    xpath_to_mapping: Optional[Dict[str, 'BlockMapping']] = None,
 ) -> List[Dict[str, str]]:
-    """diff 변경과 매핑을 텍스트 기반으로 결합하여 XHTML 패치 목록을 구성한다.
+    """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
-    MDX 블록의 normalized plain text와 XHTML 매핑의 xhtml_plain_text를
-    비교하여 올바른 대상 요소를 찾는다.
+    sidecar 인덱스가 제공되면 O(1) 직접 조회를 사용한다.
+    제공되지 않으면 기존 텍스트 기반 fuzzy matching으로 동작한다.
     """
     patches = []
     used_ids: set = set()  # 이미 매칭된 mapping block_id (중복 매칭 방지)
@@ -32,6 +37,11 @@ def build_patches(
     for m in mappings:
         for child_id in m.children:
             child_to_parent[child_id] = m.block_id
+
+    # block_id → BlockMapping 인덱스 (child 해석용)
+    id_to_mapping: Dict[str, BlockMapping] = {m.block_id: m for m in mappings}
+
+    use_sidecar = mdx_to_sidecar is not None and xpath_to_mapping is not None
 
     def _mark_used(block_id: str, m: BlockMapping):
         """매핑 사용 시 부모/자식도 함께 사용 완료로 표시."""
@@ -50,7 +60,26 @@ def build_patches(
 
         old_plain = normalize_mdx_to_plain(
             change.old_block.content, change.old_block.type)
-        mapping = find_mapping_by_text(old_plain, mappings, exclude=used_ids)
+
+        # Phase 1: Sidecar 직접 조회 (O(1))
+        mapping = None
+        if use_sidecar:
+            mapping = find_mapping_by_sidecar(
+                change.index, mdx_to_sidecar, xpath_to_mapping)
+
+            # Parent mapping → child 해석 시도
+            if mapping is not None and mapping.children:
+                child = _resolve_child_mapping(
+                    old_plain, mapping, id_to_mapping)
+                if child is not None:
+                    mapping = child
+                else:
+                    # Child 해석 실패 (list/table 블록 등) → fuzzy fallback
+                    mapping = None
+
+        # Phase 2: Fuzzy matching fallback
+        if mapping is None:
+            mapping = find_mapping_by_text(old_plain, mappings, exclude=used_ids)
 
         if mapping is None:
             # 리스트 블록: 항목별로 분리하여 개별 매핑 시도
@@ -81,10 +110,6 @@ def build_patches(
         new_block = change.new_block
         new_plain = normalize_mdx_to_plain(new_block.content, new_block.type)
 
-        # MDX와 XHTML의 공백 구조가 같으면 (paragraph/heading 등)
-        # MDX normalized text를 직접 사용.
-        # 다르면 (table/html_block/list 등 셀/항목 경계 공백 차이)
-        # XHTML 공백 구조를 보존하면서 콘텐츠 변경만 전이.
         if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
             new_plain = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
@@ -109,6 +134,53 @@ def build_patches(
         used_ids.add(bid)
 
     return patches
+
+
+def _resolve_child_mapping(
+    old_plain: str,
+    parent_mapping: BlockMapping,
+    id_to_mapping: Dict[str, BlockMapping],
+) -> Optional[BlockMapping]:
+    """Parent mapping의 children 중에서 old_plain과 일치하는 child를 찾는다."""
+    old_norm = collapse_ws(old_plain)
+    if not old_norm:
+        return None
+
+    # 1차: collapse_ws 완전 일치
+    for child_id in parent_mapping.children:
+        child = id_to_mapping.get(child_id)
+        if child and collapse_ws(child.xhtml_plain_text) == old_norm:
+            return child
+
+    # 2차: 공백 무시 완전 일치
+    old_nospace = re.sub(r'\s+', '', old_norm)
+    for child_id in parent_mapping.children:
+        child = id_to_mapping.get(child_id)
+        if child:
+            child_nospace = re.sub(r'\s+', '', child.xhtml_plain_text)
+            if child_nospace == old_nospace:
+                return child
+
+    # 3차: 리스트 마커 제거 후 비교 (XHTML child가 "- text" 형식인 경우)
+    for child_id in parent_mapping.children:
+        child = id_to_mapping.get(child_id)
+        if child:
+            child_nospace = re.sub(r'\s+', '', child.xhtml_plain_text)
+            child_unmarked = strip_list_marker(child_nospace)
+            if child_unmarked != child_nospace and old_nospace == child_unmarked:
+                return child
+
+    # 4차: MDX 쪽 리스트 마커 제거 후 비교
+    old_unmarked = strip_list_marker(old_nospace)
+    if old_unmarked != old_nospace:
+        for child_id in parent_mapping.children:
+            child = id_to_mapping.get(child_id)
+            if child:
+                child_nospace = re.sub(r'\s+', '', child.xhtml_plain_text)
+                if old_unmarked == child_nospace:
+                    return child
+
+    return None
 
 
 def is_markdown_table(content: str) -> bool:

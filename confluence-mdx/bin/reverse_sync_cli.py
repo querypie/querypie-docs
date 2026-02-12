@@ -213,8 +213,28 @@ def run_verify(
     (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
 
+    # Step 3.5: Sidecar mapping 생성 + 인덱스 구축
+    from reverse_sync.sidecar_lookup import (
+        SidecarEntry, generate_sidecar_mapping,
+        build_mdx_to_sidecar_index, build_xpath_to_mapping,
+    )
+    sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx, page_id)
+    (var_dir / 'mapping.yaml').write_text(sidecar_yaml)
+    sidecar_data = yaml.safe_load(sidecar_yaml) or {}
+    sidecar_entries = [
+        SidecarEntry(
+            xhtml_xpath=item['xhtml_xpath'],
+            xhtml_type=item.get('xhtml_type', ''),
+            mdx_blocks=item.get('mdx_blocks', []),
+        )
+        for item in sidecar_data.get('mappings', [])
+    ]
+    mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
+    xpath_to_mapping = build_xpath_to_mapping(original_mappings)
+
     # Step 4: XHTML 패치 → patched.xhtml 저장
-    patches = build_patches(changes, original_blocks, improved_blocks, original_mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks,
+                            original_mappings, mdx_to_sidecar, xpath_to_mapping)
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
