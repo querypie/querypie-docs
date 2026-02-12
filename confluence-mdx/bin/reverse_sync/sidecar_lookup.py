@@ -23,7 +23,7 @@ def load_sidecar_mapping(mapping_path: str) -> List[SidecarEntry]:
             f"Sidecar mapping not found: {mapping_path}\n"
             f"Forward converter를 실행하여 mapping.yaml을 생성하세요."
         )
-    data = yaml.safe_load(path.read_text())
+    data = yaml.safe_load(path.read_text()) or {}
     entries = []
     for item in data.get('mappings', []):
         entries.append(SidecarEntry(
@@ -103,11 +103,6 @@ def generate_sidecar_mapping(
     top_mappings = [m for m in xhtml_mappings if m.block_id not in child_ids]
     mdx_ptr = 0  # MDX 콘텐츠 인덱스 포인터
 
-    # 텍스트가 비어있거나 의미 없는 XHTML 매핑 타입
-    SKIP_TYPES = frozenset(('html_block',))
-    # XHTML 매핑 중 MDX 대응이 없는 것들 (image, toc 매크로 등)
-    NO_MDX_XPATHS = frozenset()  # 동적 판단으로 처리
-
     LOOKAHEAD = 5  # 최대 앞으로 탐색할 MDX 블록 수
 
     for xm in top_mappings:
@@ -145,10 +140,8 @@ def generate_sidecar_mapping(
             # 단, 다음 top-level XHTML 매핑의 텍스트와 겹치지 않는 범위에서만
             if xm.children:
                 num_children = _count_child_mdx_blocks(
-                    xm, xhtml_mappings, child_ids,
-                    mdx_content_indices, mdx_blocks, mdx_plains,
-                    mdx_ptr, top_mappings,
-                    normalize_mdx_to_plain, collapse_ws,
+                    xm, mdx_content_indices, mdx_plains,
+                    mdx_ptr, top_mappings, collapse_ws,
                 )
                 for _ in range(num_children):
                     if mdx_ptr < len(mdx_content_indices):
@@ -179,14 +172,10 @@ def generate_sidecar_mapping(
 
 def _count_child_mdx_blocks(
     xm,
-    xhtml_mappings,
-    child_ids,
     mdx_content_indices,
-    mdx_blocks,
     mdx_plains,
     mdx_ptr,
     top_mappings,
-    normalize_mdx_to_plain,
     collapse_ws,
 ) -> int:
     """children이 있는 XHTML 매핑에 대응하는 MDX 블록 수를 결정한다.

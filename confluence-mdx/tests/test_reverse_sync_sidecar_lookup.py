@@ -11,7 +11,6 @@ sidecar_lookup.py의 핵심 기능을 검증한다:
 import pytest
 import yaml
 from pathlib import Path
-from unittest.mock import patch
 
 from reverse_sync.sidecar_lookup import (
     SidecarEntry,
@@ -73,6 +72,12 @@ class TestLoadSidecarMapping:
     def test_empty_mappings(self, tmp_path):
         mapping_file = tmp_path / 'mapping.yaml'
         mapping_file.write_text(yaml.dump({'version': 1, 'mappings': []}))
+        entries = load_sidecar_mapping(str(mapping_file))
+        assert entries == []
+
+    def test_empty_yaml_file(self, tmp_path):
+        mapping_file = tmp_path / 'mapping.yaml'
+        mapping_file.write_text('')
         entries = load_sidecar_mapping(str(mapping_file))
         assert entries == []
 
