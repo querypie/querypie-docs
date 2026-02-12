@@ -23,11 +23,11 @@ RUN chmod +x bin/*.py bin/*.sh
 COPY etc/ ./etc/
 COPY tests/ ./tests/
 
-# Copy cache/ data (included in image)
-COPY cache/ ./cache/
+# Restore var/ from previous image cache (baseline for --recent mode)
+COPY cache/ ./var/
 
-# Populate var/ directory by running fetch_cli.py --remote --attachments
-RUN python3 bin/fetch_cli.py --remote --attachments
+# Update var/ with recently modified pages only
+RUN python3 bin/fetch_cli.py --recent --attachments
 
 # Create target/ directory
 RUN mkdir -p target/ko target/en target/ja target/public
