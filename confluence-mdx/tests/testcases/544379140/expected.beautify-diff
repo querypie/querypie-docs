@@ -44,24 +44,6 @@
      <span style="color: rgb(76,154,255);">
       See Log Template and Description
      </span>
-@@ -1035,7 +1035,7 @@
-     연산자를 활용합니다.
-    </p>
-    <p>
--    - 복합 조건 : 함께 처리해야하는 조건은 괄호(
-+    - 복합 조건 : 함께 처리해야 하는 조건은 괄호(
-     <code>
-      ( )
-     </code>
-@@ -1059,7 +1059,7 @@
-     </code>
-    </p>
-    <p>
--    - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 :
-+    - DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 :
-     <code>
-      connectionName == 'database1' || connectionName == 'database2'
-     </code>
 @@ -1279,7 +1279,7 @@
      </strong>
     </p>

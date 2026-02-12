@@ -9,6 +9,10 @@ from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync_cli import run_verify, MdxSource
 from reverse_sync.patch_builder import build_patches
+from reverse_sync.sidecar_lookup import (
+    SidecarEntry, generate_sidecar_mapping,
+    build_mdx_to_sidecar_index, build_xpath_to_mapping,
+)
 
 
 TESTCASE_DIR = Path(__file__).parent / "testcases" / "793608206"
@@ -68,8 +72,24 @@ def test_e2e_text_replacement(testcase_data):
     mappings = record_mapping(xhtml)
     assert len(mappings) > 0
 
+    # Step 3.5: Sidecar mapping 생성
+    import yaml
+    sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx)
+    sidecar_data = yaml.safe_load(sidecar_yaml) or {}
+    sidecar_entries = [
+        SidecarEntry(
+            xhtml_xpath=item['xhtml_xpath'],
+            xhtml_type=item.get('xhtml_type', ''),
+            mdx_blocks=item.get('mdx_blocks', []),
+        )
+        for item in sidecar_data.get('mappings', [])
+    ]
+    mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
+    xpath_to_mapping = build_xpath_to_mapping(mappings)
+
     # Step 4: XHTML 패치
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
 
     if patches:
         patched = patch_xhtml(xhtml, patches)
