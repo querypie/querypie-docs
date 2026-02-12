@@ -55,3 +55,36 @@ jobs:
           touch .env
           docker compose --progress=plain push
 
+      - name: Clean up untagged images from Docker Hub
+        if: github.event_name != 'pull_request'
+        env:
+          DOCKERHUB_USERNAME: ${{ vars.CONTAINER_REGISTRY_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.CONTAINER_REGISTRY_CREDENTIAL }}
+        run: |
+          set -o errexit -o nounset -o pipefail
+          REPO="querypie/confluence-mdx"
+
+          # Get Docker Hub API token
+          TOKEN=$(curl -sf "https://hub.docker.com/v2/users/login" \
+            -H "Content-Type: application/json" \
+            -d "{\"username\":\"${DOCKERHUB_USERNAME}\",\"password\":\"${DOCKERHUB_PASSWORD}\"}" \
+            | jq -r '.token')
+
+          # List inactive (untagged) image digests
+          DIGESTS=$(curl -sf "https://hub.docker.com/v2/repositories/${REPO}/images?status=inactive&page_size=100" \
+            -H "Authorization: Bearer ${TOKEN}" \
+            | jq '[.results[] | {repository: "confluence-mdx", digest: .digest}]')
+
+          COUNT=$(echo "${DIGESTS}" | jq 'length')
+
+          if [ "${COUNT}" -gt 0 ]; then
+            echo "Deleting ${COUNT} inactive (untagged) image(s)..."
+            curl -sf -X POST "https://hub.docker.com/v2/repositories/${REPO}/images/delete" \
+              -H "Authorization: Bearer ${TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"dry_run\":false,\"manifests\":${DIGESTS}}"
+            echo "Cleanup complete."
+          else
+            echo "No inactive images to clean up."
+          fi
+
