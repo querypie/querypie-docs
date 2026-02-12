@@ -6,7 +6,7 @@ This script converts MDX files to skeleton format by preserving the markdown str
 and replacing text content with a _TEXT_ placeholder.
 
 Usage:
-    python3 skeleton/cli.py path/to/filename.mdx
+    bin/skeleton/cli.py path/to/filename.mdx
     # Creates path/to/filename.skel.mdx
 
 Features Preserved:

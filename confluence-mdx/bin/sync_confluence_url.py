@@ -9,16 +9,16 @@ inserting it right after the `title:` line.
 
 Usage:
     # Individual files (en/ja paths only; ko paths are silently skipped)
-    python3 bin/sync_confluence_url.py src/content/en/overview.mdx src/content/ja/overview.mdx
+    bin/sync_confluence_url.py src/content/en/overview.mdx src/content/ja/overview.mdx
 
     # Recursive – default targets: src/content/en + src/content/ja
-    python3 bin/sync_confluence_url.py -r
+    bin/sync_confluence_url.py -r
 
     # Recursive – specific directory
-    python3 bin/sync_confluence_url.py -r src/content/en/administrator-manual
+    bin/sync_confluence_url.py -r src/content/en/administrator-manual
 
     # Dry-run (no files written)
-    python3 bin/sync_confluence_url.py -r --dry-run
+    bin/sync_confluence_url.py -r --dry-run
 """
 
 import argparse

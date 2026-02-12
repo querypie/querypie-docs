@@ -8,11 +8,11 @@ This script:
 3. Generates Confluence document links
 
 Usage:
-    python3 find_mdx_with_text.py [search_text]
+    bin/find_mdx_with_text.py [search_text]
 
 Example:
-    python3 find_mdx_with_text.py "Unsupported xhtml node:"
-    python3 find_mdx_with_text.py "특정 문구"
+    bin/find_mdx_with_text.py "Unsupported xhtml node:"
+    bin/find_mdx_with_text.py "특정 문구"
 """
 
 import argparse

@@ -3,8 +3,8 @@
 git diff에서 기존 alt 텍스트를 추출하여 덮어쓴 파일에 복원
 
 사용법:
-  python3 bin/restore_alt_from_diff.py --dry-run
-  python3 bin/restore_alt_from_diff.py --apply
+  bin/restore_alt_from_diff.py --dry-run
+  bin/restore_alt_from_diff.py --apply
 """
 
 import re

@@ -8,7 +8,7 @@ entity 인코딩)은 양쪽 모두 동일하게 정규화되어 소거되고, �
 변경만 diff에 남는다.
 
 Usage:
-    python3 bin/xhtml_beautify_diff.py <file_a> <file_b>
+    bin/xhtml_beautify_diff.py <file_a> <file_b>
 
 Exit codes:
     0 — 차이 없음
