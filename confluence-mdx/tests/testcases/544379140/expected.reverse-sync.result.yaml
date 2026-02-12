@@ -1,5 +1,5 @@
 changes_count: 8
-created_at: '2026-02-10T19:50:53.237420+00:00'
+created_at: '2026-02-12T15:58:44.994871+00:00'
 mdx_diff_report: "--- tests/testcases/544379140/original.mdx+++ tests/testcases/544379140/improved.mdx@@\
   \ -75,10 +75,10 @@ ### 로그 추출 작업 생성하기\n \n 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다.\n\
   -(1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드\n+(1) 관련\
@@ -42,10 +42,20 @@ mdx_diff_report: "--- tests/testcases/544379140/original.mdx+++ tests/testcases/
   \ \n 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다.\n 장기간에 걸친 로그이거나 필터링 조건의 복잡도가\
   \ 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.\n"
 page_id: '544379140'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -139,7 +139,7\
+    \ @@ \n - OR 조건 : `||` 연산자를 활용합니다.\n \n-- 복합 조건 : 함께 처리해야 하는 조건은 괄호(`( )`)로 묶어서\
+    \ 활용합니다.\n+- 복합 조건 : 함께 처리해야하는 조건은 괄호(`( )`)로 묶어서 활용합니다.\n \n \n (4) 예시\n@@ -148,7\
+    \ +148,7 @@ \n - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType\
+    \ == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`\n \n-- DB Access History\
+    \ 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName\
+    \ == 'database2'`\n+- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식\
+    \ : `connectionName == 'database1' || connectionName == 'database2'`\n \n - DB\
+    \ Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우\
+    \ 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2')\
+    \ && replicationType == 'SINGLE'`\n </Callout>\n"
+  exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -717,14 +717,14\
   \ @@\n  로그 추출 작업 생성하기\n </h2>\n <p>\n- 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1)\
   \ 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드\n+ 감사 로그 추출\
@@ -66,16 +76,10 @@ xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -717,14 +
   \ 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n     </p>\n    </li>\n    <li>\n@@ -890,7\
   \ +890,7 @@\n     </strong>\n    </p>\n    <p>\n-    (1) 필터 표현식을 사용하시기 위해 '\n+ \
   \   (1) 필터 표현식을 사용하기 위해 '\n     <span style=\"color: rgb(76,154,255);\">\n     \
-  \ See Log Template and Description\n     </span>\n@@ -1035,7 +1035,7 @@\n     연산자를\
-  \ 활용합니다.\n    </p>\n    <p>\n-    - 복합 조건 : 함께 처리해야하는 조건은 괄호(\n+    - 복합 조건 : 함께\
-  \ 처리해야 하는 조건은 괄호(\n     <code>\n      ( )\n     </code>\n@@ -1059,7 +1059,7 @@\n\
-  \     </code>\n    </p>\n    <p>\n-    - DB Access History 중 특정 데이터베이스 2종류 대해서만\
-  \ 추출하려는 경우 필요한 표현식 :\n+    - DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한\
-  \ 표현식 :\n     <code>\n      connectionName == 'database1' || connectionName == 'database2'\n\
-  \     </code>\n@@ -1279,7 +1279,7 @@\n     </strong>\n    </p>\n    <p>\n-    내보내기\
-  \ 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n+    내보내기\
-  \ 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n    </p>\n\
-  \    <ol start=\"1\">\n     <li>\n@@ -1335,7 +1335,7 @@\n <p>\n </p>\n <h2>\n- 추출\
-  \ 작업 완료시 파일 내려받기\n+ 추출 작업 완료 시 파일 내려받기\n </h2>\n <p>\n  별도의 필터링 조건이 없는 단기간 조회의 경우에는\
-  \ 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될\
-  \ 수 있습니다."
+  \ See Log Template and Description\n     </span>\n@@ -1279,7 +1279,7 @@\n     </strong>\n\
+  \    </p>\n    <p>\n-    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다.\
+  \ 아래와 같이 작동합니다.\n+    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다.\
+  \ 아래와 같이 작동합니다.\n    </p>\n    <ol start=\"1\">\n     <li>\n@@ -1335,7 +1335,7 @@\n\
+  \ <p>\n </p>\n <h2>\n- 추출 작업 완료시 파일 내려받기\n+ 추출 작업 완료 시 파일 내려받기\n </h2>\n <p>\n \
+  \ 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은\
+  \ 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다."

@@ -269,13 +269,13 @@ blocks:
     x != ''abc'',     contains(x, ''ab'')- Boolean Type 지원하는 표현식 : == (equals), != (not equals), &&
     (and), || (or)예 : x == `true`, x && y,     (x > `0`) && (y == `0`)- Array Type예 : x[? @ == ''value''], list[? @ > `10`](3)
     여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.- AND 조건 : && 연산자를 활용합니다.- OR 조건 : || 연산자를
-    활용합니다.- 복합 조건 : 함께 처리해야 하는 조건은 괄호(( ))로 묶어서 활용합니다.(4) 예시- Query Audit 중 쿼리 실행
-    로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION''- Query Audit 중 웹에디터에 수행한
-    쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION'' && executedFrom ==
-    ''WEB_EDITOR''- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : connectionName
-    == ''database1'' || connectionName == ''database2''- DB Access History 중 특정 데이터베이스
-    2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName ==
-    ''database1'' || connectionName == ''database2'') && replicationType == ''SINGLE''
+    활용합니다.- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.(4) 예시- Query Audit 중 쿼리 실행 로그만
+    추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION''- Query Audit 중 웹에디터에 수행한 쿼리
+    실행 로그만 추출하려는 경우 필요한 표현식 : actionType == ''SQL_EXECUTION'' && executedFrom == ''WEB_EDITOR''-
+    DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName == ''database1''
+    || connectionName == ''database2''- DB Access History 중 특정 데이터베이스 2종류이면서 Replication
+    Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == ''database1'' ||
+    connectionName == ''database2'') && replicationType == ''SINGLE''
 
     필터 표현식(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을 통해 로그별 key와 각각의
     type 및 포함하는 value를 참고해주시기 바랍니다.(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  -
@@ -303,12 +303,12 @@ blocks:
     <code>|| (or)</code><br/>예 : <code>x == `true`</code>,<code> x &amp;&amp; y</code>,     <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code></p><p>- Array Type</p><p>예 : <code>x[?
     @ == ''value'']</code>, <code>list[? @ &gt; `10`]</code></p><p></p><p>(3) 여러 조건을
     함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p><p>- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p><p>-
-    OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야 하는 조건은 괄호(<code>(
-    )</code>)로 묶어서 활용합니다.</p><p></p><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는
-    경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION''</code></p><p>- Query Audit
-    중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION''
-    &amp;&amp; executedFrom == ''WEB_EDITOR''</code></p><p>- DB Access History 중 특정
-    데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == ''database1'' || connectionName
+    OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로
+    묶어서 활용합니다.</p><p></p><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식
+    : <code>actionType == ''SQL_EXECUTION''</code></p><p>- Query Audit 중 웹에디터에 수행한
+    쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == ''SQL_EXECUTION'' &amp;&amp;
+    executedFrom == ''WEB_EDITOR''</code></p><p>- DB Access History 중 특정 데이터베이스 2종류
+    대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == ''database1'' || connectionName
     == ''database2''</code></p><p>- DB Access History 중 특정 데이터베이스 2종류이면서 Replication
     Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == ''database1''
     || connectionName == ''database2'') &amp;&amp; replicationType == ''SINGLE''</code></p></ac:adf-content></ac:adf-node><ac:adf-fallback><div
@@ -458,8 +458,8 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 33
-  xhtml_plain_text: '- 복합 조건 : 함께 처리해야 하는 조건은 괄호(( ))로 묶어서 활용합니다.'
-  xhtml_text: '- 복합 조건 : 함께 처리해야 하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.'
+  xhtml_plain_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.'
+  xhtml_text: '- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.'
   xhtml_xpath: ac:adf-extension[1]/p[16]
 - block_id: paragraph-35
   children: []
@@ -495,9 +495,9 @@ blocks:
   children: []
   type: paragraph
   xhtml_element_index: 38
-  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 :
-    connectionName == ''database1'' || connectionName == ''database2'''
-  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName
+  xhtml_plain_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName
+    == ''database1'' || connectionName == ''database2'''
+  xhtml_text: '- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName
     == ''database1'' || connectionName == ''database2''</code>'
   xhtml_xpath: ac:adf-extension[1]/p[21]
 - block_id: paragraph-40
@@ -685,6 +685,6 @@ blocks:
   xhtml_text: 추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다.
     하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.
   xhtml_xpath: p[10]
-created_at: '2026-02-10T19:50:53.237420+00:00'
+created_at: '2026-02-12T15:58:44.994871+00:00'
 page_id: '544379140'
 source_xhtml: patched.xhtml
