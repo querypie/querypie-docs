@@ -6,9 +6,9 @@ translate_titles.py, generate_commands_for_xhtml2markdown.py, xhtml2markdown.ko.
 하나의 명령으로 대체합니다.
 
 Usage:
-  python convert_all.py                       # 전체 변환
-  python convert_all.py --verify-translations  # 번역 검증만 수행
-  python convert_all.py --generate-list        # list.txt / list.en.txt 생성
+  bin/convert_all.py                       # 전체 변환
+  bin/convert_all.py --verify-translations  # 번역 검증만 수행
+  bin/convert_all.py --generate-list        # list.txt / list.en.txt 생성
 """
 
 import argparse

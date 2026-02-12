@@ -64,13 +64,13 @@
 
 ```bash
 # 기본 사용법
-$ python bin/sync_ko_commit.py ae93da7e
+$ bin/sync_ko_commit.py ae93da7e
 
 # dry-run (미리보기)
-$ python bin/sync_ko_commit.py ae93da7e --dry-run
+$ bin/sync_ko_commit.py ae93da7e --dry-run
 
 # 특정 언어만
-$ python bin/sync_ko_commit.py ae93da7e --lang en
+$ bin/sync_ko_commit.py ae93da7e --lang en
 
 # 검증
 $ cd confluence-mdx && bin/skeleton/cli.py --recursive --max-diff=10
