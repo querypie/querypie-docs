@@ -17,12 +17,12 @@ Modes:
   --recent: Download recently modified pages, then process like --local (default)
 
 Usage examples:
-  python fetch_cli.py  # Same as --recent: download recent pages then process locally
-  python fetch_cli.py --local  # Process existing local files hierarchically
-  python fetch_cli.py --remote  # Download and process via API hierarchically
-  python fetch_cli.py --recent  # Download recent pages then process locally
-  python fetch_cli.py --days 14  # Fetch pages modified in last 14 days (with --recent)
-  python fetch_cli.py --attachments  # Download page content with attachments
+  python3 fetch_cli.py  # Same as --recent: download recent pages then process locally
+  python3 fetch_cli.py --local  # Process existing local files hierarchically
+  python3 fetch_cli.py --remote  # Download and process via API hierarchically
+  python3 fetch_cli.py --recent  # Download recent pages then process locally
+  python3 fetch_cli.py --days 14  # Fetch pages modified in last 14 days (with --recent)
+  python3 fetch_cli.py --attachments  # Download page content with attachments
 """
 
 import argparse
@@ -30,7 +30,7 @@ import logging
 import sys
 from pathlib import Path
 
-# Ensure bin/ is on sys.path when run as a script (e.g. python bin/fetch_cli.py)
+# Ensure bin/ is on sys.path when run as a script (e.g. python3 bin/fetch_cli.py)
 _bin_dir = str(Path(__file__).resolve().parent)
 if _bin_dir not in sys.path:
     sys.path.insert(0, _bin_dir)
