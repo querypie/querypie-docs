@@ -57,6 +57,7 @@ jobs:
 
       - name: Clean up untagged images from Docker Hub
         if: github.event_name != 'pull_request'
+        continue-on-error: true
         env:
           DOCKERHUB_USERNAME: ${{ vars.CONTAINER_REGISTRY_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.CONTAINER_REGISTRY_CREDENTIAL }}
@@ -65,26 +66,37 @@ jobs:
           REPO="querypie/confluence-mdx"
 
           # Get Docker Hub API token
-          TOKEN=$(curl -sf "https://hub.docker.com/v2/users/login" \
+          RESPONSE=$(curl -s "https://hub.docker.com/v2/users/login" \
             -H "Content-Type: application/json" \
-            -d "{\"username\":\"${DOCKERHUB_USERNAME}\",\"password\":\"${DOCKERHUB_PASSWORD}\"}" \
-            | jq -r '.token')
+            -d "{\"username\":\"${DOCKERHUB_USERNAME}\",\"password\":\"${DOCKERHUB_PASSWORD}\"}")
+
+          TOKEN=$(echo "${RESPONSE}" | jq -r '.token // empty')
+          if [ -z "${TOKEN}" ]; then
+            echo "::warning::Failed to get Docker Hub API token"
+            echo "${RESPONSE}" | jq . 2>/dev/null || echo "${RESPONSE}"
+            exit 1
+          fi
 
           # List inactive (untagged) image digests
-          DIGESTS=$(curl -sf "https://hub.docker.com/v2/repositories/${REPO}/images?status=inactive&page_size=100" \
-            -H "Authorization: Bearer ${TOKEN}" \
-            | jq '[.results[] | {repository: "confluence-mdx", digest: .digest}]')
+          RESPONSE=$(curl -s "https://hub.docker.com/v2/repositories/${REPO}/images?status=inactive&page_size=100" \
+            -H "Authorization: Bearer ${TOKEN}")
 
+          DIGESTS=$(echo "${RESPONSE}" | jq '[.results[]? | {repository: "confluence-mdx", digest: .digest}]' 2>/dev/null || echo "[]")
           COUNT=$(echo "${DIGESTS}" | jq 'length')
 
           if [ "${COUNT}" -gt 0 ]; then
             echo "Deleting ${COUNT} inactive (untagged) image(s)..."
-            curl -sf -X POST "https://hub.docker.com/v2/repositories/${REPO}/images/delete" \
+            curl -s -X POST "https://hub.docker.com/v2/repositories/${REPO}/images/delete" \
               -H "Authorization: Bearer ${TOKEN}" \
               -H "Content-Type: application/json" \
               -d "{\"dry_run\":false,\"manifests\":${DIGESTS}}"
+            echo ""
             echo "Cleanup complete."
           else
             echo "No inactive images to clean up."
+            if ! echo "${RESPONSE}" | jq -e '.results' > /dev/null 2>&1; then
+              echo "::warning::Unexpected API response"
+              echo "${RESPONSE}" | jq . 2>/dev/null || echo "${RESPONSE}"
+            fi
           fi
 
