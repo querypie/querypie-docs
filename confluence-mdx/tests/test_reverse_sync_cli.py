@@ -12,7 +12,6 @@ from reverse_sync.text_normalizer import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
     align_chars, find_insert_pos, transfer_text_changes,
 )
-from reverse_sync.block_matcher import find_mapping_by_text
 from reverse_sync.patch_builder import build_patches
 
 
@@ -511,6 +510,7 @@ def testbuild_patches_index_mapping():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
 
     original_blocks = [
         MdxBlock('frontmatter', '---\ntitle: T\n---\n', 1, 3),
@@ -539,8 +539,14 @@ def testbuild_patches_index_mapping():
                      xhtml_text='Old text.', xhtml_plain_text='Old text.',
                      xhtml_element_index=1),
     ]
+    # MDX block index 4 → p[1] sidecar 엔트리
+    mdx_to_sidecar = {
+        4: SidecarEntry(xhtml_xpath='p[1]', xhtml_type='paragraph', mdx_blocks=[4]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
@@ -573,7 +579,8 @@ def testbuild_patches_skips_non_content():
                      xhtml_element_index=0),
     ]
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            {}, {})
     assert len(patches) == 0
 
 
@@ -626,48 +633,6 @@ def test_verify_ignores_frontmatter_diff(setup_var):
     assert result['status'] == 'pass'
     assert result['verification']['exact_match'] is True
 
-
-
-# --- find_mapping_by_text tests ---
-
-
-def test_find_mapping_spaceless_match():
-    """셀 경계 공백 차이가 있는 테이블 블록도 공백 무시 비교로 매핑한다."""
-    from reverse_sync.mapping_recorder import BlockMapping
-
-    mdx_plain = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
-    mapping = BlockMapping(
-        block_id='table-12', type='table', xhtml_xpath='table[2]',
-        xhtml_text='...', xhtml_element_index=11,
-        xhtml_plain_text='설정 순서설정 항목1Databased Access Control 설정하기',
-    )
-
-    result = find_mapping_by_text(mdx_plain, [mapping])
-    assert result is not None
-    assert result.xhtml_xpath == 'table[2]'
-
-
-def test_find_mapping_prefix_prefers_best_length():
-    """prefix 매칭 시 길이가 가장 유사한 후보를 선택한다."""
-    from reverse_sync.mapping_recorder import BlockMapping
-
-    prefix = 'Administrator > Audit > Databases > Access Control Logs'
-    mdx_plain = prefix + ' 메뉴로 이동합니다. 당월 기준으로 내림차순으로 로그가 조회됩니다.'
-
-    caption_mapping = BlockMapping(
-        block_id='image-1', type='html_block', xhtml_xpath='ac:image[1]',
-        xhtml_text='...', xhtml_element_index=0,
-        xhtml_plain_text=prefix,
-    )
-    list_mapping = BlockMapping(
-        block_id='list-2', type='list', xhtml_xpath='ol[1]',
-        xhtml_text='...', xhtml_element_index=1,
-        xhtml_plain_text=prefix + ' 메뉴로 이동합니다.당월 기준으로 내림차순으로 로그가 조회됩니다.',
-    )
-
-    result = find_mapping_by_text(mdx_plain, [caption_mapping, list_mapping])
-    assert result is not None
-    assert result.xhtml_xpath == 'ol[1]'
 
 
 # --- align_chars tests ---
@@ -805,6 +770,7 @@ def testbuild_patches_table_block():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar_lookup import SidecarEntry
 
     old_table = '<table>\n<th>\n**Databased Access Control**\n</th>\n</table>\n'
     new_table = '<table>\n<th>\n**Database Access Control**\n</th>\n</table>\n'
@@ -822,8 +788,14 @@ def testbuild_patches_table_block():
                      xhtml_plain_text='Databased Access Control',
                      xhtml_element_index=0),
     ]
+    # MDX block index 0 → table[1] sidecar 엔트리
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='table[1]', xhtml_type='table', mdx_blocks=[0]),
+    }
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings)
+    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
