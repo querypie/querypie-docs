@@ -186,7 +186,7 @@ run_reverse_sync_test() {
     # verify 실행 (cwd를 confluence-mdx root로 이동 — run_verify()가 var/<page_id>/에 중간 파일을 쓰므로)
     mkdir -p "../var/${test_id}"
     pushd .. > /dev/null
-    run_cmd env PYTHONPATH=bin python3 -m reverse_sync.test_verify \
+    run_cmd bin/reverse_sync/test_verify.py \
         "${test_id}" \
         "tests/${test_path}/original.mdx" \
         "tests/${test_path}/improved.mdx" \

@@ -1,10 +1,16 @@
 """run-tests.sh용 thin wrapper — run_verify()를 page_id와 함께 직접 호출한다.
 
 Usage:
-    python3 -m reverse_sync.test_verify <page_id> <original_mdx_path> <improved_mdx_path> <xhtml_path>
+    bin/reverse_sync/test_verify.py <page_id> <original_mdx_path> <improved_mdx_path> <xhtml_path>
 """
 import json
 import sys
+from pathlib import Path
+
+# Ensure bin/ is on sys.path when run as a script (e.g. bin/reverse_sync/test_verify.py)
+_bin_dir = str(Path(__file__).resolve().parent.parent)
+if _bin_dir not in sys.path:
+    sys.path.insert(0, _bin_dir)
 
 from reverse_sync_cli import run_verify, MdxSource
 
