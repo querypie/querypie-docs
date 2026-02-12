@@ -6,16 +6,16 @@ case "${1:-help}" in
   fetch_cli.py|convert_all.py|converter/cli.py)
     command=$1
     shift
-    echo "+ python3 bin/$command $@"
-    exec python3 bin/$command "$@"
+    echo "+ bin/$command $@"
+    exec bin/$command "$@"
     ;;
   full) # Execute full workflow
     shift
     echo "# Starting full workflow..."
-    echo "+ python3 bin/fetch_cli.py $@"
-    python3 bin/fetch_cli.py "$@"
-    echo "+ python3 bin/convert_all.py"
-    python3 bin/convert_all.py
+    echo "+ bin/fetch_cli.py $@"
+    bin/fetch_cli.py "$@"
+    echo "+ bin/convert_all.py"
+    bin/convert_all.py
     ;;
   bash|sh)
     echo "+ $@"
