@@ -273,6 +273,11 @@ def normalize_table_row(row: str) -> str:
         s = re.sub(r'`([^`]+)`', r'\1', s)
         s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)
         s = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', s)
+        s = re.sub(
+            r'<Badge\s+color="([^"]+)">(.*?)</Badge>',
+            lambda m: m.group(2) + m.group(1).capitalize(),
+            s,
+        )
         s = re.sub(r'<[^>]+/?>', '', s)
         s = html_module.unescape(s)
         s = s.strip()

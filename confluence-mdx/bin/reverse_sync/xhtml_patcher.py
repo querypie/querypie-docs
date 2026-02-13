@@ -187,10 +187,11 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
     opcodes = matcher.get_opcodes()
 
     # text node 목록 수집 (순서대로)
+    # ac:plain-text-body 내부의 텍스트는 CDATA로 보호되는 코드 본문이므로 제외
     text_nodes = []
     for desc in element.descendants:
         if isinstance(desc, NavigableString) and not isinstance(desc, Tag):
-            if desc.parent.name not in ('script', 'style'):
+            if desc.parent.name not in ('script', 'style', 'ac:plain-text-body'):
                 text_nodes.append(desc)
 
     if not text_nodes:
