@@ -92,8 +92,8 @@ from pathlib import Path
 from typing import List, Tuple, Optional
 
 # Resolve project root (confluence-mdx/) from this script's location
-# bin/skeleton/cli.py -> .parent=skeleton/ -> .parent=bin/ -> .parent=confluence-mdx/
-_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
 # Import modules for recursive processing and comparison
 from skeleton.compare import compare_files

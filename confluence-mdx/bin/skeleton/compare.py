@@ -9,8 +9,8 @@ across different language directories (target/ko, target/ja, target/en).
 from pathlib import Path
 
 # Resolve project root (confluence-mdx/) from this module's location
-# bin/skeleton/compare.py -> .parent=skeleton/ -> .parent=bin/ -> .parent=confluence-mdx/
-_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
 
 def get_mdx_files(directory: Path) -> set[str]:

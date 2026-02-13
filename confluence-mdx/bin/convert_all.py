@@ -23,19 +23,20 @@ from typing import Dict, List
 import yaml
 
 # Resolve project root (confluence-mdx/) from this script's location
-_bin_dir = str(Path(__file__).resolve().parent)
-_project_root = str(Path(_bin_dir).parent)
+_SCRIPT_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                    # confluence-mdx/
 
 # Ensure bin/ is on sys.path
-if _bin_dir not in sys.path:
-    sys.path.insert(0, _bin_dir)
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
 
 
-def _resolve(path: str) -> str:
-    """Resolve a relative path against _project_root (confluence-mdx/)."""
-    if os.path.isabs(path):
-        return path
-    return os.path.join(_project_root, path)
+def _resolve(rel: str) -> str:
+    """Resolve a relative path against _PROJECT_DIR (confluence-mdx/)."""
+    p = Path(rel)
+    if p.is_absolute():
+        return rel
+    return str(_PROJECT_DIR / rel)
 
 
 def load_pages_yaml(pages_yaml_path: str) -> List[Dict]:
@@ -141,7 +142,7 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
         os.makedirs(output_dir, exist_ok=True)
 
         cmd = [
-            sys.executable, os.path.join(_bin_dir, 'converter', 'cli.py'),
+            sys.executable, str(_SCRIPT_DIR / 'converter' / 'cli.py'),
             input_file, output_file,
             f'--public-dir={public_dir}',
             f'--attachment-dir={attachment_dir}',

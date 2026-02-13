@@ -5,8 +5,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-# Project root: confluence-mdx/ (two levels up from this file)
-_PROJECT_ROOT = str(Path(__file__).resolve().parent.parent.parent)
+# Resolve project root (confluence-mdx/) from this module's location
+# bin/fetch/config.py -> .parent=fetch/ -> .parent=bin/ -> .parent=confluence-mdx/
+_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
 
 
 @dataclass
@@ -35,4 +36,4 @@ class Config:
         for field in ('default_output_dir', 'cache_dir', 'translations_file'):
             value = getattr(self, field)
             if not os.path.isabs(value):
-                setattr(self, field, os.path.join(_PROJECT_ROOT, value))
+                setattr(self, field, str(_PROJECT_DIR / value))

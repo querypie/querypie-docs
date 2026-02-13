@@ -17,19 +17,13 @@ from typing import Optional, List
 import yaml
 
 # Resolve project root (confluence-mdx/) from this script's location
-_bin_dir = str(Path(__file__).resolve().parent.parent)
-_project_dir = str(Path(_bin_dir).parent)
+# bin/converter/cli.py -> .parent=converter/ -> .parent=bin/ -> .parent=confluence-mdx/
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
 # Ensure bin/ is on sys.path when run as a script (e.g. bin/converter/cli.py)
-if _bin_dir not in sys.path:
-    sys.path.insert(0, _bin_dir)
-
-
-def _resolve(path: str) -> str:
-    """Resolve a relative path against _project_dir (confluence-mdx/)."""
-    if os.path.isabs(path):
-        return path
-    return os.path.join(_project_dir, path)
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
 
 import converter.context as ctx
 from converter.context import (
@@ -134,7 +128,8 @@ def main():
     args = parser.parse_args()
 
     # Resolve relative paths against project root (confluence-mdx/)
-    args.public_dir = _resolve(args.public_dir)
+    if not os.path.isabs(args.public_dir):
+        args.public_dir = str(_PROJECT_DIR / args.public_dir)
 
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())

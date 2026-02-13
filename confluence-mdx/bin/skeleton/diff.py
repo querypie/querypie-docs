@@ -14,8 +14,8 @@ from pathlib import Path
 from typing import List, Tuple, Optional, Dict, Set
 
 # Resolve project root (confluence-mdx/) from this module's location
-# bin/skeleton/diff.py -> .parent=skeleton/ -> .parent=bin/ -> .parent=confluence-mdx/
-_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
 try:
     import yaml
