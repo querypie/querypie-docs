@@ -48,6 +48,10 @@ COPY tests/ ./tests/
 # var/ 최종 상태를 단일 레이어로 복사 (builder의 cache+fetch 결과)
 COPY --from=builder /workdir/var/ ./var/
 
+# Record build metadata
+ARG BUILD_DATE
+RUN echo "${BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}" > /workdir/.build-date
+
 # Create target/ directory
 RUN mkdir -p target/ko target/en target/ja target/public
 
