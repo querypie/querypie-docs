@@ -987,8 +987,9 @@ def testbuild_patches_list_item_child_resolved():
         changes[0], mappings, set(),
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
 
-    # sidecar에 parent가 없으므로 매칭 불가 → 빈 패치
-    assert len(patches) == 0
+    # sidecar에 parent가 없어도 텍스트 포함 폴백으로 containing mapping 발견
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'ul[1]'
 
     # sidecar에 parent가 있는 경우
     mdx_to_sidecar = {
