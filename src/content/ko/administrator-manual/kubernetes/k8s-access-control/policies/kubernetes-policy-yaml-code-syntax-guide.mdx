@@ -187,7 +187,7 @@ O
 리소스 접근 정책 적용 여부를 조건으로 적용 대상을 세부 제어합니다.
 * `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge> 
 * `userAttributes` : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
-* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
+* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
 <td>
 `resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
@@ -234,7 +234,7 @@ O
             - system:masters
             - default-group-account
           ```
-        * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
+        * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(") 없이 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
           ```
           kubernetesGroups: 
             - $user.groups
@@ -323,7 +323,7 @@ O
     "countryCode": "KR"
     "department": "Infra"
   ```
-* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
+* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태로 정의합니다. 
   ```
   ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
   ```
