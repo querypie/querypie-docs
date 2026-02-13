@@ -6,10 +6,21 @@ import re
 EMOJI_RE = re.compile(
     r'[\U0001F000-\U0001F9FF\u2700-\u27BF\uFE00-\uFE0F\u200D]+'
 )
-# Confluence XHTML에 포함될 수 있는 보이지 않는 문자 (zero-width space, Hangul filler 등)
-INVISIBLE_RE = re.compile(
-    r'[\u200B\u200C\u200D\u2060\uFEFF\u00AD\u3164\u115F\u1160]+'
+# 비교 시 제거할 공백·불가시 문자 패턴
+# - \s: 일반 공백/탭/줄바꿈
+# - \u200B~\uFEFF: zero-width space, zero-width (non-)joiner, word joiner, BOM
+# - \u00AD: soft hyphen
+# - \u3164, \u115F, \u1160: Hangul Filler 류
+# - \u3000: ideographic space
+# - \xa0: non-breaking space
+_INVISIBLE_AND_WS_RE = re.compile(
+    r'[\s\u200b\u200c\u200d\u2060\ufeff\u00ad\u3164\u115f\u1160\u3000\xa0]+'
 )
+
+
+def strip_for_compare(text: str) -> str:
+    """비교를 위해 공백 및 불가시 유니코드 문자를 모두 제거한다."""
+    return _INVISIBLE_AND_WS_RE.sub('', text)
 
 
 def normalize_mdx_to_plain(content: str, block_type: str) -> str:
