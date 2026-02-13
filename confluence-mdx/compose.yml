@@ -10,7 +10,7 @@
 #
 # Environment Variables (.env file):
 #   ATLASSIAN_USERNAME=your-email@example.com
-#   ATLASSIAN_API_TOKEN=your-api-token
+#   ATLASSIAN_TOKEN=your-api-token
 #
 # Main Commands:
 #   - Full workflow for recent updates: docker compose run --rm confluence-mdx full
