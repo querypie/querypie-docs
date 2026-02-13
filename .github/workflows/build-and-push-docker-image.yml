@@ -32,7 +32,7 @@ jobs:
         working-directory: ./confluence-mdx
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
-          ./bin/setup-cache.sh
+          ./bin/setup-cache.sh docker
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
