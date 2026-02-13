@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-사용자는 권한이 있는 서버의 목록을 서버, 서버 그룹 별로 또는 Cloud Provider 별로 정렬하여 한눈에 확인할 수 있습니다.
+사용자는 권한이 있는 서버의 목록을 서버, 서버 그룹별로 또는 Cloud Provider별로 정렬하여 한눈에 확인할 수 있습니다.
 접속할 서버를 선택 후 사용자는 운영체제와 상관없이 웹 브라우저를 통해 제공되는 웹 터미널과 웹 SFTP를 통해 명령어를 실행하고 작업을 수행할 수 있습니다.
 
 ### Role 선택하기
@@ -40,7 +40,7 @@ QueryPie Web &gt; System Access Control &gt; Servers
     2. Time-limited items only : 시간단위로 권한을 부여받은 서버만 리스트에서 표시합니다.
     3. Search by Host : 서버 목록의 검색 기준이 기존 서버 이름에서 Host(IP 주소)로 변경됩니다. 동시에 서버 목록의 표기 방식도 Host로 전환되어 표시됩니다. 토글이 비활성화된 상태에서는 서버 이름으로만 검색할 수 있습니다.
 2. 서버 목록에서 서버를 선택하면 우측 페이지에서 서버 및 계정 정보를 확인할 수 있습니다. 
-    1.  **Server OS** : 해당 서버의 OS를 표시됩니다 
+    1.  **Server OS** : 해당 서버의 OS가 표시됩니다 
     2.  **Host** : 해당 서버의 호스트가 표시됩니다. 
     3.  **Account** : 권한이 있는 계정 목록입니다. 계정 뒤의 괄호 안에는 서버 및 계정이 속한 서버 그룹이 표시됩니다.
     4.  **Custom Account** : Account에서 카테고리가 QueryPie - Custom Account인 계정을 선택했을 때 표시됩니다. 사전에 등록된 계정 외에 접속하려는 서버의 계정을 입력합니다. 해당 계정의 비밀번호는 Password 필드에 입력하면 됩니다. 
@@ -49,9 +49,9 @@ QueryPie Web &gt; System Access Control &gt; Servers
         2.  **Weekday Access Allowed**  : 접속 가능 요일을 표시합니다.
         3.  **Restrict Commands (SSH)**  : SSH 접속 시 차단 명령어를 표시합니다.
         4.  **Restrict Functions (SFTP)**  : SFTP 접속 시 차단 기능을 표시합니다.
-    6.  **Password** (또는 SSH Key) : 선택한 계정의 인증 방식이 Password 일 경우 Password를 입력할 수 있는 필드가 표시됩니다. 만약 자동 로그인 설정이 되어있다면 Password 항목이 표시되지 않으며, 관리자가 설정한 패스워드 또는 SSH Key로 로그인을 하게 됩니다. 
+    6.  **Password** (또는 SSH Key) : 선택한 계정의 인증 방식이 Password 일 경우 Password를 입력할 수 있는 필드가 표시됩니다. 만약 자동 로그인 설정이 되어 있다면 Password 항목이 표시되지 않으며, 관리자가 설정한 패스워드 또는 SSH Key로 로그인을 하게 됩니다. 
     7.  **Status** : 선택한 계정의 상태가 표시됩니다. 
-    8.  **Protocol** : SSH, SFTP 또는 RDP 를 선택하여 접속할 수 있습니다. 
+    8.  **Protocol** : SSH, SFTP 또는 RDP를 선택하여 접속할 수 있습니다. 
 3. 하단의 `Connect` 버튼을 클릭하여 서버에 접속합니다. 
 
 <Callout type="info">
@@ -66,7 +66,7 @@ A. 권한의 상태가 변경되었거나 접속이 허용되지 않은 시간�
 A. QueryPie에서는 QueryPie Agent (User Agent / Multi-Agent)를 통해서만 Windows Server에 접속이 가능합니다.
 접속 방법은 아래와 같습니다.
 
-QueryPie Agent (User Agent / Multi-Agent) 설치 후, 권한을 부여 받은 Windows Server를 우클릭, `Open Connection with` 메뉴를 클릭 후, PC에 설치된 RDP Client를 클릭하여 접속합니다.
+QueryPie Agent (User Agent / Multi-Agent) 설치 후, 권한을 부여받은 Windows Server를 우클릭, `Open Connection with` 메뉴를 클릭 후, PC에 설치된 RDP Client를 클릭하여 접속합니다.
 
 * Windows PC에서는 PC에 기본 설치된 MSTSC 프로그램을 지원합니다.
 * macOS는 RDP 접속을 위해 [Windows App](https://apps.apple.com/us/app/windows-app/id1295203466?mt=12)을 다운받아야 합니다.
@@ -84,7 +84,7 @@ QueryPie Agent (User Agent / Multi-Agent) 설치 후, 권한을 부여 받은 Wi
 A. 사용자의 PC가 macOS일 때, QueryPie User Agent를 통해서 macOS에 접속이 가능합니다.
 접속 방법은 아래와 같습니다.
 
-QueryPie User Agent 설치 후, 권한을 부여 받은 macOS를 우클릭, `Open Connection with` 메뉴를 클릭 후, macOS에 설치된 화면 공유.app을 클릭하여 접속합니다.
+QueryPie User Agent 설치 후, 권한을 부여받은 macOS를 우클릭, `Open Connection with` 메뉴를 클릭 후, macOS에 설치된 화면 공유.app을 클릭하여 접속합니다.
 접속 시, macOS의 계정 정보를 직접 입력해야 합니다.
 
 * Windows PC에서는 macOS 접속을 지원하지 않습니다.
