@@ -115,7 +115,7 @@ def main():
     parser.add_argument('input_file', help='Input XHTML file path')
     parser.add_argument('output_file', help='Output Markdown file path')
     parser.add_argument('--public-dir',
-                        default='./public',
+                        default=str(_PROJECT_DIR / 'public'),
                         help='/public directory path')
     parser.add_argument('--attachment-dir',
                         help='Directory to save attachments (default: output file directory)')
@@ -126,10 +126,6 @@ def main():
                         default='info',
                         help='Set the logging level (default: info)')
     args = parser.parse_args()
-
-    # Resolve relative paths against project root (confluence-mdx/)
-    if not os.path.isabs(args.public_dir):
-        args.public_dir = str(_PROJECT_DIR / args.public_dir)
 
     # Configure logging with the specified level
     log_level = getattr(logging, args.log_level.upper())
