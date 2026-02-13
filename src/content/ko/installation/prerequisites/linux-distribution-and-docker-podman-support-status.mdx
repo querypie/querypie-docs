@@ -7,9 +7,9 @@ import { Callout } from 'nextra/components'
 
 # 리눅스 배포본과 Docker, Podman 지원 현황
 
-본 문서는 QueryPie Server의 컨테이너 기반 배포 및 운영 환경 선택을 위한 기술 가이드입니다.
+이 문서는 QueryPie Server의 컨테이너 기반 배포 및 운영 환경 선택을 위한 기술 가이드입니다.
 QueryPie Server는 Docker와 Podman 컨테이너 엔진에서 검증되었으며, 다양한 Linux 배포본에서의 호환성과 권장 구성을 분석하여 최적의 운영 환경 선택을 지원합니다.
-본 문서는 시스템 아키텍트와 인프라 엔지니어가 환경 설계 시 참고할 수 있는 기술적 근거와 실무 가이드라인을 제공합니다.
+이 문서는 시스템 아키텍트와 인프라 엔지니어가 환경 설계 시 참고할 수 있는 기술적 근거와 실무 가이드라인을 제공합니다.
 
 설치 방법, 검증 스크립트, 운영 절차 등은 이 문서에서 다루지 않습니다.
 
@@ -24,7 +24,7 @@ Docker는 널리 사용되는 컨테이너 엔진으로, 엔진 자체와 도구
 Podman은 Docker와 유사한 명령체계와 워크플로우를 제공하면서도 루트리스(rootless) 실행을 기본으로 지원하는 오픈소스 컨테이너 엔진으로, 특히 RHEL 계열에서 표준으로 권장됩니다.
 
 Docker 와 Podman 은 Compose 와 함께 사용하여, 여러 Container 를 실행하고 관리할 수 있습니다.
-Compose 는 단일 호스트에서 여러 Container 를 실행하여 소프트웨어를 구동, 운영하는데 적합합니다.
+Compose는 단일 호스트에서 여러 Container를 실행하여 소프트웨어를 구동, 운영하는 데 적합합니다.
 Compose 의 구현체로 Docker Compose 가 널리 사용되며, Docker, Podman, 모두 Docker Compose 와 함께 사용할 수 있습니다.
 Docker Compose 는 하나의 실행파일로 구성되어 있고, 다른 패키지에 의존성이 없어, 설치가 간편합니다.
 Podman 의 경우, Python 으로 구현된 Podman Compose 라는 구현체가 제공되기도 합니다.
@@ -39,13 +39,13 @@ Podman + Podman Compose 조합은 기술적으로 지원되나, Python 의존성
 <Callout type="important">
 리눅스 배포본에 따라, Docker, Podman 가운데 한가지만 지원되는 경우가 있습니다.
 이에 따라, 두 컨테이너 엔진을 상황에 따라 적절히 선택하여 사용하여야 합니다.
-특히, 많이 사용되는 Amazon Linux 2023 에서 Podman 을 지원하지 않는다는 것, 25년 출시된 Red Hat Enterprise Linux 10 에서 Docker 를 지원하지 않는다는 것에 유의하여 주세요.
+특히, 많이 사용되는 Amazon Linux 2023에서 Podman을 지원하지 않는다는 것, 25년 출시된 Red Hat Enterprise Linux 10에서 Docker를 지원하지 않는다는 것에 유의해 주세요.
 </Callout>
 
 ### 리눅스 배포본의 현황 요약표
 
-아래 표는 QueryPie 에서 공식적으로 기술지원을 제공하는 배포판과 Docker, Podman 지원 현황을 정리한 것입니다.
-Docker, Podman 지원 현황은 QueryPie 를 실행, 관리하기 위한 버전을 제공되는지 여부를 기준으로 합니다.
+아래 표는 QueryPie에서 공식적으로 기술지원을 제공하는 배포본과 Docker, Podman 지원 현황을 정리한 것입니다.
+Docker, Podman 지원 현황은 QueryPie를 실행, 관리하기 위한 버전이 제공되는지 여부를 기준으로 합니다.
 
 Podman 3.x 의 구버전, 신뢰할 수 있는 패키지가 제공되지 않는 경우, QueryPie 팀으로부터 기술지원되지 않으며, QueryPie 를 사용할 수 없는 조건이라고 분류합니다.
 
@@ -228,7 +228,7 @@ QueryPie 팀에서 기술지원을 제공하는 리눅스 배포본의 현황을
 #### Amazon Linux 2 (2018년 6월 출시)
 
 Amazon Linux 2는 RHEL 7 계열을 기반으로 AWS가 EC2에 최적화하여 제공하는 배포판으로, 장기간의 안정적 운영을 위해 널리 사용되어왔습니다.
-AWS의 공식 지원 정책에 따르면 Amazon Linux 2의 공식 보안·버그 패치 제공은 2026-06-30까지로 예정되어 있어(출처: [Amazon Linux 2 FAQs](https://aws.amazon.com/amazon-linux-2/faqs/)), 새로운 신규 서버 구축이나 장기 운영을 계획 중이라면 수명 주기가 더 긴 Amazon Linux 2023 또는 Ubuntu/RHEL 계열로의 이전을 검토하시기 바랍니다.
+AWS의 공식 지원 정책에 따르면 Amazon Linux 2의 공식 보안·버그 패치 제공은 2026-06-30까지로 예정되어 있어(출처: [Amazon Linux 2 FAQs](https://aws.amazon.com/amazon-linux-2/faqs/)), 신규 서버 구축이나 장기 운영을 계획 중이라면 수명 주기가 더 긴 Amazon Linux 2023 또는 Ubuntu/RHEL 계열로의 이전을 검토하세요.
 
 컨테이너 관점에서 Amazon Linux 2는 amazon-linux-extras를 통해 Docker를 손쉽게 설치·운영할 수 있게 설계되어 있으며, 이 경로가 AWS 문서에서 일관되게 안내되는 표준 접근법입니다.
 반면 Podman은 기본 저장소에서 제공되지 않으며, 제3자 리포지터리(COPR 등)를 통해 설치하는 비공식 경로가 존재하더라도 AWS의 패키지 관리·지원 체계 밖에 있기 때문에, 운영 체계와 지원 정책의 일관성을 중시하는 서버 워크로드에서는 Docker 사용이 현실적입니다.
