@@ -21,8 +21,8 @@ QueryPie에서 기록하는 로그를 Syslog 형식으로 외부로 전송하는
 2. Syslog 타일을 클릭하여 상세 페이지로 이동합니다. 
 
 <Callout type="important">
-**Syslog (legacy) 는 무엇인가요?** <br/>기존 Syslog 를 사용하셨던 경우  **Syslog (Legacy)**  타일이 추가로 표시됩니다.
-이곳에서 기존 포맷을 유지한 상태로 Syslog 를 그대로 전송받을 수 있습니다.
+**Syslog (legacy) 는 무엇인가요?** <br/>기존 Syslog를 사용하셨던 경우  **Syslog (Legacy)**  타일이 추가로 표시됩니다.
+이곳에서 기존 포맷을 유지한 상태로 Syslog를 그대로 전송받을 수 있습니다.
 Legacy Format은 Syslog 프로토콜 상 Timestamp 필드가 Time Zone의 영향을 받으므로 별도로 Time Zone 설정 항목이 존재합니다.
 기본값은 UTC입니다.
 </Callout>
@@ -54,9 +54,9 @@ Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Config
     1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
 
 <Callout type="info">
-11.3.0에서 Timezone 설정이 추가 되었습니다.
-전에 Syslog (Legacy)에서만 Timezone 설정을 할 수 있었으나 SIEM 관련 설정 모두 (Syslog, Splunk) Timezone 설정을 할 수 있도록 변경되었습니다.
-또한 New DAC Policy Management 기능에 의해 발생된 이벤트에 대한 스트리밍 전송기능이 추가되었습니다.
+11.3.0에서 Timezone 설정이 추가되었습니다.
+이전에 Syslog (Legacy)에서만 Timezone 설정을 할 수 있었으나 SIEM 관련 설정 모두(Syslog, Splunk) Timezone 설정을 할 수 있도록 변경되었습니다.
+또한 New DAC Policy Management 기능에 의해 발생된 이벤트에 대한 스트리밍 전송 기능이 추가되었습니다.
 (Select Event Items에서 DAC Policy Audit Logs를 선택.)
 </Callout>
 
