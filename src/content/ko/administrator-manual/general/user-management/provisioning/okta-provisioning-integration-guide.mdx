@@ -8,8 +8,8 @@ import { Callout } from 'nextra/components'
 # [Okta] 프로비저닝 연동 가이드
 
 <Callout type="info">
-본 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다.
-본 제품의 SCIM 기능은 RPC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 해당 가이드를 따라 필요한 정보를 QueryPie에서 수집하시어 연동을 진행하여 주시기 바랍니다.
+이 가이드는 Okta의 App Integration Wizard(AIW)를 기반으로 QueryPie와 SCIM 연동을 구현하는 방법을 안내합니다.
+이 제품의 SCIM 기능은 RFC 7643을 기반하여 SCIM 2.0 기본 규격에 맞추어 제작되었으므로, 타사 Identity Provider 연동 시에도 이 가이드를 따라 필요한 정보를 QueryPie에서 수집하여 연동을 진행하기 바랍니다.
 </Callout>
 
 ### Prerequisites
@@ -30,7 +30,7 @@ import { Callout } from 'nextra/components'
 
 
 <Callout type="info">
-Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인 경우, [Okta 연동하기](../authentication/integrating-with-okta) 페이지 내 절차대로 대신 진행하여 주시기 바랍니다. SCIM과 동시에 활성화 시, 사용자 동기화에 영향을 받을 수 있으므로 유의하시기 바랍니다.
+Okta API를 활용한 아웃바운드 사용자 동기화를 설정할 예정인 경우, [Okta 연동하기](../authentication/integrating-with-okta) 페이지 내 절차대로 대신 진행하기 바랍니다. SCIM과 동시에 활성화 시, 사용자 동기화에 영향을 받을 수 있으므로 유의하기 바랍니다.
 </Callout>
 
 ### Integration Steps
@@ -54,7 +54,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 5. 커스텀 SCIM 연동을 목적으로 Sign-in method로  **SAML 2.0**  옵션을 선택한 뒤 `Next` 버튼을 클릭합니다.
 6. General Settings 단계에서 General Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
     1.  **App name**  : 식별 가능한 애플리케이션 이름을 기입합니다. 
-    2.  **App logo**  : 사용자가 식별 가능한 로그를 업로드합니다. 
+    2.  **App logo**  : 사용자가 식별 가능한 로고를 업로드합니다.
 7. Configure SAML 단계에서 SAML Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
     1.  **Single sign-on URL**  : https://`{{querypie.domain}}`/saml/sp/acs 
     2.  **Audience URI (SP Entity ID)**  : https://`{{querypie.domain}}`/saml/sp/metadata 
@@ -66,7 +66,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 8. Feedback 단계에서 `I'm an Okta customer adding an internal app`을 선택한 뒤 하단의 `Finish` 버튼을 클릭합니다.
 9. Application이 생성되면 상단의 General 탭으로 이동하여  **App Settings**  메뉴의 우측 `Edit` 버튼을 클릭합니다. 
 10. Provisioning 필드를  **SCIM** 으로 선택한 뒤 `Save` 버튼을 클릭합니다. 
-11. [Okta 연동하기 | Okta에서-QueryPie-애플리케이션-연동-정보-설정](../authentication/integrating-with-okta#okta%ec%97%90%ec%84%9c-querypie-%ec%95%a0%ed%94%8c%eb%a6%ac%ec%bc%80%ec%9d%b4%ec%85%98-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%84%a4%ec%a0%95) 및 [Okta 연동하기 | QueryPie에서-Okta-연동-및-동기화-설정](../authentication/integrating-with-okta#querypie%ec%97%90%ec%84%9c-okta-%ec%97%b0%eb%8f%99-%eb%b0%8f-%eb%8f%99%ea%b8%b0%ed%99%94-%ec%84%a4%ec%a0%95)을 따라 SSO 연동을 마무리한 뒤, 이후 스텝을 진행하시기 바랍니다.
+11. [Okta 연동하기 | Okta에서-QueryPie-애플리케이션-연동-정보-설정](../authentication/integrating-with-okta#okta%ec%97%90%ec%84%9c-querypie-%ec%95%a0%ed%94%8c%eb%a6%ac%ec%bc%80%ec%9d%b4%ec%85%98-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%84%a4%ec%a0%95) 및 [Okta 연동하기 | QueryPie에서-Okta-연동-및-동기화-설정](../authentication/integrating-with-okta#querypie%ec%97%90%ec%84%9c-okta-%ec%97%b0%eb%8f%99-%eb%b0%8f-%eb%8f%99%ea%b8%b0%ed%99%94-%ec%84%a4%ec%a0%95)을 따라 SSO 연동을 마무리한 뒤, 이후 스텝을 진행하기 바랍니다.
 
 
 ______
@@ -95,7 +95,7 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
         * Push Groups
         * Import Groups
     4. Authentication Mode : “ **HTTP Header** ”
-    5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다. 
+    5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM 전용 access token 값을 삽입합니다.
 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다. 
 4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다. 
   <figure data-layout="center" data-align="center">
@@ -127,10 +127,10 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 7. 사용자 임의의 설정에 맞게 항목을 맵핑한 뒤, 하단의 `Save Mappings` 버튼을 클릭합니다.
 8. 하단의 `Apply updates now` 버튼을 클릭합니다.
 
-#### 일부 Attribute 를 추가적으로 동기화하는 방법
+#### 일부 Attribute를 추가적으로 동기화하는 방법
 
 <Callout type="important">
-QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute 항목은 SCIM Integration 의 기본설정에서는 Import 되지 않습니다.
+QueryPie Profile의 속성 가운데, staticIp, macAddress 등 일부 attribute 항목은 SCIM Integration의 기본 설정에서는 Import 되지 않습니다.
 </Callout>
 
 쿼리파이 프로필 내 staticIp, macAddress 등 일부 attribute 항목이 SCIM Integration 당시에 별도 import 되지 않습니다.
@@ -142,9 +142,9 @@ QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute
 4. staticIp (쿼리파이 전용 커스텀 속성)
 5. macAddress (쿼리파이 전용 커스텀 속성)
 
-해당 Attribute 정보를 함께 싱크가 필요한 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화 시킬 수 있습니다.
+해당 Attribute 정보를 함께 동기화해야 하는 경우, Okta 등의 IdP에서 Custom Attribute를 추가하여 매핑하여 동기화할 수 있습니다.
 
-##### [Okta 에서 Custom Attribute 를 설정하는 예시]
+##### [Okta에서 Custom Attribute를 설정하는 예시]
 
 1. SCIM 앱의 Provisioning 탭 &gt; To App 하단의 `Go to Profile Editor`를 클릭합니다.
   <figure data-layout="center" data-align="center">
@@ -220,5 +220,5 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 
 <Callout type="important">
 Okta 등 타사 Identity Provider(IdP)에서 푸시하여 생성한 Auth Provider가 QueryPie가 아닌 그룹의 경우, 그룹의 삭제를 해당 IdP에서 unlink 후 삭제 처리하시는 것을 권장드립니다.
-본 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다.
+이 제품에서 그룹을 삭제할 경우, 해당 IdP에서의 관리 플로우가 엉켜 해당 삭제된 그룹명으로는 제품에 다시 push가 어려울 수 있습니다.
 </Callout>
