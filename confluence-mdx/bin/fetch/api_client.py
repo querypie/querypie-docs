@@ -95,11 +95,12 @@ class ApiClient:
             encoded_query = quote(cql_query)
 
             # Use CQL search API
-            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}&limit=1000"
+            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}"
 
             self.logger.debug(f"CQL query: {cql_query}")
 
-            page_ids = []
+            seen_ids: set[str] = set()
+            page_ids: list[str] = []
             start = 0
             limit = 100
 
@@ -114,13 +115,16 @@ class ApiClient:
                 if not results:
                     break
 
+                new_count = 0
                 for result in results:
                     page_id = result.get("id")
-                    if page_id:
+                    if page_id and page_id not in seen_ids:
+                        seen_ids.add(page_id)
                         page_ids.append(page_id)
+                        new_count += 1
 
-                # Check if there are more results
-                if len(results) < limit:
+                # Stop if no new results (API ignoring pagination) or last page
+                if new_count == 0 or len(results) < limit:
                     break
 
                 start += limit

@@ -25,4 +25,4 @@ class Config:
         if self.email is None:
             self.email = os.environ.get('ATLASSIAN_USERNAME', 'your-email@example.com')
         if self.api_token is None:
-            self.api_token = os.environ.get('ATLASSIAN_API_TOKEN', 'your-api-token')
+            self.api_token = os.environ.get('ATLASSIAN_TOKEN', 'your-api-token')
