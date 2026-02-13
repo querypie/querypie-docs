@@ -31,6 +31,11 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         s = text.lstrip('#').strip()
         s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
+        s = re.sub(
+            r'<Badge\s+color="([^"]+)">(.*?)</Badge>',
+            lambda m: m.group(2) + m.group(1).capitalize(),
+            s,
+        )
         s = re.sub(r'<[^>]+/?>', '', s)
         s = html_module.unescape(s)
         return s.strip()
@@ -42,6 +47,9 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         if not s:
             continue
         if s.startswith('<figure') or s.startswith('<img') or s.startswith('</figure'):
+            continue
+        # 코드 펜스 마커 건너뛰기 (```, ```yaml 등)
+        if s.startswith('```'):
             continue
         # Markdown table separator 행 건너뛰기 (| --- | --- | ...)
         if re.match(r'^\|[\s\-:|]+\|$', s):
@@ -61,6 +69,13 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         s = re.sub(
             r'\[([^\]]+)\]\([^)]+\)',
             lambda m: m.group(1).split(' | ')[0] if ' | ' in m.group(1) else m.group(1),
+            s,
+        )
+        # Badge 컴포넌트 → XHTML status macro 형식으로 변환
+        # (XHTML get_text()는 title + colour를 이어서 반환)
+        s = re.sub(
+            r'<Badge\s+color="([^"]+)">(.*?)</Badge>',
+            lambda m: m.group(2) + m.group(1).capitalize(),
             s,
         )
         s = re.sub(r'<[^>]+/?>', '', s)
