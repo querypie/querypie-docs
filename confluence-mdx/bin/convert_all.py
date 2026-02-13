@@ -22,10 +22,20 @@ from typing import Dict, List
 
 import yaml
 
-# Ensure bin/ is on sys.path
+# Resolve project root (confluence-mdx/) from this script's location
 _bin_dir = str(Path(__file__).resolve().parent)
+_project_root = str(Path(_bin_dir).parent)
+
+# Ensure bin/ is on sys.path
 if _bin_dir not in sys.path:
     sys.path.insert(0, _bin_dir)
+
+
+def _resolve(path: str) -> str:
+    """Resolve a relative path against _project_root (confluence-mdx/)."""
+    if os.path.isabs(path):
+        return path
+    return os.path.join(_project_root, path)
 
 
 def load_pages_yaml(pages_yaml_path: str) -> List[Dict]:
@@ -169,6 +179,13 @@ def main():
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         help='Log level for converter/cli.py (default: warning)')
     args = parser.parse_args()
+
+    # Resolve relative paths against project root (confluence-mdx/)
+    args.pages_yaml = _resolve(args.pages_yaml)
+    args.var_dir = _resolve(args.var_dir)
+    args.output_dir = _resolve(args.output_dir)
+    args.public_dir = _resolve(args.public_dir)
+    args.translations = _resolve(args.translations)
 
     # Load data
     pages = load_pages_yaml(args.pages_yaml)
