@@ -7,7 +7,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1164705793/P
 
 ### Overview
 
-정책 예외 처리의 상태 변화를 기록하는 기능입니다.
+정책 예외 처리의 상태 변화를 기록하고 기능입니다.
 정책 예외가 생성, 수정, 삭제, 만료, 활성화, 비활성화될 때마다 해당 이벤트를 로그로 기록하여 추적할 수 있습니다.
 목록에서 행을 클릭하면 특정 정책 예외의 상세 내용을 볼 수 있습니다.
 
@@ -26,12 +26,12 @@ Policy Exception Logs
     *  **Created**  : Workflow 또는 관리자에 의해 정책 예외가 생성된 이벤트
     *  **Modified** : 관리자에 의해 정책 예외가 수정된 이벤트
     *  **Deleted**  : 관리자가 특정 정책 예외를 수동으로 삭제한 이벤트
-    *  **Expired**  : Workflow 또는 관리자가 지정한 만료 기간이 도래하여 정책 예외가 만료된 이벤트
+    *  **Expired**  : Workflow 또는 관리자가 지정한 만료기간이 도래하여 정책 예외가 만료된 이벤트
     *  **Activated**  : 관리자에 의해 특정 정책 예외가 활성화 상태가 된 이벤트
     *  **Deactivated**  : 관리자에 의해 특정 정책 예외가 비활성화(Inactive) 상태가 된 이벤트 
-*  **Exception Type**  : 현재 존재하는 정책 예외는 Restricted Data Access, Unmasking 두 가지 유형이 있습니다.
+*  **Exception Type**  : 현재 존재하는 정책예외는 Restricted Data Access, Unmasking 두가지 유형이 있습니다.
 *  **Allowed Users**  : 정책 예외 대상 사용자 또는 그룹이 기록됩니다. 또한 관리자가 지정한 사용자의 속성 (Attribute of Users)이 기록됩니다.
-*  **Description** : 정책 예외에 설정된 설명입니다.
+*  **Description** : 정잭 예외에 설정된 설명입니다.
 *  **Excepted By**  : 정책 예외를 발생시킨 주체입니다. 
     *  **Workflow**  : 정책 예외 요청 및 승인이 workflow를 통해 이뤄진 경우 workflow로 기록됩니다.
     *  **User(Admin)**  : 정책 예외가 관리자에 의해 수동으로 생성된 경우 사용자 Display Name이 표시됩니다. 
