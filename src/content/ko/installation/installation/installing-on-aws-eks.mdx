@@ -77,14 +77,14 @@ Container Registry 접근 권한
 
 ### 3. 기본 컴포넌트 설치
 
-시작하기 전에 QueryPie를 설치를 위해 namespaces를 만듭니다.
+시작하기 전에 QueryPie 설치를 위해 namespace를 만듭니다.
 ```
 kubectl create namespace querypie
 ```
 
 #### 3.1 MetaDB(MySQL) 설치
 
-MySQL은 QueryPie의 메타데이터를 저장하는 데이터베이스로 사용됩니다.
+MySQL은 QueryPie의 메타데이터를 저장하는 데이터베이스입니다.
 
 ##### 3.1.1 Persistent Volume 생성
 
@@ -226,7 +226,7 @@ exit
 
 #### 3.2 Redis 설치
 
-Redis는 QueryPie의 세션 및 캐시 저장소로 사용됩니다.
+Redis는 QueryPie의 세션 및 캐시 저장소입니다.
 아래 내용으로 `redis.yml` 파일을 생성합니다. `{your-redis-password}` 에는 고객사의 정책에 따라 다른 값을 지정합니다.
 ```yaml
 apiVersion: apps/v1
@@ -551,9 +551,9 @@ config:
 
 #### 4.3 QueryPie 설치
 
-Helm을 사용하여 QueryPie ACP 를 설치합니다.
+Helm을 사용하여 QueryPie ACP를 설치합니다.
 
-QueryPie ACP 의 [제품 버전](../product-versions)에 따라, Helm 버전을 선택합니다.
+QueryPie ACP의 [제품 버전](../product-versions)에 따라 Helm 버전을 선택합니다.
 
 * QueryPie ACP 11.3.0 또는 이후: Helm Chart 1.5.0 이상의 최신 버전을 사용하세요.
 * QueryPie ACP 11.3.0 이전: Helm Chart 1.4.4 를 사용하세요.
@@ -597,7 +597,7 @@ kubectl port-forward -n querypie statefulsets/poc-querypie 80:80
 이후, 처음 설정 과정을 진행합니다.
 
 * [라이선스 설치](../license-installation)
-* [설치 후 초기 설정](../post-installation-setup)문서를 참조하여 공통 설정, 제품별 설정을 진행합니다.
+* [설치 후 초기 설정](../post-installation-setup) 문서를 참조하여 공통 설정, 제품별 설정을 진행합니다.
 
 이것으로 제품 설치 과정이 완료되었습니다.
 수고하셨습니다~!
