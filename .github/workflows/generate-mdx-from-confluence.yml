@@ -14,7 +14,7 @@ on:
           - '--remote'
           - '--remote --attachments'
           - '--local'
-        default: '--recent'
+        default: '--recent --attachments'
 
 jobs:
   generate-mdx:
