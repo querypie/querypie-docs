@@ -43,6 +43,7 @@ def build_patches(
     mappings: List[BlockMapping],
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
+    alignment: Optional[Dict[int, int]] = None,
 ) -> List[Dict[str, str]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
@@ -71,6 +72,10 @@ def build_patches(
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for change in changes:
+        # Phase 2: added/deleted는 별도 처리
+        if change.change_type in ('added', 'deleted'):
+            continue
+
         if change.old_block.type in NON_CONTENT_TYPES:
             continue
 
