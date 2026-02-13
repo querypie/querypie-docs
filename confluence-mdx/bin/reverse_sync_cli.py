@@ -180,7 +180,7 @@ def run_verify(
     # Step 1: MDX 블록 파싱 + Step 2: 블록 Diff 추출
     original_blocks = parse_mdx_blocks(original_mdx)
     improved_blocks = parse_mdx_blocks(improved_mdx)
-    changes = diff_blocks(original_blocks, improved_blocks)
+    changes, alignment = diff_blocks(original_blocks, improved_blocks)
 
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
@@ -195,9 +195,11 @@ def run_verify(
         'page_id': page_id, 'created_at': now,
         'original_mdx': original_src.descriptor, 'improved_mdx': improved_src.descriptor,
         'changes': [
-            {'index': c.index, 'block_id': f'{c.old_block.type}-{c.index}',
+            {'index': c.index,
+             'block_id': f'{(c.old_block or c.new_block).type}-{c.index}',
              'change_type': c.change_type,
-             'old_content': c.old_block.content, 'new_content': c.new_block.content}
+             'old_content': c.old_block.content if c.old_block else None,
+             'new_content': c.new_block.content if c.new_block else None}
             for c in changes
         ],
     }
@@ -234,7 +236,8 @@ def run_verify(
 
     # Step 4: XHTML 패치 → patched.xhtml 저장
     patches = build_patches(changes, original_blocks, improved_blocks,
-                            original_mappings, mdx_to_sidecar, xpath_to_mapping)
+                            original_mappings, mdx_to_sidecar, xpath_to_mapping,
+                            alignment)
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 

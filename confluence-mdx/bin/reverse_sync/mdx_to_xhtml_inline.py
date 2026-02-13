@@ -200,3 +200,71 @@ def _render_nested_list(items: List[dict]) -> str:
     tag = 'ol' if ordered else 'ul'
     inner = _render_list_items(items)
     return f'<{tag}>{inner}</{tag}>'
+
+
+def mdx_block_to_xhtml_element(block) -> str:
+    """MDX 블록을 완전한 Confluence XHTML 요소(outer tag 포함)로 변환한다."""
+    inner = mdx_block_to_inner_xhtml(block.content, block.type)
+
+    if block.type == 'heading':
+        level = _detect_heading_level(block.content)
+        return f'<h{level}>{inner}</h{level}>'
+
+    elif block.type == 'paragraph':
+        return f'<p>{inner}</p>'
+
+    elif block.type == 'list':
+        tag = _detect_list_tag(block.content)
+        return f'<{tag}>{inner}</{tag}>'
+
+    elif block.type == 'code_block':
+        lang = _extract_code_language(block.content)
+        code = inner
+        parts = ['<ac:structured-macro ac:name="code">']
+        if lang:
+            parts.append(
+                f'<ac:parameter ac:name="language">{lang}</ac:parameter>')
+        parts.append(
+            f'<ac:plain-text-body><![CDATA[{code}]]></ac:plain-text-body>')
+        parts.append('</ac:structured-macro>')
+        return ''.join(parts)
+
+    elif block.type == 'html_block':
+        return block.content.strip()
+
+    else:
+        return f'<p>{inner}</p>'
+
+
+def _detect_heading_level(content: str) -> int:
+    """heading content에서 레벨(1-6)을 추출한다."""
+    stripped = content.strip()
+    level = 0
+    for ch in stripped:
+        if ch == '#':
+            level += 1
+        else:
+            break
+    return max(1, min(level, 6))
+
+
+def _detect_list_tag(content: str) -> str:
+    """list content의 첫 번째 마커로 ul/ol을 결정한다."""
+    for line in content.strip().split('\n'):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if re.match(r'^\d+\.\s', stripped):
+            return 'ol'
+        if re.match(r'^[-*+]\s', stripped):
+            return 'ul'
+    return 'ul'
+
+
+def _extract_code_language(content: str) -> str:
+    """code fence 첫 줄에서 언어를 추출한다."""
+    first_line = content.strip().split('\n')[0].strip()
+    if first_line.startswith('```'):
+        lang = first_line[3:].strip()
+        return lang
+    return ''

@@ -250,3 +250,69 @@ class TestNestedList:
         assert '<li><p>parent</p><ol>' in result
         assert '<li><p>child1</p></li>' in result
         assert '<li><p>child2</p></li>' in result
+
+
+# --- Phase 2: mdx_block_to_xhtml_element 테스트 ---
+
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
+from reverse_sync.mdx_block_parser import MdxBlock
+
+
+class TestMdxBlockToXhtmlElement:
+    def test_heading_h2(self):
+        block = MdxBlock(type='heading', content='## Section Title\n',
+                         line_start=1, line_end=1)
+        result = mdx_block_to_xhtml_element(block)
+        assert result == '<h2>Section Title</h2>'
+
+    def test_heading_h3_with_code(self):
+        block = MdxBlock(type='heading', content='### `config` 설정\n',
+                         line_start=1, line_end=1)
+        result = mdx_block_to_xhtml_element(block)
+        assert result == '<h3><code>config</code> 설정</h3>'
+
+    def test_paragraph(self):
+        block = MdxBlock(type='paragraph', content='Hello **world**\n',
+                         line_start=1, line_end=1)
+        result = mdx_block_to_xhtml_element(block)
+        assert result == '<p>Hello <strong>world</strong></p>'
+
+    def test_unordered_list(self):
+        block = MdxBlock(type='list', content='- item1\n- item2\n',
+                         line_start=1, line_end=2)
+        result = mdx_block_to_xhtml_element(block)
+        assert '<ul>' in result
+        assert '<li><p>item1</p></li>' in result
+        assert '</ul>' in result
+
+    def test_ordered_list(self):
+        block = MdxBlock(type='list', content='1. first\n2. second\n',
+                         line_start=1, line_end=2)
+        result = mdx_block_to_xhtml_element(block)
+        assert '<ol>' in result
+        assert '</ol>' in result
+
+    def test_code_block_with_language(self):
+        block = MdxBlock(type='code_block',
+                         content='```python\nprint("hi")\n```\n',
+                         line_start=1, line_end=3)
+        result = mdx_block_to_xhtml_element(block)
+        assert 'ac:structured-macro' in result
+        assert 'ac:name="code"' in result
+        assert 'python' in result
+        assert 'print("hi")' in result
+
+    def test_code_block_no_language(self):
+        block = MdxBlock(type='code_block',
+                         content='```\nsome code\n```\n',
+                         line_start=1, line_end=3)
+        result = mdx_block_to_xhtml_element(block)
+        assert 'ac:structured-macro' in result
+        assert 'some code' in result
+
+    def test_html_block_passthrough(self):
+        block = MdxBlock(type='html_block',
+                         content='<div>custom html</div>\n',
+                         line_start=1, line_end=1)
+        result = mdx_block_to_xhtml_element(block)
+        assert '<div>custom html</div>' in result

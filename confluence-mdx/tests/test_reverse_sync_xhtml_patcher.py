@@ -136,3 +136,104 @@ def test_compound_xpath_adf_extension():
     result = patch_xhtml(xhtml, patches)
     assert 'Updated text.' in result
     assert 'Second para.' in result
+
+
+# --- Phase 2: delete/insert 테스트 ---
+
+
+class TestDeletePatch:
+    def test_delete_paragraph(self):
+        xhtml = '<h1>Title</h1><p>Para one</p><p>Para two</p>'
+        patches = [{'action': 'delete', 'xhtml_xpath': 'p[1]'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>Para one</p>' not in result
+        assert '<p>Para two</p>' in result
+        assert '<h1>Title</h1>' in result
+
+    def test_delete_heading(self):
+        xhtml = '<h1>Title</h1><h2>Sub</h2><p>Text</p>'
+        patches = [{'action': 'delete', 'xhtml_xpath': 'h2[1]'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<h2>Sub</h2>' not in result
+        assert '<h1>Title</h1>' in result
+
+    def test_delete_multiple_preserves_order(self):
+        xhtml = '<p>A</p><p>B</p><p>C</p>'
+        patches = [
+            {'action': 'delete', 'xhtml_xpath': 'p[1]'},
+            {'action': 'delete', 'xhtml_xpath': 'p[3]'},
+        ]
+        result = patch_xhtml(xhtml, patches)
+        assert 'A' not in result
+        assert '<p>B</p>' in result
+        assert 'C' not in result
+
+    def test_delete_nonexistent_xpath_skipped(self):
+        xhtml = '<p>Only</p>'
+        patches = [{'action': 'delete', 'xhtml_xpath': 'p[99]'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>Only</p>' in result
+
+
+class TestInsertPatch:
+    def test_insert_after_element(self):
+        xhtml = '<h1>Title</h1><p>Existing</p>'
+        patches = [{'action': 'insert', 'after_xpath': 'h1[1]',
+                     'new_element_xhtml': '<p>New para</p>'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>New para</p>' in result
+        h1_pos = result.index('<h1>')
+        new_pos = result.index('New para')
+        exist_pos = result.index('Existing')
+        assert h1_pos < new_pos < exist_pos
+
+    def test_insert_at_beginning(self):
+        xhtml = '<h1>Title</h1><p>Text</p>'
+        patches = [{'action': 'insert', 'after_xpath': None,
+                     'new_element_xhtml': '<p>First</p>'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>First</p>' in result
+        first_pos = result.index('First')
+        title_pos = result.index('Title')
+        assert first_pos < title_pos
+
+    def test_insert_at_end(self):
+        xhtml = '<h1>Title</h1><p>Last</p>'
+        patches = [{'action': 'insert', 'after_xpath': 'p[1]',
+                     'new_element_xhtml': '<p>After last</p>'}]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>After last</p>' in result
+        last_pos = result.index('Last')
+        after_pos = result.index('After last')
+        assert last_pos < after_pos
+
+    def test_insert_nonexistent_anchor_skipped(self):
+        xhtml = '<p>Only</p>'
+        patches = [{'action': 'insert', 'after_xpath': 'h1[99]',
+                     'new_element_xhtml': '<p>Ghost</p>'}]
+        result = patch_xhtml(xhtml, patches)
+        assert 'Ghost' not in result
+
+
+class TestPatchOrdering:
+    def test_delete_before_insert_before_modify(self):
+        xhtml = '<p>Delete me</p><p>Modify me</p><p>Keep</p>'
+        patches = [
+            {'action': 'delete', 'xhtml_xpath': 'p[1]'},
+            {'action': 'insert', 'after_xpath': 'p[2]',
+             'new_element_xhtml': '<p>Inserted</p>'},
+            {'action': 'modify', 'xhtml_xpath': 'p[2]',
+             'old_plain_text': 'Modify me', 'new_plain_text': 'Modified'},
+        ]
+        result = patch_xhtml(xhtml, patches)
+        assert 'Delete me' not in result
+        assert 'Inserted' in result
+        assert 'Modified' in result
+
+    def test_legacy_patch_without_action_treated_as_modify(self):
+        xhtml = '<p>Old text</p>'
+        patches = [{'xhtml_xpath': 'p[1]',
+                     'old_plain_text': 'Old text',
+                     'new_plain_text': 'New text'}]
+        result = patch_xhtml(xhtml, patches)
+        assert 'New text' in result

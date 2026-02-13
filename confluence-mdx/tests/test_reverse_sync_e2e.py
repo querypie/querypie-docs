@@ -36,7 +36,7 @@ def test_e2e_no_change_identity(testcase_data):
     mdx = testcase_data['mdx']
     original_blocks = parse_mdx_blocks(mdx)
     improved_blocks = parse_mdx_blocks(mdx)
-    changes = diff_blocks(original_blocks, improved_blocks)
+    changes, alignment = diff_blocks(original_blocks, improved_blocks)
     assert changes == []
 
 
@@ -65,7 +65,7 @@ def test_e2e_text_replacement(testcase_data):
 
     # Step 1-2: 블록 파싱 + diff
     improved_blocks = parse_mdx_blocks(improved_mdx)
-    changes = diff_blocks(original_blocks, improved_blocks)
+    changes, alignment = diff_blocks(original_blocks, improved_blocks)
     assert len(changes) > 0, "변경이 감지되어야 함"
 
     # Step 3: 매핑
@@ -89,7 +89,7 @@ def test_e2e_text_replacement(testcase_data):
 
     # Step 4: XHTML 패치
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
-                            mdx_to_sidecar, xpath_to_mapping)
+                            mdx_to_sidecar, xpath_to_mapping, alignment)
 
     if patches:
         patched = patch_xhtml(xhtml, patches)

@@ -563,3 +563,101 @@ class TestBuildListItemPatches:
 
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
+
+
+# ── delete/insert 패치 생성 테스트 ──
+
+
+class TestBuildDeletePatch:
+    def test_delete_patch_from_sidecar(self):
+        """deleted 변경이 sidecar에서 xpath를 찾아 delete 패치를 생성한다."""
+        mapping = _make_mapping('m1', 'Delete this text', xpath='p[1]')
+        sidecar = _make_sidecar('p[1]', [2])
+        mdx_to_sidecar = {2: sidecar}
+        xpath_to_mapping = {'p[1]': mapping}
+
+        change = BlockChange(
+            index=2, change_type='deleted',
+            old_block=_make_block('Delete this text'),
+            new_block=None,
+        )
+        patches = build_patches(
+            [change], [], [], [mapping],
+            mdx_to_sidecar, xpath_to_mapping, {})
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'delete'
+        assert patches[0]['xhtml_xpath'] == 'p[1]'
+
+    def test_delete_non_content_skipped(self):
+        """deleted된 empty/frontmatter 블록은 무시."""
+        change = BlockChange(
+            index=0, change_type='deleted',
+            old_block=_make_block('', type_='empty'),
+            new_block=None,
+        )
+        patches = build_patches([change], [], [], [], {}, {}, {})
+        assert len(patches) == 0
+
+    def test_delete_no_sidecar_skipped(self):
+        """sidecar에 매핑되지 않은 삭제 블록은 무시."""
+        change = BlockChange(
+            index=5, change_type='deleted',
+            old_block=_make_block('Unmapped text'),
+            new_block=None,
+        )
+        patches = build_patches([change], [], [], [], {}, {}, {})
+        assert len(patches) == 0
+
+
+class TestBuildInsertPatch:
+    def test_insert_patch_with_anchor(self):
+        """added 변경이 선행 매칭 블록을 앵커로 insert 패치를 생성한다."""
+        mapping = _make_mapping('m1', 'Anchor text', xpath='p[1]')
+        sidecar = _make_sidecar('p[1]', [0])
+        mdx_to_sidecar = {0: sidecar}
+        xpath_to_mapping = {'p[1]': mapping}
+
+        alignment = {0: 0}  # improved[0] → original[0]
+        change = BlockChange(
+            index=1, change_type='added',
+            old_block=None,
+            new_block=_make_block('New paragraph text'),
+        )
+        improved_blocks = [
+            _make_block('Anchor text'),
+            _make_block('New paragraph text'),
+        ]
+        patches = build_patches(
+            [change], [_make_block('Anchor text')], improved_blocks,
+            [mapping], mdx_to_sidecar, xpath_to_mapping, alignment)
+
+        insert_patches = [p for p in patches if p.get('action') == 'insert']
+        assert len(insert_patches) == 1
+        assert insert_patches[0]['after_xpath'] == 'p[1]'
+        assert '<p>' in insert_patches[0]['new_element_xhtml']
+
+    def test_insert_at_beginning(self):
+        """선행 매칭 블록이 없으면 after_xpath=None."""
+        alignment = {}
+        change = BlockChange(
+            index=0, change_type='added',
+            old_block=None,
+            new_block=_make_block('Very first paragraph'),
+        )
+        patches = build_patches(
+            [change], [], [_make_block('Very first paragraph')],
+            [], {}, {}, alignment)
+
+        insert_patches = [p for p in patches if p.get('action') == 'insert']
+        assert len(insert_patches) == 1
+        assert insert_patches[0]['after_xpath'] is None
+
+    def test_insert_non_content_skipped(self):
+        """added된 empty 블록은 무시."""
+        change = BlockChange(
+            index=0, change_type='added',
+            old_block=None,
+            new_block=_make_block('\n', type_='empty'),
+        )
+        patches = build_patches([change], [], [], [], {}, {}, {})
+        assert len(patches) == 0
