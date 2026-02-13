@@ -21,11 +21,11 @@ import { Callout } from 'nextra/components'
 * Linux OS 가 설치된 서버 컴퓨터 1대 : 아래에서 `Server VM`이라고 표기합니다.
     * AWS, Azure, Google Cloud Platform 등의 클라우드 서비스를 이용해도 무방합니다.
 * Hardware 성능과 용량
-    * 서버 컴퓨터의 사양은 4 vCPUs, 16GiB Memory 을 기본 사양으로 제시합니다. 이 성능 사양은 QueryPie 의 여러가지 기능 테스트에 적합합니다.
+    * 서버 컴퓨터의 사양은 4 vCPUs, 16GiB Memory를 기본 사양으로 제시합니다. 이 성능 사양은 QueryPie의 여러 가지 기능 테스트에 적합합니다.
     * 수백명 이상의 여러 이용자가 많은 트래픽으로 이용하는 경우, 8 vCPUs, 32 GiB Memory 를 권장 사양으로 제시합니다.
     * Root file system 의 크기를 100GiB 이상으로 구성하는 것을 권장합니다.
 * CPU Architecture
-    * CPU 는 x86_64 또는 AMD64 아키텍처를 권장합니다. AMD64, Intel Xeon 등 CPU 를 적용하여 주세요.
+    * CPU는 x86_64 또는 AMD64 아키텍처를 권장합니다. AMD64, Intel Xeon 등 CPU를 적용해 주세요.
     * <Badge color="yellow">BETA</Badge> QueryPie version 11.1.1 부터, ARM64 아키텍처의 CPU 를 지원합니다.
         * Production 수준의 기능 테스트를 수행하지 못하였기에, 개발환경에서의 기능테스트, 시험사용 용도로 권장합니다.
         * AWS 의 경우, `t4g.xlarge`, `m7g.xlarge` 등의 인스턴스 유형을 사용할 수 있습니다.
@@ -51,7 +51,7 @@ Production 환경을 위한 서버 권장 사양을 요약합니다.
 ### 리눅스 배포본
 
 QueryPie ACP 는 Docker, Podman 을 사용할 수 있는 대부분의 리눅스 배포본에서 정상적으로 작동합니다.
-그리고, 몇가지 리눅스 배포본에서 QueryPie ACP 제품을 사용하는 경우, 기술지원을 효과적으로 제공받을 수 있습니다.
+그리고 몇 가지 리눅스 배포본에서 QueryPie ACP 제품을 사용하는 경우, 기술지원을 효과적으로 제공받을 수 있습니다.
 
 #### 설치, 운영 과정이 검증된 리눅스 배포본
 
@@ -105,5 +105,5 @@ Docker Compose 를 Compose Tool 이라고 합니다.
         * MacOS OS 의 경우, MacOS 10.15 or later 버전을 사용해야 합니다. MacOS 12 (Monterey) 또는 이후 버전을 권장합니다.
         * Linux OS 의 경우, Debian 9 or later, Ubuntu 16.04 or later, Fedora 30 or later 버전을 사용해야 합니다.
     * Linux OS 의 경우, headless 모드를 지원하지 않습니다. X-Window, VNC 등을 사용하여 GUI 환경에서 실행해야 합니다.
-    * User Agent 를 사용하지 않고 웹 브라우저만을 이용해 QueryPie 를 사용하는 경우, 이 항목은 무시하셔도 됩니다.
+    * User Agent 를 사용하지 않고 웹 브라우저만을 이용해 QueryPie 를 사용하는 경우, 이 항목은 무시해도 됩니다.
 
