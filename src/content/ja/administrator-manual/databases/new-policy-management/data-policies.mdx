@@ -69,11 +69,11 @@ QueryPieは以下のようなポリシータイプを提供します:
       <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png" alt="Screenshot-2025-03-07-at-11.01.28-PM.png" width="712" />
       </figure>
 5.  **Sensitive Data Access Monitoring** 
-    * 管理者が特定テーブルまたはカラムを機密情報として指定し、アクセスする場合Alertを発生させます。
+    * 管理者が特定テーブルまたはカラムを機密情報として指定し、該当データにアクセスした場合にAlertが発生するよう設定します。
     * どの経路が機密情報か設定し、Alert設定はGeneral &gt; Company Management &gt; Alertで設定します。<br/>（11.0.0基準新ポリシー用Sensitive Data Access Monitoring Alert設定機能は未実装状態です。）
 6.  **DML Query Approval Enforcement**  
     * 特定テーブルに対して`INSERT`, `UPDATE`, `DELETE`クエリを実行する場合Workflowで承認手順を経るよう強制します。
-    * このポリシーを作成する前にGeneral &gt; Workflow Management &gt; Approval RulesでSQL Request TypeのApproval Ruleをまず作成しておく必要があります。`INSERT`, `UPDATE`, `DELETE`を実行するのは実行する人に該当privilegeが付与されていることを前提とします。クエリを実行する人がリクエスト者本人になるようにするには、以下の図のようにExecution項目のAssignee for Executionに「Allow Assginee selection (All Users)が選択されている必要があり、`INSERT`, `UPDATE`, `DELETE`権限はあるが管理者でない人が承認を経てクエリを実行できます。<br/>
+    * このポリシーを作成する前にGeneral &gt; Workflow Management &gt; Approval RulesでSQL Request TypeのApproval Ruleをまず作成しておく必要があります。`INSERT`, `UPDATE`, `DELETE`を実行するのは実行する人に該当privilegeが付与されていることを前提とします。クエリを実行する人がリクエスト者本人になるようにするには、以下の図のようにExecution項目のAssignee for Executionに「Allow Assignee selection (All Users)が選択されている必要があり、`INSERT`, `UPDATE`, `DELETE`権限はあるが管理者でない人が承認を経てクエリを実行できます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-153240.png" alt="General &gt; Workflow Management &gt; Approval RulesにSQL Request形式のApproval ruleを作成" width="419" />
       <figcaption>
@@ -133,7 +133,7 @@ User scopeのscope typeが  **Everyone** の場合のみExclusion対象を指定
 1.  **Data tags** : Data Pathsメニューで設定されたタグを基にポリシー適用対象を選択します。
     * このオプションが選択されるとタグキーと値を指定してポリシーを適用するテーブルまたはカラムを選択できます。
 2.  **Specific data path** : 特定データ経路を直接指定するオプションです。 <Badge color="grey">11.0.0</Badge> 
-    * このオプションを選択した後Add tartgetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。  <br/>  <br/> 
+    * このオプションを選択した後Add targetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。  <br/>  <br/> 
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png" alt="直接経路指定" width="505" />
       <figcaption>
