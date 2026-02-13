@@ -13,6 +13,10 @@ import sys
 from pathlib import Path
 from typing import List, Tuple, Optional, Dict, Set
 
+# Resolve project root (confluence-mdx/) from this module's location
+# bin/skeleton/diff.py -> .parent=skeleton/ -> .parent=bin/ -> .parent=confluence-mdx/
+_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
+
 try:
     import yaml
 except ImportError:
@@ -184,11 +188,14 @@ def filter_diff_output(
     Returns:
         Filtered diff output with ignored lines removed. Returns empty string if all differences are ignored.
     """
-    # Normalize file path (use forward slashes, remove leading slash if present)
+    # Normalize file path (use forward slashes, extract target/{lang}/... portion)
     file_path = file_path.replace('\\', '/')
-    if file_path.startswith('/'):
+    target_match = re.search(r'target/(?:ko|en|ja)/', file_path)
+    if target_match:
+        file_path = file_path[target_match.start():]
+    elif file_path.startswith('/'):
         file_path = file_path[1:]
-    
+
     # Get ignore line numbers for this file
     ignore_lines = ignore_rules.get(file_path, set())
     
@@ -527,9 +534,9 @@ def process_directories_recursive(directories: List[Path], convert_func) -> Tupl
     if len(directories) == 0:
         # No directories specified, use defaults (Korean, Japanese, English order)
         default_dirs = [
-            Path('target/ko'),
-            Path('target/ja'),
-            Path('target/en')
+            _PROJECT_DIR / 'target/ko',
+            _PROJECT_DIR / 'target/ja',
+            _PROJECT_DIR / 'target/en',
         ]
         directories = default_dirs
 

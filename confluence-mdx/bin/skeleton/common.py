@@ -21,10 +21,10 @@ def extract_language_code(file_path: Path) -> Optional[str]:
     path_str = str(file_path)
     path_lower = path_str.lower()
 
-    # Check for language codes in the target/{lang}/ pattern at the start
+    # Check for language codes in the target/{lang}/ pattern (anywhere in path)
     for lang in ['ko', 'en', 'ja']:
-        pattern = r'^target[/\\]' + lang + r'[/\\]'
-        if re.match(pattern, path_lower):
+        pattern = r'target[/\\]' + lang + r'[/\\]'
+        if re.search(pattern, path_lower):
             return lang.lower()
 
     return None
@@ -75,10 +75,10 @@ def get_path_without_lang_dir(file_path: Path) -> Optional[str]:
     path_str = str(file_path)
     path_lower = path_str.lower()
 
-    # Check for the target/{lang}/ pattern at the start (relative path only)
+    # Check for the target/{lang}/ pattern (anywhere in path)
     for lang in ['ko', 'en', 'ja']:
-        pattern = r'^target[/\\]' + lang + r'[/\\]'
-        match = re.match(pattern, path_lower)
+        pattern = r'target[/\\]' + lang + r'[/\\]'
+        match = re.search(pattern, path_lower)
         if match:
             end = match.end()
             relative_path = path_str[end:]

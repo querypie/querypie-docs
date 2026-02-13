@@ -13,12 +13,19 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+# Resolve repo root from this script's location
+# Script is at confluence-mdx/bin/restore_alt_from_diff.py
+_SCRIPT_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                    # confluence-mdx/
+_REPO_ROOT = _PROJECT_DIR.parent                     # repo root
+
 
 def get_diff_for_lang(lang: str) -> str:
     """특정 언어의 git diff 가져오기"""
     result = subprocess.run(
         ['git', 'diff', f'src/content/{lang}/'],
-        capture_output=True, text=True
+        capture_output=True, text=True,
+        cwd=str(_REPO_ROOT),
     )
     return result.stdout
 
@@ -120,7 +127,7 @@ def main():
         total_changes = 0
 
         for file_path_str, alt_mapping in file_mappings.items():
-            file_path = Path(file_path_str)
+            file_path = _REPO_ROOT / file_path_str
 
             if not file_path.exists():
                 continue

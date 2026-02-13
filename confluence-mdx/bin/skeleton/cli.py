@@ -91,6 +91,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Tuple, Optional
 
+# Resolve project root (confluence-mdx/) from this script's location
+# bin/skeleton/cli.py -> .parent=skeleton/ -> .parent=bin/ -> .parent=confluence-mdx/
+_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
+
 # Import modules for recursive processing and comparison
 from skeleton.compare import compare_files
 from skeleton.diff import (
@@ -1119,9 +1123,9 @@ def delete_skeleton_files(directories: List[Path]) -> int:
     if len(directories) == 0:
         # No directories specified, use defaults (Korean, Japanese, English order)
         default_dirs = [
-            Path('target/ko'),
-            Path('target/ja'),
-            Path('target/en')
+            _PROJECT_DIR / 'target/ko',
+            _PROJECT_DIR / 'target/ja',
+            _PROJECT_DIR / 'target/en',
         ]
         directories = default_dirs
     
