@@ -71,7 +71,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Enhancement**
 
-* [General] Network Zone External API 벨리데이션 체크 추가
+* [General] Network Zone External API 밸리데이션 체크 추가
 * [General] Alert Dialog 모달 내 텍스트 복사 기능 개선
 * [General] QUERYPIE_WEB_URL 환경변수 설정 위치 변경 (Meta DB로 이동)
 * [Agent] 멀티 에이전트에서 SAC 지원
@@ -126,7 +126,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [SAC] 윈도우 서버 에이전트 프로세스 탐지 메모리 누수 현상 해결
 * [Multi-Agent] Host 등록 시 IP 및 HTTP 도메인 등록 가능하도록 수정
 * [Multi-Agent] 메모리 부족 현상 해결 및 자동 복구 기능 추가
-* [Agent] RDP Password 잘못입력한 경우 간헐적 에이전트 종료 현상 수정
+* [Agent] RDP Password 잘못 입력한 경우 간헐적 에이전트 종료 현상 수정
 
 
 ### QueryPie 10.2.6 Release
@@ -153,13 +153,13 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [Agent] 멀티 에이전트 내의 Database 3rd Party Client 빠른 연결 지원
 * [DAC] Oracle 사용자 커넥션 페이지 Proxy Info 정보에 SID 정보 표기
 * [DAC] Dr.Sum SSH 기능 활성화
-* [SAC] Cloud Provide 동기화 시 자동 태깅 기능 추가
+* [SAC] Cloud Provider 동기화 시 자동 태깅 기능 추가
 * [SAC] Rocky Linux 9 에서 Agent 설치 및 연결 가능하도록 개선
 * [SAC] 서버 권한 부여 시 Server Groups 및 Servers 목록 로딩 속도 개선
 * [WAC] Web App Configurations 페이지 추가
 * [WAC] Web App 워터마크 문구 커스텀 기능 추가
 * [WAC] Web App 사용자 행위 Event Log 정교화
-* [AIDD] Discovery Job에 timeout 옵션 추가하여 제한된 시간동안 수행할 수 있도록 개선
+* [AIDD] Discovery Job에 timeout 옵션 추가하여 제한된 시간 동안 수행할 수 있도록 개선
 
 
 **Bug Fix**
@@ -218,7 +218,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Improvement**
 
-* [Ganeral] 인도네시아 타임존 추가
+* [General] 인도네시아 타임존 추가
 * [General] CSV 파일 생성 시, UTF-8(BOM) 인코딩 타입으로 변경 개선
 * [DAC] 워크플로우에서 개인 Keytab 및 UID & PW 인증 정상 동작하도록 개선 
 * [DAC] SQL Request 승인된 쿼리 실행 시, 계정정보가 틀려도 재시도할 수 있도록 개선
@@ -227,7 +227,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] Athena Workgroup 등록 관련 개선
 * [DAC] GCP 동기화 시 Database Filter 동작 개선
 * [DAC] DB 커넥션 접속 시 Masking 정책 스캔 로직 개선
-* [DAC] Ledger 대상 DML 쿼리 실행 후, 워크플로 넘길때 커스텀 링크로 리다이렉션
+* [DAC] Ledger 대상 DML 쿼리 실행 후, 워크플로 넘길 때 커스텀 링크로 리다이렉션
 * [SAC] NOVA Server의 HA 구성 및 PPv2 지원
 * [AIDD] 지원하는 모든 데이터베이스에 SSL 지원
 * [SAC] 서버 선택 시 전체 선택 체크박스 UX 개선
@@ -235,7 +235,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [SAC] 대규모로 서버 권한 일괄 부여(Direct Permission) 개선
 * [SAC] Server Group 수정 페이지에서 서버 외 항목 수정 가능하도록 요청
 * [SAC] Proxyjump 멀티홉(Multi-Hop) 지원
-* [Audit] Audit Logs Export 시도 시 글자를 자를수 있는 옵션 제공
+* [Audit] Audit Logs Export 시도 시 글자를 자를 수 있는 옵션 제공
 * [WAC] WebApp 생성 시 Sub Path 등록 방식 개선
 * [WAC] Single Page Application에 대한 접근통제 로직 보완
 * [WAC] RootCA 인증서 다운로드 기능 추가
@@ -284,10 +284,10 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] Athena Ledger Table 지원
 * [DAC] Ledger 정책에 Export Purpose 기능 추가
 * [DAC] Oracle, MongoDB, PostgreSQL Proxy (Agent) 암호 고정 / 난수 옵션 제공
-* [SAC] RDP Server Agent 없어 Windows Server 접속가능하도록 개선
+* [SAC] RDP Server Agent 없이 Windows Server 접속 가능하도록 개선
 * [SAC] Command Template 에서 Allow/Deny 스펙 추가 개선
 * [SAC] OpenSSH Certificate 지원
-* [SAC] Window 서버에 Server Agent 설치 후 기존 WindowOS 와 매핑 기능 추가
+* [SAC] Windows 서버에 Server Agent 설치 후 기존 Windows OS와 매핑 기능 추가
 * [SAC] Vault SSH CA Engine 추가 (signed ssh certificates)
 * [SAC] Server Access Control Role 권한 관련 External API 지원
 * [SAC] Policy 변경 시 열려있는 세션 유지할 수 있도록 옵션 제공
@@ -300,7 +300,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Bug Fix**
 
-* [DAC] Window 환경 웹에디터에서 쿼리 작성 시 커서 위치 관련 이슈 해결
+* [DAC] Windows 환경 웹에디터에서 쿼리 작성 시 커서 위치 관련 이슈 해결
 * [SAC] 일반 사용자에게 TELNET, FTP의 Protocol 이 노출되지 않는 이슈 해결
 
 
