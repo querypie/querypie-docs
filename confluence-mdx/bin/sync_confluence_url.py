@@ -26,6 +26,12 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Tuple
 
+# Resolve repo root from this script's location
+# Script is at confluence-mdx/bin/sync_confluence_url.py
+_SCRIPT_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                    # confluence-mdx/
+_REPO_ROOT = _PROJECT_DIR.parent                     # repo root
+
 
 # ---------------------------------------------------------------------------
 # Path helpers
@@ -221,8 +227,8 @@ def main() -> int:
     targets: List[Path] = []
     if args.recursive is not None:
         dirs = args.recursive if args.recursive else [
-            Path('src/content/en'),
-            Path('src/content/ja'),
+            _REPO_ROOT / 'src/content/en',
+            _REPO_ROOT / 'src/content/ja',
         ]
         targets = collect_mdx_files(dirs)
     elif args.files:

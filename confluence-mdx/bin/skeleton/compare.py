@@ -8,6 +8,10 @@ across different language directories (target/ko, target/ja, target/en).
 
 from pathlib import Path
 
+# Resolve project root (confluence-mdx/) from this module's location
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
+
 
 def get_mdx_files(directory: Path) -> set[str]:
     """
@@ -43,7 +47,7 @@ def compare_files(verbose: bool = False):
         verbose: If False, skip files that exist in all three languages.
                  If True, output all files.
     """
-    base_dir = Path('target')
+    base_dir = _PROJECT_DIR / 'target'
     dirs = {
         'ko': base_dir / 'ko',
         'en': base_dir / 'en',

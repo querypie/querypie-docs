@@ -22,10 +22,21 @@ from typing import Dict, List
 
 import yaml
 
+# Resolve project root (confluence-mdx/) from this script's location
+_SCRIPT_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                    # confluence-mdx/
+
 # Ensure bin/ is on sys.path
-_bin_dir = str(Path(__file__).resolve().parent)
-if _bin_dir not in sys.path:
-    sys.path.insert(0, _bin_dir)
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
+
+def _resolve(rel: str) -> str:
+    """Resolve a relative path against _PROJECT_DIR (confluence-mdx/)."""
+    p = Path(rel)
+    if p.is_absolute():
+        return rel
+    return str(_PROJECT_DIR / rel)
 
 
 def load_pages_yaml(pages_yaml_path: str) -> List[Dict]:
@@ -131,7 +142,7 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
         os.makedirs(output_dir, exist_ok=True)
 
         cmd = [
-            sys.executable, os.path.join(_bin_dir, 'converter', 'cli.py'),
+            sys.executable, str(_SCRIPT_DIR / 'converter' / 'cli.py'),
             input_file, output_file,
             f'--public-dir={public_dir}',
             f'--attachment-dir={attachment_dir}',
@@ -169,6 +180,13 @@ def main():
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         help='Log level for converter/cli.py (default: warning)')
     args = parser.parse_args()
+
+    # Resolve relative paths against project root (confluence-mdx/)
+    args.pages_yaml = _resolve(args.pages_yaml)
+    args.var_dir = _resolve(args.var_dir)
+    args.output_dir = _resolve(args.output_dir)
+    args.public_dir = _resolve(args.public_dir)
+    args.translations = _resolve(args.translations)
 
     # Load data
     pages = load_pages_yaml(args.pages_yaml)

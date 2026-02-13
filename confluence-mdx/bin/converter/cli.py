@@ -16,10 +16,14 @@ from typing import Optional, List
 
 import yaml
 
+# Resolve project root (confluence-mdx/) from this script's location
+# bin/converter/cli.py -> .parent=converter/ -> .parent=bin/ -> .parent=confluence-mdx/
+_SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
+
 # Ensure bin/ is on sys.path when run as a script (e.g. bin/converter/cli.py)
-_bin_dir = str(Path(__file__).resolve().parent.parent)
-if _bin_dir not in sys.path:
-    sys.path.insert(0, _bin_dir)
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
 
 import converter.context as ctx
 from converter.context import (
@@ -111,7 +115,7 @@ def main():
     parser.add_argument('input_file', help='Input XHTML file path')
     parser.add_argument('output_file', help='Output Markdown file path')
     parser.add_argument('--public-dir',
-                        default='./public',
+                        default=str(_PROJECT_DIR / 'public'),
                         help='/public directory path')
     parser.add_argument('--attachment-dir',
                         help='Directory to save attachments (default: output file directory)')

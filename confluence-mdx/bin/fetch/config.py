@@ -2,7 +2,12 @@
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Optional
+
+# Resolve project root (confluence-mdx/) from this module's location
+# bin/fetch/config.py -> .parent=fetch/ -> .parent=bin/ -> .parent=confluence-mdx/
+_PROJECT_DIR = Path(__file__).resolve().parent.parent.parent  # confluence-mdx/
 
 
 @dataclass
@@ -26,3 +31,9 @@ class Config:
             self.email = os.environ.get('ATLASSIAN_USERNAME', 'your-email@example.com')
         if self.api_token is None:
             self.api_token = os.environ.get('ATLASSIAN_TOKEN', 'your-api-token')
+
+        # Resolve relative paths against project root (confluence-mdx/)
+        for field in ('default_output_dir', 'cache_dir', 'translations_file'):
+            value = getattr(self, field)
+            if not os.path.isabs(value):
+                setattr(self, field, str(_PROJECT_DIR / value))
