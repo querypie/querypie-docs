@@ -11,14 +11,14 @@ import { Callout } from 'nextra/components'
 
 QueryPie에서는 Okta 연동을 지원합니다.
 Okta의 사용자 및 그룹을 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있으며, 이 과정에서 사용자에게 간소화되고 편리한 환경을 제공하면서도 엄격한 보안 정책을 운영할 수 있습니다.
-QueryPie와 Okta의 통합은 데이터베이스 및 시스템 관리 생태계의 보안과 운영 효율성 및 사용자 경험이 향상시킬 수 있습니다.
+QueryPie와 Okta의 통합은 데이터베이스 및 시스템 관리 생태계의 보안과 운영 효율성 및 사용자 경험을 향상시킬 수 있습니다.
 
 <Callout type="info">
-SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하여 주시기 바랍니다. 하단의 Okta API를 활용한 아웃바운드 사용자 동기화 설정을 동시에 활용할 시, 사용자 동기화에 영향을 받을 수 있는 점 유의하시기 바랍니다.
+SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하기 바랍니다. 하단의 Okta API를 활용한 아웃바운드 사용자 동기화 설정을 동시에 활용할 시, 사용자 동기화에 영향을 받을 수 있는 점 유의하기 바랍니다.
 </Callout>
 
 
-### Okta에서 QueryPie 를 애플리케이션으로 추가
+### Okta에서 QueryPie를 애플리케이션으로 추가
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색" width="760" />
@@ -30,9 +30,9 @@ Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; Quer
 1. [Okta 서비스](https://login.okta.com/)에 접속하여 관리자 계정으로 로그인합니다.
 2. 우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.
 3. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
-4. `Browse App Catalog` 버튼을 클릭하여 QueryPie 를 검색합니다.
+4. `Browse App Catalog` 버튼을 클릭하여 QueryPie를 검색합니다.
 5. QueryPie 애플리케이션 페이지로 들어가 `Add Integration` 버튼을 클릭합니다.
-6. Application Label에 QueryPie 로 입력된 것을 확인 후, `Done` 버튼을 클릭하여 애플리케이션을 추가합니다.
+6. Application Label에 QueryPie로 입력된 것을 확인 후, `Done` 버튼을 클릭하여 애플리케이션을 추가합니다.
 
 
 ### Okta 계정 연동을 위한 Profile 설정
@@ -45,7 +45,7 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attrib
 </figure>
 
 1. Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
-2. Profile 목록 중 ‘QueryPie User’ 를 클릭합니다. 
+2. Profile 목록 중 'QueryPie User'를 클릭합니다.
 3. Attributes 설정에서 `Add Attribute` 버튼을 클릭합니다.
 4. Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
     1. Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another` 
@@ -60,12 +60,12 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
 </figcaption>
 </figure>
 
-1. 4가지 Attribute 가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
-2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute 와 연결합니다.
+1. 4가지 Attribute가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
+2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute와 연결합니다.
     1. user.firstName ↔︎ firstName
     2. user.lastName ↔︎ lastName
     3. user.email ↔︎ email
-    4. user.email ↔︎ loginId (Okta 의 email 항목을 QueryPie 의 로그인 Id 로 사용합니다.)
+    4. user.email ↔︎ loginId (Okta의 email 항목을 QueryPie의 로그인 Id로 사용합니다.)
 3. `Save Mappings` 버튼을 클릭하여 저장합니다.
 
 
@@ -121,9 +121,9 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 
 1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다. 
     * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다. 
-2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다. 
-3. Create new role을 선택합니다. 
-4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다. 
+2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles 탭으로 이동합니다.
+3. Create new role을 선택합니다.
+4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permissions에서 이하의 권한만 체크합니다.
     1.  **User** 
         * View users and their details
     2.  **Group** 
@@ -158,22 +158,22 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figcaption>
 </figure>
 
-1. QueryPie 에서 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
-2. 인증 Type 항목에서 Okta 를 선택합니다.
+1. QueryPie에서 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
+2. 인증 Type 항목에서 Okta를 선택합니다.
 3. 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
 4. 자동 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System”를 체크합니다.
-    1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.
+    1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL을 확인할 수 있습니다.
     2. API Token: Okta 관리자 API 토큰을 기입합니다. 
-    3. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다. 
-5. 자동 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.
+    3. Application ID: Okta 내에서 2개 이상의 QueryPie App을 사용할 경우 입력합니다.
+5. 자동 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling을 설정합니다.
 6. `Dry Run` 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
 7. `Save Changes`로 저장합니다.
-8. `Synchronize` 버튼을 클릭하여 Okta 의 사용자를 동기화합니다.
+8. `Synchronize` 버튼을 클릭하여 Okta의 사용자를 동기화합니다.
 
 
 <Callout type="info">
 **Application ID 확인하는 방법**
-2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인할 수 있습니다.
+2개 이상의 QueryPie Application을 사용하는 경우, Okta Admin &gt; Applications으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL에서 위의 스크린샷에 표시된 것과 같은 Application ID를 확인할 수 있습니다.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -194,6 +194,6 @@ Okta Admin &gt; Applications &gt; QueryPie App 상단 URL
 </figure>
 
 <Callout type="info">
-해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.
-SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하여 주시기 바랍니다.
+이 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.
+SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하기 바랍니다.
 </Callout>
