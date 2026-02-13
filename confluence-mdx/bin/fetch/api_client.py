@@ -68,14 +68,17 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
         return self.make_request(url, "V1 API attachments")
 
-    def get_recently_modified_pages(self, days: int, space_key: str, since_date: Optional[str] = None) -> List[str]:
-        """Get a list of page IDs modified since a date or in the last N days.
+    def get_recently_modified_pages(self, days: int, space_key: str, since_date: Optional[str] = None) -> List[Dict]:
+        """Get recently modified pages with version info.
 
         Args:
             days: Number of days to look back (used when since_date is not provided)
             space_key: Confluence space key
             since_date: ISO 8601 date string (e.g. version.createdAt from page.v2.yaml).
                         If provided, overrides days parameter. A 1-day safety margin is subtracted.
+
+        Returns:
+            List of dicts with keys: "id" (str), "version_number" (int or None).
         """
         try:
             if since_date:
@@ -94,13 +97,13 @@ class ApiClient:
             cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}"'
             encoded_query = quote(cql_query)
 
-            # Use CQL search API
-            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}"
+            # Use CQL search API with version expansion
+            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}&expand=version"
 
             self.logger.debug(f"CQL query: {cql_query}")
 
             seen_ids: set[str] = set()
-            page_ids: list[str] = []
+            pages: list[Dict] = []
             start = 0
             limit = 100
 
@@ -120,7 +123,11 @@ class ApiClient:
                     page_id = result.get("id")
                     if page_id and page_id not in seen_ids:
                         seen_ids.add(page_id)
-                        page_ids.append(page_id)
+                        version = result.get("version", {})
+                        pages.append({
+                            "id": page_id,
+                            "version_number": version.get("number"),
+                        })
                         new_count += 1
 
                 # Stop if no new results (API ignoring pagination) or last page
@@ -129,8 +136,8 @@ class ApiClient:
 
                 start += limit
 
-            self.logger.info(f"Found {len(page_ids)} recently modified pages")
-            return page_ids
+            self.logger.info(f"Found {len(pages)} recently modified pages")
+            return pages
 
         except Exception as e:
             self.logger.error(f"Error getting recently modified pages: {str(e)}")

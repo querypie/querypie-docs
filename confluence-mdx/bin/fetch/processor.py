@@ -133,6 +133,22 @@ class ConfluencePageProcessor:
         self.file_manager.save_yaml(state_path, state)
         self.logger.warning(f"Fetch state saved to {state_path}")
 
+    def _is_page_current(self, page_id: str, api_version_number: int) -> bool:
+        """Check if local page data matches the API version number."""
+        v2_path = os.path.join(self.config.default_output_dir, page_id, "page.v2.yaml")
+        try:
+            v2_data = self.file_manager.load_yaml(v2_path)
+            if not v2_data or "version" not in v2_data:
+                return False
+            local_version = v2_data["version"].get("number")
+            if local_version is not None and int(local_version) == int(api_version_number):
+                self.logger.info(f"Skipped page {page_id} (local version {local_version} matches API)")
+                return True
+            self.logger.info(f"Page {page_id} needs update: local version {local_version} != API version {api_version_number}")
+            return False
+        except Exception:
+            return False
+
     def _compute_max_modified_date(self, page_ids: List[str]) -> Optional[str]:
         """Scan page.v2.yaml files for the given page IDs and return the maximum version.createdAt."""
         max_date = None
@@ -186,7 +202,7 @@ class ConfluencePageProcessor:
                     else:
                         self.logger.warning(f"Recent mode: No fetch state for start_page_id {start_page_id}, using default {effective_days} days")
 
-                page_ids = self.api_client.get_recently_modified_pages(
+                modified_pages = self.api_client.get_recently_modified_pages(
                     days=effective_days,
                     space_key=self.config.space_key,
                     since_date=since_date
@@ -195,17 +211,25 @@ class ConfluencePageProcessor:
                 # Exclude specific page_id from collection (576585864)
                 # 576585864 - https://querypie.atlassian.net/wiki/spaces/QM/overview
                 excluded_page_id = "576585864"
-                original_count = len(page_ids)
-                page_ids = [pid for pid in page_ids if pid != excluded_page_id]
-                if original_count != len(page_ids):
-                    self.logger.info(f"Excluded page ID {excluded_page_id} from collection ({original_count} -> {len(page_ids)} pages)")
+                original_count = len(modified_pages)
+                modified_pages = [p for p in modified_pages if p["id"] != excluded_page_id]
+                if original_count != len(modified_pages):
+                    self.logger.info(f"Excluded page ID {excluded_page_id} from collection ({original_count} -> {len(modified_pages)} pages)")
 
                 # Download each page through all 4 stages and output to stdout
                 # Store downloaded pages for list.txt
-                self.logger.warning(f"Downloading {len(page_ids)} recently modified pages")
+                self.logger.warning(f"Downloading {len(modified_pages)} recently modified pages")
                 downloaded_list_lines = []
-                for page_id in page_ids:
+                skipped_count = 0
+                for entry in modified_pages:
+                    page_id = entry["id"]
+                    api_version = entry.get("version_number")
                     try:
+                        # Skip if local data already matches the latest version
+                        if api_version is not None and self._is_page_current(page_id, api_version):
+                            skipped_count += 1
+                            continue
+
                         page = self.process_page_complete(page_id, start_page_id)
                         if page:
                             # Update translations if available
@@ -223,6 +247,9 @@ class ConfluencePageProcessor:
                     except Exception as e:
                         self.logger.error(f"Error downloading page ID {page_id}: {str(e)}")
                         continue
+
+                if skipped_count > 0:
+                    self.logger.warning(f"Skipped {skipped_count} pages (already up-to-date)")
 
                 # After downloading, process like local mode (hierarchical traversal from start_page_id)
                 # Generate pages.yaml and list.txt with full hierarchical tree (like --local mode)
