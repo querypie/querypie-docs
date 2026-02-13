@@ -43,8 +43,8 @@ Administrator &gt; General &gt; System &gt; Integrations &gt; Syslog &gt; Config
     4.  **Port**  : sylog server에서 listen 하는 port를 입력합니다. (기본값 514)
     5.  **Test Connection 버튼**  : TCP는 syslog 서버와 통신상태를 점검할 수 있습니다. 
         * UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
-    6.  **Select Event Items**  : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 있는 "Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
-    7. Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운 경우 syslog header를 빼기 위해 제공되는 옵션입니다.
+    6.  **Select Event Items**  : 이벤트 항목을 선택적으로 전송할 수 있습니다. 아래에 앴는 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
+    7. Disable syslog header : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운경우 syslog header를 빼기 위해 제공되는 옵션입니다.
     8. Description : 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
 2. `OK` 버튼을 누르고 설정을 저장합니다. 
     1. 설정 사항을 저장하더라도 바로 Syslog 전송이 활성화되는 것은 아닙니다.
