@@ -119,21 +119,23 @@ def _add_mapping(
     ))
 
 
-def _add_rich_text_body_children(
-    macro_element: Tag,
+def _add_container_children(
+    container,
     parent_mapping: BlockMapping,
     mappings: List[BlockMapping],
     counters: dict,
 ):
-    """Callout 매크로의 ac:rich-text-body 내 자식 요소를 개별 매핑으로 추가한다."""
-    rich_body = macro_element.find('ac:rich-text-body')
-    if rich_body is None:
+    """컨테이너 요소 내 블록 레벨 자식을 개별 매핑으로 추가한다.
+
+    ac:rich-text-body, ac:adf-content 등 다양한 컨테이너에 공통 적용.
+    """
+    if container is None:
         return
 
-    child_counters: dict = {}  # 매크로 내부 전용 카운터
-    parent_xpath = parent_mapping.xhtml_xpath  # 예: "macro-info[1]"
+    child_counters: dict = {}
+    parent_xpath = parent_mapping.xhtml_xpath
 
-    for child in rich_body.children:
+    for child in container.children:
         if not isinstance(child, Tag):
             continue
         tag = child.name
@@ -164,6 +166,17 @@ def _add_rich_text_body_children(
         )
         mappings.append(child_mapping)
         parent_mapping.children.append(block_id)
+
+
+def _add_rich_text_body_children(
+    macro_element: Tag,
+    parent_mapping: BlockMapping,
+    mappings: List[BlockMapping],
+    counters: dict,
+):
+    """Callout 매크로의 ac:rich-text-body 내 자식 요소를 개별 매핑으로 추가한다."""
+    rich_body = macro_element.find('ac:rich-text-body')
+    _add_container_children(rich_body, parent_mapping, mappings, counters)
 
 
 def _get_adf_panel_type(element: Tag) -> str:
@@ -193,40 +206,4 @@ def _add_adf_content_children(
 ):
     """ac:adf-extension의 ac:adf-content 내 자식 요소를 개별 매핑으로 추가한다."""
     content_body = _get_adf_content_body(adf_element)
-    if content_body is None:
-        return
-
-    child_counters: dict = {}
-    parent_xpath = parent_mapping.xhtml_xpath
-
-    for child in content_body.children:
-        if not isinstance(child, Tag):
-            continue
-        tag = child.name
-        if tag not in ('p', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table'):
-            continue
-
-        child_counters[tag] = child_counters.get(tag, 0) + 1
-        child_xpath = f"{parent_xpath}/{tag}[{child_counters[tag]}]"
-
-        plain = child.get_text()
-        if tag in ('ul', 'ol', 'table'):
-            inner = str(child)
-        else:
-            inner = ''.join(str(c) for c in child.children)
-
-        block_type = 'heading' if tag in HEADING_TAGS else (
-            'list' if tag in ('ul', 'ol') else (
-            'table' if tag == 'table' else 'paragraph'))
-
-        block_id = f"{block_type}-{len(mappings) + 1}"
-        child_mapping = BlockMapping(
-            block_id=block_id,
-            type=block_type,
-            xhtml_xpath=child_xpath,
-            xhtml_text=inner.strip(),
-            xhtml_plain_text=plain.strip(),
-            xhtml_element_index=len(mappings),
-        )
-        mappings.append(child_mapping)
-        parent_mapping.children.append(block_id)
+    _add_container_children(content_body, parent_mapping, mappings, counters)
