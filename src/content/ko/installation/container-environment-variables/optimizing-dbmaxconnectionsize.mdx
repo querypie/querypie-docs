@@ -73,10 +73,10 @@ Production 환경에 적용하는 것을 권장합니다.
 
 `DB_MAX_CONNECTION_SIZE` = `minimum ( Application_CPU_Count / Application_Node_Count, RDS_CPU_Count ) * 10`
 
-* Application_CPU_Count - QueryPie Server Container 가 실행되는 Linux VM 의 vCPU 갯수
-* Application_Node_Count - QueryPie Server Container 의 갯수, 또는 실행되는 Linux VM 의 갯수, 또는 Kubernetes Pod 의 갯수.
+* Application_CPU_Count - QueryPie Server Container 가 실행되는 Linux VM 의 vCPU 개수
+* Application_Node_Count - QueryPie Server Container 의 개수, 또는 실행되는 Linux VM 의 개수, 또는 Kubernetes Pod 의 개수.
     * 이중화 구성의 경우, 2, 삼중화 구성의 경우, 3 이 됩니다.
-* RDS_CPU_Count - 별도로 구성된 QueryPie MySQL 이 실행되는 VM Instance 의 vCPU 갯수
+* RDS_CPU_Count - 별도로 구성된 QueryPie MySQL 이 실행되는 VM Instance 의 vCPU 개수
 * minimum ( a, b, c, … ) - `,` 로 구분된 여러 값 가운데, 가장 작은 값을 선택합니다.
 
 예시1) Server Container 가 실행되는 Linux 의 VM 이 4 vCPU 이고, 2개의 Linux VM 을 운영합니다.
@@ -104,7 +104,7 @@ PoC 환경에 사용하는 것이 적합합니다.
 
 `DB_MAX_CONNECTION_SIZE` = `Application_CPU_Count * 2.5`
 
-* Application_CPU_Count - QueryPie Server Container 가 실행되는 Linux VM 의 vCPU 갯수
+* Application_CPU_Count - QueryPie Server Container 가 실행되는 Linux VM 의 vCPU 개수
 
 예시1) Server Container 가 실행되는 Linux 의 VM 이 4 vCPU 이고, MySQL 을 함께 실행합니다.
 이 경우, `DB_MAX_CONNECTION_SIZE` 을 10 으로 설정하는 것이 적절합니다.

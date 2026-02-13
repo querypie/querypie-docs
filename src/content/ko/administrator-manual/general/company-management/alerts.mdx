@@ -26,7 +26,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts
 
 공통 알림을 비롯하여 DB 접근에 특화된 알림과 시스템 접근에 특화된 알림을 지원합니다.
 
-서비스 별로 지원하는 알림 유형은 다음과 같습니다.
+서비스별로 지원하는 알림 유형은 다음과 같습니다.
 
 <table>
 <colgroup>
@@ -264,7 +264,7 @@ IP 대역에 따른 사용자 로그인 행위 알림
     * 1 이상 입력 가능합니다.
 
 <Callout type="info">
-예) 비정상적인 로그인 시도시 알림 발송 - 5분간 QueryPie 로그인 실패 3회 누적시
+예) 비정상적인 로그인 시도 시 알림 발송 - 5분간 QueryPie 로그인 실패 3회 누적 시
 * Action Count : 3
 * Specific Time Internal (Minutes) : 5
 </Callout>
@@ -285,12 +285,12 @@ IP 대역에 따른 사용자 로그인 행위 알림
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 <Callout type="info">
-예 1) 100건 이상의 대량 데이터 조회시 알림 발송
+예 1) 100건 이상의 대량 데이터 조회 시 알림 발송
 
 * Rows : 100
 * SQL Events : `SELECT`
 
-예 2) 데이터 변경 및 삭제 시도시 알림 발송
+예 2) 데이터 변경 및 삭제 시도 시 알림 발송
 
 * Rows : 1
 * SQL Events : `UPDATE`, `DELETE`
@@ -320,7 +320,7 @@ DB 접속 성공 또는 실패 알림
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 <Callout type="info">
-예) 비정상적인 데이터베이스 접속 시도시 알림 발송 - 5분간 DB 접속 실패 3회 누적시
+예) 비정상적인 데이터베이스 접속 시도 시 알림 발송 - 5분간 DB 접속 실패 3회 누적 시
 * Alert Trigger Condition : Failure
 * Connection Failure Trigger with Internal : On
 * Action Count : 3
@@ -348,12 +348,12 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 </Callout>
 
 <Callout type="info">
-예1) 민감레벨 High 로 설정된 개인정보 데이터 조회시 알림 발송
+예1) 민감레벨 High 로 설정된 개인정보 데이터 조회 시 알림 발송
 
 * Criteria : Sensitive Level
 * Sensitive Level : High
 
-예2) 특정 데이터베이스에 포함된 개인정보 데이터 조회시 알림 발송
+예2) 특정 데이터베이스에 포함된 개인정보 데이터 조회 시 알림 발송
 
 * Criteria : Policy
 * Policy : *`{사전에 등록된 Sensitive Data 정책}`* 
@@ -372,7 +372,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 <Callout type="info">
-예) 100건 이상의 대량 데이터 내보내기 시도시 알림 발송
+예) 100건 이상의 대량 데이터 내보내기 시도 시 알림 발송
 * Alert Type : SQL Export
 * Trigger Condition (Rows) : 100
 </Callout>
@@ -391,7 +391,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 * Action Count : 이벤트가 발생한 회수입니다. 1 이상의 값을 입력할 수 있습니다.
 * Time Interval : 이벤트 발생하는 시간 범위입니다.
 
-예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생시 알람을 발송하게 됩니다.
+예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생 시 알람을 발송하게 됩니다.
 
 * Action Count : 3
 * Specific Time Internal (Minutes) : 5
@@ -405,7 +405,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
     * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
-        * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
+        * 다중 선택으로 인해 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 <Callout type="info">
@@ -420,7 +420,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
     * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
-        * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
+        * 다중 선택으로 인해 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 #### Specific Command
@@ -429,11 +429,11 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
     * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
-        * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
+        * 다중 선택으로 인해 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 *  **Command**  : 실행 시 알림 발송할 명령어 조건
-    * Keyword : 명령어에 입력된 키워드 포함시 알림 발송
-    * RegExr : 정규표현식에 해당하는 명령어 실행시 알림 발송
+    * Keyword : 명령어에 입력된 키워드 포함 시 알림 발송
+    * RegExr : 정규표현식에 해당하는 명령어 실행 시 알림 발송
 
 #### File Transfer (SFTP)
 
@@ -444,7 +444,7 @@ SFTP를 통한 파일 전송 실행 알림
     * File Download : 파일 다운로드 시 알림 발송
 *  **Connection**  : 알림 발송할 대상 커넥션 (다중 선택)
     * 서버 및 서버 그룹 선택 가능하며, 중복 선택 가능
-        * 다중 선택으로 인하여 대상이 중복 선택된 경우에도 알림은 1회만 발송
+        * 다중 선택으로 인해 대상이 중복 선택된 경우에도 알림은 1회만 발송
     * All Connections (*) : 추후 추가될 모든 커넥션 대상으로 알림 조건 생성
 
 #### K8s API Request<Badge color="grey">10.2.2</Badge>

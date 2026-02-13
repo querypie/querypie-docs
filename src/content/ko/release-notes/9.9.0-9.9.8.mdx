@@ -28,7 +28,7 @@ ______
 
 **Enhancement**
 
-* [Agent] 에이전트 실행시 zscaler VPN 충돌 이슈 해결
+* [Agent] 에이전트 실행 시 zscaler VPN 충돌 이슈 해결
 ______
 
 ### QueryPie 9.9.6 Release
@@ -64,14 +64,14 @@ ______
 * QCP-50 [Access Control] 권한 재부여시 발생하는 duplicate key 오류 해결
 * QCP-138 [Agent] 윈도우즈 1709 이하 버전에서 에이전트 실행 오류 해결
 * QCP-285 [Agent] ODBC Client 접속 시 프로세스를 찾을 수 없는 문제 해결
-* QCP-238 [Authentication] SwivelSecure 연동시 사용자 추가가 되지 않는 이슈 해결
+* QCP-238 [Authentication] SwivelSecure 연동 시 사용자 추가가 되지 않는 이슈 해결
 * QCP-240 [Authentication] XFF 파싱 오류로 saml 로그인 실패 이슈 해결
 * QCP-177 [Cloud Provider] EKS IRSA 환경에서 Cross account role 방식의 동기화가 동작하지 않는 이슈 해결
 * QCP-244 [Cloud Provider] EC2 환경에서 Cross account role 방식의 동기화가 동작하지 않는 이슈 해결
-* QCP-126 [MariaDB] timestamp 데이터타입 조회시 NULL로 표시되는 이슈 해결
+* QCP-126 [MariaDB] timestamp 데이터타입 조회 시 NULL로 표시되는 이슈 해결
 * QCP-62 [Policies] 정규식을 통한 데이터 마스킹 규칙 작성 관련 이슈 해결
-* QCP-286 [PostgreSQL] 탭에 선택된 카탈로그 기준으로 조회 안되는 이슈 해결
-* QCP-199 [Dynamodb] 테이블 조회 관련 최대 갯수 제한 관련 이슈 해결
+* QCP-286 [PostgreSQL] 탭에 선택된 카탈로그 기준으로 조회 안 되는 이슈 해결
+* QCP-199 [Dynamodb] 테이블 조회 관련 최대 개수 제한 관련 이슈 해결
 ______
 
 ### QueryPie 9.9.4 Release
@@ -110,8 +110,8 @@ ______
 * [Connection] 삭제된 사용자 User not found 오류 관련 데이터 처리 로직 개선
 * [Policy] 마스킹 적용된 테이블에서 Server sent unknown charsetnr 오류 해결
 * [External API] 업데이트 직후 alert external api 가 정상 동작하지 않는 이슈 해결
-* [MySQL] mysqlbinlog 명령어 사용시 빈로그 추출이 되지 않고 응답 대기가 지속되는 이슈 해결
-* [PostgreSQL] Proxy 접속시 INSERT 관련 오류 수정
+* [MySQL] mysqlbinlog 명령어 사용 시 빈로그 추출이 되지 않고 응답 대기가 지속되는 이슈 해결
+* [PostgreSQL] Proxy 접속 시 INSERT 관련 오류 수정
 * [Migration] Query Audit 로그의 실행시간/생성시간 차이로 인한 서버 메모리 관련 이슈 해결
 * [Performance] hub 서버의 CPU가 지속적으로 증가하는 이슈 해결
 * [ScyllaDB] Not Supported serialization type 이슈 관련 미지원 데이터 타입 추가
@@ -136,16 +136,16 @@ ______
 * [Cloud Provider] 동기화 시 Database Type 필터 추가
 * [Users] Description 항목 내 Locked, Locked Manually 상태 구분 및 툴팁 표시 개선
 * [Privilege Type] 중복된 Privilege Name 사용 못하도록 변경
-* [Agent] 업데이트 실패 시, 앱 종료 현상 수정 및 가이드 메세지 개선
-* [MongoDB] 접속 시 Password 미입력 오류 메세지 개선
-* [MySQL] 접속 실패시 에러 메세지 개선
+* [Agent] 업데이트 실패 시, 앱 종료 현상 수정 및 가이드 메시지 개선
+* [MongoDB] 접속 시 Password 미입력 오류 메시지 개선
+* [MySQL] 접속 실패시 에러 메시지 개선
 * [Audit & Log] 메뉴 내 검색 기본 값 Name으로 개선
 
 **Bug Fix**
 
-* [Groups] Group을 마지막으로 업데이트 한 사용자 삭제후, 해당 group을 삭제시 오류 수정
+* [Groups] Group을 마지막으로 업데이트 한 사용자 삭제 후, 해당 group을 삭제 시 오류 수정
 * [External API] Data Access Policy Rule 삭제 관련 오류 수정
-* [Proxy] 프록시를 통해 mysql workbench 연결시도시 QPA-03EE 오류 수정
+* [Proxy] 프록시를 통해 mysql workbench 연결 시도 시 QPA-03EE 오류 수정
 * [SQL Editor] 신규 테이블 추가 후 SQL Editor 자동완성에 반영되지 않는 오류 수정
 * [SQL Editor] Oracle 접속 후 테이블 선택 시 Specified method is not supported 오류 수정
 * [SQL Request] SQL Request 실행 후 상태 로그 업데이트 오류 수정
@@ -167,7 +167,7 @@ ______
 * Setting 메뉴명 일부 조정 (Settings, SSL Configuration, Query Audit, DB Access History)
 * DB Access History &gt; Connected from 컬럼 기록 추가
 * Drawer header / Workflow title 변경 및 글자수 제한
-* Report / Accessible Users 화면에서 Deactivated 표시 안되는 이슈 해결
+* Report / Accessible Users 화면에서 Deactivated 표시 안 되는 이슈 해결
 * Connection Label (Ledger) 항목 syslog 포함
 * Index Range Scan 관련 인덱스를 못찾는 경우 테이블 데이터 수정 기능 비활성화
 * 클러스터 동기화 기능에서 Security Group 동기화해오지 않도록 처리
@@ -181,7 +181,7 @@ ______
 * User name 변경 시 admin role 값 'None'으로 변경되는 오류 수정
 * LDAP 동기화 사용자 수정 시 email 필수값 처리 해제
 * LDAP 로그인 시 오류메시지 개선
-* SAML Login Error 시 메세지 개선
+* SAML Login Error 시 메시지 개선
 * Authentication &gt; Okta Install Guide 링크 변경
 * System Properties 페이지 추가
 * Reports &gt; 결과 다운로드 시 Export a file with Encryption 옵션 적용

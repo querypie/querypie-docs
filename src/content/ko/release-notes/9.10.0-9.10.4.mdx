@@ -47,13 +47,13 @@ ______
 **Bug Fix**
 
 * [DynamoDB] AssumeRole 사용하는 환경에서 쿼리 실행 불가 오류 해결
-* [Redis] ElastiCache Redis 접속시 ERR Unknown Command 오류 해결
+* [Redis] ElastiCache Redis 접속 시 ERR Unknown Command 오류 해결
 * [Redis] 6.2.0 이전 버전에서 웹을 통한 접속 불가 현상 해결
-* [Redis] Proxy - Kill Session시 오류 발생 이슈 해결
-* [Workflow] All Request Export 시도시 step별 승인 시간을 Company 시간대로 적용하도록 수정
+* [Redis] Proxy - Kill Session 시 오류 발생 이슈 해결
+* [Workflow] All Request Export 시도 시 step별 승인 시간을 Company 시간대로 적용하도록 수정
 * [Workflow] 만료된 결재 목록이 포함된 상태의 목록이 조회 되지 않는 오류 해결
 * [Migration][Workflow] approved_at이 공백인 경우 마이그레이션 오류 발생 이슈 해결
-* [Migration] Query Audit 로그 마이그레이션 시 쿼리 실행시간 및 처리한 데이터 갯수 누락 오류 해결
+* [Migration] Query Audit 로그 마이그레이션 시 쿼리 실행시간 및 처리한 데이터 개수 누락 오류 해결
 ______
 
 ### QueryPie 9.10.0 Release
@@ -67,21 +67,21 @@ ______
 **Bug Fix & Enhancement**
 
 * [Alert] New Request (Workflow) 내 타입 및 사후승인 조건 추가
-* [Agent] 에이전트 실행시 zscaler VPN 충돌을 피하기 위해 Bitwise Not 스트림 적용
+* [Agent] 에이전트 실행 시 zscaler VPN 충돌을 피하기 위해 Bitwise Not 스트림 적용
 * [Authentication] SAML 연동 사용자의 계정 삭제 기능 지원 
-* [Authentication] Okta, Onelogin 사용시 QueryPie 자체 OTP 설정 무시되도록 처리 
+* [Authentication] Okta, Onelogin 사용 시 QueryPie 자체 OTP 설정 무시되도록 처리 
 * [Audit&Log] DML Snapshot에서 Executed From (Query Audit) 컬럼 추가
 * [Audit&Log] 권한 모두 회수했을 때 세션 종료 후 로그 기록
 * [Impala] 관리자나 사용자가 지정한 Realm 으로 접속 불가능한 이슈 수정
 * [MongoDB] Proxy 내 DML Snapshot 지원
 * [MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor)
-* [MongoDB] 데이터 조회시 이모지 깨지는 이슈
+* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈
 * [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)
 * [PostgreSQL] 프록시 환경에서 SASL 인증에 실패하는 오류 수정
 * [PostgreSQL] 프록시에서 PreparedStatement가 비정상 동작하는 오류 수정
 * [PostgreSQL] 쿼리 실행 후 Unknown Content-Type received 오류 수정
 * [Proxy] 폐쇄망 환경 내 외부 연동 http client proxy 설정 적용
-* [Redis] 미지원 명령어 실행 시 에러 메세지 개선
+* [Redis] 미지원 명령어 실행 시 에러 메시지 개선
 * [Web Editor] 원장 DB의 경우 SQL Execution Purpose 옵션 활성 강제화
 * [Windows][SAML] 미들웨어보다 브라우저 시간이 빠른 경우 OneLogin, Okta 로그인 시 오류 수정
 * [Workflow] Access Request 요청에 Expiration Date 항목에 Default 일자 표시 

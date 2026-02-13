@@ -41,12 +41,12 @@ JIT 권한 획득 Guide는 `10.3.0` 버전을 기준으로 설명합니다.
 1. Name : QueryPie Web Site
 2. Base URL : `querypie.com` 또는 `10.10.10.10:443` 
     1. Base URL에 하위 경로(예: `/ko`)를 포함할 수 없습니다.
-    2. Base URL에 `https://` 를 입력하면 오류 메세지가 표시됩니다.
-    3. Base URL에 `www.` 를 입력하면 오류 메세지가 표시됩니다.
+    2. Base URL에 `https://` 를 입력하면 오류 메시지가 표시됩니다.
+    3. Base URL에 `www.` 를 입력하면 오류 메시지가 표시됩니다.
 3. Description : 웹 앱에 대한 설명을 입력하세요. (예: 쿼리파이 웹사이트)
 4. URL Paths : 하위 경로를 입력합니다. 여기서는 비워 둡니다.
 5. Watermark : 웹 앱 접속 시 사용자의 브라우저 화면에 워터마크를 적용할지 여부를 선택합니다.
-    1. 웹 앱 접속시 브라우저에 접속자, 접속일시 등의 정보를 표시함으로써 화면 유출을 방지합니다.
+    1. 웹 앱 접속 시 브라우저에 접속자, 접속일시 등의 정보를 표시함으로써 화면 유출을 방지합니다.
     2. 가이드에서는 On 상태를 가정하고 안내하겠습니다.
 6. User Activity Recording : 사용자 행위 기록 여부
     1. On으로 활성화 후 모든 옵션을 켜주세요.
@@ -73,7 +73,7 @@ JIT(Just-in-Time) 권한 부여에는 아래 두 역할이 있습니다.
 ### 3. 이용자의 JIT Web App 접속 권한 신청
 
 <Callout type="info">
-QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다.
+QueryPie를 통해 Web App 접속 시, Root CA 인증서 설치 및 Chrome의 Extension의 설치가 필요합니다.
 
 설치 방법은 아래 매뉴얼을 참고해주세요.
 
@@ -109,7 +109,7 @@ QueryPie를 통해 Web App 접속시, Root CA 인증서 설치 및 Chrome의 Ext
 4. Submit 을 클릭합니다.
 
 <Callout type="info">
-JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다.
+JIT(Just-in-Time) 권한 신청 시 아래와 같은 제약사항이 있습니다.
 *  **승인자는 Web App Owner로 고정** 되어 있습니다.
 * 승인 조건은  **여러 명의 승인자 중 최소 1명이 승인하면 완료** 되도록 고정됩니다.
 *  **승인 단계 추가나 승인자 변경은 제한** 됩니다.
@@ -128,7 +128,7 @@ JIT(Just-in-Time) 권한 신청시 아래와 같은 제약사항이 있습니다
 4. 상단의 Approve를 클릭합니다.
 
 
-### 5. QueryPie를 통하여 웹 앱 접근하기
+### 5. QueryPie를 통해 웹 앱 접근하기
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/web-apps/wac-quickstart/1030-wac-jit-permission-acquisition-guide/image-20250513-073501.png" alt="image-20250513-073501.png" width="736" />

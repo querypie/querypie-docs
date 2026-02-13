@@ -22,7 +22,7 @@ ______
 
 **Bug Fix & Enhancement**
 
-* [Proxy] MySQL 8.0.26 이상인 경우 Agentless 방식 프록시 접속시 오류 해결
+* [Proxy] MySQL 8.0.26 이상인 경우 Agentless 방식 프록시 접속 시 오류 해결
 ______
 
 ### QueryPie 9.12.12 Release
@@ -52,20 +52,20 @@ ______
 
 **New Feature**
 
-* [Workflow] SQL Request 쿼리 실행시 백그라운드 실행 지원 (레진엔터테인먼트/카카오페이)
-* [QSI] 클러스터그룹 내 인스턴스에서 DDL 발생시, 해당 그룹의 QSI 스키마 캐시 갱신
+* [Workflow] SQL Request 쿼리 실행 시 백그라운드 실행 지원 (레진엔터테인먼트/카카오페이)
+* [QSI] 클러스터그룹 내 인스턴스에서 DDL 발생 시, 해당 그룹의 QSI 스키마 캐시 갱신
 
 
 **Bug Fix & Enhancement**
 
-* [Web Editor] 커넥션 연결시 타임아웃을 30초에서 60초로 조정
+* [Web Editor] 커넥션 연결 시 타임아웃을 30초에서 60초로 조정
 * [Syslog] Syslog 내의 Proxy 관련 로그 필터링 항목 추가
 * [Agent] 아마존 워크스페이스(Windows Server 2016)에서 에이전트 접속 이슈 해결
 * [Web Editor] 커넥션 목록에서 Cluster 및 Instance 정보 표시 관련 이슈 수정
 * [Proxy] 간헐적으로 Proxy 연결이 끊어지는 이슈와 관련된 수정 작업 반영
 * [MySQL] GroupBy 없이 Having을 사용하는 경우 오류 발생
-* [Agent] 에이전트 통신시 헤더에 User-Agent 항목 추가
-* [Web Editor] DocumentDB 3.6 접속시 연결 시간 초과로 인한 접속 불가 이슈 해결
+* [Agent] 에이전트 통신 시 헤더에 User-Agent 항목 추가
+* [Web Editor] DocumentDB 3.6 접속 시 연결 시간 초과로 인한 접속 불가 이슈 해결
 * [Connection] DB 세션 누수로 인한 사용량 증가 이슈 해결
 
 
@@ -82,12 +82,12 @@ ______
 **Bug Fix & Enhancement**
 
 * [Alert] Alert을 생성만 해도 Last Event Time이 표시되는 문제 해결
-* [Proxy] 연결 실패시 'DB Access History'가 남지 않는 문제 해결
+* [Proxy] 연결 실패 시 'DB Access History'가 남지 않는 문제 해결
 * [Proxy] Client IP를 Agent, Agentless 모든 환경에서 정확하게 파악하도록 개선
 * [Proxy] LOCAL IDE(DBeaver) 에서 DDL 실행 후 취소 시 진행되지 않는 문제 해결
 * [Proxy] First 10 rows 기록 중 ArgumentOutOfRangeException, IndexOutOfRangeException 문제 해결
 * [SSL] OpenSSL 버전 차이에 따른 SSL 모드 접속 불가 문제 해결
-* [Session] 비로그인 -&gt; Okta로 로그인시, 목표 URL로 가지 않고 첫페이지 랜딩하는 현상 개선
+* [Session] 비로그인 -&gt; Okta로 로그인 시, 목표 URL로 가지 않고 첫페이지 랜딩하는 현상 개선
 * [LDAP] Group 동기화 시 Group Base DN값을 참조하도록 개선
 * [Workflow] 단계별 권한이 유효한 사용자만 세부 페이지 조회 가능하도록 개선
 * [Web Editor] Object Info &gt; Data에서 JSON 데이터 클릭 시 에러발생 해결
@@ -105,7 +105,7 @@ ______
 
 * [Agent] [Windows10/11] 업데이트 및 설치 후 바로 실행 시 로그인 실패하는 현상 개선
 * MySQL에서 Role과 함께 Grant를 사용하면 발생하는 오류 수정
-* [Proxy] 3rd-party tool에서 mysql 생성시 Database Name을 입력하지 않았을 경우, USE문과 무관하게 반드시 스키마를 입력해야 쿼리 가능한 현상 개선
+* [Proxy] 3rd-party tool에서 mysql 생성 시 Database Name을 입력하지 않았을 경우, USE문과 무관하게 반드시 스키마를 입력해야 쿼리 가능한 현상 개선
 ______
 
 ### QueryPie 9.12.7 Release
@@ -125,7 +125,7 @@ ______
 
 * [MariaDB] SET 구문이 포함되면 정책 반영되도록 개선
 * [SQL Server] Proxy 미구현 타입 추가 구현
-* [SQL Server] Data Access, Data Masking 적용시 Proxy 환경에서 에러 수정
+* [SQL Server] Data Access, Data Masking 적용 시 Proxy 환경에서 에러 수정
 * [Performance] 동시에 DML Snapshot을 기록할 때 Connection Pool 고갈 현상 수정
 * [Performance] API 응답이 지연될 경우 SQL Audit 로그가 Running Query로 남는 현상 수정
 * [SAML] 최초 로그인 시 에러 수정
@@ -141,8 +141,8 @@ ______
 
 * [Alert] SQL 최대 길이 100자에서 1000자로 개선
 * [Agent] 로그인 시 열기 옵션 자동 활성화되지 않도록 수정
-* [Agent] 에이전트 세션이 종료됬을 때, 연결이 끊기도록 수정
-* [SQL Server] DML Snapshot을 활성화하면 쿼리가 실행안되는 이슈 해결
+* [Agent] 에이전트 세션이 종료됐을 때, 연결이 끊기도록 수정
+* [SQL Server] DML Snapshot을 활성화하면 쿼리가 실행 안 되는 이슈 해결
 * [Agent] MariaDB JDBC 드라이버 1.x 2.x 버전을 사용하여 프록시 연결되도록 개선
 ______
 
@@ -184,7 +184,7 @@ ______
 
 **Bug Fix**
 
-* [Proxy] PPv2 옵션 설정시 Proxy 오류 발생 해결
+* [Proxy] PPv2 옵션 설정 시 Proxy 오류 발생 해결
 * [Export] Export 시 생성된 temp 파일이 삭제되지 않아 disk full 되는 이슈 해결
 * [License] 라이선스 발행 기준 타임존을 UTC → KST로 변경 
 
@@ -214,8 +214,8 @@ ______
 * [License] 라이선스 UI 개선
 * [Application log] 메뉴 미노출 처리
 * [Impala] UIDPWD 방식일 때 Web Proxy 지원
-* [Workflow] query audit 추출시 컬럼에 원장여부 포함
-* [LDAP] 조직 변경에 따른 계정 비활성화 및 비활성화시 참조 필드 옵션 추가
+* [Workflow] query audit 추출 시 컬럼에 원장여부 포함
+* [LDAP] 조직 변경에 따른 계정 비활성화 및 비활성화 시 참조 필드 옵션 추가
 
 ****
 
@@ -235,22 +235,22 @@ ______
 * [Connection] rpc GrpcGitService.SaveFile 호출 시 엔진이 죽는 문제 해결 
 * [DML Snapshot] 11개 벤더는 DML Snapshot 옵션 옆에 베타 태그 부착
 * [DynamoDB] 리턴값 지수 원본으로 표시되도록 개선 
-* [Export] export시 에러 해결 
+* [Export] export 시 에러 해결 
 * [External API] Update Cluster Group (PATCH) External API 오류 해결 
-* [Impala] Sensitive Data에 컬럼을 등록 후 테이블 조회시 발생하는 에러 수정 
-* [LDAP] 그룹 동기화시 그룹에 포함되어 있지 않은 사용자가 있는 경우 오류 발생 수정
+* [Impala] Sensitive Data에 컬럼을 등록 후 테이블 조회 시 발생하는 에러 수정 
+* [LDAP] 그룹 동기화 시 그룹에 포함되어 있지 않은 사용자가 있는 경우 오류 발생 수정
 * [Oracle] ORA-00900: invalid SQL statement 오류 수정
-* [Oracle] 웹 SQL에서 function &gt; script 조회시 발생 에러 수정 'ORA-19011 Character string buffer too small' 
+* [Oracle] 웹 SQL에서 function &gt; script 조회 시 발생 에러 수정 'ORA-19011 Character string buffer too small' 
 * [Performance] Agent 를 통한 접속이 매우 느린 현상 개선
 * [Performance] 쿼리 실행 전 full scan 여부를 체크하여 경고 알림 추가
 * [Privilege] Copy Clipboard 권한이 없어도 Json Data 복사 시 첫번째 권한이 막히지 않는 현상 개선
 * [Privilege Type] Tag의 폰트가 사용자마다 다르게 보이는 현상 개선
-* [Proxy/MariaDB] libmariadb 드라이버 사용시 오류 발생 개선 
+* [Proxy/MariaDB] libmariadb 드라이버 사용 시 오류 발생 개선 
 * [Query Audit] SQL Execution Purpose 옵션 활성화 후 실행 시 Execution Reason 이 남겨지지 않는 이슈 해결 
 * [Query Audit] 패스워드 설정 로그에 마스킹 패턴 적용 (only MySQL)
 * [Redis] Wrongtype DB 에러가 Engine 에러로 표기되는 이슈 해결
 * [Redis] Redis driver 에서 Error를 Exception으로 처리함 
-* [Setting] Account Expiration Period 옵션이 Last Login만 체크하여 Proxy만 사용시 계정이 잠기는 이슈 해결
+* [Setting] Account Expiration Period 옵션이 Last Login만 체크하여 Proxy만 사용 시 계정이 잠기는 이슈 해결
 * [SQLServer] 접속 시 `[ENGINE] Internal connection fatal error.` 발생 해결
 * [Syslog] IP 기록 오류 수정 
 * [Workflow] Access Request 시에 만료일자 지정 오류 수정 

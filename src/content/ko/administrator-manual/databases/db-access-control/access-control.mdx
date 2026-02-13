@@ -20,7 +20,7 @@ Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터
 Access Control 페이지에서는 QueryPie에 등록된 사용자 및 그룹별로 부여된 DB 권한(Privilege) 및 관리자 역할 현황을 조회할 수 있습니다.
 
 * Group / Users 탭 : Group 및 사용자의 목록을 표시하고 현황을 볼 수 있습니다.
-* Locked Accounts : 계정 잠금 조건으로 인해 잠긴 사용자를 확인할 수 있고 잠금을 해제 할 수 있습니다.
+* Locked Accounts : 계정 잠금 조건으로 인해 잠긴 사용자를 확인할 수 있고 잠금을 해제할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20251209-061107.png" alt="Administrator &gt; Databases &gt; DB Access Control &gt; Access Control" width="760" />
@@ -56,9 +56,9 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
     * Port : 커넥션에 등록된 Port 주소입니다.
     * Access Control Level : access control의 수준을 나타냅니다. 11.5.0 부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다. 
     * Assigned Privilege : 대상에 할당된 privilege입니다.
-    * Status : privilege 의 상태 표시입니다,.
+    * Status : privilege 의 상태 표시입니다.
         * Active ; 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태
-        * Deactivated : 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간동안 커넥션에 접속하지 않은 경우 비활성화된 상태
+        * Deactivated : 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간 동안 커넥션에 접속하지 않은 경우 비활성화된 상태
         * Expired : 해당 사용자의 권한이 만료일자에 도래하여 회수된 상태
     * Expiration date : Privilege 만료일
     * Renewed At : deactivated 상태에서 다시 관리자에 의해 active 상태가 된 시점입니다.
@@ -103,8 +103,8 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
-5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한번에 여러개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege를 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장드립니다.
-6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item`버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila 
+5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한번에 여러 개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울 수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장합니다.
+6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item` 버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야 합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila 
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
@@ -128,7 +128,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 
 <Callout type="info">
 **사용자가 그룹에 포함된 경우, 그룹과 사용자를 대상으로 같은 커넥션에 대해 각각 다른 권한을 적용하면 어떻게 되나요?**
-사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속시 Default Privilege 를 선택하고 접속할 수 있습니다.
+사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege 이 부여된 경우, 사용자 커넥션 접속 시 Default Privilege 를 선택하고 접속할 수 있습니다.
 </Callout>
 
 
@@ -146,13 +146,13 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 3. 권한을 회수할 커넥션을 찾아 체크박스 선택 후 Revoke 버튼을 통해 권한을 회수합니다.
 4. 권한을 회수할 커넥션 여러 개를 선택하여 일괄적으로 권한을 회수할 수도 있습니다.
 
-이제 권한이 회수된 사용자는 더이상 해당 커넥션에 접속할 수 없으며, 권한 회수 내역은 Access Control Logs 로그에 Access Control Revoked 항목으로 기록됩니다.
+이제 권한이 회수된 사용자는 더 이상 해당 커넥션에 접속할 수 없으며, 권한 회수 내역은 Access Control Logs 로그에 Access Control Revoked 항목으로 기록됩니다.
 
 
 <Callout type="important">
 **Access Control Details 패널에서의 Status 설명**
 *  **Active**  : 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태입니다.
-*  **Deactivated**  : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다. 
+*  **Deactivated**  : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간 동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다. 
 * Deactivated 상태 우측의 버튼(`Renew`)을 통해 비활성화된 권한을 갱신하여 다시 활성화할 수 있습니다.
 * 비활성화된 권한을 갱신한 경우  **Renewed At**  컬럼에 갱신 시점이 표시됩니다.
 </Callout>
@@ -175,15 +175,15 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 </figcaption>
 </figure>
 
-1. 데이터베이스 커넥션 보안정책에 의해 DB 계정 인증 실패(Maximum Login Failures) 횟수 초과로 커넥션이 잠긴 경우에 대해 Locked Account 메뉴에서 조회 가능합니다.
+1. 데이터베이스 커넥션 보안 정책에 의해 DB 계정 인증 실패(Maximum Login Failures) 횟수 초과로 커넥션이 잠긴 경우에 대해 Locked Account 메뉴에서 조회 가능합니다.
 2. DB 계정 인증 실패 횟수와 잠긴 시점이 함께 표시됩니다.
-3. 잠금해제 하고자하는 항목을 선택 후 우측 `Unlock`을 클릭하여 커넥션 잠금을 해제합니다.
+3. 잠금 해제하고자 하는 항목을 선택 후 우측 `Unlock`을 클릭하여 커넥션 잠금을 해제합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png" alt="image-20241209-123358.png" width="760" />
 </figure>
 
-1. 커넥션 잠금 및 잠금해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인하실 수 있습니다. 
+1. 커넥션 잠금 및 잠금 해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인할 수 있습니다. 
 
 
 <Callout type="info">
@@ -193,7 +193,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png" alt="image-20250703-050924.png" width="551" />
 </figure>
 
-Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어 할 수 있습니다.
+Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 특정 태그가 부여된 테이블만 접근 가능하도록 제어할 수 있습니다.
 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다.
 
 * New DAC Policy Management 기능이 Enable이어야 합니다.
