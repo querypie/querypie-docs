@@ -20,11 +20,13 @@ COPY bin/ ./bin/
 RUN chmod +x bin/*.py bin/*.sh
 COPY etc/ ./etc/
 
-# Restore var/ from previous image cache (baseline for --recent mode)
-COPY cache/ ./var/
+# Restore cache at its expected path (for Stage 3 attachment fallback)
+COPY cache/ ./cache/
 
-# Update var/ with recently modified pages only
-RUN python3 bin/fetch_cli.py --recent --attachments
+# Populate var/ baseline from cache and fetch recent updates in one step.
+# cp -a creates var/ with all cached YAML/content/attachment files,
+# then fetch_cli.py downloads only recently modified pages.
+RUN cp -a cache/. var/ && python3 bin/fetch_cli.py --recent --attachments
 
 # ── Stage 2: Final image ────────────────────────────
 FROM python:3.12-slim

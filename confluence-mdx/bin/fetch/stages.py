@@ -188,6 +188,16 @@ class Stage3Processor(StageBase):
             if "fileSize" in extensions:
                 expected_size = extensions["fileSize"]
 
+            # Check if file already exists at target path with matching size.
+            # Avoids redundant cache-to-var copy or API download on re-runs.
+            if os.path.exists(filepath):
+                existing_size = os.path.getsize(filepath)
+                if existing_size > 0:
+                    if expected_size is None or existing_size == expected_size:
+                        self.logger.info(f"Skipped attachment (already exists): {filename} (size: {existing_size} bytes)")
+                        return
+                    self.logger.warning(f"Existing file size mismatch for {filename}: actual={existing_size}, expected={expected_size}. Will re-download.")
+
             # Check cache directory for the file before downloading from API
             cache_page_dir = self.get_cache_page_directory(page_id)
             cache_filepath = os.path.join(cache_page_dir, filename)
