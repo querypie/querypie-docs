@@ -119,7 +119,7 @@ Agent &gt; DB Connection Information
 #### 1. 서버 역할 선택하기
 
 * 사용자 프로필 영역 하단의 `Role` 버튼을 클릭하여 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
-* Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. 
+* Default 역할 선택 시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-162653.png" alt="Agent &gt; Server &gt; Select a Role" width="764" />
@@ -132,7 +132,7 @@ Agent &gt; Server &gt; Select a Role
 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
 </Callout>
 
-#### <br/>2.Agent로 서버 접속하기
+#### <br/>2. Agent로 서버 접속하기
 
 * 접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
 
@@ -156,7 +156,7 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH 설정하기
 
 Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
-다음음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
+다음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
 
 1) 터미널을 열고, .ssh 폴더로 이동합니다.
 ```
@@ -200,8 +200,8 @@ $ ssh deploy@{{Server Name}}
 
 * 권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 `kubeconfig` 파일이 자동으로 수신됩니다.
 * 이를 통해 Kubernetes Client(kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.
-* 에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.
-* 또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.
+* 에이전트에서는 접근 가능한 클러스터 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.
+* 또한 설정 메뉴를 통해 kubeconfig 파일의 위치를 확인 및 수정할 수 있습니다.
 
 #### 1. Kubernetes 역할 선택하기
 
@@ -269,12 +269,12 @@ export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
 export KUBECONFIG="${KUBECONFIG}:<user-specified-path>"
 ```
 
-3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.
+3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조하기 바랍니다.
 
 * 참고: [kubeconfig 파일 병합](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
 * 참고: [KUBECONFIG 환경 변수 설정](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
 
-4) `Copy` 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다
+4) `Copy`로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다.
 ```
 export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
