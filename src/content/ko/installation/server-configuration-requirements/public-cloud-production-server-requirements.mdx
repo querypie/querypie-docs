@@ -5,9 +5,19 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/903086124/Pu
 
 # Public Cloud 운영서버 요구사항
 
-### 개요
+AWS, GCP, Azure 등 Public Cloud에서 QueryPie를 운영하기 위한 서버 구성 가이드입니다.
 
-QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 다음과 같은 구성을 적용하는 것을 권장합니다.
+## 요약
+
+| 컴포넌트 | 기본 사양 | 권장 사양 (높은 처리량) |
+| --- | --- | --- |
+| QueryPie Container VM | m6i.xlarge (4 vCPUs, 16 GiB) | m6i.2xlarge (8 vCPUs, 32 GiB) |
+| QueryPie MySQL | db.r7g.large (2 vCPUs, 16 GiB) | db.r7g.xlarge (4 vCPUs, 32 GiB) |
+| QueryPie Redis | cache.t4g.small (2 vCPUs, 1 GiB) | cache.t4g.medium (2 vCPUs, 3 GiB) |
+
+## 개요
+
+Public Cloud에서는 다음과 같은 구성을 권장합니다.
 
 * High Availability 구성 적용
     * Application Load Balancer, Network Load Balancer 를 적용하여, 고가용성, 부하분산에 적합한 구성을 적용합니다.
@@ -18,7 +28,7 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
     * AWS 의 경우, Amazon Linux 를 추천합니다.
     * GCP 의 경우, Ubuntu 24.04 LTS (또는 이후의 최신 LTS 버전)를 추천합니다.
 
-### QueryPie Container 용 VM 모델
+## QueryPie Container용 VM 모델
 
 기본사양 : CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB 이상, Disk 100 GiB, CPU AMD
 
@@ -34,7 +44,7 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
 * GCP Compute Engine : c4-standard-8, n4-standard-8 ( 또는 AMD64 아키텍처의 -standard-8 모델 )
 * Disk IO 성능 : 높은 IOPS 의 Volume 을 적용합니다. AWS 의 EBS Provisioned IOPS SSD (io1) 또는 그 이상 성능의 Volume 을 적용합니다.
 
-### QueryPie MySQL
+## QueryPie MySQL
 
 기본사양 : CPU 2 vCPUs, Memory 16 GiB 이상, Disk 100 GiB 이상
 
@@ -49,7 +59,7 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
 * Disk IO 성능 : 높은 IOPS 의 Volume 을 적용합니다. AWS 의 EBS Provisioned IOPS SSD (io1) 또는 그 이상 성능의 Volume 을 적용합니다.
 * Disk 용량 : QueryPie 에서 기록하는 Audit Log 를 MySQL 에 저장합니다. Audit Log 가 기록되는 빈도, 평균 크기, 보관 기간에 따라, 저장공간의 크기를 적절히 산정할 필요가 있습니다.
 
-### QueryPie Redis
+## QueryPie Redis
 
 기본사양 : CPU 2 vCPUs, Memory 1 GiB 이상
 
@@ -62,11 +72,11 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
 * AWS ElastiCache On-Demand Nodes : cache.t4g.medium 또는 비슷한 모델
 
 
-### Availability Zone 에 따른 VM 구성 방법
+## Availability Zone에 따른 VM 구성 방법
 
 가용영역(Availability Zone)에 따라 VM 을 배치하고, VM 의 사양을 조정하는 방법을 안내합니다.
 
-#### 운영환경에서는 가용영역 3개 (또는 4개) 에 각각 VM 을 생성하여 배치합니다.
+### 운영환경에서는 가용영역 3개 (또는 4개)에 각각 VM을 배치
 
 하나의 가용영역에 VM 이 집중되지 않도록, 각 가용영역에 골고루 VM 을 분산하여 배치합니다.
 
@@ -74,7 +84,7 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
 서비스 이용량이 높아지면, VM 의 수를 늘여, 평소에 측정되는 최대 이용량이 일정 수준 이하를 유지하도록 조정합니다.
 구체적인 조정 기준은 아래에서 설명합니다.
 
-#### 하나의 VM Instance 가 서비스를 중단하게 되더라도, 평소에 측정되는 최대 이용량을 처리 가능하도록, VM 의 사양을 조정합니다.
+### VM 장애 시에도 최대 이용량을 처리할 수 있도록 사양 조정
 
 예를 들어, 3개의 VM 을 구성하여 서비스를 제공하는 경우, 2개의 VM 만으로 최대 이용량을 처리 가능하도록 VM 의 사양을 조정합니다.
 2개의 VM 이 최대 이용량을 처리하는 시점에, CPU 사용량이 85% 를 넘지 않도록 조정합니다.
@@ -94,7 +104,7 @@ VM 갯수를 늘이는 Scale-Out 구성을 적용하는 경우, 정상 운영시
 
 VM 갯수를 늘이지 않고, 2개 또는 3개를 고정으로 두는 경우, 정상 운영시 최대 CPU 사용량으로 계산된 기준값보다 더 높은 실제 사용량을 보일 경우, VM 의 CPU 수를 늘이거나, Instance Type 을 고사양으로 변경하여, 계산된 기준값보다 더 낮은 실제 사용량을 보이도록 조정합니다.
 
-#### Auto Scaling Group 설정을 적용하지 않습니다.
+### Auto Scaling Group 사용 제한
 
 서비스가 처리하는 트래픽, 부하의 정도에 따라 Upstream 서버를 자동으로 늘이거나 줄이는 Auto Scaling Group 설정을 적용하지 않습니다.
 
@@ -106,9 +116,9 @@ Auto Scaling Group 을 적용하는 경우, Upstream 서버 수가 변경될 때
 참조 - [HA 구성에서 Sticky Session이 왜 필요한가요?](https://querypie.atlassian.net/wiki/spaces/QCP/pages/894632097)
 
 
-### 요구되는 성능에 대한 근거
+## 요구되는 성능에 대한 근거
 
-#### QueryPie Server 가 요구하는 컴퓨팅 자원의 유형
+### QueryPie Server가 요구하는 컴퓨팅 자원의 유형
 
 QueryPie Server Container 와 MySQL 은 다음과 같은 유형의 작업을 처리하는데, 컴퓨팅 자원을 주로 사용합니다.
 
@@ -118,7 +128,7 @@ QueryPie Server Container 와 MySQL 은 다음과 같은 유형의 작업을 처
 * SSO Integration 에 따라, 주기적으로 다수 이용자의 목록을 전송 받고, 각 이용자의 QueryPie 계정 정보를 업데이트합니다.
 * External API 를 이용해, 다수의 DB, Server 자산을 등록하거나 변경하고, 접근제어 정책을 변경합니다.
 
-#### QueryPie Container 가 요구하는 메모리 크기
+### QueryPie Container가 요구하는 메모리 크기
 
 * QueryPie Container 는 초기 실행시에 약 7 GiB 의 메모리를 사용합니다. 이용자의 사용에 따라, Container 가 사용하는 메모리가 2~3 GiB 가량 증가할 수 있습니다.
 * Mongo, Document DB 에 접근하는 경우, 메모리 사용량이 1 GiB 이상 증가할 수 있습니다.
@@ -126,7 +136,7 @@ QueryPie Server Container 와 MySQL 은 다음과 같은 유형의 작업을 처
 * Audit Log 를 기록하는 과정에서, Container 내부에서 임시 파일을 생성하여 사용합니다. 이에 따라, Disk 장치를 위한 OS 의 Cache 를 위한 메모리를 1~2 GiB 가량 할당해 줄 필요가 있습니다.
 
 
-### FAQ
+## FAQ
 
 #### Q: 이용자 수에 따라 서버 처리용량을 추정하는 가이드를 제공해 주세요.
 

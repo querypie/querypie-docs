@@ -5,23 +5,28 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1261895760/s
 
 # setup.sh, setup.v2.sh 비교
 
-### 들어가기
+두 설치 프로그램의 작동 방식, 특징과 차이점을 비교합니다.
 
-2025년 8월 현재, setup.sh 는 파트너를 위해 제공된 QueryPie 설치 프로그램입니다.
-setup.v2.sh 는 QueryPie Community Edition 출시와 함께 제공되는 QueryPie 설치 프로그램입니다.
+## 요약
 
-이 두 가지 설치 프로그램의 작동 방식, 특징과 차이점을 이 문서에서 살펴봅니다.
+| 구분 | setup.sh | setup.v2.sh |
+| --- | --- | --- |
+| 대상 | 파트너, 기존 고객 | 신규 고객, Community Edition |
+| 자동화 수준 | 낮음 (수동 설정 필요) | 높음 (전체 과정 자동화) |
+| Container Registry | Harbor (계정 필요) | Docker Hub (인증 불필요) |
+| Rootless Mode | 추가 설정 필요 | 기본 지원 |
+| 구버전 지원 | Version 10 이전 지원 | Version 11 이상만 지원 |
 
-### 설치 프로그램의 기능 범위
+## 설치 프로그램의 기능 범위
 
-#### setup.sh 의 설치 기능
+### setup.sh의 설치 기능
 
 * Container Engine, Compose Tool 이 발견되지 않은 경우, 이를 설치합니다.
     * Container Engine : Docker
     * Compose Tool : Docker Compose
 * `./querypie/version` 경로에 Compose 를 위한 package.tar.gz 을 설치합니다.
 
-#### setup.v2.sh 의 설치 기능
+### setup.v2.sh의 설치 기능
 
 * Container Engine, Compose Tool 이 발견되지 않은 경우, 이를 설치합니다.
     * Container Engine : Docker 또는 Podman
@@ -33,7 +38,7 @@ setup.v2.sh 는 QueryPie Community Edition 출시와 함께 제공되는 QueryPi
 * QueryPie MySQL 의 Migration 을 수행하고, QueryPie App Container 를 실행합니다.
 * `./querypie/current` 라는 Symbolic Link 를 `./querypie/<version>` 으로 연결하여, 현재 작동 중인 버전을 명시합니다.
 
-#### setup.v2.sh 의 업그레이드, 삭제 등 추가 기능
+### setup.v2.sh의 업그레이드, 삭제 등 추가 기능
 
 setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니다.
 
@@ -43,7 +48,7 @@ setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니�
 * setup.sh 와 동등하게, Compose Package 설치까지만 수행하는 모드를 제공합니다.
 * <Badge color="yellow">검토 중</Badge> 환경변수 설정파일 `.env` 의 설정값을 이용자 확인, 입력을 거쳐 채웁니다.
 
-### Compose 설정과 환경설정의 차이
+## Compose 설정과 환경설정의 차이
 
 |  **Topic**        |  **setup.sh**                                              |  **setup.v2.sh**                                   |
 | ----------------- | ---------------------------------------------------------- | -------------------------------------------------- |
@@ -54,7 +59,7 @@ setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니�
 | Application Log   | `/var/log/querypie/` - 10.2.x<br/>`./querypie/log/` - 11.x | `./querypie/log/`                                  |
 | 작동 중 버전의 Symlink  | (없음)                                                       | `./querypie/current`                               |
 
-### MySQL Data Dir 의 위치 변경
+## MySQL Data Dir의 위치 변경
 
 MySQL Data Dir 의 경로가 변경되면서, 다음의 장점이 생깁니다.
 
@@ -67,13 +72,13 @@ MySQL Data Dir 의 경로가 변경되면서, 다음의 장점이 생깁니다.
 * setup.sh 로 제품을 이미 설치한 서버에, setup.v2.sh 를 이용해 새로운 버전을 설치할 수 있습니다. 그러나, MySQL Data Dir 변경에 따라,  **기존 데이터가 자동으로 이관되지 않습니다** . 새로운 설치, 업그레이드 등 목적에 따라, MySQL Data 디렉토리를 설치 담당자가 적절히 이동하여야 합니다.
 
 
-### Rootless Mode 지원
+## Rootless Mode 지원
 
 setup.sh 로 설치하는 경우, Rootless Mode 의 Docker 환경에서 실행하기 위해, 추가적인 설정 변경이 필요합니다.
 
 setup.v2.sh 로 설치하는 경우, Rootless Mode 의 Docker, Podman 환경에서 실행하기 위해, 추가적인 설정 변경이 필요하지 않습니다.
 
-#### setup.v2.sh - Rootless Mode 설정 방법
+### setup.v2.sh - Rootless Mode 설정 방법
 
 Rootless Mode 로 Container Engine 을 실행하도록 먼저 환경을 구성합니다.
 setup.v2.sh 를 이용하여 Podman 을 설치하는 경우, 기본적으로 Rootless Mode 환경이 적용됩니다.
@@ -82,7 +87,7 @@ Docker 를 사용하는 경우, 별도의 문서를 참조하여, Rootless Mode 
 이후, `setup.v2.sh` 를 실행할 때, `--universal` 옵션을 추가하여, QueryPie 를 설치하면, Rootless Mode 에 적합한 Compose package.tar.gz 이 설치됩니다.
 
 
-### setup.v2.sh 문제현상, 오류 신고하기
+## setup.v2.sh 문제 신고
 
 setup.v2.sh 는 실행 초기에, 스크립트 버전, 환경 정보를 콘솔에 출력합니다.
 
@@ -91,7 +96,7 @@ setup.v2.sh 와 관련된 문제 현상을 신고할 때에는, 다음의 두 �
 * setup.v2.sh 실행시 옵션을 포함한 명령줄, 스크립트 버전을 포함한 콘솔 로그 앞부분 5줄
 * 문제 현상이 발생한 마지막 콘솔 로그 5줄 또는 관련 내용
 
-#### 스크립트 버전을 포함한 콘솔 로그의 예시
+### 스크립트 버전을 포함한 콘솔 로그 예시
 
 ```
 jk@host ~ % ./setup.v2.sh --universal

@@ -16,7 +16,7 @@ QueryPie Server는 Docker와 Podman 컨테이너 엔진에서 검증되었으며
 * 최종 업데이트: 2025년 08월 29일 
 * 검증 기준일: 2025년 08월 29일
 
-### 컨테이너 엔진과 Compose
+## 컨테이너 엔진과 Compose
 
 QueryPie Server는 컨테이너 기반으로 배포·운영되며, Docker와 Podman 두 컨테이너 엔진에서 기능 검증을 완료하고 기술지원을 제공합니다.
 
@@ -29,7 +29,7 @@ Compose 의 구현체로 Docker Compose 가 널리 사용되며, Docker, Podman,
 Docker Compose 는 하나의 실행파일로 구성되어 있고, 다른 패키지에 의존성이 없어, 설치가 간편합니다.
 Podman 의 경우, Python 으로 구현된 Podman Compose 라는 구현체가 제공되기도 합니다.
 
-#### 권장하는 컨테이너 엔진과 Compose 구성
+### 권장하는 컨테이너 엔진과 Compose 구성
 
 QueryPie는 운영 환경에서  **Docker + Docker Compose**  조합 또는  **Podman + Docker Compose**  조합을 1차 권장합니다.
 권장 최소 버전은 Docker Engine 23.0 (23년 2월 출시) 이상, Docker Compose 2.29.0 (24년 7월 출시) 이상, Podman 4.9.0 (24년 1월 출시) 이상으로 검증되어 있습니다.
@@ -42,7 +42,7 @@ Podman + Podman Compose 조합은 기술적으로 지원되나, Python 의존성
 특히, 많이 사용되는 Amazon Linux 2023 에서 Podman 을 지원하지 않는다는 것, 25년 출시된 Red Hat Enterprise Linux 10 에서 Docker 를 지원하지 않는다는 것에 유의하여 주세요.
 </Callout>
 
-### 리눅스 배포본의 현황 요약표
+## 리눅스 배포본의 현황 요약표
 
 아래 표는 QueryPie 에서 공식적으로 기술지원을 제공하는 배포판과 Docker, Podman 지원 현황을 정리한 것입니다.
 Docker, Podman 지원 현황은 QueryPie 를 실행, 관리하기 위한 버전을 제공되는지 여부를 기준으로 합니다.
@@ -221,11 +221,11 @@ RHEL 9 바이너리 호환
 </tbody>
 </table>
 
-### 리눅스 배포본의 특징
+## 리눅스 배포본의 특징
 
 QueryPie 팀에서 기술지원을 제공하는 리눅스 배포본의 현황을 설명합니다.
 
-#### Amazon Linux 2 (2018년 6월 출시)
+### Amazon Linux 2 (2018년 6월 출시)
 
 Amazon Linux 2는 RHEL 7 계열을 기반으로 AWS가 EC2에 최적화하여 제공하는 배포판으로, 장기간의 안정적 운영을 위해 널리 사용되어왔습니다.
 AWS의 공식 지원 정책에 따르면 Amazon Linux 2의 공식 보안·버그 패치 제공은 2026-06-30까지로 예정되어 있어(출처: [Amazon Linux 2 FAQs](https://aws.amazon.com/amazon-linux-2/faqs/)), 새로운 신규 서버 구축이나 장기 운영을 계획 중이라면 수명 주기가 더 긴 Amazon Linux 2023 또는 Ubuntu/RHEL 계열로의 이전을 검토하시기 바랍니다.
@@ -237,7 +237,7 @@ Compose는 Docker Compose 플러그인(v2)을 함께 배포·업데이트할 수
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.
 *  **<u>Podman 은 지원되지 않습니다</u>** .
 
-#### Amazon Linux 2023 (2023년 3월 출시)
+### Amazon Linux 2023 (2023년 3월 출시)
 
 Amazon Linux 2023(AL2023)은 Fedora를 상류(upstream)로 채택해 주기적 릴리스, 지원 일정을 명확히 한 차세대 AWS 리눅스입니다.
 GA는 2023년 3월에 이뤄졌고, 표준 지원(Standard Support)은 2027년 6월 30일, 유지보수 지원(Maintenance Support)은 2029년 6월 30일까지 제공되는 5년 지원 모델을 따릅니다(출처: [Amazon Linux 2023 FAQs](https://aws.amazon.com/linux/amazon-linux-2023/faqs/)).
@@ -249,7 +249,7 @@ AWS가 제공하는 설치 가이드에서도 Docker 중심의 운영 모델이 
 * Docker, Docker Compose 조합을 사용하기에 적합합니다. Amazon Linux 2023 의 dnf 패키지를 설치하는 경우,  **Docker 25.0.8**  버전이 기본 설치됩니다.
 *  **<u>Podman 은 지원되지 않습니다.</u>**  Amazon Linux 2023 은 Podman 설치가 어렵고, 검증된 설치 패키지가 제공되지 않습니다. 상당수 이용자가 Podman 을 배포본에 추가하기를 요청하였으나, AWS 에서 이를 완곡히 거절하고, Podman 에 대한 기술지원을 하지 않는 것으로 보입니다.
 
-#### Red Hat Enterprise Linux 8 (2019년 5월 출시)
+### Red Hat Enterprise Linux 8 (2019년 5월 출시)
 
 RHEL 8은 2019년 5월 7일 공개되었고, Full Support는 2024년 5월 31일에 종료되었으며, Maintenance Support는 2029년 5월 31일까지, 선택 시 Extended Life Cycle Support(ELS)는 2032년 5월 31일까지 이어집니다.
 기업 현장에서 가장 널리 배포된 EL8 생태계의 중심으로, Red Hat은 Docker 엔진 대신 Podman을 기본 컨테이너 엔진으로 제공합니다.
@@ -261,7 +261,7 @@ Compose 측면에서는 Docker Compose(v2 플러그인)를 Docker 엔진과 함�
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
     * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/)
 
-#### Red Hat Enterprise Linux 9 (2022년 5월 출시)
+### Red Hat Enterprise Linux 9 (2022년 5월 출시)
 
 RHEL 9는 2022년 5월 18일 릴리스되었고, Full Support는 2027년 5월 31일, Maintenance Support는 2032년 5월 31일, 선택 ELS는 2035년 5월 31일까지 제공됩니다.
 운영 모델은 RHEL 8과 동일하게 Podman 중심이며, 루트리스 모드와 시스템 통합(systemd 유저 서비스 등)에서 성숙도가 높아졌습니다.
@@ -272,7 +272,7 @@ Docker CE는 공식 RHEL 리포지터리의 지원 범위 밖이지만, Docker �
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
     * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/) 
 
-#### Red Hat Enterprise Linux 10 (2025년 5월 출시)
+### Red Hat Enterprise Linux 10 (2025년 5월 출시)
 
 RHEL 10은 2025년 5월 20일에 공개되었으며, Red Hat의 표준 정책에 따라 Full Support는 2030년 5월 31일, Maintenance Support는 2035년 5월 31일, 선택 ELS는 2038년 5월 31일까지 이어지는 로드맵을 가집니다.
 RHEL 10에서는 Docker 엔진과 docker 명령이 기본 제공에서 제거되었고, Red Hat의 공식 지원도 Podman에 한정됩니다.
@@ -282,7 +282,7 @@ Docker를 외부 업스트림에서 설치하는 것은 기술적으로 가능�
 * Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 5.4.0**  버전이 설치됩니다.
 *  **Docker 패키지가 제공되지 않습니다** . (2025년 8월 현재) CentOS Stream 10 에서 Docker 패키지가 준비되어 있으나, 설치하여 실행할 때, 오류가 발생합니다.
 
-#### Ubuntu 22.04 LTS Jammy Jellyfish
+### Ubuntu 22.04 LTS Jammy Jellyfish
 
 Ubuntu 22.04 LTS는 2022년 4월 21일 공개되었고, 표준 지원은 2027년 4월까지, Extended Security Maintenance(ESM)는 2032년 4월까지 제공됩니다.
 Canonical은 서버·클라우드 환경에서 Docker와 Podman 모두를 공식 문서·저장소를 통해 제공하며, Docker는 Docker 공식 APT 리포지터리 또는 Ubuntu의 docker.io/플러그인 패키지로, Podman은 배포본 기본 저장소에서 설치할 수 있습니다.
@@ -293,7 +293,7 @@ Ubuntu 특유의 폭넓은 커뮤니티 생태계와 빠른 보안 패치 제공
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
     * [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
-#### Ubuntu 24.04 LTS Noble Numbat
+### Ubuntu 24.04 LTS Noble Numbat
 
 Ubuntu 24.04 LTS는 2024년 4월 25일 공개되었으며, 표준 지원은 2029년 4월까지, ESM은 2036년 4월까지 이어집니다.
 최신 LTS답게 컨테이너 관련 툴체인의 버전이 상향되어 있으며, Docker는 Docker 공식 리포지터리와 Canonical 패키지 모두에서 최신 Compose 플러그인과 함께 배치할 수 있습니다.
@@ -304,7 +304,7 @@ Podman 역시 기본 저장소에서 제공되어 루트리스 실행과 사용�
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
     * [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
-#### Rocky Linux 9 (2022년 7월 출시)
+### Rocky Linux 9 (2022년 7월 출시)
 
 Rocky Linux 9 역시 RHEL 9과 동형의 릴리스 정책을 따르며, 유지보수 지원은 2032년 5월 31일까지 제공됩니다.
 기본 컨테이너 스택은 Podman이며, 루트리스 실행과 cgroup, systemd 연계가 성숙해 복잡한 다중 컨테이너 서비스를 운영하기 용이합니다.
@@ -315,7 +315,7 @@ QueryPie Server는 두 엔진 모두에서 동등한 품질로 동작하도록 �
 * Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
     * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/) 
 
-#### CentOS Stream (2021년 이후)
+### CentOS Stream (2021년 이후)
 
 기존 CentOS 의 대체 배포판으로, RHEL 의 차기 릴리스를 미리 반영하는 롤링 업데이트 방식을 채택하고 있습니다.
 안정성 면에서 RHEL 및 Amazon Linux 대비 변동성이 있으므로, 장기 운영보다는 개발 및 테스트 환경에 적합합니다.

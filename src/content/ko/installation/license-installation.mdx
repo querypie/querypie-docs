@@ -7,12 +7,17 @@ import { Callout } from 'nextra/components'
 
 # 라이선스 설치
 
-QueryPie 제품의 License 를 최초 설치, 업그레이드 설치하는 방법을 안내합니다.
+QueryPie 라이선스를 설치하고 관리하는 방법을 안내합니다.
 
-### QueryPie 를 처음 설치하는 경우<Badge color="grey">11.3.0</Badge>
+<Callout type="info">
+**버전별 라이선스 관리 방법**
+* 11.3.0 이상: Web Console에서 라이선스 관리
+* 11.3.0 미만: QueryPie Tools를 사용한 라이선스 설치
+</Callout>
 
-QueryPie ACP 를 처음 설치하여 실행하는 경우, 웹브라우저로 웹콘솔에 접속하게 되면, 라이선스 입력을 요구합니다.
-라이선스를 정상적으로 입력하게 되면, 로그인 화면을 만나게 됩니다.
+## 처음 설치하는 경우 (11.3.0 이상)
+
+QueryPie를 처음 설치하여 실행하면, 웹브라우저에서 라이선스 입력을 요구합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/license-installation/image-20260130-054810.png" alt="PEM 형식 라이선스 입력 화면" width="760" />
@@ -21,26 +26,30 @@ PEM 형식 라이선스 입력 화면
 </figcaption>
 </figure>
 
-### 라이선스를 추가, 교체하기<Badge color="grey">11.3.0</Badge>
+## 라이선스 추가 및 교체 (11.3.0 이상)
 
-11.3.0 또는 이후 버전에서는 웹콘솔에서 제품의 License 를 설치, 추가, 교체할 수 있습니다: [Licenses](../administrator-manual/general/company-management/licenses)
+11.3.0 이상에서는 Web Console에서 라이선스를 관리할 수 있습니다.
 
-#### 다수의 라이선스 설치 후 관리하기
+**설정 경로:** Admin Page → General → Company Management → [Licenses](../administrator-manual/general/company-management/licenses)
 
-11.3.0 이전 버전에는 License 의 유효기간이 겹치는 라이선스를 추가 설치할 수 없는 제약이 있었으나, 11.3.0 부터는 유효기간이 겹치는 라이선스를 추가 설치할 수 있습니다.
-유효한 라이선스가 둘 이상인 경우, 유효한 라이선스를 관리자가 지정할 수 있습니다.
+### 라이선스 상태
 
-유효한 라이선스의 상태는 활성화 여부에 따라, 다음과 같이 구분됩니다.
+| 상태 | 설명 |
+| --- | --- |
+| Activated | 현재 활성화된 라이선스 |
+| Available | 사용 가능하지만 활성화되지 않은 라이선스 |
 
-* Activated : 현재 활성화된 상태
-* Available : 사용 가능한 license이지만 활성화 하지 않은 상태
+11.3.0부터는 유효기간이 겹치는 라이선스도 추가 설치할 수 있습니다.
 
-### QueryPie 를 처음 설치하는 경우<Badge color="grey">Deprecated</Badge>
+## 11.3.0 미만 버전에서 라이선스 설치
 
-QueryPie 를 처음 설치하는 경우, QueryPie Tools 라는 컴포넌트를 실행하여, Product License 를 설치할 수 있습니다.
-QueryPie Tools 는 QueryPie Server 와 별개로 작동하는 도구로, 제품 설치, 업그레이드, 라이선스 설치 등에 사용하는 도구입니다.
+<Callout type="warning">
+이 섹션은 11.3.0 미만 버전 사용자를 위한 내용입니다. 11.3.0 이상에서는 Web Console을 사용하세요.
+</Callout>
 
-QueryPie Tools 를 이용해 Product License 설치하는 방법을 간단히 설명하면 다음과 같습니다.
+### 처음 설치하는 경우
+
+QueryPie Tools를 실행하여 라이선스를 설치합니다.
 
 `docker-compose` 명령으로 QueryPie Tools Container 를 실행합니다.
 ```
@@ -62,7 +71,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 
 전반적인 제품 설치 과정과 Product License 설치 단계에 대한 상세한 설명은 다음 문서를 참조하여 주세요: [설치 가이드 - 간단한 구성](installation/installation-guide-simple-configuration)
 
-### 사용 중인 QueryPie 의 라이선스를 연장하는 경우<Badge color="grey">Deprecated</Badge>
+### 라이선스 연장하는 경우
 
 현재 사용 중인 QueryPie 에 라이선스를 연장하고자 하는 경우가 있습니다.
 예를 들어, PoC 진행 중이던 QueryPie Server Instance 에 Production License 를 설치하여, 기존 PoC License 를 연장하고자 하는 경우를 가정합니다.
@@ -98,25 +107,15 @@ ubuntu@querypie:~/querypie/10.2.4$
 이 응답 메시지를 만난 경우 대처 방법은, “사용 중인 QueryPie 의 라이선스를 교체하는 경우” 섹션을 참고하시기 바랍니다.
 
 
-### 사용 중인 QueryPie 의 라이선스를 교체하는 경우<Badge color="grey">Deprecated</Badge>
+### 라이선스 교체하는 경우 (유효기간 중복 시)
 
-QueryPie 의 License 관리 기능에는 한가지 제약사항이 있어서, 기존 라이선스의 유효기간과 새 라이선스의 유효기간이 일부 겹치는 경우, 새 라이선스를 추가로 설치하지 못합니다.
-이로 인해, 유효기간이 겹치는 라이선스를 설치하려는 경우, 별도 절차를 통하여 기존 라이선스를 삭제한 후, 새로운 라이선스를 설치하여야 합니다.
-
-<Callout type="important">
-11.3.0 또는 이후 버전에는 이 제약이 해소되었습니다.
-참조: [Licenses](../administrator-manual/general/company-management/licenses)
+<Callout type="info">
+11.3.0 이상에서는 유효기간이 겹치는 라이선스도 추가할 수 있으므로, 이 절차가 필요하지 않습니다.
 </Callout>
 
-기존 라이선스를 삭제하는 방법은 크게 두 가지가 있습니다.
+11.3.0 미만 버전에서 유효기간이 겹치는 라이선스를 설치하려면, 기존 라이선스를 먼저 삭제해야 합니다.
 
-* Docker Container 내부에서 mysql client 을 사용하여, 기존 라이선스를 삭제하기
-* QueryPie Web Console 에서 QueryPie MySQL 에 연결하여, 기존 라이선스를 삭제하기
-    * QueryPie DAC 기능을 이용하는 고객의 경우, DAC 의 Database Connection 을 추가하여, QueryPie MySQL Database 에 연결할 수 있습니다. 자세한 방법은 이 문서에서 설명하지 않습니다.
-
-이 문서에서는 Docker Container 내부에서 mysql client 을 사용하여, 기존 라이선스를 삭제하는 방법을 설명합니다.
-
-#### 기존 라이선스 삭제하기
+#### 기존 라이선스 삭제
 
 QueryPie Server Container 가 작동 중인 리눅스 서버에 터미널로 연결합니다.
 
@@ -186,7 +185,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 ```
 
 
-#### QueryPie Tools 를 실행하여, License 를 설치하기
+#### QueryPie Tools를 실행하여 라이선스 설치
 
 이제 QueryPie Tools 를 실행하여, License 를 설치합니다.
 처음 설치 때와 마찬가지 방식으로, 라이선스를 설치할 수 있습니다.
@@ -213,16 +212,15 @@ ubuntu@querypie:~/querypie/10.2.4$
 
 `[License] Upload: Success` 라는 응답 메시지를 만난 경우, 정상적으로 라이선스가 설치된 것입니다.
 
-#### QueryPie Server Container 를 재시작하기
+#### QueryPie Server Container 재시작
 
-이제, QueryPie Server Container 를 재시작하여 주세요.
+라이선스 설치 후 QueryPie Server Container를 재시작합니다.
 
-* `docker-compose --env-file compose-env --profile querypie down`
-* `docker-compose --env-file compose-env --profile querypie up -d`
+```bash
+docker-compose --env-file compose-env --profile querypie down
+docker-compose --env-file compose-env --profile querypie up -d
+```
 
-설치된 QueryPie Web Console 에서, 제품이 정상적으로 작동하는지 확인하여 주세요.
-
-지금까지, 기존 라이선스를 교체하여, 새로운 라이선스를 설치하는 과정을 살펴보았습니다.
-수고하셨습니다.
+Web Console에서 제품이 정상적으로 작동하는지 확인하세요.
 
 

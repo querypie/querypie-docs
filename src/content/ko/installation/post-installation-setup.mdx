@@ -7,13 +7,22 @@ import { Callout } from 'nextra/components'
 
 # 설치 후 초기 설정
 
-운영 환경에 따라 설치 이후 필수적으로 수행이 필요한 설정들을 안내합니다.
+QueryPie 설치 후 필수적으로 수행해야 하는 초기 설정을 안내합니다.
 
-### 공통 설정
+## 설정 체크리스트
 
-설치 직후 QueryPie 사용 시 필요한 공통 절차 입니다.
+| 순서 | 설정 항목 | 필수 여부 |
+| --- | --- | --- |
+| 1 | Web Base URL 설정 | 필수 |
+| 2 | DAC/SAC Proxy 주소 설정 | DAC/SAC 사용 시 |
+| 3 | KAC Proxy 주소 설정 | KAC 사용 시 |
+| 4 | WAC Proxy 주소 설정 | WAC 사용 시 |
 
-#### QueryPie Web Base URL 설정
+## 공통 설정
+
+모든 환경에서 필수로 설정해야 하는 항목입니다.
+
+### QueryPie Web Base URL 설정
 
 > 설정 경로: Admin Page → General
 Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다.
@@ -35,9 +44,11 @@ QueryPie Web Base URL 설정 화면
 </figcaption>
 </figure>
 
-### 제품별 설정
+## 제품별 설정
 
-#### DAC/SAC: Proxy 접속 주소 설정
+사용하는 기능에 따라 Proxy 접속 주소를 설정합니다.
+
+### DAC/SAC: Proxy 접속 주소 설정
 
 QueryPie Database 에 접속하여, DAC/SAC 의 Proxy 접속을 위한 주소를 등록합니다.
 
@@ -80,7 +91,7 @@ DAC/SAC Proxy 접속 주소 설정 화면
 </figcaption>
 </figure>
 
-#### KAC: Proxy 접속 주소 설정
+### KAC: Proxy 접속 주소 설정
 
 QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등록합니다.
 
@@ -103,7 +114,7 @@ KAC Proxy 접속 주소 설정 화면
 </figure>
 
 
-#### WAC: Proxy 접속 주소 설정
+### WAC: Proxy 접속 주소 설정
 
 > 설정 경로: Admin Page → Web Apps → Web App Configurations
 WAC의 Proxy 접속 주소 설정은 Web Console 에서 수행 가능합니다.
@@ -115,7 +126,7 @@ WAC의 Proxy 접속 주소 설정은 Web Console 에서 수행 가능합니다.
 </Callout>
 
 
-### 제품 설치가 완료되었습니다
+## 다음 단계
 
 설치 후 초기 설정 과정을 진행한 것으로, QueryPie ACP 제품을 사용할 수 있는 준비가 완료되었습니다.
 수고하셨습니다~!

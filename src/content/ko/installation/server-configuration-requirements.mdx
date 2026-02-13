@@ -5,7 +5,18 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1690402874'
 
 # 서버구성 요구사항
 
-QueryPie 를 설치, 운영하기 위한 서버의 하드웨어 성능과 처리용량에 대한 가이드를 제공합니다.
-* [Public Cloud 운영서버 요구사항](server-configuration-requirements/public-cloud-production-server-requirements)
-* [On-Premise VM 요구사항](server-configuration-requirements/on-premise-vm-requirements) 
-* [서버구성 요구사항 요약표](server-configuration-requirements/server-configuration-requirements-summary) 
+QueryPie를 설치하고 운영하기 위한 서버 하드웨어 성능과 처리 용량에 대한 가이드를 제공합니다.
+
+## 빠른 참조
+
+| 구성 요소 | 기본 사양 | 권장 사양 (다수 사용자) |
+| --- | --- | --- |
+| QueryPie Container VM | 4 vCPUs, 15 GiB, 100 GiB Disk | 8 vCPUs, 30 GiB, 100 GiB Disk |
+| QueryPie MySQL | 2 vCPUs, 16 GiB, 100 GiB Disk | 4 vCPUs, 32 GiB, 100 GiB+ Disk |
+| QueryPie Redis | 2 vCPUs, 1 GiB | 2 vCPUs, 3 GiB |
+
+## 상세 가이드
+
+* [서버구성 요구사항 요약표](server-configuration-requirements/server-configuration-requirements-summary) - 한눈에 보는 요약
+* [Public Cloud 운영서버 요구사항](server-configuration-requirements/public-cloud-production-server-requirements) - AWS, GCP, Azure
+* [On-Premise VM 요구사항](server-configuration-requirements/on-premise-vm-requirements) - 물리 서버 환경 
