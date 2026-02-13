@@ -8,21 +8,13 @@ from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
 from reverse_sync.text_normalizer import (
     normalize_mdx_to_plain, collapse_ws, strip_list_marker,
+    strip_for_compare,
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar_lookup import find_mapping_by_sidecar, SidecarEntry
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
-
-# 비교 시 제거할 공백·불가시 문자 패턴 (Hangul Filler, ZWSP, NBSP 등 포함)
-_INVISIBLE_RE = re.compile(
-    r'[\s\u200b\u200c\u200d\u2060\ufeff\u3164\u115f\u1160\u3000\xa0]+')
-
-
-def _strip_for_compare(text: str) -> str:
-    """비교를 위해 공백 및 불가시 유니코드 문자를 모두 제거한다."""
-    return _INVISIBLE_RE.sub('', text)
 
 
 def _find_containing_mapping(
@@ -34,11 +26,11 @@ def _find_containing_mapping(
     old_norm = collapse_ws(old_plain)
     if not old_norm or len(old_norm) < 5:
         return None
-    old_nospace = _strip_for_compare(old_norm)
+    old_nospace = strip_for_compare(old_norm)
     for m in mappings:
         if m.block_id in used_ids:
             continue
-        m_nospace = _strip_for_compare(m.xhtml_plain_text)
+        m_nospace = strip_for_compare(m.xhtml_plain_text)
         if m_nospace and old_nospace in m_nospace:
             return m
     return None
@@ -97,8 +89,8 @@ def build_patches(
                 mapping = child
             else:
                 # 블록 텍스트가 parent에 포함되는지 확인
-                _old_ns = _strip_for_compare(old_plain)
-                _map_ns = _strip_for_compare(mapping.xhtml_plain_text)
+                _old_ns = strip_for_compare(old_plain)
+                _map_ns = strip_for_compare(mapping.xhtml_plain_text)
                 if _old_ns and _map_ns and _old_ns not in _map_ns:
                     # 텍스트 불일치 → list 항목 단위 분리 시도
                     if change.old_block.type == 'list':
@@ -149,8 +141,8 @@ def build_patches(
 
         # 매핑 텍스트에 old_plain이 포함되지 않으면 더 나은 매핑 찾기
         if not mapping.children:
-            old_nospace = _strip_for_compare(old_plain)
-            map_nospace = _strip_for_compare(mapping.xhtml_plain_text)
+            old_nospace = strip_for_compare(old_plain)
+            map_nospace = strip_for_compare(mapping.xhtml_plain_text)
             if old_nospace and map_nospace and old_nospace not in map_nospace:
                 better = _find_containing_mapping(old_plain, mappings, used_ids)
                 if better is not None:
@@ -431,8 +423,8 @@ def build_list_item_patches(
             container = parent_mapping
             if container is not None and used_ids is not None:
                 # parent 텍스트에 항목이 포함되지 않으면 더 나은 매핑 찾기
-                _item_ns = _strip_for_compare(old_plain)
-                _cont_ns = _strip_for_compare(container.xhtml_plain_text)
+                _item_ns = strip_for_compare(old_plain)
+                _cont_ns = strip_for_compare(container.xhtml_plain_text)
                 if _item_ns and _cont_ns and _item_ns not in _cont_ns:
                     better = _find_containing_mapping(
                         old_plain, mappings, used_ids)
