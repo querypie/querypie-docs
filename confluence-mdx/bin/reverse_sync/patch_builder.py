@@ -12,6 +12,7 @@ from reverse_sync.text_normalizer import (
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar_lookup import find_mapping_by_sidecar, SidecarEntry
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
@@ -72,8 +73,19 @@ def build_patches(
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for change in changes:
-        # Phase 2: added/deleted는 별도 처리
-        if change.change_type in ('added', 'deleted'):
+        if change.change_type == 'deleted':
+            patch = _build_delete_patch(
+                change, mdx_to_sidecar, xpath_to_mapping)
+            if patch:
+                patches.append(patch)
+            continue
+
+        if change.change_type == 'added':
+            patch = _build_insert_patch(
+                change, improved_blocks, alignment,
+                mdx_to_sidecar, xpath_to_mapping)
+            if patch:
+                patches.append(patch)
             continue
 
         if change.old_block.type in NON_CONTENT_TYPES:
@@ -470,3 +482,65 @@ def extract_list_marker_prefix(text: str) -> str:
     """텍스트에서 선행 리스트 마커 prefix를 추출한다."""
     m = re.match(r'^([-*+]\s+|\d+\.\s+)', text)
     return m.group(0) if m else ''
+
+
+def _build_delete_patch(
+    change: BlockChange,
+    mdx_to_sidecar: Dict[int, SidecarEntry],
+    xpath_to_mapping: Dict[str, 'BlockMapping'],
+) -> Optional[Dict[str, str]]:
+    """삭제된 블록에 대한 delete 패치를 생성한다."""
+    if change.old_block.type in NON_CONTENT_TYPES:
+        return None
+    mapping = find_mapping_by_sidecar(
+        change.index, mdx_to_sidecar, xpath_to_mapping)
+    if mapping is None:
+        return None
+    return {'action': 'delete', 'xhtml_xpath': mapping.xhtml_xpath}
+
+
+def _build_insert_patch(
+    change: BlockChange,
+    improved_blocks: List[MdxBlock],
+    alignment: Optional[Dict[int, int]],
+    mdx_to_sidecar: Dict[int, SidecarEntry],
+    xpath_to_mapping: Dict[str, 'BlockMapping'],
+) -> Optional[Dict[str, str]]:
+    """추가된 블록에 대한 insert 패치를 생성한다."""
+    new_block = change.new_block
+    if new_block.type in NON_CONTENT_TYPES:
+        return None
+
+    after_xpath = _find_insert_anchor(
+        change.index, alignment, mdx_to_sidecar, xpath_to_mapping)
+    new_xhtml = mdx_block_to_xhtml_element(new_block)
+
+    return {
+        'action': 'insert',
+        'after_xpath': after_xpath,
+        'new_element_xhtml': new_xhtml,
+    }
+
+
+def _find_insert_anchor(
+    improved_idx: int,
+    alignment: Optional[Dict[int, int]],
+    mdx_to_sidecar: Dict[int, SidecarEntry],
+    xpath_to_mapping: Dict[str, 'BlockMapping'],
+) -> Optional[str]:
+    """추가 블록의 삽입 위치 앵커를 찾는다.
+
+    improved 시퀀스에서 역순으로 탐색하여 alignment에 존재하는
+    (= original에 매칭되는) 첫 번째 블록의 xhtml_xpath를 반환한다.
+    """
+    if alignment is None:
+        return None
+
+    for j in range(improved_idx - 1, -1, -1):
+        if j in alignment:
+            orig_idx = alignment[j]
+            mapping = find_mapping_by_sidecar(
+                orig_idx, mdx_to_sidecar, xpath_to_mapping)
+            if mapping is not None:
+                return mapping.xhtml_xpath
+    return None

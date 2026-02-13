@@ -6,28 +6,60 @@ import re
 
 
 def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
-    """XHTML에 텍스트 패치를 적용한다.
+    """XHTML에 패치를 적용한다.
 
     Args:
         xhtml: 원본 XHTML 문자열
         patches: 패치 목록. 각 패치는 dict:
-            - xhtml_xpath: 간이 XPath (예: "p[1]", "h2[3]")
-            - old_plain_text: 원본 평문 텍스트 (검증용)
-            - new_inner_xhtml: 새 inner HTML (있으면 innerHTML 교체)
-            - new_plain_text: 변경할 평문 텍스트 (legacy path)
+            - action: "modify" (기본) | "delete" | "insert"
+            - modify: xhtml_xpath, old_plain_text, new_plain_text 또는 new_inner_xhtml
+            - delete: xhtml_xpath
+            - insert: after_xpath (None이면 맨 앞), new_element_xhtml
 
     Returns:
         패치된 XHTML 문자열
     """
     soup = BeautifulSoup(xhtml, 'html.parser')
 
-    for patch in patches:
-        xpath = patch['xhtml_xpath']
+    # 패치를 action별로 분류
+    delete_patches = [p for p in patches if p.get('action') == 'delete']
+    insert_patches = [p for p in patches if p.get('action') == 'insert']
+    modify_patches = [p for p in patches
+                      if p.get('action', 'modify') == 'modify']
 
-        element = _find_element_by_xpath(soup, xpath)
-        if element is None:
-            continue
+    # 모든 xpath를 DOM 변경 전에 미리 resolve (인덱스 shift 방지)
+    resolved_deletes = []
+    for p in delete_patches:
+        el = _find_element_by_xpath(soup, p['xhtml_xpath'])
+        if el is not None:
+            resolved_deletes.append(el)
 
+    resolved_inserts = []
+    for p in insert_patches:
+        after_xpath = p.get('after_xpath')
+        anchor = None
+        if after_xpath is not None:
+            anchor = _find_element_by_xpath(soup, after_xpath)
+            if anchor is None:
+                continue  # anchor를 못 찾으면 skip
+        resolved_inserts.append((anchor, p))
+
+    resolved_modifies = []
+    for p in modify_patches:
+        el = _find_element_by_xpath(soup, p['xhtml_xpath'])
+        if el is not None:
+            resolved_modifies.append((el, p))
+
+    # 1단계: delete
+    for element in resolved_deletes:
+        element.decompose()
+
+    # 2단계: insert
+    for anchor, patch in resolved_inserts:
+        _insert_element_resolved(soup, anchor, patch['new_element_xhtml'])
+
+    # 3단계: modify
+    for element, patch in resolved_modifies:
         if 'new_inner_xhtml' in patch:
             old_text = patch.get('old_plain_text', '')
             current_plain = element.get_text()
@@ -37,16 +69,47 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
         else:
             old_text = patch['old_plain_text']
             new_text = patch['new_plain_text']
-
             current_plain = element.get_text()
             if current_plain.strip() != old_text.strip():
                 continue
-
             _apply_text_changes(element, old_text, new_text)
 
     result = str(soup)
     result = _restore_cdata(result)
     return result
+
+
+def _xpath_index(xpath: str) -> int:
+    """xpath에서 인덱스 부분을 추출한다 (정렬용)."""
+    match = re.search(r'\[(\d+)\]', xpath)
+    return int(match.group(1)) if match else 0
+
+
+def _insert_element_resolved(soup: BeautifulSoup, anchor, new_html: str):
+    """미리 resolve된 anchor를 사용하여 새 요소를 삽입한다."""
+    new_parsed = BeautifulSoup(new_html, 'html.parser')
+
+    if anchor is None:
+        # 첫 번째 블록 요소 앞에 삽입
+        first_block = _find_first_block_element(soup)
+        if first_block:
+            for child in reversed(list(new_parsed.children)):
+                first_block.insert_before(child.extract())
+        else:
+            for child in list(new_parsed.children):
+                soup.append(child.extract())
+    else:
+        children = list(new_parsed.children)
+        for child in reversed(children):
+            anchor.insert_after(child.extract())
+
+
+def _find_first_block_element(soup: BeautifulSoup):
+    """soup의 첫 번째 블록 레벨 요소를 찾는다."""
+    for child in _iter_block_children(soup):
+        if isinstance(child, Tag):
+            return child
+    return None
 
 
 def _restore_cdata(xhtml: str) -> str:
