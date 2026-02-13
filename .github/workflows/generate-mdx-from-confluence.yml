@@ -45,6 +45,13 @@ jobs:
           # 플랫폼을 명시적으로 지정하여 아키텍처 불일치 오류 방지
           DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose --progress=quiet pull confluence-mdx
 
+      - name: Docker image metadata
+        run: |
+          echo "=== Docker Image Metadata ==="
+          docker inspect querypie/confluence-mdx:latest --format 'Image Created: {{.Created}}'
+          docker inspect querypie/confluence-mdx:latest --format 'Image ID: {{.Id}}'
+          docker inspect querypie/confluence-mdx:latest --format 'Image Size: {{.Size}} bytes'
+
       - name: Generate MDX files
         working-directory: ./confluence-mdx
         run: |
