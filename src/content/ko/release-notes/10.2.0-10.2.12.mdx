@@ -32,7 +32,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Bug Fix**
 
-* [DAC] Postgre/Redshift Proxy에서 모든 에러가 `An I/O error occurred while sending to the backend.` 메세지로 처리되는 이슈 해결
+* [DAC] Postgre/Redshift Proxy에서 모든 에러가 `An I/O error occurred while sending to the backend.` 메시지로 처리되는 이슈 해결
 * [DAC] PostgreSQL Unmasking Request가 특정 조건에서 실패하는 문제 수정
 
 
@@ -52,9 +52,9 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] MongoDB 메모리 누수 오류 해결
 * [DAC] Unmasking Request 시 Schema 있는 DB 신청 불가한 오류 해결
 * [General] QueryPie Meta DB에 SSL 활성화 시 무한 접속을 시도하는 오류 해결
-* [General] S3 호환 저장소 MinIO의 Endpoint URL이 설정이 안되는 오류 해결
+* [General] S3 호환 저장소 MinIO의 Endpoint URL이 설정이 안 되는 오류 해결
 * [General] 사용자 그룹 삭제할 수 없는 오류 해결 
-* [General] 워크플로우 상신시 승인자가 Slack DM 수신하지 못하는 오류 해결
+* [General] 워크플로우 상신 시 승인자가 Slack DM 수신하지 못하는 오류 해결
 * [WAC] 로그인 여부 갱신 시 발생하는 Invalid Token 디버그 로그 과다 출력 이슈 해결
 
 
@@ -103,7 +103,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] SQL Request 결과 탭에서 1,021개 초과하는 경우 정상적으로 표시하지 않는 오류 해결
 * [DAC] Impala에서 컬럼 수가 많은 테이블 조회 시 proxy 연결 실패 현상 해결
 * [DAC] 권한 없는 사용자의 쿼리 실행 시 Default Privilege 선택창이 표시되는 현상 해결
-* [SAC] Web Terminal 에서 새로운 세션 접속시 기존 세션 탭의 히스토리가 유지되지 않는 오류 해결
+* [SAC] Web Terminal 에서 새로운 세션 접속 시 기존 세션 탭의 히스토리가 유지되지 않는 오류 해결
 * [SAC] VDI 환경(Windows)에서 Agent를 통한 SSH 접속 불가 버그 픽스
 * [SAC] 기존 계정의 Secret Store 변경 시 발생하는 저장 오류 해결
 
@@ -117,14 +117,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 * [General] Slack DM 을 통해 전달되는 Workflow Request 알림 메시지 항목 추가
 * [Syslog] Legacy Syslog 포맷에 Urgent Mode 항목 추가
-* [Syslog] Workflow New Request 이벤트 전송시 Urgent Mode 항목 추가
+* [Syslog] Workflow New Request 이벤트 전송 시 Urgent Mode 항목 추가
 
 
 **Bug Fix**
 
 * [DAC] Redshift Connector 패키지 지원
 * [SAC] 윈도우 서버 에이전트 프로세스 탐지 메모리 누수 현상 해결
-* [Multi-Agent] Host 등록시 IP 및 HTTP 도메인 등록 가능하도록 수정
+* [Multi-Agent] Host 등록 시 IP 및 HTTP 도메인 등록 가능하도록 수정
 * [Multi-Agent] 메모리 부족 현상 해결 및 자동 복구 기능 추가
 * [Agent] RDP Password 잘못입력한 경우 간헐적 에이전트 종료 현상 수정
 
@@ -140,7 +140,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [SAC] VNC 프로토콜 신규 지원
 * [DAC] Teradata 신규 벤더 지원
 * [DAC] 태그 기반 DB 정책 템플릿 기능 Beta 출시
-* [SAC] 서버 접근시 시간 단위 권한 상승 요청 및 승인 기능
+* [SAC] 서버 접근 시 시간 단위 권한 상승 요청 및 승인 기능
 
 
 **Improvement**
@@ -148,14 +148,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [General] Slack 연동 기능 개선 (기존 Slack DM 대체)
 * [General] Action Rate Limit 기준을 IP 및 Access Token 조합으로 변경
 * [General] Query Audit 로그에서 SQL type 다중 선택 UI 개선
-* [General] Report CSV 파일 생성시 UTF-8(BOM) 인코딩 적용
+* [General] Report CSV 파일 생성 시 UTF-8(BOM) 인코딩 적용
 * [General] Workflow 동일 요청 건 내에서 중복 액션을 제한하도록 개선
 * [Agent] 멀티 에이전트 내의 Database 3rd Party Client 빠른 연결 지원
 * [DAC] Oracle 사용자 커넥션 페이지 Proxy Info 정보에 SID 정보 표기
 * [DAC] Dr.Sum SSH 기능 활성화
 * [SAC] Cloud Provide 동기화 시 자동 태깅 기능 추가
 * [SAC] Rocky Linux 9 에서 Agent 설치 및 연결 가능하도록 개선
-* [SAC] 서버 권한 부여시 Server Groups 및 Servers 목록 로딩 속도 개선
+* [SAC] 서버 권한 부여 시 Server Groups 및 Servers 목록 로딩 속도 개선
 * [WAC] Web App Configurations 페이지 추가
 * [WAC] Web App 워터마크 문구 커스텀 기능 추가
 * [WAC] Web App 사용자 행위 Event Log 정교화
@@ -165,9 +165,9 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 **Bug Fix**
 
 * [Agent] 에이전트에서 간헐적으로 'SecretString' 발생하는 이슈 해결
-* [DAC] PostgreSQL UNION 구문 사용시 WITH 구문의 테이블 참조 불가능한 이슈 해결
+* [DAC] PostgreSQL UNION 구문 사용 시 WITH 구문의 테이블 참조 불가능한 이슈 해결
 * [DAC] MSSQL 날짜가 12시간제로 표시되는 이슈 해결
-* [Workflow] DB Access Request 내의 Reject 처리시 Access Control Logs 관련 이슈 해결
+* [Workflow] DB Access Request 내의 Reject 처리 시 Access Control Logs 관련 이슈 해결
 
 
 ### QueryPie 10.2.5 Release
@@ -193,12 +193,12 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Bug Fix**
 
-* [DAC] 원장 테이블 식별시 실제 변경 대상 테이블이 Ledger 인 경우에만 정책 적용되도록 개선
+* [DAC] 원장 테이블 식별 시 실제 변경 대상 테이블이 Ledger 인 경우에만 정책 적용되도록 개선
 * [DAC] INSERT 대상 테이블의 Ledger 식별 이슈 해결
 * [DAC] SQLServer 가용성그룹 대시보드 사용 이슈 해결
 * [DAC] DML Snapshot 옵션 활성화 후 대용량 쿼리 실행 시 Memory 과부하 이슈 해결
-* [DAC] SQLServer SET STATISTIC IO, TIME 등 설정 후 쿼리 실행시 오류 해결
-* [Workflow] 삭제된 커넥션이 포함된 결재 요청시 승인이 실패하는 오류 해결
+* [DAC] SQLServer SET STATISTIC IO, TIME 등 설정 후 쿼리 실행 시 오류 해결
+* [Workflow] 삭제된 커넥션이 포함된 결재 요청 시 승인이 실패하는 오류 해결
 
 
 ### QueryPie 10.2.4 Release
@@ -210,7 +210,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 * [DAC] Spanner 신규 벤더 지원
 * [DAC] Dr.Sum 신규 벤더 지원
-* [DAC] BigQuery 접속시 OAuth 인증 지원
+* [DAC] BigQuery 접속 시 OAuth 인증 지원
 * [KAC] 쿠버네티스 클러스터에 Reverse Tunnel 지원(NOVA)
 * [SAC] Cloud Provider 등록/수정/삭제 External API 지원
 * [Workflow] 사용자의 SQL Request 요청 및 실행 External API 지원
@@ -219,14 +219,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 **Improvement**
 
 * [Ganeral] 인도네시아 타임존 추가
-* [General] CSV 파일 생성시, UTF-8(BOM) 인코딩 타입으로 변경 개선
+* [General] CSV 파일 생성 시, UTF-8(BOM) 인코딩 타입으로 변경 개선
 * [DAC] 워크플로우에서 개인 Keytab 및 UID & PW 인증 정상 동작하도록 개선 
 * [DAC] SQL Request 승인된 쿼리 실행 시, 계정정보가 틀려도 재시도할 수 있도록 개선
-* [DAC] Cloud SQL 동기화시 인스턴스에 Public IP 및 Private IP 가 없어도 동기화되도록 개선 
+* [DAC] Cloud SQL 동기화 시 인스턴스에 Public IP 및 Private IP 가 없어도 동기화되도록 개선 
 * [DAC] 웹에디터 SQL History 패널에서 executed at 역순으로 정렬되도록 개선
 * [DAC] Athena Workgroup 등록 관련 개선
-* [DAC] GCP 동기화시 Database Filter 동작 개선
-* [DAC] DB 커넥션 접속시 Masking 정책 스캔 로직 개선
+* [DAC] GCP 동기화 시 Database Filter 동작 개선
+* [DAC] DB 커넥션 접속 시 Masking 정책 스캔 로직 개선
 * [DAC] Ledger 대상 DML 쿼리 실행 후, 워크플로 넘길때 커스텀 링크로 리다이렉션
 * [SAC] NOVA Server의 HA 구성 및 PPv2 지원
 * [AIDD] 지원하는 모든 데이터베이스에 SSL 지원
@@ -235,7 +235,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [SAC] 대규모로 서버 권한 일괄 부여(Direct Permission) 개선
 * [SAC] Server Group 수정 페이지에서 서버 외 항목 수정 가능하도록 요청
 * [SAC] Proxyjump 멀티홉(Multi-Hop) 지원
-* [Audit] Audit Logs Export 시도시 글자를 자를수 있는 옵션 제공
+* [Audit] Audit Logs Export 시도 시 글자를 자를수 있는 옵션 제공
 * [WAC] WebApp 생성 시 Sub Path 등록 방식 개선
 * [WAC] Single Page Application에 대한 접근통제 로직 보완
 * [WAC] RootCA 인증서 다운로드 기능 추가
@@ -244,11 +244,11 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 **Bug Fix**
 
 * [Workflow] Workflow Lists Full Access Policy 권한으로 All Requests 메뉴를 조회할 수 없는 이슈 해결
-* [DAC] CSV Import 수행시 Target Table 로딩 관련 오류 해결
+* [DAC] CSV Import 수행 시 Target Table 로딩 관련 오류 해결
 * [DAC] SQLServer WITH 구문을 포함한 UPDATE, DELETE, MERGE 구문이 SELECT 로 실행되는 이슈 해결
-* [DAC] Oracle 에서 데이터 Import 수행 중 쿼리 실행시 정상적으로 Import 되지 않는 이슈 해결
+* [DAC] Oracle 에서 데이터 Import 수행 중 쿼리 실행 시 정상적으로 Import 되지 않는 이슈 해결
 * [DAC] SELECT 구문 내의 ORDER BY 정렬 표시 관련 이슈 해결
-* [DAC] AWS 동기화 정보 저장시 Role ARN 등 이 정상적으로 표시되지 않는 이슈 해결
+* [DAC] AWS 동기화 정보 저장 시 Role ARN 등 이 정상적으로 표시되지 않는 이슈 해결
 * [DAC] Cloud Provider 에서 동기화 시, “This user does not exist anymore” 오류 발생 해결
 
 
@@ -290,17 +290,17 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [SAC] Window 서버에 Server Agent 설치 후 기존 WindowOS 와 매핑 기능 추가
 * [SAC] Vault SSH CA Engine 추가 (signed ssh certificates)
 * [SAC] Server Access Control Role 권한 관련 External API 지원
-* [SAC] Policy 변경시 열려있는 세션 유지할 수 있도록 옵션 제공
+* [SAC] Policy 변경 시 열려있는 세션 유지할 수 있도록 옵션 제공
 * [KAC] 정책 문법 변경 대비 Tips 제안 내용 개선
 * [KAC] Non-namespaced 리소스 관련 정책 개선
 * [KAC] Alert 타입에 Request Audit 관련 로그 추가 
 * [General] Alert 기능 UI/UX 변경 및 조건 선택 관련 항목 개선
-* [General] Cloud Provider 동기화시 Key 방식 저장하여 재사용 및 동기화 가능하도록 개선
+* [General] Cloud Provider 동기화 시 Key 방식 저장하여 재사용 및 동기화 가능하도록 개선
 
 
 **Bug Fix**
 
-* [DAC] Window 환경 웹에디터에서 쿼리 작성시 커서 위치 관련 이슈 해결
+* [DAC] Window 환경 웹에디터에서 쿼리 작성 시 커서 위치 관련 이슈 해결
 * [SAC] 일반 사용자에게 TELNET, FTP의 Protocol 이 노출되지 않는 이슈 해결
 
 
@@ -316,24 +316,24 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] Vertica 신규 지원
 * [DAC] MariaDB 원장 기능 지원
 * [DAC] Ledger 테이블 관리 기능 추가
-* [SAC] 서버 접속시 Reverse Tunneling Agent 기능 지원 (NOVA)
+* [SAC] 서버 접속 시 Reverse Tunneling Agent 기능 지원 (NOVA)
 
 
 **Improvement**
 
 * [Admin] 통합리포트 기능 개선
 * [Admin] User Management 어드민 권한 세분화
-* [Admin] Authentication &gt; LDAP 연동시 Name 값 선택 기능 추가
+* [Admin] Authentication &gt; LDAP 연동 시 Name 값 선택 기능 추가
 * [DAC] Sensitive Data 정규식으로 설정한 규칙의 로그 표시 개선
 * [DAC] Access Control UI/UX 개선
-* [DAC] 관리자 페이지에서 DB 권한 부여시 만료일 지정 기능 추가
+* [DAC] 관리자 페이지에서 DB 권한 부여 시 만료일 지정 기능 추가
 * [DAC] Ledger 기능 API 추가
 * [DAC] 마스킹 정책에서 복수개의 컬럼 대상으로 규칙 적용가능하도록 개선
 * [DAC] MySQL 8.0 JSON Table Function 지원 
-* [DAC] Oracle OCI 접속시 DB 개인 계정 사용 및 로깅 가능하도록 개선
+* [DAC] Oracle OCI 접속 시 DB 개인 계정 사용 및 로깅 가능하도록 개선
 * [SAC] 명령어 우회 통제 기능 고도화 (Command Restrictions)
-* [SAC] Command Template 설정시 Allow / Deny 스펙 추가
-* [SAC] ProxyJump 사용시 JumpHost SSH Key 알고리즘 추가 지원
+* [SAC] Command Template 설정 시 Allow / Deny 스펙 추가
+* [SAC] ProxyJump 사용 시 JumpHost SSH Key 알고리즘 추가 지원
 * [KAC] EKS 클러스터 상세페이지에서 Test Connection 기능 지원
 
 
@@ -347,7 +347,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [General] 다국어 글로벌 설정
 * [General] 사용자 패스워드 보안 규칙 설정 기능
 * [DAC] Hive 데이터 정책 지원 (Data Access, Data Masking, Sensitive Data)
-* [SAC] Vault 연동시 OTP Engine 타입 지원
+* [SAC] Vault 연동 시 OTP Engine 타입 지원
 * [Workflow] 마스킹 해제 요청을 위한 Unmasking Request 기능 지원
 * [Workflow] SQL Request 에서 실행계획 기능 지원
 
@@ -357,8 +357,8 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [General] Alert 내 Message Template Variable 추가 (workflowUuid, urgent, executedAt)
 * [General] Job 수행 및 결과 처리를 전체가 아닌 개별 항목 기준으로 성공/실패 처리하도록 변경
 * [IDP] Okta Sync를 위한 API 토큰 값 마스킹 
-* [IDP] Okta, Onelogin, LDAP 동기화시 Dry Run 기능 추가
-* [DAC] 클라우드 동기화시 Dry Run 기능 추가
+* [IDP] Okta, Onelogin, LDAP 동기화 시 Dry Run 기능 추가
+* [DAC] 클라우드 동기화 시 Dry Run 기능 추가
 * [DAC] Policy 디테일 페이지에서도 검색 기능 추가
 * [DAC] MariaDB Ed25519 Password 암호화 지원
 * [DAC] DML Snapshot UPDATE 구문에 PK 추가
@@ -393,6 +393,6 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] AWS 클라우드 동기화 Modifying 상태의 인스턴스는 Skip 되도록 처리
 * [DAC] 에이전트 오라클 접속 후 쿼리 시 Unauthorized 오류 수정
 * [Audit] 세션 타임아웃 발생 시 Logout 로그가 탭 수만큼 발생하는 이슈 해결
-* [Audit] 로그 export 시도시 Query Full Text의 용량이 큰 경우 메모리 이슈 대응
+* [Audit] 로그 export 시도 시 Query Full Text의 용량이 큰 경우 메모리 이슈 대응
 
 

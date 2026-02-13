@@ -9,7 +9,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Activity logs에서는  **관리자** 에 의하여 수행되는 리소스 등록 및 설정 변경 이력을 조회할 수 있습니다.
+Activity logs에서는  **관리자** 에 의해 수행되는 리소스 등록 및 설정 변경 이력을 조회할 수 있습니다.
 
 
 ### Activity Logs 조회하기
@@ -43,15 +43,15 @@ Administrator &gt; Audit &gt; General &gt; Activity Logs &gt; Activity Logs Deta
 </figure>
 
 1. 목록의 한 행을 클릭하면 Drawer가 열리고, 상세 내용을 확인할 수 있습니다.
-2.  **Affected Data**  : 해당 행위에 의하여 변경된 데이터 내역을 표시합니다. 각 컬럼의 의미는 다음과 같습니다.
+2.  **Affected Data**  : 해당 행위에 의해 변경된 데이터 내역을 표시합니다. 각 컬럼의 의미는 다음과 같습니다.
     1. Label : 데이터 컬럼명
     2. Before : 액션 이전의 값
     3. After : 액션 이후의 값
 3.  **Related Logs**  : 해당 행위에 대해, 연쇄적으로 또는 동시에 발생한 로그를 표시합니다. 전후 로그를 모두 포함합니다.
-    1. 관리자가 직접 일으킨 행위 뿐만 아니라, 그에 따라 파생된 시스템의 자동 행위들을 확인할 수 있습니다.
-    2. Related Logs에 표시된 행위 로그들은 각각 개별 로그로도 남아있습니다.
+    1. 관리자가 직접 일으킨 행위뿐만 아니라, 그에 따라 파생된 시스템의 자동 행위들을 확인할 수 있습니다.
+    2. Related Logs에 표시된 행위 로그들은 각각 개별 로그로도 남아 있습니다.
 
 <Callout type="info">
-11.3.0 부터 Activity Logs의 상세 화면(Drawer)에서 Changes Only 체크박스가 추가되어 변경된 항목만 필터링 해서 볼 수 있도록 개선되었습니다.
-또한, 빈값의 경우 “-(dash)” 대신 “&lt;null&gt;” 로 표시하도록 변경되었습니다.
+11.3.0 부터 Activity Logs의 상세 화면(Drawer)에서 Changes Only 체크박스가 추가되어 변경된 항목만 필터링해서 볼 수 있도록 개선되었습니다.
+또한, 빈 값의 경우 “-(dash)” 대신 “&lt;null&gt;” 로 표시하도록 변경되었습니다.
 </Callout>

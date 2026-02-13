@@ -19,7 +19,7 @@ import { Callout } from 'nextra/components'
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다. 
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
-*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Access Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신 할 수 없습니다. Maximum Approval Duration &gt; Maximum Access Duration인 경우, Maximum Approval Duration의 값이 Maximum Access Duration의 값과 동일하게 적용됩니다. 예) Maximum Approval Duration은 14일이고 Maximum Access Duration은 5일인 경우, Maximum Approval Duration의 값도 5일로 적용됩니다. 
+*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Access Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신할 수 없습니다. Maximum Approval Duration &gt; Maximum Access Duration인 경우, Maximum Approval Duration의 값이 Maximum Access Duration의 값과 동일하게 적용됩니다. 예) Maximum Approval Duration은 14일이고 Maximum Access Duration은 5일인 경우, Maximum Approval Duration의 값도 5일로 적용됩니다. 
     * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
@@ -128,14 +128,14 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-121402.png" alt="image-20251218-121402.png" width="736" />
   </figure>
-5. 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.
+5. 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야 합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-122027.png" alt="image-20251218-122027.png" width="736" />
   </figure>
     * Oracle 예시 : ORCLDB.TESTUSER
     * PostgreSQL 예시 : testdb.test_schema
     * MySQL 예시 : sakila<br/>
-6. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) Host Level privilege에 할당이 필요한 privilege가 없다면 관리자에게 해당 커넥션에 대해 특정 privilege가 있는 privilege type을 생성해달라고 요청해야합니다.<br/>
+6. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) Host Level privilege에 할당이 필요한 privilege가 없다면 관리자에게 해당 커넥션에 대해 특정 privilege가 있는 privilege type을 생성해달라고 요청해야 합니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-122450.png" alt="image-20251218-122450.png" width="736" />
   </figure>
