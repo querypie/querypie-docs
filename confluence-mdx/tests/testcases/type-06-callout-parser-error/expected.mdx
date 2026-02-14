@@ -1,0 +1,27 @@
+### Overview
+
+관리자는 원장 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 정의할 수 있습니다.
+
+### 원장 테이블에 승인 규칙 생성하기
+
+원장 테이블 정책 적용 시 강제화할 승인 규칙을 별도로 생성하고 관리할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+<img src="testcases/type-06-callout-parser-error/output/Screenshot-2024-12-18-at-11.52.33-AM.png" alt="Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval Rules" width="760" />
+<figcaption>
+Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval Rules
+</figcaption>
+</figure>
+
+1. Database 설정 메뉴에서 Ledger Management &gt; Ledger Approval Rules 메뉴로 이동합니다.
+2. 우측 상단의 `Add Approval Rule` 버튼을 클릭합니다.
+3. 정책 생성을 위한 다음의 정보들을 입력합니다.
+    1.  **Rule Name**  : 결재 규칙을 화면상에서 구별할 수 있는 이름입니다.
+    2.  **Request Type**  : 결재 규칙을 추가할 요청 타입을 선택합니다. 결재 규칙은 요청 타입별로 구분됩니다.
+    3.  **Approval Steps**  : 단계별 승인이 가능하도록 승인 규칙을 설정할 수 있습니다. 
+        * `Add Step` 버튼을 클릭하여 승인 단계를 추가할 수 있습니다. 최대 3단계까지 가능합니다.
+    4.  **Execution Steps**  : SQL / Export Request 타입의 경우 실행자에 대한 규칙을 설정할 수 있습니다. 
+4.  **Urgent Mode**  : 해당 결재 규칙을 선택할 경우, 사후승인 기능 허용 여부를 설정합니다. (Default = Off)
+5. `Save` 버튼을 통해 저장합니다.
+
+승인자 관련 세부 옵션과 실행자 관련 세부 옵션은 [Approval Rules](#unexpected-failure) 문서를 참고해 주세요.
