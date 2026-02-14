@@ -13,6 +13,7 @@
 #     → fix/proofread-mdx:src/content/ko/...
 
 set -o nounset -o pipefail
+trap 'exit 130' INT
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -84,12 +85,7 @@ main() {
 
         echo "──── [$(( i + 1 ))/${#failures[@]}] ${mdx} ────"
         log::cmd bin/reverse_sync_cli.py verify "${ref}"
-        bin/reverse_sync_cli.py verify "${ref}" || {
-            local rc=$?
-            if [[ ${rc} -eq 130 ]]; then
-                exit 130
-            fi
-        }
+        bin/reverse_sync_cli.py verify "${ref}"
         echo ""
     done
 }
