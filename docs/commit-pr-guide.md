@@ -112,7 +112,7 @@ Claude Code를 사용하여 작업한 경우 다음을 포함합니다:
 ```markdown
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 ## 예시
@@ -133,7 +133,7 @@ feat(tests): Playwright 기반 이미지 렌더링 측정 도구 추가 (#530)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-authored-by: Claude Opus 4.5 <noreply@anthropic.com>
+Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 ### fix 예시
@@ -150,7 +150,7 @@ fix(src/lib): useLocale에서 pathname null 체크 추가 (#520)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-authored-by: Claude Opus 4.5 <noreply@anthropic.com>
+Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 ### docs 예시
@@ -192,5 +192,5 @@ ci(.github/workflows): fetch-openapi-spec 워크플로우를 self-hosted runner�
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-authored-by: Claude Opus 4.5 <noreply@anthropic.com>
+Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```
