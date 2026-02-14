@@ -33,42 +33,35 @@ cd confluence-mdx
 source venv/bin/activate
 
 # 1. Confluence 데이터 수집
-python bin/pages_of_confluence.py --attachments
+bin/fetch_cli.py --recent --attachments
 
-# 2. 제목 번역
-python bin/translate_titles.py
-
-# 3. 변환 스크립트 생성
-python bin/generate_commands_for_xhtml2markdown.py var/list.en.txt >bin/xhtml2markdown.ko.sh
-
-# 4. XHTML을 MDX로 변환
-./bin/xhtml2markdown.ko.sh
+# 2. pages.yaml 기준으로 전체 변환
+bin/convert_all.py
 ```
 
 ### 변환 단계
 
-1. **데이터 수집** (`pages_of_confluence.py`): Confluence API에서 페이지 다운로드
-2. **제목 번역** (`translate_titles.py`): 한국어 제목을 영어로 번역
-3. **명령어 생성** (`generate_commands_for_xhtml2markdown.py`): 변환 스크립트 생성
-4. **변환 실행** (`xhtml2markdown.ko.sh`): XHTML을 MDX로 변환
+1. **데이터 수집** (`fetch_cli.py`): Confluence API 또는 로컬 데이터에서 `var/` 갱신
+2. **전체 변환** (`convert_all.py`): `var/pages.yaml` 기반으로 `target/ko` 및 `target/public`에 반영
 
 ## 일반적인 작업
 
 ### 특정 페이지만 업데이트
 
 ```bash
-# 특정 페이지와 하위 페이지 다운로드
-python bin/pages_of_confluence.py --page-id <page_id> --attachments
+# 특정 페이지를 루트로 하위 트리 다운로드
+bin/fetch_cli.py --remote --start-page-id <page_id> --attachments
 
 # 단일 파일 수동 변환
-python bin/converter/cli.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
+bin/converter/cli.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
 ```
 
 ### 번역 문제 처리
 
 제목이 번역되지 않은 경우:
 1. `etc/korean-titles-translations.txt`에 번역 추가
-2. `translate_titles.py` 재실행
+2. `bin/convert_all.py --verify-translations`로 누락 여부 확인
+3. `bin/convert_all.py` 재실행
 
 ## Python 환경 설정
 
@@ -91,7 +84,7 @@ make test-one TEST_ID=<test_id>  # 특정 테스트 실행
 
 1. **변환 전 백업**: 기존 MDX 파일 백업
 2. **로컬 테스트**: `npm run dev`로 변환 결과 확인
-3. **점진적 업데이트**: `--page-id`로 특정 페이지만 업데이트
+3. **점진적 업데이트**: `--start-page-id`로 특정 하위 트리만 업데이트
 
 ## 상세 문서
 
@@ -99,4 +92,3 @@ make test-one TEST_ID=<test_id>  # 특정 테스트 실행
 
 - **전체 사용법**: [confluence-mdx/README.md](/confluence-mdx/README.md)
 - **Container 환경 설계**: [confluence-mdx/CONTAINER_DESIGN.md](/confluence-mdx/CONTAINER_DESIGN.md)
-

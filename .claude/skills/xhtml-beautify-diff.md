@@ -10,7 +10,7 @@ XML serializer 부산물(속성 순서, self-closing 태그, entity 인코딩)�
 
 ```bash
 cd confluence-mdx
-python3 bin/xhtml_beautify_diff.py <file_a> <file_b>
+bin/xhtml_beautify_diff.py <file_a> <file_b>
 ```
 
 ### Exit codes
@@ -28,7 +28,7 @@ python3 bin/xhtml_beautify_diff.py <file_a> <file_b>
 reverse-sync가 XHTML에 적용한 패치를 원본과 비교:
 
 ```bash
-python3 bin/xhtml_beautify_diff.py \
+bin/xhtml_beautify_diff.py \
   var/<page_id>/page.xhtml \
   var/<page_id>/reverse-sync.patched.xhtml
 ```
@@ -39,7 +39,7 @@ python3 bin/xhtml_beautify_diff.py \
 
 ```bash
 # 예: administrator-manual 페이지
-python3 bin/xhtml_beautify_diff.py \
+bin/xhtml_beautify_diff.py \
   var/544178405/page.xhtml \
   var/544178405/reverse-sync.patched.xhtml
 ```
@@ -51,7 +51,7 @@ python3 bin/xhtml_beautify_diff.py \
 
 ```bash
 # 테스트케이스의 실제 diff와 기대 diff 비교
-python3 bin/xhtml_beautify_diff.py \
+bin/xhtml_beautify_diff.py \
   tests/testcases/<page_id>/page.xhtml \
   tests/testcases/<page_id>/expected.reverse-sync.patched.xhtml
 ```
@@ -66,7 +66,7 @@ XHTML 레벨에서 어떤 텍스트가 변경되었는지 직접 확인할 수 �
 
 ```bash
 cd confluence-mdx
-python3 bin/reverse_sync_cli.py verify \
+bin/reverse_sync_cli.py verify \
   "jk/fix-typo-and-grammar:src/content/ko/administrator-manual.mdx"
 ```
 
@@ -86,7 +86,7 @@ var/544178405/
 ### Step 2: beautify-diff로 XHTML 변경 확인
 
 ```bash
-python3 bin/xhtml_beautify_diff.py \
+bin/xhtml_beautify_diff.py \
   var/544178405/page.xhtml \
   var/544178405/reverse-sync.patched.xhtml
 ```

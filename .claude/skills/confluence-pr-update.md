@@ -40,7 +40,8 @@ cd confluence-mdx
 source venv/bin/activate
 
 # 이미지 첨부 포함하여 재실행
-python3 bin/pages_of_confluence.py --recent --attachments
+bin/fetch_cli.py --recent --attachments
+bin/convert_all.py
 ```
 
 **참고**: `--attachments` 옵션은 Confluence 페이지의 첨부 이미지를 `public/` 디렉토리에 복사합니다. 이미 모든 첨부파일이 존재하면 이 단계를 건너뜁니다.
@@ -74,7 +75,7 @@ git status public/
 ```bash
 cd confluence-mdx
 source venv/bin/activate
-python3 bin/skeleton/cli.py --recursive --max-diff=10
+bin/skeleton/cli.py --recursive --max-diff=10
 ```
 
 **중요**: 빈 줄의 누락/추가 차이도 감지합니다. 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다.
@@ -144,7 +145,7 @@ gh pr edit <PR번호> --body "$(cat <<'EOF'
 - `src/content/en/path/to/file.mdx`: 영어 번역
 - `src/content/ja/path/to/file.mdx`: 일본어 번역
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 EOF
 )"
 ```
@@ -167,7 +168,8 @@ EOF
 ```bash
 # 이미지 포함하여 재실행
 cd confluence-mdx
-python3 bin/pages_of_confluence.py --recent --attachments
+bin/fetch_cli.py --recent --attachments
+bin/convert_all.py
 
 # 새 이미지 확인
 git status public/

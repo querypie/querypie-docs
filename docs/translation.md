@@ -19,7 +19,7 @@
 - [src/content/en](../src/content/en) 아래의 .mdx 확장자를 가진 MDX 문서가 영어로 번역된 문서입니다.
 - 이 문서는 표준 영어로 작성되어야 합니다.
 - 문서의 경로, 파일이름은 컨텐츠의 원문과 동일한 경로, 파일이름을 사용하여야 합니다.
-    - `src/content/ko/path/filename.mdx`라는 원문의 경우, `src/content/en/path/filename/.mdx`라는 영어 문서가 대응합니다.
+    - `src/content/ko/path/filename.mdx`라는 원문의 경우, `src/content/en/path/filename.mdx`라는 영어 문서가 대응합니다.
     - 다시 말해, `src/content/ko/`, `src/content/en/` 의 경로는 언어에 따라 다르지만, 그 이후 경로와 파일이름은 동일하여야 합니다.
 - 번역된 문서는 스크린샷과 같은 이미지 파일을 본문에 포함할 수 있습니다. 이때, 한국어 원문에 사용된 이미지 파일을 동일하게 사용합니다.
     - 이미지 파일의 Caption 등 설명 문구는 한국어 원문을 영어로 번역하는 대상이 됩니다.
@@ -29,7 +29,7 @@
 - [src/content/ja](../src/content/ja) 아래의 .mdx 확장자를 가진 MDX 문서가 일본어로 번역된 문서입니다.
 - 이 문서는 표준 일본어로 작성되어야 합니다.
 - 문서의 경로, 파일이름은 컨텐츠의 원문과 동일한 경로, 파일이름을 사용하여야 합니다.
-    - `src/content/ko/path/filename.mdx`라는 원문의 경우, `src/content/ja/path/filename/.mdx`라는 일본어 문서가 대응합니다.
+    - `src/content/ko/path/filename.mdx`라는 원문의 경우, `src/content/ja/path/filename.mdx`라는 일본어 문서가 대응합니다.
     - 다시 말해, `src/content/ko/`, `src/content/ja/` 의 경로는 언어에 따라 다르지만, 그 이후 경로와 파일이름은 동일하여야 합니다.
 - 번역된 문서는 스크린샷과 같은 이미지 파일을 본문에 포함할 수 있습니다. 이때, 한국어 원문에 사용된 이미지 파일을 동일하게 사용합니다.
     - 이미지 파일의 Caption 등 설명 문구는 한국어 원문을 일본어로 번역하는 대상이 됩니다.
@@ -42,7 +42,7 @@
     - 이 Skeleton MDX 파일을 비교하여, 원문과 번역문의 MDX 파일이 동일한 구성을 갖고 있는지, 문장의 수가 동일한지, Image link 가 동일한
       파일을 가리키는지, 검증할 수 있습니다.
 - `skeleton/cli.py`는 venv 환경에서 실행할 수 있습니다.
-    - `cd confluence-mdx; source venv/bin/activate; bin/skeleton/cli.py filename.mdx` 와 같이 실행할 수 있습니다.
+    - `cd confluence-mdx; source venv/bin/activate; bin/skeleton/cli.py target/en/path/to/file.mdx` 와 같이 실행할 수 있습니다.
     - Skeleton MDX 파일은 원문 MDX 파일과 동일한 디렉토리에 생성됩니다.
 - `bin/skeleton/cli.py --recursive`를 실행하면, target 디렉토리 아래의 모든 MDX 파일에 대해 Skeleton MDX 를 생성하고,
   한국어 원문 MDX 와 번역문 MDX 의 Skeleton MDX 를 비교하여 줍니다. 이때, diff 결과와 유사한 형식의 결과가 출력되는데, Skeleton MDX 의 비교와 함께
@@ -77,8 +77,8 @@
 - Skeleton MDX 를 비교하여, 원문과 번역문의 차이가 없어야 합니다.
 - 번역, 수정 과정이 1차 완료된 이후, `npm run build`를 수행하여, 번역, 수정된 MDX 파일이 올바르게 빌드되는지 확인합니다.
     - 빌드 오류가 발생하는 경우, 에러 메시지에서 그 원인을 확인하고, 잘못된 부분을 고칩니다.
-    - `rpm run build`가 성공할 때까지, 위 과정을 반복합니다.
-    - `rpn run build`를 실행하기 위해, 명령 지시자에게 확인받지 않습니다. 직접 곧바로 명령을 수행합니다.
+    - `npm run build`가 성공할 때까지, 위 과정을 반복합니다.
+    - `npm run build`를 실행하기 위해, 명령 지시자에게 확인받지 않습니다. 직접 곧바로 명령을 수행합니다.
 - 별도의 지시가 없으면, 이미 번역된 문서를 대상으로, 다시 번역하지 않습니다.
     - 별도의 지시가 없으면, 이미 검토 결과가 작성된 문서에 대해, 교정, 교열을 수행하지 않습니다.
 - 별도의 지시가 없으면, 한번에 50개의 문서를 번역하거나 검토한 이후, 작업을 완료하고, 명령 지시자에게 리뷰를 요청하세요.

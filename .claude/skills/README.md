@@ -57,7 +57,7 @@
 ## 프로젝트 구조
 
 이 저장소는 다음을 사용합니다:
-- **Next.js 15** + **Nextra 4** - 문서 사이트
+- **Next.js 16** + **Nextra 4** - 문서 사이트
 - **TypeScript 5** - 타입 안전성
 - **React 19** - UI 컴포넌트
 - **MDX** - 콘텐츠 파일 형식
@@ -69,4 +69,3 @@
 - Confluence 변환 스크립트: `confluence-mdx/bin/`
 - 공용 자산: `public/`
 - 프로젝트 문서: `docs/`
-

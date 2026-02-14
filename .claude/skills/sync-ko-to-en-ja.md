@@ -20,14 +20,14 @@
 cd confluence-mdx
 
 # 기본 사용법 - 한국어 커밋 변경을 en/ja에 덮어쓰기
-python3 bin/sync_ko_commit.py <commit-hash>
+bin/sync_ko_commit.py <commit-hash>
 
 # dry-run (미리보기)
-python3 bin/sync_ko_commit.py <commit-hash> --dry-run
+bin/sync_ko_commit.py <commit-hash> --dry-run
 
 # 특정 언어만 적용
-python3 bin/sync_ko_commit.py <commit-hash> --lang en
-python3 bin/sync_ko_commit.py <commit-hash> --lang ja
+bin/sync_ko_commit.py <commit-hash> --lang en
+bin/sync_ko_commit.py <commit-hash> --lang ja
 ```
 
 ### 2. restore_alt_from_diff.py
@@ -38,13 +38,13 @@ sync_ko_commit.py 실행 후, git diff에서 기존 영어/일본어 alt 텍스�
 cd confluence-mdx
 
 # 미리보기 - 어떤 alt가 복원되는지 확인
-python3 bin/restore_alt_from_diff.py --dry-run
+bin/restore_alt_from_diff.py --dry-run
 
 # 실제 적용
-python3 bin/restore_alt_from_diff.py --apply
+bin/restore_alt_from_diff.py --apply
 
 # 특정 언어만
-python3 bin/restore_alt_from_diff.py --apply --lang en
+bin/restore_alt_from_diff.py --apply --lang en
 ```
 
 ## 전체 워크플로우
@@ -60,7 +60,7 @@ git log --oneline src/content/ko/ | head -10
 
 ```bash
 cd confluence-mdx
-python3 bin/sync_ko_commit.py <commit-hash>
+bin/sync_ko_commit.py <commit-hash>
 ```
 
 이 단계에서 한국어 라인이 영어/일본어 파일의 같은 위치에 복사됩니다.
@@ -69,8 +69,8 @@ python3 bin/sync_ko_commit.py <commit-hash>
 
 ```bash
 # git diff에서 기존 alt 텍스트 복원
-python3 bin/restore_alt_from_diff.py --dry-run  # 미리보기
-python3 bin/restore_alt_from_diff.py --apply    # 적용
+bin/restore_alt_from_diff.py --dry-run  # 미리보기
+bin/restore_alt_from_diff.py --apply    # 적용
 ```
 
 ### Step 4: 나머지 한국어 텍스트 번역
@@ -90,7 +90,7 @@ Skeleton 구조 일치를 확인합니다. 상세 사용법은 [mdx-skeleton-com
 
 ```bash
 cd confluence-mdx
-python3 bin/skeleton/cli.py --recursive --max-diff=10
+bin/skeleton/cli.py --recursive --max-diff=10
 ```
 
 ## 예시: 이미지 태그 width 동기화
@@ -100,13 +100,13 @@ python3 bin/skeleton/cli.py --recursive --max-diff=10
 ```bash
 # 1. 한국어 변경 덮어쓰기
 cd confluence-mdx
-python3 bin/sync_ko_commit.py ae93da7e
+bin/sync_ko_commit.py ae93da7e
 
 # 2. 기존 영어/일본어 alt 텍스트 복원
-python3 bin/restore_alt_from_diff.py --apply
+bin/restore_alt_from_diff.py --apply
 
 # 3. 검증
-python3 bin/skeleton/cli.py --recursive --max-diff=10
+bin/skeleton/cli.py --recursive --max-diff=10
 ```
 
 ## 주의사항

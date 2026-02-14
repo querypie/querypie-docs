@@ -123,7 +123,7 @@ import { Callout } from 'nextra/components'
 
 - [ ] 모든 콘텐츠가 한국어에서 번역됨
 - [ ] 마크다운 포맷팅이 원본과 동일함
-- [ ] `npm run build` 성공
+- [ ] PR 생성 후 CI Pipeline 빌드 검증 통과 확인 (로컬 `npm run build`는 선택)
 - [ ] 구조가 한국어 소스와 일치함
 
 ## 상세 지침
@@ -134,4 +134,3 @@ import { Callout } from 'nextra/components'
 - **제품명/API 명칭 지침**: [docs/api-naming-guide.md](/docs/api-naming-guide.md)
 - **Skeleton MDX 비교**: [docs/translation.md](/docs/translation.md)의 "Skeleton MDX 를 비교하기" 섹션
 - **MDX 스켈레톤 비교 Skill**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
-
