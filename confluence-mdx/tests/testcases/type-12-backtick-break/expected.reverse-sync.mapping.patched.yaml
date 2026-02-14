@@ -1,0 +1,376 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를 설치해야 합니다.
+    QueryPie Server Agent 설치 후, QueryPie내 Servers 메뉴에 Windows Server가 자동으로 추가됩니다.
+  xhtml_text: Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를 설치해야 합니다. QueryPie
+    Server Agent 설치 후, QueryPie내 Servers 메뉴에 Windows Server가 자동으로 추가됩니다.
+  xhtml_xpath: p[1]
+- block_id: paragraph-3
+  children: []
+  type: paragraph
+  xhtml_element_index: 2
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[2]
+- block_id: heading-4
+  children: []
+  type: heading
+  xhtml_element_index: 3
+  xhtml_plain_text: Server Agent 설치하기
+  xhtml_text: Server Agent 설치하기
+  xhtml_xpath: h2[2]
+- block_id: html_block-5
+  children: []
+  type: html_block
+  xhtml_element_index: 4
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240728-163032.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="712" ac:original-width="1277" ac:width="760"><ri:attachment
+    ri:filename="image-20240728-163032.png" ri:version-at-save="1"></ri:attachment><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: list-6
+  children: []
+  type: list
+  xhtml_element_index: 5
+  xhtml_plain_text: Server Agent 다운로드 페이지에 접속합니다.설치된 QueryPie 도메인 주소 뒤에 /for-agent/server-agent/download
+    를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.e.g. https://sac.querypie.io/for-agent/server-agent/download
+  xhtml_text: <ul><li><p>Server Agent 다운로드 페이지에 접속합니다.</p><ul><li><p>설치된 QueryPie
+    도메인 주소 뒤에 <code>/for-agent/server-agent/download</code> 를 붙여 Server Agent 다운로드
+    페이지에 접속할 수 있습니다.<br/>e.g. <code>https://sac.querypie.io/for-agent/server-agent/download</code></p></li></ul></li></ul>
+  xhtml_xpath: ul[1]
+- block_id: html_block-7
+  children:
+  - paragraph-8
+  type: html_block
+  xhtml_element_index: 6
+  xhtml_plain_text: 11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin > Servers > Connection
+    Management > RDP Server Agent 페이지의 Download Server Agent 버튼)를 통해서도 받을 수 있도록 변경되었습니다.
+    기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드
+    받아야 하는 경우 사용) RDP Server Agent 다운로드 버튼 제공
+  xhtml_text: <ac:structured-macro ac:macro-id="059ae9f8-8891-4cd0-9621-f5fc4bfd2189"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>11.3.0 에서 관리자가 server
+    agent의 다운로드를 UI( Admin &gt; Servers &gt; Connection Management &gt; RDP Server
+    Agent 페이지의 <code>Download Server Agent</code> 버튼)를 통해서도 받을 수 있도록 변경되었습니다. 기존 처럼
+    다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드 받아야
+    하는 경우 사용) </p><ac:image ac:align="center" ac:alt="image-20251010-085601.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="612" ac:original-width="1280" ac:width="700"><ri:attachment
+    ri:filename="image-20251010-085601.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>RDP
+    Server Agent 다운로드 버튼 제공</p></ac:caption></ac:image></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[1]
+- block_id: paragraph-8
+  children: []
+  type: paragraph
+  xhtml_element_index: 7
+  xhtml_plain_text: 11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin > Servers > Connection
+    Management > RDP Server Agent 페이지의 Download Server Agent 버튼)를 통해서도 받을 수 있도록 변경되었습니다.
+    기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드
+    받아야 하는 경우 사용)
+  xhtml_text: 11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin > Servers > Connection
+    Management > RDP Server Agent 페이지의 <code>Download Server Agent</code> 버튼)를 통해서도
+    받을 수 있도록 변경되었습니다. 기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie 사용자가 아닌
+    사람이 외부에서 에이전트를 다운로드 받아야 하는 경우 사용)
+  xhtml_xpath: macro-info[1]/p[1]
+- block_id: list-9
+  children: []
+  type: list
+  xhtml_element_index: 8
+  xhtml_plain_text: 에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.화면 중앙의 Windows 버튼을 클릭하면 압축 파일이
+    다운로드 됩니다.설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.QueryPie Server
+    Access Control_(QueryPie Version)_SetupCONFIG두 파일을 같은 경로에 위치한 뒤, QueryPie Server
+    Access Control_(QueryPie Version)_Setup 파일을 실행합니다.안내에 따라 파일을 설치합니다.
+  xhtml_text: <ul><li><p>에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.</p></li><li><p>화면 중앙의
+    Windows 버튼을 클릭하면 압축 파일이 다운로드 됩니다.</p></li><li><p>설치할 Windows 서버에 압축파일을 풀어줍니다.
+    압축 파일 내에는 아래 두 파일이 있습니다.</p><ol start="1"><li><p>QueryPie Server Access Control_(QueryPie
+    Version)_Setup</p></li><li><p>CONFIG</p></li></ol></li><li><p>두 파일을 같은 경로에 위치한
+    뒤, QueryPie Server Access Control_(QueryPie Version)_Setup 파일을 실행합니다.</p></li><li><p>안내에
+    따라 파일을 설치합니다. </p></li></ul>
+  xhtml_xpath: ul[2]
+- block_id: html_block-10
+  children:
+  - paragraph-11
+  - paragraph-12
+  - paragraph-13
+  type: html_block
+  xhtml_element_index: 9
+  xhtml_plain_text: CONFIG 파일 설명RDP Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.10.2.8
+    버전 부터는 RDP 연결에 사용할 Port를 CONFIG 파일에서 지정할 수 있습니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="79f77d24-965a-4334-8e8d-90e4b8ff41d1"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p><strong>CONFIG 파일 설명</strong></p><p>RDP
+    Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.</p><p>10.2.8 버전 부터는 RDP 연결에 사용할 Port를
+    CONFIG 파일에서 지정할 수 있습니다. </p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[2]
+- block_id: paragraph-11
+  children: []
+  type: paragraph
+  xhtml_element_index: 10
+  xhtml_plain_text: CONFIG 파일 설명
+  xhtml_text: <strong>CONFIG 파일 설명</strong>
+  xhtml_xpath: macro-info[2]/p[1]
+- block_id: paragraph-12
+  children: []
+  type: paragraph
+  xhtml_element_index: 11
+  xhtml_plain_text: RDP Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.
+  xhtml_text: RDP Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.
+  xhtml_xpath: macro-info[2]/p[2]
+- block_id: paragraph-13
+  children: []
+  type: paragraph
+  xhtml_element_index: 12
+  xhtml_plain_text: 10.2.8 버전 부터는 RDP 연결에 사용할 Port를 CONFIG 파일에서 지정할 수 있습니다.
+  xhtml_text: 10.2.8 버전 부터는 RDP 연결에 사용할 Port를 CONFIG 파일에서 지정할 수 있습니다.
+  xhtml_xpath: macro-info[2]/p[3]
+- block_id: html_block-14
+  children:
+  - paragraph-15
+  - list-16
+  type: html_block
+  xhtml_element_index: 13
+  xhtml_plain_text: RDP연결에 사용할 Port의 변경RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.Port
+    변경이 필요한 경우, RDP Server Agent를 재설치해야 합니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="eee67223-dc16-4c85-b1fb-54551a9ffc53"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><p><strong>RDP연결에 사용할
+    Port의 변경</strong></p><ul><li><p>RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.</p></li><li><p>Port
+    변경이 필요한 경우, RDP Server Agent를 재설치해야 합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[1]
+- block_id: paragraph-15
+  children: []
+  type: paragraph
+  xhtml_element_index: 14
+  xhtml_plain_text: RDP연결에 사용할 Port의 변경
+  xhtml_text: <strong>RDP연결에 사용할 Port의 변경</strong>
+  xhtml_xpath: macro-note[1]/p[1]
+- block_id: list-16
+  children: []
+  type: list
+  xhtml_element_index: 15
+  xhtml_plain_text: RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.Port 변경이 필요한 경우,
+    RDP Server Agent를 재설치해야 합니다.
+  xhtml_text: <ul><li><p>RDP에서 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.</p></li><li><p>Port
+    변경이 필요한 경우, RDP Server Agent를 재설치해야 합니다.</p></li></ul>
+  xhtml_xpath: macro-note[1]/ul[1]
+- block_id: paragraph-17
+  children: []
+  type: paragraph
+  xhtml_element_index: 16
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[3]
+- block_id: heading-18
+  children: []
+  type: heading
+  xhtml_element_index: 17
+  xhtml_plain_text: CONFIG 파일 없이 Server Agent 설치하기
+  xhtml_text: CONFIG 파일 없이 Server Agent 설치하기
+  xhtml_xpath: h2[3]
+- block_id: paragraph-19
+  children: []
+  type: paragraph
+  xhtml_element_index: 18
+  xhtml_plain_text: GUI 없이 설치하면 사용자 개입 없이 자동으로 프로그램을 설치할 수 있어 대규모 배포나 원격 설치에 유용합니다.
+  xhtml_text: GUI 없이 설치하면 사용자 개입 없이 자동으로 프로그램을 설치할 수 있어 대규모 배포나 원격 설치에 유용합니다.
+  xhtml_xpath: p[4]
+- block_id: paragraph-20
+  children: []
+  type: paragraph
+  xhtml_element_index: 19
+  xhtml_plain_text: PowerShell 또는 CMD를 통해 Server Agent를 자동으로 설치할 수 있습니다.
+  xhtml_text: PowerShell 또는 CMD를 통해 Server Agent를 자동으로 설치할 수 있습니다.
+  xhtml_xpath: p[5]
+- block_id: paragraph-21
+  children: []
+  type: paragraph
+  xhtml_element_index: 20
+  xhtml_plain_text: PowerShell
+  xhtml_text: <strong>PowerShell</strong>
+  xhtml_xpath: p[6]
+- block_id: code-22
+  children: []
+  type: code
+  xhtml_element_index: 21
+  xhtml_plain_text: '& "{설치파일 경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}"
+    /VERYSILENT'
+  xhtml_text: <ac:structured-macro ac:macro-id="1f8f430e-85df-4aca-a00e-d3b88cfb08ef"
+    ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
+    ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[& "{설치파일
+    경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro>
+  xhtml_xpath: macro-code[1]
+- block_id: paragraph-23
+  children: []
+  type: paragraph
+  xhtml_element_index: 22
+  xhtml_plain_text: e.g.
+  xhtml_text: e.g.
+  xhtml_xpath: p[7]
+- block_id: code-24
+  children: []
+  type: code
+  xhtml_element_index: 23
+  xhtml_plain_text: '& ".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com"
+    /Port="13389" /VERYSILENT'
+  xhtml_text: <ac:structured-macro ac:macro-id="b538337d-7cd6-448a-a06e-05d1852be05a"
+    ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
+    ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[& ".\QueryPie_Server_Access_Control_Setup.exe"
+    /Url="https://dev.querypie.com" /Port="13389" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro>
+  xhtml_xpath: macro-code[2]
+- block_id: paragraph-25
+  children: []
+  type: paragraph
+  xhtml_element_index: 24
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[8]
+- block_id: paragraph-26
+  children: []
+  type: paragraph
+  xhtml_element_index: 25
+  xhtml_plain_text: CMD
+  xhtml_text: <strong>CMD</strong>
+  xhtml_xpath: p[9]
+- block_id: code-27
+  children: []
+  type: code
+  xhtml_element_index: 26
+  xhtml_plain_text: '"{설치파일 경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}" /VERYSILENT'
+  xhtml_text: <ac:structured-macro ac:macro-id="bee10f71-a57e-4f23-97ba-28ae2d111415"
+    ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
+    ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA["{설치파일
+    경로}.exe" /Url="{쿼리파이 웹 주소}" /Port="{RDP에 사용할 Port}" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro>
+  xhtml_xpath: macro-code[3]
+- block_id: paragraph-28
+  children: []
+  type: paragraph
+  xhtml_element_index: 27
+  xhtml_plain_text: e.g.
+  xhtml_text: e.g.
+  xhtml_xpath: p[10]
+- block_id: paragraph-29
+  children: []
+  type: paragraph
+  xhtml_element_index: 28
+  xhtml_plain_text: CMD에서 Server Agent 설치파일 위치로 이동 후 아래 명령어 실행
+  xhtml_text: CMD에서 Server Agent 설치파일 위치로 이동 후 아래 명령어 실행
+  xhtml_xpath: p[11]
+- block_id: code-30
+  children: []
+  type: code
+  xhtml_element_index: 29
+  xhtml_plain_text: '".\QueryPie_Server_Access_Control_Setup.exe" /Url="https://dev.querypie.com"  /Port="13389"
+    /VERYSILENT'
+  xhtml_text: <ac:structured-macro ac:macro-id="5c388167-6aaf-4ca1-8d8a-2f05060881d9"
+    ac:name="code" ac:schema-version="1"><ac:parameter ac:name="breakoutMode">wide</ac:parameter><ac:parameter
+    ac:name="breakoutWidth">760</ac:parameter><ac:plain-text-body><![CDATA[".\QueryPie_Server_Access_Control_Setup.exe"
+    /Url="https://dev.querypie.com"  /Port="13389" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro>
+  xhtml_xpath: macro-code[4]
+- block_id: paragraph-31
+  children: []
+  type: paragraph
+  xhtml_element_index: 30
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[12]
+- block_id: heading-32
+  children: []
+  type: heading
+  xhtml_element_index: 31
+  xhtml_plain_text: Server Agent 삭제하기
+  xhtml_text: Server Agent 삭제하기
+  xhtml_xpath: h2[4]
+- block_id: html_block-33
+  children: []
+  type: html_block
+  xhtml_element_index: 32
+  xhtml_plain_text: ''
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240829-010643.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="626" ac:original-width="984" ac:width="760"><ri:attachment
+    ri:filename="image-20240829-010643.png" ri:version-at-save="1"></ri:attachment></ac:image>
+  xhtml_xpath: ac:image[2]
+- block_id: list-34
+  children: []
+  type: list
+  xhtml_element_index: 33
+  xhtml_plain_text: Administrator > Servers > Connection Management > Server Agents
+    for RDP 페이지로 접속합니다.우측 상단의 Verify Deletion Key 버튼을 클릭합니다.확인된 Deletion Key를 기록합니다.Windows
+    Server 콘솔에 접속합니다.제어판 > 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.패스워드 입력
+    란에 3에서 기록한 Deletion Key를 입력합니다.QueryPie 웹에 접속합니다.Administrator > Servers > Connection
+    Management > Server Agents for RDP 메뉴로 이동합니다.테이블 내 삭제할 대상 서버 좌측의 체크 박스를 체크 후 Delete
+    버튼을 통해 삭제합니다.
+  xhtml_text: <ol start="1"><li><p>Administrator &gt; Servers &gt; Connection Management
+    &gt; Server Agents for RDP 페이지로 접속합니다.</p></li><li><p>우측 상단의 <code>Verify Deletion
+    Key 버튼을 클릭합니다.</code></p></li><li><p>확인된 Deletion Key를 기록합니다.</p></li><li><p>Windows
+    Server 콘솔에 접속합니다.</p></li><li><p>제어판 &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를
+    삭제합니다.</p></li><li><p>패스워드 입력 란에 3에서 기록한 Deletion Key를 입력합니다.</p></li><li><p>QueryPie
+    웹에 접속합니다.</p></li><li><p>Administrator &gt; Servers &gt; Connection Management
+    &gt; Server Agents for RDP 메뉴로 이동합니다.</p></li><li><p>테이블 내 삭제할 대상 서버 좌측의 체크 박스를
+    체크 후 <code>Delete</code> 버튼을 통해 삭제합니다.</p></li></ol>
+  xhtml_xpath: ol[1]
+- block_id: paragraph-35
+  children: []
+  type: paragraph
+  xhtml_element_index: 34
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[13]
+- block_id: html_block-36
+  children:
+  - paragraph-37
+  type: html_block
+  xhtml_element_index: 35
+  xhtml_plain_text: Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows
+    서버의 날짜가 동일해야 삭제가 가능합니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="1e4db7ed-51ef-4ff7-a76a-b72cc9ec5387"
+    ac:name="info" ac:schema-version="1"><ac:rich-text-body><p>Deletion Key는 일단위로
+    변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일해야 삭제가 가능합니다.</p></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-info[3]
+- block_id: paragraph-37
+  children: []
+  type: paragraph
+  xhtml_element_index: 36
+  xhtml_plain_text: Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows
+    서버의 날짜가 동일해야 삭제가 가능합니다.
+  xhtml_text: Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가
+    동일해야 삭제가 가능합니다.
+  xhtml_xpath: macro-info[3]/p[1]
+- block_id: html_block-38
+  children:
+  - paragraph-39
+  - list-40
+  type: html_block
+  xhtml_element_index: 37
+  xhtml_plain_text: Windows에서 Deletion Key가 틀리는 경우연결된 QueryPie에서 Deletion Key를 받았는지
+    확인합니다.QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.
+  xhtml_text: <ac:structured-macro ac:macro-id="76d617f1-4729-42b8-bd15-fc385bf44fec"
+    ac:name="note" ac:schema-version="1"><ac:rich-text-body><p><strong>Windows에서 Deletion
+    Key가 틀리는 경우</strong></p><ul><li><p>연결된 QueryPie에서 Deletion Key를 받았는지 확인합니다.</p></li><li><p>QueryPie가
+    동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>
+  xhtml_xpath: macro-note[2]
+- block_id: paragraph-39
+  children: []
+  type: paragraph
+  xhtml_element_index: 38
+  xhtml_plain_text: Windows에서 Deletion Key가 틀리는 경우
+  xhtml_text: <strong>Windows에서 Deletion Key가 틀리는 경우</strong>
+  xhtml_xpath: macro-note[2]/p[1]
+- block_id: list-40
+  children: []
+  type: list
+  xhtml_element_index: 39
+  xhtml_plain_text: 연결된 QueryPie에서 Deletion Key를 받았는지 확인합니다.QueryPie가 동작하는 서버의 날짜와
+    삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.
+  xhtml_text: <ul><li><p>연결된 QueryPie에서 Deletion Key를 받았는지 확인합니다.</p></li><li><p>QueryPie가
+    동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.</p></li></ul>
+  xhtml_xpath: macro-note[2]/ul[1]
+created_at: '2026-02-14T16:28:19.726686+00:00'
+page_id: type-12-backtick-break
+source_xhtml: patched.xhtml

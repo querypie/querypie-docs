@@ -1,0 +1,36 @@
+changes_count: 1
+created_at: '2026-02-14T16:28:18.901991+00:00'
+mdx_diff_report: "--- tests/testcases/type-04-empty-strong/original.mdx+++ tests/testcases/type-04-empty-strong/improved.mdx@@\
+  \ -17,7 +17,7 @@ \n * [ **General** ](company-management/general) **:** 쿼리파이의 기본\
+  \ 시스템 설정을 적용하는 메뉴입니다. \n * [ **Security** ](company-management/security) : 쿼리파이의\
+  \ 보안 설정을 적용하는 메뉴입니다. \n-* [ **Allowed Zones** ](company-management/allowed-zones)\
+  \ **** : 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n+* [ **Allowed Zones** ](company-management/allowed-zones)\
+  \ : 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n * [ **Channels** ](company-management/channels)\
+  \ : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\n * [ **Alerts** ](company-management/alerts) :\
+  \ 쿼리파이 알림을 설정하는 메뉴입니다. \n * [ **Licenses** ](company-management/licenses) : 쿼리파이의\
+  \ 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n"
+page_id: type-04-empty-strong
+status: fail
+verification:
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -1,12 +1,9 @@-\n\
+    -# Company Management\n-\n ### Overview\n \n Company Management는 쿼리파이 제품의 기본 보안\
+    \ 및 알림 설정 등을 관리하기 위한 메뉴입니다.\n \n <figure data-layout=\"center\" data-align=\"\
+    center\">\n-<img src=\"/administrator-manual/general/company-management/image-20240724-055809.png\"\
+    \ alt=\"Administrator &gt; General &gt; Company Management &gt; General\" width=\"\
+    760\" />\n+<img src=\"/types/type-04-empty-strong/image-20240724-055809.png\"\
+    \ alt=\"Administrator &gt; General &gt; Company Management &gt; General\" width=\"\
+    760\" />\n <figcaption>\n Administrator &gt; General &gt; Company Management &gt;\
+    \ General\n </figcaption>\n@@ -15,9 +12,9 @@ \n ### 메뉴 설명\n \n-* [ **General**\
+    \ ](company-management/general) **:** 쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. \n-* [ **Security**\
+    \ ](company-management/security) : 쿼리파이의 보안 설정을 적용하는 메뉴입니다. \n-* [ **Allowed Zones**\
+    \ ](company-management/allowed-zones) : 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n-* [\
+    \ **Channels** ](company-management/channels) : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\n\
+    -* [ **Alerts** ](company-management/alerts) : 쿼리파이 알림을 설정하는 메뉴입니다. \n-* [ **Licenses**\
+    \ ](company-management/licenses) : 쿼리파이의 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n+* [ **General**\
+    \ ](#link-error) **:** 쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. \n+* [ **Security** ](#link-error)\
+    \ : 쿼리파이의 보안 설정을 적용하는 메뉴입니다. \n+* [ **Allowed Zones** ](#link-error) **** : 쿼리파이의\
+    \ 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n+* [ **Channels** ](#link-error) : 쿼리파이의 알림을 받을\
+    \ 채널을 구성하는 메뉴입니다.\n+* [ **Alerts** ](#link-error) : 쿼리파이 알림을 설정하는 메뉴입니다. \n+*\
+    \ [ **Licenses** ](#link-error) : 쿼리파이의 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n"
+  exact_match: false
+xhtml_diff_report: ''

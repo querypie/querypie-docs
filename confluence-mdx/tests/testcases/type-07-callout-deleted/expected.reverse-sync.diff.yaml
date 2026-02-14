@@ -1,0 +1,48 @@
+changes:
+- block_id: list-20
+  change_type: modified
+  index: 20
+  new_content: '* [Syslog 연동](integrations/integrating-with-syslog)
+
+    * [PagerDuty 연동](integrations/integrating-with-pagerduty)
+
+    * [Splunk 연동](integrations/integrating-with-splunk)
+
+    * [Secret Store 연동](integrations/integrating-with-secret-store)
+
+    * [Email 연동](integrations/integrating-with-email)
+
+    * [Event Callback 연동](integrations/integrating-with-event-callback)
+
+    * [OAuth 2.0을 사용하기 위한 Google Cloud API 연동](integrations/integrating-google-cloud-api-for-oauth-20)
+
+    * [Slack DM 연동](integrations/integrating-with-slack-dm)
+
+    * [OAuth Client Application](integrations/oauth-client-application)
+
+    * [Identity Providers](integrations/identity-providers)
+
+    '
+  old_content: '* [Syslog 연동](integrations/integrating-with-syslog)
+
+    * [Splunk 연동](integrations/integrating-with-splunk)
+
+    * [Secret Store 연동](integrations/integrating-with-secret-store)
+
+    * [Email 연동](integrations/integrating-with-email)
+
+    * [Event Callback 연동](integrations/integrating-with-event-callback)
+
+    * [OAuth 2.0을 사용하기 위한 Google Cloud API 연동](integrations/integrating-google-cloud-api-for-oauth-20)
+
+    * [Slack DM 연동](integrations/integrating-with-slack-dm)
+
+    * [OAuth Client Application](integrations/oauth-client-application)
+
+    * [Identity Providers](integrations/identity-providers)
+
+    '
+created_at: '2026-02-14T16:28:19.370814+00:00'
+improved_mdx: tests/testcases/type-07-callout-deleted/improved.mdx
+original_mdx: tests/testcases/type-07-callout-deleted/original.mdx
+page_id: type-07-callout-deleted

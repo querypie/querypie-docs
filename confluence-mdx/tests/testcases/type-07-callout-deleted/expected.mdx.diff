@@ -1,0 +1,7 @@
+--- a/original.mdx+++ b/improved.mdx@@ -32,6 +32,7 @@ ### 제공하는 기능
+ 
+ * [Syslog 연동](integrations/integrating-with-syslog)
++* [PagerDuty 연동](integrations/integrating-with-pagerduty)
+ * [Splunk 연동](integrations/integrating-with-splunk)
+ * [Secret Store 연동](integrations/integrating-with-secret-store)
+ * [Email 연동](integrations/integrating-with-email)

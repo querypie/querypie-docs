@@ -1,0 +1,14 @@
+changes:
+- block_id: paragraph-6
+  change_type: modified
+  index: 6
+  new_content: '관리자는 원장 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 정의하고 운영할 수 있습니다.
+
+    '
+  old_content: '관리자는 원장 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 정의할 수 있습니다.
+
+    '
+created_at: '2026-02-14T16:28:19.218291+00:00'
+improved_mdx: tests/testcases/type-06-callout-parser-error/improved.mdx
+original_mdx: tests/testcases/type-06-callout-parser-error/original.mdx
+page_id: type-06-callout-parser-error

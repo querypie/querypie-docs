@@ -1,0 +1,8 @@
+--- a/original.mdx+++ b/improved.mdx@@ -52,7 +52,7 @@   <img src="/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png" alt="image-20240425-022156.png" width="298" />
+   </figure>
+ 3. 녹화된 파일의 크기가 700MB를 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. 
+-    1.  **700MB 미만**  
++    1.  **700MB 미만 (권장)**  
+       <figure data-layout="center" data-align="center">
+       <img src="/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082651.png" alt="image-20240721-082651.png" width="440" />
+       </figure>

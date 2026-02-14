@@ -1,0 +1,22 @@
+changes:
+- block_id: list-13
+  change_type: modified
+  index: 13
+  new_content: "* [ **General** ](company-management/general) **:** 쿼리파이의 기본 시스템 설정을\
+    \ 적용하는 메뉴입니다. \n* [ **Security** ](company-management/security) : 쿼리파이의 보안 설정을\
+    \ 적용하는 메뉴입니다. \n* [ **Allowed Zones** ](company-management/allowed-zones) : 쿼리파이의\
+    \ 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n* [ **Channels** ](company-management/channels)\
+    \ : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\n* [ **Alerts** ](company-management/alerts)\
+    \ : 쿼리파이 알림을 설정하는 메뉴입니다. \n* [ **Licenses** ](company-management/licenses) : 쿼리파이의\
+    \ 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n"
+  old_content: "* [ **General** ](company-management/general) **:** 쿼리파이의 기본 시스템 설정을\
+    \ 적용하는 메뉴입니다. \n* [ **Security** ](company-management/security) : 쿼리파이의 보안 설정을\
+    \ 적용하는 메뉴입니다. \n* [ **Allowed Zones** ](company-management/allowed-zones) ****\
+    \ : 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. \n* [ **Channels** ](company-management/channels)\
+    \ : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\n* [ **Alerts** ](company-management/alerts)\
+    \ : 쿼리파이 알림을 설정하는 메뉴입니다. \n* [ **Licenses** ](company-management/licenses) : 쿼리파이의\
+    \ 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n"
+created_at: '2026-02-14T16:28:18.901991+00:00'
+improved_mdx: tests/testcases/type-04-empty-strong/improved.mdx
+original_mdx: tests/testcases/type-04-empty-strong/original.mdx
+page_id: type-04-empty-strong

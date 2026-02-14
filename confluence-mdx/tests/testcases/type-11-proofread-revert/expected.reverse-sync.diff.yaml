@@ -1,0 +1,24 @@
+changes:
+- block_id: paragraph-85
+  change_type: modified
+  index: 85
+  new_content: '> +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면  **tls=true**
+    를 수동으로 입력해줘야 합니다.> (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이  **&tls=true**
+    를 입력합니다.
+
+    Proxy를 사용하는 경우 DataGrip 등의 SQL Client에서 TLS 설정과 별개로 QueryPie에서도 SSL 설정이 필요합니다.<br/>[SSL
+    Configurations](../ssl-configurations)를 참고하여 설정 후 커넥션의 SSL 설정에 반영해야 합니다.<br/>
+
+    '
+  old_content: '> +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면  **tls=true**
+    를 수동으로 입력해줘야 합니다.> (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이  **&tls=true**
+    를 입력합니다.
+
+    Proxy를 사용하는 경우 DataGrip등의 SQL Client에서 TLS 설정과 별개로 QueryPie에서도 SSL 설정이 필요합니다.<br/>[SSL
+    Configurations](../ssl-configurations)를 참고하여 설정 후 커넥션의 SSL 설정에 반영해야 합니다.<br/>
+
+    '
+created_at: '2026-02-14T16:28:19.928424+00:00'
+improved_mdx: tests/testcases/type-11-proofread-revert/improved.mdx
+original_mdx: tests/testcases/type-11-proofread-revert/original.mdx
+page_id: type-11-proofread-revert

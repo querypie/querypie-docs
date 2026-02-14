@@ -1,0 +1,6 @@
+--- a/original.mdx+++ b/improved.mdx@@ -45,5 +45,6 @@ 
+ * [Provisioning 활성화 하기](provisioning/activating-provisioning)
+ * [[Okta] 프로비저닝 연동 가이드](provisioning/okta-provisioning-integration-guide)
++* [SCIM API 참고](provisioning/scim-api-reference)
+ 
+ 

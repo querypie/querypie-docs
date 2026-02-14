@@ -1,0 +1,64 @@
+blocks:
+- block_id: heading-1
+  children: []
+  type: heading
+  xhtml_element_index: 0
+  xhtml_plain_text: Overview
+  xhtml_text: Overview
+  xhtml_xpath: h2[1]
+- block_id: paragraph-2
+  children: []
+  type: paragraph
+  xhtml_element_index: 1
+  xhtml_plain_text: Company Management는 쿼리파이 제품의 기본 보안 및 알림 설정 등을 관리하기 위한 메뉴입니다.
+  xhtml_text: Company Management는 쿼리파이 제품의 기본 보안 및 알림 설정 등을 관리하기 위한 메뉴입니다.
+  xhtml_xpath: p[1]
+- block_id: html_block-3
+  children: []
+  type: html_block
+  xhtml_element_index: 2
+  xhtml_plain_text: Administrator > General > Company Management > General
+  xhtml_text: <ac:image ac:align="center" ac:alt="image-20240724-055809.png" ac:custom-width="true"
+    ac:layout="center" ac:original-height="720" ac:original-width="1280" ac:width="760"><ri:attachment
+    ri:filename="image-20240724-055809.png" ri:version-at-save="1"></ri:attachment><ac:caption><p>Administrator
+    &gt; General &gt; Company Management &gt; General</p></ac:caption><ac:adf-mark
+    color="#091e4224" key="border" size="1"></ac:adf-mark></ac:image>
+  xhtml_xpath: ac:image[1]
+- block_id: paragraph-4
+  children: []
+  type: paragraph
+  xhtml_element_index: 3
+  xhtml_plain_text: ''
+  xhtml_text: ''
+  xhtml_xpath: p[2]
+- block_id: heading-5
+  children: []
+  type: heading
+  xhtml_element_index: 4
+  xhtml_plain_text: 메뉴 설명
+  xhtml_text: 메뉴 설명
+  xhtml_xpath: h2[2]
+- block_id: list-6
+  children: []
+  type: list
+  xhtml_element_index: 5
+  xhtml_plain_text: 'General : 쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. Security : 쿼리파이의 보안 설정을
+    적용하는 메뉴입니다. Allowed Zones : 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. Channels : 쿼리파이의 알림을
+    받을 채널을 구성하는 메뉴입니다.Alerts : 쿼리파이 알림을 설정하는 메뉴입니다. Licenses : 쿼리파이의 적용 라이선스 현황을 조회할
+    수 있는 메뉴입니다.'
+  xhtml_text: '<ul><li><p><ac:link><ri:page ri:content-title="General​" ri:version-at-save="7"></ri:page><ac:link-body><strong>General</strong></ac:link-body></ac:link><strong>
+    : </strong>쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title="Security"
+    ri:version-at-save="19"></ri:page><ac:link-body><strong>Security</strong></ac:link-body></ac:link>
+    : 쿼리파이의 보안 설정을 적용하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title="Allowed
+    Zones" ri:version-at-save="8"></ri:page><ac:link-body><strong>Allowed Zones</strong></ac:link-body></ac:link><strong>
+    </strong>: 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title="Channels"
+    ri:version-at-save="8"></ri:page><ac:link-body><strong>Channels</strong></ac:link-body></ac:link>
+    : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.</p></li><li><p><ac:link><ri:page ri:content-title="Alerts"
+    ri:version-at-save="16"></ri:page><ac:link-body><strong>Alerts</strong></ac:link-body></ac:link>
+    : 쿼리파이 알림을 설정하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title="Licenses"
+    ri:version-at-save="5"></ri:page><ac:link-body><strong>Licenses</strong></ac:link-body></ac:link>
+    : 쿼리파이의 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. </p></li></ul>'
+  xhtml_xpath: ul[1]
+created_at: '2026-02-14T16:28:18.901991+00:00'
+page_id: type-04-empty-strong
+source_xhtml: page.xhtml

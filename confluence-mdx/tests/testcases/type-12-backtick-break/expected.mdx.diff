@@ -1,0 +1,8 @@
+--- a/original.mdx+++ b/improved.mdx@@ -94,7 +94,7 @@ </figure>
+ 
+ 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 페이지로 접속합니다.
+-2. 우측 상단은 `Verify Deletion Key 버튼을 클릭합니다.`
++2. 우측 상단의 `Verify Deletion Key` 버튼을 클릭합니다.
+ 3. 확인된 Deletion Key를 기록합니다.
+ 4. Windows Server 콘솔에 접속합니다.
+ 5. 제어판 &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.

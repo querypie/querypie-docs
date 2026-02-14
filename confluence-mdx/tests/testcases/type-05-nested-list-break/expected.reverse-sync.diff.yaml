@@ -1,0 +1,60 @@
+changes:
+- block_id: list-16
+  change_type: modified
+  index: 16
+  new_content: "1. 각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이 가능합니다.\n2. Action At의 링크를\
+    \ 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를 보여주는 모달이 나타납니다. \n  <figure data-layout=\"\
+    center\" data-align=\"center\">\n  <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png\"\
+    \ alt=\"image-20240425-022156.png\" width=\"298\" />\n  </figure>\n3. 녹화된 파일의\
+    \ 크기가 700MB를 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. \n    1.  **700MB 미만 (권장)**\
+    \  \n      <figure data-layout=\"center\" data-align=\"center\">\n      <img src=\"\
+    /administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082651.png\"\
+    \ alt=\"image-20240721-082651.png\" width=\"440\" />\n      </figure>\n      \
+    \  1. 상단에 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다. \n            1.  **Name** : 실행자명\
+    \ \n            2.  **Action At** : 발생 일시 (시작)\n            3.  **Session Recording\
+    \ Name** : 레코딩명\n        2. 재생 버튼을 누르면 시작됩니다. \n            1. 반대로, 일시정지 버튼을 누르면\
+    \ 재생이 멈춥니다.\n            2. 버튼 우측 라인을 드래그하거나 원하는 시점을 클릭하여 해당 부분부터 재생도 가능합니다. \n\
+    \        3. `Close` 버튼을 누르면 창이 닫힙니다. \n    2.  **700MB 이상**  \n      <figure data-layout=\"\
+    center\" data-align=\"center\">\n      <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240618-053333.png\"\
+    \ alt=\"image-20240618-053333.png\" width=\"434\" />\n      </figure>\n      \
+    \  1. 재생 화면 안에 실행 불가 문구와 함께 다운로드 버튼을 제공합니다. \n            1. 파일 크기가 700MB를 초과하여\
+    \ 세션을 재생할 수 없습니다. \n            2. 이 세션 녹화를 보려면 파일 콘텐츠를 다운로드하여 플레이해야 합니다. \n \
+    \       2. `Download` 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다. \n            1. Administrator\
+    \ &gt; General &gt; Company Management &gt; Security &gt; Others 에 위치한 `Export\
+    \ a file with Encryption` 공통 옵션이 `Required`로 활성화되어 있을 경우, 해당 다운로드 시 암호화 모달이 추가로\
+    \ 나타나고 해당 모달 이후에 다운로드를 실행합니다.  <br/>  \n              <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n              <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082733.png\"\
+    \ alt=\"image-20240721-082733.png\" width=\"404\" />\n              </figure>\n\
+    \              <figure data-layout=\"center\" data-align=\"center\">\n       \
+    \       <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-025317.png\"\
+    \ alt=\"image-20240425-025317.png\" width=\"412\" />\n              </figure>\n"
+  old_content: "1. 각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이 가능합니다.\n2. Action At의 링크를\
+    \ 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를 보여주는 모달이 나타납니다. \n  <figure data-layout=\"\
+    center\" data-align=\"center\">\n  <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png\"\
+    \ alt=\"image-20240425-022156.png\" width=\"298\" />\n  </figure>\n3. 녹화된 파일의\
+    \ 크기가 700MB를 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. \n    1.  **700MB 미만**  \n\
+    \      <figure data-layout=\"center\" data-align=\"center\">\n      <img src=\"\
+    /administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082651.png\"\
+    \ alt=\"image-20240721-082651.png\" width=\"440\" />\n      </figure>\n      \
+    \  1. 상단에 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다. \n            1.  **Name** : 실행자명\
+    \ \n            2.  **Action At** : 발생 일시 (시작)\n            3.  **Session Recording\
+    \ Name** : 레코딩명\n        2. 재생 버튼을 누르면 시작됩니다. \n            1. 반대로, 일시정지 버튼을 누르면\
+    \ 재생이 멈춥니다.\n            2. 버튼 우측 라인을 드래그하거나 원하는 시점을 클릭하여 해당 부분부터 재생도 가능합니다. \n\
+    \        3. `Close` 버튼을 누르면 창이 닫힙니다. \n    2.  **700MB 이상**  \n      <figure data-layout=\"\
+    center\" data-align=\"center\">\n      <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240618-053333.png\"\
+    \ alt=\"image-20240618-053333.png\" width=\"434\" />\n      </figure>\n      \
+    \  1. 재생 화면 안에 실행 불가 문구와 함께 다운로드 버튼을 제공합니다. \n            1. 파일 크기가 700MB를 초과하여\
+    \ 세션을 재생할 수 없습니다. \n            2. 이 세션 녹화를 보려면 파일 콘텐츠를 다운로드하여 플레이해야 합니다. \n \
+    \       2. `Download` 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다. \n            1. Administrator\
+    \ &gt; General &gt; Company Management &gt; Security &gt; Others 에 위치한 `Export\
+    \ a file with Encryption` 공통 옵션이 `Required`로 활성화되어 있을 경우, 해당 다운로드 시 암호화 모달이 추가로\
+    \ 나타나고 해당 모달 이후에 다운로드를 실행합니다.  <br/>  \n              <figure data-layout=\"center\"\
+    \ data-align=\"center\">\n              <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082733.png\"\
+    \ alt=\"image-20240721-082733.png\" width=\"404\" />\n              </figure>\n\
+    \              <figure data-layout=\"center\" data-align=\"center\">\n       \
+    \       <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-025317.png\"\
+    \ alt=\"image-20240425-025317.png\" width=\"412\" />\n              </figure>\n"
+created_at: '2026-02-14T16:28:19.050146+00:00'
+improved_mdx: tests/testcases/type-05-nested-list-break/improved.mdx
+original_mdx: tests/testcases/type-05-nested-list-break/original.mdx
+page_id: type-05-nested-list-break
