@@ -118,5 +118,5 @@ python3 bin/skeleton/cli.py --recursive --max-diff=10
 ## 관련 문서
 
 - **번역 가이드**: [docs/translation.md](/docs/translation.md)
-- **Skeleton 비교**: [.claude/skills/mdx-skeleton-comparison.md](/.claude/skills/mdx-skeleton-comparison.md)
-- **Confluence MDX 변환**: [.claude/skills/confluence-mdx.md](/.claude/skills/confluence-mdx.md)
+- **Skeleton 비교**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
+- **Confluence MDX 변환**: [confluence-mdx.md](confluence-mdx.md)

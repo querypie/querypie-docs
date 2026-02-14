@@ -65,8 +65,7 @@ git status public/
 - 일본어: `src/content/ja/path/to/file.mdx`
 
 **번역 지침**:
-- [docs/translation.md](/docs/translation.md)의 번역 규칙 준수
-- [.claude/skills/translation.md](/.claude/skills/translation.md) 참조
+- [docs/translation.md](/docs/translation.md) 및 [translation.md](translation.md)의 번역 규칙 준수
 
 ### Step 5: Skeleton MDX 비교로 검증
 
@@ -184,7 +183,7 @@ git status public/
 
 ## 관련 문서
 
-- **Confluence MDX 변환**: [.claude/skills/confluence-mdx.md](/.claude/skills/confluence-mdx.md)
-- **Skeleton MDX 비교**: [.claude/skills/mdx-skeleton-comparison.md](/.claude/skills/mdx-skeleton-comparison.md)
-- **번역 가이드라인**: [.claude/skills/translation.md](/.claude/skills/translation.md)
-- **한국어→영어/일본어 동기화**: [.claude/skills/sync-ko-to-en-ja.md](/.claude/skills/sync-ko-to-en-ja.md)
+- **Confluence MDX 변환**: [confluence-mdx.md](confluence-mdx.md)
+- **Skeleton MDX 비교**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
+- **번역 가이드라인**: [translation.md](translation.md)
+- **한국어→영어/일본어 동기화**: [sync-ko-to-en-ja.md](sync-ko-to-en-ja.md)

@@ -132,5 +132,5 @@ import { Callout } from 'nextra/components'
 
 - **번역 상세 지침**: [docs/translation.md](/docs/translation.md)
 - **Skeleton MDX 비교**: [docs/translation.md](/docs/translation.md)의 "Skeleton MDX 를 비교하기" 섹션
-- **MDX 스켈레톤 비교 Skill**: [.claude/skills/mdx-skeleton-comparison.md](/docs/../.claude/skills/mdx-skeleton-comparison.md)
+- **MDX 스켈레톤 비교 Skill**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
 
