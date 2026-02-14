@@ -245,4 +245,4 @@ python -m pytest tests/test_mdx_to_skeleton.py -v
 ## 상세 문서
 
 - **Skeleton MDX 개념**: [docs/translation.md](/docs/translation.md)
-- **번역 가이드라인**: [.claude/skills/translation.md](/.claude/skills/translation.md)
+- **번역 가이드라인**: [translation.md](translation.md)

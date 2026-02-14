@@ -7,27 +7,7 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 
 ## 컨텐츠 문서 위치
 
-### 원문 (한국어)
-- `src/content/ko/**/*.mdx`
-- 원문은 한국어로 작성되어 있습니다.
-- MDX 문서는 Markdown에 JSX 기능을 확장한 문서양식입니다. MDX 문서는 서로 참조하는 링크를 갖고 있습니다.
-
-### 영어 번역
-- `src/content/en/**/*.mdx`
-- 표준 영어로 작성되어야 합니다.
-- 문서의 경로, 파일이름은 원문과 동일해야 합니다.
-  - 예: `src/content/ko/path/filename.mdx` → `src/content/en/path/filename.mdx`
-
-### 일본어 번역
-- `src/content/ja/**/*.mdx`
-- 표준 일본어로 작성되어야 합니다.
-- 문서의 경로, 파일이름은 원문과 동일해야 합니다.
-  - 예: `src/content/ko/path/filename.mdx` → `src/content/ja/path/filename.mdx`
-
-### 이미지
-- `public/` 디렉토리에 위치
-- 이미지 파일은 언어에 무관하게 공통으로 사용합니다. 번역 시 이미지 파일을 교체하지 않습니다.
-- 이미지 파일의 Caption 등 설명 문구는 번역 대상입니다.
+콘텐츠 파일 위치와 언어별 구조는 [translation.md](translation.md)를 참조하세요.
 
 ## 교정/교열 결과 저장 위치
 
@@ -91,7 +71,7 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 # 교정/교열 결과: {파일명}
 
 **검토일시**: YYYY-MM-DD
-**검토 수행 AI Agent**: Claude Opus 4.5
+**검토 수행 AI Agent**: Claude Opus 4.6
 
 ## 요약
 - 발견된 문제: N건
@@ -115,17 +95,8 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 ## 유의사항
 
 ### 반드시 유지할 것
-- Markdown 표현 형식 (표, 목록, 강조 등)
-- 줄바꿈 형식
-- `**text**` 강조 표시 (`<strong>` 대체 금지)
-- HTML Encode 문자열 유지 (임의로 Decode 금지)
-  - `&lt;`, `&gt;`로 HTML Encode된 문자열 그대로 유지
-  - 예: 원문의 `&lt;token&gt;`을 `<token>`으로 변경 금지
-- 중괄호로 감싸인 문자열의 backquote 유지
-  - 예: `{querypie url}` 그대로 유지
-- 문서 간 상대 경로 링크
-- 코드 블록 내용
-- 이미지 경로
+
+[translation.md](translation.md)의 "반드시 보존할 것" 섹션을 참조하세요.
 
 ### 피해야 할 표현
 
@@ -146,6 +117,4 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 
 ## 빌드 검증
 
-- PR 생성 시 CI Pipeline에서 자동으로 빌드를 검증합니다.
-- 로컬에서 `npm run build`를 실행하는 것은 선택사항입니다.
-- CI Pipeline에서 빌드 오류 발생 시 에러 메시지를 확인하고 수정합니다.
+빌드 검증 정책은 [translation.md](translation.md)의 "번역 프로세스 가이드라인"을 참조하세요.

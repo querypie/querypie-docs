@@ -4,19 +4,27 @@
 
 ## 사용 가능한 Skills
 
-### 문서 작성 Skills
-- **documentation.md** - MDX 문서 파일 작성 및 편집 가이드라인
+### 번역/교정 Skills
 - **translation.md** - 다국어 번역 가이드라인 (ko → en, ja)
-- **confluence-mdx.md** - Confluence에서 MDX로 변환 워크플로우
-- **confluence-pr-update.md** - Confluence MDX PR 수정 워크플로우
+- **proofread.md** - 문서 교정/교열 가이드
 - **sync-ko-to-en-ja.md** - 한국어 MDX 변경사항을 영어/일본어에 동기화
 - **mdx-skeleton-comparison.md** - 스켈레톤 비교를 통한 번역 일관성 검증
 
-### 개발 Skills
-- **code-review.md** - 코드 변경 사항 검토 가이드라인
+### Confluence 워크플로우 Skills
+- **confluence-mdx.md** - Confluence에서 MDX로 변환 워크플로우
+- **confluence-pr-update.md** - Confluence MDX PR 수정 워크플로우
+- **confluence-mdx-testcase.md** - XHTML 변환 테스트케이스 추가 가이드
+
+### Reverse Sync / XHTML Skills
 - **reverse-sync.md** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
-- **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
 - **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
+
+### 유틸리티 Skills
+- **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
+
+### 프로세스 Skills
+- **commit.md** - Commit 및 PR 작성 가이드
+- **code-review.md** - 코드 변경 사항 검토 가이드라인
 
 ## Skills과 참조 문서 관계
 
@@ -27,13 +35,14 @@
 | translation.md | [docs/translation.md](/docs/translation.md) |
 | confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
 | confluence-pr-update.md | confluence-mdx.md, translation.md, mdx-skeleton-comparison.md |
+| confluence-mdx-testcase.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
 | sync-ko-to-en-ja.md | [docs/translation.md](/docs/translation.md) |
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
-| documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
 | reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
 | sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
-| commit.md (commands) | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
+| commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
+| proofread.md | - |
 
 ## 사용법
 

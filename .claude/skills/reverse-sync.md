@@ -192,5 +192,5 @@ email:api_token
 
 ## 관련 Skill
 
-- **xhtml-beautify-diff.md** — XHTML 패치 결과의 의미적 diff 분석
-- **confluence-mdx.md** — Confluence에서 MDX로의 forward 변환 워크플로우
+- [xhtml-beautify-diff.md](xhtml-beautify-diff.md) — XHTML 패치 결과의 의미적 diff 분석
+- [confluence-mdx.md](confluence-mdx.md) — Confluence에서 MDX로의 forward 변환 워크플로우

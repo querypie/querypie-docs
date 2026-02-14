@@ -32,7 +32,7 @@ querypie-docs 저장소의 commit 관습에 맞게 commit message를 작성합�
 ## Claude 사용 시
 
 ```
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 ---
@@ -71,7 +71,7 @@ PR을 작성하게 된 배경, 이유, 목적을 한 문장으로 기술합니�
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 ```
 
 ## PR 작성 지침
