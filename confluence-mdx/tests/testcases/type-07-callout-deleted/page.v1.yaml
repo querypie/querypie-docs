@@ -1,0 +1,320 @@
+"id": "544080097"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544080097"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MDgwMDk3"
+"status": "current"
+"title": "Integrations"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie v10 Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "14426974"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544178405"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1"
+  "status": "current"
+  "title": "관리자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757510"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544178405/restriction/byOperation"
+    "history": "/rest/api/content/544178405/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544178405/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544178405/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544178405"
+    "tinyui": "/x/5YBvI"
+    "editui": "/pages/resumedraft.action?draftId=544178405"
+    "webui": "/spaces/QM/pages/544178405"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544178405"
+- "id": "544080057"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544080057"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MDgwMDU3"
+  "status": "current"
+  "title": "General"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "257"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544080057/restriction/byOperation"
+    "history": "/rest/api/content/544080057/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544080057/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544080057/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544080057"
+    "tinyui": "/x/uQBuI"
+    "editui": "/pages/resumedraft.action?draftId=544080057"
+    "webui": "/spaces/QM/pages/544080057/General"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544080057"
+- "id": "544112865"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544112865"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTEyODY1"
+  "status": "current"
+  "title": "System"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "2375"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544112865/restriction/byOperation"
+    "history": "/rest/api/content/544112865/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544112865/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544112865/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544112865"
+    "tinyui": "/x/4YBuI"
+    "editui": "/pages/resumedraft.action?draftId=544112865"
+    "webui": "/spaces/QM/pages/544112865/System"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544112865"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<h2 local-id=\"5003f1df-5317-4ded-bf79-4c1e55d6910d\">Overview</h2><p\
+      \ local-id=\"b38a17e2-d107-4255-b17e-f8eb11c21ce1\">Integration 메뉴에서는 외부 보안\
+      \ 서비스와의 연동을 간편하게 지원합니다. 다양한 보안 툴과의 연동을 통해 시스템 보안을 강화하고, 시스템의 복잡성을 줄이며, 관리 및\
+      \ 유지 보수를 단순화할 수 있습니다. 10.0.0 버전 현재, SIEM/SOAR 및 Secret Store 연동을 지원하고 있으며, 지원하고\
+      \ 있는 SIEM 서비스는 Syslog, Splunk의 2종입니다.</p><ac:structured-macro ac:name=\"info\"\
+      \ ac:schema-version=\"1\" ac:local-id=\"13119061-b24d-4254-b081-b5c6ebf2a085\"\
+      \ ac:macro-id=\"641b2684-1ad2-4319-9a7f-41f434972d44\"><ac:rich-text-body><p\
+      \ local-id=\"0e2282e5-6bab-4a30-bb14-5107a497a3fb\"><strong>SIEM이란?</strong><br\
+      \ />SIEM(Security Information and Event Management) 은 여러 원본으로부터 이벤트 로그 데이터의\
+      \ 실시간 수집 및 분석을 지원합니다. 로그의 상관 관계를 분석하고 비정상적 활동을 식별하여 적절한 조치를 취할 수 있습니다.</p></ac:rich-text-body></ac:structured-macro><ac:image\
+      \ ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"859\" ac:original-width=\"\
+      1570\" ac:custom-width=\"true\" ac:local-id=\"ea58a79d-4fed-4c58-a807-efed8f1d17ca\"\
+      \ ac:alt=\"image-20240714-054645.png\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      image-20240714-054645.png\" ri:version-at-save=\"1\" /><ac:caption ac:local-id=\"\
+      6d5c9548-19e6-4d42-9534-7c965fab9ab8\"><p>Administrator &gt; General &gt; System\
+      \ &gt; Integrations</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"\
+      #091e4224\" /></ac:image><ac:structured-macro ac:name=\"note\" ac:schema-version=\"\
+      1\" ac:local-id=\"f8828874-9e2d-4ed0-b255-9049c8a2d28e\" ac:macro-id=\"150a67b8-da24-4990-a852-0a2b63a95deb\"\
+      ><ac:rich-text-body><p local-id=\"60661af5-2ba5-4b96-8454-f019dce54339\">Integration\
+      \ 설정을 위해서는 System admin 권한이 필요합니다.</p></ac:rich-text-body></ac:structured-macro><h2\
+      \ local-id=\"c436fc4f-d584-4e6e-ae3c-79deb9005b31\">제공하는 기능</h2><ul local-id=\"\
+      8c660d49d2b0\"><li local-id=\"94f061bc5437\"><p local-id=\"a81c889e3b2e\"><ac:link\
+      \ ac:local-id=\"96b86d63f7ba\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"\
+      Syslog 연동\" ri:version-at-save=\"10\" /><ac:link-body>Syslog 연동</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"73abe5946eb5\"><p local-id=\"5c5c0123b04e\"><ac:link ac:local-id=\"\
+      93717fda7816\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Splunk\
+      \ 연동\" ri:version-at-save=\"12\" /><ac:link-body>Splunk 연동</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"24c02be26da0\"><p local-id=\"a64c17d00e41\"><ac:link ac:local-id=\"\
+      0ffe5ee4f4ea\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Secret\
+      \ Store 연동\" ri:version-at-save=\"21\" /><ac:link-body>Secret Store 연동</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"a5fc0f7b8fe5\"><p local-id=\"5969f29dd9b7\"><ac:link ac:local-id=\"\
+      be505ca5c49b\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Email\
+      \ 연동\" ri:version-at-save=\"6\" /><ac:link-body>Email 연동</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"3d1668dc16ab\"><p local-id=\"4d8686dd0d98\"><ac:link ac:local-id=\"\
+      8992ecca6344\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Event\
+      \ Callback 연동\" ri:version-at-save=\"1\" /><ac:link-body>Event Callback 연동</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"3fb73f9b6134\"><p local-id=\"c01845a560a7\"><ac:link ac:local-id=\"\
+      4afeae2b131a\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"OAuth\
+      \ 2.0을 사용하기 위한 Google Cloud API 연동\" ri:version-at-save=\"2\" /><ac:link-body>OAuth\
+      \ 2.0을 사용하기 위한 Google Cloud API 연동</ac:link-body></ac:link></p></li><li local-id=\"\
+      9923cf2c785e\"><p local-id=\"81852e9d6c17\"><ac:link ac:local-id=\"9edd7ec58129\"\
+      \ ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Slack DM 연동\" ri:version-at-save=\"\
+      5\" /><ac:link-body>Slack DM 연동</ac:link-body></ac:link></p></li><li local-id=\"\
+      e697c509f41f\"><p local-id=\"a60fcbee4a4a\"><ac:link ac:local-id=\"2e6903400bc8\"\
+      \ ac:card-appearance=\"inline\"><ri:page ri:content-title=\"OAuth Client Application\"\
+      \ ri:version-at-save=\"3\" /><ac:link-body>OAuth Client Application</ac:link-body></ac:link></p></li><li\
+      \ local-id=\"c74300458db6\"><p local-id=\"65f3dfc800f9\"><ac:link ac:local-id=\"\
+      ff7369bfca14\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Identity\
+      \ Providers\" ri:version-at-save=\"13\" /><ac:link-body>Identity Providers</ac:link-body></ac:link></p></li></ul><p\
+      \ local-id=\"6bfba74ce1a3\" />"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/544080097"
+  "view":
+    "value": "<h2 local-id=\"5003f1df-5317-4ded-bf79-4c1e55d6910d\" id=\"Integrations-Overview\"\
+      >Overview</h2><p local-id=\"b38a17e2-d107-4255-b17e-f8eb11c21ce1\">Integration\
+      \ 메뉴에서는 외부 보안 서비스와의 연동을 간편하게 지원합니다. 다양한 보안 툴과의 연동을 통해 시스템 보안을 강화하고, 시스템의 복잡성을\
+      \ 줄이며, 관리 및 유지 보수를 단순화할 수 있습니다. 10.0.0 버전 현재, SIEM/SOAR 및 Secret Store 연동을 지원하고\
+      \ 있으며, 지원하고 있는 SIEM 서비스는 Syslog, Splunk의 2종입니다.</p><div class=\"confluence-information-macro\
+      \ confluence-information-macro-information conf-macro output-block\" data-hasbody=\"\
+      true\" data-local-id=\"13119061-b24d-4254-b081-b5c6ebf2a085\" data-macro-id=\"\
+      641b2684-1ad2-4319-9a7f-41f434972d44\" data-macro-name=\"info\"><span class=\"\
+      aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon\"\
+      > </span><div class=\"confluence-information-macro-body\"><p local-id=\"0e2282e5-6bab-4a30-bb14-5107a497a3fb\"\
+      ><strong>SIEM이란?</strong><br />SIEM(Security Information and Event Management)\
+      \ 은 여러 원본으로부터 이벤트 로그 데이터의 실시간 수집 및 분석을 지원합니다. 로그의 상관 관계를 분석하고 비정상적 활동을 식별하여\
+      \ 적절한 조치를 취할 수 있습니다.</p></div></div><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"image-20240714-054645.png\"\
+      \ width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544080097/image-20240714-054645.png?version=1&amp;modificationDate=1720936007841&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=415\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544080097/image-20240714-054645.png?version=1&amp;modificationDate=1720936007841&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"859\" data-width=\"1570\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"544112879\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240714-054645.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544080097\" data-linked-resource-container-version=\"\
+      9\" data-media-id=\"5ab3173a-d5e1-417d-b48e-a0b225a8d11a\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544080097/image-20240714-054645.png?version=1&amp;modificationDate=1720936007841&amp;cacheVersion=1&amp;api=v2&amp;width=1520&amp;height=830\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544080097/image-20240714-054645.png?version=1&amp;modificationDate=1720936007841&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=415\
+      \ 1x\"></span><div class=\"confluence-information-macro confluence-information-macro-note\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-local-id=\"f8828874-9e2d-4ed0-b255-9049c8a2d28e\"\
+      \ data-macro-id=\"150a67b8-da24-4990-a852-0a2b63a95deb\" data-macro-name=\"\
+      note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning confluence-information-macro-icon\"\
+      > </span><div class=\"confluence-information-macro-body\"><p local-id=\"60661af5-2ba5-4b96-8454-f019dce54339\"\
+      >Integration 설정을 위해서는 System admin 권한이 필요합니다.</p></div></div><h2 local-id=\"\
+      c436fc4f-d584-4e6e-ae3c-79deb9005b31\" id=\"Integrations-제공하는기능\">제공하는 기능</h2><ul\
+      \ local-id=\"8c660d49d2b0\"><li local-id=\"94f061bc5437\"><p local-id=\"a81c889e3b2e\"\
+      ><a href=\"/wiki/spaces/QM/pages/544379393/Syslog\" data-linked-resource-id=\"\
+      544379393\" data-linked-resource-version=\"10\" data-linked-resource-type=\"\
+      page\">Syslog 연동</a></p></li><li local-id=\"73abe5946eb5\"><p local-id=\"5c5c0123b04e\"\
+      ><a href=\"/wiki/spaces/QM/pages/557940795/Splunk\" data-linked-resource-id=\"\
+      557940795\" data-linked-resource-version=\"12\" data-linked-resource-type=\"\
+      page\">Splunk 연동</a></p></li><li local-id=\"24c02be26da0\"><p local-id=\"a64c17d00e41\"\
+      ><a href=\"/wiki/spaces/QM/pages/544379587/Secret+Store\" data-linked-resource-id=\"\
+      544379587\" data-linked-resource-version=\"21\" data-linked-resource-type=\"\
+      page\">Secret Store 연동</a></p></li><li local-id=\"a5fc0f7b8fe5\"><p local-id=\"\
+      5969f29dd9b7\"><a href=\"/wiki/spaces/QM/pages/798064641/Email\" data-linked-resource-id=\"\
+      798064641\" data-linked-resource-version=\"6\" data-linked-resource-type=\"\
+      page\">Email 연동</a></p></li><li local-id=\"3d1668dc16ab\"><p local-id=\"4d8686dd0d98\"\
+      ><a href=\"/wiki/spaces/QM/pages/1267007528/Event+Callback\" data-linked-resource-id=\"\
+      1267007528\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      page\">Event Callback 연동</a></p></li><li local-id=\"3fb73f9b6134\"><p local-id=\"\
+      c01845a560a7\"><a href=\"/wiki/spaces/QM/pages/811401365/OAuth+2.0+Google+Cloud+API\"\
+      \ data-linked-resource-id=\"811401365\" data-linked-resource-version=\"2\" data-linked-resource-type=\"\
+      page\">OAuth 2.0을 사용하기 위한 Google Cloud API 연동</a></p></li><li local-id=\"9923cf2c785e\"\
+      ><p local-id=\"81852e9d6c17\"><a href=\"/wiki/spaces/QM/pages/883654669/Slack+DM\"\
+      \ data-linked-resource-id=\"883654669\" data-linked-resource-version=\"5\" data-linked-resource-type=\"\
+      page\">Slack DM 연동</a></p></li><li local-id=\"e697c509f41f\"><p local-id=\"\
+      a60fcbee4a4a\"><a href=\"/wiki/spaces/QM/pages/1453588486/OAuth+Client+Application\"\
+      \ data-linked-resource-id=\"1453588486\" data-linked-resource-version=\"3\"\
+      \ data-linked-resource-type=\"page\">OAuth Client Application</a></p></li><li\
+      \ local-id=\"c74300458db6\"><p local-id=\"65f3dfc800f9\"><a href=\"/wiki/spaces/QM/pages/1454342158/Identity+Providers\"\
+      \ data-linked-resource-id=\"1454342158\" data-linked-resource-version=\"13\"\
+      \ data-linked-resource-type=\"page\">Identity Providers</a></p></li></ul><p\
+      \ local-id=\"6bfba74ce1a3\" />"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/544080097"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "615"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/544080097/restriction/byOperation"
+  "history": "/rest/api/content/544080097/history"
+  "version": ""
+  "descendants": "/rest/api/content/544080097/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/544080097/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544080097"
+  "webui": "/spaces/QM/pages/544080097/Integrations"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544080097"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/544080097"
+  "tinyui": "/x/4QBuI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

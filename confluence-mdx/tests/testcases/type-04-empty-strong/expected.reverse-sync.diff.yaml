@@ -16,7 +16,7 @@ changes:
     \ : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\n* [ **Alerts** ](company-management/alerts)\
     \ : 쿼리파이 알림을 설정하는 메뉴입니다. \n* [ **Licenses** ](company-management/licenses) : 쿼리파이의\
     \ 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \n"
-created_at: '2026-02-14T16:28:18.901991+00:00'
+created_at: '2026-02-14T17:24:01.760429+00:00'
 improved_mdx: tests/testcases/type-04-empty-strong/improved.mdx
 original_mdx: tests/testcases/type-04-empty-strong/original.mdx
 page_id: type-04-empty-strong

@@ -1,5 +1,5 @@
 changes_count: 1
-created_at: '2026-02-14T16:28:19.726686+00:00'
+created_at: '2026-02-14T17:24:02.850603+00:00'
 mdx_diff_report: "--- tests/testcases/type-12-backtick-break/original.mdx+++ tests/testcases/type-12-backtick-break/improved.mdx@@\
   \ -90,7 +90,7 @@ </figure>\n \n 1. Administrator &gt; Servers &gt; Connection Management\
   \ &gt; Server Agents for RDP 페이지로 접속합니다.\n-2. 우측 상단은 `Verify Deletion Key 버튼을 클릭합니다.`\n\
@@ -10,23 +10,11 @@ status: fail
 verification:
   diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -1,7 +1,4 @@-\n\
     \ import { Callout } from 'nextra/components'\n-\n-# Server Agent 설치 및 제거하기\n\
-    \ \n ### Overview\n \n@@ -12,7 +9,7 @@ ### Server Agent 설치하기\n \n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240728-163032.png\"\
-    \ alt=\"image-20240728-163032.png\" width=\"760\" />\n+<img src=\"/types/type-12-backtick-break/image-20240728-163032.png\"\
-    \ alt=\"image-20240728-163032.png\" width=\"760\" />\n </figure>\n \n * Server\
-    \ Agent 다운로드 페이지에 접속합니다.\n@@ -23,7 +20,7 @@ 기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도\
-    \ 있습니다.\n (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드 받아야 하는 경우 사용)\n <figure data-layout=\"\
-    center\" data-align=\"center\">\n-<img src=\"/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20251010-085601.png\"\
-    \ alt=\"RDP Server Agent 다운로드 버튼 제공\" width=\"700\" />\n+<img src=\"/types/type-12-backtick-break/image-20251010-085601.png\"\
-    \ alt=\"RDP Server Agent 다운로드 버튼 제공\" width=\"700\" />\n <figcaption>\n RDP Server\
-    \ Agent 다운로드 버튼 제공\n </figcaption>\n@@ -86,11 +83,11 @@ ### Server Agent 삭제하기\n\
-    \ \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240829-010643.png\"\
-    \ alt=\"image-20240829-010643.png\" width=\"760\" />\n+<img src=\"/types/type-12-backtick-break/image-20240829-010643.png\"\
-    \ alt=\"image-20240829-010643.png\" width=\"760\" />\n </figure>\n \n 1. Administrator\
-    \ &gt; Servers &gt; Connection Management &gt; Server Agents for RDP 페이지로 접속합니다.\n\
-    -2. 우측 상단의 `Verify Deletion Key` 버튼을 클릭합니다.\n+2. 우측 상단의 `Verify Deletion Key 버튼을\
-    \ 클릭합니다.`\n 3. 확인된 Deletion Key를 기록합니다.\n 4. Windows Server 콘솔에 접속합니다.\n 5. 제어판\
-    \ &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.\n"
+    \ \n ### Overview\n \n@@ -90,7 +87,7 @@ </figure>\n \n 1. Administrator &gt; Servers\
+    \ &gt; Connection Management &gt; Server Agents for RDP 페이지로 접속합니다.\n-2. 우측 상단의\
+    \ `Verify Deletion Key` 버튼을 클릭합니다.\n+2. 우측 상단의 `Verify Deletion Key 버튼을 클릭합니다.`\n\
+    \ 3. 확인된 Deletion Key를 기록합니다.\n 4. Windows Server 콘솔에 접속합니다.\n 5. 제어판 &gt; 프로그램\
+    \ 추가/제거 메뉴 접속 후 QueryPie Server Agent를 삭제합니다.\n"
   exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -226,7 +226,7\
   \ @@\n  </li>\n  <li>\n   <p>\n-   우측 상단은\n+   우측 상단의\n    <code>\n     Verify Deletion\

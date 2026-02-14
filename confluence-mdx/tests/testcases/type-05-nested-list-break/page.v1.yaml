@@ -1,0 +1,398 @@
+"id": "544383693"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544383693"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgzNjkz"
+"status": "current"
+"title": "Pod Session Recordingsㅤ"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie v10 Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "14426974"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544178405"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1"
+  "status": "current"
+  "title": "관리자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757510"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544178405/restriction/byOperation"
+    "history": "/rest/api/content/544178405/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544178405/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544178405/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544178405"
+    "tinyui": "/x/5YBvI"
+    "editui": "/pages/resumedraft.action?draftId=544178405"
+    "webui": "/spaces/QM/pages/544178405"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544178405"
+- "id": "544379062"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544379062"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0Mzc5MDYy"
+  "status": "current"
+  "title": "Audit"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "2251"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544379062/restriction/byOperation"
+    "history": "/rest/api/content/544379062/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544379062/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544379062/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544379062"
+    "tinyui": "/x/tpByI"
+    "editui": "/pages/resumedraft.action?draftId=544379062"
+    "webui": "/spaces/QM/pages/544379062/Audit"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544379062"
+- "id": "544383513"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544383513"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgzNTEz"
+  "status": "current"
+  "title": "Kubernetes Logs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "2415"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544383513/restriction/byOperation"
+    "history": "/rest/api/content/544383513/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544383513/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544383513/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544383513"
+    "tinyui": "/x/GaJyI"
+    "editui": "/pages/resumedraft.action?draftId=544383513"
+    "webui": "/spaces/QM/pages/544383513/Kubernetes+Logs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544383513"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<h2>Overview</h2><p>조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 중 Pod Exec 등의 연결\
+      \ 세션 내 행위를 기록합니다. 관리자는 영상 재생을 통해 사용자가 운영 컨테이너 쉘에서의 수행 이력을 모니터링할 수 있습니다. </p><h2>Pod\
+      \ Session Recordings 조회하기 </h2><ac:image ac:align=\"center\" ac:alt=\"image-20240721-082407.png\"\
+      \ ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"1800\"\
+      \ ac:original-width=\"2880\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      image-20240721-082407.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator\
+      \ &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings</p></ac:caption><ac:adf-mark\
+      \ color=\"#091e4224\" key=\"border\" size=\"1\" /></ac:image><ol start=\"1\"\
+      ><li><p>Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings\
+      \ 메뉴로 이동합니다.</p></li><li><p>Pod exec 세션 내역은 테이블에 내림차순으로 목록에 로그가 노출됩니다. </p></li><li><p>테이블\
+      \ 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p><ol start=\"1\"><li><p><strong>Name</strong>\
+      \ : 사용자 이름</p></li><li><p><strong>Email</strong> : 사용자 이메일</p></li><li><p><strong>Cluster\
+      \ Name</strong> : 쿼리파이 상에 등록된 클러스터 이름</p></li><li><p><strong>Client IP</strong>\
+      \ : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Client Name</strong> : 사용자 클라이언트명/버전\
+      \ (예. kubectl/v1.27.3)</p></li></ol></li><li><p>검색 필드 우측 필터 버튼을 클릭하여 <strong>Action\
+      \ At</strong>에 대한 일시 범위를 재지정하여 필터링이 가능합니다.</p><ac:image ac:align=\"center\"\
+      \ ac:alt=\"image-20240721-082446.png\" ac:custom-width=\"true\" ac:layout=\"\
+      center\" ac:original-height=\"348\" ac:original-width=\"628\" ac:width=\"220\"\
+      ><ri:attachment ri:filename=\"image-20240721-082446.png\" ri:version-at-save=\"\
+      1\" /><ac:adf-mark color=\"#091e4224\" key=\"border\" size=\"1\" /></ac:image></li><li><p>테이블\
+      \ 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.</p></li><li><p>테이블에서 이하의 컬럼 정보를 제공합니다:</p><ol\
+      \ start=\"1\"><li><p><strong>No</strong> : 이벤트 식별 번호</p></li><li><p><strong>Action\
+      \ At</strong> : 세션 녹화 시작 일시</p></li><li><p><strong>Name</strong> : 대상 사용자 이름</p></li><li><p><strong>Email</strong>\
+      \ : 대상 사용자 이메일</p></li><li><p><strong>Cluster Name</strong> : 대상 쿠버네티스 클러스터명</p></li><li><p><strong>Role</strong>\
+      \ : 액션을 행사할 수 있었던 Role명</p></li><li><p><strong>Client IP</strong> : 사용자 클라이언트\
+      \ IP 주소</p></li><li><p><strong>Client Name</strong> : 사용자 클라이언트명/버전</p></li><li><p><strong>Connected\
+      \ From</strong> : 연결 방식의 주체 </p><ol start=\"1\"><li><p>현재는 Proxy만 기입됩니다.</p></li></ol></li></ol></li></ol><h2>Pod\
+      \ Session Recordings 내역 재생하기 </h2><ol start=\"7\"><li><p>각 행의 Action At의 링크를\
+      \ 클릭하면 세션 레코딩 내역의 재생이 가능합니다.</p></li><li><p>Action At의 링크를 클릭하면 모달이 실행되고, 재생을\
+      \ 위한 초기 다운로딩 프로세스를 보여주는 모달이 나타납니다. </p><ac:image ac:align=\"center\" ac:alt=\"\
+      image-20240425-022156.png\" ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"\
+      336\" ac:original-width=\"1044\" ac:width=\"298\"><ri:attachment ri:filename=\"\
+      image-20240425-022156.png\" ri:version-at-save=\"1\" /><ac:adf-mark color=\"\
+      #091e4224\" key=\"border\" size=\"1\" /></ac:image></li><li><p>녹화된 파일의 크기가 700MB를\
+      \ 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. </p><ol start=\"1\"><li><p><strong>700MB\
+      \ 미만</strong> </p><ac:image ac:align=\"center\" ac:alt=\"image-20240721-082651.png\"\
+      \ ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"1068\"\
+      \ ac:original-width=\"1370\" ac:width=\"440\"><ri:attachment ri:filename=\"\
+      image-20240721-082651.png\" ri:version-at-save=\"1\" /><ac:adf-mark color=\"\
+      #091e4224\" key=\"border\" size=\"1\" /></ac:image><ol start=\"1\"><li><p>상단에\
+      \ 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다. </p><ol start=\"1\"><li><p><strong>Name</strong>:\
+      \ 실행자명 </p></li><li><p><strong>Action At</strong>: 발생 일시 (시작)</p></li><li><p><strong>Session\
+      \ Recording Name</strong>: 레코딩명</p></li></ol></li><li><p>재생 버튼을 누르면 시작됩니다. </p><ol\
+      \ start=\"1\"><li><p>반대로, 일시정지 버튼을 누르면 재생이 멈춥니다.</p></li><li><p>버튼 우측 라인을 드래그하거나\
+      \ 원하는 시점을 클릭하여 해당 부분부터 재생도 가능합니다.  </p></li></ol></li><li><p><code>Close</code>\
+      \ 버튼을 누르면 창이 닫힙니다. </p></li></ol></li><li><p><strong>700MB 이상</strong> </p><ac:image\
+      \ ac:align=\"center\" ac:alt=\"image-20240618-053333.png\" ac:custom-width=\"\
+      true\" ac:layout=\"center\" ac:original-height=\"524\" ac:original-width=\"\
+      682\" ac:width=\"434\"><ri:attachment ri:filename=\"image-20240618-053333.png\"\
+      \ ri:version-at-save=\"1\" /><ac:adf-mark color=\"#091e4224\" key=\"border\"\
+      \ size=\"1\" /></ac:image><ol start=\"1\"><li><p>재생 화면 안에 실행 불가 문구와 함께 다운로드\
+      \ 버튼을 제공합니다. </p><ol start=\"1\"><li><p>파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다. </p></li><li><p>이\
+      \ 세션 녹화를 보려면 파일 콘텐츠를 다운로드하여 플레이해야 합니다. </p></li></ol></li><li><p><code>Download</code>\
+      \ 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다. </p><ol start=\"1\"><li><p>Administrator\
+      \ &gt; General &gt; Company Management &gt; Security &gt; Others 에 위치한 <code>Export\
+      \ a file with Encryption</code> 공통 옵션이 <code>Required</code>로 활성화되어 있을 경우, 해당\
+      \ 다운로드 시 암호화 모달이 추가로 나타나고 해당 모달 이후에 다운로드를 실행합니다. </p><ac:image ac:align=\"center\"\
+      \ ac:alt=\"image-20240721-082733.png\" ac:custom-width=\"true\" ac:layout=\"\
+      center\" ac:original-height=\"300\" ac:original-width=\"1240\" ac:width=\"404\"\
+      ><ri:attachment ri:filename=\"image-20240721-082733.png\" ri:version-at-save=\"\
+      1\" /><ac:adf-mark color=\"#091e4224\" key=\"border\" size=\"1\" /></ac:image><p>\
+      \ </p><ac:image ac:align=\"center\" ac:alt=\"image-20240425-025317.png\" ac:custom-width=\"\
+      true\" ac:layout=\"center\" ac:original-height=\"792\" ac:original-width=\"\
+      1132\" ac:width=\"412\"><ri:attachment ri:filename=\"image-20240425-025317.png\"\
+      \ ri:version-at-save=\"1\" /></ac:image></li></ol></li></ol></li></ol></li></ol>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/544383693"
+  "view":
+    "value": "<h2 id=\"PodSessionRecordingsㅤ-Overview\">Overview</h2><p>조직에서 관리하는\
+      \ 쿠버네티스 클러스터의 API 서버 호출 중 Pod Exec 등의 연결 세션 내 행위를 기록합니다. 관리자는 영상 재생을 통해 사용자가\
+      \ 운영 컨테이너 쉘에서의 수행 이력을 모니터링할 수 있습니다. </p><h2 id=\"PodSessionRecordingsㅤ-PodSessionRecordings조회하기\"\
+      >Pod Session Recordings 조회하기 </h2><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"image-20240721-082407.png\"\
+      \ width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082407.png?version=1&amp;modificationDate=1721550249398&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240721-082407.png?version=1&amp;modificationDate=1721550249398&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"1800\" data-width=\"2880\" data-unresolved-comment-count=\"\
+      0\" data-linked-resource-id=\"554893689\" data-linked-resource-version=\"1\"\
+      \ data-linked-resource-type=\"attachment\" data-linked-resource-default-alias=\"\
+      image-20240721-082407.png\" data-base-url=\"https://querypie.atlassian.net/wiki\"\
+      \ data-linked-resource-content-type=\"image/png\" data-linked-resource-container-id=\"\
+      544383693\" data-linked-resource-container-version=\"8\" data-media-id=\"7b244939-c074-4641-84ae-dd618dd8d6bf\"\
+      \ data-media-type=\"file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082407.png?version=1&amp;modificationDate=1721550249398&amp;cacheVersion=1&amp;api=v2&amp;width=1520&amp;height=950\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082407.png?version=1&amp;modificationDate=1721550249398&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=475\
+      \ 1x\"></span><ol start=\"1\"><li><p>Administrator &gt; Audit &gt; Kubernetes\
+      \ &gt; Pod Session Recordings 메뉴로 이동합니다.</p></li><li><p>Pod exec 세션 내역은 테이블에\
+      \ 내림차순으로 목록에 로그가 노출됩니다. </p></li><li><p>테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p><ol\
+      \ start=\"1\"><li><p><strong>Name</strong> : 사용자 이름</p></li><li><p><strong>Email</strong>\
+      \ : 사용자 이메일</p></li><li><p><strong>Cluster Name</strong> : 쿼리파이 상에 등록된 클러스터\
+      \ 이름</p></li><li><p><strong>Client IP</strong> : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Client\
+      \ Name</strong> : 사용자 클라이언트명/버전 (예. kubectl/v1.27.3)</p></li></ol></li><li><p>검색\
+      \ 필드 우측 필터 버튼을 클릭하여 <strong>Action At</strong>에 대한 일시 범위를 재지정하여 필터링이 가능합니다.</p><span\
+      \ class=\"confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"image-20240721-082446.png\" width=\"220\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082446.png?version=1&amp;modificationDate=1721550288400&amp;cacheVersion=1&amp;api=v2&amp;width=220&amp;height=121\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240721-082446.png?version=1&amp;modificationDate=1721550288400&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"348\" data-width=\"628\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"554631566\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240721-082446.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544383693\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"7fc78ad2-87d4-42b7-83b3-ed028867b265\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082446.png?version=1&amp;modificationDate=1721550288400&amp;cacheVersion=1&amp;api=v2&amp;width=440&amp;height=242\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082446.png?version=1&amp;modificationDate=1721550288400&amp;cacheVersion=1&amp;api=v2&amp;width=220&amp;height=121\
+      \ 1x\"></span></li><li><p>테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.</p></li><li><p>테이블에서\
+      \ 이하의 컬럼 정보를 제공합니다:</p><ol start=\"1\"><li><p><strong>No</strong> : 이벤트 식별 번호</p></li><li><p><strong>Action\
+      \ At</strong> : 세션 녹화 시작 일시</p></li><li><p><strong>Name</strong> : 대상 사용자 이름</p></li><li><p><strong>Email</strong>\
+      \ : 대상 사용자 이메일</p></li><li><p><strong>Cluster Name</strong> : 대상 쿠버네티스 클러스터명</p></li><li><p><strong>Role</strong>\
+      \ : 액션을 행사할 수 있었던 Role명</p></li><li><p><strong>Client IP</strong> : 사용자 클라이언트\
+      \ IP 주소</p></li><li><p><strong>Client Name</strong> : 사용자 클라이언트명/버전</p></li><li><p><strong>Connected\
+      \ From</strong> : 연결 방식의 주체 </p><ol start=\"1\"><li><p>현재는 Proxy만 기입됩니다.</p></li></ol></li></ol></li></ol><h2\
+      \ id=\"PodSessionRecordingsㅤ-PodSessionRecordings내역재생하기\">Pod Session Recordings\
+      \ 내역 재생하기 </h2><ol start=\"7\"><li><p>각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이\
+      \ 가능합니다.</p></li><li><p>Action At의 링크를 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를 보여주는\
+      \ 모달이 나타납니다. </p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"image-20240425-022156.png\" width=\"298\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-022156.png?version=1&amp;modificationDate=1720933745129&amp;cacheVersion=1&amp;api=v2&amp;width=298&amp;height=95\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240425-022156.png?version=1&amp;modificationDate=1720933745129&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"336\" data-width=\"1044\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"544383719\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240425-022156.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544383693\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"dc9f7f7b-ec3a-4485-93fe-faddce5515f9\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-022156.png?version=1&amp;modificationDate=1720933745129&amp;cacheVersion=1&amp;api=v2&amp;width=596&amp;height=190\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-022156.png?version=1&amp;modificationDate=1720933745129&amp;cacheVersion=1&amp;api=v2&amp;width=298&amp;height=95\
+      \ 1x\"></span></li><li><p>녹화된 파일의 크기가 700MB를 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을\
+      \ 노출합니다. </p><ol start=\"1\"><li><p><strong>700MB 미만</strong> </p><span class=\"\
+      confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size\"\
+      ><img class=\"confluence-embedded-image confluence-content-image-border image-center\"\
+      \ alt=\"image-20240721-082651.png\" width=\"440\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082651.png?version=1&amp;modificationDate=1721550413200&amp;cacheVersion=1&amp;api=v2&amp;width=440&amp;height=343\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240721-082651.png?version=1&amp;modificationDate=1721550413200&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"1068\" data-width=\"1370\" data-unresolved-comment-count=\"\
+      0\" data-linked-resource-id=\"554828172\" data-linked-resource-version=\"1\"\
+      \ data-linked-resource-type=\"attachment\" data-linked-resource-default-alias=\"\
+      image-20240721-082651.png\" data-base-url=\"https://querypie.atlassian.net/wiki\"\
+      \ data-linked-resource-content-type=\"image/png\" data-linked-resource-container-id=\"\
+      544383693\" data-linked-resource-container-version=\"8\" data-media-id=\"7fe4fd5f-120f-4fcb-bd74-115d2dba6639\"\
+      \ data-media-type=\"file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082651.png?version=1&amp;modificationDate=1721550413200&amp;cacheVersion=1&amp;api=v2&amp;width=880&amp;height=686\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082651.png?version=1&amp;modificationDate=1721550413200&amp;cacheVersion=1&amp;api=v2&amp;width=440&amp;height=343\
+      \ 1x\"></span><ol start=\"1\"><li><p>상단에 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다.\
+      \ </p><ol start=\"1\"><li><p><strong>Name</strong>: 실행자명 </p></li><li><p><strong>Action\
+      \ At</strong>: 발생 일시 (시작)</p></li><li><p><strong>Session Recording Name</strong>:\
+      \ 레코딩명</p></li></ol></li><li><p>재생 버튼을 누르면 시작됩니다. </p><ol start=\"1\"><li><p>반대로,\
+      \ 일시정지 버튼을 누르면 재생이 멈춥니다.</p></li><li><p>버튼 우측 라인을 드래그하거나 원하는 시점을 클릭하여 해당 부분부터\
+      \ 재생도 가능합니다.  </p></li></ol></li><li><p><code>Close</code> 버튼을 누르면 창이 닫힙니다.\
+      \ </p></li></ol></li><li><p><strong>700MB 이상</strong> </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"image-20240618-053333.png\"\
+      \ width=\"434\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240618-053333.png?version=1&amp;modificationDate=1720933750302&amp;cacheVersion=1&amp;api=v2&amp;width=434&amp;height=333\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240618-053333.png?version=1&amp;modificationDate=1720933750302&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"524\" data-width=\"682\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"544383755\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240618-053333.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544383693\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"328e9013-7995-4d0f-94f3-cee9d45d3d70\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240618-053333.png?version=1&amp;modificationDate=1720933750302&amp;cacheVersion=1&amp;api=v2&amp;width=868&amp;height=666\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240618-053333.png?version=1&amp;modificationDate=1720933750302&amp;cacheVersion=1&amp;api=v2&amp;width=434&amp;height=333\
+      \ 1x\"></span><ol start=\"1\"><li><p>재생 화면 안에 실행 불가 문구와 함께 다운로드 버튼을 제공합니다. </p><ol\
+      \ start=\"1\"><li><p>파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다. </p></li><li><p>이 세션\
+      \ 녹화를 보려면 파일 콘텐츠를 다운로드하여 플레이해야 합니다. </p></li></ol></li><li><p><code>Download</code>\
+      \ 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다. </p><ol start=\"1\"><li><p>Administrator\
+      \ &gt; General &gt; Company Management &gt; Security &gt; Others 에 위치한 <code>Export\
+      \ a file with Encryption</code> 공통 옵션이 <code>Required</code>로 활성화되어 있을 경우, 해당\
+      \ 다운로드 시 암호화 모달이 추가로 나타나고 해당 모달 이후에 다운로드를 실행합니다. </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"image-20240721-082733.png\"\
+      \ width=\"404\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082733.png?version=1&amp;modificationDate=1721550454910&amp;cacheVersion=1&amp;api=v2&amp;width=404&amp;height=97\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240721-082733.png?version=1&amp;modificationDate=1721550454910&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"300\" data-width=\"1240\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"554893701\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240721-082733.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544383693\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"7611a1c1-961d-4716-bdb5-ec94233a6836\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082733.png?version=1&amp;modificationDate=1721550454910&amp;cacheVersion=1&amp;api=v2&amp;width=808&amp;height=194\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240721-082733.png?version=1&amp;modificationDate=1721550454910&amp;cacheVersion=1&amp;api=v2&amp;width=404&amp;height=97\
+      \ 1x\"></span><p> </p><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image image-center\"\
+      \ alt=\"image-20240425-025317.png\" width=\"412\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-025317.png?version=1&amp;modificationDate=1720933747360&amp;cacheVersion=1&amp;api=v2&amp;width=412&amp;height=288\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/544383693/image-20240425-025317.png?version=1&amp;modificationDate=1720933747360&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"792\" data-width=\"1132\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"544383731\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240425-025317.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"544383693\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"6582c679-3eb4-420e-af61-c60ee71932d0\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-025317.png?version=1&amp;modificationDate=1720933747360&amp;cacheVersion=1&amp;api=v2&amp;width=824&amp;height=576\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/544383693/image-20240425-025317.png?version=1&amp;modificationDate=1720933747360&amp;cacheVersion=1&amp;api=v2&amp;width=412&amp;height=288\
+      \ 1x\"></span></li></ol></li></ol></li></ol></li></ol>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/544383693"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "293"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/544383693/restriction/byOperation"
+  "history": "/rest/api/content/544383693/history"
+  "version": ""
+  "descendants": "/rest/api/content/544383693/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/544383693/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544383693"
+  "webui": "/spaces/QM/pages/544383693/Pod+Session+Recordings"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544383693"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/544383693"
+  "tinyui": "/x/zaJyI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

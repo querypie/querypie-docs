@@ -1,0 +1,177 @@
+"parentType": "page"
+"parentId": "544383513"
+"ownerId": "630c844a9796033b256b98a5"
+"createdAt": "2024-07-14T05:09:03.298Z"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"position": !!int "293"
+"version":
+  "number": !!int "8"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2026-02-13T03:44:39.420Z"
+  "ncsStepVersion": "67"
+"spaceId": "539099246"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"조직에서 관리하는 쿠버네티스 클러스터의 API 서버 호출 중 Pod Exec 등의 연결 세션\
+      \ 내 행위를 기록합니다. 관리자는 영상 재생을 통해 사용자가 운영 컨테이너 쉘에서의 수행 이력을 모니터링할 수 있습니다. \",\"type\"\
+      :\"text\"}]},{\"type\":\"heading\",\"attrs\":{\"level\":2},\"content\":[{\"\
+      text\":\"Pod Session Recordings 조회하기 \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":2880,\"alt\":\"image-20240721-082407.png\"\
+      ,\"id\":\"7b244939-c074-4641-84ae-dd618dd8d6bf\",\"collection\":\"contentId-544383693\"\
+      ,\"type\":\"file\",\"height\":1800},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"Administrator > Audit > Kubernetes > Pod Session Recordings\",\"type\"\
+      :\"text\"}]}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"Administrator > Audit > Kubernetes > Pod Session Recordings 메뉴로 이동합니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Pod exec 세션 내역은 테이블에 내림차순으로 목록에 로그가 노출됩니다. \",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.\",\"type\":\"\
+      text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\"\
+      \ : 사용자 이름\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"Email\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"strong\"}]},{\"text\":\" : 사용자 이메일\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Cluster Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\"\
+      :\" : 쿼리파이 상에 등록된 클러스터 이름\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Client IP\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 사용자 클라이언트 IP 주소\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Client Name\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : 사용자 클라이언트명/버전 (예. kubectl/v1.27.3)\",\"type\"\
+      :\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"검색 필드 우측 필터 버튼을 클릭하여 \",\"type\":\"text\"},{\"text\"\
+      :\"Action At\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\"\
+      :\"에 대한 일시 범위를 재지정하여 필터링이 가능합니다.\",\"type\":\"text\"}]},{\"type\":\"mediaSingle\"\
+      ,\"attrs\":{\"layout\":\"center\",\"width\":220,\"widthType\":\"pixel\"},\"\
+      content\":[{\"type\":\"media\",\"attrs\":{\"width\":628,\"alt\":\"image-20240721-082446.png\"\
+      ,\"id\":\"7fc78ad2-87d4-42b7-83b3-ed028867b265\",\"collection\":\"contentId-544383693\"\
+      ,\"type\":\"file\",\"height\":348},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"테이블 우측 상단의 새로고침 버튼을 통해 로그\
+      \ 목록을 최신화할 수 있습니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"테이블에서 이하의 컬럼 정보를 제공합니다:\"\
+      ,\"type\":\"text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"No\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\"\
+      :\" : 이벤트 식별 번호\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Action At\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 세션 녹화 시작 일시\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"\
+      text\":\" : 대상 사용자 이름\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Email\",\"type\":\"text\"\
+      ,\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 대상 사용자 이메일\",\"type\":\"\
+      text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\"\
+      :[{\"text\":\"Cluster Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]},{\"text\":\" : 대상 쿠버네티스 클러스터명\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Role\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 액션을 행사할 수 있었던 Role명\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Client IP\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : 사용자 클라이언트 IP 주소\",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Client Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\"\
+      :\" : 사용자 클라이언트명/버전\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Connected From\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\" : 연결 방식의 주체 \",\"\
+      type\":\"text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"현재는 Proxy만 기입됩니다.\",\"type\":\"text\"}]}]}]}]}]}]}]},{\"type\":\"heading\"\
+      ,\"attrs\":{\"level\":2},\"content\":[{\"text\":\"Pod Session Recordings 내역\
+      \ 재생하기 \",\"type\":\"text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\"\
+      :7},\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이 가능합니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Action At의 링크를 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를\
+      \ 보여주는 모달이 나타납니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\"\
+      :{\"layout\":\"center\",\"width\":298,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":1044,\"alt\":\"image-20240425-022156.png\"\
+      ,\"id\":\"dc9f7f7b-ec3a-4485-93fe-faddce5515f9\",\"collection\":\"contentId-544383693\"\
+      ,\"type\":\"file\",\"height\":336},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]}]}]},{\"type\":\"listItem\",\"content\"\
+      :[{\"type\":\"paragraph\",\"content\":[{\"text\":\"녹화된 파일의 크기가 700MB를 초과 여부에\
+      \ 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. \",\"type\":\"text\"}]},{\"type\":\"orderedList\"\
+      ,\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"700MB 미만\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"strong\"}]},{\"text\":\" \",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":440,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1370,\"alt\"\
+      :\"image-20240721-082651.png\",\"id\":\"7fe4fd5f-120f-4fcb-bd74-115d2dba6639\"\
+      ,\"collection\":\"contentId-544383693\",\"type\":\"file\",\"height\":1068},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      상단에 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다. \",\"type\":\"text\"}]},{\"type\":\"\
+      orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"\
+      content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Name\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\": 실행자명 \",\"type\"\
+      :\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"Action At\",\"type\":\"text\",\"marks\":[{\"type\":\"\
+      strong\"}]},{\"text\":\": 발생 일시 (시작)\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Session Recording\
+      \ Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"text\":\":\
+      \ 레코딩명\",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"재생 버튼을 누르면 시작됩니다. \",\"type\"\
+      :\"text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"반대로, 일시정지 버튼을 누르면 재생이 멈춥니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\"\
+      ,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"버튼 우측 라인을 드래그하거나\
+      \ 원하는 시점을 클릭하여 해당 부분부터 재생도 가능합니다.  \",\"type\":\"text\"}]}]}]}]},{\"type\":\"\
+      listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Close\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르면 창이\
+      \ 닫힙니다. \",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"700MB 이상\",\"type\":\"text\",\"\
+      marks\":[{\"type\":\"strong\"}]},{\"text\":\" \",\"type\":\"text\"}]},{\"type\"\
+      :\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":434,\"widthType\"\
+      :\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":682,\"alt\"\
+      :\"image-20240618-053333.png\",\"id\":\"328e9013-7995-4d0f-94f3-cee9d45d3d70\"\
+      ,\"collection\":\"contentId-544383693\",\"type\":\"file\",\"height\":524},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\":[{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      재생 화면 안에 실행 불가 문구와 함께 다운로드 버튼을 제공합니다. \",\"type\":\"text\"}]},{\"type\":\"orderedList\"\
+      ,\"attrs\":{\"order\":1},\"content\":[{\"type\":\"listItem\",\"content\":[{\"\
+      type\":\"paragraph\",\"content\":[{\"text\":\"파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.\
+      \ \",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"\
+      paragraph\",\"content\":[{\"text\":\"이 세션 녹화를 보려면 파일 콘텐츠를 다운로드하여 플레이해야 합니다.\
+      \ \",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"content\":[{\"type\"\
+      :\"paragraph\",\"content\":[{\"text\":\"Download\",\"type\":\"text\",\"marks\"\
+      :[{\"type\":\"code\"}]},{\"text\":\" 버튼을 누르면 다운로드가 진행되어 로컬에 파일이 생성됩니다. \",\"\
+      type\":\"text\"}]},{\"type\":\"orderedList\",\"attrs\":{\"order\":1},\"content\"\
+      :[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"\
+      text\":\"Administrator > General > Company Management > Security > Others 에\
+      \ 위치한 \",\"type\":\"text\"},{\"text\":\"Export a file with Encryption\",\"type\"\
+      :\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 공통 옵션이 \",\"type\":\"\
+      text\"},{\"text\":\"Required\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"\
+      }]},{\"text\":\"로 활성화되어 있을 경우, 해당 다운로드 시 암호화 모달이 추가로 나타나고 해당 모달 이후에 다운로드를 실행합니다.\
+      \ \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"\
+      center\",\"width\":404,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\"\
+      ,\"attrs\":{\"width\":1240,\"alt\":\"image-20240721-082733.png\",\"id\":\"7611a1c1-961d-4716-bdb5-ec94233a6836\"\
+      ,\"collection\":\"contentId-544383693\",\"type\":\"file\",\"height\":300},\"\
+      marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\":\"#091e4224\"\
+      }}]}]},{\"type\":\"paragraph\",\"content\":[{\"text\":\" \",\"type\":\"text\"\
+      }]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":412,\"\
+      widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\"\
+      :1132,\"alt\":\"image-20240425-025317.png\",\"id\":\"6582c679-3eb4-420e-af61-c60ee71932d0\"\
+      ,\"collection\":\"contentId-544383693\",\"type\":\"file\",\"height\":792}}]}]}]}]}]}]}]}]}]}],\"\
+      version\":1}"
+"status": "current"
+"title": "Pod Session Recordingsㅤ"
+"id": "544383693"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544383693"
+  "webui": "/spaces/QM/pages/544383693/Pod+Session+Recordings"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544383693"
+  "tinyui": "/x/zaJyI"
+  "base": "https://querypie.atlassian.net/wiki"

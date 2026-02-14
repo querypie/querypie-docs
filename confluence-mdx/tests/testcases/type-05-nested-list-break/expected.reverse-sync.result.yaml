@@ -1,5 +1,5 @@
 changes_count: 1
-created_at: '2026-02-14T16:28:19.050146+00:00'
+created_at: '2026-02-14T17:24:01.913997+00:00'
 mdx_diff_report: "--- tests/testcases/type-05-nested-list-break/original.mdx+++ tests/testcases/type-05-nested-list-break/improved.mdx@@\
   \ -48,7 +48,7 @@   <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png\"\
   \ alt=\"image-20240425-022156.png\" width=\"298\" />\n   </figure>\n 3. 녹화된 파일의\
@@ -12,52 +12,16 @@ status: fail
 verification:
   diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -1,6 +1,3 @@-\n\
     -# Pod Session Recordings\n-\n ### Overview\n \n 조직에서 관리하는 쿠버네티스 클러스터의 API 서버\
-    \ 호출 중 Pod Exec 등의 연결 세션 내 행위를 기록합니다.\n@@ -9,7 +6,7 @@ ### Pod Session Recordings\
-    \ 조회하기\n \n <figure data-layout=\"center\" data-align=\"center\">\n-<img src=\"\
-    /administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082407.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings\"\
-    \ width=\"760\" />\n+<img src=\"/types/type-05-nested-list-break/image-20240721-082407.png\"\
-    \ alt=\"Administrator &gt; Audit &gt; Kubernetes &gt; Pod Session Recordings\"\
-    \ width=\"760\" />\n <figcaption>\n Administrator &gt; Audit &gt; Kubernetes &gt;\
-    \ Pod Session Recordings\n </figcaption>\n@@ -25,7 +22,7 @@     5.  **Client Name**\
-    \  : 사용자 클라이언트명/버전 (예. kubectl/v1.27.3)\n 4. 검색 필드 우측 필터 버튼을 클릭하여  **Action At**\
-    \ 에 대한 일시 범위를 재지정하여 필터링이 가능합니다.\n   <figure data-layout=\"center\" data-align=\"\
-    center\">\n-  <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082446.png\"\
-    \ alt=\"image-20240721-082446.png\" width=\"220\" />\n+  <img src=\"/types/type-05-nested-list-break/image-20240721-082446.png\"\
-    \ alt=\"image-20240721-082446.png\" width=\"220\" />\n   </figure>\n 5. 테이블 우측\
-    \ 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.\n 6. 테이블에서 이하의 컬럼 정보를 제공합니다:\n@@ -45,14\
-    \ +42,14 @@ 1. 각 행의 Action At의 링크를 클릭하면 세션 레코딩 내역의 재생이 가능합니다.\n 2. Action At의\
-    \ 링크를 클릭하면 모달이 실행되고, 재생을 위한 초기 다운로딩 프로세스를 보여주는 모달이 나타납니다. \n   <figure data-layout=\"\
-    center\" data-align=\"center\">\n-  <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png\"\
-    \ alt=\"image-20240425-022156.png\" width=\"298\" />\n+  <img src=\"/types/type-05-nested-list-break/image-20240425-022156.png\"\
+    \ 호출 중 Pod Exec 등의 연결 세션 내 행위를 기록합니다.\n@@ -48,11 +45,11 @@   <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-022156.png\"\
     \ alt=\"image-20240425-022156.png\" width=\"298\" />\n   </figure>\n 3. 녹화된 파일의\
     \ 크기가 700MB를 초과 여부에 따라 재생화면을 노출하거나 다운로드 버튼을 노출합니다. \n-    1.  **700MB 미만 (권장)**\
     \  \n+    1.  **700MB 미만**  \n       <figure data-layout=\"center\" data-align=\"\
-    center\">\n-      <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082651.png\"\
-    \ alt=\"image-20240721-082651.png\" width=\"440\" />\n+      <img src=\"/types/type-05-nested-list-break/image-20240721-082651.png\"\
+    center\">\n       <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082651.png\"\
     \ alt=\"image-20240721-082651.png\" width=\"440\" />\n       </figure>\n-    \
     \    1. 상단에 기본 정보가 노출되며 하단에 Replay 재생화면이 노출됩니다. \n+        1. (권장) 상단에 기본 정보가\
     \ 노출되며 하단에 Replay 재생화면이 노출됩니다. \n             1.  **Name** : 실행자명 \n         \
     \    2.  **Action At** : 발생 일시 (시작)\n             3.  **Session Recording Name**\
-    \ : 레코딩명\n@@ -62,7 +59,7 @@         3. `Close` 버튼을 누르면 창이 닫힙니다. \n     2.  **700MB\
-    \ 이상**  \n       <figure data-layout=\"center\" data-align=\"center\">\n-    \
-    \  <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240618-053333.png\"\
-    \ alt=\"image-20240618-053333.png\" width=\"434\" />\n+      <img src=\"/types/type-05-nested-list-break/image-20240618-053333.png\"\
-    \ alt=\"image-20240618-053333.png\" width=\"434\" />\n       </figure>\n     \
-    \    1. 재생 화면 안에 실행 불가 문구와 함께 다운로드 버튼을 제공합니다. \n             1. 파일 크기가 700MB를\
-    \ 초과하여 세션을 재생할 수 없습니다. \n@@ -70,8 +67,8 @@         2. `Download` 버튼을 누르면 다운로드가\
-    \ 진행되어 로컬에 파일이 생성됩니다. \n             1. Administrator &gt; General &gt; Company\
-    \ Management &gt; Security &gt; Others 에 위치한 `Export a file with Encryption` 공통\
-    \ 옵션이 `Required`로 활성화되어 있을 경우, 해당 다운로드 시 암호화 모달이 추가로 나타나고 해당 모달 이후에 다운로드를 실행합니다.\
-    \  <br/>  \n               <figure data-layout=\"center\" data-align=\"center\"\
-    >\n-              <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240721-082733.png\"\
-    \ alt=\"image-20240721-082733.png\" width=\"404\" />\n+              <img src=\"\
-    /types/type-05-nested-list-break/image-20240721-082733.png\" alt=\"image-20240721-082733.png\"\
-    \ width=\"404\" />\n               </figure>\n               <figure data-layout=\"\
-    center\" data-align=\"center\">\n-              <img src=\"/administrator-manual/audit/kubernetes-logs/pod-session-recordings/image-20240425-025317.png\"\
-    \ alt=\"image-20240425-025317.png\" width=\"412\" />\n+              <img src=\"\
-    /types/type-05-nested-list-break/image-20240425-025317.png\" alt=\"image-20240425-025317.png\"\
-    \ width=\"412\" />\n               </figure>\n"
+    \ : 레코딩명\n"
   exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -223,7 +223,7\
   \ @@\n     <ol start=\"1\">\n      <li>\n       <p>\n-       상단에 기본 정보가 노출되며 하단에\

@@ -2,6 +2,7 @@ import difflib
 import re
 import shutil
 from pathlib import Path
+import re as _re
 
 import pytest
 import yaml
@@ -11,6 +12,7 @@ from reverse_sync_cli import MdxSource, run_verify
 
 TESTCASES_ROOT = Path(__file__).parent / "testcases"
 TYPECASE_DIRS = sorted([p for p in TESTCASES_ROOT.glob("type-*") if p.is_dir()])
+REAL_PAGES_YAML = Path(__file__).parent.parent / "var" / "pages.yaml"
 
 
 def _strip_fields(text: str, pattern: str) -> str:
@@ -34,9 +36,31 @@ def _assert_text_equal(actual: str, expected: str, label_a: str, label_b: str) -
     raise AssertionError(diff)
 
 
+def _extract_source_page_id(original_mdx: str) -> str | None:
+    m = _re.search(r"/pages/(\d+)/", original_mdx)
+    return m.group(1) if m else None
+
+
+def _load_real_path_map() -> dict[str, list[str]]:
+    pages = yaml.safe_load(REAL_PAGES_YAML.read_text()) or []
+    out: dict[str, list[str]] = {}
+    for p in pages:
+        pid = str(p.get("page_id", ""))
+        path = p.get("path")
+        if pid and isinstance(path, list):
+            out[pid] = path
+    return out
+
+
 @pytest.mark.parametrize("case_dir", TYPECASE_DIRS, ids=[p.name for p in TYPECASE_DIRS])
 def test_reverse_sync_roundtrip_typecases(case_dir: Path, tmp_path, monkeypatch):
     case_id = case_dir.name
+    original_mdx_text = (case_dir / "original.mdx").read_text()
+    source_page_id = _extract_source_page_id(original_mdx_text)
+    real_paths = _load_real_path_map()
+    real_path = real_paths.get(source_page_id or "")
+    if not real_path:
+        real_path = ["types", case_id]
 
     # isolated project root for this testcase
     project_dir = tmp_path / "project"
@@ -45,7 +69,7 @@ def test_reverse_sync_roundtrip_typecases(case_dir: Path, tmp_path, monkeypatch)
     out_var_case.mkdir(parents=True, exist_ok=True)
 
     # minimal pages.yaml so _resolve_attachment_dir() works with non-page-id names
-    pages = [{"page_id": case_id, "path": ["types", case_id]}]
+    pages = [{"page_id": case_id, "path": real_path}]
     (var_dir / "pages.yaml").write_text(
         yaml.dump(pages, allow_unicode=True, default_flow_style=False)
     )
@@ -59,7 +83,7 @@ def test_reverse_sync_roundtrip_typecases(case_dir: Path, tmp_path, monkeypatch)
     result = run_verify(
         page_id=case_id,
         original_src=MdxSource(
-            content=original_path.read_text(),
+            content=original_mdx_text,
             descriptor=f"tests/testcases/{case_id}/original.mdx",
         ),
         improved_src=MdxSource(

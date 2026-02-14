@@ -1,0 +1,428 @@
+"id": "565575990"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/565575990"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTY1NTc1OTkw"
+"status": "current"
+"title": "Server Agent 설치 및 제거하기"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie v10 Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "14426974"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544178405"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1"
+  "status": "current"
+  "title": "관리자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757510"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544178405/restriction/byOperation"
+    "history": "/rest/api/content/544178405/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544178405/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544178405/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544178405"
+    "tinyui": "/x/5YBvI"
+    "editui": "/pages/resumedraft.action?draftId=544178405"
+    "webui": "/spaces/QM/pages/544178405"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544178405"
+- "id": "544380588"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544380588"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgwNTg4"
+  "status": "current"
+  "title": "Servers"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "947"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544380588/restriction/byOperation"
+    "history": "/rest/api/content/544380588/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544380588/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544380588/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544380588"
+    "tinyui": "/x/rJZyI"
+    "editui": "/pages/resumedraft.action?draftId=544380588"
+    "webui": "/spaces/QM/pages/544380588/Servers"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544380588"
+- "id": "544380635"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544380635"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MzgwNjM1"
+  "status": "current"
+  "title": "Connection Management​"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "77258932"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544380635/restriction/byOperation"
+    "history": "/rest/api/content/544380635/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544380635/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544380635/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544380635"
+    "tinyui": "/x/25ZyI"
+    "editui": "/pages/resumedraft.action?draftId=544380635"
+    "webui": "/spaces/QM/pages/544380635/Connection+Management"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544380635"
+- "id": "544211376"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544211376"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MjExMzc2"
+  "status": "current"
+  "title": "Server Agents for RDP"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "2182"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544211376/restriction/byOperation"
+    "history": "/rest/api/content/544211376/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544211376/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544211376/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544211376"
+    "tinyui": "/x/sAFwI"
+    "editui": "/pages/resumedraft.action?draftId=544211376"
+    "webui": "/spaces/QM/pages/544211376/Server+Agents+for+RDP"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544211376"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<h2>Overview</h2><p>Windows Server에 원격 접속을 하기 위해선 QueryPie Server Agent를\
+      \ 설치해야 합니다. QueryPie Server Agent 설치 후, QueryPie내 Servers 메뉴에 Windows Server가\
+      \ 자동으로 추가됩니다.</p><p /><h2>Server Agent 설치하기</h2><ac:image ac:align=\"center\"\
+      \ ac:alt=\"image-20240728-163032.png\" ac:custom-width=\"true\" ac:layout=\"\
+      center\" ac:original-height=\"712\" ac:original-width=\"1277\" ac:width=\"760\"\
+      ><ri:attachment ri:filename=\"image-20240728-163032.png\" ri:version-at-save=\"\
+      1\" /><ac:adf-mark color=\"#091e4224\" key=\"border\" size=\"1\" /></ac:image><ul><li><p>Server\
+      \ Agent 다운로드 페이지에 접속합니다.</p><ul><li><p>설치된 QueryPie 도메인 주소 뒤에 <code>/for-agent/server-agent/download</code>\
+      \ 를 붙여 Server Agent 다운로드 페이지에 접속할 수 있습니다.<br />e.g. <code>https://sac.querypie.io/for-agent/server-agent/download</code></p></li></ul></li></ul><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"059ae9f8-8891-4cd0-9621-f5fc4bfd2189\"\
+      ><ac:rich-text-body><p>11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin &gt; Servers\
+      \ &gt; Connection Management &gt; RDP Server Agent 페이지의 <code>Download Server\
+      \ Agent</code> 버튼)를 통해서도 받을 수 있도록 변경되었습니다. 기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을\
+      \ 수도 있습니다. (QueryPie 사용자가 아닌 사람이 외부에서 에이전트를 다운로드 받아야 하는 경우 사용) </p><ac:image\
+      \ ac:align=\"center\" ac:alt=\"image-20251010-085601.png\" ac:custom-width=\"\
+      true\" ac:layout=\"center\" ac:original-height=\"612\" ac:original-width=\"\
+      1280\" ac:width=\"700\"><ri:attachment ri:filename=\"image-20251010-085601.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>RDP Server Agent 다운로드 버튼 제공</p></ac:caption></ac:image></ac:rich-text-body></ac:structured-macro><ul><li><p>에이전트\
+      \ 설치를 위해선 QueryPie에 로그인이 필요합니다.</p></li><li><p>화면 중앙의 Windows 버튼을 클릭하면 압축 파일이\
+      \ 다운로드 됩니다.</p></li><li><p>설치할 Windows 서버에 압축파일을 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.</p><ol\
+      \ start=\"1\"><li><p>QueryPie Server Access Control_(QueryPie Version)_Setup</p></li><li><p>CONFIG</p></li></ol></li><li><p>두\
+      \ 파일을 같은 경로에 위치한 뒤, QueryPie Server Access Control_(QueryPie Version)_Setup\
+      \ 파일을 실행합니다.</p></li><li><p>안내에 따라 파일을 설치합니다. </p></li></ul><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"79f77d24-965a-4334-8e8d-90e4b8ff41d1\"\
+      ><ac:rich-text-body><p><strong>CONFIG 파일 설명</strong></p><p>RDP Server Agent가\
+      \ 연결될 QueryPie의 주소를 가지고 있습니다.</p><p>10.2.8 버전 부터는 RDP 연결에 사용할 Port를 CONFIG 파일에서\
+      \ 지정할 수 있습니다. </p></ac:rich-text-body></ac:structured-macro><ac:structured-macro\
+      \ ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"eee67223-dc16-4c85-b1fb-54551a9ffc53\"\
+      ><ac:rich-text-body><p><strong>RDP연결에 사용할 Port의 변경</strong></p><ul><li><p>RDP에서\
+      \ 사용할 Port의 변경은 QueryPie Web에서는 지원하지 않습니다.</p></li><li><p>Port 변경이 필요한 경우, RDP\
+      \ Server Agent를 재설치해야 합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro><p\
+      \ /><h2>CONFIG 파일 없이 Server Agent 설치하기</h2><p>GUI 없이 설치하면 사용자 개입 없이 자동으로 프로그램을\
+      \ 설치할 수 있어 대규모 배포나 원격 설치에 유용합니다.</p><p>PowerShell 또는 CMD를 통해 Server Agent를 자동으로\
+      \ 설치할 수 있습니다.</p><p><strong>PowerShell</strong></p><ac:structured-macro ac:name=\"\
+      code\" ac:schema-version=\"1\" ac:macro-id=\"1f8f430e-85df-4aca-a00e-d3b88cfb08ef\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[& \"{설치파일 경로}.exe\"\
+      \ /Url=\"{쿼리파이 웹 주소}\" /Port=\"{RDP에 사용할 Port}\" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro><p>e.g.</p><ac:structured-macro\
+      \ ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"b538337d-7cd6-448a-a06e-05d1852be05a\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[& \".\\QueryPie_Server_Access_Control_Setup.exe\"\
+      \ /Url=\"https://dev.querypie.com\" /Port=\"13389\" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro><p\
+      \ /><p><strong>CMD</strong></p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"\
+      1\" ac:macro-id=\"bee10f71-a57e-4f23-97ba-28ae2d111415\"><ac:parameter ac:name=\"\
+      breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[\"\
+      {설치파일 경로}.exe\" /Url=\"{쿼리파이 웹 주소}\" /Port=\"{RDP에 사용할 Port}\" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro><p>e.g.</p><p>CMD에서\
+      \ Server Agent 설치파일 위치로 이동 후 아래 명령어 실행</p><ac:structured-macro ac:name=\"code\"\
+      \ ac:schema-version=\"1\" ac:macro-id=\"5c388167-6aaf-4ca1-8d8a-2f05060881d9\"\
+      ><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"\
+      breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[\".\\QueryPie_Server_Access_Control_Setup.exe\"\
+      \ /Url=\"https://dev.querypie.com\"  /Port=\"13389\" /VERYSILENT]]></ac:plain-text-body></ac:structured-macro><p\
+      \ /><h2>&nbsp;Server Agent 삭제하기</h2><ac:image ac:align=\"center\" ac:alt=\"\
+      image-20240829-010643.png\" ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"\
+      626\" ac:original-width=\"984\" ac:width=\"760\"><ri:attachment ri:filename=\"\
+      image-20240829-010643.png\" ri:version-at-save=\"1\" /></ac:image><ol start=\"\
+      1\"><li><p>Administrator &gt; Servers &gt; Connection Management &gt; Server\
+      \ Agents for RDP 페이지로 접속합니다.</p></li><li><p>우측 상단은 <code>Verify Deletion Key\
+      \ 버튼을 클릭합니다.</code></p></li><li><p>확인된 Deletion Key를 기록합니다.</p></li><li><p>Windows\
+      \ Server 콘솔에 접속합니다.</p></li><li><p>제어판 &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server\
+      \ Agent를 삭제합니다.</p></li><li><p>패스워드 입력 란에 3에서 기록한 Deletion Key를 입력합니다.</p></li><li><p>QueryPie\
+      \ 웹에 접속합니다.</p></li><li><p>Administrator &gt; Servers &gt; Connection Management\
+      \ &gt; Server Agents for RDP 메뉴로 이동합니다.</p></li><li><p>테이블 내 삭제할 대상 서버 좌측의 체크\
+      \ 박스를 체크 후 <code>Delete</code> 버튼을 통해 삭제합니다.</p></li></ol><p /><ac:structured-macro\
+      \ ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"1e4db7ed-51ef-4ff7-a76a-b72cc9ec5387\"\
+      ><ac:rich-text-body><p>Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상\
+      \ Windows 서버의 날짜가 동일해야 삭제가 가능합니다.</p></ac:rich-text-body></ac:structured-macro><ac:structured-macro\
+      \ ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"76d617f1-4729-42b8-bd15-fc385bf44fec\"\
+      ><ac:rich-text-body><p><strong>Windows에서 Deletion Key가 틀리는 경우</strong></p><ul><li><p>연결된\
+      \ QueryPie에서 Deletion Key를 받았는지 확인합니다.</p></li><li><p>QueryPie가 동작하는 서버의 날짜와\
+      \ 삭제 대상 Windows 서버의 날짜가 동일한지 확인합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/565575990"
+  "view":
+    "value": "<h2 id=\"ServerAgent설치및제거하기-Overview\">Overview</h2><p>Windows Server에\
+      \ 원격 접속을 하기 위해선 QueryPie Server Agent를 설치해야 합니다. QueryPie Server Agent 설치 후,\
+      \ QueryPie내 Servers 메뉴에 Windows Server가 자동으로 추가됩니다.</p><p /><h2 id=\"ServerAgent설치및제거하기-ServerAgent설치하기\"\
+      >Server Agent 설치하기</h2><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image confluence-content-image-border\
+      \ image-center\" alt=\"image-20240728-163032.png\" width=\"760\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240728-163032.png?version=1&amp;modificationDate=1722184235186&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=423\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/565575990/image-20240728-163032.png?version=1&amp;modificationDate=1722184235186&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"712\" data-width=\"1277\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"565576028\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240728-163032.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"565575990\" data-linked-resource-container-version=\"\
+      12\" data-media-id=\"f70dc225-10df-4041-b19a-eed691beac49\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240728-163032.png?version=1&amp;modificationDate=1722184235186&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=714\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240728-163032.png?version=1&amp;modificationDate=1722184235186&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=423\
+      \ 1x\"></span><ul><li><p>Server Agent 다운로드 페이지에 접속합니다.</p><ul><li><p>설치된 QueryPie\
+      \ 도메인 주소 뒤에 <code>/for-agent/server-agent/download</code> 를 붙여 Server Agent\
+      \ 다운로드 페이지에 접속할 수 있습니다.<br/>e.g. <code>https://sac.querypie.io/for-agent/server-agent/download</code></p></li></ul></li></ul><div\
+      \ class=\"confluence-information-macro confluence-information-macro-information\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"059ae9f8-8891-4cd0-9621-f5fc4bfd2189\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>11.3.0 에서 관리자가 server agent의 다운로드를 UI( Admin &gt; Servers &gt; Connection\
+      \ Management &gt; RDP Server Agent 페이지의 <code>Download Server Agent</code> 버튼)를\
+      \ 통해서도 받을 수 있도록 변경되었습니다. 기존 처럼 다운로드 링크의 페이지를 사용해서 다운로드 받을 수도 있습니다. (QueryPie\
+      \ 사용자가 아닌 사람이 외부에서 에이전트를 다운로드 받아야 하는 경우 사용) </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ image-center\" alt=\"image-20251010-085601.png\" width=\"700\" loading=\"\
+      lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20251010-085601.png?version=1&amp;modificationDate=1760086565530&amp;cacheVersion=1&amp;api=v2&amp;width=700&amp;height=334\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/565575990/image-20251010-085601.png?version=1&amp;modificationDate=1760086565530&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"612\" data-width=\"1280\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"1459879941\" data-linked-resource-version=\"1\"\
+      \ data-linked-resource-type=\"attachment\" data-linked-resource-default-alias=\"\
+      image-20251010-085601.png\" data-base-url=\"https://querypie.atlassian.net/wiki\"\
+      \ data-linked-resource-content-type=\"image/png\" data-linked-resource-container-id=\"\
+      565575990\" data-linked-resource-container-version=\"12\" data-media-id=\"482274a8-bc89-4b80-b757-b55318428950\"\
+      \ data-media-type=\"file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20251010-085601.png?version=1&amp;modificationDate=1760086565530&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=612\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20251010-085601.png?version=1&amp;modificationDate=1760086565530&amp;cacheVersion=1&amp;api=v2&amp;width=700&amp;height=334\
+      \ 1x\" /></span></div></div><ul><li><p>에이전트 설치를 위해선 QueryPie에 로그인이 필요합니다.</p></li><li><p>화면\
+      \ 중앙의 Windows 버튼을 클릭하면 압축 파일이 다운로드 됩니다.</p></li><li><p>설치할 Windows 서버에 압축파일을\
+      \ 풀어줍니다. 압축 파일 내에는 아래 두 파일이 있습니다.</p><ol start=\"1\"><li><p>QueryPie Server\
+      \ Access Control_(QueryPie Version)_Setup</p></li><li><p>CONFIG</p></li></ol></li><li><p>두\
+      \ 파일을 같은 경로에 위치한 뒤, QueryPie Server Access Control_(QueryPie Version)_Setup\
+      \ 파일을 실행합니다.</p></li><li><p>안내에 따라 파일을 설치합니다. </p></li></ul><div class=\"confluence-information-macro\
+      \ confluence-information-macro-information conf-macro output-block\" data-hasbody=\"\
+      true\" data-macro-id=\"79f77d24-965a-4334-8e8d-90e4b8ff41d1\" data-macro-name=\"\
+      info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon\"\
+      > </span><div class=\"confluence-information-macro-body\"><p><strong>CONFIG\
+      \ 파일 설명</strong></p><p>RDP Server Agent가 연결될 QueryPie의 주소를 가지고 있습니다.</p><p>10.2.8\
+      \ 버전 부터는 RDP 연결에 사용할 Port를 CONFIG 파일에서 지정할 수 있습니다. </p></div></div><div class=\"\
+      confluence-information-macro confluence-information-macro-note conf-macro output-block\"\
+      \ data-hasbody=\"true\" data-macro-id=\"eee67223-dc16-4c85-b1fb-54551a9ffc53\"\
+      \ data-macro-name=\"note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p><strong>RDP연결에 사용할 Port의 변경</strong></p><ul><li><p>RDP에서 사용할 Port의 변경은 QueryPie\
+      \ Web에서는 지원하지 않습니다.</p></li><li><p>Port 변경이 필요한 경우, RDP Server Agent를 재설치해야\
+      \ 합니다.</p></li></ul></div></div><p /><h2 id=\"ServerAgent설치및제거하기-CONFIG파일없이ServerAgent설치하기\"\
+      >CONFIG 파일 없이 Server Agent 설치하기</h2><p>GUI 없이 설치하면 사용자 개입 없이 자동으로 프로그램을 설치할\
+      \ 수 있어 대규모 배포나 원격 설치에 유용합니다.</p><p>PowerShell 또는 CMD를 통해 Server Agent를 자동으로\
+      \ 설치할 수 있습니다.</p><p><strong>PowerShell</strong></p><div class=\"code panel pdl\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"1f8f430e-85df-4aca-a00e-d3b88cfb08ef\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
+      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
+      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">&amp;\
+      \ &quot;{설치파일 경로}.exe&quot; /Url=&quot;{쿼리파이 웹 주소}&quot; /Port=&quot;{RDP에 사용할\
+      \ Port}&quot; /VERYSILENT</pre>\n</div></div><p>e.g.</p><div class=\"code panel\
+      \ pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"b538337d-7cd6-448a-a06e-05d1852be05a\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
+      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
+      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">&amp;\
+      \ &quot;.\\QueryPie_Server_Access_Control_Setup.exe&quot; /Url=&quot;https://dev.querypie.com&quot;\
+      \ /Port=&quot;13389&quot; /VERYSILENT</pre>\n</div></div><p /><p><strong>CMD</strong></p><div\
+      \ class=\"code panel pdl conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"\
+      bee10f71-a57e-4f23-97ba-28ae2d111415\" data-macro-name=\"code\" style=\"border-width:\
+      \ 1px;\"><div class=\"codeContent panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\"\
+      \ data-syntaxhighlighter-params=\"brush: java; gutter: false; theme: Confluence\"\
+      \ data-theme=\"Confluence\">&quot;{설치파일 경로}.exe&quot; /Url=&quot;{쿼리파이 웹 주소}&quot;\
+      \ /Port=&quot;{RDP에 사용할 Port}&quot; /VERYSILENT</pre>\n</div></div><p>e.g.</p><p>CMD에서\
+      \ Server Agent 설치파일 위치로 이동 후 아래 명령어 실행</p><div class=\"code panel pdl conf-macro\
+      \ output-block\" data-hasbody=\"true\" data-macro-id=\"5c388167-6aaf-4ca1-8d8a-2f05060881d9\"\
+      \ data-macro-name=\"code\" style=\"border-width: 1px;\"><div class=\"codeContent\
+      \ panelContent pdl\">\n<pre class=\"syntaxhighlighter-pre\" data-syntaxhighlighter-params=\"\
+      brush: java; gutter: false; theme: Confluence\" data-theme=\"Confluence\">&quot;.\\\
+      QueryPie_Server_Access_Control_Setup.exe&quot; /Url=&quot;https://dev.querypie.com&quot;\
+      \  /Port=&quot;13389&quot; /VERYSILENT</pre>\n</div></div><p /><h2 id=\"ServerAgent설치및제거하기-ServerAgent삭제하기\"\
+      > Server Agent 삭제하기</h2><span class=\"confluence-embedded-file-wrapper image-center-wrapper\
+      \ confluence-embedded-manual-size\"><img class=\"confluence-embedded-image image-center\"\
+      \ alt=\"image-20240829-010643.png\" width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240829-010643.png?version=1&amp;modificationDate=1724893605824&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=483\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/565575990/image-20240829-010643.png?version=1&amp;modificationDate=1724893605824&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"626\" data-width=\"984\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"615940110\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240829-010643.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"565575990\" data-linked-resource-container-version=\"\
+      12\" data-media-id=\"fb64182c-bc5e-4f42-ba00-15612888051a\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240829-010643.png?version=1&amp;modificationDate=1724893605824&amp;cacheVersion=1&amp;api=v2&amp;width=1520&amp;height=966\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/565575990/image-20240829-010643.png?version=1&amp;modificationDate=1724893605824&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=483\
+      \ 1x\"></span><ol start=\"1\"><li><p>Administrator &gt; Servers &gt; Connection\
+      \ Management &gt; Server Agents for RDP 페이지로 접속합니다.</p></li><li><p>우측 상단은 <code>Verify\
+      \ Deletion Key 버튼을 클릭합니다.</code></p></li><li><p>확인된 Deletion Key를 기록합니다.</p></li><li><p>Windows\
+      \ Server 콘솔에 접속합니다.</p></li><li><p>제어판 &gt; 프로그램 추가/제거 메뉴 접속 후 QueryPie Server\
+      \ Agent를 삭제합니다.</p></li><li><p>패스워드 입력 란에 3에서 기록한 Deletion Key를 입력합니다.</p></li><li><p>QueryPie\
+      \ 웹에 접속합니다.</p></li><li><p>Administrator &gt; Servers &gt; Connection Management\
+      \ &gt; Server Agents for RDP 메뉴로 이동합니다.</p></li><li><p>테이블 내 삭제할 대상 서버 좌측의 체크\
+      \ 박스를 체크 후 <code>Delete</code> 버튼을 통해 삭제합니다.</p></li></ol><p /><div class=\"\
+      confluence-information-macro confluence-information-macro-information conf-macro\
+      \ output-block\" data-hasbody=\"true\" data-macro-id=\"1e4db7ed-51ef-4ff7-a76a-b72cc9ec5387\"\
+      \ data-macro-name=\"info\"><span class=\"aui-icon aui-icon-small aui-iconfont-info\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p>Deletion Key는 일단위로 변경되며, QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows 서버의 날짜가 동일해야\
+      \ 삭제가 가능합니다.</p></div></div><div class=\"confluence-information-macro confluence-information-macro-note\
+      \ conf-macro output-block\" data-hasbody=\"true\" data-macro-id=\"76d617f1-4729-42b8-bd15-fc385bf44fec\"\
+      \ data-macro-name=\"note\"><span class=\"aui-icon aui-icon-small aui-iconfont-warning\
+      \ confluence-information-macro-icon\"> </span><div class=\"confluence-information-macro-body\"\
+      ><p><strong>Windows에서 Deletion Key가 틀리는 경우</strong></p><ul><li><p>연결된 QueryPie에서\
+      \ Deletion Key를 받았는지 확인합니다.</p></li><li><p>QueryPie가 동작하는 서버의 날짜와 삭제 대상 Windows\
+      \ 서버의 날짜가 동일한지 확인합니다.</p></li></ul></div></div>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/565575990"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "921"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/565575990/restriction/byOperation"
+  "history": "/rest/api/content/565575990/history"
+  "version": ""
+  "descendants": "/rest/api/content/565575990/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/565575990/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=565575990"
+  "webui": "/spaces/QM/pages/565575990/Server+Agent"
+  "edituiv2": "/spaces/QM/pages/edit-v2/565575990"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/565575990"
+  "tinyui": "/x/NgG2IQ"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

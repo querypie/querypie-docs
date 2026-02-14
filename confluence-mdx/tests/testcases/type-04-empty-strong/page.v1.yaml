@@ -1,0 +1,231 @@
+"id": "543948978"
+"type": "page"
+"ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/543948978"
+"base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQzOTQ4OTc4"
+"status": "current"
+"title": "Company Management"
+"ancestors":
+- "id": "576585864"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/576585864"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTc2NTg1ODY0"
+  "status": "current"
+  "title": "QueryPie v10 Manual"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "14426974"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/576585864/restriction/byOperation"
+    "history": "/rest/api/content/576585864/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/576585864/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/576585864/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/576585864"
+    "tinyui": "/x/iABeIg"
+    "editui": "/pages/resumedraft.action?draftId=576585864"
+    "webui": "/spaces/QM/overview"
+    "edituiv2": "/spaces/QM/pages/edit-v2/576585864"
+- "id": "608501837"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/608501837"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNjA4NTAxODM3"
+  "status": "current"
+  "title": "QueryPie Docs"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "9"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/608501837/restriction/byOperation"
+    "history": "/rest/api/content/608501837/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/608501837/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/608501837/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/608501837"
+    "tinyui": "/x/TQBFJ"
+    "editui": "/pages/resumedraft.action?draftId=608501837"
+    "webui": "/spaces/QM/pages/608501837/QueryPie+Docs"
+    "edituiv2": "/spaces/QM/pages/edit-v2/608501837"
+- "id": "544178405"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544178405"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MTc4NDA1"
+  "status": "current"
+  "title": "관리자 매뉴얼"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "521757510"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544178405/restriction/byOperation"
+    "history": "/rest/api/content/544178405/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544178405/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544178405/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544178405"
+    "tinyui": "/x/5YBvI"
+    "editui": "/pages/resumedraft.action?draftId=544178405"
+    "webui": "/spaces/QM/pages/544178405"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544178405"
+- "id": "544080057"
+  "type": "page"
+  "ari": "ari:cloud:confluence:530d00f8-a0ee-42cf-8109-ec274eb5f47b:page/544080057"
+  "base64EncodedAri": "YXJpOmNsb3VkOmNvbmZsdWVuY2U6NTMwZDAwZjgtYTBlZS00MmNmLTgxMDktZWMyNzRlYjVmNDdiOmNvbnRlbnQvNTQ0MDgwMDU3"
+  "status": "current"
+  "title": "General"
+  "macroRenderedOutput": {}
+  "extensions":
+    "position": !!int "257"
+  "_expandable":
+    "container": "/rest/api/space/QM"
+    "metadata": ""
+    "restrictions": "/rest/api/content/544080057/restriction/byOperation"
+    "history": "/rest/api/content/544080057/history"
+    "body": ""
+    "version": ""
+    "descendants": "/rest/api/content/544080057/descendant"
+    "space": "/rest/api/space/QM"
+    "childTypes": ""
+    "schedulePublishInfo": ""
+    "operations": ""
+    "schedulePublishDate": ""
+    "children": "/rest/api/content/544080057/child"
+    "ancestors": ""
+    "draftVersion": ""
+  "_links":
+    "self": "https://querypie.atlassian.net/wiki/rest/api/content/544080057"
+    "tinyui": "/x/uQBuI"
+    "editui": "/pages/resumedraft.action?draftId=544080057"
+    "webui": "/spaces/QM/pages/544080057/General"
+    "edituiv2": "/spaces/QM/pages/edit-v2/544080057"
+"macroRenderedOutput": {}
+"body":
+  "storage":
+    "value": "<h2>Overview</h2><p>Company Management는 쿼리파이 제품의 기본 보안 및 알림 설정 등을 관리하기\
+      \ 위한 메뉴입니다. </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"\
+      720\" ac:original-width=\"1280\" ac:custom-width=\"true\" ac:alt=\"image-20240724-055809.png\"\
+      \ ac:width=\"760\"><ri:attachment ri:filename=\"image-20240724-055809.png\"\
+      \ ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; General &gt;\
+      \ Company Management &gt; General</p></ac:caption><ac:adf-mark key=\"border\"\
+      \ size=\"1\" color=\"#091e4224\" /></ac:image><p /><h2>메뉴 설명</h2><ul><li><p><ac:link><ri:page\
+      \ ri:content-title=\"General​\" ri:version-at-save=\"7\" /><ac:link-body><strong>General</strong></ac:link-body></ac:link><strong>\
+      \ : </strong>쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. </p></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Security\" ri:version-at-save=\"19\" /><ac:link-body><strong>Security</strong></ac:link-body></ac:link>\
+      \ : 쿼리파이의 보안 설정을 적용하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title=\"\
+      Allowed Zones\" ri:version-at-save=\"8\" /><ac:link-body><strong>Allowed Zones</strong></ac:link-body></ac:link><strong>\
+      \ </strong>: 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. </p></li><li><p><ac:link><ri:page\
+      \ ri:content-title=\"Channels\" ri:version-at-save=\"8\" /><ac:link-body><strong>Channels</strong></ac:link-body></ac:link>\
+      \ : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.</p></li><li><p><ac:link><ri:page ri:content-title=\"\
+      Alerts\" ri:version-at-save=\"16\" /><ac:link-body><strong>Alerts</strong></ac:link-body></ac:link>\
+      \ : 쿼리파이 알림을 설정하는 메뉴입니다. </p></li><li><p><ac:link><ri:page ri:content-title=\"\
+      Licenses\" ri:version-at-save=\"5\" /><ac:link-body><strong>Licenses</strong></ac:link-body></ac:link>\
+      \ : 쿼리파이의 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. </p></li></ul>"
+    "representation": "storage"
+    "embeddedContent": []
+    "_expandable":
+      "content": "/rest/api/content/543948978"
+  "view":
+    "value": "<h2 id=\"CompanyManagement-Overview\">Overview</h2><p>Company Management는\
+      \ 쿼리파이 제품의 기본 보안 및 알림 설정 등을 관리하기 위한 메뉴입니다. </p><span class=\"confluence-embedded-file-wrapper\
+      \ image-center-wrapper confluence-embedded-manual-size\"><img class=\"confluence-embedded-image\
+      \ confluence-content-image-border image-center\" alt=\"image-20240724-055809.png\"\
+      \ width=\"760\" loading=\"lazy\" src=\"https://querypie.atlassian.net/wiki/download/thumbnails/543948978/image-20240724-055809.png?version=1&amp;modificationDate=1721800690931&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=427\"\
+      \ data-image-src=\"https://querypie.atlassian.net/wiki/download/attachments/543948978/image-20240724-055809.png?version=1&amp;modificationDate=1721800690931&amp;cacheVersion=1&amp;api=v2\"\
+      \ data-height=\"720\" data-width=\"1280\" data-unresolved-comment-count=\"0\"\
+      \ data-linked-resource-id=\"559120631\" data-linked-resource-version=\"1\" data-linked-resource-type=\"\
+      attachment\" data-linked-resource-default-alias=\"image-20240724-055809.png\"\
+      \ data-base-url=\"https://querypie.atlassian.net/wiki\" data-linked-resource-content-type=\"\
+      image/png\" data-linked-resource-container-id=\"543948978\" data-linked-resource-container-version=\"\
+      8\" data-media-id=\"7a221b6c-d5fc-45c0-8e03-8d6fd79dc194\" data-media-type=\"\
+      file\" srcset=\"https://querypie.atlassian.net/wiki/download/thumbnails/543948978/image-20240724-055809.png?version=1&amp;modificationDate=1721800690931&amp;cacheVersion=1&amp;api=v2&amp;width=1280&amp;height=720\
+      \ 2x, https://querypie.atlassian.net/wiki/download/thumbnails/543948978/image-20240724-055809.png?version=1&amp;modificationDate=1721800690931&amp;cacheVersion=1&amp;api=v2&amp;width=760&amp;height=427\
+      \ 1x\"></span><p /><h2 id=\"CompanyManagement-메뉴설명\">메뉴 설명</h2><ul><li><p><a\
+      \ href=\"/wiki/spaces/QM/pages/544145591/General\" data-linked-resource-id=\"\
+      544145591\" data-linked-resource-version=\"44\" data-linked-resource-type=\"\
+      page\"><strong>General</strong></a><strong> : </strong>쿼리파이의 기본 시스템 설정을 적용하는\
+      \ 메뉴입니다. </p></li><li><p><a href=\"/wiki/spaces/QM/pages/544178422/Security\"\
+      \ data-linked-resource-id=\"544178422\" data-linked-resource-version=\"46\"\
+      \ data-linked-resource-type=\"page\"><strong>Security</strong></a> : 쿼리파이의 보안\
+      \ 설정을 적용하는 메뉴입니다. </p></li><li><p><a href=\"/wiki/spaces/QM/pages/544112846/Allowed+Zones\"\
+      \ data-linked-resource-id=\"544112846\" data-linked-resource-version=\"11\"\
+      \ data-linked-resource-type=\"page\"><strong>Allowed Zones</strong></a><strong>\
+      \ </strong>: 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. </p></li><li><p><a href=\"/wiki/spaces/QM/pages/544243925/Channels\"\
+      \ data-linked-resource-id=\"544243925\" data-linked-resource-version=\"17\"\
+      \ data-linked-resource-type=\"page\"><strong>Channels</strong></a> : 쿼리파이의 알림을\
+      \ 받을 채널을 구성하는 메뉴입니다.</p></li><li><p><a href=\"/wiki/spaces/QM/pages/543981760/Alerts\"\
+      \ data-linked-resource-id=\"543981760\" data-linked-resource-version=\"26\"\
+      \ data-linked-resource-type=\"page\"><strong>Alerts</strong></a> : 쿼리파이 알림을\
+      \ 설정하는 메뉴입니다. </p></li><li><p><a href=\"/wiki/spaces/QM/pages/544178443/Licenses\"\
+      \ data-linked-resource-id=\"544178443\" data-linked-resource-version=\"12\"\
+      \ data-linked-resource-type=\"page\"><strong>Licenses</strong></a> : 쿼리파이의 적용\
+      \ 라이선스 현황을 조회할 수 있는 메뉴입니다. </p></li></ul>"
+    "representation": "view"
+    "_expandable":
+      "webresource": ""
+      "embeddedContent": ""
+      "mediaToken": ""
+      "content": "/rest/api/content/543948978"
+  "_expandable":
+    "editor": ""
+    "atlas_doc_format": ""
+    "export_view": ""
+    "styled_view": ""
+    "dynamic": ""
+    "editor2": ""
+    "anonymous_export_view": ""
+"extensions":
+  "position": !!int "207"
+"_expandable":
+  "container": "/rest/api/space/QM"
+  "metadata": ""
+  "restrictions": "/rest/api/content/543948978/restriction/byOperation"
+  "history": "/rest/api/content/543948978/history"
+  "version": ""
+  "descendants": "/rest/api/content/543948978/descendant"
+  "space": "/rest/api/space/QM"
+  "childTypes": ""
+  "schedulePublishInfo": ""
+  "operations": ""
+  "schedulePublishDate": ""
+  "children": "/rest/api/content/543948978/child"
+  "draftVersion": ""
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=543948978"
+  "webui": "/spaces/QM/pages/543948978/Company+Management"
+  "edituiv2": "/spaces/QM/pages/edit-v2/543948978"
+  "context": "/wiki"
+  "self": "https://querypie.atlassian.net/wiki/rest/api/content/543948978"
+  "tinyui": "/x/sgBsI"
+  "collection": "/rest/api/content"
+  "base": "https://querypie.atlassian.net/wiki"

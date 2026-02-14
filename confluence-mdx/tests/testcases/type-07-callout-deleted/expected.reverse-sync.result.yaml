@@ -1,5 +1,5 @@
 changes_count: 1
-created_at: '2026-02-14T16:28:19.370814+00:00'
+created_at: '2026-02-14T17:24:02.253881+00:00'
 mdx_diff_report: "--- tests/testcases/type-07-callout-deleted/original.mdx+++ tests/testcases/type-07-callout-deleted/improved.mdx@@\
   \ -28,6 +28,7 @@ ### 제공하는 기능\n \n * [Syslog 연동](integrations/integrating-with-syslog)\n\
   +* [PagerDuty 연동](integrations/integrating-with-pagerduty)\n * [Splunk 연동](integrations/integrating-with-splunk)\n\
@@ -9,13 +9,7 @@ status: fail
 verification:
   diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -1,7 +1,4 @@-\n\
     \ import { Callout } from 'nextra/components'\n-\n-# Integrations\n \n ### Overview\n\
-    \ \n@@ -15,7 +12,7 @@ </Callout>\n \n <figure data-layout=\"center\" data-align=\"\
-    center\">\n-<img src=\"/administrator-manual/general/system/integrations/image-20240714-054645.png\"\
-    \ alt=\"Administrator &gt; General &gt; System &gt; Integrations\" width=\"760\"\
-    \ />\n+<img src=\"/types/type-07-callout-deleted/image-20240714-054645.png\" alt=\"\
-    Administrator &gt; General &gt; System &gt; Integrations\" width=\"760\" />\n\
-    \ <figcaption>\n Administrator &gt; General &gt; System &gt; Integrations\n </figcaption>\n\
-    @@ -27,15 +24,14 @@ \n ### 제공하는 기능\n \n-* [Syslog 연동](integrations/integrating-with-syslog)\n\
+    \ \n@@ -27,15 +24,14 @@ \n ### 제공하는 기능\n \n-* [Syslog 연동](integrations/integrating-with-syslog)\n\
     -* [PagerDuty 연동](integrations/integrating-with-pagerduty)\n-* [Splunk 연동](integrations/integrating-with-splunk)\n\
     -* [Secret Store 연동](integrations/integrating-with-secret-store)\n-* [Email 연동](integrations/integrating-with-email)\n\
     -* [Event Callback 연동](integrations/integrating-with-event-callback)\n-* [OAuth\

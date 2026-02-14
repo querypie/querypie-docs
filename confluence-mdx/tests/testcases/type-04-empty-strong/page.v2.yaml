@@ -1,0 +1,66 @@
+"parentType": "page"
+"parentId": "544080057"
+"ownerId": "630c844a9796033b256b98a5"
+"createdAt": "2024-07-14T05:36:43.525Z"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"position": !!int "207"
+"version":
+  "number": !!int "8"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "630c844a9796033b256b98a5"
+  "createdAt": "2024-08-06T10:29:53.627Z"
+  "ncsStepVersion": "1032"
+"spaceId": "539099246"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\"\
+      ,\"content\":[{\"text\":\"Company Management는 쿼리파이 제품의 기본 보안 및 알림 설정 등을 관리하기\
+      \ 위한 메뉴입니다. \",\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"\
+      layout\":\"center\",\"width\":760,\"widthType\":\"pixel\"},\"content\":[{\"\
+      type\":\"media\",\"attrs\":{\"width\":1280,\"alt\":\"image-20240724-055809.png\"\
+      ,\"id\":\"7a221b6c-d5fc-45c0-8e03-8d6fd79dc194\",\"collection\":\"contentId-543948978\"\
+      ,\"type\":\"file\",\"height\":720},\"marks\":[{\"type\":\"border\",\"attrs\"\
+      :{\"size\":1,\"color\":\"#091e4224\"}}]},{\"type\":\"caption\",\"content\":[{\"\
+      text\":\"Administrator > General > Company Management > General\",\"type\":\"\
+      text\"}]}]},{\"type\":\"paragraph\"},{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2},\"content\":[{\"text\":\"메뉴 설명\",\"type\":\"text\"}]},{\"type\":\"bulletList\"\
+      ,\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"\
+      content\":[{\"text\":\"General\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      },{\"type\":\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544145591\"\
+      }}]},{\"text\":\" : \",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"\
+      text\":\"쿼리파이의 기본 시스템 설정을 적용하는 메뉴입니다. \",\"type\":\"text\"}]}]},{\"type\":\"\
+      listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"Security\"\
+      ,\"type\":\"text\",\"marks\":[{\"type\":\"strong\"},{\"type\":\"link\",\"attrs\"\
+      :{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544178422\"\
+      }}]},{\"text\":\" : 쿼리파이의 보안 설정을 적용하는 메뉴입니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Allowed Zones\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"},{\"type\"\
+      :\"link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544112846\"\
+      }}]},{\"text\":\" \",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"}]},{\"\
+      text\":\": 쿼리파이의 허용 네트워크 존 설정을 구성하는 메뉴입니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Channels\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"},{\"type\":\"link\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544243925\"\
+      }}]},{\"text\":\" : 쿼리파이의 알림을 받을 채널을 구성하는 메뉴입니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\"\
+      :\"Alerts\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"},{\"type\":\"\
+      link\",\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/543981760\"\
+      }}]},{\"text\":\" : 쿼리파이 알림을 설정하는 메뉴입니다. \",\"type\":\"text\"}]}]},{\"type\"\
+      :\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"text\":\"\
+      Licenses\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"},{\"type\":\"link\"\
+      ,\"attrs\":{\"href\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544178443\"\
+      }}]},{\"text\":\" : 쿼리파이의 적용 라이선스 현황을 조회할 수 있는 메뉴입니다. \",\"type\":\"text\"}]}]}]}],\"\
+      version\":1}"
+"status": "current"
+"title": "Company Management"
+"id": "543948978"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=543948978"
+  "webui": "/spaces/QM/pages/543948978/Company+Management"
+  "edituiv2": "/spaces/QM/pages/edit-v2/543948978"
+  "tinyui": "/x/sgBsI"
+  "base": "https://querypie.atlassian.net/wiki"

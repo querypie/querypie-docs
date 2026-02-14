@@ -1,0 +1,88 @@
+"parentType": "page"
+"parentId": "544112865"
+"ownerId": "630c844a9796033b256b98a5"
+"createdAt": "2024-07-14T05:46:28.009Z"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "9"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2026-02-14T08:46:06.832Z"
+  "ncsStepVersion": "101"
+"position": !!int "615"
+"id": "544080097"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2,\"localId\":\"5003f1df-5317-4ded-bf79-4c1e55d6910d\"},\"content\":[{\"text\"\
+      :\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"b38a17e2-d107-4255-b17e-f8eb11c21ce1\"},\"content\":[{\"text\":\"Integration\
+      \ 메뉴에서는 외부 보안 서비스와의 연동을 간편하게 지원합니다. 다양한 보안 툴과의 연동을 통해 시스템 보안을 강화하고, 시스템의 복잡성을\
+      \ 줄이며, 관리 및 유지 보수를 단순화할 수 있습니다. 10.0.0 버전 현재, SIEM/SOAR 및 Secret Store 연동을 지원하고\
+      \ 있으며, 지원하고 있는 SIEM 서비스는 Syslog, Splunk의 2종입니다.\",\"type\":\"text\"}]},{\"type\"\
+      :\"panel\",\"attrs\":{\"panelType\":\"info\",\"localId\":\"13119061-b24d-4254-b081-b5c6ebf2a085\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0e2282e5-6bab-4a30-bb14-5107a497a3fb\"\
+      },\"content\":[{\"text\":\"SIEM이란?\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"type\":\"hardBreak\"},{\"text\":\"SIEM(Security Information\
+      \ and Event Management) 은 여러 원본으로부터 이벤트 로그 데이터의 실시간 수집 및 분석을 지원합니다. 로그의 상관 관계를\
+      \ 분석하고 비정상적 활동을 식별하여 적절한 조치를 취할 수 있습니다.\",\"type\":\"text\"}]}]},{\"type\":\"\
+      mediaSingle\",\"attrs\":{\"layout\":\"center\",\"width\":760,\"widthType\":\"\
+      pixel\"},\"content\":[{\"type\":\"media\",\"attrs\":{\"width\":1570,\"alt\"\
+      :\"image-20240714-054645.png\",\"id\":\"5ab3173a-d5e1-417d-b48e-a0b225a8d11a\"\
+      ,\"collection\":\"contentId-544080097\",\"type\":\"file\",\"localId\":\"ea58a79d-4fed-4c58-a807-efed8f1d17ca\"\
+      ,\"height\":859},\"marks\":[{\"type\":\"border\",\"attrs\":{\"size\":1,\"color\"\
+      :\"#091e4224\"}}]},{\"type\":\"caption\",\"attrs\":{\"localId\":\"6d5c9548-19e6-4d42-9534-7c965fab9ab8\"\
+      },\"content\":[{\"text\":\"Administrator > General > System > Integrations\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"panel\",\"attrs\":{\"panelType\":\"warning\"\
+      ,\"localId\":\"f8828874-9e2d-4ed0-b255-9049c8a2d28e\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"60661af5-2ba5-4b96-8454-f019dce54339\"\
+      },\"content\":[{\"text\":\"Integration 설정을 위해서는 System admin 권한이 필요합니다.\",\"\
+      type\":\"text\"}]}]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\"\
+      :\"c436fc4f-d584-4e6e-ae3c-79deb9005b31\"},\"content\":[{\"text\":\"제공하는 기능\"\
+      ,\"type\":\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"8c660d49d2b0\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"94f061bc5437\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"a81c889e3b2e\"\
+      },\"content\":[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"96b86d63f7ba\"\
+      ,\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544379393\"}}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"73abe5946eb5\"},\"content\":[{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"5c5c0123b04e\"},\"content\":[{\"\
+      type\":\"inlineCard\",\"attrs\":{\"localId\":\"93717fda7816\",\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/557940795\"\
+      }}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"24c02be26da0\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"a64c17d00e41\"},\"content\"\
+      :[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"0ffe5ee4f4ea\",\"url\":\"\
+      https://querypie.atlassian.net/wiki/spaces/QM/pages/544379587\"}}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"a5fc0f7b8fe5\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"5969f29dd9b7\"},\"content\":[{\"type\"\
+      :\"inlineCard\",\"attrs\":{\"localId\":\"be505ca5c49b\",\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/798064641\"\
+      }}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"3d1668dc16ab\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"4d8686dd0d98\"},\"content\"\
+      :[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"8992ecca6344\",\"url\":\"\
+      https://querypie.atlassian.net/wiki/spaces/QM/pages/1267007528\"}}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"3fb73f9b6134\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"c01845a560a7\"},\"content\":[{\"type\"\
+      :\"inlineCard\",\"attrs\":{\"localId\":\"4afeae2b131a\",\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/811401365\"\
+      }}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"9923cf2c785e\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"81852e9d6c17\"},\"content\"\
+      :[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"9edd7ec58129\",\"url\":\"\
+      https://querypie.atlassian.net/wiki/spaces/QM/pages/883654669\"}}]}]},{\"type\"\
+      :\"listItem\",\"attrs\":{\"localId\":\"e697c509f41f\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"a60fcbee4a4a\"},\"content\":[{\"type\"\
+      :\"inlineCard\",\"attrs\":{\"localId\":\"2e6903400bc8\",\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/1453588486\"\
+      }}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c74300458db6\"},\"content\"\
+      :[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"65f3dfc800f9\"},\"content\"\
+      :[{\"type\":\"inlineCard\",\"attrs\":{\"localId\":\"ff7369bfca14\",\"url\":\"\
+      https://querypie.atlassian.net/wiki/spaces/QM/pages/1454342158\"}}]}]}]},{\"\
+      type\":\"paragraph\",\"attrs\":{\"localId\":\"6bfba74ce1a3\"}}],\"version\"\
+      :1}"
+"status": "current"
+"spaceId": "539099246"
+"title": "Integrations"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=544080097"
+  "webui": "/spaces/QM/pages/544080097/Integrations"
+  "edituiv2": "/spaces/QM/pages/edit-v2/544080097"
+  "tinyui": "/x/4QBuI"
+  "base": "https://querypie.atlassian.net/wiki"

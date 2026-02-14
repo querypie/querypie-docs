@@ -1,5 +1,5 @@
 changes_count: 1
-created_at: '2026-02-14T16:28:19.218291+00:00'
+created_at: '2026-02-14T17:24:02.094910+00:00'
 mdx_diff_report: "--- tests/testcases/type-06-callout-parser-error/original.mdx+++\
   \ tests/testcases/type-06-callout-parser-error/improved.mdx@@ -3,7 +3,7 @@ \n ###\
   \ Overview\n \n-관리자는 원장 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 정의할 수 있습니다.\n\
@@ -10,16 +10,9 @@ status: fail
 verification:
   diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -1,6 +1,3 @@-\n\
     -# Ledger Approval Rules\n-\n ### Overview\n \n 관리자는 원장 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger\
-    \ Approval Rule)’을 정의하고 운영할 수 있습니다.\n@@ -10,7 +7,7 @@ 원장 테이블 정책 적용 시 강제화할 승인 규칙을\
-    \ 별도로 생성하고 관리할 수 있습니다.\n \n <figure data-layout=\"center\" data-align=\"center\"\
-    >\n-<img src=\"/administrator-manual/databases/ledger-management/ledger-approval-rules/Screenshot-2024-12-18-at-11.52.33-AM.png\"\
-    \ alt=\"Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval\
-    \ Rules\" width=\"760\" />\n+<img src=\"/types/type-06-callout-parser-error/Screenshot-2024-12-18-at-11.52.33-AM.png\"\
-    \ alt=\"Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Approval\
-    \ Rules\" width=\"760\" />\n <figcaption>\n Administrator &gt; Databases &gt;\
-    \ Ledger Management &gt; Ledger Approval Rules\n </figcaption>\n@@ -27,4 +24,4\
-    \ @@ 4.  **Urgent Mode**  : 해당 결재 규칙을 선택할 경우, 사후승인 기능 허용 여부를 설정합니다. (Default =\
-    \ Off)\n 5. `Save` 버튼을 통해 저장합니다.\n \n-승인자 관련 세부 옵션과 실행자 관련 세부 옵션은 [Approval Rules](../../general/workflow-management/approval-rules)\
+    \ Approval Rule)’을 정의하고 운영할 수 있습니다.\n@@ -27,4 +24,4 @@ 4.  **Urgent Mode**  :\
+    \ 해당 결재 규칙을 선택할 경우, 사후승인 기능 허용 여부를 설정합니다. (Default = Off)\n 5. `Save` 버튼을 통해 저장합니다.\n\
+    \ \n-승인자 관련 세부 옵션과 실행자 관련 세부 옵션은 [Approval Rules](../../general/workflow-management/approval-rules)\
     \ 문서를 참고해 주세요.\n+승인자 관련 세부 옵션과 실행자 관련 세부 옵션은 [Approval Rules](#link-error) 문서를\
     \ 참고해 주세요.\n"
   exact_match: false

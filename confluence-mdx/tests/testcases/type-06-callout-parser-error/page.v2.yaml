@@ -1,0 +1,93 @@
+"parentType": "page"
+"parentId": "571277577"
+"ownerId": "630c844a9796033b256b98a5"
+"createdAt": "2024-07-31T09:48:28.131Z"
+"lastOwnerId": !!null "null"
+"authorId": "630c844a9796033b256b98a5"
+"version":
+  "number": !!int "11"
+  "message": ""
+  "minorEdit": !!bool "false"
+  "authorId": "712020:f3e573c0-e3bc-4fde-9a9f-0d5e206c30c9"
+  "createdAt": "2026-02-14T08:19:52.110Z"
+  "ncsStepVersion": "15"
+"position": !!int "244498772"
+"id": "571277650"
+"body":
+  "atlas_doc_format":
+    "representation": "atlas_doc_format"
+    "value": "{\"type\":\"doc\",\"content\":[{\"type\":\"heading\",\"attrs\":{\"level\"\
+      :2,\"localId\":\"1c4abede-a177-4344-9109-978b2cca596b\"},\"content\":[{\"text\"\
+      :\"Overview\",\"type\":\"text\"}]},{\"type\":\"paragraph\",\"attrs\":{\"localId\"\
+      :\"b580af8d-e243-4dbc-a214-dc1e1c079293\"},\"content\":[{\"text\":\"관리자는 원장\
+      \ 테이블에 맵핑할 ‘원장 전용 승인 규칙(Ledger Approval Rule)’을 정의할 수 있습니다. \",\"type\":\"text\"\
+      }]},{\"type\":\"heading\",\"attrs\":{\"level\":2,\"localId\":\"a7bdbe9b-7db6-4f0b-92b3-05ce02c4e34e\"\
+      },\"content\":[{\"text\":\"원장 테이블에 승인 규칙 생성하기\",\"type\":\"text\"}]},{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"29389b3b-7683-4306-be57-030456f25d36\"\
+      },\"content\":[{\"text\":\"원장 테이블 정책 적용 시 강제화할 승인 규칙을 별도로 생성하고 관리할 수 있습니다. \"\
+      ,\"type\":\"text\"}]},{\"type\":\"mediaSingle\",\"attrs\":{\"layout\":\"center\"\
+      ,\"width\":760,\"widthType\":\"pixel\"},\"content\":[{\"type\":\"media\",\"\
+      attrs\":{\"width\":1619,\"id\":\"9c28ec81-54f1-4b81-a62e-56a5d8e3a856\",\"collection\"\
+      :\"contentId-571277650\",\"type\":\"file\",\"localId\":\"8b3da43c-7f1b-43bc-ab33-6ff9f474e7a2\"\
+      ,\"height\":1329}},{\"type\":\"caption\",\"attrs\":{\"localId\":\"08579c0c-f933-43e5-8f6f-97d397227deb\"\
+      },\"content\":[{\"text\":\"Administrator > Databases > Ledger Management > Ledger\
+      \ Approval Rules\",\"type\":\"text\"}]}]},{\"type\":\"orderedList\",\"attrs\"\
+      :{\"localId\":\"6acb3d2a-1f0b-456f-8269-63e6b1b32ba9\",\"order\":1},\"content\"\
+      :[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"c673bccb-ce7f-4e26-9d0d-c9cd7d0cad17\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"2c8244bc-e8fd-4cbd-a9ba-1d12354e68bc\"\
+      },\"content\":[{\"text\":\"Database 설정 메뉴에서 Ledger Management > Ledger Approval\
+      \ Rules 메뉴로 이동합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"5b84a6a6-5f5f-4e3c-be6a-63a4566fb495\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"c107940e-1919-461c-8ec9-9a7135889f29\"\
+      },\"content\":[{\"text\":\"우측 상단의 \",\"type\":\"text\"},{\"text\":\"Add Approval\
+      \ Rule\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"text\":\" 버튼을\
+      \ 클릭합니다.\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"931e3759-77e1-46f8-8d98-e1d8841e0281\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"0f2e22b8-5bf9-4319-8362-630183491f5d\"},\"content\"\
+      :[{\"text\":\"정책 생성을 위한 다음의 정보들을 입력합니다.\",\"type\":\"text\"}]},{\"type\":\"\
+      orderedList\",\"attrs\":{\"localId\":\"e98ae5b0-8d45-43f1-9dd1-baeb72e26294\"\
+      ,\"order\":1},\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"\
+      ce246430-d146-46f0-98fd-c8b5df9129f4\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"443affd7-1395-46a2-9bb0-d01201a799c5\"},\"content\"\
+      :[{\"text\":\"Rule Name\",\"type\":\"text\",\"marks\":[{\"type\":\"strong\"\
+      }]},{\"text\":\" : 결재 규칙을 화면상에서 구별할 수 있는 이름입니다.\",\"type\":\"text\"}]}]},{\"\
+      type\":\"listItem\",\"attrs\":{\"localId\":\"ad6ae9de-a80e-4061-9b9d-475cba60674a\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"23608fbe-7efd-4a46-a38b-48193037fe71\"\
+      },\"content\":[{\"text\":\"Request Type\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : 결재 규칙을 추가할 요청 타입을 선택합니다. 결재 규칙은 요청 타입별로 구분됩니다.\"\
+      ,\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"f4be2b85-b04c-4d0a-9568-0885830fc998\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"0dc37da2-e446-4135-bb34-cfe3efa35724\"\
+      },\"content\":[{\"text\":\"Approval Steps\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]},{\"text\":\" : 단계별 승인이 가능하도록 승인 규칙을 설정할 수 있습니다. \",\"type\"\
+      :\"text\"}]},{\"type\":\"bulletList\",\"attrs\":{\"localId\":\"56c93695-c3c1-4484-b563-831dd37927d2\"\
+      },\"content\":[{\"type\":\"listItem\",\"attrs\":{\"localId\":\"16419865-936d-4aa3-b396-11a34918841d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"feef2e2b-a29e-4255-8544-e6f95762b58b\"\
+      },\"content\":[{\"text\":\"Add Step\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"code\"}]},{\"text\":\" 버튼을 클릭하여 승인 단계를 추가할 수 있습니다. 최대 3단계까지 가능합니다.\",\"type\"\
+      :\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\":\"2c445224-6878-4576-aeb1-e1fac8c8ea2d\"\
+      },\"content\":[{\"type\":\"paragraph\",\"attrs\":{\"localId\":\"67a97471-010f-49d6-b067-fbe258236008\"\
+      },\"content\":[{\"text\":\"Execution Steps\",\"type\":\"text\",\"marks\":[{\"\
+      type\":\"strong\"}]},{\"text\":\" : SQL / Export Request 타입의 경우 실행자에 대한 규칙을\
+      \ 설정할 수 있습니다. \",\"type\":\"text\"}]}]}]}]},{\"type\":\"listItem\",\"attrs\"\
+      :{\"localId\":\"1be9ebb8-6701-47b7-ba57-0f92abcd8b9e\"},\"content\":[{\"type\"\
+      :\"paragraph\",\"attrs\":{\"localId\":\"f7781b65-ee15-4eba-ae5b-198fb8847889\"\
+      },\"content\":[{\"text\":\"Urgent Mode\",\"type\":\"text\",\"marks\":[{\"type\"\
+      :\"strong\"}]},{\"text\":\" : 해당 결재 규칙을 선택할 경우, 사후승인 기능 허용 여부를 설정합니다. (Default\
+      \ = Off)\",\"type\":\"text\"}]}]},{\"type\":\"listItem\",\"attrs\":{\"localId\"\
+      :\"d0a2d008-dc48-4ca6-b01b-47857da59b76\"},\"content\":[{\"type\":\"paragraph\"\
+      ,\"attrs\":{\"localId\":\"9dc8c14f-8958-4ce7-b3ba-d1365d4ffb27\"},\"content\"\
+      :[{\"text\":\"Save\",\"type\":\"text\",\"marks\":[{\"type\":\"code\"}]},{\"\
+      text\":\" 버튼을 통해 저장합니다.\",\"type\":\"text\"}]}]}]},{\"type\":\"paragraph\",\"\
+      attrs\":{\"localId\":\"00e4c70e-9099-4639-b170-80d40e73e29b\"},\"content\":[{\"\
+      text\":\"승인자 관련 세부 옵션과 실행자 관련 세부 옵션은 \",\"type\":\"text\"},{\"type\":\"inlineCard\"\
+      ,\"attrs\":{\"localId\":\"be6b6fbf89db\",\"url\":\"https://querypie.atlassian.net/wiki/spaces/QM/pages/544378513\"\
+      }},{\"text\":\" 문서를 참고해 주세요.\",\"type\":\"text\"}]}],\"version\":1}"
+"status": "current"
+"spaceId": "539099246"
+"title": "Ledger Approval Rules"
+"_links":
+  "editui": "/pages/resumedraft.action?draftId=571277650"
+  "webui": "/spaces/QM/pages/571277650/Ledger+Approval+Rules"
+  "edituiv2": "/spaces/QM/pages/edit-v2/571277650"
+  "tinyui": "/x/UgENIg"
+  "base": "https://querypie.atlassian.net/wiki"
