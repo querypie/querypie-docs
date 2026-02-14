@@ -86,14 +86,11 @@ git diff src/content/ja/
 
 ### Step 5: 검증
 
+Skeleton 구조 일치를 확인합니다. 상세 사용법은 [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)를 참조하세요.
+
 ```bash
-# Skeleton 구조 일치 확인
 cd confluence-mdx
 python3 bin/skeleton/cli.py --recursive --max-diff=10
-
-# 빌드 확인
-cd ..
-npm run build
 ```
 
 ## 예시: 이미지 태그 width 동기화

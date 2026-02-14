@@ -70,22 +70,15 @@ git status public/
 
 ### Step 5: Skeleton MDX 비교로 검증
 
-번역 후 구조 일치를 확인합니다:
+번역 후 구조 일치를 확인합니다. 사용법은 [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)를 참조하세요.
 
 ```bash
 cd confluence-mdx
 source venv/bin/activate
-
-# 전체 비교
 python3 bin/skeleton/cli.py --recursive --max-diff=10
-
-# 특정 파일만 비교
-python3 bin/skeleton/cli.py ../src/content/en/path/to/file.mdx
 ```
 
-**중요**: Skeleton MDX 비교는 빈 줄의 누락/추가 차이도 감지합니다. 영어/일본어 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다. Skeleton 비교에서 발견된 빈 줄 차이를 무시하지 마세요.
-
-**상세**: [.claude/skills/mdx-skeleton-comparison.md](/.claude/skills/mdx-skeleton-comparison.md)
+**중요**: 빈 줄의 누락/추가 차이도 감지합니다. 번역 파일은 한국어 원본과 **라인 수와 빈 줄 위치가 정확히 일치**해야 합니다.
 
 ### Step 6: 코드 블록 일치 확인
 
@@ -122,7 +115,7 @@ mdx: 영어/일본어 번역 추가 (한국어 문서 변경 대응)
 - 한국어 문서 변경에 대응하는 영어/일본어 번역을 추가합니다.
 - Skeleton MDX 비교로 구조 일치를 확인합니다.
 
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 EOF
 )"
 
@@ -183,12 +176,7 @@ git status public/
 
 ### Skeleton 불일치가 발생한 경우
 
-1. 불일치 내용 확인:
-   ```bash
-   python3 bin/skeleton/cli.py ../src/content/en/path/to/file.mdx
-   ```
-2. 번역 파일의 구조를 한국어 원본과 동일하게 수정
-3. 공백, 줄 바꿈을 원본과 정확히 일치시킴
+[mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)의 "불일치 발견 시 처리 방법"을 참조하세요.
 
 ### 코드 블록 내 주석이 번역된 경우
 
