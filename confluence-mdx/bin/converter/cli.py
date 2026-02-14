@@ -9,7 +9,6 @@ to clean Markdown, including argument parsing and conversion orchestration.
 import argparse
 import logging
 import os
-import re
 import sys
 from pathlib import Path
 from typing import Optional, List
@@ -165,12 +164,8 @@ def main():
         with open(args.input_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
 
-        # 원본 XHTML 보존 (namespace prefix 제거 전) — sidecar mapping에서 사용
+        # 원본 XHTML 보존 — sidecar mapping에서 사용
         xhtml_original = html_content
-
-        # Replace XML namespace prefixes
-        html_content = re.sub(r'\sac:', ' ', html_content)
-        html_content = re.sub(r'\sri:', ' ', html_content)
 
         # Load pages.yaml to get the current page's path
         pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')

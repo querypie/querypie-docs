@@ -237,6 +237,19 @@ Confluence의 h1을 h2로, h2를 h3로 자동 조정한다. MDX 파일의 `# tit
 
 ---
 
+### 16. 네임스페이스 접두사 제거가 텍스트를 손상시킴 (cli.py L171-173) — **해결됨**
+
+```python
+html_content = re.sub(r'\sac:', ' ', html_content)
+html_content = re.sub(r'\sri:', ' ', html_content)
+```
+
+**문제**: BeautifulSoup 파싱 전에 정규식으로 XHTML 전체 문자열에서 `ac:`, `ri:` 접두사를 제거한다. 속성명뿐 아니라 텍스트 본문의 `ac:`, `ri:` 문자열까지 삭제하는 부작용이 있다.
+
+**해결**: 정규식 전처리와 `_strip_namespace_prefixes()` 메서드를 모두 제거했다. 네임스페이스 접두사(`ac:`, `ri:`)를 제거하는 대신 그대로 유지하고, 코드에서 속성을 참조하는 모든 `.get()` 및 `.find()` 호출에 올바른 접두사를 명시하도록 수정했다. ADF 계열 태그(`ac:adf-node`, `ac:adf-attribute` 등)는 원래 접두사 없는 속성(`type`, `key`)을 사용하므로 변경하지 않았다.
+
+---
+
 ## 유지할 좋은 패턴
 
 - **파서 클래스 분리**: `SingleLineParser`(인라인)와 `MultiLineParser`(블록)의 역할 분담이 명확하다.

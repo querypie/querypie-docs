@@ -49,7 +49,7 @@ class Attachment:
     """
 
     def __init__(self, node: Tag, input_dir: str, output_dir: str, public_dir: str) -> None:
-        filename = node.get('filename', '')
+        filename = node.get('ri:filename', '')
         if not filename:
             logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
             return
@@ -156,7 +156,7 @@ class SingleLineParser:
             elif node.name in ['ac:link', 'ac:image', 'ac:adf-fragment-mark']:
                 return True
             elif node.name in ['ac:structured-macro']:
-                attr_name = node.get('name', '')
+                attr_name = node.get('ac:name', '')
                 if attr_name in ['status']:
                     return True
                 else:
@@ -236,14 +236,14 @@ class SingleLineParser:
             Note: Badge is registered as a global MDX component in src/mdx-components.js,
             so no import statement is needed in the generated MDX files.
             """
-            if node.get('name') == 'status':
+            if node.get('ac:name') == 'status':
                 title = ''
                 color = 'grey'  # default color
                 for child in node.children:
                     if isinstance(child, Tag) and child.name == 'ac:parameter':
-                        if child.get('name') == 'title':
+                        if child.get('ac:name') == 'title':
                             title = SingleLineParser(child).markdown_of_children(child)
-                        elif child.get('name') == 'colour':
+                        elif child.get('ac:name') == 'colour':
                             confluence_color = child.text.strip()
                             color = CONFLUENCE_COLOR_TO_BADGE_COLOR.get(confluence_color, 'grey')
                 self.markdown_lines.append(f'<Badge color="{color}">{title}</Badge>')
@@ -255,10 +255,10 @@ class SingleLineParser:
         elif node.name in ['ac:parameter']:
             # ac:parameter nodes are now handled within their parent ac:structured-macro
             # This block should only be reached if ac:parameter appears in unexpected contexts
-            if node.get('name') == 'title':
+            if node.get('ac:name') == 'title':
                 for child in node.children:
                     self.convert_recursively(child)
-            elif node.get('name') == 'colour':
+            elif node.get('ac:name') == 'colour':
                 # ac:parameter with colour is not needed in Markdown
                 pass
             else:
@@ -283,7 +283,7 @@ class SingleLineParser:
             markdown_link = self.convert_ac_link(node)
             self.markdown_lines.append(markdown_link)
         elif node.name in ['ri:page']:
-            content_title = node.get('content-title', '#')
+            content_title = node.get('ri:content-title', '#')
             self.markdown_lines.append(content_title)
         elif node.name in ['ac:link-body']:
             # ac:link-body is used in ac:link, we can process it as a regular text
@@ -324,8 +324,8 @@ class SingleLineParser:
                          ac:emoji-id="2705" ac:emoji-fallback="✅"/>
             """
             # First check ac:emoji-fallback attribute (may already be an emoji character)
-            fallback = node.get('emoji-fallback', '')
-            shortname = node.get('emoji-shortname', '')
+            fallback = node.get('ac:emoji-fallback', '')
+            shortname = node.get('ac:emoji-shortname', '')
 
             # Check if fallback is already an emoji character (not in shortname format)
             if fallback and not fallback.startswith(':'):
@@ -464,7 +464,7 @@ class SingleLineParser:
             str: Markdown link in format [link_body](href) or [link_body | anchor](href#fragment)
         """
         link_body = '(ERROR: Link body not found)'
-        anchor = node.get('anchor', '')
+        anchor = node.get('ac:anchor', '')
 
         # Process anchor fragment
         if anchor:
@@ -483,7 +483,7 @@ class SingleLineParser:
 
             elif isinstance(child, Tag) and child.name == 'ri:space':
                 # Handle space links: <ac:link><ri:space ri:space-key="QCP" /></ac:link>
-                space_key = child.get('space-key', '')
+                space_key = child.get('ri:space-key', '')
                 if space_key:
                     href = f'https://querypie.atlassian.net/wiki/spaces/{space_key}/overview'
                     logging.info(f"Generated Confluence space overview link for space '{space_key}': {href}")
@@ -492,8 +492,8 @@ class SingleLineParser:
                     logging.warning(f"No space key found in ri:space tag, using error anchor: {href}")
 
             elif isinstance(child, Tag) and child.name == 'ri:page':
-                target_title = child.get('content-title', '')
-                space_key = child.get('space-key', '')
+                target_title = child.get('ri:content-title', '')
+                space_key = child.get('ri:space-key', '')
 
                 # Check if the target page is in pages.yaml
                 target_page = PAGES_BY_TITLE.get(target_title)
@@ -529,23 +529,23 @@ class SingleLineParser:
 
         # Extract width attribute if custom-width is true
         width = None
-        custom_width = node.get('custom-width', 'false')
+        custom_width = node.get('ac:custom-width', 'false')
         if custom_width == 'true':
-            width = node.get('width', '')
+            width = node.get('ac:width', '')
             if width:
                 logging.debug(f"Using custom width: {width}")
 
         # Extract align attribute
-        align = node.get('align', 'center')
+        align = node.get('ac:align', 'center')
 
         # Find the attachment filename
         image_filename = ''
         attachment = node.find('ri:attachment')
         if attachment:
-            image_filename = attachment.get('filename', '')
+            image_filename = attachment.get('ri:filename', '')
             if not image_filename:
                 # Log warning if the filename is still empty
-                logging.warning("'filename' attribute is empty, check XML namespace handling")
+                logging.warning("'ri:filename' attribute is empty, check XML namespace handling")
         else:
             logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
 
@@ -644,7 +644,7 @@ class MultiLineParser:
             return
 
         logging.debug(f"MultiLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        attr_name = node.get('name', '(none)')
+        attr_name = node.get('ac:name', '(none)')
         if node.name in [
             '[document]',  # Start processing from the body of the document
             'html', 'body',
@@ -781,7 +781,7 @@ class MultiLineParser:
         li_itself = []
         child_markdown = []
         for child in node.children:
-            attr_name = child.get('name', '(none)') if not isinstance(child, NavigableString) else '(none)'
+            attr_name = child.get('ac:name', '(none)') if not isinstance(child, NavigableString) else '(none)'
             if isinstance(child, NavigableString):
                 if child.text.strip():  # Only process non-empty text nodes
                     li_itself.append(SingleLineParser(child).as_markdown)
@@ -835,14 +835,14 @@ class MultiLineParser:
         logging.debug(f"Processing Confluence image: {node}")
 
         # Extract image attributes
-        align = node.get('align', 'center')
-        alt_text = node.get('alt', '')
+        align = node.get('ac:align', 'center')
+        alt_text = node.get('ac:alt', '')
 
         # Extract width attribute if custom-width is true
         width = None
-        custom_width = node.get('custom-width', 'false')
+        custom_width = node.get('ac:custom-width', 'false')
         if custom_width == 'true':
-            width = node.get('width', '')
+            width = node.get('ac:width', '')
             if width:
                 logging.debug(f"Using custom width: {width}")
 
@@ -850,10 +850,10 @@ class MultiLineParser:
         image_filename = ''
         attachment = node.find('ri:attachment')
         if attachment:
-            image_filename = attachment.get('filename', '')
+            image_filename = attachment.get('ri:filename', '')
             if not image_filename:
                 # Log warning if the filename is still empty
-                logging.warning("'filename' attribute is empty, check XML namespace handling")
+                logging.warning("'ri:filename' attribute is empty, check XML namespace handling")
         else:
             logging.warning(f'No attachment found in <ac:image> from {ancestors(node)}, no filename to use.')
 
@@ -898,7 +898,7 @@ class MultiLineParser:
         cdata = 'TODO(JK): Error in converting <structured-macro name="code">'
 
         # Look for language parameter
-        language_param = node.find('ac:parameter', {'name': 'language'})
+        language_param = node.find('ac:parameter', {'ac:name': 'language'})
         if language_param:
             language = language_param.get_text()
         self.markdown_lines.append(f"```{language}\n")
@@ -927,7 +927,7 @@ class MultiLineParser:
         self.markdown_lines.append(f"<details>\n")
         # Find title parameter
         title = "(Untitled)"
-        title_param = node.find('ac:parameter', {'name': 'title'})
+        title_param = node.find('ac:parameter', {'ac:name': 'title'})
         if title_param:
             title = title_param.get_text()
         self.markdown_lines.append(f'<summary>{title}</summary>\n')
@@ -950,11 +950,11 @@ class MultiLineParser:
         :paperclip: [994_external.json](./994_external.json)
         """
         filename = ""
-        name_parameter = node.find('ac:parameter', {'name': 'name'})
+        name_parameter = node.find('ac:parameter', {'ac:name': 'name'})
         if name_parameter:
             attachment = name_parameter.find('ri:attachment')
             if attachment:
-                filename = attachment.get('filename', '')
+                filename = attachment.get('ri:filename', '')
         self.markdown_lines.append(f":paperclip: [{filename}]({filename})\n")
 
 
@@ -1185,7 +1185,7 @@ class StructuredMacroToCallout:
 
     @property
     def applicable(self):
-        attr_name = self.node.get('name', '')
+        attr_name = self.node.get('ac:name', '')
         if self.node.name in ['ac:structured-macro']:
             if attr_name in ['tip', 'info', 'note', 'warning']:
                 return True
@@ -1217,7 +1217,7 @@ class StructuredMacroToCallout:
             return
 
         logging.debug(f"StructuredMacroToCallout: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
-        attr_name = node.get('name', '')
+        attr_name = node.get('ac:name', '')
         if node.name in ['ac:structured-macro'] and attr_name in ['tip', 'info', 'note', 'warning']:
             # https://nextra.site/docs/built-ins/callout
             # Confluence has broken namings of panels.
@@ -1238,7 +1238,7 @@ class StructuredMacroToCallout:
 
             self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
-            parameter = node.find('ac:parameter', {'name': 'panelIconText'})
+            parameter = node.find('ac:parameter', {'ac:name': 'panelIconText'})
             rich_text_body = node.find('ac:rich-text-body')
             # https://nextra.site/docs/built-ins/callout
             # Confluence has broken namings of panels.

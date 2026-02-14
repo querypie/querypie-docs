@@ -573,7 +573,7 @@ def get_html_attributes(node):
             continue
 
         # Remove local-id attribute (Confluence-specific, not needed in MDX)
-        if attr_name == 'local-id':
+        if attr_name == 'ac:local-id':
             continue
 
         # Remove all data-* attributes (Confluence-specific metadata, not needed in MDX)
