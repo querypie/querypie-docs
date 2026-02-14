@@ -1357,6 +1357,20 @@ class ConfluenceToMarkdown:
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')
+        self._strip_namespace_prefixes()
+
+    def _strip_namespace_prefixes(self):
+        """속성명에서 ac:, ri: 네임스페이스 접두사를 제거한다.
+        태그명과 텍스트 내용은 변경하지 않는다."""
+        for tag in self.soup.descendants:
+            if isinstance(tag, Tag) and tag.attrs:
+                renamed = {}
+                for attr, value in tag.attrs.items():
+                    if attr.startswith(('ac:', 'ri:')):
+                        renamed[attr.split(':', 1)[1]] = value
+                    else:
+                        renamed[attr] = value
+                tag.attrs = renamed
 
     @property
     def imports(self):
