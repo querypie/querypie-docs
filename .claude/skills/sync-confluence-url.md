@@ -12,16 +12,16 @@ Skeleton 비교 시 frontmatter 구조 불일치(ko에만 `confluenceUrl` 존재
 
 ```bash
 # en + ja 전체 재귀 (기본)
-python3 confluence-mdx/bin/sync_confluence_url.py -r
+confluence-mdx/bin/sync_confluence_url.py -r
 
 # 특정 디렉토리만
-python3 confluence-mdx/bin/sync_confluence_url.py -r src/content/en/administrator-manual
+confluence-mdx/bin/sync_confluence_url.py -r src/content/en/administrator-manual
 
 # 개별 파일
-python3 confluence-mdx/bin/sync_confluence_url.py src/content/en/overview.mdx src/content/ja/overview.mdx
+confluence-mdx/bin/sync_confluence_url.py src/content/en/overview.mdx src/content/ja/overview.mdx
 
 # 변경 없이 미리보기
-python3 confluence-mdx/bin/sync_confluence_url.py -r --dry-run
+confluence-mdx/bin/sync_confluence_url.py -r --dry-run
 ```
 
 ## CLI 옵션
@@ -68,13 +68,13 @@ Confluence에서 MDX를 동기화하면 ko 파일에 `confluenceUrl`이 포함�
 en/ja에는 반영되지 않는다. 이때 일괄 동기화:
 
 ```bash
-python3 confluence-mdx/bin/sync_confluence_url.py -r
+confluence-mdx/bin/sync_confluence_url.py -r
 ```
 
 ### 변경 전 미리보기
 
 ```bash
-python3 confluence-mdx/bin/sync_confluence_url.py -r --dry-run
+confluence-mdx/bin/sync_confluence_url.py -r --dry-run
 ```
 
 출력 예시:
@@ -91,10 +91,10 @@ Done: 578 updated, 4 unchanged, 0 skipped(ko), 0 missing(ko), 0 errors
 2회 연속 실행하면 두 번째는 모든 파일이 `unchanged`여야 한다:
 
 ```bash
-python3 confluence-mdx/bin/sync_confluence_url.py -r
+confluence-mdx/bin/sync_confluence_url.py -r
 # Done: 578 updated, ...
 
-python3 confluence-mdx/bin/sync_confluence_url.py -r
+confluence-mdx/bin/sync_confluence_url.py -r
 # Done: 0 updated, 582 unchanged, ...
 ```
 

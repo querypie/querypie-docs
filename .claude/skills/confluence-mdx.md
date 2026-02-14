@@ -33,10 +33,10 @@ cd confluence-mdx
 source venv/bin/activate
 
 # 1. Confluence 데이터 수집
-python3 bin/fetch_cli.py --recent --attachments
+bin/fetch_cli.py --recent --attachments
 
 # 2. pages.yaml 기준으로 전체 변환
-python3 bin/convert_all.py
+bin/convert_all.py
 ```
 
 ### 변환 단계
@@ -50,18 +50,18 @@ python3 bin/convert_all.py
 
 ```bash
 # 특정 페이지를 루트로 하위 트리 다운로드
-python3 bin/fetch_cli.py --remote --start-page-id <page_id> --attachments
+bin/fetch_cli.py --remote --start-page-id <page_id> --attachments
 
 # 단일 파일 수동 변환
-python3 bin/converter/cli.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
+bin/converter/cli.py var/<page_id>/page.xhtml target/ko/path/to/page.mdx
 ```
 
 ### 번역 문제 처리
 
 제목이 번역되지 않은 경우:
 1. `etc/korean-titles-translations.txt`에 번역 추가
-2. `python3 bin/convert_all.py --verify-translations`로 누락 여부 확인
-3. `python3 bin/convert_all.py` 재실행
+2. `bin/convert_all.py --verify-translations`로 누락 여부 확인
+3. `bin/convert_all.py` 재실행
 
 ## Python 환경 설정
 

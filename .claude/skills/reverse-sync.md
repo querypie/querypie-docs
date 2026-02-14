@@ -32,22 +32,22 @@ round-trip 검증(MDX → XHTML 패치 → MDX 재변환 → 비교)을 통해 �
 cd confluence-mdx
 
 # 단일 파일 검증
-python3 bin/reverse_sync_cli.py verify \
+bin/reverse_sync_cli.py verify \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
 # 브랜치 전체 배치 검증
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo
 
 # 상세 디버그 출력
-python3 bin/reverse_sync_cli.py debug \
+bin/reverse_sync_cli.py debug \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
 # 검증 + Confluence 반영
-python3 bin/reverse_sync_cli.py push \
+bin/reverse_sync_cli.py push \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
 # 브랜치 전체 배치 push
-python3 bin/reverse_sync_cli.py push --branch proofread/fix-typo
+bin/reverse_sync_cli.py push --branch proofread/fix-typo
 ```
 
 ## MDX 소스 지정
@@ -122,7 +122,7 @@ var/<page_id>/
 ### 교정 브랜치의 전체 파일 검증
 
 ```bash
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo
 ```
 
 모든 변경 파일의 PASS/FAIL 상태와 Summary가 출력된다.
@@ -130,7 +130,7 @@ python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo
 ### 실패 건만 빠르게 확인
 
 ```bash
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only
 ```
 
 pass/no_changes 결과를 생략하고 fail/error만 출력한다.
@@ -138,7 +138,7 @@ pass/no_changes 결과를 생략하고 fail/error만 출력한다.
 ### 실패 3건만 수집 후 중단
 
 ```bash
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --limit 3
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --limit 3
 ```
 
 실패가 3건 수집되면 나머지 파일 처리를 건너뛴다.
@@ -146,7 +146,7 @@ python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-on
 ### FAIL 원인 분석 (debug 모드)
 
 ```bash
-python3 bin/reverse_sync_cli.py debug \
+bin/reverse_sync_cli.py debug \
   "proofread/fix-typo:src/content/ko/administrator-manual.mdx"
 ```
 
@@ -160,7 +160,7 @@ python3 bin/reverse_sync_cli.py debug \
 `xhtml_beautify_diff.py`와 함께 사용하여 XHTML 레벨의 변경을 정밀 분석:
 
 ```bash
-python3 bin/xhtml_beautify_diff.py \
+bin/xhtml_beautify_diff.py \
   var/<page_id>/page.xhtml \
   var/<page_id>/reverse-sync.patched.xhtml
 ```
@@ -169,17 +169,17 @@ python3 bin/xhtml_beautify_diff.py \
 
 ```bash
 # 전체 결과를 JSON으로
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo --json
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo --json
 
 # 실패 건만 JSON으로
-python3 bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --json
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --json
 ```
 
 ### 검증 후 Confluence 반영
 
 ```bash
 # 전체 PASS 시에만 push 실행 (일부라도 FAIL이면 중단)
-python3 bin/reverse_sync_cli.py push --branch proofread/fix-typo
+bin/reverse_sync_cli.py push --branch proofread/fix-typo
 ```
 
 ## Confluence 인증 설정
