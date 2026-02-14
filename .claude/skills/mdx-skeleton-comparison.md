@@ -26,16 +26,16 @@ cd confluence-mdx/
 source venv/bin/activate
 
 # 전체 비교 실행 (기본: target/ko, target/ja, target/en)
-PYTHONPATH=bin bin/skeleton/cli.py -r
+bin/skeleton/cli.py -r
 
 # 최대 20개 차이까지 출력
-PYTHONPATH=bin bin/skeleton/cli.py -r --max-diff=20
+bin/skeleton/cli.py -r --max-diff=20
 
 # 특정 파일 변환 + 한국어 스켈레톤과 비교
-PYTHONPATH=bin bin/skeleton/cli.py target/en/path/to/file.mdx
+bin/skeleton/cli.py target/en/path/to/file.mdx
 
 # ignore 규칙을 적용하여 비교
-PYTHONPATH=bin bin/skeleton/cli.py --use-ignore target/ja/path/to/file.mdx
+bin/skeleton/cli.py --use-ignore target/ja/path/to/file.mdx
 ```
 
 ## CLI 옵션 레퍼런스
@@ -94,23 +94,23 @@ PYTHONPATH=bin bin/skeleton/cli.py --use-ignore target/ja/path/to/file.mdx
 
 ```bash
 # 기본 실행 (max-diff=5)
-PYTHONPATH=bin bin/skeleton/cli.py -r
+bin/skeleton/cli.py -r
 
 # 충분한 diff 출력으로 전체 현황 파악
-PYTHONPATH=bin bin/skeleton/cli.py -r --max-diff=50
+bin/skeleton/cli.py -r --max-diff=50
 
 # unmatched 파일 목록을 파일로 저장
-PYTHONPATH=bin bin/skeleton/cli.py -r --max-diff=100 --output /tmp/unmatched.txt
+bin/skeleton/cli.py -r --max-diff=100 --output /tmp/unmatched.txt
 ```
 
 ### 파일 존재 여부 비교 (구조 비교 없이)
 
 ```bash
 # 3개 언어 중 누락된 파일만 표시
-PYTHONPATH=bin bin/skeleton/cli.py --compare
+bin/skeleton/cli.py --compare
 
 # 모든 파일 표시 (3개 언어 모두 존재하는 파일 포함)
-PYTHONPATH=bin bin/skeleton/cli.py --compare --verbose
+bin/skeleton/cli.py --compare --verbose
 ```
 
 출력 형식: `/path/to/file.mdx ko en ja` (누락 시 `-` 표시)
@@ -119,20 +119,20 @@ PYTHONPATH=bin bin/skeleton/cli.py --compare --verbose
 
 ```bash
 # 변환 + 한국어 스켈레톤과 비교
-PYTHONPATH=bin bin/skeleton/cli.py target/ja/administrator-manual/databases/db-connections.mdx
+bin/skeleton/cli.py target/ja/administrator-manual/databases/db-connections.mdx
 
 # ignore 규칙 적용하여 비교
-PYTHONPATH=bin bin/skeleton/cli.py --use-ignore target/ja/administrator-manual/databases/db-connections.mdx
+bin/skeleton/cli.py --use-ignore target/ja/administrator-manual/databases/db-connections.mdx
 ```
 
 ### 스켈레톤 파일 정리
 
 ```bash
 # 모든 .skel.mdx 파일 삭제 (기본 디렉토리)
-PYTHONPATH=bin bin/skeleton/cli.py --reset
+bin/skeleton/cli.py --reset
 
 # 특정 디렉토리만 정리
-PYTHONPATH=bin bin/skeleton/cli.py --reset target/ja
+bin/skeleton/cli.py --reset target/ja
 ```
 
 ### 순차 리뷰 (review-skeleton-diff.sh)
@@ -141,7 +141,7 @@ unmatched 파일 목록을 입력받아 파일별로 순차 리뷰합니다.
 
 ```bash
 # 먼저 unmatched 목록 생성
-PYTHONPATH=bin bin/skeleton/cli.py -r --max-diff=100 --output /tmp/unmatched.txt
+bin/skeleton/cli.py -r --max-diff=100 --output /tmp/unmatched.txt
 
 # 대화형 리뷰 (파일별 확인 후 계속)
 bin/review-skeleton-diff.sh /tmp/unmatched.txt
@@ -221,10 +221,10 @@ ignores:
 
 ```bash
 # 기본 제외: /index.skel.mdx
-PYTHONPATH=bin bin/skeleton/cli.py -r
+bin/skeleton/cli.py -r
 
 # 추가 경로 제외
-PYTHONPATH=bin bin/skeleton/cli.py -r --exclude /index.skel.mdx /release-notes/overview.skel.mdx
+bin/skeleton/cli.py -r --exclude /index.skel.mdx /release-notes/overview.skel.mdx
 ```
 
 ## 번역 수정 시 주의사항
@@ -239,7 +239,7 @@ PYTHONPATH=bin bin/skeleton/cli.py -r --exclude /index.skel.mdx /release-notes/o
 ```bash
 cd confluence-mdx/
 source venv/bin/activate
-PYTHONPATH=bin python -m pytest tests/test_mdx_to_skeleton.py -v
+python -m pytest tests/test_mdx_to_skeleton.py -v
 ```
 
 ## 상세 문서

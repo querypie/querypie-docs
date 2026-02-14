@@ -42,7 +42,7 @@
     - 이 Skeleton MDX 파일을 비교하여, 원문과 번역문의 MDX 파일이 동일한 구성을 갖고 있는지, 문장의 수가 동일한지, Image link 가 동일한
       파일을 가리키는지, 검증할 수 있습니다.
 - `skeleton/cli.py`는 venv 환경에서 실행할 수 있습니다.
-    - `cd confluence-mdx; source venv/bin/activate; python bin/skeleton/cli.py filename.mdx` 와 같이 실행할 수 있습니다.
+    - `cd confluence-mdx; source venv/bin/activate; bin/skeleton/cli.py filename.mdx` 와 같이 실행할 수 있습니다.
     - Skeleton MDX 파일은 원문 MDX 파일과 동일한 디렉토리에 생성됩니다.
 - `bin/skeleton/cli.py --recursive`를 실행하면, target 디렉토리 아래의 모든 MDX 파일에 대해 Skeleton MDX 를 생성하고,
   한국어 원문 MDX 와 번역문 MDX 의 Skeleton MDX 를 비교하여 줍니다. 이때, diff 결과와 유사한 형식의 결과가 출력되는데, Skeleton MDX 의 비교와 함께

@@ -95,6 +95,10 @@ from typing import List, Tuple, Optional
 _SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
 _PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
+# Ensure bin/ is on sys.path so skeleton package imports resolve without PYTHONPATH
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
 # Import modules for recursive processing and comparison
 from skeleton.compare import compare_files
 from skeleton.diff import (
