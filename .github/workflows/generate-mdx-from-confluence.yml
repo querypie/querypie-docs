@@ -42,6 +42,7 @@ jobs:
           set -o xtrace
           docker --version
           docker compose version
+          touch .env # Create an empty .env to prevent missing .env error.
           # 플랫폼을 명시적으로 지정하여 아키텍처 불일치 오류 방지
           DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose --progress=quiet pull confluence-mdx
 
@@ -58,7 +59,6 @@ jobs:
         working-directory: ./confluence-mdx
         run: |
           set -o xtrace
-          touch .env # Create an empty .env to prevent missing .env error.
           docker compose run --rm confluence-mdx full ${{ inputs.arguments }}
 
       - name: Check for changes
