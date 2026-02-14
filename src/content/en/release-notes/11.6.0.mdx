@@ -1,0 +1,42 @@
+---
+title: '11.6.0'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0'
+---
+
+# 11.6.0
+
+### QueryPie 11.6.0 Release
+
+February 13, 2026
+
+
+**New Feature**
+
+* [Common] AI Chat basic functionality added (including MCP Tool invocation and conversation history management support)
+* [DAC] AWS Secrets Manager integration support - Secret Store functionality added to automatically retrieve DB connection passwords from AWS Secrets Manager
+* [DAC] Query Rule functionality added - support for configuring ALLOW/DENY/SKIP filtering rules based on SQL query patterns
+* [DAC] Custom JDBC Vendor added - support for uploading custom JDBC drivers and managing Custom JDBC Configurations, with ANSI SQL level query analysis support
+
+
+**Improvement**
+
+* [Common] OAuth Client management improvement - scope selection, multiple redirect URLs, detail page introduction, and DCR endpoint type stability enhancement
+* [Common] Fixed issue where emails were sent even when Email Integration workflow notification was disabled
+* [Common] Fixed issue where qpctl command was not found due to non-existent /usr/local/bin directory during macOS Multi-Agent installation
+* [DAC] MySQL LOAD DATA LOCAL INFILE large file processing improvement
+* [DAC] Unnecessary metadata query improvement during Trino proxy connection
+* [DAC] Resolved SAP HANA SECONDDATE error caused by Julian/Gregorian calendar difference
+* [DAC] Aborted status check in SQL Request Workflow - fixed duplicate execution bug caused by singleton object contamination
+* [DAC] Policy support added for PostgreSQL RETURNING clause
+* [DAC] Fixed minWritableBytes error when querying SAP HANA BLOB type columns
+* [DAC] Changed SAP BTP Web Editor comment style to ANSI SQL
+* [DAC] Fixed missing Audit Log recording for Web Editor context menu DDL operations (Truncate/Drop/Rename)
+* [DAC] Fixed issue where logs were duplicated by the number of WHERE conditions in Policy Audit Log
+* [DAC] Reverse Tunnel Server Redis TLS support and cluster mode auto-detection improvement
+* [DAC] Fixed inability to connect to Redis Cluster through Reverse Tunnel
+* [DAC] Improved to display clear error message when HTTPS certificate is not configured
+* [DAC] Fixed issue where Workflow Tag Display feature was not shown when New DAC Policy Management was disabled
+* [SAC] Server Agent code signing verification logic improvement - certificate change compatibility secured
+* [SAC] Fixed issue where VMs were missing due to resource path case mismatch during Azure Cloud Provider synchronization
+* [SAC] Fixed IndexOutOfBoundsException issue during Cloud Provider synchronization
+* [WAC] Key Pair validation logic added when uploading Root CA Certificate
