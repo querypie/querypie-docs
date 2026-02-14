@@ -28,3 +28,7 @@ QueryPie 제품 문서 사이트 (Next.js 15 + Nextra 4 + MDX)
 - Confluence 변환 도구: `confluence-mdx/`
 - 공용 이미지: `public/`
 - 프로젝트 문서: `docs/`
+  - `docs/DEVELOPMENT.md` — 기술 스택, 로컬 실행, 배포
+  - `docs/commit-pr-guide.md` — 커밋/PR 컨벤션 상세 가이드
+  - `docs/translation.md` — 다국어 번역 상세 지침
+  - `docs/api-naming-guide.md` — QueryPie ACP 제품명/API 명칭 지침

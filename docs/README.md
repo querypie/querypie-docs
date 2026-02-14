@@ -1,26 +1,36 @@
-# QueryPie Documentation Files
+# docs/ 디렉토리
 
-This directory contains files related to the QueryPie documentation project. Below is a description of the files and directories in this location.
+QueryPie 문서 사이트 프로젝트의 지식, 정보, 가이드 문서를 관리합니다.
 
-## Prompt Files
+## 문서 목록
 
-### prompt-1-ko.md
-This file contains detailed instructions for creating Korean documentation for QueryPie 11.0.0. It explains:
-- The structure of the documentation
-- How to process breadcrumbs.txt to create breadcrumbs.revised.txt
-- How to convert HTML content to Markdown format
-- How to handle images and file naming conventions
-- The process for generating Korean content in the src/content/ko/ directory
+### 프로젝트 가이드
 
-## Documentation Directories
+| 문서 | 설명 |
+|------|------|
+| [DEVELOPMENT.md](DEVELOPMENT.md) | 기술 스택, 로컬 실행, 빌드, 배포 방법 |
+| [commit-pr-guide.md](commit-pr-guide.md) | 커밋 메시지 및 PR 작성 컨벤션 |
+| [translation.md](translation.md) | 다국어 번역 상세 지침 (ko, en, ja) |
+| [api-naming-guide.md](api-naming-guide.md) | QueryPie ACP 제품명 및 API 명칭 지침 |
 
-## Image Files
+### 기술 문서
 
-### deploy-action.png
-- Screenshot showing the deployment action process for the documentation
+| 문서 | 설명 |
+|------|------|
+| [vercel-logging.md](vercel-logging.md) | Vercel 환경 Pino 로거 설정 가이드 |
+| [plan-to-migrate-openapi-spec.md](plan-to-migrate-openapi-spec.md) | OpenAPI Specification 자동 이관 계획 |
 
-### preview-deploy-url.png
-- Screenshot showing the preview deployment URL for the documentation
+### 작업 결과
 
-## Note
-The `venv` directory is excluded from this documentation as it contains Python virtual environment files not directly related to the documentation content.
+| 디렉토리 | 설명 |
+|----------|------|
+| [proofreading/](proofreading/) | 문서 교정/교열 결과 (`.claude/skills/proofread.md` Skill에서 사용) |
+
+## Skills와의 관계
+
+AI Agent용 Skill 문서는 `.claude/skills/`에 있으며, 상세 지침은 이 디렉토리의 문서를 참조합니다:
+
+- `.claude/skills/translation.md` → `docs/translation.md`
+- `.claude/skills/commit.md` → `docs/commit-pr-guide.md`
+- `.claude/skills/mdx-skeleton-comparison.md` → `docs/translation.md`
+- `.claude/skills/code-review.md` → `docs/DEVELOPMENT.md`
