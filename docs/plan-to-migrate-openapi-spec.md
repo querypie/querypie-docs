@@ -4,6 +4,20 @@
 
 QueryPie ACP 제품에서 제공하는 OpenAPI Specification 문서를 `querypie-docs` repository에 버전별로 자동으로 이관하여 관리하고, 문서 사이트에서 제공합니다.
 
+## 진행 현황 (2026-02-14 기준)
+
+- ✅ `scripts/fetch-openapi-spec/` 구현 완료
+  - URL 기반 다운로드, API 버전 자동 감지(v0.9/v2), `x-querypie-version` 파싱, `public/openapi-specification/{version}/{apiVersion}.json` 저장
+- ✅ `.github/workflows/fetch-openapi-spec.yml` 구현 완료
+  - `workflow_dispatch` 수동 실행, base URL 입력, 변경분 브랜치 생성/커밋/PR 생성
+- ✅ 문서 사이트 연동 완료
+  - 경로: `src/app/[lang]/api-reference/[acpVersion]/[apiVersion]/page.tsx`
+  - 렌더러: `src/components/openapi-viewer/OpenApiViewer.tsx` (`redoc` 사용)
+  - 사이드바 메타: `src/content/{lang}/api-reference/_meta.ts`
+- 🔄 남은 작업
+  - `fetch-openapi-spec` 워크플로우 스케줄 트리거 추가 여부 결정
+  - 신규 ACP 버전 추가 시 `src/content/{lang}/api-reference/_meta.ts` 갱신 자동화
+
 ## 현재 상황 파악
 
 ### 1. OpenAPI Spec 생성 방식
@@ -26,7 +40,7 @@ QueryPie ACP는 Spring Boot 기반 애플리케이션으로, `springdoc-openapi`
 
 ### 3. 현재 저장 상태
 
-- `public/openapi-specification/11.4.1/v2.json` 파일이 이미 존재합니다.
+- `public/openapi-specification/11.4.1/v0.9.json`, `public/openapi-specification/11.4.1/v2.json` 파일이 존재합니다.
 - OpenAPI Spec JSON 파일에는 `x-querypie-version` 필드에 QueryPie 버전 정보가 포함되어 있습니다.
 
 ## 버전 관리 전략
@@ -94,12 +108,11 @@ public/openapi-specification/
 2. 인증 토큰 또는 접근 권한 확인
 3. HTTP GET 요청으로 OpenAPI Spec JSON 다운로드
 
-### 추천 접근 방법
+### 현재 채택 접근 방법
 
-**방법 1 (Docker 이미지 추출)을 권장합니다.** 이유:
-- 외부 의존성 최소화
-- 재현 가능한 빌드 프로세스
-- 버전 관리와 일관성 유지
+현재 저장소 구현은 **방법 2 (사내 QueryPie 인스턴스에서 다운로드)** 를 사용합니다.
+- 근거: `scripts/fetch-openapi-spec/index.ts`가 URL 인자를 직접 받아 다운로드
+- 근거: `.github/workflows/fetch-openapi-spec.yml`이 base URL 입력값을 받아 `external`, `external-v2` 엔드포인트 호출
 
 ## 구현 계획
 
@@ -272,7 +285,7 @@ scripts/fetch-openapi-spec/
 
 **트리거 방식:**
 1. **수동 트리거 (workflow_dispatch)**: 필요 시 수동으로 실행
-2. **스케줄 트리거 (schedule)**: 주기적으로 최신 버전 확인 (예: 매주 월요일)
+2. **스케줄 트리거 (schedule)**: 미구현 (필요 시 추가 예정)
 
 **워크플로우 단계:**
 1. Repository 체크아웃
@@ -290,19 +303,14 @@ scripts/fetch-openapi-spec/
 
 ### 참고: 웹페이지 서비스 제공
 
-`public/openapi-specification/` 디렉토리의 Spec 파일을 웹페이지로 서비스 제공하는 기능은 별도의 구현 단계로 구분하며, 이 문서의 구현 계획 범위에는 포함하지 않습니다.
-
-웹페이지 서비스 제공을 위한 구현은 다음을 포함할 수 있습니다:
-- Next.js 컴포넌트로 OpenAPI Spec 렌더링
-- Redoc 또는 Swagger UI 통합
-- 버전별 동적 라우팅
-- API 문서 페이지 생성
-
-이러한 기능들은 별도의 문서나 이슈에서 계획 및 구현됩니다.
+이 기능은 현재 구현되어 있습니다.
+- 페이지 라우트: `src/app/[lang]/api-reference/[acpVersion]/[apiVersion]/page.tsx`
+- 렌더링 컴포넌트: `src/components/openapi-viewer/OpenApiViewer.tsx`
+- 스펙 파일 로딩 경로: `/openapi-specification/{querypieVersion}/{apiVersion}.json`
 
 ## 기술적 고려사항
 
-### 1. Docker 컨테이너 실행
+### 1. 다운로드 실행 환경
 
 **필요한 설정:**
 - 환경 변수: 데이터베이스 연결 정보, 라이센스 키 등
@@ -330,7 +338,7 @@ scripts/fetch-openapi-spec/
 
 ### 4. 에러 처리
 
-- Docker 컨테이너 실행 실패
+- 다운로드 실행 실패
 - 네트워크 오류
 - JSON 파싱 오류
 - 버전 정보 추출 실패
@@ -352,7 +360,7 @@ scripts/fetch-openapi-spec/
 - 클라이언트 사이드에서 로드하므로 번들 크기 고려 필요
 - **해결 방안:**
   - JSON 파일은 `public` 폴더에 저장하여 별도 번들로 처리
-  - 동적 import 사용: `import('@redocly/react-doc')`
+  - OpenAPI 뷰어 컴포넌트(`redoc`)와 일반 문서 페이지의 코드 경로 분리
   - 코드 스플리팅 활용
 
 #### 6.2 성능 최적화
@@ -390,14 +398,14 @@ scripts/fetch-openapi-spec/
 ## 구현 우선순위
 
 ### Phase 1: 기본 기능 구현
-1. ✅ Docker 이미지에서 OpenAPI Spec 추출 스크립트 개발
+1. ✅ 사내 QueryPie 인스턴스 다운로드 스크립트 개발
 2. ✅ 버전 정보 파싱 및 파일 저장
 3. ✅ 수동 실행 가능한 스크립트 완성
 
 ### Phase 2: 자동화
-1. GitHub Actions 워크플로우 구현
-2. 수동 트리거 및 스케줄 트리거 설정
-3. PR 자동 생성 기능
+1. ✅ GitHub Actions 워크플로우 구현
+2. 🔄 수동 트리거 구현, 스케줄 트리거는 미구현
+3. ✅ PR 자동 생성 기능
 
 ### Phase 3: 문서 통합
 
@@ -428,55 +436,45 @@ scripts/fetch-openapi-spec/
 
 #### 3.2 구현 방식 결정
 
-**선택: 하이브리드 방식 (MDX 파일 + React 컴포넌트)**
+**실제 구현: Next.js 동적 라우트 + React 컴포넌트**
 
-**이유:**
-1. **MDX 파일의 장점:**
-   - Nextra와의 자연스러운 통합
-   - 페이지 메타데이터(front matter) 관리 용이
-   - 검색 엔진 최적화(SEO) 지원
-   - 사이드바 네비게이션 자동 생성
-   - 다국어 지원 구조와 일치
-
-2. **React 컴포넌트의 장점:**
-   - OpenAPI Spec JSON 동적 로드
-   - 클라이언트 사이드 렌더링으로 대용량 JSON 처리
-   - 인터랙티브 UI 라이브러리 통합 용이
-   - 버전별 동적 라우팅 처리
+**구현 요약:**
+1. `src/app/[lang]/api-reference/[acpVersion]/[apiVersion]/page.tsx`에서 정적 파라미터 생성 및 메타데이터 처리
+2. `OpenApiViewer`에서 JSON fetch 후 Redoc 렌더링
+3. 언어별 `_meta.ts`로 사이드바 엔트리 제공
 
 **구현 구조:**
 ```
-src/content/{lang}/api-reference/
-  _meta.ts                          # 사이드바 메타데이터
-  {querypie-version}/
-    _meta.ts                        # 버전별 메타데이터
-    {api-version}.mdx               # MDX 페이지 파일 (예: v2.mdx, v0.9.mdx)
+src/app/[lang]/api-reference/[acpVersion]/[apiVersion]/page.tsx  # 동적 라우트
+src/components/openapi-viewer/OpenApiViewer.tsx                  # Redoc 렌더링
+src/content/{lang}/api-reference/_meta.ts                        # 사이드바 메타데이터
+src/content/{lang}/api-reference/{version}/_meta.ts              # 버전별 사이드바 메타
 ```
 
 **대안 방식 비교:**
 
 | 방식 | 장점 | 단점 | 권장도 |
 |------|------|------|--------|
-| **MDX 파일 + React 컴포넌트** | Nextra 통합, SEO, 메타데이터 관리 | 파일 생성 필요 | ⭐⭐⭐⭐⭐ |
-| Next.js API Route | 동적 라우팅, 서버 사이드 처리 | SEO 제한, 메타데이터 관리 복잡 | ⭐⭐⭐ |
+| **Next.js 동적 라우트 + React 컴포넌트 (현재 적용)** | 파일 자동 생성 불필요, 버전/언어 파라미터 처리 용이 | 사이드바 메타를 별도 유지해야 함 | ⭐⭐⭐⭐⭐ |
+| MDX 파일 + React 컴포넌트 | Nextra 통합 직관적 | 버전 증가 시 파일 생성/관리 비용 증가 | ⭐⭐⭐ |
 | 순수 MDX 파일 | 단순함 | 대용량 JSON 처리 어려움 | ⭐⭐ |
 
 #### 3.3 OpenAPI 렌더링 라이브러리 선택
 
-**권장: Redoc 또는 Swagger UI React**
+**현재 적용: `redoc` 패키지 (`RedocStandalone`)**
 
 **옵션 1: Redoc (권장)**
 - **장점:**
   - 깔끔하고 읽기 쉬운 UI
   - 3-panel 레이아웃 (메뉴, 요청/응답, 코드 샘플)
-  - React 컴포넌트 제공 (`@redocly/react-doc`)
+  - React 컴포넌트 제공 (`redoc`)
   - 번들 크기 최적화
   - 다크 모드 지원
 - **단점:**
   - Swagger UI 대비 커스터마이징 옵션 제한
 - **설치:**
   ```bash
-  npm install @redocly/react-doc
+  npm install redoc
   ```
 
 **옵션 2: Swagger UI React**
@@ -497,7 +495,7 @@ src/content/{lang}/api-reference/
 - 추가 기능: 검색, 다중 스펙 지원 등
 - 무료 버전도 제공
 
-**최종 권장: Redoc (`@redocly/react-doc`)**
+**최종 선택: Redoc (`redoc`)**
 - 문서 사이트에 적합한 깔끔한 UI
 - React 통합 용이
 - 적절한 번들 크기
@@ -536,7 +534,7 @@ src/components/
 'use client';
 
 import { useEffect, useState } from 'react';
-import { RedocStandalone } from '@redocly/react-doc';
+import { RedocStandalone } from 'redoc';
 
 interface OpenApiViewerProps {
   querypieVersion: string;
@@ -596,6 +594,8 @@ export function OpenApiViewer({
 
 #### 3.5 MDX 페이지 파일 생성
 
+현재 구현에서는 버전별 `.mdx` 파일을 생성하지 않고, 동적 라우트에서 직접 렌더링합니다.
+
 **파일 구조:**
 ```
 src/content/{lang}/api-reference/
@@ -648,6 +648,8 @@ export default {
 
 #### 3.6 동적 라우팅 구현 (선택사항)
 
+이 항목은 현재 구현 방식으로 채택 완료되었습니다.
+
 **방법 1: 정적 MDX 파일 생성 (권장)**
 - 각 버전별로 MDX 파일을 수동 또는 자동 생성
 - 빌드 타임에 모든 페이지 생성
@@ -658,24 +660,20 @@ export default {
 - 런타임에 JSON 파일 로드
 - 파일 생성 불필요하지만 SEO 제한
 
-**권장: 방법 1 (정적 MDX 파일)**
-- OpenAPI Spec은 자주 변경되지 않음
-- 정적 생성이 성능과 SEO에 유리
-- MDX 파일은 `fetch-openapi-spec` 스크립트 실행 시 자동 생성 가능
+**채택: 방법 2 (Next.js 동적 라우트)**
+- 구현 파일: `src/app/[lang]/api-reference/[acpVersion]/[apiVersion]/page.tsx`
+- 정적 파라미터 생성으로 빌드 시점에 버전/언어 조합 페이지를 생성
 
 #### 3.7 자동 MDX 파일 생성 스크립트
 
-**스크립트 위치:** `scripts/generate-api-reference-pages/`
+현재 저장소에는 `scripts/generate-api-reference-pages/`가 없으며, 미도입 상태입니다.
 
 **기능:**
 1. `public/openapi-specification/` 디렉토리 스캔
-2. 각 버전별로 MDX 파일 자동 생성
-3. `_meta.ts` 파일 자동 업데이트
-4. 다국어 지원 (en, ko, ja)
+2. 버전별 `_meta.ts` 엔트리 자동 생성/정렬
+3. 다국어 지원 (en, ko, ja)
 
-**실행 시점:**
-- `fetch-openapi-spec` 스크립트 실행 후 자동 실행
-- 또는 수동으로 `npm run generate-api-reference-pages` 실행
+대신 `_meta.ts` 갱신 자동화만 별도 개선 과제로 유지합니다.
 
 #### 3.8 구현 단계별 계획
 
@@ -690,9 +688,8 @@ export default {
 3. `_meta.ts` 파일 생성
 
 **3.8.3 자동화 스크립트 개발**
-1. MDX 파일 자동 생성 스크립트 개발
-2. `_meta.ts` 자동 업데이트 스크립트 개발
-3. `fetch-openapi-spec` 스크립트와 통합
+1. `_meta.ts` 자동 업데이트 스크립트 개발
+2. `fetch-openapi-spec` 스크립트와 통합
 
 **3.8.4 테스트 및 검증**
 1. 로컬 환경에서 페이지 렌더링 테스트
@@ -732,37 +729,12 @@ export default {
 
 ## 다음 단계
 
-### Phase 1 완료 후
-1. ✅ Docker 이미지 접근 방법 확인 및 테스트
-2. ✅ 스크립트 프로토타입 개발
-3. ✅ 수동 실행 가능한 스크립트 완성
+### 완료된 단계
+1. ✅ `fetch-openapi-spec` 스크립트 구현 및 수동 실행 검증
+2. ✅ OpenAPI fetch GitHub Actions 워크플로우 및 PR 자동 생성 구현
+3. ✅ API Reference 동적 라우팅/렌더링 구현
 
-### Phase 2 진행 중
-1. GitHub Actions 워크플로우 설계
-2. 수동 트리거 및 스케줄 트리거 설정
-3. PR 자동 생성 기능 구현
-
-### Phase 3 준비
-1. **OpenAPI 렌더링 라이브러리 선택 및 설치**
-   - Redoc (`@redocly/react-doc`) 또는 Swagger UI React 평가
-   - 프로토타입 컴포넌트 개발
-
-2. **React 컴포넌트 개발**
-   - `OpenApiViewer` 컴포넌트 구현
-   - 에러 처리 및 로딩 상태 구현
-   - 버전 정보 표시 컴포넌트 구현
-
-3. **MDX 파일 구조 설계**
-   - `src/content/{lang}/api-reference/` 디렉토리 구조 설계
-   - 샘플 MDX 파일 생성
-   - `_meta.ts` 파일 구조 설계
-
-4. **자동화 스크립트 개발**
-   - MDX 파일 자동 생성 스크립트 개발
-   - `fetch-openapi-spec` 스크립트와 통합
-
-5. **테스트 및 검증**
-   - 로컬 환경 테스트
-   - 빌드 및 배포 테스트
-   - 다국어 지원 검증
-
+### 다음 작업
+1. `fetch-openapi-spec` 워크플로우의 `schedule` 트리거 추가 여부 결정 및 적용
+2. 신규 버전 추가 시 언어별 `_meta.ts` 자동 갱신 스크립트 도입 여부 결정
+3. API Reference 페이지의 버전 선택 UX(예: latest 링크/selector) 개선 검토

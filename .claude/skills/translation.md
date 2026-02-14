@@ -28,7 +28,7 @@ src/content/
 ## 번역 프로세스 가이드라인
 
 1. **일괄 처리**: 한 번에 50개 문서 번역 또는 검토 후 리뷰 요청
-2. **빌드 검증**: PR 생성 시 CI Pipeline에서 자동 검증. 로컬 `npm run build`는 선택사항
+2. **빌드 검증**: 번역/수정 1차 완료 후 로컬 `npm run build`를 실행하여 빌드 성공을 확인
 3. **재번역 금지**: 특별히 지시하지 않는 한 이미 번역된 문서를 다시 번역하지 않음
 4. **피드백**: 한국어 소스에서 발견된 오류 및 번역 중 어려움 보고
 
@@ -134,4 +134,3 @@ import { Callout } from 'nextra/components'
 - **제품명/API 명칭 지침**: [docs/api-naming-guide.md](/docs/api-naming-guide.md)
 - **Skeleton MDX 비교**: [docs/translation.md](/docs/translation.md)의 "Skeleton MDX 를 비교하기" 섹션
 - **MDX 스켈레톤 비교 Skill**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
-
