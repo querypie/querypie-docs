@@ -17,14 +17,16 @@ set -o nounset -o pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLI="${SCRIPT_DIR}/reverse_sync_cli.py"
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
+readonly BOLD_CYAN="\e[1;36m"
+readonly RESET="\e[0m"
 
 usage() {
     sed -n '3,13p' "$0" | sed 's/^# //' | sed 's/^#//'
     exit 0
+}
+
+log::cmd() {
+    printf "%b+ %s%b\n" "${BOLD_CYAN}" "$*" "${RESET}" 1>&2
 }
 
 # 로그 첫 줄에서 브랜치명 추출
@@ -35,11 +37,12 @@ extract_branch() {
 }
 
 # 로그에서 fail/error 파일 경로 추출
+# 로그 형식: "[N/M] src/content/ko/.../file.mdx ... fail"
 extract_failures() {
     local log="$1"
-    grep -E '\.\.\.\s+(fail|error)$' "$log" \
+    grep -E '\.\.\.\s+(fail|error)' "$log" \
         | sed 's/.*] //' \
-        | sed 's/ \.\.\. \(fail\|error\)$//'
+        | sed 's/ \.\.\..*$//'
 }
 
 main() {
@@ -75,49 +78,15 @@ main() {
     echo "=== branch: ${branch}, 재검증 대상: ${#failures[@]}건 ==="
     echo ""
 
-    local passed=0
-    local failed=0
-    local errors=0
-    local still_failing=()
-
     for (( i=0; i<${#failures[@]}; i++ )); do
         local mdx="${failures[$i]}"
         local ref="${branch}:${mdx}"
-        printf "[%d/%d] %s ... " "$((i + 1))" "${#failures[@]}" "${mdx}"
 
-        local output
-        output="$(python3 "${CLI}" verify "${ref}" 2>&1)" || true
-        local result
-        result="$(echo "${output}" | grep -oE '(pass|fail|error)$' | tail -1)" || true
-        result="${result:-error}"
-
-        case "${result}" in
-            pass)
-                echo -e "${GREEN}${result}${NC}"
-                passed=$((passed + 1))
-                ;;
-            fail)
-                echo -e "${RED}${result}${NC}"
-                failed=$((failed + 1))
-                still_failing+=("${mdx}")
-                ;;
-            *)
-                echo -e "${RED}${result}${NC}"
-                errors=$((errors + 1))
-                still_failing+=("${mdx}")
-                ;;
-        esac
-    done
-
-    echo ""
-    echo "Results: ${passed} passed, ${failed} failed, ${errors} errors (total ${#failures[@]})"
-
-    if [[ ${#still_failing[@]} -gt 0 ]]; then
+        echo "──── [$(( i + 1 ))/${#failures[@]}] ${mdx} ────"
+        log::cmd python3 "${CLI}" verify "${ref}"
+        python3 "${CLI}" verify "${ref}"
         echo ""
-        echo "Still failing:"
-        printf "  %s\n" "${still_failing[@]}"
-        exit 1
-    fi
+    done
 }
 
 main "$@"
