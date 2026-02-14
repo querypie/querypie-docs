@@ -11,6 +11,7 @@ import argparse
 import tempfile
 from pathlib import Path
 from typing import Dict, List
+import re
 
 import yaml
 
@@ -43,6 +44,26 @@ def _prepare_pages_yaml(var_dir: Path, case_ids: List[str]) -> None:
     (var_dir / "pages.yaml").write_text(
         yaml.dump(pages, allow_unicode=True, default_flow_style=False)
     )
+
+
+def _extract_source_page_id(mdx_text: str) -> str | None:
+    m = re.search(r"/pages/(\d+)/", mdx_text)
+    return m.group(1) if m else None
+
+
+def _load_real_path_map(project_root: Path) -> Dict[str, List[str]]:
+    pages = yaml.safe_load((project_root / "var" / "pages.yaml").read_text()) or []
+    result: Dict[str, List[str]] = {}
+    for p in pages:
+        pid = str(p.get("page_id", ""))
+        path = p.get("path")
+        if pid and isinstance(path, list):
+            result[pid] = path
+    return result
+
+
+def _strip_first_h1(mdx_text: str) -> str:
+    return re.sub(r"^# .+\n\n", "", mdx_text, count=1, flags=re.MULTILINE)
 
 
 def _short_diff_line(diff_report: str) -> str:
@@ -121,25 +142,42 @@ def main() -> None:
     rows: List[Dict[str, str]] = []
     original_project_dir = reverse_sync_cli._PROJECT_DIR
 
+    real_path_map = _load_real_path_map(root)
+
     with tempfile.TemporaryDirectory(prefix="reverse-sync-typecases-") as tmp:
         tmp_root = Path(tmp) / "project"
         var_dir = tmp_root / "var"
         var_dir.mkdir(parents=True, exist_ok=True)
-        _prepare_pages_yaml(var_dir, [p.name for p in typecases])
+
+        pages_rows = []
+        for case in typecases:
+            case_id = case.name
+            original_mdx = (case / "original.mdx").read_text()
+            src_page_id = _extract_source_page_id(original_mdx)
+            if src_page_id and src_page_id in real_path_map:
+                page_path = real_path_map[src_page_id]
+            else:
+                page_path = ["types", case_id]
+            pages_rows.append({"page_id": case_id, "path": page_path})
+        (var_dir / "pages.yaml").write_text(
+            yaml.dump(pages_rows, allow_unicode=True, default_flow_style=False)
+        )
 
         reverse_sync_cli._PROJECT_DIR = tmp_root
         try:
             for case in typecases:
                 case_id = case.name
                 (var_dir / case_id).mkdir(parents=True, exist_ok=True)
+                original_mdx = _strip_first_h1((case / "original.mdx").read_text())
+                improved_mdx = _strip_first_h1((case / "improved.mdx").read_text())
                 result = run_verify(
                     page_id=case_id,
                     original_src=MdxSource(
-                        content=(case / "original.mdx").read_text(),
+                        content=original_mdx,
                         descriptor=f"tests/testcases/{case_id}/original.mdx",
                     ),
                     improved_src=MdxSource(
-                        content=(case / "improved.mdx").read_text(),
+                        content=improved_mdx,
                         descriptor=f"tests/testcases/{case_id}/improved.mdx",
                     ),
                     xhtml_path=str(case / "page.xhtml"),
