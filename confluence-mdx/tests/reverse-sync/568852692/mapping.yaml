@@ -1,0 +1,77 @@
+version: 1
+source_page_id: '568852692'
+generated_at: '2026-02-14T15:15:18Z'
+mdx_file: documentdb-specific-guide.mdx
+mappings:
+- xhtml_xpath: macro-info[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 4
+- xhtml_xpath: macro-toc[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 6
+- xhtml_xpath: h2[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 7
+- xhtml_xpath: p[1]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 9
+- xhtml_xpath: p[2]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 11
+- xhtml_xpath: ac:image[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 13
+- xhtml_xpath: h2[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 15
+- xhtml_xpath: p[3]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 17
+- xhtml_xpath: h3[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 19
+- xhtml_xpath: p[4]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 21
+- xhtml_xpath: ol[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 23
+- xhtml_xpath: ac:image[2]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 25
+- xhtml_xpath: ol[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 27
+- xhtml_xpath: ac:image[3]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 29
+- xhtml_xpath: h3[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 31
+- xhtml_xpath: ol[3]
+  xhtml_type: list
+  mdx_blocks:
+  - 33
+- xhtml_xpath: ac:image[4]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 35
+- xhtml_xpath: ol[4]
+  xhtml_type: list
+  mdx_blocks:
+  - 37

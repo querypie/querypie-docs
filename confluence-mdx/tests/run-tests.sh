@@ -6,9 +6,11 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: convert (default), skeleton, reverse-sync, image-copy, xhtml-diff
+#   --type TYPE       Test type: convert (default), skeleton, reverse-sync,
+#                     reverse-sync-verify, image-copy, xhtml-diff
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
+#   --test-dir DIR    Test case directory (default: testcases)
 #   --verbose, -v     Show converter output (stdout/stderr)
 #   --help            Show this help message
 
@@ -19,7 +21,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${SCRIPT_DIR}"
 
 # Configuration (relative paths from script directory)
-TEST_DIR="testcases"
+TEST_DIR=""  # set later from --test-dir or default
 BIN_DIR="../bin"
 VENV_DIR="../venv"
 
@@ -85,6 +87,10 @@ while [[ $# -gt 0 ]]; do
             TEST_ID="$2"
             shift 2
             ;;
+        --test-dir)
+            TEST_DIR="$2"
+            shift 2
+            ;;
         --verbose|-v)
             VERBOSE=true
             shift
@@ -98,6 +104,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+# Set default TEST_DIR based on test type if not explicitly given
+if [[ -z "${TEST_DIR}" ]]; then
+    TEST_DIR="testcases"
+fi
 
 # Activate virtual environment
 activate_venv() {
@@ -223,6 +234,55 @@ has_reverse_sync_input() {
     local test_id="$1"
     [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
     [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]]
+}
+
+# Run reverse-sync verify-only test (no expected file comparison)
+# Reports pass/fail status from test_verify.py result
+run_reverse_sync_verify_test() {
+    local test_id="$1"
+    local test_path="${TEST_DIR}/${test_id}"
+
+    mkdir -p "../var/${test_id}"
+    pushd .. > /dev/null
+    run_cmd bin/reverse_sync/test_verify.py \
+        "${test_id}" \
+        "tests/${test_path}/original.mdx" \
+        "tests/${test_path}/improved.mdx" \
+        "tests/${test_path}/page.xhtml"
+    popd > /dev/null
+
+    # Copy result file
+    local var_dir="../var/${test_id}"
+    cp "${var_dir}/reverse-sync.result.yaml" "${test_path}/output.reverse-sync.result.yaml"
+
+    # Check status from result.yaml
+    local status
+    status=$(python3 -c "
+import yaml, sys
+r = yaml.safe_load(open(sys.argv[1]))
+print(r.get('status', 'error'))
+" "${test_path}/output.reverse-sync.result.yaml")
+
+    if [[ "${status}" == "pass" ]]; then
+        return 0
+    else
+        # Show verify diff on failure
+        python3 -c "
+import yaml, sys
+r = yaml.safe_load(open(sys.argv[1]))
+diff = r.get('verification', {}).get('diff_report', '')
+if diff:
+    print(diff)
+" "${test_path}/output.reverse-sync.result.yaml"
+        return 1
+    fi
+}
+
+has_reverse_sync_verify_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]]
 }
 
 # Run image-copy test: verify converter copies and sanitizes image files correctly
@@ -392,6 +452,13 @@ main() {
                 run_single_test run_reverse_sync_test "Reverse-Sync" "${TEST_ID}"
             else
                 run_all_tests run_reverse_sync_test "Reverse-Sync" has_reverse_sync_input
+            fi
+            ;;
+        reverse-sync-verify)
+            if [[ -n "${TEST_ID}" ]]; then
+                run_single_test run_reverse_sync_verify_test "Reverse-Sync-Verify" "${TEST_ID}"
+            else
+                run_all_tests run_reverse_sync_verify_test "Reverse-Sync-Verify" has_reverse_sync_verify_input
             fi
             ;;
         image-copy)

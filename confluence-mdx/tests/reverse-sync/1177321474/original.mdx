@@ -1,0 +1,304 @@
+---
+title: '설치 가이드 - 간단한 구성'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/964952065/-'
+---
+
+import { Callout } from 'nextra/components'
+
+# 설치 가이드 - 간단한 구성
+
+
+## 소개
+
+이 설치 가이드는 하나의 서버 컴퓨터에 QueryPie ACP 서버를 설치하는 간단한 구성의 설치 방법을 안내합니다.
+간단한 구성으로 설치하더라도, 대부분의 쿼리파이 기능을 시험해 볼 수 있습니다.
+
+그러나, 이 설치 방식은 실제 운영 환경에서 사용하기에는 적합하지 않습니다.
+실제 운영 환경에 사용하기에 적합한 설치 방법은 별도로 제공되는 [QueryPie Installation Guide]를 참고하십시오.
+
+<Callout type="info">
+QueryPie 10.3.0 또는 이후 버전을 대상으로 하는 PoC 용도의 설치 가이드입니다.
+</Callout>
+
+## 설치 전 준비사항
+
+설치를 진행하기 전에, 다음의 사항을 준비해야 합니다.
+간단히 요약하면, 다음과 같습니다.
+
+* Linux 서버 1대
+* 웹 브라우저가 설치된 PC 1대
+
+자세한 것은 다음 문서를 참조하세요: [설치 전 준비사항](../prerequisites)
+
+## 시스템 아키텍처
+
+다음 문서를 참조하세요: [시스템 아키텍처와 네트워크 접근제어](../system-architecture-and-network-access-control)
+
+## 설치 과정
+
+### setup.sh 실행
+
+QueryPie 설치를 간편하게 수행할 수 있는 `setup.sh` 스크립트를 내려받고, 실행합니다.
+setup.sh 가 실제로 수행하는 명령은 실행 과정에서 확인할 수 있습니다.
+아래의 “Manual steps replacing setup.sh” 항목은 `setup.sh` 가 실행하는 명령을 옮겨 놓은 것입니다.
+
+QueryPie Service를 위한 docker, docker-compose 를 설치하고, docker-compose.yml 등 설정파일을 설치합니다.
+
+<Callout type="info">
+아래에 제시된 QP_VERSION, DOWNLOAD_VERSION 은 예시입니다.
+설치할 버전은 [제품 버전](../product-versions) 문서를 참조하거나, 기술지원 담당자에게 확인받으시기 바랍니다.
+</Callout>
+```bash
+# Download and run ./setup.sh with required environment variables.
+curl -L https://dl.querypie.com/releases/compose/setup.sh -o setup.sh
+chmod +x setup.sh
+export DOWNLOAD_VERSION=10.3.x
+export QP_VERSION=10.3.0
+./setup.sh
+
+# Grant permission of docker group
+sudo usermod -aG docker $USER
+
+# Please logout and ssh again to run docker command.
+```
+
+docker 를 처음 설치한 경우, 현재 shell 이 docker group 의 권한을 아직 갖고 있지 못합니다.
+logout 이후, 다시 ssh 연결하세요.
+
+<Callout type="important">
+OS 버전이나 종류에 따라 setup.sh 가 정상적으로 실행되지 않는 경우, 아래와 같이 설치합니다.
+</Callout>
+<details>
+<summary>Manual steps replacing setup.sh</summary>
+```bash
+# Install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+# Install docker-compose
+curl -SL https://dl.querypie.com/releases/bin/v2.29.7/docker-compose-linux-x86_64 -o docker-compose
+chmod +x docker-compose
+sudo install -m 755 docker-compose /usr/local/bin/
+
+# Install docker-compose.yml and config files
+# NOTE: Please use the actual version number instead of '10.3.0'.
+mkdir -p querypie/10.3.0
+cd querypie/10.3.0
+curl -L https://dl.querypie.com/releases/compose/10.3.x/package.tar.gz -o package.tar.gz
+tar zxvf package.tar.gz
+
+# Install logrotate config for docker daemon
+sudo cp logrotate /etc/logrotate.d/querypie
+```
+</details>
+
+
+### Harbor Login
+
+QueryPie Docker Image 를 내려받을 수 있도록, Harbor Docker Registry 에 로그인합니다.
+
+<Callout type="info">
+최초 설치 시 고객사 하버 계정을 발급하여 사전에 전달드립니다.
+</Callout>
+```bash
+docker login harbor.chequer.io
+Username:
+Password:
+```
+
+아래와 같은 메시지가 나타나는 경우, Harbor 에 정상적으로 로그인된 것입니다.
+```bash
+WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credential-stores 
+
+Login Succeeded
+```
+
+
+### compose-env 설정
+
+`./setup.sh` 스크립트를 실행하면, `querypie/<version>/` 디렉토리 안에 `docker-compose.yml`, `compose-env` 등 설정 파일을 생성하게 됩니다.
+이 디렉토리 안으로 이동하여, `compose-env` 라는 이름의 설정 파일을 편집합니다.
+
+각 환경변수에 대한 설명은 다음 문서를 참조하여 주세요: [컨테이너 환경변수](../container-environment-variables)
+```bash
+# Version of QueryPie Docker Image to run: 10.3.0 or later.
+VERSION=10.3.0
+
+# Common
+## Secret key for encrypting communication between QueryPie client agents and QueryPie over port 9000/tcp.
+## Must be exactly 32 characters in length.
+## Suggested: 32-char random string via `openssl rand -hex 16`
+AGENT_SECRET=
+
+## Secret key used to encrypt sensitive information, such as database connection strings and SSH private keys.
+## This key can be any string but is immutable once set.
+## Suggested: 16-char random string via `openssl rand -hex 8`
+KEY_ENCRYPTION_KEY=
+
+# DB
+## Suggested: host.docker.internal
+DB_HOST=
+DB_PORT=3306
+DB_CATALOG=querypie
+LOG_DB_CATALOG=querypie_log
+ENG_DB_CATALOG=querypie_snapshot
+## Suggested: querypie
+DB_USERNAME=
+## Suggested: 16-char random string via `openssl rand -hex 8`
+DB_PASSWORD=
+DB_MAX_CONNECTION_SIZE=20
+## If you’re using AWS Aurora, use the software.amazon.jdbc.Driver instead of org.mariadb.jdbc.Driver for automatic failover handling.
+DB_DRIVER_CLASS=org.mariadb.jdbc.Driver
+
+# Redis
+## REDIS_NODES should be specified as a “Host:Port” combination.
+## In CLUSTER MODE, when specifying multiple nodes, separate each address with a comma.
+## Example: Host1:6379,Host2:6379,Host3:6379
+## Suggested: host.docker.internal:6379
+REDIS_NODES=
+## Suggested: 16-char random string via `openssl rand -hex 8`
+REDIS_PASSWORD=
+
+DAC_SKIP_SQL_COMMAND_RULE_FILE=skip_command_config.json
+```
+
+
+### MySQL / Redis 구동
+
+Single machine 구성에서는, 하나의 VM 내에 QueryPie MySQL, QueryPie Redis 를 Container 방식으로 실행합니다.
+다음의 명령으로, MySQL, Redis 를 실행합니다.
+처음 실행하는 경우, `compose-env` 파일에서 정의한 Username, Password 를 적용하여, 기본 계정을 생성하게 됩니다.
+```
+docker-compose --env-file compose-env --profile database up -d
+```
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+
+### Tools 구동
+
+QueryPie Tools 는 설치 과정에서 사용되는 도구입니다.
+QueryPie Tools 는 QueryPie MySQL 에 Table, Procedure 등을 생성하는 기능을 제공합니다.
+MySQL 의 Database Table 등은 제품의 버전에 따라 그 내용이 바뀌게 되며, Flyway 라는 오픈소스 도구를 이용해, 형상을 관리합니다.
+QueryPie Tools 는 제품의 라이선스를 설치하는 기능을 제공합니다.
+
+QueryPie Tools 는 TCP Port 8050 에서 요청을 받아들이는 API 서버 방식으로 작동합니다.
+
+#### Tools 실행
+
+다음의 명령을 수행하여, QueryPie Tools 를 실행합니다.
+이후 `docker ps` 명령으로 Container 가 정상적으로 실행 중인지 확인할 수 있습니다. `docker logs -f querypie-tools-1` 명령으로 Container 의 로그를 확인할 수 있습니다.
+```
+docker-compose --env-file compose-env --profile tools up -d
+```
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+6e867d744acb  harbor.chequer.io/querypie/querypie-tools:10.3.0 ... querypie-tools-1
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+#### Migration 실행
+
+QueryPie 가 필요로 하는 MySQL Table, Procedure 등을 생성하는 작업을, Migration 이라고 부릅니다.
+다음의 명령을 수행하여, Migration 을 실행합니다.
+최초 설치의 경우, 수백건의 DB Table 을 생성하는 과정에서, 1~2분 가량 시간이 소요됩니다.
+```
+docker exec -it querypie-tools-1 /app/script/migrate.sh runall
+```
+```
+[2025-05-20 07:43:15] QueryPie migration is started.
+--------------------------------------------------------------------------------
+[2025-05-20 07:43:15] QueryPie `V67.11__9.10.0.11_workflow_rule_migration.sql` is started.
+[2025-05-20 07:43:18] QueryPie `V67.11__9.10.0.11_workflow_rule_migration.sql` is finished.
+
+...
+[2025-05-20 07:44:17] QueryPie Snapshot `V5.0__10.2.8.0_oven_diary_tables_alter_json_column_type.sql` is started.
+[2025-05-20 07:44:17] QueryPie Snapshot `V5.0__10.2.8.0_oven_diary_tables_alter_json_column_type.sql` is finished.
+[2025-05-20 07:44:17] QueryPie Snapshot migration is finished.
+--------------------------------------------------------------------------------
+```
+
+#### License 실행
+
+QueryPie Tools 에 license 파일을 설치하는 명령을 다음과 같이 수행할 수 있습니다. `license.crt` 라는 파일 이름은 예시입니다.
+기술지원 담당자에게 전달 받은 라이선스 파일의 이름을 지정하면 됩니다.
+라이선스 파일은 x509 형식의 인증서 파일로서, 텍스트 파일입니다.
+```
+curl -XPOST 127.0.0.1:8050/license/upload -F file=@license.crt
+```
+```
+[License] Upload: Success
+```
+
+#### Tools 종료
+
+설치를 위한 중간 과정이 완료되었기에, QueryPie Tools 를 종료합니다.
+```
+docker-compose --env-file compose-env --profile tools down
+```
+
+### QueryPie 구동
+
+QueryPie Tools 를 이용해, MySQL Database Table 을 생성하고, License 를 설치하면, 기본적인 설치 과정이 거의 완료된 것입니다.
+이제는 QueryPie Server Container 를 실행하여, QueryPie 를 사용할 수 있습니다.
+다음의 명령을 실행하여, QueryPie Server Container 를 실행합니다.
+```
+docker-compose --env-file compose-env --profile querypie up -d
+```
+
+일반적인 서버 환경에서 약 1분50초~2분10초 후에 QueryPie Container 가 실행됩니다.
+```
+docker ps
+
+CONTAINER ID  IMAGE                                            ... NAMES
+69353ab980d8  harbor.chequer.io/querypie/querypie:10.3.0       ... querypie-app-1
+0b8d8b9b9486  harbor.chequer.io/querypie/mysql:8.0.39          ... querypie-mysql-1
+6d96b9cdc95e  harbor.chequer.io/querypie/redis:7.4.2           ... querypie-redis-1
+```
+
+QueryPie Container 의 프로세스들이 정상적으로 기동하고 나면, Container Log 에서, 다음과 같은 실행 성공 안내 메시지를 만나게 됩니다.
+```
+docker logs -f querypie-app-1
+
+....
+READYZ             | ########################################################################
+READYZ             | #                                                                      #
+READYZ             | #     ██████╗ ██╗   ██╗███████╗██████╗ ██╗   ██╗██████╗ ██╗███████╗    #
+READYZ             | #    ██╔═══██╗██║   ██║██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗██║██╔════╝    #
+READYZ             | #    ██║   ██║██║   ██║█████╗  ██████╔╝ ╚████╔╝ ██████╔╝██║█████╗      #
+READYZ             | #    ██║▄▄ ██║██║   ██║██╔══╝  ██╔══██╗  ╚██╔╝  ██╔═══╝ ██║██╔══╝      #
+READYZ             | #    ╚██████╔╝╚██████╔╝███████╗██║  ██║   ██║   ██║     ██║███████╗    #
+READYZ             | #     ╚══▀▀═╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚══════╝    #
+READYZ             | #                                                                      #
+READYZ             | ########################################################################
+READYZ             | .--------------------------------------------------------.
+READYZ             | |  🚀 QueryPie Server has been successfully started! 🚀  |
+READYZ             | |  Timestamp in UTC: Sun Jan 26 15:00:56 UTC 2025        |
+READYZ             | |  Timestamp in KST: Mon Jan 27 00:00:56 KST 2025        |
+READYZ             | '--------------------------------------------------------'
+....
+```
+
+### 설치 완료
+
+수고하셨습니다.
+이제 QueryPie 가 작동하는 모습을 볼 수 있습니다.
+
+## 기본 설정 절차
+
+설치가 완료된 후, 운영 환경에 맞게 초기 설정을 진행하여야 합니다.
+자세한 설정 절차는 다음 문서를 참조하세요: [설치 후 초기 설정](../post-installation-setup)
+
+

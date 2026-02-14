@@ -1,0 +1,49 @@
+version: 1
+source_page_id: '920944732'
+generated_at: '2026-02-14T15:15:04Z'
+mdx_file: password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
+mappings:
+- xhtml_xpath: h2[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 4
+- xhtml_xpath: p[1]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 6
+- xhtml_xpath: h2[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 8
+- xhtml_xpath: ul[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 10
+- xhtml_xpath: h2[3]
+  xhtml_type: heading
+  mdx_blocks:
+  - 12
+- xhtml_xpath: ol[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 14
+- xhtml_xpath: macro-note[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 16
+- xhtml_xpath: h2[4]
+  xhtml_type: heading
+  mdx_blocks:
+  - 18
+- xhtml_xpath: ul[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 19
+- xhtml_xpath: h2[5]
+  xhtml_type: heading
+  mdx_blocks:
+  - 20
+- xhtml_xpath: ol[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 22
