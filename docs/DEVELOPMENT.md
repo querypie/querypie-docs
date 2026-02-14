@@ -59,7 +59,3 @@ npm start
 ```shell
 TARGET_ENV=preview BRANCH=main node ./index.js
 ```
-
-## 오픈 전 다음 파일 TODO 보고 로직이나 값 고쳐서 나가야 함
-- scripts/generate-sitemap/index.ts
-- src/app/[lang]/layout.tsx
