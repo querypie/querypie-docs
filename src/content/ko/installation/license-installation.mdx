@@ -60,7 +60,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 
 `[License] Upload: Success` 라는 응답 메시지를 만난 경우, 정상적으로 라이선스가 설치된 것입니다.
 
-전반적인 제품 설치 과정과 Product License 설치 단계에 대한 상세한 설명은 다음 문서를 참조하여 주세요: [설치 가이드 - 간단한 구성](installation/installation-guide-simple-configuration)
+전반적인 제품 설치 과정과 Product License 설치 단계에 대한 상세한 설명은 다음 문서를 참조해 주세요: [설치 가이드 - 간단한 구성](installation/installation-guide-simple-configuration)
 
 ### 사용 중인 QueryPie 의 라이선스를 연장하는 경우<Badge color="grey">Deprecated</Badge>
 
@@ -95,7 +95,7 @@ ubuntu@querypie:~/querypie/10.2.4$
 세부 과정을 살펴보면, 처음 설치 시점의 라이선스 설치 과정과 동일합니다.
 
 그러나, 경우에 따라, `[License] Upload: The periods overlap.` 라는 응답 메시지를 만날 수 있으며, 이 경우, 새로운 라이선스 설치에 실패한 것입니다.
-이 응답 메시지를 만난 경우 대처 방법은, “사용 중인 QueryPie 의 라이선스를 교체하는 경우” 섹션을 참고하시기 바랍니다.
+이 응답 메시지를 만난 경우 대처 방법은 "사용 중인 QueryPie 의 라이선스를 교체하는 경우" 섹션을 참고하세요.
 
 
 ### 사용 중인 QueryPie 의 라이선스를 교체하는 경우<Badge color="grey">Deprecated</Badge>
@@ -130,7 +130,7 @@ ubuntu@querypie:~/querypie/10.2.4$ docker exec -it querypie-app-1 bash
 
 Container 내부에서 mysql client 을 실행하여, QueryPie MySQL 에 연결합니다.
 Container 내부에서는 환경변수가 정의되어 있어서, QueryPie MySQL 에 연결하기 위한 정보가 제공됩니다.
-아래의 `mysql` 명령에서 `-h`, `$DB_HOST` 등 옵션이름과 옵션값 사이에 공백이 없다는 것에 주의하여 주세요.
+아래의 `mysql` 명령에서 `-h`, `$DB_HOST` 등 옵션이름과 옵션값 사이에 공백이 없다는 것에 주의해 주세요.
 
 `mysql -h$DB_HOST -u$DB_USERNAME -p$DB_PASSWORD $DB_CATALOG`
 ```
@@ -215,12 +215,12 @@ ubuntu@querypie:~/querypie/10.2.4$
 
 #### QueryPie Server Container 를 재시작하기
 
-이제, QueryPie Server Container 를 재시작하여 주세요.
+이제 QueryPie Server Container를 재시작해 주세요.
 
 * `docker-compose --env-file compose-env --profile querypie down`
 * `docker-compose --env-file compose-env --profile querypie up -d`
 
-설치된 QueryPie Web Console 에서, 제품이 정상적으로 작동하는지 확인하여 주세요.
+설치된 QueryPie Web Console에서 제품이 정상적으로 작동하는지 확인해 주세요.
 
 지금까지, 기존 라이선스를 교체하여, 새로운 라이선스를 설치하는 과정을 살펴보았습니다.
 수고하셨습니다.

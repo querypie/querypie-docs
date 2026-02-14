@@ -55,7 +55,7 @@ $ curl -s https://dl.querypie.com/setup.v2.sh -o setup.v2.sh
 $ bash setup.v2.sh
 ```
 
-`setup.v2.sh` 는 제조사에서 권장하는 버전을 스스로 선택하여 설치합니다.
+`setup.v2.sh`는 제조사에서 권장하는 버전을 스스로 선택하여 설치합니다.
 설치 가능한 버전은 이 문서를 참조하세요: [제품 버전](../product-versions)
 
 특정한 버전을 지정하여 설치하려는 경우, 다음과 같은 명령을 사용할 수 있습니다.
@@ -110,12 +110,12 @@ $
 
 ### setup.v2.sh 가 자동으로 수행하는 작업
 
-`setup.v2.sh` 는 다음의 주요 설치 절차를 자동으로 진행합니다.
+`setup.v2.sh`는 다음의 주요 설치 절차를 자동으로 수행합니다.
 
-1. `docker-compose.yml` , `.env` 등 Compose 를 위한 설정파일을 내려 받기
+1. `docker-compose.yml` , `.env` 등 Compose 를 위한 설정파일을 내려받기
     * 기존의 `compose-env` 라는 환경변수 설정 파일의 이름이 `.env` 로 바뀌었습니다. `compose-env` 는 설정파일 생성을 위한 template 으로 사용됩니다.
 2.  `.env` 에 환경변수 값을 설정하기
-    * 각 환경변수에 대한 설명은 [컨테이너 환경변수](../container-environment-variables) 문서를 참고해주세요.
+    * 각 환경변수에 대한 설명은 [컨테이너 환경변수](../container-environment-variables) 문서를 참고해 주세요.
 3. docker image 내려받기
     * `docker.io/querypie/` registry 에서 image 를 내려받습니다. 따라서, Harbor login 과정이 필요하지 않습니다.
 4. mysql, redis container 실행하기
@@ -123,7 +123,7 @@ $
 6. querypie-app container 실행하기
 7. `./querypie/current` 라는 심볼릭 링크를 생성하여, 현재 작동 중인 버전을 가리킵니다.
 
-`setup.v2.sh` 가 querypie-app container 를 정상적으로 기동하고 나면, 다음과 같은 실행 성공 안내 메시지를 만나게 됩니다.
+`setup.v2.sh`가 querypie-app container를 정상적으로 기동하고 나면, 다음과 같은 실행 성공 안내 메시지를 만나게 됩니다.
 ```
 + docker exec querypie-app-1 readyz
 ########################################################################
@@ -161,7 +161,7 @@ $
 수고하셨습니다.
 이제 QueryPie 가 작동하는 모습을 볼 수 있습니다.
 
-`setup.v2.sh` 의 실행 마지막에 보이는 `http://172.31.11.201:8000` 와 같은 URL 에 접속을 시도하여 보십시오.
+`setup.v2.sh`의 실행 마지막에 보이는 `http://172.31.11.201:8000`과 같은 URL에 접속을 시도해 보십시오.
 이 주소는 Local PC 에서 Linux Server 로 연결하기 위한 IP Address 를 사용합니다.
 네트워크 연결 구성을 참조하여, Firewall, AWS Security Group 설정 등을 변경하여야 할 수 있습니다: [시스템 아키텍처와 네트워크 접근제어](../system-architecture-and-network-access-control)
 

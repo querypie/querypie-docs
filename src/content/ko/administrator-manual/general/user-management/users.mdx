@@ -26,10 +26,10 @@ Administrator &gt; General &gt; User Management &gt; Users
 Users 목록에서 확인 가능한 정보는 다음과 같습니다.
 
 *  **Auth Provider**  : 사용자 인증 제공자
-    * QueryPie 또는 User Management &gt; Authentication 에서 설정된 IdP Type을 표시합니다.
+    * QueryPie 또는 User Management &gt; Authentication에서 설정된 IdP Type을 표시합니다.
     * 수동으로 등록된 사용자의 경우 QueryPie로 표시됩니다.
     * IdP에서 연동된 사용자는 각 ID Provider 이름으로 표시됩니다.
-    * Authentication 관련 자세한 내용은 [Authentication](authentication) 문서를 참고하시기 바랍니다.
+    * Authentication 관련 자세한 내용은 [Authentication](authentication) 문서를 참고하기 바랍니다.
 *  **Name**  : 사용자 이름 (Display Name)
 *  **Username**  : 사용자 로그인 ID
 *  **Email**  : 사용자 이메일
@@ -77,14 +77,14 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; Add User
 사용자의 Username 항목은 고유한 값으로 최초 추가 이후 수정할 수 없습니다.
 </Callout>
 
-해당 사용자가 QueryPie Provider로 Users 목록에 추가된 것을 확인할 수 있습니다.
+해당 사용자가 QueryPie Provider로 Users 목록에 추가된 것을 확인합니다.
 기본적으로 Admin 권한이 없는 기본 User로 등록됩니다.
 
 
 ### 사용자에게 관리자 역할 부여 또는 회수하기
 
 <Callout type="important">
-Admin Role 을 부여할 수 있는 관리자는 Owner 역할의 사용자만 가능합니다.
+Admin Role을 부여할 수 있는 관리자는 Owner 역할의 사용자만 가능합니다.
 </Callout>
 
 사전 정의된 관리자 역할(Admin Role)을 사용자에게 부여 또는 회수할 수 있습니다.
@@ -97,7 +97,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 </figure>
 
 1.  **Admin Role**  컬럼 내 드롭다운 항목에는 관리자 역할 현황이 표시됩니다.
-    * 부여된 권한이 없는 경우 None 으로 표시됩니다.
+    * 부여된 권한이 없는 경우 None으로 표시됩니다.
     * 기부여된 권한이 있는 경우 권한명이 표시됩니다. (여러 개인 경우 +N 형식으로 표시)
 2. 드롭다운을 클릭하여, 권한을 추가 또는 삭제할 수 있습니다. (복수 선택 가능)
 3. `Clear` 버튼을 클릭하면 모든 권한 선택 내역이 초기화됩니다.
@@ -113,7 +113,7 @@ Administrator &gt; General &gt; User Management &gt; Users
 Users 페이지에서 사용자를 클릭하면 상세 정보 페이지로 진입합니다.
 등록된 정보의 조회 및 사용자 관리 작업을 수행할 수 있습니다.
 사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다.
-사용자 상세 정보는 각각 Profile, Groupts, Admin Roles, Allowed Zones, Tags 탭으로 구분됩니다.
+사용자 상세 정보는 각각 Profile, Groups, Admin Roles, Allowed Zones, Tags 탭으로 구분됩니다.
 각 항목별 설명은 [사용자 프로필 문서](users/user-profile)를 참고해주세요.
 
 <figure data-layout="center" data-align="center">
@@ -134,7 +134,7 @@ QueryPie를 통해 등록한 사용자만 Profile 정보 수정 및 사용자 �
 
 #### Users 페이지에서 비활성화하기
 
-사용자 페이지 내 Status 드롭다운에서, 비활성화 하려는 사용자의 Status 값을 Inactive로 변경합니다.
+사용자 페이지 내 Status 드롭다운에서, 비활성화하려는 사용자의 Status 값을 Inactive로 변경합니다.
 
 사유 입력 모달이 출력되면 변경 사유를 입력 후 `OK` 버튼을 클릭하여 변경을 완료합니다.
 
@@ -160,18 +160,18 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 
 
 <Callout type="info">
-비활성화 처리된 사용자의 계정 상태는 Inactive, Description에는 Locked Manually 로 표시됩니다.
+비활성화 처리된 사용자의 계정 상태는 Inactive, Description에는 Locked Manually로 표시됩니다.
 </Callout>
 
 
 ### 사용자 재활성화하기
 
-관리자에 의해 수동으로 비활성화 되었거나, 장기 미접속으로 인해 비활성화 처리된 사용자의 계정 상태는 Inactive 로 표시됩니다.
-이러한 사용자 계정을 다시 활성화하는 방법은 크게 두가지입니다.
+관리자에 의해 수동으로 비활성화되었거나, 장기 미접속으로 인해 비활성화 처리된 사용자의 계정 상태는 Inactive로 표시됩니다.
+이러한 사용자 계정을 다시 활성화하는 방법은 크게 두 가지입니다.
 
 #### Users 페이지에서 재활성화하기
 
-사용자 페이지 내 Status 드롭다운에서, 재활성화 하려는 사용자의 Status 값을 Active로 변경합니다.
+사용자 페이지 내 Status 드롭다운에서, 재활성화하려는 사용자의 Status 값을 Active로 변경합니다.
 사유 입력 모달이 출력되면 변경 사유를 입력 후 `OK` 버튼을 클릭하여 변경을 완료합니다.
 
 <figure data-layout="center" data-align="center">
@@ -197,8 +197,8 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details
 ### 사용자 정보 수정하기
 
 <Callout type="important">
-QueryPie에서 수동으로 등록한 사용자의 정보만 수정가능합니다.
-SCIM을 통해 연동해온 사용자 정보 수정은 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다.
+QueryPie에서 수동으로 등록한 사용자의 정보만 수정 가능합니다.
+SCIM을 통해 연동한 사용자 정보 수정은 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다.
 </Callout>
 
 사용자 상세 페이지에서 `Edit` 버튼을 클릭하면 수정 모드로 진입합니다.
@@ -217,7 +217,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 
 <Callout type="important">
 QueryPie에서 수동으로 등록한 사용자만 직접 삭제 가능합니다.
-SCIM을 통해 연동해온 사용자 삭제는 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다.
+SCIM을 통해 연동한 사용자 삭제는 원장 데이터 업데이트 후 동기화를 거쳐 가능합니다.
 </Callout>
 
 사용자 상세 페이지에서 `Delete` 버튼을 클릭하면 Delete User 확인 모달이 노출됩니다.
@@ -236,10 +236,10 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 
 <Callout type="important">
 QueryPie에서 수동으로 등록한 사용자만 비밀번호 재설정이 가능합니다.
-SCIM을 통해 연동해온 사용자의 인증 수단은 SCIM에서 관리하고 있습니다.
+SCIM을 통해 연동한 사용자의 인증 수단은 SCIM에서 관리하고 있습니다.
 </Callout>
 
-비밀번호 재설정은 임시 비밀번호 발급을 통해서 진행됩니다.
+비밀번호 재설정은 임시 비밀번호 발급을 통해 수행됩니다.
 관리자는 사용자 상세페이지에서 임시 비밀번호를 발급한 뒤 사용자에게 임시 비밀번호를 안내해야 합니다.
 
 #### 임시 비밀번호 발급
@@ -255,7 +255,7 @@ Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt
 2. 임시 비밀번호를 입력 후 `Confirm` 버튼을 누르면 임시 비밀번호 발급이 완료됩니다.
 
 <Callout type="info">
-QueryPie 10.2.2부터 Email 연동 설정이 되어 있는 경우, 관리자가 임시 비밀번호를 지정하는 대신 사용자가 직접 자신의 비밀 번호를 초기화하도록 초기화 메일을 발송 할 수 있습니다.
+QueryPie 10.2.2부터 Email 연동 설정이 되어 있는 경우, 관리자가 임시 비밀번호를 지정하는 대신 사용자가 직접 자신의 비밀번호를 초기화하도록 초기화 메일을 발송할 수 있습니다.
 
 1. 관리자가 사용자 상세페이지에서 `Reset Password` 버튼을 클릭합니다.
 2. 출력되는 팝업 창의 “Password change method”에서 “User changes own password (via email)”을 선택하고 `Confirm` 버튼을 누르면 비밀번호 초기화 메일이 해당 사용자의 email 주소로 발송됩니다.
@@ -268,8 +268,8 @@ Email을 통해 사용자가 자신의 패스워드를 직접 초기화하도록
 </figure>
 
 사용자가 수신하게 되는 메일의 내용은 아래와 유사합니다.
-비밀번호 초기화 링크는 30분동안 유효합니다.
-만약 30분이 넘게 사용자가 이 링크로 접속하지 않는다면, 이 링크로 비밀번호를 초기화 할 수 없으므로 관리자가 다시 위 절차(User changes own password (via email))를 수행하여 비밀번호 초기화 메일을 발송해줘야 합니다.
+비밀번호 초기화 링크는 30분 동안 유효합니다.
+만약 30분이 넘게 사용자가 이 링크로 접속하지 않는다면, 이 링크로 비밀번호를 초기화할 수 없으므로 관리자가 다시 위 절차(User changes own password (via email))를 수행하여 비밀번호 초기화 메일을 발송해야 합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/user-management/users/image-20241218-224655.png" alt="비밀번호 초기화 이메일" width="610" />
@@ -283,7 +283,7 @@ Email을 통해 사용자가 자신의 패스워드를 직접 초기화하도록
 
 #### 비밀번호 재설정 (사용자)
 
-사용자가 로그인 할 때 앞에서 설정한 임시 비밀번호를 입력하면, 곧바로 비밀번호 재설정 화면으로 진입됩니다.
+사용자가 로그인할 때 앞에서 설정한 임시 비밀번호를 입력하면, 곧바로 비밀번호 재설정 화면으로 진입합니다.
 비밀번호를 변경한 뒤 `Change Password` 버튼을 클릭하면 비밀번호 변경이 완료되며, 새로운 비밀번호로 로그인할 수 있습니다.
 
 
@@ -305,7 +305,7 @@ OTP를 다시 설정하는 방법은 [My Dashboard](../../../user-manual/my-dash
 #### 사용자 OTP 재설정
 
 사용자의 상세 페이지에서 `Reset OTP` 버튼을 클릭합니다.
-경고 모달이 출력되면 `Reset` 버튼을 클릭하여 변경을 재설정을 완료합니다.
+경고 모달이 출력되면 `Reset` 버튼을 클릭하여 재설정을 완료합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/user-management/users/image-20250116-131037.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details" width="760" />
