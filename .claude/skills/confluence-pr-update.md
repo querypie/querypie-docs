@@ -145,7 +145,7 @@ gh pr edit <PR번호> --body "$(cat <<'EOF'
 - `src/content/en/path/to/file.mdx`: 영어 번역
 - `src/content/ja/path/to/file.mdx`: 일본어 번역
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 EOF
 )"
 ```

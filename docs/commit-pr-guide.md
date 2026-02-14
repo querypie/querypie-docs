@@ -105,11 +105,15 @@ PR을 작성하게 된 배경, 이유, 목적을 한 문장으로 기술합니�
    - 좋은 예: "ARM64 빌드 지원을 추가합니다."
    - 피할 예: "더 나은 호환성을 위해 ARM64 아키텍처에 대한 빌드 지원 기능을 새롭게 추가합니다."
 
-### Claude 사용 시
+### 에이전트별 footer 사용
 
-Claude Code를 사용하여 작업한 경우 다음을 포함합니다:
+사용한 에이전트에 따라 footer 문구를 선택하여 포함합니다.
 
 ```markdown
+# Codex를 사용한 경우
+🤖 Generated with Codex
+
+# Claude를 사용한 경우
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
@@ -131,7 +135,7 @@ feat(tests): Playwright 기반 이미지 렌더링 측정 도구 추가 (#530)
 - [ ] `cd tests/image-rendering && npm install` 실행
 - [ ] `node measure.js <URL>` 실행하여 이미지 측정 확인
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 
 Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```
@@ -148,7 +152,7 @@ fix(src/lib): useLocale에서 pathname null 체크 추가 (#520)
 ## Test plan
 - [ ] `npm run build` 성공 확인
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 
 Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```
@@ -165,7 +169,7 @@ docs(src/content): ko MDX 파일의 이미지를 img 태그로 변환합니다
 ## Related tickets & links
 - #528
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 ```
 
 ### mdx prefix 예시
@@ -190,7 +194,7 @@ ci(.github/workflows): fetch-openapi-spec 워크플로우를 self-hosted runner�
 ## Test plan
 - [ ] workflow_dispatch로 워크플로우 실행하여 self-hosted runner에서 정상 동작 확인
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 
 Co-authored-by: Claude Opus 4.6 <noreply@anthropic.com>
 ```

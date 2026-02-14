@@ -29,11 +29,13 @@ querypie-docs 저장소의 commit 관습에 맞게 commit message를 작성합�
 - **언어**: 한국어, 경어체(~합니다), 능동태
 - **제목 길이**: 50자 이내
 
-## Claude 사용 시
+## 에이전트별 footer
 
-```
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
-```
+- Codex를 사용한 경우:
+  `🤖 Generated with Codex`
+- Claude를 사용한 경우:
+  `🤖 Generated with [Claude Code](https://claude.com/claude-code)`
+  `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>`
 
 ---
 
@@ -69,9 +71,9 @@ PR을 작성하게 된 배경, 이유, 목적을 한 문장으로 기술합니�
 ## Related tickets & links
 - #123
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+🤖 Generated with {Codex|[Claude Code](https://claude.com/claude-code)}
 
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com> (Claude 사용 시)
 ```
 
 ## PR 작성 지침
@@ -81,7 +83,7 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 3. **능동태를 사용합니다.**
 4. **`## Summary` 또는 `## Description` 섹션으로 시작합니다.**
 5. **`## Test plan` 섹션을 포함합니다.**
-6. **Claude 사용 시 footer를 포함합니다.**
+6. **사용한 에이전트(Codex/Claude)에 맞는 footer를 포함합니다.**
 
 ## gh cli 사용 시 참고
 
