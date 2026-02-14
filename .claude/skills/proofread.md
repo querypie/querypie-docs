@@ -117,6 +117,4 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 
 ## 빌드 검증
 
-- PR 생성 시 CI Pipeline에서 자동으로 빌드를 검증합니다.
-- 로컬에서 `npm run build`를 실행하는 것은 선택사항입니다.
-- CI Pipeline에서 빌드 오류 발생 시 에러 메시지를 확인하고 수정합니다.
+빌드 검증 정책은 [translation.md](translation.md)의 "번역 프로세스 가이드라인"을 참조하세요.
