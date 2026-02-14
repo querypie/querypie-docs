@@ -19,9 +19,6 @@
 - **reverse-sync.md** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
 - **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
 
-### 문서 작성 Skills
-- **documentation.md** - MDX 문서 파일 작성 및 편집 가이드라인
-
 ### 유틸리티 Skills
 - **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
 
@@ -41,7 +38,6 @@
 | confluence-mdx-testcase.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
 | sync-ko-to-en-ja.md | [docs/translation.md](/docs/translation.md) |
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
-| documentation.md | [docs/DEVELOPMENT.md](/docs/DEVELOPMENT.md) |
 | reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
 | sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |

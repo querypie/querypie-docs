@@ -61,6 +61,48 @@ src/content/
 - 이미지 파일 (한국어 소스와 동일하게 사용)
 - 링크 경로 (텍스트만 번역)
 
+## MDX 문법 참조
+
+### Frontmatter
+
+```yaml
+---
+title: '페이지 제목'
+---
+```
+
+### Callout 컴포넌트
+
+```jsx
+import { Callout } from 'nextra/components'
+
+<Callout type="info">
+  중요한 정보를 여기에 작성
+</Callout>
+```
+
+### 이미지 (figure 컴포넌트)
+
+```jsx
+<figure data-layout="center" data-align="center">
+  ![이미지 설명](/path/to/image.png)
+  <figcaption>
+    캡션 텍스트
+  </figcaption>
+</figure>
+```
+
+### 테이블
+
+```markdown
+<table data-table-width="760" data-layout="default">
+```
+
+### 링크
+
+- 내부 링크: `[링크 텍스트](relative/path/to/page)` (상대 경로)
+- 파일 이름: kebab-case 사용
+
 ## 언어별 톤 가이드
 
 ### 영어 (en)
