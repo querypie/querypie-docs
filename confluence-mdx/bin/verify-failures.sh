@@ -15,7 +15,7 @@
 set -o nounset -o pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLI="${SCRIPT_DIR}/reverse_sync_cli.py"
+cd "$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 readonly BOLD_CYAN="\e[1;36m"
 readonly RESET="\e[0m"
@@ -83,8 +83,8 @@ main() {
         local ref="${branch}:${mdx}"
 
         echo "──── [$(( i + 1 ))/${#failures[@]}] ${mdx} ────"
-        log::cmd python3 "${CLI}" verify "${ref}"
-        python3 "${CLI}" verify "${ref}"
+        log::cmd python3 bin/reverse_sync_cli.py verify "${ref}"
+        python3 bin/reverse_sync_cli.py verify "${ref}"
         echo ""
     done
 }
