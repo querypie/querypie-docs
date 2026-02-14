@@ -20,6 +20,10 @@ _SCRIPT_DIR = Path(__file__).resolve().parent   # confluence-mdx/bin/
 _PROJECT_DIR = _SCRIPT_DIR.parent               # confluence-mdx/
 _REPO_ROOT = _PROJECT_DIR.parent                # 레포 루트
 
+# Ensure bin/ is on sys.path so local package imports resolve without PYTHONPATH
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
 from reverse_sync.mdx_block_parser import parse_mdx_blocks
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
