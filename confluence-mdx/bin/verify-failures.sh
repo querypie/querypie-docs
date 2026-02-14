@@ -6,12 +6,16 @@
 # reverse_sync_cli.py 코드를 수정한 뒤, 실패 항목만 빠르게 확인할 때 사용.
 #
 # Usage:
-#   ./verify-failures.sh <log-file>
+#   bin/verify-failures.sh <log-file>
+#
+# 로그 파일 첫 줄에서 브랜치명을 자동 추출하여 ref:path 형식으로 verify 실행.
+# 예) "Processing 211/211 file(s) from branch fix/proofread-mdx..."
+#     → fix/proofread-mdx:src/content/ko/...
 
-set -o nounset -o errexit -o pipefail
+set -o nounset -o pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLI="${SCRIPT_DIR}/bin/reverse_sync_cli.py"
+CLI="${SCRIPT_DIR}/reverse_sync_cli.py"
 
 # Colors for output
 RED='\033[0;31m'
@@ -19,8 +23,15 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 usage() {
-    sed -n '3,9p' "$0" | sed 's/^# //' | sed 's/^#//'
+    sed -n '3,13p' "$0" | sed 's/^# //' | sed 's/^#//'
     exit 0
+}
+
+# 로그 첫 줄에서 브랜치명 추출
+# "Processing N/N file(s) from branch <branch>..." → <branch>
+extract_branch() {
+    local log="$1"
+    head -1 "${log}" | sed -n 's/.*from branch \([^ ]*\)\.\.\..*/\1/p'
 }
 
 # 로그에서 fail/error 파일 경로 추출
@@ -43,6 +54,14 @@ main() {
         exit 1
     fi
 
+    local branch
+    branch="$(extract_branch "${log_file}")"
+    if [[ -z "${branch}" ]]; then
+        echo "ERROR: 로그 첫 줄에서 브랜치명을 추출할 수 없습니다." >&2
+        echo "       expected: 'Processing N/N file(s) from branch <branch>...'" >&2
+        exit 1
+    fi
+
     local failures=()
     while IFS= read -r path; do
         failures+=("${path}")
@@ -53,7 +72,7 @@ main() {
         exit 0
     fi
 
-    echo "=== 재검증 대상: ${#failures[@]}건 ==="
+    echo "=== branch: ${branch}, 재검증 대상: ${#failures[@]}건 ==="
     echo ""
 
     local passed=0
@@ -63,12 +82,13 @@ main() {
 
     for (( i=0; i<${#failures[@]}; i++ )); do
         local mdx="${failures[$i]}"
+        local ref="${branch}:${mdx}"
         printf "[%d/%d] %s ... " "$((i + 1))" "${#failures[@]}" "${mdx}"
 
         local output
-        output="$(python3 "${CLI}" verify "${mdx}" 2>&1)" || true
+        output="$(python3 "${CLI}" verify "${ref}" 2>&1)" || true
         local result
-        result=$(echo "${output}" | grep -oE '(pass|fail|error)$' | tail -1)
+        result="$(echo "${output}" | grep -oE '(pass|fail|error)$' | tail -1)" || true
         result="${result:-error}"
 
         case "${result}" in
