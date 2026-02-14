@@ -17,7 +17,6 @@ QueryPie 문서 사이트 프로젝트의 지식, 정보, 가이드 문서를 �
 
 | 문서 | 설명 |
 |------|------|
-| [vercel-logging.md](vercel-logging.md) | Vercel 환경 Pino 로거 설정 가이드 |
 | [plan-to-migrate-openapi-spec.md](plan-to-migrate-openapi-spec.md) | OpenAPI Specification 자동 이관 계획 |
 
 ### 작업 결과
