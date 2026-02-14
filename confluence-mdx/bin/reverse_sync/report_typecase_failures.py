@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
-"""Typecase reverse-sync 결과를 한 번에 요약 출력한다.
+"""type-* 테스트케이스를 reverse-sync verify 단일파일 모드로 실행한다.
 
-Usage:
-  python3 bin/reverse_sync/report_typecase_failures.py
+핵심:
+- reverse_sync_cli.py의 `verify` 명령을 그대로 사용한다.
+- 단, verify 단일파일 모드는 `src/content/ko/...` 경로를 요구하므로
+  각 testcase의 original/improved를 임시 src/content/ko 경로로 복사해 실행한다.
 """
 
 from __future__ import annotations
 
 import argparse
+import datetime as dt
+import re
+import subprocess
+import sys
 import tempfile
 from pathlib import Path
-from typing import Dict, List
-import re
+from typing import Dict, List, Tuple
 
 import yaml
-
-# confluence-mdx/bin 을 import path에 추가
-SCRIPT_DIR = Path(__file__).resolve().parent.parent
-if str(SCRIPT_DIR) not in __import__("sys").path:
-    __import__("sys").path.insert(0, str(SCRIPT_DIR))
-
-import reverse_sync_cli  # noqa: E402
-from reverse_sync_cli import MdxSource, run_verify  # noqa: E402
 
 
 def _project_root() -> Path:
@@ -29,181 +26,133 @@ def _project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def _discover_typecases(testcases_root: Path) -> List[Path]:
-    return sorted(
+def _load_page_path_map(project_root: Path) -> Dict[str, List[str]]:
+    pages_yaml = project_root / "var" / "pages.yaml"
+    pages = yaml.safe_load(pages_yaml.read_text()) or []
+    out: Dict[str, List[str]] = {}
+    for p in pages:
+        pid = str(p.get("page_id", ""))
+        path = p.get("path")
+        if pid and isinstance(path, list):
+            out[pid] = path
+    return out
+
+
+def _extract_page_id_from_mdx(mdx_text: str) -> str | None:
+    # confluenceUrl: .../pages/<id>/...
+    m = re.search(r"/pages/(\d+)/", mdx_text)
+    return m.group(1) if m else None
+
+
+def _discover_cases(testcases_root: Path, only_case: str) -> List[Path]:
+    all_cases = sorted(
         p for p in testcases_root.glob("type-*")
         if p.is_dir()
         and (p / "original.mdx").exists()
         and (p / "improved.mdx").exists()
         and (p / "page.xhtml").exists()
     )
+    if only_case:
+        all_cases = [p for p in all_cases if p.name == only_case]
+    return all_cases
 
 
-def _prepare_pages_yaml(var_dir: Path, case_ids: List[str]) -> None:
-    pages = [{"page_id": cid, "path": ["types", cid]} for cid in case_ids]
-    (var_dir / "pages.yaml").write_text(
-        yaml.dump(pages, allow_unicode=True, default_flow_style=False)
-    )
+def _default_log_file(case: str) -> Path:
+    ts = dt.datetime.now().strftime("%m%d%H%M")
+    suffix = case if case else "all"
+    return Path(f"reverse_sync_verify_typecases_{suffix}.{ts}.log")
 
 
-def _extract_source_page_id(mdx_text: str) -> str | None:
-    m = re.search(r"/pages/(\d+)/", mdx_text)
-    return m.group(1) if m else None
+def _prepare_temp_ko_files(
+    case_dir: Path,
+    ko_rel_path: str,
+    tmp_root: Path,
+) -> Tuple[Path, Path]:
+    improved_dst = tmp_root / ko_rel_path
+    original_dst = tmp_root / ("original_" + improved_dst.name)
+    improved_dst.parent.mkdir(parents=True, exist_ok=True)
+    improved_dst.write_text((case_dir / "improved.mdx").read_text())
+    original_dst.write_text((case_dir / "original.mdx").read_text())
+    return improved_dst, original_dst
 
 
-def _load_real_path_map(project_root: Path) -> Dict[str, List[str]]:
-    pages = yaml.safe_load((project_root / "var" / "pages.yaml").read_text()) or []
-    result: Dict[str, List[str]] = {}
-    for p in pages:
-        pid = str(p.get("page_id", ""))
-        path = p.get("path")
-        if pid and isinstance(path, list):
-            result[pid] = path
-    return result
-
-
-def _strip_first_h1(mdx_text: str) -> str:
-    return re.sub(r"^# .+\n\n", "", mdx_text, count=1, flags=re.MULTILINE)
-
-
-def _short_diff_line(diff_report: str) -> str:
-    for line in diff_report.splitlines():
-        if line.startswith(("+++", "---", "@@")):
-            continue
-        if line.startswith(("+", "-")):
-            text = line[1:].strip()
-            if text:
-                return text[:100]
-    return ""
-
-
-def _format_cell(text: str, width: int) -> str:
-    s = text.replace("\n", " ")
-    if len(s) > width:
-        s = s[: width - 1] + "…"
-    return s.ljust(width)
-
-
-def _print_summary(rows: List[Dict[str, str]]) -> None:
-    headers = ["case", "status", "exact", "changes", "hint"]
-    widths = [30, 8, 6, 8, 100]
-    line = " | ".join(_format_cell(h, w) for h, w in zip(headers, widths))
-    sep = "-+-".join("-" * w for w in widths)
-    print(line)
-    print(sep)
-    for r in rows:
-        print(" | ".join([
-            _format_cell(r["case"], widths[0]),
-            _format_cell(r["status"], widths[1]),
-            _format_cell(r["exact"], widths[2]),
-            _format_cell(str(r["changes"]), widths[3]),
-            _format_cell(r["hint"], widths[4]),
-        ]))
-
-
-def _print_details(rows: List[Dict[str, str]], max_lines: int) -> None:
-    print("\nDetailed diff excerpts")
-    print("======================")
-    for r in rows:
-        if r["status"] != "fail":
-            continue
-        print(f"\n[{r['case']}]")
-        lines = r["diff"].splitlines()
-        shown = 0
-        for line in lines:
-            if line.startswith(("+++", "---")):
-                continue
-            print(line)
-            shown += 1
-            if shown >= max_lines:
-                break
-        if shown == 0:
-            print("(no diff lines)")
-
-
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Run reverse-sync typecases and print failure summary"
+        description="Run reverse-sync verify for type-* testcases using single-file mode."
     )
     parser.add_argument(
-        "--max-detail-lines",
-        type=int,
-        default=12,
-        help="Max lines per failed case in detailed excerpt",
+        "--case",
+        default="",
+        help="Run only one testcase directory name (e.g. type-12-backtick-break)",
+    )
+    parser.add_argument(
+        "--log-file",
+        default="",
+        help="Output log file path (default: auto-generated)",
     )
     args = parser.parse_args()
 
     root = _project_root()
     testcases_root = root / "tests" / "testcases"
-    typecases = _discover_typecases(testcases_root)
-    if not typecases:
-        raise SystemExit("No type-* testcases found under tests/testcases/")
+    page_map = _load_page_path_map(root)
+    cases = _discover_cases(testcases_root, args.case)
+    if not cases:
+        print("No matching type-* testcase found.", file=sys.stderr)
+        return 1
 
-    rows: List[Dict[str, str]] = []
-    original_project_dir = reverse_sync_cli._PROJECT_DIR
+    log_file = Path(args.log_file) if args.log_file else _default_log_file(args.case)
+    all_output: List[str] = []
+    exit_code = 0
 
-    real_path_map = _load_real_path_map(root)
+    with tempfile.TemporaryDirectory(prefix="reverse-sync-typecase-verify-") as td:
+        tmp_root = Path(td)
+        for case_dir in cases:
+            case_name = case_dir.name
+            original_text = (case_dir / "original.mdx").read_text()
+            page_id = _extract_page_id_from_mdx(original_text)
+            if not page_id or page_id not in page_map:
+                msg = f"[{case_name}] skip: page_id mapping not found"
+                print(msg, file=sys.stderr)
+                all_output.append(msg + "\n")
+                exit_code = 1
+                continue
 
-    with tempfile.TemporaryDirectory(prefix="reverse-sync-typecases-") as tmp:
-        tmp_root = Path(tmp) / "project"
-        var_dir = tmp_root / "var"
-        var_dir.mkdir(parents=True, exist_ok=True)
+            ko_rel = "src/content/ko/" + "/".join(page_map[page_id]) + ".mdx"
+            improved_tmp, original_tmp = _prepare_temp_ko_files(case_dir, ko_rel, tmp_root)
+            xhtml_path = case_dir / "page.xhtml"
 
-        pages_rows = []
-        for case in typecases:
-            case_id = case.name
-            original_mdx = (case / "original.mdx").read_text()
-            src_page_id = _extract_source_page_id(original_mdx)
-            if src_page_id and src_page_id in real_path_map:
-                page_path = real_path_map[src_page_id]
-            else:
-                page_path = ["types", case_id]
-            pages_rows.append({"page_id": case_id, "path": page_path})
-        (var_dir / "pages.yaml").write_text(
-            yaml.dump(pages_rows, allow_unicode=True, default_flow_style=False)
-        )
+            cmd = [
+                sys.executable,
+                str(root / "bin" / "reverse_sync_cli.py"),
+                "verify",
+                str(improved_tmp),
+                "--original-mdx",
+                str(original_tmp),
+                "--xhtml",
+                str(xhtml_path),
+            ]
 
-        reverse_sync_cli._PROJECT_DIR = tmp_root
-        try:
-            for case in typecases:
-                case_id = case.name
-                (var_dir / case_id).mkdir(parents=True, exist_ok=True)
-                original_mdx = _strip_first_h1((case / "original.mdx").read_text())
-                improved_mdx = _strip_first_h1((case / "improved.mdx").read_text())
-                result = run_verify(
-                    page_id=case_id,
-                    original_src=MdxSource(
-                        content=original_mdx,
-                        descriptor=f"tests/testcases/{case_id}/original.mdx",
-                    ),
-                    improved_src=MdxSource(
-                        content=improved_mdx,
-                        descriptor=f"tests/testcases/{case_id}/improved.mdx",
-                    ),
-                    xhtml_path=str(case / "page.xhtml"),
-                )
-                diff = result.get("verification", {}).get("diff_report", "")
-                exact = result.get("verification", {}).get("exact_match")
-                rows.append({
-                    "case": case_id,
-                    "status": str(result.get("status")),
-                    "exact": str(exact),
-                    "changes": str(result.get("changes_count", "")),
-                    "hint": _short_diff_line(diff),
-                    "diff": diff,
-                })
-        finally:
-            reverse_sync_cli._PROJECT_DIR = original_project_dir
+            header = f"\n=== {case_name} ===\n[cmd] {' '.join(cmd)}\n"
+            print(header, end="")
+            all_output.append(header)
 
-    _print_summary(rows)
-    _print_details(rows, args.max_detail_lines)
+            proc = subprocess.run(
+                cmd,
+                cwd=str(root),
+                text=True,
+                capture_output=True,
+            )
+            out = (proc.stdout or "") + (proc.stderr or "")
+            print(out, end="")
+            all_output.append(out)
 
-    fail_count = sum(1 for r in rows if r["status"] == "fail")
-    pass_count = sum(1 for r in rows if r["status"] == "pass")
-    print(
-        f"\nTotal: {len(rows)} case(s) | fail={fail_count}, pass={pass_count}"
-    )
+            if proc.returncode != 0:
+                exit_code = 1
+
+    log_file.write_text("".join(all_output))
+    print(f"\n[log] {log_file}")
+    return exit_code
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
