@@ -22,7 +22,7 @@
 | `commit-pr-guide.md` | 커밋/PR 컨벤션 상세 가이드 | **유지** | commit.md skill에서 참조하는 상세 문서 |
 | `translation.md` | 번역 상세 지침 | **유지** | translation.md, mdx-skeleton-comparison.md skill에서 참조하는 상세 문서 |
 | `api-naming-guide.md` | QueryPie ACP 제품명/API 명칭 지침 | **유지** | 프로젝트 지식 문서. Skill에서 참조하지 않지만, 번역/문서 작성 시 참조 필요 |
-| `vercel-logging.md` | Vercel Pino 로거 설정 가이드 | **유지** | 기술 문서. 현재 코드 구현에 대한 설명 |
+| `vercel-logging.md` | Vercel Pino 로거 설정 가이드 | **삭제** | 현재 코드(console 기반)와 불일치. Pino 기반 이전 구현 문서 |
 | `plan-to-migrate-openapi-spec.md` | OpenAPI Spec 자동 이관 계획 | **유지** | Phase 1 완료, Phase 2~3 진행 중인 계획 문서 |
 | `prompt-1-ko.md` | 초기 Confluence → MDX 변환 프롬프트 | **삭제** | confluence-mdx 자동화 도구로 완전히 대체됨. 히스토리 가치만 있음 |
 | `translation-11-3.42e20714.md` | 커밋 42e20714 번역 작업 추적 | **삭제** | 일회성 작업 문서. 체크리스트 미완료이나, 이 방식으로 추적하지 않음 |
@@ -123,7 +123,6 @@ docs/
   commit-pr-guide.md                  # 커밋/PR 컨벤션 상세 가이드
   translation.md                      # 번역 상세 지침
   api-naming-guide.md                 # 제품명/API 명칭 지침
-  vercel-logging.md                   # Vercel 로깅 설정 가이드
   plan-to-migrate-openapi-spec.md     # OpenAPI Spec 이관 계획
   deploy-action.png                   # 배포 스크린샷
   preview-deploy-url.png              # 프리뷰 배포 스크린샷
