@@ -246,7 +246,7 @@ html_content = re.sub(r'\sri:', ' ', html_content)
 
 **문제**: BeautifulSoup 파싱 전에 정규식으로 XHTML 전체 문자열에서 `ac:`, `ri:` 접두사를 제거한다. 속성명뿐 아니라 텍스트 본문의 `ac:`, `ri:` 문자열까지 삭제하는 부작용이 있다.
 
-**해결**: 정규식 기반 전처리를 제거하고, `ConfluenceToMarkdown.__init__()`에서 BeautifulSoup 파싱 후 DOM을 순회하며 속성명에서만 접두사를 제거하는 `_strip_namespace_prefixes()` 메서드를 도입했다. 태그명과 텍스트 내용은 변경하지 않는다.
+**해결**: 정규식 전처리와 `_strip_namespace_prefixes()` 메서드를 모두 제거했다. 네임스페이스 접두사(`ac:`, `ri:`)를 제거하는 대신 그대로 유지하고, 코드에서 속성을 참조하는 모든 `.get()` 및 `.find()` 호출에 올바른 접두사를 명시하도록 수정했다. ADF 계열 태그(`ac:adf-node`, `ac:adf-attribute` 등)는 원래 접두사 없는 속성(`type`, `key`)을 사용하므로 변경하지 않았다.
 
 ---
 
