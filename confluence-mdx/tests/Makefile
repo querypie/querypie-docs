@@ -58,6 +58,11 @@ test-skeleton-one:
 test-reverse-sync:
 	@$(TEST_SCRIPT) --type reverse-sync $(VERBOSE_FLAG)
 
+# Report reverse-sync typecase failures (single-command summary)
+.PHONY: report-reverse-sync-typecases
+report-reverse-sync-typecases:
+	@cd ../ && python3 bin/reverse_sync/report_typecase_failures.py
+
 # Run a specific reverse-sync test
 .PHONY: test-reverse-sync-one
 test-reverse-sync-one:
