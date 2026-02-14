@@ -26,8 +26,7 @@ VENV_DIR="../venv"
 CONVERTER_SCRIPT="${BIN_DIR}/converter/cli.py"
 SKELETON_SCRIPT="${BIN_DIR}/skeleton/cli.py"
 
-# Ensure bin/ is on PYTHONPATH so skeleton package imports resolve
-export PYTHONPATH="${BIN_DIR}:${PYTHONPATH:-}"
+# Note: PYTHONPATH is no longer needed — skeleton scripts resolve their own sys.path
 
 # Default options
 TEST_TYPE="convert"

@@ -17,6 +17,10 @@ from typing import List, Tuple, Optional, Dict, Set
 _SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
 _PROJECT_DIR = _SCRIPT_DIR.parent                     # confluence-mdx/
 
+# Ensure bin/ is on sys.path so skeleton package imports resolve without PYTHONPATH
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
 try:
     import yaml
 except ImportError:

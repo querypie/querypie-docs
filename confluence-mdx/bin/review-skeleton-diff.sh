@@ -83,11 +83,11 @@ function process_file() {
 
   # Step 1: Run without --use-ignore
   echo "# --- Step 1: skeleton/cli.py (without --use-ignore) ---"
-  PYTHONPATH=bin bin/skeleton/cli.py "$file" 2>&1
+  bin/skeleton/cli.py "$file" 2>&1
 
   # Step 2: Run with --use-ignore
   echo "# --- Step 2: skeleton/cli.py (with --use-ignore) ---"
-  PYTHONPATH=bin bin/skeleton/cli.py --use-ignore "$file" 2>&1
+  bin/skeleton/cli.py --use-ignore "$file" 2>&1
 
   # Ask for user confirmation (skip if --yes option is provided)
   if [[ "$YES_MODE" == false ]]; then
