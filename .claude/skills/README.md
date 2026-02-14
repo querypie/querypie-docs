@@ -18,6 +18,10 @@
 - **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
 - **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
 
+### 프로세스 Skills
+- **commit.md** - Commit 및 PR 작성 가이드
+- **proofread.md** - 문서 교정/교열 가이드
+
 ## Skills과 참조 문서 관계
 
 각 skill은 핵심 원칙과 빠른 시작 가이드를 제공하며, 상세 내용은 프로젝트의 다른 문서를 참조합니다:
@@ -33,7 +37,8 @@
 | reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
 | sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
-| commit.md (commands) | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
+| commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
+| proofread.md | - |
 
 ## 사용법
 
