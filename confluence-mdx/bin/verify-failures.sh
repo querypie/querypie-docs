@@ -83,8 +83,8 @@ main() {
         local ref="${branch}:${mdx}"
 
         echo "──── [$(( i + 1 ))/${#failures[@]}] ${mdx} ────"
-        log::cmd python3 bin/reverse_sync_cli.py verify "${ref}"
-        python3 bin/reverse_sync_cli.py verify "${ref}"
+        log::cmd bin/reverse_sync_cli.py verify "${ref}"
+        bin/reverse_sync_cli.py verify "${ref}"
         echo ""
     done
 }

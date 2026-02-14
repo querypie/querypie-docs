@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Reverse Sync — MDX 변경사항을 Confluence XHTML에 역반영하는 파이프라인.
 
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
