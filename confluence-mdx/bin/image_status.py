@@ -13,6 +13,7 @@ Usage:
 """
 
 import argparse
+import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -58,6 +59,7 @@ def scan_pages(var_dir: Path) -> list[dict]:
                 "created_at": version_info.get("createdAt", ""),
             })
         except Exception:
+            logging.warning("Failed to parse %s, skipping", v2_file)
             continue
     return pages
 

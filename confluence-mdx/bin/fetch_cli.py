@@ -30,10 +30,13 @@ import logging
 import sys
 from pathlib import Path
 
-# Ensure bin/ is on sys.path when run as a script (e.g. bin/fetch_cli.py)
-_bin_dir = str(Path(__file__).resolve().parent)
-if _bin_dir not in sys.path:
-    sys.path.insert(0, _bin_dir)
+# 스크립트 위치 기반 경로 상수
+_SCRIPT_DIR = Path(__file__).resolve().parent   # confluence-mdx/bin/
+_PROJECT_DIR = _SCRIPT_DIR.parent               # confluence-mdx/
+
+# Ensure bin/ is on sys.path so local package imports resolve without PYTHONPATH
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
 
 from fetch.config import Config
 from fetch.processor import ConfluencePageProcessor

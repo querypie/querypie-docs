@@ -24,7 +24,7 @@ def get_diff_for_lang(lang: str) -> str:
     """특정 언어의 git diff 가져오기"""
     result = subprocess.run(
         ['git', 'diff', f'src/content/{lang}/'],
-        capture_output=True, text=True,
+        capture_output=True, text=True, check=True,
         cwd=str(_REPO_ROOT),
     )
     return result.stdout
