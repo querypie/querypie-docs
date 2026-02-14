@@ -131,11 +131,19 @@ bold/italic의 `*`/`**`와 동일한 실패 패턴입니다.
 2. Delimiter **내부** 쪽에 Unicode punctuation 문자가 인접
 3. Delimiter **외부** 쪽에 CJK 문자가 공백 없이 인접
 
+예시: `**마크다운(Markdown)**은` — 닫는 `**` 기준으로 양쪽을 분해하면:
+
 ```
-외부(CJK)  delimiter  내부(punct)
-    은     **         )Markdown(마크다운**    ← FAIL: 닫기 불가
-    은     **         )Markdown(마크다운** ← 공백 추가하면 PASS
+              닫는 delimiter
+                   ↓
+... Markdown)  **  은 ...
+          ↑         ↑
+      내부: )      외부: 은
+      (punct)     (CJK)
 ```
+
+- `)**은` → `)` (punct)가 앞, `은` (CJK ≠ whitespace/punct)이 뒤 → right-flanking 조건 2b 불충족 → **FAIL**
+- `)** 은` → `)` (punct)가 앞, ` ` (whitespace)이 뒤 → 조건 충족 → **PASS**
 
 ---
 
