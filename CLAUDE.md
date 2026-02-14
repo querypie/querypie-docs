@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 
-QueryPie 제품 문서 사이트 (Next.js 15 + Nextra 4 + MDX)
+QueryPie 제품 문서 사이트 (Next.js 16 + Nextra 4 + MDX)
 다국어 지원: 한국어(ko), 영어(en), 일본어(ja)
 
 ## Skills
