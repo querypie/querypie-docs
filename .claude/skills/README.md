@@ -32,7 +32,7 @@
 
 | Skill | 참조 문서 |
 |-------|----------|
-| translation.md | [docs/translation.md](/docs/translation.md) |
+| translation.md | [docs/translation.md](/docs/translation.md), [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
 | confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
 | confluence-pr-update.md | confluence-mdx.md, translation.md, mdx-skeleton-comparison.md |
 | confluence-mdx-testcase.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
@@ -42,7 +42,7 @@
 | sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
 | commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
-| proofread.md | - |
+| proofread.md | [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
 
 ## 사용법
 

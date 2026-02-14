@@ -61,7 +61,7 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
   - 일상적인 구어체, 친구들 사이에 사용하는 가벼운 문체는 사용하지 않음
 
 ### 3. 용어 통일
-- 브랜드명 표기 통일 (QueryPie)
+- 브랜드명 표기 통일 (QueryPie) — [docs/api-naming-guide.md](/docs/api-naming-guide.md) 참조
 - 기술 용어 일관성
 - UI 요소명 통일
 

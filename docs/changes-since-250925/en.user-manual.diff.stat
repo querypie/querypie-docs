@@ -1,9 +1,0 @@
- ...ti-agent-linux-installation-and-usage-guide.mdx | 55 ++++++++++++++++++++++
- .../multi-agent-seamless-ssh-usage-guide.mdx       |  2 +-
- .../connecting-to-authorized-servers.mdx           | 11 ++++-
- .../accessing-web-applications-websites.mdx        | 28 +++++------
- .../user-manual/workflow/requesting-db-access.mdx  |  5 ++
- .../workflow/requesting-db-policy-exception.mdx    | 20 +++++---
- .../workflow/requesting-restricted-data-access.mdx | 17 ++++---
- .../requesting-unmasking-mask-removal-request.mdx  | 17 ++++---
- 8 files changed, 117 insertions(+), 38 deletions(-)

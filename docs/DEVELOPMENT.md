@@ -2,7 +2,7 @@
 QueryPie 제품의 Docs를 관리하는 Git Repository입니다.
 
 ## 기술 스택
-- Next.js 15
+- Next.js 16
 - React.js 19
 - Nextra 4
 - TypeScript 5
@@ -37,11 +37,11 @@ npm start
   - Vercel Deployment 마다 다른 URL 을 갖습니다.
 
 ### 배포 - GitHub Action
-- [GitHub Actions](https://github.com/querypie/querypie-docs/actions/workflows/deploy.yml) 에 접속합니다.
-- `Run workflow`를 눌러서 알맞게 설정한 후 실행합니다.
-    - `Delete on Production`: docs.querypie.com 에 배포하는 용도입니다.
-    - `Delete on Staging`: docs-staging.querypie.com 에 배포하는 용도입니다. 자동 배포됩니다.
-    - `Delete on Preview`: feature branch 의 결과를 미리 살펴보는데 사용합니다.
+- GitHub Actions 워크플로우가 환경별로 분리되어 있습니다:
+    - [deploy-production.yml](https://github.com/querypie/querypie-docs/actions/workflows/deploy-production.yml): docs.querypie.com 에 배포하는 용도입니다.
+    - [deploy-staging.yml](https://github.com/querypie/querypie-docs/actions/workflows/deploy-staging.yml): docs-staging.querypie.io 에 배포하는 용도입니다.
+    - [deploy-preview.yml](https://github.com/querypie/querypie-docs/actions/workflows/deploy-preview.yml): feature branch 의 결과를 미리 살펴보는데 사용합니다.
+- 각 워크플로우에서 `Run workflow`를 눌러서 실행합니다.
 
 ### 배포 관련 화면 스크린샷
 ![deploy-action.png](deploy-action.png)
@@ -61,6 +61,5 @@ TARGET_ENV=preview BRANCH=main node ./index.js
 ```
 
 ## 오픈 전 다음 파일 TODO 보고 로직이나 값 고쳐서 나가야 함
-- src/middleware.ts
-- scripts/generate-sitemap/index.js
+- scripts/generate-sitemap/index.ts
 - src/app/[lang]/layout.tsx
