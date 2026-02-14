@@ -65,6 +65,74 @@ Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.
 - 기술 용어 일관성
 - UI 요소명 통일
 
+### 4. Markdown 인라인 요소 주변 공백
+
+> 상세 분석: [confluence-mdx/docs/analysis-inline-element-spacing-cjk.md](../../confluence-mdx/docs/analysis-inline-element-spacing-cjk.md)
+
+CommonMark flanking delimiter 규칙에 따라, 인라인 요소별로 CJK 문자 인접 시 공백 처리가 다릅니다.
+
+#### 공백 없이 붙여 쓰기 (권장)
+
+Code span, Link, Image는 flanking 규칙이 없어 CJK 문자에 공백 없이 붙여도 항상 정상 동작합니다. 불필요한 공백을 넣지 않습니다.
+
+```markdown
+<!-- 올바른 예 -->
+`Test Connection`을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
+[설치 후 초기 설정](../post-installation-setup) 문서를 참조하세요.
+
+<!-- 피해야 할 예 -->
+`Test Connection` 을 통해 실제로 접속 가능한 계정인지 테스트할 수 있습니다.
+[설치 후 초기 설정](../post-installation-setup)  문서를 참조하세요.
+```
+
+#### Bold/Italic — 기본: 공백 없이 붙여 쓰기
+
+`*`/`**` asterisk 변형은 순수 CJK 텍스트 사이에서 공백 없이 정상 동작합니다.
+
+```markdown
+<!-- 올바른 예 -->
+이것은**강조된 문장**이 있습니다.
+현재 QueryPie ACP는**데이터베이스 접근제어**를 핵심으로 제공합니다.
+
+<!-- 피해야 할 예 -->
+이것은 **강조된 문장** 이 있습니다.
+현재 QueryPie ACP는 **데이터베이스 접근제어** 를 핵심으로 제공합니다.
+```
+
+#### Bold/Italic — 예외: 내부 구두점 인접 시 공백 필요
+
+delimiter 내부 끝에 구두점(`)`, `.`, `!`, `,` 등)이 오고, 외부에 CJK 문자가 바로 붙으면 렌더링이 실패합니다. 이 경우 delimiter 외부에 공백을 넣어야 합니다.
+
+```markdown
+<!-- FAIL: ) 뒤의 닫는 ** 다음에 CJK가 바로 옴 -->
+**마크다운(Markdown)**은 문서 작성 도구입니다.
+
+<!-- PASS: 공백 추가 -->
+**마크다운(Markdown)** 은 문서 작성 도구입니다.
+
+<!-- FAIL: ( 앞의 여는 ** 앞에 CJK가 바로 옴 -->
+이전**(테스트)**다음
+
+<!-- PASS: 공백 추가 -->
+이전 **(테스트)** 다음
+```
+
+#### underscore(`_`/`__`) 변형은 사용 금지
+
+`_`/`__`는 CJK 문자 사이에서 거의 항상 실패합니다. 반드시 `*`/`**`를 사용합니다.
+
+```markdown
+<!-- 사용 금지 -->
+이전__강조__다음
+
+<!-- 올바른 표기 -->
+이전**강조**다음
+```
+
+#### Strikethrough(`~~`)
+
+Bold/Italic의 `*`/`**`와 동일한 규칙을 따릅니다. 내부 구두점 인접 시에만 공백이 필요합니다.
+
 ## 결과 보고서 형식
 
 ```markdown
