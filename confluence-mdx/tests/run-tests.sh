@@ -237,45 +237,57 @@ has_reverse_sync_input() {
 }
 
 # Run reverse-sync verify-only test (no expected file comparison)
-# Reports pass/fail status from test_verify.py result
+# test_verify.py --format=cli 로 실행하여 CLI와 동일한 출력을 생성한다.
+#
+# 이 함수는 run_all_tests에서 실패 시 두 번 호출됨:
+#   1회차: 출력 억제 상태로 실행 (> /dev/null 2>&1)
+#   2회차: 출력 표시 상태로 재실행
+# 따라서 결과 파일이 이미 있으면 test_verify.py를 재실행하지 않고
+# 저장된 결과에서 상태만 확인한다.
 run_reverse_sync_verify_test() {
     local test_id="$1"
     local test_path="${TEST_DIR}/${test_id}"
+    local result_file="${test_path}/output.reverse-sync.result.yaml"
 
-    mkdir -p "../var/${test_id}"
-    pushd .. > /dev/null
-    run_cmd bin/reverse_sync/test_verify.py \
-        "${test_id}" \
-        "tests/${test_path}/original.mdx" \
-        "tests/${test_path}/improved.mdx" \
-        "tests/${test_path}/page.xhtml"
-    popd > /dev/null
+    local output_log="${test_path}/output.verify.log"
 
-    # Copy result file
-    local var_dir="../var/${test_id}"
-    cp "${var_dir}/reverse-sync.result.yaml" "${test_path}/output.reverse-sync.result.yaml"
+    # 결과 파일이 없을 때만 test_verify.py 실행
+    if [[ ! -f "${result_file}" ]]; then
+        mkdir -p "../var/${test_id}"
+        pushd .. > /dev/null
+        # --format=cli: reverse_sync_cli.py verify 와 동일한 형식으로 출력
+        # 출력을 파일로 저장 (run_all_tests의 재실행 시 재사용)
+        bin/reverse_sync/test_verify.py --format=cli \
+            "${test_id}" \
+            "tests/${test_path}/original.mdx" \
+            "tests/${test_path}/improved.mdx" \
+            "tests/${test_path}/page.xhtml" \
+            > "tests/${output_log}" 2>&1
+        popd > /dev/null
 
-    # Check status from result.yaml
+        # var/에 생성된 중간 결과물을 output.* 으로 복사
+        local var_dir="../var/${test_id}"
+        cp "${var_dir}/reverse-sync.result.yaml"          "${test_path}/output.reverse-sync.result.yaml"
+        cp "${var_dir}/reverse-sync.diff.yaml"             "${test_path}/output.reverse-sync.diff.yaml"             2>/dev/null || true
+        cp "${var_dir}/reverse-sync.patched.xhtml"         "${test_path}/output.reverse-sync.patched.xhtml"         2>/dev/null || true
+        cp "${var_dir}/reverse-sync.mapping.original.yaml" "${test_path}/output.reverse-sync.mapping.original.yaml" 2>/dev/null || true
+        cp "${var_dir}/reverse-sync.mapping.patched.yaml"  "${test_path}/output.reverse-sync.mapping.patched.yaml"  2>/dev/null || true
+    fi
+
+    # result.yaml에서 상태 확인
     local status
     status=$(python3 -c "
 import yaml, sys
 r = yaml.safe_load(open(sys.argv[1]))
 print(r.get('status', 'error'))
-" "${test_path}/output.reverse-sync.result.yaml")
+" "${result_file}")
 
-    if [[ "${status}" == "pass" ]]; then
-        return 0
-    else
-        # Show verify diff on failure
-        python3 -c "
-import yaml, sys
-r = yaml.safe_load(open(sys.argv[1]))
-diff = r.get('verification', {}).get('diff_report', '')
-if diff:
-    print(diff)
-" "${test_path}/output.reverse-sync.result.yaml"
-        return 1
+    # 저장된 CLI 출력 표시
+    if [[ -f "${output_log}" ]]; then
+        cat "${output_log}"
     fi
+
+    [[ "${status}" == "pass" ]]
 }
 
 has_reverse_sync_verify_input() {

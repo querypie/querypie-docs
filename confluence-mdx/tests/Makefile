@@ -70,6 +70,7 @@ test-reverse-sync-one:
 # Run reverse-sync bug reproduction tests (tests/reverse-sync/)
 .PHONY: test-reverse-sync-bugs
 test-reverse-sync-bugs:
+	@find reverse-sync -name "output.*" -type f -delete 2>/dev/null || true
 	@$(TEST_SCRIPT) --type reverse-sync-verify --test-dir reverse-sync $(VERBOSE_FLAG)
 
 # Run a specific reverse-sync bug reproduction test
@@ -79,6 +80,7 @@ test-reverse-sync-bugs-one:
 		echo "Usage: make test-reverse-sync-bugs-one TEST_ID=<page_id>"; \
 		exit 1; \
 	fi
+	@rm -f "reverse-sync/$(TEST_ID)/output.reverse-sync.result.yaml" "reverse-sync/$(TEST_ID)/output.verify.log"
 	@$(TEST_SCRIPT) --type reverse-sync-verify --test-dir reverse-sync --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
 # Run image-copy tests
@@ -134,7 +136,7 @@ clean:
 	@find testcases -name "output.reverse-sync.*" -type f -delete
 	@find testcases -name "output.mdx.diff" -type f -delete
 	@find testcases -name "output.beautify-diff" -type f -delete
-	@find reverse-sync -name "output.reverse-sync.*" -type f -delete 2>/dev/null || true
+	@find reverse-sync -name "output.*" -type f -delete 2>/dev/null || true
 
 # Help
 .PHONY: help
