@@ -7,13 +7,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-import difflib
 from pathlib import Path
 from typing import Iterable
 
 from reverse_sync.mdx_block_parser import parse_mdx_blocks
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
-from xhtml_beautify_diff import beautify_xhtml
+from xhtml_beautify_diff import beautify_xhtml, xhtml_diff
 
 
 IGNORED_BLOCK_TYPES = {"frontmatter", "import_statement", "empty"}
@@ -50,18 +49,14 @@ def verify_expected_mdx_against_page_xhtml(
     generated_norm = _normalize_xhtml(generated)
     page_norm = _normalize_xhtml(page_xhtml)
 
-    if generated_norm == page_norm:
-        return True, generated, ""
-
-    diff_lines = list(
-        difflib.unified_diff(
-            page_norm.splitlines(),
-            generated_norm.splitlines(),
-            fromfile="page.xhtml",
-            tofile="generated-from-expected.mdx.xhtml",
-            lineterm="",
-        )
+    diff_lines = xhtml_diff(
+        page_norm,
+        generated_norm,
+        label_a="page.xhtml",
+        label_b="generated-from-expected.mdx.xhtml",
     )
+    if not diff_lines:
+        return True, generated, ""
     return False, generated, "\n".join(diff_lines)
 
 
@@ -87,4 +82,3 @@ def verify_testcase_dir(case_dir: Path) -> CaseVerification:
         generated_xhtml=generated,
         diff_report=diff_report,
     )
-
