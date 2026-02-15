@@ -216,6 +216,19 @@ class ConfluencePageProcessor:
                 if original_count != len(modified_pages):
                     self.logger.info(f"Excluded page ID {excluded_page_id} from collection ({original_count} -> {len(modified_pages)} pages)")
 
+                # Log result set metadata at INFO level
+                if modified_pages:
+                    pages_with_date = [p for p in modified_pages if p.get("last_modified")]
+                    if pages_with_date:
+                        sorted_by_date = sorted(pages_with_date, key=lambda p: p["last_modified"])
+                        oldest = sorted_by_date[0]
+                        newest = sorted_by_date[-1]
+                        self.logger.info(
+                            f"Recent fetch result: {len(modified_pages)} pages, "
+                            f"oldest: {oldest['last_modified']} \"{oldest.get('title', 'N/A')}\", "
+                            f"newest: {newest['last_modified']} \"{newest.get('title', 'N/A')}\""
+                        )
+
                 # Download each page through all 4 stages and output to stdout
                 # Store downloaded pages for list.txt
                 self.logger.warning(f"Downloading {len(modified_pages)} recently modified pages")

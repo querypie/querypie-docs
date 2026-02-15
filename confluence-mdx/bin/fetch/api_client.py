@@ -69,47 +69,49 @@ class ApiClient:
         return self.make_request(url, "V1 API attachments")
 
     def get_recently_modified_pages(self, days: int, space_key: str, since_date: Optional[str] = None) -> List[Dict]:
-        """Get recently modified pages with version info.
+        """Get recently modified pages with version info using sliding window.
+
+        Uses CQL datetime precision ("yyyy-MM-dd HH:mm") and a sliding window
+        approach to collect all modified pages even when limited to 100 results
+        per request (unauthenticated API).
 
         Args:
             days: Number of days to look back (used when since_date is not provided)
             space_key: Confluence space key
             since_date: ISO 8601 date string (e.g. version.createdAt from page.v2.yaml).
-                        If provided, overrides days parameter. A 1-day safety margin is subtracted.
+                        If provided, overrides days parameter. A 1-hour safety margin is subtracted.
 
         Returns:
-            List of dicts with keys: "id" (str), "version_number" (int or None).
+            List of dicts with keys: "id" (str), "version_number" (int or None),
+            "title" (str or None), "last_modified" (str or None).
         """
         try:
             if since_date:
-                # Parse ISO 8601 date and apply 1-day safety margin
+                # Parse ISO 8601 date and apply 1-hour safety margin
                 parsed_date = datetime.fromisoformat(since_date.replace("Z", "+00:00"))
-                threshold_date = parsed_date - timedelta(days=1)
-                date_str = threshold_date.strftime("%Y-%m-%d")
-                self.logger.info(f"Using since_date: {since_date} (with 1-day margin: {date_str})")
+                threshold_date = parsed_date - timedelta(hours=1)
+                self.logger.info(f"Using since_date: {since_date} (with 1-hour margin: {threshold_date.strftime('%Y-%m-%d %H:%M')})")
             else:
                 # Calculate the date threshold from days
                 threshold_date = datetime.now() - timedelta(days=days)
-                date_str = threshold_date.strftime("%Y-%m-%d")
                 self.logger.info(f"Searching for pages modified in last {days} days in space {space_key}")
-
-            # Build CQL query
-            cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}"'
-            encoded_query = quote(cql_query)
-
-            # Use CQL search API with version expansion
-            url = f"{self.config.base_url}/rest/api/content/search?cql={encoded_query}&expand=version"
-
-            self.logger.debug(f"CQL query: {cql_query}")
 
             seen_ids: set[str] = set()
             pages: list[Dict] = []
-            start = 0
-            limit = 100
+            window_start = threshold_date
+            window_round = 0
 
             while True:
-                paginated_url = f"{url}&start={start}&limit={limit}"
-                response_data = self.make_request(paginated_url, "CQL search for recently modified pages")
+                window_round += 1
+                # CQL supports "yyyy-MM-dd HH:mm" format (minute precision)
+                date_str = window_start.strftime("%Y-%m-%d %H:%M")
+                cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}" order by lastModified asc'
+
+                url = f"{self.config.base_url}/rest/api/content/search?cql={quote(cql_query)}&expand=version&limit=100"
+
+                self.logger.info(f"CQL query (round {window_round}): {cql_query}")
+
+                response_data = self.make_request(url, f"CQL search (round {window_round})")
 
                 if not response_data:
                     break
@@ -118,25 +120,62 @@ class ApiClient:
                 if not results:
                     break
 
+                # Extract page info and track the latest lastModified for sliding window
+                batch_max_when: Optional[str] = None
                 new_count = 0
                 for result in results:
                     page_id = result.get("id")
                     if page_id and page_id not in seen_ids:
                         seen_ids.add(page_id)
                         version = result.get("version", {})
+                        when = version.get("when")
                         pages.append({
                             "id": page_id,
                             "version_number": version.get("number"),
+                            "title": result.get("title"),
+                            "last_modified": when,
                         })
                         new_count += 1
+                    # Track max across all results (including duplicates) for window advance
+                    when = result.get("version", {}).get("when")
+                    if when and (batch_max_when is None or when > batch_max_when):
+                        batch_max_when = when
 
-                # Stop if no new results (API ignoring pagination) or last page
-                if new_count == 0 or len(results) < limit:
+                self.logger.info(
+                    f"Round {window_round}: {len(results)} results returned, "
+                    f"{new_count} new pages (total: {len(pages)})"
+                )
+
+                # If fewer than 100 results, we've collected everything
+                if len(results) < 100:
                     break
 
-                start += limit
+                # Sliding window: advance start to the latest lastModified in this batch
+                if batch_max_when:
+                    next_start = datetime.fromisoformat(batch_max_when.replace("Z", "+00:00"))
+                    if next_start <= window_start:
+                        # No progress — all 100 results have the same timestamp; can't advance further
+                        self.logger.warning(
+                            f"Sliding window stuck at {date_str} with {len(results)} results. "
+                            f"Some pages may share the same lastModified minute."
+                        )
+                        break
+                    window_start = next_start
+                else:
+                    break
 
-            self.logger.info(f"Found {len(pages)} recently modified pages")
+            # Log result set summary
+            if pages:
+                sorted_pages = sorted(pages, key=lambda p: p.get("last_modified") or "")
+                oldest = sorted_pages[0]
+                newest = sorted_pages[-1]
+                self.logger.info(
+                    f"Result summary — total: {len(pages)} pages, "
+                    f"oldest: {oldest.get('last_modified')} \"{oldest.get('title')}\", "
+                    f"newest: {newest.get('last_modified')} \"{newest.get('title')}\""
+                )
+
+            self.logger.info(f"Found {len(pages)} recently modified pages in {window_round} round(s)")
             return pages
 
         except Exception as e:
