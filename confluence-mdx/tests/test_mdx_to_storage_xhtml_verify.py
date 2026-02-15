@@ -4,6 +4,7 @@ from reverse_sync.mdx_to_storage_xhtml_verify import (
     iter_testcase_dirs,
     mdx_to_storage_xhtml_fragment,
     verify_expected_mdx_against_page_xhtml,
+    verify_testcase_dir,
 )
 
 
@@ -39,3 +40,13 @@ def test_iter_testcase_dirs_filters_required_files(tmp_path: Path):
     dirs = list(iter_testcase_dirs(tmp_path))
     assert dirs == [good]
 
+
+def test_verify_testcase_dir_writes_generated_file(tmp_path: Path):
+    case = tmp_path / "300"
+    case.mkdir()
+    (case / "expected.mdx").write_text("# Title\n\nParagraph\n", encoding="utf-8")
+    (case / "page.xhtml").write_text("<h1>Title</h1><p>Paragraph</p>", encoding="utf-8")
+
+    result = verify_testcase_dir(case, write_generated=True, diff_engine="external")
+    assert result.passed is True
+    assert (case / "generated.from.expected.xhtml").exists()
