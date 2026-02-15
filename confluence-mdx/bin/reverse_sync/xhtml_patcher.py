@@ -154,6 +154,7 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
 
     단일 xpath: "p[1]", "h2[3]", "macro-info[1]"
     복합 xpath: "macro-info[1]/p[1]", "macro-note[2]/ul[1]"
+    다단계 xpath: "ol[1]/li[2]/p[1]", "ul[3]/li[1]/p[1]"
     """
     parts = xpath.split('/')
     if len(parts) == 1:
@@ -165,10 +166,17 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
         return None
 
     container = _find_content_container(parent)
-    if container is None:
-        return None
+    if container is not None:
+        # macro 내부 컨테이너에서 자식 검색 (기존 동작 유지)
+        return _find_child_in_element(container, parts[1])
 
-    return _find_child_in_element(container, parts[1])
+    # macro가 아닌 일반 요소 (ol, ul 등)에서는 요소 자체를 컨테이너로 사용
+    current = parent
+    for part in parts[1:]:
+        current = _find_child_in_element(current, part)
+        if current is None:
+            return None
+    return current
 
 
 def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):

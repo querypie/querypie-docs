@@ -12,7 +12,9 @@ from reverse_sync.text_normalizer import (
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar_lookup import find_mapping_by_sidecar, SidecarEntry
-from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
+from reverse_sync.mdx_to_xhtml_inline import (
+    mdx_block_to_xhtml_element, _convert_inline,
+)
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
@@ -180,6 +182,15 @@ def build_patches(
                     continue
 
         _mark_used(mapping.block_id, mapping)
+
+        # 리스트 블록: 인라인 포맷팅 경계 변경이 있으면 항목별 패치로 분리
+        if change.old_block.type == 'list':
+            item_patches = _build_list_item_level_patches(
+                change, mapping)
+            if item_patches is not None:
+                patches.extend(item_patches)
+                continue
+
         new_block = change.new_block
         new_plain = normalize_mdx_to_plain(new_block.content, new_block.type)
 
@@ -482,6 +493,103 @@ def extract_list_marker_prefix(text: str) -> str:
     """텍스트에서 선행 리스트 마커 prefix를 추출한다."""
     m = re.match(r'^([-*+]\s+|\d+\.\s+)', text)
     return m.group(0) if m else ''
+
+
+def _has_inline_format_change(old_mdx: str, new_mdx: str) -> bool:
+    """두 MDX 문자열 사이에 code span(`...`) 경계 변경이 있는지 검사한다.
+
+    backtick이 감싸는 텍스트의 범위가 변경된 경우에만 True.
+    마커 내부의 텍스트 수정(오타 등)이나 마커 외부의 텍스트만 변경은 False.
+    """
+    # 리스트 마커 제거
+    old_stripped = re.sub(r'^[-*+]\s+|\d+\.\s+', '', old_mdx.strip())
+    new_stripped = re.sub(r'^[-*+]\s+|\d+\.\s+', '', new_mdx.strip())
+
+    # backtick이 없으면 code span 변경 불가
+    if '`' not in old_stripped and '`' not in new_stripped:
+        return False
+
+    # code span 추출
+    old_code = re.findall(r'`([^`]+)`', old_stripped)
+    new_code = re.findall(r'`([^`]+)`', new_stripped)
+
+    # code span 개수가 다르면 구조 변경
+    if len(old_code) != len(new_code):
+        return True
+
+    if not old_code:
+        return False
+
+    # 각 code span의 내부 텍스트를 공백 무시하고 비교
+    # 공백만 다른 경우(오타 수정)는 경계 변경이 아님
+    for old_c, new_c in zip(old_code, new_code):
+        old_norm = re.sub(r'\s+', '', old_c)
+        new_norm = re.sub(r'\s+', '', new_c)
+        if old_norm != new_norm:
+            return True
+
+    return False
+
+
+def _mdx_list_item_to_inner_xhtml(item_mdx: str) -> str:
+    """리스트 항목의 MDX content를 <p> 내부의 XHTML로 변환한다."""
+    # 리스트 마커 제거
+    stripped = re.sub(r'^[-*+]\s+|\d+\.\s+', '', item_mdx.strip())
+    return _convert_inline(stripped)
+
+
+def _build_list_item_level_patches(
+    change: BlockChange,
+    mapping: BlockMapping,
+) -> Optional[List[Dict[str, str]]]:
+    """리스트 항목 중 인라인 포맷팅 경계가 변경된 항목이 있으면 항목별 패치를 생성한다.
+
+    인라인 포맷팅 변경이 없으면 None을 반환하여 기존 monolithic 패치를 사용한다.
+    인라인 포맷팅 변경이 있으면 모든 변경 항목에 대해 개별 패치를 생성한다:
+    - 포맷팅 변경 항목: new_inner_xhtml 패치 (ol[N]/li[M]/p[1] 대상)
+    - 텍스트만 변경 항목: new_plain_text 패치 (ol[N]/li[M]/p[1] 대상)
+    """
+    old_items = split_list_items(change.old_block.content)
+    new_items = split_list_items(change.new_block.content)
+    if len(old_items) != len(new_items):
+        return None
+
+    # 인라인 포맷팅 변경이 있는 항목이 있는지 먼저 확인
+    has_any_format_change = False
+    for old_item, new_item in zip(old_items, new_items):
+        if old_item != new_item and _has_inline_format_change(old_item, new_item):
+            has_any_format_change = True
+            break
+
+    if not has_any_format_change:
+        return None  # 기존 monolithic 패치 사용
+
+    parent_xpath = mapping.xhtml_xpath
+    patches = []
+    li_index = 0
+    for old_item, new_item in zip(old_items, new_items):
+        li_index += 1
+        if old_item == new_item:
+            continue
+
+        old_plain = normalize_mdx_to_plain(old_item, 'list')
+        if _has_inline_format_change(old_item, new_item):
+            # 인라인 포맷팅 변경: inner HTML 교체
+            new_inner = _mdx_list_item_to_inner_xhtml(new_item)
+            patches.append({
+                'xhtml_xpath': f'{parent_xpath}/li[{li_index}]/p[1]',
+                'old_plain_text': old_plain,
+                'new_inner_xhtml': new_inner,
+            })
+        else:
+            # 텍스트만 변경: text-only 패치
+            new_plain = normalize_mdx_to_plain(new_item, 'list')
+            patches.append({
+                'xhtml_xpath': f'{parent_xpath}/li[{li_index}]/p[1]',
+                'old_plain_text': old_plain,
+                'new_plain_text': new_plain,
+            })
+    return patches
 
 
 def _build_delete_patch(
