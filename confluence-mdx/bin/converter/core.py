@@ -199,16 +199,9 @@ class SingleLineParser:
                 for child in node.children:
                     self.convert_recursively(child)
             else:
-                inner = self.markdown_of_children(node).strip()
-                if inner:
-                    self.markdown_lines.append(" **")
-                    self.markdown_lines.append(inner)
-                    self.markdown_lines.append("** ")
-                else:
-                    # Empty/whitespace-only <strong>: output whitespace without bold markers
-                    raw = self.markdown_of_children(node)
-                    if raw and raw != raw.strip():
-                        self.markdown_lines.append(" ")
+                self.markdown_lines.append(" **")
+                self.markdown_lines.append(self.markdown_of_children(node).strip())
+                self.markdown_lines.append("** ")
         elif node.name in ['em']:
             self.markdown_lines.append(" *")
             self.markdown_lines.append(self.markdown_of_children(node).strip())
