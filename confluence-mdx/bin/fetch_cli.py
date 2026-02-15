@@ -70,13 +70,17 @@ def main():
 
     parser.add_argument("--output-dir", default=Config().default_output_dir,
                         help="Directory to store output files (default: %(default)s)")
+    parser.add_argument("--verbose", "-v", action="store_true",
+                        help="Enable verbose output (sets log level to INFO)")
     parser.add_argument("--log-level", default="WARNING", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
                         help="Set the logging level (default: %(default)s)")
     args = parser.parse_args()
 
     # Set up logging configuration
+    # --verbose flag overrides --log-level to INFO
+    effective_level = "INFO" if args.verbose else args.log_level
     logging.basicConfig(
-        level=getattr(logging, args.log_level),
+        level=getattr(logging, effective_level),
         format='%(levelname)s - %(filename)s:%(lineno)d - %(message)s',
         stream=sys.stderr
     )
