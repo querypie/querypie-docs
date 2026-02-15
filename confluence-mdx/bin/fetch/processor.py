@@ -71,7 +71,7 @@ class ConfluencePageProcessor:
                 data = self.file_manager.load_yaml(yaml_filepath)
                 if data:
                     child_ids = [child["id"] for child in data.get("results", [])]
-                    self.logger.info(f"Found {len(child_ids)} child pages for page ID {page_id}")
+                    self.logger.debug(f"Found {len(child_ids)} child pages for page ID {page_id}")
                     return child_ids
             else:
                 self.logger.warning(f"No children.v2.yaml found for page ID {page_id}")
@@ -83,7 +83,7 @@ class ConfluencePageProcessor:
     def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None, use_local: bool = False) -> Generator[Page, None, None]:
         """Recursively fetch page tree through all 4 stages"""
         try:
-            self.logger.info(f"Processing page tree for page ID {page_id}")
+            self.logger.debug(f"Processing page tree for page ID {page_id}")
 
             # If start_page_id is not provided, use the current page_id as the starting point
             if start_page_id is None:
@@ -141,10 +141,12 @@ class ConfluencePageProcessor:
             if not v2_data or "version" not in v2_data:
                 return False
             local_version = v2_data["version"].get("number")
+            title = v2_data.get("title", "N/A")
+            created_at = v2_data["version"].get("createdAt", "N/A")
             if local_version is not None and int(local_version) == int(api_version_number):
-                self.logger.info(f"Skipped page {page_id} (local version {local_version} matches API)")
+                self.logger.info(f"Skipped page {page_id} (local version {local_version} matches API) {created_at} \"{title}\"")
                 return True
-            self.logger.info(f"Page {page_id} needs update: local version {local_version} != API version {api_version_number}")
+            self.logger.info(f"Page {page_id} needs update: local version {local_version} != API version {api_version_number} {created_at} \"{title}\"")
             return False
         except Exception:
             return False

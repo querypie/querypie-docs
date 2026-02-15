@@ -57,9 +57,11 @@ jobs:
 
       - name: Generate MDX files
         working-directory: ./confluence-mdx
+        env:
+          ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
         run: |
           set -o xtrace
-          docker compose run --rm confluence-mdx full ${{ inputs.arguments }}
+          docker compose run --rm -e ATLASSIAN_TOKEN confluence-mdx full ${{ inputs.arguments }}
 
       - name: Check for changes
         run: |
