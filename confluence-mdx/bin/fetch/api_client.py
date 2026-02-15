@@ -68,11 +68,14 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}/child/attachment"
         return self.make_request(url, "V1 API attachments")
 
+    CQL_SEARCH_LIMIT = 500
+    """Maximum number of results per CQL search request."""
+
     def get_recently_modified_pages(self, days: int, space_key: str, since_date: Optional[str] = None) -> List[Dict]:
         """Get recently modified pages with version info using sliding window.
 
         Uses CQL datetime precision ("yyyy-MM-dd HH:mm") and a sliding window
-        approach to collect all modified pages even when limited to 100 results
+        approach to collect all modified pages even when limited to CQL_SEARCH_LIMIT results
         per request (unauthenticated API).
 
         Args:
@@ -107,7 +110,7 @@ class ApiClient:
                 date_str = window_start.strftime("%Y-%m-%d %H:%M")
                 cql_query = f'lastModified >= "{date_str}" AND type = page AND space = "{space_key}" order by lastModified asc'
 
-                url = f"{self.config.base_url}/rest/api/content/search?cql={quote(cql_query)}&expand=version&limit=100"
+                url = f"{self.config.base_url}/rest/api/content/search?cql={quote(cql_query)}&expand=version&limit={self.CQL_SEARCH_LIMIT}"
 
                 self.logger.info(f"CQL query (round {window_round}): {cql_query}")
 
@@ -146,20 +149,22 @@ class ApiClient:
                     f"{new_count} new pages (total: {len(pages)})"
                 )
 
-                # If fewer than 100 results, we've collected everything
-                if len(results) < 100:
+                # If fewer than CQL_SEARCH_LIMIT results, we've collected everything
+                if len(results) < self.CQL_SEARCH_LIMIT:
                     break
 
                 # Sliding window: advance start to the latest lastModified in this batch
                 if batch_max_when:
                     next_start = datetime.fromisoformat(batch_max_when.replace("Z", "+00:00"))
                     if next_start <= window_start:
-                        # No progress — all 100 results have the same timestamp; can't advance further
+                        # No progress — CQL minute precision causes the same results.
+                        # Advance by 1 minute to skip past the stuck window.
+                        window_start = window_start + timedelta(minutes=1)
                         self.logger.warning(
                             f"Sliding window stuck at {date_str} with {len(results)} results. "
-                            f"Some pages may share the same lastModified minute."
+                            f"Advancing by 1 minute to {window_start.strftime('%Y-%m-%d %H:%M')}"
                         )
-                        break
+                        continue
                     window_start = next_start
                 else:
                     break

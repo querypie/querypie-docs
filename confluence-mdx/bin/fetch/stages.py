@@ -95,7 +95,7 @@ class Stage2Processor(StageBase):
     """Stage 2: Content Extraction - Extract and save page content."""
 
     def process(self, page_id: str) -> bool:
-        self.logger.info(f"Stage 2: Extracting content for page ID {page_id}")
+        self.logger.debug(f"Stage 2: Extracting content for page ID {page_id}")
         directory = self.get_page_directory(page_id)
 
         # Extract V1 content
@@ -108,7 +108,7 @@ class Stage2Processor(StageBase):
         if v2_data:
             self._extract_v2_content(page_id, v2_data, directory)
 
-        self.logger.info(f"Stage 2 completed for page ID {page_id}")
+        self.logger.debug(f"Stage 2 completed for page ID {page_id}")
         return True
 
     def _extract_v1_content(self, page_id: str, v1_data: Dict, directory: str) -> None:
@@ -119,26 +119,26 @@ class Stage2Processor(StageBase):
         xhtml_content = body.get("storage", {}).get("value", "")
         if xhtml_content:
             self.file_manager.save_file(os.path.join(directory, "page.xhtml"), xhtml_content)
-            self.logger.info(f"Extracted XHTML content for page ID {page_id} ({len(xhtml_content)} characters)")
+            self.logger.debug(f"Extracted XHTML content for page ID {page_id} ({len(xhtml_content)} characters)")
 
         # Extract HTML content
         html_content = body.get("view", {}).get("value", "")
         if html_content:
             self.file_manager.save_file(os.path.join(directory, "page.html"), html_content)
-            self.logger.info(f"Extracted HTML content for page ID {page_id} ({len(html_content)} characters)")
+            self.logger.debug(f"Extracted HTML content for page ID {page_id} ({len(html_content)} characters)")
 
         # Extract ancestors
         ancestors = v1_data.get("ancestors", [])
         if ancestors:
             self.file_manager.save_yaml(os.path.join(directory, "ancestors.v1.yaml"), {'results': ancestors})
-            self.logger.info(f"Extracted {len(ancestors)} ancestors for page ID {page_id}")
+            self.logger.debug(f"Extracted {len(ancestors)} ancestors for page ID {page_id}")
 
     def _extract_v2_content(self, page_id: str, v2_data: Dict, directory: str) -> None:
         """Extract content from V2 API data."""
         adf_content = v2_data.get("body", {}).get("atlas_doc_format", {}).get("value", "")
         if adf_content:
             self.file_manager.save_file(os.path.join(directory, "page.adf"), adf_content)
-            self.logger.info(f"Extracted ADF content for page ID {page_id} ({len(adf_content)} characters)")
+            self.logger.debug(f"Extracted ADF content for page ID {page_id} ({len(adf_content)} characters)")
 
 
 class Stage3Processor(StageBase):
@@ -240,7 +240,7 @@ class Stage4Processor(StageBase):
     """Stage 4: Document Listing - Generate document information for output listing."""
 
     def process(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Page]:
-        self.logger.info(f"Stage 4: Generating document list for page ID {page_id}")
+        self.logger.debug(f"Stage 4: Generating document list for page ID {page_id}")
 
         directory = self.get_page_directory(page_id)
         v1_data = self.file_manager.load_yaml(os.path.join(directory, "page.v1.yaml"))
@@ -264,7 +264,7 @@ class Stage4Processor(StageBase):
         # Build breadcrumbs
         breadcrumbs = self._build_breadcrumbs(page_id, ancestors, title, start_page_id)
 
-        self.logger.info(f"Stage 4 completed for page ID {page_id}: {title}")
+        self.logger.debug(f"Stage 4 completed for page ID {page_id}: {title}")
 
         return Page(
             page_id=page_id,
