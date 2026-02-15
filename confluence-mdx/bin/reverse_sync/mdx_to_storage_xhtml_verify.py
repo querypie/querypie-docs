@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import subprocess
 from typing import Iterable
 
 from reverse_sync.mdx_block_parser import parse_mdx_blocks
@@ -60,6 +61,26 @@ def verify_expected_mdx_against_page_xhtml(
     return False, generated, "\n".join(diff_lines)
 
 
+def verify_page_vs_generated_with_external_tool(
+    page_xhtml_path: Path, generated_xhtml_path: Path
+) -> tuple[bool, str]:
+    """xhtml_beautify_diff.py를 외부 도구로 실행해 비교한다."""
+    script_path = Path(__file__).resolve().parents[1] / "xhtml_beautify_diff.py"
+    proc = subprocess.run(
+        [str(script_path), str(page_xhtml_path), str(generated_xhtml_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode == 0:
+        return True, ""
+    if proc.returncode == 1:
+        return False, proc.stdout.strip()
+    raise RuntimeError(
+        f"xhtml_beautify_diff failed: code={proc.returncode}, stderr={proc.stderr.strip()}"
+    )
+
+
 def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:
     """`page.xhtml`과 `expected.mdx`가 있는 테스트케이스 디렉토리를 순회한다."""
     for child in sorted(testcases_dir.iterdir()):
@@ -69,13 +90,32 @@ def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:
             yield child
 
 
-def verify_testcase_dir(case_dir: Path) -> CaseVerification:
+def verify_testcase_dir(
+    case_dir: Path,
+    *,
+    write_generated: bool = False,
+    diff_engine: str = "internal",
+    generated_filename: str = "generated.from.expected.xhtml",
+) -> CaseVerification:
     """단일 테스트케이스 디렉토리를 검증한다."""
-    expected_mdx = (case_dir / "expected.mdx").read_text(encoding="utf-8")
-    page_xhtml = (case_dir / "page.xhtml").read_text(encoding="utf-8")
-    passed, generated, diff_report = verify_expected_mdx_against_page_xhtml(
-        expected_mdx, page_xhtml
-    )
+    expected_mdx_path = case_dir / "expected.mdx"
+    page_xhtml_path = case_dir / "page.xhtml"
+    expected_mdx = expected_mdx_path.read_text(encoding="utf-8")
+    page_xhtml = page_xhtml_path.read_text(encoding="utf-8")
+    generated = mdx_to_storage_xhtml_fragment(expected_mdx)
+
+    generated_path = case_dir / generated_filename
+    if write_generated or diff_engine == "external":
+        generated_path.write_text(generated, encoding="utf-8")
+
+    if diff_engine == "external":
+        passed, diff_report = verify_page_vs_generated_with_external_tool(
+            page_xhtml_path, generated_path
+        )
+    else:
+        passed, _gen, diff_report = verify_expected_mdx_against_page_xhtml(
+            expected_mdx, page_xhtml
+        )
     return CaseVerification(
         case_id=case_dir.name,
         passed=passed,

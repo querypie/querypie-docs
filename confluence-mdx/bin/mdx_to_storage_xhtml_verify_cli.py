@@ -33,6 +33,17 @@ def _build_parser() -> argparse.ArgumentParser:
         default=3,
         help="Max number of failing case diffs to print",
     )
+    parser.add_argument(
+        "--write-generated",
+        action="store_true",
+        help="Write generated XHTML file for each testcase",
+    )
+    parser.add_argument(
+        "--diff-engine",
+        choices=("internal", "external"),
+        default="external",
+        help="Diff engine: internal normalizer or external xhtml_beautify_diff.py",
+    )
     return parser
 
 
@@ -58,7 +69,14 @@ def main() -> int:
         print("No testcase directories containing page.xhtml + expected.mdx found.")
         return 0
 
-    results = [verify_testcase_dir(case_dir) for case_dir in case_dirs]
+    results = [
+        verify_testcase_dir(
+            case_dir,
+            write_generated=args.write_generated,
+            diff_engine=args.diff_engine,
+        )
+        for case_dir in case_dirs
+    ]
     passed = [r for r in results if r.passed]
     failed = [r for r in results if not r.passed]
 
@@ -78,4 +96,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
