@@ -573,8 +573,12 @@ def _do_verify(args) -> dict:
     )
 
 
-def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False) -> List[dict]:
-    """브랜치의 모든 변경 ko MDX 파일을 배치 verify 처리한다."""
+def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
+                     push: bool = False) -> List[dict]:
+    """브랜치의 변경 ko MDX 파일을 배치 처리한다.
+
+    push=True이면 개별 문서마다 verify 성공 시 즉시 Confluence에 push한다.
+    """
     files = _get_changed_ko_mdx_files(branch)
     if not files:
         return [{'status': 'no_changes', 'branch': branch, 'changes_count': 0}]
@@ -584,6 +588,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False) -
     print(f"Processing {'up to ' + str(total) if failures_only and limit > 0 else str(len(files))}/{total} file(s) from branch {branch}...", file=sys.stderr)
     results = []
     failure_count = 0
+    push_count = 0
     for idx, ko_path in enumerate(files, 1):
         print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
         try:
@@ -593,7 +598,14 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False) -
             )
             result = _do_verify(args)
             result['file'] = ko_path
-            print(result.get('status', 'unknown'), file=sys.stderr)
+            status = result.get('status', 'unknown')
+            if push and status == 'pass':
+                push_result = _do_push(result['page_id'])
+                result['push'] = push_result
+                push_count += 1
+                print(f"pass → pushed (v{push_result.get('version', '?')})", file=sys.stderr)
+            else:
+                print(status, file=sys.stderr)
             results.append(result)
         except Exception as e:
             print("error", file=sys.stderr)
@@ -602,6 +614,8 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False) -
             failure_count += 1
         if failures_only and limit > 0 and failure_count >= limit:
             break
+    if push:
+        print(f"\nPushed {push_count}/{len(results)} file(s)", file=sys.stderr)
     return results
 
 
@@ -697,7 +711,7 @@ def main():
             if getattr(args, 'branch', None):
                 # 배치 모드
                 results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
-                                           failures_only=failures_only)
+                                           failures_only=failures_only, push=not dry_run)
                 if use_json:
                     output = results
                     if failures_only:
@@ -707,15 +721,7 @@ def main():
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
-                if not dry_run:
-                    passed = [r for r in results if r.get('status') == 'pass']
-                    if has_failure:
-                        print(f"Error: 일부 파일이 검증에 실패했습니다. push하지 않습니다.", file=sys.stderr)
-                        sys.exit(1)
-                    for r in passed:
-                        push_result = _do_push(r['page_id'])
-                        print(json.dumps(push_result, ensure_ascii=False, indent=2))
-                elif has_failure:
+                if has_failure:
                     sys.exit(1)
             else:
                 # 기존 단일 파일 모드
