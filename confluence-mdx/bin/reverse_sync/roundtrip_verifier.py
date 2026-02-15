@@ -118,6 +118,17 @@ def _normalize_table_cell_lines(text: str) -> str:
     return '\n'.join(result)
 
 
+def _normalize_adjacent_bold_spans(text: str) -> str:
+    """인접한 bold span을 하나로 병합한다.
+
+    Confluence XHTML에서 <strong>A</strong> <strong>B</strong> 구조를
+    forward converter가 **A**   **B** 로 변환하지만,
+    MDX 교정에서 **A B** 로 병합하는 경우가 있다.
+    두 형태를 동일하게 취급하기 위해 **A** <spaces> **B** → **A B** 로 정규화한다.
+    """
+    return re.sub(r'\*\*\s+\*\*', ' ', text)
+
+
 def _normalize_html_entities_in_code(text: str) -> str:
     """코드 블록 내의 HTML 엔티티를 일반 문자로 변환한다.
 
@@ -154,6 +165,8 @@ def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
     actual_mdx = _normalize_table_cell_lines(actual_mdx)
     expected_mdx = _normalize_html_entities_in_code(expected_mdx)
     actual_mdx = _normalize_html_entities_in_code(actual_mdx)
+    expected_mdx = _normalize_adjacent_bold_spans(expected_mdx)
+    actual_mdx = _normalize_adjacent_bold_spans(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")
