@@ -180,6 +180,14 @@ def build_patches(
                     continue
 
         _mark_used(mapping.block_id, mapping)
+
+        # 리스트 블록: 중첩 항목이 있으면 항목별 패치로 분리하여 텍스트 병합 방지
+        if change.old_block.type == 'list':
+            item_patches = _build_nested_list_item_patches(change, mapping)
+            if item_patches is not None:
+                patches.extend(item_patches)
+                continue
+
         new_block = change.new_block
         new_plain = normalize_mdx_to_plain(new_block.content, new_block.type)
 
@@ -378,6 +386,277 @@ def split_list_items(content: str) -> List[str]:
     if current:
         items.append('\n'.join(current))
     return items
+
+
+def _split_top_level_items(content: str) -> List[str]:
+    """리스트 블록에서 최상위 항목만 분리한다.
+
+    하위 중첩 항목은 부모 항목에 포함된다.
+    """
+    items = []
+    current: List[str] = []
+    base_indent: Optional[int] = None
+
+    for line in content.split('\n'):
+        stripped = line.strip()
+        if not stripped:
+            if current:
+                current.append(line)
+            continue
+
+        indent = len(line) - len(line.lstrip())
+        is_marker = bool(
+            re.match(r'^[-*+]\s+', stripped) or re.match(r'^\d+\.\s+', stripped))
+
+        if is_marker and base_indent is None:
+            base_indent = indent
+
+        # 같은 들여쓰기의 새 리스트 항목이면 새 항목으로 분리
+        if is_marker and indent == base_indent and current:
+            # 뒤 빈 줄 제거
+            while current and not current[-1].strip():
+                current.pop()
+            items.append('\n'.join(current))
+            current = [line]
+        else:
+            current.append(line)
+
+    if current:
+        while current and not current[-1].strip():
+            current.pop()
+        items.append('\n'.join(current))
+
+    return items
+
+
+def _extract_first_line(item_mdx: str) -> str:
+    """리스트 항목의 첫 번째 줄(top-level text)만 추출한다.
+
+    중첩된 하위 항목이나 figure 등의 블록 요소를 제외한다.
+    """
+    lines = item_mdx.split('\n')
+    if not lines:
+        return ''
+    first = lines[0].strip()
+    # 리스트 마커 제거
+    first = re.sub(r'^\d+\.\s+', '', first)
+    first = re.sub(r'^[-*+]\s+', '', first)
+    return first
+
+
+def _has_nested_items(item_mdx: str) -> bool:
+    """리스트 항목에 중첩된 하위 항목이 있는지 확인한다."""
+    lines = item_mdx.split('\n')
+    if len(lines) <= 1:
+        return False
+    first_line = lines[0]
+    first_indent = len(first_line) - len(first_line.lstrip())
+    for line in lines[1:]:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        indent = len(line) - len(line.lstrip())
+        if indent > first_indent and (
+            re.match(r'^[-*+]\s+', stripped) or re.match(r'^\d+\.\s+', stripped)
+        ):
+            return True
+    return False
+
+
+def _nesting_depth(item_mdx: str) -> int:
+    """리스트 항목의 최대 중첩 깊이를 반환한다. (1 = 중첩 없음)"""
+    lines = item_mdx.split('\n')
+    if not lines:
+        return 0
+    first_line = lines[0]
+    base_indent = len(first_line) - len(first_line.lstrip())
+    max_depth = 1
+    current_depth = 1
+    indent_stack = [base_indent]
+
+    for line in lines[1:]:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        indent = len(line) - len(line.lstrip())
+        is_marker = bool(
+            re.match(r'^[-*+]\s+', stripped) or re.match(r'^\d+\.\s+', stripped))
+        if not is_marker:
+            continue
+        while indent_stack and indent <= indent_stack[-1]:
+            indent_stack.pop()
+            current_depth -= 1
+        if indent > (indent_stack[-1] if indent_stack else base_indent):
+            indent_stack.append(indent)
+            current_depth += 1
+        max_depth = max(max_depth, current_depth)
+
+    return max_depth
+
+
+def _extract_sub_items(item_mdx: str) -> List[str]:
+    """중첩 항목에서 직속 하위 항목들을 추출한다."""
+    lines = item_mdx.split('\n')
+    if len(lines) <= 1:
+        return []
+
+    first_line = lines[0]
+    base_indent = len(first_line) - len(first_line.lstrip())
+
+    # 하위 항목의 들여쓰기 수준 결정
+    sub_indent: Optional[int] = None
+    sub_items: List[str] = []
+    current: List[str] = []
+
+    for line in lines[1:]:
+        stripped = line.strip()
+        if not stripped:
+            if current:
+                current.append(line)
+            continue
+
+        indent = len(line) - len(line.lstrip())
+        is_marker = bool(
+            re.match(r'^[-*+]\s+', stripped) or re.match(r'^\d+\.\s+', stripped))
+
+        if is_marker and indent > base_indent:
+            if sub_indent is None:
+                sub_indent = indent
+
+            if indent == sub_indent:
+                if current:
+                    while current and not current[-1].strip():
+                        current.pop()
+                    sub_items.append('\n'.join(current))
+                current = [line]
+                continue
+
+        if current:
+            current.append(line)
+
+    if current:
+        while current and not current[-1].strip():
+            current.pop()
+        sub_items.append('\n'.join(current))
+
+    return sub_items
+
+
+def _build_sub_item_patches(
+    old_item: str,
+    new_item: str,
+    parent_xpath: str,
+) -> List[Dict[str, str]]:
+    """중첩 항목 내 변경된 하위 항목에 대한 패치를 생성한다."""
+    old_subs = _extract_sub_items(old_item)
+    new_subs = _extract_sub_items(new_item)
+    if len(old_subs) != len(new_subs):
+        return []
+
+    patches = []
+    # 하위 항목은 ol[1]/li[N] 구조로 매핑
+    li_index = 0
+    for old_sub, new_sub in zip(old_subs, new_subs):
+        li_index += 1
+        if old_sub == new_sub:
+            continue
+
+        if _has_nested_items(old_sub):
+            # 더 깊은 중첩: 첫 줄만 패치 + 재귀
+            old_first = _extract_first_line(old_sub)
+            new_first = _extract_first_line(new_sub)
+            if old_first != new_first:
+                old_plain = normalize_mdx_to_plain(old_first, 'paragraph')
+                new_plain = normalize_mdx_to_plain(new_first, 'paragraph')
+                patches.append({
+                    'xhtml_xpath': f'{parent_xpath}/ol[1]/li[{li_index}]/p[1]',
+                    'old_plain_text': old_plain,
+                    'new_plain_text': new_plain,
+                })
+            sub_patches = _build_sub_item_patches(
+                old_sub, new_sub, f'{parent_xpath}/ol[1]/li[{li_index}]')
+            patches.extend(sub_patches)
+        else:
+            old_first = _extract_first_line(old_sub)
+            new_first = _extract_first_line(new_sub)
+            if old_first != new_first:
+                old_plain = normalize_mdx_to_plain(old_first, 'paragraph')
+                new_plain = normalize_mdx_to_plain(new_first, 'paragraph')
+                patches.append({
+                    'xhtml_xpath': f'{parent_xpath}/ol[1]/li[{li_index}]/p[1]',
+                    'old_plain_text': old_plain,
+                    'new_plain_text': new_plain,
+                })
+
+    return patches
+
+
+def _build_nested_list_item_patches(
+    change: 'BlockChange',
+    mapping: 'BlockMapping',
+) -> Optional[List[Dict[str, str]]]:
+    """중첩 리스트의 변경된 항목만 개별 패치로 생성한다.
+
+    중첩 리스트에서 전체 텍스트를 한꺼번에 패치하면 하위 항목의 텍스트가
+    상위 항목으로 병합되는 문제를 방지한다.
+    """
+    old_items = _split_top_level_items(change.old_block.content)
+    new_items = _split_top_level_items(change.new_block.content)
+    if len(old_items) != len(new_items):
+        return None
+
+    # 중첩 항목의 첫 번째 줄이 변경된 경우에만 항목별 패치 사용.
+    # 첫 줄 변경이 없는 경우 monolithic _apply_text_changes로도 안전하게 처리 가능.
+    has_first_line_change_in_nested = False
+    for old_item, new_item in zip(old_items, new_items):
+        if old_item == new_item:
+            continue
+        if not _has_nested_items(old_item):
+            continue
+        old_first = _extract_first_line(old_item)
+        new_first = _extract_first_line(new_item)
+        if old_first != new_first:
+            has_first_line_change_in_nested = True
+            break
+
+    if not has_first_line_change_in_nested:
+        return None
+
+    parent_xpath = mapping.xhtml_xpath
+    patches = []
+    li_index = 0
+    for old_item, new_item in zip(old_items, new_items):
+        li_index += 1
+        if old_item == new_item:
+            continue
+
+        if _has_nested_items(old_item):
+            # 중첩 항목: 첫 번째 줄(top-level <p>)만 패치
+            old_first = _extract_first_line(old_item)
+            new_first = _extract_first_line(new_item)
+            if old_first != new_first:
+                old_plain = normalize_mdx_to_plain(old_first, 'paragraph')
+                new_plain = normalize_mdx_to_plain(new_first, 'paragraph')
+                patches.append({
+                    'xhtml_xpath': f'{parent_xpath}/li[{li_index}]/p[1]',
+                    'old_plain_text': old_plain,
+                    'new_plain_text': new_plain,
+                })
+            # 중첩 하위 항목의 변경도 재귀적으로 처리
+            sub_patches = _build_sub_item_patches(
+                old_item, new_item, f'{parent_xpath}/li[{li_index}]')
+            patches.extend(sub_patches)
+        else:
+            # 비중첩 항목: 전체 항목 텍스트 패치
+            old_plain = normalize_mdx_to_plain(old_item, 'list')
+            new_plain = normalize_mdx_to_plain(new_item, 'list')
+            patches.append({
+                'xhtml_xpath': f'{parent_xpath}/li[{li_index}]/p[1]',
+                'old_plain_text': old_plain,
+                'new_plain_text': new_plain,
+            })
+
+    return patches
 
 
 def build_list_item_patches(
