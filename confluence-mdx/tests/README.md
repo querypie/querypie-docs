@@ -53,6 +53,16 @@ cd confluence-mdx/tests
 make test-one TEST_ID=568918170
 ```
 
+### expected.mdx -> page.xhtml 동등성 검증
+
+`expected.mdx`로부터 XHTML fragment를 생성한 뒤 `page.xhtml`과 구조 차이를 비교합니다.
+비교는 `bin/xhtml_beautify_diff.py` 정규화 규칙을 사용합니다.
+
+```bash
+cd confluence-mdx
+./bin/mdx_to_storage_xhtml_verify_cli.py --testcases-dir tests/testcases --show-diff-limit 3
+```
+
 ### 출력 파일 정리
 
 ```bash
