@@ -61,7 +61,7 @@ ______
 **Bug Fix**
 
 * QCP-173 [Access Control] renew한 권한이 하루 지나면 다시 deactivated 되는 이슈 해결
-* QCP-50 [Access Control] 권한 재부여시 발생하는 duplicate key 오류 해결
+* QCP-50 [Access Control] 권한 재부여 시 발생하는 duplicate key 오류 해결
 * QCP-138 [Agent] 윈도우즈 1709 이하 버전에서 에이전트 실행 오류 해결
 * QCP-285 [Agent] ODBC Client 접속 시 프로세스를 찾을 수 없는 문제 해결
 * QCP-238 [Authentication] SwivelSecure 연동 시 사용자 추가가 되지 않는 이슈 해결
@@ -80,7 +80,7 @@ ______
 
 **Bug Fix**
 
-* [User] 사용자 그룹의 커넥션 권한이 Deactived 상태인 경우에서 발생하는 오류 수정
+* [User] 사용자 그룹의 커넥션 권한이 Deactivated 상태인 경우에서 발생하는 오류 수정
 ______
 
 ### QueryPie 9.9.3 Release
@@ -109,7 +109,7 @@ ______
 * [Alert] HTTP Channel 응답 결과 NULL 저장 관련 오류 개선
 * [Connection] 삭제된 사용자 User not found 오류 관련 데이터 처리 로직 개선
 * [Policy] 마스킹 적용된 테이블에서 Server sent unknown charsetnr 오류 해결
-* [External API] 업데이트 직후 alert external api 가 정상 동작하지 않는 이슈 해결
+* [External API] 업데이트 직후 alert external api가 정상 동작하지 않는 이슈 해결
 * [MySQL] mysqlbinlog 명령어 사용 시 빈로그 추출이 되지 않고 응답 대기가 지속되는 이슈 해결
 * [PostgreSQL] Proxy 접속 시 INSERT 관련 오류 수정
 * [Migration] Query Audit 로그의 실행시간/생성시간 차이로 인한 서버 메모리 관련 이슈 해결
@@ -138,7 +138,7 @@ ______
 * [Privilege Type] 중복된 Privilege Name 사용 못하도록 변경
 * [Agent] 업데이트 실패 시, 앱 종료 현상 수정 및 가이드 메시지 개선
 * [MongoDB] 접속 시 Password 미입력 오류 메시지 개선
-* [MySQL] 접속 실패시 에러 메시지 개선
+* [MySQL] 접속 실패 시 에러 메시지 개선
 * [Audit & Log] 메뉴 내 검색 기본 값 Name으로 개선
 
 **Bug Fix**
@@ -172,7 +172,7 @@ ______
 * Index Range Scan 관련 인덱스를 못찾는 경우 테이블 데이터 수정 기능 비활성화
 * 클러스터 동기화 기능에서 Security Group 동기화해오지 않도록 처리
 * Network Zone 메뉴 컬럼 조정 (Cloud Provider 항목 제거)
-* DocumentDB AWS 동기화시 TLS 설정도 함께 유지하도록 처리
+* DocumentDB AWS 동기화 시 TLS 설정도 함께 유지하도록 처리
 * 동기화된 Oracle 커넥션에서 listener type 변경가능하도록 수정
 * 사용자 개별 SQL History 삭제 처리 기준 일자 적용 관련 가이드 툴팁 추가
 * Export 시, 데이터 사이즈가 한 셀의 최대크기를 벗어나는 경우 처리 개선

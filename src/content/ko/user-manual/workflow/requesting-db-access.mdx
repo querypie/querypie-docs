@@ -86,7 +86,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
     *  **Privilege Type**  : 특정 DB 커넥션에 요청할 Privilege Type을 지정하면 그 값이 표시됩니다. 
     *  **Current Privilege**  : 해당 커넥션의 현재 권한을 표시합니다. 현재 접근 권한이 없는 경우 비어있습니다.
     *  **Expiration Date**  : 현재 해당 커넥션에 부여되어 있는 권한의 만료일자를 표시합니다.
-* 접근 권한을 요청할 DB 커넥션을 체크박스로 선택 후 아래 두가지 방법으로 Privilege Type을 선택할 수 있습니다.
+* 접근 권한을 요청할 DB 커넥션을 체크박스로 선택 후 아래 두 가지 방법으로 Privilege Type을 선택할 수 있습니다.
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-db-access/screenshot-20240801-191054.png" alt="드롭다운을 통해 커넥션 별로 지정" width="362" />
 <figcaption>
@@ -112,7 +112,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
 아래의 내용은 공통된 부분은 생략하고 다른 부분 위주로 설명했습니다.
 </Callout>
 
-1. Submit Request 버튼을 누르고 메뉴에서 “DB Access Request (Schema Level)을 선택합니다.
+1. Submit Request 버튼을 누르고 메뉴에서 "DB Access Request (Schema Level)"을 선택합니다.
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-120432.png" alt="image-20251218-120432.png" width="736" />
   </figure>
@@ -124,7 +124,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-121011.png" alt="image-20251218-121011.png" width="736" />
   </figure>
-4. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 이 항목을 지울수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 불가피한 경우가 아니라면 이 항목을 제거하지 않습니다.<br/>`Add Item` 버튼을 누릅니다.<br/>
+4. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 이 항목을 지울 수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 불가피한 경우가 아니라면 이 항목을 제거하지 않습니다.<br/>`Add Item` 버튼을 누릅니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-121402.png" alt="image-20251218-121402.png" width="736" />
   </figure>
@@ -135,7 +135,7 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
     * Oracle 예시 : ORCLDB.TESTUSER
     * PostgreSQL 예시 : testdb.test_schema
     * MySQL 예시 : sakila<br/>
-6. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) Host Level privilege에 할당이 필요한 privilege가 없다면 관리자에게 해당 커넥션에 대해 특정 privilege가 있는 privilege type을 생성해달라고 요청해야 합니다.<br/>
+6. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 privilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) Host Level privilege에 할당이 필요한 privilege가 없다면 관리자에게 해당 커넥션에 대해 특정 privilege가 있는 privilege type을 생성해달라고 요청해야 합니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-122450.png" alt="image-20251218-122450.png" width="736" />
   </figure>
@@ -143,4 +143,4 @@ User &gt; Workflow &gt; Submit Request &gt; DB Access Request &gt; Request Summa
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/workflow/requesting-db-access/image-20251218-122702.png" alt="image-20251218-122702.png" width="736" />
   </figure>
-8. `OK` 버튼을 누르고 양식의 나머지 부분을 입력한뒤 `Submit` 버튼을 눌러 요청을 마무리합니다.
+8. `OK` 버튼을 누르고 양식의 나머지 부분을 입력한 뒤 `Submit` 버튼을 눌러 요청을 마무리합니다.

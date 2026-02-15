@@ -13,7 +13,7 @@ QueryPie Multi Agent는 여러 개의 QueryPie Host를 동시에 사용할 수 �
 
 Agent UI에서는 특정 Host에서 사용 가능한 리소스들을 확인할 수 있습니다.
 
-Agent 설치 및 Host 별 로그인 수행만으로 추가 설정 없이 둘 이상의 QueryPie Proxy를 통한 리소스 접속이 가능합니다.
+Agent 설치 및 Host별 로그인 수행만으로 추가 설정 없이 둘 이상의 QueryPie Proxy를 통한 리소스 접속이 가능합니다.
 
 <Callout type="info">
 **지원 버전**
@@ -77,7 +77,7 @@ QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
 
 #### 에이전트로 데이터베이스 접속하기
 
-1. Database 탭에서 선택된 QueryPie Host 에 대해 권한이 부여되어 있고 Proxy 사용이 가능한 Database Connection 목록을 확인할 수 있습니다. <br/> 
+1. Database 탭에서 선택된 QueryPie Host에 대해 권한이 부여되어 있고 Proxy 사용이 가능한 Database Connection 목록을 확인할 수 있습니다. <br/> 
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/multi-agent/screenshot-20250307-105512.png" alt="Multi-Agent &gt; Databases" width="580" />
   <figcaption>
@@ -93,11 +93,11 @@ QueryPie Host 버전이 `10.2.8` 이상 버전인 경우 지원 범위:
   </figure>
     1. Connection Information: Proxy 접속을 위한 정보를 확인할 수 있습니다.
     2. Open Connection With <Badge color="green">10.2.6~</Badge>: 3rd Party 툴로 커넥션에 접속할 수 있습니다.
-        1. DBeaver: DBeaver 를 열고 커넥션의 정보를 삽입해줍니다.
-            * 최초 1회의 DBeaver 경로 인식 과정이 필요합니다. DBeaver가 실행 중인 상태에서 본 기능을 실행하시기를 권장합니다.
+        1. DBeaver: DBeaver를 열고 커넥션의 정보를 삽입합니다.
+            * 최초 1회의 DBeaver 경로 인식 과정이 필요합니다. DBeaver가 실행 중인 상태에서 이 기능을 실행하기를 권장합니다.
         2. DataGrip: DataGrip에 붙여넣을 수 있는 커넥션 정보가 복사됩니다.
-        3. SQLGate for Oracle (Windows만 지원): SQLGate for Oracle 을 열고 커넥션 정보를 삽입해줍니다.
-    3. Copy as JDBC URL <Badge color="green">10.2.6~</Badge>: 선택한 커넥션의 JDBC URL을 복사해줍니다.
+        3. SQLGate for Oracle (Windows만 지원): SQLGate for Oracle을 열고 커넥션 정보를 삽입합니다.
+    3. Copy as JDBC URL <Badge color="green">10.2.6~</Badge>: 선택한 커넥션의 JDBC URL을 복사합니다.
 
 <Callout type="info">
 Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전에서 지원합니다.
@@ -105,7 +105,7 @@ Open Connection With, Copy as JDBC URL 기능은 10.2.6 또는 그 이후 버전
 
 #### 에이전트에서 3rd Party Database Tool 설정 관리하기
 
-Settings &gt; Databases 에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
+Settings &gt; Databases에서 3rd Party 툴 관련 설정을 관리할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/multi-agent/screenshot-20250413-235252.png" alt="Multi-Agent &gt; Settings &gt; Databases" width="580" />
@@ -117,16 +117,16 @@ Multi-Agent &gt; Settings &gt; Databases
 
 * Database Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
     * Auto Detected : Open Connection With 로 툴을 선택할 때마다 툴의 경로를 자동으로 찾습니다.
-        * 툴이 제대로 열리지 않는 경우 Manual Configuration 으로 경로를 수동 지정하시기를 바랍니다.
+        * 툴이 제대로 열리지 않는 경우 Manual Configuration으로 경로를 수동 지정하기 바랍니다.
     * Manual Configuration : 수동으로 툴이 설치된 경로를 지정합니다.
-    * Do not user the tool : 툴 사용을 비활성화 합니다. 커넥션 목록의 컨텍스트 메뉴에서 툴이 숨겨집니다.
+    * Do not use the tool : 툴 사용을 비활성화합니다. 커넥션 목록의 컨텍스트 메뉴에서 툴이 숨겨집니다.
 * DataGrip Connection Guide: DataGrip으로 커넥션을 열 때 노출되는 가이드 모달을 계속 볼지 설정합니다.
 
 #### 에이전트에서 default privilege 선택하기
 
 쿼리파이 DB 접근제어에서 한 사용자가 두 개 이상의 privilege를 부여받을 수 있습니다.
 특정 커넥션에 접근권한을 부여받은 사용자가 여러 그룹에 포함되어 있고 그룹에 다른 접근 권한을 부여한 경우 이 사용자는 여러 개의 privilege가 할당될 수 있습니다.
-이 때 proxy를 통해 접속할 때 사용할 Privilege를 agent 화면에서 선택할 수 있습니다.
+이때 proxy를 통해 접속할 때 사용할 Privilege를 agent 화면에서 선택할 수 있습니다.
 (10.3.0 부터 지원)
 
 다중 privilege를 부여받은 후 사용자가 특정 privilege를 default로 설정하지 않으면 접속할 수 없기 때문에 만약 default privilege가 설정되어 있지 않은 경우 아래 그림과 같은 경고 아이콘이 표시됩니다.<br/>
@@ -147,7 +147,7 @@ Multi-Agent &gt; Settings &gt; Databases
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/multi-agent/image-20250513-043056.png" alt="image-20250513-043056.png" width="580" />
   </figure>
-4. Previlege Name 의 항목중 하나를 선택하고 저장합니다.<br/>
+4. Privilege Name의 항목 중 하나를 선택하고 저장합니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/multi-agent/image-20250513-044616.png" alt="image-20250513-044616.png" width="579" />
   </figure>
@@ -175,7 +175,7 @@ Proxy를 통해 kubectl 명령을 사용하려면  **최초 1회의 Kubeconfig �
 
 에이전트 우상단의 톱니바퀴 버튼을 클릭하여 Setting 페이지로 진입, Kubernetes 탭을 선택하면 Kubeconfig File 저장 경로를 관리하고, Kubeconfig 설정 커맨드를 복사할 수 있습니다.
 
-이후 사용하시는 터미널에서 복사한 커맨드를 붙여넣고 실행합니다.
+이후 사용하는 터미널에서 복사한 커맨드를 붙여넣고 실행합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/multi-agent/screenshot-20250217-113712.png" alt="Multi-Agent &gt; Setting &gt; Kubernetes" width="580" />
@@ -203,7 +203,7 @@ Multi-Agent &gt; Setting &gt; Kubernetes
   </figcaption>
   </figure>
 3. 필요 시 Account 정보를 입력하고 `Open` 버튼을 누릅니다.
-    1. Account에서 카테고리가 QueryPie - Custom Account인 계정을 선택하면 Custom Account 필드와와 Password 필드가 표기되며, 사전에 등록되지 않은 계정 정보를 직접 입력하여 Linux 및 Windows 서버에 접속할 수 있습니다.
+    1. Account에서 카테고리가 QueryPie - Custom Account인 계정을 선택하면 Custom Account 필드와 Password 필드가 표기되며, 사전에 등록되지 않은 계정 정보를 직접 입력하여 Linux 및 Windows 서버에 접속할 수 있습니다.
         1. 단, Server Agent가 없는 Windows Server에 접속 시, Custom Account만 선택할 수 있으며, Custom Account 입력 필드와 Password 입력 필드는 표기되지 않습니다. Server Agent가 있는 Windows Server에서는 사용할 수 없습니다. 
 4. 선택한 터미널 툴로 서버에 접속할 수 있습니다.
   <figure data-layout="center" data-align="center">
@@ -265,7 +265,7 @@ Multi-Agent &gt; Servers
 
 #### 에이전트에서 3rd Party Terminal Tool 설정 관리하기
 
-Setting &gt; Servers 에서 터미널 툴 관련 설정을 관리할 수 있습니다.
+Setting &gt; Servers에서 터미널 툴 관련 설정을 관리할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/multi-agent/screenshot-20250413-235301.png" alt="Multi-Agent &gt; Setting &gt; Servers" width="580" />
@@ -276,13 +276,13 @@ Multi-Agent &gt; Setting &gt; Servers
 
 * Terminal Tool Path: 지원하는 3rd Party 툴의 경로를 설정할 수 있습니다.
     * Auto Detected : Open Connection With 로 툴을 선택할 때마다 툴의 경로를 자동으로 찾습니다.
-        * 툴이 제대로 열리지 않는 경우 Manual Configuration 으로 경로를 수동 지정하시기를 바랍니다.
+        * 툴이 제대로 열리지 않는 경우 Manual Configuration으로 경로를 수동 지정하기 바랍니다.
     * Manual Configuration : 수동으로 툴이 설치된 경로를 지정합니다.
-    * Do not user the tool : 툴 사용을 비활성화 합니다. 서버 목록의 컨텍스트 메뉴에서 툴이 숨겨집니다.
+    * Do not use the tool : 툴 사용을 비활성화합니다. 서버 목록의 컨텍스트 메뉴에서 툴이 숨겨집니다.
 
 ### 에이전트에서 둘 이상의 Host 사용하기
 
-1. Settings &gt; Hosts 에서 `+ Add New Host` 버튼을 클릭한 뒤 새로운 Host의 도메인을 입력하고 저장합니다. <br/> 
+1. Settings &gt; Hosts에서 `+ Add New Host` 버튼을 클릭한 뒤 새로운 Host의 도메인을 입력하고 저장합니다. <br/> 
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/multi-agent/screenshot-20250413-235030.png" alt="Multi-Agent &gt; Setting &gt; General &gt; Add New Host" width="580" />
   <figcaption>
@@ -349,7 +349,7 @@ Application Menu (MacOS)
 
 ### Multi Agent 로그 추출하기
 
-Multi-agent 사용 중 문제 발생 시 다음의 절차를 따라서 로그를 추출해주세요.
+Multi-agent 사용 중 문제 발생 시 다음 절차를 따라 로그를 추출하세요.
 
 #### GUI
 
@@ -379,7 +379,7 @@ QPMA_TRACE=1 open -a QueryPieMultiAgent
 ```
 
 1. 문제를 재현합니다.
-2. 아래의 폴더를 압축하여 전달해주세요.
+2. 아래 폴더를 압축하여 전달하세요.
 ```
 ~/.querypie-multi-agent
 ```
@@ -392,7 +392,7 @@ set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
 ```
 
 1. 문제를 재현합니다.
-2. 아래의 폴더를 압축하여 전달해주세요.
+2. 아래 폴더를 압축하여 전달하세요.
 ```
 %USERPROFILE%\.querypie-multi-agent
 ```
@@ -400,7 +400,7 @@ set QPMA_TRACE=1 "%ProgramFiles%\QueryPie Multi Agent\QueryPieMultiAgent.exe"
 
 ### 관리자를 위한 제약사항 문서
 
-관리자를 위한 Multi Agent 제약사항 문서는 별도의 관리자 가이드 문서를 참고해 주세요.
+관리자를 위한 Multi Agent 제약사항 문서는 별도의 관리자 가이드 문서를 참고하세요.
 
 [Multi Agent 제약사항](../administrator-manual/multi-agent-limitations)
 
