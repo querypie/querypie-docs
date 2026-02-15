@@ -60,7 +60,7 @@ make test-one TEST_ID=568918170
 
 ```bash
 cd confluence-mdx
-python3 bin/mdx_to_storage_xhtml_verify_cli.py --testcases-dir tests/testcases --show-diff-limit 3
+./bin/mdx_to_storage_xhtml_verify_cli.py --testcases-dir tests/testcases --show-diff-limit 3
 ```
 
 ### 출력 파일 정리
