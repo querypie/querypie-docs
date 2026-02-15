@@ -60,7 +60,7 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
 
 ### 워크플로우 사유입력 글자 수 제한 설정
 
-워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및 최대 글자 수를 설정하는 기능입니다.
+워크플로우의 요청 사유(Reason for Request)와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및 최대 글자 수를 설정하는 기능입니다.
 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
 
 * 관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할 수 있습니다.
@@ -77,7 +77,7 @@ Activate Review Step to collaborate with others 토글로 활성화합니다.
 
 * Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.
 * 토글을 켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.
-* 토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
+* 토글을 끄면 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)
 
 ### 사후 승인 허용
 
@@ -113,7 +113,7 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
   </figure>
     * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
 * Attribute 값 부재 시 알림
-    * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
+    * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
         * 에러 메시지 예시: 
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/general/company-management/general/image-20250508-022114.png" alt="image-20250508-022114.png" width="688" />
@@ -142,12 +142,12 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 ### 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
 
 <Callout type="info">
-대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.<br/>11.4.0 부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다.
-해당 로그는 External API ( /api/external/v2/workflows/approval-delegations/logs) 를 사용해서 조회 할 수 있습니다.
+대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.<br/>11.4.0부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다.
+이 로그는 External API(/api/external/v2/workflows/approval-delegations/logs)를 사용해서 조회할 수 있습니다.
 </Callout>
 
-승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는 옵션입니다.
-만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
+승인자 역할을 일정 기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화할 수 있는 옵션입니다.
+만약 비활성화할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/general/image-20250926-112444.png" alt="Allow Delegated Approval 스위치" width="253" />
@@ -225,7 +225,7 @@ Select Request Types Allowed for Users 토글을 활성화합니다.
 
 ### DB access 요청 권한 별 결재선 지정 기능
 
-Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval Rule)을 특정할 수 있도록 하려면 “Use DB Privilege Type Based Approval” 토글을 활성화합니다.
+Workflow를 통해 DB Access Request를 상신할 경우 요청하는 권한에 따라 결재선(Approval Rule)을 특정할 수 있도록 하려면 "Use DB Privilege Type Based Approval" 토글을 활성화합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/general/image-20250822-111454.png" alt="Use DB Privilege Type Based Approval" width="507" />
@@ -234,7 +234,7 @@ Use DB Privilege Type Based Approval
 </figcaption>
 </figure>
 
-`+Routing Rule` 버튼을 누르면 privilege 에 대한 조건을 지정하여 결재선에 대한 라우팅을 지정할 수 있습니다.
+`+Routing Rule` 버튼을 누르면 privilege에 대한 조건을 지정하여 결재선에 대한 라우팅을 지정할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/general/image-20250822-112026.png" alt="image-20250822-112026.png" width="432" />
@@ -242,9 +242,9 @@ Use DB Privilege Type Based Approval
 
 *  **Routing Rule Name**  : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.
 *  **Condition**  : Privilege에 대한 조건을 지정합니다.
-    *  **All Match**  : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.
-    *  **Contains** : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.
-*   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.
+    *  **All Match**  : 사용자가 DB Access Request를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.
+    *  **Contains** : 사용자가 DB Access Request를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함했을 때 동작하는 조건입니다.
+*   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의되어 있는 Privilege 유형 중 하나를 선택합니다.
 *  **Approval Rule**  : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.
 
 #### Routing Rule 지정 예시
@@ -260,10 +260,10 @@ Use DB Privilege Type Based Approval
 
 ### SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션
 
-Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 “Attach Explain Results” 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.
+Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 "Attach Explain Results" 기능을 활성 또는 비활성화할 수 있도록 옵션을 제공합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/general/image-20250825-002423.png" alt="image-20250825-002423.png" width="425" />
 </figure>
 
-관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 “Attach Explain Results” 는 Off로 되어 있으므로 사용자가 필요시 명시적으로 “Attatch Explain Results” 토글 스위치를 On으로 변경해야 실행계획 결과가 첨부됩니다.
+관리자가 이 옵션을 활성화하더라도 Workflow의 SQL Request 양식에서 "Attach Explain Results"는 Off로 되어 있으므로 사용자가 필요 시 명시적으로 "Attach Explain Results" 토글 스위치를 On으로 변경해야 실행계획 결과가 첨부됩니다.

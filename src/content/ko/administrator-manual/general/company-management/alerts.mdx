@@ -183,8 +183,8 @@ K8s API Request
 </table>
 
 <Callout type="info">
-11.1.0 부터 New DAC Policy Managment 기능이 활성화 된 경우 아래와 같은 알림 유형을 사용할 수 있습니다.
-* New Request - DB Policy Exception Request<br/>DB Policy Exception Request 는 Unmasking과 Restriced Data Access 두가지 유형이 있으나 구분해서 알림 생성을 할 수는 없습니다.
+11.1.0부터 New DAC Policy Management 기능이 활성화된 경우 아래와 같은 알림 유형을 사용할 수 있습니다.
+* New Request - DB Policy Exception Request<br/>DB Policy Exception Request는 Unmasking과 Restricted Data Access 두 가지 유형이 있으나 구분해서 알림을 생성할 수는 없습니다.
 * Data Access
     * Column Data Masking : 신 정책 관리에서 생성한 Column Data Masking 정책에 걸려 제한된 마스킹 된 상태로 조회된 이벤트 
     * Table Access Restriction : 신 정책 관리에서 생성한 Table Access Restriction 정책에 걸려 특정 테이블 접근이 제한된 이벤트 
@@ -241,8 +241,8 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 
 **11.1.0 Request Type 변경 사항**
 
-* Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있다면 Alert의 Request Type에 DB Policy Exception Request 를 사용할 수 있습니다.
-* DB Policy Exception Request 는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알람이 발송되도록 합니다. 
+* Databases &gt; General &gt; Configurations에서 New DAC Policy Management 기능이 활성화되어 있다면 Alert의 Request Type에 DB Policy Exception Request를 사용할 수 있습니다.
+* DB Policy Exception Request는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알림이 발송되도록 합니다. 
 
 **11.2.0 이메일 알림 템플릿 변경 사항**
 
@@ -386,12 +386,12 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
     * Failure : 서버 접속 실패 시 알림 발송
 
 <Callout type="info">
-11.3.0 에서 Failure의 하위 옵션으로 Set trigger threshold on failed attempt 옵션이 추가 되어 실패 횟수의 임계값으로 alert 를 발생시킬 수 있도록 변경되었습니다.
+11.3.0에서 Failure의 하위 옵션으로 Set trigger threshold on failed attempt 옵션이 추가되어 실패 횟수의 임계값으로 alert를 발생시킬 수 있도록 변경되었습니다.
 
-* Action Count : 이벤트가 발생한 회수입니다. 1 이상의 값을 입력할 수 있습니다.
+* Action Count : 이벤트가 발생한 횟수입니다. 1 이상의 값을 입력할 수 있습니다.
 * Time Interval : 이벤트 발생하는 시간 범위입니다.
 
-예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생 시 알람을 발송하게 됩니다.
+예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생 시 알림을 발송하게 됩니다.
 
 * Action Count : 3
 * Specific Time Internal (Minutes) : 5
@@ -465,7 +465,7 @@ SFTP를 통한 파일 전송 실행 알림
 #### Data Access<Badge color="grey">11.1.0</Badge>
 
 <Callout type="info">
-Databases &gt; General &gt; Configurations 에서 New DAC Policy Management 기능이 활성화 되어있고 관련 정책들이 존재해야 사용할 수 있습니다.
+Databases &gt; General &gt; Configurations에서 New DAC Policy Management 기능이 활성화되어 있고 관련 정책들이 존재해야 사용할 수 있습니다.
 </Callout>
 
 Data Access 알림은 Column Data Masking, Table Access Restriction, Column Access Restriction, Sensitive Data Access Monitoring 의 네가지  **policy type** 을 선택할 수 있습니다.<br/>
@@ -475,26 +475,26 @@ Data Access 알림은 Column Data Masking, Table Access Restriction, Column Acce
 </figure>
 
 *  **Column Data Masking** 
-    *  **Policy** : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
-    *  **Rows**  : 알람 발생 기준 행 수를 지정합니다.
-    *  **Time Interval** : 알람 발생 기준 시간 (분 단위) 입니다. 
+    *  **Policy** : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
+    *  **Rows**  : 알림 발생 기준 행 수를 지정합니다.
+    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다. 
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
 *  **Table Access Restriction** 
-    *  **Policy** : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
-    *  **Unauthorized Access Attempt Count** : 알람 발생 조건이 되는 접근 회수를 지정합니다. 만약 Time interval 값이 0 이면 시간 조건 없이 단건의 이벤트에 대해 알람이 발생하므로 Unauthorized Access Attempt Count는 1로 고정됩니다. 최소 값은 1, 최대값은 2147483647 입니다.
-    *  **Time Interval**  : 알람 발생 기준 시간 (분 단위) 입니다. 
+    *  **Policy** : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
+    *  **Unauthorized Access Attempt Count** : 알림 발생 조건이 되는 접근 횟수를 지정합니다. 만약 Time interval 값이 0이면 시간 조건 없이 단건의 이벤트에 대해 알림이 발생하므로 Unauthorized Access Attempt Count는 1로 고정됩니다. 최솟값은 1, 최댓값은 2147483647입니다.
+    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다. 
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
 *  **Column Access Restriction** 
-    *  **Rows** : 알람 발생 기준 행 수를 지정합니다.
-    *  **Time Interval**  : 알람 발생 기준 시간 (분 단위) 입니다. 
+    *  **Rows** : 알림 발생 기준 행 수를 지정합니다.
+    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다. 
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
 *  **Sensitive Data Access Monitoring** 
-    *  **Policy**  : 알람 발생 조건이 될 대상 정책 이름을 지정합니다.
-    *  **Rows**  : 알람 발생 기준 행 수를 지정합니다.
-    *  **Time Interval** : 알람 발생 기준 시간 (분 단위) 입니다. 
+    *  **Policy**  : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
+    *  **Rows**  : 알림 발생 기준 행 수를 지정합니다.
+    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다. 
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다
 

@@ -9,10 +9,10 @@ import { Callout } from 'nextra/components'
 
 ## 개요
 
-QUERYPIE_WEB_URL은 서비스 접근, 인증 연동, 데이터 다운로드, 외부 연동 및 Proxy 설정 등 다양한 경로에서 사용되어 필수로 설정이 필요합니다.
+QUERYPIE_WEB_URL은 서비스 접근, 인증 연동, 데이터 다운로드, 외부 연동 및 Proxy 설정 등 다양한 경로에서 사용되므로 필수로 설정해야 합니다.
 
 <Callout type="important">
-**QueryPie 버전 10.2.8 부터 해당 환경변수는 사용되지 않습니다. General 메뉴의 Web Base URL로 대체됩니다.**
+**QueryPie 버전 10.2.8부터 이 환경변수는 사용되지 않습니다. General 메뉴의 Web Base URL로 대체됩니다.**
 <figure data-layout="center" data-align="center">
 <img src="/installation/container-environment-variables/querypieweburl/screenshot-20250312-112533.png" alt="screenshot-20250312-112533.png" width="760" />
 </figure>
@@ -33,7 +33,7 @@ QUERYPIE_WEB_URL은 서비스 접근, 인증 연동, 데이터 다운로드, 외
 
 ## Q&A
 
-**Q. 내부망에서만 사용하는 경우에도 도메인 설정이 필요한가요?** <br/> **A.**  IP를 사용하셔도 무방합니다.
+**Q. 내부망에서만 사용하는 경우에도 도메인 설정이 필요한가요?** <br/> **A.**  IP를 사용해도 무방합니다.
 다만, 사용자 PC에서 접근할 수 있는 주소(IP 또는 도메인)여야 합니다.
 사용자 PC 에서 접근할 수 없는 Private IP Address 를 사용하지 않아야 합니다.
 
@@ -47,6 +47,6 @@ Okta에서는 Base URL 입력 시 반드시 https:// 프로토콜을 포함한 U
 *Is not an HTTPS URL. Valid example:* [https://www.okta.com](https://www.okta.com)
 </Callout>
 
-따라서, 도메인을 포함한 HTTPS URL을 사용하여 설정해 주시기 바랍니다.
+따라서, 도메인을 포함한 HTTPS URL을 사용하여 설정해 주세요.
 
 

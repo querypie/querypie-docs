@@ -17,7 +17,7 @@ import { Callout } from 'nextra/components'
 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동 후, 인증 Type 항목에서  **LDAP** 을 선택하면 LDAP 연동을 위한 설정 입력이 가능합니다.
 
 <Callout type="important">
-**주의:** Authentication 타입을 선택하고 사용자를 동기화 한 후에는, 인증 타입을 변경하는 것이 불가능합니다. <br/>인증 방식 변경을 위해서는 Customer Portal 을 통해 문의 부탁드립니다.
+**주의:** Authentication 타입을 선택하고 사용자를 동기화한 후에는, 인증 타입을 변경하는 것이 불가능합니다. <br/>인증 방식 변경을 위해서는 Customer Portal을 통해 문의 부탁드립니다.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -133,12 +133,12 @@ LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use
     * Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 `Synchronize` 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.
     * Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression 필드가 활성화됩니다.
 *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
-    * 동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
+    * 동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 이 옵션을 활성화하기 바랍니다.
 *  **Use an Attribute for Privilege Revoke** : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
     * 특정 LDAP Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요.
     * LDAP Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
 *  **Enable Attribute Synchronization :**  LDAP 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다.
-    * LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다.
+    * LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 이 옵션을 활성화하기 바랍니다.
     * 옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.
     * 단, 해당 기능은 Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
 
@@ -204,7 +204,8 @@ QueryPie Attribute
 필수
 </td>
 <td>
-매핑 대상이 될 QueryPie Attribute를 선택합니다.목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.
+매핑 대상이 될 QueryPie Attribute를 선택합니다.
+목록에는 Profile Editor에서 Inherit from profile source로 설정된 항목만 노출되며, Display Name과 Variable Name이 함께 표시됩니다.
 * 예: `Manager ID (managerId)`, <br/>`Mobile Phone (mobilePhone)` 등
 </td>
 </tr>
@@ -228,7 +229,7 @@ QueryPie Attribute
 *  **Anonymous :** 익명 사용자의 인증 가능 여부를 설정합니다. (True 또는 False)
 *  **Dry Run :**  `Dry Run` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행할 경우, 그 결과를 미리 확인할 수 있습니다. (현재 입력된 정보의 저장 여부와 무관)
 * `Save Changes` 를 클릭하면 입력된 설정 정보를 QueryPie에 저장합니다.
-* `Synchronize` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행합니다. (현재 입력한 설정 정보를 저장한 후에만 활성화 됨)
+* `Synchronize` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행합니다. (현재 입력한 설정 정보를 저장한 후에만 활성화됨)
     * <img src="/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png" alt="image-20241209-124345.png" />버튼을 클릭하면 직전의 동기화 이력을 조회할 수 있습니다. 
     * 개별 동기화 중 실패 건이 있는 경우, Progress Bar 색상이 노란색으로 표시됩니다.
     * 실패 로그는 ❌ 아이콘으로 표시됩니다. 로그를 클릭하면 상세한 에러메시지를 확인할 수 있습니다.

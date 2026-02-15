@@ -9,8 +9,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie ACP (Access Control Platform) Community Edition 11.5.0에 Remote MCP (Model Context Protocol) Server 기능이 추가 되었습니다.
-이제 다양한 AI 코딩 어시스턴트에서 LLM을 사용해서 다양한 작업을 QueryPie ACP의 접근통제하에 안전하게 수행할 수 있습니다.
+QueryPie ACP (Access Control Platform) Community Edition 11.5.0에 Remote MCP (Model Context Protocol) Server 기능이 추가되었습니다.
+이제 다양한 AI 코딩 어시스턴트에서 LLM을 사용하여 여러 작업을 QueryPie ACP의 접근 통제하에 안전하게 수행할 수 있습니다.
 
 <Callout type="info">
 MCP 관련 참고 자료
@@ -36,8 +36,8 @@ MCP 관련 참고 자료
 
 #### MCP Server URL
 
-AI 코딩 어시스턴트를 설정하기 위해, MCP Server 역할을 수행하는 QueryPie ACP 의 URL 을 입력하여야 합니다.
-이 MCP Server URL 을 설정하는 것은 여러 AI 코딩 어시스턴트에서 공통적으로 수행하여야 합니다.
+AI 코딩 어시스턴트를 설정하기 위해, MCP Server 역할을 수행하는 QueryPie ACP의 URL을 입력해야 합니다.
+이 MCP Server URL을 설정하는 것은 여러 AI 코딩 어시스턴트에서 공통적으로 수행해야 합니다.
 
 `{QueryPie_URL}/api/mcp`
 
@@ -104,7 +104,7 @@ claude mcp list 명령 수행 결과
 </figcaption>
 </figure>
 
-질의를 통해 작업을 수행하여 봅니다.
+질의를 통해 작업을 수행해 봅니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251214-232033.png" alt="질의 예시" width="760" />
@@ -113,7 +113,7 @@ claude mcp list 명령 수행 결과
 </figcaption>
 </figure>
 
-사용가능한 툴 확인이 되면 진행에 대한 질의가 출력됩니다.
+사용 가능한 툴 확인이 되면 진행에 대한 질의가 출력됩니다.
 ‘yes’ 또는 ‘yes, and don’t ask again for querypie -…' 를 선택합니다.
 
 <figure data-layout="center" data-align="center">
@@ -124,7 +124,7 @@ claude mcp list 명령 수행 결과
 </figure>
 
 
-인증관리 : claude code에서 `/mcp` 명령을 실행하여 인증상태를 관리할 수 있습니다.
+인증 관리 : claude code에서 `/mcp` 명령을 실행하여 인증 상태를 관리할 수 있습니다.
 인증 토큰은 자동으로 갱신됩니다.
 “Clear authentication” 옵션으로 인증을 해제할 수 있습니다.
 ______
@@ -195,7 +195,7 @@ ______
 
 ##### 3. MCP 연결을 확인합니다.
 
-Cursor Settings에서 MCP 툴이 올바르게 연동 되는지 확인합니다.
+Cursor Settings에서 MCP 툴이 올바르게 연동되는지 확인합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251212-012243.png" alt="image-20251212-012243.png" width="736" />
@@ -226,7 +226,7 @@ ______
 
 ##### 3. MCP 연결을 확인합니다.
 
-Windsurf Agents 화면에서 MCP 툴이 올바르게 연동 되는지 확인합니다.
+Windsurf Agents 화면에서 MCP 툴이 올바르게 연동되는지 확인합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/installation/querypie-acp-community-edition/mcp-configuration-guide/image-20251212-012554.png" alt="image-20251212-012554.png" width="569" />
@@ -310,7 +310,7 @@ ______
 
 #### 권한 오류
 
-* 해당 Tool에 필요한 권한이 있는지 확인
+* 해당 Tool에 필요한 권한이 부여되어 있는지 확인
 * 역할이 올바르게 할당되었는지 확인
 * IP 허용 목록에 현재 IP가 포함되어 있는지 확인
 

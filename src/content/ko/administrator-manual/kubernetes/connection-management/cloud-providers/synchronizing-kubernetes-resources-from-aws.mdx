@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 ### Overview
 
 QueryPie에서는 쿠버네티스 클러스터 등록 및 관리를 위한 AWS 연동을 지원합니다.
-AWS 내의 리소스를 동기화하여 QueryPie에서 관리하는 클러스터로 등록하고, 사용자 및 그룹에 동기화 해온 클러스터에 대한 쿠버네티스 API 접근 권한을 부여하고 정책을 설정할 수 있습니다.
+AWS 내의 리소스를 동기화하여 QueryPie에서 관리하는 클러스터로 등록하고, 사용자 및 그룹에 동기화해 온 클러스터에 대한 쿠버네티스 API 접근 권한을 부여하고 정책을 설정할 수 있습니다.
 
 <Callout type="info">
 #### 사전 준비사항
@@ -31,7 +31,7 @@ AWS 내의 리소스를 동기화하여 QueryPie에서 관리하는 클러스터
 ### AWS EKS 인증 모드 수정하기
 
 QueryPie는 AWS EKS 쿠버네티스 클러스터 연결을 위해 동기화 시 EKS access entry API를 활용합니다.
-따라서, 클러스터 인증 모드가 ConfigMap으로만 설정되어 있다면 연결이 어려운 부분이 있어 원활한 동기화를 위해 AWS 콘솔에서 모드 변경을 사전에 작업해두시는 것을 권장드립니다.
+따라서, 클러스터 인증 모드가 ConfigMap으로만 설정되어 있다면 연결이 어려울 수 있으므로 원활한 동기화를 위해 AWS 콘솔에서 모드 변경을 사전에 작업해 두는 것을 권장합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240512-134234.png" alt="AWS Console &gt; EKS &gt; Clusters &gt; `{cluster}` &gt; Access &gt; Access configuration &gt; Manage access" width="760" />
@@ -63,14 +63,14 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
 3.  **Name**  항목에 해당 프로바이더를 구분할 수 있는 이름을 기입합니다.
-4.  **Cloud Provider**  항목에서 Amazon Web Services 를 선택합니다.
+4.  **Cloud Provider**  항목에서 Amazon Web Services를 선택합니다.
 5.  **Region**  항목에서 동기화하고자 하는 리소스의 리전을 선택합니다.
 6. 리소스를 동기화하기 위해 필요한  **Credential**  정보를 입력합니다. 
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png" alt="image-20240721-054206.png" width="510" />
   </figure>
     1.  **Default Credentials**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스에 IAM 역할을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다.
-    2.  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주시기 바랍니다.
+    2.  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당하시기 바랍니다.
 7.  **Search Filter** 를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다. 
     1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다. 
         1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter 
@@ -79,7 +79,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케줄링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
 9. (`Dry Run` 버튼을 클릭하여 동기화에 문제가 없을지 미리 확인할 수 있습니다.)
-10. `Save` 버튼을 클릭하여 Cloud Provider 를 저장합니다.
+10. `Save` 버튼을 클릭하여 Cloud Provider를 저장합니다.
 
 <Callout type="important">
 **Q. Save 버튼을 클릭했는데 “Already exists cloud provider.” 라는 오류가 표시됩니다.**
@@ -99,7 +99,7 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
 
 1. Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 등록한 Cloud Provider를 클릭하여 세부 정보 화면으로 들어갑니다.
-3. 우측 상단의 `Synchronize` 버튼을 클릭하면 AWS 에서 리소스를 동기화할 수 있습니다.
+3. 우측 상단의 `Synchronize` 버튼을 클릭하면 AWS에서 리소스를 동기화할 수 있습니다.
     1. 표기 문구에 대한 정의는 아래  **Dry Run/Synchronization Log 표기 문구** 를 참고하여 주시기 바랍니다. 
     2. 표시되는 Synchronization Log에서 동기화 진행 상황을 확인할 수 있고, Settings &gt; Systems &gt; Jobs 메뉴에서도 동기화 히스토리를 확인할 수 있습니다.
 4. Cloud Provider를 한번 등록하고 나면 Provider 일부 정보는 변경할 수 없습니다.
