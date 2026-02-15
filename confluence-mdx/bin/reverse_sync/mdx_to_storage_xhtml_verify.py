@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 import subprocess
+import tempfile
 from typing import Iterable
 
 from reverse_sync.mdx_block_parser import parse_mdx_blocks
@@ -96,6 +97,7 @@ def verify_testcase_dir(
     write_generated: bool = False,
     diff_engine: str = "internal",
     generated_filename: str = "generated.from.expected.xhtml",
+    generated_out_dir: Path | None = None,
 ) -> CaseVerification:
     """단일 테스트케이스 디렉토리를 검증한다."""
     expected_mdx_path = case_dir / "expected.mdx"
@@ -104,14 +106,22 @@ def verify_testcase_dir(
     page_xhtml = page_xhtml_path.read_text(encoding="utf-8")
     generated = mdx_to_storage_xhtml_fragment(expected_mdx)
 
-    generated_path = case_dir / generated_filename
-    if write_generated or diff_engine == "external":
-        generated_path.write_text(generated, encoding="utf-8")
-
     if diff_engine == "external":
-        passed, diff_report = verify_page_vs_generated_with_external_tool(
-            page_xhtml_path, generated_path
-        )
+        if write_generated:
+            target_dir = generated_out_dir or case_dir
+            target_dir.mkdir(parents=True, exist_ok=True)
+            generated_path = target_dir / generated_filename
+            generated_path.write_text(generated, encoding="utf-8")
+            passed, diff_report = verify_page_vs_generated_with_external_tool(
+                page_xhtml_path, generated_path
+            )
+        else:
+            with tempfile.TemporaryDirectory(prefix=f"mdx-xhtml-{case_dir.name}-") as td:
+                generated_path = Path(td) / generated_filename
+                generated_path.write_text(generated, encoding="utf-8")
+                passed, diff_report = verify_page_vs_generated_with_external_tool(
+                    page_xhtml_path, generated_path
+                )
     else:
         passed, _gen, diff_report = verify_expected_mdx_against_page_xhtml(
             expected_mdx, page_xhtml

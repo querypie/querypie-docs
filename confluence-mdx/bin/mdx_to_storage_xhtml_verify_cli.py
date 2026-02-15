@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -39,10 +40,20 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Write generated XHTML file for each testcase",
     )
     parser.add_argument(
+        "--generated-out-dir",
+        type=Path,
+        help="Directory to store generated XHTML when --write-generated is enabled",
+    )
+    parser.add_argument(
         "--diff-engine",
         choices=("internal", "external"),
         default="external",
         help="Diff engine: internal normalizer or external xhtml_beautify_diff.py",
+    )
+    parser.add_argument(
+        "--report-json",
+        type=Path,
+        help="Write verification summary report to a JSON file",
     )
     return parser
 
@@ -74,6 +85,11 @@ def main() -> int:
             case_dir,
             write_generated=args.write_generated,
             diff_engine=args.diff_engine,
+            generated_out_dir=(
+                args.generated_out_dir / case_dir.name
+                if args.generated_out_dir is not None
+                else None
+            ),
         )
         for case_dir in case_dirs
     ]
@@ -83,6 +99,22 @@ def main() -> int:
     print(
         f"[mdx->xhtml-verify] total={len(results)} passed={len(passed)} failed={len(failed)}"
     )
+
+    if args.report_json:
+        args.report_json.parent.mkdir(parents=True, exist_ok=True)
+        report = {
+            "total": len(results),
+            "passed": len(passed),
+            "failed": len(failed),
+            "failed_cases": [r.case_id for r in failed],
+            "diff_engine": args.diff_engine,
+            "write_generated": bool(args.write_generated),
+        }
+        args.report_json.write_text(
+            json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(f"Report written: {args.report_json}")
 
     if failed:
         print("Failed cases:", ", ".join(r.case_id for r in failed))

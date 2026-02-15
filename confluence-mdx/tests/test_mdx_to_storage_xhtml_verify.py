@@ -50,3 +50,14 @@ def test_verify_testcase_dir_writes_generated_file(tmp_path: Path):
     result = verify_testcase_dir(case, write_generated=True, diff_engine="external")
     assert result.passed is True
     assert (case / "generated.from.expected.xhtml").exists()
+
+
+def test_verify_testcase_dir_external_does_not_pollute_case_by_default(tmp_path: Path):
+    case = tmp_path / "301"
+    case.mkdir()
+    (case / "expected.mdx").write_text("# Title\n\nParagraph\n", encoding="utf-8")
+    (case / "page.xhtml").write_text("<h1>Title</h1><p>Paragraph</p>", encoding="utf-8")
+
+    result = verify_testcase_dir(case, write_generated=False, diff_engine="external")
+    assert result.passed is True
+    assert not (case / "generated.from.expected.xhtml").exists()

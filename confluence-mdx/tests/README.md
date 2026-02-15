@@ -60,7 +60,21 @@ make test-one TEST_ID=568918170
 
 ```bash
 cd confluence-mdx
-./bin/mdx_to_storage_xhtml_verify_cli.py --testcases-dir tests/testcases --diff-engine external --write-generated --show-diff-limit 3
+./bin/mdx_to_storage_xhtml_verify_cli.py \
+  --testcases-dir tests/testcases \
+  --diff-engine external \
+  --show-diff-limit 3 \
+  --report-json var/mdx_to_xhtml_verify_report.json
+```
+
+생성 XHTML 파일을 보관하려면:
+
+```bash
+./bin/mdx_to_storage_xhtml_verify_cli.py \
+  --testcases-dir tests/testcases \
+  --diff-engine external \
+  --write-generated \
+  --generated-out-dir var/mdx_to_xhtml_generated
 ```
 
 ### 출력 파일 정리
