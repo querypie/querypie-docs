@@ -2,7 +2,11 @@
 """run-tests.sh용 thin wrapper — run_verify()를 page_id와 함께 직접 호출한다.
 
 Usage:
-    bin/reverse_sync/test_verify.py <page_id> <original_mdx_path> <improved_mdx_path> <xhtml_path>
+    bin/reverse_sync/test_verify.py <page_id> <original_mdx> <improved_mdx> <xhtml>
+    bin/reverse_sync/test_verify.py --format=cli <page_id> <original_mdx> <improved_mdx> <xhtml>
+
+--format=cli 를 지정하면 reverse_sync_cli.py verify 와 동일한 형식으로 출력한다.
+기본값은 JSON 출력.
 """
 import json
 import sys
@@ -15,16 +19,23 @@ _SCRIPT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
 if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
-from reverse_sync_cli import run_verify, MdxSource
+from reverse_sync_cli import run_verify, MdxSource, _print_results
 
 
 def main():
-    if len(sys.argv) != 5:
-        print(f'Usage: {sys.argv[0]} <page_id> <original_mdx> <improved_mdx> <xhtml>',
+    args = sys.argv[1:]
+    output_format = 'json'
+
+    if args and args[0].startswith('--format='):
+        output_format = args[0].split('=', 1)[1]
+        args = args[1:]
+
+    if len(args) != 4:
+        print(f'Usage: {sys.argv[0]} [--format=json|cli] <page_id> <original_mdx> <improved_mdx> <xhtml>',
               file=sys.stderr)
         sys.exit(1)
 
-    page_id, original_path, improved_path, xhtml_path = sys.argv[1:5]
+    page_id, original_path, improved_path, xhtml_path = args
 
     original_src = MdxSource(
         content=open(original_path).read(),
@@ -41,7 +52,11 @@ def main():
         improved_src=improved_src,
         xhtml_path=xhtml_path,
     )
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+    if output_format == 'cli':
+        _print_results([result])
+    else:
+        print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':

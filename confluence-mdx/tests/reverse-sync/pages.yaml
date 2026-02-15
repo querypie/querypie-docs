@@ -1,0 +1,204 @@
+# reverse-sync E2E 테스트케이스 매니페스트
+# 출처: reverse_sync_verify_fix_proofread-mdx.02140728.log
+# 브랜치: fix/proofread-mdx (original: main, improved: fix/proofread-mdx)
+#
+# 현재 결과 (2026-02-15): 15 failed, 2 passed / 17 total
+# make test-reverse-sync-bugs 로 실행
+
+testcases:
+
+  # ──────────────────────────────────────────────
+  # Type 4: 빈 <strong> 태그 삽입 (empty bold ****)
+  # ──────────────────────────────────────────────
+
+  544379719:
+    failure_type: 4
+    severity: low
+    title: "빈 Bold 태그 삽입"
+    description: >
+      Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨.
+      XHTML 라운드트립 후 기존 줄 끝에 **** 가 추가됨.
+    mdx_path: administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+    expected_status: fail
+
+  543948978:
+    failure_type: 4
+    severity: low
+    title: "빈 Bold 태그 삽입 (링크 뒤)"
+    description: >
+      링크 요소 뒤에 빈 <strong></strong>가 위치하여 **** 가 삽입됨.
+    mdx_path: administrator-manual/general/company-management.mdx
+    expected_status: fail
+
+  # ──────────────────────────────────────────────
+  # Type 5: 중첩 리스트 내용 소실 [Critical]
+  # ──────────────────────────────────────────────
+
+  544383693:
+    failure_type: 5
+    severity: critical
+    title: "중첩 리스트 내용 소실"
+    description: >
+      깊은 중첩 번호 목록(3단계 이상)의 텍스트가 부모 항목으로 병합되고,
+      하위 항목은 빈 줄이 됨. Bold 텍스트도 **** 로 소실됨.
+    mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
+    expected_status: fail
+
+  # ──────────────────────────────────────────────
+  # Type 6: Callout 파서 에러 삽입 [Critical]
+  # ──────────────────────────────────────────────
+
+  571277650:
+    failure_type: 6
+    severity: critical
+    title: "Callout 파서 에러 본문 삽입"
+    description: >
+      <callout> 요소 처리 실패로 MultiLineParser 에러 메시지가
+      MDX 본문에 그대로 삽입됨.
+      주: 현재 verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
+    mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
+    expected_status: pass
+
+  # ──────────────────────────────────────────────
+  # Type 7: Callout 블록 삭제 [Critical]
+  # ──────────────────────────────────────────────
+
+  544379393:
+    failure_type: 7
+    severity: critical
+    title: "Callout 블록 전체 삭제"
+    description: >
+      <Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
+    mdx_path: administrator-manual/general/system/integrations.mdx
+    expected_status: fail
+
+  # ──────────────────────────────────────────────
+  # Type 10: Unsupported XHTML Node 중복
+  # ──────────────────────────────────────────────
+
+  544376265:
+    failure_type: 10
+    severity: low
+    title: "Unsupported XHTML Node 중복 (provisioning)"
+    description: >
+      (Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
+    mdx_path: administrator-manual/general/user-management/provisioning.mdx
+    expected_status: fail
+
+  544381637:
+    failure_type: 10
+    severity: low
+    title: "Unsupported XHTML Node 중복 (k8s connection)"
+    description: >
+      (Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
+      주: 현재 verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
+    mdx_path: administrator-manual/kubernetes/connection-management.mdx
+    expected_status: pass
+
+  # ──────────────────────────────────────────────
+  # Type 12: 백틱 포맷 깨짐 [Critical]
+  # ──────────────────────────────────────────────
+
+  565575990:
+    failure_type: 12
+    severity: critical
+    title: "백틱 코드 스팬 포맷 깨짐"
+    description: >
+      닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐.
+      예: `Verify Deletion Key` 버튼 → `Verify Deletion Key 버튼을 클릭합니다.`
+    mdx_path: administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+    expected_status: fail
+
+  # ──────────────────────────────────────────────
+  # Type 11: 교정 내용 원복 [Medium]
+  # ──────────────────────────────────────────────
+
+  568852692:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 띄어쓰기 (DataGrip 등)"
+    description: >
+      MDX 교정 시 수정한 띄어쓰기가 XHTML 원본 기준으로 되돌아감.
+      예: DataGrip등 → DataGrip 등 (교정) → DataGrip등 (원복)
+    mdx_path: administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide.mdx
+    expected_status: fail
+
+  954172219:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — Bold 병합 (Client Name)"
+    description: >
+      분리된 Bold 마크업을 하나로 합친 교정이 원복됨.
+      예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
+    mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
+    expected_status: fail
+
+  544112846:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 어미 변경 (가능하도록→구성할 수 있도록)"
+    description: >
+      어미·표현 수정이 XHTML 원본 기준으로 되돌아감.
+      예: 다중 설정이 가능하도록 → 다중으로 구성할 수 있도록
+    mdx_path: administrator-manual/general/company-management/security.mdx
+    expected_status: fail
+
+  544376183:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 경어체 통일 (진행하여 주시기 바랍니다)"
+    description: >
+      경어체 교정이 XHTML 원본 기준으로 되돌아감.
+      예: 진행하여 주시기 바랍니다 → 진행하기 바랍니다
+    mdx_path: administrator-manual/general/user-management/authentication/integrating-with-okta.mdx
+    expected_status: fail
+
+  920944732:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 띄어쓰기 (Static IP삭제하기)"
+    description: >
+      MDX 교정 시 수정한 띄어쓰기가 XHTML 원본 기준으로 되돌아감.
+      예: Static IP삭제하기 → Static IP 삭제하기
+    mdx_path: administrator-manual/general/user-management/users/user-profile.mdx
+    expected_status: fail
+
+  1177321474:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 어미 변경 (참조하여 주세요)"
+    description: >
+      어미 교정이 XHTML 원본 기준으로 되돌아감.
+      예: 참조하여 주세요 → 참조해 주세요
+    mdx_path: installation/installation/installation-guide-simple-configuration.mdx
+    expected_status: fail
+
+  1907294209:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 조사 띄어쓰기 (QueryPie ACP 를)"
+    description: >
+      조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감.
+      예: QueryPie ACP 를 → QueryPie ACP를
+    mdx_path: installation/installation/installing-on-aws-eks.mdx
+    expected_status: fail
+
+  862093313:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 어휘 변경 (갈음하여)"
+    description: >
+      어휘 교정이 XHTML 원본 기준으로 되돌아감.
+      예: 갈음하여 → 대체하여
+    mdx_path: installation/post-installation-setup.mdx
+    expected_status: fail
+
+  1297383451:
+    failure_type: 11
+    severity: medium
+    title: "교정 내용 원복 — 날짜 형식 (Aug 29, 2025)"
+    description: >
+      날짜 형식 교정이 XHTML 원본 기준으로 되돌아감.
+      예: Aug 29, 2025 → 2025년 08월 29일
+    mdx_path: installation/prerequisites/linux-distribution-and-docker-podman-support-status.mdx
+    expected_status: fail

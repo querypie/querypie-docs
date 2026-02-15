@@ -1,0 +1,55 @@
+version: 1
+source_page_id: '544379393'
+generated_at: '2026-02-14T15:15:10Z'
+mdx_file: integrating-with-syslog.mdx
+mappings:
+- xhtml_xpath: h2[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 4
+- xhtml_xpath: p[1]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 6
+- xhtml_xpath: ul[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 8
+- xhtml_xpath: p[2]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 10
+- xhtml_xpath: h2[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 13
+- xhtml_xpath: ol[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 15
+- xhtml_xpath: macro-note[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 17
+  - 18
+- xhtml_xpath: ol[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 20
+- xhtml_xpath: ac:image[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 22
+- xhtml_xpath: ol[3]
+  xhtml_type: list
+  mdx_blocks:
+  - 24
+- xhtml_xpath: macro-info[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 26
+  - 27
+- xhtml_xpath: ac:image[2]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 29

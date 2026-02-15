@@ -1,0 +1,126 @@
+---
+title: '설치 후 초기 설정'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1907294209'
+---
+
+import { Callout } from 'nextra/components'
+
+# 설치 후 초기 설정
+
+운영 환경에 따라 설치 이후 필수적으로 수행이 필요한 설정들을 안내합니다.
+
+### 공통 설정
+
+설치 직후 QueryPie 사용 시 필요한 공통 절차입니다.
+
+#### QueryPie Web Base URL 설정
+
+> 설정 경로: Admin Page → General
+Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다.
+(예시. `https://querypie.customer.com`) 이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
+
+이 URL 은 `/` 로 끝나지 않아야 합니다. `https://querypie.customer.com/` 와 같이 URL 의 마지막에 `/` 를 붙이지 않도록 주의하여 주세요.
+
+이 URL 은 아래의 용도로 사용됩니다.
+
+* SSO Integration 의 인증 과정에서, callback 주소로 사용됩니다.
+* Web Console 에서 User Agent 를 내려받는 링크에 사용됩니다.
+* 그 외 자세한 용도는, [QUERYPIE_WEB_URL](container-environment-variables/querypieweburl)를 참조하시기 바랍니다.
+
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-081112.png" alt="QueryPie Web Base URL 설정 화면" width="1074" />
+<figcaption>
+QueryPie Web Base URL 설정 화면
+</figcaption>
+</figure>
+
+### 제품별 설정
+
+#### DAC/SAC: Proxy 접속 주소 설정
+
+QueryPie Database 에 접속하여, DAC/SAC 의 Proxy 접속을 위한 주소를 등록합니다.
+
+<Callout type="info">
+QueryPie Web Console 에서 QueryPie Database 에 연결하려면, DB 연결 설정이 필요합니다: [DB Connections](../administrator-manual/databases/connection-management/db-connections)
+
+Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Password 가 필요합니다.
+
+* Hostname: `host.docker.internal`
+* Username: `querypie` (기본 설정의 경우)
+* Password: QueryPie 를 설치한 디렉토리의 환경변수 파일에서 `DB_PASSWORD` 를 확인하세요.
+    * setup.v2.sh 로 설치한 경우: `.env` 파일
+    * setup.sh 로 설치한 경우: `compose-env` 파일
+
+환경변수 파일에 설정된 값 중 `DB_PASSWORD`, `REDIS_PASSWORD`, `KEY_ENCRYPTION_KEY` 등은 안전하게 보관하여야 합니다.
+다른 사람에게 이 값을 노출하지 않도록 주의하여 주세요.
+</Callout>
+
+아래 `<customer-proxy-address>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+
+<Callout type="important">
+해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안 됩니다.
+</Callout>
+```
+UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
+```
+
+쿼리 실행에 에러 없이 정상적으로 수행이 확인되었으면, 아래 쿼리를 수행하여 등록이 되었는지 확인합니다.
+```
+SELECT * FROM querypie.proxies;
+```
+
+Proxy 접속을 위한 주소를 QueryPie Database 에 등록한 이후, Server Container 를 재시작하지 않아도 됩니다.
+User Agent 에서 로그인을 시도하면, 웹브라우저를 통해 인증을 진행한 이후, User Agent 를 사용할 수 있는 상태가 됩니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-082706.png" alt="DAC/SAC Proxy 접속 주소 설정 화면" width="1100" />
+<figcaption>
+DAC/SAC Proxy 접속 주소 설정 화면
+</figcaption>
+</figure>
+
+#### KAC: Proxy 접속 주소 설정
+
+QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등록합니다.
+
+아래 `<customer-proxy-fqdn>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+
+특이사항으로 DAC/SAC 설정과는 다르게 `http`  `https` 와 같은 Scheme을 자유롭게 입력 가능합니다.
+
+<Callout type="important">
+설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
+</Callout>
+```
+UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
+```
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/post-installation-setup/image-20250520-084243.png" alt="KAC Proxy 접속 주소 설정 화면" width="1096" />
+<figcaption>
+KAC Proxy 접속 주소 설정 화면
+</figcaption>
+</figure>
+
+
+#### WAC: Proxy 접속 주소 설정
+
+> 설정 경로: Admin Page → Web Apps → Web App Configurations
+WAC의 Proxy 접속 주소 설정은 Web Console 에서 수행 가능합니다.
+
+자세한 설정 절차는 다음 문서를 참조하세요: [Web App Configurations에서 WAC 초기 설정하기](../administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
+
+<Callout type="important">
+설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
+</Callout>
+
+
+### 제품 설치가 완료되었습니다
+
+설치 후 초기 설정 과정을 진행한 것으로, QueryPie ACP 제품을 사용할 수 있는 준비가 완료되었습니다.
+수고하셨습니다~!
+
+이후 다음의 문서를 참조하여, 관리자 설정을 진행하고, 제품을 사용할 수 있습니다.
+
+* [관리자 매뉴얼](../administrator-manual)
+* [사용자 매뉴얼](../user-manual)

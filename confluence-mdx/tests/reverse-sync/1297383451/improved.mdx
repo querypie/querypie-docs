@@ -1,0 +1,324 @@
+---
+title: '리눅스 배포본과 Docker, Podman 지원 현황'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1298530305/Docker+Podman'
+---
+
+import { Callout } from 'nextra/components'
+
+# 리눅스 배포본과 Docker, Podman 지원 현황
+
+이 문서는 QueryPie Server의 컨테이너 기반 배포 및 운영 환경 선택을 위한 기술 가이드입니다.
+QueryPie Server는 Docker와 Podman 컨테이너 엔진에서 검증되었으며, 다양한 Linux 배포본에서의 호환성과 권장 구성을 분석하여 최적의 운영 환경 선택을 지원합니다.
+이 문서는 시스템 아키텍트와 인프라 엔지니어가 환경 설계 시 참고할 수 있는 기술적 근거와 실무 가이드라인을 제공합니다.
+
+설치 방법, 검증 스크립트, 운영 절차 등은 이 문서에서 다루지 않습니다.
+
+* 최종 업데이트: 2025년 08월 29일 
+* 검증 기준일: 2025년 08월 29일
+
+### 컨테이너 엔진과 Compose
+
+QueryPie Server는 컨테이너 기반으로 배포·운영되며, Docker와 Podman 두 컨테이너 엔진에서 기능 검증을 완료하고 기술지원을 제공합니다.
+
+Docker는 널리 사용되는 컨테이너 엔진으로, 엔진 자체와 도구 체인(Compose 등)을 포함하며, 커뮤니티 무료 버전과 상용 버전(Desktop)으로 제공됩니다.
+Podman은 Docker와 유사한 명령체계와 워크플로우를 제공하면서도 루트리스(rootless) 실행을 기본으로 지원하는 오픈소스 컨테이너 엔진으로, 특히 RHEL 계열에서 표준으로 권장됩니다.
+
+Docker 와 Podman 은 Compose 와 함께 사용하여, 여러 Container 를 실행하고 관리할 수 있습니다.
+Compose는 단일 호스트에서 여러 Container를 실행하여 소프트웨어를 구동, 운영하는 데 적합합니다.
+Compose 의 구현체로 Docker Compose 가 널리 사용되며, Docker, Podman, 모두 Docker Compose 와 함께 사용할 수 있습니다.
+Docker Compose 는 하나의 실행파일로 구성되어 있고, 다른 패키지에 의존성이 없어, 설치가 간편합니다.
+Podman 의 경우, Python 으로 구현된 Podman Compose 라는 구현체가 제공되기도 합니다.
+
+#### 권장하는 컨테이너 엔진과 Compose 구성
+
+QueryPie는 운영 환경에서  **Docker + Docker Compose**  조합 또는  **Podman + Docker Compose**  조합을 1차 권장합니다.
+권장 최소 버전은 Docker Engine 23.0 (23년 2월 출시) 이상, Docker Compose 2.29.0 (24년 7월 출시) 이상, Podman 4.9.0 (24년 1월 출시) 이상으로 검증되어 있습니다.
+
+Podman + Podman Compose 조합은 기술적으로 지원되나, Python 의존성과 추가 환경 설정이 필요하고 Docker Compose 대비 기능 제약이 있어 2차 권장 구성으로 분류됩니다.
+
+<Callout type="important">
+리눅스 배포본에 따라, Docker, Podman 가운데 한가지만 지원되는 경우가 있습니다.
+이에 따라, 두 컨테이너 엔진을 상황에 따라 적절히 선택하여 사용하여야 합니다.
+특히, 많이 사용되는 Amazon Linux 2023에서 Podman을 지원하지 않는다는 것, 25년 출시된 Red Hat Enterprise Linux 10에서 Docker를 지원하지 않는다는 것에 유의해 주세요.
+</Callout>
+
+### 리눅스 배포본의 현황 요약표
+
+아래 표는 QueryPie에서 공식적으로 기술지원을 제공하는 배포본과 Docker, Podman 지원 현황을 정리한 것입니다.
+Docker, Podman 지원 현황은 QueryPie를 실행, 관리하기 위한 버전이 제공되는지 여부를 기준으로 합니다.
+
+Podman 3.x 의 구버전, 신뢰할 수 있는 패키지가 제공되지 않는 경우, QueryPie 팀으로부터 기술지원되지 않으며, QueryPie 를 사용할 수 없는 조건이라고 분류합니다.
+
+<table>
+<colgroup>
+<col/>
+<col/>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<th>
+**배포판 / 버전**
+</th>
+<th>
+**출시일**
+</th>
+<th>
+**기술지원 종료일 (EOL/EOS)**
+</th>
+<th>
+**Docker, Podman 지원**
+</th>
+</tr>
+<tr>
+<td>
+**Amazon Linux 2**
+</td>
+<td>
+2018년 6월
+</td>
+<td>
+2026년 6월 30일
+</td>
+<td>
+* Docker 기본 지원
+* Podman 지원 없음 ➖ 
+</td>
+</tr>
+<tr>
+<td>
+**Amazon Linux 2023**
+</td>
+<td>
+2023년 3월
+</td>
+<td>
+Standard Support: 2027년 6월, Maintenance Support: 2029년 6월까지
+</td>
+<td>
+* Docker 기본 지원
+* Podman 지원 없음 ➖ 
+</td>
+</tr>
+<tr>
+<td>
+**Red Hat Enterprise Linux 8**
+</td>
+<td>
+2019년 5월
+</td>
+<td>
+Full Support: 2024년 5월,<br/>Maintenance: 2029년까지
+</td>
+<td>
+* Podman 기본 지원
+* Docker 가능
+</td>
+</tr>
+<tr>
+<td>
+**Red Hat Enterprise Linux 9**
+</td>
+<td>
+2022년 5월
+</td>
+<td>
+약 10년 (2032년까지)
+</td>
+<td>
+* Podman 기본 지원
+* Docker 가능
+</td>
+</tr>
+<tr>
+<td>
+**Red Hat Enterprise Linux 10**
+</td>
+<td>
+2025년 5월
+</td>
+<td>
+약 10년 (2035년까지)
+</td>
+<td>
+* Podman 기본 지원
+* Docker 지원 없음 ➖
+</td>
+</tr>
+<tr>
+<td>
+**Ubuntu 22.04 LTS (Jammy)**
+</td>
+<td>
+2022년 4월
+</td>
+<td>
+2027년 4월 (ESM 적용 시 최대 2032년)
+</td>
+<td>
+* Podman 사용 불가 ➖ 구버전 3.4.4
+* Docker 기본 지원
+</td>
+</tr>
+<tr>
+<td>
+**Ubuntu 24.04 LTS (Noble)**
+</td>
+<td>
+2024년 4월
+</td>
+<td>
+2029년 4월 (ESM 적용 시 2036년)
+</td>
+<td>
+* Podman 기본 지원
+* Docker 기본 지원
+</td>
+</tr>
+<tr>
+<td>
+**Rocky Linux 8**
+</td>
+<td>
+2021년 6월
+</td>
+<td>
+RHEL 8 과 동일 (2029년까지)
+</td>
+<td>
+RHEL 8 바이너리 호환
+</td>
+</tr>
+<tr>
+<td>
+**Rocky Linux 9**
+</td>
+<td>
+2022년 7월
+</td>
+<td>
+RHEL 9 과 동일 (2032년까지)
+</td>
+<td>
+RHEL 9 바이너리 호환
+</td>
+</tr>
+<tr>
+<td>
+**CentOS Stream**
+</td>
+<td>
+2021년 이후
+</td>
+<td>
+롤링 릴리스, EOS 없음
+</td>
+<td>
+차기 RHEL 미리 반영, 안정성 낮음
+</td>
+</tr>
+</tbody>
+</table>
+
+### 리눅스 배포본의 특징
+
+QueryPie 팀에서 기술지원을 제공하는 리눅스 배포본의 현황을 설명합니다.
+
+#### Amazon Linux 2 (2018년 6월 출시)
+
+Amazon Linux 2는 RHEL 7 계열을 기반으로 AWS가 EC2에 최적화하여 제공하는 배포판으로, 장기간의 안정적 운영을 위해 널리 사용되어왔습니다.
+AWS의 공식 지원 정책에 따르면 Amazon Linux 2의 공식 보안·버그 패치 제공은 2026-06-30까지로 예정되어 있어(출처: [Amazon Linux 2 FAQs](https://aws.amazon.com/amazon-linux-2/faqs/)), 신규 서버 구축이나 장기 운영을 계획 중이라면 수명 주기가 더 긴 Amazon Linux 2023 또는 Ubuntu/RHEL 계열로의 이전을 검토하세요.
+
+컨테이너 관점에서 Amazon Linux 2는 amazon-linux-extras를 통해 Docker를 손쉽게 설치·운영할 수 있게 설계되어 있으며, 이 경로가 AWS 문서에서 일관되게 안내되는 표준 접근법입니다.
+반면 Podman은 기본 저장소에서 제공되지 않으며, 제3자 리포지터리(COPR 등)를 통해 설치하는 비공식 경로가 존재하더라도 AWS의 패키지 관리·지원 체계 밖에 있기 때문에, 운영 체계와 지원 정책의 일관성을 중시하는 서버 워크로드에서는 Docker 사용이 현실적입니다.
+Compose는 Docker Compose 플러그인(v2)을 함께 배포·업데이트할 수 있어, 단일 호스트 상의 멀티 컨테이너 서비스를 안정적으로 관리할 수 있습니다.
+
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.
+*  **<u>Podman 은 지원되지 않습니다</u>** .
+
+#### Amazon Linux 2023 (2023년 3월 출시)
+
+Amazon Linux 2023(AL2023)은 Fedora를 상류(upstream)로 채택해 주기적 릴리스, 지원 일정을 명확히 한 차세대 AWS 리눅스입니다.
+GA는 2023년 3월에 이뤄졌고, 표준 지원(Standard Support)은 2027년 6월 30일, 유지보수 지원(Maintenance Support)은 2029년 6월 30일까지 제공되는 5년 지원 모델을 따릅니다(출처: [Amazon Linux 2023 FAQs](https://aws.amazon.com/linux/amazon-linux-2023/faqs/)).
+
+AL2023은 패키지 관리가 dnf로 전환되며, Docker는 공식 문서에 따라 표준 절차로 설치·운영됩니다.
+AWS가 제공하는 설치 가이드에서도 Docker 중심의 운영 모델이 제시되며, 현재 공식 저장소에 Podman 패키지는 포함되어 있지 않습니다.
+결과적으로, QueryPie Server를 EC2에 배치한다면 AL2023에서는 Docker + Docker Compose 조합이 가장 간결하고 문서화가 잘 된 경로입니다.
+
+* Docker, Docker Compose 조합을 사용하기에 적합합니다. Amazon Linux 2023 의 dnf 패키지를 설치하는 경우,  **Docker 25.0.8**  버전이 기본 설치됩니다.
+*  **<u>Podman 은 지원되지 않습니다.</u>**  Amazon Linux 2023 은 Podman 설치가 어렵고, 검증된 설치 패키지가 제공되지 않습니다. 상당수 이용자가 Podman 을 배포본에 추가하기를 요청하였으나, AWS 에서 이를 완곡히 거절하고, Podman 에 대한 기술지원을 하지 않는 것으로 보입니다.
+
+#### Red Hat Enterprise Linux 8 (2019년 5월 출시)
+
+RHEL 8은 2019년 5월 7일 공개되었고, Full Support는 2024년 5월 31일에 종료되었으며, Maintenance Support는 2029년 5월 31일까지, 선택 시 Extended Life Cycle Support(ELS)는 2032년 5월 31일까지 이어집니다.
+기업 현장에서 가장 널리 배포된 EL8 생태계의 중심으로, Red Hat은 Docker 엔진 대신 Podman을 기본 컨테이너 엔진으로 제공합니다.
+Podman은 Docker와 호환되는 CLI와 REST API(패키지 podman-docker 등)를 통해 많은 도구가 기대하는 docker 명령·소켓과의 호환성을 제공합니다.
+Docker 자체는 Red Hat의 기본 채널에서 제공·지원하지 않지만, Docker 공식 리포지터리를 추가해 설치하는 방식이 현장에서 사용됩니다.
+Compose 측면에서는 Docker Compose(v2 플러그인)를 Docker 엔진과 함께 쓰거나, Podman과의 호환 계층을 사용해 docker-compose 기반 배포 파일을 그대로 활용하는 방식이 검증되어 있습니다.
+
+* Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 4.9.4**  버전이 설치됩니다.
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
+    * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/)
+
+#### Red Hat Enterprise Linux 9 (2022년 5월 출시)
+
+RHEL 9는 2022년 5월 18일 릴리스되었고, Full Support는 2027년 5월 31일, Maintenance Support는 2032년 5월 31일, 선택 ELS는 2035년 5월 31일까지 제공됩니다.
+운영 모델은 RHEL 8과 동일하게 Podman 중심이며, 루트리스 모드와 시스템 통합(systemd 유저 서비스 등)에서 성숙도가 높아졌습니다.
+QueryPie Server는 Podman을 표준 엔진으로 사용해도 무리가 없고, podman-docker 호환 패키지를 더하면 기존 docker-compose.yml 자산을 큰 변경 없이 재사용할 수 있습니다.
+Docker CE는 공식 RHEL 리포지터리의 지원 범위 밖이지만, Docker 측 리포지터리를 추가해 설치·운영하는 방식이 실무에서 널리 쓰입니다.
+
+* Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 4.9.4**  버전이 설치됩니다.
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
+    * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/) 
+
+#### Red Hat Enterprise Linux 10 (2025년 5월 출시)
+
+RHEL 10은 2025년 5월 20일에 공개되었으며, Red Hat의 표준 정책에 따라 Full Support는 2030년 5월 31일, Maintenance Support는 2035년 5월 31일, 선택 ELS는 2038년 5월 31일까지 이어지는 로드맵을 가집니다.
+RHEL 10에서는 Docker 엔진과 docker 명령이 기본 제공에서 제거되었고, Red Hat의 공식 지원도 Podman에 한정됩니다.
+Docker를 외부 업스트림에서 설치하는 것은 기술적으로 가능하더라도 RHEL 10 자체의 지원 범주 밖이며, Red Hat 문서 역시 이를 명시합니다.
+따라서 RHEL 10에서 QueryPie Server를 운영할 때는 Podman을 1순위로 선택하고, Compose 파일은 Docker Compose 구문을 유지하되 Podman의 Docker API 호환 레이어를 통해 적용하는 구성이 가장 현실적입니다.
+
+* Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 5.4.0**  버전이 설치됩니다.
+*  **Docker 패키지가 제공되지 않습니다** . (2025년 8월 현재) CentOS Stream 10 에서 Docker 패키지가 준비되어 있으나, 설치하여 실행할 때, 오류가 발생합니다.
+
+#### Ubuntu 22.04 LTS Jammy Jellyfish
+
+Ubuntu 22.04 LTS는 2022년 4월 21일 공개되었고, 표준 지원은 2027년 4월까지, Extended Security Maintenance(ESM)는 2032년 4월까지 제공됩니다.
+Canonical은 서버·클라우드 환경에서 Docker와 Podman 모두를 공식 문서·저장소를 통해 제공하며, Docker는 Docker 공식 APT 리포지터리 또는 Ubuntu의 docker.io/플러그인 패키지로, Podman은 배포본 기본 저장소에서 설치할 수 있습니다.
+Compose는 Docker Compose v2 플러그인으로 가장 수월하며, Podman 환경에서는 Docker API 호환을 통해 기존 Compose 파일을 재사용하는 구성이 실무에서 흔합니다.
+Ubuntu 특유의 폭넓은 커뮤니티 생태계와 빠른 보안 패치 제공은 QueryPie Server 같은 컨테이너형 애플리케이션의 안정 운용에 유리합니다.
+
+*  **Podman 을 사용하기에 적합하지 않습니다** . 기본 저장소에서 제공되는 Podman 3.4.4 버전은 Docker Compose와 호환되지 않아, 권장하지 않습니다.
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
+    * [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+
+#### Ubuntu 24.04 LTS Noble Numbat
+
+Ubuntu 24.04 LTS는 2024년 4월 25일 공개되었으며, 표준 지원은 2029년 4월까지, ESM은 2036년 4월까지 이어집니다.
+최신 LTS답게 컨테이너 관련 툴체인의 버전이 상향되어 있으며, Docker는 Docker 공식 리포지터리와 Canonical 패키지 모두에서 최신 Compose 플러그인과 함께 배치할 수 있습니다.
+Podman 역시 기본 저장소에서 제공되어 루트리스 실행과 사용자별 컨테이너 관리가 자연스럽고, CI/CD에서의 비대화형 실행이 매끄럽습니다.
+장기 관점의 서버 표준화가 필요하다면, 24.04 LTS는 22.04 LTS 대비 더 긴 보안 업데이트 창구와 최신 커널·툴체인 기반을 동시에 확보할 수 있다는 점에서 장점이 있습니다.
+
+* Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 4.9.3**  버전이 설치됩니다.
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
+    * [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+
+#### Rocky Linux 9 (2022년 7월 출시)
+
+Rocky Linux 9 역시 RHEL 9과 동형의 릴리스 정책을 따르며, 유지보수 지원은 2032년 5월 31일까지 제공됩니다.
+기본 컨테이너 스택은 Podman이며, 루트리스 실행과 cgroup, systemd 연계가 성숙해 복잡한 다중 컨테이너 서비스를 운영하기 용이합니다.
+Docker CE는 Rocky 9에서도 공식(Red Hat) 채널이 아닌 Docker의 자체 리포지터리를 통해 설치하는 모델이 일반적이고, Compose 플러그인을 더해 배포 자동화를 단순화할 수 있습니다.
+QueryPie Server는 두 엔진 모두에서 동등한 품질로 동작하도록 검증되었습니다.
+
+* Podman, Docker Compose 조합을 사용하기에 적합합니다.  **Podman 4.9.4**  버전이 설치됩니다.
+* Docker, Docker Compose 조합을 사용하기에 적합합니다.  **Docker 최신 버전의 패키지가 제공** 됩니다. 25년 8월 현재  **28.3.3**  버전이 제공됩니다.
+    * [https://docs.docker.com/engine/install/rhel/](https://docs.docker.com/engine/install/rhel/) 
+
+#### CentOS Stream (2021년 이후)
+
+기존 CentOS 의 대체 배포판으로, RHEL 의 차기 릴리스를 미리 반영하는 롤링 업데이트 방식을 채택하고 있습니다.
+안정성 면에서 RHEL 및 Amazon Linux 대비 변동성이 있으므로, 장기 운영보다는 개발 및 테스트 환경에 적합합니다.
+QueryPie 운영 환경에 적합하지 않기에, 사용하지 않는 것을 권장합니다.
+
+

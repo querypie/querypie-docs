@@ -6,9 +6,11 @@
 #   ./run-tests.sh [options]
 #
 # Options:
-#   --type TYPE       Test type: convert (default), skeleton, reverse-sync, image-copy, xhtml-diff
+#   --type TYPE       Test type: convert (default), skeleton, reverse-sync,
+#                     reverse-sync-verify, image-copy, xhtml-diff
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
+#   --test-dir DIR    Test case directory (default: testcases)
 #   --verbose, -v     Show converter output (stdout/stderr)
 #   --help            Show this help message
 
@@ -19,7 +21,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${SCRIPT_DIR}"
 
 # Configuration (relative paths from script directory)
-TEST_DIR="testcases"
+TEST_DIR=""  # set later from --test-dir or default
 BIN_DIR="../bin"
 VENV_DIR="../venv"
 
@@ -85,6 +87,10 @@ while [[ $# -gt 0 ]]; do
             TEST_ID="$2"
             shift 2
             ;;
+        --test-dir)
+            TEST_DIR="$2"
+            shift 2
+            ;;
         --verbose|-v)
             VERBOSE=true
             shift
@@ -98,6 +104,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+# Set default TEST_DIR based on test type if not explicitly given
+if [[ -z "${TEST_DIR}" ]]; then
+    TEST_DIR="testcases"
+fi
 
 # Activate virtual environment
 activate_venv() {
@@ -223,6 +234,67 @@ has_reverse_sync_input() {
     local test_id="$1"
     [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
     [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]]
+}
+
+# Run reverse-sync verify-only test (no expected file comparison)
+# test_verify.py --format=cli 로 실행하여 CLI와 동일한 출력을 생성한다.
+#
+# 이 함수는 run_all_tests에서 실패 시 두 번 호출됨:
+#   1회차: 출력 억제 상태로 실행 (> /dev/null 2>&1)
+#   2회차: 출력 표시 상태로 재실행
+# 따라서 결과 파일이 이미 있으면 test_verify.py를 재실행하지 않고
+# 저장된 결과에서 상태만 확인한다.
+run_reverse_sync_verify_test() {
+    local test_id="$1"
+    local test_path="${TEST_DIR}/${test_id}"
+    local result_file="${test_path}/output.reverse-sync.result.yaml"
+
+    local output_log="${test_path}/output.verify.log"
+
+    # 결과 파일이 없을 때만 test_verify.py 실행
+    if [[ ! -f "${result_file}" ]]; then
+        mkdir -p "../var/${test_id}"
+        pushd .. > /dev/null
+        # --format=cli: reverse_sync_cli.py verify 와 동일한 형식으로 출력
+        # 출력을 파일로 저장 (run_all_tests의 재실행 시 재사용)
+        bin/reverse_sync/test_verify.py --format=cli \
+            "${test_id}" \
+            "tests/${test_path}/original.mdx" \
+            "tests/${test_path}/improved.mdx" \
+            "tests/${test_path}/page.xhtml" \
+            > "tests/${output_log}" 2>&1
+        popd > /dev/null
+
+        # var/에 생성된 중간 결과물을 output.* 으로 복사
+        local var_dir="../var/${test_id}"
+        cp "${var_dir}/reverse-sync.result.yaml"          "${test_path}/output.reverse-sync.result.yaml"
+        cp "${var_dir}/reverse-sync.diff.yaml"             "${test_path}/output.reverse-sync.diff.yaml"             2>/dev/null || true
+        cp "${var_dir}/reverse-sync.patched.xhtml"         "${test_path}/output.reverse-sync.patched.xhtml"         2>/dev/null || true
+        cp "${var_dir}/reverse-sync.mapping.original.yaml" "${test_path}/output.reverse-sync.mapping.original.yaml" 2>/dev/null || true
+        cp "${var_dir}/reverse-sync.mapping.patched.yaml"  "${test_path}/output.reverse-sync.mapping.patched.yaml"  2>/dev/null || true
+    fi
+
+    # result.yaml에서 상태 확인
+    local status
+    status=$(python3 -c "
+import yaml, sys
+r = yaml.safe_load(open(sys.argv[1]))
+print(r.get('status', 'error'))
+" "${result_file}")
+
+    # 저장된 CLI 출력 표시
+    if [[ -f "${output_log}" ]]; then
+        cat "${output_log}"
+    fi
+
+    [[ "${status}" == "pass" ]]
+}
+
+has_reverse_sync_verify_input() {
+    local test_id="$1"
+    [[ -f "${TEST_DIR}/${test_id}/original.mdx" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/improved.mdx" ]] && \
+    [[ -f "${TEST_DIR}/${test_id}/page.xhtml" ]]
 }
 
 # Run image-copy test: verify converter copies and sanitizes image files correctly
@@ -392,6 +464,13 @@ main() {
                 run_single_test run_reverse_sync_test "Reverse-Sync" "${TEST_ID}"
             else
                 run_all_tests run_reverse_sync_test "Reverse-Sync" has_reverse_sync_input
+            fi
+            ;;
+        reverse-sync-verify)
+            if [[ -n "${TEST_ID}" ]]; then
+                run_single_test run_reverse_sync_verify_test "Reverse-Sync-Verify" "${TEST_ID}"
+            else
+                run_all_tests run_reverse_sync_verify_test "Reverse-Sync-Verify" has_reverse_sync_verify_input
             fi
             ;;
         image-copy)

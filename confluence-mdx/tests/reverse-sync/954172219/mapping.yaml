@@ -1,0 +1,61 @@
+version: 1
+source_page_id: '954172219'
+generated_at: '2026-02-14T15:15:24Z'
+mdx_file: running-queries.mdx
+mappings:
+- xhtml_xpath: h2[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 4
+- xhtml_xpath: p[1]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 6
+- xhtml_xpath: h2[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 8
+- xhtml_xpath: ac:image[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 10
+- xhtml_xpath: ol[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 12
+- xhtml_xpath: h2[3]
+  xhtml_type: heading
+  mdx_blocks:
+  - 14
+- xhtml_xpath: p[2]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 16
+- xhtml_xpath: ac:image[2]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 18
+- xhtml_xpath: ul[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 20
+- xhtml_xpath: h2[4]
+  xhtml_type: heading
+  mdx_blocks:
+  - 22
+- xhtml_xpath: p[3]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 24
+- xhtml_xpath: macro-info[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 26
+- xhtml_xpath: ac:image[3]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 28
+- xhtml_xpath: ol[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 29

@@ -67,6 +67,22 @@ test-reverse-sync-one:
 	fi
 	@$(TEST_SCRIPT) --type reverse-sync --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
+# Run reverse-sync bug reproduction tests (tests/reverse-sync/)
+.PHONY: test-reverse-sync-bugs
+test-reverse-sync-bugs:
+	@find reverse-sync -name "output.*" -type f -delete 2>/dev/null || true
+	@$(TEST_SCRIPT) --type reverse-sync-verify --test-dir reverse-sync $(VERBOSE_FLAG)
+
+# Run a specific reverse-sync bug reproduction test
+.PHONY: test-reverse-sync-bugs-one
+test-reverse-sync-bugs-one:
+	@if [ -z "$(TEST_ID)" ]; then \
+		echo "Usage: make test-reverse-sync-bugs-one TEST_ID=<page_id>"; \
+		exit 1; \
+	fi
+	@rm -f "reverse-sync/$(TEST_ID)/output.reverse-sync.result.yaml" "reverse-sync/$(TEST_ID)/output.verify.log"
+	@$(TEST_SCRIPT) --type reverse-sync-verify --test-dir reverse-sync --test-id $(TEST_ID) $(VERBOSE_FLAG)
+
 # Run image-copy tests
 .PHONY: test-image-copy
 test-image-copy:
@@ -120,6 +136,7 @@ clean:
 	@find testcases -name "output.reverse-sync.*" -type f -delete
 	@find testcases -name "output.mdx.diff" -type f -delete
 	@find testcases -name "output.beautify-diff" -type f -delete
+	@find reverse-sync -name "output.*" -type f -delete 2>/dev/null || true
 
 # Help
 .PHONY: help
@@ -138,6 +155,10 @@ help:
 	@echo "  test-reverse-sync / test-reverse-sync-one"
 	@echo "    MDX 편집분을 XHTML 에 역패치."
 	@echo "    patched.xhtml, diff.yaml 등 5개 산출물 비교"
+	@echo ""
+	@echo "  test-reverse-sync-bugs / test-reverse-sync-bugs-one"
+	@echo "    reverse-sync 버그 재현 테스트 (tests/reverse-sync/)."
+	@echo "    유형 4,5,6,7,10,11,12 버그 케이스. verify-only 모드"
 	@echo ""
 	@echo "  test-image-copy / test-image-copy-one"
 	@echo "    이미지 파일 복사 및 파일명 sanitize 검증"

@@ -1,0 +1,165 @@
+version: 1
+source_page_id: '1177321474'
+generated_at: '2026-02-14T15:16:03Z'
+mdx_file: installation-guide-setupv2sh.mdx
+mappings:
+- xhtml_xpath: p[1]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 4
+- xhtml_xpath: macro-toc[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 7
+- xhtml_xpath: h1[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 9
+- xhtml_xpath: p[2]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 11
+- xhtml_xpath: p[3]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 13
+- xhtml_xpath: p[4]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 15
+- xhtml_xpath: macro-info[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 16
+- xhtml_xpath: h1[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 18
+- xhtml_xpath: p[5]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 20
+- xhtml_xpath: ul[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 22
+- xhtml_xpath: p[6]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 24
+- xhtml_xpath: h1[3]
+  xhtml_type: heading
+  mdx_blocks:
+  - 26
+- xhtml_xpath: p[7]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 28
+- xhtml_xpath: h1[4]
+  xhtml_type: heading
+  mdx_blocks:
+  - 30
+- xhtml_xpath: h2[1]
+  xhtml_type: heading
+  mdx_blocks:
+  - 32
+- xhtml_xpath: p[8]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 34
+- xhtml_xpath: macro-code[1]
+  xhtml_type: code
+  mdx_blocks:
+  - 35
+- xhtml_xpath: p[9]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 37
+- xhtml_xpath: macro-code[2]
+  xhtml_type: code
+  mdx_blocks:
+  - 38
+- xhtml_xpath: p[10]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 40
+- xhtml_xpath: p[11]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 42
+- xhtml_xpath: macro-code[3]
+  xhtml_type: code
+  mdx_blocks:
+  - 43
+- xhtml_xpath: h2[2]
+  xhtml_type: heading
+  mdx_blocks:
+  - 45
+- xhtml_xpath: p[12]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 47
+- xhtml_xpath: p[13]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 49
+- xhtml_xpath: ul[2]
+  xhtml_type: list
+  mdx_blocks:
+  - 51
+- xhtml_xpath: p[14]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 53
+- xhtml_xpath: h2[3]
+  xhtml_type: heading
+  mdx_blocks:
+  - 55
+- xhtml_xpath: p[15]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 57
+- xhtml_xpath: ol[1]
+  xhtml_type: list
+  mdx_blocks:
+  - 59
+- xhtml_xpath: p[16]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 61
+- xhtml_xpath: macro-code[4]
+  xhtml_type: code
+  mdx_blocks:
+  - 62
+- xhtml_xpath: h2[4]
+  xhtml_type: heading
+  mdx_blocks:
+  - 64
+- xhtml_xpath: p[17]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 66
+- xhtml_xpath: p[18]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 68
+- xhtml_xpath: h2[5]
+  xhtml_type: heading
+  mdx_blocks:
+  - 70
+- xhtml_xpath: p[19]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 72
+- xhtml_xpath: ac:image[1]
+  xhtml_type: html_block
+  mdx_blocks:
+  - 74
+- xhtml_xpath: h1[5]
+  xhtml_type: heading
+  mdx_blocks:
+  - 76
+- xhtml_xpath: p[20]
+  xhtml_type: paragraph
+  mdx_blocks:
+  - 78
