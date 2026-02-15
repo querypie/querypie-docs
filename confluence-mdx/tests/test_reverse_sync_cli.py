@@ -375,47 +375,45 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False)
     mock_push.assert_not_called()
 
 
 def test_main_push_branch(tmp_path, monkeypatch):
-    """main() 통합 테스트 — 배치 push (all pass)."""
+    """main() 통합 테스트 — 배치 push (all pass, push=True)."""
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
     monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     batch_results = [
-        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
-        {'status': 'pass', 'page_id': 'p2', 'changes_count': 2},
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+         'push': {'page_id': 'p1', 'title': 'T1', 'version': 2, 'url': '/t1'}},
+        {'status': 'pass', 'page_id': 'p2', 'changes_count': 2,
+         'push': {'page_id': 'p2', 'title': 'T2', 'version': 3, 'url': '/t2'}},
     ]
-    push_result = {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}
 
-    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
-         patch('reverse_sync_cli._do_push', return_value=push_result) as mock_push, \
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
          patch('builtins.print'):
         main()
 
-    assert mock_push.call_count == 2
-    mock_push.assert_any_call('p1')
-    mock_push.assert_any_call('p2')
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True)
 
 
 def test_main_push_branch_with_failure(monkeypatch):
-    """배치 push 시 일부 fail → exit 1, push 안 함."""
+    """배치 push 시 일부 fail → exit 1 (pass한 문서는 이미 push됨)."""
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
     batch_results = [
-        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+         'push': {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}},
         {'status': 'fail', 'page_id': 'p2', 'changes_count': 1},
     ]
 
-    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
-         patch('reverse_sync_cli._do_push') as mock_push, \
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
          patch('builtins.print'):
         with pytest.raises(SystemExit) as exc_info:
             main()
 
     assert exc_info.value.code == 1
-    mock_push.assert_not_called()
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True)
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -452,12 +450,13 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
         {'status': 'error', 'file': 'src/content/ko/b.mdx', 'error': 'not found'},
     ]
 
-    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
          patch('builtins.print'):
         with pytest.raises(SystemExit) as exc_info:
             main()
 
     assert exc_info.value.code == 1
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False)
 
 
 # --- normalize_mdx_to_plain tests ---
