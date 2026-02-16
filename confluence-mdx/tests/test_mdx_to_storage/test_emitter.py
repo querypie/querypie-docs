@@ -448,3 +448,15 @@ def test_emit_paragraph_then_markdown_table():
     assert "<p>Intro paragraph.</p>" in xhtml
     assert "<table><tbody>" in xhtml
     assert "<td><p>1</p></td>" in xhtml
+
+
+def test_emit_blockquote_single_paragraph():
+    mdx = "> quoted **text** and `code`\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<blockquote><p>quoted <strong>text</strong> and <code>code</code></p></blockquote>"
+
+
+def test_emit_blockquote_multiple_paragraphs():
+    mdx = "> first line\n>\n> second line\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<blockquote><p>first line</p><p>second line</p></blockquote>"

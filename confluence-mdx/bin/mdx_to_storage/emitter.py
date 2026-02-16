@@ -84,6 +84,9 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
     if block.type == "table":
         return _emit_markdown_table(block.content)
 
+    if block.type == "blockquote":
+        return _emit_blockquote(block.content)
+
     return ""
 
 
@@ -283,3 +286,33 @@ def _emit_html_block(content: str) -> str:
         return f"<{tag}{attrs}>{convert_inline(inner.strip())}</{tag}>"
 
     return pattern.sub(_replace_cell, stripped)
+
+
+def _emit_blockquote(content: str) -> str:
+    raw_lines = content.splitlines()
+    stripped_lines: list[str] = []
+    for line in raw_lines:
+        line = line.lstrip()
+        if line.startswith(">"):
+            line = line[1:]
+            if line.startswith(" "):
+                line = line[1:]
+        stripped_lines.append(line)
+
+    paragraphs: list[str] = []
+    current: list[str] = []
+    for line in stripped_lines:
+        if line.strip():
+            current.append(line.strip())
+            continue
+        if current:
+            paragraphs.append(" ".join(current))
+            current = []
+    if current:
+        paragraphs.append(" ".join(current))
+
+    if not paragraphs:
+        return "<blockquote><p></p></blockquote>"
+
+    body = "".join(f"<p>{convert_inline(text)}</p>" for text in paragraphs)
+    return f"<blockquote>{body}</blockquote>"
