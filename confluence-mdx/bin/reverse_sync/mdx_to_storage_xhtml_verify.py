@@ -24,10 +24,15 @@ _IGNORED_ATTRIBUTES = {
     "ac:original-height",
     "ac:original-width",
     "ac:custom-width",
+    "ac:alt",
+    "ac:layout",
     "data-table-width",
     "data-layout",
+    "data-highlight-colour",
+    "data-card-appearance",
     "ac:breakout-mode",
     "ac:breakout-width",
+    "ri:space-key",
     "style",
     "class",
 }
@@ -116,6 +121,11 @@ def _strip_decorations(soup: BeautifulSoup) -> None:
     for tag_name in ("ac:adf-mark", "ac:inline-comment-marker"):
         for tag in soup.find_all(tag_name):
             tag.unwrap()
+    for colgroup in soup.find_all("colgroup"):
+        colgroup.decompose()
+    for p in soup.find_all("p"):
+        if not p.get_text(strip=True) and not p.find_all(True):
+            p.decompose()
 
 
 def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:

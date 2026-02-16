@@ -108,6 +108,55 @@ def test_verify_strips_decorations_but_keeps_inner_text():
     assert diff_report == ""
 
 
+def test_verify_strips_colgroup_from_tables():
+    """Confluence tables have <colgroup> for column widths; generated tables don't."""
+    mdx = """| A | B |
+| --- | --- |
+| 1 | 2 |
+"""
+    page = (
+        "<table><colgroup><col /><col /></colgroup>"
+        "<tbody><tr><th><p>A</p></th><th><p>B</p></th></tr>"
+        "<tr><td><p>1</p></td><td><p>2</p></td></tr></tbody></table>"
+    )
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_highlight_colour_and_space_key():
+    """data-highlight-colour on th and ri:space-key on links should be ignored."""
+    mdx = "## Title\n"
+    page = '<h1 data-highlight-colour="#eee" ri:space-key="DOCS">Title</h1>'
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_image_auto_attributes():
+    """ac:alt, ac:layout, data-card-appearance should be ignored."""
+    mdx = """<figure>
+  <img src="/images/sample.png" alt="Sample" width="700">
+</figure>
+"""
+    page = (
+        '<ac:image ac:align="center" ac:alt="sample.png" ac:layout="center" ac:width="700">'
+        '<ri:attachment ri:filename="sample.png"></ri:attachment></ac:image>'
+    )
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_empty_paragraphs():
+    """Trailing empty <p></p> in page.xhtml should be stripped."""
+    mdx = "## Title\n"
+    page = "<h1>Title</h1><p></p>"
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
 def test_classify_failure_reasons_detects_verify_filter_noise():
     diff_report = '-<p ac:local-id="x">A</p>\n+<p>A</p>\n-<ri:attachment ri:version-at-save="1" />'
     reasons = classify_failure_reasons(diff_report)
