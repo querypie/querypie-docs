@@ -43,6 +43,9 @@ Body
     blocks = parse_mdx(text)
     assert blocks[0].type == "callout"
     assert blocks[0].attrs == {"type": "info", "emoji": "🌈"}
+    assert len(blocks[0].children) == 1
+    assert blocks[0].children[0].type == "paragraph"
+    assert blocks[0].children[0].content == "Body\n"
 
 
 def test_parse_figure_block_and_img_attrs():
@@ -92,6 +95,22 @@ def test_parse_html_block_stops_before_heading():
     assert blocks[0].type == "html_block"
     assert "line2" in blocks[0].content
     assert blocks[1].type == "heading"
+
+
+def test_parse_callout_children_multiple_blocks():
+    text = """<Callout type="important">
+first paragraph
+
+```bash
+echo hi
+```
+</Callout>
+"""
+    blocks = parse_mdx(text)
+    callout = blocks[0]
+    assert callout.type == "callout"
+    assert callout.attrs == {"type": "important"}
+    assert [child.type for child in callout.children] == ["paragraph", "empty", "code_block"]
 
 
 def test_parse_frontmatter_unclosed_falls_through():

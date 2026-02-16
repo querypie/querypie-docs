@@ -141,3 +141,49 @@ def test_emit_heading_level6_emits_h5():
     mdx = "###### Deep\n"
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<h5>Deep</h5>"
+
+
+def test_emit_callout_type_mapping_default_to_tip():
+    mdx = """<Callout type="default">
+Tip body
+</Callout>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert (
+        xhtml
+        == '<ac:structured-macro ac:name="tip"><ac:rich-text-body><p>Tip body</p></ac:rich-text-body></ac:structured-macro>'
+    )
+
+
+def test_emit_callout_type_mapping_info_important_error():
+    info = emit_document(parse_mdx('<Callout type="info">\nInfo\n</Callout>\n'))
+    important = emit_document(parse_mdx('<Callout type="important">\nImportant\n</Callout>\n'))
+    error = emit_document(parse_mdx('<Callout type="error">\nError\n</Callout>\n'))
+    assert '<ac:structured-macro ac:name="info">' in info
+    assert '<ac:structured-macro ac:name="note">' in important
+    assert '<ac:structured-macro ac:name="warning">' in error
+
+
+def test_emit_callout_with_emoji_as_panel():
+    mdx = """<Callout type="info" emoji="🌈">
+Panel body
+</Callout>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:structured-macro ac:name="panel">' in xhtml
+    assert '<ac:parameter ac:name="panelIcon">🌈</ac:parameter>' in xhtml
+    assert "<p>Panel body</p>" in xhtml
+
+
+def test_emit_callout_body_supports_code_block():
+    mdx = """<Callout type="important">
+```sql
+select 1;
+```
+</Callout>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:structured-macro ac:name="note">' in xhtml
+    assert '<ac:structured-macro ac:name="code">' in xhtml
+    assert '<ac:parameter ac:name="language">sql</ac:parameter>' in xhtml
+    assert "<![CDATA[select 1;]]>" in xhtml
