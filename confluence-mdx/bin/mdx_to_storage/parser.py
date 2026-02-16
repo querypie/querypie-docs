@@ -186,7 +186,9 @@ def _parse_callout_block(lines: list[str], start: int) -> tuple[Block, int]:
 
     content = "\n".join(lines[start:i]) + "\n"
     attrs = _parse_callout_attrs(lines[start])
-    return Block(type="callout", content=content, attrs=attrs), i
+    inner_content = _extract_callout_inner_content(content)
+    children = parse_mdx(inner_content) if inner_content else []
+    return Block(type="callout", content=content, attrs=attrs, children=children), i
 
 
 def _parse_callout_attrs(opening_line: str) -> dict:
@@ -195,6 +197,17 @@ def _parse_callout_attrs(opening_line: str) -> dict:
         value = v1 or v2
         attrs[key] = value
     return attrs
+
+
+def _extract_callout_inner_content(content: str) -> str:
+    lines = content.splitlines()
+    if not lines:
+        return ""
+    if lines[0].startswith("<Callout"):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith("</Callout"):
+        lines = lines[:-1]
+    return "\n".join(lines).strip()
 
 
 def _parse_figure_block(lines: list[str], start: int) -> tuple[Block, int]:

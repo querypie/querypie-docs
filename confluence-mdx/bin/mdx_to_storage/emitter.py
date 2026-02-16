@@ -12,6 +12,12 @@ from .parser import Block
 _ORDERED_LIST_PATTERN = re.compile(r"^\d+\.\s+(.*)$")
 _UNORDERED_LIST_PATTERN = re.compile(r"^[-*+]\s+(.*)$")
 _HEADING_LINE_PATTERN = re.compile(r"^(#{1,6})\s+(.*)$")
+_CALLOUT_TYPE_TO_MACRO = {
+    "default": "tip",
+    "info": "info",
+    "important": "note",
+    "error": "warning",
+}
 
 
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
@@ -59,6 +65,9 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
 
     if block.type == "html_block":
         return block.content.strip()
+
+    if block.type == "callout":
+        return _emit_callout(block, context)
 
     return ""
 
@@ -122,3 +131,40 @@ def _parse_list_items(content: str) -> list[tuple[bool, str]]:
             is_ordered, existing = items[-1]
             items[-1] = (is_ordered, f"{existing} {stripped}")
     return items
+
+
+def _emit_callout(block: Block, context: dict) -> str:
+    emoji = block.attrs.get("emoji", "").strip()
+    callout_type = block.attrs.get("type", "default").strip().lower()
+
+    if emoji:
+        macro_name = "panel"
+    else:
+        macro_name = _CALLOUT_TYPE_TO_MACRO.get(callout_type, "tip")
+
+    children = block.children
+    if not children:
+        children = _parse_callout_children_from_content(block.content)
+
+    body = "".join(emit_block(child, context=context) for child in children if child.type != "empty")
+    parts = [f'<ac:structured-macro ac:name="{macro_name}">']
+    if emoji:
+        parts.append(f'<ac:parameter ac:name="panelIcon">{emoji}</ac:parameter>')
+    parts.append(f"<ac:rich-text-body>{body}</ac:rich-text-body>")
+    parts.append("</ac:structured-macro>")
+    return "".join(parts)
+
+
+def _parse_callout_children_from_content(content: str) -> list[Block]:
+    lines = content.splitlines()
+    if not lines:
+        return []
+    if lines[0].startswith("<Callout"):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith("</Callout"):
+        lines = lines[:-1]
+    inner_text = "\n".join(lines).strip()
+    if not inner_text:
+        return []
+    from .parser import parse_mdx
+    return parse_mdx(inner_text)
