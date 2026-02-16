@@ -63,6 +63,8 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
 
     if block.type == "paragraph":
         paragraph_text = _join_paragraph_lines(block.content)
+        if not paragraph_text:
+            return "<p />"
         return f"<p>{convert_inline(paragraph_text, link_resolver=context.get('link_resolver'))}</p>"
 
     if block.type == "code_block":
@@ -303,6 +305,8 @@ def _split_table_row(line: str) -> list[str]:
 
 def _emit_html_block(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
     stripped = content.strip()
+    if stripped in {"<p></p>", "<p/>", "<p />"}:
+        return "<p />"
     if not stripped.startswith("<table"):
         return stripped
     pattern = re.compile(r"<(td|th)([^>]*)>(.*?)</\1>", flags=re.DOTALL)
@@ -342,7 +346,7 @@ def _emit_blockquote(content: str, link_resolver: Optional[LinkResolver] = None)
         paragraphs.append(" ".join(current))
 
     if not paragraphs:
-        return "<blockquote><p></p></blockquote>"
+        return "<blockquote><p /></blockquote>"
 
     body = "".join(f"<p>{convert_inline(text, link_resolver=link_resolver)}</p>" for text in paragraphs)
     return f"<blockquote>{body}</blockquote>"

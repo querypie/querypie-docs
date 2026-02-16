@@ -45,6 +45,11 @@ def _build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="Write markdown failure analysis report to file",
     )
+    parser.add_argument(
+        "--ignore-ri-filename",
+        action="store_true",
+        help="Ignore ri:filename attribute during XHTML comparison",
+    )
     return parser
 
 
@@ -109,7 +114,10 @@ def main() -> int:
         print("No testcase directories containing page.xhtml + expected.mdx found.")
         return 0
 
-    results = [verify_testcase_dir(case_dir) for case_dir in case_dirs]
+    results = [
+        verify_testcase_dir(case_dir, ignore_ri_filename=args.ignore_ri_filename)
+        for case_dir in case_dirs
+    ]
     summary = summarize_results(results)
     failed = [r for r in results if not r.passed]
 

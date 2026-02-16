@@ -70,6 +70,11 @@ def test_emit_html_block_passthrough():
     assert result == html
 
 
+def test_emit_html_block_empty_p_normalized():
+    block = Block(type="html_block", content="<p></p>")
+    assert emit_block(block) == "<p />"
+
+
 def test_emit_frontmatter_import_empty_skip():
     block_fm = Block(type="frontmatter", content="---\ntitle: Test\n---", attrs={"title": "Test"})
     block_imp = Block(type="import_statement", content="import X from 'y'")
@@ -117,6 +122,11 @@ def test_emit_paragraph_multiline_joins_with_space():
     mdx = "line one\nline two\n"
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<p>line one line two</p>"
+
+
+def test_emit_paragraph_empty_content_to_self_closing_p():
+    block = Block(type="paragraph", content="\n")
+    assert emit_block(block) == "<p />"
 
 
 def test_emit_list_with_continuation_line():
@@ -532,4 +542,4 @@ def test_emit_blockquote_empty_body():
     """Empty blockquote `>` only → blockquote with empty paragraph."""
     mdx = ">\n"
     xhtml = emit_document(parse_mdx(mdx))
-    assert xhtml == "<blockquote><p></p></blockquote>"
+    assert xhtml == "<blockquote><p /></blockquote>"

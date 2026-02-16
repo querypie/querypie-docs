@@ -20,7 +20,13 @@ def test_convert_inline_code_span_protects_markdown_tokens():
 def test_convert_inline_preserves_html_entities_and_br():
     src = "a &gt; b and c &lt; d<br/>next"
     got = convert_inline(src)
-    assert got == "a &gt; b and c &lt; d<br/>next"
+    assert got == "a &gt; b and c &lt; d<br />next"
+
+
+def test_convert_inline_normalizes_br_variants():
+    src = "a<br>b<br/>c<BR />d"
+    got = convert_inline(src)
+    assert got == "a<br />b<br />c<br />d"
 
 
 def test_convert_inline_bold_italic_combo():

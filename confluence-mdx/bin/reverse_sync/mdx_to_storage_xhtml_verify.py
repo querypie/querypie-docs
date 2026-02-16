@@ -70,22 +70,22 @@ def mdx_to_storage_xhtml_fragment(mdx_text: str) -> str:
     return emit_document(blocks)
 
 
-def _normalize_xhtml(xhtml: str) -> str:
+def _normalize_xhtml(xhtml: str, ignore_ri_filename: bool = False) -> str:
     soup = BeautifulSoup(xhtml, "html.parser")
     _strip_layout_sections(soup)
     _strip_nonreversible_macros(soup)
     _strip_decorations(soup)
-    _strip_ignored_attributes(soup)
+    _strip_ignored_attributes(soup, ignore_ri_filename=ignore_ri_filename)
     return beautify_xhtml(str(soup)).strip()
 
 
 def verify_expected_mdx_against_page_xhtml(
-    expected_mdx: str, page_xhtml: str
+    expected_mdx: str, page_xhtml: str, ignore_ri_filename: bool = False
 ) -> tuple[bool, str, str]:
     """expected.mdx로 생성한 XHTML과 page.xhtml을 비교한다."""
     generated = mdx_to_storage_xhtml_fragment(expected_mdx)
-    generated_norm = _normalize_xhtml(generated)
-    page_norm = _normalize_xhtml(page_xhtml)
+    generated_norm = _normalize_xhtml(generated, ignore_ri_filename=ignore_ri_filename)
+    page_norm = _normalize_xhtml(page_xhtml, ignore_ri_filename=ignore_ri_filename)
 
     diff_lines = xhtml_diff(
         page_norm,
@@ -98,10 +98,13 @@ def verify_expected_mdx_against_page_xhtml(
     return False, generated, "\n".join(diff_lines)
 
 
-def _strip_ignored_attributes(soup: BeautifulSoup) -> None:
+def _strip_ignored_attributes(soup: BeautifulSoup, ignore_ri_filename: bool = False) -> None:
+    ignored_attrs = set(_IGNORED_ATTRIBUTES)
+    if ignore_ri_filename:
+        ignored_attrs.add("ri:filename")
     for tag in soup.find_all(True):
         for attr in list(tag.attrs.keys()):
-            if attr in _IGNORED_ATTRIBUTES:
+            if attr in ignored_attrs:
                 del tag.attrs[attr]
 
 
@@ -137,12 +140,12 @@ def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:
             yield child
 
 
-def verify_testcase_dir(case_dir: Path) -> CaseVerification:
+def verify_testcase_dir(case_dir: Path, ignore_ri_filename: bool = False) -> CaseVerification:
     """단일 테스트케이스 디렉토리를 검증한다."""
     expected_mdx = (case_dir / "expected.mdx").read_text(encoding="utf-8")
     page_xhtml = (case_dir / "page.xhtml").read_text(encoding="utf-8")
     passed, generated, diff_report = verify_expected_mdx_against_page_xhtml(
-        expected_mdx, page_xhtml
+        expected_mdx, page_xhtml, ignore_ri_filename=ignore_ri_filename
     )
     return CaseVerification(
         case_id=case_dir.name,
