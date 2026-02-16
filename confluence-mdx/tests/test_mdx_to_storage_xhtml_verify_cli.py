@@ -12,6 +12,8 @@ def test_main_returns_2_when_testcases_dir_missing(monkeypatch, capsys):
             testcases_dir=Path("/tmp/not-found"),
             case_id=None,
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     rc = cli.main()
@@ -28,6 +30,8 @@ def test_main_returns_2_when_case_id_missing(monkeypatch, tmp_path, capsys):
             testcases_dir=tmp_path,
             case_id="missing",
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     rc = cli.main()
@@ -44,6 +48,8 @@ def test_main_returns_0_when_no_case_dirs(monkeypatch, tmp_path, capsys):
             testcases_dir=tmp_path,
             case_id=None,
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [])
@@ -64,6 +70,8 @@ def test_main_all_pass_returns_0(monkeypatch, tmp_path, capsys):
             testcases_dir=tmp_path,
             case_id=None,
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_dir])
@@ -90,6 +98,8 @@ def test_main_case_id_returns_2_when_required_files_missing(monkeypatch, tmp_pat
             testcases_dir=tmp_path,
             case_id="101",
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     rc = cli.main()
@@ -111,6 +121,8 @@ def test_main_case_id_single_case_pass(monkeypatch, tmp_path, capsys):
             testcases_dir=tmp_path,
             case_id="101",
             show_diff_limit=3,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     rc = cli.main()
@@ -132,6 +144,8 @@ def test_main_has_failures_returns_1_and_respects_diff_limit(monkeypatch, tmp_pa
             testcases_dir=tmp_path,
             case_id=None,
             show_diff_limit=1,
+            show_analysis=False,
+            write_analysis_report=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_a, case_b])
@@ -150,3 +164,42 @@ def test_main_has_failures_returns_1_and_respects_diff_limit(monkeypatch, tmp_pa
     assert "--- diff #1: 101 ---" in output
     assert "diff-101" in output
     assert "diff-102" not in output
+
+
+def test_main_show_analysis_and_write_report(monkeypatch, tmp_path, capsys):
+    case_a = tmp_path / "101"
+    case_a.mkdir()
+    report_path = tmp_path / "reports" / "verify-analysis.md"
+
+    monkeypatch.setattr(
+        cli.argparse.ArgumentParser,
+        "parse_args",
+        lambda self: SimpleNamespace(
+            testcases_dir=tmp_path,
+            case_id=None,
+            show_diff_limit=0,
+            show_analysis=True,
+            write_analysis_report=report_path,
+        ),
+    )
+    monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_a])
+    monkeypatch.setattr(
+        cli,
+        "verify_testcase_dir",
+        lambda _: SimpleNamespace(
+            case_id="101",
+            passed=False,
+            diff_report='-<ac:link><ri:page /></ac:link>\n+<a href="#link-error">x</a>',
+        ),
+    )
+
+    rc = cli.main()
+    assert rc == 1
+    output = capsys.readouterr().out
+    assert "[analysis] priorities:" in output
+    assert "[analysis] top reasons:" in output
+    assert "[analysis] report written:" in output
+    assert report_path.exists()
+    report = report_path.read_text(encoding="utf-8")
+    assert "Priority Summary" in report
+    assert "internal_link_unresolved" in report

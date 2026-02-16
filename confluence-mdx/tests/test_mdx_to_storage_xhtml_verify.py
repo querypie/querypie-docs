@@ -1,8 +1,12 @@
 from pathlib import Path
 
 from reverse_sync.mdx_to_storage_xhtml_verify import (
+    CaseVerification,
+    analyze_failed_cases,
+    classify_failure_reasons,
     iter_testcase_dirs,
     mdx_to_storage_xhtml_fragment,
+    summarize_results,
     verify_expected_mdx_against_page_xhtml,
     verify_testcase_dir,
 )
@@ -62,3 +66,45 @@ def test_verify_testcase_dir_reads_and_returns_case_result(tmp_path: Path):
     assert result.passed is True
     assert result.generated_xhtml == "<h1>Heading</h1><p>Body</p>"
     assert result.diff_report == ""
+
+
+def test_classify_failure_reasons_detects_verify_filter_noise():
+    diff_report = '-<p ac:local-id="x">A</p>\n+<p>A</p>\n-<ri:attachment ri:version-at-save="1" />'
+    reasons = classify_failure_reasons(diff_report)
+    assert "verify_filter_noise" in reasons
+
+
+def test_classify_failure_reasons_detects_internal_link_unresolved():
+    diff_report = "-<ac:link><ri:page ri:content-title=\"Doc\" /></ac:link>\n+<a href=\"#link-error\">Doc</a>"
+    reasons = classify_failure_reasons(diff_report)
+    assert "internal_link_unresolved" in reasons
+
+
+def test_analyze_and_summarize_results_prioritize_p1():
+    results = [
+        CaseVerification(case_id="100", passed=True, generated_xhtml="<p>ok</p>", diff_report=""),
+        CaseVerification(
+            case_id="200",
+            passed=False,
+            generated_xhtml="<p>bad</p>",
+            diff_report="-<ac:link><ri:page /></ac:link>\n+<a href=\"#link-error\">x</a>",
+        ),
+        CaseVerification(
+            case_id="300",
+            passed=False,
+            generated_xhtml="<p>bad</p>",
+            diff_report='-<p ac:local-id="x">A</p>\n+<p>A</p>',
+        ),
+    ]
+
+    analyses = analyze_failed_cases(results)
+    assert len(analyses) == 2
+    assert analyses[0].case_id == "200"
+    assert analyses[0].priority == "P1"
+
+    summary = summarize_results(results)
+    assert summary.total == 3
+    assert summary.passed == 1
+    assert summary.failed == 2
+    assert summary.by_priority["P1"] == 1
+    assert summary.by_priority["P2"] == 1
