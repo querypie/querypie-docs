@@ -326,8 +326,11 @@ def main():
     # 삭제
     if args.delete and unused:
         sys.path.insert(0, str(_PROJECT_DIR / "bin"))
-        from fetch.config import Config
-        config = Config()
+        from reverse_sync.confluence_client import ConfluenceConfig
+        config = ConfluenceConfig()
+        if not config.email or not config.api_token:
+            logger.error("인증 정보를 찾을 수 없습니다. ~/.config/atlassian/confluence.conf를 확인하세요.")
+            sys.exit(1)
         print(f"\n{len(unused)}개 첨부파일을 삭제합니다...", file=sys.stderr)
         success, failure = delete_attachments(unused, config, logger)
         print(f"삭제 완료: 성공 {success}개, 실패 {failure}개", file=sys.stderr)
