@@ -69,3 +69,26 @@ def test_parse_paragraph_fallback():
 def test_parse_badge_not_html_block():
     blocks = parse_mdx('<Badge color="blue">Active</Badge> status\n')
     assert blocks[0].type == "paragraph"
+
+
+def test_parse_import_and_empty_blocks():
+    text = "import X from 'x'\n\nParagraph\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "import_statement"
+    assert blocks[1].type == "empty"
+    assert blocks[2].type == "paragraph"
+
+
+def test_parse_list_with_continuation_and_blank_line():
+    text = "* item1\n  continuation\n\n* item2\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "list"
+    assert "continuation" in blocks[0].content
+
+
+def test_parse_html_block_stops_before_heading():
+    text = "<div>line1\nline2\n## Heading\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "html_block"
+    assert "line2" in blocks[0].content
+    assert blocks[1].type == "heading"

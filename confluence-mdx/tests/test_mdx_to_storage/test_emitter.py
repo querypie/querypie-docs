@@ -110,3 +110,20 @@ ______
     # frontmatter, import, page title(# My Page)은 출력에 미포함
     assert "My Page" not in xhtml
     assert "import" not in xhtml
+
+
+def test_emit_paragraph_multiline_joins_with_space():
+    mdx = "line one\nline two\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<p>line one line two</p>"
+
+
+def test_emit_list_with_continuation_line():
+    mdx = "* first line\n  continued line\n* second\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<ul><li><p>first line continued line</p></li><li><p>second</p></li></ul>"
+
+
+def test_emit_unknown_block_type_returns_empty():
+    block = Block(type="unknown", content="x")
+    assert emit_block(block) == ""
