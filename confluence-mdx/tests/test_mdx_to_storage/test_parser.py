@@ -69,3 +69,50 @@ def test_parse_paragraph_fallback():
 def test_parse_badge_not_html_block():
     blocks = parse_mdx('<Badge color="blue">Active</Badge> status\n')
     assert blocks[0].type == "paragraph"
+
+
+def test_parse_import_and_empty_blocks():
+    text = "import X from 'x'\n\nParagraph\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "import_statement"
+    assert blocks[1].type == "empty"
+    assert blocks[2].type == "paragraph"
+
+
+def test_parse_list_with_continuation_and_blank_line():
+    text = "* item1\n  continuation\n\n* item2\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "list"
+    assert "continuation" in blocks[0].content
+
+
+def test_parse_html_block_stops_before_heading():
+    text = "<div>line1\nline2\n## Heading\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "html_block"
+    assert "line2" in blocks[0].content
+    assert blocks[1].type == "heading"
+
+
+def test_parse_frontmatter_unclosed_falls_through():
+    text = "---\ntitle: X\nNo closing\n"
+    blocks = parse_mdx(text)
+    # 닫히지 않은 frontmatter는 파싱되지 않고 다른 타입으로 처리
+    assert blocks[0].type != "frontmatter"
+
+
+def test_parse_code_block_unclosed_collects_to_end():
+    text = "```python\nline1\nline2\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "code_block"
+    assert blocks[0].language == "python"
+    assert "line1" in blocks[0].content
+    assert "line2" in blocks[0].content
+
+
+def test_parse_ordered_list_detected():
+    text = "1. first\n2. second\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "list"
+    assert "first" in blocks[0].content
+    assert "second" in blocks[0].content
