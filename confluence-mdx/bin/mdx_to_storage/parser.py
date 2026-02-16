@@ -80,6 +80,11 @@ def parse_mdx(text: str) -> list[Block]:
             blocks.append(block)
             continue
 
+        if _is_markdown_table_start(lines, i):
+            block, i = _parse_markdown_table_block(lines, i)
+            blocks.append(block)
+            continue
+
         if _is_list_line(line):
             block, i = _parse_list_block(lines, i)
             blocks.append(block)
@@ -246,7 +251,24 @@ def _extract_figure_caption(content: str) -> str:
     return inner.strip()
 
 
+def _parse_markdown_table_block(lines: list[str], start: int) -> tuple[Block, int]:
+    i = start
+    while i < len(lines) and _is_pipe_table_row(lines[i]):
+        i += 1
+    content = "\n".join(lines[start:i]) + "\n"
+    return Block(type="table", content=content), i
+
+
 def _parse_html_block(lines: list[str], start: int) -> tuple[Block, int]:
+    if lines[start].startswith("<table"):
+        i = start + 1
+        while i < len(lines) and "</table>" not in lines[i]:
+            i += 1
+        if i < len(lines):
+            i += 1
+        content = "\n".join(lines[start:i]) + "\n"
+        return Block(type="html_block", content=content), i
+
     i = start + 1
     while i < len(lines):
         current = lines[i]
@@ -317,4 +339,33 @@ def _is_html_block_start(line: str) -> bool:
         return False
     if line.startswith("<Badge"):
         return False
+    return True
+
+
+def _is_markdown_table_start(lines: list[str], idx: int) -> bool:
+    if idx + 1 >= len(lines):
+        return False
+    if not _is_pipe_table_row(lines[idx]):
+        return False
+    return _is_markdown_table_separator(lines[idx + 1])
+
+
+def _is_pipe_table_row(line: str) -> bool:
+    stripped = line.strip()
+    return "|" in stripped and stripped.count("|") >= 2
+
+
+def _is_markdown_table_separator(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped or "|" not in stripped:
+        return False
+    cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+    if not cells:
+        return False
+    for cell in cells:
+        compact = cell.replace(":", "").replace("-", "")
+        if compact != "":
+            return False
+        if "-" not in cell:
+            return False
     return True

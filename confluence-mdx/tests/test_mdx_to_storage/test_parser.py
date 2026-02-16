@@ -158,3 +158,58 @@ def test_parse_ordered_list_detected():
     assert blocks[0].type == "list"
     assert "first" in blocks[0].content
     assert "second" in blocks[0].content
+
+
+def test_parse_markdown_table_block():
+    mdx = """| Name | Desc |
+| --- | --- |
+| A | B |
+| C | D |
+"""
+    blocks = parse_mdx(mdx)
+    assert len(blocks) == 1
+    assert blocks[0].type == "table"
+    assert "| A | B |" in blocks[0].content
+
+
+def test_parse_non_table_pipe_text_as_paragraph():
+    mdx = "a | b | c\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type == "paragraph"
+
+
+def test_parse_markdown_table_with_alignment_markers():
+    mdx = """| Left | Center | Right |
+| :--- | :---: | ---: |
+| a | b | c |
+"""
+    blocks = parse_mdx(mdx)
+    assert len(blocks) == 1
+    assert blocks[0].type == "table"
+
+
+def test_parse_paragraph_with_pipe_chars_not_broken():
+    """Paragraph containing pipe characters must not be split by table detection."""
+    mdx = "Some text before.\n\n* [My Dashboard | Logging into Web](user-manual/dashboard#logging)\n"
+    blocks = parse_mdx(mdx)
+    types = [b.type for b in blocks if b.type != "empty"]
+    assert types == ["paragraph", "list"]
+
+
+def test_parse_paragraph_then_markdown_table():
+    mdx = """Intro paragraph.
+
+| A | B |
+| --- | --- |
+| 1 | 2 |
+"""
+    blocks = parse_mdx(mdx)
+    types = [b.type for b in blocks if b.type != "empty"]
+    assert types == ["paragraph", "table"]
+
+
+def test_parse_inline_code_with_pipes_stays_paragraph():
+    """Inline code with || operators must not trigger table detection."""
+    mdx = "Expression: `a == 'x' || b == 'y'` is valid.\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type == "paragraph"
