@@ -271,7 +271,7 @@ class TestRealData:
         assert "image-20241103-071004.png" in unused_titles
 
     @pytest.mark.skipif(
-        not VAR_DIR.is_dir(),
+        not (VAR_DIR / SAMPLE_PAGE_ID).is_dir(),
         reason="var/ 실제 데이터가 없습니다"
     )
     def test_full_scan(self):
