@@ -78,6 +78,28 @@ def test_verify_testcase_dir_reads_and_returns_case_result(tmp_path: Path):
     assert result.diff_report == ""
 
 
+def test_verify_testcase_dir_sets_current_page_on_link_resolver(tmp_path: Path):
+    case_dir = tmp_path / "544375741"
+    case_dir.mkdir()
+    (case_dir / "expected.mdx").write_text("## Heading\n\nBody\n", encoding="utf-8")
+    (case_dir / "page.xhtml").write_text("<h1>Heading</h1><p>Body</p>", encoding="utf-8")
+
+    class StubResolver:
+        def __init__(self) -> None:
+            self.current_page = None
+
+        def set_current_page(self, page_id: str) -> None:
+            self.current_page = page_id
+
+        def resolve(self, href: str, link_text: str = ""):
+            return None, None
+
+    resolver = StubResolver()
+    result = verify_testcase_dir(case_dir, link_resolver=resolver)
+    assert result.passed is True
+    assert resolver.current_page == "544375741"
+
+
 def test_verify_ignores_confluence_auto_attributes():
     mdx = "## Title\n\nBody\n"
     page = '<h1 local-id="x">Title</h1><p ac:local-id="y" class="media-group">Body</p>'

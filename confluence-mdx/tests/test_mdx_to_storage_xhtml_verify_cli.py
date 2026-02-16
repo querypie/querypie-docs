@@ -15,6 +15,7 @@ def test_main_returns_2_when_testcases_dir_missing(monkeypatch, capsys):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     rc = cli.main()
@@ -34,6 +35,7 @@ def test_main_returns_2_when_case_id_missing(monkeypatch, tmp_path, capsys):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     rc = cli.main()
@@ -53,6 +55,7 @@ def test_main_returns_0_when_no_case_dirs(monkeypatch, tmp_path, capsys):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [])
@@ -76,6 +79,7 @@ def test_main_all_pass_returns_0(monkeypatch, tmp_path, capsys):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_dir])
@@ -105,6 +109,7 @@ def test_main_case_id_returns_2_when_required_files_missing(monkeypatch, tmp_pat
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     rc = cli.main()
@@ -129,6 +134,7 @@ def test_main_case_id_single_case_pass(monkeypatch, tmp_path, capsys):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     rc = cli.main()
@@ -153,6 +159,7 @@ def test_main_has_failures_returns_1_and_respects_diff_limit(monkeypatch, tmp_pa
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_a, case_b])
@@ -192,6 +199,7 @@ def test_main_show_analysis_and_write_report(monkeypatch, tmp_path, capsys):
             show_analysis=True,
             write_analysis_report=report_path,
             ignore_ri_filename=False,
+            pages_yaml=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_a])
@@ -231,18 +239,64 @@ def test_main_passes_ignore_ri_filename_option(monkeypatch, tmp_path):
             show_analysis=False,
             write_analysis_report=None,
             ignore_ri_filename=True,
+            pages_yaml=None,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_dir])
 
     called = {}
 
-    def _verify(case, ignore_ri_filename=False):
+    def _verify(case, ignore_ri_filename=False, link_resolver=None):
         called["case"] = case
         called["ignore"] = ignore_ri_filename
+        called["resolver"] = link_resolver
         return SimpleNamespace(case_id="101", passed=True, diff_report="")
 
     monkeypatch.setattr(cli, "verify_testcase_dir", _verify)
     rc = cli.main()
     assert rc == 0
     assert called["ignore"] is True
+    assert called["resolver"] is None
+
+
+def test_main_builds_link_resolver_when_pages_yaml_provided(monkeypatch, tmp_path):
+    case_dir = tmp_path / "101"
+    case_dir.mkdir()
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "101"
+  title_orig: "Example"
+  path: ["example"]
+""".strip(),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        cli.argparse.ArgumentParser,
+        "parse_args",
+        lambda self: SimpleNamespace(
+            testcases_dir=tmp_path,
+            case_id=None,
+            show_diff_limit=0,
+            show_analysis=False,
+            write_analysis_report=None,
+            ignore_ri_filename=False,
+            pages_yaml=pages_yaml,
+        ),
+    )
+    monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case_dir])
+
+    called = {}
+
+    def _verify(case, ignore_ri_filename=False, link_resolver=None):
+        called["case"] = case
+        called["ignore"] = ignore_ri_filename
+        called["resolver"] = link_resolver
+        return SimpleNamespace(case_id="101", passed=True, diff_report="")
+
+    monkeypatch.setattr(cli, "verify_testcase_dir", _verify)
+    rc = cli.main()
+    assert rc == 0
+    assert called["ignore"] is False
+    assert called["resolver"] is not None

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from mdx_to_storage.link_resolver import LinkResolver
+from mdx_to_storage.link_resolver import LinkResolver, load_pages_yaml
 
 
 def test_resolve_relative_path_to_title(tmp_path: Path):
@@ -65,3 +65,40 @@ def test_external_and_hash_links_are_not_resolved(tmp_path: Path):
     assert resolver.resolve("https://example.com", link_text="x") == (None, None)
     assert resolver.resolve("mailto:test@example.com", link_text="x") == (None, None)
     assert resolver.resolve("#section", link_text="x") == (None, None)
+
+
+def test_load_pages_yaml_returns_page_entries(tmp_path: Path):
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "100"
+  title_orig: "Overview"
+  path: ["overview"]
+""".strip(),
+        encoding="utf-8",
+    )
+    pages = load_pages_yaml(pages_yaml)
+    assert len(pages) == 1
+    assert pages[0].page_id == "100"
+    assert pages[0].title_orig == "Overview"
+    assert pages[0].path == ["overview"]
+
+
+def test_resolve_relative_dotdot_with_current_page(tmp_path: Path):
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "200"
+  title_orig: "Child"
+  path: ["docs", "section", "child"]
+- page_id: "201"
+  title_orig: "Sibling"
+  path: ["docs", "sibling"]
+""".strip(),
+        encoding="utf-8",
+    )
+    resolver = LinkResolver(pages_yaml)
+    resolver.set_current_page("200")
+    title, anchor = resolver.resolve("../sibling", link_text="Sibling")
+    assert title == "Sibling"
+    assert anchor is None

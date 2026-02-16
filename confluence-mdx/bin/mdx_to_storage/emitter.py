@@ -59,7 +59,11 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
             return ""
 
         xhtml_level = max(1, min(6, block.level - 1))
-        return f"<h{xhtml_level}>{convert_heading_inline(heading_text)}</h{xhtml_level}>"
+        return (
+            f"<h{xhtml_level}>"
+            f"{convert_heading_inline(heading_text, link_resolver=context.get('link_resolver'))}"
+            f"</h{xhtml_level}>"
+        )
 
     if block.type == "paragraph":
         paragraph_text = _join_paragraph_lines(block.content)
@@ -108,9 +112,13 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
     return ""
 
 
-def emit_document(blocks: list[Block]) -> str:
+def emit_document(
+    blocks: list[Block],
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """Emit XHTML for a full MDX document."""
-    link_resolver = LinkResolver()
+    if link_resolver is None:
+        link_resolver = LinkResolver()
     context: dict[str, object] = {"frontmatter_title": "", "link_resolver": link_resolver}
     for block in blocks:
         if block.type == "frontmatter":

@@ -91,3 +91,22 @@ def test_convert_inline_unresolved_link_keeps_anchor(tmp_path):
     src = "[Unknown](not/found)"
     got = convert_inline(src, link_resolver=resolver)
     assert got == '<a href="not/found">Unknown</a>'
+
+
+def test_convert_heading_inline_with_link_resolver(tmp_path):
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "1"
+  title_orig: "My Dashboard"
+  path: ["user-manual", "my-dashboard"]
+""".strip(),
+        encoding="utf-8",
+    )
+    resolver = LinkResolver(pages_yaml)
+    src = "Heading [My Dashboard](user-manual/my-dashboard#overview)"
+    got = convert_heading_inline(src, link_resolver=resolver)
+    assert (
+        got
+        == 'Heading <ac:link ac:anchor="overview"><ri:page ri:content-title="My Dashboard"></ri:page><ac:link-body>My Dashboard</ac:link-body></ac:link>'
+    )

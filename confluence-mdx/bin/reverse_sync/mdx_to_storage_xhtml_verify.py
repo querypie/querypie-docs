@@ -13,6 +13,7 @@ from typing import Iterable
 
 from bs4 import BeautifulSoup
 from mdx_to_storage import emit_document, parse_mdx
+from mdx_to_storage.link_resolver import LinkResolver
 from xhtml_beautify_diff import beautify_xhtml, xhtml_diff
 
 
@@ -65,10 +66,13 @@ class VerificationSummary:
     analyses: list[FailureAnalysis]
 
 
-def mdx_to_storage_xhtml_fragment(mdx_text: str) -> str:
+def mdx_to_storage_xhtml_fragment(
+    mdx_text: str,
+    link_resolver: LinkResolver | None = None,
+) -> str:
     """MDX 텍스트를 Confluence Storage XHTML fragment로 변환한다."""
     blocks = parse_mdx(mdx_text)
-    return emit_document(blocks)
+    return emit_document(blocks, link_resolver=link_resolver)
 
 
 def _normalize_xhtml(xhtml: str, ignore_ri_filename: bool = False) -> str:
@@ -81,10 +85,13 @@ def _normalize_xhtml(xhtml: str, ignore_ri_filename: bool = False) -> str:
 
 
 def verify_expected_mdx_against_page_xhtml(
-    expected_mdx: str, page_xhtml: str, ignore_ri_filename: bool = False
+    expected_mdx: str,
+    page_xhtml: str,
+    ignore_ri_filename: bool = False,
+    link_resolver: LinkResolver | None = None,
 ) -> tuple[bool, str, str]:
     """expected.mdx로 생성한 XHTML과 page.xhtml을 비교한다."""
-    generated = mdx_to_storage_xhtml_fragment(expected_mdx)
+    generated = mdx_to_storage_xhtml_fragment(expected_mdx, link_resolver=link_resolver)
     generated_norm = _normalize_xhtml(generated, ignore_ri_filename=ignore_ri_filename)
     page_norm = _normalize_xhtml(page_xhtml, ignore_ri_filename=ignore_ri_filename)
 
@@ -141,12 +148,22 @@ def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:
             yield child
 
 
-def verify_testcase_dir(case_dir: Path, ignore_ri_filename: bool = False) -> CaseVerification:
+def verify_testcase_dir(
+    case_dir: Path,
+    ignore_ri_filename: bool = False,
+    link_resolver: LinkResolver | None = None,
+) -> CaseVerification:
     """단일 테스트케이스 디렉토리를 검증한다."""
+    if link_resolver is not None:
+        link_resolver.set_current_page(case_dir.name)
+
     expected_mdx = (case_dir / "expected.mdx").read_text(encoding="utf-8")
     page_xhtml = (case_dir / "page.xhtml").read_text(encoding="utf-8")
     passed, generated, diff_report = verify_expected_mdx_against_page_xhtml(
-        expected_mdx, page_xhtml, ignore_ri_filename=ignore_ri_filename
+        expected_mdx,
+        page_xhtml,
+        ignore_ri_filename=ignore_ri_filename,
+        link_resolver=link_resolver,
     )
     return CaseVerification(
         case_id=case_dir.name,
