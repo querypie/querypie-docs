@@ -21,6 +21,14 @@ _CALLOUT_TYPE_TO_MACRO = {
 }
 
 
+class _ListNode:
+    def __init__(self, ordered: bool, text: str, depth: int) -> None:
+        self.ordered = ordered
+        self.text = text
+        self.depth = depth
+        self.children: list["_ListNode"] = []
+
+
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
     """Emit XHTML for a single block."""
     if context is None:
@@ -108,33 +116,70 @@ def _emit_single_depth_list(content: str) -> str:
     if not parsed:
         return ""
 
-    ordered = parsed[0][0]
-    tag = "ol" if ordered else "ul"
-    items = "".join(f"<li><p>{convert_inline(item)}</p></li>" for _, item in parsed)
-    return f"<{tag}>{items}</{tag}>"
+    roots = _build_list_tree(parsed)
+    return _render_list_nodes(roots)
 
 
-def _parse_list_items(content: str) -> list[tuple[bool, str]]:
-    items: list[tuple[bool, str]] = []
+def _parse_list_items(content: str) -> list[_ListNode]:
+    items: list[_ListNode] = []
     for line in content.splitlines():
-        stripped = line.strip()
-        if not stripped:
+        if not line.strip():
             continue
+        expanded = line.expandtabs(4)
+        indent = len(expanded) - len(expanded.lstrip(" "))
+        depth = max(0, indent // 4)
+        stripped = line.strip()
 
         ordered_match = _ORDERED_LIST_PATTERN.match(stripped)
         if ordered_match:
-            items.append((True, ordered_match.group(1)))
+            items.append(_ListNode(True, ordered_match.group(1), depth))
             continue
 
         unordered_match = _UNORDERED_LIST_PATTERN.match(stripped)
         if unordered_match:
-            items.append((False, unordered_match.group(1)))
+            items.append(_ListNode(False, unordered_match.group(1), depth))
             continue
 
         if items:
-            is_ordered, existing = items[-1]
-            items[-1] = (is_ordered, f"{existing} {stripped}")
+            items[-1].text = f"{items[-1].text} {stripped}"
     return items
+
+
+def _build_list_tree(items: list[_ListNode]) -> list[_ListNode]:
+    roots: list[_ListNode] = []
+    stack: list[_ListNode] = []
+
+    for item in items:
+        while stack and stack[-1].depth >= item.depth:
+            stack.pop()
+        if stack:
+            stack[-1].children.append(item)
+        else:
+            roots.append(item)
+        stack.append(item)
+
+    return roots
+
+
+def _render_list_nodes(nodes: list[_ListNode]) -> str:
+    parts: list[str] = []
+    i = 0
+    while i < len(nodes):
+        ordered = nodes[i].ordered
+        tag = "ol" if ordered else "ul"
+        group: list[_ListNode] = []
+        while i < len(nodes) and nodes[i].ordered == ordered:
+            group.append(nodes[i])
+            i += 1
+
+        body = "".join(_render_list_item(node) for node in group)
+        parts.append(f"<{tag}>{body}</{tag}>")
+    return "".join(parts)
+
+
+def _render_list_item(node: _ListNode) -> str:
+    nested = _render_list_nodes(node.children) if node.children else ""
+    return f"<li><p>{convert_inline(node.text)}</p>{nested}</li>"
 
 
 def _emit_callout(block: Block, context: dict) -> str:

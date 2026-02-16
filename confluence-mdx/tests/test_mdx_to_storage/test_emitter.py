@@ -294,3 +294,37 @@ More text after image.
     assert "<p>More text after image.</p>" in xhtml
     # frontmatter and page title should be excluded
     assert "Page" not in xhtml
+
+
+def test_emit_nested_unordered_list():
+    mdx = """* parent
+    * child
+    * child-2
+* parent-2
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert (
+        xhtml
+        == "<ul><li><p>parent</p><ul><li><p>child</p></li><li><p>child-2</p></li></ul></li><li><p>parent-2</p></li></ul>"
+    )
+
+
+def test_emit_nested_mixed_ordered_unordered_list():
+    mdx = """1. step one
+    * detail a
+    * detail b
+2. step two
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert (
+        xhtml
+        == "<ol><li><p>step one</p><ul><li><p>detail a</p></li><li><p>detail b</p></li></ul></li><li><p>step two</p></li></ol>"
+    )
+
+
+def test_emit_same_depth_mixed_marker_splits_lists():
+    mdx = """* bullet
+1. ordered
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<ul><li><p>bullet</p></li></ul><ol><li><p>ordered</p></li></ol>"
