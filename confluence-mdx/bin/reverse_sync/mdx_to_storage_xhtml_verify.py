@@ -22,6 +22,24 @@ class CaseVerification:
     diff_report: str
 
 
+@dataclass
+class FailureAnalysis:
+    case_id: str
+    priority: str
+    reasons: list[str]
+
+
+@dataclass
+class VerificationSummary:
+    total: int
+    passed: int
+    failed: int
+    failed_case_ids: list[str]
+    by_priority: dict[str, int]
+    by_reason: dict[str, int]
+    analyses: list[FailureAnalysis]
+
+
 def mdx_to_storage_xhtml_fragment(mdx_text: str) -> str:
     """MDX 텍스트를 Confluence Storage XHTML fragment로 변환한다."""
     blocks = parse_mdx(mdx_text)
@@ -72,4 +90,109 @@ def verify_testcase_dir(case_dir: Path) -> CaseVerification:
         passed=passed,
         generated_xhtml=generated,
         diff_report=diff_report,
+    )
+
+
+_REASON_PRIORITY: dict[str, str] = {
+    "internal_link_unresolved": "P1",
+    "table_cell_structure_mismatch": "P1",
+    "blockquote_or_paragraph_grouping": "P1",
+    "verify_filter_noise": "P2",
+    "non_reversible_macro_noise": "P2",
+    "empty_paragraph_style_mismatch": "P2",
+    "other": "P3",
+}
+_PRIORITY_ORDER = {"P1": 1, "P2": 2, "P3": 3}
+
+
+def classify_failure_reasons(diff_report: str) -> list[str]:
+    reasons: list[str] = []
+
+    if any(
+        token in diff_report
+        for token in (
+            "ac:macro-id",
+            "ac:local-id",
+            "local-id",
+            "ri:version-at-save",
+            "ac:original-height",
+            "ac:original-width",
+            "ac:custom-width",
+            "data-table-width",
+            "ac:breakout-mode",
+            "ac:breakout-width",
+            "<ac:adf-mark",
+        )
+    ):
+        reasons.append("verify_filter_noise")
+
+    if any(
+        token in diff_report
+        for token in (
+            'ac:name="toc"',
+            'ac:name="view-file"',
+            "<ac:layout",
+            "<ac:layout-section",
+            "<ac:layout-cell",
+        )
+    ):
+        reasons.append("non_reversible_macro_noise")
+
+    if any(token in diff_report for token in ("<ri:page", "<ri:space", "href=\"#link-error\"")):
+        reasons.append("internal_link_unresolved")
+
+    if "<table" in diff_report and any(token in diff_report for token in ("<th", "<td", "<colgroup")):
+        reasons.append("table_cell_structure_mismatch")
+
+    if "<blockquote" in diff_report or "\n-<p>\n+<p />" in diff_report:
+        reasons.append("blockquote_or_paragraph_grouping")
+
+    if "<p />" in diff_report and "<p>" in diff_report:
+        reasons.append("empty_paragraph_style_mismatch")
+
+    if not reasons:
+        reasons.append("other")
+    return reasons
+
+
+def _pick_priority(reasons: list[str]) -> str:
+    priorities = [_REASON_PRIORITY.get(reason, "P3") for reason in reasons]
+    return sorted(priorities, key=lambda priority: _PRIORITY_ORDER.get(priority, 99))[0]
+
+
+def analyze_failed_cases(results: list[CaseVerification]) -> list[FailureAnalysis]:
+    analyses: list[FailureAnalysis] = []
+    for result in results:
+        if result.passed:
+            continue
+        reasons = classify_failure_reasons(result.diff_report)
+        analyses.append(
+            FailureAnalysis(
+                case_id=result.case_id,
+                priority=_pick_priority(reasons),
+                reasons=reasons,
+            )
+        )
+    return analyses
+
+
+def summarize_results(results: list[CaseVerification]) -> VerificationSummary:
+    failed_case_ids = [result.case_id for result in results if not result.passed]
+    analyses = analyze_failed_cases(results)
+
+    by_priority = {"P1": 0, "P2": 0, "P3": 0}
+    by_reason: dict[str, int] = {}
+    for analysis in analyses:
+        by_priority[analysis.priority] = by_priority.get(analysis.priority, 0) + 1
+        for reason in analysis.reasons:
+            by_reason[reason] = by_reason.get(reason, 0) + 1
+
+    return VerificationSummary(
+        total=len(results),
+        passed=len(results) - len(failed_case_ids),
+        failed=len(failed_case_ids),
+        failed_case_ids=failed_case_ids,
+        by_priority=by_priority,
+        by_reason=by_reason,
+        analyses=analyses,
     )
