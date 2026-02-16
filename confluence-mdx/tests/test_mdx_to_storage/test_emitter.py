@@ -402,3 +402,49 @@ def test_emit_html_table_keeps_nested_html_in_cells():
 """
     xhtml = emit_document(parse_mdx(mdx))
     assert "<td><p>**not converted here**</p></td>" in xhtml
+
+
+def test_emit_markdown_table_with_empty_cells():
+    mdx = """| Name | Version |
+| --- | --- |
+| A | 1.0 |
+| B |  |
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<td><p>A</p></td>" in xhtml
+    assert "<td><p></p></td>" in xhtml
+
+
+def test_emit_markdown_table_with_alignment_markers():
+    mdx = """| Left | Center | Right |
+| :--- | :---: | ---: |
+| a | b | c |
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<th><p>Left</p></th>" in xhtml
+    assert "<td><p>a</p></td>" in xhtml
+    assert "<td><p>c</p></td>" in xhtml
+
+
+def test_emit_markdown_table_with_bold_headers():
+    """Confluence header cells use <strong> — MDX bold markers should convert."""
+    mdx = """| **Name** | **Desc** |
+| --- | --- |
+| A | B |
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<th><p><strong>Name</strong></p></th>" in xhtml
+    assert "<th><p><strong>Desc</strong></p></th>" in xhtml
+
+
+def test_emit_paragraph_then_markdown_table():
+    mdx = """Intro paragraph.
+
+| A | B |
+| --- | --- |
+| 1 | 2 |
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<p>Intro paragraph.</p>" in xhtml
+    assert "<table><tbody>" in xhtml
+    assert "<td><p>1</p></td>" in xhtml

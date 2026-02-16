@@ -305,8 +305,6 @@ def _starts_new_block(line: str) -> bool:
         return True
     if line.startswith("<figure"):
         return True
-    if _is_pipe_table_row(line):
-        return True
     if _is_list_line(line):
         return True
     if _is_html_block_start(line):
