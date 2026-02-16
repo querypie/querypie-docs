@@ -7,6 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from mdx_to_storage.link_resolver import LinkResolver, load_pages_yaml
 from reverse_sync.mdx_to_storage_xhtml_verify import (
     VerificationSummary,
     iter_testcase_dirs,
@@ -49,6 +50,11 @@ def _build_parser() -> argparse.ArgumentParser:
         "--ignore-ri-filename",
         action="store_true",
         help="Ignore ri:filename attribute during XHTML comparison",
+    )
+    parser.add_argument(
+        "--pages-yaml",
+        type=Path,
+        help="pages.yaml path for internal link resolution",
     )
     return parser
 
@@ -114,10 +120,20 @@ def main() -> int:
         print("No testcase directories containing page.xhtml + expected.mdx found.")
         return 0
 
-    results = [
-        verify_testcase_dir(case_dir, ignore_ri_filename=args.ignore_ri_filename)
-        for case_dir in case_dirs
-    ]
+    link_resolver = None
+    if args.pages_yaml:
+        pages = load_pages_yaml(args.pages_yaml)
+        link_resolver = LinkResolver(pages)
+
+    results = []
+    for case_dir in case_dirs:
+        results.append(
+            verify_testcase_dir(
+                case_dir,
+                ignore_ri_filename=args.ignore_ri_filename,
+                link_resolver=link_resolver,
+            )
+        )
     summary = summarize_results(results)
     failed = [r for r in results if not r.passed]
 

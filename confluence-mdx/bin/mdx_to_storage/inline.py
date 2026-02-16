@@ -44,7 +44,10 @@ def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
     return converted
 
 
-def convert_heading_inline(text: str) -> str:
+def convert_heading_inline(
+    text: str,
+    link_resolver: LinkResolver | None = None,
+) -> str:
     """Convert heading inline text while stripping bold markers.
 
     Heading behavior follows forward converter semantics where strong tags
@@ -59,7 +62,7 @@ def convert_heading_inline(text: str) -> str:
         return f"\x00CODE{len(placeholders) - 1}\x00"
 
     converted = _CODE_SPAN_RE.sub(_stash_code, without_bold_markers)
-    converted = _convert_links(converted, link_resolver=None)
+    converted = _convert_links(converted, link_resolver=link_resolver)
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
