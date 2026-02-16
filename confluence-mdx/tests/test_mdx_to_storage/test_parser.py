@@ -74,6 +74,18 @@ def test_parse_figure_with_caption():
     assert blocks[0].attrs["caption"] == "Caption text"
 
 
+def test_parse_figure_self_closing_img():
+    """Self-closing <img ... /> tag should parse identically."""
+    text = """<figure>
+  <img src="/images/sample.png" alt="Sample" width="500" />
+</figure>
+"""
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "figure"
+    assert blocks[0].attrs["src"] == "/images/sample.png"
+    assert blocks[0].attrs["width"] == "500"
+
+
 def test_parse_paragraph_fallback():
     blocks = parse_mdx("one\ntwo\n\n")
     assert blocks[0].type == "paragraph"
