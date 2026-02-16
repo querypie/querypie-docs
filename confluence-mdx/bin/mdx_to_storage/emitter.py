@@ -93,7 +93,7 @@ def _extract_code_body(content: str) -> str:
 def _emit_single_depth_list(content: str) -> str:
     parsed = _parse_list_items(content)
     if not parsed:
-        return "<ul></ul>"
+        return ""
 
     ordered = parsed[0][0]
     tag = "ol" if ordered else "ul"
