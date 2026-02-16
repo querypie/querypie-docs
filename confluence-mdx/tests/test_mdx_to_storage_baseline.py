@@ -73,6 +73,40 @@ def test_render_report_contains_numbers_and_failed_cases():
     assert "100, lists" in report
 
 
+def test_render_report_no_failed_cases_omits_section():
+    result = BaselineResult(
+        total=5,
+        passed=5,
+        failed=0,
+        failed_cases=[],
+        exit_code=0,
+        raw_output="",
+    )
+    report = render_report(command="cmd", result=result, notes=["all pass"])
+    assert "## Failed Cases" not in report
+    assert "- all pass" in report
+
+
+def test_render_report_default_notes_when_none():
+    result = BaselineResult(
+        total=1, passed=0, failed=1,
+        failed_cases=[], exit_code=1, raw_output="",
+    )
+    report = render_report(command="cmd", result=result, notes=None)
+    assert "Baseline measured from current" in report
+
+
+def test_parse_summary_with_surrounding_output():
+    output = (
+        "Processing case 100...\n"
+        "Processing case 200...\n"
+        "[mdx->xhtml-verify] total=2 passed=1 failed=1\n"
+        "Failed cases: 200\n"
+    )
+    assert parse_summary(output) == (2, 1, 1)
+    assert parse_failed_cases(output) == ["200"]
+
+
 def test_write_report_creates_parent_dir(tmp_path: Path):
     output_path = tmp_path / "docs" / "baseline.md"
     write_report(output_path, "# hi\n")
