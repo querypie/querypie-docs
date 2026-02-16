@@ -19,6 +19,15 @@ _CALLOUT_TYPE_TO_MACRO = {
     "important": "note",
     "error": "warning",
 }
+_BADGE_COLOR_MAP = {
+    "green": "Green",
+    "blue": "Blue",
+    "red": "Red",
+    "yellow": "Yellow",
+    "grey": "Grey",
+    "gray": "Grey",
+    "purple": "Purple",
+}
 
 
 class _ListNode:
@@ -86,6 +95,12 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
 
     if block.type == "blockquote":
         return _emit_blockquote(block.content)
+
+    if block.type == "details":
+        return _emit_details(block, context)
+
+    if block.type == "badge":
+        return _emit_badge(block)
 
     return ""
 
@@ -316,3 +331,40 @@ def _emit_blockquote(content: str) -> str:
 
     body = "".join(f"<p>{convert_inline(text)}</p>" for text in paragraphs)
     return f"<blockquote>{body}</blockquote>"
+
+
+def _emit_details(block: Block, context: dict) -> str:
+    summary = block.attrs.get("summary", "").strip()
+    children = block.children
+    if not children:
+        children = _parse_details_children_from_content(block.content)
+    body = "".join(emit_block(child, context=context) for child in children if child.type != "empty")
+    parts = ['<ac:structured-macro ac:name="expand">']
+    if summary:
+        parts.append(f'<ac:parameter ac:name="title">{convert_inline(summary)}</ac:parameter>')
+    parts.append(f"<ac:rich-text-body>{body}</ac:rich-text-body>")
+    parts.append("</ac:structured-macro>")
+    return "".join(parts)
+
+
+def _parse_details_children_from_content(content: str) -> list[Block]:
+    match = re.search(r"</summary>(.*?)</details>", content, flags=re.DOTALL)
+    if not match:
+        return []
+    inner = match.group(1).strip()
+    if not inner:
+        return []
+    from .parser import parse_mdx
+    return parse_mdx(inner)
+
+
+def _emit_badge(block: Block) -> str:
+    text = block.attrs.get("text", "").strip()
+    color = block.attrs.get("color", "").strip().lower()
+    colour = _BADGE_COLOR_MAP.get(color, "Grey")
+
+    parts = ['<ac:structured-macro ac:name="status">']
+    parts.append(f'<ac:parameter ac:name="title">{convert_inline(text)}</ac:parameter>')
+    parts.append(f'<ac:parameter ac:name="colour">{colour}</ac:parameter>')
+    parts.append("</ac:structured-macro>")
+    return "".join(parts)

@@ -462,6 +462,27 @@ def test_emit_blockquote_multiple_paragraphs():
     assert xhtml == "<blockquote><p>first line</p><p>second line</p></blockquote>"
 
 
+def test_emit_details_to_expand_macro():
+    mdx = """<details>
+<summary>More Info</summary>
+First **paragraph**.
+</details>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:structured-macro ac:name="expand">' in xhtml
+    assert '<ac:parameter ac:name="title">More Info</ac:parameter>' in xhtml
+    assert "<ac:rich-text-body><p>First <strong>paragraph</strong>.</p></ac:rich-text-body>" in xhtml
+
+
+def test_emit_badge_to_status_macro():
+    mdx = '<Badge color="blue">Stable</Badge>\n'
+    xhtml = emit_document(parse_mdx(mdx))
+    assert (
+        xhtml
+        == '<ac:structured-macro ac:name="status"><ac:parameter ac:name="title">Stable</ac:parameter><ac:parameter ac:name="colour">Blue</ac:parameter></ac:structured-macro>'
+    )
+
+
 def test_emit_blockquote_multiline_single_paragraph():
     """Multiple `>` lines without blank separator → merged into one paragraph."""
     mdx = "> line one\n> line two\n> line three\n"

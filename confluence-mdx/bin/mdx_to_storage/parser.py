@@ -9,7 +9,7 @@ _HR_PATTERN = re.compile(r"^_{6,}$")
 _HEADING_PATTERN = re.compile(r"^(#{1,6})\s+(.*)$")
 _LIST_ORDERED_PATTERN = re.compile(r"^\d+\.\s+")
 _LIST_UNORDERED_PATTERN = re.compile(r"^[-*+]\s+")
-_CALLOUT_ATTR_PATTERN = re.compile(r"(\w+)=(?:\"([^\"]*)\"|'([^']*)')")
+_ATTR_PATTERN = re.compile(r"(\w+)=(?:\"([^\"]*)\"|'([^']*)')")
 _FIGURE_IMG_ATTR_PATTERN = re.compile(r"(\w+(?:-\w+)*)=(?:\"([^\"]*)\"|'([^']*)')")
 
 
@@ -77,6 +77,16 @@ def parse_mdx(text: str) -> list[Block]:
 
         if line.startswith("<figure"):
             block, i = _parse_figure_block(lines, i)
+            blocks.append(block)
+            continue
+
+        if line.startswith("<details"):
+            block, i = _parse_details_block(lines, i)
+            blocks.append(block)
+            continue
+
+        if line.startswith("<Badge"):
+            block, i = _parse_badge_block(lines, i)
             blocks.append(block)
             continue
 
@@ -203,7 +213,7 @@ def _parse_callout_block(lines: list[str], start: int) -> tuple[Block, int]:
 
 def _parse_callout_attrs(opening_line: str) -> dict:
     attrs = {}
-    for key, v1, v2 in _CALLOUT_ATTR_PATTERN.findall(opening_line):
+    for key, v1, v2 in _ATTR_PATTERN.findall(opening_line):
         value = v1 or v2
         attrs[key] = value
     return attrs
@@ -262,6 +272,63 @@ def _parse_markdown_table_block(lines: list[str], start: int) -> tuple[Block, in
         i += 1
     content = "\n".join(lines[start:i]) + "\n"
     return Block(type="table", content=content), i
+
+
+def _parse_details_block(lines: list[str], start: int) -> tuple[Block, int]:
+    i = start + 1
+    while i < len(lines) and "</details>" not in lines[i]:
+        i += 1
+    if i < len(lines):
+        i += 1
+
+    content = "\n".join(lines[start:i]) + "\n"
+    summary, inner = _extract_details_summary_and_inner(content)
+    children = parse_mdx(inner) if inner else []
+    attrs = {"summary": summary} if summary else {}
+    return Block(type="details", content=content, attrs=attrs, children=children), i
+
+
+def _extract_details_summary_and_inner(content: str) -> tuple[str, str]:
+    summary_match = re.search(r"<summary>(.*?)</summary>", content, flags=re.DOTALL)
+    summary = summary_match.group(1).strip() if summary_match else ""
+    inner_match = re.search(r"</summary>(.*?)</details>", content, flags=re.DOTALL)
+    if not inner_match:
+        return summary, ""
+    inner = inner_match.group(1).strip()
+    return summary, inner
+
+
+def _parse_badge_block(lines: list[str], start: int) -> tuple[Block, int]:
+    if "</Badge>" in lines[start]:
+        i = start + 1
+    else:
+        i = start + 1
+        while i < len(lines) and "</Badge>" not in lines[i]:
+            i += 1
+        if i < len(lines):
+            i += 1
+
+    content = "\n".join(lines[start:i]) + "\n"
+    opening = lines[start]
+    attrs = _parse_badge_attrs(opening)
+    text = _extract_badge_text(content)
+    if text:
+        attrs["text"] = text
+    return Block(type="badge", content=content, attrs=attrs), i
+
+
+def _parse_badge_attrs(opening_line: str) -> dict:
+    attrs = {}
+    for key, v1, v2 in _ATTR_PATTERN.findall(opening_line):
+        attrs[key] = v1 or v2
+    return attrs
+
+
+def _extract_badge_text(content: str) -> str:
+    match = re.search(r"<Badge[^>]*>(.*?)</Badge>", content, flags=re.DOTALL)
+    if not match:
+        return ""
+    return match.group(1).strip()
 
 
 def _parse_blockquote_block(lines: list[str], start: int) -> tuple[Block, int]:
@@ -327,6 +394,10 @@ def _starts_new_block(line: str) -> bool:
         return True
     if line.startswith("<figure"):
         return True
+    if line.startswith("<details"):
+        return True
+    if line.startswith("<Badge"):
+        return True
     if _is_blockquote_line(line):
         return True
     if _is_list_line(line):
@@ -360,6 +431,8 @@ def _is_html_block_start(line: str) -> bool:
     if line.startswith("<Callout"):
         return False
     if line.startswith("<figure"):
+        return False
+    if line.startswith("<details"):
         return False
     if line.startswith("<Badge"):
         return False
