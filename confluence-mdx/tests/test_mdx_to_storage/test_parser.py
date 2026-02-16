@@ -213,3 +213,33 @@ def test_parse_inline_code_with_pipes_stays_paragraph():
     mdx = "Expression: `a == 'x' || b == 'y'` is valid.\n"
     blocks = parse_mdx(mdx)
     assert blocks[0].type == "paragraph"
+
+
+def test_parse_blockquote_block():
+    mdx = "> quoted line\n> second line\n"
+    blocks = parse_mdx(mdx)
+    assert len(blocks) == 1
+    assert blocks[0].type == "blockquote"
+    assert "> quoted line" in blocks[0].content
+
+
+def test_parse_blockquote_with_blank_and_stop_before_next_block():
+    mdx = "> first\n>\n> second\n## Heading\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type == "blockquote"
+    assert blocks[1].type == "heading"
+
+
+def test_parse_blockquote_followed_by_paragraph():
+    """Blockquote ends when non-`>` line appears; next block is paragraph."""
+    mdx = "> quote\n\nParagraph after.\n"
+    blocks = parse_mdx(mdx)
+    types = [b.type for b in blocks if b.type != "empty"]
+    assert types == ["blockquote", "paragraph"]
+
+
+def test_parse_triple_gt_not_blockquote():
+    """Lines like `>>> token` (shell output) should NOT be parsed as blockquote."""
+    mdx = ">>> Service Account token\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type != "blockquote"

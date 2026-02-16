@@ -85,6 +85,11 @@ def parse_mdx(text: str) -> list[Block]:
             blocks.append(block)
             continue
 
+        if _is_blockquote_line(line):
+            block, i = _parse_blockquote_block(lines, i)
+            blocks.append(block)
+            continue
+
         if _is_list_line(line):
             block, i = _parse_list_block(lines, i)
             blocks.append(block)
@@ -259,6 +264,23 @@ def _parse_markdown_table_block(lines: list[str], start: int) -> tuple[Block, in
     return Block(type="table", content=content), i
 
 
+def _parse_blockquote_block(lines: list[str], start: int) -> tuple[Block, int]:
+    i = start
+    while i < len(lines):
+        current = lines[i]
+        if current == "":
+            if i + 1 < len(lines) and _is_blockquote_line(lines[i + 1]):
+                i += 1
+                continue
+            break
+        if not _is_blockquote_line(current):
+            break
+        i += 1
+
+    content = "\n".join(lines[start:i]) + "\n"
+    return Block(type="blockquote", content=content), i
+
+
 def _parse_html_block(lines: list[str], start: int) -> tuple[Block, int]:
     if lines[start].startswith("<table"):
         i = start + 1
@@ -304,6 +326,8 @@ def _starts_new_block(line: str) -> bool:
     if line.startswith("<Callout"):
         return True
     if line.startswith("<figure"):
+        return True
+    if _is_blockquote_line(line):
         return True
     if _is_list_line(line):
         return True
@@ -369,3 +393,8 @@ def _is_markdown_table_separator(line: str) -> bool:
         if "-" not in cell:
             return False
     return True
+
+
+def _is_blockquote_line(line: str) -> bool:
+    stripped = line.lstrip()
+    return stripped.startswith("> ") or stripped == ">"
