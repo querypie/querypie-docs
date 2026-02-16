@@ -37,6 +37,15 @@ def test_verify_expected_mdx_against_page_xhtml_fail_has_diff():
     assert "+++ generated-from-expected.mdx.xhtml" in diff_report
 
 
+def test_verify_expected_mdx_ignore_ri_filename_option():
+    mdx = "<figure>\n<img src=\"/images/a.png\" alt=\"a\">\n</figure>\n"
+    page = '<ac:image ac:align="center"><ri:attachment ri:filename="b.png"></ri:attachment></ac:image>'
+    passed, _generated, _diff_report = verify_expected_mdx_against_page_xhtml(
+        mdx, page, ignore_ri_filename=True
+    )
+    assert passed is True
+
+
 def test_iter_testcase_dirs_filters_required_files(tmp_path: Path):
     valid = tmp_path / "100"
     valid.mkdir()

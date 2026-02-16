@@ -11,6 +11,7 @@ _LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 _BOLD_ITALIC_RE = re.compile(r"\*\*\*(.+?)\*\*\*")
 _BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 _ITALIC_RE = re.compile(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)")
+_BR_TAG_RE = re.compile(r"<br\s*/?>", flags=re.IGNORECASE)
 
 
 def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
@@ -33,6 +34,7 @@ def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
     converted = _BOLD_RE.sub(r"<strong>\1</strong>", converted)
     converted = _ITALIC_RE.sub(r"<em>\1</em>", converted)
     converted = _convert_links(converted, link_resolver=link_resolver)
+    converted = _BR_TAG_RE.sub("<br />", converted)
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
