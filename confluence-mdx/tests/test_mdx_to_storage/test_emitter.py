@@ -328,3 +328,38 @@ def test_emit_same_depth_mixed_marker_splits_lists():
 """
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<ul><li><p>bullet</p></li></ul><ol><li><p>ordered</p></li></ol>"
+
+
+def test_emit_nested_three_levels_deep():
+    """Three-level nesting: root → child → grandchild."""
+    mdx = """* root
+    * child
+        * grandchild
+    * child-2
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<ul><li><p>root</p>" in xhtml
+    assert "<ul><li><p>child</p><ul><li><p>grandchild</p></li></ul></li>" in xhtml
+    assert "<li><p>child-2</p></li></ul></li></ul>" in xhtml
+
+
+def test_emit_nested_list_continuation_line():
+    """Continuation line in a nested list item appends to parent item text."""
+    mdx = """* parent
+    * child first line
+      continued line
+    * child-2
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<p>child first line continued line</p>" in xhtml
+    assert "<p>child-2</p>" in xhtml
+
+
+def test_emit_nested_list_with_inline_markup():
+    """Inline bold/code in nested list items are converted."""
+    mdx = """* **bold** parent
+    * child with `code`
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<p><strong>bold</strong> parent</p>" in xhtml
+    assert "<p>child with <code>code</code></p>" in xhtml
