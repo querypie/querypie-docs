@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from typing import Iterable
 
 from bs4 import BeautifulSoup
@@ -159,9 +160,15 @@ _REASON_PRIORITY: dict[str, str] = {
     "internal_link_unresolved": "P1",
     "table_cell_structure_mismatch": "P1",
     "blockquote_or_paragraph_grouping": "P1",
+    "image_block_structure_mismatch": "P1",
     "verify_filter_noise": "P2",
     "non_reversible_macro_noise": "P2",
+    "adf_extension_panel_mismatch": "P2",
+    "attachment_filename_mismatch": "P2",
     "empty_paragraph_style_mismatch": "P2",
+    "ordered_list_start_mismatch": "P3",
+    "emoticon_representation_mismatch": "P3",
+    "underline_tag_mismatch": "P3",
     "other": "P3",
 }
 _PRIORITY_ORDER = {"P1": 1, "P2": 2, "P3": 3}
@@ -208,6 +215,32 @@ def classify_failure_reasons(diff_report: str) -> list[str]:
 
     if "<blockquote" in diff_report or "\n-<p>\n+<p />" in diff_report:
         reasons.append("blockquote_or_paragraph_grouping")
+
+    if "<ac:image" in diff_report and "<figure data-align" in diff_report:
+        reasons.append("image_block_structure_mismatch")
+
+    if "<ac:adf-extension" in diff_report:
+        reasons.append("adf_extension_panel_mismatch")
+
+    if "<ol start=" in diff_report and "+<ol>" in diff_report:
+        reasons.append("ordered_list_start_mismatch")
+
+    if "<ac:emoticon" in diff_report or "✔️" in diff_report or "❌" in diff_report:
+        reasons.append("emoticon_representation_mismatch")
+
+    if "<u>" in diff_report or "</u>" in diff_report:
+        reasons.append("underline_tag_mismatch")
+
+    removed_filenames = re.findall(
+        r'(?m)^(?!-{3})-\s*.*?<ri:attachment ri:filename="([^"]+)"',
+        diff_report,
+    )
+    added_filenames = re.findall(
+        r'(?m)^(?!\+{3})\+\s*.*?<ri:attachment ri:filename="([^"]+)"',
+        diff_report,
+    )
+    if removed_filenames and added_filenames and set(removed_filenames) != set(added_filenames):
+        reasons.append("attachment_filename_mismatch")
 
     if "<p />" in diff_report and "<p>" in diff_report:
         reasons.append("empty_paragraph_style_mismatch")
@@ -258,3 +291,8 @@ def summarize_results(results: list[CaseVerification]) -> VerificationSummary:
         by_reason=by_reason,
         analyses=analyses,
     )
+
+
+def get_unclassified_case_ids(results: list[CaseVerification]) -> list[str]:
+    analyses = analyze_failed_cases(results)
+    return [analysis.case_id for analysis in analyses if "other" in analysis.reasons]

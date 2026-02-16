@@ -4,6 +4,7 @@ from reverse_sync.mdx_to_storage_xhtml_verify import (
     CaseVerification,
     analyze_failed_cases,
     classify_failure_reasons,
+    get_unclassified_case_ids,
     iter_testcase_dirs,
     mdx_to_storage_xhtml_fragment,
     summarize_results,
@@ -206,3 +207,71 @@ def test_analyze_and_summarize_results_prioritize_p1():
     assert summary.failed == 2
     assert summary.by_priority["P1"] == 1
     assert summary.by_priority["P2"] == 1
+
+
+def test_classify_failure_reasons_detects_image_block_structure_mismatch():
+    diff_report = "-<ac:image><ri:attachment ri:filename=\"a.png\" /></ac:image>\n+<figure data-align=\"center\">"
+    reasons = classify_failure_reasons(diff_report)
+    assert "image_block_structure_mismatch" in reasons
+
+
+def test_classify_failure_reasons_detects_adf_extension_panel_mismatch():
+    diff_report = "-<ac:adf-extension>...</ac:adf-extension>\n+<ac:structured-macro ac:name=\"panel\">"
+    reasons = classify_failure_reasons(diff_report)
+    assert "adf_extension_panel_mismatch" in reasons
+
+
+def test_classify_failure_reasons_detects_ordered_list_start_mismatch():
+    diff_report = "-<ol start=\"1\">\n+<ol>\n <li><p>item</p></li>"
+    reasons = classify_failure_reasons(diff_report)
+    assert "ordered_list_start_mismatch" in reasons
+
+
+def test_classify_failure_reasons_detects_emoticon_representation_mismatch():
+    diff_report = "-<ac:emoticon ac:name=\"tick\" />\n+✔️"
+    reasons = classify_failure_reasons(diff_report)
+    assert "emoticon_representation_mismatch" in reasons
+
+
+def test_classify_failure_reasons_detects_underline_tag_mismatch():
+    diff_report = "-<p><u>text</u></p>\n+<p>text</p>"
+    reasons = classify_failure_reasons(diff_report)
+    assert "underline_tag_mismatch" in reasons
+
+
+def test_classify_failure_reasons_detects_attachment_filename_mismatch():
+    diff_report = (
+        '-<ac:image><ri:attachment ri:filename="원본 파일.png" /></ac:image>\n'
+        '+<ac:image><ri:attachment ri:filename="normalized-file.png" /></ac:image>'
+    )
+    reasons = classify_failure_reasons(diff_report)
+    assert "attachment_filename_mismatch" in reasons
+
+
+def test_classify_failure_reasons_filename_same_is_not_mismatch():
+    diff_report = (
+        '-<ac:image><ri:attachment ri:filename="same.png" /></ac:image>\n'
+        '+<ac:image><ri:attachment ri:filename="same.png" /></ac:image>'
+    )
+    reasons = classify_failure_reasons(diff_report)
+    assert "attachment_filename_mismatch" not in reasons
+
+
+def test_get_unclassified_case_ids_filters_other_only():
+    results = [
+        CaseVerification(case_id="100", passed=True, generated_xhtml="<p>ok</p>", diff_report=""),
+        CaseVerification(
+            case_id="200",
+            passed=False,
+            generated_xhtml="<p>x</p>",
+            diff_report='-<p ac:local-id="x">A</p>\n+<p>A</p>',
+        ),
+        CaseVerification(
+            case_id="300",
+            passed=False,
+            generated_xhtml="<p>y</p>",
+            diff_report="-<unknown>foo</unknown>\n+<unknown>bar</unknown>",
+        ),
+    ]
+    unclassified = get_unclassified_case_ids(results)
+    assert unclassified == ["300"]
