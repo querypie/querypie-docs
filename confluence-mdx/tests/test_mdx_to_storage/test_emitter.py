@@ -221,3 +221,32 @@ Second paragraph.
     assert "<p>First paragraph.</p>" in xhtml
     assert "<p>Second paragraph.</p>" in xhtml
     assert '<ac:structured-macro ac:name="info">' in xhtml
+
+
+def test_emit_figure_to_ac_image_with_width():
+    mdx = """<figure>
+  <img src="/images/path/sample.png" alt="Sample" width="700" data-layout="center">
+</figure>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert (
+        xhtml
+        == '<ac:image ac:align="center" ac:width="700"><ri:attachment ri:filename="sample.png"></ri:attachment></ac:image>'
+    )
+
+
+def test_emit_figure_with_caption():
+    mdx = """<figure>
+  <img src="/images/path/sample.png" alt="Sample">
+  <figcaption>This is **caption**</figcaption>
+</figure>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:image ac:align="center">' in xhtml
+    assert '<ri:attachment ri:filename="sample.png"></ri:attachment>' in xhtml
+    assert "<ac:caption><p>This is <strong>caption</strong></p></ac:caption>" in xhtml
+
+
+def test_emit_figure_without_src_is_skipped():
+    block = Block(type="figure", content="<figure></figure>", attrs={})
+    assert emit_block(block) == ""

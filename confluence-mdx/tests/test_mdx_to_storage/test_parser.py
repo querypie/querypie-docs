@@ -63,6 +63,17 @@ def test_parse_figure_block_and_img_attrs():
     }
 
 
+def test_parse_figure_with_caption():
+    text = """<figure>
+  <img src="/images/sample.png" alt="Sample" width="700" data-layout="center">
+  <figcaption>Caption <strong>text</strong></figcaption>
+</figure>
+"""
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "figure"
+    assert blocks[0].attrs["caption"] == "Caption text"
+
+
 def test_parse_paragraph_fallback():
     blocks = parse_mdx("one\ntwo\n\n")
     assert blocks[0].type == "paragraph"
