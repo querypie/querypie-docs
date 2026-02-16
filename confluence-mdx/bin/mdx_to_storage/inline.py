@@ -1,6 +1,10 @@
 """Inline MDX -> XHTML conversion helpers."""
 
+from __future__ import annotations
+
 import re
+
+from .link_resolver import LinkResolver
 
 _CODE_SPAN_RE = re.compile(r"`([^`]+)`")
 _LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -9,7 +13,7 @@ _BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 _ITALIC_RE = re.compile(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)")
 
 
-def convert_inline(text: str) -> str:
+def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
     """Convert inline MDX syntax to XHTML.
 
     Supported syntax:
@@ -28,7 +32,7 @@ def convert_inline(text: str) -> str:
     converted = _BOLD_ITALIC_RE.sub(r"<strong><em>\1</em></strong>", converted)
     converted = _BOLD_RE.sub(r"<strong>\1</strong>", converted)
     converted = _ITALIC_RE.sub(r"<em>\1</em>", converted)
-    converted = _LINK_RE.sub(r'<a href="\2">\1</a>', converted)
+    converted = _convert_links(converted, link_resolver=link_resolver)
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
@@ -53,7 +57,7 @@ def convert_heading_inline(text: str) -> str:
         return f"\x00CODE{len(placeholders) - 1}\x00"
 
     converted = _CODE_SPAN_RE.sub(_stash_code, without_bold_markers)
-    converted = _LINK_RE.sub(r'<a href="\2">\1</a>', converted)
+    converted = _convert_links(converted, link_resolver=None)
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
@@ -61,3 +65,25 @@ def convert_heading_inline(text: str) -> str:
 
     converted = re.sub(r"\x00CODE(\d+)\x00", _restore_code, converted)
     return converted
+
+
+def _convert_links(text: str, link_resolver: LinkResolver | None) -> str:
+    def _replace_link(match: re.Match[str]) -> str:
+        link_text = match.group(1)
+        href = match.group(2)
+        if link_resolver is None:
+            return f'<a href="{href}">{link_text}</a>'
+
+        content_title, anchor = link_resolver.resolve(href, link_text=link_text)
+        if not content_title:
+            return f'<a href="{href}">{link_text}</a>'
+
+        anchor_attr = f' ac:anchor="{anchor}"' if anchor else ""
+        return (
+            f"<ac:link{anchor_attr}>"
+            f'<ri:page ri:content-title="{content_title}"></ri:page>'
+            f"<ac:link-body>{link_text}</ac:link-body>"
+            f"</ac:link>"
+        )
+
+    return _LINK_RE.sub(_replace_link, text)

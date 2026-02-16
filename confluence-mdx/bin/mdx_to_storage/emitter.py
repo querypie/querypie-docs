@@ -7,6 +7,7 @@ import re
 from typing import Optional
 
 from .inline import convert_heading_inline, convert_inline
+from .link_resolver import LinkResolver
 from .parser import Block
 
 
@@ -53,7 +54,7 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
 
     if block.type == "paragraph":
         paragraph_text = _join_paragraph_lines(block.content)
-        return f"<p>{convert_inline(paragraph_text)}</p>"
+        return f"<p>{convert_inline(paragraph_text, link_resolver=context.get('link_resolver'))}</p>"
 
     if block.type == "code_block":
         code_body = _extract_code_body(block.content)
@@ -67,32 +68,33 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
         return "".join(parts)
 
     if block.type == "list":
-        return _emit_single_depth_list(block.content)
+        return _emit_single_depth_list(block.content, link_resolver=context.get("link_resolver"))
 
     if block.type == "hr":
         return "<hr />"
 
     if block.type == "html_block":
-        return _emit_html_block(block.content)
+        return _emit_html_block(block.content, link_resolver=context.get("link_resolver"))
 
     if block.type == "callout":
         return _emit_callout(block, context)
 
     if block.type == "figure":
-        return _emit_figure(block)
+        return _emit_figure(block, link_resolver=context.get("link_resolver"))
 
     if block.type == "table":
-        return _emit_markdown_table(block.content)
+        return _emit_markdown_table(block.content, link_resolver=context.get("link_resolver"))
 
     if block.type == "blockquote":
-        return _emit_blockquote(block.content)
+        return _emit_blockquote(block.content, link_resolver=context.get("link_resolver"))
 
     return ""
 
 
 def emit_document(blocks: list[Block]) -> str:
     """Emit XHTML for a full MDX document."""
-    context: dict[str, str] = {"frontmatter_title": ""}
+    link_resolver = LinkResolver()
+    context: dict[str, object] = {"frontmatter_title": "", "link_resolver": link_resolver}
     for block in blocks:
         if block.type == "frontmatter":
             context["frontmatter_title"] = block.attrs.get("title", "")
@@ -117,13 +119,13 @@ def _extract_code_body(content: str) -> str:
     return "\n".join(lines)
 
 
-def _emit_single_depth_list(content: str) -> str:
+def _emit_single_depth_list(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
     parsed = _parse_list_items(content)
     if not parsed:
         return ""
 
     roots = _build_list_tree(parsed)
-    return _render_list_nodes(roots)
+    return _render_list_nodes(roots, link_resolver=link_resolver)
 
 
 def _parse_list_items(content: str) -> list[_ListNode]:
@@ -167,7 +169,10 @@ def _build_list_tree(items: list[_ListNode]) -> list[_ListNode]:
     return roots
 
 
-def _render_list_nodes(nodes: list[_ListNode]) -> str:
+def _render_list_nodes(
+    nodes: list[_ListNode],
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     parts: list[str] = []
     i = 0
     while i < len(nodes):
@@ -178,14 +183,18 @@ def _render_list_nodes(nodes: list[_ListNode]) -> str:
             group.append(nodes[i])
             i += 1
 
-        body = "".join(_render_list_item(node) for node in group)
+        body = "".join(_render_list_item(node, link_resolver=link_resolver) for node in group)
         parts.append(f"<{tag}>{body}</{tag}>")
     return "".join(parts)
 
 
-def _render_list_item(node: _ListNode) -> str:
-    nested = _render_list_nodes(node.children) if node.children else ""
-    return f"<li><p>{convert_inline(node.text)}</p>{nested}</li>"
+def _render_list_item(node: _ListNode, link_resolver: Optional[LinkResolver] = None) -> str:
+    nested = (
+        _render_list_nodes(node.children, link_resolver=link_resolver)
+        if node.children
+        else ""
+    )
+    return f"<li><p>{convert_inline(node.text, link_resolver=link_resolver)}</p>{nested}</li>"
 
 
 def _emit_callout(block: Block, context: dict) -> str:
@@ -225,7 +234,7 @@ def _parse_callout_children_from_content(content: str) -> list[Block]:
     return parse_mdx(inner_text)
 
 
-def _emit_figure(block: Block) -> str:
+def _emit_figure(block: Block, link_resolver: Optional[LinkResolver] = None) -> str:
     src = block.attrs.get("src", "").strip()
     if not src:
         return ""
@@ -241,12 +250,12 @@ def _emit_figure(block: Block) -> str:
     parts = [f"<ac:image {' '.join(attrs)}>"]
     parts.append(f'<ri:attachment ri:filename="{filename}"></ri:attachment>')
     if caption:
-        parts.append(f"<ac:caption><p>{convert_inline(caption)}</p></ac:caption>")
+        parts.append(f"<ac:caption><p>{convert_inline(caption, link_resolver=link_resolver)}</p></ac:caption>")
     parts.append("</ac:image>")
     return "".join(parts)
 
 
-def _emit_markdown_table(content: str) -> str:
+def _emit_markdown_table(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
     lines = [line.strip() for line in content.splitlines() if line.strip()]
     if len(lines) < 2:
         return f"<p>{convert_inline(content.strip())}</p>"
@@ -256,11 +265,17 @@ def _emit_markdown_table(content: str) -> str:
     body_rows = rows[2:]
 
     parts = ["<table><tbody><tr>"]
-    parts.extend(f"<th><p>{convert_inline(cell)}</p></th>" for cell in headers)
+    parts.extend(
+        f"<th><p>{convert_inline(cell, link_resolver=link_resolver)}</p></th>"
+        for cell in headers
+    )
     parts.append("</tr>")
     for row in body_rows:
         parts.append("<tr>")
-        parts.extend(f"<td><p>{convert_inline(cell)}</p></td>" for cell in row)
+        parts.extend(
+            f"<td><p>{convert_inline(cell, link_resolver=link_resolver)}</p></td>"
+            for cell in row
+        )
         parts.append("</tr>")
     parts.append("</tbody></table>")
     return "".join(parts)
@@ -271,7 +286,7 @@ def _split_table_row(line: str) -> list[str]:
     return [cell.strip() for cell in stripped.split("|")]
 
 
-def _emit_html_block(content: str) -> str:
+def _emit_html_block(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
     stripped = content.strip()
     if not stripped.startswith("<table"):
         return stripped
@@ -283,12 +298,12 @@ def _emit_html_block(content: str) -> str:
         inner = match.group(3)
         if "<" in inner and ">" in inner:
             return match.group(0)
-        return f"<{tag}{attrs}>{convert_inline(inner.strip())}</{tag}>"
+        return f"<{tag}{attrs}>{convert_inline(inner.strip(), link_resolver=link_resolver)}</{tag}>"
 
     return pattern.sub(_replace_cell, stripped)
 
 
-def _emit_blockquote(content: str) -> str:
+def _emit_blockquote(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
     raw_lines = content.splitlines()
     stripped_lines: list[str] = []
     for line in raw_lines:
@@ -314,5 +329,5 @@ def _emit_blockquote(content: str) -> str:
     if not paragraphs:
         return "<blockquote><p></p></blockquote>"
 
-    body = "".join(f"<p>{convert_inline(text)}</p>" for text in paragraphs)
+    body = "".join(f"<p>{convert_inline(text, link_resolver=link_resolver)}</p>" for text in paragraphs)
     return f"<blockquote>{body}</blockquote>"
