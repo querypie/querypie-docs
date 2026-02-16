@@ -73,13 +73,16 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
         return "<hr />"
 
     if block.type == "html_block":
-        return block.content.strip()
+        return _emit_html_block(block.content)
 
     if block.type == "callout":
         return _emit_callout(block, context)
 
     if block.type == "figure":
         return _emit_figure(block)
+
+    if block.type == "table":
+        return _emit_markdown_table(block.content)
 
     return ""
 
@@ -238,3 +241,45 @@ def _emit_figure(block: Block) -> str:
         parts.append(f"<ac:caption><p>{convert_inline(caption)}</p></ac:caption>")
     parts.append("</ac:image>")
     return "".join(parts)
+
+
+def _emit_markdown_table(content: str) -> str:
+    lines = [line.strip() for line in content.splitlines() if line.strip()]
+    if len(lines) < 2:
+        return f"<p>{convert_inline(content.strip())}</p>"
+
+    rows = [_split_table_row(line) for line in lines]
+    headers = rows[0]
+    body_rows = rows[2:]
+
+    parts = ["<table><tbody><tr>"]
+    parts.extend(f"<th><p>{convert_inline(cell)}</p></th>" for cell in headers)
+    parts.append("</tr>")
+    for row in body_rows:
+        parts.append("<tr>")
+        parts.extend(f"<td><p>{convert_inline(cell)}</p></td>" for cell in row)
+        parts.append("</tr>")
+    parts.append("</tbody></table>")
+    return "".join(parts)
+
+
+def _split_table_row(line: str) -> list[str]:
+    stripped = line.strip().strip("|")
+    return [cell.strip() for cell in stripped.split("|")]
+
+
+def _emit_html_block(content: str) -> str:
+    stripped = content.strip()
+    if not stripped.startswith("<table"):
+        return stripped
+    pattern = re.compile(r"<(td|th)([^>]*)>(.*?)</\1>", flags=re.DOTALL)
+
+    def _replace_cell(match: re.Match[str]) -> str:
+        tag = match.group(1)
+        attrs = match.group(2)
+        inner = match.group(3)
+        if "<" in inner and ">" in inner:
+            return match.group(0)
+        return f"<{tag}{attrs}>{convert_inline(inner.strip())}</{tag}>"
+
+    return pattern.sub(_replace_cell, stripped)

@@ -363,3 +363,42 @@ def test_emit_nested_list_with_inline_markup():
     xhtml = emit_document(parse_mdx(mdx))
     assert "<p><strong>bold</strong> parent</p>" in xhtml
     assert "<p>child with <code>code</code></p>" in xhtml
+
+
+def test_emit_markdown_table_to_xhtml_table():
+    mdx = """| Name | Desc |
+| --- | --- |
+| A | **bold** |
+| C | `code` |
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml.startswith("<table><tbody><tr>")
+    assert "<th><p>Name</p></th>" in xhtml
+    assert "<td><p>A</p></td>" in xhtml
+    assert "<td><p><strong>bold</strong></p></td>" in xhtml
+    assert "<td><p><code>code</code></p></td>" in xhtml
+    assert xhtml.endswith("</tbody></table>")
+
+
+def test_emit_html_table_applies_inline_conversion_in_cells():
+    mdx = """<table>
+<tbody>
+<tr><td>**bold** and `code`</td><td>plain</td></tr>
+</tbody>
+</table>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<table>" in xhtml
+    assert "<td><strong>bold</strong> and <code>code</code></td>" in xhtml
+    assert "<td>plain</td>" in xhtml
+
+
+def test_emit_html_table_keeps_nested_html_in_cells():
+    mdx = """<table>
+<tbody>
+<tr><td><p>**not converted here**</p></td></tr>
+</tbody>
+</table>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<td><p>**not converted here**</p></td>" in xhtml

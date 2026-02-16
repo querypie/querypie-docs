@@ -158,3 +158,21 @@ def test_parse_ordered_list_detected():
     assert blocks[0].type == "list"
     assert "first" in blocks[0].content
     assert "second" in blocks[0].content
+
+
+def test_parse_markdown_table_block():
+    mdx = """| Name | Desc |
+| --- | --- |
+| A | B |
+| C | D |
+"""
+    blocks = parse_mdx(mdx)
+    assert len(blocks) == 1
+    assert blocks[0].type == "table"
+    assert "| A | B |" in blocks[0].content
+
+
+def test_parse_non_table_pipe_text_as_paragraph():
+    mdx = "a | b | c\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type == "paragraph"
