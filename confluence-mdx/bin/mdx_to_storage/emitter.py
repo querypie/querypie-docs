@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 from typing import Optional
 
@@ -68,6 +69,9 @@ def emit_block(block: Block, context: Optional[dict] = None) -> str:
 
     if block.type == "callout":
         return _emit_callout(block, context)
+
+    if block.type == "figure":
+        return _emit_figure(block)
 
     return ""
 
@@ -168,3 +172,24 @@ def _parse_callout_children_from_content(content: str) -> list[Block]:
         return []
     from .parser import parse_mdx
     return parse_mdx(inner_text)
+
+
+def _emit_figure(block: Block) -> str:
+    src = block.attrs.get("src", "").strip()
+    if not src:
+        return ""
+
+    filename = os.path.basename(src)
+    width = block.attrs.get("width", "").strip()
+    caption = block.attrs.get("caption", "").strip()
+
+    attrs = ['ac:align="center"']
+    if width:
+        attrs.append(f'ac:width="{width}"')
+
+    parts = [f"<ac:image {' '.join(attrs)}>"]
+    parts.append(f'<ri:attachment ri:filename="{filename}"></ri:attachment>')
+    if caption:
+        parts.append(f"<ac:caption><p>{convert_inline(caption)}</p></ac:caption>")
+    parts.append("</ac:image>")
+    return "".join(parts)

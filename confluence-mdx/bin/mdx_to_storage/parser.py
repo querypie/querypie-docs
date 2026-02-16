@@ -232,7 +232,18 @@ def _parse_figure_attrs(content: str) -> dict:
     for key, v1, v2 in _FIGURE_IMG_ATTR_PATTERN.findall(img_match.group(1)):
         value = v1 or v2
         attrs[key] = value
+    caption = _extract_figure_caption(content)
+    if caption:
+        attrs["caption"] = caption
     return attrs
+
+
+def _extract_figure_caption(content: str) -> str:
+    match = re.search(r"<figcaption[^>]*>(.*?)</figcaption>", content, flags=re.DOTALL)
+    if not match:
+        return ""
+    inner = re.sub(r"<[^>]+>", "", match.group(1))
+    return inner.strip()
 
 
 def _parse_html_block(lines: list[str], start: int) -> tuple[Block, int]:
