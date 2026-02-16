@@ -187,3 +187,37 @@ select 1;
     assert '<ac:structured-macro ac:name="code">' in xhtml
     assert '<ac:parameter ac:name="language">sql</ac:parameter>' in xhtml
     assert "<![CDATA[select 1;]]>" in xhtml
+
+
+def test_emit_callout_no_type_defaults_to_tip():
+    """<Callout> without type attribute → defaults to 'default' → 'tip' macro."""
+    mdx = "<Callout>\nBody\n</Callout>\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:structured-macro ac:name="tip">' in xhtml
+    assert "<p>Body</p>" in xhtml
+
+
+def test_emit_callout_unknown_type_defaults_to_tip():
+    """<Callout type="custom"> with unmapped type → fallback to 'tip'."""
+    mdx = '<Callout type="custom">\nBody\n</Callout>\n'
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:structured-macro ac:name="tip">' in xhtml
+
+
+def test_emit_callout_body_with_inline_markup():
+    mdx = '<Callout type="info">\nThis is **bold** and `code`.\n</Callout>\n'
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<p>This is <strong>bold</strong> and <code>code</code>.</p>" in xhtml
+
+
+def test_emit_callout_body_multiple_paragraphs():
+    mdx = """<Callout type="info">
+First paragraph.
+
+Second paragraph.
+</Callout>
+"""
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<p>First paragraph.</p>" in xhtml
+    assert "<p>Second paragraph.</p>" in xhtml
+    assert '<ac:structured-macro ac:name="info">' in xhtml
