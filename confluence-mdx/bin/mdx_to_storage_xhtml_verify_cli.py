@@ -50,6 +50,10 @@ def main() -> int:
         if not case_dir.is_dir():
             print(f"Error: case not found: {case_dir}", file=sys.stderr)
             return 2
+        for required in ("page.xhtml", "expected.mdx"):
+            if not (case_dir / required).exists():
+                print(f"Error: {required} not found in {case_dir}", file=sys.stderr)
+                return 2
         case_dirs = [case_dir]
     else:
         case_dirs = list(iter_testcase_dirs(testcases_dir))

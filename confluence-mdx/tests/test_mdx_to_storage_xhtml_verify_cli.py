@@ -79,6 +79,46 @@ def test_main_all_pass_returns_0(monkeypatch, tmp_path, capsys):
     assert "[mdx->xhtml-verify] total=1 passed=1 failed=0" in output
 
 
+def test_main_case_id_returns_2_when_required_files_missing(monkeypatch, tmp_path, capsys):
+    case_dir = tmp_path / "101"
+    case_dir.mkdir()
+    # directory exists but page.xhtml and expected.mdx are missing
+    monkeypatch.setattr(
+        cli.argparse.ArgumentParser,
+        "parse_args",
+        lambda self: SimpleNamespace(
+            testcases_dir=tmp_path,
+            case_id="101",
+            show_diff_limit=3,
+        ),
+    )
+    rc = cli.main()
+    assert rc == 2
+    captured = capsys.readouterr()
+    assert "not found in" in captured.err
+
+
+def test_main_case_id_single_case_pass(monkeypatch, tmp_path, capsys):
+    case_dir = tmp_path / "101"
+    case_dir.mkdir()
+    (case_dir / "expected.mdx").write_text("## Title\n\nBody\n", encoding="utf-8")
+    (case_dir / "page.xhtml").write_text("<h1>Title</h1><p>Body</p>", encoding="utf-8")
+
+    monkeypatch.setattr(
+        cli.argparse.ArgumentParser,
+        "parse_args",
+        lambda self: SimpleNamespace(
+            testcases_dir=tmp_path,
+            case_id="101",
+            show_diff_limit=3,
+        ),
+    )
+    rc = cli.main()
+    assert rc == 0
+    output = capsys.readouterr().out
+    assert "[mdx->xhtml-verify] total=1 passed=1 failed=0" in output
+
+
 def test_main_has_failures_returns_1_and_respects_diff_limit(monkeypatch, tmp_path, capsys):
     case_a = tmp_path / "101"
     case_b = tmp_path / "102"
