@@ -396,4 +396,5 @@ def _is_markdown_table_separator(line: str) -> bool:
 
 
 def _is_blockquote_line(line: str) -> bool:
-    return line.lstrip().startswith(">")
+    stripped = line.lstrip()
+    return stripped.startswith("> ") or stripped == ">"

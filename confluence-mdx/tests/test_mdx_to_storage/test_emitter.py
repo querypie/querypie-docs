@@ -460,3 +460,26 @@ def test_emit_blockquote_multiple_paragraphs():
     mdx = "> first line\n>\n> second line\n"
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<blockquote><p>first line</p><p>second line</p></blockquote>"
+
+
+def test_emit_blockquote_multiline_single_paragraph():
+    """Multiple `>` lines without blank separator → merged into one paragraph."""
+    mdx = "> line one\n> line two\n> line three\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<blockquote><p>line one line two line three</p></blockquote>"
+
+
+def test_emit_blockquote_in_mixed_document():
+    """Blockquote integrated with other block types."""
+    mdx = "## Section\n\n> Important note.\n\nFollowing text.\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert "<h1>Section</h1>" in xhtml
+    assert "<blockquote><p>Important note.</p></blockquote>" in xhtml
+    assert "<p>Following text.</p>" in xhtml
+
+
+def test_emit_blockquote_empty_body():
+    """Empty blockquote `>` only → blockquote with empty paragraph."""
+    mdx = ">\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<blockquote><p></p></blockquote>"

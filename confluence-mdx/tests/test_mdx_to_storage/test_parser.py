@@ -228,3 +228,18 @@ def test_parse_blockquote_with_blank_and_stop_before_next_block():
     blocks = parse_mdx(mdx)
     assert blocks[0].type == "blockquote"
     assert blocks[1].type == "heading"
+
+
+def test_parse_blockquote_followed_by_paragraph():
+    """Blockquote ends when non-`>` line appears; next block is paragraph."""
+    mdx = "> quote\n\nParagraph after.\n"
+    blocks = parse_mdx(mdx)
+    types = [b.type for b in blocks if b.type != "empty"]
+    assert types == ["blockquote", "paragraph"]
+
+
+def test_parse_triple_gt_not_blockquote():
+    """Lines like `>>> token` (shell output) should NOT be parsed as blockquote."""
+    mdx = ">>> Service Account token\n"
+    blocks = parse_mdx(mdx)
+    assert blocks[0].type != "blockquote"
