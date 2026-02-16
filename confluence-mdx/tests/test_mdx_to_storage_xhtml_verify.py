@@ -68,6 +68,46 @@ def test_verify_testcase_dir_reads_and_returns_case_result(tmp_path: Path):
     assert result.diff_report == ""
 
 
+def test_verify_ignores_confluence_auto_attributes():
+    mdx = "## Title\n\nBody\n"
+    page = '<h1 local-id="x">Title</h1><p ac:local-id="y" class="media-group">Body</p>'
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_layout_wrappers():
+    mdx = "Body\n"
+    page = (
+        "<ac:layout><ac:layout-section><ac:layout-cell>"
+        "<p>Body</p>"
+        "</ac:layout-cell></ac:layout-section></ac:layout>"
+    )
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_nonreversible_macros():
+    mdx = "Body\n"
+    page = (
+        '<ac:structured-macro ac:name="toc"></ac:structured-macro>'
+        '<ac:structured-macro ac:name="view-file"></ac:structured-macro>'
+        "<p>Body</p>"
+    )
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
+def test_verify_strips_decorations_but_keeps_inner_text():
+    mdx = "Text\n"
+    page = '<p><ac:inline-comment-marker>Text</ac:inline-comment-marker></p>'
+    passed, _generated, diff_report = verify_expected_mdx_against_page_xhtml(mdx, page)
+    assert passed is True
+    assert diff_report == ""
+
+
 def test_classify_failure_reasons_detects_verify_filter_noise():
     diff_report = '-<p ac:local-id="x">A</p>\n+<p>A</p>\n-<ri:attachment ri:version-at-save="1" />'
     reasons = classify_failure_reasons(diff_report)

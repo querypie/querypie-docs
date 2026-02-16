@@ -10,8 +10,27 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
+from bs4 import BeautifulSoup
 from mdx_to_storage import emit_document, parse_mdx
 from xhtml_beautify_diff import beautify_xhtml, xhtml_diff
+
+
+_IGNORED_ATTRIBUTES = {
+    "ac:macro-id",
+    "ac:local-id",
+    "local-id",
+    "ac:schema-version",
+    "ri:version-at-save",
+    "ac:original-height",
+    "ac:original-width",
+    "ac:custom-width",
+    "data-table-width",
+    "data-layout",
+    "ac:breakout-mode",
+    "ac:breakout-width",
+    "style",
+    "class",
+}
 
 
 @dataclass
@@ -47,7 +66,12 @@ def mdx_to_storage_xhtml_fragment(mdx_text: str) -> str:
 
 
 def _normalize_xhtml(xhtml: str) -> str:
-    return beautify_xhtml(xhtml).strip()
+    soup = BeautifulSoup(xhtml, "html.parser")
+    _strip_layout_sections(soup)
+    _strip_nonreversible_macros(soup)
+    _strip_decorations(soup)
+    _strip_ignored_attributes(soup)
+    return beautify_xhtml(str(soup)).strip()
 
 
 def verify_expected_mdx_against_page_xhtml(
@@ -67,6 +91,31 @@ def verify_expected_mdx_against_page_xhtml(
     if not diff_lines:
         return True, generated, ""
     return False, generated, "\n".join(diff_lines)
+
+
+def _strip_ignored_attributes(soup: BeautifulSoup) -> None:
+    for tag in soup.find_all(True):
+        for attr in list(tag.attrs.keys()):
+            if attr in _IGNORED_ATTRIBUTES:
+                del tag.attrs[attr]
+
+
+def _strip_layout_sections(soup: BeautifulSoup) -> None:
+    for tag_name in ("ac:layout", "ac:layout-section", "ac:layout-cell"):
+        for tag in soup.find_all(tag_name):
+            tag.unwrap()
+
+
+def _strip_nonreversible_macros(soup: BeautifulSoup) -> None:
+    for macro in soup.find_all("ac:structured-macro"):
+        if macro.get("ac:name") in {"toc", "view-file"}:
+            macro.decompose()
+
+
+def _strip_decorations(soup: BeautifulSoup) -> None:
+    for tag_name in ("ac:adf-mark", "ac:inline-comment-marker"):
+        for tag in soup.find_all(tag_name):
+            tag.unwrap()
 
 
 def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:
