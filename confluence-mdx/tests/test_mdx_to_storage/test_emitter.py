@@ -1,5 +1,6 @@
 from mdx_to_storage import emit_document, parse_mdx
 from mdx_to_storage.emitter import emit_block
+from mdx_to_storage import emitter as emitter_module
 from mdx_to_storage.parser import Block
 
 
@@ -363,6 +364,34 @@ def test_emit_nested_list_with_inline_markup():
     xhtml = emit_document(parse_mdx(mdx))
     assert "<p><strong>bold</strong> parent</p>" in xhtml
     assert "<p>child with <code>code</code></p>" in xhtml
+
+
+def test_emit_internal_link_uses_ri_page(monkeypatch):
+    class StubResolver:
+        def resolve(self, href: str, link_text: str = ""):
+            if href == "user-manual/my-dashboard":
+                return "My Dashboard", None
+            return None, None
+
+    monkeypatch.setattr(emitter_module, "LinkResolver", lambda: StubResolver())
+
+    mdx = "See [My Dashboard](user-manual/my-dashboard).\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:link><ri:page ri:content-title="My Dashboard"></ri:page><ac:link-body>My Dashboard</ac:link-body></ac:link>' in xhtml
+
+
+def test_emit_internal_link_with_anchor_uses_ac_anchor(monkeypatch):
+    class StubResolver:
+        def resolve(self, href: str, link_text: str = ""):
+            if href == "user-manual/my-dashboard#overview":
+                return "My Dashboard", "overview"
+            return None, None
+
+    monkeypatch.setattr(emitter_module, "LinkResolver", lambda: StubResolver())
+
+    mdx = "See [My Dashboard](user-manual/my-dashboard#overview).\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert '<ac:link ac:anchor="overview"><ri:page ri:content-title="My Dashboard"></ri:page><ac:link-body>My Dashboard</ac:link-body></ac:link>' in xhtml
 
 
 def test_emit_markdown_table_to_xhtml_table():
