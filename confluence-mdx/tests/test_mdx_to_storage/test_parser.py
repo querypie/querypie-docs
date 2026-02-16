@@ -94,7 +94,24 @@ def test_parse_paragraph_fallback():
 
 def test_parse_badge_not_html_block():
     blocks = parse_mdx('<Badge color="blue">Active</Badge> status\n')
-    assert blocks[0].type == "paragraph"
+    assert blocks[0].type == "badge"
+    assert blocks[0].attrs["color"] == "blue"
+    assert blocks[0].attrs["text"] == "Active"
+
+
+def test_parse_details_block_and_children():
+    mdx = """<details>
+<summary>More Info</summary>
+First paragraph.
+
+* item
+</details>
+"""
+    blocks = parse_mdx(mdx)
+    assert len(blocks) == 1
+    assert blocks[0].type == "details"
+    assert blocks[0].attrs["summary"] == "More Info"
+    assert [child.type for child in blocks[0].children] == ["paragraph", "empty", "list"]
 
 
 def test_parse_import_and_empty_blocks():
