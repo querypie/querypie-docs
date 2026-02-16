@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from reverse_sync.mdx_to_storage_xhtml_verify import (
+    VerificationSummary,
     iter_testcase_dirs,
     summarize_results,
     verify_testcase_dir,
@@ -47,7 +48,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _format_analysis_report(summary) -> str:
+def _format_analysis_report(summary: VerificationSummary) -> str:
     lines = [
         "# MDX -> Storage XHTML Batch Verify Analysis",
         "",
