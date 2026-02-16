@@ -44,3 +44,15 @@ def test_convert_heading_inline_keeps_non_bold_markdown_text():
     src = "Heading *italic* **Bold** [jump](/path) `x`"
     got = convert_heading_inline(src)
     assert got == 'Heading *italic* Bold <a href="/path">jump</a> <code>x</code>'
+
+
+def test_convert_inline_plain_text_passthrough():
+    src = "Just plain text without any markdown"
+    got = convert_inline(src)
+    assert got == src
+
+
+def test_convert_inline_bold_inside_link():
+    src = "[**bold link**](https://example.com)"
+    got = convert_inline(src)
+    assert got == '<a href="https://example.com"><strong>bold link</strong></a>'

@@ -92,3 +92,27 @@ def test_parse_html_block_stops_before_heading():
     assert blocks[0].type == "html_block"
     assert "line2" in blocks[0].content
     assert blocks[1].type == "heading"
+
+
+def test_parse_frontmatter_unclosed_falls_through():
+    text = "---\ntitle: X\nNo closing\n"
+    blocks = parse_mdx(text)
+    # 닫히지 않은 frontmatter는 파싱되지 않고 다른 타입으로 처리
+    assert blocks[0].type != "frontmatter"
+
+
+def test_parse_code_block_unclosed_collects_to_end():
+    text = "```python\nline1\nline2\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "code_block"
+    assert blocks[0].language == "python"
+    assert "line1" in blocks[0].content
+    assert "line2" in blocks[0].content
+
+
+def test_parse_ordered_list_detected():
+    text = "1. first\n2. second\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "list"
+    assert "first" in blocks[0].content
+    assert "second" in blocks[0].content

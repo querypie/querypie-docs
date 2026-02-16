@@ -127,3 +127,17 @@ def test_emit_list_with_continuation_line():
 def test_emit_unknown_block_type_returns_empty():
     block = Block(type="unknown", content="x")
     assert emit_block(block) == ""
+
+
+def test_emit_heading_level1_without_frontmatter_emits_h1():
+    """# Heading (level 1) without matching frontmatter title → <h1> (clamped)."""
+    mdx = "# NonTitle\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<h1>NonTitle</h1>"
+
+
+def test_emit_heading_level6_emits_h5():
+    """###### Heading (level 6) → <h5> (level - 1 = 5)."""
+    mdx = "###### Deep\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == "<h5>Deep</h5>"
