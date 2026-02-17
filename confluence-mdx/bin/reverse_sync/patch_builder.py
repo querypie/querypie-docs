@@ -11,7 +11,7 @@ from reverse_sync.text_normalizer import (
     strip_for_compare,
 )
 from reverse_sync.text_transfer import transfer_text_changes
-from reverse_sync.sidecar_lookup import find_mapping_by_sidecar, SidecarEntry
+from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
 
 

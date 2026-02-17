@@ -4,7 +4,7 @@ from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.patch_builder import build_patches
 from reverse_sync.xhtml_patcher import patch_xhtml
-from reverse_sync.sidecar_lookup import (
+from reverse_sync.sidecar import (
     SidecarEntry, build_mdx_to_sidecar_index, build_xpath_to_mapping,
 )
 

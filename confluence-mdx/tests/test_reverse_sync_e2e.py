@@ -9,7 +9,7 @@ from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync_cli import run_verify, MdxSource
 from reverse_sync.patch_builder import build_patches
-from reverse_sync.sidecar_lookup import (
+from reverse_sync.sidecar import (
     SidecarEntry, generate_sidecar_mapping,
     build_mdx_to_sidecar_index, build_xpath_to_mapping,
 )

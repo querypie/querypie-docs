@@ -8,7 +8,7 @@ build_table_row_patches, build_list_item_patches) 테스트.
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.sidecar_lookup import SidecarEntry
+from reverse_sync.sidecar import SidecarEntry
 from reverse_sync.patch_builder import (
     _find_containing_mapping,
     _resolve_child_mapping,

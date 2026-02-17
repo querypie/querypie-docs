@@ -221,7 +221,7 @@ def run_verify(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 3.5: Sidecar mapping 생성 + 인덱스 구축
-    from reverse_sync.sidecar_lookup import (
+    from reverse_sync.sidecar import (
         SidecarEntry, generate_sidecar_mapping,
         build_mdx_to_sidecar_index, build_xpath_to_mapping,
     )
