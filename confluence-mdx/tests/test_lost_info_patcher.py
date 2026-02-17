@@ -176,3 +176,44 @@ class TestPatchAdfExtensions:
         }
         result = apply_lost_info(emitted, lost_info)
         assert result == emitted
+
+
+class TestLoadPageLostInfo:
+    def test_load_lost_info_from_mapping_yaml(self):
+        import tempfile, yaml
+        from pathlib import Path
+        from reverse_sync.sidecar import load_page_lost_info
+
+        data = {
+            'version': 2,
+            'source_page_id': '123',
+            'mdx_file': 'page.mdx',
+            'mappings': [{'xhtml_xpath': 'p[1]', 'xhtml_type': 'paragraph', 'mdx_blocks': [0]}],
+            'lost_info': {
+                'emoticons': [{'name': 'tick', 'shortname': ':check_mark:', 'emoji_id': '', 'fallback': '', 'raw': '<ac:emoticon ac:name="tick"/>'}],
+            },
+        }
+        with tempfile.NamedTemporaryFile(suffix='.yaml', mode='w', delete=False) as f:
+            yaml.dump(data, f, allow_unicode=True)
+            f.flush()
+            result = load_page_lost_info(f.name)
+
+        assert 'emoticons' in result
+        assert result['emoticons'][0]['name'] == 'tick'
+
+    def test_no_lost_info_returns_empty(self):
+        import tempfile, yaml
+        from reverse_sync.sidecar import load_page_lost_info
+
+        data = {
+            'version': 2,
+            'source_page_id': '123',
+            'mdx_file': 'page.mdx',
+            'mappings': [],
+        }
+        with tempfile.NamedTemporaryFile(suffix='.yaml', mode='w', delete=False) as f:
+            yaml.dump(data, f, allow_unicode=True)
+            f.flush()
+            result = load_page_lost_info(f.name)
+
+        assert result == {}
