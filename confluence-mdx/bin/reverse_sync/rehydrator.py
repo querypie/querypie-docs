@@ -16,6 +16,7 @@ from mdx_to_storage import emit_document, parse_mdx
 from mdx_to_storage.emitter import emit_block as emit_single_block
 from mdx_to_storage.parser import Block
 
+from .lost_info_patcher import apply_lost_info
 from .mdx_block_parser import MdxBlock, parse_mdx_blocks
 from .sidecar import RoundtripSidecar, SidecarBlock, load_sidecar, sha256_text
 
@@ -109,6 +110,9 @@ def splice_rehydrate_xhtml(
             else:
                 parser_block = _mdx_block_to_parser_block(mdx_block)
                 emitted = emit_single_block(parser_block)
+                # L4: lost_info 적용
+                if sb.lost_info:
+                    emitted = apply_lost_info(emitted, sb.lost_info)
                 fragments.append(emitted)
                 emitted_count += 1
                 details.append({

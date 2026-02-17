@@ -282,3 +282,49 @@ class TestDistributeLostInfo:
         distribute_lost_info(blocks, page_lost_info)
         # Filenames match by ORIGINAL name in the XHTML fragment (original is in the source XHTML)
         assert 'filenames' in blocks[0].lost_info
+
+
+class TestSpliceWithLostInfo:
+    def test_emitted_block_gets_lost_info_applied(self):
+        """splice 경로에서 emitter 출력에 lost_info가 적용되는지 테스트."""
+        from reverse_sync.rehydrator import splice_rehydrate_xhtml
+        from reverse_sync.sidecar import RoundtripSidecar, SidecarBlock, DocumentEnvelope, sha256_text
+
+        # 변경된 MDX (hash 불일치하도록)
+        mdx_text = '## Title\n\nCheck ✔️ done\n'
+
+        # Sidecar: block 1의 hash가 불일치하도록 설정
+        sidecar = RoundtripSidecar(
+            page_id='test',
+            mdx_sha256='different',
+            source_xhtml_sha256='test',
+            blocks=[
+                SidecarBlock(
+                    block_index=0,
+                    xhtml_xpath='h2[1]',
+                    xhtml_fragment='<h2>Title</h2>',
+                    mdx_content_hash=sha256_text('## Title'),
+                ),
+                SidecarBlock(
+                    block_index=1,
+                    xhtml_xpath='p[1]',
+                    xhtml_fragment='<p>original <ac:emoticon ac:name="tick"/></p>',
+                    mdx_content_hash='wrong_hash',  # 불일치 → emitter 호출
+                    lost_info={
+                        'emoticons': [{
+                            'name': 'tick',
+                            'shortname': ':check_mark:',
+                            'emoji_id': '',
+                            'fallback': ':check_mark:',
+                            'raw': '<ac:emoticon ac:name="tick"/>',
+                        }],
+                    },
+                ),
+            ],
+            separators=['\n'],
+            document_envelope=DocumentEnvelope(prefix='', suffix=''),
+        )
+
+        result = splice_rehydrate_xhtml(mdx_text, sidecar)
+        # emitter가 ✔️를 출력하지만, lost_info로 <ac:emoticon>으로 복원됨
+        assert '<ac:emoticon ac:name="tick"/>' in result.xhtml
