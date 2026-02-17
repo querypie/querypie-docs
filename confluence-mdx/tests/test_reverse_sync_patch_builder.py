@@ -9,10 +9,12 @@ from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
 from reverse_sync.sidecar import SidecarEntry
+from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _find_containing_mapping,
     _flush_containing_changes,
     _resolve_child_mapping,
+    _resolve_mapping_for_change,
     build_patches,
     build_list_item_patches,
     build_table_row_patches,
@@ -712,3 +714,89 @@ class TestFlushContainingChanges:
         }
         patches = _flush_containing_changes(cc)
         assert len(patches) == 2
+
+
+# ── _resolve_mapping_for_change ──
+
+
+class TestResolveMappingForChange:
+    """_resolve_mapping_for_change 매핑 해석 함수 테스트."""
+
+    def _make_context(self, mappings=None, mdx_to_sidecar=None,
+                      xpath_to_mapping=None, id_to_mapping=None):
+        """공통 컨텍스트 dict를 구성한다."""
+        mappings = mappings or []
+        return {
+            'mappings': mappings,
+            'used_ids': set(),
+            'mdx_to_sidecar': mdx_to_sidecar or {},
+            'xpath_to_mapping': xpath_to_mapping or {},
+            'id_to_mapping': id_to_mapping or {m.block_id: m for m in mappings},
+        }
+
+    def _old_plain(self, change):
+        """change에서 old_plain을 계산한다."""
+        return normalize_mdx_to_plain(
+            change.old_block.content, change.old_block.type)
+
+    def test_no_sidecar_match_no_containing_returns_skip(self):
+        change = _make_change(0, 'hello', 'world')
+        ctx = self._make_context()
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'skip'
+        assert mapping is None
+
+    def test_sidecar_direct_match_returns_direct(self):
+        m = _make_mapping('b1', 'hello', xpath='p[1]')
+        se = _make_sidecar('p[1]', [{'mdx_index': 0}])
+        ctx = self._make_context(
+            mappings=[m],
+            mdx_to_sidecar={0: se},
+            xpath_to_mapping={'p[1]': m},
+        )
+        change = _make_change(0, 'hello', 'world')
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'direct'
+        assert mapping.block_id == 'b1'
+
+    def test_sidecar_match_with_children_resolved_returns_direct(self):
+        child = _make_mapping('c1', 'child text', xpath='li[1]')
+        parent = _make_mapping('p1', 'parent text', xpath='ul[1]',
+                               children=['c1'])
+        se = _make_sidecar('ul[1]', [{'mdx_index': 0}])
+        ctx = self._make_context(
+            mappings=[parent, child],
+            mdx_to_sidecar={0: se},
+            xpath_to_mapping={'ul[1]': parent},
+        )
+        change = _make_change(0, 'child text', 'new child')
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'direct'
+        assert mapping.block_id == 'c1'
+
+    def test_no_sidecar_list_type_returns_list(self):
+        change = _make_change(0, '- item1\n- item2', '- item1\n- changed', type_='list')
+        ctx = self._make_context()
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'list'
+
+    def test_no_sidecar_table_type_returns_table(self):
+        table = '| a | b |\n| --- | --- |\n| 1 | 2 |'
+        change = _make_change(0, table, table.replace('1', 'X'))
+        ctx = self._make_context()
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'table'
+
+    def test_no_sidecar_containing_match_returns_containing(self):
+        m = _make_mapping('b1', 'hello world full text here', xpath='div[1]')
+        change = _make_change(0, 'hello world', 'hi world')
+        ctx = self._make_context(mappings=[m])
+        strategy, mapping = _resolve_mapping_for_change(
+            change, self._old_plain(change), **ctx)
+        assert strategy == 'containing'
+        assert mapping.block_id == 'b1'
