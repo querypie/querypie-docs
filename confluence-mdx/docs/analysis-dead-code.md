@@ -68,19 +68,60 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 **영향도:** 낮음
 
-### 3.3 [검토 대상] CLI 래퍼 통합 가능성
+### 3.3 [삭제 검토] `mdx_to_storage_xhtml_cli.py` — 중복 CLI 래퍼 (194줄)
 
-**대상 파일:**
-- `mdx_to_storage_phase1_baseline_cli.py` (80줄)
-- `mdx_to_storage_xhtml_cli.py` (193줄)
-- `mdx_to_storage_xhtml_verify_cli.py` (173줄)
+**위치:** `bin/mdx_to_storage_xhtml_cli.py`
 
 **현황:**
-`mdx_to_storage_xhtml_cli.py`는 `convert`, `verify`, `batch-verify` 서브커맨드를 제공합니다.
-`mdx_to_storage_phase1_baseline_cli.py`는 `batch-verify`와 유사한 baseline 기록 기능을 제공합니다.
-`mdx_to_storage_xhtml_verify_cli.py`는 standalone 검증 도구입니다.
+- `convert`, `verify`, `batch-verify` 서브커맨드를 제공합니다.
+- `batch-verify`와 `verify` 기능은 `mdx_to_storage_xhtml_verify_cli.py`(173줄)에서도 동일하게 제공합니다.
+- 유일한 고유 기능은 `convert` 서브커맨드이나, 이는 `emit_document(parse_mdx(...))`의 단순 래퍼입니다.
+- README.md나 문서에서 참조되지 않으며, 테스트 파일(`test_mdx_to_storage_xhtml_cli.py`)만 import합니다.
 
-**권장:** 3개의 CLI를 단일 진입점으로 통합하면 약 100줄 절감 가능하나, 각각이 현재 테스트 및 CI 스크립트에서 참조되고 있으므로, 리팩토링 시 import 경로 업데이트가 필요합니다. 당장의 삭제 대상은 아니며, 중복 코드 리팩토링과 함께 진행하는 것을 권장합니다.
+**권장:** `mdx_to_storage_xhtml_verify_cli.py`가 정규 진입점입니다. `convert` 기능이 필요하면 verify CLI에 서브커맨드로 추가하고, 이 파일을 삭제하는 것을 검토합니다.
+
+**신뢰도:** 높음 | **예상 삭제:** 194줄
+
+### 3.4 [삭제 검토] `reverse_sync/mdx_to_storage_final_verify.py` — 래퍼 모듈 (137줄)
+
+**위치:** `bin/reverse_sync/mdx_to_storage_final_verify.py`
+
+**현황:**
+- `mdx_to_storage_xhtml_verify.py`의 핵심 검증 로직을 단순 래핑합니다.
+- `run_final_verify()`, `render_final_verify_report()` 등은 `VerificationSummary`의 얇은 래퍼입니다.
+- 테스트 파일(`test_mdx_to_storage_final_verify.py`)만 참조합니다.
+- Phase 3 Task 3.5에서 생성된 태스크 전용 모듈입니다.
+
+**권장:** 태스크 완료 후 검증 리포트 기능을 `mdx_to_storage_xhtml_verify.py`에 통합하고 삭제를 검토합니다.
+
+**신뢰도:** 중간-높음 | **예상 삭제:** 137줄
+
+### 3.5 [삭제 검토] `reverse_sync/mdx_to_storage_baseline.py` — 래퍼 모듈 (118줄)
+
+**위치:** `bin/reverse_sync/mdx_to_storage_baseline.py`
+
+**현황:**
+- `mdx_to_storage_xhtml_verify_cli.py`를 subprocess로 호출하여 결과를 파싱하는 래퍼입니다.
+- `mdx_to_storage_phase1_baseline_cli.py`에서만 import됩니다.
+- Phase 1 baseline 측정 전용 유틸리티로, Phase 1 완료 후 활용도가 낮습니다.
+- CLI 출력을 regex로 파싱하는 취약한 구조입니다.
+
+**권장:** Phase 1 baseline이 더 이상 업데이트되지 않으면 `mdx_to_storage_phase1_baseline_cli.py`와 함께 삭제합니다.
+
+**신뢰도:** 중간 | **예상 삭제:** 118줄 (+ CLI 80줄)
+
+### 3.6 [삭제 검토] `reverse_sync/test_verify.py` — 위치 부적절한 CLI 래퍼 (67줄)
+
+**위치:** `bin/reverse_sync/test_verify.py`
+
+**현황:**
+- `reverse_sync_cli.py`의 `run_verify()`를 호출하는 얇은 래퍼입니다.
+- 패키지 디렉토리(`reverse_sync/`) 안에 위치한 CLI 스크립트로, 위치가 부적절합니다.
+- `tests/run-tests.sh`에서 호출되지만, `reverse_sync_cli.py verify` 커맨드로 대체 가능합니다.
+
+**권장:** `run-tests.sh`가 `reverse_sync_cli.py verify`를 직접 호출하도록 변경 후 삭제합니다.
+
+**신뢰도:** 높음 | **예상 삭제:** 67줄
 
 ## 4. 도달 불가능한 코드 경로
 
@@ -111,16 +152,38 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 ## 6. 삭제 범위 요약
 
-| 항목 | 파일 | 예상 삭제 줄수 | 우선순위 |
-|------|------|---------------|---------|
-| `_debug_markdown` 플래그 및 분기 | `converter/core.py` | ~30줄 | 낮음 |
-| `_debug_tags` 빈 집합 및 분기 | `converter/core.py` | ~10줄 | 낮음 |
-| 주석 처리된 디버그 코드 | `converter/core.py` | ~4줄 | 낮음 |
-| **합계** | | **~44줄** | |
+### 6.1 즉시 삭제 가능 (dead code)
+
+| 항목 | 파일 | 예상 삭제 줄수 | 신뢰도 |
+|------|------|---------------|--------|
+| `_debug_markdown` 플래그 및 분기 | `converter/core.py` | ~30줄 | 높음 |
+| `_debug_tags` 빈 집합 및 분기 | `converter/core.py` | ~10줄 | 높음 |
+| 주석 처리된 디버그 코드 | `converter/core.py` | ~4줄 | 높음 |
+| **소계** | | **~44줄** | |
+
+### 6.2 통합 후 삭제 가능 (중복 래퍼)
+
+| 항목 | 파일 | 예상 삭제 줄수 | 신뢰도 |
+|------|------|---------------|--------|
+| 중복 CLI 래퍼 | `mdx_to_storage_xhtml_cli.py` | ~194줄 | 높음 |
+| 위치 부적절 CLI 래퍼 | `reverse_sync/test_verify.py` | ~67줄 | 높음 |
+| 래퍼 모듈 (final verify) | `reverse_sync/mdx_to_storage_final_verify.py` | ~137줄 | 중간-높음 |
+| 래퍼 모듈 (baseline) | `reverse_sync/mdx_to_storage_baseline.py` | ~118줄 | 중간 |
+| baseline CLI | `mdx_to_storage_phase1_baseline_cli.py` | ~80줄 | 중간 |
+| **소계** | | **~596줄** | |
+
+### 6.3 전체 합계
+
+| 분류 | 예상 삭제 줄수 |
+|------|---------------|
+| 즉시 삭제 가능 | ~44줄 |
+| 통합 후 삭제 가능 | ~596줄 |
+| **총계** | **~640줄** |
 
 ## 7. 결론
 
-confluence-mdx 코드베이스는 전반적으로 잘 관리되고 있으며, 모듈 수준의 미사용 코드는 없습니다.
-함수 수준에서 삭제 가능한 dead code는 `converter/core.py`의 디버그 관련 코드(약 44줄)에 한정됩니다.
+confluence-mdx 코드베이스는 전반적으로 잘 관리되고 있으며, 완전히 미사용인 모듈은 없습니다.
 
-코드 품질 개선의 더 큰 효과는 **중복 코드 리팩토링**(별도 문서 `analysis-duplicate-code.md` 참조)에서 얻을 수 있습니다.
+- **즉시 삭제 가능한 dead code**는 `converter/core.py`의 디버그 관련 코드(~44줄)에 한정됩니다.
+- **래퍼 모듈/CLI 통합**을 통해 추가로 ~596줄을 정리할 수 있습니다. 이들은 현재 테스트에서 참조되므로, import 경로 업데이트와 함께 진행해야 합니다.
+- 코드 품질 개선의 더 큰 효과는 **중복 코드 리팩토링**(별도 문서 `analysis-duplicate-code.md` 참조)에서 얻을 수 있습니다.
