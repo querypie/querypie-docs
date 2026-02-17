@@ -245,3 +245,13 @@ entries.append(entry)
 - `lost_info`를 활용한 역순변환 품질 개선
 - `roundtrip.json`의 `SidecarBlock.lost_info` 연계
 - `stripped_attrs` 수집
+- lost_info의 entry별 분배 (현재는 페이지 전체 수준)
+
+## 구현 노트 (2026-02-17)
+
+설계 대비 실제 구현의 차이점:
+
+1. **LostInfoCollector 위치:** `converter/core.py` 인라인이 아닌 별도 `converter/lost_info.py` 모듈로 분리
+2. **collector 단위:** 블록별 collector가 아닌, `ConfluenceToMarkdown` 전체에 하나의 collector를 두고 모든 파서에 전파
+3. **lost_info 저장 위치:** entry별 `lost_info` 필드가 아닌, mapping.yaml 최상위 `lost_info` 필드로 기록. entry별 분배는 L4에서 필요 시 구현
+4. **stripped_attrs:** 범위 외로 미구현 (설계 문서 §5와 동일)
