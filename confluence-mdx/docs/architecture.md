@@ -2,6 +2,25 @@
 
 Confluence XHTML 문서를 Nextra용 MDX로 변환하고, MDX 편집 내용을 Confluence에 역반영하는 양방향 변환 시스템의 아키텍처를 설명한다.
 
+## 용어 정의
+
+| 용어 | 방향 | 패키지 | 설명 |
+|------|------|--------|------|
+| **Forward Conversion (정순변환)** | XHTML → MDX | `converter/` | Confluence XHTML을 MDX로 변환 |
+| **Backward Conversion (역순변환)** | MDX → XHTML | `mdx_to_storage/` | MDX를 Confluence Storage XHTML로 변환 |
+| **Reverse Sync (역반영)** | MDX 편집 → Confluence 반영 | `reverse_sync/` | MDX 교정 내용을 Confluence에 반영하는 파이프라인 |
+| **Round Trip Verification (라운드트립 검증)** | MDX → XHTML → MDX → 비교 | — | 변경된 MDX를 역순변환 후, 다시 정순변환하여 원래 MDX와 동일한지 검증 |
+
+**라운드트립 검증 흐름:**
+
+```
+변경된 MDX ──(역순변환)──▶ XHTML ──(정순변환)──▶ 재변환 MDX
+    │                                                │
+    └──────────────── 동일한지 비교 ──────────────────┘
+```
+
+---
+
 ## 전체 구조
 
 시스템은 세 개의 파이프라인과 하나의 메타데이터 시스템으로 구성된다.
@@ -15,26 +34,26 @@ Confluence XHTML 문서를 Nextra용 MDX로 변환하고, MDX 편집 내용을 C
   │                      │          │                      │
   ▼                      ▼          ▼                      ▼
 ┌─────────┐   ┌──────────────────┐   ┌──────────────────┐
-│ Pipeline│   │ Pipeline 2       │   │ Pipeline 3       │
-│ 1       │   │ MDX → XHTML     │   │ Reverse Sync     │
-│ XHTML → │   │ (Forward        │   │ (MDX 편집 →      │
-│ MDX     │   │  Converter)     │   │  Confluence 반영) │
-│         │   │                  │   │                  │
+│ Forward │   │ Backward        │   │ Reverse Sync     │
+│Converter│   │ Converter       │   │                  │
+│ XHTML → │   │ MDX → XHTML    │   │ (MDX 편집 →      │
+│ MDX     │   │                 │   │  Confluence 반영) │
+│         │   │                 │   │                  │
 │converter│   │mdx_to_storage/  │   │reverse_sync/     │
 └─────────┘   └──────────────────┘   └──────────────────┘
 ```
 
 | 파이프라인 | 방향 | 패키지 | 용도 |
 |-----------|------|--------|------|
-| Pipeline 1 | Confluence XHTML → MDX | `converter/` | 초기 문서 마이그레이션 |
-| Pipeline 2 | MDX → Confluence Storage XHTML | `mdx_to_storage/` | 역반영 시 XHTML 재생성, 변환 정확도 검증 |
-| Pipeline 3 | MDX 편집 → XHTML 패치 → Confluence 업데이트 | `reverse_sync/` | MDX 교정 내용을 Confluence에 반영 |
+| Forward Converter (정순변환) | Confluence XHTML → MDX | `converter/` | 초기 문서 마이그레이션 |
+| Backward Converter (역순변환) | MDX → Confluence Storage XHTML | `mdx_to_storage/` | 역반영 시 XHTML 재생성, 라운드트립 검증 |
+| Reverse Sync (역반영) | MDX 편집 → XHTML 패치 → Confluence 업데이트 | `reverse_sync/` | MDX 교정 내용을 Confluence에 반영 |
 
 ---
 
-## Pipeline 1: Confluence XHTML → MDX (`converter/`)
+## Forward Converter: XHTML → MDX (`converter/`)
 
-Confluence API에서 수집한 XHTML을 Nextra용 MDX 파일로 변환한다.
+Confluence API에서 수집한 XHTML을 Nextra용 MDX 파일로 변환하는 정순변환기이다.
 
 ### 실행 흐름
 
@@ -147,10 +166,10 @@ ConfluenceToMarkdown                ← 오케스트레이터
 
 ---
 
-## Pipeline 2: MDX → Confluence Storage XHTML (`mdx_to_storage/`)
+## Backward Converter: MDX → XHTML (`mdx_to_storage/`)
 
-MDX 텍스트를 Confluence Storage Format XHTML로 변환한다. Pipeline 1의 역방향이며, 두 가지 목적으로 사용된다:
-1. **변환 정확도 검증**: Pipeline 1의 결과를 다시 XHTML로 변환하여 원본과 비교
+MDX 텍스트를 Confluence Storage Format XHTML로 변환하는 역순변환기이다. Forward Converter의 역방향이며, 두 가지 목적으로 사용된다:
+1. **라운드트립 검증**: 역순변환 결과를 원본 `page.xhtml`과 비교하거나, 역순변환 → 정순변환 경로로 MDX 동일성을 검증
 2. **역반영 시 XHTML 재생성**: 변경된 MDX 블록을 XHTML로 재생성 (insert 패치)
 
 ### 모듈 구성
@@ -231,7 +250,7 @@ MDX 상대 경로                     Confluence XHTML
 
 ---
 
-## Pipeline 3: Reverse Sync (`reverse_sync/`)
+## Reverse Sync: MDX 편집 → Confluence 반영 (`reverse_sync/`)
 
 MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 diff를 XHTML 패치로 변환하는 정밀한 파이프라인이다.
 
@@ -266,7 +285,7 @@ MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 d
           patch_xhtml()          ← BeautifulSoup으로 XHTML 수정
                  │
                  ▼
-          verify_roundtrip()     ← 패치 결과 검증 (정순변환 비교)
+          verify_roundtrip()     ← 라운드트립 검증 (XHTML→정순변환→MDX→비교)
                  │
                  ▼
        Confluence API push       ← (선택) 실제 반영
@@ -353,7 +372,7 @@ BeautifulSoup으로 패치를 적용한다. 실행 순서: **delete → insert �
 
 #### Step 7: 라운드트립 검증 (`roundtrip_verifier.py`)
 
-패치된 XHTML을 다시 정순변환하여 교정된 MDX와 비교한다. 정규화 항목:
+패치된 XHTML을 정순변환(Forward Conversion)하여 MDX로 되돌린 뒤, 교정된 MDX와 비교한다. 두 MDX가 동일하면 패치가 정확하게 적용된 것이다. 정규화 항목:
 - Trailing whitespace, 날짜 포맷 (한국어 ↔ 영어), 테이블 패딩, h1 헤딩 (페이지 제목), `<td>` 내 줄 합치기, 코드 블록 HTML 엔티티
 
 ### Reverse Sync 생성 파일
@@ -365,17 +384,17 @@ BeautifulSoup으로 패치를 적용한다. 실행 순서: **delete → insert �
 | `reverse-sync.mapping.patched.yaml` | `var/<page_id>/` | 패치 후 XHTML 매핑 |
 | `reverse-sync.patched.xhtml` | `var/<page_id>/` | 패치된 XHTML |
 | `reverse-sync.result.yaml` | `var/<page_id>/` | 검증 결과 (pass/fail, diff) |
-| `verify.mdx` | `var/<page_id>/` | 라운드트립 정순변환 결과 |
+| `verify.mdx` | `var/<page_id>/` | 라운드트립 검증용: 패치된 XHTML을 정순변환한 MDX |
 
 ---
 
 ## Sidecar 시스템
 
-Pipeline 1과 Pipeline 3을 연결하는 메타데이터 시스템이다. 두 종류의 sidecar 파일이 있다.
+Forward Converter와 Reverse Sync를 연결하는 메타데이터 시스템이다. 두 종류의 sidecar 파일이 있다.
 
 ### 1. Mapping Sidecar (`mapping.yaml`)
 
-Pipeline 1 실행 시 `converter/sidecar_mapping.py`가 생성한다. XHTML 블록과 MDX 블록의 대응 관계를 기록한다.
+Forward Converter 실행 시 `converter/sidecar_mapping.py`가 생성한다. XHTML 블록과 MDX 블록의 대응 관계를 기록한다.
 
 **위치:** `var/<page_id>/mapping.yaml`
 
@@ -398,11 +417,11 @@ mappings:
 2. `parse_mdx_blocks(mdx)` → MDX 블록 목록 (`MdxBlock`)
 3. `_build_mapping_entries()` → 순차 매칭하여 매핑 기록
 
-**사용처:** Pipeline 3에서 `build_mdx_to_sidecar_index()`로 O(1) 조회 인덱스를 구축한다.
+**사용처:** Reverse Sync에서 `build_mdx_to_sidecar_index()`로 O(1) 조회 인덱스를 구축한다.
 
 ### 2. Roundtrip Sidecar (`expected.roundtrip.json`)
 
-Pipeline 2의 검증 인프라에서 사용한다. XHTML 원본을 블록 단위 프래그먼트로 분해하여 저장하며, **프래그먼트 재조립이 원본과 byte-equal**함을 보장한다.
+Backward Converter의 검증 인프라에서 사용한다. XHTML 원본을 블록 단위 프래그먼트로 분해하여 저장하며, **프래그먼트 재조립이 원본과 byte-equal**함을 보장한다.
 
 **위치:** `tests/testcases/<case_id>/expected.roundtrip.json`
 
@@ -448,15 +467,15 @@ envelope.prefix
 
 **프래그먼트 추출 (`fragment_extractor.py`):** BeautifulSoup으로 태그 시퀀스를 식별한 뒤, 원문을 직접 스캔하여 정확한 태그 경계를 추출한다. BS4의 속성 재정렬, 공백 정규화, self-closing 변환 문제를 회피한다.
 
-**무손실 복원 (`rehydrator.py`):** MDX의 SHA256 해시가 sidecar와 일치하면 `reassemble_xhtml()`으로 원본을 byte-equal 복원한다. 불일치 시 정순변환 폴백.
+**무손실 복원 (`rehydrator.py`):** MDX의 SHA256 해시가 sidecar와 일치하면 `reassemble_xhtml()`으로 원본을 byte-equal 복원한다. 불일치 시 역순변환(Backward Conversion) 폴백.
 
 ---
 
 ## 검증 인프라
 
-### 정순변환 검증 (`mdx_to_storage_xhtml_verify`)
+### 역순변환 검증 (`mdx_to_storage_xhtml_verify`)
 
-Pipeline 2의 출력을 원본 `page.xhtml`과 비교한다. XHTML을 정규화(beautify)한 뒤 diff를 생성한다.
+Backward Converter의 출력을 원본 `page.xhtml`과 비교한다. XHTML을 정규화(beautify)한 뒤 diff를 생성한다.
 
 | 모듈 | 역할 |
 |------|------|
@@ -507,13 +526,13 @@ var/
     ├── page.xhtml                       ← Confluence XHTML 본문
     ├── children.v2.yaml                 ← 자식 페이지 목록 + 정렬 순서
     ├── attachments.v1.yaml              ← 첨부파일 메타데이터
-    ├── mapping.yaml                     ← XHTML↔MDX 매핑 sidecar (Pipeline 1 생성)
-    ├── reverse-sync.diff.yaml           ← 블록 변경 diff (Pipeline 3 생성)
+    ├── mapping.yaml                     ← XHTML↔MDX 매핑 sidecar (Forward Converter 생성)
+    ├── reverse-sync.diff.yaml           ← 블록 변경 diff (Reverse Sync 생성)
     ├── reverse-sync.mapping.original.yaml
     ├── reverse-sync.mapping.patched.yaml
     ├── reverse-sync.patched.xhtml       ← 패치된 XHTML
     ├── reverse-sync.result.yaml         ← 검증 결과
-    ├── verify.mdx                       ← 라운드트립 검증용 MDX
+    ├── verify.mdx                       ← 라운드트립 검증용: 패치된 XHTML을 정순변환한 MDX
     └── <attachment files>               ← 다운로드된 첨부파일
 ```
 
@@ -545,15 +564,15 @@ tests/testcases/
 
 ## CLI 명령어
 
-### 데이터 수집 및 변환
+### 데이터 수집 및 정순변환 (Forward Conversion)
 
 | 명령어 | 설명 |
 |--------|------|
 | `fetch_cli.py --recent` | 최근 수정 페이지 수집 |
-| `convert_all.py` | pages.yaml 기반 전체 배치 변환 |
+| `convert_all.py` | pages.yaml 기반 전체 배치 변환 (XHTML → MDX) |
 | `converter/cli.py <input> <output>` | 단일 페이지 XHTML → MDX 변환 |
 
-### 정순변환 (MDX → XHTML)
+### 역순변환 (Backward Conversion)
 
 | 명령어 | 설명 |
 |--------|------|
@@ -590,7 +609,7 @@ tests/testcases/
 
 ### 정보 손실 카테고리
 
-정순변환(XHTML → MDX)은 구조적으로 다음 정보를 손실한다:
+Forward Conversion(XHTML → MDX)은 구조적으로 다음 정보를 손실한다:
 
 | 카테고리 | 설명 |
 |---------|------|
@@ -618,20 +637,20 @@ tests/testcases/
 
 ### Phase L2: 블록 정렬 + Splice Rehydrator
 
-MDX 블록을 sidecar 블록과 해시 매칭하여, 변경되지 않은 블록은 원본 XHTML 프래그먼트를 그대로 사용하고, 변경된 블록만 재생성하는 splice 방식의 rehydrator를 구현한다.
+MDX 블록을 sidecar 블록과 해시 매칭하여, 변경되지 않은 블록은 원본 XHTML 프래그먼트를 그대로 사용하고, 변경된 블록만 Backward Converter로 재생성하는 splice 방식의 rehydrator를 구현한다.
 
 **핵심 알고리즘:**
 1. MDX → MdxBlock[] 파싱 + content 해시 계산
 2. 각 MdxBlock의 해시를 sidecar 블록의 `mdx_content_hash`와 매칭
 3. 매칭된 블록: `sidecar.blocks[j].xhtml_fragment` 그대로 사용
-4. 매칭되지 않은 블록: `emitter.emit_block()`으로 재생성
+4. 매칭되지 않은 블록: `emitter.emit_block()`으로 역순변환하여 재생성
 5. separators + envelope로 조립
 
 **목표:** 모든 21개 테스트케이스에서 블록 단위 splice 경로로 byte-equal 달성.
 
-### Phase L3: 정순변환 정보 보존
+### Phase L3: Forward Conversion 정보 보존
 
-`converter/core.py`의 정순변환 과정에서 손실되는 정보를 sidecar의 `lost_info` 필드에 기록한다.
+`converter/core.py`의 정순변환(Forward Conversion) 과정에서 손실되는 정보를 sidecar의 `lost_info` 필드에 기록한다.
 
 - emoticons: 단축명 + 원본 XHTML
 - links: 원본 `ri:content-title`, `ri:space-key`
@@ -648,9 +667,9 @@ MDX 블록을 sidecar 블록과 해시 매칭하여, 변경되지 않은 블록�
 - 파일명 패치: 정규화된 이름 → 원본 이름
 - ADF 패치: Callout → 원본 확장 구조
 
-### Phase L5: Emitter 정확도 개선
+### Phase L5: Backward Converter 정확도 개선
 
-정순변환기의 XHTML 출력 품질을 개선한다.
+역순변환기(Backward Converter)의 XHTML 출력 품질을 개선한다.
 - `<ol>` 리스트에 `start="1"` 속성 추가
 - `<br/>` → `<br />` 표기 통일
 - `<ac:image>` 중첩 구조 수정
