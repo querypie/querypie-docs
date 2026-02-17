@@ -197,7 +197,10 @@ def main():
         try:
             from reverse_sync.sidecar import generate_sidecar_mapping
             page_id = str(page_v1.get('id')) if page_v1 else ''
-            sidecar_yaml = generate_sidecar_mapping(xhtml_original, markdown_content, page_id)
+            sidecar_yaml = generate_sidecar_mapping(
+                xhtml_original, markdown_content, page_id,
+                lost_infos=converter.lost_infos,
+            )
             mapping_path = os.path.join(input_dir, 'mapping.yaml')
             with open(mapping_path, 'w', encoding='utf-8') as f:
                 f.write(sidecar_yaml)

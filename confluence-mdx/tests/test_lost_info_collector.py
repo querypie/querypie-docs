@@ -126,3 +126,44 @@ class TestConfluenceToMarkdownLostInfos:
         converter = ConfluenceToMarkdown(html)
         _ = converter.as_markdown()
         assert converter.lost_infos == {}
+
+
+class TestMappingYamlLostInfo:
+    def test_version_is_2(self):
+        import yaml
+        from reverse_sync.sidecar import generate_sidecar_mapping
+
+        xhtml = '<h2>Title</h2>'
+        mdx = '---\ntitle: test\n---\n\n# Doc\n\n## Title\n'
+
+        result = generate_sidecar_mapping(xhtml, mdx, '12345')
+        data = yaml.safe_load(result)
+        assert data['version'] == 2
+
+    def test_lost_info_in_mapping_yaml(self):
+        import yaml
+        from reverse_sync.sidecar import generate_sidecar_mapping
+
+        lost_infos = {
+            'emoticons': [{'name': 'tick', 'shortname': ':check_mark:', 'emoji_id': '', 'fallback': '', 'raw': '<ac:emoticon ac:name="tick"/>'}],
+        }
+
+        xhtml = '<h2>Title</h2><p>text</p>'
+        mdx = '---\ntitle: test\n---\n\n# Doc\n\n## Title\n\ntext\n'
+
+        result = generate_sidecar_mapping(xhtml, mdx, '12345', lost_infos=lost_infos)
+        data = yaml.safe_load(result)
+        assert data['version'] == 2
+        assert 'lost_info' in data
+        assert data['lost_info']['emoticons'][0]['name'] == 'tick'
+
+    def test_no_lost_info_when_empty(self):
+        import yaml
+        from reverse_sync.sidecar import generate_sidecar_mapping
+
+        xhtml = '<h2>Title</h2>'
+        mdx = '---\ntitle: test\n---\n\n# Doc\n\n## Title\n'
+
+        result = generate_sidecar_mapping(xhtml, mdx, '12345')
+        data = yaml.safe_load(result)
+        assert 'lost_info' not in data
