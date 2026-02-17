@@ -28,7 +28,7 @@ def rehydrate_xhtml(
     fallback_renderer: FallbackRenderer | None = None,
 ) -> str:
     if sidecar_matches_mdx(mdx_text, sidecar):
-        return sidecar.raw_xhtml
+        return sidecar.reassemble_xhtml()
 
     renderer = fallback_renderer or default_fallback_renderer
     return renderer(mdx_text)

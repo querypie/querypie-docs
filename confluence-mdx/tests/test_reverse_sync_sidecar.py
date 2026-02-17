@@ -1,7 +1,7 @@
 """Sidecar 통합 모듈 유닛 테스트.
 
 reverse_sync/sidecar.py의 핵심 기능을 검증한다:
-  - Roundtrip sidecar v1 스키마 (RoundtripSidecar, build/load/write)
+  - Block-level roundtrip sidecar (RoundtripSidecar, build/load/write)
   - mapping.yaml 파일 로드 및 SidecarEntry 생성
   - MDX block index → SidecarEntry 역인덱스 구축
   - xhtml_xpath → BlockMapping 인덱스 구축
@@ -32,7 +32,7 @@ from reverse_sync.sidecar import (
 from reverse_sync.mapping_recorder import BlockMapping
 
 
-# ── Roundtrip Sidecar v1 ─────────────────────────────────────
+# ── Roundtrip Sidecar (block-level) ──────────────────────────
 
 class TestSha256Text:
     def test_stable(self):
@@ -43,29 +43,30 @@ class TestSha256Text:
 
 
 class TestBuildSidecar:
-    def test_contains_hashes_and_payload(self):
-        mdx = "## Title\n\nBody\n"
+    def test_contains_hashes_and_fragments(self):
         xhtml = "<h1>Title</h1><p>Body</p>"
-        sidecar = build_sidecar(mdx, xhtml, page_id="123")
-        assert sidecar.roundtrip_schema_version == ROUNDTRIP_SCHEMA_VERSION
+        mdx = "## Title\n\nBody\n"
+        sidecar = build_sidecar(xhtml, mdx, page_id="123")
+        assert sidecar.schema_version == ROUNDTRIP_SCHEMA_VERSION
         assert sidecar.page_id == "123"
-        assert sidecar.raw_xhtml == xhtml
+        assert sidecar.reassemble_xhtml() == xhtml
         assert sidecar.mdx_sha256 == sha256_text(mdx)
         assert sidecar.source_xhtml_sha256 == sha256_text(xhtml)
+        assert len(sidecar.blocks) == 2
 
 
 class TestWriteAndLoadSidecar:
     def test_roundtrip(self, tmp_path):
-        mdx = "## T\n"
         xhtml = "<h1>T</h1>"
-        sidecar = build_sidecar(mdx, xhtml, page_id="case-1")
+        mdx = "## T\n"
+        sidecar = build_sidecar(xhtml, mdx, page_id="case-1")
         path = tmp_path / "expected.roundtrip.json"
         write_sidecar(sidecar, path)
 
         loaded = load_sidecar(path)
-        assert loaded.roundtrip_schema_version == ROUNDTRIP_SCHEMA_VERSION
+        assert loaded.schema_version == ROUNDTRIP_SCHEMA_VERSION
         assert loaded.page_id == "case-1"
-        assert loaded.raw_xhtml == xhtml
+        assert loaded.reassemble_xhtml() == xhtml
         assert loaded.mdx_sha256 == sha256_text(mdx)
 
 
