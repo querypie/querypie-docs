@@ -210,7 +210,7 @@ Confluence Storage XHTML (문자열)
 | `heading` | `## Title` | `<h2>Title</h2>` |
 | `paragraph` | 텍스트 | `<p>텍스트</p>` |
 | `code_block` | ` ```lang ` | `<ac:structured-macro ac:name="code">` |
-| `list` | `* item` / `1. item` | `<ul>/<ol><li>...</li></ul>` |
+| `list` | `* item` / `1. item` | `<ul>/<ol start="1"><li>...</li></ul>` |
 | `callout` | `<Callout type="info">` | `<ac:structured-macro ac:name="info">` |
 | `figure` | `<figure>` | `<ac:image><ri:attachment>` |
 | `details` | `<details>` | `<ac:structured-macro ac:name="expand">` |
@@ -229,6 +229,7 @@ Confluence Storage XHTML (문자열)
 | `**bold**` | `<strong>bold</strong>` |
 | `*italic*` | `<em>italic</em>` |
 | `[text](url)` | `<a href="url">text</a>` 또는 `<ac:link>` (내부 링크) |
+| `<Badge color="X">text</Badge>` | `<ac:structured-macro ac:name="status">` (L5) |
 
 ### 링크 해석 (`link_resolver.py`)
 
@@ -513,21 +514,24 @@ SpliceVerificationResult(case_id, passed, reason, first_mismatch_offset,
 
 | 검증 기준 | 결과 | 비고 |
 |-----------|------|------|
-| normalize-diff (emitter 단독) | **0/21 pass** | 역순변환기 단독 출력 |
+| normalize-diff (emitter 단독) | **1/21 pass** | L5 개선 후 (L5 이전: 0/21) |
 | document-level sidecar (Lossless v1) | **21/21 pass** | MDX 미변경 시 원본 XHTML 그대로 반환 (trivial) |
 | L1 fragment reassembly | **21/21 pass** | sidecar v2 프래그먼트 재조립 byte-equal |
 | **block-level splice (L2)** | **21/21 pass** | forced-splice 경로로 블록 단위 byte-equal |
 
-**Emitter 단독 실패 원인 분포:**
+**Emitter 단독 실패 원인 분포 (L5 이후):**
 
-| 원인 | 건수 | 비가역 여부 |
-|------|------|-------------|
-| `ordered_list_start_mismatch` | 12 | emitter 수정 가능 (L5) |
-| `internal_link_unresolved` (`#link-error`) | 7 | **비가역** — 정순변환에서 원본 정보 소실 |
-| `attachment_filename_mismatch` | 7 | **비가역** — 정순변환에서 파일명 정규화 |
-| `image_block_structure_mismatch` | 5 | emitter 수정 가능 (L5) |
-| `emoticon_representation_mismatch` | 4 | **비가역** — 정순변환에서 shortname 소실 |
-| `adf_extension_panel_mismatch` | 3 | **비가역** — ADF 구조가 MDX에 없음 |
+| 원인 | 건수 | 비가역 여부 | L5 변화 |
+|------|------|-------------|---------|
+| `attachment_filename_mismatch` | 9 | **비가역** — 정순변환에서 파일명 정규화 | +2 (분류 변경) |
+| `internal_link_unresolved` (`#link-error`) | 7 | **비가역** — 정순변환에서 원본 정보 소실 | 변동 없음 |
+| `emoticon_representation_mismatch` | 4 | **비가역** — 정순변환에서 shortname 소실 | 변동 없음 |
+| `image_block_structure_mismatch` | 3 | emitter 수정 가능 (중첩 구조) | -2 (L5 해소) |
+| `adf_extension_panel_mismatch` | 3 | **비가역** — ADF 구조가 MDX에 없음 | 변동 없음 |
+| `table_cell_structure_mismatch` | 2 | emitter 수정 가능 | 신규 분류 |
+| `other` | 2 | 분석 필요 | — |
+| `underline_tag_mismatch` | 1 | emitter 수정 가능 | -1 |
+| ~~`ordered_list_start_mismatch`~~ | ~~0~~ | ~~해소~~ | **-12 (L5 완전 해소)** |
 
 비가역 항목은 emitter 개선으로 해결할 수 없으며, 정순변환 시 sidecar의 `lost_info`에 원본 정보를 보존해야 한다 (Phase L3).
 
@@ -677,7 +681,7 @@ Forward Conversion(XHTML → MDX)은 구조적으로 다음 정보를 손실한�
 | L2 | Block alignment + splice rehydrator | **완료** | #794 |
 | L3 | Forward Conversion 정보 보존 강화 (`lost_info`) | 미착수 | — |
 | L4 | Metadata-enhanced emitter + patcher | 미착수 | — |
-| L5 | Backward Converter 정확도 개선 | 미착수 | — |
+| L5 | Backward Converter 정확도 개선 | **완료** | #TBD |
 | L6 | CI gate 전환 (byte-equal을 기본 게이트로) | 미착수 | — |
 
 ### Phase L2: 블록 정렬 + Splice Rehydrator ✅
@@ -729,17 +733,21 @@ envelope.prefix + fragments[0] + separators[0] + ... + envelope.suffix → XHTML
 
 **인수 기준:** partial edit 시 unchanged blocks byte-equal 유지 + changed blocks well-formed XHTML 생성
 
-### Phase L5: Backward Converter 정확도 개선
+### Phase L5: Backward Converter 정확도 개선 ✅
 
-역순변환기(Backward Converter)의 XHTML 출력 품질을 개선한다.
+역순변환기(Backward Converter)의 XHTML 출력 품질을 3개 항목에서 개선했다.
 
-- `<ol>` 생성 시 `start="1"` 속성 추가 (12건 영향)
-- `<br/>` → `<br />` 표기 통일
-- 리스트 내 `<ac:image>` 구조 수정 (5건)
-- `<details>` → `expand` 매크로 매핑 개선
-- `<Badge>` → `status` 매크로 매핑 개선
+**구현 항목:**
 
-**인수 기준:** emitter 개선 항목별 단위 테스트 통과 + block-level splice 21/21 유지
+| 항목 | 수정 파일 | 영향 | 결과 |
+|------|----------|------|------|
+| `<ol start="1">` 속성 추가 | `emitter.py` | 12건 → 0건 | `ordered_list_start_mismatch` 완전 해소 |
+| 인라인 `<Badge>` → `status` 매크로 | `inline.py` | 2건 | paragraph/list 내 Badge 변환 |
+| 리스트 내 `<figure>` → `<ac:image>` 형제 구조 | `emitter.py` | 5건 → 3건 | 단순 구조 2건 해소 |
+
+나머지 원래 계획 항목 2개(`<br/>` 표기, `<details>` 매핑)는 이미 구현 완료 상태였다.
+
+**검증 결과:** normalize-diff 0/21 → 1/21 pass, splice 21/21 byte-equal 유지
 
 ### Phase L6: CI Gate 전환
 
