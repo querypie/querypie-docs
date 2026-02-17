@@ -11,6 +11,7 @@ from reverse_sync.mdx_block_parser import MdxBlock
 from reverse_sync.sidecar import SidecarEntry
 from reverse_sync.patch_builder import (
     _find_containing_mapping,
+    _flush_containing_changes,
     _resolve_child_mapping,
     build_patches,
     build_list_item_patches,
@@ -661,3 +662,53 @@ class TestBuildInsertPatch:
         )
         patches = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
+
+
+# ── _flush_containing_changes ──
+
+
+class TestFlushContainingChanges:
+    """_flush_containing_changes 헬퍼 함수 테스트."""
+
+    def test_empty_dict_returns_empty(self):
+        assert _flush_containing_changes({}) == []
+
+    def test_single_change(self):
+        m = _make_mapping('b1', 'hello world', xpath='p[1]')
+        cc = {'b1': (m, [('hello', 'hi')])}
+        patches = _flush_containing_changes(cc)
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'p[1]'
+        assert patches[0]['old_plain_text'] == 'hello world'
+        assert 'hi' in patches[0]['new_plain_text']
+
+    def test_multiple_changes_same_block(self):
+        m = _make_mapping('b1', 'aaa bbb ccc', xpath='p[1]')
+        cc = {'b1': (m, [('aaa', 'AAA'), ('bbb', 'BBB')])}
+        patches = _flush_containing_changes(cc)
+        assert len(patches) == 1
+        assert 'AAA' in patches[0]['new_plain_text']
+        assert 'BBB' in patches[0]['new_plain_text']
+
+    def test_used_ids_updated(self):
+        m = _make_mapping('b1', 'text', xpath='p[1]')
+        cc = {'b1': (m, [('text', 'changed')])}
+        used = set()
+        _flush_containing_changes(cc, used_ids=used)
+        assert 'b1' in used
+
+    def test_used_ids_none_no_error(self):
+        m = _make_mapping('b1', 'text', xpath='p[1]')
+        cc = {'b1': (m, [('text', 'changed')])}
+        patches = _flush_containing_changes(cc, used_ids=None)
+        assert len(patches) == 1
+
+    def test_multiple_blocks(self):
+        m1 = _make_mapping('b1', 'alpha', xpath='p[1]')
+        m2 = _make_mapping('b2', 'beta', xpath='p[2]')
+        cc = {
+            'b1': (m1, [('alpha', 'ALPHA')]),
+            'b2': (m2, [('beta', 'BETA')]),
+        }
+        patches = _flush_containing_changes(cc)
+        assert len(patches) == 2

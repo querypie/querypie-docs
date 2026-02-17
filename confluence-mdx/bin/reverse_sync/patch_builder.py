@@ -37,6 +37,31 @@ def _find_containing_mapping(
     return None
 
 
+def _flush_containing_changes(
+    containing_changes: dict,
+    used_ids: 'set | None' = None,
+) -> List[Dict[str, str]]:
+    """그룹화된 containing_changes를 패치 목록으로 변환한다.
+
+    containing_changes: block_id → (mapping, [(old_plain, new_plain)])
+    각 매핑의 xhtml_plain_text에 transfer_text_changes를 순차 적용하여 패치를 생성한다.
+    """
+    patches = []
+    for bid, (mapping, item_changes) in containing_changes.items():
+        xhtml_text = mapping.xhtml_plain_text
+        for old_plain, new_plain in item_changes:
+            xhtml_text = transfer_text_changes(
+                old_plain, new_plain, xhtml_text)
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        })
+        if used_ids is not None:
+            used_ids.add(bid)
+    return patches
+
+
 def build_patches(
     changes: List[BlockChange],
     original_blocks: List[MdxBlock],
@@ -194,18 +219,7 @@ def build_patches(
         })
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
@@ -342,19 +356,7 @@ def build_table_row_patches(
             containing_changes[bid] = (container, [])
         containing_changes[bid][1].append((old_plain, new_plain))
 
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        if used_ids is not None:
-            used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
@@ -462,19 +464,7 @@ def build_list_item_patches(
                 containing_changes[bid][1].append((old_plain, new_plain))
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        if used_ids is not None:
-            used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
