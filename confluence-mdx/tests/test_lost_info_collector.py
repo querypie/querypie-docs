@@ -65,3 +65,64 @@ class TestLostInfoCollector:
         assert 'emoticons' in result
         assert 'filenames' in result
         assert 'links' not in result
+
+
+class TestSingleLineParserCollector:
+    """SingleLineParser가 collector에 emoticon/link를 기록하는지 테스트한다."""
+
+    def test_emoticon_collected(self):
+        from converter.lost_info import LostInfoCollector
+        from converter.core import SingleLineParser
+
+        html = (
+            '<p><ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:" '
+            'ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:"/></p>'
+        )
+        node = _tag(html)
+        collector = LostInfoCollector()
+        parser = SingleLineParser(node, collector=collector)
+        _ = parser.as_markdown
+        result = collector.to_dict()
+        assert 'emoticons' in result
+        assert result['emoticons'][0]['name'] == 'tick'
+
+    def test_emoticon_without_collector_works(self):
+        """collector 없이도 기존 동작이 유지되어야 한다."""
+        from converter.core import SingleLineParser
+
+        html = (
+            '<p><ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:" '
+            'ac:emoji-id="atlassian-check_mark" ac:emoji-fallback=":check_mark:"/></p>'
+        )
+        node = _tag(html)
+        parser = SingleLineParser(node)
+        result = parser.as_markdown
+        # Should contain emoji character or shortname - either way it should work
+        assert len(result) > 0
+
+
+class TestConfluenceToMarkdownLostInfos:
+    """ConfluenceToMarkdown가 lost_infos를 수집하는지 테스트한다."""
+
+    def test_emoticon_in_paragraph(self):
+        from converter.core import ConfluenceToMarkdown
+
+        html = (
+            '<p>Check: <ac:emoticon ac:name="tick" '
+            'ac:emoji-shortname=":check_mark:" '
+            'ac:emoji-id="atlassian-check_mark" '
+            'ac:emoji-fallback=":check_mark:"/></p>'
+        )
+        converter = ConfluenceToMarkdown(html)
+        _ = converter.as_markdown()
+        lost = converter.lost_infos
+        assert 'emoticons' in lost
+        assert lost['emoticons'][0]['name'] == 'tick'
+
+    def test_no_lost_info_when_nothing_lost(self):
+        from converter.core import ConfluenceToMarkdown
+
+        html = '<p>Simple text</p>'
+        converter = ConfluenceToMarkdown(html)
+        _ = converter.as_markdown()
+        assert converter.lost_infos == {}
