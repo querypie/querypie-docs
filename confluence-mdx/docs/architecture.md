@@ -306,8 +306,8 @@ MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 d
 | `xhtml_patcher.py` | 333 | 패치를 XHTML에 적용 |
 | `roundtrip_verifier.py` | 174 | 패치 결과 라운드트립 검증 |
 | `mdx_to_xhtml_inline.py` | 271 | 삽입 패치용 MDX → XHTML 블록 변환 |
-| `rehydrator.py` | 49 | Sidecar 기반 무손실 XHTML 복원 |
-| `byte_verify.py` | 63 | Byte-equal 검증 |
+| `rehydrator.py` | 149 | Sidecar 기반 무손실 XHTML 복원 (fast path + splice + fallback) |
+| `byte_verify.py` | 126 | Byte-equal 검증 (document-level + forced-splice) |
 | `confluence_client.py` | 65 | Confluence REST API 클라이언트 |
 
 ### 단계별 상세
@@ -467,7 +467,11 @@ envelope.prefix
 
 **프래그먼트 추출 (`fragment_extractor.py`):** BeautifulSoup으로 태그 시퀀스를 식별한 뒤, 원문을 직접 스캔하여 정확한 태그 경계를 추출한다. BS4의 속성 재정렬, 공백 정규화, self-closing 변환 문제를 회피한다.
 
-**무손실 복원 (`rehydrator.py`):** MDX의 SHA256 해시가 sidecar와 일치하면 `reassemble_xhtml()`으로 원본을 byte-equal 복원한다. 불일치 시 역순변환(Backward Conversion) 폴백.
+**무손실 복원 (`rehydrator.py`):** 세 가지 경로로 XHTML을 복원한다:
+
+1. **Fast path** — MDX 전체 SHA256이 sidecar와 일치하면 `reassemble_xhtml()`으로 원본을 document-level byte-equal 복원
+2. **Splice path** — 블록 단위 해시 매칭. sidecar 블록을 순회하면서 MDX 대응 없는 블록(이미지 등)은 원본 fragment 보존, 해시 일치 블록은 원본 fragment 사용, 불일치 블록은 emitter 폴백
+3. **Fallback path** — 전체 emitter 재생성 (byte-equal 미보장)
 
 ---
 
@@ -490,11 +494,18 @@ Backward Converter의 출력을 원본 `page.xhtml`과 비교한다. XHTML을 �
 
 ### Byte-equal 검증 (`byte_verify`)
 
-Roundtrip sidecar를 사용하여 byte 수준 일치를 검증한다. 정규화 없이 원문 그대로 비교한다.
+Roundtrip sidecar를 사용하여 byte 수준 일치를 검증한다. 정규화 없이 원문 그대로 비교한다. 두 가지 검증 모드를 제공한다:
+
+- **`verify_case_dir()`** — document-level fast path 사용 (production 경로)
+- **`verify_case_dir_splice()`** — forced-splice 경로 사용 (sidecar 구조 검증)
 
 ```python
 ByteVerificationResult(case_id, passed, reason, first_mismatch_offset)
 # reason: "byte_equal" | "byte_mismatch" | "sidecar_missing"
+
+SpliceVerificationResult(case_id, passed, reason, first_mismatch_offset,
+                         matched_count, emitted_count, total_blocks)
+# reason: "byte_equal_splice" | "byte_mismatch_splice" | "sidecar_missing"
 ```
 
 ### 현재 배치 검증 결과
@@ -504,7 +515,7 @@ ByteVerificationResult(case_id, passed, reason, first_mismatch_offset)
 | normalize-diff (emitter 단독) | **0/21 pass** | 역순변환기 단독 출력 |
 | document-level sidecar (Lossless v1) | **21/21 pass** | MDX 미변경 시 원본 XHTML 그대로 반환 (trivial) |
 | L1 fragment reassembly | **21/21 pass** | sidecar v2 프래그먼트 재조립 byte-equal |
-| block-level splice (L2) | **미구현** | Phase L2에서 구현 예정 |
+| **block-level splice (L2)** | **21/21 pass** | forced-splice 경로로 블록 단위 byte-equal |
 
 **Emitter 단독 실패 원인 분포:**
 
@@ -661,55 +672,82 @@ Forward Conversion(XHTML → MDX)은 구조적으로 다음 정보를 손실한�
 |-------|------|------|-----|
 | L0 | 코드 통합 (`lossless_roundtrip` → `reverse_sync` 흡수) | **완료** | #791 |
 | L1 | Roundtrip Sidecar v2 + block fragment 추출 | **완료** | #792 |
-| L2 | Block alignment + splice rehydrator | 미착수 | — |
+| L2 | Block alignment + splice rehydrator | **완료** | #794 |
 | L3 | Forward Conversion 정보 보존 강화 (`lost_info`) | 미착수 | — |
 | L4 | Metadata-enhanced emitter + patcher | 미착수 | — |
 | L5 | Backward Converter 정확도 개선 | 미착수 | — |
 | L6 | CI gate 전환 (byte-equal을 기본 게이트로) | 미착수 | — |
 
-### Phase L2: 블록 정렬 + Splice Rehydrator
+### Phase L2: 블록 정렬 + Splice Rehydrator ✅
 
-MDX 블록을 sidecar 블록과 해시 매칭하여, 변경되지 않은 블록은 원본 XHTML 프래그먼트를 그대로 사용하고, 변경된 블록만 Backward Converter로 재생성하는 splice 방식의 rehydrator를 구현한다.
+`rehydrator.py`에 `splice_rehydrate_xhtml()` 함수를 추가하여 블록 단위 splice 경로를 구현했다. Sidecar 블록 기준으로 순회하면서 MDX content 블록과 해시 매칭한다.
 
-**핵심 알고리즘:**
-1. MDX → MdxBlock[] 파싱 + content 해시 계산
-2. 각 MdxBlock의 해시를 sidecar 블록의 `mdx_content_hash`와 매칭
-3. 매칭된 블록: `sidecar.blocks[j].xhtml_fragment` 그대로 사용
-4. 매칭되지 않은 블록: `emitter.emit_block()`으로 역순변환하여 재생성
-5. separators + envelope로 조립
+**Splice 알고리즘 (`splice_rehydrate_xhtml`):**
 
-**목표:** 모든 21개 테스트케이스에서 블록 단위 splice 경로로 byte-equal 달성.
+```
+MDX → parse_mdx_blocks() → content 블록 추출 (frontmatter, empty, import 제외)
+
+Sidecar 블록 순회 (XHTML fragment 기준):
+  ├── mdx_content_hash 없음 → 원본 fragment 보존 (이미지, 빈 단락 등)
+  ├── hash 일치 → 원본 xhtml_fragment 사용 (sidecar)
+  └── hash 불일치 → emit_block() emitter 폴백
+
+envelope.prefix + fragments[0] + separators[0] + ... + envelope.suffix → XHTML
+```
+
+**설계 포인트:** MDX content 블록이 아닌 **sidecar 블록을 기준으로 순회**하고, MDX 포인터를 별도로 관리한다. XHTML에는 MDX 대응이 없는 블록(이미지, 빈 단락, macro-only 요소)이 존재하므로, MDX 기준 순회 시 이러한 블록이 누락되어 separator 정렬이 깨진다.
+
+**결과:** `SpliceResult(xhtml, matched_count, emitted_count, total_blocks, block_details)` — 각 블록의 복원 방법(sidecar/emitter/preserved)을 추적한다.
+
+**검증 결과:** 21/21 forced-splice byte-equal 통과.
 
 ### Phase L3: Forward Conversion 정보 보존
 
 `converter/core.py`의 정순변환(Forward Conversion) 과정에서 손실되는 정보를 sidecar의 `lost_info` 필드에 기록한다.
 
-- emoticons: 단축명 + 원본 XHTML
-- links: 원본 `ri:content-title`, `ri:space-key`
-- filenames: 원본 Unicode 파일명
-- adf_extensions: 원본 XHTML 전체
-- stripped_attrs: 제거된 Confluence 속성
+| 필드 | 대상 | 저장 내용 |
+|------|------|----------|
+| `emoticons[]` | `ac:emoticon` 태그 | shortname, raw XHTML |
+| `links[]` | `#link-error` 링크 | 원본 `ri:content-title`, `ri:space-key`, raw XHTML |
+| `filenames[]` | 정규화된 파일명 | 원본 `ri:filename` |
+| `adf_extensions[]` | `ac:adf-extension` | raw XHTML 전체 |
+| `stripped_attrs` | 제거된 속성 19종 | `{attr_name: value}` |
+| `layout_wrapper` | `ac:layout` 래핑 | 래핑 구조 raw XHTML |
+
+**인수 기준:** 비가역 정보를 포함하는 모든 블록에서 `lost_info`에 해당 원본 정보 존재 + 기존 splice 21/21 유지
 
 ### Phase L4: 메타데이터 활용 Emitter + Patcher
 
 변경된 블록을 재생성할 때 `lost_info`를 활용하여 원본에 가까운 XHTML을 생성한다.
 
 - Emoticon 패치: Unicode 이모지 → 원본 `<ac:emoticon>` 태그
-- 링크 패치: `#link-error` → 원본 링크 대상
-- 파일명 패치: 정규화된 이름 → 원본 이름
-- ADF 패치: Callout → 원본 확장 구조
+- 링크 패치: `#link-error` → 원본 `<ac:link>` 태그
+- 파일명 패치: 정규화된 이름 → 원본 `ri:filename`
+- ADF 패치: Callout → 원본 `ac:adf-extension` raw
+
+**인수 기준:** partial edit 시 unchanged blocks byte-equal 유지 + changed blocks well-formed XHTML 생성
 
 ### Phase L5: Backward Converter 정확도 개선
 
 역순변환기(Backward Converter)의 XHTML 출력 품질을 개선한다.
-- `<ol>` 리스트에 `start="1"` 속성 추가
+
+- `<ol>` 생성 시 `start="1"` 속성 추가 (12건 영향)
 - `<br/>` → `<br />` 표기 통일
-- `<ac:image>` 중첩 구조 수정
+- 리스트 내 `<ac:image>` 구조 수정 (5건)
 - `<details>` → `expand` 매크로 매핑 개선
+- `<Badge>` → `status` 매크로 매핑 개선
+
+**인수 기준:** emitter 개선 항목별 단위 테스트 통과 + block-level splice 21/21 유지
 
 ### Phase L6: CI Gate 전환
 
-Byte-equal 검증을 CI의 기본 게이트로 설정하고, 정규화 diff 검증은 진단 전용으로 전환한다.
+Byte-equal 검증을 CI의 기본 게이트로 설정한다.
+
+- `byte_verify` CLI를 CI 스크립트에 통합
+- 기존 normalize-verify를 `--diagnostic` 모드로 전환
+- Byte mismatch → build fail (exit code 1)
+
+**인수 기준:** CI pipeline에서 byte-equal gate 활성화, 21/21 pass
 
 ### Reverse Sync Phase 3: 전면 재구성
 
