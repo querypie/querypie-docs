@@ -295,7 +295,7 @@ MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 d
 
 | 모듈 | 줄 수 | 역할 |
 |------|-------|------|
-| `mdx_block_parser.py` | 3 | Backward-compat re-export (`mdx_to_storage.parser` 위임) |
+| `mdx_block_parser.py` | 129 | MDX → MdxBlock 시퀀스 파싱 (splice rehydrator 호환용 유지) |
 | `block_diff.py` | 90 | 두 MdxBlock 시퀀스 diff |
 | `mapping_recorder.py` | 210 | XHTML → BlockMapping 추출 |
 | `sidecar.py` | 524 | Roundtrip sidecar + 매핑 인덱스 |

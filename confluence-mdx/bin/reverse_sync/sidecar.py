@@ -166,7 +166,7 @@ def build_sidecar(
     """
     from reverse_sync.fragment_extractor import extract_block_fragments
     from reverse_sync.mapping_recorder import record_mapping
-    from mdx_to_storage.parser import parse_mdx_blocks
+    from reverse_sync.mdx_block_parser import parse_mdx_blocks
 
     # 1. XHTML mapping + fragment 추출
     xhtml_mappings = record_mapping(page_xhtml_text)

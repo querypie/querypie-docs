@@ -74,7 +74,7 @@ class Block:
 
 **예상 절감:** ~80줄 (mdx_block_parser.py의 대부분을 parser.py로 통합)
 
-**실행 결과:** `parser.py`의 `Block`에 `line_start`/`line_end` 필드를 추가하고, `parse_mdx_blocks()` 호환 함수를 추가했습니다. `mdx_block_parser.py`는 backward-compat re-export 래퍼로 전환했습니다. 8개 파일의 import 경로를 업데이트했습니다.
+**실행 결과:** `parser.py`의 `Block`에 `line_start`/`line_end` 필드를 추가하고, `parse_mdx_blocks()` 호환 함수를 추가했습니다. `patch_builder.py`, `block_diff.py`, `sidecar.py`, `reverse_sync_cli.py`, `sidecar_mapping.py`의 import를 `mdx_to_storage.parser`로 전환했습니다. 단, `mdx_block_parser.py`는 원본 구현을 유지합니다 — `rehydrator.py`의 splice 경로가 이 파서의 블록 분할에 의존하며, sidecar의 `mdx_content_hash`가 이 파서 기준으로 생성되었기 때문입니다.
 
 ---
 
@@ -347,11 +347,11 @@ def _extract_code_language(content: str) -> str:
 
 - `emitter.py`의 `_HEADING_LINE_PATTERN`을 `parser.py`의 `HEADING_PATTERN`에서 import하도록 변경 완료.
 
-### Phase 2: MDX 파서 통합 (우선순위 1) — **완료**
+### Phase 2: MDX 파서 통합 (우선순위 1) — **부분 완료**
 
 1. ~~`mdx_to_storage/parser.py`의 `Block`에 `line_start`, `line_end` 필드 추가~~ ✓
-2. ~~`reverse_sync/mdx_block_parser.py`의 호출부를 `mdx_to_storage/parser.py`로 전환~~ ✓
-3. ~~`mdx_block_parser.py` 얇은 래퍼로 전환~~ ✓
+2. ~~`patch_builder`, `block_diff`, `sidecar`, `reverse_sync_cli`, `sidecar_mapping`의 import를 `parser.py`로 전환~~ ✓
+3. `mdx_block_parser.py` 원본 유지 — `rehydrator.py`의 splice 경로가 이 파서의 블록 분할에 의존 (sidecar `mdx_content_hash` 호환성)
 
 ### Phase 3: 인라인 변환기 통합 (우선순위 2) — **완료**
 
