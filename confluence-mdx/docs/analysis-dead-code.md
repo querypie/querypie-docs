@@ -38,7 +38,7 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 ## 3. 함수 수준 불필요 코드
 
-### 3.1 [삭제 대상] `_debug_markdown` 플래그 및 관련 분기 — `converter/core.py`
+### 3.1 [유지] `_debug_markdown` 플래그 및 관련 분기 — `converter/core.py`
 
 **위치:**
 - `core.py:577` — `MultiLineParser.__init__`에서 `self._debug_markdown = False` 설정
@@ -46,27 +46,23 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 - `core.py:722, 725` — 추가 조건 분기
 - `core.py:1356` — `ConfluenceToMarkdown`에서도 동일 플래그
 
-**문제:** `_debug_markdown`이 항상 `False`로 설정되어, 해당 조건 분기의 코드가 절대 실행되지 않습니다.
-외부에서 이 플래그를 변경하는 코드도 없습니다.
+**현황:** `_debug_markdown`이 항상 `False`로 설정되어 프로덕션에서는 실행되지 않으나,
+개발자가 수동으로 `True`로 변경하여 디버깅하는 용도로 의도적으로 유지됩니다.
+(`# Used when debugging manually` 주석 추가됨, c7dd721)
 
-**삭제 범위:** `_debug_markdown` 관련 초기화 및 모든 `if self._debug_markdown:` 조건 블록
+**판단:** 삭제 대상이 아닙니다.
 
-**영향도:** 낮음 (디버그 전용 코드, 프로덕션 동작 무관)
-
-**주의:** 개발 시 디버깅 용도로 활용될 수 있으므로, 삭제 대신 `logging.debug()`로 전환하는 방법도 고려 가능합니다.
-
-### 3.2 [삭제 대상] `_debug_tags` 빈 집합 — `converter/core.py`
+### 3.2 [유지] `_debug_tags` 빈 집합 — `converter/core.py`
 
 **위치:**
 - `core.py:131-133` — `SingleLineParser.__init__`에서 `self._debug_tags = {}` 초기화
 - `core.py:180, 385` — `_debug_tags` 검사 조건문
 
-**문제:** 빈 집합으로 초기화되어 있고, 코드 어디에서도 값을 추가하지 않습니다.
-`if tag in self._debug_tags:` 조건이 항상 `False`입니다.
+**현황:** 빈 집합으로 초기화되어 있고 프로덕션에서는 조건이 항상 `False`이나,
+개발자가 수동으로 태그명을 추가하여 특정 태그의 파싱 과정을 디버깅하는 용도입니다.
+`_debug_markdown`과 동일한 패턴의 수동 디버깅 도구입니다.
 
-**삭제 범위:** `_debug_tags` 관련 초기화 및 모든 조건 블록
-
-**영향도:** 낮음
+**판단:** 삭제 대상이 아닙니다.
 
 ### 3.3 [삭제 검토] `mdx_to_storage_xhtml_cli.py` — 중복 CLI 래퍼 (194줄)
 
@@ -125,7 +121,7 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 ## 4. 도달 불가능한 코드 경로
 
-### 4.1 [삭제 대상] 주석 처리된 디버그 코드 — `converter/core.py:192-195`
+### 4.1 [유지] 주석 처리된 디버그 코드 — `converter/core.py:192-195`
 
 ```python
 # DEBUG(JK)
@@ -133,7 +129,7 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 #     breakpoint()
 ```
 
-**권장:** `_debug_tags` 자체를 삭제할 경우 함께 제거합니다.
+**판단:** `_debug_tags`와 함께 수동 디버깅용으로 유지합니다.
 
 ## 5. TODO/FIXME 주석 정리
 
@@ -152,14 +148,15 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 ## 6. 삭제 범위 요약
 
-### 6.1 즉시 삭제 가능 (dead code)
+### 6.1 수동 디버깅용 코드 (유지)
 
-| 항목 | 파일 | 예상 삭제 줄수 | 신뢰도 |
-|------|------|---------------|--------|
-| `_debug_markdown` 플래그 및 분기 | `converter/core.py` | ~30줄 | 높음 |
-| `_debug_tags` 빈 집합 및 분기 | `converter/core.py` | ~10줄 | 높음 |
-| 주석 처리된 디버그 코드 | `converter/core.py` | ~4줄 | 높음 |
-| **소계** | | **~44줄** | |
+아래 항목들은 프로덕션에서 실행되지 않지만, 개발자가 수동으로 활성화하여 디버깅하는 용도로 의도적으로 유지합니다. (`# Used when debugging manually`, c7dd721)
+
+| 항목 | 파일 | 줄수 | 판단 |
+|------|------|------|------|
+| `_debug_markdown` 플래그 및 분기 | `converter/core.py` | ~30줄 | 유지 |
+| `_debug_tags` 빈 집합 및 분기 | `converter/core.py` | ~10줄 | 유지 |
+| 주석 처리된 디버그 코드 | `converter/core.py` | ~4줄 | 유지 |
 
 ### 6.2 통합 후 삭제 가능 (중복 래퍼)
 
@@ -176,14 +173,14 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 | 분류 | 예상 삭제 줄수 |
 |------|---------------|
-| 즉시 삭제 가능 | ~44줄 |
+| 수동 디버깅용 코드 (유지) | 0줄 (삭제 안 함) |
 | 통합 후 삭제 가능 | ~596줄 |
-| **총계** | **~640줄** |
+| **총계** | **~596줄** |
 
 ## 7. 결론
 
 confluence-mdx 코드베이스는 전반적으로 잘 관리되고 있으며, 완전히 미사용인 모듈은 없습니다.
 
-- **즉시 삭제 가능한 dead code**는 `converter/core.py`의 디버그 관련 코드(~44줄)에 한정됩니다.
-- **래퍼 모듈/CLI 통합**을 통해 추가로 ~596줄을 정리할 수 있습니다. 이들은 현재 테스트에서 참조되므로, import 경로 업데이트와 함께 진행해야 합니다.
+- **즉시 삭제 가능한 dead code는 없습니다.** `converter/core.py`의 디버그 관련 코드(`_debug_markdown`, `_debug_tags`)는 수동 디버깅용으로 의도적으로 유지됩니다.
+- **래퍼 모듈/CLI 통합**을 통해 ~596줄을 정리할 수 있습니다. 이들은 현재 테스트에서 참조되므로, import 경로 업데이트와 함께 진행해야 합니다.
 - 코드 품질 개선의 더 큰 효과는 **중복 코드 리팩토링**(별도 문서 `analysis-duplicate-code.md` 참조)에서 얻을 수 있습니다.
