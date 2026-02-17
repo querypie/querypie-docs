@@ -110,3 +110,27 @@ def test_convert_heading_inline_with_link_resolver(tmp_path):
         got
         == 'Heading <ac:link ac:anchor="overview"><ri:page ri:content-title="My Dashboard"></ri:page><ac:link-body>My Dashboard</ac:link-body></ac:link>'
     )
+
+
+def test_convert_inline_badge_to_status_macro():
+    src = '텍스트 <Badge color="blue">와일드카드 허용</Badge>'
+    got = convert_inline(src)
+    assert got == (
+        '텍스트 <ac:structured-macro ac:name="status">'
+        '<ac:parameter ac:name="title">와일드카드 허용</ac:parameter>'
+        '<ac:parameter ac:name="colour">Blue</ac:parameter>'
+        '</ac:structured-macro>'
+    )
+
+
+def test_convert_inline_badge_color_mapping():
+    for color, expected in [("green", "Green"), ("red", "Red"), ("yellow", "Yellow"), ("purple", "Purple"), ("gray", "Grey")]:
+        src = f'<Badge color="{color}">text</Badge>'
+        got = convert_inline(src)
+        assert f'<ac:parameter ac:name="colour">{expected}</ac:parameter>' in got
+
+
+def test_convert_inline_badge_unknown_color_defaults_grey():
+    src = '<Badge color="orange">text</Badge>'
+    got = convert_inline(src)
+    assert '<ac:parameter ac:name="colour">Grey</ac:parameter>' in got

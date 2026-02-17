@@ -49,7 +49,7 @@ def test_emit_list_ul_and_ol():
     ul = emit_document(parse_mdx("* a\n* b\n"))
     ol = emit_document(parse_mdx("1. a\n2. b\n"))
     assert ul == "<ul><li><p>a</p></li><li><p>b</p></li></ul>"
-    assert ol == "<ol><li><p>a</p></li><li><p>b</p></li></ol>"
+    assert ol == '<ol start="1"><li><p>a</p></li><li><p>b</p></li></ol>'
 
 
 def test_emit_hr():
@@ -329,7 +329,7 @@ def test_emit_nested_mixed_ordered_unordered_list():
     xhtml = emit_document(parse_mdx(mdx))
     assert (
         xhtml
-        == "<ol><li><p>step one</p><ul><li><p>detail a</p></li><li><p>detail b</p></li></ul></li><li><p>step two</p></li></ol>"
+        == '<ol start="1"><li><p>step one</p><ul><li><p>detail a</p></li><li><p>detail b</p></li></ul></li><li><p>step two</p></li></ol>'
     )
 
 
@@ -338,7 +338,7 @@ def test_emit_same_depth_mixed_marker_splits_lists():
 1. ordered
 """
     xhtml = emit_document(parse_mdx(mdx))
-    assert xhtml == "<ul><li><p>bullet</p></li></ul><ol><li><p>ordered</p></li></ol>"
+    assert xhtml == '<ul><li><p>bullet</p></li></ul><ol start="1"><li><p>ordered</p></li></ol>'
 
 
 def test_emit_nested_three_levels_deep():
@@ -543,3 +543,25 @@ def test_emit_blockquote_empty_body():
     mdx = ">\n"
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<blockquote><p /></blockquote>"
+
+
+def test_emit_list_item_with_figure_becomes_ac_image_sibling():
+    """리스트 아이템 내 figure는 <p>의 형제 <ac:image>로 변환."""
+    mdx = '1. 텍스트 <br/>\n  <figure data-layout="center" data-align="center">\n  <img src="/images/path/sample-image.png" alt="sample-image.png" width="712" />\n  </figure>\n'
+    xhtml = emit_document(parse_mdx(mdx))
+    # <p> should contain only the text (no figure, no trailing br)
+    assert '<li><p>텍스트</p>' in xhtml
+    # ac:image should be a sibling of <p>
+    assert '<ac:image ac:align="center" ac:width="712">' in xhtml
+    assert '<ri:attachment ri:filename="sample-image.png"></ri:attachment>' in xhtml
+    # empty <p /> after the image
+    assert '<p />' in xhtml
+    # figure tag should NOT remain
+    assert '<figure' not in xhtml
+
+
+def test_emit_list_item_without_figure_unchanged():
+    """figure가 없는 일반 리스트 아이템은 기존 동작 유지."""
+    mdx = "1. normal item\n2. second item\n"
+    xhtml = emit_document(parse_mdx(mdx))
+    assert xhtml == '<ol start="1"><li><p>normal item</p></li><li><p>second item</p></li></ol>'

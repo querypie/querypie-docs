@@ -12,6 +12,30 @@ _BOLD_ITALIC_RE = re.compile(r"\*\*\*(.+?)\*\*\*")
 _BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 _ITALIC_RE = re.compile(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)")
 _BR_TAG_RE = re.compile(r"<br\s*/?>", flags=re.IGNORECASE)
+_BADGE_INLINE_RE = re.compile(
+    r'<Badge\s+color="([^"]+)">(.*?)</Badge>', flags=re.DOTALL
+)
+_BADGE_COLOR_MAP = {
+    "green": "Green",
+    "blue": "Blue",
+    "red": "Red",
+    "yellow": "Yellow",
+    "grey": "Grey",
+    "gray": "Grey",
+    "purple": "Purple",
+}
+
+
+def _replace_badge(match: re.Match[str]) -> str:
+    color = match.group(1).strip().lower()
+    text = match.group(2).strip()
+    colour = _BADGE_COLOR_MAP.get(color, "Grey")
+    return (
+        f'<ac:structured-macro ac:name="status">'
+        f'<ac:parameter ac:name="title">{text}</ac:parameter>'
+        f'<ac:parameter ac:name="colour">{colour}</ac:parameter>'
+        f'</ac:structured-macro>'
+    )
 
 
 def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
@@ -35,6 +59,7 @@ def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
     converted = _ITALIC_RE.sub(r"<em>\1</em>", converted)
     converted = _convert_links(converted, link_resolver=link_resolver)
     converted = _BR_TAG_RE.sub("<br />", converted)
+    converted = _BADGE_INLINE_RE.sub(_replace_badge, converted)
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
