@@ -1,9 +1,9 @@
-"""Sidecar 통합 모듈 — Roundtrip sidecar v1 스키마/IO + Mapping lookup/인덱스.
+"""Sidecar 통합 모듈 — Block-level roundtrip sidecar 스키마/IO + Mapping lookup/인덱스.
 
-lossless_roundtrip/sidecar.py와 sidecar_lookup.py를 통합한다.
-
-v1 (document-level):
-  RoundtripSidecar, build_sidecar, load_sidecar, write_sidecar, sha256_text
+Block-level sidecar (schema v2):
+  RoundtripSidecar, SidecarBlock, DocumentEnvelope,
+  build_sidecar, verify_sidecar_integrity,
+  write_sidecar, load_sidecar, sha256_text
 
 Mapping lookup (mapping.yaml 기반):
   SidecarEntry, load_sidecar_mapping, build_mdx_to_sidecar_index,
@@ -12,7 +12,7 @@ Mapping lookup (mapping.yaml 기반):
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 import hashlib
 import json
 from pathlib import Path
@@ -24,70 +24,223 @@ from reverse_sync.mapping_recorder import BlockMapping
 
 
 # ---------------------------------------------------------------------------
-# Roundtrip sidecar v1 — document-level hash + raw XHTML
+# Roundtrip sidecar — block-level fragment + metadata
 # ---------------------------------------------------------------------------
 
-ROUNDTRIP_SCHEMA_VERSION = "1"
-
-
-@dataclass
-class RoundtripSidecar:
-    roundtrip_schema_version: str
-    page_id: str
-    mdx_sha256: str
-    source_xhtml_sha256: str
-    raw_xhtml: str
+ROUNDTRIP_SCHEMA_VERSION = "2"
 
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+@dataclass
+class DocumentEnvelope:
+    """첫 블록 앞, 마지막 블록 뒤의 원본 텍스트."""
+
+    prefix: str = ""
+    suffix: str = ""
+
+
+@dataclass
+class SidecarBlock:
+    """Individual XHTML block + metadata."""
+
+    block_index: int
+    xhtml_xpath: str
+    xhtml_fragment: str
+    mdx_content_hash: str = ""
+    mdx_line_range: tuple = (0, 0)
+    lost_info: dict = field(default_factory=dict)
+
+
+@dataclass
+class RoundtripSidecar:
+    """Block-level sidecar structure."""
+
+    schema_version: str = ROUNDTRIP_SCHEMA_VERSION
+    page_id: str = ""
+    mdx_sha256: str = ""
+    source_xhtml_sha256: str = ""
+    blocks: List[SidecarBlock] = field(default_factory=list)
+    separators: List[str] = field(default_factory=list)
+    document_envelope: DocumentEnvelope = field(default_factory=DocumentEnvelope)
+
+    def reassemble_xhtml(self) -> str:
+        """Fragment + separator + envelope에서 원본 XHTML을 재조립한다."""
+        parts = [self.document_envelope.prefix]
+        for i, block in enumerate(self.blocks):
+            parts.append(block.xhtml_fragment)
+            if i < len(self.separators):
+                parts.append(self.separators[i])
+        parts.append(self.document_envelope.suffix)
+        return "".join(parts)
+
+    def to_dict(self) -> dict:
+        """JSON 직렬화."""
+        return {
+            "schema_version": self.schema_version,
+            "page_id": self.page_id,
+            "mdx_sha256": self.mdx_sha256,
+            "source_xhtml_sha256": self.source_xhtml_sha256,
+            "blocks": [
+                {
+                    "block_index": b.block_index,
+                    "xhtml_xpath": b.xhtml_xpath,
+                    "xhtml_fragment": b.xhtml_fragment,
+                    "mdx_content_hash": b.mdx_content_hash,
+                    "mdx_line_range": list(b.mdx_line_range),
+                    "lost_info": b.lost_info,
+                }
+                for b in self.blocks
+            ],
+            "separators": self.separators,
+            "document_envelope": {
+                "prefix": self.document_envelope.prefix,
+                "suffix": self.document_envelope.suffix,
+            },
+        }
+
+    @staticmethod
+    def from_dict(data: dict) -> "RoundtripSidecar":
+        """JSON 역직렬화."""
+        blocks = [
+            SidecarBlock(
+                block_index=b["block_index"],
+                xhtml_xpath=b["xhtml_xpath"],
+                xhtml_fragment=b["xhtml_fragment"],
+                mdx_content_hash=b.get("mdx_content_hash", ""),
+                mdx_line_range=tuple(b.get("mdx_line_range", (0, 0))),
+                lost_info=b.get("lost_info", {}),
+            )
+            for b in data.get("blocks", [])
+        ]
+        env = data.get("document_envelope", {})
+        return RoundtripSidecar(
+            schema_version=data.get("schema_version", ROUNDTRIP_SCHEMA_VERSION),
+            page_id=data.get("page_id", ""),
+            mdx_sha256=data.get("mdx_sha256", ""),
+            source_xhtml_sha256=data.get("source_xhtml_sha256", ""),
+            blocks=blocks,
+            separators=data.get("separators", []),
+            document_envelope=DocumentEnvelope(
+                prefix=env.get("prefix", ""),
+                suffix=env.get("suffix", ""),
+            ),
+        )
+
+
+def verify_sidecar_integrity(
+    sidecar: RoundtripSidecar,
+    expected_xhtml: str,
+) -> None:
+    """Fragment + separator + envelope 재조립이 원본과 byte-equal인지 검증한다.
+
+    실패 시 ValueError를 발생시킨다.
+    """
+    reassembled = sidecar.reassemble_xhtml()
+
+    if reassembled != expected_xhtml:
+        first_offset = -1
+        for j, (c1, c2) in enumerate(zip(reassembled, expected_xhtml)):
+            if c1 != c2:
+                first_offset = j
+                break
+        if first_offset < 0 and len(reassembled) != len(expected_xhtml):
+            first_offset = min(len(reassembled), len(expected_xhtml))
+        raise ValueError(
+            f"Sidecar integrity check failed: "
+            f"reassembled ({len(reassembled)}) != expected ({len(expected_xhtml)}), "
+            f"first mismatch at offset {first_offset}"
+        )
+
+
 def build_sidecar(
-    expected_mdx: str,
-    source_xhtml: str,
+    page_xhtml_text: str,
+    mdx_text: str,
     page_id: str = "",
 ) -> RoundtripSidecar:
-    return RoundtripSidecar(
-        roundtrip_schema_version=ROUNDTRIP_SCHEMA_VERSION,
+    """Block-level sidecar를 생성한다.
+
+    Fragment 추출 → MDX alignment → 무결성 검증 → RoundtripSidecar 반환.
+    """
+    from reverse_sync.fragment_extractor import extract_block_fragments
+    from reverse_sync.mapping_recorder import record_mapping
+    from reverse_sync.mdx_block_parser import parse_mdx_blocks
+
+    # 1. XHTML mapping + fragment 추출
+    xhtml_mappings = record_mapping(page_xhtml_text)
+    frag_result = extract_block_fragments(page_xhtml_text)
+    mdx_blocks = parse_mdx_blocks(mdx_text)
+
+    # 2. top-level mapping 필터링
+    child_ids = set()
+    for m in xhtml_mappings:
+        child_ids.update(m.children)
+    top_mappings = [m for m in xhtml_mappings if m.block_id not in child_ids]
+
+    # 3. MDX content 블록 (frontmatter, empty, import 제외)
+    NON_CONTENT = frozenset(("empty", "frontmatter", "import_statement"))
+    mdx_content_blocks = [b for b in mdx_blocks if b.type not in NON_CONTENT]
+
+    # 4. Block 생성 — fragment와 top-level mapping을 정렬
+    sidecar_blocks: List[SidecarBlock] = []
+    for i, fragment in enumerate(frag_result.fragments):
+        xpath = top_mappings[i].xhtml_xpath if i < len(top_mappings) else f"unknown[{i}]"
+
+        # 순차 1:1 대응 (향후 block alignment로 개선)
+        mdx_block = mdx_content_blocks[i] if i < len(mdx_content_blocks) else None
+        mdx_hash = sha256_text(mdx_block.content) if mdx_block else ""
+        mdx_range = (mdx_block.line_start, mdx_block.line_end) if mdx_block else (0, 0)
+
+        sidecar_blocks.append(
+            SidecarBlock(
+                block_index=i,
+                xhtml_xpath=xpath,
+                xhtml_fragment=fragment,
+                mdx_content_hash=mdx_hash,
+                mdx_line_range=mdx_range,
+            )
+        )
+
+    sidecar = RoundtripSidecar(
         page_id=page_id,
-        mdx_sha256=sha256_text(expected_mdx),
-        source_xhtml_sha256=sha256_text(source_xhtml),
-        raw_xhtml=source_xhtml,
+        mdx_sha256=sha256_text(mdx_text),
+        source_xhtml_sha256=sha256_text(page_xhtml_text),
+        blocks=sidecar_blocks,
+        separators=frag_result.separators,
+        document_envelope=DocumentEnvelope(
+            prefix=frag_result.prefix,
+            suffix=frag_result.suffix,
+        ),
     )
+
+    # 5. 무결성 검증
+    verify_sidecar_integrity(sidecar, page_xhtml_text)
+
+    return sidecar
 
 
 def write_sidecar(sidecar: RoundtripSidecar, path: Path) -> None:
+    """RoundtripSidecar를 JSON 파일로 저장한다."""
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(asdict(sidecar), ensure_ascii=False, indent=2) + "\n",
+        json.dumps(sidecar.to_dict(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
 
 
 def load_sidecar(path: Path) -> RoundtripSidecar:
+    """JSON 파일에서 RoundtripSidecar를 로드한다."""
     data: Any = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError("invalid sidecar payload")
-
-    required = {
-        "roundtrip_schema_version",
-        "page_id",
-        "mdx_sha256",
-        "source_xhtml_sha256",
-        "raw_xhtml",
-    }
-    missing = sorted(required - set(data.keys()))
-    if missing:
-        raise ValueError(f"missing sidecar fields: {', '.join(missing)}")
-
-    return RoundtripSidecar(
-        roundtrip_schema_version=str(data["roundtrip_schema_version"]),
-        page_id=str(data["page_id"]),
-        mdx_sha256=str(data["mdx_sha256"]),
-        source_xhtml_sha256=str(data["source_xhtml_sha256"]),
-        raw_xhtml=str(data["raw_xhtml"]),
-    )
+    if data.get("schema_version") != ROUNDTRIP_SCHEMA_VERSION:
+        raise ValueError(
+            f"expected schema_version={ROUNDTRIP_SCHEMA_VERSION}, "
+            f"got {data.get('schema_version')}"
+        )
+    return RoundtripSidecar.from_dict(data)
 
 
 # ---------------------------------------------------------------------------
@@ -269,8 +422,6 @@ def _count_child_mdx_blocks(
     다음 비빈 top-level XHTML 매핑의 텍스트와 겹치지 않는 범위에서
     후속 MDX 블록을 소비한다.
     """
-    # 현재 XHTML 매핑 이후의 top-level 매핑들을 찾아
-    # 그 중 첫 번째로 유의미한 텍스트를 가진 것의 시그니처를 구한다.
     current_idx = None
     for i, tm in enumerate(top_mappings):
         if tm is xm:
@@ -279,7 +430,6 @@ def _count_child_mdx_blocks(
     if current_idx is None:
         return len(xm.children)
 
-    # 다음 매핑들의 텍스트 시그니처 수집
     next_sigs = []
     for tm in top_mappings[current_idx + 1:]:
         sig = _strip_all_ws(collapse_ws(tm.xhtml_plain_text))
@@ -291,10 +441,8 @@ def _count_child_mdx_blocks(
     if not next_sigs:
         return len(xm.children)
 
-    # mdx_ptr부터 앞으로 스캔하면서
-    # 다음 top-level 매핑의 텍스트와 일치하는 MDX 블록이 나오면 중단
     count = 0
-    max_scan = len(xm.children) + 5  # 약간의 여유
+    max_scan = len(xm.children) + 5
     for offset in range(max_scan):
         ptr = mdx_ptr + offset
         if ptr >= len(mdx_content_indices):
@@ -305,7 +453,6 @@ def _count_child_mdx_blocks(
             count += 1
             continue
 
-        # 다음 top-level 매핑과 일치하면 중단
         hit = False
         for ns in next_sigs:
             if mdx_sig == ns:
@@ -336,34 +483,21 @@ def _find_text_match(
     start_ptr: int,
     lookahead: int,
 ) -> Optional[int]:
-    """XHTML plain text와 일치하는 MDX 블록을 전방 탐색한다.
-
-    start_ptr부터 최대 lookahead 범위 내에서 텍스트가 일치하는
-    MDX 콘텐츠 블록의 포인터 위치를 반환한다.
-    일치하는 블록이 없으면 None을 반환한다.
-
-    매칭 전략:
-      1. 완전 일치 (collapse_ws 후 동일)
-      2. 공백 무시 완전 일치 (모든 공백 제거 후 동일)
-      3. 공백 무시 prefix 포함 (모든 공백 제거 후 앞 50자가 포함)
-    """
+    """XHTML plain text와 일치하는 MDX 블록을 전방 탐색한다."""
     end_ptr = min(start_ptr + lookahead, len(mdx_content_indices))
     xhtml_sig = _strip_all_ws(xhtml_plain)
 
-    # 1차: collapse_ws 후 완전 일치
     for ptr in range(start_ptr, end_ptr):
         mdx_idx = mdx_content_indices[ptr]
         if xhtml_plain == mdx_plains[mdx_idx]:
             return ptr
 
-    # 2차: 공백 무시 완전 일치
     for ptr in range(start_ptr, end_ptr):
         mdx_idx = mdx_content_indices[ptr]
         mdx_sig = _strip_all_ws(mdx_plains[mdx_idx])
         if xhtml_sig == mdx_sig:
             return ptr
 
-    # 3차: 공백 무시 prefix 포함
     if len(xhtml_sig) >= 10:
         prefix = xhtml_sig[:50]
         for ptr in range(start_ptr, end_ptr):
@@ -382,12 +516,7 @@ def find_mapping_by_sidecar(
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, BlockMapping],
 ) -> Optional[BlockMapping]:
-    """MDX 블록 인덱스로부터 sidecar를 거쳐 BlockMapping을 찾는다.
-
-    BlockChange.index (MDX 블록 인덱스)
-      → SidecarEntry (xhtml_xpath)
-      → BlockMapping
-    """
+    """MDX 블록 인덱스로부터 sidecar를 거쳐 BlockMapping을 찾는다."""
     entry = mdx_to_sidecar.get(mdx_block_index)
     if entry is None:
         return None

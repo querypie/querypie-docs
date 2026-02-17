@@ -43,7 +43,7 @@ def _run_generate(args: argparse.Namespace) -> int:
 
     mdx_text = args.mdx.read_text(encoding="utf-8")
     xhtml_text = args.xhtml.read_text(encoding="utf-8")
-    sidecar = build_sidecar(mdx_text, xhtml_text, page_id=args.page_id)
+    sidecar = build_sidecar(xhtml_text, mdx_text, page_id=args.page_id)
     write_sidecar(sidecar, args.output)
     print(f"[sidecar] wrote: {args.output}")
     return 0
@@ -60,15 +60,23 @@ def _run_batch_generate(args: argparse.Namespace) -> int:
         return 0
 
     count = 0
+    errors = 0
     for case_dir in case_dirs:
         mdx_text = (case_dir / "expected.mdx").read_text(encoding="utf-8")
         xhtml_text = (case_dir / "page.xhtml").read_text(encoding="utf-8")
         output = case_dir / args.output_name
-        sidecar = build_sidecar(mdx_text, xhtml_text, page_id=case_dir.name)
-        write_sidecar(sidecar, output)
-        count += 1
+        try:
+            sidecar = build_sidecar(xhtml_text, mdx_text, page_id=case_dir.name)
+            write_sidecar(sidecar, output)
+            count += 1
+        except Exception as e:
+            errors += 1
+            print(f"[sidecar] ERROR {case_dir.name}: {e}", file=sys.stderr)
 
     print(f"[sidecar] generated {count} files (name={args.output_name})")
+    if errors:
+        print(f"[sidecar] {errors} errors", file=sys.stderr)
+        return 1
     return 0
 
 
