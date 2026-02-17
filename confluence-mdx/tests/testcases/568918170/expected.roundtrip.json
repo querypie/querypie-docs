@@ -1,0 +1,469 @@
+{
+  "schema_version": "2",
+  "page_id": "568918170",
+  "mdx_sha256": "d42bf9174ddbc1d9e63fabbea2bb4c14659267352859b7d1de8f598a1333588a",
+  "source_xhtml_sha256": "dc295c914735b806617a4d44cec180f0db014894623a9e43cbb178d334c1ea16",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "55bbd1b46dc155b04f7c083e4f0b61b636d42e8c294b8d29b44a5a03a34b9558",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>Workflow 사용 시 편리함을 더해주는 부가 기능을 소개합니다. </p>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "macro-toc[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"fffae0b9-84f6-42d8-b6f2-b38fd4a694ce\" ac:macro-id=\"334477e7-dc7b-494d-9513-c21c2ccabe57\"><ac:parameter ac:name=\"maxLevel\">2</ac:parameter><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"include\" /><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"indent\" /><ac:parameter ac:name=\"exclude\">Overview</ac:parameter><ac:parameter ac:name=\"style\">default</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter ac:name=\"printable\">true</ac:parameter><ac:parameter ac:name=\"class\" /></ac:structured-macro>",
+      "mdx_content_hash": "814340096f09ab74bcec2969caae0d3d071141400d6d37e5c131626f610e7ad1",
+      "mdx_line_range": [
+        12,
+        12
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "3c2001ba27f25a2eb468de78355544d4f8cdb0c4ee223749466009ecc505401d",
+      "mdx_line_range": [
+        15,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>참조된 요청 확인 처리하기</h2>",
+      "mdx_content_hash": "05c632cb4a060d4169e3500ed9613291acf5a418d10a5a4dd70ed0b1de788d83",
+      "mdx_line_range": [
+        17,
+        22
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1291\" ac:original-width=\"1990\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오전 11.41.29.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오전 11.41.29.png\" ri:version-at-save=\"1\" /><ac:caption><p>Workflow &gt; Reviews &gt; All Reviews &gt; Review Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "7dd45c9581da81183e2a7aedbee38489c17d61634328b7bc847717cb194891a4",
+      "mdx_line_range": [
+        24,
+        29
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>Reviews &gt; All Reviews 목록에서 참조 완료 처리하려는 요청을 클릭하여 상세 페이지로 진입합니다. </p><ol start=\"1\"><li><p>참조 문서는 결재 승인 상태와 관계없이(승인 전/후) 모두 열람할 수 있습니다. </p></li><li><p>Review Status 가 <strong>Unread</strong> 인 요청들에 대해서만 <code>Confirm</code>이 가능합니다. </p></li></ol></li><li><p>요청 상세 페이지 우측 상단의 <code>Confirm</code> 버튼을 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다. </p></li><li><p>검토 의견을 입력 후 <code>OK</code> 버튼을 눌러 확인을 완료합니다. </p></li><li><p>All Reviews 목록으로 돌아가면 Review Status 값이 <strong>Confirmed</strong>로 변경된 것을 확인할 수 있습니다.</p></li></ol>",
+      "mdx_content_hash": "f15812a00692fb55935f388763291a48a60998609604c9c727859f56751ed528",
+      "mdx_line_range": [
+        33,
+        33
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "65a8bee698cd501d19e228f4cf35927880bd9dd6c5b1a994425369c571d487b0",
+      "mdx_line_range": [
+        35,
+        36
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p> </p>",
+      "mdx_content_hash": "873a7b2810dcd7dfb2279ab68e42a771aadcf8df0ac974fa295e25042bfdfee4",
+      "mdx_line_range": [
+        38,
+        38
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>대리 결재 사용하기</h2>",
+      "mdx_content_hash": "105bb55e1c7ca215b374b43c862f8893a15f30148e07c11cd4d3aef0a93478b2",
+      "mdx_line_range": [
+        40,
+        45
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p>대리 결재란 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p>",
+      "mdx_content_hash": "03d7bc1d8d7dcdfd662b75476e6831914fbc7b178c98309a36f55a174f193d11",
+      "mdx_line_range": [
+        47,
+        51
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3>1. 대리 결재 사용 설정하기</h3>",
+      "mdx_content_hash": "8d5e1043869660f271bce247072254506e6313dd080a0210485d7043ac95411e",
+      "mdx_line_range": [
+        53,
+        53
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"557\" ac:original-width=\"897\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.04.01.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.04.01.png\" ri:version-at-save=\"1\" /><ac:caption><p>User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "a9214550a39a7493db60ceb894a459d5d84e86f204c75ac123134209b14134bf",
+      "mdx_line_range": [
+        55,
+        55
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul><li><p><strong>Delegate Approval to</strong> : 대리 결재자 입력 </p></li><li><p><strong>Start Date</strong> : 대리 결재 시작일자</p></li><li><p><strong>End Date</strong> : 대리 결재 종료일자</p></li><li><p><strong>Delegation Reason</strong> : 대리 결재 설정 사유 입력 </p></li><li><p><strong>Save</strong> : <code>Save</code> 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 <code>Save</code> 즉시 적용됩니다.</p></li></ul>",
+      "mdx_content_hash": "68ac0320d622ce48e000af71e29b9562ffec2dcf6f3735c662e563d88ce52832",
+      "mdx_line_range": [
+        56,
+        71
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "h3[2]",
+      "xhtml_fragment": "<h3>2. 대리 결재 설정 상태 확인하기</h3>",
+      "mdx_content_hash": "f3f0eae6fa6f6fccdceea3f7ca0148bb657bf4982ecc8e5c60819a031c4dbf61",
+      "mdx_line_range": [
+        73,
+        73
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p>",
+      "mdx_content_hash": "67cecc9181391d80a39483639fcaf58de2b5552e87a5dccaf2055e1d9365dc2e",
+      "mdx_line_range": [
+        75,
+        78
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "ac:image[3]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"174\" ac:original-width=\"594\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.07.41.png\" ac:width=\"594\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.07.41.png\" ri:version-at-save=\"1\" /><ac:caption><p>원 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "0b6a2cc3c95fa56988047c1b161ad8fd178f419d2f29f7c21acd08e555541410",
+      "mdx_line_range": [
+        80,
+        82
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "ac:image[4]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"174\" ac:original-width=\"594\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.08.54.png\" ac:width=\"594\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.08.54.png\" ri:version-at-save=\"1\" /><ac:caption><p>대리 결재자 기준 표시 내용</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "a0929542da27e2e6d65f501bf72b0d9fad8aefaeec1624504b1c2db6d375db92",
+      "mdx_line_range": [
+        84,
+        84
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "macro-info[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"0e393d17-632f-4483-91ba-6fc07e3650b3\"><ac:rich-text-body><p>대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "174749322ab40899a5710e83bfc11404a1e0b3ee5540de7939b0073b9fac8762",
+      "mdx_line_range": [
+        86,
+        86
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 19,
+      "xhtml_xpath": "h3[3]",
+      "xhtml_fragment": "<h3>3. 위임받은 대리 결재 요청 처리하기</h3>",
+      "mdx_content_hash": "aacd5b713ffc49c66c3e78efc7c64afda4ba3f417d717d4a5bbfbc2e53008489",
+      "mdx_line_range": [
+        87,
+        87
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 20,
+      "xhtml_xpath": "ul[2]",
+      "xhtml_fragment": "<ul><li><p>대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다. </p><ul><li><p><strong>Received Requests &gt; To Do</strong> : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함</p></li><li><p><strong>Received Requests &gt; Done</strong> : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.</p></li></ul></li><li><p>상세 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다. </p></li></ul>",
+      "mdx_content_hash": "2c96dc5680d39864877e98b7883e47d485d22e6ab4f82743ed486e86637c64a5",
+      "mdx_line_range": [
+        88,
+        104
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 21,
+      "xhtml_xpath": "ac:image[5]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"928\" ac:original-width=\"1433\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오후 12.46.38.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오후 12.46.38.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "2b7dec7c0abef06dba47caa13acf5c8d680a928d002e6943023d300de7ed4ea2",
+      "mdx_line_range": [
+        106,
+        106
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 22,
+      "xhtml_xpath": "h3[4]",
+      "xhtml_fragment": "<h3>4. 대리 결재 처리된 요청 건 확인하기 </h3>",
+      "mdx_content_hash": "af212b23acfb69422788ca289df11bc968fc25522810471a148a228a9ee0a93b",
+      "mdx_line_range": [
+        108,
+        108
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 23,
+      "xhtml_xpath": "ul[3]",
+      "xhtml_fragment": "<ul><li><p>다음과 같이 요청 상세페이지 내 승인 현황에서 원 결재자 또는 대리 결재자가 처리한 것인지를 확인할 수 있습니다.  </p></li></ul>",
+      "mdx_content_hash": "03c74eff84434baa96d39e6069b606b448315e246415bd71e4c8e096c367f6fc",
+      "mdx_line_range": [
+        111,
+        111
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 24,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p style=\"text-align: center;\"><strong>원 결재자가 처리한 경우</strong></p>",
+      "mdx_content_hash": "b6cf9d4dbfc73bba4984d4b699e386afb5fbe1f3a427f42219086acde8f6e640",
+      "mdx_line_range": [
+        113,
+        113
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 25,
+      "xhtml_xpath": "ac:image[6]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"576\" ac:original-width=\"676\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-25 오후 3.35.33.png\" ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-25 오후 3.35.33.png\" ri:version-at-save=\"1\" /><ac:caption><p>대리 결재 관련 문구 없음</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "3d67ed978b93cc3926e130a14af3ce9dd21f20d4097daef7999298b1a8b553c0",
+      "mdx_line_range": [
+        115,
+        120
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 26,
+      "xhtml_xpath": "p[8]",
+      "xhtml_fragment": "<p style=\"text-align: center;\"><strong>대리 결재자가 처리한 경우</strong></p>",
+      "mdx_content_hash": "57a5eb27cc749091edfc3cbb231daa8eb4c98d1a568a91570db6b592d4c8a849",
+      "mdx_line_range": [
+        122,
+        122
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 27,
+      "xhtml_xpath": "ac:image[7]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"571\" ac:original-width=\"662\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-25 오후 3.21.41.png\" ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-25 오후 3.21.41.png\" ri:version-at-save=\"1\" /><ac:caption><p>대리 결재자가 Done by the delegate와 함께 표기됨</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "c04cb8a6ccb237d6ad2651e8879c74da85677132af2480f9a3cd81a1dd71ce69",
+      "mdx_line_range": [
+        124,
+        125
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 28,
+      "xhtml_xpath": "macro-info[2]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"0d492211-666c-4cf5-b197-36ab604842b9\"><ac:rich-text-body><p>Slack DM을 통한 요청 알림을 사용 중이라면, 대리 결재자에게도 Workflow 단계별 알림이 발송됩니다. Slack DM 알림 관련 자세한 내용은 <ac:link><ri:page ri:content-title=\"Slack DM - Workflow 알림 유형\" ri:version-at-save=\"14\" /><ac:link-body>Slack DM 개인 알림 사용하기</ac:link-body></ac:link> 문서를 참고해주세요. </p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        126,
+        126
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 29,
+      "xhtml_xpath": "h3[5]",
+      "xhtml_fragment": "<h3>5. 대리 결재 설정 종료 이후의 기안 조회 방법</h3>",
+      "mdx_content_hash": "8a8252fe0a9a8f0817c1430a59714f0fe5259bad8ded5da6e085692d9d8c3035",
+      "mdx_line_range": [
+        128,
+        131
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 30,
+      "xhtml_xpath": "ul[4]",
+      "xhtml_fragment": "<ul><li><p>대리 결재 설정 기간이 종료되었다 하더라도 Received Requests &gt; Done 목록에서, 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 확인할 수 있습니다. 그 이외의 요청들은 더 이상 조회하거나 처리할 수 없습니다. </p></li></ul>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 31,
+      "xhtml_xpath": "p[9]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 32,
+      "xhtml_xpath": "h2[4]",
+      "xhtml_fragment": "<h2>기존 요청 건 재상신하기 </h2>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 33,
+      "xhtml_xpath": "p[10]",
+      "xhtml_fragment": "<p>동일한 내용으로 반복적인 결재 요청을 하거나 반려 처리된 결재 건에 대해 다음과 같이 재상신할 수 있습니다. </p>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 34,
+      "xhtml_xpath": "ac:image[8]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"235\" ac:original-width=\"575\" ac:custom-width=\"true\" ac:width=\"768\"><ri:attachment ri:filename=\"image-20230824-110815.png\" ri:version-at-save=\"1\" /><ac:caption><p>Workflow &gt; Sent Requests &gt; Done &gt; List Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 35,
+      "xhtml_xpath": "ol[2]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>Sent Requests &gt; Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다. </p></li></ol>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 36,
+      "xhtml_xpath": "macro-info[3]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"131be646-3aa7-492b-902a-32bf694b89af\"><ac:rich-text-body><p>이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 <em><span style=\"color: rgb(255,86,48);\">Deleted</span></em>로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다. </p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 37,
+      "xhtml_xpath": "ol[3]",
+      "xhtml_fragment": "<ol start=\"2\"><li><p>우측 상단에 있는 <code>Resubmit</code> 버튼을 클릭하여 재상신 페이지로 진입합니다. </p></li><li><p>재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다. </p></li><li><p><code>Save</code> 버튼을 통해 저장합니다.</p></li><li><p>Workflow &gt; Sent Request &gt; In Progress 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.</p></li></ol>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "</ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"two_equal\" ac:breakout-mode=\"default\"><ac:layout-cell>",
+    "</ac:layout-cell><ac:layout-cell>",
+    "</ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"default\"><ac:layout-cell>",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "</ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"two_equal\" ac:breakout-mode=\"default\"><ac:layout-cell>",
+    "",
+    "</ac:layout-cell><ac:layout-cell>",
+    "",
+    "</ac:layout-cell></ac:layout-section><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"default\"><ac:layout-cell>",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "<ac:layout><ac:layout-section ac:type=\"fixed-width\" ac:breakout-mode=\"default\"><ac:layout-cell>",
+    "suffix": "</ac:layout-cell></ac:layout-section></ac:layout>"
+  }
+}

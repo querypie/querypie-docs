@@ -1,0 +1,181 @@
+{
+  "schema_version": "2",
+  "page_id": "panels",
+  "mdx_sha256": "8cb5fa670c0281558c58e532c58d33ef4b90440a4623b85cfbe85a6e7e45d875",
+  "source_xhtml_sha256": "ac1ec9ed15afad6a00c3a4337fc7393cd4bb7a899662a6ddc71f293b84465c0e",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "macro-info[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"52a351ab-604c-4a22-9f9d-9f0941d2d112\"><ac:rich-text-body><p>This is an info panel.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "87375bc9ffdf1dd1c579e6210bf38aba0b74aab2da0292155122ae11459def95",
+      "mdx_line_range": [
+        3,
+        4
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "hr[1]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        5,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "ac:adf-extension[1]",
+      "xhtml_fragment": "<ac:adf-extension><ac:adf-node type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p>This is a note panel.</p></ac:adf-content></ac:adf-node><ac:adf-fallback><div class=\"panel conf-macro output-block\" style=\"background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;\"><div class=\"panelContent\" style=\"background-color: rgb(234,230,255);\"><p>This is a note panel.</p></div></div></ac:adf-fallback></ac:adf-extension>",
+      "mdx_content_hash": "84c4c43c26f39794dfb1a13fc09df95f4871bbd51b6d055d57b73a5098883200",
+      "mdx_line_range": [
+        8,
+        9
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "hr[2]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        10,
+        11
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "macro-warning[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"warning\" ac:schema-version=\"1\" ac:macro-id=\"8864c519-cc60-4195-ab7d-9702130cff97\"><ac:rich-text-body><p>This is an error panel.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "abab02d611dc9d04beb7ab9ab1c219c305f58013ef4eed70869c88381367c85c",
+      "mdx_line_range": [
+        13,
+        14
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "hr[3]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        15,
+        16
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "macro-tip[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"tip\" ac:schema-version=\"1\" ac:macro-id=\"509924cb-99b1-4299-adfe-263357395cca\"><ac:rich-text-body><p>This is a success panel.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "4f39ea50ede2d12e171063a4d7d6cbf60aa4d1117bcdd98e8935671882b84455",
+      "mdx_line_range": [
+        18,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "hr[4]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        20,
+        21
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "macro-note[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"6611ad2b-a3f8-4dbe-b7f4-79758adece17\"><ac:rich-text-body><p>This is a warning panel.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "21aa6f6928fd3848caeb7b53923b6f5f66708cbdba15f869dd3fd959f647f4be",
+      "mdx_line_range": [
+        23,
+        24
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "hr[5]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        25,
+        26
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "macro-panel[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"panel\" ac:schema-version=\"1\" ac:macro-id=\"67d1ae85-a2a2-45c7-8a71-0098b7752a3d\"><ac:parameter ac:name=\"panelIcon\">:rainbow:</ac:parameter><ac:parameter ac:name=\"panelIconId\">1f308</ac:parameter><ac:parameter ac:name=\"panelIconText\">🌈</ac:parameter><ac:parameter ac:name=\"bgColor\">#E6FCFF</ac:parameter><ac:rich-text-body><p>This is a custom panel.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "bf4b2b9419aa6d416285c3a9c79a020ed33cb69ff9d9253dc13721f1290d5486",
+      "mdx_line_range": [
+        28,
+        29
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "hr[6]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a404d4598b98a22d68c11b21c85a209c1c93160823c8b860bd228d62ccfb2743",
+      "mdx_line_range": [
+        30,
+        31
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>Done.</p>",
+      "mdx_content_hash": "16fceed19d3f55f9da618f9b89fe69d717d6015113a0d8312af96ea0eabee312",
+      "mdx_line_range": [
+        33,
+        33
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

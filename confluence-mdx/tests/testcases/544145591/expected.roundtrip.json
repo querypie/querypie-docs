@@ -1,0 +1,841 @@
+{
+  "schema_version": "2",
+  "page_id": "544145591",
+  "mdx_sha256": "43556e368b14c8badd00bd2c96d8f41aedafcadf0ddd3486064ef8dbb229f98f",
+  "source_xhtml_sha256": "cbc830bacea9231f83d9d4414a69f79e32a0fb414596a648fd9326688b5598c3",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "3c9cc81f33d4e1529f559381d400f87363fc42b060111ceb77dc0273c4f10e3e",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>General 페이지에서는 QueryPie 전체의 기본 설정을 변경할 수 있습니다. </p>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"952\" ac:original-width=\"908\" ac:custom-width=\"true\" ac:alt=\"image-20250822-103044.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20250822-103044.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; General &gt; Company Management &gt; General</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "82c32a6041e628e9790c0ee4892c09dbcf72eed08094eed79eeca467c4f4e41f",
+      "mdx_line_range": [
+        12,
+        12
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "macro-toc[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"454bb818-ff05-4fd2-b617-5d2d7943c70e\" ac:macro-id=\"0fbab51a-0a60-4ccb-abe1-80e8ff989f27\"><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"maxLevel\">2</ac:parameter><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"style\">disc</ac:parameter><ac:parameter ac:name=\"exclude\">Overview</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter ac:name=\"printable\">true</ac:parameter></ac:structured-macro>",
+      "mdx_content_hash": "4553b15344e4a08e488d5c85d782dac079b6f271bd73d4b3d87a40755a911c1e",
+      "mdx_line_range": [
+        14,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>기본 설정</h2>",
+      "mdx_content_hash": "e60bbfb943d889c34160a336e24db93a93c273931915215fc74d3da9aa8004c4",
+      "mdx_line_range": [
+        21,
+        21
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul><li><p><strong>Company Name</strong> : 프로필 영역 등에 표시할 회사 이름을 입력합니다.</p></li><li><p><strong>Web Base URL</strong> : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소</p></li><li><p><strong>Timezone</strong> : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.</p></li><li><p><strong>Date Format</strong> : 날짜 표기 방식을 지정합니다.</p></li><li><p><strong>Default Display Language</strong> : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) </p></li><li><p><strong>Audit Log Retention Period </strong>: 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.</p></li><li><p><strong>Go to System Properties</strong> : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. </p></li></ul>",
+      "mdx_content_hash": "19a8614a798ef2d156809360c8ef5d76a360c3e383920ce5dc45f6bd20a9d5bb",
+      "mdx_line_range": [
+        23,
+        29
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "92f3cc4574cb37373de212ad62e8ecae5022d6da0736c1618f1d19f5ac116ab7",
+      "mdx_line_range": [
+        32,
+        32
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>System Properties</h2>",
+      "mdx_content_hash": "a3b0346a63d5693c20c5a0e5563089e87f6a329eb19441ee34d3bfdf97e366a8",
+      "mdx_line_range": [
+        34,
+        34
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p>System Properties 페이지에서는 QueryPie 시스템 컴포넌트들의 설정값을 확인하고, 파일로 저장할 수 있습니다.</p>",
+      "mdx_content_hash": "72b8dba71029f4fdcb945b289af836937fe27d7b10c206b964ffd69304fd1aca",
+      "mdx_line_range": [
+        36,
+        41
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1028\" ac:original-width=\"1747\" ac:custom-width=\"true\" ac:alt=\"image-20240805-014838.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240805-014838.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; General &gt; Company Management &gt; General &gt; System Properties</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "a274a7a48009ef687a8fed757e22e637760bcc9d002288559f6c7359df24276c",
+      "mdx_line_range": [
+        44,
+        44
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "6481a2d975ed470e702f36c8219337d1871f0e297346aa70197e6abeea2d17e5",
+      "mdx_line_range": [
+        46,
+        46
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "h2[4]",
+      "xhtml_fragment": "<h2>Workflow Configuration</h2>",
+      "mdx_content_hash": "2cfa7ed0b4ee8d5e9061fa0bbf171854a5baf5970e111c149fa31dd842b6d896",
+      "mdx_line_range": [
+        48,
+        50
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p>Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변경합니다.</p>",
+      "mdx_content_hash": "d9ff071078407c3fac34fc64e06347a456d5aaf0861f15840558c01b4bd25cab",
+      "mdx_line_range": [
+        52,
+        52
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "ac:image[3]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1040\" ac:original-width=\"755\" ac:custom-width=\"true\" ac:width=\"543\"><ri:attachment ri:filename=\"Screenshot 2025-08-25 at 5.36.19 PM.png\" ri:version-at-save=\"2\" /><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "3694b9bd458f28292ce28b68d8b61350e89a13a4172296f39be5e7bf2dfa212f",
+      "mdx_line_range": [
+        54,
+        54
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "h2[5]",
+      "xhtml_fragment": "<h2>최대 승인 기간 설정 </h2>",
+      "mdx_content_hash": "05f46ef0bb72e32f143e761e79167fcbd704991b4f7f75625a4409ac82b243bf",
+      "mdx_line_range": [
+        56,
+        57
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p>모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.</p>",
+      "mdx_content_hash": "b063c7fc91c224496c99cafdd2403795d3d23d27ef947d35e3a4b285e4436497",
+      "mdx_line_range": [
+        59,
+        59
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p>관리자는 Maximum Approval Duration 항목에서 승인 대기 요청이 자동으로 만료될 때까지의 기간을 1일에서 최대 14일까지 설정할 수 있습니다. 이곳에 설정된 기간은 사용자가 워크플로우를 상신할 때 선택하는 Approval Expiration Date (승인 만료일)의 최대값으로 적용됩니다.</p>",
+      "mdx_content_hash": "df37324bb2030fc9cf7da0ffdd12c92936bf3ea8f966bb768b284258c6ba3c1f",
+      "mdx_line_range": [
+        61,
+        61
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "ul[2]",
+      "xhtml_fragment": "<ul><li><p>Admin &gt; Databases &gt; Configurations의 Maximum Access Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다. </p></li></ul>",
+      "mdx_content_hash": "5576de4266dd2d47e78e0c86585cbf7b464cfa61d317a963fdc0303c0579899c",
+      "mdx_line_range": [
+        63,
+        64
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "h2[6]",
+      "xhtml_fragment": "<h2>워크플로우 사유입력 글자 수 제한 설정</h2>",
+      "mdx_content_hash": "e7f58ae58f76c68094d604e0f41ed5f6051538d5d11404be0485de9908653383",
+      "mdx_line_range": [
+        66,
+        69
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 19,
+      "xhtml_xpath": "p[8]",
+      "xhtml_fragment": "<p>워크플로우의 요청 사유Reason for Request와 승인, 거부, 취소, 확인 시 입력하는 Comment의 최소 및 최대 글자 수를 설정하는 기능입니다. 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.</p>",
+      "mdx_content_hash": "6ce9ba047de050ad9c1bc72fa75c03a17b980fa819458e77dc2fadf460ffaec1",
+      "mdx_line_range": [
+        71,
+        71
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 20,
+      "xhtml_xpath": "ul[3]",
+      "xhtml_fragment": "<ul><li><p>관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할 수 있습니다.</p><ul><li><p>Reason for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 1000자)</p></li><li><p>Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다. (기본값: 최소 3자, 최대 300자)</p></li></ul></li><li><p>글자 수 범위는 최소 3자에서 최대 1000자 사이에서만 설정할 수 있습니다.</p></li></ul>",
+      "mdx_content_hash": "9fb5b62d21ca1240d2c4acd83ede186a922d63bb8dc0ab36ed961746ae8645d3",
+      "mdx_line_range": [
+        73,
+        73
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 21,
+      "xhtml_xpath": "h2[7]",
+      "xhtml_fragment": "<h2>참조자 지정 활성화</h2>",
+      "mdx_content_hash": "7cbb152b602034f5f3f32bd426f03a60002082ed15d3b886f04d45c0d566f6d1",
+      "mdx_line_range": [
+        75,
+        77
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 22,
+      "xhtml_xpath": "p[9]",
+      "xhtml_fragment": "<p>Activate Review Step to collaborate with others 토글로 활성화합니다.</p>",
+      "mdx_content_hash": "9ee77865a51f77659a1c18091dbf6ea4b7ab61c6cb9a23a8a8c9821df7758cfe",
+      "mdx_line_range": [
+        79,
+        79
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 23,
+      "xhtml_xpath": "ul[4]",
+      "xhtml_fragment": "<ul><li><p>Workflow 요청을 상신할 때 참조자를 지정하도록 허용할지 결정합니다.</p></li><li><p>토글을 켜면 요청 생성 화면의 결재 규칙 지정 영역에서 참조자 지정 버튼이 표시됩니다.</p></li><li><p>토글을 끄면 해당 버튼이 제거됩니다. (기존에 지정한 내역은 유지되며, 여전히 목록을 확인할 수 있습니다.)</p></li></ul>",
+      "mdx_content_hash": "9166b7caff9ec6cd9b4eeae47002d75253e165606224388931775dec762473b7",
+      "mdx_line_range": [
+        81,
+        81
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 24,
+      "xhtml_xpath": "h2[8]",
+      "xhtml_fragment": "<h2>사후 승인 허용</h2>",
+      "mdx_content_hash": "4b9c86d416999591b047899ab5245af42241f3a3557746f3255de73883fb72d4",
+      "mdx_line_range": [
+        83,
+        87
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 25,
+      "xhtml_xpath": "p[10]",
+      "xhtml_fragment": "<p>Allow users to submit requests in Urgent mode 토글로 활성화합니다.</p>",
+      "mdx_content_hash": "5b7ce143eff042852e877bd5f6abe65b420d7acecbdba8183a73e1139f953a2f",
+      "mdx_line_range": [
+        89,
+        89
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 26,
+      "xhtml_xpath": "ul[5]",
+      "xhtml_fragment": "<ul><li><p>Workflow 요청을 상신할 때 사후 승인 모드(Urgent Mode)를 허용할지 결정합니다.</p></li><li><p>토글을 켜면 다음의 영역에서 사후 승인 관련 토글이 표시됩니다.</p><ul><li><p>Approval Rules : 결재 규칙 생성 및 수정</p></li><li><p>Submit Request : 요청 생성 화면의 결재 규칙 지정 영역</p></li></ul></li><li><p>토글을 끄면 위 영역에서 사후 승인 관련 토글이 더 이상 표시되지 않습니다. 단, 기존에 이미 사후 승인 모드로 요청한 내역은 그대로 남아 있으며, 실행 가능합니다.</p></li></ul>",
+      "mdx_content_hash": "5c4612a935e63c43ead6317ad3c24443488bf4d99747b8e9126115120e7401f3",
+      "mdx_line_range": [
+        91,
+        92
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 27,
+      "xhtml_xpath": "h2[9]",
+      "xhtml_fragment": "<h2>Attribute 기반 승인자 지정 기능</h2>",
+      "mdx_content_hash": "68d421e7d64a73b495a184738e232b663988d782b08be850ed1145abe5b8e83a",
+      "mdx_line_range": [
+        93,
+        94
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 28,
+      "xhtml_xpath": "macro-info[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"761a1bb7-13c0-403d-8614-5a77bbbad0ad\"><ac:rich-text-body><p>11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다. </p><ul><li><p>Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations의 Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.</p></li><li><p>기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.  </p></li></ul></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        95,
+        95
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 29,
+      "xhtml_xpath": "p[11]",
+      "xhtml_fragment": "<p>사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다. </p>",
+      "mdx_content_hash": "26e274f0b2f705677b05aa1a027d8e6f46b17f34369672ea4c19eb6300afc132",
+      "mdx_line_range": [
+        97,
+        97
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 30,
+      "xhtml_xpath": "ul[6]",
+      "xhtml_fragment": "<ul><li><p>중요: </p><ul><li><p>선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"86\" ac:original-width=\"820\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-06-12 at 1.33.58 PM.png\" ri:version-at-save=\"1\" /><ac:caption><p>Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br /></p></ac:caption></ac:image></li></ul></li><li><p>Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)'를 선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"832\" ac:original-width=\"1524\" ac:custom-width=\"true\" ac:alt=\"image-20251110-030113.png\" ac:width=\"736\"><ri:attachment ri:filename=\"image-20251110-030113.png\" ri:version-at-save=\"1\" /></ac:image><ul><li><p>자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.</p></li></ul></li><li><p>Attribute 값 부재 시 알림</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.</p><ul><li><p>에러 메시지 예시: </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"512\" ac:original-width=\"942\" ac:custom-width=\"true\" ac:alt=\"image-20250508-022114.png\" ac:width=\"688\"><ri:attachment ri:filename=\"image-20250508-022114.png\" ri:version-at-save=\"2\" /></ac:image></li></ul></li></ul></li><li><p>Attribute 값은 있지만 해당 사용자가 비활성화된 경우</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.</p><ul><li><p>에러 메세지 예시:</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"260\" ac:original-width=\"615\" ac:custom-width=\"true\" ac:width=\"615\"><ri:attachment ri:filename=\"Screenshot 2025-06-16 at 10.30.14 AM.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image></li></ul></li></ul></li></ul>",
+      "mdx_content_hash": "d245f17d5107b869fe8730323e1c16f6e3e6b6321988de3560e4b0ddb48e144e",
+      "mdx_line_range": [
+        99,
+        123
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 31,
+      "xhtml_xpath": "h2[10]",
+      "xhtml_fragment": "<h2>Attribute 기반 워크플로우 메뉴 숨김 기능 (Use User Attribute to Hide Workflow Menu)</h2>",
+      "mdx_content_hash": "11cd48278ea0ff17293f89889b0706306827c914762de243d56b7b89c215f096",
+      "mdx_line_range": [
+        125,
+        125
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 32,
+      "xhtml_xpath": "p[12]",
+      "xhtml_fragment": "<p>Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.</p>",
+      "mdx_content_hash": "5a47c0d8a288b04ab1ede44a007809034d7f8422e74d9b107b7b4feb275ca2aa",
+      "mdx_line_range": [
+        127,
+        127
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 33,
+      "xhtml_xpath": "ac:image[4]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"90\" ac:original-width=\"484\" ac:custom-width=\"true\" ac:width=\"670\"><ri:attachment ri:filename=\"Screenshot 2025-06-26 at 6.35.32 PM.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "57057b468761e2f877b804d491204b53f89fbae4f19ec30385681ab41a3f1d10",
+      "mdx_line_range": [
+        129,
+        131
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 34,
+      "xhtml_xpath": "p[13]",
+      "xhtml_fragment": "<p>특정 사용자 속성(User Attribute)을 기준으로 사용자 대시보드에서 Workflow 메뉴를 보이지 않도록 설정하는 기능입니다.</p>",
+      "mdx_content_hash": "e7dd355d4411afafc911bab2988e59134edb4f9bab5dedb79399fc170fac2d01",
+      "mdx_line_range": [
+        133,
+        133
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 35,
+      "xhtml_xpath": "ul[7]",
+      "xhtml_fragment": "<ul><li><p>토글을 활성화하면 <code>User Attribute</code>의 <code>Key</code>와 <code>Value</code>를 한 쌍으로 선택하고 입력할 수 있습니다.</p></li><li><p>여기에 설정된 <code>Key:Value</code> 조건과 일치하는 사용자는 사용자 대시보드에 <code>Workflow</code> 메뉴가 표시되지 않습니다.</p></li><li><p><strong>예시:</strong> <code>User Attribute Key</code>로 '부서코드'를 선택하고, <code>Value</code>로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 <code>Workflow</code> 메뉴가 보이지 않습니다.</p></li></ul>",
+      "mdx_content_hash": "8b915dc83121e9ebabe718c6d272480b320a2885d640d6c4ab532e583899d031",
+      "mdx_line_range": [
+        135,
+        137
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 36,
+      "xhtml_xpath": "h2[11]",
+      "xhtml_fragment": "<h2>대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)</h2>",
+      "mdx_content_hash": "42c14b76f35503bc2fdc8d9e2776f3e542a70180d395cce0272330fa551ad76f",
+      "mdx_line_range": [
+        139,
+        139
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 37,
+      "xhtml_xpath": "macro-info[2]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"090050c3-368a-432c-8a9c-ced74bd0d3b8\"><ac:rich-text-body><p>대리결재 기능 활성화 / 비활성화 옵션은 11.3.0에 추가되었습니다.<br />11.4.0 부터 사용자의 대리결재자 지정 / 해제 이벤트에 대해 감사로그를 기록합니다. 해당 로그는 External API ( /api/external/v2/workflows/approval-delegations/logs) 를 사용해서 조회 할 수 있습니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "90f448d3a6b0aa99c940ab95c3a21829d923d7ba3c51e5b0c58398c0fbc3980f",
+      "mdx_line_range": [
+        141,
+        143
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 38,
+      "xhtml_xpath": "p[14]",
+      "xhtml_fragment": "<p>승인자 역할을 일정기간 다른 사용자에게 위임하는 기능인 대리결재 기능을 관리자가 활성화 또는 비활성화 할 수 있는 옵션입니다. 만약 비활성화 할 경우 사용자 preference 화면에서 Approver setting 메뉴가 노출되지 않습니다. </p>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        144,
+        144
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 39,
+      "xhtml_xpath": "ac:image[5]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"36\" ac:original-width=\"225\" ac:custom-width=\"true\" ac:alt=\"image-20250926-112444.png\" ac:width=\"253\"><ri:attachment ri:filename=\"image-20250926-112444.png\" ri:version-at-save=\"1\" /><ac:caption><p>Allow Delegated Approval 스위치</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "c07c46328ca08e7dc041002fb101d13c53e08f020865b1f352cf4cb9d6e1bf76",
+      "mdx_line_range": [
+        146,
+        147
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 40,
+      "xhtml_xpath": "ac:image[6]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"649\" ac:original-width=\"888\" ac:custom-width=\"true\" ac:alt=\"image-20250926-112201.png\" ac:width=\"516\"><ri:attachment ri:filename=\"image-20250926-112201.png\" ri:version-at-save=\"1\" /><ac:caption><p>대리결재 기능을 비활성화한 상태의 preference</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "477da8c911f578b38f7c1bd15689b8ab17992741fab14e2d8fe64bce3422f2cf",
+      "mdx_line_range": [
+        149,
+        154
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 41,
+      "xhtml_xpath": "h2[12]",
+      "xhtml_fragment": "<h2>SQL 요청 실행 시 쓰로틀링 활성화 (Use throttling when submitting SQL Request in Workflow)</h2>",
+      "mdx_content_hash": "b9c7c0cf17d21816e1d08930c9e9651b4e5a7111cef95e123c58e9e99d01f56e",
+      "mdx_line_range": [
+        156,
+        161
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 42,
+      "xhtml_xpath": "p[15]",
+      "xhtml_fragment": "<p>토글을 켜면 Workflow에서 상신된 SQL 요청 실행시 쓰로틀링을 적용합니다.</p>",
+      "mdx_content_hash": "0273975eb82cb85dd53a5a1d696def57ec7f1f34696a25d45b6b70077982fafb",
+      "mdx_line_range": [
+        163,
+        163
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 43,
+      "xhtml_xpath": "ac:image[7]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"159\" ac:original-width=\"604\" ac:custom-width=\"true\" ac:width=\"604\"><ri:attachment ri:filename=\"Screenshot 2025-05-09 at 3.18.32 PM.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "1c3a571e8ca93c4789a01c359f25994636dcc4816ec8c64117b6c64733b18070",
+      "mdx_line_range": [
+        165,
+        165
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 44,
+      "xhtml_xpath": "p[16]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "ed2bff0435b61f5a39c13ce59f249b4458b2625826187f31bc315108cac03824",
+      "mdx_line_range": [
+        167,
+        169
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 45,
+      "xhtml_xpath": "p[17]",
+      "xhtml_fragment": "<p>이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다. 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.</p>",
+      "mdx_content_hash": "8dbb8175ba07f4622955a8dc14d1b97f0f8f88b11e9183191a048336b61a52b3",
+      "mdx_line_range": [
+        172,
+        173
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 46,
+      "xhtml_xpath": "ul[8]",
+      "xhtml_fragment": "<ul><li><p><strong>Query chunk size</strong> : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능</p><ul><li><p>예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. </p></li></ul></li><li><p><strong>Query throttle interval </strong>: 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)</p></li></ul>",
+      "mdx_content_hash": "ae650614ba0d29e97f84ddf084c72c900c4361f7f79717524154a2238e52a2b1",
+      "mdx_line_range": [
+        175,
+        177
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 47,
+      "xhtml_xpath": "h2[13]",
+      "xhtml_fragment": "<h2>Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능</h2>",
+      "mdx_content_hash": "4ef4f08a6bc89d7b71f695826cda77c776905cc5aa85bab62c8ec2d4f04b2f77",
+      "mdx_line_range": [
+        179,
+        179
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 48,
+      "xhtml_xpath": "p[18]",
+      "xhtml_fragment": "<p>Redirect to custom page for SQL Requests 토글을 활성화합니다.</p>",
+      "mdx_content_hash": "da3d823d27efcd758628ae9e3728e82741e5151243575974b2c7b0d77c270bbd",
+      "mdx_line_range": [
+        181,
+        181
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 49,
+      "xhtml_xpath": "ac:image[8]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"92\" ac:original-width=\"468\" ac:custom-width=\"true\" ac:width=\"516\"><ri:attachment ri:filename=\"Screenshot 2025-05-09 at 8.33.07 PM.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "ca4bf4375816c11dc8a87e2da57250c752d8e943e9c0377f6217363db19c6e2f",
+      "mdx_line_range": [
+        183,
+        185
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 50,
+      "xhtml_xpath": "p[19]",
+      "xhtml_fragment": "<p>이 옵션을 통해 User Agent에서 Ledger 테이블 대상으로 INSERT, UPDATE, DELETE 쿼리 실행으로 인해 워크플로 승인 요청이 발생할 경우, <code>Send Request</code> 버튼 클릭 시 사용자를 사전에 정의된 커스텀 URL 페이지로 리디렉션할지 여부를 결정합니다. 이를 통해 고객사는 자체 운영 중인 외부 워크플로 시스템과의 연동을 강화할 수 있습니다.</p>",
+      "mdx_content_hash": "0dc111d7c73289915e77f15b8a9825d9f4a8f8eadaeb039e8da6677b7f94a39e",
+      "mdx_line_range": [
+        187,
+        188
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 51,
+      "xhtml_xpath": "ul[9]",
+      "xhtml_fragment": "<ul><li><p>토글을 활성화한 경우</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 나타납니다.</p></li><li><p>User Agent 사용자가 Ledger 테이블에 대해 변경 쿼리를 실행하고 승인 요청을 보낼 경우, <code>Send Request</code> 클릭 시 해당 커스텀 URL로 리디렉션되며, 이때 쿼리나 사용자 정보는 전달되지 않습니다.</p></li></ul></li><li><p>토글을 비활성화한 경우</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations 페이지에 커스텀 URL을 입력할 수 있는 필드가 표시되지 않습니다.</p></li><li><p>User Agent 사용자가 Ledger 테이블에 대해 INSERT, UPDATE, DELETE 쿼리를 실행하여 워크플로 승인 요청 모달이 표시될 때, <code>Send Request</code> 버튼을 클릭하면 기존과 같이 QueryPie 내부의 표준 워크플로 페이지로 이동합니다</p></li></ul></li></ul>",
+      "mdx_content_hash": "cdbb980bef9a52b0ec6ec17bfe27d1930efa7b1e1f5b0c073d072cbd09efe18f",
+      "mdx_line_range": [
+        190,
+        195
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 52,
+      "xhtml_xpath": "h2[14]",
+      "xhtml_fragment": "<h2>워크플로우 Request 타입별 사용자 노출 제어 기능</h2>",
+      "mdx_content_hash": "ecdfdbe0e8f99a612b3e4466d213c15b7e24aa9b708288b102de476595768bb0",
+      "mdx_line_range": [
+        197,
+        197
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 53,
+      "xhtml_xpath": "p[20]",
+      "xhtml_fragment": "<p>Select Request Types Allowed for Users 토글을 활성화합니다. </p>",
+      "mdx_content_hash": "7d8acfbe08fcb207eb5fe678d4438dbdea9540b21adce992d827e04e0d2a2ac8",
+      "mdx_line_range": [
+        199,
+        199
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 54,
+      "xhtml_xpath": "ac:image[9]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"574\" ac:original-width=\"352\" ac:custom-width=\"true\" ac:width=\"352\"><ri:attachment ri:filename=\"Screenshot 2025-05-09 at 8.40.28 PM.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "549f23106fc350b31d3fb8f22ef966fe579b85015811a649745d54b7411864dc",
+      "mdx_line_range": [
+        201,
+        203
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 55,
+      "xhtml_xpath": "p[21]",
+      "xhtml_fragment": "<p>이 옵션을 통해 관리자가 사용자가 접근하고 요청할 수 있는 워크플로우의 요청(Request) 타입을 선택적으로 제어할 수 있도록 합니다. </p>",
+      "mdx_content_hash": "9c01e81a0ce9c09d63a169af7a024674ee5e0f598e7f38fdf8e9165d62810945",
+      "mdx_line_range": [
+        205,
+        205
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 56,
+      "xhtml_xpath": "ul[10]",
+      "xhtml_fragment": "<ul><li><p>토글을 활성화(On)한 경우:</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations 페이지에서:</p><ul><li><p>Select Request Types Allowed for Users 토글 아래에 제품별(Databases (DAC), Servers (SAC), Kubernetes (KAC), Web Apps (WAC))로 분류된 요청 타입 목록이 체크박스 형태로 표시됩니다.</p></li><li><p>관리자는 이 체크박스를 사용하여 사용자에게 노출할 요청 타입을 선택적으로 지정할 수 있습니다. 기본적으로 모든 요청 타입이 선택된 상태로 표시됩니다.</p></li></ul></li><li><p>사용자 워크플로우 상신 화면:</p><ul><li><p>관리자가 선택한(체크한) 요청 타입만 사용자에게 표시되며 요청 가능합니다.</p></li></ul></li><li><p>Access Role Request의 특별 동작:</p><ul><li><p>Servers (SAC), Kubernetes (KAC), Web Apps (WAC) 중 하나 이상의 제품에서 Access Role Request가 선택되어야 사용자에게 Access Role Request 항목이 노출됩니다.</p></li><li><p>Access Role Request 요청 시, 내부 Service 항목에는 관리자가 선택한 제품(예: &quot;Server Access Control&quot;)만 표시됩니다.</p></li></ul></li></ul></li><li><p>토글을 비활성화(Off)한 경우 (기본값):</p><ul><li><p>Administrator &gt; General &gt; Workflow Configurations 페이지에서:</p><ul><li><p>요청 타입 선택을 위한 체크박스 목록이 표시되지 않습니다.</p></li></ul></li><li><p>사용자 워크플로우 상신 화면:</p><ul><li><p>기존과 동일하게, 사용자에게 할당된 라이선스에 따라 모든 관련 제품의 워크플로우 요청 타입이 노출되고 요청 가능합니다.</p></li><li><p>Access Role Request 내의 Service 항목도 라이선스에 따라 모두 노출됩니다.</p></li></ul></li></ul></li></ul>",
+      "mdx_content_hash": "038127c27b947a1f5e4911b2e96e681578c195ac4a0280d2ce38089d7fb98e9e",
+      "mdx_line_range": [
+        207,
+        221
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 57,
+      "xhtml_xpath": "h2[15]",
+      "xhtml_fragment": "<h2>DB access 요청 권한 별 결재선 지정 기능</h2>",
+      "mdx_content_hash": "e5a73f9de2eccaaa9a6a038bc3f73327b4ccf25abc25617914e0c01007e4e50a",
+      "mdx_line_range": [
+        223,
+        223
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 58,
+      "xhtml_xpath": "p[22]",
+      "xhtml_fragment": "<p>Workflow를 통해 DB Access Request 를 상신할 경우 요청하는 권한에 따라 결재선 (Approval Rule)을 특정할 수 있도록 하려면 &ldquo;Use DB Privilege Type Based Approval&rdquo; 토글을 활성화합니다.</p>",
+      "mdx_content_hash": "23f6fa3d08178cc1017845ec2f925bb432276caae240b6ef7dfe30f594bd855f",
+      "mdx_line_range": [
+        225,
+        225
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 59,
+      "xhtml_xpath": "ac:image[10]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"350\" ac:original-width=\"623\" ac:custom-width=\"true\" ac:alt=\"image-20250822-111454.png\" ac:width=\"507\"><ri:attachment ri:filename=\"image-20250822-111454.png\" ri:version-at-save=\"1\" /><ac:caption><p>Use DB Privilege Type Based Approval</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "af5be3116afc392d394d3a4f7f4ea199d59a8aae201ee73e864c03a910586794",
+      "mdx_line_range": [
+        227,
+        232
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 60,
+      "xhtml_xpath": "p[23]",
+      "xhtml_fragment": "<p><code>+Routing Rule</code> 버튼을 누르면 privilege 에 대한 조건을 지정하여 결재선에 대한 라우팅을 지정할 수 있습니다.</p>",
+      "mdx_content_hash": "130c161ed0fb3fa0b0f96fbaf49622d9616dae21e6d58255c523886c004fcb88",
+      "mdx_line_range": [
+        234,
+        234
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 61,
+      "xhtml_xpath": "ac:image[11]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"427\" ac:original-width=\"512\" ac:custom-width=\"true\" ac:alt=\"image-20250822-112026.png\" ac:width=\"432\"><ri:attachment ri:filename=\"image-20250822-112026.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "cf2103a62f65cb712a1f530b11057717ff296f560be3d8222119e011091965b0",
+      "mdx_line_range": [
+        236,
+        238
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 62,
+      "xhtml_xpath": "ul[11]",
+      "xhtml_fragment": "<ul><li><p><strong>Routing Rule Name</strong> : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.</p></li><li><p><strong>Condition</strong> : Privilege에 대한 조건을 지정합니다.</p><ul><li><p><strong>All Match</strong> : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.</p></li><li><p><strong>Contains </strong>: 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.</p></li></ul></li><li><p> <strong>Requested Privilege Type</strong> : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.</p></li><li><p><strong>Approval Rule</strong> : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.</p></li></ul>",
+      "mdx_content_hash": "14c0c57462d9611ab3e9214ff50357352eb14ec15d35b494d356b4aa60933a5a",
+      "mdx_line_range": [
+        240,
+        245
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 63,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3>Routing Rule 지정 예시</h3>",
+      "mdx_content_hash": "4cbda45cf9f95e284fa72d8a05956dc8e32dbc8731a562390da60143c13340e7",
+      "mdx_line_range": [
+        247,
+        247
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 64,
+      "xhtml_xpath": "ul[12]",
+      "xhtml_fragment": "<ul><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 모두  &ldquo;Read-Only&rdquo; 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: All Match 선택.</p></li><li><p>Requested Privilege Type : Read-Only 선택.</p></li><li><p>Approval Rule : 강제하기 원하는 Approval Rule 선택. </p></li></ul></li><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: Contains 선택.</p></li><li><p>Requested Privilege Type : Read/Write 선택.</p></li><li><p>Approval Rule : 강제하기 원하는 Approval Rule 선택.</p></li></ul></li></ul>",
+      "mdx_content_hash": "77591667fd4615cb7bd5d3e1852ed2083f7a958306f7c2a3daf2e6efc73c18e0",
+      "mdx_line_range": [
+        249,
+        256
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 65,
+      "xhtml_xpath": "h2[16]",
+      "xhtml_fragment": "<h2>SQL Request에서 실행계획 첨부기능 활성 / 비활성 옵션 </h2>",
+      "mdx_content_hash": "84a7ae6642803a81e9fe728adfa40aad3fdcf7077cf79c838c1038ab17227540",
+      "mdx_line_range": [
+        258,
+        258
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 66,
+      "xhtml_xpath": "p[24]",
+      "xhtml_fragment": "<p>Workflow의 SQL Request를 통해 수행할 쿼리를 상신할 때 실행 계획 결과를 첨부하는 &ldquo;Attach Explain Results&rdquo; 기능을 활성 또는 비활성화 할 수 있도록 옵션을 제공합니다.</p>",
+      "mdx_content_hash": "ae964f9e6c798d40c2516ae5a6155fa8a756438dc0f25d53630aec455a872334",
+      "mdx_line_range": [
+        260,
+        260
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 67,
+      "xhtml_xpath": "ac:image[12]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"46\" ac:original-width=\"425\" ac:custom-width=\"true\" ac:alt=\"image-20250825-002423.png\" ac:width=\"425\"><ri:attachment ri:filename=\"image-20250825-002423.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "c114aaf5357dc5ba50ac1bf500be5a89cd35a352a54ee7f4f744a7346ee27488",
+      "mdx_line_range": [
+        262,
+        264
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 68,
+      "xhtml_xpath": "p[25]",
+      "xhtml_fragment": "<p>관리자가 이 옵션을 활성화 하더라도 Workflow의 SQL Request 양식에서 &ldquo;Attach Explain Results&rdquo; 는 Off로 되어 있으므로 사용자가 필요시 명시적으로 &ldquo;Attatch Explain Results&rdquo; 토글 스위치를 On으로 변경해야 실행계획 결과가 첨부됩니다.</p>",
+      "mdx_content_hash": "92a3fceaa1a78114b64ed20897645d75b26fe8f6fe9548f71c69df3d2a0c9c88",
+      "mdx_line_range": [
+        266,
+        266
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

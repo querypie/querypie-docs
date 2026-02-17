@@ -1,0 +1,217 @@
+{
+  "schema_version": "2",
+  "page_id": "1911652402",
+  "mdx_sha256": "4c8e770601d5fac4d74c9214a8773f27cbd86fcd5de6a22e553ae9080e57b28d",
+  "source_xhtml_sha256": "dd7e858544cbe4c994c4844b5d55812b3effdaeb21538e4ff12e0f014e86cbc9",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p local-id=\"88f68dcf91fb\">QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라, 안내 문서가 구분되어 제공됩니다.</p>",
+      "mdx_content_hash": "c144af9852edf8a18afc7c2cb6ec98ce1b91449dbcd7768ce8c93feaa4e05562",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2 local-id=\"295b880c-7b06-46cd-b817-e11745599e4d\">Compose Tool 로 Container 를 실행하기</h2>",
+      "mdx_content_hash": "9d5361ed1cdb915ce34cb1d342ad6ea41d9e39d49af72903fee2dc4f715b8d0f",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p local-id=\"92a3757fa85d\">일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다. Docker Compose 를 활용하여, Container Image 를 내려받고, 실행, 종료하는 방식입니다.</p>",
+      "mdx_content_hash": "ded3bfc08f6d724bdb0e6630ef088d9e33ddacd7b5e164b4c2a7a0f43a78435e",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p local-id=\"d872ddaf0cf7\">이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.</p>",
+      "mdx_content_hash": "67e620d0a803bd736a72f523f293c87c3c518e49a08ea1714be317c389d74dfd",
+      "mdx_line_range": [
+        12,
+        13
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3 local-id=\"9fd29aa7927d\">setup.v2.sh 로 설치하기</h3>",
+      "mdx_content_hash": "e5fba69229829a32b47dfd97d761ff5d91a690675865542fefb927b4d83cc64e",
+      "mdx_line_range": [
+        15,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p local-id=\"adf8f0375431\">2025년 8월 출시된 QueryPie ACP Community Edition 의 출시와 함께 최종 고객사와 파트너 엔지니어에게 제공되는 설치 도우미 프로그램입니다. Docker Hub 에 공개된 Container Image 를 내려받아 설치하는 방식입니다.</p>",
+      "mdx_content_hash": "b51bc10842a77cf252330d0e5110b318f638aa39156c371f168c72f01f0b503c",
+      "mdx_line_range": [
+        17,
+        17
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p local-id=\"3a7aa77ca0c7\">설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다. setup.v2.sh 가 실제로 실행하는 설치 과정은 setup.sh 의 설치 방식과 동등합니다. setup.v2.sh 는 그 과정이 자동화되었고, Version 10 등 구버전의 설치를 지원하지 않는다는 차이가 있습니다. 더 상세한 차이점은 이 문서를 참조하세요: <ac:link ac:local-id=\"af972ffe-4ea0-411c-91b5-eb9fcf92df45\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"setup.sh, setup.v2.sh 비교\" ri:version-at-save=\"6\" /><ac:link-body>setup.sh, setup.v2.sh 비교</ac:link-body></ac:link></p>",
+      "mdx_content_hash": "542a49571bd6a1388d80e50a36d74e9a7c475fb4e9f9952017fc24c0302105c5",
+      "mdx_line_range": [
+        19,
+        20
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p local-id=\"3dc3c03f0a63\">Apple Silicon 을 사용하는 macOS 환경의 설치를 지원합니다.</p>",
+      "mdx_content_hash": "424f940490f288228663451f8911226776a4bb73a3c03966f1b0dbfca80aedca",
+      "mdx_line_range": [
+        22,
+        25
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p local-id=\"891425652a71\">자세한 설치 방법은 이 문서를 참조하세요: <ac:link ac:local-id=\"7dca62d4-0f35-4664-bde0-49f59210d90e\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"설치 가이드 - setup.v2.sh\" ri:version-at-save=\"30\" /><ac:link-body>설치 가이드 - setup.v2.sh</ac:link-body></ac:link></p>",
+      "mdx_content_hash": "674d0b17840f07494da5758e8c4e34fb2958f0574cf8b937bf000f36dae84f15",
+      "mdx_line_range": [
+        27,
+        27
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "h3[2]",
+      "xhtml_fragment": "<h3 local-id=\"8eba8a81-c6fc-4f1f-b18a-43153cee4747\">setup.sh 로 설치하기</h3>",
+      "mdx_content_hash": "cee19b6b0a7b643113ad8b0fac08115cc4afd1ca5b1b2ce0deb37b6f9e5ff828",
+      "mdx_line_range": [
+        29,
+        29
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "p[8]",
+      "xhtml_fragment": "<p local-id=\"7bce0f5ca1d1\">QueryPie ACP Version 9 시절부터 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다. Harbor 라는 Container Registry 에 계정을 발급받아 Container Image 를 내려받을 수 있습니다.</p>",
+      "mdx_content_hash": "79ad96798878d0ca319b91566f3df29427b0d72b610bf05a3d64d8c26ea56555",
+      "mdx_line_range": [
+        31,
+        31
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "p[9]",
+      "xhtml_fragment": "<p local-id=\"ba5fa9b87d96\">자세한 설치 방법은 이 문서를 참조하세요: <ac:link ac:local-id=\"4599bf9f-cf7c-4699-99fe-ac48128efd92\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"설치 가이드 - 간단한 구성\" ri:version-at-save=\"14\" /><ac:link-body>설치 가이드 - 간단한 구성</ac:link-body></ac:link></p>",
+      "mdx_content_hash": "f9aa23d49043802f28b8537753dd410a61257bf25d906eaa79e72b480c7050fa",
+      "mdx_line_range": [
+        33,
+        34
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2 local-id=\"a3928fd5-e4b6-4b8f-b158-aca089401767\">Kubernetes 환경에 설치하기</h2>",
+      "mdx_content_hash": "71a9b5f835d25cef2501a59cc3f4f8f013b4f5db58e7944f327f38eac5c931a1",
+      "mdx_line_range": [
+        36,
+        36
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "p[10]",
+      "xhtml_fragment": "<p local-id=\"8b65e7a4b44a\">QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다. Compose Tool 을 이용해 설치, 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.</p>",
+      "mdx_content_hash": "55612b24e11ec92f9e192762c902be3106ab51e365eeb7073ebe7e6146a60ce8",
+      "mdx_line_range": [
+        38,
+        38
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "p[11]",
+      "xhtml_fragment": "<p local-id=\"cf6bccb44758\">Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.</p>",
+      "mdx_content_hash": "6571c12692bd88d2deb3ef4e754fac47082e1f76dea38840fdaf8b8ca7a9f771",
+      "mdx_line_range": [
+        40,
+        41
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul local-id=\"7460d9b4-35a0-4f98-8637-724391d4c7a0\"><li local-id=\"9288d6aa-077f-4639-848e-7375d83e4ada\"><p local-id=\"22b709c0d310\">AWS EKS 환경 : <ac:link ac:local-id=\"2aa65d2a-300b-4e8f-8818-953c28d9481f\" ac:card-appearance=\"inline\"><ri:page ri:content-title=\"AWS EKS 환경에서 설치하기\" ri:version-at-save=\"36\" /><ac:link-body>AWS EKS 환경에서 설치하기</ac:link-body></ac:link> </p></li><li local-id=\"f9425b39-37a3-473d-b0c1-b59523f81c9a\"><p local-id=\"6512b1edb160\">Helm Chart : <a href=\"https://github.com/chequer-io/querypie-deployment\" local-id=\"39207560-10d4-4ec7-9c01-921457a5d9bf\" data-card-appearance=\"inline\">https://github.com/chequer-io/querypie-deployment</a> </p></li></ul>",
+      "mdx_content_hash": "dde31d27d1b45e121ef670205acec9712a52a80680448e76a701035d49e8c0d8",
+      "mdx_line_range": [
+        43,
+        43
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "p[12]",
+      "xhtml_fragment": "<p local-id=\"bd4a0ef67f9f\" />",
+      "mdx_content_hash": "ba7398e3e1b5abe2f58708fb940fe98ea849453ec816b2611ecad47054cf3ec1",
+      "mdx_line_range": [
+        45,
+        46
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "schema_version": "2",
+  "page_id": "793608206",
+  "mdx_sha256": "8942355bb84f715a00bb8a651af9c1edf0ced7ecab66ffce07b72c30e435c1b2",
+  "source_xhtml_sha256": "1fe717056eda284c8e41946fa98b25a00dae0e421798cccd34abcd2c0ae80c3c",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.</p>",
+      "mdx_content_hash": "1e7963a07852e6c7287e8136dafeecf1d6bf5a4351cf8a65baa97dfd8ca4f2dc",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>공통 변수</h2>",
+      "mdx_content_hash": "c540152e7b6044e0b0f50f622bf2df0ab9f9ce24ae86b69f044425caf8c94661",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p>모든 요청 타입에서 지원하는 변수 목록입니다.</p>",
+      "mdx_content_hash": "4f6c666a12be336b23a1058b74341e8bb60f5b8e480dab0d1d938c919c808c73",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p>Request Type을 전체 선택한 경우에도 공통 변수는 사용 가능합니다.</p>",
+      "mdx_content_hash": "8fe1babdfc5074ed44a4575c07d81cd57ad059528d605479776b46ded7236416",
+      "mdx_line_range": [
+        12,
+        12
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "table[1]",
+      "xhtml_fragment": "<table data-table-width=\"811\" data-layout=\"center\" ac:local-id=\"c749b9ca-9033-4c2b-b8fa-3880ad5a8736\"><colgroup><col style=\"width: 178.0px;\" /><col style=\"width: 178.0px;\" /><col style=\"width: 315.0px;\" /><col style=\"width: 140.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Request Title             </p></td><td><p>{{requestTitle}}    </p></td><td><p>요청 제목</p><ul><li><p>예: 서비스 DB 접근 요청</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Assignees                 </p></td><td><p>{{assignees}}       </p></td><td><p>요청 승인 담당자</p><ul><li><p>예: STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant Hwang)</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Comment                   </p></td><td><p>{{comment}}         </p></td><td><p>요청 코멘트</p><ul><li><p>예: 서비스 운영 목적으로 DB 접근 권한 요청드립니다.</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>User Name                 </p></td><td><p>{{userName}}        </p></td><td><p>요청자 이름  </p><ul><li><p>예: Keira Yoon</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Email                     </p></td><td><p>{{email}}           </p></td><td><p>요청자 이메일</p><ul><li><p>예: <a href=\"mailto:keira@email.com\">keira@email.com</a></p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Access Type               </p></td><td><p>{{accessType}}      </p></td><td><p>요청 유형</p><ul><li><p>DB Access Request</p></li><li><p>SQL Request</p></li><li><p>SQL Export Request</p></li><li><p>Unmasking Request</p></li><li><p>Server Access Request</p></li><li><p>Access Role Request</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Link                      </p></td><td><p>{{link}}            </p></td><td><p>요청 상세 페이지 링크</p><ul><li><p>예: https://{querypie_domain}/workflow/received-requests/to-do/detail/{workflow_uuid}</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Workflow Uuid             </p></td><td><p>{{workflowUuid}}    </p></td><td><p>요청 UUID </p><ul><li><p>예: b63f9f94-11e5-4095-a399-be7d96e9ce06</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Workflow Id               </p></td><td><p>{{id}}              </p></td><td><p>요청 ID</p><ul><li><p>예: 12</p></li></ul></td><td><p>-</p></td></tr><tr><td><p>Urgent                    </p></td><td><p>{{urgent}}          </p></td><td><p>긴급 요청 여부</p><ul><li><p>true 또는 false</p></li></ul></td><td><p>10.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "859461fa7f061bcd40faf8245ef0afa6ab84b87d37be33b4e8dec97cdddf0fa8",
+      "mdx_line_range": [
+        14,
+        14
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2><strong>DB Access Request</strong></h2>",
+      "mdx_content_hash": "2d8ce5012b539286d78a489a7731188b8729ab20f1956d49f8255d741031fdab",
+      "mdx_line_range": [
+        16,
+        194
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "table[2]",
+      "xhtml_fragment": "<table data-table-width=\"808\" data-layout=\"center\" ac:local-id=\"ee62ec7d-c9f6-4e28-b56e-747b6443c26d\"><colgroup><col style=\"width: 174.0px;\" /><col style=\"width: 174.0px;\" /><col style=\"width: 319.0px;\" /><col style=\"width: 137.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Expiration Date                  </p></td><td><p>{{expirationDate}}            </p></td><td><p>만료 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Access Expiration Date</p></td><td><p>{{accessExpirationDate}}</p></td><td><p>권한 만료일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Requested Privilege per Connection </p></td><td><p>{{connectionPrivilegeNames}}  </p></td><td><p>커넥션 별 요청된 Privilege를 목록으로 표시</p><ul><li><p>예:</p><ul><li><p>Connection A : Read/Write</p></li><li><p>Connection B : Read-Only</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr></tbody></table>",
+      "mdx_content_hash": "39fb89e782c7e0d5df9e520f270b1ee87a13467a52b955978374e1658bad4136",
+      "mdx_line_range": [
+        196,
+        196
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2><strong>SQL Request</strong></h2>",
+      "mdx_content_hash": "aedbeb5ed742fbd5c0c254bae238e14495b7854705e00da5d40b4c7707e397d6",
+      "mdx_line_range": [
+        198,
+        281
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "table[3]",
+      "xhtml_fragment": "<table data-table-width=\"814\" data-layout=\"center\" ac:local-id=\"65178aed-8861-4dee-943a-42d33ce617bf\"><colgroup><col style=\"width: 176.0px;\" /><col style=\"width: 174.0px;\" /><col style=\"width: 316.0px;\" /><col style=\"width: 140.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>SQL Text                  </p></td><td><p>{{sqlText}}              </p></td><td><p>SQL 구문</p><ul><li><p>최대 100자 (TEXT, FILE 동일)</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Content Type              </p></td><td><p>{{contentType}}          </p></td><td><p>SQL 구문 입력 방식</p><ul><li><p>TEXT 또는 FILE</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB 커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB 커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Id                </p></td><td><p>{{clusterId}}            </p></td><td><p>DB 커넥션 ID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스 유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Use Ledger Approval Rule  </p></td><td><p>{{useLedgerApprovalRule}}</p></td><td><p>원장 승인 규칙 사용 여부</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Target Date               </p></td><td><p>{{targetDate}}           </p></td><td><p>실행 목표 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Preferred Execution Date</p></td><td><p>{{preferredExecutionDate}}</p></td><td><p>실행 목표 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Due Date                  </p></td><td><p>{{dueDate}}              </p></td><td><p>승인/실행 만료 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Execution Expiration Date</p></td><td><p>{{executionExpirationDate}}</p></td><td><p>실행 만료 일자</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "822a87df69e26952f9a5e0852156626be8b8d921a4da0dd32e7adf422a2be1c2",
+      "mdx_line_range": [
+        283,
+        283
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "h2[4]",
+      "xhtml_fragment": "<h2><strong>SQL Export Request</strong></h2>",
+      "mdx_content_hash": "554d8130320574b8de10b42f1b6c07413867c5d24fa39e314d6f755bc8198a5c",
+      "mdx_line_range": [
+        285,
+        494
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "table[4]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"a7dabd97-8ea6-4502-b876-197d927dd1dc\"><colgroup><col style=\"width: 166.0px;\" /><col style=\"width: 166.0px;\" /><col style=\"width: 344.0px;\" /><col style=\"width: 137.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB 커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB 커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Id                </p></td><td><p>{{clusterId}}            </p></td><td><p>DB 커넥션 ID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스 유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Export Type               </p></td><td><p>{{exportType}}           </p></td><td><p>내보내기 유형</p><ul><li><p>QUERY 또는 TABLE</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Export Detail             </p></td><td><p>{{exportDetail}}         </p></td><td><p>내보내기 세부 정보</p><ul><li><p>Query인 경우, 최대 100자의 쿼리</p></li><li><p>Table인 경우, 테이블 이름</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Target Date               </p></td><td><p>{{targetDate}}           </p></td><td><p>실행 목표 일자</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Preferred Execution Date</p></td><td><p>{{preferredExecutionDate}}</p></td><td><p>실행 목표 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Due Date                  </p></td><td><p>{{dueDate}}              </p></td><td><p>승인/실행 만료 일자</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Execution Expiration Date</p></td><td><p>{{executionExpirationDate}}</p></td><td><p>실행 만료 일자</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "0d51c3faf0abee8e6e9ff9bd4bb0e2c1b5dbdfd207b37c5ecf6a5f18139b137d",
+      "mdx_line_range": [
+        496,
+        496
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "h2[5]",
+      "xhtml_fragment": "<h2><strong>Unmasking Request</strong></h2>",
+      "mdx_content_hash": "42a7928edb72f6fea7e0e40fd74a8b7d9fc072f90dcb979ea303652a1d25da0e",
+      "mdx_line_range": [
+        498,
+        692
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "table[5]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"212dceed-34bd-42c0-9cab-7b11a24950af\"><colgroup><col style=\"width: 168.0px;\" /><col style=\"width: 168.0px;\" /><col style=\"width: 341.0px;\" /><col style=\"width: 135.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB 커넥션 UUID</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB 커넥션 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스 유형</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Table Name                </p></td><td><p>{{tableName}}            </p></td><td><p>테이블 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Column Names              </p></td><td><p>{{columnNames}}          </p></td><td><p>컬럼 이름을 목록으로 표시</p><ul><li><p>예: [actor_id, first_name, last_name, last_update]</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Unmasking Expiration      </p></td><td><p>{{unmaskingExpiration}}  </p></td><td><p>마스킹 해제 만료 시점 </p><ul><li><p>예: </p><ul><li><p>10 Minutes</p></li><li><p>2024-12-03T14:59:00 </p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "4bd7a3e21f19bc7577cc9c40cbfaf0007987334f0186e588a9a99d98646dc4bd",
+      "mdx_line_range": [
+        694,
+        694
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "h2[6]",
+      "xhtml_fragment": "<h2><strong>Restricted Data Access Request</strong></h2>",
+      "mdx_content_hash": "f9fc5faac034f7afcf301ecbcd9c48baeff6f4c3f32cd822ad2288ab79536e07",
+      "mdx_line_range": [
+        696,
+        835
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "table[6]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"8d66df32-3ad9-473e-9876-a4c7fe8775e1\"><colgroup><col style=\"width: 168.0px;\" /><col style=\"width: 168.0px;\" /><col style=\"width: 341.0px;\" /><col style=\"width: 135.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB 커넥션 UUID</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB 커넥션 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스 유형</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Table Name                </p></td><td><p>{{tableName}}            </p></td><td><p>테이블 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Column Names              </p></td><td><p>{{columnNames}}          </p></td><td><p>컬럼 이름을 목록으로 표시</p><ul><li><p>예: [actor_id, first_name, last_name, last_update]</p></li></ul></td><td><p>11.0.0</p></td></tr><tr><td><p>Restricted Data Access Expiration</p></td><td><p>{{restrictedDataAccessExpiration}}  </p></td><td><p>접근 허용 만료 시점 </p><ul><li><p>예: </p><ul><li><p>10 Minutes</p></li><li><p>2024-12-03T14:59:00 </p></li></ul></li></ul></td><td><p>11.0.0</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "79512c7f0563478ddc7192d828d8705c2a6b52dff249c54705d8d138ee21732f",
+      "mdx_line_range": [
+        837,
+        837
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "h2[7]",
+      "xhtml_fragment": "<h2><strong>DB Policy Exception Request</strong></h2>",
+      "mdx_content_hash": "719f9880c79c243ab7dca5f6c08f259fdfaf19509914a4b767cc4b4e7a1b8b21",
+      "mdx_line_range": [
+        839,
+        978
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "table[7]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"8fdf1d5c-786c-4147-8e56-bfd6d8dcdb0f\"><colgroup><col style=\"width: 168.0px;\" /><col style=\"width: 168.0px;\" /><col style=\"width: 341.0px;\" /><col style=\"width: 135.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Cluster Group Uuid        </p></td><td><p>{{clusterGroupUuid}}     </p></td><td><p>DB 커넥션 UUID</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Cluster Group Name        </p></td><td><p>{{clusterGroupName}}     </p></td><td><p>DB 커넥션 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Data Scope Type</p></td><td><p>{{dataScopeType}}</p></td><td><p>Data Path와 Tag중 하나를 선택</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Database Type             </p></td><td><p>{{databaseType}}         </p></td><td><p>데이터베이스 유형</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Database Name             </p></td><td><p>{{databaseName}}         </p></td><td><p>데이터베이스 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Table Name                </p></td><td><p>{{tableName}}            </p></td><td><p>테이블 이름</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Column Names              </p></td><td><p>{{columnNames}}          </p></td><td><p>컬럼 이름을 목록으로 표시</p><ul><li><p>예: [actor_id, first_name, last_name, last_update]</p></li></ul></td><td><p>11.0.0</p></td></tr><tr><td><p>Expiration</p></td><td><p>{{expiration}}  </p></td><td><p>예외 허용 만료 시점 </p><ul><li><p>예: </p><ul><li><p>10 Minutes</p></li><li><p>2024-12-03T14:59:00 </p></li></ul></li></ul></td><td><p>11.0.0</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "008e26d8ba8f953f43397f9d9bf35bce75ae0a080e69e3df617fa08f29d0a106",
+      "mdx_line_range": [
+        980,
+        980
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "h2[8]",
+      "xhtml_fragment": "<h2><strong>Server Access Request</strong></h2>",
+      "mdx_content_hash": "2989b4f4f7b3af4c6eeccd031094af2cdd120efc2fa91e88aa3a81e018355bc1",
+      "mdx_line_range": [
+        982,
+        1135
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "table[8]",
+      "xhtml_fragment": "<table data-table-width=\"820\" data-layout=\"center\" ac:local-id=\"a4480e83-0193-4c46-ba7c-53a665a6ad03\"><colgroup><col style=\"width: 170.0px;\" /><col style=\"width: 170.0px;\" /><col style=\"width: 345.0px;\" /><col style=\"width: 132.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Server Group Name         </p></td><td><p>{{serverGroupName}}      </p></td><td><p>서버 그룹 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Server Names              </p></td><td><p>{{serverNames}}          </p></td><td><p>서버 이름을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>Server A</p></li><li><p>Server B</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Server Accounts           </p></td><td><p>{{serverAccounts}}       </p></td><td><p>서버 계정을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>dev</p></li><li><p>ec2-user</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Expiration Date           </p></td><td><p>{{expirationDate}}       </p></td><td><p>만료 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Access Expiration Date</p></td><td><p>{{accessExpirationDate}}</p></td><td><p>권한 만료일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Trigger Condition</p></td><td><p>{{triggerCondition}}</p></td><td><p>권한 부여 시작 조건</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Duration</p></td><td><p>{{duration}}</p></td><td><p>분(Minutes) 단위 서버 접근 권한이 유효한 시간</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "9223b8b11c645c3d2e023bdbb4d6d30e013223586674bb9af2a4d1d190757280",
+      "mdx_line_range": [
+        1137,
+        1137
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 19,
+      "xhtml_xpath": "h2[9]",
+      "xhtml_fragment": "<h2><strong>Server Privilege Request</strong></h2>",
+      "mdx_content_hash": "c4dc12d79c0ddd66d2364ed4d3ea6b144456a6ed18261761ad170f0965d76fae",
+      "mdx_line_range": [
+        1139,
+        1281
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 20,
+      "xhtml_xpath": "table[9]",
+      "xhtml_fragment": "<table data-table-width=\"820\" data-layout=\"center\" ac:local-id=\"1ac8db57-f53b-4306-9a63-eabe504365d4\"><colgroup><col style=\"width: 170.0px;\" /><col style=\"width: 170.0px;\" /><col style=\"width: 345.0px;\" /><col style=\"width: 132.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Server Group Name         </p></td><td><p>{{serverGroupName}}      </p></td><td><p>서버 그룹 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Server Names              </p></td><td><p>{{serverNames}}          </p></td><td><p>서버 이름을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>Server A</p></li><li><p>Server B</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Server Accounts           </p></td><td><p>{{serverAccounts}}       </p></td><td><p>서버 계정을 목록으로 표시</p><ul><li><p>예: </p><ul><li><p>dev</p></li><li><p>ec2-user</p></li></ul></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Expiration Date           </p></td><td><p>{{expirationDate}}       </p></td><td><p>만료 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Privilege Expiration Date</p></td><td><p>{{accessExpirationDate}}</p></td><td><p>권한 만료일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Trigger Condition</p></td><td><p>{{triggerCondition}}</p></td><td><p>권한 부여 시작 조건</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Duration</p></td><td><p>{{duration}}</p></td><td><p>분(Minutes) 단위 서버 특권이 유효한 시간</p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "e84b3a050a806a123424bafda88ad81bc1d626ffa78f482e5db2110758e2116b",
+      "mdx_line_range": [
+        1283,
+        1283
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 21,
+      "xhtml_xpath": "h2[10]",
+      "xhtml_fragment": "<h2><strong>Access Role Request</strong></h2>",
+      "mdx_content_hash": "3c06e38484b00372160d5d417b36eda23818fc3b699e34ce8d16e4b1a4287372",
+      "mdx_line_range": [
+        1285,
+        1427
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 22,
+      "xhtml_xpath": "table[10]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"e44f2beb-29c0-417c-b961-8a1b7946b510\"><colgroup><col style=\"width: 172.0px;\" /><col style=\"width: 172.0px;\" /><col style=\"width: 339.0px;\" /><col style=\"width: 130.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Service                   </p></td><td><p>{{service}}              </p></td><td><p>역할 요청 대상 서비스</p><ul><li><p>SAC, KAC, WAC</p></li></ul></td><td><p>10.2.2</p></td></tr><tr><td><p>Role Name                 </p></td><td><p>{{roleName}}             </p></td><td><p>역할 이름</p></td><td><p>10.2.2</p></td></tr><tr><td><p>Expiration Date           </p></td><td><p>{{expirationDate}}       </p></td><td><p>만료 일자</p></td><td><p>10.2.2</p><p>11.2.0 - Deprecated</p></td></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Role Expiration Date</p></td><td><p>{{roleExpirationDate}}</p></td><td><p>권한 만료 일자 </p></td><td><p>11.2.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "fb7a93d1634daa70e83a71ef207f912660cb2973cb1a8e61391374971b4ed95f",
+      "mdx_line_range": [
+        1429,
+        1429
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 23,
+      "xhtml_xpath": "h2[11]",
+      "xhtml_fragment": "<h2><strong>Web APP Just-In-Time Access Request</strong></h2>",
+      "mdx_content_hash": "66231157c145364b87a22e4d98b8e8a2342b6bca3801afec9dc3aa72dc038f3d",
+      "mdx_line_range": [
+        1431,
+        1526
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 24,
+      "xhtml_xpath": "table[11]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"f2f9b44d-eaa3-4c0d-9471-fed198990f83\"><colgroup><col style=\"width: 172.0px;\" /><col style=\"width: 172.0px;\" /><col style=\"width: 339.0px;\" /><col style=\"width: 130.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Web App Name</p></td><td><p>{{webAppName}}</p></td><td><p>요청 대상 웹앱</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Access Duration</p></td><td><p>{{accessDuration}}             </p></td><td><p>분(Minutes) 단위 웹앱 접근 권한이 유효한 시간</p></td><td><p>11.0.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "755fd23d35642c65459c213f492413cdd9e79f4b300799bc4d1b58cbd1b7af96",
+      "mdx_line_range": [
+        1528,
+        1528
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 25,
+      "xhtml_xpath": "h2[12]",
+      "xhtml_fragment": "<h2><strong>IP Registration Request</strong></h2>",
+      "mdx_content_hash": "3f3bcc63e221688c10791b381444ca454c57f6509e10ad54cc0e3cce4854abb8",
+      "mdx_line_range": [
+        1530,
+        1534
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 26,
+      "xhtml_xpath": "table[12]",
+      "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"c1a404fa-905f-4b0c-9613-f8439a2e702e\"><colgroup><col style=\"width: 172.0px;\" /><col style=\"width: 172.0px;\" /><col style=\"width: 339.0px;\" /><col style=\"width: 130.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>IP Addresses                </p></td><td><p>{{ipAddresses}}             </p></td><td><p>IP 주소 </p></td><td><p>11.0.0</p></td></tr></tbody></table>",
+      "mdx_content_hash": "98556346fcd2d5d3e9f5f0300b27fa970927f06506ad7b2fcd2c837f008d3c66",
+      "mdx_line_range": [
+        1536,
+        1536
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "schema_version": "2",
+  "page_id": "692355151",
+  "mdx_sha256": "05b9bdc273a0d560eea19481486060237076f83b656bfeecbcfa6ad5d71578fe",
+  "source_xhtml_sha256": "b9e0646039c7414bbc75057fcec55a2d80783ca2b6767f0fb6147dde5920d6dd",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "macro-info[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"d17430fb-9447-470e-83ac-d17ab23b1c3b\"><ac:rich-text-body><p>10.2.0 부터 추가된 기능입니다. (10.2.0 기준 MySQL만 지원합니다.)</p><p>11.2.0 부터 관리자가 이 기능을 비활성화 할 수 있도록 변경되었습니다. 사용자가 이 기능을 사용할 수 없는 경우 관리자가 정책적으로 비활성화한 것입니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "13827d542696285443a68e5919f9324d9a34adc37774580799cdd591866319c5",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "e0ba182a853acb19236b7a78865e3cbaff6e098f8dc30ca635ec06d6be177027",
+      "mdx_line_range": [
+        10,
+        14
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>사용자가 Workflow를 통해 SQL Request를 요청할 때 해당 쿼리에 대해 DBMS에서 제공하는 실행 계획(Explain 구문)을 사용하여 쿼리에 대한 제한적인 절차 정보를 확인할 수 있습니다.  이 기능은 DBMS에 종속된 기능이므로 Workflow의 SQL Request 작성할 때 커넥션에 해당하는 DBMS 마다 차이가 있을 수 있습니다. </p>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        15,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "macro-info[2]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"4352403e-dc94-4062-93c6-154a747a602f\"><ac:rich-text-body><p>실행계획이란?<br />데이터베이스의 옵티마이저가 가장 최적의 쿼리를 수행하기 위해 생성하는 일련의 작업세트 또는 작업 절차입니다. 단계적으로 수행 단계를 볼 수 있고 단계별 비용을 볼 수 있습니다. </p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        17,
+        17
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>SQL Request 작성 및 실행계획(Explain) 수행하기</h2>",
+      "mdx_content_hash": "421b9b5db209fa83425ddaf1e289e9f82536295d978cc29cd6c4d87c4a1eb9a4",
+      "mdx_line_range": [
+        19,
+        20
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p>QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다. (참고 : <ac:link ac:card-appearance=\"inline\"><ri:page ri:content-title=\"SQL Request 요청하기\" ri:version-at-save=\"26\" /><ac:link-body>SQL Request 요청하기</ac:link-body></ac:link>)</p>",
+      "mdx_content_hash": "c26b4966637d6328398cd5a1d9bec76a2ff4af651a3ff384201305874535f06f",
+      "mdx_line_range": [
+        22,
+        24
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p> MySQL Connection 및 Database 선택 <br />쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다. </p></li></ol>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        25,
+        25
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "macro-note[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"426a0df6-e9e8-4f8e-95c2-7e96de40ba61\"><ac:rich-text-body><p>Content Type은 &ldquo;Text&rdquo;만 지원합니다. &ldquo;File&rdquo;을 선택하면 실행 계획(Explain)기능을 사용할 수 없습니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "095561f1a17316c1d89cbbff7883a79baccf1c425176ffbf81f177988d4a66b9",
+      "mdx_line_range": [
+        27,
+        27
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"531\" ac:original-width=\"776\" ac:custom-width=\"true\" ac:alt=\"image-20241029-234721.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20241029-234721.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "785e0279b6307f702e1f56e490e83ee13c0bfdf89091b79604da569d9091b40b",
+      "mdx_line_range": [
+        29,
+        30
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "ol[2]",
+      "xhtml_fragment": "<ol start=\"2\"><li><p>실행계획(Explain) 옵션 및 실행계획 수행<br />쿼리 에디터 하단에 있는 옵션을 선택하고 <code>Explain</code> 버튼을 누릅니다.</p><ol start=\"1\"><li><p><strong>Attach Explain Results</strong> : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) </p></li><li><p>결과 표시 방식 선택</p><ol start=\"1\"><li><p><strong>Table</strong> : 테이블 형태로 결과가 표시됩니다.</p></li><li><p><strong>JSON</strong> : JSON 형태로 결과가 표시됩니다. </p></li></ol></li></ol></li></ol>",
+      "mdx_content_hash": "c07c868d115723b146eb04a46d7525181978546473024c59215340e2d82886e2",
+      "mdx_line_range": [
+        32,
+        32
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"537\" ac:original-width=\"682\" ac:custom-width=\"true\" ac:alt=\"image-20241029-235845.png\" ac:width=\"682\"><ri:attachment ri:filename=\"image-20241029-235845.png\" ri:version-at-save=\"1\" /></ac:image>",
+      "mdx_content_hash": "82370c8e50590a997f0e7bf8b346a073dce364c1b55c5e96d504959256340a02",
+      "mdx_line_range": [
+        34,
+        36
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "macro-note[2]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"f0d417a3-d230-473c-ad86-b389329dc1c2\"><ac:rich-text-body><ul><li><p>실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. </p></li><li><p>MySQL은 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.</p></li></ul><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"392\" ac:original-width=\"719\" ac:custom-width=\"true\" ac:alt=\"image-20241030-001252.png\" ac:width=\"682\"><ri:attachment ri:filename=\"image-20241030-001252.png\" ri:version-at-save=\"1\" /></ac:image></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        37,
+        37
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "ol[3]",
+      "xhtml_fragment": "<ol start=\"3\"><li><p>실행계획(Explain) 결과 확인</p><ol start=\"1\"><li><p>Table 형태의 결과 확인<br />아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"271\" ac:original-width=\"1080\" ac:custom-width=\"true\" ac:alt=\"image-20241030-002325.png\" ac:width=\"712\"><ri:attachment ri:filename=\"image-20241030-002325.png\" ri:version-at-save=\"1\" /></ac:image><p> </p></li><li><p>JSON 형태의 결과 확인<br />JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. {JSON} 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"270\" ac:original-width=\"1078\" ac:custom-width=\"true\" ac:alt=\"image-20241030-003040.png\" ac:width=\"712\"><ri:attachment ri:filename=\"image-20241030-003040.png\" ri:version-at-save=\"1\" /><ac:caption><p>{JSON}을 클릭하면 전체 내용을 볼수 있습니다.</p></ac:caption></ac:image><p> <br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"680\" ac:original-width=\"760\" ac:custom-width=\"true\" ac:alt=\"image-20241030-003129.png\" ac:width=\"560\"><ri:attachment ri:filename=\"image-20241030-003129.png\" ri:version-at-save=\"1\" /><ac:caption><p>JSON 결과의 복사와 내보내기가 가능합니다.</p></ac:caption></ac:image><p> <br />내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.</p></li></ol></li></ol>",
+      "mdx_content_hash": "c29278939dc19c6402035382fc9333f5564c93ac7a5d91d7f80cb3231618fc1d",
+      "mdx_line_range": [
+        39,
+        41
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>기타 참고사항 </h2>",
+      "mdx_content_hash": "b0a3d590fcd224f0fc621d92608e06fb9c0f2d138186493b7dc816ab0174b148",
+      "mdx_line_range": [
+        43,
+        47
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "ol[4]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>결재자(Approver)의 실행계획(Explain)결과 확인<br />결재자는 Explain Results 탭에서 첨부된 실행계획(Explain)결과를 확인하고 승인의 참고자료로 활용할 수 있습니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"249\" ac:original-width=\"1139\" ac:custom-width=\"true\" ac:alt=\"image-20241030-004258.png\" ac:width=\"736\"><ri:attachment ri:filename=\"image-20241030-004258.png\" ri:version-at-save=\"1\" /></ac:image></li></ol>",
+      "mdx_content_hash": "554f7fd968824d94c22e01e062ad0066ee86779f7d999eb965f6ff49e1ec96ab",
+      "mdx_line_range": [
+        49,
+        51
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "macro-note[3]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"2b5b3cc5-8cdf-4782-b102-7fb0d83a152f\"><ac:rich-text-body><p>결재자가 볼 수 있는 실행계획(Explain) 결과는 상신자가 실행계획을 수행할 때 선택한 포맷으로만 볼 수 있습니다. 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다. </p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "79aeeff57c0fe45aa52f6417a670588985a460d28f50e800c28a4a17f294d4ee",
+      "mdx_line_range": [
+        53,
+        53
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "ol[5]",
+      "xhtml_fragment": "<ol start=\"2\"><li><p>MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br />MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다. </p></li></ol>",
+      "mdx_content_hash": "1c774171964dac4c1d5a89b65ea436117ff2095dc3ae4e57274c68421b11a394",
+      "mdx_line_range": [
+        54,
+        55
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "table[1]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"2ff2c2d5-c31c-463e-b8d8-2e44a15a51c5\"><colgroup><col style=\"width: 381.0px;\" /><col style=\"width: 379.0px;\" /></colgroup><tbody><tr><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, var(--ds-background-accent-gray-subtlest, #F1F2F4))\"><p><strong>MySQL 5.6.3 이전</strong></p></th><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, var(--ds-background-accent-gray-subtlest, #F1F2F4))\"><p><strong>MySQL 5.6.3 이후</strong></p></th></tr><tr><td><p>SELECT</p></td><td><p>SELECT , DELETE , INSERT , REPLACE , UPDATE</p></td></tr></tbody></table>",
+      "mdx_content_hash": "9e56a0212218375b58ad1e1161da9e5b942c693fef011370f4831d98ed4e26b8",
+      "mdx_line_range": [
+        56,
+        59
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "macro-note[4]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"8ef7997a-646b-4e96-97a5-42d91c92abe8\"><ac:rich-text-body><p>optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다. </p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "658bc016384f450117872ca59c04248ede215078cb5844c66d52600c822b9846",
+      "mdx_line_range": [
+        61,
+        78
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

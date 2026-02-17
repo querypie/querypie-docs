@@ -1,0 +1,469 @@
+{
+  "schema_version": "2",
+  "page_id": "544375741",
+  "mdx_sha256": "c58aa7c5f524dd5e9cbf1f011b720865dda5e1456318a046a741ba996fd41f38",
+  "source_xhtml_sha256": "89b833aa5c960cf06b8c5f9a803f3d30b076dad7dc82ec8ac2eb709abb67f3e9",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "macro-toc[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"d20a7b68-bbd3-4415-bd42-1c3d42bab812\" ac:macro-id=\"b1b7a13a598cededc74e26d40052217d\"><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"maxLevel\">1</ac:parameter><ac:parameter ac:name=\"exclude\">External API 변경사항 바로가기</ac:parameter></ac:structured-macro>",
+      "mdx_content_hash": "94f335e8d5059c966555ffaffea5fbee14835f3a8382fa944e0c7e0757482152",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "hr[1]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a70304d3a44c0068e572cc94e850c8c6fe5b885326e1eef4abc25f79ca87aba9",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "h1[1]",
+      "xhtml_fragment": "<h1>API Docs Json File</h1>",
+      "mdx_content_hash": "2debcb002cd59881fca3eae704f4a38ad92908efff0097eb913cd0e0ce696fdf",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p class=\"media-group\"><ac:structured-macro ac:name=\"view-file\" ac:schema-version=\"1\" ac:macro-id=\"bb52972a-ed8f-4020-a27f-c84b50eb1e0c\"><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"994_external.json\" ri:version-at-save=\"1\" /></ac:parameter></ac:structured-macro><ac:structured-macro ac:name=\"view-file\" ac:schema-version=\"1\" ac:macro-id=\"7bd5e77e-1eef-4fea-b41d-c4305e195959\"><ac:parameter ac:name=\"name\"><ri:attachment ri:filename=\"995_external.json\" ri:version-at-save=\"1\" /></ac:parameter></ac:structured-macro></p>",
+      "mdx_content_hash": "45548d360f130d2d014eefd5e943039fd45819bb4ee8945a809d1a51306e44aa",
+      "mdx_line_range": [
+        12,
+        14
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "hr[2]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "fca53f4bb3f98c21c7b84a1ad9154ba545432c5326faf1b71599fcab6c173541",
+      "mdx_line_range": [
+        16,
+        16
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "h1[2]",
+      "xhtml_fragment": "<h1>1. Access Approval API</h1>",
+      "mdx_content_hash": "6814c2809676e539c450c3489978526093f76a42f685679f6aa54dfa0767ed22",
+      "mdx_line_range": [
+        18,
+        18
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3><strong>(GET) List</strong></h3>",
+      "mdx_content_hash": "7efa6238ff76d523a311c131a96ed7edbbcc6b1c6d8555cdb33f115832fa654a",
+      "mdx_line_range": [
+        20,
+        20
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "h4[1]",
+      "xhtml_fragment": "<h4>Request</h4>",
+      "mdx_content_hash": "92474269f5b72b10897cc8a0b4844539de4caf1806750f5af74c160ea590cd75",
+      "mdx_line_range": [
+        22,
+        22
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul><li><p>변경점 없음</p></li></ul>",
+      "mdx_content_hash": "56a19afc05098f858bbf0e761bd7b2484b2c4f1cd6298db380ba8705974481fa",
+      "mdx_line_range": [
+        24,
+        24
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "h4[2]",
+      "xhtml_fragment": "<h4>Response</h4>",
+      "mdx_content_hash": "852fc820480d95438176efc03eeeddf6bea553ff6d15fb7eba51e7b1c5d7f663",
+      "mdx_line_range": [
+        26,
+        41
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "table[1]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"729f4860-908e-453e-a2ce-586ef92bde21\"><colgroup><col style=\"width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table>",
+      "mdx_content_hash": "293957f1e6e179d7da9ec795acfdddb8972a6769902417fabbf29508d3113be1",
+      "mdx_line_range": [
+        43,
+        49
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "ul[2]",
+      "xhtml_fragment": "<ul><li><p><strong>id</strong> 가 <strong>추가</strong>되었습니다.</p></li></ul>",
+      "mdx_content_hash": "075f1331e2fe466f1a7304074f4130c8c2cab432cbdc128336b9ec712aedb76d",
+      "mdx_line_range": [
+        51,
+        51
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "hr[3]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "a70304d3a44c0068e572cc94e850c8c6fe5b885326e1eef4abc25f79ca87aba9",
+      "mdx_line_range": [
+        52,
+        52
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "h1[3]",
+      "xhtml_fragment": "<h1>2. Approval API</h1>",
+      "mdx_content_hash": "3e18f046cfad164ebbf451b777dd80b35469c2bc278f928cfd6c30587ab6790b",
+      "mdx_line_range": [
+        54,
+        54
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "h3[2]",
+      "xhtml_fragment": "<h3><strong>(GET) List</strong></h3>",
+      "mdx_content_hash": "6814c2809676e539c450c3489978526093f76a42f685679f6aa54dfa0767ed22",
+      "mdx_line_range": [
+        56,
+        56
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "h4[3]",
+      "xhtml_fragment": "<h4>Request</h4>",
+      "mdx_content_hash": "7efa6238ff76d523a311c131a96ed7edbbcc6b1c6d8555cdb33f115832fa654a",
+      "mdx_line_range": [
+        58,
+        58
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "ul[3]",
+      "xhtml_fragment": "<ul><li><p>변경점 없음</p></li></ul>",
+      "mdx_content_hash": "92474269f5b72b10897cc8a0b4844539de4caf1806750f5af74c160ea590cd75",
+      "mdx_line_range": [
+        60,
+        60
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "h4[4]",
+      "xhtml_fragment": "<h4>Response</h4>",
+      "mdx_content_hash": "56a19afc05098f858bbf0e761bd7b2484b2c4f1cd6298db380ba8705974481fa",
+      "mdx_line_range": [
+        62,
+        62
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "table[2]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"d1aedf57-9c7c-4ffd-abf3-d1381144dd7d\"><colgroup><col style=\"width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><p /></td><td><ul><li><p>id</p></li></ul></td></tr></tbody></table>",
+      "mdx_content_hash": "852fc820480d95438176efc03eeeddf6bea553ff6d15fb7eba51e7b1c5d7f663",
+      "mdx_line_range": [
+        64,
+        79
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 19,
+      "xhtml_xpath": "ul[4]",
+      "xhtml_fragment": "<ul><li><p><strong>id</strong> 가 <strong>추가</strong>되었습니다.</p></li></ul>",
+      "mdx_content_hash": "293957f1e6e179d7da9ec795acfdddb8972a6769902417fabbf29508d3113be1",
+      "mdx_line_range": [
+        81,
+        87
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 20,
+      "xhtml_xpath": "hr[4]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "075f1331e2fe466f1a7304074f4130c8c2cab432cbdc128336b9ec712aedb76d",
+      "mdx_line_range": [
+        89,
+        89
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 21,
+      "xhtml_xpath": "h1[4]",
+      "xhtml_fragment": "<h1>3. Audit Log API</h1>",
+      "mdx_content_hash": "a70304d3a44c0068e572cc94e850c8c6fe5b885326e1eef4abc25f79ca87aba9",
+      "mdx_line_range": [
+        90,
+        90
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 22,
+      "xhtml_xpath": "h3[3]",
+      "xhtml_fragment": "<h3><strong>(GET) List of Approval</strong></h3>",
+      "mdx_content_hash": "4a2bf07bd9503f19dc1cfcd588ec1b01fd9f7ae1b8abaa6e9dc9b7b24fd55e63",
+      "mdx_line_range": [
+        92,
+        92
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 23,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p><code>/api/external/audit-logs</code></p>",
+      "mdx_content_hash": "eba06966480eeb813b9057708569ea0aa929eac292d9239d6e139b698b8c1a77",
+      "mdx_line_range": [
+        94,
+        94
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 24,
+      "xhtml_xpath": "h4[5]",
+      "xhtml_fragment": "<h4>Request</h4>",
+      "mdx_content_hash": "7edfaa914a83c184ce18289ea1d71063ca5f86c26c2fde755bb36ec4771b656c",
+      "mdx_line_range": [
+        96,
+        96
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 25,
+      "xhtml_xpath": "ul[5]",
+      "xhtml_fragment": "<ul><li><p>Query Parameter</p></li><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>cursor</strong> 에 대한 내용이 수정되었습니다.</p></li></ul>",
+      "mdx_content_hash": "7efa6238ff76d523a311c131a96ed7edbbcc6b1c6d8555cdb33f115832fa654a",
+      "mdx_line_range": [
+        98,
+        98
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 26,
+      "xhtml_xpath": "h4[6]",
+      "xhtml_fragment": "<h4>Response</h4>",
+      "mdx_content_hash": "bff053b97c3f0fda4799b8f0239134166d38cd360cac02202bbc38f606786ca3",
+      "mdx_line_range": [
+        100,
+        101
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 27,
+      "xhtml_xpath": "ul[6]",
+      "xhtml_fragment": "<ul><li><p>/api/docs 에 잘못 표기 되어 있던 <strong>nextCursor</strong> 에 대한 내용이 수정되었습니다.</p></li></ul>",
+      "mdx_content_hash": "56a19afc05098f858bbf0e761bd7b2484b2c4f1cd6298db380ba8705974481fa",
+      "mdx_line_range": [
+        103,
+        103
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 28,
+      "xhtml_xpath": "hr[5]",
+      "xhtml_fragment": "<hr />",
+      "mdx_content_hash": "4e5ee88d78d154cdca6dcf2af4c89e407b07ebef5a515b6959e105813795d98a",
+      "mdx_line_range": [
+        105,
+        105
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 29,
+      "xhtml_xpath": "h1[5]",
+      "xhtml_fragment": "<h1>4. Notification Channels API</h1>",
+      "mdx_content_hash": "a70304d3a44c0068e572cc94e850c8c6fe5b885326e1eef4abc25f79ca87aba9",
+      "mdx_line_range": [
+        106,
+        106
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 30,
+      "xhtml_xpath": "h3[4]",
+      "xhtml_fragment": "<h3><strong>(GET) List</strong></h3>",
+      "mdx_content_hash": "c2dbd1e6731d83c9cce7fb70c246ec4f4255e57e239e2c06f5b317dd9b8e5b2e",
+      "mdx_line_range": [
+        108,
+        108
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 31,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p><code>/api/external/notification-channels</code></p>",
+      "mdx_content_hash": "6814c2809676e539c450c3489978526093f76a42f685679f6aa54dfa0767ed22",
+      "mdx_line_range": [
+        110,
+        110
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 32,
+      "xhtml_xpath": "h4[7]",
+      "xhtml_fragment": "<h4>Request</h4>",
+      "mdx_content_hash": "b31108c4f6e999c5592c8a2c73fd0245ebc6fd4cc9cd1cd4cc50783ba2b9c10c",
+      "mdx_line_range": [
+        112,
+        112
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 33,
+      "xhtml_xpath": "ul[7]",
+      "xhtml_fragment": "<ul><li><p>Query Parameter</p></li></ul>",
+      "mdx_content_hash": "7efa6238ff76d523a311c131a96ed7edbbcc6b1c6d8555cdb33f115832fa654a",
+      "mdx_line_range": [
+        114,
+        114
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 34,
+      "xhtml_xpath": "table[3]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"a8579e9b-bf3a-44ef-8dbe-bef487c68840\"><colgroup><col style=\"width: 316.0px;\" /><col style=\"width: 364.0px;\" /></colgroup><tbody><tr><th><p><strong>변경 전</strong></p></th><th><p><strong>변경 후</strong></p></th></tr><tr><td><ul><li><p>dataFlowRequest.filterKey</p></li><li><p>dataFlowRequest.filterValue</p></li><li><p>dataFlowRequest.sortKey</p></li><li><p>dataFlowRequest.sortType</p></li></ul></td><td><ul><li><p>filterKey</p></li><li><p>filterValue</p></li><li><p>sortKey</p></li><li><p>sortType</p></li></ul></td></tr></tbody></table>",
+      "mdx_content_hash": "d5f90f565f347a4ce0e9e55b4763a3af9e78f1ad2d8804e3c5138053c338b33d",
+      "mdx_line_range": [
+        116,
+        116
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 35,
+      "xhtml_xpath": "ul[8]",
+      "xhtml_fragment": "<ul><li><p><strong>이름</strong>이 <strong>변경</strong>되었습니다.</p></li></ul>",
+      "mdx_content_hash": "217b9da8ce659743139aa82ba19d4442d914503c52c9528ca13748f0bfc2559b",
+      "mdx_line_range": [
+        118,
+        147
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 36,
+      "xhtml_xpath": "h4[8]",
+      "xhtml_fragment": "<h4>Response</h4>",
+      "mdx_content_hash": "71549591868435b48c983a29e75841bca775889a5efe1069660bb4e333a622e2",
+      "mdx_line_range": [
+        149,
+        149
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 37,
+      "xhtml_xpath": "ul[9]",
+      "xhtml_fragment": "<ul><li><p>변경점 없음</p></li></ul>",
+      "mdx_content_hash": "56a19afc05098f858bbf0e761bd7b2484b2c4f1cd6298db380ba8705974481fa",
+      "mdx_line_range": [
+        151,
+        151
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

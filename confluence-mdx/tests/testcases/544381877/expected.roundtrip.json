@@ -1,0 +1,169 @@
+{
+  "schema_version": "2",
+  "page_id": "544381877",
+  "mdx_sha256": "907335b639c974473775f7ce0cc7bcf9cc97a26f6052506a6f3e5b7bd2989ba2",
+  "source_xhtml_sha256": "cc44184af8a58c67adea622946171a262d266f7a8371352323a96d047b79e3e4",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "d1b470880b98dedfb4d3c3aa26b8e00887f624f9782740cf85944e978a712e6a",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>QueryPie에서는 접근 제어를 적용할 온프레미스 등에 위치한 쿠버네티스 클러스터를 수동으로 등록할 수 있습니다. </p>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "72ed6a9e3b20d5ee24ae8bc3fe866dea2fb08abf891dcb67935ddd65ab2fdaad",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>수동으로 클러스터 등록하기</h2>",
+      "mdx_content_hash": "c4d4ad659fd3881e66b4b066ca33666ef936712d382f0d59a350ab98f84c3841",
+      "mdx_line_range": [
+        13,
+        13
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p>개별 서버를 수동으로 등록하기 위해서는 서버의 기본적인 정보 입력이 필요합니다. </p>",
+      "mdx_content_hash": "a17283551678d1d4048d169a3b1a5b03a7c18a42f1849de9ffc7a3a5a267d694",
+      "mdx_line_range": [
+        15,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1800\" ac:original-width=\"2880\" ac:custom-width=\"true\" ac:alt=\"image-20240721-054859.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240721-054859.png\" ri:version-at-save=\"2\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "6f5c71055a1df82fa1be4e0973b0cbcf34131d9e80108ace308900fcebced1fd",
+      "mdx_line_range": [
+        17,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters 메뉴로 이동합니다.</p></li><li><p>우측 상단의 <code>+ Create Cluster</code> 버튼을 클릭합니다.</p></li><li><p><strong>Information</strong> : 클러스터 수동 등록을 위한 다음의 정보들을 입력합니다</p><ol start=\"1\"><li><p><strong>Name</strong> : 해당 클러스터를 식별할 수 있는 이름을 입력합니다. (필수) </p><ul><li><p>해당 정보는 향후 수정이 불가한 항목입니다. </p></li></ul></li><li><p><strong>Version</strong> : 클러스터의 버전을 기입합니다. (선택) </p><ul><li><p>이후 크리덴셜 인증 테스트 절차를 통해 자동 기입 예정인 항목입니다. </p></li></ul></li><li><p><strong>API URL</strong> : Kubernetes API를 수신할 클러스터의 API URL을 기입합니다. </p></li><li><p /></li><li><p><strong>Credential</strong> : 해당 클러스터의 Kubernetes API 서버에 액세스 권한을 부여하려면 서비스 계정 토큰 및 CA인증서를 해당 클러스터에서 가져와야 합니다. 자세한 내용은 파란색 정보 박스 안 내용을 확인해 주세요.</p><ol start=\"1\"><li><p><strong>Service Account Token</strong> : QueryPie Proxy에서 사용자 Kubernetes API 호출 시 사용할 쿠버네티스 클러스터의 서버스 계정 토큰 값을 기입합니다. </p></li><li><p><strong>Certificate Authority</strong> : QueryPie에서 Kubernetes API 서버 인증서를 검증할 CA 인증서를 기입합니다.</p></li><li><p><strong>Verify Credential</strong> : 서비스 계정 토큰 및 CA인증서를 모두 기입 시 해당 버튼이 활성화됩니다. 버튼을 클릭하면 정상 연결이 가능한지 여부를 체크할 수 있습니다. 수행 결과에 따라 다음과 같이 결과가 표시됩니다.</p><ul><li><p><ac:emoticon ac:name=\"tick\" ac:emoji-shortname=\":check_mark:\" ac:emoji-id=\"atlassian-check_mark\" ac:emoji-fallback=\":check_mark:\" /> <strong>Verified</strong> : 클러스터 연결 성공으로 서비스 계정 토큰 및 CA 인증서가 정상 기입되었음을 의미합니다. </p></li><li><p><ac:emoticon ac:name=\"cross\" ac:emoji-shortname=\":cross_mark:\" ac:emoji-id=\"atlassian-cross_mark\" ac:emoji-fallback=\":cross_mark:\" /> <strong>Verification Failed</strong> : 클러스터 연결 실패로 서비스 계정 토큰 및 CA인증서 중 값의 오류가 있거나, 네트워크 연결에 실패하였을 가능성이 있음을 의미합니다. </p></li></ul></li></ol></li><li><p><strong>Logging Options</strong>  : 해당 클러스터에 대한 로깅 옵션을 선택합니다. </p><ol start=\"1\"><li><p><strong>Request Audit</strong> : 해당 클러스터에 대한 Kubernetes API 호출 이력에 대한 로깅 활성화 옵션으로, Default는 <code>On</code>입니다. 해당 기능을 <code>Off</code>로 전환 시, </p><ol start=\"1\"><li><p>해당 클러스터를 대상으로 호출되는 Kubernetes API 이력이 남지 않습니다. </p></li><li><p>하위의 Request Audit Types 및 Pod Session Recording 모두 일괄 비활성화 처리됩니다.   </p></li></ol></li><li><p><strong>Request Audit Types</strong> : 해당 클러스터의 감사할 대상 Verb를 관리자가 선택할 수 있습니다. Default는 이하의 기본 verb 전부를 선택하고 있습니다. </p><ol start=\"1\"><li><p>Verb 종류: </p><ol start=\"1\"><li><p><code>get</code> </p></li><li><p><code>list</code> </p></li><li><p><code>watch</code> </p></li><li><p><code>create</code></p></li><li><p><code>update </code></p></li><li><p><code>patch</code></p></li><li><p><code>delete</code></p></li><li><p><code>deletecollection </code></p></li></ol></li><li><p><ac:emoticon ac:name=\"blue-star\" ac:emoji-shortname=\":white_check_mark:\" ac:emoji-id=\"2705\" ac:emoji-fallback=\"✅\" /> Select All : 모든 API 호출에 대해 감사를 진행합니다.  </p></li></ol></li><li><p><strong>Pod Session Recording</strong> : 해당 클러스터 내 Pod exec 명령에 의해 오픈된 세션에 대한 레코딩 활성화 옵션으로, Default는 <code>On</code>입니다. 해당 기능은 이하의 조건을 충족하지 못하면 <code>Off</code>로 전환됩니다: </p><ol start=\"1\"><li><p>Request Audit이 <code>On</code>으로 활성화되어야 합니다. </p></li><li><p>Request Audit Types에 이하의 verb가 선택되어 있어야 합니다:</p><ol start=\"1\"><li><p><code>create</code></p></li><li><p><code>get </code></p></li></ol></li></ol></li></ol></li></ol></li><li><p><strong>Tags</strong> : 필요 시 개별 클러스터에 Tag를 수동으로 입력할 수 있으며 Cloud Provider를 통해 동기화된 클러스터의 경우 동기화해 온 태그도 함께 표시됩니다. (단, 동기화를 통해 불러온 태그는 삭제 및 수정 불가합니다.) <code>+ Add Tag</code> 버튼을 클릭하여 새 행을 추가하고 원하는 태그 값을 기입할 수 있으며 태그는 key-value 형태로 기입해야 합니다. </p><ol start=\"1\"><li><p><strong>Key</strong> : 태그를 구분할 수 있는 Key 값을 512자 이내로 입력합니다. </p><ol start=\"1\"><li><p>Key 값을 필수로 입력해야 하며, 이미 등록된 키는 중복 입력이 불가합니다. </p></li><li><p>중복은 대소문자를 구분하여 체크합니다. </p></li></ol></li><li><p><strong>Value</strong> : 필터링에 사용할 Value 값을 256자 이내로 입력합니다.</p></li></ol></li><li><p>위 과정을 거친 후 최종 <code>Save</code> 버튼을 클릭하면 클러스터가 성공적으로 등록됩니다. </p></li></ol>",
+      "mdx_content_hash": "3133b576a8a11a87d76c36a525e76c21414c77c1401df4cfd80a6074c3709b76",
+      "mdx_line_range": [
+        21,
+        61
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "6d98e1645813cb06e052dff2d8f64119031abfe0bfff4510f61e4f9075b77a3c",
+      "mdx_line_range": [
+        64,
+        64
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>쿠버네티스 클러스터 연동용 스크립트 이용 안내  </h2>",
+      "mdx_content_hash": "ac3fd57576b743ae6276b65937d94f2235f3e0873121b2a58793aaf6629720b3",
+      "mdx_line_range": [
+        66,
+        68
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1980\" ac:original-width=\"1796\" ac:custom-width=\"true\" ac:alt=\"image-20240511-033842.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240511-033842.png\" ri:version-at-save=\"2\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "9fbec23dc905456abc3086af843afd25fc482543479e7fb7d713625f6c93dd3c",
+      "mdx_line_range": [
+        70,
+        71
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul><li><p>관리자는 사전에 해당 대상 쿠버네티스 클러스터에 접속이 가능하여야 합니다.</p></li><li><p>관리자는 Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster &gt; Credential 안내 박스 내 &ldquo;download and run this script&rdquo;의 링크를 클릭하여 스크립트를 다운로드할 수 있습니다. </p></li></ul>",
+      "mdx_content_hash": "0b8d395caca2f74223e718e5d40f9c26379f8d8c993368258546b2f88e5cb143",
+      "mdx_line_range": [
+        72,
+        75
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "macro-expand[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"expand\" ac:schema-version=\"1\" ac:macro-id=\"1df48224-102c-464b-931c-e5e53abcb781\"><ac:parameter ac:name=\"title\">generate_kubepie_sa.sh 스크립트 컨텐츠 </ac:parameter><ac:rich-text-body><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"af7dde18-30fb-46b2-9cab-d4ff1b0e1607\"><ac:plain-text-body><![CDATA[#!/bin/bash\n\nset -o nounset -o errexit -o pipefail\n\nRESOURCE_PREFIX=querypie\nNAMESPACE=querypie\n\nSERVICE_ACCOUNT_NAME=${RESOURCE_PREFIX}-sa\nCLUSTER_ROLE_NAME=${RESOURCE_PREFIX}-role\nCLUSTER_ROLE_BINDING_NAME=${RESOURCE_PREFIX}-crb\nSERVICE_ACCOUNT_SECRET_NAME=${SERVICE_ACCOUNT_NAME}-secret\n\necho \"Creating the Queypie Service Account and grant permission\"\nkubectl apply -f - <<EOF\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: ${NAMESPACE}\n---\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: ${SERVICE_ACCOUNT_NAME}\n  namespace: ${NAMESPACE}\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRole\nmetadata:\n  name: ${CLUSTER_ROLE_NAME}\nrules:\n- apiGroups:\n  - \"\"\n  resources:\n  - users\n  - groups\n  - serviceaccounts\n  verbs:\n  - impersonate\n---\napiVersion: rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n  name: ${CLUSTER_ROLE_BINDING_NAME}\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n  kind: ClusterRole\n  name: ${CLUSTER_ROLE_NAME}\nsubjects:\n- kind: ServiceAccount\n  name: ${SERVICE_ACCOUNT_NAME}\n  namespace: ${NAMESPACE}\nEOF\n\n\nSA_SECRET_NAME=$(kubectl get -n ${NAMESPACE} sa/${SERVICE_ACCOUNT_NAME} -o \"jsonpath={.secrets[0]..name}\")\nif [ -z $SA_SECRET_NAME ]\nthen\nkubectl apply -f - <<EOF\napiVersion: v1\nkind: Secret\ntype: kubernetes.io/service-account-token\nmetadata:\n  name: ${SERVICE_ACCOUNT_SECRET_NAME}\n  namespace: ${NAMESPACE}\n  annotations:\n    kubernetes.io/service-account.name: \"${SERVICE_ACCOUNT_NAME}\"\nEOF\nSA_SECRET_NAME=${SERVICE_ACCOUNT_SECRET_NAME}\nfi\n\nif [[ \"$OSTYPE\" == \"linux-gnu\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\nelif [[ \"$OSTYPE\" == \"darwin\"* ]]; then\n    BASE64_DECODE_FLAG=\"-D\"\nelif [[ \"$OSTYPE\" == \"linux-musl\" ]]; then\n    BASE64_DECODE_FLAG=\"-d\"\nelse\n    echo \"Unknown OS ${OSTYPE}\"\n    exit 1\nfi\n\nSA_TOKEN=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o \"jsonpath={.data['token']}\" | base64 ${BASE64_DECODE_FLAG})\nCA_CERT=$(kubectl get -n ${NAMESPACE} secrets/${SA_SECRET_NAME} -o \"jsonpath={.data['ca\\.crt']}\" | base64 ${BASE64_DECODE_FLAG})\n\necho \"\nFinished successfully.\nPlease copy the token and ca cert below and paste them into the credential input box on the querypie clusters page.\n\n>>> Service Account token\n${SA_TOKEN}\n\n--------------\n\n>>> CA Cert\n${CA_CERT}\"]]></ac:plain-text-body></ac:structured-macro></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "017a8d7a60f28905264cf009688045d2773ff32c65c65e4d558f134c7f6cf5b2",
+      "mdx_line_range": [
+        77,
+        77
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "ul[2]",
+      "xhtml_fragment": "<ul><li><p>스크립트 다운로드 이후 해당 경로에서 이하의 명령어를 수행하여 실행 권한을 부여한 뒤 사용합니다. </p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"0a1a2ec5-0106-4f75-8c06-79da67839e78\"><ac:plain-text-body><![CDATA[chmod +x generate_kubepie_sa.sh\n./generate_kubepie_sa.sh]]></ac:plain-text-body></ac:structured-macro></li></ul>",
+      "mdx_content_hash": "f9e52b21499b16e8e74201a3dceecdf68345f6e2cdb45ab520a0d22821de6ae6",
+      "mdx_line_range": [
+        79,
+        80
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schema_version": "2",
+  "page_id": "880181257",
+  "mdx_sha256": "f59e03cb11065fd22f8bda66c4b12e950d4dc08799c5f2911609a865a0fec448",
+  "source_xhtml_sha256": "dd6df6dbfae4e50c7b53823a9bbfbc3d1bc4119240c4155d9c4b3a276a28e3b9",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "macro-toc[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"c35fc44e-3eda-46fb-9e57-b7b45c4a80ce\" ac:macro-id=\"5f9d6351-54a9-4524-86ca-acd73b79bfad\"><ac:parameter ac:name=\"minLevel\">2</ac:parameter><ac:parameter ac:name=\"maxLevel\">6</ac:parameter><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"style\">none</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter ac:name=\"printable\">true</ac:parameter></ac:structured-macro>",
+      "mdx_content_hash": "04a48ffb03fc28e39a3bd3e970233c73282a315f96d74465ef81a43644e9bd03",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3>Custom Data Source 접근 요청</h3>",
+      "mdx_content_hash": "fb6d83cb72873c4f92680266e53e2e80a2c0d5af77b8cd8d944416976386bd88",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측 상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"766\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 1.19.24 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB Connection 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.</p></li><li><p>다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 &ldquo;-&rdquo;로 표기됩니다. </p></li><li><p>Expiration Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"763\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 1.22.28 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.  </p></li><li><p>관리자의 승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol>",
+      "mdx_content_hash": "fbd76f993e38760f942cbe410a4785a89f728cb052b51852e4aab75389e024e2",
+      "mdx_line_range": [
+        12,
+        25
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "macro-note[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"49e266fd-3fe8-41c2-a65b-1892fa504004\"><ac:rich-text-body><p><strong>Custom Data Source Type 외 다중 요청 시 주의사항</strong></p><ul><li><p>Custom Data Source와 다른 벤더를 함께 선택하는 경우 권한 타입이 다르기 때문에 일괄적으로 선택할 수 없습니다. </p></li><li><p>이 경우 다음 메시지가 표시됩니다: &quot;Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection.&quot;</p></li><li><p>같은 권한 타입의 커넥션끼리는 일괄 적용이 가능합니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "1ba8ee5f4cf5845eb083224457553015eeaa0363d016960afb5beeda6114d42b",
+      "mdx_line_range": [
+        27,
+        28
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "h3[2]",
+      "xhtml_fragment": "<h3><br />Agent를 통한 접속</h3>",
+      "mdx_content_hash": "c029179610d1846a928e83c22234b3b97c066757d72f7c4c5df9d8f0d09c0092",
+      "mdx_line_range": [
+        29,
+        31
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "ol[2]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"550\" ac:original-width=\"400\" ac:custom-width=\"true\" ac:width=\"400\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.05.26 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li></ul></li><li><p><strong>Connection Guide 확인</strong></p><ul><li><p>Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"453\" ac:original-width=\"903\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.08.11 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는 &quot;-&quot;로 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나 기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.</strong> </p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"680\" ac:original-width=\"800\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.18.26 PM.png\" ri:version-at-save=\"1\" /></ac:image></li></ul></li></ol>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        32,
+        32
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "macro-note[2]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"4de93d75-70f3-4361-aa97-fca387cd343e\"><ac:rich-text-body><p><strong>주의사항</strong></p><ul><li><p>관리자가 설정한 접근 가능 시간 외에 접속 시도 시 에러 메시지가 표시됩니다.</p></li></ul></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "d779405b6eb61234155c19fbab3df9bca589fa616876275efc3cb635621dda94",
+      "mdx_line_range": [
+        34,
+        34
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "h3[3]",
+      "xhtml_fragment": "<h3>웹으로 접속 시도하는 경우</h3>",
+      "mdx_content_hash": "f398294a4e0071259a143393f74841734947758f62a817cd00f41cbefc5fb3cd",
+      "mdx_line_range": [
+        36,
+        56
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "ol[3]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p><strong>웹 커넥션 목록 확인</strong></p><ul><li><p>사용자 화면 상단 Databases를 클릭합니다. </p></li><li><p>좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"768\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.22.22 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li></ul></li><li><p><strong>접속 불가 안내</strong></p><ul><li><p>Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.</p></li><li><p>아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다. </p><p>&quot;Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source.&quot;</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"763\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.23.37 PM.png\" ri:version-at-save=\"1\" /></ac:image></li></ul></li></ol>",
+      "mdx_content_hash": "b963f89c94977df2c1ab1002bd67b98b739c61d0248249943a13253d21653ccc",
+      "mdx_line_range": [
+        58,
+        59
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

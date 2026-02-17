@@ -1,0 +1,325 @@
+{
+  "schema_version": "2",
+  "page_id": "544379140",
+  "mdx_sha256": "581f5bc5a0c8fd9da970bc2007a079c8c7f5ae48c972cb0a6ea483fa3433e70a",
+  "source_xhtml_sha256": "4afc192738be9e19c9b78f324aab5800dd7bad4490d49520f6ff2c0e964840c5",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "f6a82505fca5c8442d478f9f435e80d3f7715e406852be21f95a6b803b8f4e25",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>QueryPie에서 생성된 각종 감사 로그를 추출하고 csv 파일로 내려받을 수 있는 기능입니다. 장기간에 걸친 로그 등 대용량 파일인 경우에도 안정적인 추출 및 다운로드가 가능합니다. 한 번 생성된 로그 추출 파일은 30일 동안 다운로드가 가능합니다. 추출 지원 로그는 Query Audit, Workflow SQL Request 등 21종입니다. </p>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "macro-note[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"d584e29c-8e4f-4028-96d5-3483b1f27c54\"><ac:rich-text-body><p>Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 &lsquo;Excel File Download&rsquo; 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "abfac661485eda50b3bd8ea2e527309a21cf661376e724c9e24b84535e6a86b0",
+      "mdx_line_range": [
+        12,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p><strong>추출 지원 로그 종류 (QueryPie v11.0.0 기준)</strong></p>",
+      "mdx_content_hash": "1bbb5d77eba61bc39acc2e92b97eadc6aad8e1f6340142c4eb402c7bde433f1c",
+      "mdx_line_range": [
+        17,
+        18
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "table[1]",
+      "xhtml_fragment": "<table data-layout=\"default\" ac:local-id=\"2947c127-97e1-4b3d-82ff-fcecae88fdc1\"><colgroup><col style=\"width: 498.0px;\" /><col style=\"width: 160.0px;\" /><col style=\"width: 99.0px;\" /></colgroup><tbody><tr><th data-highlight-colour=\"#d9d9d9\"><p style=\"text-align: center;\"><strong>Log Type</strong></p></th><th data-highlight-colour=\"#d9d9d9\"><p style=\"text-align: center;\"><strong>Release Version</strong></p></th><th data-highlight-colour=\"#d9d9d9\"><p style=\"text-align: center;\"><strong>Format</strong></p></th></tr><tr><td><p>Workflow DB Access Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow SQL Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow SQL Request for Query Details</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow SQL Export Request</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Workflow Restricted Data Access Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow DB Policy Exception Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow Unmasking Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow Decryption Request</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow Server Access Request</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Workflow Server Privilege Request</p></td><td><p>11.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Workflow Access Role Request</p></td><td><p>10.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>IP Registration Request</p></td><td><p>11.0.0</p></td><td><p>JSON</p></td></tr><tr><td><p>User Access History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Admin Role History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>Activity Logs</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Alert Logs</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Query Audit</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>DB Access History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>DB Account Lock History</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>DB Access Control Logs</p></td><td><p /></td><td><p>CSV</p></td></tr><tr><td><p>DML Snapshot</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Restricted Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Masked Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Sensitive Data Access Logs (Legacy)</p></td><td><p>10.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>DAC Policy Audit Log</p></td><td><p>11.3.0</p></td><td><p>JSON</p></td></tr><tr><td><p>Server Access History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Command Audit</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Session Logs</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Server Access Control Logs</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Server Role History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Server Account Lock History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Request Audit</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Kubernetes Role History</p></td><td><p /></td><td><p>JSON</p></td></tr><tr><td><p>Web App Access History</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web App Role History</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web App JIT Access Control Log</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr><tr><td><p>Web App Event Audit</p></td><td><p>11.0.0</p></td><td><p>CSV</p></td></tr></tbody></table>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        19,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>Audit Log Export 목록 조회하기</h2>",
+      "mdx_content_hash": "3dd9cdd65a79e9018e73aef5457369a235bd48dd09456b48f1528d66685211bc",
+      "mdx_line_range": [
+        21,
+        21
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"864\" ac:original-width=\"1566\" ac:custom-width=\"true\" ac:alt=\"image-20240714-063656.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240714-063656.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "690814957cee9b62cd93a916cf03e84cb5b8442b4da3972a92c7f06ff04179a6",
+      "mdx_line_range": [
+        23,
+        61
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export 메뉴로 이동합니다.</p></li><li><p>현재까지 생성된 Audit Log Export 태스크 목록을 확인할 수 있습니다.</p></li><li><p>Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.</p><ul><li><p><strong>Processing</strong> : 감사 로그 추출이 진행 중입니다.</p></li><li><p><strong>Completed</strong> : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)</p></li><li><p><strong>Failed</strong> : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.</p></li></ul></li></ol>",
+      "mdx_content_hash": "92a4412305da61ff249e365f3c575321e011406ad3050016b549b8c7aa1ca21b",
+      "mdx_line_range": [
+        63,
+        63
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>로그 추출 작업 생성하기</h2>",
+      "mdx_content_hash": "b004526982d66613661e36ce8917c5503ca1b0de6939e7ea3e985e0cea5d4d0f",
+      "mdx_line_range": [
+        65,
+        70
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p>감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1) 관련 메뉴 진입 &rarr; (2) 로그 추출 작업 생성 &rarr; (3) 로그 추출 완료까지 대기 &rarr; (4) 추출 완료시 파일 다운로드</p>",
+      "mdx_content_hash": "86f69fc68b0492bc03b0933f8d1a9484a0695500d29d5e0cc7170d19a98c8444",
+      "mdx_line_range": [
+        72,
+        77
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p>감사 로그 추출을 시작하기 위해서는 &lsquo;Audit &gt; General &gt; Audit Log Export&rsquo; 메뉴 접근 후, 우측 상단의 <code>Create Task</code> 버튼을 클릭해야 합니다. 해당 버튼 클릭시 아래와 같은 화면이 나타납니다. </p>",
+      "mdx_content_hash": "cff74747e1be560a1163770f1ece6854e7aab54976c00a61e93312f5627937b2",
+      "mdx_line_range": [
+        79,
+        79
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1005\" ac:original-width=\"1494\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2025-01-16 오후 1.18.05.png\" ac:width=\"612\"><ri:attachment ri:filename=\"스크린샷 2025-01-16 오후 1.18.05.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "fbe092b4bbc89046f9da19abd713290ecfee9e887e84687c85c3f3e0b9af5640",
+      "mdx_line_range": [
+        81,
+        82
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "ol[2]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p><strong>Task Name </strong>: 로그 추출 작업의 이름을 입력합니다.</p></li><li><p><strong>Log Type </strong>: 추출 대상 로그의 종류를 선택합니다. </p><ol start=\"1\"><li><p>Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.</p></li><li><p>로그 종류 선택 후 <span style=\"color: rgb(76,154,255);\">See Log Template and Description</span>을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.</p></li></ol></li><li><p><strong>Download File Format </strong>: 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의 <strong>&lsquo;추출 지원 로그 종류&rsquo;</strong>을 참고해주시기 바랍니다.) </p></li><li><p><strong>For Text Exceeding 32,000 Characters</strong> : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.</p><ol start=\"1\"><li><p>Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.</p></li><li><p>No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.</p></li></ol></li><li><p><strong>From</strong> : 추출 시작 날짜를 지정합니다.</p></li><li><p><strong>To </strong>: 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다. </p></li><li><p><strong>Filter Expression</strong> : 필터 표현식을 지정합니다. </p><ol start=\"1\"><li><p>조건 입력 방법 및 예시는 하단의 &lsquo;<strong>필터 표현식</strong>&rsquo;을 참고해주시기 바랍니다.</p></li></ol></li><li><p><strong>Generate Preview </strong>: 미리보기를 생성합니다. </p><ol start=\"1\"><li><p>미리보기는 필수 단계입니다.</p></li><li><p>미리보기 결과를 확인해야 다음 단계인 &lsquo;Create&rsquo;가 가능합니다.</p></li></ol></li><li><p><code>Create</code> 버튼 : 로그 추출 작업을 생성합니다. </p></li></ol>",
+      "mdx_content_hash": "367c62d080581c6e51369e7ac668a64eb7e95c365e4f7e1b7856261962bda019",
+      "mdx_line_range": [
+        84,
+        85
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "macro-info[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"f453d3e9-c88d-4457-a68f-cb81ce0c1b6b\"><ac:rich-text-body><p><strong>유의 사항</strong></p><p>당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.</p></ac:rich-text-body></ac:structured-macro>",
+      "mdx_content_hash": "32aa38ecc924c948612470763c69adfcd61e3481ef30dd0cd200649f1886819e",
+      "mdx_line_range": [
+        87,
+        92
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "ac:adf-extension[1]",
+      "xhtml_fragment": "<ac:adf-extension><ac:adf-node type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p><strong>필터 표현식</strong></p><p>(1) 필터 표현식을 사용하시기 위해 '<span style=\"color: rgb(76,154,255);\">See Log Template and Description</span>'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br /></p><p>(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  </p><p>- Number Type</p><p>지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code><br />예 : <code>x &gt; `10`</code>, <code>x == `10`</code></p><p>- String Type</p><p>지원하는 표현식 :  <code>== (equals)</code>, <code>!= (not equals)</code>, <code>contains</code><br />예 : <code>x == 'abc'</code>, <code>x != 'abc'</code>, <code>contains(x, 'ab')</code></p><p>- Boolean Type </p><p>지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>, <code>&amp;&amp; (and)</code>, <code>|| (or)</code><br />예 : <code>x == `true`</code>,<code> x &amp;&amp; y</code>, <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code></p><p>- Array Type</p><p>예 : <code>x[? @ == 'value']</code>, <code>list[? @ &gt; `10`]</code></p><p /><p>(3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p><p>- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p><p>- OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.</p><p /><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION'</code></p><p>- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION' &amp;&amp; executedFrom == 'WEB_EDITOR'</code></p><p>- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == 'database1' || connectionName == 'database2'</code></p><p>- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == 'database1' || connectionName == 'database2') &amp;&amp; replicationType == 'SINGLE'</code></p></ac:adf-content></ac:adf-node><ac:adf-fallback><div class=\"panel conf-macro output-block\" style=\"background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;\"><div class=\"panelContent\" style=\"background-color: rgb(234,230,255);\">\n<p><strong>필터 표현식</strong></p><p>(1) 필터 표현식을 사용하시기 위해 '<span style=\"color: rgb(76,154,255);\">See Log Template and Description</span>'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br /></p><p>(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.  </p><p>- Number Type</p><p>지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code><br />예 : <code>x &gt; `10`</code>, <code>x == `10`</code></p><p>- String Type</p><p>지원하는 표현식 :  <code>== (equals)</code>, <code>!= (not equals)</code>, <code>contains</code><br />예 : <code>x == 'abc'</code>, <code>x != 'abc'</code>, <code>contains(x, 'ab')</code></p><p>- Boolean Type </p><p>지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>, <code>&amp;&amp; (and)</code>, <code>|| (or)</code><br />예 : <code>x == `true`</code>,<code> x &amp;&amp; y</code>, <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code></p><p>- Array Type</p><p>예 : <code>x[? @ == 'value']</code>, <code>list[? @ &gt; `10`]</code></p><p> </p><p>(3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p><p>- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p><p>- OR 조건 : <code>||</code> 연산자를 활용합니다.</p><p>- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.</p><p> </p><p>(4) 예시</p><p>- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION'</code></p><p>- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION' &amp;&amp; executedFrom == 'WEB_EDITOR'</code></p><p>- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == 'database1' || connectionName == 'database2'</code></p><p>- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == 'database1' || connectionName == 'database2') &amp;&amp; replicationType == 'SINGLE'</code></p>\n</div></div></ac:adf-fallback></ac:adf-extension>",
+      "mdx_content_hash": "f9e178b73cdbf15682943b7c79473e2ed32835c757eb241a144d82ae71a9f5c1",
+      "mdx_line_range": [
+        94,
+        109
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "440a04c18681393f3c1be3fca0166a4491993ff1f22016cb47cd50bef7b30f18",
+      "mdx_line_range": [
+        111,
+        113
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 16,
+      "xhtml_xpath": "ac:adf-extension[2]",
+      "xhtml_fragment": "<ac:adf-extension><ac:adf-node type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p><strong>Query Audit의 내보내기 파일의 Privilege Type 명시 기준</strong></p><p>내보내기 파일의 &lsquo;Privilege Type&rsquo; 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. </p><ol start=\"1\"><li><p>기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</p></li><li><p>INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. </p></li><li><p>Redis의 경우에는 커맨드명이 명시됩니다.</p></li></ol></ac:adf-content></ac:adf-node><ac:adf-fallback><div class=\"panel conf-macro output-block\" style=\"background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;\"><div class=\"panelContent\" style=\"background-color: rgb(234,230,255);\">\n<p><strong>Query Audit의 내보내기 파일의 Privilege Type 명시 기준</strong></p><p>내보내기 파일의 &lsquo;Privilege Type&rsquo; 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. </p><ol start=\"1\"><li><p>기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</p></li><li><p>INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. </p></li><li><p>Redis의 경우에는 커맨드명이 명시됩니다.</p></li></ol>\n</div></div></ac:adf-fallback></ac:adf-extension>",
+      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_line_range": [
+        114,
+        114
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 17,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "410377ccbfae6b265333a0c77cbcbdb002fd75799ecdd041ee1efda01eb70777",
+      "mdx_line_range": [
+        116,
+        117
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 18,
+      "xhtml_xpath": "h2[4]",
+      "xhtml_fragment": "<h2>추출 작업 완료시 파일 내려받기</h2>",
+      "mdx_content_hash": "c95e4312640d4ee6fc55890f7f42fa527153ee03d691b521e50d8dc17106dd97",
+      "mdx_line_range": [
+        119,
+        119
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 19,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p>별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.</p>",
+      "mdx_content_hash": "1d0d207a0483d3a61fea332377eb9c87ac34d9a60627b4b20c54d6ee1bbef963",
+      "mdx_line_range": [
+        121,
+        121
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 20,
+      "xhtml_xpath": "p[8]",
+      "xhtml_fragment": "<p>추출 작업이 완료된 이후에는 두 가지 방법으로 로그 파일을 내려받을 수 있습니다. </p>",
+      "mdx_content_hash": "42b05fca06d793f0a26efaf578152ee6a53e54ec5d3f7dc4858934116b7cf543",
+      "mdx_line_range": [
+        123,
+        123
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 21,
+      "xhtml_xpath": "ol[3]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>목록 페이지에서 다운로드: 목록 페이지에서 Download 버튼을 클릭합니다.</p></li><li><p>상세 페이지에서 다운로드: 목록 페이지에서 태스크를 클릭하여 상세 페이지로 진입, 우측 상단 Download 버튼을 클릭합니다.</p></li></ol>",
+      "mdx_content_hash": "cc2c96dceb54bea55ca5ef3ef0df15048d17a84625e1941af39652206174945b",
+      "mdx_line_range": [
+        125,
+        125
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 22,
+      "xhtml_xpath": "ac:adf-extension[3]",
+      "xhtml_fragment": "<ac:adf-extension><ac:adf-node type=\"panel\"><ac:adf-attribute key=\"panel-type\">note</ac:adf-attribute><ac:adf-content><p><strong>다운로드 파일에 암호 포함하기</strong></p><p>다운로드 대상 파일은 &lsquo;*.csv 또는 *.json 파일을 압축한 *.zip 파일&rsquo;입니다. </p><p>해당 압축 파일에 대한 암호를 지정하기 위해서는 &lsquo;General Setting &gt; Security&rsquo; 메뉴에서 <code>Export a file with Encryption</code> 옵션을 &lsquo;Required&rsquo;로 지정해야 합니다.  </p></ac:adf-content></ac:adf-node><ac:adf-fallback><div class=\"panel conf-macro output-block\" style=\"background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;\"><div class=\"panelContent\" style=\"background-color: rgb(234,230,255);\">\n<p><strong>다운로드 파일에 암호 포함하기</strong></p><p>다운로드 대상 파일은 &lsquo;*.csv 또는 *.json 파일을 압축한 *.zip 파일&rsquo;입니다. </p><p>해당 압축 파일에 대한 암호를 지정하기 위해서는 &lsquo;General Setting &gt; Security&rsquo; 메뉴에서 <code>Export a file with Encryption</code> 옵션을 &lsquo;Required&rsquo;로 지정해야 합니다.  </p>\n</div></div></ac:adf-fallback></ac:adf-extension>",
+      "mdx_content_hash": "1f01b97fa54fc6299d5a3b1d75982b25e6025e460fa1e361a538ea7dcd611a2b",
+      "mdx_line_range": [
+        127,
+        127
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 23,
+      "xhtml_xpath": "p[9]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "30523b998cdefda268de05d1c7b57e80fd4783347664acace49d54ff2d2ce334",
+      "mdx_line_range": [
+        129,
+        129
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 24,
+      "xhtml_xpath": "h2[5]",
+      "xhtml_fragment": "<h2>로그 추출 파일 보관 기간 정책 안내</h2>",
+      "mdx_content_hash": "0cdca73215ed61b39584ff2a3682ef94d7206f17871a97166952ddd87513bcf5",
+      "mdx_line_range": [
+        131,
+        131
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 25,
+      "xhtml_xpath": "p[10]",
+      "xhtml_fragment": "<p>추출이 완료된 로그 파일은 작업 생성일로부터 30일간 보관되며, 해당 기간 이내에는 횟수 제한 없이 내려받기가 가능합니다. 하지만 30일이 경과하면 파일이 만료됩니다. 만료된 로그 파일이 필요해진 경우, 로그 추출 태스크를 다시 생성해주시기 바랍니다.</p>",
+      "mdx_content_hash": "00608a7b459c7a397a53ea2985a98e7123957a1c939f0aa3b68ca0425214bd1c",
+      "mdx_line_range": [
+        133,
+        133
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}
