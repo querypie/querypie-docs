@@ -48,3 +48,6 @@ next-env.d.ts
 
 # log files in top dir for maintenance
 /*.log
+
+# git worktrees
+.worktrees/
