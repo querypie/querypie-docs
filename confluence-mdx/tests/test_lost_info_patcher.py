@@ -217,3 +217,68 @@ class TestLoadPageLostInfo:
             result = load_page_lost_info(f.name)
 
         assert result == {}
+
+
+class TestDistributeLostInfo:
+    def test_emoticon_assigned_to_containing_block(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info
+        from reverse_sync.sidecar import SidecarBlock
+
+        blocks = [
+            SidecarBlock(block_index=0, xhtml_xpath='h2[1]', xhtml_fragment='<h2>Title</h2>'),
+            SidecarBlock(block_index=1, xhtml_xpath='p[1]',
+                         xhtml_fragment='<p>Check <ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"/></p>'),
+        ]
+        page_lost_info = {
+            'emoticons': [{
+                'name': 'tick', 'shortname': ':check_mark:', 'emoji_id': '', 'fallback': '',
+                'raw': '<ac:emoticon ac:name="tick" ac:emoji-shortname=":check_mark:"/>',
+            }],
+        }
+        distribute_lost_info(blocks, page_lost_info)
+        assert blocks[0].lost_info == {}
+        assert 'emoticons' in blocks[1].lost_info
+        assert blocks[1].lost_info['emoticons'][0]['name'] == 'tick'
+
+    def test_multiple_categories_distributed(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info
+        from reverse_sync.sidecar import SidecarBlock
+
+        blocks = [
+            SidecarBlock(block_index=0, xhtml_xpath='p[1]',
+                         xhtml_fragment='<p><ac:emoticon ac:name="tick"/></p>'),
+            SidecarBlock(block_index=1, xhtml_xpath='p[2]',
+                         xhtml_fragment='<p><ac:link><ri:page ri:content-title="Page"/></ac:link></p>'),
+        ]
+        page_lost_info = {
+            'emoticons': [{'name': 'tick', 'shortname': '', 'emoji_id': '', 'fallback': '',
+                           'raw': '<ac:emoticon ac:name="tick"/>'}],
+            'links': [{'content_title': 'Page', 'space_key': '',
+                       'raw': '<ac:link><ri:page ri:content-title="Page"/></ac:link>'}],
+        }
+        distribute_lost_info(blocks, page_lost_info)
+        assert 'emoticons' in blocks[0].lost_info
+        assert 'links' in blocks[1].lost_info
+
+    def test_empty_lost_info_no_change(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info
+        from reverse_sync.sidecar import SidecarBlock
+
+        blocks = [SidecarBlock(block_index=0, xhtml_xpath='p[1]', xhtml_fragment='<p>text</p>')]
+        distribute_lost_info(blocks, {})
+        assert blocks[0].lost_info == {}
+
+    def test_filename_distributed_by_normalized_name(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info
+        from reverse_sync.sidecar import SidecarBlock
+
+        blocks = [
+            SidecarBlock(block_index=0, xhtml_xpath='p[1]',
+                         xhtml_fragment='<ac:image><ri:attachment ri:filename="스크린샷.png"></ri:attachment></ac:image>'),
+        ]
+        page_lost_info = {
+            'filenames': [{'original': '스크린샷.png', 'normalized': 'screenshot.png'}],
+        }
+        distribute_lost_info(blocks, page_lost_info)
+        # Filenames match by ORIGINAL name in the XHTML fragment (original is in the source XHTML)
+        assert 'filenames' in blocks[0].lost_info

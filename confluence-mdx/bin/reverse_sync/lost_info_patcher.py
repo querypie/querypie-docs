@@ -2,8 +2,12 @@
 from __future__ import annotations
 
 import re
+from typing import TYPE_CHECKING
 
 import emoji as emoji_lib
+
+if TYPE_CHECKING:
+    from reverse_sync.sidecar import SidecarBlock
 
 _LINK_ERROR_RE = re.compile(r'<a\s+href="#link-error"[^>]*>.*?</a>', re.DOTALL)
 
@@ -132,3 +136,34 @@ def _patch_adf_extensions(xhtml: str, adf_extensions: list[dict]) -> str:
         result = result[:match.start()] + raw + result[match.end():]
 
     return result
+
+
+def distribute_lost_info(blocks: list[SidecarBlock], page_lost_info: dict) -> None:
+    """페이지 레벨 lost_info를 각 블록에 분배한다.
+
+    각 항목의 raw 필드가 블록의 xhtml_fragment에 포함되는지로 판별한다.
+    블록의 lost_info dict를 in-place로 갱신한다.
+    """
+    if not page_lost_info:
+        return
+
+    for category in ('emoticons', 'links', 'adf_extensions'):
+        entries = page_lost_info.get(category, [])
+        for entry in entries:
+            raw = entry.get('raw', '')
+            if not raw:
+                continue
+            for block in blocks:
+                if raw in block.xhtml_fragment:
+                    block.lost_info.setdefault(category, []).append(entry)
+                    break
+
+    # filenames: raw가 없으므로 original filename으로 매칭
+    for entry in page_lost_info.get('filenames', []):
+        original = entry.get('original', '')
+        if not original:
+            continue
+        for block in blocks:
+            if original in block.xhtml_fragment:
+                block.lost_info.setdefault('filenames', []).append(entry)
+                break
