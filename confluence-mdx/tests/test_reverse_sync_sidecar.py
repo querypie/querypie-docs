@@ -324,7 +324,7 @@ class TestGenerateSidecarMapping:
         result = generate_sidecar_mapping(xhtml, mdx, '12345')
         data = yaml.safe_load(result)
 
-        assert data['version'] == 1
+        assert data['version'] == 2
         assert data['source_page_id'] == '12345'
         assert len(data['mappings']) >= 2
 
