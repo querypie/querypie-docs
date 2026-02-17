@@ -298,6 +298,7 @@ def generate_sidecar_mapping(
     xhtml: str,
     mdx: str,
     page_id: str = '',
+    lost_infos: dict | None = None,
 ) -> str:
     """XHTML + MDX로부터 mapping.yaml 내용을 생성한다.
 
@@ -401,11 +402,13 @@ def generate_sidecar_mapping(
             })
 
     mapping_data = {
-        'version': 1,
+        'version': 2,
         'source_page_id': page_id,
         'mdx_file': 'page.mdx',
         'mappings': entries,
     }
+    if lost_infos:
+        mapping_data['lost_info'] = lost_infos
     return yaml.dump(mapping_data, allow_unicode=True, default_flow_style=False)
 
 

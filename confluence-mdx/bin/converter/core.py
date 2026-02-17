@@ -35,6 +35,7 @@ from converter.context import (
     ancestors, print_node_with_properties, get_html_attributes,
     datetime_ko_format, normalize_screenshots, clean_text,
 )
+from converter.lost_info import LostInfoCollector
 
 try:
     import emoji
@@ -48,7 +49,8 @@ class Attachment:
     <ri:attachment filename="스크린샷 2024-08-01 오후 2.50.06.png" version-at-save="1">
     """
 
-    def __init__(self, node: Tag, input_dir: str, output_dir: str, public_dir: str) -> None:
+    def __init__(self, node: Tag, input_dir: str, output_dir: str, public_dir: str,
+                 collector: LostInfoCollector | None = None) -> None:
         filename = node.get('ri:filename', '')
         if not filename:
             logging.warning(f"add_attachment: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
@@ -59,6 +61,8 @@ class Attachment:
         filename = unicodedata.normalize('NFC', filename)
         self.original: str = filename
         self.filename: str = normalize_screenshots(filename)
+        if collector and self.original != self.filename:
+            collector.add_filename(self.original, self.filename)
         self.used: bool = False
 
         self.input_dir: str = input_dir
@@ -112,8 +116,9 @@ class Attachment:
 
 
 class SingleLineParser:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
         self.applicable_nodes = {
             'span',
@@ -242,7 +247,7 @@ class SingleLineParser:
                 for child in node.children:
                     if isinstance(child, Tag) and child.name == 'ac:parameter':
                         if child.get('ac:name') == 'title':
-                            title = SingleLineParser(child).markdown_of_children(child)
+                            title = SingleLineParser(child, collector=self.collector).markdown_of_children(child)
                         elif child.get('ac:name') == 'colour':
                             confluence_color = child.text.strip()
                             color = CONFLUENCE_COLOR_TO_BADGE_COLOR.get(confluence_color, 'grey')
@@ -274,7 +279,7 @@ class SingleLineParser:
             self.markdown_lines.append("<br/>")
         elif node.name in ['a']:
             href, readable_anchor_text = convert_confluence_url(node.get('href', '#'))
-            link_text = ''.join(SingleLineParser(child).as_markdown for child in node.children)
+            link_text = ''.join(SingleLineParser(child, collector=self.collector).as_markdown for child in node.children)
             if readable_anchor_text and link_text.startswith('http'):
                 link_text = readable_anchor_text
             self.markdown_lines.append(f"[{link_text}]({href})")
@@ -323,6 +328,8 @@ class SingleLineParser:
             <ac:emoticon ac:name="blue-star" ac:emoji-shortname=":white_check_mark:"
                          ac:emoji-id="2705" ac:emoji-fallback="✅"/>
             """
+            if self.collector:
+                self.collector.add_emoticon(node)
             # First check ac:emoji-fallback attribute (may already be an emoji character)
             fallback = node.get('ac:emoji-fallback', '')
             shortname = node.get('ac:emoji-shortname', '')
@@ -394,7 +401,7 @@ class SingleLineParser:
         """
         markdown = []
         for child in node.children:
-            markdown.append(SingleLineParser(child).as_markdown)
+            markdown.append(SingleLineParser(child, collector=self.collector).as_markdown)
         return ''.join(markdown)
 
     def convert_ac_link(self, node: Tag) -> str:
@@ -479,7 +486,7 @@ class SingleLineParser:
         # Process child nodes to extract link body and determine href
         for child in node.children:
             if isinstance(child, Tag) and child.name == 'ac:link-body':
-                link_body = SingleLineParser(child).as_markdown
+                link_body = SingleLineParser(child, collector=self.collector).as_markdown
 
             elif isinstance(child, Tag) and child.name == 'ri:space':
                 # Handle space links: <ac:link><ri:space ri:space-key="QCP" /></ac:link>
@@ -505,8 +512,12 @@ class SingleLineParser:
                     # External link - resolve using pageId from link mapping
                     # Get link_body explicitly to ensure we have the correct text for lookup
                     link_body_node = node.find('ac:link-body')
-                    current_link_body = SingleLineParser(link_body_node).as_markdown if link_body_node else link_body
+                    current_link_body = SingleLineParser(link_body_node, collector=self.collector).as_markdown if link_body_node else link_body
                     href = resolve_external_link(current_link_body, space_key, target_title)
+
+        # Collect unresolved links
+        if self.collector and href == '#link-error':
+            self.collector.add_link(node)
 
         return f'[{link_body}{decoded_anchor}]({href}{lowercased_fragment})'
 
@@ -570,8 +581,9 @@ class SingleLineParser:
 
 
 class MultiLineParser:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.list_stack = []
         self.markdown_lines = []
         self._debug_markdown = False  # Used when debugging manually
@@ -655,14 +667,14 @@ class MultiLineParser:
         elif node.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
             # Headings can exist in a <Callout> block.
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node, collector=self.collector).as_markdown + '\n')
             self.markdown_lines.append('\n')
         elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(StructuredMacroToCallout(node).as_markdown)
+            self.markdown_lines.extend(StructuredMacroToCallout(node, collector=self.collector).as_markdown)
         elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(AdfExtensionToCallout(node).as_markdown)
+            self.markdown_lines.extend(AdfExtensionToCallout(node, collector=self.collector).as_markdown)
         elif node.name in ['ac:structured-macro'] and attr_name in ['code']:
             self.convert_structured_macro_code(node)
         elif node.name in ['ac:structured-macro'] and attr_name in ['expand']:
@@ -679,7 +691,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             markdown = []
             for child in node.children:
-                markdown.extend(MultiLineParser(child).as_markdown)
+                markdown.extend(MultiLineParser(child, collector=self.collector).as_markdown)
             lines = ''.join(markdown).splitlines()
             for to_quote in lines:
                 self.markdown_lines.append(f'> {to_quote}')
@@ -690,13 +702,13 @@ class MultiLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name == 'table':
-            native_markdown = TableToNativeMarkdown(node)
+            native_markdown = TableToNativeMarkdown(node, collector=self.collector)
             if native_markdown.applicable:
                 self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(native_markdown.as_markdown)
             else:
                 self.append_empty_line_unless_first_child(node)
-                self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
+                self.markdown_lines.extend(TableToHtmlTable(node, collector=self.collector).as_markdown)
         elif node.name in ['p', 'div']:
             self.append_empty_line_unless_first_child(node)
             child_markdown = []
@@ -705,7 +717,7 @@ class MultiLineParser:
                     # Problem: A paragraph was in a too long line.
                     # Resolve:
                     # - Split a paragraph into sentences. And arrange one sentence in each line.
-                    single_line = SingleLineParser(child).as_markdown
+                    single_line = SingleLineParser(child, collector=self.collector).as_markdown
                     # Preserve a leading whitespace in single_line
                     if single_line[0].isspace():
                         child_markdown.append(' ')
@@ -716,18 +728,18 @@ class MultiLineParser:
                     # Preserve an ending whitespace in single_line
                     if single_line[-1].isspace():
                         child_markdown.append(' ')
-                elif SingleLineParser(child).applicable:
-                    child_markdown.append(SingleLineParser(child).as_markdown)
+                elif SingleLineParser(child, collector=self.collector).applicable:
+                    child_markdown.append(SingleLineParser(child, collector=self.collector).as_markdown)
                 else:
                     if self._debug_markdown:
                         child_markdown.append(f'<{child.name}>')
-                    child_markdown.extend(MultiLineParser(child).as_markdown)
+                    child_markdown.extend(MultiLineParser(child, collector=self.collector).as_markdown)
                     if self._debug_markdown:
                         child_markdown.append(f'</{child.name}>')
             # Add an empty line after paragraphs
             self.markdown_lines.append(''.join(child_markdown).strip() + '\n')
         elif node.name in ['span']:
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node, collector=self.collector).as_markdown)
         elif node.name in ['br']:
             # <br/> is a line break. Just keep using <br/>.
             # Append '\n' for <br/> in MultiLineParser.
@@ -739,7 +751,7 @@ class MultiLineParser:
             self.append_empty_line_unless_first_child(node)
             self.convert_image(node)
         elif node.name in ['a']:
-            self.markdown_lines.append(SingleLineParser(node).as_markdown)
+            self.markdown_lines.append(SingleLineParser(node, collector=self.collector).as_markdown)
         elif node.name in ['hr']:
             # Using --- after a sentence means an H2 heading.
             # To prevent ambiguity with headings, use ______ for a horizontal rule.
@@ -784,20 +796,20 @@ class MultiLineParser:
             attr_name = child.get('ac:name', '(none)') if not isinstance(child, NavigableString) else '(none)'
             if isinstance(child, NavigableString):
                 if child.text.strip():  # Only process non-empty text nodes
-                    li_itself.append(SingleLineParser(child).as_markdown)
+                    li_itself.append(SingleLineParser(child, collector=self.collector).as_markdown)
             elif child.name == 'p':
                 # Process paragraph content
                 if len(li_itself) > 0:
                     li_itself.append('<br/>')
-                li_itself.append(SingleLineParser(child).as_markdown)
+                li_itself.append(SingleLineParser(child, collector=self.collector).as_markdown)
             elif child.name == 'ac:image':
                 # Process image separately using MultiLineParser
-                image_markdown = MultiLineParser(child).as_markdown
+                image_markdown = MultiLineParser(child, collector=self.collector).as_markdown
                 child_markdown.extend(image_markdown)
             elif child.name in ['ul', 'ol']:
                 pass  # Will be processed later in this method
             elif child.name in ['ac:structured-macro'] and attr_name in ['code']:
-                code_markdown = MultiLineParser(child).as_markdown
+                code_markdown = MultiLineParser(child, collector=self.collector).as_markdown
                 child_markdown.extend(code_markdown)
             else:
                 child_markdown.append(f'(Unexpected node name="{child.name}" ac:name="{attr_name}")\n')
@@ -863,7 +875,7 @@ class MultiLineParser:
         if caption:
             caption_paragraph = caption.find('p')
             if caption_paragraph:
-                caption_text = SingleLineParser(caption_paragraph).as_markdown
+                caption_text = SingleLineParser(caption_paragraph, collector=self.collector).as_markdown
 
         markdown = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
@@ -935,7 +947,7 @@ class MultiLineParser:
         # Look for code content in the CDATA section
         rich_text_body = node.find('ac:rich-text-body')
         if rich_text_body:
-            self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+            self.markdown_lines.extend(MultiLineParser(rich_text_body, collector=self.collector).as_markdown)
 
         self.markdown_lines.append(f"</details>\n")
 
@@ -959,8 +971,9 @@ class MultiLineParser:
 
 
 class TableToNativeMarkdown:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
         self.applicable_nodes = {
             'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
@@ -1052,7 +1065,7 @@ class TableToNativeMarkdown:
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
 
-                cell_content = SingleLineParser(cell).as_markdown
+                cell_content = SingleLineParser(cell, collector=self.collector).as_markdown
 
                 # Add cell content to the current row
                 current_row.append(cell_content)
@@ -1111,8 +1124,9 @@ class TableToNativeMarkdown:
 
 
 class TableToHtmlTable:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
 
     @property
@@ -1147,23 +1161,23 @@ class TableToHtmlTable:
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
-                elif SingleLineParser(child).applicable:
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
-                elif MultiLineParser(child).is_standalone_dash:
+                    self.markdown_lines.append(SingleLineParser(child, collector=self.collector).as_markdown + '\n')
+                elif SingleLineParser(child, collector=self.collector).applicable:
+                    self.markdown_lines.append(SingleLineParser(child, collector=self.collector).as_markdown + '\n')
+                elif MultiLineParser(child, collector=self.collector).is_standalone_dash:
                     # Wrap dash in <p> to prevent MDX interpreting it as a list marker
                     self.markdown_lines.append(f'<p>-</p>\n')
                 else:
-                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                    self.markdown_lines.extend(MultiLineParser(child, collector=self.collector).as_markdown)
 
             self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name == 'col':
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
             self.markdown_lines.append(f"<col{attrs}/>\n")
-        elif SingleLineParser(node).applicable:
+        elif SingleLineParser(node, collector=self.collector).applicable:
             # <ac:adf-fragment-mark> could be converted.
-            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node, collector=self.collector).as_markdown + '\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]\n')
@@ -1172,8 +1186,9 @@ class TableToHtmlTable:
 
 
 class StructuredMacroToCallout:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
 
     @property
@@ -1234,7 +1249,7 @@ class StructuredMacroToCallout:
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
 
             for child in node.children:
-                self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(child, collector=self.collector).as_markdown)
 
             self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
@@ -1250,7 +1265,7 @@ class StructuredMacroToCallout:
                     f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}')
 
             if rich_text_body:
-                self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(rich_text_body, collector=self.collector).as_markdown)
             else:
                 logging.warning(
                     f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}')
@@ -1264,8 +1279,9 @@ class StructuredMacroToCallout:
 
 
 class AdfExtensionToCallout:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
 
     @property
@@ -1322,6 +1338,8 @@ class AdfExtensionToCallout:
             adf_attribute = node.find('ac:adf-attribute', {'key': 'panel-type'})
             if adf_attribute:
                 panel_type = adf_attribute.text
+                if self.collector:
+                    self.collector.add_adf_extension(node, panel_type)
                 logging.debug(f'Found <ac:adf-attribute key="panel-type"> text={adf_attribute.text}')
             else:
                 logging.warning(f"No <ac:adf-attribute> in {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
@@ -1335,7 +1353,7 @@ class AdfExtensionToCallout:
 
             adf_content = node.find('ac:adf-content')
             if adf_content:
-                self.markdown_lines.extend(MultiLineParser(adf_content).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(adf_content, collector=self.collector).as_markdown)
             else:
                 logging.warning(f"No <ac:adf-content> in {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
 
@@ -1354,9 +1372,14 @@ class ConfluenceToMarkdown:
         self.markdown_lines = []
         self._imports = {}
         self._debug_markdown = False  # Used when debugging manually
+        self._collector = LostInfoCollector()
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')
+
+    @property
+    def lost_infos(self) -> dict:
+        return self._collector.to_dict()
 
     @property
     def imports(self):
@@ -1413,7 +1436,7 @@ class ConfluenceToMarkdown:
             attachment_nodes = ac_image.find_all('ri:attachment')
             for node in attachment_nodes:
                 logging.debug(f"add attachment of <ac:image>{node}")
-                attachment = Attachment(node, input_dir, output_dir, public_dir)
+                attachment = Attachment(node, input_dir, output_dir, public_dir, collector=self._collector)
                 if not skip_image_copy:
                     attachment.copy_to_destination()
                 attachments.append(attachment)
@@ -1430,7 +1453,7 @@ class ConfluenceToMarkdown:
         # Add document title at the beginning if available
         self.markdown_lines.extend(self.title)
         # Start conversion
-        self.markdown_lines.extend(MultiLineParser(self.soup).as_markdown)
+        self.markdown_lines.extend(MultiLineParser(self.soup, collector=self._collector).as_markdown)
         # self.process_node(soup)
 
         # Join all Markdown lines and return
