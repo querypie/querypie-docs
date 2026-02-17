@@ -497,6 +497,28 @@ ByteVerificationResult(case_id, passed, reason, first_mismatch_offset)
 # reason: "byte_equal" | "byte_mismatch" | "sidecar_missing"
 ```
 
+### 현재 배치 검증 결과
+
+| 검증 기준 | 결과 | 비고 |
+|-----------|------|------|
+| normalize-diff (emitter 단독) | **0/21 pass** | 역순변환기 단독 출력 |
+| document-level sidecar (Lossless v1) | **21/21 pass** | MDX 미변경 시 원본 XHTML 그대로 반환 (trivial) |
+| L1 fragment reassembly | **21/21 pass** | sidecar v2 프래그먼트 재조립 byte-equal |
+| block-level splice (L2) | **미구현** | Phase L2에서 구현 예정 |
+
+**Emitter 단독 실패 원인 분포:**
+
+| 원인 | 건수 | 비가역 여부 |
+|------|------|-------------|
+| `ordered_list_start_mismatch` | 12 | emitter 수정 가능 (L5) |
+| `internal_link_unresolved` (`#link-error`) | 7 | **비가역** — 정순변환에서 원본 정보 소실 |
+| `attachment_filename_mismatch` | 7 | **비가역** — 정순변환에서 파일명 정규화 |
+| `image_block_structure_mismatch` | 5 | emitter 수정 가능 (L5) |
+| `emoticon_representation_mismatch` | 4 | **비가역** — 정순변환에서 shortname 소실 |
+| `adf_extension_panel_mismatch` | 3 | **비가역** — ADF 구조가 MDX에 없음 |
+
+비가역 항목은 emitter 개선으로 해결할 수 없으며, 정순변환 시 sidecar의 `lost_info`에 원본 정보를 보존해야 한다 (Phase L3).
+
 ### CJK 인라인 요소 공백 규칙
 
 Markdown 인라인 요소(bold, italic, code, link)와 CJK 문자의 인접 시 CommonMark flanking delimiter 규칙에 의해 공백 처리가 달라진다.
@@ -633,7 +655,17 @@ Forward Conversion(XHTML → MDX)은 구조적으로 다음 정보를 손실한�
 
 ## 로드맵: Byte-equal 라운드트립 구현 계획
 
-현재 구현된 Phase L0(코드 통합)과 L1(sidecar v2 + 프래그먼트 추출) 이후, 다음 단계를 통해 완전한 byte-equal 라운드트립을 달성한다.
+### Phase 진행 상태
+
+| Phase | 범위 | 상태 | PR |
+|-------|------|------|-----|
+| L0 | 코드 통합 (`lossless_roundtrip` → `reverse_sync` 흡수) | **완료** | #791 |
+| L1 | Roundtrip Sidecar v2 + block fragment 추출 | **완료** | #792 |
+| L2 | Block alignment + splice rehydrator | 미착수 | — |
+| L3 | Forward Conversion 정보 보존 강화 (`lost_info`) | 미착수 | — |
+| L4 | Metadata-enhanced emitter + patcher | 미착수 | — |
+| L5 | Backward Converter 정확도 개선 | 미착수 | — |
+| L6 | CI gate 전환 (byte-equal을 기본 게이트로) | 미착수 | — |
 
 ### Phase L2: 블록 정렬 + Splice Rehydrator
 
@@ -678,3 +710,7 @@ MDX 블록을 sidecar 블록과 해시 매칭하여, 변경되지 않은 블록�
 ### Phase L6: CI Gate 전환
 
 Byte-equal 검증을 CI의 기본 게이트로 설정하고, 정규화 diff 검증은 진단 전용으로 전환한다.
+
+### Reverse Sync Phase 3: 전면 재구성
+
+문서 구조, 위치, 이름 변경을 포함한 전면 재구성을 Confluence에 반영한다. Phase 2의 SequenceMatcher를 확장하여 이동(reorder) 감지, Confluence API 페이지 이동/이름 변경 연동, 페이지 트리 구조 관리를 구현한다. 별도 설계 필요.
