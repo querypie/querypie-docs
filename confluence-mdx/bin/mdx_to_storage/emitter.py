@@ -29,6 +29,12 @@ _BADGE_COLOR_MAP = {
     "gray": "Grey",
     "purple": "Purple",
 }
+_FIGURE_IN_LIST_RE = re.compile(
+    r'\s*<figure[^>]*>\s*<img\s+([^>]+?)\s*/?\s*>\s*</figure>',
+    flags=re.DOTALL,
+)
+_TRAILING_BR_RE = re.compile(r'\s*<br\s*/?\s*>\s*$')
+_IMG_ATTR_RE = re.compile(r'(\w[\w-]*)=(?:"([^"]*)"|\'([^\']*)\')')
 
 
 class _ListNode:
@@ -216,13 +222,52 @@ def _render_list_nodes(
     return "".join(parts)
 
 
+def _figure_attrs_to_ac_image(img_attrs_str: str) -> str:
+    """<img> 속성 문자열에서 <ac:image><ri:attachment> XHTML을 생성."""
+    src = ""
+    width = ""
+    for key, v1, v2 in _IMG_ATTR_RE.findall(img_attrs_str):
+        val = v1 or v2
+        if key == "src":
+            src = val
+        elif key == "width":
+            width = val
+
+    filename = os.path.basename(src) if src else ""
+    ac_attrs = ['ac:align="center"']
+    if width:
+        ac_attrs.append(f'ac:width="{width}"')
+
+    return (
+        f'<ac:image {" ".join(ac_attrs)}>'
+        f'<ri:attachment ri:filename="{filename}"></ri:attachment>'
+        f'</ac:image>'
+    )
+
+
 def _render_list_item(node: _ListNode, link_resolver: Optional[LinkResolver] = None) -> str:
     nested = (
         _render_list_nodes(node.children, link_resolver=link_resolver)
         if node.children
         else ""
     )
-    return f"<li><p>{convert_inline(node.text, link_resolver=link_resolver)}</p>{nested}</li>"
+    text = node.text
+    figure_match = _FIGURE_IN_LIST_RE.search(text)
+    if figure_match:
+        before_text = text[:figure_match.start()]
+        before_text = _TRAILING_BR_RE.sub("", before_text).strip()
+        img_attrs_str = figure_match.group(1)
+        ac_image = _figure_attrs_to_ac_image(img_attrs_str)
+        p_content = convert_inline(before_text, link_resolver=link_resolver) if before_text else ""
+        parts = ["<li>"]
+        if p_content:
+            parts.append(f"<p>{p_content}</p>")
+        parts.append(ac_image)
+        parts.append("<p />")
+        parts.append(nested)
+        parts.append("</li>")
+        return "".join(parts)
+    return f"<li><p>{convert_inline(text, link_resolver=link_resolver)}</p>{nested}</li>"
 
 
 def _emit_callout(block: Block, context: dict) -> str:
