@@ -106,7 +106,6 @@ converter/cli.py            ← 단일 페이지 변환 진입점
 | `converter/cli.py` | 단일 페이지 변환 진입점 |
 | `converter/core.py` | 변환 클래스 (1,438줄) |
 | `converter/context.py` | 전역 상태, 유틸리티 (665줄) |
-| `converter/sidecar_mapping.py` | XHTML↔MDX 블록 매핑 생성 (160줄) |
 
 **클래스 계층:**
 
@@ -302,7 +301,6 @@ MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 d
 | `sidecar.py` | 524 | Roundtrip sidecar + 매핑 인덱스 |
 | `fragment_extractor.py` | 204 | XHTML byte-exact 프래그먼트 추출 |
 | `patch_builder.py` | 547 | BlockChange → XHTML 패치 변환 |
-| `text_normalizer.py` | 7 | Backward-compat re-export (`text_utils` 위임) |
 | `text_transfer.py` | 79 | 텍스트 변경을 XHTML에 전사 |
 | `xhtml_patcher.py` | 333 | 패치를 XHTML에 적용 |
 | `roundtrip_verifier.py` | 174 | 패치 결과 라운드트립 검증 |
@@ -361,7 +359,7 @@ xpath_to_mapping = build_xpath_to_mapping(block_mappings)   # XPath → BlockMap
 
 각 `BlockChange`에 대해 sidecar 인덱스로 대응하는 XHTML 요소를 찾고, 텍스트 변경을 패치로 변환한다.
 
-- **Modified**: `text_normalizer`로 MDX를 일반 텍스트로 정규화 → `text_transfer`로 XHTML 텍스트에 변경 전사
+- **Modified**: `text_utils`로 MDX를 일반 텍스트로 정규화 → `text_transfer`로 XHTML 텍스트에 변경 전사
 - **Added**: `mdx_to_xhtml_inline`로 새 MDX 블록을 XHTML 요소로 변환 → insert 패치
 - **Deleted**: 대응 XPath 요소 삭제 패치
 - **리스트/테이블**: 항목별 세분화된 패치 (항목 매칭, 셀 매칭)
@@ -396,15 +394,14 @@ Forward Converter와 Reverse Sync를 연결하는 메타데이터 시스템이�
 
 ### 1. Mapping Sidecar (`mapping.yaml`)
 
-Forward Converter 실행 시 `converter/sidecar_mapping.py`가 생성한다. XHTML 블록과 MDX 블록의 대응 관계를 기록한다.
+`reverse_sync/sidecar.py`의 `generate_sidecar_mapping()`이 생성한다. XHTML 블록과 MDX 블록의 대응 관계를 기록한다. Forward Converter(`converter/cli.py`)와 Reverse Sync CLI(`reverse_sync_cli.py`) 모두 이 함수를 사용한다.
 
 **위치:** `var/<page_id>/mapping.yaml`
 
 ```yaml
 version: 1
 source_page_id: "608501837"
-generated_at: "2025-01-15T09:30:00Z"
-mdx_file: "installation.mdx"
+mdx_file: "page.mdx"
 mappings:
   - xhtml_xpath: "p[1]"
     xhtml_type: "paragraph"
@@ -416,8 +413,8 @@ mappings:
 
 **생성 과정:**
 1. `record_mapping(xhtml)` → XHTML 블록 목록 (`BlockMapping`)
-2. `parse_mdx_blocks(mdx)` → MDX 블록 목록 (`MdxBlock`)
-3. `_build_mapping_entries()` → 순차 매칭하여 매핑 기록
+2. `parse_mdx_blocks(mdx)` → MDX 블록 목록
+3. 텍스트 기반 lookahead 매칭 → 정규화 텍스트로 XHTML↔MDX 블록 대응
 
 **사용처:** Reverse Sync에서 `build_mdx_to_sidecar_index()`로 O(1) 조회 인덱스를 구축한다.
 
@@ -564,7 +561,7 @@ var/
     ├── page.xhtml                       ← Confluence XHTML 본문
     ├── children.v2.yaml                 ← 자식 페이지 목록 + 정렬 순서
     ├── attachments.v1.yaml              ← 첨부파일 메타데이터
-    ├── mapping.yaml                     ← XHTML↔MDX 매핑 sidecar (Forward Converter 생성)
+    ├── mapping.yaml                     ← XHTML↔MDX 매핑 sidecar (reverse_sync/sidecar.py 생성)
     ├── reverse-sync.diff.yaml           ← 블록 변경 diff (Reverse Sync 생성)
     ├── reverse-sync.mapping.original.yaml
     ├── reverse-sync.mapping.patched.yaml

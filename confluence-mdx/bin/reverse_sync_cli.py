@@ -550,6 +550,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
     parser.add_argument('--original-mdx',
                         help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
     parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
+    parser.add_argument('--page-id',
+                        help='page ID를 직접 지정 (기본: improved_mdx 경로에서 자동 유도)')
     parser.add_argument('--limit', type=int, default=0,
                         help='배치 모드에서 최대 처리 파일 수 (기본: 0=전체)')
     parser.add_argument('--failures-only', action='store_true',
@@ -564,7 +566,10 @@ def _do_verify(args) -> dict:
     else:
         ko_path = _extract_ko_mdx_path(improved_src.descriptor)
         original_src = _resolve_mdx_source(f'main:{ko_path}')
-    page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
+    if getattr(args, 'page_id', None):
+        page_id = args.page_id
+    else:
+        page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
     return run_verify(
         page_id=page_id,
         original_src=original_src,

@@ -196,11 +196,12 @@ run_reverse_sync_test() {
     # verify 실행 (cwd를 confluence-mdx root로 이동 — run_verify()가 var/<page_id>/에 중간 파일을 쓰므로)
     mkdir -p "../var/${test_id}"
     pushd .. > /dev/null
-    run_cmd bin/reverse_sync/test_verify.py \
-        "${test_id}" \
-        "tests/${test_path}/original.mdx" \
-        "tests/${test_path}/improved.mdx" \
-        "tests/${test_path}/page.xhtml"
+    run_cmd bin/reverse_sync_cli.py verify \
+        --page-id "${test_id}" \
+        --original-mdx "tests/${test_path}/original.mdx" \
+        --xhtml "tests/${test_path}/page.xhtml" \
+        --json \
+        "tests/${test_path}/improved.mdx"
     popd > /dev/null
 
     # var/에 생성된 중간 파일을 output.*으로 복사
@@ -237,12 +238,12 @@ has_reverse_sync_input() {
 }
 
 # Run reverse-sync verify-only test (no expected file comparison)
-# test_verify.py --format=cli 로 실행하여 CLI와 동일한 출력을 생성한다.
+# reverse_sync_cli.py verify 로 실행하여 CLI 형식 출력을 생성한다.
 #
 # 이 함수는 run_all_tests에서 실패 시 두 번 호출됨:
 #   1회차: 출력 억제 상태로 실행 (> /dev/null 2>&1)
 #   2회차: 출력 표시 상태로 재실행
-# 따라서 결과 파일이 이미 있으면 test_verify.py를 재실행하지 않고
+# 따라서 결과 파일이 이미 있으면 재실행하지 않고
 # 저장된 결과에서 상태만 확인한다.
 run_reverse_sync_verify_test() {
     local test_id="$1"
@@ -251,17 +252,16 @@ run_reverse_sync_verify_test() {
 
     local output_log="${test_path}/output.verify.log"
 
-    # 결과 파일이 없을 때만 test_verify.py 실행
+    # 결과 파일이 없을 때만 verify 실행
     if [[ ! -f "${result_file}" ]]; then
         mkdir -p "../var/${test_id}"
         pushd .. > /dev/null
-        # --format=cli: reverse_sync_cli.py verify 와 동일한 형식으로 출력
         # 출력을 파일로 저장 (run_all_tests의 재실행 시 재사용)
-        bin/reverse_sync/test_verify.py --format=cli \
-            "${test_id}" \
-            "tests/${test_path}/original.mdx" \
+        bin/reverse_sync_cli.py verify \
+            --page-id "${test_id}" \
+            --original-mdx "tests/${test_path}/original.mdx" \
+            --xhtml "tests/${test_path}/page.xhtml" \
             "tests/${test_path}/improved.mdx" \
-            "tests/${test_path}/page.xhtml" \
             > "tests/${output_log}" 2>&1
         popd > /dev/null
 
