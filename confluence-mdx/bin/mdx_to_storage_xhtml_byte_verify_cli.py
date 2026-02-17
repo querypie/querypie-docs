@@ -7,7 +7,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from reverse_sync.byte_verify import verify_case_dir
+from reverse_sync.byte_verify import verify_case_dir, verify_case_dir_splice
 from reverse_sync.mdx_to_storage_xhtml_verify import iter_testcase_dirs
 
 
@@ -30,6 +30,11 @@ def _build_parser() -> argparse.ArgumentParser:
         type=int,
         default=10,
         help="Number of failed cases to print in detail",
+    )
+    parser.add_argument(
+        "--splice",
+        action="store_true",
+        help="Use forced-splice path (block-level) instead of fast-path (document-level)",
     )
     return parser
 
@@ -62,11 +67,14 @@ def main() -> int:
     if not case_dirs:
         return 0
 
-    results = [verify_case_dir(case_dir, sidecar_name=args.sidecar_name) for case_dir in case_dirs]
+    verify_fn = verify_case_dir_splice if args.splice else verify_case_dir
+    label = "mdx->xhtml-byte-verify-splice" if args.splice else "mdx->xhtml-byte-verify"
+
+    results = [verify_fn(case_dir, sidecar_name=args.sidecar_name) for case_dir in case_dirs]
     failed = [r for r in results if not r.passed]
 
     print(
-        f"[mdx->xhtml-byte-verify] total={len(results)} passed={len(results)-len(failed)} failed={len(failed)}"
+        f"[{label}] total={len(results)} passed={len(results)-len(failed)} failed={len(failed)}"
     )
 
     if failed:

@@ -7,7 +7,7 @@
 #
 # Options:
 #   --type TYPE       Test type: convert (default), skeleton, reverse-sync,
-#                     reverse-sync-verify, image-copy, xhtml-diff
+#                     reverse-sync-verify, image-copy, xhtml-diff, byte-verify
 #   --log-level LEVEL Log level: warning (default), debug, info
 #   --test-id ID      Run specific test case only
 #   --test-dir DIR    Test case directory (default: testcases)
@@ -486,6 +486,14 @@ main() {
             else
                 run_all_tests run_xhtml_diff_test "XHTML-Diff" has_xhtml_diff_input
             fi
+            ;;
+        byte-verify)
+            local byte_verify_cli="${BIN_DIR}/mdx_to_storage_xhtml_byte_verify_cli.py"
+            echo "Running byte-equal verify (fast-path)..."
+            run_cmd python3 "${byte_verify_cli}" --testcases-dir "${TEST_DIR}"
+            echo ""
+            echo "Running byte-equal verify (forced-splice)..."
+            run_cmd python3 "${byte_verify_cli}" --testcases-dir "${TEST_DIR}" --splice
             ;;
         *)
             echo "Unknown test type: ${TEST_TYPE}"

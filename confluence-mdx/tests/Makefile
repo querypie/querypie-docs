@@ -97,6 +97,11 @@ test-image-copy-one:
 	fi
 	@$(TEST_SCRIPT) --type image-copy --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
+# Run byte-equal verify (fast-path + forced-splice)
+.PHONY: test-byte-verify
+test-byte-verify:
+	@$(TEST_SCRIPT) --type byte-verify $(VERBOSE_FLAG)
+
 # Run xhtml-diff tests
 .PHONY: test-xhtml-diff
 test-xhtml-diff:
@@ -166,6 +171,10 @@ help:
 	@echo "  test-xhtml-diff / test-xhtml-diff-one"
 	@echo "    page.xhtml ↔ patched.xhtml beautify-diff."
 	@echo "    serializer 부산물 무시, 실제 변경만 검증"
+	@echo ""
+	@echo "  test-byte-verify"
+	@echo "    Byte-equal 라운드트립 검증 (fast-path + forced-splice)."
+	@echo "    expected.roundtrip.json sidecar 기반 XHTML 복원 → page.xhtml 과 byte 비교"
 	@echo ""
 	@echo "  test-render / test-render-one"
 	@echo "    MDX → HTML 렌더링(vitest). expected.html 과 비교"
