@@ -228,6 +228,7 @@ def run_verify(
     sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx, page_id)
     (var_dir / 'mapping.yaml').write_text(sidecar_yaml)
     sidecar_data = yaml.safe_load(sidecar_yaml) or {}
+    page_lost_info = sidecar_data.get('lost_info', {})
     sidecar_entries = [
         SidecarEntry(
             xhtml_xpath=item['xhtml_xpath'],
@@ -242,7 +243,7 @@ def run_verify(
     # Step 4: XHTML 패치 → patched.xhtml 저장
     patches = build_patches(changes, original_blocks, improved_blocks,
                             original_mappings, mdx_to_sidecar, xpath_to_mapping,
-                            alignment)
+                            alignment, page_lost_info=page_lost_info)
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
