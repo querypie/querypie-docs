@@ -671,7 +671,7 @@ class MultiLineParser:
             self.markdown_lines.append('\n')
         elif node.name in ['ac:structured-macro'] and StructuredMacroToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
-            self.markdown_lines.extend(StructuredMacroToCallout(node).as_markdown)
+            self.markdown_lines.extend(StructuredMacroToCallout(node, collector=self.collector).as_markdown)
         elif node.name == 'ac:adf-extension' and AdfExtensionToCallout(node).applicable:
             self.append_empty_line_unless_first_child(node)
             self.markdown_lines.extend(AdfExtensionToCallout(node, collector=self.collector).as_markdown)
@@ -702,13 +702,13 @@ class MultiLineParser:
             for child in node.children:
                 self.convert_recursively(child)
         elif node.name == 'table':
-            native_markdown = TableToNativeMarkdown(node)
+            native_markdown = TableToNativeMarkdown(node, collector=self.collector)
             if native_markdown.applicable:
                 self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(native_markdown.as_markdown)
             else:
                 self.append_empty_line_unless_first_child(node)
-                self.markdown_lines.extend(TableToHtmlTable(node).as_markdown)
+                self.markdown_lines.extend(TableToHtmlTable(node, collector=self.collector).as_markdown)
         elif node.name in ['p', 'div']:
             self.append_empty_line_unless_first_child(node)
             child_markdown = []
@@ -971,8 +971,9 @@ class MultiLineParser:
 
 
 class TableToNativeMarkdown:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
         self.applicable_nodes = {
             'table', 'tbody', 'col', 'tr', 'colgroup', 'th', 'td',
@@ -1064,7 +1065,7 @@ class TableToNativeMarkdown:
                 colspan = int(cell.get('colspan', 1))
                 rowspan = int(cell.get('rowspan', 1))
 
-                cell_content = SingleLineParser(cell).as_markdown
+                cell_content = SingleLineParser(cell, collector=self.collector).as_markdown
 
                 # Add cell content to the current row
                 current_row.append(cell_content)
@@ -1123,8 +1124,9 @@ class TableToNativeMarkdown:
 
 
 class TableToHtmlTable:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
 
     @property
@@ -1159,23 +1161,23 @@ class TableToHtmlTable:
 
             for child in node.children:
                 if isinstance(child, NavigableString):
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
-                elif SingleLineParser(child).applicable:
-                    self.markdown_lines.append(SingleLineParser(child).as_markdown + '\n')
-                elif MultiLineParser(child).is_standalone_dash:
+                    self.markdown_lines.append(SingleLineParser(child, collector=self.collector).as_markdown + '\n')
+                elif SingleLineParser(child, collector=self.collector).applicable:
+                    self.markdown_lines.append(SingleLineParser(child, collector=self.collector).as_markdown + '\n')
+                elif MultiLineParser(child, collector=self.collector).is_standalone_dash:
                     # Wrap dash in <p> to prevent MDX interpreting it as a list marker
                     self.markdown_lines.append(f'<p>-</p>\n')
                 else:
-                    self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                    self.markdown_lines.extend(MultiLineParser(child, collector=self.collector).as_markdown)
 
             self.markdown_lines.append(f"</{node.name}>\n")
         elif node.name == 'col':
             """Convert col node to HTML col markup."""
             attrs = get_html_attributes(node)
             self.markdown_lines.append(f"<col{attrs}/>\n")
-        elif SingleLineParser(node).applicable:
+        elif SingleLineParser(node, collector=self.collector).applicable:
             # <ac:adf-fragment-mark> could be converted.
-            self.markdown_lines.append(SingleLineParser(node).as_markdown + '\n')
+            self.markdown_lines.append(SingleLineParser(node, collector=self.collector).as_markdown + '\n')
         else:
             logging.warning(f"TableToHtmlTable: Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
             self.markdown_lines.append(f'[{node.name}]\n')
@@ -1184,8 +1186,9 @@ class TableToHtmlTable:
 
 
 class StructuredMacroToCallout:
-    def __init__(self, node):
+    def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
+        self.collector = collector
         self.markdown_lines = []
 
     @property
@@ -1246,7 +1249,7 @@ class StructuredMacroToCallout:
                 logging.warning(f"Unexpected {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
 
             for child in node.children:
-                self.markdown_lines.extend(MultiLineParser(child).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(child, collector=self.collector).as_markdown)
 
             self.markdown_lines.append('</Callout>\n')
         elif node.name in ['ac:structured-macro'] and attr_name in ['panel']:
@@ -1262,7 +1265,7 @@ class StructuredMacroToCallout:
                     f'Cannot find <ac:parameter ac:name="panelIconText"> under {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}')
 
             if rich_text_body:
-                self.markdown_lines.extend(MultiLineParser(rich_text_body).as_markdown)
+                self.markdown_lines.extend(MultiLineParser(rich_text_body, collector=self.collector).as_markdown)
             else:
                 logging.warning(
                     f'Cannot find <ac:rich-text-body> under {print_node_with_properties(node)} from {ancestors(node)} in {ctx.INPUT_FILE_PATH}')
