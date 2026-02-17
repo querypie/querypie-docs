@@ -5,8 +5,8 @@ from typing import Dict, List, Optional
 
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
-from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.text_normalizer import (
+from mdx_to_storage.parser import Block as MdxBlock
+from text_utils import (
     normalize_mdx_to_plain, collapse_ws, strip_list_marker,
     strip_for_compare,
 )

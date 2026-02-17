@@ -574,7 +574,7 @@ class MultiLineParser:
         self.node = node
         self.list_stack = []
         self.markdown_lines = []
-        self._debug_markdown = False
+        self._debug_markdown = False  # Used when debugging manually
 
     @property
     def as_markdown(self):
@@ -1353,7 +1353,7 @@ class ConfluenceToMarkdown:
     def __init__(self, html_content: str):
         self.markdown_lines = []
         self._imports = {}
-        self._debug_markdown = False
+        self._debug_markdown = False  # Used when debugging manually
 
         # Parse HTML with BeautifulSoup
         self.soup = BeautifulSoup(html_content, 'html.parser')

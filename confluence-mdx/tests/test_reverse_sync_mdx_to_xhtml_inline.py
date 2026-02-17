@@ -1,48 +1,47 @@
-import pytest
+from mdx_to_storage.inline import convert_inline
 from reverse_sync.mdx_to_xhtml_inline import (
     mdx_block_to_inner_xhtml,
-    _convert_inline,
     _parse_list_items,
 )
 
 
-# --- _convert_inline 단위 테스트 ---
+# --- convert_inline 단위 테스트 ---
 
 
 class TestConvertInline:
     def test_plain_text(self):
-        assert _convert_inline("plain text") == "plain text"
+        assert convert_inline("plain text") == "plain text"
 
     def test_bold(self):
-        assert _convert_inline("**bold**") == "<strong>bold</strong>"
+        assert convert_inline("**bold**") == "<strong>bold</strong>"
 
     def test_code(self):
-        assert _convert_inline("`code`") == "<code>code</code>"
+        assert convert_inline("`code`") == "<code>code</code>"
 
     def test_link(self):
-        assert _convert_inline("[text](url)") == '<a href="url">text</a>'
+        assert convert_inline("[text](url)") == '<a href="url">text</a>'
 
     def test_entities(self):
         """HTML entities는 그대로 유지."""
-        assert _convert_inline("A &gt; B") == "A &gt; B"
+        assert convert_inline("A &gt; B") == "A &gt; B"
 
     def test_mixed(self):
-        result = _convert_inline("**Company Name** : text")
+        result = convert_inline("**Company Name** : text")
         assert result == "<strong>Company Name</strong> : text"
 
     def test_bold_and_code(self):
-        result = _convert_inline("**bold** and `code`")
+        result = convert_inline("**bold** and `code`")
         assert result == "<strong>bold</strong> and <code>code</code>"
 
     def test_code_inside_not_bold(self):
         """code span 내부의 **는 bold 처리되지 않는다."""
-        result = _convert_inline("`**not bold**`")
+        result = convert_inline("`**not bold**`")
         assert result == "<code>**not bold**</code>"
 
     def test_br_preserved(self):
-        """<br/> 태그는 그대로 유지."""
-        result = _convert_inline("line1<br/>line2")
-        assert result == "line1<br/>line2"
+        """<br/> 태그는 <br />로 정규화되어 유지."""
+        result = convert_inline("line1<br/>line2")
+        assert result == "line1<br />line2"
 
 
 # --- mdx_block_to_inner_xhtml 블록 변환 테스트 ---
@@ -255,7 +254,7 @@ class TestNestedList:
 # --- Phase 2: mdx_block_to_xhtml_element 테스트 ---
 
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
-from reverse_sync.mdx_block_parser import MdxBlock
+from mdx_to_storage.parser import Block as MdxBlock
 
 
 class TestMdxBlockToXhtmlElement:

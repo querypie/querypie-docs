@@ -1,4 +1,11 @@
-"""MDX Block Parser — MDX 파일을 블록 시퀀스로 파싱한다."""
+"""MDX Block Parser — MDX 파일을 블록 시퀀스로 파싱한다.
+
+NOTE: rehydrator.py의 splice 경로가 이 파서의 블록 분할에 의존합니다.
+sidecar의 mdx_content_hash가 이 파서 기준으로 생성되었으므로,
+parser.py (mdx_to_storage.parser)로 대체하면 해시 불일치가 발생합니다.
+다른 모듈에서는 mdx_to_storage.parser를 사용하되,
+rehydrator.py는 이 파서를 유지해야 합니다.
+"""
 from dataclasses import dataclass
 from typing import List
 

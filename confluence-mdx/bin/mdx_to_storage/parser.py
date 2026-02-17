@@ -7,6 +7,7 @@ from typing import Optional
 
 _HR_PATTERN = re.compile(r"^_{6,}$")
 _HEADING_PATTERN = re.compile(r"^(#{1,6})\s+(.*)$")
+HEADING_PATTERN = _HEADING_PATTERN
 _LIST_ORDERED_PATTERN = re.compile(r"^\d+\.\s+")
 _LIST_UNORDERED_PATTERN = re.compile(r"^[-*+]\s+")
 _ATTR_PATTERN = re.compile(r"(\w+)=(?:\"([^\"]*)\"|'([^']*)')")
@@ -23,6 +24,8 @@ class Block:
     language: str = ""
     children: list["Block"] = field(default_factory=list)
     attrs: dict = field(default_factory=dict)
+    line_start: int = 0
+    line_end: int = 0
 
 
 def parse_mdx(text: str) -> list[Block]:
@@ -37,83 +40,113 @@ def parse_mdx(text: str) -> list[Block]:
 
     while i < n:
         line = lines[i]
+        start = i
 
         frontmatter_block = _parse_frontmatter(lines, i)
         if frontmatter_block:
             block, i = frontmatter_block
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if line == "":
-            blocks.append(Block(type="empty", content="\n"))
+            blocks.append(Block(type="empty", content="\n", line_start=i + 1, line_end=i + 1))
             i += 1
             continue
 
         if line.startswith("import "):
-            blocks.append(Block(type="import_statement", content=line + "\n"))
+            blocks.append(Block(type="import_statement", content=line + "\n", line_start=i + 1, line_end=i + 1))
             i += 1
             continue
 
         heading = _parse_heading(line)
         if heading:
+            heading.line_start = i + 1
+            heading.line_end = i + 1
             blocks.append(heading)
             i += 1
             continue
 
         if line.startswith("```"):
-            block, i = _parse_code_block(lines, i)
+            block, i = _parse_code_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if _HR_PATTERN.match(line.strip()):
-            blocks.append(Block(type="hr", content=line + "\n"))
+            blocks.append(Block(type="hr", content=line + "\n", line_start=i + 1, line_end=i + 1))
             i += 1
             continue
 
         if line.startswith("<Callout"):
-            block, i = _parse_callout_block(lines, i)
+            block, i = _parse_callout_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if line.startswith("<figure"):
-            block, i = _parse_figure_block(lines, i)
+            block, i = _parse_figure_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if line.startswith("<details"):
-            block, i = _parse_details_block(lines, i)
+            block, i = _parse_details_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if line.startswith("<Badge"):
-            block, i = _parse_badge_block(lines, i)
+            block, i = _parse_badge_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if _is_markdown_table_start(lines, i):
-            block, i = _parse_markdown_table_block(lines, i)
+            block, i = _parse_markdown_table_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if _is_blockquote_line(line):
-            block, i = _parse_blockquote_block(lines, i)
+            block, i = _parse_blockquote_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if _is_list_line(line):
-            block, i = _parse_list_block(lines, i)
+            block, i = _parse_list_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
         if _is_html_block_start(line):
-            block, i = _parse_html_block(lines, i)
+            block, i = _parse_html_block(lines, start)
+            block.line_start = start + 1
+            block.line_end = i
             blocks.append(block)
             continue
 
-        block, i = _parse_paragraph(lines, i)
+        block, i = _parse_paragraph(lines, start)
+        block.line_start = start + 1
+        block.line_end = i
         blocks.append(block)
 
     return blocks
+
+
+def parse_mdx_blocks(text: str) -> list[Block]:
+    """reverse_sync 호환 API — parse_mdx의 별칭."""
+    return parse_mdx(text)
 
 
 def _parse_frontmatter(lines: list[str], start: int) -> Optional[tuple[Block, int]]:
