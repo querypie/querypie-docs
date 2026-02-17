@@ -1,0 +1,121 @@
+{
+  "schema_version": "2",
+  "page_id": "544113141",
+  "mdx_sha256": "2ca07c352f16219ff70ed69b7fba4f226bb6d7b96ef1023ac229e39a7a6d5f50",
+  "source_xhtml_sha256": "4ae9cf549fddbc8f6fa3a9164f51a99fb22474f470f2c8f8a6a71b48830927f6",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>Overview</h2>",
+      "mdx_content_hash": "eb60517ec0f24ef9513faa01731c224f02eecebcadac4a092725489519568ac1",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>조직에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.</p>",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>DB Access History 조회하기 </h2>",
+      "mdx_content_hash": "9f0ba1d678646e93cd26295309a9eead4144b6220a93fa06475bc2d4b5668aa1",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1800\" ac:original-width=\"2880\" ac:custom-width=\"true\" ac:alt=\"image-20240730-070842.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240730-070842.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; Audit &gt; Databases &gt; DB Access History</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "e8a2c2567747c018b7cff3598c8c8fa20594a9eab806f2f6bb8e3d891ccbad13",
+      "mdx_line_range": [
+        12,
+        12
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "ol[1]",
+      "xhtml_fragment": "<ol start=\"1\"><li><p>Administrator &gt; Audit &gt; Databases &gt; DB Access History 메뉴로 이동합니다.</p></li><li><p>현재 월 기준으로 로그가 내림차순으로 조회됩니다.</p></li><li><p>테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p><ol start=\"1\"><li><p><strong>Name</strong> : 사용자 이름</p></li><li><p><strong>Error Message</strong> : 접근 에러 메시지 내 구문 </p></li><li><p><strong>Client IP</strong> : 사용자 IP</p></li></ol></li><li><p>검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"488\" ac:original-width=\"1488\" ac:custom-width=\"true\" ac:alt=\"image-20240730-064139.png\" ac:width=\"736\"><ri:attachment ri:filename=\"image-20240730-064139.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image><ol start=\"1\"><li><p><strong>Connection Name</strong> : 접속한 DB 커넥션명</p></li><li><p><strong>Database Type </strong>: 데이터베이스 유형</p></li><li><p><strong>Action Type </strong>: Connect / Disconnect 여부</p></li><li><p><strong>Result </strong>: 접속 성공/실패 여부</p></li><li><p><strong>Action At</strong> : 접속 시점</p></li></ol></li><li><p>테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.</p></li><li><p>테이블에서 이하의 컬럼 정보를 제공합니다:</p><ol start=\"1\"><li><p><strong>No</strong> : 이벤트 식별 번호</p></li><li><p><strong>Action At</strong> : 서버 접속 시도 일시</p></li><li><p><strong>Action Type</strong> : Connect / Disconnect 여부</p></li><li><p><strong>Result</strong> : 접속 성공/실패 여부</p><ol start=\"1\"><li><p><ac:emoticon ac:name=\"tick\" ac:emoji-shortname=\":check_mark:\" ac:emoji-id=\"atlassian-check_mark\" ac:emoji-fallback=\":check_mark:\" /> Success</p></li><li><p><ac:emoticon ac:name=\"cross\" ac:emoji-shortname=\":cross_mark:\" ac:emoji-id=\"atlassian-cross_mark\" ac:emoji-fallback=\":cross_mark:\" /> Failure</p></li></ol></li><li><p><strong>Name</strong> : 대상 사용자 이름</p></li><li><p><strong>Email</strong> : 대상 사용자 이메일</p></li><li><p><strong>Cloud Provider</strong> : 대상 클라우드 프로바이더명</p></li><li><p><strong>Connection Name</strong> : 대상 DB 커넥션명</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스 유형</p></li><li><p><strong>Privilege</strong> <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Client IP</strong> : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong> : DB Replication 유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB User</strong> : DB 사용자 ID</p></li><li><p><strong>DB Name</strong> : DB명</p></li><li><p><strong>Client</strong> <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Error Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li><li><p><strong>Connected</strong> <strong>From</strong> : 접속 방식</p></li></ol></li></ol>",
+      "mdx_content_hash": "f71dcdbe62e32f2aeb6220987253a3b4e8a07eb87d5f9113ebbb3a1383520e8e",
+      "mdx_line_range": [
+        14,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>DB Access History 상세 내역 조회하기</h2>",
+      "mdx_content_hash": "0ce172be587d70504230ce1f647d678c4917e2bbb2f54ccd24207d43f6ce7ae0",
+      "mdx_line_range": [
+        21,
+        57
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p>각 행을 클릭하면 세부 정보 조회가 가능합니다. </p>",
+      "mdx_content_hash": "3fc074477e08e250a06101440dce4c846e21bdf56d755a25707ddab288f6ab77",
+      "mdx_line_range": [
+        59,
+        59
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "ac:image[2]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1800\" ac:original-width=\"2880\" ac:custom-width=\"true\" ac:alt=\"image-20240730-065045.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240730-065045.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; Audit &gt; Databases &gt; DB Access History &gt; DB Access History Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "b81451c3fb737fb9fc19843ff37c00705b8c29b9f82867fd611d6ec8dc21a403",
+      "mdx_line_range": [
+        61,
+        61
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul><li><p>우측 드로워에는 이하의 정보를 노출합니다:</p><ol start=\"1\"><li><p><strong>Result</strong> : 접속 성공/실패 여부</p><ol start=\"1\"><li><p><ac:emoticon ac:name=\"tick\" ac:emoji-shortname=\":check_mark:\" ac:emoji-id=\"atlassian-check_mark\" ac:emoji-fallback=\":check_mark:\" /> Success</p></li><li><p><ac:emoticon ac:name=\"cross\" ac:emoji-shortname=\":cross_mark:\" ac:emoji-id=\"atlassian-cross_mark\" ac:emoji-fallback=\":cross_mark:\" /> Failure</p></li></ol></li><li><p><strong>Name</strong> : 대상 사용자 이름</p></li><li><p><strong>Action At</strong> : 접속 시점</p></li><li><p><strong>Action Type </strong>: Connect / Disconnect 여부</p></li><li><p><strong>Privilege</strong> <strong>Name</strong> : 사용자 접속 권한 </p></li><li><p><strong>Connection Name</strong> : 대상 DB 커넥션명</p></li><li><p><strong>Host</strong> <strong>Name </strong>: 접속 실행 호스트명</p></li><li><p><strong>Connected From</strong> : 접속 방식</p></li><li><p><strong>Client</strong> <strong>Name</strong> : 이용 클라이언트명 (DataGrip 등)</p></li><li><p><strong>Client IP</strong> : 사용자 클라이언트 IP 주소</p></li><li><p><strong>Replication Type</strong> : DB Replication 유형</p></li><li><p><strong>Database Type</strong> : 대상 데이터베이스 유형</p></li><li><p><strong>DB Host</strong> : 접속한 DB 호스트</p></li><li><p><strong>DB Name</strong> : DB명</p></li><li><p><strong>DB User</strong> : DB 사용자 ID</p></li><li><p><strong>Error Message</strong> : 접속 실패 등 특이사항에 대한 기록</p></li></ol></li></ul>",
+      "mdx_content_hash": "3c56b2f215e68a047366f9ca7419ae138810f59037dd4b4cd0890879eacd176c",
+      "mdx_line_range": [
+        63,
+        68
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

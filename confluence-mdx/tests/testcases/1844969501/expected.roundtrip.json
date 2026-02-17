@@ -1,0 +1,205 @@
+{
+  "schema_version": "2",
+  "page_id": "1844969501",
+  "mdx_sha256": "fb4733fe5a0ebbcfe6a20af3b5c9f3d84a075a7b4d253f2e23260b5426a74d58",
+  "source_xhtml_sha256": "94e15b644935393ee8893708987d235462108a6e137afbf178f44f1411ac08a3",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "macro-toc[1]",
+      "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"e73631cc-f0eb-448b-9354-c7ec94a27e77\" ac:macro-id=\"7bdc2ece-abbc-4741-a900-a08feb04a9a2\"><ac:parameter ac:name=\"style\">none</ac:parameter></ac:structured-macro>",
+      "mdx_content_hash": "fcc8ac1511d6a276bd920cc13c666072875a70d6bc4d7259c8e99d2a1bf34115",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2 local-id=\"da628dd2-12f3-4651-ab59-c77494309797\">공통 리소스</h2>",
+      "mdx_content_hash": "6e7728abf78a94c9a3500a8baf1f65b2a77090824a3060bf179ffd7d77094348",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p local-id=\"7aeaf0a8-a18a-4de2-9abf-78d440337552\">모든 QueryPie 고객이 이용할 수 있는 자료입니다.</p>",
+      "mdx_content_hash": "85019d5465fad808bff24a529a2f174c0fca68608964f50d26a0bd25572c0dc0",
+      "mdx_line_range": [
+        10,
+        10
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "h3[1]",
+      "xhtml_fragment": "<h3 local-id=\"edf077b3-5199-49e6-8392-6fd115decf62\">Documentation</h3>",
+      "mdx_content_hash": "39869635a7c7cb4e06bcef86d3fa2b5a3f9e66570029f94f91ac7d7070be607d",
+      "mdx_line_range": [
+        12,
+        12
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p local-id=\"1405d1f5-07b4-4058-a676-97f9b3a66479\">이 웹사이트, <a href=\"http://docs.querypie.com\">docs.querypie.com</a> 에서 다음 자료를 확인할 수 있습니다:</p>",
+      "mdx_content_hash": "93c1c6d39eb0c9d4cb61580dcb414f0b93bee3b3932bd14d62384047ba086ec8",
+      "mdx_line_range": [
+        14,
+        14
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "ul[1]",
+      "xhtml_fragment": "<ul local-id=\"9ef82e17-4026-4cbe-9696-e3226a7357b1\"><li local-id=\"a4dae406-dcd8-40dc-95ec-424085d2a50c\"><p local-id=\"07de2fcc-6c47-4e84-a213-bc5e28bea2b8\">이용자 매뉴얼</p></li><li local-id=\"56c6e2fe-e0df-4f66-986e-684355eb9dbd\"><p local-id=\"27a26caa-20d9-47ff-85d8-97deba0d7593\">관리자 매뉴얼</p></li><li local-id=\"f877543f-6756-4036-9150-4c61e8fe1a7d\"><p local-id=\"bea6b957-601b-44fe-baa8-a8e4aaa3b2c0\">API Reference</p></li><li local-id=\"8b26ca51-0984-47fa-ada6-8b6467c18b9e\"><p local-id=\"fbe95a8b-88ee-4f0d-97ca-4f4bb4de47e9\">릴리스 노트</p></li></ul>",
+      "mdx_content_hash": "085dc830df54ef090b463f5b7fae4ffcbd30ee48748bfc127c1311c4e911806f",
+      "mdx_line_range": [
+        16,
+        19
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p local-id=\"711c3c85-02f2-422b-b768-5296b59156b5\">기술지원을 위한 <ac:link><ri:space ri:space-key=\"QCP\" /><ac:link-body>Confluence Space</ac:link-body></ac:link> 에서 상세한 기술지원 자료를 확인할 수 있습니다.</p>",
+      "mdx_content_hash": "5afb5c4e027fa482a3a000fdf17633a1728996715c3b48b1d36a7916954b97fb",
+      "mdx_line_range": [
+        21,
+        21
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "ul[2]",
+      "xhtml_fragment": "<ul local-id=\"1dc6fa88-2805-4e4e-a0de-3bb29c246c62\"><li local-id=\"30c1a3a7-8ebb-4c88-ae8d-31b94e59a68b\"><p local-id=\"dec58e05-5910-4e21-985b-560b5f70e229\"><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"QueryPie Architecture (KO)\" ri:version-at-save=\"6\" /><ac:link-body>QueryPie Architecture</ac:link-body></ac:link></p></li><li local-id=\"9f7893d4-abad-4a93-b9bf-14e5cedbd44c\"><p local-id=\"37c3db5a-5873-466c-808a-68a83e62f57a\"><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"Advanced Environment Setup (KO)\" ri:version-at-save=\"4\" /><ac:link-body>Advanced Environment Setup</ac:link-body></ac:link></p></li><li local-id=\"6b8334f2-b334-487b-9539-f19ae402bf96\"><p local-id=\"9e849d92-d344-4ec4-9478-f0bb3c64867e\"><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"Advanced Integration Guide (KO)\" ri:version-at-save=\"5\" /><ac:link-body>Advanced Integration Guide</ac:link-body></ac:link></p></li><li local-id=\"92aa4792-7e4f-4522-8fba-a66e26afbc58\"><p local-id=\"994e1893-08ee-4242-ba5b-0b803ef22dac\"><ac:link ac:local-id=\"2c6f6eb0-6fc2-4900-aa7f-6ecc3fd87d57\" ac:card-appearance=\"inline\"><ri:page ri:space-key=\"QCP\" ri:content-title=\"릴리스 버전 별 문서\" ri:version-at-save=\"1\" /><ac:link-body>릴리스 버전 별 문서</ac:link-body></ac:link></p></li><li local-id=\"4cb99bfb-1f32-4ed2-a2d0-a7c61ae9fc17\"><p local-id=\"683eb18e-d18b-418e-83cf-3fe165846630\"><ac:link><ri:page ri:space-key=\"QCP\" ri:content-title=\"Troubleshooting (KO)\" ri:version-at-save=\"5\" /><ac:link-body>Troubleshooting</ac:link-body></ac:link></p></li></ul>",
+      "mdx_content_hash": "b615c52c55a739e64730079b41893df725f5ffdeec327a7251f524aad4217eab",
+      "mdx_line_range": [
+        23,
+        27
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "h3[2]",
+      "xhtml_fragment": "<h3 local-id=\"44974faa-fab5-416c-87d5-664d7219f126\">Product Demo - YouTube</h3>",
+      "mdx_content_hash": "575190eb1ab5d24a0c4f0c1e2eb7e9eb4104b97915f525cfcce4870c1ab80ab3",
+      "mdx_line_range": [
+        29,
+        29
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p local-id=\"ff1d3c6f-ff30-4a5e-85c3-b78ee962bf03\"><a href=\"https://www.youtube.com/playlist?list=PLB6l6itD4YrpMXRtprvUdR3hIHVbT8IhZ\">Product Demo - YouTube</a> 채널에서 QueryPie ACP 제품의 여러 기능을 영상으로 살펴볼 수 있습니다.</p>",
+      "mdx_content_hash": "cb37ae9cf6b9a67d42bcf75ce7d1d5e36fc6b773df6c77f28525b634c6f246ed",
+      "mdx_line_range": [
+        31,
+        31
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "ul[3]",
+      "xhtml_fragment": "<ul local-id=\"44e8c253-aceb-45f0-bd97-f18771246887\"><li local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\">DAC: 데이터베이스 접근 제어 기능 튜토리얼</p></li><li local-id=\"6cc45ec1-65d8-4bd3-ace9-0924e0b5fc9c\"><p local-id=\"2d3aeeb4-6426-40cf-992c-17f8b59bafe8\">SAC: 서버 접근 제어 기능 튜토리얼</p></li><li local-id=\"de0dde4b-8ae2-4b41-b6ce-557f972db058\"><p local-id=\"52268ffc-bc5a-47f0-b1f0-3cd5ae6aa123\">KAC: Kubernetes 접근 제어 기능 튜토리얼</p></li><li local-id=\"ae112e65-e714-4dbf-b7a4-6013a99e2311\"><p local-id=\"27e21136-ba15-465f-b039-26163ddaa103\">General: SSO 통합, 감사 로그, BI 도구 연동 (Tableau, Redash)</p></li></ul>",
+      "mdx_content_hash": "dca6d4290941d8f11b04bacaf3877f4c859c4c8339f1c93becf5ade9e20a21d5",
+      "mdx_line_range": [
+        33,
+        36
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2 local-id=\"4561f9b5-2678-4159-8991-7ffbff223048\">커뮤니티 지원</h2>",
+      "mdx_content_hash": "71f602b035be9f52082b60e29d912b28321d1433edfd42bb264bbcd3e01b85eb",
+      "mdx_line_range": [
+        38,
+        38
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p local-id=\"6fe65f82-af0d-4894-b0ac-5508285bc762\">대상: Community Edition, Standard Edition 을 이용하는 고객</p>",
+      "mdx_content_hash": "25225599e62f48a3283b5c4d8749ab1464a74706664130989133baf7566dfcf8",
+      "mdx_line_range": [
+        40,
+        40
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "h3[3]",
+      "xhtml_fragment": "<h3 local-id=\"68d99482-0c37-450d-892e-2143a15addba\">GitHub Discussion</h3>",
+      "mdx_content_hash": "b3aa0c081f9a75d18272f5913ab62e77a28cd33bfab69d738860bef978529ef5",
+      "mdx_line_range": [
+        42,
+        42
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 14,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p local-id=\"328c698b-d652-484a-9a2b-21addf7e26fc\">설치 및 사용 중 궁금한 점을 <a href=\"https://github.com/querypie/querypie-community/discussions\">GitHub Discussion</a> 에서 문의하거나, 다른 사용자들과 경험을 공유할 수 있습니다.</p>",
+      "mdx_content_hash": "90a23bcd55a971d1c034ea7e1bb3ab9eb3dd7805b58536dc5c5e641a6a034893",
+      "mdx_line_range": [
+        44,
+        44
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 15,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p local-id=\"bd55c917-a378-4083-8710-9e8b75b3a7b3\" />",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}

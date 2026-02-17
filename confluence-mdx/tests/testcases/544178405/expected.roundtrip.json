@@ -1,0 +1,181 @@
+{
+  "schema_version": "2",
+  "page_id": "544178405",
+  "mdx_sha256": "f772f1250c30b99ffab64e2f29740d077da38eb3377a616fb562170530388488",
+  "source_xhtml_sha256": "4fe7ffbbcee2a5a22ee29bc64cd3f4eaac99a48ae71bae70ed58b41e562e246e",
+  "blocks": [
+    {
+      "block_index": 0,
+      "xhtml_xpath": "h2[1]",
+      "xhtml_fragment": "<h2>환영합니다.</h2>",
+      "mdx_content_hash": "f28e55048a2a0cac36f9dcc923232ec3919244c5a2a4c47127893c7b01817017",
+      "mdx_line_range": [
+        6,
+        6
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 1,
+      "xhtml_xpath": "p[1]",
+      "xhtml_fragment": "<p>QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스 및 권한, 솔루션 보안, 알림 설정 등 쿼리파이 전반 솔루션 관리를 진행할 수 있습니다. 공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게 보여지는 설정 메뉴가 상이합니다.</p>",
+      "mdx_content_hash": "253483cd7cb7ecf82eb0d2d61fb602aaf56ad5fba9e25419f1798fb9f82a5104",
+      "mdx_line_range": [
+        8,
+        8
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 2,
+      "xhtml_xpath": "p[2]",
+      "xhtml_fragment": "<p>관리자 페이지를 진입하기 위해서는 먼저 QueryPie 로그인을 진행합니다. 로그인이 정상적으로 완료되었다면 사용자 대시보드 이동하게 되며 만약 QueryPie 관리자 역할을 할당받은 사용자일 경우 우측 상단에 <code>Go to Admin Page</code> 버튼이 표시됩니다. 이 버튼을 클릭하여 관리자 페이지를 새 탭으로 열 수 있습니다. </p>",
+      "mdx_content_hash": "129da1224b4c0e76211cce8755e773fe4f2f63ceeddf2fedcb3a9c727275e502",
+      "mdx_line_range": [
+        10,
+        11
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 3,
+      "xhtml_xpath": "ac:image[1]",
+      "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"98\" ac:original-width=\"698\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-01 오후 2.50.06.png\" ac:width=\"762\"><ri:attachment ri:filename=\"스크린샷 2024-08-01 오후 2.50.06.png\" ri:version-at-save=\"1\" /><ac:caption><p>GNB 내 관리자 페이지 진입점</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
+      "mdx_content_hash": "3008887a039218bfd790a581bf05d4ff5ba8189378f0f2844bc3d872dd10c84a",
+      "mdx_line_range": [
+        13,
+        15
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 4,
+      "xhtml_xpath": "p[3]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "5bfebae731a0135bfe259889a6e87abd876c0a12725153da3f8f1062e00b545e",
+      "mdx_line_range": [
+        17,
+        22
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 5,
+      "xhtml_xpath": "h2[2]",
+      "xhtml_fragment": "<h2>QueryPie 관리자 설정이 처음이신가요?</h2>",
+      "mdx_content_hash": "2c0bef50efd49b303da69a1839a94cd7a65cc4737023b705b8230c454ceca4a0",
+      "mdx_line_range": [
+        25,
+        25
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 6,
+      "xhtml_xpath": "p[4]",
+      "xhtml_fragment": "<p>Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 기본적으로 설정해야하는 항목들이 있습니다. 특히 보안 설정, 사용자 설정, 관리자 역할 할당은 필수적으로 설정하시는 것을 권장해 드립니다. </p>",
+      "mdx_content_hash": "0d457e7d51227aa0f598bfe369790f475e553a1cae82d706870b7e78f2ec0114",
+      "mdx_line_range": [
+        27,
+        28
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 7,
+      "xhtml_xpath": "table[1]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"96d34ea4-8772-49af-9ba2-14ea36b1f3e1\"><colgroup><col /><col style=\"width: 242.0px;\" /><col style=\"width: 518.0px;\" /></colgroup><tbody><tr><th class=\"numberingColumn\" /><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"><p style=\"text-align: center;\"><strong>설정 순서</strong></p></th><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"><p style=\"text-align: center;\"><strong>설정 항목</strong></p></th></tr><tr><td class=\"numberingColumn\">1</td><th><p><strong>기본 정보 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"General​\" ri:version-at-save=\"35\" /><ac:link-body>General</ac:link-body></ac:link> </p><ul><li><p>회사 이름, 타임존, 날짜 표기 방식 등</p></li></ul></li></ul></td></tr><tr><td class=\"numberingColumn\">2</td><th><p><strong>보안 정보 설정하기 </strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Security\" ri:version-at-save=\"39\" /><ac:link-body>Security</ac:link-body></ac:link> </p><ul><li><p>잠금 정책, 비밀번호 변경 주기, 타임아웃 등</p></li></ul></li><li><p><ac:link><ri:page ri:content-title=\"Allowed Zones\" ri:version-at-save=\"9\" /><ac:link-body>Allowed Zones</ac:link-body></ac:link> </p><ul><li><p>허용할 IP 대역 생성 및 관리</p></li></ul></li></ul></td></tr><tr><td class=\"numberingColumn\">3</td><th><p><strong>사용자 및 사용자 그룹 생성하기</strong></p></th><td><ul><li><p>Authentication </p><ul><li><p><ac:link><ri:page ri:content-title=\"LDAP 연동하기\" ri:version-at-save=\"13\" /><ac:link-body>LDAP 연동하기</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Okta 연동하기\" ri:version-at-save=\"12\" /><ac:link-body>Okta 연동하기 </ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"AWS SSO 연동하기\" ri:version-at-save=\"9\" /><ac:link-body>AWS SSO 연동하기 </ac:link-body></ac:link></p></li></ul></li><li><p>Users </p><ul><li><p><ac:link><ri:page ri:content-title=\"사용자 프로필\" ri:version-at-save=\"13\" /><ac:link-body>사용자 프로필 </ac:link-body></ac:link></p></li></ul></li><li><p><ac:link><ri:page ri:content-title=\"Groups\" ri:version-at-save=\"10\" /><ac:link-body>Groups</ac:link-body></ac:link> </p></li></ul></td></tr><tr><td class=\"numberingColumn\">4</td><th><p><strong>관리자 역할 할당하기 </strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Roles\" ri:version-at-save=\"9\" /><ac:link-body>Roles</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">5</td><th><p><strong>결재 규칙 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Approval Rules\" ri:version-at-save=\"22\" /><ac:link-body>Approval Rules</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">6</td><th><p><strong>알림 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Channels\" ri:version-at-save=\"17\" /><ac:link-body>Channels</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Alerts\" ri:version-at-save=\"22\" /><ac:link-body>Alerts</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">7</td><th><p><strong>외부 보안 솔루션 연동하기 </strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Integrations\" ri:version-at-save=\"8\" /><ac:link-body>Integrations</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table>",
+      "mdx_content_hash": "c14d9173ff369cd34f7efaa564f53ecd27b82ae601f009527df7b98f0ad2d3fa",
+      "mdx_line_range": [
+        30,
+        136
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 8,
+      "xhtml_xpath": "p[5]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "aa1a1003324db99621c5c0151482a7259802325ae0e8c9412943d3b6e0026c5a",
+      "mdx_line_range": [
+        139,
+        139
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 9,
+      "xhtml_xpath": "h2[3]",
+      "xhtml_fragment": "<h2>자, 이제 기본 설정을 마쳤습니다. 이제 서비스별 설정을 해볼까요?</h2>",
+      "mdx_content_hash": "86f67c1f133ff5c720387dcf066e0c3bc62e0e630d6fcfd37d7e6c3090f2b71a",
+      "mdx_line_range": [
+        141,
+        144
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 10,
+      "xhtml_xpath": "p[6]",
+      "xhtml_fragment": "<p>기본 설정을 마쳤다면 서비스별 설정이 남았습니다. QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요. 서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인하실 수 있습니다. 뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.</p>",
+      "mdx_content_hash": "55f5aba0d2250b845d234cfdab934b04cef0d9a4fe0fb3107d79723c1a67417a",
+      "mdx_line_range": [
+        146,
+        216
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 11,
+      "xhtml_xpath": "table[2]",
+      "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"1c770267-da7f-48dc-b1e3-817744eeec38\"><colgroup><col /><col style=\"width: 344.0px;\" /><col style=\"width: 415.0px;\" /></colgroup><tbody><tr><th class=\"numberingColumn\" /><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"><p style=\"text-align: center;\"><strong>설정 순서</strong></p></th><th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"><p style=\"text-align: center;\"><strong>설정 항목</strong></p></th></tr><tr><td class=\"numberingColumn\">1</td><th><p><strong>Databased Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Connection Management\" ri:version-at-save=\"17\" /><ac:link-body>Connection Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"DB Access Control​\" ri:version-at-save=\"7\" /><ac:link-body>DB Access Control</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Policies\" ri:version-at-save=\"14\" /><ac:link-body>Policies</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Ledger Management\" ri:version-at-save=\"5\" /><ac:link-body>Ledger Management</ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">2</td><th><p><strong>Server Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Connection Management​\" ri:version-at-save=\"10\" /><ac:link-body>Connection Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Server Access Control\" ri:version-at-save=\"12\" /><ac:link-body>Server Access Control </ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">3</td><th><p><strong>Kubernetes Access Control 설정하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"Connection Management​​\" ri:version-at-save=\"11\" /><ac:link-body>Connection Management</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"K8s Access Control\" ri:version-at-save=\"8\" /><ac:link-body>K8s Access Control </ac:link-body></ac:link></p></li></ul></td></tr><tr><td class=\"numberingColumn\">4</td><th><p><strong>감사 로그 확인하기</strong></p></th><td><ul><li><p><ac:link><ri:page ri:content-title=\"General Logs\" ri:version-at-save=\"14\" /><ac:link-body>General Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Database Logs\" ri:version-at-save=\"6\" /><ac:link-body>Database Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Server Logs\" ri:version-at-save=\"6\" /><ac:link-body>Server Logs</ac:link-body></ac:link></p></li><li><p><ac:link><ri:page ri:content-title=\"Kubernetes Logs\" ri:version-at-save=\"8\" /><ac:link-body>Kubernetes Logs</ac:link-body></ac:link></p></li></ul></td></tr></tbody></table>",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 12,
+      "xhtml_xpath": "p[7]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    },
+    {
+      "block_index": 13,
+      "xhtml_xpath": "p[8]",
+      "xhtml_fragment": "<p />",
+      "mdx_content_hash": "",
+      "mdx_line_range": [
+        0,
+        0
+      ],
+      "lost_info": {}
+    }
+  ],
+  "separators": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "document_envelope": {
+    "prefix": "",
+    "suffix": ""
+  }
+}
