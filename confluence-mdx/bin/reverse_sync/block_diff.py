@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Tuple
 
-from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.text_normalizer import normalize_mdx_to_plain, collapse_ws
+from mdx_to_storage.parser import Block as MdxBlock
+from text_utils import normalize_mdx_to_plain, collapse_ws
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 

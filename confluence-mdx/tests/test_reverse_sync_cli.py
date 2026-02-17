@@ -8,7 +8,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
 )
-from reverse_sync.text_normalizer import normalize_mdx_to_plain
+from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
     align_chars, find_insert_pos, transfer_text_changes,
 )

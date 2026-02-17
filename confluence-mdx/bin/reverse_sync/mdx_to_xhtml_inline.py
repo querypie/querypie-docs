@@ -6,6 +6,8 @@ MDX 블록의 content를 파싱하여 대상 XHTML 요소의 innerHTML로
 import re
 from typing import List
 
+from mdx_to_storage.inline import convert_inline
+
 
 def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
     """MDX 블록 content → XHTML inner HTML.
@@ -26,7 +28,7 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
     elif block_type == 'code_block':
         return _convert_code_block(text)
     else:
-        return _convert_inline(text)
+        return convert_inline(text)
 
 
 def _convert_heading(text: str) -> str:
@@ -49,7 +51,7 @@ def _convert_paragraph(text: str) -> str:
         line = line.strip()
         if not line:
             continue
-        converted.append(_convert_inline(line))
+        converted.append(convert_inline(line))
     return ' '.join(converted)
 
 
@@ -62,39 +64,6 @@ def _convert_code_block(text: str) -> str:
     if lines and lines[-1].strip() == '```':
         lines = lines[:-1]
     return '\n'.join(lines)
-
-
-def _convert_inline(text: str) -> str:
-    """인라인 마크다운 → XHTML 변환.
-
-    처리 순서 (충돌 방지):
-    1. code span (`text` → placeholder) — 내부가 bold/link 처리되지 않도록 보호
-    2. bold (**text** → <strong>text</strong>)
-    3. link ([text](url) → <a href="url">text</a>)
-    4. code span placeholder 복원 → <code>text</code>
-    5. HTML entities (&gt;, &lt;) — 이미 XHTML 형식이므로 그대로 유지
-    6. <br/> — 그대로 유지
-    """
-    # 1. code span 추출 → placeholder
-    code_spans: List[str] = []
-    def _replace_code(m):
-        code_spans.append(m.group(1))
-        return f'\x00CODE{len(code_spans) - 1}\x00'
-    text = re.sub(r'`([^`]+)`', _replace_code, text)
-
-    # 2. bold
-    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
-
-    # 3. link
-    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', text)
-
-    # 4. code span placeholder 복원
-    def _restore_code(m):
-        idx = int(m.group(1))
-        return f'<code>{code_spans[idx]}</code>'
-    text = re.sub(r'\x00CODE(\d+)\x00', _restore_code, text)
-
-    return text
 
 
 def _convert_code_spans(text: str) -> str:
@@ -171,7 +140,7 @@ def _render_list_items(items: List[dict]) -> str:
     i = 0
     while i < len(items):
         item = items[i]
-        inner = _convert_inline(item['content'])
+        inner = convert_inline(item['content'])
 
         # 다음 아이템이 더 깊은 indent인지 확인 → 중첩 리스트
         children_start = i + 1

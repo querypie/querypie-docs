@@ -295,31 +295,32 @@ MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 d
 
 | 모듈 | 줄 수 | 역할 |
 |------|-------|------|
-| `mdx_block_parser.py` | 130 | MDX → MdxBlock 시퀀스 파싱 |
+| `mdx_block_parser.py` | 3 | Backward-compat re-export (`mdx_to_storage.parser` 위임) |
 | `block_diff.py` | 90 | 두 MdxBlock 시퀀스 diff |
 | `mapping_recorder.py` | 210 | XHTML → BlockMapping 추출 |
 | `sidecar.py` | 524 | Roundtrip sidecar + 매핑 인덱스 |
 | `fragment_extractor.py` | 204 | XHTML byte-exact 프래그먼트 추출 |
 | `patch_builder.py` | 547 | BlockChange → XHTML 패치 변환 |
-| `text_normalizer.py` | 97 | MDX 블록 → 일반 텍스트 정규화 |
+| `text_normalizer.py` | 7 | Backward-compat re-export (`text_utils` 위임) |
 | `text_transfer.py` | 79 | 텍스트 변경을 XHTML에 전사 |
 | `xhtml_patcher.py` | 333 | 패치를 XHTML에 적용 |
 | `roundtrip_verifier.py` | 174 | 패치 결과 라운드트립 검증 |
-| `mdx_to_xhtml_inline.py` | 271 | 삽입 패치용 MDX → XHTML 블록 변환 |
+| `mdx_to_xhtml_inline.py` | 240 | 삽입 패치용 MDX → XHTML 블록 변환 (`mdx_to_storage.inline` 활용) |
 | `rehydrator.py` | 149 | Sidecar 기반 무손실 XHTML 복원 (fast path + splice + fallback) |
 | `byte_verify.py` | 126 | Byte-equal 검증 (document-level + forced-splice) |
 | `confluence_client.py` | 65 | Confluence REST API 클라이언트 |
 
 ### 단계별 상세
 
-#### Step 1: MDX 블록 파싱 (`mdx_block_parser.py`)
+#### Step 1: MDX 블록 파싱 (`mdx_to_storage/parser.py`)
 
-MDX 텍스트를 줄 단위 상태머신으로 파싱하여 블록 시퀀스를 생성한다.
+MDX 텍스트를 줄 단위 상태머신으로 파싱하여 블록 시퀀스를 생성한다. (`mdx_block_parser.py`는 backward-compat re-export 래퍼)
 
 ```python
-MdxBlock(type, content, line_start, line_end)
+Block(type, content, level, language, children, attrs, line_start, line_end)
 # type: "frontmatter" | "import_statement" | "heading" | "paragraph" |
-#       "code_block" | "list" | "html_block" | "empty"
+#       "code_block" | "list" | "html_block" | "callout" | "figure" |
+#       "details" | "badge" | "table" | "blockquote" | "empty"
 ```
 
 #### Step 2: 블록 Diff (`block_diff.py`)
@@ -484,8 +485,8 @@ Backward Converter의 출력을 원본 `page.xhtml`과 비교한다. XHTML을 �
 | 모듈 | 역할 |
 |------|------|
 | `mdx_to_storage_xhtml_verify.py` | 테스트케이스 검증 + 실패 원인 분류 (P1/P2/P3) |
-| `mdx_to_storage_baseline.py` | 베이스라인 측정 + 리포트 생성 |
-| `mdx_to_storage_final_verify.py` | 최종 검증 + 목표 달성 확인 |
+| `mdx_to_storage_xhtml_cli.py final-verify` | 최종 검증 + 목표 달성 확인 (CLI 서브커맨드) |
+| `mdx_to_storage_xhtml_cli.py baseline` | 베이스라인 측정 + 리포트 생성 (CLI 서브커맨드) |
 
 **실패 원인 분류:** diff 패턴을 분석하여 자동으로 이슈 카테고리를 분류한다.
 - **P1**: 내부 링크 미해석, 테이블 구조 불일치 등 (기능적 오류)
@@ -611,13 +612,14 @@ tests/testcases/
 |--------|------|
 | `mdx_to_storage_xhtml_cli.py convert <mdx>` | MDX → XHTML 변환 |
 | `mdx_to_storage_xhtml_cli.py verify <mdx> --expected <xhtml>` | 단일 케이스 검증 |
-| `mdx_to_storage_xhtml_cli.py batch-verify` | 테스트케이스 배치 검증 |
+| `mdx_to_storage_xhtml_cli.py batch-verify` | 테스트케이스 배치 검증 (정규화 diff 기반) |
+| `mdx_to_storage_xhtml_cli.py final-verify` | 최종 검증 + 목표 달성 확인 리포트 |
+| `mdx_to_storage_xhtml_cli.py baseline` | Phase 1 baseline 측정 리포트 |
 
 ### 검증 (Verify)
 
 | 명령어 | 설명 |
 |--------|------|
-| `mdx_to_storage_xhtml_verify_cli.py --testcases-dir <dir>` | 정규화 diff 기반 배치 검증 |
 | `mdx_to_storage_xhtml_byte_verify_cli.py --testcases-dir <dir>` | byte-equal 배치 검증 |
 
 ### Sidecar 생성

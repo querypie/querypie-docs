@@ -8,12 +8,12 @@ from typing import Optional
 
 from .inline import convert_heading_inline, convert_inline
 from .link_resolver import LinkResolver
-from .parser import Block
+from .parser import Block, HEADING_PATTERN
 
 
 _ORDERED_LIST_PATTERN = re.compile(r"^\d+\.\s+(.*)$")
 _UNORDERED_LIST_PATTERN = re.compile(r"^[-*+]\s+(.*)$")
-_HEADING_LINE_PATTERN = re.compile(r"^(#{1,6})\s+(.*)$")
+_HEADING_LINE_PATTERN = HEADING_PATTERN
 _CALLOUT_TYPE_TO_MACRO = {
     "default": "tip",
     "info": "info",

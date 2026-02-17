@@ -24,7 +24,7 @@ bin/
 
 ---
 
-### 2.1 [우선순위 1] MDX 블록 파서 중복
+### 2.1 [완료] MDX 블록 파서 중복
 
 **중복 파일:**
 - `reverse_sync/mdx_block_parser.py` (129줄) — `MdxBlock` 데이터클래스, `parse_mdx_blocks()`
@@ -74,9 +74,11 @@ class Block:
 
 **예상 절감:** ~80줄 (mdx_block_parser.py의 대부분을 parser.py로 통합)
 
+**실행 결과:** `parser.py`의 `Block`에 `line_start`/`line_end` 필드를 추가하고, `parse_mdx_blocks()` 호환 함수를 추가했습니다. `mdx_block_parser.py`는 backward-compat re-export 래퍼로 전환했습니다. 8개 파일의 import 경로를 업데이트했습니다.
+
 ---
 
-### 2.2 [우선순위 2] 인라인 변환기 중복
+### 2.2 [완료] 인라인 변환기 중복
 
 **중복 파일:**
 - `reverse_sync/mdx_to_xhtml_inline.py` (270줄) — LinkResolver 통합, heading 전용 처리
@@ -132,9 +134,11 @@ text = re.sub(r'\x00CODE(\d+)\x00', lambda m: ..., text)
 
 **예상 절감:** ~50줄
 
+**실행 결과:** `mdx_to_xhtml_inline.py`의 자체 `_convert_inline()`을 삭제하고 `mdx_to_storage.inline.convert_inline`을 import하여 사용하도록 변경했습니다. 블록 레벨 함수(`mdx_block_to_inner_xhtml()`, `mdx_block_to_xhtml_element()`)는 유지합니다.
+
 ---
 
-### 2.3 [우선순위 3] 텍스트 정규화 유틸리티 중복
+### 2.3 [완료] 텍스트 정규화 유틸리티 중복
 
 **중복 파일:**
 - `reverse_sync/text_normalizer.py` (97줄)
@@ -179,6 +183,8 @@ def _strip_all_ws(text: str) -> str:
 4. `sidecar.py`의 `_strip_all_ws()`를 `text_utils.strip_for_compare()`로 대체
 
 **예상 절감:** ~40줄 (text_normalizer.py 삭제 후 text_utils.py 확장)
+
+**실행 결과:** `text_normalizer.py`의 함수들(`strip_for_compare`, `normalize_mdx_to_plain`, `collapse_ws`, `strip_list_marker`, `EMOJI_RE`)을 `text_utils.py`로 이동했습니다. `text_normalizer.py`는 backward-compat re-export 래퍼로 전환했습니다. 5개 파일의 import 경로를 업데이트했습니다.
 
 ---
 
@@ -335,35 +341,29 @@ def _extract_code_language(content: str) -> str:
 
 ## 3. 리팩토링 로드맵
 
-### Phase 1: 공용 모듈 생성 (기반 작업)
+### Phase 1: 공용 모듈 생성 (기반 작업) — **부분 완료**
 
-```
-bin/shared/
-├── __init__.py
-├── models.py          # MdxBlock, ListItem 등 통합 데이터 모델
-├── patterns.py        # HEADING_RE, LIST_RE 등 공통 regex
-└── (text_utils.py 확장)  # text_normalizer.py 함수들 흡수
-```
+`text_utils.py` 확장 완료. `bin/shared/` 디렉토리 생성은 보류 (현재 규모에서는 불필요).
 
-### Phase 2: MDX 파서 통합 (우선순위 1)
+- `emitter.py`의 `_HEADING_LINE_PATTERN`을 `parser.py`의 `HEADING_PATTERN`에서 import하도록 변경 완료.
 
-1. `mdx_to_storage/parser.py`의 `Block`에 `line_start`, `line_end` 필드 추가
-2. `reverse_sync/mdx_block_parser.py`의 호출부를 `mdx_to_storage/parser.py`로 전환
-3. `mdx_block_parser.py` 삭제 또는 얇은 래퍼로 전환
+### Phase 2: MDX 파서 통합 (우선순위 1) — **완료**
 
-### Phase 3: 인라인 변환기 통합 (우선순위 2)
+1. ~~`mdx_to_storage/parser.py`의 `Block`에 `line_start`, `line_end` 필드 추가~~ ✓
+2. ~~`reverse_sync/mdx_block_parser.py`의 호출부를 `mdx_to_storage/parser.py`로 전환~~ ✓
+3. ~~`mdx_block_parser.py` 얇은 래퍼로 전환~~ ✓
 
-1. `mdx_to_storage/inline.py`에 `***bold italic***` 패턴 추가
-2. `reverse_sync/mdx_to_xhtml_inline.py`가 `inline.py`를 import하여 확장
-3. 코드 스팬 추출/복원 로직을 공유
+### Phase 3: 인라인 변환기 통합 (우선순위 2) — **완료**
 
-### Phase 4: 텍스트 유틸리티 통합 (우선순위 3)
+1. ~~`reverse_sync/mdx_to_xhtml_inline.py`가 `inline.py`의 `convert_inline`을 import하여 사용~~ ✓
+2. ~~자체 `_convert_inline()` 삭제~~ ✓
 
-1. `text_normalizer.py`의 모든 함수를 `text_utils.py`로 이관
-2. `sidecar.py`의 `_strip_all_ws()`를 `text_utils`로 대체
-3. `text_normalizer.py` 삭제
+### Phase 4: 텍스트 유틸리티 통합 (우선순위 3) — **완료**
 
-### Phase 5: 리스트/사이드카/모델 정리 (우선순위 4-7)
+1. ~~`text_normalizer.py`의 모든 함수를 `text_utils.py`로 이관~~ ✓
+2. ~~`text_normalizer.py`를 re-export 래퍼로 전환~~ ✓
+
+### Phase 5: 리스트/사이드카/모델 정리 (우선순위 4-7) — 미착수
 
 1. 공통 리스트 파서 모듈 생성
 2. 사이드카 매핑의 공통 골격 추출
@@ -371,16 +371,16 @@ bin/shared/
 
 ## 4. 요약
 
-| 우선순위 | 대상 | 파일 쌍 | 예상 절감 | 위험도 |
-|---------|------|---------|----------|--------|
-| 1 | MDX 블록 파서 | `mdx_block_parser.py` ↔ `parser.py` | ~80줄 | 중간 |
-| 2 | 인라인 변환기 | `mdx_to_xhtml_inline.py` ↔ `inline.py` | ~50줄 | 중간 |
-| 3 | 텍스트 정규화 | `text_normalizer.py` ↔ `text_utils.py` | ~40줄 | 낮음 |
-| 4 | 리스트 파싱/렌더링 | `emitter.py` ↔ `mdx_to_xhtml_inline.py` | ~50줄 | 중간 |
-| 5 | 사이드카 매핑 | `sidecar_mapping.py` ↔ `sidecar.py` | ~40줄 | 높음 |
-| 6 | 데이터 모델 | 5개 파일에 분산 | ~20줄 | 중간 |
-| 7 | 코드 블록 추출 | `emitter.py` ↔ `mdx_to_xhtml_inline.py` | ~10줄 | 낮음 |
-| | **합계** | | **~290줄** | |
+| 우선순위 | 대상 | 파일 쌍 | 예상 절감 | 상태 |
+|---------|------|---------|----------|------|
+| 1 | MDX 블록 파서 | `mdx_block_parser.py` ↔ `parser.py` | ~80줄 | **완료** |
+| 2 | 인라인 변환기 | `mdx_to_xhtml_inline.py` ↔ `inline.py` | ~50줄 | **완료** |
+| 3 | 텍스트 정규화 | `text_normalizer.py` ↔ `text_utils.py` | ~40줄 | **완료** |
+| 4 | 리스트 파싱/렌더링 | `emitter.py` ↔ `mdx_to_xhtml_inline.py` | ~50줄 | 미착수 |
+| 5 | 사이드카 매핑 | `sidecar_mapping.py` ↔ `sidecar.py` | ~40줄 | 미착수 |
+| 6 | 데이터 모델 | 5개 파일에 분산 | ~20줄 | 미착수 |
+| 7 | 코드 블록 추출 | `emitter.py` ↔ `mdx_to_xhtml_inline.py` | ~10줄 | 미착수 |
+| | **합계** | | **~290줄** (완료 ~170줄) | |
 
 ### 리팩토링 시 주의사항
 

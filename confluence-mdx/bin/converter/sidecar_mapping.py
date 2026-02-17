@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Set
 import yaml
 
 from reverse_sync.mapping_recorder import BlockMapping, record_mapping
-from reverse_sync.mdx_block_parser import MdxBlock, parse_mdx_blocks
+from mdx_to_storage.parser import Block as MdxBlock, parse_mdx_blocks
 
 logger = logging.getLogger(__name__)
 

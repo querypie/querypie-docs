@@ -33,8 +33,8 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 | `xhtml_beautify_diff.py` | **사용 중** | `reverse_sync_cli.py`, `run-tests.sh` |
 | `restore_alt_from_diff.py` | **사용 중** | 독립 실행 유틸리티 |
 | `image_status.py` | **사용 중** | `entrypoint.sh` (Docker) |
-| `mdx_to_storage_phase1_baseline_cli.py` | **사용 중** | Task 1.7 baseline CLI, 테스트 존재 |
-| `mdx_to_storage_xhtml_verify_cli.py` | **사용 중** | `mdx_to_storage_baseline.py`에서 호출 |
+| `mdx_to_storage_phase1_baseline_cli.py` | **삭제됨** | `mdx_to_storage_xhtml_cli.py baseline` 서브커맨드로 통합 |
+| `mdx_to_storage_xhtml_verify_cli.py` | **삭제됨** | `mdx_to_storage_xhtml_cli.py batch-verify`로 통합 |
 
 ## 3. 함수 수준 불필요 코드
 
@@ -64,47 +64,18 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 
 **판단:** 삭제 대상이 아닙니다.
 
-### 3.3 [삭제 검토] `mdx_to_storage_xhtml_cli.py` — 중복 CLI 래퍼 (194줄)
+### 3.3 [완료] CLI 통합 — `mdx_to_storage_xhtml_cli.py`를 단일 진입점으로
 
-**위치:** `bin/mdx_to_storage_xhtml_cli.py`
+**실행 결과:**
+- `mdx_to_storage_xhtml_cli.py`를 단일 CLI 진입점으로 확장했습니다.
+- `convert`, `verify`, `batch-verify`, `final-verify`, `baseline` 5개 서브커맨드를 제공합니다.
+- 다음 파일들을 흡수 후 삭제했습니다:
+  - `mdx_to_storage_xhtml_verify_cli.py` (173줄) → `batch-verify` 서브커맨드로 흡수
+  - `mdx_to_storage_phase1_baseline_cli.py` (80줄) → `baseline` 서브커맨드로 흡수
+  - `reverse_sync/mdx_to_storage_final_verify.py` (137줄) → `final-verify` 서브커맨드로 흡수
+  - `reverse_sync/mdx_to_storage_baseline.py` (118줄) → `baseline` 서브커맨드에 인라인
 
-**현황:**
-- `convert`, `verify`, `batch-verify` 서브커맨드를 제공합니다.
-- `batch-verify`와 `verify` 기능은 `mdx_to_storage_xhtml_verify_cli.py`(173줄)에서도 동일하게 제공합니다.
-- 유일한 고유 기능은 `convert` 서브커맨드이나, 이는 `emit_document(parse_mdx(...))`의 단순 래퍼입니다.
-- README.md나 문서에서 참조되지 않으며, 테스트 파일(`test_mdx_to_storage_xhtml_cli.py`)만 import합니다.
-
-**권장:** `mdx_to_storage_xhtml_verify_cli.py`가 정규 진입점입니다. `convert` 기능이 필요하면 verify CLI에 서브커맨드로 추가하고, 이 파일을 삭제하는 것을 검토합니다.
-
-**신뢰도:** 높음 | **예상 삭제:** 194줄
-
-### 3.4 [삭제 검토] `reverse_sync/mdx_to_storage_final_verify.py` — 래퍼 모듈 (137줄)
-
-**위치:** `bin/reverse_sync/mdx_to_storage_final_verify.py`
-
-**현황:**
-- `mdx_to_storage_xhtml_verify.py`의 핵심 검증 로직을 단순 래핑합니다.
-- `run_final_verify()`, `render_final_verify_report()` 등은 `VerificationSummary`의 얇은 래퍼입니다.
-- 테스트 파일(`test_mdx_to_storage_final_verify.py`)만 참조합니다.
-- Phase 3 Task 3.5에서 생성된 태스크 전용 모듈입니다.
-
-**권장:** 태스크 완료 후 검증 리포트 기능을 `mdx_to_storage_xhtml_verify.py`에 통합하고 삭제를 검토합니다.
-
-**신뢰도:** 중간-높음 | **예상 삭제:** 137줄
-
-### 3.5 [삭제 검토] `reverse_sync/mdx_to_storage_baseline.py` — 래퍼 모듈 (118줄)
-
-**위치:** `bin/reverse_sync/mdx_to_storage_baseline.py`
-
-**현황:**
-- `mdx_to_storage_xhtml_verify_cli.py`를 subprocess로 호출하여 결과를 파싱하는 래퍼입니다.
-- `mdx_to_storage_phase1_baseline_cli.py`에서만 import됩니다.
-- Phase 1 baseline 측정 전용 유틸리티로, Phase 1 완료 후 활용도가 낮습니다.
-- CLI 출력을 regex로 파싱하는 취약한 구조입니다.
-
-**권장:** Phase 1 baseline이 더 이상 업데이트되지 않으면 `mdx_to_storage_phase1_baseline_cli.py`와 함께 삭제합니다.
-
-**신뢰도:** 중간 | **예상 삭제:** 118줄 (+ CLI 80줄)
+**삭제 줄수:** ~508줄 (4개 파일 + 관련 테스트 파일 삭제)
 
 ### 3.6 [삭제 검토] `reverse_sync/test_verify.py` — 위치 부적절한 CLI 래퍼 (67줄)
 
@@ -158,29 +129,34 @@ confluence-mdx 코드베이스에서 삭제 가능한 불필요한 구현을 탐
 | `_debug_tags` 빈 집합 및 분기 | `converter/core.py` | ~10줄 | 유지 |
 | 주석 처리된 디버그 코드 | `converter/core.py` | ~4줄 | 유지 |
 
-### 6.2 통합 후 삭제 가능 (중복 래퍼)
+### 6.2 통합 완료 (삭제됨)
+
+| 항목 | 파일 | 상태 |
+|------|------|------|
+| CLI 통합 | `mdx_to_storage_xhtml_verify_cli.py` | **삭제** → `batch-verify` 서브커맨드로 흡수 |
+| CLI 통합 | `mdx_to_storage_phase1_baseline_cli.py` | **삭제** → `baseline` 서브커맨드로 흡수 |
+| 래퍼 모듈 | `reverse_sync/mdx_to_storage_final_verify.py` | **삭제** → `final-verify` 서브커맨드로 흡수 |
+| 래퍼 모듈 | `reverse_sync/mdx_to_storage_baseline.py` | **삭제** → `baseline` 서브커맨드에 인라인 |
+
+### 6.3 미처리 항목
 
 | 항목 | 파일 | 예상 삭제 줄수 | 신뢰도 |
 |------|------|---------------|--------|
-| 중복 CLI 래퍼 | `mdx_to_storage_xhtml_cli.py` | ~194줄 | 높음 |
 | 위치 부적절 CLI 래퍼 | `reverse_sync/test_verify.py` | ~67줄 | 높음 |
-| 래퍼 모듈 (final verify) | `reverse_sync/mdx_to_storage_final_verify.py` | ~137줄 | 중간-높음 |
-| 래퍼 모듈 (baseline) | `reverse_sync/mdx_to_storage_baseline.py` | ~118줄 | 중간 |
-| baseline CLI | `mdx_to_storage_phase1_baseline_cli.py` | ~80줄 | 중간 |
-| **소계** | | **~596줄** | |
 
-### 6.3 전체 합계
+### 6.4 전체 합계
 
-| 분류 | 예상 삭제 줄수 |
-|------|---------------|
+| 분류 | 줄수 |
+|------|------|
 | 수동 디버깅용 코드 (유지) | 0줄 (삭제 안 함) |
-| 통합 후 삭제 가능 | ~596줄 |
-| **총계** | **~596줄** |
+| 통합 완료 (삭제됨) | ~508줄 |
+| 미처리 | ~67줄 |
 
 ## 7. 결론
 
 confluence-mdx 코드베이스는 전반적으로 잘 관리되고 있으며, 완전히 미사용인 모듈은 없습니다.
 
 - **즉시 삭제 가능한 dead code는 없습니다.** `converter/core.py`의 디버그 관련 코드(`_debug_markdown`, `_debug_tags`)는 수동 디버깅용으로 의도적으로 유지됩니다.
-- **래퍼 모듈/CLI 통합**을 통해 ~596줄을 정리할 수 있습니다. 이들은 현재 테스트에서 참조되므로, import 경로 업데이트와 함께 진행해야 합니다.
+- **래퍼 모듈/CLI 통합**을 통해 ~508줄을 정리했습니다 (4개 파일 삭제, `mdx_to_storage_xhtml_cli.py`로 통합).
+- 남은 미처리 항목은 `reverse_sync/test_verify.py` (~67줄)입니다.
 - 코드 품질 개선의 더 큰 효과는 **중복 코드 리팩토링**(별도 문서 `analysis-duplicate-code.md` 참조)에서 얻을 수 있습니다.
