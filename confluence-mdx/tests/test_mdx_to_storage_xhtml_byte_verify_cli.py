@@ -15,6 +15,7 @@ def test_main_returns_2_when_testcases_dir_missing(monkeypatch, capsys):
             case_id=None,
             sidecar_name="expected.roundtrip.json",
             show_fail_limit=10,
+            splice=False,
         ),
     )
     rc = cli.main()
@@ -34,6 +35,7 @@ def test_main_returns_0_when_all_pass(monkeypatch, tmp_path, capsys):
             case_id=None,
             sidecar_name="expected.roundtrip.json",
             show_fail_limit=10,
+            splice=False,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case])
@@ -67,6 +69,7 @@ def test_main_returns_1_when_failures(monkeypatch, tmp_path, capsys):
             case_id=None,
             sidecar_name="expected.roundtrip.json",
             show_fail_limit=1,
+            splice=False,
         ),
     )
     monkeypatch.setattr(cli, "iter_testcase_dirs", lambda _: [case1, case2])

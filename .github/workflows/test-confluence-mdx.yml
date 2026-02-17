@@ -65,6 +65,10 @@ jobs:
         working-directory: ./confluence-mdx/tests
         run: make test-xhtml-diff
 
+      - name: Run Byte-equal verify
+        working-directory: ./confluence-mdx/tests
+        run: make test-byte-verify
+
       - name: Run MDX Render tests
         working-directory: ./confluence-mdx/tests
         run: make test-render
