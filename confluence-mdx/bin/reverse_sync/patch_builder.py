@@ -12,6 +12,7 @@ from text_utils import (
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
+from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
 
 
@@ -45,6 +46,7 @@ def build_patches(
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
     alignment: Optional[Dict[int, int]] = None,
+    page_lost_info: Optional[dict] = None,
 ) -> List[Dict[str, str]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
@@ -83,7 +85,8 @@ def build_patches(
         if change.change_type == 'added':
             patch = _build_insert_patch(
                 change, improved_blocks, alignment,
-                mdx_to_sidecar, xpath_to_mapping)
+                mdx_to_sidecar, xpath_to_mapping,
+                page_lost_info=page_lost_info)
             if patch:
                 patches.append(patch)
             continue
@@ -505,6 +508,7 @@ def _build_insert_patch(
     alignment: Optional[Dict[int, int]],
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
+    page_lost_info: Optional[dict] = None,
 ) -> Optional[Dict[str, str]]:
     """추가된 블록에 대한 insert 패치를 생성한다."""
     new_block = change.new_block
@@ -514,6 +518,9 @@ def _build_insert_patch(
     after_xpath = _find_insert_anchor(
         change.index, alignment, mdx_to_sidecar, xpath_to_mapping)
     new_xhtml = mdx_block_to_xhtml_element(new_block)
+    # L4: lost_info 적용
+    if page_lost_info:
+        new_xhtml = apply_lost_info(new_xhtml, page_lost_info)
 
     return {
         'action': 'insert',

@@ -328,3 +328,47 @@ class TestSpliceWithLostInfo:
         result = splice_rehydrate_xhtml(mdx_text, sidecar)
         # emitter가 ✔️를 출력하지만, lost_info로 <ac:emoticon>으로 복원됨
         assert '<ac:emoticon ac:name="tick"/>' in result.xhtml
+
+
+class TestInsertPatchWithLostInfo:
+    def test_insert_patch_applies_lost_info(self):
+        from reverse_sync.patch_builder import build_patches
+        from reverse_sync.block_diff import BlockChange
+        from reverse_sync.mapping_recorder import BlockMapping
+        from reverse_sync.mdx_block_parser import MdxBlock
+        from reverse_sync.sidecar import SidecarEntry
+
+        # added 블록 (emoticon 포함)
+        new_block = MdxBlock(type='paragraph', content='Check ✔️ done',
+                             line_start=0, line_end=1)
+        change = BlockChange(index=0, change_type='added',
+                             old_block=None, new_block=new_block)
+
+        anchor_block = MdxBlock(type='heading', content='## Title',
+                                line_start=0, line_end=1)
+        mappings = [BlockMapping(block_id='h1', type='heading',
+                                 xhtml_xpath='h2[1]', xhtml_text='<h2>Title</h2>',
+                                 xhtml_plain_text='Title',
+                                 xhtml_element_index=0, children=[])]
+
+        sidecar_entry = SidecarEntry(xhtml_xpath='h2[1]', xhtml_type='heading', mdx_blocks=[0])
+        mdx_to_sidecar = {0: sidecar_entry}
+        xpath_to_mapping = {'h2[1]': mappings[0]}
+        alignment = {0: 0}
+
+        page_lost_info = {
+            'emoticons': [{
+                'name': 'tick', 'shortname': ':check_mark:',
+                'emoji_id': '', 'fallback': ':check_mark:',
+                'raw': '<ac:emoticon ac:name="tick"/>',
+            }],
+        }
+
+        patches = build_patches(
+            [change], [anchor_block], [anchor_block, new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            alignment, page_lost_info=page_lost_info)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'insert'
+        assert '<ac:emoticon ac:name="tick"/>' in patches[0]['new_element_xhtml']
