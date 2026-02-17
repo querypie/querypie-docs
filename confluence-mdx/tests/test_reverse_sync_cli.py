@@ -509,7 +509,7 @@ def testbuild_patches_index_mapping():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     original_blocks = [
         MdxBlock('frontmatter', '---\ntitle: T\n---\n', 1, 3),
@@ -769,7 +769,7 @@ def testbuild_patches_table_block():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     old_table = '<table>\n<th>\n**Databased Access Control**\n</th>\n</table>\n'
     new_table = '<table>\n<th>\n**Database Access Control**\n</th>\n</table>\n'
@@ -810,7 +810,7 @@ def testbuild_patches_child_resolved():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     original_blocks = [
         MdxBlock('paragraph', 'Old child text.\n', 1, 1),
@@ -858,7 +858,7 @@ def testbuild_patches_child_fallback_to_parent_containing():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     original_blocks = [
         MdxBlock('paragraph', 'Unresolvable old text.\n', 1, 1),
@@ -909,7 +909,7 @@ def testbuild_patches_unmapped_block_skipped():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     original_blocks = [
         MdxBlock('paragraph', 'Mapped text.\n', 1, 1),
@@ -946,7 +946,7 @@ def testbuild_patches_list_item_child_resolved():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     old_list = '- Item A old\n- Item B\n'
     new_list = '- Item A new\n- Item B\n'
@@ -1008,7 +1008,7 @@ def testbuild_patches_list_item_fallback_to_parent():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar_lookup import SidecarEntry
+    from reverse_sync.sidecar import SidecarEntry
 
     old_list = '- 변경할 텍스트입니다\n'
     new_list = '- 변경된 텍스트입니다\n'
