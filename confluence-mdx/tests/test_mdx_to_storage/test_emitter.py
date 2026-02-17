@@ -49,7 +49,7 @@ def test_emit_list_ul_and_ol():
     ul = emit_document(parse_mdx("* a\n* b\n"))
     ol = emit_document(parse_mdx("1. a\n2. b\n"))
     assert ul == "<ul><li><p>a</p></li><li><p>b</p></li></ul>"
-    assert ol == "<ol><li><p>a</p></li><li><p>b</p></li></ol>"
+    assert ol == '<ol start="1"><li><p>a</p></li><li><p>b</p></li></ol>'
 
 
 def test_emit_hr():
@@ -329,7 +329,7 @@ def test_emit_nested_mixed_ordered_unordered_list():
     xhtml = emit_document(parse_mdx(mdx))
     assert (
         xhtml
-        == "<ol><li><p>step one</p><ul><li><p>detail a</p></li><li><p>detail b</p></li></ul></li><li><p>step two</p></li></ol>"
+        == '<ol start="1"><li><p>step one</p><ul><li><p>detail a</p></li><li><p>detail b</p></li></ul></li><li><p>step two</p></li></ol>'
     )
 
 
@@ -338,7 +338,7 @@ def test_emit_same_depth_mixed_marker_splits_lists():
 1. ordered
 """
     xhtml = emit_document(parse_mdx(mdx))
-    assert xhtml == "<ul><li><p>bullet</p></li></ul><ol><li><p>ordered</p></li></ol>"
+    assert xhtml == '<ul><li><p>bullet</p></li></ul><ol start="1"><li><p>ordered</p></li></ol>'
 
 
 def test_emit_nested_three_levels_deep():

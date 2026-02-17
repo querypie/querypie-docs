@@ -209,7 +209,10 @@ def _render_list_nodes(
             i += 1
 
         body = "".join(_render_list_item(node, link_resolver=link_resolver) for node in group)
-        parts.append(f"<{tag}>{body}</{tag}>")
+        if tag == "ol":
+            parts.append(f'<ol start="1">{body}</ol>')
+        else:
+            parts.append(f"<ul>{body}</ul>")
     return "".join(parts)
 
 
