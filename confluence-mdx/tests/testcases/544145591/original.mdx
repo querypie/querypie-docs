@@ -23,9 +23,9 @@ Administrator &gt; General &gt; Company Management &gt; General
 *  **Web Base URL**  : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소입니다. [[자세한 내용]](../../../installation/container-environment-variables/querypieweburl)
 *  **Timezone**  : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
 *  **Date Format**  : 날짜 표기 방식을 지정합니다.
-*  **Default Display Language**  : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) 
+*  **Default Display Language**  : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어)
 *  **Audit Log Retention Period** : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
-*  **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. 
+*  **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.
 
 
 ### System Properties
@@ -55,7 +55,7 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
 관리자는 Maximum Approval Duration 항목에서 승인 대기 요청이 자동으로 만료될 때까지의 기간을 1일에서 최대 14일까지 설정할 수 있습니다.
 이곳에 설정된 기간은 사용자가 워크플로우를 상신할 때 선택하는 Approval Expiration Date (승인 만료일)의 최대값으로 적용됩니다.
 
-* Admin &gt; Databases &gt; Configurations의 Maximum Access Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다. 
+* Admin &gt; Databases &gt; Configurations의 Maximum Access Duration 또는 Admin &gt; Servers &gt; Configurations의 Maximum Access Duration이 Maximum Approval Duration보다 짧게 설정된 경우, 권한이 이미 만료된 후에 승인이 처리되는 상황을 방지하기 위해 Approval Expiration Date은 더 짧은 Access Expiration Date (권한 만료일)을 따라갑니다.
 
 ### 워크플로우 사유입력 글자 수 제한 설정
 
@@ -63,12 +63,12 @@ Workflow Configurations에서는 결재 상신 및 승인 관련 설정을 변�
 이 설정을 통해 관리자는 조직의 정책에 맞춰 입력 글자 수를 관리할 수 있습니다.
 
 * 관리자는 Workflow Configurations 페이지에서 다음 항목에 대한 글자 수 범위를 지정할 수 있습니다.
-    * Reason for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다. 
+    * Reason for Request: 워크플로우 상신 시 사유 입력에 대한 최소, 최대 글자 수를 설정합니다.
         * Minimum length : 최소 3, 최대 1000, 기본값 3
         * Maximum length : 최소 = minimum length에 기입한 값, 최대 1000, 기본값 1000
-    * Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다. 
+    * Comments: 워크플로우 승인, 거부, 실행 취소, 리뷰 확인 시 입력값에 대한 최소, 최대 글자 수를 설정합니다.
         * Minimum length : 최소 3, 최대 1000, 기본값 3
-        * Maximum length : 최소 = minimum length에 기입한 값, 최대 1000, 기본값 300 
+        * Maximum length : 최소 = minimum length에 기입한 값, 최대 1000, 기본값 300
 
 ### 참조자 지정 활성화
 
@@ -93,12 +93,12 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
 <Callout type="info">
 11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.
 * Admin &gt; General &gt; Company Management &gt; General &gt; Workflow Configurations의 Use User Attribute-Based Approval 옵션 스위치가 제거되었습니다.
-* 기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다. 
+* 기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나 다른 Attribute를 선택할 수 있도록 하여 각 승인 단계별 각각 다른 속성의 승인자가 매핑되도록 개선되었습니다.
 </Callout>
 
 사용자 프로필의 특정 Attribute(예: 팀 리더, 부서장)를 기준으로 승인자를 자동으로 지정할 수 있습니다.
 
-* 중요: 
+* 중요:
     * 선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png" alt="Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭&lt;br/&gt;" width="712" />
@@ -113,7 +113,7 @@ Allow users to submit requests in Urgent mode 토글로 활성화합니다.
     * 자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.
 * Attribute 값 부재 시 알림
     * 만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.
-        * 에러 메시지 예시: 
+        * 에러 메시지 예시:
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/general/company-management/general/image-20250508-022114.png" alt="image-20250508-022114.png" width="688" />
           </figure>
@@ -175,7 +175,7 @@ Allow Delegated Approval 스위치
 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
 
 *  **Query chunk size**  : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
-    * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. 
+    * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다.
 *  **Query throttle interval** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
 
 ### Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
@@ -251,7 +251,7 @@ Use DB Privilege Type Based Approval
 * 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 모두 “Read-Only” 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 `Add` 버튼을 누릅니다.
     * Condition: All Match 선택.
     * Requested Privilege Type : Read-Only 선택.
-    * Approval Rule : 강제하기 원하는 Approval Rule 선택. 
+    * Approval Rule : 강제하기 원하는 Approval Rule 선택.
 * 만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 `Add` 버튼을 누릅니다.
     * Condition: Contains 선택.
     * Requested Privilege Type : Read/Write 선택.
