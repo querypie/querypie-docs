@@ -39,7 +39,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 1. In Step 1, select the data source type to proceed to Step 2.
 2. In Step 2, enter DB connection information.
     *  **Allowed Zone**  : Network range that can access the DB connection
-        * You can select Allowed Zones registered in the Allowed Zones menu 
+        * You can select Allowed Zones registered in the Allowed Zones menu
         * Default: Default (All allowed)
     *  **Connection Name**  : DB connection name
     *  **Cluster**  : Cluster configuration status
@@ -74,7 +74,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 1. When the Cluster option is activated, you can enter cluster and instance information in a hierarchical structure.
 2. If you know the endpoints of each cluster and instance, you can register them manually through `Add Cluster`.
     *  **Type**  : Replication type of the corresponding cluster
-        * Primary and Secondary types are available, and permissions can be granted at the cluster level. 
+        * Primary and Secondary types are available, and permissions can be granted at the cluster level.
     *  **Expose**  : Option to display the cluster in the connection list
         * Expandable : Displays all clusters and instances in the user's Connections list when accessing via web
         * Unexpandable : Displays only at the cluster level in the web connection user's Connections list, not showing instances under the cluster
@@ -108,7 +108,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Database Type** : DB type (eg. MySQL, MariaDB, PostgreSQL…)
     *  **Cloud Provider** : Cloud provider type (AWS, Azure, GCP, or QueryPie Connection)
     *  **Favorite View** : Favorite setting status
-        * There is a button for favorite setting on the far right of the table. <br/>  
+        * There is a button for favorite setting on the far right of the table. <br/>
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png" alt="Favorite setting button" width="347" />
           <figcaption>
@@ -160,7 +160,7 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connecti
 </figure>
 
 * Allowed Zone : Network range that can access the DB connection
-    * You can select Allowed Zones registered in the Allowed Zones menu 
+    * You can select Allowed Zones registered in the Allowed Zones menu
     * Default: Default (All allowed)
 * Connection Name : DB connection name
 * Host : DB connection host (both domain and IP formats can be entered)
@@ -255,7 +255,7 @@ Proxy Usage options
 </figure>
 
 * Use QueryPie registered account : When accessing DB through Proxy, the account information entered in 3rd party tools uses the account information specified by QueryPie's Proxy.
-* Use existing database acount with Agent : When accessing DB through Proxy, the account information entered in 3rd party tools uses the actual DB account information. 
+* Use existing database acount with Agent : When accessing DB through Proxy, the account information entered in 3rd party tools uses the actual DB account information.
 
 From QueryPie 9.17, when using account information specified by Proxy, it has been changed to use random passwords as a security enhancement measure.
 From QueryPie 10.2.2, the " **Fixed Credential for Agent** " option is provided to use fixed passwords in situations where random password usage is difficult.
@@ -340,7 +340,7 @@ QueryPie Web &gt; Databases &gt; Connections
 </figure>
 
 * Users who have been granted privileges with Privilege Setting configured use the DB account mapped to that Privilege as pre-configured by the administrator when connecting, and cannot see the DB Username and Password fields themselves on the Connections access page.
-* The use of that DB account is enforced in connection access such as web editor, agent proxy, SQL Request, Export Request, etc. 
+* The use of that DB account is enforced in connection access such as web editor, agent proxy, SQL Request, Export Request, etc.
 
 <Callout type="info">
 From 11.3.0, when configuring Advanced privilege, if you do not register a password for a privileged account, the privileged account (administrator account) can manually enter the password when connecting to the target.

@@ -92,21 +92,21 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </figure>
 
 1.  **Task Name** : Enter the name of the log extraction task.
-2.  **Log Type** : Select the type of log to extract. 
+2.  **Log Type** : Select the type of log to extract.
     1. Select the log type you want to extract, such as Query Audit.
     2. After selecting the log type, click See Log Template and Description to view detailed information such as keys for each log.
-3.  **Download File Format** : Specify the log output file format. (As of 9.17.0, the downloadable format for each log is limited to a single format. Please refer to the **'Supported Extraction Log Types'** above.) 
+3.  **Download File Format** : Specify the log output file format. (As of 9.17.0, the downloadable format for each log is limited to a single format. Please refer to the **'Supported Extraction Log Types'** above.)
 4.  **For Text Exceeding 32,000 Characters**  : For CSV files, you can choose whether to trim text exceeding 32,000 characters.
     1. Trim Overflowing Text - Trims text exceeding 32,000 characters. Prevents table corruption due to exceeding the maximum number of characters per cell when opening files directly in Excel.
     2. No Action - Includes text exceeding 32,000 characters as is.
 5.  **From**  : Specify the extraction start date.
-6.  **To** : Specify the last date for extraction. From 11.2.0, you can select the current date. 
-7.  **Filter Expression**  : Specify filter expressions. 
+6.  **To** : Specify the last date for extraction. From 11.2.0, you can select the current date.
+7.  **Filter Expression**  : Specify filter expressions.
     1. Please refer to the ' **Filter Expression** ' section below for input methods and examples.
-8.  **Generate Preview** : Generate a preview. 
+8.  **Generate Preview** : Generate a preview.
     1. Preview is a required step.
     2. You must check the preview results to proceed to the next step 'Create'.
-9. `Create` button : Creates the log extraction task. 
+9. `Create` button : Creates the log extraction task.
 
 <Callout type="info">
 **Important Notes**
@@ -165,7 +165,7 @@ The 'Privilege Type' column in the export file records which permission was requ
 It works as follows:
 
 1. Commands executed with basic permissions (SET, SHOW, etc.) have blank values in the corresponding column.
-2. Logs performed according to permissions such as INSERT have SQL Type specified. 
+2. Logs performed according to permissions such as INSERT have SQL Type specified.
 3. For Redis, the command name is specified.
 </Callout>
 

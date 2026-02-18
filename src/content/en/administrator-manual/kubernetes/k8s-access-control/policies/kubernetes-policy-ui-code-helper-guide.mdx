@@ -24,7 +24,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 </figcaption>
 </figure>
 
-1.  **Add Resources**  modal 
+1.  **Add Resources**  modal
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png" alt="image-20240721-073346.png" width="426" />
   </figure>
@@ -40,15 +40,15 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
     3.  **Permitted Impersonation**  : (Optional) Lists the Kubernetes users/groups that can be applied when users attempt impersonation through actual --as, --as-group through clients through this field.
         1.  **Allowed Kubernetes Users** : Enter the kubernetes users to be allowed in QueryPie with the --as parameter.
         2.  **Allowed Kubernetes Groups** : Enter the kubernetes groups to be allowed in QueryPie with the --as-group parameter.
-        3. Multiple registration is possible through ','. 
-    4. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
+        3. Multiple registration is possible through ','.
+    4. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor.
 3.  **Add Actions**  modal
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073515.png" alt="image-20240721-073515.png" width="420" />
   </figure>
     1. Works the same in both Spec: Allow and Spec: Deny.
     2.  **API Groups** : Provides "*" by default; administrators can modify and enter multiple values with ','.
-    3.  **Resources** : Specifies Kubernetes resources. 
+    3.  **Resources** : Specifies Kubernetes resources.
         1. Provides "*" by default; administrators can modify and enter multiple values.
         2. Commonly used resources are as follows, and you can easily select resources from the following list by placing the cursor in the field:
             * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
@@ -65,20 +65,20 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
         2. Commonly called Verbs are as follows, and you can easily select Verbs from the following list by placing the cursor in the field:
             * `get`, `list`, `watch`, `create`, `update`, `patch`, `delete`, `deletecollection`
         3. Users can directly type to specify other verb names for custom resources outside the list.
-    7. Click the `Add` button to define one action set among the actions list. 
+    7. Click the `Add` button to define one action set among the actions list.
     8. In terms of code, it corresponds to the append part, so new additions are possible without initializing previously added actions.
 4.  **Set Conditions**  modal
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073628.png" alt="image-20240721-073628.png" width="384" />
   </figure>
     1. All items are optional.
-    2. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor. 
+    2. The modal displays existing information based on the content in the editor, and when you press the `Set` button, it overwrites the changes in the editor.
     3.  **Resource Tags**  (Optional)
         1. You can reduce the policy application scope based on tags attached to QueryPie resources.
         2. Each row operates as an AND condition; OR operation with ',' in Value.
         3. You can create a new row by pressing the Insert button.
         4. When specified, it is displayed like a tag block and can be removed by pressing X.
-        5. Entry items: 
+        5. Entry items:
             1.  **Key** : Tag key (regex, glob not supported)
             2.  **Value** : Tag value entry (both regex and glob supported, multiple input supported)
     4.  **User Attributes**  (Optional)

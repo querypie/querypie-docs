@@ -24,27 +24,27 @@ This feature was added in version 10.2.6.
 * ID/PW and SSL/TLS settings cannot be managed by administrators in Custom Data Source.
     * If needed, users must directly enter the authentication information in third-party SQL tools.
 * Only simple manual registration without clusters can be created.
-* Query Audit and statement control are not supported. 
+* Query Audit and statement control are not supported.
 </Callout>
 
-1.  **Navigate to DB Connections Menu** 
+1.  **Navigate to DB Connections Menu**
     * Select Admin &gt; Databases &gt; Connection Management &gt; DB Connections.
     * Click the `+ Create Connection` button.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.10.11-AM.png" alt="Screenshot-2025-03-05-at-10.10.11-AM.png" width="712" />
       </figure>
-2.  **Create Custom Data Source** 
+2.  **Create Custom Data Source**
     * Click the Custom Data Source icon.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.11.42-AM.png" alt="Screenshot-2025-03-05-at-10.11.42-AM.png" width="712" />
       </figure>
-    * When creating, the following warning message is displayed: <br/>  **Restrictions:** 
+    * When creating, the following warning message is displayed: <br/>  **Restrictions:**
         * Only TCP access control is available; Privilege control and Query Audit are not supported.
         * Access is only possible through a proxy; it cannot be accessed via the web editor.
-    * Enter the following connection information according to your desired settings. **** 
+    * Enter the following connection information according to your desired settings. ****
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-12.02.22-PM.png" alt="Screenshot-2025-03-05-at-12.02.22-PM.png" width="712" />
-      </figure> 
+      </figure>
         * Connection Name (Required) : Enter connection name
         * Host (Required) : Host address of the target data source
         * Port (Required) : Port number of the target data source
@@ -53,19 +53,19 @@ This feature was added in version 10.2.6.
         * Weekday Access (Optional) : Set access allowed weekdays
         * Proxy Usage : Always enabled (cannot be disabled)
         * Description (Optional) : Add description if needed
-    * After entering, click the `Next` button at the bottom to complete creation. 
-3.  **Creation Complete** 
-    * After creation, Database Type is displayed as Custom Data Source in the DB Connection list. 
-4.  **Modifying and Deleting Custom Data Source** 
-    *  **Modification** 
+    * After entering, click the `Next` button at the bottom to complete creation.
+3.  **Creation Complete**
+    * After creation, Database Type is displayed as Custom Data Source in the DB Connection list.
+4.  **Modifying and Deleting Custom Data Source**
+    *  **Modification**
         * Select the Custom Data Source you want to modify from the Admin &gt; Databases &gt; Connection Management &gt; DB Connections list.
         * You can change desired items and add Tags.
         * After modification, click the `Save Changes` button in the top right to save changes.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.43.08-PM.png" alt="Screenshot-2025-03-05-at-6.43.08-PM.png" width="760" />
           </figure>
-    *  **Deletion** 
-        * Select the checkbox on the left of the connection you want to delete from the DB Connections list, then click the `Delete` button. 
+    *  **Deletion**
+        * Select the checkbox on the left of the connection you want to delete from the DB Connections list, then click the `Delete` button.
         * After the "Are you sure you want to delete" message appears, click the `OK` button to delete the connection.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.54.56-PM.png" alt="Screenshot-2025-03-05-at-6.54.56-PM.png" width="688" />
@@ -73,24 +73,24 @@ This feature was added in version 10.2.6.
 
 #### Setting Up Access Control
 
-1.  **Navigate to Permission Grant Modal** 
+1.  **Navigate to Permission Grant Modal**
     * Select Admin &gt; Databases &gt; DB Access Control &gt; Access Control.
     * Click on the user you want to grant permissions to go to the Detail page.
-    * Click the `+ Grant Privilege` button in the middle right. 
-2.  **Granting Permissions** 
+    * Click the `+ Grant Privilege` button in the middle right.
+2.  **Granting Permissions**
     * Click Custom Data Source in the permission grant modal left checkbox.
     * Custom Data Source's Privilege is displayed as "-" with no separate type.
     * You can set an expiration date when granting.
-    * After selection is complete, click the `Grant` button to grant permissions. 
+    * After selection is complete, click the `Grant` button to grant permissions.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-1.59.53-PM.png" alt="Screenshot-2025-03-05-at-1.59.53-PM.png" width="712" />
       </figure>
 
 
-1.  **Revoking Permissions** 
+1.  **Revoking Permissions**
     * By default, permissions are maintained until the Expiration Date requested by the user.
     * To revoke permissions granted to users in the middle, revoke the Privilege.
-        * Select Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User. 
+        * Select Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User.
         * Select the connection to revoke permissions from on the Detail page, then click the `Revoke` button.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-3.18.12-PM.png" alt="Screenshot-2025-03-05-at-3.18.12-PM.png" width="688" />
@@ -98,14 +98,14 @@ This feature was added in version 10.2.6.
 
 #### Checking Audit Logs
 
-1.  **DB Access History** 
+1.  **DB Access History**
     * Select Admin &gt; Audit &gt; DB Access History.
     * Check logs
         * Database Type: Displayed as 'Custom Data Source'.
         * Connected From: Displayed as 'Proxy'.
         * Success/Failure information for Connect/Disconnect can be checked.
             * When attempting to connect outside allowed access time, the same message "This connection is not accessible at this time. Please ask your administrator." is displayed for all vendors.
-2.  **Activity Logs** 
+2.  **Activity Logs**
     * Records are left when administrators create/modify/delete Custom Data Source connection information.
 
 <Callout type="important">

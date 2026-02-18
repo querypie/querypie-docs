@@ -29,7 +29,7 @@ import { Callout } from 'nextra/components'
 QueryPie Workflow에서 SQL Request를 작성하는 기본 방법은 동일합니다.
 (참고 : [SQL Request 요청하기](.))
 
-1.  MySQL Connection 및 Database 선택 <br/>쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다. 
+1.  MySQL Connection 및 Database 선택 <br/>쿼리를 실행할 MySQL Connection 과 Database를 선택하고 쿼리를 입력합니다.
 
 <Callout type="important">
 Content Type은 “Text”만 지원합니다.
@@ -41,17 +41,17 @@ Content Type은 “Text”만 지원합니다.
 </figure>
 
 1. 실행계획(Explain) 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 `Explain` 버튼을 누릅니다.
-    1.  **Attach Explain Results**  : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) 
+    1.  **Attach Explain Results**  : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.)
     2. 결과 표시 방식 선택
         1.  **Table**  : 테이블 형태로 결과가 표시됩니다.
-        2.  **JSON**  : JSON 형태로 결과가 표시됩니다. 
+        2.  **JSON**  : JSON 형태로 결과가 표시됩니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png" alt="image-20241029-235845.png" width="682" />
 </figure>
 
 <Callout type="important">
-* 실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다. 
+* 실행계획 대상이 되는 쿼리(세미콜론으로 끝나는 구문)는 100개로 제한됩니다.
 * MySQL은 5.6 이후 부터 Explain의 결과를 JSON 포맷으로 출력할 수 있습니다. 따라서 5.6 이전 버전을 대상으로 Explain을 수행시 JSON으로 출력할 수 없습니다.
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png" alt="image-20241030-001252.png" width="682" />
@@ -59,7 +59,7 @@ Content Type은 “Text”만 지원합니다.
 </Callout>
 
 1. 실행계획(Explain) 결과 확인
-    1. Table 형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/> <br/>  
+    1. Table 형태의 결과 확인<br/>아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png" alt="image-20241030-002325.png" width="712" />
       </figure>
@@ -89,7 +89,7 @@ Content Type은 “Text”만 지원합니다.
 즉, 상신자가 실행계획을 JSON 형태로 출력하도록 하고 첨부하여 상신했다면 결재자는 JSON 형태의 결과만 볼 수 있고 출력 형태를 테이블로 바꿀 수 없습니다.
 </Callout>
 
-1. MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br/>MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다. 
+1. MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br/>MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다.
 
 |  **MySQL 5.6.3 이전**  |  **MySQL 5.6.3 이후**                         |
 | -------------------- | ------------------------------------------- |

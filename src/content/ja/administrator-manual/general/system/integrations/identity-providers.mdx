@@ -23,7 +23,7 @@ QueryPieのユーザー認証方式は、QueryPieユーザーアカウント（I
 
 <Callout type="info">
 * 現在、複数のIdentity Providerを同時にサポートしていません。Internal database（QueryPieユーザーID/PW）認証以外に1つのIdPを使用する必要があります。
-* MFA（Multi-factor Authentication）サポートはInternal DB、LDAP、Custom Identity Providerでのみ可能です。 
+* MFA（Multi-factor Authentication）サポートはInternal DB、LDAP、Custom Identity Providerでのみ可能です。
 * 11.5.0から、Internal DBとLDAPまたはInternal DBとCustom Identity Providerを設定して使用する場合、それぞれの設定でMFAを使用できます。<br/>例）LDAPでMFAを設定し、Internal DBにMFAを設定した場合、ユーザーアカウントがLDAPアカウントの場合はLDAPのMFA設定によって制御され、Internal DBのユーザーアカウントはInternal DBのMFA設定によって制御されます。
 * Scheduleによる定期的な同期はLDAP、Okta、One Login、Custom Identity Providerでのみ可能です。
 </Callout>
@@ -175,7 +175,7 @@ LDAPサーバーからユーザー情報同期を実行する場合は、**Use S
 *  **Replication Frequency**  : 自動同期機能の使用有無を設定します。
     * Manual：手動でのみ同期を実行します。現在のページで`Synchronize`ボタンをクリックした時のみLDAPサーバーからユーザー情報を取得します。
     * Scheduling：定期的に同期を実行します。下位Use cron expressionフィールドが有効化されます。
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 同期時に新しいユーザーを非アクティブ状態で追加するかどうかを選択します。
         * 同期するユーザー数が多い場合や、ユーザーのLDAP認証によるQueryPieアクセスを個別に管理したい場合は、このオプションを有効化してください。
     *  **Use an Attribute for Privilege Revoke** : 同期時に特定のAttributeに基づいてPrivilegeを回収するかどうかを選択します。
@@ -185,11 +185,11 @@ LDAPサーバーからユーザー情報同期を実行する場合は、**Use S
         * LDAPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。
         * オプション有効化時、下位にLDAP Attribute Mapping UIが表示され、マッピング作業を通じて連携するLDAP AttributeとQueryPie Attributeを指定できます。
         * ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
             * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
-            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートするとこの値が1.0に基本設定されます。 
+            * 11.3.0以前バージョンで同期設定がある状態の時、11.3.0以上にアップデートするとこの値が1.0に基本設定されます。
 
 <Callout type="info">
 **LDAP Attribute Mapping**
@@ -318,11 +318,11 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 * Okta管理者ページ左パネルでSecurity &gt; Administratorsメニューに移動してRolesタブに移動します。
 * Create new roleを選択します。
 * Role name（例：MinimumAdminRole）およびRole descriptionを定義した後、Select Permissionsで以下の権限のみチェックします。
-    *  **User** 
+    *  **User**
         * View users and their details
-    *  **Group** 
+    *  **Group**
         * View groups and their details
-    *  **Application** 
+    *  **Application**
         * View application and their details
 * Save roleを押してカスタムロールを保存します。
 * Resourcesタブに移動します。
@@ -357,7 +357,7 @@ Okta詳細設定（1）
 *  **Type** : Oktaを選択します。
 *  **Identity Provider Metadata**  : <br/>[OktaでQueryPieアプリケーション連携情報設定](#oktaでquerypieアプリケーション連携情報設定)過程でコピーしたXML情報をIdentity Provider Metadata項目に貼り付けます。
 *  **Use SAML Assertion Consumer Service Index**  : Service Providerで複数のEndpointを使用する場合、ACS Indexを使用してendpointをそれぞれ指定できます。
-    * Entity ID：`https://your-domain.com/saml/sp/metadata`の形式で入力します。Okta SAML 2.0設定のAudience URI（SP Entity ID）値です。 
+    * Entity ID：`https://your-domain.com/saml/sp/metadata`の形式で入力します。Okta SAML 2.0設定のAudience URI（SP Entity ID）値です。
     * ACS Index：0～2,147,483,647の間の値を入力します。基本値は0です。
 
 <Callout type="info">
@@ -398,7 +398,7 @@ SPは各バインディング方式に従って別々のACS URLを運営でき�
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164255.png" alt="okta app設定のAudience URI(SP Entity ID) " width="690" />
 <figcaption>
-okta app設定のAudience URI(SP Entity ID) 
+okta app設定のAudience URI(SP Entity ID)
 </figcaption>
 </figure>
 
@@ -423,11 +423,11 @@ Okta詳細設定（2）
     *  **API Token** : Okta管理者APIトークンを入力します。
     *  **Application ID** : Okta内で2つ以上のQueryPie Appを使用する場合入力します。
 * 定期的な同期機能を使用したい場合は**Replication Frequency**項目でSchedulingを設定します。
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 同期時に新しいユーザーを非アクティブ状態で追加するかどうかを選択します。 <br/> 同期するユーザー数が多い場合や、ユーザーの認証によるQueryPieアクセスを個別に管理したい場合は、該当オプションを有効化してください。
     *  **Use an Attribute for Privilege Revoke**  : 同期時に特定のAttributeに基づいてPrivilegeを回収するかどうかを選択します。 <br/> 特定のAttributeの変更により自動的にDAC Privilegeを回収したい場合は、このオプションを有効化してください。 <br/> Attribute入力フィールドに有効化変更を検知するAttribute名を入力します。
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
             * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
@@ -476,7 +476,7 @@ One Login SAML Custom Connector設定およびMetadata XMLダウンロード
 * `Add App`ボタンをクリックします。
 * 検索領域に'SAML Custom Connector (Advanced)'を入力した後、検索結果をクリックします。
 * Display NameにQueryPieで確認されたApplication Name to be used in OneLoginの内容をコピーして貼り付け、Audiance (Entity ID)、Recipient、ACS (Consumer) URL Validator、ACS (Consumer) URLもそれぞれ情報をコピーしてOne Login設定に貼り付けます。
-* `Save`ボタンを押して保存します。 
+* `Save`ボタンを押して保存します。
 * 画面左のConfigurationメニューを選択した後、画面右上のMore Actions &gt; SAML Metadataをクリックします。
 * ダウンロードされたXMLファイルを確認します。
 
@@ -502,11 +502,11 @@ One Login詳細設定（2）
 </figcaption>
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 同期時に新しいユーザーを非アクティブ状態で追加するかどうかを選択します。 <br/> 同期するユーザー数が多い場合や、ユーザーの認証によるQueryPieアクセスを個別に管理したい場合は、該当オプションを有効化してください。
     *  **Use an Attribute for Privilege Revoke**  : 同期時に特定のAttributeに基づいてPrivilegeを回収するかどうかを選択します。 <br/> 特定のAttributeの変更により自動的にDAC Privilegeを回収したい場合は、このオプションを有効化してください。 <br/> Attribute入力フィールドに有効化変更を検知するAttribute名を入力します。
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
             * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。
@@ -518,7 +518,7 @@ One Login詳細設定（2）
 
 *  **Name**  : 識別に便利な適切なIdPの名前を入力します。
 *  **Type** : SAMLを選択します。
-*  **Identity Provider Metadata**  : IdPで確認したSAML metadata XMLの内容をコピーして貼り付けます。 
+*  **Identity Provider Metadata**  : IdPで確認したSAML metadata XMLの内容をコピーして貼り付けます。
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/image-20251014-015015.png" alt="image-20251014-015015.png" width="481" />
@@ -532,18 +532,18 @@ Custom Identity Providerは認証APIサーバーを使用する特殊な場合�
 
 *  **Name**  : 識別に便利な適切なIdPの名前を入力します。
 *  **Type** : Custom Identity Providerを選択します。
-*  **API URL**  : APIサーバーのEnd-point URLを入力します。 
+*  **API URL**  : APIサーバーのEnd-point URLを入力します。
 *  ユーザー情報同期を実行したい場合はUse Synchronization with the Authentication Systemオプションを有効化します。
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png" alt="image-20251014-015047.png" width="481" />
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 同期時に新しいユーザーを非アクティブ状態で追加するかどうかを選択します。 <br/> 同期するユーザー数が多い場合や、ユーザーの認証によるQueryPieアクセスを個別に管理したい場合は、該当オプションを有効化してください。
     *  **Use an Attribute for Privilege Revoke**  : 同期時に特定のAttributeに基づいてPrivilegeを回収するかどうかを選択します。 <br/> 特定のAttributeの変更により自動的にDAC Privilegeを回収したい場合は、このオプションを有効化してください。 <br/> Attribute入力フィールドに有効化変更を検知するAttribute名を入力します。
     *  **Enable Attribute Synchronization**  : IdPのユーザー属性とQueryPieユーザー属性をマッピングして同期するかどうかを選択します。 <br/> IdPで管理中のユーザー属性をQueryPie内Attributeと自動連携したい場合は、該当オプションを有効化してください。 <br/> オプション有効化時、下位にAttribute Mapping UIが表示され、マッピング作業を通じて連携するIdP AttributeとQueryPie Attributeを指定できます。 <br/> ただし、該当機能はProfile Editor（Admin&gt; General &gt; User Management &gt; Profile Editor）でSource PriorityがInherit from profile sourceに設定されたAttributeに限り適用されます。
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 同期時に既存ユーザーがこの値の比率以上で削除された場合、同期を失敗させる機能です。
         * 0.0 ～ 1.0 の間の値を入力します。（基本値は0.1）
             * 例）既存ユーザーが100名で、Allowed User Deletion Rate Threshold 0.1 の場合、再同期時に削除されたユーザーが10名以上なら同期が失敗します。

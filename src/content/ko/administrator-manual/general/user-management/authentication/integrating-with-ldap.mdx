@@ -214,12 +214,12 @@ QueryPie Attribute
 
 매핑 완료 후 동기화를 수행하면, 연동된 Attribute는 Profile Editor와 User Profile에서 확인할 수 있습니다.
 
-*  **Profile Editor** 
+*  **Profile Editor**
     * Admin &gt; General &gt; User Management &gt; Profile Editor에서 연동된 Attribute는 아래와 같은 상태로 표시됩니다.
         *  **Source Priority**  : Inherit from profile source로 고정됩니다.
         *  **Status**  : 수정이 불가능한 상태로 비활성화됩니다.
         *  **Custom Attribute의 경우** : Display Name, Description, Status 모두 수정이 불가하며, 체크박스가 비활성화되어 삭제 불가 상태로 표시됩니다.
-*  **User Profile** 
+*  **User Profile**
     * Administrator &gt; General &gt; User Management &gt; Users &gt; User Detail Page &gt; User Profile에서 연동된 Attribute는 아래와 같은 상태로 표시됩니다.
         * 수정이 불가능한 읽기 전용 상태로 나타납니다.
             * 예를 들어, Primary Email (email) 값이 regan@querypie.com으로 연동된 경우, UI 상에서 직접 수정할 수 없으며, LDAP에서만 변경 가능합니다.
@@ -230,7 +230,7 @@ QueryPie Attribute
 *  **Dry Run :**  `Dry Run` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행할 경우, 그 결과를 미리 확인할 수 있습니다. (현재 입력된 정보의 저장 여부와 무관)
 * `Save Changes` 를 클릭하면 입력된 설정 정보를 QueryPie에 저장합니다.
 * `Synchronize` 버튼을 클릭하면 현재 입력된 설정 정보를 기반으로 동기화를 수행합니다. (현재 입력한 설정 정보를 저장한 후에만 활성화됨)
-    * <img src="/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png" alt="image-20241209-124345.png" />버튼을 클릭하면 직전의 동기화 이력을 조회할 수 있습니다. 
+    * <img src="/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png" alt="image-20241209-124345.png" />버튼을 클릭하면 직전의 동기화 이력을 조회할 수 있습니다.
     * 개별 동기화 중 실패 건이 있는 경우, Progress Bar 색상이 노란색으로 표시됩니다.
     * 실패 로그는 ❌ 아이콘으로 표시됩니다. 로그를 클릭하면 상세한 에러메시지를 확인할 수 있습니다.
 
@@ -244,7 +244,7 @@ QueryPie Attribute
 
 ### QueryPie에서 LDAP 인증하여 로그인
 
-1. Administrator &gt; General &gt; User Management &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다. <br/>  
+1. Administrator &gt; General &gt; User Management &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/authentication/integrating-with-ldap/screenshot-20241209-215940.png" alt="Admin &gt; General &gt; User Management &gt; Users" width="736" />
   <figcaption>

@@ -77,21 +77,21 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Specify Connection Name.
 3. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, select the default `Primary`.
-    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`. 
-    3. Connection String : 
+    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`.
+    3. Connection String :
         1. Select `mongodb://` from the Scheme selection options.
         2. Enter subordinate host names and ports separated by commas.
     4. Click the `Add Instance` button to add each member host as an instance.
         1. Instance Name : Enter a name that can distinguish each host.
         2. Connection String : Enter each host in `HOSTNAME(FQDN or IP Address):[PORT]` format.
-        3. Expose is an option that can determine the exposure of individual instances in connection information. <br/> **To use multi-host functionality, instances must be in expose state, so be sure to activate the** `Expose` **option.**  
+        3. Expose is an option that can determine the exposure of individual instances in connection information. <br/> **To use multi-host functionality, instances must be in expose state, so be sure to activate the** `Expose` **option.**
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Enter the value of Authentication DB (authSource).
-2. Other Options : Enter remaining values except authSource among options used in connection string.<br/>Example 1) When using only single option format ( [Key]=[Value] ) : replicaSet=rs0<br/>Example 2) When using multiple options format ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **When using replica set configuration, you must enter replicaSet=[replicaset name] option.** 
+2. Other Options : Enter remaining values except authSource among options used in connection string.<br/>Example 1) When using only single option format ( [Key]=[Value] ) : replicaSet=rs0<br/>Example 2) When using multiple options format ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **When using replica set configuration, you must enter replicaSet=[replicaset name] option.**
 3. Secret Store : Option for using 3rd party for password and key management. Default Querypie means managed within QueryPie.
 4. User Name & Password : Enter the username and password for the database.
 5. Click the `Test Connection` button to verify if the entered connection information is valid.
@@ -112,8 +112,8 @@ ______
 2. Specify Connection Name.
 3. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, select the default `Primary`.
-    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`. 
-    3. Connection String : 
+    2. Expose : To allow viewing subordinate nodes (hosts or instances) of the cluster in connection information screen or agent's connection target list, select `Expandable`, to prevent viewing, select `Unexpandable`, to hide the cluster and show only subordinate nodes (hosts or instances), select `Hidden`.
+    3. Connection String :
         1. Select `mongodb+srv://` from the Scheme selection options.
         2. Enter domain format host name (FQDN).
         3. Click the `Lookup` button. If DNS lookup is successful, nodes included in the cluster are automatically added as instances.
@@ -138,7 +138,7 @@ Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster d
 
 1. Turn on the `Cluster` switch to activate cluster input, then enter the following information:
     1. Type : Area exposed in connection information. Since Primary role can change dynamically, maintain the Primary value.
-    2. Connection String : 
+    2. Connection String :
         1. Select `mongodb://` from the Scheme selection options.
         2. Enter each mongos host name and port separated by commas.
     3. Click the `Add Instance` button to add each mongos as an instance.

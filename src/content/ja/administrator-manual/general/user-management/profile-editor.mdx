@@ -22,10 +22,10 @@ Profile Editorを通じて、ユーザーの各属性別に台帳主体を設定
 
 各ユーザー属性別にSource Priorityを指定でき、種類は以下の通りです：
 
-1.  **Inherit from profile source** 
+1.  **Inherit from profile source**
     1. 外部Auth Providerから該当Attributeに対する更新を受信することを許可するという意味のオプションです。
     2. SCIM APIを通じてユーザーのAttributeが更新（patch）可能な状態になります。
-2.  **Inherit from QueryPie** 
+2.  **Inherit from QueryPie**
     1. 外部Auth Providerから生成されたユーザーですが、該当AttributeはQueryPie自体で管理するという意味のオプションです。
     2. SCIM APIを通じてユーザーの該当Attributeが更新プッシュされても、QueryPie自体で管理するAttributeになって変更を無視します。
 

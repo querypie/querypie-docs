@@ -29,7 +29,7 @@ You can see the execution steps step by step and the cost for each step.
 The basic method of writing SQL Request in QueryPie Workflow is the same.
 (Reference: [Requesting SQL Request](.))
 
-1.  MySQL Connection and Database Selection<br/>Select the MySQL Connection and Database to execute the query and enter the query. 
+1.  MySQL Connection and Database Selection<br/>Select the MySQL Connection and Database to execute the query and enter the query.
 
 <Callout type="important">
 Content Type only supports "Text".
@@ -41,17 +41,17 @@ If you select "File", you cannot use the execution plan (Explain) feature.
 </figure>
 
 1. Execution Plan (Explain) Options and Execution Plan Execution<br/>Select the options at the bottom of the query editor and click the `Explain` button.
-    1.  **Attach Explain Results**  : This is a switch to select whether to attach the execution plan results to the SQL Request. (The default value is OFF. If necessary, turn the switch ON to attach the execution plan results.) 
+    1.  **Attach Explain Results**  : This is a switch to select whether to attach the execution plan results to the SQL Request. (The default value is OFF. If necessary, turn the switch ON to attach the execution plan results.)
     2. Select result display format
         1.  **Table**  : Results are displayed in table format.
-        2.  **JSON**  : Results are displayed in JSON format. 
+        2.  **JSON**  : Results are displayed in JSON format.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png" alt="image-20241029-235845.png" width="682" />
 </figure>
 
 <Callout type="important">
-* The number of queries (statements ending with semicolons) that can be targeted for execution plan is limited to 100. 
+* The number of queries (statements ending with semicolons) that can be targeted for execution plan is limited to 100.
 * MySQL can output Explain results in JSON format from version 5.6 onwards. Therefore, if you perform Explain on versions before 5.6, you cannot output in JSON format.
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-001252.png" alt="image-20241030-001252.png" width="682" />
@@ -59,7 +59,7 @@ If you select "File", you cannot use the execution plan (Explain) feature.
 </Callout>
 
 1. Checking Execution Plan (Explain) Results
-    1. Checking Table Format Results<br/>Results are displayed as shown in the figure below. Please refer to the MySQL reference documentation for the meaning of each field.<br/> <br/>  
+    1. Checking Table Format Results<br/>Results are displayed as shown in the figure below. Please refer to the MySQL reference documentation for the meaning of each field.<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png" alt="image-20241030-002325.png" width="712" />
       </figure>
@@ -89,7 +89,7 @@ The execution plan (Explain) results that approvers can see are only available i
 That is, if the submitter performed the execution plan in JSON format and attached it for submission, the approver can only see the JSON format results and cannot change the output format to table.
 </Callout>
 
-1. Statements that can be reviewed through execution plan (Explain) in MySQL<br/>MySQL differs in the supported statements for analysis through execution plan by version. 
+1. Statements that can be reviewed through execution plan (Explain) in MySQL<br/>MySQL differs in the supported statements for analysis through execution plan by version.
 
 |  **MySQL 5.6.3 and earlier**  |  **MySQL 5.6.3 and later**                         |
 | -------------------- | ------------------------------------------- |

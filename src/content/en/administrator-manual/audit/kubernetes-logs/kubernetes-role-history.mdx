@@ -19,11 +19,11 @@ Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History
 </figure>
 
 1. Navigate to the Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History menu.
-2. Logs are displayed in descending order based on Action At from 00:00 to 23:59 of the current month. 
+2. Logs are displayed in descending order based on Action At from 00:00 to 23:59 of the current month.
 3. You can search with the following conditions through the search field in the top left of the table:
     1.  **Name**  : User name
     2.  **Email**  : User email
-    3.  **Role Name**  : Kubernetes access permission role name 
+    3.  **Role Name**  : Kubernetes access permission role name
 4. Click the filter button on the right side of the search field to filter with AND/OR conditions for the following:
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/kubernetes-logs/kubernetes-role-history/image-20240721-084201.png" alt="image-20240721-084201.png" width="736" />
@@ -37,22 +37,22 @@ Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History
     3.  **Action At**  : Kubernetes API permission grant/revocation date and time range
 5. You can refresh the log list through the refresh button in the top right of the table.
 6. The table provides the following column information:
-    1.  **No**  : Event identification number 
-    2.  **Action At**  : Role permission grant/revocation date and time 
-    3.  **Event**  : Role permission related event 
+    1.  **No**  : Event identification number
+    2.  **Action At**  : Role permission grant/revocation date and time
+    3.  **Event**  : Role permission related event
         1.  **Role Granted**  : Event where Role was granted to user/group
-        2.  **Role Revoked**  : Event where Role was revoked from user/group 
-    4.  **User Type**  : User/group type 
+        2.  **Role Revoked**  : Event where Role was revoked from user/group
+    4.  **User Type**  : User/group type
     5.  **Name**  : Target user/group name
-    6.  **Email**  : Target user email 
-        1. For groups, it is displayed as a hyphen ('-'). 
+    6.  **Email**  : Target user email
+        1. For groups, it is displayed as a hyphen ('-').
     7.  **Role**  : Granted/revoked Role name
     8.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
-    9.  **Action By**  : Administrator name or System who performed the Role grant/revocation 
+    9.  **Action By**  : Administrator name or System who performed the Role grant/revocation
 
 ### Viewing Kubernetes Role History Details
 
-1. You can view detailed information by clicking on each row. 
+1. You can view detailed information by clicking on each row.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/kubernetes-logs/kubernetes-role-history/image-20240721-084057.png" alt="Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History &gt; Kubernetes Role History Details" width="736" />
   <figcaption>
@@ -61,24 +61,24 @@ Administrator &gt; Audit &gt; Kubernetes &gt; Kubernetes Role History
   </figure>
     1. The top displays information based on basic events:
         1.  **Role Name**  : Role name
-            * Clicking the link allows opening the detailed page path of the corresponding Role in a new window. 
+            * Clicking the link allows opening the detailed page path of the corresponding Role in a new window.
         2.  **Event**  : Event where Role was granted/revoked to user/group
         3.  **Name**  : Target user/group name
-        4.  **Email**  : Target user email 
-            1. For groups, it is displayed as a hyphen ('-'). 
-        5.  **Action At** : Role permission grant/revocation date and time 
-        6.  **Action By**  : Administrator name or System who performed the Role grant/revocation 
+        4.  **Email**  : Target user email
+            1. For groups, it is displayed as a hyphen ('-').
+        5.  **Action At** : Role permission grant/revocation date and time
+        6.  **Action By**  : Administrator name or System who performed the Role grant/revocation
         7.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
-    2. The bottom lists and displays Policies corresponding to the granted/revoked Role: 
-        * Display columns 
+    2. The bottom lists and displays Policies corresponding to the granted/revoked Role:
+        * Display columns
             1.  **Name**  : Assigned policy name
-            2.  **Description**  : Detailed description of the assigned policy 
+            2.  **Description**  : Detailed description of the assigned policy
             3.  **Version**  : Version of the assigned policy
-                * Clicking the link displays a popup modal to view the policy code. 
+                * Clicking the link displays a popup modal to view the policy code.
                   <figure data-layout="center" data-align="center">
                   <img src="/administrator-manual/audit/kubernetes-logs/kubernetes-role-history/image-20240721-084129.png" alt="image-20240721-084129.png" width="390" />
                   </figure>
-                    1. Shows the Policy Snapshot from when it was granted. 
-                        * Records remain even if the corresponding Policy is deleted. 
-                    2. Simply displays the code along with the policy name. 
-                    3. Clicking the `Close` button or the `X` in the top right closes the modal. 
+                    1. Shows the Policy Snapshot from when it was granted.
+                        * Records remain even if the corresponding Policy is deleted.
+                    2. Simply displays the code along with the policy name.
+                    3. Clicking the `Close` button or the `X` in the top right closes the modal.

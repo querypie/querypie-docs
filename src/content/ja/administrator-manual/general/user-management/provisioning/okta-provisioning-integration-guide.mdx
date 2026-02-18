@@ -136,7 +136,7 @@ QueryPie Profileの属性のうち、staticIp、macAddressなど一部attribute�
 QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目がSCIM Integration当時に別途importされません。
 該当Attributeは以下の通りです：
 
-1. secondEmail 
+1. secondEmail
 2. mobilePhone
 3. postalAddress（SCIMスキーマに合わせて「formatted」で追加されて該当項目をマッピングすればよいです。）
 4. staticIp（QueryPie専用カスタム属性）
@@ -150,32 +150,32 @@ QueryPieプロファイル内のstaticIp、macAddressなど一部attribute項目
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082412.png" alt="image-20240712-082412.png" width="518" />
   </figure>
-2. `Add Attribute`ボタンをクリックします。 
+2. `Add Attribute`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
-3. 同期に必要なAttributeを新たに登録します。 
+3. 同期に必要なAttributeを新たに登録します。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082453.png" alt="image-20240712-082453.png" width="314" />
   </figure>
     1. Data type：QueryPieと同様にstringを選択します。
     2. Display name：Okta内表記する属性名を記入します。
-    3. Variable name & External name：同期するcustom attribute変数名を記入します。 
-        * QueryPieユーザープロファイルでも括弧で変数名確認が可能です。 
+    3. Variable name & External name：同期するcustom attribute変数名を記入します。
+        * QueryPieユーザープロファイルでも括弧で変数名確認が可能です。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png" alt="image-20240712-083117.png" width="144" />
           </figure>
     4. External namespace：以下の値を記入します。<br/>`urn:ietf:params:scim:schemas:extension:querypie:2.0:User`
     5. 以降`Save`または`Save and Add Another`ボタンをクリックして保存します。
-4. 次に`Mappings`ボタンをクリックします。 
+4. 次に`Mappings`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-082549.png" alt="image-20240712-082549.png" width="187" />
   </figure>
-    1. プロンプト上部のタブを2番目のタブ（Okta → `{APP}`）で選択します。 
+    1. プロンプト上部のタブを2番目のタブ（Okta → `{APP}`）で選択します。
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083618.png" alt="image-20240712-083618.png" width="285" />
       </figure>
-    2. 下部に新たに生成したCustom AttributeとIdP内適切なAttributeをマッピングしてSave Mappingsボタンをクリックして設定を保存します。 
+    2. 下部に新たに生成したCustom AttributeとIdP内適切なAttributeをマッピングしてSave Mappingsボタンをクリックして設定を保存します。
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-085207.png" alt="image-20240712-085207.png" width="450" />
       </figure>

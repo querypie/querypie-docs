@@ -34,9 +34,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 5. 同期したいリソースの  **Tenant**   **ID** を入力します。
 6.  **Subscription**   **ID** を入力します。
 7. リソースを同期するために必要な  **Credential** 情報を入力します。現在はClient Secret方式のみサポートされています。
-    * `Synchronize`ボタンクリック時にAzureのClient Secretを入力する手動同期方式を基本提供します。 <br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでClient Secretを使用する時もスケジュールを通じた同期が可能になるように改善されました。 
-8.  **Database Type Filter** 項目で同期したいリソースを選択します。 
-    * 現在Azure SQL Databaseのみ同期可能です。 
+    * `Synchronize`ボタンクリック時にAzureのClient Secretを入力する手動同期方式を基本提供します。 <br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでClient Secretを使用する時もスケジュールを通じた同期が可能になるように改善されました。
+8.  **Database Type Filter** 項目で同期したいリソースを選択します。
+    * 現在Azure SQL Databaseのみ同期可能です。
 9.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
     1. Search FilterはAWSの検索方式と同じように動作します。名前、ホスト、OS、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
         1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
@@ -60,7 +60,7 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **このオプションをアクティブにして保存した同期設定は同期設定詳細ページでこのオプションを非アクティブにできませんので慎重に選択する必要があります。保存されたcredentialは交換できません。他のcredentialを使用しなければならない状況なら同期設定を新しく作成する必要があります。credential変更が必要な場合は既存と同じ権限が割り当てられたcredentialを作成し同期設定を新しく作った後既存同期設定を削除することをお勧めします。** 
+*  **このオプションをアクティブにして保存した同期設定は同期設定詳細ページでこのオプションを非アクティブにできませんので慎重に選択する必要があります。保存されたcredentialは交換できません。他のcredentialを使用しなければならない状況なら同期設定を新しく作成する必要があります。credential変更が必要な場合は既存と同じ権限が割り当てられたcredentialを作成し同期設定を新しく作った後既存同期設定を削除することをお勧めします。**
 * このオプションがアクティブになっていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションをアクティブにできます。
 * このオプションがアクティブになっていれば同期を手動ですることもでき、スケジュールを指定することもできます。
 </Callout>
@@ -96,9 +96,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 
 <Callout type="info">
 Microsoft Azureでアプリケーション登録およびClient Secret情報取得
-* AzureコンソールでMicrosoft Entra IDメニューにアクセスします。 
-* 左側メニューで「アプリ登録」メニューで新しいアプリケーションを登録します。 
-    *  **該当アプリケーションのID値をClient Secret IDで入力します。** 
+* AzureコンソールでMicrosoft Entra IDメニューにアクセスします。
+* 左側メニューで「アプリ登録」メニューで新しいアプリケーションを登録します。
+    *  **該当アプリケーションのID値をClient Secret IDで入力します。**
 * 登録したアプリケーションを詳細ページで「証明書およびパスワードメニュー」に移動します。
 * 上部の「新しいクライアントパスワード」ボタンをクリックして新しいクライアントパスワードを生成します。
 * 「サブスクリプション」の「IAM」メニューにアクセスします。

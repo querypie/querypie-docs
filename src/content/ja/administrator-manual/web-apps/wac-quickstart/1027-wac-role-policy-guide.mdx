@@ -168,7 +168,7 @@ WACのポリシーはYAML形式で記述され、その基本構造は以下の�
 
 QueryPieに定義したWebアプリリソース名を入力します。
 
-1. 明示的にWebアプリを特定する必要があり、ワイルドカードや正規表現は許可されません。 
+1. 明示的にWebアプリを特定する必要があり、ワイルドカードや正規表現は許可されません。
     * `- webApp: "QueryPie"` (O)
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
@@ -178,7 +178,7 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
       - webApp: "QueryPie Customer Portal"
@@ -194,7 +194,7 @@ spec:
 
 ポリシーを適用したい特定のWebアプリリソースのサブパスを特定します。
 
-1. Admin &gt; Web App に登録されたサブパスのみ登録可能です。 
+1. Admin &gt; Web App に登録されたサブパスのみ登録可能です。
 2. Base URLを含めて、Webアプリに存在する **すべて** のサブパスに対して許可または拒否する方法は以下の通りです。
     * urlPaths行を記述しません。
         * 例：QueryPie Web Admin の全体パスに対してアクセス許可
@@ -221,18 +221,18 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/kubernetes-settings"
           ```
     * サブパスとこれに含まれる詳細パスを同時に入力できません。
-        * 例：QueryPie Web Admin の `/general-settings` と `/general-settings/user-management` を **同時に入力不可** 
+        * 例：QueryPie Web Admin の `/general-settings` と `/general-settings/user-management` を **同時に入力不可**
           ```
 spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings"
           - "/general-settings/user-management"
           ```
@@ -242,7 +242,7 @@ urlPathsに特定のサブパスを入力するには、Web App詳細情報でPa
 登録されていないサブパス入力時はエラーが発生します。
 </Callout>
 
-1. ワイルドカードまたは正規表現はサポートされません。 
+1. ワイルドカードまたは正規表現はサポートされません。
     * `"/*-settings"` (X)
     * `"^/database-settings/policies/data-.*$"` (X)
 2. 同一のリソース（およびサブパス）に対してブロックポリシーと許可ポリシーが重複する場合、**ブロックポリシーが優先**です。
@@ -260,22 +260,22 @@ urlPathsに特定のサブパスを入力するには、Web App詳細情報でPa
 Web AppのPath Managementで付与されたタグを基準にルールによってアクセスが許可されるリソース範囲を限定します。
 
 1. タグは大文字小文字を区別し、複数入力できます。
-    * Keyが同一のタグを複数入力時、OR条件で動作します。 
+    * Keyが同一のタグを複数入力時、OR条件で動作します。
         * 例：`access: admin` または `access: user` が付与されたパスに対してアクセス許可
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "access": "user"
           ```
-    * Keyが異なるタグを複数入力時、AND条件で動作します。 
+    * Keyが異なるタグを複数入力時、AND条件で動作します。
         * 例：`access: admin` と `type: general` が一緒に付与されたパスに対してアクセス許可
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "type": "general"
           ```
 2. `resources[].urlPaths` と連携して動作します。
-    *  **Webアプリリソースの対象urlPathが明示されていない場合** 
+    *  **Webアプリリソースの対象urlPathが明示されていない場合**
         * 登録された全体サブパス中urlPathTagがあるパスをすべて許可します。
         * 例：Web App "QueryPie Web Admin" に対して、Path Managementに登録された全体サブパス中 `access: admin` タグが付与されたパスに限ってアクセス許可
           ```
@@ -288,7 +288,7 @@ spec:
       urlPathTags:
         "access": "admin"
           ```
-    *  **Webアプリリソースの対象urlPathが明示された場合** 
+    *  **Webアプリリソースの対象urlPathが明示された場合**
         * 明示されたパス中urlPathTagがあるパスのみを許可します。
         * 例：Web App "QueryPie Web Admin" に対して、`resources[].urlPaths` に明示された2つのパス中Path Managementで `access: admin` タグが付与されたパスに限ってアクセス許可
           ```
@@ -296,14 +296,14 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
     conditions:
       urlPathTags:
         "access": "admin"
           ```
-    *  **Webアプリリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合** 
+    *  **Webアプリリソースの対象urlPathが明示されたが範囲内でマッチングされるurlPathTagがない場合**
         * 条件に一致するurlPathが存在しないため、いかなるパスも許可しません。
 
 #### userAttributes<Badge color="green">OPTIONAL</Badge>
@@ -317,17 +317,17 @@ QueryPieで追加されたユーザーの属性は詳細ページで追加/変�
 
 属性情報は大文字小文字を区別し、複数入力できます。
 
-* Keyが同一の属性を複数入力時、OR条件で動作します。 
+* Keyが同一の属性を複数入力時、OR条件で動作します。
     * 例：部署（department）がPMまたはQAのユーザーに対してアクセス許可
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "department": "QA"
       ```
-* Keyが異なる属性を複数入力時、AND条件で動作します。 
+* Keyが異なる属性を複数入力時、AND条件で動作します。
     * 例：部署（department）がPMで、職位（title）が管理者のユーザーに対してアクセス許可
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "title": "Manager"
       ```
@@ -369,7 +369,7 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 識別されていないサブパスに対するアクセスを許可してはいけない場合、許可対象パスを明確に指定しなければなりません。
 
 1. Path Managementでアクセス許可が必要なすべてのパスを登録し、Path Tagを適切に付与します。
-2. ポリシー構成時、タグおよびユーザー属性、IPなどの条件を使用します。 
+2. ポリシー構成時、タグおよびユーザー属性、IPなどの条件を使用します。
     1. 制御対象WebアプリのurlPathsを全体で指定しても、タグ条件付与時、Path Managementに登録されたパスを対象にのみポリシーが設定されます。
     2. 必要時ユーザー属性やIPなど、Webアプリアクセスを許可するユーザーの範囲を指定できます。
 

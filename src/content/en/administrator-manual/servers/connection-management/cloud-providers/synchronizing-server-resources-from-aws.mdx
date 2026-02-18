@@ -30,16 +30,16 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 5. Select the region of the resources you want to synchronize from the **Region** field.
 6. Enter the **Credential** information required to synchronize resources.
     1. Please refer to <u>Setting Authentication Methods by Credential Type</u> below for descriptions of each Credential method.
-7. You can use **Search Filter** to retrieve a list of some types of resources you want to synchronize. 
-    1. Search Filter works the same way as AWS search. You can use values such as names, hosts, OS, tags as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order. 
-        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value value and press Enter 
-    2. For more detailed usage, please refer to [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch). 
+7. You can use **Search Filter** to retrieve a list of some types of resources you want to synchronize.
+    1. Search Filter works the same way as AWS search. You can use values such as names, hosts, OS, tags as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
+        1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value value and press Enter
+    2. For more detailed usage, please refer to [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch).
 8. Select the synchronization method from the **Replication Frequency** field.
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Cron Expressions are provided.
 9.  **Auto Configuration Upon Initial Synchronization** You can specify some values for servers that are initially synchronized from Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register again.
     * port **:**  You can specify the connection port of synchronized servers. Currently, only SSH/SFTP ports can be specified.
-    * Tag : You can automatically add tags to synchronized servers. 
+    * Tag : You can automatically add tags to synchronized servers.
         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud where the server belongs is automatically filled.
         * Example: If you set the tag Key to "Network" and enter the Value as `{vpcid}`, when the server is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag is automatically created.
 10. Click the `Save` button to save the Cloud Provider.
@@ -63,7 +63,7 @@ Credential Type
 *  **Default Credentials**  : If the QueryPie server is installed in the same AWS account, you can assign the AmazonEC2ReadOnlyAccess policy to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS.
 *  **Cross Account Role**  : You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen.
 *  **Profile Credential**  : You can create an IAM role to synchronize resources from other AWS accounts.
-*  **Access Key**  : Provides manual synchronization method by entering access key and secret key of AWS account when clicking `Synchronize` button by default. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable synchronization through schedules even when using access key as Credential type.  **** 
+*  **Access Key**  : Provides manual synchronization method by entering access key and secret key of AWS account when clicking `Synchronize` button by default. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable synchronization through schedules even when using access key as Credential type.  ****
 
 <Callout type="important">
 **Save Credential for Synchronization Option**
@@ -75,8 +75,8 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **Synchronization settings saved with this option enabled cannot disable this option from the synchronization settings detailed page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same IAM permissions as before, creating new synchronization settings, and then deleting the existing synchronization settings.** 
-* Synchronization settings saved with this option disabled can enable the option by checking the checkbox on the detailed page. 
+*  **Synchronization settings saved with this option enabled cannot disable this option from the synchronization settings detailed page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same IAM permissions as before, creating new synchronization settings, and then deleting the existing synchronization settings.**
+* Synchronization settings saved with this option disabled can enable the option by checking the checkbox on the detailed page.
 * If this option is enabled, you can synchronize manually or specify a schedule.
 </Callout>
 

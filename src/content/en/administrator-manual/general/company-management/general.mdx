@@ -24,9 +24,9 @@ Administrator &gt; General &gt; Company Management &gt; General
 *  **Web Base URL**  : The basic domain address used to access the QueryPie service. [[More details]](../../../installation/container-environment-variables/querypieweburl)
 *  **Timezone**  : Set the timezone to be applied to date and time information displayed throughout QueryPie.
 *  **Date Format**  : Specify the date notation method.
-*  **Default Display Language**  : Set the default language setting for QueryPie. (Default: English) 
+*  **Default Display Language**  : Set the default language setting for QueryPie. (Default: English)
 *  **Audit Log Retention Period** : Set the audit log retention period. Currently fixed at 5 years.
-*  **Go to System Properties**  : Click to view system configuration values. 
+*  **Go to System Properties**  : Click to view system configuration values.
 
 
 ### System Properties
@@ -99,7 +99,7 @@ From 11.4.0, the attribute-based approver assignment feature has been improved t
 
 You can automatically assign approvers based on specific Attributes (e.g., team leader, department head) in user profiles.
 
-* Important: 
+* Important:
     * The value of the selected Attribute must contain the QueryPie Login ID of the approver.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/company-management/general/Screenshot-2025-06-12-at-1.33.58-PM.png" alt="Admin &gt; General &gt; Users &gt; Detail page &gt; Profile tab<br/>" width="712" />
@@ -114,7 +114,7 @@ You can automatically assign approvers based on specific Attributes (e.g., team 
     * Integration when self-approval is disabled: If the 'Self Approval (self-approval)' option is disabled in Approval Rules settings, when the approver determined based on Attributes is the requester themselves, that requester cannot be automatically assigned as an approver. In this case, approver assignment may fail or be processed through other routes according to workflow settings or system policies, so caution is needed.
 * Notification when Attribute value is missing
     * If the corresponding Attribute value is empty in the submitter's User Profile (i.e., no approver Login ID is specified), a notification modal with the following content is displayed when submitting workflows and request submission is interrupted. Submitters must contact administrators to set the Attribute value in their profile.
-        * Error message example: 
+        * Error message example:
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/general/company-management/general/image-20250508-022114.png" alt="image-20250508-022114.png" width="688" />
           </figure>

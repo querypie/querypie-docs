@@ -41,37 +41,37 @@ Data PoliciesはQueryPieでデータアクセス制御、データマスキン�
 
 QueryPieは以下のようなポリシータイプを提供します:
 
-1.  **Column Data Masking** 
-    * カラムを対象にデータマスキングポリシーを適用します。 
+1.  **Column Data Masking**
+    * カラムを対象にデータマスキングポリシーを適用します。
     * 正規表現ベースのマスキングパターンを使用して特定データパターンを検出し、マスキングします。（Masking Patterns）
-    * ユーザーが該当カラムを照会する時`{masked}`形態で表示され、セルをクリックするとマスキング処理されたデータが表示されます。<br/> <br/> 
+    * ユーザーが該当カラムを照会する時`{masked}`形態で表示され、セルをクリックするとマスキング処理されたデータが表示されます。<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.23.47-PM.png" alt="Screenshot-2025-03-07-at-10.23.47-PM.png" width="712" />
       </figure>
-2.  **Table Access Restriction** 
+2.  **Table Access Restriction**
     * テーブルを対象にアクセス遮断ポリシーを適用します。
     * ユーザーが該当テーブルを照会しようとする時アクセスが遮断され、権限なしメッセージが表示されます。
-    * メッセージ: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/> 
+    * メッセージ: `"You don't have permission to access the table 'database.table'. Please check your privileges."`<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.36.58-PM.png" alt="Screenshot-2025-03-07-at-10.36.58-PM.png" width="712" />
       </figure>
-3.  **Column Access Restriction** 
+3.  **Column Access Restriction**
     * カラムを対象にアクセス遮断ポリシーを適用します。
-    * ユーザーが該当カラムを照会しようとする時`{restricted}`形態で表示され、アクセスが遮断されます。<br/> <br/> 
+    * ユーザーが該当カラムを照会しようとする時`{restricted}`形態で表示され、アクセスが遮断されます。<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-10.34.20-PM.png" alt="Screenshot-2025-03-07-at-10.34.20-PM.png" width="712" />
       </figure>
-4.  **Table Access Justification Requirement** 
+4.  **Table Access Justification Requirement**
     * 特定テーブルに対する作業時理由入力を強制化します。
     * ユーザーが選択された作業（例：SELECTクエリ、データエクスポート）を実行する時理由入力モーダルが表示されます。
     * 入力された理由はQuery AuditのExecution Reasonに記録されます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/Screenshot-2025-03-07-at-11.01.28-PM.png" alt="Screenshot-2025-03-07-at-11.01.28-PM.png" width="712" />
       </figure>
-5.  **Sensitive Data Access Monitoring** 
+5.  **Sensitive Data Access Monitoring**
     * 管理者が特定テーブルまたはカラムを機密情報として指定し、該当データにアクセスした場合にAlertが発生するよう設定します。
     * どの経路が機密情報か設定し、Alert設定はGeneral &gt; Company Management &gt; Alertで設定します。<br/>（11.0.0基準新ポリシー用Sensitive Data Access Monitoring Alert設定機能は未実装状態です。）
-6.  **DML Query Approval Enforcement**  
+6.  **DML Query Approval Enforcement**
     * 特定テーブルに対して`INSERT`, `UPDATE`, `DELETE`クエリを実行する場合Workflowで承認手順を経るよう強制します。
     * このポリシーを作成する前にGeneral &gt; Workflow Management &gt; Approval RulesでSQL Request TypeのApproval Ruleをまず作成しておく必要があります。`INSERT`, `UPDATE`, `DELETE`を実行するのは実行する人に該当privilegeが付与されていることを前提とします。クエリを実行する人がリクエスト者本人になるようにするには、以下の図のようにExecution項目のAssignee for Executionに「Allow Assignee selection (All Users)が選択されている必要があり、`INSERT`, `UPDATE`, `DELETE`権限はあるが管理者でない人が承認を経てクエリを実行できます。<br/>
       <figure data-layout="center" data-align="center">
@@ -101,7 +101,7 @@ QueryPieは以下のようなポリシータイプを提供します:
 
 1.  **Everyone** : すべてのユーザーにポリシーが適用されます。（基本値）
 2.  **Users or Groups** : 選択した特定ユーザーやグループにのみポリシーが適用されます。
-3.  **Attribute of Users**  : 特定属性を持つユーザーに動的にポリシーを適用したい場合使用します。 <Badge color="grey">11.1.0</Badge> 
+3.  **Attribute of Users**  : 特定属性を持つユーザーに動的にポリシーを適用したい場合使用します。 <Badge color="grey">11.1.0</Badge>
 
 #### Exclusions
 
@@ -112,7 +112,7 @@ User scopeのscope typeが  **Everyone** の場合のみExclusion対象を指定
 （ポリシー適用対象 = 全体 - exclusionsに指定した特定ユーザーまたはグループです。）
 
 1.  **None** : 除外なしにScope Typeに従ってすべてのユーザーに適用されます。（基本値）
-2.  **Users and Groups** : 選択したユーザーやグループをポリシー適用から除外します。 
+2.  **Users and Groups** : 選択したユーザーやグループをポリシー適用から除外します。
 
 
 ### ポリシー適用ターゲットデータ設定
@@ -132,8 +132,8 @@ User scopeのscope typeが  **Everyone** の場合のみExclusion対象を指定
 
 1.  **Data tags** : Data Pathsメニューで設定されたタグを基にポリシー適用対象を選択します。
     * このオプションが選択されるとタグキーと値を指定してポリシーを適用するテーブルまたはカラムを選択できます。
-2.  **Specific data path** : 特定データ経路を直接指定するオプションです。 <Badge color="grey">11.0.0</Badge> 
-    * このオプションを選択した後Add targetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。  <br/>  <br/> 
+2.  **Specific data path** : 特定データ経路を直接指定するオプションです。 <Badge color="grey">11.0.0</Badge>
+    * このオプションを選択した後Add targetボタンを押して出力されるポップアップダイアログでDatabase、Schema、Table、Columnを指定でき、正規表現も使用できます。  <br/>  <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/new-policy-management/data-policies/image-20250629-162342.png" alt="直接経路指定" width="505" />
       <figcaption>

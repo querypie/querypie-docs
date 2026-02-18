@@ -10,46 +10,46 @@ import { Callout } from 'nextra/components'
 #### Custom Data Sourceアクセス要求
 
 1. ユーザー画面上部Workflowメニューに移動します。
-2. 左上`Submit Request`ボタンクリック後DB Access Request項目を選択します。 <br/> 
+2. 左上`Submit Request`ボタンクリック後DB Access Request項目を選択します。 <br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-1.19.24-PM.png" alt="Screenshot-2025-03-06-at-1.19.24-PM.png" width="712" />
   </figure>
 3. Approval Ruleを状況に合わせて設定しTitleも作成します。
 4. DB Connection目録でTypeが'Custom Data Source'の項目を選択します。
-5. 他のベンダーと異なりPrivilegeを選択できないため"-"で表記されます。 
-6. Expiration DateとReason for Request項目も状況に合わせて設定および作成します。 <br/> 
+5. 他のベンダーと異なりPrivilegeを選択できないため"-"で表記されます。
+6. Expiration DateとReason for Request項目も状況に合わせて設定および作成します。 <br/>
   <figure data-layout="center" data-align="center">
   <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-1.22.28-PM.png" alt="Screenshot-2025-03-06-at-1.22.28-PM.png" width="712" />
   </figure>
-7. 作成が完了したら下部`Submit`ボタンをクリックして申請を完了します。 
+7. 作成が完了したら下部`Submit`ボタンをクリックして申請を完了します。
 8. 管理者の承認を受けたら左上Workflow &gt; Sent Request &gt; Doneメニューで確認できます。
 
 <Callout type="important">
 **Custom Data Source Type外多重要求時注意事項**
-* Custom Data Sourceと他のベンダーを一緒に選択する場合権限タイプが異なるため一括的に選択できません。 
+* Custom Data Sourceと他のベンダーを一緒に選択する場合権限タイプが異なるため一括的に選択できません。
 * この場合次のメッセージが表示されます: "Privileges cannot be applied across different types at once (e.g., General, Redis, Custom Data Source). Please assign privileges separately for each connection."
 * 同じ権限タイプのコネクション同士は一括適用が可能です。
 </Callout>
 
 #### <br/>Agentを通じた接続
 
-1.  **QueryPie Agent実行** 
+1.  **QueryPie Agent実行**
     * QueryPie Agentを実行します。
-    * Database項目でCustom Data Sourceを確認できます。<br/> 
+    * Database項目でCustom Data Sourceを確認できます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png" alt="Screenshot-2025-03-06-at-2.05.26-PM.png" width="400" />
       </figure>
-2.  **Connection Guide確認** 
+2.  **Connection Guide確認**
     * AgentでCustom Data Sourceコネクション行をクリックするとPort情報を含む行が見えます。
-    * 上記行を右クリックした後Connection Guideをクリックすると接続情報を確認できます。<br/> 
+    * 上記行を右クリックした後Connection Guideをクリックすると接続情報を確認できます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png" alt="Screenshot-2025-03-06-at-2.08.11-PM.png" width="712" />
       </figure>
     * UID/PWは修正できないdb username、db passwordで表示されます。
     * Privilegesは"-"で表示されます。
-3.  **SQL Toolで接続** 
+3.  **SQL Toolで接続**
     * DataGripやその他のSQL Toolを実行します。
-    *  **HostとPortはConnection Guideに明記されている情報を入力する必要があります。**  
+    *  **HostとPortはConnection Guideに明記されている情報を入力する必要があります。**
     * ベンダーに応じて追加情報を入力します。
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png" alt="Screenshot-2025-03-06-at-2.18.26-PM.png" width="712" />
@@ -62,13 +62,13 @@ import { Callout } from 'nextra/components'
 
 #### ウェブで接続試行する場合
 
-1.  **ウェブコネクション目録確認** 
-    * ユーザー画面上部Databasesをクリックします。 
-    * 左側コネクション目録でQueryPie Connectionsをクリックするとアクセス権限があるCustom Data Sourceが表示されます。<br/> 
+1.  **ウェブコネクション目録確認**
+    * ユーザー画面上部Databasesをクリックします。
+    * 左側コネクション目録でQueryPie Connectionsをクリックするとアクセス権限があるCustom Data Sourceが表示されます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.22.22-PM.png" alt="Screenshot-2025-03-06-at-2.22.22-PM.png" width="712" />
       </figure>
-2.  **接続不可案内** 
+2.  **接続不可案内**
     * Custom Data Source選択時Connectボタンが非活性化されます。
     * 下記のようなツールチップが表示されウェブでは接続が不可です。<br/> "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."
       <figure data-layout="center" data-align="center">

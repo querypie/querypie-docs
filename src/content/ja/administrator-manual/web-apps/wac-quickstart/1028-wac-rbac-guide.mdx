@@ -39,20 +39,20 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPathTags:              
+        urlPathTags:
           access: "admin"
       - webApp: "QueryPie Customer Portal"
-        urlPaths: ["*"]          
+        urlPaths: ["*"]
     conditions:
       userAttributes:
         department: "White"
-      ipAddresses: 
+      ipAddresses:
         - "10.10.0.0/24"
         - "10.10.1.79"
   deny:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management/roles"
 ```
 
@@ -209,11 +209,11 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
       - webApp: "QueryPie Customer Portal"
-        urlPathTags: 
+        urlPathTags:
           access: "admin"
   ```
 3. Webアプリ名は以下の条件を満たす必要があります。
@@ -248,18 +248,18 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"     # 特定のサブパス
           - "/general-settings/user-management/*"   # 特定パスのすべてのサブパス
       ```
     * 入力したパス中に相互に重複するパスを同時に入力できません。
-        * 例：QueryPie Web Admin の `/general-settings/*` と `/general-settings/user-management` を **同時に入力不可** 
+        * 例：QueryPie Web Admin の `/general-settings/*` と `/general-settings/user-management` を **同時に入力不可**
           ```
 spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/*"
           - "/general-settings/user-management"
           ```
@@ -277,14 +277,14 @@ Webアプリに登録されたサブパス別URL Pathタグを基準に、アク
     * Keyが同一のタグを複数入力時、**OR** 条件で動作します。
         * 例：`access: admin` または `access: user` が付与されたパスに対してアクセス許可
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "access": "user"
           ```
     * Keyが異なるタグを複数入力時、**AND** 条件で動作します。
         * 例：`access: admin` と `type: general` が一緒に付与されたパスに対してアクセス許可
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "type": "general"
           ```
@@ -311,14 +311,14 @@ QueryPieで追加されたユーザーの属性は詳細ページで追加/変�
 * Keyが同一の属性を複数入力時、OR条件で動作します。
     * 例：部署（department）がPMまたはQAのユーザーに対してアクセス許可
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "department": "QA"
       ```
 * Keyが異なる属性を複数入力時、AND条件で動作します。
     * 例：部署（department）がPMで、職位（title）が管理者のユーザーに対してアクセス許可
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "title": "Manager"
       ```
@@ -336,7 +336,7 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 権限別にアクセスを許可するWebアプリおよびサブパスを指定する方式を推奨しています。
 
-1. Webアプリ別に存在する権限リストを確認します。 
+1. Webアプリ別に存在する権限リストを確認します。
     1. 例：採用プラットフォームに対して、
         1. HR - すべての権限を持つ
         2. 面接官 - 面接結果を管理するページにのみアクセス可能

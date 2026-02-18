@@ -115,7 +115,7 @@ Do not enter queries that should be allowed for execution by certain users.
 *  **Query Annotation**  : Automatically records annotations specified by administrators when performing queries. When the feature is activated, annotations are recorded using the following 3 templates. As of 10.4.0, limited to Redshift support.
     * User Name: `{{userName}}` : Display Name of the user who performed the query.
     * Login ID: `{{loginId}}` : Login ID of the user who performed the query.
-    * Execute From: `{{executedFrom}}` : The means by which the query was performed. As of 10.4.0, only Web Editor is recorded. 
+    * Execute From: `{{executedFrom}}` : The means by which the query was performed. As of 10.4.0, only Web Editor is recorded.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png" alt="Query Audit" width="556" />
@@ -126,7 +126,7 @@ Query Audit
 
 <br/>
 
-*  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow. 
+*  **Member based Connection Filtering :**  Feature to filter and show only specified connections instead of showing all connections for specific users or groups in DB Access Request forms in Workflow.
     * Only connections registered as connection members in the connection detail screen are exposed in Workflow DB Access Request.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png" alt="Assign specific users or groups to Connection Member in the detail screen of a specific connection in Databases &gt; Connection Management &gt; DB Connections" width="712" />
@@ -141,7 +141,7 @@ From version 9.17.0, this feature has been changed to detailed connection settin
 For detailed configuration methods, please refer to [DB Connections](connection-management/db-connections) for  **Additional Settings** .
 </Callout>
 
-*  **Maximum Policy Exception Period**  : Sets the maximum validity period (in hours) for policy exceptions such as Unmasking. This setting affects the Workflow application form and the administrator's manual policy settings when the New DAC Policy Management feature is enabled. 
+*  **Maximum Policy Exception Period**  : Sets the maximum validity period (in hours) for policy exceptions such as Unmasking. This setting affects the Workflow application form and the administrator's manual policy settings when the New DAC Policy Management feature is enabled.
     * Default: 720 hours (30 days)
     * Maximum: 8760 hours (1 year)
     * Minimum: 1 hour

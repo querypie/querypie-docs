@@ -58,7 +58,7 @@ Admin &gt; Web Apps &gt; Create a Web App
 以下の情報を入力してください。
 
 1. Name : QueryPie Web Site
-2. Base URL : `querypie.com` または `10.10.10.10:443` 
+2. Base URL : `querypie.com` または `10.10.10.10:443`
     1. Base URLにはサブパス（例：`/ko`）を含めることはできません。
     2. Base URLに `https://` を入力するとエラーメッセージが表示されます。
     3. Base URLに `www.` を入力するとエラーメッセージが表示されます。
@@ -66,7 +66,7 @@ Admin &gt; Web Apps &gt; Create a Web App
 4. Watermark : Webアプリアクセス時にユーザーのブラウザ画面にウォーターマークを適用するかどうかを選択します。
     1. Webアプリアクセス時にブラウザにアクセス者、アクセス日時などの情報を表示することで画面流出を防止します。
     2. ガイドではOn状態を前提として案内します。
-5. URL Paths : サブパスを入力します。（選択） 
+5. URL Paths : サブパスを入力します。（選択）
     1. ガイドではサブパスを入力してみます。`+ Add Path` ボタンをクリックしてサブパスを入力してください。
 
 |  **Path**                              |  **Path Tag**  |
@@ -168,14 +168,14 @@ Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List De
 
 ### 1. Root CA証明書のインストール
 
-1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから Support &gt; Download Web Secure ボタンをクリックします。<br/> <br/> 
+1. QueryPieにログインした状態で、上部右側のプロフィールボタンをクリックし、プロフィールメニューから Support &gt; Download Web Secure ボタンをクリックします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-120321.png" alt="QueryPie &gt; Profile Menu" width="565" />
   <figcaption>
   QueryPie &gt; Profile Menu
   </figcaption>
   </figure>
-2. QueryPie Web Secure Downloadモーダルが開きます。  **A. Install Root CA Certificate** で、Step 1. のDownload Linkをクリックすると証明書ファイルのダウンロードが実行されます。 <br/> <br/> 
+2. QueryPie Web Secure Downloadモーダルが開きます。  **A. Install Root CA Certificate** で、Step 1. のDownload Linkをクリックすると証明書ファイルのダウンロードが実行されます。 <br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20250116-155957.png" alt="QueryPie Web Secure Download" width="565" />
   <figcaption>
@@ -193,14 +193,14 @@ Admin &gt; Web Apps &gt; Web App Access Control &gt; Access Control &gt; List De
 
 1. Chromeアドレスバーに chrome://extensions/ を入力します。
 2. ページ右上の開発者モードトグルを有効にします。
-3. 受け取ったExtensionファイルを **圧縮を解かない** 状態で、拡張機能エリアにドラッグします。<br/> <br/> 
+3. 受け取ったExtensionファイルを **圧縮を解かない** 状態で、拡張機能エリアにドラッグします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192626.png" alt="Chrome &gt; 拡張機能管理" width="565" />
   <figcaption>
   Chrome &gt; 拡張機能管理
   </figcaption>
   </figure>
-4. 新しいタブでHost Configurationページが開きます。QueryPie Hostに現在使用中のQueryPieアドレスを貼り付けて、`Continue` ボタンをクリックします。 
+4. 新しいタブでHost Configurationページが開きます。QueryPie Hostに現在使用中のQueryPieアドレスを貼り付けて、`Continue` ボタンをクリックします。
     1. Host情報が有効であれば `Go to Dashboard` ボタンが表示されます。クリックすると新しいタブでQueryPieにアクセスします。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192931.png" alt="Host Configurationページ" width="565" />
@@ -224,22 +224,22 @@ WAC拡張機能インストール前に開いていたタブについては管�
     1. 現在QueryPieにログインされている状態であれば、Web App Dashboardが開きます。
     2. ログインされていない状態であればログインページへ移動します。ログインを完了し、上部メニューでWeb Appsをクリックしてダッシュボードにアクセスしてください。
     3. ロール選択モーダルが表示されたら、QP Web Testを選択します。
-2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/> <br/> 
+2. Web App Dashboard内のMy Appsに先ほど登録したQueryPie Web Siteアプリアイコンが表示されるはずです。アイコンをクリックするとウェブサイトにアクセスします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-224323.png" alt="QueryPie &gt; Web Apps &gt; Web App Dashboard" width="565" />
   <figcaption>
   QueryPie &gt; Web Apps &gt; Web App Dashboard
   </figcaption>
   </figure>
-3. 初回アクセス時、現在のWebセッションが記録されていることを知らせる画面が表示されます。`Continue` ボタンをクリックしてウェブサイトにアクセスします。<br/> <br/> 
+3. 初回アクセス時、現在のWebセッションが記録されていることを知らせる画面が表示されます。`Continue` ボタンをクリックしてウェブサイトにアクセスします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113541.png" alt="Web Session Monitoring Notification" width="565" />
   <figcaption>
   Web Session Monitoring Notification
   </figcaption>
   </figure>
-4. QueryPieホームページにウォーターマークが適用されていることを確認できます。 <br/> 
-5. 許可されていないページ（例：Productsメニュー）にアクセスを試みると、ブロック案内画面にリダイレクトされます。 <br/> 
+4. QueryPieホームページにウォーターマークが適用されていることを確認できます。 <br/>
+5. 許可されていないページ（例：Productsメニュー）にアクセスを試みると、ブロック案内画面にリダイレクトされます。 <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113037.png" alt=" QueryPie Access Denied" width="565" />
   <figcaption>

@@ -58,7 +58,7 @@ Admin &gt; Web Apps &gt; Create a Web App
 Enter the following information.
 
 1. Name : QueryPie Web Site
-2. Base URL : `querypie.com` or `10.10.10.10:443` 
+2. Base URL : `querypie.com` or `10.10.10.10:443`
     1. Base URL cannot include sub-paths (e.g., `/ko`).
     2. If you enter `https://` in Base URL, an error message will be displayed.
     3. If you enter `www.` in Base URL, an error message will be displayed.
@@ -66,7 +66,7 @@ Enter the following information.
 4. Watermark : Choose whether to apply watermark to the user's browser screen when accessing the web app.
     1. Displays information such as accessor and access time on the browser when accessing the web app to prevent screen leakage.
     2. This guide assumes On status.
-5. URL Paths : Enter sub-paths. (Optional) 
+5. URL Paths : Enter sub-paths. (Optional)
     1. In this guide, let's enter sub-paths. Click the `+ Add Path` button to enter sub-paths.
 
 |  **Path**                              |  **Path Tag**  |
@@ -168,14 +168,14 @@ Now let's proceed with user-side settings to verify that the access policy we ju
 
 ### 1. Install Root CA Certificate
 
-1. While logged into QueryPie, click the profile button in the top right and click Support &gt; Download Web Secure button in the profile menu.<br/> <br/> 
+1. While logged into QueryPie, click the profile button in the top right and click Support &gt; Download Web Secure button in the profile menu.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-120321.png" alt="QueryPie &gt; Profile Menu" width="565" />
   <figcaption>
   QueryPie &gt; Profile Menu
   </figcaption>
   </figure>
-2. The QueryPie Web Secure Download modal opens. In **A. Install Root CA Certificate**, click Step 1. Download Link to download the certificate file. <br/> <br/> 
+2. The QueryPie Web Secure Download modal opens. In **A. Install Root CA Certificate**, click Step 1. Download Link to download the certificate file. <br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20250116-155957.png" alt="QueryPie Web Secure Download" width="565" />
   <figcaption>
@@ -193,14 +193,14 @@ Now let's proceed with user-side settings to verify that the access policy we ju
 
 1. Enter chrome://extensions/ in the Chrome address bar.
 2. Enable the Developer mode toggle in the top right of the page.
-3. Drag the Extension file you received **without extracting** into the extensions area.<br/> <br/> 
+3. Drag the Extension file you received **without extracting** into the extensions area.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192626.png" alt="Chrome &gt; Extensions Management" width="565" />
   <figcaption>
   Chrome &gt; Extensions Management
   </figcaption>
   </figure>
-4. The Host Configuration page opens in a new tab. Paste the QueryPie address you are currently using in QueryPie Host and click the `Continue` button. 
+4. The Host Configuration page opens in a new tab. Paste the QueryPie address you are currently using in QueryPie Host and click the `Continue` button.
     1. If the Host information is valid, the `Go to Dashboard` button appears. Click it to enter QueryPie in a new tab.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241219-192931.png" alt="Host Configuration Page" width="565" />
@@ -224,22 +224,22 @@ Please close all existing browser tabs and windows before installing the extensi
     1. If you are currently logged into QueryPie, the Web App Dashboard opens.
     2. If you are not logged in, you will go to the login page. Complete login and click Web Apps in the top menu to enter the dashboard.
     3. When the Role selection modal appears, select QP Web Test.
-2. In the Web App Dashboard's My Apps, you will see the QueryPie Web Site app icon you registered earlier. Click the icon to access the website.<br/> <br/> 
+2. In the Web App Dashboard's My Apps, you will see the QueryPie Web Site app icon you registered earlier. Click the icon to access the website.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20250412-224323.png" alt="QueryPie &gt; Web Apps &gt; Web App Dashboard" width="565" />
   <figcaption>
   QueryPie &gt; Web Apps &gt; Web App Dashboard
   </figcaption>
   </figure>
-3. On first access, you will see a screen informing you that the current web session is being recorded. Click the `Continue` button to access the website.<br/> <br/> 
+3. On first access, you will see a screen informing you that the current web session is being recorded. Click the `Continue` button to access the website.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113541.png" alt="Web Session Monitoring Notification" width="565" />
   <figcaption>
   Web Session Monitoring Notification
   </figcaption>
   </figure>
-4. You can see that Watermark has been applied to the QueryPie homepage. <br/> 
-5. When trying to access unauthorized pages (e.g., Products menu), you will be redirected to a blocking notification screen. <br/> 
+4. You can see that Watermark has been applied to the QueryPie homepage. <br/>
+5. When trying to access unauthorized pages (e.g., Products menu), you will be redirected to a blocking notification screen. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/web-apps/wac-quickstart/screenshot-20241223-113037.png" alt=" QueryPie Access Denied" width="565" />
   <figcaption>

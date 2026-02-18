@@ -186,8 +186,8 @@ K8s API Request
 11.1.0부터 New DAC Policy Management 기능이 활성화된 경우 아래와 같은 알림 유형을 사용할 수 있습니다.
 * New Request - DB Policy Exception Request<br/>DB Policy Exception Request는 Unmasking과 Restricted Data Access 두 가지 유형이 있으나 구분해서 알림을 생성할 수는 없습니다.
 * Data Access
-    * Column Data Masking : 신 정책 관리에서 생성한 Column Data Masking 정책에 걸려 제한된 마스킹 된 상태로 조회된 이벤트 
-    * Table Access Restriction : 신 정책 관리에서 생성한 Table Access Restriction 정책에 걸려 특정 테이블 접근이 제한된 이벤트 
+    * Column Data Masking : 신 정책 관리에서 생성한 Column Data Masking 정책에 걸려 제한된 마스킹 된 상태로 조회된 이벤트
+    * Table Access Restriction : 신 정책 관리에서 생성한 Table Access Restriction 정책에 걸려 특정 테이블 접근이 제한된 이벤트
     * Column Access Restriction : 신 정책 관리에서 생성한 Column Access Restriction 정책에 걸려 특정 컬럼 접근이 제한된 이벤트
     * Sensitive Data Access Monitoring : 신 정책 관리에서 생성한 Sensitive Data Access Monitoring 정책의 조건에 해당되는 이벤트
 </Callout>
@@ -204,12 +204,12 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 </figure>
 
 1.  **Name**  : 알림 이름
-2.  **Alert Type**  : 알림 유형을 선택합니다. 
+2.  **Alert Type**  : 알림 유형을 선택합니다.
     1. 알림 유형별로 설정 가능한 조건이 상이합니다. 자세한 내용은 하단 문서를 참고해주세요.
 3.  **Message Template**  : 알림 메시지 템플릿을 설정합니다.
     1. Message Template Variable에서 지원하는 템플릿 변수를 활용하여 커스텀한 메시지를 작성할 수 있습니다.
     2. Message Template Variable은 Alert Type 별로 상이합니다.
-4.  **Channel**  : 알림 발송 채널 
+4.  **Channel**  : 알림 발송 채널
     1. Administrator &gt; General &gt; Channels 에 등록된 채널 중 하나를 선택합니다.
     2. 채널에 대한 자세한 설명은 [Channels](channels) 문서를 참고하세요.
 5.  **Subject Title**  : Channel을 Email로 선택한 경우 표시됩니다. 이메일 알림의 제목을 직접 지정할 수 있으며, Message Template Variable에서 지원하는 변수를 동일하게 사용할 수 있습니다. 입력하지 않을 경우, 시스템에서 기본으로 설정된 제목으로 발송됩니다.
@@ -226,7 +226,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 *  **Urgent Mode**  : 사후 승인 여부
     * All : 모든 승인 요청 건에 알림 발송
     * Urgent Mode Only : 사후 승인 요청 건만 알림 발송
-*  **Send email only to those involved in this request :** Channel을 Email로 선택한 경우 표시됩니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용을 담은 알림이 발송됩니다. 
+*  **Send email only to those involved in this request :** Channel을 Email로 선택한 경우 표시됩니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용을 담은 알림이 발송됩니다.
 
 
 <Callout type="info">
@@ -242,12 +242,12 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 **11.1.0 Request Type 변경 사항**
 
 * Databases &gt; General &gt; Configurations에서 New DAC Policy Management 기능이 활성화되어 있다면 Alert의 Request Type에 DB Policy Exception Request를 사용할 수 있습니다.
-* DB Policy Exception Request는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알림이 발송되도록 합니다. 
+* DB Policy Exception Request는 Column Data Masking, Table Access Restriction, Column Data Access Restriction에 대한 정책 예외 요청 이벤트가 발생했을 때 알림이 발송되도록 합니다.
 
 **11.2.0 이메일 알림 템플릿 변경 사항**
 
 * Alert의 Channel을 Email로 지정할 경우, Subject Title (이메일 제목) 을 직접 입력하는 기능이 추가되었습니다.
-* Workflow 관련 Alert 설정 시 Channel이 Email인 경우, `Send email only to those involved in this request` 옵션을 제공합니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용으로 알림이 발송됩니다. 
+* Workflow 관련 Alert 설정 시 Channel이 Email인 경우, `Send email only to those involved in this request` 옵션을 제공합니다. 이 옵션을 활성화하면 해당 요청의 관련자(요청자, 승인자 등)에게 Message Template의 내용으로 알림이 발송됩니다.
 
 **11.3.0 Alert 생성화면에서 Channel 선택 항목**
 
@@ -356,7 +356,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 예2) 특정 데이터베이스에 포함된 개인정보 데이터 조회 시 알림 발송
 
 * Criteria : Policy
-* Policy : *`{사전에 등록된 Sensitive Data 정책}`* 
+* Policy : *`{사전에 등록된 Sensitive Data 정책}`*
 </Callout>
 
 #### SQL Export
@@ -474,27 +474,27 @@ Data Access 알림은 Column Data Masking, Table Access Restriction, Column Acce
 <img src="/administrator-manual/general/company-management/alerts/image-20250727-222007.png" alt="image-20250727-222007.png" width="557" />
 </figure>
 
-*  **Column Data Masking** 
+*  **Column Data Masking**
     *  **Policy** : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
     *  **Rows**  : 알림 발생 기준 행 수를 지정합니다.
-    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다. 
+    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다.
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
-*  **Table Access Restriction** 
+*  **Table Access Restriction**
     *  **Policy** : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
     *  **Unauthorized Access Attempt Count** : 알림 발생 조건이 되는 접근 횟수를 지정합니다. 만약 Time interval 값이 0이면 시간 조건 없이 단건의 이벤트에 대해 알림이 발생하므로 Unauthorized Access Attempt Count는 1로 고정됩니다. 최솟값은 1, 최댓값은 2147483647입니다.
-    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다. 
+    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다.
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
-*  **Column Access Restriction** 
+*  **Column Access Restriction**
     *  **Rows** : 알림 발생 기준 행 수를 지정합니다.
-    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다. 
+    *  **Time Interval**  : 알림 발생 기준 시간(분 단위)입니다.
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다.
-*  **Sensitive Data Access Monitoring** 
+*  **Sensitive Data Access Monitoring**
     *  **Policy**  : 알림 발생 조건이 될 대상 정책 이름을 지정합니다.
     *  **Rows**  : 알림 발생 기준 행 수를 지정합니다.
-    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다. 
+    *  **Time Interval** : 알림 발생 기준 시간(분 단위)입니다.
         * 0 입력 시, 시간 조건 없이 단건의 SQL 실행을 기준으로 합니다.
         * 최대 1440까지 입력 가능합니다
 

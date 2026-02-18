@@ -23,7 +23,7 @@ Databases &gt; Data Policies &gt; Exception ManagementにWorkflowタブにWorkfl
 * Exception Type : Unmasking、Restricted Data Accessのようなポリシー例外タイプが表示されます。
 * Connection : ポリシー例外対象DBコネクションが表示されます。
 * Data Path : Workflowでリクエストした経路が表示されます。Tagで申請した場合対象が動的に変わるため、Data Pathに値が表示されません。
-* Data Tag : Workflowでリクエストフォームで指定したタグが表示されます。 
+* Data Tag : Workflowでリクエストフォームで指定したタグが表示されます。
 * Allowed User : 一時的にポリシー例外が承認されたユーザーまたはグループが表示されます。
 * Start Time
 * End Time
@@ -64,12 +64,12 @@ Workflowのポリシー例外申請および管理者の手動ポリシー例外
 
 *  **Exception Name**  : ポリシー例外の名前を入力します。
 *  **Exception Type**  : Unmasking、Restricted Column Access、Restricted Table Access のようなポリシー例外タイプを選択します。
-*  **Data Scope**  : ポリシー例外対象テーブルまたはカラムを指定します。 <Badge color="grey">11.1.0</Badge> 
+*  **Data Scope**  : ポリシー例外対象テーブルまたはカラムを指定します。 <Badge color="grey">11.1.0</Badge>
     * Data Tag を選択するとタグで対象を指定できます。Databases &gt; Policy Management &gt; Data Pathsに設定したタグのみ使用できます。タグは同じキーはOR演算で異なるキー間はAND演算です。
-    * Specific data path を選択すると直接対象テーブルまたはカラムを指定できます。 <br/>正規式で指定することもできます。 <Badge color="grey">11.3.0</Badge> 
+    * Specific data path を選択すると直接対象テーブルまたはカラムを指定できます。 <br/>正規式で指定することもできます。 <Badge color="grey">11.3.0</Badge>
 *  **Allowed User**  : 一時的にポリシー例外が必要な対象を指定します。
     * User / Group : ユーザーまたはグループを指定できます。
-    * Attribute of Users : ユーザーProfileに登録されたIdentifierタイプの属性を使用して動的に対象を指定できます。 <Badge color="grey">11.1.0</Badge> 
+    * Attribute of Users : ユーザーProfileに登録されたIdentifierタイプの属性を使用して動的に対象を指定できます。 <Badge color="grey">11.1.0</Badge>
 *  **Policy Exception Schedule**  : ポリシー例外が適用される期間を設定してリクエストできます。最大ポリシー例外の有効期間は管理者が設定した最大期間（Maximum Policy Exception Period）を超えて申請できません。
     * Specific Period : 開始時点と終了時点を指定します。時間単位で指定できます。
     * Time Duration : 開始時点から指定した時間まで有効になるよう指定できます。

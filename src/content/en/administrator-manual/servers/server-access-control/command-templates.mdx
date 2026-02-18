@@ -35,17 +35,17 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt
 
 1. Navigate to Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates menu.
 2. Click the `+ Create Template` button in the top right.
-3. Enter the following information for each item to set policies. 
+3. Enter the following information for each item to set policies.
     1.  **Base Type** : Select whether to allow or prohibit commands registered in this command template. This item cannot be changed after creating the command template.
         1.  **Deny**  : Set commands to prohibit. Commands other than the set commands can be used.
         2.  **Allow**  : Set commands to allow. Commands other than the set commands cannot be used.<br/>*Limitation: (10.2.1) Allow setting does not work in TELNET and FTP.
     2.  **Allow for Workflow Request** : Set whether to allow users to select the created template in the server privilege request (Server Privilege Request) workflow.
         * This option is only activated when Base Type is Allow.
         * When set to On, users can select this template when requesting server privileges.
-    3.  **Commands (SSH)**  : This is where you set command policies executed through web terminals on servers. 
-        1.  **Keyword**  : You can enter commands as keywords. 
-        2.  **RegEx**  : You can enter commands in regular expression format. 
-    4.  **Functions (SFTP)**  : This is where you set function policies executed through web SFTP and FTP on the server. You can restrict actions such as directory/file deletion, file upload, file download, and directory creation. 
+    3.  **Commands (SSH)**  : This is where you set command policies executed through web terminals on servers.
+        1.  **Keyword**  : You can enter commands as keywords.
+        2.  **RegEx**  : You can enter commands in regular expression format.
+    4.  **Functions (SFTP)**  : This is where you set function policies executed through web SFTP and FTP on the server. You can restrict actions such as directory/file deletion, file upload, file download, and directory creation.
 4. Click the `Save` button in the bottom right to complete the settings.
 
 
