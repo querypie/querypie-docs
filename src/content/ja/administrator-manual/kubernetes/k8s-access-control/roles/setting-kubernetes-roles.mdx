@@ -1,20 +1,20 @@
 ---
-title: 'Kubernetes役割設定方法'
+title: 'Kubernetesロールの設定'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382963'
 ---
 
 import { Callout } from 'nextra/components'
 
-# Kubernetes役割設定方法
+# Kubernetesロールの設定
 
 ### Overview
 
-Kubernetesに対するユーザーアクセスを許可または制限するために、組織内でのKubernetes役割をベースにする役割ベースアクセス制御(Role-Based Access Control, RBAC)を適用します。
+Kubernetesに対するユーザーアクセスを許可または制限するために、組織内のKubernetesロールに基づくロールベースアクセス制御（Role-Based Access Control, RBAC）を適用します。
 ユーザーまたはユーザーグループに設定したRoleを付与できます。
-Roleは複数のポリシーを総合して単一役割で定義するのに使用されます。
+Roleは複数のポリシーをまとめて単一のロールとして定義するために使用されます。
 
 
-### Roleポリシーを割り当てる
+### Roleポリシーの割り当て
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071540.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Details" width="760" />
@@ -24,39 +24,39 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Rolesメニューに移動します。
-2. Rolesリストで対象Role行をクリックして詳細ページに移動します。
+2. Rolesリストで対象のRole行をクリックして詳細ページに移動します。
 3. Policiesタブ右側の`+ Assign Policies`ボタンをクリックします。
-4. 割り当てるポリシーを検討した後、左側のチェックボックスをチェックします。
+4. 割り当てるポリシーを確認した後、左側のチェックボックスにチェックを入れます。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071758.png" alt="image-20240721-071758.png" width="454" />
   </figure>
-    1. ポリシー名で検索可能です。
-    2. 既に割り当てられているポリシーはチェックボックスが選択できません。
-    3. リスト目録には各ポリシー別に以下の情報を露出します：
+    1. ポリシー名で検索できます。
+    2. 既に割り当てられているポリシーはチェックボックスが無効化されます。
+    3. リストには各ポリシーごとに以下の情報が表示されます：
         *  **Name**  : ポリシー名
-            * ポリシー情報を照会できるモーダルリンクを提供します。
+            * ポリシー情報を確認できるモーダルリンクが提供されます。
               <figure data-layout="center" data-align="center">
               <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071822.png" alt="image-20240721-071822.png" width="330" />
               </figure>
-5. `Assign`ボタンを押すとチェックボックスをチェックした対象ポリシーを割り当てます。
-6. (`Cancel`ボタンを押すと該当モーダルを変更事項なしで終了します。)
+5. `Assign`ボタンを押すと、チェックした対象ポリシーが割り当てられます。
+6. （`Cancel`ボタンを押すと、変更なしでモーダルが閉じられます。）
 
 
-### Roleポリシー割り当て解除
+### Roleポリシーの割り当て解除
 
 <figure data-layout="left" data-align="left">
 <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071910.png" alt="image-20240721-071910.png" width="507" />
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Rolesメニューに移動します。
-2. Rolesリストで対象Role行をクリックして詳細ページに移動します。
-3. Policiesタブで全体選択または個別選択ボックスにチェックするとカラムバーに表示される`Unassign`ボタンをクリックします。
+2. Rolesリストで対象のRole行をクリックして詳細ページに移動します。
+3. Policiesタブで全選択または個別選択のチェックボックスにチェックを入れると、カラムバーに表示される`Unassign`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071940.png" alt="image-20240721-071940.png" width="486" />
   </figure>
-4. 確認ウィンドウで`Unassign`ボタンクリック時、選択したアイテムが割り当て解除されてリストから消えます。
-5. (`Cancel`ボタンクリック時は確認ウィンドウのみ閉じます。)
+4. 確認ダイアログで`Unassign`ボタンをクリックすると、選択したアイテムの割り当てが解除されてリストから削除されます。
+5. （`Cancel`ボタンをクリックすると、確認ダイアログのみ閉じられます。）
 
 <Callout type="important">
-ポリシー割り当て解除時、該当ポリシーでユーザーおよびグループに付与されていたすべてのアクセス権限が解除されます。
+ポリシーの割り当てを解除すると、そのポリシーによってユーザーおよびグループに付与されていたすべてのアクセス権限が取り消されます。
 </Callout>

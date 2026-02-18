@@ -9,8 +9,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPieユーザーおよびグループに組織で管理するKubernetesクラスターのアクセス権限に対する付与および回収管理をサポートします。
-Access ControlはKubernetesアクセス権限を実装および適用するための最終段階を意味します。
+QueryPieユーザーおよびグループに、組織で管理するKubernetesクラスターへのアクセス権限の付与および回収の管理をサポートします。
+Access Controlは、Kubernetesアクセス権限を実装および適用するための最終段階を意味します。
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065226.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control" width="760" />
@@ -20,7 +20,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control
 </figure>
 
 
-### Access Control現況照会
+### Access Control現況の照会
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065443.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details" width="760" />
@@ -30,70 +30,70 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
 </figure>
 
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Controlメニューに移動します。
-2. テーブル左上の検索欄を通じて、ユーザー/グループ名を条件に検索が可能です。
-3. テーブル右上の更新ボタンを通じて、ユーザー/グループリストを最新化できます。
-4. テーブルリストには各ユーザー/グループ別に以下の情報を露出します：
-    1.  **User Type**  : ユーザー/グループタイプ
-    2.  **Provider**  : ユーザー/グループの元帳を表現
+2. テーブル左上の検索欄を使用して、ユーザー/グループ名で検索できます。
+3. テーブル右上のリフレッシュボタンを使用して、ユーザー/グループリストを更新できます。
+4. テーブルリストには、各ユーザー/グループごとに以下の情報が表示されます：
+    1.  **User Type**  : ユーザー/グループのタイプ
+    2.  **Provider**  : ユーザー/グループのIDソースを表示
     3.  **Name**  : ユーザー/グループ名
-    4.  **Members**  : グループ内所属メンバーリスト
+    4.  **Members**  : グループ内の所属メンバーリスト
     5.  **Roles**  : 付与されたRoleの数
-5. Access Controlリストで行をクリックすると、対象ユーザー/グループに対する詳細ページに移動します。
+5. Access Controlリストで行をクリックすると、対象ユーザー/グループの詳細ページに移動します。
     1.   **Roles**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065530.png" alt="image-20240721-065530.png" width="712" />
       </figure>
-        1. デフォルトで指定されるタブで付与されたRoleリストを照会できます。
-        2. Role名で検索可能です。
-        3. リストは各Roleごとに以下の情報を露出します：
+        1. デフォルトで指定されるタブで、付与されたRoleリストを照会できます。
+        2. Role名で検索が可能です。
+        3. リストには各Roleごとに以下の情報が表示されます：
             1.  **Name**  : Role名
-            2.  **Description**  : Role詳細説明
-            3.  **Expiration Date**  : 期限満了日
-            4.  **Last Access At**  : 該当ロールの最終呼び出し日時
+            2.  **Description**  : Roleの詳細説明
+            3.  **Expiration Date**  : 有効期限日
+            4.  **Last Access At**  : 該当Roleの最終呼び出し日時
             5.  **Granted At**  : Roleが該当ユーザー/グループに付与された日時
             6.  **Granted By**  : 該当Roleをユーザー/グループに付与した管理者名
-        4. 各Role行をクリックすると該当Roleの詳細情報をドロワー形態で提供します。
+        4. 各Role行をクリックすると、該当Roleの詳細情報がドロワー形式で表示されます。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065559.png" alt="image-20240721-065559.png" width="688" />
           </figure>
-            1. 上段には基本情報が以下のように露出されます：
+            1. 上部には基本情報が以下のように表示されます：
                 1.  **Name**  : Role名
-                    * (Role詳細ページリンクを新しいウィンドウで開けます。)
-                2.  **Description**  : Role詳細説明
+                    * （Role詳細ページのリンクを新しいウィンドウで開くことができます。）
+                2.  **Description**  : Roleの詳細説明
                 3.  **Granted At**  : Roleが該当ユーザー/グループに付与された日時
                 4.  **Granted By**  : 該当Roleをユーザー/グループに付与した管理者名
-                5.  **Last Access At**  : 該当ロールの最終呼び出し日時
-                6.  **Expiration Date**  : 期限満了日
-            2. 下段には該当ロールに割り当てられているポリシーがリストで露出されます。
+                5.  **Last Access At**  : 該当Roleの最終呼び出し日時
+                6.  **Expiration Date**  : 有効期限日
+            2. 下部には該当Roleに割り当てられているポリシーがリストで表示されます。
                 1.  **Name**  : Policy名
-                    * (ポリシー情報を照会できるリンクを提供します。)
+                    * （ポリシー情報を照会できるリンクを提供します。）
                       <figure data-layout="center" data-align="center">
                       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065637.png" alt="image-20240721-065637.png" width="310" />
                       </figure>
-                2.  **Description**  : Policy詳細説明
-                3.  **Version**  : Policy版
+                2.  **Description**  : Policyの詳細説明
+                3.  **Version**  : Policyバージョン
                 4.  **Assigned At**  : 割り当て日時
                 5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
     2.  **Clusters**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065710.png" alt="image-20240721-065710.png" width="712" />
       </figure>
-        1. 付与されたRoleによってアクセス可能なKubernetesクラスターリストを列挙します。
-        2. Cluster名、Role名で検索可能です。
-        3. リストは各クラスターごとに以下の情報を露出します：
+        1. 付与されたRoleによってアクセス可能なKubernetesクラスターリストを一覧表示します。
+        2. Cluster名、Role名で検索が可能です。
+        3. リストには各クラスターごとに以下の情報が表示されます：
             1.  **Name**  : クラスター名
-            2.  **Version**  : Kubernetes版
+            2.  **Version**  : Kubernetesバージョン
             3.  **API URL**  : クラスターAPI URL
-            4.  **Cloud Provider**  : 接続プラットフォーム (手動クラスターの場合、ハイフンで表記)
-            5.  **Tags**  : クラスターに付いたタグリスト
-            6.  **Role**  : 関連Roleリスト列挙
-            7.  **Created At**  : クラスター初回作成日時
-            8.  **Updated At**  : クラスター最終修正日時
+            4.  **Cloud Provider**  : 接続プラットフォーム（手動クラスターの場合、ハイフンで表記）
+            5.  **Tags**  : クラスターに付けられたタグリスト
+            6.  **Role**  : 関連Roleリストの一覧
+            7.  **Created At**  : クラスターの初回作成日時
+            8.  **Updated At**  : クラスターの最終更新日時
 
 <Callout type="info">
 **Expiration Dateに到達したGranted Roleの処理方式**
-* ユーザーまたはグループに付与されたRole中にExpiration Dateに到達したRoleの場合、以下のアクションが発生します：
-    * Access Control詳細ページ内Rolesタブで該当Role行が自動削除されます。
-    * Access Control詳細ページ内Clustersタブで該当Roleによってアクセス可能だったクラスター行が自動削除されます。
-    * Audit &gt; Kubernetes &gt; Kubernetes Role Historyに「Role Revoked」ログを残し、Action Byは「System」で表記します。
+* ユーザーまたはグループに付与されたRoleのうち、Expiration Dateに到達したRoleの場合、以下のアクションが発生します：
+    * Access Control詳細ページ内のRolesタブで、該当Role行が自動的に削除されます。
+    * Access Control詳細ページ内のClustersタブで、該当Roleによってアクセス可能だったクラスター行が自動的に削除されます。
+    * Audit &gt; Kubernetes &gt; Kubernetes Role Historyに「Role Revoked」ログが記録され、Action Byは「System」と表記されます。
 </Callout>

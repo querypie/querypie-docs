@@ -9,9 +9,9 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Apply role-based access control (Role-Based Access Control, RBAC) based on Kubernetes roles within the organization to allow or restrict user access to Kubernetes.
-You can grant set Roles to users or user groups.
-Roles are used to define multiple policies as a single role.
+Role-Based Access Control (RBAC) based on Kubernetes roles within the organization is applied to allow or restrict user access to Kubernetes.
+You can assign configured Roles to users or user groups.
+Roles are used to combine multiple policies into a single role definition.
 
 
 ### Assigning Role Policies
@@ -23,23 +23,23 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 </figcaption>
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
-2. Click on the target Role row from the Roles list to move to the detailed page.
-3. Click the `+ Assign Policies` button on the right of the Policies tab.
-4. Review the policies to assign, then check the checkbox on the left. 
+1. Navigate to the Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. Click on the target Role row in the Roles list to go to the details page.
+3. Click the `+ Assign Policies` button on the right side of the Policies tab.
+4. Review the policies to assign, then check the checkbox on the left.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071758.png" alt="image-20240721-071758.png" width="454" />
   </figure>
     1. You can search by policy name.
-    2. Already assigned policies have disabled checkboxes.
-    3. The list exposes the following information for each policy:
-        *  **Name**  : Policy name 
-            * Provides a modal link to view policy information.
+    2. Policies that are already assigned will have their checkboxes disabled.
+    3. The list displays the following information for each policy:
+        *  **Name**  : Policy name
+            * A modal link is provided to view policy information.
               <figure data-layout="center" data-align="center">
               <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071822.png" alt="image-20240721-071822.png" width="330" />
               </figure>
-5. Press the `Assign` button to assign the checked target policies.
-6. (Pressing the `Cancel` button closes the modal without changes.)
+5. Click the `Assign` button to assign the selected policies.
+6. (Clicking the `Cancel` button closes the modal without any changes.)
 
 
 ### Unassigning Role Policies
@@ -48,15 +48,15 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles &gt; List Detai
 <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071910.png" alt="image-20240721-071910.png" width="507" />
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
-2. Click on the target Role row from the Roles list to move to the detailed page.
-3. In the Policies tab, click the `Unassign` button exposed in the column bar when checking the select all or individual selection box.
+1. Navigate to the Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Roles menu.
+2. Click on the target Role row in the Roles list to go to the details page.
+3. In the Policies tab, check the select-all or individual selection checkboxes, then click the `Unassign` button that appears in the column bar.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/roles/setting-kubernetes-roles/image-20240721-071940.png" alt="image-20240721-071940.png" width="486" />
   </figure>
-4. When clicking the `Unassign` button in the confirmation window, the selected items are unassigned and disappear from the list.
-5. (Clicking the `Cancel` button only closes the confirmation window.)
+4. When you click the `Unassign` button in the confirmation dialog, the selected items are unassigned and removed from the list.
+5. (Clicking the `Cancel` button only closes the confirmation dialog.)
 
 <Callout type="important">
-When unassigning a Policy, all access permissions that were granted to users and groups through that policy are revoked.
+When a Policy is unassigned, all access permissions that were granted to users and groups through that policy will be revoked.
 </Callout>

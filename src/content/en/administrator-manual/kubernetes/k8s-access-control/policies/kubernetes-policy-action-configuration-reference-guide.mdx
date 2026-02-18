@@ -8,16 +8,16 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382659/Ac
 ### Overview
 
 In QueryPie KAC, you configure access control policies for k8s using YAML-based policies.
-This guide explains how to set Actions to avoid difficulties using client tools such as kubectl, Lens, and k9s due to misconfigured policies.
+This guide provides guidance on Actions to prevent difficulties when using client tools such as kubectl, Lens, and k9s due to misconfigured policies.
 
 
 ### API Groups Configuration Guide
 
-Commonly used resources like pods belong to the core group and thus use an empty string `""` for apiGroups, whereas deployments and replicasets belong to `"apps"`, and ingresses belong to `"networking.k8s.io"`.
+For commonly used resources like pods, the apiGroups is the core group so it is an empty string `""`, but for deployments and replicasets it is `"apps"`, and for ingresses it is `"networking.k8s.io"`, making it difficult for administrators to know and configure each one individually.
 
-Of course, if resources have the same name, you may need to separate them via apiGroups, but that is not a common situation.
+Of course, if resources share the same resource name, you may need to separate them via apiGroups, but this is not a common situation.
 
-Therefore, unless you have a specific mission to manage Kubernetes API Groups, it is generally recommended to set apiGroups to `"*"` and control access via resources.
+Therefore, unless you have a specific mission to manage Kubernetes API Groups, it is generally recommended to set apiGroups to `"*"` and control access permissions through resources.
 
 
 ### Resources Configuration Guide
@@ -29,11 +29,11 @@ Therefore, unless you have a specific mission to manage Kubernetes API Groups, i
 </figcaption>
 </figure>
 
-When using 3rd-party client tools, you can monitor status within the permitted resource scope.
+When using 3rd Party Client Tools, you can monitor the status within the scope of permitted resources.
 
-* **Resources section**
-    * In the screen above, only resources for which you have permissions are displayed.
-    * So if you only have permission for `pods`, only the graph for `pods` is shown, and if `pods` are filtered so you can only view some, only some are displayed.
+*  **Resources Section**
+    * In the screen above, resources are displayed only for the resources you have permissions for.
+    * So if you only have permissions for `pods`, only the graph for `pods` is shown, and if `pods` are filtered so that only some are visible, only those are displayed.
     * Other resources work the same way.
     * Recommended spec
       ```
@@ -46,10 +46,10 @@ When using 3rd-party client tools, you can monitor status within the permitted r
             name: "*"
             verbs: ["get", "list", "watch"]
       ```
-* **Events section**
-    * The events section below is displayed based on permissions for the `events` resource, and like the resources section above, it is filtered and displayed by namespace and name.
-    * However, having permission for `pods` does not mean `events` related to `pods` are displayed, so to view that screen, you must explicitly grant permission for the `events` resource.
-    * The `events` resource and `pods` resource are separate resources. Therefore, if you only grant permission for `pods` while having permission for the `events` resource, it does not mean only the history of `events` related to `pods` is retrieved.
+*  **Events Section**
+    * The events section below is displayed based on permissions for the `events` resource, and like the resources section above, it is filtered by namespace and name.
+    * However, having permissions for `pods` does not mean that `pods`-related `events` are displayed, so to view this screen, you must explicitly grant permissions for the `events` resource.
+    * The `events` resource and `pods` resource are separate resources. Therefore, even if you grant only `pods` permissions while having `events` resource permissions, it does not mean that only `events` related to `pods` will be retrieved.
     * Recommended spec
       ```
       allow:
@@ -65,12 +65,12 @@ When using 3rd-party client tools, you can monitor status within the permitted r
 
 ### Verbs Configuration Guide
 
-The part that most affects 3rd-party client tool usage is verbs.
-Administrators specify the scope of resources users can access through apiGroups, resources, namespace, and name, and specify which APIs can be called via verbs, but even if you set the resource scope well, if you do not properly configure the verb groupings, tool usage becomes difficult.
+The part most affected when using 3rd Party Client Tools is verbs.
+Administrators specify the scope of resources users can access through apiGroups, resources, namespace, and name, and specify which APIs can be called through verbs. Even if the resource scope is configured well, if the verb groupings are not properly configured, tool usage becomes difficult.
 
-* **View permissions**
-    * For users who only get View permissions, grant `get`, `list`, and `watch` all together.
-    * Using kubectl is not too difficult with just `get` and `list`, but without `watch`, tools like Lens that support live monitoring are difficult to use.
+*  **View Permissions**
+    * For users who only receive View permissions, you must grant `get`, `list`, and `watch` all together.
+    * Using kubectl is not too difficult with just `get` and `list`, but without `watch`, tools like Lens that support live monitoring become difficult to use.
     * Recommended spec
       ```
       allow:
@@ -81,11 +81,11 @@ Administrators specify the scope of resources users can access through apiGroups
             name: "*"
             verbs: ["get", "list", "watch"]
       ```
-* **Edit permissions**
-    * For users who also get Edit permissions, you must also grant View permissions (at minimum, `get` and `list`). This is because kubectl first performs a read before issuing a modification request for a given resource.
-    * In tools like Lens, without View permissions there is no way to reach the Edit screen.
-    * For Edit, group the verbs by role: create (`create`), modify (`patch`, `update`), delete (`delete`, `deletecollection`).
-    * Although `deletecollection` is not commonly used, in KAC, even when a `deletecollection` request is made, only resources for which the user has permissions are selected and deleted, so it can be useful.
+*  **Edit Permissions**
+    * For users who also receive Edit permissions, you must also grant View permissions (at minimum `get` and `list`). This is because even in kubectl, when a modification request is made for a specific resource, a read request is made first.
+    * In tools like Lens, without View permissions there is no way to navigate to the Edit screen.
+    * Among Edit operations, they should be grouped by role: create (`create`), modify (`patch`, `update`), and delete (`delete`, `deletecollection`).
+    * Although `deletecollection` is not commonly used, in KAC, even when a `deletecollection` request is received, only resources for which the user has permissions are selected and deleted, so it can be useful.
     * Recommended spec
       ```
       allow:
@@ -111,9 +111,9 @@ Administrators specify the scope of resources users can access through apiGroups
       ```
 
 
-### Other recommended configuration examples
+### Other Recommended Configuration Guide
 
-Example) Restrict permissions for resources in the prod namespace
+Example) Restricting permissions for resources in the prod namespace
 ```
 allow:
   actions:
@@ -129,7 +129,7 @@ allow:
       verbs: ["get", "list", "watch"]
 ```
 
-Example) Restrict access to secrets in the prod namespace
+Example) Restricting secret access in the prod namespace
 ```
 deny:
   actions:
