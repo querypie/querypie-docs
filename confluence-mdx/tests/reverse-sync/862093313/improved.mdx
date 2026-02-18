@@ -1,126 +1,156 @@
 ---
-title: '설치 후 초기 설정'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1907294209'
+title: '시스템 아키텍처와 네트워크 접근제어'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/862093313'
 ---
 
-import { Callout } from 'nextra/components'
+# 시스템 아키텍처와 네트워크 접근제어
 
-# 설치 후 초기 설정
 
-운영 환경에 따라 설치 이후 필수적으로 수행이 필요한 설정들을 안내합니다.
+### 시스템 아키텍처
 
-### 공통 설정
+QueryPie Server, QueryPie User Agent, User PC 의 Web Browser, 그리고 이용자의 접근 대상인 Database, Linux Server 등의 시스템이 어떻게 구성되고 연결되는지 알아봅니다.
 
-설치 직후 QueryPie 사용 시 필요한 공통 절차입니다.
+#### 시스템 아키텍처 구성도
 
-#### QueryPie Web Base URL 설정
-
-> 설정 경로: Admin Page → General
-Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다.
-(예시. `https://querypie.customer.com`) 이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
-
-이 URL은 `/`로 끝나지 않아야 합니다. `https://querypie.customer.com/`와 같이 URL의 마지막에 `/`를 붙이지 않도록 주의해 주세요.
-
-이 URL 은 아래의 용도로 사용됩니다.
-
-* SSO Integration 의 인증 과정에서, callback 주소로 사용됩니다.
-* Web Console 에서 User Agent 를 내려받는 링크에 사용됩니다.
-* 그 외 자세한 용도는 [QUERYPIE_WEB_URL](container-environment-variables/querypieweburl)을 참조하세요.
-
+이 시스템 아키텍처는 단일 리눅스 서버에 QueryPie Service 를 설치하는 경우의 아키텍처입니다.
+TLS 인증서를 적용한 웹서비스, 고가용성을 위한 다중화 구성 등을 포함하지 않습니다.
 
 <figure data-layout="center" data-align="center">
-<img src="/installation/post-installation-setup/image-20250520-081112.png" alt="QueryPie Web Base URL 설정 화면" width="1074" />
+<img src="/installation/system-architecture-and-network-access-control/image-20251204-043839.png" alt="Overview of QueryPie System Architecture " width="904" />
 <figcaption>
-QueryPie Web Base URL 설정 화면
+Overview of QueryPie System Architecture 
 </figcaption>
 </figure>
 
-### 제품별 설정
+각 컴포넌트에 대한 설명은 다음과 같습니다.
 
-#### DAC/SAC: Proxy 접속 주소 설정
+#### User PC 의 Web Browser
 
-QueryPie Database 에 접속하여, DAC/SAC 의 Proxy 접속을 위한 주소를 등록합니다.
+이용자의 PC 에서 웹 브라우저를 통해 QueryPie 웹 서비스에 접속합니다.
+QueryPie 를 이용하기 위해서는 웹 브라우저가 필수적입니다.
+QueryPie 관리자, 보안정책 운영자는 QueryPie Web Console 을 통해 QueryPie 서비스를 관리합니다.
 
-<Callout type="info">
-QueryPie Web Console 에서 QueryPie Database 에 연결하려면, DB 연결 설정이 필요합니다: [DB Connections](../administrator-manual/databases/connection-management/db-connections)
+또한, QueryPie 사용자는 QueryPie Web SQL Editor, Web Terminal 을 통해 대상 시스템에 접근할 수 있습니다.
 
-Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Password 가 필요합니다.
+#### User PC 의 QueryPie User Agent
 
-* Hostname: `host.docker.internal`
-* Username: `querypie` (기본 설정의 경우)
-* Password: QueryPie 를 설치한 디렉토리의 환경변수 파일에서 `DB_PASSWORD` 를 확인하세요.
-    * setup.v2.sh 로 설치한 경우: `.env` 파일
-    * setup.sh 로 설치한 경우: `compose-env` 파일
+User PC 에서 작동하는 Database Client Application, SSH Client Application 를 이용하는 경우, QueryPie User Agent 가 필요합니다.
+QueryPie User Agent 는 User PC 에서 작동하는 Local Proxy Agent 의 역할을 수행합니다.
+QueryPie Web Console 에 로그인하면, QueryPie User Agent 를 다운로드 받을 수 있습니다.
 
-환경변수 파일에 설정된 값 중 `DB_PASSWORD`, `REDIS_PASSWORD`, `KEY_ENCRYPTION_KEY` 등은 안전하게 보관하여야 합니다.
-다른 사람에게 이 값을 노출하지 않도록 주의하여 주세요.
-</Callout>
+QueryPie User Agent 는 User PC 에서 작동하는 대부분의 Database Client Application, SSH Client Application 을 지원합니다.
+(이후 `3rd Party Tool` 이라고 표기합니다.) 구체적인 사례는 이 문서를 참조하세요: [Supported 3rd Party Tools (KO)](https://querypie.atlassian.net/wiki/spaces/QCP/pages/919404587)
 
-아래 `<customer-proxy-address>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 대체하여 쿼리를 수행합니다.
+#### QueryPie Server
 
-<Callout type="important">
-이 주소는 `http`  `https` 와 같은 Scheme을 붙여서는 안 됩니다.
-</Callout>
-```
-UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
-```
+Linux VM 에서 작동하는 QueryPie Server 는 Web Console, Web SQL Editor, Web Terminal 을 웹서비스로 제공합니다.
+또한 SQL protocol, ssh protocol을 이해하고 접근제어를 수행하는 Proxy server를 제공하는 핵심적 역할을 수행합니다.
 
-쿼리 실행에 에러 없이 정상적으로 수행이 확인되었으면, 아래 쿼리를 수행하여 등록이 되었는지 확인합니다.
-```
-SELECT * FROM querypie.proxies;
-```
+QueryPie Server 는 두 가지 컴포넌트를 필요로 합니다.
 
-Proxy 접속을 위한 주소를 QueryPie Database 에 등록한 이후, Server Container 를 재시작하지 않아도 됩니다.
-User Agent 에서 로그인을 시도하면, 웹브라우저를 통해 인증을 진행한 이후, User Agent 를 사용할 수 있는 상태가 됩니다.
+* QueryPie Database
+* QueryPie Redis
 
-<figure data-layout="center" data-align="center">
-<img src="/installation/post-installation-setup/image-20250520-082706.png" alt="DAC/SAC Proxy 접속 주소 설정 화면" width="1100" />
-<figcaption>
-DAC/SAC Proxy 접속 주소 설정 화면
-</figcaption>
-</figure>
+#### QueryPie Database
 
-#### KAC: Proxy 접속 주소 설정
+QueryPie Database 는 QueryPie Server 의 작동을 위한 데이터를 저장합니다.
+QueryPie 의 User Account, Admin Account, 연결 대상 시스템의 정보, 접근제어 정책 등을 저장합니다.
+뿐만 아니라, User의 Query Log, System Access Log 등 Audit 정보를 저장합니다.
 
-QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등록합니다.
+MySQL, MariaDB 또는 호환되는 Database 를 QueryPie Database 로 사용할 수 있습니다.
 
-아래 `<customer-proxy-fqdn>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 대체하여 쿼리를 수행합니다.
+* AWS Aurora MySQL
+* GCP Cloud SQL for MySQL
 
-특이사항으로 DAC/SAC 설정과는 다르게 `http`  `https` 와 같은 Scheme을 자유롭게 입력 가능합니다.
+#### QueryPie Redis
 
-<Callout type="important">
-설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
-</Callout>
-```
-UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
-```
+QueryPie Redis 는 QueryPie Server 의 작동을 위한 Cache 역할을 수행합니다.
+QueryPie Server 가 작동하기 위해, 필수로 요구되는 컴포넌트입니다.
 
-<figure data-layout="center" data-align="center">
-<img src="/installation/post-installation-setup/image-20250520-084243.png" alt="KAC Proxy 접속 주소 설정 화면" width="1096" />
-<figcaption>
-KAC Proxy 접속 주소 설정 화면
-</figcaption>
-</figure>
+#### Target Database
+
+이용자가 접근을 원하는 Database 서버입니다.
+QueryPie Server 는 이용자와 Target Database 사이의 중계 역할을 수행합니다.
+
+#### Target Server System
+
+이용자가 접근을 원하는 Linux Server, Windows Server 등의 시스템입니다.
+QueryPie Server 는 이용자와 Target Server System 사이의 중계 역할을 수행합니다.
+
+### 네트워크 접근제어 설정
+
+#### 네트워크 접근 유형
+
+QueryPie 가 설치된 Linux VM 을 중심으로, 네트워크 연결을 Outbound, Inbound, 두 가지 유형으로 구분합니다.
+
+* Outbound : QueryPie 가 설치된 Linux VM 에서, 외부 인터넷으로 연결하는 네트워크 접근입니다.
+* Inbound : 이용자의 PC 또는 고객사 내부 네트워크에서, QueryPie 가 설치된 Linux VM 으로 연결하는 네트워크 접근입니다.
+
+#### 소프트웨어 설치를 위한 네트워크 접근
+
+|  **Access Type**  |  **Source**     |  **Destination**                                                                                                      |  **Protocol**  |  **Port**  |  **Description**                                                             |
+| ----------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- | ---------- | ---------------------------------------------------------------------------- |
+| Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | 제품 설치를 위한 설정파일을 내려받는 website 입니다.                                            |
+| Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | 제품 설치를 위해, Docker Image 를 내려받는 website 입니다. docker 용어로는 Docker Registry 입니다. |
+
+#### 제품 사용을 위한 네트워크 접근
+
+아래의 항목은 제품 사용을 위한 네트워크 접근을 설명합니다.
+QueryPie 제품의 기능에 따라, 공통, DAC, SAC, KAC, WAC 로 구분합니다.
+
+#### 공통
+
+|  **Access Type**  |  **Source**        |  **Destination**                                     |  **Service**  |  **Protocol**  |  **Port**  |  **Description**                                  |
+| ----------------- | ------------------ | ---------------------------------------------------- | ------------- | -------------- | ---------- | ------------------------------------------------- |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | SSH           | TCP            | 22         | Installation and management                       |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | HTTP          | TCP            | 80         | QueryPie Web Console                              |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | HTTPS         | TCP            | 443        | QueryPie Web Console                              |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | Custom TCP    | TCP            | 9000       | QueryPie Proxy for User Agent                     |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | MySQL         | TCP            | 3306       | (Optional) QueryPie Meta DB                       |
+| Inbound           | PC of Admin User   | QueryPie Server                                      | Redis         | TCP            | 6379       | (Optional) QueryPie CacheDB                       |
+| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTP          | TCP            | 80         | QueryPie Web Console                              |
+| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTPS         | TCP            | 443        | ( **Recommended** ) QueryPie Web Console          |
+| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer     | Custom TCP    | TCP            | 9000       | ( **Recommended** ) QueryPie Proxy for User Agent |
+
+#### DAC
+
+|  **Access Type**  |  **Source**                                    |  **Destination**  |  **Type**  |  **Protocol**  |  **Port Range**  |  **Description**                                   |
+| ----------------- | ---------------------------------------------- | ----------------- | ---------- | -------------- | ---------------- | -------------------------------------------------- |
+| Inbound           | Users or Systems connecting to Agentless Proxy | QueryPie Server   | Custom TCP | TCP            | 40000 - 41000    | ( **Recommended** ) QueryPie Agentless Proxy       |
+| Inbound           | Users or Systems connecting to Agentless Proxy | QueryPie Server   | Custom TCP | TCP            | 41001 - 45000    | (Optional) More ports for QueryPie Agentless Proxy |
+
+#### SAC
+
+|  **Access Type**  |  **Source**     |  **Destination**       |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                                                   |
+| ----------------- | --------------- | ---------------------- | ---------- | -------------- | ---------- | ------------------------------------------------------------------ |
+| Outbound          | QueryPie Server | Target Linux Servers   | SSH        | TCP            | 22         | When Users access target linux machines via QueryPie               |
+| Outbound          | QueryPie Server | Target Windows Servers | RDP        | TCP            | 3389       | When Admin installs QueryPie RDP Agent on target Windows Servers.  |
+| Outbound          | QueryPie Server | Target Windows Servers | Custom RDP | TCP            | 13389      | When Users access target Windows Servers via QueryPie              |
+| Outbound          | QueryPie Server | Target Windows Servers | Custom TCP | TCP            | 13390      | Obsoleted - Port 13390 is not used anymore since version 10.2.2    |
+
+#### KAC
+
+|  **Access Type**  |  **Source**     |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                                   |
+| ----------------- | --------------- | ------------------------------------------------ | ---------- | -------------- | ---------- | -------------------------------------------------- |
+| Inbound           | All the users   | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP            | 6443       | From Users to QueryPie KAC Proxy                   |
+| Outbound          | QueryPie Server | Target Kubernetes Cluster                        | Custom TCP | TCP            | 6443       | From QueryPie Server to target Kubernetes Clusters |
+
+#### WAC
+
+|  **Access Ty** pe |  **Source**        |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                 |
+| ----------------- | ------------------ | ------------------------------------------------ | ---------- | -------------- | ---------- | -------------------------------- |
+| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP            | 7447       | From Users to QueryPie WAC Proxy |
+
+### Load Balancers 설정
+
+부하분산, 장애내성을 갖추기 위해, QueryPie Service 에 Load Balancer 를 적용하는 설정을 표로 설명합니다.
+
+|  **LB**                            |  **Listener**  |  **Target**        |  **Health Check**         |  **LB Option**  |  **Description**          |
+| ---------------------------------- | -------------- | ------------------ | ------------------------- | --------------- | ------------------------- |
+| Application Load Balancer<br/>(L7) | HTTP / 80      | -                  | None                      | default         | Redirection to HTTPS      |
+| Application Load Balancer<br/>(L7) | HTTPS / 443    | http://querypie:80 | http://querypie:80/readyz | Sticky Session  | QueryPie Web Console      |
+| Network Load Balancer<br/>(L4)     | TCP / 9000     | querypie:9000      | http://querypie:80/readyz | default         | QueryPie Agent (DAC, SAC) |
+| Network Load Balancer<br/>(L4)     | TCP / 6443     | querypie:6443      | http://querypie:80/readyz | default         | QueryPie Agent (KAC)      |
+| Network Load Balancer<br/>(L4)     | TCP / 7447     | querypie:7447      | http://querypie:80/readyz | default         | QueryPie Agent (WAC)      |
 
 
-#### WAC: Proxy 접속 주소 설정
-
-> 설정 경로: Admin Page → Web Apps → Web App Configurations
-WAC의 Proxy 접속 주소 설정은 Web Console 에서 수행 가능합니다.
-
-자세한 설정 절차는 다음 문서를 참조하세요: [Web App Configurations에서 WAC 초기 설정하기](../administrator-manual/web-apps/wac-quickstart/initial-wac-setup-in-web-app-configurations)
-
-<Callout type="important">
-설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재 기동이 필요합니다.
-</Callout>
-
-
-### 제품 설치가 완료되었습니다
-
-설치 후 초기 설정 과정을 완료하여, QueryPie ACP 제품을 사용할 수 있는 준비가 되었습니다.
-수고하셨습니다.
-
-이후 다음의 문서를 참조하여, 관리자 설정을 진행하고, 제품을 사용할 수 있습니다.
-
-* [관리자 매뉴얼](../administrator-manual)
-* [사용자 매뉴얼](../user-manual)

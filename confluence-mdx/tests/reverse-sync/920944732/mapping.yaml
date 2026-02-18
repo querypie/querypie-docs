@@ -1,49 +1,58 @@
-version: 1
-source_page_id: '920944732'
-generated_at: '2026-02-14T15:15:04Z'
-mdx_file: password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
+lost_info:
+  filenames:
+  - normalized: Screenshot-2025-04-09-at-7.12.08-PM.png
+    original: Screenshot 2025-04-09 at 7.12.08 PM.png
+  - normalized: Screenshot-2025-04-09-at-7.14.25-PM.png
+    original: Screenshot 2025-04-09 at 7.14.25 PM.png
+  - normalized: Screenshot-2025-04-09-at-7.16.29-PM.png
+    original: Screenshot 2025-04-09 at 7.16.29 PM.png
+  - normalized: Screenshot-2025-04-09-at-7.18.40-PM.png
+    original: Screenshot 2025-04-09 at 7.18.40 PM.png
 mappings:
-- xhtml_xpath: h2[1]
-  xhtml_type: heading
-  mdx_blocks:
-  - 4
-- xhtml_xpath: p[1]
-  xhtml_type: paragraph
-  mdx_blocks:
+- mdx_blocks:
   - 6
-- xhtml_xpath: h2[2]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h2[1]
+- mdx_blocks:
   - 8
-- xhtml_xpath: ul[1]
-  xhtml_type: list
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[1]
+- mdx_blocks:
   - 10
-- xhtml_xpath: h2[3]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h2[2]
+- mdx_blocks:
   - 12
-- xhtml_xpath: ol[1]
   xhtml_type: list
-  mdx_blocks:
+  xhtml_xpath: ul[1]
+- mdx_blocks:
   - 14
-- xhtml_xpath: macro-note[1]
-  xhtml_type: html_block
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h2[3]
+- mdx_blocks:
   - 16
-- xhtml_xpath: h2[4]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: list
+  xhtml_xpath: ol[1]
+- mdx_blocks:
   - 18
-- xhtml_xpath: ul[2]
-  xhtml_type: list
-  mdx_blocks:
-  - 19
-- xhtml_xpath: h2[5]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: html_block
+  xhtml_xpath: macro-note[1]
+- mdx_blocks:
   - 20
-- xhtml_xpath: ol[2]
-  xhtml_type: list
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h2[4]
+- mdx_blocks:
   - 22
+  xhtml_type: list
+  xhtml_xpath: ul[2]
+- mdx_blocks:
+  - 24
+  xhtml_type: heading
+  xhtml_xpath: h2[5]
+- mdx_blocks:
+  - 26
+  xhtml_type: list
+  xhtml_xpath: ol[2]
+mdx_file: page.mdx
+source_page_id: '920944732'
+version: 2

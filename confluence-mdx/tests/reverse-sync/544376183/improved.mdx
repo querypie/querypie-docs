@@ -1,199 +1,74 @@
 ---
-title: 'Okta 연동하기'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544376100/Okta'
+title: 'AWS SSO 연동하기'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544376183/AWS+SSO'
 ---
 
-import { Callout } from 'nextra/components'
-
-# Okta 연동하기
+# AWS SSO 연동하기
 
 ### Overview
 
-QueryPie에서는 Okta 연동을 지원합니다.
-Okta의 사용자 및 그룹을 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있으며, 이 과정에서 사용자에게 간소화되고 편리한 환경을 제공하면서도 엄격한 보안 정책을 운영할 수 있습니다.
-QueryPie와 Okta의 통합은 데이터베이스 및 시스템 관리 생태계의 보안과 운영 효율성 및 사용자 경험을 향상시킬 수 있습니다.
+QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 애플리케이션 및 SAML 2.0을 통해 사용자 연동을 지원합니다.
+사용자를 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있습니다.
 
-<Callout type="info">
-SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하기 바랍니다. 하단의 Okta API를 활용한 아웃바운드 사용자 동기화 설정을 동시에 활용할 시, 사용자 동기화에 영향을 받을 수 있는 점 유의하기 바랍니다.
-</Callout>
-
-
-### Okta에서 QueryPie를 애플리케이션으로 추가
+### AWS IAM Identity Center에서 QueryPie를 애플리케이션으로 추가
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064242.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색" width="760" />
+<img src="/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/AWS-SSO-01-20230317-044219.png" alt="AWS-SSO-01-20230317-044219.png" width="760" />
+</figure>
+
+1. [AWS IAM Identity Center](https://ap-northeast-2.console.aws.amazon.com/singlesignon/applications/home)에 접속합니다.
+2. 좌측 메뉴의 애플리케이션 메뉴로 진입합니다.
+3. 우측 상단의 애플리케이션 추가 버튼을 클릭합니다.
+4. 사용자 지정 SAML 2.0 애플리케이션 추가 옵션 선택 후 다음 버튼을 클릭합니다.
+5. 애플리케이션 구성 &gt; 표시 이름에 QueryPie를 입력합니다.
+6. 애플리케이션 속성 &gt; 애플리케이션 시작 URL 항목에 QueryPie가 설치된 도메인 주소를 아래와 같이 입력합니다.
+    1. 애플리케이션 Start URL : https://`{querypie_host}`
+7. 애플리케이션 메타 데이터 항목에 각각 다음과 같이 입력합니다. 
+    1. 애플리케이션 ACS URL : https://`{querypie_host}`/saml/sp/acs
+    2. 애플리케이션 SAML 대상 : https://`{querypie_host}`/saml/sp/metadata
+8. 제출 버튼을 클릭하여 저장합니다.
+
+
+### QueryPie 연동을 위한 속성 매핑 설정
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/AWS-SSO-06-20230317-064023.png" alt="AWS-SSO-06-20230317-064023.png" width="760" />
+</figure>
+
+1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집 으로 이동합니다.
+2. 애플리케이션 내 사용자 속성과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
+
+|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
+| --------------------- | ------------------------------------------------ | ------------ |
+| Subject               | $`{user:email}`                                  | emailAddress |
+| firstName             | $`{user:givenName}`                              | basic        |
+| lastName              | $`{user:familyName}`                             | basic        |
+| loginId               | $`{user:email}`                                  | basic        |
+| email                 | $`{user:email}`                                  | basic        |
+
+`변경 사항 저장` 버튼을 클릭하여 저장합니다.
+
+### QueryPie에서 AWS IAM Identity Center 연동 설정
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/image-20240723-072112.png" alt="Administrator &gt; General &gt; User Management &gt; Authentication " width="739" />
 <figcaption>
-Okta Admin &gt; Applications &gt; Applications &gt; Browse App Catalog &gt; QueryPie 검색
+Administrator &gt; General &gt; User Management &gt; Authentication 
 </figcaption>
 </figure>
 
-1. [Okta 서비스](https://login.okta.com/)에 접속하여 관리자 계정으로 로그인합니다.
-2. 우측 상단의 프로필을 클릭하여 Your Org로 접속합니다.
-3. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
-4. `Browse App Catalog` 버튼을 클릭하여 QueryPie를 검색합니다.
-5. QueryPie 애플리케이션 페이지로 들어가 `Add Integration` 버튼을 클릭합니다.
-6. Application Label에 QueryPie로 입력된 것을 확인 후, `Done` 버튼을 클릭하여 애플리케이션을 추가합니다.
+1. Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
+2. 인증 Type 항목에서  **SAML** 을 선택합니다.
+3. 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드합니다.
+4. 다운로드 받은 XML 정보를 Identity Provider Metadata 항목에 붙여 넣습니다.
+5. `Save Changes` 버튼을 클릭하여 저장합니다.
 
-
-### Okta 계정 연동을 위한 Profile 설정
+### QueryPie에서 SAML 로그인
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064424.png" alt="Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute" width="760" />
-<figcaption>
-Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attribute
-</figcaption>
+<img src="/administrator-manual/general/user-management/authentication/integrating-with-aws-sso/image-20240723-073353.png" alt="image-20240723-073353.png" width="760" />
 </figure>
 
-1. Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
-2. Profile 목록 중 'QueryPie User'를 클릭합니다.
-3. Attributes 설정에서 `Add Attribute` 버튼을 클릭합니다.
-4. Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
-    1. Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another` 
-    2. Display name : lastName / Variable name : lastName 항목 입력 후 `Save and Add Another`
-    3. Display name : email / Variable name : email 항목 입력 후 `Save and Add Another` 
-    4. Display name : loginId / Variable name : loginId 항목 입력 후 `Save` 클릭
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-064721.png" alt="Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings" width="760" />
-<figcaption>
-Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Mappings
-</figcaption>
-</figure>
-
-1. 4가지 Attribute가 추가된 것을 확인 후 `Mappings` 버튼을 클릭합니다.
-2. Okta User Profile Attribute 항목을 아래와 같이 QueryPie User Profile의 Attribute와 연결합니다.
-    1. user.firstName ↔︎ firstName
-    2. user.lastName ↔︎ lastName
-    3. user.email ↔︎ email
-    4. user.email ↔︎ loginId (Okta의 email 항목을 QueryPie의 로그인 Id로 사용합니다.)
-3. `Save Mappings` 버튼을 클릭하여 저장합니다.
+이제 로그인 페이지에서 `Login with SAML` 버튼을 통해 AWS 인증하여 QueryPie에 로그인할 수 있습니다.
 
 
-### Okta에 추가된 QueryPie 애플리케이션에 사용자 할당
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065134.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App" width="760" />
-<figcaption>
-Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
-</figcaption>
-</figure>
-
-1. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
-2. 리스트에서 QueryPie 애플리케이션을 클릭합니다.
-3. Assignments 탭으로 이동한 뒤 `Assign` 버튼을 클릭하여 `Assign to People` 또는 `Assign to Group`을 선택합니다.
-4. Okta 계정으로 QueryPie 접근을 허용할 사용자 또는 그룹을 할당한 뒤 Done 버튼을 클릭합니다.
-    1. People 할당 시 사용자 정보 확인 후 `Save and Go Back` 버튼을 클릭합니다.
-    2. Group 할당 시 loginId 항목을 빈 칸으로 두고 `Save and Go Back` 버튼을 클릭합니다.
-5. 사용자 또는 그룹이 QueryPie 애플리케이션에 할당되어 추가된 내역을 확인할 수 있습니다.
-
-
-### Okta에서 QueryPie 애플리케이션 연동 정보 설정
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-065346.png" alt="Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App" width="760" />
-<figcaption>
-Okta Admin &gt; Applications &gt; Applications &gt; QueryPie App
-</figcaption>
-</figure>
-
-1. Okta 내의 QueryPie 애플리케이션 페이지에서 Sign On 탭으로 이동합니다.
-2. Settings 영역의 `Edit` 버튼을 클릭하여 QueryPie 가 설치된 도메인 주소를 Base URL 항목에 입력하고 저장합니다.
-3. Metadata URL에 표기된 주소로 별도 탭에서 접근하여 표시되는 XML 정보를 복사합니다.
-
-
-### 최소 권한의 Okta API 토큰 발급
-
-QueryPie-Okta 간 사용자 및 그룹, 그룹 멤버십의 동기화를 위해 Okta Admin API 토큰 발급이 필요합니다.
-일반적인 방법으로는 이용하고 계신 Okta 최고관리자(Super Administrator)/읽기권한관리자(Read-Only Administrator) 계정으로 API 토큰을 이하의 방법으로 발급하여 적용하는 방법이 있습니다:
-
-1. Okta 관리자 페이지 좌측 패널에서 Security &gt; API 메뉴로 이동합니다.
-2. API 메뉴에서 Tokens 탭으로 이동합니다.
-3. Create Token 버튼을 클릭하여 인증 토큰을 생성할 수 있습니다.
-
-다만, 보안 수준 향상을 위해 Okta API 토큰의 권한을 최소한으로 부여하도록 조정해야 하는 경우, 이하의 권한 및 방법에 따라 API 토큰을 생성할 것을 권장드립니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240110-042233.png" alt="Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role" width="762" />
-<figcaption>
-Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new role
-</figcaption>
-</figure>
-
-1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다. 
-    * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다. 
-2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles 탭으로 이동합니다.
-3. Create new role을 선택합니다.
-4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permissions에서 이하의 권한만 체크합니다.
-    1.  **User** 
-        * View users and their details
-    2.  **Group** 
-        * View groups and their details
-    3.  **Application** 
-        * View application and their details
-5. Save role을 눌러 커스텀 롤을 저장합니다. 
-6. Resources 탭으로 이동합니다. 
-7. Create new resource set을 선택합니다.
-    * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다. 
-8. Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다. 
-    1. User : 쿼리파이 사용자 전부 선택 
-    2. Group : 쿼리파이 사용 그룹 전부 선택 
-    3. Application : 쿼리파이 앱으로 한정
-9. Create를 선택하여 생성합니다. 
-10. Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.
-    1. Role: MinimumAdminRole | Resource: MinimumResources
-    2. Role: Read-Only Administrator 
-        * API 토큰 생성메뉴 접근을 위한 임시 부여 
-11. 쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다. 
-12. Security &gt; API 메뉴에서 Tokens 탭으로 이동합니다.
-13. Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다. 
-14. 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다. 
-
-
-### QueryPie에서 Okta 연동 및 동기화 설정
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20241103-071714.png" alt="Administrator &gt; General &gt; User Management &gt; Authentication" width="760" />
-<figcaption>
-Administrator &gt; General &gt; User Management &gt; Authentication
-</figcaption>
-</figure>
-
-1. QueryPie에서 Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
-2. 인증 Type 항목에서 Okta를 선택합니다.
-3. 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
-4. 자동 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System”를 체크합니다.
-    1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL을 확인할 수 있습니다.
-    2. API Token: Okta 관리자 API 토큰을 기입합니다. 
-    3. Application ID: Okta 내에서 2개 이상의 QueryPie App을 사용할 경우 입력합니다.
-5. 자동 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling을 설정합니다.
-6. `Dry Run` 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
-7. `Save Changes`로 저장합니다.
-8. `Synchronize` 버튼을 클릭하여 Okta의 사용자를 동기화합니다.
-
-
-<Callout type="info">
-**Application ID 확인하는 방법**
-2개 이상의 QueryPie Application을 사용하는 경우, Okta Admin &gt; Applications으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL에서 위의 스크린샷에 표시된 것과 같은 Application ID를 확인할 수 있습니다.
-</Callout>
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/Authentication-Okta-02.png" alt="Okta Admin &gt; Applications &gt; QueryPie App 상단 URL" width="760" />
-<figcaption>
-Okta Admin &gt; Applications &gt; QueryPie App 상단 URL
-</figcaption>
-</figure>
-
-
-### QueryPie에서 Okta 로그인
-
-1. General Settings &gt; Users 또는 Groups 메뉴에서 동기화된 사용자 및 그룹을 확인할 수 있습니다.
-2. 이제 로그인 페이지에서 `Login with Okta` 버튼을 통해 Okta 계정으로 QueryPie에 로그인할 수 있습니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/authentication/integrating-with-okta/image-20240723-070449.png" alt="image-20240723-070449.png" width="760" />
-</figure>
-
-<Callout type="info">
-이 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.
-SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [[Okta] 프로비저닝 연동 가이드](../provisioning/okta-provisioning-integration-guide) 내 절차대로 대신 진행하기 바랍니다.
-</Callout>
