@@ -25,22 +25,22 @@ Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurati
 
 
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations menu.
-2. Click the `+ Create ProxyJump` button in the top right. 
-3. Enter the following information for group creation. 
+2. Click the `+ Create ProxyJump` button in the top right.
+3. Enter the following information for group creation.
     1.  **Name** : Name of the ProxyJump setting.
     2.  **Jump Hosts** : Set the Jump Host to be used as Hop.
-        1.  **Server**  : Select the Jump Host from servers registered in Servers. 
+        1.  **Server**  : Select the Jump Host from servers registered in Servers.
         2.  **Account**  : Enter an Account that can connect to the Jump Host.
         3.  **Auth Types**  : Select the authentication method to use when connecting to the Jump Host.
             *  **Password**  : Enter the password directly.
             *  **SSH Key :** Select the SSH Key registered in SSH Key Configurations.
-            *  **Managed by Job :** Select credentials managed by QueryPie. Only displayed when "Password Provisioning" item is set in [SAC General Configurations](../../sac-general-configurations) menu. 
+            *  **Managed by Job :** Select credentials managed by QueryPie. Only displayed when "Password Provisioning" item is set in [SAC General Configurations](../../sac-general-configurations) menu.
         4.  **Authority**  : Enter password or select SSH Key.
     3.  **Test Jump Hosts**  : Check if connection to Jump Host is possible with the entered Account.
     4.  **Add Jump Host**  : Add Jump Host. When connecting to servers, it attempts to connect to the final server by sequentially going through all added Jump Hosts. Up to 5 Jump Hosts can be used.
     5.  **Delete** : Delete added Jump Host. Jump Host 1 cannot be deleted.
-    6.  **Routing Target** : Select server groups to connect through Proxyjump. One server group can only be set to one Proxyjump. 
-4. Save through the `Save` button. 
+    6.  **Routing Target** : Select server groups to connect through Proxyjump. One server group can only be set to one Proxyjump.
+4. Save through the `Save` button.
 
 <Callout type="info">
 **Windows Server Proxyjump Settings**

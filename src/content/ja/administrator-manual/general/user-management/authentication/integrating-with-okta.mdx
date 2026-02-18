@@ -45,12 +45,12 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attrib
 </figure>
 
 1. Okta管理者ページの左側パネルでDirectory &gt; Profile Editorメニューに移動します。
-2. Profileリスト中'QueryPie User'をクリックします。 
+2. Profileリスト中'QueryPie User'をクリックします。
 3. Attributes設定で`Add Attribute`ボタンをクリックします。
 4. Attribute追加画面で以下4つの項目を順番に入力後保存します。
-    1. Display name : firstName / Variable name : firstName項目入力後`Save and Add Another` 
+    1. Display name : firstName / Variable name : firstName項目入力後`Save and Add Another`
     2. Display name : lastName / Variable name : lastName項目入力後`Save and Add Another`
-    3. Display name : email / Variable name : email項目入力後`Save and Add Another` 
+    3. Display name : email / Variable name : email項目入力後`Save and Add Another`
     4. Display name : loginId / Variable name : loginId項目入力後`Save`クリック
 
 <figure data-layout="center" data-align="center">
@@ -119,34 +119,34 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 </figcaption>
 </figure>
 
-1. Okta管理者ページ左側パネルでDirectory &gt; Peopleメニューに移動してAdd Personを押して専用システム連携用アカウントを生成します。 
-    * 既にQueryPie連携用で使用可能なアカウントがあれば本段階をスキップします。 
-2. Okta管理者ページ左側パネルでSecurity &gt; Administratorsメニューに移動してRolesタブに移動します。 
-3. Create new roleを選択します。 
-4. Role name（例：MinimumAdminRole）およびRole descriptionを定義した後、Select Permissionsで以下の権限のみチェックします。 
-    1.  **User** 
+1. Okta管理者ページ左側パネルでDirectory &gt; Peopleメニューに移動してAdd Personを押して専用システム連携用アカウントを生成します。
+    * 既にQueryPie連携用で使用可能なアカウントがあれば本段階をスキップします。
+2. Okta管理者ページ左側パネルでSecurity &gt; Administratorsメニューに移動してRolesタブに移動します。
+3. Create new roleを選択します。
+4. Role name（例：MinimumAdminRole）およびRole descriptionを定義した後、Select Permissionsで以下の権限のみチェックします。
+    1.  **User**
         * View users and their details
-    2.  **Group** 
+    2.  **Group**
         * View groups and their details
-    3.  **Application** 
+    3.  **Application**
         * View application and their details
-5. Save roleを押してカスタムロールを保存します。 
-6. Resourcesタブに移動します。 
+5. Save roleを押してカスタムロールを保存します。
+6. Resourcesタブに移動します。
 7. Create new resource setを選択します。
-    * 既に割り当てる権限範囲指定のために作っておいたresource setがあれば本段階をスキップして10番段階を進行します。 
-8. Name（例：MinimumResources）およびDescriptionを定義した後以下の範囲を検索して指定します。 
-    1. User : QueryPieユーザー全部選択 
-    2. Group : QueryPie使用グループ全部選択 
+    * 既に割り当てる権限範囲指定のために作っておいたresource setがあれば本段階をスキップして10番段階を進行します。
+8. Name（例：MinimumResources）およびDescriptionを定義した後以下の範囲を検索して指定します。
+    1. User : QueryPieユーザー全部選択
+    2. Group : QueryPie使用グループ全部選択
     3. Application : QueryPieアプリに限定
-9. Createを選択して生成します。 
+9. Createを選択して生成します。
 10. Adminsタブに移動してQueryPie連携用アカウントに以下の権限を割り当てます。
     1. Role: MinimumAdminRole | Resource: MinimumResources
-    2. Role: Read-Only Administrator 
-        * APIトークン生成メニューアクセスのための一時付与 
-11. QueryPie連携用アカウントでOkta管理者コンソールページに認証後アクセスします。 
+    2. Role: Read-Only Administrator
+        * APIトークン生成メニューアクセスのための一時付与
+11. QueryPie連携用アカウントでOkta管理者コンソールページに認証後アクセスします。
 12. Security &gt; APIメニューでTokensタブに移動します。
-13. Create Tokenボタンをクリックして認証トークンを生成してこれを保管します。 
-14. その後再び初期作業した管理者アカウントでアクセスしてSecurity &gt; Administrators &gt; Adminsタブで連携用アカウントを編集してRead-Only Administrator権限を回収します。 
+13. Create Tokenボタンをクリックして認証トークンを生成してこれを保管します。
+14. その後再び初期作業した管理者アカウントでアクセスしてSecurity &gt; Administrators &gt; Adminsタブで連携用アカウントを編集してRead-Only Administrator権限を回収します。
 
 
 ### QueryPieでOkta連携および同期設定
@@ -163,8 +163,8 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 3. コピーしたXML情報をIdentity Provider Metadata項目に貼り付けます。
 4. 自動同期を設定したい場合、"Use Synchronization with the Authentication System"をチェックします。
     1. API URL: Okta管理者ページ右上のプロフィールをクリックすると`{domain}`.okta.com形式のURLを確認できます。
-    2. API Token: Okta管理者APIトークンを記入します。 
-    3. Application ID: Okta内で2つ以上のQueryPie Appを使用する場合入力します。 
+    2. API Token: Okta管理者APIトークンを記入します。
+    3. Application ID: Okta内で2つ以上のQueryPie Appを使用する場合入力します。
 5. 自動同期機能を使用したい場合Replication Frequency項目でSchedulingを設定します。
 6. `Dry Run`ボタンをクリックして連携情報が正常に入力されたか確認します。
 7. `Save Changes`で保存します。

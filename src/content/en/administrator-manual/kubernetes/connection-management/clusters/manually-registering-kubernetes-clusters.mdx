@@ -21,44 +21,44 @@ To manually register individual servers, you need to enter basic server informat
 1. Navigate to Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters menu.
 2. Click the `+ Create Cluster` button in the top right.
 3.  **Information**  : Enter the following information for manual cluster registration
-    1.  **Name**  : Enter a name that can identify the cluster. (Required) 
-        * This information cannot be modified in the future. 
-    2.  **Version**  : Enter the cluster version. (Optional) 
-        * This is an item that will be automatically filled through the credential authentication test procedure later. 
-    3.  **API URL**  : Enter the API URL of the cluster that will receive the Kubernetes API. 
-    4. 
+    1.  **Name**  : Enter a name that can identify the cluster. (Required)
+        * This information cannot be modified in the future.
+    2.  **Version**  : Enter the cluster version. (Optional)
+        * This is an item that will be automatically filled through the credential authentication test procedure later.
+    3.  **API URL**  : Enter the API URL of the cluster that will receive the Kubernetes API.
+    4.
     5.  **Credential**  : To grant access to the Kubernetes API server of the cluster, you need to obtain the service account token and CA certificate from the cluster. Please check the content in the blue information box for details.
-        1.  **Service Account Token**  : Enter the service account token value of the Kubernetes cluster that will be used when QueryPie Proxy makes user Kubernetes API calls. 
+        1.  **Service Account Token**  : Enter the service account token value of the Kubernetes cluster that will be used when QueryPie Proxy makes user Kubernetes API calls.
         2.  **Certificate Authority**  : Enter the CA certificate that QueryPie will use to verify the Kubernetes API server certificate.
         3.  **Verify Credential**  : This button is activated when both the service account token and CA certificate are entered. Click the button to check if normal connection is possible. The result is displayed as follows based on the execution result:
-            * ✔️  **Verified**  : Indicates that the cluster connection was successful and the service account token and CA certificate were entered correctly. 
-            * ❌  **Verification Failed**  : Indicates that the cluster connection failed, there may be an error in the service account token and CA certificate values, or network connection failed. 
-    6.  **Logging Options**  : Select logging options for the cluster. 
+            * ✔️  **Verified**  : Indicates that the cluster connection was successful and the service account token and CA certificate were entered correctly.
+            * ❌  **Verification Failed**  : Indicates that the cluster connection failed, there may be an error in the service account token and CA certificate values, or network connection failed.
+    6.  **Logging Options**  : Select logging options for the cluster.
         1.  **Request Audit**  : This is an option to enable logging for Kubernetes API call history for the cluster, and the default is `On`. When this function is switched to `Off`,
-            1. Kubernetes API call history for the cluster will not be recorded. 
-            2. All Request Audit Types and Pod Session Recording below are bulk deactivated. 
-        2.  **Request Audit Types**  : Administrators can select the target Verb to audit for the cluster. The default selects all of the following basic verbs. 
-            1. Verb types: 
-                1. `get` 
-                2. `list` 
-                3. `watch` 
+            1. Kubernetes API call history for the cluster will not be recorded.
+            2. All Request Audit Types and Pod Session Recording below are bulk deactivated.
+        2.  **Request Audit Types**  : Administrators can select the target Verb to audit for the cluster. The default selects all of the following basic verbs.
+            1. Verb types:
+                1. `get`
+                2. `list`
+                3. `watch`
                 4. `create`
                 5. `update`
                 6. `patch`
                 7. `delete`
                 8. `deletecollection`
-            2. ✅ Select All : Audits all API calls. 
+            2. ✅ Select All : Audits all API calls.
         3.  **Pod Session Recording**  : This is an option to enable recording for sessions opened by Pod exec commands within the cluster, and the default is `On`. This function is switched to `Off` if the following conditions are not met:
             1. Request Audit must be enabled to `On`.
             2. The following verbs must be selected in Request Audit Types:
                 1. `create`
                 2. `get`
-4.  **Tags**  : You can manually enter tags for individual clusters if necessary, and for clusters synchronized through Cloud Providers, synchronized tags are also displayed. (However, tags imported through synchronization cannot be deleted or modified.) Click the `+ Add Tag` button to add a new row and enter the desired tag value, and tags must be entered in key-value format. 
-    1.  **Key**  : Enter a Key value that can distinguish the tag within 512 characters. 
-        1. Key value must be entered as required, and already registered keys cannot be entered in duplicate. 
-        2. Duplicates are checked case-sensitively. 
+4.  **Tags**  : You can manually enter tags for individual clusters if necessary, and for clusters synchronized through Cloud Providers, synchronized tags are also displayed. (However, tags imported through synchronization cannot be deleted or modified.) Click the `+ Add Tag` button to add a new row and enter the desired tag value, and tags must be entered in key-value format.
+    1.  **Key**  : Enter a Key value that can distinguish the tag within 512 characters.
+        1. Key value must be entered as required, and already registered keys cannot be entered in duplicate.
+        2. Duplicates are checked case-sensitively.
     2.  **Value**  : Enter a Value value to be used for filtering within 256 characters.
-5. After going through the above process, click the final `Save` button to successfully register the cluster. 
+5. After going through the above process, click the final `Save` button to successfully register the cluster.
 
 
 ### Kubernetes Cluster Integration Script Usage Guide
@@ -68,7 +68,7 @@ To manually register individual servers, you need to enter basic server informat
 </figure>
 
 * Administrators must be able to access the target Kubernetes cluster in advance.
-* Administrators can download the script by clicking the "download and run this script" link in the Credential information box at Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster &gt; Credential. 
+* Administrators can download the script by clicking the "download and run this script" link in the Credential information box at Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters &gt; Create Cluster &gt; Credential.
 <details>
 <summary>generate_kubepie_sa.sh script content </summary>
 ```

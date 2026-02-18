@@ -26,15 +26,15 @@ Slack AppをQueryPieに連携し、QueryPieからDirect Message通知を受信�
 App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
 
 
-1. [https://api.slack.com/apps](https://api.slack.com/apps)に移動して`Create an App`をクリックします。<br/> <br/> 
+1. [https://api.slack.com/apps](https://api.slack.com/apps)に移動して`Create an App`をクリックします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065658.png" alt="image-20231227-065658.png" width="760" />
   </figure>
-2. Create an appモーダルで、App生成方式を選択します。`From a manifest`をクリックします。<br/> <br/> 
+2. Create an appモーダルで、App生成方式を選択します。`From a manifest`をクリックします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-131725.png" alt="screenshot-20250218-131725.png" width="712" />
   </figure>
-3. Pick a workspaceモーダルでQueryPieと連携するSlack Workspaceを選択した後次の段階に進行します。<br/> <br/> 
+3. Pick a workspaceモーダルでQueryPieと連携するSlack Workspaceを選択した後次の段階に進行します。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png" alt="image-20231227-065951.png" width="710" />
   </figure>
@@ -69,15 +69,15 @@ App Manifestを利用してQueryPie DM連携専用Slack Appを生成します。
       }
   }
   ```
-5. 設定内容を検討し`Create`ボタンをクリックしてApp生成を完了します。<br/> <br/> 
+5. 設定内容を検討し`Create`ボタンをクリックしてApp生成を完了します。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png" alt="image-20240115-220447.png" width="763" />
   </figure>
 
 ### Slack WorkspaceにSlack Appインストール
 
-1. Settings &gt; Install Appで`Install to Workspace`ボタンをクリックして生成されたアプリをSlack Workspaceにインストールします。 
-2. 権限リクエストページで、`許可`をクリックします。 <br/> 
+1. Settings &gt; Install Appで`Install to Workspace`ボタンをクリックして生成されたアプリをSlack Workspaceにインストールします。
+2. 権限リクエストページで、`許可`をクリックします。 <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-221520.png" alt="image-20240115-221520.png" width="760" />
   </figure>
@@ -105,11 +105,11 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 
 以下の段階を実行してApp-Level Tokenを手動で生成します。
 
-1. アプリ設定ページのSettings &gt; Basic InformationメニューのApp-Level Tokensセクションに移動し、`Generate Token and Scope`ボタンをクリックします。<br/> <br/> 
+1. アプリ設定ページのSettings &gt; Basic InformationメニューのApp-Level Tokensセクションに移動し、`Generate Token and Scope`ボタンをクリックします。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-140951.png" alt="screenshot-20250218-140951.png" width="736" />
   </figure>
-2. Generate an app-level tokenモーダルで、Add Scopeボタンをクリックした後`connections:write`を追加します。<br/> <br/> 
+2. Generate an app-level tokenモーダルで、Add Scopeボタンをクリックした後`connections:write`を追加します。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-141555.png" alt="screenshot-20250218-141555.png" width="736" />
   </figure>
@@ -117,7 +117,7 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 
 ### QueryPieでSlack DM設定
 
-1. Admin &gt; General &gt; System &gt; Integrations &gt; Slackメニューに進入した後、`Configure`ボタンをクリックして設定モーダルを開きます。<br/> <br/> 
+1. Admin &gt; General &gt; System &gt; Integrations &gt; Slackメニューに進入した後、`Configure`ボタンをクリックして設定モーダルを開きます。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113509.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack Configuration" width="736" />
   <figcaption>
@@ -127,7 +127,7 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 2. 設定モーダルに先ほど記録しておいたApp TokenとBot User OAuth Tokenを入力します。
 3. 追加設定値は以下の通りです。DMでWorkflow通知を受けメッセージ内で承認/拒否を実行するにはすべての設定トグルを有効化します。
     *  **Send Workflow Notification via Slack DM**  : ワークフローリクエストに対するSlack DM送信有効化
-    *  **Allow Users to approve or reject on Slack DM**  : Slack DM内で承認または拒否機能有効化<br/> <br/> 
+    *  **Allow Users to approve or reject on Slack DM**  : Slack DM内で承認または拒否機能有効化<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231003-054240.png" alt="アクション許容タイプ例（左）/ アクション非許容タイプ例（右）" width="760" />
       <figcaption>
@@ -138,7 +138,7 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 
 ### Slack DM設定管理
 
-1. Slack Configurationを登録した後、現在の設定状態を画面で確認できます。<br/> <br/> 
+1. Slack Configurationを登録した後、現在の設定状態を画面で確認できます。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113950.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack" width="736" />
   <figcaption>
@@ -158,11 +158,11 @@ App manifestでSlack appを生成する時Socket Modeと関連権限を有効化
 
 DB Access Requestを例に、Slack DM機能が正常に動作するかテストを実行します。
 
-1. QueryPie User &gt; WorkflowページでSubmit Requestボタンをクリックした後、DB Access Requestを選択してリクエスト作成画面に進入します。リクエスト作成画面で必要な情報を入力し、リクエストを提出します。 <br/> 
+1. QueryPie User &gt; WorkflowページでSubmit Requestボタンをクリックした後、DB Access Requestを選択してリクエスト作成画面に進入します。リクエスト作成画面で必要な情報を入力し、リクエストを提出します。 <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-151504.png" alt="screenshot-20250218-151504.png" width="736" />
   </figure>
-2. 承認者は前に追加したSlack AppとのDMで承認すべきリクエスト通知を受信できます。<br/>**Allow Users to approve or reject on Slack DM**設定がオンになっているため、DMで直接理由を入力してリクエストを承認または拒否できます。<br/> <br/> 
+2. 承認者は前に追加したSlack AppとのDMで承認すべきリクエスト通知を受信できます。<br/>**Allow Users to approve or reject on Slack DM**設定がオンになっているため、DMで直接理由を入力してリクエストを承認または拒否できます。<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-152238.png" alt="screenshot-20250218-152238.png" width="701" />
   </figure>

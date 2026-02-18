@@ -14,8 +14,8 @@ You can create server groups according to purpose and conveniently manage polici
 
 <Callout type="info">
 We recommend registering each resource required for server group registration in advance.
-1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates** 
-2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations** 
+1. Administrator &gt; Servers &gt; Server Account Management &gt;  **Server Account Templates**
+2. Administrator &gt; Servers &gt; Server Account Management &gt;  **SSH Key Configurations**
 </Callout>
 
 
@@ -30,12 +30,12 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 
 
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Server Groups menu.
-2. Click the `+ Create Group` button in the top right. 
-3. Enter the following information for group creation. 
-    1.  **Name** : Name that can distinguish the server group on the screen. 
-    2.  **Description** : You can enter additional descriptions of the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups. 
+2. Click the `+ Create Group` button in the top right.
+3. Enter the following information for group creation.
+    1.  **Name** : Name that can distinguish the server group on the screen.
+    2.  **Description** : You can enter additional descriptions of the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups.
     3.  **Server Tags** : You can dynamically manage server group targets by specifying tags of servers to be grouped through Server Tags.
-4. Save through the `Save` button. 
+4. Save through the `Save` button.
 
 <Callout type="info">
 Server groups can manage servers based on Tags.
@@ -54,9 +54,9 @@ Some items can be modified after creation.
 <img src="/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20240902-045749.png" alt="image-20240902-045749.png" width="703" />
 </figure>
 
-* Name : Enter the name of the server group. 
-* Description : Enter content that can describe the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups. 
-* Server Tags : You can dynamically manage server group targets by specifying tags of servers to be grouped. Servers added through tags cannot be manually deleted from the server table and must be modified by modifying the tags in Server Tags. 
+* Name : Enter the name of the server group.
+* Description : Enter content that can describe the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups.
+* Server Tags : You can dynamically manage server group targets by specifying tags of servers to be grouped. Servers added through tags cannot be manually deleted from the server table and must be modified by modifying the tags in Server Tags.
 
 #### 2. Manually Adding Servers
 
@@ -64,7 +64,7 @@ Some items can be modified after creation.
 <img src="/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/image-20241028-003400.png" alt="image-20241028-003400.png" width="760" />
 </figure>
 
-* In Servers, you can check servers that belong to the server group or manually add servers to the server group. 
+* In Servers, you can check servers that belong to the server group or manually add servers to the server group.
     * Clicking the `Add Server` button in the top right displays a popup showing the server list above the screen.
     * In the popup window, select individual servers to add to the server group and click the `Add` button.
         * You can filter servers with various conditions using the filter(:filter:) function in the popup.
@@ -82,7 +82,7 @@ Example of filtering targets to add to Server Group using tags
 
 * Even if you delete tags related to manually added servers in the Server Tags of Information, manually added servers are not excluded from the server group. Only manual deletion through the `Delete` button that appears after selecting the checkbox in the Servers table is possible.
 * You can check account information for Servers and Accounts added to the Server Group through Test Connection.
-    * To use Test Connection, you must add at least 1 Server and Account to the Server Group. 
+    * To use Test Connection, you must add at least 1 Server and Account to the Server Group.
 
 <Callout type="info">
 Test Connection can only be used after saving the Server Group.
@@ -94,11 +94,11 @@ Test Connection can only be used after saving the Server Group.
 <img src="/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.33.48-PM.png" alt="Screenshot-2025-07-27-at-10.33.48-PM.png" width="760" />
 </figure>
 
-1. Register and manage Accounts required to access the connection. There are two ways to register Accounts. 
+1. Register and manage Accounts required to access the connection. There are two ways to register Accounts.
     1. You can load already registered Accounts from the Server Account Templates menu at once by pressing the `Copy` button.
-        1. For how to register Server Account Template, refer to [Server Account Templates](../../server-account-management/server-account-templates). 
-    2. Or you can manually add Accounts using the `Add Account` function. 
-        1. When clicking the `Add Account` button, a modal window for account settings is displayed. Items to be entered differ for each selected Category.  <br/> 
+        1. For how to register Server Account Template, refer to [Server Account Templates](../../server-account-management/server-account-templates).
+    2. Or you can manually add Accounts using the `Add Account` function.
+        1. When clicking the `Add Account` button, a modal window for account settings is displayed. Items to be entered differ for each selected Category.  <br/>
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.37.35-PM.png" alt="Screenshot-2025-07-27-at-10.37.35-PM.png" width="688" />
           </figure>
@@ -106,11 +106,11 @@ Test Connection can only be used after saving the Server Group.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/servers/connection-management/server-groups/managing-servers-as-groups/Screenshot-2025-07-27-at-10.35.23-PM.png" alt="Screenshot-2025-07-27-at-10.35.23-PM.png" width="736" />
   </figure>
-3. You can set accounts by category. 
+3. You can set accounts by category.
     1. Category : You must first select a Category that defines the authentication method and type of the account. The setting items displayed below change dynamically according to the selected Category.
     2.  **Caution** : After creating an account, the Category cannot be modified, so you must choose carefully.
 4. Setting items by Category
-    1.  **QueryPie Internal Authentication** 
+    1.  **QueryPie Internal Authentication**
         1. `QueryPie - Manual Login` : Users directly enter the password of the set account when accessing the server.
             * Required items : Account
         2. `QueryPie - Password` : Automatically logs in using the password stored in QueryPie.
@@ -124,38 +124,38 @@ Test Connection can only be used after saving the Server Group.
             * Custom Account access is not supported in Seamless SSH method.
             * Custom Account access is not supported on Windows Servers with Server Agent installed.
             * On Windows Servers without Server Agent, only Custom Account access is possible.
-    2.  **Provisioning and One Time Account** 
-        1. Category items are visible only when Password Provisioning and Using One Time Accounts are activated in Admin &gt; Servers &gt; Configures. 
+    2.  **Provisioning and One Time Account**
+        1. Category items are visible only when Password Provisioning and Using One Time Accounts are activated in Admin &gt; Servers &gt; Configures.
         2. `QueryPie - Provisioning` : Uses accounts registered in QueryPie for Provisioning purposes.
             * Required items : Account
             * When Admin &gt; Servers &gt; Configurations &gt; Using One Time Accounts is activated, Set As Provisioning Account checkbox can be checked
         3. `Active Directory - Provisioning` : Uses Active Directory accounts for Provisioning purposes.
             * Required items : Account, Secret Store
-        4. `QueryPie - One Time Account` : Used for one-time temporary accounts that are only valid while users access the server. 
+        4. `QueryPie - One Time Account` : Used for one-time temporary accounts that are only valid while users access the server.
             * Required items : Account
             * Required condition: To use One Time Account, a Provisioning account must be designated first in the server group.
-    3.  **Secret Store Integration (Hashicorp Vault)** 
-        1. Category items are visible only when Admin &gt; General &gt; Security &gt; Secret Stores is activated. 
+    3.  **Secret Store Integration (Hashicorp Vault)**
+        1. Category items are visible only when Admin &gt; General &gt; Security &gt; Secret Stores is activated.
         2. `Vault - K/V - Password` **** : Uses passwords stored in Vault K/V engine.
             * Required items : Alias, Secret Store, Account Path, Password Path
-                * Secret Store : Only items with K/V engine type are filtered and displayed. 
+                * Secret Store : Only items with K/V engine type are filtered and displayed.
             * When utilizing Secret Store integration information when registering Account information in server groups, you can access connections through pre-designated Secret Store authentication information integration. By pre-storing server authentication information in Secret Store and having users utilize server authentication information stored in Secret Store when accessing servers remotely, security for server authentication information can be enhanced. Servers designated for Server Groups are forced to use the same Secret Store as Server Groups.
             * Enter the server account name to be exposed to users in the Alias field.
         3. `Vault - K/V - SSH Key` **** : Uses SSH Keys stored in Vault K/V engine.
             * Required items : Alias, Secret Store, Account Path, SSH Key Path
-                * Secret Store : Only items with K/V engine type are filtered and displayed. 
+                * Secret Store : Only items with K/V engine type are filtered and displayed.
         4. `Vault - SSH - OTP` **** : Uses Vault's SSH OTP engine.
             * Required items: Account, Secret Store, Vault Role Path
-                * Secret Store : Only items with OTP engine type are filtered and displayed. 
+                * Secret Store : Only items with OTP engine type are filtered and displayed.
             * You can manage server accounts in Passwordless form using Hashicorp Vault's SSH OTP engine. However, you must install vault-ssh-helper, which is Vault's server agent, on the server. For detailed guide, please refer to [Hashicorp Vault Official Guide](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp).
         5. `Vault - SSH - CA` **** : Uses Vault's SSH CA engine.
             * Required items: Account, Secret Store, Vault Role Path
-                * Secret Store : Only items with CA engine type are filtered and displayed. 
+                * Secret Store : Only items with CA engine type are filtered and displayed.
             * You can manage server accounts in Passwordless form using Hashicorp Vault's SSH CA engine (Signed SSH certificates). However, you must add the Public Key issued by the vault ca engine to the TrustedUserCAKeys of the server to be accessed. For detailed guide, please refer to [Hashicorp Vault Official Guide](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates).
 
 <Callout type="info">
 **Common Item: Account**
-* Enter a name that can distinguish individual accounts. 
+* Enter a name that can distinguish individual accounts.
     1. When entering `{username}`, it is replaced with QueryPie's username when users with permissions access the server through QueryPie.
     2. When username is in email format, entering `{username_prefix}` replaces it with the prefix part of QueryPie's username (part before @).
 </Callout>
@@ -209,7 +209,7 @@ You can register server group owners to designate them as approvers in Workflow.
 1. Clicking the `Assign Owners` button in the top right displays a popup showing Users and User Groups.
 2. In the popup window, select the User or User Group to designate as server group owner and click the `Save` button.
 3. You can check the User or User Group designated as owner of the server group.
-4. Save through the `Save Changes` button. 
+4. Save through the `Save Changes` button.
 
 
 #### 5. Registering Server Group Member
@@ -223,7 +223,7 @@ You can register server group members to specify Server Groups displayed in user
 1. Clicking the `Assign Members` button in the top right displays a popup showing Users and User Groups.
 2. In the popup window, select the User or User Group to designate as server group member and click the `Save` button.
 3. You can check the User or User Group designated as member of the server group.
-4. Save through the `Save Changes` button. 
+4. Save through the `Save Changes` button.
 
 <Callout type="info">
 To limit Server Groups shown in Workflow, you must activate the "Show Server Groups in Workflow if Assigned as Member" item in Admin &gt; Servers &gt; General &gt; Configurations.

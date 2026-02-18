@@ -31,10 +31,10 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
 したがって、より円滑なアカウントフロー管理のために[SSOアカウントシステム連動](authentication)の手順を先に進行することをお勧めします。
 これに伴うシステム動作は以下の通りです。
 
-*  **Authentication未設定（Default: Internal Database）** 
+*  **Authentication未設定（Default: Internal Database）**
     * SCIM APIによって生成されたユーザーまたはグループのAuth Providerは「QueryPie」になり、一般的なbulk importの概念で動作します。
     * ローカルQueryPieアカウントと同様に管理され、QueryPieで該当ユーザーに対する編集、削除が可能です。
-*  **Authentication設定（例：Okta）** 
+*  **Authentication設定（例：Okta）**
     * SCIM APIによって生成されたユーザーまたはグループのAuth Providerは該当Identity Provider（IdP）で表記され、ユーザーのAttributeプロファイル管理はAdministrator &gt; General &gt; User Management &gt; Profile Editorの基準で更新管理されます。
     * 既存ローカルQueryPieアカウントにUsername（loginId）が同じユーザーの情報がSCIM APIで更新呼び出しを受けると、該当ユーザーのプロファイルがIdPに合わせて修正されますが、QueryPie内付与権限の維持を目的として優先的にAuth Providerが該当IdPに変更されません。（9.19.0基準）
         * 依然としてローカルQueryPieアカウントと同様にQueryPieで該当ユーザーに対するプロファイルおよび現況編集、削除が可能です。

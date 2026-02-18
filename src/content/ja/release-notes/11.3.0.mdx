@@ -17,42 +17,42 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1421475841/1
 * [DAC] Impala JDBC URLオプションで3rd party toolのHTTP要求に対応できるようサポート
 * [DAC] Postgres（PostgreSQL）DBに対するLite Proxy機能サポート
 * [DAC] Redis Connectionに対して手動Cluster設定機能提供
-* [DAC] 新ポリシーのイベントに対するSyslog送信機能追加 
+* [DAC] 新ポリシーのイベントに対するSyslog送信機能追加
 * [SAC] Audit Log ExportにWorkflow Server Privilege Request追加
 
 
 **Improvement**
 
-* [共通] Activity Logsで変更されたデータに対する可視性改善 
-* [共通] Alert設定のChannel選択項目でタイプをアイコンで表示して視認性改善 
-* [共通] Alert詳細ページのLogsタブ、Job詳細画面でテーブル下部に行数表示 
-* [共通] Allowed Zone設定で`IP Band(s)`を`IP Address Range(s)`に変更 
-* [共通] OAuth client設定を複数で登録できるよう改善 
-* [共通] SIEM設定にTimezone追加 
-* [共通] User Groupにユーザー追加時、選択されたメンバーの数を表示するよう改善 
-* [共通] ユーザーのアイドル状態制御（Agent Session Timeout補強） 
-* [共通] Authentication関連設定位置変更および設定方法改善 
+* [共通] Activity Logsで変更されたデータに対する可視性改善
+* [共通] Alert設定のChannel選択項目でタイプをアイコンで表示して視認性改善
+* [共通] Alert詳細ページのLogsタブ、Job詳細画面でテーブル下部に行数表示
+* [共通] Allowed Zone設定で`IP Band(s)`を`IP Address Range(s)`に変更
+* [共通] OAuth client設定を複数で登録できるよう改善
+* [共通] SIEM設定にTimezone追加
+* [共通] User Groupにユーザー追加時、選択されたメンバーの数を表示するよう改善
+* [共通] ユーザーのアイドル状態制御（Agent Session Timeout補強）
+* [共通] Authentication関連設定位置変更および設定方法改善
 * [共通] Urgent Mode（事後承認）を使用する場合、承認満了日指定をできないよう改善
 * [共通] ライセンス管理方法改善
-* [DAC] WorkflowでDACポリシー例外要求（Unmasking、DataAccess、DB Policy Exception Request）のStart Time / End Timeをユーザー定義できるよう改善 
+* [DAC] WorkflowでDACポリシー例外要求（Unmasking、DataAccess、DB Policy Exception Request）のStart Time / End Timeをユーザー定義できるよう改善
 * [DAC] 新ポリシー（New DAC Policy Management）使用時、手動でDB Policy Exceptionで効力発生時点にStart Time / End Timeで指定するよう改善
 * [DAC] ポリシー例外に対して最大有効期間を設定できるよう改善
-* [DAC] SSMSで実行計画の内容が表示されるよう改善 / SET STATISTICS PROFILE処理改善 
-* [DAC] RedshiftでCREATE TEMP TABLE構文で生成されるテーブルサポート 
-* [DAC] Dynamo DB Connectionに設定したSecret Keyが平文で露出されないようマスキング処理 
+* [DAC] SSMSで実行計画の内容が表示されるよう改善 / SET STATISTICS PROFILE処理改善
+* [DAC] RedshiftでCREATE TEMP TABLE構文で生成されるテーブルサポート
+* [DAC] Dynamo DB Connectionに設定したSecret Keyが平文で露出されないようマスキング処理
 * [DAC] Document DB同期後Instanceが変更されてもProxy portを割り当てるよう改善
-* [DAC] クラウド資源の同期時、特定対象のみ選択的に同期できるよう改善 
-* [DAC] DB ConnectionリストでCreated At、Updated Atでソートできるよう改善 
-* [DAC] WorkflowでTrinoに対する要求を上申する時、アカウントID / PWを入力できるよう改善 
-* [DAC] 新ポリシーでタグ入力UI統一 
-* [DAC] 新ポリシーでdata scopeを正規表現でも指定できるよう改善 
-* [DAC] 新ポリシーのData scopeで複数のテーブルまたは複数のカラムを選択できるよう改善 
+* [DAC] クラウド資源の同期時、特定対象のみ選択的に同期できるよう改善
+* [DAC] DB ConnectionリストでCreated At、Updated Atでソートできるよう改善
+* [DAC] WorkflowでTrinoに対する要求を上申する時、アカウントID / PWを入力できるよう改善
+* [DAC] 新ポリシーでタグ入力UI統一
+* [DAC] 新ポリシーでdata scopeを正規表現でも指定できるよう改善
+* [DAC] 新ポリシーのData scopeで複数のテーブルまたは複数のカラムを選択できるよう改善
 * [DAC] DBAなど特権で接続する必要があるユーザーがAdvanced privilege使用時、パスワードを直接入力できるよう改善
 * [SAC] Windows Server接続時、アカウントパスワードを手動で入力できるよう改善
 * [SAC] RDPセッション接続時、ウィンドウモードを使用するよう改善
-* [SAC] Alert項目でServer Connection Attemptに対して失敗回数閾値設定オプション追加 
-* [SAC] Command AuditのAction Typeフィルター改善 
+* [SAC] Alert項目でServer Connection Attemptに対して失敗回数閾値設定オプション追加
+* [SAC] Command AuditのAction Typeフィルター改善
 * [SAC] RDP Server Agentダウンロードボタン提供
 * [SAC] Server GroupにServerを追加する時、Serverのタグを活用して検索できるようフィルター提供
-* [WAC] Workflow Web Application JIT Request様式およびDefault RuleにReviewerを追加できるよう改善 
-* [WAC] RootCA証明書をアップロードした後、再起動が必要だというバナー表示 
+* [WAC] Workflow Web Application JIT Request様式およびDefault RuleにReviewerを追加できるよう改善
+* [WAC] RootCA証明書をアップロードした後、再起動が必要だというバナー表示

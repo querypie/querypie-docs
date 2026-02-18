@@ -34,7 +34,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 5.  **Region**  Select the region of the resources you want to synchronize.
 6. Enter the Credential information required to synchronize resources.
     * For descriptions of each **Credential** method, refer to **Setting Up Authentication Methods by Credential Type** below.
-7.  **Database Type Filter**  Select the resources you want to synchronize. 
+7.  **Database Type Filter**  Select the resources you want to synchronize.
 8.  **Search Filter**  You can get a list of specific types of resources you want to synchronize.
     1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
         1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
@@ -60,7 +60,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt;
 
 *  **Default Credentials (Instance Profile)**  : When the QueryPie server is installed in the same AWS account, you can synchronize resources within the same AWS by assigning policies to the IAM permissions of the EC2 instance where QueryPie is installed. Please assign policies appropriate for the required resources.
 *  **Cross Account Role**  : You can synchronize resources from other AWS accounts by creating IAM roles. Please create permissions for synchronization and assign policies according to the steps displayed on the screen. (To synchronize resources through this Credential, you must set the AWS account where QueryPie is installed in the **AWS_ACCOUNT_ID** field of the environment variable file)
-*  **Access Key**  : `Synchronize` Provides a manual synchronization method that enters access key and secret key of the AWS account when clicking the button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using access key as the Credential type.  **** 
+*  **Access Key**  : `Synchronize` Provides a manual synchronization method that enters access key and secret key of the AWS account when clicking the button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using access key as the Credential type.  ****
 
 <Callout type="important">
 **Save Credential for Synchronization Option**
@@ -72,8 +72,8 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same IAM permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.** 
-* Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page. 
+*  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same IAM permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.**
+* Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page.
 * When this option is enabled, you can synchronize manually or set a schedule.
 </Callout>
 

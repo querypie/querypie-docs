@@ -39,20 +39,20 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPathTags:              
+        urlPathTags:
           access: "admin"
       - webApp: "QueryPie Customer Portal"
-        urlPaths: ["*"]          
+        urlPaths: ["*"]
     conditions:
       userAttributes:
         department: "White"
-      ipAddresses: 
+      ipAddresses:
         - "10.10.0.0/24"
         - "10.10.1.79"
   deny:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management/roles"
 ```
 
@@ -209,11 +209,11 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
       - webApp: "QueryPie Customer Portal"
-        urlPathTags: 
+        urlPathTags:
           access: "admin"
   ```
 3. Web app names must meet the following conditions.
@@ -248,21 +248,21 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"     # Specific sub-path
           - "/general-settings/user-management/*"   # All sub-paths under specific path
       ```
     * Overlapping paths cannot be entered simultaneously.
-        * Example: **Cannot enter simultaneously** `/general-settings/*` and `/general-settings/user-management` of QueryPie Web Admin 
+        * Example: **Cannot enter simultaneously** `/general-settings/*` and `/general-settings/user-management` of QueryPie Web Admin
           ```
 spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/*"
           - "/general-settings/user-management"
-          ``` 
+          ```
 4. Wildcards **cannot be entered** in the middle of paths or as part of path names, and regular expressions **cannot be entered**.
     * `"/*-settings"` (X)
     * `"/*/edit"` (X)
@@ -277,14 +277,14 @@ Specifies sub-paths to allow access based on URL Path tags assigned to each sub-
     * When multiple tags with the same Key are entered, they operate with **OR** conditions.
         * Example: Allow access to paths with `access: admin` or `access: user` tags
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "access": "user"
           ```
     * When multiple tags with different Keys are entered, they operate with **AND** conditions.
         * Example: Allow access to paths with both `access: admin` and `type: general` tags
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "type": "general"
           ```
@@ -311,14 +311,14 @@ Attribute information is case-sensitive and multiple can be entered.
 * When multiple attributes with the same Key are entered, they operate with OR conditions.
     * Example: Allow access for users whose department is PM or QA
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "department": "QA"
       ```
 * When multiple attributes with different Keys are entered, they operate with AND conditions.
     * Example: Allow access for users whose department is PM and title is manager
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "title": "Manager"
       ```
@@ -336,7 +336,7 @@ If not defined separately, the default value is allow all (`0.0.0.0/0`).
 
 We recommend specifying web apps and sub-paths to allow access by permission.
 
-1. Check the permission list that exists for each web app. 
+1. Check the permission list that exists for each web app.
     1. Example: For a recruitment platform,
         1. HR - has all permissions
         2. Interviewer - can only access pages that manage interview results

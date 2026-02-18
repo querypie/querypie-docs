@@ -23,7 +23,7 @@ The currently supported IdP integration settings are as follows:
 
 <Callout type="info">
 * Multiple Identity Providers are not currently supported simultaneously. You must use one IdP in addition to Internal database (QueryPie user ID/PW) authentication.
-* MFA (Multi-factor Authentication) support is available only with Internal DB, LDAP, and Custom Identity Provider. 
+* MFA (Multi-factor Authentication) support is available only with Internal DB, LDAP, and Custom Identity Provider.
 * Starting from 11.5.0, when using Internal DB with LDAP or Internal DB with Custom Identity Provider, you can use MFA in each respective setting.<br/>For example, if MFA is set in LDAP and MFA is set in Internal DB, user accounts that are LDAP accounts are controlled by LDAP's MFA settings, and user accounts in Internal DB are controlled by Internal DB's MFA settings.
 * Scheduled periodic synchronization is available only for LDAP, Okta, One Login, and Custom Identity Provider.
 </Callout>
@@ -175,7 +175,7 @@ To run user information synchronization from the LDAP server, enable the **Use S
 *  **Replication Frequency**  : Configure whether to use automatic synchronization.
     * Manual : Synchronization is performed only manually. User information is fetched from the LDAP server only when you click the `Synchronize` button on the current page.
     * Scheduling : Periodic synchronization is performed. The "Use cron expression" field below is enabled.
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing.
         * We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via LDAP authentication.
     *  **Use an Attribute for Privilege Revoke** : Select whether to revoke Privileges based on a specific Attribute during synchronization.
@@ -185,7 +185,7 @@ To run user information synchronization from the LDAP server, enable the **Use S
         * We recommend enabling this option when you want to automatically link user attributes managed in LDAP with Attributes in QueryPie.
         * When the option is enabled, an LDAP Attribute Mapping UI is displayed below, allowing you to specify the LDAP Attribute and QueryPie Attribute to link through mapping.
         * However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
         * Enter a value between 0.0 and 1.0 (default is 0.1).
             * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
@@ -318,11 +318,11 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 * Go to Security &gt; Administrators in the left panel of the Okta admin page and go to the Roles tab.
 * Select Create new role.
 * Define Role name (e.g., MinimumAdminRole) and Role description, then check only the following permissions in Select Permissions:
-    *  **User** 
+    *  **User**
         * View users and their details
-    *  **Group** 
+    *  **Group**
         * View groups and their details
-    *  **Application** 
+    *  **Application**
         * View application and their details
 * Click Save role to save the custom role.
 * Go to the Resources tab.
@@ -357,7 +357,7 @@ Okta details (1)
 *  **Type** : Select Okta.
 *  **Identity Provider Metadata**  : <br/>Paste the XML information copied in the [Configure QueryPie application integration settings in Okta](#configure-querypie-application-integration-settings-in-okta) section into the Identity Provider Metadata field.
 *  **Use SAML Assertion Consumer Service Index**  : When the Service Provider uses multiple Endpoints, you can use the ACS Index to specify each endpoint.
-    * Entity ID : Enter in the format `https://your-domain.com/saml/sp/metadata`. This is the Audience URI (SP Entity ID) value in Okta SAML 2.0 settings. 
+    * Entity ID : Enter in the format `https://your-domain.com/saml/sp/metadata`. This is the Audience URI (SP Entity ID) value in Okta SAML 2.0 settings.
     * ACS Index : Enter a value between 0 and 2,147,483,647 (default is 0).
 
 <Callout type="info">
@@ -423,11 +423,11 @@ Okta details (2)
     *  **API Token** : Enter the Okta Admin API token.
     *  **Application ID** : Enter this when using two or more QueryPie Apps in Okta.
 * To use periodic synchronization, configure Scheduling in the **Replication Frequency** field.
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
     *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
     *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
         * Enter a value between 0.0 and 1.0 (default is 0.1).
             * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
@@ -476,7 +476,7 @@ One Login SAML Custom Connector configuration and Metadata XML download
 * Click the `Add App` button.
 * Enter 'SAML Custom Connector (Advanced)' in the search area and click the search result.
 * For Display Name, copy and paste the content of "Application Name to be used in OneLogin" confirmed in QueryPie, and also copy Audience (Entity ID), Recipient, ACS (Consumer) URL Validator, and ACS (Consumer) URL into the One Login settings.
-* Click the `Save` button to save. 
+* Click the `Save` button to save.
 * Select the Configuration menu on the left, then click More Actions &gt; SAML Metadata at the top right.
 * Check the downloaded XML file.
 
@@ -502,11 +502,11 @@ One Login details (2)
 </figcaption>
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
     *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
     *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
         * Enter a value between 0.0 and 1.0 (default is 0.1).
             * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.
@@ -532,18 +532,18 @@ Custom Identity Provider is used only for special cases that use an authenticati
 
 *  **Name**  : Enter a suitable name for the IdP for easy identification.
 *  **Type** : Select Custom Identity Provider.
-*  **API URL**  : Enter the End-point URL of the API server. 
+*  **API URL**  : Enter the End-point URL of the API server.
 * To run user information synchronization, enable the Use Synchronization with the Authentication System option.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png" alt="image-20251014-015047.png" width="481" />
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : Select whether to add new users as inactive when synchronizing. <br/> We recommend enabling this option when there are many users to synchronize or when you want to manage individual QueryPie access via authentication.
     *  **Use an Attribute for Privilege Revoke**  : Select whether to revoke Privileges based on a specific Attribute during synchronization. <br/> Enable this option if you want to automatically revoke DAC Privileges based on changes to a specific Attribute. <br/> Enter the attribute name to monitor for activation changes in the Attribute input field.
     *  **Enable Attribute Synchronization**  : Select whether to map and synchronize IdP user attributes with QueryPie user attributes. <br/> We recommend enabling this option when you want to automatically link user attributes managed in the IdP with Attributes in QueryPie. <br/> When the option is enabled, an Attribute Mapping UI is displayed below, allowing you to specify the IdP Attribute and QueryPie Attribute to link through mapping. <br/> However, this feature applies only to Attributes whose Source Priority is set to Inherit from profile source in Profile Editor (Admin&gt; General &gt; User Management &gt; Profile Editor).
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * This feature causes synchronization to fail when the percentage of existing users deleted during synchronization is greater than or equal to this value.
         * Enter a value between 0.0 and 1.0 (default is 0.1).
             * Example: If there are 100 existing users and the Allowed User Deletion Rate Threshold is 0.1, synchronization fails when 10 or more users are deleted after re-synchronization.

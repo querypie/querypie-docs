@@ -115,7 +115,7 @@ Restricted StatementポリシーによってブロックされるクエリはSQL
 *  **Query Annotation**  : クエリ実行時に自動で管理者が指定したコメントを記録します。機能を有効化した場合、以下の3つのテンプレートを使用してコメントを記録します。10.4.0基準Redshift限定サポート。
     * User Name: `{{userName}}` : クエリを実行したユーザーのDisplay Nameです。
     * Login ID: `{{loginId}}` : クエリを実行したユーザーのLogin IDです。
-    * Execute From: `{{executedFrom}}` : クエリを実行した手段です。10.4.0基準Web Editorのみ記録されます。 
+    * Execute From: `{{executedFrom}}` : クエリを実行した手段です。10.4.0基準Web Editorのみ記録されます。
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-140103.png" alt="Query Audit" width="556" />
@@ -126,7 +126,7 @@ Query Audit
 
 <br/>
 
-*  **Member based Connection Filtering :** WorkflowでDB Access Requestフォームで特定ユーザーまたはグループに対して全体コネクションを表示せず、指定したコネクションのみ表示するようフィルタリングする機能です。 
+*  **Member based Connection Filtering :** WorkflowでDB Access Requestフォームで特定ユーザーまたはグループに対して全体コネクションを表示せず、指定したコネクションのみ表示するようフィルタリングする機能です。
     * コネクションの詳細画面でconnection memberに登録されたユーザー/グループのみ該当コネクションがWorkflow DB Access Requestに表示されます。<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png" alt="Databases &gt; Connection Management &gt; DB Connections の特定コネクション詳細画面でConnection Memberに特定ユーザーまたはグループを割り当て" width="712" />
@@ -141,7 +141,7 @@ Query Audit
 詳細な設定方法は[DB Connections](connection-management/db-connections)内  **追加設定** を参考にしてください。
 </Callout>
 
-*  **Maximum Policy Exception Period**  : Unmasking等のポリシー例外に対して最大有効期間を設定できます。（時間単位）。この設定値はWorkflow申請フォームとNew DAC Policy Management機能有効化時の管理者の手動ポリシー設定に影響を与えます。 
+*  **Maximum Policy Exception Period**  : Unmasking等のポリシー例外に対して最大有効期間を設定できます。（時間単位）。この設定値はWorkflow申請フォームとNew DAC Policy Management機能有効化時の管理者の手動ポリシー設定に影響を与えます。
     * 基本値 : 720時間 (30日)
     * 最大値 : 8760時間 (1年)
     * 最小値 : 1時間

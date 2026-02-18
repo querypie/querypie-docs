@@ -33,10 +33,10 @@ My Dashboard &gt; Workflow Requests
 
 Workflow機能内で実行する行為に応じてユーザーが持つことができる役割は以下の通りです。
 
-*  **要求者** (Requester) : Requestを送ることができます。 
-*  **承認者** (Approver) : 要求を確認し、承認または拒否できます。 
-*  **実行者** (Executor) : 承認が完了されたSQL RequestおよびExport Request件を実行できます。 
-*  **参照者** (Reviewer) : 要求件をレビューまたは参照できます。 
+*  **要求者** (Requester) : Requestを送ることができます。
+*  **承認者** (Approver) : 要求を確認し、承認または拒否できます。
+*  **実行者** (Executor) : 承認が完了されたSQL RequestおよびExport Request件を実行できます。
+*  **参照者** (Reviewer) : 要求件をレビューまたは参照できます。
 
 <Callout type="info">
 要求件に対する承認者および実行者は[ **決裁ルール(Approval Rules)** ](../administrator-manual/general/workflow-management/approval-rules)を通じて管理者が事前に設定できます。
@@ -54,7 +54,7 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
 * [Restricted Data Access](workflow/requesting-restricted-data-access) : アクセスが制限されたテーブルまたはカラムのデータに対する一時的なアクセス許可を要求でき、承認後設定された期間中該当データにアクセスできます。
 * [Server Access Request](workflow/requesting-server-access) : サーバーコネクションに対するアクセス権限を要求でき、承認即座に権限が付与されます。
 * [Server Privilege Request](workflow/requesting-server-privilege) : サーバーで特定コマンドに対する一時実行権限を要求でき、承認後設定された条件(接続時点または承認時点)に応じて指定された時間中該当コマンドを使用できます。
-* [Access Role Request](workflow/requesting-access-role) : サーバーまたはKubernetes対象アクセス役割権限を要求でき、承認即座に役割が付与されます。 
+* [Access Role Request](workflow/requesting-access-role) : サーバーまたはKubernetes対象アクセス役割権限を要求でき、承認即座に役割が付与されます。
 * [IP Registration Request](workflow/requesting-ip-registration) : システムアクセスのためのIPアドレス登録を要求でき、承認即座に該当IPからのアクセスが許可されます。
 * [DB Exception Request](workflow/requesting-db-policy-exception) : DAC新規ポリシー環境で、マスキング解除(Unmasking)またはアクセス制限解除(Restricted Data Access)を一つの様式で要求でき、承認後設定された期間中該当権限が付与されます。
 
@@ -65,10 +65,10 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
 該当機能の設定方法は[Approval Rules](../administrator-manual/general/workflow-management/approval-rules)マニュアルページで確認できます。
 代理上申時には次の基準が適用されます。
 
-*  **代理上申時権限およびDB表示基準** 
+*  **代理上申時権限およびDB表示基準**
     *  **DB Access Request** : 代理上申者は本人が照会可能なDBコネクションに対してのみ要求を上申できます。
     *  **Unmasking Request / Restricted Data Access Request / DB Policy Exception Request / Decryption Request** : 代理上申者は本人が権限を持つコネクションに対してのみ上記2つの要求を代理で上申できます。
-*  **上申時注意事項** 
+*  **上申時注意事項**
     * 決裁を適用される対象者(`Target User`)指定後UIにマウスカーソルを置くと、選択された対象者目録と一緒に次の案内メッセージが表示されます。
     * "The following users will be impacted by this request. Please double-check that all settings are correct before proceeding." (現在決裁を適用される対象です。正しく設定したか必ず確認してください。)
 
@@ -76,8 +76,8 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
 
 私が要求者(Requester)として上申した決裁要求目録はSent Requests下位メニューに表示されます。
 
-*  **In Progress** : 決裁要求はされましたがまだ承認が完了されていない進行中要求件です。Approval Status、Execution Status中一つでもPendingまたはIn Progress状態の要求件が該当目録に表示されます。 
-*  **Done**  : すべての承認(または実行)が完了されたか要求者が決裁要求を自分でキャンセルした件が表示されます。 
+*  **In Progress** : 決裁要求はされましたがまだ承認が完了されていない進行中要求件です。Approval Status、Execution Status中一つでもPendingまたはIn Progress状態の要求件が該当目録に表示されます。
+*  **Done**  : すべての承認(または実行)が完了されたか要求者が決裁要求を自分でキャンセルした件が表示されます。
 
 ### Received Requests (私が受けた要求承認または反対)
 
@@ -85,7 +85,7 @@ Workflowメニュー内`Submit Request`ボタンを押した後、希望する�
 もし代理決裁者として指定された場合元決裁者が承認しない要求目録も一緒に表示されます。
 代理決裁関連内容は[決裁付加機能 (代理決裁、再上申など) 文書](workflow/approval-additional-features-proxy-approval-resubmission-etc)で詳しく確認できます。
 
-1. Workflow目録中Received Requests &gt; To Doメニューで承認が必要な要求目録を確認します。 
+1. Workflow目録中Received Requests &gt; To Doメニューで承認が必要な要求目録を確認します。
 2. 処理したい要求をクリックして詳細内容を確認後右上で`Approve`または`Reject`をクリックします。
 
 <figure data-layout="center" data-align="center">
@@ -101,8 +101,8 @@ A. DB Access Requestの場合一部DBコネクションに対してのみ部分�
 ユーザーが要求したDBコネクション目録で権限を付与しない項目のチェックボックスを解除後`Approve`するとチェックしたコネクションに対しては承認処理がされ、チェックしないコネクションに対しては自動反対処理されます。
 </Callout>
 
-1. Commentsポップアップウィンドウで承認または反対理由を入力後`OK`ボタンを押して処理を完了します。 
-2. 処理を完了した要求件に対してはWorkflow &gt; Received Request &gt; Doneメニューで確認できます。 
+1. Commentsポップアップウィンドウで承認または反対理由を入力後`OK`ボタンを押して処理を完了します。
+2. 処理を完了した要求件に対してはWorkflow &gt; Received Request &gt; Doneメニューで確認できます。
 
 ### Executions (承認された要求実行)
 
@@ -118,12 +118,12 @@ Workflow &gt; Executions &gt; To Do &gt; List Details
 </figcaption>
 </figure>
 
-1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。 
+1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。
 2. 実行待機中のSQL Request件をクリックして詳細ページに移動します。
 3. 詳細内容確認後右上の`Execute`ボタンを押して実行または`Cancel`ボタンを押してキャンセル処理できます。
-4. `Execute`ボタンをクリックするとクエリ実行確認ポップアップウィンドウが表示されます。 
+4. `Execute`ボタンをクリックするとクエリ実行確認ポップアップウィンドウが表示されます。
 5. 注意事項を確認後`Execute`ボタンをクリックしてクエリを最終的に実行します。
-6. 実行が完了された件に対する結果は詳細ページ内のResultsタブで成功または失敗可否を確認できます。 
+6. 実行が完了された件に対する結果は詳細ページ内のResultsタブで成功または失敗可否を確認できます。
 7. Workflow &gt; Received Requests &gt; Doneメニューで本人が実行した履歴を確認できます。
 
 <Callout type="info">
@@ -142,7 +142,7 @@ Workflow &gt; Executions &gt; To Do
 </figcaption>
 </figure>
 
-1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。 
+1. User &gt; Workflow &gt; Executions &gt; To Doメニューに移動します。
 2. 実行待機中のExport Request件をクリックして詳細ページに移動します。
 3. 詳細内容確認後右上の`Execute`ボタンを押して実行または`Cancel`ボタンを押してキャンセル処理できます。
 4. Export Optionポップアップウィンドウでエクスポートオプションを設定します。
@@ -152,7 +152,7 @@ Workflow &gt; Executions &gt; To Do
         *  **Contain Data**  : エクスポート時データを含めます。
         *  **New INSERT Statement every N Rows**  : INSERT構文を毎回挿入する行数を指定します。
 5. オプション設定が完了されたらモーダルで`Export`ボタンをクリックしてエクスポートを最終的に実行します。
-6. エクスポートが完了されたら、その結果を詳細ページ内Resultsタブで確認できます。 
+6. エクスポートが完了されたら、その結果を詳細ページ内Resultsタブで確認できます。
 7. Workflow &gt; Executions &gt; Doneメニューで実行完了されたエクスポート要求履歴を確認できます。
 
 ### Reviews (参照された要求確認)
@@ -184,8 +184,8 @@ Reviewメニューは管理者が事前に使用設定をした場合のみ表�
 </tr>
 <tr>
 <td>
-* Pending : 承認待機中 
-* In Progress : 承認進行中 
+* Pending : 承認待機中
+* In Progress : 承認進行中
 * Approved : 承認完了
 * Canceled : 要求者によるキャンセル
 * Rejected : 承認者による反対

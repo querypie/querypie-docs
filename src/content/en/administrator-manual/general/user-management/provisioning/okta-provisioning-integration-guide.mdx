@@ -56,8 +56,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
     1. **App name**: Enter an identifiable application name.
     2. **App logo**: Upload a logo that users can identify.
 7. In the Configure SAML step, define the values in SAML Settings appropriately and click the `Next` button at the bottom.
-    1. **Single sign-on URL**: https://`{{querypie.domain}}`/saml/sp/acs 
-    2. **Audience URI (SP Entity ID)**: https://`{{querypie.domain}}`/saml/sp/metadata 
+    1. **Single sign-on URL**: https://`{{querypie.domain}}`/saml/sp/acs
+    2. **Audience URI (SP Entity ID)**: https://`{{querypie.domain}}`/saml/sp/metadata
     3. **Attribute Statements (optional)**: Enter the required QueryPie URL attributes as follows:
         1. Name: **firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
         2. Name: **lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
@@ -136,7 +136,7 @@ Some attribute items in the QueryPie Profile, such as staticIp and macAddress, a
 Some attribute items in the QueryPie profile, such as staticIp and macAddress, are not separately imported during SCIM Integration.
 These attributes are:
 
-1. secondEmail 
+1. secondEmail
 2. mobilePhone
 3. postalAddress (It is added as "formatted" to comply with the SCIM schema, so you can map that item.)
 4. staticIp (QueryPie-specific custom attribute)

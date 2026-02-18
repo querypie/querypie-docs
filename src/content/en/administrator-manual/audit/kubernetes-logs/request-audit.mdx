@@ -16,7 +16,7 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
 </figure>
 
 1. Navigate to the Administrator &gt; Audit &gt; Kubernetes &gt; Request Audit menu.
-2. Logs are displayed in descending order based on Executed At from 00:00 to 23:59 of the current day. 
+2. Logs are displayed in descending order based on Executed At from 00:00 to 23:59 of the current day.
 3. You can search with the following conditions through the search field in the top left of the table:
     1.  **Name**  : User name
     2.  **Cluster Name**  : Cluster name registered in QueryPie
@@ -34,7 +34,7 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
 6. The table provides the following column information:
     1.  **No**  : Event identification number
     2.  **Executed At**  : Kubernetes API call occurrence date and time
-    3.  **Result**  : API call success/failure status 
+    3.  **Result**  : API call success/failure status
         1. ✔️ Success
         2. ❌ Failure
     4.  **Name**  : Target user name
@@ -42,24 +42,24 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
     6.  **Client IP**  : User client IP address
     7.  **Cluster Name**  : Target Kubernetes cluster name
     8.  **Role**  : Role name that could perform the action
-    9.  **Namespace** : Target namespace 
+    9.  **Namespace** : Target namespace
     10.  **Verb**  : Specific Kubernetes API action called
     11.  **Resource**  : Specific Kubernetes resource called
-    12.  **Resource Name**  : Name of the specific Kubernetes resource called 
-    13.  **Message**  : Records messages returned during API calls 
-        * QueryPie records a total of 2 times for session logs such as pods/exec, matching the start and end times of each session. The distinction can be made through the corresponding message. 
-    14.  **Cluster Endpoint**  : Target API endpoint called 
+    12.  **Resource Name**  : Name of the specific Kubernetes resource called
+    13.  **Message**  : Records messages returned during API calls
+        * QueryPie records a total of 2 times for session logs such as pods/exec, matching the start and end times of each session. The distinction can be made through the corresponding message.
+    14.  **Cluster Endpoint**  : Target API endpoint called
     15.  **Kubernetes Groups**  : Kubernetes group account name that QueryPie Proxy impersonated during API calls
     16.  **Client Name**  : User client name/version (e.g. kubectl/v1.27.3)
 
 ### Viewing Request Audit Details
 
-1. You can view detailed information by clicking on each row. <br/> 
+1. You can view detailed information by clicking on each row. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20250116-121412.png" alt="image-20250116-121412.png" width="736" />
   </figure>
     1. The top displays information based on basic events:
-        1.  **Result**  : API call success/failure status 
+        1.  **Result**  : API call success/failure status
             1. ✔️ Success
             2. ❌ Failure
         2.  **Executed At** : Kubernetes API call occurrence date and time
@@ -75,22 +75,22 @@ The QueryPie proxy monitors and records audit logs for each call of API server c
         12.  **Tag** : When connected through Reverse Tunnel, the Tag used to select the Reverse Tunnel Agent for communication
         13.  **Pod Session Recording**  : Recording for the corresponding session when executed with Pod exec API
             1. This field is viewable in the detail page only for logs where session recording occurred.
-            2. When executed with Pod exec API, recording for the corresponding session proceeds, and the "Session Recording" text includes a hyperlink. 
+            2. When executed with Pod exec API, recording for the corresponding session proceeds, and the "Session Recording" text includes a hyperlink.
               <figure data-layout="center" data-align="center">
               <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240512-055657.png" alt="image-20240512-055657.png" width="218" />
               </figure>
-            3. Clicking the link plays the related session recording. 
+            3. Clicking the link plays the related session recording.
               <figure data-layout="center" data-align="center">
               <img src="/administrator-manual/audit/kubernetes-logs/request-audit/image-20240721-082651.png" alt="image-20240721-082651.png" width="382" />
-              </figure> 
-        14. The middle section displays information based on API call history: 
+              </figure>
+        14. The middle section displays information based on API call history:
             1.  **Verb**  : Specific Kubernetes API action called
-            2.  **Namespace**  : Target namespace 
+            2.  **Namespace**  : Target namespace
             3.  **Resource**  : Specific Kubernetes resource called
-            4.  **Resource Name**  : Name of the specific Kubernetes resource called 
+            4.  **Resource Name**  : Name of the specific Kubernetes resource called
             5.  **Kubernetes Impersonated User** : Kubernetes user account name impersonated during API calls (expresses --as information)
             6.  **Kubernetes Impersonated Group**  : Kubernetes group account name impersonated during API calls (expresses --as-group information)
         15. The **Request Body** area at the bottom specifies what YAML content was requested via API.
-            1. Mainly records content in Create, Update, Patch history. 
+            1. Mainly records content in Create, Update, Patch history.
             2. The Max Size for Request Body is recorded and stored up to a maximum of 4KB.
-            3. When a situation exceeding 4KB occurs, the corresponding kubernetes API call is processed as is, and the record remains only up to 4KB. 
+            3. When a situation exceeding 4KB occurs, the corresponding kubernetes API call is processed as is, and the record remains only up to 4KB.

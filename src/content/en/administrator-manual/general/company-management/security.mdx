@@ -121,16 +121,16 @@ Users blocked from login due to enabling the `Require Allowed Zones for User Acc
   Screen when Admin page IP access is blocked
   </figcaption>
   </figure>
-    *  **Access Requirements:** 
+    *  **Access Requirements:**
         * Users must have administrator privileges.
         * User's connection IP must be included in the IP range set in 'All Users'.
         * User's connection IP must be included in the IP list registered in 'Admin Page Access Control'.
-    *  **Precautions when setting administrator page access control** 
+    *  **Precautions when setting administrator page access control**
         * When adding IPs to `Admin Page Access Control`, those IPs must be included in the upper  **All Users**  setting. If you try to save after adding IPs not registered in  **All Users** , an error occurs and the settings are not saved.
 
 <Callout type="info">
 **Q. What screen do users see when trying to access the QueryPie web console from an unauthorized IP?**
-A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below. 
+A. When attempting to access from an unauthorized IP, access to any page within the QueryPie web console is not possible, and users will see the guidance screen below.
 If the default value (0.0.0.0/0) is registered in All Users and specific Allowed Zones are set for individual users, access to the login page is possible but login is not possible.
 </Callout>
 
@@ -151,7 +151,7 @@ Screen when IP access is blocked by All User settings
 
 <Callout type="important">
 **IP restriction setting precautions**
-Settings on the Security page are applied immediately upon saving. 
+Settings on the Security page are applied immediately upon saving.
 Therefore, if the entered IP does not match the IP of the administrator who set the option, the administrator will be  **logged out immediately upon saving** , so please apply carefully.
 </Callout>
 
@@ -169,7 +169,7 @@ Vault registration is performed in the General &gt; Integrations menu.
 
 <Callout type="info">
 **Q. I want to disable Secret Store activation, but the toggle is disabled.**
-A. Check if there are any Vaults registered in the Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault menu. 
+A. Check if there are any Vaults registered in the Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault menu.
 The toggle can be disabled after all registered Vaults are removed.
 </Callout>
 

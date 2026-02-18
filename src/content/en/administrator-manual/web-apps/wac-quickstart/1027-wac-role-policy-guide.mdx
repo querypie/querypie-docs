@@ -168,7 +168,7 @@ Must have `webApp` and `urlPaths` as sub-elements.
 
 Enter the web app resource name defined in QueryPie.
 
-1. Web apps must be specified explicitly, and wildcards or regular expressions are not allowed. 
+1. Web apps must be specified explicitly, and wildcards or regular expressions are not allowed.
     * `- webApp: "QueryPie"` (O)
     * `- webApp: "*Query*"` (X)
     * `- webApp: "QueryPie$"` (X)
@@ -178,7 +178,7 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
       - webApp: "QueryPie Customer Portal"
@@ -194,7 +194,7 @@ spec:
 
 Specifies the sub-paths of specific web app resources to which you want to apply policies.
 
-1. Only sub-paths registered in Admin &gt; Web App can be registered. 
+1. Only sub-paths registered in Admin &gt; Web App can be registered.
 2. To allow or deny **all** sub-paths that exist in the web app, including Base URL, use the following methods.
     * Do not write the urlPaths row.
         * Example: Allow access to all paths of QueryPie Web Admin
@@ -221,28 +221,28 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/kubernetes-settings"
           ```
     * Parent paths and their included detailed paths cannot be entered simultaneously.
-        * Example: **Cannot enter simultaneously** `/general-settings` and `/general-settings/user-management` of QueryPie Web Admin 
+        * Example: **Cannot enter simultaneously** `/general-settings` and `/general-settings/user-management` of QueryPie Web Admin
           ```
 spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings"
           - "/general-settings/user-management"
-          ``` 
+          ```
 
 <Callout type="info">
 To enter specific sub-paths in urlPaths, Path Management activation is required in Web App details.
 An error occurs when entering unregistered sub-paths.
 </Callout>
 
-1. Wildcards or regular expressions are not supported. 
+1. Wildcards or regular expressions are not supported.
     * `"/*-settings"` (X)
     * `"^/database-settings/policies/data-.*$"` (X)
 2. When deny and allow policies overlap for the same resource (and sub-paths), **deny policies take precedence**.
@@ -260,22 +260,22 @@ An error occurs when entering unregistered sub-paths.
 Limits the scope of resources whose access is allowed by rules based on tags assigned to Web App's Path Management.
 
 1. Tags are case-sensitive and multiple can be entered.
-    * When multiple tags with the same Key are entered, they operate with OR conditions. 
+    * When multiple tags with the same Key are entered, they operate with OR conditions.
         * Example: Allow access to paths with `access: admin` or `access: user` tags
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "access": "user"
           ```
-    * When multiple tags with different Keys are entered, they operate with AND conditions. 
+    * When multiple tags with different Keys are entered, they operate with AND conditions.
         * Example: Allow access to paths with both `access: admin` and `type: general` tags
           ```
-urlPathTags: 
+urlPathTags:
   "access": "admin"
   "type": "general"
           ```
 2. Operates in conjunction with `resources[].urlPaths`.
-    *  **When target urlPath of web app resource is not specified** 
+    *  **When target urlPath of web app resource is not specified**
         * Allows all paths with urlPathTag among all registered sub-paths.
         * Example: For Web App "QueryPie Web Admin", allow access only to paths with `access: admin` tags among all sub-paths registered in Path Management
           ```
@@ -288,7 +288,7 @@ spec:
       urlPathTags:
         "access": "admin"
           ```
-    *  **When target urlPath of web app resource is specified** 
+    *  **When target urlPath of web app resource is specified**
         * Allows only paths with urlPathTag among specified paths.
         * Example: For Web App "QueryPie Web Admin", among the two paths specified in `resources[].urlPaths`, allow access only to paths with `access: admin` tags in Path Management
           ```
@@ -296,14 +296,14 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management"
           - "/database-settings/policies"
     conditions:
       urlPathTags:
         "access": "admin"
           ```
-    *  **When target urlPath of web app resource is specified but no matching urlPathTag exists within the scope** 
+    *  **When target urlPath of web app resource is specified but no matching urlPathTag exists within the scope**
         * No paths match the conditions, so no paths are allowed.
 
 #### userAttributes<Badge color="green">OPTIONAL</Badge>
@@ -317,17 +317,17 @@ Attributes of users added in QueryPie can be added/changed/deleted in the detail
 
 Attribute information is case-sensitive and multiple can be entered.
 
-* When multiple attributes with the same Key are entered, they operate with OR conditions. 
+* When multiple attributes with the same Key are entered, they operate with OR conditions.
     * Example: Allow access for users whose department is PM or QA
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "department": "QA"
       ```
-* When multiple attributes with different Keys are entered, they operate with AND conditions. 
+* When multiple attributes with different Keys are entered, they operate with AND conditions.
     * Example: Allow access for users whose department is PM and title is manager
       ```
-userAttributes: 
+userAttributes:
   "department": "PM"
   "title": "Manager"
       ```
@@ -369,7 +369,7 @@ This pattern can be used when there are no problems with leaving access to unide
 When access to unidentified sub-paths should not be allowed, you must clearly specify the paths to allow.
 
 1. Register all paths that need access permission in Path Management and assign appropriate Path Tags.
-2. When configuring policies, use conditions such as tags, user attributes, and IP. 
+2. When configuring policies, use conditions such as tags, user attributes, and IP.
     1. Even if you specify the urlPaths of the controlled web app as all, when tag conditions are applied, policies are set only for paths registered in Path Management.
     2. If necessary, you can specify the scope of users to allow web app access using user attributes or IP.
 

@@ -101,7 +101,7 @@ The input content when creating a channel is as follows.
 *  **Email Recipients**  (required) : Email recipients
     * You can select users registered in QueryPie, and emails will be sent to registered email addresses
 *  **Body Template**  : Request body template
-    * Default value : `{{message}}` 
+    * Default value : `{{message}}`
     * Enter content to add commonly before and after messages defined in Alert
 
 ### Deleting Channels
@@ -158,7 +158,7 @@ Webhook addition screen in Slack
 #### 2-2. Integrating with API Type
 
 1. Click the created App to enter the app's Settings page, then navigate to the `App Manifest` menu.
-2. Add `chat:write`, `users:read`, `users:read.email` to the scopes area and save. <br/>  
+2. Add `chat:write`, `users:read`, `users:read.email` to the scopes area and save. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/company-management/channels/screenshot-20241211-171140.png" alt="Slack API &gt; Apps &gt; Settings &gt; App Manifest" width="736" />
   <figcaption>
@@ -169,14 +169,14 @@ Webhook addition screen in Slack
 4. `Reinstall to {Workspace_name}` Click the button to select the Slack channel to send notifications to, then click the `Allow` button.
     1. To apply after changing scopes, you must perform this step again.
 5. Go to the corresponding Slack channel and add the created app. (If the app is already added, you can skip this step)
-6. Click the channel name to open the Channel Detail modal, and copy the Channel ID from the bottom of the modal. Paste the copied Channel ID into the QueryPie channel creation modal. <br/>  
+6. Click the channel name to open the Channel Detail modal, and copy the Channel ID from the bottom of the modal. Paste the copied Channel ID into the QueryPie channel creation modal. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/company-management/channels/screenshot-20241211-190312.png" alt="Slack App &gt; Channel Detail" width="736" />
   <figcaption>
   Slack App &gt; Channel Detail
   </figcaption>
   </figure>
-7. Copy the Bot User OAuth Token from the OAuth & Permissions page and paste it into the QueryPie channel creation modal. 
+7. Copy the Bot User OAuth Token from the OAuth & Permissions page and paste it into the QueryPie channel creation modal.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/company-management/channels/screenshot-20240804-190835.png" alt="Slack OAuth & Permissions page - Copy token" width="760" />
   <figcaption>

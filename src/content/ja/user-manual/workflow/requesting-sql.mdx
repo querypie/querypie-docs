@@ -17,7 +17,7 @@ import { Callout } from 'nextra/components'
 
 #### 1. 決裁ルール選択
 
-* Approval Ruleを選択して目的に合う決裁ルールを選択してください。選択したルールに応じて承認対象が変わります。 
+* Approval Ruleを選択して目的に合う決裁ルールを選択してください。選択したルールに応じて承認対象が変わります。
 * もし管理者が承認者を指定した決裁ルールが選択された場合、自動で承認者が指定され追加および変更が不可能です。
 *  **Approval Expiration Date** : 承認期限切れ日を入力します。Maximum Approval Durationを通じて最大値を設定できます。Approval Expiration DateはExecution Expiration Dateを超過できません。超過した場合、上申できません。
     * ただし、Urgent Modeで上申時、上記条件を無視します。
@@ -28,9 +28,9 @@ import { Callout } from 'nextra/components'
 
 #### 2. 承認者指定
 
-* 決裁ラインで`+`ボタンを押すと段階別承認者を指定できるポップアップウィンドウが表示されます。 
+* 決裁ラインで`+`ボタンを押すと段階別承認者を指定できるポップアップウィンドウが表示されます。
 * このポップアップウィンドウで決裁承認条件および承認者を追加後`Save`ボタンを押して決裁ラインを保存します。
-* 選択可能な承認条件は以下の通りです。 
+* 選択可能な承認条件は以下の通りです。
     *  **A single Assignee can complete the approval request**  : 複数名中一人の承認だけで決裁要求が承認処理されます。
     *  **All Assignees must approve this request**  : すべての承認者が承認しなければ決裁要求が承認処理されます。
 
@@ -40,9 +40,9 @@ import { Callout } from 'nextra/components'
 
 #### 3. 実行者および参照者指定
 
-* 決裁ラインで`+`ボタンを押すと実行者および参照者を指定できるポップアップウィンドウが表示されます。 
-    * 管理者が参照者指定を許可しない場合はReviewerボックスが表示されません。 
-* このポップアップウィンドウで決裁承認条件および承認者を追加します。 
+* 決裁ラインで`+`ボタンを押すと実行者および参照者を指定できるポップアップウィンドウが表示されます。
+    * 管理者が参照者指定を許可しない場合はReviewerボックスが表示されません。
+* このポップアップウィンドウで決裁承認条件および承認者を追加します。
 * `Save`ボタンを押してモーダルを閉じ参照者指定を完了します。
 
 <figure data-layout="center" data-align="center">
@@ -51,7 +51,7 @@ import { Callout } from 'nextra/components'
 
 #### 4. 事後承認で要求送信
 
-* 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。 
+* 事後承認機能が許可された決裁ルールを選択した場合Urgent Modeスイッチが表示されます。
 * Urgent mode = Onに設定後決裁要求を登録すると即座に権限を付与されたり作業を実行できます。
 
 <figure data-layout="center" data-align="center">

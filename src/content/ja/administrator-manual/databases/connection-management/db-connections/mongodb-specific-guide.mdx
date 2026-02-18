@@ -77,21 +77,21 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Connection Nameを指定します。
 3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
     1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
-    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。 
-    3. Connection String : 
+    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。
+    3. Connection String :
         1. Scheme選択項目で`mongodb://`を選択します。
         2. 下位ホスト名とポートをカンマで区切って入力します。
     4. `Add Instance`ボタンを押して各メンバーホストをインスタンスとして追加します。
         1. Instance Name : それぞれのホストを区別できる名前を入力します。
         2. Connection String : 各ホストを`HOSTNAME(FQDN or IP Address):[PORT]`形式で入力します。
-        3. Exposeはコネクション情報での個別インスタンスの露出可否を決定できるオプションです。<br/>**マルチホスト機能を使用するには必ずインスタンスがexpose状態でなければならないため、必ず**`Expose`**オプションをアクティブにします。**  
+        3. Exposeはコネクション情報での個別インスタンスの露出可否を決定できるオプションです。<br/>**マルチホスト機能を使用するには必ずインスタンスがexpose状態でなければならないため、必ず**`Expose`**オプションをアクティブにします。**
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Authentication DB（authSource）の値を入力します。
-2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。** 
+2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
 3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
 4. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
 5. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
@@ -112,8 +112,8 @@ ______
 2. Connection Nameを指定します。
 3. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
     1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、基本値である`Primary`を選択します。
-    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。 
-    3. Connection String : 
+    2. Expose : Connection情報画面またはagentの接続対象一覧でクラスターの下位ノード（ホストまたはインスタンス）を展開して見ることができるようにするには`Expandable`を、展開して見ることができないようにするには`Unexpandable`を、クラスターを隠して下位ノード（ホストまたはインスタンス）のみ表示するには`Hidden`を選択します。
+    3. Connection String :
         1. Scheme選択項目で`mongodb+srv://`を選択します。
         2. ドメイン形式のホスト名（FQDN）を入力します。
         3. `Lookup`ボタンを押します。正常にDNS照会がされた場合、クラスターに含まれたノードがインスタンスとして自動で追加されます。
@@ -138,7 +138,7 @@ Replica Setは replicaSet=[replica set name] オプションが必要ですが�
 
 1. `Cluster`スイッチをオンにしてクラスター入力をアクティブにした後、以下の情報を入力します。
     1. Type : コネクション情報に露出される領域です。Primary役割が動的に変わる可能性があるため、Primary値を維持します。
-    2. Connection String : 
+    2. Connection String :
         1. Scheme選択項目で`mongodb://`を選択します。
         2. 各mongosのホスト名とポートをカンマで区切って入力します。
     3. `Add Instance`ボタンを押して各mongosをインスタンスとして追加します。

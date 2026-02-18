@@ -34,9 +34,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 5. Enter the  **Tenant**   **ID**  of the resources you want to synchronize.
 6.  **Subscription**   **ID**  Enter the Subscription ID.
 7. Enter the  **Credential**  information required to synchronize resources. Currently, only Client Secret method is supported.
-    * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Client Secret as the Credential type. 
-8.  **Database Type Filter**  Select the resources you want to synchronize. 
-    * Currently, only Azure SQL Database can be synchronized. 
+    * Provides a manual synchronization method that enters Azure's Client Secret when clicking the `Synchronize` button. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable scheduled synchronization even when using Client Secret as the Credential type.
+8.  **Database Type Filter**  Select the resources you want to synchronize.
+    * Currently, only Azure SQL Database can be synchronized.
 9.  **Search Filter**  You can get a list of specific types of resources you want to synchronize.
     1. Search Filter works the same way as AWS search. You can use values such as name, host, OS, tags, etc. as filters, and you can conveniently enter search conditions and filters using the Enter key in the following order.
         1. Enter Key value and press Enter → Select search condition and press Enter → Enter Value and press Enter
@@ -60,7 +60,7 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.** 
+*  **Synchronization settings saved with this option enabled cannot be disabled on the synchronization settings detail page, so you must choose carefully. Saved credentials cannot be replaced. If you need to use different credentials, you must create new synchronization settings. If credential changes are needed, we recommend creating credentials with the same permissions as the existing ones, creating new synchronization settings, and then deleting the existing synchronization settings.**
 * Synchronization settings saved without this option enabled can be enabled by checking the checkbox on the detail page.
 * When this option is enabled, you can synchronize manually or set a schedule.
 </Callout>
@@ -96,11 +96,11 @@ Like when creating new ones, this setting  **cannot be disabled again after bein
 
 <Callout type="info">
 Registering Applications and Obtaining Client Secret Information in Microsoft Azure
-* Access the Microsoft Entra ID menu in the Azure console. 
-* Register a new application in the 'App registrations' menu on the left menu. 
-    *  **Enter the ID value of the application as the Client Secret ID.** 
+* Access the Microsoft Entra ID menu in the Azure console.
+* Register a new application in the 'App registrations' menu on the left menu.
+    *  **Enter the ID value of the application as the Client Secret ID.**
 * Move to the 'Certificates & secrets' menu on the detail page of the registered application.
 * Click the 'New client secret' button at the top to generate a new client secret.
-* Access the 'IAM' menu of 'Subscriptions'. 
-* Assign the previously registered application to the 'Reader' role through 'Add role assignment'. 
+* Access the 'IAM' menu of 'Subscriptions'.
+* Assign the previously registered application to the 'Reader' role through 'Add role assignment'.
 </Callout>
