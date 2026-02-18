@@ -59,7 +59,7 @@ Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Passw
 아래 `<customer-proxy-address>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
 
 <Callout type="important">
-해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안 됩니다.
+해당 주소는 `http`, `https`와 같은 Scheme을 붙여서는 안 됩니다.
 </Callout>
 ```
 UPDATE querypie.proxies SET host = '<customer-proxy-address>' WHERE id = 1;
@@ -86,10 +86,10 @@ QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등
 
 아래 `<customer-proxy-fqdn>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
 
-특이사항으로 DAC/SAC 설정과는 다르게 `http`  `https` 와 같은 Scheme을 자유롭게 입력 가능합니다.
+특이사항으로 DAC/SAC 설정과는 다르게 `http`, `https`와 같은 Scheme을 자유롭게 입력할 수 있습니다.
 
 <Callout type="important">
-설정 후, 내부적으로 등록한 주소에 맞는 TLS 인증서 발급을 위해 QueryPie Container 재기동이 필요합니다.
+설정 후 내부적으로 등록한 주소에 맞는 TLS 인증서를 발급하기 위해 QueryPie Container 재기동이 필요합니다.
 </Callout>
 ```
 UPDATE querypie.k_proxy_setting SET host = 'https://<customer-proxy-fqdn>';
