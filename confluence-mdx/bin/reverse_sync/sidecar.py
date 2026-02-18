@@ -273,6 +273,15 @@ def load_sidecar_mapping(mapping_path: str) -> List[SidecarEntry]:
     return entries
 
 
+def load_page_lost_info(mapping_path: str) -> dict:
+    """mapping.yaml에서 페이지 레벨 lost_info를 로드한다."""
+    path = Path(mapping_path)
+    if not path.exists():
+        return {}
+    data = yaml.safe_load(path.read_text()) or {}
+    return data.get('lost_info', {})
+
+
 def build_mdx_to_sidecar_index(
     entries: List[SidecarEntry],
 ) -> Dict[int, SidecarEntry]:
