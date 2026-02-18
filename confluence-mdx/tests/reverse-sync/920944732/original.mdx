@@ -1,167 +1,68 @@
 ---
-title: '사용자 프로필'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544376787'
+title: 'qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/920944732/qp-admin'
 ---
 
 import { Callout } from 'nextra/components'
 
-# 사용자 프로필
+# qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
 
 ### Overview
 
-사용자 프로필에 등록된 속성으로 Attribute-based Access Control (ABAC)을 구현할 수 있습니다.
-이 문서에서는 사용자 상세 정보 항목별 상세 내용을 안내합니다.
+본 문서는 QueryPie의 보안 강화를 위한 주요 업데이트 중 하나로, 기본 계정인 qp-admin의 삭제 기능이 10.2.8 버전에 새롭게 추가된 배경과 동작 방식, 유의사항 등을 안내합니다.
+기존에는 qp-admin 계정이 시스템에 기본 생성되며 삭제가 불가능했지만, 이로 인해 계정 노출 및 보안 취약점 악용 가능성이 지속적으로 제기되어 왔습니다.
+이러한 리스크를 해소하기 위해, 해당 버전부터는 기본 계정 삭제 기능과 함께 최초 로그인 시 패스워드 변경을 필수화하는 등 보안 중심의 개선 사항이 도입되었습니다.
 
+### qp-admin 계정 삭제 조건
 
-### Profile 
+* 시스템에 인증 방식(Auth Provider)과 관계없이 Owner 권한을 가진 계정이 최소 1개 이상 존재해야 합니다. 
+    * 이유는 OKTA와 LDAP으로 연동된 유저인 경우, IdP에서 삭제가 되면 Owner 계정이 한 개도 없는 경우가 발생할 수 있기 때문입니다.
+*  조건 미충족 시(QueryPie 인증 방식의 Owner 유저가 1명도 없을 경우), 삭제 버튼 비활성화 됩니다. 
 
-사용자의 Attribute(속성)을 조회할 수 있는 탭입니다.
-각 Attribute별 설명은 이 페이지 하단의  **참고: 사용자 Attribute 목록**  항목을 참고하여 주시기 바랍니다.
+### qp-admin 계정 삭제 방법
 
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/image-20240526-063720.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile 탭" width="760" />
-<figcaption>
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Profile 탭
-</figcaption>
-</figure>
-
-### Groups
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/image-20240514-162350.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups 탭" width="760" />
-<figcaption>
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Groups 탭
-</figcaption>
-</figure>
-
-사용자가 소속된 사용자 그룹을 조회할 수 있는 탭입니다.
-
-1.  **Auth Provider** : 그룹의 관리 주체
-2.  **Group Name**  : 그룹명
-
-
-### Admin Roles
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/image-20240514-162730.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles 탭" width="760" />
-<figcaption>
-Administrator &gt; General &gt; User Management &gt; Users &gt; List Details &gt; Admin Roles 탭
-</figcaption>
-</figure>
-
-사용자에게 할당된 쿼리파이 관리자 권한 목록을 조회할 수 있는 탭입니다.
-
-1.  **Role Name**  : 관리자 역할명
-2.  **Description**  : 관리자 역할에 대한 설명
-3.  **Granted By**  : 현 사용자에게 관리자 역할을 부여한 주체
-4.  **Granted At**  : 관리자 역할을 부여받은 일시
-
-
-### Allowed Zones
-
-Administrator &gt; General &gt; Company Management &gt; Allowed Zones 메뉴에서 생성된 Allowed Zone을 사용자에게 직접 할당하거나, 'IP Registration Request' 워크플로우를 통해 승인된 Static IP가 자동으로 적용된 내역을 확인할 수 있습니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/image-20240526-064635.png" alt="Allowed Zones 탭" width="760" />
-<figcaption>
-Allowed Zones 탭
-</figcaption>
-</figure>
+1. Admin &gt; General &gt; User Management &gt; Users 메뉴 접속합니다. 
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account/Screenshot-2025-04-09-at-7.12.08-PM.png" alt="&lt;br/&gt;" width="736" />
+  <figcaption>
+  <br/>
+  </figcaption>
+  </figure>
+2. qp-admin 계정 선택합니다.
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account/Screenshot-2025-04-09-at-7.14.25-PM.png" alt="&lt;br/&gt;" width="736" />
+  <figcaption>
+  <br/>
+  </figcaption>
+  </figure>
+3. `Delete` 버튼 클릭합니다. 
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account/Screenshot-2025-04-09-at-7.16.29-PM.png" alt="&lt;br/&gt;" width="736" />
+  <figcaption>
+  <br/>
+  </figcaption>
+  </figure>
+4. 조건 검증 후 Delete 처리합니다. 
 
 <Callout type="important">
-**사전 작업**
-사용자별 Allowed Zone 할당을 위해서는 먼저 Admin &gt; General &gt; Company Management &gt; Security 메뉴에서 사용자별 QueryPie Web 접근 IP 제어 기능을 활성화해야 합니다. [Security](../../company-management/security) 문서를 참고해주세요.
+**주의사항**
+* qp-admin 계정 삭제 후 복구는 불가능합니다.
+* 삭제를 위해서는 최소 1명의 QueryPie 인증 방식의 Owner 유저가 존재해야 합니다.
 </Callout>
 
-#### 워크플로우를 통해 등록된 Static IP 확인하기
+### qp-admin 계정 패스워드 변경 강제화 조건
 
-사용자가 'IP Registration Request' 워크플로우를 통해 IP 주소 등록을 요청하고 최종 승인되면, 해당 IP는 사용자의  **Profile**  탭에 있는 `Static IP` 속성에 자동으로 추가됩니다.
+* 10.2.8 업그레이드 시 qp-admin 계정의 패스워드는 자동 만료 처리합니다. 
+* 로그인 시 반드시 패스워드 재설정 필요합니다.
+* 초기 로그인 시점에 패스워드 변경 강제화됩니다. 
 
-이렇게 `Static IP` 속성에 등록된 주소들은 이 `Allowed Zone` 탭에 `Name`이 `Static IP` 인 항목으로 자동 반영되어, 사용자는 해당 IP에서의 접근 권한을 부여받게 됩니다.
+### qp-admin 계정 패스워드 변경 방법
 
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/Screenshot-2025-06-26-at-6.12.22-PM.png" alt="Screenshot-2025-06-26-at-6.12.22-PM.png" width="779" />
-</figure>
-
-#### 워크플로우를 통해 등록된 Static IP삭제하기
-
-워크플로우를 통해 자동으로 등록된 `Static IP` 항목은 `Allowed Zones` 탭에서 직접 `Detach` 할 수 없습니다.
-삭제하려면 사용자의  **Profile**  탭으로 이동하여 `Static IP` 속성값 중 원하는 IP 주소를 직접 편집하여 제거해야 합니다. `Static IP` 속성에서 값이 삭제되면 `Allowed Zones` 탭에서도 해당 IP가 즉시 제거되어 접근 권한이 해제됩니다.
-
-
-#### 테이블 표시 정보
-
-테이블에서 표시하는 정보는 다음과 같습니다.
-
-1.  **Name** : Allowed Zone의 명칭
-2.  **IP Bands**  : Allowed Zone의 IP대역
-
-#### 사용자에게 Allowed Zone 할당하기
-
-Allowed Zones 탭 우측 `Attach Allowed Zones` 버튼을 클릭하면 Allowed Zone 할당 모달이 출력됩니다.
-할당하고자 하는 Allowed Zone을 선택하고 `Attach` 버튼을 클릭하여 할당을 완료합니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214403.png" alt="Attach Allowed Zone 모달" width="760" />
-<figcaption>
-Attach Allowed Zone 모달
-</figcaption>
-</figure>
-
-#### 사용자에게서 Allowed Zone 할당 해제하기
-
-Allowed Zone 탭 하단 목록에서 할당을 해제하려는 항목을 체크박스로 선택하면 `Detach` 버튼이 노출됩니다.
-버튼을 클릭하고, 확인 모달에서 `Detach` 버튼을 클릭하여 할당 해제를 완료합니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/user-management/users/user-profile/screenshot-20240730-214952.png" alt="Allowed Zones 할당 해제" width="760" />
-<figcaption>
-Allowed Zones 할당 해제
-</figcaption>
-</figure>
-
-<Callout type="info">
-**Q. Tags 탭이 비활성화 되어 있어요.**
-A. Tags 탭은 사용자별로 할당된 Tag를 조회하고 관리할 수 있는 탭으로 아직 미출시된 기능입니다.
-추후 버전에서 지원 예정입니다.
-</Callout>
-
-
-### 참고: 사용자 Attribute 목록
-
-|  **속성명**           |  **변수**           |  **설명**                       |  **비고**  |
-| ------------------ | ----------------- | ----------------------------- | -------- |
-| User name          | loginId           | 사용자 ID                        | 필수       |
-| First name         | firstName         | 사용자 이름                        |          |
-| Last name          | lastName          | 사용자 성                         |          |
-| Middle name        | middleName        | 사용자 중간 이름                     |          |
-| Honorific prefix   | honorificPrefix   | 사용자 존칭 (접두사) (예. Mr./Ms.)     |          |
-| Honorific suffix   | honorificSuffix   | 사용자 존칭 (접미사) (예. 님, 씨)        |          |
-| Primary email      | email             | 사용자 이메일                       | 필수       |
-| Title              | title             | 사용자 직함                        |          |
-| Display name       | displayName       | 사용자 표기명                       | 필수       |
-| Nickname           | nickName          | 사용자 별칭                        |          |
-| Profile Url        | profileUrl        | 사용자 프로필 URL                   |          |
-| Secondary email    | secondEmail       | 보조 이메일                        |          |
-| Mobile phone       | mobilePhone       | 휴대폰 번호                        |          |
-| Primary phone      | primaryPhone      | 전화전호 (주 연락처)                  |          |
-| Street address     | streetAddress     | 도로주소                          |          |
-| City               | city              | 도시                            |          |
-| State              | state             | 주/도                           |          |
-| Zip code           | zipCode           | 우편번호                          |          |
-| Country code       | countryCode       | 국가코드 번호                       |          |
-| Postal Address     | postalAddress     | 우편용 주소                        |          |
-| Preferred language | preferredLanguage | 선호 언어 (예. en)                 |          |
-| Locale             | locale            | 국가/언어 설정에 쓰이는 장소 (예. en_US)   |          |
-| Time zone          | timezone          | 지역 타임존 (예. US/Pacific)        |          |
-| User type          | userType          | 사용자 유형 (예. Employee)          |          |
-| Employee number    | employeeNumber    | 사번                            |          |
-| Cost center        | costCenter        | 사업부서 (재무회계 기준)                |          |
-| Organization       | organization      | 사용자 소속 조직                     |          |
-| Division           | division          | 사용자 소속 부                      |          |
-| Department         | department        | 사용자 소속 부서                     |          |
-| Manager ID         | managerId         | 상사 ID                         |          |
-| Manager            | manager           | 상사 표기명                        |          |
-| Static IP          | staticIp          | 사용자 할당 정적 IP                  |          |
-| Mac address        | macAddress        | 사용자 MAC 주소                    |          |
-| Risk score         | riskScore         | 사용자 위험 지수 (쿼리파이 System에서 관리)  | 추후 제공 예정 |
+1. qp-admin 계정 로그인 시 패스워드 만료 안내 화면 노출합니다. 
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account/Screenshot-2025-04-09-at-7.18.40-PM.png" alt="&lt;br/&gt;" width="736" />
+  <figcaption>
+  <br/>
+  </figcaption>
+  </figure>
+2. 새 비밀번호 설정 후 정상 로그인 가능합니다. 
