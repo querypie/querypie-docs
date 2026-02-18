@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "568918170",
-  "mdx_sha256": "d42bf9174ddbc1d9e63fabbea2bb4c14659267352859b7d1de8f598a1333588a",
+  "mdx_sha256": "f33741064d30c2cf903106caf8fc29027396be95c5aad66cb38e9fa379350d65",
   "source_xhtml_sha256": "dc295c914735b806617a4d44cec180f0db014894623a9e43cbb178d334c1ea16",
   "blocks": [
     {
@@ -63,7 +63,7 @@
       "block_index": 5,
       "xhtml_xpath": "ac:image[1]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1291\" ac:original-width=\"1990\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오전 11.41.29.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오전 11.41.29.png\" ri:version-at-save=\"1\" /><ac:caption><p>Workflow &gt; Reviews &gt; All Reviews &gt; Review Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "7dd45c9581da81183e2a7aedbee38489c17d61634328b7bc847717cb194891a4",
+      "mdx_content_hash": "b40ffa5aa4adc98b564b25c9aa790896dc866a218974e85922bf631449d480cd",
       "mdx_line_range": [
         24,
         29
@@ -118,7 +118,7 @@
       "block_index": 10,
       "xhtml_xpath": "p[5]",
       "xhtml_fragment": "<p>대리 결재란 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p>",
-      "mdx_content_hash": "03d7bc1d8d7dcdfd662b75476e6831914fbc7b178c98309a36f55a174f193d11",
+      "mdx_content_hash": "8e7d72fd5c43a95c137ac8d6040ddb14dd314625d3938e0d0509e3022ccbdc52",
       "mdx_line_range": [
         47,
         51
@@ -173,7 +173,7 @@
       "block_index": 15,
       "xhtml_xpath": "p[6]",
       "xhtml_fragment": "<p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p>",
-      "mdx_content_hash": "67cecc9181391d80a39483639fcaf58de2b5552e87a5dccaf2055e1d9365dc2e",
+      "mdx_content_hash": "20359501178e0e6d45f4dade0842c60fc3c6970a46c0a633a3fd3b1175e475bb",
       "mdx_line_range": [
         75,
         78
@@ -206,7 +206,7 @@
       "block_index": 18,
       "xhtml_xpath": "macro-info[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"0e393d17-632f-4483-91ba-6fc07e3650b3\"><ac:rich-text-body><p>대리 결재 설정 기간 중 기안 요청자에게는 별도의 안내가 나타나지 않습니다. 요청자는 평소와 마찬가지로 Approval Rule 및 Approver를 선택하면 됩니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "174749322ab40899a5710e83bfc11404a1e0b3ee5540de7939b0073b9fac8762",
+      "mdx_content_hash": "500d195a84c3977b80b0ff08c449c42af5320c96b1f8ff6d5e9627fc298d969a",
       "mdx_line_range": [
         86,
         86
@@ -250,7 +250,7 @@
       "block_index": 22,
       "xhtml_xpath": "h3[4]",
       "xhtml_fragment": "<h3>4. 대리 결재 처리된 요청 건 확인하기 </h3>",
-      "mdx_content_hash": "af212b23acfb69422788ca289df11bc968fc25522810471a148a228a9ee0a93b",
+      "mdx_content_hash": "13ee672b262085f3ffff57bc6da55095ea272a0c7e5d6f2fe06b67db42349c10",
       "mdx_line_range": [
         108,
         108
@@ -294,7 +294,7 @@
       "block_index": 26,
       "xhtml_xpath": "p[8]",
       "xhtml_fragment": "<p style=\"text-align: center;\"><strong>대리 결재자가 처리한 경우</strong></p>",
-      "mdx_content_hash": "57a5eb27cc749091edfc3cbb231daa8eb4c98d1a568a91570db6b592d4c8a849",
+      "mdx_content_hash": "5b80cc020914efe856ed9f92040697f669fac65b4dd78dd3f478d1105d5d09b6",
       "mdx_line_range": [
         122,
         122
@@ -327,7 +327,7 @@
       "block_index": 29,
       "xhtml_xpath": "h3[5]",
       "xhtml_fragment": "<h3>5. 대리 결재 설정 종료 이후의 기안 조회 방법</h3>",
-      "mdx_content_hash": "8a8252fe0a9a8f0817c1430a59714f0fe5259bad8ded5da6e085692d9d8c3035",
+      "mdx_content_hash": "fe75acf27e692d29c03a5824ce95d7d73dabb70edf53508a1d8141faaf9246de",
       "mdx_line_range": [
         128,
         131

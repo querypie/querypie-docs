@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "1454342158",
-  "mdx_sha256": "f6d8b90cf8d56186c0edc9789bead5d42a296399928cd9c5f190b71f057983e3",
+  "mdx_sha256": "c733389d56831b498ea8d19b4edc9f778d740408c910e9b28ecd61616196e203",
   "source_xhtml_sha256": "94e38b8adec78c652bec25688477c8ba2e1e15b5a7c16a7c7112ec7b9af3b8d7",
   "blocks": [
     {
@@ -74,7 +74,7 @@
       "block_index": 6,
       "xhtml_xpath": "p[3]",
       "xhtml_fragment": "<p local-id=\"96bfca74-58f1-4a03-8e63-ccf0aad4c0a8\">Admin &gt; General &gt; System &gt; Integration 에서 Authentication 하위 항목으로 Identity Providers 가 있습니다. 항목을 클릭하여 상세페이지로 이동하면 Identity Providers에 관련된 설정을 할 수 있습니다. 기본적으로 사용자 인증은 QueryPie의 Internal database에 저장된 ID / Password를 사용해서 처리되므로 목록에 Internal database 항목이 존재합니다. 이 항목은 삭제 할 수 없습니다.</p>",
-      "mdx_content_hash": "e9ffaa6a73e5ae1a648a2e387f2846c2e6801d294ee0ca7b1a4c0325068d3520",
+      "mdx_content_hash": "c8c2ab67249c5466f82d23d6fed8bf4a935aba442e2831e029b878fef3ac3fcf",
       "mdx_line_range": [
         25,
         28
@@ -294,7 +294,7 @@
       "block_index": 26,
       "xhtml_xpath": "macro-info[2]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:local-id=\"f274adf5-56bf-4f3d-9ed5-a241501928b9\" ac:macro-id=\"4883a95a-4d82-4a3e-a459-f4ff9268bdfb\"><ac:rich-text-body><p local-id=\"0d3ca9eb-d222-4cea-83c1-c361de77c421\"><strong>LDAP Attribute Mapping</strong></p><p local-id=\"3ca4b1d9-800e-424a-aaec-32d0c66693ea\">LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.</p><p local-id=\"20b36119-12a8-42c7-ba7e-02da385c9828\">우측 상단의 <code>Add Row</code> 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.</p><ol start=\"1\" local-id=\"571c3c3b-cc85-4876-bb70-703f9f1ccf68\"><li local-id=\"33079fcd-4944-4136-af93-05e4606832f0\"><p local-id=\"a0cbbc66-233d-49ac-8c2c-d2b0cbe7ab65\">해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.</p></li><li local-id=\"ff9e5c76-2fa7-47ba-b395-c048124fe8c0\"><p local-id=\"b3835627-f4b3-4c2c-8513-d88714b38494\">QueryPie Attribute인 <code>Username (loginId)</code>, <code>Primary Email (email)</code> 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP&ndash;QueryPie Attribute Mapping UI에는 노출되지 않습니다.</p></li><li local-id=\"ba3c265b-a2c8-4738-b3f6-34cb6f821972\"><p local-id=\"5ba4ad57-cab6-484c-9a81-6bfdd019183f\"> 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.</p></li></ol></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "386e6d7391782bc55203ea2e3e536e0cda64c356a97adaa53044de80e6eeac09",
+      "mdx_content_hash": "2a1ae4ee83148e28edf7f1bbcd3e7167fd045ed2a9c1e2cd646211d72c6f5c46",
       "mdx_line_range": [
         175,
         192
@@ -602,7 +602,7 @@
       "block_index": 54,
       "xhtml_xpath": "ac:image[12]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"725\" ac:original-width=\"481\" ac:custom-width=\"true\" ac:local-id=\"e2b94f40-2c20-4957-b8e8-b1cd08adc9a5\" ac:alt=\"image-20251014-014729.png\" ac:width=\"481\"><ri:attachment ri:filename=\"image-20251014-014729.png\" ri:version-at-save=\"1\" /><ac:caption ac:local-id=\"0f85908f-8d1c-41ef-b57a-789232041814\"><p>Okta 상세설정 (1)</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "39932343f49c09393da81c84433652012f7e44f411a0aad21f26d772ae35e4ee",
+      "mdx_content_hash": "876f502c366a0d5acf9573572f4dea98ca9cfcc09ea9f8e4e54c43af41c938b7",
       "mdx_line_range": [
         316,
         343
@@ -646,7 +646,7 @@
       "block_index": 58,
       "xhtml_xpath": "p[16]",
       "xhtml_fragment": "<p local-id=\"00af5494-f11f-45cd-9035-d9497a9573ca\" />",
-      "mdx_content_hash": "e7560374372a3bf8cd338197033495b6c4da3ceaefcba16d2a7a2e6a26dcf1b0",
+      "mdx_content_hash": "9b714b0339a7920e5805ec075df637a8f260f5f467bd637910f7084dd8620bb1",
       "mdx_line_range": [
         356,
         361
@@ -811,7 +811,7 @@
       "block_index": 73,
       "xhtml_xpath": "ul[16]",
       "xhtml_fragment": "<ul local-id=\"ca40341b-40ec-41f0-9a0a-637b0577c827\"><li local-id=\"c724dda1-56f8-4f69-b9b4-3b0634bdad16\"><p local-id=\"c586772f-f5a2-4db7-a3d4-baff29444c28\">동기화를 설정하고자 하는 경우, &ldquo;Use Synchronization with the Authentication System&rdquo; 옵션을 활성화(체크)합니다.</p></li><li local-id=\"dd43541e-312d-465e-abd2-d5b649894ece\"><p local-id=\"3f5c5aad-35a4-4933-ad3d-27940487346a\">주기적인 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.</p></li></ul>",
-      "mdx_content_hash": "033fd80b16565c731671a05c0050b1c5ad3452d57728107282567029ad7e0f43",
+      "mdx_content_hash": "6246feae8a3077952fd6e841d085ffd6c30fd72ce78466dc60ef949566a617be",
       "mdx_line_range": [
         398,
         403
@@ -844,7 +844,7 @@
       "block_index": 76,
       "xhtml_xpath": "h2[5]",
       "xhtml_fragment": "<h2 local-id=\"d2fa7f54-35fa-44fb-ad8f-66d556dc78c0\">SAML 2.0 연동 (주기적 동기화 없는 1회용)</h2>",
-      "mdx_content_hash": "0126b71ad202cd4ffe761a95a8ecc47595b7c8e49e0bada8fdf90e31fe1fa293",
+      "mdx_content_hash": "db0339b6b368ca726d867203447a97b474d9837b977dc1760b3e757536acfb1f",
       "mdx_line_range": [
         421,
         436

@@ -103,8 +103,8 @@ O
 </td>
 <td>
 정책의 구체적인 규칙의 허용 또는 거부 여부 지정합니다.
-* 각 정책은 이하의 스펙만 허용합니다: 
-    * 단일 Allow 
+* 각 정책은 이하의 스펙만 허용합니다:
+    * 단일 Allow
     * 단일 Deny
     * 단일 Allow & 단일 Deny
 * Deny가 Allow보다 우선순위가 높습니다.
@@ -185,7 +185,7 @@ O
 </td>
 <td>
 리소스 접근 정책 적용 여부를 조건으로 적용 대상을 세부 제어합니다.
-* `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge> 
+* `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
 * `userAttributes` : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
 * `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
@@ -201,17 +201,17 @@ O
 
 `resources`는 <u>쿠버네티스의 리소스가 아닌</u> 쿼리파이에 등록된 쿠버네티스 클러스터에 대한 리소스를 정의합니다.
 
-1. 해당 `resources` 필드에 대한 정의는 필수입니다. <Badge color="red">required</Badge> 
+1. 해당 `resources` 필드에 대한 정의는 필수입니다. <Badge color="red">required</Badge>
 2. 쿠버네티스 클러스터명을 바탕으로 입력합니다.
     * `"cluster:{Kubernetes Cluster Name in QueryPie}"`
-3. 쿠버네티스 클러스터명은 이하의 기준으로 정립됩니다. 
+3. 쿠버네티스 클러스터명은 이하의 기준으로 정립됩니다.
     * 문자 길이 100자 제한
     * 알파벳 대소문자 (case-sensitive), 숫자 및 이하 특수기호만 허용
         * underscore (_)
         * hyphen (-)
     * 이름 시작과 끝은 알파벳 대소문자 또는 숫자로 제한
     * 클러스터명은 중복을 제한
-4. 쿠버네티스 클러스터는 단일 정책에서 다중으로 지정이 가능합니다. 
+4. 쿠버네티스 클러스터는 단일 정책에서 다중으로 지정이 가능합니다.
     * `- "cluster:kubepie-dev-1"`<br/>`- "cluster:kubepie-dev-2"`
     * `["cluster:kubepie-dev-1", "cluster:kubepie-dev-2"]`
 5. 경로는 와일드카드를 허용합니다.
@@ -230,13 +230,13 @@ O
             * Impersonation을 위한 해당 subjects는 다른 Policy들과 하나의 Role 내에서 중첩이 가능합니다.
         * Resources에 명시된 리소스에 대한 권한 수행이 가능한 kubernetes 측 그룹(단일 또는 복수)을 정의합니다.
           ```
-          kubernetesGroups: 
+          kubernetesGroups:
             - system:masters
             - default-group-account
           ```
         * kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
           ```
-          kubernetesGroups: 
+          kubernetesGroups:
             - $user.groups
           ```
 2. `impersonation`: <Badge color="yellow">OPTIONAL</Badge>
@@ -244,10 +244,10 @@ O
         * `users`: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 "--as" 파라미터에 허용 가능한 값을 나열합니다.
         * `groups`: 쿠버네티스 내 존재하는 그룹 계정으로 "--as-group" 파라미터에 허용 가능한 값을 나열합니다.
           ```
-          impersonation: 
-            users: 
+          impersonation:
+            users:
               - "system:serviceaccount:argocd"
-            groups: 
+            groups:
               - "system:admin"
           ```
         * 와일드카드를 허용합니다. (`"*"`)
@@ -258,20 +258,20 @@ O
 클러스터 API 서버 내 허용할 Resource API 리스트를 명시합니다.
 각 action에는 `apiGroups`, `resources`, `namespace`, `name`, `verbs` 기입이 필요합니다.
 
-1. `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다. 
-    1. API 그룹을 정의함으로써 더욱 세부적인 권한 통제가 API 그룹별로 가능합니다. 
-    2. 커스텀 리소스에 대한 통제가 필요 시, apiGroups에 명시하여 커스텀 리소스에 한하여 통제도 가능합니다. 
-    3. 참고: 
+1. `apiGroups` : 쿠버네티스 API 그룹 리스트를 정의합니다.
+    1. API 그룹을 정의함으로써 더욱 세부적인 권한 통제가 API 그룹별로 가능합니다.
+    2. 커스텀 리소스에 대한 통제가 필요 시, apiGroups에 명시하여 커스텀 리소스에 한하여 통제도 가능합니다.
+    3. 참고:
         1. [API Groups 안내 ](https://kubernetes.io/docs/reference/using-api/#api-groups)
-        2. [API Group 목록](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#api-groups) 
+        2. [API Group 목록](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#api-groups)
     4. 와일드카드를 허용하여 API 그룹 전체를 포괄적으로 지정하는 것이 가능합니다.
         * `apiGroups: ["*"]`
 2. `resources` : 쿠버네티스 리소스 리스트를 정의합니다.
     1. 일반적으로 많이 쓰이는 리소스는 이하와 같습니다:
         * `pods`, `pods/exec`, `pods/log`, `pods/portforward`, `services`, `ingresses`, `deployments`, `replicasets`, `statefulsets`, `daemonsets`, `configmaps`, `secrets`, `namespaces`, `nodes`, `persistentvolumes`, `persistentvolumeclaims`, `jobs`, `cronjobs`, `serviceaccounts`, `endpoints`, `roles`, `rolebindings`, `clusterroles`, `clusterrolebindings`
-    2. 위에 표기되지 않은 리소스 또한 정책에서 수용이 가능합니다. 
-    3. 네임스페이스 하위 리소스만 지정하여 권한을 부여하더라도, Namespace에 대한 ReadOnly 권한이 함께 부여됩니다. 따라서, 리소스 호출 시 매번 네임스페이스 명시해주어야 하는 사례가 발생되지 않습니다. 특정 네임스페이스에 대한 권한 부여를 방지하고자 하는 경우, `spec:deny` 에서 네임스페이스 리소스에 대한 접근 거부를 설정할 수 있습니다. 
-    4. 단일 정책 액션에서 다중으로 리소스 지정이 가능합니다. 
+    2. 위에 표기되지 않은 리소스 또한 정책에서 수용이 가능합니다.
+    3. 네임스페이스 하위 리소스만 지정하여 권한을 부여하더라도, Namespace에 대한 ReadOnly 권한이 함께 부여됩니다. 따라서, 리소스 호출 시 매번 네임스페이스 명시해주어야 하는 사례가 발생되지 않습니다. 특정 네임스페이스에 대한 권한 부여를 방지하고자 하는 경우, `spec:deny` 에서 네임스페이스 리소스에 대한 접근 거부를 설정할 수 있습니다.
+    4. 단일 정책 액션에서 다중으로 리소스 지정이 가능합니다.
       ```
        resources:
          - "pods"
@@ -279,31 +279,31 @@ O
          - "configmaps"
       ```
     5. 와일드카드를 허용합니다. (`"*"`)
-3. `namespace` : 대상 네임스페이스를 정의합니다. 
-    1. 네임스페이스를 액션에서 정의하여 클러스터 내 허용 대상 네임스페이스를 리소스별로 제어할 수 있습니다. 
+3. `namespace` : 대상 네임스페이스를 정의합니다.
+    1. 네임스페이스를 액션에서 정의하여 클러스터 내 허용 대상 네임스페이스를 리소스별로 제어할 수 있습니다.
     2. 와일드카드와 정규표현식 모두 허용합니다.
         * `namespace: "*"`
     3. namespaces 외 네임스페이스에 존속되지 않는 리소스의 경우, 해당 namespace를 작성하지 않아도 됩니다.
         1. 대상 예) `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings` 등
-4. `name` : 대상 리소스명을 정의하여 클러스터 내 허용 리소스 중 네이밍을 바탕으로 제어가 가능합니다. 
+4. `name` : 대상 리소스명을 정의하여 클러스터 내 허용 리소스 중 네이밍을 바탕으로 제어가 가능합니다.
     1. 와일드카드와 정규표현식 모두 허용합니다.
         * `name: "pods-*"`
 5. `verbs` : 작업을 허용하거나 거부할 kubernetes 내의 API 권한을 명시합니다.
-    * 일반적으로 호출되는 verb는 아래와 같습니다: 
+    * 일반적으로 호출되는 verb는 아래와 같습니다:
         * `get`: 리소스 정보 검색
         * `list`: 리소스 목록 나열
-        * `watch`: 리소스 변경사항 주시 
+        * `watch`: 리소스 변경사항 주시
         * `create`: 새로운 리소스 생성
         * `update`: 기존 리소스 업데이트
         * `patch`: 리소스 부분 수정
-        * `delete`: 리소스 삭제 
+        * `delete`: 리소스 삭제
         * `deletecollection`: 단일 작업에서 여러 자원 삭제
-    * 위에 표기되지 않은 특수한 verb가 있더라도 정책에 명시하여 적용 가능합니다. 
-    * 3rd-Party 클라이언트 지원 시 이하의 verb가 필수로 요구되며 안내합니다: 
+    * 위에 표기되지 않은 특수한 verb가 있더라도 정책에 명시하여 적용 가능합니다.
+    * 3rd-Party 클라이언트 지원 시 이하의 verb가 필수로 요구되며 안내합니다:
         * View 권한 : `get`, `list`, `watch`
         * Edit 권한 : `get`, `list`, `watch` + `create`, `update`, `patch`, `delete`, `deletecollection`
-    * pod exec명령을 통한 컨테이너 쉘 접속 세션 생성을 위해서는 일반적으로 `create` verb 명시가 필요합니다. 
-    * 와일드카드를 허용합니다. 
+    * pod exec명령을 통한 컨테이너 쉘 접속 세션 생성을 위해서는 일반적으로 `create` verb 명시가 필요합니다.
+    * 와일드카드를 허용합니다.
         * `verbs: ["*"]`
 
 
@@ -311,19 +311,19 @@ O
 
 `conditions` 항목에는 `resourceTags`, `userAttributes`, `ipAddresses`를 조건으로 정의할 수 있습니다. <Badge color="yellow">OPTIONAL</Badge>
 
-* `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. 
+* `resourceTags` : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다.
   ```
-  resourceTags: 
+  resourceTags:
     "region": "ap-northeast-1"
     "Owner": "Brant"
   ```
-* `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. 
+* `userAttributes` : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다.
   ```
-  userAttributes: 
+  userAttributes:
     "countryCode": "KR"
     "department": "Infra"
   ```
-* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. 
+* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다.
   ```
   ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
   ```
@@ -332,45 +332,45 @@ O
 ### KAC Policy 예시
 
 ```
-apiVersion: kubernetes.rbac.querypie.com/v1 
+apiVersion: kubernetes.rbac.querypie.com/v1
 kind: KacPolicy
 
 spec:
-  allow: 
-    resources: 
+  allow:
+    resources:
       - "cluster:*"
-    subjects: 
-      kubernetesGroups: 
+    subjects:
+      kubernetesGroups:
         - "system:masters"
-      impersonation: 
-        users: ["system:serviceaccount:argocd"] 
-        groups: ["system:admin"]  
-    actions: 
-      - apiGroups: ["*"] 
-        resources: 
+      impersonation:
+        users: ["system:serviceaccount:argocd"]
+        groups: ["system:admin"]
+    actions:
+      - apiGroups: ["*"]
+        resources:
           - "pods"
-        namespace: "*" 
-        name: "*" 
+        namespace: "*"
+        name: "*"
         verbs: ["get", "list", "watch"]
-    conditions: 
-      resourceTags: 
+    conditions:
+      resourceTags:
         "Owner": ["Kenny", "Brant"]
-        "Team": "DevSecOps" 
-      userAttributes: 
+        "Team": "DevSecOps"
+      userAttributes:
         "countryCode": "KR"
         "department": "Infra"
-      ipAddresses: ["10.10.0.0/24", "10.11.10.1"] 
-  deny: 
-    resources: 
+      ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
+  deny:
+    resources:
       - "cluster:kubepie-*"
-    actions: 
+    actions:
       - apiGroups: ["*"]
-        resources: 
+        resources:
           - "*"
         namespace: "production"
         name: "*"
         verbs: ["*"]
-    conditions: 
-      resourceTags: 
+    conditions:
+      resourceTags:
         "Owner": "Brant"
 ```

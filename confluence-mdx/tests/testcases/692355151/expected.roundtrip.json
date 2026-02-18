@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "692355151",
-  "mdx_sha256": "05b9bdc273a0d560eea19481486060237076f83b656bfeecbcfa6ad5d71578fe",
+  "mdx_sha256": "eab1679eeebd6da47932a52062b7e7b475af6a1d39f88b1a4e8bf5b1cf4c80cb",
   "source_xhtml_sha256": "b9e0646039c7414bbc75057fcec55a2d80783ca2b6767f0fb6147dde5920d6dd",
   "blocks": [
     {
@@ -107,7 +107,7 @@
       "block_index": 9,
       "xhtml_xpath": "ol[2]",
       "xhtml_fragment": "<ol start=\"2\"><li><p>실행계획(Explain) 옵션 및 실행계획 수행<br />쿼리 에디터 하단에 있는 옵션을 선택하고 <code>Explain</code> 버튼을 누릅니다.</p><ol start=\"1\"><li><p><strong>Attach Explain Results</strong> : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.) </p></li><li><p>결과 표시 방식 선택</p><ol start=\"1\"><li><p><strong>Table</strong> : 테이블 형태로 결과가 표시됩니다.</p></li><li><p><strong>JSON</strong> : JSON 형태로 결과가 표시됩니다. </p></li></ol></li></ol></li></ol>",
-      "mdx_content_hash": "c07c868d115723b146eb04a46d7525181978546473024c59215340e2d82886e2",
+      "mdx_content_hash": "21e2e360e7cf287a3fa8624373bdef438a13c2021bdc514c98d53b138deb5708",
       "mdx_line_range": [
         32,
         32
@@ -151,7 +151,7 @@
       "block_index": 13,
       "xhtml_xpath": "h2[3]",
       "xhtml_fragment": "<h2>기타 참고사항 </h2>",
-      "mdx_content_hash": "b0a3d590fcd224f0fc621d92608e06fb9c0f2d138186493b7dc816ab0174b148",
+      "mdx_content_hash": "c71614b153c7d4a47727abe9e10e54dbd6e921ebdc551a6a56aa0396d8e17765",
       "mdx_line_range": [
         43,
         47
@@ -184,7 +184,7 @@
       "block_index": 16,
       "xhtml_xpath": "ol[5]",
       "xhtml_fragment": "<ol start=\"2\"><li><p>MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br />MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다. </p></li></ol>",
-      "mdx_content_hash": "1c774171964dac4c1d5a89b65ea436117ff2095dc3ae4e57274c68421b11a394",
+      "mdx_content_hash": "31293322c53e6df6d91c85e8a39166a7e82386556759288852894a62f7fb4a5b",
       "mdx_line_range": [
         54,
         55
@@ -206,7 +206,7 @@
       "block_index": 18,
       "xhtml_xpath": "macro-note[4]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:macro-id=\"8ef7997a-646b-4e96-97a5-42d91c92abe8\"><ac:rich-text-body><p>optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다. </p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "658bc016384f450117872ca59c04248ede215078cb5844c66d52600c822b9846",
+      "mdx_content_hash": "c60e9e87a61a90ccdecd365f89465de8d95bcd95ee081289f58d248774a792a9",
       "mdx_line_range": [
         61,
         78

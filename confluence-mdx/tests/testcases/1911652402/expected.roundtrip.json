@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "1911652402",
-  "mdx_sha256": "4c8e770601d5fac4d74c9214a8773f27cbd86fcd5de6a22e553ae9080e57b28d",
+  "mdx_sha256": "b2a1012919bffd53a0c833068fd81d96a1397a097ee065948ccdd63591bfb82e",
   "source_xhtml_sha256": "dd7e858544cbe4c994c4844b5d55812b3effdaeb21538e4ff12e0f014e86cbc9",
   "blocks": [
     {
@@ -184,7 +184,7 @@
       "block_index": 16,
       "xhtml_xpath": "p[12]",
       "xhtml_fragment": "<p local-id=\"bd4a0ef67f9f\" />",
-      "mdx_content_hash": "ba7398e3e1b5abe2f58708fb940fe98ea849453ec816b2611ecad47054cf3ec1",
+      "mdx_content_hash": "9aff85a470acd07956031ba4666d68a458d11730906734c9ddc4ddcb8474dde8",
       "mdx_line_range": [
         45,
         46

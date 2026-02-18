@@ -23,7 +23,7 @@ QueryPie의 사용자 인증 방식은 QueryPie 사용자 계정(ID)과 암호�
 
 <Callout type="info">
 * 현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.
-* MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다. 
+* MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다.
 * 11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.<br/>예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal DB의 MFA 설정에 의해 제어됩니다.
 * Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.
 </Callout>
@@ -175,7 +175,7 @@ LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use
 *  **Replication Frequency**  : 자동 동기화 기능 사용 여부를 설정합니다.
     * Manual : 수동으로만 동기화를 수행합니다. 현재 페이지에서 `Synchronize` 버튼을 클릭할 때에만 LDAP 서버로부터 사용자 정보를 불러옵니다.
     * Scheduling : 주기적으로 동기화를 수행합니다. 하단 Use cron expression 필드가 활성화됩니다.
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다.
         * 동기화할 사용자 수가 많거나, 사용자의 LDAP 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
     *  **Use an Attribute for Privilege Revoke** : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다.
@@ -185,7 +185,7 @@ LDAP 서버로부터 사용자 정보 동기화를 실행하려는 경우  **Use
         * LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다.
         * 옵션 활성화 시, 하단에 LDAP Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 LDAP Attribute와 QueryPie Attribute를 지정할 수 있습니다.
         * 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
         * 0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
             * 예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.
@@ -318,11 +318,11 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 * Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.
 * Create new role을 선택합니다.
 * Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.
-    *  **User** 
+    *  **User**
         * View users and their details
-    *  **Group** 
+    *  **Group**
         * View groups and their details
-    *  **Application** 
+    *  **Application**
         * View application and their details
 * Save role을 눌러 커스텀 롤을 저장합니다.
 * Resources 탭으로 이동합니다.
@@ -357,7 +357,7 @@ Okta 상세설정 (1)
 *  **Type** : Okta를 선택합니다.
 *  **Identity Provider Metadata**  : <br/>[#Okta에서 QueryPie 애플리케이션 연동 정보 설정](#okta에서-querypie-애플리케이션-연동-정보-설정) 단계에서 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
 *  **Use SAML Assertion Consumer Service Index**  : Service Provider에서 여러개의 Endpoint 를 사용하는 경우 ACS Index를 사용하여 endpoint를 각각 지정할 수 있습니다.
-    * Entity ID : `https://your-domain.com/saml/sp/metadata` 의 형식으로 입력합니다. Okta SAML 2.0 설정의 Audience URI (SP Entity ID) 값입니다. 
+    * Entity ID : `https://your-domain.com/saml/sp/metadata` 의 형식으로 입력합니다. Okta SAML 2.0 설정의 Audience URI (SP Entity ID) 값입니다.
     * ACS Index : 0 ~ 2,147,483,647 사이의 값을 입력합니다. 기본값은 0 입니다.
 
 <Callout type="info">
@@ -398,7 +398,7 @@ SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습�
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/screenshot-20250124-164255.png" alt="okta app 설정의 Audience URI(SP Entity ID) " width="690" />
 <figcaption>
-okta app 설정의 Audience URI(SP Entity ID) 
+okta app 설정의 Audience URI(SP Entity ID)
 </figcaption>
 </figure>
 
@@ -423,11 +423,11 @@ Okta 상세설정 (2)
     *  **API Token** : Okta 관리자 API 토큰을 기입합니다.
     *  **Application ID** : Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
 * 주기적인 동기화 기능을 사용하고자 할 경우 **Replication Frequency**  항목에서 Scheduling 을 설정합니다.
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
     *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
     *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
         * 0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
             * 예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.
@@ -476,7 +476,7 @@ One Login SAML Custom Connector 설정 및 Metadata XML 다운로드
 * `Add App` 버튼을 클릭합니다.
 * 검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.
 * Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator, ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.
-* `Save` 버튼을 눌러 저장합니다. 
+* `Save` 버튼을 눌러 저장합니다.
 * 화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions &gt; SAML Metadata를 클릭합니다.
 * 다운로드된 XML 파일을 확인합니다.
 
@@ -502,11 +502,11 @@ One Login 상세설정 (2)
 </figcaption>
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
     *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
     *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
         * 0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
             * 예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.
@@ -518,7 +518,7 @@ One Login 상세설정 (2)
 
 *  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
 *  **Type** : SAML 을 선택합니다.
-*  **Identity Provider Metadata**  : IdP에서 확인한 SML metadata XML의 내용을 복사해서 붙여 넣습니다. 
+*  **Identity Provider Metadata**  : IdP에서 확인한 SML metadata XML의 내용을 복사해서 붙여 넣습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/image-20251014-015015.png" alt="image-20251014-015015.png" width="481" />
@@ -532,18 +532,18 @@ Custom Identity Provider는 인증 API서버를 사용하는 특수한 경우에
 
 *  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
 *  **Type** : Custom Identity Provider 를 선택합니다.
-*  **API URL**  : API서버의 End-point URL을 입력합니다. 
+*  **API URL**  : API서버의 End-point URL을 입력합니다.
 *  사용자 정보 동기화를 실행하려는 경우 Use Synchronization with the Authentication System 옵션을 활성화합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/identity-providers/image-20251014-015047.png" alt="image-20251014-015047.png" width="481" />
 </figure>
 
-*  **Additional Settings** 
+*  **Additional Settings**
     *  **Make New Users Inactive by Default** : 동기화 시 새로운 사용자를 비활성화 상태로 추가할지 여부를 선택합니다. <br/> 동기화할 사용자 수가 많거나, 사용자의 인증을 통한 QueryPie 접근을 개별적으로 관리하고자 하는 경우 해당 옵션을 활성화하시기 바랍니다.
     *  **Use an Attribute for Privilege Revoke**  : 동기화 시 특정 Attribute에 따라 Privilege를 회수할지 여부를 선택합니다. <br/> 특정 Attribute의 변경에 의해 자동으로 DAC Privilege를 회수하고자 하는 경우 이 옵션을 활성화하세요. <br/> Attribute 입력 필드에 활성화 변경을 감지하려는 Attribute 이름을 입력합니다.
     *  **Enable Attribute Synchronization**  : IdP의 사용자 속성과 QueryPie 사용자 속성을 매핑하여 동기화할지 여부를 선택합니다. <br/> IdP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 자동으로 연동하고자 하는 경우, 해당 옵션을 활성화하시기 바랍니다. <br/> 옵션 활성화 시, 하단에 Attribute Mapping UI가 표시되며 매핑 작업을 통해 연동할 IdP Attribute와 QueryPie Attribute를 지정할 수 있습니다. <br/> 단, 해당 기능은 Profile Editor(Admin&gt; General &gt; User Management &gt; Profile Editor)에서 Source Priority가 Inherit from profile source로 설정된 Attribute에 한해 적용됩니다.
-    *  **Allowed User Deletion Rate Threshold :** 
+    *  **Allowed User Deletion Rate Threshold :**
         * 동기화시 기존 유저가 이 값의 비율 이상으로 삭제되었을 경우에는 동기화를 실패하도록 하는 기능입니다.
         * 0.0 ~ 1.0 사이의 값을 입력합니다. (기본값은 0.1)
             * 예) 기존 유저가 100명이고, Allowed User Deletion Rate Threshold 0.1 인 경우, 다시 동기화 하였을 때, 삭제된 유저가 10명 이상이면 동기화가 실패합니다.
