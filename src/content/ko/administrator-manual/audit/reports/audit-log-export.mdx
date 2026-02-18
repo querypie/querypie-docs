@@ -152,9 +152,9 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 
 - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
 
-- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
+- DB Access History 중 특정 데이터베이스 2종류만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
 
-- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
+- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
 </Callout>
 
 
