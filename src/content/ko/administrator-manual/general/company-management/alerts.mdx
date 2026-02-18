@@ -109,7 +109,7 @@ DAC
 Sensitive Data Access
 </td>
 <td>
-정의된 조건에 해당하는 민감데이터 조회 알림
+정의된 조건에 해당하는 민감 데이터 조회 알림
 </td>
 </tr>
 <tr>
@@ -266,7 +266,7 @@ IP 대역에 따른 사용자 로그인 행위 알림
 <Callout type="info">
 예) 비정상적인 로그인 시도 시 알림 발송 - 5분간 QueryPie 로그인 실패 3회 누적 시
 * Action Count : 3
-* Specific Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 </Callout>
 
 #### SQL Execution
@@ -322,18 +322,18 @@ DB 접속 성공 또는 실패 알림
 <Callout type="info">
 예) 비정상적인 데이터베이스 접속 시도 시 알림 발송 - 5분간 DB 접속 실패 3회 누적 시
 * Alert Trigger Condition : Failure
-* Connection Failure Trigger with Internal : On
+* Connection Failure Trigger with Interval : On
 * Action Count : 3
-* Specified Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 </Callout>
 
 #### Sensitive Data Access
 
-정의된 조건에 해당하는 민감데이터 조회 알림
+정의된 조건에 해당하는 민감 데이터 조회 알림
 
 * **Criteria** : 알림 발송 기준을 선택합니다.
     * Sensitive Level : Sensitive Data Policy &gt; Rule에 설정된 데이터별 민감 레벨 기준
-        * Low, Medium, High 중 택 일
+        * Low, Medium, High 중 택일
     * Policy : 특정 Sensitive Data Policy 기준
         * 등록된 Sensitive Data Policy 중 택 일
 * **Rows** : 알림 발송 기준 행 수 (10.2.2 이후 버전)
@@ -344,11 +344,11 @@ DB 접속 성공 또는 실패 알림
 
 <Callout type="important">
 Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정책에 개인정보가 포함된 테이블 및 컬럼을 사전 정의해야 합니다.
-자세한 내용은 [Sensitive Data](../../databases/policies/sensitive-data) 문서를 참고해주세요.
+자세한 내용은 [Sensitive Data](../../databases/policies/sensitive-data) 문서를 참고해 주세요.
 </Callout>
 
 <Callout type="info">
-예1) 민감레벨 High 로 설정된 개인정보 데이터 조회 시 알림 발송
+예1) 민감 레벨 High로 설정된 개인정보 데이터 조회 시 알림 발송
 
 * Criteria : Sensitive Level
 * Sensitive Level : High
@@ -394,7 +394,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생 시 알림을 발송하게 됩니다.
 
 * Action Count : 3
-* Specific Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/alerts/image-20251010-093016.png" alt="image-20251010-093016.png" width="639" />
