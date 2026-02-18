@@ -163,6 +163,63 @@ def _clean_reverse_sync_artifacts(page_id: str) -> Path:
     return var_dir
 
 
+def _parse_and_diff(original_mdx: str, improved_mdx: str):
+    """MDX 블록 파싱 + diff 추출.
+
+    Returns: (changes, alignment, original_blocks, improved_blocks)
+    """
+    original_blocks = parse_mdx_blocks(original_mdx)
+    improved_blocks = parse_mdx_blocks(improved_mdx)
+    changes, alignment = diff_blocks(original_blocks, improved_blocks)
+    return changes, alignment, original_blocks, improved_blocks
+
+
+def _save_diff_yaml(
+    var_dir: Path, page_id: str, now: str,
+    original_descriptor: str, improved_descriptor: str,
+    changes,
+) -> None:
+    """diff.yaml를 var_dir에 저장한다."""
+    diff_data = {
+        'page_id': page_id, 'created_at': now,
+        'original_mdx': original_descriptor, 'improved_mdx': improved_descriptor,
+        'changes': [
+            {'index': c.index,
+             'block_id': f'{(c.old_block or c.new_block).type}-{c.index}',
+             'change_type': c.change_type,
+             'old_content': c.old_block.content if c.old_block else None,
+             'new_content': c.new_block.content if c.new_block else None}
+            for c in changes
+        ],
+    }
+    (var_dir / 'reverse-sync.diff.yaml').write_text(
+        yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
+
+
+def _compile_result(
+    var_dir: Path, page_id: str, now: str,
+    changes_count: int,
+    mdx_diff_report: str, xhtml_diff_report: str,
+    verify_result, roundtrip_diff_report: str,
+) -> Dict[str, Any]:
+    """검증 결과를 조립하여 저장하고 반환한다."""
+    status = 'pass' if verify_result.passed else 'fail'
+    result = {
+        'page_id': page_id, 'created_at': now,
+        'status': status,
+        'changes_count': changes_count,
+        'mdx_diff_report': mdx_diff_report,
+        'xhtml_diff_report': xhtml_diff_report,
+        'verification': {
+            'exact_match': verify_result.passed,
+            'diff_report': roundtrip_diff_report,
+        },
+    }
+    (var_dir / 'reverse-sync.result.yaml').write_text(
+        yaml.dump(result, allow_unicode=True, default_flow_style=False))
+    return result
+
+
 def run_verify(
     page_id: str,
     original_src: MdxSource,
@@ -182,10 +239,9 @@ def run_verify(
         xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
     xhtml = Path(xhtml_path).read_text()
 
-    # Step 1: MDX 블록 파싱 + Step 2: 블록 Diff 추출
-    original_blocks = parse_mdx_blocks(original_mdx)
-    improved_blocks = parse_mdx_blocks(improved_mdx)
-    changes, alignment = diff_blocks(original_blocks, improved_blocks)
+    # Step 1-2: MDX 파싱 + diff
+    changes, alignment, original_blocks, improved_blocks = _parse_and_diff(
+        original_mdx, improved_mdx)
 
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
@@ -195,21 +251,8 @@ def run_verify(
             yaml.dump(result, allow_unicode=True, default_flow_style=False))
         return result
 
-    # diff.yaml 저장
-    diff_data = {
-        'page_id': page_id, 'created_at': now,
-        'original_mdx': original_src.descriptor, 'improved_mdx': improved_src.descriptor,
-        'changes': [
-            {'index': c.index,
-             'block_id': f'{(c.old_block or c.new_block).type}-{c.index}',
-             'change_type': c.change_type,
-             'old_content': c.old_block.content if c.old_block else None,
-             'new_content': c.new_block.content if c.new_block else None}
-            for c in changes
-        ],
-    }
-    (var_dir / 'reverse-sync.diff.yaml').write_text(
-        yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
+    _save_diff_yaml(var_dir, page_id, now,
+                    original_src.descriptor, improved_src.descriptor, changes)
 
     # Step 3: 원본 매핑 생성 → mapping.original.yaml 저장
     original_mappings = record_mapping(xhtml)
@@ -299,22 +342,10 @@ def run_verify(
     )
     roundtrip_diff_report = ''.join(roundtrip_diff_lines)
 
-    status = 'pass' if verify_result.passed else 'fail'
-    result = {
-        'page_id': page_id, 'created_at': now,
-        'status': status,
-        'changes_count': len(changes),
-        'mdx_diff_report': mdx_diff_report,
-        'xhtml_diff_report': xhtml_diff_report,
-        'verification': {
-            'exact_match': verify_result.passed,
-            'diff_report': roundtrip_diff_report,
-        },
-    }
-    (var_dir / 'reverse-sync.result.yaml').write_text(
-        yaml.dump(result, allow_unicode=True, default_flow_style=False))
-
-    return result
+    return _compile_result(
+        var_dir, page_id, now, len(changes),
+        mdx_diff_report, xhtml_diff_report,
+        verify_result, roundtrip_diff_report)
 
 
 def _strip_frontmatter(mdx: str) -> str:

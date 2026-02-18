@@ -7,6 +7,7 @@ from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
+    _parse_and_diff, _save_diff_yaml, _compile_result,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
@@ -1048,3 +1049,86 @@ def testbuild_patches_list_item_fallback_to_parent():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'ul[1]'
     assert '변경된 텍스트입니다' in patches[0]['new_plain_text']
+
+
+class TestParseAndDiff:
+    """_parse_and_diff 함수 테스트."""
+
+    def test_no_changes(self):
+        mdx = "# Title\n\nSome text"
+        changes, alignment, orig_blocks, impr_blocks = _parse_and_diff(mdx, mdx)
+        assert changes == []
+        assert len(orig_blocks) > 0
+
+    def test_detects_changes(self):
+        original = "# Title\n\nOriginal text"
+        improved = "# Title\n\nImproved text"
+        changes, alignment, orig_blocks, impr_blocks = _parse_and_diff(
+            original, improved)
+        assert len(changes) > 0
+
+
+class TestSaveDiffYaml:
+    """_save_diff_yaml 함수 테스트."""
+
+    def test_writes_yaml_file(self, tmp_path):
+        from reverse_sync.block_diff import BlockChange
+        from mdx_to_storage.parser import parse_mdx_blocks
+
+        original = "# Title\n\nOriginal"
+        improved = "# Title\n\nImproved"
+        orig_blocks = parse_mdx_blocks(original)
+        impr_blocks = parse_mdx_blocks(improved)
+
+        old_b = [b for b in orig_blocks if b.content.strip() == 'Original'][0]
+        new_b = [b for b in impr_blocks if b.content.strip() == 'Improved'][0]
+        changes = [BlockChange(index=1, change_type='modified',
+                               old_block=old_b, new_block=new_b)]
+
+        _save_diff_yaml(
+            var_dir=tmp_path,
+            page_id='test123',
+            now='2026-01-01T00:00:00Z',
+            original_descriptor='main:test.mdx',
+            improved_descriptor='branch:test.mdx',
+            changes=changes,
+        )
+        assert (tmp_path / 'reverse-sync.diff.yaml').exists()
+
+
+class TestCompileResult:
+    """_compile_result 함수 테스트."""
+
+    def test_pass_result(self, tmp_path):
+        from unittest.mock import MagicMock
+        verify_result = MagicMock()
+        verify_result.passed = True
+        result = _compile_result(
+            var_dir=tmp_path,
+            page_id='test123',
+            now='2026-01-01T00:00:00Z',
+            changes_count=2,
+            mdx_diff_report='some diff',
+            xhtml_diff_report='xhtml diff',
+            verify_result=verify_result,
+            roundtrip_diff_report='',
+        )
+        assert result['status'] == 'pass'
+        assert result['changes_count'] == 2
+        assert (tmp_path / 'reverse-sync.result.yaml').exists()
+
+    def test_fail_result(self, tmp_path):
+        from unittest.mock import MagicMock
+        verify_result = MagicMock()
+        verify_result.passed = False
+        result = _compile_result(
+            var_dir=tmp_path,
+            page_id='test123',
+            now='2026-01-01T00:00:00Z',
+            changes_count=1,
+            mdx_diff_report='',
+            xhtml_diff_report='',
+            verify_result=verify_result,
+            roundtrip_diff_report='diff here',
+        )
+        assert result['status'] == 'fail'

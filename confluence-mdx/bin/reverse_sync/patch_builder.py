@@ -38,6 +38,90 @@ def _find_containing_mapping(
     return None
 
 
+def _flush_containing_changes(
+    containing_changes: dict,
+    used_ids: 'set | None' = None,
+) -> List[Dict[str, str]]:
+    """그룹화된 containing_changes를 패치 목록으로 변환한다.
+
+    containing_changes: block_id → (mapping, [(old_plain, new_plain)])
+    각 매핑의 xhtml_plain_text에 transfer_text_changes를 순차 적용하여 패치를 생성한다.
+    """
+    patches = []
+    for bid, (mapping, item_changes) in containing_changes.items():
+        xhtml_text = mapping.xhtml_plain_text
+        for old_plain, new_plain in item_changes:
+            xhtml_text = transfer_text_changes(
+                old_plain, new_plain, xhtml_text)
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        })
+        if used_ids is not None:
+            used_ids.add(bid)
+    return patches
+
+
+def _resolve_mapping_for_change(
+    change: BlockChange,
+    old_plain: str,
+    mappings: List[BlockMapping],
+    used_ids: set,
+    mdx_to_sidecar: Dict[int, SidecarEntry],
+    xpath_to_mapping: Dict[str, 'BlockMapping'],
+    id_to_mapping: Dict[str, BlockMapping],
+) -> tuple:
+    """변경에 대한 매핑과 처리 전략을 결정한다.
+
+    Returns:
+        (strategy, mapping) 튜플.
+        strategy: 'direct' | 'containing' | 'list' | 'table' | 'skip'
+        mapping: 해당 BlockMapping 또는 None
+    """
+
+    # Sidecar 직접 조회 (O(1))
+    mapping = find_mapping_by_sidecar(
+        change.index, mdx_to_sidecar, xpath_to_mapping)
+
+    # Parent mapping → child 해석 시도
+    if mapping is not None and mapping.children:
+        child = _resolve_child_mapping(old_plain, mapping, id_to_mapping)
+        if child is not None:
+            return ('direct', child)
+        # 블록 텍스트가 parent에 포함되는지 확인
+        _old_ns = strip_for_compare(old_plain)
+        _map_ns = strip_for_compare(mapping.xhtml_plain_text)
+        if _old_ns and _map_ns and _old_ns not in _map_ns:
+            if change.old_block.type == 'list':
+                return ('list', mapping)
+        return ('containing', mapping)
+
+    if mapping is None:
+        # 폴백: 텍스트 포함 검색으로 containing mapping 찾기
+        containing = _find_containing_mapping(old_plain, mappings, used_ids)
+        if containing is not None:
+            return ('containing', containing)
+        if change.old_block.type == 'list':
+            return ('list', None)
+        if is_markdown_table(change.old_block.content):
+            return ('table', None)
+        return ('skip', None)
+
+    # 매핑 텍스트에 old_plain이 포함되지 않으면 더 나은 매핑 찾기
+    if not mapping.children:
+        old_nospace = strip_for_compare(old_plain)
+        map_nospace = strip_for_compare(mapping.xhtml_plain_text)
+        if old_nospace and map_nospace and old_nospace not in map_nospace:
+            better = _find_containing_mapping(old_plain, mappings, used_ids)
+            if better is not None:
+                return ('containing', better)
+            if change.old_block.type == 'list':
+                return ('list', mapping)
+
+    return ('direct', mapping)
+
+
 def build_patches(
     changes: List[BlockChange],
     original_blocks: List[MdxBlock],
@@ -97,95 +181,39 @@ def build_patches(
         old_plain = normalize_mdx_to_plain(
             change.old_block.content, change.old_block.type)
 
-        # Sidecar 직접 조회 (O(1))
-        mapping = find_mapping_by_sidecar(
-            change.index, mdx_to_sidecar, xpath_to_mapping)
+        strategy, mapping = _resolve_mapping_for_change(
+            change, old_plain, mappings, used_ids,
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
 
-        # Parent mapping → child 해석 시도
-        if mapping is not None and mapping.children:
-            child = _resolve_child_mapping(
-                old_plain, mapping, id_to_mapping)
-            if child is not None:
-                mapping = child
-            else:
-                # 블록 텍스트가 parent에 포함되는지 확인
-                _old_ns = strip_for_compare(old_plain)
-                _map_ns = strip_for_compare(mapping.xhtml_plain_text)
-                if _old_ns and _map_ns and _old_ns not in _map_ns:
-                    # 텍스트 불일치 → list 항목 단위 분리 시도
-                    if change.old_block.type == 'list':
-                        patches.extend(
-                            build_list_item_patches(
-                                change, mappings, used_ids,
-                                mdx_to_sidecar, xpath_to_mapping,
-                                id_to_mapping))
-                        continue
-                # Child 해석 실패 → parent를 containing block으로 사용
-                new_plain = normalize_mdx_to_plain(
-                    change.new_block.content, change.new_block.type)
-                bid = mapping.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (mapping, [])
-                containing_changes[bid][1].append((old_plain, new_plain))
-                continue
-
-        if mapping is None:
-            # 폴백: 텍스트 포함 검색으로 containing mapping 찾기
-            containing = _find_containing_mapping(old_plain, mappings, used_ids)
-            if containing is not None:
-                new_plain = normalize_mdx_to_plain(
-                    change.new_block.content, change.new_block.type)
-                bid = containing.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (containing, [])
-                containing_changes[bid][1].append((old_plain, new_plain))
-                continue
-
-            # sidecar에 없는 블록 → list/table 분리 시도, 그 외는 skip
-            if change.old_block.type == 'list':
-                patches.extend(
-                    build_list_item_patches(
-                        change, mappings, used_ids,
-                        mdx_to_sidecar, xpath_to_mapping, id_to_mapping))
-                continue
-
-            if is_markdown_table(change.old_block.content):
-                patches.extend(
-                    build_table_row_patches(
-                        change, mappings, used_ids,
-                        mdx_to_sidecar, xpath_to_mapping))
-                continue
-
-            # sidecar에 매핑되지 않은 블록 → skip
+        if strategy == 'skip':
             continue
 
-        # 매핑 텍스트에 old_plain이 포함되지 않으면 더 나은 매핑 찾기
-        if not mapping.children:
-            old_nospace = strip_for_compare(old_plain)
-            map_nospace = strip_for_compare(mapping.xhtml_plain_text)
-            if old_nospace and map_nospace and old_nospace not in map_nospace:
-                better = _find_containing_mapping(old_plain, mappings, used_ids)
-                if better is not None:
-                    new_plain = normalize_mdx_to_plain(
-                        change.new_block.content, change.new_block.type)
-                    bid = better.block_id
-                    if bid not in containing_changes:
-                        containing_changes[bid] = (better, [])
-                    containing_changes[bid][1].append((old_plain, new_plain))
-                    continue
-                # 전체 텍스트 매칭 불가 → list 항목 단위로 분리 시도
-                if change.old_block.type == 'list':
-                    patches.extend(
-                        build_list_item_patches(
-                            change, mappings, used_ids,
-                            mdx_to_sidecar, xpath_to_mapping,
-                            id_to_mapping))
-                    continue
+        if strategy == 'list':
+            patches.extend(
+                build_list_item_patches(
+                    change, mappings, used_ids,
+                    mdx_to_sidecar, xpath_to_mapping, id_to_mapping))
+            continue
 
+        if strategy == 'table':
+            patches.extend(
+                build_table_row_patches(
+                    change, mappings, used_ids,
+                    mdx_to_sidecar, xpath_to_mapping))
+            continue
+
+        new_plain = normalize_mdx_to_plain(
+            change.new_block.content, change.new_block.type)
+
+        if strategy == 'containing':
+            bid = mapping.block_id
+            if bid not in containing_changes:
+                containing_changes[bid] = (mapping, [])
+            containing_changes[bid][1].append((old_plain, new_plain))
+            continue
+
+        # strategy == 'direct'
         _mark_used(mapping.block_id, mapping)
-        new_block = change.new_block
-        new_plain = normalize_mdx_to_plain(new_block.content, new_block.type)
-
         if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
             new_plain = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
@@ -197,18 +225,7 @@ def build_patches(
         })
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
@@ -345,19 +362,7 @@ def build_table_row_patches(
             containing_changes[bid] = (container, [])
         containing_changes[bid][1].append((old_plain, new_plain))
 
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        if used_ids is not None:
-            used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
@@ -465,19 +470,7 @@ def build_list_item_patches(
                 containing_changes[bid][1].append((old_plain, new_plain))
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(
-                old_plain, new_plain, xhtml_text)
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        })
-        if used_ids is not None:
-            used_ids.add(bid)
-
+    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches
 
 
