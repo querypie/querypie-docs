@@ -25,11 +25,11 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Provider` 버튼을 클릭합니다.
 3.  **Name**  항목에 해당 프로바이더를 구분할 수 있는 이름을 입력합니다.
-4.  **Cloud**   **Provider**  항목에서 Google **** Cloud **** Platform을 선택합니다.
+4.  **Cloud**   **Provider**  항목에서 Google Cloud Platform을 선택합니다.
 5. 동기화하고자 하는 리소스의  **Project ID** 를 입력합니다.
-6. 특정 Region 및 Zone의 리소스를 동기화하고자 할 경우  **Use Region and Zone**  항목에 체크 후 Region 과 Zone을 각각 선택해 주세요.
+6. 특정 Region 및 Zone의 리소스를 동기화하고자 할 경우  **Use Region and Zone**  항목에 체크 후 Region과 Zone을 각각 선택해 주세요.
 7. 리소스를 동기화하기 위해 필요한  **Credential** 을 선택하세요. 현재는 Service Account 방식만 지원되고 있습니다.
-    1. `Synchronize` 버튼 클릭 시 GCP의 Service Account JSON을 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type으로 Service Account를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
+    1. `Synchronize` 버튼 클릭 시 GCP의 Service Account JSON을 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2부터 "Save Credential for Synchronization" 옵션을 제공하여 Credential type으로 Service Account를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
 8.  **Search**   **Filter** 를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
     1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다.
         1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
@@ -54,8 +54,8 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.**
-* 이 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세 페이지에서 이 옵션을 비활성화할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.**
+* 이 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세 페이지에서 체크박스를 체크하는 것으로 옵션을 활성화할 수 있습니다.
 * 이 옵션이 활성화되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
 
@@ -84,9 +84,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
     7.  **Replication**   **Frequency** : 변경 불가
 
 <Callout type="important">
-“Save Credential for Synchronization” 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
-새로 생성할 때와 마찬가지로 이 설정은  **활성화한 뒤 다시 비활성화 할 수 없으므로**  신중히 선택해야 합니다.
+“Save Credential for Synchronization” 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세 페이지에서 체크박스를 체크해 옵션을 활성화할 수 있습니다.
+새로 생성할 때와 마찬가지로 이 설정은  **활성화한 뒤 다시 비활성화할 수 없으므로**  신중히 선택해야 합니다.
 </Callout>
-
-
 
