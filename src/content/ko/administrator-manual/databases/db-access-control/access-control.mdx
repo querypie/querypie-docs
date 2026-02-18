@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 Access Control 페이지에서 관리자는 사용자 또는 그룹에 데이터베이스 접근 권한을 직접 부여할 수 있습니다.
 
 <Callout type="info">
-11.5.0부터 스키마(논리DB) 수준의 접근제어 기능이 추가되었습니다.
+11.5.0부터 스키마(논리DB) 수준의 접근 제어 기능이 추가되었습니다.
 </Callout>
 
 ### Access Control 목록 조회하기
@@ -32,7 +32,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control
 
 ### 사용자/그룹별 Access Control 상세 내역 조회하기
 
-Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자 또는 그룹 행을 클릭하면 상세 화면에서 privilege를 부여받은 대상 정보를 확인할 수 있습니다.
+Access Control 페이지 내 Group / Users 탭의 목록에서 특정 사용자 또는 그룹 행을 클릭하면 상세 화면에서 privilege를 부여받은 대상 정보를 확인할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-085542.png" alt="특정 사용자의 접근제어 상세 페이지" width="760" />
@@ -42,7 +42,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 </figure>
 
 
-* 검색 : Connection Name 으로 조회 가능
+* 검색 : Connection Name으로 조회 가능
 * 기본 정보
     * Type : USER 또는 Group으로 분류 유형을 표시합니다.
     * Auth Provider : 해당 사용자가 인증에 사용하는 인증서비스 제공자가 무엇인지 표시합니다.
@@ -56,8 +56,8 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
     * Port : 커넥션에 등록된 Port 주소입니다.
     * Access Control Level : access control의 수준을 나타냅니다. 11.5.0부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다.
     * Assigned Privilege : 대상에 할당된 privilege입니다.
-    * Status : privilege 의 상태 표시입니다.
-        * Active ; 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태
+    * Status : privilege의 상태 표시입니다.
+        * Active : 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태
         * Deactivated : 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간 동안 커넥션에 접속하지 않은 경우 비활성화된 상태
         * Expired : 해당 사용자의 권한이 만료일자에 도래하여 회수된 상태
     * Expiration date : Privilege 만료일
@@ -72,7 +72,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
 2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 상세 페이지로 이동합니다.
 3. `Grant Privilege` 버튼을 클릭합니다.
-4. 팝업 창에서 Access Control Level 에서 Host 를 선택합니다. (기본값 : Host)<br/>
+4. 팝업 창에서 Access Control Level에서 Host를 선택합니다. (기본값 : Host)<br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095117.png" alt="image-20251218-095117.png" width="736" />
   </figure>
@@ -99,7 +99,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 1. Database 설정 메뉴에서 Access Control 메뉴로 이동합니다.
 2. 목록에서 권한을 부여할 사용자 또는 그룹을 선택하여 상세 페이지로 이동합니다.
 3. `Grant Privilege` 버튼을 클릭합니다.
-4. 팝업 창에서 Access Control Level 에서 Schema(Logical DB) 를 선택합니다. (기본값 : Host)
+4. 팝업 창에서 Access Control Level에서 Schema(Logical DB)를 선택합니다. (기본값 : Host)
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
@@ -108,11 +108,11 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
-7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 privilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.)
+7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 privilege type을 선택합니다. (스키마 레벨 privilege는 Host Level privilege 범위 내에서만 부여할 수 있기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.)
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png" alt="image-20251218-110506.png" width="736" />
   </figure>
-8. 아래에 표시되는 Host Level Others, Host Level Functions는 설정을 보기만 할 수 있습니다. 수정하기 위해서는 Databases &gt; DB Access Control &gt; Privilege Type 메뉴에서 해당 Privilege Type을 수정해야 합니다. Host Level의 Privilege의 속성에 의해 Schema Level도 privilege가 종속되기 때문에 상위의 정보를 확인하는 용도로 사용됩니다.<br/>
+8. 아래에 표시되는 Host Level Others, Host Level Functions는 설정을 보기만 할 수 있습니다. 수정하려면 Databases &gt; DB Access Control &gt; Privilege Type 메뉴에서 해당 Privilege Type을 수정해야 합니다. Host Level Privilege의 속성에 Schema Level privilege도 종속되므로 상위 정보를 확인하는 용도로 사용됩니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png" alt="image-20251218-111204.png" width="732" />
   </figure>
@@ -121,14 +121,14 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
 이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 이벤트로 기록됩니다.
 
 <Callout type="important">
-* PostgreSQL은 schema level 제어 대상이 Database입니다. PostgreSQL은 schema 라는 이름의 구조를 가지고 있으나 이는 privilege 할당의 대상이 되는 것이 아니라 구분의 용도로 사용되기 때문입니다.
+* PostgreSQL은 schema level 제어 대상이 Database입니다. PostgreSQL은 schema라는 이름의 구조를 가지고 있으나, 이는 privilege 할당의 대상이 아니라 구분 용도로 사용되기 때문입니다.
 * Oracle, Presto, Trino, SAP HANA는 schema level 제어 대상이 Schema입니다.
 * Schema 또는 Logical DB 대상 입력을 할 때 정규식을 사용할 수 있습니다. 이때 단어의 시작을 나타내는 ^, 단어의 끝을 나타내는 $를 사용할 수 없을 수 있습니다. 내부적으로 database.schema.table의 구조를 모두 인식하여 처리하기 때문에 schema 이름에 해당하는 정규식만 입력하면 오류가 발생합니다.
 </Callout>
 
 <Callout type="info">
 **사용자가 그룹에 포함된 경우, 그룹과 사용자를 대상으로 같은 커넥션에 대해 각각 다른 권한을 적용하면 어떻게 되나요?**
-사용자에 개별 사용자 권한 및 그룹의 권한으로 여러 개의 Privilege이 부여된 경우, 사용자 커넥션 접속 시 Default Privilege를 선택하고 접속할 수 있습니다.
+사용자에게 개별 사용자 권한 및 그룹 권한으로 여러 개의 Privilege가 부여된 경우, 사용자 커넥션 접속 시 Default Privilege를 선택해 접속할 수 있습니다.
 </Callout>
 
 
@@ -197,13 +197,13 @@ Access Control에서 특정 사용자에 접근 허용된 커넥션에 대해 �
 이 기능을 사용하기 위해 다음의 조건이 충족되어야 합니다.
 
 * New DAC Policy Management 기능이 Enable이어야 합니다.
-* 특정 사용자에게 특정커넥션에 대한 privilege가 할당되어 있어야 합니다.
-* Databases &gt; Policy Management &gt; Data Path 에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다.
+* 특정 사용자에게 특정 커넥션에 대한 privilege가 할당되어 있어야 합니다.
+* Databases &gt; Policy Management &gt; Data Path에 대상 테이블이 경로로 등록되어 있어야 하고 태그가 부여되어 있어야 합니다.
 
 조건이 만족되었다면 아래와 같이 설정할 수 있습니다.
 
 1. Databases &gt; DB Access Control &gt; Access Control에서 특정 사용자에게 privilege가 할당된 특정 커넥션 상세화면으로 이동합니다.
-2. 상세화면에서 Access Type을 Tag-based table access 를 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
+2. 상세 화면에서 Access Type을 Tag-based table access로 선택하고 태그를 추가합니다. 이미 존재하는 태그(테이블에 부여된 태그)만 선택하여 사용할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-051824.png" alt="image-20250703-051824.png" width="700" />
