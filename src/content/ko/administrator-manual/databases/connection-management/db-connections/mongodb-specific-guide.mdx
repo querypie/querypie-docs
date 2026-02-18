@@ -77,21 +77,21 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Connection Name을 지정합니다.
 3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다. 
-    3. Connection String : 
+    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    3. Connection String :
         1. Scheme 선택항목에서 `mongodb://` 를 선택합니다.
         2. 하위 호스트 이름과 포트를 쉼표로 구분하여 입력합니다.
     4. `Add Instance` 버튼을 눌러 각 멤버 호스트를 인스턴스로 추가합니다.
         1. Instance Name : 각각의 호스트를 구별할 수 있는 이름을 입력합니다.
         2. Connection String : 각 호스트를 `HOSTNAME(FQDN or IP Address):[PORT]` 형식으로 입력합니다.
-        3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시** `Expose` **옵션을 활성화 시킵니다.**  
+        3. Expose 는 커넥션 정보에서의 개별 인스턴스의 노출 여부를 결정할 수 있는 옵션입니다. <br/> **멀티호스트 기능을 사용하기 위해서는 반드시 인스턴스가 expose 상태여야 하므로 반드시** `Expose` **옵션을 활성화 시킵니다.**
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
 1. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
-2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.** 
+2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.**
 3. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 Querypie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 4. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 5. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
@@ -112,8 +112,8 @@ ______
 2. Connection Name을 지정합니다.
 3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다. 
-    3. Connection String : 
+    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    3. Connection String :
         1. Scheme 선택항목에서 `mongodb+srv://` 를 선택합니다.
         2. 도메인 형식의 호스트 이름(FQDN)을 입력합니다.
         3. `Lookup` 버튼을 누릅니다. 정상적으로 DNS 조회가 되었다면 클러스터 포함된 노드가 인스턴스로 자동으로 추가 됩니다.
@@ -138,7 +138,7 @@ Replica Set은 replicaSet=[replica set name] 옵션이 필요하지만 Sharded C
 
 1. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 Primary 값을 유지합니다.
-    2. Connection String : 
+    2. Connection String :
         1. Scheme 선택항목에서 `mongodb://` 를 선택합니다.
         2. 각 mongos의 호스트 이름과 포트를 쉼표로 구분하여 입력합니다.
     3. `Add Instance` 버튼을 눌러 각 mongos를 인스턴스로 추가합니다.

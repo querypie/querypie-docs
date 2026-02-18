@@ -15,9 +15,9 @@ SCIM 2.0 프로토콜을 기반으로 동작하는 QueryPie의 Provisioning 기�
 
 ### Prerequisites
 
-* 이하의 쿼리파이 관리자 권한 Role에서 이 기능을 활성화할 수 있습니다: 
+* 이하의 쿼리파이 관리자 권한 Role에서 이 기능을 활성화할 수 있습니다:
     * Owner
-    * System Admin 
+    * System Admin
 
 
 ### QueryPie Provisioning 활성화
@@ -29,14 +29,14 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
 </figcaption>
 </figure>
 
-1. QueryPie 앱의 Administrator &gt; General &gt; User Management &gt; Provisioning 경로로 이동합니다. 
-2. Provisioning 우측의 `Enable` 버튼을 클릭하여 SCIM 기능을 활성화합니다. 
-3. SCIM Endpoint로 제공하는 주소 값을 향후 Base URL로 설정할 수 있도록 보관합니다. 
-4. Access Token 발급을 위해 우측의 `Generate Token` 버튼을 클릭합니다. 
-5. 팝업창이 나타나면 해당 Access Token 값을 향후 IdP 측 토큰 정보에 기입할 수 있도록 복사해둡니다. 
+1. QueryPie 앱의 Administrator &gt; General &gt; User Management &gt; Provisioning 경로로 이동합니다.
+2. Provisioning 우측의 `Enable` 버튼을 클릭하여 SCIM 기능을 활성화합니다.
+3. SCIM Endpoint로 제공하는 주소 값을 향후 Base URL로 설정할 수 있도록 보관합니다.
+4. Access Token 발급을 위해 우측의 `Generate Token` 버튼을 클릭합니다.
+5. 팝업창이 나타나면 해당 Access Token 값을 향후 IdP 측 토큰 정보에 기입할 수 있도록 복사해둡니다.
     1. 이 토큰 값은 다시 조회가 어려우므로 해당 창을 닫지 않고 바로 원장이 될 Identity Provider로 넘어가는 것을 권장합니다. ([ **Okta-QueryPie Provisioning 연동** ](okta-provisioning-integration-guide) 스텝 참고)
-    2. 혹시라도 토큰 값을 분실한 경우, 기존의 토큰을 삭제하고 다시 4번 단계를 통해 새로 발급받기 바랍니다. 
-6. `Confirm` 버튼을 눌러 창을 닫습니다. 
+    2. 혹시라도 토큰 값을 분실한 경우, 기존의 토큰을 삭제하고 다시 4번 단계를 통해 새로 발급받기 바랍니다.
+6. `Confirm` 버튼을 눌러 창을 닫습니다.
 
 <Callout type="important">
 **SCIM 전용 토큰 안내**
@@ -44,8 +44,8 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
 2. 토큰 값은 생성 당시 1회에 한해 노출되며 이후에는 노출되지 않습니다.
 3. SCIM API 전용으로만 사용 가능하며 /api/scim/v2 외 다른 엔드포인트 호출이 불가합니다.
 4. 새로 생성된 토큰은 발급일 yyyy-MM-dd 기준으로 1년까지만 유효합니다.
-    1. 만료일이 도래하면 토큰은 Expired 처리되어 SCIM API 이용이 불가합니다. 
-    2. 관리자는 만료일이 도달하기 이전에 신규 토큰을 발급하여 기존의 IdP에 설정된 토큰을 변경해야 합니다. 
+    1. 만료일이 도래하면 토큰은 Expired 처리되어 SCIM API 이용이 불가합니다.
+    2. 관리자는 만료일이 도달하기 이전에 신규 토큰을 발급하여 기존의 IdP에 설정된 토큰을 변경해야 합니다.
 5. 토큰을 선택하고 `DELETE` 버튼을 클릭하여 토큰 삭제가 가능합니다.
 6. 만일 관리자가 토큰을 발급받았던 상태에서 Provisioning을 비활성화 했다가 다시 활성화 했을 경우, 기존의 토큰은 모두 비활성화 타이밍에 삭제 처리되므로, 관리자는 새로 유효한 토큰을 발급해야 합니다.
 </Callout>

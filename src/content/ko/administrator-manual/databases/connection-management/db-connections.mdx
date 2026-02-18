@@ -39,7 +39,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 1. Step 1에서 데이터 소스 종류를 선택하면 Step 2로 진입합니다.
 2. Step 2에서 DB 커넥션 정보를 입력합니다.
     *  **Allowed Zone**  : DB 커넥션에 접속할 수 있는 네트워크 대역
-        * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택 가능 
+        * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택 가능
         * 기본값: Default (All allowed)
     *  **Connection Name**  : DB 커넥션 이름
     *  **Cluster**  : 클러스터 구성 여부
@@ -74,7 +74,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 1. Cluster 옵션을 활성화하면 계층형 구조로 클러스터 및 인스턴스 정보를 입력할 수 있습니다.
 2. 각각의 클러스터 및 인스턴스의 엔드포인트를 알고 있는 경우 `Add Cluster`를 통해 수동으로 등록할 수 있습니다.
     *  **Type**  : 해당 클러스터의 Replication 타입
-        * Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다. 
+        * Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다.
     *  **Expose**  : 커넥션 목록에서 클러스터를 표시하는 옵션
         * Expandable : 웹 접속 시 사용자의 Connections 목록에서 클러스터, 인스턴스 단위까지 모두 표시
         * Unexpandable : 웹 커넥션 사용자의 Connections 목록에서 클러스터 하위의 인스턴스는 표시하지 않고, 클러스터 단위로만 표시
@@ -108,7 +108,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
     *  **Database Type** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
     *  **Cloud Provider** : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
     *  **Favorite View** : 즐겨찾기 설정 여부
-        * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다. <br/>  
+        * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다. <br/>
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png" alt="즐겨찾기 설정 버튼" width="347" />
           <figcaption>
@@ -160,7 +160,7 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connecti
 </figure>
 
 * Allowed Zone : DB 커넥션에 접속할 수 있는 네트워크 대역
-    * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택 가능 
+    * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택 가능
     * 기본값: Default (All allowed)
 * Connection Name : DB 커넥션 이름
 * Host : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)
@@ -255,7 +255,7 @@ Proxy Usage의 옵션
 </figure>
 
 * Use QueryPie registered account : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 QueryPie의 Proxy에서 지정한 계정 정보를 사용합니다.
-* Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다. 
+* Use existing database acount with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다.
 
 QueryPie 9.17부터 Proxy에서 지정한 계정 정보 사용 시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다.
 QueryPie 10.2.2 부터 난수 암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다.
@@ -340,7 +340,7 @@ QueryPie Web &gt; Databases &gt; Connections
 </figure>
 
 * Privilege Setting 이 설정된 권한을 부여받은 사용자는 커넥션 접속 시 관리자가 사전에 설정한 대로 해당 Privilege 에 맵핑된 DB 계정을 사용하며, Connections 접속 페이지에서 DB Username, Password 항목 자체를 볼 수 없습니다.
-* 웹에디터, 에이전트 프록시, SQL Request, Export Request 등 커넥션 접속에서 해당 DB 계정 사용이 강제화됩니다. 
+* 웹에디터, 에이전트 프록시, SQL Request, Export Request 등 커넥션 접속에서 해당 DB 계정 사용이 강제화됩니다.
 
 <Callout type="info">
 11.3.0에서 Advanced privilege 설정 시 특권 계정에 대해 암호를 등록하지 않으면 특권 계정(관리자 계정)이 대상에 접속할 때 수동으로 암호를 입력할 수 있도록 변경되었습니다.

@@ -44,14 +44,14 @@ QueryPie는 https://querypie-poc.customer.com/과 같은 TLS 인증서가 적용
 1. 제품에 접속하기 위한 Fully Qualified Domain Name (FQDN)
     * 원하는 도메인을 자유롭게 선택할 수 있습니다. 예) querypie-poc.customer.com
 2. 위 FQDN를 위한 로드 밸런서(LB)와 TLS 인증서
-    * QueryPie 기술 지원 담당자가 TLS 인증서 파일에 직접 액세스할 필요는 없습니다. 
+    * QueryPie 기술 지원 담당자가 TLS 인증서 파일에 직접 액세스할 필요는 없습니다.
     * 그러나 QueryPie는 TLS가 적용된 로드 밸런서(LB)가 필요합니다.
     * AWS의 경우, [Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html) 가 이에 해당합니다.
     * Azure의 경우, [Application Gateway](https://learn.microsoft.com/en-us/azure/application-gateway/overview) 가 이에 해당합니다.
     * GCP의 경우, [Application Load Balancer](https://cloud.google.com/load-balancing/docs/application-load-balancer) 가 이에 해당합니다.
 3. QueryPie를 실행할 Linux VM
     * 평가 목적으로는 4개의 vCPU와 16GiB 메모리를 사용하는 것이 권장됩니다.
-    * 로드 밸런서를 적용하는 것이 필수적이지만, 2개 이상의 VM 인스턴스를 구성할 필요는 없습니다. 
+    * 로드 밸런서를 적용하는 것이 필수적이지만, 2개 이상의 VM 인스턴스를 구성할 필요는 없습니다.
     * QueryPie를 단일 VM에 설치하더라도 제품의 기능을 효과적으로 테스트할 수 있습니다.
 4. 고객사의 Linux VM 환경에 대한 원격 접근을 임시로 허용해 주세요.
     * 로드 밸런서 및 TLS 설정을 위한 임시 Azure, AWS, GCP 계정을 제공할 수 있습니다. SSH 공개 키를 통해 액세스할 수 있는 Linux VM 인스턴스의 구성하고, SSH 공개 키(.pem 파일)를 제공할 수 있습니다.

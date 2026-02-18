@@ -45,12 +45,12 @@ Okta Admin &gt; Directory &gt; Profile Editor &gt; QueryPie User &gt; Add Attrib
 </figure>
 
 1. Okta 관리자 페이지의 좌측 패널에서 Directory &gt; Profile Editor 메뉴로 이동합니다.
-2. Profile 목록 중 ‘QueryPie User’ 를 클릭합니다. 
+2. Profile 목록 중 ‘QueryPie User’ 를 클릭합니다.
 3. Attributes 설정에서 `Add Attribute` 버튼을 클릭합니다.
 4. Attribute 추가 화면에서 아래 4가지 항목을 차례대로 입력 후 저장합니다.
-    1. Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another` 
+    1. Display name : firstName / Variable name : firstName 항목 입력 후 `Save and Add Another`
     2. Display name : lastName / Variable name : lastName 항목 입력 후 `Save and Add Another`
-    3. Display name : email / Variable name : email 항목 입력 후 `Save and Add Another` 
+    3. Display name : email / Variable name : email 항목 입력 후 `Save and Add Another`
     4. Display name : loginId / Variable name : loginId 항목 입력 후 `Save` 클릭
 
 <figure data-layout="center" data-align="center">
@@ -119,34 +119,34 @@ Okta Admin Console &gt; Security &gt; Administrators &gt; Roles &gt; Create new 
 </figcaption>
 </figure>
 
-1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다. 
-    * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다. 
-2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다. 
-3. Create new role을 선택합니다. 
-4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다. 
-    1.  **User** 
+1. Okta 관리자 페이지 좌측 패널에서 Directory &gt; People 메뉴로 이동하여 Add Person을 눌러 전용 시스템 연동용 계정을 생성합니다.
+    * 이미 쿼리파이 연동용으로 사용 가능한 계정이 있다면 본 단계를 넘어갑니다.
+2. Okta 관리자 페이지 좌측 패널에서 Security &gt; Administrators 메뉴로 이동하여 Roles탭으로 이동합니다.
+3. Create new role을 선택합니다.
+4. Role name (예. MinimumAdminRole) 및 Role description을 정의한 뒤, Select Permisions에서 이하의 권한만 체크합니다.
+    1.  **User**
         * View users and their details
-    2.  **Group** 
+    2.  **Group**
         * View groups and their details
-    3.  **Application** 
+    3.  **Application**
         * View application and their details
-5. Save role을 눌러 커스텀 롤을 저장합니다. 
-6. Resources 탭으로 이동합니다. 
+5. Save role을 눌러 커스텀 롤을 저장합니다.
+6. Resources 탭으로 이동합니다.
 7. Create new resource set을 선택합니다.
-    * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다. 
-8. Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다. 
-    1. User : 쿼리파이 사용자 전부 선택 
-    2. Group : 쿼리파이 사용 그룹 전부 선택 
+    * 이미 할당할 권한 범위 지정을 위해 만들어두신 resource set이 있다면 본 단계를 넘어가 10번 단계를 진행합니다.
+8. Name (예. MinimumResources) 및 Description을 정의한 뒤 이하의 범위를 검색하여 지정합니다.
+    1. User : 쿼리파이 사용자 전부 선택
+    2. Group : 쿼리파이 사용 그룹 전부 선택
     3. Application : 쿼리파이 앱으로 한정
-9. Create를 선택하여 생성합니다. 
+9. Create를 선택하여 생성합니다.
 10. Admins 탭으로 이동하여 쿼리파이 연동용 계정에 이하의 권한을 할당합니다.
     1. Role: MinimumAdminRole | Resource: MinimumResources
-    2. Role: Read-Only Administrator 
-        * API 토큰 생성메뉴 접근을 위한 임시 부여 
-11. 쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다. 
+    2. Role: Read-Only Administrator
+        * API 토큰 생성메뉴 접근을 위한 임시 부여
+11. 쿼리파이 연동용 계정으로 옥타 관리자 콘솔 페이지로 인증 후 접근합니다.
 12. Security &gt; API 메뉴에서 Tokens 탭으로 이동합니다.
-13. Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다. 
-14. 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다. 
+13. Create Token 버튼을 클릭하여 인증 토큰을 생성하여 이를 보관합니다.
+14. 이후 다시 초기 작업하였던 관리자 계정으로 접속하여 Security &gt; Administrators &gt; Admins 탭에서 연동용 계정을 편집하여 Read-Only Adminstrator 권한을 회수합니다.
 
 
 ### QueryPie에서 Okta 연동 및 동기화 설정
@@ -163,8 +163,8 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 3. 복사한 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
 4. 자동 동기화를 설정하고자 하는 경우, “Use Synchronization with the Authentication System”를 체크합니다.
     1. API URL: Okta 관리자 페이지 우측 상단의 프로필을 클릭하면 `{domain}`.okta.com 형식의 URL 을 확인할 수 있습니다.
-    2. API Token: Okta 관리자 API 토큰을 기입합니다. 
-    3. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다. 
+    2. API Token: Okta 관리자 API 토큰을 기입합니다.
+    3. Application ID: Okta 내에서 2개 이상의 QueryPie App 을 사용할 경우 입력합니다.
 5. 자동 동기화 기능을 사용하고자 할 경우 Replication Frequency 항목에서 Scheduling 을 설정합니다.
 6. `Dry Run` 버튼을 클릭하여 연동 정보가 정상적으로 입력되었는지 확인합니다.
 7. `Save Changes`로 저장합니다.

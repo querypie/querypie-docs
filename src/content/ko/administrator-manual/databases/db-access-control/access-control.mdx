@@ -54,7 +54,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
     * Database Type **** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
     * Host : 커넥션에 등록된 Host 주소입니다.
     * Port : 커넥션에 등록된 Port 주소입니다.
-    * Access Control Level : access control의 수준을 나타냅니다. 11.5.0 부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다. 
+    * Access Control Level : access control의 수준을 나타냅니다. 11.5.0 부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다.
     * Assigned Privilege : 대상에 할당된 privilege입니다.
     * Status : privilege 의 상태 표시입니다.
         * Active ; 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태
@@ -80,7 +80,7 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095406.png" alt="image-20251218-095406.png" width="736" />
   </figure>
-6. 필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
+6. 필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다.
 7. 권한을 부여할 커넥션 여러 개를 선택하여 일괄적으로 권한을 부여할 수도 있습니다. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-095817.png" alt="image-20251218-095817.png" width="736" />
@@ -104,11 +104,11 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
 5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한번에 여러 개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울 수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장합니다.
-6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item` 버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야 합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila 
+6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item` 버튼을 누릅니다. <br/> 아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야 합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
-7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.) 
+7. privilege 할당은 먼저 팝업 창 우측 상단의 Host Level Privilege 항목에서 원하는 priivilege type을 선택합니다. ( 스키마 레벨 privilege는 host level privilege 의 범위 내에서만 부여가 가능하기 때문입니다. 예를 들어 Read/Write를 Host Level Privilege 로 선택했다면 그 범위 내에서 SELECT, INSERT 등을 부여할 수 있지만 Read-Only를 Host Level Privilege로 선택했다면 SELECT만 지정할 수 있습니다.)
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-110506.png" alt="image-20251218-110506.png" width="736" />
   </figure>
@@ -116,14 +116,14 @@ Access Control 페이지 내 Groups / Users 탭의 목록에서 특정 사용자
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-111204.png" alt="image-20251218-111204.png" width="732" />
   </figure>
-9.  필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다. 
+9.  필요한 경우 Expiration date에 privilege 만료일을 설정한 뒤 `Grant` 버튼을 누릅니다.
 
 이제 권한을 부여받은 사용자는 해당 권한으로 커넥션에 접속할 수 있으며, 권한 부여 내역은 Access Control Logs 로그에 Access Control Granted 이벤트로 기록됩니다.
 
 <Callout type="important">
 * PostgreSQL은 schema level 제어 대상이 Database 입니다. PotgreSql은 schema 라는 이름의 구조를 가지고 있으나 이는 privilege 할당의 대상이 되는 것이 아니라 구분의 용도로 사용되기 때문입니다.
-* Oracle, Presto, Trino, SAP HANA는 schema level 제어 대상이 Schema입니다. 
-* Schema 또는 Logical DB 대상 입력을 할 때 정규식을 사용할 수 있습니다. 이 때 단어의 시작을 나타내는 ^, 단어의 끝을 나타내는 $를 사용할 수 없을 수 있습니다. 내부적으로 database.schema.table의 구조를 모두 인식하여 처리하기 때문에 schema 이름에 해당하는 정규식만 입력하면 오류가 발생합니다. 
+* Oracle, Presto, Trino, SAP HANA는 schema level 제어 대상이 Schema입니다.
+* Schema 또는 Logical DB 대상 입력을 할 때 정규식을 사용할 수 있습니다. 이 때 단어의 시작을 나타내는 ^, 단어의 끝을 나타내는 $를 사용할 수 없을 수 있습니다. 내부적으로 database.schema.table의 구조를 모두 인식하여 처리하기 때문에 schema 이름에 해당하는 정규식만 입력하면 오류가 발생합니다.
 </Callout>
 
 <Callout type="info">
@@ -152,7 +152,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 <Callout type="important">
 **Access Control Details 패널에서의 Status 설명**
 *  **Active**  : 해당 사용자에게 커넥션의 권한이 정상적으로 부여되어 있는 상태입니다.
-*  **Deactivated**  : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간 동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다. 
+*  **Deactivated**  : 해당 사용자가 커넥션에 대한 권한이 있지만, 관리자에 의해 설정된 기간 동안 커넥션에 접속하지 않은 경우 비활성화된 상태입니다. 이 경우, 사용자는 해당 커넥션에 일시적으로 접속할 수 없습니다.
 * Deactivated 상태 우측의 버튼(`Renew`)을 통해 비활성화된 권한을 갱신하여 다시 활성화할 수 있습니다.
 * 비활성화된 권한을 갱신한 경우  **Renewed At**  컬럼에 갱신 시점이 표시됩니다.
 </Callout>
@@ -183,7 +183,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20241209-123358.png" alt="image-20241209-123358.png" width="760" />
 </figure>
 
-1. 커넥션 잠금 및 잠금 해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인할 수 있습니다. 
+1. 커넥션 잠금 및 잠금 해제 내역은 Audit &gt; Databases &gt; Account Lock History 메뉴에서 확인할 수 있습니다.
 
 
 <Callout type="info">

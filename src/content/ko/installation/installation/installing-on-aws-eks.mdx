@@ -95,7 +95,7 @@ kind: PersistentVolume
 metadata:
   name: local-pv
   labels:
-    app: mysql     
+    app: mysql
 spec:
   capacity:
     storage: 50Gi
@@ -161,8 +161,8 @@ spec:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: ""              
-        selector:                       
+        storageClassName: ""
+        selector:
           matchLabels:
             app: mysql
 ---

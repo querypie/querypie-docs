@@ -35,7 +35,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 7.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다.
 8.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
     1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다.
-        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter 
+        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
 9.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케줄링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
@@ -55,7 +55,7 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.** 
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.**
 * 이 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화할 수 있습니다.
 * 이 옵션이 활성화되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
@@ -91,7 +91,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 
 1. GCP 연동을 위한 Cloud Provider 등록 후 상세페이지에서 `Synchronize` 버튼을 클릭합니다.
 2. 표시되는 Service Account JSON 항목에 JSON 키 값을 입력 후 `Ok` 버튼을 클릭합니다.
-    * Service Account는 Google Cloud 콘솔 &gt; IAM 및 관리자 &gt; 서비스 계정 메뉴에서 생성 후 JSON 키를 발급하여 사용할 수 있습니다. 
+    * Service Account는 Google Cloud 콘솔 &gt; IAM 및 관리자 &gt; 서비스 계정 메뉴에서 생성 후 JSON 키를 발급하여 사용할 수 있습니다.
 3. 해당 JSON 키로 동기화된 리소스는 DB Connections 메뉴에서 확인할 수 있습니다.
 
 <Callout type="info">

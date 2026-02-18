@@ -39,20 +39,20 @@ spec:
   allow:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPathTags:              
+        urlPathTags:
           access: "admin"
       - webApp: "QueryPie Customer Portal"
-        urlPaths: ["*"]          
+        urlPaths: ["*"]
     conditions:
       userAttributes:
         department: "White"
-      ipAddresses: 
+      ipAddresses:
         - "10.10.0.0/24"
         - "10.10.1.79"
   deny:
     resources:
       - webApp: "Querypie Web Admin"
-        urlPaths: 
+        urlPaths:
           - "/general-settings/user-management/roles"
 ```
 
@@ -209,11 +209,11 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
     allow:
       resources:
         - webApp: "Querypie Web Admin"
-          urlPaths: 
+          urlPaths:
             - "/general-settings/user-management"
             - "/database-settings/policies"
         - webApp: "QueryPie Customer Portal"
-          urlPathTags: 
+          urlPathTags:
             access: "admin"
   ```
 3. 웹 앱 이름은 다음의 조건을 만족해야 합니다.
@@ -248,18 +248,18 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
         allow:
           resources:
             - webApp: "Querypie Web Admin"
-              urlPaths: 
+              urlPaths:
                 - "/general-settings/user-management"     # 특정 하위 경로
                 - "/general-settings/user-management/*"   # 특정 경로의 모든 하위 경로
       ```
     * 입력한 경로 중에 서로 중첩되는 경로를 동시에 입력할 수 없습니다.
-        * 예: QueryPie Web Admin 의 `/general-settings/*` 와 `/general-settings/user-management` 를  **동시에 입력 불가** 
+        * 예: QueryPie Web Admin 의 `/general-settings/*` 와 `/general-settings/user-management` 를  **동시에 입력 불가**
           ```
           spec:
             allow:
               resources:
                 - webApp: "Querypie Web Admin"
-                  urlPaths: 
+                  urlPaths:
                     - "/general-settings/*"
                     - "/general-settings/user-management"
           ```
@@ -277,14 +277,14 @@ QueryPie에 정의한 웹 앱 리소스 이름을 입력합니다.
     * Key가 동일한 태그를 여러 개 입력 시,  **OR**  조건으로 동작합니다.
         * 예: `access: admin` 또는 `access: user` 가 부여된 경로에 대해 접근 허용
           ```
-          urlPathTags: 
+          urlPathTags:
             "access": "admin"
             "access": "user"
           ```
     * Key가 다른 태그를 여러 개 입력 시,  **AND**  조건으로 동작합니다.
         * 예: `access: admin` 과 `type: general` 가 함께 부여된 경로에 대해 접근 허용
           ```
-          urlPathTags: 
+          urlPathTags:
             "access": "admin"
             "type": "general"
           ```
@@ -311,14 +311,14 @@ QueryPie에서 추가된 사용자의 속성은 상세 페이지에서 추가/�
 * Key가 동일한 속성을 여러 개 입력 시, OR 조건으로 동작합니다.
     * 예: 부서(department)가 PM 또는 QA인 사용자에 대해 접근 허용
       ```
-      userAttributes: 
+      userAttributes:
         "department": "PM"
         "department": "QA"
       ```
 * Key가 다른 속성을 여러 개 입력 시, AND 조건으로 동작합니다.
     * 예: 부서(department)가 PM이고, 직책(title)이 관리자인 사용자에 대해 접근 허용
       ```
-      userAttributes: 
+      userAttributes:
         "department": "PM"
         "title": "Manager"
       ```
@@ -336,7 +336,7 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 
 권한 별로 접근을 허용할 웹 앱 및 하위 경로를 지정하는 방식을 권장하고 있습니다.
 
-1. 웹 앱 별로 존재하는 권한 목록을 확인합니다. 
+1. 웹 앱 별로 존재하는 권한 목록을 확인합니다.
     1. 예: 채용 플랫폼에 대하여,
         1. HR - 모든 권한 가짐
         2. 면접관 - 면접 결과를 관리하는 페이지에만 접근 가능

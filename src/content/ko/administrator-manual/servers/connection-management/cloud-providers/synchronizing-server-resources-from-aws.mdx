@@ -30,16 +30,16 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 5.  **Region**  항목에서 동기화하고자 하는 리소스의 리전을 선택합니다.
 6. 리소스를 동기화하기 위해 필요한  **Credential**  정보를 입력합니다.
     1. 각각의 Credential 방식에 대한 설명은 하단의 <u>Credential 타입별 인증 방식 설정하기</u>를 참고합니다.
-7.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다. 
-    1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다. 
-        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter 
-    2. 더 자세한 사용 방법은 [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)에서 확인할 수 있습니다. 
+7.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
+    1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다.
+        1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
+    2. 더 자세한 사용 방법은 [User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)에서 확인할 수 있습니다.
 8.  **Replication Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케줄링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
 9.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 서버의 일부 값을 사용자가 지정할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
     * port **:**  동기화된 서버의 접속 포트를 지정할 수 있습니다. 현재는 SSH/SFTP 포트만 지정이 가능합니다.
-    * Tag : 동기화된 서버에 자동으로 태그를 추가할 수 있습니다. 
+    * Tag : 동기화된 서버에 자동으로 태그를 추가할 수 있습니다.
         * 태그 값에 `{vpcid}`를 입력하면, 해당 서버가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, 서버가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
 10. `Save` 버튼을 클릭하여 Cloud Provider를 저장합니다.
@@ -63,7 +63,7 @@ Credential 타입
 *  **Default Credentials**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스에 AmazonEC2ReadOnlyAccess 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다.
 *  **Cross Account Role**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해 주세요.
 *  **Profile Credential**  : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다.
-*  **Access Key**  : `Synchronize` 버튼 클릭 시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  **** 
+*  **Access Key**  : `Synchronize` 버튼 클릭 시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 access key를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.  ****
 
 <Callout type="important">
 **Save Credential for Synchronization 옵션**
@@ -75,8 +75,8 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.** 
-* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다. 
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 IAM 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.**
+* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
 * 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
 
