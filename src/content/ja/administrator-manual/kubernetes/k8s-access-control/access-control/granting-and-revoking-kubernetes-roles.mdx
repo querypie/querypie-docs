@@ -1,17 +1,17 @@
 ---
-title: 'Kubernetes役割付与および回収'
+title: 'Kubernetesロールの付与および回収'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544383381'
 ---
 
 import { Callout } from 'nextra/components'
 
-# Kubernetes役割付与および回収
+# Kubernetesロールの付与および回収
 
 ### Overview
 
-管理者はユーザーまたはユーザーグループにKubernetes APIアクセス権限がある役割(Role)を付与または回収できます。
+管理者は、ユーザーまたはユーザーグループにKubernetes APIアクセス権限を持つロール（Role）を付与または回収することができます。
 
-### Kubernetes役割付与
+### Kubernetesロールの付与
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-065226.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control" width="760" />
@@ -20,45 +20,45 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control
 </figcaption>
 </figure>
 
-1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Controlメニューに移動します。
-2. 権限を付与するユーザーまたはユーザーグループを選択して詳細ページに移動します。
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control メニューに移動します。
+2. 権限を付与するユーザーまたはユーザーグループを選択して、詳細ページに移動します。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-065443.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details" width="760" />
   <figcaption>
   Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details
   </figcaption>
   </figure>
-3. Rolesタブ右側の`+ Grant Roles`ボタンをクリックして付与するRole左側チェックボックスをチェックし、満了日を指定します。
+3. Rolesタブ右側の`+ Grant Roles`ボタンをクリックして、付与するRoleの左側チェックボックスにチェックを入れ、有効期限を指定します。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070449.png" alt="image-20240721-070449.png" width="478" />
   </figure>
-    1. Role名で検索可能です。
-    2. 既存にすでに割り当てられている役割はチェックボックスが非活性化されます。
-    3. リストリストには各ポリシー別に以下の情報を露出します：
+    1. Role名で検索できます。
+    2. 既に割り当てられているロールはチェックボックスが無効化されます。
+    3. リスト一覧には各ポリシーごとに以下の情報が表示されます：
         1.  **Name**  : Role名
-            * 役割情報を照会できる新しいウィンドウリンクを提供します。
-        2.  **Description**  : Role詳細説明
-        3.  **Assigned Policies**  : 割り当てられているポリシーリストを列挙
-    4.  **Expiration Date**  : 期限満了日を必須で指定します。
-        * デフォルトで設定時点から1年後に設定され、最大1年までしか設定できません。
-4. `Grant`ボタンをクリックしてチェックした対象Roleを割り当てます。
-5. (`Cancel`ボタンを押すと該当モーダルを変更事項なしで終了します。)
+            * ロール情報を確認できる新しいウィンドウリンクが提供されます。
+        2.  **Description**  : Roleの詳細説明
+        3.  **Assigned Policies**  : 割り当てられているポリシーの一覧を表示
+    4.  **Expiration Date**  : 有効期限を必須で指定します。
+        * デフォルトでは設定時点から1年後に設定され、最大1年までのみ設定可能です。
+4. `Grant`ボタンをクリックして、チェックした対象Roleを割り当てます。
+5. （`Cancel`ボタンを押すと、該当モーダルを変更なしで閉じます。）
 
-### Kubernetes役割回収
+### Kubernetesロールの回収
 
 <figure data-layout="left" data-align="left">
 <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070526.png" alt="image-20240721-070526.png" width="444" />
 </figure>
 
-1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Controlメニューに移動します。
-2. 権限を回収するユーザーまたはユーザーグループを選択して詳細ページに移動します。
-3. Rolesタブで全体選択または個別選択ボックスにチェックするとカラムバーに露出された`Revoke`ボタンをクリックします。
+1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control メニューに移動します。
+2. 権限を回収するユーザーまたはユーザーグループを選択して、詳細ページに移動します。
+3. Rolesタブで全選択または個別選択ボックスにチェックを入れると、カラムバーに表示される`Revoke`ボタンをクリックします。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070637.png" alt="image-20240721-070637.png" width="428" />
   </figure>
-4. 確認ウィンドウで`Revoke`ボタンクリック時、選択した役割権限がユーザー/グループから回収されてリストから消えます。
-5. (`Cancel`ボタンクリック時は確認ウィンドウのみ閉じます。)
+4. 確認ダイアログで`Revoke`ボタンをクリックすると、選択したロールの権限がユーザー/グループから回収され、リストから削除されます。
+5. （`Cancel`ボタンをクリックすると、確認ダイアログのみ閉じます。）
 
 <Callout type="important">
-Role回収時、該当役割でユーザーおよびグループに付与されていたすべてのアクセス権限が回収されます。
+Roleを回収すると、該当ロールでユーザーおよびグループに付与されていたすべてのアクセス権限が回収されます。
 </Callout>

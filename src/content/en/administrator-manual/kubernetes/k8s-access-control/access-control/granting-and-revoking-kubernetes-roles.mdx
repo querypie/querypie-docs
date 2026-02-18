@@ -20,29 +20,29 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control
 </figcaption>
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control menu. 
-2. Select the user or user group to grant permissions to and move to the detailed page. 
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control menu.
+2. Select the user or user group to grant permissions to and navigate to the detail page.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-065443.png" alt="Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details" width="760" />
   <figcaption>
   Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; List Details
   </figcaption>
   </figure>
-3. Click the `+ Grant Roles` button on the right of the Roles tab, check the checkbox on the left of the Role to grant, and specify the expiration date. 
+3. Click the `+ Grant Roles` button on the right side of the Roles tab, check the checkbox on the left of the Role to grant, and specify the expiration date.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070449.png" alt="image-20240721-070449.png" width="478" />
-  </figure> 
+  </figure>
     1. You can search by Role name.
-    2. Already assigned roles have disabled checkboxes.
-    3. The list exposes the following information for each policy:
-        1.  **Name**  : Role name 
-            * Provides a new window link to view role information.
-        2.  **Description**  : Role detailed description
-        3.  **Assigned Policies**  : Lists assigned policy list
-    4.  **Expiration Date**  : Expiration date must be specified as required. 
-        * When set as default, it is set to one year from the current point, and can be set up to a maximum of one year. 
-4. Click the `Grant` button to assign the checked target Role.
-5. (Clicking the `Cancel` button closes the modal without changes.)
+    2. Checkboxes for already assigned roles will be disabled.
+    3. The list displays the following information for each policy:
+        1.  **Name**  : Role name
+            * A new window link is provided to view the role information.
+        2.  **Description**  : Detailed description of the Role
+        3.  **Assigned Policies**  : Lists the assigned policies
+    4.  **Expiration Date**  : The expiration date must be specified.
+        * By default, it is set to one year from the time of configuration, and can be set up to a maximum of one year.
+4. Click the `Grant` button to assign the checked Role.
+5. (Clicking the `Cancel` button closes the modal without any changes.)
 
 ### Revoking Kubernetes Roles
 
@@ -50,15 +50,15 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control
 <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070526.png" alt="image-20240721-070526.png" width="444" />
 </figure>
 
-1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control menu. 
-2. Select the user or user group to revoke permissions from and move to the detailed page. 
-3. In the Roles tab, click the `Revoke` button exposed in the column bar when checking the select all or individual selection box.
+1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control menu.
+2. Select the user or user group to revoke permissions from and navigate to the detail page.
+3. In the Roles tab, check the select all or individual selection checkbox, then click the `Revoke` button that appears in the column bar.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/granting-and-revoking-kubernetes-roles/image-20240721-070637.png" alt="image-20240721-070637.png" width="428" />
   </figure>
-4. When clicking the `Revoke` button in the confirmation window, the selected role permissions are revoked from the user/group and disappear from the list.
-5. (Clicking the `Cancel` button only closes the confirmation window.)
+4. When you click the `Revoke` button in the confirmation dialog, the selected role permissions are revoked from the user/group and removed from the list.
+5. (Clicking the `Cancel` button only closes the confirmation dialog.)
 
 <Callout type="important">
-When revoking a Role, all access permissions that were granted to users and groups through that role are revoked.
+When a Role is revoked, all access permissions that were granted to users and groups through that role will be revoked.
 </Callout>

@@ -30,70 +30,70 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
 </figure>
 
 1. Navigate to Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control menu.
-2. You can search by user/group name using the search box in the top left of the table.
-3. You can refresh the user/group list using the refresh button in the top right of the table.
-4. The table list exposes the following information for each user/group:
+2. You can search by user/group name using the search box at the top left of the table.
+3. You can refresh the user/group list using the refresh button at the top right of the table.
+4. The table displays the following information for each user/group:
     1.  **User Type**  : User/group type
-    2.  **Provider**  : Represents the ledger of the user/group
+    2.  **Provider**  : Represents the identity source of the user/group
     3.  **Name**  : User/group name
     4.  **Members**  : List of members belonging to the group
     5.  **Roles**  : Number of granted Roles
-5. Click on a row in the Access Control list to move to the detailed page for the target user/group.
-    1.   **Roles** 
+5. Clicking a row in the Access Control list navigates to the detail page for the target user/group.
+    1.   **Roles**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065530.png" alt="image-20240721-065530.png" width="712" />
       </figure>
         1. This is the default tab where you can view the list of granted Roles.
         2. You can search by Role name.
-        3. The list exposes the following information for each Role:
+        3. The list displays the following information for each Role:
             1.  **Name**  : Role name
-            2.  **Description**  : Role detailed description
+            2.  **Description**  : Role description
             3.  **Expiration Date**  : Expiration date
-            4.  **Last Access At**  : Last call date and time for the role
+            4.  **Last Access At**  : Date and time of the last invocation of the Role
             5.  **Granted At**  : Date and time when the Role was granted to the user/group
-            6.  **Granted By**  : Administrator name who granted the Role to the user/group
-        4. Click on each Role row to provide detailed information of the Role in drawer format.
+            6.  **Granted By**  : Name of the administrator who granted the Role to the user/group
+        4. Clicking each Role row displays the detailed information of the Role in a drawer format.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065559.png" alt="image-20240721-065559.png" width="688" />
           </figure>
-            1. Basic information is exposed at the top as follows:
-                1.  **Name**  : Role name 
-                    * (You can open the Role detailed page link in a new window.)
-                2.  **Description**  : Role detailed description
+            1. Basic information is displayed at the top as follows:
+                1.  **Name**  : Role name
+                    * (You can open the Role detail page link in a new window.)
+                2.  **Description**  : Role description
                 3.  **Granted At**  : Date and time when the Role was granted to the user/group
-                4.  **Granted By**  : Administrator name who granted the Role to the user/group
-                5.  **Last Access At**  : Last call date and time for the role
+                4.  **Granted By**  : Name of the administrator who granted the Role to the user/group
+                5.  **Last Access At**  : Date and time of the last invocation of the Role
                 6.  **Expiration Date**  : Expiration date
-            2. Policies assigned to the role are exposed as a list at the bottom.
-                1.  **Name**  : Policy name 
-                    * (Provides a link to view policy information.)
+            2. The policies assigned to the Role are displayed as a list at the bottom.
+                1.  **Name**  : Policy name
+                    * (Provides a link to view the policy information.)
                       <figure data-layout="center" data-align="center">
                       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065637.png" alt="image-20240721-065637.png" width="310" />
                       </figure>
-                2.  **Description**  : Policy detailed description
+                2.  **Description**  : Policy description
                 3.  **Version**  : Policy version
                 4.  **Assigned At**  : Assignment date and time
-                5.  **Assigned By**  : Administrator name who assigned the policy
-    2.  **Clusters** 
+                5.  **Assigned By**  : Name of the administrator who assigned the policy
+    2.  **Clusters**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065710.png" alt="image-20240721-065710.png" width="712" />
       </figure>
-        1. Lists Kubernetes clusters accessible through granted Roles.
-        2. You can search by Cluster name and Role name.
-        3. The list exposes the following information for each cluster:
+        1. Lists the Kubernetes clusters accessible through the granted Roles.
+        2. You can search by Cluster name or Role name.
+        3. The list displays the following information for each cluster:
             1.  **Name**  : Cluster name
             2.  **Version**  : Kubernetes version
             3.  **API URL**  : Cluster API URL
-            4.  **Cloud Provider**  : Connected platform (displayed as hyphen for manual clusters)
+            4.  **Cloud Provider**  : Connected platform (displayed as a hyphen for manual clusters)
             5.  **Tags**  : List of tags attached to the cluster
             6.  **Role**  : List of related Roles
             7.  **Created At**  : Cluster initial creation date and time
             8.  **Updated At**  : Cluster last modification date and time
 
 <Callout type="info">
-**Processing Method for Granted Roles with Expired Expiration Date**
+**How Granted Roles with an Expired Expiration Date Are Handled**
 * For Roles that have reached the Expiration Date among Roles granted to users or groups, the following actions occur:
-    * The Role row is automatically removed from the Roles tab in the Access Control detailed page.
-    * The cluster row that was accessible through the Role is automatically removed from the Clusters tab in the Access Control detailed page.
-    * A "Role Revoked" log is left in Audit &gt; Kubernetes &gt; Kubernetes Role History with Action By marked as "System". 
+    * The Role row is automatically removed from the Roles tab on the Access Control detail page.
+    * The cluster row that was accessible through the Role is automatically removed from the Clusters tab on the Access Control detail page.
+    * A "Role Revoked" log is recorded in Audit &gt; Kubernetes &gt; Kubernetes Role History, and Action By is marked as "System".
 </Callout>

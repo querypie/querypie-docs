@@ -7,22 +7,22 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382445/Ti
 
 ### Overview
 
-You can manage access policies (Policy) for Kubernetes clusters managed by the organization.
+You can manage access policies (Policy) for Kubernetes clusters managed by your organization.
 Kubernetes policies are operated as Policy as a Code (PaC) and work based on YAML format.
 
 Administrators can check the definition method for each item through the **Tips tab** at the bottom of the Code Editor page and reflect it in the code.
 
 **Tips** briefly provides writing guides for each field of the code editor.
 
-1. Highlights the relevant tip based on the code editor cursor position to allow users to view related content.
-2. When a value is written in the field, the tip disappears from the display. When the value becomes empty again, it is specified in Tips again.
+1. Highlights the relevant tip based on the code editor cursor position, allowing users to view the related content.
+2. When a value is entered in the field, the tip disappears from the display. When the value becomes empty again, it is displayed in Tips again.
 
 
 ### Content Provided by TIPS
 
-The following information is exposed to guide methods when writing Policy code:
+The following information is displayed to guide you when writing Policy code:
 
-|  **Target**                                                    |  **Main Tip**                                      |  **Detailed Description**                                                                                                                                                                                                                                                                                            |
+|  **Target**                                                  |  **Main Tip**                                    |  **Detailed Description**                                                                                                                                                                                                                                                                             |
 | ---------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `spec`                                                     |  **Define Specifications**                     | A policy may include allow and/or deny specifications. The syntax does not accept multiple allow or deny specifications in a single policy.                                                                                                                                                           |
 | `resources`                                                |  **Specify Resources**                         | A policy is required to include at least one target QueryPie resource. To target every resources at once, use '*'. (e.g., cluster:*) QueryPie supports both glob patterns and regular expressions (RE2: [https://github.com/girishji/re2/wiki/Syntax](https://github.com/girishji/re2/wiki/Syntax) ). |

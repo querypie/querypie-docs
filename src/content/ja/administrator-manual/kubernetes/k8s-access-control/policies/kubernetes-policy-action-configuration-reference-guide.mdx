@@ -7,17 +7,17 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382659/Ac
 
 ### Overview
 
-QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。
-この時、Actionに対するガイドを提供して、間違ったポリシー設定によるkubectl、lens、k9sのようなclient tool使用の困難が発生しないようにします。
+QueryPie KACでは、Yaml形式のPolicyを通じてk8sに対するアクセス制御ポリシーを設定します。
+この際、Actionに関するガイドを提供し、誤ったポリシー設定によるkubectl、Lens、k9sなどのclient toolの使用に支障が出ないようにします。
 
 
 ### API Groups関連設定ガイド
 
-よく使用されるpodsのような場合はapiGroupsがcoreグループなので`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`で管理者が個別に設定を行うのは困難です。
+よく使用されるpodsのような場合はapiGroupsがcoreグループであるため`""`空文字列ですが、deploymentsやreplicasetsは`"apps"`、ingressesのような場合は`"networking.k8s.io"`であり、管理者が一つ一つ把握して設定するのは困難です。
 
-もちろん同じresource nameを持つ場合、apiGroupsを通じて分離する必要があるかもしれませんが、一般的な状況ではありません。
+もちろん同じresource nameを持つ場合はapiGroupsを通じて分離する必要がありますが、一般的な状況ではありません。
 
-したがって、Kubernetes API Group管理のミッションがない限り、一般的には`"*"`で設定し、resourcesでアクセス権限を制御する方向で設定することをお勧めします。
+したがって、Kubernetes API Group管理のミッションがない限り、一般的には`"*"`で設定し、resourcesでアクセス権限を制御する方向で設定することを推奨します。
 
 
 ### Resources関連設定ガイド
@@ -32,14 +32,14 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
 3rd Party Client Tool使用時、許可されたリソース範囲内で現況モニタリングが可能です。
 
 *  **Resourcesパート**
-    * 上画面でresourcesは私が権限を持つリソースに対してのみ表示されます。
-    * そのため`pods`に対する権限だけあれば`pods`に対するグラフだけ見え、もし`pods`がフィルタリングされて一部だけ見ることができれば一部だけ表示されます。
+    * 上記画面でresourcesは自分が権限を持つリソースに対してのみ表示されます。
+    * そのため`pods`に対する権限だけがあれば`pods`に対するグラフのみ表示され、`pods`がフィルタリングされて一部のみ閲覧可能な場合は一部のみ表示されます。
     * 他のリソースも同様に動作します。
     * 推奨スペック
       ```
       allow:
         actions:
-          # Podsのみ許可時
+          # Podsのみ許可する場合
           - apiGroups: ["*"]
             resources: ["pods"]
             namespace: "*"
@@ -47,14 +47,14 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
             verbs: ["get", "list", "watch"]
       ```
 *  **Eventsパート**
-    * 下のevents項目は`events`リソースに対する権限によって表示されますが、上のresources項目と同様にnamespace、nameによってフィルタリングされて表示されます。
-    * ただし`pods`に対する権限があるからといって`pods`関連`events`が見えるわけではないので、該当画面を見るには明示的に`events`リソースに対する権限を与える必要があります。
-    * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソース権限がある状態で`pods`に対する権限だけを与えたとしても`events`中`pods`に対する内容だけが照会されるわけではないことをご案内します。
+    * 下記のevents項目は`events`リソースに対する権限によって表示されますが、上記のresources項目と同様にnamespace、nameによってフィルタリングされて表示されます。
+    * ただし、`pods`に対する権限があるからといって`pods`関連の`events`が表示されるわけではないため、該当画面を表示するには明示的に`events`リソースに対する権限を付与する必要があります。
+    * `events`リソースと`pods`リソースは互いに分離されたリソースです。したがって、`events`リソースの権限がある状態で`pods`に対する権限のみを付与したとしても、`events`の中で`pods`に対する内容のみが照会されるわけではありません。
     * 推奨スペック
       ```
       allow:
         actions:
-          # Eventsを一緒に出力許可時
+          # Eventsも一緒に出力を許可する場合
           - apiGroups: ["*"]
             resources: ["pods", "events"]
             namespace: "*"
@@ -65,12 +65,12 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
 
 ### Verbs関連設定ガイド
 
-3rd Party Client Tool使用に最も大きな影響を受ける部分はverbです。
-管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースに対する範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲をよく設定したとしてもverbの束を適切に設定しなければTool使用が困難です。
+3rd Party Client Toolの使用に最も大きな影響を与える部分はverbです。
+管理者はapiGroups、resources、namespace、nameを通じてユーザーがアクセスできるリソースの範囲を指定し、verbを通じてどのAPIを呼び出せるかを指定しますが、リソースの範囲を適切に設定したとしてもverbの組み合わせを正しく設定しなければToolの使用が困難になります。
 
 *  **View権限**
-    * View権限だけを得るユーザーの場合は`get`、`list`、`watch`をすべて付与する必要があります。
-    * `get`、`list`だけでもkubectlの使用は大きく困難ではありませんが、`watch`がないとlensのような現況モニタリングをサポートするツールの使用が困難です。
+    * View権限のみを得るユーザーの場合は`get`、`list`、`watch`をすべて付与する必要があります。
+    * `get`、`list`のみでもkubectlの使用に大きな支障はありませんが、`watch`がなければLensのような現況モニタリングをサポートするツールの使用が困難になります。
     * 推奨スペック
       ```
       allow:
@@ -82,10 +82,10 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
             verbs: ["get", "list", "watch"]
       ```
 *  **Edit権限**
-    * Edit権限まで得るユーザーの場合はView権限(最小`get`、`list`)も一緒に付与する必要があります。kubectlでも特定リソースに対する修正要求をするとまず照会要求をするためです。
-    * lensのようなツールではView権限がないとEdit画面に行く方法がありません。
-    * Edit中でも作成(`create`)、修正(`patch`、`update`)、削除(`delete`、`deletecollection`)このように各役割に合わせて束にして与えられる必要があります。
-    * `deletecollection`はよく使用されるわけではありませんが、KACでは`deletecollection`で要求が来てもユーザーに権限があるリソースだけを選んで削除処理するため、有用に使用できます。
+    * Edit権限まで得るユーザーの場合はView権限（最低限`get`、`list`）も一緒に付与する必要があります。kubectlでも特定リソースに対する修正リクエストを行うと、まず照会リクエストを行うためです。
+    * Lensのようなツールでは、View権限がなければEdit画面に移動する方法がありません。
+    * Editの中でも作成（`create`）、修正（`patch`、`update`）、削除（`delete`、`deletecollection`）のように各役割に合わせてグループ化して付与する必要があります。
+    * `deletecollection`は一般的に使用されることは多くありませんが、KACでは`deletecollection`でリクエストが来てもユーザーに権限があるリソースのみを選択して削除処理するため、有用に活用できます。
     * 推奨スペック
       ```
       allow:
@@ -111,9 +111,9 @@ QueryPie KACではYaml形態のPolicyを通じてk8sに対するアクセス制�
       ```
 
 
-### その他推奨設定ガイド
+### その他の推奨設定ガイド
 
-例) prod namespace環境のリソースに対する権限制限
+例）prod namespace環境のリソースに対する権限制限
 ```
 allow:
   actions:
@@ -129,7 +129,7 @@ allow:
       verbs: ["get", "list", "watch"]
 ```
 
-例) prod namespaceに対するsecretアクセス制限
+例）prod namespaceに対するsecretアクセス制限
 ```
 deny:
   actions:
