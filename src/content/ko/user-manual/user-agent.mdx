@@ -158,7 +158,6 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH 설정하기
 
 Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
-<<<<<<< HEAD
 다음 방법으로 `.ssh` 폴더에 `config` 파일을 생성하여 손쉽게 Seamless SSH를 설정할 수 있습니다.
 
 ##### 3.1. 터미널을 열고, `.ssh` 폴더로 이동합니다.
@@ -184,7 +183,7 @@ Host {{Server Name}}
 
 <Callout type="info">
 `config` 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.
-서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
+서버 간 URL, 포트가 겹치지 않는 경우 아래와 같이 입력해도 접속할 수 있습니다.
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
