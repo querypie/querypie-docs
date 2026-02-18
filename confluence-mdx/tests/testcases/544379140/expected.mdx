@@ -92,21 +92,21 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 </figure>
 
 1.  **Task Name** : 로그 추출 작업의 이름을 입력합니다.
-2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다. 
+2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다.
     1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.
     2. 로그 종류 선택 후 See Log Template and Description을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
-3.  **Download File Format** : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.) 
+3.  **Download File Format** : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.)
 4.  **For Text Exceeding 32,000 Characters**  : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.
     1. Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
     2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.
 5.  **From**  : 추출 시작 날짜를 지정합니다.
-6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다. 
-7.  **Filter Expression**  : 필터 표현식을 지정합니다. 
+6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다.
+7.  **Filter Expression**  : 필터 표현식을 지정합니다.
     1. 조건 입력 방법 및 예시는 하단의 ‘ **필터 표현식** ’을 참고해주시기 바랍니다.
-8.  **Generate Preview** : 미리보기를 생성합니다. 
+8.  **Generate Preview** : 미리보기를 생성합니다.
     1. 미리보기는 필수 단계입니다.
     2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가 가능합니다.
-9. `Create` 버튼 : 로그 추출 작업을 생성합니다. 
+9. `Create` 버튼 : 로그 추출 작업을 생성합니다.
 
 <Callout type="info">
 **유의 사항**
@@ -165,7 +165,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 아래와 같이 작동합니다.
 
 1. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.
-2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. 
+2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다.
 3. Redis의 경우에는 커맨드명이 명시됩니다.
 </Callout>
 

@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544112828",
-  "mdx_sha256": "38c92a80991ff35f4bed2235caea6114bc2a38f9e7f56e96a16520f325e4d343",
+  "mdx_sha256": "515b770c71d516d432e7c7f5aad5047dc985f1d0b4ec1608ce29391cdffff6d0",
   "source_xhtml_sha256": "b31f4552fd924f4299dfd7dc6edea8f00bfefbf403f5f96011e17a553b24ff67",
   "blocks": [
     {
@@ -360,7 +360,7 @@
       "block_index": 32,
       "xhtml_xpath": "h3[1]",
       "xhtml_fragment": "<h3>1. 서버 역할 선택하기</h3>",
-      "mdx_content_hash": "b62bfc649cac24538e66b72a49a4739213a824abeb7202b83ff49e1acc745846",
+      "mdx_content_hash": "f82769bc04abbd98ba696602372709c72db855de011d4dd5fe99e6d4b9734e1d",
       "mdx_line_range": [
         121,
         122
@@ -437,7 +437,7 @@
       "block_index": 39,
       "xhtml_xpath": "ul[3]",
       "xhtml_fragment": "<ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul>",
-      "mdx_content_hash": "ed4121be7e6161a4d66b6521bb69c1a5a8d79d12acb60c6d3c100f9dce594617",
+      "mdx_content_hash": "3ca82d6718ceec744bcd97b8cb658a6edc594ddc758e31c12ced237f7d4f2688",
       "mdx_line_range": [
         146,
         147
@@ -756,7 +756,7 @@
       "block_index": 68,
       "xhtml_xpath": "p[26]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "9465b5ab429ba91ae3067b998e40b3a59bee4fe66a06dc3a6d6d3b26b4fc6001",
+      "mdx_content_hash": "16dbfbc263c0eeda5bff4ce4c30a2e570eb9646b4c22c1945ec88aaeaf2f5c62",
       "mdx_line_range": [
         246,
         248

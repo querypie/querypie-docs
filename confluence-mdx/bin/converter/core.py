@@ -14,6 +14,7 @@ Contains the main parser and converter classes:
 
 import filecmp
 import logging
+import re
 import os
 import shutil
 import unicodedata
@@ -1456,5 +1457,6 @@ class ConfluenceToMarkdown:
         self.markdown_lines.extend(MultiLineParser(self.soup, collector=self._collector).as_markdown)
         # self.process_node(soup)
 
-        # Join all Markdown lines and return
-        return ''.join(chain(self.remark, self.imports, self.markdown_lines))
+        # Join all Markdown lines and strip trailing spaces from each line
+        result = ''.join(chain(self.remark, self.imports, self.markdown_lines))
+        return re.sub(r' +\n', '\n', result)

@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544145591",
-  "mdx_sha256": "43556e368b14c8badd00bd2c96d8f41aedafcadf0ddd3486064ef8dbb229f98f",
+  "mdx_sha256": "299c529a3c66d5ebf9af8afb91c0b7f307af0fb5c8800b677738a21424414d50",
   "source_xhtml_sha256": "cbc830bacea9231f83d9d4414a69f79e32a0fb414596a648fd9326688b5598c3",
   "blocks": [
     {
@@ -63,7 +63,7 @@
       "block_index": 5,
       "xhtml_xpath": "ul[1]",
       "xhtml_fragment": "<ul><li><p><strong>Company Name</strong> : 프로필 영역 등에 표시할 회사 이름을 입력합니다.</p></li><li><p><strong>Web Base URL</strong> : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소</p></li><li><p><strong>Timezone</strong> : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.</p></li><li><p><strong>Date Format</strong> : 날짜 표기 방식을 지정합니다.</p></li><li><p><strong>Default Display Language</strong> : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) </p></li><li><p><strong>Audit Log Retention Period </strong>: 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.</p></li><li><p><strong>Go to System Properties</strong> : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. </p></li></ul>",
-      "mdx_content_hash": "19a8614a798ef2d156809360c8ef5d76a360c3e383920ce5dc45f6bd20a9d5bb",
+      "mdx_content_hash": "a960a2e0e4790520cade736e8802bc5b4438207c38f0ab5bedf173fc3ebf8927",
       "mdx_line_range": [
         23,
         29
@@ -173,7 +173,7 @@
       "block_index": 15,
       "xhtml_xpath": "p[6]",
       "xhtml_fragment": "<p>모든 워크플로우 요청의 승인 만료일을 일괄적으로 제한하는 최대 기간을 설정합니다.</p>",
-      "mdx_content_hash": "b063c7fc91c224496c99cafdd2403795d3d23d27ef947d35e3a4b285e4436497",
+      "mdx_content_hash": "d4d123a77741a12a5cfa47d98b351406723987f77076ae70d5adeb25953de3e3",
       "mdx_line_range": [
         59,
         59
@@ -305,7 +305,7 @@
       "block_index": 27,
       "xhtml_xpath": "h2[9]",
       "xhtml_fragment": "<h2>Attribute 기반 승인자 지정 기능</h2>",
-      "mdx_content_hash": "68d421e7d64a73b495a184738e232b663988d782b08be850ed1145abe5b8e83a",
+      "mdx_content_hash": "b7b690810049c45ff8b7e015da0511ac2a636d5555f83900dfab6b0bfc34ced2",
       "mdx_line_range": [
         93,
         94
@@ -338,7 +338,7 @@
       "block_index": 30,
       "xhtml_xpath": "ul[6]",
       "xhtml_fragment": "<ul><li><p>중요: </p><ul><li><p>선택된 Attribute의 값으로는 승인자의 QueryPie Login ID가 입력되어 있어야 합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"86\" ac:original-width=\"820\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-06-12 at 1.33.58 PM.png\" ri:version-at-save=\"1\" /><ac:caption><p>Admin &gt; General &gt; Users &gt; Detail page &gt; Profile 탭<br /></p></ac:caption></ac:image></li></ul></li><li><p>Administrator &gt; General &gt; Workflow Management &gt; Approval Rules 페이지에서 새로운 승인 규칙을 추가하거나 기존 규칙을 수정할 때, 'Assignee for Approval' 항목에 'Allow Assignee selection (Attribute-Based)'를 선택한 뒤 승인자와 매핑하기 위한 Attribute (예: teamLeader)를 지정합니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"832\" ac:original-width=\"1524\" ac:custom-width=\"true\" ac:alt=\"image-20251110-030113.png\" ac:width=\"736\"><ri:attachment ri:filename=\"image-20251110-030113.png\" ri:version-at-save=\"1\" /></ac:image><ul><li><p>자가 승인 비활성화 시 연동: 만약 Approval Rules 설정에서 'Self Approval (자가 승인)' 옵션이 비활성화된 경우, Attribute 기반으로 결정된 승인자가 요청자 자신일 경우에는 해당 요청자를 승인자로 자동 지정할 수 없습니다. 이 경우, 워크플로우 설정 또는 시스템 정책에 따라 승인자 지정이 실패하거나 다른 경로로 처리될 수 있으니 주의가 필요합니다.</p></li></ul></li><li><p>Attribute 값 부재 시 알림</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값이 비어 있는 경우(즉, 승인자의 Login ID가 지정되지 않은 경우), 워크플로우 상신 시 다음과 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다. 상신자는 관리자에게 문의하여 프로필의 Attribute 값을 설정해야 합니다.</p><ul><li><p>에러 메시지 예시: </p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"512\" ac:original-width=\"942\" ac:custom-width=\"true\" ac:alt=\"image-20250508-022114.png\" ac:width=\"688\"><ri:attachment ri:filename=\"image-20250508-022114.png\" ri:version-at-save=\"2\" /></ac:image></li></ul></li></ul></li><li><p>Attribute 값은 있지만 해당 사용자가 비활성화된 경우</p><ul><li><p>만약 상신자 User Profile에 해당 Attribute 값으로 지정된 승인자가 비활성화된 경우, 워크플로우 상신 시 Approver란에 지정된 승인자가 표기되지 않으며 아래와 같은 내용의 알림 모달이 표시되며 요청 제출이 중단됩니다.</p><ul><li><p>에러 메세지 예시:</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"260\" ac:original-width=\"615\" ac:custom-width=\"true\" ac:width=\"615\"><ri:attachment ri:filename=\"Screenshot 2025-06-16 at 10.30.14 AM.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image></li></ul></li></ul></li></ul>",
-      "mdx_content_hash": "d245f17d5107b869fe8730323e1c16f6e3e6b6321988de3560e4b0ddb48e144e",
+      "mdx_content_hash": "7a086830796ba1720e274e15f5c341de4242dcc16426705029875d492cc77817",
       "mdx_line_range": [
         99,
         123
@@ -514,7 +514,7 @@
       "block_index": 46,
       "xhtml_xpath": "ul[8]",
       "xhtml_fragment": "<ul><li><p><strong>Query chunk size</strong> : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능</p><ul><li><p>예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. </p></li></ul></li><li><p><strong>Query throttle interval </strong>: 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)</p></li></ul>",
-      "mdx_content_hash": "ae650614ba0d29e97f84ddf084c72c900c4361f7f79717524154a2238e52a2b1",
+      "mdx_content_hash": "2a25f3f77049bc49aaa3c9a1c6ad56362ed76249f9a916ba263491bb7334d063",
       "mdx_line_range": [
         175,
         177
@@ -712,7 +712,7 @@
       "block_index": 64,
       "xhtml_xpath": "ul[12]",
       "xhtml_fragment": "<ul><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 모두  &ldquo;Read-Only&rdquo; 인 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: All Match 선택.</p></li><li><p>Requested Privilege Type : Read-Only 선택.</p></li><li><p>Approval Rule : 강제하기 원하는 Approval Rule 선택. </p></li></ul></li><li><p>만약 사용자가 Workflow의 DB Access Request를 통해 요청한 대상 커넥션에 지정한 privilege가 하나라도 Read/Write가 포함되어 있는 경우 특정 Approval rule을 사용하도록 강제하기 원한다면, 아래와 같이 설정하고 <code>Add</code> 버튼을 누릅니다.</p><ul><li><p>Condition: Contains 선택.</p></li><li><p>Requested Privilege Type : Read/Write 선택.</p></li><li><p>Approval Rule : 강제하기 원하는 Approval Rule 선택.</p></li></ul></li></ul>",
-      "mdx_content_hash": "77591667fd4615cb7bd5d3e1852ed2083f7a958306f7c2a3daf2e6efc73c18e0",
+      "mdx_content_hash": "85860f1345e18b25ad2c9224449b64342166169a1d61f688f67b7b015babee47",
       "mdx_line_range": [
         249,
         256

@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544382364",
-  "mdx_sha256": "19255cc1d069b92945d2376526b645a34c88de690ebddb5487d50180cf4cc951",
+  "mdx_sha256": "e5ee765a1a5d0d58de6d373ea6be4bda578d38ffb7c103d5d77e212dc7eb9b21",
   "source_xhtml_sha256": "672aae0060c85c2dff3cc80ef243fe69dcb915a52e2117a181acfef5733be0c7",
   "blocks": [
     {
@@ -107,7 +107,7 @@
       "block_index": 9,
       "xhtml_xpath": "p[6]",
       "xhtml_fragment": "<p>일부 항목을 제외한 전반 정책 코드에서 와일드카드(&ldquo;*&rdquo;) 및 정규표현식(<a href=\"https://github.com/girishji/re2/wiki/Syntax\">RE2 형식</a>: <code>^$</code> 명시 필수) 패턴을 지원합니다.</p>",
-      "mdx_content_hash": "4e011d8c218e33280f8f87afd316bdb31cf2279f51fd3ecc215fe363321483a1",
+      "mdx_content_hash": "de6218f77af55404f8bca29582ceac8e2bc0305e4745adea0dbe7d9f6b443060",
       "mdx_line_range": [
         32,
         117
@@ -162,7 +162,7 @@
       "block_index": 14,
       "xhtml_xpath": "ol[1]",
       "xhtml_fragment": "<ol start=\"1\"><li><p>해당 <code>resources</code> 필드에 대한 정의는 필수입니다. <ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\" ac:macro-id=\"b54b33dd-77c5-47b4-9c5c-1e103ead3ed1\"><ac:parameter ac:name=\"title\">required</ac:parameter><ac:parameter ac:name=\"colour\">Red</ac:parameter></ac:structured-macro> </p></li><li><p>쿠버네티스 클러스터명을 바탕으로 입력합니다.</p><ul><li><p><code>&quot;cluster:{Kubernetes Cluster Name in QueryPie}&quot;</code></p></li></ul></li><li><p>쿠버네티스 클러스터명은 이하의 기준으로 정립됩니다. </p><ul><li><p>문자 길이 100자 제한</p></li><li><p>알파벳 대소문자 (case-sensitive), 숫자 및 이하 특수기호만 허용</p><ul><li><p>underscore (_)</p></li><li><p>hyphen (-)</p></li></ul></li><li><p>이름 시작과 끝은 알파벳 대소문자 또는 숫자로 제한</p></li><li><p>클러스터명은 중복을 제한</p></li></ul></li><li><p>쿠버네티스 클러스터는 단일 정책에서 다중으로 지정이 가능합니다. </p><ul><li><p><code>- &quot;cluster:kubepie-dev-1&quot;</code><br /><code>- &quot;cluster:kubepie-dev-2&quot;</code></p></li><li><p><code>[&quot;cluster:kubepie-dev-1&quot;, &quot;cluster:kubepie-dev-2&quot;]</code></p></li></ul></li><li><p>경로는 와일드카드를 허용합니다.</p><ul><li><p><code>&quot;cluster:kubepie-dev-*&quot;</code></p></li></ul></li><li><p>경로는 정규표현식을 허용합니다.</p><ul><li><p><code>&quot;cluster:^kubepie-dev-.*$&quot;</code></p></li></ul></li></ol>",
-      "mdx_content_hash": "76daff9f69d3b0d28222d1fbe092d664131fead78d9941b5a3568abfaeac648d",
+      "mdx_content_hash": "b4e0731bf85c52ba67221b9be84362427391c190d7b74fbe2c655ec0c0c40c7b",
       "mdx_line_range": [
         185,
         197
@@ -195,7 +195,7 @@
       "block_index": 17,
       "xhtml_xpath": "p[10]",
       "xhtml_fragment": "<p><code>subjects</code>는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. <code>subjects</code>는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다. </p>",
-      "mdx_content_hash": "53101071b7dd7ae1b8c09b400539c8115fedb383313a750c6e60f01c736495bb",
+      "mdx_content_hash": "15fedfb84e02686e7d5daf8883fb798c6dcab96823a0a4d3ed1fb45dff1434b3",
       "mdx_line_range": [
         204,
         220
@@ -228,7 +228,7 @@
       "block_index": 20,
       "xhtml_xpath": "h2[5]",
       "xhtml_fragment": "<h2>Actions 명시 방법</h2>",
-      "mdx_content_hash": "5c577cb3bb862c9c5d90f3faa821a18ea98d7ead3882026de03b2c9ac9dc5d97",
+      "mdx_content_hash": "55c05431570d730af1982b00e93cbcae500a31e795f3e82a9e9707660ceb451f",
       "mdx_line_range": [
         227,
         253
@@ -261,7 +261,7 @@
       "block_index": 23,
       "xhtml_xpath": "p[13]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "60f9b1fb488c60c38ddf6a97c218cf083b9e0a81bab8c17e5ddc9c18f73d0647",
+      "mdx_content_hash": "38f1ab089803a4b288f128e9aeb61731657b27603c1b32fb6ff2d37cb7681804",
       "mdx_line_range": [
         261,
         307
@@ -294,7 +294,7 @@
       "block_index": 26,
       "xhtml_xpath": "ul[1]",
       "xhtml_fragment": "<ul><li><p><code>resourceTags</code> : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다. </p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"9b9de014-2f9d-43e5-b3e3-4e46c2d19fdf\"><ac:plain-text-body><![CDATA[resourceTags: \n  \"region\": \"ap-northeast-1\"\n  \"Owner\": \"Brant\"]]></ac:plain-text-body></ac:structured-macro></li><li><p><code>userAttributes</code> : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다. </p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"bd92697f-d6eb-4c40-99aa-b9c6bad7973d\"><ac:plain-text-body><![CDATA[userAttributes: \n  \"countryCode\": \"KR\"\n  \"department\": \"Infra\"]]></ac:plain-text-body></ac:structured-macro></li><li><p><code>ipAddresses</code> : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태으로 정의합니다. </p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"f47b9722-b2b5-4d60-931d-dd5abf4ee359\"><ac:plain-text-body><![CDATA[ipAddresses: [\"10.10.0.0/24\", \"10.11.10.1\"]]]></ac:plain-text-body></ac:structured-macro></li></ul>",
-      "mdx_content_hash": "e0db78d0d74f14fc1094538cee4220d4a55b6c25a8a26b6199e8b88b3029c1d7",
+      "mdx_content_hash": "8beb7835d32db5e56a24c7cec38980693e4784a8aace5b02b3a6653c0feaa820",
       "mdx_line_range": [
         314,
         329
@@ -316,7 +316,7 @@
       "block_index": 28,
       "xhtml_xpath": "h2[7]",
       "xhtml_fragment": "<h2>KAC Policy 예시</h2>",
-      "mdx_content_hash": "cd2aa3931f04d6d3bef7f7da3740cb4e6a413f7bd888a66e2ac3e6c5656dbfb0",
+      "mdx_content_hash": "bbcb1ce0bffc0ac37fac233c82b0640227595538f4a9157ea1b46a9e99b7c758",
       "mdx_line_range": [
         334,
         376

@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "880181257",
-  "mdx_sha256": "f59e03cb11065fd22f8bda66c4b12e950d4dc08799c5f2911609a865a0fec448",
+  "mdx_sha256": "88028ef1e0a5c919691d88b8fd6d9b4d97d0a3d0cc9ea496a6880522e69df5c0",
   "source_xhtml_sha256": "dd6df6dbfae4e50c7b53823a9bbfbc3d1bc4119240c4155d9c4b3a276a28e3b9",
   "blocks": [
     {
@@ -30,7 +30,7 @@
       "block_index": 2,
       "xhtml_xpath": "ol[1]",
       "xhtml_fragment": "<ol start=\"1\"><li><p>사용자 화면 상단 Workflow 메뉴로 이동합니다.</p></li><li><p>좌측 상단 <code>Submit Request</code> 버튼 클릭후 DB Access Request 항목을 선택합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"766\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 1.19.24 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>Approval Rule을 상황에 맞게 설정하고 Title도 작성합니다.</p></li><li><p>DB Connection 목록에서 Type이 'Custom Data Source'인 항목을 선택합니다.</p></li><li><p>다른 벤더들과 다르게 Privilege를 선택할 수 없기 때문에 &ldquo;-&rdquo;로 표기됩니다. </p></li><li><p>Expiration Date과 Reason for Request 항목도 상황에 맞게 설정 및 작성합니다.</p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"763\" ac:original-width=\"1512\" ac:custom-width=\"true\" ac:width=\"712\"><ri:attachment ri:filename=\"Screenshot 2025-03-06 at 1.22.28 PM.png\" ri:version-at-save=\"1\" /></ac:image><p /></li><li><p>작성을 완료했다면 하단 <code>Submit</code>버튼을 클릭하여 신청을 완료합니다.  </p></li><li><p>관리자의 승인을 받았다면 좌측 Workflow &gt; Sent Request &gt; Done 메뉴에서 확인할 수 있습니다.</p></li></ol>",
-      "mdx_content_hash": "fbd76f993e38760f942cbe410a4785a89f728cb052b51852e4aab75389e024e2",
+      "mdx_content_hash": "834f10fef850c1431f825a9ed24e3f6a58b6ccfed4cd1f063629049f29c0944b",
       "mdx_line_range": [
         12,
         25
@@ -52,7 +52,7 @@
       "block_index": 4,
       "xhtml_xpath": "h3[2]",
       "xhtml_fragment": "<h3><br />Agent를 통한 접속</h3>",
-      "mdx_content_hash": "c029179610d1846a928e83c22234b3b97c066757d72f7c4c5df9d8f0d09c0092",
+      "mdx_content_hash": "c9efb41fcc2995b1bb8f1c8f060bd9d44c9d704abcace399d2acc6d09c9cab9b",
       "mdx_line_range": [
         29,
         31
@@ -85,7 +85,7 @@
       "block_index": 7,
       "xhtml_xpath": "h3[3]",
       "xhtml_fragment": "<h3>웹으로 접속 시도하는 경우</h3>",
-      "mdx_content_hash": "f398294a4e0071259a143393f74841734947758f62a817cd00f41cbefc5fb3cd",
+      "mdx_content_hash": "89f7e3699eac3a8a769625ad4717947834dbc88664fb577f017b2b8ad8047510",
       "mdx_line_range": [
         36,
         56

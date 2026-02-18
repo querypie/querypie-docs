@@ -25,19 +25,19 @@ Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림�
 App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.
 
 
-1. [https://api.slack.com/apps](https://api.slack.com/apps) 으로 이동하여 `Create an App` 을 클릭합니다.<br/> <br/> 
+1. [https://api.slack.com/apps](https://api.slack.com/apps) 으로 이동하여 `Create an App` 을 클릭합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065658.png" alt="image-20231227-065658.png" width="760" />
   </figure>
-2. Create an app 모달에서, App 생성 방식을 선택합니다. `From a manifest` 를 클릭합니다.<br/> <br/> 
+2. Create an app 모달에서, App 생성 방식을 선택합니다. `From a manifest` 를 클릭합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-131725.png" alt="screenshot-20250218-131725.png" width="712" />
   </figure>
-3. Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.<br/> <br/> 
+3. Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231227-065951.png" alt="image-20231227-065951.png" width="710" />
   </figure>
-4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/> 
+4. Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. <br/>미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.<br/>:light_bulb_on: `{{..}}` 안의 값은 원하는 값으로 변경해 주세요. <br/>
   ```
   {
       "display_information": {
@@ -68,15 +68,15 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
       }
   }
   ```
-5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/> 
+5. 설정 내용을 검토하고 `Create` 버튼을 클릭하여 App 생성을 완료합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-220447.png" alt="image-20240115-220447.png" width="763" />
   </figure>
 
 ### Slack Workspace에 Slack App 설치
 
-1. Settings &gt; Install App에서 `Install to Workspace` 버튼을 클릭하여 생성된 앱을 Slack Workspace에 설치합니다. 
-2. 권한 요청 페이지에서, `허용`을 클릭합니다. <br/> 
+1. Settings &gt; Install App에서 `Install to Workspace` 버튼을 클릭하여 생성된 앱을 Slack Workspace에 설치합니다.
+2. 권한 요청 페이지에서, `허용`을 클릭합니다. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240115-221520.png" alt="image-20240115-221520.png" width="760" />
   </figure>
@@ -104,11 +104,11 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 
 다음 단계를 수행하여 App-Level Token을 수동으로 생성합니다.
 
-1. 앱 설정 페이지의 Settings &gt; Basic Information 메뉴의 App-Level Tokens 섹션으로 이동하고, `Generate Token and Scope` 버튼을 클릭합니다.<br/> <br/> 
+1. 앱 설정 페이지의 Settings &gt; Basic Information 메뉴의 App-Level Tokens 섹션으로 이동하고, `Generate Token and Scope` 버튼을 클릭합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-140951.png" alt="screenshot-20250218-140951.png" width="736" />
   </figure>
-2. Generate an app-level token 모달에서, Add Scope 버튼을 클릭한 뒤 `connections:write` 를 추가합니다.<br/> <br/> 
+2. Generate an app-level token 모달에서, Add Scope 버튼을 클릭한 뒤 `connections:write` 를 추가합니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-141555.png" alt="screenshot-20250218-141555.png" width="736" />
   </figure>
@@ -116,7 +116,7 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 
 ### QueryPie에서 Slack DM 설정하기
 
-1. Admin &gt; General &gt; System &gt; Integrations &gt; Slack 메뉴로 진입한 뒤, `Configure` 버튼을 클릭하여 설정 모달을 엽니다.<br/> <br/> 
+1. Admin &gt; General &gt; System &gt; Integrations &gt; Slack 메뉴로 진입한 뒤, `Configure` 버튼을 클릭하여 설정 모달을 엽니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113509.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack &gt; Create a New Slack Configuration" width="736" />
   <figcaption>
@@ -126,7 +126,7 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 2. 설정 모달에 아까 기록해둔 App Token과 Bot User OAuth Token을 입력합니다.
 3. 추가 설정 값은 다음과 같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화 합니다.
     *  **Send Workflow Notification via Slack DM**  : 워크플로우 요청에 대한 Slack DM 전송 활성화
-    *  **Allow Users to approve or reject on Slack DM**  : Slack DM 내에서 승인 또는 거절 기능 활성화<br/> <br/> 
+    *  **Allow Users to approve or reject on Slack DM**  : Slack DM 내에서 승인 또는 거절 기능 활성화<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231003-054240.png" alt="액션 허용타입 예시 (좌) / 액션 비허용 타입 예시 (우)" width="760" />
       <figcaption>
@@ -137,7 +137,7 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 
 ### Slack DM 설정 관리하기
 
-1. Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.<br/> <br/> 
+1. Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250310-113950.png" alt="Administrator &gt; General &gt; System &gt; Integrations &gt; Slack" width="736" />
   <figcaption>
@@ -157,11 +157,11 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
 
 DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.
 
-1. QueryPie User &gt; Workflow 페이지에서 Submit Request 버튼을 클릭한 뒤, DB Access Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고, 요청을 상신합니다. <br/> 
+1. QueryPie User &gt; Workflow 페이지에서 Submit Request 버튼을 클릭한 뒤, DB Access Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고, 요청을 상신합니다. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-151504.png" alt="screenshot-20250218-151504.png" width="736" />
   </figure>
-2. 승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/> **Allow Users to approve or reject on Slack DM**  설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/> <br/> 
+2. 승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/> **Allow Users to approve or reject on Slack DM**  설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-152238.png" alt="screenshot-20250218-152238.png" width="701" />
   </figure>
