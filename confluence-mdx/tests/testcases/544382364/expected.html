@@ -194,7 +194,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </li>
 
 <li>Resources에 명시된 리소스에 대한 권한 수행이 가능한 kubernetes 측 그룹(단일 또는 복수)을 정의합니다.
-<pre><code>kubernetesGroups: 
+<pre><code>kubernetesGroups:
   - system:masters
   - default-group-account
 </code></pre>
@@ -202,7 +202,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </li>
 
 <li>kubernetesGroups에는 Querypie User의 Group을 예약어 형태로 입력할 수 있습니다. 이 때, User의 Group은 쌍따옴표(“) 없이 입력 입력되어야 하며, 사용자가 Policy를 볼 땐 실제 user Group의 값이 표시됩니다.
-<pre><code>kubernetesGroups: 
+<pre><code>kubernetesGroups:
   - $user.groups
 </code></pre>
 
@@ -223,10 +223,10 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 <li><code>users</code>: 쿠버네티스 내 존재하는 사용자/서비스 계정으로 &quot;--as&quot; 파라미터에 허용 가능한 값을 나열합니다.</li>
 
 <li><code>groups</code>: 쿠버네티스 내 존재하는 그룹 계정으로 &quot;--as-group&quot; 파라미터에 허용 가능한 값을 나열합니다.
-<pre><code>impersonation: 
-  users: 
+<pre><code>impersonation:
+  users:
     - &quot;system:serviceaccount:argocd&quot;
-  groups: 
+  groups:
     - &quot;system:admin&quot;
 </code></pre>
 
@@ -405,7 +405,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 
 <ul>
 <li><code>resourceTags</code> : 태그 항목에서는 리소스 태그의 키와 값으로 필터링할 수 있습니다.
-<pre><code>resourceTags: 
+<pre><code>resourceTags:
   &quot;region&quot;: &quot;ap-northeast-1&quot;
   &quot;Owner&quot;: &quot;Brant&quot;
 </code></pre>
@@ -413,7 +413,7 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 </li>
 
 <li><code>userAttributes</code> : 사용자의 속성(attribute)을 조건으로 지정하고 값이 매칭되는 사용자에 한해서만 해당 정책에서 정의된 권한의 사용을 제한합니다.
-<pre><code>userAttributes: 
+<pre><code>userAttributes:
   &quot;countryCode&quot;: &quot;KR&quot;
   &quot;department&quot;: &quot;Infra&quot;
 </code></pre>
@@ -430,45 +430,45 @@ Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 
 <h3>KAC Policy 예시</h3>
 
-<pre><code>apiVersion: kubernetes.rbac.querypie.com/v1 
+<pre><code>apiVersion: kubernetes.rbac.querypie.com/v1
 kind: KacPolicy
 
 spec:
-  allow: 
-    resources: 
+  allow:
+    resources:
       - &quot;cluster:*&quot;
-    subjects: 
-      kubernetesGroups: 
+    subjects:
+      kubernetesGroups:
         - &quot;system:masters&quot;
-      impersonation: 
-        users: [&quot;system:serviceaccount:argocd&quot;] 
-        groups: [&quot;system:admin&quot;]  
-    actions: 
-      - apiGroups: [&quot;*&quot;] 
-        resources: 
+      impersonation:
+        users: [&quot;system:serviceaccount:argocd&quot;]
+        groups: [&quot;system:admin&quot;]
+    actions:
+      - apiGroups: [&quot;*&quot;]
+        resources:
           - &quot;pods&quot;
-        namespace: &quot;*&quot; 
-        name: &quot;*&quot; 
+        namespace: &quot;*&quot;
+        name: &quot;*&quot;
         verbs: [&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;]
-    conditions: 
-      resourceTags: 
+    conditions:
+      resourceTags:
         &quot;Owner&quot;: [&quot;Kenny&quot;, &quot;Brant&quot;]
-        &quot;Team&quot;: &quot;DevSecOps&quot; 
-      userAttributes: 
+        &quot;Team&quot;: &quot;DevSecOps&quot;
+      userAttributes:
         &quot;countryCode&quot;: &quot;KR&quot;
         &quot;department&quot;: &quot;Infra&quot;
-      ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;] 
-  deny: 
-    resources: 
+      ipAddresses: [&quot;10.10.0.0/24&quot;, &quot;10.11.10.1&quot;]
+  deny:
+    resources:
       - &quot;cluster:kubepie-*&quot;
-    actions: 
+    actions:
       - apiGroups: [&quot;*&quot;]
-        resources: 
+        resources:
           - &quot;*&quot;
         namespace: &quot;production&quot;
         name: &quot;*&quot;
         verbs: [&quot;*&quot;]
-    conditions: 
-      resourceTags: 
+    conditions:
+      resourceTags:
         &quot;Owner&quot;: &quot;Brant&quot;
 </code></pre>
