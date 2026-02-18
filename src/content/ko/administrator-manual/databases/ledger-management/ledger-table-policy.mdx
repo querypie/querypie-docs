@@ -15,13 +15,13 @@ import { Callout } from 'nextra/components'
 기존의 원장 테이블 정책 기능은 별도 라이선스로 제공하였으나, 10.2.1 버전부터 별도 라이선스 없이 DAC 통합 기능으로 제공됩니다.
 </Callout>
 
-### 원장 테이블에 승인 규칙 맵핑하기
+### 원장 테이블에 승인 규칙 매핑하기
 
 <Callout type="info">
 원장 테이블 관리를 지원하는 DBMS는 MySQL, MongoDB, Oracle, MariaDB, Athena입니다.
 </Callout>
 
-DB 커넥션 단위로 Policy를 생성하고, 커넥션 내의 원장으로 관리하고자 하는 테이블에 승인 규칙을 맵핑할 수 있습니다.
+DB 커넥션 단위로 Policy를 생성하고, 커넥션 내에서 원장으로 관리하려는 테이블에 승인 규칙을 매핑할 수 있습니다.
 설정 이후 사용자가 해당 테이블에서 UPDATE 등 수정 쿼리 및 데이터 내보내기를 시도하는 경우, 해당 승인 규칙을 통한 SQL Request를 설정할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
@@ -47,7 +47,7 @@ Administrator &gt; Databases &gt; Ledger Management &gt; Ledger Table Policy &gt
 </figcaption>
 </figure>
 
-생성한 정책의 상세페이지로 이동하여, 원장 테이블 승인 규칙을 설정할 수 있습니다.
+생성한 정책의 상세 페이지로 이동하여 원장 테이블 승인 규칙을 설정할 수 있습니다.
 
 1. 상세 페이지에서 우측 중앙의 `Add Rule` 버튼을 클릭합니다.
 2. 원장 테이블을 목록에서 선택합니다.
