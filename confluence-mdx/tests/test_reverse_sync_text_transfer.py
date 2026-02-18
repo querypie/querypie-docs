@@ -112,3 +112,44 @@ class TestTransferTextChanges:
             'the quick brown fox',
         )
         assert result == 'the slow red fox'
+
+    def test_repeated_pattern_long_text(self):
+        """반복 패턴이 있는 긴 텍스트에서 로컬 변경만 적용되는지 검증.
+
+        SequenceMatcher autojunk=True일 때 반복 패턴이 있으면
+        대규모 insert/delete를 생성하여 텍스트가 붕괴되는 버그를 방지.
+        """
+        # "700MB를 초과"가 두 번 등장하는 긴 텍스트
+        xhtml_text = (
+            '첫째 항목 텍스트입니다.'
+            '둘째 항목 700MB를 초과 여부에 따라 재생화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        mdx_old = (
+            '첫째 항목 텍스트입니다. '
+            '둘째 항목 700MB를 초과 여부에 따라 재생화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        mdx_new = (
+            '첫째 항목 텍스트입니다. '
+            '둘째 항목 700MB 초과 여부에 따라 재생 화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생 화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        result = transfer_text_changes(mdx_old, mdx_new, xhtml_text)
+        # "를" 삭제, 두 곳의 "재생화면" → "재생 화면" 변경만 적용
+        assert '700MB 초과 여부' in result
+        assert '700MB를 초과 여부' not in result
+        assert '재생 화면을 노출합니다' in result
+        assert '재생 화면이 하단에' in result
+        # 나머지 텍스트는 보존
+        assert '첫째 항목 텍스트입니다.' in result
+        assert '700MB를 초과하여 세션을' in result
