@@ -19,7 +19,7 @@ import { Callout } from 'nextra/components'
 Web Console 에 접근하기 위한 QueryPie 의 URL 주소입니다.
 (예시. `https://querypie.customer.com`) 이 URL 은 QueryPie 의 Base URL 이라고 부르기도 합니다.
 
-이 URL 은 `/` 로 끝나지 않아야 합니다. `https://querypie.customer.com/` 와 같이 URL 의 마지막에 `/` 를 붙이지 않도록 주의하여 주세요.
+이 URL 은 `/` 로 끝나지 않아야 합니다. `https://querypie.customer.com/` 와 같이 URL 의 마지막에 `/` 를 붙이지 않도록 주의해 주세요.
 
 이 URL 은 아래의 용도로 사용됩니다.
 
@@ -53,10 +53,10 @@ Database 연결 설정 과정에서 QueryPie MySQL 의 Hostname, Username, Passw
     * setup.sh 로 설치한 경우: `compose-env` 파일
 
 환경변수 파일에 설정된 값 중 `DB_PASSWORD`, `REDIS_PASSWORD`, `KEY_ENCRYPTION_KEY` 등은 안전하게 보관하여야 합니다.
-다른 사람에게 이 값을 노출하지 않도록 주의하여 주세요.
+다른 사람에게 이 값을 노출하지 않도록 주의해 주세요.
 </Callout>
 
-아래 `<customer-proxy-address>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+아래 `<customer-proxy-address>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 대체하여 쿼리를 수행합니다.
 
 <Callout type="important">
 해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안 됩니다.
@@ -84,7 +84,7 @@ DAC/SAC Proxy 접속 주소 설정 화면
 
 QueryPie Database 에 접속하여, KAC 의 Proxy 접속을 위한 주소를 등록합니다.
 
-아래 `<customer-proxy-fqdn>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 갈음하여 쿼리를 수행합니다.
+아래 `<customer-proxy-fqdn>` 부분을 고객사의 Proxy 접속 IP 혹은 도메인으로 대체하여 쿼리를 수행합니다.
 
 특이사항으로 DAC/SAC 설정과는 다르게 `http`  `https` 와 같은 Scheme을 자유롭게 입력 가능합니다.
 
