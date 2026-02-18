@@ -42,7 +42,7 @@ testcases:
       깊은 중첩 번호 목록(3단계 이상)의 텍스트가 부모 항목으로 병합되고,
       하위 항목은 빈 줄이 됨. Bold 텍스트도 **** 로 소실됨.
     mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
-    expected_status: fail
+    expected_status: pass
 
   # ──────────────────────────────────────────────
   # Type 6: Callout 파서 에러 삽입 [Critical]

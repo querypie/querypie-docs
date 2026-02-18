@@ -246,7 +246,9 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
     각 text node에서 해당 변경을 적용한다.
     """
     # 변경 부분 계산
-    matcher = difflib.SequenceMatcher(None, old_text.strip(), new_text.strip())
+    # autojunk=False: 한국어 등 반복 문자가 많은 텍스트에서
+    # autojunk이 로컬 매칭을 건너뛰어 대규모 insert/delete를 생성하는 것을 방지
+    matcher = difflib.SequenceMatcher(None, old_text.strip(), new_text.strip(), autojunk=False)
     opcodes = matcher.get_opcodes()
 
     # text node 목록 수집 (순서대로)

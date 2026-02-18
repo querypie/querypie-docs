@@ -54,7 +54,9 @@ def transfer_text_changes(mdx_old: str, mdx_new: str, xhtml_text: str) -> str:
     char_map = align_chars(mdx_old, xhtml_text)
 
     # 2. MDX old → new 변경 추출
-    matcher = difflib.SequenceMatcher(None, mdx_old, mdx_new)
+    # autojunk=False: 한국어 등 반복 문자가 많은 텍스트에서
+    # autojunk이 로컬 매칭을 건너뛰어 대규모 insert/delete를 생성하는 것을 방지
+    matcher = difflib.SequenceMatcher(None, mdx_old, mdx_new, autojunk=False)
 
     # 3. 변경을 XHTML 위치로 매핑
     edits = []  # (xhtml_start, xhtml_end, replacement)
