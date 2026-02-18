@@ -1,45 +1,55 @@
-version: 1
-source_page_id: '544376265'
-generated_at: '2026-02-14T15:15:08Z'
-mdx_file: activating-provisioning.mdx
+lost_info:
+  adf_extensions:
+  - panel_type: note
+    raw: '<ac:adf-node type="panel"><ac:adf-attribute key="panel-type">note</ac:adf-attribute><ac:adf-content><p><strong>SCIM
+      전용 토큰 안내 </strong></p><ol start="1"><li><p>Access Token은 Generate Token 버튼을
+      통해 생성할 수 있으며, 최대 2개까지만 발급 가능합니다.</p></li><li><p>토큰 값은 생성 당시 1회에 한해 노출되며 이후에는
+      노출되지 않습니다.</p></li><li><p>SCIM API전용으로만 사용 가능하며 /api/scim/v2 외 다른 엔드포인트 호출이
+      불가합니다.</p></li><li><p>새로 생성된 토큰은 발급일 yyyy-MM-dd 기준으로 1년까지만 유효합니다.</p><ol start="1"><li><p>만료일이
+      도래하면 토큰은 <span style="color: rgb(255,86,48);">Expired</span> 처리되어 SCIM API 이용이
+      불가합니다. </p></li><li><p>관리자는 만료일이 도달하기 이전에 신규 토큰을 발급하여 기존의 IdP에 설정된 토큰을 변경해주어야
+      합니다. </p></li></ol></li><li><p>토큰을 선택하고 <code>DELETE</code> 버튼을 클릭하여 토큰 삭제가
+      가능합니다.</p></li><li><p>만일 관리자가 토큰을 발급받았던 상태에서 Provisioning을 비활성화 했다가 다시 활성화 했을
+      경우, 기존의 토큰은 모두 비활성화 타이밍에 삭제 처리되므로, 관리자는 새로 유효한 토큰을 발급해야 합니다.</p></li></ol></ac:adf-content></ac:adf-node>'
 mappings:
-- xhtml_xpath: h2[1]
-  xhtml_type: heading
-  mdx_blocks:
-  - 4
-- xhtml_xpath: p[1]
-  xhtml_type: paragraph
-  mdx_blocks:
+- mdx_blocks:
   - 6
-- xhtml_xpath: p[2]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h2[1]
+- mdx_blocks:
   - 8
-- xhtml_xpath: h2[2]
-  xhtml_type: heading
-  mdx_blocks:
-  - 11
-- xhtml_xpath: ul[1]
-  xhtml_type: list
-  mdx_blocks:
-  - 13
-- xhtml_xpath: p[3]
   xhtml_type: paragraph
-  mdx_blocks:
-  - 16
-- xhtml_xpath: h2[3]
+  xhtml_xpath: p[1]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[2]
+- mdx_blocks:
+  - 11
   xhtml_type: heading
-  mdx_blocks:
-  - 18
-- xhtml_xpath: ac:image[1]
-  xhtml_type: html_block
-  mdx_blocks:
-  - 20
-- xhtml_xpath: ol[1]
+  xhtml_xpath: h2[2]
+- mdx_blocks:
+  - 13
   xhtml_type: list
-  mdx_blocks:
-  - 22
-- xhtml_xpath: ac:adf-extension[1]
+  xhtml_xpath: ul[1]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[3]
+- mdx_blocks:
+  - 16
+  xhtml_type: heading
+  xhtml_xpath: h2[3]
+- mdx_blocks:
+  - 18
   xhtml_type: html_block
-  mdx_blocks:
-  - 23
+  xhtml_xpath: ac:image[1]
+- mdx_blocks:
+  - 20
+  xhtml_type: list
+  xhtml_xpath: ol[1]
+- mdx_blocks:
+  - 22
+  xhtml_type: html_block
+  xhtml_xpath: ac:adf-extension[1]
+mdx_file: page.mdx
+source_page_id: '544376265'
+version: 2

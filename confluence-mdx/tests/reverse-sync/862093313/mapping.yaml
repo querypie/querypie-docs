@@ -1,197 +1,207 @@
-version: 1
-source_page_id: '862093313'
-generated_at: '2026-02-14T15:16:04Z'
-mdx_file: system-architecture-and-network-access-control.mdx
 mappings:
-- xhtml_xpath: p[1]
+- mdx_blocks: []
   xhtml_type: paragraph
-  mdx_blocks:
-  - 2
-- xhtml_xpath: macro-toc[1]
+  xhtml_xpath: p[1]
+- mdx_blocks: []
   xhtml_type: html_block
-  mdx_blocks:
+  xhtml_xpath: macro-toc[1]
+- mdx_blocks:
   - 5
-- xhtml_xpath: h2[1]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h2[1]
+- mdx_blocks:
   - 7
-- xhtml_xpath: p[2]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[2]
+- mdx_blocks:
   - 9
-- xhtml_xpath: h3[1]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[1]
+- mdx_blocks:
   - 11
-- xhtml_xpath: p[3]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[3]
+- mdx_blocks:
   - 13
-- xhtml_xpath: ac:image[1]
   xhtml_type: html_block
-  mdx_blocks:
+  xhtml_xpath: ac:image[1]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[4]
+- mdx_blocks:
   - 15
-- xhtml_xpath: p[4]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[5]
+- mdx_blocks:
   - 17
-- xhtml_xpath: p[5]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[2]
+- mdx_blocks:
   - 19
-- xhtml_xpath: h3[2]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[6]
+- mdx_blocks:
   - 21
-- xhtml_xpath: p[6]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[7]
+- mdx_blocks:
   - 23
-- xhtml_xpath: p[7]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[3]
+- mdx_blocks:
   - 25
-- xhtml_xpath: h3[3]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[8]
+- mdx_blocks:
   - 27
-- xhtml_xpath: p[8]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[9]
+- mdx_blocks:
   - 29
-- xhtml_xpath: p[9]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[4]
+- mdx_blocks:
   - 31
-- xhtml_xpath: h3[4]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[10]
+- mdx_blocks:
   - 33
-- xhtml_xpath: p[10]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[11]
+- mdx_blocks:
   - 35
-- xhtml_xpath: p[11]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: list
+  xhtml_xpath: ul[1]
+- mdx_blocks:
   - 37
-- xhtml_xpath: ul[1]
-  xhtml_type: list
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[5]
+- mdx_blocks:
   - 39
-- xhtml_xpath: h3[5]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[12]
+- mdx_blocks:
   - 41
-- xhtml_xpath: p[12]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[13]
+- mdx_blocks:
   - 43
-- xhtml_xpath: p[13]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: list
+  xhtml_xpath: ul[2]
+- mdx_blocks:
   - 45
-- xhtml_xpath: ul[2]
-  xhtml_type: list
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[6]
+- mdx_blocks:
   - 47
-- xhtml_xpath: h3[6]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[14]
+- mdx_blocks:
   - 49
-- xhtml_xpath: p[14]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[7]
+- mdx_blocks:
   - 51
-- xhtml_xpath: h3[7]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[15]
+- mdx_blocks:
   - 53
-- xhtml_xpath: p[15]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[8]
+- mdx_blocks:
   - 55
-- xhtml_xpath: h3[8]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[16]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[17]
+- mdx_blocks:
   - 57
-- xhtml_xpath: p[16]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h2[2]
+- mdx_blocks:
   - 59
-- xhtml_xpath: p[17]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h3[9]
+- mdx_blocks:
   - 61
-- xhtml_xpath: h2[2]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[18]
+- mdx_blocks:
   - 63
-- xhtml_xpath: h3[9]
-  xhtml_type: heading
-  mdx_blocks:
-  - 65
-- xhtml_xpath: p[18]
-  xhtml_type: paragraph
-  mdx_blocks:
-  - 67
-- xhtml_xpath: ul[3]
   xhtml_type: list
-  mdx_blocks:
+  xhtml_xpath: ul[3]
+- mdx_blocks:
+  - 65
+  xhtml_type: heading
+  xhtml_xpath: h3[10]
+- mdx_blocks:
+  - 67
+  xhtml_type: table
+  xhtml_xpath: table[1]
+- mdx_blocks:
   - 69
-- xhtml_xpath: h3[10]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[11]
+- mdx_blocks:
   - 71
-- xhtml_xpath: table[1]
-  xhtml_type: table
-  mdx_blocks:
-  - 73
-- xhtml_xpath: h3[11]
-  xhtml_type: heading
-  mdx_blocks:
-  - 75
-- xhtml_xpath: p[19]
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[19]
+- mdx_blocks:
+  - 73
+  xhtml_type: heading
+  xhtml_xpath: h3[12]
+- mdx_blocks:
+  - 75
+  xhtml_type: table
+  xhtml_xpath: table[2]
+- mdx_blocks:
   - 77
-- xhtml_xpath: h3[12]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[13]
+- mdx_blocks:
   - 79
-- xhtml_xpath: table[2]
   xhtml_type: table
-  mdx_blocks:
+  xhtml_xpath: table[3]
+- mdx_blocks:
   - 81
-- xhtml_xpath: h3[13]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[14]
+- mdx_blocks:
   - 83
-- xhtml_xpath: table[3]
   xhtml_type: table
-  mdx_blocks:
+  xhtml_xpath: table[4]
+- mdx_blocks:
   - 85
-- xhtml_xpath: h3[14]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[15]
+- mdx_blocks:
   - 87
-- xhtml_xpath: table[4]
   xhtml_type: table
-  mdx_blocks:
+  xhtml_xpath: table[5]
+- mdx_blocks:
   - 89
-- xhtml_xpath: h3[15]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h3[16]
+- mdx_blocks:
   - 91
-- xhtml_xpath: table[5]
   xhtml_type: table
-  mdx_blocks:
+  xhtml_xpath: table[6]
+- mdx_blocks:
   - 93
-- xhtml_xpath: h3[16]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h2[3]
+- mdx_blocks:
   - 95
-- xhtml_xpath: table[6]
-  xhtml_type: table
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[20]
+- mdx_blocks:
   - 97
+  xhtml_type: table
+  xhtml_xpath: table[7]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[21]
+mdx_file: page.mdx
+source_page_id: '862093313'
+version: 2

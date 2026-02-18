@@ -1,73 +1,71 @@
-version: 1
-source_page_id: '544376183'
-generated_at: '2026-02-14T15:15:06Z'
-mdx_file: integrating-with-aws-sso.mdx
 mappings:
-- xhtml_xpath: h2[1]
-  xhtml_type: heading
-  mdx_blocks:
-  - 2
-- xhtml_xpath: p[1]
-  xhtml_type: paragraph
-  mdx_blocks:
+- mdx_blocks:
   - 4
-- xhtml_xpath: h2[2]
   xhtml_type: heading
-  mdx_blocks:
+  xhtml_xpath: h2[1]
+- mdx_blocks:
   - 6
-- xhtml_xpath: ac:image[1]
-  xhtml_type: html_block
-  mdx_blocks:
+  xhtml_type: paragraph
+  xhtml_xpath: p[1]
+- mdx_blocks:
   - 8
-- xhtml_xpath: ol[1]
-  xhtml_type: list
-  mdx_blocks:
-  - 10
-- xhtml_xpath: p[2]
-  xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_type: heading
+  xhtml_xpath: h2[2]
+- mdx_blocks: []
+  xhtml_type: html_block
+  xhtml_xpath: ac:image[1]
+- mdx_blocks:
   - 12
-- xhtml_xpath: h2[3]
-  xhtml_type: heading
-  mdx_blocks:
+  xhtml_type: list
+  xhtml_xpath: ol[1]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[2]
+- mdx_blocks:
   - 15
-- xhtml_xpath: ac:image[2]
+  xhtml_type: heading
+  xhtml_xpath: h2[3]
+- mdx_blocks: []
   xhtml_type: html_block
-  mdx_blocks:
-  - 17
-- xhtml_xpath: ol[2]
-  xhtml_type: list
-  mdx_blocks:
+  xhtml_xpath: ac:image[2]
+- mdx_blocks:
   - 19
-- xhtml_xpath: table[1]
-  xhtml_type: table
-  mdx_blocks:
-  - 21
-- xhtml_xpath: p[3]
-  xhtml_type: paragraph
-  mdx_blocks:
-  - 23
-- xhtml_xpath: h2[4]
-  xhtml_type: heading
-  mdx_blocks:
-  - 25
-- xhtml_xpath: ac:image[3]
-  xhtml_type: html_block
-  mdx_blocks:
-  - 27
-- xhtml_xpath: ol[3]
   xhtml_type: list
-  mdx_blocks:
-  - 29
-- xhtml_xpath: h2[5]
-  xhtml_type: heading
-  mdx_blocks:
-  - 31
-- xhtml_xpath: ac:image[4]
-  xhtml_type: html_block
-  mdx_blocks:
-  - 33
-- xhtml_xpath: p[4]
+  xhtml_xpath: ol[2]
+- mdx_blocks:
+  - 21
+  xhtml_type: table
+  xhtml_xpath: table[1]
+- mdx_blocks:
+  - 23
   xhtml_type: paragraph
-  mdx_blocks:
+  xhtml_xpath: p[3]
+- mdx_blocks:
+  - 25
+  xhtml_type: heading
+  xhtml_xpath: h2[4]
+- mdx_blocks:
+  - 27
+  xhtml_type: html_block
+  xhtml_xpath: ac:image[3]
+- mdx_blocks:
+  - 29
+  xhtml_type: list
+  xhtml_xpath: ol[3]
+- mdx_blocks:
+  - 31
+  xhtml_type: heading
+  xhtml_xpath: h2[5]
+- mdx_blocks: []
+  xhtml_type: html_block
+  xhtml_xpath: ac:image[4]
+- mdx_blocks:
   - 35
+  xhtml_type: paragraph
+  xhtml_xpath: p[4]
+- mdx_blocks: []
+  xhtml_type: paragraph
+  xhtml_xpath: p[5]
+mdx_file: page.mdx
+source_page_id: '544376183'
+version: 2
