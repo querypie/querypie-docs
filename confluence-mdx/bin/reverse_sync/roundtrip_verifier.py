@@ -119,26 +119,6 @@ def _normalize_table_cell_lines(text: str) -> str:
     return '\n'.join(result)
 
 
-def _normalize_heading_ws(text: str) -> str:
-    """Heading 행의 공백을 정규화한다.
-
-    Forward converter가 heading 내 텍스트 노드를 .strip()하므로,
-    인라인 요소(<strong>, <code> 등) 경계의 공백이 제거된다.
-    비교 시 이 차이를 무시하기 위해 heading 내용의 공백을 제거하여 비교한다.
-    """
-    lines = text.split('\n')
-    result = []
-    for line in lines:
-        m = re.match(r'^(#{2,6})\s', line)
-        if m:
-            prefix = m.group(1)
-            content = line[len(prefix):].lstrip()
-            content = re.sub(r'\s+', '', content)
-            result.append(prefix + ' ' + content)
-        else:
-            result.append(line)
-    return '\n'.join(result)
-
 
 def _normalize_sentence_breaks(text: str) -> str:
     """Forward converter의 split_into_sentences()에 의한 줄바꿈을 정규화한다.
@@ -203,7 +183,6 @@ def _apply_normalizations(text: str) -> str:
     text = _normalize_table_cell_lines(text)
     text = _normalize_html_entities_in_code(text)
     text = _normalize_inline_code_boundaries(text)
-    text = _normalize_heading_ws(text)
     text = _normalize_sentence_breaks(text)
     text = _normalize_quotes(text)
     return text
