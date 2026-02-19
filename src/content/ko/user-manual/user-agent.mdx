@@ -7,14 +7,11 @@ import { Callout } from 'nextra/components'
 
 # User Agent
 
-### Overview
-
 QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.
-
 
 ### 에이전트 앱 다운로드 및 실행하기
 
-1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download` 버튼을 클릭합니다.
+#### 1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 `Agent Download` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-173002.png" alt="QueryPie Web &gt; 프로필 메뉴" width="760" />
@@ -23,7 +20,10 @@ QueryPie Web &gt; 프로필 메뉴
 </figcaption>
 </figure>
 
-2. QueryPie Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을 복사해 둡니다.
+#### 2. 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드합니다.
+
+QueryPie Agent Downloads 팝업창의 Step 1 에서, 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드합니다.
+Step 3 섹션에 표시된 QueryPie URL을 복사해 둡니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/image-20240723-154847.png" alt="QueryPie Web &gt; Agent Downloads 팝업창" width="760" />
@@ -36,7 +36,7 @@ QueryPie Web &gt; Agent Downloads 팝업창
 QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.
 </Callout>
 
-3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.
+#### 3. 다운로드받은 QueryPie Agent 설치 프로그램을 실행하여 설치를 완료합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-174002.png" alt="Mac OS 설치 프로그램" width="760" />
@@ -45,7 +45,8 @@ Mac OS 설치 프로그램
 </figcaption>
 </figure>
 
-4. 설치 완료된 QueryPie Agent를 실행합니다.
+#### 4. 설치된 QueryPie Agent를 실행합니다.
+
 QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 `Next` 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다.
 
 <figure data-layout="center" data-align="center">
@@ -55,16 +56,15 @@ Agent &gt; QueryPie Host 입력
 </figcaption>
 </figure>
 
-
 ### QueryPie Agent에 로그인하기
 
-1. Agent 앱 내 로그인 화면에서 `Login` 버튼을 클릭합니다.
+#### 1. Agent 앱 내 로그인 화면에서 `Login` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-173713.png" alt="screenshot-20240804-173713.png" width="760" />
 </figure>
 
-2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, `Continue` 버튼을 클릭합니다.
+#### 2. 웹 브라우저가 열리면, 로그인 페이지에서 인증정보를 입력하고, `Continue` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240729-171236.png" alt="QueryPie Web &gt; Agent Login Page" width="760" />
@@ -73,7 +73,7 @@ QueryPie Web &gt; Agent Login Page
 </figcaption>
 </figure>
 
-3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.
+#### 3. 로그인을 성공하면 아래와 같이 로그인 성공 화면이 표시되며 이후 Agent로 돌아갑니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240729-171314.png" alt="QueryPie Web &gt; Agent Login Success Page" width="764" />
@@ -82,7 +82,7 @@ QueryPie Web &gt; Agent Login Success Page
 </figcaption>
 </figure>
 
-4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.
+#### 4. Agent 열기를 명시적으로 수행하여 인증정보를 Agent로 전달합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-174209.png" alt="Chrome - Agent App 열기 모달" width="760" />
@@ -93,7 +93,10 @@ Chrome - Agent App 열기 모달
 
 ### 에이전트로 데이터베이스 접속하기
 
-1. 로그인이 정상적으로 완료되면 Agent 앱 내 Databases 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.<br/>접속할 커넥션에 할당된 `Port` 를 클릭하면, 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.
+#### 1. Agent 앱 내 Database 탭에서 권한 있는 커넥션들의 접속 정보를 확인합니다.
+
+로그인이 정상적으로 완료되면 Agent 앱 내 Database 탭에서 권한 있는 커넥션들의 접속 정보를 확인할 수 있습니다.
+접속할 커넥션에 할당된 `Port` 를 클릭하면, 해당 커넥션의 `Proxy Credentials` 정보를 확인할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-151001.png" alt="Agent &gt; DB Connection Information" width="764" />
@@ -102,7 +105,7 @@ Agent &gt; DB Connection Information
 </figcaption>
 </figure>
 
-2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.
+#### 2. 위의 접속 정보를 3rd Party 클라이언트에 입력하면 DB 커넥션 접속이 가능합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/agent-07.png" alt="3rd Party Client를 이용한 DB 커넥션 접속" width="764" />
@@ -118,8 +121,7 @@ Agent &gt; DB Connection Information
 
 #### 1. 서버 역할 선택하기
 
-* 사용자 프로필 영역 하단의 `Role` 버튼을 클릭하여 원하는 역할을 고르고 `OK` 버튼을 클릭하세요.
-* Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.
+사용자 프로필 영역 하단의 `Role` 버튼을 클릭하여 원하는 역할을 고르고 `OK` 버튼을 클릭하세요. `Default` 역할을 선택택하는 경우, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-162653.png" alt="Agent &gt; Server &gt; Select a Role" width="764" />
@@ -132,9 +134,9 @@ Agent &gt; Server &gt; Select a Role
 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.
 </Callout>
 
-#### <br/>2.Agent로 서버 접속하기
+#### 2. Agent로 서버 접속하기
 
-* 접속할 서버를 우클릭 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
+접속할 서버를 우클릭 후 `Open Connection with` 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-161729.png" alt="Agent &gt; Server &gt; Open Connection with" width="760" />
@@ -143,8 +145,8 @@ Agent &gt; Server &gt; Open Connection with
 </figcaption>
 </figure>
 
-* 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.
-* 사용하려는 계정을 선택하고 필요 시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.
+이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.
+사용하려는 계정을 선택하고, 필요 시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-162532.png" alt="Agent &gt; Server &gt; Open New Session" width="746" />
@@ -156,19 +158,22 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH 설정하기
 
 Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
-다음의 방법으로 .ssh 폴더에 config 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
+다음의 방법으로 `.ssh` 폴더에 `config` 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
 
-1) 터미널을 열고, .ssh 폴더로 이동합니다.
+##### 3.1. 터미널을 열고, `.ssh` 폴더로 이동합니다.
+
 ```
 $ cd .ssh
 ```
 
-2) ssh 폴더에서 config 파일을 생성하기 위해 vi 에디터를 엽니다.
+##### 3.2. `.ssh` 폴더에서 `config` 파일을 생성하기 위해 vi 에디터를 엽니다.
+
 ```
 $ vi config
 ```
 
-3) 아래의 내용을 입력 후, `wq` 키를 입력하여 vi 에디터를 나옵니다.
+##### 3.3. 아래의 내용을 입력 후, `Esc` 와 `:wq` 를 입력하여 변경사항을 저장하고, vi 에디터를 종료합니다.
+
 ```
 Host {{Server Name}}
   Hostname {{Server URL}}
@@ -177,7 +182,7 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.
+`config` 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.
 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
 ```
 Host *
@@ -185,7 +190,8 @@ Host *
 ```
 </Callout>
 
-4) 이상으로 설정이 완료됩니다.
+##### 3.4. 이상으로 설정이 완료됩니다.
+
 Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.
 ```
 $ ssh deploy@{{Server Name}}
@@ -198,10 +204,11 @@ $ ssh deploy@{{Server Name}}
 <img src="/user-manual/user-agent/kubernetes-agent-access-flow.png" alt="kubernetes-agent-access-flow.png" width="764" />
 </figure>
 
-* 권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 `kubeconfig` 파일이 자동으로 수신됩니다.
-* 이를 통해 Kubernetes Client(kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.
-* 에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.
-* 또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.
+권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 `kubeconfig` 파일이 자동으로 수신됩니다.
+이를 통해 Kubernetes Client (kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.
+
+에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.
+또한 설정 메뉴를 통해 `kubeconfig` 파일의 위치를 확인하고, 파일의 경로를 변경할 수 있습니다.
 
 #### 1. Kubernetes 역할 선택하기
 

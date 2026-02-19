@@ -168,7 +168,7 @@ MySQL, Redis 는 별개의 Container 에서 실행되기에, QueryPie Container 
 이 경우, `host.docker.internal` 주소를 사용하여, Docker Host, 즉 docker daemon 이 실행 중인 Linux machine 의 host network 에 연결할 수 있습니다.
 
 
-#### Q: 운영 도중AGENT_SECRET를 변경해도 괜찮은가요?
+#### Q: 운영 도중 AGENT_SECRET 를 변경해도 괜찮은가요?
 
 A: 변경하는 절차가 복잡하고 고객사 이용자에게 불편을 주기에, 변경하지 않는 것을 권합니다.
 
@@ -182,7 +182,7 @@ A: 변경하는 절차가 복잡하고 고객사 이용자에게 불편을 주�
 
 해당 환경변수는 이용자가 입력하지 않고, 서버 내에서 스스로 구성하는 방식으로 대체될 계획이 있습니다.
 
-#### Q. 운영 도중KEY_ENCRYPTION_KEY를 변경할 수 있나요?
+#### Q. 운영 도중 KEY_ENCRYPTION_KEY 를 변경할 수 있나요?
 
 A: 이 값을 변경할 수 없습니다.
 최초 설치 시 사용한 값을  **반드시**  보관하고 있어야 합니다.
@@ -197,7 +197,7 @@ A: 이 값을 변경할 수 없습니다.
 그러나, 고객사의 보안 담당자에게 문의하여, 고객사 내부의 정보보안 정책, 가이드라인에 따라 설정하는 것을 권장합니다.
 
 
-#### Q:AWS_ACCOUNT_ID는 반드시 입력해야 하는 값인가요? 어떤 값을 입력해야 하나요?
+#### Q: AWS_ACCOUNT_ID 는 반드시 입력해야 하는 값인가요? 어떤 값을 입력해야 하나요?
 
 A: QueryPie 10.3.0 또는 이후 버전에서는, AWS_ACCOUNT_ID 를 입력하지 않습니다.
 QueryPie Server Container 가 스스로 이 값을 알아냅니다.
@@ -216,13 +216,13 @@ AWS_ACCOUNT_ID 환경변수값은 Web Console 에서 Cloud Provider 를 설정�
 </details>
 
 
-#### Q: SAC, RDP 기능을 사용하지 않습니다.CABINET_DATA_DIR 항목을 없애어도 되나요?
+#### Q: SAC, RDP 기능을 사용하지 않습니다. CABINET_DATA_DIR 항목을 없애어도 되나요?
 
 A: QueryPie 10.3.0 또는 이후 버전에서는, CABINET_DATA_DIR 항목을 사용하지 않습니다.
 OVEN 컴포넌트의 설정값으로 대체되었습니다.
 
 
-#### Q:Redis 설정이 필수인가요?
+#### Q: Redis 설정이 필수인가요?
 
 A: QueryPie Container 의 서버 소프트웨어는 Redis 를 필수 요소로 사용하고 있습니다.
 
