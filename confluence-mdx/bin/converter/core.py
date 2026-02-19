@@ -176,10 +176,7 @@ class SingleLineParser:
         """Recursively convert child nodes to Markdown."""
         if isinstance(node, NavigableString):
             text = navigable_string_as_markdown(node)
-            if node.parent.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                self.markdown_lines.append(text.strip())
-            else:
-                self.markdown_lines.append(text)
+            self.markdown_lines.append(text)
             return
 
         logging.debug(f"SingleLineParser: type={type(node).__name__}, name={node.name}, value={repr(node.text)}")
