@@ -16,7 +16,7 @@ Azure 내의 리소스를 동기화하여 QueryPie 에서 관리하는 데이터
 ### QueryPie 에서 Azure 연동 정보 등록하기
 
 <Callout type="info">
-11.3.0에서 특정 태그가 있는 리소스만 동기화 할 수 있도록 Search Filter 기능이 추가 되었습니다.
+11.3.0에서 특정 태그가 있는 리소스만 동기화할 수 있도록 Search Filter 기능이 추가되었습니다.
 </Callout>
 
 <figure data-layout="center" data-align="center">
@@ -33,17 +33,17 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 4.  **Cloud**   **Provider**  항목에서 Microsoft Azure 를 선택합니다.
 5. 동기화하고자 하는 리소스의  **Tenant**   **ID** 를 입력합니다.
 6.  **Subscription**   **ID** 를 입력합니다.
-7. 리소스를 동기화하기 위해 필요한  **Credential**  정보를 입력합니다. 현재는 Client Secret 방식만 지원되고 있습니다.
-    * `Synchronize` 버튼 클릭 시 Azure의 Client Secret을 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2 부터 “Save Credential for Synchronization” 옵션을 제공하여 Credential type로 Client Secret을 사용 할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
+7. 리소스를 동기화하기 위해 필요한  **Credential**  정보를 입력합니다. 현재는 Client Secret 방식만 지원됩니다.
+    * `Synchronize` 버튼 클릭 시 Azure의 Client Secret을 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2부터 "Save Credential for Synchronization" 옵션을 제공하여 Credential type으로 Client Secret을 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
 8.  **Database Type Filter**  항목에서 동기화하고자 하는 리소스들을 선택합니다.
-    * 현재 Azure SQL Database 만 동기화 가능합니다.
+    * 현재 Azure SQL Database만 동기화 가능합니다.
 9.  **Search Filter**  를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
     1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다.
         1. Key 값 입력 후 Enter → 검색 조건 선택 후 Enter → Value 값 입력 후 Enter
 10.  **Replication**   **Frequency**  항목에서 동기화 방식을 선택합니다.
     1. Manual : 동기화를 하고자 하는 시점에만 수동으로 동기화하는 방식입니다.
     2. Scheduling : 주기적인 스케줄링을 통해 리소스를 동기화하는 방식입니다. Cron Expressions를 제공합니다.
-11.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정 할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록을 해야 합니다.
+11.  **Auto Configuration Upon Initial Synchronization** Cloud Provider에서 처음 동기화하는 DB의 일부 값을 사용자가 지정할 수 있습니다. 초기값 설정은 Cloud Provider 저장 후 수정할 수 없습니다. 이 설정의 변경이 필요한 경우, Cloud Provider 삭제 후 다시 등록해야 합니다.
     * Tag : 동기화된 DB에 자동으로 태그를 추가할 수 있습니다.
         * 태그 값에 `{vpcid}`를 입력하면, 해당 DB가 속한 Cloud의 VPC ID가 자동으로 채워집니다.
         * 예: 태그 Key를 "Network"로 설정하고 Value를 `{vpcid}`로 입력하면, DB가 "vpc-1a2b3c4d" VPC에 있을 경우 "Network: vpc-1a2b3c4d" 태그가 자동 생성됩니다.
@@ -60,9 +60,9 @@ Save Credential for Synchronization
 </figcaption>
 </figure>
 
-*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성 할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장 드립니다.**
-* 이 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
-* 이 옵션이 활성화 되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
+*  **이 옵션을 활성화해서 저장한 동기화 설정은 동기화 설정 상세페이지에서 이 옵션을 비활성화할 수 없으므로 신중히 선택해야 합니다. 저장된 credential은 교체할 수 없습니다. 다른 credential을 사용해야 하는 상황이라면 동기화 설정을 새로 생성해야 합니다. credential 변경이 필요한 경우 기존과 동일한 권한이 할당된 credential을 생성하고 동기화 설정을 새로 만든 뒤 기존 동기화 설정을 삭제하는 것을 권장합니다.**
+* 이 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화할 수 있습니다.
+* 이 옵션이 활성화되어 있으면 동기화를 수동으로 할 수도 있고 스케줄을 지정할 수도 있습니다.
 </Callout>
 
 
@@ -79,7 +79,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 2. 등록한 Cloud Provider 를 클릭하여 세부 정보 화면으로 들어갑니다.
 3. 우측 상단의 `Synchronize` 버튼을 클릭하면 Azure 에서 리소스를 동기화할 수 있습니다.
 4. 표시되는 Synchronization Log 에서 동기화 진행 상황을 확인할 수 있고, Administrator &gt; General &gt; Systems &gt; Jobs 메뉴에서도 동기화 히스토리를 확인할 수 있습니다.
-5. Cloud Provider 를 한번 등록하고 나면 Provider 기본 정보 및 인증정보는 변경할 수 없습니다.
+5. Cloud Provider 를 한 번 등록하고 나면 Provider 기본 정보 및 인증정보는 변경할 수 없습니다.
     1.  **Name**  : 변경 가능
     2.  **Cloud Provider** : 변경 불가
     3.  **Tenant**   **ID** : 변경 불가
@@ -87,11 +87,11 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
     5.  **Credential**  : 변경 불가
         1. “Save Credential for Synchronization” : 비활성화 상태는 활성화로 변경할 수 있으나 활성화 상태를 비활성화로 전환 불가
     6.  **Database Type Filter**  : 변경 불가
-    7.  **Replication Frequency**  : “Save Credential for Synchronization” 옵션이 활성화 되어 있는 클라우드 동기화 설정은 이 값을 변경할 수 있습니다. “Save Credential for Synchronization” 는 기본값이 비활성화입니다.
+    7.  **Replication Frequency**  : "Save Credential for Synchronization" 옵션이 활성화되어 있는 클라우드 동기화 설정은 이 값을 변경할 수 있습니다. "Save Credential for Synchronization"는 기본값이 비활성화입니다.
 
 <Callout type="important">
-“Save Credential for Synchronization” 옵션이 활성화 되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화 할 수 있습니다.
-새로 생성할 때와 마찬가지로 이 설정은  **활성화 한 뒤 다시 비활성화 할 수 없으므로**  신중히 선택해야 합니다.
+"Save Credential for Synchronization" 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화할 수 있습니다.
+새로 생성할 때와 마찬가지로 이 설정은  **활성화한 뒤 다시 비활성화할 수 없으므로**  신중히 선택해야 합니다.
 </Callout>
 
 <Callout type="info">
