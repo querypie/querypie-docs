@@ -92,7 +92,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Authentication DB : Enter the value of Authentication DB (authSource).
 2. Other Options : Enter remaining values except authSource among options used in connection string.<br/>Example 1) When using only single option format ( [Key]=[Value] ) : replicaSet=rs0<br/>Example 2) When using multiple options format ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **When using replica set configuration, you must enter replicaSet=[replicaset name] option.**
-3. Secret Store : Option for using 3rd party for password and key management. Default Querypie means managed within QueryPie.
+3. Secret Store : Option for using 3rd party for password and key management. Default QueryPie means managed within QueryPie.
 4. User Name & Password : Enter the username and password for the database.
 5. Click the `Test Connection` button to verify if the entered connection information is valid.
 6. Complete and save by clicking the `Next` button.
@@ -120,7 +120,7 @@ ______
     4. Authentication DB and Other Options
         1. Authentication DB value and Other Options are automatically entered with values queried from DNS TXT records.
         2. Since +srv scheme automatically has TLS option as true, when converting to standard string, tls=true must be manually entered. (Because TXT record doesn't have TLS option.) Therefore, enter &tls=true in Other options field as shown in the figure above.
-4. Secret Store : Option for using 3rd party for password and key management. Default Querypie means managed within QueryPie.
+4. Secret Store : Option for using 3rd party for password and key management. Default QueryPie means managed within QueryPie.
 5. User Name & Password : Enter the username and password for the database.
 6. Click the `Test Connection` button to verify if the entered connection information is valid.
 7. Complete and save by clicking the `Next` button
@@ -146,7 +146,7 @@ Replica Set requires replicaSet=[replica set name] option, but Sharded Cluster d
         2. Expose is a value that can determine exposure in connection information.
 2. Authentication DB : Enter the value of Authentication DB (authSource).
 3. Other Options : Sharded cluster may not need additional options.
-4. Secret Store : Option for using 3rd party for password and key management. Default Querypie means managed within QueryPie.
+4. Secret Store : Option for using 3rd party for password and key management. Default QueryPie means managed within QueryPie.
 5. User Name & Password : Enter the username and password for the database.
 6. Click the `Test Connection` button to verify if the entered connection information is valid.
 7. Complete and save by clicking the `Next` button.

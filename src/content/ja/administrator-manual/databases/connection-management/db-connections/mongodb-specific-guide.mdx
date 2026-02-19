@@ -92,7 +92,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Authentication DB : Authentication DB（authSource）の値を入力します。
 2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
-3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QueryPieはQueryPie内部で管理することを意味します。
 4. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
 5. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
 6. `Next`ボタンを通じて仕上げて保存します。
@@ -120,7 +120,7 @@ ______
     4. Authentication DBおよびOther Options
         1. Authentication DB値とOther OptionsにもDNSのTXTレコードで照会された値が自動で入力されます。
         2. +srvスキームはTLSオプションが自動でtrueなので、standard stringに変換するとtls=trueを手動で入力する必要があります。（TXTレコードにTLSオプションがないためです。）したがって、Other options項目に上図のように&tls=trueを入力します。
-4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QueryPieはQueryPie内部で管理することを意味します。
 5. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
 6. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
 7. `Next`ボタンを通じて仕上げて保存します
@@ -146,7 +146,7 @@ Replica Setは replicaSet=[replica set name] オプションが必要ですが�
         2. Exposeはコネクション情報での露出可否を決定できる値です。
 2. Authentication DB : Authentication DB（authSource）の値を入力します。
 3. Other Options : Sharded clusterは別途追加オプションが必要ない場合があります。
-4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QuerypieはQueryPie内部で管理することを意味します。
+4. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QueryPieはQueryPie内部で管理することを意味します。
 5. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
 6. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
 7. `Next`ボタンを通じて仕上げて保存します。
