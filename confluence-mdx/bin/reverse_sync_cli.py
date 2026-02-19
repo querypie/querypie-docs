@@ -331,6 +331,7 @@ def run_verify(
     verify_result = verify_roundtrip(
         expected_mdx=impr_stripped,
         actual_mdx=verify_stripped,
+        original_mdx=orig_stripped,
     )
     # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
     roundtrip_diff_lines = difflib.unified_diff(

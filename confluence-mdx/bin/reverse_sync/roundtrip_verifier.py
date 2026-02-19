@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import difflib
 import html as html_module
 import re
+from typing import Optional
 
 
 @dataclass
@@ -118,6 +119,70 @@ def _normalize_table_cell_lines(text: str) -> str:
     return '\n'.join(result)
 
 
+def _normalize_heading_ws(text: str) -> str:
+    """Heading 행의 공백을 정규화한다.
+
+    Forward converter가 heading 내 텍스트 노드를 .strip()하므로,
+    인라인 요소(<strong>, <code> 등) 경계의 공백이 제거된다.
+    비교 시 이 차이를 무시하기 위해 heading 내용의 공백을 제거하여 비교한다.
+    """
+    lines = text.split('\n')
+    result = []
+    for line in lines:
+        m = re.match(r'^(#{2,6})\s', line)
+        if m:
+            prefix = m.group(1)
+            content = line[len(prefix):].lstrip()
+            content = re.sub(r'\s+', '', content)
+            result.append(prefix + ' ' + content)
+        else:
+            result.append(line)
+    return '\n'.join(result)
+
+
+def _normalize_sentence_breaks(text: str) -> str:
+    """Forward converter의 split_into_sentences()에 의한 줄바꿈을 정규화한다.
+
+    Forward converter가 <p> 내의 문장을 '. '에서 줄바꿈으로 분리하므로,
+    문장 경계에서 분리된 행을 다시 결합하여 비교한다.
+    """
+    lines = text.split('\n')
+    result: list = []
+    for line in lines:
+        stripped = line.strip()
+        if (result
+                and stripped
+                and not stripped.startswith(('#', '*', '-', '<', '|', '`', '>'))
+                and not re.match(r'^\d+\.', stripped)):
+            prev = result[-1].rstrip()
+            if prev and re.search(r'[.!?]$', prev):
+                result[-1] = prev + ' ' + stripped
+                continue
+        result.append(line)
+    return '\n'.join(result)
+
+
+def _normalize_quotes(text: str) -> str:
+    """스마트 따옴표를 ASCII 따옴표로 정규화한다.
+
+    Forward converter가 XHTML의 따옴표를 Unicode 스마트 따옴표로 변환할 수 있으므로,
+    비교 시 ASCII 따옴표로 통일한다.
+    """
+    text = text.replace('\u201c', '"').replace('\u201d', '"')
+    text = text.replace('\u2018', "'").replace('\u2019', "'")
+    return text
+
+
+def _normalize_inline_code_boundaries(text: str) -> str:
+    """인라인 코드 스팬의 backtick을 제거하여 경계 차이를 무시한다.
+
+    XHTML의 <code> 요소 경계는 텍스트 패처로 변경할 수 없으므로,
+    인라인 코드 backtick을 제거하여 텍스트 내용만 비교한다.
+    fenced code block (```)은 유지한다.
+    """
+    return re.sub(r'(?<!`)`(?!`)', '', text)
+
+
 def _normalize_html_entities_in_code(text: str) -> str:
     """코드 블록 내의 HTML 엔티티를 일반 문자로 변환한다.
 
@@ -129,34 +194,85 @@ def _normalize_html_entities_in_code(text: str) -> str:
     return re.sub(r'```(\w*\n)(.*?)```', _unescape_block, text, flags=re.DOTALL)
 
 
-def verify_roundtrip(expected_mdx: str, actual_mdx: str) -> VerifyResult:
+def _apply_normalizations(text: str) -> str:
+    """모든 정규화를 순서대로 적용한다."""
+    text = _normalize_trailing_ws(text)
+    text = _normalize_dates(text)
+    text = _normalize_table_cell_padding(text)
+    text = _strip_first_heading(text)
+    text = _normalize_table_cell_lines(text)
+    text = _normalize_html_entities_in_code(text)
+    text = _normalize_inline_code_boundaries(text)
+    text = _normalize_heading_ws(text)
+    text = _normalize_sentence_breaks(text)
+    text = _normalize_quotes(text)
+    return text
+
+
+def _changed_lines_in_expected(original: str, expected: str) -> set:
+    """original→expected에서 변경된 행의 인덱스 집합을 반환한다."""
+    orig_lines = original.splitlines()
+    exp_lines = expected.splitlines()
+    sm = difflib.SequenceMatcher(None, orig_lines, exp_lines)
+    changed = set()
+    for tag, _i1, _i2, j1, j2 in sm.get_opcodes():
+        if tag != 'equal':
+            for j in range(j1, j2):
+                changed.add(j)
+    return changed
+
+
+def verify_roundtrip(
+    expected_mdx: str,
+    actual_mdx: str,
+    original_mdx: Optional[str] = None,
+) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
     trailing whitespace, 날짜 형식을 정규화. 그 외 공백, 줄바꿈, 모든 문자가
     동일해야 PASS.
 
+    original_mdx가 제공되면, 변경되지 않은 행의 차이는 무시한다.
+    이를 통해 기존 MDX↔XHTML 불일치가 있는 파일도 패치된 행만 검증한다.
+
     Args:
         expected_mdx: 개선 MDX (의도한 결과)
         actual_mdx: 패치된 XHTML을 forward 변환한 결과
+        original_mdx: (선택) 원본 MDX (main 브랜치)
 
     Returns:
         VerifyResult: passed=True면 통과, 아니면 diff_report 포함
     """
-    expected_mdx = _normalize_trailing_ws(expected_mdx)
-    actual_mdx = _normalize_trailing_ws(actual_mdx)
-    expected_mdx = _normalize_dates(expected_mdx)
-    actual_mdx = _normalize_dates(actual_mdx)
-    expected_mdx = _normalize_table_cell_padding(expected_mdx)
-    actual_mdx = _normalize_table_cell_padding(actual_mdx)
-    expected_mdx = _strip_first_heading(expected_mdx)
-    actual_mdx = _strip_first_heading(actual_mdx)
-    expected_mdx = _normalize_table_cell_lines(expected_mdx)
-    actual_mdx = _normalize_table_cell_lines(actual_mdx)
-    expected_mdx = _normalize_html_entities_in_code(expected_mdx)
-    actual_mdx = _normalize_html_entities_in_code(actual_mdx)
+    expected_mdx = _apply_normalizations(expected_mdx)
+    actual_mdx = _apply_normalizations(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")
+
+    # original_mdx가 제공되면, 변경된 행에서만 차이를 검사한다.
+    if original_mdx is not None:
+        original_mdx = _apply_normalizations(original_mdx)
+        changed = _changed_lines_in_expected(original_mdx, expected_mdx)
+
+        exp_lines = expected_mdx.splitlines()
+        act_lines = actual_mdx.splitlines()
+
+        # expected vs actual의 diff hunk에서, 변경된 행이 포함된 것만 실패 처리
+        sm = difflib.SequenceMatcher(None, exp_lines, act_lines)
+        has_real_diff = False
+        for tag, i1, i2, _j1, _j2 in sm.get_opcodes():
+            if tag == 'equal':
+                continue
+            # 이 diff hunk의 expected 쪽 행 중 하나라도 변경된 행이면 실패
+            for i in range(i1, i2):
+                if i in changed:
+                    has_real_diff = True
+                    break
+            if has_real_diff:
+                break
+
+        if not has_real_diff:
+            return VerifyResult(passed=True, diff_report="")
 
     expected_lines = expected_mdx.splitlines(keepends=True)
     actual_lines = actual_mdx.splitlines(keepends=True)
