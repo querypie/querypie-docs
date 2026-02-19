@@ -7,14 +7,11 @@ import { Callout } from 'nextra/components'
 
 # User Agent
 
-### Overview
-
 QueryPie Agentをインストールすると、DataGrip、DBeaverのようなSQL Client、iTerm/SecureCRTのようなSSH Client、Lens、k9sのような3rd Partyアプリケーションを使用できます。
-
 
 ### エージェントアプリダウンロードおよび実行
 
-1. QueryPieログイン後右上プロフィールをクリックして`Agent Download`ボタンをクリックします。
+#### 1. QueryPieログイン後右上プロフィールをクリックして`Agent Download`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-173002.png" alt="QueryPie Web &gt; プロフィールメニュー" width="760" />
@@ -23,7 +20,10 @@ QueryPie Web &gt; プロフィールメニュー
 </figcaption>
 </figure>
 
-2. QueryPie Agent Downloadsポップアップウィンドウが実行されるとStep 1で使用中のPCオペレーティングシステムに合うインストールファイルをダウンロードした後Step 3にあるQueryPie URLをコピーしておきます。
+#### 2. 使用中のPCオペレーティングシステムに合うインストールファイルをダウンロードします。
+
+QueryPie Agent Downloadsポップアップウィンドウの Step 1 で、使用中のPCオペレーティングシステムに合うインストールファイルをダウンロードします。
+Step 3 セクションに表示されたQueryPie URLをコピーしておきます。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/image-20240723-154847.png" alt="QueryPie Web &gt; Agent Downloadsポップアップウィンドウ" width="760" />
@@ -36,7 +36,7 @@ QueryPie Web &gt; Agent Downloadsポップアップウィンドウ
 QueryPie AgentはMac、Windows、Linux OSをサポートします。
 </Callout>
 
-3. ダウンロードしたQueryPie Agentインストールプログラムを実行してインストールを完了します。
+#### 3. ダウンロードしたQueryPie Agentインストールプログラムを実行してインストールを完了します。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-174002.png" alt="Mac OSインストールプログラム" width="760" />
@@ -45,7 +45,8 @@ Mac OSインストールプログラム
 </figcaption>
 </figure>
 
-4. インストール完了されたQueryPie Agentを実行します。
+#### 4. インストールされたQueryPie Agentを実行します。
+
 QueryPie Host入力欄に事前にコピーしておいたQueryPie URLを入力して`Next`ボタンをクリックするとログイン画面にアクセスします。
 
 <figure data-layout="center" data-align="center">
@@ -55,16 +56,15 @@ Agent &gt; QueryPie Host入力
 </figcaption>
 </figure>
 
-
 ### QueryPie Agentにログイン
 
-1. Agentアプリ内ログイン画面で`Login`ボタンをクリックします。
+#### 1. Agentアプリ内ログイン画面で`Login`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-173713.png" alt="screenshot-20240804-173713.png" width="760" />
 </figure>
 
-2. ウェブブラウザが開くと、ログインページで認証情報を入力し、`Continue`ボタンをクリックします。
+#### 2. ウェブブラウザが開くと、ログインページで認証情報を入力し、`Continue`ボタンをクリックします。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240729-171236.png" alt="QueryPie Web &gt; Agent Login Page" width="760" />
@@ -73,7 +73,7 @@ QueryPie Web &gt; Agent Login Page
 </figcaption>
 </figure>
 
-3. ログインが成功すると下記のようにログイン成功画面が表示されその後Agentに戻ります。
+#### 3. ログインが成功すると下記のようにログイン成功画面が表示されその後Agentに戻ります。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240729-171314.png" alt="QueryPie Web &gt; Agent Login Success Page" width="764" />
@@ -82,7 +82,7 @@ QueryPie Web &gt; Agent Login Success Page
 </figcaption>
 </figure>
 
-4. Agent開きを明示的に実行して認証情報をAgentに伝達します。
+#### 4. Agent開きを明示的に実行して認証情報をAgentに伝達します。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240804-174209.png" alt="Chrome - Agent App開きモーダル" width="760" />
@@ -93,7 +93,10 @@ Chrome - Agent App開きモーダル
 
 ### エージェントでデータベース接続
 
-1. ログインが正常に完了されるとAgentアプリ内Databasesタブで権限のあるコネクションの接続情報を確認できます。<br/>接続するコネクションに割り当てられた`Port`をクリックすると、該当コネクションの`Proxy Credentials`情報を確認できます。
+#### 1. Agentアプリ内Databaseタブで権限のあるコネクションの接続情報を確認します。
+
+ログインが正常に完了されるとAgentアプリ内Databaseタブで権限のあるコネクションの接続情報を確認できます。
+接続するコネクションに割り当てられた`Port`をクリックすると、該当コネクションの`Proxy Credentials`情報を確認できます。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-151001.png" alt="Agent &gt; DB Connection Information" width="764" />
@@ -102,7 +105,7 @@ Agent &gt; DB Connection Information
 </figcaption>
 </figure>
 
-2. 上記の接続情報を3rd Partyクライアントに入力するとDBコネクション接続が可能です。
+#### 2. 上記の接続情報を3rd Partyクライアントに入力するとDBコネクション接続が可能です。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/agent-07.png" alt="3rd Party Clientを利用したDBコネクション接続" width="764" />
@@ -118,8 +121,7 @@ Agent &gt; DB Connection Information
 
 #### 1. サーバー役割選択
 
-* ユーザープロフィール領域下部の`Role`ボタンをクリックして希望する役割を選び`OK`ボタンをクリックしてください。
-* Default役割選択時、Workflow &gt; Server Access Request要求により割り当てられたサーバー権限を使用します。
+ユーザープロフィール領域下部の`Role`ボタンをクリックして希望する役割を選び`OK`ボタンをクリックしてください。`Default`役割を選択する場合、Workflow > Server Access Request要求により割り当てられたサーバー権限を使用します。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-162653.png" alt="Agent &gt; Server &gt; Select a Role" width="764" />
@@ -132,9 +134,9 @@ Agent &gt; Server &gt; Select a Role
 役割が2個以上なら、Agentログイン後Server機能使用のために役割選択をまず完了しなければなりません。
 </Callout>
 
-#### <br/>2.Agentでサーバー接続
+#### 2. Agentでサーバー接続
 
-* 接続するサーバーを右クリック後Open Connection withメニューを選択して、使用したいターミナルツールを選択します。
+接続するサーバーを右クリック後`Open Connection with`メニューを選択して、使用したいターミナルツールを選択します。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-161729.png" alt="Agent &gt; Server &gt; Open Connection with" width="760" />
@@ -143,8 +145,8 @@ Agent &gt; Server &gt; Open Connection with
 </figcaption>
 </figure>
 
-* その後該当サーバーに接続可能なアカウントが複数あるなら、Account選択窓が開きます。
-* 使用したいアカウントを選択し必要時パスワードを入力した後、`OK`ボタンをクリックしてセッションを開きます。
+その後該当サーバーに接続可能なアカウントが複数あるなら、Account選択窓が開きます。
+使用したいアカウントを選択し、必要時パスワードを入力した後、`OK`ボタンをクリックしてセッションを開きます。
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/user-agent/screenshot-20240730-162532.png" alt="Agent &gt; Server &gt; Open New Session" width="746" />
@@ -156,19 +158,22 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH設定
 
 Seamless SSHとは既存ターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。
-次の方法で.sshフォルダにconfigファイルを作成して簡単にseamless SSH設定が可能です。
+次の方法で`.ssh`フォルダに`config`ファイルを作成して簡単にseamless SSH設定が可能です。
 
-1) ターミナルを開き、.sshフォルダに移動します。
+##### 3.1. ターミナルを開き、`.ssh`フォルダに移動します。
+
 ```
 $ cd .ssh
 ```
 
-2) sshフォルダでconfigファイルを作成するためviエディターを開きます。
+##### 3.2. `.ssh`フォルダで`config`ファイルを作成するためviエディターを開きます。
+
 ```
 $ vi config
 ```
 
-3) 下記の内容を入力後、`wq`キーを入力してviエディターを出ます。
+##### 3.3. 下記の内容を入力後、`Esc`と`:wq`を入力して変更事項を保存し、viエディターを終了します。
+
 ```
 Host {{Server Name}}
   Hostname {{Server URL}}
@@ -177,7 +182,7 @@ Host {{Server Name}}
 ```
 
 <Callout type="info">
-configファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。
+`config`ファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。
 サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続が可能です。
 ```
 Host *
@@ -185,7 +190,8 @@ Host *
 ```
 </Callout>
 
-4) 以上で設定が完了します。
+##### 3.4. 以上で設定が完了します。
+
 Agent &gt; Serverタブで役割を選択すると既存sshコマンドでサーバーに接続できます。
 ```
 $ ssh deploy@{{Server Name}}
@@ -198,10 +204,11 @@ $ ssh deploy@{{Server Name}}
 <img src="/user-manual/user-agent/kubernetes-agent-access-flow.png" alt="kubernetes-agent-access-flow.png" width="764" />
 </figure>
 
-* 権限を付与されたユーザーはエージェント実行時現在ポリシーに応じた`kubeconfig`ファイルが自動で受信されます。
-* これを通じてKubernetes Client(kubectl、lens、k9sなど)ツールでKubernetes APIリソースにアクセスできます。
-* エージェントではアクセス可能なクラスターリストを表示し、各クラスターに適用されたポリシーを確認できます。
-* また設定メニューを通じてkubeconfigファイルの位置を確認および修正できます。
+権限を付与されたユーザーはエージェント実行時現在ポリシーに応じた`kubeconfig`ファイルが自動で受信されます。
+これを通じてKubernetes Client（kubectl、lens、k9sなど）ツールでKubernetes APIリソースにアクセスできます。
+
+エージェントではアクセス可能なクラスターリストを表示し、各クラスターに適用されたポリシーを確認できます。
+また設定メニューを通じて`kubeconfig`ファイルの位置を確認し、ファイルのパスを変更できます。
 
 #### 1. Kubernetes役割選択
 

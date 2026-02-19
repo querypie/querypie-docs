@@ -178,14 +178,14 @@ spec:
 
 以下でポリシー記述に必要なQueryPie WAC Policy YAML文法を案内します。
 
-### spec: &lt;effect&gt;<Badge color="red">required</Badge>
+### spec: &lt;effect&gt; <Badge color="red">required</Badge>
 
 ポリシーの具体的なルールの許可または拒否の有無を指定します。`spec: allow` または `spec: deny` をサポートします。
 
 1. 1つのポリシーには最大1回の `allow`、1回の `deny` のみが存在できます。
 2. ポリシー内で同一の要素に対して `deny` と `allow` が同時に宣言された場合、`deny` が優先されます。
 
-### Resources<Badge color="red">required</Badge>
+### Resources <Badge color="red">required</Badge>
 
 許可またはブロックポリシーを設定したいWebアプリリソースを指定します。
 配下に `webApp` を必須で持ち、`urlPaths` または `urlPathTags` を持ちます。
@@ -195,7 +195,7 @@ spec:
 ただし、`urlPathTags` による明示は `spec: allow` でのみサポートされます。
 </Callout>
 
-#### webApp<Badge color="red">required</Badge>
+#### webApp <Badge color="red">required</Badge>
 
 QueryPieに定義したWebアプリリソース名を入力します。
 
@@ -226,7 +226,7 @@ spec:
 Webアプリのサブパスレベルでアクセス制御ポリシーを運用するためには、`webApp` 配下に `urlPaths` または `urlPathTags` を入力できます。
 1つのポリシー内で、1つのWebアプリに対して `urlPaths` と `urlPathTags` を同時に指定することは  **不可能** です。
 
-#### urlPaths<Badge color="green">OPTIONAL</Badge>
+#### urlPaths <Badge color="green">OPTIONAL</Badge>
 
 ポリシーを適用したい特定のWebアプリリソースのサブパスを特定します。
 
@@ -269,7 +269,7 @@ spec:
     * `"^/database-settings/policies/data-.*$"` (X)
 5. 同一のリソース（およびサブパス）に対してブロックポリシーと許可ポリシーが重複する場合、**ブロックポリシーが優先適用**されます。
 
-#### urlPathTags<Badge color="green">OPTIONAL</Badge>
+#### urlPathTags <Badge color="green">OPTIONAL</Badge>
 
 Webアプリに登録されたサブパス別URL Pathタグを基準に、アクセスを許可するサブパスを指定します。
 
@@ -289,7 +289,7 @@ urlPathTags:
   "type": "general"
           ```
 
-### Conditions<Badge color="green">OPTIONAL</Badge>
+### Conditions <Badge color="green">OPTIONAL</Badge>
 
 `conditions` はルール適用対象リソースの範囲を狭めるための条件を定義します。`userAttributes`、`ipAddresses` 2種類の条件指定が可能です。
 
@@ -297,7 +297,7 @@ urlPathTags:
 `conditions` はspec:allowでのみ文法的に許可されます。
 </Callout>
 
-#### userAttributes<Badge color="green">OPTIONAL</Badge>
+#### userAttributes <Badge color="green">OPTIONAL</Badge>
 
 QueryPieユーザーの属性（attribute）を基準にルールによってリソースアクセスが許可されるユーザーの範囲を限定します。
 
@@ -323,7 +323,7 @@ userAttributes:
   "title": "Manager"
       ```
 
-#### ipAddresses<Badge color="green">OPTIONAL</Badge>
+#### ipAddresses <Badge color="green">OPTIONAL</Badge>
 
 リソースに対するIPアクセス制御条件リストを単一IP、CIDR形式で定義します。
 ```

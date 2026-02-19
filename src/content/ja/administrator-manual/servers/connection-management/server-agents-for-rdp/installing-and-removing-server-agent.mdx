@@ -87,29 +87,29 @@ CMDでServer Agentインストールファイル位置に移動後、以下の�
 ```
 
 
-### Server Agent削除
+### Server Agent 削除
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent/image-20240829-010643.png" alt="image-20240829-010643.png" width="760" />
 </figure>
 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPページにアクセスします。
-2. 右上段の`Verify Deletion Keyボタンをクリックします。`
-3. 確認されたDeletion Keyを記録します。
+2. 右上段の `Verify Deletion Key` ボタンをクリックします。
+3. 確認された `Deletion Key` を記録します。
 4. Windows Serverコンソールにアクセスします。
 5. コントロールパネル &gt; プログラム追加/削除メニューアクセス後、QueryPie Server Agentを削除します。
-6. パスワード入力欄に3で記録したDeletion Keyを入力します。
+6. パスワード入力欄に3で記録した `Deletion Key` を入力します。
 7. QueryPieウェブにアクセスします。
 8. Administrator &gt; Servers &gt; Connection Management &gt; Server Agents for RDPメニューに移動します。
 9. テーブル内の削除対象サーバー左側のチェックボックスをチェック後`Delete`ボタンを通じて削除します。
 
 
 <Callout type="info">
-Deletion Keyは日単位で変更され、QueryPieが動作するサーバーの日付と削除対象Windowsサーバーの日付が同じでなければ削除ができません。
+`Deletion Key` は日単位で変更され、QueryPieが動作するサーバーの日付と削除対象Windowsサーバーの日付が同じでなければ削除ができません。
 </Callout>
 
 <Callout type="important">
-**WindowsでDeletion Keyが間違っている場合**
-* 接続されたQueryPieからDeletion Keyを受信したか確認します。
+**Windowsで `Deletion Key` が間違っている場合**
+* 接続されたQueryPieから `Deletion Key` を受信したか確認します。
 * QueryPieが動作するサーバーの日付と削除対象Windowsサーバーの日付が同じか確認します。
 </Callout>

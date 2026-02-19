@@ -256,21 +256,6 @@
   - "user-manual"
   - "workflow"
   - "requesting-ip-registration"
-- "page_id": "568918170"
-  "title": "결재 부가 기능 (대리 결재, 재상신 등)"
-  "title_orig": "결재 부가 기능 (대리 결재, 재상신 등)"
-  "breadcrumbs":
-  - "사용자 매뉴얼"
-  - "Workflow"
-  - "결재 부가 기능 (대리 결재, 재상신 등)"
-  "breadcrumbs_en":
-  - "User Manual"
-  - "Workflow"
-  - "Approval Additional Features (Proxy Approval, Resubmission, etc.)"
-  "path":
-  - "user-manual"
-  - "workflow"
-  - "approval-additional-features-proxy-approval-resubmission-etc"
 - "page_id": "1070006273"
   "title": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
   "title_orig": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
@@ -286,6 +271,21 @@
   - "user-manual"
   - "workflow"
   - "requesting-db-policy-exception"
+- "page_id": "568918170"
+  "title": "결재 부가 기능 (대리 결재, 재상신 등)"
+  "title_orig": "결재 부가 기능 (대리 결재, 재상신 등)"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "Workflow"
+  - "결재 부가 기능 (대리 결재, 재상신 등)"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "Workflow"
+  - "Approval Additional Features (Proxy Approval, Resubmission, etc.)"
+  "path":
+  - "user-manual"
+  - "workflow"
+  - "approval-additional-features-proxy-approval-resubmission-etc"
 - "page_id": "544380204"
   "title": "Database Access Control"
   "title_orig": "Database Access Control"
