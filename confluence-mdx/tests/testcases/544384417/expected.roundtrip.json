@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544384417",
-  "mdx_sha256": "2aa3d2cfb9df8f558ebe0fa569a42c7ae4fa6d26ff9c4223ab51f376c0dc37c1",
+  "mdx_sha256": "4b96a4535c91347c0855f4564fe7034161b5eb987cc05939cfa8b025220e530b",
   "source_xhtml_sha256": "a4e2f99d4cec940a78d4fec41ca182195bcca8a70edd3085f72d5e778c47d4c0",
   "blocks": [
     {
@@ -338,7 +338,7 @@
       "block_index": 30,
       "xhtml_xpath": "ac:image[4]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1005\" ac:original-width=\"1627\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-12-23 오전 10.45.29.png\" ac:width=\"589\"><ri:attachment ri:filename=\"스크린샷 2024-12-23 오전 10.45.29.png\" ri:version-at-save=\"1\" /><ac:caption><p>Administrator &gt; Audit &gt; Reports &gt; Reports - Duplicate Task</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "ab1da70db6eada1e421ce73dba7703c6e331ce9c30412c1f17ae8addf08af6c8",
+      "mdx_content_hash": "4717dbed3a74575da20a27f83fd83c6c78af7e7d218051cf7428d1cecc1ea32a",
       "mdx_line_range": [
         800,
         800
