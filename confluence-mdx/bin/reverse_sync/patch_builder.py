@@ -19,6 +19,14 @@ from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 
 
+_BLOCK_MARKER_RE = re.compile(r'#{1,6}|\d+\.')
+
+
+def _strip_block_markers(text: str) -> str:
+    """containment 비교를 위해 heading/list 마커를 제거한다."""
+    return _BLOCK_MARKER_RE.sub('', text)
+
+
 def _find_containing_mapping(
     old_plain: str,
     mappings: List[BlockMapping],
@@ -34,6 +42,14 @@ def _find_containing_mapping(
             continue
         m_nospace = strip_for_compare(m.xhtml_plain_text)
         if m_nospace and old_nospace in m_nospace:
+            return m
+    # 폴백: heading/list 마커를 제거하고 재시도
+    old_stripped = _strip_block_markers(old_nospace)
+    for m in mappings:
+        if m.block_id in used_ids:
+            continue
+        m_stripped = _strip_block_markers(strip_for_compare(m.xhtml_plain_text))
+        if m_stripped and old_stripped in m_stripped:
             return m
     return None
 
