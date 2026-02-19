@@ -18,7 +18,7 @@ MongoDB는 단일 호스트로 구성되는 경우 보다 Replica Set 또는 Sha
 
 #### 1. MongoDB의 기본적인 Connection String 구조 이해하기
 
-MongoDB의 connection string은 standard, +srv 두가지가 있습니다.
+MongoDB의 connection string은 standard, +srv 두 가지가 있습니다.
 
 ##### &lt; Standard connection string의 구조 &gt;
 
@@ -77,7 +77,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 2. Connection Name을 지정합니다.
 3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
     3. Connection String :
         1. Scheme 선택항목에서 `mongodb://` 를 선택합니다.
         2. 하위 호스트 이름과 포트를 쉼표로 구분하여 입력합니다.
@@ -92,7 +92,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
 2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/> **replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.**
-3. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 Querypie는 QueryPie 내부에서 관리하는 것을 의미합니다.
+3. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 4. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 5. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
 6. `Next` 버튼을 통해 마무리하고 저장합니다.
@@ -112,7 +112,7 @@ ______
 2. Connection Name을 지정합니다.
 3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼수 있도록 하려면 `Expandable`을, 펼쳐 볼수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
     3. Connection String :
         1. Scheme 선택항목에서 `mongodb+srv://` 를 선택합니다.
         2. 도메인 형식의 호스트 이름(FQDN)을 입력합니다.
@@ -120,7 +120,7 @@ ______
     4. Authentication DB 및 Other Options
         1. Authentication DB 값과 Other Options에도 DNS의 TXT레코드에서 조회된 값이 자동으로 입력됩니다.
         2. +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 tls=true를 수동으로 입력해줘야 합니다. (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이 &tls=true를 입력합니다.
-4. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 Querypie는 QueryPie 내부에서 관리하는 것을 의미합니다.
+4. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 5. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 6. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
 7. `Next` 버튼을 통해 마무리하고 저장합니다
@@ -146,7 +146,7 @@ Replica Set은 replicaSet=[replica set name] 옵션이 필요하지만 Sharded C
         2. Expose 는 커넥션 정보에서의 노출 여부를 결정할 수 있는 값입니다.
 2. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
 3. Other Options : Sharded cluster는 별도 추가 옵션이 필요하지 않을 수 있습니다.
-4. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 Querypie는 QueryPie 내부에서 관리하는 것을 의미합니다.
+4. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 5. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 6. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
 7. `Next` 버튼을 통해 마무리하고 저장합니다.
@@ -182,7 +182,7 @@ MongoDB 에 개인정보 또는 민감정보와 같이 접근 제한이 필요�
 QueryPie에서 지원하는 DBMS 중 MongoDB의 경우 항상 데이터를 JSON 형태로 저장하기 때문에 별도의 포맷팅 로직을 사용하게 됩니다.
 
 
-최초 정책 생성은 아래 링크를 확인해주세요.
+최초 정책 생성은 아래 링크를 확인하세요.
 
 * [Data Masking](../../policies/data-masking)
 * [Data Access](../../policies/data-access)
@@ -205,7 +205,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
         3. Column Name : MongoDB 의 경우 Document 내에서 마스킹을 적용할 JSON Attribute 값을 입력합니다.
     4. 마스킹 패턴을 적용합니다.
         1. 3번에서 선택한 컬럼에 적용할 마스킹 패턴을 1개 이상 선택합니다.
-        2. 기본적으로 20여가지의 개인정보 및 민감정보를 마스킹하는 패턴을 제공합니다.
+        2. 기본적으로 20여 가지의 개인정보 및 민감정보를 마스킹하는 패턴을 제공합니다.
         3. Masking Pattern 메뉴에서 정규식을 통해 직접 탐지 패턴과 마스킹 패턴을 생성할 수 있습니다.
     5. 해당 데이터 조회가 필요한 사용자 또는 그룹에 한해 마스킹 규칙을 예외 처리할 수 있습니다.
         1. Allowed Users : 해당 규칙을 예외처리할 사용자 또는 그룹을 선택합니다.
@@ -271,7 +271,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 
 ##### Case 2. size.h 속성 접근 제한
 
-size하위의 h속성에 대해 접근제한 정책을 설정할 경우 “Column Name” 항목에 `$.size.h`을 입력 후 `OK` 버튼을 클릭합니다.
+size 하위의 h 속성에 대해 접근제한 정책을 설정할 경우 "Column Name" 항목에 `$.size.h`을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120011.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
@@ -284,7 +284,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120215.png" alt="image-20240730-120215.png" width="731" />
 </figure>
 
-위 스크린샷과 같이 size 하위의 h속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
+위 스크린샷과 같이 size 하위의 h 속성의 값이 "Restricted Column"으로 표시되는 것을 확인할 수 있습니다.
 
 ##### Case 3. size 하위 모든 속성 접근 제한
 
@@ -301,11 +301,11 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120421.png" alt="image-20240730-120421.png" width="729" />
 </figure>
 
-위 스크린샷과 같이 size 하위의 모든속성의 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
+위 스크린샷과 같이 size 하위의 모든 속성의 값이 "Restricted Column"으로 표시되는 것을 확인할 수 있습니다.
 
 ##### Case 4. tags 속성의 리스트 2번째 값에 대한 접근 제한
 
-tags속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 “Column Name” 항목에 `$.tags[1]`을 입력 후 `OK` 버튼을 클릭합니다.
+tags 속성의 리스트 값 중 2번째 값에 대한 접근제한 정책을 설정할 경우 "Column Name" 항목에 `$.tags[1]`을 입력 후 `OK` 버튼을 클릭합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120507.png" alt="Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List" width="760" />
@@ -318,4 +318,4 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Add Rule List
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-120544.png" alt="image-20240730-120544.png" width="731" />
 </figure>
 
-위 스크린샷과 같이 tags속성의 2번째 값이 “Restricted Column”으로 표시되는 것을 확인할 수 있습니다.
+위 스크린샷과 같이 tags 속성의 2번째 값이 "Restricted Column"으로 표시되는 것을 확인할 수 있습니다.
