@@ -8,6 +8,6 @@ export default {
   'requesting-server-privilege': 'Requesting Server Privilege',
   'requesting-access-role': 'Requesting Access Role',
   'requesting-ip-registration': 'Requesting IP Registration',
-  'approval-additional-features-proxy-approval-resubmission-etc': 'Approval Additional Features (Proxy Approval, Resubmission, etc.)',
   'requesting-db-policy-exception': 'Requesting DB Policy Exception',
+  'approval-additional-features-proxy-approval-resubmission-etc': 'Approval Additional Features (Proxy Approval, Resubmission, etc.)',
 };

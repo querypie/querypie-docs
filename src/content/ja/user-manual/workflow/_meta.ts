@@ -8,6 +8,6 @@ export default {
   'requesting-server-privilege': 'Server Privilege Requestの要求',
   'requesting-access-role': 'Access Role Requestの要求',
   'requesting-ip-registration': 'IP Registration Requestの要求',
-  'approval-additional-features-proxy-approval-resubmission-etc': '承認付加機能（代理承認、再提出など）',
   'requesting-db-policy-exception': 'DBポリシー例外の要求',
+  'approval-additional-features-proxy-approval-resubmission-etc': '承認付加機能（代理承認、再提出など）',
 };
