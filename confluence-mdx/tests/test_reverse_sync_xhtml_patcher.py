@@ -237,3 +237,27 @@ class TestPatchOrdering:
                      'new_plain_text': 'New text'}]
         result = patch_xhtml(xhtml, patches)
         assert 'New text' in result
+
+
+def test_remove_space_before_korean_particle_after_strong():
+    """<strong> 뒤 조사 앞 공백 제거를 올바르게 패치한다.
+
+    XHTML: <h3>... <strong>AGENT_SECRET</strong> 를 변경해도 괜찮은가요?</h3>
+    교정: 'AGENT_SECRET 를' → 'AGENT_SECRET를' (공백 제거)
+
+    old_plain_text는 xhtml_plain_text(element.get_text())에서 오므로 double-space를 포함.
+    <strong> 다음 text node의 leading whitespace가 diff에서 삭제된 경우,
+    xhtml_patcher가 해당 공백도 제거해야 한다.
+    """
+    xhtml = '<h3>Q: 운영 도중  <strong>AGENT_SECRET</strong> 를 변경해도 괜찮은가요?</h3>'
+    patches = [
+        {
+            'xhtml_xpath': 'h3[1]',
+            # old_plain_text는 element.get_text()에서 오므로 XHTML 그대로의 공백 포함
+            'old_plain_text': 'Q: 운영 도중  AGENT_SECRET 를 변경해도 괜찮은가요?',
+            'new_plain_text': 'Q: 운영 도중  AGENT_SECRET를 변경해도 괜찮은가요?',
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+    assert '<strong>AGENT_SECRET</strong>를 변경해도' in result
+    assert '<strong>AGENT_SECRET</strong> 를 변경해도' not in result
