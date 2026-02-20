@@ -290,9 +290,22 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
         )
 
         node_str = str(node)
-        # 원본 whitespace 보존
+        # 원본 whitespace 보존 (단, diff에서 삭제된 선행 공백은 제거)
         leading = node_str[:len(node_str) - len(node_str.lstrip())]
         trailing = node_str[len(node_str.rstrip()):]
+
+        # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 삭제된 경우,
+        # leading whitespace를 제거한다.
+        # 예: <strong>IDENTIFIER</strong> 조사 → IDENTIFIER조사 (공백 교정)
+        if leading and i > 0:
+            prev_end = node_ranges[i - 1][1]
+            if prev_end < node_start:
+                gap_new = _map_text_range(
+                    old_stripped, new_stripped, opcodes, prev_end, node_start
+                )
+                if not gap_new:
+                    leading = ''
+
         node.replace_with(NavigableString(leading + new_node_text + trailing))
 
 
