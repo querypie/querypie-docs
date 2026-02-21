@@ -93,7 +93,7 @@ Query Audit Detail
     * 자세한 내용은 [DB Connections](connection-management/db-connections) 내  **Privilege Setting**  문서 참고
 *  **Unmasking Zones** : Unmasking request를 통해 마스킹된 데이터 조회를 허가받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 정책 예외 대상인 사용자라도 특정 IP(대역)에서만 마스킹 해제 상태로 조회할 수 있도록 설정합니다. (Default : Off) <br/>참고 : [Unmasking Zones 상세 설명](dac-general-configurations/unmasking-zones)
 *  **Ledger Table Management :**  특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유 입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화 설정입니다. (Default : Off)
-*  **Select Purpose Duration for Agent :**  Proxy를 통해 서드파티 도구로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유를 입력할 때 지정한 시간 동안 재입력하지 않도록 설정합니다. Ledger Table Management가 On 상태일 때만 설정 가능합니다. (Default : 10 minutes)
+*  **Select Purpose Duration for Agent :**  Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유를 입력할 때 지정한 시간 동안 재입력하지 않도록 설정합니다. Ledger Table Management가 On 상태일 때만 설정 가능합니다. (Default : 10 minutes)
 *  **Restricted Statement**  : 사용 제한 쿼리
     * Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)
     * Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)
