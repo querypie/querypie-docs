@@ -23,16 +23,15 @@ Policy Exception
 2. Data Path : 예외 처리를 적용할 데이터의 경로를 표시합니다. <br/>(ex1. MySQL 기준, Database &gt; Table &gt; Column 으로 표시합니다. <br/> ex2. Oracle 기준, Database &gt; Schema &gt; Table &gt; Column 으로 표시합니다. <br/> ex3. DynamoDB 기준, Table &gt; Column 으로 표시합니다.)
 3. Allowed Users: 정책 예외 처리를 적용받을 사용자 이름을 표시합니다.
 4. Start Time: 정책 예외 처리를 적용할 시작 시간을 표시합니다.
-    1. Unmasking Request 의 승인 시점을 기준으로 표시합니다.
+    1. Unmasking Request의 승인 시점을 기준으로 표시합니다.
     2. 사후승인으로 요청을 등록한 경우, 요청 시점을 기준으로 표시합니다.
 5. End Time: 정책 예외 처리의 종료 시간을 표시합니다.
     1. Unmasking Request 요청에서 설정한 Unmasking Expiration 시간을 기준으로 종료시간을 표시합니다.
         1. Unmasking Expiration 타입이 End Date 인 경우에는 해당 시간을 종료시간으로 표시합니다.
         2. Unmasking Expiration 타입이 Time Duration 인 경우에는 시작 시간 기준으로 시간 간격을 계산하여 종료시간으로 표시합니다.
-6. Status: 정책 예외 처리 여부가 활성화되어 있는지 여부를 Active, Inactive, Expired 로 표시합니다.
-    1. Active: 마스킹 해제 요청에 의해 정책 예외 처리가 적용되어 있으며, 마스킹이 해제되어 표시됩니다. End Time 전까지 Inactive 로 변경할 수 있습니다.
-    2. Inactive: 마스킹 해제 요청에 의해 정책 예외 처리가 비활성화된 상태이며, 마스킹이 적용되어 표시됩니다. End Time 전까지 Active 로 변경할 수 있습니다.
-    3. Expired: 마스킹 해제 요청의 End Time 이 지난 경우 Expired 로 표시하며, Active 또는 Inactive 로 변경할 수 없습니다.
+6. Status: 정책 예외 처리 활성 여부를 Active, Inactive, Expired로 표시합니다.
+    1. Active: 마스킹 해제 요청에 의해 정책 예외 처리가 적용되어 있으며, 마스킹이 해제되어 표시됩니다. End Time 전까지 Inactive로 변경할 수 있습니다.
+    2. Inactive: 마스킹 해제 요청에 의해 정책 예외 처리가 비활성화된 상태이며, 마스킹이 적용되어 표시됩니다. End Time 전까지 Active로 변경할 수 있습니다.
+    3. Expired: 마스킹 해제 요청의 End Time이 지난 경우 Expired로 표시하며, Active 또는 Inactive로 변경할 수 없습니다.
 7. Excepted By: 해당 마스킹 해제가 요청된 Unmasking Request를 링크로 표시하며, 클릭 시 All Request의 해당 Request 상세 화면으로 리다이렉션합니다.
-
 

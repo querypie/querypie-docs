@@ -9,20 +9,19 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-기존 QueryPie DAC은 Data Access, Data Masking, Sensitive Data.
-Ledger Table Management 과 같은 데이터 정책을 제공하고 있습니다.
+기존 QueryPie DAC은 Data Access, Data Masking, Sensitive Data, Ledger Table Management와 같은 데이터 정책을 제공합니다.
 그러나 이러한 정책을 각 커넥션마다 개별적으로 설정하고, 각 테이블과 컬럼마다 규칙을 적용해야 합니다.
 그리고 정책에 대해 가져오기 및 내보내기 기능을 제공하지 않습니다.
 
-10.2.6부터 이러한 불편에 대한 개선을 위해 새로운 정책 관리 기능을 제공합니다.
-태그기반 정책 적용 기능을 통해 DBMS의 path와 태그를 매핑한 뒤 정책을 적용하면 태그에 의해 동적으로 정책이 할당될 수 있습니다.
+10.2.6부터 이러한 불편을 개선하기 위해 새로운 정책 관리 기능을 제공합니다.
+태그 기반 정책 적용 기능을 통해 DBMS의 path와 태그를 매핑한 뒤 정책을 적용하면 태그에 의해 동적으로 정책이 할당될 수 있습니다.
 테이블에 할당된 태그를 통해 특정 테이블만 접근 가능하도록 설정할 수 있습니다.
 
-### 새로운 정책 관리기능 사용하기
+### 새로운 정책 관리 기능 사용하기
 
-새로운 정책 관리기능을 사용하기 위해서는 먼저 기능을 활성화해야 합니다.
+새로운 정책 관리 기능을 사용하려면 먼저 기능을 활성화해야 합니다.
 
-General &gt; Company management &gt; Security 의 하위 항목 중 DB Connection Security에서 New DAC Policy Management 를 `Enable`로 설정합니다.
+General &gt; Company management &gt; Security의 하위 항목 중 DB Connection Security에서 New DAC Policy Management를 `Enable`로 설정합니다.
 (기본값 Disable)<br/>
 
 <figure data-layout="center" data-align="center">
@@ -33,17 +32,15 @@ Enable New DAC Policy Management
 </figure>
 
 <Callout type="important">
-새로운 정책관리기능을 활성화하기 전에 아래의 내용을 먼저 검토해야 합니다.
-* 이 기능을 활성화하기 전에 먼저 원장 테이블 관리기능을 Off로 전환해야 합니다.
-*  **새로운 정책 관리 기능을 활성화하면 기존 정책은 비활성화되고 메뉴에서 보이지 않게 됩니다. 설정화면에 접근하기 위해서는 기존 정책의 URL을 브라우저에서 직접 입력해야 합니다.**
+새로운 정책 관리 기능을 활성화하기 전에 아래 내용을 먼저 검토해야 합니다.
+* 이 기능을 활성화하기 전에 먼저 원장 테이블 관리 기능을 Off로 전환해야 합니다.
+*  **새로운 정책 관리 기능을 활성화하면 기존 정책은 비활성화되고 메뉴에서 보이지 않게 됩니다. 설정 화면에 접근하려면 기존 정책 URL을 브라우저에 직접 입력해야 합니다.**
 *  **구 정책 페이지 직접 접근용 URL**
     *  **Data Access**  : https://`{QueryPie Host}`/database-settings/policies/data-access
     *  **Data Masking**  : https://`{QueryPie Host}`/database-settings/policies/data-masking
     *  **Sensitive Data**  : https://`{QueryPie Host}`/database-settings/policies/sensitive-data
-    *  **Policy Exception**  : https://`{QueryPie Host}`//database-settings/policies/policy-exception ****
-*  **새로운 정책관리기능이 활성화되면 기존 정책은 비활성화됩니다. 기존 정책이 삭제되는 것은 아니므로 URL을 통해 기존 UI로 이동하여 기존 정책의 내용을 확인할 수는 있습니다.**
-* 이 기능에 의해 생성된 정책은 기존 정책과 호환되지 않고 기존 정책을 마이그레이션할 수 없습니다.
-* 새로운 정책관리기능으로 생성한 정책을 모두 삭제해야 이 기능을 비활성화할 수 있습니다.
+    *  **Policy Exception**  : https://`{QueryPie Host}`/database-settings/policies/policy-exception
+*  **새로운 정책 관리 기능이 활성화되면 기존 정책은 비활성화됩니다. 기존 정책이 삭제되는 것은 아니므로 URL을 통해 기존 UI로 이동해 기존 정책 내용을 확인할 수 있습니다.**
+* 이 기능으로 생성된 정책은 기존 정책과 호환되지 않으며 기존 정책을 마이그레이션할 수 없습니다.
+* 새로운 정책 관리 기능으로 생성한 정책을 모두 삭제해야 이 기능을 비활성화할 수 있습니다.
 </Callout>
-
-
