@@ -30,7 +30,7 @@ ______
 **New Features**
 
 * [Audit] External API V2 및 Document 신규 출시
-* [Audit] 감사로그 내보내기 Activity Logs, DML Snapshot 및 SAC 감사로그 범위로 지원 영역 확대
+* [Audit] 감사 로그 내보내기를 Activity Logs, DML Snapshot 및 SAC 감사 로그 범위로 지원 영역 확대
 * [DAC] Custom Identity Provider를 통한 인사정보 파일 연동 지원
 * [DAC] DocumentDB Proxy 지원
 * [DAC] Tibero 신규 지원
@@ -53,7 +53,7 @@ ______
 **Bug Fix**
 
 * [Audit] Activity Logs 일부 Update 로그 Affected Data 대상 확인 불가 이슈 해결
-* [Oracle] MERGE INTO 를 통한 DML 쿼리 실행 시 DML Snapshot 남지 않는 이슈 해결
+* [Oracle] `MERGE INTO`를 통한 DML 쿼리 실행 시 DML Snapshot이 남지 않는 이슈 해결
 * [Security] 모의해킹을 통한 내부 발견 보안 취약점 일괄 조치 완료
 * [Audit] Kotlin 호환 이슈로 Workflow External API V2 내 boolean 속성 키명 isXXX에서 변경 처리 완료
     * Workflow - DB Access Request Details
@@ -66,5 +66,4 @@ ______
     * Workflow - SQL Export Request Details
         * connection.deleted
         * approvalSteps[].assignees[].delegated
-
 
