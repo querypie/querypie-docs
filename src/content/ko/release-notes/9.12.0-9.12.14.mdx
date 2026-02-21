@@ -84,16 +84,16 @@ ______
 * [Alert] Alert을 생성만 해도 Last Event Time이 표시되는 문제 해결
 * [Proxy] 연결 실패 시 'DB Access History'가 남지 않는 문제 해결
 * [Proxy] Client IP를 Agent, Agentless 모든 환경에서 정확하게 파악하도록 개선
-* [Proxy] LOCAL IDE(DBeaver) 에서 DDL 실행 후 취소 시 진행되지 않는 문제 해결
+* [Proxy] LOCAL IDE(DBeaver)에서 DDL 실행 후 취소 시 진행되지 않는 문제 해결
 * [Proxy] First 10 rows 기록 중 ArgumentOutOfRangeException, IndexOutOfRangeException 문제 해결
 * [SSL] OpenSSL 버전 차이에 따른 SSL 모드 접속 불가 문제 해결
 * [Session] 비로그인 -&gt; Okta로 로그인 시, 목표 URL로 가지 않고 첫페이지 랜딩하는 현상 개선
 * [LDAP] Group 동기화 시 Group Base DN값을 참조하도록 개선
 * [Workflow] 단계별 권한이 유효한 사용자만 세부 페이지 조회 가능하도록 개선
-* [Web Editor] Object Info &gt; Data에서 JSON 데이터 클릭 시 에러발생 해결
+* [Web Editor] Object Info &gt; Data에서 JSON 데이터 클릭 시 에러 발생 해결
 * [Web Editor] Object Browser의 디비 선택 시 예상치 못한 Object Info Panel 데이터 노출 문제 해결
-* [Web Editor] 쿼리 실행 후 Data Viewer 조회 시 LOB 'uuid' was not found 에러발생 해결
-* [Web Editor] 동일한 커넥션에 재접속하여 복원된 Result 창으로 Data Viewer를 조회했을 때 에러발생 해결
+* [Web Editor] 쿼리 실행 후 Data Viewer 조회 시 `LOB 'uuid' was not found` 에러 발생 해결
+* [Web Editor] 동일한 커넥션에 재접속하여 복원된 Result 창으로 Data Viewer를 조회할 때 에러 발생 해결
 * [User Access History] SAML 로그인한 경우 로그의 Hostname 값이 127.0.0.1로 남는 문제 해결
 ______
 
@@ -153,8 +153,8 @@ ______
 **Bug Fix & Enhancement**
 
 * [Agent/Linux] Tray icon이 뜨도록 해결
-* [Alert] Executed Result : `{{execResult}}` 에러 해결
-* [Authentication] okta sync 중 Cluster Group NotFound 오류 발생 해결
+* [Alert] `Executed Result: {{execResult}}` 에러 해결
+* [Authentication] Okta sync 중 Cluster Group NotFound 오류 발생 해결
 * [Editor] datetime 컬럼의 값이 제대로 표시되도록 해결
 * [MariaDB] Proxy를 통해 Set 구문 실행 시 Audit에서 SQL Type이 Set으로 남겨지는 이슈 해결
 * [MariaDB] SET 구문 분석에 추가 대응되도록 개선
@@ -165,7 +165,7 @@ ______
 * [Proxy] Datetime 형식에 유효하지 않은 데이터가 있을 경우 조회 쿼리 실행 시 커넥션이 끊기는 현상 해결
 * [Query Audit] 로그 - CSV 파일 다운로드 시 DB 부하 발생 해결
 * [SQL Job] SQL Jobs 탭이 활성화 가능하도록 수정
-* [Workflow] Canceled 된 결재가 sent request의 in progress 에 노출되지 않도록 해결
+* [Workflow] Canceled 된 결재가 sent request의 in progress에 노출되지 않도록 수정
 ______
 
 ### QueryPie 9.12.3 Release
@@ -212,9 +212,9 @@ ______
 
 * [Menu] 쿼리파이 전체의 메뉴 개편 및 URL 구조 개선
 * [License] 라이선스 UI 개선
-* [Application log] 메뉴 미노출 처리
+* [Application Log] 메뉴 미노출 처리
 * [Impala] UIDPWD 방식일 때 Web Proxy 지원
-* [Workflow] query audit 추출 시 컬럼에 원장여부 포함
+* [Workflow] Query Audit 추출 시 컬럼에 원장 여부 포함
 * [LDAP] 조직 변경에 따른 계정 비활성화 및 비활성화 시 참조 필드 옵션 추가
 
 ****
@@ -241,7 +241,7 @@ ______
 * [LDAP] 그룹 동기화 시 그룹에 포함되어 있지 않은 사용자가 있는 경우 오류 발생 수정
 * [Oracle] ORA-00900: invalid SQL statement 오류 수정
 * [Oracle] 웹 SQL에서 function &gt; script 조회 시 발생 에러 수정 'ORA-19011 Character string buffer too small'
-* [Performance] Agent 를 통한 접속이 매우 느린 현상 개선
+* [Performance] Agent를 통한 접속이 매우 느린 현상 개선
 * [Performance] 쿼리 실행 전 full scan 여부를 체크하여 경고 알림 추가
 * [Privilege] Copy Clipboard 권한이 없어도 Json Data 복사 시 첫번째 권한이 막히지 않는 현상 개선
 * [Privilege Type] Tag의 폰트가 사용자마다 다르게 보이는 현상 개선
