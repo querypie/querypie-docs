@@ -9,12 +9,12 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Masking Pattern 페이지에서는 민감정보를 검출 및 마스킹하기 위한 패턴을 관리합니다.
+Masking Pattern 페이지에서는 민감 정보를 검출하고 마스킹하기 위한 패턴을 관리합니다.
 기본적으로 25개의 마스킹 패턴이 제공되며, 그 외 사용자가 원하는 패턴을 직접 추가할 수 있습니다.
 
 <Callout type="info">
 **메뉴 위치 이동**
-11.2.0부터 기존 Administrator &gt; Databases &gt; Policies &gt; Masking Pattern 에서 Administrator &gt; Databases &gt; General &gt; Masking Pattern으로 메뉴가 이동되었습니다.
+11.2.0부터 기존 Administrator &gt; Databases &gt; Policies &gt; Masking Pattern에서 Administrator &gt; Databases &gt; General &gt; Masking Pattern으로 메뉴가 이동되었습니다.
 </Callout>
 
 ### 마스킹 패턴 목록 조회하기
@@ -32,7 +32,7 @@ Administrator &gt; Databases &gt; General &gt; Masking Pattern
 
 ### 마스킹 패턴 상세 정보 조회/변경/삭제하기
 
-테이블에서 상세 정보를 조회하려는 아이템을 클릭하면 Drawer가 열리고 상세 정보를 조회, 변경, 또는 삭제할 수 있습니다.
+테이블에서 상세 정보를 조회하려는 항목을 클릭하면 Drawer가 열리고, 상세 정보를 조회하거나 변경 또는 삭제할 수 있습니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/dac-general-configurations/masking-pattern-menu-relocated/image-20250826-005930.png" alt="Administrator &gt; Databases &gt; General &gt; Masking Pattern &gt; Details" width="760" />
@@ -41,18 +41,18 @@ Administrator &gt; Databases &gt; General &gt; Masking Pattern &gt; Details
 </figcaption>
 </figure>
 
-*  **Detecting Pattern**  : 민감정보 검출 패턴
-*  **Masking Pattern**  : 민감정보 마스킹 패턴
+*  **Detecting Pattern**  : 민감 정보 검출 패턴
+*  **Masking Pattern**  : 민감 정보 마스킹 패턴
 *  **Masking Pattern Preview**  : 마스킹 패턴 적용 결과 미리보기
     *  **Raw Data**  : 샘플 데이터
-    *  **Detected Data**  : 샘플 데이터에서 Detecting Pattern에 의해 민감정보로 검출된 영역 (푸른색 음영)
-    * Preview 테이블 내 Masked Data에서 샘플 데이터에 대한 민감정보 마스킹 결과를 확인할 수 있음
+    *  **Detected Data**  : 샘플 데이터에서 Detecting Pattern에 의해 민감 정보로 검출된 영역 (푸른색 음영)
+    * Preview 테이블 내 Masked Data에서 샘플 데이터에 대한 민감 정보 마스킹 결과를 확인할 수 있습니다.
 
 `Save` 버튼을 클릭하면 변경 내용이 저장됩니다.
 
 `Delete` 버튼을 클릭하고, 확인 모달에서 `Delete` 버튼을 클릭하면 마스킹 패턴 삭제가 완료됩니다.
 
-또는 Masking Pattern 목록에서 삭제하려는 아이템을 체크박스로 선택하고 `Delete` 버튼을 클릭하여 삭제할 수 있습니다.
+또는 Masking Pattern 목록에서 삭제하려는 항목을 체크박스로 선택하고 `Delete` 버튼을 클릭하여 삭제할 수 있습니다.
 
 
 ### 마스킹 패턴 추가 등록하기
@@ -68,9 +68,9 @@ Create Pattern
 </figure>
 
 *  **Name**  : 마스킹 패턴 이름
-*  **Detecting Pattern**  : 민감정보 검출용 패턴 (정규식)
-*  **Masking Pattern**  : 민감정보 마스킹용 패턴 (정규식)
-*  **Masking Pattern Preview**  : 마스킹 패턴이 정확히 입력되었는지 미리보기 하기 위한 정보
+*  **Detecting Pattern**  : 민감 정보 검출용 패턴 (정규식)
+*  **Masking Pattern**  : 민감 정보 마스킹용 패턴 (정규식)
+*  **Masking Pattern Preview**  : 마스킹 패턴이 정확히 입력되었는지 미리 확인하기 위한 정보
     * Raw Data에 샘플 데이터를 입력하면 Detected Data에 검출 데이터가 표시됨
     * Preview 테이블에 정리된 결과가 표시됨
     * 샘플 데이터는 하나만 입력 가능

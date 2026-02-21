@@ -9,7 +9,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 애플리케이션 및 SAML 2.0을 통해 사용자 연동을 지원합니다.
+QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 애플리케이션과 SAML 2.0을 통해 연동할 수 있습니다.
 사용자를 동기화하여 접근 권한을 부여하고 정책을 적용할 수 있습니다.
 
 <Callout type="important">
@@ -41,10 +41,10 @@ QueryPie의 Identity Providers Integration 설정에서 SAML을 Type으로 선�
 <img src="/administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20/AWS-SSO-06-20230317-064023.png" alt="AWS-SSO-06-20230317-064023.png" width="760" />
 </figure>
 
-1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집 으로 이동합니다.
+1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집으로 이동합니다.
 2. 애플리케이션 내 사용자 속성과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
 
-|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
+|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
 | --------------------- | ------------------------------------------------ | ------------ |
 | Subject               | $`{user:email}`                                  | emailAddress |
 | firstName             | $`{user:givenName}`                              | basic        |
@@ -63,10 +63,10 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figcaption>
 </figure>
 
-* Administrator &gt; Admin &gt; General &gt; System &gt; Integration 에서 Authentication 섹션의 하위에서 Identity Provider를 선택합니다.
+* Administrator &gt; General &gt; System &gt; Integrations에서 Authentication 섹션 하위의 Identity Provider를 선택합니다.
 * Add 버튼을 눌러 SAML 형식으로 IdP를 등록합니다.
     *  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
-    *  **Type** : SAML 을 선택합니다.
+    *  **Type** : SAML을 선택합니다.
     *  **Identity Provider Metadata**  : AWS에서 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드한 SAML metadata XML의 내용을 복사해서 붙여 넣습니다.
 * `Save` 버튼을 클릭하여 저장합니다.
 
@@ -77,5 +77,4 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figure>
 
 로그인 페이지에서 `Login with SAML` 버튼을 통해 AWS 인증하여 QueryPie에 로그인합니다.
-
 

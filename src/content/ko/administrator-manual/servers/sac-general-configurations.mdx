@@ -50,7 +50,7 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
             * 정책 업데이트
             * 사용자 역할 변경
         * 단, 사용자의 역할이나 권한이 완전히 제거될 경우 관련 리소스에 대한 세션은 종료됨
-        * 변경된 정책을 적용하려면 세션을 재접속 필요
+        * 변경된 정책을 적용하려면 세션에 다시 접속해야 합니다.
     *  **Disable**  선택 시:
         * 정책 변경 시 연결된 모든 세션 자동 종료
         * 새로 연결되는 세션부터 변경된 정책 적용
@@ -61,7 +61,7 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
 *  **Using insecure protocols** : 권장하지 않는 서버 접속 프로토콜 사용 설정
     * TELNET 또는 FTP 사용 여부 설정
 *  **Access Server with MFA**  : 서버 접속 시 MFA 인증 여부 (Default : Disabled)
-    * 현재 Google OTP 지원하며, 옵션 선택 시 MFA 인증을 적용할 서버를 태그 기준으로 지정
+    * 현재 Google OTP를 지원하며, 옵션 선택 시 MFA 인증을 적용할 서버를 태그 기준으로 지정
         * 태그 입력 방식 : 키 입력 → 엔터 키 입력 → 밸류 입력 → 엔터 입력
     * 입력된 태그는 `key = value` 식으로 표시되며, 입력된 태그와 일치하는 태그를 하나라도 가지고 있는 서버는 MFA 인증 후 접속 가능
 *  **Resource IP Access Control Configuration :** 서버 접속 허용 IP 접근 제어 설정
@@ -140,8 +140,8 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
     * VSCode 등 Port Forwarding을 사용하는 경우 사용
 *  **Max Sessions**  : 서버 당 최대 동시 접속수
 *  **Session Timeout** : 서버 세션 타임아웃 기준 시간 (분)
-*  **Show Server Groups in Workflow if Assigned as Member :**  체크된 경우, 이용자가 Server Access Request 신청 시, Server Group Member로 지정된 서버 그룹만 표시
-*  **Require Minute-Based Requests :** Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일단위로 권한을 신청. 체크된 경우, 서버 접속 권한 신청 시 분 단위 권한 신청
+*  **Show Server Groups in Workflow if Assigned as Member :**  체크된 경우, 이용자가 Server Access Request 신청 시 Server Group Member로 지정된 서버 그룹만 표시
+*  **Require Minute-Based Requests :** Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 접속 권한을 분 단위로 신청할 수 있습니다.
 
 #### 서버 특권 신청 정책 설정
 
@@ -166,4 +166,4 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 *  **Allow Pre-defined Command Templates Only** : 서버 특권 신청 시 명령어 입력 방식을 제어
     *  **Enable** : 신청자는 관리자가 미리 정의하고 허용한 명령어 템플릿 중에서만 선택할 수 있으며, 명령어를 직접 입력 불가
     *  **Disable** : 기존과 같이 신청자가 허용할 명령어를 직접 입력
-*  **Require Minute-Based Requests** : Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일단위로 권한을 신청. 체크된 경우, 서버 특권 신청 시 분 단위로 권한 신청
+*  **Require Minute-Based Requests** : Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 특권을 분 단위로 신청할 수 있습니다.

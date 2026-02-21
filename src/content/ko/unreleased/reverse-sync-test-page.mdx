@@ -5,14 +5,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1911652402/R
 
 # Reverse Sync Test Page
 
-QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라, 안내 문서가 구분되어 제공됩니다.
+QueryPie ACP 제품 설치 방법은 Container 실행 방식과 설치 도우미 프로그램 버전에 따라 안내 문서가 구분되어 제공됩니다.
 
 * MDX 변환 테스트
 
 ### Compose Tool로 Container를 실행하기
 
-일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다.
-Docker Compose를 활용하여, Container Image를 내려받고, 실행, 종료하는 방식입니다.
+일반적인 설치 및 실행 방식이며, 제조사에서 권장하는 설치 방법입니다.
+Docker Compose를 활용해 Container Image를 내려받고 실행/종료하는 방식입니다.
 
 이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.
 
@@ -21,7 +21,7 @@ Docker Compose를 활용하여, Container Image를 내려받고, 실행, 종료�
 2025년 8월 출시된 QueryPie ACP Community Edition의 출시와 함께 최종 고객사와 파트너 엔지니어에게 제공되는 설치 도우미 프로그램입니다.
 Docker Hub에 공개된 Container Image를 내려받아 설치하는 방식입니다.
 
-설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다.
+설치 과정이 자동화되어 처음 설치하는 이용자도 제품을 쉽게 설치할 수 있습니다.
 setup.v2.sh가 실제로 실행하는 설치 과정은 setup.sh의 설치 방식과 동등합니다.
 setup.v2.sh는 그 과정이 자동화되었고, Version 10 등 구버전의 설치를 지원하지 않는다는 차이가 있습니다.
 더 상세한 차이점은 이 문서를 참조하세요: [setup.sh, setup.v2.sh 비교](../installation/installation/comparison-of-setupsh-and-setupv2sh)
@@ -46,5 +46,4 @@ Kubernetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Mana
 
 * AWS EKS 환경: [AWS EKS 환경에서 설치하기](../installation/installation/installing-on-aws-eks)
 * Helm Chart: [https://github.com/chequer-io/querypie-deployment](https://github.com/chequer-io/querypie-deployment)
-
 
