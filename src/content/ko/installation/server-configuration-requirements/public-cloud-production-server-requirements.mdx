@@ -7,14 +7,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/903086124/Pu
 
 ### 개요
 
-QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 다음과 같은 구성을 적용하는 것을 권장합니다.
+QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud에서 운영하는 경우 다음과 같은 구성을 적용하는 것을 권장합니다.
 
 * High Availability 구성 적용
-    * Application Load Balancer, Network Load Balancer 를 적용하여, 고가용성, 부하분산에 적합한 구성을 적용합니다.
+    * Application Load Balancer, Network Load Balancer를 적용하여 고가용성, 부하 분산에 적합한 구성을 적용합니다.
     * 2개 이상의 VM Instance를 Load Balancer의 Upstream 서버로 둡니다. 요구되는 처리용량이 높은 경우, VM Instance의 수를 늘리는 Scale-Out 방식의 구성을 적용합니다.
-* QueryPie MySQL, Redis 를 VM 이 아닌, Managed Service 방식의 MySQL, Redis 를 적용합니다.
-    * AWS 의 경우 Aurora RDS for MySQL, Aurora RDS for MariaDB, ElastiCache 를 사용하는 것을 권장합니다.
-* VM 의 OS 는 Linux 배포본은 대부분 지원합니다. 다만, docker daemon 을 설치하여 사용할 수 있어야 합니다.
+* QueryPie MySQL, Redis를 VM이 아닌 Managed Service 방식의 MySQL, Redis로 적용합니다.
+    * AWS의 경우 Aurora RDS for MySQL, Aurora RDS for MariaDB, ElastiCache를 사용하는 것을 권장합니다.
+* VM의 OS는 Linux 배포본 대부분을 지원합니다. 다만, docker daemon을 설치하여 사용할 수 있어야 합니다.
     * AWS 의 경우, Amazon Linux 를 추천합니다.
     * GCP 의 경우, Ubuntu 24.04 LTS (또는 이후의 최신 LTS 버전)를 추천합니다.
 
@@ -22,14 +22,14 @@ QueryPie 서버를 AWS, GCP, Azure 등 Public Cloud 에서 운영하는 경우, 
 
 기본사양 : CPU 4 vCPUs AMD64 Architecture, Memory 15 GiB 이상, Disk 100 GiB, CPU AMD
 
-* 기본사양의 VM 을 두 개 이상 생성하여, Scale-Out 구성을 적용하는 것을 권장합니다.
+* 기본 사양의 VM을 두 개 이상 생성하여 Scale-Out 구성을 적용하는 것을 권장합니다.
 * AWS EC2 Instance Type: m6i.xlarge, m7i.xlarge
 * GCP Compute Engine Machine Type : c4-standard-4, n4-standard-4 ( 또는 AMD64 아키텍처의 -standard-4 모델 )
 * Disk IO 성능 : 범용 Disk Volume 을 적용합니다. AWS 의 경우, EBS General Purpose SSD (gp3) 를 적용합니다.
 
 높은 처리량이 필요한 경우 권장사양 : CPU 8 vCPUs AMD64 Architecture, Memory 30 GiB 이상, Disk 100 GiB
 
-* 권장사양의 VM 을 두 개 이상 생성하여, Scale-Out 구성을 적용하는 것을 권장합니다.
+* 권장 사양의 VM을 두 개 이상 생성하여 Scale-Out 구성을 적용하는 것을 권장합니다.
 * AWS EC2 : m6i.2xlarge, m7i.2xlarge
 * GCP Compute Engine : c4-standard-8, n4-standard-8 ( 또는 AMD64 아키텍처의 -standard-8 모델 )
 * Disk IO 성능 : 높은 IOPS 의 Volume 을 적용합니다. AWS 의 EBS Provisioned IOPS SSD (io1) 또는 그 이상 성능의 Volume 을 적용합니다.
@@ -156,5 +156,4 @@ QueryPie 는 기본사양의 VM 1대에서, DAC 기준으로 간단한 쿼리의
 
 * QueryPie 를 신규 도입하는 경우, 내부 이용자에 대해 점진적으로 배포를 수행하며, VM 의 CPU, Memory, Disk IO 사용량 지표를 모니터링하고, 성능이 부족하지 않은지, 모니터링합니다.
 * 기존 사용 중인 접근제어 시스템이 있는 경우, 이용자의 사용량 지표를 제공받아, 분석합니다. 1일 또는 1주일 정도의 기간 동안, 이용자의 접속 건수, 쿼리 실행 건수, ResultSet 의 크기, 생성된 Audit Log 의 크기 등 사용량 지표를 필요로 합니다.
-
 
