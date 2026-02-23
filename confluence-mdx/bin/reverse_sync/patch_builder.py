@@ -502,7 +502,8 @@ def _build_delete_patch(
     xpath_to_mapping: Dict[str, 'BlockMapping'],
 ) -> Optional[Dict[str, str]]:
     """삭제된 블록에 대한 delete 패치를 생성한다."""
-    if change.old_block.type in NON_CONTENT_TYPES:
+    _SKIP_DELETE_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if change.old_block.type in _SKIP_DELETE_TYPES:
         return None
     mapping = find_mapping_by_sidecar(
         change.index, mdx_to_sidecar, xpath_to_mapping)
@@ -521,7 +522,8 @@ def _build_insert_patch(
 ) -> Optional[Dict[str, str]]:
     """추가된 블록에 대한 insert 패치를 생성한다."""
     new_block = change.new_block
-    if new_block.type in NON_CONTENT_TYPES:
+    _SKIP_INSERT_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if new_block.type in _SKIP_INSERT_TYPES:
         return None
 
     after_xpath = _find_insert_anchor(
@@ -536,58 +538,6 @@ def _build_insert_patch(
         'after_xpath': after_xpath,
         'new_element_xhtml': new_xhtml,
     }
-
-
-def build_trailing_blank_delete_patches(
-    original_blocks: List[MdxBlock],
-    improved_blocks: List[MdxBlock],
-    sidecar_entries: List[SidecarEntry],
-) -> List[Dict[str, str]]:
-    """문서 끝의 빈 줄 삭제를 XHTML trailing empty 요소 삭제 패치로 변환한다.
-
-    MDX에서 trailing blank line이 삭제되면, XHTML의 대응하는 trailing empty
-    요소(빈 <p> 등)를 삭제하는 패치를 생성한다.
-
-    Forward converter에서 trailing empty <p>는 separator 없이 변환되므로,
-    N개의 trailing empty <p> → N개의 trailing blank line으로 1:1 매핑된다.
-    따라서 삭제할 개수 = XHTML trailing empty 수 - improved trailing blank 수.
-    """
-    impr_trailing = _count_trailing_empties(improved_blocks)
-
-    # Trailing unmapped XHTML 요소 탐색 (mdx_blocks가 비어있는 trailing 요소)
-    trailing_xpaths = []
-    for entry in reversed(sidecar_entries):
-        if not entry.mdx_blocks:
-            trailing_xpaths.append(entry.xhtml_xpath)
-        else:
-            break
-
-    if not trailing_xpaths:
-        return []
-
-    xhtml_trailing = len(trailing_xpaths)
-    to_delete = xhtml_trailing - impr_trailing
-
-    if to_delete <= 0:
-        return []
-
-    # 가장 뒤에서부터 to_delete개만 삭제
-    patches = []
-    for xpath in trailing_xpaths[:to_delete]:
-        patches.append({'action': 'delete', 'xhtml_xpath': xpath})
-
-    return patches
-
-
-def _count_trailing_empties(blocks: List[MdxBlock]) -> int:
-    """블록 시퀀스 끝의 연속된 empty 블록 수를 센다."""
-    count = 0
-    for b in reversed(blocks):
-        if b.type == 'empty':
-            count += 1
-        else:
-            break
-    return count
 
 
 def _find_insert_anchor(
