@@ -1,6 +1,6 @@
 # Container 환경에서 실행하기
 
-GitHub Action 을 이용한 자동화를 위해 Container 환경을 제공합니다. 다음의 작업을 수행할 수 있습니다.
+GitHub Action을 이용한 자동화를 위해 Container 환경을 제공합니다. 다음의 작업을 수행할 수 있습니다.
 
 1. Container Image 빌드
     - [docker.io/querypie/confluence-mdx:latest](https://hub.docker.com/r/querypie/confluence-mdx) 이미지를 빌드합니다.
