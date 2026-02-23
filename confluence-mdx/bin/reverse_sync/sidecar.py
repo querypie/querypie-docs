@@ -335,6 +335,14 @@ def generate_sidecar_mapping(
         i for i, b in enumerate(mdx_blocks)
         if b.type not in NON_CONTENT
     ]
+    # Empty MDX 블록 중 콘텐츠 영역 내의 것만 매핑 대상으로 추적
+    # (frontmatter/import 사이의 빈 줄은 XHTML에 대응하지 않음)
+    first_content_idx = mdx_content_indices[0] if mdx_content_indices else len(mdx_blocks)
+    mdx_empty_indices = [
+        i for i, b in enumerate(mdx_blocks)
+        if b.type == 'empty' and i > first_content_idx
+    ]
+    empty_ptr = 0
 
     # MDX 콘텐츠 블록별 정규화 텍스트를 미리 계산
     mdx_plains = {}
@@ -357,13 +365,36 @@ def generate_sidecar_mapping(
     for xm in top_mappings:
         xhtml_plain = collapse_ws(xm.xhtml_plain_text)
 
-        # 빈 텍스트 XHTML 블록은 MDX 대응 없음
+        # 빈 텍스트 XHTML 블록 — empty MDX 블록과 순차 매핑
         if not xhtml_plain:
-            entries.append({
-                'xhtml_xpath': xm.xhtml_xpath,
-                'xhtml_type': xm.type,
-                'mdx_blocks': [],
-            })
+            if xm.type == 'paragraph':
+                # 현재 content 포인터의 MDX 인덱스 이후의 empty만 사용
+                last_content_idx = (
+                    mdx_content_indices[mdx_ptr - 1] if mdx_ptr > 0 else -1
+                )
+                # empty_ptr를 last_content_idx 이후로 전진
+                while (empty_ptr < len(mdx_empty_indices)
+                       and mdx_empty_indices[empty_ptr] <= last_content_idx):
+                    empty_ptr += 1
+                if empty_ptr < len(mdx_empty_indices):
+                    entries.append({
+                        'xhtml_xpath': xm.xhtml_xpath,
+                        'xhtml_type': xm.type,
+                        'mdx_blocks': [mdx_empty_indices[empty_ptr]],
+                    })
+                    empty_ptr += 1
+                else:
+                    entries.append({
+                        'xhtml_xpath': xm.xhtml_xpath,
+                        'xhtml_type': xm.type,
+                        'mdx_blocks': [],
+                    })
+            else:
+                entries.append({
+                    'xhtml_xpath': xm.xhtml_xpath,
+                    'xhtml_type': xm.type,
+                    'mdx_blocks': [],
+                })
             continue
 
         if mdx_ptr >= len(mdx_content_indices):

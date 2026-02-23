@@ -603,7 +603,8 @@ def _build_delete_patch(
     xpath_to_mapping: Dict[str, 'BlockMapping'],
 ) -> Optional[Dict[str, str]]:
     """삭제된 블록에 대한 delete 패치를 생성한다."""
-    if change.old_block.type in NON_CONTENT_TYPES:
+    _SKIP_DELETE_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if change.old_block.type in _SKIP_DELETE_TYPES:
         return None
     mapping = find_mapping_by_sidecar(
         change.index, mdx_to_sidecar, xpath_to_mapping)
@@ -622,7 +623,8 @@ def _build_insert_patch(
 ) -> Optional[Dict[str, str]]:
     """추가된 블록에 대한 insert 패치를 생성한다."""
     new_block = change.new_block
-    if new_block.type in NON_CONTENT_TYPES:
+    _SKIP_INSERT_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if new_block.type in _SKIP_INSERT_TYPES:
         return None
 
     after_xpath = _find_insert_anchor(

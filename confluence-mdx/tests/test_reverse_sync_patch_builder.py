@@ -702,11 +702,21 @@ class TestBuildDeletePatch:
         assert patches[0]['action'] == 'delete'
         assert patches[0]['xhtml_xpath'] == 'p[1]'
 
-    def test_delete_non_content_skipped(self):
-        """deleted된 empty/frontmatter 블록은 무시."""
+    def test_delete_empty_without_sidecar_skipped(self):
+        """deleted된 empty 블록은 sidecar 매핑이 없으면 무시."""
         change = BlockChange(
             index=0, change_type='deleted',
             old_block=_make_block('', type_='empty'),
+            new_block=None,
+        )
+        patches = build_patches([change], [], [], [], {}, {}, {})
+        assert len(patches) == 0
+
+    def test_delete_frontmatter_skipped(self):
+        """deleted된 frontmatter 블록은 무시."""
+        change = BlockChange(
+            index=0, change_type='deleted',
+            old_block=_make_block('---\ntitle: x\n---\n', type_='frontmatter'),
             new_block=None,
         )
         patches = build_patches([change], [], [], [], {}, {}, {})
@@ -766,12 +776,23 @@ class TestBuildInsertPatch:
         assert len(insert_patches) == 1
         assert insert_patches[0]['after_xpath'] is None
 
-    def test_insert_non_content_skipped(self):
-        """added된 empty 블록은 무시."""
+    def test_insert_empty_generates_patch(self):
+        """added된 empty 블록은 빈 <p> insert 패치를 생성한다."""
         change = BlockChange(
             index=0, change_type='added',
             old_block=None,
             new_block=_make_block('\n', type_='empty'),
+        )
+        patches = build_patches([change], [], [], [], {}, {}, {})
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'insert'
+
+    def test_insert_frontmatter_skipped(self):
+        """added된 frontmatter 블록은 무시."""
+        change = BlockChange(
+            index=0, change_type='added',
+            old_block=None,
+            new_block=_make_block('---\ntitle: x\n---\n', type_='frontmatter'),
         )
         patches = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
