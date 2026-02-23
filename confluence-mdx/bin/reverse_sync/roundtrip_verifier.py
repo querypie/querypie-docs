@@ -3,7 +3,6 @@ from dataclasses import dataclass
 import difflib
 import html as html_module
 import re
-from typing import Optional
 
 
 @dataclass
@@ -188,70 +187,33 @@ def _apply_normalizations(text: str) -> str:
     return text
 
 
-def _changed_lines_in_expected(original: str, expected: str) -> set:
-    """original→expected에서 변경된 행의 인덱스 집합을 반환한다."""
-    orig_lines = original.splitlines()
-    exp_lines = expected.splitlines()
-    sm = difflib.SequenceMatcher(None, orig_lines, exp_lines)
-    changed = set()
-    for tag, _i1, _i2, j1, j2 in sm.get_opcodes():
-        if tag != 'equal':
-            for j in range(j1, j2):
-                changed.add(j)
-    return changed
-
-
 def verify_roundtrip(
     expected_mdx: str,
     actual_mdx: str,
-    original_mdx: Optional[str] = None,
+    lenient: bool = False,
 ) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
-    trailing whitespace, 날짜 형식을 정규화. 그 외 공백, 줄바꿈, 모든 문자가
-    동일해야 PASS.
+    기본 동작(엄격 모드): 정규화 없이 문자 그대로 비교한다.
+    모든 공백, 줄바꿈, 문자가 동일해야 PASS.
 
-    original_mdx가 제공되면, 변경되지 않은 행의 차이는 무시한다.
-    이를 통해 기존 MDX↔XHTML 불일치가 있는 파일도 패치된 행만 검증한다.
+    lenient=True(관대 모드): trailing whitespace, 날짜 형식 등 XHTML↔MDX 변환기
+    한계에 의한 차이를 정규화한 후 전체 행에서 exact match를 검증한다.
 
     Args:
         expected_mdx: 개선 MDX (의도한 결과)
         actual_mdx: 패치된 XHTML을 forward 변환한 결과
-        original_mdx: (선택) 원본 MDX (main 브랜치)
+        lenient: True면 정규화 후 비교하는 관대 모드 활성화
 
     Returns:
         VerifyResult: passed=True면 통과, 아니면 diff_report 포함
     """
-    expected_mdx = _apply_normalizations(expected_mdx)
-    actual_mdx = _apply_normalizations(actual_mdx)
+    if lenient:
+        expected_mdx = _apply_normalizations(expected_mdx)
+        actual_mdx = _apply_normalizations(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")
-
-    # original_mdx가 제공되면, 변경된 행에서만 차이를 검사한다.
-    if original_mdx is not None:
-        original_mdx = _apply_normalizations(original_mdx)
-        changed = _changed_lines_in_expected(original_mdx, expected_mdx)
-
-        exp_lines = expected_mdx.splitlines()
-        act_lines = actual_mdx.splitlines()
-
-        # expected vs actual의 diff hunk에서, 변경된 행이 포함된 것만 실패 처리
-        sm = difflib.SequenceMatcher(None, exp_lines, act_lines)
-        has_real_diff = False
-        for tag, i1, i2, _j1, _j2 in sm.get_opcodes():
-            if tag == 'equal':
-                continue
-            # 이 diff hunk의 expected 쪽 행 중 하나라도 변경된 행이면 실패
-            for i in range(i1, i2):
-                if i in changed:
-                    has_real_diff = True
-                    break
-            if has_real_diff:
-                break
-
-        if not has_real_diff:
-            return VerifyResult(passed=True, diff_report="")
 
     expected_lines = expected_mdx.splitlines(keepends=True)
     actual_lines = actual_mdx.splitlines(keepends=True)
