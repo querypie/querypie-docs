@@ -44,11 +44,50 @@ def _strip_positions(markers: list) -> list:
     return [(m[0],) + m[2:] for m in markers]
 
 
+def _extract_marker_spans(content: str) -> list:
+    """MDX content에서 inline 포맷 마커의 (start, end) 위치 범위를 추출한다."""
+    spans = []
+    for m in _INLINE_CODE_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_BOLD_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_ITALIC_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_LINK_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    return sorted(spans)
+
+
+def _extract_between_marker_texts(content: str) -> list:
+    """연속된 inline 마커 사이의 텍스트를 추출한다."""
+    spans = _extract_marker_spans(content)
+    between = []
+    for i in range(len(spans) - 1):
+        between.append(content[spans[i][1]:spans[i + 1][0]])
+    return between
+
+
 def has_inline_format_change(old_content: str, new_content: str) -> bool:
-    """old/new MDX 콘텐츠의 inline 포맷 마커가 다른지 감지한다."""
+    """old/new MDX 콘텐츠의 inline 포맷 마커가 다른지 감지한다.
+
+    마커 type/content 변경뿐 아니라, 연속된 마커 사이의 텍스트가
+    변경된 경우도 inline 변경으로 판단한다 (XHTML code 요소 경계에서
+    text-only 패치가 올바르게 동작하지 않기 때문).
+    """
     old_markers = _strip_positions(_extract_inline_markers(old_content))
     new_markers = _strip_positions(_extract_inline_markers(new_content))
-    return old_markers != new_markers
+    if old_markers != new_markers:
+        return True
+
+    # 마커가 있을 때, 연속된 마커 사이 텍스트 변경 감지
+    if old_markers:
+        old_between = _extract_between_marker_texts(old_content)
+        new_between = _extract_between_marker_texts(new_content)
+        if ([collapse_ws(s) for s in old_between]
+                != [collapse_ws(s) for s in new_between]):
+            return True
+
+    return False
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))

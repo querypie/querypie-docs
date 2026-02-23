@@ -24,6 +24,8 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
         return _convert_heading(text)
     elif block_type == 'paragraph':
         return _convert_paragraph(text)
+    elif block_type == 'callout':
+        return _convert_callout_inner(text)
     elif block_type == 'list':
         return _convert_list_content(text)
     elif block_type == 'code_block':
@@ -56,6 +58,17 @@ def _convert_paragraph(text: str) -> str:
             continue
         converted.append(convert_inline(line))
     return ' '.join(converted)
+
+
+def _convert_callout_inner(text: str) -> str:
+    """callout: <Callout> 래퍼 태그를 제거하고 내부 텍스트를 paragraph로 변환."""
+    lines = text.splitlines()
+    if lines and lines[0].strip().startswith('<Callout'):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith('</Callout'):
+        lines = lines[:-1]
+    inner = '\n'.join(lines).strip()
+    return _convert_paragraph(inner)
 
 
 def _convert_code_block(text: str) -> str:
