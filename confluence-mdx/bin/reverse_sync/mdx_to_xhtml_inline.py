@@ -6,6 +6,7 @@ MDX 블록의 content를 파싱하여 대상 XHTML 요소의 innerHTML로
 import re
 from typing import List
 
+from bs4 import BeautifulSoup, Tag
 from mdx_to_storage.inline import convert_inline
 
 
@@ -27,6 +28,8 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
         return _convert_list_content(text)
     elif block_type == 'code_block':
         return _convert_code_block(text)
+    elif block_type == 'html_block':
+        return _convert_html_block_inner(text)
     else:
         return convert_inline(text)
 
@@ -64,6 +67,21 @@ def _convert_code_block(text: str) -> str:
     if lines and lines[-1].strip() == '```':
         lines = lines[:-1]
     return '\n'.join(lines)
+
+
+def _convert_html_block_inner(text: str) -> str:
+    """html_block: inline 변환 후 루트 요소의 innerHTML만 반환한다.
+
+    html_block content는 ``<table>...**bold**...</table>`` 처럼
+    outer 태그를 포함하므로, inline 변환 후 루트 요소를 벗겨내야
+    _replace_inner_html()에서 중첩이 발생하지 않는다.
+    """
+    converted = convert_inline(text)
+    soup = BeautifulSoup(converted, 'html.parser')
+    root = soup.find(True)  # 첫 번째 태그 요소
+    if isinstance(root, Tag):
+        return root.decode_contents()
+    return converted
 
 
 def _convert_code_spans(text: str) -> str:

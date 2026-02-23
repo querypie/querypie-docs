@@ -815,7 +815,11 @@ def testbuild_patches_table_block():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
     assert patches[0]['old_plain_text'] == 'Databased Access Control'
-    assert patches[0]['new_plain_text'] == 'Database Access Control'
+    # bold content가 변경되어 has_inline_format_change()가 True →
+    # new_inner_xhtml 패치가 생성됨 (outer <table> 없이 innerHTML만 포함)
+    assert 'new_inner_xhtml' in patches[0]
+    assert '<strong>Database Access Control</strong>' in patches[0]['new_inner_xhtml']
+    assert not patches[0]['new_inner_xhtml'].startswith('<table')
 
 
 # --- sidecar 전용 매칭 코드 경로 테스트 ---
