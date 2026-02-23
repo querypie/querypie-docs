@@ -1021,3 +1021,24 @@ class TestHasInlineFormatChange:
             '앞문장 `code` 뒷문장',
             '변경된 앞문장 `code` 변경된 뒷문장',
         ) is False
+
+    def test_comma_added_between_consecutive_code_spans(self):
+        """연속된 code 마커 사이에 쉼표 추가 → inline 변경."""
+        assert has_inline_format_change(
+            '해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안 됩니다.',
+            '해당 주소는 `http`, `https`와 같은 Scheme을 붙여서는 안 됩니다.',
+        ) is True
+
+    def test_punctuation_added_between_markers(self):
+        """연속된 마커 사이에 구두점 추가 → inline 변경."""
+        assert has_inline_format_change(
+            '`a` `b` end',
+            '`a`, `b` end',
+        ) is True
+
+    def test_whitespace_only_change_between_markers(self):
+        """연속된 마커 사이 공백만 변경 → inline 변경 아님."""
+        assert has_inline_format_change(
+            '`http`  `https` text',
+            '`http` `https` text',
+        ) is False
