@@ -1,16 +1,19 @@
 changes_count: 1
-created_at: '2026-02-10T19:50:45.385058+00:00'
+created_at: '2026-02-23T07:36:13.018621+00:00'
 mdx_diff_report: "--- tests/testcases/544112828/original.mdx+++ tests/testcases/544112828/improved.mdx@@\
   \ -139,8 +139,8 @@ </figcaption>\n </figure>\n \n-* 이후 해당 서버에 접속 가능한 계정이 여러개라면,\
-  \ Account 선택창이 열립니다. \n-* 사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n\
-  +* 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. \n+* 사용하려는 계정을 선택하고 필요 시 비밀번호를\
+  \ Account 선택창이 열립니다.\n-* 사용하려는 계정을 선택하고 필요시 비밀번호를 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n\
+  +* 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.\n+* 사용하려는 계정을 선택하고 필요 시 비밀번호를\
   \ 입력한 뒤, `OK` 버튼을 클릭하여 세션을 엽니다.\n \n <figure data-layout=\"center\" data-align=\"\
   center\">\n <img src=\"/user-manual/user-agent/screenshot-20240730-162532.png\"\
   \ alt=\"Agent &gt; Server &gt; Open New Session\" width=\"746\" />\n"
 page_id: '544112828'
 status: pass
 verification:
-  diff_report: ''
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -128,7 +128,7\
+    \ @@ 역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.\n </Callout>\n\
+    \ \n-#### <br/>2.Agent로 서버 접속하기\n+#### <br/>2. Agent로 서버 접속하기\n \n * 접속할 서버를 우클릭\
+    \ 후 Open Connection with 메뉴를 선택하여, 사용하려는 터미널 툴을 선택합니다.\n \n"
   exact_match: true
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -294,12 +294,12\
   \ @@\n    <ul>\n     <li>\n      <p>\n-      이후 해당 서버에 접속 가능한 계정이 여러개라면, Account\
