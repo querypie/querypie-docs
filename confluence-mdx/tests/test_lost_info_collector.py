@@ -101,6 +101,63 @@ class TestSingleLineParserCollector:
         assert len(result) > 0
 
 
+class TestSingleLineParserTimeDatetime:
+    """SingleLineParser가 <time datetime="..."> 태그를 언어별로 올바르게 변환하는지 테스트한다."""
+
+    def test_time_ko(self):
+        import converter.context as ctx
+        from converter.core import SingleLineParser
+
+        original_lang = ctx.LANGUAGE
+        try:
+            ctx.LANGUAGE = 'ko'
+            node = _tag('<p><time datetime="2025-08-29" /></p>')
+            result = SingleLineParser(node).as_markdown
+            assert result == '2025년 08월 29일'
+        finally:
+            ctx.LANGUAGE = original_lang
+
+    def test_time_en(self):
+        import converter.context as ctx
+        from converter.core import SingleLineParser
+
+        original_lang = ctx.LANGUAGE
+        try:
+            ctx.LANGUAGE = 'en'
+            node = _tag('<p><time datetime="2025-08-29" /></p>')
+            result = SingleLineParser(node).as_markdown
+            assert result == 'Aug 29, 2025'
+        finally:
+            ctx.LANGUAGE = original_lang
+
+    def test_time_ja(self):
+        import converter.context as ctx
+        from converter.core import SingleLineParser
+
+        original_lang = ctx.LANGUAGE
+        try:
+            ctx.LANGUAGE = 'ja'
+            node = _tag('<p><time datetime="2025-08-29" /></p>')
+            result = SingleLineParser(node).as_markdown
+            assert result == '2025年08月29日'
+        finally:
+            ctx.LANGUAGE = original_lang
+
+    def test_time_default_iso(self):
+        """알 수 없는 언어 코드일 때 ISO 형식으로 fallback한다."""
+        import converter.context as ctx
+        from converter.core import SingleLineParser
+
+        original_lang = ctx.LANGUAGE
+        try:
+            ctx.LANGUAGE = 'fr'
+            node = _tag('<p><time datetime="2025-08-29" /></p>')
+            result = SingleLineParser(node).as_markdown
+            assert result == '2025-08-29'
+        finally:
+            ctx.LANGUAGE = original_lang
+
+
 class TestConfluenceToMarkdownLostInfos:
     """ConfluenceToMarkdown가 lost_infos를 수집하는지 테스트한다."""
 

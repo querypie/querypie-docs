@@ -123,7 +123,20 @@ def _resolve_attachment_dir(page_id: str) -> str:
     raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
 
 
-def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
+def _detect_language(descriptor: str) -> str:
+    """descriptor에서 src/content/{lang}/ 의 언어 코드를 추출한다. 기본값: 'ko'."""
+    path = descriptor.split(':', 1)[-1] if ':' in descriptor else descriptor
+    prefix = 'src/content/'
+    if prefix in path:
+        idx = path.index(prefix) + len(prefix)
+        lang = path[idx:].split('/')[0]
+        if lang in ('ko', 'ja', 'en'):
+            return lang
+    return 'ko'
+
+
+def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str,
+                     language: str = 'ko') -> str:
     """patched XHTML 파일을 forward converter로 MDX로 변환한다.
 
     입력 파일이 var/<page_id>/ 에 직접 있으므로 메타데이터를 자동 발견한다.
@@ -141,7 +154,8 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
          str(abs_input), str(abs_output),
          '--public-dir', str(var_dir.parent),
          '--attachment-dir', attachment_dir,
-         '--skip-image-copy'],
+         '--skip-image-copy',
+         '--language', language],
         capture_output=True, text=True,
     )
     if result.returncode != 0:
@@ -226,6 +240,7 @@ def run_verify(
     improved_src: MdxSource,
     xhtml_path: str = None,
     lenient: bool = False,
+    language: str = None,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
 
@@ -310,10 +325,12 @@ def run_verify(
         yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 6: Forward 변환 → verify.mdx 저장
+    lang = language or _detect_language(improved_src.descriptor)
     _forward_convert(
         str(var_dir / 'reverse-sync.patched.xhtml'),
         str(var_dir / 'verify.mdx'),
         page_id,
+        language=lang,
     )
     verify_mdx = (var_dir / 'verify.mdx').read_text()
 

@@ -8,6 +8,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result,
+    _detect_language,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
@@ -47,7 +48,7 @@ def test_verify_detects_changes(setup_var, tmp_path):
     page_id, var_dir = setup_var
 
     # forward converter를 mock: verify.mdx에 improved_mdx 내용을 그대로 써서 pass 유도
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -72,7 +73,7 @@ def test_verify_roundtrip_fail(setup_var):
     """forward 변환 결과가 다르면 status=fail."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         # 다른 내용을 반환하여 roundtrip 실패 유도
         content = "## Title\n\nDifferent output.\n"
         Path(output_mdx_path).write_text(content)
@@ -635,7 +636,7 @@ def test_verify_ignores_frontmatter_diff(setup_var):
     improved_mdx = "---\ntitle: 'Test'\n---\n\n## Title\n\nModified.\n"
     verify_content = "---\ntitle: 'Test'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n\nModified.\n"
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text(verify_content)
         return verify_content
 
@@ -728,7 +729,7 @@ def test_verify_result_includes_xhtml_diff(setup_var):
     """run_verify() 결과에 xhtml_diff_report 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -748,7 +749,7 @@ def test_verify_result_includes_mdx_diff(setup_var):
     """run_verify() 결과에 mdx_diff_report (original→improved) 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -1151,3 +1152,28 @@ class TestCompileResult:
             roundtrip_diff_report='diff here',
         )
         assert result['status'] == 'fail'
+
+
+# --- _detect_language tests ---
+
+
+def test_detect_language_ko_from_ref_path():
+    assert _detect_language('split/ko-proofread:src/content/ko/installation/page.mdx') == 'ko'
+
+
+def test_detect_language_en_from_ref_path():
+    assert _detect_language('main:src/content/en/installation/page.mdx') == 'en'
+
+
+def test_detect_language_ja_from_ref_path():
+    assert _detect_language('main:src/content/ja/installation/page.mdx') == 'ja'
+
+
+def test_detect_language_ko_from_file_path():
+    assert _detect_language('src/content/ko/overview.mdx') == 'ko'
+
+
+def test_detect_language_defaults_to_ko():
+    """src/content/{lang}/ 패턴이 없으면 기본값 'ko'를 반환한다."""
+    assert _detect_language('/tmp/improved.mdx') == 'ko'
+    assert _detect_language('original.mdx') == 'ko'
