@@ -513,6 +513,50 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert 'UPDATED' in patches[0]['new_plain_text']
 
+    def test_direct_heading_inline_code_added(self):
+        """heading에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', 'kubectl 명령어 가이드', xpath='h2[1]',
+                           type_='heading')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '## kubectl 명령어 가이드\n',
+            '## `kubectl` 명령어 가이드\n',
+            type_='heading',
+        )
+        mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
+
+    def test_direct_bold_added_generates_inner_xhtml(self):
+        """paragraph에서 bold가 추가되면 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', '중요한 설정입니다', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '중요한 설정입니다',
+            '**중요한** 설정입니다',
+        )
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<strong>중요한</strong>' in patches[0]['new_inner_xhtml']
+
 
 # ── build_table_row_patches ──
 
