@@ -28,7 +28,7 @@ PodmanをインストールしてくれるLinuxディストリビューション
 * Ubuntu 24.04 LTS
 
 Podmanをインストールせず、DockerをインストールしてくれるLinuxディストリビューションは以下のとおりです。
-以下のLinuxディストリビューションでDockerを使用しなければならない理由についてはこの文書を参照してください：[LinuxディストリビューションとDocker、Podmanサポート状況](linux-distribution-and-docker-podman-support-status)
+以下のLinuxディストリビューションでDockerを使用しなければならない理由はこの文書を参照してください：[LinuxディストリビューションとDocker、Podmanサポート状況](linux-distribution-and-docker-podman-support-status)
 
 * Amazon Linux 2、Amazon Linux 2023
 * Ubuntu 22.04 LTS
@@ -74,7 +74,7 @@ $ bash <(curl -s https://dl.querypie.com/setup.v2.sh) --install 11.0.1
 Rootless Mode Podmanの場合、Linuxサーバが再起動する場合、追加的な設定をしないと、Containerが自動的に実行されません。
 これはRootless Mode Podmanの特性です。
 
-Linuxサーバ再起動時に、Containerが自動的に実行されるには、`podman compose up -d`コマンドを実行するsystemd serviceを登録して有効化する必要があります。
+Linuxサーバ再起動時にContainerが自動的に実行されるには`podman compose up -d`コマンドを実行するsystemd serviceを登録して有効化する必要があります。
 QueryPieのためのsystemd serviceファイルはComposeのためのpackage.tar.gzで基本として提供されます。
 
 `setup.v2.sh`を利用してQueryPieをインストールした場合、このようなsystemd service登録、有効化過程を自動的に実行します。
