@@ -588,6 +588,31 @@ class TestBuildListItemPatches:
         patches = build_list_item_patches(change, [], set(), {}, {})
         assert patches == []
 
+    def test_list_item_inline_code_added_generates_inner_xhtml(self):
+        """리스트 항목에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        child = _make_mapping('c1', 'use kubectl command', xpath='ul[1]/li[1]/p[1]')
+        parent = _make_mapping('p1', 'use kubectl command', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* use kubectl command\n',
+            '* use `kubectl` command\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
+
     def test_child_miss_falls_back_to_containing(self):
         parent = _make_mapping(
             'p1', 'parent old text here in list', xpath='ul[1]',

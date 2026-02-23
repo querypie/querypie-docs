@@ -14,6 +14,7 @@ from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
 from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
+from mdx_to_storage.inline import convert_inline
 
 
 # ── Inline format 변경 감지 ──
@@ -488,28 +489,39 @@ def build_list_item_patches(
                 old_plain, parent_mapping, id_to_mapping)
 
         if mapping is not None:
-            # child 매칭: 기존 로직대로 패치 생성
             if used_ids is not None:
                 used_ids.add(mapping.block_id)
-            new_plain = normalize_mdx_to_plain(new_item, 'list')
 
-            xhtml_text = mapping.xhtml_plain_text
-            prefix = extract_list_marker_prefix(xhtml_text)
-            if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                xhtml_body = xhtml_text[len(prefix):]
-                if collapse_ws(old_plain) != collapse_ws(xhtml_body):
+            # inline 포맷 변경 감지 → new_inner_xhtml 패치
+            if has_inline_format_change(old_item, new_item):
+                new_item_text = re.sub(r'^[-*+]\s+', '', new_item.strip())
+                new_item_text = re.sub(r'^\d+\.\s+', '', new_item_text)
+                new_inner = convert_inline(new_item_text)
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_inner_xhtml': new_inner,
+                })
+            else:
+                new_plain = normalize_mdx_to_plain(new_item, 'list')
+
+                xhtml_text = mapping.xhtml_plain_text
+                prefix = extract_list_marker_prefix(xhtml_text)
+                if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
+                    xhtml_body = xhtml_text[len(prefix):]
+                    if collapse_ws(old_plain) != collapse_ws(xhtml_body):
+                        new_plain = transfer_text_changes(
+                            old_plain, new_plain, xhtml_body)
+                    new_plain = prefix + new_plain
+                elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
                     new_plain = transfer_text_changes(
-                        old_plain, new_plain, xhtml_body)
-                new_plain = prefix + new_plain
-            elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                new_plain = transfer_text_changes(
-                    old_plain, new_plain, xhtml_text)
+                        old_plain, new_plain, xhtml_text)
 
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': xhtml_text,
-                'new_plain_text': new_plain,
-            })
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_plain_text': new_plain,
+                })
         else:
             # child 매칭 실패: parent 또는 텍스트 포함 매핑을 containing block으로 사용
             container = parent_mapping
