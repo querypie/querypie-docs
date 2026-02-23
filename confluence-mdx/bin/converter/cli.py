@@ -120,6 +120,9 @@ def main():
                         help='Directory to save attachments (default: output file directory)')
     parser.add_argument('--skip-image-copy', action='store_true',
                         help='이미지 파일 복사를 생략 (경로만 지정대로 생성)')
+    parser.add_argument('--language',
+                        choices=['ko', 'ja', 'en'],
+                        help='언어 코드를 명시적으로 지정 (미지정 시 출력 경로에서 자동 감지)')
     parser.add_argument('--log-level',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         default='info',
@@ -144,21 +147,25 @@ def main():
         output_dir = os.path.join(os.path.dirname(args.output_file), output_file_stem)
         logging.info(f"Using default attachment directory: {output_dir}")
 
-    # Extract language code from the output file path
-    path_parts = ctx.OUTPUT_FILE_PATH.split(os.sep)
+    # Determine language: explicit --language takes precedence over path detection
+    if args.language:
+        ctx.LANGUAGE = args.language
+        logging.info(f"Language set explicitly: {ctx.LANGUAGE}")
+    else:
+        # Extract language code from the output file path
+        path_parts = ctx.OUTPUT_FILE_PATH.split(os.sep)
 
-    # Look for 2-letter language code in the path
-    detected_language = 'en'  # Default to English
-    for part in path_parts:
-        if len(part) == 2 and part.isalpha():
-            # Check if it's a known language code
-            if part in ['ko', 'ja', 'en']:
-                detected_language = part
-                break
+        # Look for 2-letter language code in the path
+        detected_language = 'en'  # Default to English
+        for part in path_parts:
+            if len(part) == 2 and part.isalpha():
+                # Check if it's a known language code
+                if part in ['ko', 'ja', 'en']:
+                    detected_language = part
+                    break
 
-    # Update shared LANGUAGE variable
-    ctx.LANGUAGE = detected_language
-    logging.info(f"Detected language from output path: {ctx.LANGUAGE}")
+        ctx.LANGUAGE = detected_language
+        logging.info(f"Detected language from output path: {ctx.LANGUAGE}")
 
     try:
         with open(args.input_file, 'r', encoding='utf-8') as f:

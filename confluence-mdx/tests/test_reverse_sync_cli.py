@@ -47,7 +47,7 @@ def test_verify_detects_changes(setup_var, tmp_path):
     page_id, var_dir = setup_var
 
     # forward converter를 mock: verify.mdx에 improved_mdx 내용을 그대로 써서 pass 유도
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -72,7 +72,7 @@ def test_verify_roundtrip_fail(setup_var):
     """forward 변환 결과가 다르면 status=fail."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         # 다른 내용을 반환하여 roundtrip 실패 유도
         content = "## Title\n\nDifferent output.\n"
         Path(output_mdx_path).write_text(content)
@@ -635,7 +635,7 @@ def test_verify_ignores_frontmatter_diff(setup_var):
     improved_mdx = "---\ntitle: 'Test'\n---\n\n## Title\n\nModified.\n"
     verify_content = "---\ntitle: 'Test'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n\nModified.\n"
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text(verify_content)
         return verify_content
 
@@ -728,7 +728,7 @@ def test_verify_result_includes_xhtml_diff(setup_var):
     """run_verify() 결과에 xhtml_diff_report 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -748,7 +748,7 @@ def test_verify_result_includes_mdx_diff(setup_var):
     """run_verify() 결과에 mdx_diff_report (original→improved) 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
