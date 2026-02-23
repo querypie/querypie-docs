@@ -18,11 +18,13 @@ from reverse_sync.patch_builder import (
     build_patches,
     build_list_item_patches,
     build_table_row_patches,
+    has_inline_format_change,
     is_markdown_table,
     split_table_rows,
     normalize_table_row,
     split_list_items,
     extract_list_marker_prefix,
+    _extract_inline_markers,
 )
 
 
@@ -800,3 +802,100 @@ class TestResolveMappingForChange:
             change, self._old_plain(change), **ctx)
         assert strategy == 'containing'
         assert mapping.block_id == 'b1'
+
+
+# ── Inline format 변경 감지 테스트 ──
+
+
+class TestExtractInlineMarkers:
+    """_extract_inline_markers()의 inline 포맷 마커 추출을 테스트한다."""
+
+    def test_no_markers(self):
+        assert _extract_inline_markers('plain text only') == []
+
+    def test_code_span(self):
+        markers = _extract_inline_markers('use `kubectl` command')
+        assert len(markers) == 1
+        assert markers[0][0] == 'code'
+        assert markers[0][2] == 'kubectl'
+
+    def test_bold(self):
+        markers = _extract_inline_markers('this is **important** text')
+        assert len(markers) == 1
+        assert markers[0][0] == 'bold'
+        assert markers[0][2] == 'important'
+
+    def test_italic(self):
+        markers = _extract_inline_markers('this is *emphasized* text')
+        assert len(markers) == 1
+        assert markers[0][0] == 'italic'
+        assert markers[0][2] == 'emphasized'
+
+    def test_link(self):
+        markers = _extract_inline_markers('see [docs](https://example.com)')
+        assert len(markers) == 1
+        assert markers[0][0] == 'link'
+        assert markers[0][2] == 'docs'
+        assert markers[0][3] == 'https://example.com'
+
+    def test_multiple_markers_sorted_by_position(self):
+        markers = _extract_inline_markers('**bold** and `code`')
+        assert len(markers) == 2
+        assert markers[0][0] == 'bold'
+        assert markers[1][0] == 'code'
+
+    def test_code_inside_bold_not_double_counted(self):
+        """bold 내부의 backtick은 code로만 감지된다."""
+        markers = _extract_inline_markers('use `code` here')
+        code_markers = [m for m in markers if m[0] == 'code']
+        assert len(code_markers) == 1
+
+
+class TestHasInlineFormatChange:
+    """has_inline_format_change()의 inline 변경 감지를 테스트한다."""
+
+    def test_no_change_plain_text(self):
+        assert has_inline_format_change('hello world', 'hello earth') is False
+
+    def test_code_added(self):
+        assert has_inline_format_change(
+            'use https://example.com/ URL',
+            'use `https://example.com/` URL',
+        ) is True
+
+    def test_code_removed(self):
+        assert has_inline_format_change(
+            'use `kubectl` command',
+            'use kubectl command',
+        ) is True
+
+    def test_code_content_changed(self):
+        assert has_inline_format_change(
+            'use `old_cmd` here',
+            'use `new_cmd` here',
+        ) is True
+
+    def test_bold_added(self):
+        assert has_inline_format_change(
+            'important note',
+            '**important** note',
+        ) is True
+
+    def test_link_changed(self):
+        assert has_inline_format_change(
+            'see [docs](https://old.com)',
+            'see [docs](https://new.com)',
+        ) is True
+
+    def test_same_markers_no_change(self):
+        assert has_inline_format_change(
+            '**bold** and `code`',
+            '**bold** and `code`',
+        ) is False
+
+    def test_text_only_change_with_existing_markers(self):
+        """마커 외부의 텍스트만 변경 → inline 변경 아님."""
+        assert has_inline_format_change(
+            '앞문장 `code` 뒷문장',
+            '변경된 앞문장 `code` 변경된 뒷문장',
+        ) is False

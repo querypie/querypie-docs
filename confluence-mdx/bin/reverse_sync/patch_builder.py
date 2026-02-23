@@ -16,6 +16,40 @@ from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
 
 
+# ── Inline format 변경 감지 ──
+
+_INLINE_CODE_RE = re.compile(r'`([^`]+)`')
+_INLINE_BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
+_INLINE_ITALIC_RE = re.compile(r'(?<!\*)\*([^*]+)\*(?!\*)')
+_INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+
+
+def _extract_inline_markers(content: str) -> list:
+    """MDX content에서 inline 포맷 마커를 위치순으로 추출한다."""
+    markers = []
+    for m in _INLINE_CODE_RE.finditer(content):
+        markers.append(('code', m.start(), m.group(1)))
+    for m in _INLINE_BOLD_RE.finditer(content):
+        markers.append(('bold', m.start(), m.group(1)))
+    for m in _INLINE_ITALIC_RE.finditer(content):
+        markers.append(('italic', m.start(), m.group(1)))
+    for m in _INLINE_LINK_RE.finditer(content):
+        markers.append(('link', m.start(), m.group(1), m.group(2)))
+    return sorted(markers, key=lambda x: x[1])
+
+
+def _strip_positions(markers: list) -> list:
+    """마커 리스트에서 위치(index 1)를 제거하여 type+content만 비교 가능하게 한다."""
+    return [(m[0],) + m[2:] for m in markers]
+
+
+def has_inline_format_change(old_content: str, new_content: str) -> bool:
+    """old/new MDX 콘텐츠의 inline 포맷 마커가 다른지 감지한다."""
+    old_markers = _strip_positions(_extract_inline_markers(old_content))
+    new_markers = _strip_positions(_extract_inline_markers(new_content))
+    return old_markers != new_markers
+
+
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 
 
