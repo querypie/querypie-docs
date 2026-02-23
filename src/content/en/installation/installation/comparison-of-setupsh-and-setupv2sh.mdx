@@ -64,7 +64,7 @@ As the MySQL Data Dir path has changed, the following advantages have emerged.
 There are two things to note.
 
 * setup.sh must maintain the QueryPie MySQL Container running from the path of the initial installation version. setup.v2.sh **runs the MySQL Container from the current installation version's path**.
-* You can install a new version using setup.v2.sh on a server where the product has already been installed with setup.sh. However, due to the MySQL Data Dir change, **existing data is not automatically migrated**. The installation manager must appropriately move the MySQL Data directory according to the purpose, such as new installation or upgrade.
+* You can install a new version using setup.v2.sh on a server where the product has already been installed with setup.sh. However, due to the MySQL Data Dir change, **existing data is not automatically migrated**. The installation manager must appropriately move the MySQL Data directory according to the purpose such as new installation or upgrade.
 
 
 ### Rootless Mode Support
@@ -77,7 +77,7 @@ When installing with setup.v2.sh, no additional configuration changes are requir
 
 First, configure the environment to run Container Engine in Rootless Mode.
 If you install Podman using setup.v2.sh, Rootless Mode environment is applied by default.
-If you use Docker, you must perform Rootless Mode configuration by referring to separate documentation.
+If you use Docker, you must perform Rootless Mode configuration by referring to a separate document.
 
 Then, when running `setup.v2.sh`, add the `--universal` option to install QueryPie, and a Compose package.tar.gz suitable for Rootless Mode will be installed.
 
