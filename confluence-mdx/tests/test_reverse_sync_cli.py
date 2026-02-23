@@ -8,6 +8,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result,
+    _detect_language,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
@@ -1151,3 +1152,28 @@ class TestCompileResult:
             roundtrip_diff_report='diff here',
         )
         assert result['status'] == 'fail'
+
+
+# --- _detect_language tests ---
+
+
+def test_detect_language_ko_from_ref_path():
+    assert _detect_language('split/ko-proofread:src/content/ko/installation/page.mdx') == 'ko'
+
+
+def test_detect_language_en_from_ref_path():
+    assert _detect_language('main:src/content/en/installation/page.mdx') == 'en'
+
+
+def test_detect_language_ja_from_ref_path():
+    assert _detect_language('main:src/content/ja/installation/page.mdx') == 'ja'
+
+
+def test_detect_language_ko_from_file_path():
+    assert _detect_language('src/content/ko/overview.mdx') == 'ko'
+
+
+def test_detect_language_defaults_to_ko():
+    """src/content/{lang}/ 패턴이 없으면 기본값 'ko'를 반환한다."""
+    assert _detect_language('/tmp/improved.mdx') == 'ko'
+    assert _detect_language('original.mdx') == 'ko'
