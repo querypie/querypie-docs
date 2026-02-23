@@ -267,7 +267,8 @@ def build_patches(
         _mark_used(mapping.block_id, mapping)
 
         # inline 포맷 변경 감지 → new_inner_xhtml 패치
-        if has_inline_format_change(
+        # html_block은 raw HTML이므로 markdown inline 포맷 감지 대상이 아님
+        if change.old_block.type != 'html_block' and has_inline_format_change(
                 change.old_block.content, change.new_block.content):
             new_inner = mdx_block_to_inner_xhtml(
                 change.new_block.content, change.new_block.type)
