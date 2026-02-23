@@ -1,5 +1,5 @@
 changes_count: 5
-created_at: '2026-02-10T19:50:48.929677+00:00'
+created_at: '2026-02-23T07:48:23.670086+00:00'
 mdx_diff_report: "--- tests/testcases/544178405/original.mdx+++ tests/testcases/544178405/improved.mdx@@\
   \ -3,11 +3,11 @@ \n ### 환영합니다.\n \n-QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스\
   \ 및 권한, 솔루션 보안, 알림 설정 등 쿼리파이 전반 솔루션 관리를 진행할 수 있습니다.\n-공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게\
@@ -21,10 +21,47 @@ mdx_diff_report: "--- tests/testcases/544178405/original.mdx+++ tests/testcases/
   \ \n <table>\n@@ -161,7 +161,7 @@ 1\n </td>\n <th>\n-**Databased Access Control\
   \ 설정하기**\n+**Database Access Control 설정하기**\n </th>\n <td>\n * [Connection Management](administrator-manual/databases/connection-management)\n"
 page_id: '544178405'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -139,77 +139,12\
+    \ @@ 서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인할 수 있습니다.\n 뿐만 아니라\
+    \ 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n \n-<table>\n-<colgroup>\n\
+    -<col/>\n-<col/>\n-<col/>\n-</colgroup>\n-<tbody>\n-<tr>\n-<th>\n-</th>\n-<th>\n\
+    -**설정 순서**\n-</th>\n-<th>\n-**설정 항목**\n-</th>\n-</tr>\n-<tr>\n-<td>\n-1\n-</td>\n\
+    -<th>\n-**Database Access Control 설정하기**\n-</th>\n-<td>\n-* [Connection Management](administrator-manual/databases/connection-management)\n\
+    -* [DB Access Control](administrator-manual/databases/db-access-control)\n-* [Policies](administrator-manual/databases/policies)\n\
+    -* [Ledger Management](administrator-manual/databases/ledger-management)\n-</td>\n\
+    -</tr>\n-<tr>\n-<td>\n-2\n-</td>\n-<th>\n-**Server Access Control 설정하기**\n-</th>\n\
+    -<td>\n-* [Connection Management](administrator-manual/servers/connection-management)\n\
+    -* [Server Access Control ](user-manual/server-access-control)\n-</td>\n-</tr>\n\
+    -<tr>\n-<td>\n-3\n-</td>\n-<th>\n-**Kubernetes Access Control 설정하기**\n-</th>\n\
+    -<td>\n-* [Connection Management](administrator-manual/kubernetes/connection-management)\n\
+    -* [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)\n\
+    -</td>\n-</tr>\n-<tr>\n-<td>\n-4\n-</td>\n-<th>\n-**감사 로그 확인하기**\n-</th>\n-<td>\n\
+    -* [General Logs](administrator-manual/audit/general-logs)\n-* [Database Logs](administrator-manual/audit/database-logs)\n\
+    -* [Server Logs](administrator-manual/audit/server-logs)\n-* [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)\n\
+    -</td>\n-</tr>\n-</tbody>\n-</table>\n+|     |   **설정 순서**                   \
+    \         |   **설정 항목**                                                      \
+    \                                                                            \
+    \                                                                            \
+    \                                                               |\n+| --- | --------------------------------------\
+    \ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
+    \ |\n+|  1  |   **Database Access Control 설정하기**     |  * [Connection Management](administrator-manual/databases/connection-management)\
+    \ * [DB Access Control](administrator-manual/databases/db-access-control) * [Policies](administrator-manual/databases/policies)\
+    \ * [Ledger Management](administrator-manual/databases/ledger-management)  |\n\
+    +|  2  |   **Server Access Control 설정하기**       |  * [Connection Management](administrator-manual/servers/connection-management)\
+    \ * [Server Access Control ](user-manual/server-access-control)              \
+    \                                                                            \
+    \                                                  |\n+|  3  |   **Kubernetes\
+    \ Access Control 설정하기**   |  * [Connection Management](administrator-manual/kubernetes/connection-management)\
+    \ * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)\
+    \                                                                            \
+    \                                               |\n+|  4  |   **감사 로그 확인하기** \
+    \                      |  * [General Logs](administrator-manual/audit/general-logs)\
+    \ * [Database Logs](administrator-manual/audit/database-logs) * [Server Logs](administrator-manual/audit/server-logs)\
+    \ * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)            \
+    \                              |\n \n \n \n"
+  exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -2,10 +2,10\
   \ @@\n  환영합니다.\n </h2>\n <p>\n- QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스 및 권한,\
   \ 솔루션 보안, 알림 설정 등 쿼리파이 전반 솔루션 관리를 진행할 수 있습니다. 공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게 보여지는\
@@ -39,13 +76,90 @@ xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -2,10 +2,
   \ 것을 권장해 드립니다.\n+ Databases, Servers, Kubernetes 등 각 서비스 설정을 진행하기 전에 기본적으로 설정해야\
   \ 하는 항목들이 있습니다. 특히 보안 설정, 사용자 설정, 관리자 역할 할당은 필수적으로 설정하는 것을 권장합니다.\n </p>\n <table\
   \ ac:local-id=\"96d34ea4-8772-49af-9ba2-14ea36b1f3e1\" data-layout=\"default\" data-table-width=\"\
-  760\">\n  <colgroup>\n@@ -353,7 +353,7 @@\n  자, 이제 기본 설정을 마쳤습니다. 이제 서비스별 설정을 해볼까요?\n\
-  \ </h2>\n <p>\n- 기본 설정을 마쳤다면 서비스별 설정이 남았습니다. QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한\
-  \ 관리를 경험해 보세요. 서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인하실 수 있습니다.\
-  \ 뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n+ 기본 설정을 마쳤다면\
-  \ 서비스별 설정이 남았습니다. QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요. 서비스별 설정이 끝난 후에는\
-  \ 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인할 수 있습니다. 뿐만 아니라 민감 정보를 식별할 수 있는 Discovery\
-  \ 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n </p>\n <table ac:local-id=\"1c770267-da7f-48dc-b1e3-817744eeec38\"\
-  \ data-layout=\"default\" data-table-width=\"760\">\n  <colgroup>\n@@ -387,7 +387,7\
-  \ @@\n    <th>\n     <p>\n      <strong>\n-      Databased Access Control 설정하기\n\
-  +      Database Access Control 설정하기\n      </strong>\n     </p>\n    </th>"
+  760\">\n  <colgroup>\n@@ -353,227 +353,123 @@\n  자, 이제 기본 설정을 마쳤습니다. 이제 서비스별 설정을\
+  \ 해볼까요?\n </h2>\n <p>\n- 기본 설정을 마쳤다면 서비스별 설정이 남았습니다. QueryPie의 세분화된 접근 제어 기능을 통해\
+  \ 강력한 권한 관리를 경험해 보세요. 서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인하실\
+  \ 수 있습니다. 뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n+\
+  \ 기본 설정을 마쳤다면 서비스별 설정이 남았습니다. QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요. 서비스별\
+  \ 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인할 수 있습니다. 뿐만 아니라 민감 정보를 식별할\
+  \ 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n </p>\n <table ac:local-id=\"\
+  1c770267-da7f-48dc-b1e3-817744eeec38\" data-layout=\"default\" data-table-width=\"\
+  760\">\n  <colgroup>\n   <col/>\n-  <col style=\"width: 344.0px;\"/>\n-  <col style=\"\
+  width: 415.0px;\"/>\n+  <col/>\n+  <col/>\n  </colgroup>\n  <tbody>\n   <tr>\n-\
+  \   <th class=\"numberingColumn\">\n-   </th>\n-   <th data-highlight-colour=\"\
+  var(--ds-background-accent-gray-subtlest, #F4F5F7)\">\n-    <p style=\"text-align:\
+  \ center;\">\n-     <strong>\n-      설정 순서\n-     </strong>\n-    </p>\n-   </th>\n\
+  -   <th data-highlight-colour=\"var(--ds-background-accent-gray-subtlest, #F4F5F7)\"\
+  >\n-    <p style=\"text-align: center;\">\n-     <strong>\n-      설정 항목\n-     </strong>\n\
+  -    </p>\n-   </th>\n-  </tr>\n-  <tr>\n-   <td class=\"numberingColumn\">\n+ \
+  \  <th>\n+   </th>\n+   <th>\n+    <strong>\n+     설정 순서\n+    </strong>\n+   </th>\n\
+  +   <th>\n+    <strong>\n+     설정 항목\n+    </strong>\n+   </th>\n+  </tr>\n+  <tr>\n\
+  +   <td>\n     1\n    </td>\n    <th>\n-    <p>\n-     <strong>\n-      Databased\
+  \ Access Control 설정하기\n-     </strong>\n-    </p>\n-   </th>\n-   <td>\n-    <ul>\n\
+  -     <li>\n-      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"\
+  Connection Management\" ri:version-at-save=\"17\">\n-        </ri:page>\n-     \
+  \   <ac:link-body>\n-         Connection Management\n-        </ac:link-body>\n\
+  -       </ac:link>\n-      </p>\n-     </li>\n-     <li>\n-      <p>\n-       <ac:link>\n\
+  -        <ri:page ri:content-title=\"DB Access Control​\" ri:version-at-save=\"\
+  7\">\n-        </ri:page>\n-        <ac:link-body>\n-         DB Access Control\n\
+  -        </ac:link-body>\n-       </ac:link>\n-      </p>\n-     </li>\n-     <li>\n\
+  -      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"Policies\" ri:version-at-save=\"\
+  14\">\n-        </ri:page>\n-        <ac:link-body>\n-         Policies\n-     \
+  \   </ac:link-body>\n-       </ac:link>\n-      </p>\n-     </li>\n-     <li>\n\
+  -      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"Ledger Management\"\
+  \ ri:version-at-save=\"5\">\n-        </ri:page>\n-        <ac:link-body>\n-   \
+  \      Ledger Management\n-        </ac:link-body>\n-       </ac:link>\n-      </p>\n\
+  -     </li>\n-    </ul>\n-   </td>\n-  </tr>\n-  <tr>\n-   <td class=\"numberingColumn\"\
+  >\n+    <strong>\n+     Database Access Control 설정하기\n+    </strong>\n+   </th>\n\
+  +   <td>\n+    *\n+    <a href=\"administrator-manual/databases/connection-management\"\
+  >\n+     Connection Management\n+    </a>\n+    *\n+    <a href=\"administrator-manual/databases/db-access-control\"\
+  >\n+     DB Access Control\n+    </a>\n+    *\n+    <a href=\"administrator-manual/databases/policies\"\
+  >\n+     Policies\n+    </a>\n+    *\n+    <a href=\"administrator-manual/databases/ledger-management\"\
+  >\n+     Ledger Management\n+    </a>\n+   </td>\n+  </tr>\n+  <tr>\n+   <td>\n\
+  \     2\n    </td>\n    <th>\n-    <p>\n-     <strong>\n-      Server Access Control\
+  \ 설정하기\n-     </strong>\n-    </p>\n-   </th>\n-   <td>\n-    <ul>\n-     <li>\n\
+  -      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"Connection Management​\"\
+  \ ri:version-at-save=\"10\">\n-        </ri:page>\n-        <ac:link-body>\n-  \
+  \       Connection Management\n-        </ac:link-body>\n-       </ac:link>\n- \
+  \     </p>\n-     </li>\n-     <li>\n-      <p>\n-       <ac:link>\n-        <ri:page\
+  \ ri:content-title=\"Server Access Control\" ri:version-at-save=\"12\">\n-     \
+  \   </ri:page>\n-        <ac:link-body>\n-         Server Access Control\n-    \
+  \    </ac:link-body>\n-       </ac:link>\n-      </p>\n-     </li>\n-    </ul>\n\
+  -   </td>\n-  </tr>\n-  <tr>\n-   <td class=\"numberingColumn\">\n+    <strong>\n\
+  +     Server Access Control 설정하기\n+    </strong>\n+   </th>\n+   <td>\n+    *\n\
+  +    <a href=\"administrator-manual/servers/connection-management\">\n+     Connection\
+  \ Management\n+    </a>\n+    *\n+    <a href=\"user-manual/server-access-control\"\
+  >\n+     Server Access Control\n+    </a>\n+   </td>\n+  </tr>\n+  <tr>\n+   <td>\n\
+  \     3\n    </td>\n    <th>\n-    <p>\n-     <strong>\n-      Kubernetes Access\
+  \ Control 설정하기\n-     </strong>\n-    </p>\n-   </th>\n-   <td>\n-    <ul>\n-  \
+  \   <li>\n-      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"Connection\
+  \ Management​​\" ri:version-at-save=\"11\">\n-        </ri:page>\n-        <ac:link-body>\n\
+  -         Connection Management\n-        </ac:link-body>\n-       </ac:link>\n\
+  -      </p>\n-     </li>\n-     <li>\n-      <p>\n-       <ac:link>\n-        <ri:page\
+  \ ri:content-title=\"K8s Access Control\" ri:version-at-save=\"8\">\n-        </ri:page>\n\
+  -        <ac:link-body>\n-         K8s Access Control\n-        </ac:link-body>\n\
+  -       </ac:link>\n-      </p>\n-     </li>\n-    </ul>\n-   </td>\n-  </tr>\n\
+  -  <tr>\n-   <td class=\"numberingColumn\">\n+    <strong>\n+     Kubernetes Access\
+  \ Control 설정하기\n+    </strong>\n+   </th>\n+   <td>\n+    *\n+    <a href=\"administrator-manual/kubernetes/connection-management\"\
+  >\n+     Connection Management\n+    </a>\n+    *\n+    <a href=\"administrator-manual/kubernetes/k8s-access-control\"\
+  >\n+     K8s Access Control\n+    </a>\n+   </td>\n+  </tr>\n+  <tr>\n+   <td>\n\
+  \     4\n    </td>\n    <th>\n-    <p>\n-     <strong>\n-      감사 로그 확인하기\n-   \
+  \  </strong>\n-    </p>\n-   </th>\n-   <td>\n-    <ul>\n-     <li>\n-      <p>\n\
+  -       <ac:link>\n-        <ri:page ri:content-title=\"General Logs\" ri:version-at-save=\"\
+  14\">\n-        </ri:page>\n-        <ac:link-body>\n-         General Logs\n- \
+  \       </ac:link-body>\n-       </ac:link>\n-      </p>\n-     </li>\n-     <li>\n\
+  -      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"Database Logs\"\
+  \ ri:version-at-save=\"6\">\n-        </ri:page>\n-        <ac:link-body>\n-   \
+  \      Database Logs\n-        </ac:link-body>\n-       </ac:link>\n-      </p>\n\
+  -     </li>\n-     <li>\n-      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"\
+  Server Logs\" ri:version-at-save=\"6\">\n-        </ri:page>\n-        <ac:link-body>\n\
+  -         Server Logs\n-        </ac:link-body>\n-       </ac:link>\n-      </p>\n\
+  -     </li>\n-     <li>\n-      <p>\n-       <ac:link>\n-        <ri:page ri:content-title=\"\
+  Kubernetes Logs\" ri:version-at-save=\"8\">\n-        </ri:page>\n-        <ac:link-body>\n\
+  -         Kubernetes Logs\n-        </ac:link-body>\n-       </ac:link>\n-     \
+  \ </p>\n-     </li>\n-    </ul>\n+    <strong>\n+     감사 로그 확인하기\n+    </strong>\n\
+  +   </th>\n+   <td>\n+    *\n+    <a href=\"administrator-manual/audit/general-logs\"\
+  >\n+     General Logs\n+    </a>\n+    *\n+    <a href=\"administrator-manual/audit/database-logs\"\
+  >\n+     Database Logs\n+    </a>\n+    *\n+    <a href=\"administrator-manual/audit/server-logs\"\
+  >\n+     Server Logs\n+    </a>\n+    *\n+    <a href=\"administrator-manual/audit/kubernetes-logs\"\
+  >\n+     Kubernetes Logs\n+    </a>\n    </td>\n   </tr>\n  </tbody>"

@@ -18,11 +18,13 @@ from reverse_sync.patch_builder import (
     build_patches,
     build_list_item_patches,
     build_table_row_patches,
+    has_inline_format_change,
     is_markdown_table,
     split_table_rows,
     normalize_table_row,
     split_list_items,
     extract_list_marker_prefix,
+    _extract_inline_markers,
 )
 
 
@@ -451,6 +453,46 @@ class TestBuildPatches:
 
         assert patches == []
 
+    # Inline format 변경 → new_inner_xhtml 패치 생성
+    def test_direct_inline_code_added_generates_inner_xhtml(self):
+        """paragraph에서 backtick이 추가되면 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', 'QueryPie는 https://example.com/과 같은 URL', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            'QueryPie는 https://example.com/과 같은 URL',
+            'QueryPie는 `https://example.com/`과 같은 URL',
+        )
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>https://example.com/</code>' in patches[0]['new_inner_xhtml']
+        assert 'new_plain_text' not in patches[0]
+
+    def test_direct_text_only_change_uses_plain_text_patch(self):
+        """inline format 변경 없이 텍스트만 바뀌면 기존 text patch를 사용한다."""
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_plain_text' in patches[0]
+        assert 'new_inner_xhtml' not in patches[0]
+
     # 여러 변경이 동일 containing block에 그룹화
     def test_multiple_changes_grouped_to_containing(self):
         container = _make_mapping(
@@ -470,6 +512,50 @@ class TestBuildPatches:
 
         assert len(patches) == 1
         assert 'UPDATED' in patches[0]['new_plain_text']
+
+    def test_direct_heading_inline_code_added(self):
+        """heading에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', 'kubectl 명령어 가이드', xpath='h2[1]',
+                           type_='heading')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '## kubectl 명령어 가이드\n',
+            '## `kubectl` 명령어 가이드\n',
+            type_='heading',
+        )
+        mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
+
+    def test_direct_bold_added_generates_inner_xhtml(self):
+        """paragraph에서 bold가 추가되면 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', '중요한 설정입니다', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '중요한 설정입니다',
+            '**중요한** 설정입니다',
+        )
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<strong>중요한</strong>' in patches[0]['new_inner_xhtml']
 
 
 # ── build_table_row_patches ──
@@ -545,6 +631,31 @@ class TestBuildListItemPatches:
             type_='list')
         patches = build_list_item_patches(change, [], set(), {}, {})
         assert patches == []
+
+    def test_list_item_inline_code_added_generates_inner_xhtml(self):
+        """리스트 항목에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        child = _make_mapping('c1', 'use kubectl command', xpath='ul[1]/li[1]/p[1]')
+        parent = _make_mapping('p1', 'use kubectl command', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* use kubectl command\n',
+            '* use `kubectl` command\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
 
     def test_child_miss_falls_back_to_containing(self):
         parent = _make_mapping(
@@ -715,6 +826,19 @@ class TestFlushContainingChanges:
         patches = _flush_containing_changes(cc)
         assert len(patches) == 2
 
+    def test_inline_change_in_containing_still_uses_text_patch(self):
+        """containing block에서는 inline 변경이 있어도 text patch를 유지한다."""
+        m = _make_mapping('m1', 'use command and url', xpath='p[1]')
+        containing_changes = {
+            'm1': (m, [
+                ('use command and url', 'use command and url'),
+            ]),
+        }
+        patches = _flush_containing_changes(containing_changes)
+        assert len(patches) == 1
+        assert 'new_plain_text' in patches[0]
+        assert 'new_inner_xhtml' not in patches[0]
+
 
 # ── _resolve_mapping_for_change ──
 
@@ -800,3 +924,100 @@ class TestResolveMappingForChange:
             change, self._old_plain(change), **ctx)
         assert strategy == 'containing'
         assert mapping.block_id == 'b1'
+
+
+# ── Inline format 변경 감지 테스트 ──
+
+
+class TestExtractInlineMarkers:
+    """_extract_inline_markers()의 inline 포맷 마커 추출을 테스트한다."""
+
+    def test_no_markers(self):
+        assert _extract_inline_markers('plain text only') == []
+
+    def test_code_span(self):
+        markers = _extract_inline_markers('use `kubectl` command')
+        assert len(markers) == 1
+        assert markers[0][0] == 'code'
+        assert markers[0][2] == 'kubectl'
+
+    def test_bold(self):
+        markers = _extract_inline_markers('this is **important** text')
+        assert len(markers) == 1
+        assert markers[0][0] == 'bold'
+        assert markers[0][2] == 'important'
+
+    def test_italic(self):
+        markers = _extract_inline_markers('this is *emphasized* text')
+        assert len(markers) == 1
+        assert markers[0][0] == 'italic'
+        assert markers[0][2] == 'emphasized'
+
+    def test_link(self):
+        markers = _extract_inline_markers('see [docs](https://example.com)')
+        assert len(markers) == 1
+        assert markers[0][0] == 'link'
+        assert markers[0][2] == 'docs'
+        assert markers[0][3] == 'https://example.com'
+
+    def test_multiple_markers_sorted_by_position(self):
+        markers = _extract_inline_markers('**bold** and `code`')
+        assert len(markers) == 2
+        assert markers[0][0] == 'bold'
+        assert markers[1][0] == 'code'
+
+    def test_code_inside_bold_not_double_counted(self):
+        """bold 내부의 backtick은 code로만 감지된다."""
+        markers = _extract_inline_markers('use `code` here')
+        code_markers = [m for m in markers if m[0] == 'code']
+        assert len(code_markers) == 1
+
+
+class TestHasInlineFormatChange:
+    """has_inline_format_change()의 inline 변경 감지를 테스트한다."""
+
+    def test_no_change_plain_text(self):
+        assert has_inline_format_change('hello world', 'hello earth') is False
+
+    def test_code_added(self):
+        assert has_inline_format_change(
+            'use https://example.com/ URL',
+            'use `https://example.com/` URL',
+        ) is True
+
+    def test_code_removed(self):
+        assert has_inline_format_change(
+            'use `kubectl` command',
+            'use kubectl command',
+        ) is True
+
+    def test_code_content_changed(self):
+        assert has_inline_format_change(
+            'use `old_cmd` here',
+            'use `new_cmd` here',
+        ) is True
+
+    def test_bold_added(self):
+        assert has_inline_format_change(
+            'important note',
+            '**important** note',
+        ) is True
+
+    def test_link_changed(self):
+        assert has_inline_format_change(
+            'see [docs](https://old.com)',
+            'see [docs](https://new.com)',
+        ) is True
+
+    def test_same_markers_no_change(self):
+        assert has_inline_format_change(
+            '**bold** and `code`',
+            '**bold** and `code`',
+        ) is False
+
+    def test_text_only_change_with_existing_markers(self):
+        """마커 외부의 텍스트만 변경 → inline 변경 아님."""
+        assert has_inline_format_change(
+            '앞문장 `code` 뒷문장',
+            '변경된 앞문장 `code` 변경된 뒷문장',
+        ) is False
