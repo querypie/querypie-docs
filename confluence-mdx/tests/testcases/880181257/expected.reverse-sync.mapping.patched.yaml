@@ -93,19 +93,27 @@ blocks:
   type: list
   xhtml_element_index: 7
   xhtml_plain_text: QueryPie Agent 실행QueryPie Agent를 실행합니다.Database 항목에서 Custom Data
-    Source를 확인할 수 있습니다. Connection Guide 확인Agent에서 Custom Data Source 커넥션 행을 클릭하면
-    Port 정보를 담은 행이 보입니다.위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다. UID/PW는
-    수정할 수 없는 db username, db password로 표시됩니다.Privileges는 "-"로 표시됩니다.SQL Tool에서 접속DataGrip이나
-    기타 SQL Tool을 실행합니다.Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.벤더에 따라 추가
+    Source를 확인할 수 있습니다.Connection Guide 확인Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port
+    정보를 담은 행이 보입니다.위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.UID/PW는 수정할
+    수 없는 db username, db password로 표시됩니다.Privileges는 "-"로 표시됩니다.SQL Tool에서 접속DataGrip이나
+    기타 SQL Tool을 실행합니다.Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다. 벤더에 따라 추가
     정보를 입력합니다.
   xhtml_text: <ol start="1"><li><p><strong>QueryPie Agent 실행</strong></p><ul><li><p>QueryPie
-    Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다. <br/></p></li></ul></li><li><p><strong>Connection
+    Agent를 실행합니다.</p></li><li><p>Database 항목에서 Custom Data Source를 확인할 수 있습니다.</p><ac:image
+    ac:align="center" ac:custom-width="true" ac:layout="center" ac:original-height="550"
+    ac:original-width="400" ac:width="400"><ri:attachment ri:filename="Screenshot
+    2025-03-06 at 2.05.26 PM.png" ri:version-at-save="1"></ri:attachment></ac:image><p></p></li></ul></li><li><p><strong>Connection
     Guide 확인</strong></p><ul><li><p>Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port 정보를
-    담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.
-    <br/></p></li><li><p>UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는
-    "-"로 표시됩니다.</p></li></ul></li><li><p><strong>SQL Tool에서 접속</strong></p><ul><li><p>DataGrip이나
-    기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와 Port는 Connection Guide에 명시되어있는
-    정보를 입력해야 합니다.</strong></p></li><li><p>벤더에 따라 추가 정보를 입력합니다.</p></li></ul></li></ol>
+    담은 행이 보입니다.</p></li><li><p>위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.</p><ac:image
+    ac:align="center" ac:custom-width="true" ac:layout="center" ac:original-height="453"
+    ac:original-width="903" ac:width="712"><ri:attachment ri:filename="Screenshot
+    2025-03-06 at 2.08.11 PM.png" ri:version-at-save="1"></ri:attachment></ac:image><p></p></li><li><p>UID/PW는
+    수정할 수 없는 db username, db password로 표시됩니다.</p></li><li><p>Privileges는 "-"로 표시됩니다.</p></li></ul></li><li><p><strong>SQL
+    Tool에서 접속</strong></p><ul><li><p>DataGrip이나 기타 SQL Tool을 실행합니다.</p></li><li><p><strong>Host와
+    Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.</strong> </p></li><li><p>벤더에 따라 추가
+    정보를 입력합니다.</p><ac:image ac:align="center" ac:custom-width="true" ac:layout="center"
+    ac:original-height="680" ac:original-width="800" ac:width="712"><ri:attachment
+    ri:filename="Screenshot 2025-03-06 at 2.18.26 PM.png" ri:version-at-save="1"></ri:attachment></ac:image></li></ul></li></ol>
   xhtml_xpath: ol[2]
 - block_id: html_block-9
   children:
@@ -160,6 +168,6 @@ blocks:
     ac:layout="center" ac:original-height="763" ac:original-width="1512" ac:width="712"><ri:attachment
     ri:filename="Screenshot 2025-03-06 at 2.23.37 PM.png" ri:version-at-save="1"></ri:attachment></ac:image></li></ul></li></ol>
   xhtml_xpath: ol[3]
-created_at: '2026-02-23T07:36:27.462995+00:00'
+created_at: '2026-02-23T08:09:48.358444+00:00'
 page_id: '880181257'
 source_xhtml: patched.xhtml

@@ -1,5 +1,5 @@
 changes_count: 1
-created_at: '2026-02-23T07:36:27.462995+00:00'
+created_at: '2026-02-23T08:09:48.358444+00:00'
 mdx_diff_report: "--- tests/testcases/880181257/original.mdx+++ tests/testcases/880181257/improved.mdx@@\
   \ -45,7 +45,7 @@     * Privileges는 \"-\"로 표시됩니다.\n 3.  **SQL Tool에서 접속**\n     *\
   \ DataGrip이나 기타 SQL Tool을 실행합니다.\n-    *  **Host와 Port는 Connection Guide에 명시되어있는\
@@ -10,41 +10,9 @@ mdx_diff_report: "--- tests/testcases/880181257/original.mdx+++ tests/testcases/
 page_id: '880181257'
 status: pass
 verification:
-  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -32,24 +32,15\
-    \ @@ 1.  **QueryPie Agent 실행**\n     * QueryPie Agent를 실행합니다.\n     * Database\
-    \ 항목에서 Custom Data Source를 확인할 수 있습니다. <br/>\n-      <figure data-layout=\"center\"\
-    \ data-align=\"center\">\n-      <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png\"\
-    \ alt=\"Screenshot-2025-03-06-at-2.05.26-PM.png\" width=\"400\" />\n-      </figure>\n\
-    \ 2.  **Connection Guide 확인**\n     * Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port\
-    \ 정보를 담은 행이 보입니다.\n     * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.\
-    \ <br/>\n-      <figure data-layout=\"center\" data-align=\"center\">\n-     \
-    \ <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.08.11-PM.png\"\
-    \ alt=\"Screenshot-2025-03-06-at-2.08.11-PM.png\" width=\"712\" />\n-      </figure>\n\
-    \     * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.\n     * Privileges는\
-    \ \"-\"로 표시됩니다.\n 3.  **SQL Tool에서 접속**\n     * DataGrip이나 기타 SQL Tool을 실행합니다.\n\
-    \     *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.**\n     * 벤더에 따라\
-    \ 추가 정보를 입력합니다.\n-      <figure data-layout=\"center\" data-align=\"center\">\n\
-    -      <img src=\"/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png\"\
-    \ alt=\"Screenshot-2025-03-06-at-2.18.26-PM.png\" width=\"712\" />\n-      </figure>\n\
-    \ \n <Callout type=\"important\">\n **주의사항**\n"
+  diff_report: ''
   exact_match: true
-xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -129,12 +129,7\
-  \ @@\n    <li>\n     <p>\n      Database 항목에서 Custom Data Source를 확인할 수 있습니다.\n\
-  -    </p>\n-    <ac:image ac:align=\"center\" ac:custom-width=\"true\" ac:layout=\"\
-  center\" ac:original-height=\"550\" ac:original-width=\"400\" ac:width=\"400\">\n\
-  -     <ri:attachment ri:filename=\"Screenshot 2025-03-06 at 2.05.26 PM.png\" ri:version-at-save=\"\
-  1\">\n-     </ri:attachment>\n-    </ac:image>\n-    <p>\n+     <br/>\n     </p>\n\
-  \    </li>\n   </ul>\n@@ -154,12 +149,7 @@\n    <li>\n     <p>\n      위 행을 우클릭을\
-  \ 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다.\n-    </p>\n-    <ac:image ac:align=\"\
-  center\" ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"453\"\
-  \ ac:original-width=\"903\" ac:width=\"712\">\n-     <ri:attachment ri:filename=\"\
-  Screenshot 2025-03-06 at 2.08.11 PM.png\" ri:version-at-save=\"1\">\n-     </ri:attachment>\n\
-  -    </ac:image>\n-    <p>\n+     <br/>\n     </p>\n    </li>\n    <li>\n@@ -189,7\
-  \ +179,7 @@\n    <li>\n     <p>\n      <strong>\n-      Host와 Port는 Connection Guide에\
-  \ 명시되어있는 정보를 입력해야합니다.\n+      Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.\n\
-  \      </strong>\n     </p>\n    </li>\n@@ -197,10 +187,6 @@\n     <p>\n      벤더에\
-  \ 따라 추가 정보를 입력합니다.\n     </p>\n-    <ac:image ac:align=\"center\" ac:custom-width=\"\
-  true\" ac:layout=\"center\" ac:original-height=\"680\" ac:original-width=\"800\"\
-  \ ac:width=\"712\">\n-     <ri:attachment ri:filename=\"Screenshot 2025-03-06 at\
-  \ 2.18.26 PM.png\" ri:version-at-save=\"1\">\n-     </ri:attachment>\n-    </ac:image>\n\
-  \    </li>\n   </ul>\n  </li>"
+xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -189,7 +189,7\
+  \ @@\n    <li>\n     <p>\n      <strong>\n-      Host와 Port는 Connection Guide에 명시되어있는\
+  \ 정보를 입력해야합니다.\n+      Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야 합니다.\n    \
+  \  </strong>\n     </p>\n    </li>"

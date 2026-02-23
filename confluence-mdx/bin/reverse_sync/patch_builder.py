@@ -170,6 +170,10 @@ def _resolve_mapping_for_change(
             if change.old_block.type == 'list':
                 return ('list', mapping)
 
+    # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
+    if change.old_block.type == 'list':
+        return ('list', mapping)
+
     return ('direct', mapping)
 
 
