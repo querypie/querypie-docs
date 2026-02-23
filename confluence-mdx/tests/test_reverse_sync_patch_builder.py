@@ -782,6 +782,19 @@ class TestFlushContainingChanges:
         patches = _flush_containing_changes(cc)
         assert len(patches) == 2
 
+    def test_inline_change_in_containing_still_uses_text_patch(self):
+        """containing block에서는 inline 변경이 있어도 text patch를 유지한다."""
+        m = _make_mapping('m1', 'use command and url', xpath='p[1]')
+        containing_changes = {
+            'm1': (m, [
+                ('use command and url', 'use command and url'),
+            ]),
+        }
+        patches = _flush_containing_changes(containing_changes)
+        assert len(patches) == 1
+        assert 'new_plain_text' in patches[0]
+        assert 'new_inner_xhtml' not in patches[0]
+
 
 # ── _resolve_mapping_for_change ──
 
