@@ -617,6 +617,32 @@ class MultiLineParser:
 
         return True
 
+    @staticmethod
+    def _is_trailing_empty_p(node):
+        """Check if node is a top-level trailing empty <p>/<div>.
+
+        Only applies to empty <p> at the document root level (parent is [document]),
+        not inside nested containers like expand macros. By skipping the separator
+        before these elements, we get a 1:1 mapping: N trailing empty <p> → N trailing
+        blank lines in MDX.
+        """
+        if node.name not in ('p', 'div'):
+            return False
+        if node.get_text(strip=True):
+            return False
+        # Only apply at top-level document context
+        if node.parent.name != '[document]':
+            return False
+        # Check all subsequent siblings – if any is a non-empty block element, not trailing
+        for sibling in node.next_siblings:
+            if isinstance(sibling, NavigableString):
+                if sibling.strip():
+                    return False
+            else:
+                if sibling.get_text(strip=True):
+                    return False
+        return True
+
     def append_empty_line_unless_first_child(self, node):
         # Convert generator to list to check length
         children_list = list(node.parent.children)
@@ -708,7 +734,10 @@ class MultiLineParser:
                 self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(TableToHtmlTable(node, collector=self.collector).as_markdown)
         elif node.name in ['p', 'div']:
-            self.append_empty_line_unless_first_child(node)
+            # Skip separator for trailing empty <p>/<div> to get 1:1 mapping
+            # between trailing empty elements and trailing blank lines in MDX
+            if not self._is_trailing_empty_p(node):
+                self.append_empty_line_unless_first_child(node)
             child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):

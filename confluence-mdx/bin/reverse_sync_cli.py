@@ -29,7 +29,7 @@ from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
-from reverse_sync.patch_builder import build_patches
+from reverse_sync.patch_builder import build_patches, build_trailing_blank_delete_patches
 from xhtml_beautify_diff import xhtml_diff
 
 
@@ -290,6 +290,9 @@ def run_verify(
     patches = build_patches(changes, original_blocks, improved_blocks,
                             original_mappings, mdx_to_sidecar, xpath_to_mapping,
                             alignment, page_lost_info=page_lost_info)
+    # Trailing 빈 줄 삭제에 대한 XHTML empty 요소 삭제 패치 추가
+    patches.extend(build_trailing_blank_delete_patches(
+        original_blocks, improved_blocks, sidecar_entries))
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
