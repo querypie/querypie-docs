@@ -453,6 +453,46 @@ class TestBuildPatches:
 
         assert patches == []
 
+    # Inline format 변경 → new_inner_xhtml 패치 생성
+    def test_direct_inline_code_added_generates_inner_xhtml(self):
+        """paragraph에서 backtick이 추가되면 new_inner_xhtml 패치를 생성한다."""
+        m1 = _make_mapping('m1', 'QueryPie는 https://example.com/과 같은 URL', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            'QueryPie는 https://example.com/과 같은 URL',
+            'QueryPie는 `https://example.com/`과 같은 URL',
+        )
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert '<code>https://example.com/</code>' in patches[0]['new_inner_xhtml']
+        assert 'new_plain_text' not in patches[0]
+
+    def test_direct_text_only_change_uses_plain_text_patch(self):
+        """inline format 변경 없이 텍스트만 바뀌면 기존 text patch를 사용한다."""
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_plain_text' in patches[0]
+        assert 'new_inner_xhtml' not in patches[0]
+
     # 여러 변경이 동일 containing block에 그룹화
     def test_multiple_changes_grouped_to_containing(self):
         container = _make_mapping(

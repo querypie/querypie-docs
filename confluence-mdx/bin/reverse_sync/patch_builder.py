@@ -13,7 +13,7 @@ from text_utils import (
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
 from reverse_sync.lost_info_patcher import apply_lost_info
-from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
 
 
 # ── Inline format 변경 감지 ──
@@ -264,15 +264,27 @@ def build_patches(
 
         # strategy == 'direct'
         _mark_used(mapping.block_id, mapping)
-        if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
-            new_plain = transfer_text_changes(
-                old_plain, new_plain, mapping.xhtml_plain_text)
 
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': new_plain,
-        })
+        # inline 포맷 변경 감지 → new_inner_xhtml 패치
+        if has_inline_format_change(
+                change.old_block.content, change.new_block.content):
+            new_inner = mdx_block_to_inner_xhtml(
+                change.new_block.content, change.new_block.type)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_inner_xhtml': new_inner,
+            })
+        else:
+            if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
+                new_plain = transfer_text_changes(
+                    old_plain, new_plain, mapping.xhtml_plain_text)
+
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': new_plain,
+            })
 
     # 상위 블록에 대한 그룹화된 변경 적용
     patches.extend(_flush_containing_changes(containing_changes, used_ids))
