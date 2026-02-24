@@ -38,13 +38,13 @@ QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 �
 1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집 으로 이동합니다.
 2. 애플리케이션 내 사용자 속성과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
 
-|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
-| --------------------- | ------------------------------------------------ | ------------ |
-| Subject               | $`{user:email}`                                  | emailAddress |
-| firstName             | $`{user:givenName}`                              | basic        |
-| lastName              | $`{user:familyName}`                             | basic        |
-| loginId               | $`{user:email}`                                  | basic        |
-| email                 | $`{user:email}`                                  | basic        |
+| **애플리케이션 내 사용자 속성** | **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑** | **형식**       |
+| ------------------- | ---------------------------------------------- | ------------ |
+| Subject             | $`{user:email}`                                | emailAddress |
+| firstName           | $`{user:givenName}`                            | basic        |
+| lastName            | $`{user:familyName}`                           | basic        |
+| loginId             | $`{user:email}`                                | basic        |
+| email               | $`{user:email}`                                | basic        |
 
 `변경 사항 저장` 버튼을 클릭하여 저장합니다.
 
@@ -58,7 +58,7 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 </figure>
 
 1. Administrator &gt; General &gt; User Management &gt; Authentication 메뉴로 이동합니다.
-2. 인증 Type 항목에서  **SAML** 을 선택합니다.
+2. 인증 Type 항목에서 **SAML**을 선택합니다.
 3. 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드합니다.
 4. 다운로드 받은 XML 정보를 Identity Provider Metadata 항목에 붙여넣기합니다.
 5. `Save Changes` 버튼을 클릭하여 저장합니다.

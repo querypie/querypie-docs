@@ -22,7 +22,7 @@ QueryPie WAC은 다른 QueryPie 제품들과 마찬가지로 RBAC(Role-Based Acc
 
 <Callout type="important">
 **주의**
-역할에 포함된 정책을 모두 통합하였을 때,  **최소 1개의 허용 정책** 이 남아있어야 합니다.<br/>차단 정책만으로 구성된 역할은 아무런 앱 권한도 부여하지 않으므로 정상적인 사용이 불가합니다.
+역할에 포함된 정책을 모두 통합하였을 때, **최소 1개의 허용 정책**이 남아있어야 합니다.<br/>차단 정책만으로 구성된 역할은 아무런 앱 권한도 부여하지 않으므로 정상적인 사용이 불가합니다.
 </Callout>
 
 ## WAC YAML 정책의 기본 구조
@@ -195,7 +195,7 @@ QueryPie에 정의한 웹앱 리소스명을 입력합니다.
 정책을 적용하려는 특정 웹앱 리소스의 하위 경로를 특정합니다.
 
 1. Admin &gt; Web App 에 등록된 하위 경로만 등록이 가능합니다.
-2. Base URL을 포함하여, 웹 앱에 존재하는  **모든**  하위 경로에 대해 허용 또는 거부하는 방법은 다음과 같습니다.
+2. Base URL을 포함하여, 웹 앱에 존재하는 **모든** 하위 경로에 대해 허용 또는 거부하는 방법은 다음과 같습니다.
     * urlPaths 행을 작성하지 않습니다.
         * 예: QueryPie Web Admin 의 전체 경로에 대해 접근 허용
           ```
@@ -226,7 +226,7 @@ QueryPie에 정의한 웹앱 리소스명을 입력합니다.
                     - "/kubernetes-settings"
           ```
     * 하위 경로와 이에 포함된 세부 경로를 동시에 입력할 수 없습니다.
-        * 예: QueryPie Web Admin 의 `/general-settings` 와 `/general-settings/user-management` 를  **동시에 입력 불가**
+        * 예: QueryPie Web Admin 의 `/general-settings` 와 `/general-settings/user-management` 를 **동시에 입력 불가**
           ```
           spec:
             allow:
@@ -245,7 +245,7 @@ urlPaths에 특정 하위 경로를 입력하려면 Web App 상세 정보에서 
 1. 와일드카드 또는 정규표현식은 지원되지 않습니다.
     * `"/*-settings"` (X)
     * `"^/database-settings/policies/data-.*$"` (X)
-2. 동일한 리소스(및 하위 경로)에 대하여 차단 정책과 허용 정책이 중첩되는 경우,  **차단 정책이 우선** 입니다.
+2. 동일한 리소스(및 하위 경로)에 대하여 차단 정책과 허용 정책이 중첩되는 경우, **차단 정책이 우선**입니다.
 
 ### Conditions <Badge color="green">OPTIONAL</Badge>
 
@@ -275,7 +275,7 @@ Web App의 Path Management에서 부여된 태그를 기준으로 규칙에 의�
             "type": "general"
           ```
 2. `resources[].urlPaths` 와 연계되어 동작합니다.
-    *  **웹앱 리소스의 대상 urlPath가 명시되지 않은 경우**
+    * **웹앱 리소스의 대상 urlPath가 명시되지 않은 경우**
         * 등록된 전체 하위 경로 중 urlPathTag가 있는 경로를 모두 허용합니다.
         * 예: Web App “QueryPie Web Admin” 에 대해, Path Management에 등록된 전체 하위 경로 중 `access: admin` 태그가 부여된 경로에 한하여 접근 허용
           ```
@@ -288,7 +288,7 @@ Web App의 Path Management에서 부여된 태그를 기준으로 규칙에 의�
                 urlPathTags:
                   "access": "admin"
           ```
-    *  **웹앱 리소스의 대상 urlPath가 명시된 경우**
+    * **웹앱 리소스의 대상 urlPath가 명시된 경우**
         * 명시된 경로들 중 urlPathTag가 있는 경로만을 허용합니다.
         * 예: Web App “QueryPie Web Admin” 에 대해, `resources[].urlPaths` 에 명시된 두 경로 중 Path Management에서 `access: admin` 태그가 부여된 경로에 한하여 접근 허용
           ```
@@ -303,7 +303,7 @@ Web App의 Path Management에서 부여된 태그를 기준으로 규칙에 의�
                 urlPathTags:
                   "access": "admin"
           ```
-    *  **웹앱 리소스의 대상 urlPath가 명시되었으나 범위 내에서 매칭되는 urlPathTag가 없는 경우**
+    * **웹앱 리소스의 대상 urlPath가 명시되었으나 범위 내에서 매칭되는 urlPathTag가 없는 경우**
         * 조건에 일치하는 urlPath가 존재하지 않으므로, 어떠한 경로도 허용하지 않습니다.
 
 #### userAttributes <Badge color="green">OPTIONAL</Badge>
@@ -376,7 +376,7 @@ ipAddresses: ["10.10.0.0/24", "10.11.10.1"]
 <Callout type="important">
 **주의**
 
-일부 허용 패턴을 사용하는 경우, 정상적인 웹 사이트 사용을 위해  **반드시 진입이 필요한 랜딩 페이지** 들을 별도 정책으로 구성하고, 역할에 넣어주어야 합니다.
+일부 허용 패턴을 사용하는 경우, 정상적인 웹 사이트 사용을 위해 **반드시 진입이 필요한 랜딩 페이지**들을 별도 정책으로 구성하고, 역할에 넣어주어야 합니다.
 
 * 예: 로그인 페이지, 리다이렉트 페이지 등
 </Callout>

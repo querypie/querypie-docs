@@ -45,7 +45,7 @@ setup.v2.sh 는 제품의 설치 외에도 다른 주요 기능을 제공합니�
 
 ### Compose 설정과 환경설정의 차이
 
-|  **Topic**        |  **setup.sh**                                              |  **setup.v2.sh**                                   |
+| **Topic**         | **setup.sh**                                               | **setup.v2.sh**                                    |
 | ----------------- | ---------------------------------------------------------- | -------------------------------------------------- |
 | Image Registry    | `harbor.chequer.io/querypie/`                              | `docker.io/querypie/`                              |
 | 환경변수 설정파일         | `compose-env`                                              | `.env`                                             |
@@ -63,8 +63,8 @@ MySQL Data Dir 의 경로가 변경되면서, 다음의 장점이 생깁니다.
 
 두 가지 유의사항이 있습니다.
 
-* setup.sh 는 기존 QueryPie MySQL Container 를 최초 설치 버전의 경로에서 작동하는 MySQL Container 로 유지해야 합니다. setup.v2.sh 는  **현재 설치 버전의 경로에서 MySQL Container 를 실행** 합니다.
-* setup.sh 로 제품을 이미 설치한 서버에 setup.v2.sh 를 이용해 새로운 버전을 설치할 수 있습니다. 그러나 MySQL Data Dir 변경에 따라  **기존 데이터가 자동으로 이관되지 않습니다** . 새로운 설치, 업그레이드 등 목적에 따라 설치 담당자가 MySQL Data 디렉토리를 적절히 이동해야 합니다.
+* setup.sh 는 기존 QueryPie MySQL Container 를 최초 설치 버전의 경로에서 작동하는 MySQL Container 로 유지해야 합니다. setup.v2.sh 는 **현재 설치 버전의 경로에서 MySQL Container 를 실행**합니다.
+* setup.sh 로 제품을 이미 설치한 서버에 setup.v2.sh 를 이용해 새로운 버전을 설치할 수 있습니다. 그러나 MySQL Data Dir 변경에 따라 **기존 데이터가 자동으로 이관되지 않습니다**. 새로운 설치, 업그레이드 등 목적에 따라 설치 담당자가 MySQL Data 디렉토리를 적절히 이동해야 합니다.
 
 
 ### Rootless Mode 지원

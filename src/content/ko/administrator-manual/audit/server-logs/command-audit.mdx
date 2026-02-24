@@ -24,20 +24,20 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 * Administrator &gt; Audit &gt; Servers &gt; Command Audit 메뉴로 이동합니다.
 * 접속일 기준으로 로그가 내림차순으로 조회됩니다.
 * 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
-    *  **Name**  : 사용자 이름
-    *  **Server Name**  : 접속 서버 명
-    *  **Command**  : 실행한 명령어
-    *  **Role**  : 접속 Role
+    * **Name** : 사용자 이름
+    * **Server Name** : 접속 서버 명
+    * **Command** : 실행한 명령어
+    * **Role** : 접속 Role
 * 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/server-logs/command-audit/image-20240728-171533.png" alt="image-20240728-171533.png" width="671" />
   </figure>
-    *  **Server OS**  : 접속한 서버의 OS
-    *  **Protocol** : 접속 시 사용한 Protocol
-    *  **Executed From** : 접속 방식
+    * **Server OS** : 접속한 서버의 OS
+    * **Protocol**: 접속 시 사용한 Protocol
+    * **Executed From**: 접속 방식
         * web : QueryPie Web을 통한 접속
         * proxy : Agent 또는 Seamless SSH Connection을 통한 접속
-    *  **Action Type** : 기록된 이벤트 타입
+    * **Action Type**: 기록된 이벤트 타입
         * Command : 로그에 기록된 명령어
         * File Download : (SFTP) 파일 다운로드
         * File Upload : (SFTP) 파일 업로드
@@ -46,8 +46,8 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
         * User Input - MouseClick : (RDP) 사용자 마우스 클릭
         * User Input - MouseDoubleClick : (RDP) 사용자 마우스 더블클릭
         * User Input - KeyPress : (RDP) 사용자 키보드 입력
-    *  **Executed At**  : 명령어 수행 시점
-    *  **Restricted**  : 명령어 차단 여부
+    * **Executed At** : 명령어 수행 시점
+    * **Restricted** : 명령어 차단 여부
 
 <Callout type="info">
 11.3.0에서 필터를 사용할 때 Action Type의 항목을 다중으로 선택할 수 있도록 변경되었습니다.
@@ -61,26 +61,26 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit
 
 * 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
 * 테이블에서 이하의 컬럼 정보를 제공합니다:
-    *  **No**  : 이벤트 식별 번호
-    *  **Executed At**  : 명령어 수행 시점
-    *  **Name**  : 대상 사용자 이름
-    *  **Email**  : 대상 사용자 이메일
-    *  **Role**  : 대상 사용자 접속 시 사용된 Role명
-    *  **Account**  : 서버 접속 Account
-    *  **Command**  : 실행한 명령어
-    *  **Restricted**  : 명령어 차단 여부
+    * **No** : 이벤트 식별 번호
+    * **Executed At** : 명령어 수행 시점
+    * **Name** : 대상 사용자 이름
+    * **Email** : 대상 사용자 이메일
+    * **Role** : 대상 사용자 접속 시 사용된 Role명
+    * **Account** : 서버 접속 Account
+    * **Command** : 실행한 명령어
+    * **Restricted** : 명령어 차단 여부
         * Not Restricted
         * Restricted
-    *  **Restricted Command**  : 차단된 명령어
-    *  **Server Name**  : 대상 서버명
-    *  **Server OS**  : 접속한 서버의 OS
-    *  **Host**  : 접속한 서버의 호스트
-    *  **Port**  : 접속 시 사용된 포트
-    *  **Protocol** : 접속 시 사용한 Protocol
-    *  **Client IP**  : 사용자 클라이언트 IP 주소
-    *  **Client**   **Name**  : 사용자의 접속 방식
-    *  **Action Type** : 기록된 이벤트 타입
-    *  **Message**  : 접속 실패 등 특이사항에 대한 기록
+    * **Restricted Command** : 차단된 명령어
+    * **Server Name** : 대상 서버명
+    * **Server OS** : 접속한 서버의 OS
+    * **Host** : 접속한 서버의 호스트
+    * **Port** : 접속 시 사용된 포트
+    * **Protocol**: 접속 시 사용한 Protocol
+    * **Client IP** : 사용자 클라이언트 IP 주소
+    * **Client** **Name** : 사용자의 접속 방식
+    * **Action Type**: 기록된 이벤트 타입
+    * **Message** : 접속 실패 등 특이사항에 대한 기록
 
 ### Command Audit 상세 내역 조회하기
 
@@ -95,25 +95,25 @@ Administrator &gt; Audit &gt; Servers &gt; Command Audit &gt; Command Audit Deta
 </figure>
 
 * 우측 드로워에는 이하의 정보를 노출합니다:
-    *  **Name**  : 대상 사용자 이름
-    *  **Action Type** : 기록된 이벤트 타입
-    *  **Executed At**  : 명령어 수행 시점
-    *  **Executed From** : 접속 방식
-    *  **Server Access History** : 해당 세션의 접속 로그
-    *  **Session Log**  : 이 명령어를 수행한 세션 레코딩 조회
-    *  **Server Name**  : 대상 서버명
-    *  **Server OS**  : 접속한 서버의 OS
-    *  **Host**  : 접속한 서버의 호스트
-    *  **Port**  : 접속 시 사용된 포트
-    *  **Account**  : 서버 접속 Account
-    *  **Protocol** : 접속 시 사용한 Protocol
-    *  **Client**   **Name**  : 사용자의 접속 방식
-    *  **Client IP**  : 사용자 클라이언트 IP 주소
-    *  **Restricted**  : 명령어 차단 여부
-    *  **Restricted Command**  : 차단된 명령어
-    *  **Detected Type :** 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)
-    *  **Command**  : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)
-    *  **Result**  : 명령어 수행 결과
+    * **Name** : 대상 사용자 이름
+    * **Action Type**: 기록된 이벤트 타입
+    * **Executed At** : 명령어 수행 시점
+    * **Executed From**: 접속 방식
+    * **Server Access History**: 해당 세션의 접속 로그
+    * **Session Log** : 이 명령어를 수행한 세션 레코딩 조회
+    * **Server Name** : 대상 서버명
+    * **Server OS** : 접속한 서버의 OS
+    * **Host** : 접속한 서버의 호스트
+    * **Port** : 접속 시 사용된 포트
+    * **Account** : 서버 접속 Account
+    * **Protocol**: 접속 시 사용한 Protocol
+    * **Client** **Name** : 사용자의 접속 방식
+    * **Client IP** : 사용자 클라이언트 IP 주소
+    * **Restricted** : 명령어 차단 여부
+    * **Restricted Command** : 차단된 명령어
+    * **Detected Type :** 탐지된 차단 명령어의 실행 방식(Shell Script 또는 Alias)
+    * **Command** : 사용자 입력 명령어(RDP의 경우 프로세스 명 혹은 클릭 좌표 등)
+    * **Result** : 명령어 수행 결과
 
 
 <Callout type="important">

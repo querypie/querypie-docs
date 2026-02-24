@@ -19,9 +19,9 @@ ______
 
 * API Key HTTP Header name이 변경되었습니다
 
-|                             |  **변경 전**            |  **변경 후**     |
-| --------------------------- | -------------------- | ------------- |
-|  **Header Parameter name**  | X-QueryPie-Api-Token | Authorization |
+|                           | **변경 전**             | **변경 후**      |
+| ------------------------- | -------------------- | ------------- |
+| **Header Parameter name** | X-QueryPie-Api-Token | Authorization |
 
 
 ______
@@ -49,8 +49,8 @@ ______
 **(GET) List**
 </th>
 <td>
-* 각 Alert의  **모든 정보** 를 반환 <br/>→ 각 Alert의  **간단한 정보** 를 반환하도록 변경되었습니다.
-* 각 Alert Type별로 Alert의 자세한 정보를 반환하는  **Detail API가 추가** 되었습니다.
+* 각 Alert의 **모든 정보**를 반환 <br/>→ 각 Alert의 **간단한 정보**를 반환하도록 변경되었습니다.
+* 각 Alert Type별로 Alert의 자세한 정보를 반환하는 **Detail API가 추가**되었습니다.
 </td>
 </tr>
 <tr>
@@ -58,7 +58,7 @@ ______
 **(POST) Create**
 </th>
 <td>
-*  **하나의 API** 로 모든 Type의 Alert를 생성 가능 <br/>→ 각 Alert Type별로  **생성 API가 분리** 되었습니다.
+* **하나의 API**로 모든 Type의 Alert를 생성 가능 <br/>→ 각 Alert Type별로 **생성 API가 분리**되었습니다.
 * 기존 Create API 삭제되었습니다.
 </td>
 </tr>
@@ -67,7 +67,7 @@ ______
 **(PUT) Update**
 </th>
 <td>
-*  **하나의 API** 로 모든 Type의 Alert를 수정 가능 <br/>→ 각 Alert Type별로  **수정 API를 분리** 했습니다.
+* **하나의 API**로 모든 Type의 Alert를 수정 가능 <br/>→ 각 Alert Type별로 **수정 API를 분리**했습니다.
 * 기존 Update API 삭제되었습니다.
 </td>
 </tr>
@@ -249,7 +249,7 @@ ______
 ##### Request
 
 * Query Parameter
-*  **RequestType**  이 `SQL`, `ACCESS` → `SQL`, `EXPORT`, `ACCESS` 로 `EXPORT` **가 추가** 되었습니다.
+* **RequestType** 이 `SQL`, `ACCESS` → `SQL`, `EXPORT`, `ACCESS` 로 `EXPORT`**가 추가**되었습니다.
 
 ##### Response
 
@@ -296,24 +296,24 @@ ______
 * sqlFullText
 </td>
 <td>
-*  **cursor**
-*  **count**
+* **cursor**
+* **count**
 * actionType
 * clusterGroupId
 * clusterId
 * startDate
 * endDate
-*  **databaseType**
+* **databaseType**
 * sqlFullText
 </td>
 </tr>
 </tbody>
 </table>
 
-* cursor 는 Response 의  **nextCursor** 를  **그대로**  쓰면 됩니다. 첫 호출이라면 비워놓습니다.
-    * /api/docs 에 나와있는 내용은  **잘못된 내용** 으로 이후 버전에서 수정 예정입니다.
-*  **count** 는 기존 pageSize 와 동일하며,  **max**  값은  **100** 입니다.
-*  **databaseType**  에 `Redis` 가  **추가** 되었습니다.
+* cursor 는 Response 의 **nextCursor**를 **그대로** 쓰면 됩니다. 첫 호출이라면 비워놓습니다.
+    * /api/docs 에 나와있는 내용은 **잘못된 내용**으로 이후 버전에서 수정 예정입니다.
+* **count**는 기존 pageSize 와 동일하며, **max** 값은 **100**입니다.
+* **databaseType** 에 `Redis` 가 **추가**되었습니다.
 
 ##### Response
 
@@ -375,12 +375,12 @@ ______
 </tbody>
 </table>
 
-* hasNext 필드가  **추가** 되었습니다.  **Response 이후 다음 데이터가 있는지** 를 나타냅니다.
-*  **execResult** 가 **Deprecated**  되었습니다. 이후 버전에서 삭제됩니다.
-*  **page**  필드가  **사라지고**   **nextCursor**  가  **추가** 되었습니다.
-    * Request 의 startDate 와 endDate 사이에서 현재 Response 의 list 중  **가장 마지막 요소의 executedAt**  을 의미합니다.
-    * Request 의 cursor 에 해당 값을 넣으면  **해당 시간부터 이어서**  데이터를 가져옵니다. (startDate, endDate 는 변경하지 않아도 됩니다.)
-    * /api/docs 에 나와있는 내용은  **잘못된 내용** 으로 이후 버전에서 수정 예정입니다.
+* hasNext 필드가 **추가**되었습니다. **Response 이후 다음 데이터가 있는지**를 나타냅니다.
+* **execResult**가**Deprecated** 되었습니다. 이후 버전에서 삭제됩니다.
+* **page** 필드가 **사라지고** **nextCursor** 가 **추가**되었습니다.
+    * Request 의 startDate 와 endDate 사이에서 현재 Response 의 list 중 **가장 마지막 요소의 executedAt** 을 의미합니다.
+    * Request 의 cursor 에 해당 값을 넣으면 **해당 시간부터 이어서** 데이터를 가져옵니다. (startDate, endDate 는 변경하지 않아도 됩니다.)
+    * /api/docs 에 나와있는 내용은 **잘못된 내용**으로 이후 버전에서 수정 예정입니다.
 
 #### <br/>(GET) Detail
 
@@ -434,7 +434,7 @@ ______
 </tbody>
 </table>
 
-*  **execResult** 가 **Deprecated**  되었습니다. 이후 버전에서 삭제됩니다.
+* **execResult**가**Deprecated** 되었습니다. 이후 버전에서 삭제됩니다.
 
 
 #### (GET) Detail
@@ -490,7 +490,7 @@ ______
 </tbody>
 </table>
 
-*  **execResult** 가 **Deprecated**  되었습니다. 이후 버전에서 삭제됩니다.
+* **execResult**가**Deprecated** 되었습니다. 이후 버전에서 삭제됩니다.
 
 
 
@@ -535,21 +535,21 @@ ______
 <td>
 * pageNumber
 * pageSize
-*  **actionType**
+* **actionType**
 * clusterGroupId
 * clusterId
 * startDate
 * endDate
-*  **databaseType**
+* **databaseType**
 * sqlFullText
 </td>
 </tr>
 </tbody>
 </table>
 
-*  **actionType**  에서 `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` 이  **제거** 되었습니다.
+* **actionType** 에서 `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` 이 **제거**되었습니다.
     *  `CONNECT`, `DISCONNECT` 만 사용합니다.
-*  **databaseType**  에 `Redis`가  **추가** 되었습니다.
+* **databaseType** 에 `Redis`가 **추가**되었습니다.
 
 ##### Response
 
@@ -567,7 +567,7 @@ ______
 
 ##### Request & Response
 
-*  **actionType**  에서 `CONNECT`, `DISCONNECT`이  **제거** 되었습니다.
+* **actionType** 에서 `CONNECT`, `DISCONNECT`이 **제거**되었습니다.
     *  `LOGIN`, `LOGOUT`, `LOCKED`, `EXPIRED`, `LOCKED_MANUALLY`, `UNLOCK` 만 사용합니다.
 
 
@@ -640,8 +640,8 @@ ______
 </tbody>
 </table>
 
-*  **synchronizableDatabaseTypes**  가  **추가** 되었습니다.
-    *  **싱크하고자 하는 데이터베이스의 타입**  (벤더)를 출력하는 필드입니다.
+* **synchronizableDatabaseTypes** 가 **추가**되었습니다.
+    * **싱크하고자 하는 데이터베이스의 타입** (벤더)를 출력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
 
@@ -692,8 +692,8 @@ ______
 </tbody>
 </table>
 
-*  **synchronizableDatabaseTypes**  가  **추가** 되었습니다.
-    *  **싱크하고자 하는 데이터베이스의 타입**  (벤더)를 입력하는 필드입니다.
+* **synchronizableDatabaseTypes** 가 **추가**되었습니다.
+    * **싱크하고자 하는 데이터베이스의 타입** (벤더)를 입력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
 ##### Response
@@ -739,8 +739,8 @@ ______
 </tbody>
 </table>
 
-*  **synchronizableDatabaseTypes**  가  **추가** 되었습니다.
-    *  **싱크하고자 하는 데이터베이스의 타입**  (벤더) 를 출력하는 필드입니다.
+* **synchronizableDatabaseTypes** 가 **추가**되었습니다.
+    * **싱크하고자 하는 데이터베이스의 타입** (벤더) 를 출력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`<br/>
 
 #### (PUT) Update Cloud Provider
@@ -795,8 +795,8 @@ ______
 </tbody>
 </table>
 
-*  **synchronizableDatabaseTypes**  가  **추가** 되었습니다.
-    *  **싱크하고자 하는 데이터베이스의 타입**  (벤더)를 입력하는 필드입니다.
+* **synchronizableDatabaseTypes** 가 **추가**되었습니다.
+    * **싱크하고자 하는 데이터베이스의 타입** (벤더)를 입력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
 ##### Response
@@ -842,8 +842,8 @@ ______
 </tbody>
 </table>
 
-*  **synchronizableDatabaseTypes**  가  **추가** 되었습니다.
-    *  **싱크하고자 하는 데이터베이스의 타입**  (벤더) 를 출력하는 필드입니다.
+* **synchronizableDatabaseTypes** 가 **추가**되었습니다.
+    * **싱크하고자 하는 데이터베이스의 타입** (벤더) 를 출력하는 필드입니다.
     * `AURORA_MY_SQL`, `AURORA_POSTGRESQL`, `MY_SQL`, `POSTGRESQL`, `MARIA_DB`, `ORACLE`, `SQL_SERVER`, `DYNAMO_DB`, `DOCUMENT_DB`, `REDSHIFT`, `ATHENA`
 
 
@@ -912,7 +912,7 @@ ______
 </tbody>
 </table>
 
-*  **privilegeVendor** 가  **추가** 되었습니다.
+* **privilegeVendor**가 **추가**되었습니다.
     * `SQL`, `REDIS`
 
 #### (POST) Create Role
@@ -959,7 +959,7 @@ ______
 </tbody>
 </table>
 
-*  **privilegeVendor** 가  **추가** 되었습니다.
+* **privilegeVendor**가 **추가**되었습니다.
     * `SQL`, `REDIS`
 
 #### (PUT) Update Role
@@ -1006,7 +1006,7 @@ ______
 </tbody>
 </table>
 
-*  **privilegeVendor** 가  **추가** 되었습니다.
+* **privilegeVendor**가 **추가**되었습니다.
     * `SQL`, `REDIS`
 
 
@@ -1152,16 +1152,16 @@ ______
 </tbody>
 </table>
 
-*  **dbUserInfo**  가  **삭제** 되었습니다.  **userMultipleAccount**  가  **삭제** 되었습니다.
+* **dbUserInfo** 가 **삭제**되었습니다. **userMultipleAccount** 가 **삭제**되었습니다.
     * 이 필드의 내용은 connectionAccount를 통해 전달됩니다.<br/>
-*  **connectionAccount** 가  **추가** 되었습니다.
-    * 커넥션의  **account**   **정보** 를 전달하는 필드입니다.
-    *  **type** 은 account 의  **타입** 을 의미합니다.
+* **connectionAccount**가 **추가**되었습니다.
+    * 커넥션의 **account** **정보**를 전달하는 필드입니다.
+    * **type**은 account 의 **타입**을 의미합니다.
         * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
-    *  **useMultipleAccount**  는  **멀티 어카운트** 를 사용하는지에 대한  **boolean**  값입니다.
-    *  **KerberosProtocols**  는  **커버로스 어카운트**  정보를 전달하는 필드입니다.
-        * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.**
-    *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
+    * **useMultipleAccount** 는 **멀티 어카운트**를 사용하는지에 대한 **boolean** 값입니다.
+    * **KerberosProtocols** 는 **커버로스 어카운트** 정보를 전달하는 필드입니다.
+        * 커버로스 어카운트는 **proxy** **어카운트**를 **지원하지 않습니다.**
+    * **usernamePasswords** 는 **usernamePassword** **어카운트** 정보를 전달하는 필드입니다.
 
 
 #### (POST) Create Cluster Group
@@ -1275,16 +1275,16 @@ ______
 </tbody>
 </table>
 
-*  **dbUserInfo**  가  **삭제** 되었습니다.  **userMultipleAccount**  가  **삭제** 되었습니다.
+* **dbUserInfo** 가 **삭제**되었습니다. **userMultipleAccount** 가 **삭제**되었습니다.
     * 이 필드의 내용은 connectionAccount를 통해 전달됩니다.<br/>
-*  **connectionAccount** 가  **추가** 되었습니다.
-    * 커넥션의  **account**   **정보** 를 전달하는 필드입니다.
-    *  **type** 은 account 의  **타입** 을 의미합니다.
+* **connectionAccount**가 **추가**되었습니다.
+    * 커넥션의 **account** **정보**를 전달하는 필드입니다.
+    * **type**은 account 의 **타입**을 의미합니다.
         * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
-    *  **useMultipleAccount**  는  **멀티 어카운트** 를 사용하는지에 대한  **boolean**  값입니다.
-    *  **KerberosProtocols**  는  **커버로스 어카운트**  정보를 전달하는 필드입니다.
-        * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.**
-    *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
+    * **useMultipleAccount** 는 **멀티 어카운트**를 사용하는지에 대한 **boolean** 값입니다.
+    * **KerberosProtocols** 는 **커버로스 어카운트** 정보를 전달하는 필드입니다.
+        * 커버로스 어카운트는 **proxy** **어카운트**를 **지원하지 않습니다.**
+    * **usernamePasswords** 는 **usernamePassword** **어카운트** 정보를 전달하는 필드입니다.
 
 ##### Response
 
@@ -1401,16 +1401,16 @@ ______
 </tbody>
 </table>
 
-*  **dbUserInfo**  가  **삭제** 되었습니다.  **userMultipleAccount**  가  **삭제** 되었습니다.
+* **dbUserInfo** 가 **삭제**되었습니다. **userMultipleAccount** 가 **삭제**되었습니다.
     * 이 필드의 내용은 connectionAccount를 통해 전달됩니다.<br/>
-*  **connectionAccount** 가  **추가** 되었습니다.
-    * 커넥션의  **account**   **정보** 를 전달하는 필드입니다.
-    *  **type** 은 account 의  **타입** 을 의미합니다.
+* **connectionAccount**가 **추가**되었습니다.
+    * 커넥션의 **account** **정보**를 전달하는 필드입니다.
+    * **type**은 account 의 **타입**을 의미합니다.
         * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
-    *  **useMultipleAccount**  는  **멀티 어카운트** 를 사용하는지에 대한  **boolean**  값입니다.
-    *  **KerberosProtocols**  는  **커버로스 어카운트**  정보를 전달하는 필드입니다.
-        * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.**
-    *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
+    * **useMultipleAccount** 는 **멀티 어카운트**를 사용하는지에 대한 **boolean** 값입니다.
+    * **KerberosProtocols** 는 **커버로스 어카운트** 정보를 전달하는 필드입니다.
+        * 커버로스 어카운트는 **proxy** **어카운트**를 **지원하지 않습니다.**
+    * **usernamePasswords** 는 **usernamePassword** **어카운트** 정보를 전달하는 필드입니다.
 
 #### <br/>(PATCH) Update Cluster Group
 
@@ -1522,16 +1522,16 @@ ______
 </tbody>
 </table>
 
-*  **dbUserInfo**  가  **삭제** 되었습니다.  **userMultipleAccount**  가  **삭제** 되었습니다.
+* **dbUserInfo** 가 **삭제**되었습니다. **userMultipleAccount** 가 **삭제**되었습니다.
     * 이 필드의 내용은 connectionAccount를 통해 전달됩니다.<br/>
-*  **connectionAccount** 가  **추가** 되었습니다.
-    * 커넥션의  **account**   **정보** 를 전달하는 필드입니다.
-    *  **type** 은 account 의  **타입** 을 의미합니다.
+* **connectionAccount**가 **추가**되었습니다.
+    * 커넥션의 **account** **정보**를 전달하는 필드입니다.
+    * **type**은 account 의 **타입**을 의미합니다.
         * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
-    *  **useMultipleAccount**  는  **멀티 어카운트** 를 사용하는지에 대한  **boolean**  값입니다.
-    *  **KerberosProtocols**  는  **커버로스 어카운트**  정보를 전달하는 필드입니다.
-        * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.**
-    *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
+    * **useMultipleAccount** 는 **멀티 어카운트**를 사용하는지에 대한 **boolean** 값입니다.
+    * **KerberosProtocols** 는 **커버로스 어카운트** 정보를 전달하는 필드입니다.
+        * 커버로스 어카운트는 **proxy** **어카운트**를 **지원하지 않습니다.**
+    * **usernamePasswords** 는 **usernamePassword** **어카운트** 정보를 전달하는 필드입니다.
 
 ##### Response
 
@@ -1648,16 +1648,16 @@ ______
 </tbody>
 </table>
 
-*  **dbUserInfo**  가  **삭제** 되었습니다.  **userMultipleAccount**  가  **삭제** 되었습니다.
+* **dbUserInfo** 가 **삭제**되었습니다. **userMultipleAccount** 가 **삭제**되었습니다.
     * 이 필드의 내용은 connectionAccount를 통해 전달됩니다.<br/>
-*  **connectionAccount** 가  **추가** 되었습니다.
-    * 커넥션의  **account**   **정보** 를 전달하는 필드입니다.
-    *  **type** 은 account 의  **타입** 을 의미합니다.
+* **connectionAccount**가 **추가**되었습니다.
+    * 커넥션의 **account** **정보**를 전달하는 필드입니다.
+    * **type**은 account 의 **타입**을 의미합니다.
         * `NOAUTH` `SASL_KERBEROS` `SASL_PLAIN_UID` `UIDPWD` `SASL_PLAIN_UIDPWD_SSL` `NOAUTH_SSL` `DELEGATION_TOKEN` `O_AUTH_CLIENT_CREDENTIALS`
-    *  **useMultipleAccount**  는  **멀티 어카운트** 를 사용하는지에 대한  **boolean**  값입니다.
-    *  **KerberosProtocols**  는  **커버로스 어카운트**  정보를 전달하는 필드입니다.
-        * 커버로스 어카운트는  **proxy**   **어카운트** 를  **지원하지 않습니다.**
-    *  **usernamePasswords**  는  **usernamePassword**   **어카운트**  정보를 전달하는 필드입니다.
+    * **useMultipleAccount** 는 **멀티 어카운트**를 사용하는지에 대한 **boolean** 값입니다.
+    * **KerberosProtocols** 는 **커버로스 어카운트** 정보를 전달하는 필드입니다.
+        * 커버로스 어카운트는 **proxy** **어카운트**를 **지원하지 않습니다.**
+    * **usernamePasswords** 는 **usernamePassword** **어카운트** 정보를 전달하는 필드입니다.
 
 
 
@@ -1692,20 +1692,20 @@ ______
 * …
 </td>
 <td>
-* dataFlowRequest. **filterKey**
-* dataFlowRequest. **filterValue**
-* dataFlowRequest. **sortKey**
-* dataFlowRequest. **sortType**
+* dataFlowRequest.**filterKey**
+* dataFlowRequest.**filterValue**
+* dataFlowRequest.**sortKey**
+* dataFlowRequest.**sortType**
 * …
 </td>
 </tr>
 </tbody>
 </table>
 
-* dataflowRequest. **filterKey** 는  **필터 키** 를 넣습니다. ex) "Title"
-* dataflowRequest. **filterValue**  는  **필터 값(검색어)** 를 넣습니다. ex) “channelName123”
-* dataflowRequest. **sortKey**  는  **sort**  할  **칼럼 명** 을 넣습니다. ex ) “createdAt”
-* dataflowRequest. **sortType**  은  **sort**  를  **내림차순** 으로 할지,  **오름차순** 으로 할지를 입력합니다. ex) “ASC”, “DESC”
+* dataflowRequest.**filterKey**는 **필터 키**를 넣습니다. ex) "Title"
+* dataflowRequest.**filterValue** 는 **필터 값(검색어)** 를 넣습니다. ex) “channelName123”
+* dataflowRequest.**sortKey** 는 **sort** 할 **칼럼 명**을 넣습니다. ex ) “createdAt”
+* dataflowRequest.**sortType** 은 **sort** 를 **내림차순**으로 할지, **오름차순**으로 할지를 입력합니다. ex) “ASC”, “DESC”
 
 
 

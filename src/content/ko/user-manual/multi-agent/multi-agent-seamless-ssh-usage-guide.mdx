@@ -105,7 +105,7 @@ qpa ssh %r %h %p
 
 연결 단계에서 QueryPie Proxy 서버에 연결에 오류가 발생하면 기존 User Agent는 dialog 를 표시하고 있어 터미널 친화적이지 않았습니다.
 
-Multi Agent는  **터미널에 에러 내용이 노출** 되도록 변경되었습니다.
+Multi Agent는 **터미널에 에러 내용이 노출**되도록 변경되었습니다.
 ```
 $ qpctl ssh manual@core.dev.querypie.io
 qpctl: error: Connection error: Timeout
@@ -119,8 +119,8 @@ Multi Agent는 Seamless SSH를 사용하기 위해서 QueryPie Host를 입력해
 
 `qpctl` 명령에 사용하는 기본 서버를 지정하는 기능을 추가합니다.
 
-* 기본서버가 지정되면  **qpctl ssh-proxy**  명령에서  **QueryPie Host**  를 입력하지 않아도 됩니다.
-* 기본서버가 지정되어 있더라도  **QueryPie Host**  를 입력하면 이 값을 사용합니다.
+* 기본서버가 지정되면 **qpctl ssh-proxy** 명령에서 **QueryPie Host** 를 입력하지 않아도 됩니다.
+* 기본서버가 지정되어 있더라도 **QueryPie Host** 를 입력하면 이 값을 사용합니다.
 
 <Callout type="info">
 Reset All Settings 으로 앱을 초기화 하면 기본 호스트 설정도 삭제됩니다.
@@ -221,16 +221,16 @@ OpenSSH_9.8p1, LibreSSL 3.3.6
 
 `qpctl` 명령이 `ssh` 클라이언트 명령을 wrapping 하여 ProxyCommand 옵션을 자동으로 붙여서 실행해줍니다.
 
-1.  **qpctl**  ssh command_line
-2. ssh  **-G**  command_line
-    1.  **username, hostname, port**  추출
-3. ssh command_line  **-o ProxyCommand=”qpctl ssh-proxy username**   **hostname**   **port”**
+1. **qpctl** ssh command_line
+2. ssh  **-G** command_line
+    1. **username, hostname, port** 추출
+3. ssh command_line  **-o ProxyCommand=”qpctl ssh-proxy username** **hostname** **port”**
 
 #### 미지원 기능
 
 ##### 사용자 지정 ProxyCommand
 
-qpctl 가 ProxyCommand 를 사용하기 때문에 **사용자 지정 ProxyCommand** 는 사용할 수 없습니다.
+qpctl 가 ProxyCommand 를 사용하기 때문에**사용자 지정 ProxyCommand**는 사용할 수 없습니다.
 ```
 $ qpctl ssh ec2-user@core.dev.querypie.io -o ProxyCommand="..."
 qpctl: error: ProxyCommand option is not supported
