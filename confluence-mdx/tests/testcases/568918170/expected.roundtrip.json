@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "568918170",
-  "mdx_sha256": "f33741064d30c2cf903106caf8fc29027396be95c5aad66cb38e9fa379350d65",
+  "mdx_sha256": "6165e815db5e0b98cb9592baa5c78a7d49094dc7467f9df46209b1402e6016d5",
   "source_xhtml_sha256": "dc295c914735b806617a4d44cec180f0db014894623a9e43cbb178d334c1ea16",
   "blocks": [
     {
@@ -63,7 +63,7 @@
       "block_index": 5,
       "xhtml_xpath": "ac:image[1]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"1291\" ac:original-width=\"1990\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-02 오전 11.41.29.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-02 오전 11.41.29.png\" ri:version-at-save=\"1\" /><ac:caption><p>Workflow &gt; Reviews &gt; All Reviews &gt; Review Details</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "b40ffa5aa4adc98b564b25c9aa790896dc866a218974e85922bf631449d480cd",
+      "mdx_content_hash": "842219e40659f264b1525cefb822990754a3aef984776cf5d173d7362de634c2",
       "mdx_line_range": [
         24,
         29
@@ -118,7 +118,7 @@
       "block_index": 10,
       "xhtml_xpath": "p[5]",
       "xhtml_fragment": "<p>대리 결재란 승인자 역할을 일정 기간 동안 다른 사용자에게 위임하는 기능입니다. 사용 방법은 다음과 같습니다.</p>",
-      "mdx_content_hash": "8e7d72fd5c43a95c137ac8d6040ddb14dd314625d3938e0d0509e3022ccbdc52",
+      "mdx_content_hash": "6e1521a3699de55f72d630e6936a8e363a6750d1d26c7a045eb6af7e50431ad7",
       "mdx_line_range": [
         47,
         51
@@ -173,7 +173,7 @@
       "block_index": 15,
       "xhtml_xpath": "p[6]",
       "xhtml_fragment": "<p>대리 결재 설정 기간에는 원 결재자와 대리 결재자의 접속 시 상단 메뉴바에 다음과 같이 표시됩니다.</p>",
-      "mdx_content_hash": "20359501178e0e6d45f4dade0842c60fc3c6970a46c0a633a3fd3b1175e475bb",
+      "mdx_content_hash": "12c2a35b7b7411cf93d81b7225fa122406df7f310a554607ba7c9ced54594650",
       "mdx_line_range": [
         75,
         78
@@ -305,7 +305,7 @@
       "block_index": 27,
       "xhtml_xpath": "ac:image[7]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"571\" ac:original-width=\"662\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-25 오후 3.21.41.png\" ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-25 오후 3.21.41.png\" ri:version-at-save=\"1\" /><ac:caption><p>대리 결재자가 Done by the delegate와 함께 표기됨</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "c04cb8a6ccb237d6ad2651e8879c74da85677132af2480f9a3cd81a1dd71ce69",
+      "mdx_content_hash": "eacae8e7e146e709c7da1b5871360f1a75353931cf2ce2d3283ce8f6b46fc9f6",
       "mdx_line_range": [
         124,
         125

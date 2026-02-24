@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544382364",
-  "mdx_sha256": "e5ee765a1a5d0d58de6d373ea6be4bda578d38ffb7c103d5d77e212dc7eb9b21",
+  "mdx_sha256": "7167b9565306b542b575d17e84f01cf5443e97c546862ff82396f5cd820744be",
   "source_xhtml_sha256": "672aae0060c85c2dff3cc80ef243fe69dcb915a52e2117a181acfef5733be0c7",
   "blocks": [
     {
@@ -19,7 +19,7 @@
       "block_index": 1,
       "xhtml_xpath": "macro-toc[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"7044a520-d23f-4ce1-9d21-1ec2df329420\" ac:macro-id=\"908303f4-956c-42f6-934c-e029e57519ad\"><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"maxLevel\">6</ac:parameter><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"style\">disc</ac:parameter><ac:parameter ac:name=\"exclude\">토픽</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter ac:name=\"printable\">true</ac:parameter></ac:structured-macro>",
-      "mdx_content_hash": "5fc41aae621e16ca10436ada6d43f79c30016082a632ba062b753af244873187",
+      "mdx_content_hash": "67a7921321f545bc9bbc3f53c0bdff1e2a11b823bd50f8a5f09bb4184f127fff",
       "mdx_line_range": [
         10,
         11

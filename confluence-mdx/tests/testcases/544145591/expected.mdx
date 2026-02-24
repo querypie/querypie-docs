@@ -20,13 +20,13 @@ Administrator &gt; General &gt; Company Management &gt; General
 
 ### 기본 설정
 
-*  **Company Name**  : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
-*  **Web Base URL**  : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
-*  **Timezone**  : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
-*  **Date Format**  : 날짜 표기 방식을 지정합니다.
-*  **Default Display Language**  : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어)
-*  **Audit Log Retention Period** : 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
-*  **Go to System Properties**  : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.
+* **Company Name** : 프로필 영역 등에 표시할 회사 이름을 입력합니다.
+* **Web Base URL** : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소
+* **Timezone** : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.
+* **Date Format** : 날짜 표기 방식을 지정합니다.
+* **Default Display Language** : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어)
+* **Audit Log Retention Period**: 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.
+* **Go to System Properties** : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다.
 
 
 ### System Properties
@@ -134,7 +134,7 @@ Use User Attribute to Hide Workflow Menu 토글을 활성화합니다.
 
 * 토글을 활성화하면 `User Attribute`의 `Key`와 `Value`를 한 쌍으로 선택하고 입력할 수 있습니다.
 * 여기에 설정된 `Key:Value` 조건과 일치하는 사용자는 사용자 대시보드에 `Workflow` 메뉴가 표시되지 않습니다.
-*  **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
+* **예시:**  `User Attribute Key`로 '부서코드'를 선택하고, `Value`로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 `Workflow` 메뉴가 보이지 않습니다.
 
 ### 대리결재 기능 활성화 / 비활성화 옵션 (Allow Delegated Approval)
 
@@ -172,9 +172,9 @@ Allow Delegated Approval 스위치
 이 옵션을 활성화하는 경우, 명시된 갯수만큼 쿼리를 연속적으로 실행한 뒤, 명시된 간격(ms)만큼 대기합니다.
 이를 통해 대용량 쿼리 실행에 따르는 DB 부하를 방지할 수 있습니다.
 
-*  **Query chunk size**  : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
+* **Query chunk size** : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능
     * 예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다.
-*  **Query throttle interval** : 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
+* **Query throttle interval**: 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)
 
 ### Ledger 테이블 DML 워크플로우 커스텀 URL 리디렉션 기능
 
@@ -237,12 +237,12 @@ Use DB Privilege Type Based Approval
 <img src="/administrator-manual/general/company-management/general/image-20250822-112026.png" alt="image-20250822-112026.png" width="432" />
 </figure>
 
-*  **Routing Rule Name**  : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.
-*  **Condition**  : Privilege에 대한 조건을 지정합니다.
-    *  **All Match**  : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.
-    *  **Contains** : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.
-*   **Requested Privilege Type**  : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.
-*  **Approval Rule**  : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.
+* **Routing Rule Name** : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.
+* **Condition** : Privilege에 대한 조건을 지정합니다.
+    * **All Match** : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.
+    * **Contains**: 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.
+*  **Requested Privilege Type** : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.
+* **Approval Rule** : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.
 
 #### Routing Rule 지정 예시
 

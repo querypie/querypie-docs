@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "1454342158",
-  "mdx_sha256": "5223b032eef543093c909c10c2d9942c32043704fc6a8b3b0d24387d5828560c",
+  "mdx_sha256": "0981c4dace18ef4f27f3c2908cbeb7110034ec22972a3e1e2b934820976d7849",
   "source_xhtml_sha256": "94e38b8adec78c652bec25688477c8ba2e1e15b5a7c16a7c7112ec7b9af3b8d7",
   "blocks": [
     {
@@ -129,7 +129,7 @@
       "block_index": 11,
       "xhtml_xpath": "macro-note[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"note\" ac:schema-version=\"1\" ac:local-id=\"043a4d66-8c4b-4576-90e1-dcc9628418ed\" ac:macro-id=\"1924e6a9-e6a0-4b6e-ac94-9d90a9ec56a9\"><ac:rich-text-body><p local-id=\"8928ed6d-12c8-4984-93c4-cfac592ba470\">주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "ffdeb942f239f2a9b9e8bc62155a38c400b4aae7bdfd5f5cefaa8b50847c4b8b",
+      "mdx_content_hash": "2a063aafcd93c7329897c55194295bbfc5ec5f922c3e003bcc5a362aa76ff934",
       "mdx_line_range": [
         42,
         44
@@ -195,7 +195,7 @@
       "block_index": 17,
       "xhtml_xpath": "table[1]",
       "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"91bf4962-93a1-4502-9ecd-6b9289c26d7e\"><colgroup><col style=\"width: 204.0px;\" /><col style=\"width: 103.0px;\" /><col style=\"width: 451.0px;\" /></colgroup><tbody><tr ac:local-id=\"1a1705b7-25f6-4e90-933a-d6fcccbbf25e\"><th ac:local-id=\"79f92dd8-5c7a-4465-818b-57366de42b3a\"><p local-id=\"856003c0-d1cd-450c-a6f1-36e707a4234a\"><strong>Attribute</strong></p></th><th ac:local-id=\"db194e23-4bb4-4322-8a03-416234ca5eab\"><p local-id=\"354b0e87-a530-4e63-a6b4-9f25334a064a\"><strong>필수 여부</strong></p></th><th ac:local-id=\"ee8eca02-767c-42c2-9f2d-796f9f02a274\"><p local-id=\"cd184ea8-bae5-4fd7-8d74-6d9695c06406\"><strong>Description</strong></p></th></tr><tr ac:local-id=\"3c59cdf7-d770-4546-a4a8-bc85c9280cc4\"><td ac:local-id=\"308ce979-4a78-47aa-a17a-cd687da8ca92\"><p local-id=\"00c872f9-5f12-4b62-bfd2-be889e757442\">User Base DN</p></td><td ac:local-id=\"14c308d5-77e3-4a66-9dac-6ede22bb05c5\"><p local-id=\"238870b9-2285-4b30-8304-ed0a1ffde5f1\">필수</p></td><td ac:local-id=\"7f90afc3-f3c2-4325-a206-e44ab7686f24\"><p local-id=\"5f04abec-63ce-4f6c-8921-a3486cb78e67\">LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만 로그인 대상으로 간주됩니다.</p><p local-id=\"497b48a6-6ae3-4512-9615-d2757eb74db5\">예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com</p></td></tr><tr ac:local-id=\"9fd14e7b-2772-4ef2-8c5f-1dcc08f3dd77\"><td ac:local-id=\"237bd477-1be2-4aa4-8bd4-0fa708727203\"><p local-id=\"202729dd-3c94-4da2-8041-a9bf99f1ce91\">User Search Filter</p></td><td ac:local-id=\"f1a8a0e7-1900-440e-bf40-154783b856d7\"><p local-id=\"5378217f-590e-403d-9436-563dd7989280\">필수</p></td><td ac:local-id=\"2e4965f0-d72a-43da-ab2c-7b035b1a5369\"><p local-id=\"878dd6d8-a199-425e-b8dd-f09033cc410e\">사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다. </p><p local-id=\"a18f1452-b638-4c47-a05c-33088cf53aef\">예시: (objectClass=inetOrgPerson)</p></td></tr><tr ac:local-id=\"ee854e5a-ea7c-4b52-af84-71cd1d4e6361\"><td ac:local-id=\"6dfed504-d8e0-4de5-9b56-242d322b3a2c\"><p local-id=\"490a6f22-83b2-442d-96f2-fc7970f6411a\">User Name</p></td><td ac:local-id=\"114df58d-55d2-4de0-9d7d-699fe0de0879\"><p local-id=\"066e171d-72a3-4eb0-86c2-1fea515b887b\">필수</p></td><td ac:local-id=\"4cecd77e-b08f-4433-a21e-ca1494b30860\"><p local-id=\"1aceca0b-3401-4172-b155-87bf03509b5f\">LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QuerPie 사용자의 Login ID에 매핑됩니다.</p><p local-id=\"a283e0fd-86bb-437a-8ee3-5a1d3b1d3a9c\">예시: uid</p></td></tr><tr ac:local-id=\"3a87b88f-2377-460b-a9e7-ddc0fb49fcaa\"><td ac:local-id=\"de607a77-ae1d-46ad-87d6-a40740224f63\"><p local-id=\"e283c7be-6c82-4406-a5cb-8945cace82c7\">Email</p></td><td ac:local-id=\"1f084f9f-4040-4e0b-b598-bffee1e16cd9\"><p local-id=\"d2ff59a0-cb82-464e-b447-f9e61cf08027\">필수</p></td><td ac:local-id=\"53432ec3-d7b7-4772-a2b5-b046427a31a5\"><p local-id=\"d06ba1b7-ad80-4ce6-acab-76f589313871\">LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화 할 때 QueryPie 사용자의 Email에 매핑됩니다.</p><p local-id=\"585f09ba-4b76-4871-9cf3-48e513e8cb0a\">예시: email</p></td></tr><tr ac:local-id=\"9d5342ec-81ed-4612-9552-452272751a44\"><td ac:local-id=\"48e35255-409d-44dd-8580-8c42a4c5ba33\"><p local-id=\"4d4e0d89-403c-4a3d-9bbb-faee3c3be5cb\">Display Name</p></td><td ac:local-id=\"f7425453-cac3-4530-a2a5-6e65e2fa408f\"><p local-id=\"dcef8d6a-a713-4bb5-8139-9b884fbf7243\">-</p></td><td ac:local-id=\"68c3cd10-bef2-4931-8356-49d70ab709b4\"><p local-id=\"22d39f27-ba79-422f-9bad-62576b30ee06\">QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을 입력합니다.</p><p local-id=\"c9bc298d-a2ac-4495-9654-7c46680bbec8\">예시: cn 또는 displayName 등.</p></td></tr></tbody></table>",
-      "mdx_content_hash": "b0301bbd2c61918dd45a25d0d1470eb716bcdf5412dd08a6c502769a7e56d3ea",
+      "mdx_content_hash": "284ce0cdb98773dee7a906eaf3e4665d66f338c1897d21b4bd62b9de7810a4d0",
       "mdx_line_range": [
         62,
         66
@@ -228,7 +228,7 @@
       "block_index": 20,
       "xhtml_xpath": "p[7]",
       "xhtml_fragment": "<p local-id=\"ecfbd495-3619-41e9-b363-8fc6aed8cd2c\" />",
-      "mdx_content_hash": "9ca527f69d4c5b4e1eef7d435dcd021ed2eb848a45e97b1624a85c2dbd0fc4ba",
+      "mdx_content_hash": "efa88731e85a1a08540b097bd19dc5eb34520ec4fe5fa6eb66858ccde9e40b54",
       "mdx_line_range": [
         77,
         83
@@ -239,7 +239,7 @@
       "block_index": 21,
       "xhtml_xpath": "table[2]",
       "xhtml_fragment": "<table data-table-width=\"760\" data-layout=\"default\" ac:local-id=\"56f8d1f8-9645-460d-a5cb-b6cce53606f2\"><colgroup><col style=\"width: 171.0px;\" /><col style=\"width: 89.0px;\" /><col style=\"width: 496.0px;\" /></colgroup><tbody><tr ac:local-id=\"cfa528d4-7ee6-483e-8b39-8d8a70310476\"><th data-highlight-colour=\"#f0f1f2\" ac:local-id=\"2cdeca85-1e14-4556-8faf-7e77b327d3b9\"><p local-id=\"61f6df6f-6caf-4198-9eaf-898ce09184f6\"><strong>Attribute</strong></p></th><th data-highlight-colour=\"#f0f1f2\" ac:local-id=\"53109c7a-a40d-4a4e-9d6a-73c4ddc826c4\"><p local-id=\"476880bd-30ff-4f99-9b69-cd49f428caf0\"><strong>필수 여부</strong></p></th><th data-highlight-colour=\"#f0f1f2\" ac:local-id=\"e24af88f-9192-424a-b43f-025bb31f869d\"><p local-id=\"39e9cfdb-7358-45d3-979e-f38ebc684a6a\"><strong>Description</strong></p></th></tr><tr ac:local-id=\"75805077-450e-4657-bfe4-3cf78a4d5928\"><td data-highlight-colour=\"#ffffff\" ac:local-id=\"ea2a1ab7-7f7f-496d-9a6c-da87bf25e27e\"><p local-id=\"e15f6072-1eea-4bb8-8415-0925e2be5f1a\">Group Base DN</p></td><td data-highlight-colour=\"#ffffff\" ac:local-id=\"b89474cb-0a96-449d-8a83-c1ca1e5a2b56\"><p local-id=\"f38ab132-36f5-4c36-bd67-4d92cfb0edcb\">필수</p></td><td data-highlight-colour=\"#ffffff\" ac:local-id=\"45f67115-11f7-474d-b15e-7189fd10c205\"><p local-id=\"362bc186-5206-4523-a803-2d8aedc2f4d6\">LDAP 서버의 그룹 Base DN 값을 입력합니다. 이 경로의 하위에 있는 그룹만 Group으로 동기화합니다. </p><ul local-id=\"cf8dfae6-81db-4442-9261-0c467ea2f02c\"><li local-id=\"6ef4255d-a6cd-47aa-a884-c7a821c7e627\"><p local-id=\"943d18d4-97dc-48ed-87fe-b964502fc64f\">예: <code>dc=example,dc=com</code></p></li></ul></td></tr><tr ac:local-id=\"acfd3ac8-1ccf-4790-87fa-969d15cf52d6\"><td data-highlight-colour=\"#ffffff\" ac:local-id=\"18032ff5-11ab-427f-85c6-a8246f91a155\"><p local-id=\"c5f3fe04-b258-45b0-96f0-ad61621d0bb2\">Group Search Filter</p></td><td data-highlight-colour=\"#ffffff\" ac:local-id=\"646d1d8d-c6ab-4445-976e-a92acb4ad672\"><p local-id=\"f009218a-07a4-48b9-b357-93f57da726f9\">필수</p></td><td data-highlight-colour=\"#ffffff\" ac:local-id=\"51af7682-029c-474f-b1d7-9658042490f0\"><p local-id=\"968aa711-f826-45e1-83b6-a95da883c7a9\">LDAP 서버의 그룹을 가져오기 위한 필터 값을 입력합니다.</p><ul local-id=\"33c2ae87-9ec7-46ad-8209-5f35f25e9c1b\"><li local-id=\"afdd0347-d329-481b-8623-069c8dfe863c\"><p local-id=\"433b7ced-b74a-48a8-984f-eb0facfa871d\">예: <code>objectclass=posixGroup</code></p></li></ul></td></tr><tr ac:local-id=\"5c723610-073d-4379-a2fe-ee2392355478\"><td ac:local-id=\"ec5bca28-b3ec-4bdb-be11-90e106ad68b3\"><p local-id=\"72795697-1b46-4a6d-b678-d14e79361cdc\">Group ID</p></td><td ac:local-id=\"7ae2e57e-9b05-42b5-a721-e2289dc4a1ea\"><p local-id=\"adf36fda-62d0-49c2-a9f4-e765807d790e\">필수</p></td><td ac:local-id=\"588d0912-0f58-4f46-9b25-c50c90650b50\"><p local-id=\"a28b2dbc-1cae-468c-8652-bb80a5f6143d\">그룹의 식별자로 사용할 속성 값을 입력합니다.</p><ul local-id=\"370186f9-817f-494c-b19e-62f0a8a462ba\"><li local-id=\"62c76406-2d0a-4037-b487-624c0842d14e\"><p local-id=\"5b05c77c-1198-4549-9b64-9b79d4907be3\">예: <code>gidNumber</code></p></li></ul></td></tr><tr ac:local-id=\"f6c5bd3a-d125-41ed-a76f-09b7ba17f1b1\"><td data-highlight-colour=\"#ffffff\" rowspan=\"2\" ac:local-id=\"22031ab0-9082-4f3f-bc9f-c375ce2a39a5\"><p local-id=\"c4718adc-a2ed-4bb1-8e32-614222524a65\">Membership Type</p></td><td data-highlight-colour=\"#ffffff\" rowspan=\"2\" ac:local-id=\"7db6a6a6-8fcc-4a8f-b59e-544ccd580c72\"><p local-id=\"bf90fa09-7db9-4940-b830-c1ac543b0cc8\">필수</p></td><td data-highlight-colour=\"#ffffff\" ac:local-id=\"1dc8e309-8401-4397-ba11-1dfda8f45536\"><p local-id=\"4b9ff187-a186-4d72-8d4d-a659e1b8def9\">사용자에 그룹 정보가 포함된 경우, <code>Include group information in user entries</code> 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.</p><ul local-id=\"55c55671-2645-4660-9dd7-1d56015a3094\"><li local-id=\"b3e08ef1-bc14-4c26-801f-ebd5a1d7b19f\"><p local-id=\"3e135f07-f888-4555-9b0f-204eb0084e47\">예: <code>member</code>, <code>uniqueMember</code>, <code>memberUid</code> 등</p></li></ul></td></tr><tr ac:local-id=\"97e7cec3-7328-4f30-8b01-295ca445a63f\"><td data-highlight-colour=\"#ffffff\" ac:local-id=\"01bae4e3-5d99-4208-ba57-3880491c4780\"><p local-id=\"084f00e3-712c-49aa-8bba-9d866948f4a4\">그룹에 사용자 정보가 포함된 경우, <code>Include user information in group entries</code> 를 선택하고, 하단 필드에 참조할 Attribute를 입력합니다.</p><ul local-id=\"95aa4947-c0c9-49f9-a42d-4b4348e29672\"><li local-id=\"a3b5b242-733f-4026-a850-a8f3a544c31a\"><p local-id=\"c26e4763-b108-47b1-96dd-7a731194e434\">예: <code>gidNumber</code></p></li></ul></td></tr></tbody></table>",
-      "mdx_content_hash": "bb867e8b3f9ad9f6040030b3e0b209317d1e0f8bcbe1b545d4836440439360fc",
+      "mdx_content_hash": "07969aaac868cc2b37421cc50dc978b55caf45c88d500f0408c5695270713492",
       "mdx_line_range": [
         85,
         85
@@ -272,7 +272,7 @@
       "block_index": 24,
       "xhtml_xpath": "p[9]",
       "xhtml_fragment": "<p local-id=\"fc447349-4fc5-4d43-a574-435409ca59c7\" />",
-      "mdx_content_hash": "6240662ccad4806157146749f54bf893ed490eb6fd19d413b1ce59f1378dc99d",
+      "mdx_content_hash": "bf3d9246b0fddd7bb7256039205d11021e9c06e450208e84e9cace9ed9e2642f",
       "mdx_line_range": [
         168,
         168
@@ -294,7 +294,7 @@
       "block_index": 26,
       "xhtml_xpath": "macro-info[2]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:local-id=\"f274adf5-56bf-4f3d-9ed5-a241501928b9\" ac:macro-id=\"4883a95a-4d82-4a3e-a459-f4ff9268bdfb\"><ac:rich-text-body><p local-id=\"0d3ca9eb-d222-4cea-83c1-c361de77c421\"><strong>LDAP Attribute Mapping</strong></p><p local-id=\"3ca4b1d9-800e-424a-aaec-32d0c66693ea\">LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.</p><p local-id=\"20b36119-12a8-42c7-ba7e-02da385c9828\">우측 상단의 <code>Add Row</code> 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.</p><ol start=\"1\" local-id=\"571c3c3b-cc85-4876-bb70-703f9f1ccf68\"><li local-id=\"33079fcd-4944-4136-af93-05e4606832f0\"><p local-id=\"a0cbbc66-233d-49ac-8c2c-d2b0cbe7ab65\">해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.</p></li><li local-id=\"ff9e5c76-2fa7-47ba-b395-c048124fe8c0\"><p local-id=\"b3835627-f4b3-4c2c-8513-d88714b38494\">QueryPie Attribute인 <code>Username (loginId)</code>, <code>Primary Email (email)</code> 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP&ndash;QueryPie Attribute Mapping UI에는 노출되지 않습니다.</p></li><li local-id=\"ba3c265b-a2c8-4738-b3f6-34cb6f821972\"><p local-id=\"5ba4ad57-cab6-484c-9a81-6bfdd019183f\"> 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.</p></li></ol></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "2a1ae4ee83148e28edf7f1bbcd3e7167fd045ed2a9c1e2cd646211d72c6f5c46",
+      "mdx_content_hash": "16e451acec469db690df696b582c968f81cf9d39a54e4a8d502e0535cc213f75",
       "mdx_line_range": [
         175,
         192
@@ -602,7 +602,7 @@
       "block_index": 54,
       "xhtml_xpath": "ac:image[12]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"725\" ac:original-width=\"481\" ac:custom-width=\"true\" ac:local-id=\"e2b94f40-2c20-4957-b8e8-b1cd08adc9a5\" ac:alt=\"image-20251014-014729.png\" ac:width=\"481\"><ri:attachment ri:filename=\"image-20251014-014729.png\" ri:version-at-save=\"1\" /><ac:caption ac:local-id=\"0f85908f-8d1c-41ef-b57a-789232041814\"><p>Okta 상세설정 (1)</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "876f502c366a0d5acf9573572f4dea98ca9cfcc09ea9f8e4e54c43af41c938b7",
+      "mdx_content_hash": "a0fc8dbd4fc4c90fc44834846a227c401b2b34e06e59984798b3d190959a460d",
       "mdx_line_range": [
         316,
         343
@@ -646,7 +646,7 @@
       "block_index": 58,
       "xhtml_xpath": "p[16]",
       "xhtml_fragment": "<p local-id=\"00af5494-f11f-45cd-9035-d9497a9573ca\" />",
-      "mdx_content_hash": "9b714b0339a7920e5805ec075df637a8f260f5f467bd637910f7084dd8620bb1",
+      "mdx_content_hash": "25de64e115b879d5869b4170dc40e79b5e0b458f9d1dcb31aae4b710a33d612d",
       "mdx_line_range": [
         356,
         361
@@ -668,7 +668,7 @@
       "block_index": 60,
       "xhtml_xpath": "macro-info[4]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:local-id=\"318fe127-350a-478f-bbc7-ee840f7f94ed\" ac:macro-id=\"edf70d6a-cb84-47b4-bf3f-cca8c8170c77\"><ac:rich-text-body><p local-id=\"e8ffb179-8020-46ef-89a4-7ac022e3c383\"><strong>Application ID 확인하는 방법</strong></p><p local-id=\"6c4c9441-b313-4111-b169-2c14c19d2428\">2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin &gt; Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "7de45a2108c098776511bd3d6246876e3be571117096c2ef2a6b20af034c821a",
+      "mdx_content_hash": "11238b5a2ad2625b6caba4585b917f59919404c4b2bb2ceaa5e600a962dcca3f",
       "mdx_line_range": [
         366,
         366
@@ -844,7 +844,7 @@
       "block_index": 76,
       "xhtml_xpath": "h2[5]",
       "xhtml_fragment": "<h2 local-id=\"d2fa7f54-35fa-44fb-ad8f-66d556dc78c0\">SAML 2.0 연동 (주기적 동기화 없는 1회용)</h2>",
-      "mdx_content_hash": "db0339b6b368ca726d867203447a97b474d9837b977dc1760b3e757536acfb1f",
+      "mdx_content_hash": "b04e39f4262038068f1c59caedd9a2494c10566e837d03ed26881404826a14e6",
       "mdx_line_range": [
         421,
         436
