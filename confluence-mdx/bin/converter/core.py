@@ -116,6 +116,18 @@ class Attachment:
             return f'[{caption}]({self.output_dir}/{self.filename})'
 
 
+def _is_unicode_punctuation(ch: str) -> bool:
+    """CommonMark spec의 Unicode punctuation 판정.
+
+    Unicode general category가 P(punctuation) 또는 S(symbol)이면 True.
+    ASCII punctuation도 포함된다.
+    """
+    if not ch:
+        return False
+    cat = unicodedata.category(ch[0])
+    return cat.startswith('P') or cat.startswith('S')
+
+
 class SingleLineParser:
     def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
@@ -202,13 +214,25 @@ class SingleLineParser:
                 for child in node.children:
                     self.convert_recursively(child)
             else:
-                self.markdown_lines.append(" **")
-                self.markdown_lines.append(self.markdown_of_children(node).strip())
-                self.markdown_lines.append("** ")
+                inner = self.markdown_of_children(node).strip()
+                open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
+                close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+                # 연속 emphasis delimiter 충돌 방지
+                if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
+                    close_sp = " "
+                self.markdown_lines.append(f"{open_sp}**")
+                self.markdown_lines.append(inner)
+                self.markdown_lines.append(f"**{close_sp}")
         elif node.name in ['em']:
-            self.markdown_lines.append(" *")
-            self.markdown_lines.append(self.markdown_of_children(node).strip())
-            self.markdown_lines.append("* ")
+            inner = self.markdown_of_children(node).strip()
+            open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
+            close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+            # 연속 emphasis delimiter 충돌 방지
+            if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
+                close_sp = " "
+            self.markdown_lines.append(f"{open_sp}*")
+            self.markdown_lines.append(inner)
+            self.markdown_lines.append(f"*{close_sp}")
         elif node.name in ['code']:
             self.markdown_lines.append("`")
             self.markdown_lines.append(self.markdown_of_children(node).strip())
