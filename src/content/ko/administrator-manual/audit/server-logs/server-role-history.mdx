@@ -21,31 +21,31 @@ Administrator &gt; Audit &gt; Servers &gt; Server Role History
 1. Administrator &gt; Audit &gt; Servers &gt; Server Role History 메뉴로 이동합니다.
 2. 당월 기준으로 내림차순으로 로그가 조회됩니다.
 3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색할 수 있습니다.
-    1.  **Name**  : 사용자 이름
-    2.  **Email**  : 사용자 이메일
-    3.  **Role Name**  : 서버 접근 권한 역할명
+    1. **Name** : 사용자 이름
+    2. **Email** : 사용자 이메일
+    3. **Role Name** : 서버 접근 권한 역할명
 4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/server-logs/server-role-history/image-20240728-174439.png" alt="image-20240728-174439.png" width="456" />
   </figure>
-    1.  **Event**  : 이벤트 유형
-        1.  **Role Granted**  : Role 부여 이력
-        2.  **Role Revoked**  : Role 회수 이력
-    2.  **Action At**  : 권한 부여/회수 일시 범위
+    1. **Event** : 이벤트 유형
+        1. **Role Granted** : Role 부여 이력
+        2. **Role Revoked** : Role 회수 이력
+    2. **Action At** : 권한 부여/회수 일시 범위
 5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
 6. 테이블에서 이하의 컬럼 정보를 제공합니다:
-    1.  **No**  : 이벤트 식별 번호
-    2.  **Action At**  : Role 권한 부여/회수 일시
-    3.  **Event**  : Role 권한 관련 이벤트
-        1.  **Role Granted**  : 사용자/그룹에 Role이 부여된 이벤트
-        2.  **Role Revoked**  : 사용자/그룹에서 Role이 회수된 이벤트
-    4.  **User Type**  : 사용자/그룹 유형
-    5.  **Name**  : 대상 사용자/그룹 이름
-    6.  **Email**  : 대상 사용자 이메일
+    1. **No** : 이벤트 식별 번호
+    2. **Action At** : Role 권한 부여/회수 일시
+    3. **Event** : Role 권한 관련 이벤트
+        1. **Role Granted** : 사용자/그룹에 Role이 부여된 이벤트
+        2. **Role Revoked** : 사용자/그룹에서 Role이 회수된 이벤트
+    4. **User Type** : 사용자/그룹 유형
+    5. **Name** : 대상 사용자/그룹 이름
+    6. **Email** : 대상 사용자 이메일
         1. 그룹의 경우에는 미표기합니다.
-    7.  **Role Name**  : 부여/회수된 Role 이름
-    8.  **Expiration Date**  : 권한 부여 만료일 (회수예정일)
-    9.  **Action By**  : Role을 부여/회수한 관리자명 또는 System
+    7. **Role Name** : 부여/회수된 Role 이름
+    8. **Expiration Date** : 권한 부여 만료일 (회수예정일)
+    9. **Action By** : Role을 부여/회수한 관리자명 또는 System
 
 ### Server Role History 상세 내역 조회하기
 
@@ -59,17 +59,17 @@ Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role 
 </figure>
 
 1. 최상단에는 기본 이벤트에 따른 정보를 노출합니다:
-    1.  **Action At**  : Role 권한 부여/회수 일시
-    2.  **Name**  : 대상 사용자/그룹 이름
-    3.  **Event**  : 사용자/그룹에 Role이 부여/회수된 이벤트
-    4.  **Email**  : 대상 사용자 이메일
-    5.  **Action By**  : Role을 부여/회수한 관리자명 또는 System
-    6.  **Role Name**  : Role명
-    7.  **Expiration Date**  : 권한 부여 만료일 (회수예정일)
+    1. **Action At** : Role 권한 부여/회수 일시
+    2. **Name** : 대상 사용자/그룹 이름
+    3. **Event** : 사용자/그룹에 Role이 부여/회수된 이벤트
+    4. **Email** : 대상 사용자 이메일
+    5. **Action By** : Role을 부여/회수한 관리자명 또는 System
+    6. **Role Name** : Role명
+    7. **Expiration Date** : 권한 부여 만료일 (회수예정일)
 2. 하단에는 부여/회수된 Role에 해당하는 Policy를 목록화하여 나열합니다:
-    *  **Name**  : 할당되어 있는 정책명
-    *  **Description**  : 할당되어 있는 정책의 상세설명
-    *  **Version**  : 할당되어 있는 정책의 버전
+    * **Name** : 할당되어 있는 정책명
+    * **Description** : 할당되어 있는 정책의 상세설명
+    * **Version** : 할당되어 있는 정책의 버전
         * 링크를 누르면 정책 코드를 조회할 수 있도록 팝업 모달이 나타납니다.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/audit/server-logs/server-role-history/image-20240728-174822.png" alt="image-20240728-174822.png" width="614" />
@@ -78,5 +78,4 @@ Administrator &gt; Audit &gt; Servers &gt; Server Role History &gt; Server Role 
                 * 해당 Policy가 삭제되어도 기록이 남습니다.
             2. 정책명, Policy의 Description과 더불어 코드를 보여줍니다.
             3. `Close` 버튼 또는 우측 상단의 `X`를 클릭하면 해당 모달이 닫힙니다.
-
 

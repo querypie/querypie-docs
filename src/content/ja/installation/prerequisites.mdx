@@ -22,14 +22,14 @@ import { Callout } from 'nextra/components'
     * AWS、Azure、Google Cloud Platformなどのクラウドサービスを利用しても問題ありません。
 * Hardware性能と容量
     * サーバコンピュータの仕様は4 vCPUs、16GiB Memoryを基本仕様として提示します。この性能仕様はQueryPieの様々な機能テストに適しています。
-    * 数百名以上の複数の利用者が多くのトラフィックで利用する場合、8 vCPUs、32 GiB Memoryを推奨仕様として提示します。
-    * Root file systemのサイズを100GiB以上で構成することを推奨します。
+    * 数百名以上の利用者が多くのトラフィックで利用する場合、8 vCPUs、32 GiB Memoryを推奨仕様として提示します。
+    * Root file systemのサイズを100 GiB以上で構成することを推奨します。
 * CPU Architecture
     * CPUはx86_64またはAMD64アーキテクチャを推奨します。AMD64、Intel XeonなどのCPUを適用してください。
     * <Badge color="yellow">BETA</Badge> QueryPie version 11.1.1から、ARM64アーキテクチャのCPUをサポートします。
         * Productionレベルの機能テストを実行できなかったため、開発環境での機能テスト、試験使用用途として推奨します。
         * AWSの場合、`t4g.xlarge`、`m7g.xlarge`などのインスタンスタイプを使用できます。
-    * <Badge color="yellow">BETA</Badge> QueryPie version 11.1.1から、Apple Silicon CPUを使用するmacOS環境をサポートします。
+    * <Badge color="yellow">BETA</Badge> QueryPie version 11.1.1からApple Silicon CPUを使用するmacOS環境をサポートします。
 * `Server VM`に利用者が接続できるIPアドレスが必要です。
     * Fully Qualified Domain Name(FQDN)を設定して接続することを推奨します。
 * `Server VM`には次のポートが開いている必要があります。

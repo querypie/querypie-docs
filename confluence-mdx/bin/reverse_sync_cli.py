@@ -123,7 +123,20 @@ def _resolve_attachment_dir(page_id: str) -> str:
     raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
 
 
-def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str) -> str:
+def _detect_language(descriptor: str) -> str:
+    """descriptor에서 src/content/{lang}/ 의 언어 코드를 추출한다. 기본값: 'ko'."""
+    path = descriptor.split(':', 1)[-1] if ':' in descriptor else descriptor
+    prefix = 'src/content/'
+    if prefix in path:
+        idx = path.index(prefix) + len(prefix)
+        lang = path[idx:].split('/')[0]
+        if lang in ('ko', 'ja', 'en'):
+            return lang
+    return 'ko'
+
+
+def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str,
+                     language: str = 'ko') -> str:
     """patched XHTML 파일을 forward converter로 MDX로 변환한다.
 
     입력 파일이 var/<page_id>/ 에 직접 있으므로 메타데이터를 자동 발견한다.
@@ -141,7 +154,8 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
          str(abs_input), str(abs_output),
          '--public-dir', str(var_dir.parent),
          '--attachment-dir', attachment_dir,
-         '--skip-image-copy'],
+         '--skip-image-copy',
+         '--language', language],
         capture_output=True, text=True,
     )
     if result.returncode != 0:
@@ -225,10 +239,14 @@ def run_verify(
     original_src: MdxSource,
     improved_src: MdxSource,
     xhtml_path: str = None,
+    lenient: bool = False,
+    language: str = None,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
 
     모든 중간 파일을 var/<page_id>/ 에 reverse-sync. prefix로 저장한다.
+
+    lenient=True면 변경된 행만 검사하는 관대 모드로 검증한다.
     """
     now = datetime.now(timezone.utc).isoformat()
     var_dir = _clean_reverse_sync_artifacts(page_id)
@@ -307,10 +325,12 @@ def run_verify(
         yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 6: Forward 변환 → verify.mdx 저장
+    lang = language or _detect_language(improved_src.descriptor)
     _forward_convert(
         str(var_dir / 'reverse-sync.patched.xhtml'),
         str(var_dir / 'verify.mdx'),
         page_id,
+        language=lang,
     )
     verify_mdx = (var_dir / 'verify.mdx').read_text()
 
@@ -331,7 +351,7 @@ def run_verify(
     verify_result = verify_roundtrip(
         expected_mdx=impr_stripped,
         actual_mdx=verify_stripped,
-        original_mdx=orig_stripped,
+        lenient=lenient,
     )
     # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
     roundtrip_diff_lines = difflib.unified_diff(
@@ -472,12 +492,12 @@ _USAGE_SUMMARY = """\
 reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
 
 Usage:
-  reverse-sync verify <mdx> [--original-mdx <mdx>]
-  reverse-sync verify --branch <branch>
-  reverse-sync debug  <mdx> [--original-mdx <mdx>]
-  reverse-sync debug  --branch <branch>
-  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run]
-  reverse-sync push   --branch <branch> [--dry-run]
+  reverse-sync verify <mdx> [--original-mdx <mdx>] [--lenient]
+  reverse-sync verify --branch <branch> [--lenient]
+  reverse-sync debug  <mdx> [--original-mdx <mdx>] [--lenient]
+  reverse-sync debug  --branch <branch> [--lenient]
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--lenient]
+  reverse-sync push   --branch <branch> [--dry-run] [--lenient]
   reverse-sync -h | --help
 
 Commands:
@@ -505,6 +525,11 @@ Options:
   --branch <branch>
     브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 배치 처리한다.
     <mdx>와 동시에 사용할 수 없다.
+
+  --lenient
+    관대 모드: trailing whitespace, 날짜 형식 등 XHTML↔MDX 변환기 한계에
+    의한 차이를 정규화한 후 비교한다. 기본 동작은 정규화 없이 문자 그대로
+    비교하는 엄격 모드이다.
 
 Examples:
   # 단일 파일 검증
@@ -589,6 +614,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
                         help='배치 모드에서 최대 처리 파일 수 (기본: 0=전체)')
     parser.add_argument('--failures-only', action='store_true',
                         help='실패한 결과만 출력 (--limit와 함께 사용 시 실패 건수 기준으로 제한)')
+    parser.add_argument('--lenient', action='store_true',
+                        help='관대 모드: 정규화 후 비교 (기본은 문자 그대로 비교하는 엄격 모드)')
 
 
 def _do_verify(args) -> dict:
@@ -608,14 +635,16 @@ def _do_verify(args) -> dict:
         original_src=original_src,
         improved_src=improved_src,
         xhtml_path=args.xhtml,
+        lenient=getattr(args, 'lenient', False),
     )
 
 
 def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
-                     push: bool = False) -> List[dict]:
+                     push: bool = False, lenient: bool = False) -> List[dict]:
     """브랜치의 변경 ko MDX 파일을 배치 처리한다.
 
     push=True이면 개별 문서마다 verify 성공 시 즉시 Confluence에 push한다.
+    lenient=True이면 변경된 행만 검사하는 관대 모드로 검증한다.
     """
     files = _get_changed_ko_mdx_files(branch)
     if not files:
@@ -633,6 +662,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             args = argparse.Namespace(
                 improved_mdx=f"{branch}:{ko_path}",
                 original_mdx=None, xhtml=None,
+                lenient=lenient,
             )
             result = _do_verify(args)
             result['file'] = ko_path
@@ -749,7 +779,8 @@ def main():
             if getattr(args, 'branch', None):
                 # 배치 모드
                 results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
-                                           failures_only=failures_only, push=not dry_run)
+                                           failures_only=failures_only, push=not dry_run,
+                                           lenient=getattr(args, 'lenient', False))
                 if use_json:
                     output = results
                     if failures_only:

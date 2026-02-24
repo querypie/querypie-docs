@@ -116,6 +116,18 @@ class Attachment:
             return f'[{caption}]({self.output_dir}/{self.filename})'
 
 
+def _is_unicode_punctuation(ch: str) -> bool:
+    """CommonMark spec의 Unicode punctuation 판정.
+
+    Unicode general category가 P(punctuation) 또는 S(symbol)이면 True.
+    ASCII punctuation도 포함된다.
+    """
+    if not ch:
+        return False
+    cat = unicodedata.category(ch[0])
+    return cat.startswith('P') or cat.startswith('S')
+
+
 class SingleLineParser:
     def __init__(self, node, collector: LostInfoCollector | None = None):
         self.node = node
@@ -202,13 +214,25 @@ class SingleLineParser:
                 for child in node.children:
                     self.convert_recursively(child)
             else:
-                self.markdown_lines.append(" **")
-                self.markdown_lines.append(self.markdown_of_children(node).strip())
-                self.markdown_lines.append("** ")
+                inner = self.markdown_of_children(node).strip()
+                open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
+                close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+                # 연속 emphasis delimiter 충돌 방지
+                if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
+                    close_sp = " "
+                self.markdown_lines.append(f"{open_sp}**")
+                self.markdown_lines.append(inner)
+                self.markdown_lines.append(f"**{close_sp}")
         elif node.name in ['em']:
-            self.markdown_lines.append(" *")
-            self.markdown_lines.append(self.markdown_of_children(node).strip())
-            self.markdown_lines.append("* ")
+            inner = self.markdown_of_children(node).strip()
+            open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
+            close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+            # 연속 emphasis delimiter 충돌 방지
+            if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
+                close_sp = " "
+            self.markdown_lines.append(f"{open_sp}*")
+            self.markdown_lines.append(inner)
+            self.markdown_lines.append(f"*{close_sp}")
         elif node.name in ['code']:
             self.markdown_lines.append("`")
             self.markdown_lines.append(self.markdown_of_children(node).strip())
@@ -617,6 +641,43 @@ class MultiLineParser:
 
         return True
 
+    @staticmethod
+    def _is_trailing_empty_p(node):
+        """Trailing empty <p>/<div> 앞의 separator를 건너뛰어 1:1 매핑을 보장한다.
+
+        Markdown에서 블록 사이 빈 줄(separator)은 필수이므로, separator를
+        그대로 두면 N개의 trailing empty <p> → N+1개의 blank line이 된다:
+
+            XHTML empty <p> 수 | separator 포함 시 blank line 수
+            0                  | 0
+            1                  | 2  ← "1"이 불가능
+            2                  | 3
+            N                  | N+1
+
+        1 blank line을 만들 수 있는 XHTML 상태가 존재하지 않으므로,
+        사용자가 trailing blank을 2→1로 편집하면 roundtrip에서 재현할 수 없다.
+
+        Trailing empty <p> 앞의 separator를 건너뛰면 N → N으로 1:1 매핑되어
+        모든 trailing blank 수를 XHTML로 정확히 표현할 수 있다.
+
+        Top-level [document] 컨텍스트에서만 적용하여, expand 매크로 등
+        중첩 컨테이너 내부에는 영향을 주지 않는다.
+        """
+        if node.name not in ('p', 'div'):
+            return False
+        if node.get_text(strip=True):
+            return False
+        if node.parent.name != '[document]':
+            return False
+        for sibling in node.next_siblings:
+            if isinstance(sibling, NavigableString):
+                if sibling.strip():
+                    return False
+            else:
+                if sibling.get_text(strip=True):
+                    return False
+        return True
+
     def append_empty_line_unless_first_child(self, node):
         # Convert generator to list to check length
         children_list = list(node.parent.children)
@@ -708,7 +769,8 @@ class MultiLineParser:
                 self.append_empty_line_unless_first_child(node)
                 self.markdown_lines.extend(TableToHtmlTable(node, collector=self.collector).as_markdown)
         elif node.name in ['p', 'div']:
-            self.append_empty_line_unless_first_child(node)
+            if not self._is_trailing_empty_p(node):
+                self.append_empty_line_unless_first_child(node)
             child_markdown = []
             for child in node.children:
                 if isinstance(child, NavigableString):

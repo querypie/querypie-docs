@@ -64,7 +64,7 @@ Server Containerの数が増えると、`DB_MAX_CONNECTION_SIZE`を低くしま�
 ### `DB_MAX_CONNECTION_SIZE`とハードウェア容量の関係式
 
 開発チーム内部の性能最適化テストを通じて、`DB_MAX_CONNECTION_SIZE`とQueryPie Server VM、DBのハードウェア処理容量の間に次の関係式があることを導出しました。
-この関係式を参照して、`DB_MAX_CONNECTION_SIZE`値を設定すると、最適の処理性能を得ると同時に、可能な限り小さな`DB_MAX_CONNECTION_SIZE`値を設定できます。
+この関係式を参照して`DB_MAX_CONNECTION_SIZE`値を設定すると、最適の処理性能を得ると同時に可能な限り小さな`DB_MAX_CONNECTION_SIZE`値を設定できます。
 
 #### QueryPie MySQLを分離構成する場合
 
@@ -151,5 +151,4 @@ QueryPie利用者数が少なく、使用量負荷が低い場合、`DB_MAX_CONN
 
 `DB_MAX_CONNECTION_SIZE`をデフォルト値20ではなく、10または5に下げて設定します。
 PoC環境の場合、`DB_MAX_CONNECTION_SIZE`を5に設定しても、一般的な機能テストを円滑に実行できます。
-
 

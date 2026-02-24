@@ -13,7 +13,81 @@ from text_utils import (
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
 from reverse_sync.lost_info_patcher import apply_lost_info
-from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
+from mdx_to_storage.inline import convert_inline
+
+
+# ── Inline format 변경 감지 ──
+
+_INLINE_CODE_RE = re.compile(r'`([^`]+)`')
+_INLINE_BOLD_RE = re.compile(r'\*\*(.+?)\*\*')
+_INLINE_ITALIC_RE = re.compile(r'(?<!\*)\*([^*]+)\*(?!\*)')
+_INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+
+
+def _extract_inline_markers(content: str) -> list:
+    """MDX content에서 inline 포맷 마커를 위치순으로 추출한다."""
+    markers = []
+    for m in _INLINE_CODE_RE.finditer(content):
+        markers.append(('code', m.start(), m.group(1)))
+    for m in _INLINE_BOLD_RE.finditer(content):
+        markers.append(('bold', m.start(), m.group(1)))
+    for m in _INLINE_ITALIC_RE.finditer(content):
+        markers.append(('italic', m.start(), m.group(1)))
+    for m in _INLINE_LINK_RE.finditer(content):
+        markers.append(('link', m.start(), m.group(1), m.group(2)))
+    return sorted(markers, key=lambda x: x[1])
+
+
+def _strip_positions(markers: list) -> list:
+    """마커 리스트에서 위치(index 1)를 제거하여 type+content만 비교 가능하게 한다."""
+    return [(m[0],) + m[2:] for m in markers]
+
+
+def _extract_marker_spans(content: str) -> list:
+    """MDX content에서 inline 포맷 마커의 (start, end) 위치 범위를 추출한다."""
+    spans = []
+    for m in _INLINE_CODE_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_BOLD_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_ITALIC_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    for m in _INLINE_LINK_RE.finditer(content):
+        spans.append((m.start(), m.end()))
+    return sorted(spans)
+
+
+def _extract_between_marker_texts(content: str) -> list:
+    """연속된 inline 마커 사이의 텍스트를 추출한다."""
+    spans = _extract_marker_spans(content)
+    between = []
+    for i in range(len(spans) - 1):
+        between.append(content[spans[i][1]:spans[i + 1][0]])
+    return between
+
+
+def has_inline_format_change(old_content: str, new_content: str) -> bool:
+    """old/new MDX 콘텐츠의 inline 포맷 마커가 다른지 감지한다.
+
+    마커 type/content 변경뿐 아니라, 연속된 마커 사이의 텍스트가
+    변경된 경우도 inline 변경으로 판단한다 (XHTML code 요소 경계에서
+    text-only 패치가 올바르게 동작하지 않기 때문).
+    """
+    old_markers = _strip_positions(_extract_inline_markers(old_content))
+    new_markers = _strip_positions(_extract_inline_markers(new_content))
+    if old_markers != new_markers:
+        return True
+
+    # 마커가 있을 때, 연속된 마커 사이 텍스트 변경 감지
+    if old_markers:
+        old_between = _extract_between_marker_texts(old_content)
+        new_between = _extract_between_marker_texts(new_content)
+        if ([collapse_ws(s) for s in old_between]
+                != [collapse_ws(s) for s in new_between]):
+            return True
+
+    return False
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
@@ -135,6 +209,10 @@ def _resolve_mapping_for_change(
             if change.old_block.type == 'list':
                 return ('list', mapping)
 
+    # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
+    if change.old_block.type == 'list':
+        return ('list', mapping)
+
     return ('direct', mapping)
 
 
@@ -230,15 +308,27 @@ def build_patches(
 
         # strategy == 'direct'
         _mark_used(mapping.block_id, mapping)
-        if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
-            new_plain = transfer_text_changes(
-                old_plain, new_plain, mapping.xhtml_plain_text)
 
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': new_plain,
-        })
+        # inline 포맷 변경 감지 → new_inner_xhtml 패치
+        if has_inline_format_change(
+                change.old_block.content, change.new_block.content):
+            new_inner = mdx_block_to_inner_xhtml(
+                change.new_block.content, change.new_block.type)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_inner_xhtml': new_inner,
+            })
+        else:
+            if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
+                new_plain = transfer_text_changes(
+                    old_plain, new_plain, mapping.xhtml_plain_text)
+
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': new_plain,
+            })
 
     # 상위 블록에 대한 그룹화된 변경 적용
     patches.extend(_flush_containing_changes(containing_changes, used_ids))
@@ -442,28 +532,39 @@ def build_list_item_patches(
                 old_plain, parent_mapping, id_to_mapping)
 
         if mapping is not None:
-            # child 매칭: 기존 로직대로 패치 생성
             if used_ids is not None:
                 used_ids.add(mapping.block_id)
-            new_plain = normalize_mdx_to_plain(new_item, 'list')
 
-            xhtml_text = mapping.xhtml_plain_text
-            prefix = extract_list_marker_prefix(xhtml_text)
-            if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                xhtml_body = xhtml_text[len(prefix):]
-                if collapse_ws(old_plain) != collapse_ws(xhtml_body):
+            # inline 포맷 변경 감지 → new_inner_xhtml 패치
+            if has_inline_format_change(old_item, new_item):
+                new_item_text = re.sub(r'^[-*+]\s+', '', new_item.strip())
+                new_item_text = re.sub(r'^\d+\.\s+', '', new_item_text)
+                new_inner = convert_inline(new_item_text)
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_inner_xhtml': new_inner,
+                })
+            else:
+                new_plain = normalize_mdx_to_plain(new_item, 'list')
+
+                xhtml_text = mapping.xhtml_plain_text
+                prefix = extract_list_marker_prefix(xhtml_text)
+                if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
+                    xhtml_body = xhtml_text[len(prefix):]
+                    if collapse_ws(old_plain) != collapse_ws(xhtml_body):
+                        new_plain = transfer_text_changes(
+                            old_plain, new_plain, xhtml_body)
+                    new_plain = prefix + new_plain
+                elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
                     new_plain = transfer_text_changes(
-                        old_plain, new_plain, xhtml_body)
-                new_plain = prefix + new_plain
-            elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                new_plain = transfer_text_changes(
-                    old_plain, new_plain, xhtml_text)
+                        old_plain, new_plain, xhtml_text)
 
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': xhtml_text,
-                'new_plain_text': new_plain,
-            })
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_plain_text': new_plain,
+                })
         else:
             # child 매칭 실패: parent 또는 텍스트 포함 매핑을 containing block으로 사용
             container = parent_mapping
@@ -502,7 +603,8 @@ def _build_delete_patch(
     xpath_to_mapping: Dict[str, 'BlockMapping'],
 ) -> Optional[Dict[str, str]]:
     """삭제된 블록에 대한 delete 패치를 생성한다."""
-    if change.old_block.type in NON_CONTENT_TYPES:
+    _SKIP_DELETE_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if change.old_block.type in _SKIP_DELETE_TYPES:
         return None
     mapping = find_mapping_by_sidecar(
         change.index, mdx_to_sidecar, xpath_to_mapping)
@@ -521,7 +623,8 @@ def _build_insert_patch(
 ) -> Optional[Dict[str, str]]:
     """추가된 블록에 대한 insert 패치를 생성한다."""
     new_block = change.new_block
-    if new_block.type in NON_CONTENT_TYPES:
+    _SKIP_INSERT_TYPES = frozenset(('frontmatter', 'import_statement'))
+    if new_block.type in _SKIP_INSERT_TYPES:
         return None
 
     after_xpath = _find_insert_anchor(

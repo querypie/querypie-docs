@@ -64,7 +64,7 @@ MySQL Data Dirの経路が変更されながら、次の利点が生まれます
 2つの注意事項があります。
 
 * setup.shは既存QueryPie MySQL Containerを初回インストールバージョンの経路で動作するMySQL Containerを維持する必要があります。setup.v2.shは**現在インストールバージョンの経路でMySQL Containerを実行**します。
-* setup.shで製品を既にインストールしたサーバに、setup.v2.shを利用して新しいバージョンをインストールできます。しかし、MySQL Data Dir変更に従って、**既存データが自動的に移管されません**。新しいインストール、アップグレードなど目的に従って、MySQL Dataディレクトリをインストール担当者が適切に移動する必要があります。
+* setup.shで製品を既にインストールしたサーバにsetup.v2.shを利用して新しいバージョンをインストールできます。しかしMySQL Data Dir変更に従って**既存データが自動的に移管されません**。新しいインストール、アップグレードなど目的に従ってインストール担当者がMySQL Dataディレクトリを適切に移動する必要があります。
 
 
 ### Rootless Modeサポート
@@ -77,7 +77,7 @@ setup.v2.shでインストールする場合、Rootless ModeのDocker、Podman�
 
 Rootless ModeでContainer Engineを実行するようにまず環境を構成します。
 setup.v2.shを利用してPodmanをインストールする場合、基本的にRootless Mode環境が適用されます。
-Dockerを使用する場合、別途の文書を参照して、Rootless Mode設定を実行する必要があります。
+Dockerを使用する場合、別途文書を参照してRootless Mode設定を実行する必要があります。
 
 その後、`setup.v2.sh`を実行するとき、`--universal`オプションを追加して、QueryPieをインストールすると、Rootless Modeに適したCompose package.tar.gzがインストールされます。
 
@@ -100,5 +100,4 @@ jk@host ~ % ./setup.v2.sh --universal
 # Directory ./querypie/ does not exist. QueryPie has not been installed on this system.
 Do you want to install QueryPie (11.1.1)?
 ```
-
 

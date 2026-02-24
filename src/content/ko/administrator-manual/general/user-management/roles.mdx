@@ -17,12 +17,12 @@ Roles 페이지에서 QueryPie 내 다양한 관리자 역할을 관리할 수 �
 
 관리자 역할은 역할(Role)과 정책(Policy)으로 구성됩니다.
 
-*  **관리자 역할** (Role) : 사용자에게 부여되는 단위로서, 정책(Policy)의 집합입니다.
+* **관리자 역할**(Role) : 사용자에게 부여되는 단위로서, 정책(Policy)의 집합입니다.
     * 기본 제공 역할은 Created by System으로 표기되어 있습니다.
         * Owner 역할은 QueryPie 시스템 전체에 대한 권한을 가지며 변경 및 삭제가 제한됩니다.
         * 그 외 역할은 필요에 따라 변경하여 활용할 수 있습니다.
     * 기본 제공 역할 이외에, 사용자가 직접 역할을 생성할 수 있습니다.
-*  **관리자 정책** (Policy) : Permission의 집합
+* **관리자 정책**(Policy) : Permission의 집합
     * 개별 정책은 각각 관리자 페이지 내 개별 메뉴 접근 권한 및 상세 기능 실행 권한으로 정의됩니다.
     * 정책 레벨의 추가, 수정 및 삭제는 불가능합니다.
 
@@ -138,43 +138,43 @@ Administrator &gt; General &gt; User Management &gt; Roles &gt; List Details
 
 아래의 리스트에서 관리자 정책별 권한 내용 및 해당 정책이 활성화되기 위해 필요한 QueryPie 제품 라이센스 정보를 확인할 수 있습니다.
 
-|  **Policy Name**                                  |  **Description**                                            |  **License**  |
-| ------------------------------------------------- | ----------------------------------------------------------- | ------------- |
-| User Management Full Access                       | Can access and modify Users and Groups menu.                | Default       |
-| User Management Read Only                         | Can access Users and Groups menu.                           | Default       |
-| Group Management Full Access                      | Can access and modify Group menu                            | Default       |
-| Group Management Read Only                        | Can access Groups menu                                      | Default       |
-| General Setting Full Access                       | Can access and modify General menu.                         | Default       |
-| Security Setting Full Access                      | Can access and modify Security menu.                        | Default       |
-| Allowed Zone Full Access                          | Can access and modify Allowed Zones menu.                   | Default       |
-| Alert Setting Full Access                         | Can access and modify Alert menu.                           | Default       |
-| Channel Setting Full Access                       | Can access and modify Channel menu.                         | Default       |
-| License Page Full Access                          | Can access License menu.                                    | Default       |
-| Authentication Setting Full Access                | Can access and modify Authentication menu.                  | Default       |
-| Workflow Lists Full Access                        | Can access All Requests menu.                               | Default       |
-| Approval Rule Setting Full Access                 | Can access and modify Approval menu.                        | Default       |
-| API Token Setting Full Access                     | Can access and modify API Token menu.                       | Default       |
-| Job Page Full Access                              | Can access Jobs menu.                                       | Default       |
-| Integration Page Full Access                      | Can access and modify Integration menu.                     | Default       |
-| System Properties Full Access                     | Can access System Properties menu.                          | Default       |
-| Database Connection Management Full Access        | Can access and modify Connection Management menu.           | DAC Only      |
-| Database Access Control Full Access               | Can access and modify DB Access Control menu.               | DAC Only      |
-| Database Policy Management Full Access            | Can access and modify Database Policies menu.               | DAC Only      |
-| Proxy Management Full Access                      | Can access Proxy Management menu.                           | DAC Only      |
-| Database Ledger Policy Full Access                | Can access and modify Ledger Management menu.               | DAC Only      |
-| Masking Pattern Setting Full Access               | Can access and modify Masking Pattern menu.                 | DAC Only      |
-| Server Connection Management Full Access          | Can access and modify Server Management menu.               | SAC Only      |
-| Server Access Control Full Access                 | Can access and modify Server Access Control menu.           | SAC Only      |
-| General Audit Full Access                         | Can access General Audit menu and export logs and report.   | Default       |
-| Database Audit Full Access                        | Can access Database Audit menu and export logs and report.  | DAC Only      |
-| Server Audit Full Access                          | Can access Server Audit menu and export logs and report.    | SAC Only      |
-| DB Access Request Approval Permission             | Can access and modify Profile Editor setting.               | DAC Only      |
-| SQL Request Approval Permission                   | Can approve SQL Request as an approver.                     | DAC Only      |
-| SQL Export Request Approval Permission            | Can approve Data Export Request as an approver.             | DAC Only      |
-| Server Access Request Approval Permission         | Can approve Server Access Request as an approver.           | SAC Only      |
-| Access Role Request Approval Permission           | Can approve Access Role Request as an approver.             | SAC or KAC    |
-| SCIM Provisioning and API Token Management Access | Can manage SCIM Provisioning status and API Token.          | Default       |
-| Kubernetes Connection Management Full Access      | Can access and modify Connection Management menu            | KAC           |
-| Kubernetes Access Control Full Access             | Can access and modify Kubernetes Access Control menu        | KAC           |
-| Kubernetes Audit Full Access                      | Can access Kubernetes Audit menu and export logs and report | KAC           |
-| Discovery Management Full Access                  | Can access and modify Discovery menu                        | DD            |
+| **Policy Name**                                   | **Description**                                             | **License** |
+| ------------------------------------------------- | ----------------------------------------------------------- | ----------- |
+| User Management Full Access                       | Can access and modify Users and Groups menu.                | Default     |
+| User Management Read Only                         | Can access Users and Groups menu.                           | Default     |
+| Group Management Full Access                      | Can access and modify Group menu                            | Default     |
+| Group Management Read Only                        | Can access Groups menu                                      | Default     |
+| General Setting Full Access                       | Can access and modify General menu.                         | Default     |
+| Security Setting Full Access                      | Can access and modify Security menu.                        | Default     |
+| Allowed Zone Full Access                          | Can access and modify Allowed Zones menu.                   | Default     |
+| Alert Setting Full Access                         | Can access and modify Alert menu.                           | Default     |
+| Channel Setting Full Access                       | Can access and modify Channel menu.                         | Default     |
+| License Page Full Access                          | Can access License menu.                                    | Default     |
+| Authentication Setting Full Access                | Can access and modify Authentication menu.                  | Default     |
+| Workflow Lists Full Access                        | Can access All Requests menu.                               | Default     |
+| Approval Rule Setting Full Access                 | Can access and modify Approval menu.                        | Default     |
+| API Token Setting Full Access                     | Can access and modify API Token menu.                       | Default     |
+| Job Page Full Access                              | Can access Jobs menu.                                       | Default     |
+| Integration Page Full Access                      | Can access and modify Integration menu.                     | Default     |
+| System Properties Full Access                     | Can access System Properties menu.                          | Default     |
+| Database Connection Management Full Access        | Can access and modify Connection Management menu.           | DAC Only    |
+| Database Access Control Full Access               | Can access and modify DB Access Control menu.               | DAC Only    |
+| Database Policy Management Full Access            | Can access and modify Database Policies menu.               | DAC Only    |
+| Proxy Management Full Access                      | Can access Proxy Management menu.                           | DAC Only    |
+| Database Ledger Policy Full Access                | Can access and modify Ledger Management menu.               | DAC Only    |
+| Masking Pattern Setting Full Access               | Can access and modify Masking Pattern menu.                 | DAC Only    |
+| Server Connection Management Full Access          | Can access and modify Server Management menu.               | SAC Only    |
+| Server Access Control Full Access                 | Can access and modify Server Access Control menu.           | SAC Only    |
+| General Audit Full Access                         | Can access General Audit menu and export logs and report.   | Default     |
+| Database Audit Full Access                        | Can access Database Audit menu and export logs and report.  | DAC Only    |
+| Server Audit Full Access                          | Can access Server Audit menu and export logs and report.    | SAC Only    |
+| DB Access Request Approval Permission             | Can access and modify Profile Editor setting.               | DAC Only    |
+| SQL Request Approval Permission                   | Can approve SQL Request as an approver.                     | DAC Only    |
+| SQL Export Request Approval Permission            | Can approve Data Export Request as an approver.             | DAC Only    |
+| Server Access Request Approval Permission         | Can approve Server Access Request as an approver.           | SAC Only    |
+| Access Role Request Approval Permission           | Can approve Access Role Request as an approver.             | SAC or KAC  |
+| SCIM Provisioning and API Token Management Access | Can manage SCIM Provisioning status and API Token.          | Default     |
+| Kubernetes Connection Management Full Access      | Can access and modify Connection Management menu            | KAC         |
+| Kubernetes Access Control Full Access             | Can access and modify Kubernetes Access Control menu        | KAC         |
+| Kubernetes Audit Full Access                      | Can access Kubernetes Audit menu and export logs and report | KAC         |
+| Discovery Management Full Access                  | Can access and modify Discovery menu                        | DD          |

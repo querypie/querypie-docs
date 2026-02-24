@@ -8,6 +8,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result,
+    _detect_language,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
@@ -47,7 +48,7 @@ def test_verify_detects_changes(setup_var, tmp_path):
     page_id, var_dir = setup_var
 
     # forward converter를 mock: verify.mdx에 improved_mdx 내용을 그대로 써서 pass 유도
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -72,7 +73,7 @@ def test_verify_roundtrip_fail(setup_var):
     """forward 변환 결과가 다르면 status=fail."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         # 다른 내용을 반환하여 roundtrip 실패 유도
         content = "## Title\n\nDifferent output.\n"
         Path(output_mdx_path).write_text(content)
@@ -376,7 +377,7 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=False)
     mock_push.assert_not_called()
 
 
@@ -396,7 +397,7 @@ def test_main_push_branch(tmp_path, monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, lenient=False)
 
 
 def test_main_push_branch_with_failure(monkeypatch):
@@ -414,7 +415,7 @@ def test_main_push_branch_with_failure(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, lenient=False)
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -457,7 +458,22 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=False)
+
+
+def test_main_verify_branch_lenient(monkeypatch):
+    """--lenient 플래그가 _do_verify_batch에 전달된다."""
+    monkeypatch.setattr('sys.argv', [
+        'reverse_sync_cli.py', 'verify', '--branch', 'proofread/fix-typo', '--lenient'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
+         patch('builtins.print'):
+        main()
+
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=True)
 
 
 # --- normalize_mdx_to_plain tests ---
@@ -620,7 +636,7 @@ def test_verify_ignores_frontmatter_diff(setup_var):
     improved_mdx = "---\ntitle: 'Test'\n---\n\n## Title\n\nModified.\n"
     verify_content = "---\ntitle: 'Test'\nconfluenceUrl: 'https://example.com'\n---\n\n## Title\n\nModified.\n"
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text(verify_content)
         return verify_content
 
@@ -713,7 +729,7 @@ def test_verify_result_includes_xhtml_diff(setup_var):
     """run_verify() 결과에 xhtml_diff_report 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -733,7 +749,7 @@ def test_verify_result_includes_mdx_diff(setup_var):
     """run_verify() 결과에 mdx_diff_report (original→improved) 필드가 포함된다."""
     page_id, var_dir = setup_var
 
-    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id):
+    def mock_forward_convert(patched_xhtml_path, output_mdx_path, page_id, **kwargs):
         Path(output_mdx_path).write_text("## Title\n\nModified.\n")
         return "## Title\n\nModified.\n"
 
@@ -800,7 +816,11 @@ def testbuild_patches_table_block():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
     assert patches[0]['old_plain_text'] == 'Databased Access Control'
-    assert patches[0]['new_plain_text'] == 'Database Access Control'
+    # bold content가 변경되어 has_inline_format_change()가 True →
+    # new_inner_xhtml 패치가 생성됨 (outer <table> 없이 innerHTML만 포함)
+    assert 'new_inner_xhtml' in patches[0]
+    assert '<strong>Database Access Control</strong>' in patches[0]['new_inner_xhtml']
+    assert not patches[0]['new_inner_xhtml'].startswith('<table')
 
 
 # --- sidecar 전용 매칭 코드 경로 테스트 ---
@@ -1132,3 +1152,28 @@ class TestCompileResult:
             roundtrip_diff_report='diff here',
         )
         assert result['status'] == 'fail'
+
+
+# --- _detect_language tests ---
+
+
+def test_detect_language_ko_from_ref_path():
+    assert _detect_language('split/ko-proofread:src/content/ko/installation/page.mdx') == 'ko'
+
+
+def test_detect_language_en_from_ref_path():
+    assert _detect_language('main:src/content/en/installation/page.mdx') == 'en'
+
+
+def test_detect_language_ja_from_ref_path():
+    assert _detect_language('main:src/content/ja/installation/page.mdx') == 'ja'
+
+
+def test_detect_language_ko_from_file_path():
+    assert _detect_language('src/content/ko/overview.mdx') == 'ko'
+
+
+def test_detect_language_defaults_to_ko():
+    """src/content/{lang}/ 패턴이 없으면 기본값 'ko'를 반환한다."""
+    assert _detect_language('/tmp/improved.mdx') == 'ko'
+    assert _detect_language('original.mdx') == 'ko'

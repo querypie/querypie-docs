@@ -38,24 +38,24 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Step 1에서 데이터 소스 종류를 선택하면 Step 2로 진입합니다.
 2. Step 2에서 DB 커넥션 정보를 입력합니다.
-    *  **Allowed Zone**  : DB 커넥션에 접속할 수 있는 네트워크 대역
+    * **Allowed Zone** : DB 커넥션에 접속할 수 있는 네트워크 대역
         * Allowed Zones 메뉴에서 등록한 Allowed Zone 선택 가능
         * 기본값: Default (All allowed)
-    *  **Connection Name**  : DB 커넥션 이름
-    *  **Cluster**  : 클러스터 구성 여부
-        * 토글 활성화 시 클러스터 등록 모드가 활성화되며, 하단  **클러스터 구성으로 DB 커넥션 등록하기**  섹션 참고
-    *  **Host**  : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)
-    *  **Port**  : DB 커넥션의 포트
-    *  **Database Name**  : 커넥션 연결 시 접속할 DB 이름
-    *  **Secret Store**  : 인증 정보 저장 위치
+    * **Connection Name** : DB 커넥션 이름
+    * **Cluster** : 클러스터 구성 여부
+        * 토글 활성화 시 클러스터 등록 모드가 활성화되며, 하단 **클러스터 구성으로 DB 커넥션 등록하기** 섹션 참고
+    * **Host** : DB 커넥션의 호스트 (도메인, IP 형태 모두 입력 가능)
+    * **Port** : DB 커넥션의 포트
+    * **Database Name** : 커넥션 연결 시 접속할 DB 이름
+    * **Secret Store** : 인증 정보 저장 위치
         * QueryPie : QueryPie 내부에 저장
         * 그 외, 등록한 Vault 이름이 표시됨
         * 선택한 인증 정보 저장 위치 속성에 따라 추가 인증 정보 표시 방식이 상이함
     * `Test Connection` 버튼을 클릭하여, 커넥션 접속 정보가 유효한지 확인할 수 있습니다.
     * Additional Information : 부가 정보 입력
-        * 자세한 설명은 하단  **Additional Information**  섹션 참고
+        * 자세한 설명은 하단 **Additional Information** 섹션 참고
     * SSL / SSH Setting : SSL/SSH 구성 정보 입력
-        * 자세한 설명은 하단  **SSL / SSH Setting**  섹션 참고
+        * 자세한 설명은 하단 **SSL / SSH Setting** 섹션 참고
     * `Next` 버튼을 클릭하면 DB 커넥션 생성이 완료되고 Step 3으로 이동합니다.
 3. Step 3에서는 입력된 DB 커넥션 정보를 확인할 수 있습니다.
 4. DB Connections 페이지 내 목록에서 신규 DB 커넥션의 생성을 확인할 수 있습니다.
@@ -73,14 +73,14 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Cluster 옵션을 활성화하면 계층형 구조로 클러스터 및 인스턴스 정보를 입력할 수 있습니다.
 2. 각각의 클러스터 및 인스턴스의 엔드포인트를 알고 있는 경우 `Add Cluster`를 통해 수동으로 등록할 수 있습니다.
-    *  **Type**  : 해당 클러스터의 Replication 타입
+    * **Type** : 해당 클러스터의 Replication 타입
         * Primary, Secondary 타입이 있으며, 해당 클러스터 단위로 권한 부여가 가능합니다.
-    *  **Expose**  : 커넥션 목록에서 클러스터를 표시하는 옵션
+    * **Expose** : 커넥션 목록에서 클러스터를 표시하는 옵션
         * Expandable : 웹 접속 시 사용자의 Connections 목록에서 클러스터, 인스턴스 단위까지 모두 표시
         * Unexpandable : 웹 커넥션 사용자의 Connections 목록에서 클러스터 하위의 인스턴스는 표시하지 않고, 클러스터 단위로만 표시
         * Hidden : 사용자의 Connections 목록에서 클러스터가 표시되지 않으며, 클러스터 하위의 인스턴스만 표시
-    *  **Host**  : 해당 클러스터의 호스트에 해당하는 엔드포인트
-    *  **Add Instance**  : 인스턴스 레벨까지 관리하고 싶은 경우, 해당 인스턴스의 이름과 호스트를 입력
+    * **Host** : 해당 클러스터의 호스트에 해당하는 엔드포인트
+    * **Add Instance** : 인스턴스 레벨까지 관리하고 싶은 경우, 해당 인스턴스의 이름과 호스트를 입력
         * Expose : 사용자의 Connections 목록에서 인스턴스 엔드포인트를 노출할 것인지 여부
             * ex. Secondary 하위에 3개의 인스턴스가 있고, 그중 2개만 Expose = On 설정을 한 경우, Secondary 권한이 있는 사용자는 2개의 인스턴스 엔드포인트로 접속 가능
 
@@ -88,7 +88,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 **Cluster 모드는 무엇인가요?**
 일반적으로 Primary 및 Secondary 클러스터 및 엔드포인트 관리를 위해 Cloud Provider 동기화 시에 클러스터 구조로 동기화되어 등록합니다.
 수동으로 커넥션을 등록하는 경우에도 Cluster 토글 버튼을 통해 클러스터 구조로 커넥션을 등록할 수 있습니다.
-Cluster 모드 활용 시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며, **부하분산 및 권한 관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여** 할 수 있습니다.
+Cluster 모드 활용 시 클러스터 및 인스턴스 엔드포인트 구조로 접속 권한을 관리할 수 있으며,**부하분산 및 권한 관리 등의 목적으로 일부 사용자에게 특정 인스턴스 엔드포인트만 권한을 부여**할 수 있습니다.
 </Callout>
 
 
@@ -105,9 +105,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
 
 * 검색: DB 커넥션 이름으로 검색
 * 제공 필터 타입
-    *  **Database Type** : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
-    *  **Cloud Provider** : 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
-    *  **Favorite View** : 즐겨찾기 설정 여부
+    * **Database Type**: DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
+    * **Cloud Provider**: 클라우드 제공자 타입 (AWS, Azure, GCP, 또는 QueryPie Connection)
+    * **Favorite View**: 즐겨찾기 설정 여부
         * 테이블 가장 오른쪽에 즐겨찾기 설정을 위한 버튼이 있습니다. <br/>
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/screenshot-20240730-222905.png" alt="즐겨찾기 설정 버튼" width="347" />
@@ -115,9 +115,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections
           즐겨찾기 설정 버튼
           </figcaption>
           </figure>
-    *  **SSL Status** : SSL 활성화 여부
-    *  **Label** : 원장DB 여부
-    *  **Tag** : 커넥션에 할당된 태그
+    * **SSL Status**: SSL 활성화 여부
+    * **Label**: 원장DB 여부
+    * **Tag**: 커넥션에 할당된 태그
         * 각 태그 입력 방식: Key 입력 → 엔터 키 입력 → 연산자 입력 → Value 입력 → 엔터 키 입력
             * 지원하는 연산자: `=`, `!=`, `:`, `!:`
         * Key가 동일한 태그를 여러 개 입력 시 OR 검색 수행 (합집합)
@@ -234,7 +234,7 @@ Additional Information 탭
 * `Description` : 해당 커넥션에 대한 설명을 입력할 수 있습니다.
 
 <Callout type="info">
-**User Action Purpose Required** <br/>11.2.0부터 User Action Purpose Required 옵션의 SQL Execute 이벤트에 대한 사유 입력을 Agent를 통해서도 받을 수 있도록 개선되었습니다.<br/>&lt; 제약사항 &gt;
+**User Action Purpose Required**<br/>11.2.0부터 User Action Purpose Required 옵션의 SQL Execute 이벤트에 대한 사유 입력을 Agent를 통해서도 받을 수 있도록 개선되었습니다.<br/>&lt; 제약사항 &gt;
 * 3rd party tool (DBeaver, DataGrip 등)을 사용할 때 사유 입력을 강제할 수 있는 것은 SQL Execute 항목만 해당됩니다.
 * 3rd party tool에서 내부적으로 전송하는 쿼리 (DB 스키마를 트리구조로 보여주거나 데이터 타입을 UI에서 표시해주는 기능을 수행하는 쿼리)도 SQL Execute로 감지되어 사유 입력을 요구합니다. 예) 최초 접속하자마자 쿼리를 입력하지 않았음에도 불구하고 사유 입력 창이 팝업됩니다. 이 경우 SQL 구문의 종류를 판단하지 않으므로 설정에 따라 상당히 불편함을 초래할 수 있습니다. 따라서 Database &gt; General &gt; Configurations 의 Query Purpose Duration for Agent 옵션의 값을 적절하게 조절해야 합니다.<br/>
   <figure data-layout="center" data-align="center">
@@ -258,7 +258,7 @@ Proxy Usage의 옵션
 * Use existing database account with Agent : Proxy를 통해 DB를 접속할 때 3rd party tool에 입력하는 계정 정보는 실제 DB 계정의 정보를 사용합니다.
 
 QueryPie 9.17부터 Proxy에서 지정한 계정 정보 사용 시 보안강화 조치로 난수 암호를 사용하는 것으로 변경되었습니다.
-QueryPie 10.2.2부터 난수 암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “ **Fixed Credential for Agent** ” 옵션이 제공됩니다.
+QueryPie 10.2.2부터 난수 암호 사용이 어려운 상황에 대한 개선으로 고정 암호를 사용할 수 있는 “**Fixed Credential for Agent**” 옵션이 제공됩니다.
 난수 암호 사용이 어려운 경우 관리자가 이 옵션을 활성화한 뒤 암호를 고정하여 사용할 수 있으며, Fixed Credential for Agent는 Oracle, PostgreSQL, MongoDB에 한해서만 가능합니다.
 </Callout>
 
@@ -314,7 +314,7 @@ DB 커넥션에 Privilege 별로 사용해야 할 접속 계정을 강제 지정
 
 <Callout type="info">
 해당 탭은 Security에서 Advanced Privilege Setting을 활성화할 경우에만 표시됩니다.
-자세한 내용은 [Security](../../general/company-management/security) 내  **DB 커넥션 보안 설정**  문서를 참고하세요.
+자세한 내용은 [Security](../../general/company-management/security) 내 **DB 커넥션 보안 설정** 문서를 참고하세요.
 </Callout>
 
 <figure data-layout="center" data-align="center">

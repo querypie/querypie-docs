@@ -28,7 +28,7 @@ Linux distributions that install Podman are as follows.
 * Ubuntu 24.04 LTS
 
 Linux distributions that install Docker instead of Podman are as follows.
-For reasons why Docker should be used in the Linux distributions below, please refer to this document: [Linux Distribution and Docker, Podman Support Status](linux-distribution-and-docker-podman-support-status)
+For reasons why Docker should be used in the Linux distributions below, refer to this document: [Linux Distribution and Docker, Podman Support Status](linux-distribution-and-docker-podman-support-status)
 
 * Amazon Linux 2, Amazon Linux 2023
 * Ubuntu 22.04 LTS
@@ -74,7 +74,7 @@ When you execute the above command, the entire installation process is automatic
 For Rootless Mode Podman, if the Linux server restarts, Containers will not run automatically without additional configuration.
 This is a characteristic of Rootless Mode Podman.
 
-For Containers to run automatically when the Linux server restarts, you must register and activate a systemd service that executes the `podman compose up -d` command.
+For Containers to run automatically when the Linux server restarts, you must register and activate a systemd service that performs the `podman compose up -d` command.
 systemd service files for QueryPie are provided by default in package.tar.gz for Compose.
 
 If you install QueryPie using `setup.v2.sh`, it automatically performs these systemd service registration and activation processes.
@@ -123,5 +123,4 @@ However, this document does not cover in detail how to manage systemd services u
 * Running containers automatically using systemd services in Red Hat Enterprise Linux, Rootless Podman environment
     * [https://www.redhat.com/en/blog/container-systemd-persist-reboot](https://www.redhat.com/en/blog/container-systemd-persist-reboot)
     * [https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_porting-containers-to-systemd-using-podman_building-running-and-managing-containers](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_porting-containers-to-systemd-using-podman_building-running-and-managing-containers)
-
 

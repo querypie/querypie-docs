@@ -6,6 +6,7 @@ MDX 블록의 content를 파싱하여 대상 XHTML 요소의 innerHTML로
 import re
 from typing import List
 
+from bs4 import BeautifulSoup, Tag
 from mdx_to_storage.inline import convert_inline
 
 
@@ -23,10 +24,14 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
         return _convert_heading(text)
     elif block_type == 'paragraph':
         return _convert_paragraph(text)
+    elif block_type == 'callout':
+        return _convert_callout_inner(text)
     elif block_type == 'list':
         return _convert_list_content(text)
     elif block_type == 'code_block':
         return _convert_code_block(text)
+    elif block_type == 'html_block':
+        return _convert_html_block_inner(text)
     else:
         return convert_inline(text)
 
@@ -55,6 +60,17 @@ def _convert_paragraph(text: str) -> str:
     return ' '.join(converted)
 
 
+def _convert_callout_inner(text: str) -> str:
+    """callout: <Callout> 래퍼 태그를 제거하고 내부 텍스트를 paragraph로 변환."""
+    lines = text.splitlines()
+    if lines and lines[0].strip().startswith('<Callout'):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith('</Callout'):
+        lines = lines[:-1]
+    inner = '\n'.join(lines).strip()
+    return _convert_paragraph(inner)
+
+
 def _convert_code_block(text: str) -> str:
     """code_block: 펜스 마커 제거, 코드 내용만 추출."""
     lines = text.split('\n')
@@ -64,6 +80,21 @@ def _convert_code_block(text: str) -> str:
     if lines and lines[-1].strip() == '```':
         lines = lines[:-1]
     return '\n'.join(lines)
+
+
+def _convert_html_block_inner(text: str) -> str:
+    """html_block: inline 변환 후 루트 요소의 innerHTML만 반환한다.
+
+    html_block content는 ``<table>...**bold**...</table>`` 처럼
+    outer 태그를 포함하므로, inline 변환 후 루트 요소를 벗겨내야
+    _replace_inner_html()에서 중첩이 발생하지 않는다.
+    """
+    converted = convert_inline(text)
+    soup = BeautifulSoup(converted, 'html.parser')
+    root = soup.find(True)  # 첫 번째 태그 요소
+    if isinstance(root, Tag):
+        return root.decode_contents()
+    return converted
 
 
 def _convert_code_spans(text: str) -> str:

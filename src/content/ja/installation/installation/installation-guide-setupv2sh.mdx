@@ -110,7 +110,7 @@ $
 
 ### setup.v2.shが自動的に実行する作業
 
-`setup.v2.sh`は次の主要インストール手順を自動的に進行します。
+`setup.v2.sh`は次の主要インストール手順を自動的に実行します。
 
 1. `docker-compose.yml`、`.env`などComposeのための設定ファイルをダウンロード
     * 既存の`compose-env`という環境変数設定ファイルの名前が`.env`に変わりました。`compose-env`は設定ファイル生成のためのtemplateとして使用されます。
@@ -163,7 +163,7 @@ $
 
 `setup.v2.sh`の実行最後に表示される`http://172.31.11.201:8000`のようなURLに接続を試してみてください。
 このアドレスはLocal PCからLinux Serverに接続するためのIP Addressを使用します。
-ネットワーク接続構成を参照して、Firewall、AWS Security Group設定などを変更する必要があるかもしれません：[システムアーキテクチャとネットワークアクセス制御](../system-architecture-and-network-access-control)
+ネットワーク接続構成を参照してFirewall、AWS Security Group設定などを変更する必要があるかもしれません：[システムアーキテクチャとネットワークアクセス制御](../system-architecture-and-network-access-control)
 
 ### License入力
 
@@ -178,7 +178,6 @@ Enter the license in PEM format.
 
 ## 基本設定手順
 
-インストールが完了したら、運用環境に合わせて初期設定を進める必要があります。
+インストールが完了した後、運用環境に合わせて初期設定を進める必要があります。
 詳細な設定手順は次の文書を参照してください：[インストール後の初期設定](../post-installation-setup)
-
 

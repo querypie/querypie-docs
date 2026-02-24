@@ -31,49 +31,49 @@ Configurations 페이지는 QueryPie에서 서버 접근 및 보안 정책을 �
 </figure>
 
 
-*  **Permission Revocation Period :** 장기 미접속 서버 권한 자동 회수 설정
+* **Permission Revocation Period :** 장기 미접속 서버 권한 자동 회수 설정
     * Enable 선택 시, 지정된 기간(일) 동안 사용자가 서버에 접속하지 않으면 부여된 서버 접근 권한이 자동으로 회수됩니다.
     * 유의 사항
         * 사용자에게 직접 부여된 권한 중 만료일이 있는 Direct Permission 또는 Role 권한에만 적용됩니다.
         * 그룹으로부터 상속받은 권한이나, 만료일이 지정되지 않은 영구 권한은 이 기능의 영향을 받지 않습니다.
         * 권한이 부여된 후 사용자가 한 번도 접속하지 않은 경우에는 권한이 부여된 시점부터 기간이 계산됩니다.
-*  **Notification of Access Expiration**  : 권한 만료(Permission Expiration, Privilege Expiration, Role Expiration) 전 이메일로 알림을 발송하도록 설정합니다.
-*  **Maximum OS Account Login Failures before Lockout** : 로그인 실패 시 계정 잠금 정책
+* **Notification of Access Expiration** : 권한 만료(Permission Expiration, Privilege Expiration, Role Expiration) 전 이메일로 알림을 발송하도록 설정합니다.
+* **Maximum OS Account Login Failures before Lockout**: 로그인 실패 시 계정 잠금 정책
     * 서버 로그인 실패 허용 최대 횟수 지정
     * Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 11분 내 2회 실패 시 계정 잠금)
-*  **Maximum Command Attempts before Session Termination** : 금지 명령어 최대 실행 횟수
+* **Maximum Command Attempts before Session Termination**: 금지 명령어 최대 실행 횟수
     * Enable 선택 시 횟수 및 기간 범위 기준 추가 입력 가능 (예: 10분 이내 10회 시도 시 세션 종료)
-*  **Retain Session After Policy Change** : 서버 접근 정책 변경 시 연결되어 있는 세션 유지 여부 설정
-    *  **Enable**  선택 시:
+* **Retain Session After Policy Change**: 서버 접근 정책 변경 시 연결되어 있는 세션 유지 여부 설정
+    * **Enable** 선택 시:
         * 다음과 같은 경우에도 활성 세션이 종료되지 않고 유지
             * 직접적인 권한 부여 또는 취소
             * 정책 업데이트
             * 사용자 역할 변경
         * 단, 사용자의 역할이나 권한이 완전히 제거될 경우 관련 리소스에 대한 세션은 종료됨
         * 변경된 정책을 적용하려면 세션에 다시 접속해야 합니다.
-    *  **Disable**  선택 시:
+    * **Disable** 선택 시:
         * 정책 변경 시 연결된 모든 세션 자동 종료
         * 새로 연결되는 세션부터 변경된 정책 적용
-*  **Server Session Timeout**  : 서버 세션 타임아웃 기준 (분)
+* **Server Session Timeout** : 서버 세션 타임아웃 기준 (분)
     * 지정된 시간 동안 서버 접속 후 명령 미실행 시 타임아웃
     * 개별 Policy에 타임아웃 지정되지 않은 경우 해당 설정 적용
     * 개별 Policy 또는 Server Default Settings에 지정된 타임아웃 정책이 있는 경우 더 짧은 것으로 적용
-*  **Using insecure protocols** : 권장하지 않는 서버 접속 프로토콜 사용 설정
+* **Using insecure protocols**: 권장하지 않는 서버 접속 프로토콜 사용 설정
     * TELNET 또는 FTP 사용 여부 설정
-*  **Access Server with MFA**  : 서버 접속 시 MFA 인증 여부 (Default : Disabled)
+* **Access Server with MFA** : 서버 접속 시 MFA 인증 여부 (Default : Disabled)
     * 현재 Google OTP를 지원하며, 옵션 선택 시 MFA 인증을 적용할 서버를 태그 기준으로 지정
         * 태그 입력 방식 : 키 입력 → 엔터 키 입력 → 밸류 입력 → 엔터 입력
     * 입력된 태그는 `key = value` 식으로 표시되며, 입력된 태그와 일치하는 태그를 하나라도 가지고 있는 서버는 MFA 인증 후 접속 가능
-*  **Resource IP Access Control Configuration :** 서버 접속 허용 IP 접근 제어 설정
+* **Resource IP Access Control Configuration :** 서버 접속 허용 IP 접근 제어 설정
     * IP 접근 제어를 적용할 서버를 태그 기준으로 지정
     * User/Group에 부여된 Role 또는 Direct Permission보다 우선 적용
     * `Add Configuration` 버튼 클릭 시, 모달이 생성되며 이하의 정보를 기입하여 `Add` 버튼을 클릭하여 추가 (우측 상단의 `Save Changes` 버튼 클릭 이전까지 미반영)
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/servers/sac-general-configurations/image-20240829-095257.png" alt="image-20240829-095257.png" width="274" />
       </figure>
-        *  **Server Tag Key**  : 서버 태그 키를 기입하며, 한번에 하나씩만 적용 가능 (사용 시 기재 필수)
-        *  **Server Tag Value**  : 서버 태그 값을 기입하며, 한번에 하나씩만 적용 가능(사용 시 기재 필수)
-        *  **Allowed Zones**  : General &gt; Company Management &gt; Allowed Zones 명단을 불러오며 사용 시 최소 1개 선택 필수
+        * **Server Tag Key** : 서버 태그 키를 기입하며, 한번에 하나씩만 적용 가능 (사용 시 기재 필수)
+        * **Server Tag Value** : 서버 태그 값을 기입하며, 한번에 하나씩만 적용 가능(사용 시 기재 필수)
+        * **Allowed Zones** : General &gt; Company Management &gt; Allowed Zones 명단을 불러오며 사용 시 최소 1개 선택 필수
     * 이 기능이 활성화되면, 사용자가 서버에 접속할 때 여기에 설정된 Allowed Zones의 IP 대역이 표시됩니다.
 
 <Callout type="info">
@@ -82,13 +82,13 @@ Allowed Zones는 넓은 범위의 허용 IP 대역을 의미합니다.
 따라서 표시된 IP 대역 내에 있더라도, 관리자가 데이터 정책(DP/Policy) 등을 통해 추가적인 IP 제한을 설정한 경우 최종 접근이 거부될 수 있습니다.
 </Callout>
 
-*  **Password Provisioning :** 패스워드 프로비저닝 사용 여부 설정
+* **Password Provisioning :** 패스워드 프로비저닝 사용 여부 설정
     * 등록된 서버의 서버 계정 패스워드를 주기적으로 변경
     * On으로 설정 시 아래와 같이 변경
         * [서버를 그룹으로 관리하기 | 3.-Accounts-등록하기](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)에서 패스워드 프로비저닝에 사용할 계정 선택 옵션 추가
         * [Password Provisioning](server-account-management/password-provisioning) 메뉴 활성화 및 Password 변경 Job 등록
         * [Account Management](server-account-management/account-management) 메뉴 활성화 및 QueryPie에서 관리하는 서버의 계정 리스트 조회 기능 제공
-*  **Allow RDP Connection without Server Agent :**  RDP Server Agent가 설치되지 않은 Windows Server 접속 허용 여부 설정
+* **Allow RDP Connection without Server Agent :**  RDP Server Agent가 설치되지 않은 Windows Server 접속 허용 여부 설정
     * QueryPie를 경유하여 RDP 프로토콜로 Windows Server에 접속
 
 <Callout type="important">
@@ -99,7 +99,7 @@ RDP Server Agent가 설치되지 않은 Windows Server에 접속할 경우 아�
 * RDP Server Agent를 설치하는 목적으로만 사용하길 권장하며, RDP Server Agent 설치 후 원격 연결을 다시 시작한 시점부터 Audit 및 레코딩이 정상 동작합니다.
 </Callout>
 
-*  **Using One Time Accounts**  : 임시 로그인 계정 사용 설정
+* **Using One Time Accounts** : 임시 로그인 계정 사용 설정
     * 각 서버 세션에 대해 고유한 임시 계정을 생성하는 기능의 사용 여부를 설정합니다.
     * Enable 선택 시 다음과 같이 동작합니다.
         * Server Groups 메뉴 설정에 Account 카테고리로 QueryPie - One Time Account가 추가됩니다.
@@ -112,7 +112,7 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 
 <Callout type="important">
 **주의**
-**Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다.
+**Workflow 요청 작성 시점**을 기준으로 정책 내용이 반영됩니다.
 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
 </Callout>
 
@@ -126,22 +126,22 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 </figure>
 
 * Maximum Access Duration : 서버 접근 권한의 최대 사용 기간을 설정
-*  **Protocols**  : 허용 프로토콜 (지원 프로토콜 : SSH, SFTP, TELNET, FTP, RDP, VNC)
-*  **Command Template**  : 접속 시 적용할 차단 명령어 템플릿
+* **Protocols** : 허용 프로토콜 (지원 프로토콜 : SSH, SFTP, TELNET, FTP, RDP, VNC)
+* **Command Template** : 접속 시 적용할 차단 명령어 템플릿
     * 선택한 Command Template의 내용은 `Command Policy Detail` 아코디언을 펼쳐서 확인 가능
     * 차단 명령어 템플릿의 생성 및 관리 방법은 [Command Templates](server-access-control/command-templates) 참고
-*  **Access Start Time**  : 접속 허용 시작 시각
-*  **Access End Time**  : 접속 허용 종료 시각
-*  **Access Weekday**  : 접속 가능 요일
-*  **Command Audit**  : 접속 시 명령어 감사 적용 여부
-*  **Command Detection**  : 접속 후 Script/Alias 내 금지 명령어 탐지 여부
-*  **Proxy Usage**  : Agent를 통한 프록시 접속 허용 여부
-*  **Allow Local Port Forwarding**  : Client에서의 Port Forwarding 허용 여부
+* **Access Start Time** : 접속 허용 시작 시각
+* **Access End Time** : 접속 허용 종료 시각
+* **Access Weekday** : 접속 가능 요일
+* **Command Audit** : 접속 시 명령어 감사 적용 여부
+* **Command Detection** : 접속 후 Script/Alias 내 금지 명령어 탐지 여부
+* **Proxy Usage** : Agent를 통한 프록시 접속 허용 여부
+* **Allow Local Port Forwarding** : Client에서의 Port Forwarding 허용 여부
     * VSCode 등 Port Forwarding을 사용하는 경우 사용
-*  **Max Sessions**  : 서버 당 최대 동시 접속수
-*  **Session Timeout** : 서버 세션 타임아웃 기준 시간 (분)
-*  **Show Server Groups in Workflow if Assigned as Member :**  체크된 경우, 이용자가 Server Access Request 신청 시 Server Group Member로 지정된 서버 그룹만 표시
-*  **Require Minute-Based Requests :** Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 접속 권한을 분 단위로 신청할 수 있습니다.
+* **Max Sessions** : 서버 당 최대 동시 접속수
+* **Session Timeout**: 서버 세션 타임아웃 기준 시간 (분)
+* **Show Server Groups in Workflow if Assigned as Member :**  체크된 경우, 이용자가 Server Access Request 신청 시 Server Group Member로 지정된 서버 그룹만 표시
+* **Require Minute-Based Requests :** Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 접속 권한을 분 단위로 신청할 수 있습니다.
 
 #### 서버 특권 신청 정책 설정
 
@@ -149,7 +149,7 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 
 <Callout type="important">
 **주의**
-**Workflow 요청 작성 시점** 을 기준으로 정책 내용이 반영됩니다.
+**Workflow 요청 작성 시점**을 기준으로 정책 내용이 반영됩니다.
 요청이 승인된 이후 접근 정책을 변경하더라도 기존에 승인된 요청에 소급 적용되지 않습니다.
 </Callout>
 
@@ -162,8 +162,8 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 <img src="/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.15.31-PM.png" alt="Screenshot-2025-07-22-at-3.15.31-PM.png" width="724" />
 </figure>
 
-*  **Maximum Access Duration** : 특권 사용의 최대 지속 기간을 설정
-*  **Allow Pre-defined Command Templates Only** : 서버 특권 신청 시 명령어 입력 방식을 제어
-    *  **Enable** : 신청자는 관리자가 미리 정의하고 허용한 명령어 템플릿 중에서만 선택할 수 있으며, 명령어를 직접 입력 불가
-    *  **Disable** : 기존과 같이 신청자가 허용할 명령어를 직접 입력
-*  **Require Minute-Based Requests** : Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 특권을 분 단위로 신청할 수 있습니다.
+* **Maximum Access Duration**: 특권 사용의 최대 지속 기간을 설정
+* **Allow Pre-defined Command Templates Only**: 서버 특권 신청 시 명령어 입력 방식을 제어
+    * **Enable**: 신청자는 관리자가 미리 정의하고 허용한 명령어 템플릿 중에서만 선택할 수 있으며, 명령어를 직접 입력 불가
+    * **Disable**: 기존과 같이 신청자가 허용할 명령어를 직접 입력
+* **Require Minute-Based Requests**: Workflow에서 서버 관련 권한 신청 시 분 단위 신청 허용. 미설정 시 일 단위로 권한을 신청합니다. 체크된 경우 서버 특권을 분 단위로 신청할 수 있습니다.

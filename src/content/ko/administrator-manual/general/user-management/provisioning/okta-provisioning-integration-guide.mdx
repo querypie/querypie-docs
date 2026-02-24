@@ -14,9 +14,9 @@ import { Callout } from 'nextra/components'
 
 ### Prerequisites
 
-* Okta IAM 서비스의  **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
+* Okta IAM 서비스의 **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
 * Okta 관리자 콘솔(Okta Admin Console)에 접근하여 App을 만들고 사용자/그룹을 앱에 할당할 수 있는 권한이 요구됩니다.
-    *  **최소 필요 권한**
+    * **최소 필요 권한**
         * User
             * Edit users' application assignments
         * Group
@@ -51,21 +51,21 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 2. 우측 상단의 `Admin` 버튼을 클릭하여 관리자 콘솔에 접속합니다.
 3. Okta 관리자 페이지의 좌측 패널에서 Applications &gt; Applications 메뉴로 이동합니다.
 4. `Create App Integration` 버튼을 클릭합니다.
-5. 커스텀 SCIM 연동을 목적으로 Sign-in method로  **SAML 2.0**  옵션을 선택한 뒤 `Next` 버튼을 클릭합니다.
+5. 커스텀 SCIM 연동을 목적으로 Sign-in method로 **SAML 2.0** 옵션을 선택한 뒤 `Next` 버튼을 클릭합니다.
 6. General Settings 단계에서 General Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
-    1.  **App name**  : 식별 가능한 애플리케이션 이름을 기입합니다.
-    2.  **App logo**  : 사용자가 식별 가능한 로그를 업로드합니다.
+    1. **App name** : 식별 가능한 애플리케이션 이름을 기입합니다.
+    2. **App logo** : 사용자가 식별 가능한 로그를 업로드합니다.
 7. Configure SAML 단계에서 SAML Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
-    1.  **Single sign-on URL**  : https://`{{querypie.domain}}`/saml/sp/acs
-    2.  **Audience URI (SP Entity ID)**  : https://`{{querypie.domain}}`/saml/sp/metadata
-    3.  **Attribute Statements (optional)**  : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
-        1. Name:  **firstName**  <br/>Name format: Unspecified<br/>Value:  **user.firstName**
-        2. Name:  **lastName**  <br/>Name format: Unspecified<br/>Value:  **user.lastName**
-        3. Name:  **email**  <br/>Name format: Unspecified<br/>Value:  **user.email**
-        4. Name:  **loginId**  <br/>Name format: Unspecified<br/>Value:  **user.login**
+    1. **Single sign-on URL** : https://`{{querypie.domain}}`/saml/sp/acs
+    2. **Audience URI (SP Entity ID)**  : https://`{{querypie.domain}}`/saml/sp/metadata
+    3. **Attribute Statements (optional)**  : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
+        1. Name: **firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
+        2. Name: **lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
+        3. Name: **email** <br/>Name format: Unspecified<br/>Value: **user.email**
+        4. Name: **loginId** <br/>Name format: Unspecified<br/>Value: **user.login**
 8. Feedback 단계에서 `I'm an Okta customer adding an internal app`을 선택한 뒤 하단의 `Finish` 버튼을 클릭합니다.
-9. Application이 생성되면 상단의 General 탭으로 이동하여  **App Settings**  메뉴의 우측 `Edit` 버튼을 클릭합니다.
-10. Provisioning 필드를  **SCIM** 으로 선택한 뒤 `Save` 버튼을 클릭합니다.
+9. Application이 생성되면 상단의 General 탭으로 이동하여 **App Settings** 메뉴의 우측 `Edit` 버튼을 클릭합니다.
+10. Provisioning 필드를 **SCIM**으로 선택한 뒤 `Save` 버튼을 클릭합니다.
 11. [Okta 연동하기 | Okta에서-QueryPie-애플리케이션-연동-정보-설정](../authentication/integrating-with-okta#okta%ec%97%90%ec%84%9c-querypie-%ec%95%a0%ed%94%8c%eb%a6%ac%ec%bc%80%ec%9d%b4%ec%85%98-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%84%a4%ec%a0%95) 및 [Okta 연동하기 | QueryPie에서-Okta-연동-및-동기화-설정](../authentication/integrating-with-okta#querypie%ec%97%90%ec%84%9c-okta-%ec%97%b0%eb%8f%99-%eb%b0%8f-%eb%8f%99%ea%b8%b0%ed%99%94-%ec%84%a4%ec%a0%95)을 따라 SSO 연동을 마무리한 뒤, 이후 스텝을 진행하시기 바랍니다.
 
 
@@ -87,14 +87,14 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 1. Okta에서 생성한 SCIM App의 Provisioning 탭으로 이동합니다.
 2. SCIM Connection의 우측 `Edit` 버튼을 눌러 이하의 값을 채워 수정합니다.
     1. SCIM connector base URL : QueryPie에서 조회한 SCIM Endpoint 값을 삽입합니다.
-    2. Unique identifier field for users : “ **userName** ”
+    2. Unique identifier field for users : “**userName**”
     3. Supported provisioning action : 다음의 다섯 항목을 모두 선택합니다.
         * Import New Users and Profile Updates
         * Push New Users
         * Push Profile Updates
         * Push Groups
         * Import Groups
-    4. Authentication Mode : “ **HTTP Header** ”
+    4. Authentication Mode : “**HTTP Header**”
     5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다.
 3. Test Connector Configuration 버튼을 눌러 연결 테스트를 수행합니다.
 4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다.
@@ -118,9 +118,9 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 1. Okta에서 생성한 SCIM App의 Provisioning 탭의 To App 화면으로 이동합니다.
 2. Provisioning to App 우측의 Edit 버튼을 클릭합니다.
 3. 이하의 설정의 체크박스를 활성화한 뒤 Save 버튼을 클릭하여 저장합니다.
-    1.  **Create Users**  : 사용자가 앱에 할당될 때 앱에 추가합니다.
-    2.  **Update User Attributes**  : 사용자의 프로필 업데이트가 발생되면 앱에 반영합니다.
-    3.  **Deactivate Users**  : 사용자가 비활성화될 때 앱에서 함께 비활성화합니다.
+    1. **Create Users** : 사용자가 앱에 할당될 때 앱에 추가합니다.
+    2. **Update User Attributes** : 사용자의 프로필 업데이트가 발생되면 앱에 반영합니다.
+    3. **Deactivate Users** : 사용자가 비활성화될 때 앱에서 함께 비활성화합니다.
 4. QueryPie SCIM App Attribute Mappings 하단의 `Go to Profile Editor` 버튼을 클릭합니다.
 5. Attributes 하단의 `Mappings` 버튼을 클릭합니다.
 6. 팝업창 상단의 두 탭 중 “Okta User to `{사용자가 정의한 App명}`” 으로 기재된 탭으로 이동합니다.
@@ -193,8 +193,8 @@ ______
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
   </figure>
-    1.  **Assign to People**  : 사용자 개별 단위로 할당
-    2.  **Assign to Groups**  : 사용자 그룹 단위로 할당
+    1. **Assign to People** : 사용자 개별 단위로 할당
+    2. **Assign to Groups** : 사용자 그룹 단위로 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Users로 이동하여 사용자가 정상 푸시되었는지 확인합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details" width="736" />
@@ -214,8 +214,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 </figure>
 
 1. SCIM 앱으로 다시 돌아가서 Push Groups 탭에서 `Push Groups` 버튼의 옵션을 통해 사용자를 할당합니다.
-    1.  **Find groups by name**  : 푸시할 그룹명으로 검색하여 할당
-    2.  **Find groups by rule**  : 검색 룰을 정의하여 조건에 부합하는 그룹 할당
+    1. **Find groups by name** : 푸시할 그룹명으로 검색하여 할당
+    2. **Find groups by rule** : 검색 룰을 정의하여 조건에 부합하는 그룹 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Groups로 이동하여 그룹이 정상 푸시되었는지 확인합니다.
 
 <Callout type="important">

@@ -19,7 +19,7 @@ Server Access Request는 승인 즉시 권한이 부여되며 웹 터미널 또�
 
 * Approval Rule을 선택하여 목적에 맞는 결재 규칙을 선택하세요. 선택한 규칙에 따라 승인 대상이 달라집니다.
 * 만약 관리자가 승인자를 지정한 결재 규칙이 선택된 경우, 자동으로 승인자가 지정되며 추가 및 변경이 불가합니다.
-*  **Approval Expiration Date** : 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Access Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신할 수 없습니다. Maximum Approval Duration &gt; Maximum Access Duration인 경우, Maximum Approval Duration의 값이 Maximum Access Duration의 값과 동일하게 적용됩니다. 예) Maximum Approval Duration은 14일이고 Maximum Access Duration은 5일인 경우, Maximum Approval Duration의 값도 5일로 적용됩니다.
+* **Approval Expiration Date**: 승인 만료일을 입력합니다. Maximum Approval Duration을 통해 최대값을 설정할 수 있습니다. Approval Expiration Date은 Access Expiration Date을 초과할 수 없습니다. 초과한 경우, 상신할 수 없습니다. Maximum Approval Duration &gt; Maximum Access Duration인 경우, Maximum Approval Duration의 값이 Maximum Access Duration의 값과 동일하게 적용됩니다. 예) Maximum Approval Duration은 14일이고 Maximum Access Duration은 5일인 경우, Maximum Approval Duration의 값도 5일로 적용됩니다.
     * 단, Urgent Mode로 상신 시, 위 조건을 무시합니다.
 
 <figure data-layout="center" data-align="center">
@@ -84,10 +84,10 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 <img src="/user-manual/workflow/requesting-server-access/Screenshot-2025-08-26-at-1.05.08-AM.png" alt="Screenshot-2025-08-26-at-1.05.08-AM.png" width="760" />
 </figure>
 
-*  **Start Trigger**  : 권한 부여 시작 조건을 선택합니다.
+* **Start Trigger** : 권한 부여 시작 조건을 선택합니다.
     * Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이, 활성화 시점부터 지정된 기간 동안 서버 접속이 가능합니다.
     * Grant : 권한 부여 즉시 타이머가 시작되며, 사용자의 실제 접속 여부와 관계없이 지정된 기간 동안만 권한이 유효합니다.
-*  **Duration(Minutes)** : 서버 접근 권한이 유효한 시간을 분 단위로 입력합니다. 1분부터 최대 허용 시간까지 설정할 수 있으며, 지정된 시간이 경과하면 자동으로 접근 권한이 만료됩니다.
+* **Duration(Minutes)** : 서버 접근 권한이 유효한 시간을 분 단위로 입력합니다. 1분부터 최대 허용 시간까지 설정할 수 있으며, 지정된 시간이 경과하면 자동으로 접근 권한이 만료됩니다.
 
 ##### Require Minute-Based Requests Off인 경우
 
@@ -95,11 +95,11 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 <img src="/user-manual/workflow/requesting-server-access/Screenshot-2025-08-26-at-1.07.26-AM.png" alt="Screenshot-2025-08-26-at-1.07.26-AM.png" width="718" />
 </figure>
 
-*  **Access Expiration Date**  : 요청 권한의 만료일자를 입력합니다. 기본값은 관리자 페이지에서 SAC configurations &gt; Server Access Request Default Settings의 Maximum Access Duration 값을 따릅니다.
+* **Access Expiration Date** : 요청 권한의 만료일자를 입력합니다. 기본값은 관리자 페이지에서 SAC configurations &gt; Server Access Request Default Settings의 Maximum Access Duration 값을 따릅니다.
     * 적절한 커넥션 접근 권한 관리를 위해 필요한 기간만큼 요청하는 것을 권장합니다.
 
 <Callout type="important">
-Server Access Request에서는  **한 번에 하나의 서버 그룹에 대해서만 Direct Permission 요청이 가능** 합니다.
+Server Access Request에서는 **한 번에 하나의 서버 그룹에 대해서만 Direct Permission 요청이 가능**합니다.
 Server List 테이블에 서버가 추가되어있는 상태에서 Add Servers 모달을 다시 띄울 경우, 선택된 내용이 모두 초기화됩니다.
 </Callout>
 
@@ -112,13 +112,13 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 3
 </figcaption>
 </figure>
 
-*  **Title**  : 요청 제목을 입력합니다.
-*  **Reason for Request**  : 커넥션 접근 권한을 요청하는 사유를 입력합니다.
-*  **Submit**  : 요청을 모두 작성하였다면 `Submit` 버튼을 눌러 상신을 완료합니다.
+* **Title** : 요청 제목을 입력합니다.
+* **Reason for Request** : 커넥션 접근 권한을 요청하는 사유를 입력합니다.
+* **Submit** : 요청을 모두 작성하였다면 `Submit` 버튼을 눌러 상신을 완료합니다.
 
 접근 권한을 부여받은 서버에 접속하는 방법은 [권한이 있는 서버에 접속하기](../server-access-control/connecting-to-authorized-servers) 문서를 참고해 주세요.
 
 <Callout type="info">
-Direct Permission으로 부여된 권한은 서버 목록에서  **Default Role** 을 선택할 경우에 적용됩니다.
+Direct Permission으로 부여된 권한은 서버 목록에서 **Default Role**을 선택할 경우에 적용됩니다.
 접근 권한 정책은 Server Access Request 신청 시점에 설정된 기본 서버 접근 정책을 적용받습니다.
 </Callout>

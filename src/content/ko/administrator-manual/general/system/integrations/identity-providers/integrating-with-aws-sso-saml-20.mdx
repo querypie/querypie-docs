@@ -44,7 +44,7 @@ QueryPie의 Identity Providers Integration 설정에서 SAML을 Type으로 선�
 1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집으로 이동합니다.
 2. 애플리케이션 내 사용자 속성과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
 
-|  **애플리케이션 내 사용자 속성**  |  **IAM Identity Center의 문자열 값 또는 사용자 속성으로 매핑**  |  **형식**      |
+| **애플리케이션 내 사용자 속성** | **IAM Identity Center의 문자열 값 또는 사용자 속성으로 매핑** | **형식**     |
 | --------------------- | ------------------------------------------------ | ------------ |
 | Subject               | $`{user:email}`                                  | emailAddress |
 | firstName             | $`{user:givenName}`                              | basic        |
@@ -65,9 +65,9 @@ Administrator &gt; General &gt; User Management &gt; Authentication
 
 * Administrator &gt; General &gt; System &gt; Integrations에서 Authentication 섹션 하위의 Identity Provider를 선택합니다.
 * Add 버튼을 눌러 SAML 형식으로 IdP를 등록합니다.
-    *  **Name**  : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
-    *  **Type** : SAML을 선택합니다.
-    *  **Identity Provider Metadata**  : AWS에서 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드한 SAML metadata XML의 내용을 복사해서 붙여 넣습니다.
+    * **Name** : 식별에 용이하도록 적합한 IdP의 이름을 입력합니다.
+    * **Type**: SAML을 선택합니다.
+    * **Identity Provider Metadata** : AWS에서 애플리케이션 &gt; 작업 &gt; 구성 편집 화면에서 IAM Identity Center SAML 메타데이터 파일을 다운로드한 SAML metadata XML의 내용을 복사해서 붙여 넣습니다.
 * `Save` 버튼을 클릭하여 저장합니다.
 
 ### QueryPie에서 SAML 로그인

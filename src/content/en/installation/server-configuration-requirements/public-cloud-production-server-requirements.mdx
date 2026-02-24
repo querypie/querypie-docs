@@ -7,14 +7,14 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/903086124/Pu
 
 ### Overview
 
-When operating QueryPie servers on Public Cloud such as AWS, GCP, Azure, we recommend applying the following configuration.
+When operating QueryPie servers on Public Cloud such as AWS, GCP, or Azure, we recommend applying the following configuration.
 
 * Apply High Availability configuration
-    * Apply Application Load Balancer and Network Load Balancer for high availability and load distribution suitable configuration.
+    * Apply Application Load Balancer and Network Load Balancer for a configuration suitable for high availability and load balancing.
     * Place 2 or more VM Instances as Upstream servers of Load Balancer. If the required processing capacity is high, apply Scale-Out configuration by increasing the number of VM Instances.
-* Apply Managed Service MySQL and Redis instead of VM for QueryPie MySQL and Redis.
+* Apply Managed Service MySQL and Redis instead of VMs for QueryPie MySQL and Redis.
     * For AWS, we recommend using Aurora RDS for MySQL, Aurora RDS for MariaDB, and ElastiCache.
-* VM OS supports most Linux distributions. However, you must be able to install and use docker daemon.
+* The VM OS supports most Linux distributions. However, you must be able to install and use docker daemon.
     * For AWS, we recommend Amazon Linux.
     * For GCP, we recommend Ubuntu 24.04 LTS (or the latest LTS version after that).
 
@@ -156,5 +156,4 @@ For such cases, we recommend approaching in the following way.
 
 * When newly introducing QueryPie, perform gradual deployment for internal users, monitor VM CPU, Memory, and Disk IO usage indicators, and monitor whether performance is sufficient.
 * If there is an existing access control system in use, receive and analyze user usage indicators. We need usage indicators such as user access count, query execution count, ResultSet size, generated Audit Log size, etc. for a period of about 1 day or 1 week.
-
 

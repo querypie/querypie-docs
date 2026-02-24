@@ -26,8 +26,8 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access
 1. Database 설정 메뉴에서 Policies &gt; Data Access 메뉴로 이동합니다.
 2. 우측 상단의 `Create Policy` 버튼을 클릭합니다.
 3. 정책 생성을 위해 다음 정보를 입력합니다.
-    1.  **Policy Name**  : 정책을 화면상에서 구별할 수 있는 이름입니다.
-    2.  **Target Connection**  : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
+    1. **Policy Name** : 정책을 화면상에서 구별할 수 있는 이름입니다.
+    2. **Target Connection** : 정책을 적용할 커넥션을 선택합니다. 1개의 정책당 1개의 커넥션을 연결할 수 있습니다.
 4. `Save` 버튼을 통해 저장합니다.
 
 해당 정책이 Data Access 정책 목록에 생성된 것을 확인할 수 있습니다.
@@ -47,11 +47,11 @@ Administrator &gt; Databases &gt; Policies &gt; Data Access &gt; Details &gt; Ad
 1. Data Access 메뉴에서 생성한 정책을 클릭합니다.
 2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
 3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.
-    1.  **Database Name**  : 규칙 등록을 위한 필수 값입니다.
-    2.  **Table Name**  : 규칙 등록을 위한 필수 값입니다. 테이블만 선택할 경우, 해당 테이블 조회 자체가 불가능하도록 제한됩니다.
-    3.  **Column Name**  : 컬럼 단위로 데이터 접근을 제한하고자 하는 경우 선택합니다.
+    1. **Database Name** : 규칙 등록을 위한 필수 값입니다.
+    2. **Table Name** : 규칙 등록을 위한 필수 값입니다. 테이블만 선택할 경우, 해당 테이블 조회 자체가 불가능하도록 제한됩니다.
+    3. **Column Name** : 컬럼 단위로 데이터 접근을 제한하고자 하는 경우 선택합니다.
 4. 해당 데이터 조회가 필요한 사용자 또는 그룹에 한해 테이블/컬럼 접근 제한 규칙을 예외 처리할 수 있습니다.
-    *  **Allowed Users**  : 해당 규칙에 대한 예외 사용자 또는 그룹을 선택합니다.
+    * **Allowed Users** : 해당 규칙에 대한 예외 사용자 또는 그룹을 선택합니다.
 5. `Ok` 버튼을 통해 저장합니다.
 
 Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다.
@@ -68,7 +68,7 @@ SQL Editor &gt; 정책이 적용된 데이터 조회 시 *`{RESTRICTED}`*  로 �
 Database Name 선택 시 "[ENGINE] [30101] Please Check the user credential or IP ACL settings.
 Access denied for user ‘username’@’host' (using password: YES)” 오류가 발생합니다.
 A. 이 경우, DB 계정 정보 설정이 안 되어 있거나 잘못된 정보로 설정되어 있을 수 있습니다.
-Administrator &gt; Databases &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후,  **Database Username / Password 정보를 입력하고 저장** 한 뒤 다시 시도합니다.
+Administrator &gt; Databases &gt; Connection Management &gt; DB Connections 메뉴에서 해당 커넥션 정보 클릭 후, **Database Username / Password 정보를 입력하고 저장**한 뒤 다시 시도합니다.
 </Callout>
 
 ### 접근 제한 정책이 적용된 테이블 / 컬럼에 대한 접근 로그 확인하기
@@ -87,13 +87,13 @@ Logs 탭에서 로그 확인
 1. 정책 목록에서 생성한 정책의 개별 항목(행)을 클릭하여 상세 페이지로 이동합니다.
 2. Logs 탭을 선택합니다.
 3. Log의 내용을 확인합니다.
-    1.  **Name** : QueryPie 사용자의 Display Name입니다.
-    2.  **Connection**  : 정책이 제어하고 있는 대상 커넥션입니다.
-    3.  **Database Name** : 정책이 제어하고 있는 대상 논리 DB 이름입니다.
-    4.  **Table Name**  : 정책이 제어하고 있는 대상 테이블 이름입니다.
-    5.  **Column Name**  : 정책이 제어하고 있는 대상 단일 또는 복수의 컬럼 이름입니다.
-    6.  **Rows**  : 쿼리가 반환하는 행 수입니다.
-    7.  **Action At**  : 쿼리를 수행한 시점입니다.
+    1. **Name**: QueryPie 사용자의 Display Name입니다.
+    2. **Connection** : 정책이 제어하고 있는 대상 커넥션입니다.
+    3. **Database Name**: 정책이 제어하고 있는 대상 논리 DB 이름입니다.
+    4. **Table Name** : 정책이 제어하고 있는 대상 테이블 이름입니다.
+    5. **Column Name** : 정책이 제어하고 있는 대상 단일 또는 복수의 컬럼 이름입니다.
+    6. **Rows** : 쿼리가 반환하는 행 수입니다.
+    7. **Action At** : 쿼리를 수행한 시점입니다.
 4. Log 탭의 행을 클릭하면 상세화면에서 수행된 쿼리를 확인할 수 있습니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/policies/data-access/image-20250512-040436.png" alt="로그의 상세화면에서 쿼리 내용 확인" width="736" />

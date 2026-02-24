@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components'
 Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 수신할 수 있습니다.
 
 <Callout type="info">
-본 문서는  **10.2.6 또는 그 이상의 버전** 에 적용됩니다.
+본 문서는 **10.2.6 또는 그 이상의 버전**에 적용됩니다.
 10.2.5 또는 그 이하 버전의 Slack 연동 방법은 [10.1.0 버전 매뉴얼 문서](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)를 참고해주세요.
 </Callout>
 
@@ -88,7 +88,7 @@ App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니
 
 ### Bot User OAuth Token 획득
 
-Features &gt; OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서,  **Bot User OAuth Token**  을 복사하여 기록해 둡니다.
+Features &gt; OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서, **Bot User OAuth Token** 을 복사하여 기록해 둡니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20240418-022640.png" alt="image-20240418-022640.png" width="764" />
@@ -126,8 +126,8 @@ App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 �
   </figure>
 2. 설정 모달에 아까 기록해둔 App Token과 Bot User OAuth Token을 입력합니다.
 3. 추가 설정 값은 다음과 같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화합니다.
-    *  **Send Workflow Notification via Slack DM**  : 워크플로우 요청에 대한 Slack DM 전송 활성화
-    *  **Allow Users to approve or reject on Slack DM**  : Slack DM 내에서 승인 또는 거절 기능 활성화<br/> <br/>
+    * **Send Workflow Notification via Slack DM** : 워크플로우 요청에 대한 Slack DM 전송 활성화
+    * **Allow Users to approve or reject on Slack DM** : Slack DM 내에서 승인 또는 거절 기능 활성화<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/image-20231003-054240.png" alt="액션 허용타입 예시 (좌) / 액션 비허용 타입 예시 (우)" width="760" />
       <figcaption>
@@ -162,7 +162,7 @@ DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는�
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-151504.png" alt="screenshot-20250218-151504.png" width="736" />
   </figure>
-2. 승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/> **Allow Users to approve or reject on Slack DM**  설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/> <br/>
+2. 승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.<br/>**Allow Users to approve or reject on Slack DM** 설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-slack-dm/screenshot-20250218-152238.png" alt="screenshot-20250218-152238.png" width="701" />
   </figure>

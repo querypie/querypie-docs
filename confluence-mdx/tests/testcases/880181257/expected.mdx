@@ -33,13 +33,13 @@ import { Callout } from 'nextra/components'
 
 #### <br/>Agent를 통한 접속
 
-1.  **QueryPie Agent 실행**
+1. **QueryPie Agent 실행**
     * QueryPie Agent를 실행합니다.
     * Database 항목에서 Custom Data Source를 확인할 수 있습니다. <br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.05.26-PM.png" alt="Screenshot-2025-03-06-at-2.05.26-PM.png" width="400" />
       </figure>
-2.  **Connection Guide 확인**
+2. **Connection Guide 확인**
     * Agent에서 Custom Data Source 커넥션 행을 클릭하면 Port 정보를 담은 행이 보입니다.
     * 위 행을 우클릭을 한뒤 Connection Guide를 클릭하면 접속 정보를 확인할 수 있습니다. <br/>
       <figure data-layout="center" data-align="center">
@@ -47,9 +47,9 @@ import { Callout } from 'nextra/components'
       </figure>
     * UID/PW는 수정할 수 없는 db username, db password로 표시됩니다.
     * Privileges는 "-"로 표시됩니다.
-3.  **SQL Tool에서 접속**
+3. **SQL Tool에서 접속**
     * DataGrip이나 기타 SQL Tool을 실행합니다.
-    *  **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.**
+    * **Host와 Port는 Connection Guide에 명시되어있는 정보를 입력해야합니다.**
     * 벤더에 따라 추가 정보를 입력합니다.
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.18.26-PM.png" alt="Screenshot-2025-03-06-at-2.18.26-PM.png" width="712" />
@@ -62,13 +62,13 @@ import { Callout } from 'nextra/components'
 
 #### 웹으로 접속 시도하는 경우
 
-1.  **웹 커넥션 목록 확인**
+1. **웹 커넥션 목록 확인**
     * 사용자 화면 상단 Databases를 클릭합니다.
     * 좌측 커넥션 목록에서 QueryPie Connections를 클릭하면 접근 권한이 있는 Custom Data Source가 표시됩니다. <br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/database-access-control/connecting-to-custom-data-source/Screenshot-2025-03-06-at-2.22.22-PM.png" alt="Screenshot-2025-03-06-at-2.22.22-PM.png" width="712" />
       </figure>
-2.  **접속 불가 안내**
+2. **접속 불가 안내**
     * Custom Data Source 선택 시 Connect 버튼이 비활성화됩니다.
     * 아래와 같은 툴팁이 표시되며 웹으로는 접속이 불가합니다.  <br/> "Access is only possible through a proxy and cannot be accessed through the web. Please open the QueryPie Agent to connect to the Custom Data Source."
       <figure data-layout="center" data-align="center">

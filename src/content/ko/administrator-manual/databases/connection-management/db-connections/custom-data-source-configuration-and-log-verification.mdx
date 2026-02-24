@@ -13,9 +13,9 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 
 **주요 특징**
 
-*  **다양한 벤더 지원** : QueryPie에서 지원하지 않는 데이터 소스에 접근 가능
-*  **TCP 기반 접근 제어** : 사용자와 IP 기반의 접근 제어 제공
-*  **Agent 기반 연결** : QueryPie Agent를 통해 서드 파티 SQL 도구로 연결 가능
+* **다양한 벤더 지원**: QueryPie에서 지원하지 않는 데이터 소스에 접근 가능
+* **TCP 기반 접근 제어**: 사용자와 IP 기반의 접근 제어 제공
+* **Agent 기반 연결**: QueryPie Agent를 통해 서드 파티 SQL 도구로 연결 가능
 
 #### Custom Data Source 커넥션 생성
 
@@ -27,21 +27,21 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 * Query Audit 및 구문제어는 지원하지 않습니다.
 </Callout>
 
-1.  **DB Connections 메뉴로 이동**
+1. **DB Connections 메뉴로 이동**
     * Admin &gt; Databases &gt; Connection Management &gt; DB Connections를 선택합니다.
     * `+ Create Connection` 버튼을 클릭합니다.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.10.11-AM.png" alt="Screenshot-2025-03-05-at-10.10.11-AM.png" width="712" />
       </figure>
-2.  **Custom Data Source 생성**
+2. **Custom Data Source 생성**
     *  Custom Data Source 아이콘을 클릭합니다.
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-10.11.42-AM.png" alt="Screenshot-2025-03-05-at-10.11.42-AM.png" width="712" />
       </figure>
-    * 생성 시 다음과 같은 경고 메시지가 표시됩니다: <br/>  **Restrictions:**
+    * 생성 시 다음과 같은 경고 메시지가 표시됩니다: <br/> **Restrictions:** 
         * Only TCP access control is available; Privileges control and Query Audit are not supported.
         * Access is only possible through a proxy; it cannot be accessed via the web editor.
-    * 아래의 연결 정보를 원하는 설정에 맞게 입력합니다. ****
+    * 아래의 연결 정보를 원하는 설정에 맞게 입력합니다.****
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-12.02.22-PM.png" alt="Screenshot-2025-03-05-at-12.02.22-PM.png" width="712" />
       </figure>
@@ -54,17 +54,17 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
         * Proxy Usage : 항상 활성화 상태 (비활성화 불가)
         * Description (선택) : 필요시 설명 추가
     * 입력 후 하단의 `Next` 버튼을 클릭하여 생성을 완료합니다.
-3.  **생성 완료**
+3. **생성 완료**
     * 생성 후 DB Connection 목록에서 Database Type이 Custom Data Source로 표시됩니다.
-4.  **Custom Data Source 수정 및 삭제**
-    *  **수정**
+4. **Custom Data Source 수정 및 삭제**
+    * **수정**
         * Admin &gt; Databases &gt; Connection Management &gt; DB Connections 목록에서 수정하고 싶은 Custom Data Source를 선택합니다.
         * 원하는 항목을 변경할 수 있으며 Tag를 추가할 수 있습니다.
         * 수정 후 우측 상단의 `Save Changes` 버튼을 클릭해 변경사항을 저장합니다.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/databases/connection-management/db-connections/custom-data-source-configuration-and-log-verification/Screenshot-2025-03-05-at-6.43.08-PM.png" alt="Screenshot-2025-03-05-at-6.43.08-PM.png" width="760" />
           </figure>
-    *  **삭제**
+    * **삭제**
         * DB Connections 목록에서 삭제할 커넥션의 좌측 체크 박스를 선택한 후 `Delete` 버튼을 클릭합니다.
         * “Are you sure you want to delete“ 문구가 나오면 `OK` 버튼을 클릭해 커넥션을 삭제합니다.
           <figure data-layout="center" data-align="center">
@@ -73,11 +73,11 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 
 #### Access Control 설정
 
-1.  **권한 부여 모달로 이동**
+1. **권한 부여 모달로 이동**
     * Admin &gt; Databases &gt; DB Access Control &gt; Access Control을 선택합니다.
     * 권한을 부여하고 싶은 사용자를 클릭하여 Detail 페이지로 넘어갑니다.
     * 우측 중단에 `+ Grant Privilege` 버튼을 클릭합니다.
-2.  **권한 부여**
+2. **권한 부여**
     * 권한 부여 모달 좌측 체크박스에 Custom Data Source를 클릭합니다.
     * Custom Data Source의 Privilege는 별도 타입이 없는 "-"로 표시됩니다.
     * 부여 시 만료일(Expiration Date)을 설정할 수 있습니다.
@@ -87,7 +87,7 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
       </figure>
 
 
-1.  **권한 회수**
+1. **권한 회수**
     * 기본적으로는 사용자가 신청한 Expiration Date까지 권한이 유지됩니다.
     * 사용자에게 부여된 권한을 중간에 회수하려면 Privilege를 Revoke 합니다.
         * Admin &gt; Databases &gt; DB Access Control &gt; Access Control &gt; User를 선택합니다.
@@ -98,14 +98,14 @@ Custom Data Source는 QueryPie에서 기본적으로 지원하지 않는 벤더�
 
 #### Audit Log 확인
 
-1.  **DB Access History**
+1. **DB Access History**
     * Admin &gt; Audit &gt; DB Access History를 선택합니다.
     * 로그 확인
         * Database Type: 'Custom Data Source'로 표시됩니다.
         * Connected From: 'Proxy'로 표시됩니다.
         * Connect/Disconnect의 Success/Failure 정보 확인 가능합니다.
             * 접속 허용 시간 외 접속 시도할 경우 모든 벤더에서 동일하게 "This connection is not accessible at this time. Please ask your administrator." 메시지가 표기됩니다.
-2.  **Activity Logs**
+2. **Activity Logs**
     * 관리자가 Custom Data Source 커넥션 정보를 생성 / 수정 / 삭제 한 경우 기록이 남습니다.
 
 <Callout type="important">

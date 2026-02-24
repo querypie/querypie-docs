@@ -25,19 +25,19 @@ Event Callback Integration 상세페이지
 </figure>
 
 4. Event Callback 설정을 위해 다음 정보를 입력합니다.
-    *  **Name** : 식별이 용이하도록 임의의 이름을 입력합니다.
-    *  **Callback URL** : 이벤트 알림을 수신할 외부 애플리케이션의 웹훅 URL을 입력합니다.
-    *  **Status** : 웹훅의 동작 상태를 선택합니다.
-        *  **Enabled** : 웹훅이 활성화되어 실시간으로 이벤트를 전송합니다.
-        *  **Paused** : 웹훅을 일시 중지합니다. 이 상태에서 발생한 이벤트는 누적되며, 다시 Enabled로 변경 시 누적된 이벤트가 모두 전송됩니다.
-        *  **Disabled** : 웹훅을 완전히 비활성화합니다. 이 상태에서는 이벤트가 전송되지 않으며, 누적되지도 않습니다.
-    *  **Subscribed Events** : 알림을 구독할 이벤트 타입을 선택합니다. 현재 지원되는 이벤트는 다음과 같습니다.
+    * **Name**: 식별이 용이하도록 임의의 이름을 입력합니다.
+    * **Callback URL**: 이벤트 알림을 수신할 외부 애플리케이션의 웹훅 URL을 입력합니다.
+    * **Status**: 웹훅의 동작 상태를 선택합니다.
+        * **Enabled**: 웹훅이 활성화되어 실시간으로 이벤트를 전송합니다.
+        * **Paused**: 웹훅을 일시 중지합니다. 이 상태에서 발생한 이벤트는 누적되며, 다시 Enabled로 변경 시 누적된 이벤트가 모두 전송됩니다.
+        * **Disabled**: 웹훅을 완전히 비활성화합니다. 이 상태에서는 이벤트가 전송되지 않으며, 누적되지도 않습니다.
+    * **Subscribed Events**: 알림을 구독할 이벤트 타입을 선택합니다. 현재 지원되는 이벤트는 다음과 같습니다.
         * `USER_LOCKED`: 사용자 계정 잠금
         * `USER_LOGIN_SUCCEEDED`: 사용자 로그인 성공
         * `USER_CREATED`: 사용자 생성
         * `USER_DELETED`: 사용자 삭제
-    *  **Authorization Header** : 웹훅 요청 시 보안 인증을 위해 필요한 인증 헤더 값을 입력합니다. (예: Authorization: Bearer &lt;token&gt;)
-    *  **Description** : 설정에 대한 설명을 입력합니다. (선택 사항)<br/>
+    * **Authorization Header**: 웹훅 요청 시 보안 인증을 위해 필요한 인증 헤더 값을 입력합니다. (예: Authorization: Bearer &lt;token&gt;)
+    * **Description**: 설정에 대한 설명을 입력합니다. (선택 사항)<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/system/integrations/integrating-with-event-callback/Screenshot-2025-08-25-at-6.06.50-PM.png" alt="Event Callback 설정 팝업 다이얼로그" width="427" />
       <figcaption>

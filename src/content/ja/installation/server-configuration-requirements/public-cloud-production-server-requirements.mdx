@@ -12,9 +12,9 @@ QueryPieサーバをAWS、GCP、AzureなどのPublic Cloudで運用する場合�
 * High Availability構成適用
     * Application Load Balancer、Network Load Balancerを適用して、高可用性、負荷分散に適した構成を適用します。
     * 2つ以上のVM InstanceをLoad BalancerのUpstreamサーバとします。要求される処理容量が高い場合、VM Instanceの数を増やすScale-Out方式の構成を適用します。
-* QueryPie MySQL、RedisをVMではなく、Managed Service方式のMySQL、Redisを適用します。
+* QueryPie MySQL、RedisをVMではなくManaged Service方式のMySQL、Redisで適用します。
     * AWSの場合Aurora RDS for MySQL、Aurora RDS for MariaDB、ElastiCacheを使用することを推奨します。
-* VMのOSはLinuxディストリビューションは大部分サポートします。ただし、docker daemonをインストールして使用できる必要があります。
+* VMのOSはLinuxディストリビューション大部分をサポートします。ただし、docker daemonをインストールして使用できる必要があります。
     * AWSの場合、Amazon Linuxを推奨します。
     * GCPの場合、Ubuntu 24.04 LTS（または以降の最新LTSバージョン）を推奨します。
 
@@ -156,5 +156,4 @@ QueryPieは基本仕様のVM 1台で、DAC基準で簡単なクエリの場合�
 
 * QueryPieを新規導入する場合、内部利用者に対して段階的に配布を実行し、VMのCPU、Memory、Disk IO使用量指標をモニタリングし、性能が不足していないか、モニタリングします。
 * 既存使用中のアクセス制御システムがある場合、利用者の使用量指標を提供받いて、分析します。1日または1週間程度の期間中、利用者の接続件数、クエリ実行件数、ResultSetのサイズ、生成されたAudit Logのサイズなど使用量指標が必要です。
-
 

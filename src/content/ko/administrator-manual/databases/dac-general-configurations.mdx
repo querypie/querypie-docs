@@ -36,16 +36,16 @@ Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩�
 <img src="/administrator-manual/databases/dac-general-configurations/screenshot-20240726-145650.png" alt="screenshot-20240726-145650.png" width="350" />
 </figure>
 
-*  **Git Repository URL**  : 쿼리를 전송할 Git Repository URL
-*  **Git Branch**  : 쿼리 파일을 전송할 Repository 내 브랜치 이름
-*  **Authentication Type**  : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)
+* **Git Repository URL** : 쿼리를 전송할 Git Repository URL
+* **Git Branch** : 쿼리 파일을 전송할 Repository 내 브랜치 이름
+* **Authentication Type** : 쿼리 전송 요청의 인증 방식 (OAuth 또는 SSH 선택)
     * OAuth 선택 시, 다음의 내용을 입력합니다.
-        *  **User Name** : Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
-        *  **Access Token**  : Git 서비스에서 제공하는 Access Token
+        * **User Name**: Git Repository를 이용 중인 사용자 이름 (예: GitHub Username)
+        * **Access Token** : Git 서비스에서 제공하는 Access Token
     * SSH 선택 시, 다음의 내용을 입력합니다.
-        *  **Public Key**  : Git 서버에 저장된 SSH Public Key
-        *  **Private Key**  : SSH Public Key와 한 쌍을 이루는 Private Key
-        *  **Passphrase**  : Private Key에 Passphrase 설정된 경우 입력
+        * **Public Key** : Git 서버에 저장된 SSH Public Key
+        * **Private Key** : SSH Public Key와 한 쌍을 이루는 Private Key
+        * **Passphrase** : Private Key에 Passphrase 설정된 경우 입력
 
 
 입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인한 후 `OK` 버튼을 클릭하여 저장합니다.
@@ -57,7 +57,7 @@ GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음 문서를
 </Callout>
 
 
-Query Sharing 설정이 완료되면 Query Sharing이  **On** 으로 표시됩니다.
+Query Sharing 설정이 완료되면 Query Sharing이 **On**으로 표시됩니다.
 
 SQL Editor 화면에서 쿼리 공유 기능을 사용할 수 있습니다.
 
@@ -72,14 +72,14 @@ ______
 #### 접근제어 설정
 
 
-*  **Privilege Deactivation Period** : DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
-*  **Maximum Access Duration** : Privilege 요청 및 할당 시 최대 기간
+* **Privilege Deactivation Period**: DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
+* **Maximum Access Duration**: Privilege 요청 및 할당 시 최대 기간
     * DB Access Request 요청 시 지정된 기간을 초과한 만료일자 설정 불가
-*  **Notification of Access Expiration**  : 사용자의 권한 만료(Privilege Expiration, Policy Exception Expiration) 전 이메일로 사전 알림을 받을 수 있도록 합니다.
+* **Notification of Access Expiration** : 사용자의 권한 만료(Privilege Expiration, Policy Exception Expiration) 전 이메일로 사전 알림을 받을 수 있도록 합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png" alt="image-20251218-084512.png" width="620" />
   </figure>
-*  **Display the first 10 rows in Query Audit** : Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며, On으로 설정할 경우 전체 결과를 노출하지 않고 최초 10줄만 표시됩니다)
+* **Display the first 10 rows in Query Audit**: Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며, On으로 설정할 경우 전체 결과를 노출하지 않고 최초 10줄만 표시됩니다)
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png" alt="Query Audit Detail" width="736" />
@@ -88,13 +88,13 @@ Query Audit Detail
 </figcaption>
 </figure>
 
-*  **Advanced Privilege Setting**  : Privilege 권한별 계정 통제 (Default : Off)
+* **Advanced Privilege Setting** : Privilege 권한별 계정 통제 (Default : Off)
     * On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨
-    * 자세한 내용은 [DB Connections](connection-management/db-connections) 내  **Privilege Setting**  문서 참고
-*  **Unmasking Zones** : Unmasking request를 통해 마스킹된 데이터 조회를 허가받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 정책 예외 대상인 사용자라도 특정 IP(대역)에서만 마스킹 해제 상태로 조회할 수 있도록 설정합니다. (Default : Off) <br/>참고 : [Unmasking Zones 상세 설명](dac-general-configurations/unmasking-zones)
-*  **Ledger Table Management :**  특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유 입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화 설정입니다. (Default : Off)
-*  **Select Purpose Duration for Agent :**  Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유를 입력할 때 지정한 시간 동안 재입력하지 않도록 설정합니다. Ledger Table Management가 On 상태일 때만 설정 가능합니다. (Default : 10 minutes)
-*  **Restricted Statement**  : 사용 제한 쿼리
+    * 자세한 내용은 [DB Connections](connection-management/db-connections) 내 **Privilege Setting** 문서 참고
+* **Unmasking Zones**: Unmasking request를 통해 마스킹된 데이터 조회를 허가받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 정책 예외 대상인 사용자라도 특정 IP(대역)에서만 마스킹 해제 상태로 조회할 수 있도록 설정합니다. (Default : Off) <br/>참고 : [Unmasking Zones 상세 설명](dac-general-configurations/unmasking-zones)
+* **Ledger Table Management :**  특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유 입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화 설정입니다. (Default : Off)
+* **Select Purpose Duration for Agent :**  Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유를 입력할 때 지정한 시간 동안 재입력하지 않도록 설정합니다. Ledger Table Management가 On 상태일 때만 설정 가능합니다. (Default : 10 minutes)
+* **Restricted Statement** : 사용 제한 쿼리
     * Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)
     * Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)
     * 입력된 Restricted Statement 포함 쿼리 실행 시 차단됨
@@ -107,12 +107,12 @@ Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승�
 사용자에 따라 실행을 허용해야 하는 쿼리를 입력하지 않도록 합니다.
 </Callout>
 
-*  **Justification Length**  : Connection 설정에서 "User Action Purpose Required" 옵션이 활성화되어 있거나 Ledger table management 정책에서 사유 입력을 강제한 경우 Web Editor 또는 Agent를 통해 사유를 입력해야 합니다. 이때 입력란에 입력하는 글자 길이의 최소값 및 최대값을 관리자가 지정합니다.
+* **Justification Length** : Connection 설정에서 "User Action Purpose Required" 옵션이 활성화되어 있거나 Ledger table management 정책에서 사유 입력을 강제한 경우 Web Editor 또는 Agent를 통해 사유를 입력해야 합니다. 이때 입력란에 입력하는 글자 길이의 최소값 및 최대값을 관리자가 지정합니다.
     * 입력값의 최소값은 1이고 최대값은 1000입니다.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png" alt="image-20250824-233845.png" width="712" />
       </figure>
-*  **Query Annotation**  : 쿼리 수행 시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.
+* **Query Annotation** : 쿼리 수행 시 자동으로 관리자가 지정한 주석을 기록합니다. 기능을 활성화한 경우 아래 3가지 템플릿을 사용하여 주석을 기록합니다. 10.4.0 기준 Redshift 한정 지원.
     * User Name: `{{userName}}` : 쿼리를 수행한 사용자의 Display Name입니다.
     * Login ID: `{{loginId}}` : 쿼리를 수행한 사용자의 Login ID입니다.
     * Execute From: `{{executedFrom}}` : 쿼리를 수행한 수단입니다. 10.4.0 기준 Web Editor만 기록됩니다.
@@ -126,7 +126,7 @@ Query Audit
 
 <br/>
 
-*  **Member based Connection Filtering :** Workflow의 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링하는 기능입니다.
+* **Member based Connection Filtering :** Workflow의 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링하는 기능입니다.
     * 커넥션의 상세 화면에서 connection member에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Request에 노출됩니다.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png" alt="Databases &gt; Connection Management &gt; DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당" width="712" />
@@ -138,10 +138,10 @@ Query Audit
 <Callout type="info">
 **DB 작업에 대한 사유 입력 강제 설정**
 9.17.0 버전부터 해당 기능은 커넥션 세부 설정으로 변경되었습니다.
-자세한 설정 방법은 [DB Connections](connection-management/db-connections) 내  **추가 설정하기** 를 참고하세요.
+자세한 설정 방법은 [DB Connections](connection-management/db-connections) 내 **추가 설정하기**를 참고하세요.
 </Callout>
 
-*  **Maximum Policy Exception Period**  : Unmasking 등 정책 예외에 대해 최대 유효 기간을 설정할 수 있습니다. (시간 단위). 이 설정값은 Workflow 신청 양식과 New DAC Policy Management 기능 활성화 시 관리자의 수동 정책 설정에 영향을 줍니다.
+* **Maximum Policy Exception Period** : Unmasking 등 정책 예외에 대해 최대 유효 기간을 설정할 수 있습니다. (시간 단위). 이 설정값은 Workflow 신청 양식과 New DAC Policy Management 기능 활성화 시 관리자의 수동 정책 설정에 영향을 줍니다.
     * 기본값 : 720시간 (30일)
     * 최대값 : 8760시간 (1년)
     * 최소값 : 1시간
