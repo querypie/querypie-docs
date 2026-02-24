@@ -41,10 +41,10 @@ Content Type은 “Text”만 지원합니다.
 </figure>
 
 1. 실행계획(Explain) 옵션 및 실행계획 수행<br/>쿼리 에디터 하단에 있는 옵션을 선택하고 `Explain` 버튼을 누릅니다.
-    1.  **Attach Explain Results**  : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.)
+    1. **Attach Explain Results** : 실행계획의 결과를 SQL Request 에 첨부 여부를 선택하는 스위치입니다. (기본값은 OFF 입니다. 필요한 경우 스위치를 ON으로 전환하여 실행 계획 결과를 첨부해야 합니다.)
     2. 결과 표시 방식 선택
-        1.  **Table**  : 테이블 형태로 결과가 표시됩니다.
-        2.  **JSON**  : JSON 형태로 결과가 표시됩니다.
+        1. **Table** : 테이블 형태로 결과가 표시됩니다.
+        2. **JSON** : JSON 형태로 결과가 표시됩니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-235845.png" alt="image-20241029-235845.png" width="682" />
@@ -91,9 +91,9 @@ Content Type은 “Text”만 지원합니다.
 
 1. MySQL에서 실행계획(Explain)을 통해 검토 가능한 구문<br/>MySQL은 버전별로 실행계획을 통해 분석하는 지원 구문이 다릅니다.
 
-|  **MySQL 5.6.3 이전**  |  **MySQL 5.6.3 이후**                         |
-| -------------------- | ------------------------------------------- |
-| SELECT               | SELECT , DELETE , INSERT , REPLACE , UPDATE |
+| **MySQL 5.6.3 이전** | **MySQL 5.6.3 이후**                          |
+| ------------------ | ------------------------------------------- |
+| SELECT             | SELECT , DELETE , INSERT , REPLACE , UPDATE |
 
 <Callout type="important">
 optimizer_trace, analyze 는 SQL Request 에서 제공하는 실행계획(Explain) 수행 기능에서 지원하지 않습니다.

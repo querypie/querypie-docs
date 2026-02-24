@@ -21,42 +21,42 @@ Administrator &gt; Audit &gt; Servers &gt; Server Access History
 1. Administrator &gt; Audit &gt; Servers &gt; Server Access History 메뉴로 이동합니다.
 2. 현재 월 기준으로 로그가 내림차순으로 조회됩니다.
 3. 테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.
-    1.  **Name**  : 사용자 이름
-    2.  **Email**  : 사용자 Email
-    3.  **Account**  : 서버 접속 Account
-    4.  **Server Name**  : 접속 서버 명
-    5.  **Host**  : 접속 서버 호스트
-    6.  **Client IP**  : 사용자 IP
-    7.  **Client**   **Name**  : 사용자의 접속 방식
-    8.  **Role**  : 접속 Role
+    1. **Name** : 사용자 이름
+    2. **Email** : 사용자 Email
+    3. **Account** : 서버 접속 Account
+    4. **Server Name** : 접속 서버 명
+    5. **Host** : 접속 서버 호스트
+    6. **Client IP** : 사용자 IP
+    7. **Client** **Name** : 사용자의 접속 방식
+    8. **Role** : 접속 Role
 4. 검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/audit/server-logs/server-access-history/image-20240728-170045.png" alt="image-20240728-170045.png" width="672" />
   </figure>
-    1.  **Server OS**  : 접속한 서버의 OS
-    2.  **Protocol** : 접속 시 사용한 Protocol
-    3.  **Result** : 접속 시도 결과
-    4.  **Action Type** : Connect / Disconnect 여부
-    5.  **Action At**  : 접속 시점
+    1. **Server OS** : 접속한 서버의 OS
+    2. **Protocol**: 접속 시 사용한 Protocol
+    3. **Result**: 접속 시도 결과
+    4. **Action Type**: Connect / Disconnect 여부
+    5. **Action At** : 접속 시점
 5. 테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.
 6. 테이블에서 이하의 컬럼 정보를 제공합니다:
-    1.  **No**  : 이벤트 식별 번호
-    2.  **Action At**  : 서버 접속 시도 일시
-    3.  **Result**  : 접속 성공/실패 여부
+    1. **No** : 이벤트 식별 번호
+    2. **Action At** : 서버 접속 시도 일시
+    3. **Result** : 접속 성공/실패 여부
         1. ✔️ Success
         2. ❌ Failure
-    4.  **Name**  : 대상 사용자 이름
-    5.  **Email**  : 대상 사용자 이메일
-    6.  **Role**  : 대상 사용자 접속 시 사용된 Role명
-    7.  **Account**  : 서버 접속 Account
-    8.  **Server Name**  : 대상 서버명
-    9.  **Server OS**  : 접속한 서버의 OS
-    10.  **Host**  : 접속한 서버의 호스트
-    11.  **Port**  : 접속 시 사용된 포트
-    12.  **Protocol** : 접속 시 사용한 Protocol
-    13.  **Client IP**  : 사용자 클라이언트 IP 주소
-    14.  **Client**   **Name**  : 사용자의 접속 방식
-    15.  **Message**  : 접속 실패 등 특이사항에 대한 기록
+    4. **Name** : 대상 사용자 이름
+    5. **Email** : 대상 사용자 이메일
+    6. **Role** : 대상 사용자 접속 시 사용된 Role명
+    7. **Account** : 서버 접속 Account
+    8. **Server Name** : 대상 서버명
+    9. **Server OS** : 접속한 서버의 OS
+    10. **Host** : 접속한 서버의 호스트
+    11. **Port** : 접속 시 사용된 포트
+    12. **Protocol**: 접속 시 사용한 Protocol
+    13. **Client IP** : 사용자 클라이언트 IP 주소
+    14. **Client** **Name** : 사용자의 접속 방식
+    15. **Message** : 접속 실패 등 특이사항에 대한 기록
 
 ### Server Access History 상세 내역 조회하기
 
@@ -72,25 +72,25 @@ Administrator &gt; Audit &gt; Servers &gt; Server Access History &gt; Server Acc
 
 
 * 우측 드로워에는 이하의 정보를 노출합니다:
-    1.  **Result**  : 서버 접속 성공/실패 여부
+    1. **Result** : 서버 접속 성공/실패 여부
         1. ✔️ Success
         2. ❌ Failure
-    2.  **Name**  : 대상 사용자 이름
-    3.  **Action At**  : 접속 시점
-    4.  **Action Type** : Connect / Disconnect 여부
-    5.  **Connected From**  : 접속 방식
-    6.  **Role**  : 대상 사용자 접속 시 사용된 Role
-    7.  **Command Audit**  : 이 접속을 통한 명령어 기록 조회
-    8.  **Session Log**  : 이 접속을 통한 세션 레코딩 조회
-    9.  **Server Name**  : 대상 서버명
-    10.  **Server OS**  : 접속한 서버의 OS
-    11.  **Host**  : 접속한 서버의 호스트
-    12.  **Port**  : 접속 시 사용된 포트
-    13.  **Account**  : 서버 접속 Account
-    14.  **Protocol** : 접속 시 사용한 Protocol
-    15.  **Client**   **Name**  : 사용자의 접속 방식
-    16.  **Client IP**  : 사용자 클라이언트 IP 주소
-    17.  **Reverse Tunnel Agent Name** : Reverse Tunnel로 접속한 경우, 사용된 Reverse Tunnel Agent의 Name
-    18.  **Tag**  : Reverse Tunnel로 접속한 경우, Reverse Tunnel Agent를 선택하는 데 사용된 Tag
-    19.  **ProxyJump**  : Jump Host를 경유해서 서버에 접속한 경우, 적용된 ProxyJump
-    20.  **Message**  : 접속 실패 등 특이사항에 대한 기록
+    2. **Name** : 대상 사용자 이름
+    3. **Action At** : 접속 시점
+    4. **Action Type**: Connect / Disconnect 여부
+    5. **Connected From** : 접속 방식
+    6. **Role** : 대상 사용자 접속 시 사용된 Role
+    7. **Command Audit** : 이 접속을 통한 명령어 기록 조회
+    8. **Session Log** : 이 접속을 통한 세션 레코딩 조회
+    9. **Server Name** : 대상 서버명
+    10. **Server OS** : 접속한 서버의 OS
+    11. **Host** : 접속한 서버의 호스트
+    12. **Port** : 접속 시 사용된 포트
+    13. **Account** : 서버 접속 Account
+    14. **Protocol**: 접속 시 사용한 Protocol
+    15. **Client** **Name** : 사용자의 접속 방식
+    16. **Client IP** : 사용자 클라이언트 IP 주소
+    17. **Reverse Tunnel Agent Name**: Reverse Tunnel로 접속한 경우, 사용된 Reverse Tunnel Agent의 Name
+    18. **Tag** : Reverse Tunnel로 접속한 경우, Reverse Tunnel Agent를 선택하는 데 사용된 Tag
+    19. **ProxyJump** : Jump Host를 경유해서 서버에 접속한 경우, 적용된 ProxyJump
+    20. **Message** : 접속 실패 등 특이사항에 대한 기록

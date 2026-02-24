@@ -24,7 +24,7 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates
 ### 차단 명령어 템플릿 설정하기
 
 서버 접근 정책은 Policies 메뉴에서 설정할 수 있습니다.
-설정 방법은 [서버 접근 정책 설정하기](policies/setting-server-access-policy)의  **commandsRef**  부분을 참고합니다.
+설정 방법은 [서버 접근 정책 설정하기](policies/setting-server-access-policy)의 **commandsRef** 부분을 참고합니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/server-access-control/command-templates/Screenshot-2025-07-22-at-3.23.24-PM.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt; Create Command Template" width="760" />
@@ -36,16 +36,16 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Template` 버튼을 클릭합니다.
 3. 정책 설정을 위해 각 항목별로 다음의 정보를 입력합니다.
-    1.  **Base Type** : 이 명령어 템플릿에 등록된 명령어의 허용, 금지 여부를 선택합니다. 이 항목은 명령어 템플릿 생성 후 변경할 수 없습니다.
-        1.  **Deny**  : 금지할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 가능합니다.
-        2.  **Allow**  : 허용할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 불가능합니다.<br/>*제약사항: (10.2.1) Allow 설정은 TELNET과 FTP에서는 동작하지 않습니다.
-    2.  **Allow for Workflow Request** : 생성하는 템플릿을 서버 특권 신청(Server Privilege Request) 워크플로우에서 사용자가 선택할 수 있도록 허용할지 설정합니다.
+    1. **Base Type**: 이 명령어 템플릿에 등록된 명령어의 허용, 금지 여부를 선택합니다. 이 항목은 명령어 템플릿 생성 후 변경할 수 없습니다.
+        1. **Deny** : 금지할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 가능합니다.
+        2. **Allow** : 허용할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 불가능합니다.<br/>*제약사항: (10.2.1) Allow 설정은 TELNET과 FTP에서는 동작하지 않습니다.
+    2. **Allow for Workflow Request**: 생성하는 템플릿을 서버 특권 신청(Server Privilege Request) 워크플로우에서 사용자가 선택할 수 있도록 허용할지 설정합니다.
         * 이 옵션은 Base Type이 Allow인 경우에만 활성화됩니다.
         * On으로 설정하면, 사용자가 서버 특권 신청 시 이 템플릿을 선택할 수 있습니다.
-    3.  **Commands (SSH)**  : 서버에서 웹 터미널을 통해 실행되는 명령어 정책을 설정하는 곳입니다.
-        1.  **Keyword**  : 명령어를 키워드로 입력할 수 있습니다.
-        2.  **RegEx**  : 명령어를 정규 표현식 형태로 입력할 수 있습니다.
-    4.  **Functions (SFTP)**  : 해당 서버에서 웹 SFTP과 FTP를 통해 실행되는 기능 정책을 설정하는 곳입니다. 디렉터리/파일 삭제, 파일 업로드, 파일 다운로드, 디렉토리 생성 액션을 제한할 수 있습니다.
+    3. **Commands (SSH)**  : 서버에서 웹 터미널을 통해 실행되는 명령어 정책을 설정하는 곳입니다.
+        1. **Keyword** : 명령어를 키워드로 입력할 수 있습니다.
+        2. **RegEx** : 명령어를 정규 표현식 형태로 입력할 수 있습니다.
+    4. **Functions (SFTP)**  : 해당 서버에서 웹 SFTP과 FTP를 통해 실행되는 기능 정책을 설정하는 곳입니다. 디렉터리/파일 삭제, 파일 업로드, 파일 다운로드, 디렉토리 생성 액션을 제한할 수 있습니다.
 4. 우측 하단의 `Save` 버튼을 클릭하여 설정을 마무리합니다.
 
 

@@ -88,10 +88,10 @@ QueryPie 가 설치된 Linux VM 을 중심으로, 네트워크 연결을 Outboun
 
 #### 소프트웨어 설치를 위한 네트워크 접근
 
-|  **Access Type**  |  **Source**     |  **Destination**                                                                                                      |  **Protocol**  |  **Port**  |  **Description**                                                             |
-| ----------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- | ---------- | ---------------------------------------------------------------------------- |
-| Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | 제품 설치를 위한 설정파일을 내려받는 website 입니다.                                            |
-| Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | 제품 설치를 위해, Docker Image 를 내려받는 website 입니다. docker 용어로는 Docker Registry 입니다. |
+| **Access Type** | **Source**      | **Destination**                                                                                                       | **Protocol** | **Port** | **Description**                                                              |
+| --------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | ------------ | -------- | ---------------------------------------------------------------------------- |
+| Outbound        | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP          | 443      | 제품 설치를 위한 설정파일을 내려받는 website 입니다.                                            |
+| Outbound        | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP          | 443      | 제품 설치를 위해, Docker Image 를 내려받는 website 입니다. docker 용어로는 Docker Registry 입니다. |
 
 #### 제품 사용을 위한 네트워크 접근
 
@@ -100,56 +100,56 @@ QueryPie 제품의 기능에 따라, 공통, DAC, SAC, KAC, WAC 로 구분합니
 
 #### 공통
 
-|  **Access Type**  |  **Source**        |  **Destination**                                     |  **Service**  |  **Protocol**  |  **Port**  |  **Description**                                  |
-| ----------------- | ------------------ | ---------------------------------------------------- | ------------- | -------------- | ---------- | ------------------------------------------------- |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | SSH           | TCP            | 22         | Installation and management                       |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | HTTP          | TCP            | 80         | QueryPie Web Console                              |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | HTTPS         | TCP            | 443        | QueryPie Web Console                              |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | Custom TCP    | TCP            | 9000       | QueryPie Proxy for User Agent                     |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | MySQL         | TCP            | 3306       | (Optional) QueryPie Meta DB                       |
-| Inbound           | PC of Admin User   | QueryPie Server                                      | Redis         | TCP            | 6379       | (Optional) QueryPie CacheDB                       |
-| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTP          | TCP            | 80         | QueryPie Web Console                              |
-| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTPS         | TCP            | 443        | ( **Recommended** ) QueryPie Web Console          |
-| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer     | Custom TCP    | TCP            | 9000       | ( **Recommended** ) QueryPie Proxy for User Agent |
+| **Access Type** | **Source**         | **Destination**                                      | **Service** | **Protocol** | **Port** | **Description**                                 |
+| --------------- | ------------------ | ---------------------------------------------------- | ----------- | ------------ | -------- | ----------------------------------------------- |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | SSH         | TCP          | 22       | Installation and management                     |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | HTTP        | TCP          | 80       | QueryPie Web Console                            |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | HTTPS       | TCP          | 443      | QueryPie Web Console                            |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | Custom TCP  | TCP          | 9000     | QueryPie Proxy for User Agent                   |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | MySQL       | TCP          | 3306     | (Optional) QueryPie Meta DB                     |
+| Inbound         | PC of Admin User   | QueryPie Server                                      | Redis       | TCP          | 6379     | (Optional) QueryPie CacheDB                     |
+| Inbound         | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTP        | TCP          | 80       | QueryPie Web Console                            |
+| Inbound         | All the users<br/> | QueryPie Server<br/>or<br/>Application Load Balancer | HTTPS       | TCP          | 443      | (**Recommended**) QueryPie Web Console          |
+| Inbound         | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer     | Custom TCP  | TCP          | 9000     | (**Recommended**) QueryPie Proxy for User Agent |
 
 #### DAC
 
-|  **Access Type**  |  **Source**                                    |  **Destination**  |  **Type**  |  **Protocol**  |  **Port Range**  |  **Description**                                   |
-| ----------------- | ---------------------------------------------- | ----------------- | ---------- | -------------- | ---------------- | -------------------------------------------------- |
-| Inbound           | Users or Systems connecting to Agentless Proxy | QueryPie Server   | Custom TCP | TCP            | 40000 - 41000    | ( **Recommended** ) QueryPie Agentless Proxy       |
-| Inbound           | Users or Systems connecting to Agentless Proxy | QueryPie Server   | Custom TCP | TCP            | 41001 - 45000    | (Optional) More ports for QueryPie Agentless Proxy |
+| **Access Type** | **Source**                                     | **Destination** | **Type**   | **Protocol** | **Port Range** | **Description**                                    |
+| --------------- | ---------------------------------------------- | --------------- | ---------- | ------------ | -------------- | -------------------------------------------------- |
+| Inbound         | Users or Systems connecting to Agentless Proxy | QueryPie Server | Custom TCP | TCP          | 40000 - 41000  | (**Recommended**) QueryPie Agentless Proxy         |
+| Inbound         | Users or Systems connecting to Agentless Proxy | QueryPie Server | Custom TCP | TCP          | 41001 - 45000  | (Optional) More ports for QueryPie Agentless Proxy |
 
 #### SAC
 
-|  **Access Type**  |  **Source**     |  **Destination**       |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                                                   |
-| ----------------- | --------------- | ---------------------- | ---------- | -------------- | ---------- | ------------------------------------------------------------------ |
-| Outbound          | QueryPie Server | Target Linux Servers   | SSH        | TCP            | 22         | When Users access target linux machines via QueryPie               |
-| Outbound          | QueryPie Server | Target Windows Servers | RDP        | TCP            | 3389       | When Admin installs QueryPie RDP Agent on target Windows Servers.  |
-| Outbound          | QueryPie Server | Target Windows Servers | Custom RDP | TCP            | 13389      | When Users access target Windows Servers via QueryPie              |
-| Outbound          | QueryPie Server | Target Windows Servers | Custom TCP | TCP            | 13390      | Obsoleted - Port 13390 is not used anymore since version 10.2.2    |
+| **Access Type** | **Source**      | **Destination**        | **Type**   | **Protocol** | **Port** | **Description**                                                    |
+| --------------- | --------------- | ---------------------- | ---------- | ------------ | -------- | ------------------------------------------------------------------ |
+| Outbound        | QueryPie Server | Target Linux Servers   | SSH        | TCP          | 22       | When Users access target linux machines via QueryPie               |
+| Outbound        | QueryPie Server | Target Windows Servers | RDP        | TCP          | 3389     | When Admin installs QueryPie RDP Agent on target Windows Servers.  |
+| Outbound        | QueryPie Server | Target Windows Servers | Custom RDP | TCP          | 13389    | When Users access target Windows Servers via QueryPie              |
+| Outbound        | QueryPie Server | Target Windows Servers | Custom TCP | TCP          | 13390    | Obsoleted - Port 13390 is not used anymore since version 10.2.2    |
 
 #### KAC
 
-|  **Access Type**  |  **Source**     |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                                   |
-| ----------------- | --------------- | ------------------------------------------------ | ---------- | -------------- | ---------- | -------------------------------------------------- |
-| Inbound           | All the users   | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP            | 6443       | From Users to QueryPie KAC Proxy                   |
-| Outbound          | QueryPie Server | Target Kubernetes Cluster                        | Custom TCP | TCP            | 6443       | From QueryPie Server to target Kubernetes Clusters |
+| **Access Type** | **Source**      | **Destination**                                  | **Type**   | **Protocol** | **Port** | **Description**                                    |
+| --------------- | --------------- | ------------------------------------------------ | ---------- | ------------ | -------- | -------------------------------------------------- |
+| Inbound         | All the users   | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP          | 6443     | From Users to QueryPie KAC Proxy                   |
+| Outbound        | QueryPie Server | Target Kubernetes Cluster                        | Custom TCP | TCP          | 6443     | From QueryPie Server to target Kubernetes Clusters |
 
 #### WAC
 
-|  **Access Ty** pe |  **Source**        |  **Destination**                                 |  **Type**  |  **Protocol**  |  **Port**  |  **Description**                 |
-| ----------------- | ------------------ | ------------------------------------------------ | ---------- | -------------- | ---------- | -------------------------------- |
-| Inbound           | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP            | 7447       | From Users to QueryPie WAC Proxy |
+| **Access Ty**pe | **Source**         | **Destination**                                  | **Type**   | **Protocol** | **Port** | **Description**                  |
+| --------------- | ------------------ | ------------------------------------------------ | ---------- | ------------ | -------- | -------------------------------- |
+| Inbound         | All the users<br/> | QueryPie Server<br/>or<br/>Network Load Balancer | Custom TCP | TCP          | 7447     | From Users to QueryPie WAC Proxy |
 
 ### Load Balancers 설정
 
 부하분산, 장애내성을 갖추기 위해, QueryPie Service 에 Load Balancer 를 적용하는 설정을 표로 설명합니다.
 
-|  **LB**                            |  **Listener**  |  **Target**        |  **Health Check**         |  **LB Option**  |  **Description**          |
-| ---------------------------------- | -------------- | ------------------ | ------------------------- | --------------- | ------------------------- |
-| Application Load Balancer<br/>(L7) | HTTP / 80      | -                  | None                      | default         | Redirection to HTTPS      |
-| Application Load Balancer<br/>(L7) | HTTPS / 443    | http://querypie:80 | http://querypie:80/readyz | Sticky Session  | QueryPie Web Console      |
-| Network Load Balancer<br/>(L4)     | TCP / 9000     | querypie:9000      | http://querypie:80/readyz | default         | QueryPie Agent (DAC, SAC) |
-| Network Load Balancer<br/>(L4)     | TCP / 6443     | querypie:6443      | http://querypie:80/readyz | default         | QueryPie Agent (KAC)      |
-| Network Load Balancer<br/>(L4)     | TCP / 7447     | querypie:7447      | http://querypie:80/readyz | default         | QueryPie Agent (WAC)      |
+| **LB**                             | **Listener** | **Target**         | **Health Check**          | **LB Option**  | **Description**           |
+| ---------------------------------- | ------------ | ------------------ | ------------------------- | -------------- | ------------------------- |
+| Application Load Balancer<br/>(L7) | HTTP / 80    | -                  | None                      | default        | Redirection to HTTPS      |
+| Application Load Balancer<br/>(L7) | HTTPS / 443  | http://querypie:80 | http://querypie:80/readyz | Sticky Session | QueryPie Web Console      |
+| Network Load Balancer<br/>(L4)     | TCP / 9000   | querypie:9000      | http://querypie:80/readyz | default        | QueryPie Agent (DAC, SAC) |
+| Network Load Balancer<br/>(L4)     | TCP / 6443   | querypie:6443      | http://querypie:80/readyz | default        | QueryPie Agent (KAC)      |
+| Network Load Balancer<br/>(L4)     | TCP / 7447   | querypie:7447      | http://querypie:80/readyz | default        | QueryPie Agent (WAC)      |
 
