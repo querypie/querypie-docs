@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544145591",
-  "mdx_sha256": "299c529a3c66d5ebf9af8afb91c0b7f307af0fb5c8800b677738a21424414d50",
+  "mdx_sha256": "e303cb74201950279a8a679eecbf5fa55d6936166bd9316e25cdb98eafaad206",
   "source_xhtml_sha256": "cbc830bacea9231f83d9d4414a69f79e32a0fb414596a648fd9326688b5598c3",
   "blocks": [
     {
@@ -63,7 +63,7 @@
       "block_index": 5,
       "xhtml_xpath": "ul[1]",
       "xhtml_fragment": "<ul><li><p><strong>Company Name</strong> : 프로필 영역 등에 표시할 회사 이름을 입력합니다.</p></li><li><p><strong>Web Base URL</strong> : QueryPie 서비스에 접근하기 위해 사용하는 기본 도메인 주소</p></li><li><p><strong>Timezone</strong> : QueryPie 전체에서 표시될 날짜 및 시각 정보에 적용될 타임존을 설정합니다.</p></li><li><p><strong>Date Format</strong> : 날짜 표기 방식을 지정합니다.</p></li><li><p><strong>Default Display Language</strong> : QueryPie의 기본 언어 설정을 설정합니다. (디폴트: 영어) </p></li><li><p><strong>Audit Log Retention Period </strong>: 감사로그 보존 주기를 설정합니다. 현재는 5년으로 고정되어 있습니다.</p></li><li><p><strong>Go to System Properties</strong> : 클릭 시 시스템 설정값 내역을 확인할 수 있습니다. </p></li></ul>",
-      "mdx_content_hash": "a960a2e0e4790520cade736e8802bc5b4438207c38f0ab5bedf173fc3ebf8927",
+      "mdx_content_hash": "f944dc6d318af63edc287d2d96833eb3d4cf442764e3aa463f8d5e7db65cf51e",
       "mdx_line_range": [
         23,
         29
@@ -393,7 +393,7 @@
       "block_index": 35,
       "xhtml_xpath": "ul[7]",
       "xhtml_fragment": "<ul><li><p>토글을 활성화하면 <code>User Attribute</code>의 <code>Key</code>와 <code>Value</code>를 한 쌍으로 선택하고 입력할 수 있습니다.</p></li><li><p>여기에 설정된 <code>Key:Value</code> 조건과 일치하는 사용자는 사용자 대시보드에 <code>Workflow</code> 메뉴가 표시되지 않습니다.</p></li><li><p><strong>예시:</strong> <code>User Attribute Key</code>로 '부서코드'를 선택하고, <code>Value</code>로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 <code>Workflow</code> 메뉴가 보이지 않습니다.</p></li></ul>",
-      "mdx_content_hash": "8b915dc83121e9ebabe718c6d272480b320a2885d640d6c4ab532e583899d031",
+      "mdx_content_hash": "dc4611bbea652c502c676080df2092405410b352570a540987d0d844f4345b2b",
       "mdx_line_range": [
         135,
         137
@@ -514,7 +514,7 @@
       "block_index": 46,
       "xhtml_xpath": "ul[8]",
       "xhtml_fragment": "<ul><li><p><strong>Query chunk size</strong> : 1~999,999 사이의 값으로 설정되며, 다수의 쿼리를 해당 개수만큼 나누어 순차적으로 실행하는 기능</p><ul><li><p>예) 100개의 쿼리가 있을 때, Query chunk size가 10으로 설정되어 있다면 한번에 10개의 Query를 실행합니다. </p></li></ul></li><li><p><strong>Query throttle interval </strong>: 연속 쿼리 실행 후, 다음 연속 쿼리 실행 간의 간격 (1 ~ 9,999 ms)</p></li></ul>",
-      "mdx_content_hash": "2a25f3f77049bc49aaa3c9a1c6ad56362ed76249f9a916ba263491bb7334d063",
+      "mdx_content_hash": "1511d4a06113aa74b43a584f55039aeab7e2783c040d5b286c00b31cb5582219",
       "mdx_line_range": [
         175,
         177
@@ -690,7 +690,7 @@
       "block_index": 62,
       "xhtml_xpath": "ul[11]",
       "xhtml_fragment": "<ul><li><p><strong>Routing Rule Name</strong> : 식별하기 쉬운 라우팅 규칙의 이름을 입력합니다.</p></li><li><p><strong>Condition</strong> : Privilege에 대한 조건을 지정합니다.</p><ul><li><p><strong>All Match</strong> : 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 모두 같은 종류인 경우 동작하는 조건입니다.</p></li><li><p><strong>Contains </strong>: 사용자가 DB Access Request 를 상신할 때 지정한 Privilege Type이 하나라도 지정한 종류를 포함 했을 때 동작하는 조건입니다.</p></li></ul></li><li><p> <strong>Requested Privilege Type</strong> : Administrator &gt; Databases &gt; DB Access Control &gt; Privilege Type에 정의 되어 있는 Privilege 유형 중 하나를 선택합니다.</p></li><li><p><strong>Approval Rule</strong> : 위 조건이 만족했을 경우 강제할 결재선(Approval Rule)을 지정합니다.</p></li></ul>",
-      "mdx_content_hash": "14c0c57462d9611ab3e9214ff50357352eb14ec15d35b494d356b4aa60933a5a",
+      "mdx_content_hash": "dfb8ea7730f1c49dedaf80931c2f2161101db2e8ea3175d39d337cb40a7edd18",
       "mdx_line_range": [
         240,
         245

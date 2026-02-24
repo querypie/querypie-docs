@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "544112828",
-  "mdx_sha256": "d00db1b0aabbe8136bff8ba7fa23884a02a9e9d20d057ebd4afece764be056c9",
+  "mdx_sha256": "1944af0092b956a4eb535f915e514027ebe336c343a52dc02ee389828e799699",
   "source_xhtml_sha256": "b31f4552fd924f4299dfd7dc6edea8f00bfefbf403f5f96011e17a553b24ff67",
   "blocks": [
     {
@@ -756,7 +756,7 @@
       "block_index": 68,
       "xhtml_xpath": "p[26]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "16dbfbc263c0eeda5bff4ce4c30a2e570eb9646b4c22c1945ec88aaeaf2f5c62",
+      "mdx_content_hash": "980941e4b19f22255fcde655e9a2d4a8b5ca1a6364650c98661e017d38ec1c98",
       "mdx_line_range": [
         246,
         248
@@ -778,7 +778,7 @@
       "block_index": 70,
       "xhtml_xpath": "ul[6]",
       "xhtml_fragment": "<ul><li><p><strong>Where</strong> : 우측의 <code>🔽</code> 버튼을 클릭하여 원하는 폴더를 지정합니다.</p></li><li><p><strong>Save As</strong> : Kubeconfig 파일의 이름을 입력합니다. 변경하지 않으면 기본값으로 적용됩니다.</p></li><li><p><strong>Command Line</strong> : KUBECONFIG 환경 변수를 선언하기 위한 커맨드 라인을 제공합니다.</p></li></ul>",
-      "mdx_content_hash": "304c0dd80de01214bd5ac870e6dd7792975503d57d3e170cff10532ce79efaca",
+      "mdx_content_hash": "fd187f334c3165a2dee01b63e57a38ef26509cbaa7523e20201cbf31c17646cc",
       "mdx_line_range": [
         258,
         260
