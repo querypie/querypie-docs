@@ -64,10 +64,10 @@ bin/reverse_sync_cli.py verify --branch={branch} --failures-only
   - Confluence 원문의 XHTML 을 Forward Convert 로 변환한 파일이다.
   - 일반적으로, Confluence 원문은 original.mdx 와 동일한 내용을 가진다.
 - improved.mdx: 대상 브랜치의 변경된 MDX 파일. 사람 또는 AI Agent 가 변경한 MDX 파일이다.
-- verified.mdx: Reverse Sync 를 위해 Round-Trip Verification 과정에서 생성된 MDX 파일이다. 
+- verify.mdx: Reverse Sync 를 위해 Round-Trip Verification 과정에서 생성된 MDX 파일이다.
   - original.mdx 와 improved.mdx 의 차이를 기반으로, Confluence XHTML (page.xhtml) 파일을 변경(Patch)한 후,
     이 patched.xhtml 을 다시 Forward Convert 로 변환한 파일이다.
-  - verified.mdx 와 improved.mdx 과 동일하면, verify 에 성공한 것이다.
+  - verify.mdx 와 improved.mdx 가 동일하면, verify 에 성공한 것이다.
 - Forward Convert:
   - Confluence 원문의 XHTML (page.xhtml)을 Markdown(정확히는 MDX) 형식으로 변환하는 코드의 실행
   - 이 코드는 가능한 XHTML 원문의 구조와 특성을 Markdown 으로 그대로 변환하는 것을 목표로 한다.
@@ -76,10 +76,10 @@ bin/reverse_sync_cli.py verify --branch={branch} --failures-only
 - XHTML Patch:
   - original.mdx 와 improved.mdx 의 차이를 기반으로, Confluence XHTML (page.xhtml) 파일을 변경(Patch)하는 코드의 실행
 - Reverse Sync:
-  - original.mdx 를 수정한 경우, 이 변경사항을 Confluence XHTML 로 변환하고, Confluence 원문에 적용하는 것
+  - original.mdx 를 교정/교열하여 improved.mdx 를 만든 경우, 이 변경사항을 Confluence XHTML 에 반영하여 Confluence 원문을 업데이트하는 것
   - Reverse Sync 과정의 오류를 방지하기 위해, Round Trip Verification 과정으로 검증한다.
 - Round-Trip Verification:
-  - improved.mdx 와 verified.mdx 가 동일한지 여부를 검증하는 것
+  - improved.mdx 와 verify.mdx 가 동일한지 여부를 검증하는 것
   - Confluence 원문을 변경하지 않고, 원문 변경의 효과를 미리 확인하는 과정이다.
   - XHTML Patch, Forward Convert 과정의 오류를 발견할 수 있다.
 - verify 에 실패하는 원인: 다음의 두 가지 사항이 있으며, 이 가운데 XHTML Patch 코드의 버그일 가능성이 높다.
