@@ -90,6 +90,18 @@ def has_inline_format_change(old_content: str, new_content: str) -> bool:
     return False
 
 
+def has_inline_marker_added(old_content: str, new_content: str) -> bool:
+    """inline 마커의 type 목록이 변경되었는지만 확인한다.
+
+    마커 내부 content 변경은 무시하고, type 추가/제거만 감지한다.
+    flat list의 전체 리스트 재생성 판단에 사용한다.
+    (has_inline_format_change보다 보수적 — 이미지 등 XHTML 고유 요소 보존)
+    """
+    old_types = [m[0] for m in _extract_inline_markers(old_content)]
+    new_types = [m[0] for m in _extract_inline_markers(new_content)]
+    return old_types != new_types
+
+
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 
 
@@ -524,6 +536,8 @@ def build_list_item_patches(
     patches = []
     # 매칭 실패한 항목을 상위 블록 기준으로 그룹화
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
+    # flat list에서 inline 포맷 변경이 감지되면 전체 리스트 inner XHTML 재생성
+    _flat_inline_change = False
     for old_item, new_item in zip(old_items, new_items):
         if old_item == new_item:
             continue
@@ -576,7 +590,12 @@ def build_list_item_patches(
                     'new_plain_text': new_plain,
                 })
         else:
-            # child 매칭 실패: parent 또는 텍스트 포함 매핑을 containing block으로 사용
+            # child 매칭 실패: inline 마커 추가/제거 여부 추적
+            # (has_inline_marker_added: content 변경 무시, type 변경만 감지)
+            if has_inline_marker_added(old_item, new_item):
+                _flat_inline_change = True
+
+            # parent 또는 텍스트 포함 매핑을 containing block으로 사용
             container = parent_mapping
             if container is not None and used_ids is not None:
                 # parent 텍스트에 항목이 포함되지 않으면 더 나은 매핑 찾기
@@ -595,6 +614,18 @@ def build_list_item_patches(
                 if bid not in containing_changes:
                     containing_changes[bid] = (container, [])
                 containing_changes[bid][1].append((old_plain, new_plain))
+
+    # flat list에서 inline 포맷 변경이 감지된 경우:
+    # containing block 텍스트 패치 대신 전체 리스트 inner XHTML 재생성
+    if _flat_inline_change and parent_mapping is not None:
+        containing_changes.pop(parent_mapping.block_id, None)
+        new_inner = mdx_block_to_inner_xhtml(
+            change.new_block.content, change.new_block.type)
+        patches.append({
+            'xhtml_xpath': parent_mapping.xhtml_xpath,
+            'old_plain_text': parent_mapping.xhtml_plain_text,
+            'new_inner_xhtml': new_inner,
+        })
 
     # 상위 블록에 대한 그룹화된 변경 적용
     patches.extend(_flush_containing_changes(containing_changes, used_ids))
