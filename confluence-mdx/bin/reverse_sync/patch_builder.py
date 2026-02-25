@@ -525,6 +525,19 @@ def build_list_item_patches(
     old_items = split_list_items(change.old_block.content)
     new_items = split_list_items(change.new_block.content)
     if len(old_items) != len(new_items):
+        # 항목 수가 다르면 (삭제/추가) 전체 리스트 inner XHTML 재생성
+        parent = None
+        if mdx_to_sidecar is not None and xpath_to_mapping is not None:
+            parent = find_mapping_by_sidecar(
+                change.index, mdx_to_sidecar, xpath_to_mapping)
+        if parent is not None:
+            new_inner = mdx_block_to_inner_xhtml(
+                change.new_block.content, change.new_block.type)
+            return [{
+                'xhtml_xpath': parent.xhtml_xpath,
+                'old_plain_text': parent.xhtml_plain_text,
+                'new_inner_xhtml': new_inner,
+            }]
         return []
 
     # sidecar에서 parent mapping 획득

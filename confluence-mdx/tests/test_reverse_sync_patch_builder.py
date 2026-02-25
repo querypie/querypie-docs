@@ -313,7 +313,7 @@ class TestBuildPatches:
         assert 'updated child' in patches[0]['new_plain_text']
 
     # Path 2: sidecar 매칭 → children 있음 → child 해석 실패
-    #          → 텍스트 불일치 → list 분리 (반환 빈 = item 수 불일치)
+    #          → 텍스트 불일치 → list 분리 (item 수 불일치 → inner XHTML 재생성)
     def test_path2_sidecar_match_child_fail_list_split(self):
         parent = _make_mapping('p1', 'totally different parent', xpath='ul[1]',
                                type_='list', children=['c1'])
@@ -321,7 +321,7 @@ class TestBuildPatches:
         mappings = [parent, child]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-        # list type with different item count → returns []
+        # list type with different item count → new_inner_xhtml 재생성
         change = _make_change(
             0, '- item one\n- item two', '- item one\n- item two\n- item three',
             type_='list')
@@ -331,8 +331,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # item count mismatch → build_list_item_patches returns []
-        assert patches == []
+        # item count mismatch → parent mapping으로 전체 리스트 inner XHTML 재생성
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0]
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
 
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
@@ -625,12 +627,56 @@ class TestBuildListItemPatches:
         assert len(patches) == 1
         assert 'new item' in patches[0]['new_plain_text']
 
-    def test_item_count_mismatch_returns_empty(self):
+    def test_item_count_mismatch_without_parent_returns_empty(self):
+        """parent mapping이 없으면 item count 불일치 시 빈 패치를 반환한다."""
         change = _make_change(
             0, '- item one\n- item two', '- item one',
             type_='list')
         patches = build_list_item_patches(change, [], set(), {}, {})
         assert patches == []
+
+    def test_item_count_mismatch_with_parent_generates_inner_xhtml(self):
+        """리스트 항목 수가 달라지면(삭제/추가) new_inner_xhtml 패치를 생성해야 한다.
+
+        실제 사례: 10.3.0-10.3.4.mdx — 중복된 리스트 항목 삭제
+          Original MDX: "* [DAC] DRM 연동\\n* [DAC] 기능 제공\\n* [DAC] DRM 연동\\n* [DAC] Default Privilege"
+          Improved MDX: "* [DAC] DRM 연동\\n* [DAC] 기능 제공\\n* [DAC] Default Privilege"
+          현상: 중복 항목 삭제 시 build_list_item_patches가 빈 패치를 반환하여
+                XHTML에서 중복이 제거되지 않음
+        """
+        parent = _make_mapping(
+            'list-56',
+            '[DAC] DRM 연동 [DAC] 기능 제공 [DAC] DRM 연동 [DAC] Default Privilege',
+            xpath='ul[5]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* [DAC] DRM 연동\n* [DAC] 기능 제공\n* [DAC] DRM 연동\n* [DAC] Default Privilege\n',
+            '* [DAC] DRM 연동\n* [DAC] 기능 제공\n* [DAC] Default Privilege\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[5]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1, (
+            'item count 불일치 시 parent mapping이 있으면 '
+            'new_inner_xhtml 패치를 생성해야 함'
+        )
+        assert 'new_inner_xhtml' in patches[0]
+        # 중복 항목이 제거된 결과여야 함
+        inner = patches[0]['new_inner_xhtml']
+        assert inner.count('DRM 연동') == 1, (
+            f'중복 항목이 제거되어야 함: {inner!r}'
+        )
 
     def test_list_item_inline_code_added_generates_inner_xhtml(self):
         """리스트 항목에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
