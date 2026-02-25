@@ -49,6 +49,21 @@ class TestFindInsertPos:
         char_map = {1: 1, 2: 2}
         assert find_insert_pos(char_map, 0) == 0
 
+    def test_insert_at_beginning_with_offset_mapping(self):
+        """mdx_pos=0이지만 char_map[0]이 xhtml의 중간(198)에 매핑될 때,
+        삽입 위치는 char_map[0]이어야 한다 (0이 아님).
+
+        실제 사례: flat list의 containing block에서 한 리스트 아이템의
+        텍스트 맨 앞에 '[' 삽입 시, XHTML의 해당 아이템 시작 위치에 삽입되어야 함.
+        """
+        # mdx "Authentication Type ..." 가 xhtml의 198번째 위치부터 시작
+        char_map = {0: 198, 1: 199, 2: 200, 3: 201}
+        result = find_insert_pos(char_map, 0)
+        assert result == 198, (
+            f"mdx_pos=0에서 삽입 시 char_map[0]=198 앞에 삽입되어야 하지만 "
+            f"{result}이 반환됨"
+        )
+
     def test_insert_after_gap(self):
         char_map = {0: 0, 3: 5}
         # Insert at pos 2 → walks back to pos 0 → returns 1
@@ -153,3 +168,31 @@ class TestTransferTextChanges:
         # 나머지 텍스트는 보존
         assert '첫째 항목 텍스트입니다.' in result
         assert '700MB를 초과하여 세션을' in result
+
+    def test_insert_bracket_at_item_start_in_containing_block(self):
+        """flat list containing block에서 리스트 아이템 앞에 '[' 삽입 시
+        해당 아이템 위치에 정확히 삽입되어야 한다.
+
+        실제 사례: Authentication Type → [Authentication] Type
+        XHTML에는 여러 리스트 아이템 텍스트가 공백 없이 이어져 있고,
+        old_plain은 그 중 한 아이템의 텍스트만 해당한다.
+        """
+        xhtml_text = (
+            'Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가'
+            'MongoDB Report (Beta) CSV 추출 결과 개선'
+            'DynamoDB 데이터 조회 관련 이슈 개선'
+            'Authentication Type 변경 시 오류 메시지 개선'
+            '하단 상태바 버전 태그 표시 개선'
+        )
+        mdx_old = 'Authentication Type 변경 시 오류 메시지 개선'
+        mdx_new = '[Authentication] Type 변경 시 오류 메시지 개선'
+
+        result = transfer_text_changes(mdx_old, mdx_new, xhtml_text)
+
+        assert '[Authentication]' in result, (
+            f"'[Authentication]'이 결과에 포함되어야 하지만 누락됨: {result!r}"
+        )
+        # '[' 가 xhtml 텍스트 맨 앞에 삽입되면 안 됨
+        assert not result.startswith('['), (
+            f"'['가 전체 텍스트 맨 앞에 삽입됨 — 잘못된 위치: {result!r}"
+        )

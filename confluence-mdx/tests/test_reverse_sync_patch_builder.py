@@ -758,6 +758,59 @@ class TestBuildListItemPatches:
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
 
+    def test_flat_list_bracket_insert_at_item_start(self):
+        """flat list에서 리스트 아이템 맨 앞에 '[' 삽입 시
+        XHTML의 해당 아이템 위치에 정확히 삽입되어야 한다.
+
+        실제 사례: 'Authentication Type ...' → '[Authentication] Type ...'
+        XHTML에는 여러 리스트 아이템 텍스트가 이어져 있으므로,
+        transfer_text_changes가 '[' 를 전체 텍스트 맨 앞이 아닌
+        해당 아이템 시작 위치에 삽입해야 한다.
+        """
+        parent = _make_mapping(
+            'list-105',
+            'Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가'
+            'DynamoDB 데이터 조회 관련 이슈 개선'
+            'Authentication Type 변경 시 오류 메시지 개선'
+            '하단 상태바 버전 태그 표시 개선',
+            xpath='ul[10]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가\n'
+            '* DynamoDB 데이터 조회 관련 이슈 개선\n'
+            '* Authentication Type 변경 시 오류 메시지 개선\n'
+            '* 하단 상태바 버전 태그 표시 개선\n',
+            '* Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가\n'
+            '* DynamoDB 데이터 조회 관련 이슈 개선\n'
+            '* [Authentication] Type 변경 시 오류 메시지 개선\n'
+            '* 하단 상태바 버전 태그 표시 개선\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[10]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1
+        p = patches[0]
+        assert 'new_plain_text' in p
+        # '[Authentication]' 이 올바른 위치에 있어야 함
+        assert '[Authentication]' in p['new_plain_text'], (
+            f"'[Authentication]'이 패치 결과에 포함되어야 함: {p['new_plain_text']!r}"
+        )
+        # '[' 가 전체 텍스트 맨 앞에 삽입되면 안 됨
+        assert not p['new_plain_text'].startswith('['), (
+            f"'['가 전체 텍스트 맨 앞에 삽입됨: {p['new_plain_text']!r}"
+        )
+
 
 # ── delete/insert 패치 생성 테스트 ──
 
