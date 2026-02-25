@@ -30,11 +30,11 @@ Simple System Configuration for Evaluation
 </figcaption>
 </figure>
 
-The system structure above is an example of a simple configuration set up to trial and evaluate the QueryPie product.
+The system structure above is a simple configuration example for trialing and evaluating the QueryPie product.
 Users access QueryPie through a web browser, and QueryPie is installed and operates on a single Linux VM connected to an Application Load Balancer.
-Inside the Linux VM, the QueryPie application runs in Docker container mode, along with the MySQL database and Redis cache used by QueryPie, which also run in Docker container mode.
+Inside the Linux VM, the QueryPie application runs in Docker container mode, and the MySQL database and Redis cache used by QueryPie also run in Docker container mode.
 
-QueryPie will have a web service URL with TLS certificates applied, such as https://querypie-poc.customer.com/, and it is recommended to configure an Application Load Balancer with TLS certificates to set this up.
+QueryPie will have a web service URL with TLS certificates applied, such as `https://querypie-poc.customer.com/`, and it is recommended to set up an Application Load Balancer with TLS certificates for this purpose.
 
 
 ### Prerequisites for Trial Evaluation Configuration
@@ -54,7 +54,7 @@ The following preparations are necessary to install QueryPie for testing and eva
     * While applying a load balancer is essential, there is no need to configure 2 or more VM instances.
     * Even if QueryPie is installed on a single VM, you can effectively test the product's features.
 4. Please temporarily allow remote access to your company's Linux VM environment.
-    * You can provide temporary Azure, AWS, GCP accounts for load balancer and TLS setup. Configure a Linux VM instance accessible via SSH public key and provide the SSH public key (.pem file).
+    * You can provide temporary Azure, AWS, GCP accounts for load balancer and TLS setup. Please configure a Linux VM instance to be accessible via SSH public key and provide the SSH public key (.pem file).
 
 
 ### Summary of System Configuration for Real Use
@@ -72,7 +72,7 @@ The above configuration is a summarized diagram to help users understand, not a 
 
 The above configuration is an example that summarizes the main elements of the system configuration applied when using the actual QueryPie product.
 Users can connect to and use QueryPie through a web browser.
-In addition, to access DB and System from applications running on user PCs such as DataGrip, MySQL Workbench, iTerm, and Putty, you can install and use the QueryPie Agent on your PC.
+Additionally, to access databases and systems using applications running on user PCs such as DataGrip, MySQL Workbench, iTerm, and PuTTY, you can install and use the QueryPie Agent on your PC.
 
 The QueryPie server configured in a cloud environment has a redundant configuration to operate as a web application, and it is recommended to use MySQL and Redis in Managed Service mode provided by the cloud.
 The QueryPie Agent installed on PCs connects to the QueryPie server using a TCP-based proprietary protocol, and it is recommended to configure a Network Load Balancer for this purpose.

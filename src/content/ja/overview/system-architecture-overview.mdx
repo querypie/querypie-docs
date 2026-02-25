@@ -11,13 +11,13 @@ import { Callout } from 'nextra/components'
 
 QueryPieは、クラウドおよびオンプレミス環境で動作するWebアプリケーションアーキテクチャを備えています。
 
-QueryPieは、Linux VM上でDockerコンテナ形式で動作するのが一般的であり、TLS証明書で保護されたWebアプリケーションとして運用することを推奨します。
+QueryPieは、Linux VMでDockerコンテナ形式で動作するのが一般的であり、TLS証明書で保護されたWebアプリケーションとして運用することを推奨します。
 お客様がクラウド環境にQueryPieをインストールして運用する場合、ロードバランサーおよびTLS証明書を適用して構成することを推奨します。
 接続設定やユーザー情報など、QueryPieの運用に必要なリソースはMySQLデータベースに保存されます。
 高速な応答時間のために、Redisを一時ストレージとして活用します。
 
 QueryPieのバイナリパッケージはDockerイメージとして作成されており、OSおよびDockerデーモンが最新バージョンの場合、Azure、AWS、GCPのLinux VMまたは物理的なLinuxサーバーにデプロイできるように準備されています。
-また、ネイティブでKubernetesをサポートしていますが、主にKubernetes DevOpsチームがあるお客様を対象に推奨されます。
+また、Kubernetesをネイティブでサポートしていますが、主にKubernetes DevOpsチームがあるお客様に推奨されます。
 
 製品を試用したいお客様のために、Community Editionを提供します: [QueryPie ACP Community Edition](../installation/querypie-acp-community-edition) Community Edition利用者には1年間製品を使用できるライセンスが提供され、1年以降もライセンスを延長して継続使用できます。
 
@@ -30,11 +30,11 @@ Simple System Configuration for Evaluation
 </figcaption>
 </figure>
 
-上記のシステム構造は、QueryPie製品を試用評価するために構成する簡単な構成の事例です。
-利用者はWebブラウザでQueryPieに接続することになり、QueryPieはApplication Load Balancerに接続された1つのLinux VMにインストールされて動作します。
-Linux VM内には、QueryPieアプリケーションがDockerコンテナ方式で稼働し、これ以外にQueryPieが使用するMySQLデータベース、RedisキャッシュがDockerコンテナ方式で稼働します。
+上記のシステム構造は、QueryPie製品を試用評価するための簡単な構成事例です。
+利用者はWebブラウザでQueryPieに接続し、QueryPieはApplication Load Balancerに接続された1つのLinux VMにインストールされて動作します。
+Linux VM内には、QueryPieアプリケーションがDockerコンテナ方式で稼働し、QueryPieが使用するMySQLデータベースとRedisキャッシュもDockerコンテナ方式で稼働します。
 
-QueryPieは、https://querypie-poc.customer.com/のようなTLS証明書が適用されたWebサービスURLを持つことになり、これを構成するためにTLS証明書とともにApplication Load Balancerを設定することを推奨します。
+QueryPieは、`https://querypie-poc.customer.com/`のようなTLS証明書が適用されたWebサービスURLを持つことになり、そのためにTLS証明書とともにApplication Load Balancerを設定することを推奨します。
 
 
 ### 試用評価構成のための事前準備事項
@@ -54,7 +54,7 @@ QueryPieは、https://querypie-poc.customer.com/のようなTLS証明書が適�
     * ロードバランサーを適用することは必須ですが、2つ以上のVMインスタンスを構成する必要はありません。
     * QueryPieを単一VMにインストールしても、製品の機能を効果的にテストできます。
 4. お客様のLinux VM環境へのリモートアクセスを一時的に許可してください。
-    * ロードバランサーおよびTLS設定のための一時的なAzure、AWS、GCPアカウントを提供できます。SSH公開鍵を通じてアクセスできるLinux VMインスタンスを構成し、SSH公開鍵(.pemファイル)を提供できます。
+    * ロードバランサーおよびTLS設定のための一時的なAzure、AWS、GCPアカウントを提供できます。SSH公開鍵を通じてアクセスできるようにLinux VMインスタンスを構成し、SSH公開鍵(.pemファイル)を提供してください。
 
 
 ### 実使用のためのシステム構成の要約
@@ -72,7 +72,7 @@ Summary of System Architecture for Real Use
 
 上記の構成は、実際のQueryPie製品を使用する場合に適用されるシステム構成の主要要素を要約して表現した事例です。
 利用者はWebブラウザでQueryPieに接続して使用できます。
-それだけでなく、DataGrip、MySQL Workbench、iTerm、Puttyなど、利用者PCで実行するアプリケーションからDB、Systemにアクセスするために、QueryPie AgentをPCにインストールして使用できます。
+また、DataGrip、MySQL Workbench、iTerm、PuTTYなど、利用者PCで実行するアプリケーションでDBとシステムにアクセスするために、QueryPie AgentをPCにインストールして使用できます。
 
 クラウド環境に構成されたQueryPieサーバーは、Webアプリケーションとして動作するために二重化された構成を備えており、クラウドで提供されるManaged Service方式のMySQL、Redisを使用することを推奨します。
 PCにインストールされたQueryPie Agentは、TCPベースの独自プロトコルを利用してQueryPieサーバーに接続し、これのためにNetwork Load Balancerを構成することを推奨します。
