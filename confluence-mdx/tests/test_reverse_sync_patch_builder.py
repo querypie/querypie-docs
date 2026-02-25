@@ -804,6 +804,60 @@ class TestBuildListItemPatches:
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
 
+    def test_flat_list_append_text_at_end_of_item(self):
+        """flat list에서 항목 끝에 텍스트를 추가할 때 다음 항목으로 넘치지 않아야 한다.
+
+        실제 사례: 9.10.0-9.10.4.mdx
+          Original: "* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈"
+          Improved: "* [MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결"
+          현상: "해결"이 다음 항목 앞에 붙어 "해결[Privilege Type]..."이 됨
+
+        실제 사례: 11.1.0-11.1.2.mdx
+          Original: "* [General] 워크플로우 승인완료되었거나 ... External API"
+          Improved: "* [General] 워크플로우 승인 완료 상태이거나 ... External API 추가"
+          현상: "추가"가 다음 항목 앞에 붙어 "추가[DAC]..."이 됨
+        """
+        parent = _make_mapping(
+            'list-55',
+            '[MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor) '
+            '[MongoDB] 데이터 조회 시 이모지 깨지는 이슈 '
+            '[Privilege Type] Default Privilege Type 이름 변경 (-role 제거)',
+            xpath='ul[5]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* [MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor)\n'
+            '* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈\n'
+            '* [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)\n',
+            '* [MongoDB] Aggregate 커맨드 정책 적용 지원(Web Editor)\n'
+            '* [MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결\n'
+            '* [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[5]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1
+        p = patches[0]
+        assert 'new_plain_text' in p
+        # "해결"이 올바른 위치(이슈 뒤)에 있어야 함
+        assert '이슈 해결' in p['new_plain_text'], (
+            f"'이슈 해결'이 연속되어야 함: {p['new_plain_text']!r}"
+        )
+        # "해결"이 다음 항목 앞에 붙으면 안 됨
+        assert '해결[Privilege' not in p['new_plain_text'], (
+            f"'해결'이 다음 항목 앞에 잘못 삽입됨: {p['new_plain_text']!r}"
+        )
+
     def test_flat_list_bracket_insert_at_item_start(self):
         """flat list에서 리스트 아이템 맨 앞에 '[' 삽입 시
         XHTML의 해당 아이템 위치에 정확히 삽입되어야 한다.
