@@ -11,6 +11,7 @@ QueryPie 문서 사이트 프로젝트의 지식, 정보, 가이드 문서를 �
 | [DEVELOPMENT.md](DEVELOPMENT.md) | 기술 스택, 로컬 실행, 빌드, 배포 방법 |
 | [commit-pr-guide.md](commit-pr-guide.md) | 커밋 메시지 및 PR 작성 컨벤션 |
 | [translation.md](translation.md) | 다국어 번역 상세 지침 (ko, en, ja) |
+| [ko-writing-style-guide.md](ko-writing-style-guide.md) | 한국어 문장 표현 및 교정/교열 가이드 |
 | [api-naming-guide.md](api-naming-guide.md) | QueryPie ACP 제품명 및 API 명칭 지침 |
 
 ### 기술 문서
