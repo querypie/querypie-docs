@@ -305,6 +305,18 @@ PR을 업데이트한다:
 - Draft 상태를 해제하여 Review 가능으로 전환한다.
 - 최종 commit 을 포함한 상태를 반영하여 PR title과 description을 재작성한다.
 
+### 7. CI 확인 및 완료
+
+PR push 후 CI ([`test-confluence-mdx.yml`](/.github/workflows/test-confluence-mdx.yml)) 실행 결과를 확인한다.
+
+```bash
+# PR의 CI check 상태 확인
+gh pr checks
+```
+
+- **CI 성공**: 디버깅 작업을 성공적으로 종료한다.
+- **CI 실패**: 실패한 테스트를 확인하고, 4단계(원인 분석 및 수정) → 5단계(로컬 테스트) → 6단계(commit 및 PR 업데이트)를 반복 수행한다.
+
 ## 실제 사례
 
 다음 PR들이 이 디버깅 워크플로우의 실제 사례이다. 모두 Python pytest 단위 테스트(방법 B)로 버그를 재현하고 수정하였다.
