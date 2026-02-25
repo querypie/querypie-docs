@@ -783,6 +783,45 @@ class TestBuildListItemPatches:
         inner = inner_xhtml_patches[0]['new_inner_xhtml']
         assert '<code>useServerPrepStmts = true</code>' in inner
 
+    def test_flat_list_bold_boundary_change_generates_inner_xhtml(self):
+        """flat list에서 bold 마커 경계가 이동하는 경우 new_inner_xhtml 패치를 생성해야 한다.
+
+        예: '* **after :** `"APPROVER"`' → '*  **after**  : `"APPROVER"`'
+        bold 마커의 content가 "after :" → "after"로 변경되어,
+        text-only 패치로는 <strong> 경계를 변경할 수 없다.
+        """
+        parent = _make_mapping(
+            'list-37',
+            'before : "REPORTER" "APPROVER" after : "APPROVER" "EXECUTOR"',
+            xpath='ul[3]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* **before** : `"REPORTER"` `"APPROVER"`\n'
+            '* **after :** `"APPROVER"` `"EXECUTOR"`\n',
+            '* **before** : `"REPORTER"` `"APPROVER"`\n'
+            '*  **after**  : `"APPROVER"` `"EXECUTOR"`\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[3]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        # bold 경계 변경이 있으므로 new_inner_xhtml 패치가 생성되어야 함
+        inner_xhtml_patches = [p for p in patches if 'new_inner_xhtml' in p]
+        assert len(inner_xhtml_patches) >= 1, (
+            'bold 경계 변경에서 new_inner_xhtml 패치가 생성되어야 하지만, '
+            f'text-only 패치만 생성됨: {patches}'
+        )
+
     def test_child_miss_falls_back_to_containing(self):
         parent = _make_mapping(
             'p1', 'parent old text here in list', xpath='ul[1]',
