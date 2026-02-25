@@ -14,7 +14,6 @@ from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
 from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
-from mdx_to_storage.inline import convert_inline
 from reverse_sync.inline_detector import (
     has_inline_format_change,
     has_inline_boundary_change,
