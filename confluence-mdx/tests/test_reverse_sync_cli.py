@@ -1002,7 +1002,7 @@ def testbuild_patches_list_item_child_resolved():
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
     id_to_mapping = {m.block_id: m for m in mappings}
 
-    from reverse_sync.patch_builder import build_list_item_patches
+    from reverse_sync.list_patcher import build_list_item_patches
     patches = build_list_item_patches(
         changes[0], mappings, set(),
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
@@ -1061,7 +1061,7 @@ def testbuild_patches_list_item_fallback_to_parent():
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
     id_to_mapping = {m.block_id: m for m in mappings}
 
-    from reverse_sync.patch_builder import build_list_item_patches
+    from reverse_sync.list_patcher import build_list_item_patches
     patches = build_list_item_patches(
         changes[0], mappings, set(),
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)

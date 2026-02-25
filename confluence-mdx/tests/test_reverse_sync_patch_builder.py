@@ -13,20 +13,22 @@ from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _find_containing_mapping,
     _flush_containing_changes,
-    _resolve_child_mapping,
     _resolve_mapping_for_change,
     build_patches,
-    build_list_item_patches,
     build_table_row_patches,
     is_markdown_table,
     split_table_rows,
     normalize_table_row,
-    split_list_items,
-    extract_list_marker_prefix,
 )
 from reverse_sync.inline_detector import (
     has_inline_format_change,
     _extract_inline_markers,
+)
+from reverse_sync.list_patcher import (
+    build_list_item_patches,
+    split_list_items,
+    extract_list_marker_prefix,
+    _resolve_child_mapping,
 )
 
 
