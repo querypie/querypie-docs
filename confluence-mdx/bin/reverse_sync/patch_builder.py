@@ -3,7 +3,7 @@ import html as html_module
 import re
 from typing import Dict, List, Optional
 
-from reverse_sync.block_diff import BlockChange
+from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
 from reverse_sync.mapping_recorder import BlockMapping
 from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
@@ -114,9 +114,6 @@ def has_inline_boundary_change(old_content: str, new_content: str) -> bool:
             return True
 
     return False
-
-
-NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
 
 
 _BLOCK_MARKER_RE = re.compile(r'#{1,6}|\d+\.')
