@@ -100,6 +100,15 @@ bin/reverse_sync_cli.py verify --branch={branch} --failures-only
 
 ### 1. 실패 문서에 대해 검증 결과 확인하기
 
+먼저 디버깅 작업용 feature branch를 생성한다. main 브랜치에서 분기한다:
+
+```bash
+git checkout main
+git checkout -b fix/reverse-sync-<간단한-설명>
+```
+
+이후 모든 디버깅 작업(테스트케이스 추가, 코드 수정, commit)은 이 브랜치에서 수행한다.
+
 실패한 MDX 파일에 대해 단일 파일 단위로 검증 결과를 확인한다.
 
 **verify 모드**: 결과 상태와 불일치 diff를 확인한다.
