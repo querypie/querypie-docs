@@ -47,7 +47,8 @@ class TestFindInsertPos:
 
     def test_insert_at_beginning(self):
         char_map = {1: 1, 2: 2}
-        assert find_insert_pos(char_map, 0) == 0
+        # forward 탐색으로 첫 매핑된 문자(char_map[1]=1) 앞에 삽입
+        assert find_insert_pos(char_map, 0) == 1
 
     def test_insert_at_beginning_with_offset_mapping(self):
         """mdx_pos=0이지만 char_map[0]이 xhtml의 중간(198)에 매핑될 때,

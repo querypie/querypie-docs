@@ -37,9 +37,16 @@ def align_chars(source: str, target: str) -> dict:
 
 def find_insert_pos(char_map: dict, mdx_pos: int) -> int:
     """MDX 삽입 위치에 대응하는 XHTML 위치를 찾는다."""
+    # 1. backward: mdx_pos 앞쪽에서 마지막 매핑된 문자를 찾아 그 뒤에 삽입
     for k in range(mdx_pos - 1, -1, -1):
         if k in char_map:
             return char_map[k] + 1
+    # 2. forward: mdx_pos 이후 첫 매핑된 문자를 찾아 그 앞에 삽입
+    #    (containing block에서 source가 target의 중간에 매핑될 때 필요)
+    if char_map:
+        for k in range(mdx_pos, max(char_map) + 1):
+            if k in char_map:
+                return char_map[k]
     return 0
 
 
