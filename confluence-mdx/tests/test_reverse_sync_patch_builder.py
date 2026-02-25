@@ -657,6 +657,86 @@ class TestBuildListItemPatches:
         assert 'new_inner_xhtml' in patches[0]
         assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
 
+    def test_flat_list_inline_code_added_generates_inner_xhtml(self):
+        """children이 없는 flat 리스트에서 backtick 추가 시에도
+        new_inner_xhtml 패치를 생성해야 한다.
+
+        현상: flat list(children=[])에서 _resolve_child_mapping이 None을 반환하여
+        containing block 전략으로 폴백되고, normalize_mdx_to_plain이 backtick을
+        제거하므로 old_plain == new_plain이 되어 패치가 생성되지 않는다.
+        결과적으로 backtick → <code> 변환이 누락된다.
+        """
+        # flat list mapping (children 없음) — 실제 Confluence 페이지에서 흔한 구조
+        parent = _make_mapping(
+            'list-16',
+            '[DAC] Not allowed object type undefined 오류 해결',
+            xpath='ul[3]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* [DAC] Not allowed object type undefined 오류 해결\n',
+            '* [DAC] `Not allowed object type undefined` 오류 해결\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[3]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) == 1
+        assert 'new_inner_xhtml' in patches[0], (
+            'backtick 추가 시 new_inner_xhtml 패치가 생성되어야 하지만, '
+            'containing block 전략으로 폴백되어 inline format이 누락됨'
+        )
+        assert '<code>Not allowed object type undefined</code>' in patches[0]['new_inner_xhtml']
+
+    def test_flat_list_inline_code_with_text_change_generates_inner_xhtml(self):
+        """children이 없는 flat 리스트에서 텍스트 변경과 함께 backtick이
+        추가되는 경우에도 new_inner_xhtml 패치를 생성해야 한다.
+
+        예: 'MySQL 에서 useServerPrepStmts = true 인 경우'
+          → 'MySQL에서 `useServerPrepStmts = true`인 경우'
+        """
+        parent = _make_mapping(
+            'list-38',
+            '[DAC] MySQL 에서 useServerPrepStmts = true 인 경우 DML 스냅샷 기능 충돌 이슈 해결',
+            xpath='ul[8]',
+            type_='list',
+            children=[],
+        )
+        mappings = [parent]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        id_to_mapping = {m.block_id: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* [DAC] MySQL 에서 useServerPrepStmts = true 인 경우 DML 스냅샷 기능 충돌 이슈 해결\n',
+            '* [DAC] MySQL에서 `useServerPrepStmts = true`인 경우 DML 스냅샷 기능 충돌 이슈 해결\n',
+            type_='list',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('ul[8]', [0])}
+
+        patches = build_list_item_patches(
+            change, mappings, set(),
+            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+
+        assert len(patches) >= 1
+        # 최소한 하나의 패치는 inline format 변경을 포함해야 함
+        inner_xhtml_patches = [p for p in patches if 'new_inner_xhtml' in p]
+        assert len(inner_xhtml_patches) >= 1, (
+            'backtick 추가가 포함된 변경에서 new_inner_xhtml 패치가 생성되어야 하지만, '
+            'containing block 전략으로 폴백되어 inline format이 누락됨'
+        )
+        inner = inner_xhtml_patches[0]['new_inner_xhtml']
+        assert '<code>useServerPrepStmts = true</code>' in inner
+
     def test_child_miss_falls_back_to_containing(self):
         parent = _make_mapping(
             'p1', 'parent old text here in list', xpath='ul[1]',

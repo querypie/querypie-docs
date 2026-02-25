@@ -154,21 +154,32 @@ def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
 
     단일 xpath: "p[1]", "h2[3]", "macro-info[1]"
     복합 xpath: "macro-info[1]/p[1]", "macro-note[2]/ul[1]"
+    다단계 xpath: "ul[3]/li[7]/p[1]"
     """
     parts = xpath.split('/')
     if len(parts) == 1:
         return _find_element_by_simple_xpath(soup, xpath)
 
     # 복합 xpath: 먼저 부모를 찾고, 내부 컨테이너에서 자식 검색
-    parent = _find_element_by_simple_xpath(soup, parts[0])
-    if parent is None:
+    current = _find_element_by_simple_xpath(soup, parts[0])
+    if current is None:
         return None
 
-    container = _find_content_container(parent)
-    if container is None:
-        return None
+    for part in parts[1:]:
+        # ac:structured-macro 등은 content container 내부에서 검색
+        container = _find_content_container(current)
+        if container is None:
+            if ':' in (current.name or ''):
+                # ac:structured-macro 등 Confluence 요소는 content container 없이
+                # 자식 검색 불가 (기존 동작 유지)
+                return None
+            # 일반 HTML 요소 (ul, ol, li 등)는 직접 자식 검색
+            container = current
+        current = _find_child_in_element(container, part)
+        if current is None:
+            return None
 
-    return _find_child_in_element(container, parts[1])
+    return current
 
 
 def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):
