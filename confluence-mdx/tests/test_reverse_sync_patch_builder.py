@@ -18,12 +18,14 @@ from reverse_sync.patch_builder import (
     build_patches,
     build_list_item_patches,
     build_table_row_patches,
-    has_inline_format_change,
     is_markdown_table,
     split_table_rows,
     normalize_table_row,
     split_list_items,
     extract_list_marker_prefix,
+)
+from reverse_sync.inline_detector import (
+    has_inline_format_change,
     _extract_inline_markers,
 )
 
