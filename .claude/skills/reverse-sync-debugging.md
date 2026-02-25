@@ -60,9 +60,13 @@ bin/reverse_sync_cli.py verify --branch={branch} --failures-only
 
 ## 용어와 개념
 
+- page.xhtml: Confluence에서 내려받은 원본 XHTML 파일. `var/<page_id>/page.xhtml`에 저장된다.
+- patched.xhtml: XHTML Patch를 적용한 결과 XHTML 파일. `var/<page_id>/reverse-sync.patched.xhtml`에 저장된다.
 - original.mdx: main 브랜치의 MDX 파일.
   - Confluence 원문의 XHTML 을 Forward Convert 로 변환한 파일이다.
   - 일반적으로, Confluence 원문은 original.mdx 와 동일한 내용을 가진다.
+    Confluence 원문이 변경된 이후, bin/fetch_cli.py 실행, bin/convert_all.py 실행,
+    이후 변경된 MDX 파일을 PR 로 작성하여 main branch 에 병합하는 과정이 완료되지 않은 경우, Confluence 원문과 original.mdx 는 불일치한다.
 - improved.mdx: 대상 브랜치의 변경된 MDX 파일. 사람 또는 AI Agent 가 변경한 MDX 파일이다.
 - verify.mdx: Reverse Sync 를 위해 Round-Trip Verification 과정에서 생성된 MDX 파일이다.
   - original.mdx 와 improved.mdx 의 차이를 기반으로, Confluence XHTML (page.xhtml) 파일을 변경(Patch)한 후,
