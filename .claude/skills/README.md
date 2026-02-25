@@ -17,6 +17,7 @@
 
 ### Reverse Sync / XHTML Skills
 - **reverse-sync.md** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
+- **reverse-sync-debugging.md** - Reverse Sync 디버깅 워크플로우 (verify 실패 원인 분석 및 수정)
 - **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
 
 ### 유틸리티 Skills
@@ -39,6 +40,7 @@
 | sync-ko-to-en-ja.md | [docs/translation.md](/docs/translation.md) |
 | mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
 | reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
+| reverse-sync-debugging.md | reverse-sync.md, [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
 | sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
 | commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
