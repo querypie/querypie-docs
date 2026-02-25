@@ -301,3 +301,112 @@ def test_insert_space_at_inline_element_boundary_not_duplicated():
     assert '</ac:link> 문서를 참조해' in result, (
         f'</ac:link> 뒤에 공백이 없거나 다른 위치에 삽입됨: {result}'
     )
+
+
+def test_flat_list_append_text_stays_in_same_item():
+    """flat list에서 항목 끝에 텍스트를 추가할 때 다음 항목으로 넘치지 않아야 한다.
+
+    재현 시나리오:
+      XHTML: <ul><li><p>이모지 깨지는 이슈</p></li><li><p>이름 변경</p></li></ul>
+      교정: '이모지 깨지는 이슈' → '이모지가 깨지는 이슈 해결'
+
+    기대: '해결'이 첫 번째 <li> 안에 남음.
+    버그: _apply_text_changes가 insert를 노드 경계에서 다음 <li>의 text node에 할당하여
+          '해결이름 변경'이 됨.
+    """
+    xhtml = (
+        '<ul>'
+        '<li><p>[MongoDB] 데이터 조회 시 이모지 깨지는 이슈</p></li>'
+        '<li><p>[Privilege Type] Default Privilege Type 이름 변경</p></li>'
+        '</ul>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ul[1]',
+            'old_plain_text': (
+                '[MongoDB] 데이터 조회 시 이모지 깨지는 이슈'
+                '[Privilege Type] Default Privilege Type 이름 변경'
+            ),
+            'new_plain_text': (
+                '[MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결'
+                '[Privilege Type] Default Privilege Type 이름 변경'
+            ),
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+
+    # '해결'이 첫 번째 항목에 남아야 함
+    assert '이슈 해결</p></li>' in result, (
+        f"'해결'이 첫 번째 <li> 안에 없음: {result}"
+    )
+    # '해결'이 두 번째 항목 앞에 붙으면 안 됨
+    assert '해결[Privilege' not in result, (
+        f"'해결'이 다음 항목으로 넘침: {result}"
+    )
+
+
+def test_flat_list_append_text_multiple_items():
+    """여러 항목에서 동시에 텍스트를 추가해도 올바른 항목에 남아야 한다."""
+    xhtml = (
+        '<ul>'
+        '<li><p>item A text</p></li>'
+        '<li><p>item B text</p></li>'
+        '<li><p>item C text</p></li>'
+        '</ul>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ul[1]',
+            'old_plain_text': 'item A textitem B textitem C text',
+            'new_plain_text': 'item A text appendeditem B text modifieditem C text',
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+
+    assert '<li><p>item A text appended</p></li>' in result, (
+        f"첫 번째 항목에 ' appended' 누락: {result}"
+    )
+    assert '<li><p>item B text modified</p></li>' in result, (
+        f"두 번째 항목에 ' modified' 누락: {result}"
+    )
+
+
+def test_flat_list_prepend_bracket_stays_in_correct_item():
+    """리스트 항목 앞에 '[' 삽입 시 해당 항목에 남아야 한다 (이전 항목으로 이동하면 안 됨).
+
+    재현 시나리오:
+      old: "DynamoDB 데이터 조회 관련 이슈 개선Authentication Type 변경 시"
+      new: "DynamoDB 데이터 조회 관련 이슈 개선[Authentication] Type 변경 시"
+
+    기대: '[' 가 두 번째 <li>에 삽입됨.
+    회귀 버그: block boundary fix가 '[' 를 이전 <li>에 잘못 할당.
+    """
+    xhtml = (
+        '<ul>'
+        '<li><p>DynamoDB 데이터 조회 관련 이슈 개선</p></li>'
+        '<li><p>Authentication Type 변경 시 오류 메시지 개선</p></li>'
+        '</ul>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ul[1]',
+            'old_plain_text': (
+                'DynamoDB 데이터 조회 관련 이슈 개선'
+                'Authentication Type 변경 시 오류 메시지 개선'
+            ),
+            'new_plain_text': (
+                'DynamoDB 데이터 조회 관련 이슈 개선'
+                '[Authentication] Type 변경 시 오류 메시지 개선'
+            ),
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+
+    # DynamoDB 항목은 변경 없이 그대로
+    assert '<li><p>DynamoDB 데이터 조회 관련 이슈 개선</p></li>' in result, (
+        f"DynamoDB 항목이 변경됨: {result}"
+    )
+    # '[' 가 두 번째 항목에 삽입됨
+    assert '<li><p>[Authentication] Type 변경 시 오류 메시지 개선</p></li>' in result, (
+        f"Authentication 항목에 bracket이 없음: {result}"
+    )

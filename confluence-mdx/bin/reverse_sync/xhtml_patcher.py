@@ -299,6 +299,40 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
             last_nonempty_idx = j
             break
 
+    # 블록 경계 감지: 서로 다른 블록 부모(p, li 등)에 속하는 인접 텍스트 노드 사이에서
+    # insert가 잘못된 노드에 할당되는 것을 방지한다.
+    # block_boundary_pairs: (left_idx, right_idx) 쌍 - 블록 경계를 이루는 노드 인덱스
+    block_boundary_pairs = []
+    prev_nonempty_idx = -1
+    for j, (ns, ne, nd) in enumerate(node_ranges):
+        if ns == ne:
+            continue
+        if prev_nonempty_idx >= 0:
+            prev_node = node_ranges[prev_nonempty_idx][2]
+            if _find_block_ancestor(prev_node) is not _find_block_ancestor(nd):
+                block_boundary_pairs.append((prev_nonempty_idx, j))
+        prev_nonempty_idx = j
+
+    # 블록 경계에서 insert가 right 노드에 기본 할당되는 것을 수정한다.
+    # right 노드 내부에 자체 변경(replace/delete/strictly-inside-insert)이 있으면
+    # boundary insert는 right의 동반 변경이므로 기본 동작을 유지한다.
+    # right 노드에 변경이 없으면 insert는 left 노드에 귀속시킨다.
+    # 예: "이모지 깨지는 이슈" + insert(" 해결") + unchanged → left에 할당
+    # 예: unchanged + insert("[") + "Authentication]..." → right에 할당
+    claim_end_set = set()
+    exclude_start_set = set()
+    for left_idx, right_idx in block_boundary_pairs:
+        right_start, right_end, _ = node_ranges[right_idx]
+        has_changes_in_right = any(
+            (tag in ('replace', 'delete')
+             and max(i1, right_start) < min(i2, right_end))
+            or (tag == 'insert' and right_start < i1 < right_end)
+            for tag, i1, i2, j1, j2 in opcodes
+        )
+        if not has_changes_in_right:
+            claim_end_set.add(left_idx)
+            exclude_start_set.add(right_idx)
+
     for i, (node_start, node_end, node) in enumerate(node_ranges):
         if node_start == node_end:
             continue
@@ -306,8 +340,14 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
         # _map_text_range는 half-open [start, end)를 사용하므로,
         # 마지막 non-empty 노드에서는 end를 확장하여 trailing insert를 포함한다.
         effective_end = node_end + 1 if i == last_nonempty_idx else node_end
+        # 블록 경계에서는 include_insert_at_end/exclude_insert_at_start로
+        # insert를 올바른 노드에 할당한다.
+        include_at_end = i in claim_end_set and i != last_nonempty_idx
+        exclude_at_start = i in exclude_start_set
         new_node_text = _map_text_range(
-            old_stripped, new_stripped, opcodes, node_start, effective_end
+            old_stripped, new_stripped, opcodes, node_start, effective_end,
+            include_insert_at_end=include_at_end,
+            exclude_insert_at_start=exclude_at_start,
         )
 
         node_str = str(node)
@@ -330,8 +370,31 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
         node.replace_with(NavigableString(leading + new_node_text + trailing))
 
 
-def _map_text_range(old_text: str, new_text: str, opcodes, start: int, end: int) -> str:
-    """old_text[start:end] 범위에 대응하는 new_text 부분을 추출한다."""
+def _find_block_ancestor(node):
+    """텍스트 노드의 가장 가까운 블록 레벨 부모 요소를 찾는다."""
+    _BLOCK_TAGS = {
+        'p', 'li', 'td', 'th', 'div', 'blockquote',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    }
+    parent = node.parent
+    while parent:
+        if isinstance(parent, Tag) and parent.name in _BLOCK_TAGS:
+            return parent
+        parent = parent.parent
+    return None
+
+
+def _map_text_range(old_text: str, new_text: str, opcodes, start: int, end: int,
+                    include_insert_at_end: bool = False,
+                    exclude_insert_at_start: bool = False) -> str:
+    """old_text[start:end] 범위에 대응하는 new_text 부분을 추출한다.
+
+    Args:
+        include_insert_at_end: True이면 i1 == end 위치의 insert도 포함한다.
+            블록 경계에서 trailing insert를 현재 노드에 할당할 때 사용.
+        exclude_insert_at_start: True이면 i1 == start 위치의 insert를 제외한다.
+            이전 노드가 해당 insert를 이미 claim한 경우 중복 방지용.
+    """
     result_parts = []
     for tag, i1, i2, j1, j2 in opcodes:
         # 이 opcode가 [start, end) 범위와 겹치는지 확인
@@ -360,7 +423,11 @@ def _map_text_range(old_text: str, new_text: str, opcodes, start: int, end: int)
             # insert는 old 텍스트에서 위치 i1 == i2
             # 이 insert가 현재 노드 범위 [start, end) 안에 위치하면 포함
             # half-open range를 사용하여 인접 노드 경계에서 중복 삽입 방지
+            if exclude_insert_at_start and i1 == start:
+                continue
             if start <= i1 < end:
+                result_parts.append(new_text[j1:j2])
+            elif include_insert_at_end and i1 == end:
                 result_parts.append(new_text[j1:j2])
         elif tag == 'delete':
             # 삭제된 부분은 new에 아무것도 추가하지 않음
