@@ -321,6 +321,10 @@ def build_patches(
             })
         else:
             if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
+                # XHTML이 이미 원하는 텍스트와 일치하면 변경 건너뛰기
+                # (push+fetch 후 verify 재실행 시 멱등성 보장)
+                if collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text):
+                    continue
                 new_plain = transfer_text_changes(
                     old_plain, new_plain, mapping.xhtml_plain_text)
 
@@ -552,11 +556,17 @@ def build_list_item_patches(
                 prefix = extract_list_marker_prefix(xhtml_text)
                 if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
                     xhtml_body = xhtml_text[len(prefix):]
+                    # XHTML body가 이미 new_plain과 일치하면 건너뛰기
+                    if collapse_ws(new_plain) == collapse_ws(xhtml_body):
+                        continue
                     if collapse_ws(old_plain) != collapse_ws(xhtml_body):
                         new_plain = transfer_text_changes(
                             old_plain, new_plain, xhtml_body)
                     new_plain = prefix + new_plain
                 elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
+                    # XHTML이 이미 new_plain과 일치하면 건너뛰기
+                    if collapse_ws(new_plain) == collapse_ws(xhtml_text):
+                        continue
                     new_plain = transfer_text_changes(
                         old_plain, new_plain, xhtml_text)
 
