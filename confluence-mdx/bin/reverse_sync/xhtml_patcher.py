@@ -281,12 +281,22 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
 
     # opcode를 적용하여 각 text node의 새 텍스트를 계산
     new_stripped = new_text.strip()
+    # 마지막 non-empty 노드 인덱스 (trailing insert 포함용)
+    last_nonempty_idx = -1
+    for j in range(len(node_ranges) - 1, -1, -1):
+        if node_ranges[j][0] != node_ranges[j][1]:
+            last_nonempty_idx = j
+            break
+
     for i, (node_start, node_end, node) in enumerate(node_ranges):
         if node_start == node_end:
             continue
 
+        # _map_text_range는 half-open [start, end)를 사용하므로,
+        # 마지막 non-empty 노드에서는 end를 확장하여 trailing insert를 포함한다.
+        effective_end = node_end + 1 if i == last_nonempty_idx else node_end
         new_node_text = _map_text_range(
-            old_stripped, new_stripped, opcodes, node_start, node_end
+            old_stripped, new_stripped, opcodes, node_start, effective_end
         )
 
         node_str = str(node)
@@ -337,8 +347,9 @@ def _map_text_range(old_text: str, new_text: str, opcodes, start: int, end: int)
                 result_parts.append(new_text[ns:ne])
         elif tag == 'insert':
             # insert는 old 텍스트에서 위치 i1 == i2
-            # 이 insert가 현재 노드 범위 안에 위치하면 포함
-            if start <= i1 <= end:
+            # 이 insert가 현재 노드 범위 [start, end) 안에 위치하면 포함
+            # half-open range를 사용하여 인접 노드 경계에서 중복 삽입 방지
+            if start <= i1 < end:
                 result_parts.append(new_text[j1:j2])
         elif tag == 'delete':
             # 삭제된 부분은 new에 아무것도 추가하지 않음

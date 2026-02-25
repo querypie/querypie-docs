@@ -261,3 +261,43 @@ def test_remove_space_before_korean_particle_after_strong():
     result = patch_xhtml(xhtml, patches)
     assert '<strong>AGENT_SECRET</strong>를 변경해도' in result
     assert '<strong>AGENT_SECRET</strong> 를 변경해도' not in result
+
+
+def test_insert_space_at_inline_element_boundary_not_duplicated():
+    """인라인 요소 경계에 공백을 삽입할 때 양쪽 text node에 중복 삽입되지 않아야 한다.
+
+    재현 시나리오:
+      XHTML:  <p><ac:link ...><ac:link-body>설치 후 초기 설정</ac:link-body></ac:link>문서를 참조하여</p>
+      교정:   '설치 후 초기 설정문서를 참조하여' → '설치 후 초기 설정 문서를 참조해'
+              (link text와 후속 텍스트 사이에 공백 삽입 + 텍스트 변경)
+
+    기대: 공백이 </ac:link> 뒤 text node에만 삽입됨.
+    버그:  _map_text_range의 insert 조건 'start <= i1 <= end'가 경계 위치에서
+          양쪽 node 모두에 매칭되어 link-body 안에 trailing space가 생김.
+    """
+    xhtml = (
+        '<ul><li><p>'
+        '<ac:link ac:card-appearance="inline">'
+        '<ri:page ri:content-title="설치 후 초기 설정" />'
+        '<ac:link-body>설치 후 초기 설정</ac:link-body>'
+        '</ac:link>'
+        '문서를 참조하여 공통 설정, 제품별 설정을 진행합니다.'
+        '</p></li></ul>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ul[1]',
+            'old_plain_text': '설치 후 초기 설정문서를 참조하여 공통 설정, 제품별 설정을 진행합니다.',
+            'new_plain_text': '설치 후 초기 설정 문서를 참조해 공통 설정과 제품별 설정을 수행합니다.',
+        }
+    ]
+    result = patch_xhtml(xhtml, patches)
+
+    # link-body 내부에 trailing space가 들어가면 안 됨
+    assert '<ac:link-body>설치 후 초기 설정</ac:link-body>' in result, (
+        f'link-body에 trailing space가 생김: {result}'
+    )
+    # 공백은 </ac:link> 뒤 text node에만 있어야 함
+    assert '</ac:link> 문서를 참조해' in result, (
+        f'</ac:link> 뒤에 공백이 없거나 다른 위치에 삽입됨: {result}'
+    )
