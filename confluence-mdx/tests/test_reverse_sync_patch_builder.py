@@ -15,6 +15,8 @@ from reverse_sync.patch_builder import (
     _flush_containing_changes,
     _resolve_mapping_for_change,
     build_patches,
+)
+from reverse_sync.table_patcher import (
     build_table_row_patches,
     is_markdown_table,
     split_table_rows,
