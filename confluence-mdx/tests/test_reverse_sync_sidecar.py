@@ -307,6 +307,27 @@ class TestFindTextMatch:
         result = _find_text_match('AB', indices, plains, 0, 5)
         assert result is None
 
+    def test_short_prefix_match_with_emoticon_difference(self):
+        """4차: emoticon 차이가 있어도 앞부분 20자 prefix가 일치하면 매칭한다."""
+        # XHTML에서 ac:emoticon이 텍스트로 추출되지 않는 경우,
+        # 끝부분에 이모지가 빠져서 전체 문자열 비교가 실패하지만
+        # 앞부분 prefix로 매칭할 수 있어야 한다.
+        xhtml_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. )'
+        mdx_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. 🔎 )'
+        indices = [0]
+        plains = {0: mdx_text}
+        result = _find_text_match(xhtml_text, indices, plains, 0, 5)
+        assert result == 0
+
+    def test_short_prefix_match_with_metadata_prefix(self):
+        """4차: XHTML에 파라미터 메타데이터 prefix가 있어도 MDX prefix로 매칭한다."""
+        xhtml_text = ':purple_circle:1f7e3🟣#F4F5F79.12.0 이후부터 적용되는 신규 메뉴 가이드입니다.'
+        mdx_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. 🔎 )'
+        indices = [0]
+        plains = {0: mdx_text}
+        result = _find_text_match(xhtml_text, indices, plains, 0, 5)
+        assert result == 0
+
 
 # ── generate_sidecar_mapping ──────────────────────────────────
 
@@ -420,6 +441,38 @@ class TestGenerateSidecarMapping:
             e for e in data['mappings'] if len(e.get('mdx_blocks', [])) > 1
         ]
         assert len(container_entries) >= 1
+
+    def test_callout_panel_with_emoticon_maps_to_mdx(self):
+        """panel callout + emoticon이 있는 XHTML이 MDX callout에 매핑된다."""
+        xhtml = (
+            '<ac:structured-macro ac:name="panel">'
+            '<ac:parameter ac:name="panelIcon">:purple_circle:</ac:parameter>'
+            '<ac:parameter ac:name="panelIconId">1f7e3</ac:parameter>'
+            '<ac:parameter ac:name="panelIconText">🟣</ac:parameter>'
+            '<ac:parameter ac:name="bgColor">#F4F5F7</ac:parameter>'
+            '<ac:rich-text-body>'
+            '<p><strong>9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. </strong>'
+            '<ac:emoticon ac:emoji-fallback="🔎" ac:emoji-id="1f50e" '
+            'ac:emoji-shortname=":mag_right:" ac:name="blue-star"></ac:emoticon>'
+            ' )</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        mdx = (
+            '---\ntitle: Test\n---\n\n'
+            'import { Callout } from \'nextra/components\'\n\n'
+            '<Callout type="info" emoji="🟣">\n'
+            '**9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요.** 🔎 )\n'
+            '</Callout>\n'
+        )
+        result = generate_sidecar_mapping(xhtml, mdx)
+        data = yaml.safe_load(result)
+
+        panel_entry = next(
+            e for e in data['mappings']
+            if e['xhtml_xpath'] == 'macro-panel[1]')
+        assert len(panel_entry['mdx_blocks']) >= 1, \
+            f"panel callout이 MDX 블록에 매핑되지 않음: {panel_entry}"
 
 
 # ── 실제 테스트 케이스 기반 통합 테스트 ───────────────────────

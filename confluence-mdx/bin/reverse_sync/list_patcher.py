@@ -55,6 +55,23 @@ def _resolve_child_mapping(
                 if old_unmarked == child_nospace:
                     return child
 
+    # 5차: 앞부분 prefix 일치 (emoticon/lost_info 차이 허용)
+    # XHTML에서 ac:emoticon이 텍스트로 치환되지 않는 경우,
+    # 전체 문자열 비교가 실패할 수 있으므로 앞부분 20자로 비교한다.
+    # 단, old_nospace가 child보다 2배 이상 긴 경우는 잘못된 매칭으로 판단한다
+    # (callout 전체 텍스트가 내부 paragraph 첫 줄과 prefix를 공유하는 경우 방지).
+    _PREFIX_LEN = 20
+    if len(old_nospace) >= _PREFIX_LEN:
+        old_prefix = old_nospace[:_PREFIX_LEN]
+        for child_id in parent_mapping.children:
+            child = id_to_mapping.get(child_id)
+            if child:
+                child_nospace = re.sub(r'\s+', '', child.xhtml_plain_text)
+                if (len(child_nospace) >= _PREFIX_LEN
+                        and child_nospace[:_PREFIX_LEN] == old_prefix
+                        and len(old_nospace) <= len(child_nospace) * 2):
+                    return child
+
     return None
 
 

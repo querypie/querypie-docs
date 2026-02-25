@@ -194,6 +194,17 @@ class TestResolveChildMapping:
         result = _resolve_child_mapping('some text here', parent, id_map)
         assert result is None
 
+    def test_prefix_match_rejects_long_text(self):
+        # 5차 prefix: old_plain이 child보다 훨씬 길 때 잘못된 매칭 방지
+        # callout 전체 텍스트가 내부 paragraph와 같은 prefix를 공유하는 경우
+        child_text = '11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.'
+        long_old = child_text + ' ' + '기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나...' * 3
+        child = _make_mapping('c1', child_text)
+        parent = _make_mapping('p1', 'parent', children=['c1'])
+        id_map = {'c1': child, 'p1': parent}
+        result = _resolve_child_mapping(long_old, parent, id_map)
+        assert result is None
+
 
 # ── Helper 함수 테스트 ──
 

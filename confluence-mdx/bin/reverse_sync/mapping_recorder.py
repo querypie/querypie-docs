@@ -20,6 +20,28 @@ HEADING_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
 _CALLOUT_MACRO_NAMES = frozenset({'tip', 'info', 'note', 'warning', 'panel'})
 
 
+def _get_text_with_emoticons(element) -> str:
+    """get_text()와 동일하지만 ac:emoticon의 fallback 텍스트를 포함한다.
+
+    Confluence의 <ac:emoticon> 태그는 self-closing으로 텍스트 노드가 없어서
+    get_text()에서 누락되지만, MDX에서는 리터럴 이모지로 표현된다.
+    이 함수는 ac:emoticon의 ac:emoji-fallback 속성값을 텍스트로 포함시켜
+    MDX 정규화 텍스트와의 매칭을 가능하게 한다.
+    """
+    parts = []
+    for item in element.children:
+        if isinstance(item, NavigableString):
+            parts.append(str(item))
+        elif isinstance(item, Tag):
+            if item.name == 'ac:emoticon':
+                fallback = item.get('ac:emoji-fallback', '')
+                if fallback:
+                    parts.append(fallback)
+            else:
+                parts.append(_get_text_with_emoticons(item))
+    return ''.join(parts)
+
+
 def _iter_block_children(parent):
     """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
     for child in parent.children:
@@ -70,7 +92,12 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
                 _add_mapping(mappings, counters, f'macro-{macro_name}', str(child), plain,
                              block_type='code')
             else:
-                plain = child.get_text()
+                # Callout 매크로: body 텍스트만 추출 (파라미터 메타데이터 제외)
+                if macro_name in _CALLOUT_MACRO_NAMES:
+                    rich_body = child.find('ac:rich-text-body')
+                    plain = _get_text_with_emoticons(rich_body) if rich_body else child.get_text()
+                else:
+                    plain = child.get_text()
                 _add_mapping(mappings, counters, f'macro-{macro_name}', str(child), plain,
                              block_type='html_block')
                 # Callout 매크로: 자식 요소 개별 매핑 추가
@@ -145,7 +172,7 @@ def _add_container_children(
         child_counters[tag] = child_counters.get(tag, 0) + 1
         child_xpath = f"{parent_xpath}/{tag}[{child_counters[tag]}]"
 
-        plain = child.get_text()
+        plain = _get_text_with_emoticons(child)
         if tag in ('ul', 'ol', 'table'):
             inner = str(child)
         else:
