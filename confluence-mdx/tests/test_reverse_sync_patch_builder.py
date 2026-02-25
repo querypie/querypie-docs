@@ -1063,3 +1063,117 @@ class TestHasInlineFormatChange:
             '`http`  `https` text',
             '`http` `https` text',
         ) is False
+
+
+# ── build_patches 멱등성 (idempotency) 테스트 ──
+
+
+class TestBuildPatchesIdempotency:
+    """push+fetch 후 verify 재실행 시 멱등성(idempotency) 테스트.
+
+    reverse_sync push로 Confluence 원문을 교정한 후 fetch하면,
+    XHTML은 이미 새 텍스트를 포함한다. 이 상태에서 verify를 재실행하면
+    MDX diff는 여전히 존재하지만 (base branch MDX가 아직 old이므로),
+    XHTML은 이미 업데이트되었으므로 패치를 생성하지 않아야 한다.
+
+    버그: build_patches가 collapse_ws(old_plain) != collapse_ws(xhtml_plain_text)
+    조건에서 transfer_text_changes를 호출하는데, xhtml_text가 이미 new_plain과
+    동일한 상태에서 old→new 변경을 다시 매핑하여 텍스트가 중복된다.
+    """
+
+    def _setup_sidecar(self, xpath: str, mdx_idx: int):
+        entry = _make_sidecar(xpath, [mdx_idx])
+        return {mdx_idx: entry}
+
+    def test_direct_patch_skipped_when_xhtml_already_matches_new(self):
+        """XHTML이 이미 new_plain과 일치하면 변경이 없는 패치를 생성해야 한다.
+
+        재현 시나리오:
+          Original MDX: "또한 네이티브로 Kubernetes를 지원하지만, 주로 ... 고객을 대상으로 권장됩니다."
+          Improved MDX: "또한 Kubernetes를 네이티브로 지원하지만, 주로 ... 고객에게 권장됩니다."
+
+        1차 verify+push 후 XHTML이 업데이트됨 → 2차 verify에서 text 중복 발생.
+        "네이티브로" → "네이티브로 네이티브로", "에게" → "에게에게" 등.
+        """
+        old_content = (
+            "또한 네이티브로 Kubernetes를 지원하지만, "
+            "주로 Kubernetes DevOps 팀이 있는 고객을 대상으로 권장됩니다."
+        )
+        new_content = (
+            "또한 Kubernetes를 네이티브로 지원하지만, "
+            "주로 Kubernetes DevOps 팀이 있는 고객에게 권장됩니다."
+        )
+        # push+fetch 후 XHTML은 new_content와 동일한 텍스트를 포함
+        xhtml_text = new_content
+
+        m = _make_mapping('m1', xhtml_text, xpath='p[1]')
+        mappings = [m]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        change = _make_change(0, old_content, new_content)
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        # 이미 적용된 변경이므로 패치가 없거나 no-op이어야 함
+        for p in patches:
+            if 'new_plain_text' in p:
+                assert p['new_plain_text'] == p['old_plain_text'], (
+                    f"XHTML이 이미 변경된 상태에서 불필요한 패치 생성. "
+                    f"new_plain_text에 텍스트 중복 포함: {p['new_plain_text']!r}"
+                )
+
+    def test_direct_multi_sentence_patch_skipped_when_already_applied(self):
+        """여러 문장을 포함하는 direct match 블록에서도 멱등성이 보장되어야 한다.
+
+        재현 시나리오 (실제 system-architecture-overview.mdx paragraph-38):
+          Original MDX (3개 문장의 단일 블록):
+            "위의 구성은 ... 사례입니다."
+            "이용자가 웹브라우저로 QueryPie에 연결하여 사용할 수 있습니다."
+            "그뿐만 아니라, DataGrip ... 설치하여 사용할 수 있습니다."
+          Improved MDX:
+            "위의 구성은 ... 사례입니다."
+            "이용자는 웹 브라우저로 QueryPie에 연결하여 사용할 수 있습니다."
+            "또한 DataGrip ... 설치해 사용할 수 있습니다."
+
+        push 후 XHTML이 업데이트된 상태에서 "또한" → "또한또한" 중복 발생.
+        """
+        old_content = (
+            "위의 구성은 실제 사례입니다.\n"
+            "이용자가 웹브라우저로 QueryPie에 연결하여 사용할 수 있습니다.\n"
+            "그뿐만 아니라, DataGrip, MySQL Workbench 등 "
+            "애플리케이션에서 DB, System에 접속하기 위해, "
+            "QueryPie Agent를 PC에 설치하여 사용할 수 있습니다."
+        )
+        new_content = (
+            "위의 구성은 실제 사례입니다.\n"
+            "이용자는 웹 브라우저로 QueryPie에 연결하여 사용할 수 있습니다.\n"
+            "또한 DataGrip, MySQL Workbench 등 "
+            "애플리케이션으로 DB와 시스템에 접속하기 위해 "
+            "QueryPie Agent를 PC에 설치해 사용할 수 있습니다."
+        )
+        # normalize_mdx_to_plain은 줄바꿈을 공백으로 치환하고 join
+        # push+fetch 후 XHTML은 new_content의 normalize 결과와 동일한 텍스트를 포함
+        xhtml_text = normalize_mdx_to_plain(new_content, 'paragraph')
+
+        m = _make_mapping('m1', xhtml_text, xpath='p[1]')
+        mappings = [m]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        change = _make_change(0, old_content, new_content)
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        # 이미 적용된 변경이므로 텍스트 중복이 없어야 함
+        for p in patches:
+            if 'new_plain_text' in p:
+                assert '또한또한' not in p['new_plain_text'], (
+                    f"텍스트 중복 발생: {p['new_plain_text']!r}"
+                )
+                assert p['new_plain_text'] == p['old_plain_text'], (
+                    f"XHTML이 이미 변경된 상태에서 불필요한 패치 생성: "
+                    f"new={p['new_plain_text']!r}"
+                )
