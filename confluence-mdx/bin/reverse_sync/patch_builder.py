@@ -603,9 +603,10 @@ def build_list_item_patches(
                     'new_plain_text': new_plain,
                 })
         else:
-            # child 매칭 실패: inline 마커 추가/제거 여부 추적
-            # (has_inline_marker_added: content 변경 무시, type 변경만 감지)
-            if has_inline_marker_added(old_item, new_item):
+            # child 매칭 실패: inline 포맷 변경(마커 경계 이동 포함) 감지
+            # has_inline_format_change: 마커 type/content 변경 및 마커 간 텍스트 변경 모두 감지
+            # (bold 경계 이동 등 text-only 패치로 처리 불가한 구조 변경을 포착)
+            if has_inline_format_change(old_item, new_item):
                 _flat_inline_change = True
 
             # parent 또는 텍스트 포함 매핑을 containing block으로 사용
