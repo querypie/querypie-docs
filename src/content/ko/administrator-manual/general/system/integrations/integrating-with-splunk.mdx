@@ -27,7 +27,7 @@ Splunk 연계 권장 아키텍처
 
 Splunk에서 권장하는 Syslog-Splunk 연계를 위한 아키텍처는 다음과 같습니다.
 
-1. 별도 syslog server를 통한 1차 수집 이후 Splunk 로 전송
+1. 별도 syslog server를 통한 1차 수집 이후 Splunk로 전송
 2. Universal forwarder / Heavy forwarder를 통해 Splunk로 전송
 
 <Callout type="important">
@@ -50,7 +50,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 </figcaption>
 </figure>
 
-1. Destination 정보를 생성하기 위해 다음의 정보들을 입력합니다.
+1. Destination 정보를 생성하기 위해 다음 정보를 입력합니다.
     1. **Destination Name**: syslog를 수신하는 주체를 식별할 수 있도록 적당한 이름을 입력합니다.
     2. **Protocol** : Splunk로 전송가능한 프로토콜은 TCP(기본값), UDP, HTTP, HTTPS입니다.
         1. UDP는 패킷의 길이 제약사항이 있고 보안적으로 취약하므로 TCP 사용을 권장합니다.
@@ -58,24 +58,24 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
         3. 만약 HTTPS 대신 HTTP를 사용하기 위해서는 먼저 Splunk의 HEC 옵션에서 SSL 옵션을 사용하지 않도록 설정해야 합니다. HTTP 선택 시, 추가적으로 다음의 필드 값을 입력해야 합니다:
             * **HEC Host** : Splunk server의 hostname 또는 ip 주소를 입력합니다.
             * **HEC Token** : Splunk HEC token 값을 입력합니다.
-    3. **Destination Address (Hostname)** : syslog를 수신하는 Splunk server 또는 forwarder의 IP address 또는 hostname을 입력합니다. HTTP, HTTPS 프로토콜은 이부분이 HEC Host 입력으로 바뀌어 표시됩니다.
-    4. **Port** : sylog server의 listening port를 입력합니다. (TCP/UDP 기본값 514)
-        1. Splunk HEC port는 Splunk 의 설정을 먼저 확인 후 입력해야 합니다.
+    3. **Destination Address (Hostname)** : syslog를 수신하는 Splunk server 또는 forwarder의 IP address 또는 hostname을 입력합니다. HTTP, HTTPS 프로토콜은 이 부분이 HEC Host 입력으로 바뀌어 표시됩니다.
+    4. **Port** : syslog server의 listening port를 입력합니다. (TCP/UDP 기본값 514)
+        1. Splunk HEC port는 Splunk 설정을 먼저 확인한 후 입력해야 합니다.
         2. Splunk 메뉴에서 HTTP/HTTPS 프로토콜을 선택한 경우:
             * Splunk HTTP Event Collector의 global option에 설정된 port 번호를 입력합니다. 기본값은 8088입니다.
             * Splunk Cloud 사용자에게는 443을 입력합니다.
-    5. **HEC Token**: HTTP, HTTPS 프로토콜의 경우 Splunk의 HEC 설정 시 생성하는 token 값을 입력해야 합니다.
+    5. **HEC Token**: HTTP, HTTPS 프로토콜의 경우 Splunk의 HEC 설정 시 생성한 token 값을 입력해야 합니다.
     6. **Test Connection 버튼** : TCP, HTTP, HTTPS 프로토콜은 대상과 통신상태를 점검할 수 있습니다.
         * UDP는 프로토콜 특성상 통신 상태 점검이 불가능하여, Test Connection 버튼이 비활성화됩니다.
     7. **Select Event Items** : 이벤트 항목을 선택적으로 전송할 수 있습니다. 하단 “Select all event items, including those that may be added later.” 체크박스를 선택하면 전송 가능한 모든 이벤트를 전송합니다.
     8. **Disable syslog header** : syslog header 정보를 빼고 전송합니다(기본값 Yes). 일부 SIEM에서 json 파싱이 어려운 경우 syslog header를 빼기 위해 제공되는 옵션입니다. HTTP, HTTPS의 경우 이 옵션을 사용할 수 없고 항상 syslog header가 없는 상태로 전송됩니다.
-    9. **Description**: 설정 정보에 대한 100자 이내의 간략한 정보를 입력합니다.
+    9. **Description**: 설정 정보에 대한 100자 이내의 간략한 설명을 입력합니다.
 2. `OK` 버튼을 누르고 설정을 저장합니다.
     1. 설정 사항이 저장되더라도 바로 Syslog가 전송되는 것은 아닙니다.
 3. 전송 시작을 하려면 페이지 좌측 상단에 있는 토글 버튼을 `ON`으로 전환합니다.
     1. 이 전송 토글 버튼은 유지 보수 등 다양한 상황에서 일시적으로 전송을 중지해야 하는 경우 사용할 수 있습니다.
 4. 만약 더 이상 Syslog 전송이 필요하지 않을 경우 `Delete` 버튼을 통해 설정을 제거할 수 있습니다.
-    1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.
+    1. 단, 전송 중인 상태에서는 삭제할 수 없으므로 전송 토글 버튼을 Off로 변경한 후 삭제해 주시기 바랍니다.
 
 <Callout type="info">
 11.3.0에서 Timezone 설정이 추가되었습니다.

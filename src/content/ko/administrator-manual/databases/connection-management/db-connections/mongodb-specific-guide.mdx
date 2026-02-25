@@ -31,7 +31,7 @@ mongodb://[Hostname or IP]:[port],[Hostname or IP]:[port],[Hostname or IP]:[port
 * options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러 개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
-replica set 을 사용하는 경우 `/?` 뒤에 replicaSet=[replica set 이름] 을 입력해야 합니다.
+replica set을 사용하는 경우 `/?` 뒤에 replicaSet=[replica set 이름]을 입력해야 합니다.
 ex. `/?replicaSet=rs0`
 </Callout>
 
@@ -47,8 +47,8 @@ mongodb+srv://<FQDN>/?[options]
 * options : `/?` 뒤에 붙는 접속에 관련된 옵션. 여러 개의 옵션을 사용할 경우 `&`로 붙여서 사용합니다. <br/>ex. `/?authSource=admin&replicaSet=rs0`
 
 <Callout type="info">
-+srv 는 클러스터에 포함되어 있는 각각의 호스트의 주소가 동적으로 바뀔 수 있기 때문에 QueryPie에서 +srv를 직접 커넥션에 사용할 수는 없고 standard connection string으로 변환해서 사용하게 됩니다.
-이런 변환과정으로 인해 현재 +srv 를 사용하여 접속하는 경우 하위 인스턴스에 직접 접속은 지원하지 않습니다.
++srv는 클러스터에 포함된 각 호스트 주소가 동적으로 바뀔 수 있으므로 QueryPie에서 +srv를 직접 커넥션에 사용할 수 없고 standard connection string으로 변환해 사용합니다.
+이런 변환 과정으로 인해 현재 +srv를 사용해 접속하는 경우 하위 인스턴스 직접 접속은 지원하지 않습니다.
 그럼에도 불구하고 +srv 접속 환경의 하위 호스트에 대한 직접 접속이 필요한 경우, 사용자가 nslookup 명령을 사용하여 DNS 조회를 통해 각 호스트 정보를 확인 후 별도 standard connection string을 사용한 커넥션을 생성해서 접속해야 합니다.
 </Callout>
 
@@ -63,7 +63,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Administrator &gt; Databases &gt; Connection Management &gt; DB Connections 메뉴로 이동합니다.
 2. 우측 상단의 `Create Connection` 버튼을 클릭합니다.
-3. 데이터 소스 선택 단계에서 mongoDB를 선택합니다.
+3. 데이터 소스 선택 단계에서 MongoDB를 선택합니다.
 
 #### 3. Replica Set 형태로 설정하기
 
@@ -75,9 +75,9 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
 2. Connection Name을 지정합니다.
-3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
+3. `Cluster` 스위치를 켜서 클러스터 입력을 활성화한 후 다음 정보를 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    2. Expose : Connection 정보 화면 또는 agent의 접속 대상 목록에서 클러스터 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)만 표시하려면 `Hidden`을 선택합니다.
     3. Connection String :
         1. Scheme 선택항목에서 `mongodb://` 를 선택합니다.
         2. 하위 호스트 이름과 포트를 쉼표로 구분하여 입력합니다.
@@ -91,7 +91,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 </figure>
 
 1. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
-2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/>**replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.**
+2. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Value]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/>**replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.** 
 3. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 4. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 5. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
@@ -110,16 +110,16 @@ ______
 
 1. Allowed Zone에 알맞은 네트워크 zone 설정을 합니다.
 2. Connection Name을 지정합니다.
-3. `Cluster` 스위치를 를 켜서 클러스터 입력을 활성화한 후 다음의 정보들을 입력합니다.
+3. `Cluster` 스위치를 켜서 클러스터 입력을 활성화한 후 다음 정보를 입력합니다.
     1. Type : 커넥션 정보에 노출되는 영역입니다. Primary 역할이 동적으로 바뀔 수 있으므로 기본값인 `Primary` 를 선택합니다.
-    2. Expose : Connection 정보 화면 또는 agent의 접속대상 목록에 클러스터의 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)들만 표시하려면 `Hidden`을 선택합니다.
+    2. Expose : Connection 정보 화면 또는 agent의 접속 대상 목록에서 클러스터 하위 노드(호스트 또는 인스턴스)를 펼쳐 볼 수 있도록 하려면 `Expandable`을, 펼쳐 볼 수 없도록 하려면 `Unexpandable`을, 클러스터를 숨기고 하위 노드(호스트 또는 인스턴스)만 표시하려면 `Hidden`을 선택합니다.
     3. Connection String :
         1. Scheme 선택항목에서 `mongodb+srv://` 를 선택합니다.
         2. 도메인 형식의 호스트 이름(FQDN)을 입력합니다.
         3. `Lookup` 버튼을 누릅니다. 정상적으로 DNS 조회가 되었다면 클러스터 포함된 노드가 인스턴스로 자동으로 추가 됩니다.
     4. Authentication DB 및 Other Options
         1. Authentication DB 값과 Other Options에도 DNS의 TXT레코드에서 조회된 값이 자동으로 입력됩니다.
-        2. +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 tls=true를 수동으로 입력해줘야 합니다. (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이 &tls=true를 입력합니다.
+        2. +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 tls=true를 수동으로 입력해 주어야 합니다. (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이 &tls=true를 입력합니다.
 4. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 5. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 6. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
@@ -165,7 +165,7 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 �
 
 위에서 안내된 바와 같이 QueryPie의 SQL editor를 사용하여 접속하는 경우 커넥션 스트링에 tls=true가 필요합니다.
 
-> +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 **tls=true**를 수동으로 입력해줘야 합니다.> (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이  **&tls=true**를 입력합니다.
++ +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 **tls=true**를 수동으로 입력해 주어야 합니다. (TXT 레코드에 TLS 옵션이 없기 때문입니다.) 따라서 Other options 항목에 위 그림과 같이  **&tls=true**를 입력합니다.
 Proxy를 사용하는 경우 DataGrip등의 SQL Client에서 TLS 설정과 별개로 QueryPie에서도 SSL 설정이 필요합니다.<br/>[SSL Configurations](../ssl-configurations)를 참고하여 설정 후 커넥션의 SSL 설정에 반영해야 합니다.<br/>
 
 <figure data-layout="center" data-align="center">
@@ -196,7 +196,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
 </figure>
 
-1. 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다. <br/> Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 MongoDB 에서 해당 Collection 의 Document 를 조회할 경우 적용한 마스킹 패턴에 따라 사전에 지정한 Attribute 의 Value 값이 `*****@gmail.com`와 같이 마스킹되어 표시됩니다.
+1. 정책을 생성한 뒤 실제로 정책을 적용할 데이터 경로를 규칙으로 등록합니다. <br/> Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 MongoDB에서 해당 Collection의 Document를 조회할 경우 적용한 마스킹 패턴에 따라 사전에 지정한 Attribute의 Value 값이 `*****@gmail.com`와 같이 마스킹되어 표시됩니다.
     1. Data Masking 메뉴에서 생성한 정책을 클릭합니다.
     2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
     3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.

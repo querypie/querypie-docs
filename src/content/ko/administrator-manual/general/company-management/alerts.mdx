@@ -109,7 +109,7 @@ DAC
 Sensitive Data Access
 </td>
 <td>
-정의된 조건에 해당하는 민감데이터 조회 알림
+정의된 조건에 해당하는 민감 데이터 조회 알림
 </td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 
 1. **Name** : 알림 이름
 2. **Alert Type** : 알림 유형을 선택합니다.
-    1. 알림 유형별로 설정 가능한 조건이 상이합니다. 자세한 내용은 하단 문서를 참고해주세요.
+    1. 알림 유형별로 설정 가능한 조건이 상이합니다. 자세한 내용은 하단 문서를 참고해 주세요.
 3. **Message Template** : 알림 메시지 템플릿을 설정합니다.
     1. Message Template Variable에서 지원하는 템플릿 변수를 활용하여 커스텀한 메시지를 작성할 수 있습니다.
     2. Message Template Variable은 Alert Type 별로 상이합니다.
@@ -221,7 +221,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 새로운 결재 요청 등록 알림
 
 * **Request Type** : Workflow 요청 유형
-    * DB Access Request, SQL Request, SQL Export Request, Server Access Request, Access Role Request, Unmasking Request 중 택 일
+    * DB Access Request, SQL Request, SQL Export Request, Server Access Request, Access Role Request, Unmasking Request 중 택일
     * All Requests (*) : 모든 요청 타입에 대해 알림 발송
 * **Urgent Mode** : 사후 승인 여부
     * All : 모든 승인 요청 건에 알림 발송
@@ -233,7 +233,7 @@ Administrator &gt; General &gt; Company Management &gt; Alerts &gt; Create Alert
 **10.2.2 슬랙 메시지 템플릿 변경 사항**
 
 * Slack &gt; API 방식의 Channel로 전송되는 알림 메시지에서 `{{assignees}}` 에 대한 Slack 사용자 멘션이 지원됩니다.
-* Request Type 선택에 따라 지원되는 템플릿 변수가 상이합니다. 자세한 내용은 별도의 **New Request &gt; 요청 타입별 템플릿 변수** 문서를 참고해주세요.
+* Request Type 선택에 따라 지원되는 템플릿 변수가 상이합니다. 자세한 내용은 별도의 **New Request &gt; 요청 타입별 템플릿 변수** 문서를 참고해 주세요.
 
 **10.2.8 슬랙 메시지 템플릿 변경 사항**
 
@@ -266,7 +266,7 @@ IP 대역에 따른 사용자 로그인 행위 알림
 <Callout type="info">
 예) 비정상적인 로그인 시도 시 알림 발송 - 5분간 QueryPie 로그인 실패 3회 누적 시
 * Action Count : 3
-* Specific Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 </Callout>
 
 #### SQL Execution
@@ -322,20 +322,20 @@ DB 접속 성공 또는 실패 알림
 <Callout type="info">
 예) 비정상적인 데이터베이스 접속 시도 시 알림 발송 - 5분간 DB 접속 실패 3회 누적 시
 * Alert Trigger Condition : Failure
-* Connection Failure Trigger with Internal : On
+* Connection Failure Trigger with Interval : On
 * Action Count : 3
-* Specified Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 </Callout>
 
 #### Sensitive Data Access
 
-정의된 조건에 해당하는 민감데이터 조회 알림
+정의된 조건에 해당하는 민감 데이터 조회 알림
 
 * **Criteria** : 알림 발송 기준을 선택합니다.
     * Sensitive Level : Sensitive Data Policy &gt; Rule에 설정된 데이터별 민감 레벨 기준
-        * Low, Medium, High 중 택 일
+        * Low, Medium, High 중 택일
     * Policy : 특정 Sensitive Data Policy 기준
-        * 등록된 Sensitive Data Policy 중 택 일
+        * 등록된 Sensitive Data Policy 중 택일
 * **Rows** : 알림 발송 기준 행 수 (10.2.2 이후 버전)
     * 1 이상 입력 가능합니다.
 * **Specific Time Interval (Minutes)**  : 알림 발송 기준 시간(분) (10.2.2 이후 버전)
@@ -344,11 +344,11 @@ DB 접속 성공 또는 실패 알림
 
 <Callout type="important">
 Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정책에 개인정보가 포함된 테이블 및 컬럼을 사전 정의해야 합니다.
-자세한 내용은 [Sensitive Data](../../databases/policies/sensitive-data) 문서를 참고해주세요.
+자세한 내용은 [Sensitive Data](../../databases/policies/sensitive-data) 문서를 참고해 주세요.
 </Callout>
 
 <Callout type="info">
-예1) 민감레벨 High 로 설정된 개인정보 데이터 조회 시 알림 발송
+예1) 민감 레벨 High로 설정된 개인정보 데이터 조회 시 알림 발송
 
 * Criteria : Sensitive Level
 * Sensitive Level : High
@@ -394,7 +394,7 @@ Sensitive Data Access 알림 타입 사용을 위해서는 민감 데이터 정�
 예) 다음과 같은 설정의 경우 Server 접속 실패 이벤트가 5분 이내에 3회 발생 시 알림을 발송하게 됩니다.
 
 * Action Count : 3
-* Specific Time Internal (Minutes) : 5
+* Specific Time Interval (Minutes) : 5
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/general/company-management/alerts/image-20251010-093016.png" alt="image-20251010-093016.png" width="639" />

@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 <Callout type="info">
 10.3.0부터 Administrator &gt; General &gt; Security 하위에 있던 DAC 관련 설정 항목들이 각 서비스 메뉴의 General &gt; Configurations로 이동되었습니다.
 
-11.2.0부터 Administrator &gt; General &gt; Company Management &gt; General 하위에 있던 Query Sharing이 Administrator &gt; Databases &gt; General &gt; Configurations 로 이동되었습니다.
+11.2.0부터 Administrator &gt; General &gt; Company Management &gt; General 하위에 있던 Query Sharing이 Administrator &gt; Databases &gt; General &gt; Configurations로 이동되었습니다.
 
 11.5.0부터 권한 만료(Privilege Expiration, Policy Exception Expiration) 전 이메일 알림 기능이 추가되었습니다.
 </Callout>
@@ -48,10 +48,10 @@ Query Sharing 옵션을 On으로 선택 시, 추가 입력 항목이 노출됩�
         * **Passphrase** : Private Key에 Passphrase 설정된 경우 입력
 
 
-입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인 후 `OK` 버튼을 입력하여 저장합니다.
+입력이 완료되면 `Test` 버튼을 클릭하여 정상적으로 인증되는지 확인한 후 `OK` 버튼을 클릭하여 저장합니다.
 
 <Callout type="info">
-GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음의 문서들을 참고하세요.
+GitHub을 이용한 OAuth 또는 SSH 인증에 대한 설명은 다음 문서를 참고해 주세요.
 * Access Token 발급 : [개인용 액세스 토큰 관리](https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 * SSH 연결 : [SSH를 통한 GitHub 연결](https://docs.github.com/ko/authentication/connecting-to-github-with-ssh)
 </Callout>
@@ -79,7 +79,7 @@ ______
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/dac-general-configurations/image-20251218-084512.png" alt="image-20251218-084512.png" width="620" />
   </figure>
-* **Display the first 10 rows in Query Audit**: Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며 On으로 설정할 경우 전체 결과를 노출하지 않고, 최초 10줄만 표시됩니다)
+* **Display the first 10 rows in Query Audit**: Query Audit 내 SELECT 구문 실행 결과 노출 방식 설정 (Default : Off이며, On으로 설정할 경우 전체 결과를 노출하지 않고 최초 10줄만 표시됩니다)
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/dac-general-configurations/screenshot-20231210-174400.png" alt="Query Audit Detail" width="736" />
@@ -91,9 +91,9 @@ Query Audit Detail
 * **Advanced Privilege Setting** : Privilege 권한별 계정 통제 (Default : Off)
     * On으로 설정할 경우 Connection Details 페이지 하단에 Privilege Settings 탭이 표시됨
     * 자세한 내용은 [DB Connections](connection-management/db-connections) 내 **Privilege Setting** 문서 참고
-* **Unmasking Zones**: Unmasking request를 통해 마스킹된 데이터 조회를 허가받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 마스킹 정책의 예외 대상인 사용자일지라도 특정 IP(대역)일 경우만 마스킹 해제 상태로 조회할 수 있도록 설정. (Default : Off) <br/>참고 : [Unmasking Zones 상세 설명](dac-general-configurations/unmasking-zones)
-* **Ledger Table Management :**  특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화로 설정. (Default : Off)
-* **Select Purpose Duration for Agent :**  Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유 입력을 할 때 지정한 시간 동안 재입력하지 않도록 설정. Ledger Table Management가 On 상태일 때만 설정 가능. (Default : 10 minutes)
+* **Unmasking Zones**: Unmasking request를 통해 마스킹된 데이터 조회를 허가받은 사용자 또는 마스킹 정책의 allowed user로 등록되어 정책 예외 대상인 사용자라도 특정 IP(대역)에서만 마스킹 해제 상태로 조회할 수 있도록 설정합니다. (Default : Off) <br/>참고 : [Unmasking Zones 상세 설명](dac-general-configurations/unmasking-zones)
+* **Ledger Table Management :**  특정 테이블을 Ledger로 지정하여 Workflow 승인 강제, 사유 입력 강제를 할 수 있는 Ledger table management 기능의 활성화 또는 비활성화 설정입니다. (Default : Off)
+* **Select Purpose Duration for Agent :**  Proxy를 통해 3rd party tool로 DB에 접속하는 사용자가 사유 입력 강제 대상 데이터를 조회하여 사유를 입력할 때 지정한 시간 동안 재입력하지 않도록 설정합니다. Ledger Table Management가 On 상태일 때만 설정 가능합니다. (Default : 10 minutes)
 * **Restricted Statement** : 사용 제한 쿼리
     * Statement : 쿼리에 포함 시 실행 제한하려는 문자열 입력 (대소문자 구분 없음)
     * Allowed User : 해당 구문 실행을 허용할 사용자 지정 (복수 선택 가능, 그룹 단위 지정 불가)
@@ -103,11 +103,11 @@ Query Audit Detail
       </figure>
 
 <Callout type="important">
-Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승인 받더라도 실행이 차단됩니다.
+Restricted Statement 정책에 의해 차단되는 쿼리는 SQL Request로 승인받더라도 실행이 차단됩니다.
 사용자에 따라 실행을 허용해야 하는 쿼리를 입력하지 않도록 합니다.
 </Callout>
 
-* **Justification Length** : Connection 설정에서 "User Action Purpose Required" 옵션이 활성화되어 있거나 Ledger table management 정책에서 사유 입력을 강제한 경우 Web Editor 또는 Agent를 통해 사유 입력을 해야 합니다. 이때 입력란에 입력하는 글자길이의 최소값 및 최대값을 관리자가 지정합니다.
+* **Justification Length** : Connection 설정에서 "User Action Purpose Required" 옵션이 활성화되어 있거나 Ledger table management 정책에서 사유 입력을 강제한 경우 Web Editor 또는 Agent를 통해 사유를 입력해야 합니다. 이때 입력란에 입력하는 글자 길이의 최소값 및 최대값을 관리자가 지정합니다.
     * 입력값의 최소값은 1이고 최대값은 1000입니다.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250824-233845.png" alt="image-20250824-233845.png" width="712" />
@@ -126,7 +126,7 @@ Query Audit
 
 <br/>
 
-* **Member based Connection Filtering :** Workflow에서 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링 하는 기능입니다.
+* **Member based Connection Filtering :** Workflow의 DB Access Request 양식에서 특정 사용자 또는 그룹에 대해 전체 커넥션을 노출하지 않고 지정한 커넥션만 보이도록 필터링하는 기능입니다.
     * 커넥션의 상세 화면에서 connection member에 등록된 사용자/그룹만 해당 커넥션이 Workflow DB Access Request에 노출됩니다.<br/>
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/databases/dac-general-configurations/image-20250627-141133.png" alt="Databases &gt; Connection Management &gt; DB Connections 의 특정 커넥션 상세화면에서 Connection Member에 특정 사용자 또는 그룹을 할당" width="712" />

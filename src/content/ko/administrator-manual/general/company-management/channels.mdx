@@ -9,8 +9,8 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-Channels 페이지에서는 QueryPie에서 발송하는 알림을 수신할 채널을 등록 및 관리합니다.
-현재 QueryPie에서 제공하는 채널 타입은 Slack, Agit, HTTP, Email의 네 가지이며, 채널 등록 사전에 연동을 위한 작업이 필요합니다.
+Channels 페이지에서는 QueryPie에서 발송하는 알림을 수신할 채널을 등록하고 관리합니다.
+현재 QueryPie에서 제공하는 채널 타입은 Slack, Agit, HTTP, Email의 네 가지이며, 채널 등록 전에 연동 작업이 필요합니다.
 
 ### 등록된 채널 조회하기
 
@@ -158,14 +158,14 @@ Slack 내 Webhook 추가 화면
 #### 2-2. API 타입으로 연동하기
 
 1. 생성했던 App 을 클릭하여 앱의 Settings 페이지에 진입한 뒤, `App Manifest` 메뉴로 이동합니다.
-2. scopes 영역에 `chat:write`, `users:read`, `users:read.email` 을 추가한 뒤 저장합니다. <br/>
+2. scopes 영역에 `chat:write`, `users:read`, `users:read.email`을 추가한 뒤 저장합니다. <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/company-management/channels/screenshot-20241211-171140.png" alt="Slack API &gt; Apps &gt; Settings &gt; App Manifest" width="736" />
   <figcaption>
   Slack API &gt; Apps &gt; Settings &gt; App Manifest
   </figcaption>
   </figure>
-3. 상단의 노란색 알림 바를 통해 `Reinstall your app` 을 통해 앱을 재시작합니다. (필수)
+3. 상단의 노란색 알림 바에서 `Reinstall your app`을 눌러 앱을 재설치합니다. (필수)
 4. `Reinstall to {Workspace_name}` 버튼을 클릭하여 알림을 보낼 Slack 채널을 선택한 뒤 `허용` 버튼을 클릭합니다.
     1. Scope를 변경한 뒤 적용하려면, 이 단계를 다시 수행해야 합니다.
 5. 해당 Slack 채널로 이동하여 생성한 앱을 추가합니다. (이미 앱을 추가한 상태라면 이 단계는 건너뛸 수 있습니다)
@@ -176,7 +176,7 @@ Slack 내 Webhook 추가 화면
   Slack App &gt; Channel Detail
   </figcaption>
   </figure>
-7. OAuth & Permissions 페이지에서 Bot User OAuth Token 을 복사하고, QueryPie 채널 생성 모달에 붙여넣습니다.
+7. OAuth & Permissions 페이지에서 Bot User OAuth Token을 복사하고, QueryPie 채널 생성 모달에 붙여넣습니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/company-management/channels/screenshot-20240804-190835.png" alt="Slack 내 OAuth & Permissions 페이지 - 토큰 복사" width="760" />
   <figcaption>

@@ -28,21 +28,21 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
   Email Integration 상세페이지
   </figcaption>
   </figure>
-4. SMTP 설정을 생성하기 위해 다음의 정보들을 입력합니다.
+4. SMTP 설정을 생성하기 위해 다음 정보를 입력합니다.
     1. **Email Server Name** : 식별이 용이하도록 임의의 이름을 입력합니다.
-    2. **Host** : SMTP 서버의 hostname (FQDN) 을 입력합니다.
+    2. **Host** : SMTP 서버의 hostname(FQDN)을 입력합니다.
     3. **Secure** : 암호화 전송방식을 선택합니다. TLS, STARTTLS 중 하나를 선택할 수 있습니다. 기본값은 TLS입니다.<br/>STARTTLS는 SMTP Server가 TLS를 사용할 수 없다면 평문을 사용합니다.
     4. **Port** : SMTP 서버가 사용하는 포트 번호를 입력합니다.
     5. **Timeout (milliseconds)** : SMTP의 응답을 대기하는 임계값을 입력합니다. 기본값은 60000입니다. 반드시 필요한 경우가 아니라면 가급적 이 값을 수정하지 않도록 합니다.
     6. **Sender Email Address** : 메일 발신자의 메일 주소를 입력합니다.
     7. **Sender Name** : 메일 발신자의 이름으로 표시될 내용을 입력합니다.
     8. **Support Email Address (Reply-to)**  : 쿼리파이에서 SMTP 서버로 발송하는 메일은 모두 발신전용 메일입니다. Sender Email Address에 입력한 발신전용 메일 주소는 사용자의 회신 메일을 받지 못하므로 경우에 따라 메일 수신자가 기술지원을 요청해야 할 필요가 있을 때 메일을 수신할 주소를 제공할 필요가 있습니다. <br/>10.2.2 기준 암호초기화 email 템플릿, 2차 인증용 인증코드 메일 템플릿에서 여기서 지정한 support email address 를 사용하도록 되어 있습니다.
-    9. **SMTP Server Requires Authentication 스위치** : SMTP 서버에 접속 및 Email 발송을 위해 인증 필요 여부에 따라 On 또는 Off 를 선택합니다. On을 할 경우 User, Password 를 입력해야 합니다.
+    9. **SMTP Server Requires Authentication 스위치** : SMTP 서버에 접속 및 Email 발송을 위해 인증 필요 여부에 따라 On 또는 Off를 선택합니다. On을 할 경우 User, Password를 입력해야 합니다.
         1. User : 인증을 위한 사용자를 입력합니다. 형식은 일반적으로 email 주소입니다.
         2. Password : 인증 계정의 암호를 입력합니다.
     10. **Send Workflow Notification via Email 스위치** : 결재 요청 수신, 승인/반려 처리 등 워크플로우 관련 이벤트 발생 시 관련자에게 이메일 알림을 발송할지 여부를 선택합니다.
     11. **Test 버튼** : SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
-    12.
+    
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/general/system/integrations/integrating-with-email/image-20241218-163449.png" alt="SMTP 설정 팝업 다이얼로그" width="402" />
       <figcaption>
@@ -55,7 +55,7 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다.
-3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Edit 버튼을 누릅니다.<br/> <br/>
+3. 상세 페이지 Email sender에 표시된 SMTP 설정에 대해 Edit 버튼을 누릅니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png" alt="Email Sender" width="736" />
   <figcaption>
@@ -68,7 +68,7 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다.
-3. Sent Email History 목록을 확인합니다.<br/>이 목록에 저장되는 email 발송 이력은 30일 동안 보관되고 30일 이전의 내용은 삭제됩니다.<br/> <br/>
+3. Sent Email History 목록을 확인합니다.<br/>이 목록에 저장되는 Email 발송 이력은 30일 동안 보관되고 30일 이전 내용은 삭제됩니다.<br/> <br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-005544.png" alt="Sent Email History" width="736" />
   <figcaption>
@@ -80,7 +80,7 @@ Email 발송을 위해서는 SMTP 서버가 필요하며, QueryPie에서는 SMTP
 
 1. Administrator &gt; General &gt; System &gt; Integrations 메뉴로 이동합니다.
 2. Email 타일을 클릭하여 상세 페이지로 이동합니다.
-3. 상세페이지 Email sender에 표시된 SMTP 설정에 대해 Delete 버튼을 누릅니다.<br/>SMTP 설정을 사용하는 Alert, MFA 등의 설정이 존재하는 경우 SMTP 설정을 삭제할 수 없습니다.<br/>먼저 관련 설정을 모두 삭제해야 삭제 가능합니다.<br/>
+3. 상세 페이지 Email sender에 표시된 SMTP 설정에 대해 Delete 버튼을 누릅니다.<br/>SMTP 설정을 사용하는 Alert, MFA 등의 설정이 존재하는 경우 SMTP 설정을 삭제할 수 없습니다.<br/>먼저 관련 설정을 모두 삭제해야 삭제할 수 있습니다.<br/>
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/system/integrations/integrating-with-email/image-20241219-011621.png" alt="Email Sender" width="736" />
   <figcaption>

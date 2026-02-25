@@ -19,8 +19,8 @@ EABAC은 쿼리파이 사용자의 역할(Role)과 속성(Attribute)을 기반�
 RBAC(Role-Based Access Control) 및 ABAC(Attribute-Based Access Control)의 기능을 결합하여 더욱 유연하고 정교한 접근 제어를 제공합니다.
 모든 정책은 All Deny를 전제로 동작합니다.
 
-EABAC 은 Role, Policy 두 가지로 동작합니다.
-Role 설정은 GUI 로 하며, Policy 정의는 코드(YAML)로 관리합니다.
+EABAC은 Role, Policy 두 가지로 동작합니다.
+Role 설정은 GUI로 하며, Policy 정의는 코드(YAML)로 관리합니다.
 
 쿠버네티스 정책의 경우, 실제 쿠버네티스에 존재하는 네임스페이스에 국한되는 Role과 네임스페이스 범위 외 리소스를 지원하는 ClusterRole 양측 모두를 수용할 수 있는 종합적 모델로 스펙이 제작되었습니다.
 
@@ -186,8 +186,8 @@ O
 <td>
 리소스 접근 정책 적용 여부를 조건으로 적용 대상을 세부 제어합니다.
 * `resourceTags` : 리소스 태그의 키와 값으로 필터링할 수 있습니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
-* `userAttributes` : 사용자의 attribute을 조건으로 권한 사용을 제한합니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
-* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일IP, CIDR 형태로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
+* `userAttributes` : 사용자의 attribute를 조건으로 권한 사용을 제한합니다. <Badge color="purple">Value 와일드카드 및 정규표현식 허용</Badge>
+* `ipAddresses` : 리소스에 대한 IP 접근 통제 조건 리스트를 단일 IP, CIDR 형태로 정의합니다. <Badge color="green">와일드카드 허용</Badge>
 </td>
 <td>
 `resourceTags:`<br/>`- "Owner": "Daniel"`<br/>`userAttributes:`<br/>`- "department": "DevOps" ipAddresses:`<br/>`- "10.10.10.0/24"`
@@ -222,7 +222,7 @@ O
 
 ### Subjects 명시 방법
 
-`subjects`는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. `subjects`는 spec:allow에 한해 적용이 필요한 필드로, spec:deny에서는 문법적으로 허용되지 않습니다.
+`subjects`는 쿠버네티스 명령을 impersonate할 쿠버네티스 내 사용자/그룹을 정의합니다. `subjects`는 spec:allow에 한해 적용이 필요한 필드이며 spec:deny에서는 문법적으로 허용되지 않습니다.
 
 1. `kubernetesGroups`: <Badge color="red">required</Badge>
     * 리소스에 대한 API 수행을 위해 쿼리파이 Proxy가 impersonate할 kubernetes 그룹 계정을 정의합니다.

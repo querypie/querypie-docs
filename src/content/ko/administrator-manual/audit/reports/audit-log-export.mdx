@@ -74,7 +74,7 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export
 3. Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.
     * **Processing** : 감사 로그 추출이 진행 중입니다.
     * **Completed** : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)
-    * **Failed** : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.
+    * **Failed** : 감사 로그 추출이 실패했습니다. QueryPie Customer Support 를 통해 문의하시기 바랍니다.
 
 ### 로그 추출 작업 생성하기
 
@@ -152,9 +152,9 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 
 - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
 
-- DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
+- DB Access History 중 특정 데이터베이스 2종류만 추출하려는 경우 필요한 표현식 : `connectionName == 'database1' || connectionName == 'database2'`
 
-- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
+- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우만 추출하려는 경우 필요한 표현식 : `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
 </Callout>
 
 

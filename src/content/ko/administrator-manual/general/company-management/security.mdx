@@ -13,7 +13,7 @@ Security 페이지에서 QueryPie 전반에 대한 보안 설정을 관리할 �
 이 문서에서는 각 보안 설정에 대한 설명을 제공합니다.
 
 <Callout type="info">
-10.3.0 부터 각 서비스 별 설정 항목이 Administrator &gt; General &gt; Security 하위에서 각 서비스(Databases / Servers / Kubernetes) 의 General 하위(Administrator &gt; `{Service}` &gt; General &gt; Configurations)로 이동되었습니다.
+10.3.0부터 각 서비스별 설정 항목이 Administrator &gt; General &gt; Security 하위에서 각 서비스(Databases / Servers / Kubernetes)의 General 하위(Administrator &gt; `{Service}` &gt; General &gt; Configurations)로 이동되었습니다.
 </Callout>
 
 ### 웹 콘솔 로그인 설정
@@ -63,7 +63,7 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
     * Special character (e.g., !@#$%^&*) : 특수문자 필수
     * Limit 3 repeating characters and numbers (e.g., aaa, bbb) : 3자 이상 반복되는 문자/숫자 제한
     * Limit 3 consecutive characters and numbers (e.g., abc, 123) : 3자 이상 연속되는 문자/숫자 제한
-    * Restrict nearby characters on the keyboard (e.g., qwe, ert) : : 3자 이상 키보드 상 나란히 있는 문자열 제한
+    * Restrict nearby characters on the keyboard (e.g., qwe, ert) : 3자 이상 키보드 상 나란히 있는 문자열 제한
     * Does not contain part of personal information (Username, Primary email) : 패스워드 내 개인정보(Username, Primary email) 사용 제한
 
 
@@ -79,7 +79,7 @@ QueryPie 계정의 패스워드 정책을 설정할 수 있습니다.
     * 지정된 시간 동안 활동이 없을 경우 타임아웃 처리
 * **Agent Session Timeout**: 에이전트 세션 타임아웃 기준 (Default : 1,440분)
     * 지정된 시간 동안 에이전트 앱 로그인을 유지하고, 경과 시 로그아웃 처리
-* **User Inactivity Timeout (on agent)** :  <br/> Agent Session Timeout 기능에 추가로 Agent가 사용자의 마우스, 키보드 입력을 모니터링하고 지정된 시간을 초과하여 행위(키보드의 키 입력, 마우스 클릭, 마우스 포인터 이동, 마우스 휠 조작, 마우스 드래그)가 없으면 세션을 강제 종료합니다. 유휴 상태인 경우, 장시간 쿼리를 실행하고 있어도 마우스 및 키보드 움직임이 없다면 무조건 세션이 종료되어 로그아웃처리 됩니다. 사용자 행위 감시는 30초마다 수행합니다. 최대 유휴 만료시간이 Agent Session Timeout을 초과 할 수 없습니다.
+* **User Inactivity Timeout (on agent)** :  <br/> Agent Session Timeout 기능에 추가로 Agent가 사용자의 마우스, 키보드 입력을 모니터링하고 지정된 시간을 초과하여 행위(키보드의 키 입력, 마우스 클릭, 마우스 포인터 이동, 마우스 휠 조작, 마우스 드래그)가 없으면 세션을 강제 종료합니다. 유휴 상태인 경우, 장시간 쿼리를 실행하고 있어도 마우스 및 키보드 움직임이 없다면 무조건 세션이 종료되어 로그아웃 처리됩니다. 사용자 행위 감시는 30초마다 수행합니다. 최대 유휴 만료 시간은 Agent Session Timeout을 초과할 수 없습니다.
 
 <Callout type="info">
 **User Inactivity Timeout (on agent) 설정 예시**
@@ -129,7 +129,7 @@ QueryPie 접속 시 IP 제한 정책을 설정할 수 있습니다.
         * `Admin Page Access Control`에 IP를 추가할 경우, 해당 IP는 반드시 상위의 **All Users** 설정에도 포함되어야 합니다. 만약 **All Users**에 등록되지 않은 IP를 추가하고 저장을 시도할 경우, 오류가 발생하며 설정이 저장되지 않습니다.
 
 <Callout type="info">
-**Q. 만약 사용자가 허용되지 않은 IP 에서 QueryPie 웹 콘솔 접속 시도 시 어떤 화면을 보게 되나요?**
+**Q. 만약 사용자가 허용되지 않은 IP에서 QueryPie 웹 콘솔 접속을 시도하면 어떤 화면을 보게 되나요?**
 A. 허용되지 않은 IP에서 접속 시도 시 QueryPie 웹 콘솔 내 어떤 페이지이든 접근이 불가하여 아래와 같은 안내 화면을 보게 됩니다.
 만약 All Users에 기본값(0.0.0.0/0)이 등록되어 있고, 개별 사용자에게 특정 Allowed Zone 이 설정되어 있다면 로그인 페이지까지는 접속이 가능하나 로그인은 불가하게 됩니다.
 </Callout>
@@ -142,7 +142,7 @@ Each User 설정의 IP 접근 차단 시 화면
 </figure>
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/general/company-management/security/image-20251212-162103.png" alt="All User 설정의 IP 접근차단 시 화면" width="598" />
+<img src="/administrator-manual/general/company-management/security/image-20251212-162103.png" alt="All User 설정의 IP 접근 차단 시 화면" width="598" />
 <figcaption>
 All User 설정의 IP 접근차단 시 화면
 </figcaption>
@@ -169,7 +169,7 @@ Vault 등록은 General &gt; Integrations 메뉴에서 수행합니다.
 
 <Callout type="info">
 **Q. Secret Store 활성화를 해제하고 싶은데, 토글이 비활성화 상태입니다.**
-A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Valut 메뉴에 등록된 Vault 가 남아있는지 확인해보세요.
+A. Administrator &gt; General &gt; Integrations &gt; HashiCorp Vault 메뉴에 등록된 Vault가 남아 있는지 확인해 보세요.
 등록된 Vault가 모두 제거된 후 토글 비활성화 가능합니다.
 </Callout>
 
@@ -204,5 +204,4 @@ Server Group 상세 페이지 내 Accounts &gt; Secret Store 선택
 
 * Export a file with Encryption : 파일 다운로드 시 암호 입력 여부
     * Required 선택 시, 파일 다운로드 시에 파일 암호 지정 필수
-
 

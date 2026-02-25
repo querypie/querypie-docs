@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 ### Overview
 
 조직에서 관리하는 서버에서 접속 후 사용 불가능한 명령어 템플릿을 관리할 수 있습니다.
-한번 설정한 명령어 템플릿은 접근 권한 설정 시 재활용이 가능합니다.
+한 번 설정한 명령어 템플릿은 접근 권한 설정 시 재활용할 수 있습니다.
 명령어 차단은 string 기반으로 이루어지며, 정규식을 통한 명령어 차단도 지원하고 있습니다.
 또한, 서버 특권 신청 프로세스에서 사용자가 선택할 수 있는 명령어 목록을 표준화하여 관리 효율성을 높일 수 있습니다.
 
@@ -35,7 +35,7 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates 메뉴로 이동합니다.
 2. 우측 상단의 `+ Create Template` 버튼을 클릭합니다.
-3. 정책 설정을 위해 각 항목별로 다음의 정보를 입력합니다.
+3. 정책 설정을 위해 각 항목별로 다음 정보를 입력합니다.
     1. **Base Type**: 이 명령어 템플릿에 등록된 명령어의 허용, 금지 여부를 선택합니다. 이 항목은 명령어 템플릿 생성 후 변경할 수 없습니다.
         1. **Deny** : 금지할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 가능합니다.
         2. **Allow** : 허용할 명령어를 설정합니다. 설정된 명령어 외 다른 명령어는 사용이 불가능합니다.<br/>*제약사항: (10.2.1) Allow 설정은 TELNET과 FTP에서는 동작하지 않습니다.
@@ -45,7 +45,7 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Command Templates &gt
     3. **Commands (SSH)**  : 서버에서 웹 터미널을 통해 실행되는 명령어 정책을 설정하는 곳입니다.
         1. **Keyword** : 명령어를 키워드로 입력할 수 있습니다.
         2. **RegEx** : 명령어를 정규 표현식 형태로 입력할 수 있습니다.
-    4. **Functions (SFTP)**  : 해당 서버에서 웹 SFTP과 FTP를 통해 실행되는 기능 정책을 설정하는 곳입니다. 디렉터리/파일 삭제, 파일 업로드, 파일 다운로드, 디렉토리 생성 액션을 제한할 수 있습니다.
+    4. **Functions (SFTP)**  : 해당 서버에서 웹 SFTP와 FTP를 통해 실행되는 기능 정책을 설정하는 곳입니다. 디렉터리/파일 삭제, 파일 업로드, 파일 다운로드, 디렉터리 생성 액션을 제한할 수 있습니다.
 4. 우측 하단의 `Save` 버튼을 클릭하여 설정을 마무리합니다.
 
 
