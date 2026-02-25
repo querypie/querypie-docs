@@ -90,16 +90,30 @@ def has_inline_format_change(old_content: str, new_content: str) -> bool:
     return False
 
 
-def has_inline_marker_added(old_content: str, new_content: str) -> bool:
-    """inline 마커의 type 목록이 변경되었는지만 확인한다.
+def has_inline_boundary_change(old_content: str, new_content: str) -> bool:
+    """inline 마커의 경계 이동을 감지한다.
 
-    마커 내부 content 변경은 무시하고, type 추가/제거만 감지한다.
+    마커 type 추가/제거, 마커 간 텍스트 변경(경계 이동)을 감지한다.
+    마커 내부 content만 변경된 경우는 무시한다 (text-only 패치로 처리 가능).
     flat list의 전체 리스트 재생성 판단에 사용한다.
     (has_inline_format_change보다 보수적 — 이미지 등 XHTML 고유 요소 보존)
     """
-    old_types = [m[0] for m in _extract_inline_markers(old_content)]
-    new_types = [m[0] for m in _extract_inline_markers(new_content)]
-    return old_types != new_types
+    old_markers = _extract_inline_markers(old_content)
+    new_markers = _extract_inline_markers(new_content)
+    old_types = [m[0] for m in old_markers]
+    new_types = [m[0] for m in new_markers]
+    if old_types != new_types:
+        return True
+
+    # 마커가 있을 때, 연속된 마커 사이 텍스트 변경 감지 (경계 이동)
+    if old_markers:
+        old_between = _extract_between_marker_texts(old_content)
+        new_between = _extract_between_marker_texts(new_content)
+        if ([collapse_ws(s) for s in old_between]
+                != [collapse_ws(s) for s in new_between]):
+            return True
+
+    return False
 
 
 NON_CONTENT_TYPES = frozenset(('empty', 'frontmatter', 'import_statement'))
@@ -603,10 +617,10 @@ def build_list_item_patches(
                     'new_plain_text': new_plain,
                 })
         else:
-            # child 매칭 실패: inline 포맷 변경(마커 경계 이동 포함) 감지
-            # has_inline_format_change: 마커 type/content 변경 및 마커 간 텍스트 변경 모두 감지
-            # (bold 경계 이동 등 text-only 패치로 처리 불가한 구조 변경을 포착)
-            if has_inline_format_change(old_item, new_item):
+            # child 매칭 실패: inline 마커 경계 이동 감지
+            # has_inline_boundary_change: type 추가/제거 및 마커 간 텍스트 변경만 감지
+            # (마커 내부 content만 변경된 경우는 무시하여 이미지 등 XHTML 고유 요소 보존)
+            if has_inline_boundary_change(old_item, new_item):
                 _flat_inline_change = True
 
             # parent 또는 텍스트 포함 매핑을 containing block으로 사용
