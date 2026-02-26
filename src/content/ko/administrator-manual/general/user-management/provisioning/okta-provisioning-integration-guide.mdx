@@ -14,7 +14,7 @@ import { Callout } from 'nextra/components'
 
 ### Prerequisites
 
-* Okta IAM 서비스의 **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
+* Okta IAM 서비스의 **Lifecycle Management(LCM)** 라이선스 구독이 필요합니다.
 * Okta 관리자 콘솔(Okta Admin Console)에 접근하여 App을 만들고 사용자/그룹을 앱에 할당할 수 있는 권한이 요구됩니다.
     * **최소 필요 권한**
         * User
@@ -57,8 +57,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
     2. **App logo** : 사용자가 식별 가능한 로그를 업로드합니다.
 7. Configure SAML 단계에서 SAML Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
     1. **Single sign-on URL** : https://`{{querypie.domain}}`/saml/sp/acs
-    2. **Audience URI (SP Entity ID)**  : https://`{{querypie.domain}}`/saml/sp/metadata
-    3. **Attribute Statements (optional)**  : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
+    2. **Audience URI (SP Entity ID)** : https://`{{querypie.domain}}`/saml/sp/metadata
+    3. **Attribute Statements (optional)** : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
         1. Name: **firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
         2. Name: **lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
         3. Name: **email** <br/>Name format: Unspecified<br/>Value: **user.email**

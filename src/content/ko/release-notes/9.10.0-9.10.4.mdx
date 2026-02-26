@@ -37,7 +37,7 @@ ______
 
 **Bug Fix**
 
-* [Migration] 1MB 이상의 SQL이 들어간 SQL Request 마이그레이션 할 때 `Data Tool long` 발생 오류 해결
+* [Migration] 1MB 이상의 SQL이 포함된 SQL Request를 마이그레이션할 때 `Data Too long` 오류가 발생하는 문제 해결
 ______
 
 ### QueryPie 9.10.1 Release
@@ -74,8 +74,8 @@ ______
 * [Audit&Log] 권한 모두 회수했을 때 세션 종료 후 로그 기록
 * [Impala] 관리자나 사용자가 지정한 Realm으로 접속 불가능한 이슈 수정
 * [MongoDB] Proxy 내 DML Snapshot 지원
-* [MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor)
-* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈
+* [MongoDB] Aggregate 커맨드 정책 적용 지원(Web Editor)
+* [MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결
 * [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)
 * [PostgreSQL] 프록시 환경에서 SASL 인증에 실패하는 오류 수정
 * [PostgreSQL] 프록시에서 PreparedStatement가 비정상 동작하는 오류 수정
@@ -84,7 +84,7 @@ ______
 * [Redis] 미지원 명령어 실행 시 에러 메시지 개선
 * [Web Editor] 원장 DB의 경우 SQL Execution Purpose 옵션 활성 강제화
 * [Windows][SAML] 미들웨어보다 브라우저 시간이 빠른 경우 OneLogin, Okta 로그인 시 오류 수정
-* [Workflow] Access Request 요청에 Expiration Date 항목에 Default 일자 표시
+* [Workflow] Access Request의 Expiration Date 항목에 기본 일자 표시
 * [Workflow] All requests 메뉴 내 Export 기능 추가
 * [Workflow] SQL Request / Export Request 타입 커넥션 목록 내 원장 DB 표시 추가
 * [Connection] Access Start Time / Access End Time 정책 초기화시 저장 불가 이슈 해결

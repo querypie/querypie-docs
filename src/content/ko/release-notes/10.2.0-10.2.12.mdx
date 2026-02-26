@@ -52,8 +52,8 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] MongoDB 메모리 누수 오류 해결
 * [DAC] Unmasking Request 시 Schema 있는 DB 신청 불가한 오류 해결
 * [General] QueryPie Meta DB에 SSL 활성화 시 무한 접속을 시도하는 오류 해결
-* [General] S3 호환 저장소 MinIO의 Endpoint URL이 설정이 안 되는 오류 해결
-* [General] 사용자 그룹 삭제할 수 없는 오류 해결
+* [General] S3 호환 저장소 MinIO의 Endpoint URL을 설정할 수 없는 오류 해결
+* [General] 사용자 그룹을 삭제할 수 없는 오류 해결
 * [General] 워크플로우 상신 시 승인자가 Slack DM 수신하지 못하는 오류 해결
 * [WAC] 로그인 여부 갱신 시 발생하는 Invalid Token 디버그 로그 과다 출력 이슈 해결
 
@@ -178,8 +178,8 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 **New Feature**
 
 * [Agent] 멀티 에이전트 MVP 출시
-* [SAC] QueryPie Agent에 SFTP 클라이언트 Filezilla 신규 지원
-* [SAC] QueryPie Agent에 SSH 클라이언트 x-shell 신규 추가
+* [SAC] QueryPie Agent에 SFTP 클라이언트 FileZilla 신규 지원
+* [SAC] QueryPie Agent에 SSH 클라이언트 Xshell 신규 추가
 * [SAC] Policy 생성/수정/삭제 및 Role 에 Policy 추가/제거 External API 개발
 
 
@@ -197,7 +197,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] INSERT 대상 테이블의 Ledger 식별 이슈 해결
 * [DAC] SQLServer 가용성그룹 대시보드 사용 이슈 해결
 * [DAC] DML Snapshot 옵션 활성화 후 대용량 쿼리 실행 시 Memory 과부하 이슈 해결
-* [DAC] SQLServer SET STATISTIC IO, TIME 등 설정 후 쿼리 실행 시 오류 해결
+* [DAC] SQL Server에서 `SET STATISTICS IO`, `TIME` 설정 후 쿼리 실행 시 오류 해결
 * [Workflow] 삭제된 커넥션이 포함된 결재 요청 시 승인이 실패하는 오류 해결
 
 
@@ -249,7 +249,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] Oracle 에서 데이터 Import 수행 중 쿼리 실행 시 정상적으로 Import 되지 않는 이슈 해결
 * [DAC] SELECT 구문 내의 ORDER BY 정렬 표시 관련 이슈 해결
 * [DAC] AWS 동기화 정보 저장 시 Role ARN 등 이 정상적으로 표시되지 않는 이슈 해결
-* [DAC] Cloud Provider 에서 동기화 시, “This user does not exist anymore” 오류 발생 해결
+* [DAC] Cloud Provider에서 동기화 시 `This user does not exist anymore` 오류 발생 문제 해결
 
 
 ### QueryPie 10.2.3 Release
@@ -259,7 +259,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 
 **Bug Fix**
 
-* [AIDD] 특정 DB Data Path 가 겹치는 경우 Hash 중복을 막아 Discovery Jobs 정상 동작하도록 수정
+* [AIDD] 특정 DB Data Path가 겹치는 경우 Hash 중복을 방지해 Discovery Jobs가 정상 동작하도록 수정
 
 
 ### QueryPie 10.2.2 Release
@@ -301,7 +301,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 **Bug Fix**
 
 * [DAC] Windows 환경 웹에디터에서 쿼리 작성 시 커서 위치 관련 이슈 해결
-* [SAC] 일반 사용자에게 TELNET, FTP의 Protocol 이 노출되지 않는 이슈 해결
+* [SAC] 일반 사용자에게 TELNET, FTP 프로토콜이 노출되지 않는 이슈 해결
 
 
 ### QueryPie 10.2.1 Release
@@ -328,7 +328,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/703463517/10
 * [DAC] Access Control UI/UX 개선
 * [DAC] 관리자 페이지에서 DB 권한 부여 시 만료일 지정 기능 추가
 * [DAC] Ledger 기능 API 추가
-* [DAC] 마스킹 정책에서 복수개의 컬럼 대상으로 규칙 적용가능하도록 개선
+* [DAC] 마스킹 정책에서 복수 컬럼에 규칙을 적용할 수 있도록 개선
 * [DAC] MySQL 8.0 JSON Table Function 지원
 * [DAC] Oracle OCI 접속 시 DB 개인 계정 사용 및 로깅 가능하도록 개선
 * [SAC] 명령어 우회 통제 기능 고도화 (Command Restrictions)
