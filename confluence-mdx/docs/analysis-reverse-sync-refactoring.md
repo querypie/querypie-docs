@@ -289,6 +289,47 @@ build_patches()
 
 ---
 
+## 8. 구현 진행 상황
+
+### 8.1 R1: direct 경로 inner XHTML 재생성 — 완료
+
+- **PR**: #858 (merged)
+- `build_patches`의 direct 경로에서 text transfer 대신 `mdx_block_to_inner_xhtml` 재생성을 기본으로 전환
+- `lost_info_patcher.py`의 `apply_lost_info`로 `<ac:*>` 요소 보존
+
+### 8.2 R2: list_patcher 재생성 — 완료 (후속 과제 있음)
+
+- **PR**: #859
+- `build_list_item_patches`에서 child 매칭 실패 시 전체 리스트 inner XHTML 재생성
+- containing block 제거 폴백 완전 제거
+- `<ac:image>` 포함 리스트는 `transfer_text_changes`로 폴백하는 가드 추가
+
+#### R2 구현 후 발견된 후속 과제
+
+R2 구현 중 3개 테스트 케이스(544112828, 544379140, 544384417)에서 round-trip 검증이 `pass → fail`로 변경됨. 원인 분석 결과 2가지 후속 과제가 도출됨.
+
+**F1. `<span style>` 가드 추가 (우선순위: 높음)**
+
+| 항목 | 내용 |
+|------|------|
+| 위치 | `list_patcher.py` — `_regenerate_list_from_parent` 및 per-child 경로 |
+| 증상 | 리스트 항목 내 `<span style="color: ...">` 인라인 스타일이 재생성 시 소실 |
+| 예시 | 544379140: `<span style="color: rgb(76,154,255);">See Log Template...</span>` → 일반 텍스트 |
+| 해결 방향 | `<ac:image>` 가드와 동일한 패턴으로 `<span style=` 포함 시 `transfer_text_changes`로 폴백 |
+| 영향 | Confluence에서 색상이 적용된 텍스트가 일반 텍스트로 변경되는 **실제 시각적 변화** |
+
+**F2. `<ol start="1">` 보존 (우선순위: 낮음)**
+
+| 항목 | 내용 |
+|------|------|
+| 위치 | `mdx_to_xhtml_inline.py` — `_render_nested_list` |
+| 증상 | 재생성 시 `<ol start="1">` → `<ol>`로 변경 (HTML 기본값이므로 기능 동일) |
+| 예시 | 544379140: 4건, 544384417: 8건의 `start` 속성 제거 |
+| 해결 방향 | `_render_nested_list`에서 ordered list 생성 시 `start="1"` 속성 출력 |
+| 영향 | 기능적 영향 없음 (Confluence 렌더링 동일), 불필요한 XHTML 변경 최소화 |
+
+---
+
 ## 7. 결론
 
 reverse-sync의 반복적인 버그는 **"텍스트 패칭이 기본, 재생성이 폴백"이라는 설계 전략**에서 비롯된다. 텍스트 패칭은 두 좌표계(MDX ↔ XHTML) 사이의 문자 단위 정렬을 요구하며, 이는 인라인 마커, 공백 차이, DOM 구조 경계에서 본질적으로 불안정하다.
