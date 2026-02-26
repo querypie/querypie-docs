@@ -328,6 +328,19 @@ R2 구현 중 3개 테스트 케이스(544112828, 544379140, 544384417)에서 ro
 | 해결 방향 | `_render_nested_list`에서 ordered list 생성 시 `start="1"` 속성 출력 |
 | 영향 | 기능적 영향 없음 (Confluence 렌더링 동일), 불필요한 XHTML 변경 최소화 |
 
+### 8.3 F1+F2: `<span style>` 가드 + `<ol start="1">` 보존 — 완료
+
+- **PR**: #862 (merged)
+- `list_patcher.py`에서 `<span style=` 포함 시 `transfer_text_changes`로 폴백하는 가드 추가
+- `mdx_to_xhtml_inline.py`에서 ordered list 생성 시 `start="1"` 속성 출력
+
+### 8.4 F3: direct 경로 `<ac:link>` 가드 — 완료
+
+- **PR**: #864 (예정)
+- `build_patches`의 direct 경로에서 매핑 XHTML에 `<ac:link>` 포함 시 inner XHTML 재생성 대신 `transfer_text_changes`로 폴백
+- HTML table 블록 내 `<ac:link>` 요소가 `<a href>`로 소실되는 문제 해결
+- 544178405 테스트케이스 `status: fail → pass` 전환 (16/16 전체 pass 달성)
+
 ---
 
 ## 7. 결론
