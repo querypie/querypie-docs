@@ -333,7 +333,12 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
 
         # _map_text_range는 half-open [start, end)를 사용하므로,
         # 마지막 non-empty 노드에서는 end를 확장하여 trailing insert를 포함한다.
-        effective_end = node_end + 1 if i == last_nonempty_idx else node_end
+        # 단, 텍스트 노드가 old_text 전체를 커버하지 않는 경우(예: callout 내부
+        # 코드 블록이 ac:plain-text-body로 제외된 경우) +1이 비텍스트 영역에
+        # 침범하여 잘못된 문자가 포함되는 것을 방지한다.
+        effective_end = (node_end + 1
+                         if i == last_nonempty_idx and node_end >= len(old_stripped)
+                         else node_end)
         # 블록 경계에서는 include_insert_at_end/exclude_insert_at_start로
         # insert를 올바른 노드에 할당한다.
         include_at_end = i in claim_end_set and i != last_nonempty_idx
