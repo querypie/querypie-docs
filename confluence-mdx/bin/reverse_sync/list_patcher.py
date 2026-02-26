@@ -7,6 +7,7 @@ from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.sidecar import SidecarEntry, find_mapping_by_sidecar
 from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_inner_xhtml
+from reverse_sync.text_transfer import transfer_text_changes
 from mdx_to_storage.inline import convert_inline
 from text_utils import normalize_mdx_to_plain, collapse_ws, strip_list_marker, strip_for_compare
 
@@ -103,9 +104,32 @@ def _regenerate_list_from_parent(
     used_ids: 'set | None' = None,
     mapping_lost_info: Optional[Dict[str, dict]] = None,
 ) -> List[Dict[str, str]]:
-    """parent mapping 기반으로 전체 리스트 inner XHTML을 재생성한다."""
+    """parent mapping 기반으로 전체 리스트 inner XHTML을 재생성한다.
+
+    parent XHTML에 <ac:image> 등 MDX로 표현 불가한 요소가 있으면
+    텍스트 전이(transfer_text_changes)로 폴백하여 DOM 구조를 보존한다.
+    """
     if parent is None:
         return []
+
+    if used_ids is not None:
+        used_ids.add(parent.block_id)
+        for child_id in parent.children:
+            used_ids.add(child_id)
+
+    # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
+    if '<ac:image' in parent.xhtml_text:
+        old_plain = normalize_mdx_to_plain(
+            change.old_block.content, change.old_block.type)
+        new_plain = normalize_mdx_to_plain(
+            change.new_block.content, change.new_block.type)
+        xhtml_text = transfer_text_changes(
+            old_plain, new_plain, parent.xhtml_plain_text)
+        return [{
+            'xhtml_xpath': parent.xhtml_xpath,
+            'old_plain_text': parent.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        }]
 
     new_inner = mdx_block_to_inner_xhtml(
         change.new_block.content, change.new_block.type)
@@ -114,11 +138,6 @@ def _regenerate_list_from_parent(
         block_lost = mapping_lost_info.get(parent.block_id, {})
         if block_lost:
             new_inner = apply_lost_info(new_inner, block_lost)
-
-    if used_ids is not None:
-        used_ids.add(parent.block_id)
-        for child_id in parent.children:
-            used_ids.add(child_id)
 
     return [{
         'xhtml_xpath': parent.xhtml_xpath,
@@ -180,12 +199,26 @@ def build_list_item_patches(
             return _regenerate_list_from_parent(
                 change, parent_mapping, used_ids, mapping_lost_info)
 
-        # child 매칭 성공: 항상 child inner XHTML 재생성
+        # child 매칭 성공: child inner XHTML 재생성
         new_plain = normalize_mdx_to_plain(new_item, 'list')
 
         # 멱등성 체크: push 후 XHTML이 이미 업데이트된 경우 건너뜀
         if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
                 and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+            continue
+
+        if used_ids is not None:
+            used_ids.add(mapping.block_id)
+
+        # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
+        if '<ac:image' in mapping.xhtml_text:
+            xhtml_text = transfer_text_changes(
+                old_plain, new_plain, mapping.xhtml_plain_text)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': xhtml_text,
+            })
             continue
 
         new_item_text = re.sub(r'^[-*+]\s+', '', new_item.strip())
@@ -197,9 +230,6 @@ def build_list_item_patches(
             block_lost = mapping_lost_info.get(mapping.block_id, {})
             if block_lost:
                 new_inner = apply_lost_info(new_inner, block_lost)
-
-        if used_ids is not None:
-            used_ids.add(mapping.block_id)
 
         patches.append({
             'xhtml_xpath': mapping.xhtml_xpath,
