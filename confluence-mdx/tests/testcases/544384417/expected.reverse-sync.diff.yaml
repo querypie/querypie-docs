@@ -2,49 +2,49 @@ changes:
 - block_id: list-72
   change_type: modified
   index: 72
-  new_content: "1.  **User/Group**  : 보고서 출력 데이터를 사용자 또는 그룹으로 필터링합니다.\n    1. 예: PM팀에\
+  new_content: "1. **User/Group** : 보고서 출력 데이터를 사용자 또는 그룹으로 필터링합니다.\n    1. 예: PM팀에\
     \ 대해서 부여된 DB 접근 권한 보고서 출력을 원하는 경우 다음과 같이 선택\n        * Type: QueryPie DAC\n  \
     \      * Data: DB Access Control - Assigned Status\n        * Filter &gt; User/Group:\
-    \ PM (그룹)\n2.  **Resource**  : 보고서 출력 데이터를 리소스에 부여된 태그로 필터링합니다.\n    1. 예: `Service:Homepage`\
+    \ PM (그룹)\n2. **Resource** : 보고서 출력 데이터를 리소스에 부여된 태그로 필터링합니다.\n    1. 예: `Service:Homepage`\
     \ 태그가 달린 DB에 대한 접근 권한 보고서 출력을 원하는 경우\n        * Type: QueryPie DAC\n        *\
     \ Data: DB Access Control - Assigned Status\n        * Filter &gt; Resource: `Service:Homepage`\n\
     \    2. 태그 연산 로직은 다른 QueryPie 기능과 동일하며, 다음과 같습니다.\n        * Key가 동일한 태그 필터를 여러\
     \ 개 입력하는 경우 OR 조건으로 합쳐집니다.\n        * Key가 다른 태그 필터를 여러 개 입력하는 경우 AND 조건으로 합쳐집니다.\n\
     \    3. Workflow의 경우 한 번에 여러 개의 리소스에 대해 요청이 가능합니다. 이 때 요청 내에 조건을 만족하는 리소스가 한 개\
-    \ 이상 포함되었다면 검색결과에 포함됩니다.\n3.  **User Status :** User Account Status 출력 시 User\
-    \ Account의 상태로 필터링합니다.\n    1. 필터값: Active, Locked, Expired, Locked Manually\n\
-    4.  **Time Range**  : DB Access History 또는 Server Access History 선택 시 시간 범위로 필터링합니다.\n\
-    \    1. 시작 시간 및 종료 시간을 입력합니다.\n    2. 입력된 시간 범위 내의 결과를 제외할지 여부를 선택합니다. 선택 시, 입력된\
-    \ 시간 범위 외의 로그만 출력됩니다.\n5.  **Result**  : Server Access History 선택 시 결과를 기준으로 필터링합니다.\n\
-    \    1. 필터값: Success, Failure\n6.  **Action Type**  : Server Access History 선택\
-    \ 시 행위 유형(Action Type)을 기준으로 필터링합니다.\n    1. 필터값: Connect, Disconnect\n7.  **Role**\
-    \  : Server Access History 선택 시 사용한 서버 역할을 기준으로 필터링합니다.\n    1. 복수 개의 Role을 입력하는\
-    \ 경우 OR 조건으로 합쳐집니다.\n8.  **Keyword**  : Command History 또는 Restricted Commands\
-    \ 선택 시 입력한 커맨드 기준으로 필터링합니다.\n    1. 키워드 입력 후 키보드에서 Enter 키를 입력하여 검색 조건을 적용합니다.\n\
+    \ 이상 포함되었다면 검색결과에 포함됩니다.\n3. **User Status :** User Account Status 출력 시 User Account의\
+    \ 상태로 필터링합니다.\n    1. 필터값: Active, Locked, Expired, Locked Manually\n4. **Time\
+    \ Range** : DB Access History 또는 Server Access History 선택 시 시간 범위로 필터링합니다.\n \
+    \   1. 시작 시간 및 종료 시간을 입력합니다.\n    2. 입력된 시간 범위 내의 결과를 제외할지 여부를 선택합니다. 선택 시, 입력된\
+    \ 시간 범위 외의 로그만 출력됩니다.\n5. **Result** : Server Access History 선택 시 결과를 기준으로 필터링합니다.\n\
+    \    1. 필터값: Success, Failure\n6. **Action Type** : Server Access History 선택 시\
+    \ 행위 유형(Action Type)을 기준으로 필터링합니다.\n    1. 필터값: Connect, Disconnect\n7. **Role**\
+    \ : Server Access History 선택 시 사용한 서버 역할을 기준으로 필터링합니다.\n    1. 복수 개의 Role을 입력하는\
+    \ 경우 OR 조건으로 합쳐집니다.\n8. **Keyword** : Command History 또는 Restricted Commands 선택\
+    \ 시 입력한 커맨드 기준으로 필터링합니다.\n    1. 키워드 입력 후 키보드에서 Enter 키를 입력하여 검색 조건을 적용합니다.\n\
     \    2. 입력한 키워드가 포함된 커맨드 이력만 추출됩니다. (like 검색)\n    3. 대소문자를 구분하지 않습니다.\n    4.\
     \ 복수의 키워드를 입력하는 경우 OR 조건으로 합쳐집니다.\n"
-  old_content: "1.  **User/Group**  : 보고서 출력 데이터를 사용자 또는 그룹으로 필터링합니다.\n    1. 예: PM팀에\
+  old_content: "1. **User/Group** : 보고서 출력 데이터를 사용자 또는 그룹으로 필터링합니다.\n    1. 예: PM팀에\
     \ 대해서 부여된 DB 접근 권한 보고서 출력을 원하는 경우 다음과 같이 선택\n        * Type: QueryPie DAC\n  \
     \      * Data: DB Access Control - Assigned Status\n        * Filter &gt; User/Group:\
-    \ PM (그룹)\n2.  **Resource**  : 보고서 출력 데이터를 리소스에 부여된 태그로 필터링합니다.\n    1. 예: `Service:Homepage`\
+    \ PM (그룹)\n2. **Resource** : 보고서 출력 데이터를 리소스에 부여된 태그로 필터링합니다.\n    1. 예: `Service:Homepage`\
     \ 태그가 달린 DB에 대한 접근 권한 보고서 출력을 원하는 경우\n        * Type: QueryPie DAC\n        *\
     \ Data: DB Access Control - Assigned Status\n        * Filter &gt; Resource: `Service:Homepage`\n\
     \    2. 태그 연산 로직은 다른 QueryPie 기능과 동일하며, 다음과 같습니다.\n        * Key가 동일한 태그 필터를 여러\
     \ 개 입력하는 경우 OR 조건으로 합쳐집니다.\n        * Key가 다른 태그 필터를 여러 개 입력하는 경우 AND 조건으로 합쳐집니다.\n\
     \    3. Workflow의 경우 한 번에 여러 개의 리소스에 대해 요청이 가능합니다. 이 때 요청 내에 조건을 만족하는 리소스가 한 개\
-    \ 이상 포함되었다면 검색결과에 포함됩니다.\n3.  **User Status :** User Account Status 출력 시 User\
-    \ Account의 상태로 필터링합니다.\n    1. 필터값: Active, Locked, Expired, Locked Manually\n\
-    4.  **Time Range**  : DB Access History 또는 Server Access History 선택 시 시간 범위로 필터링합니다.\n\
-    \    1. 시작 시간 및 종료 시간을 입력합니다.\n    2. 입력된 시간 범위 내의 결과를 제외할 지 여부를 선택합니다. 선택 시,\
-    \ 입력된 시간 범위 외의 로그만 출력됩니다.\n5.  **Result**  : Server Access History 선택 시 결과를 기준으로\
-    \ 필터링합니다.\n    1. 필터값: Success, Failure\n6.  **Action Type**  : Server Access\
-    \ History 선택 시 행위 유형(Action Type)을 기준으로 필터링합니다.\n    1. 필터값: Connect, Disconnect\n\
-    7.  **Role**  : Server Access History 선택 시 사용한 서버 역할을 기준으로 필터링합니다.\n    1. 복수\
-    \ 개의 Role을 입력하는 경우 OR 조건으로 합쳐집니다.\n8.  **Keyword**  : Command History 또는 Restricted\
-    \ Commands 선택 시 입력한 커맨드 기준으로 필터링합니다.\n    1. 키워드 입력 후 키보드에서 Enter 키를 입력하여 검색 조건을\
-    \ 적용합니다.\n    2. 입력한 키워드가 포함된 커맨드 이력만 추출됩니다. (like 검색)\n    3. 대소문자를 구분하지 않습니다.\n\
-    \    4. 복수의 키워드를 입력하는 경우 OR 조건으로 합쳐집니다.\n"
-created_at: '2026-02-26T08:42:05.486801+00:00'
+    \ 이상 포함되었다면 검색결과에 포함됩니다.\n3. **User Status :** User Account Status 출력 시 User Account의\
+    \ 상태로 필터링합니다.\n    1. 필터값: Active, Locked, Expired, Locked Manually\n4. **Time\
+    \ Range** : DB Access History 또는 Server Access History 선택 시 시간 범위로 필터링합니다.\n \
+    \   1. 시작 시간 및 종료 시간을 입력합니다.\n    2. 입력된 시간 범위 내의 결과를 제외할 지 여부를 선택합니다. 선택 시, 입력된\
+    \ 시간 범위 외의 로그만 출력됩니다.\n5. **Result** : Server Access History 선택 시 결과를 기준으로 필터링합니다.\n\
+    \    1. 필터값: Success, Failure\n6. **Action Type** : Server Access History 선택 시\
+    \ 행위 유형(Action Type)을 기준으로 필터링합니다.\n    1. 필터값: Connect, Disconnect\n7. **Role**\
+    \ : Server Access History 선택 시 사용한 서버 역할을 기준으로 필터링합니다.\n    1. 복수 개의 Role을 입력하는\
+    \ 경우 OR 조건으로 합쳐집니다.\n8. **Keyword** : Command History 또는 Restricted Commands 선택\
+    \ 시 입력한 커맨드 기준으로 필터링합니다.\n    1. 키워드 입력 후 키보드에서 Enter 키를 입력하여 검색 조건을 적용합니다.\n\
+    \    2. 입력한 키워드가 포함된 커맨드 이력만 추출됩니다. (like 검색)\n    3. 대소문자를 구분하지 않습니다.\n    4.\
+    \ 복수의 키워드를 입력하는 경우 OR 조건으로 합쳐집니다.\n"
+created_at: '2026-02-26T09:02:28.512255+00:00'
 improved_mdx: tests/testcases/544384417/improved.mdx
 original_mdx: tests/testcases/544384417/original.mdx
 page_id: '544384417'
