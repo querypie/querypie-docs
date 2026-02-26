@@ -2,7 +2,7 @@
 
 기존 _find_containing_mapping 테스트 + build_patches 6개 분기 경로
 + helper 함수 (is_markdown_table, split_table_rows, normalize_table_row,
-split_list_items, extract_list_marker_prefix, _resolve_child_mapping,
+split_list_items, _resolve_child_mapping,
 build_table_row_patches, build_list_item_patches) 테스트.
 """
 from reverse_sync.block_diff import BlockChange
@@ -30,7 +30,6 @@ from reverse_sync.inline_detector import (
 from reverse_sync.list_patcher import (
     build_list_item_patches,
     split_list_items,
-    extract_list_marker_prefix,
     _resolve_child_mapping,
 )
 
@@ -283,20 +282,6 @@ class TestSplitListItems:
         content = '- item one\n\n- item two'
         items = split_list_items(content)
         assert items == ['- item one', '- item two']
-
-
-class TestExtractListMarkerPrefix:
-    def test_dash(self):
-        assert extract_list_marker_prefix('- item') == '- '
-
-    def test_asterisk(self):
-        assert extract_list_marker_prefix('* item') == '* '
-
-    def test_number(self):
-        assert extract_list_marker_prefix('1. item') == '1. '
-
-    def test_no_marker(self):
-        assert extract_list_marker_prefix('plain text') == ''
 
 
 # ── build_patches 분기 경로 테스트 ──
@@ -643,14 +628,14 @@ class TestBuildListItemPatches:
             mdx_to_sidecar, xpath_to_mapping, id_map)
 
         assert len(patches) == 1
-        assert 'new item' in patches[0]['new_plain_text']
+        assert 'new item' in patches[0]['new_inner_xhtml']
 
     def test_item_count_mismatch_without_parent_returns_empty(self):
         """parent mapping이 없으면 item count 불일치 시 빈 패치를 반환한다."""
         change = _make_change(
             0, '- item one\n- item two', '- item one',
             type_='list')
-        patches = build_list_item_patches(change, [], set(), {}, {})
+        patches = build_list_item_patches(change, [], set(), {}, {}, {})
         assert patches == []
 
     def test_item_count_mismatch_with_parent_generates_inner_xhtml(self):
@@ -840,7 +825,8 @@ class TestBuildListItemPatches:
             f'text-only 패치만 생성됨: {patches}'
         )
 
-    def test_child_miss_falls_back_to_containing(self):
+    def test_child_miss_regenerates_full_list(self):
+        """R2: child 매칭 실패 시 전체 리스트 inner XHTML을 재생성한다."""
         parent = _make_mapping(
             'p1', 'parent old text here in list', xpath='ul[1]',
             children=['c1'])
@@ -860,6 +846,8 @@ class TestBuildListItemPatches:
 
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert 'new_inner_xhtml' in patches[0]
+        assert 'new text' in patches[0]['new_inner_xhtml']
 
     def test_flat_list_append_text_at_end_of_item(self):
         """flat list에서 항목 끝에 텍스트를 추가할 때 다음 항목으로 넘치지 않아야 한다.
@@ -905,14 +893,14 @@ class TestBuildListItemPatches:
 
         assert len(patches) == 1
         p = patches[0]
-        assert 'new_plain_text' in p
-        # "해결"이 올바른 위치(이슈 뒤)에 있어야 함
-        assert '이슈 해결' in p['new_plain_text'], (
-            f"'이슈 해결'이 연속되어야 함: {p['new_plain_text']!r}"
+        assert 'new_inner_xhtml' in p
+        # R2: 전체 리스트 재생성이므로 각 항목이 올바르게 포함됨
+        assert '이슈 해결' in p['new_inner_xhtml'], (
+            f"'이슈 해결'이 포함되어야 함: {p['new_inner_xhtml']!r}"
         )
-        # "해결"이 다음 항목 앞에 붙으면 안 됨
-        assert '해결[Privilege' not in p['new_plain_text'], (
-            f"'해결'이 다음 항목 앞에 잘못 삽입됨: {p['new_plain_text']!r}"
+        # 재생성된 리스트에서 항목 간 텍스트 혼합이 없어야 함
+        assert '해결[Privilege' not in p['new_inner_xhtml'], (
+            f"'해결'이 다음 항목과 혼합됨: {p['new_inner_xhtml']!r}"
         )
 
     def test_flat_list_bracket_insert_at_item_start(self):
@@ -958,14 +946,10 @@ class TestBuildListItemPatches:
 
         assert len(patches) == 1
         p = patches[0]
-        assert 'new_plain_text' in p
-        # '[Authentication]' 이 올바른 위치에 있어야 함
-        assert '[Authentication]' in p['new_plain_text'], (
-            f"'[Authentication]'이 패치 결과에 포함되어야 함: {p['new_plain_text']!r}"
-        )
-        # '[' 가 전체 텍스트 맨 앞에 삽입되면 안 됨
-        assert not p['new_plain_text'].startswith('['), (
-            f"'['가 전체 텍스트 맨 앞에 삽입됨: {p['new_plain_text']!r}"
+        assert 'new_inner_xhtml' in p
+        # R2: 전체 리스트 재생성이므로 '[Authentication]'이 포함됨
+        assert '[Authentication]' in p['new_inner_xhtml'], (
+            f"'[Authentication]'이 패치 결과에 포함되어야 함: {p['new_inner_xhtml']!r}"
         )
 
 

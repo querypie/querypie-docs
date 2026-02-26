@@ -1,5 +1,5 @@
-changes_count: 8
-created_at: '2026-02-12T17:12:21.729451+00:00'
+changes_count: 6
+created_at: '2026-02-26T06:18:29.822024+00:00'
 mdx_diff_report: "--- tests/testcases/544379140/original.mdx+++ tests/testcases/544379140/improved.mdx@@\
   \ -75,10 +75,10 @@ ### 로그 추출 작업 생성하기\n \n 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다.\n\
   -(1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드\n+(1) 관련\
@@ -9,18 +9,18 @@ mdx_diff_report: "--- tests/testcases/544379140/original.mdx+++ tests/testcases/
   \ <figure data-layout=\"center\" data-align=\"center\">\n <img src=\"/administrator-manual/audit/reports/audit-log-export/screenshot-20250116-131805.png\"\
   \ alt=\"Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create\
   \ New Task\" width=\"612\" />\n@@ -90,10 +90,10 @@ 1.  **Task Name** : 로그 추출 작업의\
-  \ 이름을 입력합니다.\n 2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다. \n     1. Query Audit 등 추출하기\
+  \ 이름을 입력합니다.\n 2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다.\n     1. Query Audit 등 추출하기\
   \ 원하는 로그 타입을 선택합니다.\n-    2. 로그 종류 선택 후 See Log Template and Description을 클릭하시면\
   \ 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n+    2. 로그 종류 선택 후 See Log Template and Description을\
   \ 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n 3.  **Download File Format** : 로그 출력 파일\
   \ 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을\
-  \ 참고해주시기 바랍니다.) \n 4.  **For Text Exceeding 32,000 Characters**  : CSV 파일의 경우 32,000자를\
+  \ 참고해주시기 바랍니다.)\n 4.  **For Text Exceeding 32,000 Characters**  : CSV 파일의 경우 32,000자를\
   \ 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.\n-    1. Trim Overflowing Text - 32,000자를 초과하는 글자를\
   \ 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n+    1. Trim\
   \ Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수\
   \ 초과로 표가 깨지는 현상을 방지합니다.\n     2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.\n 5.\
   \  **From**  : 추출 시작 날짜를 지정합니다.\n 6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일\
-  \ 날짜를 선택할 수 있도록 개선되었습니다. \n@@ -112,7 +112,7 @@ <Callout type=\"important\">\n **필터\
+  \ 날짜를 선택할 수 있도록 개선되었습니다.\n@@ -112,7 +112,7 @@ <Callout type=\"important\">\n **필터\
   \ 표현식**\n \n-(1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와\
   \ 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>\n+(1) 필터 표현식을 사용하기 위해 'See Log Template\
   \ and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>\n \n (2)\
@@ -42,10 +42,123 @@ mdx_diff_report: "--- tests/testcases/544379140/original.mdx+++ tests/testcases/
   \ \n 별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에 완료됩니다.\n 장기간에 걸친 로그이거나 필터링 조건의 복잡도가\
   \ 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다.\n"
 page_id: '544379140'
-status: pass
+status: fail
 verification:
-  diff_report: ''
-  exact_match: true
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -16,45 +16,45\
+    \ @@ \n **추출 지원 로그 종류 (QueryPie v11.0.0 기준)**\n \n-|  **Log Type**           \
+    \                |  **Release Version**  |  **Format**  |\n-| ---------------------------------------\
+    \ | --------------------- | ------------ |\n-| Workflow DB Access Request    \
+    \          |                       | CSV          |\n-| Workflow SQL Request \
+    \                   |                       | CSV          |\n-| Workflow SQL\
+    \ Request for Query Details  |                       | CSV          |\n-| Workflow\
+    \ SQL Export Request             |                       | CSV          |\n-|\
+    \ Workflow Restricted Data Access Request | 11.0.0                | JSON     \
+    \    |\n-| Workflow DB Policy Exception Request    | 11.0.0                | JSON\
+    \         |\n-| Workflow Unmasking Request              | 11.0.0             \
+    \   | JSON         |\n-| Workflow Decryption Request             | 10.3.0    \
+    \            | JSON         |\n-| Workflow Server Access Request          |  \
+    \                     | JSON         |\n-| Workflow Server Privilege Request \
+    \      | 11.3.0                | JSON         |\n-| Workflow Access Role Request\
+    \            | 10.0.0                | CSV          |\n-| IP Registration Request\
+    \                 | 11.0.0                | JSON         |\n-| User Access History\
+    \                     |                       | CSV          |\n-| Admin Role\
+    \ History                      |                       | CSV          |\n-| Activity\
+    \ Logs                           |                       | JSON         |\n-|\
+    \ Alert Logs                              | 10.3.0                | JSON     \
+    \    |\n-| Query Audit                             |                       | CSV\
+    \          |\n-| DB Access History                       |                   \
+    \    | CSV          |\n-| DB Account Lock History                 |          \
+    \             | CSV          |\n-| DB Access Control Logs                  | \
+    \                      | CSV          |\n-| DML Snapshot                     \
+    \       |                       | JSON         |\n-| Restricted Data Access Logs\
+    \ (Legacy)    | 10.3.0                | JSON         |\n-| Masked Data Access\
+    \ Logs (Legacy)        | 10.3.0                | JSON         |\n-| Sensitive\
+    \ Data Access Logs (Legacy)     | 10.3.0                | JSON         |\n-| DAC\
+    \ Policy Audit Log                    | 11.3.0                | JSON         |\n\
+    -| Server Access History                   |                       | JSON    \
+    \     |\n-| Command Audit                           |                       |\
+    \ JSON         |\n-| Session Logs                            |               \
+    \        | JSON         |\n-| Server Access Control Logs              |      \
+    \                 | JSON         |\n-| Server Role History                   \
+    \  |                       | JSON         |\n-| Server Account Lock History  \
+    \           |                       | JSON         |\n-| Request Audit       \
+    \                    |                       | JSON         |\n-| Kubernetes Role\
+    \ History                 |                       | JSON         |\n-| Web App\
+    \ Access History                  | 11.0.0                | CSV          |\n-|\
+    \ Web App Role History                    | 11.0.0                | CSV      \
+    \    |\n-| Web App JIT Access Control Log          | 11.0.0                | CSV\
+    \          |\n-| Web App Event Audit                     | 11.0.0            \
+    \    | CSV          |\n+| **Log Type**                            | **Release\
+    \ Version** | **Format** |\n+| --------------------------------------- | -------------------\
+    \ | ---------- |\n+| Workflow DB Access Request              |               \
+    \      | CSV        |\n+| Workflow SQL Request                    |          \
+    \           | CSV        |\n+| Workflow SQL Request for Query Details  |     \
+    \                | CSV        |\n+| Workflow SQL Export Request             |\
+    \                     | CSV        |\n+| Workflow Restricted Data Access Request\
+    \ | 11.0.0              | JSON       |\n+| Workflow DB Policy Exception Request\
+    \    | 11.0.0              | JSON       |\n+| Workflow Unmasking Request     \
+    \         | 11.0.0              | JSON       |\n+| Workflow Decryption Request\
+    \             | 10.3.0              | JSON       |\n+| Workflow Server Access\
+    \ Request          |                     | JSON       |\n+| Workflow Server Privilege\
+    \ Request       | 11.3.0              | JSON       |\n+| Workflow Access Role\
+    \ Request            | 10.0.0              | CSV        |\n+| IP Registration\
+    \ Request                 | 11.0.0              | JSON       |\n+| User Access\
+    \ History                     |                     | CSV        |\n+| Admin Role\
+    \ History                      |                     | CSV        |\n+| Activity\
+    \ Logs                           |                     | JSON       |\n+| Alert\
+    \ Logs                              | 10.3.0              | JSON       |\n+| Query\
+    \ Audit                             |                     | CSV        |\n+| DB\
+    \ Access History                       |                     | CSV        |\n\
+    +| DB Account Lock History                 |                     | CSV       \
+    \ |\n+| DB Access Control Logs                  |                     | CSV  \
+    \      |\n+| DML Snapshot                            |                     | JSON\
+    \       |\n+| Restricted Data Access Logs (Legacy)    | 10.3.0              |\
+    \ JSON       |\n+| Masked Data Access Logs (Legacy)        | 10.3.0          \
+    \    | JSON       |\n+| Sensitive Data Access Logs (Legacy)     | 10.3.0     \
+    \         | JSON       |\n+| DAC Policy Audit Log                    | 11.3.0\
+    \              | JSON       |\n+| Server Access History                   |  \
+    \                   | JSON       |\n+| Command Audit                         \
+    \  |                     | JSON       |\n+| Session Logs                     \
+    \       |                     | JSON       |\n+| Server Access Control Logs  \
+    \            |                     | JSON       |\n+| Server Role History    \
+    \                 |                     | JSON       |\n+| Server Account Lock\
+    \ History             |                     | JSON       |\n+| Request Audit \
+    \                          |                     | JSON       |\n+| Kubernetes\
+    \ Role History                 |                     | JSON       |\n+| Web App\
+    \ Access History                  | 11.0.0              | CSV        |\n+| Web\
+    \ App Role History                    | 11.0.0              | CSV        |\n+|\
+    \ Web App JIT Access Control Log          | 11.0.0              | CSV        |\n\
+    +| Web App Event Audit                     | 11.0.0              | CSV       \
+    \ |\n \n ### Audit Log Export 목록 조회하기\n \n@@ -68,9 +68,9 @@ 1. Administrator &gt;\
+    \ Audit &gt; General &gt; Audit Log Export 메뉴로 이동합니다.\n 2. 현재까지 생성된 Audit Log\
+    \ Export 태스크 목록을 확인할 수 있습니다.\n 3. Status 에서는 태스크의 진행 상태를 확인할 수 있습니다.\n-    * \
+    \ **Processing**  : 감사 로그 추출이 진행 중입니다.\n-    *  **Completed**  : 감사 로그 추출이 완료되었으며,\
+    \ 파일 다운로드가 가능합니다. (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)\n-    *  **Failed**\
+    \  : 감사 로그 추출이 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.\n+    * **Processing**\
+    \ : 감사 로그 추출이 진행 중입니다.\n+    * **Completed** : 감사 로그 추출이 완료되었으며, 파일 다운로드가 가능합니다.\
+    \ (추출 완료 후 30일이 경과하였다면, 파일이 만료되어 다운로드가 불가능합니다.)\n+    * **Failed** : 감사 로그 추출이\
+    \ 실패하였습니다. QueryPie Customer Support 를 통해 문의 바랍니다.\n \n ### 로그 추출 작업 생성하기\n \n\
+    @@ -87,19 +87,19 @@ </figcaption>\n </figure>\n \n-1.  **Task Name** : 로그 추출 작업의\
+    \ 이름을 입력합니다.\n-2.  **Log Type** : 추출 대상 로그의 종류를 선택합니다.\n+1. **Task Name** : 로그\
+    \ 추출 작업의 이름을 입력합니다.\n+2. **Log Type** : 추출 대상 로그의 종류를 선택합니다.\n     1. Query Audit\
+    \ 등 추출하기 원하는 로그 타입을 선택합니다.\n     2. 로그 종류 선택 후 See Log Template and Description을\
+    \ 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n-3.  **Download File Format** : 로그 출력 파일\
+    \ 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’**\
+    \ 을 참고해주시기 바랍니다.)\n-4.  **For Text Exceeding 32,000 Characters**  : CSV 파일의 경우\
+    \ 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.\n+3. **Download File Format** : 로그 출력\
+    \ 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’**\
+    \  을 참고해주시기 바랍니다.)\n+4. **For Text Exceeding 32,000 Characters** : CSV 파일의 경우\
+    \ 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.\n     1. Trim Overflowing Text - 32,000자를\
+    \ 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n \
+    \    2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.\n-5.  **From**  : 추출 시작 날짜를\
+    \ 지정합니다.\n-6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다.\n\
+    -7.  **Filter Expression**  : 필터 표현식을 지정합니다.\n+5. **From** : 추출 시작 날짜를 지정합니다.\n\
+    +6. **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일 날짜를 선택할 수 있도록 개선되었습니다.\n+7. **Filter\
+    \ Expression** : 필터 표현식을 지정합니다.\n     1. 조건 입력 방법 및 예시는 하단의 ‘ **필터 표현식** ’을 참고해주시기\
+    \ 바랍니다.\n-8.  **Generate Preview** : 미리보기를 생성합니다.\n+8. **Generate Preview** :\
+    \ 미리보기를 생성합니다.\n     1. 미리보기는 필수 단계입니다.\n     2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가\
+    \ 가능합니다.\n 9. `Create` 버튼 : 로그 추출 작업을 생성합니다.\n"
+  exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -717,14 +717,14\
   \ @@\n  로그 추출 작업 생성하기\n </h2>\n <p>\n- 감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다. (1)\
   \ 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드\n+ 감사 로그 추출\
@@ -56,26 +169,33 @@ xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -717,14 +
   \ 나타납니다.\n </p>\n <ac:image ac:align=\"center\" ac:alt=\"스크린샷 2025-01-16 오후\
   \ 1.18.05.png\" ac:custom-width=\"true\" ac:layout=\"center\" ac:original-height=\"\
   1005\" ac:original-width=\"1494\" ac:width=\"612\">\n  <ri:attachment ri:filename=\"\
-  스크린샷 2025-01-16 오후 1.18.05.png\" ri:version-at-save=\"1\">\n@@ -765,7 +765,7\
-  \ @@\n      <span style=\"color: rgb(76,154,255);\">\n       See Log Template and\
-  \ Description\n      </span>\n-     을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n+  \
-  \   을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n     </p>\n    </li>\n   </ol>\n@@ -792,7\
-  \ +792,7 @@\n   <ol start=\"1\">\n    <li>\n     <p>\n-     Trim Overflowing Text\
-  \ - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을\
-  \ 방지합니다.\n+     Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야\
-  \ 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n     </p>\n    </li>\n    <li>\n@@ -890,7\
-  \ +890,7 @@\n     </strong>\n    </p>\n    <p>\n-    (1) 필터 표현식을 사용하시기 위해 '\n+ \
-  \   (1) 필터 표현식을 사용하기 위해 '\n     <span style=\"color: rgb(76,154,255);\">\n     \
-  \ See Log Template and Description\n     </span>\n@@ -1035,7 +1035,7 @@\n     연산자를\
-  \ 활용합니다.\n    </p>\n    <p>\n-    - 복합 조건 : 함께 처리해야하는 조건은 괄호(\n+    - 복합 조건 : 함께\
-  \ 처리해야 하는 조건은 괄호(\n     <code>\n      ( )\n     </code>\n@@ -1059,7 +1059,7 @@\n\
-  \     </code>\n    </p>\n    <p>\n-    - DB Access History 중 특정 데이터베이스 2종류 대해서만\
-  \ 추출하려는 경우 필요한 표현식 :\n+    - DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한\
-  \ 표현식 :\n     <code>\n      connectionName == 'database1' || connectionName == 'database2'\n\
-  \     </code>\n@@ -1279,7 +1279,7 @@\n     </strong>\n    </p>\n    <p>\n-    내보내기\
-  \ 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n+    내보내기\
-  \ 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n    </p>\n\
-  \    <ol start=\"1\">\n     <li>\n@@ -1335,7 +1335,7 @@\n <p>\n </p>\n <h2>\n- 추출\
-  \ 작업 완료시 파일 내려받기\n+ 추출 작업 완료 시 파일 내려받기\n </h2>\n <p>\n  별도의 필터링 조건이 없는 단기간 조회의 경우에는\
-  \ 로그 추출이 몇 분 이내에 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될\
-  \ 수 있습니다."
+  스크린샷 2025-01-16 오후 1.18.05.png\" ri:version-at-save=\"1\">\n@@ -753,7 +753,7\
+  \ @@\n    </strong>\n    : 추출 대상 로그의 종류를 선택합니다.\n   </p>\n-  <ol start=\"1\">\n\
+  +  <ol>\n    <li>\n     <p>\n      Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.\n@@ -761,11\
+  \ +761,7 @@\n    </li>\n    <li>\n     <p>\n-     로그 종류 선택 후\n-     <span style=\"\
+  color: rgb(76,154,255);\">\n-      See Log Template and Description\n-     </span>\n\
+  -     을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n+     로그 종류 선택 후 See Log Template\
+  \ and Description을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n     </p>\n    </li>\n \
+  \  </ol>\n@@ -789,10 +785,10 @@\n    </strong>\n    : CSV 파일의 경우 32,000자를 초과하는 글자를\
+  \ 잘라낼지 여부를 선택할 수 있습니다.\n   </p>\n-  <ol start=\"1\">\n+  <ol>\n    <li>\n     <p>\n\
+  -     Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에\
+  \ 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n+     Trim Overflowing Text - 32,000자를 초과하는\
+  \ 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n     </p>\n\
+  \    </li>\n    <li>\n@@ -825,7 +821,7 @@\n    </strong>\n    : 필터 표현식을 지정합니다.\n\
+  \   </p>\n-  <ol start=\"1\">\n+  <ol>\n    <li>\n     <p>\n      조건 입력 방법 및 예시는\
+  \ 하단의 ‘\n@@ -844,7 +840,7 @@\n    </strong>\n    : 미리보기를 생성합니다.\n   </p>\n-  <ol\
+  \ start=\"1\">\n+  <ol>\n    <li>\n     <p>\n      미리보기는 필수 단계입니다.\n@@ -890,7 +886,7\
+  \ @@\n     </strong>\n    </p>\n    <p>\n-    (1) 필터 표현식을 사용하시기 위해 '\n+    (1) 필터\
+  \ 표현식을 사용하기 위해 '\n     <span style=\"color: rgb(76,154,255);\">\n      See Log Template\
+  \ and Description\n     </span>\n@@ -1035,7 +1031,7 @@\n     연산자를 활용합니다.\n    </p>\n\
+  \    <p>\n-    - 복합 조건 : 함께 처리해야하는 조건은 괄호(\n+    - 복합 조건 : 함께 처리해야 하는 조건은 괄호(\n\
+  \     <code>\n      ( )\n     </code>\n@@ -1059,7 +1055,7 @@\n     </code>\n   \
+  \ </p>\n    <p>\n-    - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식\
+  \ :\n+    - DB Access History 중 특정 데이터베이스 2종류에 대해서만 추출하려는 경우 필요한 표현식 :\n     <code>\n\
+  \      connectionName == 'database1' || connectionName == 'database2'\n     </code>\n\
+  @@ -1279,7 +1275,7 @@\n     </strong>\n    </p>\n    <p>\n-    내보내기 파일의 ‘Privilege\
+  \ Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n+    내보내기 파일의 ‘Privilege\
+  \ Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.\n    </p>\n    <ol start=\"\
+  1\">\n     <li>\n@@ -1335,7 +1331,7 @@\n <p>\n </p>\n <h2>\n- 추출 작업 완료시 파일 내려받기\n\
+  + 추출 작업 완료 시 파일 내려받기\n </h2>\n <p>\n  별도의 필터링 조건이 없는 단기간 조회의 경우에는 로그 추출이 몇 분 이내에\
+  \ 완료됩니다. 장기간에 걸친 로그이거나 필터링 조건의 복잡도가 높은 경우 등에서는 로그 추출까지 다소 시간이 소요될 수 있습니다."

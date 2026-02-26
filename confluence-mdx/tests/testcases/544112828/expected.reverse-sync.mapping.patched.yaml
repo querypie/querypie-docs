@@ -366,9 +366,9 @@ blocks:
   children: []
   type: list
   xhtml_element_index: 41
-  xhtml_plain_text: 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. 사용하려는 계정을 선택하고
+  xhtml_plain_text: 이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.사용하려는 계정을 선택하고
     필요 시 비밀번호를 입력한 뒤, OK 버튼을 클릭하여 세션을 엽니다.
-  xhtml_text: <ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다. </p></li><li><p>사용하려는
+  xhtml_text: <ul><li><p>이후 해당 서버에 접속 가능한 계정이 여러 개라면, Account 선택창이 열립니다.</p></li><li><p>사용하려는
     계정을 선택하고 필요 시 비밀번호를 입력한 뒤, <code>OK</code> 버튼을 클릭하여 세션을 엽니다.</p></li></ul>
   xhtml_xpath: ul[3]
 - block_id: html_block-43
@@ -841,6 +841,6 @@ blocks:
   xhtml_plain_text: ''
   xhtml_text: ''
   xhtml_xpath: p[36]
-created_at: '2026-02-23T08:12:04.159485+00:00'
+created_at: '2026-02-26T06:18:24.580949+00:00'
 page_id: '544112828'
 source_xhtml: patched.xhtml

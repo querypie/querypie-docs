@@ -5,8 +5,9 @@ from typing import Dict, List, Optional
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.sidecar import SidecarEntry, find_mapping_by_sidecar
-from reverse_sync.inline_detector import has_inline_format_change, has_inline_boundary_change
+from reverse_sync.lost_info_patcher import apply_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_inner_xhtml
+from reverse_sync.text_transfer import transfer_text_changes
 from mdx_to_storage.inline import convert_inline
 from text_utils import normalize_mdx_to_plain, collapse_ws, strip_list_marker, strip_for_compare
 
@@ -97,10 +98,52 @@ def split_list_items(content: str) -> List[str]:
     return items
 
 
-def extract_list_marker_prefix(text: str) -> str:
-    """텍스트에서 선행 리스트 마커 prefix를 추출한다."""
-    m = re.match(r'^([-*+]\s+|\d+\.\s+)', text)
-    return m.group(0) if m else ''
+def _regenerate_list_from_parent(
+    change: BlockChange,
+    parent: Optional[BlockMapping],
+    used_ids: 'set | None' = None,
+    mapping_lost_info: Optional[Dict[str, dict]] = None,
+) -> List[Dict[str, str]]:
+    """parent mapping 기반으로 전체 리스트 inner XHTML을 재생성한다.
+
+    parent XHTML에 <ac:image> 등 MDX로 표현 불가한 요소가 있으면
+    텍스트 전이(transfer_text_changes)로 폴백하여 DOM 구조를 보존한다.
+    """
+    if parent is None:
+        return []
+
+    if used_ids is not None:
+        used_ids.add(parent.block_id)
+        for child_id in parent.children:
+            used_ids.add(child_id)
+
+    # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
+    if '<ac:image' in parent.xhtml_text:
+        old_plain = normalize_mdx_to_plain(
+            change.old_block.content, change.old_block.type)
+        new_plain = normalize_mdx_to_plain(
+            change.new_block.content, change.new_block.type)
+        xhtml_text = transfer_text_changes(
+            old_plain, new_plain, parent.xhtml_plain_text)
+        return [{
+            'xhtml_xpath': parent.xhtml_xpath,
+            'old_plain_text': parent.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        }]
+
+    new_inner = mdx_block_to_inner_xhtml(
+        change.new_block.content, change.new_block.type)
+
+    if mapping_lost_info:
+        block_lost = mapping_lost_info.get(parent.block_id, {})
+        if block_lost:
+            new_inner = apply_lost_info(new_inner, block_lost)
+
+    return [{
+        'xhtml_xpath': parent.xhtml_xpath,
+        'old_plain_text': parent.xhtml_plain_text,
+        'new_inner_xhtml': new_inner,
+    }]
 
 
 def build_list_item_patches(
@@ -110,31 +153,15 @@ def build_list_item_patches(
     mdx_to_sidecar: Optional[Dict[int, SidecarEntry]] = None,
     xpath_to_mapping: Optional[Dict[str, 'BlockMapping']] = None,
     id_to_mapping: Optional[Dict[str, BlockMapping]] = None,
+    mapping_lost_info: Optional[Dict[str, dict]] = None,
 ) -> List[Dict[str, str]]:
     """리스트 블록의 각 항목을 개별 매핑과 대조하여 패치를 생성한다.
 
-    sidecar에서 얻은 parent mapping의 children을 통해 child 매핑을 해석한다.
+    R2: child 매칭 성공 시 항상 child inner XHTML 재생성,
+    child 매칭 실패 시 전체 리스트 inner XHTML 재생성.
     """
-    from reverse_sync.patch_builder import _find_containing_mapping, _flush_containing_changes
-    from reverse_sync.text_transfer import transfer_text_changes
-
     old_items = split_list_items(change.old_block.content)
     new_items = split_list_items(change.new_block.content)
-    if len(old_items) != len(new_items):
-        # 항목 수가 다르면 (삭제/추가) 전체 리스트 inner XHTML 재생성
-        parent = None
-        if mdx_to_sidecar is not None and xpath_to_mapping is not None:
-            parent = find_mapping_by_sidecar(
-                change.index, mdx_to_sidecar, xpath_to_mapping)
-        if parent is not None:
-            new_inner = mdx_block_to_inner_xhtml(
-                change.new_block.content, change.new_block.type)
-            return [{
-                'xhtml_xpath': parent.xhtml_xpath,
-                'old_plain_text': parent.xhtml_plain_text,
-                'new_inner_xhtml': new_inner,
-            }]
-        return []
 
     # sidecar에서 parent mapping 획득
     parent_mapping = None
@@ -142,11 +169,20 @@ def build_list_item_patches(
         parent_mapping = find_mapping_by_sidecar(
             change.index, mdx_to_sidecar, xpath_to_mapping)
 
+    # sidecar에 없으면 텍스트 포함 검색으로 parent 찾기
+    if parent_mapping is None:
+        from reverse_sync.patch_builder import _find_containing_mapping
+        old_plain_all = normalize_mdx_to_plain(
+            change.old_block.content, 'list')
+        parent_mapping = _find_containing_mapping(
+            old_plain_all, mappings, used_ids or set())
+
+    # 항목 수 불일치 → 전체 리스트 재생성
+    if len(old_items) != len(new_items):
+        return _regenerate_list_from_parent(
+            change, parent_mapping, used_ids, mapping_lost_info)
+
     patches = []
-    # 매칭 실패한 항목을 상위 블록 기준으로 그룹화
-    containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
-    # flat list에서 inline 포맷 변경이 감지되면 전체 리스트 inner XHTML 재생성
-    _flat_inline_change = False
     for old_item, new_item in zip(old_items, new_items):
         if old_item == new_item:
             continue
@@ -158,85 +194,47 @@ def build_list_item_patches(
             mapping = _resolve_child_mapping(
                 old_plain, parent_mapping, id_to_mapping)
 
-        if mapping is not None:
-            if used_ids is not None:
-                used_ids.add(mapping.block_id)
+        if mapping is None:
+            # R2: child 매칭 실패 → 전체 리스트 재생성
+            return _regenerate_list_from_parent(
+                change, parent_mapping, used_ids, mapping_lost_info)
 
-            # inline 포맷 변경 감지 → new_inner_xhtml 패치
-            if has_inline_format_change(old_item, new_item):
-                new_item_text = re.sub(r'^[-*+]\s+', '', new_item.strip())
-                new_item_text = re.sub(r'^\d+\.\s+', '', new_item_text)
-                new_inner = convert_inline(new_item_text)
-                patches.append({
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_inner_xhtml': new_inner,
-                })
-            else:
-                new_plain = normalize_mdx_to_plain(new_item, 'list')
+        # child 매칭 성공: child inner XHTML 재생성
+        new_plain = normalize_mdx_to_plain(new_item, 'list')
 
-                xhtml_text = mapping.xhtml_plain_text
-                prefix = extract_list_marker_prefix(xhtml_text)
-                if prefix and collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                    xhtml_body = xhtml_text[len(prefix):]
-                    # XHTML body가 이미 new_plain과 일치하면 건너뛰기
-                    if collapse_ws(new_plain) == collapse_ws(xhtml_body):
-                        continue
-                    if collapse_ws(old_plain) != collapse_ws(xhtml_body):
-                        new_plain = transfer_text_changes(
-                            old_plain, new_plain, xhtml_body)
-                    new_plain = prefix + new_plain
-                elif collapse_ws(old_plain) != collapse_ws(xhtml_text):
-                    # XHTML이 이미 new_plain과 일치하면 건너뛰기
-                    if collapse_ws(new_plain) == collapse_ws(xhtml_text):
-                        continue
-                    new_plain = transfer_text_changes(
-                        old_plain, new_plain, xhtml_text)
+        # 멱등성 체크: push 후 XHTML이 이미 업데이트된 경우 건너뜀
+        if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
+                and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+            continue
 
-                patches.append({
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': new_plain,
-                })
-        else:
-            # child 매칭 실패: inline 마커 경계 이동 감지
-            # has_inline_boundary_change: type 추가/제거 및 마커 간 텍스트 변경만 감지
-            # (마커 내부 content만 변경된 경우는 무시하여 이미지 등 XHTML 고유 요소 보존)
-            if has_inline_boundary_change(old_item, new_item):
-                _flat_inline_change = True
+        if used_ids is not None:
+            used_ids.add(mapping.block_id)
 
-            # parent 또는 텍스트 포함 매핑을 containing block으로 사용
-            container = parent_mapping
-            if container is not None and used_ids is not None:
-                # parent 텍스트에 항목이 포함되지 않으면 더 나은 매핑 찾기
-                _item_ns = strip_for_compare(old_plain)
-                _cont_ns = strip_for_compare(container.xhtml_plain_text)
-                if _item_ns and _cont_ns and _item_ns not in _cont_ns:
-                    better = _find_containing_mapping(
-                        old_plain, mappings, used_ids)
-                    if better is not None:
-                        container = better
-            elif used_ids is not None:
-                container = _find_containing_mapping(old_plain, mappings, used_ids)
-            if container is not None:
-                new_plain = normalize_mdx_to_plain(new_item, 'list')
-                bid = container.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (container, [])
-                containing_changes[bid][1].append((old_plain, new_plain))
+        # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
+        if '<ac:image' in mapping.xhtml_text:
+            xhtml_text = transfer_text_changes(
+                old_plain, new_plain, mapping.xhtml_plain_text)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': xhtml_text,
+            })
+            continue
 
-    # flat list에서 inline 포맷 변경이 감지된 경우:
-    # containing block 텍스트 패치 대신 전체 리스트 inner XHTML 재생성
-    if _flat_inline_change and parent_mapping is not None:
-        containing_changes.pop(parent_mapping.block_id, None)
-        new_inner = mdx_block_to_inner_xhtml(
-            change.new_block.content, change.new_block.type)
+        new_item_text = re.sub(r'^[-*+]\s+', '', new_item.strip())
+        new_item_text = re.sub(r'^\d+\.\s+', '', new_item_text)
+        new_inner = convert_inline(new_item_text)
+
+        # 블록 레벨 lost_info 적용
+        if mapping_lost_info:
+            block_lost = mapping_lost_info.get(mapping.block_id, {})
+            if block_lost:
+                new_inner = apply_lost_info(new_inner, block_lost)
+
         patches.append({
-            'xhtml_xpath': parent_mapping.xhtml_xpath,
-            'old_plain_text': parent_mapping.xhtml_plain_text,
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
             'new_inner_xhtml': new_inner,
         })
 
-    # 상위 블록에 대한 그룹화된 변경 적용
-    patches.extend(_flush_containing_changes(containing_changes, used_ids))
     return patches

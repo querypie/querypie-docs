@@ -1,7 +1,7 @@
 changes:
-- block_id: paragraph-25
+- block_id: paragraph-24
   change_type: modified
-  index: 25
+  index: 24
   new_content: '감사 로그 추출 및 다운로드는 크게 다음과 같은 단계로 진행됩니다.
 
     (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료 시 파일 다운로드
@@ -12,9 +12,9 @@ changes:
     (1) 관련 메뉴 진입 → (2) 로그 추출 작업 생성 → (3) 로그 추출 완료까지 대기 → (4) 추출 완료시 파일 다운로드
 
     '
-- block_id: paragraph-27
+- block_id: paragraph-26
   change_type: modified
-  index: 27
+  index: 26
   new_content: '감사 로그 추출을 시작하기 위해서는 ‘Audit &gt; General &gt; Audit Log Export’ 메뉴
     접근 후, 우측 상단의 `Create Task` 버튼을 클릭해야 합니다.
 
@@ -27,50 +27,81 @@ changes:
     해당 버튼 클릭시 아래와 같은 화면이 나타납니다.
 
     '
-- block_id: list-31
+- block_id: list-30
   change_type: modified
-  index: 31
+  index: 30
   new_content: "1.  **Task Name** : 로그 추출 작업의 이름을 입력합니다.\n2.  **Log Type** : 추출 대상\
-    \ 로그의 종류를 선택합니다. \n    1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.\n    2. 로그 종류 선택\
+    \ 로그의 종류를 선택합니다.\n    1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.\n    2. 로그 종류 선택\
     \ 후 See Log Template and Description을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n3.\
     \  **Download File Format** : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한\
-    \ 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.) \n4.  **For Text Exceeding\
+    \ 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.)\n4.  **For Text Exceeding\
     \ 32,000 Characters**  : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.\n \
     \   1. Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에\
     \ 셀당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n    2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.\n\
     5.  **From**  : 추출 시작 날짜를 지정합니다.\n6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일\
-    \ 날짜를 선택할 수 있도록 개선되었습니다. \n7.  **Filter Expression**  : 필터 표현식을 지정합니다. \n    1.\
+    \ 날짜를 선택할 수 있도록 개선되었습니다.\n7.  **Filter Expression**  : 필터 표현식을 지정합니다.\n    1.\
     \ 조건 입력 방법 및 예시는 하단의 ‘ **필터 표현식** ’을 참고해주시기 바랍니다.\n8.  **Generate Preview** :\
-    \ 미리보기를 생성합니다. \n    1. 미리보기는 필수 단계입니다.\n    2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가\
-    \ 가능합니다.\n9. `Create` 버튼 : 로그 추출 작업을 생성합니다. \n"
+    \ 미리보기를 생성합니다.\n    1. 미리보기는 필수 단계입니다.\n    2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가\
+    \ 가능합니다.\n9. `Create` 버튼 : 로그 추출 작업을 생성합니다.\n"
   old_content: "1.  **Task Name** : 로그 추출 작업의 이름을 입력합니다.\n2.  **Log Type** : 추출 대상\
-    \ 로그의 종류를 선택합니다. \n    1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.\n    2. 로그 종류 선택\
+    \ 로그의 종류를 선택합니다.\n    1. Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.\n    2. 로그 종류 선택\
     \ 후 See Log Template and Description을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.\n3.\
     \  **Download File Format** : 로그 출력 파일 형식을 지정합니다. (9.17.0 기준, 각 로그마다 다운로드 가능한\
-    \ 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.) \n4.  **For Text Exceeding\
+    \ 형식이 단일로 제한됩니다. 상단의  **‘추출 지원 로그 종류’** 을 참고해주시기 바랍니다.)\n4.  **For Text Exceeding\
     \ 32,000 Characters**  : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.\n \
     \   1. Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에\
     \ 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.\n    2. No Action - 32,000자를 초과하는 글자를 그대로 포함시킵니다.\n\
     5.  **From**  : 추출 시작 날짜를 지정합니다.\n6.  **To** : 추출 대상 마지막 날짜를 지정합니다. 11.2.0부터 당일\
-    \ 날짜를 선택할 수 있도록 개선되었습니다. \n7.  **Filter Expression**  : 필터 표현식을 지정합니다. \n    1.\
+    \ 날짜를 선택할 수 있도록 개선되었습니다.\n7.  **Filter Expression**  : 필터 표현식을 지정합니다.\n    1.\
     \ 조건 입력 방법 및 예시는 하단의 ‘ **필터 표현식** ’을 참고해주시기 바랍니다.\n8.  **Generate Preview** :\
-    \ 미리보기를 생성합니다. \n    1. 미리보기는 필수 단계입니다.\n    2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가\
-    \ 가능합니다.\n9. `Create` 버튼 : 로그 추출 작업을 생성합니다. \n"
-- block_id: paragraph-38
+    \ 미리보기를 생성합니다.\n    1. 미리보기는 필수 단계입니다.\n    2. 미리보기 결과를 확인해야 다음 단계인 ‘Create’가\
+    \ 가능합니다.\n9. `Create` 버튼 : 로그 추출 작업을 생성합니다.\n"
+- block_id: callout-34
   change_type: modified
-  index: 38
-  new_content: '(1) 필터 표현식을 사용하기 위해 ''See Log Template and Description''을 통해 로그별 key와
-    각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>
+  index: 34
+  new_content: '<Callout type="important">
 
-    '
-  old_content: '(1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을 통해 로그별
-    key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/>
+    **필터 표현식**
 
-    '
-- block_id: list-61
-  change_type: modified
-  index: 61
-  new_content: '- AND 조건 : `&&` 연산자를 활용합니다.
+
+    (1) 필터 표현식을 사용하기 위해 ''See Log Template and Description''을 통해 로그별 key와 각각의 type
+    및 포함하는 value를 참고해주시기 바랍니다.<br/>
+
+
+    (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
+
+
+    - Number Type
+
+
+    지원하는 표현식 : `>`, `<`, `<=`, `>=`, `==`, `!=`<br/>예 : `x > `10``, `x == `10``
+
+
+    - String Type
+
+
+    지원하는 표현식 : `== (equals)`, `!= (not equals)`, `contains`<br/>예 : `x == ''abc''`,
+    `x != ''abc''`, `contains(x, ''ab'')`
+
+
+    - Boolean Type
+
+
+    지원하는 표현식 : `== (equals)`, `!= (not equals)`, `&& (and)`, `|| (or)`<br/>예 : `x
+    == `true``,`x && y`, `(x > `0`) && (y == `0`)`
+
+
+    - Array Type
+
+
+    예 : `x[? @ == ''value'']`, `list[? @ > `10`]`
+
+
+
+    (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.
+
+
+    - AND 조건 : `&&` 연산자를 활용합니다.
 
 
     - OR 조건 : `||` 연산자를 활용합니다.
@@ -78,20 +109,12 @@ changes:
 
     - 복합 조건 : 함께 처리해야 하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
 
-    '
-  old_content: '- AND 조건 : `&&` 연산자를 활용합니다.
 
 
-    - OR 조건 : `||` 연산자를 활용합니다.
+    (4) 예시
 
 
-    - 복합 조건 : 함께 처리해야하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
-
-    '
-- block_id: list-66
-  change_type: modified
-  index: 66
-  new_content: '- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''`
+    - Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''`
 
 
     - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''
@@ -106,8 +129,65 @@ changes:
     경우 필요한 표현식 : `(connectionName == ''database1'' || connectionName == ''database2'')
     && replicationType == ''SINGLE''`
 
+    </Callout>
+
     '
-  old_content: '- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''`
+  old_content: '<Callout type="important">
+
+    **필터 표현식**
+
+
+    (1) 필터 표현식을 사용하시기 위해 ''See Log Template and Description''을 통해 로그별 key와 각각의 type
+    및 포함하는 value를 참고해주시기 바랍니다.<br/>
+
+
+    (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.
+
+
+    - Number Type
+
+
+    지원하는 표현식 : `>`, `<`, `<=`, `>=`, `==`, `!=`<br/>예 : `x > `10``, `x == `10``
+
+
+    - String Type
+
+
+    지원하는 표현식 : `== (equals)`, `!= (not equals)`, `contains`<br/>예 : `x == ''abc''`,
+    `x != ''abc''`, `contains(x, ''ab'')`
+
+
+    - Boolean Type
+
+
+    지원하는 표현식 : `== (equals)`, `!= (not equals)`, `&& (and)`, `|| (or)`<br/>예 : `x
+    == `true``,`x && y`, `(x > `0`) && (y == `0`)`
+
+
+    - Array Type
+
+
+    예 : `x[? @ == ''value'']`, `list[? @ > `10`]`
+
+
+
+    (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.
+
+
+    - AND 조건 : `&&` 연산자를 활용합니다.
+
+
+    - OR 조건 : `||` 연산자를 활용합니다.
+
+
+    - 복합 조건 : 함께 처리해야하는 조건은 괄호(`( )`)로 묶어서 활용합니다.
+
+
+
+    (4) 예시
+
+
+    - Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''`
 
 
     - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : `actionType == ''SQL_EXECUTION''
@@ -122,30 +202,60 @@ changes:
     경우 필요한 표현식 : `(connectionName == ''database1'' || connectionName == ''database2'')
     && replicationType == ''SINGLE''`
 
+    </Callout>
+
     '
-- block_id: paragraph-72
+- block_id: callout-37
   change_type: modified
-  index: 72
-  new_content: '내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다.
+  index: 37
+  new_content: '<Callout type="important">
+
+    **Query Audit의 내보내기 파일의 Privilege Type 명시 기준**
+
+
+    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행 시점에는 어느 권한이 필요했는지가 기록됩니다.
 
     아래와 같이 작동합니다.
 
+
+    1. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.
+
+    2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다.
+
+    3. Redis의 경우에는 커맨드명이 명시됩니다.
+
+    </Callout>
+
     '
-  old_content: '내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다.
+  old_content: '<Callout type="important">
+
+    **Query Audit의 내보내기 파일의 Privilege Type 명시 기준**
+
+
+    내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다.
 
     아래와 같이 작동합니다.
 
+
+    1. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.
+
+    2. INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다.
+
+    3. Redis의 경우에는 커맨드명이 명시됩니다.
+
+    </Callout>
+
     '
-- block_id: heading-78
+- block_id: heading-40
   change_type: modified
-  index: 78
+  index: 40
   new_content: '### 추출 작업 완료 시 파일 내려받기
 
     '
   old_content: '### 추출 작업 완료시 파일 내려받기
 
     '
-created_at: '2026-02-12T17:12:21.729451+00:00'
+created_at: '2026-02-26T06:18:29.822024+00:00'
 improved_mdx: tests/testcases/544379140/improved.mdx
 original_mdx: tests/testcases/544379140/original.mdx
 page_id: '544379140'

@@ -222,7 +222,8 @@ def build_patches(
             patches.extend(
                 build_list_item_patches(
                     change, mappings, used_ids,
-                    mdx_to_sidecar, xpath_to_mapping, id_to_mapping))
+                    mdx_to_sidecar, xpath_to_mapping, id_to_mapping,
+                    mapping_lost_info=mapping_lost_info))
             continue
 
         if strategy == 'table':
