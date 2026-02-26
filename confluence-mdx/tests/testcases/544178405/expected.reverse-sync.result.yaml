@@ -1,5 +1,5 @@
 changes_count: 5
-created_at: '2026-02-23T07:48:23.670086+00:00'
+created_at: '2026-02-26T09:56:26.748702+00:00'
 mdx_diff_report: "--- tests/testcases/544178405/original.mdx+++ tests/testcases/544178405/improved.mdx@@\
   \ -3,11 +3,11 @@ \n ### 환영합니다.\n \n-QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스\
   \ 및 권한, 솔루션 보안, 알림 설정 등 쿼리파이 전반 솔루션 관리를 진행할 수 있습니다.\n-공급된 라이선스 및 관리자 역할 권한에 따라 관리자에게\
@@ -23,7 +23,7 @@ mdx_diff_report: "--- tests/testcases/544178405/original.mdx+++ tests/testcases/
 page_id: '544178405'
 status: fail
 verification:
-  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -139,77 +139,12\
+  diff_report: "--- improved.mdx+++ verify.mdx (from patched XHTML)@@ -139,76 +139,11\
     \ @@ 서비스별 설정이 끝난 후에는 관리자/사용자의 접속 및 실행 이력들을 Audit 메뉴에서 자세히 확인할 수 있습니다.\n 뿐만 아니라\
     \ 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.\n \n-<table>\n-<colgroup>\n\
     -<col/>\n-<col/>\n-<col/>\n-</colgroup>\n-<tbody>\n-<tr>\n-<th>\n-</th>\n-<th>\n\
@@ -40,27 +40,27 @@ verification:
     -</td>\n-</tr>\n-<tr>\n-<td>\n-4\n-</td>\n-<th>\n-**감사 로그 확인하기**\n-</th>\n-<td>\n\
     -* [General Logs](administrator-manual/audit/general-logs)\n-* [Database Logs](administrator-manual/audit/database-logs)\n\
     -* [Server Logs](administrator-manual/audit/server-logs)\n-* [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)\n\
-    -</td>\n-</tr>\n-</tbody>\n-</table>\n+|     |   **설정 순서**                   \
-    \         |   **설정 항목**                                                      \
+    -</td>\n-</tr>\n-</tbody>\n-</table>\n+|     |  **설정 순서**                    \
+    \       |  **설정 항목**                                                         \
     \                                                                            \
     \                                                                            \
-    \                                                               |\n+| --- | --------------------------------------\
+    \                                                             |\n+| --- | ------------------------------------\
     \ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
-    \ |\n+|  1  |   **Database Access Control 설정하기**     |  * [Connection Management](administrator-manual/databases/connection-management)\
+    \ |\n+|  1  |  **Database Access Control 설정하기**    |  * [Connection Management](administrator-manual/databases/connection-management)\
     \ * [DB Access Control](administrator-manual/databases/db-access-control) * [Policies](administrator-manual/databases/policies)\
     \ * [Ledger Management](administrator-manual/databases/ledger-management)  |\n\
-    +|  2  |   **Server Access Control 설정하기**       |  * [Connection Management](administrator-manual/servers/connection-management)\
+    +|  2  |  **Server Access Control 설정하기**      |  * [Connection Management](administrator-manual/servers/connection-management)\
     \ * [Server Access Control ](user-manual/server-access-control)              \
     \                                                                            \
-    \                                                  |\n+|  3  |   **Kubernetes\
-    \ Access Control 설정하기**   |  * [Connection Management](administrator-manual/kubernetes/connection-management)\
+    \                                                  |\n+|  3  |  **Kubernetes Access\
+    \ Control 설정하기**  |  * [Connection Management](administrator-manual/kubernetes/connection-management)\
     \ * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)\
     \                                                                            \
-    \                                               |\n+|  4  |   **감사 로그 확인하기** \
-    \                      |  * [General Logs](administrator-manual/audit/general-logs)\
+    \                                               |\n+|  4  |  **감사 로그 확인하기**  \
+    \                    |  * [General Logs](administrator-manual/audit/general-logs)\
     \ * [Database Logs](administrator-manual/audit/database-logs) * [Server Logs](administrator-manual/audit/server-logs)\
     \ * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)            \
-    \                              |\n \n \n \n"
+    \                              |\n \n \n"
   exact_match: false
 xhtml_diff_report: "--- page.xhtml\n+++ reverse-sync.patched.xhtml\n@@ -2,10 +2,10\
   \ @@\n  환영합니다.\n </h2>\n <p>\n- QueryPie의 관리자는 QueryPie Web 또는 API를 통하여 리소스 및 권한,\
