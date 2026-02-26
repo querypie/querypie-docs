@@ -1,6 +1,6 @@
 --- a/original.mdx
 +++ b/improved.mdx
-@@ -6,11 +6,11 @@
+@@ -7,11 +7,11 @@
  
  ### 환영합니다.
  
@@ -16,7 +16,7 @@
  이 버튼을 클릭하여 관리자 페이지를 새 탭으로 열 수 있습니다.
  
  <figure data-layout="center" data-align="center">
-@@ -23,8 +23,8 @@
+@@ -24,8 +24,8 @@
  
  ### QueryPie 관리자 설정이 처음이신가요?
  
@@ -27,7 +27,7 @@
  
  <table>
  <colgroup>
-@@ -139,7 +139,7 @@
+@@ -140,7 +140,7 @@
  
  기본 설정을 마쳤다면 서비스별 설정이 남았습니다.
  QueryPie의 세분화된 접근 제어 기능을 통해 강력한 권한 관리를 경험해 보세요.
@@ -36,12 +36,3 @@
  뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.
  
  <table>
-@@ -164,7 +164,7 @@
- 1
- </td>
- <th>
--**Databased Access Control 설정하기**
-+**Database Access Control 설정하기**
- </th>
- <td>
- * [Connection Management](administrator-manual/databases/connection-management)
