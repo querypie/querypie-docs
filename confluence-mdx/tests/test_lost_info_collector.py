@@ -56,6 +56,19 @@ class TestLostInfoCollector:
         assert len(result['adf_extensions']) == 1
         assert result['adf_extensions'][0]['panel_type'] == 'note'
 
+    def test_add_image(self):
+        c = LostInfoCollector()
+        node = _tag(
+            '<ac:image ac:width="760">'
+            '<ri:attachment ri:filename="img.png"/>'
+            '</ac:image>'
+        )
+        c.add_image(node, 'attachments/img.png')
+        result = c.to_dict()
+        assert len(result['images']) == 1
+        assert result['images'][0]['src'] == 'attachments/img.png'
+        assert 'ac:image' in result['images'][0]['raw']
+
     def test_multiple_categories(self):
         c = LostInfoCollector()
         node = _tag('<ac:emoticon ac:name="tick"/>')

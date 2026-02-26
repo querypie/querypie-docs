@@ -584,6 +584,7 @@ class SingleLineParser:
 
         # Find matching attachment in attachments list
         markdown = ''
+        img_src = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
             attachments = get_attachments()
@@ -591,12 +592,17 @@ class SingleLineParser:
                 if it.original == image_filename:
                     it.used = True
                     markdown = it.as_markdown(width=width, align=align)
+                    img_src = f'{it.output_dir}/{it.filename}'
                     break
 
         if not markdown:
             # If no matching attachment found, use the filename as fallback
             logging.warning(f'No matching attachment found for filename: {image_filename}')
             markdown = f'[{image_filename}]()'
+
+        # Record image lost_info
+        if self.collector and img_src:
+            self.collector.add_image(node, img_src)
 
         # Add the image in Markdown format
         self.markdown_lines.append(markdown)
@@ -938,6 +944,7 @@ class MultiLineParser:
                 caption_text = SingleLineParser(caption_paragraph, collector=self.collector).as_markdown
 
         markdown = ''
+        img_src = ''
         image_filename = unicodedata.normalize('NFC', image_filename)
         if image_filename:
             attachments = get_attachments()
@@ -945,12 +952,17 @@ class MultiLineParser:
                 if it.original == image_filename:
                     it.used = True
                     markdown = it.as_markdown(caption_text, width, align)
+                    img_src = f'{it.output_dir}/{it.filename}'
                     break
 
         if not markdown:
             # If no matching attachment found, use the filename as fallback
             logging.warning(f'No matching attachment found for filename: {image_filename}')
             markdown = f'[{image_filename}]()'
+
+        # Record image lost_info
+        if self.collector and img_src:
+            self.collector.add_image(node, img_src)
 
         # Add the image in Markdown format
         self.markdown_lines.append(f'<figure data-layout="{align}" data-align="{align}">\n')

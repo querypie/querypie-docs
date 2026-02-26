@@ -286,7 +286,14 @@ def run_verify(
         SidecarEntry, generate_sidecar_mapping,
         build_mdx_to_sidecar_index, build_xpath_to_mapping,
     )
-    sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx, page_id)
+    # forward converter가 생성한 mapping.yaml에서 lost_info를 보존
+    existing_mapping = var_dir / 'mapping.yaml'
+    existing_lost_info = None
+    if existing_mapping.exists():
+        existing_data = yaml.safe_load(existing_mapping.read_text()) or {}
+        existing_lost_info = existing_data.get('lost_info') or None
+    sidecar_yaml = generate_sidecar_mapping(
+        xhtml, original_mdx, page_id, lost_infos=existing_lost_info)
     (var_dir / 'mapping.yaml').write_text(sidecar_yaml)
     sidecar_data = yaml.safe_load(sidecar_yaml) or {}
     page_lost_info = sidecar_data.get('lost_info', {})

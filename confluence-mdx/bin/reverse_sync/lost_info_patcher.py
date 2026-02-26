@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 import emoji as emoji_lib
 
 if TYPE_CHECKING:
+    from reverse_sync.mapping_recorder import BlockMapping
     from reverse_sync.sidecar import SidecarBlock
 
 _LINK_ERROR_RE = re.compile(r'<a\s+href="#link-error"[^>]*>.*?</a>', re.DOTALL)
@@ -44,6 +45,9 @@ def apply_lost_info(emitted_xhtml: str, lost_info: dict) -> str:
 
     if 'adf_extensions' in lost_info:
         result = _patch_adf_extensions(result, lost_info['adf_extensions'])
+
+    if 'images' in lost_info:
+        result = _patch_images(result, lost_info['images'])
 
     return result
 
@@ -138,6 +142,27 @@ def _patch_adf_extensions(xhtml: str, adf_extensions: list[dict]) -> str:
     return result
 
 
+def _patch_images(xhtml: str, images: list[dict]) -> str:
+    """<img> 태그를 원본 <ac:image> 태그로 복원한다.
+
+    lost_info의 src 필드로 <img> 태그를 찾아 원본 <ac:image> raw로 교체한다.
+    """
+    result = xhtml
+    for entry in images:
+        src = entry.get('src', '')
+        raw = entry.get('raw', '')
+        if not src or not raw:
+            continue
+        # src 속성이 일치하는 <img> 태그를 찾아 교체
+        pattern = re.compile(
+            r'<img\s[^>]*src="' + re.escape(src) + r'"[^>]*/?>',
+        )
+        match = pattern.search(result)
+        if match:
+            result = result[:match.start()] + raw + result[match.end():]
+    return result
+
+
 def distribute_lost_info(blocks: list[SidecarBlock], page_lost_info: dict) -> None:
     """페이지 레벨 lost_info를 각 블록에 분배한다.
 
@@ -147,7 +172,7 @@ def distribute_lost_info(blocks: list[SidecarBlock], page_lost_info: dict) -> No
     if not page_lost_info:
         return
 
-    for category in ('emoticons', 'links', 'adf_extensions'):
+    for category in ('emoticons', 'links', 'images', 'adf_extensions'):
         entries = page_lost_info.get(category, [])
         for entry in entries:
             raw = entry.get('raw', '')
@@ -167,3 +192,44 @@ def distribute_lost_info(blocks: list[SidecarBlock], page_lost_info: dict) -> No
             if original in block.xhtml_fragment:
                 block.lost_info.setdefault('filenames', []).append(entry)
                 break
+
+
+def distribute_lost_info_to_mappings(
+    mappings: list[BlockMapping],
+    page_lost_info: dict,
+) -> dict[str, dict]:
+    """페이지 레벨 lost_info를 BlockMapping별로 분배한다.
+
+    각 항목의 raw 필드가 매핑의 xhtml_text에 포함되는지로 판별한다.
+
+    Returns:
+        block_id → block-level lost_info dict
+    """
+    if not page_lost_info:
+        return {}
+
+    result: dict[str, dict] = {}
+
+    for category in ('emoticons', 'links', 'images', 'adf_extensions'):
+        for entry in page_lost_info.get(category, []):
+            raw = entry.get('raw', '')
+            if not raw:
+                continue
+            for m in mappings:
+                if raw in m.xhtml_text:
+                    result.setdefault(m.block_id, {}).setdefault(
+                        category, []).append(entry)
+                    break
+
+    # filenames: raw가 없으므로 original filename으로 매칭
+    for entry in page_lost_info.get('filenames', []):
+        original = entry.get('original', '')
+        if not original:
+            continue
+        for m in mappings:
+            if original in m.xhtml_text:
+                result.setdefault(m.block_id, {}).setdefault(
+                    'filenames', []).append(entry)
+                break
+
+    return result
