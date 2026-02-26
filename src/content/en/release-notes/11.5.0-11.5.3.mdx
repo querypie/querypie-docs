@@ -1,9 +1,69 @@
 ---
-title: '11.5.0'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0'
+title: '11.5.0 ~ 11.5.3'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.3'
 ---
 
-# 11.5.0
+# 11.5.0 ~ 11.5.3
+
+### QueryPie 11.5.3 Release
+
+February 24, 2026
+
+
+**Improvement**
+
+* [Common] Fixed issue where emails continued to be sent even after disabling Workflow notifications in Email Integration
+* [DAC/SAC] Fixed zombie session accumulation and port exhaustion issue due to missing keepalive in Reverse Tunnel
+* [DAC] Fixed issue where Redis Cluster connection via Reverse Tunnel was not possible
+
+
+### QueryPie 11.5.2 Release
+
+February 11, 2026
+
+
+**Improvement**
+
+* [SAC] Added locked file handling logic when upgrading Server Agent 10.2.x legacy
+* [SAC] Fixed Server Agent auto-update signature verification logic
+* [SAC] Fixed Server Agent code signing verification logic
+
+
+### QueryPie 11.5.1 Release
+
+January 22, 2026
+
+
+**New Feature**
+
+* [Common] License MCP Feature added
+* [DAC] Added Select Audit Snapshot feature to save complete SELECT query results to S3 (Advanced only)
+* [DAC] Implemented schema-based access control Workflow Audit Log Export
+* [DAC] Added Stateful Session management feature for MCP
+* [DAC] Added Spanner Batch DML request processing support
+* [SAC] Added IP selection feature to RDP Server Agent Host column
+* [SAC] Added feature to save complete list of Server Agent unicast addresses to DB
+
+
+**Improvement**
+
+* [Common] Added /userinfo API for Access Token expiration time inquiry
+* [Common] Applied mandatory authentication to GetEnvironment, GetKacProxyEnvironment API
+* [Common] Fixed error when designating a substitute approver
+* [Common] Addressed System.Text.Json (CVE-2024-30105) and System.Text.Encodings.Web (CVE-2021-26701) vulnerabilities
+* [DAC] Added searchFilters option to CloudProvider External API
+* [DAC] Improved to record tables inside subqueries in Query Audit
+* [DAC] Improved JDBC Connection Dispose stability and added Connection status check
+* [DAC] Improved JDBC Connection Dispose stability to resolve APP server memory overload issue and added ExecutionPipeline Connection null check
+* [DAC] Added force termination and Connection status check when stopping Redshift
+* [DAC] Fixed issue occurring when using export request with query using WITH clause in Impala via Workflow
+* [DAC] Fixed ClickHouse proxy connection error
+* [DAC] Fixed issue where tags were not displayed in DB Policy Exception
+* [DAC] Improved Privilege type column header to be sortable by click in DB Access Request in Workflow
+* [SAC] Fixed Windows Server Remote Desktop connection termination due to RDP session time overflow
+* [SAC] Added Headless Agent automatic re-authentication support
+* [SAC] Improved Server Agent behavior to resolve MCCS redundancy Windows Server communication failure issue
+
 
 ### QueryPie 11.5.0 Release
 
@@ -16,6 +76,7 @@ December 15, 2025
 * [Common] Logging functionality for access attempts from unauthorized IPs added
 * [DAC] Google Spanner policy and Proxy support
 * [DAC] ClickHouse policy and Proxy support
+* [DAC] Vertica Proxy support
 * [DAC] Schema access control implementation and approval request integration
 
 

@@ -1,0 +1,116 @@
+---
+title: '11.5.0 ~ 11.5.3'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.3'
+---
+
+# 11.5.0 ~ 11.5.3
+
+### QueryPie 11.5.3 Release
+
+2026年02月24日
+
+
+**Improvement**
+
+* [共通] Email IntegrationでWorkflow通知を無効化してもメールが継続して送信される問題修正
+* [DAC/SAC] Reverse Tunnelでkeepaliveがないことによるゾンビセッション累積・ポート枯渇問題修正
+* [DAC] Reverse Tunnelを通じたRedis Clusterへの接続不可問題修正
+
+
+### QueryPie 11.5.2 Release
+
+2026年02月11日
+
+
+**Improvement**
+
+* [SAC] Server Agent 10.2.xレガシーアップグレード時のロックファイル処理ロジック追加
+* [SAC] Server Agent自動アップデート署名検証ロジック修正
+* [SAC] Server Agentコード署名検証ロジック修正
+
+
+### QueryPie 11.5.1 Release
+
+2026年01月22日
+
+
+**New Feature**
+
+* [共通] License MCP Feature追加
+* [DAC] SELECTクエリ結果の全データをS3に保存するSelect Audit Snapshot機能追加（Advanced専用）
+* [DAC] スキーマ基盤アクセス制御Workflow Audit Log Export実装
+* [DAC] MCP用Stateful Session管理機能追加
+* [DAC] Spanner Batch DMLリクエスト処理サポート
+* [SAC] RDP Server Agent HostカラムにIP選択機能追加
+* [SAC] Server Agent unicast addressの全リストDB保存機能追加
+
+
+**Improvement**
+
+* [共通] Access Token有効期限照会用/userinfo API追加
+* [共通] GetEnvironment、GetKacProxyEnvironment APIに認証必須適用
+* [共通] 代理承認者指定時のエラー修正
+* [共通] System.Text.Json（CVE-2024-30105）およびSystem.Text.Encodings.Web（CVE-2021-26701）脆弱性対応
+* [DAC] CloudProvider External APIにsearchFiltersオプション追加
+* [DAC] サブクエリ内部テーブルもQuery Auditに記録されるよう改善
+* [DAC] JDBC Connection Dispose安定性改善およびConnection状態チェック追加
+* [DAC] APPサーバーメモリ過負荷問題解決のためのJDBC Connection Dispose安定性改善およびExecutionPipeline Connection nullチェック追加
+* [DAC] Redshift停止時の強制終了およびConnection状態チェック追加
+* [DAC] WorkflowでImpalaのWITH句を使用したクエリでexport requestを使用する際に発生する問題修正
+* [DAC] ClickHouseプロキシ接続エラー修正
+* [DAC] DB Policy Exceptionでタグが表示されない問題修正
+* [DAC] WorkflowのDB Access RequestでPrivilege種別カラムヘッダーのクリックによるソートを可能にする改善
+* [SAC] RDPセッション時間オーバーフローによるWindows Serverリモートデスクトップ接続切断問題修正
+* [SAC] Headless Agent自動再認証サポート追加
+* [SAC] MCCSデュアル化Windows Server通信失敗問題解決のためのServer Agent動作改善
+
+
+### QueryPie 11.5.0 Release
+
+2025年12月15日
+
+
+**New Feature**
+
+* [共通] 権限期限切れ（Deactivated）通知メール送信機能追加
+* [共通] 許可されていないIPから接続試行時ログ記録機能追加
+* [DAC] Google Spanner政策およびProxyサポート
+* [DAC] ClickHouse政策およびProxyサポート
+* [DAC] Vertica Proxyサポート
+* [DAC] スキーマアクセス制御実装および決裁要求連動
+
+
+**Improvement**
+
+* [共通] SAML認証を使用する時Display Name表示改善
+* [共通] Identity ProviderのMFA適用改善
+* [共通] Admin Role - Database Access Control Read-only権限追加
+* [共通] Workflow Approval RuleでDB Access Request Connection Owner選択改善
+* [共通] 誤ったライセンス処理改善
+* [共通] API Docsのrequiredフィールド表示改善
+* [共通] Multi Agentで期限切れトークンで接続再試行する問題修正
+* [共通] IPアクセス制限画面に現在IPアドレス表示
+* [共通] IdP設定でDry run進行中にログイン試行時Lock wait timeoutエラー発生問題修正
+* [DAC] SQL Request、SQL Export Request承認者反対時Execution Status改善
+* [DAC] Exception Management workflow権限詳細状態管理改善
+* [DAC] Web EditorのImportポップアップウィンドウのテーブル名表示改善
+* [DAC] MongoDB Ledger Table照会時Query Audit Label表示修正
+* [DAC] WorkflowでUrgent modeの場合実行者が取消した時表示される方式修正
+* [DAC] MySQLコネクションにアカウント情報（Id/Password）がない時エラー処理改善
+* [DAC] Excel Import時シート変更時カラム情報更新改善
+* [DAC] Max Display Rows設定動作改善
+* [DAC] MongoDBマスキング対象フィールドがArrayの場合処理改善
+* [DAC] PostgreSQL Prepare Statement Integer Null Parameter処理改善
+* [DAC] Redis Cluster有効化時Proxy Usage検証強化
+* [DAC] DB Policy Exception Requestでタグを多重選択可能に修正
+* [DAC] Engine異常終了時JDBC.NET Process終了されない問題修正
+* [DAC] PostgreSQL/Redshift Import時エラー発生問題修正
+* [DAC] Trino TLS接続時私設認証書サポート
+* [DAC] Connection Accessible Usersリストで期限切れユーザー除外
+* [DAC] Web Editorで事由入力時以前事由再利用できるように改善
+* [DAC] MongoDB / DocumentDBのData Tabページサイズ100に制限
+* [DAC] Ledger Workflow実行時Query AuditにLedgerで記録されなかった問題修正
+* [DAC] Verticaパスワード期限切れ時パスワード変更UIサポート
+* [DAC] DELETE FROM table構文でtable aliasを適切に分析できない問題修正
+* [SAC] 禁止コマンド動作改善 - 履歴編集ケース処理
+* [SAC] Session Monitoringメニュー位置変更およびServer Monitoring Full Access権限追加

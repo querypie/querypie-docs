@@ -1,9 +1,69 @@
 ---
-title: '11.5.0'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0'
+title: '11.5.0 ~ 11.5.3'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.3'
 ---
 
-# 11.5.0
+# 11.5.0 ~ 11.5.3
+
+### QueryPie 11.5.3 Release
+
+2026년 02월 24일
+
+
+**Improvement**
+
+* [공통] Email Integration에서 Workflow 알림 비활성화해도 이메일 계속 발송되는 문제 수정
+* [DAC/SAC] Reverse Tunnel에서 keepalive 부재로 인한 좀비 세션 누적/포트 고갈 문제 수정
+* [DAC] Reverse Tunnel를 통해 Redis Cluster 접속 불가 문제 수정
+
+
+### QueryPie 11.5.2 Release
+
+2026년 02월 11일
+
+
+**Improvement**
+
+* [SAC] Server Agent 10.2.x 레거시 업그레이드 시 잠긴 파일 처리 로직 추가
+* [SAC] Server Agent 자동 업데이트 서명 검증 로직 수정
+* [SAC] Server Agent 코드 서명 검증 로직 수정
+
+
+### QueryPie 11.5.1 Release
+
+2026년 01월 22일
+
+
+**New Feature**
+
+* [공통] License MCP Feature 추가
+* [DAC] Select 쿼리 결과 전체 데이터를 S3에 저장하는 Select Audit Snapshot 기능 추가 (Advanced 전용)
+* [DAC] 스키마 기반 접근제어 Workflow Audit Log Export 구현
+* [DAC] MCP용 Stateful Session 관리 기능 추가
+* [DAC] Spanner Batch DML 요청 처리 지원
+* [SAC] RDP Server Agent Host 컬럼에 IP 선택 기능 추가
+* [SAC] Server Agent unicast address 전체 목록 DB 저장 기능 추가
+
+
+**Improvement**
+
+* [공통] Access Token 만료시간 조회용 /userinfo API 추가
+* [공통] GetEnvironment, GetKacProxyEnvironment API 인증 필수 적용
+* [공통] 대결자 지정 시 오류 수정
+* [공통] System.Text.Json(CVE-2024-30105) 및 System.Text.Encodings.Web(CVE-2021-26701) 취약점 조치
+* [DAC] CloudProvider External API에 searchFilters 옵션 추가
+* [DAC] 서브쿼리 내부 테이블도 Query Audit에 기록되도록 개선
+* [DAC] JDBC Connection Dispose 안정성 개선 및 Connection 상태 체크 추가
+* [DAC] APP 서버 메모리 과부하 문제 해결을 위한 JDBC Connection Dispose 안정성 개선 및 ExecutionPipeline Connection null 체크 추가
+* [DAC] Redshift Stop 시 강제 종료 및 Connection 상태 체크 추가
+* [DAC] Workflow에서 Impala에서 with를 사용한 쿼리로 export request 사용 시 발생하는 문제 수정
+* [DAC] ClickHouse 프록시 접속 에러 수정
+* [DAC] DB Policy Exception에서 태그 표시되지 않는 문제 수정
+* [DAC] Workflow의 DB Access Request 에서 Privilege 유형 컬럼 헤더 클릭으로 정렬할 수 있도록 개선
+* [SAC] RDP 세션 타임 overflow로 Windows Server 원격 데스크톱 연결 종료 문제 수정
+* [SAC] Headless Agent 자동 재인증 지원 추가
+* [SAC] MCCS 이중화 Windows Server 통신 실패 문제 해결을 위한 Server Agent 동작 개선
+
 
 ### QueryPie 11.5.0 Release
 
@@ -16,6 +76,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/1
 * [공통] 허용되지 않은 IP에서 접속 시도 시 로그 기록 기능 추가
 * [DAC] Google Spanner 정책 및 Proxy 지원
 * [DAC] ClickHouse 정책 및 Proxy 지원
+* [DAC] Vertica Proxy 지원
 * [DAC] 스키마 접근제어 구현 및 결재 요청 연동
 
 
