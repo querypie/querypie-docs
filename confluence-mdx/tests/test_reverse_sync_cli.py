@@ -1007,9 +1007,10 @@ def testbuild_patches_list_item_child_resolved():
         changes[0], mappings, set(),
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
 
-    # sidecar에 parent가 없어도 텍스트 포함 폴백으로 containing mapping 발견
+    # R2: sidecar에 parent가 없어도 텍스트 포함 폴백으로 parent 발견 → child 해석 성공
     assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'ul[1]'
+    assert patches[0]['xhtml_xpath'] == 'ul[1]/li[1]'
+    assert patches[0]['new_inner_xhtml'] == 'Item A new'
 
     # sidecar에 parent가 있는 경우
     mdx_to_sidecar = {
@@ -1021,11 +1022,11 @@ def testbuild_patches_list_item_child_resolved():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'ul[1]/li[1]'
-    assert patches[0]['new_plain_text'] == 'Item A new'
+    assert patches[0]['new_inner_xhtml'] == 'Item A new'
 
 
 def testbuild_patches_list_item_fallback_to_parent():
-    """리스트 항목의 child 해석 실패 시 parent containing block으로 패치한다."""
+    """R2: 리스트 항목의 child 해석 실패 시 전체 리스트를 재생성한다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -1068,7 +1069,8 @@ def testbuild_patches_list_item_fallback_to_parent():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'ul[1]'
-    assert '변경된 텍스트입니다' in patches[0]['new_plain_text']
+    assert 'new_inner_xhtml' in patches[0]
+    assert '변경된 텍스트입니다' in patches[0]['new_inner_xhtml']
 
 
 class TestParseAndDiff:
