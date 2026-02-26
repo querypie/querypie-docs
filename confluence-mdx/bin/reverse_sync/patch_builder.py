@@ -11,13 +11,8 @@ from text_utils import (
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
-from reverse_sync.lost_info_patcher import apply_lost_info
+from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
-from reverse_sync.inline_detector import (
-    has_inline_format_change,
-    has_inline_boundary_change,
-    _extract_inline_markers,
-)
 from reverse_sync.list_patcher import (
     build_list_item_patches,
     _resolve_child_mapping,
@@ -178,6 +173,10 @@ def build_patches(
     # block_id → BlockMapping 인덱스 (child 해석용)
     id_to_mapping: Dict[str, BlockMapping] = {m.block_id: m for m in mappings}
 
+    # 블록 레벨 lost_info 분배
+    mapping_lost_info = distribute_lost_info_to_mappings(
+        mappings, page_lost_info or {})
+
     def _mark_used(block_id: str, m: BlockMapping):
         """매핑 사용 시 부모/자식도 함께 사용 완료로 표시."""
         used_ids.add(block_id)
@@ -246,30 +245,24 @@ def build_patches(
         # strategy == 'direct'
         _mark_used(mapping.block_id, mapping)
 
-        # inline 포맷 변경 감지 → new_inner_xhtml 패치
-        if has_inline_format_change(
-                change.old_block.content, change.new_block.content):
-            new_inner = mdx_block_to_inner_xhtml(
-                change.new_block.content, change.new_block.type)
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping.xhtml_plain_text,
-                'new_inner_xhtml': new_inner,
-            })
-        else:
-            if collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text):
-                # XHTML이 이미 원하는 텍스트와 일치하면 변경 건너뛰기
-                # (push+fetch 후 verify 재실행 시 멱등성 보장)
-                if collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text):
-                    continue
-                new_plain = transfer_text_changes(
-                    old_plain, new_plain, mapping.xhtml_plain_text)
+        # 멱등성 체크: push 후 XHTML이 이미 업데이트된 경우 건너뜀
+        # (old != xhtml 이고 new == xhtml → 이미 적용된 변경)
+        if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
+                and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+            continue
 
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping.xhtml_plain_text,
-                'new_plain_text': new_plain,
-            })
+        # inner XHTML 재생성 + 블록 레벨 lost_info 적용
+        new_inner = mdx_block_to_inner_xhtml(
+            change.new_block.content, change.new_block.type)
+        block_lost = mapping_lost_info.get(mapping.block_id, {})
+        if block_lost:
+            new_inner = apply_lost_info(new_inner, block_lost)
+
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_inner_xhtml': new_inner,
+        })
 
     # 상위 블록에 대한 그룹화된 변경 적용
     patches.extend(_flush_containing_changes(containing_changes, used_ids))

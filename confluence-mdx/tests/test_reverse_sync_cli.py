@@ -567,7 +567,7 @@ def testbuild_patches_index_mapping():
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
     assert patches[0]['old_plain_text'] == 'Old text.'
-    assert patches[0]['new_plain_text'] == 'New text.'
+    assert patches[0]['new_inner_xhtml'] == 'New text.'
 
 
 def testbuild_patches_skips_non_content():
@@ -871,7 +871,7 @@ def testbuild_patches_child_resolved():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]/p[1]'
-    assert patches[0]['new_plain_text'] == 'New child text.'
+    assert patches[0]['new_inner_xhtml'] == 'New child text.'
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
