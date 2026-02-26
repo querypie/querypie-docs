@@ -3,6 +3,7 @@ from typing import List, Dict
 from bs4 import BeautifulSoup, NavigableString, Tag
 import difflib
 import re
+from reverse_sync.mapping_recorder import _iter_block_children
 
 
 def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
@@ -136,17 +137,6 @@ def _replace_inner_html(element: Tag, new_inner_xhtml: str):
     new_content = BeautifulSoup(new_inner_xhtml, 'html.parser')
     for child in list(new_content.children):
         element.append(child.extract())
-
-
-def _iter_block_children(parent):
-    """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
-    for child in parent.children:
-        if isinstance(child, Tag) and child.name == 'ac:layout':
-            for section in child.find_all('ac:layout-section', recursive=False):
-                for cell in section.find_all('ac:layout-cell', recursive=False):
-                    yield from cell.children
-        else:
-            yield child
 
 
 def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):

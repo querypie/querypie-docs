@@ -21,6 +21,7 @@ from typing import Any, Dict, List, Optional
 import yaml
 
 from reverse_sync.mapping_recorder import BlockMapping
+from reverse_sync.block_diff import NON_CONTENT_TYPES
 
 
 # ---------------------------------------------------------------------------
@@ -180,8 +181,7 @@ def build_sidecar(
     top_mappings = [m for m in xhtml_mappings if m.block_id not in child_ids]
 
     # 3. MDX content 블록 (frontmatter, empty, import 제외)
-    NON_CONTENT = frozenset(("empty", "frontmatter", "import_statement"))
-    mdx_content_blocks = [b for b in mdx_blocks if b.type not in NON_CONTENT]
+    mdx_content_blocks = [b for b in mdx_blocks if b.type not in NON_CONTENT_TYPES]
 
     # 4. Block 생성 — fragment와 top-level mapping을 정렬
     sidecar_blocks: List[SidecarBlock] = []
@@ -328,12 +328,10 @@ def generate_sidecar_mapping(
     mdx_blocks = parse_mdx_blocks(mdx)
 
     # 콘텐츠 블록만 필터 (frontmatter, empty, import 제외)
-    NON_CONTENT = frozenset(('empty', 'frontmatter', 'import_statement'))
-
     entries = []
     mdx_content_indices = [
         i for i, b in enumerate(mdx_blocks)
-        if b.type not in NON_CONTENT
+        if b.type not in NON_CONTENT_TYPES
     ]
     # Empty MDX 블록 중 콘텐츠 영역 내의 것만 매핑 대상으로 추적
     # (frontmatter/import 사이의 빈 줄은 XHTML에 대응하지 않음)

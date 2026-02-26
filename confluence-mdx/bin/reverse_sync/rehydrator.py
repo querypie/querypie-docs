@@ -18,12 +18,11 @@ from mdx_to_storage.parser import Block
 
 from .lost_info_patcher import apply_lost_info
 from .mdx_block_parser import MdxBlock, parse_mdx_blocks
+from .block_diff import NON_CONTENT_TYPES as _NON_CONTENT
 from .sidecar import RoundtripSidecar, SidecarBlock, load_sidecar, sha256_text
 
 
 FallbackRenderer = Callable[[str], str]
-
-_NON_CONTENT = frozenset(("empty", "frontmatter", "import_statement"))
 
 _MDX_TYPE_TO_PARSER_TYPE = {
     "heading": "heading",
