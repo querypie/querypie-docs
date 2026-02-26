@@ -549,6 +549,20 @@ def _find_text_match(
             if prefix in mdx_sig or mdx_sig[:50] in xhtml_sig:
                 return ptr
 
+    # 4차: 짧은 prefix 포함 매칭 (emoticon/lost_info 차이 허용)
+    # XHTML ac:emoticon 태그가 텍스트로 치환되지 않는 경우,
+    # 전체 문자열의 substring 비교가 실패할 수 있으므로
+    # 앞부분 20자만으로 포함 관계를 검사한다.
+    _SHORT_PREFIX = 20
+    for ptr in range(start_ptr, end_ptr):
+        mdx_idx = mdx_content_indices[ptr]
+        mdx_sig = _strip_all_ws(mdx_plains[mdx_idx])
+        if len(mdx_sig) < _SHORT_PREFIX:
+            continue
+        mdx_prefix = mdx_sig[:_SHORT_PREFIX]
+        if mdx_prefix in xhtml_sig:
+            return ptr
+
     return None
 
 

@@ -5,6 +5,8 @@ import difflib
 import re
 from reverse_sync.mapping_recorder import _iter_block_children
 
+from reverse_sync.mapping_recorder import _get_text_with_emoticons
+
 
 def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     """XHTML에 패치를 적용한다.
@@ -63,14 +65,16 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     for element, patch in resolved_modifies:
         if 'new_inner_xhtml' in patch:
             old_text = patch.get('old_plain_text', '')
-            current_plain = element.get_text()
+            # ac:emoticon의 fallback 텍스트를 포함하여 비교
+            current_plain = _get_text_with_emoticons(element)
             if old_text and current_plain.strip() != old_text.strip():
                 continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
         else:
             old_text = patch['old_plain_text']
             new_text = patch['new_plain_text']
-            current_plain = element.get_text()
+            # ac:emoticon의 fallback 텍스트를 포함하여 비교
+            current_plain = _get_text_with_emoticons(element)
             if current_plain.strip() != old_text.strip():
                 continue
             _apply_text_changes(element, old_text, new_text)

@@ -158,6 +158,52 @@ def test_adf_extension_non_callout_no_children():
     assert mappings[0].children == []
 
 
+def test_callout_panel_excludes_parameter_metadata():
+    """panel callout의 xhtml_plain_text가 파라미터 메타데이터를 포함하지 않는다."""
+    xhtml = (
+        '<ac:structured-macro ac:name="panel">'
+        '<ac:parameter ac:name="panelIcon">:purple_circle:</ac:parameter>'
+        '<ac:parameter ac:name="panelIconId">1f7e3</ac:parameter>'
+        '<ac:parameter ac:name="panelIconText">🟣</ac:parameter>'
+        '<ac:parameter ac:name="bgColor">#F4F5F7</ac:parameter>'
+        '<ac:rich-text-body>'
+        '<p><strong>본문 텍스트입니다.</strong></p>'
+        '</ac:rich-text-body>'
+        '</ac:structured-macro>'
+    )
+    mappings = record_mapping(xhtml)
+    parent = mappings[0]
+    assert parent.xhtml_xpath == 'macro-panel[1]'
+    # 파라미터 메타데이터가 제외되고 body 텍스트만 포함
+    assert ':purple_circle:' not in parent.xhtml_plain_text
+    assert '#F4F5F7' not in parent.xhtml_plain_text
+    assert '본문 텍스트입니다.' in parent.xhtml_plain_text
+
+
+def test_callout_includes_emoticon_fallback_text():
+    """ac:emoticon의 fallback 텍스트가 xhtml_plain_text에 포함된다."""
+    xhtml = (
+        '<ac:structured-macro ac:name="panel">'
+        '<ac:parameter ac:name="panelIcon">:purple_circle:</ac:parameter>'
+        '<ac:rich-text-body>'
+        '<p><strong>클릭해서 확대해서 보세요. </strong>'
+        '<ac:emoticon ac:emoji-fallback="🔎" ac:emoji-id="1f50e" '
+        'ac:emoji-shortname=":mag_right:" ac:name="blue-star"></ac:emoticon>'
+        ' )</p>'
+        '</ac:rich-text-body>'
+        '</ac:structured-macro>'
+    )
+    mappings = record_mapping(xhtml)
+
+    parent = mappings[0]
+    assert '🔎' in parent.xhtml_plain_text
+
+    # child paragraph에도 emoticon fallback이 포함
+    child = mappings[1]
+    assert child.xhtml_xpath.endswith('/p[1]')
+    assert '🔎' in child.xhtml_plain_text
+
+
 from pathlib import Path
 
 def test_mapping_real_testcase():
