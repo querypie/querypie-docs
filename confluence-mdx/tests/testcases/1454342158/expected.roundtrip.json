@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
   "page_id": "1454342158",
-  "mdx_sha256": "0981c4dace18ef4f27f3c2908cbeb7110034ec22972a3e1e2b934820976d7849",
+  "mdx_sha256": "7a634e202c8134d7f0520c9730e9ae4e8cdbf58d3128227c1355d372d0f071a4",
   "source_xhtml_sha256": "94e38b8adec78c652bec25688477c8ba2e1e15b5a7c16a7c7112ec7b9af3b8d7",
   "blocks": [
     {
@@ -294,7 +294,7 @@
       "block_index": 26,
       "xhtml_xpath": "macro-info[2]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:local-id=\"f274adf5-56bf-4f3d-9ed5-a241501928b9\" ac:macro-id=\"4883a95a-4d82-4a3e-a459-f4ff9268bdfb\"><ac:rich-text-body><p local-id=\"0d3ca9eb-d222-4cea-83c1-c361de77c421\"><strong>LDAP Attribute Mapping</strong></p><p local-id=\"3ca4b1d9-800e-424a-aaec-32d0c66693ea\">LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.</p><p local-id=\"20b36119-12a8-42c7-ba7e-02da385c9828\">우측 상단의 <code>Add Row</code> 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.</p><ol start=\"1\" local-id=\"571c3c3b-cc85-4876-bb70-703f9f1ccf68\"><li local-id=\"33079fcd-4944-4136-af93-05e4606832f0\"><p local-id=\"a0cbbc66-233d-49ac-8c2c-d2b0cbe7ab65\">해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.</p></li><li local-id=\"ff9e5c76-2fa7-47ba-b395-c048124fe8c0\"><p local-id=\"b3835627-f4b3-4c2c-8513-d88714b38494\">QueryPie Attribute인 <code>Username (loginId)</code>, <code>Primary Email (email)</code> 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP&ndash;QueryPie Attribute Mapping UI에는 노출되지 않습니다.</p></li><li local-id=\"ba3c265b-a2c8-4738-b3f6-34cb6f821972\"><p local-id=\"5ba4ad57-cab6-484c-9a81-6bfdd019183f\"> 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.</p></li></ol></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "16e451acec469db690df696b582c968f81cf9d39a54e4a8d502e0535cc213f75",
+      "mdx_content_hash": "76e3ff20613b8e533de2861350530d1e7ce98ee423c4cd89977edf0bdc601012",
       "mdx_line_range": [
         175,
         192
