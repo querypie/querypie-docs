@@ -17,34 +17,17 @@
  </p>
  <ac:image ac:align="center" ac:alt="스크린샷 2025-01-16 오후 1.18.05.png" ac:custom-width="true" ac:layout="center" ac:original-height="1005" ac:original-width="1494" ac:width="612">
   <ri:attachment ri:filename="스크린샷 2025-01-16 오후 1.18.05.png" ri:version-at-save="1">
-@@ -753,7 +753,7 @@
-    </strong>
-    : 추출 대상 로그의 종류를 선택합니다.
-   </p>
--  <ol start="1">
-+  <ol>
-    <li>
-     <p>
-      Query Audit 등 추출하기 원하는 로그 타입을 선택합니다.
-@@ -761,11 +761,7 @@
-    </li>
-    <li>
-     <p>
--     로그 종류 선택 후
--     <span style="color: rgb(76,154,255);">
--      See Log Template and Description
--     </span>
+@@ -765,7 +765,7 @@
+      <span style="color: rgb(76,154,255);">
+       See Log Template and Description
+      </span>
 -     을 클릭하시면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
-+     로그 종류 선택 후 See Log Template and Description을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
++     을 클릭하면 각 로그의 key 등 상세 정보를 조회할 수 있습니다.
      </p>
     </li>
    </ol>
-@@ -789,10 +785,10 @@
-    </strong>
-    : CSV 파일의 경우 32,000자를 초과하는 글자를 잘라낼지 여부를 선택할 수 있습니다.
-   </p>
--  <ol start="1">
-+  <ol>
+@@ -792,7 +792,7 @@
+   <ol start="1">
     <li>
      <p>
 -     Trim Overflowing Text - 32,000자를 초과하는 글자를 잘라냅니다. Excel로 파일을 직접 열어야 하는 경우에 셀 당 최대 글자수 초과로 표가 깨지는 현상을 방지합니다.
@@ -52,25 +35,7 @@
      </p>
     </li>
     <li>
-@@ -825,7 +821,7 @@
-    </strong>
-    : 필터 표현식을 지정합니다.
-   </p>
--  <ol start="1">
-+  <ol>
-    <li>
-     <p>
-      조건 입력 방법 및 예시는 하단의 ‘
-@@ -844,7 +840,7 @@
-    </strong>
-    : 미리보기를 생성합니다.
-   </p>
--  <ol start="1">
-+  <ol>
-    <li>
-     <p>
-      미리보기는 필수 단계입니다.
-@@ -890,7 +886,7 @@
+@@ -890,7 +890,7 @@
      </strong>
     </p>
     <p>
@@ -79,7 +44,7 @@
      <span style="color: rgb(76,154,255);">
       See Log Template and Description
      </span>
-@@ -1035,7 +1031,7 @@
+@@ -1035,7 +1035,7 @@
      연산자를 활용합니다.
     </p>
     <p>
@@ -88,7 +53,7 @@
      <code>
       ( )
      </code>
-@@ -1059,7 +1055,7 @@
+@@ -1059,7 +1059,7 @@
      </code>
     </p>
     <p>
@@ -97,7 +62,7 @@
      <code>
       connectionName == 'database1' || connectionName == 'database2'
      </code>
-@@ -1279,7 +1275,7 @@
+@@ -1279,7 +1279,7 @@
      </strong>
     </p>
     <p>
@@ -106,7 +71,7 @@
     </p>
     <ol start="1">
      <li>
-@@ -1335,7 +1331,7 @@
+@@ -1335,7 +1335,7 @@
  <p>
  </p>
  <h2>
