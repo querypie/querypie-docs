@@ -11,7 +11,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544375587/9.
 
 **Bug Fix & Enhancement**
 
-* [PostgreSQL] 메모리 사용량에 따라 에이전트 접속 높은 빈도로 오류 발생 수정
+* [PostgreSQL] 메모리 사용량 증가 시 에이전트 접속 오류가 높은 빈도로 발생하는 문제 수정
 * [Performance] gRPC C Binding 라이브러리 sigsegv 발생 및 프로세스 종료되는 이슈 수정
 
 
@@ -59,12 +59,12 @@ ______
 **Bug Fix & Enhancement**
 
 * [Agent] 리눅스 환경에서 Agent 설치 문제 해결
-* [Application Log]에 일부 데이터 노출 안 되는 이슈 해결
-* [Authentication] okta 및 onelogin saml meta data 표시되지 않는 이슈 해결
+* [Application Log]에 일부 데이터가 노출되지 않는 이슈 해결
+* [Authentication] Okta 및 OneLogin SAML metadata가 표시되지 않는 이슈 해결
 * [Authentication] AWS SAML 로그인 접속 불가 해결
 * [Cloud Provider] GCP, Azure 동기화 목록에서 제외
 * [Connection] multiple database account 강제 비활성화 해결
-* [Query Sharing] 외부 저장소에 파일 저장 시 에러가 발생 해결
+* [Query Sharing] 외부 저장소에 파일 저장 시 에러가 발생하는 문제 해결
 ______
 
 ### QueryPie 9.11.0 Release
@@ -86,14 +86,14 @@ ______
 * [External API] 커넥션 잠금해제 관련 API 추가
 * [External API] 커넥션 등록 Redis 추가
 * [External API] /api/external/connection-auth-logs 호출 시 null pointer 오류 발생
-* [Hbase] Vendor type 중 Hbase 지원의 중단
+* [HBase] Vendor type 중 HBase 지원 중단
 * [Job] 서버 재시작 시 job 중복 실행 방지 적용
-* [Masking][MySql] WITH 구문과 함께 update 쿼리 실행 시 NotSupportedException 발생 해결
+* [Masking][MySQL] WITH 구문과 함께 UPDATE 쿼리 실행 시 `NotSupportedException` 발생 문제 해결
 * [Masking] 마스킹 예외 처리 Allowed Users에서 사용자가 uuid로 표시되는 이슈 개선
 * [MongoDB] Connection Timeout 문제 해결
 * [MongoDB] Workflow에서 Export Request 했을 때, Query Audit에 SQL Type이 Unknown으로 기록되는 현상 개선
 * [MongoDB] Alert 타입이 Data Export 일 때, SQL Type이 Unknown으로 기록되는 현상 개선
-* [Mysql] Query Audit Detail 페이지에서 2개 이상의 테이블 표시가 `.`(점)으로 구분되는 현상 개선
+* [MySQL] Query Audit Detail 페이지에서 2개 이상의 테이블 표시가 `.`(점)으로 구분되는 현상 개선
 * [Preferences] 단축키 설정이 새 탭에서는 초기화되는 현상 개선
 * [QSI] select 쿼리 실행 시 Query results do not match pre executed results 오류 발생하는 현상 해결
 * [Redis] Agent 접속 후 실행한 쿼리에 대해 Query Audit &gt; First 10 Rows에서 중복 표기 오류 개선

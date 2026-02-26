@@ -58,7 +58,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Provider &gt;
 </figure>
 
 
-* **Default Credentials (Instance Profile)**  : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스 IAM 권한에 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다. 필요한 리소스에 맞는 정책을 할당해주세요.
+* **Default Credentials (Instance Profile)** : QueryPie 서버가 같은 AWS 계정에 설치되어 있는 경우, QueryPie가 설치된 EC2 인스턴스 IAM 권한에 정책을 할당하여 같은 AWS 내의 리소스를 동기화할 수 있습니다. 필요한 리소스에 맞는 정책을 할당해주세요.
 * **Cross Account Role** : IAM 역할을 생성하여 다른 AWS 계정의 리소스를 동기화할 수 있습니다. 화면에 표시된 스텝에 따라 동기화를 위한 권한을 생성하고 정책을 할당해주세요. (해당 Credential 을 통해 리소스를 동기화하기 위해서는 환경변수 파일 **AWS_ACCOUNT_ID** 항목에 QueryPie 가 설치된 AWS 계정을 설정해야 합니다)
 * **Access Key** : `Synchronize` 버튼 클릭 시 AWS 계정의 access key 및 secret key를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2부터 "Save Credential for Synchronization" 옵션을 제공하여 Credential type로 access key를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다. ****
 

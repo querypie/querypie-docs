@@ -55,7 +55,7 @@ ______
 
 `GET /api/external/access-approvals`
 
-Request 의 변경사항
+Request 변경사항
 
 * Query Parameter 로 사용할 수 있는 `status` 가 변경되었습니다. `PARTIALLY_APPROVED` 가 `IN_PROGRESS` 로 대체되었고, `NONE` 이 삭제되었습니다.
     * **before** : `"NONE"` `"PENDING"` `"CANCELED"` `"REJECTED"` `"PARTIALLY_APPROVED"` `"APPROVED"` `"EXPIRED"`
@@ -76,7 +76,7 @@ Response 변경사항
     * **after** : `"NONE"` `"PENDING"` `"CANCELED"` `"APPROVED"` `"REJECTED"` `"EXECUTED"` `"UNREAD"` `"CONFIRMED"`
 * `lines` 의 `type` 이 변경되었습니다.
     * **before** : `"REPORTER"` `"APPROVER"` `"EXECUTOR"` `"REFERRER"` `"REVIEWER"`
-    * **after :** `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
+    * **after** : `"APPROVER"` `"EXECUTOR"` `"REVIEWER"`
 * `connections` 의 `clusterGroupDescription` 이 삭제되었습니다.
 * `connections` 의 `databaseName` 이 삭제되었습니다.
 * `connections` 의 `schemaName` 이 삭제되었습니다.
