@@ -100,4 +100,11 @@ def has_inline_boundary_change(old_content: str, new_content: str) -> bool:
                 != [collapse_ws(s) for s in new_between]):
             return True
 
+        # 첫 번째 마커 앞 텍스트 변경 감지 (마커가 leading text를 흡수하는 경우)
+        # 예: `Executed Result : \`X\`` → `\`Executed Result: X\`` (code span boundary 확장)
+        old_before = old_content[:old_markers[0][1]]
+        new_before = new_content[:new_markers[0][1]]
+        if collapse_ws(old_before) != collapse_ws(new_before):
+            return True
+
     return False

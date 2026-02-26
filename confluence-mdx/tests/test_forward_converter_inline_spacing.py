@@ -77,6 +77,20 @@ class TestStrongSpacing:
             '<p><strong>AAA</strong><strong>BBB</strong></p>')
         assert '**AAA** **BBB**' in result
 
+    def test_strong_inner_ends_with_punct_followed_by_space_and_text(self):
+        """내부 끝이 punct이고 다음 텍스트가 이미 공백으로 시작하면 이중 공백 방지.
+
+        재현 시나리오:
+          patched XHTML: <strong>보세요.</strong> 🔎
+          현상: close_sp(" ") + text node(" 🔎") → **보세요.**  🔎 (이중 공백)
+          기대: **보세요.** 🔎 (단일 공백)
+
+        페이지 544375505 reverse-sync verify 실패 원인.
+        """
+        result = _parse_p('<p><strong>보세요.</strong> 🔎</p>')
+        assert '**보세요.** 🔎' in result, f'expected single space, got: {result!r}'
+        assert '**보세요.**  🔎' not in result, f'double space found in: {result!r}'
+
 
 class TestEmSpacing:
     """<em> → * 변환의 공백 처리 테스트."""
