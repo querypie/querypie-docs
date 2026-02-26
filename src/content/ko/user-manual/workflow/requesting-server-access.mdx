@@ -32,7 +32,7 @@ Server Access Request는 승인 즉시 권한이 부여되며 웹 터미널 또�
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
 * 선택 가능한 승인 조건은 다음과 같습니다.
     * A single Assignee can complete the approval request : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.
-    * All Assignees must approve this request : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
+    * All Assignees must approve this request : 모든 승인자가 승인해야 결재 요청이 승인 처리됩니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-server-access/image-20240807-125743.png" alt="image-20240807-125743.png" width="760" />
@@ -85,7 +85,7 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 </figure>
 
 * **Start Trigger** : 권한 부여 시작 조건을 선택합니다.
-    * Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이, 활성화 시점부터 지정된 기간 동안 서버 접속이 가능합니다.
+    * Access to the Server : 사용자가 서버에 접근할 때 즉시 권한이 활성화됩니다. 서버 세션 유지 여부와 상관없이 활성화 시점부터 지정된 기간 동안 서버에 접속할 수 있습니다.
     * Grant : 권한 부여 즉시 타이머가 시작되며, 사용자의 실제 접속 여부와 관계없이 지정된 기간 동안만 권한이 유효합니다.
 * **Duration(Minutes)** : 서버 접근 권한이 유효한 시간을 분 단위로 입력합니다. 1분부터 최대 허용 시간까지 설정할 수 있으며, 지정된 시간이 경과하면 자동으로 접근 권한이 만료됩니다.
 
@@ -99,7 +99,7 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
     * 적절한 커넥션 접근 권한 관리를 위해 필요한 기간만큼 요청하는 것을 권장합니다.
 
 <Callout type="important">
-Server Access Request에서는 **한 번에 하나의 서버 그룹에 대해서만 Direct Permission 요청이 가능**합니다.
+Server Access Request에서는  **한 번에 하나의 서버 그룹에만 Direct Permission 요청이 가능** 합니다.
 Server List 테이블에 서버가 추가되어있는 상태에서 Add Servers 모달을 다시 띄울 경우, 선택된 내용이 모두 초기화됩니다.
 </Callout>
 

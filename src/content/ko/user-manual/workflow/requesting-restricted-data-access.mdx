@@ -10,7 +10,7 @@ import { Callout } from 'nextra/components'
 ### Overview
 
 DAC에서 “Data Access” 정책에 의해 접근이 제한된 테이블 또는 컬럼에 대해 접근이 필요할 경우 Workflow를 통해 관리자에게 일시적 접근 허용을 요청할 수 있습니다.
-요청은 Workflow를 통해 할 수도 있고, 웹 SQL 에디터에서 결과 창을 우클릭하여 표시되는 Send Restricted Data Access Request 메뉴를 통해서도 가능합니다.
+요청은 Workflow를 통해 할 수도 있고, 웹 SQL 에디터에서 결과 창을 우클릭해 표시되는 Send Restricted Data Access Request 메뉴를 통해서도 가능합니다.
 
 ### Restricted Data Access Request 요청하기
 
@@ -31,7 +31,7 @@ DAC에서 “Data Access” 정책에 의해 접근이 제한된 테이블 또�
 * 이 팝업창에서 결재 승인 조건 및 승인자를 추가 후 `Save` 버튼을 눌러 결재 라인을 저장합니다.
 * 선택 가능한 승인 조건은 다음과 같습니다.
     * A single Assignee can complete the approval request : 여러 명 중 한 명의 승인만으로 결재 요청이 승인 처리됩니다.
-    * All Assignees must approve this request : 모든 승인자가 승인하여야 결재 요청이 승인 처리됩니다.
+    * All Assignees must approve this request : 모든 승인자가 승인해야 결재 요청이 승인 처리됩니다.
 
 <figure data-layout="center" data-align="center">
 <img src="/user-manual/workflow/requesting-restricted-data-access/screenshot-20240724-154729.png" alt="screenshot-20240724-154729.png" width="763" />
@@ -70,7 +70,7 @@ A. 관리자가 Urgent Mode를 허용하지 않은 결재 규칙을 선택한 �
 
 * **Title** : 요청 제목을 입력합니다.
 * **Connection** : 접근 허용을 요청할 대상 테이블 또는 컬럼이 속한 커넥션을 선택합니다.
-* **Table :** 대상 테이블을 선택합니다.
+* **Table :**  대상 테이블을 선택합니다.
 * **Column :** 1개 이상 컬럼을 선택할 수 있으며, 최대 30개까지 선택할 수 있습니다.
 * **Policy Exception Schedule** : Data Access 정책 예외가 적용되는 기간을 설정하여 요청할 수 있습니다. 최대 정책 예외의 유효 기간은 관리자가 설정한 최대 기간(Maximum Policy Exception Period)을 넘겨서 신청할 수 없습니다.
     * Specific Period : 시작 시점과 종료 시점을 지정합니다. 시간 단위로 지정할 수 있습니다.
