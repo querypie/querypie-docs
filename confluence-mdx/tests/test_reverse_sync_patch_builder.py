@@ -327,7 +327,7 @@ class TestBuildPatches:
 
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'li[1]'
-        assert 'updated child' in patches[0]['new_plain_text']
+        assert 'updated child' in patches[0]['new_inner_xhtml']
 
     # Path 2: sidecar 매칭 → children 있음 → child 해석 실패
     #          → 텍스트 불일치 → list 분리 (item 수 불일치 → inner XHTML 재생성)
@@ -436,8 +436,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        # text_transfer가 XHTML 공백을 보존하면서 변경 적용
-        assert 'earth' in patches[0]['new_plain_text']
+        # R1: 항상 inner XHTML 재생성
+        assert 'earth' in patches[0]['new_inner_xhtml']
 
     # 직접 매칭 + text_transfer 미사용 (텍스트 동일)
     def test_direct_match_no_transfer(self):
@@ -453,7 +453,7 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0]['new_plain_text'] == 'hello earth'
+        assert patches[0]['new_inner_xhtml'] == 'hello earth'
 
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
@@ -495,8 +495,8 @@ class TestBuildPatches:
         assert '<code>https://example.com/</code>' in patches[0]['new_inner_xhtml']
         assert 'new_plain_text' not in patches[0]
 
-    def test_direct_text_only_change_uses_plain_text_patch(self):
-        """inline format 변경 없이 텍스트만 바뀌면 기존 text patch를 사용한다."""
+    def test_direct_text_only_change_uses_inner_xhtml_patch(self):
+        """R1: 텍스트만 바뀌어도 inner XHTML 재생성 패치를 사용한다."""
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -509,8 +509,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_plain_text' in patches[0]
-        assert 'new_inner_xhtml' not in patches[0]
+        assert 'new_inner_xhtml' in patches[0]
+        assert 'new_plain_text' not in patches[0]
 
     # 여러 변경이 동일 containing block에 그룹화
     def test_multiple_changes_grouped_to_containing(self):
