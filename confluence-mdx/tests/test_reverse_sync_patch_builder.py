@@ -24,6 +24,7 @@ from reverse_sync.table_patcher import (
 )
 from reverse_sync.inline_detector import (
     has_inline_format_change,
+    has_inline_boundary_change,
     _extract_inline_markers,
 )
 from reverse_sync.list_patcher import (
@@ -1352,6 +1353,46 @@ class TestHasInlineFormatChange:
             '`http`  `https` text',
             '`http` `https` text',
         ) is False
+
+
+# ── has_inline_boundary_change 테스트 ──
+
+
+class TestHasInlineBoundaryChange:
+    """has_inline_boundary_change()의 boundary 감지 테스트."""
+
+    def test_code_span_boundary_expands_to_include_leading_text(self):
+        """code span이 확장되어 이전에 plain이었던 leading text를 흡수하는 경우 감지.
+
+        재현 시나리오:
+          Original MDX: * [Alert] Executed Result : `{{execResult}}` 에러 해결
+          Improved MDX: * [Alert] `Executed Result: {{execResult}}` 에러 해결
+          현상: old_types == new_types == ['code'], between=[] → False 반환
+          기대: True 반환 (code span의 leading boundary 변경)
+
+        페이지 544375485 reverse-sync verify 실패 원인.
+        """
+        old = '* [Alert] Executed Result : `{{execResult}}` 에러 해결'
+        new = '* [Alert] `Executed Result: {{execResult}}` 에러 해결'
+        assert has_inline_boundary_change(old, new) is True
+
+    def test_code_span_content_only_change_not_boundary(self):
+        """code span 내용만 변경 → boundary 변경 아님."""
+        old = '* [Alert] prefix `{{execResult}}` 에러'
+        new = '* [Alert] prefix `{{execResult_v2}}` 에러'
+        assert has_inline_boundary_change(old, new) is False
+
+    def test_type_change_detected(self):
+        """마커 타입 변경 감지."""
+        assert has_inline_boundary_change('use `cmd` here', 'use **cmd** here') is True
+
+    def test_between_marker_text_change_detected(self):
+        """연속 마커 사이 텍스트 변경 감지."""
+        assert has_inline_boundary_change('`a` `b`', '`a`, `b`') is True
+
+    def test_no_change_returns_false(self):
+        """변경 없음 → False."""
+        assert has_inline_boundary_change('`code` text', '`code` text') is False
 
 
 # ── build_patches 멱등성 (idempotency) 테스트 ──

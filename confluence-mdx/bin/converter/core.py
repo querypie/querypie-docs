@@ -220,6 +220,9 @@ class SingleLineParser:
                 # 연속 emphasis delimiter 충돌 방지
                 if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
                     close_sp = " "
+                # 다음 텍스트가 이미 공백으로 시작하면 close_sp로 인한 이중 공백 방지
+                if close_sp and isinstance(node.next_sibling, NavigableString) and str(node.next_sibling)[:1] in (' ', '\t', '\n'):
+                    close_sp = ""
                 self.markdown_lines.append(f"{open_sp}**")
                 self.markdown_lines.append(inner)
                 self.markdown_lines.append(f"**{close_sp}")
@@ -230,6 +233,9 @@ class SingleLineParser:
             # 연속 emphasis delimiter 충돌 방지
             if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
                 close_sp = " "
+            # 다음 텍스트가 이미 공백으로 시작하면 close_sp로 인한 이중 공백 방지
+            if close_sp and isinstance(node.next_sibling, NavigableString) and str(node.next_sibling)[:1] in (' ', '\t', '\n'):
+                close_sp = ""
             self.markdown_lines.append(f"{open_sp}*")
             self.markdown_lines.append(inner)
             self.markdown_lines.append(f"*{close_sp}")
