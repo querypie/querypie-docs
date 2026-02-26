@@ -1,7 +1,7 @@
 {
   "schema_version": "2",
-  "page_id": "544145591",
-  "mdx_sha256": "e303cb74201950279a8a679eecbf5fa55d6936166bd9316e25cdb98eafaad206",
+  "page_id": "",
+  "mdx_sha256": "b6183884380b9e270dca5ed67ccfb8f144052850236c7c2b1ad291b2acf5dee7",
   "source_xhtml_sha256": "cbc830bacea9231f83d9d4414a69f79e32a0fb414596a648fd9326688b5598c3",
   "blocks": [
     {
@@ -393,7 +393,7 @@
       "block_index": 35,
       "xhtml_xpath": "ul[7]",
       "xhtml_fragment": "<ul><li><p>토글을 활성화하면 <code>User Attribute</code>의 <code>Key</code>와 <code>Value</code>를 한 쌍으로 선택하고 입력할 수 있습니다.</p></li><li><p>여기에 설정된 <code>Key:Value</code> 조건과 일치하는 사용자는 사용자 대시보드에 <code>Workflow</code> 메뉴가 표시되지 않습니다.</p></li><li><p><strong>예시:</strong> <code>User Attribute Key</code>로 '부서코드'를 선택하고, <code>Value</code>로 '부서 A'를 입력하면 해당 부서코드 소속의 사용자에게는 <code>Workflow</code> 메뉴가 보이지 않습니다.</p></li></ul>",
-      "mdx_content_hash": "dc4611bbea652c502c676080df2092405410b352570a540987d0d844f4345b2b",
+      "mdx_content_hash": "0d4c058eefabf8f701e78f0cb0e476e7a5a1c2ce224734843eb87b7bacaa88d8",
       "mdx_line_range": [
         135,
         137
