@@ -178,6 +178,79 @@ class TestPatchAdfExtensions:
         assert result == emitted
 
 
+class TestPatchImages:
+    def test_img_tag_replaced_with_ac_image(self):
+        from reverse_sync.lost_info_patcher import apply_lost_info
+
+        emitted = '<p>See <img src="attachments/img.png" alt="screenshot" /> here</p>'
+        lost_info = {
+            'images': [{
+                'src': 'attachments/img.png',
+                'raw': '<ac:image ac:width="760"><ri:attachment ri:filename="img.png"/></ac:image>',
+            }],
+        }
+        result = apply_lost_info(emitted, lost_info)
+        assert '<ac:image ac:width="760">' in result
+        assert '<img ' not in result
+
+    def test_img_with_width_attribute_replaced(self):
+        from reverse_sync.lost_info_patcher import apply_lost_info
+
+        emitted = '<p><img src="attachments/img.png" alt="img.png" width="760" /></p>'
+        lost_info = {
+            'images': [{
+                'src': 'attachments/img.png',
+                'raw': '<ac:image ac:custom-width="true" ac:width="760"><ri:attachment ri:filename="img.png"/></ac:image>',
+            }],
+        }
+        result = apply_lost_info(emitted, lost_info)
+        assert '<ac:image ac:custom-width="true"' in result
+        assert '<img ' not in result
+
+    def test_img_src_no_match_skipped(self):
+        from reverse_sync.lost_info_patcher import apply_lost_info
+
+        emitted = '<p><img src="attachments/other.png" alt="other" /></p>'
+        lost_info = {
+            'images': [{
+                'src': 'attachments/img.png',
+                'raw': '<ac:image><ri:attachment ri:filename="img.png"/></ac:image>',
+            }],
+        }
+        result = apply_lost_info(emitted, lost_info)
+        assert result == emitted
+
+    def test_multiple_images_sequential(self):
+        from reverse_sync.lost_info_patcher import apply_lost_info
+
+        emitted = (
+            '<p><img src="attachments/a.png" alt="a" /> and '
+            '<img src="attachments/b.png" alt="b" /></p>'
+        )
+        lost_info = {
+            'images': [
+                {'src': 'attachments/a.png', 'raw': '<ac:image><ri:attachment ri:filename="a.png"/></ac:image>'},
+                {'src': 'attachments/b.png', 'raw': '<ac:image><ri:attachment ri:filename="b.png"/></ac:image>'},
+            ],
+        }
+        result = apply_lost_info(emitted, lost_info)
+        assert result.count('<ac:image>') == 2
+        assert '<img ' not in result
+
+    def test_self_closing_img_tag_replaced(self):
+        from reverse_sync.lost_info_patcher import apply_lost_info
+
+        emitted = '<p><img src="attachments/img.png" alt="img.png"></p>'
+        lost_info = {
+            'images': [{
+                'src': 'attachments/img.png',
+                'raw': '<ac:image><ri:attachment ri:filename="img.png"/></ac:image>',
+            }],
+        }
+        result = apply_lost_info(emitted, lost_info)
+        assert '<ac:image>' in result
+
+
 class TestLoadPageLostInfo:
     def test_load_lost_info_from_mapping_yaml(self):
         import tempfile, yaml
@@ -282,6 +355,78 @@ class TestDistributeLostInfo:
         distribute_lost_info(blocks, page_lost_info)
         # Filenames match by ORIGINAL name in the XHTML fragment (original is in the source XHTML)
         assert 'filenames' in blocks[0].lost_info
+
+
+class TestDistributeLostInfoToMappings:
+    def test_emoticon_distributed_to_matching_mapping(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info_to_mappings
+        from reverse_sync.mapping_recorder import BlockMapping
+
+        mappings = [
+            BlockMapping(block_id='h1', type='heading', xhtml_xpath='h2[1]',
+                         xhtml_text='<h2>Title</h2>', xhtml_plain_text='Title',
+                         xhtml_element_index=0),
+            BlockMapping(block_id='p1', type='paragraph', xhtml_xpath='p[1]',
+                         xhtml_text='<p>Check <ac:emoticon ac:name="tick"/></p>',
+                         xhtml_plain_text='Check', xhtml_element_index=1),
+        ]
+        page_lost_info = {
+            'emoticons': [{
+                'name': 'tick', 'shortname': '', 'emoji_id': '', 'fallback': '',
+                'raw': '<ac:emoticon ac:name="tick"/>',
+            }],
+        }
+        result = distribute_lost_info_to_mappings(mappings, page_lost_info)
+        assert 'h1' not in result
+        assert 'p1' in result
+        assert 'emoticons' in result['p1']
+
+    def test_image_distributed_to_matching_mapping(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info_to_mappings
+        from reverse_sync.mapping_recorder import BlockMapping
+
+        mappings = [
+            BlockMapping(block_id='p1', type='paragraph', xhtml_xpath='p[1]',
+                         xhtml_text='<p>See <ac:image><ri:attachment ri:filename="img.png"/></ac:image></p>',
+                         xhtml_plain_text='See', xhtml_element_index=0),
+        ]
+        page_lost_info = {
+            'images': [{
+                'src': 'attachments/img.png',
+                'raw': '<ac:image><ri:attachment ri:filename="img.png"/></ac:image>',
+            }],
+        }
+        result = distribute_lost_info_to_mappings(mappings, page_lost_info)
+        assert 'p1' in result
+        assert 'images' in result['p1']
+
+    def test_empty_page_lost_info_returns_empty(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info_to_mappings
+        from reverse_sync.mapping_recorder import BlockMapping
+
+        mappings = [
+            BlockMapping(block_id='p1', type='paragraph', xhtml_xpath='p[1]',
+                         xhtml_text='<p>text</p>', xhtml_plain_text='text',
+                         xhtml_element_index=0),
+        ]
+        result = distribute_lost_info_to_mappings(mappings, {})
+        assert result == {}
+
+    def test_filename_distributed_by_original(self):
+        from reverse_sync.lost_info_patcher import distribute_lost_info_to_mappings
+        from reverse_sync.mapping_recorder import BlockMapping
+
+        mappings = [
+            BlockMapping(block_id='img1', type='html_block', xhtml_xpath='ac:image[1]',
+                         xhtml_text='<ac:image><ri:attachment ri:filename="스크린샷.png"/></ac:image>',
+                         xhtml_plain_text='', xhtml_element_index=0),
+        ]
+        page_lost_info = {
+            'filenames': [{'original': '스크린샷.png', 'normalized': 'screenshot.png'}],
+        }
+        result = distribute_lost_info_to_mappings(mappings, page_lost_info)
+        assert 'img1' in result
+        assert 'filenames' in result['img1']
 
 
 class TestSpliceWithLostInfo:

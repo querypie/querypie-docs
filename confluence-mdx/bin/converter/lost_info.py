@@ -12,6 +12,7 @@ class LostInfoCollector:
         self._links: list[dict] = []
         self._filenames: list[dict] = []
         self._adf_extensions: list[dict] = []
+        self._images: list[dict] = []
 
     def add_emoticon(self, node: Tag) -> None:
         self._emoticons.append({
@@ -43,6 +44,13 @@ class LostInfoCollector:
             'raw': str(node),
         })
 
+    def add_image(self, node: Tag, img_src: str) -> None:
+        """<ac:image> → <img> 변환 시 원본 태그와 img src를 기록한다."""
+        self._images.append({
+            'src': img_src,
+            'raw': str(node),
+        })
+
     def to_dict(self) -> dict:
         """빈 카테고리를 제외하고 반환한다."""
         result: dict = {}
@@ -54,4 +62,6 @@ class LostInfoCollector:
             result['filenames'] = self._filenames
         if self._adf_extensions:
             result['adf_extensions'] = self._adf_extensions
+        if self._images:
+            result['images'] = self._images
         return result
