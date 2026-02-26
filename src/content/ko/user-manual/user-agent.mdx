@@ -158,7 +158,7 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH 설정하기
 
 Seamless SSH란 기존 터미널 사용성을 그대로 유지하면서 QueryPie를 통해 서버에 접속할 수 있는 기능입니다.
-다음의 방법으로 `.ssh` 폴더에 `config` 파일을 생성하여 손쉽게 seamless SSH 설정이 가능합니다.
+다음 방법으로 `.ssh` 폴더에 `config` 파일을 생성하여 손쉽게 Seamless SSH를 설정할 수 있습니다.
 
 ##### 3.1. 터미널을 열고, `.ssh` 폴더로 이동합니다.
 
@@ -183,7 +183,7 @@ Host {{Server Name}}
 
 <Callout type="info">
 `config` 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다.
-서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.
+서버 간 URL, 포트가 겹치지 않는 경우 아래와 같이 입력해도 접속할 수 있습니다.
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
@@ -276,12 +276,12 @@ export KUBECONFIG="${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig"
 export KUBECONFIG="${KUBECONFIG}:<user-specified-path>"
 ```
 
-3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조해주시기 바랍니다.
+3) 보다 자세한 kubeconfig에 대한 내용은 다음 링크를 참조하시기 바랍니다.
 
 * 참고: [kubeconfig 파일 병합](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
 * 참고: [KUBECONFIG 환경 변수 설정](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
 
-4) `Copy` 로 커맨드라인을 복사하여 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다
+4) `Copy`로 커맨드라인을 복사해 클라이언트에 선언하고 컨텍스트를 접근 가능한 클러스터로 스위칭할 수 있습니다.
 ```
 export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
