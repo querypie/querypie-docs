@@ -197,9 +197,10 @@ def _render_nested_list(items: List[dict]) -> str:
     if not items:
         return ''
     ordered = items[0]['ordered']
-    tag = 'ol' if ordered else 'ul'
     inner = _render_list_items(items)
-    return f'<{tag}>{inner}</{tag}>'
+    if ordered:
+        return f'<ol start="1">{inner}</ol>'
+    return f'<ul>{inner}</ul>'
 
 
 def mdx_block_to_xhtml_element(block) -> str:

@@ -246,7 +246,7 @@ class TestNestedList:
     def test_nested_ordered(self):
         content = "1. parent\n    1. child1\n    2. child2\n"
         result = mdx_block_to_inner_xhtml(content, "list")
-        assert '<li><p>parent</p><ol>' in result
+        assert '<li><p>parent</p><ol start="1">' in result
         assert '<li><p>child1</p></li>' in result
         assert '<li><p>child2</p></li>' in result
 

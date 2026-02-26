@@ -117,8 +117,8 @@ def _regenerate_list_from_parent(
         for child_id in parent.children:
             used_ids.add(child_id)
 
-    # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
-    if '<ac:image' in parent.xhtml_text:
+    # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
+    if '<ac:image' in parent.xhtml_text or '<span style=' in parent.xhtml_text:
         old_plain = normalize_mdx_to_plain(
             change.old_block.content, change.old_block.type)
         new_plain = normalize_mdx_to_plain(
@@ -210,8 +210,8 @@ def build_list_item_patches(
         if used_ids is not None:
             used_ids.add(mapping.block_id)
 
-        # <ac:image> 포함 시 텍스트 전이로 폴백 (이미지 보존)
-        if '<ac:image' in mapping.xhtml_text:
+        # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
+        if '<ac:image' in mapping.xhtml_text or '<span style=' in mapping.xhtml_text:
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
             patches.append({
