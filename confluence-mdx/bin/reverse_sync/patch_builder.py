@@ -145,6 +145,10 @@ def _resolve_mapping_for_change(
     if change.old_block.type == 'list':
         return ('list', mapping)
 
+    # table 블록은 table 전략 사용 (direct 교체 시 <ac:link> 등 Confluence 태그 손실 방지)
+    if is_markdown_table(change.old_block.content):
+        return ('table', mapping)
+
     return ('direct', mapping)
 
 
@@ -250,6 +254,17 @@ def build_patches(
         # (old != xhtml 이고 new == xhtml → 이미 적용된 변경)
         if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
                 and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+            continue
+
+        # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
+        if '<ac:link' in mapping.xhtml_text:
+            xhtml_text = transfer_text_changes(
+                old_plain, new_plain, mapping.xhtml_plain_text)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': xhtml_text,
+            })
             continue
 
         # inner XHTML 재생성 + 블록 레벨 lost_info 적용
