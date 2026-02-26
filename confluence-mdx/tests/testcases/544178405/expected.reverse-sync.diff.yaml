@@ -69,7 +69,296 @@ changes:
     뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.
 
     '
-created_at: '2026-02-26T09:30:10.308846+00:00'
+- block_id: html_block-24
+  change_type: modified
+  index: 24
+  new_content: '<table>
+
+    <colgroup>
+
+    <col/>
+
+    <col/>
+
+    <col/>
+
+    </colgroup>
+
+    <tbody>
+
+    <tr>
+
+    <th>
+
+    </th>
+
+    <th>
+
+    **설정 순서**
+
+    </th>
+
+    <th>
+
+    **설정 항목**
+
+    </th>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    1
+
+    </td>
+
+    <th>
+
+    **Database Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/databases/connection-management)
+
+    * [DB Access Control](administrator-manual/databases/db-access-control)
+
+    * [Policies](administrator-manual/databases/policies)
+
+    * [Ledger Management](administrator-manual/databases/ledger-management)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    2
+
+    </td>
+
+    <th>
+
+    **Server Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/servers/connection-management)
+
+    * [Server Access Control ](user-manual/server-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    3
+
+    </td>
+
+    <th>
+
+    **Kubernetes Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/kubernetes/connection-management)
+
+    * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    4
+
+    </td>
+
+    <th>
+
+    **감사 로그 확인하기**
+
+    </th>
+
+    <td>
+
+    * [General Logs](administrator-manual/audit/general-logs)
+
+    * [Database Logs](administrator-manual/audit/database-logs)
+
+    * [Server Logs](administrator-manual/audit/server-logs)
+
+    * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+
+    </td>
+
+    </tr>
+
+    </tbody>
+
+    </table>
+
+    '
+  old_content: '<table>
+
+    <colgroup>
+
+    <col/>
+
+    <col/>
+
+    <col/>
+
+    </colgroup>
+
+    <tbody>
+
+    <tr>
+
+    <th>
+
+    </th>
+
+    <th>
+
+    **설정 순서**
+
+    </th>
+
+    <th>
+
+    **설정 항목**
+
+    </th>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    1
+
+    </td>
+
+    <th>
+
+    **Databased Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/databases/connection-management)
+
+    * [DB Access Control](administrator-manual/databases/db-access-control)
+
+    * [Policies](administrator-manual/databases/policies)
+
+    * [Ledger Management](administrator-manual/databases/ledger-management)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    2
+
+    </td>
+
+    <th>
+
+    **Server Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/servers/connection-management)
+
+    * [Server Access Control ](user-manual/server-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    3
+
+    </td>
+
+    <th>
+
+    **Kubernetes Access Control 설정하기**
+
+    </th>
+
+    <td>
+
+    * [Connection Management](administrator-manual/kubernetes/connection-management)
+
+    * [K8s Access Control ](administrator-manual/kubernetes/k8s-access-control)
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>
+
+    4
+
+    </td>
+
+    <th>
+
+    **감사 로그 확인하기**
+
+    </th>
+
+    <td>
+
+    * [General Logs](administrator-manual/audit/general-logs)
+
+    * [Database Logs](administrator-manual/audit/database-logs)
+
+    * [Server Logs](administrator-manual/audit/server-logs)
+
+    * [Kubernetes Logs](administrator-manual/audit/kubernetes-logs)
+
+    </td>
+
+    </tr>
+
+    </tbody>
+
+    </table>
+
+    '
+created_at: '2026-02-26T09:56:26.748702+00:00'
 improved_mdx: tests/testcases/544178405/improved.mdx
 original_mdx: tests/testcases/544178405/original.mdx
 page_id: '544178405'

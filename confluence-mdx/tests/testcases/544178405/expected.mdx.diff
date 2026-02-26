@@ -36,3 +36,12 @@
  뿐만 아니라 민감 정보를 식별할 수 있는 Discovery 기능 또한 제공하니 차세대 디스커버리 기능을 경험해 보세요.
  
  <table>
+@@ -165,7 +165,7 @@
+ 1
+ </td>
+ <th>
+-**Databased Access Control 설정하기**
++**Database Access Control 설정하기**
+ </th>
+ <td>
+ * [Connection Management](administrator-manual/databases/connection-management)
