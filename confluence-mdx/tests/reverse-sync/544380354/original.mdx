@@ -1,0 +1,44 @@
+---
+title: 'Default Privilege 설정하기'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544380354/Default+Privilege'
+---
+
+import { Callout } from 'nextra/components'
+
+# Default Privilege 설정하기
+
+### Overview
+
+단일 DB 커넥션에 다수의 Privilege 권한이 부여된 경우에 기본으로 접속하는 Default Privilege를 설정하는 기능입니다.
+
+
+### Default Privilege 설정하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20240731-124310.png" alt="QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges" width="760" />
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges
+</figcaption>
+</figure>
+
+1. 부여받은 권한이 1개일 경우, 웹, 프록시, SQL Request, Export Request, SQL Jobs 모두 해당 권한으로 접속하며 별도의 Default Privilege 설정을 하지 않습니다.
+2. 부여받은 권한이 2개 이상인 경우, 사용자는 별도로 Default Privilege 설정을 해야 합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20240731-124808.png" alt="QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; Default Privilege Setting" width="760" />
+<figcaption>
+QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; Default Privilege Setting
+</figcaption>
+</figure>
+
+1. Privileges 우측에 `Edit` 버튼 또는 `> Go to Settings` 링크를 클릭합니다.
+2. Privilege 항목에서 부여받은 권한 중 기본 값으로 사용할 Privilege를 선택합니다.
+3. Save 버튼을 클릭하여 Default Privilege 설정을 완료합니다.
+
+
+<Callout type="important">
+* 부여받은 권한이 2개 이상이지만 Default Privilege 설정이 안 되어 있는 경우에는 가장 먼저 grant된 privilege가 default privilege가 됩니다. 에이전트 프록시, SQL Request, Export Request에서 접속 시 Default Privilege로 선택된 권한으로 DB에 접속합니다.
+* Default Privilege 변경은 웹과 Multi-Agent에서 제공합니다. User Agent에서는 Default Privilege 변경 기능은 제공하지 않으며, 사용자는 접속할 Privilege를 변경하고자 하는 경우 웹페이지에서 변경하여야 합니다.
+* Default Privilege로 커넥션에 이미 접속되어 있는 상태에서 Default Privilege를 변경한 경우 또는 해당 권한을 회수한 경우, 기존 세션은 Disconnect 처리하고 새로운 Default 권한으로 새로 Connect 처리합니다.
+*  부여받은 권한이 2개 이상인 경우 Default privilege 설정이 되어 있지 않고 privilege deactivation period 초과로 inactive 상태가 된 경우 agent를 통해 접속할 수 없습니다. Default privilege가 설정되어 있어도 상태가 privilege deactivation period 초과로 inactive 인 경우 접속할 수 없습니다.
+</Callout>

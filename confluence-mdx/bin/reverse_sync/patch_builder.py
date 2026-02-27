@@ -110,6 +110,10 @@ def _resolve_mapping_for_change(
     if mapping is not None and mapping.children:
         child = _resolve_child_mapping(old_plain, mapping, id_to_mapping)
         if child is not None:
+            # callout 블록은 direct 전략 시 _convert_callout_inner가
+            # <li><p> 구조를 생성할 수 없으므로 containing 전략 사용
+            if change.old_block.type == 'callout':
+                return ('containing', mapping)
             return ('direct', child)
         # 블록 텍스트가 parent에 포함되는지 확인
         _old_ns = strip_for_compare(old_plain)
