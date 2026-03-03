@@ -410,3 +410,33 @@ def test_flat_list_prepend_bracket_stays_in_correct_item():
     assert '<li><p>[Authentication] Type 변경 시 오류 메시지 개선</p></li>' in result, (
         f"Authentication 항목에 bracket이 없음: {result}"
     )
+
+
+def test_list_patch_with_emoticon_uses_mapping_plain_text():
+    """리스트에 ac:emoticon이 있어도 mapping plain_text(old_plain_text) 기준으로 패치해야 한다.
+
+    실제 실패 사례(요약):
+    - request-audit 계열 문서의 list 블록에서 old_plain_text는 element.get_text() 기반
+    - patch 적용 시 비교를 emoticon fallback(:check_mark:) 포함 텍스트로 하면 불일치로 skip
+    - 결과적으로 '검색이 가능합니다' → '검색할 수 있습니다' 변경이 적용되지 않음
+    """
+    xhtml = (
+        '<ol>'
+        '<li><p>결과 '
+        '<ac:emoticon ac:emoji-fallback=":check_mark:" ac:name="tick"></ac:emoticon>'
+        ' Success</p></li>'
+        '<li><p>테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.</p></li>'
+        '</ol>'
+    )
+    patches = [
+        {
+            'xhtml_xpath': 'ol[1]',
+            # mapping_recorder(list)는 get_text() 기반 plain을 기록한다.
+            'old_plain_text': '결과  Success테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.',
+            'new_plain_text': '결과  Success테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색할 수 있습니다.',
+        }
+    ]
+
+    result = patch_xhtml(xhtml, patches)
+    assert '검색할 수 있습니다.' in result, f'리스트 텍스트 변경이 적용되지 않음: {result}'
+    assert '검색이 가능합니다.' not in result, f'기존 문구가 남아 있음: {result}'
