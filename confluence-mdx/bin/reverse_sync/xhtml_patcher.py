@@ -65,18 +65,23 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     for element, patch in resolved_modifies:
         if 'new_inner_xhtml' in patch:
             old_text = patch.get('old_plain_text', '')
-            # ac:emoticon의 fallback 텍스트를 포함하여 비교
-            current_plain = _get_text_with_emoticons(element)
+            # mapping_recorder는 top-level list/paragraph에서 get_text() 기준 plain을 기록한다.
+            # patch 적용 시에는 기본 비교를 get_text()로 수행하고, 필요 시 emoticon fallback 텍스트 비교를 허용한다.
+            current_plain = element.get_text()
             if old_text and current_plain.strip() != old_text.strip():
-                continue
+                current_plain_with_emoticons = _get_text_with_emoticons(element)
+                if current_plain_with_emoticons.strip() != old_text.strip():
+                    continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
         else:
             old_text = patch['old_plain_text']
             new_text = patch['new_plain_text']
-            # ac:emoticon의 fallback 텍스트를 포함하여 비교
-            current_plain = _get_text_with_emoticons(element)
+            # mapping plain(old_text)과의 비교는 get_text() 우선, 실패 시 emoticon fallback 포함 텍스트로 재확인한다.
+            current_plain = element.get_text()
             if current_plain.strip() != old_text.strip():
-                continue
+                current_plain_with_emoticons = _get_text_with_emoticons(element)
+                if current_plain_with_emoticons.strip() != old_text.strip():
+                    continue
             _apply_text_changes(element, old_text, new_text)
 
     result = str(soup)
