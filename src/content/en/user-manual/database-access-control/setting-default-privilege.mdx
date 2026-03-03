@@ -38,7 +38,7 @@ QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; De
 
 <Callout type="important">
 * When you have been granted 2 or more permissions but Default Privilege is not set, the first granted privilege becomes the default privilege. When connecting through agent proxy, SQL Request, Export Request, the DB is accessed with the permission selected as Default Privilege.
-* Default Privilege changes are provided in web and Multi-Agent. User Agent does not provide Default Privilege change functionality, and users must change it on the web page if they want to change the Privilege to connect to.
+* Default Privilege changes are provided in web and Multi-Agent. User Agent does not provide Default Privilege change functionality, so users must change it on the web page to switch the Privilege to connect with.
 * When Default Privilege is changed while already connected to a connection with Default Privilege, or when that permission is revoked, the existing session is disconnected and reconnected with the new Default permission.
 * When you have been granted 2 or more permissions and Default privilege is not set and becomes inactive due to exceeding the privilege deactivation period, you cannot connect through the agent. Even if Default privilege is set, you cannot connect if the status is inactive due to exceeding the privilege deactivation period.
 </Callout>

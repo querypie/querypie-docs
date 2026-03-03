@@ -85,7 +85,7 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
 </figure>
 
 *  **Start Trigger**  : 権限付与開始条件を選択します。
-    * Access to the Server : ユーザーがサーバーにアクセスする時即座に権限が有効化されます。サーバーセッション維持の有無に関係なく、有効化時点から指定された期間中サーバー接続が可能です。
+    * Access to the Server : ユーザーがサーバーにアクセスする時即座に権限が有効化されます。サーバーセッション維持の有無に関係なく、有効化時点から指定された期間中サーバーに接続できます。
     * Grant : 権限付与即座にタイマーが開始され、ユーザーの実際の接続の有無に関係なく指定された期間中のみ権限が有効です。
 *  **Duration(Minutes)** : サーバーアクセス権限が有効な時間を分単位で入力します。1分から最大許可時間まで設定でき、指定された時間が経過すると自動的にアクセス権限が期限切れになります。
 
@@ -99,7 +99,7 @@ Workflow &gt; Submit Request &gt; Server Access Request &gt; Step 2 &gt; Add Ser
     * 適切な接続アクセス権限管理のために必要な期間だけ要求することを推奨します。
 
 <Callout type="important">
-Server Access Requestでは  **一度に一つのサーバーグループに対してのみDirect Permission要求が可能** です。
+Server Access Requestでは **一度に一つのサーバーグループにのみDirect Permission要求が可能**です。
 Server Listテーブルにサーバーが追加されている状態でAdd Serversモーダルを再度表示する場合、選択された内容がすべて初期化されます。
 </Callout>
 

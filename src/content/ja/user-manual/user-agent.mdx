@@ -158,7 +158,7 @@ Agent &gt; Server &gt; Open New Session
 #### 3. Seamless SSH設定
 
 Seamless SSHとは既存ターミナル使用性をそのまま維持しながらQueryPieを通じてサーバーに接続できる機能です。
-次の方法で`.ssh`フォルダに`config`ファイルを作成して簡単にseamless SSH設定が可能です。
+次の方法で`.ssh`フォルダに`config`ファイルを作成して簡単にSeamless SSHを設定できます。
 
 ##### 3.1. ターミナルを開き、`.ssh`フォルダに移動します。
 
@@ -183,7 +183,7 @@ Host {{Server Name}}
 
 <Callout type="info">
 `config`ファイル作成時Seamless SSH設定したいサーバーごとにサーバー名、URL、ポートを入力することでサーバーを特定します。
-サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続が可能です。
+サーバー間でURL、ポートが重複しない場合は下記のように入力しても接続できます。
 ```
 Host *
   ProxyCommand qpa ssh %r %h %p
@@ -281,7 +281,7 @@ export KUBECONFIG="${KUBECONFIG}:<user-specified-path>"
 * 参考: [kubeconfigファイルマージ](https://kubernetes.io/ko/docs/concepts/configuration/organize-cluster-access-kubeconfig/#kubeconfig-%ED%8C%8C%EC%9D%BC-%EB%B3%91%ED%95%A9)
 * 参考: [KUBECONFIG環境変数設定](https://kubernetes.io/ko/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#kubeconfig-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
 
-4) `Copy`でコマンドラインをコピーしてクライアントに宣言しコンテキストをアクセス可能なクラスターにスイッチできます
+4) `Copy`でコマンドラインをコピーしてクライアントに宣言し、コンテキストをアクセス可能なクラスターにスイッチできます。
 ```
 export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig"
 ```
