@@ -14,7 +14,7 @@ import { Callout } from 'nextra/components'
 
 ### Prerequisites
 
-* Okta IAM 서비스의 **Lifecycle Management(LCM)** 라이선스 구독이 필요합니다.
+* Okta IAM 서비스의 **Lifecycle Management(LCM)**  라이선스 구독이 필요합니다.
 * Okta 관리자 콘솔(Okta Admin Console)에 접근하여 App을 만들고 사용자/그룹을 앱에 할당할 수 있는 권한이 요구됩니다.
     * **최소 필요 권한**
         * User
@@ -23,7 +23,7 @@ import { Callout } from 'nextra/components'
             * Edit groups' application assignments
         * Application
             * Manage applications
-* [https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm](https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm) 페이지 내 [Okta IP range allowlist](https://s3.amazonaws.com/okta-ip-ranges/ip_ranges.json)를 참조하여 해당하는 테넌트의 IP대역을 확인하여 사전에 인바운드 트래픽 예외처리 허용을 해야 합니다.
+* [https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm](https://help.okta.com/en-us/content/topics/security/ip-address-allow-listing.htm) 페이지 내 [Okta IP range allowlist](https://s3.amazonaws.com/okta-ip-ranges/ip_ranges.json)를 참조해 해당 테넌트의 IP 대역을 확인하고 사전에 인바운드 트래픽 예외 처리를 허용해야 합니다.
 * 라이선스와 함께 쿼리파이 제품이 설치되어 있어야 합니다.
 * 쿼리파이 Owner/Application Admin Role 권한의 계정이 있어야 합니다.
 * [Provisioning 활성화 하기](activating-provisioning) 단계를 먼저 수행해야 합니다.
@@ -57,8 +57,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
     2. **App logo** : 사용자가 식별 가능한 로그를 업로드합니다.
 7. Configure SAML 단계에서 SAML Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
     1. **Single sign-on URL** : https://`{{querypie.domain}}`/saml/sp/acs
-    2. **Audience URI (SP Entity ID)** : https://`{{querypie.domain}}`/saml/sp/metadata
-    3. **Attribute Statements (optional)** : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
+    2. **Audience URI (SP Entity ID)**  : https://`{{querypie.domain}}`/saml/sp/metadata
+    3. **Attribute Statements (optional)**  : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
         1. Name: **firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
         2. Name: **lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
         3. Name: **email** <br/>Name format: Unspecified<br/>Value: **user.email**
@@ -96,8 +96,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
         * Import Groups
     4. Authentication Mode : “**HTTP Header**”
     5. HTTP Header &gt; Authorization : QueryPie에서 생성한 SCIM전용 access token 값을 삽입합니다.
-3. Test Connector Configuration 버튼을 눌러 연결 테스트를 진행합니다.
-4. “*Connector configured successfully*” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다.
+3. Test Connector Configuration 버튼을 눌러 연결 테스트를 수행합니다.
+4. “ *Connector configured successfully* ” 문구와 함께 팝업이 나타나면 `Close` 버튼을 클릭합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240430-025059.png" alt="image-20240430-025059.png" width="324" />
   </figure>
@@ -161,7 +161,7 @@ QueryPie Profile 의 속성 가운데, staticIp, macAddress 등 일부 attribute
     1. Data type : 쿼리파이와 동일하게 string 선택합니다.
     2. Display name : 옥타 내 표기할 속성명을 기입합니다.
     3. Variable name & External name : 동기화할 custom attribute 변수명을 기입합니다.
-        * 쿼리파이 사용자 프로필에서도 괄호로 변수명 확인이 가능합니다.
+        * 쿼리파이 사용자 프로필에서도 괄호로 변수명을 확인할 수 있습니다.
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240712-083117.png" alt="image-20240712-083117.png" width="144" />
           </figure>
