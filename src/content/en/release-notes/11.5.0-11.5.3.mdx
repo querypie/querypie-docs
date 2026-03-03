@@ -7,14 +7,16 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/1
 
 ### QueryPie 11.5.3 Release
 
-February 24, 2026
+February 27, 2026
 
 
 **Improvement**
 
 * [Common] Fixed issue where emails continued to be sent even after disabling Workflow notifications in Email Integration
+* [Common] Fixed sync failure issue due to resource path case mismatch during Azure VM Cloud Provider synchronization
 * [DAC/SAC] Fixed zombie session accumulation and port exhaustion issue due to missing keepalive in Reverse Tunnel
 * [DAC] Fixed issue where Redis Cluster connection via Reverse Tunnel was not possible
+* [DAC] Fixed Impala connection failure issue via Agent Proxy
 
 
 ### QueryPie 11.5.2 Release
