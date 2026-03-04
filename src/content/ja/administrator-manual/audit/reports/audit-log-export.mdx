@@ -152,9 +152,9 @@ Administrator &gt; Audit &gt; General &gt; Audit Log Export &gt; Create New Task
 
 - Query Audit中ウェブエディターで実行したクエリ実行ログのみ抽出したい場合に必要な表現式: `actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'`
 
-- DB Access History中特定データベース2種類に対してのみ抽出したい場合に必要な表現式: `connectionName == 'database1' || connectionName == 'database2'`
+- DB Access History中特定データベース2種類のみ抽出したい場合に必要な表現式: `connectionName == 'database1' || connectionName == 'database2'`
 
-- DB Access History中特定データベース2種類でありながらReplication TypeがSINGLEの場合に対してのみ抽出したい場合に必要な表現式: `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
+- DB Access History中特定データベース2種類でありながらReplication TypeがSINGLEの場合のみ抽出したい場合に必要な表現式: `(connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'`
 </Callout>
 
 
