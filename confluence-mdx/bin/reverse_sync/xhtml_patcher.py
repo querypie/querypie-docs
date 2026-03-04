@@ -344,6 +344,21 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
         effective_end = (node_end + 1
                          if i == last_nonempty_idx and node_end >= len(old_stripped)
                          else node_end)
+
+        node_str = str(node)
+        leading = node_str[:len(node_str) - len(node_str.lstrip())]
+        trailing = node_str[len(node_str.rstrip()):]
+
+        # 내부 노드의 trailing whitespace가 old_stripped에 존재하면
+        # diff 범위를 확장하여 자연스럽게 처리한다.
+        # (예: <ac:link-body>text </ac:link-body> 의 trailing space)
+        trailing_in_range = False
+        if trailing and effective_end < len(old_stripped):
+            potential = old_stripped[node_end:node_end + len(trailing)]
+            if potential == trailing:
+                effective_end = node_end + len(trailing)
+                trailing_in_range = True
+
         # 블록 경계에서는 include_insert_at_end/exclude_insert_at_start로
         # insert를 올바른 노드에 할당한다.
         include_at_end = i in claim_end_set and i != last_nonempty_idx
@@ -353,11 +368,6 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
             include_insert_at_end=include_at_end,
             exclude_insert_at_start=exclude_at_start,
         )
-
-        node_str = str(node)
-        # 원본 whitespace 보존 (단, diff에서 삭제된 선행 공백은 제거)
-        leading = node_str[:len(node_str) - len(node_str.lstrip())]
-        trailing = node_str[len(node_str.rstrip()):]
 
         # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 삭제된 경우,
         # leading whitespace를 제거한다.
@@ -371,7 +381,17 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
                 if not gap_new:
                     leading = ''
 
-        node.replace_with(NavigableString(leading + new_node_text + trailing))
+        if trailing_in_range:
+            # diff가 trailing whitespace를 처리했으므로 별도 보존 불필요
+            node.replace_with(NavigableString(leading + new_node_text))
+        else:
+            # 마지막 노드의 edge trailing whitespace가 변경된 경우 반영
+            if trailing and i == last_nonempty_idx:
+                old_edge_trailing = old_text[len(old_text.rstrip()):]
+                new_edge_trailing = new_text[len(new_text.rstrip()):]
+                if old_edge_trailing != new_edge_trailing:
+                    trailing = new_edge_trailing
+            node.replace_with(NavigableString(leading + new_node_text + trailing))
 
 
 def _find_block_ancestor(node):

@@ -49,8 +49,7 @@ def normalize_table_row(row: str) -> str:
         )
         s = re.sub(r'<[^>]+/?>', '', s)
         s = html_module.unescape(s)
-        s = s.strip()
-        if s:
+        if s.strip():
             parts.append(s)
     return ' '.join(parts)
 

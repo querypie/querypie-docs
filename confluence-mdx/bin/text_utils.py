@@ -158,10 +158,9 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         )
         s = re.sub(r'<[^>]+/?>', '', s)
         s = html_module.unescape(s)
-        s = s.strip()
-        if s:
+        if s.strip():
             parts.append(s)
-    return ' '.join(parts)
+    return '\n'.join(parts)
 
 
 def collapse_ws(text: str) -> str:

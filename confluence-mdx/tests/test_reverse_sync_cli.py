@@ -500,8 +500,8 @@ def test_normalize_mdx_list():
     )
     result = normalize_mdx_to_plain(content, 'paragraph')
     expected = (
-        "Administrator > Audit > ... 메뉴로 이동합니다. "
-        "당월 기준으로... "
+        "Administrator > Audit > ... 메뉴로 이동합니다.\n"
+        "당월 기준으로...\n"
         "Access Control Updated  : 커넥션 접근 권한 수정이력"
     )
     assert result == expected
@@ -515,7 +515,7 @@ def test_normalize_mdx_list_with_figure():
         "2. 두 번째 항목"
     )
     result = normalize_mdx_to_plain(content, 'paragraph')
-    assert result == '첫 번째 항목 두 번째 항목'
+    assert result == '첫 번째 항목\n두 번째 항목'
 
 
 # --- build_patches index-based mapping tests ---

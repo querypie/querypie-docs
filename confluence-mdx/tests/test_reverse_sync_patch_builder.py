@@ -16,6 +16,7 @@ from reverse_sync.patch_builder import (
     _resolve_mapping_for_change,
     build_patches,
 )
+from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.table_patcher import (
     build_table_row_patches,
     is_markdown_table,
@@ -1491,3 +1492,122 @@ class TestBuildPatchesIdempotency:
                     f"XHTML이 이미 변경된 상태에서 불필요한 패치 생성: "
                     f"new={p['new_plain_text']!r}"
                 )
+
+
+# ── Link body trailing space 제거 ──
+
+
+class TestLinkBodyTrailingSpaceStrip:
+    """<ac:link-body> trailing space가 파이프라인을 통해 자연스럽게 제거된다.
+
+    재현 시나리오 (administrator-manual.mdx, page 544178405):
+      Original MDX: `[Okta 연동하기 ](url)` (trailing space)
+      Improved MDX: `[Okta 연동하기](url)` (trailing space 제거)
+      XHTML: `<ac:link-body>Okta 연동하기 </ac:link-body>`
+      기대: normalize_mdx_to_plain이 trailing space를 보존하여
+            transfer_text_changes로 자연스럽게 전이된다.
+    """
+
+    def test_normalize_preserves_link_trailing_space(self):
+        """normalize_mdx_to_plain이 link text의 trailing space를 보존한다."""
+        with_space = '* [Okta 연동하기 ](url1)\n* [LDAP 연동하기](url2)'
+        without_space = '* [Okta 연동하기](url1)\n* [LDAP 연동하기](url2)'
+        old_plain = normalize_mdx_to_plain(with_space, 'html_block')
+        new_plain = normalize_mdx_to_plain(without_space, 'html_block')
+        assert old_plain != new_plain
+        # trailing space 보존: 'Okta 연동하기 \n' vs 'Okta 연동하기\n'
+        assert 'Okta 연동하기 \n' in old_plain
+        assert 'Okta 연동하기 \n' not in new_plain
+
+    def test_build_patches_transfers_trailing_space_change(self):
+        """build_patches가 trailing space 변경을 text transfer로 전이한다."""
+        xhtml_text = (
+            '<table><tbody><tr><td>'
+            '<ul><li><p>'
+            '<ac:link><ri:page ri:content-title="Okta 연동하기"/>'
+            '<ac:link-body>Okta 연동하기 </ac:link-body></ac:link>'
+            '</p></li><li><p>'
+            '<ac:link><ri:page ri:content-title="LDAP 연동하기"/>'
+            '<ac:link-body>LDAP 연동하기</ac:link-body></ac:link>'
+            '</p></li></ul>'
+            '</td></tr></tbody></table>'
+        )
+        xhtml_plain = 'Okta 연동하기 LDAP 연동하기'
+        mapping = BlockMapping(
+            block_id='table-1', type='table',
+            xhtml_xpath='table[1]',
+            xhtml_text=xhtml_text,
+            xhtml_plain_text=xhtml_plain,
+            xhtml_element_index=0,
+        )
+        old_content = (
+            '<table>\n<tbody>\n<tr>\n<td>\n'
+            '* [Okta 연동하기 ](general/okta)\n'
+            '* [LDAP 연동하기](general/ldap)\n'
+            '</td>\n</tr>\n</tbody>\n</table>\n'
+        )
+        new_content = (
+            '<table>\n<tbody>\n<tr>\n<td>\n'
+            '* [Okta 연동하기](general/okta)\n'
+            '* [LDAP 연동하기](general/ldap)\n'
+            '</td>\n</tr>\n</tbody>\n</table>\n'
+        )
+        change = _make_change(0, old_content, new_content, type_='html_block')
+        mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
+        xpath_to_mapping = {'table[1]': mapping}
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            [mapping], mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert 'link_body_strips' not in patches[0]
+        # trailing space가 제거된 new_plain_text가 생성됨
+        assert patches[0]['old_plain_text'] != patches[0]['new_plain_text']
+
+    def test_patch_xhtml_strips_link_body_trailing_space(self):
+        """patch_xhtml가 <ac:link-body> trailing space를 자연스럽게 제거한다.
+
+        end-to-end 테스트: text transfer 파이프라인으로 trailing space 제거.
+        """
+        xhtml = (
+            '<table><tbody><tr><td>'
+            '<ul><li><p>'
+            '<ac:link><ri:page ri:content-title="Okta 연동하기"/>'
+            '<ac:link-body>Okta 연동하기 </ac:link-body></ac:link>'
+            '</p></li><li><p>'
+            '<ac:link><ri:page ri:content-title="LDAP 연동하기"/>'
+            '<ac:link-body>LDAP 연동하기</ac:link-body></ac:link>'
+            '</p></li></ul>'
+            '</td></tr></tbody></table>'
+        )
+        # trailing space가 제거되면 두 텍스트 사이의 separator도 사라짐
+        patches = [{
+            'xhtml_xpath': 'table[1]',
+            'old_plain_text': 'Okta 연동하기 LDAP 연동하기',
+            'new_plain_text': 'Okta 연동하기LDAP 연동하기',
+        }]
+
+        result = patch_xhtml(xhtml, patches)
+        assert '<ac:link-body>Okta 연동하기</ac:link-body>' in result
+        assert '<ac:link-body>Okta 연동하기 </ac:link-body>' not in result
+        # LDAP은 원래 trailing space가 없으므로 변경 없음
+        assert '<ac:link-body>LDAP 연동하기</ac:link-body>' in result
+
+    def test_single_link_in_p_trailing_space(self):
+        """<p> 내 단일 link의 trailing space가 edge trailing 로직으로 제거된다."""
+        xhtml = (
+            '<p>'
+            '<ac:link><ri:page ri:content-title="Okta 연동하기"/>'
+            '<ac:link-body>Okta 연동하기 </ac:link-body></ac:link>'
+            '</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': 'Okta 연동하기 ',
+            'new_plain_text': 'Okta 연동하기',
+        }]
+
+        result = patch_xhtml(xhtml, patches)
+        assert '<ac:link-body>Okta 연동하기</ac:link-body>' in result
+        assert '<ac:link-body>Okta 연동하기 </ac:link-body>' not in result
