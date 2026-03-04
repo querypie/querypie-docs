@@ -208,6 +208,8 @@ def build_patches(
         if idx not in _add_by_idx:
             continue
         add_change = _add_by_idx[idx]
+        if del_change.old_block.type in NON_CONTENT_TYPES:
+            continue
         mapping = find_mapping_by_sidecar(
             idx, mdx_to_sidecar, xpath_to_mapping)
         if mapping is None:
@@ -224,6 +226,7 @@ def build_patches(
             'new_plain_text': xhtml_text,
         })
         _paired_indices.add(idx)
+        _mark_used(mapping.block_id, mapping)
 
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
