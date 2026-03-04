@@ -194,9 +194,42 @@ def build_patches(
         if parent_id:
             used_ids.add(parent_id)
 
+    # delete + add 쌍 탐지: 같은 인덱스에서 삭제 후 추가된 블록은
+    # 구조 변경 없이 텍스트 전이로 처리 (callout 등 복합 블록의 DOM 파괴 방지)
+    _delete_by_idx: dict = {}
+    _add_by_idx: dict = {}
+    for change in changes:
+        if change.change_type == 'deleted':
+            _delete_by_idx[change.index] = change
+        elif change.change_type == 'added':
+            _add_by_idx[change.index] = change
+    _paired_indices: set = set()
+    for idx, del_change in _delete_by_idx.items():
+        if idx not in _add_by_idx:
+            continue
+        add_change = _add_by_idx[idx]
+        mapping = find_mapping_by_sidecar(
+            idx, mdx_to_sidecar, xpath_to_mapping)
+        if mapping is None:
+            continue
+        old_plain = normalize_mdx_to_plain(
+            del_change.old_block.content, del_change.old_block.type)
+        new_plain = normalize_mdx_to_plain(
+            add_change.new_block.content, add_change.new_block.type)
+        xhtml_text = transfer_text_changes(
+            old_plain, new_plain, mapping.xhtml_plain_text)
+        patches.append({
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        })
+        _paired_indices.add(idx)
+
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
     for change in changes:
+        if change.index in _paired_indices:
+            continue
         if change.change_type == 'deleted':
             patch = _build_delete_patch(
                 change, mdx_to_sidecar, xpath_to_mapping)
@@ -261,7 +294,8 @@ def build_patches(
             continue
 
         # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
-        if '<ac:link' in mapping.xhtml_text:
+        if ('<ac:link' in mapping.xhtml_text
+                or '<ri:attachment' in mapping.xhtml_text):
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
             patches.append({
