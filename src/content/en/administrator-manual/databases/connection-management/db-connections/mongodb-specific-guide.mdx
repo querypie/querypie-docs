@@ -165,7 +165,10 @@ For more detailed information about Cluster mode, you can also check [DB Connect
 
 As mentioned above, when using QueryPie's SQL editor for connection, tls=true is required in the connection string.
 
-> Since +srv scheme automatically has TLS option as true, when converting to standard string, **tls=true** must be manually entered. (Because TXT record doesn't have TLS option.) Therefore, enter **&tls=true** in Other options field as shown in the figure above.
+> Since +srv scheme automatically has TLS option as true, when converting to standard string, **tls=true** must be manually entered.
+> (Because TXT record doesn't have TLS option.)
+> Therefore, enter **&tls=true** in Other options field as shown in the figure above.
+
 When using Proxy, SSL settings are required in QueryPie separately from TLS settings in SQL clients like DataGrip.<br/>Refer to [SSL Configurations](../ssl-configurations) for setup and reflect in the connection's SSL settings.<br/>
 
 <figure data-layout="center" data-align="center">
