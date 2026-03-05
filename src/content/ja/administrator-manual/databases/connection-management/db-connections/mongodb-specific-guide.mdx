@@ -165,7 +165,10 @@ Clusterモードに対するより詳細な内容は[DB Connections](.)でも確
 
 上で案内されたように、QueryPieのSQL editorを使用して接続する場合、コネクションストリングにtls=trueが必要です。
 
-> +srvスキームはTLSオプションが自動でtrueなので、standard stringに変換すると**tls=true**を手動で入力する必要があります。（TXTレコードにTLSオプションがないためです。）したがって、Other options項目に上図のように**&tls=true**を入力します。
+> +srvスキームはTLSオプションが自動でtrueなので、standard stringに変換すると**tls=true**を手動で入力する必要があります。
+> （TXTレコードにTLSオプションがないためです。）
+> したがって、Other options項目に上図のように**&tls=true**を入力します。
+
 Proxyを使用する場合、DataGripなどのSQL ClientでTLS設定と別にQueryPieでもSSL設定が必要です。<br/>[SSL Configurations](../ssl-configurations)を参照して設定後、コネクションのSSL設定に反映する必要があります。<br/>
 
 <figure data-layout="center" data-align="center">
