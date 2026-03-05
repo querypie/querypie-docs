@@ -1611,3 +1611,77 @@ class TestLinkBodyTrailingSpaceStrip:
         result = patch_xhtml(xhtml, patches)
         assert '<ac:link-body>Okta 연동하기</ac:link-body>' in result
         assert '<ac:link-body>Okta 연동하기 </ac:link-body>' not in result
+
+
+class TestBlockquoteDirectPatch:
+    """blockquote 블록의 direct 패치 시 <p> 구조가 보존되어야 한다.
+
+    재현 시나리오 (mongodb-specific-guide.mdx, page 544380381):
+      Original MDX: '> text **bold** more text'
+      Improved MDX: '> text **bold** changed text'
+      XHTML: <blockquote><p>text <strong>bold</strong> more text</p></blockquote>
+      현상: mdx_block_to_inner_xhtml()에 blockquote 핸들러가 없어
+            > prefix가 XHTML에 그대로 삽입되고 <p> 래퍼가 소실됨
+    """
+
+    def test_mdx_block_to_inner_xhtml_blockquote(self):
+        """blockquote content가 > prefix 제거 후 <p>로 감싸져야 한다."""
+        from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_inner_xhtml
+
+        content = '> text with **bold** and `code` end\n'
+        result = mdx_block_to_inner_xhtml(content, 'blockquote')
+
+        # > prefix가 제거되어야 함
+        assert '>' not in result.split('<')[0]  # 첫 태그 앞에 > 없음
+        # <p> 래퍼가 있어야 함
+        assert result.startswith('<p>')
+        assert result.endswith('</p>')
+        # inline 변환이 적용되어야 함
+        assert '<strong>bold</strong>' in result
+        assert '<code>code</code>' in result
+
+    def test_blockquote_direct_patch_preserves_p_wrapper(self):
+        """blockquote direct 패치가 <blockquote><p>...</p></blockquote> 구조를 보존한다."""
+        xhtml = (
+            '<blockquote><p>'
+            '+srv 스킴은 <strong>tls=true</strong>를 수동으로 입력해줘야 합니다.'
+            '</p></blockquote>'
+        )
+        xhtml_plain = '+srv 스킴은 tls=true를 수동으로 입력해줘야 합니다.'
+        mapping = BlockMapping(
+            block_id='bq-1', type='html_block',
+            xhtml_xpath='blockquote[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text=xhtml_plain,
+            xhtml_element_index=0,
+        )
+        old_content = '> +srv 스킴은 **tls=true**를 수동으로 입력해줘야 합니다.\n'
+        new_content = '> +srv 스킴은 **tls=true**를 수동으로 입력해 주어야 합니다.\n'
+        change = _make_change(0, old_content, new_content, type_='blockquote')
+
+        mdx_to_sidecar = {0: _make_sidecar('blockquote[1]', [0])}
+        xpath_to_mapping = {'blockquote[1]': mapping}
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            [mapping], mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        patch = patches[0]
+
+        # new_inner_xhtml 패치가 생성되어야 함 (direct 전략)
+        assert 'new_inner_xhtml' in patch
+        inner = patch['new_inner_xhtml']
+        # <p> 래퍼가 포함되어야 함
+        assert '<p>' in inner
+        # > prefix가 포함되면 안 됨
+        assert '> +srv' not in inner
+        # 변경된 텍스트가 반영되어야 함
+        assert '입력해 주어야' in inner
+
+        # end-to-end: patch_xhtml 적용 후 <blockquote><p> 구조가 유지
+        result = patch_xhtml(xhtml, patches)
+        assert '<blockquote>' in result
+        assert '<p>' in result
+        assert '> +srv' not in result
+        assert '입력해 주어야' in result
