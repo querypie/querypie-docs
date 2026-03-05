@@ -124,26 +124,26 @@ class TestNormalizeMdxToPlain:
 
     def test_paragraph_skips_empty_lines(self):
         result = normalize_mdx_to_plain('line1\n\nline2', 'paragraph')
-        assert result == 'line1 line2'
+        assert result == 'line1\nline2'
 
     def test_list_strips_marker(self):
         result = normalize_mdx_to_plain('- item one\n- item two', 'list')
-        assert result == 'item one item two'
+        assert result == 'item one\nitem two'
 
     def test_numbered_list_strips_marker(self):
         result = normalize_mdx_to_plain('1. first\n2. second', 'list')
-        assert result == 'first second'
+        assert result == 'first\nsecond'
 
     def test_table_row_extracts_cells(self):
         content = '| col1 | col2 |\n| --- | --- |\n| a | b |'
         result = normalize_mdx_to_plain(content, 'paragraph')
-        assert result == 'col1 col2 a b'
+        assert result == 'col1 col2\na b'
 
     def test_unescapes_html_entities(self):
         result = normalize_mdx_to_plain('A &lt; B &amp; C', 'paragraph')
         assert result == 'A < B & C'
 
     def test_strips_html_tags(self):
-        # tag 제거 후 양쪽 공백이 남아 'text  more'가 됨 (join 전 strip으로 정리)
+        # tag 제거 후 양쪽 공백이 남아 'text  more'가 됨
         result = normalize_mdx_to_plain('text <br/> more', 'paragraph')
         assert result == 'text  more'
