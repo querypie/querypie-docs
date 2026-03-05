@@ -765,7 +765,7 @@ class MultiLineParser:
                 markdown.extend(MultiLineParser(child, collector=self.collector).as_markdown)
             lines = ''.join(markdown).splitlines()
             for to_quote in lines:
-                self.markdown_lines.append(f'> {to_quote}')
+                self.markdown_lines.append(f'> {to_quote}\n')
         elif node.name in [
             'ac:rich-text-body',  # Child of <ac:structured-macro name="panel">
             'ac:adf-content',  # Child of <ac:adf-extension>
