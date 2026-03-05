@@ -26,6 +26,8 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
         return _convert_paragraph(text)
     elif block_type == 'callout':
         return _convert_callout_inner(text)
+    elif block_type == 'blockquote':
+        return _convert_blockquote_inner(text)
     elif block_type == 'list':
         return _convert_list_content(text)
     elif block_type == 'code_block':
@@ -69,6 +71,24 @@ def _convert_callout_inner(text: str) -> str:
         lines = lines[:-1]
     inner = '\n'.join(lines).strip()
     return _convert_paragraph(inner)
+
+
+def _convert_blockquote_inner(text: str) -> str:
+    """blockquote: > prefix를 제거하고 내용을 <p>로 감싼다.
+
+    XHTML에서 blockquote는 <blockquote><p>...</p></blockquote> 구조를 사용한다.
+    MDX의 > prefix를 제거한 후 paragraph와 동일하게 인라인 변환을 적용하고
+    <p>로 감싸서 반환한다.
+    """
+    lines = text.splitlines()
+    stripped_lines = []
+    for line in lines:
+        # > prefix 제거 (> 또는 >  형식)
+        stripped = re.sub(r'^>\s?', '', line)
+        stripped_lines.append(stripped)
+    inner = '\n'.join(stripped_lines).strip()
+    converted = _convert_paragraph(inner)
+    return f'<p>{converted}</p>'
 
 
 def _convert_code_block(text: str) -> str:
