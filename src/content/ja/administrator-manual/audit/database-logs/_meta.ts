@@ -6,5 +6,5 @@ export default {
   'account-lock-history': 'Account Lock History',
   'access-control-logs': 'Access Control Logs',
   'policy-audit-logs': 'Policy Audit Logs',
-  'policy-exception-logs': 'Policy Exception logs',
+  'policy-exception-logs': 'Policy Exception Logs',
 };
