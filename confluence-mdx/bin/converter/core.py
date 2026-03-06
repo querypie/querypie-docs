@@ -836,7 +836,7 @@ class MultiLineParser:
 
     def convert_ul_ol(self, node):
         self.list_stack.append(node.name)
-        counter = 1
+        counter = int(node.get('start', 1))
         for child in node.children:
             if child.name == 'li':
                 self.convert_li(child, node.name, counter)
