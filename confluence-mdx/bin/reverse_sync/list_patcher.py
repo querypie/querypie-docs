@@ -177,6 +177,19 @@ def build_list_item_patches(
         parent_mapping = _find_containing_mapping(
             old_plain_all, mappings, used_ids or set())
 
+    # 전체 텍스트로 못 찾으면 첫 항목의 <br/> 이전 텍스트로 재시도
+    # (리스트 항목의 <br/> 이후 텍스트가 XHTML에서 sub-list 뒤에 올 수 있어
+    #  전체 텍스트 순서가 불일치하는 경우)
+    if parent_mapping is None:
+        from reverse_sync.patch_builder import _find_containing_mapping
+        first_item = split_list_items(change.old_block.content)[0] if old_items else ''
+        if first_item:
+            # <br/> 이전 텍스트만 추출 (XHTML DOM 순서와 일치시키기 위해)
+            before_br = re.split(r'\s*<br\s*/?>\s*', first_item)[0]
+            first_plain = normalize_mdx_to_plain(before_br, 'list')
+            parent_mapping = _find_containing_mapping(
+                first_plain, mappings, used_ids or set())
+
     # 항목 수 불일치 → 전체 리스트 재생성
     if len(old_items) != len(new_items):
         return _regenerate_list_from_parent(
