@@ -136,12 +136,21 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         if s.startswith('|') and s.endswith('|'):
             cells = [c.strip() for c in s.split('|')[1:-1]]
             s = ' '.join(c for c in cells if c)
+        s = re.sub(r'^>\s?', '', s)
         s = re.sub(r'^\d+\.\s+', '', s)
         s = re.sub(r'^[-*+]\s+', '', s)
+        # 인라인 코드 스팬 내용을 보호: bold/italic 제거 전에 추출하여 보존
+        _code_spans: list = []
+        def _stash_code(m):
+            _code_spans.append(m.group(1))
+            return f'\x00CS{len(_code_spans) - 1}\x00'
+        s = re.sub(r'`([^`]+)`', _stash_code, s)
         s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
-        s = re.sub(r'`([^`]+)`', r'\1', s)
         # italic *...* 제거 (bold 제거 후이므로 단일 * 만 대상)
         s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)
+        # 인라인 코드 스팬 복원
+        for i, content in enumerate(_code_spans):
+            s = s.replace(f'\x00CS{i}\x00', content)
         # Confluence 링크 패턴: "[Title | Anchor](url)" → Title만 추출
         # (XHTML ac:link-body에는 Title만 포함됨)
         s = re.sub(
