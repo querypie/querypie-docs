@@ -217,6 +217,9 @@ class SingleLineParser:
                 inner = self.markdown_of_children(node).strip()
                 open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
                 close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+                # 이전 텍스트가 이미 공백으로 끝나면 open_sp로 인한 이중 공백 방지
+                if open_sp and isinstance(node.previous_sibling, NavigableString) and str(node.previous_sibling)[-1:] in (' ', '\t', '\n'):
+                    open_sp = ""
                 # 연속 emphasis delimiter 충돌 방지
                 if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
                     close_sp = " "
@@ -230,6 +233,9 @@ class SingleLineParser:
             inner = self.markdown_of_children(node).strip()
             open_sp = " " if inner and _is_unicode_punctuation(inner[0]) else ""
             close_sp = " " if inner and _is_unicode_punctuation(inner[-1]) else ""
+            # 이전 텍스트가 이미 공백으로 끝나면 open_sp로 인한 이중 공백 방지
+            if open_sp and isinstance(node.previous_sibling, NavigableString) and str(node.previous_sibling)[-1:] in (' ', '\t', '\n'):
+                open_sp = ""
             # 연속 emphasis delimiter 충돌 방지
             if not close_sp and isinstance(node.next_sibling, Tag) and node.next_sibling.name in ('strong', 'em'):
                 close_sp = " "
