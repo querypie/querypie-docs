@@ -50,7 +50,7 @@ For reference, Splunk provides SC4S (Splunk connector for syslog) separately for
 </figcaption>
 </figure>
 
-1. Enter the following information to create Destination information.
+4. Enter the following information to create Destination information.
     1.  **Destination Name** : Enter an appropriate name to identify the entity receiving syslog.
     2.  **Protocol**  : Protocols available for transmission to Splunk are TCP (default), UDP, HTTP, HTTPS.
         1. UDP has packet length constraints and is vulnerable security-wise, so TCP usage is recommended.
@@ -70,11 +70,11 @@ For reference, Splunk provides SC4S (Splunk connector for syslog) separately for
     7.  **Select Event Items**  : You can selectively send event items. Selecting the "Select all event items, including those that may be added later." checkbox at the bottom sends all available events.
     8.  **Disable syslog header**  : Sends without syslog header information (default Yes). This is an option provided to remove syslog headers when some SIEMs have difficulty parsing JSON. For HTTP, HTTPS, this option cannot be used and is always sent without syslog headers.
     9.  **Description** : Enter brief information within 100 characters about the configuration information.
-2. Click the `OK` button to save the settings.
+5. Click the `OK` button to save the settings.
     1. Even if settings are saved, syslog is not immediately transmitted.
-3. To start transmission, switch the toggle button in the top left of the page to `ON`.
+6. To start transmission, switch the toggle button in the top left of the page to `ON`.
     1. This transmission toggle button can be used when transmission needs to be temporarily stopped for maintenance or various situations.
-4. If syslog transmission is no longer needed, you can remove the configuration through the `Delete` button.
+7. If syslog transmission is no longer needed, you can remove the configuration through the `Delete` button.
     1. However, deletion is not possible while transmitting, so please change the transmission toggle button to :toggleoff: before deleting.
 
 <Callout type="info">

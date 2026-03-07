@@ -50,7 +50,7 @@ QueryPieは顧客便宜のためTCP、UDP、HTTP、HTTPSプロトコルを使用
 </figcaption>
 </figure>
 
-1. Destination情報を生成するために以下の情報を入力します。
+4. Destination情報を生成するために以下の情報を入力します。
     1.  **Destination Name** : syslogを受信する主体を識別できるよう適当な名前を入力します。
     2.  **Protocol**  : Splunkに送信可能なプロトコルはTCP（デフォルト値）、UDP、HTTP、HTTPSです。
         1. UDPはパケットの長さ制約事項がありセキュリティ的に脆弱なためTCP使用を推奨します。
@@ -70,11 +70,11 @@ QueryPieは顧客便宜のためTCP、UDP、HTTP、HTTPSプロトコルを使用
     7.  **Select Event Items**  : イベント項目を選択的に送信できます。下部"Select all event items, including those that may be added later."チェックボックスを選択すると送信可能なすべてのイベントを送信します。
     8.  **Disable syslog header**  : syslog header情報を除いて送信します（デフォルト値Yes）。一部SIEMでjson解析が困難な場合syslog headerを除くために提供されるオプションです。HTTP、HTTPSの場合このオプションを使用できず常にsyslog headerがない状態で送信されます。
     9.  **Description** : 設定情報に対する100文字以内の簡略情報を入力します。
-2. `OK`ボタンを押して設定を保存します。
+5. `OK`ボタンを押して設定を保存します。
     1. 設定事項が保存されてもすぐにSyslogが送信されるわけではありません。
-3. 送信開始をするにはページ左上部にあるトグルボタンを`ON`に切り替えます。
+6. 送信開始をするにはページ左上部にあるトグルボタンを`ON`に切り替えます。
     1. この送信トグルボタンはメンテナンスなど多様な状況で一時的に送信を停止する必要がある場合使用できます。
-4. もしもはやSyslog送信が必要ない場合`Delete`ボタンを通じて設定を削除できます。
+7. もしもはやSyslog送信が必要ない場合`Delete`ボタンを通じて設定を削除できます。
     1. ただし、送信中状態では削除できないため送信トグルボタンを：トグルoff：に変更した後削除してください。
 
 <Callout type="info">
