@@ -90,12 +90,12 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 <img src="/administrator-manual/databases/connection-management/db-connections/mongodb-specific-guide/image-20240730-114226.png" alt="image-20240730-114226.png" width="633" />
 </figure>
 
-1. Authentication DB : Authentication DB（authSource）の値を入力します。
-2. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
-3. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QueryPieはQueryPie内部で管理することを意味します。
-4. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
-5. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
-6. `Next`ボタンを通じて仕上げて保存します。
+4. Authentication DB : Authentication DB（authSource）の値を入力します。
+5. Other Options : Connection stringで使用するオプション中authSourceを除いた残りの値を入力します。<br/>例1）単一オプションのみ使用する場合の形式（ [Key]=[Value] ）: replicaSet=rs0<br/>例2）多重オプションを使用する場合の形式（ [Key]=[Vaule]&[Key]=[Value] ）: replicaSet=rs0&tls=true<br/>**replica set構成の場合、replicaSet=[replicaset name]オプションを入力する必要があります。**
+6. Secret Store : パスワードおよびキー管理を3rd partyで使用する場合のためのオプションです。基本値QueryPieはQueryPie内部で管理することを意味します。
+7. User Name & Password : 該当データベースのユーザー名とパスワードを入力します。
+8. `Test Connection`ボタンをクリックして、入力した接続情報が有効かを確認できます。
+9. `Next`ボタンを通じて仕上げて保存します。
 
 <Callout type="info">
 Clusterモードに対するより詳細な内容は[DB Connections](.)でも確認できます。

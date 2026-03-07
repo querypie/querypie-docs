@@ -40,7 +40,7 @@ Content Typeは「Text」のみサポートします。
 <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241029-234721.png" alt="image-20241029-234721.png" width="760" />
 </figure>
 
-1. 実行計画（Explain）オプションおよび実行計画実行<br/>クエリエディター下部にあるオプションを選択して`Explain`ボタンを押します。
+2. 実行計画（Explain）オプションおよび実行計画実行<br/>クエリエディター下部にあるオプションを選択して`Explain`ボタンを押します。
     1.  **Attach Explain Results**  : 実行計画の結果をSQL Requestに添付するかを選択するスイッチです。 (基本値はOFFです。必要な場合スイッチをONに切り替えて実行計画結果を添付する必要があります。)
     2. 結果表示方式選択
         1.  **Table**  : テーブル形式で結果が表示されます。
@@ -58,7 +58,7 @@ Content Typeは「Text」のみサポートします。
 </figure>
 </Callout>
 
-1. 実行計画（Explain）結果確認
+3. 実行計画（Explain）結果確認
     1. Table形式の結果確認<br/>以下の図のような結果が表示されます。各フィールドの意味はMySQL reference文書を参照してください。<br/> <br/>
       <figure data-layout="center" data-align="center">
       <img src="/user-manual/workflow/requesting-sql/using-execution-plan-explain-feature/image-20241030-002325.png" alt="image-20241030-002325.png" width="712" />
@@ -89,7 +89,7 @@ Content Typeは「Text」のみサポートします。
 つまり、申請者が実行計画をJSON形式で出力するよう設定して添付して申請した場合、承認者はJSON形式の結果のみ見ることができ、出力形式をテーブルに変更することはできません。
 </Callout>
 
-1. MySQLで実行計画（Explain）を通じて検討可能な構文<br/>MySQLはバージョン別に実行計画を通じて分析するサポート構文が異なります。
+2. MySQLで実行計画（Explain）を通じて検討可能な構文<br/>MySQLはバージョン別に実行計画を通じて分析するサポート構文が異なります。
 
 |  **MySQL 5.6.3以前**  |  **MySQL 5.6.3以降**                         |
 | -------------------- | ------------------------------------------- |
