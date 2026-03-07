@@ -92,6 +92,26 @@ class TestStrongSpacing:
         assert '**보세요.**  🔎' not in result, f'double space found in: {result!r}'
 
 
+    def test_strong_inner_starts_with_punct_preceded_by_space(self):
+        """내부 시작이 punct이고 이전 텍스트가 이미 공백으로 끝나면 이중 공백 방지.
+
+        재현 시나리오:
+          patched XHTML: 상세 페이지에서 <strong>"Add Tags"</strong> 버튼
+          현상: text node("에서 ") + open_sp(" ") → 에서  **"Add Tags"** (이중 공백)
+          기대: 에서 **"Add Tags"** (단일 공백)
+
+        페이지 878805502 reverse-sync verify 실패 원인.
+        """
+        result = _parse_p('<p>상세 페이지에서 <strong>"Add Tags"</strong> 버튼</p>')
+        assert '에서 **"Add Tags"** 버튼' in result, f'expected single space, got: {result!r}'
+        assert '에서  **' not in result, f'double space found in: {result!r}'
+
+    def test_strong_inner_starts_with_punct_no_preceding_space(self):
+        """이전 텍스트가 공백 없이 끝나면 open_sp 유지 (flanking delimiter 규칙)."""
+        result = _parse_p('<p>에서<strong>"X"</strong> 버튼</p>')
+        assert '에서 **"X"**' in result, f'expected open_sp, got: {result!r}'
+
+
 class TestEmSpacing:
     """<em> → * 변환의 공백 처리 테스트."""
 
@@ -106,3 +126,9 @@ class TestEmSpacing:
     def test_em_between_spaces(self):
         result = _parse_p('<p>이것은 <em>기울임</em> 텍스트입니다.</p>')
         assert '이것은 *기울임* 텍스트입니다.' in result
+
+    def test_em_inner_starts_with_punct_preceded_by_space(self):
+        """이전 텍스트가 이미 공백으로 끝나면 open_sp 이중 공백 방지."""
+        result = _parse_p('<p>에서 <em>(참고)</em> 입니다.</p>')
+        assert '에서 *(참고)*' in result, f'expected single space, got: {result!r}'
+        assert '에서  *(' not in result, f'double space found in: {result!r}'
