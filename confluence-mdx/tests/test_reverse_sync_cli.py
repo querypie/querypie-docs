@@ -828,7 +828,7 @@ def testbuild_patches_table_block():
 
 
 def testbuild_patches_child_resolved():
-    """parent+children 매핑에서 child 해석 성공 시 child xpath로 패치한다."""
+    """parent+children 매핑에서 containing 전략으로 parent xpath로 패치한다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -870,9 +870,10 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
+    # _resolve_child_mapping 제거 → containing 전략 → parent xpath로 패치
     assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'macro-info[1]/p[1]'
-    assert patches[0]['new_inner_xhtml'] == 'New child text.'
+    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
+    assert 'New child text.' in patches[0]['new_plain_text']
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
@@ -1010,7 +1011,7 @@ def testbuild_patches_list_item_child_resolved():
 
     assert len(patches) == 0
 
-    # sidecar에 parent가 있는 경우 → child 해석 성공
+    # sidecar에 parent가 있는 경우 → _regenerate_list_from_parent → 전체 재생성
     mdx_to_sidecar = {
         0: SidecarEntry(xhtml_xpath='ul[1]', xhtml_type='list', mdx_blocks=[0]),
     }
@@ -1019,8 +1020,8 @@ def testbuild_patches_list_item_child_resolved():
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
 
     assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'ul[1]/li[1]'
-    assert patches[0]['new_inner_xhtml'] == 'Item A new'
+    assert patches[0]['xhtml_xpath'] == 'ul[1]'
+    assert 'new_inner_xhtml' in patches[0]
 
 
 def testbuild_patches_list_item_fallback_to_parent():
