@@ -199,7 +199,7 @@ class TestConfluenceToMarkdownLostInfos:
 
 
 class TestMappingYamlLostInfo:
-    def test_version_is_2(self):
+    def test_version_is_3(self):
         import yaml
         from reverse_sync.sidecar import generate_sidecar_mapping
 
@@ -208,7 +208,7 @@ class TestMappingYamlLostInfo:
 
         result = generate_sidecar_mapping(xhtml, mdx, '12345')
         data = yaml.safe_load(result)
-        assert data['version'] == 2
+        assert data['version'] == 3
 
     def test_lost_info_in_mapping_yaml(self):
         import yaml
@@ -223,7 +223,7 @@ class TestMappingYamlLostInfo:
 
         result = generate_sidecar_mapping(xhtml, mdx, '12345', lost_infos=lost_infos)
         data = yaml.safe_load(result)
-        assert data['version'] == 2
+        assert data['version'] == 3
         assert 'lost_info' in data
         assert data['lost_info']['emoticons'][0]['name'] == 'tick'
 

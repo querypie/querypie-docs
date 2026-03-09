@@ -5,8 +5,8 @@ Block-level sidecar (schema v2):
   build_sidecar, verify_sidecar_integrity,
   write_sidecar, load_sidecar, sha256_text
 
-Mapping lookup (mapping.yaml 기반):
-  SidecarEntry, load_sidecar_mapping, build_mdx_to_sidecar_index,
+Mapping lookup (mapping.yaml v3 기반):
+  SidecarChildEntry, SidecarEntry, load_sidecar_mapping, build_mdx_to_sidecar_index,
   build_xpath_to_mapping, generate_sidecar_mapping, find_mapping_by_sidecar
 """
 
@@ -244,14 +244,103 @@ def load_sidecar(path: Path) -> RoundtripSidecar:
 
 
 # ---------------------------------------------------------------------------
-# Mapping lookup — mapping.yaml 로드 및 인덱스 구축
+# Mapping lookup — mapping.yaml v3 로드 및 인덱스 구축
 # ---------------------------------------------------------------------------
+
+# XHTML record_mapping type → 호환 MDX parse_mdx type
+_TYPE_COMPAT: Dict[str, frozenset] = {
+    'heading':    frozenset({'heading'}),
+    'paragraph':  frozenset({'paragraph'}),
+    'list':       frozenset({'list'}),
+    'code':       frozenset({'code_block'}),
+    'table':      frozenset({'table', 'html_block'}),
+    'html_block': frozenset({'callout', 'details', 'html_block', 'blockquote',
+                             'figure', 'badge', 'hr'}),
+}
+
+# MDX 출력을 생성하지 않는 XHTML 매크로 이름
+_SKIP_MACROS = frozenset({'toc', 'children'})
+
+
+def _should_skip_xhtml(xm: Any) -> bool:
+    """toc, children 등 MDX 출력이 없는 XHTML 매크로를 판별한다."""
+    xpath = xm.xhtml_xpath
+    for skip_name in _SKIP_MACROS:
+        if xpath.startswith(f'macro-{skip_name}'):
+            return True
+    return False
+
+
+def _type_compatible(xhtml_type: str, mdx_type: str) -> bool:
+    """XHTML 타입과 MDX 블록 타입이 호환되는지 확인한다."""
+    return mdx_type in _TYPE_COMPAT.get(xhtml_type, frozenset())
+
+
+def _align_children(
+    xm: Any,
+    mdx_block: Any,
+    id_to_mapping: Dict[str, Any],
+) -> List[Dict]:
+    """XHTML children과 MDX Block.children을 타입 기반 순차 정렬한다.
+
+    각 XHTML child에 대응하는 MDX child의 절대 line range를 계산하여
+    children entry 목록을 반환한다.
+
+    절대 line = parent_mdx_block.line_start + child.line_start
+    (callout의 경우 첫 줄이 <Callout...>이므로 +1 offset이 자연스럽게 적용됨)
+    """
+    child_entries = []
+    # NON_CONTENT_TYPES는 런타임에 임포트 (순환 참조 방지)
+    from reverse_sync.block_diff import NON_CONTENT_TYPES
+    mdx_children = [c for c in mdx_block.children if c.type not in NON_CONTENT_TYPES]
+    mdx_child_ptr = 0
+
+    for child_id in xm.children:
+        child_mapping = id_to_mapping.get(child_id)
+        if child_mapping is None:
+            continue
+
+        if mdx_child_ptr < len(mdx_children):
+            mdx_child = mdx_children[mdx_child_ptr]
+            if _type_compatible(child_mapping.type, mdx_child.type):
+                abs_start = mdx_block.line_start + mdx_child.line_start
+                abs_end = mdx_block.line_start + mdx_child.line_end
+                child_entries.append({
+                    'xhtml_xpath': child_mapping.xhtml_xpath,
+                    'xhtml_block_id': child_id,
+                    'mdx_line_start': abs_start,
+                    'mdx_line_end': abs_end,
+                })
+                mdx_child_ptr += 1
+                continue
+
+        child_entries.append({
+            'xhtml_xpath': child_mapping.xhtml_xpath,
+            'xhtml_block_id': child_id,
+            'mdx_line_start': 0,
+            'mdx_line_end': 0,
+        })
+
+    return child_entries
+
+
+@dataclass
+class SidecarChildEntry:
+    """mapping.yaml v3 children 항목."""
+    xhtml_xpath: str
+    xhtml_block_id: str
+    mdx_line_start: int = 0
+    mdx_line_end: int = 0
+
 
 @dataclass
 class SidecarEntry:
     xhtml_xpath: str
     xhtml_type: str
     mdx_blocks: List[int] = field(default_factory=list)
+    mdx_line_start: int = 0
+    mdx_line_end: int = 0
+    children: List[SidecarChildEntry] = field(default_factory=list)
 
 
 def load_sidecar_mapping(mapping_path: str) -> List[SidecarEntry]:
@@ -265,10 +354,22 @@ def load_sidecar_mapping(mapping_path: str) -> List[SidecarEntry]:
     data = yaml.safe_load(path.read_text()) or {}
     entries = []
     for item in data.get('mappings', []):
+        children = [
+            SidecarChildEntry(
+                xhtml_xpath=ch.get('xhtml_xpath', ''),
+                xhtml_block_id=ch.get('xhtml_block_id', ''),
+                mdx_line_start=ch.get('mdx_line_start', 0),
+                mdx_line_end=ch.get('mdx_line_end', 0),
+            )
+            for ch in item.get('children', [])
+        ]
         entries.append(SidecarEntry(
             xhtml_xpath=item['xhtml_xpath'],
             xhtml_type=item.get('xhtml_type', ''),
             mdx_blocks=item.get('mdx_blocks', []),
+            mdx_line_start=item.get('mdx_line_start', 0),
+            mdx_line_end=item.get('mdx_line_end', 0),
+            children=children,
         ))
     return entries
 
@@ -309,93 +410,41 @@ def generate_sidecar_mapping(
     page_id: str = '',
     lost_infos: dict | None = None,
 ) -> str:
-    """XHTML + MDX로부터 mapping.yaml 내용을 생성한다.
+    """XHTML + MDX로부터 mapping.yaml v3 내용을 생성한다.
 
-    Forward converter의 sidecar 생성 로직을 재현한다.
-    record_mapping()과 parse_mdx_blocks()를 조합하여 텍스트 기반 매칭을 수행한다.
+    타입 호환성 기반 순차 정렬(two-pointer)로 XHTML top-level 블록과
+    MDX content 블록을 매핑한다. 텍스트 비교 없이 블록 타입만 사용한다.
 
-    순서 + 텍스트 매칭:
-      각 XHTML 매핑에 대해 현재 MDX 포인터부터 앞으로 탐색하여
-      정규화된 텍스트가 일치하는 MDX 블록을 찾는다.
-      일치하지 않는 XHTML 블록(image, toc, empty paragraph 등)은
-      빈 mdx_blocks로 기록한다.
+    타입 불일치 시 XHTML 블록이 MDX 출력을 생성하지 않은 것으로 판단
+    (ac:image → figure 없는 MDX, toc 등). MDX 포인터는 유지된다.
     """
     from reverse_sync.mapping_recorder import record_mapping
     from mdx_to_storage.parser import parse_mdx_blocks
-    from text_utils import normalize_mdx_to_plain, collapse_ws
 
     xhtml_mappings = record_mapping(xhtml)
-    mdx_blocks = parse_mdx_blocks(mdx)
+    mdx_blocks_all = parse_mdx_blocks(mdx)
 
-    # 콘텐츠 블록만 필터 (frontmatter, empty, import 제외)
-    entries = []
-    mdx_content_indices = [
-        i for i, b in enumerate(mdx_blocks)
+    # MDX 콘텐츠 블록만 필터 (frontmatter, empty, import 제외), 원본 인덱스 보존
+    mdx_content_indexed = [
+        (i, b) for i, b in enumerate(mdx_blocks_all)
         if b.type not in NON_CONTENT_TYPES
     ]
-    # Empty MDX 블록 중 콘텐츠 영역 내의 것만 매핑 대상으로 추적
-    # (frontmatter/import 사이의 빈 줄은 XHTML에 대응하지 않음)
-    first_content_idx = mdx_content_indices[0] if mdx_content_indices else len(mdx_blocks)
-    mdx_empty_indices = [
-        i for i, b in enumerate(mdx_blocks)
-        if b.type == 'empty' and i > first_content_idx
-    ]
-    empty_ptr = 0
 
-    # MDX 콘텐츠 블록별 정규화 텍스트를 미리 계산
-    mdx_plains = {}
-    for ci in mdx_content_indices:
-        b = mdx_blocks[ci]
-        mdx_plains[ci] = collapse_ws(normalize_mdx_to_plain(b.content, b.type))
-
-    # child mapping은 별도 처리 (parent xpath에 포함)
-    child_ids = set()
+    # child IDs 수집 → top-level mapping 필터링
+    child_ids: set = set()
     for m in xhtml_mappings:
-        for cid in m.children:
-            child_ids.add(cid)
-
-    # top-level mapping만 매칭 대상
+        child_ids.update(m.children)
     top_mappings = [m for m in xhtml_mappings if m.block_id not in child_ids]
-    mdx_ptr = 0  # MDX 콘텐츠 인덱스 포인터
 
-    LOOKAHEAD = 5  # 최대 앞으로 탐색할 MDX 블록 수
+    # block_id → BlockMapping (children 해석용)
+    id_to_mapping = {m.block_id: m for m in xhtml_mappings}
+
+    entries = []
+    mdx_ptr = 0  # mdx_content_indexed 내 포인터
 
     for xm in top_mappings:
-        xhtml_plain = collapse_ws(xm.xhtml_plain_text)
-
-        # 빈 텍스트 XHTML 블록 — empty MDX 블록과 순차 매핑
-        if not xhtml_plain:
-            if xm.type == 'paragraph':
-                # 현재 content 포인터의 MDX 인덱스 이후의 empty만 사용
-                last_content_idx = (
-                    mdx_content_indices[mdx_ptr - 1] if mdx_ptr > 0 else -1
-                )
-                # empty_ptr를 last_content_idx 이후로 전진
-                while (empty_ptr < len(mdx_empty_indices)
-                       and mdx_empty_indices[empty_ptr] <= last_content_idx):
-                    empty_ptr += 1
-                if empty_ptr < len(mdx_empty_indices):
-                    entries.append({
-                        'xhtml_xpath': xm.xhtml_xpath,
-                        'xhtml_type': xm.type,
-                        'mdx_blocks': [mdx_empty_indices[empty_ptr]],
-                    })
-                    empty_ptr += 1
-                else:
-                    entries.append({
-                        'xhtml_xpath': xm.xhtml_xpath,
-                        'xhtml_type': xm.type,
-                        'mdx_blocks': [],
-                    })
-            else:
-                entries.append({
-                    'xhtml_xpath': xm.xhtml_xpath,
-                    'xhtml_type': xm.type,
-                    'mdx_blocks': [],
-                })
-            continue
-
-        if mdx_ptr >= len(mdx_content_indices):
+        # 스킵 매크로 (toc, children 등)
+        if _should_skip_xhtml(xm):
             entries.append({
                 'xhtml_xpath': xm.xhtml_xpath,
                 'xhtml_type': xm.type,
@@ -403,44 +452,52 @@ def generate_sidecar_mapping(
             })
             continue
 
-        # 현재 MDX 블록과 텍스트 비교
-        matched_at = _find_text_match(
-            xhtml_plain, mdx_content_indices, mdx_plains, mdx_ptr, LOOKAHEAD)
+        # 빈 텍스트 paragraph XHTML 블록 — MDX 콘텐츠 대응 없음
+        # (빈 <p>는 MDX의 empty 줄에 해당하며 content 블록이 아님)
+        if not xm.xhtml_plain_text.strip() and xm.type == 'paragraph':
+            entries.append({
+                'xhtml_xpath': xm.xhtml_xpath,
+                'xhtml_type': xm.type,
+                'mdx_blocks': [],
+            })
+            continue
 
-        if matched_at is not None:
-            # 매치 위치까지 MDX 포인터 이동
-            mdx_ptr = matched_at
-            mdx_idx = mdx_content_indices[mdx_ptr]
-            matched_indices = [mdx_idx]
+        if mdx_ptr >= len(mdx_content_indexed):
+            entries.append({
+                'xhtml_xpath': xm.xhtml_xpath,
+                'xhtml_type': xm.type,
+                'mdx_blocks': [],
+            })
+            continue
+
+        mdx_idx, mdx_block = mdx_content_indexed[mdx_ptr]
+
+        if _type_compatible(xm.type, mdx_block.type):
+            entry: Dict[str, Any] = {
+                'xhtml_xpath': xm.xhtml_xpath,
+                'xhtml_type': xm.type,
+                'mdx_blocks': [mdx_idx],
+                'mdx_line_start': mdx_block.line_start,
+                'mdx_line_end': mdx_block.line_end,
+            }
+            # compound block (callout/details 등): children 정렬
+            if xm.children and mdx_block.children:
+                child_entries = _align_children(xm, mdx_block, id_to_mapping)
+                if child_entries:
+                    entry['children'] = child_entries
+            entries.append(entry)
             mdx_ptr += 1
-
-            # children이 있으면 후속 MDX 블록도 이 XHTML 매핑에 대응
-            # 단, 다음 top-level XHTML 매핑의 텍스트와 겹치지 않는 범위에서만
-            if xm.children:
-                num_children = _count_child_mdx_blocks(
-                    xm, mdx_content_indices, mdx_plains,
-                    mdx_ptr, top_mappings, collapse_ws,
-                )
-                for _ in range(num_children):
-                    if mdx_ptr < len(mdx_content_indices):
-                        matched_indices.append(mdx_content_indices[mdx_ptr])
-                        mdx_ptr += 1
-
-            entries.append({
-                'xhtml_xpath': xm.xhtml_xpath,
-                'xhtml_type': xm.type,
-                'mdx_blocks': matched_indices,
-            })
         else:
-            # 텍스트 매치 실패 — MDX 대응 없음 (image, toc 등)
+            # 타입 불일치 → XHTML 블록이 MDX 출력을 생성하지 않음
+            # MDX 포인터는 유지 (MDX 블록이 다음 XHTML과 매칭될 수 있음)
             entries.append({
                 'xhtml_xpath': xm.xhtml_xpath,
                 'xhtml_type': xm.type,
                 'mdx_blocks': [],
             })
 
-    mapping_data = {
-        'version': 2,
+    mapping_data: Dict[str, Any] = {
+        'version': 3,
         'source_page_id': page_id,
         'mdx_file': 'page.mdx',
         'mappings': entries,

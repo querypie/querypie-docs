@@ -21,6 +21,7 @@ from reverse_sync.sidecar import (
     sha256_text,
     write_sidecar,
     SidecarEntry,
+    SidecarChildEntry,
     load_sidecar_mapping,
     build_mdx_to_sidecar_index,
     build_xpath_to_mapping,
@@ -345,7 +346,7 @@ class TestGenerateSidecarMapping:
         result = generate_sidecar_mapping(xhtml, mdx, '12345')
         data = yaml.safe_load(result)
 
-        assert data['version'] == 2
+        assert data['version'] == 3
         assert data['source_page_id'] == '12345'
         assert len(data['mappings']) >= 2
 
@@ -356,6 +357,9 @@ class TestGenerateSidecarMapping:
             e for e in data['mappings'] if e['xhtml_type'] == 'paragraph')
         assert len(heading_entry['mdx_blocks']) >= 1
         assert len(para_entry['mdx_blocks']) >= 1
+        # v3: line range 필드 포함
+        assert heading_entry.get('mdx_line_start', 0) > 0
+        assert para_entry.get('mdx_line_start', 0) > 0
 
     def test_empty_xhtml_block_gets_empty_mdx_blocks(self):
         """이미지 등 텍스트가 없는 XHTML 블록은 빈 mdx_blocks를 받는다."""
@@ -417,7 +421,7 @@ class TestGenerateSidecarMapping:
         assert all_indices == sorted(all_indices)
 
     def test_callout_macro_with_children(self):
-        """Callout 매크로 (ac:structured-macro) → 컨테이너 + children 매핑."""
+        """Callout 매크로 (ac:structured-macro) → 단일 MDX callout 블록에 매핑, children 포함."""
         xhtml = (
             '<ac:structured-macro ac:name="info">'
             '<ac:rich-text-body>'
@@ -426,21 +430,26 @@ class TestGenerateSidecarMapping:
             '</ac:rich-text-body>'
             '</ac:structured-macro>'
         )
+        # 실제 프로젝트 MDX 포맷: <Callout> 태그 사용
         mdx = (
             '---\ntitle: Test\n---\n\n'
-            ':::info\n\n'
+            'import { Callout } from \'nextra/components\'\n\n'
+            '<Callout type="info">\n'
             'Info paragraph 1.\n\n'
-            'Info paragraph 2.\n\n'
-            ':::\n'
+            'Info paragraph 2.\n'
+            '</Callout>\n'
         )
         result = generate_sidecar_mapping(xhtml, mdx)
         data = yaml.safe_load(result)
 
-        # 컨테이너 매핑이 여러 MDX 블록을 포함해야 함
-        container_entries = [
-            e for e in data['mappings'] if len(e.get('mdx_blocks', [])) > 1
-        ]
-        assert len(container_entries) >= 1
+        # v3: 컨테이너가 단일 MDX 블록 (callout)에 매핑됨
+        html_entries = [e for e in data['mappings'] if e.get('xhtml_type') == 'html_block']
+        assert len(html_entries) >= 1
+        container = html_entries[0]
+        assert len(container['mdx_blocks']) == 1
+        # v3: children 필드에 XHTML children 정렬 결과 포함
+        children = container.get('children', [])
+        assert len(children) == 2
 
     def test_callout_panel_with_emoticon_maps_to_mdx(self):
         """panel callout + emoticon이 있는 XHTML이 MDX callout에 매핑된다."""
