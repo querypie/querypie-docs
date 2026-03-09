@@ -23,10 +23,12 @@ COPY etc/ ./etc/
 # Restore cache at its expected path (for Stage 3 attachment fallback)
 COPY cache/ ./cache/
 
-# Populate var/ baseline from cache and fetch recent updates in one step.
+# Populate var/ baseline from cache and fetch updates in one step.
 # cp -a creates var/ with all cached YAML/content/attachment files,
-# then fetch_cli.py downloads only recently modified pages.
-RUN cp -a cache/. var/ && python3 bin/fetch_cli.py --recent --attachments
+# then fetch_cli.py downloads pages according to FETCH_ARGS.
+# Default: --recent --attachments (incremental). Use --remote --attachments for full fetch.
+ARG FETCH_ARGS="--recent --attachments"
+RUN cp -a cache/. var/ && python3 bin/fetch_cli.py ${FETCH_ARGS}
 
 # ── Stage 2: Final image ────────────────────────────
 FROM python:3.12-slim
