@@ -2,15 +2,6 @@ name: Build and Push Docker Image
 
 on:
   workflow_dispatch:
-    inputs:
-      fetch_arguments:
-        description: 'Arguments for fetch_cli.py'
-        required: false
-        type: choice
-        options:
-          - '--recent --attachments'
-          - '--remote --attachments'
-        default: '--recent --attachments'
   push:
     branches:
       - main
@@ -63,15 +54,6 @@ jobs:
           set -o errexit -o nounset -o pipefail -o xtrace
           touch .env
           docker compose --progress=plain push
-
-      - name: Run fetch_cli.py
-        working-directory: ./confluence-mdx
-        env:
-          ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
-        run: |
-          set -o errexit -o nounset -o pipefail -o xtrace
-          FETCH_ARGS="${{ inputs.fetch_arguments || '--recent --attachments' }}"
-          docker compose run --rm -e ATLASSIAN_TOKEN confluence-mdx fetch ${FETCH_ARGS}
 
       - name: Clean up untagged images from Docker Hub
         if: github.event_name != 'pull_request'
