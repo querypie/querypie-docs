@@ -30,10 +30,10 @@ confluence-mdx/target/public  →  ../../public
 ```bash
 # ✅ 올바른 사용법 — target/ko/ 경로 사용
 cd confluence-mdx
-python3 bin/skeleton/cli.py target/ko/installation/some-page.mdx
+bin/skeleton/cli.py target/ko/installation/some-page.mdx
 
 # ❌ 작동하지 않음 — src/content 경로는 인식 불가
-python3 bin/skeleton/cli.py ../src/content/ko/installation/some-page.mdx
+bin/skeleton/cli.py ../src/content/ko/installation/some-page.mdx
 # WARNING: Corresponding Korean MDX file not found: ...
 ```
 

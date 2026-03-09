@@ -42,10 +42,10 @@ QueryPie 제품 문서 사이트 (Next.js 16 + Nextra 4 + MDX)
 Skeleton MDX 비교 시 반드시 `target/{lang}/` 경로를 사용하세요:
 ```bash
 # ✅ 올바른 사용
-python3 bin/skeleton/cli.py target/ko/path/to/file.mdx
+bin/skeleton/cli.py target/ko/path/to/file.mdx
 
 # ❌ 작동하지 않음
-python3 bin/skeleton/cli.py ../src/content/ko/path/to/file.mdx
+bin/skeleton/cli.py ../src/content/ko/path/to/file.mdx
 ```
 
 상세 내용: `docs/content-structure.md`
