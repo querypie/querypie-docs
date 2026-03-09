@@ -998,7 +998,7 @@ def testbuild_patches_list_item_child_resolved():
         xhtml_element_index=2,
     )
     mappings = [parent, child_a, child_b]
-    # sidecar에 list block index 없음 → build_list_item_patches 경로
+    # sidecar에 list block index 없음 → parent 없음 → 패치 없음
     mdx_to_sidecar = {}
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
     id_to_mapping = {m.block_id: m for m in mappings}
@@ -1008,12 +1008,9 @@ def testbuild_patches_list_item_child_resolved():
         changes[0], mappings, set(),
         mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
 
-    # R2: sidecar에 parent가 없어도 텍스트 포함 폴백으로 parent 발견 → child 해석 성공
-    assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'ul[1]/li[1]'
-    assert patches[0]['new_inner_xhtml'] == 'Item A new'
+    assert len(patches) == 0
 
-    # sidecar에 parent가 있는 경우
+    # sidecar에 parent가 있는 경우 → child 해석 성공
     mdx_to_sidecar = {
         0: SidecarEntry(xhtml_xpath='ul[1]', xhtml_type='list', mdx_blocks=[0]),
     }

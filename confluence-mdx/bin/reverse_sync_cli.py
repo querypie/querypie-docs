@@ -352,7 +352,7 @@ def run_verify(
 
     # Step 3.5: Sidecar mapping 생성 + 인덱스 구축
     from reverse_sync.sidecar import (
-        SidecarEntry, generate_sidecar_mapping,
+        SidecarEntry, SidecarChildEntry, generate_sidecar_mapping,
         build_mdx_to_sidecar_index, build_xpath_to_mapping,
     )
     # forward converter가 생성한 mapping.yaml에서 lost_info를 보존
@@ -366,14 +366,25 @@ def run_verify(
     (var_dir / 'mapping.yaml').write_text(sidecar_yaml)
     sidecar_data = yaml.safe_load(sidecar_yaml) or {}
     page_lost_info = sidecar_data.get('lost_info', {})
-    sidecar_entries = [
-        SidecarEntry(
+    sidecar_entries = []
+    for item in sidecar_data.get('mappings', []):
+        children = [
+            SidecarChildEntry(
+                xhtml_xpath=ch.get('xhtml_xpath', ''),
+                xhtml_block_id=ch.get('xhtml_block_id', ''),
+                mdx_line_start=ch.get('mdx_line_start', 0),
+                mdx_line_end=ch.get('mdx_line_end', 0),
+            )
+            for ch in item.get('children', [])
+        ]
+        sidecar_entries.append(SidecarEntry(
             xhtml_xpath=item['xhtml_xpath'],
             xhtml_type=item.get('xhtml_type', ''),
             mdx_blocks=item.get('mdx_blocks', []),
-        )
-        for item in sidecar_data.get('mappings', [])
-    ]
+            mdx_line_start=item.get('mdx_line_start', 0),
+            mdx_line_end=item.get('mdx_line_end', 0),
+            children=children,
+        ))
     mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
     xpath_to_mapping = build_xpath_to_mapping(original_mappings)
 

@@ -188,14 +188,6 @@ def build_list_item_patches(
         parent_mapping = find_mapping_by_sidecar(
             change.index, mdx_to_sidecar, xpath_to_mapping)
 
-    # sidecar에 없으면 텍스트 포함 검색으로 parent 찾기
-    if parent_mapping is None:
-        from reverse_sync.patch_builder import _find_containing_mapping
-        old_plain_all = normalize_mdx_to_plain(
-            change.old_block.content, 'list')
-        parent_mapping = _find_containing_mapping(
-            old_plain_all, mappings, used_ids or set())
-
     # 항목 수 불일치 → 전체 리스트 재생성
     if len(old_items) != len(new_items):
         return _regenerate_list_from_parent(
