@@ -65,13 +65,13 @@ jobs:
           docker compose --progress=plain push
 
       - name: Run fetch_cli.py
-        if: github.event_name == 'workflow_dispatch'
         working-directory: ./confluence-mdx
         env:
           ATLASSIAN_TOKEN: ${{ secrets.ATLASSIAN_TOKEN }}
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
-          docker compose run --rm -e ATLASSIAN_TOKEN confluence-mdx fetch ${{ inputs.fetch_arguments }}
+          FETCH_ARGS="${{ inputs.fetch_arguments || '--recent --attachments' }}"
+          docker compose run --rm -e ATLASSIAN_TOKEN confluence-mdx fetch ${FETCH_ARGS}
 
       - name: Clean up untagged images from Docker Hub
         if: github.event_name != 'pull_request'
