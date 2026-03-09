@@ -276,6 +276,7 @@ def _type_compatible(xhtml_type: str, mdx_type: str) -> bool:
     return mdx_type in _TYPE_COMPAT.get(xhtml_type, frozenset())
 
 
+
 def _align_children(
     xm: Any,
     mdx_block: Any,
@@ -440,7 +441,14 @@ def generate_sidecar_mapping(
     id_to_mapping = {m.block_id: m for m in xhtml_mappings}
 
     entries = []
-    mdx_ptr = 0  # mdx_content_indexed 내 포인터
+    # MDX H1 헤딩(페이지 제목)은 XHTML 본문에 존재하지 않으므로 건너뛴다.
+    # forward converter는 MDX 첫 줄에 `# <페이지 제목>`을 자동 생성하며,
+    # 이 블록은 Confluence XHTML의 페이지 제목(본문 외부)에 해당한다.
+    mdx_ptr = 0
+    while (mdx_ptr < len(mdx_content_indexed)
+           and mdx_content_indexed[mdx_ptr][1].type == 'heading'
+           and mdx_content_indexed[mdx_ptr][1].content.startswith('# ')):
+        mdx_ptr += 1
 
     for xm in top_mappings:
         # 스킵 매크로 (toc, children 등)
