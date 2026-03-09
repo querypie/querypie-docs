@@ -1,0 +1,83 @@
+---
+title: 'QueryPie ACP Community Editionの削除方法'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1972142096/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP Community Editionの削除方法
+
+### Overview
+
+QueryPie ACPを完全に削除するには、コンテナ、データディレクトリ、ログファイルを順番に削除する必要があります。
+一部のファイルはコンテナプロセスがrootとして作成するため、`sudo`（管理者権限）が必要です。
+______
+
+### 削除手順
+
+#### Step 1: コンテナおよびネットワークの停止/削除
+
+* `current`はインストールバージョンパスへのシンボリックリンクです。
+```bash
+cd ~/querypie/current ## This is an example when installed under the home directory.
+docker compose --profile querypie --profile database down -v
+```
+
+* `--profile querypie`：appコンテナを含む
+* `--profile database`：mysql、redisコンテナを含む
+* `-v`：接続されたDockerボリュームも一緒に削除
+
+期待される出力：
+```bash
+Container querypie-app-1 Stopped
+Container querypie-mysql-1 Stopped
+Container querypie-redis-1 Stopped
+Network querypie_app Removed
+Network querypie_database Removed
+```
+
+#### Step 2: インストールディレクトリおよびログファイルの削除
+
+`~/querypie/log/`、`~/querypie/mysql/`ディレクトリにはコンテナがrootとして作成したファイルが含まれるため、必ず`sudo`で削除する必要があります。
+```bash
+cd ~ ## This is an example when installed under the home directory.
+sudo rm -rf ~/querypie ~/querypie-install.log ~/querypie-migrate*.log
+```
+
+#### Step 3: 残存するDockerボリュームの整理（任意）
+
+`docker compose down -v`でQueryPieボリュームはすでに削除されていますが、残存ボリュームがあるか確認します。
+```bash
+docker volume ls
+```
+
+QueryPie関連ボリューム（`querypie_`で始まる）が残っている場合は個別に削除します。
+```bash
+docker volume rm <volume name>
+```
+______
+
+### 削除確認
+
+```bash
+## Confirm no containers exist
+docker ps -a
+
+## Confirm no directories exist
+ls ~ | grep querypie || echo "querypie not found"
+```
+______
+
+<Callout type="important">
+注意事項
+* **`-v`フラグ**：`docker compose down -v`はMySQLデータボリュームも削除します。データを保持したい場合は`-v`なしで実行します。
+* `sudo`なしで`rm -rf ~/querypie`を実行すると、log/mysqlディレクトリで権限エラーが発生します。必ず管理者権限で削除してください。
+* 上記の手順ではdockerイメージは削除されません。イメージも削除するには、追加で以下のコマンドを実行します。
+  ```bash
+  ## Check the list of QueryPie-related images
+  docker images | grep querypie
+
+  ## Delete after confirmation
+  docker rmi querypie/querypie:<installed version> querypie/querypie-tools:<installed version> querypie/mysql:<installed version> querypie/redis:<installed version>
+  ```
+</Callout>

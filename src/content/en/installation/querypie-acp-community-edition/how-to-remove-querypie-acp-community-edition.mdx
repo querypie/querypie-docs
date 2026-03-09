@@ -1,0 +1,83 @@
+---
+title: 'How to Remove QueryPie ACP Community Edition'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1972142096/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# How to Remove QueryPie ACP Community Edition
+
+### Overview
+
+To completely remove QueryPie ACP, you must delete the containers, data directories, and log files in order.
+Some files are created by the container process as root, so `sudo` (administrator privileges) is required.
+______
+
+### Removal Procedure
+
+#### Step 1: Stop/Remove Containers and Networks
+
+* `current` is a symbolic link to the installation version path.
+```bash
+cd ~/querypie/current ## This is an example when installed under the home directory.
+docker compose --profile querypie --profile database down -v
+```
+
+* `--profile querypie`: includes app container
+* `--profile database`: includes mysql, redis containers
+* `-v`: also removes connected Docker volumes
+
+Expected output:
+```bash
+Container querypie-app-1 Stopped
+Container querypie-mysql-1 Stopped
+Container querypie-redis-1 Stopped
+Network querypie_app Removed
+Network querypie_database Removed
+```
+
+#### Step 2: Delete Installation Directory and Log Files
+
+The `~/querypie/log/` and `~/querypie/mysql/` directories contain files created as root by the container, so they must be deleted with `sudo`.
+```bash
+cd ~ ## This is an example when installed under the home directory.
+sudo rm -rf ~/querypie ~/querypie-install.log ~/querypie-migrate*.log
+```
+
+#### Step 3: Clean Up Remaining Docker Volumes (Optional)
+
+QueryPie volumes have already been deleted by `docker compose down -v`, but check if there are any remaining volumes.
+```bash
+docker volume ls
+```
+
+If any QueryPie-related volumes (starting with `querypie_`) remain, delete them individually.
+```bash
+docker volume rm <volume name>
+```
+______
+
+### Verify Removal
+
+```bash
+## Confirm no containers exist
+docker ps -a
+
+## Confirm no directories exist
+ls ~ | grep querypie || echo "querypie not found"
+```
+______
+
+<Callout type="important">
+Notes
+* **`-v` flag**: `docker compose down -v` also deletes the MySQL data volume. If you want to preserve the data, run without `-v`.
+* Running `rm -rf ~/querypie` without `sudo` will cause permission errors in the log/mysql directories. You must delete with administrator privileges.
+* The above process does not delete docker images. To also remove images, additionally run the following commands.
+  ```bash
+  ## Check the list of QueryPie-related images
+  docker images | grep querypie
+
+  ## Delete after confirmation
+  docker rmi querypie/querypie:<installed version> querypie/querypie-tools:<installed version> querypie/mysql:<installed version> querypie/redis:<installed version>
+  ```
+</Callout>
