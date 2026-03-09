@@ -2,6 +2,15 @@ name: Build and Push Docker Image
 
 on:
   workflow_dispatch:
+    inputs:
+      fetch_arguments:
+        description: 'Arguments for fetch_cli.py (Dockerfile Stage 1)'
+        required: false
+        type: choice
+        options:
+          - '--recent --attachments'
+          - '--remote --attachments'
+        default: '--recent --attachments'
   push:
     branches:
       - main
@@ -45,7 +54,8 @@ jobs:
         working-directory: ./confluence-mdx
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
-          docker compose --progress=plain build
+          docker compose --progress=plain build \
+            --build-arg "FETCH_ARGS=${{ inputs.fetch_arguments || '--recent --attachments' }}"
 
       - name: Push Docker image
         if: github.event_name != 'pull_request'
