@@ -1,204 +1,1535 @@
-# reverse-sync E2E 테스트케이스 매니페스트
-# 출처: reverse_sync_verify_fix_proofread-mdx.02140728.log
-# 브랜치: fix/proofread-mdx (original: main, improved: fix/proofread-mdx)
+# reverse-sync E2E 테스트케이스 매니페스트 + 페이지 카탈로그
 #
-# 현재 결과 (2026-02-18): 11 failed, 6 passed / 17 total
-# make test-reverse-sync-bugs 로 실행
+# 이 파일은 두 가지 역할을 합니다:
+#   1. forward converter가 로드하는 페이지 카탈로그 (list 형식)
+#      → cross-page 링크 해소, frontmatter/h1 자동 생성에 사용됨
+#      → 테스트케이스 페이지 + 테스트케이스에서 링크되는 대상 페이지만 포함
+#   2. reverse-sync 테스트케이스 메타데이터 (failure_type, severity 등)
+#      → failure_type 필드가 있는 항목이 테스트케이스
+#
+# 출처별 브랜치:
+#   fix/proofread-mdx (2026-02-18, 17건)
+#   split/ko-proofread-20260221-administrator-manual-general (2026-03-10, 17건 신규)
+#   split/ko-proofread-20260221-administrator-manual-kubernetes (2026-03-10, 4건 신규)
+#
+# original.mdx 재생성 방법은 README.md 를 참고하세요.
+- breadcrumbs:
+  - 사용자 매뉴얼
+  breadcrumbs_en:
+  - User Manual
+  page_id: '544211126'
+  path:
+  - user-manual
+  title: 사용자 매뉴얼
+  title_orig: 사용자 매뉴얼
+- breadcrumbs:
+  - 사용자 매뉴얼
+  - My Dashboard
+  - Email을 통한 사용자 비밀번호 초기화
+  breadcrumbs_en:
+  - User Manual
+  - My Dashboard
+  - User Password Reset via Email
+  page_id: '793542657'
+  path:
+  - user-manual
+  - my-dashboard
+  - user-password-reset-via-email
+  title: Email을 통한 사용자 비밀번호 초기화
+  title_orig: Email을 통한 사용자 비밀번호 초기화
+- breadcrumbs:
+  - 사용자 매뉴얼
+  - Workflow
+  - IP Registration Request 요청하기
+  breadcrumbs_en:
+  - User Manual
+  - Workflow
+  - Requesting IP Registration
+  page_id: '1055358996'
+  path:
+  - user-manual
+  - workflow
+  - requesting-ip-registration
+  title: IP Registration Request 요청하기
+  title_orig: IP Registration Request 요청하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  breadcrumbs_en:
+  - Administrator Manual
+  page_id: '544178405'
+  path:
+  - administrator-manual
+  title: 관리자 매뉴얼
+  title_orig: 관리자 매뉴얼
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  description: '링크 요소 뒤에 빈 <strong></strong>가 위치하여 **** 가 삽입됨.
 
-testcases:
+    '
+  expected_status: fail
+  failure_type: 4
+  label: 빈 Bold 태그 삽입 (링크 뒤)
+  mdx_path: administrator-manual/general/company-management.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/543948978/Company+Management
+  page_id: '543948978'
+  page_title: Company Management
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  severity: low
+  title: Company Management
+  title_orig: Company Management
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - General
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - General
+  description: '**예시:**  (이중 공백) 형태가 라운드트립 후 **예시:** (단일 공백)으로 변환됨.
 
-  # ──────────────────────────────────────────────
-  # Type 4: 빈 <strong> 태그 삽입 (empty bold ****)
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 13
+  label: 'Bold 뒤 이중 공백 소실 (예시:  → 예시:)'
+  mdx_path: administrator-manual/general/company-management/general.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544145591/General
+  page_id: '544145591'
+  page_title: General
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - general
+  severity: medium
+  title: General
+  title_orig: General​
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Security
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Security
+  description: '이미지 alt 텍스트의 띄어쓰기 교정이 원복됨. 예: IP 접근차단 → IP 접근 차단 (교정) → IP 접근차단 (원복).
+    추가로 **bold**  : 형태의 이중 공백이 단일 공백으로 변환됨.
 
-  544379719:
-    failure_type: 4
-    severity: low
-    title: "빈 Bold 태그 삽입"
-    description: >
-      Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨.
-      XHTML 라운드트립 후 기존 줄 끝에 **** 가 추가됨.
-    mdx_path: administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 붙여쓰기 (IP 접근 차단→IP 접근차단) + Bold 공백
+  mdx_path: administrator-manual/general/company-management/security.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544178422/Security
+  page_id: '544178422'
+  page_title: Security
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - security
+  severity: medium
+  title: Security
+  title_orig: Security
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Allowed Zones
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Allowed Zones
+  description: '용어 교정이 XHTML 원본 기준으로 되돌아감. 예: 출력됩니다 → 표시됩니다 (교정) → 출력됩니다 (원복)
 
-  543948978:
-    failure_type: 4
-    severity: low
-    title: "빈 Bold 태그 삽입 (링크 뒤)"
-    description: >
-      링크 요소 뒤에 빈 <strong></strong>가 위치하여 **** 가 삽입됨.
-    mdx_path: administrator-manual/general/company-management.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 용어 변경 (출력됩니다→표시됩니다)
+  mdx_path: administrator-manual/general/company-management/allowed-zones.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544112846/Allowed+Zones
+  page_id: '544112846'
+  page_title: Allowed Zones
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - allowed-zones
+  severity: medium
+  title: Allowed Zones
+  title_orig: Allowed Zones
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Channels
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Channels
+  description: '**Request Header (JSON)**  : 형태가 **Request Header (JSON)** : 로 변환됨.
 
-  # ──────────────────────────────────────────────
-  # Type 5: 중첩 리스트 내용 소실 [Critical]
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Bold 뒤 이중 공백 소실 (Request Header (JSON)  :)
+  mdx_path: administrator-manual/general/company-management/channels.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544243925/Channels
+  page_id: '544243925'
+  page_title: Channels
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - channels
+  severity: medium
+  title: Channels
+  title_orig: Channels
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Alerts
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Alerts
+  description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이
+    삭제되고 20줄로 축소됨.
 
-  544383693:
-    failure_type: 5
-    severity: critical
-    title: "중첩 리스트 내용 소실"
-    description: >
-      깊은 중첩 번호 목록(3단계 이상)의 텍스트가 부모 항목으로 병합되고,
-      하위 항목은 빈 줄이 됨. Bold 텍스트도 **** 로 소실됨.
-    mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
-    expected_status: pass
+    '
+  expected_status: fail
+  failure_type: 14
+  label: 테이블 전체 소실 (알림 유형 표)
+  mdx_path: administrator-manual/general/company-management/alerts.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/543981760/Alerts
+  page_id: '543981760'
+  page_title: Alerts
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - alerts
+  severity: critical
+  title: Alerts
+  title_orig: Alerts
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Alerts
+  - New Request > 요청 타입별 템플릿 변수
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Alerts
+  - New Request > Template Variables by Request Type
+  description: '요청 타입별 알림 변수를 나열한 복수의 테이블이 라운드트립 후 완전히 소실됨. DB Access Request, Server
+    Access Request 등 섹션별 대형 테이블 90줄 이상 손실.
 
-  # ──────────────────────────────────────────────
-  # Type 6: Callout 파서 에러 삽입 [Critical]
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 14
+  label: 테이블 전체 소실 (알림 변수 표, 복수)
+  mdx_path: administrator-manual/general/company-management/alerts/new-request-template-variables-by-request-type.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/793608206/New+Request
+  page_id: '793608206'
+  page_title: New Request > 요청 타입별 템플릿 변수
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - alerts
+  - new-request-template-variables-by-request-type
+  severity: critical
+  title: New Request > 요청 타입별 템플릿 변수
+  title_orig: New Request > 요청 타입별 템플릿 변수
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Company Management
+  - Licenses
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Company Management
+  - Licenses
+  page_id: '544178443'
+  path:
+  - administrator-manual
+  - general
+  - company-management
+  - licenses
+  title: Licenses
+  title_orig: Licenses
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Users
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Users
+  page_id: '544047331'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - users
+  title: Users
+  title_orig: Users
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Users
+  - 사용자 프로필
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Users
+  - User Profile
+  page_id: '544376787'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - users
+  - user-profile
+  title: 사용자 프로필
+  title_orig: 사용자 프로필
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Users
+  - qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Users
+  - Password Change Enforcement and Account Deletion Feature for qp-admin Default
+    Account
+  description: '조사 추가 교정이 XHTML 원본 기준으로 되돌아감. 예: 삭제 버튼 비활성화 됩니다 → 삭제 버튼이 비활성화됩니다 (교정)
 
-  571277650:
-    failure_type: 6
-    severity: critical
-    title: "Callout 파서 에러 본문 삽입"
-    description: >
-      <callout> 요소 처리 실패로 MultiLineParser 에러 메시지가
-      MDX 본문에 그대로 삽입됨.
-      주: 현재 verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
-    mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
-    expected_status: pass
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)
+  mdx_path: administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/920944732/qp-admin
+  page_id: '920944732'
+  page_title: qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - users
+  - password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account
+  severity: medium
+  title: qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+  title_orig: qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  page_id: '544375984'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  title: Authentication
+  title_orig: Authentication
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  - LDAP 연동하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  - Integrating with LDAP
+  description: '**Enable Attribute Synchronization :**  (이중 공백) 및 **Dry Run :**  형태가
+    단일 공백으로 변환됨. 2개 항목 영향.
 
-  # ──────────────────────────────────────────────
-  # Type 7: Callout 블록 삭제 [Critical]
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 13
+  label: 'Bold 뒤 이중 공백 소실 (Enable Attribute Synchronization :  , Dry Run :  )'
+  mdx_path: administrator-manual/general/user-management/authentication/integrating-with-ldap.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376004/LDAP
+  page_id: '544376004'
+  page_title: LDAP 연동하기
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  - integrating-with-ldap
+  severity: medium
+  title: LDAP 연동하기
+  title_orig: LDAP 연동하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  - Okta 연동하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  - Integrating with Okta
+  page_id: '544376100'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  - integrating-with-okta
+  title: Okta 연동하기
+  title_orig: Okta 연동하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  - AWS SSO 연동하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  - Integrating with AWS SSO
+  description: '띄어쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: 붙여넣기합니다 → 붙여 넣습니다 (교정) → 붙여넣기합니다 (원복)
 
-  544379393:
-    failure_type: 7
-    severity: critical
-    title: "Callout 블록 전체 삭제"
-    description: >
-      <Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
-    mdx_path: administrator-manual/general/system/integrations/integrating-with-syslog.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 띄어쓰기 (붙여넣기합니다→붙여 넣습니다)
+  mdx_path: administrator-manual/general/user-management/authentication/integrating-with-aws-sso.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376183/AWS+SSO
+  page_id: '544376183'
+  page_title: AWS SSO 연동하기
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  - integrating-with-aws-sso
+  severity: medium
+  title: AWS SSO 연동하기
+  title_orig: AWS SSO 연동하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  - Google SAML 연동하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  - Integrating with Google SAML
+  description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는...
+    → [li]\n2단계 페이지에서는...
 
-  # ──────────────────────────────────────────────
-  # Type 10: Unsupported XHTML Node 중복
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 17
+  label: 리스트 항목에 [li] 태그 노출
+  mdx_path: administrator-manual/general/user-management/authentication/integrating-with-google-saml.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/619381289/Google+SAML
+  page_id: '619381289'
+  page_title: Google SAML 연동하기
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  - integrating-with-google-saml
+  severity: critical
+  title: Google SAML 연동하기
+  title_orig: Google SAML 연동하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Authentication
+  - Multi-Factor Authentication 설정하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Authentication
+  - Setting Up Multi-Factor Authentication
+  page_id: '793575425'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - authentication
+  - setting-up-multi-factor-authentication
+  title: Multi-Factor Authentication 설정하기
+  title_orig: Multi-Factor Authentication 설정하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Provisioning
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Provisioning
+  description: '**SCIM(System for Cross-domain Identity Management)** 은 형태에서 bold
+    닫힘 마커 직후 공백 처리가 변경됨.
 
-  544376265:
-    failure_type: 10
-    severity: low
-    title: "Unsupported XHTML Node 중복 (provisioning)"
-    description: >
-      (Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
-    mdx_path: administrator-manual/general/user-management/provisioning/activating-provisioning.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Bold 뒤 공백 소실 (SCIM(...)** 은)
+  mdx_path: administrator-manual/general/user-management/provisioning.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376236/Provisioning
+  page_id: '544376236'
+  page_title: Provisioning
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - provisioning
+  severity: medium
+  title: Provisioning
+  title_orig: Provisioning
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Provisioning
+  - Provisioning 활성화 하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Provisioning
+  - Activating Provisioning
+  description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
 
-  544381637:
-    failure_type: 10
-    severity: low
-    title: "Unsupported XHTML Node 중복 (k8s connection)"
-    description: >
-      (Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
-      주: 현재 verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
-    mdx_path: administrator-manual/kubernetes/connection-management.mdx
-    expected_status: pass
+    '
+  expected_status: fail
+  failure_type: 10
+  label: Unsupported XHTML Node 중복 (provisioning)
+  mdx_path: administrator-manual/general/user-management/provisioning/activating-provisioning.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376265/Provisioning
+  page_id: '544376265'
+  page_title: Provisioning 활성화 하기
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - provisioning
+  - activating-provisioning
+  severity: low
+  title: Provisioning 활성화 하기
+  title_orig: Provisioning 활성화 하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - User Management
+  - Provisioning
+  - '[Okta] 프로비저닝 연동 가이드'
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - User Management
+  - Provisioning
+  - '[Okta] Provisioning Integration Guide'
+  description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  :
+    등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
-  # ──────────────────────────────────────────────
-  # Type 12: 백틱 포맷 깨짐 [Critical]
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Bold 뒤 이중 공백 소실 (Audience URI  :, Attribute Statements  :)
+  mdx_path: administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376394/Okta
+  page_id: '544376394'
+  page_title: '[Okta] 프로비저닝 연동 가이드'
+  path:
+  - administrator-manual
+  - general
+  - user-management
+  - provisioning
+  - okta-provisioning-integration-guide
+  severity: medium
+  title: '[Okta] 프로비저닝 연동 가이드'
+  title_orig: '[Okta] 프로비저닝 연동 가이드'
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Workflow Management
+  - Approval Rules
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Workflow Management
+  - Approval Rules
+  description: '**Allow Assignee selection (All Users)**  :, **참조자 지정 방식:** , **신규
+    옵션 활성화 시:** 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
-  565575990:
-    failure_type: 12
-    severity: critical
-    title: "백틱 코드 스팬 포맷 깨짐"
-    description: >
-      닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐.
-      예: `Verify Deletion Key` 버튼 → `Verify Deletion Key 버튼을 클릭합니다.`
-    mdx_path: administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Bold 뒤 이중 공백 소실 (approval-rules, 4개 항목)
+  mdx_path: administrator-manual/general/workflow-management/approval-rules.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544378513/Approval+Rules
+  page_id: '544378513'
+  page_title: Approval Rules
+  path:
+  - administrator-manual
+  - general
+  - workflow-management
+  - approval-rules
+  severity: medium
+  title: Approval Rules
+  title_orig: Approval Rules
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - Workflow Management
+  - Workflow Configurations
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - Workflow Management
+  - Workflow Configurations
+  page_id: '561414376'
+  path:
+  - administrator-manual
+  - general
+  - workflow-management
+  - workflow-configurations
+  title: Workflow Configurations
+  title_orig: Workflow Configurations
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Syslog 연동
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Integrating with Syslog
+  description: '<Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
 
-  # ──────────────────────────────────────────────
-  # Type 11: 교정 내용 원복 [Medium]
-  # ──────────────────────────────────────────────
+    '
+  expected_status: fail
+  failure_type: 7
+  label: Callout 블록 전체 삭제
+  mdx_path: administrator-manual/general/system/integrations/integrating-with-syslog.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544379393/Syslog
+  page_id: '544379393'
+  page_title: Syslog 연동
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - integrating-with-syslog
+  severity: critical
+  title: Syslog 연동
+  title_orig: Syslog 연동
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Email 연동
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Integrating with Email
+  description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test\
+    \ 버튼** : ...<br/>\\n(공백라인)\\n    <figure> →\n    11. ...<br/>\\n    12.\\n   \
+    \   <figure>\n"
+  expected_status: fail
+  failure_type: 17
+  label: 리스트 번호 오류 및 <br/> 뒤 항목 누락
+  mdx_path: administrator-manual/general/system/integrations/integrating-with-email.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/798064641/Email
+  page_id: '798064641'
+  page_title: Email 연동
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - integrating-with-email
+  severity: critical
+  title: Email 연동
+  title_orig: Email 연동
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Event Callback 연동
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Integrating with Event Callback
+  description: '버튼을 클릭합니다.<br/> 형태가 버튼을 클릭합니다 <br/>로 변환됨. 문장 끝 마침표와 <br/> 사이에 공백이
+    삽입되고 마침표가 소실됨.
 
-  568852692:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 띄어쓰기 (활성화 되어→활성화되어)"
-    description: >
-      MDX 교정 시 수정한 띄어쓰기가 XHTML 원본 기준으로 되돌아감.
-      예: 활성화 되어 → 활성화되어 (교정) → 활성화 되어 (원복)
-    mdx_path: administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
-    expected_status: pass
+    '
+  expected_status: fail
+  failure_type: 13
+  label: <br/> 앞 마침표 뒤 공백 삽입 (클릭합니다.<br/> → 클릭합니다 <br/>)
+  mdx_path: administrator-manual/general/system/integrations/integrating-with-event-callback.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1267007528/Event+Callback
+  page_id: '1267007528'
+  page_title: Event Callback 연동
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - integrating-with-event-callback
+  severity: medium
+  title: Event Callback 연동
+  title_orig: Event Callback 연동
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - OAuth Client Application
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - OAuth Client Application
+  description: '*  `+Add` 버튼 형태에서 목록 마커 뒤 이중 공백이 단일 공백으로 변환됨. 또한 **Access Token Timeout
+    (Minutes)**  : 형태의 이중 공백도 소실됨.
 
-  954172219:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — Bold 병합 (Client Name)"
-    description: >
-      분리된 Bold 마크업을 하나로 합친 교정이 원복됨.
-      예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
-    mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 13
+  label: 목록 항목 앞 이중 공백 소실 (*  `+Add` → * `+Add`)
+  mdx_path: administrator-manual/general/system/integrations/oauth-client-application.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1453588486/OAuth+Client+Application
+  page_id: '1453588486'
+  page_title: OAuth Client Application
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - oauth-client-application
+  severity: medium
+  title: OAuth Client Application
+  title_orig: OAuth Client Application
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Identity Providers
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Identity Providers
+  description: '**Enable Attribute Synchronization :**  (이중 공백) 형태가 단일 공백으로 변환됨. (identity-providers
+    페이지 — integrating-with-ldap과 동일 패턴)
 
-  544112846:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 용어 변경 (출력됩니다→표시됩니다)"
-    description: >
-      용어 교정이 XHTML 원본 기준으로 되돌아감.
-      예: 출력됩니다 → 표시됩니다 (교정) → 출력됩니다 (원복)
-    mdx_path: administrator-manual/general/company-management/allowed-zones.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 13
+  label: 'Bold 뒤 이중 공백 소실 (Enable Attribute Synchronization :  )'
+  mdx_path: administrator-manual/general/system/integrations/identity-providers.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1454342158/Identity+Providers
+  page_id: '1454342158'
+  page_title: Identity Providers
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - identity-providers
+  severity: medium
+  title: Identity Providers
+  title_orig: Identity Providers
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Identity Providers
+  - AWS SSO 연동하기 (SAML 2.0)
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Identity Providers
+  - Integrating with AWS SSO (SAML 2.0)
+  description: '테이블 열 구분자 padding 공백이 변환 후 달라짐. 예: | --------------------- | → | -------------------
+    | 내용 변경 없이 열 너비(패딩) 정렬만 달라짐.
 
-  544376183:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 띄어쓰기 (붙여넣기합니다→붙여 넣습니다)"
-    description: >
-      띄어쓰기 교정이 XHTML 원본 기준으로 되돌아감.
-      예: 붙여넣기합니다 → 붙여 넣습니다 (교정) → 붙여넣기합니다 (원복)
-    mdx_path: administrator-manual/general/user-management/authentication/integrating-with-aws-sso.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 15
+  label: 테이블 열 너비 padding 변경 (AWS SSO SAML 속성 매핑 표)
+  mdx_path: administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1495433217/AWS+SSO+SAML+2.0
+  page_id: '1495433217'
+  page_title: AWS SSO 연동하기 (SAML 2.0)
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - identity-providers
+  - integrating-with-aws-sso-saml-20
+  severity: low
+  title: AWS SSO 연동하기 (SAML 2.0)
+  title_orig: AWS SSO 연동하기 (SAML 2.0)
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - API Token
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - API Token
+  description: '**Scopes**: API 토큰으로... 형태에서 콜론 이후 텍스트가 Bold 스팬 안으로 흡수되어 **Scopes:
+    API 토큰으로...**로 변환됨. 또한 ''*  Admin > ...'' 형태의 목록 항목 앞 이중 공백이 단일 공백으로 변환됨.
 
-  920944732:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)"
-    description: >
-      조사 추가 교정이 XHTML 원본 기준으로 되돌아감.
-      예: 삭제 버튼 비활성화 됩니다 → 삭제 버튼이 비활성화됩니다 (교정)
-    mdx_path: administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
-    expected_status: pass
+    '
+  expected_status: fail
+  failure_type: 13
+  label: 'Bold 경계 침범 — **Scopes**: 텍스트가 Bold 안으로 흡수'
+  mdx_path: administrator-manual/general/system/api-token.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544377652/API+Token
+  page_id: '544377652'
+  page_title: API Token
+  path:
+  - administrator-manual
+  - general
+  - system
+  - api-token
+  severity: medium
+  title: API Token
+  title_orig: API Token
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Maintenance
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Maintenance
+  description: 'Mode 설명 테이블의 열 구분자 padding이 변환 후 달라짐. 내용 변경 없이 열 너비 정렬만 변경됨.
 
-  1177321474:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 경어체 통일 (참고하십시오→참조하세요)"
-    description: >
-      경어체 교정이 XHTML 원본 기준으로 되돌아감.
-      예: 참고하십시오 → 참조하세요 (교정)
-    mdx_path: installation/installation/installation-guide-setupv2sh.mdx
-    expected_status: pass
+    '
+  expected_status: fail
+  failure_type: 15
+  label: 테이블 열 너비 padding 변경 (Maintenance Mode 표)
+  mdx_path: administrator-manual/general/system/maintenance.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1456144391/Maintenance
+  page_id: '1456144391'
+  page_title: Maintenance
+  path:
+  - administrator-manual
+  - general
+  - system
+  - maintenance
+  severity: low
+  title: Maintenance
+  title_orig: Maintenance
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Connection Management
+  - Cloud Providers
+  - AWS에서 DB 리소스 동기화
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Connection Management
+  - Cloud Providers
+  - Synchronizing DB Resources from AWS
+  description: 'Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨. XHTML
+    라운드트립 후 기존 줄 끝에 **** 가 추가됨.
 
-  1907294209:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 어휘·표현 변경 (갈음하여→대체하여, 주의하여→주의해)"
-    description: >
-      어휘·표현 교정이 XHTML 원본 기준으로 되돌아감.
-      예: 갈음하여 → 대체하여, 주의하여 주세요 → 주의해 주세요
-    mdx_path: installation/post-installation-setup.mdx
-    expected_status: fail
+    '
+  expected_status: fail
+  failure_type: 4
+  label: 빈 Bold 태그 삽입
+  mdx_path: administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544379719/AWS+DB
+  page_id: '544379719'
+  page_title: AWS에서 DB 리소스 동기화
+  path:
+  - administrator-manual
+  - databases
+  - connection-management
+  - cloud-providers
+  - synchronizing-db-resources-from-aws
+  severity: low
+  title: AWS에서 DB 리소스 동기화
+  title_orig: AWS에서 DB 리소스 동기화
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Connection Management
+  - DB Connections
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Connection Management
+  - DB Connections
+  page_id: '544014712'
+  path:
+  - administrator-manual
+  - databases
+  - connection-management
+  - db-connections
+  title: DB Connections
+  title_orig: DB Connections
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Connection Management
+  - DB Connections
+  - DocumentDB 전용 가이드
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Connection Management
+  - DB Connections
+  - DocumentDB Specific Guide
+  description: 'MDX 교정 시 수정한 띄어쓰기가 XHTML 원본 기준으로 되돌아감. 예: 활성화 되어 → 활성화되어 (교정) → 활성화
+    되어 (원복)
 
-  862093313:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 조사 띄어쓰기 (User 의→User의)"
-    description: >
-      조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감.
-      예: User 의 → User의 (교정) → User 의 (원복)
-    mdx_path: installation/system-architecture-and-network-access-control.mdx
-    expected_status: fail
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 띄어쓰기 (활성화 되어→활성화되어)
+  mdx_path: administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/568852692/DocumentDB
+  page_id: '568852692'
+  page_title: DocumentDB 전용 가이드
+  path:
+  - administrator-manual
+  - databases
+  - connection-management
+  - db-connections
+  - documentdb-specific-guide
+  severity: medium
+  title: DocumentDB 전용 가이드
+  title_orig: DocumentDB 전용 가이드
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Policies
+  - Sensitive Data
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Policies
+  - Sensitive Data
+  page_id: '544379993'
+  path:
+  - administrator-manual
+  - databases
+  - policies
+  - sensitive-data
+  title: Sensitive Data
+  title_orig: Sensitive Data
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Ledger Management
+  - Ledger Approval Rules
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Ledger Management
+  - Ledger Approval Rules
+  description: '<callout> 요소 처리 실패로 MultiLineParser 에러 메시지가 MDX 본문에 그대로 삽입됨. 주: 현재
+    verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
 
-  1297383451:
-    failure_type: 11
-    severity: medium
-    title: "교정 내용 원복 — 조사 띄어쓰기 (MySQL 을→MySQL을)"
-    description: >
-      조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감.
-      예: MySQL 을 → MySQL을 (교정) → MySQL 을 (원복)
-    mdx_path: installation/prerequisites/configuring-rootless-mode-with-podman.mdx
-    expected_status: fail
+    '
+  expected_status: pass
+  failure_type: 6
+  label: Callout 파서 에러 본문 삽입
+  mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/571277650/Ledger+Approval+Rules
+  page_id: '571277650'
+  page_title: Ledger Approval Rules
+  path:
+  - administrator-manual
+  - databases
+  - ledger-management
+  - ledger-approval-rules
+  severity: critical
+  title: Ledger Approval Rules
+  title_orig: Ledger Approval Rules
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Monitoring
+  - Running Queries
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Monitoring
+  - Running Queries
+  description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client
+    Name** (교정) → **Client**   **Name** (원복)
+
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — Bold 병합 (Client Name)
+  mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/954172219/Running+Queries
+  page_id: '954172219'
+  page_title: Running Queries
+  path:
+  - administrator-manual
+  - databases
+  - monitoring
+  - running-queries
+  severity: medium
+  title: Running Queries
+  title_orig: Running Queries‎
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Servers
+  - Connection Management
+  - Server Agents for RDP
+  - Server Agent 설치 및 제거하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - Servers
+  - Connection Management
+  - Server Agents for RDP
+  - Installing and Removing Server Agent
+  description: '닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐. 예: `Verify Deletion Key` 버튼 → `Verify
+    Deletion Key 버튼을 클릭합니다.`
+
+    '
+  expected_status: fail
+  failure_type: 12
+  label: 백틱 코드 스팬 포맷 깨짐
+  mdx_path: administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/565575990/Server+Agent
+  page_id: '565575990'
+  page_title: Server Agent 설치 및 제거하기
+  path:
+  - administrator-manual
+  - servers
+  - connection-management
+  - server-agents-for-rdp
+  - installing-and-removing-server-agent
+  severity: critical
+  title: Server Agent 설치 및 제거하기
+  title_orig: Server Agent 설치 및 제거하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - Connection Management
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - Connection Management
+  description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨. 주: 현재 verify
+    pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
+
+    '
+  expected_status: pass
+  failure_type: 10
+  label: Unsupported XHTML Node 중복 (k8s connection)
+  mdx_path: administrator-manual/kubernetes/connection-management.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544381637/Connection+Management
+  page_id: '544381637'
+  page_title: Connection Management
+  path:
+  - administrator-manual
+  - kubernetes
+  - connection-management
+  severity: low
+  title: Connection Management
+  title_orig: Connection Management​​
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - Connection Management
+  - Cloud Providers
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - Connection Management
+  - Cloud Providers
+  description: '팝업이 나타나면  *DELETE*  문구 형태에서 이탤릭 앞뒤 이중 공백이 단일 공백으로 변환됨.
+
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Italic 앞뒤 공백 소실 ( *DELETE* → *DELETE*)
+  mdx_path: administrator-manual/kubernetes/connection-management/cloud-providers.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544381651/Cloud+Providers
+  page_id: '544381651'
+  page_title: Cloud Providers
+  path:
+  - administrator-manual
+  - kubernetes
+  - connection-management
+  - cloud-providers
+  severity: medium
+  title: Cloud Providers
+  title_orig: Cloud Providers​
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - Connection Management
+  - Cloud Providers
+  - AWS에서 쿠버네티스 리소스 동기화
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - Connection Management
+  - Cloud Providers
+  - Synchronizing Kubernetes Resources from AWS
+  page_id: '544381739'
+  path:
+  - administrator-manual
+  - kubernetes
+  - connection-management
+  - cloud-providers
+  - synchronizing-kubernetes-resources-from-aws
+  title: AWS에서 쿠버네티스 리소스 동기화
+  title_orig: AWS에서 쿠버네티스 리소스 동기화
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - Connection Management
+  - Clusters
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - Connection Management
+  - Clusters
+  page_id: '544381839'
+  path:
+  - administrator-manual
+  - kubernetes
+  - connection-management
+  - clusters
+  title: Clusters
+  title_orig: Clusters
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - Connection Management
+  - Clusters
+  - 수동으로 쿠버네티스 클러스터 등록하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - Connection Management
+  - Clusters
+  - Manually Registering Kubernetes Clusters
+  page_id: '544381877'
+  path:
+  - administrator-manual
+  - kubernetes
+  - connection-management
+  - clusters
+  - manually-registering-kubernetes-clusters
+  title: 수동으로 쿠버네티스 클러스터 등록하기
+  title_orig: 수동으로 쿠버네티스 클러스터 등록하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  description: '**(Title)**  : 형태가 **(Title)** : 로 변환됨.
+
+    '
+  expected_status: fail
+  failure_type: 13
+  label: Bold 뒤 이중 공백 소실 ((Title)  :)
+  mdx_path: administrator-manual/kubernetes/k8s-access-control/policies.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544382060/Policies
+  page_id: '544382060'
+  page_title: Policies
+  path:
+  - administrator-manual
+  - kubernetes
+  - k8s-access-control
+  - policies
+  severity: medium
+  title: Policies
+  title_orig: Policiesㅤㅤㅤ
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - 쿠버네티스 정책 설정하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - Setting Kubernetes Policies
+  page_id: '544382274'
+  path:
+  - administrator-manual
+  - kubernetes
+  - k8s-access-control
+  - policies
+  - setting-kubernetes-policies
+  title: 쿠버네티스 정책 설정하기
+  title_orig: 쿠버네티스 정책 설정하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - 쿠버네티스 정책 YAML Code 문법 안내
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - Kubernetes Policy YAML Code Syntax Guide
+  description: '테이블 th/td 셀 내부에 빈 줄이 추가됨. 예: <th>\n**Category**\n</th> → <th>\n\n**Category**\n\n</th>
+    내용 변경 없이 셀 앞뒤 빈 줄이 삽입됨.
+
+    '
+  expected_status: fail
+  failure_type: 15
+  label: 테이블 셀 내 빈 줄 추가 (Kubernetes policy YAML 스키마 표)
+  mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544382364/YAML+Code
+  page_id: '544382364'
+  page_title: 쿠버네티스 정책 YAML Code 문법 안내
+  path:
+  - administrator-manual
+  - kubernetes
+  - k8s-access-control
+  - policies
+  - kubernetes-policy-yaml-code-syntax-guide
+  severity: low
+  title: 쿠버네티스 정책 YAML Code 문법 안내
+  title_orig: 쿠버네티스 정책 YAML Code 문법 안내
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - 쿠버네티스 정책 Action 설정 참고 가이드
+  breadcrumbs_en:
+  - Administrator Manual
+  - Kubernetes
+  - K8s Access Control
+  - Policies
+  - Kubernetes Policy Action Configuration Reference Guide
+  description: '중첩 리스트 항목 안의 펜스드 코드 블록(```) 이 라운드트립 후 인라인으로 병합됨. 예: 추천 스펙\n```\nallow:\n  actions:\n```
+    → 추천 스펙 ``` allow: actions: ...``` 코드 블록 내 YAML 구조가 완전히 파괴됨.
+
+    '
+  expected_status: fail
+  failure_type: 16
+  label: 리스트 항목 내 코드 블록 인라인 병합
+  mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544382659/Action
+  page_id: '544382659'
+  page_title: 쿠버네티스 정책 Action 설정 참고 가이드
+  path:
+  - administrator-manual
+  - kubernetes
+  - k8s-access-control
+  - policies
+  - kubernetes-policy-action-configuration-reference-guide
+  severity: critical
+  title: 쿠버네티스 정책 Action 설정 참고 가이드
+  title_orig: 쿠버네티스 정책 Action 설정 참고 가이드
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Web Apps
+  - WAC Quickstart
+  - Web App Configurations에서 WAC 초기 설정하기
+  breadcrumbs_en:
+  - Administrator Manual
+  - Web Apps
+  - WAC Quickstart
+  - Initial WAC Setup in Web App Configurations
+  page_id: '883654785'
+  path:
+  - administrator-manual
+  - web-apps
+  - wac-quickstart
+  - initial-wac-setup-in-web-app-configurations
+  title: Web App Configurations에서 WAC 초기 설정하기
+  title_orig: Web App Configurations에서 WAC 초기 설정하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Audit
+  - Kubernetes Logs
+  - Pod Session Recordings
+  breadcrumbs_en:
+  - Administrator Manual
+  - Audit
+  - Kubernetes Logs
+  - Pod Session Recordings
+  description: '깊은 중첩 번호 목록(3단계 이상)의 텍스트가 부모 항목으로 병합되고, 하위 항목은 빈 줄이 됨. Bold 텍스트도 ****
+    로 소실됨.
+
+    '
+  expected_status: pass
+  failure_type: 5
+  label: 중첩 리스트 내용 소실
+  mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544383693/Pod+Session+Recordings
+  page_id: '544383693'
+  page_title: Pod Session Recordings
+  path:
+  - administrator-manual
+  - audit
+  - kubernetes-logs
+  - pod-session-recordings
+  severity: critical
+  title: Pod Session Recordings
+  title_orig: Pod Session Recordingsㅤ
+- breadcrumbs:
+  - 제품 설치
+  - 제품 버전
+  breadcrumbs_en:
+  - Installation
+  - Product Versions
+  page_id: '1881243653'
+  path:
+  - installation
+  - product-versions
+  title: 제품 버전
+  title_orig: 제품 버전
+- breadcrumbs:
+  - 제품 설치
+  - 설치 전 준비사항
+  breadcrumbs_en:
+  - Installation
+  - Prerequisites
+  page_id: '862126081'
+  path:
+  - installation
+  - prerequisites
+  title: 설치 전 준비사항
+  title_orig: 설치 전 준비사항
+- breadcrumbs:
+  - 제품 설치
+  - 설치 전 준비사항
+  - 리눅스 배포본과 Docker, Podman 지원 현황
+  breadcrumbs_en:
+  - Installation
+  - Prerequisites
+  - Linux Distribution and Docker, Podman Support Status
+  page_id: '1298530305'
+  path:
+  - installation
+  - prerequisites
+  - linux-distribution-and-docker-podman-support-status
+  title: 리눅스 배포본과 Docker, Podman 지원 현황
+  title_orig: 리눅스 배포본과 Docker, Podman 지원 현황
+- breadcrumbs:
+  - 제품 설치
+  - 설치 전 준비사항
+  - Podman 으로 Rootless Mode 구성하기
+  breadcrumbs_en:
+  - Installation
+  - Prerequisites
+  - Configuring Rootless Mode with Podman
+  description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을
+    (원복)
+
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 조사 띄어쓰기 (MySQL 을→MySQL을)
+  mdx_path: installation/prerequisites/configuring-rootless-mode-with-podman.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1297383451/Podman+Rootless+Mode
+  page_id: '1297383451'
+  page_title: Podman 으로 Rootless Mode 구성하기
+  path:
+  - installation
+  - prerequisites
+  - configuring-rootless-mode-with-podman
+  severity: medium
+  title: Podman 으로 Rootless Mode 구성하기
+  title_orig: Podman 으로 Rootless Mode 구성하기
+- breadcrumbs:
+  - 제품 설치
+  - 설치하기
+  - 설치 가이드 - 간단한 구성
+  breadcrumbs_en:
+  - Installation
+  - Installation
+  - Installation Guide - Simple Configuration
+  page_id: '964952065'
+  path:
+  - installation
+  - installation
+  - installation-guide-simple-configuration
+  title: 설치 가이드 - 간단한 구성
+  title_orig: 설치 가이드 - 간단한 구성
+- breadcrumbs:
+  - 제품 설치
+  - 설치하기
+  - 설치 가이드 - setup.v2.sh
+  breadcrumbs_en:
+  - Installation
+  - Installation
+  - Installation Guide - setup.v2.sh
+  description: '경어체 교정이 XHTML 원본 기준으로 되돌아감. 예: 참고하십시오 → 참조하세요 (교정)
+
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 경어체 통일 (참고하십시오→참조하세요)
+  mdx_path: installation/installation/installation-guide-setupv2sh.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1177321474/-+setup.v2.sh
+  page_id: '1177321474'
+  page_title: 설치 가이드 - setup.v2.sh
+  path:
+  - installation
+  - installation
+  - installation-guide-setupv2sh
+  severity: medium
+  title: 설치 가이드 - setup.v2.sh
+  title_orig: 설치 가이드 - setup.v2.sh
+- breadcrumbs:
+  - 제품 설치
+  - 설치 후 초기 설정
+  breadcrumbs_en:
+  - Installation
+  - Post Installation Setup
+  description: '어휘·표현 교정이 XHTML 원본 기준으로 되돌아감. 예: 갈음하여 → 대체하여, 주의하여 주세요 → 주의해 주세요
+
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 어휘·표현 변경 (갈음하여→대체하여, 주의하여→주의해)
+  mdx_path: installation/post-installation-setup.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1907294209
+  page_id: '1907294209'
+  page_title: 설치 후 초기 설정
+  path:
+  - installation
+  - post-installation-setup
+  severity: medium
+  title: 설치 후 초기 설정
+  title_orig: 설치 후 초기 설정
+- breadcrumbs:
+  - 제품 설치
+  - 시스템 아키텍처와 네트워크 접근제어
+  breadcrumbs_en:
+  - Installation
+  - System Architecture and Network Access Control
+  description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: User 의 → User의 (교정) → User 의 (원복)
+
+    '
+  expected_status: fail
+  failure_type: 11
+  label: 교정 내용 원복 — 조사 띄어쓰기 (User 의→User의)
+  mdx_path: installation/system-architecture-and-network-access-control.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/862093313
+  page_id: '862093313'
+  page_title: 시스템 아키텍처와 네트워크 접근제어
+  path:
+  - installation
+  - system-architecture-and-network-access-control
+  severity: medium
+  title: 시스템 아키텍처와 네트워크 접근제어
+  title_orig: 시스템 아키텍처와 네트워크 접근제어
+- breadcrumbs:
+  - 제품 설치
+  - 컨테이너 환경변수
+  breadcrumbs_en:
+  - Installation
+  - Container Environment Variables
+  page_id: '954761289'
+  path:
+  - installation
+  - container-environment-variables
+  title: 컨테이너 환경변수
+  title_orig: 컨테이너 환경변수
+- breadcrumbs:
+  - 제품 설치
+  - 컨테이너 환경변수
+  - QUERYPIE_WEB_URL
+  breadcrumbs_en:
+  - Installation
+  - Container Environment Variables
+  - QUERYPIE_WEB_URL
+  page_id: '876937310'
+  path:
+  - installation
+  - container-environment-variables
+  - querypieweburl
+  title: QUERYPIE_WEB_URL
+  title_orig: QUERYPIE_WEB_URL
