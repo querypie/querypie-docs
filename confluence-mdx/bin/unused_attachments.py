@@ -99,14 +99,21 @@ def build_cross_reference_index(references: dict[str, set[str]],
         }
 
     # 모든 페이지의 XHTML에서 참조된 파일명 중,
-    # 해당 페이지가 아닌 다른 페이지의 첨부파일과 이름이 일치하는 것을 탐지
+    # 해당 페이지가 아닌 다른 페이지의 첨부파일과 이름이 일치하는 것을 탐지.
+    # 단, 참조하는 페이지가 동일한 이름의 첨부파일을 자체 보유한 경우는 제외한다:
+    # ri:attachment ri:filename="foo.png"은 같은 페이지의 첨부파일을 의미하므로
+    # 다른 페이지의 동명 첨부파일을 교차 참조하는 것으로 볼 수 없다.
     cross_refs: dict[str, set[str]] = {}
     for ref_page_id, ref_filenames in references.items():
+        ref_own_att_names = att_names_by_page.get(ref_page_id, set())
         for owner_page_id, owner_att_names in att_names_by_page.items():
             if owner_page_id == ref_page_id:
                 continue
             shared = ref_filenames & owner_att_names
             for filename in shared:
+                # 참조하는 페이지가 같은 이름의 첨부파일을 보유하면 교차 참조가 아님
+                if filename in ref_own_att_names:
+                    continue
                 key = f"{owner_page_id}/{filename}"
                 cross_refs.setdefault(key, set()).add(ref_page_id)
 
