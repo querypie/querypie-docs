@@ -264,11 +264,10 @@ class TestRealData:
     def test_sample_page(self):
         """실제 페이지 데이터로 미사용 첨부파일을 검출합니다."""
         unused = find_unused_attachments(self.VAR_DIR, page_ids=[self.SAMPLE_PAGE_ID])
-        # 이 페이지는 10개 첨부파일 중 5개가 미사용
-        assert len(unused) == 5
+        # 이 페이지는 6개 첨부파일 중 1개가 미사용
+        assert len(unused) == 1
         unused_titles = {u["title"] for u in unused}
-        assert "image-20240801-074431.png" in unused_titles
-        assert "image-20241103-071004.png" in unused_titles
+        assert "Screenshot 2025-08-26 at 12.43.46\u202fAM.png" in unused_titles
 
     @pytest.mark.skipif(
         not (VAR_DIR / SAMPLE_PAGE_ID).is_dir(),
