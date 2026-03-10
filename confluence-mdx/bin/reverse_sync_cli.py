@@ -412,6 +412,13 @@ def run_verify(
         yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
 
     # Step 6: Forward 변환 → verify.mdx 저장
+    # xhtml_path 옆에 있는 page.v1.yaml을 var/<page_id>/로 복사하여
+    # forward converter가 크로스 페이지 링크를 정상 해석할 수 있게 한다.
+    src_page_v1 = Path(xhtml_path).parent / 'page.v1.yaml'
+    dst_page_v1 = var_dir / 'page.v1.yaml'
+    if src_page_v1.exists() and not dst_page_v1.exists():
+        shutil.copy2(src_page_v1, dst_page_v1)
+
     lang = language or _detect_language(improved_src.descriptor)
     _forward_convert(
         str(var_dir / 'reverse-sync.patched.xhtml'),
