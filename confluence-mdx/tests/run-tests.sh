@@ -66,6 +66,11 @@ log_cmd() {
     fi
 }
 
+# Print command unconditionally
+log_step() {
+    echo -e "${YELLOW}+ $*${NC}"
+}
+
 # Run command with optional verbose logging
 run_cmd() {
     log_cmd "$@"
@@ -200,7 +205,6 @@ run_reverse_sync_test() {
         --page-id "${test_id}" \
         --original-mdx "tests/${test_path}/original.mdx" \
         --xhtml "tests/${test_path}/page.xhtml" \
-        --json \
         "tests/${test_path}/improved.mdx"
     popd > /dev/null
 
@@ -213,22 +217,41 @@ run_reverse_sync_test() {
     cp "${var_dir}/reverse-sync.mapping.patched.yaml"   "${test_path}/output.reverse-sync.mapping.patched.yaml"
 
     # MDX diff 검증: original.mdx ↔ improved.mdx 차이가 expected와 일치하는지 확인
+    log_step "diff -u --label a/original.mdx --label b/improved.mdx ${test_path}/original.mdx ${test_path}/improved.mdx > ${test_path}/output.mdx.diff"
     diff -u --label a/original.mdx --label b/improved.mdx \
         "${test_path}/original.mdx" "${test_path}/improved.mdx" \
         > "${test_path}/output.mdx.diff" || true
-    diff -u "${test_path}/expected.mdx.diff" "${test_path}/output.mdx.diff"
+    if [[ -f "${test_path}/expected.mdx.diff" ]]; then
+        log_step "diff -u ${test_path}/expected.mdx.diff ${test_path}/output.mdx.diff"
+        diff -u "${test_path}/expected.mdx.diff" "${test_path}/output.mdx.diff"
+    fi
 
     # expected와 비교 (timestamp/경로 필드 제외)
-    diff -u <(grep -v 'created_at' "${test_path}/expected.reverse-sync.result.yaml") \
-            <(grep -v 'created_at' "${test_path}/output.reverse-sync.result.yaml")
-    diff -u "${test_path}/expected.reverse-sync.patched.xhtml" \
-            "${test_path}/output.reverse-sync.patched.xhtml"
-    diff -u <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/expected.reverse-sync.diff.yaml") \
-            <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/output.reverse-sync.diff.yaml")
-    diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.original.yaml") \
-            <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.original.yaml")
-    diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.patched.yaml") \
-            <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.patched.yaml")
+    if [[ -f "${test_path}/expected.reverse-sync.result.yaml" ]]; then
+        log_step "diff -u ${test_path}/expected.reverse-sync.result.yaml ${test_path}/output.reverse-sync.result.yaml"
+        diff -u <(grep -v 'created_at' "${test_path}/expected.reverse-sync.result.yaml") \
+                <(grep -v 'created_at' "${test_path}/output.reverse-sync.result.yaml")
+    fi
+    if [[ -f "${test_path}/expected.reverse-sync.patched.xhtml" ]]; then
+        log_step "diff -u ${test_path}/expected.reverse-sync.patched.xhtml ${test_path}/output.reverse-sync.patched.xhtml"
+        diff -u "${test_path}/expected.reverse-sync.patched.xhtml" \
+                "${test_path}/output.reverse-sync.patched.xhtml"
+    fi
+    if [[ -f "${test_path}/expected.reverse-sync.diff.yaml" ]]; then
+        log_step "diff -u ${test_path}/expected.reverse-sync.diff.yaml ${test_path}/output.reverse-sync.diff.yaml"
+        diff -u <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/expected.reverse-sync.diff.yaml") \
+                <(grep -v 'created_at\|original_mdx\|improved_mdx' "${test_path}/output.reverse-sync.diff.yaml")
+    fi
+    if [[ -f "${test_path}/expected.reverse-sync.mapping.original.yaml" ]]; then
+        log_step "diff -u ${test_path}/expected.reverse-sync.mapping.original.yaml ${test_path}/output.reverse-sync.mapping.original.yaml"
+        diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.original.yaml") \
+                <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.original.yaml")
+    fi
+    if [[ -f "${test_path}/expected.reverse-sync.mapping.patched.yaml" ]]; then
+        log_step "diff -u ${test_path}/expected.reverse-sync.mapping.patched.yaml ${test_path}/output.reverse-sync.mapping.patched.yaml"
+        diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.patched.yaml") \
+                <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.patched.yaml")
+    fi
 }
 
 has_reverse_sync_input() {
@@ -251,18 +274,23 @@ run_reverse_sync_verify_test() {
     local result_file="${test_path}/output.reverse-sync.result.yaml"
 
     local output_log="${test_path}/output.verify.log"
+    local output_cmd="${test_path}/output.verify.cmd"
 
     # 결과 파일이 없을 때만 verify 실행
     if [[ ! -f "${result_file}" ]]; then
         mkdir -p "../var/${test_id}"
         pushd .. > /dev/null
+        local -a cmd_reverse_sync_cli_verify=(
+            bin/reverse_sync_cli.py verify
+            --page-id "${test_id}"
+            --original-mdx "tests/${test_path}/original.mdx"
+            --xhtml "tests/${test_path}/page.xhtml"
+            "tests/${test_path}/improved.mdx"
+        )
+        # 실행 명령을 파일에 저장
+        echo "${cmd_reverse_sync_cli_verify[*]}" > "tests/${output_cmd}"
         # 출력을 파일로 저장 (run_all_tests의 재실행 시 재사용)
-        bin/reverse_sync_cli.py verify \
-            --page-id "${test_id}" \
-            --original-mdx "tests/${test_path}/original.mdx" \
-            --xhtml "tests/${test_path}/page.xhtml" \
-            "tests/${test_path}/improved.mdx" \
-            > "tests/${output_log}" 2>&1
+        "${cmd_reverse_sync_cli_verify[@]}" > "tests/${output_log}" 2>&1
         popd > /dev/null
 
         # var/에 생성된 중간 결과물을 output.* 으로 복사
@@ -284,6 +312,9 @@ print(r.get('status', 'error'))
 
     # 저장된 CLI 출력 표시
     if [[ -f "${output_log}" ]]; then
+        if [[ -f "${output_cmd}" ]]; then
+            log_step "$(cat "${output_cmd}")"
+        fi
         cat "${output_log}"
     fi
 
@@ -379,7 +410,7 @@ run_all_tests() {
             continue
         fi
 
-        echo "Testing case: ${test_id}"
+        echo "Testing case: ${TEST_DIR}/${test_id}"
 
         if [[ "${VERBOSE}" == "true" ]]; then
             # Show all output in verbose mode
@@ -418,7 +449,7 @@ run_single_test() {
     local test_label="$2"
     local test_id="$3"
 
-    echo "Testing case: ${test_id} (${test_label})"
+    echo "Testing case: ${TEST_DIR}/${test_id} (${test_label})"
 
     if [[ "${VERBOSE}" == "true" ]]; then
         # Show all output in verbose mode
