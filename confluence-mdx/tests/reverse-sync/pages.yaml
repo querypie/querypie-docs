@@ -125,9 +125,10 @@
   - Company Management
   - Security
   description: '이미지 alt 텍스트의 띄어쓰기 교정이 원복됨. 예: IP 접근차단 → IP 접근 차단 (교정) → IP 접근차단 (원복). 추가로 **bold**  : 형태의 이중 공백이 단일 공백으로 변환됨.
+    _normalize_consecutive_spaces_in_text, _normalize_trailing_blank_lines으로 해결됨 (PR #907).
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 붙여쓰기 (IP 접근 차단→IP 접근차단) + Bold 공백
   mdx_path: administrator-manual/general/company-management/security.mdx
@@ -806,10 +807,10 @@
   - Identity Providers
   - Integrating with AWS SSO (SAML 2.0)
   description: '테이블 열 구분자 padding 공백이 변환 후 달라짐. 예: | --------------------- | → | ------------------- | 내용 변경 없이 열 너비(패딩) 정렬만
-    달라짐.
+    달라짐. _normalize_table_cell_padding(구분자 행 대시 수 정규화)으로 해결됨 (PR #907).
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 15
   label: 테이블 열 너비 padding 변경 (AWS SSO SAML 속성 매핑 표)
   mdx_path: administrator-manual/general/system/integrations/identity-providers/integrating-with-aws-sso-saml-20.mdx
@@ -866,9 +867,10 @@
   - System
   - Maintenance
   description: 'Mode 설명 테이블의 열 구분자 padding이 변환 후 달라짐. 내용 변경 없이 열 너비 정렬만 변경됨.
+    _normalize_table_cell_padding(구분자 행 대시 수 정규화)으로 해결됨 (PR #907).
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 15
   label: 테이블 열 너비 padding 변경 (Maintenance Mode 표)
   mdx_path: administrator-manual/general/system/maintenance.mdx
