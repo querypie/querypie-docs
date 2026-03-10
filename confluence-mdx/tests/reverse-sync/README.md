@@ -278,10 +278,61 @@ PYEOF
 
 ## 테스트 실행
 
+### make test-reverse-sync-bugs
+
+`tests/reverse-sync/` 아래 모든 테스트케이스에 대해 `reverse_sync_cli.py verify` 를 실행합니다.
+
 ```bash
 # confluence-mdx/tests/ 디렉토리에서
-bash run-tests.sh --type reverse-sync-verify --test-dir reverse-sync
+make test-reverse-sync-bugs
+```
 
-# 단일 케이스
+**결과 해석:**
+
+- **PASS** (녹색): `expected_status: fail` 인 케이스가 pass 로 전환된 경우 = 해당 버그가 수정됨
+- **FAIL** (적색): `expected_status: fail` 인 케이스가 여전히 fail = 버그가 아직 존재함 (예상된 실패)
+- **PASS** (녹색): `expected_status: pass` 인 케이스가 pass = 정상 작동 확인
+
+> **Note:** `make test-reverse-sync-bugs` 의 실패는 대부분 **예상된 실패**입니다.
+> 이 명령은 "현재 수정된 버그 수 / 전체 버그 수" 를 파악하는 용도로 사용합니다.
+> `expected_status: fail` 인 케이스가 모두 PASS 로 전환되면, 해당 버그 유형은 모두 수정된 것입니다.
+
+**단일 케이스 실행:**
+
+```bash
 make test-reverse-sync-bugs-one TEST_ID=<page_id>
 ```
+
+**출력 파일:**
+
+실행 후 각 테스트케이스 디렉토리에 다음 파일이 생성됩니다:
+
+| 파일 | 내용 |
+|------|------|
+| `output.verify.log` | `reverse_sync_cli.py verify` 의 전체 출력 |
+| `output.verify.cmd` | 실행된 정확한 CLI 명령 |
+| `output.reverse-sync.result.yaml` | verify 결과 YAML (status, diff 포함) |
+
+결과 로그 확인:
+```bash
+cat reverse-sync/<page_id>/output.verify.log
+```
+
+실행된 명령 확인:
+```bash
+cat reverse-sync/<page_id>/output.verify.cmd
+```
+
+**버그 수정 확인 워크플로우:**
+
+버그를 수정한 후, 해당 테스트케이스가 PASS 로 전환되었는지 확인합니다:
+
+```bash
+# 1. 단일 케이스로 빠르게 확인
+make test-reverse-sync-bugs-one TEST_ID=<page_id>
+
+# 2. 전체 케이스 실행하여 기존 버그 케이스가 깨지지 않았는지 확인
+make test-reverse-sync-bugs
+```
+
+버그가 수정되었다면 해당 케이스의 `pages.yaml` 항목에서 `expected_status: fail` → `expected_status: pass` 로 변경합니다.

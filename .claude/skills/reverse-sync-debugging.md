@@ -180,6 +180,15 @@ make test-reverse-sync-bugs-one TEST_ID=<page_id>
 
 결과는 `reverse-sync/<page_id>/output.verify.log`에서 확인할 수 있다.
 
+전체 버그 케이스 실행 및 현황 파악:
+```bash
+make test-reverse-sync-bugs
+```
+
+- **FAIL** = 버그가 아직 존재함 (예상된 실패, `expected_status: fail`)
+- **PASS** = 버그가 수정됨 (`expected_status: fail` 케이스가 통과 전환)
+- 자세한 사용법은 `tests/reverse-sync/README.md` 참조
+
 #### 방법 B: Python pytest 단위 테스트
 
 버그가 발생하는 함수를 직접 호출하여 재현하는 방법이다.

@@ -53,10 +53,11 @@ test-skeleton-one:
 	fi
 	@$(TEST_SCRIPT) --type skeleton --test-id $(TEST_ID) $(VERBOSE_FLAG)
 
-# Run reverse-sync tests
+# Run reverse-sync tests (testcases/ 와 reverse-sync/ 모두 실행)
 .PHONY: test-reverse-sync
 test-reverse-sync:
 	@$(TEST_SCRIPT) --type reverse-sync $(VERBOSE_FLAG)
+	@$(TEST_SCRIPT) --type reverse-sync --test-dir reverse-sync $(VERBOSE_FLAG)
 
 # Run a specific reverse-sync test
 .PHONY: test-reverse-sync-one
@@ -160,6 +161,7 @@ help:
 	@echo "  test-reverse-sync / test-reverse-sync-one"
 	@echo "    MDX 편집분을 XHTML 에 역패치."
 	@echo "    patched.xhtml, diff.yaml 등 5개 산출물 비교"
+	@echo "    (testcases/ 와 reverse-sync/ 모두 실행)"
 	@echo ""
 	@echo "  test-reverse-sync-bugs / test-reverse-sync-bugs-one"
 	@echo "    reverse-sync 버그 재현 테스트 (tests/reverse-sync/)."
