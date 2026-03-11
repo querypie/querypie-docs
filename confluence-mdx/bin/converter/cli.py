@@ -123,6 +123,8 @@ def main():
     parser.add_argument('--language',
                         choices=['ko', 'ja', 'en'],
                         help='언어 코드를 명시적으로 지정 (미지정 시 출력 경로에서 자동 감지)')
+    parser.add_argument('--page-dir',
+                        help='page.v1.yaml 등 페이지 데이터 디렉토리 (기본: input 파일의 디렉토리)')
     parser.add_argument('--log-level',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         default='info',
@@ -178,8 +180,9 @@ def main():
         pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')
         load_pages_yaml(pages_yaml_path, PAGES_BY_TITLE, PAGES_BY_ID)
 
-        # Load page.v1.yaml from the same directory as the input file
-        page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(input_dir, 'page.v1.yaml'))
+        # Load page.v1.yaml: --page-dir 우선, 없으면 input_dir에서 탐색
+        page_data_dir = args.page_dir if args.page_dir else input_dir
+        page_v1: Optional[PageV1] = load_page_v1_yaml(os.path.join(page_data_dir, 'page.v1.yaml'))
         set_page_v1(page_v1)
 
         # Build link mapping from page.v1.yaml for external link pageId resolution
