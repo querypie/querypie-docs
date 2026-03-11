@@ -111,6 +111,16 @@ class TestNormalizeConsecutiveSpaces:
         text = "```\ncode  with  spaces\n```"
         assert _normalize_consecutive_spaces_in_text(text) == text
 
+    def test_code_block_with_surrounding_text(self):
+        """코드 블록 전후 일반 텍스트의 이중 공백은 정규화되고, 블록 내부는 보존된다."""
+        text = "**bold**  before\n```\ncode  inside\n```\n**bold**  after"
+        expected = "**bold** before\n```\ncode  inside\n```\n**bold** after"
+        assert _normalize_consecutive_spaces_in_text(text) == expected
+
+    def test_inline_code_span_spaces_collapsed(self):
+        """인라인 code span 내부 연속 공백도 정규화 대상이다 (HTML 렌더링과 일치)."""
+        assert _normalize_consecutive_spaces_in_text("`code  here`") == "`code here`"
+
     def test_single_space_unchanged(self):
         """단일 공백은 변경되지 않는다."""
         assert _normalize_consecutive_spaces_in_text("a b c") == "a b c"
