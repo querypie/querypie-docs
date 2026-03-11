@@ -43,6 +43,22 @@ class TestConvertInline:
         result = convert_inline("line1<br/>line2")
         assert result == "line1<br />line2"
 
+    def test_code_with_less_than(self):
+        """`a < b` → <code>a &lt; b</code>"""
+        assert convert_inline("`a < b`") == "<code>a &lt; b</code>"
+
+    def test_code_with_greater_than(self):
+        """`a > b` → <code>a &gt; b</code>"""
+        assert convert_inline("`a > b`") == "<code>a &gt; b</code>"
+
+    def test_code_with_ampersand(self):
+        """`a & b` → <code>a &amp; b</code>"""
+        assert convert_inline("`a & b`") == "<code>a &amp; b</code>"
+
+    def test_code_with_html_tag_like_string(self):
+        """`<script>` → <code>&lt;script&gt;</code>"""
+        assert convert_inline("`<script>`") == "<code>&lt;script&gt;</code>"
+
 
 # --- mdx_block_to_inner_xhtml 블록 변환 테스트 ---
 
@@ -107,6 +123,16 @@ class TestBlockConversion:
         content = "```\nline1\nline2\nline3\n```\n"
         result = mdx_block_to_inner_xhtml(content, "code_block")
         assert result == "line1\nline2\nline3"
+
+    def test_paragraph_code_html_escape(self):
+        """paragraph 내 code span의 < > 이스케이프"""
+        result = mdx_block_to_inner_xhtml("`a < b`\n", "paragraph")
+        assert result == "<code>a &lt; b</code>"
+
+    def test_heading_code_html_escape(self):
+        """heading 내 code span의 HTML 특수문자 이스케이프"""
+        result = mdx_block_to_inner_xhtml("## `SELECT * FROM t WHERE x < 10`\n", "heading")
+        assert result == "<code>SELECT * FROM t WHERE x &lt; 10</code>"
 
 
 # --- _parse_list_items 테스트 ---
