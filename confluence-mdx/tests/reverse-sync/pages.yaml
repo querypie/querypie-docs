@@ -124,8 +124,7 @@
   - General
   - Company Management
   - Security
-  description: '이미지 alt 텍스트의 띄어쓰기 교정이 원복됨. 예: IP 접근차단 → IP 접근 차단 (교정) → IP 접근차단 (원복).
-    추가로 **bold**  : 형태의 이중 공백이 단일 공백으로 변환됨.
+  description: '이미지 alt 텍스트의 띄어쓰기 교정이 원복됨. 예: IP 접근차단 → IP 접근 차단 (교정) → IP 접근차단 (원복). 추가로 **bold**  : 형태의 이중 공백이 단일 공백으로 변환됨.
 
     '
   expected_status: fail
@@ -209,8 +208,7 @@
   - General
   - Company Management
   - Alerts
-  description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이
-    삭제되고 20줄로 축소됨.
+  description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이 삭제되고 20줄로 축소됨.
 
     '
   expected_status: fail
@@ -240,8 +238,7 @@
   - Company Management
   - Alerts
   - New Request > Template Variables by Request Type
-  description: '요청 타입별 알림 변수를 나열한 복수의 테이블이 라운드트립 후 완전히 소실됨. DB Access Request, Server
-    Access Request 등 섹션별 대형 테이블 90줄 이상 손실.
+  description: '요청 타입별 알림 변수를 나열한 복수의 테이블이 라운드트립 후 완전히 소실됨. DB Access Request, Server Access Request 등 섹션별 대형 테이블 90줄 이상 손실.
 
     '
   expected_status: fail
@@ -328,14 +325,15 @@
   - General
   - User Management
   - Users
-  - Password Change Enforcement and Account Deletion Feature for qp-admin Default
-    Account
-  description: '조사 추가 교정이 XHTML 원본 기준으로 되돌아감. 예: 삭제 버튼 비활성화 됩니다 → 삭제 버튼이 비활성화됩니다 (교정)
+  - Password Change Enforcement and Account Deletion Feature for qp-admin Default Account
+  description: 'improved.mdx의 모든 차이가 줄 끝 trailing whitespace 유무. verify.mdx는 trailing space 없음.
+
+    원래 교정: 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)는 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: pass
-  failure_type: 11
-  label: 교정 내용 원복 — 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)
+  expected_status: fail
+  failure_type: 13
+  label: trailing whitespace 소실 (improved.mdx 줄 끝 trailing space가 verify.mdx에서 제거됨)
   mdx_path: administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/920944732/qp-admin
   page_id: '920944732'
@@ -379,8 +377,7 @@
   - User Management
   - Authentication
   - Integrating with LDAP
-  description: '**Enable Attribute Synchronization :**  (이중 공백) 및 **Dry Run :**  형태가
-    단일 공백으로 변환됨. 2개 항목 영향.
+  description: '**Enable Attribute Synchronization :**  (이중 공백) 및 **Dry Run :**  형태가 단일 공백으로 변환됨. 2개 항목 영향.
 
     '
   expected_status: fail
@@ -463,8 +460,7 @@
   - User Management
   - Authentication
   - Integrating with Google SAML
-  description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는...
-    → [li]\n2단계 페이지에서는...
+  description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는... → [li]\n2단계 페이지에서는...
 
     '
   expected_status: fail
@@ -514,8 +510,7 @@
   - General
   - User Management
   - Provisioning
-  description: '**SCIM(System for Cross-domain Identity Management)** 은 형태에서 bold
-    닫힘 마커 직후 공백 처리가 변경됨.
+  description: '**SCIM(System for Cross-domain Identity Management)** 은 형태에서 bold 닫힘 마커 직후 공백 처리가 변경됨.
 
     '
   expected_status: fail
@@ -576,8 +571,7 @@
   - User Management
   - Provisioning
   - '[Okta] Provisioning Integration Guide'
-  description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  :
-    등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
+  description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  : 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
   expected_status: fail
@@ -606,8 +600,7 @@
   - General
   - Workflow Management
   - Approval Rules
-  description: '**Allow Assignee selection (All Users)**  :, **참조자 지정 방식:** , **신규
-    옵션 활성화 시:** 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
+  description: '**Allow Assignee selection (All Users)**  :, **참조자 지정 방식:** , **신규 옵션 활성화 시:** 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
   expected_status: fail
@@ -686,9 +679,8 @@
   - System
   - Integrations
   - Integrating with Email
-  description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test\
-    \ 버튼** : ...<br/>\\n(공백라인)\\n    <figure> →\n    11. ...<br/>\\n    12.\\n   \
-    \   <figure>\n"
+  description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test 버튼** : ...<br/>\\n(공백라인)\\n    <figure>\
+    \ →\n    11. ...<br/>\\n    12.\\n      <figure>\n"
   expected_status: fail
   failure_type: 17
   label: 리스트 번호 오류 및 <br/> 뒤 항목 누락
@@ -717,8 +709,7 @@
   - System
   - Integrations
   - Integrating with Event Callback
-  description: '버튼을 클릭합니다.<br/> 형태가 버튼을 클릭합니다 <br/>로 변환됨. 문장 끝 마침표와 <br/> 사이에 공백이
-    삽입되고 마침표가 소실됨.
+  description: '버튼을 클릭합니다.<br/> 형태가 버튼을 클릭합니다 <br/>로 변환됨. 문장 끝 마침표와 <br/> 사이에 공백이 삽입되고 마침표가 소실됨.
 
     '
   expected_status: fail
@@ -749,8 +740,7 @@
   - System
   - Integrations
   - OAuth Client Application
-  description: '*  `+Add` 버튼 형태에서 목록 마커 뒤 이중 공백이 단일 공백으로 변환됨. 또한 **Access Token Timeout
-    (Minutes)**  : 형태의 이중 공백도 소실됨.
+  description: '*  `+Add` 버튼 형태에서 목록 마커 뒤 이중 공백이 단일 공백으로 변환됨. 또한 **Access Token Timeout (Minutes)**  : 형태의 이중 공백도 소실됨.
 
     '
   expected_status: fail
@@ -781,8 +771,8 @@
   - System
   - Integrations
   - Identity Providers
-  description: '**Enable Attribute Synchronization :**  (이중 공백) 형태가 단일 공백으로 변환됨. (identity-providers
-    페이지 — integrating-with-ldap과 동일 패턴)
+  description: '**Enable Attribute Synchronization :**  (이중 공백) 형태가 단일 공백으로 변환됨. (identity-providers 페이지 — integrating-with-ldap과
+    동일 패턴)
 
     '
   expected_status: fail
@@ -815,8 +805,8 @@
   - Integrations
   - Identity Providers
   - Integrating with AWS SSO (SAML 2.0)
-  description: '테이블 열 구분자 padding 공백이 변환 후 달라짐. 예: | --------------------- | → | -------------------
-    | 내용 변경 없이 열 너비(패딩) 정렬만 달라짐.
+  description: '테이블 열 구분자 padding 공백이 변환 후 달라짐. 예: | --------------------- | → | ------------------- | 내용 변경 없이 열 너비(패딩) 정렬만
+    달라짐.
 
     '
   expected_status: fail
@@ -846,8 +836,8 @@
   - General
   - System
   - API Token
-  description: '**Scopes**: API 토큰으로... 형태에서 콜론 이후 텍스트가 Bold 스팬 안으로 흡수되어 **Scopes:
-    API 토큰으로...**로 변환됨. 또한 ''*  Admin > ...'' 형태의 목록 항목 앞 이중 공백이 단일 공백으로 변환됨.
+  description: '**Scopes**: API 토큰으로... 형태에서 콜론 이후 텍스트가 Bold 스팬 안으로 흡수되어 **Scopes: API 토큰으로...**로 변환됨. 또한 ''*  Admin > ...''
+    형태의 목록 항목 앞 이중 공백이 단일 공백으로 변환됨.
 
     '
   expected_status: fail
@@ -905,8 +895,7 @@
   - Connection Management
   - Cloud Providers
   - Synchronizing DB Resources from AWS
-  description: 'Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨. XHTML
-    라운드트립 후 기존 줄 끝에 **** 가 추가됨.
+  description: 'Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨. XHTML 라운드트립 후 기존 줄 끝에 **** 가 추가됨.
 
     '
   expected_status: fail
@@ -955,13 +944,15 @@
   - Connection Management
   - DB Connections
   - DocumentDB Specific Guide
-  description: 'MDX 교정 시 수정한 띄어쓰기가 XHTML 원본 기준으로 되돌아감. 예: 활성화 되어 → 활성화되어 (교정) → 활성화
-    되어 (원복)
+  description: 'improved.mdx 줄 끝 trailing whitespace 소실 및 Bold 앞뒤 이중 공백(**SSL / SSH Setting**, **SSL Configurations**)이 단일
+    공백으로 소실.
+
+    원래 교정: 띄어쓰기 (활성화 되어→활성화되어)는 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: pass
-  failure_type: 11
-  label: 교정 내용 원복 — 띄어쓰기 (활성화 되어→활성화되어)
+  expected_status: fail
+  failure_type: 13
+  label: trailing whitespace 소실 + Bold 앞뒤 이중 공백 소실 (**SSL / SSH Setting**)
   mdx_path: administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/568852692/DocumentDB
   page_id: '568852692'
@@ -1003,13 +994,16 @@
   - Databases
   - Ledger Management
   - Ledger Approval Rules
-  description: '<callout> 요소 처리 실패로 MultiLineParser 에러 메시지가 MDX 본문에 그대로 삽입됨. 주: 현재
-    verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
+  description: 'improved.mdx의 Bold 앞뒤 이중 공백(**Rule Name**  :, **Approval Steps**  :)이 verify.mdx에서 단일 공백으로 소실.
+
+    또한 줄 끝 trailing whitespace 제거.
+
+    원래 교정: Callout 파서 에러 본문 삽입은 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: pass
-  failure_type: 6
-  label: Callout 파서 에러 본문 삽입
+  expected_status: fail
+  failure_type: 13
+  label: Bold 앞뒤 이중 공백 소실 (**Rule Name**  :, **Approval Steps**  등)
   mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/571277650/Ledger+Approval+Rules
   page_id: '571277650'
@@ -1032,8 +1026,7 @@
   - Databases
   - Monitoring
   - Running Queries
-  description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client
-    Name** (교정) → **Client**   **Name** (원복)
+  description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
 
     '
   expected_status: fail
@@ -1063,8 +1056,7 @@
   - Connection Management
   - Server Agents for RDP
   - Installing and Removing Server Agent
-  description: '닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐. 예: `Verify Deletion Key` 버튼 → `Verify
-    Deletion Key 버튼을 클릭합니다.`
+  description: '닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐. 예: `Verify Deletion Key` 버튼 → `Verify Deletion Key 버튼을 클릭합니다.`
 
     '
   expected_status: fail
@@ -1091,8 +1083,7 @@
   - Administrator Manual
   - Kubernetes
   - Connection Management
-  description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨. 주: 현재 verify
-    pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
+  description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨. 주: 현재 verify pass — 해당 교정이 패치 대상이 아닌 블록이거나 이미 수정됨.
 
     '
   expected_status: pass
@@ -1258,8 +1249,8 @@
   - K8s Access Control
   - Policies
   - Kubernetes Policy YAML Code Syntax Guide
-  description: '테이블 th/td 셀 내부에 빈 줄이 추가됨. 예: <th>\n**Category**\n</th> → <th>\n\n**Category**\n\n</th>
-    내용 변경 없이 셀 앞뒤 빈 줄이 삽입됨.
+  description: '테이블 th/td 셀 내부에 빈 줄이 추가됨. 예: <th>\n**Category**\n</th> → <th>\n\n**Category**\n\n</th> 내용 변경 없이 셀 앞뒤 빈 줄이
+    삽입됨.
 
     '
   expected_status: fail
@@ -1290,8 +1281,8 @@
   - K8s Access Control
   - Policies
   - Kubernetes Policy Action Configuration Reference Guide
-  description: '중첩 리스트 항목 안의 펜스드 코드 블록(```) 이 라운드트립 후 인라인으로 병합됨. 예: 추천 스펙\n```\nallow:\n  actions:\n```
-    → 추천 스펙 ``` allow: actions: ...``` 코드 블록 내 YAML 구조가 완전히 파괴됨.
+  description: '중첩 리스트 항목 안의 펜스드 코드 블록(```) 이 라운드트립 후 인라인으로 병합됨. 예: 추천 스펙\n```\nallow:\n  actions:\n``` → 추천 스펙 ``` allow:
+    actions: ...``` 코드 블록 내 YAML 구조가 완전히 파괴됨.
 
     '
   expected_status: fail
@@ -1338,13 +1329,14 @@
   - Audit
   - Kubernetes Logs
   - Pod Session Recordings
-  description: '깊은 중첩 번호 목록(3단계 이상)의 텍스트가 부모 항목으로 병합되고, 하위 항목은 빈 줄이 됨. Bold 텍스트도 ****
-    로 소실됨.
+  description: 'improved.mdx의 Bold 앞뒤 이중 공백(  **Name**  :)이 verify.mdx에서 단일 공백(**Name** :)으로 소실.
+
+    또한 줄 끝 trailing whitespace 제거.
 
     '
-  expected_status: pass
-  failure_type: 5
-  label: 중첩 리스트 내용 소실
+  expected_status: fail
+  failure_type: 13
+  label: 'Bold 앞뒤 이중 공백 소실 (**Name**  : → **Name** :) + trailing whitespace'
   mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544383693/Pod+Session+Recordings
   page_id: '544383693'
@@ -1404,8 +1396,7 @@
   - Installation
   - Prerequisites
   - Configuring Rootless Mode with Podman
-  description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을
-    (원복)
+  description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을 (원복)
 
     '
   expected_status: fail
@@ -1445,12 +1436,14 @@
   - Installation
   - Installation
   - Installation Guide - setup.v2.sh
-  description: '경어체 교정이 XHTML 원본 기준으로 되돌아감. 예: 참고하십시오 → 참조하세요 (교정)
+  description: 'improved.mdx 코드 블록 줄 끝 trailing whitespace($ )가 verify.mdx에서 제거됨.
+
+    원래 교정: 경어체 통일 (참고하십시오→참조하세요)은 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: pass
-  failure_type: 11
-  label: 교정 내용 원복 — 경어체 통일 (참고하십시오→참조하세요)
+  expected_status: fail
+  failure_type: 13
+  label: 코드 블록 내 trailing whitespace 소실 ($ → $[trailing space 제거])
   mdx_path: installation/installation/installation-guide-setupv2sh.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/1177321474/-+setup.v2.sh
   page_id: '1177321474'
@@ -1533,3 +1526,85 @@
   - querypieweburl
   title: QUERYPIE_WEB_URL
   title_orig: QUERYPIE_WEB_URL
+- breadcrumbs:
+  - 사용자 매뉴얼
+  breadcrumbs_en:
+  - User Manual
+  description: '교정 내용(어휘·경어체 변경)이 reverse-sync를 통해 올바르게 적용됨을 검증.
+
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 어휘·경어체 변경 (다음의 방법으로→다음 방법으로, seamless SSH 설정→Seamless SSH를 설정)
+  mdx_path: user-manual/user-agent.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544112828/User+Agent
+  page_id: '544112828'
+  path:
+  - user-manual
+  title: User Agent
+  title_orig: User Agent
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  - Policies
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  - Policies
+  description: '교정 내용(오탈자·문장 개선, 중복 단어 제거)이 reverse-sync를 통해 올바르게 적용됨을 검증.
+
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 오탈자·문장 개선 (테이블/컬럼 접근 제한 정책 정책→정책, 민감정보→민감 정보)
+  mdx_path: administrator-manual/databases/policies/data-access.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544379937/Data+Access
+  page_id: '544379937'
+  path:
+  - administrator-manual
+  - databases
+  - policies
+  title: Data Access
+  title_orig: Data Access
+- breadcrumbs:
+  - 사용자 매뉴얼
+  - Database Access Control
+  breadcrumbs_en:
+  - User Manual
+  - Database Access Control
+  description: '리스트 번호 오류: improved.mdx 1,2,3번 항목이 verify.mdx에서 3,4,5번으로 renumber됨.
+
+    또한 Italic 앞뒤 이중 공백(  *DELETE*  )이 단일 공백(*DELETE*)으로 소실.
+
+    '
+  expected_status: fail
+  failure_type: 17
+  label: 리스트 번호 오류 (1,2,3 → 3,4,5) + Italic 앞뒤 이중 공백 소실 (*DELETE*)
+  mdx_path: user-manual/database-access-control/setting-default-privilege.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544380354/Default+Privilege
+  page_id: '544380354'
+  path:
+  - user-manual
+  - database-access-control
+  title: Default Privilege 설정하기
+  title_orig: Default Privilege 설정하기
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - Databases
+  breadcrumbs_en:
+  - Administrator Manual
+  - Databases
+  description: '교정 내용(어휘·문장 개선, 관리기능→관리 기능, 태그기반→태그 기반)이 reverse-sync를 통해 올바르게 적용됨을 검증.
+
+    '
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 어휘 개선 (정책을 제공하고 있습니다→제공합니다, 관리기능→관리 기능)
+  mdx_path: administrator-manual/databases/new-policy-management.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/873136365/New+Policy+Management
+  page_id: '873136365'
+  path:
+  - administrator-manual
+  - databases
+  title: (New) Policy Management
+  title_orig: (New) Policy Management
