@@ -43,6 +43,22 @@ class TestConvertInline:
         result = convert_inline("line1<br/>line2")
         assert result == "line1<br />line2"
 
+    def test_code_with_less_than(self):
+        """`a < b` → <code>a &lt; b</code>"""
+        assert convert_inline("`a < b`") == "<code>a &lt; b</code>"
+
+    def test_code_with_greater_than(self):
+        """`a > b` → <code>a &gt; b</code>"""
+        assert convert_inline("`a > b`") == "<code>a &gt; b</code>"
+
+    def test_code_with_ampersand(self):
+        """`a & b` → <code>a &amp; b</code>"""
+        assert convert_inline("`a & b`") == "<code>a &amp; b</code>"
+
+    def test_code_with_html_tag_like_string(self):
+        """`<script>` → <code>&lt;script&gt;</code>"""
+        assert convert_inline("`<script>`") == "<code>&lt;script&gt;</code>"
+
 
 # --- mdx_block_to_inner_xhtml 블록 변환 테스트 ---
 
