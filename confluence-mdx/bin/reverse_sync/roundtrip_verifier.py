@@ -16,6 +16,47 @@ def _normalize_trailing_ws(text: str) -> str:
     return re.sub(r'[ \t]+$', '', text, flags=re.MULTILINE)
 
 
+def _normalize_consecutive_spaces_in_text(text: str) -> str:
+    """코드 블록 외 텍스트에서 인라인 연속 공백을 단일 공백으로 정규화한다.
+
+    Forward converter가 XHTML에서 생성한 MDX는 단일 공백만 사용하므로,
+    improved.mdx의 이중 공백(예: **bold**  :, *  `item`)과의 차이를 무시한다.
+    줄 앞 들여쓰기(leading whitespace)는 보존한다.
+    """
+    lines = text.split('\n')
+    result = []
+    in_code_block = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+            result.append(line)
+            continue
+        if in_code_block:
+            result.append(line)
+            continue
+        leading = len(line) - len(line.lstrip(' \t'))
+        rest = re.sub(r' {2,}', ' ', line[leading:])
+        result.append(line[:leading] + rest)
+    return '\n'.join(result)
+
+
+def _normalize_br_space(text: str) -> str:
+    """<br/> 앞의 공백을 제거한다.
+
+    Forward converter가 list item 구성 시 ' '.join(li_itself)로
+    <br/> 앞에 공백을 추가하므로, 비교 시 이를 제거한다.
+    """
+    return re.sub(r' +(<br\s*/>)', r'\1', text)
+
+
+def _apply_minimal_normalizations(text: str) -> str:
+    """항상 적용하는 최소 정규화 (forward converter 특성에 의한 체계적 차이만 처리)."""
+    text = _normalize_consecutive_spaces_in_text(text)
+    text = _normalize_br_space(text)
+    return text
+
+
 _MONTH_KO_TO_EN = {
     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
     '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
@@ -208,6 +249,10 @@ def verify_roundtrip(
     Returns:
         VerifyResult: passed=True면 통과, 아니면 diff_report 포함
     """
+    # 항상 최소 정규화 적용 (forward converter 특성에 의한 체계적 차이 처리)
+    expected_mdx = _apply_minimal_normalizations(expected_mdx)
+    actual_mdx = _apply_minimal_normalizations(actual_mdx)
+
     if lenient:
         expected_mdx = _apply_normalizations(expected_mdx)
         actual_mdx = _apply_normalizations(actual_mdx)
